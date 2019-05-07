@@ -2,43 +2,45 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C80916113
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 May 2019 11:36:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A19BC16134
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 May 2019 11:40:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726701AbfEGJgH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 May 2019 05:36:07 -0400
-Received: from mail-it1-f200.google.com ([209.85.166.200]:34497 "EHLO
+        id S1726925AbfEGJkH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 May 2019 05:40:07 -0400
+Received: from mail-it1-f200.google.com ([209.85.166.200]:37579 "EHLO
         mail-it1-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726072AbfEGJgG (ORCPT
+        with ESMTP id S1726473AbfEGJkG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 May 2019 05:36:06 -0400
-Received: by mail-it1-f200.google.com with SMTP id m140so2092515ita.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 07 May 2019 02:36:06 -0700 (PDT)
+        Tue, 7 May 2019 05:40:06 -0400
+Received: by mail-it1-f200.google.com with SMTP id d140so14146014itc.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 07 May 2019 02:40:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=k2pRyG7vK/1j3fVv4DVkzCWppahXNJlURyzypYD7+1w=;
-        b=Gu+7YIQe/bQtLeRliFGbr41EQdfauv1bWXoVmwE+zWHS/YYOqkVfbDefKtLrcaQVNM
-         5lYV7B4RSHy8LXnY33QdOXLbiMNC5e6v+P4D+7cEwPRDa8gu7rtDeP2vBL+TlYZc6oEJ
-         3MMi6MzZ5zRrg8AavLaX79Brum0L88QgAEHDsnfzPi32o2c2gMjDDJGsvE11L3JM/716
-         kdeyRMrIgMRYi0GQbE+GUIQy+vjgAA7bu3crfA4yYSYwXngeHdEWoilZ3HM7HsfufeDE
-         PglgP8NXfmX0hctZrFynL52TgGXZs8bY9d4UtoUuRr0U01y+X7TTm/z911PuFo5bZ6El
-         xeog==
-X-Gm-Message-State: APjAAAUMDE1eCYY0+9rGqFq9JYu8uW+r2McL9EH4vOlUnBO7awQyrFGn
-        0/2CMRSF5LJL8JrNjM82tbkfGegARMBlZF6pHFuWL+d3o2jZ
-X-Google-Smtp-Source: APXvYqz8hJFf5rvwdjuQrnHXAuprdWyiTdbNxligrkWJekg0wapLWivP35RnM33Rx7FYqFqdEGox804t8vg9vdsxMNh2QQkCGtAH
+        bh=M+r1dDE8p2pZ1Gb6K0q/nd2z9VfNJGEaSacktrDrGiE=;
+        b=rAvMwe7BF7N+W4pWczmMWQ1HeqPNqYygdimYxElGyUXSWfyWiq+a9L7RVXdoCmzZy2
+         w9Cz0TB8FqljlIWrbvUcsh5TKkycQn12wbwl28hltnE8MjzoSSuDTVa7+obco3iJLuBe
+         HKgMQ0DIPTWxvWz1ixmxAnKrMwiCQJK4qN68V/nw4k3i7n7gTq8jK7eu+7tTpWTR4c0m
+         oeNV8V0yo7hdYA9ROqhsgrgPYXlSUjYtQwrfN1Ujd2fpKezFcCSVzs17CGNFLu4CKoM9
+         e1jndfgcCfwbQcpz7VWYN/PUdDGggBCnwZG0EReFOTUbgTv45YMYG1gRhD/1y+aR+7RF
+         Cc9A==
+X-Gm-Message-State: APjAAAXSwd1qtWWhBNbKrt4uVwtYYdQlrjIgty644AVGg5Pabr+lt4x1
+        +t1ia9FTF/6vSPMWQ9rqHFQzk71TPVbzPIGoM+NPdGyJrkNV
+X-Google-Smtp-Source: APXvYqwRADDuYNGX3Y7wDUsoO/ls6z/INnziGesI/Q40aER2KXJo4Xe68NwqOHF0E9x1LanGkDBhQDSgSqNmGas1uSblsCD++5Vo
 MIME-Version: 1.0
-X-Received: by 2002:a02:6209:: with SMTP id d9mr22415754jac.34.1557221765780;
- Tue, 07 May 2019 02:36:05 -0700 (PDT)
-Date:   Tue, 07 May 2019 02:36:05 -0700
+X-Received: by 2002:a02:7122:: with SMTP id n34mr22853517jac.73.1557222005928;
+ Tue, 07 May 2019 02:40:05 -0700 (PDT)
+Date:   Tue, 07 May 2019 02:40:05 -0700
 X-Google-Appengine-App-Id: s~syzkaller
 X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <0000000000002f9ef4058848f26d@google.com>
-Subject: KASAN: use-after-free Read in kfree_skb (3)
-From:   syzbot <syzbot+dcb1305dd05699c40640@syzkaller.appspotmail.com>
-To:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, marcel@holtmann.org,
-        syzkaller-bugs@googlegroups.com
+Message-ID: <0000000000007ffeda0588490086@google.com>
+Subject: general protection fault in rfcomm_dlc_open
+From:   syzbot <syzbot+7cd22aae14e82bcf8379@syzkaller.appspotmail.com>
+To:     davem@davemloft.net, gustavo@embeddedor.com,
+        johan.hedberg@gmail.com, keescook@chromium.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, netdev@vger.kernel.org,
+        syzkaller-bugs@googlegroups.com, tiny.windzz@gmail.com
 Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
@@ -49,131 +51,78 @@ Hello,
 
 syzbot found the following crash on:
 
-HEAD commit:    085b7755 Linux 5.1-rc6
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=15f6876b200000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=a42d110b47dd6b36
-dashboard link: https://syzkaller.appspot.com/bug?extid=dcb1305dd05699c40640
+HEAD commit:    cd86972a Merge branch 'tcp-undo-congestion'
+git tree:       net-next
+console output: https://syzkaller.appspot.com/x/log.txt?x=127331dca00000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=429a5a550a968ac7
+dashboard link: https://syzkaller.appspot.com/bug?extid=7cd22aae14e82bcf8379
 compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
 
 Unfortunately, I don't have any reproducer for this crash yet.
 
 IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+dcb1305dd05699c40640@syzkaller.appspotmail.com
+Reported-by: syzbot+7cd22aae14e82bcf8379@syzkaller.appspotmail.com
 
-==================================================================
-BUG: KASAN: use-after-free in atomic_read  
-include/asm-generic/atomic-instrumented.h:26 [inline]
-BUG: KASAN: use-after-free in refcount_read include/linux/refcount.h:43  
-[inline]
-BUG: KASAN: use-after-free in skb_unref include/linux/skbuff.h:1022 [inline]
-BUG: KASAN: use-after-free in kfree_skb+0x38/0x390 net/core/skbuff.c:659
-Read of size 4 at addr ffff888091576a54 by task syz-executor.0/10940
-
-CPU: 0 PID: 10940 Comm: syz-executor.0 Not tainted 5.1.0-rc6 #78
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] PREEMPT SMP KASAN
+CPU: 1 PID: 31668 Comm: syz-executor.5 Not tainted 5.1.0-rc6+ #163
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
 Google 01/01/2011
+RIP: 0010:rfcomm_dlc_get net/bluetooth/rfcomm/core.c:360 [inline]
+RIP: 0010:__rfcomm_dlc_open net/bluetooth/rfcomm/core.c:396 [inline]
+RIP: 0010:rfcomm_dlc_open+0x28a/0xd60 net/bluetooth/rfcomm/core.c:431
+Code: 9d 50 ff ff ff 74 67 e8 14 b6 16 fb 48 8d bb 44 01 00 00 48 b9 00 00  
+00 00 00 fc ff df 48 89 f8 48 89 fa 48 c1 e8 03 83 e2 07 <0f> b6 04 08 38  
+d0 7f 08 84 c0 0f 85 e6 09 00 00 0f b6 b3 44 01 00
+RSP: 0018:ffff888068067c88 EFLAGS: 00010206
+RAX: 0620fbe76423b6ea RBX: 3107df3b211db60f RCX: dffffc0000000000
+RDX: 0000000000000003 RSI: ffffffff8659d70c RDI: 3107df3b211db753
+RBP: ffff888068067d60 R08: ffff8880a7f1e3c0 R09: fffffbfff12898a5
+R10: ffff888068067c78 R11: ffffffff8944c527 R12: ffff888085e7f0c0
+R13: ffff88809b3b2300 R14: 1ffff1100d00cf97 R15: 000000008659d603
+FS:  00007f9e3b56f700(0000) GS:ffff8880ae900000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000000073c000 CR3: 000000006895d000 CR4: 00000000001406e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 Call Trace:
-  __dump_stack lib/dump_stack.c:77 [inline]
-  dump_stack+0x172/0x1f0 lib/dump_stack.c:113
-  print_address_description.cold+0x7c/0x20d mm/kasan/report.c:187
-  kasan_report.cold+0x1b/0x40 mm/kasan/report.c:317
-  check_memory_region_inline mm/kasan/generic.c:185 [inline]
-  check_memory_region+0x123/0x190 mm/kasan/generic.c:191
-  kasan_check_read+0x11/0x20 mm/kasan/common.c:102
-  atomic_read include/asm-generic/atomic-instrumented.h:26 [inline]
-  refcount_read include/linux/refcount.h:43 [inline]
-  skb_unref include/linux/skbuff.h:1022 [inline]
-  kfree_skb+0x38/0x390 net/core/skbuff.c:659
-  bcsp_recv+0x66b/0x13e0 drivers/bluetooth/hci_bcsp.c:623
-  hci_uart_tty_receive+0x22b/0x530 drivers/bluetooth/hci_ldisc.c:607
-  tiocsti drivers/tty/tty_io.c:2195 [inline]
-  tty_ioctl+0x4ed/0x15c0 drivers/tty/tty_io.c:2571
-  vfs_ioctl fs/ioctl.c:46 [inline]
-  file_ioctl fs/ioctl.c:509 [inline]
-  do_vfs_ioctl+0xd6e/0x1390 fs/ioctl.c:696
-  ksys_ioctl+0xab/0xd0 fs/ioctl.c:713
-  __do_sys_ioctl fs/ioctl.c:720 [inline]
-  __se_sys_ioctl fs/ioctl.c:718 [inline]
-  __x64_sys_ioctl+0x73/0xb0 fs/ioctl.c:718
+  rfcomm_sock_connect+0x38a/0x4b0 net/bluetooth/rfcomm/sock.c:416
+  __sys_connect+0x266/0x330 net/socket.c:1828
+  __do_sys_connect net/socket.c:1839 [inline]
+  __se_sys_connect net/socket.c:1836 [inline]
+  __x64_sys_connect+0x73/0xb0 net/socket.c:1836
   do_syscall_64+0x103/0x610 arch/x86/entry/common.c:290
   entry_SYSCALL_64_after_hwframe+0x49/0xbe
-RIP: 0033:0x458c29
+RIP: 0033:0x458da9
 Code: ad b8 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
 ff 0f 83 7b b8 fb ff c3 66 2e 0f 1f 84 00 00 00 00
-RSP: 002b:00007f7c0d8adc78 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007f7c0d8adc90 RCX: 0000000000458c29
-RDX: 0000000020000200 RSI: 0000000000005412 RDI: 0000000000000003
-RBP: 000000000073bfa0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007f7c0d8ae6d4
-R13: 00000000004c3082 R14: 00000000004d6428 R15: 0000000000000004
-
-Allocated by task 21:
-  save_stack+0x45/0xd0 mm/kasan/common.c:75
-  set_track mm/kasan/common.c:87 [inline]
-  __kasan_kmalloc mm/kasan/common.c:497 [inline]
-  __kasan_kmalloc.constprop.0+0xcf/0xe0 mm/kasan/common.c:470
-  kasan_slab_alloc+0xf/0x20 mm/kasan/common.c:505
-  slab_post_alloc_hook mm/slab.h:437 [inline]
-  slab_alloc_node mm/slab.c:3336 [inline]
-  kmem_cache_alloc_node+0x131/0x710 mm/slab.c:3646
-  __alloc_skb+0xd5/0x5e0 net/core/skbuff.c:196
-  alloc_skb include/linux/skbuff.h:1058 [inline]
-  bt_skb_alloc include/net/bluetooth/bluetooth.h:339 [inline]
-  bcsp_recv+0x8fb/0x13e0 drivers/bluetooth/hci_bcsp.c:685
-  hci_uart_tty_receive+0x22b/0x530 drivers/bluetooth/hci_ldisc.c:607
-  tty_ldisc_receive_buf+0x164/0x1c0 drivers/tty/tty_buffer.c:465
-  tty_port_default_receive_buf+0x7d/0xb0 drivers/tty/tty_port.c:38
-  receive_buf drivers/tty/tty_buffer.c:481 [inline]
-  flush_to_ldisc+0x228/0x390 drivers/tty/tty_buffer.c:533
-  process_one_work+0x98e/0x1790 kernel/workqueue.c:2269
-  worker_thread+0x98/0xe40 kernel/workqueue.c:2415
-  kthread+0x357/0x430 kernel/kthread.c:253
-  ret_from_fork+0x3a/0x50 arch/x86/entry/entry_64.S:352
-
-Freed by task 21:
-  save_stack+0x45/0xd0 mm/kasan/common.c:75
-  set_track mm/kasan/common.c:87 [inline]
-  __kasan_slab_free+0x102/0x150 mm/kasan/common.c:459
-  kasan_slab_free+0xe/0x10 mm/kasan/common.c:467
-  __cache_free mm/slab.c:3499 [inline]
-  kmem_cache_free+0x86/0x260 mm/slab.c:3765
-  kfree_skbmem net/core/skbuff.c:589 [inline]
-  kfree_skbmem+0xc5/0x150 net/core/skbuff.c:583
-  __kfree_skb net/core/skbuff.c:646 [inline]
-  kfree_skb net/core/skbuff.c:663 [inline]
-  kfree_skb+0xf0/0x390 net/core/skbuff.c:657
-  bcsp_recv+0x66b/0x13e0 drivers/bluetooth/hci_bcsp.c:623
-  hci_uart_tty_receive+0x22b/0x530 drivers/bluetooth/hci_ldisc.c:607
-  tty_ldisc_receive_buf+0x164/0x1c0 drivers/tty/tty_buffer.c:465
-  tty_port_default_receive_buf+0x7d/0xb0 drivers/tty/tty_port.c:38
-  receive_buf drivers/tty/tty_buffer.c:481 [inline]
-  flush_to_ldisc+0x228/0x390 drivers/tty/tty_buffer.c:533
-  process_one_work+0x98e/0x1790 kernel/workqueue.c:2269
-  worker_thread+0x98/0xe40 kernel/workqueue.c:2415
-  kthread+0x357/0x430 kernel/kthread.c:253
-  ret_from_fork+0x3a/0x50 arch/x86/entry/entry_64.S:352
-
-The buggy address belongs to the object at ffff888091576980
-  which belongs to the cache skbuff_head_cache of size 224
-The buggy address is located 212 bytes inside of
-  224-byte region [ffff888091576980, ffff888091576a60)
-The buggy address belongs to the page:
-page:ffffea0002455d80 count:1 mapcount:0 mapping:ffff8880aa23bcc0 index:0x0
-flags: 0x1fffc0000000200(slab)
-raw: 01fffc0000000200 ffffea00023eb4c8 ffffea00020a7c48 ffff8880aa23bcc0
-raw: 0000000000000000 ffff8880915760c0 000000010000000c 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
-  ffff888091576900: fb fb fb fb fc fc fc fc fc fc fc fc fc fc fc fc
-  ffff888091576980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-> ffff888091576a00: fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-                                                  ^
-  ffff888091576a80: fc fc fc fc fc fc fc fc fb fb fb fb fb fb fb fb
-  ffff888091576b00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
+RSP: 002b:00007f9e3b56ec78 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 0000000000458da9
+RDX: 000000000000000e RSI: 0000000020000080 RDI: 0000000000000004
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f9e3b56f6d4
+R13: 00000000004bf18a R14: 00000000004d0218 R15: 00000000ffffffff
+Modules linked in:
+---[ end trace cac206debc49dd35 ]---
+RIP: 0010:rfcomm_dlc_get net/bluetooth/rfcomm/core.c:360 [inline]
+RIP: 0010:__rfcomm_dlc_open net/bluetooth/rfcomm/core.c:396 [inline]
+RIP: 0010:rfcomm_dlc_open+0x28a/0xd60 net/bluetooth/rfcomm/core.c:431
+Code: 9d 50 ff ff ff 74 67 e8 14 b6 16 fb 48 8d bb 44 01 00 00 48 b9 00 00  
+00 00 00 fc ff df 48 89 f8 48 89 fa 48 c1 e8 03 83 e2 07 <0f> b6 04 08 38  
+d0 7f 08 84 c0 0f 85 e6 09 00 00 0f b6 b3 44 01 00
+RSP: 0018:ffff888068067c88 EFLAGS: 00010206
+RAX: 0620fbe76423b6ea RBX: 3107df3b211db60f RCX: dffffc0000000000
+RDX: 0000000000000003 RSI: ffffffff8659d70c RDI: 3107df3b211db753
+RBP: ffff888068067d60 R08: ffff8880a7f1e3c0 R09: fffffbfff12898a5
+R10: ffff888068067c78 R11: ffffffff8944c527 R12: ffff888085e7f0c0
+R13: ffff88809b3b2300 R14: 1ffff1100d00cf97 R15: 000000008659d603
+FS:  00007f9e3b56f700(0000) GS:ffff8880ae900000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 000000006895d000 CR4: 00000000001406e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 
 
 ---
