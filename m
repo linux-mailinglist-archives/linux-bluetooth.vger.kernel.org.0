@@ -2,75 +2,81 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BA2217B82
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 May 2019 16:28:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32BAE17B7F
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 May 2019 16:24:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbfEHO20 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 8 May 2019 10:28:26 -0400
-Received: from mga02.intel.com ([134.134.136.20]:18529 "EHLO mga02.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726783AbfEHO2Z (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 8 May 2019 10:28:25 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 08 May 2019 07:23:23 -0700
-X-ExtLoop1: 1
-Received: from orsmsx109.amr.corp.intel.com ([10.22.240.7])
-  by orsmga008.jf.intel.com with ESMTP; 08 May 2019 07:23:23 -0700
-Received: from orsmsx154.amr.corp.intel.com (10.22.226.12) by
- ORSMSX109.amr.corp.intel.com (10.22.240.7) with Microsoft SMTP Server (TLS)
- id 14.3.408.0; Wed, 8 May 2019 07:23:22 -0700
-Received: from orsmsx103.amr.corp.intel.com ([169.254.5.76]) by
- ORSMSX154.amr.corp.intel.com ([169.254.11.180]) with mapi id 14.03.0415.000;
- Wed, 8 May 2019 07:23:22 -0700
-From:   "Gix, Brian" <brian.gix@intel.com>
-To:     "michal.lowas-rzechonek@silvair.com" 
-        <michal.lowas-rzechonek@silvair.com>,
-        "denkenz@gmail.com" <denkenz@gmail.com>
-CC:     "marcel@holtmann.org" <marcel@holtmann.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "Stotland, Inga" <inga.stotland@intel.com>
-Subject: Re: [PATCH BlueZ v2] mesh: Use node uuids as storage directory names
-Thread-Topic: [PATCH BlueZ v2] mesh: Use node uuids as storage directory
- names
-Thread-Index: AQHVBKSLCrBBQTDcJUeXfCA/+naXTKZglnIAgAAEHgCAAIFpgIAAo0GA
-Date:   Wed, 8 May 2019 14:23:22 +0000
-Message-ID: <1557325399.31289.16.camel@intel.com>
-References: <20190507071340.20675-1-michal.lowas-rzechonek@silvair.com>
-         <1557261666.31289.11.camel@intel.com>
-         <18e096c6-3b22-0096-5cb2-bef7264dbefe@gmail.com>
-         <20190508043901.bcueazjay3nm6cya@kynes>
-In-Reply-To: <20190508043901.bcueazjay3nm6cya@kynes>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.255.87.84]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <BE958F324BBF5546BCE6ABE1D6945208@intel.com>
-Content-Transfer-Encoding: base64
+        id S1726670AbfEHOYw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 8 May 2019 10:24:52 -0400
+Received: from mail-lj1-f169.google.com ([209.85.208.169]:33813 "EHLO
+        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726589AbfEHOYw (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 8 May 2019 10:24:52 -0400
+Received: by mail-lj1-f169.google.com with SMTP id s7so12229243ljh.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 08 May 2019 07:24:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=silvair-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=y4pjMLEwPXW91l2kZqWaykFBLHcv8LhKQS62F02RhQw=;
+        b=UudnHkeFWN5NoW/RVGbHPsH9oMQTiHWMPiT6wEQe/t/9KrViGSiI+N5z/HmZ42VTGT
+         xClCeO7ptbMQksExkHmcJXsWbKXGRBZHwddvZdhtNPnGRaO14VKERcXxhfYLSYd94glN
+         gpXvkNPDixN2//bh9ylbduw9bN/kRhAbryk5oongUT46g7afiMfCSdCk5IrFe9ZaxYd2
+         uksb2KFKRdHyC2Oa4WadV0MMCOp5Ihn3oaR1LQwHcADqtYIu3vOAigmv3XqlC/+n3A+l
+         Up+xvEdhqEDaG8tACsNRZY0eMAjeXWQX6j0TP128HfUqGV7RiRv9JkKO5oNn3BnoJZ56
+         Igug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=y4pjMLEwPXW91l2kZqWaykFBLHcv8LhKQS62F02RhQw=;
+        b=WWFuYZJfyAtbUAyuhH+dUBx779/8bWnlN2+ukXmCvKI6c9aV0NSUEIu9DQx7S0fJFg
+         cLxVC8AogTphNoZOZEJBeK1WBAY2WwSXKX7Txo6s62D2l6g9WLnMJn/7kNL8/EZ6CG6P
+         04+qo3ATWABNb4y8K5kAzdzEqJW3lU9qsohFsPszhcR3qH2K2JZLy2Vr+w4bfRT1JBhd
+         qhg5LwWwG0T6wJ4iKsiAmbMU2iJGTa7X2aXxuKf7yOyGng/4p+WOBPzIP3ovcJ2ptek+
+         XXbR4vKaDsFRgqAnKDdMkgksbGw4/RwvoSN8MG99XnKnKPnLlSBD/jjFkH/w2oIAsx9Z
+         4yUw==
+X-Gm-Message-State: APjAAAXfzzZiu8KTGeN4BqWNJTike9vqB66pVo0rP2J+KAgr+1RcEFNm
+        /EcjzVVYGoayxiiCV5qEBMEih1X5hb8=
+X-Google-Smtp-Source: APXvYqyBjLKRBhkEjPLOaxjacra4V3E/75RT70noQxUB7ueEo0b5bp/XJHsMbluNQ7GwhRiOf+LWkg==
+X-Received: by 2002:a2e:86c5:: with SMTP id n5mr21767861ljj.184.1557325489941;
+        Wed, 08 May 2019 07:24:49 -0700 (PDT)
+Received: from scytale.silvair.lan ([217.153.94.18])
+        by smtp.gmail.com with ESMTPSA id v26sm2991939ljh.11.2019.05.08.07.24.48
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 May 2019 07:24:49 -0700 (PDT)
+From:   =?UTF-8?q?Micha=C5=82=20Lowas-Rzechonek?= 
+        <michal.lowas-rzechonek@silvair.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v3 0/1] mesh: Use node uuids as storage directory names
+Date:   Wed,  8 May 2019 16:24:44 +0200
+Message-Id: <20190508142445.4508-1-michal.lowas-rzechonek@silvair.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-SGkgTWljaGFsLA0KDQpPbiBXZWQsIDIwMTktMDUtMDggYXQgMDY6MzkgKzAyMDAsIG1pY2hhbC5s
-b3dhcy1yemVjaG9uZWtAc2lsdmFpci5jb20gd3JvdGU6DQo+IEhpIERlbmlzLCBCcmlhbiwNCj4g
-DQo+IE9uIDA1LzA3LCBEZW5pcyBLZW56aW9yIHdyb3RlOg0KPiA+ID4gPiArCQlpZiAoYXNwcmlu
-dGYoJmNmZywgIiVzLyVzL25vZGUuanNvbiIsIGRpcl9uYW1lLA0KPiA+ID4gPiArCQkJCQkJZW50
-cnktPmRfbmFtZSkgPCAwKQ0KPiA+ID4gPiArCQkJY29udGludWU7DQo+ID4gPiANCj4gPiA+IFdp
-dGggRUxMLCB3ZSBkbyBub3QgdXNlIGFzcHJpbnRmLiAgRXZlcnkgZHluYW1pYyBhbGxvY2F0aW9u
-IG11c3QgbWFwDQo+ID4gPiBiYWNrIHRvIGxfbWFsbG9jLCB3aGljaCBwZXJmb3JtcyBhbiBhYm9y
-dCgpIGlmIGEgbWVtb3J5IGFsbG9jYXRpb24NCj4gPiA+IGZhaWxzLiAgU28gdGhpcyBzaG91bGQg
-YmUgcmUtY29kZWQgYXMgYSBtYWxsb2Mgb2YgdGhlIGRlc2lyZWQgc2l6ZSwNCj4gPiA+IGFuZCB0
-aGVuIHVzZSBzbnByaW50ZiwgdXNpbmcgdGhlIG1hbGxvYydkIGxlbmd0aCBhcyBOLg0KPiA+IA0K
-PiA+IC4uLm9yIHVzZSBsX3N0cmR1cF9wcmludGYuICBXaGljaCBpcyBhY3R1YWxseSBhc3ByaW50
-ZiB1bmRlcm5lYXRoLi4uDQo+ID4gOykNCj4gDQo+IFdpbGwgZG8sIHRoYW5rcyBmb3IgdGhlIHRp
-cCENCj4gDQo+IEluY2lkZW50YWxseSwgYXJlIHlvdSBhd2FyZSB3aHkgJ21haW4nIGJsdWV6IGFp
-bXMgdG8gZHJvcCBnbGliPw0KDQpFTEwgaXMgYSBzcGFjZSBlZmZpY2llbnQgbGlicmFyeSB0YWls
-b3JlZCBmb3Igc2VydmljZXMgdGhhdCBjYW4gYmUgdGFyZ2V0ZWQgYXQgZW1iZWRkZWQgc3lzdGVt
-cywgYW5kIHN1ZmZlcnMNCmZyb20gbGVzcyAiU2l6ZSBCbG9hdCIgdGhhbiBHTElCLiBUaGF0IGlz
-IHRoZSBtYWluIHJlYXNvbiwgYW5kIGhhcyBiZWVuIGNoYW1waW9uZWQgYnkgTWFyY2VsLCB3aG8g
-bWlnaHQgaGF2ZQ0KbW9yZSB0byBzYXkgYWJvdXQgaXQu
+This version of the patch drops direct asprintf() calls in favor of
+l_strdup_printf.
+
+Michał Lowas-Rzechonek (1):
+  mesh: Use node uuids as storage directory names
+
+ doc/mesh-api.txt | 26 ++++++++++---
+ mesh/README      |  7 ++--
+ mesh/mesh-db.c   |  4 --
+ mesh/mesh-db.h   |  1 -
+ mesh/mesh.c      |  7 ++++
+ mesh/node.c      | 38 ++++++-------------
+ mesh/node.h      |  2 +-
+ mesh/storage.c   | 96 +++++++++++++++---------------------------------
+ 8 files changed, 72 insertions(+), 109 deletions(-)
+
+-- 
+2.19.1
+
