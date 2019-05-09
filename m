@@ -2,69 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A0481189E4
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  9 May 2019 14:38:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F2A218FC1
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  9 May 2019 19:58:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726659AbfEIMhz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 9 May 2019 08:37:55 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:37143 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726657AbfEIMhx (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 9 May 2019 08:37:53 -0400
-Received: from classic.redhat.com (mon69-7-83-155-44-161.fbx.proxad.net [83.155.44.161])
-        (Authenticated sender: hadess@hadess.net)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id C011110001D;
-        Thu,  9 May 2019 12:37:51 +0000 (UTC)
-From:   Bastien Nocera <hadess@hadess.net>
+        id S1726682AbfEIR6F (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 9 May 2019 13:58:05 -0400
+Received: from mga12.intel.com ([192.55.52.136]:5515 "EHLO mga12.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726659AbfEIR6E (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 9 May 2019 13:58:04 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 09 May 2019 10:58:04 -0700
+X-ExtLoop1: 1
+Received: from bgix-dell-lap.sea.intel.com ([10.251.10.18])
+  by fmsmga004.fm.intel.com with ESMTP; 09 May 2019 10:58:04 -0700
+From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Cc:     Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH 8/8] android/handsfree: Fix unaligned struct access
-Date:   Thu,  9 May 2019 14:37:46 +0200
-Message-Id: <20190509123746.8396-8-hadess@hadess.net>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190509123746.8396-1-hadess@hadess.net>
-References: <20190509123746.8396-1-hadess@hadess.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     inga.stotland@intel.com, brian.gix@intel.com
+Subject: [PATCH BlueZ v5 0/2] mesh: node dir Restructure, and keyring
+Date:   Thu,  9 May 2019 10:57:37 -0700
+Message-Id: <20190509175739.16891-1-brian.gix@intel.com>
+X-Mailer: git-send-email 2.14.5
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-android/handsfree.c: In function ‘bt_sco_get_fd’:
-android/handsfree.c:2913:47: error: taking address of packed member of ‘struct sco_rsp_get_fd’ may result in an unaligned pointer value [-Werror=address-of-packed-member]
- 2913 |  if (!dev || !bt_sco_get_fd_and_mtu(sco, &fd, &rsp.mtu))
-      |                                               ^~~~~~~~
----
- android/handsfree.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+This version 5 of the keyring has been restructured to separate the
+node filesystem rework for the keyring that requires it.
 
-diff --git a/android/handsfree.c b/android/handsfree.c
-index cb348ab9f..ebe03728e 100644
---- a/android/handsfree.c
-+++ b/android/handsfree.c
-@@ -2903,6 +2903,7 @@ static void bt_sco_get_fd(const void *buf, uint16_t len)
- 	struct sco_rsp_get_fd rsp;
- 	struct hf_device *dev;
- 	bdaddr_t bdaddr;
-+	uint16_t mtu;
- 	int fd;
- 
- 	DBG("");
-@@ -2910,9 +2911,10 @@ static void bt_sco_get_fd(const void *buf, uint16_t len)
- 	android2bdaddr(cmd->bdaddr, &bdaddr);
- 
- 	dev = find_device(&bdaddr);
--	if (!dev || !bt_sco_get_fd_and_mtu(sco, &fd, &rsp.mtu))
-+	if (!dev || !bt_sco_get_fd_and_mtu(sco, &fd, &mtu))
- 		goto failed;
- 
-+	rsp.mtu = mtu;
- 	DBG("fd %d mtu %u", fd, rsp.mtu);
- 
- 	ipc_send_rsp_full(sco_ipc, SCO_SERVICE_ID, SCO_OP_GET_FD,
+See the mesh/README file for the new directory layout of the node. Instead
+runtime saving of full path of the node.json file, we save it's base path,
+and use that to construct all the paths needed in realtime.  We also have
+changed ownership of this path to node.c, and when we remove the node, we
+recursively delete everything its entire tree.
+
+Brian Gix (2):
+  mesh: Reconfigure node storage tree
+  mesh: Add key storage
+
+ Makefile.mesh  |   1 +
+ mesh/README    |  34 ++++++-
+ mesh/keyring.c | 297 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ mesh/keyring.h |  49 ++++++++++
+ mesh/node.c    |  16 ++--
+ mesh/node.h    |   4 +-
+ mesh/storage.c | 144 +++++++++++++++++-----------
+ 7 files changed, 478 insertions(+), 67 deletions(-)
+ create mode 100644 mesh/keyring.c
+ create mode 100644 mesh/keyring.h
+
 -- 
-2.21.0
+2.14.5
 
