@@ -2,43 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DAF561B3B9
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2019 12:14:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F178E1B3C3
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2019 12:18:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728234AbfEMKOm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 May 2019 06:14:42 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.24]:34799 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727272AbfEMKOl (ORCPT
+        id S1728318AbfEMKSG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 May 2019 06:18:06 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.164]:19829 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727339AbfEMKSG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 May 2019 06:14:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1557742478;
+        Mon, 13 May 2019 06:18:06 -0400
+X-Greylist: delayed 388 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 May 2019 06:18:04 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1557742683;
         s=strato-dkim-0002; d=jm0.eu;
         h=In-Reply-To:Date:Message-ID:References:Cc:To:Subject:From:
         X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=RV2nAPevilQVXczqJcsC0oxc+HiBNu3S8JXClGRtCgA=;
-        b=P76wg49CDcvdd1f+T7xb191A5Y6RCvjTiJLniMfClTsx8B14rHnwEc+PbgTztvh8+u
-        WGxnDW8sfE4Q9zsmmEqPADbDSkWM73RSG25R4G+oYXe9woOAzWPJPw3he4gIYA0TWtbH
-        QGBrecB+YCxMRlYolsO9f+dpICHSfsXnE6/38fTkqOy+kRtI94XZyjN5bx2E/6Rz0dcf
-        LrKnGVHD81VUKIvKvRjSeh3RNlbrswbVkb35GSRWAmuREtxFW9vk3Fd3e6+WuPFOvaVg
-        qWMhZ29tfoNCq5mur6Yv26Up+TjPeQdRpp9TSoS5yAA9GLxFi8egwIm3lQylEUDF/wtj
-        1RVA==
+        bh=VqHUtb0ucGZ+m1KHJbhXIR6vcH/kXyofBf+zeOz8O6A=;
+        b=Ny/RSSSh+m6FH2Ag/6lWkuCtuGwd2aNXmeFDLpfcUxxM3x8QwLT/6v6MWt28O9/ot2
+        GNse7vwgE1REdNpl64dKa1IwHt4IFnkVxAS1IQdxd1KmOtIv5hp+sxbXHAPEo0Y+22E/
+        Cc/5S1okkO5kqVFwyYUXqouybpmGGsAmQTQLU0LLj6WmdkIOOurRMh1Q5VcZeFyZhc2X
+        2roxHrnWZdBoMDzeXZb9/5vSLLdV2DJz1jesC3xmMmT+TUmv64cxmxhYxgYZp51a3rIw
+        Iw9jZqXEJbdk7tXyuiiXAtqYG0oSeD+xq1Jswl14y/Jp45+ulvHUFP5TbQQ8DZd3mmnF
+        RRtw==
 X-RZG-AUTH: ":JmMXYEHmdv4HaV2cbPh7iS0wbr/uKIfGM0EPXvQCbXgI7t69COvtk81MihidtEo/aQAAqA=="
 X-RZG-CLASS-ID: mo00
 Received: from [192.168.2.163]
         by smtp.strato.de (RZmta 44.18 DYNA|AUTH)
-        with ESMTPSA id y08c83v4DABSgEI
+        with ESMTPSA id y08c83v4DABsgEc
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
         (Client did not present a certificate);
-        Mon, 13 May 2019 12:11:28 +0200 (CEST)
+        Mon, 13 May 2019 12:11:54 +0200 (CEST)
 From:   Josua Mayer <josua.mayer@jm0.eu>
-Subject: [PATCH RESEND v2 0/3] bluetooth: 6lowpan: multiple peers and
- addresses
+Subject: [PATCH RESEND v2 1/3] bluetooth: 6lowpan: search for destination
+ address in all peers
 To:     linux-bluetooth@vger.kernel.org
-Cc:     Josua Mayer <josua.mayer@jm0.eu>, johan.hedberg@gmail.com,
-        davem@davemloft.net, marcel@holtmann.org,
-        jukka.rissanen@linux.intel.com, mike@foundries.io
+Cc:     Josua Mayer <josua.mayer@jm0.eu>,
+        Jukka Rissanen <jukka.rissanen@linux.intel.com>,
+        Michael Scott <mike@foundries.io>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>
 References: <20190208152519.16181-1-josua.mayer@jm0.eu>
+ <20190312191626.20634-1-josua.mayer@jm0.eu>
 Openpgp: preference=signencrypt
 Autocrypt: addr=josua.mayer@jm0.eu; prefer-encrypt=mutual; keydata=
  mQINBFtbYt4BEACysNSF+vmzzBvR+YgJDK6X34V+WUStfjN3YqbcClZxUWe2rOt3BfxsuG+a
@@ -114,10 +119,10 @@ Autocrypt: addr=josua.mayer@jm0.eu; prefer-encrypt=mutual; keydata=
  mMfWyGrdZKGF2NEw/YYSEXUNWd09Kgaptm/aDE/F84SIZQc8JK5LuV5lXxyC4epvwwLXOV6H
  jZLDGlel7HcUgLAU+lcuQJ3HfS0OocdheDfxGNivl/4+t0UMMiUqx11h8mNYn/02NwihLhMJ
  Si21CLNeIbliI0CNR5kPUY1ntw1JCOmOjKZm
-Message-ID: <86192f8a-0ec7-79d5-95a8-ebe040fc14fa@jm0.eu>
-Date:   Mon, 13 May 2019 12:11:28 +0200
+Message-ID: <49febed7-d4bb-6774-4338-c5a8ec565778@jm0.eu>
+Date:   Mon, 13 May 2019 12:11:54 +0200
 MIME-Version: 1.0
-In-Reply-To: <20190208152519.16181-1-josua.mayer@jm0.eu>
+In-Reply-To: <20190312191626.20634-1-josua.mayer@jm0.eu>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -126,25 +131,49 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch set deals with an issue I reported earlier this year, where
-1) packets addressed to a non-link-local address
-2) any packets when at least 2 peers are connected
-were not delivered if they matched a direct peer i.e. no routing.
+Handle overlooked case where the target address is assigned to a peer
+and neither route nor gateway exist.
 
-The full explanation of the issue including steps to reproduce are:
-https://www.spinics.net/lists/linux-bluetooth/msg78486.html
+For one peer, no checks are performed to see if it is meant to receive
+packets for a given address.
 
-Changes since v1:
-- changed comment style to c++
+As soon as there is a second peer however, checks are performed
+to deal with routes and gateways for handling complex setups with
+multiple hops to a target address.
+This logic assumed that no route and no gateway imply that the
+destination address can not be reached, which is false in case of a
+direct peer.
 
-Josua Mayer (3):
-  bluetooth: 6lowpan: search for destination address in all peers
-  bluetooth: 6lowpan: check neighbour table for SLAAC
-  bluetooth: 6lowpan: always check destination address
+Acked-by: Jukka Rissanen <jukka.rissanen@linux.intel.com>
+Tested-by: Michael Scott <mike@foundries.io>
+Signed-off-by: Josua Mayer <josua.mayer@jm0.eu>
+---
+ net/bluetooth/6lowpan.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
- net/bluetooth/6lowpan.c | 41 +++++++++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
-
--- 
-2.21.0
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index a7cd23f00bde..50530561da98 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -187,10 +187,16 @@ static inline struct lowpan_peer
+*peer_lookup_dst(struct lowpan_btle_dev *dev,
+ 	}
+  	if (!rt) {
+-		nexthop = &lowpan_cb(skb)->gw;
+-
+-		if (ipv6_addr_any(nexthop))
+-			return NULL;
++		if (ipv6_addr_any(&lowpan_cb(skb)->gw)) {
++			/* There is neither route nor gateway,
++			 * probably the destination is a direct peer.
++			 */
++			nexthop = daddr;
++		} else {
++			/* There is a known gateway
++			 */
++			nexthop = &lowpan_cb(skb)->gw;
++		}
+ 	} else {
+ 		nexthop = rt6_nexthop(rt, daddr);
+ -- 2.21.0
 
