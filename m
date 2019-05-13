@@ -2,38 +2,39 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 513D61B3C1
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2019 12:15:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD9081B3C5
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2019 12:19:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728584AbfEMKPn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 May 2019 06:15:43 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.53]:25098 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727272AbfEMKPn (ORCPT
+        id S1728773AbfEMKTB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 May 2019 06:19:01 -0400
+Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.84]:15683 "EHLO
+        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727690AbfEMKTB (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 May 2019 06:15:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1557742540;
+        Mon, 13 May 2019 06:19:01 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 May 2019 06:18:58 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1557742737;
         s=strato-dkim-0002; d=jm0.eu;
         h=In-Reply-To:Date:Message-ID:References:Cc:To:Subject:From:
         X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=ohXcyP8SZqGpSjAIlhvjFCXoq7qOMAZnkJv87zKd3Ts=;
-        b=cgOvllgX3DuIczJ6IuQpTU5+T8FVtuqRHHxNmLtOhPi8dyt/ZzXYyJCUuHoKkz5RGX
-        9rLfE9V9v7KIin5lH/YotcYfBirCUqniT2DydP6pBjVRgu6/XPvopc0cXieqWNEwsanA
-        meb64RNLXsOK9eczX6if6qNSoISlYyCdFby5xvXbcUeGWZK/k0eRhveRJymCViRikHH7
-        SI+Yq/2o/TFgH5uszNp5oqPCFFY8jR95ISxD1Ndad+BrFrxUGna/wWQgBoSoiPOQhEfR
-        mD8jYCXYyaee6RAHPbSVWAwkol35SpOPEWYvdsTQ9P/g8FuOYk+NT3p6HbV1O9i+gWMq
-        N/pw==
+        bh=KHvW0Kz/L+viwG9UJjfSWUo7RH8IAZjzXok80U7Ni38=;
+        b=MpPWGdoUZg4RmOH5kB+XL6hcXy1S8kDfnz0vtTKdYX3+AsfnN67K1GTuuAqKQOEDze
+        dUO0X3kkKhy3zA2EWLYr0Du8NRNxNQp8d7wRSP+dN2PIAkWoMo59Lp3accpiqdO05gKB
+        WUfpe9So2KMWLUmk4P4zgXq5AgzYeBCt8CMA3goDgZIZE1UE182JvqqFOwvCE1Wx5tpm
+        StjLw8Rynw/KvZoYSZHQs+HHPnx5CJXIwL7i6Srn0R7Nepxn1AO9LG5dGyf9CssLkJLH
+        yketDs+PKzW5ILEibkSthO78Cbcko2tHxQWWpW7RL2CsUsK5fZKgzv2RXNsrBbz9Klcd
+        ppkg==
 X-RZG-AUTH: ":JmMXYEHmdv4HaV2cbPh7iS0wbr/uKIfGM0EPXvQCbXgI7t69COvtk81MihidtEo/aQAAqA=="
 X-RZG-CLASS-ID: mo00
 Received: from [192.168.2.163]
         by smtp.strato.de (RZmta 44.18 DYNA|AUTH)
-        with ESMTPSA id y08c83v4DACNgEm
+        with ESMTPSA id y08c83v4DAClgEv
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
         (Client did not present a certificate);
-        Mon, 13 May 2019 12:12:23 +0200 (CEST)
+        Mon, 13 May 2019 12:12:47 +0200 (CEST)
 From:   Josua Mayer <josua.mayer@jm0.eu>
-Subject: [PATCH RESEND v2 3/3] bluetooth: 6lowpan: always check destination
- address
+Subject: [PATCH RESEND v2 2/3] bluetooth: 6lowpan: check neighbour table for
+ SLAAC
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Josua Mayer <josua.mayer@jm0.eu>,
         Jukka Rissanen <jukka.rissanen@linux.intel.com>,
@@ -118,8 +119,8 @@ Autocrypt: addr=josua.mayer@jm0.eu; prefer-encrypt=mutual; keydata=
  mMfWyGrdZKGF2NEw/YYSEXUNWd09Kgaptm/aDE/F84SIZQc8JK5LuV5lXxyC4epvwwLXOV6H
  jZLDGlel7HcUgLAU+lcuQJ3HfS0OocdheDfxGNivl/4+t0UMMiUqx11h8mNYn/02NwihLhMJ
  Si21CLNeIbliI0CNR5kPUY1ntw1JCOmOjKZm
-Message-ID: <93dc4d40-917f-84c2-e041-4cea4c8f0753@jm0.eu>
-Date:   Mon, 13 May 2019 12:12:23 +0200
+Message-ID: <fe6f7db8-d20f-3dd4-3cfa-c9864d0c6f38@jm0.eu>
+Date:   Mon, 13 May 2019 12:12:47 +0200
 MIME-Version: 1.0
 In-Reply-To: <20190312191626.20634-1-josua.mayer@jm0.eu>
 Content-Type: text/plain; charset=utf-8
@@ -130,42 +131,58 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-BLE based 6LoWPAN networks are highly constrained in bandwidth.
-Do not take a short-cut, always check if the destination address is
-known to belong to a peer.
+Like any IPv6 capable device, 6LNs can have multiple addresses assigned
+using SLAAC and made known through neighbour advertisements.
+After checking the destination address against all peers link-local
+addresses, consult the neighbour cache for additional known addresses.
 
-As a side-effect this also removes any behavioral differences between
-one, and two or more connected peers.
+RFC7668 defines the scope of Neighbor Advertisements in Section 3.2.3:
+1. "A Bluetooth LE 6LN MUST NOT register its link-local address"
+2. "A Bluetooth LE 6LN MUST register its non-link-local addresses with
+the 6LBR by sending Neighbor Solicitation (NS) messages ..."
+
+Due to these constranits both the link-local addresses tracked in the
+list of 6lowpan peers, and the neighbour cache have to be used when
+identifying the 6lowpan peer for a destination address.
 
 Acked-by: Jukka Rissanen <jukka.rissanen@linux.intel.com>
 Tested-by: Michael Scott <mike@foundries.io>
 Signed-off-by: Josua Mayer <josua.mayer@jm0.eu>
 ---
- net/bluetooth/6lowpan.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ net/bluetooth/6lowpan.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 29a4f3d65348..0f64e9ef1a3a 100644
+index 50530561da98..29a4f3d65348 100644
 --- a/net/bluetooth/6lowpan.c
 +++ b/net/bluetooth/6lowpan.c
-@@ -175,18 +175,6 @@ static inline struct lowpan_peer
+@@ -171,6 +171,7 @@ static inline struct lowpan_peer
 *peer_lookup_dst(struct lowpan_btle_dev *dev,
+ 	struct in6_addr *nexthop;
+ 	struct rt6_info *rt = (struct rt6_info *)skb_dst(skb);
+ 	int count = atomic_read(&dev->peer_count);
++	struct neighbour *neigh;
   	BT_DBG("peers %d addr %pI6c rt %p", count, daddr, rt);
- -	/* If we have multiple 6lowpan peers, then check where we should
--	 * send the packet. If only one peer exists, then we can send the
--	 * packet right away.
--	 */
--	if (count == 1) {
--		rcu_read_lock();
--		peer = list_first_or_null_rcu(&dev->peers, struct lowpan_peer,
--					      list);
--		rcu_read_unlock();
--		return peer;
--	}
--
- 	if (!rt) {
- 		if (ipv6_addr_any(&lowpan_cb(skb)->gw)) {
- 			/* There is neither route nor gateway,
+ @@ -222,6 +223,20 @@ static inline struct lowpan_peer
+*peer_lookup_dst(struct lowpan_btle_dev *dev,
+ 		}
+ 	}
+ +	/* use the neighbour cache for matching addresses assigned by SLAAC
++	 */
++	neigh = __ipv6_neigh_lookup(dev->netdev, nexthop);
++	if (neigh) {
++		list_for_each_entry_rcu(peer, &dev->peers, list) {
++			if (!memcmp(neigh->ha, peer->lladdr, ETH_ALEN)) {
++				neigh_release(neigh);
++				rcu_read_unlock();
++				return peer;
++			}
++		}
++		neigh_release(neigh);
++	}
++
+ 	rcu_read_unlock();
+  	return NULL;
 -- 
 2.21.0
 
