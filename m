@@ -2,66 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 277681B918
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2019 16:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03B7E1BA1B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2019 17:31:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730943AbfEMOvx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 May 2019 10:51:53 -0400
-Received: from mail-pg1-f181.google.com ([209.85.215.181]:44269 "EHLO
-        mail-pg1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730735AbfEMOvx (ORCPT
+        id S1730120AbfEMPbb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 May 2019 11:31:31 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:39263 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728760AbfEMPbb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 May 2019 10:51:53 -0400
-Received: by mail-pg1-f181.google.com with SMTP id z16so6889394pgv.11
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 May 2019 07:51:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=D3/VmHhj/71ke+w64kXAqk0EPn2jtZGzyEMFSnVlsVM=;
-        b=t1KL55KIelperdzWcdaB2CSsGP7XvbixHPcd6wuoiOIrsu5tPoRFo9vpy+OrqT6JnR
-         cQqeWCyHFilSCf43NCVTOB2aBQmQDm1l8d+OLa/7UF0hQLGb1bF3oUPIZbRT2l/VWfyu
-         W1QYq+jt1BT5rL7xXCp2jK6fIMYi/ODHQHwCSZztrjnk9x7GRUDPeqDZgc66MNq5vRrn
-         HyoCSMWbhyjQ+dZW9pg16mFoinfFtZEzpaZx7kEfrHywVW+QmbcaxYBuTCLakY81YvoM
-         d1ceaukfcYivnIkt4G2IGrAikpZ0VipBp70PyerASD87PMiMmKOm1HTaOqTdCwVrYmG8
-         Kb5Q==
+        Mon, 13 May 2019 11:31:31 -0400
+Received: by mail-oi1-f196.google.com with SMTP id v2so6223549oie.6;
+        Mon, 13 May 2019 08:31:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=D3/VmHhj/71ke+w64kXAqk0EPn2jtZGzyEMFSnVlsVM=;
-        b=kPisfa7L89fzc14XjkEaHZmukugRgZLD/PpLdr6DrZMQ0JLfpzPcE3Yk3+/vzBqy5L
-         mp73HTGS69Qkg/5hWNpLXvvLbqS7BROYUBz8w1SnSowa5LtjSWEiEu5pkXv7tUIieOzZ
-         rKkK390C+ByA/qUnJywhop+8Ro3UVCnf7ozmFgXQuut1r9WYtfmgw/gGDdtvatH3XjuT
-         9Sl7jFSgabqNDMTrW3/Y6gGJazkNwFXUh/aKxfFU2BrMaJMX3dRSh9YkrNYbHml3McFc
-         xD4MldHzclNLRZX8x+LNhrFYJKiSJXV+qAqXCECu66imBl7278c8excbvSInxgKn6hID
-         5kjg==
-X-Gm-Message-State: APjAAAVqe21yXHhmgotNR8OFHkUCS8+wbW1lrwArz2+xTqEPNEnSBcj2
-        O/HifYfY1jaAVG0EsmqndMkUAv+hIBsM9JfrUMOeXvMRUxA=
-X-Google-Smtp-Source: APXvYqwGi1B9YnEVZXO6QnBoBVEAlrwbtwX7d9xqOoHoTmZ8bjLDRPjaP1dyVGqA30DySIycGTBBLvpPSZzT4ubzmJk=
-X-Received: by 2002:a63:7413:: with SMTP id p19mr29222187pgc.259.1557759112548;
- Mon, 13 May 2019 07:51:52 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FQOvA5KjBthgKljzqlnSntKijRM8U0Ek6cEPPxoji2E=;
+        b=dejvX3breHRwN4An7TpReSHW8TXjWs1CDVBdaS2zxh+csl32wVGpgDTZeh313Lsjg8
+         DuRpONS5wb+S7v38+97IoNelvANeWjk11K4rzDBeKVQe6v6vuqFSuklnTGdmZAbwqRWj
+         nUS3xPtdSTbWzHf7kOu/IjHWKHuPNf3eiXOoB7aRiNUHCWR6jE286F9zlxF+QXgpTQUF
+         5hnTGcHhj9i7G2HpcVyg4J/pro/r0JY5Cz0LxngoW4oG0gYp/PtI6tJbGxTLxa6W/aSn
+         6w+iCXo6qenCGGYhYtdNQeMQEVZqgqn9mZYeonxE8IrVAmuo1IYdn2v06SUrsZTD3BJ/
+         T8Xw==
+X-Gm-Message-State: APjAAAVvDkrKMdhqr2KmxfFHaEgg6HPzch3uJ/9l/egqJonqaxvOMsxN
+        trdnI2V6TVYRL/pCL1xi2g==
+X-Google-Smtp-Source: APXvYqxPKZmpbo13eB03kaNp94tcGk2ZoALh5Nztcx9t9oH7y8OmpU0lAQiB2QW59q7pBEcpnxc4+Q==
+X-Received: by 2002:aca:3b43:: with SMTP id i64mr13910509oia.121.1557761490019;
+        Mon, 13 May 2019 08:31:30 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id o5sm5136964otl.44.2019.05.13.08.31.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 13 May 2019 08:31:29 -0700 (PDT)
+Date:   Mon, 13 May 2019 10:31:28 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Rocky Liao <rjliao@codeaurora.org>
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com, marcel@holtmann.org,
+        johan.hedberg@gmail.com, thierry.escande@linaro.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        Rocky Liao <rjliao@codeaurora.org>
+Subject: Re: [PATCH v4 2/2] dt-bindings: net: bluetooth: Add device property
+ firmware-name for QCA6174
+Message-ID: <20190513153128.GA5455@bogus>
+References: <1554888476-17560-1-git-send-email-rjliao@codeaurora.org>
+ <1557631185-5167-1-git-send-email-rjliao@codeaurora.org>
 MIME-Version: 1.0
-From:   Youssif Saeed <youssif.am.saeed@gmail.com>
-Date:   Mon, 13 May 2019 15:51:41 +0100
-Message-ID: <CA+T8qpYV_wiLMbUQcsn2v1bYU0Wub_wa3U2fjUbj-MmM=N70sQ@mail.gmail.com>
-Subject: Local Private Non-resolvable Address Support
-To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1557631185-5167-1-git-send-email-rjliao@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi
+On Sun, 12 May 2019 11:19:45 +0800, Rocky Liao wrote:
+> This patch adds an optional device property "firmware-name" to allow the
+> driver to load customized nvm firmware file based on this property.
+> 
+> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> ---
+> Changes in v4:
+>   * rebased the code base and merge with latest code
+> ---
+>  Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-Is there support for setting the local address to be non-resolvable
-private address through the command line (e.g. btmgmt or
-bluetoothctl)? If there isn't, then is there a way to set this through
-the D-Bus API? This is needed for a few PTS tests including the one I
-am currently working on:-
-
-GAP/CONN/ACEP/BV-02-C
-
-I am using BlueZ 5.50 on an Ubuntu machine running Linux 4.15.0-47-generic.
-
-Thanks
-Youssif
+Reviewed-by: Rob Herring <robh@kernel.org>
