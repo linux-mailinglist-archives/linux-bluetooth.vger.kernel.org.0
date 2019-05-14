@@ -2,92 +2,57 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EB281D062
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2019 22:15:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 181BC1E556
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2019 00:54:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726424AbfENUPr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 14 May 2019 16:15:47 -0400
-Received: from mga05.intel.com ([192.55.52.43]:13417 "EHLO mga05.intel.com"
+        id S1726221AbfENWyK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 14 May 2019 18:54:10 -0400
+Received: from mga03.intel.com ([134.134.136.65]:22776 "EHLO mga03.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726490AbfENUPq (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 14 May 2019 16:15:46 -0400
+        id S1726148AbfENWyJ (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 14 May 2019 18:54:09 -0400
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 14 May 2019 13:15:46 -0700
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 14 May 2019 15:54:09 -0700
 X-ExtLoop1: 1
-Received: from bgix-dell-lap.sea.intel.com ([10.251.7.218])
-  by fmsmga007.fm.intel.com with ESMTP; 14 May 2019 13:15:46 -0700
-From:   Brian Gix <brian.gix@intel.com>
+Received: from ingas-nuc1.sea.intel.com ([10.252.138.236])
+  by orsmga003.jf.intel.com with ESMTP; 14 May 2019 15:54:09 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Cc:     inga.stotland@intel.com, brian.gix@intel.com,
-        michal.lowas-rzechonek@silvair.com
-Subject: [PATCH BlueZ 3/3] mesh: Save generated Net and Dev keys in KeyRing
-Date:   Tue, 14 May 2019 13:15:25 -0700
-Message-Id: <20190514201525.16067-4-brian.gix@intel.com>
-X-Mailer: git-send-email 2.14.5
-In-Reply-To: <20190514201525.16067-1-brian.gix@intel.com>
-References: <20190514201525.16067-1-brian.gix@intel.com>
+Cc:     brian.gix@intel.com, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ 0/2] Start implementing mesh Management interface
+Date:   Tue, 14 May 2019 15:54:05 -0700
+Message-Id: <20190514225407.29594-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When creating a network from scratch, we need to save all
-keys that are created into the KeyRing for use by Config
-Client application.
----
- mesh/node.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+This patch set ads a sketleton for org.bluez.mesh.Management1 interface.
+Also, adds check for the existence of the provisioning agent for an
+attaching node: this information will be further used to validate
+number of method calls on Management interface
 
-diff --git a/mesh/node.c b/mesh/node.c
-index 3618595b3..5318e2b69 100644
---- a/mesh/node.c
-+++ b/mesh/node.c
-@@ -35,6 +35,7 @@
- #include "mesh/mesh-db.h"
- #include "mesh/provision.h"
- #include "mesh/storage.h"
-+#include "mesh/keyring.h"
- #include "mesh/appkey.h"
- #include "mesh/model.h"
- #include "mesh/cfgmod.h"
-@@ -1549,8 +1550,8 @@ static void get_managed_objects_cb(struct l_dbus_message *msg, void *user_data)
- 	} else {
- 		/* Callback for create node request */
- 		node_ready_func_t cb = req->cb;
-+		struct keyring_net_key net_key;
- 		uint8_t dev_key[16];
--		uint8_t net_key[16];
- 
- 		node->num_ele = num_ele;
- 		set_defaults(node);
-@@ -1561,11 +1562,22 @@ static void get_managed_objects_cb(struct l_dbus_message *msg, void *user_data)
- 
- 		/* Generate device and primary network keys */
- 		l_getrandom(dev_key, sizeof(dev_key));
--		l_getrandom(net_key, sizeof(net_key));
-+		l_getrandom(net_key.old_key, sizeof(net_key.old_key));
-+		net_key.net_idx = DEFAULT_PRIMARY_NET_INDEX;
-+		net_key.phase = 0;
- 
- 		if (!add_local_node(node, DEFAULT_NEW_UNICAST, false, false,
--					DEFAULT_IV_INDEX, dev_key,
--					DEFAULT_PRIMARY_NET_INDEX, net_key))
-+						DEFAULT_IV_INDEX, dev_key,
-+						DEFAULT_PRIMARY_NET_INDEX,
-+							net_key.old_key))
-+			goto fail;
-+
-+		if (!keyring_put_remote_dev_key(node, DEFAULT_NEW_UNICAST,
-+							num_ele, dev_key))
-+			goto fail;
-+
-+		if (!keyring_put_net_key(node, DEFAULT_PRIMARY_NET_INDEX,
-+								&net_key))
- 			goto fail;
- 
- 		cb(req->user_data, MESH_ERROR_NONE, node);
+Inga Stotland (2):
+  mesh: Add check for org.bluez.mesh.Provisioner1 interface
+  mesh: Add skeleton for org.bluez.mesh.Management1 interface
+
+ Makefile.mesh  |   1 +
+ mesh/dbus.c    |  12 ++-
+ mesh/error.h   |   1 +
+ mesh/manager.c | 266 +++++++++++++++++++++++++++++++++++++++++++++++++
+ mesh/manager.h |  20 ++++
+ mesh/mesh.h    |   4 +-
+ mesh/node.c    |   5 +-
+ 7 files changed, 303 insertions(+), 6 deletions(-)
+ create mode 100644 mesh/manager.c
+ create mode 100644 mesh/manager.h
+
 -- 
-2.14.5
+2.21.0
 
