@@ -2,62 +2,75 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26C821F8E4
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2019 18:46:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85A291FA47
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2019 21:00:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726669AbfEOQq1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 15 May 2019 12:46:27 -0400
-Received: from mga02.intel.com ([134.134.136.20]:23545 "EHLO mga02.intel.com"
+        id S1726674AbfEOTAc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 15 May 2019 15:00:32 -0400
+Received: from mga18.intel.com ([134.134.136.126]:27572 "EHLO mga18.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726515AbfEOQq1 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 15 May 2019 12:46:27 -0400
+        id S1726387AbfEOTAc (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 15 May 2019 15:00:32 -0400
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 15 May 2019 09:46:26 -0700
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 15 May 2019 12:00:30 -0700
 X-ExtLoop1: 1
-Received: from orsmsx105.amr.corp.intel.com ([10.22.225.132])
-  by orsmga005.jf.intel.com with ESMTP; 15 May 2019 09:46:26 -0700
-Received: from orsmsx154.amr.corp.intel.com (10.22.226.12) by
- ORSMSX105.amr.corp.intel.com (10.22.225.132) with Microsoft SMTP Server (TLS)
- id 14.3.408.0; Wed, 15 May 2019 09:46:26 -0700
-Received: from orsmsx103.amr.corp.intel.com ([169.254.5.182]) by
- ORSMSX154.amr.corp.intel.com ([169.254.11.101]) with mapi id 14.03.0415.000;
- Wed, 15 May 2019 09:46:26 -0700
-From:   "Gix, Brian" <brian.gix@intel.com>
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-CC:     "michal.lowas-rzechonek@silvair.com" 
-        <michal.lowas-rzechonek@silvair.com>,
-        "Stotland, Inga" <inga.stotland@intel.com>
-Subject: Re: [PATCH BlueZ 0/3] mesh: add Keyring to CreateNetwork
-Thread-Topic: [PATCH BlueZ 0/3] mesh: add Keyring to CreateNetwork
-Thread-Index: AQHVCpHMWU1CCXyn6kaxJJ4roAdW7KZs26sA
-Date:   Wed, 15 May 2019 16:46:25 +0000
-Message-ID: <1557938784.32584.4.camel@intel.com>
-References: <20190514201525.16067-1-brian.gix@intel.com>
-In-Reply-To: <20190514201525.16067-1-brian.gix@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.251.7.218]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <FDC74549A123114DBC6304E9FF38C44B@intel.com>
-Content-Transfer-Encoding: base64
+Received: from ingas-nuc1.sea.intel.com ([10.254.97.211])
+  by FMSMGA003.fm.intel.com with ESMTP; 15 May 2019 12:00:29 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ 0/2] mesh source code housekeeping
+Date:   Wed, 15 May 2019 12:00:17 -0700
+Message-Id: <20190515190019.19710-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-UGF0Y2gtc2V0IGFwcGxpZWQsIHdpdGggbWlub3IgZWRpdCB0byB0ZXN0LW1lc2ggY29tbWVudHMN
-Cg0KT24gVHVlLCAyMDE5LTA1LTE0IGF0IDEzOjE1IC0wNzAwLCBCcmlhbiBHaXggd3JvdGU6DQo+
-IFBhdGNoLXNldCBhbHNvIGZpeGVzIHNvbWUgZmlsZSBjcmVhdGlvbiBwZXJtaXNzaW9ucyBhbmQg
-YWRkcyBDcmVhdGVOZXR3b3JrDQo+IHRlc3QuDQo+IA0KPiBCcmlhbiBHaXggKDMpOg0KPiAgIG1l
-c2g6IEFkZCAiY3JlYXRlIiBjb21tYW5kIHRvIHRlc3QgYXBwDQo+ICAgbWVzaDogRml4IGZpbGUg
-b3BlbiBlcnJvciBjaGVja2luZyBhbmQgcGVybWlzc2lvbnMNCj4gICBtZXNoOiBTYXZlIGdlbmVy
-YXRlZCBOZXQgYW5kIERldiBrZXlzIGluIEtleVJpbmcNCj4gDQo+ICBtZXNoL2tleXJpbmcuYyB8
-ICA4ICsrKysrLS0tDQo+ICBtZXNoL25vZGUuYyAgICB8IDIwICsrKysrKysrKysrKysrKystLS0t
-DQo+ICBtZXNoL3N0b3JhZ2UuYyB8ICAyICstDQo+ICB0ZXN0L3Rlc3QtbWVzaCB8IDQ2ICsrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrLS0NCj4gIDQgZmlsZXMgY2hh
-bmdlZCwgNjYgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pDQo+IA==
+This patch set updates copyright dates on the files that have been modified
+in 2019 and cleans up the includelists in source files.
+
+Inga Stotland (2):
+  mesh: Update copyright dates
+  mesh: Remove unnecessary includes from .c files
+
+ mesh/agent.c           |  3 +--
+ mesh/appkey.c          |  4 +---
+ mesh/appkey.h          |  2 +-
+ mesh/cfgmod-server.c   |  7 +------
+ mesh/crypto.c          |  4 +---
+ mesh/dbus.c            | 10 ----------
+ mesh/error.h           |  2 +-
+ mesh/friend.c          |  8 +-------
+ mesh/keyring.c         |  7 +------
+ mesh/main.c            |  7 -------
+ mesh/mesh-db.c         |  3 +--
+ mesh/mesh-db.h         |  2 +-
+ mesh/mesh-defs.h       |  2 +-
+ mesh/mesh-io-generic.c |  6 +-----
+ mesh/mesh-io.c         |  2 --
+ mesh/mesh.c            |  5 ++---
+ mesh/model.c           |  2 +-
+ mesh/net-keys.c        |  3 +--
+ mesh/net-keys.h        |  2 +-
+ mesh/net.c             | 11 ++---------
+ mesh/net.h             |  2 +-
+ mesh/node.c            |  6 ++----
+ mesh/node.h            |  2 +-
+ mesh/pb-adv.c          | 18 +-----------------
+ mesh/prov-acceptor.c   | 18 ++----------------
+ mesh/prov-initiator.c  | 18 ++----------------
+ mesh/storage.c         | 13 +++----------
+ mesh/storage.h         |  2 +-
+ mesh/util.c            |  6 +-----
+ 29 files changed, 33 insertions(+), 144 deletions(-)
+
+-- 
+2.21.0
+
