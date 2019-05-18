@@ -2,22 +2,22 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0096D22554
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 May 2019 00:10:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A9AF2258F
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 May 2019 01:42:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727926AbfERWK2 convert rfc822-to-8bit (ORCPT
+        id S1727179AbfERXmT convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 18 May 2019 18:10:28 -0400
-Received: from mail.wl.linuxfoundation.org ([198.145.29.98]:43636 "EHLO
+        Sat, 18 May 2019 19:42:19 -0400
+Received: from mail.wl.linuxfoundation.org ([198.145.29.98]:50948 "EHLO
         mail.wl.linuxfoundation.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725783AbfERWK2 (ORCPT
+        by vger.kernel.org with ESMTP id S1726076AbfERXmT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 18 May 2019 18:10:28 -0400
+        Sat, 18 May 2019 19:42:19 -0400
 Received: from mail.wl.linuxfoundation.org (localhost [127.0.0.1])
-        by mail.wl.linuxfoundation.org (Postfix) with ESMTP id E2DB828569
-        for <linux-bluetooth@vger.kernel.org>; Sat, 18 May 2019 22:10:27 +0000 (UTC)
+        by mail.wl.linuxfoundation.org (Postfix) with ESMTP id E31772856D
+        for <linux-bluetooth@vger.kernel.org>; Sat, 18 May 2019 23:42:18 +0000 (UTC)
 Received: by mail.wl.linuxfoundation.org (Postfix, from userid 486)
-        id D05FD28573; Sat, 18 May 2019 22:10:27 +0000 (UTC)
+        id BECEE28573; Sat, 18 May 2019 23:42:18 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
         pdx-wl-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -27,7 +27,7 @@ From:   bugzilla-daemon@bugzilla.kernel.org
 To:     linux-bluetooth@vger.kernel.org
 Subject: [Bug 203643] [REGRESSION][BISECTED] Sixaxis gamepad no longer
  connects via Bluetooth
-Date:   Sat, 18 May 2019 22:10:27 +0000
+Date:   Sat, 18 May 2019 23:42:18 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -42,8 +42,8 @@ X-Bugzilla-Resolution:
 X-Bugzilla-Priority: P1
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-203643-62941-fFezuRwKnf@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-203643-62941-idw5SSnLyh@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-203643-62941@https.bugzilla.kernel.org/>
 References: <bug-203643-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -59,14 +59,12 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 https://bugzilla.kernel.org/show_bug.cgi?id=203643
 
-JockeTF (joakim.soderlund@gmail.com) changed:
+--- Comment #2 from JockeTF (joakim.soderlund@gmail.com) ---
+Some more possibly-related links:
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |joakim.soderlund@gmail.com
-
---- Comment #1 from JockeTF (joakim.soderlund@gmail.com) ---
-I can confirm this bug for DualShock 3 as well.
+- https://dev.getsol.us/T7970
+- https://www.spinics.net/lists/linux-bluetooth/msg80104.html
+- https://gitlab.freedesktop.org/pulseaudio/pulseaudio/issues/674
 
 -- 
 You are receiving this mail because:
