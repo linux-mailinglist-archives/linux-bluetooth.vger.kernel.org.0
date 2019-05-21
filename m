@@ -2,90 +2,386 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 832C12511F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 May 2019 15:51:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0722125647
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 May 2019 19:01:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728490AbfEUNvm convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 May 2019 09:51:42 -0400
-Received: from mail.wl.linuxfoundation.org ([198.145.29.98]:35720 "EHLO
-        mail.wl.linuxfoundation.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728045AbfEUNvl (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 May 2019 09:51:41 -0400
-Received: from mail.wl.linuxfoundation.org (localhost [127.0.0.1])
-        by mail.wl.linuxfoundation.org (Postfix) with ESMTP id DEA7028A3F
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 May 2019 13:51:40 +0000 (UTC)
-Received: by mail.wl.linuxfoundation.org (Postfix, from userid 486)
-        id D31A228A2D; Tue, 21 May 2019 13:51:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-        pdx-wl-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=2.0 tests=BAYES_00,NO_RECEIVED,
-        NO_RELAYS autolearn=ham version=3.3.1
-From:   bugzilla-daemon@bugzilla.kernel.org
+        id S1728309AbfEURBt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 21 May 2019 13:01:49 -0400
+Received: from mga03.intel.com ([134.134.136.65]:15125 "EHLO mga03.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728271AbfEURBt (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 21 May 2019 13:01:49 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 21 May 2019 10:01:45 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.60,495,1549958400"; 
+   d="scan'208";a="174083557"
+Received: from bgix-dell-lap.sea.intel.com ([10.255.78.4])
+  by fmsmga002.fm.intel.com with ESMTP; 21 May 2019 10:01:45 -0700
+From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 203661] New: Connection to bluetooth mouse lost after
- idle/reboot
-Date:   Tue, 21 May 2019 13:51:38 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: new
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: mnl@mnl.de
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: bug_id short_desc product version
- cf_kernel_version rep_platform op_sys cf_tree bug_status bug_severity
- priority component assigned_to reporter cf_regression
-Message-ID: <bug-203661-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
-MIME-Version: 1.0
-X-Virus-Scanned: ClamAV using ClamSMTP
+Cc:     inga.stotland@intel.com, brian.gix@intel.com
+Subject: [PATCH BlueZ] mesh: Add App and Net Key Refresh keyring back-end
+Date:   Tue, 21 May 2019 10:01:35 -0700
+Message-Id: <20190521170135.32057-1-brian.gix@intel.com>
+X-Mailer: git-send-email 2.14.5
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=203661
+Fill in skeleton App Key and Net Key KeyRing methods that are affected
+by the Key Refresh Procedure.
+---
+ doc/mesh-api.txt |   2 +
+ mesh/manager.c   | 198 ++++++++++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 170 insertions(+), 30 deletions(-)
 
-            Bug ID: 203661
-           Summary: Connection to bluetooth mouse lost after idle/reboot
-           Product: Drivers
-           Version: 2.5
-    Kernel Version: 5.0.16
-          Hardware: All
-                OS: Linux
-              Tree: Mainline
-            Status: NEW
-          Severity: normal
-          Priority: P1
-         Component: Bluetooth
-          Assignee: linux-bluetooth@vger.kernel.org
-          Reporter: mnl@mnl.de
-        Regression: No
-
-After upgrading to kernel 5.0.16 (Fedora29) the connection to my bluetooth
-mouse (M555b) is lost after idle or reboot. I have to reconnect the device.
-
-In the journal, I find that the device was removed.
-
-If I don't reconnect, bluetoothctl constantly reports "connection on",
-"connection off", "connection on", connection off"...
-
-(Though not the smae, there seem to be more problems with bluetooth in 5.0.16
-https://www.reddit.com/r/Fedora/comments/bp6ddq/my_bluetooth_isnt_working_in_kernel_5016/)
-
+diff --git a/doc/mesh-api.txt b/doc/mesh-api.txt
+index 112990a5d..9644553e8 100644
+--- a/doc/mesh-api.txt
++++ b/doc/mesh-api.txt
+@@ -434,6 +434,7 @@ Methods:
+ 		PossibleErrors:
+ 			org.bluez.mesh.Error.InvalidArguments
+ 			org.bluez.mesh.Error.DoesNotExist
++			org.bluez.mesh.Error.Busy
+ 
+ 	void DeleteSubnet(uint16 net_index)
+ 
+@@ -527,6 +528,7 @@ Methods:
+ 		PossibleErrors:
+ 			org.bluez.mesh.Error.InvalidArguments
+ 			org.bluez.mesh.Error.DoesNotExist
++			org.bluez.mesh.Error.Busy
+ 
+ 	void DeleteAppKey(uint16 app_index)
+ 
+diff --git a/mesh/manager.c b/mesh/manager.c
+index d990ceec2..8ef32d735 100644
+--- a/mesh/manager.c
++++ b/mesh/manager.c
+@@ -24,9 +24,12 @@
+ #define _GNU_SOURCE
+ #include <ell/ell.h>
+ 
++#include "mesh/mesh-defs.h"
+ #include "mesh/dbus.h"
+ #include "mesh/error.h"
+ #include "mesh/mesh.h"
++#include "mesh/node.h"
++#include "mesh/keyring.h"
+ #include "mesh/manager.h"
+ 
+ static struct l_dbus_message *add_node_call(struct l_dbus *dbus,
+@@ -86,51 +89,110 @@ static struct l_dbus_message *cancel_scan_call(struct l_dbus *dbus,
+ 	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
+ }
+ 
++static struct l_dbus_message *store_new_subnet(struct mesh_node *node,
++					struct l_dbus_message *msg,
++					uint16_t net_idx, uint8_t *new_key)
++{
++	struct keyring_net_key key;
++
++	if (net_idx > MAX_KEY_IDX)
++		return dbus_error(msg, MESH_ERROR_INVALID_ARGS, NULL);
++
++	if (keyring_get_net_key(node, net_idx, &key)) {
++		/* Allow redundent calls only if they match */
++		if (!memcmp(key.old_key, new_key, 16))
++			return l_dbus_message_new_method_return(msg);
++
++		return dbus_error(msg, MESH_ERROR_ALREADY_EXISTS, NULL);
++	}
++
++	memcpy(key.old_key, new_key, 16);
++	key.net_idx = net_idx;
++	key.phase = KEY_REFRESH_PHASE_NONE;
++
++	if (!keyring_put_net_key(node, net_idx, &key))
++		return dbus_error(msg, MESH_ERROR_FAILED, NULL);
++
++	return l_dbus_message_new_method_return(msg);
++}
++
+ static struct l_dbus_message *create_subnet_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+ {
++	struct mesh_node *node = user_data;
++	uint8_t key[16];
+ 	uint16_t net_idx;
+ 
+-	if (!l_dbus_message_get_arguments(msg, "q", &net_idx))
++	if (!l_dbus_message_get_arguments(msg, "q", &net_idx) || !net_idx)
+ 		return dbus_error(msg, MESH_ERROR_INVALID_ARGS, NULL);
+ 
+-	/* TODO */
+-	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
++	/* Generate key and submit */
++	l_getrandom(key, sizeof(key));
++
++	return store_new_subnet(node, msg, net_idx, key);
+ }
+ 
+ static struct l_dbus_message *update_subnet_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+ {
++	struct mesh_node *node = user_data;
++	struct keyring_net_key key;
+ 	uint16_t net_idx;
+ 
+-	if (!l_dbus_message_get_arguments(msg, "q", &net_idx))
++	if (!l_dbus_message_get_arguments(msg, "q", &net_idx) ||
++						net_idx > MAX_KEY_IDX)
+ 		return dbus_error(msg, MESH_ERROR_INVALID_ARGS, NULL);
+ 
+-	/* TODO */
+-	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
++	if (!keyring_get_net_key(node, net_idx, &key))
++		return dbus_error(msg, MESH_ERROR_DOES_NOT_EXIST, NULL);
++
++	switch (key.phase) {
++	case KEY_REFRESH_PHASE_NONE:
++		/* Generate Key and update phase */
++		l_getrandom(key.new_key, sizeof(key.new_key));
++		key.phase = KEY_REFRESH_PHASE_ONE;
++		if (!keyring_put_net_key(node, net_idx, &key))
++			return dbus_error(msg, MESH_ERROR_FAILED, NULL);
++
++		/* Fall Through */
++
++	case KEY_REFRESH_PHASE_ONE:
++		/* Allow redundent calls to start Key Refresh */
++		return l_dbus_message_new_method_return(msg);
++
++	default:
++		break;
++	}
++
++	/* All other phases mean KR already in progress over-the-air */
++	return dbus_error(msg, MESH_ERROR_BUSY, "KR in progress");
+ }
+ 
+ static struct l_dbus_message *delete_subnet_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+ {
++	struct mesh_node *node = user_data;
+ 	uint16_t net_idx;
+ 
+-	if (!l_dbus_message_get_arguments(msg, "q", &net_idx))
++	if (!l_dbus_message_get_arguments(msg, "q", &net_idx) ||
++						net_idx > MAX_KEY_IDX)
+ 		return dbus_error(msg, MESH_ERROR_INVALID_ARGS, NULL);
+ 
+-	/* TODO */
+-	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
++	keyring_del_net_key(node, net_idx);
++
++	return l_dbus_message_new_method_return(msg);
+ }
+ 
+ static struct l_dbus_message *import_subnet_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+ {
+-	uint16_t net_idx;
++	struct mesh_node *node = user_data;
+ 	struct l_dbus_message_iter iter_key;
++	uint16_t net_idx;
+ 	uint8_t *key;
+ 	uint32_t n;
+ 
+@@ -142,55 +204,116 @@ static struct l_dbus_message *import_subnet_call(struct l_dbus *dbus,
+ 		return dbus_error(msg, MESH_ERROR_INVALID_ARGS,
+ 							"Bad network key");
+ 
+-	/* TODO */
+-	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
++	return store_new_subnet(node, msg, net_idx, key);
++}
++
++static struct l_dbus_message *store_new_appkey(struct mesh_node *node,
++					struct l_dbus_message *msg,
++					uint16_t net_idx, uint16_t app_idx,
++					uint8_t *new_key)
++{
++	struct keyring_net_key net_key;
++	struct keyring_app_key app_key;
++
++	if (net_idx > MAX_KEY_IDX || app_idx > MAX_KEY_IDX)
++		return dbus_error(msg, MESH_ERROR_INVALID_ARGS, NULL);
++
++	if (!keyring_get_net_key(node, net_idx, &net_key))
++		return dbus_error(msg, MESH_ERROR_DOES_NOT_EXIST, NULL);
++
++	if (keyring_get_app_key(node, app_idx, &app_key)) {
++		/* Allow redundent calls with identical data */
++		if (!memcmp(app_key.old_key, new_key, 16) &&
++						app_key.net_idx == net_idx)
++			return l_dbus_message_new_method_return(msg);
++
++		return dbus_error(msg, MESH_ERROR_ALREADY_EXISTS, NULL);
++	}
++
++	memcpy(app_key.old_key, new_key, 16);
++	app_key.net_idx = net_idx;
++	app_key.app_idx = app_idx;
++
++	if (!keyring_put_app_key(node, app_idx, net_idx, &app_key))
++		return dbus_error(msg, MESH_ERROR_FAILED, NULL);
++
++	return l_dbus_message_new_method_return(msg);
+ }
+ 
+ static struct l_dbus_message *create_appkey_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+ {
++	struct mesh_node *node = user_data;
+ 	uint16_t net_idx, app_idx;
++	uint8_t key[16];
+ 
+ 	if (!l_dbus_message_get_arguments(msg, "qq", &net_idx, &app_idx))
+ 		return dbus_error(msg, MESH_ERROR_INVALID_ARGS, NULL);
+ 
+-	/* TODO */
+-	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
++	l_getrandom(key, sizeof(key));
++
++	return store_new_appkey(node, msg, net_idx, app_idx, key);
+ }
+ 
+ static struct l_dbus_message *update_appkey_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+ {
+-	uint16_t net_idx, app_idx;
++	struct mesh_node *node = user_data;
++	struct keyring_net_key net_key;
++	struct keyring_app_key app_key;
++	uint16_t app_idx;
+ 
+-	if (!l_dbus_message_get_arguments(msg, "qq", &net_idx, &app_idx))
++	if (!l_dbus_message_get_arguments(msg, "q", &app_idx) ||
++						app_idx > MAX_KEY_IDX)
+ 		return dbus_error(msg, MESH_ERROR_INVALID_ARGS, NULL);
+ 
+-	/* TODO */
+-	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
++	if (!keyring_get_app_key(node, app_idx, &app_key) ||
++			!keyring_get_net_key(node, app_key.net_idx, &net_key))
++		return dbus_error(msg, MESH_ERROR_DOES_NOT_EXIST, NULL);
++
++	switch (net_key.phase) {
++	case KEY_REFRESH_PHASE_NONE:
++	case KEY_REFRESH_PHASE_ONE:
++		/* Generate Key if in acceptable phase */
++		l_getrandom(app_key.new_key, sizeof(app_key.new_key));
++		if (!keyring_put_app_key(node, app_idx, app_key.net_idx,
++								&app_key))
++			return dbus_error(msg, MESH_ERROR_FAILED, NULL);
++
++		return l_dbus_message_new_method_return(msg);
++
++	default:
++		break;
++	}
++
++	/* Don't allow Updates from invalid phase */
++	return dbus_error(msg, MESH_ERROR_BUSY, "KR in progress");
+ }
+ 
+ static struct l_dbus_message *delete_appkey_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+ {
+-	uint16_t net_idx, app_idx;
++	struct mesh_node *node = user_data;
++	uint16_t app_idx;
+ 
+-	if (!l_dbus_message_get_arguments(msg, "qq", &net_idx, &app_idx))
++	if (!l_dbus_message_get_arguments(msg, "q", &app_idx))
+ 		return dbus_error(msg, MESH_ERROR_INVALID_ARGS, NULL);
+ 
+-	/* TODO */
+-	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
++	keyring_del_app_key(node, app_idx);
++
++	return l_dbus_message_new_method_return(msg);
+ }
+ 
+ static struct l_dbus_message *import_appkey_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+ {
+-	uint16_t net_idx, app_idx;
++	struct mesh_node *node = user_data;
+ 	struct l_dbus_message_iter iter_key;
++	uint16_t net_idx, app_idx;
+ 	uint8_t *key;
+ 	uint32_t n;
+ 
+@@ -203,22 +326,37 @@ static struct l_dbus_message *import_appkey_call(struct l_dbus *dbus,
+ 		return dbus_error(msg, MESH_ERROR_INVALID_ARGS,
+ 							"Bad application key");
+ 
+-	/* TODO */
+-	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
++	return store_new_appkey(node, msg, net_idx, app_idx, key);
+ }
+ 
+ static struct l_dbus_message *set_key_phase_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+ {
++	struct mesh_node *node = user_data;
++	struct keyring_net_key key;
+ 	uint16_t net_idx;
+ 	uint8_t phase;
+ 
+-	if (!l_dbus_message_get_arguments(msg, "qy", &net_idx, &phase))
++	if (!l_dbus_message_get_arguments(msg, "qy", &net_idx, &phase) ||
++					phase == KEY_REFRESH_PHASE_ONE ||
++					phase > KEY_REFRESH_PHASE_THREE)
+ 		return dbus_error(msg, MESH_ERROR_INVALID_ARGS, NULL);
+ 
+-	/* TODO */
+-	return dbus_error(msg, MESH_ERROR_NOT_IMPLEMENTED, NULL);
++	if (!keyring_get_net_key(node, net_idx, &key))
++		return dbus_error(msg, MESH_ERROR_DOES_NOT_EXIST, NULL);
++
++	if (phase == KEY_REFRESH_PHASE_THREE &&
++					key.phase != KEY_REFRESH_PHASE_NONE) {
++		memcpy(key.old_key, key.new_key, 16);
++		key.phase = KEY_REFRESH_PHASE_NONE;
++	} else
++		key.phase = phase;
++
++	if (!keyring_put_net_key(node, net_idx, &key))
++		return dbus_error(msg, MESH_ERROR_FAILED, NULL);
++
++	return l_dbus_message_new_method_return(msg);
+ }
+ 
+ static void setup_management_interface(struct l_dbus_interface *iface)
+@@ -242,9 +380,9 @@ static void setup_management_interface(struct l_dbus_interface *iface)
+ 	l_dbus_interface_method(iface, "CreateAppKey", 0, create_appkey_call,
+ 					"", "qq", "", "net_index", "app_index");
+ 	l_dbus_interface_method(iface, "UpdateAppKey", 0, update_appkey_call,
+-					"", "qq", "", "net_index", "app_index");
++					"", "q", "", "app_index");
+ 	l_dbus_interface_method(iface, "DeleteAppKey", 0, delete_appkey_call,
+-					"", "qq", "", "net_index", "app_index");
++					"", "q", "", "app_index");
+ 	l_dbus_interface_method(iface, "ImportAppKey", 0, import_appkey_call,
+ 				"", "qqay", "", "net_index", "app_index",
+ 								"app_key");
 -- 
-You are receiving this mail because:
-You are the assignee for the bug.
+2.14.5
+
