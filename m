@@ -2,81 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A204E26D8D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 May 2019 21:42:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20B3126F14
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 May 2019 21:54:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732699AbfEVTmt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 May 2019 15:42:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51314 "EHLO mail.kernel.org"
+        id S1733212AbfEVTyi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 May 2019 15:54:38 -0400
+Received: from mga12.intel.com ([192.55.52.136]:4235 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732254AbfEVT2g (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 22 May 2019 15:28:36 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 841DF204FD;
-        Wed, 22 May 2019 19:28:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1558553316;
-        bh=9gu/ehZ6l8f0SZ+JITBMqr2JTBHP/QbQzVgj0ArK6VU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pf+9DVJRsDjODhezZpISX61jFRnKKF5RMYBs8Lu3dw40X8tkX6QW8Q3dIrYi28Ad9
-         i/3A4ZjLd8mXQbIiUJl0A1FGy1aiRRQkni7/Rx8Qd0SnQ90+aheoDWSaONEPStUE8w
-         IfPZR2j0U06IP/448QAKbVm73UAvIcykTN5yTRIA=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>,
-        Claire Chang <tientzu@chromium.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 079/244] Bluetooth: hci_qca: Give enough time to ROME controller to bootup.
-Date:   Wed, 22 May 2019 15:23:45 -0400
-Message-Id: <20190522192630.24917-79-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190522192630.24917-1-sashal@kernel.org>
-References: <20190522192630.24917-1-sashal@kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+        id S1732422AbfEVTyh (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 22 May 2019 15:54:37 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 22 May 2019 12:54:37 -0700
+X-ExtLoop1: 1
+Received: from bgix-dell-lap.sea.intel.com ([10.255.78.4])
+  by fmsmga004.fm.intel.com with ESMTP; 22 May 2019 12:54:36 -0700
+From:   Brian Gix <brian.gix@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     inga.stotland@intel.com, brian.gix@intel.com
+Subject: [PATCH BlueZ v2 0/5] mesh: Add App and Net Key Refresh keyring back-end
+Date:   Wed, 22 May 2019 12:54:23 -0700
+Message-Id: <20190522195428.1901-1-brian.gix@intel.com>
+X-Mailer: git-send-email 2.14.5
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Version 2 is a patchset with some pre-staging cleanup and breaking the
+patches into functional sets.
 
-[ Upstream commit 7f09d5a6c33be66a5ca19bf9dd1c2d90c5dfcf0d ]
+Patches are order dependant (apply in composed order)
 
-This patch enables enough time to ROME controller to bootup
-after we bring the enable pin out of reset.
+Brian Gix (5):
+  mesh: Add new required method for Key Refresh proc
+  mesh: Centralize definition of PRIMARY_NET_IDX
+  mesh: Implement Net Key keyring storage handling
+  mesh: Implement App Key keyring storage handling
+  mesh: Implement Key Refresh Phasing in keyring
 
-Fixes: 05ba533c5c11 ("Bluetooth: hci_qca: Add serdev support").
-Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Reviewed-by: Rocky Liao <rjliao@codeaurora.org>
-Tested-by: Rocky Liao <rjliao@codeaurora.org>
-Tested-by: Claire Chang <tientzu@chromium.org>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/bluetooth/hci_qca.c | 2 ++
- 1 file changed, 2 insertions(+)
+ doc/mesh-api.txt |  26 ++++++-
+ mesh/manager.c   | 226 +++++++++++++++++++++++++++++++++++++++++++++++--------
+ mesh/mesh-defs.h |   1 +
+ mesh/node.c      |  12 ++-
+ 4 files changed, 227 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index f0d593c3fa728..77004c29da089 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -504,6 +504,8 @@ static int qca_open(struct hci_uart *hu)
- 		qcadev = serdev_device_get_drvdata(hu->serdev);
- 		if (qcadev->btsoc_type != QCA_WCN3990) {
- 			gpiod_set_value_cansleep(qcadev->bt_en, 1);
-+			/* Controller needs time to bootup. */
-+			msleep(150);
- 		} else {
- 			hu->init_speed = qcadev->init_speed;
- 			hu->oper_speed = qcadev->oper_speed;
 -- 
-2.20.1
+2.14.5
 
