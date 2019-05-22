@@ -2,98 +2,236 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 095D926AA3
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 May 2019 21:11:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67B182703C
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 May 2019 22:02:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729700AbfEVTLs convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 May 2019 15:11:48 -0400
-Received: from mail.wl.linuxfoundation.org ([198.145.29.98]:52278 "EHLO
-        mail.wl.linuxfoundation.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729555AbfEVTLs (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 22 May 2019 15:11:48 -0400
-Received: from mail.wl.linuxfoundation.org (localhost [127.0.0.1])
-        by mail.wl.linuxfoundation.org (Postfix) with ESMTP id 5806F201CB
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 May 2019 19:11:47 +0000 (UTC)
-Received: by mail.wl.linuxfoundation.org (Postfix, from userid 486)
-        id 5652420408; Wed, 22 May 2019 19:11:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-        pdx-wl-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=2.0 tests=BAYES_00,NO_RECEIVED,
-        NO_RELAYS autolearn=ham version=3.3.1
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 203643] [REGRESSION][BISECTED] Sixaxis gamepad no longer
- connects via Bluetooth
-Date:   Wed, 22 May 2019 19:11:46 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: irherder@gmail.com
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-203643-62941-1hBEfs3owA@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-203643-62941@https.bugzilla.kernel.org/>
-References: <bug-203643-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        id S1730220AbfEVTVz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 May 2019 15:21:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42522 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730194AbfEVTVy (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 22 May 2019 15:21:54 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 868652177E;
+        Wed, 22 May 2019 19:21:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1558552913;
+        bh=ajUm6U1R2VGsGUXl4ra8Lhgj4SgyVQf4N8g+j6z+/U4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=UUHnOo3gf7O4G3tydEUJ3CBDrgdkxLEck1RUgDq8jH0Qjqr/EdHl9rZYFRix+TqdV
+         uPZrZNjKZ3bck2E4a/kMcQnH9rt2neNqQ81TSnogMC8pxU0y+512on0koHvasSXGcH
+         2MXuEqzodAa5+UUTeaV89LZ0Bb0hWLyxF3e+0Yr4=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     =?UTF-8?q?Jo=C3=A3o=20Paulo=20Rechi=20Vita?= <jprvita@gmail.com>,
+        =?UTF-8?q?Jo=C3=A3o=20Paulo=20Rechi=20Vita?= <jprvita@endlessm.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.1 026/375] Bluetooth: Ignore CC events not matching the last HCI command
+Date:   Wed, 22 May 2019 15:15:26 -0400
+Message-Id: <20190522192115.22666-26-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190522192115.22666-1-sashal@kernel.org>
+References: <20190522192115.22666-1-sashal@kernel.org>
 MIME-Version: 1.0
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=203643
+From: João Paulo Rechi Vita <jprvita@gmail.com>
 
-Andriy Perevortkin (irherder@gmail.com) changed:
+[ Upstream commit f80c5dad7b6467b884c445ffea45985793b4b2d0 ]
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |irherder@gmail.com
+This commit makes the kernel not send the next queued HCI command until
+a command complete arrives for the last HCI command sent to the
+controller. This change avoids a problem with some buggy controllers
+(seen on two SKUs of QCA9377) that send an extra command complete event
+for the previous command after the kernel had already sent a new HCI
+command to the controller.
 
---- Comment #10 from Andriy Perevortkin (irherder@gmail.com) ---
-Sadly the RFC patch above does not fix it for me, the revert does
-The device is edifier w330nb headset.
+The problem was reproduced when starting an active scanning procedure,
+where an extra command complete event arrives for the LE_SET_RANDOM_ADDR
+command. When this happends the kernel ends up not processing the
+command complete for the following commmand, LE_SET_SCAN_PARAM, and
+ultimately behaving as if a passive scanning procedure was being
+performed, when in fact controller is performing an active scanning
+procedure. This makes it impossible to discover BLE devices as no device
+found events are sent to userspace.
 
-hcidump fragment of failed connection:
+This problem is reproducible on 100% of the attempts on the affected
+controllers. The extra command complete event can be seen at timestamp
+27.420131 on the btmon logs bellow.
 
-> HCI Event: Link Key Request (0x17) plen 6
-    bdaddr 5C:C6:E9:11:B1:20
-< HCI Command: Link Key Request Reply (0x01|0x000b) plen 22
-    bdaddr 5C:C6:E9:11:B1:20 key 9290EB1424E3A352C43F17C8499A3670
-> HCI Event: Command Complete (0x0e) plen 10
-    Link Key Request Reply (0x01|0x000b) ncmd 1
-    status 0x00 bdaddr 5C:C6:E9:11:B1:20
-> HCI Event: Encrypt Change (0x08) plen 4
-    status 0x00 handle 256 encrypt 0x01
-< HCI Command: Read Encryption Key Size (0x05|0x0008) plen 2
-> ACL data: handle 256 flags 0x02 dlen 12
-    L2CAP(s): Connect req: psm 25 scid 0x0580
-< ACL data: handle 256 flags 0x00 dlen 16
-    L2CAP(s): Connect rsp: dcid 0x0000 scid 0x0580 result 3 status 0
-      Connection refused - security block
-> HCI Event: Command Complete (0x0e) plen 7
-    Read Encryption Key Size (0x05|0x0008) ncmd 1
-> HCI Event: Number of Completed Packets (0x13) plen 5
-    handle 256 packets 1
-> HCI Event: Disconn Complete (0x05) plen 4
-    status 0x00 handle 256 reason 0x13
-    Reason: Remote User Terminated Connection
+Bluetooth monitor ver 5.50
+= Note: Linux version 5.0.0+ (x86_64)                                  0.352340
+= Note: Bluetooth subsystem version 2.22                               0.352343
+= New Index: 80:C5:F2:8F:87:84 (Primary,USB,hci0)               [hci0] 0.352344
+= Open Index: 80:C5:F2:8F:87:84                                 [hci0] 0.352345
+= Index Info: 80:C5:F2:8F:87:84 (Qualcomm)                      [hci0] 0.352346
+@ MGMT Open: bluetoothd (privileged) version 1.14             {0x0001} 0.352347
+@ MGMT Open: btmon (privileged) version 1.14                  {0x0002} 0.352366
+@ MGMT Open: btmgmt (privileged) version 1.14                {0x0003} 27.302164
+@ MGMT Command: Start Discovery (0x0023) plen 1       {0x0003} [hci0] 27.302310
+        Address type: 0x06
+          LE Public
+          LE Random
+< HCI Command: LE Set Random Address (0x08|0x0005) plen 6   #1 [hci0] 27.302496
+        Address: 15:60:F2:91:B2:24 (Non-Resolvable)
+> HCI Event: Command Complete (0x0e) plen 4                 #2 [hci0] 27.419117
+      LE Set Random Address (0x08|0x0005) ncmd 1
+        Status: Success (0x00)
+< HCI Command: LE Set Scan Parameters (0x08|0x000b) plen 7  #3 [hci0] 27.419244
+        Type: Active (0x01)
+        Interval: 11.250 msec (0x0012)
+        Window: 11.250 msec (0x0012)
+        Own address type: Random (0x01)
+        Filter policy: Accept all advertisement (0x00)
+> HCI Event: Command Complete (0x0e) plen 4                 #4 [hci0] 27.420131
+      LE Set Random Address (0x08|0x0005) ncmd 1
+        Status: Success (0x00)
+< HCI Command: LE Set Scan Enable (0x08|0x000c) plen 2      #5 [hci0] 27.420259
+        Scanning: Enabled (0x01)
+        Filter duplicates: Enabled (0x01)
+> HCI Event: Command Complete (0x0e) plen 4                 #6 [hci0] 27.420969
+      LE Set Scan Parameters (0x08|0x000b) ncmd 1
+        Status: Success (0x00)
+> HCI Event: Command Complete (0x0e) plen 4                 #7 [hci0] 27.421983
+      LE Set Scan Enable (0x08|0x000c) ncmd 1
+        Status: Success (0x00)
+@ MGMT Event: Command Complete (0x0001) plen 4        {0x0003} [hci0] 27.422059
+      Start Discovery (0x0023) plen 1
+        Status: Success (0x00)
+        Address type: 0x06
+          LE Public
+          LE Random
+@ MGMT Event: Discovering (0x0013) plen 2             {0x0003} [hci0] 27.422067
+        Address type: 0x06
+          LE Public
+          LE Random
+        Discovery: Enabled (0x01)
+@ MGMT Event: Discovering (0x0013) plen 2             {0x0002} [hci0] 27.422067
+        Address type: 0x06
+          LE Public
+          LE Random
+        Discovery: Enabled (0x01)
+@ MGMT Event: Discovering (0x0013) plen 2             {0x0001} [hci0] 27.422067
+        Address type: 0x06
+          LE Public
+          LE Random
+        Discovery: Enabled (0x01)
 
+Signed-off-by: João Paulo Rechi Vita <jprvita@endlessm.com>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ include/net/bluetooth/hci.h |  1 +
+ net/bluetooth/hci_core.c    |  5 +++++
+ net/bluetooth/hci_event.c   | 12 ++++++++++++
+ net/bluetooth/hci_request.c |  5 +++++
+ net/bluetooth/hci_request.h |  1 +
+ 5 files changed, 24 insertions(+)
+
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index fbba43e9bef5b..9a5330eed7944 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -282,6 +282,7 @@ enum {
+ 	HCI_FORCE_BREDR_SMP,
+ 	HCI_FORCE_STATIC_ADDR,
+ 	HCI_LL_RPA_RESOLUTION,
++	HCI_CMD_PENDING,
+ 
+ 	__HCI_NUM_FLAGS,
+ };
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index d6b2540ba7f8b..f275c99056507 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4383,6 +4383,9 @@ void hci_req_cmd_complete(struct hci_dev *hdev, u16 opcode, u8 status,
+ 		return;
+ 	}
+ 
++	/* If we reach this point this event matches the last command sent */
++	hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
++
+ 	/* If the command succeeded and there's still more commands in
+ 	 * this request the request is not yet complete.
+ 	 */
+@@ -4493,6 +4496,8 @@ static void hci_cmd_work(struct work_struct *work)
+ 
+ 		hdev->sent_cmd = skb_clone(skb, GFP_KERNEL);
+ 		if (hdev->sent_cmd) {
++			if (hci_req_status_pend(hdev))
++				hci_dev_set_flag(hdev, HCI_CMD_PENDING);
+ 			atomic_dec(&hdev->cmd_cnt);
+ 			hci_send_frame(hdev, skb);
+ 			if (test_bit(HCI_RESET, &hdev->flags))
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 609fd6871c5ad..8b893baf9bbe2 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3404,6 +3404,12 @@ static void hci_cmd_complete_evt(struct hci_dev *hdev, struct sk_buff *skb,
+ 	hci_req_cmd_complete(hdev, *opcode, *status, req_complete,
+ 			     req_complete_skb);
+ 
++	if (hci_dev_test_flag(hdev, HCI_CMD_PENDING)) {
++		bt_dev_err(hdev,
++			   "unexpected event for opcode 0x%4.4x", *opcode);
++		return;
++	}
++
+ 	if (atomic_read(&hdev->cmd_cnt) && !skb_queue_empty(&hdev->cmd_q))
+ 		queue_work(hdev->workqueue, &hdev->cmd_work);
+ }
+@@ -3511,6 +3517,12 @@ static void hci_cmd_status_evt(struct hci_dev *hdev, struct sk_buff *skb,
+ 		hci_req_cmd_complete(hdev, *opcode, ev->status, req_complete,
+ 				     req_complete_skb);
+ 
++	if (hci_dev_test_flag(hdev, HCI_CMD_PENDING)) {
++		bt_dev_err(hdev,
++			   "unexpected event for opcode 0x%4.4x", *opcode);
++		return;
++	}
++
+ 	if (atomic_read(&hdev->cmd_cnt) && !skb_queue_empty(&hdev->cmd_q))
+ 		queue_work(hdev->workqueue, &hdev->cmd_work);
+ }
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index ca73d36cc1494..e9a95ed654915 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -46,6 +46,11 @@ void hci_req_purge(struct hci_request *req)
+ 	skb_queue_purge(&req->cmd_q);
+ }
+ 
++bool hci_req_status_pend(struct hci_dev *hdev)
++{
++	return hdev->req_status == HCI_REQ_PEND;
++}
++
+ static int req_run(struct hci_request *req, hci_req_complete_t complete,
+ 		   hci_req_complete_skb_t complete_skb)
+ {
+diff --git a/net/bluetooth/hci_request.h b/net/bluetooth/hci_request.h
+index 692cc8b133682..55b2050cc9ff0 100644
+--- a/net/bluetooth/hci_request.h
++++ b/net/bluetooth/hci_request.h
+@@ -37,6 +37,7 @@ struct hci_request {
+ 
+ void hci_req_init(struct hci_request *req, struct hci_dev *hdev);
+ void hci_req_purge(struct hci_request *req);
++bool hci_req_status_pend(struct hci_dev *hdev);
+ int hci_req_run(struct hci_request *req, hci_req_complete_t complete);
+ int hci_req_run_skb(struct hci_request *req, hci_req_complete_skb_t complete);
+ void hci_req_add(struct hci_request *req, u16 opcode, u32 plen,
 -- 
-You are receiving this mail because:
-You are the assignee for the bug.
+2.20.1
+
