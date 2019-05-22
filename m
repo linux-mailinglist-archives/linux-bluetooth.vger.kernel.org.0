@@ -2,27 +2,27 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 67B182703C
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 May 2019 22:02:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7464B26F8E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 May 2019 21:57:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730220AbfEVTVz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 May 2019 15:21:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42522 "EHLO mail.kernel.org"
+        id S1731182AbfEVTYL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 May 2019 15:24:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45250 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730194AbfEVTVy (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 22 May 2019 15:21:54 -0400
+        id S1731158AbfEVTYL (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 22 May 2019 15:24:11 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 868652177E;
-        Wed, 22 May 2019 19:21:52 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6A5AD20879;
+        Wed, 22 May 2019 19:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1558552913;
-        bh=ajUm6U1R2VGsGUXl4ra8Lhgj4SgyVQf4N8g+j6z+/U4=;
+        s=default; t=1558553050;
+        bh=BSXp4+mOWCKrSZyMOhVM4A/sjRQADPOHjU+lnEEFvSc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UUHnOo3gf7O4G3tydEUJ3CBDrgdkxLEck1RUgDq8jH0Qjqr/EdHl9rZYFRix+TqdV
-         uPZrZNjKZ3bck2E4a/kMcQnH9rt2neNqQ81TSnogMC8pxU0y+512on0koHvasSXGcH
-         2MXuEqzodAa5+UUTeaV89LZ0Bb0hWLyxF3e+0Yr4=
+        b=LZQG2p1lWcGB76yKczr49LXxHPf3WF3muz0W9bHQBGNhJMpNa/3o5/lB5tgHVxi9y
+         YvNlqzx2DeSDtAAkpCMiYDjT3tVL7teTTvse2088nVhKk8Ed3aKjlIktlGrkH//Mpn
+         VT512UazPyIsg1ztMHlfEq7hlaLz3HYEZeYJUN4A=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     =?UTF-8?q?Jo=C3=A3o=20Paulo=20Rechi=20Vita?= <jprvita@gmail.com>,
@@ -30,12 +30,12 @@ Cc:     =?UTF-8?q?Jo=C3=A3o=20Paulo=20Rechi=20Vita?= <jprvita@gmail.com>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.1 026/375] Bluetooth: Ignore CC events not matching the last HCI command
-Date:   Wed, 22 May 2019 15:15:26 -0400
-Message-Id: <20190522192115.22666-26-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.0 021/317] Bluetooth: Ignore CC events not matching the last HCI command
+Date:   Wed, 22 May 2019 15:18:42 -0400
+Message-Id: <20190522192338.23715-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190522192115.22666-1-sashal@kernel.org>
-References: <20190522192115.22666-1-sashal@kernel.org>
+In-Reply-To: <20190522192338.23715-1-sashal@kernel.org>
+References: <20190522192338.23715-1-sashal@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 X-stable: review
@@ -140,10 +140,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  5 files changed, 24 insertions(+)
 
 diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index fbba43e9bef5b..9a5330eed7944 100644
+index c36dc1e20556a..60b7cbc0a6cb4 100644
 --- a/include/net/bluetooth/hci.h
 +++ b/include/net/bluetooth/hci.h
-@@ -282,6 +282,7 @@ enum {
+@@ -270,6 +270,7 @@ enum {
  	HCI_FORCE_BREDR_SMP,
  	HCI_FORCE_STATIC_ADDR,
  	HCI_LL_RPA_RESOLUTION,
@@ -152,10 +152,10 @@ index fbba43e9bef5b..9a5330eed7944 100644
  	__HCI_NUM_FLAGS,
  };
 diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index d6b2540ba7f8b..f275c99056507 100644
+index 7352fe85674be..c25c664a25040 100644
 --- a/net/bluetooth/hci_core.c
 +++ b/net/bluetooth/hci_core.c
-@@ -4383,6 +4383,9 @@ void hci_req_cmd_complete(struct hci_dev *hdev, u16 opcode, u8 status,
+@@ -4337,6 +4337,9 @@ void hci_req_cmd_complete(struct hci_dev *hdev, u16 opcode, u8 status,
  		return;
  	}
  
@@ -165,7 +165,7 @@ index d6b2540ba7f8b..f275c99056507 100644
  	/* If the command succeeded and there's still more commands in
  	 * this request the request is not yet complete.
  	 */
-@@ -4493,6 +4496,8 @@ static void hci_cmd_work(struct work_struct *work)
+@@ -4447,6 +4450,8 @@ static void hci_cmd_work(struct work_struct *work)
  
  		hdev->sent_cmd = skb_clone(skb, GFP_KERNEL);
  		if (hdev->sent_cmd) {
@@ -175,7 +175,7 @@ index d6b2540ba7f8b..f275c99056507 100644
  			hci_send_frame(hdev, skb);
  			if (test_bit(HCI_RESET, &hdev->flags))
 diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 609fd6871c5ad..8b893baf9bbe2 100644
+index ac2826ce162b9..ef5ae4c7e286b 100644
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
 @@ -3404,6 +3404,12 @@ static void hci_cmd_complete_evt(struct hci_dev *hdev, struct sk_buff *skb,
