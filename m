@@ -2,97 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C359028C38
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 May 2019 23:18:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F05B028C82
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 May 2019 23:42:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387810AbfEWVSo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 May 2019 17:18:44 -0400
-Received: from mail-vk1-f180.google.com ([209.85.221.180]:43530 "EHLO
-        mail-vk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387785AbfEWVSo (ORCPT
+        id S2388028AbfEWVmP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 May 2019 17:42:15 -0400
+Received: from mail107c40.carrierzone.com ([209.235.156.189]:54964 "EHLO
+        mail107c40.carrierzone.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2387447AbfEWVmP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 May 2019 17:18:44 -0400
-Received: by mail-vk1-f180.google.com with SMTP id h72so1665590vkh.10
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 May 2019 14:18:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=QyHNrUNeMazF6mWb9H8ygEL5bietKjDcesYfcxi7eSE=;
-        b=XJjSs1YmTmGrpv/CS5Tvvhcwladt10Q/MIyFSc2t5wJyeBcTYWlJ3V3qDrO+jq1uHZ
-         Y6Ju7GmgtS4BKDQBRSF9c4slJ7/q8SupTjIMzSOcEDd6lYC9l0pOyTw5rpuVlFEdupOw
-         MMfq4WhPfwPDJ8EogDWnDSuAQVPjKTmmif9KJvQNhEx+Ho2WFLLUXGO3Q3OKg3bXzP3r
-         Kr2M5zVp1r0qZK5TqJfvgUQrVWit++AJuJxRLJT8tITrBtntWeElPzkWayoM70UImS4c
-         EfHM98T8F25Kz8p06B7cvVVuLq7EWdJJDqTayn1cUzRvm+XDoERZNDTVnNc8qzQgjPeW
-         RN9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=QyHNrUNeMazF6mWb9H8ygEL5bietKjDcesYfcxi7eSE=;
-        b=GVQM0qI1Hvm11XWeiAY7Zf6nUWLOx12ZO/jIiDw+CT2/ESFC8AfSuASqNs/fGObdFj
-         Fllge4d9jPHPrvwRenK+lXclXS7zhbpf0d+O3cF+2H9xhUW4VkMIaiTXPYSupHR0OPnC
-         qOeziXw0/QWgaKgitMk7lk+WujXMcDMEp1Lc6KBgYqC91lv006FSUKQsrB4LelXVwmAG
-         EjEECL9meZtBaXXZRxdFj7v/clJuI5IMUD5J8Csj07AJvG4JoQDUmZWMMtQJ6BVCTLFe
-         HeJLDFUVVR7Z7QMc2JuBHqv0KOwyz7LuofW8Rh17R0qNl95EBIyI+8utpu5pckc1w9el
-         o/uQ==
-X-Gm-Message-State: APjAAAUgzzv4VanPxjd1kHYPULQSVY0RKqCDyqXeFLs1oOWGZN79eZxE
-        G4tQBFCY2YKCcApKU5xJlYf2vNKYvzM/bb7tgXUpFzDW
-X-Google-Smtp-Source: APXvYqxnMCv1hx8ffp7GBObRKIAMC1TMQbtzr8UxW9Soj8m41H/BajQoTYPj7skQxxjR/bPasfoA4zq5RiKpxBKBMxw=
-X-Received: by 2002:a1f:2157:: with SMTP id h84mr2731323vkh.84.1558646322689;
- Thu, 23 May 2019 14:18:42 -0700 (PDT)
+        Thu, 23 May 2019 17:42:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=carrierzone.com;
+        s=mailmia; t=1558647734;
+        bh=RvxnLaCw4+slVVfU9bE+z0lHtsyZ+0WnESaKlgdNEgs=;
+        h=To:CC:Subject:From:Reply-to:Date:From;
+        b=g2ARnuGllW3q4635I96N4QE+l8ryWEOsfees6gOYmgAvrLkHmnkYTDEBUKOMIpUU0
+         e4+JRPsUn3QIIns8Dgihx6be+uQICUGS17n3QaqA2eiMtJl3SIn6H+z5Tl3D5lkiB0
+         hzJgZu9MHh/IlklgAIpy3EBhoIJzI6HyTX/d5z8c=
+Feedback-ID: eason@poshmfg.c
+Received: from mail107c40.carrierzone.com (localhost [127.0.0.1])
+        by mail107c40.carrierzone.com (8.14.9/8.14.9) with ESMTP id x4NLgDGr012901
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 May 2019 21:42:14 +0000
+Received: (from webmail@localhost)
+        by mail107c40.carrierzone.com (8.14.9/8.12.2/Submit) id x4NLgDjE012897
+        for linux-bluetooth@vger.kernel.org; Thu, 23 May 2019 17:42:13 -0400
 MIME-Version: 1.0
-References: <CAOJ+TdvyHxe7OAgzJsg7Ar1QmoSyWuGqWn0b2rbFXq7xW3B6yA@mail.gmail.com>
-In-Reply-To: <CAOJ+TdvyHxe7OAgzJsg7Ar1QmoSyWuGqWn0b2rbFXq7xW3B6yA@mail.gmail.com>
-From:   Moreno <morrolinux@gmail.com>
-Date:   Thu, 23 May 2019 23:18:31 +0200
-Message-ID: <CAOJ+Tdv3o=gNDPvRmj27aO6tAgk7A+T+H3DZF0LEfNHLBj8Vng@mail.gmail.com>
-Subject: Re: a2dp sink delay via AVDTP
-To:     linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+To:     linux-bluetooth@vger.kernel.org
+Subject: Question about using getFile
+From:   Eason Jiang <eason@poshmfg.ca>
+X-Image-Url: http://mail.poshmfg.ca/api/storage/eason@poshmfg.ca/profile/picture
+Reply-to: eason@poshmfg.ca
+Date:   Thu, 23 May 2019 17:42:13 -0400
+Message-Id: <1558647733.fsqujj2uuc8wkogo@mail.poshmfg.ca>
+X-CTCH-RefID: str=0001.0A090210.5CE713B6.0008,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CTCH-VOD: Unknown
+X-CTCH-Spam: Unknown
+X-CTCH-Score: 0.000
+X-CTCH-Rules: 
+X-CTCH-Flags: 0
+X-CTCH-ScoreCust: 0.000
+X-CSC:  0
+X-CHA:  v=2.3 cv=Oc628CbY c=1 sm=1 tr=0 a=WkljmVdYkabdwxfqvArNOQ==:117
+        a=IkcTkHD0fZMA:10 a=E5NmQfObTbMA:10 a=9Tc-NKJvBMtvFy2OSaIA:9
+        a=QEXdDO2ut3YA:10 a=pHzHmUro8NiASowvMSCR:22 a=xoEH_sTeL_Rfw54TyV31:22
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-bump? Anyone know what I'm talking about?
-
-
-Il giorno mar 21 mag 2019 alle ore 12:00 Moreno <morrolinux@gmail.com>
-ha scritto:
->
-> Hi,
->
-> I am building an ffmpeg-based audio sink system to use a Raspberry Pi
-> as a bluetooth speaker.
->
-> Since the audio takes quite a long time to get past the processing on
-> the Pi, I need to tell the bluetooth "client" device how much delay
-> should be added (eg. for video playback) for it to be in sync.
->
-> I've looked at the code and it looks like it's fully supported, but I
-> don't understand how to signal bluez (running a2dp sbc sink profile)
-> an extra latency for the source device to be aware.
->
-> Can anyone help?
-
-
-
---=20
-
-per il supporto tecnico rivolgersi a
-Moreno Razzoli
-__________________________
-
-       Avvertenze ai sensi del D.Lgs.196 del 30/06/2003 Le
-informazioni contenute in questo messaggio di posta elettronica e/o
-files allegati, sono da considerarsi strettamente riservati. Il loro
-utilizzo =C3=A8 consentito esclusivamente al destinatario del messaggio,
-per le finalit=C3=A0  indicate nello stesso. Costituisce violazione ai
-principi dettati dal D.Lgs. 196/2003: trattenere il messaggio stesso,
-divulgarlo anche in parte, distribuirlo ad altri soggetti, copiarlo o
-utilizzarlo per finalit=C3=A0  diverse. Qualora riceveste questo messaggio
-senza esserne il destinatario Vi preghiamo cortesemente di darcene
-notizia via e-mail e di procedere alla distruzione del messaggio
-stesso, cancellandolo dal Vostro sistema. Grazie.
+I used a library called BluezQt, which is based on Bluez. When I wanted
+to fetch a file from a remote device by calling getfile function in ftp,
+I failed to fetch it. I want to know is it functional? Or does anyone
+succeed to use this function? Any response would be appreciated!
