@@ -2,64 +2,113 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A547E2C8B6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 May 2019 16:27:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EE7D2C8E8
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 May 2019 16:37:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726933AbfE1O1I (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 28 May 2019 10:27:08 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:33867 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726824AbfE1O1I (ORCPT
+        id S1726566AbfE1OhE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 28 May 2019 10:37:04 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38788 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726371AbfE1OhE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 28 May 2019 10:27:08 -0400
-Received: by mail-wr1-f47.google.com with SMTP id f8so20505138wrt.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 28 May 2019 07:27:07 -0700 (PDT)
+        Tue, 28 May 2019 10:37:04 -0400
+Received: by mail-wr1-f68.google.com with SMTP id d18so20520314wrs.5
+        for <linux-bluetooth@vger.kernel.org>; Tue, 28 May 2019 07:37:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:from:message-id:date:user-agent:mime-version
+        h=to:from:subject:message-id:date:user-agent:mime-version
          :content-transfer-encoding:content-language;
-        bh=66fegvF4oiu4Tco06DeNgmwjqueSk4MYbxZYf4jr3HA=;
-        b=Qblm786WRb598E1gH4NJAFTvk2Eu+xRCCECehX0lwoq+gd5woU+kdWDKqmMC4i4V87
-         5FIeu2t5sYK9R9Xx97hlcj1W19PXUpaTBx+PVEREGT3vayxUaKFWDIXUjYm1zKLB691V
-         3gRcnNO40f5fJjOEuk4NdfDEmgFjuTqAgFryq7olKzbqb2pxeia3qBl5XxGU/Wii+11L
-         +BF4yZMxdmuxRUKS811y1hQ/zWc/wM9vg0jyVqETOci9ZtLVpOpI/EI91pRvDMn4JJFK
-         ST41cfEP5+qXOsot0kO7pV1I1nenKBFWLqNBBpZXKfL7AnkRMI+B4Ly7x+0sYrd0jD3R
-         ap3A==
+        bh=UuRSugn3hF3nrFbpNIlzW4Mzvbi9ikb6w2/3ehwfHHc=;
+        b=SbNmy/JU5/2dX2X3QUDsgkdFqRLFM+xH7j3MBWdtmNFc7lqDRaQF+e2GgbR2J6ZV52
+         y5hin3aFRHK3rkujXeUQHAby+pp/gKKIAWQFvoLC9SGcoq4YGRo5fo06+befpP4XWyjv
+         PI1cDVu+4sLo7jZ4Ip+AVgkh+Tth3rynLvQEtC/kql3b9G+cc9NUjhr4DdDrpE+p2lNm
+         nCWzEJaerRA7eD2wiZK7lZq9FmvtegvmH3Gtd+14C2UESZExYCUsC9a0CkMgrzzUQ2AM
+         F2Mf6Dm+w68cebAmOGA2bKH16XDEQZ9RmpLFYRqBwAGykrm/9gHPT96YC+v0P9G+96cI
+         LPaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=66fegvF4oiu4Tco06DeNgmwjqueSk4MYbxZYf4jr3HA=;
-        b=mcAVB1swA6I4vrb2PDqpnoAagqQV8Vifcnwr3J3ZnoVh480boTYVL0vOoOyhZPyxPR
-         hjdMYLAnKqBzOGV4Hx2Ci8IDaEgi4FCjz+gGphv6Q3Un2437tg4TNTKYmgKEvnBaRQSp
-         Pa0VhyKlRG55JWLuRZCqhmc7mExlFcOkjfmbf2qgbj2a5W4xTKXUxFF789r+ZGwekapd
-         8P4v0bM0XfxPlnhMd/A0F2OoF3aM88X/Q082GgTiJphvzm5icCEwzFyfJn4VqFKlwZpj
-         0LQam6YGwc79QueTltf2zqqU2W8zmaOeZ8hWmecqkjf1diqx+7yHdz6BoWhPOgUxvnS1
-         D5Nw==
-X-Gm-Message-State: APjAAAUIyEbLuACy+8GMbg5viE+7VLBF/9NHd1jSmk3NcZM9tMOax/3F
-        RY1/Ph6dHn6nOuQAxXPs98oAbcDOnUw=
-X-Google-Smtp-Source: APXvYqzc1KxOytz1+EsfIwQeMzLG8XDfSGgMW5z2BM/XuBSW0SBMZyTXEFZP48//n3d+F2+3nsQ8mQ==
-X-Received: by 2002:a5d:494b:: with SMTP id r11mr11798741wrs.172.1559053626366;
-        Tue, 28 May 2019 07:27:06 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=UuRSugn3hF3nrFbpNIlzW4Mzvbi9ikb6w2/3ehwfHHc=;
+        b=hmGsA6LGC7lgrXh2/D1BBxdGRefq85ADijblH5dnygxL/7JYxRQTh5Wt/lQs9JNV9Q
+         IRvSdl4McdB0fry3i6kx0T2nw6X72dxJaxbe/W3ptcUs2lEa90fz8uetKDwPGTuBPDGv
+         F0zMVPS4RpmCCW/yeuM5ULTgawc2I2kmUVenHQ+laVVBoL8Hx/PUs6IOwgFhVWXtWwSv
+         yiGSP3mAf9Tt/37yNkFVm3O6QjxBC4Yh4jzEW6j6NWY8GOC6x1VtgVhea221VbTXIqil
+         ay00u8rxc+ww+AftmPtpHubV3HmLX6nqrlugzhtOMJimML7yjP+MNoSypW4M7PYEBCdX
+         4RbA==
+X-Gm-Message-State: APjAAAWWG7DeOHsJGv/6Zu1OnxbTp1Zb33uGXOnxU29QEJMhZHuIYHwe
+        esTKft5WLof9nocwREkVN1hhRPbbLD8=
+X-Google-Smtp-Source: APXvYqyHctP53NOKYHgl7unHCgwnS83ePoZGqZZMDbAH7h7G52yNZd7jnjYljrbnq0xgFLb35H2WiA==
+X-Received: by 2002:adf:dc12:: with SMTP id t18mr18681239wri.61.1559054220042;
+        Tue, 28 May 2019 07:37:00 -0700 (PDT)
 Received: from [192.168.1.10] (93-34-147-76.ip50.fastwebnet.it. [93.34.147.76])
-        by smtp.gmail.com with ESMTPSA id r2sm3490673wma.26.2019.05.28.07.27.05
+        by smtp.gmail.com with ESMTPSA id d17sm19585438wrw.18.2019.05.28.07.36.59
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 May 2019 07:27:05 -0700 (PDT)
+        Tue, 28 May 2019 07:36:59 -0700 (PDT)
 To:     linux-bluetooth@vger.kernel.org
 From:   Matteo Formigli <matteo.formigli@gmail.com>
-Message-ID: <c29b94c3-732f-e9f6-9593-01c89dd0b2f3@gmail.com>
-Date:   Tue, 28 May 2019 16:27:05 +0200
+Subject: Problems with bluez
+Message-ID: <f61b05a1-3e87-d09e-6892-ac1999dc6abd@gmail.com>
+Date:   Tue, 28 May 2019 16:36:59 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-intro linux-bluetooth
+Hi all!
+
+
+I am using Ubuntu 16.04 and there is no way to make the bluetooth work. 
+Every time I try to pair to my bluetooth headset bluez crashes. I really 
+don't know where to start solving this problem and I really hope that 
+someone on this list can help me.
+
+Thanks in advance for your help!
+
+Matteo
+
+P.s. The following is the output of the dpkg --status of the bluez packgage
+
+:~$ dpkg --status bluez
+Package: bluez
+Status: install ok installed
+Priority: optional
+Section: admin
+Installed-Size: 4119
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: amd64
+Multi-Arch: foreign
+Version: 5.37-0ubuntu5.1
+Replaces: bluez-alsa, bluez-audio (<= 3.36-3), bluez-input, 
+bluez-network, bluez-serial, bluez-utils (<= 3.36-3), udev (<< 170-1)
+Depends: libc6 (>= 2.15), libdbus-1-3 (>= 1.9.14), libglib2.0-0 (>= 
+2.31.8), libreadline6 (>= 6.0), libudev1 (>= 196), init-system-helpers 
+(>= 1.18~), lsb-base (>= 4.1+Debian11ubuntu7), kmod, udev (>= 170-1), dbus
+Breaks: udev (<< 170-1)
+Conflicts: bluez-alsa, bluez-audio (<= 3.36-3), bluez-utils (<= 3.36-3)
+Conffiles:
+  /etc/bluetooth/input.conf
+  /etc/bluetooth/main.conf
+  /etc/bluetooth/network.conf
+  /etc/bluetooth/proximity.conf
+  /etc/dbus-1/system.d/bluetooth.conf
+  /etc/init.d/bluetooth
+  /etc/init/bluetooth.conf
+Description: Bluetooth tools and daemons
+  This package contains tools and system daemons for using Bluetooth 
+devices.
+  .
+  BlueZ is the official Linux Bluetooth protocol stack. It is an Open 
+Source
+  project distributed under GNU General Public License (GPL).
+Homepage: http://www.bluez.org
+Original-Maintainer: Debian Bluetooth Maintainers 
+<pkg-bluetooth-maintainers@lists.alioth.deb
 
