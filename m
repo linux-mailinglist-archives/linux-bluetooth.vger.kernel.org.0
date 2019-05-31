@@ -2,74 +2,93 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B287300E7
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2019 19:22:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C4C230E12
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 31 May 2019 14:26:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726566AbfE3RWf convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 May 2019 13:22:35 -0400
-Received: from mail.wl.linuxfoundation.org ([198.145.29.98]:58670 "EHLO
-        mail.wl.linuxfoundation.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726538AbfE3RWf (ORCPT
+        id S1727184AbfEaM0D (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 31 May 2019 08:26:03 -0400
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:46783 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726330AbfEaM0C (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 May 2019 13:22:35 -0400
-Received: from mail.wl.linuxfoundation.org (localhost [127.0.0.1])
-        by mail.wl.linuxfoundation.org (Postfix) with ESMTP id ED86B289D2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 May 2019 17:22:34 +0000 (UTC)
-Received: by mail.wl.linuxfoundation.org (Postfix, from userid 486)
-        id E134D28BF8; Thu, 30 May 2019 17:22:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-        pdx-wl-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=2.0 tests=BAYES_00,NO_RECEIVED,
-        NO_RELAYS autolearn=ham version=3.3.1
-From:   bugzilla-daemon@bugzilla.kernel.org
+        Fri, 31 May 2019 08:26:02 -0400
+Received: by mail-ed1-f45.google.com with SMTP id n12so6323665edt.13
+        for <linux-bluetooth@vger.kernel.org>; Fri, 31 May 2019 05:26:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=aMbmxFRaYYw4ak2ZOoUZUfj7MueBcRf8sV1vSM6fuak=;
+        b=nQnVZVlH+C6AJCjMQz4Mm6Ld9cgOYvGCbrlyX+LFfl0fIdnI+PK678/fSyhdEEfDb8
+         JTrnnnNIA0+QA5bOsBC3nmR0gG3ccNSPpFrSFkEbQDiZNWFtjjEF19H77EeD1dxxpzRC
+         ZAT74rWJCEbWgNDk5S8YtCE230JX+psy3EzkJpgVb/YWVbipPA60a8Kbe85x2V3vslow
+         FccFhmEVWkWAu/0dz5SJmK0mrsvZRdcFjN9msRGjAfzeKQpqdtnGI/5xYcRQMUcGBMcx
+         mVoE6rIGxMXOYKrlcyG1b4Erz5/+/upQuNQ52pPoth/3S/JNFMOkF1/brm+kGZN3uS2F
+         VEnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=aMbmxFRaYYw4ak2ZOoUZUfj7MueBcRf8sV1vSM6fuak=;
+        b=S9U+p68ob44MTaqbgOeNyfJSBSU4bQERfdAFrHWQWmL4H1PK6AQGDkDQcrNFHY80ew
+         K/6lmOHToNB/iwBfuzClNxF7pDvHHCv0mLCwvpCkfWeCR60408dolqU0Nx7VptAemPIZ
+         0cVaiH3vvTUdoFt/jyqjQtYwDoXl+yNVdZ9kObpuDbxEPoiwR2G2hdx7l3MdFQxAvJlM
+         67vEs4gZZM1mZuk2OIB/OObqYmhCoOLje2cXrhTZb6lAaxDMYQzizB8hiRze5BRqN7fO
+         NYTBpt/6df7CWn58CvtWfWPHPpF6qxJjVkGesozXw3J27NqJut/dKpRNJa6hoBKtvxer
+         QxcA==
+X-Gm-Message-State: APjAAAXYPnR8Q0FnYbwLUHy1ptkqq4+pbAOcuS6E3bBac+myeQm3BfTC
+        YrWvG0eYIega6qa2cDBtHQcbclQt
+X-Google-Smtp-Source: APXvYqzspGlVky0X+g0XmPTSzJglW5Y7wLKwUP6TLHllGIC0FHzoCce+V2YdG/LVIW9+4sSyPa7+5g==
+X-Received: by 2002:a17:906:2e55:: with SMTP id r21mr8795668eji.88.1559305561212;
+        Fri, 31 May 2019 05:26:01 -0700 (PDT)
+Received: from griso ([212.129.72.108])
+        by smtp.gmail.com with ESMTPSA id 44sm1588166eds.90.2019.05.31.05.26.00
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 31 May 2019 05:26:00 -0700 (PDT)
+Date:   Fri, 31 May 2019 13:25:58 +0100
+From:   John Whitmore <arigead@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 203643] [REGRESSION][BISECTED] Sixaxis gamepad no longer
- connects via Bluetooth
-Date:   Thu, 30 May 2019 17:22:32 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: lvml@5t9.de
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-203643-62941-NQvzvb6IYz@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-203643-62941@https.bugzilla.kernel.org/>
-References: <bug-203643-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+Subject: Different respones to BLE scan from a Peripheral device?
+Message-ID: <20190531122557.GA3176@griso>
 MIME-Version: 1.0
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=203643
+Hello all,
 
-Lutz Vieweg (lvml@5t9.de) changed:
+I'm running on two identical embedded Linux Gateway devices, both on
+Ubuntu 16.04 and Bluez 5.37. That's certainly an older version, but
+it's part and parcel of that version of Ubuntu. I'm having an issue
+where the two identical gateway devices are getting different
+responses from a BLE scan, and can't figure out what would be the
+cause. In both cases it's the same peripheral device, a TI CC2650
+device. On one gateway I get a truncated response with just the MAC
+address and in the other I get the MAC address plus the description
+string "CC2650.."
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |lvml@5t9.de
+[bluepy.btle:37] Got: 'rsp=$scan\x1eaddr=b546C0E530068\x1etype=h1\x1erssi=h43\x1eflag=h0\x1ed=b020105030280AA06FF0D0003000011094343323635302053656E736F72546167051208002003020A00\n'
 
---- Comment #15 from Lutz Vieweg (lvml@5t9.de) ---
-Just came here to say that "Kensington SlimBlade Trackball Mouse" are also
-affected by this regression. Bisected this before I found this bug report via
-the commit id :-)
+[bluepy.btle:37] Got: 'rsp=$scan\x1eaddr=b546C0E530068\x1etype=h1\x1erssi=h28\x1eflag=h0\x1ed=b020105030280AA06FF0D00030000\n'
 
--- 
-You are receiving this mail because:
-You are the assignee for the bug.
+I'm probably going to have to get a Bluetooth sniffer device to trace
+this issue, but if anybody had any idea what this would be the case,
+I'd love to hear.
+
+Perhaps even though the Gateways are running the same Hardware and
+Software there might be a Hardware difference in the chipset used or
+something. It's all I can think of. Hopefully get something to help
+diagnose this issue.
+
+In those two messages there is a difference in RSS, is that signal
+strength and could that be the issue? Have to open things up.
+
+Thanks in advance for any help, and apologies I'm at the wrong end of
+a learning curve.
+
+John
