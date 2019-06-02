@@ -2,123 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CFDE732162
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  2 Jun 2019 03:05:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 887B2322D3
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  2 Jun 2019 11:40:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726849AbfFBBE5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 1 Jun 2019 21:04:57 -0400
-Received: from mailgw02.mediatek.com ([216.200.240.185]:57513 "EHLO
-        mailgw02.mediatek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726211AbfFBBE5 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 1 Jun 2019 21:04:57 -0400
-X-UUID: d94cac872b104b4c8cc425c4ebba2e79-20190601
-X-UUID: d94cac872b104b4c8cc425c4ebba2e79-20190601
-Received: from mtkcas67.mediatek.inc [(172.29.193.45)] by mailgw02.mediatek.com
-        (envelope-from <sean.wang@mediatek.com>)
-        (musrelay.mediatek.com ESMTP with TLS)
-        with ESMTP id 2052023471; Sat, 01 Jun 2019 17:04:27 -0800
-Received: from mtkcas07.mediatek.inc (172.21.101.84) by
- MTKMBS62DR.mediatek.inc (172.29.94.18) with Microsoft SMTP Server (TLS) id
- 15.0.1395.4; Sat, 1 Jun 2019 18:04:25 -0700
-Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas07.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1395.4 via Frontend
- Transport; Sun, 2 Jun 2019 09:04:24 +0800
-From:   <sean.wang@mediatek.com>
-To:     <robh+dt@kernel.org>, <mark.rutland@arm.com>,
-        <marcel@holtmann.org>, <johan.hedberg@gmail.com>
-CC:     <devicetree@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, Sean Wang <sean.wang@mediatek.com>
-Subject: [PATCH v1 4/4] Bluetooth: btmtkuart: add an implementation for clock osc property
-Date:   Sun, 2 Jun 2019 09:04:17 +0800
-Message-ID: <1559437457-26766-5-git-send-email-sean.wang@mediatek.com>
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1559437457-26766-1-git-send-email-sean.wang@mediatek.com>
-References: <1559437457-26766-1-git-send-email-sean.wang@mediatek.com>
+        id S1726190AbfFBJje (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 2 Jun 2019 05:39:34 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:50182 "EHLO mail.z3ntu.xyz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725977AbfFBJje (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 2 Jun 2019 05:39:34 -0400
+X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Sun, 02 Jun 2019 05:39:32 EDT
+Received: from g550jk.localnet (188-23-224-77.adsl.highway.telekom.at [188.23.224.77])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id CB64EC62FD;
+        Sun,  2 Jun 2019 09:33:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1559468008; bh=pQdvPMLIBmdIcqXAkWH+WvQdnCpnkFRtt4HIJgSnwC4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=mvP5P3mXB/dB/BvooP+TNehmDN6t1qMkvdl5CKdYRgltnKJO9kpa7fU37fFxFDiy4
+         0UXkiSOpD3TQfZGcOQZdzeS6m8IU7DMfmUKH9kfPRpppTaxnQhtnGTx3v+SfBowUxH
+         uTH0vnS1/M55LTnxWhCcMDZFJK5uo7VMp+SuBl1E=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Rob Herring <robh@kernel.org>
+Cc:     netdev@vger.kernel.org, Vasily Khoruzhick <anarsoul@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        devicetree <devicetree@vger.kernel.org>,
+        arm-linux <linux-arm-kernel@lists.infradead.org>,
+        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>
+Subject: Re: [PATCH 3/8] dt-bindings: net: bluetooth: Add rtl8723bs-bluetooth
+Date:   Sun, 02 Jun 2019 11:33:19 +0200
+Message-ID: <3444508.DTbMFtmaYk@g550jk>
+In-Reply-To: <CAL_Jsq+kqFrY3DoHG_TJCCSxVHRkin4OwM+F9qm6W0w5YfjPQQ@mail.gmail.com>
+References: <20190118170232.16142-1-anarsoul@gmail.com> <CA+E=qVdq5GORg-t-vVXM3zBxy3Aq93iCE+zmcGgLFBMcnTDgfw@mail.gmail.com> <CAL_Jsq+kqFrY3DoHG_TJCCSxVHRkin4OwM+F9qm6W0w5YfjPQQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MTK:  N
+Content-Type: multipart/signed; boundary="nextPart8714085.0COXUpWfup"; micalg="pgp-sha256"; protocol="application/pgp-signature"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Sean Wang <sean.wang@mediatek.com>
+--nextPart8714085.0COXUpWfup
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-Some board requires explicitily control external osscilator via GPIO.
-So, add an implementation of a clock property for an external oscillator
-to the device.
+On Dienstag, 19. Februar 2019 15:14:01 CEST Rob Herring wrote:
+> > > How is this used?
+> > 
+> > rtl8723bs-bt needs 2 firmware binaries -- one is actual firmware,
+> > another is firmware config which is specific to the board. If
+> > firmware-postfix is specified, driver appends it to the name of config
+> > and requests board-specific config while loading firmware. I.e. if
+> > 'pine64' is specified as firmware-postfix driver will load
+> > rtl8723bs_config-pine64.bin.
+> 
+> We already have 'firmware-name' defined and I'd prefer not to have
+> another way to do things. The difference is just you have to give the
+> full filename.
+> 
 
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
----
- drivers/bluetooth/btmtkuart.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+Hi Rob,
 
-diff --git a/drivers/bluetooth/btmtkuart.c b/drivers/bluetooth/btmtkuart.c
-index 1257149cfdc4..e11169ad8247 100644
---- a/drivers/bluetooth/btmtkuart.c
-+++ b/drivers/bluetooth/btmtkuart.c
-@@ -115,8 +115,9 @@ struct btmtk_hci_wmt_params {
- struct btmtkuart_dev {
- 	struct hci_dev *hdev;
- 	struct serdev_device *serdev;
--	struct clk *clk;
- 
-+	struct clk *clk;
-+	struct clk *osc;
- 	struct regulator *vcc;
- 	struct gpio_desc *reset;
- 	struct gpio_desc *boot;
-@@ -912,6 +913,12 @@ static int btmtkuart_parse_dt(struct serdev_device *serdev)
- 			return err;
- 		}
- 
-+		bdev->osc = devm_clk_get_optional(&serdev->dev, "osc");
-+		if (IS_ERR(bdev->osc)) {
-+			err = PTR_ERR(bdev->osc);
-+			return err;
-+		}
-+
- 		bdev->boot = devm_gpiod_get_optional(&serdev->dev, "boot",
- 						     GPIOD_OUT_LOW);
- 		if (IS_ERR(bdev->boot)) {
-@@ -1006,6 +1013,10 @@ static int btmtkuart_probe(struct serdev_device *serdev)
- 	set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
- 
- 	if (btmtkuart_is_standalone(bdev)) {
-+		err = clk_prepare_enable(bdev->osc);
-+		if (err < 0)
-+			return err;
-+
- 		if (bdev->boot) {
- 			gpiod_set_value_cansleep(bdev->boot, 1);
- 		} else {
-@@ -1017,8 +1028,10 @@ static int btmtkuart_probe(struct serdev_device *serdev)
- 
- 		/* Power on */
- 		err = regulator_enable(bdev->vcc);
--		if (err < 0)
-+		if (err < 0) {
-+			clk_disable_unprepare(bdev->osc);
- 			return err;
-+		}
- 
- 		/* Reset if the reset-gpios is available otherwise the board
- 		 * -level design should be guaranteed.
-@@ -1068,8 +1081,10 @@ static void btmtkuart_remove(struct serdev_device *serdev)
- 	struct btmtkuart_dev *bdev = serdev_device_get_drvdata(serdev);
- 	struct hci_dev *hdev = bdev->hdev;
- 
--	if (btmtkuart_is_standalone(bdev))
-+	if (btmtkuart_is_standalone(bdev)) {
- 		regulator_disable(bdev->vcc);
-+		clk_disable_unprepare(bdev->osc);
-+	}
- 
- 	hci_unregister_dev(hdev);
- 	hci_free_dev(hdev);
--- 
-2.17.1
+I'm working on a v2 for this patchset and I've looked on how using "firmware-
+name" with the full filename would be possible but as David Summers has already 
+written [1], the existing code [2] takes this "postfix" as parameter and 
+basically fills it into a filename template ("${CFG_NAME}-${POSTFIX}.bin"). So 
+either we stay with the "firmware-postfix" property or the existing code would 
+have to be modified to accomodate the full filename; but if using firmware-postfix 
+is unacceptable, I can rework the existing code.
+
+Luca
+
+[1] https://lore.kernel.org/netdev/d06e3c30-a34a-bd84-9cdf-535f253843e3@davidjohnsummers.uk/
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/
+drivers/bluetooth/btrtl.c#n566
+--nextPart8714085.0COXUpWfup
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE66ocILd+OiPORlvAOY2pEqPLBhkFAlzzl98ACgkQOY2pEqPL
+BhnnFA//VC5cSighumkwqn1tDlKT2am98yezWEof4TyDc9ep57nBLBfxfVi/J9o7
+S3uuBW876kpDuh5jCZ9jc7ajY/HOVk2kP63WklFmCPrFSatDw8JGaNV03cnbgV4z
+NFZh3Vgnouz+9ELHRG6o2gQiQgu4FLHrQZWzHoccDS5RmerDEFN+1/LYEQuPuFay
+WzXUcwNW4STqqQrw0AqfR61Gws1JarHMqShEmvI/5OEdfCFBlVu7uEkyMhQgurNO
+dz6Nc6KQQKPV6xBHDAHnTtXKauBENpAe8GSZyIcqpDdIIMzLm/xP1uSG7E9W2yQ8
+8YI62hXxCuKcLqNhMmmlxtnR4zQPpqV8b0bMlTHqZ/xdMsiksx/dgagafvPorvRs
+U76IRzgrye43KpLQQEmYZxCVjrvtI6RAPY764AfdwoUpo17VEUrmT40W1NkmsPyQ
+zo8m3Sl8DIvbxPTOSivZeMpN5GdgkCBT9mEQbYEkdMlDf+mUVOJBqZSNyfimwqL5
+mvtTWXneuQmpRrrIhugsO0T0fLEUqTzddawDOgA3r3f6KjQQ6JnGA7FOfF8eJNeO
+8uwK36whihKCYqUaUJaWSayF6VZVV4uurjyOMccHD+h1dYiNRBOLxcEns2XiWftw
+fcKG10h3MfKscapGVYL6HegnxTnmTSDdeb3CD+v7aP57RIqLb0g=
+=np+i
+-----END PGP SIGNATURE-----
+
+--nextPart8714085.0COXUpWfup--
+
+
 
