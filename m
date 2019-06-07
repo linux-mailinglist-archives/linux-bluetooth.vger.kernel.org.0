@@ -2,59 +2,91 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F005F37D43
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jun 2019 21:32:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A131B384F1
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Jun 2019 09:25:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726567AbfFFTcY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Jun 2019 15:32:24 -0400
-Received: from mga18.intel.com ([134.134.136.126]:30548 "EHLO mga18.intel.com"
+        id S1727703AbfFGHZo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 Jun 2019 03:25:44 -0400
+Received: from smtp1.iitb.ac.in ([103.21.127.13]:58182 "EHLO smtp1.iitb.ac.in"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726077AbfFFTcX (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Jun 2019 15:32:23 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 06 Jun 2019 12:32:23 -0700
-X-ExtLoop1: 1
-Received: from orsmsx110.amr.corp.intel.com ([10.22.240.8])
-  by fmsmga004.fm.intel.com with ESMTP; 06 Jun 2019 12:32:22 -0700
-Received: from orsmsx151.amr.corp.intel.com (10.22.226.38) by
- ORSMSX110.amr.corp.intel.com (10.22.240.8) with Microsoft SMTP Server (TLS)
- id 14.3.408.0; Thu, 6 Jun 2019 12:32:22 -0700
-Received: from orsmsx103.amr.corp.intel.com ([169.254.5.232]) by
- ORSMSX151.amr.corp.intel.com ([169.254.7.242]) with mapi id 14.03.0415.000;
- Thu, 6 Jun 2019 12:32:22 -0700
-From:   "Gix, Brian" <brian.gix@intel.com>
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "Stotland, Inga" <inga.stotland@intel.com>
-Subject: Re: [PATCH BlueZ 0/2] Minor fixes and clean up
-Thread-Topic: [PATCH BlueZ 0/2] Minor fixes and clean up
-Thread-Index: AQHVHAXEkGpwoByVnUuBPei1rt9SvqaPemuA
-Date:   Thu, 6 Jun 2019 19:32:22 +0000
-Message-ID: <8cf1f8c82d27176ab5459b33d65c31a2750033e9.camel@intel.com>
-References: <20190606011832.18801-1-inga.stotland@intel.com>
-In-Reply-To: <20190606011832.18801-1-inga.stotland@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.254.92.237]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <86B70267948A904FA3BD70E2338876E1@intel.com>
-Content-Transfer-Encoding: base64
+        id S1727695AbfFGHZo (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 7 Jun 2019 03:25:44 -0400
+Received: from ldns2.iitb.ac.in (ldns2.iitb.ac.in [10.200.12.2])
+        by smtp1.iitb.ac.in (Postfix) with SMTP id C5EF7105C472
+        for <linux-bluetooth@vger.kernel.org>; Fri,  7 Jun 2019 12:01:53 +0530 (IST)
+Received: (qmail 29995 invoked by uid 510); 7 Jun 2019 12:01:34 +0530
+X-Qmail-Scanner-Diagnostics: from 10.200.1.25 by ldns2 (envelope-from <rws@aero.iitb.ac.in>, uid 501) with qmail-scanner-2.11
+ spamassassin: 3.4.1. mhr: 1.0. {clamdscan: 0.100.0/25472} 
+ Clear:RC:1(10.200.1.25):SA:0(1.5/7.0):. Processed in 3.224183 secs; 07 Jun 2019 12:01:34 +0530
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on ldns2.iitb.ac.in
+X-Spam-Level: *
+X-Spam-Status: No, score=1.5 required=7.0 tests=BAYES_50,IITB_ORIG,
+        MISSING_HEADERS,PROPER_IITB_MSGID autolearn=disabled version=3.4.1
+X-Spam-Pyzor: Reported 1 times.
+X-Envelope-From: rws@aero.iitb.ac.in
+X-Qmail-Scanner-Mime-Attachments: |
+X-Qmail-Scanner-Zip-Files: |
+Received: from unknown (HELO ldns2.iitb.ac.in) (10.200.1.25)
+  by ldns2.iitb.ac.in with SMTP; 7 Jun 2019 12:01:31 +0530
+Received: from vayu.aero.iitb.ac.in (vayu.aero.iitb.ac.in [10.101.1.1])
+        by ldns2.iitb.ac.in (Postfix) with ESMTP id CB958341965;
+        Fri,  7 Jun 2019 12:01:17 +0530 (IST)
+Received: from localhost (localhost [127.0.0.1])
+        by vayu.aero.iitb.ac.in (Postfix) with ESMTP id 9509A8902E52F;
+        Fri,  7 Jun 2019 12:01:17 +0530 (IST)
+Received: from vayu.aero.iitb.ac.in ([127.0.0.1])
+        by localhost (vayu.aero.iitb.ac.in [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 3VnK-_U7b-vs; Fri,  7 Jun 2019 12:01:17 +0530 (IST)
+Received: from localhost (localhost [127.0.0.1])
+        by vayu.aero.iitb.ac.in (Postfix) with ESMTP id 5DAB88902E54D;
+        Fri,  7 Jun 2019 12:01:14 +0530 (IST)
+X-Virus-Scanned: amavisd-new at aero.iitb.ac.in
+Received: from vayu.aero.iitb.ac.in ([127.0.0.1])
+        by localhost (vayu.aero.iitb.ac.in [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id TgJiwoMo_EHZ; Fri,  7 Jun 2019 12:01:14 +0530 (IST)
+Received: from vayu.aero.iitb.ac.in (vayu.aero.iitb.ac.in [10.101.1.1])
+        by vayu.aero.iitb.ac.in (Postfix) with ESMTP id 0EEE684310111;
+        Fri,  7 Jun 2019 12:01:10 +0530 (IST)
+Date:   Fri, 7 Jun 2019 12:01:09 +0530 (IST)
+From:   Martins Henry <rws@aero.iitb.ac.in>
+Message-ID: <412557711.60336.1559889069980.JavaMail.zimbra@aero.iitb.ac.in>
+Subject: Thanks and I wait for your answer
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.101.1.5]
+X-Mailer: Zimbra 8.8.12_GA_3803 (ZimbraWebClient - FF11 (Win)/8.8.12_GA_3794)
+Thread-Index: SsslhYkcLNFU69da/wYft5cO9/ZYnA==
+Thread-Topic: Thanks and I wait for your answer
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-UGF0Y2hlcyBBcHBsaWVkDQoNCk9uIFdlZCwgMjAxOS0wNi0wNSBhdCAxODoxOCAtMDcwMCwgSW5n
-YSBTdG90bGFuZCB3cm90ZToNCj4gQ2xlYW51cCBjb2Rpbmcgc3R5bGUuIERvbid0IGNoZWNrIHRo
-ZSByZXR1cm4gdmFsdWVzIG9mIGxfbmV3KCkgYW5kDQo+IGxfcXVldWVfbmV3KCkuDQo+IEFkZCBj
-aGVjayBmb3IgdGhlIHByZXNlbnNlIG9mICJlbGVtZW50cyIgcHJvcGVydHkgaW4gbm9kZQ0KPiBj
-b25maWd1cmF0aW9uDQo+IChpdCdzIG1hbmRhdG9yeSkgDQo+IA0KPiBJbmdhIFN0b3RsYW5kICgy
-KToNCj4gICBtZXNoOiBNYWtlICJlbGVtZW50cyIgbWFuZGF0b3J5IGluIG5vZGUgY29uZmlndXJh
-dGlvbg0KPiAgIG1lc2g6IENsZWFuIHVwIHN0eWxlDQo+IA0KPiAgbWVzaC9tZXNoLWRiLmMgfCAy
-MyArKysrKysrKystLS0tLS0tLS0tLS0tLQ0KPiAgbWVzaC9tb2RlbC5jICAgfCAyNSArKysrKysr
-KysrKysrLS0tLS0tLS0tLS0tDQo+ICAyIGZpbGVzIGNoYW5nZWQsIDIyIGluc2VydGlvbnMoKyks
-IDI2IGRlbGV0aW9ucygtKQ0KPiANCg==
+Hello,
+
+I am Martin Henry, An American Citizen; I am the personal secretary to
+Mr. Donald Railton, the controller of a Lottery Company. Please I am
+having big problem now, I have a 6yrs old daughter who has leukemia, a
+disease of the blood, and she needs a bone marrow transplant or she
+will die.
+
+Please I am only asking for your help and you will benefit from it
+also. As an insider with Lottery Firm, working as the personal
+secretary to the controller, I want you to send me your name to play,
+I have some numbers that are going to win, stored in his secret data
+system in the office. The Lottery is an online entry with credit card
+anywhere with a name and address. All I want you to do is to send your
+name to play it and I will send confirmation to you.
+
+I will play with my card on your name and the Prize will be shared
+equally between us. Immediately the results are released they will
+contact you for payment as the oversea winner. The lotto can be played
+with 9.00 dollars, or 50 dollars but the prize will be Millions.
+Remember that I am playing on your name with my card; I just want to
+front you for this, because I need this money to save the life of my
+little daughter.
+
+Thanks and I wait for your answer
+Martin Henry.
