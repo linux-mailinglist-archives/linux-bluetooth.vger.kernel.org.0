@@ -2,70 +2,50 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BC1E23C04C
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Jun 2019 02:03:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A4AD3C46A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Jun 2019 08:43:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390963AbfFKADC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 10 Jun 2019 20:03:02 -0400
-Received: from mail-it1-f200.google.com ([209.85.166.200]:51179 "EHLO
-        mail-it1-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390707AbfFKADB (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 10 Jun 2019 20:03:01 -0400
-Received: by mail-it1-f200.google.com with SMTP id i130so982633ite.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 10 Jun 2019 17:03:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id:subject
-         :from:to;
-        bh=BGU/uwJcReQCv6nn+WhFGIGHksEiczAeWFNDRC68WZQ=;
-        b=hrV/b74d8zqprpHISaDBNUcOslAMACaUIhLat/cA8L78ERPfwTcJbXAdw4DqCvHhvg
-         bI49odGi2ryv4Tal0xvNpT9f2ooyY0k9IPpJNOjqma8Eejii6QcQXVHzw8KV3vjhX1LD
-         9gqfC+tm6BsOsn4YzyV2V8U98p86ouq92pZUTFWYHDloYW4jrJAyr4Y9j4WxzIsGm54T
-         ra8CFEKLo/5nHHOrPv2jRWdZdyvZeUTXfvZu3xMn3JUHyC3RQdfKcbpTUN3cKA2mDnN4
-         e3wdOC+NA478hSZV29You5X8f9epb4xbQTGavds+itjeRbqZ1LZq/n+gjEQRYZ7aQi5a
-         2yrQ==
-X-Gm-Message-State: APjAAAXn1QJOFnwlH2W8HAX9h3ZqyO3R+8/rHpBvvz7BvgGM2ht/w3bY
-        8xD1Yt4lplpZFz0sALSHX5zJsRTNLymqmWScPnQ8ljLobXmE
-X-Google-Smtp-Source: APXvYqzx9rj11bcg+7STaXdm9KktQ2r9Jg6Sj2EJYOft/TSvFh3KUQmHtzKOUCqSnnwXsGCuuE5sSmY8xInECwTtYZlI3FkBzuRU
-MIME-Version: 1.0
-X-Received: by 2002:a24:f6cb:: with SMTP id u194mr4207390ith.160.1560211381250;
- Mon, 10 Jun 2019 17:03:01 -0700 (PDT)
-Date:   Mon, 10 Jun 2019 17:03:01 -0700
-In-Reply-To: <0000000000002f9ef4058848f26d@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000277785058b0105df@google.com>
-Subject: Re: KASAN: use-after-free Read in kfree_skb (3)
-From:   syzbot <syzbot+dcb1305dd05699c40640@syzkaller.appspotmail.com>
-To:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, marcel@holtmann.org,
-        syzkaller-bugs@googlegroups.com, thierry.reding@gmail.com
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+        id S2403836AbfFKGnD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 11 Jun 2019 02:43:03 -0400
+Received: from ps440452.dreamhost.com ([205.196.210.232]:40603 "EHLO
+        dbcdata.top" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2390485AbfFKGnD (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 11 Jun 2019 02:43:03 -0400
+To:     linux-bluetooth@vger.kernel.org
+From:   Martin Winkler <info@dbcdata.top>
+Subject: AW: Antwort
+Date:   Mon, 10 Jun 2019 23:43:03 -0700
+Message-ID: <20190611_064303_097549.info@dbcdata.top>
+X-Mailer: WEBMAIL
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Mime-Version: 1.0
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-syzbot has bisected this bug to:
+Sehr geehrte Damen und Herren,
 
-commit 5ec8c48a6235175f7ff59ed1acbe91d4d0398026
-Author: Thierry Reding <thierry.reding@gmail.com>
-Date:   Thu Jul 6 15:16:47 2017 +0000
+nach unserem Besuch Ihrer Homepage möchten wir Ihnen ein Angebot von Produkten vorstellen, das Ihnen ermöglichen wird, den Verkauf Ihrer Produkte sowie 
+Dienstleistungen deutlich zu erhöhen. 
 
-     Merge branch 'for-4.13/drivers' into for-next
+Die Datenbanken der Firmen sind in für Sie interessante und relevante Zielgruppen untergliedert. 
 
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=14ef22daa00000
-start commit:   d1fdb6d8 Linux 5.2-rc4
-git tree:       upstream
-final crash:    https://syzkaller.appspot.com/x/report.txt?x=16ef22daa00000
-console output: https://syzkaller.appspot.com/x/log.txt?x=12ef22daa00000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=fa9f7e1b6a8bb586
-dashboard link: https://syzkaller.appspot.com/bug?extid=dcb1305dd05699c40640
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=13c787f2a00000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=10e32801a00000
+Die Firmenangaben beinhalten: Name der Firma, Ansprechpartner, E-mail Adresse, Tel. + Fax-Nr., PLZ, Ort, Straße etc. 
 
-Reported-by: syzbot+dcb1305dd05699c40640@syzkaller.appspotmail.com
-Fixes: 5ec8c48a6235 ("Merge branch 'for-4.13/drivers' into for-next")
+--
+1. Gesamtpaket 2019 DE 1 Mio. Firmenadressen ( 1 457 620 ) - 190 EUR ( bis zum 11.06.2019 ) 
+2. Gesamtpaket 2019 DE,AT,CH ( 1 747 921 ) - 240 EUR ( bis zum 11.06.2019 ) 
+--
 
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+Die Verwendungsmöglichkeiten der Datenbanken sind praktisch unbegrenzt und Sie können durch Verwendung der von uns entwickelten 
+Programme des personalisierten Versendens von Angeboten u.ä. mittels E-mailing bzw. Fax effektive und sichere Werbekampagnen damit durchführen. 
+
+Bitte informieren Sie sich über die weiteren Details einmal unverbindlich auf unseren Webseiten: 
+
+http://www.acdbmarketing.net/?p=1
+
+Mit freundlichen Grüßen
+Martin Winkler
+
