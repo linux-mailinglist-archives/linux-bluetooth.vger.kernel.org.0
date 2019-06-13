@@ -2,85 +2,90 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C0F24494B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2019 19:16:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57B9744456
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2019 18:37:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726319AbfFMRQX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 13 Jun 2019 13:16:23 -0400
-Received: from mga05.intel.com ([192.55.52.43]:50481 "EHLO mga05.intel.com"
+        id S2392590AbfFMQgO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 13 Jun 2019 12:36:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53624 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728592AbfFLViX (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 12 Jun 2019 17:38:23 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 12 Jun 2019 14:38:21 -0700
-X-ExtLoop1: 1
-Received: from orsmsx105.amr.corp.intel.com ([10.22.225.132])
-  by orsmga003.jf.intel.com with ESMTP; 12 Jun 2019 14:38:20 -0700
-Received: from orsmsx115.amr.corp.intel.com (10.22.240.11) by
- ORSMSX105.amr.corp.intel.com (10.22.225.132) with Microsoft SMTP Server (TLS)
- id 14.3.408.0; Wed, 12 Jun 2019 14:38:20 -0700
-Received: from orsmsx103.amr.corp.intel.com ([169.254.5.232]) by
- ORSMSX115.amr.corp.intel.com ([169.254.4.229]) with mapi id 14.03.0415.000;
- Wed, 12 Jun 2019 14:38:20 -0700
-From:   "Gix, Brian" <brian.gix@intel.com>
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "Stotland, Inga" <inga.stotland@intel.com>
-Subject: Re: [PATCH BlueZ 1/1] mesh: Remove redundant checks when adding a
- net key
-Thread-Topic: [PATCH BlueZ 1/1] mesh: Remove redundant checks when adding a
- net key
-Thread-Index: AQHVIKu9El0pujejoky/fQWC0wY06KaZAk0A
-Date:   Wed, 12 Jun 2019 21:38:20 +0000
-Message-ID: <1560375498.11349.0.camel@intel.com>
-References: <20190611231643.25165-1-inga.stotland@intel.com>
-In-Reply-To: <20190611231643.25165-1-inga.stotland@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.254.54.44]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <C8ED9017DEB7654A8DEA9802015B1021@intel.com>
-Content-Transfer-Encoding: base64
+        id S1730692AbfFMHfV (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 13 Jun 2019 03:35:21 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3C5FF20866;
+        Thu, 13 Jun 2019 07:35:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560411320;
+        bh=mZOzCqx3eT/+VtqG9suaVNKtiI7GMTR02WnJhf2gRy0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=L7rovxjtpPBh+rST+d1xo73WMv0KBX5MDbgsTQh7mHqvXrQA5Bht5or9M6z3fwWDb
+         8dNJQ9iXX4kQeXKdALwOpKoYwYqfEyvdvlEDie8W/4iAmAoJ9nxB2K0MkD4TtND6n5
+         fgNjBkIt1eUhepgTsPvpsXC5xGcdIYRj8bdIdWb8=
+Date:   Thu, 13 Jun 2019 09:35:18 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Hans de Goede <hdegoede@redhat.com>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        linux-bluetooth@vger.kernel.org, Jeremy Cline <jeremy@jcline.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: Bluetooth regression breaking BT connection for all 2.0 and
+ older devices in 5.0.15+, 5.1.x and master
+Message-ID: <20190613073518.GA16436@kroah.com>
+References: <af8cf6f4-4979-2f6f-68ed-e5b368b17ec7@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <af8cf6f4-4979-2f6f-68ed-e5b368b17ec7@redhat.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-QXBwbGllZCB3aXRoIG1pbm9yIGNvbW1pdCBtZXNzYWdlIHR3ZWVrcw0KDQpPbiBUdWUsIDIwMTkt
-MDYtMTEgYXQgMTY6MTYgLTA3MDAsIEluZ2EgU3RvdGxhbmQgd3JvdGU6DQo+IFRoaXMgcGF0Y2gg
-Y2xlYW5zIHVwIHJlZHVuZGFudCBjaGVja3MgaW4gc2RkX2tleSgpIGFuZCBtZXNoX25ldF9zZXRf
-a2V5KCk6DQo+IG5vIG5lZWQgdG8gY2hlY2sgdGhlIHJlc3VsdCBvZiBsX3F1ZXVlX3B1c2hfdGFp
-bCgpIGFuZCBub3QgbmVlZCB0byBjaGVjaw0KPiBpZiBzdWJuZXQgaXMgdmFsaWQgYWZ0ZXIgaXQg
-d2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVkLg0KPiAtLS0NCj4gIG1lc2gvbmV0LmMgfCAxOSArKysr
-KysrKy0tLS0tLS0tLS0tDQo+ICAxIGZpbGUgY2hhbmdlZCwgOCBpbnNlcnRpb25zKCspLCAxMSBk
-ZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9tZXNoL25ldC5jIGIvbWVzaC9uZXQuYw0K
-PiBpbmRleCBmZGQzOGU3Y2UuLmE1OTdiODc5NCAxMDA2NDQNCj4gLS0tIGEvbWVzaC9uZXQuYw0K
-PiArKysgYi9tZXNoL25ldC5jDQo+IEBAIC05OTIsMTIgKzk5MiwxMyBAQCBzdGF0aWMgc3RydWN0
-IG1lc2hfc3VibmV0ICphZGRfa2V5KHN0cnVjdCBtZXNoX25ldCAqbmV0LCB1aW50MTZfdCBpZHgs
-DQo+ICAJCXJldHVybiBOVUxMOw0KPiAgCX0NCj4gIA0KPiAtCWlmICghY3JlYXRlX3NlY3VyZV9i
-ZWFjb24obmV0LCBzdWJuZXQsIHN1Ym5ldC0+c25iLmJlYWNvbiArIDEpIHx8DQo+IC0JCQkJIWxf
-cXVldWVfcHVzaF90YWlsKG5ldC0+c3VibmV0cywgc3VibmV0KSkgew0KPiArCWlmICghY3JlYXRl
-X3NlY3VyZV9iZWFjb24obmV0LCBzdWJuZXQsIHN1Ym5ldC0+c25iLmJlYWNvbiArIDEpKSB7DQo+
-ICAJCXN1Ym5ldF9mcmVlKHN1Ym5ldCk7DQo+ICAJCXJldHVybiBOVUxMOw0KPiAgCX0NCj4gIA0K
-PiArCWxfcXVldWVfcHVzaF90YWlsKG5ldC0+c3VibmV0cywgc3VibmV0KTsNCj4gKw0KPiAgCXJl
-dHVybiBzdWJuZXQ7DQo+ICB9DQo+ICANCj4gQEAgLTMwMTgsMTEgKzMwMTksNiBAQCBib29sIG1l
-c2hfbmV0X3NldF9rZXkoc3RydWN0IG1lc2hfbmV0ICpuZXQsIHVpbnQxNl90IGlkeCwgY29uc3Qg
-dWludDhfdCAqa2V5LA0KPiAgew0KPiAgCXN0cnVjdCBtZXNoX3N1Ym5ldCAqc3VibmV0Ow0KPiAg
-DQo+IC0Jc3VibmV0ID0gbF9xdWV1ZV9maW5kKG5ldC0+c3VibmV0cywgbWF0Y2hfa2V5X2luZGV4
-LA0KPiAtCQkJCQkJCUxfVUlOVF9UT19QVFIoaWR4KSk7DQo+IC0JaWYgKHN1Ym5ldCkNCj4gLQkJ
-cmV0dXJuIGZhbHNlOw0KPiAtDQo+ICAJLyogQ3VycmVudCBrZXkgbXVzdCBiZSBhbHdheXMgcHJl
-c2VudCAqLw0KPiAgCWlmICgha2V5KQ0KPiAgCQlyZXR1cm4gZmFsc2U7DQo+IEBAIC0zMDMxLDEy
-ICszMDI3LDEzIEBAIGJvb2wgbWVzaF9uZXRfc2V0X2tleShzdHJ1Y3QgbWVzaF9uZXQgKm5ldCwg
-dWludDE2X3QgaWR4LCBjb25zdCB1aW50OF90ICprZXksDQo+ICAJaWYgKHBoYXNlICE9IEtFWV9S
-RUZSRVNIX1BIQVNFX05PTkUgJiYgIW5ld19rZXkpDQo+ICAJCXJldHVybiBmYWxzZTsNCj4gIA0K
-PiAtCXN1Ym5ldCA9IGFkZF9rZXkobmV0LCBpZHgsIGtleSk7DQo+IC0JaWYgKCFzdWJuZXQpDQo+
-IC0JCXJldHVybiBmYWxzZTsNCj4gLQ0KPiArCS8qIENoZWNrIGlmIHRoZSBzdWJuZXQgd2l0aCB0
-aGUgc3BlY2lmaWVkIGluZGV4IGFscmVhZHkgZXhpc3RzICovDQo+ICAJc3VibmV0ID0gbF9xdWV1
-ZV9maW5kKG5ldC0+c3VibmV0cywgbWF0Y2hfa2V5X2luZGV4LA0KPiAgCQkJCQkJCUxfVUlOVF9U
-T19QVFIoaWR4KSk7DQo+ICsJaWYgKHN1Ym5ldCkNCj4gKwkJcmV0dXJuIGZhbHNlOw0KPiArDQo+
-ICsJc3VibmV0ID0gYWRkX2tleShuZXQsIGlkeCwga2V5KTsNCj4gIAlpZiAoIXN1Ym5ldCkNCj4g
-IAkJcmV0dXJuIGZhbHNlOw0KPiAg
+On Mon, Jun 10, 2019 at 03:31:55PM +0200, Hans de Goede wrote:
+> Hi All,
+> 
+> First of all this is a known issue and it seems a fix is in the works,
+> but what I do not understand is why the commit causing this has not
+> simply been reverted until the fix is done, esp. for the 5.0.x
+> stable series where this was introduced in 5.0.15.
+> 
+> The problem I'm talking about is commit d5bb334a8e17 ("Bluetooth: Align
+> minimum encryption key size for LE and BR/EDR connections"):
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d5bb334a8e171b262e48f378bd2096c0ea458265
+> basically completely breaking all somewhat older (and some current cheap
+> no-name) bluetooth devices:
+> 
+> A revert of this was first proposed on May 22nd:
+> https://lore.kernel.org/netdev/CA+E=qVfopSA90vG2Kkh+XzdYdNn=M-hJN_AptW=R+B5v3HB9eA@mail.gmail.com/T/
+> We are 18 days further now and this problem still exists, including in the
+> 5.0.15+ and 5.1.x stable kernels.
+> 
+> A solution has been suggested: https://lore.kernel.org/linux-bluetooth/20190522070540.48895-1-marcel@holtmann.org/T/#u
+> and at least the Fedora 5.1.4+ kernels now carry this as a temporary fix,
+> but as of today I do not see a fix nor a revert in Torvald's tree yet and
+> neither does there seem to be any fix in the 5.0.x and 5.1.x stable series.
+> 
+> In the mean time we are getting a lot of bug reports about this:
+> https://bugzilla.kernel.org/show_bug.cgi?id=203643
+> https://bugzilla.redhat.com/show_bug.cgi?id=1711468
+> https://bugzilla.redhat.com/show_bug.cgi?id=1713871
+> https://bugzilla.redhat.com/show_bug.cgi?id=1713980
+> 
+> And some reporters:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1713871#c4
+> Are indicating that the Fedora kernels with the workaround included
+> still do not work...
+> 
+> As such I would like to suggest that we just revert the troublesome
+> commit for now and re-add it when we have a proper fix.
+
+I've now reverted this as it does not seem to be going anywhere anytime
+soon.  After the mess gets sorted out in Linus's tree, if someone could
+send stable@vger the commit ids that should be applied, I will be glad
+to do so.
+
+thanks,
+
+greg k-h
