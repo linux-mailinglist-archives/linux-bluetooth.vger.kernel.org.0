@@ -2,71 +2,29 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 237BF4BE00
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Jun 2019 18:25:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A01F4FBB2
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Jun 2019 14:58:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727068AbfFSQY6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 19 Jun 2019 12:24:58 -0400
-Received: from atrey.karlin.mff.cuni.cz ([195.113.26.193]:39083 "EHLO
-        atrey.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726479AbfFSQY6 (ORCPT
+        id S1726626AbfFWM6f (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 23 Jun 2019 08:58:35 -0400
+Received: from [163.204.244.238] ([163.204.244.238]:49918 "EHLO
+        localhost.localdomain" rhost-flags-FAIL-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726429AbfFWM6f (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 19 Jun 2019 12:24:58 -0400
-Received: by atrey.karlin.mff.cuni.cz (Postfix, from userid 512)
-        id B2F5C804A3; Wed, 19 Jun 2019 18:24:45 +0200 (CEST)
-Date:   Wed, 19 Jun 2019 18:24:56 +0200
-From:   Pavel Machek <pavel@ucw.cz>
-To:     kernel list <linux-kernel@vger.kernel.org>, security@kernel.org,
-        linux-bluetooth@vger.kernel.org, johan.hedberg@gmail.com,
-        marcel@holtmann.org
-Subject: (Small) bias in generation of random passkeys for pairing
-Message-ID: <20190619162456.GA9096@amd>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="TB36FDmn/VVEgNH/"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        Sun, 23 Jun 2019 08:58:35 -0400
+X-Greylist: delayed 21630 seconds by postgrey-1.27 at vger.kernel.org; Sun, 23 Jun 2019 08:58:34 EDT
+Received: from localhost (localhost [IPv6:::1])
+        by localhost.localdomain (Postfix) with SMTP id 3F8552461791
+        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Jun 2019 01:10:43 +0800 (CST)
+From:   linux-bluetooth@vger.kernel.org
+To:     vkS3Pmlinux-bluetooth@vger.kernel.org
+Reply-To: prodawez@armyspy.com
+Subject: Klientskie bazy. Email: prodawez@armyspy.com Uznajte podrobnee.
+Message-Id: <20190619171044.3F8552461791@localhost.localdomain>
+Date:   Thu, 20 Jun 2019 01:10:43 +0800 (CST)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-
---TB36FDmn/VVEgNH/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-There's a (small) bias in passkey generation in bluetooth:
-
-                get_random_bytes(&passkey, sizeof(passkey));
- 		passkey %=3D 1000000;
-		put_unaligned_le32(passkey, smp->tk);
-
-(there are at least two places doing this).
-
-All passkeys are not of same probability, passkey "000000" is more
-probable than "999999", but difference is small.
-
-Do we care?
-									Pavel
---=20
-(english) http://www.livejournal.com/~pavelmachek
-(cesky, pictures) http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/blo=
-g.html
-
---TB36FDmn/VVEgNH/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAl0KYdgACgkQMOfwapXb+vIpbACdESrG2uX8VrOmg0/hD77A6bpQ
-75YAniV2BHuvjLcaxwks3pCJVyNcOrjC
-=9pXo
------END PGP SIGNATURE-----
-
---TB36FDmn/VVEgNH/--
+Klientskie bazy. Email: prodawez@armyspy.com Uznajte podrobnee.
