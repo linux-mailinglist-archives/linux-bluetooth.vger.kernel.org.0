@@ -2,53 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D6E644BC9A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Jun 2019 17:15:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FBCA4BD70
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Jun 2019 18:03:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729202AbfFSPPc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 19 Jun 2019 11:15:32 -0400
-Received: from mail-ua1-f49.google.com ([209.85.222.49]:39302 "EHLO
-        mail-ua1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726428AbfFSPPc (ORCPT
+        id S1727880AbfFSQDY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 19 Jun 2019 12:03:24 -0400
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:41750 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726332AbfFSQDY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 19 Jun 2019 11:15:32 -0400
-Received: by mail-ua1-f49.google.com with SMTP id j8so10214813uan.6
-        for <linux-bluetooth@vger.kernel.org>; Wed, 19 Jun 2019 08:15:31 -0700 (PDT)
+        Wed, 19 Jun 2019 12:03:24 -0400
+Received: by mail-wr1-f43.google.com with SMTP id c2so3979094wrm.8
+        for <linux-bluetooth@vger.kernel.org>; Wed, 19 Jun 2019 09:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=HMa7oS0CmDrrKygTGF/ZlkmorzP0NmH2st8gqoaLAIo=;
-        b=Ic1qMLi+OJMk15kAmxKU+lNtdZgMwrRNRWM/BUET1ayI5/61ZAnAKMcJA3+fgIg7jf
-         tHzSUXLCSmi3MXCBQaUbAto1MXESJwZ3Y4FG0s6acZEonpUz1AJySbxsg0F9DfAk2T/3
-         kC2dXnAP2pX8YTm9HiSDqHgCM/C1ST1nsoQieELjcMC3g0PIh73+VtBqPv0t++47NTu6
-         wZvvqBfZ4OGlPLQsnf7E6RvJJBxajy2FQJDVzs+6wsod2pbj9B0GCL6cFj0M3EYTpLuw
-         du7X1/h23kGoWBJ08ukfAhII0TyT8ZMwrIXP0yKWJgoz7pOmWuwxJIZGyiKD6py8S6ER
-         EBLg==
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=r4yG/ob6dMSszNPgQlvBj7Wk3E1lO3Bua5skK8fmqOA=;
+        b=qIuSX1k8LIR+t+YZNBJncGR0gO7Cy8heJJPoIcsoezPuHjQQg8yfTLRVKIdWELTR60
+         rk3io2LhD+zWK2ErPNnQpehkNWmtK++D+CDWqoq/Rpu3LciImKCFmIUcDRQxov5vySb9
+         wEzDN2x7XWdnVzh+gLzdCtphZlW1cB/y+jSYCUqAgZ7GNyj0oYmZSsXeHD3HUfCExr9s
+         0xo8GcDb2+gLKLo51ElwAfW/FwlWeX4XEkDB6esq6U5Rl3nOLmxjsialW2UoX53C8dS9
+         8AUXUTxy3BEzHaI/L0A9RPfvLLMygIrvBjgsJ+1axnD4lUuSQT2QXxvVhMKorJQDjPtP
+         zaPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=HMa7oS0CmDrrKygTGF/ZlkmorzP0NmH2st8gqoaLAIo=;
-        b=cRD1nSzf8kAEBSuUMZK1pAKgpWEJ7rDq8cHbnYl8iZEh79nPI6RNyNFS/kQPG38x1y
-         38vmTwp0uMQUTUrz4ltpkXfCGxivcOsI2dmENshXU9m6HvLj2cUOuLGjkJuX7t4ygL2c
-         GzGQfFQPSHFzCQDJ1pWLKbxqwwHZUTUdUgEEh+BM9IZAiYAlZAPRBTyz4VZQRLQ7YT7G
-         yKXRxV42I8tIPjwwoSJpfGDdfVzhwoxSPMd5NGVNkqDK390s++j6xGDpsZj3ie40JwSW
-         gx2V/FuVp5rl5ixpW//If9VIZQZKKBXqn6YHsEOTRZJzQncAIMk1ugQvMTYIkTiMHrgG
-         vTUg==
-X-Gm-Message-State: APjAAAUcy4U0PjU+Crek1awUo4H4ieLYBs8F30LAUnCRLsRvmiquUGrm
-        8GDdTu1AP4ikFhCq1Oqk5CEqaYiHf/B9EN0HDu659XfO4ts=
-X-Google-Smtp-Source: APXvYqxdTvJ6/9EFivxTdqSAPV7xX5r7p7ujFFYXrAf7hWmDiQjUvlfGhrBSREDeNjTuzcrlKTqe2K4vzv9jv5CjJzQ=
-X-Received: by 2002:a67:7cd0:: with SMTP id x199mr59742434vsc.233.1560957330309;
- Wed, 19 Jun 2019 08:15:30 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=r4yG/ob6dMSszNPgQlvBj7Wk3E1lO3Bua5skK8fmqOA=;
+        b=uHiBJ9wdkR1f5K6aUaSio0uDv4LMsQw6JISc4HH5n5Wk/WWOYl2dG8pkdUgQqxiY4D
+         cACqyVVKJ5RXKcFJLOPft4cz0Rs9VT4N8Bk7C3PZoYO/g1rDx7JVFAXmqNNThO31w0e0
+         orrgPqU361qg3vm+fgl6vnv4uV3hAIV5scpAoIcEC5ONvK+V6znNIU4kify6w2pVvbFk
+         2DyJ//WumoShOxFAvIHExhRKahJ8CUu5ulzP6kcbqISUTCTujkFyGwfWv2vAjQy7rtYe
+         4PGk29mITteslOd5p0lZHvgG2GJXSh5IPwbs7Aey5C74GFH9IpEhF7mCxgfSloZUzM7E
+         aGIQ==
+X-Gm-Message-State: APjAAAVn5/v1tDtBo2yHLXZRH7xdJMllHfkHMc3Nukz7BzoAex+CtERR
+        txoHHtEzMjcIJRzkNcjBhlqkVSZn
+X-Google-Smtp-Source: APXvYqzkGpikEd8pNzPbVoxKmz20KlaHyWxZb+uYGzfTmLNm461fwqznfpVmkYXTu6hTdUDrADqTMg==
+X-Received: by 2002:adf:f544:: with SMTP id j4mr16099494wrp.150.1560960202162;
+        Wed, 19 Jun 2019 09:03:22 -0700 (PDT)
+Received: from pali ([2a02:2b88:2:1::5cc6:2f])
+        by smtp.gmail.com with ESMTPSA id j18sm22669187wre.23.2019.06.19.09.03.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 19 Jun 2019 09:03:20 -0700 (PDT)
+Date:   Wed, 19 Jun 2019 18:03:20 +0200
+From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
+To:     linux-bluetooth@vger.kernel.org,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Subject: bluez: avctp_connect_cb(): BT_IO_OPT_IMTU for omtu?
+Message-ID: <20190619160320.kwumolq6sgetfuzf@pali>
 MIME-Version: 1.0
-From:   Brice Waegenire <brice.wge@gmail.com>
-Date:   Wed, 19 Jun 2019 17:15:18 +0200
-Message-ID: <CAL5NfX2J1+obt-TaM8U1Fpd2V7g54ME_JsoX6OyjtKajoxTDPQ@mail.gmail.com>
-Subject: 
-To:     linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="cmtstwqviymasn6t"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-subscribe linux-bluetooth
+
+--cmtstwqviymasn6t
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hello, in bluez source code is function avctp_connect_cb() with
+following code:
+
+	bt_io_get(chan, &gerr,
+			BT_IO_OPT_DEST, &address,
+			BT_IO_OPT_IMTU, &imtu,
+			BT_IO_OPT_IMTU, &omtu,
+			BT_IO_OPT_INVALID);
+
+Why is BT_IO_OPT_IMTU used for retrieving omtu? Should not be there
+BT_IO_OPT_OMTU for retrieving omtu? Seems like a typo: imtu vs omtu.
+
+Above code was introduced in commit b5666a3747 (AVCTP: Allocate memory
+to hold incoming/outgoing PDUs).
+
+--=20
+Pali Roh=C3=A1r
+pali.rohar@gmail.com
+
+--cmtstwqviymasn6t
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCXQpcxgAKCRCL8Mk9A+RD
+Ule5AJsGqmEdaSdV0Qqjg8G3zuVkd0f6+QCgpedacxdI+BtnwkoOSHWHJJdpLjs=
+=GTAs
+-----END PGP SIGNATURE-----
+
+--cmtstwqviymasn6t--
