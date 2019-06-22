@@ -2,132 +2,65 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 979AF4F6CD
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 22 Jun 2019 18:18:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0773B4F6F4
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 22 Jun 2019 18:29:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbfFVQSl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 22 Jun 2019 12:18:41 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41621 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726276AbfFVQSl (ORCPT
+        id S1726429AbfFVQ3G (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 22 Jun 2019 12:29:06 -0400
+Received: from sonic301-3.consmr.mail.bf2.yahoo.com ([74.6.129.42]:37704 "EHLO
+        sonic301-3.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726355AbfFVQ2u (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 22 Jun 2019 12:18:41 -0400
-Received: by mail-wr1-f68.google.com with SMTP id c2so9425242wrm.8
-        for <linux-bluetooth@vger.kernel.org>; Sat, 22 Jun 2019 09:18:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=CMI+mRFz+iLb4ZvKBVqkvplhDFFP5I+NbOdbtWzF1TE=;
-        b=NopbJ+t/eJ7KEetIrSzZ7ouUjol9AOJBsxBW+j+EbG06xWKgYmJrlxhsNyEBRAKF8D
-         nxRxurZN5+lR4tlmdBeEKoBXSvojA2N9zFPBMkM3kWATOzmBSdNZew8EPRTTVGgrtk7j
-         JkoEHB2D2E7J5JBHzC2gBPhbaDOk2tjMGySPf4BOI6YNn4phV0W6MqFDLLQ6fEjakRGM
-         UI6K0aASPmzN92VR8zlOWeWfBKtnadwHcwcwJdvKRfWNCaVbLU4nNt7hKRqVaUjvkbPA
-         PwloIXExxt0+AcXovbjWUp3xCw013QNttPZ8JKpofEMynqAXQtsZWWTdNDDGf79LUx4t
-         Dxmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CMI+mRFz+iLb4ZvKBVqkvplhDFFP5I+NbOdbtWzF1TE=;
-        b=FfmcTwEPzacX9jR1QDj9CC9dv1zemW5cfFwfGxLNDaTdfIQRCrnWPuzespifNV0esX
-         lXJ4RdkBJYWUggqYE8H5DrQoDHADDxt5MSkpAyImJ0hUYK+f8Kujc/43DPOYlVqaDE1w
-         0JxyStbMN7Mks65r/FseBtn0sZfyhNFVSLtcxVDjTrWvCwl7EERE+rXuJsXtdyPcrifO
-         ydDylWf+UFXCd7DE74dtnQWDFnBbyrNPyYGucOUZoGB51dRzMBuT/sL19rbFZkvFXVeQ
-         o+1RRPbqkP6s1YipxGziHkjSOWPQM8cfR4Rn7CALjbZdoKsyeNEh1doHB26v5U5OCWBC
-         KomQ==
-X-Gm-Message-State: APjAAAVk4Wi2ZqeZDGOy7ZXQmrTAFnvTzIS2TlDp3EzQSKWqfETXaZsV
-        dgJqjPIR7Z5Y8ZkEJAqFa8g=
-X-Google-Smtp-Source: APXvYqy1D07eeNwLLE5bXDM/HrLBjPMDcT2JdWRhJKSsoOPxPAi2BNGnc5EoWVmtzO+yHtRhppI1OQ==
-X-Received: by 2002:a5d:40ca:: with SMTP id b10mr42473129wrq.171.1561220319606;
-        Sat, 22 Jun 2019 09:18:39 -0700 (PDT)
-Received: from pali ([2a02:2b88:2:1::5cc6:2f])
-        by smtp.gmail.com with ESMTPSA id v65sm8924290wme.31.2019.06.22.09.18.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 22 Jun 2019 09:18:38 -0700 (PDT)
-Date:   Sat, 22 Jun 2019 18:18:37 +0200
-From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Subject: Re: bluez - check for new a2dp features
-Message-ID: <20190622161837.37mjlsirpoql2plj@pali>
-References: <20190513170550.bsbr2mh7w36hj7io@pali>
- <20190607125800.trsx2o3njaiaitu2@pali>
- <CABBYNZLtgaCi5VGHapsKQG4iAC33ySow3AuH0Qkx8iCo3LcZDg@mail.gmail.com>
- <20190607153715.w5exsodd25qxc6xv@pali>
- <CABBYNZ+gPRkAgFAeeoSqZ7tp5fYimGdju9JSuSpn_kL+f9hJhQ@mail.gmail.com>
- <20190608105924.qmauvrwyz7nofx74@pali>
- <20190608111553.65s6yoyhmusmr3pc@pali>
+        Sat, 22 Jun 2019 12:28:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1561220929; bh=3fXYToOZXvh5MOJ1JSawYDThjnynC/Ekt2gucIg6zZg=; h=Date:From:Reply-To:Subject:From:Subject; b=FwrBLUl7u665XwQeVPTq5hUQ4Ptv5qPcwgE0MfCyAxPjQW66W+sBKlTITy95Xiak8M/9mL3k87XvuhuNYmdzjOXFqAsXXJ7ZeR0tr0xQhaR4qpp9+I79zHB4JVXDeOtUnrv/ni1DEn3m49tSMIml9+1SbDvUcui/xLYzcB7mOtvlwJJC6bBkcbOwJW8drH7WnSKYQVlUvO9PRg8+IWYABo4m/HoTrmg3JSd7+tfq1bmdsTjreC9G6uwJClVG1p8XyGEOijmNqXv9Ivunj8UzUvxVldTIg/taTAKdSlSG3i+xbnz28LKLpxSK2+M63p52Vf+hNJ0OycyVj1TkO+H8OQ==
+X-YMail-OSG: BClZlNgVM1mJa1pSUAMlnjmDwJQUKDn0osVKNVIeZ6AC0JZQ8NzrV_.P2vPToBw
+ lk4l1yMYy0P1wu9iKWHPF1vwWtED.NCcY6jE.jXdELnZdUngnDzcX.f1Ik7TcPjN._6dUftCNvSG
+ 0ilPDIIh6JKut3rld3EDzfXqVTEprJFL10dLfXEmdNXy8_9HzWnLN9Uxxh6FWr8nj4DbExyF48M8
+ b8CzHn8AtWzh0fDjJqMRXb5UR1L1fHF.mq4wk_41bl8VHLLREhO8D9AiMB_Iou.TvP.xektI4Uzf
+ lBotEg54S8nbe5a5a2eamKaLSiD6XaCIzSQkrGwkgk9qzk7J4361PG1C2lAWhSULJjGYH.uKi9SH
+ 8omXh8MvwuZmVU7umqXbA4eIFWV8ruRR3qRFWtA.2B0Eer.D49EbNovsAu.wRPm8yYyL6YMdaoys
+ 3vYAkjype1yPgR0gHAH3zObnNPMrtMzQfsTzcaha59dNYsVWPRo5EvcFgAIKXVIUqnKnooWuODru
+ O4SgrdrM8PGEZGs5dJS.h.dJB3gwQ.0I1wf1Q_CLgJhbPMrumaMiWl3ifhN9G_CCxrGhRPRltqdB
+ RyAvAXGENXKEJswzM.sYWHkLQyblOWaGX5TLKzeDGaJCZVu7CtZvQ0aNcyWtqrf4SAtE7MK9SqUH
+ 7phABBxeBrGdyDkvdUQOX_EPh25.Hb3SncDKllMEIHjvEdwbQcMGmqMEDVCI8Jh0nfgpjh259ODl
+ q.bGW_sz63_QvjPWXygjUQ4RzfXiei1bHIkvbkPAHc04dS.Qr8LP1Jyxp2QD0wtNtJgo5RScK99X
+ P5NPqcNAR8eez8YgXpk3cKLQCR9JSylhL6QyUVACODhQSLMO_l73eEDpWzNQUeEQLrEwA53TFUO9
+ BXx4lR26gADp4OeWMANR3pTNDn8J7Oc5G1l.tF8AqVFtdsoB5vgCdw0tzoX9_22cJzNNteihaN9H
+ ktOSXaCeUY26x9DWNkYi7HTOCc9F4vHnioRwelB9Lv.KGDeGPUJBBPmfcn0xXC8MB2YTlUFeVHzN
+ FJsHhvFz9eJx.VwEAdhJs3DHW6xmbj9a_RSOf.BoLPiAvMAdoBe_1sVY8nFOqhuBwpkbj17TOzIW
+ ts0JEWafkyantIFw8kEnIr0AHDEAK4aB1fgOVS8TQpbEaj2tB4pKHPa4OOjXszQAPBozr7PYVj2f
+ 6AcwHFYhcmsrFfliX20p43dgFMRY8GMXgvUWeegBAeAuOTxCoUC9WvAdL
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic301.consmr.mail.bf2.yahoo.com with HTTP; Sat, 22 Jun 2019 16:28:49 +0000
+Date:   Sat, 22 Jun 2019 16:28:46 +0000 (UTC)
+From:   "Miss.Fatima Yusuf" <fatimayusuf5@outlook.fr>
+Reply-To: miss.fmayusuf11@gmail.com
+Message-ID: <270302503.296556.1561220926635@mail.yahoo.com>
+Subject: From:Miss: Fatima Yusuf.
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="rkagearibs2fivhg"
-Content-Disposition: inline
-In-Reply-To: <20190608111553.65s6yoyhmusmr3pc@pali>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 
---rkagearibs2fivhg
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Saturday 08 June 2019 13:15:53 Pali Roh=C3=A1r wrote:
-> On Saturday 08 June 2019 12:59:24 Pali Roh=C3=A1r wrote:
-> > Ok. So is there any way how to check if bluez supports profile switching
-> > or not? And if not, could be introduced some flag/property on DBus so
-> > applications would not this information?
->=20
-> Because older versions of bluez does not support profile switching and
-> does not support properly remembering last used SEP, I need to know this
-> information in pulseaudio. To prevent any breakage e.g. that high
-> bandwidth codec would be chosen by old version of bluez in unsuitable
-> environment. Because of these problems I do not think that pulseaudio
-> should register these high quality codec with fixed high bandwidth. And
-> currently there is no way (or at last I do not know) how to check if
-> bluez support these features. And I need to know it at time when
-> pulseaudio is registering to DBus so it would correctly decide if SBC
-> UHQ codec should be registered via DBus to bluez or not.
->=20
-> Currently I know one way how to detect it -- look if there are available
-> SEP paths at dbus. But this works only after A2DP connection is active.
-> So I cannot use this "heuristic".
->=20
-> Therefore I'm asking for some DBus property or flag or whatever which
-> would tell me, prior to registering A2DP codecs via DBus to bluez, if
-> bluez supports profile switching or not.
->=20
-> Without this information, pulseaudio could enter into state when it is
-> unable to transmit any audio via bluetooth because old bluez chosen
-> unsuitable codec. And because old bluez version does not support profile
-> switching, nobody (pulseaudio or user) is able to fix this problem.
+From:Miss: Fatima Yusuf.
 
-Would be possible to provide this runtime dbus information? As explained
-in previous email, I really need it for pulseaudio for additional A2DP
-codec support.
+For sure this mail would definitely come to you as a surprise, but do take your good time to go through it, My name is Ms. Fatima Yusuf,i am from Ivory Coast.
 
-If not, then I would be forced to use compile time check (probably via
-bluez.pc) and based on this decide if support for additional codecs and
-profile switching would be compiled into pulseaudio or not... But this
-would work only in case whole profile switching would not be hidden
-under --experimental command line flag. So another configure flag for
-pulseaudio would be needed.
+I lost my parents a year and couple of months ago. My father was a serving director of the Agro-exporting board until his death. He was assassinated by his business partners.Before his death, he made a deposit of US$9.7 Million Dollars here in Cote d'ivoire which was for the purchase of cocoa processing machine and development of another factory before his untimely death.
 
---=20
-Pali Roh=C3=A1r
-pali.rohar@gmail.com
+Being that this part of the world experiences political and crises time without number, there is no guarantee of lives and properties. I cannot invest this money here any long, despite the fact it had been my late father's industrial plans.
 
---rkagearibs2fivhg
-Content-Type: application/pgp-signature; name="signature.asc"
+I want you to do me a favor to receive this funds into your country or any safer place as the beneficiary, I have plans to invest this money in continuation with the investment vision of my late father, but not in this place again rather in your country. I have the vision of going into real estate and industrial production or any profitable business venture.
 
------BEGIN PGP SIGNATURE-----
+I will be ready to compensate you with 20% of the total Amount, now all my hope is banked on you and i really wants to invest this money in your country, where there is stability of Government, political and economic welfare.
 
-iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCXQ5U2wAKCRCL8Mk9A+RD
-UnKbAKCzIfKoPaFFFb94t8ax9J3PZY48fgCfTq1J9bO8KAPVfgl47fUsv5/RyAw=
-=9hk2
------END PGP SIGNATURE-----
+My greatest worry now is how to move out of this country because my uncle is threatening to kill me as he killed my father,Please do not let anybody hear about this, it is between me and you alone because of my security reason.
 
---rkagearibs2fivhg--
+I am waiting to hear from you.
+Yours Sincerely,
+Miss.Fatima Yusuf.
