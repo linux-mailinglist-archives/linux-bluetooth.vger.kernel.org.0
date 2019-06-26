@@ -2,79 +2,79 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1391E569C6
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jun 2019 14:54:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 437F556878
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jun 2019 14:19:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727259AbfFZMyN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 26 Jun 2019 08:54:13 -0400
-Received: from zyloware.com ([23.95.19.78]:33162 "EHLO chulaseafood.com"
-        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726484AbfFZMyM (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 26 Jun 2019 08:54:12 -0400
-X-Greylist: delayed 3618 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Jun 2019 08:54:12 EDT
-To:     linux-bluetooth@vger.kernel.org
-Subject: =?UTF-8?B?wrcgICAgICAgICBjYW4geW91IGd1aWRlIG1lPw==?=
-Message-ID: <226424b92d9dbd760e5833a53eb14f4e@inaflashweb.com>
-Date:   Wed, 26 Jun 2019 13:35:59 +0200
-From:   "Laura" <ansitaasdsaksi@verizon.net>
-Reply-To: ansitaasdsaksi@verizon.net
+        id S1727318AbfFZMTW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 26 Jun 2019 08:19:22 -0400
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:34907 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727302AbfFZMTW (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 26 Jun 2019 08:19:22 -0400
+Received: by mail-ed1-f43.google.com with SMTP id w20so3085718edd.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jun 2019 05:19:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=msQfMnlg3RPUQ1CZcNb38dz/uHSnl/U39F66ISbtJAc=;
+        b=Brsf0wuABgYONoVR7TYd3B7Ucxo5HcQ5AAOhCh4RGXv4lP8MPR6876PWyuBMacwTdb
+         OExHt3DQva/lx5b2cidG6tZSBv832L8+aItiIWenYY7y9RbKyOCeGOloA2Ql8c/hTfuz
+         WqXhKwh2JvGKocfLEYpniPXTS/aUgVh+XshbAI+sNMDWIz7ic0x5lJW1AAxZjfZDsexi
+         TagvmwpSNrhBK9aTWJ2SBR7vciulZIUcftDzFMzxWPcL3P4FOeftStojNa/8gokJBs4v
+         pKscN9lSP//1mCJ7dE/ekWMOHX/MTbxGIsZvIqobAUWCy3O8FAOSNdsa3YrVoXr24iVy
+         neAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=msQfMnlg3RPUQ1CZcNb38dz/uHSnl/U39F66ISbtJAc=;
+        b=XpW8VdxXrvtvHTy1hgwHlGMaZWS0N2o8Sco7yYUJGJhheyLSOButrdNgzfFitrJoLN
+         vDo07qHreoq6gr4jVOpLEIPR8CJYb5S0WSUIaf+ZQzAlwGfYqQfH2vHr8K+kkE4NH4/7
+         fctdvgU6ucJz90U4bY8SQlGPT+D7P10quY9YbKssRyCd3wIWLKyu+OwNartHAFjC2HRS
+         U9bzGAS9zO/vJdHj2VqDpjrYB9qlBgdON69ySGgYIzioZkTRyYR7Uz2qF/Chs8jHVtuD
+         bGwJGsosPYY+L0WakEnxQq813AFAgt5PH5saRlgsWhZFMXyMY+DJmZNDYxc9C/8Hm+ym
+         iITA==
+X-Gm-Message-State: APjAAAVHDB9pg1kWH/AWU8ITfNFP/Ggkj0P4/c9c1h60EFSE2kq+6xP6
+        9gtuDr2vkjmXba0DKgbPprx6hY6DaKGUa+H7filZRL7be6Y=
+X-Google-Smtp-Source: APXvYqw8wMikw4boWb+F8zdLx4EemhusURLEtLrhQQjpS1JpYaibwjV1pWXRcB0ZPSe9eh+/riBCLN1tSKiS8SYTuA0=
+X-Received: by 2002:a17:906:43c9:: with SMTP id j9mr3693057ejn.248.1561551560572;
+ Wed, 26 Jun 2019 05:19:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+From:   Belisko Marek <marek.belisko@gmail.com>
+Date:   Wed, 26 Jun 2019 14:19:09 +0200
+Message-ID: <CAAfyv36tZvKHE3EqkHRx82miykuiBnLVCm+jo8+Pu7TSKs79Yw@mail.gmail.com>
+Subject: hci_bcm probing issue with 5.2-rcx
+To:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+Hello,
 
-Did you see my email below from last week?
+I'm adding bluetooth support for nano-pi-neo-air which is using AP6112
+combo chip. I've described in dts UART node with all necessary pins
+and regulators and 32kHz clock which is necessary to have BT part
+working. It also looks like (from bootlog) that serdev is probed
+properly but I cannot have hci_bcm platform driver probed. I see
+driver is registered but there is no mention anywhere about hci_bcm
+device (I would expect that in dts as it's platform device).  Am I
+missing something? I get inspiration from other allwinner boards which
+have same chip and probably there it works. Any ideas? Thanks.
 
-We manufacture ALL custom LOGO and branded products – over 300,000 to
-choose from.
+BR,
 
-The most asked about product that we make, are the custom printed USB flash
-drives!
-We can print your logo on them and load your digital images, videos and
-files!
+marek
 
-http://inaflashweb.com
+-- 
+as simple and primitive as possible
+-------------------------------------------------
+Marek Belisko - OPEN-NANDRA
+Freelance Developer
 
-Here is what we include:
--Any size memory you need: 64MB up to 128GB
--We will print your logo on both sides, just ask!
--Very Low Order Minimums
--Need them quickly? Not a problem, we offer Rush Service
-http://inaflashweb.com
-
-NEW: We can make a custom shaped USB drive to look like your Logo or
-product!
-
-Email over a copy of your logo and we will create a design mock up for you
-at no cost!
-
-Our higher memory sizes are a really good option right now!
-
-Ask about the “Double Your Memory” upgrade promotion going on right
-now!
-
-Pricing is low right now, so let us know what you need and we will get you
-a quick quote.
-
-We will beat any competitors pricing, send us your last invoice and we will
-beat it!
-
-We always offer great rates for schools and nonprofits as well.
-
-Let us know what you would like quoted?
-http://inaflashweb.com
-
-Regards,
-
-
-
-Sabrina Millons
-+1-888-480-8218
-Custom USB Account Manager
-http://inaflashweb.com
-
+Ruska Nova Ves 219 | Presov, 08005 Slovak Republic
+Tel: +421 915 052 184
+skype: marekwhite
+twitter: #opennandra
+web: http://open-nandra.com
