@@ -2,178 +2,87 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E5D75DEAD
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2019 09:17:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 760CF5E234
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2019 12:39:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727249AbfGCHRI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Jul 2019 03:17:08 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:35938 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727217AbfGCHRH (ORCPT
+        id S1727021AbfGCKjH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 3 Jul 2019 06:39:07 -0400
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:55075 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726678AbfGCKjH (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 3 Jul 2019 03:17:07 -0400
-Received: by mail-lj1-f196.google.com with SMTP id i21so1234861ljj.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Jul 2019 00:17:05 -0700 (PDT)
+        Wed, 3 Jul 2019 06:39:07 -0400
+Received: by mail-wm1-f53.google.com with SMTP id g135so1661735wme.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Jul 2019 03:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=silvair-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9PvTEh+Ow/ORJ6+fgyWozTQlS0tZUDr8e5T+J0UX2pA=;
-        b=nT7AYyA3mdX6957WPGJoUsjjccPZumzoAuSxRsFddN47H5oqwV5yED0j67NOtZ9uJq
-         KJb4/gw5EtdJ3UCX67Q3NR8KHC8vwrq7wzaasd0BsyoBeUmI5TC2eosTytZnSP7qdhr4
-         K9eEczMaNMkg69O1rIEa/tGR3rOFmu4Eb6EOr4onY8rYGBNBFAn3P5KtFLEVqstTVzY+
-         KdE/qZ+zDvwm1qFCcjdyAERgqktjrc6mD8WAPt+MaszFA80TwXqHjHWUvy9TfZlRI5rW
-         0ZRgcXUcfSdqNbnmcYVX5UmDqJruidZIHh2Q6AkcaBrZF7RT/N416umkwNYbOUQV9Uve
-         xYSg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=VXYgiMewesoD0JcFei/mLRq8HiTvUkoPt06L1RjWEso=;
+        b=rXXMa2H3j5yLOQ1770jVPJasTZvywkE34s+a8IX8NZTgxSoTdg6dsJiPxu1Y7CyiKz
+         ua6bLaAVqFl0XX90Zx0a+3nsk1rHQuNd5mLpJVkXhNlzZYsNuRHwfVALpdHO8jUhcomO
+         Mg+4MJL79q15A4lB7pxLQiwyn1sNSGwQtHI/GEM1Dvc/DlzxKpAiYtHfZpzhiWMyODZi
+         GC8OWDTrMfFjmjTs5xnK5Xi6DVVx/O2ERhYLmD7HYopXFxi4UDFXQEwR59t2phiyj4Er
+         jN3lxPmyZ8eguSbE/y30jc2DC5PvfMy9X/8sDH1Ok2Zxar98WCGdHTRc1/83uZ7nqS65
+         Db+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9PvTEh+Ow/ORJ6+fgyWozTQlS0tZUDr8e5T+J0UX2pA=;
-        b=KVQjAp+XghA9GnsJ+cFQGL8MdnDy/tdbXcPapc6DpmeTZXoOBJ3WbEMlfQ+kX+dZnH
-         67D7/RGaa2N8nZo7y6FOKciBC4A0mLp9j37ghkwYAnlxA8VYdAWVi+OtRIh3lHgvMZZ1
-         OkCN8AVufC/qmEqO2u58XVG+P5xcejmMMrlANxsopTUKmMsVPy/pPNEbFhb6Kxop929U
-         m+08Qcoa2kctRTsFyc2CK9q/eYlvBBtlKcAepCau2UdrGsyghOt6I7zlOO/mhsnhFUlA
-         AzgFRP3RjNdTmWgoehlb+EZBP9HwzoEUAV9JhljesW2yOs2vybLkHbyKO7pTgT0byjBj
-         Gf9Q==
-X-Gm-Message-State: APjAAAU2+u30GCg5CFoDMfkmvVElQoVqEAazlVqDoMTVBP1iIsZ2LT4S
-        TgEThLgjc5TGuG2XVRwrIGPCQIERVa4=
-X-Google-Smtp-Source: APXvYqyL2UqVOIDEPSBxmdkoAQ2BW4u1uHLlWnYAz/iVJ0YIACD9lQ44vfvXpjKuMzECstramXmlBg==
-X-Received: by 2002:a2e:8583:: with SMTP id b3mr20332342lji.171.1562138224783;
-        Wed, 03 Jul 2019 00:17:04 -0700 (PDT)
-Received: from mlowasrzechonek2133.silvair.lan ([217.153.94.18])
-        by smtp.gmail.com with ESMTPSA id l11sm281364lfc.18.2019.07.03.00.17.03
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 03 Jul 2019 00:17:04 -0700 (PDT)
-From:   =?UTF-8?q?Micha=C5=82=20Lowas-Rzechonek?= 
-        <michal.lowas-rzechonek@silvair.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ v3 3/3] mesh: Handle messages encrypted with a remote device key
-Date:   Wed,  3 Jul 2019 09:16:56 +0200
-Message-Id: <20190703071656.6342-4-michal.lowas-rzechonek@silvair.com>
-X-Mailer: git-send-email 2.19.1
-In-Reply-To: <20190703071656.6342-1-michal.lowas-rzechonek@silvair.com>
-References: <20190703071656.6342-1-michal.lowas-rzechonek@silvair.com>
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=VXYgiMewesoD0JcFei/mLRq8HiTvUkoPt06L1RjWEso=;
+        b=AcnoGeL/wxTWtfIegRXh4DAAE1PGiYVlRJd/q8sBT53Ca1KXo8xgciyDrGvgj3Uhn9
+         08GUEzApoFZs6la+btK2Ny98UdxQIECQKSmmaCdesMpl8SgkIXwFzuNE6Qh4wZU/C+15
+         ZQCOknbkqQdP1d9/O7HAT/nhHtVNuV0ctt1rv6Y08EtSn98qplHPs44XIQOsGuVwm8s/
+         mBoBNRrQ0vrU9bhSe0kOs1DpQUqiMG3xpA/Mq8tLvIFPnJzLaDg+8DKyGpK0mc+QhXUk
+         N99HcAZBcmFbx49HDXKC7v0Fy93VMaPstnVT+EdvY6WaoGYJUqE0ItJpQYJrAtQeqKXw
+         H8OA==
+X-Gm-Message-State: APjAAAWU77AoJUqlJk0mxlGW6MV6xm35VIh4T6lvl/w3ClV9P8VY/7uA
+        FZaXLgOuKfUxninLc4L5Bq4+kie0
+X-Google-Smtp-Source: APXvYqynRLDeBuyiU/pn2mXfLlJU/7SzPLgnaRSG8TWHnG2/PFaJ26by3CNKp7Xlpj3B5JFRdyenww==
+X-Received: by 2002:a7b:cd15:: with SMTP id f21mr7118387wmj.99.1562150345359;
+        Wed, 03 Jul 2019 03:39:05 -0700 (PDT)
+Received: from pali ([2a02:2b88:2:1::5cc6:2f])
+        by smtp.gmail.com with ESMTPSA id y184sm1407233wmg.14.2019.07.03.03.39.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 03 Jul 2019 03:39:03 -0700 (PDT)
+Date:   Wed, 3 Jul 2019 12:39:02 +0200
+From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
+To:     linux-bluetooth@vger.kernel.org,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Subject: Re: bluez: avctp_connect_cb(): BT_IO_OPT_IMTU for omtu?
+Message-ID: <20190703103902.2llvxp4nrmia2wkc@pali>
+References: <20190619160320.kwumolq6sgetfuzf@pali>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190619160320.kwumolq6sgetfuzf@pali>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds ability to receive messages encrypted using known remote
-device key. Such a key must be added to the node's keyring using
-ImportRemoteNode() method of org.bluez.mesh.Management1 interface.
+On Wednesday 19 June 2019 18:03:20 Pali Rohár wrote:
+> Hello, in bluez source code is function avctp_connect_cb() with
+> following code:
+> 
+> 	bt_io_get(chan, &gerr,
+> 			BT_IO_OPT_DEST, &address,
+> 			BT_IO_OPT_IMTU, &imtu,
+> 			BT_IO_OPT_IMTU, &omtu,
+> 			BT_IO_OPT_INVALID);
+> 
+> Why is BT_IO_OPT_IMTU used for retrieving omtu? Should not be there
+> BT_IO_OPT_OMTU for retrieving omtu? Seems like a typo: imtu vs omtu.
+> 
+> Above code was introduced in commit b5666a3747 (AVCTP: Allocate memory
+> to hold incoming/outgoing PDUs).
 
-Decrypted messages are then forwarded to the application using
-DevKeyMessageReceived() D-Bus API.
+Hello, I would like to remind this question. It above code bluez correct?
 
-Also, messages originating from a local node and encrypted using local
-device key are forwarde to the application as well, if they weren't
-handled by internal model. This allows e.g. receiving status messages
-from a local Config Server in the application.
----
- mesh/model.c | 65 ++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 61 insertions(+), 4 deletions(-)
-
-diff --git a/mesh/model.c b/mesh/model.c
-index aae913d92..404f5b64b 100644
---- a/mesh/model.c
-+++ b/mesh/model.c
-@@ -359,6 +359,7 @@ static int dev_packet_decrypt(struct mesh_node *node, const uint8_t *data,
- 				uint16_t dst, uint8_t key_id, uint32_t seq,
- 				uint32_t iv_idx, uint8_t *out)
- {
-+	uint8_t dev_key[16];
- 	const uint8_t *key;
- 
- 	key = node_get_device_key(node);
-@@ -369,6 +370,14 @@ static int dev_packet_decrypt(struct mesh_node *node, const uint8_t *data,
- 					dst, key_id, seq, iv_idx, out, key))
- 		return APP_IDX_DEV_LOCAL;
- 
-+	if (!keyring_get_remote_dev_key(node, src, dev_key))
-+		return -1;
-+
-+	key = dev_key;
-+	if (mesh_crypto_payload_decrypt(NULL, 0, data, size, szmict, src,
-+					dst, key_id, seq, iv_idx, out, key))
-+		return APP_IDX_DEV_REMOTE;
-+
- 	return -1;
- }
- 
-@@ -695,6 +704,47 @@ static int add_sub(struct mesh_net *net, struct mesh_model *mod,
- 	return MESH_STATUS_SUCCESS;
- }
- 
-+static void send_dev_key_msg_rcvd(struct mesh_node *node, uint8_t ele_idx,
-+					uint16_t src, uint16_t net_idx,
-+					uint16_t size, const uint8_t *data)
-+{
-+	struct l_dbus *dbus = dbus_get_bus();
-+	struct l_dbus_message *msg;
-+	struct l_dbus_message_builder *builder;
-+	const char *owner;
-+	const char *path;
-+
-+	owner = node_get_owner(node);
-+	path = node_get_element_path(node, ele_idx);
-+	if (!path || !owner)
-+		return;
-+
-+	l_debug("Send \"DevKeyMessageReceived\"");
-+
-+	msg = l_dbus_message_new_method_call(dbus, owner, path,
-+						MESH_ELEMENT_INTERFACE,
-+						"DevKeyMessageReceived");
-+
-+	builder = l_dbus_message_builder_new(msg);
-+
-+	if (!l_dbus_message_builder_append_basic(builder, 'q', &src))
-+		goto error;
-+
-+	if (!l_dbus_message_builder_append_basic(builder, 'q', &net_idx))
-+		goto error;
-+
-+	if (!dbus_append_byte_array(builder, data, size))
-+		goto error;
-+
-+	if (!l_dbus_message_builder_finalize(builder))
-+		goto error;
-+
-+	l_dbus_send(dbus, msg);
-+
-+error:
-+	l_dbus_message_builder_destroy(builder);
-+}
-+
- static void send_msg_rcvd(struct mesh_node *node, uint8_t ele_idx, bool is_sub,
- 					uint16_t src, uint16_t key_idx,
- 					uint16_t size, const uint8_t *data)
-@@ -843,10 +893,17 @@ bool mesh_model_rx(struct mesh_node *node, bool szmict, uint32_t seq0,
- 		 * Cycle through external models if the message has not been
- 		 * handled by internal models
- 		 */
--		if (forward.has_dst && !forward.done)
--			send_msg_rcvd(node, i, is_subscription, src,
--					forward.idx, forward.size,
--					forward.data);
-+		if (forward.has_dst && !forward.done) {
-+			if ((decrypt_idx & APP_IDX_MASK) == decrypt_idx)
-+				send_msg_rcvd(node, i, is_subscription, src,
-+						forward.idx, forward.size,
-+						forward.data);
-+			else if (decrypt_idx == APP_IDX_DEV_REMOTE ||
-+				(decrypt_idx == APP_IDX_DEV_LOCAL &&
-+				 mesh_net_is_local_address(net, src)))
-+				send_dev_key_msg_rcvd(node, i, src, 0,
-+						forward.size, forward.data);
-+		}
- 
- 		/*
- 		 * Either the message has been processed internally or
 -- 
-2.19.1
-
+Pali Rohár
+pali.rohar@gmail.com
