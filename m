@@ -2,83 +2,77 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F2755F979
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Jul 2019 15:57:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41F045FD12
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Jul 2019 20:41:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727345AbfGDN5T (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 4 Jul 2019 09:57:19 -0400
-Received: from mail-yw1-f46.google.com ([209.85.161.46]:39904 "EHLO
-        mail-yw1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727044AbfGDN5T (ORCPT
+        id S1727226AbfGDSlq convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 4 Jul 2019 14:41:46 -0400
+Received: from smtp2.qwestoffice.com ([64.26.60.191]:45012 "EHLO
+        smtp2.qwestoffice.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726881AbfGDSlp (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 4 Jul 2019 09:57:19 -0400
-Received: by mail-yw1-f46.google.com with SMTP id x74so672817ywx.6
-        for <linux-bluetooth@vger.kernel.org>; Thu, 04 Jul 2019 06:57:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=2LZzQ8p977rVt2eMT9pcF1umhYdPlZc1eXNN1GBVGWA=;
-        b=FJHDW/oi7CFbxFmEZYANF70C+5gDC4pX8WQqAgB2mybKaGpR2gmjbgGCAfeByHpQc6
-         kKpLrckBr5KF8tEcnFYE9B4PTNBJEubhGRIYwUdGGi5o1UxmnOp4pRWp2PGpEwyvELdW
-         iU/bRQrbUoA/on2C/Z0+1ByurrvlceFf/W4JlD261+WBNT32h0gi5czlRt8hQQHdnSKH
-         MdQ5FvkHHNxktFFg85gjbf+lYi28OLTmFCyylnf08E713TUN/wBcWTfKthgbyVHlueWF
-         ICCsZJYK7UB6DdbsoymbQ2p9ppXjlO9hvkxT5HgfHUldMfbYHVFKbVmM/nTH0GxlxZpv
-         t1+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=2LZzQ8p977rVt2eMT9pcF1umhYdPlZc1eXNN1GBVGWA=;
-        b=rUhvOLuv5YPcG9i7HVmLOihmL6sAK7nDv9FVbf/D/vr6GvNdwTusljxbvvUsk0OsTq
-         aeUrLi+w0WwpRMSDffui/4K7uYqW7ot+r46ygLNjIf4AEWe2T/HQsRu4AGeRuktXVbZ9
-         JyS+XlZuGJJKtAXRWI2DqeVI7w0eUlOe3pIQ9f7T3doGaTRkAtiy1XOn+0PwsufvFBZC
-         jkpczCciOHGn6BKOlHxSxt69PTNujuiPB5ShQ3fi1DJ7dD7YBs+ngIc9PW77U1DjuR2O
-         egkiMxqMpd3yrvJA1u0gfzO5aFC7Y25gP3/AVFbBW1MdRC71eC8VIJDjhizAM8fkjZGz
-         5bPg==
-X-Gm-Message-State: APjAAAXNJKiHpxazA1dFYB5kwGp/W3hY2+EdKNsmu8R7PPW1NwJlW+6T
-        ziYbOD4cBg10y9P0tZ2szvNxj62tcergnMh8J/Xjkg==
-X-Google-Smtp-Source: APXvYqwhYnNXM0seXJFbF7TAfmCjKU+nyTHYc2UV15nxicU5CYYo/dtWUhr29rMTk8HBmOntbC/8jo4NG6ZbrtEwz8I=
-X-Received: by 2002:a81:7bc4:: with SMTP id w187mr1482178ywc.211.1562248638047;
- Thu, 04 Jul 2019 06:57:18 -0700 (PDT)
+        Thu, 4 Jul 2019 14:41:45 -0400
+X-Greylist: delayed 11871 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Jul 2019 14:41:44 EDT
+Received: from smtpauth04b.mfg.siteprotect.com ([64.26.60.161] helo=smtpauth02.mfg.siteprotect.com)
+        by semf09.mfg.siteprotect.com with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <pastoraltland@qwestoffice.net>)
+        id 1hj3Zv-0006PG-9q; Thu, 04 Jul 2019 11:23:22 -0400
+Received: from favour.homerouter.cpe (unknown [160.152.36.127])
+        (Authenticated sender: ronaldadamson@qwestoffice.net)
+        by smtpauth02.mfg.siteprotect.com (Postfix) with ESMTPSA id 45fhYb0l3XzfqfRl;
+        Thu,  4 Jul 2019 11:22:42 -0400 (EDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-From:   =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-Date:   Thu, 4 Jul 2019 15:57:07 +0200
-Message-ID: <CACna6rxtia9EchufR9otHZD73LEHGEbgWdUpwQbogBZc0aVQtg@mail.gmail.com>
-Subject: Request for help on using BlueZ in C app for a custom GATT server
-To:     linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Contract Offer
+To:     Recipients <pastoraltland@qwestoffice.net>
+From:   "SAKI NISHIYO" <pastoraltland@qwestoffice.net>
+Date:   Thu, 04 Jul 2019 09:22:36 -0600
+Reply-To: kiyoshihomma21@gmail.com
+Authentication-Results: mfg.siteprotect.com; auth=pass smtp.auth=ronaldadamson@qwestoffice.net smtp.mailfrom=<pastoraltland@qwestoffice.net>
+Message-ID: <E1hj3Zv-0006PG-9q@semf09.mfg.siteprotect.com>
+X-Originating-IP: 64.26.60.161
+X-portal.siteprotect.com-Domain: qwest.outbound
+X-portal.siteprotect.com-Username: 64.26.60.161
+Authentication-Results: mfg.siteprotect.com; auth=pass smtp.auth=64.26.60.161@qwest.outbound
+X-portal.siteprotect.com-Outgoing-Class: unsure
+X-portal.siteprotect.com-Outgoing-Evidence: Combined (0.70)
+X-Recommended-Action: accept
+X-Filter-ID: Mvzo4OR0dZXEDF/gcnlw0Ud2CCyxmm2KHETL0VYw/ASpSDasLI4SayDByyq9LIhVbzyrHWng2i1b
+ UBO0sHTeRUTNWdUk1Ol2OGx3IfrIJKyP9eGNFz9TW9u+Jt8z2T3KgVEyf6K3Efn/WVy8nPF64hdp
+ rMyyV3jQxzlFgRHUN3UkGv6rbYIA5i4iJb1B4q4FDYxT42d7cZa4Np3LaHNTBcNFkE+VKbWysqMQ
+ EPfUmo9xUBQaCsN5XvOMJey3iFEHWlSgRvo8xuzI9LcYvrSYtsouyNwReNKN7W5TBhmqjFWbzu42
+ nS6l4k41zD64ZKWtW15E39tA7+K4hMZtrwZLmFvcsMVNxZBnI45lrbqmRD7cQe+rvoMjuMxAHVUu
+ HrNjyJlgq1q/lpsHQZYrMUVKyKvhtuVx2mtimsBY9Doi6xCwZmm7+RfFfXNLImNSOsgb9MkcgETT
+ xxzz4RX4EungckkbWvxX+Y7PbhOMVPlQd/fJ9XumfR0XyHEWPYZNY4ScMqO+DUZp3KkhVqVjHEud
+ TQvP6sgp/Cgm9hg+aKQBPsJdMQdAIFqz0SLRTmESxOldf7j0CKTjist7O+WLg0AfiNXKeTCmBzfk
+ 5DDx+TODGGm3wL2Y4F0412ezGCyTUPanaritLjmRvUzfqnQ+GQzzA6T4ilai9FNK+SxpmBASFK60
+ IkWdWsg4DI4va0pvzkWnt1ylwZRiLBoTUnc0EP5XVL0OMoTcy/+ydAU9U1Im+y+/9C1JXfJxjUBR
+ htvwVbIpbSdsa9wKVB9HLYkqjcKV0FUdQwyvjt6QyLhxEV7DXvJPewEJRzjYg3kbrt3x8igVWmuN
+ A8WTybi1JN85FSnfKUI2ReeXB3UU4sFX4AtXBVgamSS3efP/5fqe0e0xlg09AOTmdYiIhy2F1Nqi
+ 2QhqtIRsp/pWfJlZ0AnSWEY8KhF2e8VuESCXa6Mg/Ndmv2wBbU0KKlTXzRXeCKOKJhsuYBgWfVqs
+ 1QlXN1wi3QKSJb6o2lZ8dPZ83+IFiIOX0vVYQtk/xNHIo9BZ2klihOsK3urdcepWUUyYLuP7f9uP
+ cBMoG3oHtnbjJEbPOph2rpCUcUOi4eaRxlDvAfSdh54sq15poCNQZR/ftgEGGirICdM93SsS4aMX
+ JmiJ2G0eb5ahOLo90lEiN7SMNlevCQG/psQzN6sl9Br1QBgqyARXyn4lkbtdCETGUMX6hMiF0ZL/
+ HSG7WzUrxdMKslbTvS4oMHXJzrDD9dMBG7hxbb5THGDonV+E7OMXRvgtdyMlnmWirbRkdtbDXTLE
+ u7cZVAGfDJ1LQccfC/K3w2Z5pfJMAy+1RrCsHuDjXg3PqYS15VwMO2v6WNUeDS8JjpKCcXBk7vIT
+ 2a8a/m35I1cD7TNHM5R96a5Wt7CZevZJaInfl6DPX0HYjslJO4qqGgS8PDK8zdU4S0c7sFdGT6Rv
+ Qh7eXq4XckeyESXmUcMGnmyuk6GjY4oGgi3CbTjDIcJltiAWNnKdVudhV3ykyBN6q7YFssC1iY5M
+ blAwJcqfglZzM+UQ0ML7CtHjLlFEEWsjVKUhcVFfEoXm0/FPF8PR0w363lmhE90vBuEnU177heTm
+ 3p8PkXxN564rOnvoA3wzSu+31PUYZwvawhCXDHf09EayjndPRFA8Ewn20r4xR4B6leutqnRRCuGj
+ T73eKnQhjZxPMm7N8Y4TRibnsKYQz9/xf1R8K4EgtgsN2Ij6q4Ui0HC+Xc+mMzoijciXisjtqBKt
+ wLfso20WFhziqCltx5zVKHtB9KOzNyqLFbDxV6pqWEKN
+X-Report-Abuse-To: spam@semfq03.mfg.siteprotect.com
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+We’d like to contract your services for a period of 12 months. Please advise if you are open to new opportunities.
 
-I'm trying to figure out how to register a custom profile + service(s)
-using BlueZ in my C app.
+Regards,
 
-I found some posts mentioning gatt_service_add() and suggesting to
-look at gatt-example.c. I checked that file and it seems to be part of
-"plugins" with BLUETOOTH_PLUGIN_DEFINE in it.
-In "Doing Bluetooth Low Energy on Linux" pdf I read that plugins are
-deprecated and I should focus on D-Bus API.
-Is that correct? Should I avoid gatt_service_add()?
-
-Looking further I found
-https://people.csail.mit.edu/albert/bluez-intro/c404.html
-This example seems to be using hci_* functions (like hci_get_route()
-and hci_inquiry()) from libbluetooth.so. I checked hci_lib.h and found
-nothing related to registering profiles/services.
-What exactly is libbluetooth? Is that for GATT client purposes only?
-
-Finally I started looking for D-Bus API info.
-In "Doing Bluetooth Low Energy on Linux" pdf there is a
-RegisterApplication() mentioned. I can see that also in
-doc/gatt-api.txt.
-Is that the new D-Bus API I read about? Is there some tutorial/example
-for it I could use?
-
---
-Rafa=C5=82
+SAKI NISHIYO
