@@ -2,63 +2,284 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B637D60D6F
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2019 23:59:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2ED8260FC9
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Jul 2019 12:12:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727652AbfGEV7l (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Jul 2019 17:59:41 -0400
-Received: from out12.masterobox.work ([178.156.202.12]:41319 "EHLO
-        slot0.mathewsons.ga" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1725882AbfGEV7l (ORCPT
+        id S1726007AbfGFKMn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 6 Jul 2019 06:12:43 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:33436 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725971AbfGFKMn (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Jul 2019 17:59:41 -0400
-X-Greylist: delayed 625 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Jul 2019 17:59:40 EDT
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; s=dkim; d=mathewsons.ga;
- h=Content-Type:MIME-Version:Content-Transfer-Encoding:Content-Description:Subject:To:From:Date:Reply-To:Message-ID; i=purchase@mathewsons.ga;
- bh=onxYcir3NvpNjk2I/gjm/O+ljxo=;
- b=euTUB7IiQ3zjfnWFG9CWDx0dzcZY/7t1jwHtzuZ8FXeGDQHkmzmoBPvNiLLqBue+L6zKZzs7m5d8
-   aPvFnMEXrQ8qga0WuJDKfZi9CHMT5B1dyUO3Ltipej1IGzdnj6oKe2P6PZEwg3EP6KEsHW4IV2iU
-   DD+vP+zByELg6X4ybA9PUTNrTnL+Wq1ikFmwh1lRjZc0gj5oNTGgS6bpSYttqdPixgkwqz+869RD
-   imd/00K6DKwx50fiB+9rMkOWSiiwmgUOuhZitIHXN2oqOPGNtrwPYuDhNh+ZubrVHH+CLFMOEKVI
-   UAGRVGZES0llN060+RmOqqjIqWLKEqIPzsgc1w==
-DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns; s=dkim; d=mathewsons.ga;
- b=IN9fN5lnYjV18N7oX1yTBV26fDNM3gtqACQXKN0usI0hUM9RqDind4EqakyXAtZqdCJggnQqyX76
-   b4/k/zWCwqEZfKxHJkTmKdPDI4YhNO2Fn9+61G0LyHfgrAwZVxs2qIdSMJmYynkFNhK02udYqz/x
-   WX7RtiOi26MPXoO2M3778vc9gvIu6qfVb2c5XqKuxJNVfRkY6VTPGDS9EbOFCKYzwj9RGvxumGh8
-   KBdBTdKVDbYUihcSVjBU3WRlBDlcJp/8mePI2B4N9QucCiqC3SnVMS+pDtD0ereAyY0Tb1JH4z1B
-   q0kxJsaMfFS84l+Wowo8yp+RL/oW1qALRclbpA==;
-Content-Type: text/plain; charset="iso-8859-1"
+        Sat, 6 Jul 2019 06:12:43 -0400
+Received: by mail-lj1-f196.google.com with SMTP id h10so11456976ljg.0
+        for <linux-bluetooth@vger.kernel.org>; Sat, 06 Jul 2019 03:12:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NJfTz4dHdknYsWh4jMpsE+k7rWLq7xLvyt8B6tmARmM=;
+        b=m0x/hB+0vRsJxFfQt8SACrtrBPk0gvgcjMPcEHgffmNqQzCpLBW3UdLPRZBXoMjush
+         PTGINj9EQgZ8yvqyJEVmQp4/4/6Aha/blFfsKJPw3IV5Fx7/AqGmJ3uBo3Lmddl5K2ka
+         yaPqJRofENmRKueYxND25Bt9VxhmCc5CSCGbysQfkwrE7GRn3G2/ljEfJo6sZLHuZcVf
+         wcDHoo46r99CXAuxZqAwOaCGG8yqKkn+PhtmjvBaHsIp7Cj+TuOzfu+1BchgdJVF8DZk
+         6CyrWQxFjPV9O22NJhEtR3SFAEsmQY7kTAARabTS3YvcyY7UULwQb8mBwitIqaTzp9Vw
+         1LkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NJfTz4dHdknYsWh4jMpsE+k7rWLq7xLvyt8B6tmARmM=;
+        b=oCMXQMJENXqk/PpBPUPQ8+oPYkursvnXIL59GYWs6IDZcCc6bGZSyvto1ULgRncRWT
+         puZYxfOpGXX82wdUOXKn1nY91dhi0f2+tEVd27ux0RXCnsaake3ijCdKKZubMrzJ8NTR
+         oVbxZZdX/oNJiFCNGd7AJNqY2nH/NRGM6+f6AjjfYEiRuY3TMjyl0aB234A1qZNH458b
+         t/s8TqvsVayusXs9KSpzudBgtE4UImYne50KrFP6ow6ChV8lUUfBvye8b4fbOUI57IJU
+         lDBdA3Hf18jqbEgQlgTOFaK3mDO2L9qnncUAAywd8KaenjR8yCvIywmZyVBhpcNkytda
+         snuQ==
+X-Gm-Message-State: APjAAAU/f7JUQ9FN8lhNTUUUpDreHfDCkJtgtOXe4lGb/WgJwa4VQ/br
+        7KVxHX4wfu1ED4b6Vq7CTkI=
+X-Google-Smtp-Source: APXvYqwUZPAqLuQibOCPWFTr7WAeWeECgqzMX4A+jXVLZ2uCepxguqup95mN5qpcCTiRf6wuq14Ilg==
+X-Received: by 2002:a2e:85d4:: with SMTP id h20mr4631005ljj.142.1562407960926;
+        Sat, 06 Jul 2019 03:12:40 -0700 (PDT)
+Received: from ubuntu-18-04-beta2 (85-76-47-224-nat.elisa-mobile.fi. [85.76.47.224])
+        by smtp.gmail.com with ESMTPSA id b6sm1956433lfa.54.2019.07.06.03.12.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 06 Jul 2019 03:12:40 -0700 (PDT)
+Date:   Sat, 6 Jul 2019 10:07:03 +0000
+From:   Matias Karhumaa <matias.karhumaa@gmail.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-bluetooth@vger.kernel.org
+Subject: Re: [PATCH] Bluetooth: Check state in l2cap_disconnect_rsp
+Message-ID: <20190706100703.GB4223@ubuntu-18-04-beta2>
+References: <20190521100722.GA15063@makarhum-Latitude-E5440>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Quotes needed For July Shipments
-To:     Recipients <purchase@mathewsons.ga>
-From:   "Sales -Jpexcc." <purchase@mathewsons.ga>
-Date:   Sat, 06 Jul 2019 00:39:10 +0300
-Reply-To: jpexcc@aol.com
-Message-ID: <0.0.34.5E8.1D53379E2C0CD88.0@slot0.mathewsons.ga>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190521100722.GA15063@makarhum-Latitude-E5440>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello dear,
- =
+On Tue, May 21, 2019 at 01:07:22PM +0300, Matias Karhumaa wrote:
+Hi Marcel and Johan,
 
-We are in the market for your products after meeting at your stand during l=
-ast expo.
- =
+> Because of both sides doing L2CAP disconnection at the same time, it
+> was possible to receive L2CAP Disconnection Response with CID that was
+> already freed. That caused problems if CID was already reused and L2CAP
+> Connection Request with same CID was sent out. Before this patch kernel
+> deleted channel context regardless of the state of the channel.
+> 
+> Example where leftover Disconnection Response (frame #402) causes local
+> device to delete L2CAP channel which was not yet connected. This in
+> turn confuses remote device's stack because same CID is re-used without
+> properly disconnecting.
+> 
+> Btmon capture before patch:
+> ** snip **
+> > ACL Data RX: Handle 43 flags 0x02 dlen 8                #394 [hci1] 10.748949
+>       Channel: 65 len 4 [PSM 3 mode 0] {chan 2}
+>       RFCOMM: Disconnect (DISC) (0x43)
+>          Address: 0x03 cr 1 dlci 0x00
+>          Control: 0x53 poll/final 1
+>          Length: 0
+>          FCS: 0xfd
+> < ACL Data TX: Handle 43 flags 0x00 dlen 8                #395 [hci1] 10.749062
+>       Channel: 65 len 4 [PSM 3 mode 0] {chan 2}
+>       RFCOMM: Unnumbered Ack (UA) (0x63)
+>          Address: 0x03 cr 1 dlci 0x00
+>          Control: 0x73 poll/final 1
+>          Length: 0
+>          FCS: 0xd7
+> < ACL Data TX: Handle 43 flags 0x00 dlen 12               #396 [hci1] 10.749073
+>       L2CAP: Disconnection Request (0x06) ident 17 len 4
+>         Destination CID: 65
+>         Source CID: 65
+> > HCI Event: Number of Completed Packets (0x13) plen 5    #397 [hci1] 10.752391
+>         Num handles: 1
+>         Handle: 43
+>         Count: 1
+> > HCI Event: Number of Completed Packets (0x13) plen 5    #398 [hci1] 10.753394
+>         Num handles: 1
+>         Handle: 43
+>         Count: 1
+> > ACL Data RX: Handle 43 flags 0x02 dlen 12               #399 [hci1] 10.756499
+>       L2CAP: Disconnection Request (0x06) ident 26 len 4
+>         Destination CID: 65
+>         Source CID: 65
+> < ACL Data TX: Handle 43 flags 0x00 dlen 12               #400 [hci1] 10.756548
+>       L2CAP: Disconnection Response (0x07) ident 26 len 4
+>         Destination CID: 65
+>         Source CID: 65
+> < ACL Data TX: Handle 43 flags 0x00 dlen 12               #401 [hci1] 10.757459
+>       L2CAP: Connection Request (0x02) ident 18 len 4
+>         PSM: 1 (0x0001)
+>         Source CID: 65
+> > ACL Data RX: Handle 43 flags 0x02 dlen 12               #402 [hci1] 10.759148
+>       L2CAP: Disconnection Response (0x07) ident 17 len 4
+>         Destination CID: 65
+>         Source CID: 65
+> = bluetoothd: 00:1E:AB:4C:56:54: error updating services: Input/o..   10.759447
+> > HCI Event: Number of Completed Packets (0x13) plen 5    #403 [hci1] 10.759386
+>         Num handles: 1
+>         Handle: 43
+>         Count: 1
+> > ACL Data RX: Handle 43 flags 0x02 dlen 12               #404 [hci1] 10.760397
+>       L2CAP: Connection Request (0x02) ident 27 len 4
+>         PSM: 3 (0x0003)
+>         Source CID: 65
+> < ACL Data TX: Handle 43 flags 0x00 dlen 16               #405 [hci1] 10.760441
+>       L2CAP: Connection Response (0x03) ident 27 len 8
+>         Destination CID: 65
+>         Source CID: 65
+>         Result: Connection successful (0x0000)
+>         Status: No further information available (0x0000)
+> < ACL Data TX: Handle 43 flags 0x00 dlen 27               #406 [hci1] 10.760449
+>       L2CAP: Configure Request (0x04) ident 19 len 19
+>         Destination CID: 65
+>         Flags: 0x0000
+>         Option: Maximum Transmission Unit (0x01) [mandatory]
+>           MTU: 1013
+>         Option: Retransmission and Flow Control (0x04) [mandatory]
+>           Mode: Basic (0x00)
+>           TX window size: 0
+>           Max transmit: 0
+>           Retransmission timeout: 0
+>           Monitor timeout: 0
+>           Maximum PDU size: 0
+> > HCI Event: Number of Completed Packets (0x13) plen 5    #407 [hci1] 10.761399
+>         Num handles: 1
+>         Handle: 43
+>         Count: 1
+> > ACL Data RX: Handle 43 flags 0x02 dlen 16               #408 [hci1] 10.762942
+>       L2CAP: Connection Response (0x03) ident 18 len 8
+>         Destination CID: 66
+>         Source CID: 65
+>         Result: Connection successful (0x0000)
+>         Status: No further information available (0x0000)
+> *snip*
+> 
+> Similar case after the patch:
+> *snip*
+> > ACL Data RX: Handle 43 flags 0x02 dlen 8            #22702 [hci0] 1664.411056
+>       Channel: 65 len 4 [PSM 3 mode 0] {chan 3}
+>       RFCOMM: Disconnect (DISC) (0x43)
+>          Address: 0x03 cr 1 dlci 0x00
+>          Control: 0x53 poll/final 1
+>          Length: 0
+>          FCS: 0xfd
+> < ACL Data TX: Handle 43 flags 0x00 dlen 8            #22703 [hci0] 1664.411136
+>       Channel: 65 len 4 [PSM 3 mode 0] {chan 3}
+>       RFCOMM: Unnumbered Ack (UA) (0x63)
+>          Address: 0x03 cr 1 dlci 0x00
+>          Control: 0x73 poll/final 1
+>          Length: 0
+>          FCS: 0xd7
+> < ACL Data TX: Handle 43 flags 0x00 dlen 12           #22704 [hci0] 1664.411143
+>       L2CAP: Disconnection Request (0x06) ident 11 len 4
+>         Destination CID: 65
+>         Source CID: 65
+> > HCI Event: Number of Completed Pac.. (0x13) plen 5  #22705 [hci0] 1664.414009
+>         Num handles: 1
+>         Handle: 43
+>         Count: 1
+> > HCI Event: Number of Completed Pac.. (0x13) plen 5  #22706 [hci0] 1664.415007
+>         Num handles: 1
+>         Handle: 43
+>         Count: 1
+> > ACL Data RX: Handle 43 flags 0x02 dlen 12           #22707 [hci0] 1664.418674
+>       L2CAP: Disconnection Request (0x06) ident 17 len 4
+>         Destination CID: 65
+>         Source CID: 65
+> < ACL Data TX: Handle 43 flags 0x00 dlen 12           #22708 [hci0] 1664.418762
+>       L2CAP: Disconnection Response (0x07) ident 17 len 4
+>         Destination CID: 65
+>         Source CID: 65
+> < ACL Data TX: Handle 43 flags 0x00 dlen 12           #22709 [hci0] 1664.421073
+>       L2CAP: Connection Request (0x02) ident 12 len 4
+>         PSM: 1 (0x0001)
+>         Source CID: 65
+> > ACL Data RX: Handle 43 flags 0x02 dlen 12           #22710 [hci0] 1664.421371
+>       L2CAP: Disconnection Response (0x07) ident 11 len 4
+>         Destination CID: 65
+>         Source CID: 65
+> > HCI Event: Number of Completed Pac.. (0x13) plen 5  #22711 [hci0] 1664.424082
+>         Num handles: 1
+>         Handle: 43
+>         Count: 1
+> > HCI Event: Number of Completed Pac.. (0x13) plen 5  #22712 [hci0] 1664.425040
+>         Num handles: 1
+>         Handle: 43
+>         Count: 1
+> > ACL Data RX: Handle 43 flags 0x02 dlen 12           #22713 [hci0] 1664.426103
+>       L2CAP: Connection Request (0x02) ident 18 len 4
+>         PSM: 3 (0x0003)
+>         Source CID: 65
+> < ACL Data TX: Handle 43 flags 0x00 dlen 16           #22714 [hci0] 1664.426186
+>       L2CAP: Connection Response (0x03) ident 18 len 8
+>         Destination CID: 66
+>         Source CID: 65
+>         Result: Connection successful (0x0000)
+>         Status: No further information available (0x0000)
+> < ACL Data TX: Handle 43 flags 0x00 dlen 27           #22715 [hci0] 1664.426196
+>       L2CAP: Configure Request (0x04) ident 13 len 19
+>         Destination CID: 65
+>         Flags: 0x0000
+>         Option: Maximum Transmission Unit (0x01) [mandatory]
+>           MTU: 1013
+>         Option: Retransmission and Flow Control (0x04) [mandatory]
+>           Mode: Basic (0x00)
+>           TX window size: 0
+>           Max transmit: 0
+>           Retransmission timeout: 0
+>           Monitor timeout: 0
+>           Maximum PDU size: 0
+> > ACL Data RX: Handle 43 flags 0x02 dlen 16           #22716 [hci0] 1664.428804
+>       L2CAP: Connection Response (0x03) ident 12 len 8
+>         Destination CID: 66
+>         Source CID: 65
+>         Result: Connection successful (0x0000)
+>         Status: No further information available (0x0000)
+> *snip*
+> 
+> Fix is to check that channel is in state BT_DISCONN before deleting the
+> channel.
+> 
+> This bug was found while fuzzing Bluez's OBEX implementation using
+> Synopsys Defensics.
+> 
+> Reported-by: Matti Kamunen <matti.kamunen@synopsys.com>
+> Reported-by: Ari Timonen <ari.timonen@synopsys.com>
+> Signed-off-by: Matias Karhumaa <matias.karhumaa@gmail.com>
+> ---
+>  net/bluetooth/l2cap_core.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+> index b53acd6..25e8859 100644
+> --- a/net/bluetooth/l2cap_core.c
+> +++ b/net/bluetooth/l2cap_core.c
+> @@ -4371,6 +4371,12 @@ static inline int l2cap_disconnect_rsp(struct l2cap_conn *conn,
+>  
+>  	l2cap_chan_lock(chan);
+>  
+> +	if (chan->state != BT_DISCONN) {
+> +		l2cap_chan_unlock(chan);
+> +		mutex_unlock(&conn->chan_lock);
+> +		return 0;
+> +	}
+> +
+>  	l2cap_chan_hold(chan);
+>  	l2cap_chan_del(chan, 0);
+>  
+> -- 
+> 2.7.4
+>
 
-Please kindly send us your latest catalog and price list so as to start a n=
-ew project/order as promised during the exhibition. =
+Do you have any comments on this patch? This fixes real problem which may cause
+very strange symptoms if happening in production.
 
- =
-
-I would appreciate your response about the above details required so we can=
- revert back to you asap.
- =
-
-Kind regards
- =
-
-Rhema Zoeh
+Best regards,
+Matias Karhumaa
