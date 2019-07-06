@@ -2,92 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 689E56120E
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Jul 2019 18:01:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA116612D8
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Jul 2019 21:44:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbfGFQBA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 6 Jul 2019 12:01:00 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.84]:22032 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726446AbfGFQBA (ORCPT
+        id S1726813AbfGFTo4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 6 Jul 2019 15:44:56 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:58452 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbfGFTo4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 6 Jul 2019 12:01:00 -0400
-X-Greylist: delayed 358 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Jul 2019 12:00:59 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1562428858;
-        s=strato-dkim-0002; d=jm0.eu;
-        h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=OXj6KRhUsG6EBfcR/v95Lx1R9sdG8aD9r1PIplsG9HY=;
-        b=MSWkI28hFICRJTi7fDqL3TUyj/Ckks5ZRtZ530496m7qjR5sc2bDkP0df3MrSPpg/0
-        URD2j+ZlU63XdZIXGVS3A6nWQhdzfEIHbivWzurFOy2znw8fx1OTbdmjkrxZSah/D2I/
-        VYS8vEaRMgMjNpFJ9Nz+oDPD8q4cZRGU6JSVFnNoW9OlDnpnnsD/Oc61ob7HroiHIKxh
-        3Gw7SFtGscQnls+AIW1DucVqeij+CNhkbj1CpyJHkIL3Zeo3ycD/Da3/2KQg83jzXgpG
-        0uawcSC8Eyru5upLSieWTC5FvqiPgq49nqnMyWuWZjA44jCNedgKbwAxMbBUQllTayUI
-        QpDg==
-X-RZG-AUTH: ":JmMXYEHmdv4HaV2cbPh7iS0wbr/uKIfGM0EPWe8EZQbw/dDJ/fVPBaXaSiaF5/mu26zWKwNU"
-X-RZG-CLASS-ID: mo00
-Received: from linux-1tvp.lan
-        by smtp.strato.de (RZmta 44.24 DYNA|AUTH)
-        with ESMTPSA id h0a328v66Fsx6P0
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate);
-        Sat, 6 Jul 2019 17:54:59 +0200 (CEST)
-From:   josua.mayer@jm0.eu
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Josua Mayer <josua.mayer@jm0.eu>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>
-Subject: [PATCH v3 3/3] bluetooth: 6lowpan: always check destination address
-Date:   Sat,  6 Jul 2019 17:54:48 +0200
-Message-Id: <20190706155448.13382-4-josua.mayer@jm0.eu>
-X-Mailer: git-send-email 2.16.4
+        Sat, 6 Jul 2019 15:44:56 -0400
+Received: from [192.168.1.175] (apn-37-247-209-172.dynamic.gprs.plus.pl [37.247.209.172])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 5AD3ACF165;
+        Sat,  6 Jul 2019 21:53:26 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [PATCH v3 0/3] bluetooth: 6lowpan: multiple peers and addresses
+From:   Marcel Holtmann <marcel@holtmann.org>
 In-Reply-To: <20190706155448.13382-1-josua.mayer@jm0.eu>
+Date:   Sat, 6 Jul 2019 21:44:48 +0200
+Cc:     linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <5A501DEB-B2CA-4C3B-AF5E-F2E5816AA5D0@holtmann.org>
 References: <20190706155448.13382-1-josua.mayer@jm0.eu>
+To:     Josua Mayer <josua.mayer@jm0.eu>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Josua Mayer <josua.mayer@jm0.eu>
+Hi Josua,
 
-BLE based 6LoWPAN networks are highly constrained in bandwidth.
-Do not take a short-cut, always check if the destination address is
-known to belong to a peer.
+> This patch set deals with an issue I reported earlier this year, where
+> 1) packets addressed to a non-link-local address
+> 2) any packets when at least 2 peers are connected
+> were not delivered if they matched a direct peer i.e. no routing.
+> 
+> The full explanation of the issue including steps to reproduce are:
+> https://www.spinics.net/lists/linux-bluetooth/msg78486.html
+> 
+> Changes since v2:
+> - rebased on bluetooth-next
+> 
+> Changes since v1:
+> - changed comment style to c++
+> 
+> Josua Mayer (3):
+> bluetooth: 6lowpan: search for destination address in all peers
+> bluetooth: 6lowpan: check neighbour table for SLAAC
+> bluetooth: 6lowpan: always check destination address
+> 
+> net/bluetooth/6lowpan.c | 41 +++++++++++++++++++++++++----------------
+> 1 file changed, 25 insertions(+), 16 deletions(-)
 
-As a side-effect this also removes any behavioral differences between
-one, and two or more connected peers.
+all 3 patches have been applied to bluetooth-next tree.
 
-Acked-by: Jukka Rissanen <jukka.rissanen@linux.intel.com>
-Tested-by: Michael Scott <mike@foundries.io>
-Signed-off-by: Josua Mayer <josua.mayer@jm0.eu>
----
- net/bluetooth/6lowpan.c | 12 ------------
- 1 file changed, 12 deletions(-)
+Regards
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index f4e548e7b985..9d41de1ec90f 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -168,18 +168,6 @@ static inline struct lowpan_peer *peer_lookup_dst(struct lowpan_btle_dev *dev,
- 
- 	BT_DBG("peers %d addr %pI6c rt %p", count, daddr, rt);
- 
--	/* If we have multiple 6lowpan peers, then check where we should
--	 * send the packet. If only one peer exists, then we can send the
--	 * packet right away.
--	 */
--	if (count == 1) {
--		rcu_read_lock();
--		peer = list_first_or_null_rcu(&dev->peers, struct lowpan_peer,
--					      list);
--		rcu_read_unlock();
--		return peer;
--	}
--
- 	if (!rt) {
- 		if (ipv6_addr_any(&lowpan_cb(skb)->gw)) {
- 			/* There is neither route nor gateway,
--- 
-2.16.4
+Marcel
 
