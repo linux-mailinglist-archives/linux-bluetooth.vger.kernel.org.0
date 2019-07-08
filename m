@@ -2,69 +2,90 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3902761A51
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Jul 2019 07:32:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3AE7618A2
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Jul 2019 02:04:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728435AbfGHFcI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 8 Jul 2019 01:32:08 -0400
-Received: from [197.254.217.239] ([197.254.217.239]:56324 "EHLO mail.cert.sd"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727851AbfGHFcI (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 8 Jul 2019 01:32:08 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.cert.sd (Postfix) with ESMTP id C874E3C361D;
-        Mon,  8 Jul 2019 03:11:39 +0200 (CAT)
-Received: from mail.cert.sd ([127.0.0.1])
-        by localhost (mail.cert.sd [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id xJAgsH4fekEq; Mon,  8 Jul 2019 03:11:39 +0200 (CAT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.cert.sd (Postfix) with ESMTP id C9AE75EFE06;
-        Sun,  7 Jul 2019 21:33:55 +0200 (CAT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.cert.sd C9AE75EFE06
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cert.sd;
-        s=3B54D788-828F-11E8-945F-63B06BDA8568; t=1562528037;
-        bh=i6jGklZsYhvyS6O+r4vHl3fsu2UV4hnEJS7rdZ4svBg=;
-        h=MIME-Version:To:From:Date:Message-Id;
-        b=crG7rkMYO7Duurby2Abmb4dKPk+ERnHNgTOji0gqQtxqGuUSX7Tv1Mj/bWuNIq+6z
-         KOeVkE9v66fkThDOuo6tIdnxCA7kM6yK1XxKf0YFVBktnA0GNqxeKYqTwPAi+oSPZr
-         cfxqf51cjdzQLcnC62KDg6Z3gn/4bUP16iKoLP/msKz0Fk0NNOiZ08tHl9Qdq1moLQ
-         BcQo1wdScy2k1n0e8/MuuR2gJkkZTFhi2N1+dlBNa5BUwRerhHmeyBdC25BTmytGTp
-         wMTRrlHEcAk58OwhQChTXQqqWrrr8FN7Od0nna3oDt25gFQV1GAqPYhFAELjDb//rM
-         XMREi538WIZww==
-X-Virus-Scanned: amavisd-new at mail.cert.sd
-Received: from mail.cert.sd ([127.0.0.1])
-        by localhost (mail.cert.sd [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id IU6AHng4XSfF; Sun,  7 Jul 2019 21:33:55 +0200 (CAT)
-Received: from [192.168.0.103] (unknown [105.112.75.159])
-        by mail.cert.sd (Postfix) with ESMTPSA id 3175F5E3755;
-        Sun,  7 Jul 2019 18:46:26 +0200 (CAT)
-Content-Type: text/plain; charset="iso-8859-1"
+        id S1727696AbfGHAEy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 7 Jul 2019 20:04:54 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:35503 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727455AbfGHAEy (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 7 Jul 2019 20:04:54 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w24so7292352plp.2
+        for <linux-bluetooth@vger.kernel.org>; Sun, 07 Jul 2019 17:04:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=wDN6WV33uwNdL5E3I2htUXY1vmcv5ID7wjrKzbaNAcI=;
+        b=aL+OuQr6Vnet7ZPFwuLPz2sY31lDmbW+ABBY/LunEUTnfMAEaK5nDt8VXk5VRQwn9G
+         z1qA1uOx/uCmpIqG9RV0Jx56OF4SscrkPzjdPdCDLOLQ+af3qU14+PwzTUQj28OPu/vC
+         Z94QsyYOTSDLgxYcA0Qlr6o7MQFR5BRdyA/Dtb9s3R099opEoCpGDQUV9wV7NIBrtEFY
+         1BQ7MZ/G2s+hql0t5nGs2GLS4R1G2Zv53kqyZ1ayogjjtLEg4UL98IRsxDCVcWtKGU73
+         fLJ7l1UPWCrxsaybYZI176gxfnk8pNX7lYmWeF5kJPFMiOKT3Lb7IWEkTC++oh2OxcdN
+         H1lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=wDN6WV33uwNdL5E3I2htUXY1vmcv5ID7wjrKzbaNAcI=;
+        b=N5nAYM1NpH+vXHFo0ez3DmaGNZLsdFP7XQBbFTKg7ksX3Res/PIHf2725Ra421Sfh6
+         Kv4h+JOJGIO1ExztJ3zuLC84qsJDxiN73irZVXPo5HrMJJ0Qn0Gkbm3AY0PsXdp67k9c
+         VqPCqbP7HwAyJfNBvrW+IcxG6T56QpzMzKHJk3hAoBDlXKevRVGpVrff+NyaPQXxgHUF
+         HJFftuuPqsO9vUqObDDKi4HHZPs4v7OhTRUNmriw+fcdM7o+0LiOpc5z3/gONhTVTSfN
+         nKPticc/OKtJygg+WrMbOiP5hU+W6Tp85YE5pgLYiQDq0sc6MLtTO2NbWK2YB+zN3FJ8
+         /KKw==
+X-Gm-Message-State: APjAAAU1orBnSuVHU9/FmuiAKb/pAixHxpkIjiYOLfrnL0xlg/xZlzN+
+        U++daWxsbnpjI28QGmaQm62sdNQuyBsL5e3s6p/ND1j5
+X-Google-Smtp-Source: APXvYqw4Ogo/84NFmvI///0W3Hagjzt/Mp2RlvBx9QlUDDMTiw2lowkCnxPoRTM8V9WChyWRYHuYPEanITQbfRdBonE=
+X-Received: by 2002:a17:902:da4:: with SMTP id 33mr19000685plv.209.1562544293789;
+ Sun, 07 Jul 2019 17:04:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: CASH GRANT / SPENDEN !!!
-To:     Recipients <moamar@cert.sd>
-From:   "LISA ROBINSON" <moamar@cert.sd>
-Date:   Sun, 07 Jul 2019 17:36:59 +0100
-Reply-To: charitylisajohnrobinson900@usa.com
-X-Antivirus: Avast (VPS 190707-2, 07/07/2019), Outbound message
-X-Antivirus-Status: Clean
-Message-Id: <20190707164628.3175F5E3755@mail.cert.sd>
+From:   Andrey Batyiev <batyiev@gmail.com>
+Date:   Mon, 8 Jul 2019 03:04:42 +0300
+Message-ID: <CAEQQxWxQ9A6D+jdc8hVjBjgGbvBovJFxEf7K9Rta+O4noRmSFg@mail.gmail.com>
+Subject: [PATCH] Fix endianness bug in hci_core.c
+To:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Sehr geehrter Empf=E4nger, Sie wurden ausgew=E4hlt, um von Frau Lisa Robins=
-on (1.200.000,00 USD) als wohlt=E4tige Spende / Stipendium zu erhalten. Dah=
-er m=FCssen Sie sie f=FCr weitere Informationen per E-Mail kontaktieren.
+Hello everyone,
+
+I'm using Linux on big endian CPU (one of MIPS-based home routers).
+Also, I'm trying to use Cypress CYW20704A2 USB-Bluetooth dongle on it.
+However, `hciconfig hci0 up` failed, and `btmon` showed very specific problem:
 
 
-Dear Beneficiary, You have been selected to receive ($1,200,000.00 USD) as =
-charity donation/grant from Mrs. Lisa Robinson.Therefore, you are required =
-to contact her through email for more details. 
 
----
-This email has been checked for viruses by Avast antivirus software.
-https://www.avast.com/antivirus
+< HCI Command: LE Write Suggested Default Data Length (0x08|0x0024) plen 4
+        TX octets: 64256
+        TX time: 18440
+> HCI Event: Command Complete (0x0e) plen 4
+      LE Write Suggested Default Data Length (0x08|0x0024) ncmd 1
+        Status: Invalid HCI Command Parameters (0x12)
 
+
+
+After comparing with similar log on the Linux desktop (where TX octets
+value is `251`), I came to conclusion that it's an endianness problem,
+therefore here is a patch that fixes it.
+
+Thanks,
+    Andrey
+
+--- linux-4.14.104-old/net/bluetooth/hci_core.c 2019-07-07
+23:39:44.069862824 +0000
++++ linux-4.14.104/net/bluetooth/hci_core.c     2019-07-07
+22:43:21.291838543 +0000
+@@ -802,8 +802,8 @@
+       if (hdev->le_features[0] & HCI_LE_DATA_LEN_EXT) {
+               struct hci_cp_le_write_def_data_len cp;
+
+-               cp.tx_len = hdev->le_max_tx_len;
+-               cp.tx_time = hdev->le_max_tx_time;
++               cp.tx_len = cpu_to_le16(hdev->le_max_tx_len);
++               cp.tx_time = cpu_to_le16(hdev->le_max_tx_time);
+               hci_req_add(req, HCI_OP_LE_WRITE_DEF_DATA_LEN, sizeof(cp), &cp);
+       }
