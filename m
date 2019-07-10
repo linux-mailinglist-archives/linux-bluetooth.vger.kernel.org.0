@@ -2,80 +2,49 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 885CD644D3
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Jul 2019 12:01:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 703A864E8B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Jul 2019 00:04:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726198AbfGJKBk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 10 Jul 2019 06:01:40 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:36215 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725994AbfGJKBk (ORCPT
+        id S1727823AbfGJWE1 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 10 Jul 2019 18:04:27 -0400
+Received: from 50-244-196-250-static.hfc.comcastbusiness.net ([50.244.196.250]:56929
+        "EHLO hometime.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726245AbfGJWE0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 10 Jul 2019 06:01:40 -0400
-Received: by mail-pf1-f194.google.com with SMTP id r7so872596pfl.3;
-        Wed, 10 Jul 2019 03:01:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=oWhtY7VF/0YooGxc360oDSKbTlfpEs5lWHS7BPIJPpE=;
-        b=XggheSc/+S6dLAW40vhmTzXkKUDOqr9tyfJ5zD3xq/tu1SgkFHnK+aFANAOmfCWS3S
-         2bJUU8amJzfZXEmb4XfDXVH2KUML2cmstd17z7NvMXJsifB+Bea1qtnpjm4bqq9zSfq1
-         uolPrZr5tJZu0Lbm1O+eC6qzDKh14uU7fnYs0QbAipXykXS5tUbEi4TLDyWCBFlQ4mnt
-         ZNCrC1tPYzV31MNzFKS8E05R08OZhTD5pfYbbe1Lj+0oqUndnKdU7s/hOS24XVYPmwtC
-         9Bo3Oz9WZI+n+t86yC+MXN9pCt+JIYiCC/yg2+gBYgV3zRON2EcXRuuNBof1XX3/vKxn
-         hDYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=oWhtY7VF/0YooGxc360oDSKbTlfpEs5lWHS7BPIJPpE=;
-        b=aZ/qkHlRGnVOI+x4/6jIGIhNoiQtGVOCfhm5P6k7mvwAIseA1arS1rJBaMhYCIjQl/
-         xEtTrd2JPaNw/2XS71vjOb2Q84IZnwZ/QPzvC8kKph+E5h9SPQYEqFFB0p+TS4bKME/0
-         ubULt8ZxuiNdUyi08wUHAuJ5Lchme6YTARxzYtVyn+w6IGy49R6tBxJvquX0xITwTGYt
-         MzcqVPBJoXsEW66sXRa+KDg0vMbs7imnllq7iBVJATHBrIKHFKc0EfSILNFik4KpaLqq
-         JkTIvAocc7Sn+E7oaSirvMAFwHjFoBNuDWXyS9MDJqsxLlrAoaZEKeTAZJ78+XTBGa6n
-         QkyA==
-X-Gm-Message-State: APjAAAV7kKOhx7hk3+X8gbenQoHfd0HuZzEwrcwalnN7wvUtm05EQ/y6
-        9pQ6dRC4uNIFWIP9aCcnC7yZxJOiPuL9+A==
-X-Google-Smtp-Source: APXvYqxZX+YQAsBXt0Kso/g+3zS8tfNPCvsalPjlDDWX3WD2ie+I3ehs36sH4zgMVmOJ2Hyy5xJwPw==
-X-Received: by 2002:a17:90a:77c5:: with SMTP id e5mr5735940pjs.109.1562752898936;
-        Wed, 10 Jul 2019 03:01:38 -0700 (PDT)
-Received: from sheetal-Inspiron-5537.domain.name ([103.68.35.254])
-        by smtp.googlemail.com with ESMTPSA id c5sm1704424pgq.80.2019.07.10.03.01.35
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 10 Jul 2019 03:01:37 -0700 (PDT)
-From:   sheetalsingala <2396sheetal@gmail.com>
-To:     marcel@holtman.org
-Cc:     linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sheetalsingala <2396sheetal@gmail.com>
-Subject: [PATCH 2/2] Fixed a brace styling issue
-Date:   Wed, 10 Jul 2019 15:31:26 +0530
-Message-Id: <20190710100126.1519-1-2396sheetal@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 10 Jul 2019 18:04:26 -0400
+X-Greylist: delayed 18198 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Jul 2019 18:04:22 EDT
+Received: from [100.120.45.199] ([195.181.172.132]) by hometime.com with Microsoft SMTPSVC(6.0.3790.4675);
+         Wed, 10 Jul 2019 00:08:11 -0500
+Content-Type: text/plain; charset="iso-8859-1"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Greetings!
+To:     Recipients <fuqingzheng@asia.com>
+From:   fuqingzheng@asia.com
+Date:   Wed, 10 Jul 2019 07:07:37 +0200
+Reply-To: zhengfuqing@yandex.com
+X-Antivirus: Avast (VPS 190709-4, 09-07-2019), Outbound message
+X-Antivirus-Status: Clean
+Message-ID: <SBSSeKg1bzuDwP6SAH200008fea@hometime.com>
+X-OriginalArrivalTime: 10 Jul 2019 05:08:11.0766 (UTC) FILETIME=[78AE5160:01D536DD]
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Fixed a coding style issue
+Good day,
 
-Signed-off-by: Sheetal Singala <2396sheetal@gmail.com>
+  I have a mutual business proposal, which refers to the transfer of a large amount of money to an account abroad, with your help as a foreign partner as a beneficiary of the funds. Everything about this transaction will be legal without any bridge of financial authority both in my country and yours. If you are interested and I will give you more information about the project as soon as I receive your positive response.
+
+Best regards,
+
+Executive Director.
+ 
+ICBC. China
+
 ---
- drivers/bluetooth/btintel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index bb99c8653aab..4a8b812605f3 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -18,7 +18,7 @@
- 
- #define VERSION "0.1"
- 
--#define BDADDR_INTEL (&(bdaddr_t) {{0x00, 0x8b, 0x9e, 0x19, 0x03, 0x00}})
-+#define BDADDR_INTEL (&(bdaddr_t) {0x00, 0x8b, 0x9e, 0x19, 0x03, 0x00})
- 
- int btintel_check_bdaddr(struct hci_dev *hdev)
- {
--- 
-2.17.1
+Dit e-mailbericht is gecontroleerd op virussen met Avast antivirussoftware.
+https://www.avast.com/antivirus
 
