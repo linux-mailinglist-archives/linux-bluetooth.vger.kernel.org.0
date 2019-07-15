@@ -2,80 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D63E8685C8
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Jul 2019 10:52:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64866687B6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Jul 2019 13:04:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729481AbfGOIwi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Jul 2019 04:52:38 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42568 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729289AbfGOIwi (ORCPT
+        id S1729946AbfGOLDm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Jul 2019 07:03:42 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:45272 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729876AbfGOLDh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Jul 2019 04:52:38 -0400
-Received: by mail-io1-f67.google.com with SMTP id e20so2509856iob.9
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jul 2019 01:52:38 -0700 (PDT)
+        Mon, 15 Jul 2019 07:03:37 -0400
+Received: by mail-pg1-f195.google.com with SMTP id o13so7525720pgp.12
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jul 2019 04:03:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:from:date:message-id:subject:to;
-        bh=qwXt3i6bEf4W6a7/+EiN/zhZ+gnDAxQDoWvT+s7bWEU=;
-        b=hX52xV7DEyPACVr1QfWy7RGMlyVrgG60OznnnpVJ7pQkLQr5R/9iTMJdpdePwzymtq
-         /OKUbAwNHDPiBW/5U68TtGJHs9DyJx7nSHfhfVkQo9eM/KVeijIxvIaTRp5THkNiXV/E
-         WMCdL/wdypJa/NXKnCpMabsdwdKzpprG1WAqqpL+4LMQbfFUagX1wt9atoIM2Q6OLvj3
-         SB/cu8dis7WYSFR8BkZX86KqdzSHwMRJ+jtlASm06c1wi3vwKEoYpBTn+jHBZBaUDRDl
-         EgjFl62o8+3/D7YuI5Riq5X/8miJ6uhpSkMLcgviTsP5PzXj0qxT+TM043ka3DSUZ9DC
-         aHIA==
+        bh=at1U0zLzNGQlxAxn9clrRSHSPpGB2zlKGmciYViXmzQ=;
+        b=QRb1GBodFoBhFvJPBdxPE4VAqCl+I+T1SKUDc8YhKIcP8qXLNKmtBmeLwjLs/FO9lZ
+         75gCGAxY+YSs9c6HnUneWVQ5Kuc7cIu7HA1ZwTW36nCFWmVeEdZxTARPq/JJ6pFyLQCC
+         i5F57UJ0HSPfhhGiuIoSnyQ2CEuZZYzSvF/92SwjNSSKKvpKVbRgR8KxSyIf95yOdirX
+         vUpU9SAkZRrnMLlykrQni0TuHswl2ZAFQk4VFvbGPWK0ElKuMbgEj9smyMqgESRQW96Z
+         0AILN2JphlyIDpV3m3PpFXakYu3MGnxotH6bOcGMyGpkv5udFQwKTslRRPJv+1YEgJFw
+         GLhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=qwXt3i6bEf4W6a7/+EiN/zhZ+gnDAxQDoWvT+s7bWEU=;
-        b=JX2qOdt7IPnKLOWbZCNWycXXDYCaXBIP2mBMZjzaPRB2H7HjMS8ylBl+CXJaCtvC1r
-         spsfMYrcjIJkAc5cwQmbbQtv5qhNajQApKa6S023OMd0Y+DcIcCDNVir5qzVm206r/cj
-         Hmm1CJhtJ6RHmrG4/m2DtnV+SB8DGOiszelbu1VzWYpgdtHyomQiRyM9TQph14m1FjLR
-         /I7YPz7aMjTAVWj0yKJdcsVUZkUHKJArnX0SuxMAuNTIaYy4458EFTU2ETmAz+UzGR5k
-         qIe9LTDMJRWC3jmczvSSpAExqBVb9ucmNPuOqa1NLVE3Ka1g17s34KopZmauV01bE+WN
-         r3eA==
-X-Gm-Message-State: APjAAAWAH4c+4u0S6AMwMX5yoyfn8hIFrXgg8DlQDg9nvMoR5mVHPMcl
-        o/SE2W/zh4Mzb+d9hGrMdnF8CqmO5ozFH0cR960eAFHK
-X-Google-Smtp-Source: APXvYqwPhLvBQL4Mb2Ubo2czrsKUY56DmsidqkyUk44KuFzgUesv9Qg+H91F6i8vDrm4DY+xdoOZOwpE5fl+6AeYwyA=
-X-Received: by 2002:a6b:c90c:: with SMTP id z12mr22471528iof.11.1563180757335;
- Mon, 15 Jul 2019 01:52:37 -0700 (PDT)
+        bh=at1U0zLzNGQlxAxn9clrRSHSPpGB2zlKGmciYViXmzQ=;
+        b=NA5Spxa+2A+Ussi50tyh6c05gtanwUNoHw2doUM1BSbY28UuA/+ZFQJ0vsZ+tb7JU3
+         rVPXS6wNR5JxZj0VFOsWPqu3o1ggPmDuuoZ4+lrL/0uiqpS49vcOFhmEE0O8LgeMUWe4
+         7CFf4CQF/JucWNfRdtg8nE2gZYX9ePmjpQwE1AmBqQRli9VLoEu9WqFgGPbHaOfRJlwk
+         jIQNZpuqThplLI5ULCFSv6iDPRrMNvkPLNYtr6r/CXrsG8UYGq4WLYMaWQcm1zhWu8oz
+         WcJ6NBt/MM7xgHMtiYYrD8EF/qZfy8s3EMwNO/nTvrqiZHQY4ZLTU9a0po7BXaSRX5X0
+         uj1w==
+X-Gm-Message-State: APjAAAXIYriIq7h8prTbImSbKM7GnQJ1wuJnKOke9SbFZxeXmSyr2I/e
+        +XAmhQYs47FmsKa1DyB47H4xc2Bmpfs25MhjTuw=
+X-Google-Smtp-Source: APXvYqzZtOEA+O4p1z4qZpCetbNMVF7GlYWpoUrGzFqj2Xbxoz/rNpVURYzRILo4We5FvCDz7WNaWyJleYBMiLbsRiY=
+X-Received: by 2002:a17:90a:9903:: with SMTP id b3mr28453816pjp.80.1563188616818;
+ Mon, 15 Jul 2019 04:03:36 -0700 (PDT)
 MIME-Version: 1.0
-From:   =?UTF-8?B?6auY5qmL5rW3?= <www.carrotsoft@gmail.com>
-Date:   Mon, 15 Jul 2019 17:52:25 +0900
-Message-ID: <CAJpXGC2ZGK2--tEZkqAAvh-Ef-MLSn+AWK=S9Uni_F06tXLSKQ@mail.gmail.com>
-Subject: [PATCH BlueZ 1/1] tools/hciconfig: Check device name (hci0 etc.)
-To:     linux-bluetooth@vger.kernel.org
+Received: by 2002:a17:90a:b78d:0:0:0:0 with HTTP; Mon, 15 Jul 2019 04:03:36
+ -0700 (PDT)
+From:   Donald Douglas <ddouglasng@gmail.com>
+Date:   Mon, 15 Jul 2019 04:03:36 -0700
+Message-ID: <CALVR28EtFZG5M72gg5535c6GQgjUkrOmnToQem=_bwo5pu8tgQ@mail.gmail.com>
+Subject: Kindly Respond
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Check device name length given to argv.
-If the length of device name is shorter than 4,
-that's an error.
----
- tools/hciconfig.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+Hello,
+I am Barr Fredrick Mbogo a business consultant i have a lucrative
+business to discuss with you from the Eastern part of Africa Uganda to
+be precise aimed at agreed percentage upon your acceptance of my hand
+in business and friendship. Kindly respond to me if you are interested
+to partner with me for an update. Very important.
 
-diff --git a/tools/hciconfig.c b/tools/hciconfig.c
-index ddc17c4b5..aad37dd56 100644
---- a/tools/hciconfig.c
-+++ b/tools/hciconfig.c
-@@ -2027,7 +2027,13 @@ int main(int argc, char *argv[])
-         exit(0);
-     }
-
--    di.dev_id = atoi(argv[0] + 3);
-+    if (strlen(argv[0]) > 3) {
-+        di.dev_id = atoi(argv[0] + 3);
-+    } else {
-+        fprintf(stderr, "Invalid device name: %s\n", argv[0]);
-+        exit(1);
-+    }
-+
-     argc--; argv++;
-
-     if (ioctl(ctl, HCIGETDEVINFO, (void *) &di)) {
--- 
-2.17.1
+Yours Sincerely,
+Donald Douglas,
+For,
+Barr Frederick Mbogo
+Legal Consultant.
+Reply to: barrfredmbogo@consultant.com
