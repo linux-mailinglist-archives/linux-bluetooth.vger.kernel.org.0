@@ -2,61 +2,49 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A1CED69997
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Jul 2019 19:14:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C861699EE
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Jul 2019 19:32:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731404AbfGOROM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Jul 2019 13:14:12 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:52504 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730782AbfGOROM (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Jul 2019 13:14:12 -0400
-Received: from [192.168.22.163] (unknown [157.25.100.178])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 7F3FACEEB9;
-        Mon, 15 Jul 2019 19:22:44 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: [PATCH] v3 Fast Advertising Interval
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1563190522-23651-1-git-send-email-spoorthix.k@intel.com>
-Date:   Mon, 15 Jul 2019 19:14:08 +0200
-Cc:     linux-bluetooth@vger.kernel.org, bharat.b.panda@intel.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <FBF9BD43-EE1B-4D20-853C-19301B5573A0@holtmann.org>
-References: <1563190522-23651-1-git-send-email-spoorthix.k@intel.com>
-To:     SpoorthiX K <spoorthix.k@intel.com>
-X-Mailer: Apple Mail (2.3445.104.11)
+        id S1731604AbfGORbO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Jul 2019 13:31:14 -0400
+Received: from mail.thorholdings.com ([201.218.124.195]:55974 "EHLO
+        m2.gbcinfo.top" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731278AbfGORbO (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 15 Jul 2019 13:31:14 -0400
+To:     linux-bluetooth@vger.kernel.org
+From:   Martin Winkler <info@m2.gbcinfo.top>
+Subject: Nachricht
+Date:   Mon, 15 Jul 2019 12:31:14 -0500
+Message-ID: <20190715_173114_021444.info@m2.gbcinfo.top>
+X-Mailer: WEBMAIL
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Mime-Version: 1.0
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Spoorthi,
+Sehr geehrte Damen und Herren,
 
-> Changes made to add support for fast advertising interval
-> as per core 4.1 specification, section 9.3.11.2.
-> 
-> A peripheral device entering any of the following GAP modes and
-> sending either non-connectable advertising events or scannable
-> undirected advertising events should use adv_fast_interval2
-> (100ms - 150ms) for adv_fast_period(30s).
-> 
->         - Non-Discoverable Mode
->         - Non-Connectable Mode
->         - Limited Discoverable Mode
->         - General Discoverable Mode
-> 
-> Signed-off-by: Spoorthi Ravishankar Koppad <spoorthix.k@intel.com>
-> ---
-> include/net/bluetooth/hci_core.h |  2 ++
-> net/bluetooth/hci_request.c      | 32 ++++++++++++++++++++++----------
-> 2 files changed, 24 insertions(+), 10 deletions(-)
+nach unserem Besuch Ihrer Homepage möchten wir Ihnen ein Angebot von Produkten vorstellen, das Ihnen ermöglichen wird, den Verkauf Ihrer Produkte sowie Dienstleistungen deutlich zu erhöhen.
 
-patch has been applied to bluetooth-next tree.
+Die Datenbanken der Firmen sind in für Sie interessante und relevante Zielgruppen untergliedert.
 
-Regards
+Die Firmenangaben beinhalten: Name der Firma, Ansprechpartner, E-mail Adresse, Tel. + Fax-Nr., PLZ, Ort, Straße etc.
 
-Marcel
+--
+1. Gesamtpaket 2019 DE 1 Mio. Firmenadressen ( 1 457 620 ) - 190 EUR ( bis zum 15.07.2019 )
+2. Gesamtpaket 2019 DE,AT,CH ( 1 747 921 ) - 240 EUR ( bis zum 15.07.2019 )
+--
+
+Die Verwendungsmöglichkeiten der Datenbanken sind praktisch unbegrenzt und Sie können durch Verwendung der von uns entwickelten
+Programme des personalisierten Versendens von Angeboten u.ä. mittels E-mailing bzw. Fax effektive und sichere Werbekampagnen damit durchführen.
+
+Bitte informieren Sie sich über die weiteren Details einmal unverbindlich auf unseren Webseiten:
+
+http://www.dbconnectmarketing.net/?p=1
+
+Mit freundlichen Grüßen
+Martin Winkler
 
