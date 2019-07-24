@@ -2,70 +2,77 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 67B8373342
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jul 2019 18:01:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BC6D73362
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jul 2019 18:09:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727128AbfGXQBB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 24 Jul 2019 12:01:01 -0400
-Received: from 8.mo3.mail-out.ovh.net ([87.98.172.249]:37423 "EHLO
-        8.mo3.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726308AbfGXQBB (ORCPT
+        id S1728116AbfGXQJ1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 24 Jul 2019 12:09:27 -0400
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:45549 "EHLO
+        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726099AbfGXQJ1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 24 Jul 2019 12:01:01 -0400
-X-Greylist: delayed 2314 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Jul 2019 12:01:00 EDT
-Received: from player728.ha.ovh.net (unknown [10.109.160.62])
-        by mo3.mail-out.ovh.net (Postfix) with ESMTP id 6AD34220263
-        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Jul 2019 17:22:25 +0200 (CEST)
-Received: from brouillet.org (bed84-1-78-229-93-161.fbx.proxad.net [78.229.93.161])
-        (Authenticated sender: postmaster@brouillet.org)
-        by player728.ha.ovh.net (Postfix) with ESMTPSA id DF02F83196C8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Jul 2019 15:22:24 +0000 (UTC)
-To:     linux-bluetooth@vger.kernel.org
-From:   Marcel Brouillet <marcel@brouillet.org>
-Subject: A2DP sound in ALSA vs PulseAudio
-Message-ID: <3babfac8-767d-5249-f6df-67bf60892d7b@brouillet.org>
-Date:   Wed, 24 Jul 2019 17:22:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Wed, 24 Jul 2019 12:09:27 -0400
+Received: by mail-yw1-f66.google.com with SMTP id m16so18275943ywh.12
+        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Jul 2019 09:09:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=5pJVVIp/LwA+Md6ojMBb/FcTZbPOtUyucJPo//AZiFY=;
+        b=Z+wtbQFrfmyBc2rSQ0+k/56jmv58NCJZ1o+Esux6vSn6h2M8BgKKMuzD6ZI/KYWl0y
+         Pgz4MJ6EQ2TFpubszTjXuCFWLUHgKNLJtOmXYTgRkkYuU1uPWo44VQPI/bWFb6Rh2c9C
+         GHgbYxAJfFOvY1YNCCzqbBKzo2ubijP1C2e0ln9DKHNDlK3tpWvLm4erwkLYQcqv4z1h
+         xLr5gBZTf1hgCAFyWKJXkq5Jz2+BNMhLGuQOjThftGYyl0hLq4mijsRMrvR1FQr3q9N9
+         lArKn4oUyRqcRXhJeKtBmabI8MVCKqwO1XRyEohNplrE+qAAG8wVoeL85qGI2QmMAGnR
+         HyIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=5pJVVIp/LwA+Md6ojMBb/FcTZbPOtUyucJPo//AZiFY=;
+        b=NW2x8qVGg9VzcSO4kTACFoPPGeakFJ+1XqRcdXgzRy2CJgdceh7HtBlIvFSqVXvW69
+         W6fnTsK8bkW1uyhAl157U/KZUHp0mSKBy1zkoxbtHwHdGJYWULJlHroUqufq8tsVWVFs
+         r7uBDk/R0HpK1bc6923lIGHF3m0VreBogsSq1HsSGJiI7CMFCOJPRiDSzhADieKmHlDp
+         XeDC8JrU6qHA8eIZM3i4xKM4wOmC0DF9RyDboSBVQOmjuFOjC/A447GCovj3mR8PABxM
+         Q+uly2jR5MKrzxmBNV6mZCHVNBRwGttumq53j3ZUjB1WMkF9WdKh+vWcWbW3pbl0aY6z
+         CIfw==
+X-Gm-Message-State: APjAAAXyFOmucfRTLhdK34neG0UTC6DxsN/x/Cx6lUBka5CJIV2mEUok
+        n5yYAmLXA2jbScmtliLNI5CdTpNgS/vvTaXRLpk=
+X-Google-Smtp-Source: APXvYqzuwBMt+MojgXRiEnR2dNLv7709UBYq2H/K/AsMPAScOlsvD3Ro2JqBd2LbFOMDPcoXI8cpyzHwdgMvjOWnvZg=
+X-Received: by 2002:a81:2e81:: with SMTP id u123mr46926578ywu.455.1563984566305;
+ Wed, 24 Jul 2019 09:09:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: fr-classic
-X-Ovh-Tracer-Id: 8624674762922441804
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduvddrkedtgdekvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecu
+Received: by 2002:a81:140c:0:0:0:0:0 with HTTP; Wed, 24 Jul 2019 09:09:26
+ -0700 (PDT)
+From:   nelson mark <nmark6507@gmail.com>
+Date:   Wed, 24 Jul 2019 09:09:26 -0700
+Message-ID: <CABa0ZKM=U6MOd_wAD+1fqTexOds6u1ejEmzNFjt1GZFHdn+8tg@mail.gmail.com>
+Subject: CAN YOU SUPPLY?
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+Attn:Sir/Madam,
 
-I have enabled A2DP sinking on my Ubuntu 18.03 computer, and I am able 
-to stream sound from my phone to my PC. Pavucontrol sees a new device in 
-"Configuration", a new input in the "Input Devices" tab and a new item 
-in the "Playback" tab : "Loopback from xyz".
+Tender is open to all potential suppliers in the Contract Procurement
+Board (CPB) here in Ghana for the supply of your products. This Tender
+is open to Foreign suppliers whose company products meet international
+standards and also willing to bid for a tender and if your not
+interested to bid please do not reply.
 
-BUT there are no new devices shown in ALSA (result of aplay -l is 
-unchanged). It seems this is intentional by design, to only register the 
-new devices in Pulse Audio. I use Mixxx which lists ALSA devices.
+Terms of Payment: If the Contract is awarded to your company,An
+upfront payment of 80% (T/T) will be made to your account, while 20%
+will be paid before shipment.
 
-Question : What is the best current way to get A2DP sound at ALSA level ?
+This Projects is for companies who are very ready to apply for Tender
+bids and have understanding the meaning of bidding for contract supply
+and you will need to do official tender registration with the Contract
+Procurement Board (CPB) when you are submitting your bidding documents
+for approval before award.
 
-I found relevant discussions :
+I am a commission agent.
 
-- https://stackoverflow.com/questions/12338621/a2dp-sink-without-pulseaudio
-
-- 
-https://forum.armbian.com/topic/6480-bluealsa-bluetooth-audio-using-alsa-not-pulseaudio/ 
-referencing a BluezAlsa project.
-
-Has any of the above been integrated in the core bluez (should I 
-recompile bluez with a config parameter) ?
-
-Is there any advocacy against listing the devices in ALSA ? or any 
-incompatibilities ?
-
-Thank you.
-
+Regards
+Mr.Nelson
+Accra-Ghana
