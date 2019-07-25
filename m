@@ -2,56 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DF231748DE
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jul 2019 10:14:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22246748E0
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jul 2019 10:14:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389225AbfGYIOh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 25 Jul 2019 04:14:37 -0400
-Received: from mail-lj1-f174.google.com ([209.85.208.174]:36789 "EHLO
-        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389217AbfGYIOg (ORCPT
+        id S2389229AbfGYIOi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 25 Jul 2019 04:14:38 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:36760 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389116AbfGYIOh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 25 Jul 2019 04:14:36 -0400
-Received: by mail-lj1-f174.google.com with SMTP id i21so47148865ljj.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jul 2019 01:14:35 -0700 (PDT)
+        Thu, 25 Jul 2019 04:14:37 -0400
+Received: by mail-lj1-f196.google.com with SMTP id i21so47148905ljj.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jul 2019 01:14:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=silvair-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=YhQxO/lTLMgQUQHYjRygsTuXqcDa9cXxnUzWII97Thg=;
-        b=JpGbWOmZcJTHnDTmuuMTvRFvXmN7SlFgag4SBTNmoo+3jDqxw8gu/TVlHCH0rQRt2m
-         9c2XWeFdJz8WTvaQXVCLGcNwk6WAmzKxVNQ2Z01IdAPKti7B5Cslr8zm9pxuQCL3BvuR
-         grkwcYjqCbp+wtYaXdPfGLkNekIIAl0lhVokDxOkl7PI2ev+ZSQD9pHZmAAVG30ErOob
-         0znR9teQaDbOjCigNxfbvhEJR8w4oZX9QLQtyLdPCuAViAt8piFa7ExYIjn3hOzu/d9s
-         Bawqm6W0CGw76V0gYWyAupWGeHCzeiUgxo2klfFNSxPY3WzD1U3F4HTz+H0o19yAgzvG
-         XLaA==
+        bh=4vWZxijFrCIkrmaihouwzhm3/yYh1xKm2hMyiO9HK/0=;
+        b=e0vZ6gU7pIxoDU8+Tht5PO5LAd8Y6wr66ys9MUN8Cxt12glnXl1z+49iT83G+pblgw
+         sSmCreZzUhimO9drLxcfOu2sFYGcnG0AfpxCeMvxEZmSeGxb7CjhUsVrCmJk+B5uLeUq
+         rwbx6nEpuuziuZSLkK5tD2Y6Ih686PQh/457LZQEbUjs18gU/i9C/QGVxQM+2dtbPDvj
+         rsKQ6PcCv5CLUpeGxvWsUbBhHQHgvq7h4vo0U7Ydm3Ibidipfw/T4sVkUSN3vw2tIjPx
+         MyyeXG+WyJK9TtqdDG/11nDFAjfjED4vDx2iqhLwaiHGp9gj3gwGX+WNEB5/5vApxUkY
+         78Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YhQxO/lTLMgQUQHYjRygsTuXqcDa9cXxnUzWII97Thg=;
-        b=PFslK82WTA8zTzDe8jBPYA1YrSw3/ehJop7TBvEEyNYU0BhP59fYfgZ0fykqHqCzrd
-         jWbLbXdx0nP/vPToIraodzzg3ZJeSo4OLXngwyo9xt8WOO3u0ymCneZdTnQOE+Ywr8C+
-         MuW0fSVcUrOhBr6sXMvny8CGQfnFJh7yv05iGwrcyyV5wqGJFWtJx4XkWNNYWLHeGpEN
-         zmvut1lkZBS53YMEujAXymV0SIgoErzK94YIA3SsuqHyyWOPeg/z4hnXUO/X1PWrQ90L
-         EAq/loi//7b8P5jjjI3q4NzHghx2DRdBP+apNX89JFVLzCyX77N5IVwF1pB3u3Cs9Xwt
-         Bg9Q==
-X-Gm-Message-State: APjAAAVIAY+5G8iV5Gh/7Osa8FAIdCk9s6IeiWxwGb4TBqSmQXOlb6KH
-        mui235h1V5kGMY+NP1A+oQRDKx5FF8c=
-X-Google-Smtp-Source: APXvYqy1LPqN7aflypLOpiiJOhbGdYFi8aOURYXsLuZcWMhK/wm5M2TeThl8O79e50i1mOsJUNFULQ==
-X-Received: by 2002:a05:651c:95:: with SMTP id 21mr45787933ljq.128.1564042474297;
-        Thu, 25 Jul 2019 01:14:34 -0700 (PDT)
+        bh=4vWZxijFrCIkrmaihouwzhm3/yYh1xKm2hMyiO9HK/0=;
+        b=OrFseFhRo4Am6Qw8e1TvGgqblzfFtCyGqe2YX2cu0d2a3CT6ozG7KiqunPGpICqLrs
+         6wbCXBUOnRKGmnmQH4T6z4GsWe5w8rIAsA1e8giTgvDnk9X/9eCoBudWwHAsXurlQlNr
+         B3tizBbqssv6FRxeRUD40WPO+FEBf+u1Ij/bfO8uS/3eeAtxht6qGB0w7OEjvcecuGiZ
+         gqIyQJRBsVGyn2TqmJxTvb2x5B35yWOC5rcFX4J0Y0Dc0hi3X1n4daJZsko6zJR21sPx
+         1iuNvmPdM/skVOtsPmBgphVwkcUchdBReSitj+c7okRB6kptVylwY9aWc6mUexHIebrj
+         NArg==
+X-Gm-Message-State: APjAAAVwCOpJHznpCIoNbSgQZ5pM3qJ5v9mQ573D3hoW222oPI/xxTgU
+        zXC83f3R6Onq9m8u/sRpv9Oyyd9xd4c=
+X-Google-Smtp-Source: APXvYqzOAiEW9hpsKdPcKFzm/cWwVp2SG0LuaP4wPKL/WXpIUysQbz1n96GEC8BbX9gfS+mA950l7g==
+X-Received: by 2002:a2e:9a49:: with SMTP id k9mr44857137ljj.78.1564042475362;
+        Thu, 25 Jul 2019 01:14:35 -0700 (PDT)
 Received: from mlowasrzechonek2133.silvair.lan ([217.153.94.18])
-        by smtp.gmail.com with ESMTPSA id 199sm9015251ljf.44.2019.07.25.01.14.33
+        by smtp.gmail.com with ESMTPSA id 199sm9015251ljf.44.2019.07.25.01.14.34
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 25 Jul 2019 01:14:33 -0700 (PDT)
+        Thu, 25 Jul 2019 01:14:34 -0700 (PDT)
 From:   =?UTF-8?q?Micha=C5=82=20Lowas-Rzechonek?= 
         <michal.lowas-rzechonek@silvair.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 3/5] mesh: Keep element and model lists sorted and unique
-Date:   Thu, 25 Jul 2019 10:14:22 +0200
-Message-Id: <20190725081424.22621-4-michal.lowas-rzechonek@silvair.com>
+Subject: [PATCH BlueZ v3 4/5] mesh: Check that element indexes are consecutive
+Date:   Thu, 25 Jul 2019 10:14:23 +0200
+Message-Id: <20190725081424.22621-5-michal.lowas-rzechonek@silvair.com>
 X-Mailer: git-send-email 2.19.1
 In-Reply-To: <20190725081424.22621-1-michal.lowas-rzechonek@silvair.com>
 References: <20190725081424.22621-1-michal.lowas-rzechonek@silvair.com>
@@ -62,174 +62,43 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This keeps composition data unchanged even if elements or models are
-registered in a different order.
 ---
- mesh/node.c | 80 ++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 67 insertions(+), 13 deletions(-)
+ mesh/node.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/mesh/node.c b/mesh/node.c
-index 4e5586ab7..5a1866bea 100644
+index 5a1866bea..1b58d9395 100644
 --- a/mesh/node.c
 +++ b/mesh/node.c
-@@ -160,6 +160,20 @@ static bool match_element_idx(const void *a, const void *b)
- 	return (element->idx == index);
- }
- 
-+static int compare_element_idx(const void *a, const void *b, void *user_data)
-+{
-+	uint32_t a_idx = ((const struct node_element *)a)->idx;
-+	uint32_t b_idx = ((const struct node_element *)b)->idx;
-+
-+	if (a_idx < b_idx)
-+		return -1;
-+
-+	if (a_idx > b_idx)
-+		return 1;
-+
-+	return 0;
-+}
-+
- static bool match_element_path(const void *a, const void *b)
+@@ -898,6 +898,7 @@ uint8_t node_friend_mode_get(struct mesh_node *node)
+ uint16_t node_generate_comp(struct mesh_node *node, uint8_t *buf, uint16_t sz)
  {
- 	const struct node_element *element = a;
-@@ -171,6 +185,29 @@ static bool match_element_path(const void *a, const void *b)
- 	return (!strcmp(element->path, path));
- }
+ 	uint16_t n, features;
++	uint16_t num_ele = 0;
+ 	const struct l_queue_entry *ele_entry;
  
-+static bool match_model_id(const void *a, const void *b)
-+{
-+	const struct mesh_model *mod = a;
-+	uint32_t mod_id = L_PTR_TO_UINT(b);
-+
-+	return mesh_model_get_model_id(mod) == mod_id;
-+}
-+
-+static int compare_model_id(const void *a, const void *b, void *user_data)
-+{
-+	uint32_t a_id = mesh_model_get_model_id(a);
-+	uint32_t b_id = mesh_model_get_model_id(b);
-+
-+	if (a_id < b_id)
-+		return -1;
-+
-+	if (a_id > b_id)
-+		return 1;
-+
-+	return 0;
-+}
-+
-+
- struct mesh_node *node_find_by_addr(uint16_t addr)
- {
- 	if (!IS_UNICAST(addr))
-@@ -287,6 +324,17 @@ void node_remove(struct mesh_node *node)
- 	free_node_resources(node);
- }
+ 	if (!node || !node->comp || sz < MIN_COMP_SIZE)
+@@ -935,6 +936,11 @@ uint16_t node_generate_comp(struct mesh_node *node, uint8_t *buf, uint16_t sz)
+ 		uint8_t num_s = 0, num_v = 0;
+ 		uint8_t *mod_buf;
  
-+static bool element_add_model(struct node_element *ele, struct mesh_model *mod)
-+{
-+	uint32_t mod_id = mesh_model_get_model_id(mod);
++		if (ele->idx != num_ele)
++			return 0;
 +
-+	if (l_queue_find(ele->models, match_model_id, L_UINT_TO_PTR(mod_id)))
-+		return false;
++		num_ele++;
 +
-+	l_queue_insert(ele->models, mod, compare_model_id, NULL);
-+	return true;
-+}
-+
- static bool add_models(struct mesh_node *node, struct node_element *ele,
- 					struct mesh_config_element *db_ele)
- {
-@@ -305,7 +353,10 @@ static bool add_models(struct mesh_node *node, struct node_element *ele,
- 		if (!mod)
- 			return false;
+ 		/* At least fit location and zeros for number of models */
+ 		if ((n + 4) > sz)
+ 			return n;
+@@ -997,6 +1003,9 @@ element_done:
  
--		l_queue_push_tail(ele->models, mod);
-+		if (!element_add_model(ele, mod)) {
-+			mesh_model_free(mod);
-+			return false;
-+		}
  	}
  
- 	return true;
-@@ -334,7 +385,8 @@ static void add_internal_model(struct mesh_node *node, uint32_t mod_id,
- 	if (!ele->models)
- 		ele->models = l_queue_new();
- 
--	l_queue_push_tail(ele->models, mod);
-+	if (!element_add_model(ele, mod))
-+		mesh_model_free(mod);
- }
- 
- static bool add_element(struct mesh_node *node,
-@@ -1026,12 +1078,12 @@ bool node_parse_composition(struct mesh_node *node, uint8_t *data,
- 		while (len >= 2 && m--) {
- 			mod_id = l_get_le16(data);
- 			mod = mesh_model_new(ele->idx, mod_id);
--			if (!mod) {
-+			if (!mod || !element_add_model(ele, mod)) {
-+				mesh_model_free(mod);
- 				element_free(ele);
- 				goto fail;
- 			}
- 
--			l_queue_push_tail(ele->models, mod);
- 			data += 2;
- 			len -= 2;
- 		}
-@@ -1048,12 +1100,12 @@ bool node_parse_composition(struct mesh_node *node, uint8_t *data,
- 			mod_id |= (vendor_id << 16);
- 			mod = mesh_model_vendor_new(ele->idx, vendor_id,
- 									mod_id);
--			if (!mod) {
-+			if (!mod || !element_add_model(ele, mod)) {
-+				mesh_model_free(mod);
- 				element_free(ele);
- 				goto fail;
- 			}
- 
--			l_queue_push_tail(ele->models, mod);
- 			data += 4;
- 			len -= 4;
- 		}
-@@ -1151,12 +1203,9 @@ static void get_models_from_properties(struct node_element *ele,
- 		while (l_dbus_message_iter_next_entry(&ids, &mod_id)) {
- 			struct mesh_model *mod;
- 
--			/* Skip internally implemented models */
--			if ((VENDOR_ID_MASK | mod_id) == CONFIG_SRV_MODEL)
--				continue;
--
- 			mod = mesh_model_new(ele->idx, mod_id);
--			l_queue_push_tail(ele->models, mod);
-+			if (!element_add_model(ele, mod))
-+				mesh_model_free(mod);
- 		}
- 		return;
- 	}
-@@ -1166,7 +1215,8 @@ static void get_models_from_properties(struct node_element *ele,
- 		struct mesh_model *mod;
- 
- 		mod = mesh_model_vendor_new(ele->idx, vendor_id, mod_id);
--		l_queue_push_tail(ele->models, mod);
-+		if (!element_add_model(ele, mod))
-+			mesh_model_free(mod);
- 	}
- }
- 
-@@ -1216,7 +1266,11 @@ static bool get_element_properties(struct mesh_node *node, const char *path,
- 	if (!idx || !mods || !vendor_mods)
- 		goto fail;
- 
--	l_queue_push_tail(node->elements, ele);
-+	if (l_queue_find(node->elements, match_element_idx,
-+						L_UINT_TO_PTR(ele->idx)))
-+		goto fail;
++	if (!num_ele)
++		return 0;
 +
-+	l_queue_insert(node->elements, ele, compare_element_idx, NULL);
- 
- 	ele->path = l_strdup(path);
+ 	return n;
+ }
  
 -- 
 2.19.1
