@@ -2,75 +2,81 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E5287828A
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jul 2019 01:58:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1AFB7839E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jul 2019 05:20:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726323AbfG1X61 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 28 Jul 2019 19:58:27 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:46657 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726203AbfG1X61 (ORCPT
+        id S1726478AbfG2DUb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 28 Jul 2019 23:20:31 -0400
+Received: from mail-pg1-f169.google.com ([209.85.215.169]:43156 "EHLO
+        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725681AbfG2DUa (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 28 Jul 2019 19:58:27 -0400
-Received: by mail-oi1-f193.google.com with SMTP id 65so44023478oid.13
-        for <linux-bluetooth@vger.kernel.org>; Sun, 28 Jul 2019 16:58:26 -0700 (PDT)
+        Sun, 28 Jul 2019 23:20:30 -0400
+Received: by mail-pg1-f169.google.com with SMTP id f25so27457315pgv.10
+        for <linux-bluetooth@vger.kernel.org>; Sun, 28 Jul 2019 20:20:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=8HerNJ+KPshsmAFkEGOs3SrN9ygWfkRsx5jp23KpQmk=;
-        b=UE1OVjFfxfUyKE47fGFjsbqH2pjkUAchAFgYQVBOZQD93o44X/us08fYgMsme12cO/
-         gNl5T1GlO9/UKMq+2vsOeOR5ikSx/HPwlcwbsFaBpuB4WByUE/HaYdqBi2TJjTHa19LH
-         p6t4ahjga4IAe2ET7y1hB6Zm6fnZYWmcKtAbQXp5uZxZzkk4Rj0MV1B/GAEdvpStyYzP
-         vejs86suD0/pzc5vESaJJ/pBAY+uAgAQyWsJH6YqOYo2GmQpnjc+vWU3zQ5ce788XKgp
-         8YWvFM+MWlPUxO1OdHgMjW+Z8RSQtJCWyHKCYL37noZFaBkwE3+KijpagGWyYQW3mfoW
-         196Q==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Qtlvn5JE6Kj1KVZQxpnADX5oZGSAvHEeulkTS7wVoFE=;
+        b=E7iy0KcnurL4LIOiw3ynujNnR4aqUe6oO4GlIjdDZtiKy58K6Q2/kfNbeYL6c1xrfe
+         9Uuu6aSrzPiT/IIOjSIfsPitK+vypZTOCyVTJkwJP2yKp3UGurO+19yIlnoK0ktF3SGc
+         G0IhOHLOjI+15SRKmlR6OH0nezrpbV+pX6UVdMeFh3qY7oZX5XX/2OihfuZGf0aDhJoN
+         HuBeS0mioUP1+p0FRUfJvSXnI9LrULqPUZUwQg9VjsNc+LdzkzvFhcEuH7ztsPIFoKa2
+         lub3ZM5VMsbASQJqTtcD7BkrBjq3W/cp2x6mtLNXAygJhcqqVN+LpxKIs5+/4gGppiNN
+         XU9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=8HerNJ+KPshsmAFkEGOs3SrN9ygWfkRsx5jp23KpQmk=;
-        b=JNEGiPXanHty9pdGLjCHd7X9segDxNeaDbnFm4jb2uzviWUg300QaUvAl5mpGxBqOe
-         w2iiL8kaXePSG4NxPHhdGR6AcRyQeUrSDFsI7aPoNIAfKjmKLrsLdR2bWGHINRsRyMiV
-         0qtgXsKl5cXeohlzHws1G/YcQXg767n5PMSSPaGVG0kAAX15Ka8Zft+1AEtYtaxvvlH0
-         IO6QhBAypwaxIpxx1xIQvPqNf7VcAw3PyTMAkz1ws5ofI8awrYtxWevcxZSJhHDXEMwe
-         ZoTH+6YfjSAX5KuYZeo+56l7t6e/qIjVO5noim9raNjnDNUiUFG8XknqTI4Nmw8XCgmy
-         Hnfw==
-X-Gm-Message-State: APjAAAXYypzmRYE7bPDxXk9C21GfMCvxn5V8aMJkmk9qDH3ptD1p3zxr
-        /yrP7HUjOt24Mb0pZTSnHP+Tb7fDXFLdlqe3lv8=
-X-Google-Smtp-Source: APXvYqwRfBIKnrRW1g3hbIT03ZSrOUL2g7JhUSY0xVxHn4Icg2TL499H2WIVXhgLAQc6oMV9DjWCQnk+R8KQjohhffc=
-X-Received: by 2002:aca:dd04:: with SMTP id u4mr51516865oig.152.1564358305943;
- Sun, 28 Jul 2019 16:58:25 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Qtlvn5JE6Kj1KVZQxpnADX5oZGSAvHEeulkTS7wVoFE=;
+        b=TuWcccWOfbRAY+ng65hkT5d68OgHrH2kQcbZ/L3i4phP2wddjD9YheSjBfJZQTR49U
+         zCss8yfqY12D7vyfdixw/gfOsP3wcUEDWvDexrTDg2OCbVsWg70EConqhi+qczzGudM0
+         Qplmy3c+4q/R0vVNY6qC1C7fZDInZ8D7KgicQJ1iZu3AYI6ztMJFMQatN6o1fZj1M1i1
+         CKsQweb0yser+LrzjkcK5AZ2g7SyfovSRHXSrEBRdrJEdx54NpD+1Ky2qeSGYo/xJlKI
+         w2CZ7jaK23iaYUOh0IL4w8piKkmMIWUV+EkW87xt9qDg9fjECZPXFTt85j51unMdJP+F
+         8N0w==
+X-Gm-Message-State: APjAAAVr9HTrDTvqLjZZZUUOpH557W35tyUxAjZEMiYMQ8PZii8yDjLa
+        +QxKWd7/qjOiy/yZE61qhuGG3yXVXIUmn31CxhecJ3nj
+X-Google-Smtp-Source: APXvYqzLyNnFw2RYxhB1m8yA+iWWY88zKHS7zTZZj9GG30BnDx9O/fi3W5PTWcymt84qtl+Dg2o4BmHRfcjIAmxPsos=
+X-Received: by 2002:a62:cdc3:: with SMTP id o186mr34649147pfg.168.1564370429696;
+ Sun, 28 Jul 2019 20:20:29 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a9d:7614:0:0:0:0:0 with HTTP; Sun, 28 Jul 2019 16:58:25
- -0700 (PDT)
-Reply-To: williamrobert416@gmail.com
-From:   "Mr. Robert William" <omarmariam373@gmail.com>
-Date:   Mon, 29 Jul 2019 00:58:25 +0100
-Message-ID: <CA+FSRKAVxyW31h9d68W9WJKo0FOqOjiUd7uUaaS_VywvMz8sEw@mail.gmail.com>
-Subject: Its Urgent
-To:     undisclosed-recipients:;
+From:   Andrey Batyiev <batyiev@gmail.com>
+Date:   Mon, 29 Jul 2019 06:20:18 +0300
+Message-ID: <CAEQQxWySUJZBa9CF7-W_4zXcuitgaNuu2f_pYswLKDUtVwWd1g@mail.gmail.com>
+Subject: Yet another counterfeit CSR device?
+To:     linux-bluetooth@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-Hello,
+Hello everyone,
 
-I am Eng. Robert William, a retired Marine Engineer residing in
-Trinidad & Tobago.
-Unfortunately i am admitted to the hospital for a cancer (Sickness)
-over a year now,my doctor reported that i have only few months to pass
-away. Please i need your consent to invest my money (USD$1.8 Million)
-in any business of your
+I have nontdescript usb bluetooth dongle with "V5.0" marking on it.
+It claims to be CSR (0a12:0001) bluetooth dongle, but it has
+nonfunctional "delete stored link key" command, so I think it is
+counterfeit.
 
-choice in your country before i die, i have no other relatives not
-even children because i lost my family in a fire disaster in 2005.
-Please i need your urgent and
+Futhermore, Linux kernel doesn't detect it as counterfeit
+(in`btusb_setup_csr`), because the dongle reports following:
 
-kind response to enable me send you more information on how to contact
-my bank as my next of kin to process the fund into your bank account.
+- From USB enumeration:
+bcdDevice = 0x8891
 
+- From Read Local Version HCI command:
+Manufacturer = 0x000a (CSR)
+HCI ver. = 4.0
+HCI rev. = 2064
+LMP ver. = 4.0
+LMP subver. = 4114
 
-Mr Robert William
+So, Linux kernel fails to power up this dongle. Ok, so I've hacked
+`btusb_setup_csr` routine to include this device too (it powers up
+now), however GATT communication doesn't work (btmon should nothing =
+no ATT exchanges except MTU setup).
+
+Any ideas on what should I check to make this device work?
+
+Thanks,
+    Andrey
