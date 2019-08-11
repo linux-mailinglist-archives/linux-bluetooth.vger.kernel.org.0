@@ -2,69 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9016288935
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 10 Aug 2019 09:40:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C341B8900C
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 11 Aug 2019 09:01:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726162AbfHJHkJ convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 10 Aug 2019 03:40:09 -0400
-Received: from mail.wl.linuxfoundation.org ([198.145.29.98]:58304 "EHLO
-        mail.wl.linuxfoundation.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725468AbfHJHkJ (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 10 Aug 2019 03:40:09 -0400
-Received: from mail.wl.linuxfoundation.org (localhost [127.0.0.1])
-        by mail.wl.linuxfoundation.org (Postfix) with ESMTP id E55D5223A6
-        for <linux-bluetooth@vger.kernel.org>; Sat, 10 Aug 2019 07:40:08 +0000 (UTC)
-Received: by mail.wl.linuxfoundation.org (Postfix, from userid 486)
-        id C19EB22B1F; Sat, 10 Aug 2019 07:40:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-        pdx-wl-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=2.0 tests=BAYES_00,NO_RECEIVED,
-        NO_RELAYS autolearn=ham version=3.3.1
-From:   bugzilla-daemon@bugzilla.kernel.org
+        id S1725855AbfHKHBp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 11 Aug 2019 03:01:45 -0400
+Received: from mga03.intel.com ([134.134.136.65]:18129 "EHLO mga03.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725813AbfHKHBp (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 11 Aug 2019 03:01:45 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 11 Aug 2019 00:00:47 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,372,1559545200"; 
+   d="scan'208";a="183280806"
+Received: from ingas-nuc1.sea.intel.com ([10.254.104.35])
+  by FMSMGA003.fm.intel.com with ESMTP; 11 Aug 2019 00:00:47 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 204275] bluetoothd consumes 100% cpu on keyboard disconnect
-Date:   Sat, 10 Aug 2019 07:40:08 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: luiz.dentz@gmail.com
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-204275-62941-Y1b0go9y8X@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-204275-62941@https.bugzilla.kernel.org/>
-References: <bug-204275-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+Cc:     luiz.dentz@gmail.com, Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ 0/1 v3] ELL based mainloop
+Date:   Sun, 11 Aug 2019 00:00:44 -0700
+Message-Id: <20190811070045.15406-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=204275
++ timeout-ell.c
 
---- Comment #14 from Luiz Von Dentz (luiz.dentz@gmail.com) ---
-(In reply to Steven Newbury from comment #13)
-> Created attachment 284073 [details]
-> Remove sec_watch, instead attempt immediate connection
+This patch addresses a need to enable using common mainloop for the
+ell-based apps that desire to use common bluetooth fuctionality
+(e.g., bt_shell).
 
-Could you please send as a patch to linux-bluetooth?
+Note: A bit awkward callback handling there is due to the discrepancy
+in the arg type for signo (signal number).
+
+src/shared/mainloop.h:
+typedef void (*mainloop_signal_func) (int signum, void *user_data)
+
+and ell/main.h:
+
+typedef void (*l_main_signal_cb_t) (uint32_t signo, void *user_data)
+
+My guess is that ell derives the unsigned int type from <sys/signalfd.h>,
+where ssi_signo is defined as uint32_t. BlueZ is probably following the
+standard Linux signal handling, where signal is represented as an int. 
+
+Inga Stotland (1):
+  shared/mainloop: Add ell-based mainloop implementation
+
+ Makefile.am               |  11 +++-
+ src/shared/mainloop-ell.c | 126 ++++++++++++++++++++++++++++++++++++++
+ src/shared/timeout-ell.c  |  72 ++++++++++++++++++++++
+ 3 files changed, 206 insertions(+), 3 deletions(-)
+ create mode 100644 src/shared/mainloop-ell.c
+ create mode 100644 src/shared/timeout-ell.c
 
 -- 
-You are receiving this mail because:
-You are the assignee for the bug.
+2.21.0
+
