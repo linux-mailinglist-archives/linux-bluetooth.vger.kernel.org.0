@@ -2,62 +2,57 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FE2C8A3FC
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Aug 2019 19:07:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B50A8A405
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Aug 2019 19:08:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726974AbfHLRGX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 12 Aug 2019 13:06:23 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:40506 "EHLO
+        id S1726463AbfHLRIZ convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 12 Aug 2019 13:08:25 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:44820 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbfHLRGX (ORCPT
+        with ESMTP id S1726267AbfHLRIZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 12 Aug 2019 13:06:23 -0400
+        Mon, 12 Aug 2019 13:08:25 -0400
 Received: from marcel-macbook.fritz.box (p4FEFC580.dip0.t-ipconnect.de [79.239.197.128])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 981B9CECF3;
-        Mon, 12 Aug 2019 19:15:02 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 2683CCECF4;
+        Mon, 12 Aug 2019 19:17:05 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: [PATCH v2] Bluetooth: hci_qca: Remove redundant initializations
- to zero
+Subject: Re: [PATCH v2] Bluetooth: btqca: Reset download type to default
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20190807185849.253065-1-mka@chromium.org>
-Date:   Mon, 12 Aug 2019 19:06:20 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>,
-        Harish Bandi <c-hbandi@codeaurora.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <BB6ADE9C-E280-4C03-8E42-E5F08B68A194@holtmann.org>
-References: <20190807185849.253065-1-mka@chromium.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
+In-Reply-To: <20190808085608.18010-1-bgodavar@codeaurora.org>
+Date:   Mon, 12 Aug 2019 19:08:23 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, rjliao@codeaurora.org,
+        c_hbandi@codeaurora.org, tientzu@chromium.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <C7E2873F-7B65-4EF0-94F0-D7386D058EED@holtmann.org>
+References: <20190808085608.18010-1-bgodavar@codeaurora.org>
+To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
 X-Mailer: Apple Mail (2.3445.104.11)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Matthias,
+Hi Balakrishna,
 
-> The qca_data structure is allocated with kzalloc() and hence
-> zero-initialized. Remove a bunch of unnecessary explicit
-> initializations of struct members to zero.
+> This patch will reset the download flag to default value
+> before retrieving the download mode type.
 > 
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> Reviewed-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+> Fixes: 32646db8cc28 ("Bluetooth: btqca: inject command complete event during fw download")
+> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
 > ---
-> just noticed that this patch fell through the cracks, resending a
-> rebased version.
+> v2: 
+>  * add fix tag.
 > 
-> Changes in v2:
-> - added 'Reviewed-by' tag from Balakrishna
-> - rebased on bluetooth-next/master
-> 
-> drivers/bluetooth/hci_qca.c | 19 -------------------
-> 1 file changed, 19 deletions(-)
+> ---
+> drivers/bluetooth/btqca.c | 1 +
+> 1 file changed, 1 insertion(+)
 
-patch has been applied to bluetooth-next tree.
+patch has been applied to bluetooth-stable tree.
 
 Regards
 
