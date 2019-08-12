@@ -2,49 +2,65 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9983B89FCB
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Aug 2019 15:36:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A3508A359
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Aug 2019 18:30:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728136AbfHLNgq convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 12 Aug 2019 09:36:46 -0400
-Received: from p3plsmtpa06-01.prod.phx3.secureserver.net ([173.201.192.102]:36689
-        "EHLO p3plsmtpa06-01.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726502AbfHLNgq (ORCPT
+        id S1726993AbfHLQ3c (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 12 Aug 2019 12:29:32 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:52463 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725901AbfHLQ3c (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 12 Aug 2019 09:36:46 -0400
-Received: from JROmen ([199.48.138.4])
-        by :SMTPAUTH: with ESMTPA
-        id xAVBh07bGAihHxAVBhJM7R; Mon, 12 Aug 2019 06:36:46 -0700
-From:   "John Rucker" <John.Rucker@Solar-Current.com>
-To:     <linux-bluetooth@vger.kernel.org>
-References: 
-In-Reply-To: 
-Subject: D-Bus API based peripheral need guidance on setting Advertising_Interval_Min and Advertising_Interval_Max
-Date:   Mon, 12 Aug 2019 08:36:45 -0500
-Message-ID: <004301d55112$fc557da0$f50078e0$@Solar-Current.com>
-MIME-Version: 1.0
+        Mon, 12 Aug 2019 12:29:32 -0400
+Received: from marcel-macbook.fritz.box (p4FEFC580.dip0.t-ipconnect.de [79.239.197.128])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 23EACCECF3;
+        Mon, 12 Aug 2019 18:38:12 +0200 (CEST)
 Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdVMTTlRUt+lQCh8RqCxvUgdLPGzbwExZoxw
-Content-Language: en-us
-X-CMAE-Envelope: MS4wfIMVEjrJ82xlEtGdv4yPZfwrTxI8mYNN9TA+Oqmbe/OJmreUgL6gSzctwIdJhf9TKdecsRgSCG7wZJgNCaQotkhHpofBW0aQgOCHpzXCszj7vDGuUE9h
- OXgqql9adzi11WGHz4rFvlJoOacfOir2kbDKYkCDxEYe5+dClPjjJngWpepvu7BUdcXoGUwTPQujog==
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [PATCH v5 19/29] compat_ioctl: move hci_sock handlers into driver
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20190730195819.901457-7-arnd@arndb.de>
+Date:   Mon, 12 Aug 2019 18:29:30 +0200
+Cc:     Alexander Viro <viro@zeniv.linux.org.uk>,
+        linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Deepa Dinamani <deepa.kernel@gmail.com>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <29753EE8-74C4-4544-801B-3E7F3E4EEA60@holtmann.org>
+References: <20190730192552.4014288-1-arnd@arndb.de>
+ <20190730195819.901457-1-arnd@arndb.de>
+ <20190730195819.901457-7-arnd@arndb.de>
+To:     Arnd Bergmann <arnd@arndb.de>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-I have a BLE peripheral running on top of Raspbian Buster, Kernel version
-4.19 and BlueZ v 5.50.  I need to set the advertising interval from the
-default 1.2 seconds to a much more aggressive setting say 200mS.  Can
-someone please give my guidance on the best way to achieve this.   The only
-way I can find to do this is to completely setup my advertising packet with
-the HCI tool.  I have to be missing something. Is there a way to simply
-change the default advertising interval?  
+Hi Arnd,
 
-Thanks 
-JR
+> All these ioctl commands are compatible, so we can handle
+> them with a trivial wrapper in hci_sock.c and remove
+> the listing in fs/compat_ioctl.c.
+> 
+> A few of the commands pass integer arguments instead of
+> pointers, so for correctness skip the compat_ptr() conversion
+> here.
+> 
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+> fs/compat_ioctl.c        | 24 ------------------------
+> net/bluetooth/hci_sock.c | 21 ++++++++++++++++++++-
+> 2 files changed, 20 insertions(+), 25 deletions(-)
+
+I think it is best if this series is applied as a whole. So whoever takes it
+
+Acked-by: Marcel Holtmann <marcel@holtmann.org>
+
+Regards
+
+Marcel
 
