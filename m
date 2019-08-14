@@ -2,95 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 12C0E8C39B
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Aug 2019 23:25:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D1128C599
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Aug 2019 03:44:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726556AbfHMVZf convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 13 Aug 2019 17:25:35 -0400
-Received: from mga18.intel.com ([134.134.136.126]:34911 "EHLO mga18.intel.com"
+        id S1726373AbfHNBoH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 13 Aug 2019 21:44:07 -0400
+Received: from mga01.intel.com ([192.55.52.88]:58789 "EHLO mga01.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726102AbfHMVZe (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 13 Aug 2019 17:25:34 -0400
+        id S1726007AbfHNBoH (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 13 Aug 2019 21:44:07 -0400
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 13 Aug 2019 14:25:34 -0700
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 13 Aug 2019 18:44:07 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.64,382,1559545200"; 
-   d="scan'208";a="167181654"
-Received: from orsmsx104.amr.corp.intel.com ([10.22.225.131])
-  by orsmga007.jf.intel.com with ESMTP; 13 Aug 2019 14:25:34 -0700
-Received: from orsmsx153.amr.corp.intel.com (10.22.226.247) by
- ORSMSX104.amr.corp.intel.com (10.22.225.131) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Tue, 13 Aug 2019 14:25:34 -0700
-Received: from orsmsx101.amr.corp.intel.com ([169.254.8.157]) by
- ORSMSX153.amr.corp.intel.com ([169.254.12.225]) with mapi id 14.03.0439.000;
- Tue, 13 Aug 2019 14:25:33 -0700
-From:   "Gix, Brian" <brian.gix@intel.com>
-To:     Rafal Gajda <rafal.gajda@silvair.com>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Subject: RE: [PATCH BlueZ] mesh: Remove double initialisation and fix typo
- in log
-Thread-Topic: [PATCH BlueZ] mesh: Remove double initialisation and fix typo
- in log
-Thread-Index: AQHVUQaHevUThiNqWkK12yerPp9wFKb5mSLA
-Date:   Tue, 13 Aug 2019 21:25:33 +0000
-Message-ID: <DEBB0CAA2616974FAE35E4B560B9A4376CBF84FA@ORSMSX101.amr.corp.intel.com>
-References: <20190812120656.29494-1-rafal.gajda@silvair.com>
-In-Reply-To: <20190812120656.29494-1-rafal.gajda@silvair.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiOGI0NzJjNTktY2QwNi00ZTUxLWIzMWYtZmI1MzY1MTYxNjdhIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiaXR0Y3NcLzkxXC9qZm9seVRFM1hCbnlNWUlabW1keXRvdTZlZ2VNVlwvVlZPMlVhT2lOc3lVVk5LanpSXC8wSlhRMjgifQ==
-x-originating-ip: [10.22.254.139]
-Content-Type: text/plain; charset="iso-8859-2"
-Content-Transfer-Encoding: 8BIT
+   d="scan'208";a="176377779"
+Received: from bgi1-mobl2.amr.corp.intel.com ([10.254.104.160])
+  by fmsmga008.fm.intel.com with ESMTP; 13 Aug 2019 18:44:06 -0700
+From:   Brian Gix <brian.gix@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, brian.gix@intel.com,
+        inga.stotland@intel.com, michal.lowas-rzechonek@silvair.com
+Subject: [PATCH BlueZ 0/1] mesh: Add D-Bus Security for sensitive data
+Date:   Tue, 13 Aug 2019 18:43:56 -0700
+Message-Id: <20190814014357.32453-1-brian.gix@intel.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Your two patches applied.... Thanks
+There are various "security sensitive" pieces of data that need to be
+exchanged between Applications and the Bluetooth Mesh daemon.
 
-> -----Original Message-----
-> From: linux-bluetooth-owner@vger.kernel.org [mailto:linux-bluetooth-
-> owner@vger.kernel.org] On Behalf Of Rafal Gajda
-> Sent: Monday, August 12, 2019 5:07 AM
-> To: linux-bluetooth@vger.kernel.org
-> Subject: [PATCH BlueZ] mesh: Remove double initialisation and fix typo in log
-> 
-> ---
->  mesh/node.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/mesh/node.c b/mesh/node.c
-> index e7e58d9a7..f8b1099e9 100644
-> --- a/mesh/node.c
-> +++ b/mesh/node.c
-> @@ -475,7 +475,6 @@ static bool init_from_storage(struct mesh_config_node
-> *db_node,
->  	node->lpn = db_node->modes.lpn;
-> 
->  	node->proxy = db_node->modes.proxy;
-> -	node->lpn = db_node->modes.lpn;
->  	node->friend = db_node->modes.friend;
->  	node->relay.mode = db_node->modes.relay.state;
->  	node->relay.cnt = db_node->modes.relay.cnt; @@ -483,7 +482,7 @@
-> static bool init_from_storage(struct mesh_config_node *db_node,
->  	node->beacon = db_node->modes.beacon;
-> 
->  	l_debug("relay %2.2x, proxy %2.2x, lpn %2.2x, friend %2.2x",
-> -			node->relay.mode, node->proxy, node->friend, node-
-> >lpn);
-> +			node->relay.mode, node->proxy, node->lpn, node-
-> >friend);
->  	node->ttl = db_node->ttl;
->  	node->seq_number = db_node->seq_number;
-> 
-> --
-> 2.22.0
+The following items will be encrypted before sending over D-Bus:
+
+token --  This is used by all nodes.
+
+net_keys, app_keys, dev_keys -- These will only typically be needed by
+Provisioner/Config Client nodes to extract the keys for purposes of
+Cponfiguration Database transfer.
+
+Methodology:
+ECC Public/Private pairs, and key exchanges which are set up for each
+Attach() Session, and a counting diversifier to be used as a Nonce.
+
+The App and Daemon will each generate a single session ECC pair, and
+will generate an ECDH Shared Secret, which will be used as the symetric
+encription key, for AES-CCM.
+
+For most nodes, these steps will be required only for Attaching, to
+authenticate the application to the daemon while obscuring the token
+from D-Bus sniffers.  ECC and AES-CCM are both already natively
+supported by Mesh.
+
+Brian Gix (1):
+  doc: Add Pub/Private ECC shared secret to obscure sensitive data
+
+ doc/mesh-api.txt | 102 ++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 91 insertions(+), 11 deletions(-)
+
+-- 
+2.21.0
 
