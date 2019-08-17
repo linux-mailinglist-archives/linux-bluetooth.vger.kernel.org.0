@@ -2,57 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B7B2E90D5C
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Aug 2019 08:36:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CA6B90D5D
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Aug 2019 08:36:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726198AbfHQGgZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 17 Aug 2019 02:36:25 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:34299 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726128AbfHQGgZ (ORCPT
+        id S1726203AbfHQGg0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 17 Aug 2019 02:36:26 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33444 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726128AbfHQGg0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 17 Aug 2019 02:36:25 -0400
-Received: by mail-pg1-f195.google.com with SMTP id n9so4016444pgc.1
+        Sat, 17 Aug 2019 02:36:26 -0400
+Received: by mail-pl1-f193.google.com with SMTP id go14so3030181plb.0
         for <linux-bluetooth@vger.kernel.org>; Fri, 16 Aug 2019 23:36:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YtabfBwQWtyC3zyjLV1LAil4r41xMNWr577SDboN4vk=;
-        b=fkCeDVqSK77RVKd0DHClKH1TxHua43D/1RG89fDkQ6rgAaCS9mPPTlOSerUcc12Vbv
-         8+xah3Mer8o3TD0Oq1j3YG/cGy+5VuqAhAJfHrc3L1iXTPA0vYxU5vF3ZB1LZ6FNCbz4
-         G4NKf7cnYoU6GFe1Zeauby/Eqzpp9gRigbXHVAvVzApy9963XCd00ZyxBz5lVo0aTXel
-         sxFuAP5jTFL4tgrphfJdCyDxG7lRyXqX05XMNxdzfjUkWhSRRJrCoYdDR2PYUkQXJKsl
-         JLTd03Bh1FBlaqZmHcEPkDMeAPzIX5anD5+OEkXB9Yqh93JNGVtgZqnEEl6EXKoXsdTq
-         VeZA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=r+OKXG43+4EYqqwMzIQOfZVDCpcITGkNlaS2JYyQo/g=;
+        b=KhVazj9wxEnQiMxa+Gaok/52q4rAvt38veRzAFNmgbrv4yTgS391GM/Pq9AvLXMh02
+         hxHwso2Z4oKNacSRABoNo03YbI2/oeKY4XXkoe1ow8Xe/wZJHOiQE9INH9adsZIoQo4f
+         I+aF6NjI8ngSgQ7Y/EUhxc7jSGjWzkE6ttjjwqkJUHc+8H8FvZTT6N09vl25YpuB7wnH
+         e8q0innHsiWSLTnBm1Q0AJJUxZqypDFh1FBAnJLt51RrIiZg5dLoY7P5Qe8h8e0PPVMv
+         v1SpmmFvaQCFVkmSOKBFwU4QkAFvt9bt8TX9i0pHOZHw2wFq3UzyJLQ2WaLuPmGTh4pu
+         bVpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YtabfBwQWtyC3zyjLV1LAil4r41xMNWr577SDboN4vk=;
-        b=qtztKcuJebvKSEMajiRAYyYhg9CWLUSAViIPlt7LpCwM7oM1JMqaTGDCCu+7mt4RTo
-         odU3evtop+uugKUnmyRmB6qeISpsf0KaXGvyE5DBAy+uhhjxEV+01o/QiruAe+lCTJJH
-         C05KW/iW6se2WH8M0x1FT2UlpI22CX69quXsw24/4reCdSu5I60MVkglF9DjPRyxAyAU
-         BalgJ6IO0K7Qzu926mP1kg6x+vTRaT/SqbogcmOyT1ftC4auKyMfVm4+MrqzRpb5thIt
-         RukvivVA4NbYGpuaTc9IXw35RbpteKK7baL5UptW2t3nRF46d3gCVX3FN7NgSeCs+7yI
-         85Hg==
-X-Gm-Message-State: APjAAAUlWFwKwdCbl13OP2RIg0+cFIUZdn7I6ZHoIziSHSBPxrssvSLZ
-        4DYFE6o0mGtaoveyB/+qsl8dDgE=
-X-Google-Smtp-Source: APXvYqxSKBt9Fy0PtFwGOjUGV9Olw4sAv+fKbsnc6UPaNVPw7jKTLz2ADPqi3NU6S8U3CWyTzb7Y5g==
-X-Received: by 2002:a17:90a:2047:: with SMTP id n65mr10976669pjc.5.1566023784356;
-        Fri, 16 Aug 2019 23:36:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=r+OKXG43+4EYqqwMzIQOfZVDCpcITGkNlaS2JYyQo/g=;
+        b=apXCP5yh01K2DOuYHbodC/EfOJRYQkNaApJZRMDRFGY2kCZBLNbYrlIvc1Oo1vf51Q
+         evWzH5BEgi5/c2TkDGpkxJSYCcYZ+7QiVManBtlIop8Ek8/9KMdhLPO2J3VSRNJ0mud7
+         EHBIXbQYiIpVextP/X82SLrkf5QKvkqUQarRylciMvmyPRiHJ2OBdgKvz9R8jBuKy4vM
+         VzpLTeSHwrfa0T+L2d+KDmuHmY6Snq8/cTOXzApxz5e1sUGanF7wL+8OpZD+NL3Mzyl/
+         Yda/huQKV40Nw1SsWgo1kgECsGNrrBqc1+kXYSzrGiedVkdRRPJXmmJAaiMPZ9VPGBsC
+         ZN5A==
+X-Gm-Message-State: APjAAAVAVmbTk8I7g+SJzWmsfdPIy1iGVHMAHfmrRJgLWK3mr1V2eqk2
+        NEFcahpMRDbGgAtPPvFo4t/dvws=
+X-Google-Smtp-Source: APXvYqy+JBabjNPvNOSQdhteBdWcFlgG1iGNsykiZx6E0IzzI2p6zLVcLtvjRE4keWVpWdqQD6KdPA==
+X-Received: by 2002:a17:902:b418:: with SMTP id x24mr12554326plr.219.1566023785310;
+        Fri, 16 Aug 2019 23:36:25 -0700 (PDT)
 Received: from rxps.home ([2600:8800:1e00:242:3550:edee:2708:4ad0])
-        by smtp.gmail.com with ESMTPSA id y128sm6684095pgy.41.2019.08.16.23.36.23
+        by smtp.gmail.com with ESMTPSA id y128sm6684095pgy.41.2019.08.16.23.36.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Aug 2019 23:36:23 -0700 (PDT)
+        Fri, 16 Aug 2019 23:36:24 -0700 (PDT)
 From:   Ronan Pigott <rpigott314@gmail.com>
 X-Google-Original-From: Ronan Pigott
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Ronan Pigott <rpigott@berkeley.edu>
-Subject: [PATCH BlueZ v2 0/4] Add zsh completions for bluetoothctl
-Date:   Fri, 16 Aug 2019 23:34:48 -0700
-Message-Id: <20190817063452.23273-1-rpigott@berkeley.edu>
+Subject: [PATCH BlueZ v2 1/4] client/main: add help option for available args
+Date:   Fri, 16 Aug 2019 23:34:49 -0700
+Message-Id: <20190817063452.23273-2-rpigott@berkeley.edu>
 X-Mailer: git-send-email 2.22.1
+In-Reply-To: <20190817063452.23273-1-rpigott@berkeley.edu>
+References: <20190817063452.23273-1-rpigott@berkeley.edu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -62,28 +64,51 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Ronan Pigott <rpigott@berkeley.edu>
 
-V2 of zsh completions for bluetoothctl
+This option exists to facilitate external completion of commands that
+have specially defined arguments. It effectively adds two new commands
+to bluetoothctl with the following output:
 
-bluetoothctl has a nice interactive interface, but some of its functions
-can be accessed quicker non-interactively, straight from the command
-line. I made these zsh completions to facilitate that.
+$ bluetoothctl agent help
+on
+off
+DisplayOnly
+DisplayYesNo
+KeyboardDisplay
+KeyboardOnly
+NoInputNoOutput
 
-If you are a zsh user, try them out!
+$ bluetoothctl advertise help
+on
+off
+peripheral
+broadcast
 
-Ronan Pigott (4):
-  client/main: add help option for available args
-  shared/shell: add --zsh-complete option
-  completion: add bluetoothctl zsh completions
-  build: install zsh completions
+Shell completion scripts can then parse this output to provide
+completions for those commands.
 
- Makefile.tools               |  5 ++
- client/main.c                |  8 +++
- completion/zsh/_bluetoothctl | 98 ++++++++++++++++++++++++++++++++++++
- configure.ac                 | 12 +++++
- src/shared/shell.c           | 27 ++++++++++
- 5 files changed, 150 insertions(+)
- create mode 100644 completion/zsh/_bluetoothctl
+---
+ client/main.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
+diff --git a/client/main.c b/client/main.c
+index 578b3c7c3..0f810901a 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -800,6 +800,14 @@ static gboolean parse_argument(int argc, char *argv[], const char **arg_table,
+ {
+ 	const char **opt;
+ 
++	if (!strcmp(argv[1], "help")) {
++		for (opt = arg_table; opt && *opt; opt++) {
++			bt_shell_printf("%s\n", *opt);
++		}
++		bt_shell_noninteractive_quit(EXIT_SUCCESS);
++		return FALSE;
++	}
++
+ 	if (!strcmp(argv[1], "on") || !strcmp(argv[1], "yes")) {
+ 		*value = TRUE;
+ 		if (option)
 -- 
 2.22.1
 
