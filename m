@@ -2,112 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F7B190D60
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Aug 2019 08:36:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBB6D90FA9
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Aug 2019 11:28:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726239AbfHQGg3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 17 Aug 2019 02:36:29 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:36787 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726128AbfHQGg2 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 17 Aug 2019 02:36:28 -0400
-Received: by mail-pg1-f196.google.com with SMTP id l21so4009749pgm.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 16 Aug 2019 23:36:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=pHC5nU+VgzmZ7VFos8+VtimEE2pPr/e7EvEmzHQIoLE=;
-        b=Q5Xf39uxxdnsc2XhqOmD1joxP4Cgu0OyQ7Eebl/Pxu4wB2RaEEJqbBEW/cMrDDfXoT
-         7VxLQi5jQrKZcF3H+0cuXV9Iod4myJ1wSs9vHTbD+5Bg8oMtkL+nF1ylxbwdo83Aw+j8
-         EfewUglH9GXd54Rmll/wHGhgQ5O1kVn07+jstzeUAfELvYUrX4ru+B41APsqk6/Ce5YN
-         h3Ffyf5rtoMuHis2aKeJcoZrlX0B4941lyM0I/HWxVOUGWgnl3RxZ3WH3ksb9vURU9sT
-         iEagXO3W8YzjPaP8FLN9SrTUPZaWHhpb+JitGbWwMB9sq++dO/aVxKYxb/y+kFdsDQVR
-         f2Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=pHC5nU+VgzmZ7VFos8+VtimEE2pPr/e7EvEmzHQIoLE=;
-        b=Hdwz3dGJ4isw4frEeSQKfuiGyU2rdcJvliz4mIVeEJ433o5dKxQ+QlzBRNjMIOd8Yt
-         jefZAODxCCquGbSl3sFPX362ntHuvEf5BkfdQr8+ECtk97KtddFIcajDZ2GWFOa3os6X
-         XJfNN/OouGZQhxclqsq9+KOw4uSebIz7SptUinqoMuBrTW6rKLcSe3/Ifmr5IlGJNuJP
-         1if8WkaQatwU7cQI9xAcuh/slQoGfSkkuUVxx4NY6x9+9Xa8e0yt9guasW25l7Q7hTWP
-         T2xrI9o/tYx34B2V53hhvUVRfr/P9KOgZIvzGPiLJLL9URjpAOmDArI3UAd0kzn0G/RO
-         fYZA==
-X-Gm-Message-State: APjAAAUbk0oklre49agb38iFWdi2SfvikXgOvBDtld4MN7PoRgWbmZAw
-        Agyt4Z44ZWgHKFQiRYSN/KuIQMg=
-X-Google-Smtp-Source: APXvYqzD0DhJcW1UqlT5aAE/eLSXMnuWJcYCDKlabJR32lwsEBPC3IrtKJUkjXfCyjtrQOgo/zto1g==
-X-Received: by 2002:a65:620a:: with SMTP id d10mr10664768pgv.8.1566023787820;
-        Fri, 16 Aug 2019 23:36:27 -0700 (PDT)
-Received: from rxps.home ([2600:8800:1e00:242:3550:edee:2708:4ad0])
-        by smtp.gmail.com with ESMTPSA id y128sm6684095pgy.41.2019.08.16.23.36.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Aug 2019 23:36:27 -0700 (PDT)
-From:   Ronan Pigott <rpigott314@gmail.com>
-X-Google-Original-From: Ronan Pigott
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Ronan Pigott <rpigott@berkeley.edu>
-Subject: [PATCH BlueZ v2 4/4] build: install zsh completions
-Date:   Fri, 16 Aug 2019 23:34:52 -0700
-Message-Id: <20190817063452.23273-5-rpigott@berkeley.edu>
-X-Mailer: git-send-email 2.22.1
-In-Reply-To: <20190817063452.23273-1-rpigott@berkeley.edu>
-References: <20190817063452.23273-1-rpigott@berkeley.edu>
+        id S1725925AbfHQJ21 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 17 Aug 2019 05:28:27 -0400
+Received: from mail.csu.ru ([195.54.14.68]:48657 "HELO mail.csu.ru"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725840AbfHQJ21 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 17 Aug 2019 05:28:27 -0400
+X-Greylist: delayed 529 seconds by postgrey-1.27 at vger.kernel.org; Sat, 17 Aug 2019 05:28:17 EDT
+Received: from webmail.csu.ru (webmail.csu.ru [195.54.14.80])
+        (Authenticated sender: pto)
+        by mail.csu.ru (Postfix) with ESMTPA id 2657C143C71;
+        Sat, 17 Aug 2019 14:19:12 +0500 (+05)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.csu.ru 2657C143C71
+Received: from 197.237.168.51
+        (SquirrelMail authenticated user pto)
+        by webmail.csu.ru with HTTP;
+        Sat, 17 Aug 2019 14:19:13 +0500
+Message-ID: <9149697ff6a2cc65ff184969265fffd8.squirrel@webmail.csu.ru>
+Date:   Sat, 17 Aug 2019 14:19:13 +0500
+Subject: 
+From:   "Lisa Robinson" <aweb4111@gmail.com>
+User-Agent: SquirrelMail/1.4.22
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;charset=utf-8
+X-Priority: 3 (Normal)
+Importance: Normal
+X-KLMS-Rule-ID: 2
+X-KLMS-Message-Action: skipped, MessageAuthentication
+X-KLMS-AntiSpam-Lua-Profiles: 143834 [Aug 17 2019]
+X-KLMS-AntiSpam-Version: 5.8.6.0
+X-KLMS-AntiSpam-Envelope-From: aweb4111@gmail.com
+X-KLMS-AntiSpam-Auth: dmarc=fail header.from=gmail.com policy=none;spf=softfail smtp.mailfrom=gmail.com;dkim=none
+X-KLMS-AntiSpam-Rate: 30
+X-KLMS-AntiSpam-Status: not_detected
+X-KLMS-AntiSpam-Method: none
+X-KLMS-AntiSpam-Info: LuaCore: 312 312 4c9e4568ba55fc3cf9a6a6ed868a456a9232a9d4, {rep_avail}, {reputation received: black}, {black address: 197.237.168.51}, {Prob_to_header_missing}, 195.54.14.80:7.1.2;webmail.csu.ru:7.1.1;gmail.com:7.1.1;127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1, ApMailHostAddress: 195.54.14.80
+X-MS-Exchange-Organization-SCL: -1
+X-KLMS-AntiSpam-Interceptor-Info: scan successful
+X-KLMS-AntiPhishing: Clean, bases: 2019/08/17 08:19:00
+X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.30, bases: 2019/08/17 06:37:00 #13872394
+X-KLMS-AntiVirus-Status: Clean, skipped
+Content-Transfer-Encoding: 8BIT
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Ronan Pigott <rpigott@berkeley.edu>
 
----
- Makefile.tools |  5 +++++
- configure.ac   | 12 ++++++++++++
- 2 files changed, 17 insertions(+)
 
-diff --git a/Makefile.tools b/Makefile.tools
-index b6b99d216..81ed2e30d 100644
---- a/Makefile.tools
-+++ b/Makefile.tools
-@@ -12,6 +12,11 @@ client_bluetoothctl_LDADD = gdbus/libgdbus-internal.la src/libshared-glib.la \
- 				$(GLIB_LIBS) $(DBUS_LIBS) -lreadline
- endif
- 
-+if ZSH_COMPLETIONS
-+zshcompletiondir=$(ZSH_COMPLETIONDIR)
-+dist_zshcompletion_DATA = completion/zsh/_bluetoothctl
-+endif
-+
- if MONITOR
- bin_PROGRAMS += monitor/btmon
- 
-diff --git a/configure.ac b/configure.ac
-index 0afe1e6db..76612ff07 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -119,6 +119,18 @@ if (test -z "${path_dbussessionbusdir}"); then
- fi
- AC_SUBST(DBUS_SESSIONBUSDIR, [${path_dbussessionbusdir}])
- 
-+AC_ARG_WITH([zsh-completion-dir], AC_HELP_STRING([--with-zsh-completion-dir=DIR],
-+				[path to install zsh completions]),
-+					[path_zshcompletiondir=${withval}],
-+						[path_zshcompletiondir="yes"])
-+
-+if (test "${path_zshcompletiondir}" = "yes"); then
-+	path_zshcompletiondir="$datarootdir/zsh/site-functions"
-+	AC_MSG_RESULT([${path_zshcompletiondir}])
-+fi
-+AC_SUBST(ZSH_COMPLETIONDIR, [${path_zshcompletiondir}])
-+AM_CONDITIONAL(ZSH_COMPLETIONS, test "${path_zshcompletiondir}" != "no")
-+
- AC_ARG_ENABLE(backtrace, AC_HELP_STRING([--enable-backtrace],
- 		[compile backtrace support]), [enable_backtrace=${enableval}])
- 
--- 
-2.22.1
+
+Sie haben einen Geldzuschuss vom Miss Lisa Robinson Charity Program.
+E-Mail für weitere Details.
 
