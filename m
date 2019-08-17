@@ -2,56 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 15D2390D5F
+	by mail.lfdr.de (Postfix) with ESMTP id 7F7B190D60
 	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Aug 2019 08:36:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726220AbfHQGg2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 17 Aug 2019 02:36:28 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:44034 "EHLO
+        id S1726239AbfHQGg3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 17 Aug 2019 02:36:29 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:36787 "EHLO
         mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbfHQGg2 (ORCPT
+        with ESMTP id S1726128AbfHQGg2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Sat, 17 Aug 2019 02:36:28 -0400
-Received: by mail-pg1-f196.google.com with SMTP id i18so3995700pgl.11
-        for <linux-bluetooth@vger.kernel.org>; Fri, 16 Aug 2019 23:36:27 -0700 (PDT)
+Received: by mail-pg1-f196.google.com with SMTP id l21so4009749pgm.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 16 Aug 2019 23:36:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=V2kBzO6yAeiZ58u3a1dhmifrEqATA5dV//e0NzEMWZc=;
-        b=d882ujB1s6yt2XusrFRusv2LEoGruePTwkDjJxWUobP8tq4AtLU/z9I+Du594ccmIa
-         OeVBi+Ra+ZjDDwuvyDMSTXvOkuuXjW6tgDuABCPqOyQsMFBqfL+tMzIImV60B2w7dRpo
-         k5LaZ4iPOsoDrpTiXZhwJYTd899DClIUpxjAPptR+4ImOM8tIAYXaH93erztLwgLaRzT
-         vY4F951DDptoa5QvAKKjCAJGxACMOYQdYGJU06gO2doR+ItNreCBW9QcLNR+Po/LKLli
-         Rspz0y+pbfxrrqICS2InjBYYR2Je7wqxfp0B6jJn71T2tRmx3QiHFO700StchFc+rBuJ
-         /q3Q==
+        bh=pHC5nU+VgzmZ7VFos8+VtimEE2pPr/e7EvEmzHQIoLE=;
+        b=Q5Xf39uxxdnsc2XhqOmD1joxP4Cgu0OyQ7Eebl/Pxu4wB2RaEEJqbBEW/cMrDDfXoT
+         7VxLQi5jQrKZcF3H+0cuXV9Iod4myJ1wSs9vHTbD+5Bg8oMtkL+nF1ylxbwdo83Aw+j8
+         EfewUglH9GXd54Rmll/wHGhgQ5O1kVn07+jstzeUAfELvYUrX4ru+B41APsqk6/Ce5YN
+         h3Ffyf5rtoMuHis2aKeJcoZrlX0B4941lyM0I/HWxVOUGWgnl3RxZ3WH3ksb9vURU9sT
+         iEagXO3W8YzjPaP8FLN9SrTUPZaWHhpb+JitGbWwMB9sq++dO/aVxKYxb/y+kFdsDQVR
+         f2Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=V2kBzO6yAeiZ58u3a1dhmifrEqATA5dV//e0NzEMWZc=;
-        b=Vule+wfZfe/1Oo+m0HX8kHGyXYskpJYy77MHHjQckmYp+gPPi79wvpg0GpgFXOYpB1
-         kuB8vYonr3pjO5qIFdGSNIIUKv2TXZa0I3qiTSSU0M3un5Z0otm775Xs3z7mXnBN3Xg4
-         bJXKqsDN7vBL711KsVBks1Ugx/AZh2Z79w2IkWDD50VUzTyrbmY86g8l7whAv6Cpy9rS
-         PDeaThbnqKbq+7+mUZ53E6+4c1IvlzOhm3/KhEIYGb+mU624TvjxAy2MAejr7qwzPTK7
-         vsEdArBF1qNwPaw7RR8GaBFzm2daJVGsLMhC7DRarC5q3o2ovpkEqJUBmATpDNRTVOkn
-         dFwQ==
-X-Gm-Message-State: APjAAAUdLeUpb9X1U+tWwE2tXfmvECP3FMHgg57fSQ+z7FBEtKC7abde
-        5/OPJkcI2bVuAD13/KrMLrgrV1I=
-X-Google-Smtp-Source: APXvYqwuK9xAfj5saYzYQu1/x39p4JCJpGiUklnFq0bv8h+F99eRrf22jOWykXFhe+mt8Ry18nckBw==
-X-Received: by 2002:aa7:9e0a:: with SMTP id y10mr14261962pfq.93.1566023787061;
+        bh=pHC5nU+VgzmZ7VFos8+VtimEE2pPr/e7EvEmzHQIoLE=;
+        b=Hdwz3dGJ4isw4frEeSQKfuiGyU2rdcJvliz4mIVeEJ433o5dKxQ+QlzBRNjMIOd8Yt
+         jefZAODxCCquGbSl3sFPX362ntHuvEf5BkfdQr8+ECtk97KtddFIcajDZ2GWFOa3os6X
+         XJfNN/OouGZQhxclqsq9+KOw4uSebIz7SptUinqoMuBrTW6rKLcSe3/Ifmr5IlGJNuJP
+         1if8WkaQatwU7cQI9xAcuh/slQoGfSkkuUVxx4NY6x9+9Xa8e0yt9guasW25l7Q7hTWP
+         T2xrI9o/tYx34B2V53hhvUVRfr/P9KOgZIvzGPiLJLL9URjpAOmDArI3UAd0kzn0G/RO
+         fYZA==
+X-Gm-Message-State: APjAAAUbk0oklre49agb38iFWdi2SfvikXgOvBDtld4MN7PoRgWbmZAw
+        Agyt4Z44ZWgHKFQiRYSN/KuIQMg=
+X-Google-Smtp-Source: APXvYqzD0DhJcW1UqlT5aAE/eLSXMnuWJcYCDKlabJR32lwsEBPC3IrtKJUkjXfCyjtrQOgo/zto1g==
+X-Received: by 2002:a65:620a:: with SMTP id d10mr10664768pgv.8.1566023787820;
         Fri, 16 Aug 2019 23:36:27 -0700 (PDT)
 Received: from rxps.home ([2600:8800:1e00:242:3550:edee:2708:4ad0])
-        by smtp.gmail.com with ESMTPSA id y128sm6684095pgy.41.2019.08.16.23.36.26
+        by smtp.gmail.com with ESMTPSA id y128sm6684095pgy.41.2019.08.16.23.36.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Aug 2019 23:36:26 -0700 (PDT)
+        Fri, 16 Aug 2019 23:36:27 -0700 (PDT)
 From:   Ronan Pigott <rpigott314@gmail.com>
 X-Google-Original-From: Ronan Pigott
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Ronan Pigott <rpigott@berkeley.edu>
-Subject: [PATCH BlueZ v2 3/4] completion: add bluetoothctl zsh completions
-Date:   Fri, 16 Aug 2019 23:34:51 -0700
-Message-Id: <20190817063452.23273-4-rpigott@berkeley.edu>
+Subject: [PATCH BlueZ v2 4/4] build: install zsh completions
+Date:   Fri, 16 Aug 2019 23:34:52 -0700
+Message-Id: <20190817063452.23273-5-rpigott@berkeley.edu>
 X-Mailer: git-send-email 2.22.1
 In-Reply-To: <20190817063452.23273-1-rpigott@berkeley.edu>
 References: <20190817063452.23273-1-rpigott@berkeley.edu>
@@ -64,131 +64,50 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Ronan Pigott <rpigott@berkeley.edu>
 
-This zsh compdef provides completions for the bluetoothctl command.
-
-It has been modified from version 1 of this patch to get the command
-names and descriptions from the newly introduced --zsh-complete.
-
-It utilizes the output of `bluetoothctl devices` or
-`bluetoothctl controllers` to provide a descriptive completion menu
-in those contexts.
-
-e.g.
-
-$ bluetoothctl connect <TAB>
-04:52:C7:0C:D4:A7  -- Bose QuietComfort 35
-40:4E:36:D9:8F:28  -- Pixel 2
-A4:38:CC:20:5D:E0  -- Pro Controller
-
 ---
- completion/zsh/_bluetoothctl | 98 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 98 insertions(+)
- create mode 100644 completion/zsh/_bluetoothctl
+ Makefile.tools |  5 +++++
+ configure.ac   | 12 ++++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/completion/zsh/_bluetoothctl b/completion/zsh/_bluetoothctl
-new file mode 100644
-index 000000000..bf35e503e
---- /dev/null
-+++ b/completion/zsh/_bluetoothctl
-@@ -0,0 +1,98 @@
-+#compdef bluetoothctl
+diff --git a/Makefile.tools b/Makefile.tools
+index b6b99d216..81ed2e30d 100644
+--- a/Makefile.tools
++++ b/Makefile.tools
+@@ -12,6 +12,11 @@ client_bluetoothctl_LDADD = gdbus/libgdbus-internal.la src/libshared-glib.la \
+ 				$(GLIB_LIBS) $(DBUS_LIBS) -lreadline
+ endif
+ 
++if ZSH_COMPLETIONS
++zshcompletiondir=$(ZSH_COMPLETIONDIR)
++dist_zshcompletion_DATA = completion/zsh/_bluetoothctl
++endif
 +
-+__bluetoothctl() {
-+	bluetoothctl "$@" 2>/dev/null
-+}
+ if MONITOR
+ bin_PROGRAMS += monitor/btmon
+ 
+diff --git a/configure.ac b/configure.ac
+index 0afe1e6db..76612ff07 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -119,6 +119,18 @@ if (test -z "${path_dbussessionbusdir}"); then
+ fi
+ AC_SUBST(DBUS_SESSIONBUSDIR, [${path_dbussessionbusdir}])
+ 
++AC_ARG_WITH([zsh-completion-dir], AC_HELP_STRING([--with-zsh-completion-dir=DIR],
++				[path to install zsh completions]),
++					[path_zshcompletiondir=${withval}],
++						[path_zshcompletiondir="yes"])
 +
-+_bluezcomp_controller() {
-+	local -a controllers
-+	bluetoothctl list |
-+	while read _ MAC NAME; do
-+		controllers+="${MAC//:/\\:}:${NAME//:/\\:}"
-+	done
-+	_describe -t controllers 'controller' controllers
-+}
++if (test "${path_zshcompletiondir}" = "yes"); then
++	path_zshcompletiondir="$datarootdir/zsh/site-functions"
++	AC_MSG_RESULT([${path_zshcompletiondir}])
++fi
++AC_SUBST(ZSH_COMPLETIONDIR, [${path_zshcompletiondir}])
++AM_CONDITIONAL(ZSH_COMPLETIONS, test "${path_zshcompletiondir}" != "no")
 +
-+_bluezcomp_device() {
-+	local -a devices
-+	bluetoothctl devices |
-+	while read _ MAC NAME; do
-+		devices+="${MAC//:/\\:}:${NAME//:/\\:}"
-+	done
-+	_describe -t devices 'device' devices
-+}
-+
-+_bluezcomp_agentcap() {
-+	local -a agent_options=(${(f)"$(__bluetoothctl agent help)"})
-+	agent_options=( "${(@)agent_options:#(on|off)}" )
-+	compadd -a agent_options
-+}
-+
-+_bluetoothctl_agent() {
-+	local -a agent_options=(${(f)"$(__bluetoothctl agent help)"})
-+	agent_options+=help
-+	compadd -a agent_options
-+}
-+
-+_bluetoothctl_advertise() {
-+	local -a ad_options=(${(f)"$(__bluetoothctl advertise help)"})
-+	ad_options+=help
-+	compadd -a ad_options
-+}
-+
-+_bluetoothctl() {
-+	local -a toggle_commands=(
-+		"discoverable" "pairable" "power" "scan"
-+	)
-+
-+	local -a controller_commands=(
-+		"select" "show"
-+	)
-+
-+	local -a device_commands=(
-+		"block" "connect" "disconnect" "info"
-+		"pair" "remove" "trust" "unblock" "untrust"
-+	)
-+
-+	# Other commands may be handled by _bluetoothctl_$command
-+	local -a all_commands=( "${(@f)$(__bluetoothctl --zsh-complete help)}" )
-+
-+	local curcontext=$curcontext state line ret=1
-+	_arguments -C \
-+		+ '(info)' \
-+		{-h,--help}'[Show help message and exit]' \
-+		{-v,--version}'--version[Show version info and exit]' \
-+		+ 'mod' \
-+		'(info)'{-a+,--agent=}'[Register agent handler]:agent:_bluezcomp_agentcap' \
-+		'(info)'{-t,--timeout}'[Timeout in seconds for non-interactive mode]' \
-+		'(info)'{-m,--monitor}'[Enable monitor output]' \
-+		+ 'command' \
-+		'(info):command:->command' \
-+		'(info):: :->argument' \
-+		': :_message "no more arguments"'
-+
-+	if [[ $state == "command" ]]; then
-+		_describe -t commands 'command' all_commands
-+	elif [[ $state == "argument" ]]; then
-+		if (( ! ${"${(@)all_commands%%:*}"[(I)${line[1]}]} )); then
-+			_message "Unknown bluetoothctl command: $line[1]"
-+			return 1;
-+		fi
-+
-+		curcontext="${curcontext%:*:*}:bluetoothctl-$line[1]:"
-+		if ! _call_function ret _bluetoothctl_$line[1]; then
-+			case $line[1] in
-+				(${(~j.|.)toggle_commands})
-+					compadd on off
-+					;;
-+				(${(~j.|.)device_commands})
-+					_bluezcomp_device
-+					;;
-+				(${(~j.|.)controller_commands})
-+					_bluezcomp_controller
-+					;;
-+			esac
-+		fi
-+		return ret
-+	fi
-+} && _bluetoothctl
+ AC_ARG_ENABLE(backtrace, AC_HELP_STRING([--enable-backtrace],
+ 		[compile backtrace support]), [enable_backtrace=${enableval}])
+ 
 -- 
 2.22.1
 
