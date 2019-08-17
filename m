@@ -2,60 +2,86 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BBB6D90FA9
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Aug 2019 11:28:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D63F91047
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Aug 2019 13:33:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725925AbfHQJ21 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 17 Aug 2019 05:28:27 -0400
-Received: from mail.csu.ru ([195.54.14.68]:48657 "HELO mail.csu.ru"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725840AbfHQJ21 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 17 Aug 2019 05:28:27 -0400
-X-Greylist: delayed 529 seconds by postgrey-1.27 at vger.kernel.org; Sat, 17 Aug 2019 05:28:17 EDT
-Received: from webmail.csu.ru (webmail.csu.ru [195.54.14.80])
-        (Authenticated sender: pto)
-        by mail.csu.ru (Postfix) with ESMTPA id 2657C143C71;
-        Sat, 17 Aug 2019 14:19:12 +0500 (+05)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.csu.ru 2657C143C71
-Received: from 197.237.168.51
-        (SquirrelMail authenticated user pto)
-        by webmail.csu.ru with HTTP;
-        Sat, 17 Aug 2019 14:19:13 +0500
-Message-ID: <9149697ff6a2cc65ff184969265fffd8.squirrel@webmail.csu.ru>
-Date:   Sat, 17 Aug 2019 14:19:13 +0500
-Subject: 
-From:   "Lisa Robinson" <aweb4111@gmail.com>
-User-Agent: SquirrelMail/1.4.22
+        id S1725911AbfHQLdc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 17 Aug 2019 07:33:32 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:43833 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725784AbfHQLdc (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 17 Aug 2019 07:33:32 -0400
+Received: by mail-pl1-f193.google.com with SMTP id 4so3532930pld.10
+        for <linux-bluetooth@vger.kernel.org>; Sat, 17 Aug 2019 04:33:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SAM3PyO+TJncg8wgkXGt6zutUE29cfgu50rH4D8aMLI=;
+        b=Ql6ocIzDxFu+WXuUNHE+5XTKAu/avgSRvhBlorx0poN8l2M9R92zON84oHPZET98UR
+         Iq5c5fXKNl6YLppGf6vj09mgaMXkiAO+ZiOfMeF3qxu3pbJIt6ka6cl5kO4yq5pgj+bZ
+         eTLdGtBLLkVPTzoo6LAcBr/TbsJBNDPE2saQEBO2GVmBPl76axqbpJH1d2hHQVjFIkl+
+         dk8P3JvJUUYuOecWXL+3rmTOpC8Eay4GU6c5bBExwrmfFkqMYRoWQ0Vybd8I1oyHKuOD
+         c9QPFvdfa9e+b/G0lHurUobN7B4qPORzJjL1LOKEkfthgcsiSHtaLCCnQFYY8fltvDZz
+         0Plw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=SAM3PyO+TJncg8wgkXGt6zutUE29cfgu50rH4D8aMLI=;
+        b=UJkmbyd1y4PnwO7N5BT3QhyYMO5KYS8Bg8tMjNpzP71k7EbHoCNhXxq/hb3x17DGWx
+         TrW6IZqyj4qwGX9GoO532iABqOtouRYs5TSrrVh/bA0u6MWPOcDHAahz3SuSXNN5gWJN
+         +RbT/wj+PjABsV5VW+9A19/8JXB5mF5VhJH1E6iyMHurW54AgsZOJEv7JLJXhjy/1Fhu
+         T8ZAZjal+oLdIVcX2bu7HklDYnLkkwEc0zfzCEUfCMD1o42hvNpo7O4BiRYkM/uGYcLL
+         3f17F7w+7E4pKafLw7uykuiz6XLpF8BUYd703BEqm6tSDoTG7dNM2+f+J+TuAfXSwBI8
+         plEg==
+X-Gm-Message-State: APjAAAXExNfVx5hhvRXfP0eHe4rsDbqLa+jscUaAu3NRy1rNepza7wIL
+        Yk7DLlP+MwloNI1Ldqm0j/yV34PnXr8Elw==
+X-Google-Smtp-Source: APXvYqyMZIpyJx5aoNVbupdkz3xwXOV942u9vf4qmbWS7vLmv7MAs1swzo7f/hSCRgux7vdujqzKQA==
+X-Received: by 2002:a17:902:166:: with SMTP id 93mr13833532plb.195.1566041611155;
+        Sat, 17 Aug 2019 04:33:31 -0700 (PDT)
+Received: from localhost ([192.55.54.43])
+        by smtp.gmail.com with ESMTPSA id f12sm8275046pgo.85.2019.08.17.04.33.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 17 Aug 2019 04:33:29 -0700 (PDT)
+Date:   Sat, 17 Aug 2019 14:33:26 +0300
+From:   Johan Hedberg <johan.hedberg@gmail.com>
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     linux-bluetooth@vger.kernel.org
+Subject: Re: [PATCH] Bluetooth: Add debug setting for changing minimum
+ encryption key size
+Message-ID: <20190817113326.GA5851@abukhnin-mobl1.ccr.corp.intel.com>
+Mail-Followup-To: Marcel Holtmann <marcel@holtmann.org>,
+        linux-bluetooth@vger.kernel.org
+References: <20190716183441.27501-1-marcel@holtmann.org>
 MIME-Version: 1.0
-Content-Type: text/plain;charset=utf-8
-X-Priority: 3 (Normal)
-Importance: Normal
-X-KLMS-Rule-ID: 2
-X-KLMS-Message-Action: skipped, MessageAuthentication
-X-KLMS-AntiSpam-Lua-Profiles: 143834 [Aug 17 2019]
-X-KLMS-AntiSpam-Version: 5.8.6.0
-X-KLMS-AntiSpam-Envelope-From: aweb4111@gmail.com
-X-KLMS-AntiSpam-Auth: dmarc=fail header.from=gmail.com policy=none;spf=softfail smtp.mailfrom=gmail.com;dkim=none
-X-KLMS-AntiSpam-Rate: 30
-X-KLMS-AntiSpam-Status: not_detected
-X-KLMS-AntiSpam-Method: none
-X-KLMS-AntiSpam-Info: LuaCore: 312 312 4c9e4568ba55fc3cf9a6a6ed868a456a9232a9d4, {rep_avail}, {reputation received: black}, {black address: 197.237.168.51}, {Prob_to_header_missing}, 195.54.14.80:7.1.2;webmail.csu.ru:7.1.1;gmail.com:7.1.1;127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1, ApMailHostAddress: 195.54.14.80
-X-MS-Exchange-Organization-SCL: -1
-X-KLMS-AntiSpam-Interceptor-Info: scan successful
-X-KLMS-AntiPhishing: Clean, bases: 2019/08/17 08:19:00
-X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.30, bases: 2019/08/17 06:37:00 #13872394
-X-KLMS-AntiVirus-Status: Clean, skipped
-Content-Transfer-Encoding: 8BIT
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190716183441.27501-1-marcel@holtmann.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Hi Marcel,
 
+On Tue, Jul 16, 2019, Marcel Holtmann wrote:
+> For testing and qualification purposes it is useful to allow changing
+> the minimum encryption key size value that the host stack is going to
+> enforce. This adds a new debugfs setting min_encrypt_key_size to achieve
+> this functionality.
+> 
+> Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+> ---
+>  include/net/bluetooth/hci_core.h |  1 +
+>  net/bluetooth/hci_core.c         |  1 +
+>  net/bluetooth/hci_debugfs.c      | 31 +++++++++++++++++++++++++++++++
+>  net/bluetooth/l2cap_core.c       |  2 +-
+>  4 files changed, 34 insertions(+), 1 deletion(-)
 
+The patch has been applied to the bluetooth stable tree. Thanks.
 
-Sie haben einen Geldzuschuss vom Miss Lisa Robinson Charity Program.
-E-Mail für weitere Details.
-
+Johan
