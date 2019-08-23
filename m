@@ -2,103 +2,115 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 79A559AD36
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Aug 2019 12:32:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6656E9ADAE
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Aug 2019 12:54:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405127AbfHWKb5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 23 Aug 2019 06:31:57 -0400
-Received: from vps.xff.cz ([195.181.215.36]:52706 "EHLO vps.xff.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404951AbfHWKbu (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 23 Aug 2019 06:31:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=megous.com; s=mail;
-        t=1566556307; bh=Zdq7TsrioBhNJ4nRUcC5Dq41WDeZro1CErpIBoxFFlk=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=DigB5/Gzg4cMrhlQlNhoXSWgNEMQ/gOr13IQAEJPfmCfyuvFKk5RkTyngZexthmXD
-         cWRc7Bt8hLxmIZnn8syMNxhbnV5Dx6C6abzysI5JS2x2i7SQzf3pja8slt5n9qTegq
-         XPMIUi+Zb8xRoPCqp0/U5RYZcWlYz7ESLPVo/bEU=
-From:   megous@megous.com
-To:     Maxime Ripard <mripard@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-bluetooth@vger.kernel.org, Ondrej Jirman <megous@megous.com>
-Subject: [RESEND PATCH 5/5] arm64: dts: allwinner: orange-pi-3: Enable UART1 / Bluetooth
-Date:   Fri, 23 Aug 2019 12:31:39 +0200
-Message-Id: <20190823103139.17687-6-megous@megous.com>
-In-Reply-To: <20190823103139.17687-1-megous@megous.com>
-References: <20190823103139.17687-1-megous@megous.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S2392571AbfHWKw6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 23 Aug 2019 06:52:58 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:33934 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731280AbfHWKw6 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 23 Aug 2019 06:52:58 -0400
+Received: by mail-pl1-f196.google.com with SMTP id d3so5396094plr.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Aug 2019 03:52:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Gonkm/8q51fc4SdRxd8PQpe0Xki37dFxGWur6VybDyg=;
+        b=ikMLIto/m/wgbVe+UaDxGzgDL+uRulcFkZBXkragmjxZA+3lybLmjyJrLhBHPyUJAE
+         aecrNS6Q0Gn8epCK/qrV1InWZmYJuxz1/OvuH3nJP04jUoyD+AIkVB7tcp24MK/OsMZm
+         bFvxWD/heusl9cmtBnL50LMnO1KvN1td0vD0G2HdSUKshg5nJVKAgHdaH3Jug4yro4nN
+         ddE7arql9utMeDe4ljqgAlNCtdDgKazwGCwK1oKSLrCkGkKreMY19ZHzs04EhVk1/92q
+         Oq+aCKDu2zzIQAnMBAqCfARTqO/2Ys5QSMYuWj4h2+qm+mUKtrN+6OwNU1tUr+BPYmZX
+         gphg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Gonkm/8q51fc4SdRxd8PQpe0Xki37dFxGWur6VybDyg=;
+        b=gS1dQf8GgBYKymhaEHOuLkhB3CH0qVnmkKYIWTVm2Dhojufsc1nhDiqdcE/7hr2oIL
+         d44G1CkCeMeiXIhTQ6O6PnS3l1pfHh7NwBA1pA0yFiake/uHosI1yCdcXgL3jCwKQVJw
+         CHt4QdF1no7nc0Aodv/pkeC0RnA8IKDsV0RI0OZ/mavu6lsCoS+fvEbetvVQ7QHvvOwp
+         +CwDM2+TJxHFlBmptezdgStyOYWg27LPLx+COXXHSij1qGEAIjTmBeFEY9BbM7romEzj
+         PZamvOivLLHKROfWsNrqHOzXJLcZGbxaBXUlQvRYhU2OacXdrqXmJ39EShABIsT9+YlP
+         hqGA==
+X-Gm-Message-State: APjAAAU6fQiauBRvlFn3tVIoatDGIjUdzg9uHn9HKEhSAy6nbV/K8too
+        HPL+Mq+J0c9P7V8DrmGzNZA=
+X-Google-Smtp-Source: APXvYqyclXegtG94+OmJm/63kiHmYPWwlkI4R6o1b1Wcge2wHG+vvgqmyJkw2fbxFMCIjgL+IylBNg==
+X-Received: by 2002:a17:902:20cc:: with SMTP id v12mr3783868plg.188.1566557577542;
+        Fri, 23 Aug 2019 03:52:57 -0700 (PDT)
+Received: from jhedberg-mac01.fi.intel.com ([134.134.139.82])
+        by smtp.gmail.com with ESMTPSA id v145sm2548410pfc.31.2019.08.23.03.52.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 Aug 2019 03:52:57 -0700 (PDT)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [PATCH 1/1] bluetooth: update default BLE connection interval
+ bounds
+From:   Johan Hedberg <johan.hedberg@gmail.com>
+In-Reply-To: <1c707bb9-999b-7ca3-3c91-7b183dacfdd5@gmail.com>
+Date:   Fri, 23 Aug 2019 13:52:49 +0300
+Cc:     Andreas Kemnade <andreas@kemnade.info>,
+        Jamie Mccrae <Jamie.Mccrae@lairdconnect.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A298FF01-96F0-40B2-9124-3B925C960574@gmail.com>
+References: <1c707bb9-999b-7ca3-3c91-7b183dacfdd5@gmail.com>
+To:     Carey Sonsino <csonsino@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Ondrej Jirman <megous@megous.com>
+Hi,
 
-The board contains AP6256 WiFi/BT module that has its bluetooth part
-connected to SoC's UART1 port. Enable this port, and add node for the
-bluetooth device.
+On 20 Aug 2019, at 20.01, Carey Sonsino <csonsino@gmail.com> wrote:
+>=20
+> Update the default BLE connection interval min/max bounds to the full =
+range of permitted values (6-3200, corresponding to 7.25-4000ms).
+>=20
+> Commit c49a8682fc5d298d44e8d911f4fa14690ea9485e introduced a bounds =
+check on connection interval update requests, but the default min/max =
+values were left at 24-40 (30-50ms) which caused problems for devices =
+that want to negotiate connection intervals outside of those bounds.
+>=20
+> Setting the default min/max connection interval to the full allowable =
+range in the bluetooth specification restores the default Linux behavior =
+of allowing remote devices to negotiate their desired connection =
+interval, while still permitting the system administrator to later =
+narrow the range.
+>=20
+> Fixes c49a8682fc5d: (validate BLE connection interval updates)
+>=20
+> Signed-off-by: Carey Sonsino <csonsino@gmail.com>
+>=20
+> ---
+>=20
+> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+> index 04bc79359a17..f4f2f712c527 100644
+> --- a/net/bluetooth/hci_core.c
+> +++ b/net/bluetooth/hci_core.c
+> @@ -3181,8 +3181,8 @@ struct hci_dev *hci_alloc_dev(void)
+>      hdev->le_adv_max_interval =3D 0x0800;
+>      hdev->le_scan_interval =3D 0x0060;
+>      hdev->le_scan_window =3D 0x0030;
+> -    hdev->le_conn_min_interval =3D 0x0018;
+> -    hdev->le_conn_max_interval =3D 0x0028;
+> +    hdev->le_conn_min_interval =3D 0x0006;
+> +    hdev->le_conn_max_interval =3D 0x0c80;
+>      hdev->le_conn_latency =3D 0x0000;
+>      hdev->le_supv_timeout =3D 0x002a;
+>      hdev->le_def_tx_len =3D 0x001b;
 
-Bluetooth part is named bcm4345c5.
+This looks fine to me, except the commit message line lengths need =
+fixing (max 72-74 or so). It seems we=E2=80=99d want this through the =
+Bluetooth stable tree, i.e. still into the 5.3-rc series, correct? =
+Marcel, do you agree?
 
-You'll need a BCM4345C5.hcd firmware file that can be found in the
-Xulongs's repository for H6:
-
-https://github.com/orangepi-xunlong/OrangePiH6_external/tree/master/ap6256
-
-The driver expects the firmware at the following path relative to the
-firmware directory:
-
-  brcm/BCM4345C5.hcd
-
-Signed-off-by: Ondrej Jirman <megous@megous.com>
----
- .../dts/allwinner/sun50i-h6-orangepi-3.dts    | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
-index 49d954369087..a9e776446c35 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
-@@ -15,6 +15,7 @@
- 
- 	aliases {
- 		serial0 = &uart0;
-+		serial1 = &uart1;
- 	};
- 
- 	chosen {
-@@ -271,6 +272,24 @@
- 	status = "okay";
- };
- 
-+/* There's the BT part of the AP6256 connected to that UART */
-+&uart1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart1_pins>, <&uart1_rts_cts_pins>;
-+	uart-has-rtscts;
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "brcm,bcm4345c5";
-+		clocks = <&rtc 1>;
-+		clock-names = "lpo";
-+		device-wakeup-gpios = <&r_pio 1 2 GPIO_ACTIVE_HIGH>; /* PM2 */
-+		host-wakeup-gpios = <&r_pio 1 1 GPIO_ACTIVE_HIGH>; /* PM1 */
-+		shutdown-gpios = <&r_pio 1 4 GPIO_ACTIVE_HIGH>; /* PM4 */
-+		max-speed = <1500000>;
-+	};
-+};
-+
- &usb2otg {
- 	/*
- 	 * This board doesn't have a controllable VBUS even though it
--- 
-2.23.0
+Johan
 
