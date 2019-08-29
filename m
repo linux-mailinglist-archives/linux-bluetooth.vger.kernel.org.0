@@ -2,101 +2,101 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E8D7DA25DD
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Aug 2019 20:33:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F01CA2630
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Aug 2019 20:39:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728601AbfH2SNx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Aug 2019 14:13:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55594 "EHLO mail.kernel.org"
+        id S1728350AbfH2SjD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Aug 2019 14:39:03 -0400
+Received: from mga02.intel.com ([134.134.136.20]:4322 "EHLO mga02.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728571AbfH2SNv (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Aug 2019 14:13:51 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3EB1F2189D;
-        Thu, 29 Aug 2019 18:13:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567102431;
-        bh=0iVUGstZBn+OwfLZQ5q8c/fwqNEgVLv+IjmNObfZN5k=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Kg5/ZzHOxpO9h3MSv/PqkI8mUIZrSWKR2SE1QOYthG1eHlEiZMSqoY6oXLVfPpgC9
-         h8cvLCIANZg0W9qAMtTLAmXJFzBzlaUdjU/dTk7CYQYvf01pY8eMOn1zbr2fLoTChH
-         GRKrODpVlFm2JhlnyLolqq6Q7Ozw+uxgrICtVoQU=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Fabian Henneke <fabian.henneke@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 20/76] Bluetooth: hidp: Let hidp_send_message return number of queued bytes
-Date:   Thu, 29 Aug 2019 14:12:15 -0400
-Message-Id: <20190829181311.7562-20-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190829181311.7562-1-sashal@kernel.org>
-References: <20190829181311.7562-1-sashal@kernel.org>
+        id S1729012AbfH2SjD (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 29 Aug 2019 14:39:03 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 29 Aug 2019 11:39:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,444,1559545200"; 
+   d="scan'208";a="182429616"
+Received: from orsmsx102.amr.corp.intel.com ([10.22.225.129])
+  by fmsmga007.fm.intel.com with ESMTP; 29 Aug 2019 11:39:00 -0700
+Received: from orsmsx103.amr.corp.intel.com ([169.254.5.221]) by
+ ORSMSX102.amr.corp.intel.com ([169.254.3.129]) with mapi id 14.03.0439.000;
+ Thu, 29 Aug 2019 11:39:00 -0700
+From:   "Gix, Brian" <brian.gix@intel.com>
+To:     "michal.lowas-rzechonek@silvair.com" 
+        <michal.lowas-rzechonek@silvair.com>
+CC:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Subject: Re: [PATCH BlueZ] mesh: Log D-Bus method call errors
+Thread-Topic: [PATCH BlueZ] mesh: Log D-Bus method call errors
+Thread-Index: AQHVVy2bkXDzmW+5gESx2fBstT1SHacRQJeAgAEnZYCAAJELAA==
+Date:   Thu, 29 Aug 2019 18:38:59 +0000
+Message-ID: <145b9b726c45fd37592b5a7a3504c911cd848409.camel@intel.com>
+References: <20190820075654.2195-1-michal.lowas-rzechonek@silvair.com>
+         <685bc703108f5329b861f5c5f87301b44bddd8e0.camel@intel.com>
+         <20190829095951.nzzqqhgvblhogf4e@mlowasrzechonek2133>
+In-Reply-To: <20190829095951.nzzqqhgvblhogf4e@mlowasrzechonek2133>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.254.35.27]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <0C2AD96B7B7B8245A2770E0460516AB7@intel.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Fabian Henneke <fabian.henneke@gmail.com>
-
-[ Upstream commit 48d9cc9d85dde37c87abb7ac9bbec6598ba44b56 ]
-
-Let hidp_send_message return the number of successfully queued bytes
-instead of an unconditional 0.
-
-With the return value fixed to 0, other drivers relying on hidp, such as
-hidraw, can not return meaningful values from their respective
-implementations of write(). In particular, with the current behavior, a
-hidraw device's write() will have different return values depending on
-whether the device is connected via USB or Bluetooth, which makes it
-harder to abstract away the transport layer.
-
-Signed-off-by: Fabian Henneke <fabian.henneke@gmail.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/bluetooth/hidp/core.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/net/bluetooth/hidp/core.c b/net/bluetooth/hidp/core.c
-index 5abd423b55fa9..8d889969ae7ed 100644
---- a/net/bluetooth/hidp/core.c
-+++ b/net/bluetooth/hidp/core.c
-@@ -101,6 +101,7 @@ static int hidp_send_message(struct hidp_session *session, struct socket *sock,
- {
- 	struct sk_buff *skb;
- 	struct sock *sk = sock->sk;
-+	int ret;
- 
- 	BT_DBG("session %p data %p size %d", session, data, size);
- 
-@@ -114,13 +115,17 @@ static int hidp_send_message(struct hidp_session *session, struct socket *sock,
- 	}
- 
- 	skb_put_u8(skb, hdr);
--	if (data && size > 0)
-+	if (data && size > 0) {
- 		skb_put_data(skb, data, size);
-+		ret = size;
-+	} else {
-+		ret = 0;
-+	}
- 
- 	skb_queue_tail(transmit, skb);
- 	wake_up_interruptible(sk_sleep(sk));
- 
--	return 0;
-+	return ret;
- }
- 
- static int hidp_send_ctrl_message(struct hidp_session *session,
--- 
-2.20.1
-
+SGkgTWljaGHFgiwNCg0KT24gVGh1LCAyMDE5LTA4LTI5IGF0IDExOjU5ICswMjAwLCBtaWNoYWwu
+bG93YXMtcnplY2hvbmVrQHNpbHZhaXIuY29tIHdyb3RlOg0KPiBIaSBCcmlhbiwNCj4gDQo+IE9u
+IDA4LzI4LCBHaXgsIEJyaWFuIHdyb3RlOg0KPiA+IE9uIFR1ZSwgMjAxOS0wOC0yMCBhdCAwOTo1
+NiArMDIwMCwgTWljaGHFgiBMb3dhcy1SemVjaG9uZWsgd3JvdGU6DQo+ID4gPiBJZiBhIHN5c3Rl
+bSBpcyBtaXNjb25maWd1cmVkLCBtZXNoIGRhZW1vbiBtaWdodCBub3QgaGF2ZSBwZXJtaXNzaW9u
+cyB0bw0KPiA+ID4gY2FsbCBhcHBsaWNhdGlvbiBtZXRob2RzLg0KPiA+ID4gDQo+ID4gPiBUaGlz
+IHBhdGNoIGNhdXNlcyBtZXNoIGRhZW1vbiB0byBsb2cgc3VjaCBlcnJvcnMsIGluc3RlYWQgb2Yg
+ZmFpbGluZw0KPiA+ID4gc2lsZW50bHkuDQo+ID4gDQo+ID4gU29tZSBvZiB0aGVzZSBSZXBsaWVz
+IGZvciBlcnJvciBjaGVja2luZyBhcmUgd2FycmFudGVkLCBJIHRoaW5rLi4uDQo+ID4gUGFydGlj
+dWxhcmlseSB3aGVuIHRoZXJlIGlzIHJlcXVpcmVkIGluZm9ybWF0aW9uIHRoYXQgbmVlZHMgdG8g
+YmUgc2VudA0KPiA+IHRvIHRoZSBBcHBsaWNhdGlvbiBkdXJpbmcgUHJvdmlzaW9uaW5nLCBmb3Ig
+aW5zdGFuY2UuDQo+ID4gDQo+ID4gQnV0IHNvbWV0aW1lcyB3ZSBleHBlY3QgdGhlIGFwcGxpY2F0
+aW9uIHRvIGJlICJhd2F5IiBmb3Igbm9ybWFsDQo+ID4gcmVhc29ucyAoaXQgaXMgaW50ZW5kZWQg
+YXMgYSBmb3JlZ3JvdW5kIGFwcCwgZm9yIGluc3RhbmNlKSB3aGVyZSBJIGFtDQo+ID4gbm90IHN1
+cmUgd2Ugd2FudCB0byByZXF1aXJlIHRoZSByZXNwb25zZS4uLiBGb3IgaW5zdGFuY2UgdGhlIG1l
+dGhvZA0KPiA+IGNhbGxzIGluIG1vZGVsLmMgdGhhdCBvY2N1ciB3aGVuIGEgcmVtb3RlIG5vZGUg
+aGFzIHNlbnQgYSBtZXNzYWdlLg0KPiANCj4gWWVzLCB0aGVzZSBjYWxscyB3ZXJlIG15IHByaW1h
+cnkgY29uY2VybiBoZXJlLg0KPiANCj4gTm90ZSB0aGF0IEQtQnVzIGNhbGxzIGRvICpub3QqIGhh
+cHBlbiBpZiB0aGUgYXBwbGljYXRpb24gaXMgbm90IGF0dGFjaGVkDQo+IChub2RlLT5vd25lciBp
+cyBOVUxMKS4NCg0KVGhhdCBpcyB0cnVlLCBhbmQgd2UgKmV4cGVjdCogYXBwbGljYXRpb25zIHRo
+YXQgYXJlIGF0dGFjaGVkIHRvIGhhbmRsZSB0aGUgc29ja2V0LXNpZ25hbHMgKHRoYXQgZHJpdmUg
+ZC1idXMpIGluDQphIHRpbWVseSBtYW5uZXIuLi4gIEJ1dCBJIGFtIG5vdCBzdXJlIHdlIGhhdmUg
+YSB3YXkgdG8gZW5mb3JjZSBpdC4gDQoNCkNlcnRhaW5seSwgd2UgY2FuIHNpbXVsYXRlIGEgZGlz
+Y29ubmVjdGlvbiBpZiBhbiBBcHAgaWdub3JlcyBpdCdzIERCdXMgc29ja2V0IHNpZ25hbCwgYnV0
+IGFnYWluLCB3ZSB3b24ndCBrbm93DQphYm91dCB0aGF0IGZvciAzMCBzZWNvbmRzIHdoaWNoIHNl
+ZW1zIGxpa2UgZm9yZXZlci4uLiAgQW5kIGFuIEFwcCBjb3VsZCBwb3RlbnRpYWxseSBoYXZlIGEg
+bGFyZ2UgZW5vdWdoIGJhY2tsb2cNCm9mIG1lc3NhZ2VzIG5lZ2F0aXZlbHkgYWZmZWN0aW5nIHRo
+ZSBkYWVtb24gYmVmb3JlIGl0IGFuZCBjb3JyZWN0cyBpdC4NCg0KPiANCj4gPiBUaGUgTm9uLVJl
+cGx5IHZlcnNpb24gb2Ygc2VuZCAodG93YXJkcyB0aGUgYXBwcykgd2FzIGFjdHVhbGx5IGEgZGVz
+aWduDQo+ID4gZGVjaXNpb24sIHNpbmNlIHdlIGRvbid0IHdhbnQgdGhlICpkYWVtb24qIHRvIGV4
+aGFzdCBkLWJ1cyByZXNvdXJjZXMsDQo+ID4gZGVwZW5kaW5nIG9uIHJlcGxpZXMgZnJvbSBBcHBz
+IHRoYXQgYXJlIGlnbm9yaW5nIHRoZSBtZXNzYWdlcyB3ZSBhcmUNCj4gPiBzZW5kaW5nLg0KPiA+
+IA0KPiA+IFRoaXMgY291bGQgbmVnYXRpdmVseSBpbXBhY3QgdGhlIGRhZW1vbidzIGFiaWxpdHkg
+dG8NCj4gPiBpbnRlcmFjdCB3aXRoIHBlcmhhcHMgYmV0dGVyIGJlaGF2ZWQgYXBwbGljYXRpb25z
+LiAgSSB0aGluayBldmVyeQ0KPiA+IHJlcGx5IHJlcXVpcmVkIG1lc3NhZ2UgcGVyc2lzdHMgZm9y
+IHVwIHRvIDMwIHNlY29uZHMuDQo+IA0KPiBUcnVlLg0KPiANCj4gU2luY2UgbW9zdCBvZiB0aGUg
+YXBwbGljYXRpb24tc2lkZSBtZXRob2RzIGRvIG5vdCByZXR1cm4gYW55dGhpbmcgKGFuZA0KPiBy
+aWdodGx5IHNvLCBiZWNhdXNlICJBbnkgZGlzY3JldGUgT1RBIG1lc3NhZ2UgbWlnaHQgYmUgbG9z
+dCIpLCB0aGUNCj4gYXBwbGljYXRpb24gaXMgZnJlZSB0byBkbyB3aGF0ZXZlciBpcyBwbGVhc2Vz
+IHdpdGggdGhlIHBheWxvYWQsDQo+IGluY2x1ZGluZyBkcm9wcGluZyBpdC4NCj4gDQo+IFN0aWxs
+LCBJIHRoaW5rIHRoYXQgdGhlIG5vbmUgb2YgdGhlIGNhbGwgaGFuZGxlcnMgb24gdGhlIGFwcGxp
+Y2F0aW9uDQo+IHNpZGUgc2hvdWxkICpldmVyKiByZXR1cm4gZXJyb3JzL3RpbWVvdXRzIG92ZXIg
+RC1CdXMuDQo+IA0KPiBJJ20gYXJndWluZyB0aGF0IHN1Y2ggYW4gYXBwbGljYXRpb24gaXMgbWlz
+YmVoYXZpbmcsIHNvIGl0IHByb2JhYmx5DQo+IHNob3VsZCBiZSBwcm9tcHRseSBkZXRhY2hlZC4g
+VGhhdCB3b3VsZCBwcm90ZWN0IHRoZSBkYWVtb24uDQo+IA0KPiA+IEkgdGhpbmsgb3VyIHJ1bGUg
+b2YgdGh1bWIgc2hvdWxkIGJlIHJlcXVpcmluZyBhIHJlc3BvbnNlIHdoZW4gdGhlDQo+ID4gZGFl
+bW9uIG5lZWRzIHRvIGtub3cgdGhhdCB0aGUgQXBwIGhhcyBzdWNjZXNzZnVsbHkgaGFuZGxlZCBj
+cml0aWNhbA0KPiA+IGluZm9ybWF0aW9uIHNvIGZvciBpbnN0YW5jZSBZRVMgZm9yOg0KPiA+IA0K
+PiA+IEFkZE5vZGVDb21wbGV0ZSgpDQo+ID4gSm9pbkNvbXBsZXRlKCkNCj4gPiBSZXF1ZXN0UHJv
+dkRhdGEoKQ0KPiANCj4gQWdyZWVkLg0KPiANCj4gcmVnYXJkcw0K
