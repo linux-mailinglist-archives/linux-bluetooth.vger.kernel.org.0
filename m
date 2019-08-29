@@ -2,39 +2,39 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 97D8FA246A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Aug 2019 20:23:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57E96A2417
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Aug 2019 20:21:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730005AbfH2SXK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Aug 2019 14:23:10 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59150 "EHLO mail.kernel.org"
+        id S1730158AbfH2SRn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Aug 2019 14:17:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59924 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729940AbfH2SRC (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Aug 2019 14:17:02 -0400
+        id S1729311AbfH2SRn (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 29 Aug 2019 14:17:43 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4F2CF2189D;
-        Thu, 29 Aug 2019 18:17:01 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C17692189D;
+        Thu, 29 Aug 2019 18:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567102622;
-        bh=nEu9r5lbzeulnKsEgKOYbBvLHJcwBjg28QDmTSDWWFA=;
+        s=default; t=1567102662;
+        bh=JxVNULd1CA1rsypPdOENJE1D+WISPcOAWfG98oKxSiI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gSozmAA53nf8nWMyCUyj46O0geLmFW4DoQrL0XSGoEcKwaq2Jo91Hc85KrX/K3Pd3
-         NeRguU82ARZddIBaid+8qUSoADmdxqV0dlwZXb5buK2nCHrAFlHofjbbQkg7UhtJqy
-         GbAq2bmcsXj1kJoWHSkV3DUeTv8gzA7LHdBwuX48=
+        b=XV5WrA99l3Sb8+QkK2Xpsh5qGf7FAzhW9EOH8zZGowNtOeQW+LDf8/33evY1CxsG/
+         3QG9H3FErYjaix8LKU4fcHd1sYgloex0VPEDP08yc/PnwlM06WqCyrj+j8lORexOxi
+         ZadDlSBIVtMHChchfQmwWvp8sj1pt7J1T1vrTViY=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Matthias Kaehlcke <mka@chromium.org>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 04/27] Bluetooth: btqca: Add a short delay before downloading the NVM
-Date:   Thu, 29 Aug 2019 14:16:30 -0400
-Message-Id: <20190829181655.8741-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 03/16] Bluetooth: btqca: Add a short delay before downloading the NVM
+Date:   Thu, 29 Aug 2019 14:17:21 -0400
+Message-Id: <20190829181736.9040-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190829181655.8741-1-sashal@kernel.org>
-References: <20190829181655.8741-1-sashal@kernel.org>
+In-Reply-To: <20190829181736.9040-1-sashal@kernel.org>
+References: <20190829181736.9040-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -67,7 +67,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 0bbdfcef2aa84..a48a61f22f823 100644
+index 28afd5d585f95..b7dfa4afd5169 100644
 --- a/drivers/bluetooth/btqca.c
 +++ b/drivers/bluetooth/btqca.c
 @@ -363,6 +363,9 @@ int qca_uart_setup_rome(struct hci_dev *hdev, uint8_t baudrate)
