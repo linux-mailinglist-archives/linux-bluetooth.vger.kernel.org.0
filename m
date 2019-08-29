@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A0C2EA25EA
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Aug 2019 20:33:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F823A25DC
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Aug 2019 20:33:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729044AbfH2SdT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Aug 2019 14:33:19 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55528 "EHLO mail.kernel.org"
+        id S1728579AbfH2SNv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Aug 2019 14:13:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55562 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728519AbfH2SNs (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Aug 2019 14:13:48 -0400
+        id S1728546AbfH2SNu (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 29 Aug 2019 14:13:50 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F3D332189D;
-        Thu, 29 Aug 2019 18:13:46 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 190FF23428;
+        Thu, 29 Aug 2019 18:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567102427;
-        bh=Pz4Kz4xMKzKn93rEbrxC6NhO/2r1MDyu0V05BdXdxNg=;
+        s=default; t=1567102428;
+        bh=E7EHSvLSZJd4GlOj41JTabPK+yrB+jUT8faqfwhNk9U=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PvrhxKAE8daqUVUk4RfLduAHJjGXWzZSgZKcI++RNQlU7VN7fE6XtLRgeGd4Ob70L
-         eve/0msQuW5RV25saHVAypopTod5Ghxz3RCmgR0hNSmyN+zt3OXprJkhLVP/bd3tCs
-         hPCSxgVRaKon3Y3GX7KsG9ZJOeEwcGUk2WQd2tVQ=
+        b=0DmZWkYkLy4Y4WnclpxLJz3C+adDj7wfkocSASRHun+cV/+3p159PEBdnrsMS+HOM
+         Q2FEUwmPcWhE66U0JG3f5AW/DXoekPaPFJO9iqkHp6JnSIZcRcB/3KvZDrq3odELuB
+         b41Yk+wgqLj1ztU0sqIHudkKhbbiFO0y4b8H3rUA=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
+Cc:     Harish Bandi <c-hbandi@codeaurora.org>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 18/76] Bluetooth: btqca: Add a short delay before downloading the NVM
-Date:   Thu, 29 Aug 2019 14:12:13 -0400
-Message-Id: <20190829181311.7562-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.2 19/76] Bluetooth: hci_qca: Send VS pre shutdown command.
+Date:   Thu, 29 Aug 2019 14:12:14 -0400
+Message-Id: <20190829181311.7562-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190829181311.7562-1-sashal@kernel.org>
 References: <20190829181311.7562-1-sashal@kernel.org>
@@ -44,42 +44,99 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Matthias Kaehlcke <mka@chromium.org>
+From: Harish Bandi <c-hbandi@codeaurora.org>
 
-[ Upstream commit 8059ba0bd0e4694e51c2ee6438a77b325f06c0d5 ]
+[ Upstream commit a2780889e247561744dd8efbd3478a1999b72ae3 ]
 
-On WCN3990 downloading the NVM sometimes fails with a "TLV response
-size mismatch" error:
+WCN399x chips are coex chips, it needs a VS pre shutdown
+command while turning off the BT. So that chip can inform
+BT is OFF to other active clients.
 
-[  174.949955] Bluetooth: btqca.c:qca_download_firmware() hci0: QCA Downloading qca/crnv21.bin
-[  174.958718] Bluetooth: btqca.c:qca_tlv_send_segment() hci0: QCA TLV response size mismatch
-
-It seems the controller needs a short time after downloading the
-firmware before it is ready for the NVM. A delay as short as 1 ms
-seems sufficient, make it 10 ms just in case. No event is received
-during the delay, hence we don't just silently drop an extra event.
-
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Harish Bandi <c-hbandi@codeaurora.org>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/bluetooth/btqca.c   | 21 +++++++++++++++++++++
+ drivers/bluetooth/btqca.h   |  7 +++++++
+ drivers/bluetooth/hci_qca.c |  3 +++
+ 3 files changed, 31 insertions(+)
 
 diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index aff1d22223bd4..0ee5acb685a10 100644
+index 0ee5acb685a10..ee25e6ae1a098 100644
 --- a/drivers/bluetooth/btqca.c
 +++ b/drivers/bluetooth/btqca.c
-@@ -350,6 +350,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		return err;
- 	}
+@@ -99,6 +99,27 @@ static int qca_send_reset(struct hci_dev *hdev)
+ 	return 0;
+ }
  
-+	/* Give the controller some time to get ready to receive the NVM */
-+	msleep(10);
++int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
++{
++	struct sk_buff *skb;
++	int err;
 +
- 	/* Download NVM configuration */
- 	config.type = TLV_TYPE_NVM;
- 	if (qca_is_wcn399x(soc_type))
++	bt_dev_dbg(hdev, "QCA pre shutdown cmd");
++
++	skb = __hci_cmd_sync(hdev, QCA_PRE_SHUTDOWN_CMD, 0,
++				NULL, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "QCA preshutdown_cmd failed (%d)", err);
++		return err;
++	}
++
++	kfree_skb(skb);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
++
+ static void qca_tlv_check_data(struct rome_config *config,
+ 				const struct firmware *fw)
+ {
+diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+index e9c9999596035..f2a9e576a86ce 100644
+--- a/drivers/bluetooth/btqca.h
++++ b/drivers/bluetooth/btqca.h
+@@ -13,6 +13,7 @@
+ #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
+ #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
+ #define MAX_SIZE_PER_TLV_SEGMENT	(243)
++#define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
+ 
+ #define EDL_CMD_REQ_RES_EVT		(0x00)
+ #define EDL_PATCH_VER_RES_EVT		(0x19)
+@@ -130,6 +131,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		   enum qca_btsoc_type soc_type, u32 soc_ver);
+ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version);
+ int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr);
++int qca_send_pre_shutdown_cmd(struct hci_dev *hdev);
+ static inline bool qca_is_wcn399x(enum qca_btsoc_type soc_type)
+ {
+ 	return soc_type == QCA_WCN3990 || soc_type == QCA_WCN3998;
+@@ -161,4 +163,9 @@ static inline bool qca_is_wcn399x(enum qca_btsoc_type soc_type)
+ {
+ 	return false;
+ }
++
++static inline int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
++{
++	return -EOPNOTSUPP;
++}
+ #endif
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index f41fb2c02e4fd..d88b024eaf566 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1319,6 +1319,9 @@ static int qca_power_off(struct hci_dev *hdev)
+ {
+ 	struct hci_uart *hu = hci_get_drvdata(hdev);
+ 
++	/* Perform pre shutdown command */
++	qca_send_pre_shutdown_cmd(hdev);
++
+ 	qca_power_shutdown(hu);
+ 	return 0;
+ }
 -- 
 2.20.1
 
