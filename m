@@ -2,129 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 84732A65DA
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Sep 2019 11:42:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 801FFA68B1
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Sep 2019 14:38:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728500AbfICJle (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 3 Sep 2019 05:41:34 -0400
-Received: from rtits2.realtek.com ([211.75.126.72]:43746 "EHLO
-        rtits2.realtek.com.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726631AbfICJld (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 3 Sep 2019 05:41:33 -0400
-Authenticated-By: 
-X-SpamFilter-By: BOX Solutions SpamTrap 5.62 with qID x839fLmN001132, This message is accepted by code: ctloc85258
-Received: from RS-CAS02.realsil.com.cn (doc.realsil.com.cn[172.29.17.3](maybeforged))
-        by rtits2.realtek.com.tw (8.15.2/2.57/5.78) with ESMTPS id x839fLmN001132
-        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Tue, 3 Sep 2019 17:41:22 +0800
-Received: from laptop-alex (172.29.36.155) by RS-CAS02.realsil.com.cn
- (172.29.17.3) with Microsoft SMTP Server (TLS) id 14.3.439.0; Tue, 3 Sep 2019
- 17:41:20 +0800
-Date:   Tue, 3 Sep 2019 17:41:03 +0800
-From:   Alex Lu <alex_lu@realsil.com.cn>
-To:     Marcel Holtmann <marcel@holtmann.org>
-CC:     Johan Hedberg <johan.hedberg@gmail.com>,
-        <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Max Chou <max.chou@realtek.com>
-Subject: [PATCH] Bluetooth: btusb: Use cmd_timeout to reset Realtek device
-Message-ID: <20190903094103.GA10714@laptop-alex>
+        id S1729128AbfICMiB convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 3 Sep 2019 08:38:01 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40432 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728994AbfICMiB (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 3 Sep 2019 08:38:01 -0400
+From:   bugzilla-daemon@bugzilla.kernel.org
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 203997] [REGRESSION] Unable to connect BT audio device on
+ 5.1.15
+Date:   Tue, 03 Sep 2019 12:37:59 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: pavel@noa-labs.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-203997-62941-yksCGOb4Vo@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-203997-62941@https.bugzilla.kernel.org/>
+References: <bug-203997-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Originating-IP: [172.29.36.155]
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Alex Lu <alex_lu@realsil.com.cn>
+https://bugzilla.kernel.org/show_bug.cgi?id=203997
 
-Realtek Bluetooth controller provides a BT_DIS reset pin for hardware
-reset of it. The cmd_timeout is helpful on Realtek bluetooth controller
-where the firmware gets stuck.
+--- Comment #19 from Pavel (pavel@noa-labs.com) ---
+Matias, I'm afraid this also happening with all BT LE devices I have, including
+ones not MXCHIP based like Microsoft mouses.
 
-Signed-off-by: Alex Lu <alex_lu@realsil.com.cn>
----
- drivers/bluetooth/btusb.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+I'm very sure it is a BT related issues as when I switch to non-le 3.0 mode,
+the mouse works fine. It started happening at some time during the 5.1 release
+cycle.
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 31d3febed187..a626de3a3f4c 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -489,16 +489,19 @@ struct btusb_data {
- 	int (*setup_on_usb)(struct hci_dev *hdev);
- 
- 	int oob_wake_irq;   /* irq for out-of-band wake-on-bt */
--	unsigned cmd_timeout_cnt;
-+	unsigned int cmd_timeout_cnt;
-+	unsigned int cmd_timeout_max;
-+	unsigned int reset_msecs;
-+	int reset_gpio_value;
- };
- 
- 
--static void btusb_intel_cmd_timeout(struct hci_dev *hdev)
-+static void btusb_cmd_timeout(struct hci_dev *hdev)
- {
- 	struct btusb_data *data = hci_get_drvdata(hdev);
- 	struct gpio_desc *reset_gpio = data->reset_gpio;
- 
--	if (++data->cmd_timeout_cnt < 5)
-+	if (++data->cmd_timeout_cnt < data->cmd_timeout_max)
- 		return;
- 
- 	if (!reset_gpio) {
-@@ -519,9 +522,9 @@ static void btusb_intel_cmd_timeout(struct hci_dev *hdev)
- 	}
- 
- 	bt_dev_err(hdev, "Initiating HW reset via gpio");
--	gpiod_set_value_cansleep(reset_gpio, 1);
--	msleep(100);
--	gpiod_set_value_cansleep(reset_gpio, 0);
-+	gpiod_set_value_cansleep(reset_gpio, data->reset_gpio_value);
-+	msleep(data->reset_msecs);
-+	gpiod_set_value_cansleep(reset_gpio, !data->reset_gpio_value);
- }
- 
- static inline void btusb_free_frags(struct btusb_data *data)
-@@ -3723,7 +3726,10 @@ static int btusb_probe(struct usb_interface *intf,
- 		hdev->shutdown = btusb_shutdown_intel;
- 		hdev->set_diag = btintel_set_diag_mfg;
- 		hdev->set_bdaddr = btintel_set_bdaddr;
--		hdev->cmd_timeout = btusb_intel_cmd_timeout;
-+		hdev->cmd_timeout = btusb_cmd_timeout;
-+		data->cmd_timeout_max = 5;
-+		data->reset_msecs = 100;
-+		data->reset_gpio_value = 1;
- 		set_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks);
- 		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
- 		set_bit(HCI_QUIRK_NON_PERSISTENT_DIAG, &hdev->quirks);
-@@ -3737,7 +3743,10 @@ static int btusb_probe(struct usb_interface *intf,
- 		hdev->hw_error = btintel_hw_error;
- 		hdev->set_diag = btintel_set_diag;
- 		hdev->set_bdaddr = btintel_set_bdaddr;
--		hdev->cmd_timeout = btusb_intel_cmd_timeout;
-+		hdev->cmd_timeout = btusb_cmd_timeout;
-+		data->cmd_timeout_max = 5;
-+		data->reset_msecs = 100;
-+		data->reset_gpio_value = 1;
- 		set_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks);
- 		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
- 		set_bit(HCI_QUIRK_NON_PERSISTENT_DIAG, &hdev->quirks);
-@@ -3783,6 +3792,10 @@ static int btusb_probe(struct usb_interface *intf,
- 	if (id->driver_info & BTUSB_REALTEK) {
- 		hdev->setup = btrtl_setup_realtek;
- 		hdev->shutdown = btrtl_shutdown_realtek;
-+		hdev->cmd_timeout = btusb_cmd_timeout;
-+		data->cmd_timeout_max = 5;
-+		data->reset_msecs = 200;
-+		data->reset_gpio_value = 0;
- 
- 		/* Realtek devices lose their updated firmware over global
- 		 * suspend that means host doesn't send SET_FEATURE
+I would better try to use a usb dongle for BT, trying to confirm if this is not
+a modem (Qualcomm) issue.
+
 -- 
-2.21.0
-
+You are receiving this mail because:
+You are the assignee for the bug.
