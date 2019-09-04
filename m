@@ -2,93 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D2FF3A88B9
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2019 21:22:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79A9CA919A
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2019 21:39:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731058AbfIDOXb convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 Sep 2019 10:23:31 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:52632 "EHLO
+        id S2389615AbfIDSUG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 4 Sep 2019 14:20:06 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:45829 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730880AbfIDOXb (ORCPT
+        with ESMTP id S2388749AbfIDSId (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Sep 2019 10:23:31 -0400
+        Wed, 4 Sep 2019 14:08:33 -0400
 Received: from marcel-macbook.fritz.box (p4FEFC197.dip0.t-ipconnect.de [79.239.193.151])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 8C9A6CECB0;
-        Wed,  4 Sep 2019 16:32:17 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 9C832CECC4;
+        Wed,  4 Sep 2019 20:17:19 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: [PATCH] Bluetooth: btusb: Use cmd_timeout to reset Realtek device
+Subject: Re: [PATCH][next] Bluetooth: mgmt: Use struct_size() helper
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20190903094103.GA10714@laptop-alex>
-Date:   Wed, 4 Sep 2019 16:23:29 +0200
+In-Reply-To: <20190830011211.GA26531@embeddedor>
+Date:   Wed, 4 Sep 2019 20:08:31 +0200
 Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Max Chou <max.chou@realtek.com>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <989DBD04-B5DC-4733-8784-93B45BA9FF15@holtmann.org>
-References: <20190903094103.GA10714@laptop-alex>
-To:     Alex Lu <alex_lu@realsil.com.cn>
+        "David S. Miller" <davem@davemloft.net>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <4213EC85-4152-4851-9636-7069F9E2272A@holtmann.org>
+References: <20190830011211.GA26531@embeddedor>
+To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>
 X-Mailer: Apple Mail (2.3445.104.11)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Alex,
+Hi Gustavo,
 
-> Realtek Bluetooth controller provides a BT_DIS reset pin for hardware
-> reset of it. The cmd_timeout is helpful on Realtek bluetooth controller
-> where the firmware gets stuck.
+> One of the more common cases of allocation size calculations is finding
+> the size of a structure that has a zero-sized array at the end, along
+> with memory for some number of elements for that array. For example:
 > 
-> Signed-off-by: Alex Lu <alex_lu@realsil.com.cn>
+> struct mgmt_rp_get_connections {
+> 	...
+>        struct mgmt_addr_info addr[0];
+> } __packed;
+> 
+> Make use of the struct_size() helper instead of an open-coded version
+> in order to avoid any potential type mistakes.
+> 
+> So, replace the following form:
+> 
+> sizeof(*rp) + (i * sizeof(struct mgmt_addr_info));
+> 
+> with:
+> 
+> struct_size(rp, addr, i)
+> 
+> Also, notice that, in this case, variable rp_len is not necessary,
+> hence it is removed.
+> 
+> This code was detected with the help of Coccinelle.
+> 
+> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
 > ---
-> drivers/bluetooth/btusb.c | 29 +++++++++++++++++++++--------
-> 1 file changed, 21 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 31d3febed187..a626de3a3f4c 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -489,16 +489,19 @@ struct btusb_data {
-> 	int (*setup_on_usb)(struct hci_dev *hdev);
-> 
-> 	int oob_wake_irq;   /* irq for out-of-band wake-on-bt */
-> -	unsigned cmd_timeout_cnt;
-> +	unsigned int cmd_timeout_cnt;
-> +	unsigned int cmd_timeout_max;
-> +	unsigned int reset_msecs;
-> +	int reset_gpio_value;
-> };
-> 
-> 
-> -static void btusb_intel_cmd_timeout(struct hci_dev *hdev)
-> +static void btusb_cmd_timeout(struct hci_dev *hdev)
-> {
-> 	struct btusb_data *data = hci_get_drvdata(hdev);
-> 	struct gpio_desc *reset_gpio = data->reset_gpio;
-> 
-> -	if (++data->cmd_timeout_cnt < 5)
-> +	if (++data->cmd_timeout_cnt < data->cmd_timeout_max)
-> 		return;
-> 
-> 	if (!reset_gpio) {
-> @@ -519,9 +522,9 @@ static void btusb_intel_cmd_timeout(struct hci_dev *hdev)
-> 	}
-> 
-> 	bt_dev_err(hdev, "Initiating HW reset via gpio");
-> -	gpiod_set_value_cansleep(reset_gpio, 1);
-> -	msleep(100);
-> -	gpiod_set_value_cansleep(reset_gpio, 0);
-> +	gpiod_set_value_cansleep(reset_gpio, data->reset_gpio_value);
-> +	msleep(data->reset_msecs);
-> +	gpiod_set_value_cansleep(reset_gpio, !data->reset_gpio_value);
-> }
+> net/bluetooth/mgmt.c | 8 ++------
+> 1 file changed, 2 insertions(+), 6 deletions(-)
 
-I really prefer that no Realtek specifics end up in a callback that is meant for Intel hardware. So this needs to be split.
-
-So can you just provide a btusb_rtl_cmd_timeout callback and set it in case of Realtek hardware.
+patch has been applied to bluetooth-next tree.
 
 Regards
 
