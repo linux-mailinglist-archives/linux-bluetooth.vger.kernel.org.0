@@ -2,71 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AB00A80CC
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2019 13:05:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67775A8835
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2019 21:21:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729335AbfIDLDH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 Sep 2019 07:03:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37244 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727387AbfIDLDG (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Sep 2019 07:03:06 -0400
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CAB202339D
-        for <linux-bluetooth@vger.kernel.org>; Wed,  4 Sep 2019 11:03:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567594985;
-        bh=yVM2fK10izAQq2VyphGOPbBfEV5PpavIEDbbL86vyAo=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=iKCtBgCKaGRPEPcd3Xp7wXJuq3vQDpNMvigI0zEmMkOyMGt+e4rNZGrWEqpmyiq1v
-         g917ajaGA/NIK9ikDJu5wszxHeJVEkdGfhDdVqlaV8E0anGhcud+hlSrZj5yaMYlHL
-         aICYGPmgmqst97maxHAUoVzGW8oDN9JRTIgN05Mc=
-Received: by mail-qk1-f169.google.com with SMTP id x134so8993929qkb.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Sep 2019 04:03:05 -0700 (PDT)
-X-Gm-Message-State: APjAAAWODFcGR8q2VwfLyzehtpeeZ/mS+3osxP9binmhF9HIdmKL0PJq
-        3kQjgrPsHpxE5ujD+CyQWc6R7ZIHZXstUavrWK4=
-X-Google-Smtp-Source: APXvYqzMlewEVlQuPYdLh4RZzfrrHcTNryNmL9sUGR3d+Zs2Up53bRvj3tODhTseqQLiPrRjzhoPT0jfYohHeRUa2+8=
-X-Received: by 2002:a37:2784:: with SMTP id n126mr24490325qkn.302.1567594984968;
- Wed, 04 Sep 2019 04:03:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <1566984258-13480-1-git-send-email-amit.k.bag@intel.com>
-In-Reply-To: <1566984258-13480-1-git-send-email-amit.k.bag@intel.com>
-From:   Josh Boyer <jwboyer@kernel.org>
-Date:   Wed, 4 Sep 2019 07:02:52 -0400
-X-Gmail-Original-Message-ID: <CA+5PVA53ikg8AAmz39QTE9zU1FnkwEsqKE8XYto8Rk-UhDqOnw@mail.gmail.com>
-Message-ID: <CA+5PVA53ikg8AAmz39QTE9zU1FnkwEsqKE8XYto8Rk-UhDqOnw@mail.gmail.com>
-Subject: Re: [PATCH] linux-firmware: Add firmware file for Intel Bluetooth AX201
-To:     Amit K Bag <amit.k.bag@intel.com>
-Cc:     Linux Firmware <linux-firmware@kernel.org>,
-        BlueZ development <linux-bluetooth@vger.kernel.org>,
-        "Srivatsa, Ravishankar" <ravishankar.srivatsa@intel.com>,
-        chethan.tumkur.narayan@intel.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1731170AbfIDOBa convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 4 Sep 2019 10:01:30 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:57388 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731161AbfIDOB3 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 4 Sep 2019 10:01:29 -0400
+Received: from marcel-macbook.fritz.box (p4FEFC197.dip0.t-ipconnect.de [79.239.193.151])
+        by mail.holtmann.org (Postfix) with ESMTPSA id C7B46CECA3;
+        Wed,  4 Sep 2019 16:10:14 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [PATCH] Bluetooth: btrtl: Fix an issue that failing to download
+ the FW which size is over 32K bytes
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20190902090809.3409-1-max.chou@realtek.com>
+Date:   Wed, 4 Sep 2019 16:01:26 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        linux-kernel@vger.kernel.org, alex_lu@realsil.com.cn
+Content-Transfer-Encoding: 8BIT
+Message-Id: <4BACAECC-C4CF-4EB7-8626-E628934DAE32@holtmann.org>
+References: <20190902090809.3409-1-max.chou@realtek.com>
+To:     Max Chou <max.chou@realtek.com>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Wed, Aug 28, 2019 at 5:30 AM Amit K Bag <amit.k.bag@intel.com> wrote:
->
-> This patch adds new firmware file for Intel Bluetooth AX201
-> Also it is known as Intel HarrisonPeak (HrP).
->
-> FW Build: REL0318
->
-> Release Version: 21.40.0.1
->
-> Signed-off-by: Amit K Bag <amit.k.bag@intel.com>
+Hi Max,
+
+> Fix the issue that when the FW size is 32K+, it will fail for the download
+> process because of the incorrect index.
+> 
+> Signed-off-by: Max Chou <max.chou@realtek.com>
 > ---
->  WHENCE                |   4 ++++
->  intel/ibt-19-32-4.ddc | Bin 0 -> 70 bytes
->  intel/ibt-19-32-4.sfi | Bin 0 -> 743750 bytes
->  3 files changed, 4 insertions(+)
->  create mode 100644 intel/ibt-19-32-4.ddc
->  create mode 100644 intel/ibt-19-32-4.sfi
+> drivers/bluetooth/btrtl.c | 8 +++++++-
+> 1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+> index 0354e93e7a7c..215896af0259 100644
+> --- a/drivers/bluetooth/btrtl.c
+> +++ b/drivers/bluetooth/btrtl.c
+> @@ -389,6 +389,7 @@ static int rtl_download_firmware(struct hci_dev *hdev,
+> 	int frag_len = RTL_FRAG_LEN;
+> 	int ret = 0;
+> 	int i;
+> +	int j;
+> 	struct sk_buff *skb;
+> 	struct hci_rp_read_local_version *rp;
+> 
+> @@ -401,7 +402,12 @@ static int rtl_download_firmware(struct hci_dev *hdev,
+> 
+> 		BT_DBG("download fw (%d/%d)", i, frag_num);
+> 
+> -		dl_cmd->index = i;
+> +		if (i > 0x7f)
+> +			j = (i & 0x7f) + 1;
+> +		else
+> +			j = i;
+> +
+> +		dl_cmd->index = j;
 
-Applied and pushed out.
+so this seems rather complicated with the extra variable.
 
-josh
+		if (i > 0x7f)
+			dl_cmd->index = (i & 0x7f) + 1;
+		else
+			dl_cmd->index = i;
+
+And I would prefer to have a small comment above on why this is done this way.
+
+Regards
+
+Marcel
+
