@@ -2,78 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F22BDB8258
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 19 Sep 2019 22:20:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 587E7B8D78
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Sep 2019 11:11:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404475AbfISUUF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 19 Sep 2019 16:20:05 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:39948 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387854AbfISUUE (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 19 Sep 2019 16:20:04 -0400
-Received: by mail-io1-f68.google.com with SMTP id h144so10855771iof.7
-        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Sep 2019 13:20:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=USqQhkyl7LuSygeZ2mO4OfIFHPVy6/sF5weOEbVJZq0=;
-        b=XVh0F5sDBkxGU6ToODV1r5HVcmCKXN4IrtwCkeA1lHmhWrobiL3B8uGKzjsSpnPwDu
-         tmLLEqV38Txg2Wh6J5tOkCcsl+0rBA1D1z+JoCto6bURkSm/pRD9GCN3TvQTGBgb9oTc
-         sO0sO3TlZHaZxxc457K3o6x2mamtChqtE3AGj1yp2yVWjVdaA95LTVy5t9clGGDFu9vS
-         2uLpNZgSUXOcVsk0Fs8Otsal9+RKkHsD4x9t5afCTfjNZDP7TF6mHaK5Un15LMg3+eUW
-         BC+X4ZVS4IOwGguswQ/KjkxgX2cKQm+iJpGlCAYM/jMq4cTL7IxB2XIswkZdbYe6d9D/
-         KqkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=USqQhkyl7LuSygeZ2mO4OfIFHPVy6/sF5weOEbVJZq0=;
-        b=poYCZJi35k2e2FZOQ6jDlSrpTfADxbcL84t+mFOtFOUmnCTXRiAM1yRAEQMiHmLwtk
-         uVwsST+gRSPTgat6ueHE6dEztz++FR2PHjlyq43FAjqFShIuTpx2qwwMTXfZnSKK9z7e
-         hDJQh3ae1bTU/wZWKE1yUStI+ewA762WCpLXspn3p/5ukRyEzUOiTo1revPMx/xMd4FL
-         TfPVy6pXwHddVx4N6KYtJUM3Ju6qbNfEvgzYQ1dHJZmgLtz1ux8yk5fHVw3B+rC3DJNc
-         2ZTR932Aopm0qVE2Y6mYlEURjEk4UjSLD59xqbfVCQ65i8xUCbH7E0/Xn+VJP5qm4D7Z
-         REMA==
-X-Gm-Message-State: APjAAAUuiKc5HITd2Bj/CUEaW1QArM86PRzRM7suPnje6yhdgapmOORM
-        usxWkdtN2TibOEy0BGHbIzWwzpHa
-X-Google-Smtp-Source: APXvYqxiy6tNN2V4jh+1LF8izVtmOwBhkEBW7hi7mJMLVBZbUPO4k5FSPWszn9UlKXCTU9zs+2wGBQ==
-X-Received: by 2002:a5e:9247:: with SMTP id z7mr12693921iop.76.1568924403690;
-        Thu, 19 Sep 2019 13:20:03 -0700 (PDT)
-Received: from pvent01-dev-01.Geotab.local ([72.138.33.126])
-        by smtp.gmail.com with ESMTPSA id s24sm2461140iog.26.2019.09.19.13.20.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Sep 2019 13:20:02 -0700 (PDT)
-From:   Pieter Venter <pietventer@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Pieter Venter <pietventer@gmail.com>
-Subject: [PATCH BlueZ] doc: Fix grammar
-Date:   Thu, 19 Sep 2019 16:19:33 -0400
-Message-Id: <20190919201933.28066-1-pietventer@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        id S2393342AbfITJLm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 20 Sep 2019 05:11:42 -0400
+Received: from mail.andi.de1.cc ([85.214.55.253]:56078 "EHLO mail.andi.de1.cc"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2393258AbfITJLm (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 20 Sep 2019 05:11:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kemnade.info; s=20180802; h=Content-Transfer-Encoding:Content-Type:
+        MIME-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=HELD1wBCSgloEXPlRNWMELq87zwane+TqAg9m+mb8VA=; b=DUFNCnoFznFomFaS/hxKJnsYUA
+        wJqr4aabO8I4BAY7TJ5NZyJ2spYa926AEdPvYI7Oe+amfZUKJqI7bLqCLYMyDU9onPPNU28vM6wGq
+        llcBfDyzDvyxIyb8NqYFyQ7UcvQvlhb347nG2va0qnW01YfqWNbwaB6HG68enjMCSf+E=;
+Received: from p200300ccff0d4e001a3da2fffebfd33a.dip0.t-ipconnect.de ([2003:cc:ff0d:4e00:1a3d:a2ff:febf:d33a] helo=aktux)
+        by mail.andi.de1.cc with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <andreas@kemnade.info>)
+        id 1iBEx1-00087g-Fl; Fri, 20 Sep 2019 11:11:39 +0200
+Date:   Fri, 20 Sep 2019 11:11:38 +0200
+From:   Andreas Kemnade <andreas@kemnade.info>
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Carey Sonsino <csonsino@gmail.com>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Jamie Mccrae <Jamie.Mccrae@lairdconnect.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Subject: Re: [PATCH 1/1] bluetooth: update default BLE connection params
+Message-ID: <20190920111138.047dc5be@aktux>
+In-Reply-To: <4BFC2A23-1D8A-4021-BB74-418A13676E65@holtmann.org>
+References: <705dbccb-58a9-7adc-8430-c16b395c27e5@gmail.com>
+        <4BFC2A23-1D8A-4021-BB74-418A13676E65@holtmann.org>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Score: -1.0 (-)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-We don't use an before u, if it has a [j] sound.
-Sending this again, previous author email was incorrect (sorry!)
----
- doc/gatt-api.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi,
 
-diff --git a/doc/gatt-api.txt b/doc/gatt-api.txt
-index 98fe7487c..9cceef9c0 100644
---- a/doc/gatt-api.txt
-+++ b/doc/gatt-api.txt
-@@ -13,7 +13,7 @@ Object Manager at its root that is solely responsible for the objects that
- belong to that service.
- 
- Releasing a registered GATT service is not defined yet. Any API extension
--should avoid breaking the defined API, and if possible keep an unified GATT
-+should avoid breaking the defined API, and if possible keep a unified GATT
- remote and local services representation.
- 
- Service hierarchy
--- 
-2.17.1
+On Thu, 5 Sep 2019 17:34:03 +0200
+Marcel Holtmann <marcel@holtmann.org> wrote:
 
+> Hi Carey,
+> 
+> > Update the default BLE connection parameters.
+> > 
+> > Commit c49a8682fc5d298d44e8d911f4fa14690ea9485e introduced a bounds
+> > check on connection interval update requests, but the default min/max
+> > values were left at 24-40 (30-50ms) which caused problems for devices
+> > that want to negotiate connection intervals outside of those bounds.
+> > 
+> > Setting the default min/max connection interval to the full allowable
+> > range in the bluetooth specification restores the default Linux behavior
+> > of allowing remote devices to negotiate their desired connection
+> > interval, while still permitting the system administrator to later
+> > narrow the range.
+> > 
+> > The default supervision timeout must also be modified to accommodate
+> > the max connection interval increase.  The new default value meets the
+> > requirements of the bluetooth specification and the conditions in
+> > the hci_check_conn_params function.
+> > 
+> > The downside to modifying the default supervision timeout is that
+> > it will take longer (about 10 seconds) to detect a link loss condition.
+> > 
+> > Fixes c49a8682fc5d: (validate BLE connection interval updates)  
+> 
+> I decided to revert c49a8682fc5d and we need an overall better solution for handling connection parameters.
+> 
+is this revert also going towards stable/longterm? I do not see it in
+stable-queue yet. 
+
+Regards,
+Andreas
