@@ -2,22 +2,22 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 789A9B985C
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Sep 2019 22:20:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE1DCB9D03
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 21 Sep 2019 10:18:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728848AbfITUU1 convert rfc822-to-8bit (ORCPT
+        id S2393190AbfIUISN convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 20 Sep 2019 16:20:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45424 "EHLO mail.kernel.org"
+        Sat, 21 Sep 2019 04:18:13 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48446 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728301AbfITUU0 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 20 Sep 2019 16:20:26 -0400
+        id S2393159AbfIUISM (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 21 Sep 2019 04:18:12 -0400
 From:   bugzilla-daemon@bugzilla.kernel.org
 Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
 To:     linux-bluetooth@vger.kernel.org
 Subject: [Bug 204877] [Regression] Linux 5.3 breaks connecting a DualShock 4
  controller via bluetooth
-Date:   Fri, 20 Sep 2019 20:20:25 +0000
+Date:   Sat, 21 Sep 2019 08:18:11 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -26,14 +26,14 @@ X-Bugzilla-Component: Bluetooth
 X-Bugzilla-Version: 2.5
 X-Bugzilla-Keywords: 
 X-Bugzilla-Severity: normal
-X-Bugzilla-Who: atosser@linuxmail.org
+X-Bugzilla-Who: robin.langenc@gmail.com
 X-Bugzilla-Status: NEW
 X-Bugzilla-Resolution: 
 X-Bugzilla-Priority: P1
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
 X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-204877-62941-3NARGgCIRz@https.bugzilla.kernel.org/>
+Message-ID: <bug-204877-62941-tH6OT44Un0@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-204877-62941@https.bugzilla.kernel.org/>
 References: <bug-204877-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -48,37 +48,38 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 https://bugzilla.kernel.org/show_bug.cgi?id=204877
 
-Novi (atosser@linuxmail.org) changed:
+Robin Lange (robin.langenc@gmail.com) changed:
 
            What    |Removed                     |Added
 ----------------------------------------------------------------------------
-                 CC|                            |atosser@linuxmail.org
+                 CC|                            |robin.langenc@gmail.com
 
---- Comment #2 from Novi (atosser@linuxmail.org) ---
-Distribution: Gentoo Linux
-Kernel: gentoo-5.3.0
-Hardware: 
-    DualShock 4 v1
-    Intel Corporation Wireless 8265 / 8275 [8086:24fd] (rev 78)
+--- Comment #3 from Robin Lange (robin.langenc@gmail.com) ---
+Can confirm the same bug happens with a different wireless chip. Same error
+messages.
 
-Confirm affects my model 1 DS4 (CUH-ZTC1U).
+Distribution: Archlinux
+Kernel: 5.3.0-mainline from package linux-mainline
+Wireless chip: Qualcomm Atheros QCA6174 802.11ac Wireless Network Adapter
+Kernel driver: ath10k_pci
+Controller: DualShock 4 V2
 
-[158663.706012] sony 0005:054C:05C4.0019: unknown main item tag 0x0
-[158663.706084] sony 0005:054C:05C4.0019: DualShock 4 calibration report's CRC
-check failed, received crc 0x1cffff94 != 0x5e1d3aa3
-[158663.706085] sony 0005:054C:05C4.0019: Retrying DualShock 4 get calibration
+[   79.020352] sony 0005:054C:09CC.0008: unknown main item tag 0x0
+[   79.020463] sony 0005:054C:09CC.0008: DualShock 4 calibration report's CRC
+check failed, received crc 0x1cffff8e != 0x732859f2
+[   79.020463] sony 0005:054C:09CC.0008: Retrying DualShock 4 get calibration
 report request
-[158663.706087] sony 0005:054C:05C4.0019: DualShock 4 calibration report's CRC
-check failed, received crc 0x1cffff94 != 0x5e1d3aa3
-[158663.706087] sony 0005:054C:05C4.0019: Retrying DualShock 4 get calibration
+[   79.020465] sony 0005:054C:09CC.0008: DualShock 4 calibration report's CRC
+check failed, received crc 0x1cffff8e != 0x732859f2
+[   79.020466] sony 0005:054C:09CC.0008: Retrying DualShock 4 get calibration
 report request
-[158663.706090] sony 0005:054C:05C4.0019: DualShock 4 calibration report's CRC
-check failed, received crc 0x1cffff94 != 0x5e1d3aa3
-[158663.706091] sony 0005:054C:05C4.0019: Failed to get calibration data from
+[   79.020467] sony 0005:054C:09CC.0008: DualShock 4 calibration report's CRC
+check failed, received crc 0x1cffff8e != 0x732859f2
+[   79.020467] sony 0005:054C:09CC.0008: Failed to get calibration data from
 Dualshock 4
-[158663.706131] sony 0005:054C:05C4.0019: hidraw11: BLUETOOTH HID v81.00
-Gamepad [Wireless Controller] on 74:70:fd:1a:b1:5b
-[158663.706131] sony 0005:054C:05C4.0019: failed to claim input
+[   79.020587] sony 0005:054C:09CC.0008: hidraw7: BLUETOOTH HID v81.00 Gamepad
+[Wireless Controller] on 9c:b6:d0:68:cd:b6
+[   79.020588] sony 0005:054C:09CC.0008: failed to claim input
 
 -- 
 You are receiving this mail because:
