@@ -2,48 +2,51 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4A56BEBFF
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 26 Sep 2019 08:34:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E88ABEC03
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 26 Sep 2019 08:34:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392961AbfIZGeW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 26 Sep 2019 02:34:22 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:52717 "EHLO
+        id S2393023AbfIZGeb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 26 Sep 2019 02:34:31 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:35779 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388934AbfIZGeW (ORCPT
+        with ESMTP id S2392985AbfIZGea (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 26 Sep 2019 02:34:22 -0400
+        Thu, 26 Sep 2019 02:34:30 -0400
 Received: from marcel-macpro.fritz.box (p4FEFC197.dip0.t-ipconnect.de [79.239.193.151])
-        by mail.holtmann.org (Postfix) with ESMTPSA id C2589CECD9;
-        Thu, 26 Sep 2019 08:43:13 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id DD254CECD9;
+        Thu, 26 Sep 2019 08:43:21 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: [PATCH] Bluetooth: btrtl: Fix an issue for the incorrect error
- return code.
+Subject: Re: [PATCH] bluetooth: hci_nokia: Save a few cycles in
+ 'nokia_enqueue()'
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20190918085641.5374-1-max.chou@realtek.com>
-Date:   Thu, 26 Sep 2019 08:34:20 +0200
+In-Reply-To: <20190919195208.2254-1-christophe.jaillet@wanadoo.fr>
+Date:   Thu, 26 Sep 2019 08:34:28 +0200
 Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
         linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        alex_lu@realsil.com.cn
+        kernel-janitors@vger.kernel.org
 Content-Transfer-Encoding: 7bit
-Message-Id: <A2E1B181-85A1-48B5-94B5-9B3722D66584@holtmann.org>
-References: <20190918085641.5374-1-max.chou@realtek.com>
-To:     max.chou@realtek.com
+Message-Id: <BC4B9659-D8B7-4583-9D1E-F412ED989948@holtmann.org>
+References: <20190919195208.2254-1-christophe.jaillet@wanadoo.fr>
+To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 X-Mailer: Apple Mail (2.3445.104.11)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Max,
+Hi Christophe,
 
-> It does not need the '-' for PTR_ERR(skb) because PTR_ERR(skb) will
-> return the negative value during errors.
+> 'skb_pad()' a few lines above already initializes the "padded" byte to 0.
+> So there is no need to do it twice.
 > 
-> Signed-off-by: Max Chou <max.chou@realtek.com>
+> All what is needed is to increase the len of the skb. So 'skb_put(..., 1)'
+> is enough here.
+> 
+> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 > ---
-> drivers/bluetooth/btrtl.c | 2 +-
+> drivers/bluetooth/hci_nokia.c | 2 +-
 > 1 file changed, 1 insertion(+), 1 deletion(-)
 
 patch has been applied to bluetooth-next tree.
