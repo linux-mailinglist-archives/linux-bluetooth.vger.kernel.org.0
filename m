@@ -2,143 +2,196 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E6C71CD1D0
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  6 Oct 2019 14:02:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E63DCD2DB
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  6 Oct 2019 17:29:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbfJFMCu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 6 Oct 2019 08:02:50 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36495 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726275AbfJFMCt (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 6 Oct 2019 08:02:49 -0400
-Received: by mail-wm1-f66.google.com with SMTP id m18so9737564wmc.1
-        for <linux-bluetooth@vger.kernel.org>; Sun, 06 Oct 2019 05:02:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9K5jhMwWV3ze/kV9FEOyzdHEczmCqPxOBarjjtWmcDc=;
-        b=Q5dtQdyuR6RQbfYTtcSo90T5JPloEO5rBtxoZASTKutwAF5pPreQPWpLi9vRLqPHkq
-         Tz9jPtANfsSiyACuQcjj+1sI8P+4kS3GJFhBr3u6pM3LWEhpOOo0/irfI7VXhtY/yQqE
-         Zt9+Z/yGEDdnI1PPrKRH7Ym39vgebpzY4ZgWXQxc4gBjuz9UnCum4GCa9F8a8bej9Mxr
-         a2cv+RW1ILczyNfmFy8aCUnemHOMnZT4djghSYYCOTh9mM2slza3BPiXnvw5MuSwe3oz
-         2ti6o+7yvkKhsmbLYhmQ5dXMbLsBhwgCWoRwi4PVQQMc6mxl7k+ErlMQoD0358UJ0jPs
-         7FaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9K5jhMwWV3ze/kV9FEOyzdHEczmCqPxOBarjjtWmcDc=;
-        b=BWpd0CxVHfxQv9vC5DHsepyDv7uClUSxyzym1ylGjbm4LKURn9KQU+wyofeh0wFwHb
-         KjWFa/dluIe176mpRC/5CJsmWZPCa0ume9aWE8eLM++6rJJSy/f40QL3C/nx6ttnsTxq
-         wy8F+ObXb2f//lJh0HnVyBtolbHcJRHVG5jLJAnwvW75e1uZPY/AJ+hZ4YVAPB6jSLjU
-         0PmQ8ngS6dHh9sqbk26jTS4sH5/+kcjsgIEtKIqOz5jQ5f79onZ3AafFi3KyDSip7rhA
-         9HJzSTMzwOg7R94fXrm/1FDTy9f8ndu7Y9REHK/1+8M2haxRPjLccSYe6E3jrmTYP88R
-         Tvyg==
-X-Gm-Message-State: APjAAAU8GvyDa4hFewXRHCPJh1szPe1Q9ezB1UurC8l0jygrdDLwm6wQ
-        WFFnlour/yW6Sz+8xwrNfKT+oHaI
-X-Google-Smtp-Source: APXvYqzLgCPnmnVI0FKc1fKVvICZWVriNulyRvno+y+Px94Bvxd7+X8DBLe5Xdg11lUG+jDF/Rq+dA==
-X-Received: by 2002:a7b:c8c1:: with SMTP id f1mr11928704wml.79.1570363367240;
-        Sun, 06 Oct 2019 05:02:47 -0700 (PDT)
-Received: from pali ([2a02:2b88:2:1::5cc6:2f])
-        by smtp.gmail.com with ESMTPSA id c4sm14307901wru.31.2019.10.06.05.02.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 06 Oct 2019 05:02:46 -0700 (PDT)
-Date:   Sun, 6 Oct 2019 14:02:45 +0200
-From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     Pasi =?utf-8?B?S8Okcmtrw6RpbmVu?= <pasik@iki.fi>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Subject: Re: [PATCH BlueZ 1/4] doc/media-api: Add RegisterApplication method
-Message-ID: <20191006120245.tkrooh45q7irtm6l@pali>
-References: <20190712151329.11333-1-luiz.dentz@gmail.com>
- <CABBYNZLDFAJgkfAFWOOAAqqiX8mpi3KgirBkpwpnBFJ3TxPqyg@mail.gmail.com>
- <20190718100024.ii2igadxb2lmmitm@pali>
- <20190721155522.3vqt7vsprhpxflqf@pali>
- <CABBYNZK6cuz9n4Hu9uRCbQvn9uFEYkn9=mY8J5Fqu0u-D3B1EA@mail.gmail.com>
- <20190829125734.GH2840@reaktio.net>
- <20190829200513.6xnta5jx3trbmgxp@pali>
- <20191003181855.GF28704@reaktio.net>
- <20191006100503.fsbttcschr6wgsdq@pali>
- <CABBYNZLS4MMxJ=gQED-BVfn81D0bvx8aLw5OO3tNmXAnWeA57Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="oeoa3vlkigw7a7sj"
-Content-Disposition: inline
-In-Reply-To: <CABBYNZLS4MMxJ=gQED-BVfn81D0bvx8aLw5OO3tNmXAnWeA57Q@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+        id S1726702AbfJFP3X (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 6 Oct 2019 11:29:23 -0400
+Received: from mout.gmx.net ([212.227.17.21]:38857 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726333AbfJFP3Q (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 6 Oct 2019 11:29:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1570375736;
+        bh=D9EXbZWdNzUEMKJgC9st3p2SqLaVHrzEQ2VeUp/pJgc=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=Dy2wdAZcfCOjc9DKMO4G6S4p4rKkFX/zkBUy45mXLjW6ZS0yLM5X/YdGuXVaMclyW
+         RBmCk53r7AE6AVKEk600rS7Uf60NUZUixgWcopLQZpPcBIa+8I567INoZIWo1TqJXK
+         LPa+A12hI/SJmYfNI/K0ijcetmTn0no0OLFj9EFA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from localhost.localdomain ([37.4.249.116]) by mail.gmx.com
+ (mrgmx104 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1M72sJ-1iBNQt0eQp-008bhB; Sun, 06 Oct 2019 17:28:56 +0200
+From:   Stefan Wahren <wahrenst@gmx.net>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Eric Anholt <eric@anholt.net>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        bcm-kernel-feedback-list@broadcom.com,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, Stefan Wahren <wahrenst@gmx.net>
+Subject: [PATCH V4 00/10] ARM: Add minimal Raspberry Pi 4 support
+Date:   Sun,  6 Oct 2019 17:28:18 +0200
+Message-Id: <1570375708-26965-1-git-send-email-wahrenst@gmx.net>
+X-Mailer: git-send-email 2.7.4
+X-Provags-ID: V03:K1:oaevrIPGssMFFjgefH6bCBqGETYjbu6kvokh66JCjc8pzkbzgCn
+ DduSlK/gv0//R/+upcRK6CZgVQqBmFkw9pmMBi2uIyuJ4imOQqV2WvfkVH173bLaQJbG8No
+ 9K0JvL5w4KwixDtDju0KS4b5plDqf2Z+lRf0xCOueFWmpmDxAQvUfUxr8GKIORHmaNH9JMO
+ Fc2JPAe8NHraHgjucEynQ==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3lhL9fo9LXc=:aAW2l6Zdjh2q+QoFDgPCVI
+ zqnMD5T8oL0CRty6U22ldNDK993Z2iM/oHnP8AThn3AiAwJU1V11o3gEBl1gN8bomN8p+sSY8
+ XZVc2qM7DiYJaniqQOun6C4daDlszk6g3+HrKdgOG2ftzhBA1s5cXUw0dTUVZjGkSnjawtA/C
+ rGFIy1OdxwfvcvcH6+wQGd4Xw+Gt+FKI9UVYpgD231O3C59GsMUbuXH8/nORZy7jmCkcvSc5l
+ s08VbWPfxkPVBwOMyhaN+z+Jzp0J+YVDdnNlkAYl/ARV5XOzYQcbZuOzAUqxw77ChRI91geEQ
+ aOtP9RtvDSTPybo450zyhOohsggqlTS1qYd4c+NS61yWuRAzNwzIXZRsc/I9Telt8YLp0j4RB
+ a77vq7i7QMszjEZXQ3HoEjO+4LzQ7/0v4leFWZ15GZU5Rytm+v1NxHKOwKVZjvNGRfRIvj7qU
+ rSY2qcKex2ZdTjNJd9nqPfbpsdUpnTx0L5O6C1EWeVVpeho/U2ialyswX/yMjHO9iCSP5esYh
+ t+IyXIDTb7ykz6ILDdOBijMf76zaUPFgWKRGlemwRm/1zLKkPA5fAs9HjmrhVIwvsuxdnf9ct
+ 0rWVwnLNzMJzsBIpTIixd0u1R/HQBxzqci8eetzd7uFPIk9LCoPOUtAwpKvTBjye3UNpdGqr2
+ SZNwwozAl5yaXkh35242bTY0My86jN4zK4M0loLDjujLNhnqHqWyamkg54GLNYMKSNkhuPYWK
+ JdqNNbuBBAX1uvzQcS4QOMgHJhL+XInCCPcOKBu4NVspmxADm/A8RhfHfhnZiXZLsv96FgEmQ
+ Y+wYWtg75d3mzLrKqjFb3Jh81pgugFwsG9lCWqRTqe5ea9NQJ6kav6rEyztWfScmW8d4bRCBM
+ m6Ae39MtREFhm/mk4RkpXBIzfXEonkriPRVg6CL5W9DbnEbUUWr1ne70oq0MiYdxo2s6HeX4p
+ hDyIaawD7sMGwS2DW1Nc6b/Fx+AlYQTg6TfRKhN9d1S0TncS08kivghH1rdQDX+EmOJvFjN63
+ Sj3fynHJ2HGa53yT6TB13nORnxk10maexznek/NykFclnHZAhMgZwtwtj9aNyW8ibp3aWPU04
+ 1/tDWZHmlU34sK15s7yJgLuvXofOMW+UMXVEuDXktTC/8OEPtTNj8I1jBI5gbzqegz/0pqs2b
+ QP7xJnpCgCRD5jjzi9qktVGN2rzQCoTkS0tEN7SmbnwzTvNJLJ4WEz1FvoykQlMmGoxeh4DGK
+ YQGt7Douc7BJjTJm9WFO5LPiPo3UGvYbx3ccp4Q==
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+This series adds minimal support for the new Raspberry Pi 4, so we are abl=
+e
+to login via debug UART.
 
---oeoa3vlkigw7a7sj
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Patch 1:     Bluetooth driver fix
+Patch 2-3:   Fix some DT schema warnings
+Patch 4-5:   Prepare DTS for the new SoC BMC2711
+Patch 6-9:   Add Raspberry Pi 4 DTS support
+Patch 10:    Update MAINTAINERS
 
-On Sunday 06 October 2019 13:53:37 Luiz Augusto von Dentz wrote:
-> Hi Pali,
->=20
-> On Sun, Oct 6, 2019 at 1:05 PM Pali Roh=C3=A1r <pali.rohar@gmail.com> wro=
-te:
-> >
-> > On Thursday 03 October 2019 21:18:55 Pasi K=C3=A4rkk=C3=A4inen wrote:
-> > > Hi,
-> > >
-> > > On Thu, Aug 29, 2019 at 10:05:13PM +0200, Pali Roh=C3=A1r wrote:
-> > > > On Thursday 29 August 2019 15:57:34 Pasi K=C3=A4rkk=C3=A4inen wrote:
-> > > > > Pali: How does it look with porting the PA patches to use the new=
- interfaces?
-> > > >
-> > > > Hello, I have not had a time yet to play with these pulseaudio patc=
-hes
-> > > > and porting to the new interface. I guess that I could have more fr=
-ee
-> > > > time in the last week of next month.
-> > > >
-> > >
-> > > It seems BlueZ 5.51 has been released meanwhile (http://www.bluez.org=
-/release-of-bluez-5-51/)
-> > > So now at least the new interfaces are in a released bluez version.
-> >
-> > Ok! Today I have looked at this new Bluez API, but seems that there is
-> > not only missing some examples or usages with libdbus-1, but also
-> > documentation. I have tried to find something how to register endpoints
-> > throw GetManagedObjects() via libdbus-1, but seems that there is no
-> > usage of it and also unusable documentation for it in libdbus-1. So
-> > currently I'm stuck how to use this exotic API in pulseaudio...
->=20
-> It is just another D-Bus method, the only difference is that it
-> carries the entire object tree, btw I did add an example of how to
-> register Endpoints in python:
->=20
-> https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/test/example-endp=
-oint
+Unfortunately the Raspberry Pi Foundation didn't released a
+peripheral documentation for the new SoC yet. So we only have a preliminar=
+y
+datasheet [1] and reduced schematics [2].
 
-This example uses undocumented property "DelayReporting". What it is doing?
+Known issues:
+Since Linux 5.3-rc1 DMA doesn't work properly on that platform.
+Nicolas Saenz Julienne investigates on that issue. As a temporary workarou=
+nd
+i reverted the following patch to test this series:
 
-> You can also have a look at how our gdbus internal library (uses
-> libdbus) utilize it:
->=20
-> https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/gdbus/client.c#n1=
-269
->=20
+79a98672 "dma-mapping: remove dma_max_pfn"
+7559d612 "mmc: core: let the dma map ops handle bouncing"
 
---=20
-Pali Roh=C3=A1r
-pali.rohar@gmail.com
+Changes in V4:
+- add Rob's Reviewed-by
+- enable ZONE_DMA for ARCH_BCM2835
+- fix spi reference in bcm2711.dtsi
+- fix bluetooth section in RPi 4 dts
+- drop "always-on" for armv8-timer
+- add necessary Bluetooth driver fix
+- add arm64 dts link
+- additional comments to the dts files as requested by Florian
 
---oeoa3vlkigw7a7sj
-Content-Type: application/pgp-signature; name="signature.asc"
+Changes in V3:
+- rebased series
+- add Reviewed-by
+- enable ARM_GIC for ARCH_BCM2835 on arm64 too
+- configure i2c pull-up in bcm2711.dtsi
+- move i2c2 to bcm2835-common.dtsi
+- add missing compatibles to DT schema as suggested by Rob
+- fix DT schema warnings in dtsi files
+- replace brcm pintrl with generic pinctrl as suggested by Linus
+- make dma_zone_size depend on CONFIG_ZONE_DMA as suggested by Matthias
 
------BEGIN PGP SIGNATURE-----
+Changes in V2:
+- use separate board file for BCM2711
+- enable ARM_GIC for ARCH_BCM2835
+- add Acked-by and Reviewed-by
+- fix arm-pmu and timer nodes for BCM2711 reported by Marc Zyngier
+- enable HDMI at board level
+- move HDMI and pixelvalve into bcm2835-common.dtsi as suggested by Eric A=
+nholt
+- fix DWC2 probing warning by setting USB role to peripheral
+- fix order of node references in bcm2711.dtsi
+- disable I2C clock stretching quirk for BCM2711
+- mark PLLD_PER as critical clock
+- make PLLH clock unavailable on BCM2711
+- fix compile warning in clk-bcm2835 for arm64
 
-iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCXZnX4wAKCRCL8Mk9A+RD
-Uoe4AKCGxMRsw0phqKqJsVyTyspED+o0TwCaA2eW2OTZYOMFUUtheSk52TD9Y8c=
-=d/XE
------END PGP SIGNATURE-----
+Changes since RFC:
+- change BCM2838 -> BCM2711 as discussed in RFC
+- update MAINTAINERS accordingly
+- drop "spi: bcm2835: enable shared interrupt support" from series
+- squash all pinctrl-bcm2835 changes into one patch
+- introduce SoC specific clock registration as suggested by Florian
+- fix watchdog probing for Raspberry Pi 4
+- convert brcm,bcm2835.txt to json-schema
+- move VC4 node to bcm2835-common.dtsi
+- fallback to legacy pull config for Raspberry Pi 4
+- revert unintended change of mailbox in bcm283x.dtsi
+- add reference for arm64
 
---oeoa3vlkigw7a7sj--
+[1] - https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm27=
+11/rpi_DATA_2711_1p0_preliminary.pdf
+[2] - https://www.raspberrypi.org/documentation/hardware/raspberrypi/schem=
+atics/rpi_SCH_4b_4p0_reduced.pdf
+
+Stefan Wahren (10):
+  bluetooth: hci_bcm: Fix RTS handling during startup
+  ARM: dts: bcm283x: Remove simple-bus from fixed clocks
+  ARM: dts: bcm283x: Remove brcm,bcm2835-pl011 compatible
+  ARM: dts: bcm283x: Move BCM2835/6/7 specific to bcm2835-common.dtsi
+  dt-bindings: arm: Convert BCM2835 board/soc bindings to json-schema
+  dt-bindings: arm: bcm2835: Add Raspberry Pi 4 to DT schema
+  ARM: bcm: Add support for BCM2711 SoC
+  ARM: dts: Add minimal Raspberry Pi 4 support
+  arm64: dts: broadcom: Add reference to RPi 4 B
+  MAINTAINERS: Add BCM2711 to BCM2835 ARCH
+
+ .../devicetree/bindings/arm/bcm/bcm2835.yaml       |  54 ++
+ .../devicetree/bindings/arm/bcm/brcm,bcm2835.txt   |  67 --
+ MAINTAINERS                                        |   3 +-
+ arch/arm/boot/dts/Makefile                         |   1 +
+ arch/arm/boot/dts/bcm2711-rpi-4-b.dts              | 123 +++
+ arch/arm/boot/dts/bcm2711.dtsi                     | 844 ++++++++++++++++=
++++++
+ arch/arm/boot/dts/bcm2835-common.dtsi              | 194 +++++
+ arch/arm/boot/dts/bcm2835-rpi.dtsi                 |   4 -
+ arch/arm/boot/dts/bcm2835.dtsi                     |   1 +
+ arch/arm/boot/dts/bcm2836.dtsi                     |   1 +
+ arch/arm/boot/dts/bcm2837.dtsi                     |   1 +
+ arch/arm/boot/dts/bcm283x-rpi-usb-peripheral.dtsi  |   7 +
+ arch/arm/boot/dts/bcm283x.dtsi                     | 190 +----
+ arch/arm/mach-bcm/Kconfig                          |   4 +-
+ arch/arm/mach-bcm/Makefile                         |   3 +-
+ arch/arm/mach-bcm/bcm2711.c                        |  24 +
+ arch/arm64/Kconfig.platforms                       |   5 +-
+ arch/arm64/boot/dts/broadcom/Makefile              |   3 +-
+ arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dts   |   2 +
+ drivers/bluetooth/hci_bcm.c                        |   2 +
+ 20 files changed, 1272 insertions(+), 261 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml
+ delete mode 100644 Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835=
+.txt
+ create mode 100644 arch/arm/boot/dts/bcm2711-rpi-4-b.dts
+ create mode 100644 arch/arm/boot/dts/bcm2711.dtsi
+ create mode 100644 arch/arm/boot/dts/bcm2835-common.dtsi
+ create mode 100644 arch/arm/boot/dts/bcm283x-rpi-usb-peripheral.dtsi
+ create mode 100644 arch/arm/mach-bcm/bcm2711.c
+ create mode 100644 arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dts
+
+=2D-
+2.7.4
+
