@@ -2,26 +2,26 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C5EFECD2C8
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  6 Oct 2019 17:29:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE53BCD2D3
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  6 Oct 2019 17:29:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726420AbfJFP3P (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 6 Oct 2019 11:29:15 -0400
-Received: from mout.gmx.net ([212.227.17.21]:41535 "EHLO mout.gmx.net"
+        id S1726685AbfJFP3T (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 6 Oct 2019 11:29:19 -0400
+Received: from mout.gmx.net ([212.227.17.20]:37957 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725985AbfJFP3O (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 6 Oct 2019 11:29:14 -0400
+        id S1726529AbfJFP3S (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 6 Oct 2019 11:29:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570375737;
-        bh=Uiusfd++iO6W8WtYRF60ANQDODpBG+UQSmFz88xtJgk=;
+        s=badeba3b8450; t=1570375738;
+        bh=/ScWQbBAyXuNKzjoeYet94tK8hr90mgTZg1PlOrDDcw=;
         h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=hAJsRPygpz5yPJxWUAzlPKY8+matr0x7fsIjsmkXPg8wz97u2ol9vKp/9MWEHshpn
-         sDrUJYE6N/SGya6tlaROjUmUWdR1MXEAS4E19A/ZZncuxhfE43UNDh7dtM4KJon0kp
-         yHMMfFr85KdXCjXbocomutVGquJIgQc8JCGvK8vw=
+        b=lGdSiXeXnx05AcjF9FMoJ56Mi3xkP3i5CnjRD3vI6pAb475U2vcx9Vk8EiLGC6frp
+         ebL2WcBtRC7OEq1VxhSoe43S94NtDZRpd8oElYHcm5lxxnGQ9GTVjftEV+mRqhj3uy
+         /LNnnjc2C9GFPNjvEy1Xcmxvwqd/q7LU23E0l9/o=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from localhost.localdomain ([37.4.249.116]) by mail.gmx.com
  (mrgmx104 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 1Mg6Zq-1hc2cB10Aw-00hfKa; Sun, 06 Oct 2019 17:28:57 +0200
+ 1MkYXm-1hpG1X3Mxa-00m7K4; Sun, 06 Oct 2019 17:28:57 +0200
 From:   Stefan Wahren <wahrenst@gmx.net>
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
@@ -36,89 +36,64 @@ Cc:     Catalin Marinas <catalin.marinas@arm.com>,
         bcm-kernel-feedback-list@broadcom.com,
         linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         linux-bluetooth@vger.kernel.org, Stefan Wahren <wahrenst@gmx.net>
-Subject: [PATCH V4 02/10] ARM: dts: bcm283x: Remove simple-bus from fixed clocks
-Date:   Sun,  6 Oct 2019 17:28:20 +0200
-Message-Id: <1570375708-26965-3-git-send-email-wahrenst@gmx.net>
+Subject: [PATCH V4 03/10] ARM: dts: bcm283x: Remove brcm,bcm2835-pl011 compatible
+Date:   Sun,  6 Oct 2019 17:28:21 +0200
+Message-Id: <1570375708-26965-4-git-send-email-wahrenst@gmx.net>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1570375708-26965-1-git-send-email-wahrenst@gmx.net>
 References: <1570375708-26965-1-git-send-email-wahrenst@gmx.net>
-X-Provags-ID: V03:K1:i+h4gvRfF9vHSRzrDVG9tj8BWytU3V7SOKB7jSlFNNT5OZnTdf7
- zwcxT0kJKG6dK1uSFnDU+1PJ7uYF+10rUxWvssuotj32NMbuslu5fe0Y/XEZSbXXeubmRqz
- rmlCHfNnBnZR7Js398llpq1oPS5KKwKSmp7TAy4TptEdM8nyGHD4svOi7jP/z55k0c5Vxj3
- 4i9oDDVNso6y/PExitqsw==
+X-Provags-ID: V03:K1:/zzvIW/HC4W+22ZxJXt2jd0PXF2oBqFI9Z/YdHJ6fAgP3DEamAL
+ etDsm+3ZLBzk/bWktyG2CCSToz96TPhTYNfvL7qUMJbn4M78+Zf9R7CmfAmAnInf+iYyKf6
+ QDfXOxG+Zjbs0R2MNRs5IDQG3mmJ7O1DmMZI7id5X3LvppRGenJHUhwj3zRfKnZiqn4HlZ1
+ uoy0GZ0g5N2jTM0raklnA==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:qHIs3v19TaA=:uuLAVFU7rYjRbXHJzsYs5S
- liQTvF/wRD4kP3xO78s+ggITe7VaGMFOoaLDZjmU2kGptd7RVy/GovKC41JevdOJirYfLE7L3
- xgRds8qqK3gVSpV21/kaREDJuPIECuqavMgtm6sr7PXYb4c/BwytDVhMOz4x3aX9/44zO8dZ0
- VKEZtIUydQbFvCq+ZhzQN2r4tf34cnY1Yv0AZdy/Hf5yuxFro73Dot7WZB0LGyORENx9a4TB3
- v6EXdmA1YECKdwNS4Sz0SpVEhnCHhE/gBGCKspR5OFSoDB09tyI+VVbkO4ZGFgdrZDRs2WsaN
- ncs9Hpl4HFfHrRHk0mSMosfJ8VAIMeOST3i22d7n5qUad9wiNoxsd4p1W4lIeQsZHed40D2fi
- uh2b2wUsjc+u0LucruIH1eoHow/qSe49f+GlJE5vj9FsIxDte3MNYK4gWatbdHf5xMUl98+Eh
- DP/YiQp2LbhGBYvLnNoy/+/GIcwZneocE++tTAXb6MzwPVpIpW8jTxTa45cKKkwoEM/s7xhY+
- fqond8zdtib0lhkGzj6cAi8ynWNZCcIVZWgMfNA9h3uqsbPR/Td6SPJTrDbNwLAI4ixMZ8OQm
- F6OPKX50h16JBBayhb+wxCykybN42G9M4Z2pLDJprl77XNsEKC2g2qUUNDjkBbpVKrWnfbTkb
- BpWzDret0jbgiOMA4jUyEu/lcnhIMxf35enTCUTpcqmxDEC8G3EOmjgj/QHjwtGFsdhCDErqp
- ULlcgzhpeG3pHdDaiudy0Ez/P3s3bYeTEiuqb1LVbyxXmGG7d2s42UQId6q2rSY6Rj8uKWYBi
- +QiYY91Yo0/MNBDIUxVg9IEUGsDg8PHle27hfl5xiNfzt04azjO67f4T79+TlPJ5aS0FM+14k
- rqozmsu+1H/ymPrtK/yATVPB24z2I2ypR1B/o7eJDHDSe1znh+djpQYI0j4ulqfr8SMTM4zsR
- SbFVAh7C0K3bk2l1Nn7Fz18QFQrDkR85uA4uaFC4/Oe740VpfMDFpxMrTBfIrLySQaU9AlDYd
- cFXYsfZGaPtEqmZ4TehGwhvAz4nWMT5Ffu3vuQkWOk3ratwMGyT9iLgrlc0hYiah+/x7mDNRw
- ITSaaKFSX4EGnfBef7Fmb5Ws5//z3S8DLu4gXI5Yerqda57U4QETgfGznFu2BVi6CMuYxlGSB
- vVaHdVQ6O5APEM6iNMcYPWvX8G3P6gazxmVVQjuo74MrpNYVK/I+1HIANz4dFudE5hu27qYcj
- Rgnyj1ZLMJkQX2jEdR7BwLt84F0vQWu6KiGjp1g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5cwYUFPMH/k=:9xAVsgzFqpsvBMT3K9weAj
+ 3IpEWhFCTij5KtUp+zjBmo6OCZjOwHupUOJ6f9b5vDXV6FvFod2CRsWi/i1vzhxfFazA+B/g9
+ zFz/zeOUGLQ5/4FDGHUuwwNUOEh+pxqSyKmHrRXdSn1Ic3rV7yOiFUAaf9ubnYg1CWgp9jnVL
+ zUv9TmqSWpQfJgDuPc7mOT6QIG77Lvdpuox4m/DAdqQUw/NPSgYJ6eOfZ+ywXeL0ia9PoMOOB
+ xcOvf6hrSVPX7G/n56zsKSpsLGW8SD/Lkht+1zrKSwL1tUTd3FqUXfT21PNdzI6dxvf2Dxsel
+ Tcf86iyJtLOnbOFUZRkmXsvXEzPddRA321PAK9c4mwd7C71XyphfyuYUNMFn1t0MNoo9XbpiA
+ jDSxa0vwqDBhwncaGhJFcBpTs5oPlJmFuz3IGsRQI77c25NmJLTRdN9/6cc63hWE/ZxnK9XEq
+ 6e3SS2K04XZgDUMnYVPG2El3n8SDMNMroEbiHsBNvxx9p7qYQX26+vLXBRXWBP8W7ouXLphnY
+ IwmcDIAdtv4b6Mt0S3qJBKclG6AhZM5u6nEG4sYpipWtr9bqCPCCBv4eGScUZZw22J783ZpXC
+ 6J7lyRZpLLUGs41nvH1LsdLtceFQhu1LB6oETSa7DwWG7Yy/2ZaGjOnJAPWwG+Ogv0tnhCEmt
+ qnDnY1n4hmE53A4EX7EfFEvqwVrygjm/kq1DwUbZSv0zixA/TxU57uZzx9lCihoaFMm2wJ1zV
+ igTeuPUt5As3ENrrEaWm0IYC33FRYupOZ5zBAKz8MM4Y8VArWzed/ifKUrmyH6Phemx5mjTeb
+ 9PR0D4XawNKYsrwVppy4m9X1jV+pOIIFkQlrX+BmxZCk4geekWoxxZpPfNhB5IiueezKrfUX8
+ krFleZqIxmZcCIECJSvLr91aJOvmmH2MoYsb2W7FWLIRNx0Lu3IXuDxEtuYQI98xKRPtPs5qp
+ /HC85BG7fpVp8tkkqLGpeZtp4BMlREr6MagO0CtW/5LMSh5qFOf2f6aoEhaHXafcTWy4Y+bf7
+ Mtn9nbP0zBc5Kzl2ydOyBHfVy4SJlClHCMjjL6cQ6H3/vR1DYwiIam1Ujc1g1CzfpUg5fH5VV
+ j3ZEpn8mKtixipncktXPy0Bv8Hf2UFVOLwA4bBDp/BvYPH+Hz+xhhh3Fb4BpYcWz0f1j7AZXN
+ 73prhErVUputtf6fnJlEmxdkYnsOvONemXkTq33E2i7l2hgCyA/1EaTKJI+oe3fahKeZgjbGK
+ Gv/ymbi9JQQXyteBeSBoqLNgEV0Rt913NfSgy7A==
 Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The fixed clocks doesn't form some kind of bus. So let's remove it.
-This fixes the follow DT schema warnings:
-
-clocks: clock@3:reg:0: [3] is too short
-clocks: clock@4:reg:0: [4] is too short
-clocks: $nodename:0: 'clocks' does not match '^(bus|soc|axi|ahb|apb)(@[0-9=
-a-f]+)?$'
-clocks: #size-cells:0:0: 0 is not one of [1, 2]
-clocks: 'ranges' is a required property
-clock@3: 'reg' does not match any of the regexes: 'pinctrl-[0-9]+'
-clock@4: 'reg' does not match any of the regexes: 'pinctrl-[0-9]+'
+The downstream compatible brcm,bcm2835-pl011 hasn't been upstreamed yet.
+So remove it.
 
 Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
 =2D--
- arch/arm/boot/dts/bcm283x.dtsi | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ arch/arm/boot/dts/bcm283x.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/bcm283x.dtsi b/arch/arm/boot/dts/bcm283x.dt=
 si
-index 2d191fc..f16899d 100644
+index f16899d..ae8296f 100644
 =2D-- a/arch/arm/boot/dts/bcm283x.dtsi
 +++ b/arch/arm/boot/dts/bcm283x.dtsi
-@@ -650,22 +650,16 @@
- 	};
-
- 	clocks {
--		compatible =3D "simple-bus";
--		#address-cells =3D <1>;
--		#size-cells =3D <0>;
--
- 		/* The oscillator is the root of the clock tree. */
--		clk_osc: clock@3 {
-+		clk_osc: clk-osc {
- 			compatible =3D "fixed-clock";
--			reg =3D <3>;
- 			#clock-cells =3D <0>;
- 			clock-output-names =3D "osc";
- 			clock-frequency =3D <19200000>;
+@@ -396,7 +396,7 @@
  		};
 
--		clk_usb: clock@4 {
-+		clk_usb: clk-usb {
- 			compatible =3D "fixed-clock";
--			reg =3D <4>;
- 			#clock-cells =3D <0>;
- 			clock-output-names =3D "otg";
- 			clock-frequency =3D <480000000>;
+ 		uart0: serial@7e201000 {
+-			compatible =3D "brcm,bcm2835-pl011", "arm,pl011", "arm,primecell";
++			compatible =3D "arm,pl011", "arm,primecell";
+ 			reg =3D <0x7e201000 0x200>;
+ 			interrupts =3D <2 25>;
+ 			clocks =3D <&clocks BCM2835_CLOCK_UART>,
 =2D-
 2.7.4
 
