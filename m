@@ -2,26 +2,26 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 80502CD2CC
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  6 Oct 2019 17:29:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BDDCCD2CA
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  6 Oct 2019 17:29:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbfJFP3R (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 6 Oct 2019 11:29:17 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56273 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725985AbfJFP3Q (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        id S1726508AbfJFP3Q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Sun, 6 Oct 2019 11:29:16 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59103 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726289AbfJFP3P (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 6 Oct 2019 11:29:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570375738;
-        bh=ju7Bd+dM/7yFl2EXq/i/+T9p6cJbvttYXIH7HB3K4LA=;
+        s=badeba3b8450; t=1570375739;
+        bh=+Ntvzuy36h2lYmk3C1RzynnKi0efDfFW+hXy3gSJNSU=;
         h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=LH8fDeT4GfgVH00cDvsb1kbekm8YdfO51FNofLDUWw6lC7dyd7M4QvqBqkgnFvpHm
-         4IlQHQksM2A8/4ClTnbGhvqjncGkOxyF8wAqaqOADoVzhBIVErlKDOmTSycQQNa7uA
-         EyprAz21yRksGHAvmHvwmLuE9msiv9wqA2ZFfiWo=
+        b=V5Apv0ZnVeB+Z0U62pHHjUH0/QBc8NjkVjwqXAA3oP7rk/6xcZSFgNqrj1vedMT4x
+         tjuGaUuVxED1ELO8a3X5eg3rX5Q/TtmLPrCqTKAYNEDrV6hfbFTdJHW4D5ZPo7Ees1
+         U+M0SEr6uN+Bj/JlGEGvKh8pKbPUKvzs0g6d67+0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from localhost.localdomain ([37.4.249.116]) by mail.gmx.com
  (mrgmx104 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 1MDhlf-1iQnld1TqZ-00AqlF; Sun, 06 Oct 2019 17:28:58 +0200
+ 1MqJqN-1hmFsf41aN-00nSlR; Sun, 06 Oct 2019 17:28:59 +0200
 From:   Stefan Wahren <wahrenst@gmx.net>
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
@@ -36,592 +36,187 @@ Cc:     Catalin Marinas <catalin.marinas@arm.com>,
         bcm-kernel-feedback-list@broadcom.com,
         linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         linux-bluetooth@vger.kernel.org, Stefan Wahren <wahrenst@gmx.net>
-Subject: [PATCH V4 04/10] ARM: dts: bcm283x: Move BCM2835/6/7 specific to bcm2835-common.dtsi
-Date:   Sun,  6 Oct 2019 17:28:22 +0200
-Message-Id: <1570375708-26965-5-git-send-email-wahrenst@gmx.net>
+Subject: [PATCH V4 05/10] dt-bindings: arm: Convert BCM2835 board/soc bindings to json-schema
+Date:   Sun,  6 Oct 2019 17:28:23 +0200
+Message-Id: <1570375708-26965-6-git-send-email-wahrenst@gmx.net>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1570375708-26965-1-git-send-email-wahrenst@gmx.net>
 References: <1570375708-26965-1-git-send-email-wahrenst@gmx.net>
-X-Provags-ID: V03:K1:4NIJP0fCALGXVbg5Ca7qp1tnTZ23ApC1JYHc+sPxxgidiQh2sSF
- 5URwefKeIie0jnfNHFWJBqd0pkdFZOG645A/Ep2if5cT5jlaiw2GfLqIr4dyt51lqoQBbAF
- Hz3ixQWwPBCSdzoqQ1CNJ4qaVCji7w6x/eiebWlgJu6QG3VAH5vNoFYzHguyzGRozGfrp+B
- /7ZLUFqA/n4e2dSXkNb9g==
+X-Provags-ID: V03:K1:YtuTyqhExdNFIyIWtVu7QQoaNm/leC/Kp3ybCICd0REnOs2Fdq4
+ Sth3OQYqsSySzS0lhEiuIDbiCS2hm4Avy2AqfyTeIB4GZdS5AaHD9LLfwnyKbMfwUjjkQ5n
+ OsTShr9FlhbLyzRPMAYvCX/ZqT8n7HJeC6nd3wcugImFENoko90NBzTN1hEE12o4uBfS3vV
+ jaYO+FG4aWx3ye7AM/vKQ==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:IEdddmybUzs=:SNyV8CtEtJbtFd7r+TgW/z
- Md26hoWwt8SznSVKeTsdQxP86+LnslK4sBZVqaE81bd08fbTtG5yurCgBqf39NETwcK+j+Mvz
- F43b/bpVoHyV+39bg8TtJdJv065J90TI4drIwgLeKZTWN5sELBKhCNnuVZy2CSsCqHC2ndcEy
- RWNGltJfOSDhQW4apaB312cFAxn+Xjja2o+cG7YHubsi1NUJp7mDwC4H7yPVeN7SXvQmlCDOv
- WJorNK80ovnQQFW9keDws4QmT+Ks1iU9wQmA7w/XANxlq+NFexoIJM6xhsJi93cohF7rJxJNf
- ivf/WbArM9uxx+P66kgkoxp5tp8b0wQtt1rXBAAuH6c3UyR5Wi0QfB11SfDWAMIOAKYGmYn3W
- o40vMJH00TjuCVMEUrsvjVyXO8Hg7nvuNQXq96pOCoX4ROTCA8X9P6Xx0wwR3tAy/JQy35sRa
- o5T1crGkmu3/oqSFhfG/suFy0NfCAK3M+aoBXvGWq5ZBAqK6I23bc1ZsWx3OXe8TyNbyqggsz
- WsEpGf2DlMcqb8Yo0MCVtrtf5xwybQaPENaBvmfPvZ5/9Sl9ul//zOs++Mrs0aNPG4QRagfkE
- h5EBHE5aACVSNhcPFOdaAcfR7ShCPw3uIwkH9uux5+I6Da8ezzhQjrGcTlngK3gsugdOi3t+U
- bw4Wet+BTOsrijnYd7uHH8RmRG027KDkjAATqtnQCOei7s8uMxYs1Z1Sjxu2C4cdEayjXhV6E
- upMHNZZneF9S11FK/wT4+s/23tL6N1L8Da0EvwiFpnoSNvz+wu3onFEIAtfK1y/9PbseneBDR
- LJm9HIS/gvHgdXh5tSkKJWKi/hfUm+NxFqVi2HHEkBnq7lOE+jc1DPm98APLl/LHv6hplwZgK
- BQQDvwPa65Fl6NWKMFhx8CtAOf1/bG5InWzUzkylZ9b1ucXpNbq0AHjEqRAP+ILYqLahzIQKE
- +kTKB++Hf1WhGtkwDqAM6ogUS7g5U88mc4hggtVOAMYpumN8bniKxmND0NB7GPTGvSZW2+iyP
- LrPXKckUqwBk6Kqg6QzxrP6zUGjq74qOCOpj2HPv/xFJ+OckZWWHB26BxTOxlRnahCxN/s2a7
- KAAoN0F1JygAScKLZltMG5vn49SttDI93pWD22cCBiZHoJQnYQPAK1QWAu02bX4jXQd+N2vTT
- lC3NamHWLKP2hoiE4Fd/mcLNFJppBQ5sT9F6YYG2+40zlD+PPTGZ3ZZayYM4vNFut2+hcINFB
- FkEhwMeeIFccnOwH5LKtVEbvw7eBC+AHwgv7Y7A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YzL94UnfrVs=:9XH3OE9kOQvnndYTT1NWxV
+ 9PVv6VqPNc7cbAvi/qXtKMIUQ5G6X9+L5aNY51myG6b20osLy66zaN0z5j67qZZgfhYZGSp+A
+ rDaVBzqSsYSn5coGfEuWq11GJqXnsGneDAlUaKBQj4k5UxAV8/jGYStExPAXdr3M225lIBU45
+ VPCJnSvOLPhyD5+a9YLuJBLoUGSxDG4VgmlFkwHIRtcQ1sJEfBRzGWBYsCCDc08+IWV/0D9u1
+ fRxQDWS8/WQ09wU14N/6i807estmgnTrpGOL0Z2fNU1HC37xE9vinQtrMCCWCGwjdKPJCwscm
+ +lBeGezAO7TZkMHZj+67abB6vpB+Z8Ra/j0f2KyqpxSRJoLhA0+sOEJQhELOPZL8Js3ujgMkn
+ JXSbJuAhGrKQODzW3WoaUsLXnORbWGJQzazuQd6o7JTtySnnd9uhR1Wkq/SBuKQ1wXOL34VvM
+ ReP5tcv4Zdtah2QrNI4yjpHNNTQGkMOVBwXovf7igrxQ6M9w38LabdLUW/B+9dfxisXKdiOFM
+ fJg2P3jMMlo7SHo9fXeIGA6PW3VLuJYPbIg/gQIam0He3GJx6taNCXwOcv0djcIx8/szl4XSv
+ BUa39+umcw2W0MerzCtIv8l1G0pVBQIUn/JbIb0rkxklcddcBYxzQTjRaE8jymwL8xUroyMHm
+ mNlURIN1rZm3m4wfRt8OubSiKlDEByprr/gjuA/nJAxiljpu1VOLERF1TNRo1FLkAXrgOD1SF
+ 4e7urSErBJOwvdeD9C3ytSmmUeN6gaKxmkR9+Xj7IkVdsjnah3zLgPX2MuPkIB3N6fTdp/CP3
+ 0qIpxMDxiAe3ZFgIYIdaj7kd3CeskAdhF6YgMBM1EajCB8kVroUhNwA6fPEgY40VgU+mApRgQ
+ q7kdFyBhMyvuoJA96QEKa7TJVbP4TrreE9xmBi77dozgZfSOP+be46s1xu+xDzjcKEsbUhDwX
+ TfXqLOtHjsCN6CudGSpEHWTZCvFqA/+2iXKF55VeXWaG7fF2xmD5HBxK/eHmsT/82X4FL3GQD
+ CnMOFxz3p4PlkVqK7ExdtETfr9RIpzEPcJC65uZEdMIIv75W1dVZvLcLF3hoSVXaubwzjnw/y
+ Iep1hHQAONCfKCj9UZmFWVai4yTRHI0IDJh/ae3I+4ibRVquT9yA/Qnl0mxbV6QbemKbiP0hy
+ 4q2iNQV2+bd6MGMI35ZqCHOR1R6PTFgAl4ve41nCRR/nQVpTQWjXiK3siTuenL42Nthfc436h
+ Su8Dqg3Hhaoshus3GmV9gOpmf6iYtXytcfADqFg==
 Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-As preparation we want all common BCM2711 + BCM2835/6/7 functions in
-bcm283x.dtsi and all BCM2835/6/7 specific in the new
-bcm2835-common.dtsi. Since i2c2 is BCM2835 specific, we also need
-to move it to bcm2835-common.dtsi.
+Convert the BCM2835/6/7 SoC bindings to DT schema format using json-schema=
+.
+All the other Broadcom boards are maintained by Florian Fainelli.
 
 Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
 Acked-by: Eric Anholt <eric@anholt.net>
+Reviewed-by: Rob Herring <robh@kernel.org>
 =2D--
- arch/arm/boot/dts/bcm2835-common.dtsi | 194 +++++++++++++++++++++++++++++=
-+++++
- arch/arm/boot/dts/bcm2835-rpi.dtsi    |   4 -
- arch/arm/boot/dts/bcm2835.dtsi        |   1 +
- arch/arm/boot/dts/bcm2836.dtsi        |   1 +
- arch/arm/boot/dts/bcm2837.dtsi        |   1 +
- arch/arm/boot/dts/bcm283x.dtsi        | 174 +----------------------------=
--
- 6 files changed, 198 insertions(+), 177 deletions(-)
- create mode 100644 arch/arm/boot/dts/bcm2835-common.dtsi
+ .../devicetree/bindings/arm/bcm/bcm2835.yaml       | 48 ++++++++++++++++
+ .../devicetree/bindings/arm/bcm/brcm,bcm2835.txt   | 67 -----------------=
+-----
+ 2 files changed, 48 insertions(+), 67 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml
+ delete mode 100644 Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835=
+.txt
 
-diff --git a/arch/arm/boot/dts/bcm2835-common.dtsi b/arch/arm/boot/dts/bcm=
-2835-common.dtsi
+diff --git a/Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml b/Docu=
+mentation/devicetree/bindings/arm/bcm/bcm2835.yaml
 new file mode 100644
-index 0000000..fe1ab40
+index 0000000..67bf9e2
 =2D-- /dev/null
-+++ b/arch/arm/boot/dts/bcm2835-common.dtsi
-@@ -0,0 +1,194 @@
-+// SPDX-License-Identifier: GPL-2.0
++++ b/Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml
+@@ -0,0 +1,48 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/arm/bcm/bcm2835.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+/* This include file covers the common peripherals and configuration betw=
-een
-+ * bcm2835, bcm2836 and bcm2837 implementations.
-+ */
++title: Broadcom BCM2711/BCM2835 Platforms Device Tree Bindings
 +
-+/ {
-+	interrupt-parent =3D <&intc>;
++maintainers:
++  - Eric Anholt <eric@anholt.net>
++  - Stefan Wahren <wahrenst@gmx.net>
 +
-+	soc {
-+		dma: dma@7e007000 {
-+			compatible =3D "brcm,bcm2835-dma";
-+			reg =3D <0x7e007000 0xf00>;
-+			interrupts =3D <1 16>,
-+				     <1 17>,
-+				     <1 18>,
-+				     <1 19>,
-+				     <1 20>,
-+				     <1 21>,
-+				     <1 22>,
-+				     <1 23>,
-+				     <1 24>,
-+				     <1 25>,
-+				     <1 26>,
-+				     /* dma channel 11-14 share one irq */
-+				     <1 27>,
-+				     <1 27>,
-+				     <1 27>,
-+				     <1 27>,
-+				     /* unused shared irq for all channels */
-+				     <1 28>;
-+			interrupt-names =3D "dma0",
-+					  "dma1",
-+					  "dma2",
-+					  "dma3",
-+					  "dma4",
-+					  "dma5",
-+					  "dma6",
-+					  "dma7",
-+					  "dma8",
-+					  "dma9",
-+					  "dma10",
-+					  "dma11",
-+					  "dma12",
-+					  "dma13",
-+					  "dma14",
-+					  "dma-shared-all";
-+			#dma-cells =3D <1>;
-+			brcm,dma-channel-mask =3D <0x7f35>;
-+		};
++properties:
++  $nodename:
++    const: '/'
++  compatible:
++    oneOf:
++      - description: BCM2835 based Boards
++        items:
++          - enum:
++              - raspberrypi,model-a
++              - raspberrypi,model-a-plus
++              - raspberrypi,model-b
++              - raspberrypi,model-b-i2c0  # Raspberry Pi Model B (no P5)
++              - raspberrypi,model-b-rev2
++              - raspberrypi,model-b-plus
++              - raspberrypi,compute-module
++              - raspberrypi,model-zero
++              - raspberrypi,model-zero-w
++          - const: brcm,bcm2835
 +
-+		intc: interrupt-controller@7e00b200 {
-+			compatible =3D "brcm,bcm2835-armctrl-ic";
-+			reg =3D <0x7e00b200 0x200>;
-+			interrupt-controller;
-+			#interrupt-cells =3D <2>;
-+		};
++      - description: BCM2836 based Boards
++        items:
++          - enum:
++              - raspberrypi,2-model-b
++          - const: brcm,bcm2836
 +
-+		pm: watchdog@7e100000 {
-+			compatible =3D "brcm,bcm2835-pm", "brcm,bcm2835-pm-wdt";
-+			#power-domain-cells =3D <1>;
-+			#reset-cells =3D <1>;
-+			reg =3D <0x7e100000 0x114>,
-+			      <0x7e00a000 0x24>;
-+			clocks =3D <&clocks BCM2835_CLOCK_V3D>,
-+				 <&clocks BCM2835_CLOCK_PERI_IMAGE>,
-+				 <&clocks BCM2835_CLOCK_H264>,
-+				 <&clocks BCM2835_CLOCK_ISP>;
-+			clock-names =3D "v3d", "peri_image", "h264", "isp";
-+			system-power-controller;
-+		};
++      - description: BCM2837 based Boards
++        items:
++          - enum:
++              - raspberrypi,3-model-a-plus
++              - raspberrypi,3-model-b
++              - raspberrypi,3-model-b-plus
++              - raspberrypi,3-compute-module
++              - raspberrypi,3-compute-module-lite
++          - const: brcm,bcm2837
 +
-+		pixelvalve@7e206000 {
-+			compatible =3D "brcm,bcm2835-pixelvalve0";
-+			reg =3D <0x7e206000 0x100>;
-+			interrupts =3D <2 13>; /* pwa0 */
-+		};
-+
-+		pixelvalve@7e207000 {
-+			compatible =3D "brcm,bcm2835-pixelvalve1";
-+			reg =3D <0x7e207000 0x100>;
-+			interrupts =3D <2 14>; /* pwa1 */
-+		};
-+
-+		thermal: thermal@7e212000 {
-+			compatible =3D "brcm,bcm2835-thermal";
-+			reg =3D <0x7e212000 0x8>;
-+			clocks =3D <&clocks BCM2835_CLOCK_TSENS>;
-+			#thermal-sensor-cells =3D <0>;
-+			status =3D "disabled";
-+		};
-+
-+		i2c2: i2c@7e805000 {
-+			compatible =3D "brcm,bcm2835-i2c";
-+			reg =3D <0x7e805000 0x1000>;
-+			interrupts =3D <2 21>;
-+			clocks =3D <&clocks BCM2835_CLOCK_VPU>;
-+			#address-cells =3D <1>;
-+			#size-cells =3D <0>;
-+			status =3D "okay";
-+		};
-+
-+		pixelvalve@7e807000 {
-+			compatible =3D "brcm,bcm2835-pixelvalve2";
-+			reg =3D <0x7e807000 0x100>;
-+			interrupts =3D <2 10>; /* pixelvalve */
-+		};
-+
-+		hdmi: hdmi@7e902000 {
-+			compatible =3D "brcm,bcm2835-hdmi";
-+			reg =3D <0x7e902000 0x600>,
-+			      <0x7e808000 0x100>;
-+			interrupts =3D <2 8>, <2 9>;
-+			ddc =3D <&i2c2>;
-+			clocks =3D <&clocks BCM2835_PLLH_PIX>,
-+				 <&clocks BCM2835_CLOCK_HSM>;
-+			clock-names =3D "pixel", "hdmi";
-+			dmas =3D <&dma 17>;
-+			dma-names =3D "audio-rx";
-+			status =3D "disabled";
-+		};
-+
-+		v3d: v3d@7ec00000 {
-+			compatible =3D "brcm,bcm2835-v3d";
-+			reg =3D <0x7ec00000 0x1000>;
-+			interrupts =3D <1 10>;
-+			power-domains =3D <&pm BCM2835_POWER_DOMAIN_GRAFX_V3D>;
-+		};
-+
-+		vc4: gpu {
-+			compatible =3D "brcm,bcm2835-vc4";
-+		};
-+	};
-+};
-+
-+&cpu_thermal {
-+	thermal-sensors =3D <&thermal>;
-+};
-+
-+&gpio {
-+	i2c_slave_gpio18: i2c_slave_gpio18 {
-+		brcm,pins =3D <18 19 20 21>;
-+		brcm,function =3D <BCM2835_FSEL_ALT3>;
-+	};
-+
-+	jtag_gpio4: jtag_gpio4 {
-+		brcm,pins =3D <4 5 6 12 13>;
-+		brcm,function =3D <BCM2835_FSEL_ALT5>;
-+	};
-+
-+	pwm0_gpio12: pwm0_gpio12 {
-+		brcm,pins =3D <12>;
-+		brcm,function =3D <BCM2835_FSEL_ALT0>;
-+	};
-+	pwm0_gpio18: pwm0_gpio18 {
-+		brcm,pins =3D <18>;
-+		brcm,function =3D <BCM2835_FSEL_ALT5>;
-+	};
-+	pwm0_gpio40: pwm0_gpio40 {
-+		brcm,pins =3D <40>;
-+		brcm,function =3D <BCM2835_FSEL_ALT0>;
-+	};
-+	pwm1_gpio13: pwm1_gpio13 {
-+		brcm,pins =3D <13>;
-+		brcm,function =3D <BCM2835_FSEL_ALT0>;
-+	};
-+	pwm1_gpio19: pwm1_gpio19 {
-+		brcm,pins =3D <19>;
-+		brcm,function =3D <BCM2835_FSEL_ALT5>;
-+	};
-+	pwm1_gpio41: pwm1_gpio41 {
-+		brcm,pins =3D <41>;
-+		brcm,function =3D <BCM2835_FSEL_ALT0>;
-+	};
-+	pwm1_gpio45: pwm1_gpio45 {
-+		brcm,pins =3D <45>;
-+		brcm,function =3D <BCM2835_FSEL_ALT0>;
-+	};
-+};
-+
-+&i2s {
-+	dmas =3D <&dma 2>, <&dma 3>;
-+	dma-names =3D "tx", "rx";
-+};
-+
-+&sdhost {
-+	dmas =3D <&dma 13>;
-+	dma-names =3D "rx-tx";
-+};
-+
-+&spi {
-+	dmas =3D <&dma 6>, <&dma 7>;
-+	dma-names =3D "tx", "rx";
-+};
-diff --git a/arch/arm/boot/dts/bcm2835-rpi.dtsi b/arch/arm/boot/dts/bcm283=
-5-rpi.dtsi
-index 6c6a7f6..394c8a7 100644
-=2D-- a/arch/arm/boot/dts/bcm2835-rpi.dtsi
-+++ b/arch/arm/boot/dts/bcm2835-rpi.dtsi
-@@ -59,10 +59,6 @@
- 	clock-frequency =3D <100000>;
- };
-
--&i2c2 {
--	status =3D "okay";
--};
++...
+diff --git a/Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835.txt b/=
+Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835.txt
+deleted file mode 100644
+index 245328f..0000000
+=2D-- a/Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835.txt
++++ /dev/null
+@@ -1,67 +0,0 @@
+-Broadcom BCM2835 device tree bindings
+=2D-------------------------------------------
 -
- &usb {
- 	power-domains =3D <&power RPI_POWER_DOMAIN_USB>;
- };
-diff --git a/arch/arm/boot/dts/bcm2835.dtsi b/arch/arm/boot/dts/bcm2835.dt=
-si
-index a5c3824..53bf457 100644
-=2D-- a/arch/arm/boot/dts/bcm2835.dtsi
-+++ b/arch/arm/boot/dts/bcm2835.dtsi
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include "bcm283x.dtsi"
-+#include "bcm2835-common.dtsi"
-
- / {
- 	compatible =3D "brcm,bcm2835";
-diff --git a/arch/arm/boot/dts/bcm2836.dtsi b/arch/arm/boot/dts/bcm2836.dt=
-si
-index c933e84..82d6c46 100644
-=2D-- a/arch/arm/boot/dts/bcm2836.dtsi
-+++ b/arch/arm/boot/dts/bcm2836.dtsi
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include "bcm283x.dtsi"
-+#include "bcm2835-common.dtsi"
-
- / {
- 	compatible =3D "brcm,bcm2836";
-diff --git a/arch/arm/boot/dts/bcm2837.dtsi b/arch/arm/boot/dts/bcm2837.dt=
-si
-index beb6c50..9e95fee 100644
-=2D-- a/arch/arm/boot/dts/bcm2837.dtsi
-+++ b/arch/arm/boot/dts/bcm2837.dtsi
-@@ -1,4 +1,5 @@
- #include "bcm283x.dtsi"
-+#include "bcm2835-common.dtsi"
-
- / {
- 	compatible =3D "brcm,bcm2837";
-diff --git a/arch/arm/boot/dts/bcm283x.dtsi b/arch/arm/boot/dts/bcm283x.dt=
-si
-index ae8296f..addf3be 100644
-=2D-- a/arch/arm/boot/dts/bcm283x.dtsi
-+++ b/arch/arm/boot/dts/bcm283x.dtsi
-@@ -18,7 +18,6 @@
- / {
- 	compatible =3D "brcm,bcm2835";
- 	model =3D "BCM2835";
--	interrupt-parent =3D <&intc>;
- 	#address-cells =3D <1>;
- 	#size-cells =3D <1>;
-
-@@ -36,8 +35,6 @@
- 			polling-delay-passive =3D <0>;
- 			polling-delay =3D <1000>;
-
--			thermal-sensors =3D <&thermal>;
+-Raspberry Pi Model A
+-Required root node properties:
+-compatible =3D "raspberrypi,model-a", "brcm,bcm2835";
 -
- 			trips {
- 				cpu-crit {
- 					temperature	=3D <80000>;
-@@ -73,68 +70,6 @@
- 			interrupts =3D <1 11>;
- 		};
-
--		dma: dma@7e007000 {
--			compatible =3D "brcm,bcm2835-dma";
--			reg =3D <0x7e007000 0xf00>;
--			interrupts =3D <1 16>,
--				     <1 17>,
--				     <1 18>,
--				     <1 19>,
--				     <1 20>,
--				     <1 21>,
--				     <1 22>,
--				     <1 23>,
--				     <1 24>,
--				     <1 25>,
--				     <1 26>,
--				     /* dma channel 11-14 share one irq */
--				     <1 27>,
--				     <1 27>,
--				     <1 27>,
--				     <1 27>,
--				     /* unused shared irq for all channels */
--				     <1 28>;
--			interrupt-names =3D "dma0",
--					  "dma1",
--					  "dma2",
--					  "dma3",
--					  "dma4",
--					  "dma5",
--					  "dma6",
--					  "dma7",
--					  "dma8",
--					  "dma9",
--					  "dma10",
--					  "dma11",
--					  "dma12",
--					  "dma13",
--					  "dma14",
--					  "dma-shared-all";
--			#dma-cells =3D <1>;
--			brcm,dma-channel-mask =3D <0x7f35>;
--		};
+-Raspberry Pi Model A+
+-Required root node properties:
+-compatible =3D "raspberrypi,model-a-plus", "brcm,bcm2835";
 -
--		intc: interrupt-controller@7e00b200 {
--			compatible =3D "brcm,bcm2835-armctrl-ic";
--			reg =3D <0x7e00b200 0x200>;
--			interrupt-controller;
--			#interrupt-cells =3D <2>;
--		};
+-Raspberry Pi Model B
+-Required root node properties:
+-compatible =3D "raspberrypi,model-b", "brcm,bcm2835";
 -
--		pm: watchdog@7e100000 {
--			compatible =3D "brcm,bcm2835-pm", "brcm,bcm2835-pm-wdt";
--			#power-domain-cells =3D <1>;
--			#reset-cells =3D <1>;
--			reg =3D <0x7e100000 0x114>,
--			      <0x7e00a000 0x24>;
--			clocks =3D <&clocks BCM2835_CLOCK_V3D>,
--				 <&clocks BCM2835_CLOCK_PERI_IMAGE>,
--				 <&clocks BCM2835_CLOCK_H264>,
--				 <&clocks BCM2835_CLOCK_ISP>;
--			clock-names =3D "v3d", "peri_image", "h264", "isp";
--			system-power-controller;
--		};
+-Raspberry Pi Model B (no P5)
+-early model B with I2C0 rather than I2C1 routed to the expansion header
+-Required root node properties:
+-compatible =3D "raspberrypi,model-b-i2c0", "brcm,bcm2835";
 -
- 		clocks: cprman@7e101000 {
- 			compatible =3D "brcm,bcm2835-cprman";
- 			#clock-cells =3D <1>;
-@@ -184,8 +119,7 @@
- 			interrupt-controller;
- 			#interrupt-cells =3D <2>;
-
--			/* Defines pin muxing groups according to
--			 * BCM2835-ARM-Peripherals.pdf page 102.
-+			/* Defines common pin muxing groups
- 			 *
- 			 * While each pin can have its mux selected
- 			 * for various functions individually, some
-@@ -263,15 +197,7 @@
- 				brcm,pins =3D <44 45>;
- 				brcm,function =3D <BCM2835_FSEL_ALT2>;
- 			};
--			i2c_slave_gpio18: i2c_slave_gpio18 {
--				brcm,pins =3D <18 19 20 21>;
--				brcm,function =3D <BCM2835_FSEL_ALT3>;
--			};
-
--			jtag_gpio4: jtag_gpio4 {
--				brcm,pins =3D <4 5 6 12 13>;
--				brcm,function =3D <BCM2835_FSEL_ALT5>;
--			};
- 			jtag_gpio22: jtag_gpio22 {
- 				brcm,pins =3D <22 23 24 25 26 27>;
- 				brcm,function =3D <BCM2835_FSEL_ALT4>;
-@@ -286,35 +212,6 @@
- 				brcm,function =3D <BCM2835_FSEL_ALT2>;
- 			};
-
--			pwm0_gpio12: pwm0_gpio12 {
--				brcm,pins =3D <12>;
--				brcm,function =3D <BCM2835_FSEL_ALT0>;
--			};
--			pwm0_gpio18: pwm0_gpio18 {
--				brcm,pins =3D <18>;
--				brcm,function =3D <BCM2835_FSEL_ALT5>;
--			};
--			pwm0_gpio40: pwm0_gpio40 {
--				brcm,pins =3D <40>;
--				brcm,function =3D <BCM2835_FSEL_ALT0>;
--			};
--			pwm1_gpio13: pwm1_gpio13 {
--				brcm,pins =3D <13>;
--				brcm,function =3D <BCM2835_FSEL_ALT0>;
--			};
--			pwm1_gpio19: pwm1_gpio19 {
--				brcm,pins =3D <19>;
--				brcm,function =3D <BCM2835_FSEL_ALT5>;
--			};
--			pwm1_gpio41: pwm1_gpio41 {
--				brcm,pins =3D <41>;
--				brcm,function =3D <BCM2835_FSEL_ALT0>;
--			};
--			pwm1_gpio45: pwm1_gpio45 {
--				brcm,pins =3D <45>;
--				brcm,function =3D <BCM2835_FSEL_ALT0>;
--			};
+-Raspberry Pi Model B rev2
+-Required root node properties:
+-compatible =3D "raspberrypi,model-b-rev2", "brcm,bcm2835";
 -
- 			sdhost_gpio48: sdhost_gpio48 {
- 				brcm,pins =3D <48 49 50 51 52 53>;
- 				brcm,function =3D <BCM2835_FSEL_ALT0>;
-@@ -410,8 +307,6 @@
- 			reg =3D <0x7e202000 0x100>;
- 			interrupts =3D <2 24>;
- 			clocks =3D <&clocks BCM2835_CLOCK_VPU>;
--			dmas =3D <&dma 13>;
--			dma-names =3D "rx-tx";
- 			status =3D "disabled";
- 		};
-
-@@ -419,10 +314,6 @@
- 			compatible =3D "brcm,bcm2835-i2s";
- 			reg =3D <0x7e203000 0x24>;
- 			clocks =3D <&clocks BCM2835_CLOCK_PCM>;
+-Raspberry Pi Model B+
+-Required root node properties:
+-compatible =3D "raspberrypi,model-b-plus", "brcm,bcm2835";
 -
--			dmas =3D <&dma 2>,
--			       <&dma 3>;
--			dma-names =3D "tx", "rx";
- 			status =3D "disabled";
- 		};
-
-@@ -431,8 +322,6 @@
- 			reg =3D <0x7e204000 0x200>;
- 			interrupts =3D <2 22>;
- 			clocks =3D <&clocks BCM2835_CLOCK_VPU>;
--			dmas =3D <&dma 6>, <&dma 7>;
--			dma-names =3D "tx", "rx";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <0>;
- 			status =3D "disabled";
-@@ -448,18 +337,6 @@
- 			status =3D "disabled";
- 		};
-
--		pixelvalve@7e206000 {
--			compatible =3D "brcm,bcm2835-pixelvalve0";
--			reg =3D <0x7e206000 0x100>;
--			interrupts =3D <2 13>; /* pwa0 */
--		};
+-Raspberry Pi 2 Model B
+-Required root node properties:
+-compatible =3D "raspberrypi,2-model-b", "brcm,bcm2836";
 -
--		pixelvalve@7e207000 {
--			compatible =3D "brcm,bcm2835-pixelvalve1";
--			reg =3D <0x7e207000 0x100>;
--			interrupts =3D <2 14>; /* pwa1 */
--		};
+-Raspberry Pi 3 Model A+
+-Required root node properties:
+-compatible =3D "raspberrypi,3-model-a-plus", "brcm,bcm2837";
 -
- 		dpi: dpi@7e208000 {
- 			compatible =3D "brcm,bcm2835-dpi";
- 			reg =3D <0x7e208000 0x8c>;
-@@ -490,14 +367,6 @@
-
- 		};
-
--		thermal: thermal@7e212000 {
--			compatible =3D "brcm,bcm2835-thermal";
--			reg =3D <0x7e212000 0x8>;
--			clocks =3D <&clocks BCM2835_CLOCK_TSENS>;
--			#thermal-sensor-cells =3D <0>;
--			status =3D "disabled";
--		};
+-Raspberry Pi 3 Model B
+-Required root node properties:
+-compatible =3D "raspberrypi,3-model-b", "brcm,bcm2837";
 -
- 		aux: aux@7e215000 {
- 			compatible =3D "brcm,bcm2835-aux";
- 			#clock-cells =3D <1>;
-@@ -587,16 +456,6 @@
- 			status =3D "disabled";
- 		};
-
--		i2c2: i2c@7e805000 {
--			compatible =3D "brcm,bcm2835-i2c";
--			reg =3D <0x7e805000 0x1000>;
--			interrupts =3D <2 21>;
--			clocks =3D <&clocks BCM2835_CLOCK_VPU>;
--			#address-cells =3D <1>;
--			#size-cells =3D <0>;
--			status =3D "disabled";
--		};
+-Raspberry Pi 3 Model B+
+-Required root node properties:
+-compatible =3D "raspberrypi,3-model-b-plus", "brcm,bcm2837";
 -
- 		vec: vec@7e806000 {
- 			compatible =3D "brcm,bcm2835-vec";
- 			reg =3D <0x7e806000 0x1000>;
-@@ -605,26 +464,6 @@
- 			status =3D "disabled";
- 		};
-
--		pixelvalve@7e807000 {
--			compatible =3D "brcm,bcm2835-pixelvalve2";
--			reg =3D <0x7e807000 0x100>;
--			interrupts =3D <2 10>; /* pixelvalve */
--		};
+-Raspberry Pi Compute Module
+-Required root node properties:
+-compatible =3D "raspberrypi,compute-module", "brcm,bcm2835";
 -
--		hdmi: hdmi@7e902000 {
--			compatible =3D "brcm,bcm2835-hdmi";
--			reg =3D <0x7e902000 0x600>,
--			      <0x7e808000 0x100>;
--			interrupts =3D <2 8>, <2 9>;
--			ddc =3D <&i2c2>;
--			clocks =3D <&clocks BCM2835_PLLH_PIX>,
--				 <&clocks BCM2835_CLOCK_HSM>;
--			clock-names =3D "pixel", "hdmi";
--			dmas =3D <&dma 17>;
--			dma-names =3D "audio-rx";
--			status =3D "disabled";
--		};
+-Raspberry Pi Compute Module 3
+-Required root node properties:
+-compatible =3D "raspberrypi,3-compute-module", "brcm,bcm2837";
 -
- 		usb: usb@7e980000 {
- 			compatible =3D "brcm,bcm2835-usb";
- 			reg =3D <0x7e980000 0x10000>;
-@@ -636,17 +475,6 @@
- 			phys =3D <&usbphy>;
- 			phy-names =3D "usb2-phy";
- 		};
+-Raspberry Pi Compute Module 3 Lite
+-Required root node properties:
+-compatible =3D "raspberrypi,3-compute-module-lite", "brcm,bcm2837";
 -
--		v3d: v3d@7ec00000 {
--			compatible =3D "brcm,bcm2835-v3d";
--			reg =3D <0x7ec00000 0x1000>;
--			interrupts =3D <1 10>;
--			power-domains =3D <&pm BCM2835_POWER_DOMAIN_GRAFX_V3D>;
--		};
+-Raspberry Pi Zero
+-Required root node properties:
+-compatible =3D "raspberrypi,model-zero", "brcm,bcm2835";
 -
--		vc4: gpu {
--			compatible =3D "brcm,bcm2835-vc4";
--		};
- 	};
-
- 	clocks {
+-Raspberry Pi Zero W
+-Required root node properties:
+-compatible =3D "raspberrypi,model-zero-w", "brcm,bcm2835";
+-
+-Generic BCM2835 board
+-Required root node properties:
+-compatible =3D "brcm,bcm2835";
 =2D-
 2.7.4
 
