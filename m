@@ -2,26 +2,26 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 75741CD2D2
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  6 Oct 2019 17:29:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97CF7CD2CE
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  6 Oct 2019 17:29:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbfJFP3T (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 6 Oct 2019 11:29:19 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49741 "EHLO mout.gmx.net"
+        id S1726564AbfJFP3R (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 6 Oct 2019 11:29:17 -0400
+Received: from mout.gmx.net ([212.227.17.22]:48441 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726599AbfJFP3S (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 6 Oct 2019 11:29:18 -0400
+        id S1726474AbfJFP3R (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 6 Oct 2019 11:29:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1570375741;
-        bh=zsRxR3IHUAe+a4FnhRTcZN5Fxop1p9dlP5W0ADx11B8=;
+        s=badeba3b8450; t=1570375742;
+        bh=8nLmfY08cK6Zl55bjH7dTnmxZSguSgPLd5QV3TA7wYk=;
         h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=WLLtdTvTJVSL+C7Sg3DLZogPXOLnF+MYv7CISZw0w9AhGBQQkXBEHh3CiAi/fMM9i
-         fQ4PYFejYVG2Qv18ROp4i/CZqOE87lJcyPttX35Zk09NI+rYu3ce8G8nYJwsqsl7+c
-         OiC6nrqCpggfnUg/Yn5y7zVnS8J5EydkiV4RFMS0=
+        b=hxvNdN3cgWjB8KXsNL3AJA/h0HrMQsxNVgxkn67YX9P3O85yaK66Xg4GDkyujhquG
+         r+Q5rtxnyyE5AzoMXDqR1zuRAp4gTh8HzyZsyPf8wWlnF1IZM9umWu+2phyoyFDGkI
+         oScytdho8IAXwbtOZfkH8Yafsu9kQjvKjwJqiM4M=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from localhost.localdomain ([37.4.249.116]) by mail.gmx.com
  (mrgmx104 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 1MVNB1-1iiTAw0xd9-00SNc1; Sun, 06 Oct 2019 17:29:01 +0200
+ 1MuUjC-1hzCD13IIs-00rV5A; Sun, 06 Oct 2019 17:29:01 +0200
 From:   Stefan Wahren <wahrenst@gmx.net>
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
@@ -36,74 +36,72 @@ Cc:     Catalin Marinas <catalin.marinas@arm.com>,
         bcm-kernel-feedback-list@broadcom.com,
         linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         linux-bluetooth@vger.kernel.org, Stefan Wahren <wahrenst@gmx.net>
-Subject: [PATCH V4 09/10] arm64: dts: broadcom: Add reference to RPi 4 B
-Date:   Sun,  6 Oct 2019 17:28:27 +0200
-Message-Id: <1570375708-26965-10-git-send-email-wahrenst@gmx.net>
+Subject: [PATCH V4 10/10] MAINTAINERS: Add BCM2711 to BCM2835 ARCH
+Date:   Sun,  6 Oct 2019 17:28:28 +0200
+Message-Id: <1570375708-26965-11-git-send-email-wahrenst@gmx.net>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1570375708-26965-1-git-send-email-wahrenst@gmx.net>
 References: <1570375708-26965-1-git-send-email-wahrenst@gmx.net>
-X-Provags-ID: V03:K1:ON0gA9PtGkXWmbxKZqc2fzs/pNiWrzcX2ZwiwfEr8L7aCP6Vraf
- MZkposixV9lKWtxDmtArGEtW3UEjm7a8PIm8k4CLfsKgVT+mjgccEVQ0l/8UphnwlQYaYu/
- loBqdLssKqpRC0NqlIUk6UXRRQfiPkZeuQVO6nmbPo0fA0VhzjCCGDhwDaK8tpt0qNHboMa
- g+0SJXehK1sEL8xls3SOw==
+X-Provags-ID: V03:K1:ho7aodY28Mw+u3YaTMCbHrrwJViCpFvXzIPn5PuSWIG7Bbv2UTu
+ OR1+pZrBOm6bV5ikYjEeedAIsyfTNMfwEoqprQ+l3qbioT6oLRKnF4fEVMGIj9izfLmYXaf
+ WX9PqoYLlF4TjOHooNRW1R27Xp1IDE4QoX9UooVWKGccxHn5AjpoSgfOuaALqItuyuNa4zi
+ Cb/cOv6M7GGQ3c2ANavew==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cyR+OKiBsl4=:94ywcr6Zbb8TdryMYPN/f0
- yy4QaSlJETqCMaX6TaQ8d9Dih02qRCgksOtGfF4/qoZ+EW4DVb19ot/LGeMW+3jsux/MNWGFB
- zfmzKz75jlY0K62Inhkv+iY5hdEjjuhpUdMYL4LfRYJX5Mg2rraV/tytrNu4T7Suqis9S74d1
- IVAMCmUDLbtZm/Av5Y5rWweGVEXhZESl+fNM5nLo6JnBayStg6xaabRu34lHgBRh3z2tAG4wd
- Oe6ESFIk+hRhh6X8zspv3Dj68JAK5wFNgaeJukx73zJVMZsQuo/5egXmqYqnNY1Xmz8mczISA
- FVXkosdmgvWEik8z+fjDTlkNRpgy9PzTgMqc2PAI+A1zC0KUACa7mZyiT7XUTSJJNu4oFMByf
- ImkBWcg8ME49HY2sCj+Jp68XpRfiuw5Ep99D/w1hfMzelQeKjl5J7GmWorZj4XyhxVq7jvfDs
- dZXO3Qo4FBYcjQcUF3yEGQT64Ey+WjUDSfU+tBrq1tXYIx4mMnUpLPMfofL8t0HxTlOgkFa8t
- AN9G6uO7i7P1pQ12DwQNXu0vuOxGLOrpaJw/K3sQxt69uj/YohXf1n7XRtqFAqqpmD6Ki97aH
- 27ZA/zFhNlFh+nx70AasuLf/p0Iy9UQmVCvad6DE8sgZDp3Vb19/ueORYarffg4mKRhJEqNEZ
- 1EAHZCObu1HLcsMp04ABq6zv/Y27QRKEi+2KWgfiIoRIAR9wMNUhTwFGXBq/WonutKnMhFlg3
- db+1WjtuE516p884U/M8dpUapJksckKa9/FQquW9K4AcFKNChJRbdL1WW83hyFSjOM6ADshKf
- OXpqKppGs7OLMxIk97/FdH/nXSP1L4bjtO+tZMpVgY85fuo/6M7jUX4h6v1Z/W/6F+ve9UJRz
- 0YaQ+L23rP2vc4vXla5Zg5t6qLMV3nW0OHj3WHwYa8OhZF8NCeoXiGg8sg9AaCPgFvKjx/1JR
- eIUQGRGMxGK4Ql7VcDiaghHIIXIIxzJVZPprT1xKamKSp25dY863zQRGq4k+Mve5WI5ZcxF4r
- rVx65Mu6kauX5atmAvT5EAWl2pUriASTagEMXG11bq39CKcvl5jV9bwIexWozV7rKNjnSbCum
- fsR6t5hzUhQaGHgwYwMoche8O2rzMYj0OKdAp7+hoVPFU3lUhCctdqF1r5kHr9VvhUbS8eIjQ
- O6nqbtZJLfMsubFb5nB607FhdX5F8ZlSY8u8k6U8+55oy4mNWgJJ7EJte3h8fdTmO5SppiIf1
- 7o08mAP7lD3Q8ykESB2WfYD8vKrFBHOpxxtmRjw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tkgwn1bGI14=:Z/hUYUhFbB+/CWHlJtJhjy
+ 64j4o8dKT8/CpDRcbmWeUJeSORRlq5SUdvNpgM0XkF9RY2t3m/NyQmoLgKfR3NwSaktxB2yFN
+ 1+/Kw+S2NFHQU1t6w2VDYeu1HHuREdL8/mLOZgoLaUT/NvAZkKx8+FM0WwtC7mKxN9xUpcAmH
+ 0tJBUfY/zvyN0j1m1yNY3tqNqSQuNssUtNoTdyeFTI+t2toibKcVToo/xUat8X6J1PAP+MGiv
+ ap7mPq987SFy03eVoEY3KRLlkMBn6ybJi7YqEA+JqojUPC5tqbjnlJcA6sX4m3cZsbu1p3Vs3
+ Tq/XMkTbMhMRvejd+vmIRH7Am85+zGBQdPSv1Wk6XVPyX6LxnnZdy/tz53CHfbdYxB3qtGJyB
+ ZstGSRKXh5rlNC3t0A38SYDaxLD00Eu16VahKZYncxeO8JzTD8Cnqp5KJsGYzh1cJAxjshB0P
+ 0/UtDt2Tz7zenal/IZFCbLLKCJwpE3u3w//rh6eCliMH9EhcqZwvqVTGMP1Azx1zJSy+9Lmys
+ hho/syv7XoGoYzVFFP2lvE1ffF7mbxkFxOWsTJrx3Adjnh0zo6l/Dw9BSBDbYbxNao/8jehZK
+ XTD2vxf3f/md7Kb+ZU+kkWM5dXMZZZPC2+OLkPPLDcdfF9OH5NLkwOiseyH4NyOJFID4oTer3
+ hl/WF4Dpn63BJrCtwuOI9FF8Wz4UFNXJ18cY9TDAJrW7b21d1qQkRdXtHw5DLjrYTrxKsWM8d
+ lx4wS+Uo7ZPSYqpVi60pcIynaGyOJlFmmISd3ggqtv+S/ez/zBQ09QZDgsX11blkFyMTIfM89
+ X7ptvFmOYSD/4LsmvLpfGipY/uL5J1FxfkmgRNWTKrbbpqkU2FTvo6pRoSwWt5l167o9sVnAv
+ 3PVZGUA8pq79Cr+ywDGV9t5n4u2UGXG01+/YXfmrITq166pWaY/CJ+FeUS3USh/FsWfOzpbup
+ x//TWUiq44S6qdt1IdnmBp5fHyN930wYa+qwVfzDPqmrG5EsH19qu0PonzgJC8o/w9yZBVJKd
+ XoZLfzajSojeDLI5OcSgQuCvggp8Q/TvIQppRi78sLqmFb5iPOr3BrB7i8rH26JKwYqW4vM2w
+ oXypXu7CXaJgvW+1773xMm+WaDoQYraMEGKsA+bdwCdW3dSHz/XSo9F63SqPAk56XGC6OVuPu
+ OSNp3MycHkjJk+TiypOg/AVuEhj/YzzFmV4uitB9okYN4uasf1i9Mzk+7lDhe9cpyZikSiTF7
+ RCVmcqpazxXs1bSyl4xe1Ocot5jmkHwyNUN/oTA==
 Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds a reference to the dts of the Raspberry Pi 4 B,
-so we don't need to maintain the content in arm64.
+Clarify that BCM2711 belongs to the BCM2835 ARCH.
 
 Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Acked-by: Eric Anholt <eric@anholt.net>
 =2D--
- arch/arm64/boot/dts/broadcom/Makefile            | 3 ++-
- arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dts | 2 ++
- 2 files changed, 4 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dts
+ MAINTAINERS | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/broadcom/Makefile b/arch/arm64/boot/dts/b=
-roadcom/Makefile
-index d1d31cc..cb7de8d 100644
-=2D-- a/arch/arm64/boot/dts/broadcom/Makefile
-+++ b/arch/arm64/boot/dts/broadcom/Makefile
-@@ -1,5 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
--dtb-$(CONFIG_ARCH_BCM2835) +=3D bcm2837-rpi-3-a-plus.dtb \
-+dtb-$(CONFIG_ARCH_BCM2835) +=3D bcm2711-rpi-4-b.dtb \
-+			      bcm2837-rpi-3-a-plus.dtb \
- 			      bcm2837-rpi-3-b.dtb \
- 			      bcm2837-rpi-3-b-plus.dtb \
- 			      bcm2837-rpi-cm3-io3.dtb
-diff --git a/arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dts b/arch/arm64=
-/boot/dts/broadcom/bcm2711-rpi-4-b.dts
-new file mode 100644
-index 0000000..d24c536
-=2D-- /dev/null
-+++ b/arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dts
-@@ -0,0 +1,2 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include "arm/bcm2711-rpi-4-b.dts"
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 296de2b..14a939a 100644
+=2D-- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3187,7 +3187,7 @@ N:	bcm216*
+ N:	kona
+ F:	arch/arm/mach-bcm/
+
+-BROADCOM BCM2835 ARM ARCHITECTURE
++BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE
+ M:	Eric Anholt <eric@anholt.net>
+ M:	Stefan Wahren <wahrenst@gmx.net>
+ L:	bcm-kernel-feedback-list@broadcom.com
+@@ -3195,6 +3195,7 @@ L:	linux-rpi-kernel@lists.infradead.org (moderated f=
+or non-subscribers)
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+ T:	git git://github.com/anholt/linux
+ S:	Maintained
++N:	bcm2711
+ N:	bcm2835
+ F:	drivers/staging/vc04_services
+
 =2D-
 2.7.4
 
