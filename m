@@ -2,87 +2,131 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D698CFC71
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Oct 2019 16:31:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 083B1D01BA
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Oct 2019 21:55:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726062AbfJHObU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 8 Oct 2019 10:31:20 -0400
-Received: from muru.com ([72.249.23.125]:35994 "EHLO muru.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725795AbfJHObU (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 8 Oct 2019 10:31:20 -0400
-Received: from atomide.com (localhost [127.0.0.1])
-        by muru.com (Postfix) with ESMTPS id 48D9F8081;
-        Tue,  8 Oct 2019 14:31:53 +0000 (UTC)
-Date:   Tue, 8 Oct 2019 07:31:16 -0700
-From:   Tony Lindgren <tony@atomide.com>
-To:     Sebastian Reichel <sre@kernel.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Adam Ford <aford173@gmail.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        linux-bluetooth@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@collabora.com
-Subject: Re: [PATCHv2 0/4] Convert all btwilink users to hci_ll and drop
- btwilink
-Message-ID: <20191008143116.GF5610@atomide.com>
-References: <20191003134147.9458-1-sre@kernel.org>
+        id S1730717AbfJHTzh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 8 Oct 2019 15:55:37 -0400
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:45339 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730666AbfJHTzU (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 8 Oct 2019 15:55:20 -0400
+Received: by mail-ed1-f52.google.com with SMTP id h33so16803253edh.12
+        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Oct 2019 12:55:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=d9t6Rq0RbZ7PXIZmIcLbP2JTBMFny2QBILsKgMXZe9M=;
+        b=aMQQgi7dIXVBnmVMSSMCLgb3oXTzeafbZdgWl2Y7dgh9d3yilS1+9yTnvWoS7+GzUk
+         LWbTYKnbDzuBJ3/U6U4a0Txwis4unkVKDohWYyBjnKYrTLghN7laSYeGp1/FcmznDyEO
+         GS9pgiMN+uT0qCjbihaa5wuvtHOM98vqOW8UVjJ7Cv+EprgLSNS8LJdhrjnJyNqQEN56
+         5sfOyU15h4kpoOXNgzNljIz5N8IZnpl4XHLYJYLCwvTOpHMRDfM3ywlgrk+4Qs+isMtv
+         bwWMXB9P8rpPXCaQx70qpw2S2sG0Q07XznOIe3PPQ9uFVdh7+iWMtRM+rtyrWFblwrYM
+         wXZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=d9t6Rq0RbZ7PXIZmIcLbP2JTBMFny2QBILsKgMXZe9M=;
+        b=eKohofeDPB/ykuGDxVjVE4V0BK/4/nfXjgJOrC/cuJauuwIttrcM2mm3Cqr1hfQaNy
+         efHJbMvHueYvWX0bf/pApcDwvmVMU99T0oHJttUGVTOwqeTpeNhXaEeZ5gQqG0e7gHJi
+         /Z5MFYZjZxMOKisqh6BzmwaKM+KdYgIqdrt9/W+PUbUIthC7HSEvVe0a6ZWWKZF6qjXj
+         PNHjLvZkjVdeQp/j4AzsGhxaRth/FRGLb2W6ULeV57YQZacFu2o8r9ISh3RTAAflwbUE
+         kktJ571AufVNfXSh+3ETzikTeV7IKAhIWkF5NZ9bXSHMy9Kf+2MIWTdrU7mvxkMAOnZb
+         zL/w==
+X-Gm-Message-State: APjAAAWTHfji2Y0HvpmGwxM1B98bsuYb5HpGns5AZeRZutXpbIA4tU4k
+        Qu13bHl5xcQedMtd6ARG6TdaZ+lUKeFkxHEG5fw=
+X-Google-Smtp-Source: APXvYqxaZfvXk0/G1PfPN40JEbEfue6b7v2Lk/SQWmnUxoxmnZyxXwpPNC4UPIh9mJw4kQ9atMHeHG1Orcb22TWXOSk=
+X-Received: by 2002:a50:c306:: with SMTP id a6mr36339639edb.108.1570564517490;
+ Tue, 08 Oct 2019 12:55:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191003134147.9458-1-sre@kernel.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Received: by 2002:a17:906:cc89:0:0:0:0 with HTTP; Tue, 8 Oct 2019 12:55:16
+ -0700 (PDT)
+Reply-To: moneygram.1820@outlook.fr
+From:   MONEY GRAM <currency1000000@gmail.com>
+Date:   Tue, 8 Oct 2019 20:55:16 +0100
+Message-ID: <CAPqfnSEO==O6BEtBbcMMZfh3qcY4Bz0qndhCqbcLqZx4DCs44A@mail.gmail.com>
+Subject: HERE IS YOUR MONEY GRAM PAYMENT HAS BEEN SENT TO YOU HERE IS THE M.T.C.N:78393135
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-* Sebastian Reichel <sre@kernel.org> [191003 06:42]:
-> Hi,
-> 
-> This moves the remaining users of btwilink to the "new" serdev based hci_ll
-> driver and drops the btwilink driver afterwards. The patches were only compile
-> tested by me, but Enric tested the IGEP platform and Adam will test the LogicPD
-> platform.
-> 
-> I kept the TI_ST driver for now, since I plan to send a second patchset for the
-> FM radio driver. Once the FM driver has been converted to also use hci_ll, we
-> can remove TI_ST completly.
-> 
-> My suggestion is for the patch handling is, that everything simply goes through
-> Tony's tree.
+HERE IS YOUR MONEY GRAM PAYMENT HAS BEEN SENT TO YOU HERE IS THE
+M.T.C.N:78393135
 
-Sounds good to me, good to see kim gone with patch 3/4 :)
+Attn: Beneficiary,
 
-Marcel, care to ack the old driver removal patch?
+This is to inform you that the America Embassy office was instructed
+to transfer your fund $980,000.00 U.S Dollars compensating all the
+SCAM VICTIMS and your email was found as one of the VICTIMS. by
+America security leading team and America representative officers so
+between today the 8th of October till 1ST Of December 2019 you will
+be receiving MONEY GRAM the sum of $6,000 dollars per day. However be informed
+that we have already sent the $6,000 dollars this morning to avoid
+cancellation of your payment, remain the total sum of $980,000.00.
 
-Regards,
+You have only six hours to call this office upon the receipt of this
+email the maximum amount you will be receiving per a day starting from
+today's $6,000 and the Money Transfer Control Number of today is
+below.
 
-Tony
+NOTE; The sent $6,000 is on hold because of the instruction from IMF
+office, they asked us to place it on hold by requesting the (Clean
+Bill Record Certificate) which will cost you $25 in order to fulfill
+all the necessary obligation to avoid any hitches while sending you
+the payment through MONEY GRAM money transfer, the necessary
+obligation I mean here is to obtain the (Clean Bill Record
+Certificate)
 
-> Changes since PATCHv1 [0]
->  * rebase to 5.4-rc1
->  * move FM radio patches into separate patchset
-> 
-> [0] https://lore.kernel.org/lkml/20181221011752.25627-1-sre@kernel.org/
-> 
-> -- Sebastian
-> 
-> Sebastian Reichel (4):
->   ARM: dts: LogicPD Torpedo: Add WiLink UART node
->   ARM: dts: IGEP: Add WiLink UART node
->   ARM: OMAP2+: pdata-quirks: drop TI_ST/KIM support
->   Bluetooth: btwilink: drop superseded driver
-> 
->  .../boot/dts/logicpd-torpedo-37xx-devkit.dts  |   8 +
->  arch/arm/boot/dts/omap3-igep0020-rev-f.dts    |   8 +
->  arch/arm/boot/dts/omap3-igep0030-rev-g.dts    |   8 +
->  arch/arm/mach-omap2/pdata-quirks.c            |  52 ---
->  drivers/bluetooth/Kconfig                     |  11 -
->  drivers/bluetooth/Makefile                    |   1 -
->  drivers/bluetooth/btwilink.c                  | 337 ------------------
->  7 files changed, 24 insertions(+), 401 deletions(-)
->  delete mode 100644 drivers/bluetooth/btwilink.c
-> 
-> -- 
-> 2.23.0
-> 
+Below is the information of today track it in our
+
+websitehttps://moneygarm.com/asp/orderStatus.asp?country=global
+to see is available to pick up by the receiver, but if we didn't here
+from you soon we'll pickup it up from line for security reason to
+avoid hackers stealing the money online.
+
+Money Transfer Control Number M.T.C.N)::78393135
+SENDERS FIRST NAME: John
+SENDERS LAST NAME: Chun
+SENDERS COUNTRY...BENIN REPUBLIC
+TEXT QUESTION: A
+ANSWER: B
+AMOUNT: $6,000
+
+We need the below details from you, to enable us place the payment to
+your name and transfer the fund to you.
+
+(Full Receivers name)...................
+(You're Country)................................
+(Address)......................................
+(Phone NuMBER-...............................
+(You're Age)............................
+(OCCUPATION)..REAL ESTATE..................
+(A Copy of Your ID CARD).SEE ATTACHMENTS.............
+
+HOWEVER YOU HAVE TO PAY $25 FOR THE (Clean Bill Record Certificate)
+AND THAT IS ALL YOU HAVE TO DO ASAP.
+
+The payment will be sending to below information, such as:
+
+Receiver.............. ALAN UDE
+Country................Benin Republic
+Amount: ....................$25
+Question: .....................A
+Answer:................... B
+Sender...............Name:
+MTCN :..............
+
+According to the instruction and order we received from IMF the their
+requested $25 must be made directly to the above info's.
+
+Furthermore you are advised to call us as the instruction was passed
+that within 6hours without hearing from you, Count your payment
+canceled. Number to call is below listed manager director office of
+release order:
+DR.ALAN UDE
+Director MONEY GRAM-Benin
