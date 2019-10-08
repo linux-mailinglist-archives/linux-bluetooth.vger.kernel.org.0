@@ -2,126 +2,80 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 45FBECEDBB
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Oct 2019 22:42:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 078BACF516
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Oct 2019 10:35:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729412AbfJGUlp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 7 Oct 2019 16:41:45 -0400
-Received: from ns1.tgtizmir.com ([217.116.196.59]:40154 "EHLO ns1.tgtizmir.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728187AbfJGUlo (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 7 Oct 2019 16:41:44 -0400
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-        by ns1.tgtizmir.com (Postfix) with SMTP id D2D2954D2AE;
-        Mon,  7 Oct 2019 04:32:49 +0300 (+03)
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received-SPF: pass (ns1.tgtizmir.com: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=dave@dbsoundfactory.com; helo=127.0.0.1;
-Received: from [58.58.4.247] by 127.0.0.1 with ESMTP id 847C8D6DA6C; Mon, 07 Oct 2019 02:33:48 +0100
-Message-ID: <t6$b472ku0980l0r0$373$r-$ip@4ef9zi.o.ojm>
-From:   "Mr Barrister Hans Erich" <dave@dbsoundfactory.com>
-Reply-To: "Mr Barrister Hans Erich" <dave@dbsoundfactory.com>
-To:     linux@lists.openrisc.net
-Subject: RE:PERSONAL LETTER FROM MRS RASHIA AMIRA
-Date:   Mon, 07 Oct 19 02:33:48 GMT
-X-Mailer: Microsoft Outlook, Build 10.0.2616
+        id S1729730AbfJHIfH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 8 Oct 2019 04:35:07 -0400
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:53036 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728104AbfJHIfH (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 8 Oct 2019 04:35:07 -0400
+Received: by mail-wm1-f44.google.com with SMTP id r19so2162434wmh.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Oct 2019 01:35:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=BodqM2rON8HxHqwDYU9C/fGt/nBoan12tH4myrssfq4=;
+        b=hWueRwRlHLOWL2AQ0JwYk4lPcXAzcsIp84+awhjANs3Mk7eaRlrC5OL1YhnoG2HdQs
+         WOFaEIbO6QeCg3kmLYcDKZnRizCjW82LIhTfHsWrX6GuwGssI19tT75l1RkHjv3DfYAu
+         BEbOHZ8169fY4PrZtoGFN9IB5KEl1A2Wa2QZbiiGchGguX6cojtXTTvOcNgf5QkQQ4xB
+         bsKJwoNL5rp07efY1lzvan/dRmYnoy0WWKxqV1VHqy7oUqfq8DK+ZvQ6dNCyBf3hj+60
+         UQsxO0VYBV+fhu6vCIiWyhtxbL2YlbeaPGObnboCKrLrOXgSYyhiXPw19RGvtkVCiLL8
+         QhIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=BodqM2rON8HxHqwDYU9C/fGt/nBoan12tH4myrssfq4=;
+        b=Vc5HarpRB0sz3n0JILPDmwLfRFi1poy3CGTGU/nkrpr//YJjxnTmvhcyR4WxeFRF1u
+         QDd2QwF1xbILCqXeNkepbiG2sGJz+pmwISTARnrmE6RRH4JiQVTXhzDZz4LVkXcOhsV/
+         KzBY5YSs6u8OHnuYWjRePHNSox1IU7HeCpTmEJ9TNT0KTs3t8Mz5H+x58QDk6TUSAs9J
+         Q20/V1xHoHWRPToxq5lFvP3CXvVyIhV5pIR3h6Cpo317prughleTsxYslxlyHXs7PRV4
+         /PzZdUF0hTOaPlJlG/b0jS0qW1Vbzu1u+2CqYItQrLJv/aKbqYLZjgEkCXNeLuPBCgxH
+         ItOg==
+X-Gm-Message-State: APjAAAVIT3vBAumMx6HiwwAY/+0pLecFhRVmts4GyIGxAZ1dJ40IsUSJ
+        /gIOLyEfeSlfMEo7bvBjuy/7ws35X0H/iP4yUBByIvVp
+X-Google-Smtp-Source: APXvYqz9L+OCA69rCK6o4t9smXDRxHF4P2An3m0VwHcURIludCjdw4EOqYPPXj/2+BALrXKYBiMmIkiyDhGRxdk+59U=
+X-Received: by 2002:a1c:9c51:: with SMTP id f78mr2665696wme.144.1570523704795;
+ Tue, 08 Oct 2019 01:35:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-        boundary="BB118ED_BAB2D5FF1EA50F"
-X-Priority: 3
-X-MSMail-Priority: Normal
+From:   hongyi mao <maohongyicn@gmail.com>
+Date:   Tue, 8 Oct 2019 16:34:53 +0800
+Message-ID: <CACokStdMboxnDPR6cdQYfpfdNApQCn73pjQZNqQ+ag0QPYZXgw@mail.gmail.com>
+Subject: Kernel Bluetooth Protocol Stack Problem
+To:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Hi,
+ Currently we have found a problem when using the kernel Bluetooth
+protocol stack.
 
---BB118ED_BAB2D5FF1EA50F
-Content-Type: text/plain;
-Content-Transfer-Encoding: quoted-printable
+ Bluetooth hardware: support BR/BLE USB Client Module
 
-Greetings
+ Kernel version: 3.18.20
 
-My name is Barrister Hans Erich.
+ The problem: our host received the HCI_EV_CONN_REQUEST event, in this
+event call hci_conn_add () and create a struct hci_conn,
+ then the host will send HCI_OP_ACCEPT_SYNC_CONN_REQ command in the
+event processing.
+ However, according to the Bluetooth protocol core_v5.0 description,
+ the host will then receive a Command Status event or Synchronous
+Connection Complete event or Connection Complete event for the link,
+ which will include Connection_Handle and the link parameters if the
+setup is successful.
+ However, the host did not receive these events for the link.
+Hdev->rx_work workqueue is still working to collect events.
+ After a period of time, the host receives an HCI_EV_CHANNEL_SELECTED
+event, which is to operate the hci_conn->amp_mgr structure,
+ but the host has not received any events containing any information
+in the structure, this structure has not been created, so the kernel
+appears oops
 
-I have a client who is interested to invest in your country, she is a well=
- known politician in her country and deserve a lucrative investment partne=
-rship with you outside her country without any delay   Please can you mana=
-ge such investment please Kindly reply for further details.
+Thanks and Best Regards!
 
-Your full names --------
-
-
-Your urgent response will be appreciated
-
-Thank you and God bless you.
-
-Barrister Hans Erich
-
-Yours sincerely,
-Barrister Hans Erich
-CONTACT: hanserich9helmut@gmail.com
-
---BB118ED_BAB2D5FF1EA50F--
-
+Hongyi Mao
