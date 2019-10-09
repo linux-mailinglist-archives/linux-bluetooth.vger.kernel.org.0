@@ -2,135 +2,286 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 50398D136C
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2019 18:01:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8019D1833
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2019 21:12:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731375AbfJIQBW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Oct 2019 12:01:22 -0400
-Received: from mga07.intel.com ([134.134.136.100]:24934 "EHLO mga07.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730708AbfJIQBW (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 9 Oct 2019 12:01:22 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 09 Oct 2019 09:01:21 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.67,276,1566889200"; 
-   d="scan'208";a="184105132"
-Received: from fmsmsx107.amr.corp.intel.com ([10.18.124.205])
-  by orsmga007.jf.intel.com with ESMTP; 09 Oct 2019 09:01:21 -0700
-Received: from fmsmsx102.amr.corp.intel.com (10.18.124.200) by
- fmsmsx107.amr.corp.intel.com (10.18.124.205) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Wed, 9 Oct 2019 09:01:21 -0700
-Received: from FMSEDG002.ED.cps.intel.com (10.1.192.134) by
- FMSMSX102.amr.corp.intel.com (10.18.124.200) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Wed, 9 Oct 2019 09:01:20 -0700
-Received: from NAM02-CY1-obe.outbound.protection.outlook.com (104.47.37.55) by
- edgegateway.intel.com (192.55.55.69) with Microsoft SMTP Server (TLS) id
- 14.3.439.0; Wed, 9 Oct 2019 09:01:20 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OMxM7dncF8r16RrtpNCGH9njJIg8gnu/PSfW1BN5urZCo3qHkUck/xc7YJNr7/h2GFf1sw04od5qzsro+5/PxL6bTNJ7lR8dX0tiPWBCpO6beygIVb6AmXN/oyEA5HPI9ytvdO5ZZ+HfCmk9eYIE2+saBdhpOW0hUw0lSuKyGEW3mkq2pkMU8Z6R+rdsXvFNJgdz3BbOwFm0t8pxkGQb7d1N+F3q9R9UslZqT++m162KtRdZKKC0wQ8V2RfXXxa5+1gkB17fOkybn0U+UTGU4YbOzFp405gyb+oZi/ceupZZY/uP9qV4l0CZTlvBLyzgVaao58bkFuu7AYDUpq1yxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5OTBBUSHOQhM7y6cS9BmQmELacptX6nCM9Pl4qY4mnY=;
- b=aRgoqfjcF6qSiIfnedhxuJej1TEzbN0z4fjA/D905AF3+jXzTaaY1wUjrxmH6nKJFZSosdoa78XfVSmGrEKLk1vhHej8hU4EyuMDMmSJBzAyh1BWe/Tu9oRhpAxrt3AFJJsbVBxuItbxG8btoXuMowp1By50Xhv9XrrR3BQ37F6W/3U5/rfVxVXDZXSVDznhlScWr5HOzFyqzgQXAchlLy0kmYAzD6otCB0n0xI3PjLAJo0pDUej/QlxgV1CxR79c+oZBp7b6+WseloRKn9XVpRHhfY9OTxZWNXA2wO3/kgbC7Y74MgybX4hzTHqUGNpxA14IK/pRUMIm9T85iS28A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5OTBBUSHOQhM7y6cS9BmQmELacptX6nCM9Pl4qY4mnY=;
- b=Lxcq/P19tSkEN7QVXOWbHp0fWlUWGcp/npd6F5DIApK+qSHIkf1ZQNg3aJ2fhC5rfE3I4+B9ven8rGYJhAvtHnLVl6rnF2WSbeZZGnUhzlMKiOyIV4/m3eOUe5l/eqsxnWzHvfXwWH6PlBc3JKGCP3/h89JxSZupCu+o4bQuzCc=
-Received: from DM6PR11MB4412.namprd11.prod.outlook.com (52.132.248.86) by
- DM6PR11MB2874.namprd11.prod.outlook.com (20.176.100.145) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2327.25; Wed, 9 Oct 2019 16:01:05 +0000
-Received: from DM6PR11MB4412.namprd11.prod.outlook.com
- ([fe80::256c:4683:ec9f:6a19]) by DM6PR11MB4412.namprd11.prod.outlook.com
- ([fe80::256c:4683:ec9f:6a19%5]) with mapi id 15.20.2347.016; Wed, 9 Oct 2019
- 16:01:05 +0000
-From:   "Gix, Brian" <brian.gix@intel.com>
-To:     "luiz.dentz@gmail.com" <luiz.dentz@gmail.com>
-CC:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "Stotland, Inga" <inga.stotland@intel.com>
-Subject: Re: [PATCH BlueZ v2] unit: Add Mesh Crypto tests from Mesh Profile
- Spec
-Thread-Topic: [PATCH BlueZ v2] unit: Add Mesh Crypto tests from Mesh Profile
- Spec
-Thread-Index: AQHVeitnvuZ0M/6ZWESMbo6b5FGjo6dMOyMAgAY0uQCAABFOAA==
-Date:   Wed, 9 Oct 2019 16:01:05 +0000
-Message-ID: <eccd2dff7fa5e04605a3b0302315060f99c80e53.camel@intel.com>
-References: <20191003204405.27285-1-brian.gix@intel.com>
-         <e9d186c8d89be278252ddfe3982602be984f3c14.camel@intel.com>
-         <CABBYNZJ1L6ZaMe-Vf97jc=NxBEHwAs4gOGMQX_THJ-++w7Rnvg@mail.gmail.com>
-In-Reply-To: <CABBYNZJ1L6ZaMe-Vf97jc=NxBEHwAs4gOGMQX_THJ-++w7Rnvg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=brian.gix@intel.com; 
-x-originating-ip: [192.55.54.40]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: fa551b3f-b12e-4c4c-5018-08d74cd1e434
-x-ms-traffictypediagnostic: DM6PR11MB2874:
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM6PR11MB2874D481FDAF14B475E82FFCE1950@DM6PR11MB2874.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-forefront-prvs: 018577E36E
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(396003)(39850400004)(136003)(346002)(376002)(189003)(199004)(8936002)(66556008)(2906002)(6512007)(66946007)(86362001)(107886003)(14454004)(66446008)(71190400001)(71200400001)(6246003)(118296001)(36756003)(1361003)(76116006)(64756008)(316002)(8676002)(256004)(99286004)(7736002)(3846002)(6116002)(4326008)(91956017)(305945005)(66476007)(66066001)(2501003)(25786009)(11346002)(6486002)(186003)(486006)(478600001)(6436002)(6506007)(102836004)(2616005)(476003)(26005)(2351001)(446003)(76176011)(81156014)(81166006)(5660300002)(54906003)(6916009)(5640700003)(229853002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR11MB2874;H:DM6PR11MB4412.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Q/CYVAZvQ2lwws77L6x64VjXASqMNKHeHZN6a0sbdtGGuWU5RR26I/A5B29vZd6vQPyOi5/gG48VasGFtKl/6V0T8pWclxjv35cvbqdehRx/9+g1xUmidX8DIOcIQeVOllXCJ54HgM86RDmblPWHQN7RcLU1s8HIoY+E/K/Qrw/vi9ZgPaiXwpIjbd2h2lW6bdLxn5DCl4+6fOzfNLxzlla9HTFlcP4CZFqHYqSUsxLKJAviesLsZ/rKxVeWC7AJ4cGp8KcRpFfyBJ96+j8FtRQ2rfPYT7nP71v4QNzB1f03+lbiOoI0See5Zf01ZP1UXxIGamK9IpXVWaVXw7Mi4NRl15VKGR772Gzs45g8kDdUu/Q3iG3mgBpVOMSppN9x8wN6KQlY+ha5J4Suc5o6ByCZIPrB90IHirlhoEWhWrM=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <E83278C808557C4C9C70DCC9A148AFDA@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        id S1732232AbfJITMK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Oct 2019 15:12:10 -0400
+Received: from mout.kundenserver.de ([217.72.192.74]:59681 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732061AbfJITLf (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 9 Oct 2019 15:11:35 -0400
+Received: from threadripper.lan ([149.172.19.189]) by mrelayeu.kundenserver.de
+ (mreue109 [212.227.15.145]) with ESMTPA (Nemesis) id
+ 1M9Frd-1iCUhU1UAx-006S0r; Wed, 09 Oct 2019 21:09:11 +0200
+From:   Arnd Bergmann <arnd@arndb.de>
+To:     Al Viro <viro@zeniv.linux.org.uk>
+Cc:     linux-kernel@vger.kernel.org, y2038@lists.linaro.org,
+        linux-fsdevel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH v6 00/43] compat_ioctl: remove most of fs/compat_ioctl.c
+Date:   Wed,  9 Oct 2019 21:08:52 +0200
+Message-Id: <20191009190853.245077-1-arnd@arndb.de>
+X-Mailer: git-send-email 2.20.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: fa551b3f-b12e-4c4c-5018-08d74cd1e434
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Oct 2019 16:01:05.6224
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: x+6c1v2/vfiwKPDiVBzQYCryGG0drLUZ4gEO7DGnLz9iwGCUHpIzn54nB0w4J1KA+ZjZLPpCgtLBJcGz8X6spw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR11MB2874
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:soRfA8GEsLyL6KJg7pQMmF7Bo5SXBVsSv+VAvypPv38g8t9aDtn
+ 3y0GeYyEh9Ep2hbXg3Lgcef44HAU8BgCX5p0M8kyvLrlCTJan4SAkA/P7hpL88VyJP8xOqx
+ WDz/UwhCf549lXsxlbiA1d0aA+bUwFqCIzBu3kWkC4G9ZxtTrn47udvoEX8UQyIcUxYqKra
+ 4x1+N9IJOh6o18fVm/DYg==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:q9EmiQP5Hoc=:HeLrSdtqCXfrAstU0aO7OD
+ 884C2iPGS1h17y6cvncKVzY7Rh+WZvsveod21s3AMUX6zEPTX4OV2KmfDwGPPQf0hejWYCJbV
+ OGiqdwt8W1012ByoFy9WMhEg1qB6V+/F6DVYrtAfM0b9pn7P8VTjMa3K0n5oKQA/RluYkP+Tv
+ CTD4vr9OPALoSZkA9MXJ26tR5j4KoT6rdtZcb6D74ib/xLy+WdW6Uh96552Zb32nOXYPfQm/P
+ urDGniIgVPa3PSjVOYcV4BzO8qqVeM8oeDPiSSFEbirsBH+/CPjGgIsR2UCmceeSQlqTRelnf
+ Oci0xFbSJpZ7apksCk0/Fps4gl6B8+kL+c8kI9/8fDrmCUHEs7/gkchidTf4aL9t8fWVPnoKz
+ NoabhvGvwUwR+LlmizruvBi0IXG1wQvMH5we7gOBbO6aqrrlFwl/XTDGYf1TN12JPvQZitMtz
+ Jb3bhe6iE5io+NuBey6HpUCVQ7kKJn2kdIj9cvH57maGC5StNvBPRC/BNVgvMyci0CZaQJMUx
+ iXcp7gh10qMZNlnOMhHMEO0wxiE0xib8XC5PRcPCTrZr8Gk8AzkgfiihJG0BE9LNTez9e4jWm
+ Lyd8sFOPqqIYpMkMhcQpaTGpwgg05yjqT8TYD3rnCI8QBkDG5aCPiCw2hti6e7g76O7v2GIZv
+ Lrh5y8x5j32XSdtk26K5V4B5y6+3xcrol+uyeYIY45s/bP6oRsgVHzeMtMhtWjQhn70QRH6VJ
+ Mny9K9XEHt3dm7f3uu3k6U2Ip/kW3x5+7o5HK9+7HQFXccoMg8buR/iQh5PZMzcrBlYC30x4v
+ d36CIWAEEHEUamoKgqnAzBSpP5dLcEPavVuKaJuEe7jT4VPam9B63/cWl12SAckf9GzCTYOgu
+ Zxrg5El2sPCxv4k9iMhA==
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-SGkgTHVpeiwNCg0KT24gV2VkLCAyMDE5LTEwLTA5IGF0IDE3OjU5ICswMzAwLCBMdWl6IEF1Z3Vz
-dG8gdm9uIERlbnR6IHdyb3RlOg0KPiBPbiBUaHUsIDIwMTktMTAtMDMgYXQgMTM6NDQgLTA3MDAs
-IEJyaWFuIEdpeCB3cm90ZToNCj4gPiA+IFRoaXMgdW5pdCB0ZXN0IHdpbGwgYmUgZ3Jvd24gb3Zl
-ciB0aW1lIHRvIGluY2x1ZGUgdGVzdHMgZm9ybWVkIGZyb20gdGhlDQo+ID4gPiBzYW1wbGUgZGF0
-YSBpbiB0aGUgQmx1ZXRvb3RoIE1lc2ggUHJvZmlsZSBzcGVjaWZpY2F0aW9uIChDdXJyZW50bHkg
-YXQNCj4gPiA+IHZlcnNpb24gdjEuMC4xKS4NCj4gPiA+IA0KPiA+ID4gQ3VycmVudGx5IGl0IGlu
-Y2x1ZGVzIHRlc3QgY2FzZXMgZm9yIHRoZSBmb2xsb3dpbmcgc2V0cyBvZiBzYW1wbGUgZGF0YToN
-Cj4gPiA+IFNlY3Rpb25zIDguMS4xLTYNCj4gPiA+IFNlY3Rpb25zIDguMi4xLTYNCj4gPiA+IFNl
-Y3Rpb25zIDguMy4xLTExDQo+ID4gPiBTZWN0aW9uIDguNC4zDQo+ID4gPiBTZWN0aW9uIDguNi4y
-DQo+ID4gPiAtLS0NCj4gPiA+ICBNYWtlZmlsZS5hbSAgICAgICAgICAgICB8ICAgMTAgKw0KPiA+
-ID4gIHVuaXQvdGVzdC1tZXNoLWNyeXB0by5jIHwgMjAwMCArKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysNCj4gPiA+ICAyIGZpbGVzIGNoYW5nZWQsIDIwMTAgaW5zZXJ0aW9u
-cygrKQ0KPiA+ID4gIGNyZWF0ZSBtb2RlIDEwMDY0NCB1bml0L3Rlc3QtbWVzaC1jcnlwdG8uYw0K
-PiA+ID4gDQo+IA0KPiBtYWtlIHRlc3QgaXMgZmFpbGluZyBvbiB0aGlzIG9uZToNCg0KV2hhdCBw
-bGF0Zm9ybS9jb21tYW5kIGxpbmUgYXJlIHlvdSBnZXR0aW5nIHRvIHNlZSB0aGlzPyAgb3IgYXJl
-IHlvdSBydW5uaW5nIGl0IHVuZGVyIGEgc3RhdGljIGFuYWx5c2lzIHRvb2wgb2YNCnNvbWUgc29y
-dD8NCg0KSSBhbSBnZXR0aW5nIG5vIGVycm9ycyBvbiBGMzAsIGJpdGggMzIgYW5kIDY0IGJpdC4u
-Lg0KDQpCdXQgSSB3aWxsIGNoZWNrIG91dCB0aGUgY2hlY2tfaWRfYmVhY29uKCkgZnVuY3Rpb24u
-Li4NCg0KPiANCj4gPT0yNTU1OT09IDggYnl0ZXMgaW4gMSBibG9ja3MgYXJlIGRlZmluaXRlbHkg
-bG9zdCBpbiBsb3NzIHJlY29yZCAxIG9mIDQNCj4gPT0yNTU1OT09ICAgIGF0IDB4NDgzODgwQjog
-bWFsbG9jICh2Z19yZXBsYWNlX21hbGxvYy5jOjMwOSkNCj4gPT0yNTU1OT09ICAgIGJ5IDB4MTFG
-QjI1OiBsX21hbGxvYyAodXRpbC5jOjYyKQ0KPiA9PTI1NTU5PT0gICAgYnkgMHgxMjAyMzI6IGxf
-dXRpbF9mcm9tX2hleHN0cmluZyAodXRpbC5jOjQyNykNCj4gPT0yNTU1OT09ICAgIGJ5IDB4MTE4
-MDY5OiBjaGVja19pZF9iZWFjb24gKHRlc3QtbWVzaC1jcnlwdG8uYzoxNzA5KQ0KPiA9PTI1NTU5
-PT0gICAgYnkgMHgxMTgwNjk6IG1haW4gKHRlc3QtbWVzaC1jcnlwdG8uYzoxOTk3KQ0KPiANCj4g
-QnR3IHVzdWFsbHkgdGhlIHRlc3QgYXJlIHVzaW5nIHRoZSB0ZXN0ZXIgZnJhbWV3b3JrIGFuZCBp
-dCBzaG91bGQgYmUNCj4gcG9zc2libGUgdG8gaW50ZWdyYXRlIHdpdGggdGhhdCBidXQgdGhhdCBw
-cm9iYWJseSBuZWVkIHNvbWUgd29yayB0bw0KPiBtYWtlIHlvdSBhYmxlIHRvIHJ1biB3aXRoIGVs
-bCBtYWlubG9vcC4NCj4gDQo+IA0KPiANCj4gDQo+IC0tDQo+IEx1aXogQXVndXN0byB2b24gRGVu
-dHoNCg==
+As part of the cleanup of some remaining y2038 issues, I came to
+fs/compat_ioctl.c, which still has a couple of commands that need support
+for time64_t.
+
+In completely unrelated work, I spent time on cleaning up parts of this
+file in the past, moving things out into drivers instead.
+
+After Al Viro reviewed an earlier version of this series and did a lot
+more of that cleanup, I decided to try to completely eliminate the rest
+of it and move it all into drivers.
+
+This series incorporates some of Al's work and many patches of my own,
+but in the end stops short of actually removing the last part, which is
+the scsi ioctl handlers. I have patches for those as well, but they need
+more testing or possibly a rewrite.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+
+Everything in here was posted one or more times already, sending
+the whole series again for review, I hope to get some input on those
+patches that have not already been reviewed.
+
+The entire series is also part of linux-next through
+https://git.kernel.org/pub/scm/linux/kernel/git/arnd/playground.git/commit/?h=y2038
+
+
+Al Viro (8):
+  fix compat handling of FICLONERANGE, FIDEDUPERANGE and FS_IOC_FIEMAP
+  FIGETBSZ: fix compat
+  compat: itanic doesn't have one
+  do_vfs_ioctl(): use saner types
+  compat: move FS_IOC_RESVSP_32 handling to fs/ioctl.c
+  compat_sys_ioctl(): make parallel to do_vfs_ioctl()
+  compat_ioctl: unify copy-in of ppp filters
+  compat_ioctl: move PPPIOCSCOMPRESS to ppp_generic
+
+Arnd Bergmann (35):
+  ceph: fix compat_ioctl for ceph_dir_operations
+  compat_ioctl: drop FIOQSIZE table entry
+  compat_ioctl: add compat_ptr_ioctl()
+  compat_ioctl: move rtc handling into rtc-dev.c
+  compat_ioctl: move drivers to compat_ptr_ioctl
+  compat_ioctl: move more drivers to compat_ptr_ioctl
+  compat_ioctl: use correct compat_ptr() translation in drivers
+  compat_ioctl: move tape handling into drivers
+  compat_ioctl: move ATYFB_CLK handling to atyfb driver
+  compat_ioctl: move isdn/capi ioctl translation into driver
+  compat_ioctl: move rfcomm handlers into driver
+  compat_ioctl: move hci_sock handlers into driver
+  compat_ioctl: remove HCIUART handling
+  compat_ioctl: remove HIDIO translation
+  compat_ioctl: remove translation for sound ioctls
+  compat_ioctl: remove IGNORE_IOCTL()
+  compat_ioctl: remove /dev/random commands
+  compat_ioctl: remove joystick ioctl translation
+  compat_ioctl: remove PCI ioctl translation
+  compat_ioctl: remove /dev/raw ioctl translation
+  compat_ioctl: remove last RAID handling code
+  compat_ioctl: remove unused convert_in_user macro
+  gfs2: add compat_ioctl support
+  fs: compat_ioctl: move FITRIM emulation into file systems
+  compat_ioctl: move WDIOC handling into wdt drivers
+  compat_ioctl: reimplement SG_IO handling
+  af_unix: add compat_ioctl support
+  compat_ioctl: handle SIOCOUTQNSD
+  compat_ioctl: move SIOCOUTQ out of compat_ioctl.c
+  tty: handle compat PPP ioctls
+  compat_ioctl: handle PPPIOCGIDLE for 64-bit time_t
+  compat_ioctl: ppp: move simple commands into ppp_generic.c
+  compat_ioctl: move SG_GET_REQUEST_TABLE handling
+  pktcdvd: add compat_ioctl handler
+  scsi: sd: enable compat ioctls for sed-opal
+
+ Documentation/networking/ppp_generic.txt    |   2 +
+ arch/powerpc/platforms/52xx/mpc52xx_gpt.c   |   1 +
+ arch/um/drivers/harddog_kern.c              |   1 +
+ arch/um/drivers/hostaudio_kern.c            |   1 +
+ block/scsi_ioctl.c                          | 132 ++-
+ drivers/android/binder.c                    |   2 +-
+ drivers/block/pktcdvd.c                     |  25 +
+ drivers/char/ipmi/ipmi_watchdog.c           |   1 +
+ drivers/char/ppdev.c                        |  12 +-
+ drivers/char/random.c                       |   1 +
+ drivers/char/tpm/tpm_vtpm_proxy.c           |  12 +-
+ drivers/crypto/qat/qat_common/adf_ctl_drv.c |   2 +-
+ drivers/dma-buf/dma-buf.c                   |   4 +-
+ drivers/dma-buf/sw_sync.c                   |   2 +-
+ drivers/dma-buf/sync_file.c                 |   2 +-
+ drivers/firewire/core-cdev.c                |  12 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c    |   2 +-
+ drivers/hid/hidraw.c                        |   4 +-
+ drivers/hid/usbhid/hiddev.c                 |  11 +-
+ drivers/hwmon/fschmd.c                      |   1 +
+ drivers/hwtracing/stm/core.c                |  12 +-
+ drivers/ide/ide-tape.c                      |  27 +-
+ drivers/iio/industrialio-core.c             |   2 +-
+ drivers/infiniband/core/uverbs_main.c       |   4 +-
+ drivers/isdn/capi/capi.c                    |  31 +
+ drivers/media/rc/lirc_dev.c                 |   4 +-
+ drivers/misc/cxl/flash.c                    |   8 +-
+ drivers/misc/genwqe/card_dev.c              |  23 +-
+ drivers/misc/mei/main.c                     |  22 +-
+ drivers/misc/vmw_vmci/vmci_host.c           |   2 +-
+ drivers/mtd/ubi/cdev.c                      |  36 +-
+ drivers/net/ppp/ppp_generic.c               | 245 ++++--
+ drivers/net/tap.c                           |  12 +-
+ drivers/nvdimm/bus.c                        |   4 +-
+ drivers/nvme/host/core.c                    |   2 +-
+ drivers/pci/switch/switchtec.c              |   2 +-
+ drivers/platform/x86/wmi.c                  |   2 +-
+ drivers/rpmsg/rpmsg_char.c                  |   4 +-
+ drivers/rtc/dev.c                           |  13 +-
+ drivers/rtc/rtc-ds1374.c                    |   1 +
+ drivers/rtc/rtc-vr41xx.c                    |  10 +
+ drivers/s390/char/tape_char.c               |  41 +-
+ drivers/sbus/char/display7seg.c             |   2 +-
+ drivers/sbus/char/envctrl.c                 |   4 +-
+ drivers/scsi/3w-xxxx.c                      |   4 +-
+ drivers/scsi/cxlflash/main.c                |   2 +-
+ drivers/scsi/esas2r/esas2r_main.c           |   2 +-
+ drivers/scsi/megaraid/megaraid_mm.c         |  28 +-
+ drivers/scsi/pmcraid.c                      |   4 +-
+ drivers/scsi/sd.c                           |  14 +-
+ drivers/scsi/sg.c                           |  59 +-
+ drivers/scsi/st.c                           |  28 +-
+ drivers/staging/android/ion/ion.c           |   4 +-
+ drivers/staging/pi433/pi433_if.c            |  12 +-
+ drivers/staging/vme/devices/vme_user.c      |   2 +-
+ drivers/tee/tee_core.c                      |   2 +-
+ drivers/tty/tty_io.c                        |   5 +
+ drivers/usb/class/cdc-wdm.c                 |   2 +-
+ drivers/usb/class/usbtmc.c                  |   4 +-
+ drivers/usb/core/devio.c                    |  16 +-
+ drivers/usb/gadget/function/f_fs.c          |  12 +-
+ drivers/vfio/vfio.c                         |  39 +-
+ drivers/vhost/net.c                         |  12 +-
+ drivers/vhost/scsi.c                        |  12 +-
+ drivers/vhost/test.c                        |  12 +-
+ drivers/vhost/vsock.c                       |  12 +-
+ drivers/video/fbdev/aty/atyfb_base.c        |  12 +-
+ drivers/virt/fsl_hypervisor.c               |   2 +-
+ drivers/watchdog/acquirewdt.c               |   1 +
+ drivers/watchdog/advantechwdt.c             |   1 +
+ drivers/watchdog/alim1535_wdt.c             |   1 +
+ drivers/watchdog/alim7101_wdt.c             |   1 +
+ drivers/watchdog/ar7_wdt.c                  |   1 +
+ drivers/watchdog/at91rm9200_wdt.c           |   1 +
+ drivers/watchdog/ath79_wdt.c                |   1 +
+ drivers/watchdog/bcm63xx_wdt.c              |   1 +
+ drivers/watchdog/cpu5wdt.c                  |   1 +
+ drivers/watchdog/eurotechwdt.c              |   1 +
+ drivers/watchdog/f71808e_wdt.c              |   1 +
+ drivers/watchdog/gef_wdt.c                  |   1 +
+ drivers/watchdog/geodewdt.c                 |   1 +
+ drivers/watchdog/ib700wdt.c                 |   1 +
+ drivers/watchdog/ibmasr.c                   |   1 +
+ drivers/watchdog/indydog.c                  |   1 +
+ drivers/watchdog/intel_scu_watchdog.c       |   1 +
+ drivers/watchdog/iop_wdt.c                  |   1 +
+ drivers/watchdog/it8712f_wdt.c              |   1 +
+ drivers/watchdog/ixp4xx_wdt.c               |   1 +
+ drivers/watchdog/m54xx_wdt.c                |   1 +
+ drivers/watchdog/machzwd.c                  |   1 +
+ drivers/watchdog/mixcomwd.c                 |   1 +
+ drivers/watchdog/mtx-1_wdt.c                |   1 +
+ drivers/watchdog/mv64x60_wdt.c              |   1 +
+ drivers/watchdog/nv_tco.c                   |   1 +
+ drivers/watchdog/pc87413_wdt.c              |   1 +
+ drivers/watchdog/pcwd.c                     |   1 +
+ drivers/watchdog/pcwd_pci.c                 |   1 +
+ drivers/watchdog/pcwd_usb.c                 |   1 +
+ drivers/watchdog/pika_wdt.c                 |   1 +
+ drivers/watchdog/pnx833x_wdt.c              |   1 +
+ drivers/watchdog/rc32434_wdt.c              |   1 +
+ drivers/watchdog/rdc321x_wdt.c              |   1 +
+ drivers/watchdog/riowd.c                    |   1 +
+ drivers/watchdog/sa1100_wdt.c               |   1 +
+ drivers/watchdog/sb_wdog.c                  |   1 +
+ drivers/watchdog/sbc60xxwdt.c               |   1 +
+ drivers/watchdog/sbc7240_wdt.c              |   1 +
+ drivers/watchdog/sbc_epx_c3.c               |   1 +
+ drivers/watchdog/sbc_fitpc2_wdt.c           |   1 +
+ drivers/watchdog/sc1200wdt.c                |   1 +
+ drivers/watchdog/sc520_wdt.c                |   1 +
+ drivers/watchdog/sch311x_wdt.c              |   1 +
+ drivers/watchdog/scx200_wdt.c               |   1 +
+ drivers/watchdog/smsc37b787_wdt.c           |   1 +
+ drivers/watchdog/w83877f_wdt.c              |   1 +
+ drivers/watchdog/w83977f_wdt.c              |   1 +
+ drivers/watchdog/wafer5823wdt.c             |   1 +
+ drivers/watchdog/watchdog_dev.c             |   1 +
+ drivers/watchdog/wdrtas.c                   |   1 +
+ drivers/watchdog/wdt.c                      |   1 +
+ drivers/watchdog/wdt285.c                   |   1 +
+ drivers/watchdog/wdt977.c                   |   1 +
+ drivers/watchdog/wdt_pci.c                  |   1 +
+ fs/btrfs/super.c                            |   2 +-
+ fs/ceph/dir.c                               |   1 +
+ fs/ceph/file.c                              |   2 +-
+ fs/ceph/super.h                             |   1 +
+ fs/compat_ioctl.c                           | 917 +-------------------
+ fs/ecryptfs/file.c                          |   1 +
+ fs/ext4/ioctl.c                             |   1 +
+ fs/f2fs/file.c                              |   1 +
+ fs/fat/file.c                               |  13 +-
+ fs/fuse/dev.c                               |   2 +-
+ fs/gfs2/file.c                              |  30 +
+ fs/hpfs/dir.c                               |   1 +
+ fs/hpfs/file.c                              |   1 +
+ fs/ioctl.c                                  |  80 +-
+ fs/nilfs2/ioctl.c                           |   1 +
+ fs/notify/fanotify/fanotify_user.c          |   2 +-
+ fs/ocfs2/ioctl.c                            |   1 +
+ fs/userfaultfd.c                            |   2 +-
+ include/linux/blkdev.h                      |   2 +
+ include/linux/falloc.h                      |  20 +
+ include/linux/fs.h                          |   7 +
+ include/linux/mtio.h                        |  60 ++
+ include/uapi/linux/ppp-ioctl.h              |   2 +
+ include/uapi/linux/ppp_defs.h               |  14 +
+ lib/iov_iter.c                              |   1 +
+ net/bluetooth/hci_sock.c                    |  21 +-
+ net/bluetooth/rfcomm/sock.c                 |  14 +-
+ net/rfkill/core.c                           |   2 +-
+ net/socket.c                                |   3 +
+ net/unix/af_unix.c                          |  19 +
+ sound/core/oss/pcm_oss.c                    |   4 +
+ sound/oss/dmasound/dmasound_core.c          |   2 +
+ 155 files changed, 935 insertions(+), 1394 deletions(-)
+ create mode 100644 include/linux/mtio.h
+
+-- 
+2.20.0
+
