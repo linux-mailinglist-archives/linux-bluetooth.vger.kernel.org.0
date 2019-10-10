@@ -2,105 +2,154 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BA460D1880
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2019 21:14:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6868D1F0C
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Oct 2019 05:44:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732101AbfJITOh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Oct 2019 15:14:37 -0400
-Received: from mout.kundenserver.de ([212.227.126.134]:44107 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731815AbfJITLQ (ORCPT
+        id S1732764AbfJJDoY convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Oct 2019 23:44:24 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:51182 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726524AbfJJDoX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 9 Oct 2019 15:11:16 -0400
-Received: from threadripper.lan ([149.172.19.189]) by mrelayeu.kundenserver.de
- (mreue011 [212.227.15.129]) with ESMTPA (Nemesis) id
- 1MUGuZ-1iiRKk3Akl-00RHrY; Wed, 09 Oct 2019 21:11:13 +0200
-From:   Arnd Bergmann <arnd@arndb.de>
-To:     Al Viro <viro@zeniv.linux.org.uk>
-Cc:     linux-kernel@vger.kernel.org, y2038@lists.linaro.org,
-        linux-fsdevel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-        linux-bluetooth@vger.kernel.org,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>
-Subject: [PATCH v6 20/43] compat_ioctl: remove HIDIO translation
-Date:   Wed,  9 Oct 2019 21:10:20 +0200
-Message-Id: <20191009191044.308087-20-arnd@arndb.de>
-X-Mailer: git-send-email 2.20.0
-In-Reply-To: <20191009190853.245077-1-arnd@arndb.de>
-References: <20191009190853.245077-1-arnd@arndb.de>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:7RMTQj/IzXWYNqxbs38UjXmvOPx/nPUg/Jyhl5K5JkL70CQCnF4
- P7q/KM2dZFFM1mtdBuyaIqUOFQ17HlCzmqS0tuXPXTEirxZH9GS8gORXXirs/gILMvMEyja
- 5hNst7E+UHJdZxWMQnw0p3I0VbnvpoDPWpJHRD/vsv8+rHK2g9WQfQad4vs+tpXs/xmRHjT
- MbggUfSSb6Uvr6f+ZBoDQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:x0djXe2zRmc=:ad8+YXein6bQ0QFyxFmaf5
- 3H7cUXons26UtN1mFsrj6+7EPNH5+j8wl04KuKJboRJXY6swmLiRvc2JyvfLrEwlXQnApxrrp
- JsHHkVh32zh6mpb/a1ZZzohM0N9ua+czPNFXB8Y5VKPHQB88O2yvmWRJ5v/EO/6e5vCMqGOGn
- HZQrkA8YxrqX8y3mXBAlsGQgF6eWxC9pet/+6xkbNcvRSiUfjTtwLO/D/1bdK3RjjVrMtfX13
- Xf+DT120gHyHUcN0adf2srndF+BLmhNdds4gL9y+YukBzCKnRd/MrjS3PYPYs5CWwjMpwADFF
- ZXD21oeBdqGpQ9N2vhzZzGie+FQ/0pV3U8EI7RuzDHyv+HvmODurkqCyQ589vXvvkzeDfbRcl
- HfFO4XhgNzIKLH2PYpsoE21njqZi8n6u5N8zxYxCSyenIemzI1RWzck/FgqetAymWZeEkblrj
- xuJyI7N908igBl2AWWo8e3QHjMmmKzdx+blAea9rfGZAK7/FKCF3sdtZBV8OhbFgD3rWEPtTI
- Iwx1yNMvY4hiyhHf8ajTTJRvCeyMigqy/MorBDgZNFJdj66MK4Zlx/Itv9rjcv1S8pfERWjlI
- kZbOmbjKQG+w3GcxfAfeCJvE5uqiA+DYh4yJA1duY34hTLQsvBR8qKr7g7lPJpJMlp9C+TCEH
- YB+U6wL6C3kRUyp8skEW6cwIp23vVHz9t8WH5nvk6ypeLbdays2PKFEbiD20MRjpCZXCpgqVB
- Qs5zxUonl/onGJKMvt8dIrbIEdGPfGgHFFX4LZQRmmFlL5iuHF3xzgThTj53kV21/1G8oUnpW
- bomS/5kPMX2XtDxewQlWEkfyyOlvZFLk+OwzZg40ihqyPe2xvxr8qIM1sICy067JDcGPgnlzg
- sBUW1gq3ojBcK0FdJojg==
+        Wed, 9 Oct 2019 23:44:23 -0400
+Received: from [192.168.1.91] (p4FEFC197.dip0.t-ipconnect.de [79.239.193.151])
+        by mail.holtmann.org (Postfix) with ESMTPSA id AA05DCECE3;
+        Thu, 10 Oct 2019 05:53:18 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3594.4.19\))
+Subject: Re: Kernel Bluetooth Protocol Stack Problem
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <CACokStd_VLLP=dc+v=MZXpYF+Pw57f0Cma3-HSrXz5_PdiyRfw@mail.gmail.com>
+Date:   Thu, 10 Oct 2019 05:43:51 +0200
+Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <D18AA174-F883-481F-B172-EB98B26E925F@holtmann.org>
+References: <CACokStdMboxnDPR6cdQYfpfdNApQCn73pjQZNqQ+ag0QPYZXgw@mail.gmail.com>
+ <140A3914-6A0F-4E42-9858-7CDFE348C0CA@holtmann.org>
+ <CACokStd_VLLP=dc+v=MZXpYF+Pw57f0Cma3-HSrXz5_PdiyRfw@mail.gmail.com>
+To:     hongyi mao <maohongyicn@gmail.com>
+X-Mailer: Apple Mail (2.3594.4.19)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The two drivers implementing these both gained proper compat_ioctl()
-handlers a long time ago with commits bb6c8d8fa9b5 ("HID: hiddev:
-Add 32bit ioctl compatibilty") and ae5e49c79c05 ("HID: hidraw: add
-compatibility ioctl() for 32-bit applications."), so the lists in
-fs/compat_ioctl.c are no longer used.
+Hi Hongyi,
 
-It appears that the lists were also incomplete, so the translation
-didn't actually work correctly when it was still in use.
+> My use scenario: the peripheral is a BLE thermometer and
+> hygrometer,and the data of the thermometer and hygrometer is stored in
+> the BLE Advertising packet.
+> the host sends the LE Set Scan Enable Command to the local controller,
+> and then the host receives the le_meta_event and parses the data in
+> the BLE Advertising packet.
+> 
+> The problem occurred: the host side received other events besides
+> le_meta_event, such as HCI_EV_INQUIRY_COMPLETE event,
+> HCI_EV_CONN_REQUEST event, HCI_EV_CHANNEL_SELECTED event..., the
+> reason for receiving these events may be BR/EDR/LE controllers wrong
+> or other, this We are investigating.
+> 
+> However, I think that when the host receives the HCI_EV_CONN_REQUEST
+> event according to the procedure described in kernel,
+> Hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
+> ->hci_conn_request_evt(struct hci_dev *hdev, struct sk_buff *skb)
+> ->conn = hci_conn_add(hdev, ev->link_type, &ev->bdaddr,HCI_ROLE_SLAVE);
+> ->hci_send_cmd(hdev, HCI_OP_ACCEPT_CONN_REQ, sizeof(cp), &cp); or
+> hci_send_cmd(hdev, HCI_OP_ACCEPT_SYNC_CONN_REQ, sizeof(cp),&cp);
+> The host should receive the HCI_EV_CONN_COMPLETE event or the
+> HCI_EV_SYNC_CONN_COMPLETE event,
+> but we did not receive it. Or the host receives the
+> HCI_EV_CONN_COMPLETE event or HCI_EV_SYNC_CONN_COMPLETE, but
+> ev->status != 0;
+> The result is that the data for conn->handle is not updated, conn->handle=0.
+> 
+> Next, the host may receive other events, such as
+> HCI_EV_CHANNEL_SELECTED event, HCI_EV_PHY_LINK_COMPLETE event,
+> HCI_EV_PHY_LINK_COMPLETE event...,
+> but we did not receive an event that can update the struct hci_conn data.
+> For example, the host receives the HCI_EV_CHANNEL_SELECTED event next.
+> Hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
+> ->hci_chan_selected_evt(struct hci_dev *hdev, struct sk_buff
+> *skb);//but ev->phy_handle=0;
+> ->hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);//host will
+> find struct hci_conn because conn->handle=0 ev->phy_handle=0,hcon !=
+> NULL
+> ->amp_read_loc_assoc_final_data(hdev, hcon);
+> ->set_bit(READ_LOC_AMP_ASSOC_FINAL, &mgr->state); //host did not
+> receive any other events to update the data in hcon, mgr = NULL
+> 
+> This situation will lead to kernel oops
+> 
+> This problem can also occur when the host receives other events. As
+> long as the event ev->phy_handle=0, the struct hci_conn is found,
+> and the uninitialized data in the struct hci_conn is manipulated in
+> the event, this problem will occur.
+> 
+> Maybe this problem is a controller error, but I think the kernel stack
+> should take this usage scenario into consideration.
+> The attachment trace.log is the hci log we grab.The trace.log may not
+> have caught this situation, but this situation requires a long test to
+> appear.
 
-Remove them as cleanup.
+what kind of hardware is this?
 
-Cc: linux-bluetooth@vger.kernel.org
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: Johan Hedberg <johan.hedberg@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- fs/compat_ioctl.c | 17 -----------------
- 1 file changed, 17 deletions(-)
+< HCI Command: Read Local Version Information (0x04|0x0001) plen 0
+> HCI Event: Command Complete (0x0e) plen 12
+      Read Local Version Information (0x04|0x0001) ncmd 1
+        Status: Success (0x00)
+        HCI version: Bluetooth 4.1 (0x07) - Revision 0 (0x0000)
+        LMP version: Bluetooth 4.1 (0x07) - Subversion 602 (0x025a)
+        Manufacturer: Qualcomm (29)
+< HCI Command: Read BD ADDR (0x04|0x0009) plen 0
+> HCI Event: Command Complete (0x0e) plen 10
+      Read BD ADDR (0x04|0x0009) ncmd 1
+        Status: Success (0x00)
+        Address: C8:02:8F:04:89:1B (Nova Electronics (Shanghai) Co., Ltd.)
 
-diff --git a/fs/compat_ioctl.c b/fs/compat_ioctl.c
-index 758b8b934b70..03da7934a351 100644
---- a/fs/compat_ioctl.c
-+++ b/fs/compat_ioctl.c
-@@ -640,23 +640,6 @@ COMPATIBLE_IOCTL(PCIIOC_CONTROLLER)
- COMPATIBLE_IOCTL(PCIIOC_MMAP_IS_IO)
- COMPATIBLE_IOCTL(PCIIOC_MMAP_IS_MEM)
- COMPATIBLE_IOCTL(PCIIOC_WRITE_COMBINE)
--/* hiddev */
--COMPATIBLE_IOCTL(HIDIOCGVERSION)
--COMPATIBLE_IOCTL(HIDIOCAPPLICATION)
--COMPATIBLE_IOCTL(HIDIOCGDEVINFO)
--COMPATIBLE_IOCTL(HIDIOCGSTRING)
--COMPATIBLE_IOCTL(HIDIOCINITREPORT)
--COMPATIBLE_IOCTL(HIDIOCGREPORT)
--COMPATIBLE_IOCTL(HIDIOCSREPORT)
--COMPATIBLE_IOCTL(HIDIOCGREPORTINFO)
--COMPATIBLE_IOCTL(HIDIOCGFIELDINFO)
--COMPATIBLE_IOCTL(HIDIOCGUSAGE)
--COMPATIBLE_IOCTL(HIDIOCSUSAGE)
--COMPATIBLE_IOCTL(HIDIOCGUCODE)
--COMPATIBLE_IOCTL(HIDIOCGFLAG)
--COMPATIBLE_IOCTL(HIDIOCSFLAG)
--COMPATIBLE_IOCTL(HIDIOCGCOLLECTIONINDEX)
--COMPATIBLE_IOCTL(HIDIOCGCOLLECTIONINFO)
- /* joystick */
- COMPATIBLE_IOCTL(JSIOCGVERSION)
- COMPATIBLE_IOCTL(JSIOCGAXES)
--- 
-2.20.0
+Is this some sort of new USB dongle from Qualcomm?
+
+The problem is not Channel Selected event. That is just a symptom. The problem is that the hardware is sending garbage or you uncovered a bug in the driver or the USB controller.
+
+> HCI Event: Unknown (0xaf) plen 168
+        aa b1 32 13 56 7b dd 4d 68 d2 ec 2b 0e b6 3e 2b  ..2.V{.Mh..+..>+
+        02 01 03 01 b8 63 5a d0 83 0c 1f 1e ff 06 00 01  .....cZ.........
+        09 20 02 3c 26 fe 29 8d b4 89 26 03 37 3d 5c 23  . .<&.)...&.7=\#
+        8e ba 27 b6 41 c3 d2 2d 9b 7f b5 3e 2b 02 01 03  ..'.A..-...>+...
+        01 7a f7 04 dd a4 20 1f 1e ff 06 00 01 09 20 00  .z.... ....... .
+        0e 5f f0 72 0f 3b ea 9b ae ba 77 fa 41 35 4d 7a  ._.r.;....w.A5Mz
+        3f 7b 28 18 9a bb 39 b1 3e 29 02 01 03 01 fb 6e  ?{(...9.>).....n
+        54 04 1f 39 1d 1c ff 06 00 01 09 21 0a 61 76 81  T..9.......!.av.
+        ad 16 28 44 45 53 4b 54 4f 50 2d 4a 4a 38 36 35  ..(DESKTOP-JJ865
+        34 30 c1 3e 2b 02 01 03 01 79 03 3f 35 8e 01 1f  40.>+....y.?5...
+        1e ff 06 00 01 09 20 02                          ...... .        
+> HCI Event: Unknown (0x6b) plen 233
+        87 d9 8b 41 cf 02 af a8 aa b1 32 13 56 7b dd 4d  ...A......2.V{.M
+        68 d2 ec 2b 0e b5 3e 2b 02 01 03 01 7a f7 04 dd  h..+..>+....z...
+        a4 20 1f 1e ff 06 00 01 09 20 00 0e 5f f0 72 0f  . ....... .._.r.
+        3b ea 9b ae ba 77 fa 41 35 4d 7a 3f 7b 28 18 9a  ;....w.A5Mz?{(..
+        bb 39 b2 3e 29 02 01 03 01 fb 6e 54 04 1f 39 1d  .9.>).....nT..9.
+        1c ff 06 00 01 09 21 0a 61 76 81 ad 16 28 44 45  ......!.av...(DE
+        53 4b 54 4f 50 2d 4a 4a 38 36 35 34 30 c1 3e 2b  SKTOP-JJ86540.>+
+        02 01 03 01 a3 f8 96 8c 85 25 1f 1e ff 06 00 01  .........%......
+        09 20 02 7f 31 9e b5 d1 76 45 f0 77 95 eb e7 5a  . ..1...vE.w...Z
+        93 38 cc 88 20 5c 58 62 d2 af ab 3e 2b 02 01 03  .8.. \Xb...>+...
+        01 79 03 3f 35 8e 01 1f 1e ff 06 00 01 09 20 02  .y.?5......... .
+        6b e9 87 d9 8b 41 cf 02 af a8 aa b1 32 13 56 7b  k....A......2.V{
+        dd 4d 68 d2 ec 2b 0e b6 3e 2b 02 01 03 01 7a f7  .Mh..+..>+....z.
+        04 dd a4 20 1f 1e ff 06 00 01 09 20 00 0e 5f f0  ... ....... .._.
+        72 0f 3b ea 9b ae ba 77 fa                       r.;....w.       
+> HCI Event: Channel Selected (0x41) plen 53
+        invalid packet size
+        4d 7a 3f 7b 28 18 9a bb 39 b3 3e 2b 02 01 03 01  Mz?{(...9.>+....
+        79 03 3f 35 8e 01 1f 1e ff 06 00 01 09 20 02 6b  y.?5......... .k
+        e9 87 d9 8b 41 cf 02 af a8 aa b1 32 13 56 7b dd  ....A......2.V{.
+        4d 68 d2 ec 2b                                   Mh..+           
+
+So maybe this is missing a firmware download that has bug fixes. You might need to examine the Windows driver.
+
+Regards
+
+Marcel
 
