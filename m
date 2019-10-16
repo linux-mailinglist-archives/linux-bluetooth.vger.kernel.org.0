@@ -2,122 +2,38 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 03B17D90A5
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2019 14:20:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AE9CD940A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2019 16:37:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405189AbfJPMUb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Oct 2019 08:20:31 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41531 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405187AbfJPMU2 (ORCPT
+        id S2404596AbfJPOht (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 16 Oct 2019 10:37:49 -0400
+Received: from [195.171.27.244] ([195.171.27.244]:33514 "EHLO
+        gitlab.quiqup.com" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S2404542AbfJPOht (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Oct 2019 08:20:28 -0400
-Received: by mail-wr1-f65.google.com with SMTP id p4so11930660wrm.8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Oct 2019 05:20:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=netronome-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dmrMhgpUSf60d5nh3MAEGQy/4z6O1wG97cbLuW1Vm/Q=;
-        b=Lryg5TbKNuFD1H9KnYSEFIXh7TPiZG5JT6QcacCuclZQ7ucsqtGD2RjLXMfRQNQn11
-         4H8eWrGeyw6gS2x8zrZV2LRijZHZHDiWAS/WnxWrN5PilX42PAZxtYhpJffHaZ93Q0Xb
-         5yV952iEPXu5/aHNYguUVK3s07QjWaKL860yK9MwH+R94+/TR/9tWxOOY1gav0+m4s/U
-         lvNZoW05LWMCbBwqgknxmY8ZP4NZTlosLfG3f18WVt4LJYwYzJNr0WPoF+YeGPyAH+RQ
-         aNAel85fvckPLTBuXDBW0+kffLA1BAfpPJuw4dw1Cg57p4zBtdSOr4WtIQnK3hTn9zNn
-         y1oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dmrMhgpUSf60d5nh3MAEGQy/4z6O1wG97cbLuW1Vm/Q=;
-        b=KtUpMvZwJeR31QeNzyZ6Yhp/OnZBHfz8TnLQkBmeYgC8wMNWYdmqYavxchRYfqNXWu
-         MYPnbUr3NRLWgz9qSoZMyyNSp5knKc+sTOsWoGqrFPfQkVM8qnOdrbqpZ1ZFxEfQL3tR
-         5TpPA73ZINtoatQv2gFQTbbKJLyTvfAN6iu36+Zm/tvSO04e+GURxb0EouNcR7rhR40e
-         8gtIB/xzELy+vdTd8B5pYqQgTmM0pTbRiLncy4CzA5rGNUmBj7VfKoH7i/1pIhUGrDnz
-         KpsFCUD3TAw52MEkWx0vRtjnOt0BNka1uxUqcDRTTqKbnYqKZMRHd7yefNqDbZOJCtI5
-         Rbjw==
-X-Gm-Message-State: APjAAAUfOBZw4DBhYh85ScD658CPG9N2syhyPSkc6A7qPhkkocb5LKcb
-        xHv0tmi2noJqn8GGCrLCbbABIg==
-X-Google-Smtp-Source: APXvYqwfPRjX6bZCyWbED2wZKVclukgcm82IW4MA8rMSeU9WhVqp0vA8KEy24wGzUe87U8Bz3v5M6A==
-X-Received: by 2002:adf:e542:: with SMTP id z2mr2327859wrm.338.1571228426355;
-        Wed, 16 Oct 2019 05:20:26 -0700 (PDT)
-Received: from netronome.com (penelope-musen.rivierenbuurt.horms.nl. [2001:470:7eb3:404:c685:8ff:fe7c:9971])
-        by smtp.gmail.com with ESMTPSA id s12sm26946038wra.82.2019.10.16.05.20.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2019 05:20:25 -0700 (PDT)
-Date:   Wed, 16 Oct 2019 14:20:23 +0200
-From:   Simon Horman <simon.horman@netronome.com>
-To:     "Ben Dooks (Codethink)" <ben.dooks@codethink.co.uk>
-Cc:     linux-kernel@lists.codethink.co.uk,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] RFC: Bluetooth: missed cpu_to_le16 conversion in
- hci_init4_req
-Message-ID: <20191016122022.kz4xzx4hzmtuoh5l@netronome.com>
-References: <20191016113943.19256-1-ben.dooks@codethink.co.uk>
+        Wed, 16 Oct 2019 10:37:49 -0400
+Received: from localhost (localhost [IPv6:::1])
+        by gitlab.quiqup.com (Postfix) with SMTP id 307C73FCAE0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Oct 2019 15:20:24 +0100 (BST)
+From:   linux-bluetooth@vger.kernel.org
+Reply-To: prodawez@teleworm.us
+To:     linux-bluetooth@vger.kernel.org,
+        =?utf-8?Q?=D0=97=D0=B4=D1=80=D0=B0=D0=B2=D1=81=D1=82=D0?=@gitlab.quiqup.com,
+        _=D0=92=D0=B0=D1=81?=@=?utf-8?Q?=B2=D1=83=D0=B9=D1=82=D0=B5,
+        =?utf-8?Q?_=D0=B8=D0=BD=D1=82=D0=B5=D1=80=D0=B5=D1=81=D1?=@gitlab.quiqup.com,
+        =?utf-8?Q?=83=D1=8E=D1=82_=D0=BA=D0=BB=D0=B8=D0=B5=D0=BD?=@gitlab.quiqup.com,
+        =?utf-8?Q?=D1=82=D1=81=D0=BA=D0=B8=D0=B5_=D0=B1=D0=B0=D0?=@gitlab.quiqup.com,
+        =?utf-8?Q?=B7=D1=8B_=D0=B4=D0=B0=D0=BD=D0=BD=D1=8B=D1=85?=@gitlab.quiqup.com,
+        =?utf-8?Q?=3F?=@gitlab.quiqup.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191016113943.19256-1-ben.dooks@codethink.co.uk>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain; charset="utf-8";
+Content-Transfer-Encoding: 8bit
+Message-Id: <20191016142024.307C73FCAE0@gitlab.quiqup.com>
+Date:   Wed, 16 Oct 2019 15:20:24 +0100 (BST)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Wed, Oct 16, 2019 at 12:39:43PM +0100, Ben Dooks (Codethink) wrote:
-> It looks like in hci_init4_req() the request is being
-> initialised from cpu-endian data but the packet is specified
-> to be little-endian. This causes an warning from sparse due
-> to __le16 to u16 conversion.
-> 
-> Fix this by using cpu_to_le16() on the two fields in the packet.
-> 
-> net/bluetooth/hci_core.c:845:27: warning: incorrect type in assignment (different base types)
-> net/bluetooth/hci_core.c:845:27:    expected restricted __le16 [usertype] tx_len
-> net/bluetooth/hci_core.c:845:27:    got unsigned short [usertype] le_max_tx_len
-> net/bluetooth/hci_core.c:846:28: warning: incorrect type in assignment (different base types)
-> net/bluetooth/hci_core.c:846:28:    expected restricted __le16 [usertype] tx_time
-> net/bluetooth/hci_core.c:846:28:    got unsigned short [usertype] le_max_tx_time
-> 
-> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-> ---
-> Cc: Marcel Holtmann <marcel@holtmann.org>
-> Cc: Johan Hedberg <johan.hedberg@gmail.com>
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: linux-bluetooth@vger.kernel.org
-> Cc: netdev@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> ---
->  net/bluetooth/hci_core.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-> index 04bc79359a17..b2559d4bed81 100644
-> --- a/net/bluetooth/hci_core.c
-> +++ b/net/bluetooth/hci_core.c
-> @@ -842,8 +842,8 @@ static int hci_init4_req(struct hci_request *req, unsigned long opt)
->  	if (hdev->le_features[0] & HCI_LE_DATA_LEN_EXT) {
->  		struct hci_cp_le_write_def_data_len cp;
->  
-> -		cp.tx_len = hdev->le_max_tx_len;
-> -		cp.tx_time = hdev->le_max_tx_time;
-> +		cp.tx_len = cpu_to_le16(hdev->le_max_tx_len);
-> +		cp.tx_time = cpu_to_le16(hdev->le_max_tx_time);
+Здравствуйте! Вас интересуют клиентские базы данных?
 
-I would suggest that the naming of the le_ fields of struct hci_dev
-implies that the values stored in those fields should be little endian
-(but those that are more than bone byte wide are not).
-
-In any case, the question arises as to if this has ever worked on big
-endian machines.
-
->  		hci_req_add(req, HCI_OP_LE_WRITE_DEF_DATA_LEN, sizeof(cp), &cp);
->  	}
->  
-> -- 
-> 2.23.0
-> 
