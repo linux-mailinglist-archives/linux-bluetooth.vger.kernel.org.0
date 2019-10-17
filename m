@@ -2,32 +2,32 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E0185DA725
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Oct 2019 10:22:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98F44DA756
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Oct 2019 10:27:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408198AbfJQIWL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 17 Oct 2019 04:22:11 -0400
-Received: from mga03.intel.com ([134.134.136.65]:63533 "EHLO mga03.intel.com"
+        id S2390584AbfJQI1u (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Oct 2019 04:27:50 -0400
+Received: from mga05.intel.com ([192.55.52.43]:7577 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2408196AbfJQIWK (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 17 Oct 2019 04:22:10 -0400
+        id S2389585AbfJQI1u (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 17 Oct 2019 04:27:50 -0400
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 17 Oct 2019 01:22:09 -0700
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 17 Oct 2019 01:27:49 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.67,307,1566889200"; 
-   d="scan'208";a="396183071"
+   d="scan'208";a="200320715"
 Received: from ubuntu-16-04.iind.intel.com ([10.224.186.155])
-  by fmsmga005.fm.intel.com with ESMTP; 17 Oct 2019 01:22:07 -0700
+  by orsmga006.jf.intel.com with ESMTP; 17 Oct 2019 01:27:47 -0700
 From:   Amit K Bag <amit.k.bag@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     ravishankar.srivatsa@intel.com, chethan.tumkur.narayan@intel.com,
         Amit K Bag <amit.k.bag@intel.com>,
         Raghuram Hegde <raghuram.hegde@intel.com>
-Subject: [PATCH v5] Bluetooth: btusb: Trigger Intel FW download error recovery
-Date:   Thu, 17 Oct 2019 13:46:49 +0530
-Message-Id: <1571300209-27120-1-git-send-email-amit.k.bag@intel.com>
+Subject: [PATCH v6] Bluetooth: btusb: Trigger Intel FW download error recovery
+Date:   Thu, 17 Oct 2019 13:52:29 +0530
+Message-Id: <1571300549-27306-1-git-send-email-amit.k.bag@intel.com>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
@@ -133,7 +133,7 @@ index 3d846190f2bf..d2311156f778 100644
 +}
  #endif
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 5d7bc3410104..1e1772908571 100644
+index 5d7bc3410104..f706fde081ce 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
 @@ -2182,8 +2182,11 @@ static int btusb_setup_intel_new(struct hci_dev *hdev)
@@ -143,7 +143,7 @@ index 5d7bc3410104..1e1772908571 100644
 -	if (err)
 +	if (err) {
 +		bt_dev_err(hdev, "Intel Read version failed (%d)", err);
-+		btintel_retry_fw_download(hdev);
++		btintel_reset_to_bootloader(hdev);	
  		return err;
 +	}
  
