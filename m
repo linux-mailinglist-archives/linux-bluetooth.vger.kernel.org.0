@@ -2,32 +2,32 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F098DA719
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Oct 2019 10:19:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0185DA725
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Oct 2019 10:22:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392923AbfJQITA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 17 Oct 2019 04:19:00 -0400
-Received: from mga02.intel.com ([134.134.136.20]:43266 "EHLO mga02.intel.com"
+        id S2408198AbfJQIWL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Oct 2019 04:22:11 -0400
+Received: from mga03.intel.com ([134.134.136.65]:63533 "EHLO mga03.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389530AbfJQITA (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 17 Oct 2019 04:19:00 -0400
+        id S2408196AbfJQIWK (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 17 Oct 2019 04:22:10 -0400
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 17 Oct 2019 01:18:59 -0700
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 17 Oct 2019 01:22:09 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.67,307,1566889200"; 
-   d="scan'208";a="226080864"
+   d="scan'208";a="396183071"
 Received: from ubuntu-16-04.iind.intel.com ([10.224.186.155])
-  by fmsmga002.fm.intel.com with ESMTP; 17 Oct 2019 01:18:56 -0700
+  by fmsmga005.fm.intel.com with ESMTP; 17 Oct 2019 01:22:07 -0700
 From:   Amit K Bag <amit.k.bag@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     ravishankar.srivatsa@intel.com, chethan.tumkur.narayan@intel.com,
         Amit K Bag <amit.k.bag@intel.com>,
         Raghuram Hegde <raghuram.hegde@intel.com>
-Subject: [PATCH v4] Bluetooth: btusb: Trigger Intel FW download error recovery
-Date:   Thu, 17 Oct 2019 13:43:39 +0530
-Message-Id: <1571300019-27019-1-git-send-email-amit.k.bag@intel.com>
+Subject: [PATCH v5] Bluetooth: btusb: Trigger Intel FW download error recovery
+Date:   Thu, 17 Oct 2019 13:46:49 +0530
+Message-Id: <1571300209-27120-1-git-send-email-amit.k.bag@intel.com>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
@@ -48,16 +48,16 @@ Signed-off-by: Raghuram Hegde <raghuram.hegde@intel.com>
 Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
 Signed-off-by: Amit K Bag <amit.k.bag@intel.com>
 ---
- drivers/bluetooth/btintel.c | 48 +++++++++++++++++++++++++++++++++++++++++++++
+ drivers/bluetooth/btintel.c | 46 +++++++++++++++++++++++++++++++++++++++++++++
  drivers/bluetooth/btintel.h |  6 ++++++
- drivers/bluetooth/btusb.c   | 20 +++++++++++++++----
- 3 files changed, 70 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btusb.c   | 20 ++++++++++++++++----
+ 3 files changed, 68 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index bb99c8653aab..4b42bdd83c99 100644
+index bb99c8653aab..b69cdf991a9a 100644
 --- a/drivers/bluetooth/btintel.c
 +++ b/drivers/bluetooth/btintel.c
-@@ -709,6 +709,54 @@ int btintel_download_firmware(struct hci_dev *hdev, const struct firmware *fw,
+@@ -709,6 +709,52 @@ int btintel_download_firmware(struct hci_dev *hdev, const struct firmware *fw,
  }
  EXPORT_SYMBOL_GPL(btintel_download_firmware);
  
@@ -66,8 +66,6 @@ index bb99c8653aab..4b42bdd83c99 100644
 +	const struct intel_reset params;
 +	struct sk_buff *skb;
 +	u32 boot_param;
-+
-+
 +
 +	/* Send Intel Reset command. This will result in
 +	 * re-enumeration of BT controller.
