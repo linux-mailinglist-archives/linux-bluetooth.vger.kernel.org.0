@@ -2,196 +2,74 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D43AEDBCEB
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Oct 2019 07:24:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78522DBEF1
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Oct 2019 09:52:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503918AbfJRFYP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 18 Oct 2019 01:24:15 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:45511 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2442022AbfJRFYP (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 18 Oct 2019 01:24:15 -0400
-Received: by mail-pf1-f195.google.com with SMTP id y72so3099211pfb.12
-        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Oct 2019 22:24:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=A290/OLSMIdz1gm9E9GKn5KBPV2wOKoLOZi6+j+W8B0=;
-        b=IfD36HjGXoGW/VytrSV0TZUsgREKFpfzsFqdazfZT5W9+9uAFfPaereqHTYaqLxqSP
-         vmFfmuKv7WFbkNZP2ssJRHR3sMm2GyNJenRdVZ+L5vmjKAgJGosyzWEyJXRzeZmjPngU
-         5aG4eZJuVoaAPzHfyx9iVKXEDZgmgcNmCGIv/0OnvNnY6HPDo1FPy0bmXaMJjfB95Em2
-         XJ9DDJp7yjOJ8DKUUe6ZYpaNawX+bnZltgVLbJ8o9ueyVv5vmB3Hji1mTAstDOOJHXoP
-         /7GzzhJschEmR5wMZJTzENRhZVT5G98euWMDl50oSmvCQjsBExx2Nk6FNVkbQNwfkHAp
-         TUbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=A290/OLSMIdz1gm9E9GKn5KBPV2wOKoLOZi6+j+W8B0=;
-        b=Nw92qcIuN6NEeD89f5rBUyxxHWa+9Soob3w875sk2EUbuP77e7BbwTzHbRe9nMPhhd
-         2dklOmoSsufEkhMMzcbdH+6SLJMeEIMWRHWj3NUGUQKPZuHZDEe//agLBGgLKACCyuEt
-         ITYw1K4gmwcbZAtpz7RtjHMkmIfPNWh0b/eEz0NF7hkhmXSLB08ZCvlg34l7EHmgE76K
-         s4iLDGHWqYVms1gRmUnL5Sk0drPvwyegECnPMXNeA/+p24nACZGtASqVBANoqZnun+Uk
-         3YKGMmEY5rtjx2zswcA2UONNyDPcsRDPBX0fIqCl1embj7wDT9t2zIpnow61BYTHGs32
-         rbnw==
-X-Gm-Message-State: APjAAAUYk+OQN0FLqWImo0osR1ddCAtTi71h3/PWO8+vDo80JN7od+d3
-        vODyYoJPbHKARH8pcTf08oRvBQ==
-X-Google-Smtp-Source: APXvYqx0ozYSKrJgMxYmOdz9sS6M85YH2jq18jmBXCmjgB4jia0KZ5uXnddL537MflX50Cf7VM8eOA==
-X-Received: by 2002:a63:1904:: with SMTP id z4mr8210286pgl.413.1571376253468;
-        Thu, 17 Oct 2019 22:24:13 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u11sm2178760pgc.61.2019.10.17.22.24.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 22:24:12 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 4/4] Bluetooth: hci_qca: Split qca_power_setup()
-Date:   Thu, 17 Oct 2019 22:24:04 -0700
-Message-Id: <20191018052405.3693555-5-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20191018052405.3693555-1-bjorn.andersson@linaro.org>
-References: <20191018052405.3693555-1-bjorn.andersson@linaro.org>
+        id S2504877AbfJRHwU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 18 Oct 2019 03:52:20 -0400
+Received: from zaovasilisa.ru ([88.200.194.99]:46823 "EHLO usrv.lan"
+        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2504820AbfJRHwP (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 18 Oct 2019 03:52:15 -0400
+X-Greylist: delayed 39671 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Oct 2019 03:51:51 EDT
+Received: from 127.0.0.1 (localhost [127.0.0.1])
+        by usrv.lan (Postfix) with SMTP id CC3F818647F;
+        Thu, 17 Oct 2019 17:04:03 +0400 (MSD)
+Received: from [72.215.151.127] by 127.0.0.1 with ESMTP id 72A686FDC7F; Thu, 17 Oct 2019 18:59:02 +0600
+Message-ID: <735ui-$$-55e3--c$i$-l0-18w85$-6@8d6h1006syk>
+From:   "Mr Ekrem Bayraktar" <dave@dbsoundfactory.com>
+Reply-To: "Mr Ekrem Bayraktar" <dave@dbsoundfactory.com>
+To:     links@q.vu
+Subject: MOTHERLESS CHILDREN IN YOUR CITY !!
+Date:   Thu, 17 Oct 19 18:59:02 GMT
+X-Mailer: AOL 7.0 for Windows US sub 118
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/alternative;
+        boundary="EFA7_FB09FAD2"
+X-Priority: 3
+X-MSMail-Priority: Normal
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Split and rename qca_power_setup() in order to simplify each code path
-and to clarify that it is unrelated to qca_power_off() and
-qca_power_setup().
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/bluetooth/hci_qca.c | 61 ++++++++++++++++++++++---------------
- 1 file changed, 36 insertions(+), 25 deletions(-)
+--EFA7_FB09FAD2
+Content-Type: text/plain;
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 01f941e9adf3..c591a8ba9d93 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -160,7 +160,8 @@ struct qca_serdev {
- 	const char *firmware_name;
- };
- 
--static int qca_power_setup(struct hci_uart *hu, bool on);
-+static int qca_regulator_enable(struct qca_serdev *qcadev);
-+static void qca_regulator_disable(struct qca_serdev *qcadev);
- static void qca_power_shutdown(struct hci_uart *hu);
- static int qca_power_off(struct hci_dev *hdev);
- 
-@@ -516,7 +517,7 @@ static int qca_open(struct hci_uart *hu)
- 		} else {
- 			hu->init_speed = qcadev->init_speed;
- 			hu->oper_speed = qcadev->oper_speed;
--			ret = qca_power_setup(hu, true);
-+			ret = qca_regulator_enable(qcadev);
- 			if (ret) {
- 				destroy_workqueue(qca->workqueue);
- 				kfree_skb(qca->rx_skb);
-@@ -1186,7 +1187,7 @@ static int qca_wcn3990_init(struct hci_uart *hu)
- 	qcadev = serdev_device_get_drvdata(hu->serdev);
- 	if (!qcadev->bt_power->vregs_on) {
- 		serdev_device_close(hu->serdev);
--		ret = qca_power_setup(hu, true);
-+		ret = qca_regulator_enable(qcadev);
- 		if (ret)
- 			return ret;
- 
-@@ -1351,9 +1352,12 @@ static const struct qca_vreg_data qca_soc_data_wcn3998 = {
- 
- static void qca_power_shutdown(struct hci_uart *hu)
- {
-+	struct qca_serdev *qcadev;
- 	struct qca_data *qca = hu->priv;
- 	unsigned long flags;
- 
-+	qcadev = serdev_device_get_drvdata(hu->serdev);
-+
- 	/* From this point we go into power off state. But serial port is
- 	 * still open, stop queueing the IBS data and flush all the buffered
- 	 * data in skb's.
-@@ -1365,7 +1369,7 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 
- 	host_set_baudrate(hu, 2400);
- 	qca_send_power_pulse(hu, false);
--	qca_power_setup(hu, false);
-+	qca_regulator_disable(qcadev);
- }
- 
- static int qca_power_off(struct hci_dev *hdev)
-@@ -1381,36 +1385,43 @@ static int qca_power_off(struct hci_dev *hdev)
- 	return 0;
- }
- 
--static int qca_power_setup(struct hci_uart *hu, bool on)
-+static int qca_regulator_enable(struct qca_serdev *qcadev)
- {
--	struct regulator_bulk_data *vreg_bulk;
--	struct qca_serdev *qcadev;
--	int num_vregs;
--	int ret = 0;
-+	struct qca_power *power = qcadev->bt_power;
-+	int ret;
- 
--	qcadev = serdev_device_get_drvdata(hu->serdev);
--	if (!qcadev || !qcadev->bt_power || !qcadev->bt_power->vreg_bulk)
--		return -EINVAL;
-+	/* Already enabled */
-+	if (power->vregs_on)
-+		return 0;
- 
--	vreg_bulk = qcadev->bt_power->vreg_bulk;
--	num_vregs = qcadev->bt_power->num_vregs;
--	BT_DBG("on: %d (%d regulators)", on, num_vregs);
--	if (on && !qcadev->bt_power->vregs_on) {
--		ret = regulator_bulk_enable(num_vregs, vreg_bulk);
--		if (ret)
--			return ret;
-+	BT_DBG("enabling %d regulators)", power->num_vregs);
- 
--		qcadev->bt_power->vregs_on = true;
--	} else if (!on && qcadev->bt_power->vregs_on) {
--		/* turn off regulator in reverse order */
--		regulator_bulk_disable(num_vregs, vreg_bulk);
-+	ret = regulator_bulk_enable(power->num_vregs, power->vreg_bulk);
-+	if (ret)
-+		return ret;
- 
--		qcadev->bt_power->vregs_on = false;
--	}
-+	power->vregs_on = true;
- 
- 	return 0;
- }
- 
-+static void qca_regulator_disable(struct qca_serdev *qcadev)
-+{
-+	struct qca_power *power;
-+
-+	if (!qcadev)
-+		return;
-+
-+	power = qcadev->bt_power;
-+
-+	/* Already disabled? */
-+	if (!power->vregs_on)
-+		return;
-+
-+	regulator_bulk_disable(power->num_vregs, power->vreg_bulk);
-+	power->vregs_on = false;
-+}
-+
- static int qca_init_regulators(struct qca_power *qca,
- 				const struct qca_vreg *vregs, size_t num_vregs)
- {
--- 
-2.23.0
+Dear Sir / Madam
+
+
+
+Since ever we left your country back to Canada , we have gotten Government=
+ approval and we have been busying planning for the less privilege Childre=
+n projects.
+
+We are planning to release first batch of the funds $2,990,000.00 within 1=
+4 days for building an estate for motherless children in your city.
+
+I want you to use my mother;s company name to register this charity projec=
+t in your country after receiving the project funds.
+
+It must be registered as { Bayraktar Group Homeless Children Ltd }.
+
+
+Can you handle and supervise this big project ?
+Can you manager all the workers as a senior supervisor ?
+We want to be sure you can handle it before we proceed with this project.
+
+
+Please call me if you want to hear from us + 1-917 580 4919.
+Please can you manage such project please Kindly reply for further details=
+.
+
+Your full names-----------
+
+
+
+Ekrem Bayraktar.
+Bayraktar Shipping Group
+
+--EFA7_FB09FAD2--
 
