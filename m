@@ -2,102 +2,72 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 42DEADD704
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 19 Oct 2019 08:54:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47946DD72F
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 19 Oct 2019 09:57:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727887AbfJSGyB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 19 Oct 2019 02:54:01 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:40686 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726939AbfJSGyB (ORCPT
+        id S1726192AbfJSH5J convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 19 Oct 2019 03:57:09 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:52943 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbfJSH5J (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 19 Oct 2019 02:54:01 -0400
-Received: by mail-pg1-f195.google.com with SMTP id e13so4565240pga.7
-        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Oct 2019 23:54:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=j/xrTW3Vtfy8sVm4S9uCW0R8KyIbpsPtDUTj2Kq91s8=;
-        b=dSeoTUJXkJKDcNN2wGAtJilCARbHqPF/azju6wMegCFJwEWLiANMoib9YYdfcHW4sL
-         3FVWKjISNmu+Y1d4mqGsr7yIo3rjkQTbdToAlLkYcFtZK+k/bEDqNRapfZ1lRw4m5H4G
-         pMRmgfm8YBJm50kwH2JPuaJs4Jl3IacOmttWnP/9v6GMbbQ+nfUTvip9d6lp/fm539Q1
-         +8fmqCspu9BXNmJHHdU9YVusbeu5Yh2D+InoHSDDmRmELD8Y5eTw7kErVF2QmJGkkCJg
-         98T2CYcbrcKEnqppzE615/2OKTX8+h6hhi7KsU6ffVKGaiPxmUaF0qrMyVs5etuMGN9H
-         itag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=j/xrTW3Vtfy8sVm4S9uCW0R8KyIbpsPtDUTj2Kq91s8=;
-        b=rKQdQkgI28eqGt5FdOJr92E9aoTkdlSgm+tmnoy930lRQh/um6iGyQfFtEq0ox4vxL
-         OI8sJ7yb6OqiT9ZauaFDuMh+QzAT28TXfLktsfR1nTCpsYZ8f84EOnbYlyMokqaN9zF4
-         TxtWYs+XpVXb6I/5OylrhxQVCMF0MHbHa6lCI28UJ685fi5hkQeKSqU7R/adEp/WGcfo
-         s+R4N+/6TQR70C415dvNvbv6j6nZbdnE6N9h44QHJ9dghkWxoiNX5jTxhPvxdl5Aeazb
-         N3LQ2XqwTplH6LWNSPsF6kyqgupAcqFPjyvLMT9EA7RWH7/oEBq/Uq/ND31eucC2OaNV
-         GA4Q==
-X-Gm-Message-State: APjAAAXj8T5gH8eoZMVtCXWDzC04zJAK6S+6qM4bT68gQUlbS64bQgYx
-        ly710o81lwQjEmsuIepyocup9lN8bRg=
-X-Google-Smtp-Source: APXvYqwASprbQzmk0qrYKaPXnA3ANBnQHtpiHjahQN3elbE+NmAPFOAil8Vw15Bi/ycqC4xt6bmIXQ==
-X-Received: by 2002:a17:90a:cd03:: with SMTP id d3mr15582968pju.137.1571468039786;
-        Fri, 18 Oct 2019 23:53:59 -0700 (PDT)
-Received: from localhost.lan (c-67-185-54-80.hsd1.wa.comcast.net. [67.185.54.80])
-        by smtp.gmail.com with ESMTPSA id x19sm11835494pgc.59.2019.10.18.23.53.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2019 23:53:59 -0700 (PDT)
-From:   Andrey Smirnov <andrew.smirnov@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Andrey Smirnov <andrew.smirnov@gmail.com>,
-        "Pierre-Loup A . Griffais" <pgriffais@valvesoftware.com>
-Subject: [RFC Bluez] lib/sdb: Don't include NULL terminator in string's unitSize
-Date:   Fri, 18 Oct 2019 23:53:44 -0700
-Message-Id: <20191019065344.26795-1-andrew.smirnov@gmail.com>
-X-Mailer: git-send-email 2.21.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Sat, 19 Oct 2019 03:57:09 -0400
+Received: from surfer-172-29-2-69-hotspot.internet-for-guests.com (p2E5701B0.dip0.t-ipconnect.de [46.87.1.176])
+        by mail.holtmann.org (Postfix) with ESMTPSA id F3E01CED04;
+        Sat, 19 Oct 2019 10:06:05 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3594.4.19\))
+Subject: Re: [PATCH -next] Bluetooth: btusb: Remove return statement in
+ btintel_reset_to_bootloader
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20191018222924.49256-1-natechancellor@gmail.com>
+Date:   Sat, 19 Oct 2019 09:57:06 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Amit K Bag <amit.k.bag@intel.com>,
+        Chethan T N <chethan.tumkur.narayan@intel.com>,
+        Raghuram Hegde <raghuram.hegde@intel.com>,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        clang-built-linux@googlegroups.com,
+        Stephen Rothwell <sfr@canb.auug.org.au>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <859945F9-E674-4906-A18D-BCA6027AA535@holtmann.org>
+References: <20191018111343.5a34ee33@canb.auug.org.au>
+ <20191018222924.49256-1-natechancellor@gmail.com>
+To:     Nathan Chancellor <natechancellor@gmail.com>
+X-Mailer: Apple Mail (2.3594.4.19)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-HID report descriptors are 8-bit unsigned arrays (Data Element Type =
-Text String (4), Data Element Size = array (5, 6, or 7)), so they are
-parsed by extract_str(). Setting unitSize to "n + 1" in that case
-results in NULL terminator of the string being passed as a part of a
-HID report descriptor to the kernel. This causes harmless but
-confusing "unknown main item tag 0x0" warning in dmesg. Change
-unitSize to be "n" to avoid the problem.
+Hi Nathan,
 
-The warning has been observed on the following hardware:
+> When building with Clang and CONFIG_BT_INTEL unset, the following error
+> occurs:
+> 
+> In file included from drivers/bluetooth/hci_ldisc.c:34:
+> drivers/bluetooth/btintel.h:188:2: error: void function
+> 'btintel_reset_to_bootloader' should not return a value [-Wreturn-type]
+>        return -EOPNOTSUPP;
+>        ^      ~~~~~~~~~~~
+> 1 error generated.
+> 
+> Remove the unneeded return statement to fix this.
+> 
+> Fixes: b9a2562f4918 ("Bluetooth: btusb: Trigger Intel FW download error recovery")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/743
+> Reported-by: <ci_notify@linaro.org>
+> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+> Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+> ---
+> drivers/bluetooth/btintel.h | 1 -
+> 1 file changed, 1 deletion(-)
 
-   - PowerA Wireless GameCube Style Controller for Nintendo
+patch has been applied to bluetooth-next tree.
 
-   - Sony DualShock 4 Controller connected via BT (works fine via USB)
----
+Regards
 
-Not sure if this is a right place to fix this or if I missed
-something, hence the RFC tag. Maybe modifying extract_hid_desc_data()
-would be more appropriate? Please let me know.
-
-Thanks,
-Andrey Smirnov
-
- lib/sdp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/lib/sdp.c b/lib/sdp.c
-index 84311eda1..6c0db825e 100644
---- a/lib/sdp.c
-+++ b/lib/sdp.c
-@@ -1211,7 +1211,7 @@ static sdp_data_t *extract_str(const void *p, int bufsize, int *len)
- 	SDPDBG("Str : %s", s);
- 
- 	d->val.str = s;
--	d->unitSize = n + sizeof(uint8_t);
-+	d->unitSize = n;
- 	return d;
- }
- 
--- 
-2.21.0
+Marcel
 
