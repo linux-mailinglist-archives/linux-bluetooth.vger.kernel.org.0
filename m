@@ -2,56 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BB8E4E33BE
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Oct 2019 15:15:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76ADAE33BF
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Oct 2019 15:15:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502438AbfJXNPt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 24 Oct 2019 09:15:49 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:37737 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2502409AbfJXNPt (ORCPT
+        id S2502475AbfJXNPv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 24 Oct 2019 09:15:51 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33269 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2502409AbfJXNPu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 24 Oct 2019 09:15:49 -0400
-Received: by mail-wm1-f66.google.com with SMTP id q130so2401182wme.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Oct 2019 06:15:47 -0700 (PDT)
+        Thu, 24 Oct 2019 09:15:50 -0400
+Received: by mail-wr1-f65.google.com with SMTP id s1so17279223wro.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Oct 2019 06:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=DnOlPL5LbaA9EY6MGdFUHhRpPt6rJRFA9rxzFZEDOp0=;
-        b=YFISxEK4tyhGugCT4CBECnNTuRy+QHELKdRBchx1ylUZ3ysoR5SzfxWmng1EcWHZkh
-         2fOJKwyILWNRTlkEOJLpqeGj7BF+UMOB2KCW6U1NTpobNyz51crRPwecO8FakIaNZ5t0
-         UOj5wpsi1e8BUoMZyIfGYY3EM/Vr+xeFhAFSNWAjvWPdCyHspcUpYRgITiEsOsuQ1aSl
-         EMr5g/8JBtA1KUb0Ei9jtk5kFnbvqG4PJSzUeCwEWD7NXbY3n+bUcBnSVcS5Ou2YZoiF
-         dlGFXywe+9KP44Av7eVPunDc0PWt9QmX9iplevMvOm8p1Z5OVQkQzjVSKDuUD3jF1OXo
-         NlDQ==
+        bh=VfO9qD2A3/aBq+u0oWjyv1HV/mx6qQqFV7SC+93mn1I=;
+        b=Qdk2Gc9LSK6/rVpA4CeLW7ROUDtlbNXb+pPP7k6WQPSTNFRoqYV8WQcRWNyIrj5QhN
+         DJdgw2x1FYvDscIilJENS+YqdR/LnRBm08JAIFm5Ohlbx2eH6zRrgqjqLyiKXgQLwsi/
+         lXRjkBjx2hvAh+5sAx8iODFqrZqgGMc93n0P3VwjIPbIMk12f5kbXIDVczLCuZ3PAGZ6
+         V4hHggx6wDPmWb2/4nWqtzCvHxZyqJWnqoxLQj5QIQg26mob5HGAUJWp/J6/75JH+yWx
+         8WHEetzeoocfBkrezn2F+DmlugRxCcU45XQI0qdVA8R0pecaWc+xoRXPvIF/kftl7RDR
+         Riog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DnOlPL5LbaA9EY6MGdFUHhRpPt6rJRFA9rxzFZEDOp0=;
-        b=gnC9+t2Q5ofmS+3jOKXL9mdbytvjVFFL1jxhMYcj7/wjk11ia4PjZDxAIB2OzuLW56
-         tUg/TvytDyT8sNNheNOzq4A3Eo0AkPUcN6ilDqwehmmQoxt2Boh4WaTMjXh9EYVbEfpZ
-         JfZ6LI48czYSKBQ98wLLaa7YhStXvTBRjTVlYasQumrkyKSEzIbOVsa/YwTluoIjGeBo
-         se38483zFDcY5GS2hLbirgZk78IueBYqMFQMNdiIj79lwvbUMSS2VYKNNYn0QfJDmpaF
-         wfhVqHjCSBR1Hfy+PXpl8w4JH1Zjm1Jlomtxkw9RQZSI2yQo6PqVXRiQDz5S5H4gMAuH
-         WOXA==
-X-Gm-Message-State: APjAAAXyWlSVbfgK9JybT9YPfOWoBTMsqvE+SIoTGHfvYSyJvb9sKUcH
-        iSLa71gkiagtpyG/mrGgMd4HuVpu73M=
-X-Google-Smtp-Source: APXvYqw/sVsTpYsufAmpmetvHk9HDlV/SBcIVF9JhumYfU4GAs3nvAHbl0PQegUklWlMcTY6T0yLNA==
-X-Received: by 2002:a1c:4e15:: with SMTP id g21mr4564580wmh.148.1571922946610;
-        Thu, 24 Oct 2019 06:15:46 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VfO9qD2A3/aBq+u0oWjyv1HV/mx6qQqFV7SC+93mn1I=;
+        b=c64xv6lv8BwCAxR9MeljSZsFs0BK/gNNG7xcljeoYgSGVg2a8kx+iB9AjWrJuZLDdO
+         +dZnskHV/9rPhpXkBQUWPrzWWv3DfAP11IsuAygtW7S3+CFQuowQ2W2L2MqS+k0po8dz
+         j49oMm3ww7jQwNl9qwtGzDfUkfROr4pgb42p97EIBOQsv/Eh0n3n3bsTJfh0xRimGdzc
+         bJOorgV3MeTzbrohhvOd4pEvfZd6JB4uF4MQulzc9tgbNIIIZldr4JgJ/XKy4Ri8uMGX
+         8Zgadv2WHFHmUP5RmTUEGrCi4MDIzme5hW8wODA84PdZNBnG9eYJNVavXx1wol1CFYRj
+         W95w==
+X-Gm-Message-State: APjAAAWiQ0XPeFrMJ1McrznNBhtqOezKFl+7aW7ksX87RecONsulbxoa
+        eXzMaH4RPla7TvuIn/KZdAzw+adk18I=
+X-Google-Smtp-Source: APXvYqxgxdh9MyevugGh6v7PKtQvfII55bHjJkmAbW4w1fumhx7vCNL/96JmDw6o9wHm+UGIY3HxpA==
+X-Received: by 2002:adf:8465:: with SMTP id 92mr3658430wrf.376.1571922947943;
+        Thu, 24 Oct 2019 06:15:47 -0700 (PDT)
 Received: from localhost.localdomain ([192.198.151.61])
-        by smtp.gmail.com with ESMTPSA id d8sm11891334wrr.71.2019.10.24.06.15.45
+        by smtp.gmail.com with ESMTPSA id d8sm11891334wrr.71.2019.10.24.06.15.46
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Oct 2019 06:15:45 -0700 (PDT)
+        Thu, 24 Oct 2019 06:15:47 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 1/2] Bluetooth: Fix using advertising instance duration as timeout
-Date:   Thu, 24 Oct 2019 16:15:42 +0300
-Message-Id: <20191024131543.10794-1-luiz.dentz@gmail.com>
+Subject: [PATCH 2/2] Bluetooth: Fix not using LE_ADV_NONCONN_IND for instance 0
+Date:   Thu, 24 Oct 2019 16:15:43 +0300
+Message-Id: <20191024131543.10794-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20191024131543.10794-1-luiz.dentz@gmail.com>
+References: <20191024131543.10794-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -61,29 +63,42 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-When using LE Set Extended Advertising Enable command the duration
-refers to the lifetime of instance not the length which is actually
-controlled by the interval_min and interval_max when setting the
-parameters.
+Instance 0 is controlled by stack itself and always set the local name
+in the scan response.
 
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- net/bluetooth/hci_request.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_request.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 7f6a581b5b7e..3a2ec34c2999 100644
+index 3a2ec34c2999..ba99c292cf04 100644
 --- a/net/bluetooth/hci_request.c
 +++ b/net/bluetooth/hci_request.c
-@@ -1690,7 +1690,7 @@ int __hci_req_enable_ext_advertising(struct hci_request *req, u8 instance)
- 	 * scheduling it.
- 	 */
- 	if (adv_instance && adv_instance->duration) {
--		u16 duration = adv_instance->duration * MSEC_PER_SEC;
-+		u16 duration = adv_instance->timeout * MSEC_PER_SEC;
+@@ -904,9 +904,9 @@ static u8 get_adv_instance_scan_rsp_len(struct hci_dev *hdev, u8 instance)
+ {
+ 	struct adv_info *adv_instance;
  
- 		/* Time = N * 10 ms */
- 		adv_set->duration = cpu_to_le16(duration / 10);
+-	/* Ignore instance 0 */
++	/* Instance 0x00 always set local name */
+ 	if (instance == 0x00)
+-		return 0;
++		return 1;
+ 
+ 	adv_instance = hci_find_adv_instance(hdev, instance);
+ 	if (!adv_instance)
+@@ -923,9 +923,9 @@ static u8 get_cur_adv_instance_scan_rsp_len(struct hci_dev *hdev)
+ 	u8 instance = hdev->cur_adv_instance;
+ 	struct adv_info *adv_instance;
+ 
+-	/* Ignore instance 0 */
++	/* Instance 0x00 always set local name */
+ 	if (instance == 0x00)
+-		return 0;
++		return 1;
+ 
+ 	adv_instance = hci_find_adv_instance(hdev, instance);
+ 	if (!adv_instance)
 -- 
 2.21.0
 
