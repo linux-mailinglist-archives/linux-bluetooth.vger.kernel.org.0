@@ -2,55 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 37CC9E5642
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Oct 2019 23:55:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 401B9E5646
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Oct 2019 23:55:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726474AbfJYVzU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 25 Oct 2019 17:55:20 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:44846 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726304AbfJYVzT (ORCPT
+        id S1726528AbfJYVz0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 25 Oct 2019 17:55:26 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33761 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725944AbfJYVzZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 25 Oct 2019 17:55:19 -0400
-Received: by mail-pg1-f196.google.com with SMTP id e10so2386505pgd.11
-        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Oct 2019 14:55:19 -0700 (PDT)
+        Fri, 25 Oct 2019 17:55:25 -0400
+Received: by mail-pl1-f193.google.com with SMTP id y8so1996977plk.0
+        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Oct 2019 14:55:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rlkBYIHdHiVm55Kah/lon2P3jb1WVYe4P1U5EBDi8UE=;
-        b=WtyuwJU37CEXNLKUYTQmqtjGqQNWSVHolhJo6zruKL4mwtV7c8XonHyh3QPksZ1H59
-         wE3VYrgCZH3p2L1G9ZXpwqmbdQl1CAHBEf+aCagB+wqdgnIUviwwDy5k4xixtjHLh6qV
-         L/U1DWaQ6XgCl0qsaz5ZTBEUFsYZDPiXEkQJA=
+        bh=7uKa34kYvsX7BroFGlpYBz0Sd8dZ85UkHcONCBB1nmI=;
+        b=mVoUJAapx+uOBznFP8kPMazgbHKDh/1nmbF+I3B+I6pGY1Bc0SXxsWWOwS6ZqaoJ8s
+         MZwQqVJx/GAL3Dx9IjsemZnfdzeglMPrWkMYkWqz0w97Ar+Oo94dGyVVXX910/Ivgo/8
+         UOyu6jroYVgGEnJcyAEBMuAzV/hMF9wsf+NvI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rlkBYIHdHiVm55Kah/lon2P3jb1WVYe4P1U5EBDi8UE=;
-        b=gkjWH+3lCXoNRWjiE1NRDaocSSTf1/YY1X9GfZ6ZQUVohxZAs461xu7Sy9a2A30yn2
-         xNUnBynBuAgzn+M/Up7FQsVttQiLf6Sy4RU8BC0Lfslgn/83I51ztZSoiPgrts0JhZMj
-         JlhtPhDDgAsrrVRmE/ORpd41YAKI6DApay84560Wf3//caZZgIL9ErlCPBDVjogeQKNB
-         fAzMEq07+HmfilEQQ0UN4WQOKirKJMPRFufHfVlSgxJuhHiK3YnBNLEvvNMLKhEmYaal
-         Hqy/Mq7yxV/eEuVnXxksax3nIXr989adDoCxyj5wl195t+tE5h/QslgGJLdyA2r7hkAd
-         J8vw==
-X-Gm-Message-State: APjAAAU7U6QvKrBpdsg0zkQWFX18lv7nfrQTWawlkKeunGbRRClgLgwU
-        zC3Ly9viEwZWAl75JIGRC/bTpw==
-X-Google-Smtp-Source: APXvYqwoTkjLyPk77v5CePu0/mRgUiE+4yRmhCDS53t3VEv9gmWbZnkrtyZKKSrzJT0mhgbVHf9qVA==
-X-Received: by 2002:a63:794b:: with SMTP id u72mr6995020pgc.320.1572040518901;
-        Fri, 25 Oct 2019 14:55:18 -0700 (PDT)
+        bh=7uKa34kYvsX7BroFGlpYBz0Sd8dZ85UkHcONCBB1nmI=;
+        b=kgA64CU3KRgngtn3eikq1oumMJm9VoRBGoCPscRqPVAOLxWTWyypTWp+nLfG+arLQ0
+         Chj5ktL3yJDy9kavdmTbFk7YlZIbL8RmJcsQn3wNG71XbSUrlT1d0CC1ZoRqgSg4g+q+
+         DLXSGn63jXkcFx93Fwrqu8LBg8n0mVdNB+ZyHZFk1yl2rYLGV4k9c9U6FytlQ8p3n7iW
+         oiCC7uvIcq8Ly8QnF+CrLIldWPB/iStTowK6Qc17xZjxj5pQiKkrqck3f7AO0z1OHNps
+         SZuUzuw/tTfcJ3XDpEt24+7TiF6caPJLDpoWbtoZwsA4dWAZBBj5i3N+y25Knh+I5/TM
+         Hhlw==
+X-Gm-Message-State: APjAAAVX9C3OBT5S8q3zdvlEoL8ppbOHEkXmFY52GjZ0gOFQn0ahu57P
+        YFT0tQV7GzMatH8l9mZpz823Zg==
+X-Google-Smtp-Source: APXvYqz/ooBuyGY1IHf6DZksSTGAVttn8pjAAVhvqvN5QaSKbLw1d5alO5D0UMlMwup7Kjy2l0zWiw==
+X-Received: by 2002:a17:902:b687:: with SMTP id c7mr6367753pls.214.1572040525016;
+        Fri, 25 Oct 2019 14:55:25 -0700 (PDT)
 Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id y80sm3815110pfc.30.2019.10.25.14.55.18
+        by smtp.gmail.com with ESMTPSA id y80sm3815110pfc.30.2019.10.25.14.55.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Oct 2019 14:55:18 -0700 (PDT)
+        Fri, 25 Oct 2019 14:55:24 -0700 (PDT)
 From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 To:     Johan Hedberg <johan.hedberg@gmail.com>,
         Marcel Holtmann <marcel@holtmann.org>
 Cc:     linux-bluetooth@vger.kernel.org, dianders@chromium.org,
         Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 1/3] Bluetooth: hci_bcm: Add compatible string for BCM43540
-Date:   Fri, 25 Oct 2019 14:54:26 -0700
-Message-Id: <20191025215428.31607-2-abhishekpandit@chromium.org>
+        devicetree@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Ondrej Jirman <megous@megous.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Chen-Yu Tsai <wens@csie.org>
+Subject: [PATCH 2/3] dt-bindings: net: broadcom-bluetooth: Add BCM43540 compatible string
+Date:   Fri, 25 Oct 2019 14:54:27 -0700
+Message-Id: <20191025215428.31607-3-abhishekpandit@chromium.org>
 X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
 In-Reply-To: <20191025215428.31607-1-abhishekpandit@chromium.org>
 References: <20191025215428.31607-1-abhishekpandit@chromium.org>
@@ -61,28 +66,27 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The BCM43540 chip is a 802.11 a/b/g/n/ac + Bluetooth 4.1 combo module.
-This patch adds a compatible string match to the serdev driver for the
-Bluetooth part of the chip.
+The BCM43540 is a 802.11 a/b/g/n/ac WiFi + Bluetooth 4.1 chip from
+Broadcom. This is present in Azurewave AW-CM195NF WiFi+BT module.
 
 Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 ---
 
- drivers/bluetooth/hci_bcm.c | 1 +
+ Documentation/devicetree/bindings/net/broadcom-bluetooth.txt | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
-index 0f73f6a686cb..0f851c0dde7f 100644
---- a/drivers/bluetooth/hci_bcm.c
-+++ b/drivers/bluetooth/hci_bcm.c
-@@ -1424,6 +1424,7 @@ static const struct of_device_id bcm_bluetooth_of_match[] = {
- 	{ .compatible = "brcm,bcm4345c5" },
- 	{ .compatible = "brcm,bcm4330-bt" },
- 	{ .compatible = "brcm,bcm43438-bt" },
-+	{ .compatible = "brcm,bcm43540-bt" },
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, bcm_bluetooth_of_match);
+diff --git a/Documentation/devicetree/bindings/net/broadcom-bluetooth.txt b/Documentation/devicetree/bindings/net/broadcom-bluetooth.txt
+index 4fa00e2eafcf..c749dc297624 100644
+--- a/Documentation/devicetree/bindings/net/broadcom-bluetooth.txt
++++ b/Documentation/devicetree/bindings/net/broadcom-bluetooth.txt
+@@ -14,6 +14,7 @@ Required properties:
+    * "brcm,bcm4330-bt"
+    * "brcm,bcm43438-bt"
+    * "brcm,bcm4345c5"
++   * "brcm,bcm43540-bt"
+ 
+ Optional properties:
+ 
 -- 
 2.24.0.rc0.303.g954a862665-goog
 
