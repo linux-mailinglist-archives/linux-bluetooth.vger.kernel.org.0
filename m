@@ -2,167 +2,74 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E3223E5E36
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Oct 2019 19:39:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D468AE5FA5
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Oct 2019 22:48:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726276AbfJZRja (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 26 Oct 2019 13:39:30 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:38590 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbfJZRja (ORCPT
+        id S1726607AbfJZUsj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 26 Oct 2019 16:48:39 -0400
+Received: from vault.bonstra.fr.eu.org ([51.158.68.104]:39570 "EHLO
+        vault.bonstra.fr.eu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726566AbfJZUsj (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 26 Oct 2019 13:39:30 -0400
-Received: by mail-qk1-f193.google.com with SMTP id p4so4770161qkf.5
-        for <linux-bluetooth@vger.kernel.org>; Sat, 26 Oct 2019 10:39:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WJj+XYLe3cMZIZoQ9vr6L71XNxTz/FYk/4q0duDThfY=;
-        b=lmhZG5WmjZSGyG/n8DvvWPUtaIUQTSAcqfXm1lhQkFBllCnZ0iPY0qO+FfncxWVG1O
-         iGaup108mV3brmcMFcKNNZG1pEu5uY5d31Q7MY//EU1hh+eyZ1YJmsNnwtuZu+TxM3uk
-         uhzDUa/57Q+1Od0c9tEFXNNNfwOEFVHqPLRBg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WJj+XYLe3cMZIZoQ9vr6L71XNxTz/FYk/4q0duDThfY=;
-        b=ILSTi3q1ANDcs7BvLIxYZNxQIV9kdMx8kS5cTmPQs9aODerhOr6tlnRvhjaE88aJm9
-         LGSBeJzSnhZ9S0WCYiJ2kpQ99tMXY5ajZTH1NluBnvk7wmiNgv52U6A5VNPo5YQ5lh6W
-         AFX5tEwaqP9NewMhwWjiK9ejVId3qdkMtpfaAjNsQ18lzXce4/xfoACGhK4qnn1pTYTW
-         FelZ+xY7oiiW90SPu5qiRKaBthFQ6cIB2IrUS/EZ7SfREz9Ywv+ARnC62E/WUXQsuqGy
-         SoscM6ZgVAOyYsYiXKtAMRNpeF1jwT3FTtNxlJ6UOxoReGQFYKsJur6WilaeW4yrXfwO
-         UPQA==
-X-Gm-Message-State: APjAAAUO74syJu6nSHjSyqVNRgjbqc/NcfNAHFIRPLimRPxUJjZg0UXq
-        THgXJxZLTml3JS77xBgDMu6rs/HdZ3omT5OYpH9fwQ==
-X-Google-Smtp-Source: APXvYqxNNWzFrSsnCjh1NbFwr4AgLKBoBn+uLrUEM4+ByNDY81vMaaOzmML5AYyWCxiqf2lVQlNLxbhZNQL2Jn753dk=
-X-Received: by 2002:a37:4dd1:: with SMTP id a200mr8422942qkb.419.1572111568786;
- Sat, 26 Oct 2019 10:39:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20191025215428.31607-1-abhishekpandit@chromium.org>
- <20191025215428.31607-4-abhishekpandit@chromium.org> <CAD=FV=Vf64F885me=PUpv34Lb6iZpm1ui30nLHww6T3rmRVJXA@mail.gmail.com>
-In-Reply-To: <CAD=FV=Vf64F885me=PUpv34Lb6iZpm1ui30nLHww6T3rmRVJXA@mail.gmail.com>
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Date:   Sat, 26 Oct 2019 10:39:18 -0700
-Message-ID: <CANFp7mX7LNxt5=6h-eMC+o1JtoJ1Mvwo2RLBYMhZ3fN5kyqGqQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] ARM: dts: rockchip: Add brcm bluetooth module on uart0
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        linux-bluetooth@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Heiko Stuebner <heiko@sntech.de>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
+        Sat, 26 Oct 2019 16:48:39 -0400
+Received: from val.bonstra.fr.eu.org (unknown [192.168.128.2])
+        by vault.bonstra.fr.eu.org (Postfix) with ESMTP id 191D7BFB41;
+        Sat, 26 Oct 2019 20:41:47 +0000 (UTC)
+Received: from bonstra.fr.eu.org (vlad.gr1 [IPv6:fd7b:45cc:aa3d::3])
+        by val.bonstra.fr.eu.org (Postfix) with ESMTPSA id 3716D6086E;
+        Sat, 26 Oct 2019 22:41:46 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bonstra.fr.eu.org;
+        s=dkim1; t=1572122506; x=1573332106;
+        bh=gvjqgmyM6VpYYfnUpsZRKeggNshVkGNMAOiusppf46w=;
+        h=From:To:Cc:Subject:Date;
+        b=uEs56XPhlioXD792dC59KX4V1Y0ydsgmshAbLCVJCDWDn4mEoMy+GSVRj9AJivYjl
+         lultWVqd3JyWtVOXsRrw2r5GZUPUgKL2dvGOwT0rIW+r3cYQOPf+jDqDjuBRBxJgpf
+         fIePuQj/E3AKqbPaf5kDoUG6vhj6Mm/xfDYwG5A5m7uzTjgPJYuE1o+e/fEjZYbLLD
+         IuMYHARTwI9P6rSV2K5e1Y9N0BWsycgZ4h8iui99u1kJZvcC2D67yoPSU9ny7WYKHq
+         LhSqF8s74YJ3qxJXbc9dpWYnfpJv4VBW7Zzi9pDc66yQKXgm+stFiTCeb6Vv7BW0A8
+         gViiuwO2mKlFA==
+From:   Hugo Grostabussiat <bonstra@bonstra.fr.eu.org>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>
+Cc:     Hugo Grostabussiat <bonstra@bonstra.fr.eu.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org
+Subject: [PATCH 0/3] Add Bluetooth support to Teres A64 I
+Date:   Sat, 26 Oct 2019 22:41:13 +0200
+Message-Id: <20191026204116.95119-1-bonstra@bonstra.fr.eu.org>
+X-Mailer: git-send-email 2.23.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Yes, these shouldn't be for all of Veyron, only Minnie, Mickey and
-Speedy -- my mistake. I'll send an updated patch with your
-suggestions.
+The Teres A64 I laptop comes equipped with a serial-attached Realtek
+rtl8723bs Bluetooth controller. This series creates the DT binding for
+the the Realtek vendor extension of the HCI H5 driver, for which ACPI
+bindings already exist, and enable support for the Teres A64 I board.
 
-Thanks
-Abhishek
+The first patch adds the DT binding documentation.
+The second one implements such binding in the HCI H5 driver.
+The last patch adds the appropriate device node to the Teres A64 I dts
+file to enable Bluetooth.
 
-On Fri, Oct 25, 2019 at 3:50 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Fri, Oct 25, 2019 at 2:55 PM Abhishek Pandit-Subedi
-> <abhishekpandit@chromium.org> wrote:
-> >
-> > This enables the Broadcom uart bluetooth driver on uart0 and gives it
-> > ownership of its gpios. In order to use this, you must enable the
-> > following kconfig options:
-> >   - CONFIG_BT_HCIUART_BCM
-> >   - CONFIG_SERIAL_DEV
-> >
-> > Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> > ---
-> >
-> >  arch/arm/boot/dts/rk3288-veyron.dtsi | 31 +++++++---------------------
-> >  1 file changed, 7 insertions(+), 24 deletions(-)
-> >
-> > diff --git a/arch/arm/boot/dts/rk3288-veyron.dtsi b/arch/arm/boot/dts/rk3288-veyron.dtsi
-> > index 7525e3dd1fc1..8c9f91ba6f57 100644
-> > --- a/arch/arm/boot/dts/rk3288-veyron.dtsi
-> > +++ b/arch/arm/boot/dts/rk3288-veyron.dtsi
->
-> You are changing this for _all_ veryon, not just those veyron devices
-> using Broadcom.  I don't think you want to change the marvell-based
-> boards.
->
-> ...presumably you'll want to make you change only affect minnie,
-> speedy, and mickey.
->
->
-> > @@ -23,30 +23,6 @@
-> >                 reg = <0x0 0x0 0x0 0x80000000>;
-> >         };
-> >
-> > -       bt_activity: bt-activity {
-> > -               compatible = "gpio-keys";
-> > -               pinctrl-names = "default";
-> > -               pinctrl-0 = <&bt_host_wake>;
-> > -
-> > -               /*
-> > -                * HACK: until we have an LPM driver, we'll use an
-> > -                * ugly GPIO key to allow Bluetooth to wake from S3.
-> > -                * This is expected to only be used by BT modules that
-> > -                * use UART for comms.  For BT modules that talk over
-> > -                * SDIO we should use a wakeup mechanism related to SDIO.
-> > -                *
-> > -                * Use KEY_RESERVED here since that will work as a wakeup but
-> > -                * doesn't get reported to higher levels (so doesn't confuse
-> > -                * Chrome).
-> > -                */
-> > -               bt-wake {
-> > -                       label = "BT Wakeup";
-> > -                       gpios = <&gpio4 RK_PD7 GPIO_ACTIVE_HIGH>;
-> > -                       linux,code = <KEY_RESERVED>;
-> > -                       wakeup-source;
-> > -               };
-> > -
-> > -       };
-> >
-> >         power_button: power-button {
-> >                 compatible = "gpio-keys";
-> > @@ -434,6 +410,13 @@
-> >         /* Pins don't include flow control by default; add that in */
-> >         pinctrl-names = "default";
-> >         pinctrl-0 = <&uart0_xfer &uart0_cts &uart0_rts>;
-> > +
-> > +       bluetooth {
-> > +               compatible = "brcm,bcm43540-bt";
->
-> You probably need some pinctrl entries here to make sure that things
-> are properly configured, like:
->
-> pinctrl-names = "default";
-> pinctrl-0 = <&bt_host_wake>, <&bt_dev_wake>, <&bt_enable>;
->
-> This would require defining bt_dev_wake and bt_enable and removing the
-> hacky output-only versions they have now.
->
->
-> > +               host-wakeup-gpios       = <&gpio4 RK_PD7 GPIO_ACTIVE_HIGH>;
-> > +               shutdown-gpios          = <&gpio4 RK_PD5 GPIO_ACTIVE_LOW>;
->
-> Right now gpio4 RK_PD5 is controlled by the "sdio_pwrseq".  Should you
-> remove it from there?  Looks like it was a no-op for marvell which
-> makes it a little easier.
->
->
-> > +               device-wakeup-gpios     = <&gpio4 RK_PD2 GPIO_ACTIVE_HIGH>;
->
-> You probably need to stop driving this in the pinctrl hogs for
-> Broadcom boards...
->
->
-> -Doug
+Hugo Grostabussiat (3):
+  dt-bindings: net: bluetooth: add DT binding for rtl8723bs
+  Bluetooth: hci_h5: Add DT support for rtl8723bs
+  arm64: dts: allwinner: a64: Enable Bluetooth on Teres-I
+
+ .../bindings/net/realtek,rtl8723bs-bt.txt     | 25 ++++++++++++
+ .../boot/dts/allwinner/sun50i-a64-teres-i.dts | 13 ++++++
+ drivers/bluetooth/hci_h5.c                    | 40 ++++++++++++++++---
+ 3 files changed, 73 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/realtek,rtl8723bs-bt.txt
+
+-- 
+2.23.0
+
