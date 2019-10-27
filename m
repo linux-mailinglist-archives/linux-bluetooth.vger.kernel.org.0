@@ -2,91 +2,57 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 401FFE5FA1
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Oct 2019 22:48:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAA8EE650A
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 27 Oct 2019 20:17:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726614AbfJZUsj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 26 Oct 2019 16:48:39 -0400
-Received: from vault.bonstra.fr.eu.org ([51.158.68.104]:39562 "EHLO
-        vault.bonstra.fr.eu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726530AbfJZUsj (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 26 Oct 2019 16:48:39 -0400
-Received: from val.bonstra.fr.eu.org (unknown [192.168.128.2])
-        by vault.bonstra.fr.eu.org (Postfix) with ESMTP id 1A923BFE83;
-        Sat, 26 Oct 2019 20:41:48 +0000 (UTC)
-Received: from bonstra.fr.eu.org (vlad.gr1 [IPv6:fd7b:45cc:aa3d::3])
-        by val.bonstra.fr.eu.org (Postfix) with ESMTPSA id 2A6AA60873;
-        Sat, 26 Oct 2019 22:41:47 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bonstra.fr.eu.org;
-        s=dkim1; t=1572122507; x=1573332107;
-        bh=VhKkxkWcTbCjrWeKegoiffMLEInoYHE0UkHYo8HkL10=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=XWt470oIb0+H5KUndkc4KgevXnc31VGP7RacGTgi4Me6h0cxIdsebstCCEU4tbPRs
-         uirV6/kgxCUItw3V4e2RrOXO3s368QAIlDw+T1TNjM75Fy6h4G82DaByyVunSShyhc
-         w7ljbeEQznjqGZJveqSZiHdfHBv1faGDYFCqLb8vslSUD1i3V7jJDkUtauCc+z4Xcr
-         nwJjiSr7PB9E7T8sn4lgN1ymyfGckhk5gvuzRhK3JIxD9oXZTkdLg47FbexB2xWT2e
-         o0Y6vwNdarMY0jNrcnHVt7Gg90+ZKHqDLPKCVw2i79TzDt4GfktEuHU/Vq829cQp0k
-         FWs67w3PYGdfg==
-From:   Hugo Grostabussiat <bonstra@bonstra.fr.eu.org>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>
-Cc:     Hugo Grostabussiat <bonstra@bonstra.fr.eu.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: allwinner: a64: Enable Bluetooth on Teres-I
-Date:   Sat, 26 Oct 2019 22:41:16 +0200
-Message-Id: <20191026204116.95119-4-bonstra@bonstra.fr.eu.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20191026204116.95119-1-bonstra@bonstra.fr.eu.org>
-References: <20191026204116.95119-1-bonstra@bonstra.fr.eu.org>
+        id S1727258AbfJ0TRX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 27 Oct 2019 15:17:23 -0400
+Received: from ec2-52-19-174-175.eu-west-1.compute.amazonaws.com ([52.19.174.175]:39754
+        "EHLO rdmp.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726985AbfJ0TRX (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 27 Oct 2019 15:17:23 -0400
+X-Greylist: delayed 966 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Oct 2019 15:17:22 EDT
+Received: from [127.0.0.1] (helo=localhost)
+        by rdmp.org with esmtp (Exim 4.92)
+        (envelope-from <bluez-2hxy5d@rdmp.org>)
+        id 1iOnmt-0001wT-Bb
+        for linux-bluetooth@vger.kernel.org; Sun, 27 Oct 2019 19:01:15 +0000
+Message-ID: <37e50a80d823b267508893db9573a1903c87d0c6.camel@rdmp.org>
+Subject: Audio out to phone
+From:   Dale Mellor <bluez-2hxy5d@rdmp.org>
+To:     linux-bluetooth@vger.kernel.org
+Date:   Sun, 27 Oct 2019 19:01:15 +0000
+Organization: DM Bespoke Computer Solutions Ltd
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5-1.1 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The UART1 on the Teres-A64-I is connected to a rtl8723bs combo
-WLAN/Bluetooth controller, with three GPIOs used for device reset,
-host wake up and device wake up.
+Does anybody know of any tricks needed to get audio to go out through
+an ongoing phone call?  Everything in my setup looks good, with all the
+right devices and settings in bluetoothctl, pavucontrol (including
+correct headset/handsfree profiles) and I can hear the caller, but they
+are only getting silence from my end.  I am using the pulseaudio
+asynchronous API, which works well enough playing through speakers but
+I can't get sound through the telephone (an Android device, which works
+perfectly well with my car's headset).
 
-Currently, the host wake up feature is not supported by the HCI H5
-driver.
+bluez5: 5.51
+ofono:  1.30
+pulseaudio: 13.0
+debian: 10 (stable)
+linux: 5.3.0
 
-Signed-off-by: Hugo Grostabussiat <bonstra@bonstra.fr.eu.org>
----
- .../arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+I'm quite desperate to get this sorted, so if it is an unsolved problem
+perhaps some pointers to where the issue might be will help me to help
+you debug the situation?  As you see from the updatedness of the
+packages, I have built them all from source and can dig if necessary.
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts b/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
-index 1069e7012c9c..c7db2f1650d4 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
-@@ -325,6 +325,19 @@
- 	status = "okay";
- };
- 
-+&uart1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart1_pins>, <&uart1_rts_cts_pins>;
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "realtek,rtl8723bs-bt";
-+		enable-gpio = <&r_pio 0 4 GPIO_ACTIVE_HIGH>; /* PL4 */
-+		device-wake-gpio = <&r_pio 0 6 GPIO_ACTIVE_HIGH>; /* PL6 */
-+		realtek,config-name = "teres_a64_i";
-+	};
-+};
-+
- &usbphy {
- 	usb1_vbus-supply = <&reg_usb1_vbus>;
- 	status = "okay";
--- 
-2.23.0
+Thanks in advance for any help,
+Dale
+
 
