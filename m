@@ -2,87 +2,47 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 709EFE84B3
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 29 Oct 2019 10:52:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9410E8823
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 29 Oct 2019 13:28:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728339AbfJ2JwF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 29 Oct 2019 05:52:05 -0400
-Received: from mail-io1-f69.google.com ([209.85.166.69]:41812 "EHLO
-        mail-io1-f69.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727498AbfJ2JwF (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 29 Oct 2019 05:52:05 -0400
-Received: by mail-io1-f69.google.com with SMTP id s19so10637440ioe.8
-        for <linux-bluetooth@vger.kernel.org>; Tue, 29 Oct 2019 02:52:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id:subject
-         :from:to;
-        bh=KhTni5i4fWNYOrXXdKRZL7n4/+Q2oXySWZR+SGDk+1M=;
-        b=b8XzWv2HineKdEFo5W9i6mxL+r4ADX+yAQpoH8+XresVzFZvFYMFw93wt/NzfZsqXZ
-         ChR/I+PRw86PzSBAHhPfE6o91ATz68777kBUH1TtihlW5V8iqBYDL2CU2cxrA7nAQySz
-         fFZHHBmh88waE1AUlZmAS1UVlP3TbKl9O1hMgnKK+B0S+WspsVfHfsoBmvR+M3dGg72B
-         nri4HR18SDE3iazL3Q3JOrPtu8rZZWKv3d11QKAW6tVklLaBh0iYiOpbgpH4vYhNB4vU
-         ZLNHYlrwMkgKQ8E+IaV3irdjYJhxlzmgRMmakZEAhMKmmvPi22t24pl/7txvuyJXcub1
-         gO3Q==
-X-Gm-Message-State: APjAAAU4j/80E+L39J/BONt+67gnpqFzl4S8HaHRm79UKwRJwbHPNm5B
-        6musfmFdiyyj8kA1WeSWrCIjHIsv/DlzLXiykKIK8TtyvAt8
-X-Google-Smtp-Source: APXvYqxJ9xrCQYDM3zjASN2O14TUYOL1Vq099EpzYllPSctTMS5wHjd4pXl9VmehlTUaytj82L6S0Af4Z1CPJkWAD5Rc60MY47Nk
+        id S1731583AbfJ2M2I convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 29 Oct 2019 08:28:08 -0400
+Received: from s0090.ppsmtp.net ([91.90.154.91]:57738 "EHLO s0090.ppsmtp.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729224AbfJ2M2H (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 29 Oct 2019 08:28:07 -0400
+Received: from pps.filterd (s0090.ppsmtp.net [127.0.0.1])
+        by s0090.ppsmtp.net (8.16.0.27/8.16.0.27) with SMTP id x9T6h3io016606;
+        Tue, 29 Oct 2019 07:49:28 +0100
+Received: from mail.schuetz.net ([212.185.169.233])
+        by s0090.ppsmtp.net with ESMTP id 2vx8bh89wr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Oct 2019 07:49:28 +0100
+Received: from julia02 (localhost [127.0.0.1])
+        by mail.schuetz.net (Postfix) with ESMTP id DE9E72022053;
+        Tue, 29 Oct 2019 07:49:27 +0100 (CET)
 MIME-Version: 1.0
-X-Received: by 2002:a92:8dd9:: with SMTP id w86mr25132844ill.93.1572342721346;
- Tue, 29 Oct 2019 02:52:01 -0700 (PDT)
-Date:   Tue, 29 Oct 2019 02:52:00 -0700
-In-Reply-To: <000000000000044a7f0595fbaf2c@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <0000000000006db1370596099128@google.com>
-Subject: Re: INFO: trying to register non-static key in bond_3ad_update_ad_actor_settings
-From:   syzbot <syzbot+8da67f407bcba2c72e6e@syzkaller.appspotmail.com>
-To:     a@unstable.cc, alex.aring@gmail.com, allison@lohutok.net,
-        andrew@lunn.ch, andy@greyhouse.net, ap420073@gmail.com,
-        aroulin@cumulusnetworks.com, ast@domdv.de,
-        b.a.t.m.a.n@lists.open-mesh.org, bridge@lists.linux-foundation.org,
-        cleech@redhat.com, daniel@iogearbox.net, davem@davemloft.net,
-        dcaratti@redhat.com, dsa@cumulusnetworks.com, edumazet@google.com,
-        f.fainelli@gmail.com, fw@strlen.de, gbastien@versatic.net,
-        gregkh@linuxfoundation.org, gustavo@embeddedor.com,
-        haiyangz@microsoft.com, idosch@mellanox.com, info@metux.net,
-        ivan.khoronzhuk@linaro.org, j.vosburgh@gmail.com, j@w1.fi,
-        jakub.kicinski@netronome.com, jhs@mojatatu.com, jiri@mellanox.com,
-        jiri@resnulli.us, johan.hedberg@gmail.com, johannes.berg@intel.com,
-        john.hurley@netronome.com, jwi@linux.ibm.com,
-        kstewart@linuxfoundation.org, kvalo@codeaurora.org,
-        kys@microsoft.com, linmiaohe@huawei.com,
-        linux-bluetooth@vger.kernel.org, linux-hams@vger.kernel.org,
-        linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-ppp@vger.kernel.org, linux-wireless@vger.kernel.org,
-        linux-wpan@vger.kernel.org, liuhangbin@gmail.com,
-        marcel@holtmann.org, mareklindner@neomailbox.ch, mcroce@redhat.com
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+Subject: Dear Friend,
+To:     Recipients <infocarfer1@aim.com>
+From:   "Mr.R.C" <infocarfer1@aim.com>
+Date:   Tue, 29 Oct 2019 06:49:09 +0000
+Reply-To: infocarfer@aim.com
+X-TNEFEvaluated: 1
+Message-ID: <OF54F9E4DD.23684231-ON882584A2.00257C6C@schuetz.net>
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Description: Mail message body
+X-Proofpoint-ID: SID=2vx8bh89wr QID=2vx8bh89wr-1
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-10-29_03:,,
+ signatures=0
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-syzbot has bisected this bug to:
+Dear Friend,
 
-commit ab92d68fc22f9afab480153bd82a20f6e2533769
-Author: Taehee Yoo <ap420073@gmail.com>
-Date:   Mon Oct 21 18:47:51 2019 +0000
-
-     net: core: add generic lockdep keys
-
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=12b54d70e00000
-start commit:   60c1769a Add linux-next specific files for 20191028
-git tree:       linux-next
-final crash:    https://syzkaller.appspot.com/x/report.txt?x=11b54d70e00000
-console output: https://syzkaller.appspot.com/x/log.txt?x=16b54d70e00000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=cb86688f30db053d
-dashboard link: https://syzkaller.appspot.com/bug?extid=8da67f407bcba2c72e6e
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=14d43a04e00000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=16be3b9ce00000
-
-Reported-by: syzbot+8da67f407bcba2c72e6e@syzkaller.appspotmail.com
-Fixes: ab92d68fc22f ("net: core: add generic lockdep keys")
-
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+I am Vice Chairman of Hang Seng Bank, I have Important Matter to Discuss with you concerning my late client, Died without a NEXT OF KIN. Send me your private email for full details information. email me at (infocarfer@aim.com)
+Mail:
+Regards
