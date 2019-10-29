@@ -2,95 +2,96 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 23647E8932
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 29 Oct 2019 14:16:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58019E8959
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 29 Oct 2019 14:23:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388325AbfJ2NQo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 29 Oct 2019 09:16:44 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:36692 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388322AbfJ2NQo (ORCPT
+        id S2388416AbfJ2NXo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 29 Oct 2019 09:23:44 -0400
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:42627 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388328AbfJ2NXo (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 29 Oct 2019 09:16:44 -0400
-Received: by mail-ot1-f67.google.com with SMTP id c7so9701817otm.3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 29 Oct 2019 06:16:44 -0700 (PDT)
+        Tue, 29 Oct 2019 09:23:44 -0400
+Received: by mail-oi1-f174.google.com with SMTP id i185so8879104oif.9
+        for <linux-bluetooth@vger.kernel.org>; Tue, 29 Oct 2019 06:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Ecq5l3NGTkSNMMtdvtGS8c5Oc1a8hh41Azf6zC4hq04=;
-        b=RVM+eRIAVbrIfLi2NPuJ6Lm5RXXve66zj+8YhcUBxbB7RFinn6OCx9OQ5bmpJrLN3H
-         hWi7Wx6QR/cy+YFkP7yXhr2aah/MWEAv5ZVdnWZU3fcpeZBHdTtfgdmaaIRVNFGCWtNO
-         gAk5Q9tplHV+i6d4NCRXRPFa7trGE2xFJEtwG0/P6517uSIDHI0/HXAHvIHz3pEcwAhi
-         32259jLlVXPFiX8sCTzTkI2wIgoseiLWkkDpsYwWE9n5cLwEhaNSvYZqsuOxTaiCzKy2
-         VDMW0ToobApis3jCGRAHT3J/Sq6fCZ+Pa5ymPSMZV//rH4Z4SLjgIV3OPls6U2gUCsJC
-         YTVg==
+        bh=+YvoCgsmMDStvkEgYksBPpHKdqHlFbhAPsTW6KZbxXU=;
+        b=DRc92yvoGCdllIJ0JS+46IjIdVD1KAT4uGgkCfASyH08tapI/vgb5Y1xxBo+wCL8Ou
+         9zjzY2quyvyd+/iMLUpdjy08iKFKTU1dzgITFk4vN/90vQZ46yX4GB1ZC0ZWEd3yDOIy
+         84PRWJzJdHwNPkiOQ3LpM7Ev6x/y8WRaMnMaNWO97AUxOPLyCr3BOnxyPqiZ8UEFP64o
+         fUl2rekcntpQF/gLInMG/EPId2J/OZem5LxCqPqhxc8/UuV5nWPK8peOziSZJ4HFd5ar
+         LQQPhcqoXVGvntVQ709yu4msSCmXM+geM2qEQ3mwjwELrNRPIqj+/z0Q8RE1lKfG4L1Z
+         qWLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Ecq5l3NGTkSNMMtdvtGS8c5Oc1a8hh41Azf6zC4hq04=;
-        b=aHti47sFM5VxGaI27aDoq8nbpXf3x2imxnxOQLtA18ULy6QRYLLdobtGMT6PCkcF5+
-         nQ5I6r5dbEXwnozxfV7uffnft4pKw71Zpz7kx/wO6GaBvXvwqZbm6IV+67aQ0RhWn/rT
-         2f/0x41qjKwBUpbXg9WIWW6feqfMCZ3ZQQc3X5mRL491qq/O17ZW3uY2GjMnUuwBdsjU
-         VUYjVARFFIilBXBBNVpcIK2K132VtrHtUSA15DmL9aGawX2/bTIeviKVi0TPG6r+FrN4
-         zdG3VvFjaVyebnBxav0zyCptE9QFLBun42sD4lu4LRjyQUxIVKvYM0Vct5KiNUsCZlEQ
-         rRrg==
-X-Gm-Message-State: APjAAAXVEJctC2MMgE9qduBpQ42KGBXc3BgfpyhqMbviBncuZrFAXhry
-        nOuKU0j87j3IKRRGk3b1gmlbjFLMH4qAwjTAPxWDR+igfes=
-X-Google-Smtp-Source: APXvYqwrYMQTDVe5giGjn9fF0lcdFJdXdyox54UbL40aKEI2/OE085gTU/PeuIxFdefirmHnLEY6zu11F+8shtKovk8=
-X-Received: by 2002:a9d:620c:: with SMTP id g12mr8384234otj.11.1572355003359;
- Tue, 29 Oct 2019 06:16:43 -0700 (PDT)
+        bh=+YvoCgsmMDStvkEgYksBPpHKdqHlFbhAPsTW6KZbxXU=;
+        b=IAmnR/icPLYL0ganw4GLiLIlOaWlyUQCDc48RAgqCs267ENgY2doELRajU4um7RnkY
+         LUhPkSepeiTsNT+USqtsj19bOsfgNd9tXGCiBv253iOLtoD+3xLE+vhCTzoQK2rEiH83
+         uKvUomS08V0DriAqMs9jLNH+WGsatM1uJwEGDSdEFUQKLi49GYw0DVdKiQiz+GKEcFlT
+         s5vttXD3Aik98YFzgYwXmr86PTDqKLUxS4Nqqy2Ma2JbHdpOker1eEPaUNxYOJcfvOu+
+         NRNAk32JyO3ArXi3uoih5MoVDGy/S1BoR80mkH6tW+1t81YkNs1F8LAcmcTU1yaXHeNw
+         Se7Q==
+X-Gm-Message-State: APjAAAWJQOUZAAENcBYgU3mwI1OGKtV4TpYcHXWUi0/gVPgJISN5c21t
+        DBAldYKK6q3lwb7/DiPX0svOc9f4kl30vYDZqprGV70CVxo=
+X-Google-Smtp-Source: APXvYqyDqhrcRgfrBxYZ57ffH+J1IDtn9R/tIyZDYvNPsvD73GZDStfHWGorY46d4E18tcaohwmbqYQSFAEbBpeBI9c=
+X-Received: by 2002:aca:281a:: with SMTP id 26mr3935711oix.82.1572355423158;
+ Tue, 29 Oct 2019 06:23:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <1571913139-6477-1-git-send-email-jaganath.kanakkassery@intel.com>
- <585F2A10-B16E-46BD-8EF6-4FD904A485AC@holtmann.org> <CAJzH+bqLK1aohAE3f5-4Xfhz1Gq05URFgZf9yFPAeBF2ekfmQw@mail.gmail.com>
- <368BD38D-6FFB-412D-A6A9-364B3B5374F0@holtmann.org> <CAJzH+brQ6vu-o6a7iAmpBT+cbrdGHP3XNfUk61UPyS2D6bwGDQ@mail.gmail.com>
-In-Reply-To: <CAJzH+brQ6vu-o6a7iAmpBT+cbrdGHP3XNfUk61UPyS2D6bwGDQ@mail.gmail.com>
+References: <37e50a80d823b267508893db9573a1903c87d0c6.camel@rdmp.org>
+In-Reply-To: <37e50a80d823b267508893db9573a1903c87d0c6.camel@rdmp.org>
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Tue, 29 Oct 2019 15:16:30 +0200
-Message-ID: <CABBYNZ+3XKTzvwKRVK3YP2m+4rFUHBYmeD4zyFtZ25af8aAwOQ@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: Always set scannable for Adv instance 0
-To:     Jaganath K <jaganath.k.os@gmail.com>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>,
-        Jaganath Kanakkassery <jaganath.kanakkassery@intel.com>
+Date:   Tue, 29 Oct 2019 15:23:30 +0200
+Message-ID: <CABBYNZKzscuNsT6SY7KKiHMrJ2+zWCyxuWHk6UrAFDOu2zhpSw@mail.gmail.com>
+Subject: Re: Audio out to phone
+To:     Dale Mellor <bluez-2hxy5d@rdmp.org>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Jaganath,
+Hi Dale,
 
-On Mon, Oct 28, 2019 at 6:50 PM Jaganath K <jaganath.k.os@gmail.com> wrote:
+On Sun, Oct 27, 2019 at 11:07 PM Dale Mellor <bluez-2hxy5d@rdmp.org> wrote:
 >
-> Hi Marcel,
+> Does anybody know of any tricks needed to get audio to go out through
+> an ongoing phone call?  Everything in my setup looks good, with all the
+> right devices and settings in bluetoothctl, pavucontrol (including
+> correct headset/handsfree profiles) and I can hear the caller, but they
+> are only getting silence from my end.  I am using the pulseaudio
+> asynchronous API, which works well enough playing through speakers but
+> I can't get sound through the telephone (an Android device, which works
+> perfectly well with my car's headset).
 >
-> On Sat, Oct 26, 2019 at 11:02 AM Marcel Holtmann <marcel@holtmann.org> wrote:
-> >
-> > Hi Jaganath,
-> >
-> > >>> By default for instance 0, local name will be added for scan rsp
-> > >>> data, but currently the property is set as non scannable and hence
-> > >>> Set Adv parameter fails with Invalid parameter.
-> > >>
-> > >> can you be a bit more specific why this is the correct behavior. We must have documented in mgmt-api.txt somewhere, right? Or is this something that used to be correct, but we broke it with adding extended advertising?
-> > >
-> > > It seems to be functionally broken in legacy adv as well as we set scan rsp
-> > > for instance 0 always but Adv Properties is set to non connectable (if
-> > > connectable
-> > > is not set). Even we need to fix mgmt-api.txt as well as you pointed out.
-> > >
-> > > But in legacy case commands do not fail as  scan rsp can be set even before
-> > > Set Adv Param where as in extended case Adv param for an Adv set has to be set
-> > > first before sending Scan rsp and other commands for that particular Adv set.
-> >
-> > how does this intersect with the patches that Luiz was sending earlier?
-> >
-> I think Luiz patches covers both the issues.
+> bluez5: 5.51
+> ofono:  1.30
+> pulseaudio: 13.0
+> debian: 10 (stable)
+> linux: 5.3.0
+>
+> I'm quite desperate to get this sorted, so if it is an unsolved problem
+> perhaps some pointers to where the issue might be will help me to help
+> you debug the situation?  As you see from the updatedness of the
+> packages, I have built them all from source and can dig if necessary.
 
-Yep, my patches were actually targeting the same issues, though you
-had a better description, anyway it is a fix nevertheless.
+We will need quite a bit more information to help you, like btmon,
+journal of the components involved (bluetoothd, pulseaudio and ofono).
+If I got it right that is the audio path of your mic -> loopback ->
+bluetooth-src -> sco socket -> hci -> usb iso endpoint that is not
+working? There can be quite many things wrong actually, for the mic
+being muted to the usb endpoint not working, the later is not uncommon
+but you did hear the other side of the call so maybe that is not it.
+
+> Thanks in advance for any help,
+> Dale
+>
+>
 
 
 -- 
