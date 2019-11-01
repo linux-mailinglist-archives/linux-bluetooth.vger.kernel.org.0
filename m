@@ -2,75 +2,150 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 33EE2EC610
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Nov 2019 16:56:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F797EC8B1
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Nov 2019 19:57:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729160AbfKAP4C (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Nov 2019 11:56:02 -0400
-Received: from mail-il1-f194.google.com ([209.85.166.194]:40570 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729154AbfKAPzt (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Nov 2019 11:55:49 -0400
-Received: by mail-il1-f194.google.com with SMTP id d83so9077872ilk.7
-        for <linux-bluetooth@vger.kernel.org>; Fri, 01 Nov 2019 08:55:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=KqYLJklOErTzrVm5Bzbb6HQh9gI4PrbbORQE30GcC5Y=;
-        b=pUJIzGj/MPv1EKc2k3aNehKVojTiwbi36zg1sckIL11PdqXfau1yGsXj1t9CSJeyKL
-         3i/jp/TX/JDBG+iju9GRvxcye9SA9yiSTdccj7/EyUgYmTSSLRFNkcsvQASN37kQDgQc
-         jnResb6aJSg07Bq5suGRVdOqTkrlyY1YMgTmHgQc7tz+apzSU8zlfJ8cqPEt/z1Bd3OE
-         3WNB6qm/Pkg8xI5aHgZ1XzvGw6eZK1PwDo4winMpdBi8I/fqM1G/oYqHCv2wNxwHhj5m
-         N0Nph5NSOfE5c8csPVkAAUkUAiHHdFA9X2wHOboX58ouCDBOqdL9C38hXp5o3eU3+tNB
-         N8dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=KqYLJklOErTzrVm5Bzbb6HQh9gI4PrbbORQE30GcC5Y=;
-        b=eQDwOaLrJSiMIao0vBWixibZzWsZ2AeF88eXhswASVNPCuoJFIybWLhraXVykONsm/
-         YC+K5jUQmfFNe0TvtQWuzGlEv3NKFpaQo01rou6fp3m40ubCMcM4Lck0de11Reibx/Vw
-         j9Z+mZylgxEMI6l6dUzEvyO0prP/UY+d4VAV3Cn0nfSPZEGI8h/5dTXD9LwFvYPqNK3g
-         RsanhdF57U1nsNqbUAgaLfMEpAmwUHyyV4oM+/EE/PPCGWztAHBnd3Ga8gn+jQ+F6Pii
-         1oBjXsoUJNgO8Y98I9XOVDTZrU+hGrl1dLj3KxEu1WN2NfA0w9VYHbQhgvF8ntUjDsOJ
-         ub6g==
-X-Gm-Message-State: APjAAAV/yJJYwSISnbzYvf0BlcushVfusUaYIjOmLzGeuKi7X21uVY+5
-        SGBVaMrhR6Th6WyvgQF/Q4IAb7U6wuMrjh1BhQ==
-X-Google-Smtp-Source: APXvYqwNtyKjT0pXbrd92BXP7Yur4/d12tLIQphfDkWOJF9bZR6SLYcfNyjCPNgVxkpA0mTQo/BiL8Zaftdd9XRgWqY=
-X-Received: by 2002:a92:1d8d:: with SMTP id g13mr8826976ile.35.1572623748630;
- Fri, 01 Nov 2019 08:55:48 -0700 (PDT)
+        id S1727477AbfKAS5c (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Nov 2019 14:57:32 -0400
+Received: from mga05.intel.com ([192.55.52.43]:29978 "EHLO mga05.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727325AbfKAS5c (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 1 Nov 2019 14:57:32 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 01 Nov 2019 11:57:30 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.68,256,1569308400"; 
+   d="scan'208";a="211833697"
+Received: from ingas-nuc1.sea.intel.com ([10.255.230.110])
+  by fmsmga001.fm.intel.com with ESMTP; 01 Nov 2019 11:57:30 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ 00/10 v2] Mesh provisioning and configuration tool
+Date:   Fri,  1 Nov 2019 11:57:19 -0700
+Message-Id: <20191101185729.31661-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Received: by 2002:a02:7749:0:0:0:0:0 with HTTP; Fri, 1 Nov 2019 08:55:48 -0700 (PDT)
-Reply-To: moneygram.1820@outlook.fr
-From:   "Mary Coster, I.M.F director-Benin" 
-        <info.zennitbankplcnigerian@gmail.com>
-Date:   Fri, 1 Nov 2019 16:55:48 +0100
-Message-ID: <CABHzvrmPdjgy_vBxQMfJ2YwGwj1RyCvQt1Oy5GJczarHTQb=pg@mail.gmail.com>
-Subject: Contact Money Gram international service-Benin to receive your
- payment funds US$2.500,000 Million
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Attn Dear,Funds Beneficiary.
-Contact Money Gram international service-Benin to receive your payment
-funds US$2.500,000 Million approved this morning through the UN
-payment settlement organization.
-Contact Person, Mr. John Dave.
-Official Director.Money Gram-Benin
-Email: moneygram.1820@outlook.fr
-Telephone +229 62619517
-Once you get intouch with Mr. John Dave, Money Gram Director, send to
-him your address including your phone numbers. He will be sending the
-transfer to you  $5000.00 USD daily until you received your complete
-payment $2.5m from the office.
-Note,I have paid the whole service fees for you but only small money
-you been required to send to this office is $23.00 only via Money Gram
-transfer.
-God bless
-Mary Coster, I.M.F director-Benin
-m.coster@aol.com
+v2:
+1. Adjust for changed l_dbus_object_manager_enable parameters
+2. Fix AppKey delete and Add Model bindings commands (tools/mesh/cfgli.c)
+3. ADjust JSON storage format and add support for NetKey AppKey deletion.
+
+*********************
+This patch set adds a mesh-cfgclient tool that allows to create
+mesh networks operating over advertising (PB-ADV) provisioning
+bearer. The toolimplements support for:
+ - creating of the inital "pcrovisioner" node with the initial network key
+ - adding/removing network and application keys to the network
+ - provisioning remote devices into mesh network
+ - configuring of the provisioned nodes (Config Model Client operations)
+
+Network configuration is saved in JSON format file.
+Disclaimer: the storage is work in progress and is not fully implemented.
+
+Also, some functionality overlaps with meshctl tool (GATT based mesh
+network provisioning and configuration tool). For the time being, these
+two tools are separate and coexist side by side. Eventually, additional
+work needs to be done to eleiminate overlapping areas and potentially
+merge the tools. Currently, meshctl supplemenal files are moved to
+tools/mesh-gatt
+
+
+Inga Stotland (10):
+  tools/mesh: Remove extra dependencies from agent.c
+  tools/mesh: Move meshctl specific files to mesh-gatt
+  tools: Add mesh-cfgclient tool
+  tools/mesh: move remote node processing to a separate file
+  tools/mesh-cfgclient: Commands for Management iface methods
+  tools/mesh-cfgclient: Add config menu key commands
+  tools/mesh-cfgclient: Add timeout for expected response
+  tools/mesh-cfgclient: Command line option for config
+  tools/mesh: add initial support for config storage
+  tools/mesh-cfgclient: Add README file
+
+ .gitignore                                |    1 +
+ Makefile.tools                            |   46 +-
+ tools/mesh-cfgclient.c                    | 1861 +++++++++++++++++++++
+ tools/mesh-gatt/README                    |   43 +
+ tools/{mesh => mesh-gatt}/config-client.c |   14 +-
+ tools/{mesh => mesh-gatt}/config-server.c |   14 +-
+ tools/{mesh => mesh-gatt}/crypto.c        |    5 +-
+ tools/{mesh => mesh-gatt}/crypto.h        |    0
+ tools/{mesh => mesh-gatt}/gatt.c          |   11 +-
+ tools/{mesh => mesh-gatt}/gatt.h          |    0
+ tools/mesh-gatt/keys.h                    |   39 +
+ tools/{mesh => mesh-gatt}/local_node.json |    0
+ tools/{mesh => mesh-gatt}/mesh-net.h      |    0
+ tools/{mesh => mesh-gatt}/net.c           |   16 +-
+ tools/{mesh => mesh-gatt}/net.h           |    0
+ tools/{mesh => mesh-gatt}/node.c          |   16 +-
+ tools/{mesh => mesh-gatt}/node.h          |    0
+ tools/{mesh => mesh-gatt}/onoff-model.c   |   15 +-
+ tools/{mesh => mesh-gatt}/onoff-model.h   |    0
+ tools/{mesh => mesh-gatt}/prov-db.c       |   14 +-
+ tools/{mesh => mesh-gatt}/prov-db.h       |    0
+ tools/{mesh => mesh-gatt}/prov.c          |   16 +-
+ tools/{mesh => mesh-gatt}/prov.h          |    0
+ tools/{mesh => mesh-gatt}/prov_db.json    |    0
+ tools/mesh-gatt/util.c                    |  220 +++
+ tools/mesh-gatt/util.h                    |   41 +
+ tools/mesh/README                         |   43 +-
+ tools/mesh/agent.c                        |   32 +-
+ tools/mesh/cfgcli.c                       | 1413 ++++++++++++++++
+ tools/mesh/cfgcli.h                       |   25 +
+ tools/mesh/config-model.h                 |    3 +-
+ tools/mesh/keys.c                         |  175 ++
+ tools/mesh/keys.h                         |   27 +-
+ tools/mesh/mesh-db.c                      |  899 ++++++++++
+ tools/mesh/mesh-db.h                      |   54 +
+ tools/mesh/model.h                        |   63 +
+ tools/mesh/remote.c                       |  266 +++
+ tools/mesh/remote.h                       |   29 +
+ tools/mesh/util.c                         |  107 +-
+ tools/mesh/util.h                         |   14 +-
+ tools/meshctl.c                           |   22 +-
+ 41 files changed, 5313 insertions(+), 231 deletions(-)
+ create mode 100644 tools/mesh-cfgclient.c
+ create mode 100644 tools/mesh-gatt/README
+ rename tools/{mesh => mesh-gatt}/config-client.c (99%)
+ rename tools/{mesh => mesh-gatt}/config-server.c (94%)
+ rename tools/{mesh => mesh-gatt}/crypto.c (99%)
+ rename tools/{mesh => mesh-gatt}/crypto.h (100%)
+ rename tools/{mesh => mesh-gatt}/gatt.c (98%)
+ rename tools/{mesh => mesh-gatt}/gatt.h (100%)
+ create mode 100644 tools/mesh-gatt/keys.h
+ rename tools/{mesh => mesh-gatt}/local_node.json (100%)
+ rename tools/{mesh => mesh-gatt}/mesh-net.h (100%)
+ rename tools/{mesh => mesh-gatt}/net.c (99%)
+ rename tools/{mesh => mesh-gatt}/net.h (100%)
+ rename tools/{mesh => mesh-gatt}/node.c (98%)
+ rename tools/{mesh => mesh-gatt}/node.h (100%)
+ rename tools/{mesh => mesh-gatt}/onoff-model.c (96%)
+ rename tools/{mesh => mesh-gatt}/onoff-model.h (100%)
+ rename tools/{mesh => mesh-gatt}/prov-db.c (99%)
+ rename tools/{mesh => mesh-gatt}/prov-db.h (100%)
+ rename tools/{mesh => mesh-gatt}/prov.c (98%)
+ rename tools/{mesh => mesh-gatt}/prov.h (100%)
+ rename tools/{mesh => mesh-gatt}/prov_db.json (100%)
+ create mode 100644 tools/mesh-gatt/util.c
+ create mode 100644 tools/mesh-gatt/util.h
+ create mode 100644 tools/mesh/cfgcli.c
+ create mode 100644 tools/mesh/cfgcli.h
+ create mode 100644 tools/mesh/keys.c
+ create mode 100644 tools/mesh/mesh-db.c
+ create mode 100644 tools/mesh/mesh-db.h
+ create mode 100644 tools/mesh/model.h
+ create mode 100644 tools/mesh/remote.c
+ create mode 100644 tools/mesh/remote.h
+
+-- 
+2.21.0
+
