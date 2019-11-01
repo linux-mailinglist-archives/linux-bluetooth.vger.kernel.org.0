@@ -2,33 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A74FEC8BB
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Nov 2019 19:57:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CA76EC9C1
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Nov 2019 21:42:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727593AbfKAS5n (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Nov 2019 14:57:43 -0400
-Received: from mga05.intel.com ([192.55.52.43]:29987 "EHLO mga05.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727372AbfKAS5n (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Nov 2019 14:57:43 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 01 Nov 2019 11:57:42 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.68,256,1569308400"; 
-   d="scan'208";a="211833790"
-Received: from ingas-nuc1.sea.intel.com ([10.255.230.110])
-  by fmsmga001.fm.intel.com with ESMTP; 01 Nov 2019 11:57:42 -0700
-From:   Inga Stotland <inga.stotland@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ 10/10 v2] tools/mesh-cfgclient: Add README file
-Date:   Fri,  1 Nov 2019 11:57:29 -0700
-Message-Id: <20191101185729.31661-11-inga.stotland@intel.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20191101185729.31661-1-inga.stotland@intel.com>
-References: <20191101185729.31661-1-inga.stotland@intel.com>
+        id S1727514AbfKAUmv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Nov 2019 16:42:51 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:40945 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726477AbfKAUmv (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 1 Nov 2019 16:42:51 -0400
+Received: by mail-lj1-f194.google.com with SMTP id q2so4942787ljg.7;
+        Fri, 01 Nov 2019 13:42:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ZGSw0Pf1yR7L0D2XUywPAXmKwfJWwLsrgldLsCFIOFg=;
+        b=ikqziVfgGr73GAy1cRnOZrkrHml/aNL1IkBEoAFKaKqFBgzoosvRYbOKj/h2wPjDZ4
+         /Uh62d2CtaE+6aLHFYv9eJ3fgMwIDzViNazwXGHJ0IfNQ3+tcn5csPR1u8hU0JGjV3f2
+         R5lus91udvDRirSnmLkNl6B9H2GVfshZuPWFEYspsSiI7JWCuLSRbHIQfork2RYavLtA
+         ArNQFvTmBYmOeBDQH9ylAsmE1z5A6Wcu2TyfXtW8Gee1xCyx2pjLC4fttuIxyATyiPNK
+         yHj1+ObGAXtYhJj1RN9fNoy7ISvmB5vrRVXl/pHHv62yY0n8K9xcaiPb71RAqbNcwfFe
+         3ZhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ZGSw0Pf1yR7L0D2XUywPAXmKwfJWwLsrgldLsCFIOFg=;
+        b=CHgZ1dJz/O+a5f/BeVz02JzTUA6mmUk51xvLcHSED9Lgx3MPBblk6DWporOPtCCiM1
+         /8wbVDmbEPZjYl4jgWtPHrBflYIwgPWGnGM+r/wEbBLebsIepICigKq3teggKtclm3hi
+         eG4U94mxfBFpWeEW6BajelZ7yRo9MWF1DnVXOCDYK5QWGsqE9F4vIcmtWl5FDUA9YqJO
+         9r+TVTEIbWFNitcbLM1syUpJGYhKq2YelOiHjyDs6ZAeMA0xpE1BQshz9NYvIaCfUFED
+         3QM4dzwNwWejMO7dv2s5ghnPthKkQiGkVe0J2qrvRzyZvCswIaInprkaRIGj7m/AXfVD
+         v8yg==
+X-Gm-Message-State: APjAAAXG0sPYV5nfKzoXJR6ipkZLu79hCBV3Klab2d9VpWKR7jbs1v7Y
+        Nybn/6LOHkV32ryD/pXGv1U=
+X-Google-Smtp-Source: APXvYqxYE3IyIX8b2BVVt44CkmPEeeQhwtVdacK9SIq4c59o5QNNJVjRK0M+MlQmVg8WgBbtlV6xTQ==
+X-Received: by 2002:a05:651c:313:: with SMTP id a19mr9543563ljp.199.1572640969006;
+        Fri, 01 Nov 2019 13:42:49 -0700 (PDT)
+Received: from debian-tom.home (2-111-15-75-dynamic.dk.customer.tdc.net. [2.111.15.75])
+        by smtp.gmail.com with ESMTPSA id 190sm3766098ljj.72.2019.11.01.13.42.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Nov 2019 13:42:48 -0700 (PDT)
+From:   Tomas Bortoli <tomasbortoli@gmail.com>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        syzkaller@googlegroups.com, Tomas Bortoli <tomasbortoli@gmail.com>,
+        syzbot+a0d209a4676664613e76@syzkaller.appspotmail.com
+Subject: [PATCH] Fix invalid-free in bcsp_close()
+Date:   Fri,  1 Nov 2019 21:42:44 +0100
+Message-Id: <20191101204244.14509-1-tomasbortoli@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <000000000000109f9605964acf6c@google.com>
+References: <000000000000109f9605964acf6c@google.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -36,71 +63,45 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
----
- tools/mesh/README | 54 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
- create mode 100644 tools/mesh/README
+Syzbot reported an invalid-free that I introduced fixing a memleak.
 
-diff --git a/tools/mesh/README b/tools/mesh/README
-new file mode 100644
-index 000000000..9362d8ff6
---- /dev/null
-+++ b/tools/mesh/README
-@@ -0,0 +1,54 @@
-+MeshCfgclient - BlueZ PB-Adv based Bluetooth Mesh Provisioner
-+*************************************************************
-+
-+Copyright (C) 2019  Intel Corporation. All rights reserved.
-+
-+Compilation and installation
-+============================
-+
-+In addition to main BlueZ requirements, MeshCfgclient needs the following:
-+	- JSON library
-+
-+Configuration and options
-+=========================
-+
-+	--enable-mesh
-+
-+		Build mesh-cfgclient and other Bluetooth Mesh based tools
-+
-+Storage for mesh configuration file
-+===================================
-+
-+The mesh-cfgclient tool generates a mesh configuration file in JSON format:
-+	- mesh_db.json
-+that contains information about the current state of the configured mesh
-+network.
-+
-+The default directory for mesh-cfgclient configuration file is
-+/home/<username>/.config/mesh-cfgcli
-+
-+To specify a custom storage directory, run mesh-config tool as:
-+
-+	meshctl -c <config_dir_name>
-+
-+If a configuration file is not found, it is assumed that a mesh network
-+does not exist. In this case, the tool may be used to generate a new  mesh
-+network by invoking "create" command from the main menu and, on a successful
-+completion of this command, an initial configuration file is written.
-+
-+If the configuration file is present, then "create" command will fail. This
-+is done so that the existing configuration is not accidentally overwritten.
-+If the intention is to create a new network then, the existing mesh
-+configuration file has to be either moved or dleted prior to running the
-+mesh-cfgclient tool. Also, a new custom storage location may be
-+specified for a new network on the start up as a command line option.
-+
-+
-+Information
-+===========
-+
-+Mailing lists:
-+	linux-bluetooth@vger.kernel.org
-+
-+For additional information about the project visit BlueZ web site:
-+	http://www.bluez.org
+bcsp_recv() also frees bcsp->rx_skb but never nullifies its value.
+Nullify bcsp->rx_skb every time it is freed.
+
+Signed-off-by: Tomas Bortoli <tomasbortoli@gmail.com>
+Reported-by: syzbot+a0d209a4676664613e76@syzkaller.appspotmail.com
+---
+ drivers/bluetooth/hci_bcsp.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
+index fe2e307009f4..cf4a56095817 100644
+--- a/drivers/bluetooth/hci_bcsp.c
++++ b/drivers/bluetooth/hci_bcsp.c
+@@ -591,6 +591,7 @@ static int bcsp_recv(struct hci_uart *hu, const void *data, int count)
+ 			if (*ptr == 0xc0) {
+ 				BT_ERR("Short BCSP packet");
+ 				kfree_skb(bcsp->rx_skb);
++				bcsp->rx_skb = NULL;
+ 				bcsp->rx_state = BCSP_W4_PKT_START;
+ 				bcsp->rx_count = 0;
+ 			} else
+@@ -606,6 +607,7 @@ static int bcsp_recv(struct hci_uart *hu, const void *data, int count)
+ 			    bcsp->rx_skb->data[2])) != bcsp->rx_skb->data[3]) {
+ 				BT_ERR("Error in BCSP hdr checksum");
+ 				kfree_skb(bcsp->rx_skb);
++				bcsp->rx_skb = NULL;
+ 				bcsp->rx_state = BCSP_W4_PKT_DELIMITER;
+ 				bcsp->rx_count = 0;
+ 				continue;
+@@ -630,6 +632,7 @@ static int bcsp_recv(struct hci_uart *hu, const void *data, int count)
+ 				       bscp_get_crc(bcsp));
+ 
+ 				kfree_skb(bcsp->rx_skb);
++				bcsp->rx_skb = NULL;
+ 				bcsp->rx_state = BCSP_W4_PKT_DELIMITER;
+ 				bcsp->rx_count = 0;
+ 				continue;
 -- 
-2.21.0
+2.20.1
 
