@@ -2,80 +2,29 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D93F9F11A7
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 Nov 2019 10:03:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DAE71F1238
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 Nov 2019 10:32:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727257AbfKFJDA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 6 Nov 2019 04:03:00 -0500
-Received: from mail-io1-f52.google.com ([209.85.166.52]:35755 "EHLO
-        mail-io1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726903AbfKFJDA (ORCPT
+        id S1726077AbfKFJcb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 6 Nov 2019 04:32:31 -0500
+Received: from [129.146.181.251] ([129.146.181.251]:53319 "EHLO
+        issue-4015.localdomain" rhost-flags-FAIL-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725868AbfKFJcb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 6 Nov 2019 04:03:00 -0500
-Received: by mail-io1-f52.google.com with SMTP id x21so10494146iol.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 06 Nov 2019 01:02:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=codecoup-pl.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fGCJj6Pz3I6UKKEeOYN+WVQ9B06lngzg2P5VaTZWabw=;
-        b=qTiY+fz91TPAkQ114kqsI3MtJ6e18IFur01/+8MErLlRy/6fp8RtAGMPbRBN9CgCfV
-         32Jd2nGODg4WH0tLqrR5WQkBvsONRMSWVLK8Kq71XflHSp1STTFk3J4XEF+ezHAHiSQg
-         9tScHrebRC//inxEo+lTN4I4QAS4FGX4GY013igJiK3FyBSE5LRNxI4BtWXm/H63xpw8
-         PdL602X7datPHsmxgSBfyP/lAMHqarPJTvajWurNYrnqnt8irdAtkrt9K/uqmviylE3/
-         KPxP/T09vwv5YessRv8ypjk+GsRXj2GyldY9V5v7TQRvpqNLir6oX+zqWsB1ezJSZSP8
-         7tCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fGCJj6Pz3I6UKKEeOYN+WVQ9B06lngzg2P5VaTZWabw=;
-        b=HHZ63d1SZtamFB8NWiHm89y6NsiU9yWRIQQkn1mKpOSNZ6UUSYZXxSruxe9VCS9XUX
-         eZIflmfeZQhMphOsHpLZDbNHERFoadtXuAUyGkdGlXCvmjJNA6dMb/e6+hdzAmehWHtb
-         WCyR+Ds8aa1G6olxRVbut/mZKrp+SQHQW+Ha0MxrUW0NPw6W4k/QKBpmzrhZdS7IN+z1
-         2kS64XmlXLZYC/MkTTplrpTAihjjARSVJXT52mSP0y6cE0faDQt2RUTUChU3jPTnf2ZQ
-         7mnjMOLffNBtZ+P6wHKYMSiwyiHTh8nw1Be9uQKaa8BLlCgZb0q6pbBZxo8NHLC3W2D3
-         Vmjw==
-X-Gm-Message-State: APjAAAX0NuXRx5gbIoA56/+kf8fX4zAWhKa1vODpz4dR2IB+1WRlRlkw
-        Qhj0mtLNbSeY1yOVuUy5KAydoXXycKHPH9RcLYQkOQi+LQh5Tco8
-X-Google-Smtp-Source: APXvYqwEuiPuyj9UzPONH8O06GSLy0t/lRhcRSRXlp6yzx5G0xokXEK1froo/1enqt1H/4Tga/g3O0bpoVhfLcJ5CRI=
-X-Received: by 2002:a5e:9617:: with SMTP id a23mr5422028ioq.191.1573030979283;
- Wed, 06 Nov 2019 01:02:59 -0800 (PST)
-MIME-Version: 1.0
-References: <CAOVXEJJ=dMe=f8R23JmC_idSV=gy1mmH4NSQTZUpmQPedjgBxw@mail.gmail.com>
-In-Reply-To: <CAOVXEJJ=dMe=f8R23JmC_idSV=gy1mmH4NSQTZUpmQPedjgBxw@mail.gmail.com>
-From:   =?UTF-8?Q?Grzegorz_Ko=C5=82odziejczyk?= 
-        <grzegorz.kolodziejczyk@codecoup.pl>
-Date:   Wed, 6 Nov 2019 10:02:48 +0100
-Message-ID: <CALevQMaR8C6-cGkkFrNO2B6MfSEo+rxq=6DHnJTBv39wwOW4VA@mail.gmail.com>
-Subject: Re: Bluez Compilation error for l_dbus_object_manager_enable arguments
-To:     Sathish Narasimman <nsathish41@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Wed, 6 Nov 2019 04:32:31 -0500
+Received: from localhost (localhost [IPv6:::1])
+        by issue-4015.localdomain (Postfix) with SMTP id ECBB461B79A4
+        for <linux-bluetooth@vger.kernel.org>; Wed,  6 Nov 2019 09:12:20 +0000 (GMT)
+From:   linux-bluetooth@vger.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Reply-To: prodawez@teleworm.us
+Subject: BAZY DANNYH! email: prodawez@teleworm.us UZNAJTE PODROBNEE
+Message-Id: <20191106091220.ECBB461B79A4@issue-4015.localdomain>
+Date:   Wed,  6 Nov 2019 09:12:20 +0000 (GMT)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+BAZY DANNYH! email: prodawez@teleworm.us UZNAJTE PODROBNEE
 
-Please update ell library.
-
-Regards,
-Grzegorz
-
-=C5=9Br., 6 lis 2019 o 07:35 Sathish Narasimman <nsathish41@gmail.com> napi=
-sa=C5=82(a):
->
-> Hi,
->
-> I am getting the below error for compiling the latest bluez
->
-> tools/mesh-cfgclient.c:1690:7: error: too many arguments to function
-> =E2=80=98l_dbus_object_manager_enable=E2=80=99
->  1690 |  if (!l_dbus_object_manager_enable(dbus, "/"))
->
->
-> Regards,
-> Sathish N
