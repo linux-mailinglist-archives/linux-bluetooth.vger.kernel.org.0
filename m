@@ -2,29 +2,99 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DAE71F1238
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 Nov 2019 10:32:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A8158F1290
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 Nov 2019 10:42:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726077AbfKFJcb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 6 Nov 2019 04:32:31 -0500
-Received: from [129.146.181.251] ([129.146.181.251]:53319 "EHLO
-        issue-4015.localdomain" rhost-flags-FAIL-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725868AbfKFJcb (ORCPT
+        id S1728097AbfKFJmq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 6 Nov 2019 04:42:46 -0500
+Received: from mail-il1-f181.google.com ([209.85.166.181]:39007 "EHLO
+        mail-il1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725937AbfKFJmq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 6 Nov 2019 04:32:31 -0500
-Received: from localhost (localhost [IPv6:::1])
-        by issue-4015.localdomain (Postfix) with SMTP id ECBB461B79A4
-        for <linux-bluetooth@vger.kernel.org>; Wed,  6 Nov 2019 09:12:20 +0000 (GMT)
-From:   linux-bluetooth@vger.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Reply-To: prodawez@teleworm.us
-Subject: BAZY DANNYH! email: prodawez@teleworm.us UZNAJTE PODROBNEE
-Message-Id: <20191106091220.ECBB461B79A4@issue-4015.localdomain>
-Date:   Wed,  6 Nov 2019 09:12:20 +0000 (GMT)
+        Wed, 6 Nov 2019 04:42:46 -0500
+Received: by mail-il1-f181.google.com with SMTP id f201so15515385ilh.6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 06 Nov 2019 01:42:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uR5g/Q4J7Z7ZmAVkvCDymVefhoqI47BfU4KZAAIabek=;
+        b=Y9wX7MHlCiRG/4nPgfvaPd92ZguoAcq80AfKeBsJDsHVLThF70VilyKNV4d4ceGZpX
+         NoPwWdD+nnhr4RKH9QlX+Rf0M8BySwMCwOB16qrfh8Y3npvjLvOAS6wE82INqyN1MNQQ
+         hvjFDUgOEtisI6CEpGAqSTLlJ8up3g9/+GXFBpc07pqw/1G+bXU8PjgYkSOMpePrCGPC
+         F0cRMRwX8SOLbHqHLPgpz/Pq7H1CJwawVL7Fx8jJRMPKY5QujWJP8QzqOBJmGdvGd+Qb
+         AW3jjDR39oQ2MSoHLSSoBXvoj5GyDpGIcNkaUtX58WeJEZzm/QXI11yBdNRIz8gJH/Az
+         Fk7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uR5g/Q4J7Z7ZmAVkvCDymVefhoqI47BfU4KZAAIabek=;
+        b=AMDVQJZta4jCZGVOUkgeg0svLUHVOlnqNm1sKczNBq/sF1Q/uvqMjWr2uobsnX927A
+         KYowZB1kJJpMoBy1IA/DgX1Ekjzl/fGiltbJsFjnfUl7fnHxY2MTDLU3gYKk2/5JBk2K
+         pjJRWwmCBvUOSFKLzyEGoEUIXw+ROtKsKbrjPtYSzO9zy85d5aTSrn+PKjMBkoVdjZbm
+         QkIYHuGAxF0i5EE7l4/eia5rDkCdiZNAw/h/Zj2FunI/Yr1KFi4ohseg9RfA+8kAKCzQ
+         CHntOjFBiGmsZ6QJDSvUy1pO3v4wXzDdtNocasBwwgafCvwlr3zO+eTvwzLTwwMZLeJa
+         WqAw==
+X-Gm-Message-State: APjAAAUMhnPHX4MyJJD5GegIroHUbKPFjrdm3SfoqumJyXqIPeR05iyz
+        Oldrk3yrRyGiUtBJzMeWso9AioZccbTrxudNNSylQ08TvqE=
+X-Google-Smtp-Source: APXvYqyAZPOe4760SIOYawTnDkHMovAr+hF8oS8ia831cQ+nKxPAND3RpCexuRKjCPLazFM+QqJpXSg+9NMcK/GUXWk=
+X-Received: by 2002:a92:5d49:: with SMTP id r70mr1694704ilb.257.1573033365601;
+ Wed, 06 Nov 2019 01:42:45 -0800 (PST)
+MIME-Version: 1.0
+References: <CAOVXEJJ=dMe=f8R23JmC_idSV=gy1mmH4NSQTZUpmQPedjgBxw@mail.gmail.com>
+ <CALevQMaR8C6-cGkkFrNO2B6MfSEo+rxq=6DHnJTBv39wwOW4VA@mail.gmail.com>
+In-Reply-To: <CALevQMaR8C6-cGkkFrNO2B6MfSEo+rxq=6DHnJTBv39wwOW4VA@mail.gmail.com>
+From:   Sathish Narasimman <nsathish41@gmail.com>
+Date:   Wed, 6 Nov 2019 15:12:34 +0530
+Message-ID: <CAOVXEJ+H2z2EuJ2BaehN-Z+nAiTELFHH9hc2Ym8MRNckVoL9Cg@mail.gmail.com>
+Subject: Re: Bluez Compilation error for l_dbus_object_manager_enable arguments
+To:     =?UTF-8?Q?Grzegorz_Ko=C5=82odziejczyk?= 
+        <grzegorz.kolodziejczyk@codecoup.pl>
+Cc:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-BAZY DANNYH! email: prodawez@teleworm.us UZNAJTE PODROBNEE
+Hi Grzegorz,
 
+Sorry for the repeated question.
+Now i am getting this error
+
+make[1]: *** No rule to make target 'ell/strv.c', needed by
+'ell/strv.lo'.  Stop.
+Makefile:3625: recipe for target 'all' failed
+
+I used version0.9 for isntallation
+https://mirrors.edge.kernel.org/pub/linux/libs/ell/
+
+Regards,
+Sathish N
+
+On Wed, Nov 6, 2019 at 2:32 PM Grzegorz Ko=C5=82odziejczyk
+<grzegorz.kolodziejczyk@codecoup.pl> wrote:
+>
+> Hi,
+>
+> Please update ell library.
+>
+> Regards,
+> Grzegorz
+>
+> =C5=9Br., 6 lis 2019 o 07:35 Sathish Narasimman <nsathish41@gmail.com> na=
+pisa=C5=82(a):
+> >
+> > Hi,
+> >
+> > I am getting the below error for compiling the latest bluez
+> >
+> > tools/mesh-cfgclient.c:1690:7: error: too many arguments to function
+> > =E2=80=98l_dbus_object_manager_enable=E2=80=99
+> >  1690 |  if (!l_dbus_object_manager_enable(dbus, "/"))
+> >
+> >
+> > Regards,
+> > Sathish N
