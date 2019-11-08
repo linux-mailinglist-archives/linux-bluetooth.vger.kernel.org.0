@@ -2,75 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A1272F648F
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 10 Nov 2019 04:00:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62916F695C
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 10 Nov 2019 15:15:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728616AbfKJDAx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 9 Nov 2019 22:00:53 -0500
-Received: from mail.kernel.org ([198.145.29.99]:47202 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729205AbfKJC4q (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 9 Nov 2019 21:56:46 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F2FD32249E;
-        Sun, 10 Nov 2019 02:48:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573354086;
-        bh=fg91nLDGVt3w607YoMYtnBvNOU3I7TSwxUy5GAjZX40=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qS/T/2YY7VCsxIfv9Z2e/PUJRRLWSi3KpaCCxepIgvuKyAKBYpkBTT1rKTWirGS0H
-         BCgY9/nKavdmbqRchHu++cg0cJgxium5zApat8uF2fg/N+ymPxQIv/46JUTXWjdXiu
-         LQ5S0aqlp9QTk6wQYOeihCJ4qiXPy8iO8IPnaX/o=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 083/109] Bluetooth: hci_serdev: clear HCI_UART_PROTO_READY to avoid closing proto races
-Date:   Sat,  9 Nov 2019 21:45:15 -0500
-Message-Id: <20191110024541.31567-83-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191110024541.31567-1-sashal@kernel.org>
-References: <20191110024541.31567-1-sashal@kernel.org>
+        id S1726561AbfKJOPo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 10 Nov 2019 09:15:44 -0500
+Received: from static-dsl-170.87-197-152.telecom.sk ([87.197.152.170]:43674
+        "EHLO sldom.sldom" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726390AbfKJOPn (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 10 Nov 2019 09:15:43 -0500
+Received: from 127.0.0.1 (localhost [127.0.0.1])
+        by sldom.sldom (Postfix) with SMTP id DEAC224C390;
+        Fri,  8 Nov 2019 16:02:38 +0100 (CET)
+Received: from [234.95.146.86] by 127.0.0.1 id <0008911-29553>; Fri, 08 Nov 2019 09:00:53 -0600
+Message-ID: <w-z-$j$$oqo9$-d0@u5s0.ec6a>
+From:   "Simon Oliver" <olivia_simon@lihat.dds-akaun.com>
+Reply-To: "Simon Oliver" <olivia_simon@lihat.dds-akaun.com>
+To:     jinwenfly@126.com
+Subject: Seeking Investment Opportunities
+Date:   Fri, 08 Nov 19 09:00:53 GMT
+X-Mailer: The Bat! (v1.52f) Business
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/alternative;
+        boundary="6B8._C..3_EBFAF.B_20"
+X-Priority: 3
+X-MSMail-Priority: Normal
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Balakrishna Godavarthi <bgodavar@codeaurora.org>
 
-[ Upstream commit 7cf7846d27bfc9731e449857db3eec5e0e9701ba ]
+--6B8._C..3_EBFAF.B_20
+Content-Type: text/plain;
+Content-Transfer-Encoding: quoted-printable
 
-Clearing HCI_UART_PROTO_READY will avoid usage of proto function pointers
-before running the proto close function pointer. There is chance of kernel
-crash, due to usage of non proto close function pointers after proto close.
+I consider it very important to introduce to you my client who is interest=
+ed to invest $250 million to $500 million dollars in a reputable project  =
+investment, She is well known in her country holding a political office .
 
-Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/bluetooth/hci_serdev.c | 1 +
- 1 file changed, 1 insertion(+)
+She deserve a secret investment outside her country without direct involve=
+ment.  she needs an experience individual or company that can profitably i=
+nvestment and manage the above funds for the period of 15 years or more.
 
-diff --git a/drivers/bluetooth/hci_serdev.c b/drivers/bluetooth/hci_serdev.c
-index 52e6d4d1608e3..69c00a3db5382 100644
---- a/drivers/bluetooth/hci_serdev.c
-+++ b/drivers/bluetooth/hci_serdev.c
-@@ -360,6 +360,7 @@ void hci_uart_unregister_device(struct hci_uart *hu)
- {
- 	struct hci_dev *hdev = hu->hdev;
- 
-+	clear_bit(HCI_UART_PROTO_READY, &hu->flags);
- 	hci_unregister_dev(hdev);
- 	hci_free_dev(hdev);
- 
--- 
-2.20.1
+Forward your details to me for further discussion (e.g)  Your name, Teleph=
+one number and Occupation.
+
+Thank you
+Oliver Simon
+
+--6B8._C..3_EBFAF.B_20--
 
