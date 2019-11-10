@@ -2,65 +2,84 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4569FF5D00
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  9 Nov 2019 03:28:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EAA4DF6433
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 10 Nov 2019 03:58:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726143AbfKIC2n (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 8 Nov 2019 21:28:43 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:55184 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725990AbfKIC2m (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 8 Nov 2019 21:28:42 -0500
-Received: from marcel-macbook.fritz.box (p4FD19401.dip0.t-ipconnect.de [79.209.148.1])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 99E91CED20;
-        Sat,  9 Nov 2019 03:37:45 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
-Subject: Re: [PATCH v2 0/2] Enable Bluetooth functionality for WCN3991
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20191106094832.482-1-bgodavar@codeaurora.org>
-Date:   Sat, 9 Nov 2019 03:28:40 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        tientzu@chromium.org, seanpaul@chromium.org,
-        bjorn.andersson@linaro.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <0E5C9575-6D1E-4446-ACEA-B5826A7A6EEC@holtmann.org>
-References: <20191106094832.482-1-bgodavar@codeaurora.org>
-To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
-X-Mailer: Apple Mail (2.3601.0.10)
+        id S1729647AbfKJC5o (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 9 Nov 2019 21:57:44 -0500
+Received: from mail.kernel.org ([198.145.29.99]:47202 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729415AbfKJC4s (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 9 Nov 2019 21:56:48 -0500
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 095E22249A;
+        Sun, 10 Nov 2019 02:48:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1573354087;
+        bh=sL0SKLEML4Y9k9kz/zU2jbjo+8R+OhLdgvLoi8HegYo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=n0q3KAQVWkrGgyKRZE7mAWbYRcpduLqIZO79Gfxt/t0vf/lcYKVYkK7y2oPHyMaRd
+         Kr7uT0H5yXfPy5e+N7xLi4EPh0FActD5okLflp/IWzSmGb6jiQ5fH8EElRyuHl/cH1
+         SOzilgatMbAQwkleXsBRIC6mifYE//BwHsugd+j8=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.14 084/109] Bluetooth: L2CAP: Detect if remote is not able to use the whole MPS
+Date:   Sat,  9 Nov 2019 21:45:16 -0500
+Message-Id: <20191110024541.31567-84-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191110024541.31567-1-sashal@kernel.org>
+References: <20191110024541.31567-1-sashal@kernel.org>
+MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Balakrishna,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-> These patches enables Bluetooth functinalties for new Qualcomm
-> Bluetooth chip wnc3991. As this is latest chip with new features,
-> along with some common features to old chip "qcom,qcawcn3991-bt".
-> Major difference between old BT SoC's with WCN3991 is WCN3991 
-> will not send any VSE for the VSC instead is sends the data on CC
-> packet.
-> 
-> v2:
-> * updated review comments
-> 
-> Balakrishna Godavarthi (2):
->  Bluetooth: btqca: Rename ROME specific variables to generic variables
->  Bluetooth: hci_qca: Add support for Qualcomm Bluetooth SoC WCN3991
-> 
-> drivers/bluetooth/btqca.c   | 92 ++++++++++++++++++++++++++-----------
-> drivers/bluetooth/btqca.h   | 32 +++++++------
-> drivers/bluetooth/hci_qca.c | 16 ++++++-
-> 3 files changed, 97 insertions(+), 43 deletions(-)
+[ Upstream commit a5c3021bb62b970713550db3f7fd08aa70665d7e ]
 
-both patches have been applied to bluetooth-next tree.
+If the remote is not able to fully utilize the MPS choosen recalculate
+the credits based on the actual amount it is sending that way it can
+still send packets of MTU size without credits dropping to 0.
 
-Regards
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/bluetooth/l2cap_core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Marcel
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 0c2219f483d70..f63d9918b15ad 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6819,6 +6819,16 @@ static int l2cap_le_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
+ 		chan->sdu_len = sdu_len;
+ 		chan->sdu_last_frag = skb;
+ 
++		/* Detect if remote is not able to use the selected MPS */
++		if (skb->len + L2CAP_SDULEN_SIZE < chan->mps) {
++			u16 mps_len = skb->len + L2CAP_SDULEN_SIZE;
++
++			/* Adjust the number of credits */
++			BT_DBG("chan->mps %u -> %u", chan->mps, mps_len);
++			chan->mps = mps_len;
++			l2cap_chan_le_send_credits(chan);
++		}
++
+ 		return 0;
+ 	}
+ 
+-- 
+2.20.1
 
