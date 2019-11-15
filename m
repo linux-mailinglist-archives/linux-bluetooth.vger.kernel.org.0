@@ -2,87 +2,100 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E7A4FE1FE
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2019 16:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E65AFE357
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2019 17:51:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727647AbfKOPtn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 15 Nov 2019 10:49:43 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:38140 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727621AbfKOPtn (ORCPT
+        id S1727556AbfKOQvV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 15 Nov 2019 11:51:21 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53438 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727540AbfKOQvV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 15 Nov 2019 10:49:43 -0500
-Received: by mail-io1-f68.google.com with SMTP id i13so10926378ioj.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 15 Nov 2019 07:49:42 -0800 (PST)
+        Fri, 15 Nov 2019 11:51:21 -0500
+Received: by mail-wm1-f65.google.com with SMTP id u18so10344402wmc.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 15 Nov 2019 08:51:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=X5NAAOrJ3bS32ihsXavVCESX6DNfXdWEE7aVqtLVIHM=;
-        b=T96mBsWswYjsm0w7ecYkWpV509ib/ulk9bHbI0Xwo0rzkePegh7rSfOcmzGbyf8vTc
-         lns/HOXyf4/6jOYDVIgZ/CZyIfN2m2y88qVdmXSABhNsP0MXDIRsHGSOOd7wWkwuGiQx
-         ehcoBpFXp6INIFq3jwmveina1L3fsWjpzHRhMvlhwo8OJ8Dy4xuFXwCrYZiL/Ja/dmiU
-         sEvBblBcC09ww5H/W1Li3rJXBc1TYjMn46kjeboNwYGUiqFeNnjz46iJxarBlBzUTpau
-         7EU4w1MkRxjhgPFrJ2/ipVqnuE4IawmENFYcW1JVUg9OFLrEKZvfb77T8+3XayPV4Zd+
-         KrHA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=l8wbuTdKIm9pPYI+wycygsy1JniaWBVTb/yHf0gyXxA=;
+        b=JbOi6UE9LQvr0BEsmtWcta5ccO1vrud8AIMk5/DHSMXNKjF29cBmUTsKYUAkUTPfWY
+         zoi7WhtQjBSHT+4PINPd9ig5dE+CNt8bkfwePMBERbLpPMtVEThwVF9egJOMmy9toRCh
+         Wxhkc4sXQv1ygPs6KgJs+mdI22vghjf2u6U+fu1hlpRMDv6OdNpS0a/rY11BfxTyf+F9
+         Q7W/M5/2etQajYo9Jezn/WYQutDRmSe36QDnee8C/nrdCixCA/fnWRPh6NGC3TOgF7JN
+         wWOSEzsul9XgjMJTriSTk06ORoa83NJ+qQmiPOxqFC/b+ub6JqHzVw691Q31OY4ETAqh
+         1XIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=X5NAAOrJ3bS32ihsXavVCESX6DNfXdWEE7aVqtLVIHM=;
-        b=j/xZCsQySHCZSivZ/QU4WGNC2XEx4QV2pQEXPiIkPRF6xxl/zj/xnflHKKjZY7u8Ny
-         dhWL8WrZMZtK7F/YmyKhshqW22x89ClxnvjXRQ+SLSYJx4tp9LPWZGaO9QWX5H+VCtoU
-         HcXNmJN5n4ph2y1sR/ABmOetLb0W3bYTJD0ZFnpUWg6UlUBHrumeND5mkc/BOhMk39tf
-         gQg/Wn2ODuWUMWoI0zdnznxoKKZB61eV9mdJOKxAl/rPgX7536+U3/XLAJUHPtpUU+nL
-         +/EqKbTNTlCQ4S8oiLfT30xp8GSrS+Qb1cfmVmDjEwWfAFYersl4Q7tIPv2aLLWNFOuk
-         UhMw==
-X-Gm-Message-State: APjAAAWnhIht4EN64aOtp1OEnTb/jGJLy86nyy8QRvfY4GqPBScD8Skc
-        KBaaIMW2s42rdFPgI1Mddu2/gw1hTQWYCoxKOw==
-X-Google-Smtp-Source: APXvYqxEj1beLI6zhjihT/lmX2Dk324PGcIr8veC5c+0F/PFQKT7AeNYgljOGh72OwNqCMMZvqGkvMbSAqCkDjgGkjg=
-X-Received: by 2002:a5e:8e02:: with SMTP id a2mr1343031ion.269.1573832982053;
- Fri, 15 Nov 2019 07:49:42 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=l8wbuTdKIm9pPYI+wycygsy1JniaWBVTb/yHf0gyXxA=;
+        b=NnOqztFpCWFAvyyhaERtktAQ1XI87Jw4ulOVVNz+dgX8E9cxioowMEVkxnuWXFODqN
+         ui8l+WAJJ8x+kxBnBK/bTTtLBL1ufioxRoXj9V8NXmfB6ZwX6rS1aBE13ImwtnAAeeek
+         bS2VFIY11xm5xdSTOWvFnCkogjCPMi6npFE1Cw0K7miVANSyeETYmwqaT4B5lvo4ABq5
+         iheSDOadJEDcdqsQq/jNy/XDd51ayi0VK6PclD3R3dqUUlYXX4DCQ5c15DSiV2qAqFph
+         1i7ueUuKH6gR2QjPBkZMdcLNahkHpaTCgxV1lFJdU9L67abI//wWeMQqdFW1rxkCy2M+
+         po0g==
+X-Gm-Message-State: APjAAAWeCp2XbUh+HPHpbL2g6L6nnAOZhrIwvtzDJlbsvKXVRD232Tu2
+        XDBfKbUT/8y8MGdLlg5X3yM=
+X-Google-Smtp-Source: APXvYqz4Nm2urppwmtOhAgtUXENZ8u+LMnaI01uUxr6LW1JCJdGjkg7no1iRaOaIHPhlHEcFI7tMXg==
+X-Received: by 2002:a1c:e0c4:: with SMTP id x187mr16411663wmg.93.1573836678845;
+        Fri, 15 Nov 2019 08:51:18 -0800 (PST)
+Received: from localhost ([37.238.189.15])
+        by smtp.gmail.com with ESMTPSA id u7sm13500103wre.59.2019.11.15.08.51.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Nov 2019 08:51:18 -0800 (PST)
+From:   Mohammad Rasim <mohammad.rasim96@gmail.com>
+To:     Kevin Hilman <khilman@baylibre.com>,
+        linux-amlogic@lists.infradead.org,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        linux-bluetooth@vger.kernel.org,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>
+Cc:     Mohammad Rasim <mohammad.rasim96@gmail.com>
+Subject: [RFC PATCH 1/2] Add entry for BCM4335A0 UART bluetooth
+Date:   Fri, 15 Nov 2019 19:50:26 +0300
+Message-Id: <20191115165026.19376-2-mohammad.rasim96@gmail.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20191115165026.19376-1-mohammad.rasim96@gmail.com>
+References: <20191115165026.19376-1-mohammad.rasim96@gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a02:7749:0:0:0:0:0 with HTTP; Fri, 15 Nov 2019 07:49:41
- -0800 (PST)
-Reply-To: moneygram.1820@outlook.fr
-From:   "Ms.Mary Coster" <info.zennitbankplcnigerian@gmail.com>
-Date:   Fri, 15 Nov 2019 16:49:41 +0100
-Message-ID: <CABHzvrkUQbbmg0Gr7foD3OjAJiY7Fd37=SW3mU=fnOPOcOyNdQ@mail.gmail.com>
-Subject: Goodnews, I have deposited your transfer total amount US$4.8million
- Dollars with Money Gram this morning. we agreed you will be receiving it
- $5000.00 daily.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Attn, Dear
-Goodnews, I have deposited your transfer total amount US$4.8million
-Dollars with Money Gram this morning. we agreed you will be receiving
-it $5000.00 daily.
-Contact Mr. John Dave Director, Money Gram to pick up your first Money
-Gram payment $5000.00 today.
-Contact Person; Mr. John Dave Director, Money Gram,International
-Remittance-Benin
-Email; moneygram.1820@outlook.fr
-Telephone; +229 62619517
-Please re-confirm your address to him once again such as listed below.
-1.Your Full Name..............................
-2.Address.........................
-3.Country....................
-4.Sex.........................................
-5.Your telephone numbers..........................
-6. Copy of your ID...........................
-This is to avoid sending your funds to wrong person, He is waiting to
-hear from you urgent today.
-Let me know once you pick up your transfer $5000.00 today.
-Finally, Note I have paid for the service fees, but only money will
-send to him is $90.00 transfer fee before you can pick up the transfer
-today.
-Ask, Mr. John Dave Director, Money Gram to give you direction where to
-send your transfer fee $90.00 only to Him Immediately so that you can
-pick up $5000.00 us dollars today.
-Thanks for undrstanding.
-Mary Coster
-m.coster@aol.com
+Signed-off-by: Mohammad Rasim <mohammad.rasim96@gmail.com>
+---
+ drivers/bluetooth/btbcm.c   | 1 +
+ drivers/bluetooth/hci_bcm.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
+index 2d2e6d862068..22464bf8cda3 100644
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -339,6 +339,7 @@ static const struct bcm_subver_table bcm_uart_subver_table[] = {
+ 	{ 0x220e, "BCM20702A1"  },	/* 001.002.014 */
+ 	{ 0x4217, "BCM4329B1"   },	/* 002.002.023 */
+ 	{ 0x6106, "BCM4359C0"	},	/* 003.001.006 */
++	{ 0x4106, "BCM4335A0"	},	/* 002.001.006 */
+ 	{ }
+ };
+ 
+diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
+index 7646636f2d18..7b4bb5dbea1d 100644
+--- a/drivers/bluetooth/hci_bcm.c
++++ b/drivers/bluetooth/hci_bcm.c
+@@ -1422,6 +1422,7 @@ static const struct of_device_id bcm_bluetooth_of_match[] = {
+ 	{ .compatible = "brcm,bcm4345c5" },
+ 	{ .compatible = "brcm,bcm4330-bt" },
+ 	{ .compatible = "brcm,bcm43438-bt" },
++	{ .compatible = "brcm,bcm4335A0" },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, bcm_bluetooth_of_match);
+-- 
+2.23.0
+
