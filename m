@@ -2,38 +2,37 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EF531006D7
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 Nov 2019 14:53:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 276451006D9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 Nov 2019 14:53:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727004AbfKRNxp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S1727018AbfKRNxq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 18 Nov 2019 08:53:46 -0500
+Received: from mail.monasterossannunziatatodi.it ([212.104.57.17]:44908 "EHLO
+        mail.tinia.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726909AbfKRNxp (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
         Mon, 18 Nov 2019 08:53:45 -0500
-Received: from mail.omegapg.it ([212.104.57.17]:44906 "EHLO mail.tinia.eu"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726668AbfKRNxp (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 18 Nov 2019 08:53:45 -0500
-X-Greylist: delayed 567 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Nov 2019 08:53:44 EST
 Received: from localhost (localhost [127.0.0.1])
-        by mail.tinia.eu (Postfix) with ESMTP id 05FD6222712;
+        by mail.tinia.eu (Postfix) with ESMTP id C8D73222934;
         Mon, 18 Nov 2019 14:44:18 +0100 (CET)
 Received: from mail.tinia.eu ([127.0.0.1])
         by localhost (mail.tinia.eu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id wsimLMkMvaI1; Mon, 18 Nov 2019 14:44:17 +0100 (CET)
+        with ESMTP id ILRzboeQAzrY; Mon, 18 Nov 2019 14:44:18 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-        by mail.tinia.eu (Postfix) with ESMTP id 41443220985;
-        Mon, 18 Nov 2019 14:44:17 +0100 (CET)
+        by mail.tinia.eu (Postfix) with ESMTP id 13CC7220985;
+        Mon, 18 Nov 2019 14:44:18 +0100 (CET)
 X-Virus-Scanned: amavisd-new at yes
 Received: from mail.tinia.eu ([127.0.0.1])
         by localhost (mail.tinia.eu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id dNphy5hWEZ2m; Mon, 18 Nov 2019 14:44:17 +0100 (CET)
+        with ESMTP id 5E-FGWWFcBXh; Mon, 18 Nov 2019 14:44:18 +0100 (CET)
 Received: from blemesh.cbl.lan (customer-93-189-143-66.com-com.it [93.189.143.66])
-        by mail.tinia.eu (Postfix) with ESMTPA id E274522270B;
-        Mon, 18 Nov 2019 14:44:16 +0100 (CET)
+        by mail.tinia.eu (Postfix) with ESMTPA id D5C1F22270B;
+        Mon, 18 Nov 2019 14:44:17 +0100 (CET)
 From:   Daniele Biagetti <daniele.biagetti@cblelectronics.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Daniele <dbiagio@tiscali.it>
-Subject: [PATCH 1/6] tools/mesh: Add onoff set unack message to onoff client model
-Date:   Mon, 18 Nov 2019 14:44:00 +0100
-Message-Id: <20191118134405.20212-2-daniele.biagetti@cblelectronics.com>
+Subject: [PATCH 2/6] tools/mesh: Fix status messages processing
+Date:   Mon, 18 Nov 2019 14:44:01 +0100
+Message-Id: <20191118134405.20212-3-daniele.biagetti@cblelectronics.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191118134405.20212-1-daniele.biagetti@cblelectronics.com>
 References: <20191118134405.20212-1-daniele.biagetti@cblelectronics.com>
@@ -46,60 +45,89 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Daniele <dbiagio@tiscali.it>
 
+The status messages was processed and displayed even if they do
+not belong to the present model. This fix ensure that the status
+messages are processed only if they have the correct opcode.
 ---
- tools/mesh/onoff-model.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ tools/mesh/node.c        | 11 +++++++++++
+ tools/mesh/onoff-model.c | 19 ++++++++++++-------
+ 2 files changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/tools/mesh/onoff-model.c b/tools/mesh/onoff-model.c
-index b52afe2c8..6236e1fea 100644
---- a/tools/mesh/onoff-model.c
-+++ b/tools/mesh/onoff-model.c
-@@ -238,6 +238,8 @@ static void cmd_set(int argc, char *argv[])
- 	uint16_t n;
- 	uint8_t msg[32];
- 	struct mesh_node *node;
-+	int np;
+diff --git a/tools/mesh/node.c b/tools/mesh/node.c
+index d23315ce4..3171ef01a 100644
+--- a/tools/mesh/node.c
++++ b/tools/mesh/node.c
+@@ -475,6 +475,8 @@ static bool deliver_model_data(struct mesh_element* e=
+lement, uint16_t src,
+ 				uint16_t app_idx, uint8_t *data, uint16_t len)
+ {
+ 	GList *l;
 +	uint32_t opcode;
++	int n;
 =20
- 	if (IS_UNASSIGNED(target)) {
- 		bt_shell_printf("Destination not set\n");
-@@ -249,13 +251,22 @@ static void cmd_set(int argc, char *argv[])
- 	if (!node)
- 		return;
-=20
--	if ((read_input_parameters(argc, argv) !=3D 1) &&
--					parms[0] !=3D 0 && parms[0] !=3D 1) {
--		bt_shell_printf("Bad arguments: Expecting \"0\" or \"1\"\n");
--		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	np =3D read_input_parameters(argc, argv);
-+	if ((np !=3D 1) && (np !=3D 2) &&
-+		parms[0] !=3D 0 && parms[0] !=3D 1 &&
-+		parms[1] !=3D 0 && parms[1] !=3D 1) {
-+	bt_shell_printf("Bad arguments: Expecting \"0\" or \"1\" "
-+		"and an optional \"0\" or \"1\" as unack\n");
-+	return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	if( (np=3D=3D2) && parms[1] ){
-+		opcode =3D OP_GENERIC_ONOFF_SET_UNACK;
-+	}else{
-+		opcode =3D OP_GENERIC_ONOFF_SET;
+ 	for(l =3D element->models; l; l =3D l->next) {
+ 		struct mesh_model *model =3D l->data;
+@@ -487,6 +489,15 @@ static bool deliver_model_data(struct mesh_element* =
+element, uint16_t src,
+ 			return true;
  	}
 =20
--	n =3D mesh_opcode_set(OP_GENERIC_ONOFF_SET, msg);
-+	n =3D mesh_opcode_set(opcode, msg);
- 	msg[n++] =3D parms[0];
- 	msg[n++] =3D trans_id++;
++	if (mesh_opcode_get(data, len, &opcode, &n)) {
++		len -=3D n;
++		data +=3D n;
++	} else
++		return false;
++	bt_shell_printf("Unknown Model Message received (%d) opcode %x\n",
++						len, opcode);
++	print_byte_array("\t",data, len);
++
+ 	return false;
+ }
 =20
-@@ -275,7 +286,7 @@ static const struct bt_shell_menu onoff_menu =3D {
- 						"Set node to configure"},
- 	{"get",			NULL,				cmd_get_status,
- 						"Get ON/OFF status"},
--	{"onoff",		"<0/1>",			cmd_set,
-+	{"onoff",		"<0/1> [unack]",		cmd_set,
- 						"Send \"SET ON/OFF\" command"},
- 	{} },
- };
+diff --git a/tools/mesh/onoff-model.c b/tools/mesh/onoff-model.c
+index 6236e1fea..a6baeb0c5 100644
+--- a/tools/mesh/onoff-model.c
++++ b/tools/mesh/onoff-model.c
+@@ -111,6 +111,7 @@ static bool client_msg_recvd(uint16_t src, uint8_t *d=
+ata,
+ {
+ 	uint32_t opcode;
+ 	int n;
++	char s[128];
+=20
+ 	if (mesh_opcode_get(data, len, &opcode, &n)) {
+ 		len -=3D n;
+@@ -127,18 +128,22 @@ static bool client_msg_recvd(uint16_t src, uint8_t =
+*data,
+ 		return false;
+=20
+ 	case OP_GENERIC_ONOFF_STATUS:
++		bt_shell_printf("On Off Model Message received (%d) opcode %x\n",
++			len, opcode);
++		print_byte_array("\t",data, len);
+ 		if (len !=3D 1 && len !=3D 3)
+ 			break;
+=20
+-		bt_shell_printf("Node %4.4x: Off Status present =3D %s",
+-						src, data[0] ? "ON" : "OFF");
+-
++		sprintf(s, "Node %4.4x: On Off Status present =3D %s",
++			src, data[0] ? "ON" : "OFF");
+ 		if (len =3D=3D 3) {
+-			bt_shell_printf(", target =3D %s",
+-					data[1] ? "ON" : "OFF");
++			sprintf(s, ", target =3D %s",
++				data[1] ? "ON" : "OFF");
++			bt_shell_printf("%s\n", s);
+ 			print_remaining_time(data[2]);
+-		} else
+-			bt_shell_printf("\n");
++		}else
++			bt_shell_printf("%s\n", s);
++
+ 		break;
+ 	}
+=20
 --=20
 2.20.1
 
