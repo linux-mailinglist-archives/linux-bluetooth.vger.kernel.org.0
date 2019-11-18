@@ -2,88 +2,93 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B7C0D1005E1
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 Nov 2019 13:49:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AE741006D8
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 Nov 2019 14:53:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726562AbfKRMtf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 18 Nov 2019 07:49:35 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33755 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbfKRMtf (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 18 Nov 2019 07:49:35 -0500
-Received: by mail-wr1-f68.google.com with SMTP id w9so19348735wrr.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 18 Nov 2019 04:49:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=L7Er13n1f9r1dDvRCAZ2ELhKqMF8fgzn7udaqvsc/4g=;
-        b=taZK7smQ1extpIirFf1VUycjTZ+Wf3rCFCRKN1qRE60IEYsxYVzfE5dKT+5Wq7rqz9
-         7DKBHd9gqmlNnlKnRKlN7Rq3lm7YYgldk/oxmoLvOvygErZJ/9s+45CHovon6wvPrupB
-         Rd+aOF6CC9eg+xQNMXe4gwVmwX1qLZp8T51kW11KvyoFtj452SZMDhLWc4TJVr3ZLxFV
-         6vfCnQAddfIqDrO9GAUQop0mAyUoiR7oOadvUTZROZSptZQ6RbIE+b7t9RCeyhD3Vh4y
-         B966H0ZW9zcf2OYGA1rlqKjeOzcnYRT0ZLq/hQKZRKD/i11aaxy0ZF/RdjuaGN3yOKWu
-         4fjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=L7Er13n1f9r1dDvRCAZ2ELhKqMF8fgzn7udaqvsc/4g=;
-        b=qhRebtD7QjLLV7ss4k/wQ1/EhWDuljRspMXhuwf360VBRZ8aV8QwMZNFdGZvmzbKcG
-         JbqNO7JqxpTnh1petyi5Oij2roxtW8W/RDpPra0RcHxKPS5qmB90ithg9tM2SLUuHq0h
-         Aia3JDIRpF5KbJf1sFe0g15I5+tDO9i7/O+k7QcWF/DwMb/LeVv8/3CcgBaXms9HFmGD
-         phF+fbyiLD+svkf2JkHBVs9v4qHLhfdOW6qL2KRMBomveO6XeNR8HxU0MRFy6cW6Oazh
-         yUhfTVir72GP6Gtc/F/hu+9X+P4Xmw3kOGx2i8K4jDU+qC5Nhho4Q7NZ3oD849r82c9i
-         HLGg==
-X-Gm-Message-State: APjAAAUAbUADTqNFTMKOubLoZGjpQZ2CrNV/TG29T8MrdCaS8tgKmhUz
-        ZpqbSSJu7iahqdC8qY9a2PA=
-X-Google-Smtp-Source: APXvYqy1VG9RfCQHWb2F6er6G/r9FeY1aG9QWGY2SVhXaef63q/YTO4gnF5wLgD7hMvZoXVlzr3efQ==
-X-Received: by 2002:a5d:55c7:: with SMTP id i7mr31197333wrw.64.1574081371585;
-        Mon, 18 Nov 2019 04:49:31 -0800 (PST)
-Received: from mamamia.internal (a89-183-49-198.net-htp.de. [89.183.49.198])
-        by smtp.gmail.com with ESMTPSA id a11sm20550343wmh.40.2019.11.18.04.49.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2019 04:49:31 -0800 (PST)
-From:   Andre Heider <a.heider@gmail.com>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org, Ondrej Jirman <megous@megous.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>
-Subject: [PATCH] bluetooth: bcm: Set HCI_QUIRK_USE_BDADDR_PROPERTY for default addresses
-Date:   Mon, 18 Nov 2019 13:49:30 +0100
-Message-Id: <20191118124930.2138112-1-a.heider@gmail.com>
-X-Mailer: git-send-email 2.24.0
+        id S1727007AbfKRNxp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 18 Nov 2019 08:53:45 -0500
+Received: from mail.tinia.it ([212.104.57.17]:44910 "EHLO mail.tinia.eu"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726895AbfKRNxp (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 18 Nov 2019 08:53:45 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mail.tinia.eu (Postfix) with ESMTP id DAEE3222722;
+        Mon, 18 Nov 2019 14:44:15 +0100 (CET)
+Received: from mail.tinia.eu ([127.0.0.1])
+        by localhost (mail.tinia.eu [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id pMKv1QEduIUR; Mon, 18 Nov 2019 14:44:14 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.tinia.eu (Postfix) with ESMTP id 840C0222712;
+        Mon, 18 Nov 2019 14:44:14 +0100 (CET)
+X-Virus-Scanned: amavisd-new at yes
+Received: from mail.tinia.eu ([127.0.0.1])
+        by localhost (mail.tinia.eu [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id BmVZ6fgVl6NV; Mon, 18 Nov 2019 14:44:14 +0100 (CET)
+Received: from blemesh.cbl.lan (customer-93-189-143-66.com-com.it [93.189.143.66])
+        by mail.tinia.eu (Postfix) with ESMTPA id 57BC722270F;
+        Mon, 18 Nov 2019 14:44:14 +0100 (CET)
+From:   Daniele Biagetti <daniele.biagetti@cblelectronics.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Daniele <dbiagio@tiscali.it>
+Subject: [PATCH 0/6] Add features and fix some undesired behaviour of meshctl
+Date:   Mon, 18 Nov 2019 14:43:59 +0100
+Message-Id: <20191118134405.20212-1-daniele.biagetti@cblelectronics.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Some devices ship with the controller default address, like the
-Orange Pi 3 (BCM4345C5).
+From: Daniele <dbiagio@tiscali.it>
 
-Allow the bootloader to set a valid address through the device tree.
+The followings extend the features of meshctl, adding:
+ * The Subscription Delete message to the configuration client=20
+   (as per Mesh Profile 4.3.2.21)
+ * The Generic OnOff Set Unacknowledged message to the onoff
+   client model
+ * Generic Level Client Model, limited to the following messages:
+   - generic level get and set
+   - generic level set unacknowledged
+   - generic level status
+ * Generic Power OnOff Client except the Generic OnPowerUp Set
+   Unacknowledged message
+They also contains two fixes:
+ * The first one cames up when more than a client model is added
+   to the local node. The received status messages are forwarded
+   to all clients and they needs to be filtered within each client
+   in order to avoid wrong reports on the bt shell
+ * The second one replaces a return statment within the onoff=20
+   client model with a warning message when the user selects an
+   unknown target address. For example it happens when the user=20
+   tries to send messages to a group address due to the fact that
+   such addresses are not stored whitn the json database.
 
-Signed-off-by: Andre Heider <a.heider@gmail.com>
----
- drivers/bluetooth/btbcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Daniele (6):
+  tools/mesh: Add onoff set unack message to onoff client model
+  tools/mesh: Fix status messages processing
+  tools/mesh: Fix unwanted return in onoff client model
+  tools/mesh: Add subscription delete message to config client model
+  tools/mesh: Add generic level model support
+  tools/mesh: Add generic power onoff client model
 
-diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
-index 2d2e6d862068..e1471777486e 100644
---- a/drivers/bluetooth/btbcm.c
-+++ b/drivers/bluetooth/btbcm.c
-@@ -79,7 +79,7 @@ int btbcm_check_bdaddr(struct hci_dev *hdev)
- 	    !bacmp(&bda->bdaddr, BDADDR_BCM43341B)) {
- 		bt_dev_info(hdev, "BCM: Using default device address (%pMR)",
- 			    &bda->bdaddr);
--		set_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks);
-+		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
- 	}
- 
- 	kfree_skb(skb);
--- 
-2.24.0
+ Makefile.tools               |   4 +-
+ tools/mesh/config-client.c   |  40 +++++
+ tools/mesh/level-model.c     | 298 +++++++++++++++++++++++++++++++++++
+ tools/mesh/level-model.h     |  34 ++++
+ tools/mesh/local_node.json   |  10 +-
+ tools/mesh/node.c            |  11 ++
+ tools/mesh/onoff-model.c     |  52 ++++--
+ tools/mesh/onpowerup-model.c | 262 ++++++++++++++++++++++++++++++
+ tools/mesh/onpowerup-model.h |  34 ++++
+ tools/meshctl.c              |   8 +
+ 10 files changed, 734 insertions(+), 19 deletions(-)
+ create mode 100644 tools/mesh/level-model.c
+ create mode 100644 tools/mesh/level-model.h
+ create mode 100644 tools/mesh/onpowerup-model.c
+ create mode 100644 tools/mesh/onpowerup-model.h
+
+--=20
+2.20.1
 
