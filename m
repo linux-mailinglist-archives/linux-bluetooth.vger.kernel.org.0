@@ -2,77 +2,128 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B1AA7102AB1
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 19 Nov 2019 18:19:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 354FF102C3D
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 19 Nov 2019 20:00:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728629AbfKSRT1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 19 Nov 2019 12:19:27 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:47084 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728339AbfKSRT1 (ORCPT
+        id S1727205AbfKSTAd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 19 Nov 2019 14:00:33 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:38649 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726836AbfKSTAd (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 19 Nov 2019 12:19:27 -0500
-Received: by mail-qt1-f194.google.com with SMTP id r20so25395244qtp.13
-        for <linux-bluetooth@vger.kernel.org>; Tue, 19 Nov 2019 09:19:26 -0800 (PST)
+        Tue, 19 Nov 2019 14:00:33 -0500
+Received: by mail-lj1-f195.google.com with SMTP id v8so24605505ljh.5
+        for <linux-bluetooth@vger.kernel.org>; Tue, 19 Nov 2019 11:00:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=KPbcLzmN3JirQxcIsMNAPGvvWsFgMpVPgXZTiKQLiRk=;
-        b=FZqh+aa3066AaQBdGiA/r4nSWhSHU+rGbrpvP+FwiaQlPp83z/QHiWNLu1z32cXNnx
-         2Y/y+RXy5mM6332Uxlh06A6Qfqa/yZngbxd0f8Pke4XtQP+7t1Fe6d7pPP57e9i6dYPL
-         Rvs2bl2KAhK5jDe2wyGCMHG4KEy9SLnvuTZ903veBYL/ilfri63Y7dWw3eWMwf/Wf16D
-         b3/izb/4NUXMtbGq7HZLqdt0fsucuVnYZQFxz8IZxHMMYP37oS4AIGswSJ051mvE1O5P
-         b5OzAkH28E1kqMAtld3yILOGYhkFScQ1K0z4JT6fDoeNOUYWXstAC4MgTwo9jnV6pUZo
-         O5aA==
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OF+Hm1yLKQyYYXudgW+BkQo1KPOL73kywpvDxtIxLj8=;
+        b=Plbrv5tHUJb0P7rN2sE4VFihDEzSU96EeXoYyr/JkcAFj5zbFTFPhTUimdmhvMUEBq
+         OhzKynh0wiTSOkT8dYI+kHFBpPzasJHzONIdCFCsg4B8Kq8egOfpuzjrpluxYP04gFgQ
+         GFCXfwdqUmjfCMFCAqdG4nhlfxcx16r/1PQec=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=KPbcLzmN3JirQxcIsMNAPGvvWsFgMpVPgXZTiKQLiRk=;
-        b=QmlDC6uHa40gblqPF/mQfp++Zkn1MAUGFyA167wndTMQ0CoKcHb7KSCFUJl06E0VMG
-         l6cN2anJYlO7PxAoQ/3Lz/HSBZPRCgJcm9Xht9ToRhjVz8xE/nfyz10FOvZFjk2EAdvB
-         fZCnjyAFgHdIi0VXQuk7ov/W/WHLKA9e13718/MCINgPFh1Bvd6jNr7Mj0dKV0rPG4DD
-         /+w/8tbe6+AiBEBxqb6AWfupAMO/sikwZEte5lQefXijfwSGVJiAu2rmCK7C8qtdapb4
-         DzSyPVIGBi/yTQ36up90sJCeblfjkh+M4cDxTADdMc5xTMrdh37W7BGtmEW4Ft0ypzbZ
-         CJ5w==
-X-Gm-Message-State: APjAAAV1XitluqwDKQORakfZRaDt9Lgzy/hhFh/48ftXdM/eT2R2MhxP
-        TMSriQ3PpUsA1EfkQmSljtySha2uoCsdC3v3uw0=
-X-Google-Smtp-Source: APXvYqwaJrtgWT8zEtqQ5ZY2H2ZKawQ8spvz2WYh4PsxCuTyRoVLZ6RWeGu+4BeY/+vp2Li701LzzovZwco2RZ1d8sw=
-X-Received: by 2002:ac8:6697:: with SMTP id d23mr32002250qtp.32.1574183966360;
- Tue, 19 Nov 2019 09:19:26 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OF+Hm1yLKQyYYXudgW+BkQo1KPOL73kywpvDxtIxLj8=;
+        b=sfH+6ImWHlRNU3Gu/dYptmZLt80t/0fNn9jDWyfVmwuiLwks8JtFH5LYSFzb8b5YpD
+         JzhdoJXuF9g/yjsRFV/a2j7xm75DVwlAtInRCI+cXVObSD4+YivNusHisEVaeku645R6
+         dxojytA6RGsszwgVdjt8qtRSoeQoGyQ2jkB3hKou4fB+83/ihsMtaFaac0AFPGhrp9QR
+         1fq2oAYQWEnw3FtseIOYhu9+iyjorG1B4nq9dugdXsft2LgKqg8Rei8eOQXxPnvjs62h
+         EUzI7zqnUYglaUdd+8Jm3kI6zn5rY+DyM6YQXPuJq8SCUnQ3o6KNOM4Hu2xokitbPZdJ
+         /78w==
+X-Gm-Message-State: APjAAAVNyQQhC7NO/QoOdaaoOlBAxCqF60rvm5WUbTHNGdLdC1wD6b7g
+        fy3h4ERXTVU/yBkjLaX2xj+qqOVF6SQ=
+X-Google-Smtp-Source: APXvYqyP93cjD5rdcKfS62OPv/N1sN2/LYjtWHuQggi2rjOcu8Xt/O5zcv6rgMavJpOeK4S3jegZCw==
+X-Received: by 2002:a2e:22c4:: with SMTP id i187mr5513670lji.86.1574190029394;
+        Tue, 19 Nov 2019 11:00:29 -0800 (PST)
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com. [209.85.208.180])
+        by smtp.gmail.com with ESMTPSA id b3sm1118142lfq.10.2019.11.19.11.00.27
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Nov 2019 11:00:27 -0800 (PST)
+Received: by mail-lj1-f180.google.com with SMTP id q2so24623453ljg.7
+        for <linux-bluetooth@vger.kernel.org>; Tue, 19 Nov 2019 11:00:27 -0800 (PST)
+X-Received: by 2002:a2e:982:: with SMTP id 124mr5474404ljj.48.1574190026950;
+ Tue, 19 Nov 2019 11:00:26 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:ad4:5051:0:0:0:0:0 with HTTP; Tue, 19 Nov 2019 09:19:25
- -0800 (PST)
-Reply-To: m.lirnalaboso@yandex.com
-From:   "Mr.Tapioka Lirnalaboso" <tapiokalomalaboso68@gmail.com>
-Date:   Tue, 19 Nov 2019 18:19:25 +0100
-Message-ID: <CAEwu5ZGUBFQh5+wKPcdcRmBCbRTSq5TUYY8Y=7OS6VC0zFq1iw@mail.gmail.com>
-Subject: very very urgent
-To:     undisclosed-recipients:;
+References: <000000000000bf6bd30575fec528@google.com> <000000000000e2ac670597ad2663@google.com>
+In-Reply-To: <000000000000e2ac670597ad2663@google.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Tue, 19 Nov 2019 11:00:11 -0800
+X-Gmail-Original-Message-ID: <CAHk-=wjg0JXgwb6rkFK0q_JvW7YdGpiPtMVWe=YhFK1y_2-F7Q@mail.gmail.com>
+Message-ID: <CAHk-=wjg0JXgwb6rkFK0q_JvW7YdGpiPtMVWe=YhFK1y_2-F7Q@mail.gmail.com>
+Subject: Re: general protection fault in kernfs_add_one
+To:     syzbot <syzbot+db1637662f412ac0d556@syzkaller.appspotmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>
+Cc:     Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Rafael Wysocki <rafael@kernel.org>,
+        syzkaller-bugs <syzkaller-bugs@googlegroups.com>,
+        Tejun Heo <tj@kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Iam Mr Taptoka Lornalaboso.
+So looking at the decode, as usual the noise generated by KASAN isn't
+being very helpful, but it does look like at least one of the reports
+(I picked 5.2 because I don't care about 4.19 etc) is because
+'kernfs_root(kn) is NULL in kernfs_add_one().
 
-I have a Geniue business transaction of 18.5 Million Us Dollars to do
-with You Hence You Co-operate with me I am assured you that within (7)
-seven banking working days, this said amount will enter your given
-Bank account with immediate alacrity. If you agree to my business
-proposal, further details of the transfer will be forwarded to you as
-soon as I receive your wiliness to join hand with me. Am awaiting your
-urgent response with this informations Name:...................
-Sex:...............
-Age:...................
-Occupation:........
-Address:...............
-Tel/ Fax:...............
-State:.............
-Country Of origin:..........
+Looking at the reports, every single one seems to have a call chain
+that comes from vhci_write() -> vhci_get_user() ->
+vhci_create_device() -> __vhci_create_device() -> hci_register_dev()
+-> device_add() -> kobject_add().
 
-You have to contact me through my private e-mail at
-(m.lirnalaboso@yandex.com)
+(In this case, "every single one" is by looking at the last 10 reports
+sorted by date, it wasn't exhaustive).
 
-Have a nice day!!
+The way it got into 'write()' can be a bit varied (splice, write, whatever).
+
+That makes me think it's bluetooth that is the problem, but it might
+be an effect of how syzbot groups the reports too, of course.
+
+Might the device have been added at the same time that the last
+previous device was removed, so that the parent was deleted as the new
+device was aded? I dunno. The repro seem to be a repeated "open
+/dev/vhci, write two random bytes to it"
+
+Or might it be some "it happens after you've added enough devices that
+something overflows" issue?
+
+Adding bluetooth people to the cc.
+
+                  Linus
+
+On Mon, Nov 18, 2019 at 10:27 PM syzbot
+<syzbot+db1637662f412ac0d556@syzkaller.appspotmail.com> wrote:
+>
+> syzbot has bisected this bug to:
+>
+> commit 726e41097920a73e4c7c33385dcc0debb1281e18
+> Author: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+> Date:   Tue Jul 10 00:29:10 2018 +0000
+>
+>      drivers: core: Remove glue dirs from sysfs earlier
+>
+> bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=168e1012e00000
+> start commit:   5e335542 Merge branch 'for-linus' of git://git.kernel.org/..
+> git tree:       upstream
+> final crash:    https://syzkaller.appspot.com/x/report.txt?x=158e1012e00000
+> console output: https://syzkaller.appspot.com/x/log.txt?x=118e1012e00000
+> kernel config:  https://syzkaller.appspot.com/x/.config?x=9917ff4b798e1a1e
+> dashboard link: https://syzkaller.appspot.com/bug?extid=db1637662f412ac0d556
+> syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10a66c11400000
+> C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=1346c771400000
+>
+> Reported-by: syzbot+db1637662f412ac0d556@syzkaller.appspotmail.com
+> Fixes: 726e41097920 ("drivers: core: Remove glue dirs from sysfs earlier")
+>
+> For information about bisection process see: https://goo.gl/tpsmEJ#bisection
