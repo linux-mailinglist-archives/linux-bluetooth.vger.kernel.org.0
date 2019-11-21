@@ -2,103 +2,93 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 018A1104DD4
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 21 Nov 2019 09:27:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18B07104DB5
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 21 Nov 2019 09:19:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726293AbfKUI1l (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 21 Nov 2019 03:27:41 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:40448 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726165AbfKUI1l (ORCPT
+        id S1726333AbfKUITL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 21 Nov 2019 03:19:11 -0500
+Received: from mail-lj1-f180.google.com ([209.85.208.180]:37159 "EHLO
+        mail-lj1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726132AbfKUITK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 21 Nov 2019 03:27:41 -0500
-Received: from localhost.localdomain (tmo-101-191.customers.d1-online.com [80.187.101.191])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 6BC55CED0F
-        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Nov 2019 09:36:47 +0100 (CET)
-From:   Marcel Holtmann <marcel@holtmann.org>
+        Thu, 21 Nov 2019 03:19:10 -0500
+Received: by mail-lj1-f180.google.com with SMTP id d5so2194027ljl.4
+        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Nov 2019 00:19:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=silvair-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=WRuR/cabFaoKyJpsv4Q/sgoLJ+NAm1ZaQckxgSo30uk=;
+        b=EUt2ZpBuSv4fYJz5IZtQKiKl/HOvOkmI6D1PwWic7oXRSbQXgSGdCKjiebUqwGn5/k
+         z33PvBcgRq9pmXut+4l3fY2NUMITfSucDTXLoxh0QcrrO+ShN72WgM2CRHft7mOf5x8z
+         0J7RcaBafsdhRQyPaPKS1QkWc22HhzrxlGNZ8G2l3x8U9IUdCcxIrdm7HiZABIX3xrv9
+         TVXcStlRs1neNsUpHISjBIOH5R+wXvT9jo+NZsOi6eC62CBYeamMuhuvQ8NtPCZ7GyHl
+         eaQkyBLUWtjkdd1WizBxONtUQPwZvliLd4ZgezgjX6uzhJCAi/OM4ObsSrRSIqyOoyN4
+         vQvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=WRuR/cabFaoKyJpsv4Q/sgoLJ+NAm1ZaQckxgSo30uk=;
+        b=j6+8R85BWsCVhyEvtSFSzzOFHmlwrH2iFlf7Mt9waLNcqHIhewY/RLBTfuMbnAPX9N
+         np2DeA0LVrzMb2lVGsstf3s+fzcCygumJeBySMTWNhLdwER+WJO6zFpw+mvHvGeKn952
+         lF5ehBoiAF+RZPMbrXsPnybUGRhQ5yJCKk7YBv2oYTeYN4sXjUUimNMCW4vc5xIuAMVj
+         BCsHiQ5NVmbp4dkZqDzJq1iZ6jr5gFAXFtbZCaWRW6s2kX7hqe0RKosn40sPgFQN7Lg7
+         pMe3KnksE9FNWw4/3ddt5VX4CtYECb8usq8RTs4TdZIj/07MscbAVKVYtE+QtgttJbdS
+         po0w==
+X-Gm-Message-State: APjAAAXzTpR1dA9POXEeVrBkHMKffEM5NplyiJ++aKJIws02gYUeIjnn
+        Yu6Kbnsh+u1Vh6X/AT2sbGWPOT5nAISb0g==
+X-Google-Smtp-Source: APXvYqwyMeF1Ju1yQG37FPrlzoSncsnEb54QwqzSvywcQec5bVPv6/3soRfA2FmSHaCQg2iWfYF6SA==
+X-Received: by 2002:a2e:9841:: with SMTP id e1mr6306951ljj.19.1574324348020;
+        Thu, 21 Nov 2019 00:19:08 -0800 (PST)
+Received: from mlowasrzechonek2133 ([217.153.94.18])
+        by smtp.gmail.com with ESMTPSA id z127sm910175lfa.19.2019.11.21.00.19.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Nov 2019 00:19:07 -0800 (PST)
+Date:   Thu, 21 Nov 2019 09:19:05 +0100
+From:   =?utf-8?Q?Micha=C5=82?= Lowas-Rzechonek 
+        <michal.lowas-rzechonek@silvair.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 2/2] Bluetooth: Allow combination of BDADDR_PROPERTY and INVALID_BDADDR quirks
-Date:   Thu, 21 Nov 2019 08:51:30 +0100
-Message-Id: <20191121075130.92705-2-marcel@holtmann.org>
-X-Mailer: git-send-email 2.23.0
+Cc:     "Gix, Brian" <brian.gix@intel.com>,
+        "Stotland, Inga" <inga.stotland@intel.com>
+Subject: Re: [PATCH BlueZ 0/2] Include destination address in MessageReceived
+ API
+Message-ID: <20191121081905.zb4m5gqj5kywjl3v@mlowasrzechonek2133>
+Mail-Followup-To: linux-bluetooth@vger.kernel.org,
+        "Gix, Brian" <brian.gix@intel.com>,
+        "Stotland, Inga" <inga.stotland@intel.com>
+References: <20191118154147.3589-1-michal.lowas-rzechonek@silvair.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191118154147.3589-1-michal.lowas-rzechonek@silvair.com>
+User-Agent: NeoMutt/20180716
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When utilizing BDADDR_PROPERTY and INVALID_BDADDR quirks together it
-results in an unconfigured controller even if the bootloader provides
-a valid address. Fix this by allowing a bootloader provided address
-to mark the controller as configured.
+Hi Brian
 
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
----
- net/bluetooth/hci_core.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+On 11/18, Michał Lowas-Rzechonek wrote:
+> This patchset changes the MessageReceived API, replacing 'subscription'
+> flag with destination address of received messages.
+> 
+> The application receives destination address as a D-Bus variant,
+> containing either as a regular 16bit address (unicast/group) or a
+> 16-octet virtual label.
+> 
+> See previous discussion https://marc.info/?t=156719067300001&r=1&w=2 for
+> rationale.
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index c957f0611f74..6039105c96c0 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -1444,6 +1444,8 @@ static int hci_dev_do_open(struct hci_dev *hdev)
- 
- 	if (hci_dev_test_flag(hdev, HCI_SETUP) ||
- 	    test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
-+		bool invalid_bdaddr;
-+
- 		hci_sock_dev_event(hdev, HCI_DEV_SETUP);
- 
- 		if (hdev->setup) {
-@@ -1452,25 +1454,45 @@ static int hci_dev_do_open(struct hci_dev *hdev)
- 				goto setup_failed;
- 		}
- 
-+		/* The transport driver can set the quirk to mark the
-+		 * BD_ADDR invalid before creating the HCI device or in
-+		 * its setup callback.
-+		 */
-+		invalid_bdaddr = test_bit(HCI_QUIRK_INVALID_BDADDR,
-+					  &hdev->quirks);
-+
- 		if (test_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks)) {
- 			if (!bacmp(&hdev->public_addr, BDADDR_ANY))
- 				hci_dev_get_bd_addr_from_property(hdev);
- 
- 			if (bacmp(&hdev->public_addr, BDADDR_ANY) &&
--			    hdev->set_bdaddr)
-+			    hdev->set_bdaddr) {
- 				ret = hdev->set_bdaddr(hdev,
- 						       &hdev->public_addr);
-+
-+				/* If setting of the BD_ADDR from the device
-+				 * property succeeds, then treat the address
-+				 * as valid even if the invalid BD_ADDR
-+				 * quirk indicates otherwise.
-+				 */
-+				if (!ret)
-+					invalid_bdaddr = false;
-+			}
- 		}
- 
- setup_failed:
- 		/* The transport driver can set these quirks before
- 		 * creating the HCI device or in its setup callback.
- 		 *
-+		 * For the invalid BD_ADDR quirk it is possible that
-+		 * it becomes a valid address if the bootloader does
-+		 * provide it (see above).
-+		 *
- 		 * In case any of them is set, the controller has to
- 		 * start up as unconfigured.
- 		 */
- 		if (test_bit(HCI_QUIRK_EXTERNAL_CONFIG, &hdev->quirks) ||
--		    test_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks))
-+		    invalid_bdaddr)
- 			hci_dev_set_flag(hdev, HCI_UNCONFIGURED);
- 
- 		/* For an unconfigured controller it is required to
+Any comments about the patchset? If the change itself looks OK, I'm
+happy to improve the patch if needed.
+
+regards
 -- 
-2.23.0
-
+Michał Lowas-Rzechonek <michal.lowas-rzechonek@silvair.com>
+Silvair http://silvair.com
+Jasnogórska 44, 31-358 Krakow, POLAND
