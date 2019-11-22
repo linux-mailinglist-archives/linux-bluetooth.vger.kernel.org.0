@@ -2,58 +2,122 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 205B6105D30
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Nov 2019 00:36:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D46EE106586
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Nov 2019 07:25:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726529AbfKUXgw convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 21 Nov 2019 18:36:52 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:47786 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726038AbfKUXgw (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 21 Nov 2019 18:36:52 -0500
-Received: from marcel-macbook.holtmann.net (p4FF9F0D1.dip0.t-ipconnect.de [79.249.240.209])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 05FE9CED19;
-        Fri, 22 Nov 2019 00:45:58 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
-Subject: Re: [PATCH 1/2] Bluetooth: Move error check into the right if-clause
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20191121144138.GA70662@vaespino-mobl1.amr.corp.intel.com>
-Date:   Fri, 22 Nov 2019 00:36:50 +0100
-Cc:     linux-bluetooth@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <1ACA0CFD-B0A2-41D9-9AB3-295DE534511B@holtmann.org>
-References: <20191121075130.92705-1-marcel@holtmann.org>
- <20191121144138.GA70662@vaespino-mobl1.amr.corp.intel.com>
-To:     Johan Hedberg <johan.hedberg@gmail.com>
-X-Mailer: Apple Mail (2.3601.0.10)
+        id S1728066AbfKVFvP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 22 Nov 2019 00:51:15 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56184 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728059AbfKVFvO (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 22 Nov 2019 00:51:14 -0500
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2E51120731;
+        Fri, 22 Nov 2019 05:51:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1574401873;
+        bh=HA1qjHd1T3/y1oTFjb4/iw4zfU/8Qyh1cA8GBBjPN5M=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=PLeno+aSvAFYCKNgP2M/0I5mi0poslSvgW1t9S7p4WoYOxhyUnRVClaJCysT1611Y
+         ewauE9MrXQl4/pSY9Kiz/pLDrQSJot+3VwRxGYDfFx2Hra6x49B2W2nOJjpzRYZjJQ
+         sF2mm6owyINWcT5ntM6uAEttR4c80JyH7OaDbG2M=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Jonathan Bakker <xc-racer2@live.ca>,
+        =?UTF-8?q?Pawe=C5=82=20Chmiel?= <pawel.mikolaj.chmiel@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 109/219] Bluetooth: hci_bcm: Handle specific unknown packets after firmware loading
+Date:   Fri, 22 Nov 2019 00:47:21 -0500
+Message-Id: <20191122054911.1750-102-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191122054911.1750-1-sashal@kernel.org>
+References: <20191122054911.1750-1-sashal@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Johan,
+From: Jonathan Bakker <xc-racer2@live.ca>
 
->> The if-clause for hdev->setup should also include the error handling
->> since that is where the error really comes from. The code currently
->> works correctly since ret=0 is assigned early on, but it is a lot
->> harder to read and understand.
->> 
->> Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
->> ---
->> net/bluetooth/hci_core.c | 8 ++++----
->> 1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> Both patches in this set have been applied to bluetooth-next. Thanks.
+[ Upstream commit 22bba80500fdf624a7cfbb65fdfa97a038ae224d ]
 
-so my cleanup patch was actually a mistake. In itself it was the right fix, but with the follow up patch, we actually want it that way to allow the invalid_bdaddr variable assignment to be done after hdev->setup.
+The Broadcom controller on aries S5PV210 boards sends out a couple of
+unknown packets after the firmware is loaded.  This will cause
+logging of errors such as:
+	Bluetooth: hci0: Frame reassembly failed (-84)
 
-I posted a v2 now that fixes that. We need to do a push --force to fix this up. A follow up patch would cause a hard to track history.
+This is probably also the case with other boards, as there are related
+Android userspace patches for custom ROMs such as
+https://review.lineageos.org/#/c/LineageOS/android_system_bt/+/142721/
+Since this appears to be intended behaviour, treated them as diagnostic
+packets.
 
-Regards
+Note that this is another variant of commit 01d5e44ace8a
+("Bluetooth: hci_bcm: Handle empty packet after firmware loading")
 
-Marcel
+Signed-off-by: Jonathan Bakker <xc-racer2@live.ca>
+Signed-off-by: Paweł Chmiel <pawel.mikolaj.chmiel@gmail.com>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/bluetooth/hci_bcm.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
+index aa6b7ed9fdf12..59e5fc5eec8f8 100644
+--- a/drivers/bluetooth/hci_bcm.c
++++ b/drivers/bluetooth/hci_bcm.c
+@@ -51,6 +51,12 @@
+ #define BCM_LM_DIAG_PKT 0x07
+ #define BCM_LM_DIAG_SIZE 63
+ 
++#define BCM_TYPE49_PKT 0x31
++#define BCM_TYPE49_SIZE 0
++
++#define BCM_TYPE52_PKT 0x34
++#define BCM_TYPE52_SIZE 0
++
+ #define BCM_AUTOSUSPEND_DELAY	5000 /* default autosleep delay */
+ 
+ /**
+@@ -564,12 +570,28 @@ static int bcm_setup(struct hci_uart *hu)
+ 	.lsize = 0, \
+ 	.maxlen = BCM_NULL_SIZE
+ 
++#define BCM_RECV_TYPE49 \
++	.type = BCM_TYPE49_PKT, \
++	.hlen = BCM_TYPE49_SIZE, \
++	.loff = 0, \
++	.lsize = 0, \
++	.maxlen = BCM_TYPE49_SIZE
++
++#define BCM_RECV_TYPE52 \
++	.type = BCM_TYPE52_PKT, \
++	.hlen = BCM_TYPE52_SIZE, \
++	.loff = 0, \
++	.lsize = 0, \
++	.maxlen = BCM_TYPE52_SIZE
++
+ static const struct h4_recv_pkt bcm_recv_pkts[] = {
+ 	{ H4_RECV_ACL,      .recv = hci_recv_frame },
+ 	{ H4_RECV_SCO,      .recv = hci_recv_frame },
+ 	{ H4_RECV_EVENT,    .recv = hci_recv_frame },
+ 	{ BCM_RECV_LM_DIAG, .recv = hci_recv_diag  },
+ 	{ BCM_RECV_NULL,    .recv = hci_recv_diag  },
++	{ BCM_RECV_TYPE49,  .recv = hci_recv_diag  },
++	{ BCM_RECV_TYPE52,  .recv = hci_recv_diag  },
+ };
+ 
+ static int bcm_recv(struct hci_uart *hu, const void *data, int count)
+-- 
+2.20.1
 
