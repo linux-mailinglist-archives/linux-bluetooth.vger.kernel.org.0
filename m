@@ -2,79 +2,115 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B5E910837F
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 24 Nov 2019 14:34:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E1BC10857D
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Nov 2019 00:17:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726944AbfKXNeS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 24 Nov 2019 08:34:18 -0500
-Received: from mail-il1-f196.google.com ([209.85.166.196]:33169 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726817AbfKXNeS (ORCPT
+        id S1727004AbfKXXR5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 24 Nov 2019 18:17:57 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35964 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726952AbfKXXR5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 24 Nov 2019 08:34:18 -0500
-Received: by mail-il1-f196.google.com with SMTP id y16so4137810iln.0
-        for <linux-bluetooth@vger.kernel.org>; Sun, 24 Nov 2019 05:34:18 -0800 (PST)
+        Sun, 24 Nov 2019 18:17:57 -0500
+Received: by mail-wm1-f68.google.com with SMTP id n188so11761863wme.1
+        for <linux-bluetooth@vger.kernel.org>; Sun, 24 Nov 2019 15:17:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=pI7cV3FDgc1XH+A619u5I2fUvKpFMBjQiQlWPO2Scvc=;
-        b=MDyOmXrQ92ZVZlvnkcaZVXtRfDapQCTMpB/pNGxDelIypuf5vvjNdE1VpHVdh1lxGa
-         9ih5t+ed70QzxuMXJqFFkYPF2tTx2Ggp4xkp9dsbSS7bfBkZHXSfGpgUQgSwdcHTUwQF
-         1SzZfqeQuIQCV/giwxJo5x8kbbOVeDSigYkfynQGe9wXAYPoRu3WL6NyaceMqPiubgMD
-         NDDoRxJ5hbi1Ed9JgiXgH9s67EHqs+KewCUFdVTbsAc+iSvSIoqXwoJP9kpxKH0PjsWl
-         5xA8R4vibhl06YhMAPnUpqRs1YZ3HFqMb1MmIZ8Yocq7Y0FJwd2XkwP7URxX1VSRckfI
-         2B9Q==
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=YnXGwJdqPKQ3omg/jd31KX6F4G+ZZOWT8nOX5ocwo1o=;
+        b=khFz0xjhHezMpIqm2UkfJlllCbUaiuHlyS++l5zjD22mfx7czeIT4rCAEp5eiqsVhW
+         RntFYw/sB0EqFkr0HtntuvZUjKedhIqqt0HDlUBqqm4W9+sS584+EijOSS82HH3WBNkt
+         tyDyBLiLsuYE863LVaf+S4Tepqt0P3hZmatwRfloFzx9lsJ7Df8yUdFWshYXiW7WFOV8
+         QmrltjgXUQdfz4DvlXhEimvFNWYf4py7ocbuM0390z9KvtGZN1RwqURoWvZwUF84Q0yh
+         IO8oMJZg9JRKeEXO6Nx0BzNql6Jo1v8c/xW4TjDJBBzhQpAHCg2YlsYWI+58TcsWPVzQ
+         t6Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=pI7cV3FDgc1XH+A619u5I2fUvKpFMBjQiQlWPO2Scvc=;
-        b=pXxSafBhyJwpFSXd+Svdx0/OBqgJEDF6wAiuyUvnQ02aKGE7ZLj2htnmA25p7KRm6Q
-         4gbXa7HMS4UJi6BECs9oe35RoABTPMoItbnxk1tdfgtvXGSAbl2zaqeOu1iKTbZVksyt
-         5wCQuXVW/KGcXXdBZ+DYKSrVUFJEm0TtsgvzTD6XkcXGSm2iKUtwuouPHOOx7VNhSfuM
-         6Idb3DhcQSyJzl4gR2ha+FnCvg04cL+Ivx4iSTgBjTuQfgZoXDVJG/0hRigWyqxaFXe0
-         R1HbFut0wfvg/R10am8D4uliTO57d4akk9INwtKRAtD+Te+P+wG6qfgl24PTXqaEwAP9
-         yFUw==
-X-Gm-Message-State: APjAAAUQpF2WNJ6YDyCdcMmGveGR8Q3+sDUuilOsa7ueTpsjKBxjZmbb
-        ydSMyb6KQ/r+SlnlJ5HesFT5E6UuWYbplsWXhsU=
-X-Google-Smtp-Source: APXvYqxvUiBCXGCDk4YCB4trNrbwC91mZvZUawT6DB1nEj7EmlI76wgL+TuR1Zj0FRm29kTbaGDyxhzQq7RBm8QMVro=
-X-Received: by 2002:a92:9c43:: with SMTP id h64mr6760312ili.109.1574602457478;
- Sun, 24 Nov 2019 05:34:17 -0800 (PST)
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YnXGwJdqPKQ3omg/jd31KX6F4G+ZZOWT8nOX5ocwo1o=;
+        b=p9NnRmAkIGE9KT4SFFCUtXwCn5JMXv7md0cmuhOd8K1GCoLmx8X6rPUYIIz09cayj9
+         JBo7883fc8eWuUmfQP8OUUPdHcI9M1ww7NYUpOQnH3Q0JIuTn0TPDnUl6i3YxQpINWXj
+         A9eyVADcuJWA2boAkOjWb+8m9RQB3jKbuVSPQMxX9Js7WT31ErgkPhUZdCahR98QzPBA
+         mjY7cT4prNs3s7COWggdm3GczrRq/TmZn9xYKajIxyTugrxd6fw5Xy6Kd3bOSYO2pVQX
+         SQdOdkNtz/26R7PIJ4CoNLE7hdN5QsTU4xC8NbcmQ4UzwZ7rI9lLp2RU38hOm7IK3zYt
+         uzxg==
+X-Gm-Message-State: APjAAAVnTHkdKyTe3mhrbO2qaA0w6oChRGDxSwgxsmWfITJAoFlWzK4F
+        +6PX/aJnqd2wEyw+dmuku2AS05vf
+X-Google-Smtp-Source: APXvYqwgTzYiB0en5tiPdv+Q08An52HMNohMv2/qxl54omo2gSAZhWtnlG9PItDPgcEHl0rkLd3VbQ==
+X-Received: by 2002:a1c:740a:: with SMTP id p10mr25873239wmc.121.1574637474600;
+        Sun, 24 Nov 2019 15:17:54 -0800 (PST)
+Received: from pali ([2a02:2b88:2:1::5cc6:2f])
+        by smtp.gmail.com with ESMTPSA id m13sm6655050wmc.41.2019.11.24.15.17.53
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 24 Nov 2019 15:17:53 -0800 (PST)
+Date:   Mon, 25 Nov 2019 00:17:52 +0100
+From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: Re: Bluetooth HFP 0.96 specification
+Message-ID: <20191124231752.bfjbshqaihopwxd6@pali>
+References: <20191122220842.5ofrsakoyebs5wgk@pali>
 MIME-Version: 1.0
-Received: by 2002:a4f:4fd0:0:0:0:0:0 with HTTP; Sun, 24 Nov 2019 05:34:17
- -0800 (PST)
-Reply-To: afginvestmentbrokers@al-faisaliah.org
-From:   "Mr. Joon-Kyu Lin" <johnpfox60@gmail.com>
-Date:   Sun, 24 Nov 2019 05:34:17 -0800
-Message-ID: <CAHLmmYO8hTX9V5iDzBnMg_AX_F0_nxWer9=W_6t-2hHm+DJAcA@mail.gmail.com>
-Subject: Venture Capital & Private Investors
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="yhweoli7pgsk6mki"
+Content-Disposition: inline
+In-Reply-To: <20191122220842.5ofrsakoyebs5wgk@pali>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Attention:
 
-I am an investor that can provide funding for any viable business idea or
-venture.
+--yhweoli7pgsk6mki
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Please do let me know if you have fund management abilities, credible
-projects in need of funding or advanced stage projects requiring Bank
-Guarantees, Loans or Partnership, Joint Venture, Equity, we would be
-delighted to work with you.
+On Friday 22 November 2019 23:08:42 Pali Roh=C3=A1r wrote:
+> Hello!
+>=20
+> I would like to ask if somebody has specification for bluetooth HFP
+> profile, version 0.96 or older.
+>=20
+> I tried to find it, but from official site version 0.95 was removed [1].
+> On web.archive.org is mentioned new version V0.96, in file HFP_0_96.pdf
+> but it was not archived.
+>=20
+> Why I'm asking for older version? Because there are still devices which
+> support only HFP version 0.96 and I want to look what was changed...
+>=20
+> So has somebody copy of that HFP_0_96.pdf file? Or access to removed
+> 0.95 version official site?
+>=20
+> [1] - https://www.bluetooth.com/specifications/archived-specifications/
+> [2] - http://web.archive.org/web/20021204225514/http://www.bluetooth.org/=
+specifications.htm
 
+Now I found some copy on internet. If somebody is interested, this
+specification was mentioned on bluetooth.com in past [3] under file
+Hands_Free_Profile_0_96.pdf. Web archive does did not archived this
+file, but I found copy of such file with same name at [4].
 
-Best Regards,
-Mr. Joon-Kyu Lim
-Al Faisaliah Group (AFG)
-Venture Capital & Private Investors
+[3] - http://web.archive.org/web/20020407225138/http://bluetooth.com/dev/sp=
+ecifications.asp
+[4] - http://simon.dehartog.nl/datasheets/protocols/Hands_Free_Profile_0_96=
+=2Epdf
 
---
-*This email and any attachments are intended for the named recipients only
-and contain confidential materials. Any unauthorized copying, reviewing,
-dissemination or other use by anyone other than the named recipients of
-this communication is strictly prohibited. If you received this email in
-error and/or are not a named recipient, please notify the sender (Al
-Faisaliah Group) and delete all copies of this email. Thank you.
+--=20
+Pali Roh=C3=A1r
+pali.rohar@gmail.com
+
+--yhweoli7pgsk6mki
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCXdsPngAKCRCL8Mk9A+RD
+UrDAAJ9h0tKXGNHl1booHrFgmOmzBi9gcgCfdgtxf8hNbA1LwoGXau0EYBKb9T8=
+=KZGC
+-----END PGP SIGNATURE-----
+
+--yhweoli7pgsk6mki--
