@@ -2,75 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 379E41099F4
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Nov 2019 09:13:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC8B1109B31
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Nov 2019 10:24:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727305AbfKZINC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 26 Nov 2019 03:13:02 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57488 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727016AbfKZINC (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 26 Nov 2019 03:13:02 -0500
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 279CE2073F;
-        Tue, 26 Nov 2019 08:13:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1574755980;
-        bh=K4/HkReIZHrO5EOLAYxEYM72msVBHQIR4SGBUnnMj+g=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=0J/UfMLdTXQOEdPa8OBVc2zM5FSC0jOWmtISPlva5y3Rkl5I4VEFoie7afPQmLucJ
-         FuD9S6AXb5BAnFrt5dlO0hXk4nVbCmC+7jFjh3oHi8UPZEA6js4fkWFqGDQ+YoGdhS
-         KCXdocgCSWUnoLRMkYJwpkN5hTQFfpNnDkrCPHR0=
-Date:   Tue, 26 Nov 2019 09:12:58 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     Alexander Potapenko <glider@google.com>,
-        Tomas Bortoli <tomasbortoli@gmail.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        syzkaller <syzkaller@googlegroups.com>,
-        syzbot+a0d209a4676664613e76@syzkaller.appspotmail.com
-Subject: Re: [PATCH] Fix invalid-free in bcsp_close()
-Message-ID: <20191126081258.GA1233188@kroah.com>
-References: <000000000000109f9605964acf6c@google.com>
- <20191101204244.14509-1-tomasbortoli@gmail.com>
- <E16896E5-B946-450F-BF42-04665D219EEA@holtmann.org>
- <CAG_fn=Xqb1KoAvV==F5sODUYHDsxCxaz72n6qucdkR70XGCkig@mail.gmail.com>
- <8376D008-EA21-49EA-AF5A-DDDCB179EAC5@holtmann.org>
+        id S1727426AbfKZJYo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 26 Nov 2019 04:24:44 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:35244 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727397AbfKZJYo (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 26 Nov 2019 04:24:44 -0500
+Received: by mail-lf1-f68.google.com with SMTP id r15so10542846lff.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Nov 2019 01:24:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+        b=MVP2aOqjkBSlDj0BIPxPb5fOnd1lWW6xqvTi4s7eVrZdmg49H7wCyACpt8jaY9IWv4
+         T2B2awCERV5tFuwpcq9k8aB489skOJ6fHMEA1Pl4SoQt5NUC+zomLTmE3yvVH5WVDvt0
+         B/kMB/TOfFOVi4nGvqlp/oa4yE3Yo9QKz2dLrV6Y08PZtFFYPZhe0r6IWhPwbl6jgBdQ
+         4uLvzo4n8R1zmY/hOn/HqOKgAyZO2sXW2Y+iTlAFVV6qz3rcja1B426B7Py6xQxR+k1F
+         u5YwBTsLIhiDtAa2JpcG3BUXCSxIES01YmGQzP2+wXmrG6KVu96Vv6TZLSZa73rKrqpi
+         0n3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+        b=dgWGDhM238uRQxIMVhrrZHtcg1cVfQ2T4zI40yG2sJvIqXWMYShXSuqPV64X0pgqkt
+         2/hP7eADHkOezsInZbtI6F5OYUFYTzydaZBO/75RV1TcsWF/amownKEe7cQNeShlcIZI
+         66t1fQR4zKbfhDYam+nPJMadcbxTankquD2URkSwISDu3zFD/3bsDzOtz5OJWLo1A6Iq
+         ECy3WpXECgaS7e3EpPsXK1cOMU1p3iC0HTuByG99BsTGC3tqJ8HwSTcewMN3YGo/4QPs
+         l7YhBX7vnc1fsIcw+lXniOuvVYSXljmeesjbHsU1dAExMagSUEfsm14BdSJS5cnsl3UD
+         kEAA==
+X-Gm-Message-State: APjAAAW4IK3ZiRszv5RzOb2OU7rc5yElvR6yvSY0AmOod5+vi2g8SGnT
+        4PV4ZmkegAP/rVmaARrLB29zZc833hdeYunEhh4=
+X-Google-Smtp-Source: APXvYqwx6vn+0kF2bZIHHtdA23Jea94cE1kp+SLlnVcqFhS9LQmwla4OhtaNHtSdqu1MH970dLp7gT07dIQX4Qair+0=
+X-Received: by 2002:a19:e345:: with SMTP id c5mr20618683lfk.37.1574760282552;
+ Tue, 26 Nov 2019 01:24:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8376D008-EA21-49EA-AF5A-DDDCB179EAC5@holtmann.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Received: by 2002:a19:ef0b:0:0:0:0:0 with HTTP; Tue, 26 Nov 2019 01:24:41
+ -0800 (PST)
+Reply-To: robertandersonhappy1@gmail.com
+From:   robert <bdaasetulop@gmail.com>
+Date:   Tue, 26 Nov 2019 01:24:41 -0800
+Message-ID: <CAEk9GxGLYOdRT0fLnYtpWZKY151yFnS0W6X5FLHOwb+UYXw2kA@mail.gmail.com>
+Subject: Dear friend, My name is Bar.robert anderson I am an attorney and a
+ private account manager to my late client. In the Year 2014, my client by
+ name Mr. Carlos, passed away,The reason why I contacted you is because you
+ bear the same last name with the deceased, and I can present you as the
+ beneficiary and next of kin to my late client funds then you will stand as
+ his next of kin and claim the funds. leaving behind a cash inheritance of
+ seven Million Five Hundred Thousand United States Dollars (US$7.500,000,00).My
+ late client and bosom friend grew up in a "Motherless Babies Home". He had no
+ family, no beneficiary nor next of kin to the inheritance Funds left behind
+ at the Bank. You should contact me through my private email address:
+ robertandersonhappy1@gmail.com Best Regards, Bar. robert anderson
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Tue, Nov 26, 2019 at 07:18:46AM +0100, Marcel Holtmann wrote:
-> Hi Alexander,
-> 
-> >>> Syzbot reported an invalid-free that I introduced fixing a memleak.
-> >>> 
-> >>> bcsp_recv() also frees bcsp->rx_skb but never nullifies its value.
-> >>> Nullify bcsp->rx_skb every time it is freed.
-> >>> 
-> >>> Signed-off-by: Tomas Bortoli <tomasbortoli@gmail.com>
-> >>> Reported-by: syzbot+a0d209a4676664613e76@syzkaller.appspotmail.com
-> >>> ---
-> >>> drivers/bluetooth/hci_bcsp.c | 3 +++
-> >>> 1 file changed, 3 insertions(+)
-> >> 
-> >> patch has been applied to bluetooth-next tree.
-> > I believe this bug requires stable tags, as it can potentially provide
-> > an arbitrary write (via __skb_unlink) and is triggerable locally with
-> > user privileges.
-> 
-> I do not have a reproducer for it, but if you do, feel free to propose it for -stable inclusion.
 
-Now queued up, thanks.
-
-greg k-h
