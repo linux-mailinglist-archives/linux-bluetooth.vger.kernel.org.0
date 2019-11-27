@@ -2,117 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5553010BF55
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Nov 2019 22:43:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33F2610BEF9
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Nov 2019 22:40:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728150AbfK0Ujn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 27 Nov 2019 15:39:43 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:56071 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727832AbfK0Ujm (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 27 Nov 2019 15:39:42 -0500
-Received: by mail-wm1-f66.google.com with SMTP id a131so4257832wme.5
-        for <linux-bluetooth@vger.kernel.org>; Wed, 27 Nov 2019 12:39:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7CBJLL+S1K81TsgUIwQ6CBZPazEn+2M4qn4JfmRLu/8=;
-        b=LNSMsrroD0mbSCRsApuUcXOP/Z5AhZRMbX/2g7CdqdVYizuhwCfQUUlUPb7EjybTbh
-         JSuBdGuzd+6VC3XT8GiQDEHz+/HyIr5Wa+rBznVxnbjSzWpVimfOAniipeF9rgDHqm7G
-         fME2rYqnT+9DUutPNJ4LlG4HHsmv2P+wcLN9dnxee4NTO3CAM1GNqqapLcj1PCENntj/
-         2v73cxZzRe8gJGUd/sQEwHjkNnLobpnGEIvUNINhcqCd2bwtgdB86YodtEJ69h93k4mp
-         p90cl45G4KIPlJ/YDCigZwd5rRlBErwCFXvmhKUWxcR6/OnB/y5ElDmwZjDACzvAiZEZ
-         9NXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7CBJLL+S1K81TsgUIwQ6CBZPazEn+2M4qn4JfmRLu/8=;
-        b=S0EejHgQdkr+f4Q6+8uKKyIPvZL5vm6OACcOFPVc3x8zx1OdNtL3sGlXvdph/tm8pU
-         Q86qizaHajEoJZHYTuF7dJ3KDPLOBsyuFHhC7Xs07xKgNOLfWOJHNCU7MayhR990hBKt
-         3Y3j7+mSziM8TGnusYvyj2UEbcDPk0Ez9jslyb0oPyVWvhxIZT9AGfIzm1WiWBFb8VWX
-         Fg0gc14oXPVZz+6ayzynQ6eEMKvR58gq0qpApQsZX41XgrfJi9KyXArYHqziUBfL4mOK
-         CgJeSsc+T0Yft+9L2vgDDZk4LI50euHr3nxmq5pyqVQvrbd8bU8p9YJgDroYiQuTS3Pj
-         HApQ==
-X-Gm-Message-State: APjAAAUzW8DHJWsRM2m9magPt8lyC5X3kpdw2GHe1bC56ib3rpOERiSJ
-        nMz+djtQHdjlAlXhgTNoSJA=
-X-Google-Smtp-Source: APXvYqzmnEoDb2VAQUYQI2QCkEuTKVScfJO0cpm2R3MGo/JY5akwdO2zIoo2rqR22ia3XFD3T0MeCA==
-X-Received: by 2002:a7b:ce12:: with SMTP id m18mr6550863wmc.130.1574887180709;
-        Wed, 27 Nov 2019 12:39:40 -0800 (PST)
-Received: from pali ([2a02:2b88:2:1::5cc6:2f])
-        by smtp.gmail.com with ESMTPSA id q5sm7983328wmc.27.2019.11.27.12.39.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Nov 2019 12:39:39 -0800 (PST)
-Date:   Wed, 27 Nov 2019 21:39:39 +0100
-From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Subject: Re: [PATCH] avctp: Set more descriptive name for uinput device
-Message-ID: <20191127203939.ag4ejy5mzsqgyugf@pali>
-References: <20191126212753.18455-1-pali.rohar@gmail.com>
- <CABBYNZ+X1xThm9rrcj7ny9f9r0sVs-fTR2JroQdRgZTRWLcN6g@mail.gmail.com>
- <20191127160720.aleatv6l4swopg57@pali>
- <CANFp7mW47eJ6dquzLYX-uKoAO=Qc=ObgmSWQ5U0Xs7ThEV0Urg@mail.gmail.com>
- <20191127173641.2zsi7ccsnf3seoev@pali>
- <CANFp7mXyUKu7Za02XRcicLgrVUYiDfL-X-Bu6MZV1Of+y8LxgA@mail.gmail.com>
- <20191127175808.o6ajkrlewiwdsaoj@pali>
+        id S1729488AbfK0Vjt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 27 Nov 2019 16:39:49 -0500
+Received: from mga04.intel.com ([192.55.52.120]:15279 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728247AbfK0Vjt (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 27 Nov 2019 16:39:49 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 27 Nov 2019 13:39:45 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,251,1571727600"; 
+   d="scan'208";a="207008610"
+Received: from bgi1-mobl2.amr.corp.intel.com ([10.252.135.67])
+  by fmsmga007.fm.intel.com with ESMTP; 27 Nov 2019 13:39:45 -0800
+From:   Brian Gix <brian.gix@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, inga.stotland@intel.com
+Subject: [PATCH BlueZ v2 0/2] mesh: Fix Friendship for multiple local nodes
+Date:   Wed, 27 Nov 2019 13:39:37 -0800
+Message-Id: <20191127213939.4526-1-brian.gix@intel.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="dzi2xfyd2cncroyl"
-Content-Disposition: inline
-In-Reply-To: <20191127175808.o6ajkrlewiwdsaoj@pali>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Primary purpose of this patch-set is to get Friendship working again,
+and clean-up the logic so that it correctly works accross multiple
+Networks and Nodes.  Currently friendship must be enabled by manually
+editting the appropriate node.json file, but suppport will eventually be
+available with a soon-to-come mesh.conf file.
 
---dzi2xfyd2cncroyl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+v2:
+Added an additional Debug Output clean-up patch that makes logging of
+incoming messages less noisy when multiple local nodes can decrypt the
+same incoming messages.
 
-On Wednesday 27 November 2019 18:58:08 Pali Roh=C3=A1r wrote:
-> On Wednesday 27 November 2019 09:45:32 Abhishek Pandit-Subedi wrote:
-> > On Wed, Nov 27, 2019 at 9:36 AM Pali Roh=C3=A1r <pali.rohar@gmail.com> =
-wrote:
-> > >
-> > > On Wednesday 27 November 2019 09:21:24 Abhishek Pandit-Subedi wrote:
-> > > > Wouldn't it be better to use the device name for uinput rather than=
- the address?
-> > >
-> > > Hi!
-> > >
-> > > Can we access device name in bluez? If yes that would be improvement =
-too!
-> > >
-> > > But because more profiles can export input device we still should
-> > > include profile name (or abbrev) into device name.
-> >=20
-> > Yup, I would be totally ok with doing something like "Your Device Name
-> > Here (AVCTP)"
->=20
-> That it fine for me.
+Brian Gix (2):
+  mesh: clean-up Recieved Message debug output
+  mesh: Friendship clean-up and rewrite
 
-Would you prepare patch which change uinput name from address to real
-name and add that profile name?
+ mesh/crypto.c |   4 +-
+ mesh/friend.c | 610 ++++++++------------------------------------------
+ mesh/friend.h |   7 +-
+ mesh/net.c    | 328 ++++++++++++---------------
+ mesh/net.h    |  31 ++-
+ mesh/node.c   |   2 +-
+ 6 files changed, 271 insertions(+), 711 deletions(-)
 
---=20
-Pali Roh=C3=A1r
-pali.rohar@gmail.com
+-- 
+2.21.0
 
---dzi2xfyd2cncroyl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCXd7fCQAKCRCL8Mk9A+RD
-Uk+FAJ0ZtoVG1sLDskivmhnXlUpfZINvrQCdF6DOEJUspOQU/R0eNazzdm3Zbdk=
-=37vj
------END PGP SIGNATURE-----
-
---dzi2xfyd2cncroyl--
