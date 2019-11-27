@@ -2,177 +2,117 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C06010B6F2
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Nov 2019 20:43:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5553010BF55
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Nov 2019 22:43:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726970AbfK0TnI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 27 Nov 2019 14:43:08 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:43817 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726593AbfK0TnI (ORCPT
+        id S1728150AbfK0Ujn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 27 Nov 2019 15:39:43 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:56071 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727832AbfK0Ujm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 27 Nov 2019 14:43:08 -0500
-Received: by mail-oi1-f194.google.com with SMTP id l20so21159566oie.10
-        for <linux-bluetooth@vger.kernel.org>; Wed, 27 Nov 2019 11:43:07 -0800 (PST)
+        Wed, 27 Nov 2019 15:39:42 -0500
+Received: by mail-wm1-f66.google.com with SMTP id a131so4257832wme.5
+        for <linux-bluetooth@vger.kernel.org>; Wed, 27 Nov 2019 12:39:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YYz/gCoGT38qxY+p3lh6FY7qd9aw4rrLjx5dV/OK/jo=;
-        b=AmEkHRjju49Oh7wPe0NZBnH5oNz57q3KI12pCLkpQXTOM6Y4zoM88vpzXvj35+US3b
-         5xJMWeplMyvwM00pnVoOJvuz5p+uwgEndhX5Dg0yHX5mtNGVNyFfRh0MZRDGtn0bvOX2
-         wx953gcQPgOBTvQ6A5EeRzjAjrK/Zs+LKu/eSU9pdeU28T/frfCIsFHPVVtaNLPyqr5q
-         zQauQvDqUVVhHmdgOYheDnI5tBf4dJVvE0P96sv02ZMNUgczUTElq4zhfB9EeoPfYuYx
-         842YfDT3tCNoJBOgsJdkyNh6fDyKaUhtd1nZoVoMENyMOyYZ2haEc503u4d7GLexM3bX
-         cWPA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7CBJLL+S1K81TsgUIwQ6CBZPazEn+2M4qn4JfmRLu/8=;
+        b=LNSMsrroD0mbSCRsApuUcXOP/Z5AhZRMbX/2g7CdqdVYizuhwCfQUUlUPb7EjybTbh
+         JSuBdGuzd+6VC3XT8GiQDEHz+/HyIr5Wa+rBznVxnbjSzWpVimfOAniipeF9rgDHqm7G
+         fME2rYqnT+9DUutPNJ4LlG4HHsmv2P+wcLN9dnxee4NTO3CAM1GNqqapLcj1PCENntj/
+         2v73cxZzRe8gJGUd/sQEwHjkNnLobpnGEIvUNINhcqCd2bwtgdB86YodtEJ69h93k4mp
+         p90cl45G4KIPlJ/YDCigZwd5rRlBErwCFXvmhKUWxcR6/OnB/y5ElDmwZjDACzvAiZEZ
+         9NXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YYz/gCoGT38qxY+p3lh6FY7qd9aw4rrLjx5dV/OK/jo=;
-        b=TsJYCIVyDGt6PIECUfppIpM+6okMkpZolZtkQqvKH2Du92Z0Acmrxm6bxt2BifrHRS
-         psIZ9K0x1b0APtx4wGGPb7zV/xVaSykT9i9KOU3rt74GqyaEcxxTFHzgwzifBZhVYZYM
-         54vLX3sCv02Jc3R1D/T3mrZno26aqKD1Wg2dpBeQOkBUW57kzzMqmWvYB4rYgJPvGRx5
-         0cHP6rxccF7Z1Yd7TuD3hpSUPg6XsxOu2017wtQuCAr6y4DEDl8GluqBAGh0oykuUSni
-         c3hFkU2NDwsCTMcUgn6oj9Eg+YaD4KWV3pKPXyzIMqVuTuimPM+Z4ZFUFno4NCh0LcST
-         544g==
-X-Gm-Message-State: APjAAAX5ffjEoMnisAQglgg12wFcZlLFuRPguI+XlrYDHrMrzQFJIYh8
-        p4mCSpxwUSfYRis9ZyrSAUBQYuaFaNaJkwz3uQs=
-X-Google-Smtp-Source: APXvYqzg2xfa+4oskaGWWcp5FIMr0d7CU31MyIrFRmKAg3hAuhG5CGL/ZU6Nq0Z0xONVC4fTj9om7Sp7DxjSCCmLVX0=
-X-Received: by 2002:a05:6808:117:: with SMTP id b23mr1231679oie.8.1574883787071;
- Wed, 27 Nov 2019 11:43:07 -0800 (PST)
-MIME-Version: 1.0
-References: <20191127110905.BlueZ.1.I95600043ffb5b2b6c4782497ff735ab5d3e37c13@changeid>
- <20191127190941.90789-1-abhishekpandit@chromium.org>
-In-Reply-To: <20191127190941.90789-1-abhishekpandit@chromium.org>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 27 Nov 2019 21:42:54 +0200
-Message-ID: <CABBYNZJk0=x4j4tgmsZUJmnqK74V4+hy9iciJB6N5doHsB5baQ@mail.gmail.com>
-Subject: Re: [BlueZ PATCH 2/2] input: Change uinput name and set uniq attribute
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7CBJLL+S1K81TsgUIwQ6CBZPazEn+2M4qn4JfmRLu/8=;
+        b=S0EejHgQdkr+f4Q6+8uKKyIPvZL5vm6OACcOFPVc3x8zx1OdNtL3sGlXvdph/tm8pU
+         Q86qizaHajEoJZHYTuF7dJ3KDPLOBsyuFHhC7Xs07xKgNOLfWOJHNCU7MayhR990hBKt
+         3Y3j7+mSziM8TGnusYvyj2UEbcDPk0Ez9jslyb0oPyVWvhxIZT9AGfIzm1WiWBFb8VWX
+         Fg0gc14oXPVZz+6ayzynQ6eEMKvR58gq0qpApQsZX41XgrfJi9KyXArYHqziUBfL4mOK
+         CgJeSsc+T0Yft+9L2vgDDZk4LI50euHr3nxmq5pyqVQvrbd8bU8p9YJgDroYiQuTS3Pj
+         HApQ==
+X-Gm-Message-State: APjAAAUzW8DHJWsRM2m9magPt8lyC5X3kpdw2GHe1bC56ib3rpOERiSJ
+        nMz+djtQHdjlAlXhgTNoSJA=
+X-Google-Smtp-Source: APXvYqzmnEoDb2VAQUYQI2QCkEuTKVScfJO0cpm2R3MGo/JY5akwdO2zIoo2rqR22ia3XFD3T0MeCA==
+X-Received: by 2002:a7b:ce12:: with SMTP id m18mr6550863wmc.130.1574887180709;
+        Wed, 27 Nov 2019 12:39:40 -0800 (PST)
+Received: from pali ([2a02:2b88:2:1::5cc6:2f])
+        by smtp.gmail.com with ESMTPSA id q5sm7983328wmc.27.2019.11.27.12.39.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 27 Nov 2019 12:39:39 -0800 (PST)
+Date:   Wed, 27 Nov 2019 21:39:39 +0100
+From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
 To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali.rohar@gmail.com>,
-        Alain Michaud <alainm@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Subject: Re: [PATCH] avctp: Set more descriptive name for uinput device
+Message-ID: <20191127203939.ag4ejy5mzsqgyugf@pali>
+References: <20191126212753.18455-1-pali.rohar@gmail.com>
+ <CABBYNZ+X1xThm9rrcj7ny9f9r0sVs-fTR2JroQdRgZTRWLcN6g@mail.gmail.com>
+ <20191127160720.aleatv6l4swopg57@pali>
+ <CANFp7mW47eJ6dquzLYX-uKoAO=Qc=ObgmSWQ5U0Xs7ThEV0Urg@mail.gmail.com>
+ <20191127173641.2zsi7ccsnf3seoev@pali>
+ <CANFp7mXyUKu7Za02XRcicLgrVUYiDfL-X-Bu6MZV1Of+y8LxgA@mail.gmail.com>
+ <20191127175808.o6ajkrlewiwdsaoj@pali>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="dzi2xfyd2cncroyl"
+Content-Disposition: inline
+In-Reply-To: <20191127175808.o6ajkrlewiwdsaoj@pali>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Abhishek,
 
-On Wed, Nov 27, 2019 at 9:09 PM Abhishek Pandit-Subedi
-<abhishekpandit@chromium.org> wrote:
->
-> When creating the uinput device, change the name to the peer device
-> name. Set the peer device address to the uniq attribute instead of the
-> name.
->
-> The resulting uinput device will look like this:
->
-> $ udevadm info -a -p /sys/devices/virtual/input/input17
-> ...
->   looking at device '/devices/virtual/input/input17':
->     KERNEL=="input17"
->     SUBSYSTEM=="input"
->     DRIVER==""
->     ATTR{inhibited}=="0"
->     ATTR{name}=="BeatsStudio Wireless"
->     ATTR{phys}=="00:00:00:6e:d0:74"
->     ATTR{properties}=="0"
->     ATTR{uniq}=="00:00:00:cc:1c:f3"
->
-> ---
->
-> This change requires an accompanying change in the kernel that adds the
-> set uniq ioctl. The change is available here:
->
-> https://lore.kernel.org/linux-bluetooth/20191127185139.65048-1-abhishekpandit@chromium.org/T/#u
->
-> If this change looks ok, I would like to merge it with the previous
-> change before merging since they're related.
+--dzi2xfyd2cncroyl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I would split the UNIQ handling just in case it causes a problems in
-some platform so we can easily revert, Im fine merging other parts
-though.
+On Wednesday 27 November 2019 18:58:08 Pali Roh=C3=A1r wrote:
+> On Wednesday 27 November 2019 09:45:32 Abhishek Pandit-Subedi wrote:
+> > On Wed, Nov 27, 2019 at 9:36 AM Pali Roh=C3=A1r <pali.rohar@gmail.com> =
+wrote:
+> > >
+> > > On Wednesday 27 November 2019 09:21:24 Abhishek Pandit-Subedi wrote:
+> > > > Wouldn't it be better to use the device name for uinput rather than=
+ the address?
+> > >
+> > > Hi!
+> > >
+> > > Can we access device name in bluez? If yes that would be improvement =
+too!
+> > >
+> > > But because more profiles can export input device we still should
+> > > include profile name (or abbrev) into device name.
+> >=20
+> > Yup, I would be totally ok with doing something like "Your Device Name
+> > Here (AVCTP)"
+>=20
+> That it fine for me.
 
->
->  profiles/audio/avctp.c | 18 +++++++++---------
->  src/uinput.h           |  2 ++
->  2 files changed, 11 insertions(+), 9 deletions(-)
->
-> diff --git a/profiles/audio/avctp.c b/profiles/audio/avctp.c
-> index 42136f94b..05df57bd2 100644
-> --- a/profiles/audio/avctp.c
-> +++ b/profiles/audio/avctp.c
-> @@ -1162,7 +1162,7 @@ failed:
->  }
->
->  static int uinput_create(struct btd_device *device, const char *name,
-> -                        const char *phys)
-> +                        const char *src, const char *dst)
->  {
->         struct uinput_dev dev;
->         int fd, err, i;
-> @@ -1203,8 +1203,8 @@ static int uinput_create(struct btd_device *device, const char *name,
->         ioctl(fd, UI_SET_EVBIT, EV_REP);
->         ioctl(fd, UI_SET_EVBIT, EV_SYN);
->
-> -       /* Also set the phys */
-> -       ioctl(fd, UI_SET_PHYS, phys);
-> +       ioctl(fd, UI_SET_PHYS, src);
-> +       ioctl(fd, UI_SET_UNIQ, dst);
->
->         for (i = 0; key_map[i].name != NULL; i++)
->                 ioctl(fd, UI_SET_KEYBIT, key_map[i].uinput);
-> @@ -1224,7 +1224,7 @@ static int uinput_create(struct btd_device *device, const char *name,
->
->  static void init_uinput(struct avctp *session)
->  {
-> -       char address[18], phys[18], name[248 + 1];
-> +       char dest[18], src[18], name[248 + 1];
->
->         device_get_name(session->device, name, sizeof(name));
->         if (g_str_equal(name, "Nokia CK-20W")) {
-> @@ -1234,15 +1234,15 @@ static void init_uinput(struct avctp *session)
->                 session->key_quirks[AVC_PAUSE] |= QUIRK_NO_RELEASE;
->         }
->
-> -       ba2strlc(device_get_address(session->device), address);
-> +       ba2strlc(device_get_address(session->device), dest);
->         ba2strlc(btd_adapter_get_address(device_get_adapter(session->device)),
-> -                phys);
-> +                src);
->
-> -       session->uinput = uinput_create(session->device, address, phys);
-> +       session->uinput = uinput_create(session->device, name, src, dest);
->         if (session->uinput < 0)
-> -               error("AVRCP: failed to init uinput for %s", address);
-> +               error("AVRCP: failed to init uinput for %s", dest);
->         else
-> -               DBG("AVRCP: uinput initialized for %s", address);
-> +               DBG("AVRCP: uinput initialized for %s", dest);
->  }
->
->  static struct avctp_queue *avctp_queue_create(struct avctp_channel *chan)
-> diff --git a/src/uinput.h b/src/uinput.h
-> index 20e0941d1..589c22528 100644
-> --- a/src/uinput.h
-> +++ b/src/uinput.h
-> @@ -686,6 +686,8 @@ extern "C" {
->  #define UI_SET_FFBIT           _IOW(UINPUT_IOCTL_BASE, 107, int)
->  #define UI_SET_PHYS            _IOW(UINPUT_IOCTL_BASE, 108, char*)
->  #define UI_SET_SWBIT           _IOW(UINPUT_IOCTL_BASE, 109, int)
-> +#define UI_SET_PROPBIT         _IOW(UINPUT_IOCTL_BASE, 110, int)
-> +#define UI_SET_UNIQ            _IOW(UINPUT_IOCTL_BASE, 111, char*)
->
->  #ifndef NBITS
->  #define NBITS(x) ((((x) - 1) / (sizeof(long) * 8)) + 1)
-> --
-> 2.24.0.432.g9d3f5f5b63-goog
->
+Would you prepare patch which change uinput name from address to real
+name and add that profile name?
 
+--=20
+Pali Roh=C3=A1r
+pali.rohar@gmail.com
 
--- 
-Luiz Augusto von Dentz
+--dzi2xfyd2cncroyl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCXd7fCQAKCRCL8Mk9A+RD
+Uk+FAJ0ZtoVG1sLDskivmhnXlUpfZINvrQCdF6DOEJUspOQU/R0eNazzdm3Zbdk=
+=37vj
+-----END PGP SIGNATURE-----
+
+--dzi2xfyd2cncroyl--
