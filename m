@@ -2,58 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4B4210AA3F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Nov 2019 06:37:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FFB510AA4D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Nov 2019 06:41:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726133AbfK0Fhq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 27 Nov 2019 00:37:46 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:57988 "EHLO
+        id S1726135AbfK0Fk5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 27 Nov 2019 00:40:57 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:41227 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725827AbfK0Fhp (ORCPT
+        with ESMTP id S1726078AbfK0Fk5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 27 Nov 2019 00:37:45 -0500
+        Wed, 27 Nov 2019 00:40:57 -0500
 Received: from marcel-macbook.fritz.box (p4FF9F0D1.dip0.t-ipconnect.de [79.249.240.209])
-        by mail.holtmann.org (Postfix) with ESMTPSA id A6C0ACED06;
-        Wed, 27 Nov 2019 06:46:51 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 25CC6CED06;
+        Wed, 27 Nov 2019 06:50:04 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
-Subject: Re: [PATCH v6 0/4] Bluetooth: hci_bcm: Additional changes for BCM4354
- support
+Subject: Re: [PATCH] Bluetooth: btusb: Edit the logical value for Realtek
+ Bluetooth reset
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <CANFp7mU=URXhZ8V67CyGs1wZ2_N_jTk42wd0XveTpBDV4ir75w@mail.gmail.com>
-Date:   Wed, 27 Nov 2019 06:37:43 +0100
+In-Reply-To: <20191127030107.17604-1-max.chou@realtek.com>
+Date:   Wed, 27 Nov 2019 06:40:55 +0100
 Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
         Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        netdev <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Ondrej Jirman <megous@megous.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Chen-Yu Tsai <wens@csie.org>
+        lkml <linux-kernel@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-mediatek@lists.infradead.org, alex_lu@realsil.com.cn
 Content-Transfer-Encoding: 7bit
-Message-Id: <6A053F1E-E932-4087-8634-AEC6DED85B7D@holtmann.org>
-References: <20191118192123.82430-1-abhishekpandit@chromium.org>
- <1CEDCBDC-221C-4E5F-90E9-898B02304562@holtmann.org>
- <CANFp7mXNPsmfC_dDcxP1N9weiEFdogOvgSjuBLJSd+4-ONsoOQ@mail.gmail.com>
- <1CEB6B69-09AA-47AA-BC43-BD17C00249E7@holtmann.org>
- <CANFp7mU=URXhZ8V67CyGs1wZ2_N_jTk42wd0XveTpBDV4ir75w@mail.gmail.com>
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Message-Id: <E65E251A-53D0-4376-86FB-9EB1AA0074EA@holtmann.org>
+References: <20191127030107.17604-1-max.chou@realtek.com>
+To:     Max Chou <max.chou@realtek.com>
 X-Mailer: Apple Mail (2.3601.0.10)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Abhishek,
+Hi Max,
 
-> The series looks good to me.
+> It should be pull low and pull high on the physical line for the Realtek
+> Bluetooth reset. gpiod_set_value_cansleep() takes ACTIVE_LOW status for
+> the logical value settings, so the original commit should be corrected.
+> 
+> Signed-off-by: Max Chou <max.chou@realtek.com>
+> ---
+> drivers/bluetooth/btusb.c | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
 
-you also tested it on your hardware?
+patch has been applied to bluetooth-next tree.
 
 Regards
 
