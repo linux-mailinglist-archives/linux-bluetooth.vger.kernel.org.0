@@ -2,57 +2,84 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 283FB10DA16
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 Nov 2019 20:24:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 663D410DEA9
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 30 Nov 2019 19:52:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727022AbfK2TWi convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 29 Nov 2019 14:22:38 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:59120 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726926AbfK2TWh (ORCPT
+        id S1726981AbfK3Swn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 30 Nov 2019 13:52:43 -0500
+Received: from mail-io1-f50.google.com ([209.85.166.50]:46150 "EHLO
+        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726799AbfK3Swm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 29 Nov 2019 14:22:37 -0500
-Received: from [192.168.1.91] (p4FF9F0D1.dip0.t-ipconnect.de [79.249.240.209])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 923A2CECDE;
-        Fri, 29 Nov 2019 20:31:44 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
-Subject: Re: [PATCH] Bluetooth: btusb: fix memory leak on fw
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20191129173635.87479-1-colin.king@canonical.com>
-Date:   Fri, 29 Nov 2019 20:22:05 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Sean Wang <sean.wang@mediatek.com>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <F011BBCD-8D95-4934-AB3E-0F264990D4F2@holtmann.org>
-References: <20191129173635.87479-1-colin.king@canonical.com>
-To:     Colin King <colin.king@canonical.com>
-X-Mailer: Apple Mail (2.3601.0.10)
+        Sat, 30 Nov 2019 13:52:42 -0500
+Received: by mail-io1-f50.google.com with SMTP id i11so35742607iol.13
+        for <linux-bluetooth@vger.kernel.org>; Sat, 30 Nov 2019 10:52:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=4MJFIfzrzlkMFkbPkTZe2S4JsJL0B15h4NuZDBKvGrg=;
+        b=hjAutFLT2G9A6nCWHmUWs3iMt8IV58ZvHoyPPdmC6XpmHyH/hbaXALbRGGru1+jPXZ
+         d6tBUTmQl0zDKsMi4A11jcmFO2umlQ6xqIVRn6pXqt3AEWnJw+rU57sn9rD3RU6njv3b
+         RvArhJinzdjVUn4AsiXcnPTXNvMN+yn+VNJ9G7vnQgE9/lIvEEjmo+wotM9HGpSvAESd
+         HEp5nwQPegNGUoLSqoFH8oeSy5DXNW0jkehjLYe7sQBasr610sJNX4T+9CTg9KVZ9/ie
+         wdR35xtPvYJgdB296wo5nnmvFT1x0oK7AergXwjJ6eHaAWxxr2+DGhYYXAEA7WnX6cPD
+         jb1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=4MJFIfzrzlkMFkbPkTZe2S4JsJL0B15h4NuZDBKvGrg=;
+        b=WSI0IQRk1mBJG2puDMe7CmgFZfLDS74MQU6zbRH5RoDL7zb9lcrKeboP1E6h9D1OLM
+         sjFVgdUJkDLY//4CWq6O79lDTJcSFQulgMvlbee68REd7vHpL7MWaltWwrNryz9MQQa8
+         tBEmTI2sLrqIvFF1LUO/WYRoDyrzlFEQHWV9+1trf+K37sJobfX1LTjMg2qhXhLNldW3
+         tK2L5zrQu6NtWK8z++ylofnE3x+gXGw9ziETDYu2mj6vZkNVfMPVizC6U+6vI9UR1l6Z
+         hxW4RfNa7rqCggZdYrgsK4gcRk4027REEZussoeEu/NUvi51fKrRBb8nMwHgTZBOILGH
+         4X+g==
+X-Gm-Message-State: APjAAAVu2W40IQaEGhab359OFFSpMC8w9yH/jNO/rXj1hoz91NRfmi3a
+        0RpJcJd3FAv5El0YPx5kwWEaii8l+/a6DofL/3887VsT
+X-Google-Smtp-Source: APXvYqxyQcZxrFP5GnGOYsFp92m3ytoJCzZ+aYzVHKf8FZ+pGgk89fQVVX3QsvDtUJHmGLPfixPhteW9l+nT4kcA2hk=
+X-Received: by 2002:a6b:f701:: with SMTP id k1mr52348174iog.260.1575139961842;
+ Sat, 30 Nov 2019 10:52:41 -0800 (PST)
+MIME-Version: 1.0
+References: <CADqM=-wgFoxbnuBb1XwSyueg=cTCN=9tCrSDxRp-Pq8HnLo-zQ@mail.gmail.com>
+In-Reply-To: <CADqM=-wgFoxbnuBb1XwSyueg=cTCN=9tCrSDxRp-Pq8HnLo-zQ@mail.gmail.com>
+From:   Abhi Arora <engr.abhiarora@gmail.com>
+Date:   Sun, 1 Dec 2019 00:22:30 +0530
+Message-ID: <CADqM=-wzCdi9gq0tBCkUVSbj0j6J4qgyPmt8Hjf9iWBBJ2TZYw@mail.gmail.com>
+Subject: Re: Using Bluez as Peripheral and connect to multiple Central simultaneously.
+To:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Colin,
+Is it right platform for this question?
 
-> Currently the error return path when the call to btusb_mtk_hci_wmt_sync
-> fails does not free fw.  Fix this by returning via the error_release_fw
-> label that performs the free'ing.
-> 
-> Addresses-Coverity: ("Resource leak")
-> Fixes: a1c49c434e15 ("Bluetooth: btusb: Add protocol support for MediaTek MT7668U USB devices")
-> Signed-off-by: Colin Ian King <colin.king@canonical.com>
-> ---
-> drivers/bluetooth/btusb.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
+"Hello,
+I got to know that BLE v4.1 supports peripherals being connected to
+multiple central simultaneously (I know there could be some limit on
+the number of connections). I want to know if it doable in BlueZ and
+if it requires some support from the BLE Chipset/IC, please specify
+the HCI commands to look for it in the datasheet of the chipset.
 
-patch has been applied to bluetooth-next tree.
+If it supports, is it stable in the current Bluez stack?
 
-Regards
+I also want to advertise (being peripheral) while connected to other central.
 
-Marcel
+Please help."
 
+On Thu, Nov 28, 2019 at 11:58 PM Abhi Arora <engr.abhiarora@gmail.com> wrote:
+>
+> Hello,
+> I got to know that BLE v4.1 supports peripherals being connected to
+> multiple central simultaneously (I know there could be some limit on
+> the number of connections). I want to know if it doable in BlueZ and
+> if it requires some support from the BLE Chipset/IC, please specify
+> the HCI commands to look for it in the datasheet of the chipset.
+>
+> If it supports, is it stable in the current Bluez stack?
+>
+> I also want to advertise (being peripheral) while connected to other central.
+>
+> Please help.
