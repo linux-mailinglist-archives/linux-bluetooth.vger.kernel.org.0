@@ -2,128 +2,89 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FE9110E256
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  1 Dec 2019 16:20:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C0FD10E2D4
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  1 Dec 2019 19:14:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726965AbfLAPU4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 1 Dec 2019 10:20:56 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36586 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726393AbfLAPU4 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 1 Dec 2019 10:20:56 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z3so40930115wru.3
-        for <linux-bluetooth@vger.kernel.org>; Sun, 01 Dec 2019 07:20:55 -0800 (PST)
+        id S1727167AbfLASOL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 1 Dec 2019 13:14:11 -0500
+Received: from mtax.cdmx.gob.mx ([187.141.35.197]:14200 "EHLO mtax.cdmx.gob.mx"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726965AbfLASOK (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 1 Dec 2019 13:14:10 -0500
+X-Greylist: delayed 6323 seconds by postgrey-1.27 at vger.kernel.org; Sun, 01 Dec 2019 13:14:10 EST
+X-NAI-Header: Modified by McAfee Email Gateway (4500)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rKLSrZJkEH77lZ2ohriiKRfktKFCoFYYs4y4PBdXX44=;
-        b=iOIvN9f/d6+wW0ABFOg9eEbkB/eIrGEZTz+rGH31eI2Al9BRzLZDIUwmDQnS9gSy74
-         9Sn+K2VFsM5/W7DFPR21/L6sclJxyQliRpXN/3qwKkkqokq7ImAAH1cyuKjTYmQugCUY
-         EXm7XLXBG3o+guv5OfKQdAJZdhipGDej/o7x0bL2MH+l83RCWWb3vht1remevVR2VS+e
-         zoW25Os0182Cdw/71wzlttyw0alj2YdN/xUUQXgCJCxwE8An2cIhesTOmRwS9nmz+dV3
-         za1/rg69RuL3kTeoeWXaH/XrnU+NNyYUXPZ3bBLWGzjiAQMSr8iOotuprKYzNWTTgP2Y
-         hjZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rKLSrZJkEH77lZ2ohriiKRfktKFCoFYYs4y4PBdXX44=;
-        b=Jm2ck0OkdTrrNCe8lfPuRmeAuLRPOyqEdfHjusKBAWwt/xIQIdeEqKOMjPmKoAwOLv
-         G+9gkMOnZrYPvPsssI+ipzLkfQ3lfE1myk5cVrIRiUuAHlJWWZvuTJ7eQ/VvbxxJ93yN
-         SsmMDyzUXuwQn2wTOJhZ8p5d1PF+SCYhvylPlveDqH+8xIdubJGV6YthTico+JLJspkJ
-         yKAagM4+ZClv4KAR6k5z8HRSDShH1w5qp/myjdeQRAyUCuR9I6I2/mQIR9TrPpfO1x2i
-         i2xIRaCC6k1492YBewkZ27iKzlc/YLrLoz9Hr9NwiPr/U4WBxagBtrXKVveonjXAdgIF
-         cCtw==
-X-Gm-Message-State: APjAAAVgu1Gst+N6/areducnRrp7eAW6vqE529RUn4suYIau9MBzB2xm
-        JvU+mJ7U3MVcTDPiKhdYDms=
-X-Google-Smtp-Source: APXvYqzToaADlCh1O24LcKePM3Adq4VD6qsF/0Hpwf7pjAU0Akl/IspNpfZd1ZDPxV85/tHHEdDMcw==
-X-Received: by 2002:a5d:4c8c:: with SMTP id z12mr10214937wrs.222.1575213654407;
-        Sun, 01 Dec 2019 07:20:54 -0800 (PST)
-Received: from pali ([2a02:2b88:2:1::5cc6:2f])
-        by smtp.gmail.com with ESMTPSA id b17sm36402090wrp.49.2019.12.01.07.20.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 01 Dec 2019 07:20:53 -0800 (PST)
-Date:   Sun, 1 Dec 2019 16:20:52 +0100
-From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-bluetooth@vger.kernel.org, alainm@chromium.org
-Subject: Re: [BlueZ PATCH 2/2] input: Change uinput name and set uniq
- attribute
-Message-ID: <20191201152052.zxjbitwjfbsh7vh5@pali>
-References: <20191127110905.BlueZ.1.I95600043ffb5b2b6c4782497ff735ab5d3e37c13@changeid>
- <20191127190941.90789-1-abhishekpandit@chromium.org>
+        d=cdmx.gob.mx; s=72359050-3965-11E6-920A-0192F7A2F08E;
+        t=1575217524; h=DKIM-Filter:X-Virus-Scanned:
+         Content-Type:MIME-Version:Content-Transfer-Encoding:
+         Content-Description:Subject:To:From:Date:Message-Id:
+         X-AnalysisOut:X-AnalysisOut:X-AnalysisOut:
+         X-AnalysisOut:X-AnalysisOut:X-SAAS-TrackingID:
+         X-NAI-Spam-Flag:X-NAI-Spam-Threshold:X-NAI-Spam-Score:
+         X-NAI-Spam-Rules:X-NAI-Spam-Version; bh=M
+        8rWdUYQ57RAYAgTWJQ4Rsch0kO0UXllaAVDzocOs4
+        8=; b=K12MYMUQM5PidN2hltjLrpIZzaIxLlwYJP0BlS387HdH
+        B3auvP4zSkaPTSYezTDI9+cSkJszg0KoE7wn5hhnx2G44HMmqj
+        6foSdf4Lodrf7GmrLtt4vxftiC6sru7M1bl00oN69a98UaJyJA
+        El3GWK6GKFdyB1bbXIgxnsQufFM=
+Received: from cdmx.gob.mx (correo.cdmx.gob.mx [10.250.108.150]) by mtax.cdmx.gob.mx with smtp
+        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+         id 28cd_4658_f58083b2_74b2_418e_b3fd_c0af8ca07e22;
+        Sun, 01 Dec 2019 10:25:24 -0600
+Received: from localhost (localhost [127.0.0.1])
+        by cdmx.gob.mx (Postfix) with ESMTP id D27F41E2A7D;
+        Sun,  1 Dec 2019 10:17:38 -0600 (CST)
+Received: from cdmx.gob.mx ([127.0.0.1])
+        by localhost (cdmx.gob.mx [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 5ZrPpMwmjOxH; Sun,  1 Dec 2019 10:17:38 -0600 (CST)
+Received: from localhost (localhost [127.0.0.1])
+        by cdmx.gob.mx (Postfix) with ESMTP id 322E51E271F;
+        Sun,  1 Dec 2019 10:12:38 -0600 (CST)
+DKIM-Filter: OpenDKIM Filter v2.9.2 cdmx.gob.mx 322E51E271F
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cdmx.gob.mx;
+        s=72359050-3965-11E6-920A-0192F7A2F08E; t=1575216758;
+        bh=M8rWdUYQ57RAYAgTWJQ4Rsch0kO0UXllaAVDzocOs48=;
+        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:To:
+         From:Date:Message-Id;
+        b=OVaCtvbykfe+R54mGUoT2a5wZs7sVcMPA49HGaux9Jbz6IJdx721Kck7QgzgP2+wD
+         QlKctKhn1qElr0/aMuhnKfhJai5LJjEmV5WpXVZdzcObflzNcdf7e/AC0IYJ+YG5pm
+         iQF+L7PGgpOA2bxn/GiLfwTG4gqTxX1jA/2NX+A8=
+X-Virus-Scanned: amavisd-new at cdmx.gob.mx
+Received: from cdmx.gob.mx ([127.0.0.1])
+        by localhost (cdmx.gob.mx [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id jy9KbYqoqNH5; Sun,  1 Dec 2019 10:12:38 -0600 (CST)
+Received: from [192.168.0.104] (unknown [188.125.168.160])
+        by cdmx.gob.mx (Postfix) with ESMTPSA id B18C01E252E;
+        Sun,  1 Dec 2019 10:03:27 -0600 (CST)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="ca3kub6z62l5xmge"
-Content-Disposition: inline
-In-Reply-To: <20191127190941.90789-1-abhishekpandit@chromium.org>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Congratulations
+To:     Recipients <aac-styfe@cdmx.gob.mx>
+From:   "Bishop Johnr" <aac-styfe@cdmx.gob.mx>
+Date:   Sun, 01 Dec 2019 17:03:20 +0100
+Message-Id: <20191201160327.B18C01E252E@cdmx.gob.mx>
+X-AnalysisOut: [v=2.2 cv=cLaQihWN c=1 sm=1 tr=0 p=6K-Ig8iNAUou4E5wYCEA:9 p]
+X-AnalysisOut: [=zRI05YRXt28A:10 a=T6zFoIZ12MK39YzkfxrL7A==:117 a=9152RP8M]
+X-AnalysisOut: [6GQqDhC/mI/QXQ==:17 a=8nJEP1OIZ-IA:10 a=pxVhFHJ0LMsA:10 a=]
+X-AnalysisOut: [pGLkceISAAAA:8 a=wPNLvfGTeEIA:10 a=M8O0W8wq6qAA:10 a=Ygvjr]
+X-AnalysisOut: [iKHvHXA2FhpO6d-:22]
+X-SAAS-TrackingID: 279e3ed5.0.90878067.00-2391.152481043.s12p02m012.mxlogic.net
+X-NAI-Spam-Flag: NO
+X-NAI-Spam-Threshold: 3
+X-NAI-Spam-Score: -5000
+X-NAI-Spam-Rules: 1 Rules triggered
+        WHITELISTED=-5000
+X-NAI-Spam-Version: 2.3.0.9418 : core <6686> : inlines <7165> : streams
+ <1840193> : uri <2949748>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Money was donated to you by Mr and Mrs Allen and Violet Large, just contact=
+ them with this email for more information =
 
---ca3kub6z62l5xmge
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wednesday 27 November 2019 11:09:15 Abhishek Pandit-Subedi wrote:
-> When creating the uinput device, change the name to the peer device
-> name. Set the peer device address to the uniq attribute instead of the
-> name.
->=20
-> The resulting uinput device will look like this:
->=20
-> $ udevadm info -a -p /sys/devices/virtual/input/input17
-> ...
->   looking at device '/devices/virtual/input/input17':
->     KERNEL=3D=3D"input17"
->     SUBSYSTEM=3D=3D"input"
->     DRIVER=3D=3D""
->     ATTR{inhibited}=3D=3D"0"
->     ATTR{name}=3D=3D"BeatsStudio Wireless"
-
-Hello, as you already wrote in different thread, could you add
-" (AVCTP)" suffix to name to indicate used bluetooth profile?
-
->     ATTR{phys}=3D=3D"00:00:00:6e:d0:74"
->     ATTR{properties}=3D=3D"0"
->     ATTR{uniq}=3D=3D"00:00:00:cc:1c:f3"
->=20
-> ---
->=20
-> This change requires an accompanying change in the kernel that adds the
-> set uniq ioctl. The change is available here:
->=20
-> https://lore.kernel.org/linux-bluetooth/20191127185139.65048-1-abhishekpa=
-ndit@chromium.org/T/#u
->=20
-> If this change looks ok, I would like to merge it with the previous
-> change before merging since they're related.
->=20
->=20
->  profiles/audio/avctp.c | 18 +++++++++---------
->  src/uinput.h           |  2 ++
->  2 files changed, 11 insertions(+), 9 deletions(-)
-
---=20
-Pali Roh=C3=A1r
-pali.rohar@gmail.com
-
---ca3kub6z62l5xmge
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCXePaUgAKCRCL8Mk9A+RD
-UrjSAJ9pD1cg7HNECBSINFrhr5q3UMAJEgCgtWK2zMMvy3jswAXcPLE9Mzb9kGc=
-=7pYT
------END PGP SIGNATURE-----
-
---ca3kub6z62l5xmge--
+EMail: allenandvioletlargeaward@gmail.com
