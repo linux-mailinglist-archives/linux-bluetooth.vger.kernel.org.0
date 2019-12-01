@@ -2,92 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 68AE210DF38
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 30 Nov 2019 21:23:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ABB8E10DFFF
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  1 Dec 2019 02:15:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727312AbfK3UXj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 30 Nov 2019 15:23:39 -0500
-Received: from vault.bonstra.fr.eu.org ([51.158.68.104]:41476 "EHLO
-        vault.bonstra.fr.eu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727280AbfK3UXj (ORCPT
+        id S1727280AbfLABPL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 30 Nov 2019 20:15:11 -0500
+Received: from mail-io1-f69.google.com ([209.85.166.69]:46849 "EHLO
+        mail-io1-f69.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726188AbfLABPL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 30 Nov 2019 15:23:39 -0500
-Received: from val.bonstra.fr.eu.org (unknown [192.168.128.2])
-        by vault.bonstra.fr.eu.org (Postfix) with ESMTP id 90334BFBCC;
-        Sat, 30 Nov 2019 20:23:37 +0000 (UTC)
-Received: from localhost.localdomain (vlad.gr1 [IPv6:fd7b:45cc:aa3d::3])
-        by val.bonstra.fr.eu.org (Postfix) with ESMTPSA id BB4D864C1B;
-        Sat, 30 Nov 2019 21:23:36 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bonstra.fr.eu.org;
-        s=dkim1; t=1575145416; x=1576355016;
-        bh=KTDx3GIAk0BBY7Hm5xNIopsl0EDTIeBIgAhSNWOJzzw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=UjacfKcEmbQNnDInHocp5tbE+wr0WT/estqa6bJNtRbZSfUdnGXRTWfpwC21fXuqc
-         Q4VdN5W0fl5w8+pkpodLt696Bt8TzqwKvV7WrmcYaTCEOme4SpRMuX4sC55ypAyDSt
-         3Qiu1RmJrOKHWlrI53/4QbH27j8BRJDVyVA/F7p9yDn85tGZOidoMAaNob2nAMptIu
-         TL5Yrf6JiBrnbNMX9KhjKJRGnZlVYRgQHD19KwBpwHxUdwrP/SkZSBrai7hH/VS+A8
-         BxADUTpyz8uB/67wH8brJ8SMVT9BfYqDOBjRLxsni9xb722ojAZGmc2clZ0QR2BLqX
-         QaBiIl7Zj8JWA==
-From:   Hugo Grostabussiat <bonstra@bonstra.fr.eu.org>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>
-Cc:     Hugo Grostabussiat <bonstra@bonstra.fr.eu.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH v4 3/3] arm64: dts: allwinner: a64: Enable Bluetooth on Teres-I
-Date:   Sat, 30 Nov 2019 21:23:14 +0100
-Message-Id: <20191130202314.142096-4-bonstra@bonstra.fr.eu.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20191130202314.142096-1-bonstra@bonstra.fr.eu.org>
-References: <20191130202314.142096-1-bonstra@bonstra.fr.eu.org>
+        Sat, 30 Nov 2019 20:15:11 -0500
+Received: by mail-io1-f69.google.com with SMTP id b186so10558963iof.13
+        for <linux-bluetooth@vger.kernel.org>; Sat, 30 Nov 2019 17:15:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=vdA+Pl+l1f6sCTYEO0wEzF5xZZ/NEuBoxJ/fDOritgw=;
+        b=aVtgPntiA7KWouP36qA/yK16FR7sHy1frsmTK48JXV7gX7lz6bKr71IlH9O/j9UDql
+         VsIyBKLGTejXkwoWvgIEZhCuEhx+bJgmSzBGj5OmB7KvCONrJ40kWwbtpOY32y+602H4
+         P/YuupeVHVKaQz+ZluueuQM5Yg6P8GrFs5gqP46Hn1dgzaTAWKnfHKSQX6mp1P5+eNOD
+         gbS1wNAQ2A0nHNmjYk5IRC4Oxmm6T3Tpdi/0AqNbU9GCoVc+Q/D6kx98I2yOdXEQ52x8
+         z9IdAtfYGCfuPaHvLVhGYeJswUOOnFIV1duqjW4jbrbp8Dqsx9OMDhAE0Jsd4Ce51+/L
+         XznQ==
+X-Gm-Message-State: APjAAAWaXXbM+CdBURJTZdQVmDgto9gdZu0spK2nKZfAF3bLFc4VGUY5
+        5kQS1+rX91ohQepk59thsmZV/CwWlqyep5AsgXe16TSPiKGN
+X-Google-Smtp-Source: APXvYqxAhPSnP4G/gEEYfgHPhOC4baFmRSGw7Q/tzVwChglVkhh0i0Dii8mLZun0KGQjJ1DD0rsLTzIQOONdpJ9N55bQy8SZ9Z9t
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a6b:ca41:: with SMTP id a62mr40117949iog.217.1575162909157;
+ Sat, 30 Nov 2019 17:15:09 -0800 (PST)
+Date:   Sat, 30 Nov 2019 17:15:09 -0800
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <000000000000a9f2eb05989a31cf@google.com>
+Subject: INFO: trying to register non-static key in hci_uart_tty_receive (2)
+From:   syzbot <syzbot+633817d309aae1e0cfce@syzkaller.appspotmail.com>
+To:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marcel@holtmann.org,
+        syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The UART1 on the Teres-A64-I is connected to a rtl8723bs combo
-WLAN/Bluetooth controller, with three GPIOs used for device reset,
-host wake up and device wake up.
+Hello,
 
-Currently, the host wake up feature is not supported by the HCI H5
-driver.
+syzbot found the following crash on:
 
-Signed-off-by: Hugo Grostabussiat <bonstra@bonstra.fr.eu.org>
+HEAD commit:    be2eca94 Merge tag 'for-linus-5.5-1' of git://github.com/c..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=11bdb5eee00000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=7a7e892e3a014d76
+dashboard link: https://syzkaller.appspot.com/bug?extid=633817d309aae1e0cfce
+compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
+
+Unfortunately, I don't have any reproducer for this crash yet.
+
+IMPORTANT: if you fix the bug, please add the following tag to the commit:
+Reported-by: syzbot+633817d309aae1e0cfce@syzkaller.appspotmail.com
+
+INFO: trying to register non-static key.
+the code is fine but needs lockdep annotation.
+turning off the locking correctness validator.
+CPU: 0 PID: 26945 Comm: syz-executor.1 Not tainted 5.4.0-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
+Google 01/01/2011
+Call Trace:
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x197/0x210 lib/dump_stack.c:118
+  assign_lock_key kernel/locking/lockdep.c:881 [inline]
+  register_lock_class+0x179e/0x1850 kernel/locking/lockdep.c:1190
+  __lock_acquire+0xf4/0x4a00 kernel/locking/lockdep.c:3837
+  lock_acquire+0x190/0x410 kernel/locking/lockdep.c:4487
+  percpu_down_read include/linux/percpu-rwsem.h:40 [inline]
+  hci_uart_tty_receive+0xcf/0x6e0 drivers/bluetooth/hci_ldisc.c:603
+  tiocsti drivers/tty/tty_io.c:2197 [inline]
+  tty_ioctl+0x949/0x14f0 drivers/tty/tty_io.c:2573
+  vfs_ioctl fs/ioctl.c:46 [inline]
+  file_ioctl fs/ioctl.c:509 [inline]
+  do_vfs_ioctl+0xdb6/0x13e0 fs/ioctl.c:696
+  ksys_ioctl+0xab/0xd0 fs/ioctl.c:713
+  __do_sys_ioctl fs/ioctl.c:720 [inline]
+  __se_sys_ioctl fs/ioctl.c:718 [inline]
+  __x64_sys_ioctl+0x73/0xb0 fs/ioctl.c:718
+  do_syscall_64+0xfa/0x760 arch/x86/entry/common.c:290
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+RIP: 0033:0x45a649
+Code: ad b6 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
+48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
+ff 0f 83 7b b6 fb ff c3 66 2e 0f 1f 84 00 00 00 00
+RSP: 002b:00007fa162c03c78 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 000000000045a649
+RDX: 00000000200001c0 RSI: 0000000000005412 RDI: 0000000000000003
+RBP: 000000000075c070 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fa162c046d4
+R13: 00000000004c52f0 R14: 00000000004da410 R15: 00000000ffffffff
+
+
 ---
- .../boot/dts/allwinner/sun50i-a64-teres-i.dts      | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+This bug is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts b/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
-index 1069e7012c9c..b28e6d7cb227 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
-@@ -325,6 +325,20 @@
- 	status = "okay";
- };
- 
-+&uart1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart1_pins>, <&uart1_rts_cts_pins>;
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "realtek,rtl8723bs-bt";
-+		powerdown-gpios = <&r_pio 0 4 GPIO_ACTIVE_LOW>; /* PL4 */
-+		host-wake-gpios = <&r_pio 0 5 GPIO_ACTIVE_HIGH>; /* PL5 */
-+		device-wake-gpios = <&r_pio 0 6 GPIO_ACTIVE_HIGH>; /* PL6 */
-+		firmware-name = "rtl8723bs_config-teres_a64_i.bin";
-+	};
-+};
-+
- &usbphy {
- 	usb1_vbus-supply = <&reg_usb1_vbus>;
- 	status = "okay";
--- 
-2.24.0
-
+syzbot will keep track of this bug report. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
