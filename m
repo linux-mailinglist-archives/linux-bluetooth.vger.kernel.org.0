@@ -2,214 +2,117 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A10C10F45A
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Dec 2019 02:05:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B96710FB0A
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Dec 2019 10:48:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726330AbfLCBFi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 2 Dec 2019 20:05:38 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:41578 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725853AbfLCBFh (ORCPT
+        id S1725848AbfLCJs5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 3 Dec 2019 04:48:57 -0500
+Received: from mailout4.samsung.com ([203.254.224.34]:10974 "EHLO
+        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725773AbfLCJs5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 2 Dec 2019 20:05:37 -0500
-Received: by mail-pg1-f196.google.com with SMTP id x8so725979pgk.8
-        for <linux-bluetooth@vger.kernel.org>; Mon, 02 Dec 2019 17:05:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vQLxprmCC8JfA2uG9NjGBGy94LqJAU7ib6W5ozoiA9A=;
-        b=M9xaurVUD+kIv5wybWVAkUF/iTFeS8zB7Mo6bQy8aUTUSBVZkMwjkUBYeZQcfJXaRb
-         iK0kB/15uQ1OvsRmDOenchn7uq6V0nmG4a0XNj1zFyFG+rzxRKR6eJ268iqo1vc9xWO2
-         IInHkTL/m32zgYTjt9pv5LHRDTIpSd9gT24aI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vQLxprmCC8JfA2uG9NjGBGy94LqJAU7ib6W5ozoiA9A=;
-        b=Fu2y5gZZpojkspzlTn7b31xYz6qdNZ5y+Z2K5qyNnfxIK1GapWwbmnKt28VjJ/EGdR
-         KBsJWyUicLLNRNLV05WItWrekwRSAE5ljrAO0L4x8jfGwBP/IhP4fbLsocjHbVhOgS9M
-         derUoiN8A3FQs8axczqdus4Cg0Q0P3qviaqjcGeS+813RVb2ImWGh9j4LY+HkV9T3d04
-         cXpkUumOW31sVF3meLRuLVjnqPO5bkKgGYrjUYrQl1C+QUAEhK9RhHU3GV8a53yvZznq
-         ZvNkF8lLLNBf+ucGDIoQRtFSi9GLxET9yb7ifZjvsQ+HupoRZa7CgvYIMrytUof/9VBK
-         IMyg==
-X-Gm-Message-State: APjAAAXroFNTrLFZT5B4PLpmjvB+jep8/kycIM8P5F9YR4jZGL8FuWVo
-        KP+k6POXrPHcjjhKlonFSNQ61A==
-X-Google-Smtp-Source: APXvYqxNia/3JTgxap9fHMWDpLMTr4uqu4JKDoTN7qXRJoyVQLz+gHJrRQZHA/ABNQKvLJYuEI2RJw==
-X-Received: by 2002:a62:e411:: with SMTP id r17mr1771126pfh.119.1575335136928;
-        Mon, 02 Dec 2019 17:05:36 -0800 (PST)
-Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id r7sm759116pfg.34.2019.12.02.17.05.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2019 17:05:35 -0800 (PST)
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-To:     linux-input@vger.kernel.org
-Cc:     =?UTF-8?q?Pali=20Roh=C3=A1r?= <pali.rohar@gmail.com>,
-        linux-bluetooth@vger.kernel.org,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        linux-kernel@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-        Logan Gunthorpe <logang@deltatee.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andrey Smirnov <andrew.smirnov@gmail.com>,
-        Kirill Smelkov <kirr@nexedi.com>
-Subject: [PATCH v2] Input: uinput - Add UI_SET_UNIQ ioctl handler
-Date:   Mon,  2 Dec 2019 17:05:21 -0800
-Message-Id: <20191203010521.220577-1-abhishekpandit@chromium.org>
-X-Mailer: git-send-email 2.24.0.393.g34dc348eaf-goog
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 3 Dec 2019 04:48:57 -0500
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20191203094853epoutp0424f56c38950e3a8221b80e2abc211a08~c04QHUjMB2038920389epoutp040
+        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Dec 2019 09:48:53 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20191203094853epoutp0424f56c38950e3a8221b80e2abc211a08~c04QHUjMB2038920389epoutp040
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1575366533;
+        bh=FwaqjaxnZ41q7KSt1yI9UikB0Kh1JM6AInZTKp6CZMM=;
+        h=From:To:Subject:Date:References:From;
+        b=bENdHiuQtRPUuHPwzj2itWCoJ5Sm8D7unOp9mC6BIJO3UG/lhDRySH01W0p1fI0vW
+         77XNBKPauglB5l/SxsmJoFAfj4rVfUFBu+jkqosqJ5wQ3pqg6vdf4muSVb2Y6xD1/7
+         fdk1gYbFzKkEJF6wdQWWsAUBvHL7IQ48QG6E52IU=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+        epcas5p3.samsung.com (KnoxPortal) with ESMTP id
+        20191203094853epcas5p35d9cf9af6efb58dd06b91e349d9af8af~c04P7lycl1733717337epcas5p3f
+        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Dec 2019 09:48:53 +0000 (GMT)
+Received: from epsmges5p3new.samsung.com (unknown [182.195.40.197]) by
+        epsnrtp2.localdomain (Postfix) with ESMTP id 47RxyC3P74zMqYkX for
+        <linux-bluetooth@vger.kernel.org>; Tue,  3 Dec 2019 09:48:51 +0000 (GMT)
+Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
+        epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        8F.EC.19629.18F26ED5; Tue,  3 Dec 2019 18:48:49 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+        20191203094848epcas5p296450885dea6e4939072c7b8b50e71fa~c04Lrz91_2569325693epcas5p2I
+        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Dec 2019 09:48:48 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20191203094848epsmtrp1ba9e3e978840be11fde5a2c5c637443c~c04Lq8IpR1588015880epsmtrp1F
+        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Dec 2019 09:48:48 +0000 (GMT)
+X-AuditID: b6c32a4b-32dff70000014cad-9f-5de62f818f37
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        0D.FB.10238.08F26ED5; Tue,  3 Dec 2019 18:48:48 +0900 (KST)
+Received: from SyamLinux.sa.corp.samsungelectronics.net (unknown
+        [107.109.107.247]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20191203094848epsmtip1458bff01c3631d5d3bcebdf707d02ef9~c04LVTyau0063900639epsmtip10
+        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Dec 2019 09:48:48 +0000 (GMT)
+From:   Syam Sidhardhan <s.syam@samsung.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH 1/1] client: Fix memory leak
+Date:   Tue,  3 Dec 2019 15:18:42 +0530
+Message-Id: <1575366522-7742-1-git-send-email-s.syam@samsung.com>
+X-Mailer: git-send-email 2.7.4
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprBKsWRmVeSWpSXmKPExsWy7bCmhm6j/rNYg57n5hZzrvUxOzB6fN4k
+        F8AYlWOTkZqYklqkkJqXnJ+SmZduq+QdHO8cb2pmYKhraGlhrqSQl5ibaqvk4hOg65aZAzRU
+        SaEsMacUKBSQWFyspG9nU5RfWpKqkJFfXGKrlFqQklNgaFSgV5yYW1yal66XnJ9rZWhgYGQK
+        VJmQk3F+9S2Wgv0sFZ+bm1kbGM8zdzFyckgImEhMWPqDpYuRi0NIYDejxOSuRlYIZwaTRM+a
+        U1DOHCaJJ3POMsK03D46mx0isZdR4tam41D965gkeg++ZAKpYhPQkth79Tw7iC0ioCzxbN9h
+        sLiwgI5E79W7YHEWAVWJNX8egMV5BRwlbt59zwaxQU7i5rlOqANXsUocnxMCYbtIzLy1nQXC
+        FpZ4dXwLO4QtJfGyvw3sIgmBZkaJznMHGCGcGYwS595OYYWospd4umkuUBUHB7OApsT6Xfog
+        YWYBPone30+YQMISArwSHW1CENUKEqumTmSCsMUk1k3/ArXLQ+LlnSXgkBASiJXY8fsH2wRG
+        6VkIQxcwMq5ilEwtKM5NTy02LTDOSy1HjpFNjOBUoeW9g3HTOZ9DjAIcjEo8vAf+PIkVYk0s
+        K67MPcQowcGsJMK7TeJprBBvSmJlVWpRfnxRaU5q8SFGU2CgTWSWEk3OB6axvJJ4Q1MjMzMD
+        SwNTYwszQyVx3kmsV2OEBNITS1KzU1MLUotg+pg4OKUaGNuM915oc36xxvjQ619zmS/sMZp7
+        Mt73t2PgkbziPXe/J/6R7pSXecIn5ZK7/3s4d3+1g6aKqei3RSnzHr3LPrpBw8nhagbnveYd
+        u652Jxslf5xcqtByLvpuuIPgy8CO5r05urbnazk2bku7F3U+pKg8rtD/buOSuIZMD5Etkraa
+        04I+CaacUGIpzkg01GIuKk4EAKlkKhErAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrHJMWRmVeSWpSXmKPExsWy7bCSnG6D/rNYg+tvTC3mXOtjdmD0+LxJ
+        LoAxissmJTUnsyy1SN8ugSvj/OpbLAX7WSo+NzezNjCeZ+5i5OSQEDCRuH10NnsXIxeHkMBu
+        Rompf3rYIRJiEm9WnICyhSVW/nsOVbSGSeLTopVg3WwCWhJ7r54HKxIRUJZ4tu8wE4gtLKAj
+        0Xv1LlicRUBVYs2fB2BxXgFHiZt337NBDJWTuHmuk3kCI/cCRoZVjJKpBcW56bnFhgWGeanl
+        esWJucWleel6yfm5mxjBvtTS3MF4eUn8IUYBDkYlHt4Df57ECrEmlhVX5h5ilOBgVhLh3Sbx
+        NFaINyWxsiq1KD++qDQntfgQozQHi5I479O8Y5FCAumJJanZqakFqUUwWSYOTqkGRuGXUzM6
+        Ew/niV0utvlroWfOP6V5z4Ydj4MWiC53f/ws2+2U6q8dHdEHnkxYfV76ogvPYrnl3WzReaeZ
+        n/840Gm2ceqlU8oNa3bd/83adsLjyDmDytIHS7dNmrzCbL54hWTayrW7Xn2dwry14WaG5Ud7
+        98fiszZsPKq9i/fXo7dZnR86bWIkM5WVWIozEg21mIuKEwG7vtX34QEAAA==
+X-CMS-MailID: 20191203094848epcas5p296450885dea6e4939072c7b8b50e71fa
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20191203094848epcas5p296450885dea6e4939072c7b8b50e71fa
+References: <CGME20191203094848epcas5p296450885dea6e4939072c7b8b50e71fa@epcas5p2.samsung.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Support setting the uniq attribute of the input device. The uniq
-attribute is used as a unique identifier for the connected device.
-
-For example, uinput devices created by BlueZ will store the address of
-the connected device as the uniq property.
-
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 ---
-Hi input maintainers,
+ client/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I added this change to allow BlueZ to display the peer device address in
-udev. BlueZ has been setting ATTR{name} to the peer address since it
-isn't possible to set the uniq attribute currently.
-
-I've tested this on a Chromebook running kernel v4.19 with this patch.
-
-$ uname -r
-4.19.85
-
-$ dmesg | grep "input:" | tail -1
-[   69.604752] input: BeatsStudio Wireless as /devices/virtual/input/input17
-
-$ udevadm info -a -p /sys/devices/virtual/input/input17
-
-Udevadm info starts with the device specified by the devpath and then
-walks up the chain of parent devices. It prints for every device
-found, all possible attributes in the udev rules key format.
-A rule to match, can be composed by the attributes of the device
-and the attributes from one single parent device.
-
-  looking at device '/devices/virtual/input/input17':
-    KERNEL=="input17"
-    SUBSYSTEM=="input"
-    DRIVER==""
-    ATTR{inhibited}=="0"
-    ATTR{name}=="BeatsStudio Wireless"
-    ATTR{phys}=="00:00:00:6e:d0:74"
-    ATTR{properties}=="0"
-    ATTR{uniq}=="00:00:00:cc:1c:f3"
-
-(I zeroed out part of the addresses above. The phys attribute
-corresponds to the address of the Bluetooth controller on the Chromebook
-and the uniq is the address of the headphones)
-
-
-Changes in v2:
-- Added compat handling for UI_SET_UNIQ
-
- drivers/input/misc/uinput.c | 26 +++++++++++++++++++++++++-
- include/uapi/linux/uinput.h |  1 +
- 2 files changed, 26 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/input/misc/uinput.c b/drivers/input/misc/uinput.c
-index 84051f20b18a..a7cbf5726a36 100644
---- a/drivers/input/misc/uinput.c
-+++ b/drivers/input/misc/uinput.c
-@@ -280,7 +280,7 @@ static int uinput_dev_flush(struct input_dev *dev, struct file *file)
- 
- static void uinput_destroy_device(struct uinput_device *udev)
+diff --git a/client/main.c b/client/main.c
+index 68dabda..8bd0bac 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -1792,11 +1792,11 @@ static void remove_device(GDBusProxy *proxy)
  {
--	const char *name, *phys;
-+	const char *name, *phys, *uniq;
- 	struct input_dev *dev = udev->dev;
- 	enum uinput_state old_state = udev->state;
+ 	char *path;
  
-@@ -289,6 +289,7 @@ static void uinput_destroy_device(struct uinput_device *udev)
- 	if (dev) {
- 		name = dev->name;
- 		phys = dev->phys;
-+		uniq = dev->uniq;
- 		if (old_state == UIST_CREATED) {
- 			uinput_flush_requests(udev);
- 			input_unregister_device(dev);
-@@ -297,6 +298,7 @@ static void uinput_destroy_device(struct uinput_device *udev)
- 		}
- 		kfree(name);
- 		kfree(phys);
-+		kfree(uniq);
- 		udev->dev = NULL;
- 	}
- }
-@@ -840,6 +842,7 @@ static long uinput_ioctl_handler(struct file *file, unsigned int cmd,
- 	struct uinput_ff_erase  ff_erase;
- 	struct uinput_request   *req;
- 	char			*phys;
-+	char			*uniq;
- 	const char		*name;
- 	unsigned int		size;
+-	path = g_strdup(g_dbus_proxy_get_path(proxy));
+-
+ 	if (!default_ctrl)
+ 		return;
  
-@@ -931,6 +934,22 @@ static long uinput_ioctl_handler(struct file *file, unsigned int cmd,
- 		udev->dev->phys = phys;
- 		goto out;
- 
-+	case UI_SET_UNIQ:
-+		if (udev->state == UIST_CREATED) {
-+			retval = -EINVAL;
-+			goto out;
-+		}
++	path = g_strdup(g_dbus_proxy_get_path(proxy));
 +
-+		uniq = strndup_user(p, 1024);
-+		if (IS_ERR(uniq)) {
-+			retval = PTR_ERR(uniq);
-+			goto out;
-+		}
-+
-+		kfree(udev->dev->uniq);
-+		udev->dev->uniq = uniq;
-+		goto out;
-+
- 	case UI_BEGIN_FF_UPLOAD:
- 		retval = uinput_ff_upload_from_user(p, &ff_up);
- 		if (retval)
-@@ -1044,6 +1063,8 @@ static long uinput_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
-  */
- #define UI_SET_PHYS_COMPAT		\
- 	_IOW(UINPUT_IOCTL_BASE, 108, compat_uptr_t)
-+#define UI_SET_UNIQ_COMPAT		\
-+	_IOW(UINPUT_IOCTL_BASE, 111, compat_uptr_t)
- #define UI_BEGIN_FF_UPLOAD_COMPAT	\
- 	_IOWR(UINPUT_IOCTL_BASE, 200, struct uinput_ff_upload_compat)
- #define UI_END_FF_UPLOAD_COMPAT		\
-@@ -1056,6 +1077,9 @@ static long uinput_compat_ioctl(struct file *file,
- 	case UI_SET_PHYS_COMPAT:
- 		cmd = UI_SET_PHYS;
- 		break;
-+	case UI_SET_UNIQ_COMPAT:
-+		cmd = UI_SET_UNIQ;
-+		break;
- 	case UI_BEGIN_FF_UPLOAD_COMPAT:
- 		cmd = UI_BEGIN_FF_UPLOAD;
- 		break;
-diff --git a/include/uapi/linux/uinput.h b/include/uapi/linux/uinput.h
-index c9e677e3af1d..d5b7767c1b02 100644
---- a/include/uapi/linux/uinput.h
-+++ b/include/uapi/linux/uinput.h
-@@ -145,6 +145,7 @@ struct uinput_abs_setup {
- #define UI_SET_PHYS		_IOW(UINPUT_IOCTL_BASE, 108, char*)
- #define UI_SET_SWBIT		_IOW(UINPUT_IOCTL_BASE, 109, int)
- #define UI_SET_PROPBIT		_IOW(UINPUT_IOCTL_BASE, 110, int)
-+#define UI_SET_UNIQ		_IOW(UINPUT_IOCTL_BASE, 111, char*)
- 
- #define UI_BEGIN_FF_UPLOAD	_IOWR(UINPUT_IOCTL_BASE, 200, struct uinput_ff_upload)
- #define UI_END_FF_UPLOAD	_IOW(UINPUT_IOCTL_BASE, 201, struct uinput_ff_upload)
+ 	if (g_dbus_proxy_method_call(default_ctrl->proxy, "RemoveDevice",
+ 						remove_device_setup,
+ 						remove_device_reply,
 -- 
-2.24.0.393.g34dc348eaf-goog
+2.7.4
 
