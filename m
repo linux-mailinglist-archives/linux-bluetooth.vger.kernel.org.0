@@ -2,46 +2,46 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 743A810F459
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Dec 2019 02:05:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DADD10F45D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Dec 2019 02:06:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726251AbfLCBFa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 2 Dec 2019 20:05:30 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:43966 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725853AbfLCBF3 (ORCPT
+        id S1726330AbfLCBG0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 2 Dec 2019 20:06:26 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:33151 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726066AbfLCBG0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 2 Dec 2019 20:05:29 -0500
-Received: by mail-pj1-f68.google.com with SMTP id g4so689701pjs.10
-        for <linux-bluetooth@vger.kernel.org>; Mon, 02 Dec 2019 17:05:28 -0800 (PST)
+        Mon, 2 Dec 2019 20:06:26 -0500
+Received: by mail-pf1-f195.google.com with SMTP id y206so848794pfb.0
+        for <linux-bluetooth@vger.kernel.org>; Mon, 02 Dec 2019 17:06:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0W3QQ6Z6Oep9RxwjS+yMKxVf2Y00o07I5wmjJljt0FM=;
-        b=BVPab4z4EtX93dUSbAgDCJ15cyE944obnBTBqy1fAcXLbmJGonu6zajEEq3XtKxDfw
-         ctmEfOryEZU4ueU4KXPIGbAXk9wJo1cM/MwA2rTBBAZ6Xkz/soGTADR0cPj5JpZIKjLG
-         KL0EVkyRlcPVp+fyi5cjBqT5U8lM36if5H7yU=
+        bh=5hpUK9ZBIMphM9rzqP+YZa2i8oL0Tw5HGDAWHY72grw=;
+        b=H95yzW87scREq8cDX6kwC18FNWCp60gg6A2mzkDcS18jzs674sVj+bXd+28dSubpWu
+         9khnwdL/IaR4b4k/Yv7vNbut/w+yvfshoFvfvl4xo5VvklJDfpIPZ2KtrXJGxuiug5eN
+         WB64y3jy2GcsGUYnxwpR4/dyDfjQ6Tv3uGHF8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0W3QQ6Z6Oep9RxwjS+yMKxVf2Y00o07I5wmjJljt0FM=;
-        b=VyXbDqFSrusYIkDvyIwXLUVr3ppJbx4OiW+hWbiBiePdVDD/KjDp+itvh87JGQN1yn
-         G9Ow3F7mfMKljbMu6OUHPCCrpUyee3d98jRDbOhIPO7wN7g7pbwPYmZeM/VKmG7/oYDL
-         +MM4n31stAyqGpEfpjNUPXg9cDhoKmcJ9Ksd/ACArQUG53Q/Z+y8ZmIJvTpCp0U4Ac+4
-         V+Cj4TYT7asq3sYSC5kCPMiwLjjuHTT6CH6TufXp43rtTmpXuY1SCK9U8rkCfRrWzJHP
-         7Zli3PwfsBBExjehZJR8d9mIpETasY2Fb+rt6hdfx18mfX2bV8IILaJ34huDEYD4S860
-         pfmA==
-X-Gm-Message-State: APjAAAUrS5ADapTrVZeLHdpfVKkm0Ip5Q9DWiM/9F5WqD5BU8EUPeh8N
-        IRkX2Gn9b3k28a9ZZAVwzW2SNQ==
-X-Google-Smtp-Source: APXvYqwzHH+h5Gbw7fYp3Omxa/UNiujSH86gHh1gnBMI5ZyDppBgThdOhcuR8K6WgiDbRn2RzS4b+Q==
-X-Received: by 2002:a17:902:8a85:: with SMTP id p5mr2283555plo.150.1575335127811;
-        Mon, 02 Dec 2019 17:05:27 -0800 (PST)
+        bh=5hpUK9ZBIMphM9rzqP+YZa2i8oL0Tw5HGDAWHY72grw=;
+        b=OssFqqNKX8bMf0QdUTY9PDsnE0ega23hGkn28aNWvHwmZnhtNSXtLE4AZ1J22C96gr
+         akijXMkcfoRccs9H0qn4hZyqWu48IAyYRN0fy9j+17aU1IFz7hWjs4tIE72MHOdgU4TE
+         erBFyyEOxOzARjge/KI/VdAOvJ9FaGt7Z6lbqPRCGfA8wKVkmudCX/k2XRoFhtjDeTr+
+         +lo7d5lBQn7/VVRQpKCxVqkGfjSn5LP2cercfAlCOWQ2/WSljwmScamero6ftgRx9OIO
+         mqTxYclWHOgsJ2Fcs30QwcJhvxZn6skB0RWpVVgJl3Jb+EGOu7iR3WILq+IvrzRwCfE5
+         TlTg==
+X-Gm-Message-State: APjAAAX9o3MkdHsrdaFnqbkBXM4YKdyWBJ1mtJLXHOTNu77tpjdukbne
+        +KwhN15j5jdFSnYrFAhBENZGWg==
+X-Google-Smtp-Source: APXvYqzr4xPCHPcLCI5HtfE9qVaheAeOLlwDIfa28rXytOK3F3tgNBaMaFXEWun0e0i8nJvZb0z+DA==
+X-Received: by 2002:a62:4ec7:: with SMTP id c190mr1822918pfb.68.1575335185441;
+        Mon, 02 Dec 2019 17:06:25 -0800 (PST)
 Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id 143sm741808pfz.67.2019.12.02.17.04.55
+        by smtp.gmail.com with ESMTPSA id 143sm741808pfz.67.2019.12.02.17.05.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2019 17:05:10 -0800 (PST)
+        Mon, 02 Dec 2019 17:05:28 -0800 (PST)
 From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
@@ -49,21 +49,21 @@ To:     Marcel Holtmann <marcel@holtmann.org>,
 Cc:     =?UTF-8?q?Pali=20Roh=C3=A1r?= <pali.rohar@gmail.com>,
         alainm@chromium.org,
         Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Subject: [BlueZ PATCH v2 3/4] input: Change uinput name and add AVRCP suffix
-Date:   Mon,  2 Dec 2019 17:03:59 -0800
-Message-Id: <20191203010400.216538-3-abhishekpandit@chromium.org>
+Subject: [BlueZ PATCH v2 4/4] input: Set uniq attribute
+Date:   Mon,  2 Dec 2019 17:04:00 -0800
+Message-Id: <20191203010400.216538-4-abhishekpandit@chromium.org>
 X-Mailer: git-send-email 2.24.0.393.g34dc348eaf-goog
 In-Reply-To: <20191203010400.216538-1-abhishekpandit@chromium.org>
 References: <20191203010400.216538-1-abhishekpandit@chromium.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When creating the uinput device, change the name to the peer device
-name and add a "(AVRCP)" suffix.
+Set the uniq attribute of /dev/uinput with the peer device address.
 
 The resulting uinput device will look like this:
 
@@ -77,96 +77,59 @@ $ udevadm info -a -p /sys/devices/virtual/input/input17
     ATTR{name}=="BeatsStudio Wireless (AVRCP)"
     ATTR{phys}=="00:00:00:6e:d0:74"
     ATTR{properties}=="0"
-    ATTR{uniq}==""
+    ATTR{uniq}=="00:00:00:1a:33:21"
 
 ---
 
-Changes in v2:
-- Added "(AVRCP)" suffix and moved src address into uinput_create
+This change requires an accompanying change in the kernel that adds the
+set uniq ioctl. The change is available here:
 
- profiles/audio/avctp.c | 36 +++++++++++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 11 deletions(-)
+https://lore.kernel.org/linux-bluetooth/20191127185139.65048-1-abhishekpandit@chromium.org/T/#u
+
+
+Changes in v2:
+- Split setting uniq to its own commit
+
+ profiles/audio/avctp.c | 4 +++-
+ src/uinput.h           | 2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/profiles/audio/avctp.c b/profiles/audio/avctp.c
-index 42136f94b..5116a5cde 100644
+index 5116a5cde..544bc640c 100644
 --- a/profiles/audio/avctp.c
 +++ b/profiles/audio/avctp.c
-@@ -1162,10 +1162,11 @@ failed:
- }
- 
- static int uinput_create(struct btd_device *device, const char *name,
--			 const char *phys)
-+			 const char *suffix);
+@@ -1166,7 +1166,7 @@ static int uinput_create(struct btd_device *device, const char *name,
  {
  	struct uinput_dev dev;
  	int fd, err, i;
-+	char src[18];
+-	char src[18];
++	char dest[18], src[18];
  
  	fd = open("/dev/uinput", O_RDWR);
  	if (fd < 0) {
-@@ -1185,6 +1186,23 @@ static int uinput_create(struct btd_device *device, const char *name,
- 	if (name)
- 		strncpy(dev.name, name, UINPUT_MAX_NAME_SIZE - 1);
- 
-+	if (suffix) {
-+		int len, slen;
-+
-+		len = strlen(dev.name);
-+		slen = strlen(suffix);
-+
-+		/* If name + suffix don't fit, truncate the name, then add the
-+		 * suffix.
-+		 */
-+		if (len + slen < UINPUT_MAX_NAME_SIZE - 1) {
-+			strncpy(dev.name + len, suffix, slen);
-+		} else {
-+			len = UINPUT_MAX_NAME_SIZE - slen - 1;
-+			strncpy(dev.name + len, suffix, slen);
-+		}
-+	}
-+
- 	dev.id.bustype = BUS_BLUETOOTH;
- 	dev.id.vendor  = btd_device_get_vendor(device);
- 	dev.id.product = btd_device_get_product(device);
-@@ -1203,8 +1221,8 @@ static int uinput_create(struct btd_device *device, const char *name,
- 	ioctl(fd, UI_SET_EVBIT, EV_REP);
+@@ -1222,7 +1222,9 @@ static int uinput_create(struct btd_device *device, const char *name,
  	ioctl(fd, UI_SET_EVBIT, EV_SYN);
  
--	/* Also set the phys */
--	ioctl(fd, UI_SET_PHYS, phys);
-+	ba2strlc(btd_adapter_get_address(device_get_adapter(device)), src);
-+	ioctl(fd, UI_SET_PHYS, src);
+ 	ba2strlc(btd_adapter_get_address(device_get_adapter(device)), src);
++	ba2strlc(device_get_address(device), dest);
+ 	ioctl(fd, UI_SET_PHYS, src);
++	ioctl(fd, UI_SET_UNIQ, dest);
  
  	for (i = 0; key_map[i].name != NULL; i++)
  		ioctl(fd, UI_SET_KEYBIT, key_map[i].uinput);
-@@ -1224,7 +1242,7 @@ static int uinput_create(struct btd_device *device, const char *name,
+diff --git a/src/uinput.h b/src/uinput.h
+index 20e0941d1..589c22528 100644
+--- a/src/uinput.h
++++ b/src/uinput.h
+@@ -686,6 +686,8 @@ extern "C" {
+ #define UI_SET_FFBIT		_IOW(UINPUT_IOCTL_BASE, 107, int)
+ #define UI_SET_PHYS		_IOW(UINPUT_IOCTL_BASE, 108, char*)
+ #define UI_SET_SWBIT		_IOW(UINPUT_IOCTL_BASE, 109, int)
++#define UI_SET_PROPBIT		_IOW(UINPUT_IOCTL_BASE, 110, int)
++#define UI_SET_UNIQ		_IOW(UINPUT_IOCTL_BASE, 111, char*)
  
- static void init_uinput(struct avctp *session)
- {
--	char address[18], phys[18], name[248 + 1];
-+	char name[248 + 1];
- 
- 	device_get_name(session->device, name, sizeof(name));
- 	if (g_str_equal(name, "Nokia CK-20W")) {
-@@ -1234,15 +1252,11 @@ static void init_uinput(struct avctp *session)
- 		session->key_quirks[AVC_PAUSE] |= QUIRK_NO_RELEASE;
- 	}
- 
--	ba2strlc(device_get_address(session->device), address);
--	ba2strlc(btd_adapter_get_address(device_get_adapter(session->device)),
--		 phys);
--
--	session->uinput = uinput_create(session->device, address, phys);
-+	session->uinput = uinput_create(session->device, name, " (AVRCP)");
- 	if (session->uinput < 0)
--		error("AVRCP: failed to init uinput for %s", address);
-+		error("AVRCP: failed to init uinput for %s", name);
- 	else
--		DBG("AVRCP: uinput initialized for %s", address);
-+		DBG("AVRCP: uinput initialized for %s", name);
- }
- 
- static struct avctp_queue *avctp_queue_create(struct avctp_channel *chan)
+ #ifndef NBITS
+ #define NBITS(x) ((((x) - 1) / (sizeof(long) * 8)) + 1)
 -- 
 2.24.0.393.g34dc348eaf-goog
 
