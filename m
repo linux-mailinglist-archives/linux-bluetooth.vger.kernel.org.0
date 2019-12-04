@@ -2,111 +2,289 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 54373112BC2
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Dec 2019 13:43:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5042112E44
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Dec 2019 16:25:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727901AbfLDMnK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 Dec 2019 07:43:10 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:36867 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727812AbfLDMm6 (ORCPT
+        id S1728321AbfLDPZ6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 4 Dec 2019 10:25:58 -0500
+Received: from wnew3-smtp.messagingengine.com ([64.147.123.17]:44551 "EHLO
+        wnew3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727828AbfLDPZ5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Dec 2019 07:42:58 -0500
-Received: by mail-qt1-f195.google.com with SMTP id w47so7575234qtk.4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Dec 2019 04:42:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=SWzs3svZdfoJNhQZue5B0UPApGf3QNVhTsPQAsjB3v0=;
-        b=AkbuvF8WWOeGkFuNbpEiUPeHs0D9XYCrvYJnn3sJBPk0l/N+bAJ+lU7by52a8c0/XL
-         X5y/+uJVi5SRPzgKpD7LZp2RSO63H/dWhNB+Sgv8CnTmnW6HnNvEkrD3pvFKiHue+ji0
-         Cyct4Vs7hozR5hYKDh8cJJMkT72K9aPHj93bK1Ew++bIIM698i5hGwNXpwVN8RyOlTlg
-         ekVZP06isuUhwZwFxkLwU0Sye3HMnEDkq9yUmWZzxA1JTm8RzibEufZxYTJilauyHwzc
-         pKJFDkaXtzzvkeOyU7ajhljX9QykaA8Ur2FHYJunK1Sxosbxld4ODKAYs9j7AB06Aipc
-         jW5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=SWzs3svZdfoJNhQZue5B0UPApGf3QNVhTsPQAsjB3v0=;
-        b=AHQCgOYB1INaqOTi9GgNQJCKhyjIwNEEtPo6PEFK2X6jVasQXRHI0Vr7riEm1hbVZf
-         VtqUagQ7Tk3Jq1pnYfQwmI1uYoYK7VOyYL2EIE4af81bUx6SubcRUswtGgLNUZujqHqK
-         KWosI8Eefquz7zOCFjvkQlAdkFAb5unXHU0vGITEV6qPJ50N2etLSns9zy5SIihiUIQN
-         DBjQrYCpg/Ln0p5WxkhaCIK8tHYPnwtaHsJvUGCEjWlsBunPEa0m+wngo+nsthg0KkAQ
-         gYnhVvZHCRoZWOqxA8IKnUpx2eygmoA3BJCnBog1+lbjxhBzj1m8B5JnBGvIHLlK8/Cg
-         XqAw==
-X-Gm-Message-State: APjAAAX3WkK9+0FseW/u835iNcWSKkVKmolV3WAariYfLPtbui0crvAW
-        qIBBNSkOiMRQ7bDqIgah3SFnm6DjFi1cWGpIPhE=
-X-Google-Smtp-Source: APXvYqzw3gCG5cnmI6368TWfhjS/+LLSHd6b95oZCOsPTpsAjIN23auDStB1pQ1PTnMah1qk6gl8uYsnTPaZ7k01uH0=
-X-Received: by 2002:ac8:4a81:: with SMTP id l1mr2434940qtq.357.1575463377714;
- Wed, 04 Dec 2019 04:42:57 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:ac8:2f0c:0:0:0:0:0 with HTTP; Wed, 4 Dec 2019 04:42:57 -0800 (PST)
-Reply-To: moneygram.1820@outlook.fr
-From:   "Rev.Dr Emmanuel Okoye CEO Ecobank-benin" 
-        <westernunion.benin982@gmail.com>
-Date:   Wed, 4 Dec 2019 13:42:57 +0100
-Message-ID: <CAP=nHBJXiPmPL21x=_0BHWRk_3N3Yax+tTxcFi=t=AhN7g==1Q@mail.gmail.com>
-Subject: God has remembered your prayers I have already sent you Money Gram
- payment of $5000.00 today, MG 1029-8096
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+        Wed, 4 Dec 2019 10:25:57 -0500
+X-Greylist: delayed 609 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Dec 2019 10:25:56 EST
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.west.internal (Postfix) with ESMTP id 36A028D3;
+        Wed,  4 Dec 2019 10:15:46 -0500 (EST)
+Received: from imap38 ([10.202.2.88])
+  by compute3.internal (MEProxy); Wed, 04 Dec 2019 10:15:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        arunraghavan.net; h=mime-version:message-id:in-reply-to
+        :references:date:from:to:cc:subject:content-type
+        :content-transfer-encoding; s=mesmtp; bh=zuyMcS61SYpn7Z5DNj9PE0P
+        i+8LaRj+SPIHF+39T1hQ=; b=MbyYZBJh5PHbnWHKR/E9kbAPra6I0Hrl3qlTgN+
+        4A1lsqc2f3Oyi89k7dK3UTwMktxei7cCs5wrLoRaO5JM6wLDqG1AjXIEFQ3fhXLz
+        Mk9ErAerPFdDPpsmHUmGAthCrKN50bObqSKxRGrgO9xnKuONcviRxzG8CAcN5zqe
+        5P4k=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; bh=zuyMcS61SYpn7Z5DNj9PE0Pi+8LaRj+SPIHF+39T1
+        hQ=; b=eq3fDpeKSHU0hIJYm9W1LtH13NcqGjUwdWDCdV8QdGJkNcBvuMMhRZxVJ
+        zohskEhchqn6ZhFR1YncivPq+MbkVYgX4qPqADqqghcwEJlF3By4H6FR1qDTRgge
+        nmGyudxPmB9JlHCGILaaHfYw4qhrTrb23xGohm6VOWtCus9SFKB4QFCHe8Fn0Wwr
+        khfzYDAtlV/INkv138qygXhe+mZHZQ9nqHPGq2EdlQMPGQsKiWSAXttYs9JfViXX
+        fiBeBFOAZN5Bdc9pmWqIdA/Je2lalqP0J5m7QV54gVOpSCGphN15BeljZt9MiLo2
+        fs07XahSH77rZjd72Ewsb2mFqTJsw==
+X-ME-Sender: <xms:n83nXejcqjrF0MJxewEzvFLLXy24pLCf7WpVM_dIaG6aED2o7Mm4cw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudejledgjedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftehr
+    uhhnucftrghghhgrvhgrnhdfuceorghruhhnsegrrhhunhhrrghghhgrvhgrnhdrnhgvth
+    eqnecuffhomhgrihhnpehfrhgvvgguvghskhhtohhprdhorhhgpdhgihhthhhusgdrtgho
+    mhenucfrrghrrghmpehmrghilhhfrhhomheprghruhhnsegrrhhunhhrrghghhgrvhgrnh
+    drnhgvthenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:n83nXSjX_ps5GYOeAg6sw1CjyEnoNsmo152zDRfZQcxDDz778g1Rtw>
+    <xmx:n83nXY6De5_NWQZQPj8cBnOTZ2TaO_EbVRQpBZy7vrgEXYIYDwjs4A>
+    <xmx:n83nXU27SMXAOVhvTinz-hQwci6hAyvMSVgicTe1iagBFr9Yq-2fVg>
+    <xmx:oc3nXWRsRevuiIIBIT98F9BgDPjaos7XWCMgXkDctAbLZ1s0x-SqSLcIVAU>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 659FC4C000A4; Wed,  4 Dec 2019 10:15:43 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-612-g13027cc-fmstable-20191203v1
+Mime-Version: 1.0
+Message-Id: <190b130f-bc84-4af1-a807-5b5fbef3f166@www.fastmail.com>
+In-Reply-To: <20191202184512.rx6p63c6axztnwrw@pali>
+References: <20191201185740.uot7zb2s53p5gu7z@pali>
+ <508d35f29c2abc26af15e232a38d3ca53eb33706.camel@iki.fi>
+ <20191202184512.rx6p63c6axztnwrw@pali>
+Date:   Wed, 04 Dec 2019 20:45:23 +0530
+From:   "Arun Raghavan" <arun@arunraghavan.net>
+To:     =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali.rohar@gmail.com>,
+        "Tanu Kaskinen" <tanuk@iki.fi>
+Cc:     "PulseAudio Discussion" <pulseaudio-discuss@lists.freedesktop.org>,
+        linux-bluetooth@vger.kernel.org, ofono@ofono.org,
+        devkit-devel@lists.freedesktop.org,
+        "Bastien Nocera" <hadess@hadess.net>,
+        "Georg Chini" <georg@chini.tk>,
+        "Russell Treleaven" <rtreleaven@bunnykick.ca>,
+        "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>,
+        "Marcel Holtmann" <marcel@holtmann.org>,
+        "Sebastian Reichel" <sre@ring0.de>, "Pavel Machek" <pavel@ucw.cz>,
+        "Wim Taymans" <wim.taymans@gmail.com>,
+        "George Kiagiadakis" <george.kiagiadakis@collabora.com>
+Subject: =?UTF-8?Q?Re:_[pulseaudio-discuss]_Proposal_for_a_new_API_and_usage_of_B?=
+ =?UTF-8?Q?luetooth_HSP_and_HFP_profiles_on_Linux?=
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Attn, dear Beneficiary.
++Wim and George from PipeWire
 
-God has remembered your prayers
-I have already sent you Money Gram payment of $5000.00 today, MG 1029-8096
-This is because we have finally concluded to effect your transfer
-funds of $4.8,000.000usd
-through MONEY GRAM International Fund transfer Service
-Each payment will be sending to you by $5000.00 daily until the
-($4.8,000.000usd) is completely transferred
-we have this morning sent  MONEY GRAM payment of $5,000.00 in your name today
-So contact the MONEY GRAM Agent to pick up this first payment of $5000 now
+On Tue, 3 Dec 2019, at 12:15 AM, Pali Roh=C3=A1r wrote:
+> On Monday 02 December 2019 19:01:11 Tanu Kaskinen wrote:
+> > On Sun, 2019-12-01 at 19:57 +0100, Pali Roh=C3=A1r wrote:
+> > > Hello!
+> > >=20
+> > > I'm sending this email to relevant mailing lists and other people =
+who
+> > > could be interested in it. (I'm not subscribed to all of ML, so pl=
+ease
+> > > CC me when replying).
+> > >=20
+> > >=20
+> > > I would like to open a discussion about a completely new way of ha=
+ndling
+> > > Bluetooth HSP and HFP profiles on Linux. These two profiles are th=
+e only
+> > > standard way how to access microphone data from Bluetooth Headsets=
+.
+> > >=20
+> > >=20
+> > > Previously in bluez4, HFP profile was implemented by bluez daemon =
+and
+> > > telephony HFP functionality was provided by either dummy modem, of=
+ono
+> > > modem or by Nokia's CSD Maemo modem.
+> > >=20
+> > > In bluez5 version was modem code together with implementation of H=
+FP
+> > > profile removed. And let implementation of HSP and HFP profiles to=
 
-Contact person Mrs. Alan Ude
-Dir. MONEY GRAM Service,Benin
-Phone number: +229 98856728
-E-mail: moneygram.1820@outlook.fr
+> > > external application.
+> > >=20
+> > > Currently HSP profile is implemented in pulseaudio daemon to handl=
+e
+> > > microphone and Bluetooth speakers. HFP profile is not implemented =
+yet.
+> > >=20
+> > >=20
+> > > HSP and HFP profiles use AT modem commands, so its implementation =
+needs
+> > > to parse and generates AT commands, plus implement needed state ma=
+chine
+> > > for it.
+> > >=20
+> > > And now problem is that last version of HFP profile specification =
+is too
+> > > complicated, plus Bluetooth headsets vendors started to inventing =
+and
+> > > using of own custom extensions to HFP profile and AT commands.
+> > >=20
+> > > Main problem of this "external" implementation outside of bluez is=
+ that
+> > > only one application can communicate with remote Bluetooth device.=
+ It
+> > > is application which received needed socket from bluez.
+> > >=20
+> > > So in this design if audio daemon (pulseaudio) implements HFP prof=
+ile
+> > > for processing audio, and e.g. power supply application wants to
+> > > retrieve battery level from Bluetooth device, it means that audio =
+daemon
+> > > needs to implement also battery related functionality.
+> > >=20
+> > > It does not make sense to force power supply daemon (upower) to
+> > > implement audio routing/encoding/decoding or audio daemon (power s=
+upply)
+> > > to force implementing battery related operations.
+> > >=20
+> > >=20
+> > > For handle this problem I would like to propose a new way how to u=
+se and
+> > > implement HSP and HFP profiles on Linux.
+> > >=20
+> > > Implement a new HSP/HFP daemon (I called it hsphfpd) which registe=
+r HSP
+> > > and HFP profiles in bluez and then exports functionality for all o=
+ther
+> > > specific applications via DBus API (API for audio, power supply, i=
+nput
+> > > layer, telephony functions, vendor extensions, etc...). So it woul=
+d acts
+> > > as proxy daemon between bluez and target applications (pulseaudio,=
 
-Ask him to give you the complete mtcn, sender name, question and
-answer to enable you
-pick up the $5000.00 sent today,
-Also you are instructed to re-confirm your information's
-to Mrs.Alan Ude as listed below to avoid wrong transactions.
+> > > upower, ofono, ...)
+> > >=20
+> > > This would simplify whole HFP usage as applications would not need=
+ to
+> > > re-implement parsing and processing of AT commands and it would al=
+low
+> > > more applications to use HFP profile at one time. And also it mean=
+s that
+> > > audio software does not have to implement telephony stack or power=
 
-(1Your Full name:............................................
-(2 Phone number.....................................................
-(3 Contact address:.....................................
-(4 Age:..................................................................
-(5 Country..............................................
-(6) Sex .................................................................
-(7) your occupation...........................................
+> > > supply operations.
+> > >=20
+> > >=20
+> > > I wrote a document how such DBus API could look like, see here:
+> > >=20
+> > >   https://github.com/pali/hsphfpd-prototype/raw/prototype/hsphfpd.=
+txt
+> > >=20
+> > >=20
+> > > And also I implemented "prototype" implementation to verify that
+> > > designed API make sense and can be really implemented. Prototype f=
+ully
+> > > supports HSP profile in both HS and AG role, plus HFP profile in H=
+F
+> > > role. This prototype implementation is available here:
+> > >=20
+> > >   https://github.com/pali/hsphfpd-prototype
+> > >=20
+> > > Some other details are written in README:
+> > >=20
+> > >   https://github.com/pali/hsphfpd-prototype/raw/prototype/README
+> > >=20
+> > >=20
+> > > What do you think about it? Does it make sense to have such design=
+?
+> > > Would you accept usage of such hsphfpd daemon, implemented accordi=
+ng to
+> > > specification, on Linux desktop?
+> > >=20
+> > > I would like to hear your opinion if I should continue with this h=
+sphfpd
+> > > design, or not.
+> > >=20
+> > >=20
+> > > With this design and implementation of hsphfpd is possible to easi=
+ly fix
+> > > pulseaudio issue about power supply properties:
+> > >=20
+> > >   https://gitlab.freedesktop.org/pulseaudio/pulseaudio/issues/722
+> >=20
+> > I quite like this proposal. Avoiding the need to implement the butto=
+n
+> > press, battery level etc. handling separately in PulseAudio, oFono a=
+nd
+> > PipeWire seems like a pretty good justification to me. I assume you'=
+re
+> > volunteering to maintain this new daemon?
+>=20
+> Yes, I can maintain this new daemon.
+>=20
+> > It's not clear to me how this would affect the PulseAudio <-> oFono
+> > interaction, if at all.
+>=20
+> Only one application can register to bluez and "own" bluez socket for
+> communication with bluetooth headset. Currently it can be either
+> pulseaudio (with native backend in pulseaudio for HSP profile) or ofon=
+o
+> (with ofono backend in pulseaudio for HFP profile).
+>=20
+> So if hsphfpd would be in use, then ofono would not be able to get
+> socket from bluez. And it would be needed to add a new "plugin" into
+> ofono to use hsphpfd for telephony operations. See hsphfpd.txt file
+> (there is diagram of usage).
+>=20
+> > When oFono is used, would PulseAudio get the
+> > audio socket from oFono or hsphfpd?
+>=20
+> Always from hsphfpd.
+>=20
+> > What about volume commands, would they go through oFono or would
+> > PulseAudio interact with hsphfpd directly?
+>=20
+> Internally they are handled by hsphpfd directly and appropriate API is=
 
-(8)Passport/By Attach or Drivers License Number:
-Contact Mrs. Alan Ude for your MONEY GRAM payment of $4.8,000.000usd
-Note please: I have paid service fees for you but the only money you
-are required
-to send to Mrs. Alan Ude is $90.00 only Transfer fee before you can
-pick up your transfer today.
+> exported via DBus for audio application daemon (pulseaudio). For detai=
+ls
+> see hsphfpd.txt file, interface org.hsphfpd.AudioTransport.
+>=20
+> > I think hsphfpd should be part of bluetoothd, but if that's not
+> > possible, then that's not possible.
+>=20
+> I do not know if bluez developers are interested in having this code a=
+s
+> part of bluez project, specially when in bluez4 HFP profile was there
+> and in bluez5 was HFP code completely removed.
+>=20
+> But it should not matter where hsphpfd is implemented.
+>=20
+> > (I don't want to get into a lengthy discussion about programming
+> > languages, but I'll just note here that I don't like Perl.)
+>=20
+> It is just a prototype. I used Perl just because it is faster for me t=
+o
+> implement parsing of AT commands needed for prototype purposes.
 
-Send it to via Money Gram
-Receiver's Name-----Alan Ude
-Country----------Benin
-Address-----------Cotonou
-Quest--------Honest
-Ans-----------Trust
+Broadly, I think this is a good thing to do. My main concern is having t=
+his be adequately maintained over a longer period of time.
 
-I done all my best for you to receive your transfer now ok.
-We need your urgent reply
-Best Regards
-Rev.Dr Emmanuel Okoye
-CEO Ecobank-benin
+The other thing to note is that in PipeWire, it is possible for external=
+ entities to implement the equivalent of a "sink" or "source" (it's just=
+ a node in PipeWire terminology), so in the long run, it might be good t=
+o have a single BT audio daemon that manages A2DP and HSP/HFP..
 
-If we did not receive it urgent from you today,
-I will go ahead and release you funds to Mrs. Lyndia Ppaulson as your
-representative.
+This would also have the benefit of moving codec dependencies out of Pul=
+seAudio (which I'll help mitigate in other ways within PulseAudio anyway=
+).
+
+Cheers,
+Arun
