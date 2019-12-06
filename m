@@ -2,50 +2,50 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D8D8114EF0
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Dec 2019 11:20:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1B2A114EF9
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Dec 2019 11:25:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726128AbfLFKUd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 6 Dec 2019 05:20:33 -0500
-Received: from mail-pl1-f175.google.com ([209.85.214.175]:37244 "EHLO
-        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726070AbfLFKUd (ORCPT
+        id S1726102AbfLFKZE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 6 Dec 2019 05:25:04 -0500
+Received: from mail-pf1-f180.google.com ([209.85.210.180]:45424 "EHLO
+        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726070AbfLFKZE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 6 Dec 2019 05:20:33 -0500
-Received: by mail-pl1-f175.google.com with SMTP id bb5so2554077plb.4
-        for <linux-bluetooth@vger.kernel.org>; Fri, 06 Dec 2019 02:20:32 -0800 (PST)
+        Fri, 6 Dec 2019 05:25:04 -0500
+Received: by mail-pf1-f180.google.com with SMTP id 2so3119353pfg.12
+        for <linux-bluetooth@vger.kernel.org>; Fri, 06 Dec 2019 02:25:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:from:date:message-id:subject:to:cc;
         bh=ghLrXJLhDfe3OOmUKO+fQNmcK1W4zF2wIIsHccAKmSk=;
-        b=YRcEssbmcYq8g2MuAQSEx3EgvjSyDIT15Z4nKOIa1X6q5yEpeGqAPAtOU2VboPZ+ln
-         zYOzEP+ZhBZgLRXzUJnEE9AjCTii40BabczCYLKQP4aLmXes/lXvoCvBkyjj/sfEnaaP
-         KHzVKQIwBPnVJvZT8E3kfwwyaoPmJwMQgAAHgGUFGLJbG/YwU5b9J+dLpG5iu1RyI6RE
-         mfA0qXcMk7Iq1D4GccTL9fHfEKQsoBGIiSbMXHYSDPuYxXABz3m55HFuSt9wR0PBJu22
-         kwmMWxZsO6nlZQ2w5MLslmiTYPom9/bihApCZR+K8IpRVBTVirMg49JVIyPTK/hhh9Vw
-         FHnQ==
+        b=ge9ZFOUHZfegxCxal28s10akln3LO5YjRPCZA49kD2lm+bg0kkgoFGe7YI3y3V8gSA
+         6D62zJn1PsiU5CEn3GJxIRDeHwXYvktIKj0mw13AzlJ+Vvp+EOFvwNhxGa90FkK3qrG8
+         bOyLxEnVFDNgONydyywhhxaH2/lyEqH2MHBN2dHrk+lNf2GYCJJ3vlCznj1FMaAxB+sb
+         OXVgL8BvRQaUk/nlJ00WNo98s1LDwxB8ArsdFbUjEc4cHb8dUPbDaJLEslWYOXhFEkVb
+         fHKzhTpExcuosSi2rfe4ElhRhaZpdGETqgc/9k1pPIRuIymf/80GoO68Bx7r5jCYacKR
+         5j1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
         bh=ghLrXJLhDfe3OOmUKO+fQNmcK1W4zF2wIIsHccAKmSk=;
-        b=K3ihaAQGyY8KFlMQ+NsxDElWOtSbWP/O9MHUhW0wULCtts2AJFxdoKYLHCIvXuK5HU
-         Zei9OwlAOyDRj3iT7r67vHi1jv4R2HlxILuCZjHvx7q61Y24pyrZsAR9FLXhFNL3A1N7
-         /xI89geH+/IR95GwJuCpiYUoZd0YlQByUiyJMN7e5odREOM1Eb71HhMwqaMYHZc36SB+
-         +JSD817nh9l/1wp1s2Q529mVo3H4aDowTx+mNCHu6FPpmNOR/eiKCtCsVqVYBmRL4D3Z
-         I8udOPMwVS9cH6uRUXJbBC5jvqG7uocjCR3Q1wKIi4AClJj5t8wR+J8es/NpaPmVB7PK
-         aW1A==
-X-Gm-Message-State: APjAAAV0DgJp4UgcGwrqfVJJGKOHrbML9EKhLLmn4ZnHsvjaNpEd7siW
-        BEoTeCHXJDleoJTb36xhZK/2mDqcLYM7oGNxypLxbPpX5T8=
-X-Google-Smtp-Source: APXvYqwqWmES6WbvfmmyTrU8AWkqIp7xDIo8wyvKTK2o5Qoqw20mLiLyirUE/xHx5MEEz0R7TbgdZsjMShuayMTM100=
-X-Received: by 2002:a17:90a:1a1a:: with SMTP id 26mr14781699pjk.129.1575627631915;
- Fri, 06 Dec 2019 02:20:31 -0800 (PST)
+        b=AFmU7uXE0W8EIzqyiGbwYPYSPEIlOtcUB4Q7eHFBZWKtosYcLRHRUNmjwstOqrpLOo
+         14hnS5TYf8LtEce8uIMqrB/nYffyVxaifWURONANjxU7hxjRxvqm31T6op7U6OCoNTp6
+         lzdcXBxaLWVfc5N9FbEl4yoo4MJzkRVgztgTCIpdWcU1nSe6Lt6BtS/mOG2Xcr4PHEO2
+         sQ35mnnyVqRyE3cp0hwBc7k182v+7K9reyydIYhJcu0Kuf361l+edGtc6adpeC9QdpST
+         lmazWV/RxWiYhCXauRdjQKO1euyxP+tzTfIkrEDnttHrnRw5PQsRbDtYT1oou7JPJ7Fk
+         gc0g==
+X-Gm-Message-State: APjAAAXyEHn9NkQIHmZ7ldX7JDvEDy4AWpUF+sv7DI+vMdr8Z9oDUzon
+        Te/4jEbm0EIAiYM9e5toPb6fsoKRNQu588Hn+XRo2nNMLLY=
+X-Google-Smtp-Source: APXvYqydI6OWFMUh0hbc7DCdB7x857T7V+hcc9Yj823ggvtHexIv4b8ilAIXokQzGtzYbxxuHV4kAJy0NZbwJ55v/kc=
+X-Received: by 2002:aa7:9629:: with SMTP id r9mr13865753pfg.51.1575627902950;
+ Fri, 06 Dec 2019 02:25:02 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a17:90a:d103:0:0:0:0 with HTTP; Fri, 6 Dec 2019 02:20:31
+Received: by 2002:a17:90a:d103:0:0:0:0 with HTTP; Fri, 6 Dec 2019 02:25:02
  -0800 (PST)
 From:   Abhay Agarwal <aabhay169@gmail.com>
-Date:   Fri, 6 Dec 2019 15:50:31 +0530
-Message-ID: <CALbZ3NKzi=YLS4EjoCqK2j0921oQyeDueyrxtXTA1LYD0OUdqA@mail.gmail.com>
-Subject: 
+Date:   Fri, 6 Dec 2019 15:55:02 +0530
+Message-ID: <CALbZ3NJniYdZXgaNDR9778cfbr7kkNhGEeSm3pDqwOHXRp8Thg@mail.gmail.com>
+Subject: Bluez mesh-cfgclient: Not able to configure the device
 To:     linux-bluetooth@vger.kernel.org
 Cc:     "ananupam.r" <anupam.r@samsung.com>,
         "aay.agarwal" <ay.agarwal@samsung.com>
