@@ -2,179 +2,126 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E2EC511585F
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Dec 2019 21:57:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53DF71159FB
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  7 Dec 2019 01:02:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726414AbfLFU5x (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 6 Dec 2019 15:57:53 -0500
-Received: from mga04.intel.com ([192.55.52.120]:41334 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726400AbfLFU5x (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 6 Dec 2019 15:57:53 -0500
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 06 Dec 2019 12:57:52 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,286,1571727600"; 
-   d="scan'208";a="219502262"
-Received: from ingas-nuc1.sea.intel.com ([10.255.83.133])
-  by fmsmga001.fm.intel.com with ESMTP; 06 Dec 2019 12:57:52 -0800
-From:   Inga Stotland <inga.stotland@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ 3/3] mesh: Initialize net modes based on node configuration
-Date:   Fri,  6 Dec 2019 12:57:49 -0800
-Message-Id: <20191206205749.12918-4-inga.stotland@intel.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20191206205749.12918-1-inga.stotland@intel.com>
-References: <20191206205749.12918-1-inga.stotland@intel.com>
+        id S1726508AbfLGACH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 6 Dec 2019 19:02:07 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:41474 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726375AbfLGACH (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 6 Dec 2019 19:02:07 -0500
+Received: by mail-pl1-f194.google.com with SMTP id bd4so3374883plb.8
+        for <linux-bluetooth@vger.kernel.org>; Fri, 06 Dec 2019 16:02:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=ypbI226Z6HwiGkoTR1JpKgba6WvTPNZIi/BPfsRGNIA=;
+        b=ElqvwcnzW0W9oCfunbBUslllxAJJDJmQ5G7Vg6dFAlMWiLbJiFERQ1eoab+EKJa13n
+         LJ4eaOrD2kcKMckHLdBkIbszs98PMOCN6X6zf1jWGpWVQWrYQrfvcQP41XMPGZcYBHAL
+         9PmI459WbzY4zm6hoLqu9CuAADU1U8NRZVqRw/VpHvPNP8YW8c/JiSlvn41hPyyftJzt
+         58WkGrLXxwLADXtYy/+T2EQtSHj2RKy5yYSTsak+LkyH8DUnBepvDl0Yd6QDJP4QVUke
+         vQHhybKEmjVL9n/xAe8tSp3XYimepvOvb0If+4+oIxiVvPxtK8C9nhHMD1i6b3Us1G5e
+         tt4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ypbI226Z6HwiGkoTR1JpKgba6WvTPNZIi/BPfsRGNIA=;
+        b=j2QrA1JMJ/V/4RV9dYCsqbUNK/gUcMgXpv+Bpd7RY4POn806RO4sEIJhfvTLwbq7Nc
+         61foB9I9hjGG7RaXl8wd3caFcLLThlA/AIlxSPjvtnGKmhNUCaY3Ga09L4e4SUiwFfH+
+         u0NvKTBd7UkEbDGmukadJZCS2RVdTR4Cve4bOH6qb52u2sXD1L/NyX7QfJRETa9rrAIx
+         ssOPEpPAo2ZA2oFaJZ4WGCIwxwD5wmJt4xXhPSoQjn0YlSIpD0J7AGSxQaBsh0zsedhk
+         FrigoIcS4MMpwK7Sh/ki3yL60+vJG9/+5FsOapIWttUIWAB/qM3+xdmCGWN5WwikeK7m
+         DjoA==
+X-Gm-Message-State: APjAAAVUuyNKeY6cc/71oVhIImbQs4DakIkrJvMWM5ky+0K+3RYSylqy
+        lUA4AXx6EbWpR3PsxD8LZUHMJg==
+X-Google-Smtp-Source: APXvYqxkRC1g7WD/h9hWhhUCNMxPtI4B4dxiEuhbxv6mOg5XJJm+jcwOGCOW6TkEFPfDGL+tX7EXKQ==
+X-Received: by 2002:a17:902:ff15:: with SMTP id f21mr17121456plj.163.1575676926500;
+        Fri, 06 Dec 2019 16:02:06 -0800 (PST)
+Received: from localhost (c-71-197-186-152.hsd1.wa.comcast.net. [71.197.186.152])
+        by smtp.gmail.com with ESMTPSA id b10sm17715991pff.59.2019.12.06.16.02.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 06 Dec 2019 16:02:05 -0800 (PST)
+From:   Kevin Hilman <khilman@baylibre.com>
+To:     guillaume La Roque <glaroque@baylibre.com>, marcel@holtmann.org,
+        johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] bluetooth: hci_bcm: enable IRQ capability from node
+In-Reply-To: <6f6cbb0d-3265-8e6d-60fb-6df2539d36af@baylibre.com>
+References: <20191204161239.16653-1-glaroque@baylibre.com> <7hv9qu2rt1.fsf@baylibre.com> <6f6cbb0d-3265-8e6d-60fb-6df2539d36af@baylibre.com>
+Date:   Fri, 06 Dec 2019 16:02:05 -0800
+Message-ID: <7ho8wl0zr6.fsf@baylibre.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This correctly initializes net settings related to node features
-based on node configuration: either defaults in the case of
-a newly node created/provisioned/imported node or the configured
-values read from stored existing node.
----
- mesh/mesh-defs.h |  2 ++
- mesh/net.c       | 15 ++-------------
- mesh/node.c      | 45 +++++++++++++++++++++++++++------------------
- 3 files changed, 31 insertions(+), 31 deletions(-)
+guillaume La Roque <glaroque@baylibre.com> writes:
 
-diff --git a/mesh/mesh-defs.h b/mesh/mesh-defs.h
-index 8f28fc89b..9353d7351 100644
---- a/mesh/mesh-defs.h
-+++ b/mesh/mesh-defs.h
-@@ -109,6 +109,8 @@
- #define APP_IDX_DEV_REMOTE	0x6fff
- #define APP_IDX_DEV_LOCAL	0x7fff
- 
-+#define DEFAULT_SEQUENCE_NUMBER 0x000000
-+
- #define IS_UNASSIGNED(x)	((x) == UNASSIGNED_ADDRESS)
- #define IS_UNICAST(x)		(((x) > UNASSIGNED_ADDRESS) && \
- 					((x) < VIRTUAL_ADDRESS_LOW))
-diff --git a/mesh/net.c b/mesh/net.c
-index 17dbf2ec2..f662d8a91 100644
---- a/mesh/net.c
-+++ b/mesh/net.c
-@@ -679,20 +679,9 @@ struct mesh_net *mesh_net_new(struct mesh_node *node)
- 	net = l_new(struct mesh_net, 1);
- 
- 	net->node = node;
--	net->pkt_id = 0;
--	net->bea_id = 0;
--
--	net->beacon_enable = true;
--	net->proxy_enable = false;
--	net->relay.enable = false;
--
--	net->seq_num = 0x000000;
--	net->src_addr = 0x0000;
--	net->default_ttl = 0x7f;
--
--	net->provisioner = false;
-+	net->seq_num = DEFAULT_SEQUENCE_NUMBER;
-+	net->default_ttl = TTL_MASK;
- 
--	net->test_mode = false;
- 	memset(&net->prov_caps, 0, sizeof(net->prov_caps));
- 	net->prov_caps.algorithms = 1;
- 
-diff --git a/mesh/node.c b/mesh/node.c
-index edf6fce37..f8acc78c3 100644
---- a/mesh/node.c
-+++ b/mesh/node.c
-@@ -57,7 +57,6 @@
- #define DEFAULT_LOCATION 0x0000
- 
- #define DEFAULT_CRPL 10
--#define DEFAULT_SEQUENCE_NUMBER 0
- 
- enum request_type {
- 	REQUEST_TYPE_JOIN,
-@@ -219,6 +218,7 @@ static int compare_model_id(const void *a, const void *b, void *user_data)
- 	return 0;
- }
- 
-+
- struct mesh_node *node_find_by_addr(uint16_t addr)
- {
- 	if (!IS_UNICAST(addr))
-@@ -486,12 +486,34 @@ static bool init_storage_dir(struct mesh_node *node)
- 	return true;
- }
- 
-+static void update_net_settings(struct mesh_node *node)
-+{
-+	uint8_t mode;
-+
-+	mode = node->proxy;
-+	if (mode == MESH_MODE_ENABLED || mode == MESH_MODE_DISABLED)
-+		mesh_net_set_proxy_mode(node->net, mode == MESH_MODE_ENABLED);
-+
-+	mode = node->friend;
-+	if (mode == MESH_MODE_ENABLED || mode == MESH_MODE_DISABLED)
-+		mesh_net_set_friend_mode(node->net, mode == MESH_MODE_ENABLED);
-+
-+	mode = node->relay.mode;
-+	if (mode == MESH_MODE_ENABLED || mode == MESH_MODE_DISABLED)
-+		mesh_net_set_relay_mode(node->net, mode == MESH_MODE_ENABLED,
-+					node->relay.cnt, node->relay.interval);
-+
-+	mode = node->beacon;
-+	if (mode == MESH_MODE_ENABLED || mode == MESH_MODE_DISABLED)
-+		mesh_net_set_beacon_mode(node->net, mode == MESH_MODE_ENABLED);
-+}
-+
- static bool init_from_storage(struct mesh_config_node *db_node,
- 			const uint8_t uuid[16], struct mesh_config *cfg,
- 			void *user_data)
- {
- 	unsigned int num_ele;
--	uint8_t mode;
-+
- 	struct mesh_node *node = node_new(uuid);
- 
- 	if (!nodes)
-@@ -554,22 +576,7 @@ static bool init_from_storage(struct mesh_config_node *db_node,
- 	mesh_net_set_seq_num(node->net, node->seq_number);
- 	mesh_net_set_default_ttl(node->net, node->ttl);
- 
--	mode = node->proxy;
--	if (mode == MESH_MODE_ENABLED || mode == MESH_MODE_DISABLED)
--		mesh_net_set_proxy_mode(node->net, mode == MESH_MODE_ENABLED);
--
--	mode = node->friend;
--	if (mode == MESH_MODE_ENABLED || mode == MESH_MODE_DISABLED)
--		mesh_net_set_friend_mode(node->net, mode == MESH_MODE_ENABLED);
--
--	mode = node->relay.mode;
--	if (mode == MESH_MODE_ENABLED || mode == MESH_MODE_DISABLED)
--		mesh_net_set_relay_mode(node->net, mode == MESH_MODE_ENABLED,
--					node->relay.cnt, node->relay.interval);
--
--	mode = node->beacon;
--	if (mode == MESH_MODE_ENABLED || mode == MESH_MODE_DISABLED)
--		mesh_net_set_beacon_mode(node->net, mode == MESH_MODE_ENABLED);
-+	update_net_settings(node);
- 
- 	/* Initialize configuration server model */
- 	cfgmod_server_init(node, PRIMARY_ELE_IDX);
-@@ -1383,6 +1390,8 @@ static bool add_local_node(struct mesh_node *node, uint16_t unicast, bool kr,
- 			return false;
- 	}
- 
-+	update_net_settings(node);
-+
- 	mesh_config_save(node->cfg, true, NULL, NULL);
- 
- 	/* Initialize configuration server model */
--- 
-2.21.0
+> hi Kevin,
+>
+>
+> On 12/6/19 1:58 AM, Kevin Hilman wrote:
+>> Guillaume La Roque <glaroque@baylibre.com> writes:
+>>
+>>> Actually IRQ can be found from GPIO but all platorms don't support
+>> nit: s/platorms/platforms/
+> will fix in v3
+>>> gpiod_to_irq, it's the case on amlogic chip.
+>>> so to have possibility to use interrupt mode we need to add interrupts
+>>> field in node and support it in driver.
+>>>
+>>> Signed-off-by: Guillaume La Roque <glaroque@baylibre.com>
+>>> ---
+>>> sorry for noise,
+>>>
+>>> v2 is for rebasing on master branch
+>>>
+>>> guillaume
+>>>
+>>>  drivers/bluetooth/hci_bcm.c | 3 +++
+>>>  1 file changed, 3 insertions(+)
+>>>
+>>> diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
+>>> index f8f5c593a05c..9f52d57c56de 100644
+>>> --- a/drivers/bluetooth/hci_bcm.c
+>>> +++ b/drivers/bluetooth/hci_bcm.c
+>>> @@ -1409,6 +1409,7 @@ static int bcm_serdev_probe(struct serdev_device =
+*serdev)
+>>>  {
+>>>  	struct bcm_device *bcmdev;
+>>>  	const struct bcm_device_data *data;
+>>> +	struct platform_device *pdev;
+>>>  	int err;
+>>>=20=20
+>>>  	bcmdev =3D devm_kzalloc(&serdev->dev, sizeof(*bcmdev), GFP_KERNEL);
+>>> @@ -1421,6 +1422,8 @@ static int bcm_serdev_probe(struct serdev_device =
+*serdev)
+>>>  #endif
+>>>  	bcmdev->serdev_hu.serdev =3D serdev;
+>>>  	serdev_device_set_drvdata(serdev, bcmdev);
+>>> +	pdev =3D to_platform_device(bcmdev->dev);
+>>> +	bcmdev->irq =3D platform_get_irq(pdev, 0);
+>> I don't know this driver well enough to be sure, but don't you need some
+>> error checking here?
+>>
+>> If this fails (on platforms with no IRQ defined), is an error code in
+>> bcmdev->irq going to affect later code that tries to setup IRQs?
+>
+> not needed to do something here because=C2=A0 bcm_get_resources function =
+check irq <=3D0 if yes it check if host-wakeup gpio was defined in node and=
+ try a gpiod_to_irq.
+>
+> at the end in bcm_request_irq function i check if irq <=3D0 if yes return=
+ EOPNOTSUPP
+>
 
+OK, sounds good.  Thanks for clarifying.
+
+Kevin
