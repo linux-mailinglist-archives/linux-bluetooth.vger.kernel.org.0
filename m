@@ -2,29 +2,29 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 624DA1186A6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 12:41:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C3961186AB
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 12:41:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727412AbfLJLlY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S1727504AbfLJLlY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Tue, 10 Dec 2019 06:41:24 -0500
 Received: from mga07.intel.com ([134.134.136.100]:28846 "EHLO mga07.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727116AbfLJLlX (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Dec 2019 06:41:23 -0500
+        id S1727116AbfLJLlY (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 10 Dec 2019 06:41:24 -0500
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 Dec 2019 03:41:22 -0800
+  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 Dec 2019 03:41:24 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.69,299,1571727600"; 
-   d="scan'208";a="210420792"
+   d="scan'208";a="210420796"
 Received: from unknown (HELO ajay-desktop.iind.intel.com) ([10.223.96.133])
-  by fmsmga008.fm.intel.com with ESMTP; 10 Dec 2019 03:41:21 -0800
+  by fmsmga008.fm.intel.com with ESMTP; 10 Dec 2019 03:41:23 -0800
 From:   Ajay Kishore <ajay.kishore@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 2/5] obexd: Add parsers for conversation filters
-Date:   Tue, 10 Dec 2019 16:46:58 +0530
-Message-Id: <1575976621-11019-2-git-send-email-ajay.kishore@intel.com>
+Subject: [PATCH 3/5] obexd: Get conversation listings
+Date:   Tue, 10 Dec 2019 16:46:59 +0530
+Message-Id: <1575976621-11019-3-git-send-email-ajay.kishore@intel.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1575976621-11019-1-git-send-email-ajay.kishore@intel.com>
 References: <1575976621-11019-1-git-send-email-ajay.kishore@intel.com>
@@ -33,135 +33,139 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Changes made to add a new method to parse the map conversation filters.
-Filters LastActivityBegin and LastActivityEnd is used to filter the
-conversations that are returned in the Conversation-Listing object by
-LastActivity.
+Changes made to build get conversation listing command and its
+respective callback function to handle response for conversation
+listing.
 
 Co-authored-by: Bharat Bhusan Panda <bharat.b.panda@intel.com>
 Signed-off-by: Ajay Kishore <ajay.kishore@intel.com>
 ---
- obexd/client/map.c | 66 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
- obexd/src/map_ap.h |  3 +++
- 2 files changed, 67 insertions(+), 2 deletions(-)
+ obexd/client/map.c | 98 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 96 insertions(+), 2 deletions(-)
 
 diff --git a/obexd/client/map.c b/obexd/client/map.c
-index 57ca77e..9464606 100644
+index 9464606..f2f2b73 100644
 --- a/obexd/client/map.c
 +++ b/obexd/client/map.c
-@@ -1370,6 +1370,21 @@ static GObexApparam *parse_filter_type(GObexApparam *apparam,
- 									types);
+@@ -1222,6 +1222,64 @@ clean:
+ 	pending_request_free(request);
  }
  
-+static GObexApparam *parse_la_begin(GObexApparam *apparam,
-+							DBusMessageIter *iter)
++static void conversation_listing_cb(struct obc_session *session,
++						struct obc_transfer *transfer,
++						GError *err, void *user_data)
 +{
-+	const char *string;
++	struct pending_request *request = user_data;
++	struct map_parser *parser;
++	GMarkupParseContext *ctxt;
++	DBusMessage *reply;
++	DBusMessageIter iter, array;
++	char *contents;
++	size_t size;
++	int perr;
 +
-+	if (dbus_message_iter_get_arg_type(iter) != DBUS_TYPE_STRING)
-+		return NULL;
++	if (err != NULL) {
++		reply = g_dbus_create_error(request->msg,
++						ERROR_INTERFACE ".Failed",
++						"%s", err->message);
++		goto done;
++	}
 +
-+	dbus_message_iter_get_basic(iter, &string);
++	perr = obc_transfer_get_contents(transfer, &contents, &size);
++	if (perr < 0) {
++		reply = g_dbus_create_error(request->msg,
++						ERROR_INTERFACE ".Failed",
++						"Error reading contents: %s",
++						strerror(-perr));
++		goto done;
++	}
 +
-+	return g_obex_apparam_set_string(apparam,
-+					MAP_AP_FILTERLASTACTIVITYBEGIN,
-+					string);
++	reply = dbus_message_new_method_return(request->msg);
++	if (reply == NULL) {
++		g_free(contents);
++		goto clean;
++	}
++
++	dbus_message_iter_init_append(reply, &iter);
++	dbus_message_iter_open_container(&iter, DBUS_TYPE_ARRAY,
++					DBUS_DICT_ENTRY_BEGIN_CHAR_AS_STRING
++					DBUS_TYPE_OBJECT_PATH_AS_STRING
++					DBUS_TYPE_ARRAY_AS_STRING
++					DBUS_DICT_ENTRY_BEGIN_CHAR_AS_STRING
++					DBUS_TYPE_STRING_AS_STRING
++					DBUS_TYPE_VARIANT_AS_STRING
++					DBUS_DICT_ENTRY_END_CHAR_AS_STRING
++					DBUS_DICT_ENTRY_END_CHAR_AS_STRING,
++					&array);
++
++	dbus_message_iter_close_container(&iter, &array);
++	g_free(contents);
++
++done:
++	if (convo_element_end)
++		if (g_dbus_send_message(conn, reply))
++			convo_element_end = FALSE;
++clean:
++	pending_request_free(request);
 +}
 +
- static GObexApparam *parse_period_begin(GObexApparam *apparam,
- 							DBusMessageIter *iter)
+ static char *get_absolute_folder(struct map_data *map, const char *subfolder)
  {
-@@ -1398,6 +1413,20 @@ static GObexApparam *parse_period_end(GObexApparam *apparam,
- 								string);
+ 	const char *root = obc_session_get_folder(map->session);
+@@ -1270,6 +1328,43 @@ fail:
+ 	return reply;
  }
  
-+static GObexApparam *parse_la_end(GObexApparam *apparam,
-+						DBusMessageIter *iter)
++static DBusMessage *get_conversations_listing(struct map_data *map,
++							DBusMessage *message,
++							const char *folder,
++							GObexApparam *apparam)
 +{
-+	const char *string;
++	struct pending_request *request;
++	struct obc_transfer *transfer;
++	GError *err = NULL;
++	DBusMessage *reply;
 +
-+	if (dbus_message_iter_get_arg_type(iter) != DBUS_TYPE_STRING)
-+		return NULL;
++	transfer = obc_transfer_get("x-bt/MAP-convo-listing", folder, NULL,
++									&err);
 +
-+	dbus_message_iter_get_basic(iter, &string);
++	if (transfer == NULL) {
++		g_obex_apparam_free(apparam);
++		goto fail;
++	}
++	obc_transfer_set_apparam(transfer, apparam);
 +
-+	return g_obex_apparam_set_string(apparam, MAP_AP_FILTERLASTACTIVITYEND,
-+								string);
++	request = pending_request_new(map, message);
++	request->folder = get_absolute_folder(map, folder);
++
++	if (!obc_session_queue(map->session, transfer,
++				conversation_listing_cb, request, &err)) {
++		pending_request_free(request);
++		goto fail;
++	}
++
++	return NULL;
++
++fail:
++	reply = g_dbus_create_error(message, ERROR_INTERFACE ".Failed", "%s",
++								err->message);
++	g_error_free(err);
++	return reply;
 +}
 +
- static GObexApparam *parse_filter_read(GObexApparam *apparam,
+ static GObexApparam *parse_subject_length(GObexApparam *apparam,
  							DBusMessageIter *iter)
  {
-@@ -1561,6 +1590,19 @@ static DBusMessage *map_list_messages(DBusConnection *connection,
- 	return get_message_listing(map, message, folder, apparam);
- }
- 
-+static GObexApparam *parse_filter_conv_id(GObexApparam *apparam,
-+							DBusMessageIter *iter)
-+{
-+	guint8 id;
-+
-+	if (dbus_message_iter_get_arg_type(iter) != DBUS_TYPE_BYTE)
-+		return NULL;
-+
-+	dbus_message_iter_get_basic(iter, &id);
-+
-+	return g_obex_apparam_set_uint8(apparam, MAP_AP_CONVERSATIONID, id);
-+}
-+
- static GObexApparam *parse_conversation_filters(GObexApparam *apparam,
- 							DBusMessageIter *iter)
- {
-@@ -1583,8 +1625,28 @@ static GObexApparam *parse_conversation_filters(GObexApparam *apparam,
- 		dbus_message_iter_next(&entry);
- 		dbus_message_iter_recurse(&entry, &value);
- 
--		/* TODO: Parse conversation filters */
--
-+		if (strcasecmp(key, "Offset") == 0) {
-+			if (parse_offset(apparam, &value) == NULL)
-+				return NULL;
-+		} else if (strcasecmp(key, "MaxCount") == 0) {
-+			if (parse_max_count(apparam, &value) == NULL)
-+				return NULL;
-+		} else if (strcasecmp(key, "LastActivityBegin") == 0) {
-+			if (parse_la_begin(apparam, &value) == NULL)
-+				return NULL;
-+		} else if (strcasecmp(key, "FilterLastActivityEnd") == 0) {
-+			if (parse_la_end(apparam, &value) == NULL)
-+				return NULL;
-+		} else if (strcasecmp(key, "Read") == 0) {
-+			if (parse_filter_read(apparam, &value) == NULL)
-+				return NULL;
-+		} else if (strcasecmp(key, "Recipient") == 0) {
-+			if (parse_filter_recipient(apparam, &value) == NULL)
-+				return NULL;
-+		} else if (strcasecmp(key, "ConversationId") == 0) {
-+			if (parse_filter_conv_id(apparam, &value) == NULL)
-+				return NULL;
-+		}
- 		dbus_message_iter_next(&array);
+@@ -1682,8 +1777,7 @@ static DBusMessage *map_list_conversations(DBusConnection *connection,
+ 			ERROR_INTERFACE ".InvalidArguments", NULL);
  	}
- 	return apparam;
-diff --git a/obexd/src/map_ap.h b/obexd/src/map_ap.h
-index da108fe..3773859 100644
---- a/obexd/src/map_ap.h
-+++ b/obexd/src/map_ap.h
-@@ -31,6 +31,8 @@ enum map_ap_tag {
- 	MAP_AP_FILTERREADSTATUS		= 0x06,		/* uint8_t	*/
- 	MAP_AP_FILTERRECIPIENT		= 0x07,		/* char *	*/
- 	MAP_AP_FILTERORIGINATOR		= 0x08,		/* char *	*/
-+	MAP_AP_FILTERLASTACTIVITYBEGIN	= 0x08,		/* char *       */
-+	MAP_AP_FILTERLASTACTIVITYEND	= 0x09,		/* char *       */
- 	MAP_AP_FILTERPRIORITY		= 0x09,		/* uint8_t	*/
- 	MAP_AP_ATTACHMENT		= 0x0A,		/* uint8_t	*/
- 	MAP_AP_TRANSPARENT		= 0x0B,		/* uint8_t	*/
-@@ -48,4 +50,5 @@ enum map_ap_tag {
- 	MAP_AP_STATUSINDICATOR		= 0x17,		/* uint8_t	*/
- 	MAP_AP_STATUSVALUE		= 0x18,		/* uint8_t	*/
- 	MAP_AP_MSETIME			= 0x19,		/* char *	*/
-+	MAP_AP_CONVERSATIONID		= 0x1C,		/* uint32_t     */
- };
+ 
+-	/*TODO: Return conversation listing */
+-	return NULL;
++	return get_conversations_listing(map, message, folder, apparam);
+ }
+ 
+ static char **get_filter_strs(uint64_t filter, int *size)
 -- 
 2.7.4
 
