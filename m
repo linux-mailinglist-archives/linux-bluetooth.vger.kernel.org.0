@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EC1521198A1
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 22:45:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C354A11991F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 22:46:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729812AbfLJVdl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 Dec 2019 16:33:41 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38168 "EHLO mail.kernel.org"
+        id S1728845AbfLJVnC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 Dec 2019 16:43:02 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38350 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729785AbfLJVdk (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Dec 2019 16:33:40 -0500
+        id S1727310AbfLJVdq (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 10 Dec 2019 16:33:46 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 22827207FF;
-        Tue, 10 Dec 2019 21:33:39 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7FDCD2465B;
+        Tue, 10 Dec 2019 21:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576013619;
-        bh=VU0r/1dwObPA/iBY5BuKPXL3uDNx9KftXifGIMKgdKU=;
+        s=default; t=1576013626;
+        bh=M0d+gOqWSOd0I8oIkrNJWdjHyP0Kdwz5xGK+Eo5egks=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=KTRv4MSNilkqYDSDd74c68GkIxIo+D69xLd+rmRr4jMOiERHk95zBtebPS5QaIlSl
-         M8RN8dWMthyAXjuZUEX2geiZ0bBWZBg5obytpjSpr1XCz5Rwg7RXeryTj7hk7i3HDM
-         QPtchkXqZe15l0ZKwgSXF8RD7Habywwq9NwkbK3Q=
+        b=tzmL8pSJBLVmR+G1BRIoNDvIZIK/W1fVO0xGwn+Twgs0dRkqV3RM965JEtIZ8lnkH
+         Tb6S6rbpW/gpzxOFvziuO6y+dBvumV6ecCoSHNhqBRIifl+KjFv7b5TDJFNn2KptvN
+         gkt6pTRMThkGF3fb03zVhBY8OUh3nrJQ2wr5rdKM=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+Cc:     Stefan Wahren <wahrenst@gmx.net>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 064/177] Bluetooth: hci_core: fix init for HCI_USER_CHANNEL
-Date:   Tue, 10 Dec 2019 16:30:28 -0500
-Message-Id: <20191210213221.11921-64-sashal@kernel.org>
+        linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 068/177] Bluetooth: hci_bcm: Fix RTS handling during startup
+Date:   Tue, 10 Dec 2019 16:30:32 -0500
+Message-Id: <20191210213221.11921-68-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191210213221.11921-1-sashal@kernel.org>
 References: <20191210213221.11921-1-sashal@kernel.org>
@@ -44,50 +44,39 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit eb8c101e28496888a0dcfe16ab86a1bee369e820 ]
+[ Upstream commit 3347a80965b38f096b1d6f995c00c9c9e53d4b8b ]
 
-During the setup() stage, HCI device drivers expect the chip to
-acknowledge its setup() completion via vendor specific frames.
+The RPi 4 uses the hardware handshake lines for CYW43455, but the chip
+doesn't react to HCI requests during DT probe. The reason is the inproper
+handling of the RTS line during startup. According to the startup
+signaling sequence in the CYW43455 datasheet, the hosts RTS line must
+be driven after BT_REG_ON and BT_HOST_WAKE.
 
-If userspace opens() such HCI device in HCI_USER_CHANNEL [1] mode,
-the vendor specific frames are never tranmitted to the driver, as
-they are filtered in hci_rx_work().
-
-Allow HCI devices which operate in HCI_USER_CHANNEL mode to receive
-frames if the HCI device is is HCI_INIT state.
-
-[1] https://www.spinics.net/lists/linux-bluetooth/msg37345.html
-
-Fixes: 23500189d7e0 ("Bluetooth: Introduce new HCI socket channel for user operation")
-Signed-off-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/bluetooth/hci_bcm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index e0de9a609265a..e03faca84919e 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4330,7 +4330,14 @@ static void hci_rx_work(struct work_struct *work)
- 			hci_send_to_sock(hdev, skb);
- 		}
+diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
+index 59e5fc5eec8f8..b88cb7bf7f8ab 100644
+--- a/drivers/bluetooth/hci_bcm.c
++++ b/drivers/bluetooth/hci_bcm.c
+@@ -414,9 +414,11 @@ static int bcm_open(struct hci_uart *hu)
  
--		if (hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
-+		/* If the device has been opened in HCI_USER_CHANNEL,
-+		 * the userspace has exclusive access to device.
-+		 * When device is HCI_INIT, we still need to process
-+		 * the data packets to the driver in order
-+		 * to complete its setup().
-+		 */
-+		if (hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
-+		    !test_bit(HCI_INIT, &hdev->flags)) {
- 			kfree_skb(skb);
- 			continue;
- 		}
+ out:
+ 	if (bcm->dev) {
++		hci_uart_set_flow_control(hu, true);
+ 		hu->init_speed = bcm->dev->init_speed;
+ 		hu->oper_speed = bcm->dev->oper_speed;
+ 		err = bcm_gpio_set_power(bcm->dev, true);
++		hci_uart_set_flow_control(hu, false);
+ 		if (err)
+ 			goto err_unset_hu;
+ 	}
 -- 
 2.20.1
 
