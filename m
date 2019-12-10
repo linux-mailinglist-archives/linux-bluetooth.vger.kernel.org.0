@@ -2,108 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 39A48119C48
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 23:23:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6ECCA119E20
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 23:42:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727193AbfLJWXH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 Dec 2019 17:23:07 -0500
-Received: from hall.aurel32.net ([195.154.113.88]:33756 "EHLO hall.aurel32.net"
+        id S1728220AbfLJWbU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 Dec 2019 17:31:20 -0500
+Received: from mail.kernel.org ([198.145.29.99]:51314 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727075AbfLJWXH (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Dec 2019 17:23:07 -0500
-Received: from [2a01:e35:2fdd:a4e1:fe91:fc89:bc43:b814] (helo=ohm.rr44.fr)
-        by hall.aurel32.net with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <aurelien@aurel32.net>)
-        id 1ienuJ-0000gc-BN; Tue, 10 Dec 2019 23:23:03 +0100
-Received: from aurel32 by ohm.rr44.fr with local (Exim 4.92.3)
-        (envelope-from <aurelien@aurel32.net>)
-        id 1ienuI-003BiR-R5; Tue, 10 Dec 2019 23:23:02 +0100
-From:   Aurelien Jarno <aurelien@aurel32.net>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH BlueZ] tools/mesh-cfgclient: add friend get/set commands
-Date:   Tue, 10 Dec 2019 23:22:50 +0100
-Message-Id: <20191210222250.759969-1-aurelien@aurel32.net>
-X-Mailer: git-send-email 2.24.0
+        id S1728247AbfLJWbT (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 10 Dec 2019 17:31:19 -0500
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 21BC92077B;
+        Tue, 10 Dec 2019 22:31:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1576017078;
+        bh=8nkqA5g/vfpGYq285dCubfDGA9q/iGrdrGaEy2NlALA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Sfzj90VGF62PjqT9PPpdhpigXiKbwjMaLNUArovGyQJC629KLUecKJ0fGW2GrSmG6
+         anN1X4vsChrQAW9+BmxLmK+oBCxHDoQJF/NTbyeJbc1FvsuQcvnWzPwFSME0lBGOUU
+         3oiLUfcnSxdYjC2r3YZ0dk5sJjDyFqIU7I57PnEg=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.9 36/91] Bluetooth: hci_core: fix init for HCI_USER_CHANNEL
+Date:   Tue, 10 Dec 2019 17:29:40 -0500
+Message-Id: <20191210223035.14270-36-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191210223035.14270-1-sashal@kernel.org>
+References: <20191210223035.14270-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add friend-get and friend-set commands as per Mesh Profile 4.3.2.55,
-4.3.2.56 and 4.3.2.57.
----
- tools/mesh/cfgcli.c | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+From: Mattijs Korpershoek <mkorpershoek@baylibre.com>
 
-diff --git a/tools/mesh/cfgcli.c b/tools/mesh/cfgcli.c
-index ec9fabb3b..9020bb752 100644
---- a/tools/mesh/cfgcli.c
-+++ b/tools/mesh/cfgcli.c
-@@ -621,6 +621,15 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
- 				src, mesh_status_str(data[0]));
+[ Upstream commit eb8c101e28496888a0dcfe16ab86a1bee369e820 ]
+
+During the setup() stage, HCI device drivers expect the chip to
+acknowledge its setup() completion via vendor specific frames.
+
+If userspace opens() such HCI device in HCI_USER_CHANNEL [1] mode,
+the vendor specific frames are never tranmitted to the driver, as
+they are filtered in hci_rx_work().
+
+Allow HCI devices which operate in HCI_USER_CHANNEL mode to receive
+frames if the HCI device is is HCI_INIT state.
+
+[1] https://www.spinics.net/lists/linux-bluetooth/msg37345.html
+
+Fixes: 23500189d7e0 ("Bluetooth: Introduce new HCI socket channel for user operation")
+Signed-off-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/bluetooth/hci_core.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 4bd72d2fe4150..a70b078ceb3ca 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4180,7 +4180,14 @@ static void hci_rx_work(struct work_struct *work)
+ 			hci_send_to_sock(hdev, skb);
+ 		}
  
- 		break;
-+
-+	/* Per Mesh Profile 4.3.2.57 */
-+	case OP_CONFIG_FRIEND_STATUS:
-+		if (len != 1)
-+			return true;
-+
-+		bt_shell_printf("Node %4.4x Friend state 0x%02x\n",
-+				src, data[0]);
-+		break;
- 	}
- 
- 	return true;
-@@ -1310,6 +1319,33 @@ static void cmd_node_reset(int argc, char *argv[])
- 	cmd_default(OP_NODE_RESET);
- }
- 
-+static void cmd_friend_set(int argc, char *argv[])
-+{
-+	uint16_t n;
-+	uint8_t msg[2 + 1];
-+	int parm_cnt;
-+
-+	n = mesh_opcode_set(OP_CONFIG_FRIEND_SET, msg);
-+
-+	parm_cnt = read_input_parameters(argc, argv);
-+	if (parm_cnt != 1) {
-+		bt_shell_printf("bad arguments");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	msg[n++] = parms[0];
-+
-+	if (!config_send(msg, n, OP_CONFIG_FRIEND_SET))
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+
-+	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
-+}
-+
-+static void cmd_friend_get(int argc, char *argv[])
-+{
-+	cmd_default(OP_CONFIG_FRIEND_GET);
-+}
-+
- static bool tx_setup(model_send_msg_func_t send_func, void *user_data)
- {
- 	if (!send_func)
-@@ -1390,6 +1426,10 @@ static const struct bt_shell_menu cfg_menu = {
- 				"Get subscription"},
- 	{"node-reset", NULL, cmd_node_reset,
- 				"Reset a node and remove it from network"},
-+	{"friend-set", "<friend>", cmd_friend_set,
-+				"Set friend state"},
-+	{"friend-get", NULL, cmd_friend_get,
-+				"Get friend state"},
- 	{} },
- };
- 
+-		if (hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
++		/* If the device has been opened in HCI_USER_CHANNEL,
++		 * the userspace has exclusive access to device.
++		 * When device is HCI_INIT, we still need to process
++		 * the data packets to the driver in order
++		 * to complete its setup().
++		 */
++		if (hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
++		    !test_bit(HCI_INIT, &hdev->flags)) {
+ 			kfree_skb(skb);
+ 			continue;
+ 		}
 -- 
-2.24.0
+2.20.1
 
