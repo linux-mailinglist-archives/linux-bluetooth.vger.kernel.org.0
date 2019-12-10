@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C354A11991F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 22:46:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF13F1198BF
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 22:45:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728845AbfLJVnC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 Dec 2019 16:43:02 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38350 "EHLO mail.kernel.org"
+        id S1730001AbfLJVeU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 Dec 2019 16:34:20 -0500
+Received: from mail.kernel.org ([198.145.29.99]:39352 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727310AbfLJVdq (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Dec 2019 16:33:46 -0500
+        id S1728402AbfLJVeT (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 10 Dec 2019 16:34:19 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7FDCD2465B;
-        Tue, 10 Dec 2019 21:33:45 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5FA2324654;
+        Tue, 10 Dec 2019 21:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576013626;
-        bh=M0d+gOqWSOd0I8oIkrNJWdjHyP0Kdwz5xGK+Eo5egks=;
+        s=default; t=1576013659;
+        bh=ykKCGCn8/3t67A1Ya/4CAb5bkolOeo9qOFYnfKkRN8c=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tzmL8pSJBLVmR+G1BRIoNDvIZIK/W1fVO0xGwn+Twgs0dRkqV3RM965JEtIZ8lnkH
-         Tb6S6rbpW/gpzxOFvziuO6y+dBvumV6ecCoSHNhqBRIifl+KjFv7b5TDJFNn2KptvN
-         gkt6pTRMThkGF3fb03zVhBY8OUh3nrJQ2wr5rdKM=
+        b=mumTng4KbfrCJ5EASheNpQWolfviMdbE1iYef1PHw0eyy9YgpYVC0FuxqYFOquflG
+         6nKEAW15pVjEV3GYiAMLvc/ci302O0hps/SIlR2O4vWTW/QtHsZWQ9qED8CKGIIKtC
+         V6EhKDxXgKpinUNAXhiyrZohduQ6AOfrVMZhibzY=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stefan Wahren <wahrenst@gmx.net>,
-        Marcel Holtmann <marcel@holtmann.org>,
+Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        Johan Hedberg <johan.hedberg@intel.com>,
         Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 068/177] Bluetooth: hci_bcm: Fix RTS handling during startup
-Date:   Tue, 10 Dec 2019 16:30:32 -0500
-Message-Id: <20191210213221.11921-68-sashal@kernel.org>
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 097/177] Bluetooth: Fix advertising duplicated flags
+Date:   Tue, 10 Dec 2019 16:31:01 -0500
+Message-Id: <20191210213221.11921-97-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191210213221.11921-1-sashal@kernel.org>
 References: <20191210213221.11921-1-sashal@kernel.org>
@@ -44,39 +44,58 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 3347a80965b38f096b1d6f995c00c9c9e53d4b8b ]
+[ Upstream commit 6012b9346d8959194c239fd60a62dfec98d43048 ]
 
-The RPi 4 uses the hardware handshake lines for CYW43455, but the chip
-doesn't react to HCI requests during DT probe. The reason is the inproper
-handling of the RTS line during startup. According to the startup
-signaling sequence in the CYW43455 datasheet, the hosts RTS line must
-be driven after BT_REG_ON and BT_HOST_WAKE.
+Instances may have flags set as part of its data in which case the code
+should not attempt to add it again otherwise it can cause duplication:
 
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 35
+        Handle: 0x00
+        Operation: Complete extended advertising data (0x03)
+        Fragment preference: Minimize fragmentation (0x01)
+        Data length: 0x06
+        Flags: 0x04
+          BR/EDR Not Supported
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Johan Hedberg <johan.hedberg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_bcm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_request.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
-index 59e5fc5eec8f8..b88cb7bf7f8ab 100644
---- a/drivers/bluetooth/hci_bcm.c
-+++ b/drivers/bluetooth/hci_bcm.c
-@@ -414,9 +414,11 @@ static int bcm_open(struct hci_uart *hu)
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index 9448ebd3780a3..a8ddd211e94c2 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -1258,6 +1258,14 @@ static u8 create_instance_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
  
- out:
- 	if (bcm->dev) {
-+		hci_uart_set_flow_control(hu, true);
- 		hu->init_speed = bcm->dev->init_speed;
- 		hu->oper_speed = bcm->dev->oper_speed;
- 		err = bcm_gpio_set_power(bcm->dev, true);
-+		hci_uart_set_flow_control(hu, false);
- 		if (err)
- 			goto err_unset_hu;
+ 	instance_flags = get_adv_instance_flags(hdev, instance);
+ 
++	/* If instance already has the flags set skip adding it once
++	 * again.
++	 */
++	if (adv_instance && eir_get_data(adv_instance->adv_data,
++					 adv_instance->adv_data_len, EIR_FLAGS,
++					 NULL))
++		goto skip_flags;
++
+ 	/* The Add Advertising command allows userspace to set both the general
+ 	 * and limited discoverable flags.
+ 	 */
+@@ -1290,6 +1298,7 @@ static u8 create_instance_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
+ 		}
  	}
+ 
++skip_flags:
+ 	if (adv_instance) {
+ 		memcpy(ptr, adv_instance->adv_data,
+ 		       adv_instance->adv_data_len);
 -- 
 2.20.1
 
