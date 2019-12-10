@@ -2,39 +2,39 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 14A76119718
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 22:31:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A5C0611989C
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 22:45:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727289AbfLJVbM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 Dec 2019 16:31:12 -0500
-Received: from mail.kernel.org ([198.145.29.99]:58310 "EHLO mail.kernel.org"
+        id S1729797AbfLJVdk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 Dec 2019 16:33:40 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38110 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728219AbfLJVJg (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Dec 2019 16:09:36 -0500
+        id S1729780AbfLJVdi (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 10 Dec 2019 16:33:38 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D725C24696;
-        Tue, 10 Dec 2019 21:09:34 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9EAA5214AF;
+        Tue, 10 Dec 2019 21:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576012175;
-        bh=cwMBLvP+bQjJKU19Fc8UeIkvvtMAGhEI2YS6+LSkA4I=;
+        s=default; t=1576013617;
+        bh=8P3TtMsefHilumjF2q4Tw8inPFntUz/MU5VFocLHRiE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=vx51UUgKJf5tVdz84/5NsIjQko/aEw+SjKkQyre6iDycN7Dh4RgkXIl9Cmt0GSeg1
-         BbVFe0s3r66z8zbMRASO9ACiaSiA2V1L4r4meN/mUNpb7OtIb7vJQG5aWPv+KjjSNQ
-         WwcF1HLdRlnYndsNZi0o/Hfd65EWXHh5Le7Gwt/I=
+        b=rFn8Srs4Cd5Vo3C+rcqCRxKCHbd+8pu7/4QOePFcKBekynVSM6hSPQC1Bpc0TZ5Rr
+         a4npnrVihufvuq2eIBscNYfQBq8Be9Z5m5E2kaI3eee0dt34Bs+2FkvOMhwFVqw3Mr
+         tVt0C6JIstQJoIiemQTptP74JRilmr3o7+KwDvkw=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stefan Wahren <wahrenst@gmx.net>,
+Cc:     "Ben Dooks (Codethink)" <ben.dooks@codethink.co.uk>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 133/350] Bluetooth: hci_bcm: Fix RTS handling during startup
-Date:   Tue, 10 Dec 2019 16:03:58 -0500
-Message-Id: <20191210210735.9077-94-sashal@kernel.org>
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 062/177] Bluetooth: missed cpu_to_le16 conversion in hci_init4_req
+Date:   Tue, 10 Dec 2019 16:30:26 -0500
+Message-Id: <20191210213221.11921-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191210210735.9077-1-sashal@kernel.org>
-References: <20191210210735.9077-1-sashal@kernel.org>
+In-Reply-To: <20191210213221.11921-1-sashal@kernel.org>
+References: <20191210213221.11921-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -44,39 +44,46 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: "Ben Dooks (Codethink)" <ben.dooks@codethink.co.uk>
 
-[ Upstream commit 3347a80965b38f096b1d6f995c00c9c9e53d4b8b ]
+[ Upstream commit 727ea61a5028f8ac96f75ab34cb1b56e63fd9227 ]
 
-The RPi 4 uses the hardware handshake lines for CYW43455, but the chip
-doesn't react to HCI requests during DT probe. The reason is the inproper
-handling of the RTS line during startup. According to the startup
-signaling sequence in the CYW43455 datasheet, the hosts RTS line must
-be driven after BT_REG_ON and BT_HOST_WAKE.
+It looks like in hci_init4_req() the request is being
+initialised from cpu-endian data but the packet is specified
+to be little-endian. This causes an warning from sparse due
+to __le16 to u16 conversion.
 
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Fix this by using cpu_to_le16() on the two fields in the packet.
+
+net/bluetooth/hci_core.c:845:27: warning: incorrect type in assignment (different base types)
+net/bluetooth/hci_core.c:845:27:    expected restricted __le16 [usertype] tx_len
+net/bluetooth/hci_core.c:845:27:    got unsigned short [usertype] le_max_tx_len
+net/bluetooth/hci_core.c:846:28: warning: incorrect type in assignment (different base types)
+net/bluetooth/hci_core.c:846:28:    expected restricted __le16 [usertype] tx_time
+net/bluetooth/hci_core.c:846:28:    got unsigned short [usertype] le_max_tx_time
+
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_bcm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
-index 7646636f2d183..0f73f6a686cb7 100644
---- a/drivers/bluetooth/hci_bcm.c
-+++ b/drivers/bluetooth/hci_bcm.c
-@@ -445,9 +445,11 @@ static int bcm_open(struct hci_uart *hu)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 5afd67ef797a6..e0de9a609265a 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -841,8 +841,8 @@ static int hci_init4_req(struct hci_request *req, unsigned long opt)
+ 	if (hdev->le_features[0] & HCI_LE_DATA_LEN_EXT) {
+ 		struct hci_cp_le_write_def_data_len cp;
  
- out:
- 	if (bcm->dev) {
-+		hci_uart_set_flow_control(hu, true);
- 		hu->init_speed = bcm->dev->init_speed;
- 		hu->oper_speed = bcm->dev->oper_speed;
- 		err = bcm_gpio_set_power(bcm->dev, true);
-+		hci_uart_set_flow_control(hu, false);
- 		if (err)
- 			goto err_unset_hu;
+-		cp.tx_len = hdev->le_max_tx_len;
+-		cp.tx_time = hdev->le_max_tx_time;
++		cp.tx_len = cpu_to_le16(hdev->le_max_tx_len);
++		cp.tx_time = cpu_to_le16(hdev->le_max_tx_time);
+ 		hci_req_add(req, HCI_OP_LE_WRITE_DEF_DATA_LEN, sizeof(cp), &cp);
  	}
+ 
 -- 
 2.20.1
 
