@@ -2,100 +2,108 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B3499119AE3
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 23:10:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39A48119C48
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Dec 2019 23:23:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728817AbfLJWE1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 Dec 2019 17:04:27 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35318 "EHLO mail.kernel.org"
+        id S1727193AbfLJWXH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 Dec 2019 17:23:07 -0500
+Received: from hall.aurel32.net ([195.154.113.88]:33756 "EHLO hall.aurel32.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728799AbfLJWE1 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Dec 2019 17:04:27 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BA1642077B;
-        Tue, 10 Dec 2019 22:04:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576015466;
-        bh=iW6TLmpx7HmLQxCAY8JyfPKnD48fcWu02dpX9UrUyyM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MsNBPMfUAGwV2hsUCfrgKkmnGZKAUR4uSqNSnJZCxgghn52heC/IU6PkC0vPOvXga
-         /ydyCGRKR3ocI6K7WuIPLYrE0ggHYNEuf9dVzP5o+WP5lAQiDqG0J3KCu4CROIQ3Z7
-         MqA9Cw2NG7pT/bi7TSzISR2eKJT8Xu1H6iuIqFsk=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Johan Hedberg <johan.hedberg@intel.com>,
-        Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 072/130] Bluetooth: Fix advertising duplicated flags
-Date:   Tue, 10 Dec 2019 17:02:03 -0500
-Message-Id: <20191210220301.13262-72-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191210220301.13262-1-sashal@kernel.org>
-References: <20191210220301.13262-1-sashal@kernel.org>
+        id S1727075AbfLJWXH (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 10 Dec 2019 17:23:07 -0500
+Received: from [2a01:e35:2fdd:a4e1:fe91:fc89:bc43:b814] (helo=ohm.rr44.fr)
+        by hall.aurel32.net with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <aurelien@aurel32.net>)
+        id 1ienuJ-0000gc-BN; Tue, 10 Dec 2019 23:23:03 +0100
+Received: from aurel32 by ohm.rr44.fr with local (Exim 4.92.3)
+        (envelope-from <aurelien@aurel32.net>)
+        id 1ienuI-003BiR-R5; Tue, 10 Dec 2019 23:23:02 +0100
+From:   Aurelien Jarno <aurelien@aurel32.net>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, Aurelien Jarno <aurelien@aurel32.net>
+Subject: [PATCH BlueZ] tools/mesh-cfgclient: add friend get/set commands
+Date:   Tue, 10 Dec 2019 23:22:50 +0100
+Message-Id: <20191210222250.759969-1-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-
-[ Upstream commit 6012b9346d8959194c239fd60a62dfec98d43048 ]
-
-Instances may have flags set as part of its data in which case the code
-should not attempt to add it again otherwise it can cause duplication:
-
-< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 35
-        Handle: 0x00
-        Operation: Complete extended advertising data (0x03)
-        Fragment preference: Minimize fragmentation (0x01)
-        Data length: 0x06
-        Flags: 0x04
-          BR/EDR Not Supported
-        Flags: 0x06
-          LE General Discoverable Mode
-          BR/EDR Not Supported
-
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Johan Hedberg <johan.hedberg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add friend-get and friend-set commands as per Mesh Profile 4.3.2.55,
+4.3.2.56 and 4.3.2.57.
 ---
- net/bluetooth/hci_request.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tools/mesh/cfgcli.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index b73ac149de34f..759329bec399c 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -1095,6 +1095,14 @@ static u8 create_instance_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
+diff --git a/tools/mesh/cfgcli.c b/tools/mesh/cfgcli.c
+index ec9fabb3b..9020bb752 100644
+--- a/tools/mesh/cfgcli.c
++++ b/tools/mesh/cfgcli.c
+@@ -621,6 +621,15 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 				src, mesh_status_str(data[0]));
  
- 	instance_flags = get_adv_instance_flags(hdev, instance);
- 
-+	/* If instance already has the flags set skip adding it once
-+	 * again.
-+	 */
-+	if (adv_instance && eir_get_data(adv_instance->adv_data,
-+					 adv_instance->adv_data_len, EIR_FLAGS,
-+					 NULL))
-+		goto skip_flags;
+ 		break;
 +
- 	/* The Add Advertising command allows userspace to set both the general
- 	 * and limited discoverable flags.
- 	 */
-@@ -1127,6 +1135,7 @@ static u8 create_instance_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
- 		}
++	/* Per Mesh Profile 4.3.2.57 */
++	case OP_CONFIG_FRIEND_STATUS:
++		if (len != 1)
++			return true;
++
++		bt_shell_printf("Node %4.4x Friend state 0x%02x\n",
++				src, data[0]);
++		break;
  	}
  
-+skip_flags:
- 	if (adv_instance) {
- 		memcpy(ptr, adv_instance->adv_data,
- 		       adv_instance->adv_data_len);
+ 	return true;
+@@ -1310,6 +1319,33 @@ static void cmd_node_reset(int argc, char *argv[])
+ 	cmd_default(OP_NODE_RESET);
+ }
+ 
++static void cmd_friend_set(int argc, char *argv[])
++{
++	uint16_t n;
++	uint8_t msg[2 + 1];
++	int parm_cnt;
++
++	n = mesh_opcode_set(OP_CONFIG_FRIEND_SET, msg);
++
++	parm_cnt = read_input_parameters(argc, argv);
++	if (parm_cnt != 1) {
++		bt_shell_printf("bad arguments");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	msg[n++] = parms[0];
++
++	if (!config_send(msg, n, OP_CONFIG_FRIEND_SET))
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
++static void cmd_friend_get(int argc, char *argv[])
++{
++	cmd_default(OP_CONFIG_FRIEND_GET);
++}
++
+ static bool tx_setup(model_send_msg_func_t send_func, void *user_data)
+ {
+ 	if (!send_func)
+@@ -1390,6 +1426,10 @@ static const struct bt_shell_menu cfg_menu = {
+ 				"Get subscription"},
+ 	{"node-reset", NULL, cmd_node_reset,
+ 				"Reset a node and remove it from network"},
++	{"friend-set", "<friend>", cmd_friend_set,
++				"Set friend state"},
++	{"friend-get", NULL, cmd_friend_get,
++				"Get friend state"},
+ 	{} },
+ };
+ 
 -- 
-2.20.1
+2.24.0
 
