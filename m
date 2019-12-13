@@ -2,95 +2,99 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C9D4711E628
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Dec 2019 16:07:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC26411E7F9
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Dec 2019 17:19:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727915AbfLMPG2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 13 Dec 2019 10:06:28 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51897 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727898AbfLMPG2 (ORCPT
+        id S1728173AbfLMQTE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 13 Dec 2019 11:19:04 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:37299 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728133AbfLMQTE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 13 Dec 2019 10:06:28 -0500
-Received: by mail-wm1-f65.google.com with SMTP id d73so6733540wmd.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 13 Dec 2019 07:06:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zVYjiV40raA+irtPup6zp1Dmv8nl1xIXsEkpKqD3rgw=;
-        b=VeFLq+4GpUuwpIm90GS0n+hEPfFGzcbuhoIB0PM5nLufjs0UAfX9PJL3hA51N4VKOl
-         KfIk7UqTTPWyv/FbJiHdlziFU9wiXJEe8kRbbtdo7a1/dXo+JadmcXvd3qgaJa6NnHH4
-         V721mn7ZWI4UxXXLVhSQcflSljmixpbeVRaxciGrQCo8vQL3Ekl4W6G6bttZXcfPqpGw
-         nl8fiqqoeW08/a1RsvvMYeI7LUdExZsICrcXJkfTXH9m/MqEuiMPZT+2s2mn8qN10QAy
-         IKy1LrFLquP54fjqKaUjY8orntPErL+P19XiJy1DT2AErcjaLDkeopvqAjzGFDin2dbd
-         A39A==
+        Fri, 13 Dec 2019 11:19:04 -0500
+Received: by mail-lf1-f66.google.com with SMTP id b15so2374429lfc.4;
+        Fri, 13 Dec 2019 08:19:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=zVYjiV40raA+irtPup6zp1Dmv8nl1xIXsEkpKqD3rgw=;
-        b=bK9f2iiz3quZwvecEA8LI24B9x1FTzTFqHVm2w5qGgIoo+J8nutj80vsw+sl3nb7v5
-         MrMky45jUxsaKu5XT93Wyq0WWkY9zn1caIv5KMzrlV98MHS1UXXGyZP93DHPynr2hmSw
-         zvsKTmzm9WArbN8U4MpdulATyBjAsteWdOhTKmVEsk94ffbSehagcpdWIGGHiUMamLs9
-         mc/C+/sTyl/IVJhvSgtHBFHw3mBunvTa/CY14IUWuK+b1VtowkISxIEEi2Co6U9hnHh4
-         8KBlxxZOFSC5qc7726NPgZBDt7kBrp22S9jOwoUeNNkAAlFzmZ4ykZAJIrCTx2IvnKva
-         GINA==
-X-Gm-Message-State: APjAAAVp5W/aYlCtxdcNvGLY5v5fUh+s0+OmDYTEzuwKhSt013l+WFaK
-        uCSmXte+rO1clw9oEA9QrkUn+A==
-X-Google-Smtp-Source: APXvYqyhRx1/4GO9KdmDjWOPa8J6ecg/1XIViS8vFaLpiXkn64jYSGb3Q2OJaKQuE5yidzpFCAom9Q==
-X-Received: by 2002:a1c:7c18:: with SMTP id x24mr14127321wmc.21.1576249585996;
-        Fri, 13 Dec 2019 07:06:25 -0800 (PST)
-Received: from localhost.localdomain ([2a01:cb1d:6e7:d500:82a9:347a:43f3:d2ca])
-        by smtp.gmail.com with ESMTPSA id x16sm10449403wmk.35.2019.12.13.07.06.25
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Spg0GfwWFlnRUw0lvoa6ReBLhxIzcCxpK224qhBQrwk=;
+        b=fS2w9fx2/qyRZCSQ7ld1Lck5W9YGKEyko/GaYYX6zDuKFTKxUOCu6aHpYPM6/ts8A1
+         ul7fUEDNoCcdtsiQ973+hkTLseRh5wv2ZkeDw8YIXdSXWuuYuZUSAMJhvzUzuOO/zsLm
+         Akr89PDzpaRXp4ZB1mtf9yAGE6gi4vmouWVNWufSAfxFI0BqZYx7ogKVR85I3YL6MNWQ
+         b35KglaacnJtkFnNl0XKLp6wHNfQ7L51T5Q3TuleAMkidmYaAl+ytGgw/SsI+FUWRcrX
+         he4K41jJPHcdEfOP4sC404HHTi8VyA7hAAqGyxelvVh2yGjivw4B051wGzzM2refoJKd
+         E+RQ==
+X-Gm-Message-State: APjAAAW3GMI8WnEDkOixPA7WoyKNLgiX4I2MXt8cYeJ72Eb69awT/SEL
+        3qZojReauFarRlyqmFXAOn8=
+X-Google-Smtp-Source: APXvYqxnVkGEyfViuTjx4mMxFXlrRlIx6//9d0OuQRcfhBx2KniHpTnXbEebHTcjKF/40vT+3FGIaw==
+X-Received: by 2002:a05:6512:21d:: with SMTP id a29mr9741453lfo.186.1576253941800;
+        Fri, 13 Dec 2019 08:19:01 -0800 (PST)
+Received: from xi.terra (c-14b8e655.07-184-6d6c6d4.bbcust.telenor.se. [85.230.184.20])
+        by smtp.gmail.com with ESMTPSA id x13sm4778590lfe.48.2019.12.13.08.19.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Dec 2019 07:06:25 -0800 (PST)
-From:   Guillaume La Roque <glaroque@baylibre.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     netdev@vger.kernel.org, nsaenzjulienne@suse.de,
-        linux-kernel@vger.kernel.org, khilman@baylibre.com
-Subject: [PATCH v5 2/2] bluetooth: hci_bcm: enable IRQ capability from devicetree
-Date:   Fri, 13 Dec 2019 16:06:22 +0100
-Message-Id: <20191213150622.14162-3-glaroque@baylibre.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191213150622.14162-1-glaroque@baylibre.com>
+        Fri, 13 Dec 2019 08:19:00 -0800 (PST)
+Received: from johan by xi.terra with local (Exim 4.92.3)
+        (envelope-from <johan@kernel.org>)
+        id 1ifnef-0000iF-Bd; Fri, 13 Dec 2019 17:19:01 +0100
+Date:   Fri, 13 Dec 2019 17:19:01 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Guillaume La Roque <glaroque@baylibre.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
+        netdev@vger.kernel.org, nsaenzjulienne@suse.de,
+        linux-kernel@vger.kernel.org, khilman@baylibre.com,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v5 1/2] dt-bindings: net: bluetooth: add interrupts
+ properties
+Message-ID: <20191213161901.GZ10631@localhost>
 References: <20191213150622.14162-1-glaroque@baylibre.com>
+ <20191213150622.14162-2-glaroque@baylibre.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191213150622.14162-2-glaroque@baylibre.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Actually IRQ can be found from GPIO but all platforms don't support
-gpiod_to_irq, it's the case on amlogic chip.
-so to have possibility to use interrupt mode we need to add interrupts
-property in devicetree and support it in driver.
+On Fri, Dec 13, 2019 at 04:06:21PM +0100, Guillaume La Roque wrote:
+> add interrupts and interrupt-names as optional properties
+> to support host-wakeup by interrupt properties instead of
+> host-wakeup-gpios.
+> 
+> Signed-off-by: Guillaume La Roque <glaroque@baylibre.com>
+> ---
+>  Documentation/devicetree/bindings/net/broadcom-bluetooth.txt | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/broadcom-bluetooth.txt b/Documentation/devicetree/bindings/net/broadcom-bluetooth.txt
+> index b5eadee4a9a7..95912d979239 100644
+> --- a/Documentation/devicetree/bindings/net/broadcom-bluetooth.txt
+> +++ b/Documentation/devicetree/bindings/net/broadcom-bluetooth.txt
+> @@ -36,7 +36,9 @@ Optional properties:
+>      - pcm-frame-type: short, long
+>      - pcm-sync-mode: slave, master
+>      - pcm-clock-mode: slave, master
+> -
+> + - interrupts: must be one, used to wakeup the host processor if
+> +   gpiod_to_irq function not supported
 
-Signed-off-by: Guillaume La Roque <glaroque@baylibre.com>
----
- drivers/bluetooth/hci_bcm.c | 3 +++
- 1 file changed, 3 insertions(+)
+This is a Linux implementation detail which therefore doesn't belong in
+the binding.
 
-diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
-index f8f5c593a05c..99dee878b092 100644
---- a/drivers/bluetooth/hci_bcm.c
-+++ b/drivers/bluetooth/hci_bcm.c
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <linux/acpi.h>
- #include <linux/of.h>
-+#include <linux/of_irq.h>
- #include <linux/property.h>
- #include <linux/platform_data/x86/apple.h>
- #include <linux/platform_device.h>
-@@ -1144,6 +1145,8 @@ static int bcm_of_probe(struct bcm_device *bdev)
- 	device_property_read_u32(bdev->dev, "max-speed", &bdev->oper_speed);
- 	device_property_read_u8_array(bdev->dev, "brcm,bt-pcm-int-params",
- 				      bdev->pcm_int_params, 5);
-+	bdev->irq = of_irq_get_byname(bdev->dev->of_node, "host-wakeup");
-+
- 	return 0;
- }
- 
--- 
-2.17.1
+I think the general rule is to prefer interrupts over gpios where we
+have a choice, but here the current binding already has a
+host-wakeup-gpios.
 
+Not sure how best to handle that, maybe Rob knows.
+
+> + - interrupt-names: must be "host-wakeup"
+>  
+>  Example:
+
+Oh, and please keep people commenting on your patches on CC when you
+submit new versions.
+
+Johan
