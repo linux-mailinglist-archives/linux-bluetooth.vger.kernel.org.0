@@ -2,88 +2,94 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 81FE51246F8
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Dec 2019 13:37:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F39F9124B16
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Dec 2019 16:14:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726825AbfLRMhV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 18 Dec 2019 07:37:21 -0500
-Received: from mail-pj1-f52.google.com ([209.85.216.52]:55007 "EHLO
-        mail-pj1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726545AbfLRMhV (ORCPT
+        id S1727255AbfLRPNy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 18 Dec 2019 10:13:54 -0500
+Received: from mail-il1-f195.google.com ([209.85.166.195]:46463 "EHLO
+        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726723AbfLRPNx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 18 Dec 2019 07:37:21 -0500
-Received: by mail-pj1-f52.google.com with SMTP id ep17so817528pjb.4;
-        Wed, 18 Dec 2019 04:37:20 -0800 (PST)
+        Wed, 18 Dec 2019 10:13:53 -0500
+Received: by mail-il1-f195.google.com with SMTP id t17so1949383ilm.13
+        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Dec 2019 07:13:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:cc:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=SDfBkN3VJf5jvQD3fKgAU+xo/Y2l5f5r8EL8+ID85KA=;
-        b=gMiz6Nraeacz1pgHx0sxX6cGe+A7DVbn1+tUGN1ReWgzlEZQVWWz1fPBXsaQdg6WX5
-         AI4NGJA4oIJEhh8sXOlWxXjpJeQiacSdCVMsTvw7k79WrNrfZdyvF01ekd/99pIuNSk7
-         l6DFFgcQCfjaGV7ovXfpdi4oOaLE6fGAwLXmAtAecubjMYQ2LGma8xFNtzcIVQHxymR0
-         AZbswJYHVYVsGIcV8bNKpboO0lYKI/jZ7xguig4cSQTVtnJoSmKj2JCBK4wUmVTTmPsm
-         SBrwtimlBVItCSWQDudgNrEGMagz41l1pFQehSZjTbXZA/IXsi0vtdMZIRdcbku3ivJl
-         gRew==
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=R9l9mbjTMtC+3agOxuj88vgGSGUSi1shzIvbtHPQHDA=;
+        b=Q3vp2fJ40VWpq9rX2ikiWTUrhuiQJXzCeUu43e1oIIOk8rzGCPMljco+W3g3Sdt7mK
+         0zMp27lNXT81ott0dYeyE6wCdI4c1wfi5qCqRmoGIMvdtgle/6NMWI0GJrkD30CBojRq
+         hZbdgtbn9F/6uhvfSLkMdN7NhUpQoMVScRn9uDFKZJxofy0MWDF6kZw53YXeVt8sjWjA
+         Dd9TBzj4Ogplv/txGap2r0I252pQP7l7XSY4YOVhZ7qL539zlqhtO9W4mad505PIZ9Xp
+         yYy+XyL34oyC2pvEIWTDP8EMj+Gj6Cu0eHyc7GTPTD7Enq1rjLHU3JyAyX8LQzaLW/WP
+         +a+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=SDfBkN3VJf5jvQD3fKgAU+xo/Y2l5f5r8EL8+ID85KA=;
-        b=H1HNSn1ffMAHGfu0S7MYoAtfUK0wTLR5xZOlYYZVeL+XAhOMiAdi7rCC5wAiplx6LH
-         Ohpz/Zp+AG7cfFeD3Zm2t/oskFEiRZ8zcdW7DSkAVjHY+94An3+kaAUY1Gg4F3f3auuN
-         hmFgAfXItNHIbpWug+MaxeCCsHe2Xu7ocdyxUTRbSNH6U/CS7f+4Fv/81eZgMWi+o/0W
-         gdINfDBVD2+vrWT2AwH8O6sLpRpt2zLLneNNI0BgqtGEWkHriCzoKFQawmF2qYxTkejF
-         i5lVlqJXdlEE9WiaruGEtWUGFzMUAiRL7E4pUPv2dCGizXiRQqBLlSbdQ9w/lM5f4wiU
-         YXQA==
-X-Gm-Message-State: APjAAAWZWYuB7TwVfafyhuSGd0GDFqzqWeZIt0Qe1mQm0NnoIq9z7K0X
-        qkVByfwGbultYI0fjXbSmgSaWHmsrRr57g==
-X-Google-Smtp-Source: APXvYqwKHlr/DWW77+DCtxg0yDJBmtZIIAMafU7Trkih5YEuKsYAAz8HhqBoS+Zjq3bON0Kb2FCR5w==
-X-Received: by 2002:a17:902:a70c:: with SMTP id w12mr2529732plq.124.1576672640391;
-        Wed, 18 Dec 2019 04:37:20 -0800 (PST)
-Received: from ?IPv6:2402:f000:1:1501:200:5efe:166.111.139.103? ([2402:f000:1:1501:200:5efe:a66f:8b67])
-        by smtp.gmail.com with ESMTPSA id x4sm3236162pfx.68.2019.12.18.04.37.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Dec 2019 04:37:19 -0800 (PST)
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-From:   Jia-Ju Bai <baijiaju1990@gmail.com>
-Subject: [BUG] net: bluetooth: a possible sleep-in-atomic-context bug in
- disconnect_all_peers()
-Message-ID: <b1e7cccf-6e5e-aae8-09fc-6caafedc4a65@gmail.com>
-Date:   Wed, 18 Dec 2019 20:37:19 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=R9l9mbjTMtC+3agOxuj88vgGSGUSi1shzIvbtHPQHDA=;
+        b=aBS/H0crHGDiOAuLKBMI2AS4y7SezUINfLNBylmrNsPacrs9LwZkhUqd/+FUxY+arH
+         eiRBbORMDViHA5LKAQPIPSbtfapTDSDPPCpNGvKHNO6O7KdQ8A3e+Ry/O48cI5V3dVZs
+         jLHtjeuVrSy8cPjXq4HwuL/9R8wRHtAmqojD0nSjRXtmqhpIF3/dNmXxvdvVI3YR5B6h
+         YbWh/6jVvLT37xwqo2A8oJJEb4ZZkADqbzheIuLmGltOrb5Z67aRpLwt9j6V/d45jb0A
+         pT0xFxEg0wD8bJu+idtdeW8IvVExwEawnbKFbBwR0qZ9ZELtzPgxcO2OGYyaTgatusXN
+         3MGg==
+X-Gm-Message-State: APjAAAU6Dl0p/SL0fLDcaphWQdNd6GQhJxdRTkZZaOIPuUFOe7UlF13y
+        fSDMFDSm9E4Xs7A5Pr4K0KqWDne+Rv3TOe14dw==
+X-Google-Smtp-Source: APXvYqzpDMY1kfzvQTGFYFDuSf5Wkv4RFsY3uCP+mpqq6wLn7kqjCTzLCYufYBbbmMCBsVo5PHwr9dpQEEDI7K8RY00=
+X-Received: by 2002:a92:cc90:: with SMTP id x16mr2363556ilo.269.1576682033220;
+ Wed, 18 Dec 2019 07:13:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Received: by 2002:a02:6603:0:0:0:0:0 with HTTP; Wed, 18 Dec 2019 07:13:52
+ -0800 (PST)
+Reply-To: dhl.expresscourier102156@outlook.fr
+From:   "MS. MARYANNA B. THOMASON" <info.zennitbankplcnigerian@gmail.com>
+Date:   Wed, 18 Dec 2019 16:13:52 +0100
+Message-ID: <CABHzvrnY8Lhdw4Y2q97jvAVrRpM9CVLFkw=Ved7y1GhGqHiAdw@mail.gmail.com>
+Subject: I WANT TO YOU TO TREAT THIS EMAIL VERY URGENT
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The kernel module may sleep while holding a spinlock.
-The function call path (from bottom to top) in Linux 4.19 is:
+Attn Dear.
 
-net/bluetooth/l2cap_core.c, 840:
-     mutex_lock in l2cap_get_ident
-net/bluetooth/l2cap_core.c, 1402:
-     l2cap_get_ident in l2cap_send_disconn_req
-net/bluetooth/l2cap_core.c, 736:
-     l2cap_send_disconn_req in l2cap_chan_close
-net/bluetooth/6lowpan.c, 1053:
-     l2cap_chan_close in disconnect_all_peers
-net/bluetooth/6lowpan.c, 1051:
-     spin_lock in disconnect_all_peers
+Urgent delivery Notification of your ATM MASTER CARD, Dhl-Benin is
+ready for delivery of your ATM Master card worth $15.800=E2=80=99000=E2=80=
+=9900, as
+approved this morning, Date, 18/12/2019. Through the Intruction from
+INTERNATIONAL MONETARY FUNDS, I.M.F official Directors.
 
-mutex_lock() can sleep at runtime.
+REGISTRATION NO :EG58945
+PARCEL NUMBER: 140479
+Delivery Schuleded now,
+Finally all we required from you is your ATM Card Proccessing Delivery
+fees $19.00 only which you must send to this DHL service to enable us
+dispatch the parcel to your destination today.
 
-I am not sure how to properly fix this possible bug, so I only report it.
+Here is our receiving payment details.
+You are advised to send it Via Money Gram Service.
 
-This bug is found by a static analysis tool STCheck written by myself.
+Receiver's Name--------Alan Ude
+Country-------Benin Republic.
+City/ Address--------Cotonou
+Test Question--------In God
+Answer-------We Trust
+Amount------------$US19.00 only
+Mtcn-------------
+Sender's Name-------
 
+Your delivery  ATM card worth $15.800=E2=80=99000=E2=80=9900,
+Is Due for delivery to your address today upon confirmation of
+required fee from you asap.
 
-Best wishes,
-Jia-Ju Bai
+Call us on this phone number for any inquiry. +229 62819378
+Awaiting your urgent response.
+
+MS. MARYANNA B. THOMASON, Shipment director, DHL Express
+Courier Company-Benin
