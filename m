@@ -2,70 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 39AE11245CD
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Dec 2019 12:31:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81FE51246F8
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Dec 2019 13:37:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726545AbfLRLbG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 18 Dec 2019 06:31:06 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:41528 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725930AbfLRLbG (ORCPT
+        id S1726825AbfLRMhV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 18 Dec 2019 07:37:21 -0500
+Received: from mail-pj1-f52.google.com ([209.85.216.52]:55007 "EHLO
+        mail-pj1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726545AbfLRMhV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 18 Dec 2019 06:31:06 -0500
-Received: by mail-lj1-f196.google.com with SMTP id h23so1718354ljc.8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Dec 2019 03:31:05 -0800 (PST)
+        Wed, 18 Dec 2019 07:37:21 -0500
+Received: by mail-pj1-f52.google.com with SMTP id ep17so817528pjb.4;
+        Wed, 18 Dec 2019 04:37:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=GrdyiqEFc7d9G/zdkgFcJ6VHW0IWWZvW+Hm2PT6e4V0=;
-        b=ZKR0Nom+6fOvzHjPCiPbehWkIdvRTa7miv5ol/ko6SfHuJlTmT6pM51wlRW0zOQ973
-         2JXihc3HHz4d4n+QUTyF/ZDQ9PVnifle8YDUGFi8AdBhMsJ8HVlpbRjEsdXL7AtyxDfT
-         rWZ4DYBWLLo+ueP9s7Tvfrqa6Wuxa21ohhyybSmVfTornuTLliJSkAxD3dw7mkEEhrdr
-         B6cH1WLMFCvuTFySLnm/KILp7JMmryn229ppIlZCVhBjq5fgHxjIFZZRGjiTbadVV5w8
-         SK7sk61W9WaiiKb4cHkFFiO7XOtei4XDvpa9Gt73ST27X8S47G9PQHm8KqIAuNs3rJB8
-         6NdQ==
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=SDfBkN3VJf5jvQD3fKgAU+xo/Y2l5f5r8EL8+ID85KA=;
+        b=gMiz6Nraeacz1pgHx0sxX6cGe+A7DVbn1+tUGN1ReWgzlEZQVWWz1fPBXsaQdg6WX5
+         AI4NGJA4oIJEhh8sXOlWxXjpJeQiacSdCVMsTvw7k79WrNrfZdyvF01ekd/99pIuNSk7
+         l6DFFgcQCfjaGV7ovXfpdi4oOaLE6fGAwLXmAtAecubjMYQ2LGma8xFNtzcIVQHxymR0
+         AZbswJYHVYVsGIcV8bNKpboO0lYKI/jZ7xguig4cSQTVtnJoSmKj2JCBK4wUmVTTmPsm
+         SBrwtimlBVItCSWQDudgNrEGMagz41l1pFQehSZjTbXZA/IXsi0vtdMZIRdcbku3ivJl
+         gRew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=GrdyiqEFc7d9G/zdkgFcJ6VHW0IWWZvW+Hm2PT6e4V0=;
-        b=Km5tEOgA6Yd0CHhYQ1V4hBr6o9ilWeOr8MDmOExOQ9nOSgp+pg08/wULDJWl6CHAWg
-         FnqKmopzjobPGgwUoFR+9YFahTJsoNIA9vcO27W08GmPKKcmFvmNyCVO6q6W/Bv17lia
-         B3qxaaPzXCemL9VcGrGD2T1A+ROTCZBKgKLVyCWZqwJ/bcaaXZJXO6l/KpefYVoRgsuH
-         mEt0Ua57o/WYwtYFVnBtk934nETFZtDRaR7SMne9AHe4HW7ktf7C2dgyMkSBs6WIG1dy
-         TYZTmcID6+1r2+SOViCkELbpJoS2z91Hr7X4AwamnVN6m04koCeRA2MSg6I8uvBzKGq0
-         oDtQ==
-X-Gm-Message-State: APjAAAWpQiyexevySHxPMdl8KijQKapC8LtrnHjJM6NudPmW+HU1nMWR
-        DEjgZyzUIjJR79SJm4Npm4J7BypofpihrqTc6OA=
-X-Google-Smtp-Source: APXvYqxpaPVsoxgBL2jPm46BfkRF3YE5Ae483It3aFDP3qyo2xmSar5xTRuYqeFWt1CnWl09mfReSuRDzqjbXhfCXeQ=
-X-Received: by 2002:a2e:8eda:: with SMTP id e26mr1337010ljl.65.1576668664444;
- Wed, 18 Dec 2019 03:31:04 -0800 (PST)
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=SDfBkN3VJf5jvQD3fKgAU+xo/Y2l5f5r8EL8+ID85KA=;
+        b=H1HNSn1ffMAHGfu0S7MYoAtfUK0wTLR5xZOlYYZVeL+XAhOMiAdi7rCC5wAiplx6LH
+         Ohpz/Zp+AG7cfFeD3Zm2t/oskFEiRZ8zcdW7DSkAVjHY+94An3+kaAUY1Gg4F3f3auuN
+         hmFgAfXItNHIbpWug+MaxeCCsHe2Xu7ocdyxUTRbSNH6U/CS7f+4Fv/81eZgMWi+o/0W
+         gdINfDBVD2+vrWT2AwH8O6sLpRpt2zLLneNNI0BgqtGEWkHriCzoKFQawmF2qYxTkejF
+         i5lVlqJXdlEE9WiaruGEtWUGFzMUAiRL7E4pUPv2dCGizXiRQqBLlSbdQ9w/lM5f4wiU
+         YXQA==
+X-Gm-Message-State: APjAAAWZWYuB7TwVfafyhuSGd0GDFqzqWeZIt0Qe1mQm0NnoIq9z7K0X
+        qkVByfwGbultYI0fjXbSmgSaWHmsrRr57g==
+X-Google-Smtp-Source: APXvYqwKHlr/DWW77+DCtxg0yDJBmtZIIAMafU7Trkih5YEuKsYAAz8HhqBoS+Zjq3bON0Kb2FCR5w==
+X-Received: by 2002:a17:902:a70c:: with SMTP id w12mr2529732plq.124.1576672640391;
+        Wed, 18 Dec 2019 04:37:20 -0800 (PST)
+Received: from ?IPv6:2402:f000:1:1501:200:5efe:166.111.139.103? ([2402:f000:1:1501:200:5efe:a66f:8b67])
+        by smtp.gmail.com with ESMTPSA id x4sm3236162pfx.68.2019.12.18.04.37.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Dec 2019 04:37:19 -0800 (PST)
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+From:   Jia-Ju Bai <baijiaju1990@gmail.com>
+Subject: [BUG] net: bluetooth: a possible sleep-in-atomic-context bug in
+ disconnect_all_peers()
+Message-ID: <b1e7cccf-6e5e-aae8-09fc-6caafedc4a65@gmail.com>
+Date:   Wed, 18 Dec 2019 20:37:19 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Received: by 2002:a19:40d3:0:0:0:0:0 with HTTP; Wed, 18 Dec 2019 03:31:03
- -0800 (PST)
-Reply-To: tracywilliam26@gmail.com
-From:   Miss Tracy William <harikunda70000@gmail.com>
-Date:   Wed, 18 Dec 2019 03:31:03 -0800
-Message-ID: <CAJdUy9zdk-BVY0XspRjL3YRTpi_zjxYw=yUH4DTKT5PvB0aMWg@mail.gmail.com>
-Subject: GREETINGS FROM TRACY WILLIAM
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-Hello Dear,
-how are you today,I hope you are doing great.
-It is my great pleasure to
-contact you and i hope you don't mind,I was just surfing
-through the Internet search when i found your email address,I want to make a new
-and special friend,I hope you don't mind.
+The kernel module may sleep while holding a spinlock.
+The function call path (from bottom to top) in Linux 4.19 is:
 
-My name is Tracy William,I am from the United States of America but
-presently I live
-and work in England,
-I will give you pictures and details of me as soon as i hear from you
-bye
-Tracy
+net/bluetooth/l2cap_core.c, 840:
+     mutex_lock in l2cap_get_ident
+net/bluetooth/l2cap_core.c, 1402:
+     l2cap_get_ident in l2cap_send_disconn_req
+net/bluetooth/l2cap_core.c, 736:
+     l2cap_send_disconn_req in l2cap_chan_close
+net/bluetooth/6lowpan.c, 1053:
+     l2cap_chan_close in disconnect_all_peers
+net/bluetooth/6lowpan.c, 1051:
+     spin_lock in disconnect_all_peers
+
+mutex_lock() can sleep at runtime.
+
+I am not sure how to properly fix this possible bug, so I only report it.
+
+This bug is found by a static analysis tool STCheck written by myself.
+
+
+Best wishes,
+Jia-Ju Bai
