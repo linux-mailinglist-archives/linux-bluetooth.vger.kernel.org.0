@@ -2,146 +2,150 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B117129DC9
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Dec 2019 06:26:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02013129DE2
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Dec 2019 06:47:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726009AbfLXF0y (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 Dec 2019 00:26:54 -0500
-Received: from mga17.intel.com ([192.55.52.151]:5863 "EHLO mga17.intel.com"
+        id S1726037AbfLXFr0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 Dec 2019 00:47:26 -0500
+Received: from mga14.intel.com ([192.55.52.115]:4020 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725866AbfLXF0x (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 Dec 2019 00:26:53 -0500
+        id S1725934AbfLXFrZ (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 24 Dec 2019 00:47:25 -0500
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 23 Dec 2019 21:26:52 -0800
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 23 Dec 2019 21:47:25 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.69,350,1571727600"; 
-   d="scan'208";a="249713667"
-Received: from unknown (HELO ajay-desktop.iind.intel.com) ([10.223.96.133])
-  by fmsmga002.fm.intel.com with ESMTP; 23 Dec 2019 21:26:52 -0800
-From:   Ajay Kishore <ajay.kishore@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 6/6] doc/obex-api: Update documentation
-Date:   Tue, 24 Dec 2019 10:33:02 +0530
-Message-Id: <1577163782-28759-2-git-send-email-ajay.kishore@intel.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1577163782-28759-1-git-send-email-ajay.kishore@intel.com>
-References: <1577163782-28759-1-git-send-email-ajay.kishore@intel.com>
+   d="scan'208";a="211772110"
+Received: from fmsmsx103.amr.corp.intel.com ([10.18.124.201])
+  by orsmga008.jf.intel.com with ESMTP; 23 Dec 2019 21:47:24 -0800
+Received: from fmsmsx161.amr.corp.intel.com (10.18.125.9) by
+ FMSMSX103.amr.corp.intel.com (10.18.124.201) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Mon, 23 Dec 2019 21:47:24 -0800
+Received: from bgsmsx102.gar.corp.intel.com (10.223.4.172) by
+ FMSMSX161.amr.corp.intel.com (10.18.125.9) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Mon, 23 Dec 2019 21:47:24 -0800
+Received: from bgsmsx110.gar.corp.intel.com ([169.254.11.108]) by
+ BGSMSX102.gar.corp.intel.com ([169.254.2.130]) with mapi id 14.03.0439.000;
+ Tue, 24 Dec 2019 11:17:21 +0530
+From:   "Kishore, Ajay" <ajay.kishore@intel.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+CC:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Subject: RE: [PATCH 6/6] doc/obex-api: Update documentation
+Thread-Topic: [PATCH 6/6] doc/obex-api: Update documentation
+Thread-Index: AQHVtTgTIth0oGQmFkeGeELvL6yqu6fIyyoQ
+Date:   Tue, 24 Dec 2019 05:47:20 +0000
+Message-ID: <A4827819204CC641A5E2541E6709F15337DB052A@BGSMSX110.gar.corp.intel.com>
+References: <1576488509-26331-1-git-send-email-ajay.kishore@intel.com>
+ <CABBYNZLVARFpsMJsaA6aXnYZO8BD76C4WWi9zrLu5N3u=euPSg@mail.gmail.com>
+In-Reply-To: <CABBYNZLVARFpsMJsaA6aXnYZO8BD76C4WWi9zrLu5N3u=euPSg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: no-action
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMjJiOWQ2YzEtNWM2Ni00MWZkLTg2YTYtNDdkODIwOTRiZThhIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiVWY2WTlhZnhiWUhaXC9UQlFcL2lmZVFhVlVVY0lVRnJaMDFjQXhLcUJ2MUFXQzlSbkFkbFNOY3ZuVGJmTU9RNGJ1In0=
+x-originating-ip: [10.223.10.10]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds documentation with the conversation listing feature
-
-Signed-off-by: Ajay Kishore <ajay.kishore@intel.com>
----
- doc/obex-api.txt | 94 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 94 insertions(+)
-
-diff --git a/doc/obex-api.txt b/doc/obex-api.txt
-index f39355a..8f27b40 100644
---- a/doc/obex-api.txt
-+++ b/doc/obex-api.txt
-@@ -892,3 +892,97 @@ Properties	string Folder [readonly]
- 		boolean Protected [readonly]
- 
- 			Message protected flag
-+
-+Conversation Access hierarchy
-+==============================
-+
-+Service		org.bluez.obex
-+Interface	org.bluez.obex.Conversation1
-+Object path	[Session object path]
-+
-+Methods		array{object, dict} ListConversations(string folder, dict filter)
-+			Returns an array containing the conversations found in the
-+			given subfolder of the current folder, or in the current
-+			folder if folder is empty.
-+
-+			Possible Filters: MaxListCount, LastActivityBegin, LastActivityEnd,
-+			ReadStatus, Recipient
-+
-+		Properties:
-+			string id:
-+
-+				Conversation unique identification
-+
-+			string name:
-+
-+				Conversation name
-+
-+			string last_activity:
-+
-+				Conversation timestamp for the last activity
-+
-+			boolean read_status:
-+
-+				Conversation read flag
-+
-+			string version_counter:
-+
-+				128 bits version counter.
-+				The 'Conversation-Listing Version Counter',
-+				'Conversation Version Counter', and 'Folder
-+				Version Counter' are used to detect if something
-+				has changed
-+
-+			string summary:
-+
-+				Conversation summary
-+
-+			string display:
-+
-+				Conversation participants name
-+
-+			string chat_state:
-+
-+				Conversation current chat state of the participants
-+
-+			string presence_availability:
-+
-+				Conversation  participants availability
-+
-+			string presence_text:
-+
-+				User defined status of the conversation
-+
-+			uint16 priority:
-+
-+				Conversation participant priority
-+
-+		Possible errors: org.bluez.obex.Error.InvalidArguments
-+				 org.bluez.obex.Error.Failed
-+
-+
-+Filter:		uint16 MaxListCount:
-+
-+			Maximum number of items in the conversations.
-+
-+		string LastActivityBegin:
-+
-+			Filter conversations by starting period.
-+
-+			Possible values: Date in "YYYYMMDDTHHMMSS" format.
-+
-+		string LastActivityEnd:
-+
-+			Filter conversations by ending period.
-+
-+			Possible values: Date in "YYYYMMDDTHHMMSS" format.
-+
-+		boolean ReadStatus:
-+
-+			Filter converstions by read flag.
-+
-+			Possible values: True for read or False for unread
-+
-+		string Recipient:
-+
-+			Filter conversations by conversation-recipient.
--- 
-2.7.4
-
+SGkgTHVpeiwNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBsaW51eC1i
+bHVldG9vdGgtb3duZXJAdmdlci5rZXJuZWwub3JnIDxsaW51eC1ibHVldG9vdGgtDQo+IG93bmVy
+QHZnZXIua2VybmVsLm9yZz4gT24gQmVoYWxmIE9mIEx1aXogQXVndXN0byB2b24gRGVudHoNCj4g
+U2VudDogV2VkbmVzZGF5LCBEZWNlbWJlciAxOCwgMjAxOSA1OjQ0IEFNDQo+IFRvOiBLaXNob3Jl
+LCBBamF5IDxhamF5Lmtpc2hvcmVAaW50ZWwuY29tPg0KPiBDYzogbGludXgtYmx1ZXRvb3RoQHZn
+ZXIua2VybmVsLm9yZw0KPiBTdWJqZWN0OiBSZTogW1BBVENIIDYvNl0gZG9jL29iZXgtYXBpOiBV
+cGRhdGUgZG9jdW1lbnRhdGlvbg0KPiANCj4gSGkgQWpheSwNCj4gDQo+IE9uIE1vbiwgRGVjIDE2
+LCAyMDE5IGF0IDE6NTQgQU0gQWpheSBLaXNob3JlIDxhamF5Lmtpc2hvcmVAaW50ZWwuY29tPg0K
+PiB3cm90ZToNCj4gPg0KPiA+IFRoaXMgYWRkcyBkb2N1bWVudGF0aW9uIHdpdGggdGhlIGNvbnZl
+cnNhdGlvbiBsaXN0aW5nIGZlYXR1cmUNCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IEFqYXkgS2lz
+aG9yZSA8YWpheS5raXNob3JlQGludGVsLmNvbT4NCj4gPiAtLS0NCj4gPiAgZG9jL29iZXgtYXBp
+LnR4dCB8IDY1DQo+ID4gKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKysNCj4gPiAgMSBmaWxlIGNoYW5nZWQsIDY1IGluc2VydGlvbnMoKykNCj4g
+Pg0KPiA+IGRpZmYgLS1naXQgYS9kb2Mvb2JleC1hcGkudHh0IGIvZG9jL29iZXgtYXBpLnR4dCBp
+bmRleA0KPiA+IGYzOTM1NWEuLjlhNzYxNTkgMTAwNjQ0DQo+ID4gLS0tIGEvZG9jL29iZXgtYXBp
+LnR4dA0KPiA+ICsrKyBiL2RvYy9vYmV4LWFwaS50eHQNCj4gPiBAQCAtNzEyLDYgKzcxMiw3MSBA
+QCBNZXRob2RzICAgICAgICAgICAgdm9pZCBTZXRGb2xkZXIoc3RyaW5nIG5hbWUpDQo+ID4gICAg
+ICAgICAgICAgICAgICAgICAgICAgUG9zc2libGUgZXJyb3JzOiBvcmcuYmx1ZXoub2JleC5FcnJv
+ci5JbnZhbGlkQXJndW1lbnRzDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBvcmcuYmx1ZXoub2JleC5FcnJvci5GYWlsZWQNCj4gPg0KPiA+ICsNCj4gPiArDQo+
+ID4gKyAgICAgICAgICAgICAgIGFycmF5e29iamVjdCwgZGljdH0gbGlzdGNvbnZlcnNhdGlvbnMo
+c3RyaW5nIGZvbGRlciwNCj4gPiArIGRpY3QgZmlsdGVyKQ0KPiANCj4gSXQgc2hvdWxkIGhhdmUg
+YmVlbiBMaXN0Q29udmVyc2F0aW9ucyB0byBhZGhlcmUgd2l0aCBvdXIgRC1CdXMgQVBJcywgYnV0
+DQo+IHJlYWQgYmVsbG93Lg0KRml4ZWQgYW5kIHB1c2hlZCBpbiB0aGUgbmV3IHBhdGNoIChbUEFU
+Q0ggdjIgNi82XSBkb2Mvb2JleC1hcGk6IFVwZGF0ZSBkb2N1bWVudGF0aW9uKS4NCj4gDQo+ID4g
+KyAgICAgICAgICAgICAgICAgICAgICAgUmV0dXJucyBhbiBhcnJheSBjb250YWluaW5nIHRoZSBj
+b252ZXJzYXRpb25zIGZvdW5kIGluIHRoZQ0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgIGdp
+dmVuIHN1YmZvbGRlciBvZiB0aGUgY3VycmVudCBmb2xkZXIsIG9yIGluIHRoZSBjdXJyZW50DQo+
+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgZm9sZGVyIGlmIGZvbGRlciBpcyBlbXB0eS4NCj4g
+PiArDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgUG9zc2libGUgRmlsdGVyczogTGFzdEFj
+dGl2aXR5QmVnaW4sIExhc3RBY3Rpdml0eUVuZCwNCj4gPiArICAgICAgICAgICAgICAgICAgICAg
+ICBSZWFkU3RhdHVzLCBSZWNpcGllbnQNCj4gDQo+IFNvIGhlcmUgaXMgdGhlIGJpZyBkZXNpZ24g
+cXVlc3Rpb24sIHdoeSBoYXNuJ3QgdGhpcyBiZWVuIGRvbmUgYXMgYSBmaWx0ZXIgdG8NCj4gTGlz
+dE1lc3NhZ2VzPyBXZSBjb3VsZCBqdXN0IGhhdmUgYSBjb3VwbGUgb2YgZGlmZmVyZW50IHByb3Bl
+cnRpZXMgdG8gaW5kaWNhdGUNCj4gaXQgaXMgYSBjb252ZXJzYXRpb24gcmF0aGVyIHRoYW4gYSBz
+aW5nbGUgbWVzc2FnZSwgaW4gYW55IGNhc2Ugd2Ugd291bGQgbmVlZA0KPiBzb21ldGhpbmcgbGlr
+ZQ0KPiBvcmcuYmx1ZXoub2JleC5Db252ZXJzYXRpb24xIHRvIGVudW1lcmF0ZSB0aGVzZSBvYmpl
+Y3RzLCBzb21ldGhpbmcgdGhhdCBpcw0KPiBub3QgZG9jdW1lbnRlZCBoZXJlLg0KSSBBZ3JlZSB0
+aGF0IHRoZSBmZXcgcHJvcGVydGllcyBhcmUgc2ltaWxhciBpbiBMaXN0TWVzc2FnZXMgIGFuZCBM
+aXN0Q29udmVyc2F0aW9ucyBmdW5jdGlvbnMgYW5kIGNhbiBiZSBpbXBsZW1lbnRlZCB0byBqdXN0
+IGFkZCBmZXcgbmV3IHByb3BlcnRpZXMuDQpCdXQgd2UgdGhvdWdodCB0byBpbXBsZW1lbnQgYm90
+aCB0aGVzZSBmdW5jdGlvbnMgc2VwYXJhdGVseSBhcyBpbiBNQVAgc3BlY2lmaWNhdGlvbiBhbHNv
+IGl0IGlzIHNlcGFyYXRlZC4NCkFsc28gd2l0aCB0aGlzIGltcGxlbWVudGF0aW9uIGl0IHdpbGwg
+ZWFzaWVyIHRvIGRldmVsb3Agc2VwYXJhdGUgYXBwbGljYXRpb24gZm9yIGJvdGggdGhlIGZlYXR1
+cmUuDQpJbiB0aGUgY3VycmVudCBpbXBsZW1lbnRhdGlvbiB3ZSBhcmUgdXNpbmcgb3JnLmJsdWV6
+Lm9iZXguQ29udmVyc2F0aW9uMSBpbnRlcmZhY2UgdG8gZW51bWVyYXRlIGFuZCBpdCBpcyB1cGRh
+dGVkIGluIHRoZSBuZXcgcGF0Y2ggKFtQQVRDSCB2MiA2LzZdIGRvYy9vYmV4LWFwaTogVXBkYXRl
+IGRvY3VtZW50YXRpb24pLg0KDQo+IA0KPiANCj4gPiArDQo+ID4gKyAgICAgICAgICAgICAgICAg
+ICAgICAgUHJvcGVydGllczoNCj4gPiArDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBzdHJpbmcgaWQ6DQo+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBDb252ZXJzYXRpb24gdW5pcXVlDQo+ID4gKyBpZGVudGlmaWNhdGlvbg0KPiA+
+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cmluZyBuYW1lOg0KPiA+
+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQ29udmVyc2F0
+aW9uIG5hbWUNCj4gPiArDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdHJp
+bmcgbGFzdF9hY3Rpdml0eToNCj4gPiArDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIENvbnZlcnNhdGlvbiB0aW1lc3RhbXAgZm9yIHRoZQ0KPiA+ICsgbGFzdCBh
+Y3Rpdml0eQ0KPiA+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJvb2xl
+YW4gcmVhZF9zdGF0dXM6DQo+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBDb252ZXJzYXRpb24gcmVhZCBmbGFnDQo+ID4gKw0KPiA+ICsgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgc3RyaW5nIHZlcnNpb25fY291bnRlcjoNCj4gPiArDQo+ID4g
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEyOCBiaXRzIHZlcnNpb24g
+Y291bnRlci4NCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgVGhl
+IOKAmENvbnZlcnNhdGlvbi1MaXN0aW5nIFZlcnNpb24gQ291bnRlcuKAmSwNCj4gPiArICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4oCYQ29udmVyc2F0aW9uIFZlcnNpb24g
+Q291bnRlcuKAmSwgYW5kIOKAmEZvbGRlcg0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBWZXJzaW9uIENvdW50ZXLigJkgYXJlIHVzZWQgdG8gZGV0ZWN0IGlmIHNv
+bWV0aGluZw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBoYXMg
+Y2hhbmdlZA0KPiA+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cmlu
+ZyBzdW1tYXJ5Og0KPiA+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgQ29udmVyc2F0aW9uIHN1bW1hcnkNCj4gPiArDQo+ID4gKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBzdHJpbmcgZGlzcGxheToNCj4gPiArDQo+ID4gKyAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIENvbnZlcnNhdGlvbiBwYXJ0aWNpcGFudHMgbmFtZQ0K
+PiA+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cmluZyBjaGF0X3N0
+YXRlOg0KPiA+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+Q29udmVyc2F0aW9uIGN1cnJlbnQgY2hhdA0KPiA+ICsgc3RhdGUgb2YgdGhlIHBhcnRpY2lwYW50
+cw0KPiA+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cmluZyBwcmVz
+ZW5jZV9hdmFpbGFiaWxpdHk6DQo+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBDb252ZXJzYXRpb24gIHBhcnRpY2lwYW50cw0KPiA+ICsgYXZhaWxhYmls
+aXR5DQo+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RyaW5nIHBy
+ZXNlbmNlX3RleHQ6DQo+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBVc2VyIGRlZmluZWQgc3RhdHVzIG9mIHRoZQ0KPiA+ICsgY29udmVyc2F0aW9uDQo+
+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDE2IHByaW9yaXR5
+Og0KPiA+ICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQ29u
+dmVyc2F0aW9uIHBhcnRpY2lwYW50DQo+ID4gKyBwcmlvcml0eQ0KPiA+ICsNCj4gPiArICAgICAg
+ICAgICAgICAgICAgICAgICBQb3NzaWJsZSBlcnJvcnM6IG9yZy5ibHVlei5vYmV4LkVycm9yLklu
+dmFsaWRBcmd1bWVudHMNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIG9yZy5ibHVlei5vYmV4LkVycm9yLkZhaWxlZA0KPiA+ICsNCj4gPiArDQo+ID4gICAgICAg
+ICAgICAgICAgIHZvaWQgVXBkYXRlSW5ib3godm9pZCkNCj4gPg0KPiA+ICAgICAgICAgICAgICAg
+ICAgICAgICAgIFJlcXVlc3QgcmVtb3RlIHRvIHVwZGF0ZSBpdHMgaW5ib3guDQo+ID4gLS0NCj4g
+PiAyLjcuNA0KPiA+DQo+IA0KPiANCj4gLS0NCj4gTHVpeiBBdWd1c3RvIHZvbiBEZW50eg0KDQpU
+aGFua3MuDQpBamF5IEtpc2hvcmUNCg==
