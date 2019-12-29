@@ -2,100 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A9FE12BE1B
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Dec 2019 18:12:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F41C712C7C8
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 29 Dec 2019 19:15:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726293AbfL1RMQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 28 Dec 2019 12:12:16 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38539 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726088AbfL1RMP (ORCPT
+        id S1731074AbfL2Rq1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 29 Dec 2019 12:46:27 -0500
+Received: from smtpgwv02.dogantelekom.com ([213.243.1.84]:62138 "EHLO
+        smtpgwv02.dogantelekom.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731060AbfL2Rq0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 28 Dec 2019 12:12:15 -0500
-Received: by mail-wr1-f67.google.com with SMTP id y17so28951698wrh.5
-        for <linux-bluetooth@vger.kernel.org>; Sat, 28 Dec 2019 09:12:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=AOaY7iVi9fWm05Hu74mfBoMfPdqBkYD19rHCxJnpJH4=;
-        b=u+EKCkThvZIfnVQzrs7byEApwPq3bU/pRdx8qKh8umnicPOOnVe8FdISS3KNtC3aDg
-         hACqGpHNCUQKQMqtLKiVy6zgs7j0gGD8BOQQ8tKjgmEjS6GGpeBtAl94VqxaDSW/iWsm
-         AGm5lmxYojUA+JnrpMzsU193s/1P/FuwtYyqK8mM93uMtZe1EQ3iLrmr4DlwtizudgPk
-         YY3qRn5qq0QUVjO0THo/oPi/kRhA9O0MgutKeAL+kq35ZsgYnvxT/yVS+jvP7deuGOn/
-         XloTSyAS/2RvvDthaE6pHdhnI/L884+SYYIjjcGIud1DWtyvZ1t/3/0+/WpXEmiegtaq
-         e7AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=AOaY7iVi9fWm05Hu74mfBoMfPdqBkYD19rHCxJnpJH4=;
-        b=MEnXnApBfKxF6EYf0c4kQaLzi4AYsonhgveY+J+PC8oFoix5qAlYMmYGV/jROfmaaF
-         1PgcHmVviAsrZgrMFJmEzD215XFSyNQXsFy7oEYqlDeZUYpgLshG3GS+cHKxsnKcbEsC
-         Skz59wgNWbb8Fj3kLJU+4EOgB32NYjhqeIlA1+URD0UcspBltH42WEWTPj6OOYc9BNTN
-         Jgg1b0pQEvtaSRsCVyL5DKTVjRWruavLKObG8Jk6X1A837nyK5h1rkAoVSRQtgCfkRU9
-         PXiJIOh+Pk6XbatrfRMGMQRJSN1zaETy/O0zmws5E6iFmOUWN/nx6Mgo4/X0eyLAgmqS
-         fNDw==
-X-Gm-Message-State: APjAAAVr7sr8V5K6G4SRqLI7rd6hd35BnRAjFhvrICejXNX8jhO7qKQu
-        RmH6vniROFKKJIForLgibH0Nl1ZS
-X-Google-Smtp-Source: APXvYqwAv9ZI/jIeGXw6PY71Diem8GMi7eyTl+dgQ/PF3r4iqIQwSaMPD5aKv6ScxIdoVgYO3l/ErA==
-X-Received: by 2002:adf:f501:: with SMTP id q1mr26261144wro.263.1577553133517;
-        Sat, 28 Dec 2019 09:12:13 -0800 (PST)
-Received: from pali ([2a02:2b88:2:1::5cc6:2f])
-        by smtp.gmail.com with ESMTPSA id a1sm14973529wmj.40.2019.12.28.09.12.12
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 28 Dec 2019 09:12:12 -0800 (PST)
-Date:   Sat, 28 Dec 2019 18:12:12 +0100
-From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: OCF_READ_LOCAL_CODECS is permitted only for root user
-Message-ID: <20191228171212.56anj4d4kvjeqhms@pali>
+        Sun, 29 Dec 2019 12:46:26 -0500
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Sun, 29 Dec 2019 12:46:22 EST
+X-AuditID: d5f30154-30bff70000001822-12-5e08e2e6441c
+Received: from dolhst01.dol.com.tr (ftp.kozayonetim.com.tr [213.243.39.2])
+        by smtpgwv02.dogantelekom.com (D-Smart Corporate Messaging Gateway) with SMTP id 9C.BC.06178.6E2E80E5; Sun, 29 Dec 2019 20:31:18 +0300 (MSK)
+Received: from 69.164.194.72 ([69.164.194.72]) by dsmartkurumsal.com with MailEnable WebMail; Sun, 29 Dec 2019 20:31:11 +0300
+From:   "Norman HKMA cs" <nener@enercompany.com>
+Subject: 
+Date:   Sun, 29 Dec 2019 18:31:11 +0100
+Message-ID: <34CBFE7BA78C444F8FC1548BA2453ED7.MAI@dsmartkurumsal.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="jlswcyicf3hldqhd"
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: multipart/mixed;
+        boundary="--=_NextPart_000_000B_4401273EFF49482890298C2F150C4C64"
+X-Mailer: MailEnable WebMail.NET
+X-MimeOLE: Produced By MailEnable WebMail.NET V2.0.0.0
+X-Read: 0
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sf0wTZxzG8969793BvO1WGbzDLHHN5oyLCItuX5LNmCxmtyVbXDYXsyWw
+        Uy4tgdKuBww2NaDIFlpGoaJrxSqxqwP9Y1RIUEmIRTMHA3Qd2onIOoVl/FJwoYSg7mw187/P
+        +z7P833+eQTW4OLShfyiYtVepBQauWQ8dPcVZu34X0JOZrV7BbTWBQjUtw2wcHr+GIbF1gss
+        OBudDBzub8Mw3TeCYMg/x8CIb4aBpivfseA7P4MhUJEK4TNNHDh/6iBw4+QDAv2+nzkYD9Vi
+        uBU6zsBvnVEWLrU38LBQPUeg8mwMQW3PKIETDj8PF6bfgj2RkyyEDupHrnWeRVDT/TeB4cZT
+        BIIXz+nPvkEMg/tK4Fq0ncDly7ME3FdOcXC/7jYHUwvjGNzfaOAYOYo3rZZnwkO83HVvlpGD
+        tR28HGu5wcmnvSO8XHngXyLfdP7Kyf3nYlh211RhOTjXwMt9Y1lyQ8/vrNxcP8rJh9pcvPxP
+        ZEp3hD/ZkvJp8pt5amF+qWpft/HzZPPV3jucrZ0tc/n3kwo0z9SgJIFK6+m92DT/kA3SH4g6
+        wjsTvIsuRj1xT4qEaUsshh8yJ2XQSs+ZuH+5lESDjsE4Y+llGvXXx1mUNtPKQPgRP0t/8dyK
+        Z1lpO/VXHeYTvSvp4v0mkuDXae/S0CNOopfGvMiFRO8Tce8T8QRn0pare9gEv0oDzZPsUYRb
+        UbpmKbaZvizNfC0jz2pS9L0UqgVWS8YOqyWI4qtBH3eiH6o+CCFJQMZl4vcHhRwDUUq1cksI
+        PS8wxufEI3X619PbrXnlZkUz59pLClUthKjAGlPEIhPJMYh5SvlXqt36WFohYGOamPvS29sM
+        kkkpVgtU1abaH6uMkDSB0vSy5WI0ql9epq9Yyzcl5AmULTBSpJtIkT+JNHnT42PTsWZTLHrX
+        ewKnd2nFyv/2NU8JcY8kUxdKr0BpW8wkt8txaLbl+Bt7N0L1ys+uL6YOh23zBz70KltD2asi
+        /me6l1KO3RVzs3wvLMwNBHYrX6e+XzK+2hKo8wW+HS6b2TrWvMk5saOx01M9tqFoybUuObvd
+        7Or+aFX2F2WjvQO71l5kB/bxBe71XR32H08c2dyTNbuteWrynfP7w+++aMSaWclaw9o15T8a
+        0270owMAAA==
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+This is a multi-part message in MIME format.
 
---jlswcyicf3hldqhd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+----=_NextPart_000_000B_4401273EFF49482890298C2F150C4C64
+Content-type: text/plain; charset="windows-1254"
 Content-Transfer-Encoding: quoted-printable
 
-Hello!
+I have a business deal worth $150 Million USD which can be invested
+in any business area in your country, reply to me for more info via
+Email: Normanhkma@gmail.com
 
-I wrote a simple script "sco_features.pl" which show all supported
-codecs by local HCI bluetooth adapter. Script is available at:
 
-https://github.com/pali/hsphfpd-prototype/blob/prototype/sco_features.pl
+----=_NextPart_000_000B_4401273EFF49482890298C2F150C4C64--
 
-And I found out that OCF_READ_LOCAL_CODECS HCI command cannot be send by
-non-root user. Kernel returns "Operation not permitted" error.
-
-What is reason that kernel blocks OCF_READ_LOCAL_CODECS command for
-non-root users? Without it (audio) application does not know which
-codecs local bluetooth adapter supports.
-
-E.g. OCF_READ_LOCAL_EXT_FEATURES or OCF_READ_VOICE_SETTING commands can
-be send also by non-root user and kernel does not block them.
-
---=20
-Pali Roh=C3=A1r
-pali.rohar@gmail.com
-
---jlswcyicf3hldqhd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCXgeM6QAKCRCL8Mk9A+RD
-UvPmAJ0aHHNlT3F3+UrCSH4kQ9MPR+BddACfVJ5m7uvD8sW7SU3NNmoNcPal65I=
-=Us8J
------END PGP SIGNATURE-----
-
---jlswcyicf3hldqhd--
