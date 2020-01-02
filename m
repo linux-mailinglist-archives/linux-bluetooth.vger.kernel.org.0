@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DA9012F197
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Jan 2020 00:02:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8ECA012F199
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Jan 2020 00:02:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727701AbgABXBE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Jan 2020 18:01:04 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:56126 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728293AbgABXBC (ORCPT
+        id S1727849AbgABXBH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 2 Jan 2020 18:01:07 -0500
+Received: from mail-pj1-f51.google.com ([209.85.216.51]:34729 "EHLO
+        mail-pj1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727388AbgABXBD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 2 Jan 2020 18:01:02 -0500
-Received: by mail-pj1-f65.google.com with SMTP id d5so3848920pjz.5
-        for <linux-bluetooth@vger.kernel.org>; Thu, 02 Jan 2020 15:01:01 -0800 (PST)
+        Thu, 2 Jan 2020 18:01:03 -0500
+Received: by mail-pj1-f51.google.com with SMTP id s94so2365507pjc.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 02 Jan 2020 15:01:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=7tKXYKPkHBK162bq0SRMS9f5TMCqjiPhJER2UPdGUm8=;
-        b=kvF63mrZXMZfwC2bQDCY2rfmWfu9IP3Jl45FtyY+NdCtw9DXSRKYHxOpjGko4Efxlu
-         JUN1GjsD32ZhqjDoZN93MEcY/MP+EY9KSDrxcpNw+Z9r9tHT5IfzhvWo4zvCgdrYqJQ9
-         8duXvLkziDvCD1EfCpMrW022ojRPs3UwRgVgZjlrGYdTl5K4X4Qr/Q3EX83RAltwcarD
-         plGA80yLrufmse5x0tR4xs6VohVx+PuApgvDpsTD5gLWH6A6NsmwKb9StliwHiUKTER7
-         xwcZBO/yU1E6HlpeeRZDrxj7u6Ptbds0tQyfn1V2cNa/lIMv/AiVX+WC/bqyHhWzXY5F
-         ysTQ==
+        bh=1tOm7/QQ4BdIINdv6+UL2D572iaC/AKl32SSZI2q6vM=;
+        b=mlgOoJCWUke3ZuYXQ0TWhqjRqhgSYj1bpkoUEK1GZTmpks5SEzszC8LVnLfLUzFTWl
+         4DInTEyxMlKQy1wopu0cMGkvOHZ/GePS1HJqW0GhSfD/zrRAN4AShZ/rI7ubaghORjCh
+         SHn+MS+eVYKZXM5h2VI896RyfFtd+Cb4A92CyHFwdDFNWel5wSgNW883foR5R0/O6eAa
+         Uk9wbhrHRCDAKdxmMEBy1YZYtxqa79qXR7qQCPX43AlhywVdFu3uTq6vzKnxsuH1d1t3
+         hdMX7MyS3lAcSeDWD8si+QOlZCanAMysbJVTvbep4w6LcMUCHXZ571+uKVgwQ+8r6JOG
+         Cddg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7tKXYKPkHBK162bq0SRMS9f5TMCqjiPhJER2UPdGUm8=;
-        b=h/0aFx5HmujhNFNmsorDiPWEEUHcZmc2TTHNgkpv2Cpo2lJtWdKUzFG3LZsxKkm9r/
-         ZzFyvq/zVx8NDfuRNGakPWyPoLYf/nYxOYu2WUUTG6ru/WcA0hzsenjp+aZvbIZMvq1g
-         j6AZXdfAgByLOJD+OcLzsA9KL1JAVcYHW35zYxpyKDQHtgAAm8Mg0C0S2gddIC9jATqh
-         s3+bNK9aIuxbwlnybhdvp8iTr4LIJN69q8FVReh3C1XJ6B4XihythqvHW9pNdg0HH/3c
-         o3HEvMGxzwZCVnRgWvKTUKf5uijwG7sumlziD2JNUBlTHyZDj2YupFiEZ4UShDeizofh
-         4T5Q==
-X-Gm-Message-State: APjAAAUDtWMpy7we45R4bzqlConEdlblpuGVP996sraptAMFakgiWr7k
-        3uhq1NKJu0iz0BWgAXszu539fxp1cro=
-X-Google-Smtp-Source: APXvYqyjUC6KwqoyIHRURymI2tUJNCFFxLzx5cYQRXScSdqjzPeYC1nkGoQuAsLVsBLAsQQ9YhYMRg==
-X-Received: by 2002:a17:902:9a8f:: with SMTP id w15mr87258532plp.149.1578006060619;
-        Thu, 02 Jan 2020 15:01:00 -0800 (PST)
+        bh=1tOm7/QQ4BdIINdv6+UL2D572iaC/AKl32SSZI2q6vM=;
+        b=O5q9hZM2onvyrO6X+4Mc579S7OEyAvhK1vWBp6l79S/k7d29+WIK/KEr6CFY+NHxmW
+         3SvBSMGW9fkNRUc3yxZ1UQc6JwI4L2y4Mlc6fdwPjrR6Zv3YZIwl+JGCgqAKQlwcj4rq
+         WbgEeXxXP4b7dITQZfXswpDQ8HUE311JfeqFAtDhCj8jqYoaxvYRZQIlF2vNdNjTSOLw
+         swNRiQq0xwfLdkJVgA98XBwTI6H1m2kT6Rkal3q7r6SUq/8WgZ8pV6a+3YryFawkKAkw
+         mNu6ni6JAvTH+HCky3FaF1E30xfWQ2VzslGlJS5qdP/Lv+fncT3SasdX3z6kVsFt17sJ
+         TVrg==
+X-Gm-Message-State: APjAAAU8s9EJgy8SUZ5jHfkigAFl5ZC65ngtvtn+BCKiREivHQRydQ12
+        chuY99rlSKeMjecNm6Y/DMZch/2QLkA=
+X-Google-Smtp-Source: APXvYqzxh5tjYpPOF1aMmOJ5OunoL9dX3E2tkqS3SXxumkY5LVQOeYWNGh9MpH/53GmesOt5xoTHTw==
+X-Received: by 2002:a17:90a:dc82:: with SMTP id j2mr23287834pjv.70.1578006062202;
+        Thu, 02 Jan 2020 15:01:02 -0800 (PST)
 Received: from vudentzs-t460s.hsd1.or.comcast.net ([2601:1c0:6800:1640::3287])
-        by smtp.gmail.com with ESMTPSA id 83sm61468946pgh.12.2020.01.02.15.00.59
+        by smtp.gmail.com with ESMTPSA id 83sm61468946pgh.12.2020.01.02.15.01.00
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jan 2020 15:01:00 -0800 (PST)
+        Thu, 02 Jan 2020 15:01:01 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [RFC 2/3] Bluetooth: Add BT_PHYS socket option
-Date:   Thu,  2 Jan 2020 15:00:56 -0800
-Message-Id: <20200102230057.31326-2-luiz.dentz@gmail.com>
+Subject: [RFC 3/3] Bluetooth: Auto tune if input MTU is set to 0
+Date:   Thu,  2 Jan 2020 15:00:57 -0800
+Message-Id: <20200102230057.31326-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20200102230057.31326-1-luiz.dentz@gmail.com>
 References: <20200102230057.31326-1-luiz.dentz@gmail.com>
@@ -63,193 +63,100 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds BT_PHYS socket option which can be used to read the PHYs in
-use by the underline connection.
+This enables the code to set the input MTU using the underline link
+packet types when set to 0, previously this would likely be rejected by
+the remote peer since it would be bellow the minimal of 48 for BR/EDR
+or 23 for LE, that way it shall be safe to use 0 without causing any
+side effects.
+
+This is convenient for the likes of A2DP transport, see:
+
+https://habr.com/en/post/456182/
 
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- include/net/bluetooth/bluetooth.h | 17 ++++++++
- include/net/bluetooth/hci_core.h  |  2 +
- net/bluetooth/hci_conn.c          | 64 +++++++++++++++++++++++++++++++
- net/bluetooth/l2cap_sock.c        | 13 +++++++
- net/bluetooth/sco.c               | 13 +++++++
- 5 files changed, 109 insertions(+)
+ net/bluetooth/l2cap_core.c | 54 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
-index e42bb8e03c09..69c0e7eb26d9 100644
---- a/include/net/bluetooth/bluetooth.h
-+++ b/include/net/bluetooth/bluetooth.h
-@@ -121,6 +121,23 @@ struct bt_voice {
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index a845786258a0..1bca608e0170 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1289,6 +1289,9 @@ static void l2cap_le_connect(struct l2cap_chan *chan)
+ 	if (test_and_set_bit(FLAG_LE_CONN_REQ_SENT, &chan->flags))
+ 		return;
  
- #define BT_SNDMTU		12
- #define BT_RCVMTU		13
-+#define BT_PHYS			14
++	if (!chan->imtu)
++		chan->imtu = chan->conn->mtu;
 +
-+#define BT_PHY_BR_1M_1SLOT	0x00000001
-+#define BT_PHY_BR_1M_3SLOT	0x00000002
-+#define BT_PHY_BR_1M_5SLOT	0x00000004
-+#define BT_PHY_EDR_2M_1SLOT	0x00000008
-+#define BT_PHY_EDR_2M_3SLOT	0x00000010
-+#define BT_PHY_EDR_2M_5SLOT	0x00000020
-+#define BT_PHY_EDR_3M_1SLOT	0x00000040
-+#define BT_PHY_EDR_3M_3SLOT	0x00000080
-+#define BT_PHY_EDR_3M_5SLOT	0x00000100
-+#define BT_PHY_LE_1M_TX		0x00000200
-+#define BT_PHY_LE_1M_RX		0x00000400
-+#define BT_PHY_LE_2M_TX		0x00000800
-+#define BT_PHY_LE_2M_RX		0x00001000
-+#define BT_PHY_LE_CODED_TX	0x00002000
-+#define BT_PHY_LE_CODED_RX	0x00004000
+ 	l2cap_le_flowctl_init(chan, 0);
  
- __printf(1, 2)
- void bt_info(const char *fmt, ...);
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index faebe3859931..03cf3f0f22b9 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1467,6 +1467,8 @@ void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
- struct sk_buff *hci_cmd_sync(struct hci_dev *hdev, u16 opcode, u32 plen,
- 			     const void *param, u32 timeout);
- 
-+u32 hci_conn_get_phys(struct hci_conn *conn);
-+
- /* ----- HCI Sockets ----- */
- void hci_send_to_sock(struct hci_dev *hdev, struct sk_buff *skb);
- void hci_send_to_channel(unsigned short channel, struct sk_buff *skb,
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 87691404d0c6..386e6b0bd2ab 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1725,3 +1725,67 @@ struct hci_chan *hci_chan_lookup_handle(struct hci_dev *hdev, __u16 handle)
- 
- 	return hchan;
+ 	req.psm     = chan->psm;
+@@ -3226,6 +3229,49 @@ static inline void l2cap_txwin_setup(struct l2cap_chan *chan)
+ 	chan->ack_win = chan->tx_win;
  }
-+
-+u32 hci_conn_get_phys(struct hci_conn *conn)
+ 
++static void l2cap_mtu_auto(struct l2cap_chan *chan)
 +{
-+	u32 phys = 0;
++	struct hci_conn *conn = chan->conn->hcon;
 +
-+	hci_dev_lock(conn->hdev);
++	chan->imtu = L2CAP_DEFAULT_MIN_MTU;
 +
-+	switch (conn->type) {
-+	case ACL_LINK:
-+	case SCO_LINK:
-+		phys |= BT_PHY_BR_1M_1SLOT;
++	/* The 2-DH1 packet has between 2 and 56 information bytes
++	 * (including the 2-byte payload header)
++	 */
++	if (!(conn->pkt_type & HCI_2DH1))
++		chan->imtu = 54;
 +
-+		if (conn->pkt_type & (HCI_DM3 | HCI_DH3))
-+			phys |= BT_PHY_BR_1M_3SLOT;
++	/* The 3-DH1 packet has between 2 and 85 information bytes
++	 * (including the 2-byte payload header)
++	 */
++	if (!(conn->pkt_type & HCI_3DH1))
++		chan->imtu = 83;
 +
-+		if (conn->pkt_type & (HCI_DM5 | HCI_DH5))
-+			phys |= BT_PHY_BR_1M_5SLOT;
++	/* The 2-DH3 packet has between 2 and 369 information bytes
++	 * (including the 2-byte payload header)
++	 */
++	if (!(conn->pkt_type & HCI_2DH3))
++		chan->imtu = 367;
 +
-+		if (!(conn->pkt_type & HCI_2DH1))
-+			phys |= BT_PHY_EDR_2M_1SLOT;
++	/* The 3-DH3 packet has between 2 and 554 information bytes
++	 * (including the 2-byte payload header)
++	 */
++	if (!(conn->pkt_type & HCI_3DH3))
++		chan->imtu = 552;
 +
-+		if (!(conn->pkt_type & HCI_2DH3))
-+			phys |= BT_PHY_EDR_2M_3SLOT;
++	/* The 2-DH5 packet has between 2 and 681 information bytes
++	 * (including the 2-byte payload header)
++	 */
++	if (!(conn->pkt_type & HCI_2DH5))
++		chan->imtu = 679;
 +
-+		if (!(conn->pkt_type & HCI_2DH5))
-+			phys |= BT_PHY_EDR_2M_5SLOT;
-+
-+		if (!(conn->pkt_type & HCI_3DH1))
-+			phys |= BT_PHY_EDR_3M_1SLOT;
-+
-+		if (!(conn->pkt_type & HCI_3DH3))
-+			phys |= BT_PHY_EDR_3M_3SLOT;
-+
-+		if (!(conn->pkt_type & HCI_3DH5))
-+			phys |= BT_PHY_EDR_3M_5SLOT;
-+
-+		break;
-+
-+	case LE_LINK:
-+		if (conn->le_tx_phy & HCI_LE_SET_PHY_1M)
-+			phys |= BT_PHY_LE_1M_TX;
-+
-+		if (conn->le_rx_phy & HCI_LE_SET_PHY_1M)
-+			phys |= BT_PHY_LE_1M_RX;
-+
-+		if (conn->le_tx_phy & HCI_LE_SET_PHY_2M)
-+			phys |= BT_PHY_LE_2M_TX;
-+
-+		if (conn->le_rx_phy & HCI_LE_SET_PHY_2M)
-+			phys |= BT_PHY_LE_2M_RX;
-+
-+		if (conn->le_tx_phy & HCI_LE_SET_PHY_CODED)
-+			phys |= BT_PHY_LE_CODED_TX;
-+
-+		if (conn->le_rx_phy & HCI_LE_SET_PHY_CODED)
-+			phys |= BT_PHY_LE_CODED_RX;
-+
-+		break;
-+	}
-+
-+	hci_dev_unlock(conn->hdev);
-+
-+	return phys;
++	/* The 3-DH5 packet has between 2 and 1023 information bytes
++	 * (including the 2-byte payload header)
++	 */
++	if (!(conn->pkt_type & HCI_3DH5))
++		chan->imtu = 1021;
 +}
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index a7be8b59b3c2..fb011c6c67be 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -499,6 +499,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
- 	struct bt_security sec;
- 	struct bt_power pwr;
-+	u32 phys;
- 	int len, err = 0;
- 
- 	BT_DBG("sk %p", sk);
-@@ -603,6 +604,18 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 			err = -EFAULT;
- 		break;
- 
-+	case BT_PHYS:
-+		if (sk->sk_state == BT_CONNECTED) {
-+			err = -EINVAL;
-+			break;
-+		}
 +
-+		phys = hci_conn_get_phys(chan->conn->hcon);
-+
-+		if (put_user(phys, (u32 __user *) optval))
-+			err = -EFAULT;
-+		break;
-+
- 	default:
- 		err = -ENOPROTOOPT;
- 		break;
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index b91d6b440fdf..dcd297f2acc6 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -922,6 +922,7 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
- 	struct sock *sk = sock->sk;
- 	int len, err = 0;
- 	struct bt_voice voice;
-+	u32 phys;
+ static int l2cap_build_conf_req(struct l2cap_chan *chan, void *data, size_t data_size)
+ {
+ 	struct l2cap_conf_req *req = data;
+@@ -3255,8 +3301,12 @@ static int l2cap_build_conf_req(struct l2cap_chan *chan, void *data, size_t data
+ 	}
  
- 	BT_DBG("sk %p", sk);
+ done:
+-	if (chan->imtu != L2CAP_DEFAULT_MTU)
+-		l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->imtu, endptr - ptr);
++	if (chan->imtu != L2CAP_DEFAULT_MTU) {
++		if (!chan->imtu)
++			l2cap_mtu_auto(chan);
++		l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->imtu,
++				   endptr - ptr);
++	}
  
-@@ -956,6 +957,18 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
- 
- 		break;
- 
-+	case BT_PHYS:
-+		if (sk->sk_state == BT_CONNECTED) {
-+			err = -EINVAL;
-+			break;
-+		}
-+
-+		phys = hci_conn_get_phys(sco_pi(sk)->conn->hcon);
-+
-+		if (put_user(phys, (u32 __user *) optval))
-+			err = -EFAULT;
-+		break;
-+
- 	default:
- 		err = -ENOPROTOOPT;
- 		break;
+ 	switch (chan->mode) {
+ 	case L2CAP_MODE_BASIC:
 -- 
 2.21.0
 
