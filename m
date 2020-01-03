@@ -2,100 +2,101 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7765D12FBB4
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Jan 2020 18:45:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10EF012FD8A
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Jan 2020 21:19:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728137AbgACRp3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 3 Jan 2020 12:45:29 -0500
-Received: from mail-ot1-f54.google.com ([209.85.210.54]:41774 "EHLO
-        mail-ot1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726077AbgACRp3 (ORCPT
+        id S1728712AbgACUTr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 3 Jan 2020 15:19:47 -0500
+Received: from mail-qv1-f66.google.com ([209.85.219.66]:38672 "EHLO
+        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727917AbgACUTq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 3 Jan 2020 12:45:29 -0500
-Received: by mail-ot1-f54.google.com with SMTP id r27so62016560otc.8
-        for <linux-bluetooth@vger.kernel.org>; Fri, 03 Jan 2020 09:45:28 -0800 (PST)
+        Fri, 3 Jan 2020 15:19:46 -0500
+Received: by mail-qv1-f66.google.com with SMTP id t6so16704373qvs.5
+        for <linux-bluetooth@vger.kernel.org>; Fri, 03 Jan 2020 12:19:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UHjMmXyc4cvw4XaLUeQiTc8j+wHyKH0uomFcACv8DzI=;
-        b=Y+8ZbV9S9mWaW++a2r/RJN5H7FC/Uq8kbqJFXT511HfDMK2XtYRB4Hw3bcae1OvLLP
-         q7NEaDGsZvd0dSg4AlxFyKaFJaoo61NnOcQGjuHcTJrLZlUvmf6eJV7IpWn+tXCrN4v2
-         S1LeRWLgURMaTu0J57x2q8tAFnxIrWYFyv99ACKJ3djP2/m1cGSwM7dybwNMWYYF1sXu
-         EDnsqh+bD3EdloMIpej5Sk4D5qn2+u7xZ8pmUd2oC40RqwCCgFjn7VfJ9WUE7iVDd1bw
-         uLUSXyliaR4D9JJpOAwXVvQHK8C1WtZRwQ1Uc1rzyC/Yf1MpgfaRYELH3mbulOhYHZ+O
-         JIaQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=40ACnQIUnpge54Cj+EODMXbGQ2AM0yGbootCDBdgIh0=;
+        b=AWCc/ylFmQ91zZEJrbKovcmODhKduqUVkKGxHK8uCtVvWppAnjCzAVhlqtuTB6Zv3H
+         fwGfadWPG5OWx3vtouAanI9rAb4+nCSTS9ougZHH94RmFVRXusGOhSeq6LcZbXUbpYke
+         LecHuReAxOHZIAlNr0puF8IN10taJseJbu/8dZmgE65qy44VHc90CsjCbMPz9YIW56uc
+         KAocddCq9fbTe+4eLEe4ukQAx3KuF/S8Bs/5ss0PU18bAsmodPObJCziaNGvW+fW97nj
+         vqPpR6NvW2UHqccwDYrcuioTdRRCTX8F5vGOe97A6Uj5iUQG4sbm5c76feOsNIPb/J8O
+         nOKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UHjMmXyc4cvw4XaLUeQiTc8j+wHyKH0uomFcACv8DzI=;
-        b=dXg1ceNWxXt28kP9Ok5UWPBv0v7104U0gsu8dKSjq0GozB47D1izxQuz1/3altV5ie
-         zAYMbcfu8gz1FCUZNCbxthngUlah8YeH4DYToCNTlqRfP32QylG5SNt/8hmBhRaBxi32
-         Dt2Ggy/IV5Y4M64yV+vkzCjoojwIzu/1ITN8KFbRZGx7wOHAM1wFfh3IqHGniJQm2AD8
-         n/cEuzAQLXi9Z5OGt+kYnONcJt4Dc8DoqhfaIUx6au7V89XF1lwlav1fckJWwCc1rwma
-         uSjYzDRgYx22w7UPFncFqyhj5AH12J451KOQdzsqgUMdVju6BXo5JddVcJ7urtqLelmB
-         CTMg==
-X-Gm-Message-State: APjAAAXgp+TwDs8aImlfYY2KgyBJ0rI/Zwv5AsN63v0zSNAvbAbGJVUG
-        XhNUx+3rRCgF63HgPMOWqo0oYKh7D4IYkdyZWN+E28SY
-X-Google-Smtp-Source: APXvYqxV0ryec8vti5uouzKyoILWZIc8AwuuVXdlMOQxjbQz06t9T1M5BF56ptZ4lhNYUGBGTPVtLyKf/epJXxBV698=
-X-Received: by 2002:a9d:6d10:: with SMTP id o16mr101988587otp.28.1578073528262;
- Fri, 03 Jan 2020 09:45:28 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=40ACnQIUnpge54Cj+EODMXbGQ2AM0yGbootCDBdgIh0=;
+        b=jsBVN6pWBI0LPPS8ZoYsUVoe+JmfR1PaEkqsaPmndzJ7TNZlX/+mREVREYbpadtTDM
+         AaRL4SXZX3hVNgd9LJexueYsxkVQhu7Zki2JgUh/r6STuGRplPm3rP4II5FVMOOtYZOD
+         yTXn8e+rBRPHeQCsY1zoeo690f70/8E5VPLeqY+K/VDkA1Vqr76OdxlSrZU7vwClBehW
+         q+Vl4rDC7YMmvXV84vui2vEsupmgFKsPeRYiJWcq7QXv61FK00fOrt+w7aGmYT2YM1bA
+         eAr2IsWJo4gyIjt6woy6KyeL1lHuC3FIdJgGQNPXqmtpLAYpixU5Mica4XUOJi+nkm2P
+         5Tpg==
+X-Gm-Message-State: APjAAAXZjUCVBTxXPSe1rSkfql4a6cAYwrvMcm6BLs+NvwhpURd2J1c0
+        NTsrrTtA+HyYIIVfLRRSCco0cYyTGgP/O6VKrx0=
+X-Google-Smtp-Source: APXvYqwTD0MzQRfSqMjBdpNUeZAJzfDvhrEGhXGCrMyvXGb//+N8M9ASxsqTbkQfP5NbaV7n6hKI5gEfY+hOjDS6Fyg=
+X-Received: by 2002:ad4:478b:: with SMTP id z11mr69635758qvy.185.1578082785331;
+ Fri, 03 Jan 2020 12:19:45 -0800 (PST)
 MIME-Version: 1.0
-References: <20200102172447.18574-1-luiz.dentz@gmail.com> <20200102172447.18574-2-luiz.dentz@gmail.com>
- <DM5PR14MB1385EC175428FE2F702258FEE6230@DM5PR14MB1385.namprd14.prod.outlook.com>
-In-Reply-To: <DM5PR14MB1385EC175428FE2F702258FEE6230@DM5PR14MB1385.namprd14.prod.outlook.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Fri, 3 Jan 2020 09:45:15 -0800
-Message-ID: <CABBYNZ+3A7qf6X6oLgV3FXOQbDYo5H52V6Ui_0R+WEM0sktGqw@mail.gmail.com>
-Subject: Re: [RFC 2/2] Bluetooth: Add BT_PHYS socket option
-To:     Jamie Mccrae <Jamie.Mccrae@lairdconnect.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Received: by 2002:ac8:4410:0:0:0:0:0 with HTTP; Fri, 3 Jan 2020 12:19:45 -0800 (PST)
+From:   "Rev.Dr Emmanuel Okoye CEO Ecobank-benin" 
+        <westernunion.benin982@gmail.com>
+Date:   Fri, 3 Jan 2020 21:19:45 +0100
+Message-ID: <CAP=nHBKxfmbdRg7q4-1jdSUL6+zok9agasMSrXV5CsEJEmZz3A@mail.gmail.com>
+Subject: I promise you must be happy today, God has uplifted you and your
+ family ok
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Jamie,
+Dear Friend
 
-On Thu, Jan 2, 2020 at 11:22 PM Jamie Mccrae
-<Jamie.Mccrae@lairdconnect.com> wrote:
->
-> > diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
-> > index e42bb8e03c09..69c0e7eb26d9 100644
-> > --- a/include/net/bluetooth/bluetooth.h
-> > +++ b/include/net/bluetooth/bluetooth.h
-> > @@ -121,6 +121,23 @@ struct bt_voice {
-> >
-> >  #define BT_SNDMTU              12
-> >  #define BT_RCVMTU              13
-> > +#define BT_PHYS                        14
-> > +
-> > +#define BT_PHY_BR_1M_1SLOT     0x00000001
-> > +#define BT_PHY_BR_1M_3SLOT     0x00000002
-> > +#define BT_PHY_BR_1M_5SLOT     0x00000004
-> > +#define BT_PHY_EDR_2M_1SLOT    0x00000008
-> > +#define BT_PHY_EDR_2M_3SLOT    0x00000010
-> > +#define BT_PHY_EDR_2M_5SLOT    0x00000020
-> > +#define BT_PHY_EDR_3M_1SLOT    0x00000040
-> > +#define BT_PHY_EDR_3M_3SLOT    0x00000080
-> > +#define BT_PHY_EDR_3M_5SLOT    0x00000100
-> > +#define BT_PHY_LE_1M_TX                0x00000200
-> > +#define BT_PHY_LE_1M_RX                0x00000400
-> > +#define BT_PHY_LE_2M_TX                0x00000800
-> > +#define BT_PHY_LE_2M_RX                0x00001000
-> > +#define BT_PHY_LE_CODED_TX     0x00002000
-> > +#define BT_PHY_LE_CODED_RX     0x00004000
->
-> My query about this is there is an option for LE Coded, but LE coded can have a data rate of 125Kbps or 500Kbps, is there no need to differentiate between the two rates in applications?
+i hope all is well with you,if so, glory be to God almighty. I'm very
+happy to inform you, about my success in getting payment funds under
+the cooperation of a new partner from United States of
+America.Presently I am in uk for investment projects with my own share
+of the total sum. I didn't forget your past efforts. IMF finally
+approved your compensation payment funds this morning by prepaid (ATM)
+Debit card of US$12,500.000.00Million Dollars, Since you not received
+this payment yet, I was not certified
+but it is not your fault and not my fault, I hold nothing against
+you.than bank official whom has been detaining the transfer in the
+bank, trying to claim your funds by themselves.
 
-I guess you referring to L=2 and L=8 payloads, those are unfortunately
-not exposed over HCI, they seem to be tied to LL power control and not
-with the PHY selection so Im not sure how we would be able to infer
-what payload is in use. Btw, I've the PHY bit fields to match what we
-use in the management socket,
+Therefore, in appreciation of your effort I have raised an
+International prepaid (ATM) Debit card of US$12,500.000.00 in your
+favor as compensation to you.
 
+Now, i want you to contact my Diplomatic Agent, His name is Mike Benz
+on His  e-mail Address (mikebenz550@aol.com
 
--- 
-Luiz Augusto von Dentz
+ask Him to send the Prepaid (ATM) Debit card to you. Bear in mind that
+the money is in Prepaid (ATM) Debit card, not cash, so you need to
+send to him,
+your full name
+address  where the prepaid (ATM) Debit card will be delivered to you,
+including your cell phone number. Finally, I left explicit
+instructions with him, on how to send the (ATM CARD) to you.
+
+The Prepaid (ATM) Debit card, will be send to you through my
+Diplomatic Agent Mr. Mike Benz immediately you contact him. So contact
+my Diplomatic Agent Mr. Mike Benz immediately you receive this letter.
+Below is his contact information:
+
+NAME : MIKE BENZ
+EMAIL ADDRESS: mikebenz550@aol.com
+Text Him, (256) 284-4886
+
+Request for Delivery of the Prepaid (ATM) Debit card  to you today.
+Note, please I have paid for the whole service fees for you, so the
+only money you will send to my Diplomatic Agent Mr. Mike Benz is
+$50.00 for your prepaid (ATM) Debit card DELIVERY FEE to your address
+ok.
+Let me know once you receive this Card at your address.
+Best regards,
+Rev.Dr, George Adadar
