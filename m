@@ -2,101 +2,91 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 10EF012FD8A
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Jan 2020 21:19:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 088E013004E
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  4 Jan 2020 03:53:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728712AbgACUTr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 3 Jan 2020 15:19:47 -0500
-Received: from mail-qv1-f66.google.com ([209.85.219.66]:38672 "EHLO
-        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727917AbgACUTq (ORCPT
+        id S1727260AbgADCxk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 3 Jan 2020 21:53:40 -0500
+Received: from mail-pf1-f172.google.com ([209.85.210.172]:43090 "EHLO
+        mail-pf1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727255AbgADCxk (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 3 Jan 2020 15:19:46 -0500
-Received: by mail-qv1-f66.google.com with SMTP id t6so16704373qvs.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 03 Jan 2020 12:19:45 -0800 (PST)
+        Fri, 3 Jan 2020 21:53:40 -0500
+Received: by mail-pf1-f172.google.com with SMTP id x6so23213232pfo.10
+        for <linux-bluetooth@vger.kernel.org>; Fri, 03 Jan 2020 18:53:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=40ACnQIUnpge54Cj+EODMXbGQ2AM0yGbootCDBdgIh0=;
-        b=AWCc/ylFmQ91zZEJrbKovcmODhKduqUVkKGxHK8uCtVvWppAnjCzAVhlqtuTB6Zv3H
-         fwGfadWPG5OWx3vtouAanI9rAb4+nCSTS9ougZHH94RmFVRXusGOhSeq6LcZbXUbpYke
-         LecHuReAxOHZIAlNr0puF8IN10taJseJbu/8dZmgE65qy44VHc90CsjCbMPz9YIW56uc
-         KAocddCq9fbTe+4eLEe4ukQAx3KuF/S8Bs/5ss0PU18bAsmodPObJCziaNGvW+fW97nj
-         vqPpR6NvW2UHqccwDYrcuioTdRRCTX8F5vGOe97A6Uj5iUQG4sbm5c76feOsNIPb/J8O
-         nOKQ==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=V5xys3awqtSGIHbInjB6hk1pCPnn90ilnMiPl+YQvAM=;
+        b=Va3a0IzRQY34jPiO/W2vje78w4u/zrNy+jhvwP2mmQlKPgDheqf1wK2fE5dORtZVRw
+         /Ky1mdqJL2mp3LWA/tZ77U7wsxp44NZBDo06tffiUV3b6aG6trMsxSRf4/IfoiCIH1wK
+         lY88NvuYa6httioHItbK+EAtNA0j3NZPzJzmjGxcWTtNkYptbDDHLxXIMdlJAtvqpLgj
+         4IezvjRWZbUML3wJKtZNcn3f+wDZDU9/4nEzEl9eKiDR7xYuh8gGglsaampT6VUcrUHa
+         /2N5l3CEWzJj+QwIQFBim//N4evdPvdhh3+UsfAgbTjK0chLKWWUzmbFnb1lmir4fDyv
+         UE2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=40ACnQIUnpge54Cj+EODMXbGQ2AM0yGbootCDBdgIh0=;
-        b=jsBVN6pWBI0LPPS8ZoYsUVoe+JmfR1PaEkqsaPmndzJ7TNZlX/+mREVREYbpadtTDM
-         AaRL4SXZX3hVNgd9LJexueYsxkVQhu7Zki2JgUh/r6STuGRplPm3rP4II5FVMOOtYZOD
-         yTXn8e+rBRPHeQCsY1zoeo690f70/8E5VPLeqY+K/VDkA1Vqr76OdxlSrZU7vwClBehW
-         q+Vl4rDC7YMmvXV84vui2vEsupmgFKsPeRYiJWcq7QXv61FK00fOrt+w7aGmYT2YM1bA
-         eAr2IsWJo4gyIjt6woy6KyeL1lHuC3FIdJgGQNPXqmtpLAYpixU5Mica4XUOJi+nkm2P
-         5Tpg==
-X-Gm-Message-State: APjAAAXZjUCVBTxXPSe1rSkfql4a6cAYwrvMcm6BLs+NvwhpURd2J1c0
-        NTsrrTtA+HyYIIVfLRRSCco0cYyTGgP/O6VKrx0=
-X-Google-Smtp-Source: APXvYqwTD0MzQRfSqMjBdpNUeZAJzfDvhrEGhXGCrMyvXGb//+N8M9ASxsqTbkQfP5NbaV7n6hKI5gEfY+hOjDS6Fyg=
-X-Received: by 2002:ad4:478b:: with SMTP id z11mr69635758qvy.185.1578082785331;
- Fri, 03 Jan 2020 12:19:45 -0800 (PST)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=V5xys3awqtSGIHbInjB6hk1pCPnn90ilnMiPl+YQvAM=;
+        b=cps3Pm3E/rusDoYlRZdoPIZkSJqS/QQWH1tF7DVoFTVu5dCUtm93FULH8QFx2ihge3
+         LQkXOl6cwJRpZ5Sktf4jl/h54spKWuz1SCNrtevzn++rdFJ2dBQpSFKyAWADMkvpse6N
+         gHpMpA0Y8nDGOVIbCP7Be5JG+DL6mbW2Pa+VGXotylqFNmzyPjzCuqYiBiQDqSX97QrR
+         EkdOpfa4kGfeumTOt6PO7uV6sfPtMzJz3axKzDG18BZoynPLzmxHa4qw9of0vyRpGnui
+         YyZ2JMHsvoWaTcDpp14RokEbqWZZ4i9tegM0UmM5i4ugyQ8S88im9EM+6yXAvcIYIlUd
+         aUpQ==
+X-Gm-Message-State: APjAAAXD3+3WpKwwST6vXkcNDT/Tc9zMju82sijl78Ub9o4v/YL8Nmd/
+        DGraJB4srf/1ZG+8QnFYB5c60fvL
+X-Google-Smtp-Source: APXvYqwE/Pydi/qNp4FZ0pLhH9/fe6HqEo75zO1rHIPhBcdlQZzP9LJNBjnc1Iimt7NNAd7jGAMTow==
+X-Received: by 2002:aa7:968d:: with SMTP id f13mr95477066pfk.67.1578106419352;
+        Fri, 03 Jan 2020 18:53:39 -0800 (PST)
+Received: from mozzy.local ([2001:8003:2518:fa01:462a:acbd:21ff:a9ff])
+        by smtp.gmail.com with ESMTPSA id r20sm66093327pgu.89.2020.01.03.18.53.38
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jan 2020 18:53:38 -0800 (PST)
+To:     linux-bluetooth@vger.kernel.org
+From:   John Floyd <johnfloyd0657@gmail.com>
+Subject: Bluetooth Serial Port Disconnect results in high CPU usage.
+Message-ID: <500ecaae-103b-dc09-24e7-ad6f12200199@gmail.com>
+Date:   Sat, 4 Jan 2020 13:53:36 +1100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Received: by 2002:ac8:4410:0:0:0:0:0 with HTTP; Fri, 3 Jan 2020 12:19:45 -0800 (PST)
-From:   "Rev.Dr Emmanuel Okoye CEO Ecobank-benin" 
-        <westernunion.benin982@gmail.com>
-Date:   Fri, 3 Jan 2020 21:19:45 +0100
-Message-ID: <CAP=nHBKxfmbdRg7q4-1jdSUL6+zok9agasMSrXV5CsEJEmZz3A@mail.gmail.com>
-Subject: I promise you must be happy today, God has uplifted you and your
- family ok
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Friend
+Similar to Bug 205579.
 
-i hope all is well with you,if so, glory be to God almighty. I'm very
-happy to inform you, about my success in getting payment funds under
-the cooperation of a new partner from United States of
-America.Presently I am in uk for investment projects with my own share
-of the total sum. I didn't forget your past efforts. IMF finally
-approved your compensation payment funds this morning by prepaid (ATM)
-Debit card of US$12,500.000.00Million Dollars, Since you not received
-this payment yet, I was not certified
-but it is not your fault and not my fault, I hold nothing against
-you.than bank official whom has been detaining the transfer in the
-bank, trying to claim your funds by themselves.
+However I am using the dbus interface to create the serial port profile 
+on the server, using similar coding described at
 
-Therefore, in appreciation of your effort I have raised an
-International prepaid (ATM) Debit card of US$12,500.000.00 in your
-favor as compensation to you.
+https://ukbaz.github.io/howto/AppInventor.html
 
-Now, i want you to contact my Diplomatic Agent, His name is Mike Benz
-on His  e-mail Address (mikebenz550@aol.com
+The connection works well but the disconnect ups the cpu usage (~100%) 
+for the thread running the SPP code.  Subsequent connects, data 
+transfers and disconnects still work over the bluetooth link.  The 
+initial connection before disconnect runs with <  3% cpu usage.
 
-ask Him to send the Prepaid (ATM) Debit card to you. Bear in mind that
-the money is in Prepaid (ATM) Debit card, not cash, so you need to
-send to him,
-your full name
-address  where the prepaid (ATM) Debit card will be delivered to you,
-including your cell phone number. Finally, I left explicit
-instructions with him, on how to send the (ATM CARD) to you.
+I tried closing down that SPP thread and restarting it, but the cpu load 
+stays high.  I have also disabled the bluetooth on the client and 
+re-enabled it.  CPU usage stays high.  Only restarting the bluetooth 
+subsystem on the server end, resets the cpu usage.
 
-The Prepaid (ATM) Debit card, will be send to you through my
-Diplomatic Agent Mr. Mike Benz immediately you contact him. So contact
-my Diplomatic Agent Mr. Mike Benz immediately you receive this letter.
-Below is his contact information:
+The test system is bluez 5.52 on fedora desktop.  Client is Bluetooth 
+serial app on android.
 
-NAME : MIKE BENZ
-EMAIL ADDRESS: mikebenz550@aol.com
-Text Him, (256) 284-4886
+Running the server on raspberrypi zero results is similar behaviour.  It 
+running bluez v5.50.
 
-Request for Delivery of the Prepaid (ATM) Debit card  to you today.
-Note, please I have paid for the whole service fees for you, so the
-only money you will send to my Diplomatic Agent Mr. Mike Benz is
-$50.00 for your prepaid (ATM) Debit card DELIVERY FEE to your address
-ok.
-Let me know once you receive this Card at your address.
-Best regards,
-Rev.Dr, George Adadar
+Any suggestions?  Need server operating on raspberrypi for low power use 
+on battery system.  Cannot afford to to restart bluetooth after each 
+disconnect.
+
+Cheers John
