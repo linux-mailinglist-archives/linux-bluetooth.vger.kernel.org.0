@@ -2,97 +2,101 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 05F0413027D
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  4 Jan 2020 14:18:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 750CA13042B
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  4 Jan 2020 20:53:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725884AbgADNSJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 4 Jan 2020 08:18:09 -0500
-Received: from mail-pg1-f172.google.com ([209.85.215.172]:35275 "EHLO
-        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbgADNSJ (ORCPT
+        id S1726207AbgADTwl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 4 Jan 2020 14:52:41 -0500
+Received: from mout.kundenserver.de ([217.72.192.74]:33399 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726118AbgADTwl (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 4 Jan 2020 08:18:09 -0500
-Received: by mail-pg1-f172.google.com with SMTP id l24so24694488pgk.2
-        for <linux-bluetooth@vger.kernel.org>; Sat, 04 Jan 2020 05:18:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=al8pd8ExtQq9t6BystREaSUFF8BJYov7Zjf4FfVocFQ=;
-        b=a1gEjlBqe5gteXR8HA3GxDKP6K7FKbqB8zsBuBp3NKQu8RTrOzn1jVcFANQfi+39qo
-         IdCM4eWJ+PgucD4OKj2dCYxkMOTVDQsJDf6vOLJQw2iHjLV/fdmiIaIOBNw71Y9TR5k5
-         4qI8o+kztTW7Qz7ej8bDtnV9eLYH2xm3urSAJt9Fyef5CRcAS4iAD9aDJV2wbxJyNP/J
-         mli5hqcVPhPEFFKBIjwAACHSgin8/bcTQ1yTIZfCKP7yAeTCnXvEzqQxL2YmXJxOCEEC
-         mBjoGX+RvW0By4Ng5hYpJSxTU6JoneGWBefh/yzZoXGRy271iVKtj6F0DVS/SX8kbGz5
-         Y/pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=al8pd8ExtQq9t6BystREaSUFF8BJYov7Zjf4FfVocFQ=;
-        b=ATETXT3Qh5kESBOll3fnfpPk2I4AIEZ8L/Tm+nEgSOhC2ooPuDdt9RQGqExio09P7t
-         QPVxve8QMTs9TF9lev6hGC3acefhUrJ5BaBxa684o/6vOIKzd7d0NFa3RCaQG4ZB+D7L
-         IOJ0uz9iKCRkMJuhkhlP3Z5jv3JI83c4aAf2c5zAula2JbY1HaK382IcUN1L7j60siNN
-         H57BbMabKRQdWLy1cNxLDpFJRMepX3jU9VCEjJtaIcIS99IOBPD1/y4caEPQXyakwBNN
-         0UpmhJlETlrhZuScLG5qjIWp+DHymHxjQFYgWFCF/K+ow8zaOB17mf4EdrKk4IjCldnT
-         p5Uw==
-X-Gm-Message-State: APjAAAWiQGKdD/UndS1RY/EIzE2N2eGVwQBEPmYXiAeQd9nwGcZ4A/P7
-        diTRF1qRuNYcgknUHyWZhrpcLj4Wa/epdg==
-X-Google-Smtp-Source: APXvYqxkh5tLopD2c5gP+2wn6gXycWDSa3BSEZu7esTqvBnVmuvJgRB9oCthmhMZ/bAIg/3yBwZgYg==
-X-Received: by 2002:a63:5920:: with SMTP id n32mr100005205pgb.443.1578143888653;
-        Sat, 04 Jan 2020 05:18:08 -0800 (PST)
-Received: from djofarre-mobl1.ger.corp.intel.com ([134.134.139.76])
-        by smtp.gmail.com with ESMTPSA id u127sm73211406pfc.95.2020.01.04.05.18.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 04 Jan 2020 05:18:07 -0800 (PST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
-Subject: Re: deprecated tools: rfcomm, can we un-deprecate it?
-From:   Johan Hedberg <johan.hedberg@gmail.com>
-In-Reply-To: <cb73add2-cb8c-353a-5d10-134a13553cf4@message-id.googlemail.com>
-Date:   Sat, 4 Jan 2020 14:18:03 +0100
-Cc:     BlueZ devel list <linux-bluetooth@vger.kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <7192C77E-BFF5-4507-A004-3684EDE489AC@gmail.com>
-References: <0aad7250-65f9-3e4c-e5ca-434139a9ae64@message-id.googlemail.com>
- <2203E98B-B581-4C14-94DF-164D7E036234@holtmann.org>
- <fa70a57e-d5f0-a47d-f987-27b46d8275c4@message-id.googlemail.com>
- <cb73add2-cb8c-353a-5d10-134a13553cf4@message-id.googlemail.com>
-To:     Stefan Seyfried <stefan.seyfried@googlemail.com>
-X-Mailer: Apple Mail (2.3608.40.2.2.4)
+        Sat, 4 Jan 2020 14:52:41 -0500
+Received: from orion.localdomain ([95.114.65.70]) by mrelayeu.kundenserver.de
+ (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1N6bsG-1jmdkd0icQ-0180xh; Sat, 04 Jan 2020 20:52:09 +0100
+From:   "Enrico Weigelt, metux IT consult" <info@metux.net>
+To:     linux-kernel@vger.kernel.org
+Cc:     davem@davemloft.net, mareklindner@neomailbox.ch,
+        sw@simonwunderlich.de, a@unstable.cc, sven@narfation.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com,
+        roopa@cumulusnetworks.com, nikolay@cumulusnetworks.com,
+        edumazet@google.com, kuznet@ms2.inr.ac.ru, yoshfuji@linux-ipv6.org,
+        jon.maloy@ericsson.com, ying.xue@windriver.com, kafai@fb.com,
+        songliubraving@fb.com, yhs@fb.com, andriin@fb.com,
+        netdev@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        tipc-discussion@lists.sourceforge.net,
+        linux-hyperv@vger.kernel.org, bpf@vger.kernel.org
+Subject: [PATCH 1/8] net: 8021q: remove unneeded MODULE_VERSION() usage
+Date:   Sat,  4 Jan 2020 20:51:24 +0100
+Message-Id: <20200104195131.16577-1-info@metux.net>
+X-Mailer: git-send-email 2.11.0
+X-Provags-ID: V03:K1:DUOrLYqXKtl8pRCBke7g4p2qlUJHYsLFb883aZwwRQAyiSsQXdT
+ cy4bqnEYpTvE2T7ZW2zmyRvoH9reEOrH+MCZw1+MTfEwclx1qtJJ+z9F0An+vNLD57fidnW
+ iekCAJ+XZ3u5qQI4aHADVsFfAROL8S8ePLXhBCHYTNrg+oAOpgce5KbMpkzHThP9fVnaK2u
+ dw99EkkdAMJWuXX6rXgCw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VvZJXNrGmTM=:3/L+iYL2SDXV5M3uG6JcT1
+ sbVVqyUggaxakdBmx6vlSFM9NRK6OYv9mISDkjQAM+dGpXa0m+BNpMiP0jPmFVVA4lJLEpcV8
+ /WNf4HCYPv1hKczaua13+mF1Cx/JG90C9DTg+9MQnoPiBM7hxjEE0zjaA2G5N15gXt63gUW1X
+ 304gM8cV6s4X14STp3U19LjjRN9S70ftbC+I3M/FbAvzImCNZl9p47QLaVnJ3jiBCaFnhq+y4
+ 4bu+swHZtsbNmpOCzuFREH4ruFNQNGIGvdavgU/T4RzyxmFIE8NdZbZbwKhq1xZaaat0sNvJt
+ 5vwpC+lZtAHVZkNTMJhS/pRloeKaKdLbt/UEvbIHUnprcFvZdZfe6ulqaTyCteGgn9M+ooM15
+ tQo+DNSMBHWbINyFMcTju0yYl6YE7wRQBjR3Ad1PCv2MbdlniogWIlMb2f0vG7QsD6CVbOAvi
+ ongj0p4vdHcA/qXb6BkueIjdn54vJc3n2FU2Px+yassEOWno+5K5WMW2Y7RtJkgyI4rND1RZG
+ oiqwSsx7tRxwxoDjHX2ol9wjbbidnKOcNVdWBvMNPSUUXvVfH2P/Qh5GYWH4ddmjfX6OigGbl
+ 2nKH/xJfZ3NeDwwf+3uZMuaeWlRuVTvsrG+N/B01h55qTE9Q+5LZ2GQODM3VAKv/TYFkWphz/
+ cnhQeuDYPzpL4FPiGuFA9yoyBvD+okzIToXErulKu1C7lV6o0fg0NjObpRUTQwbNO6ag2jgul
+ c6GetK92ee1+uhoRlYpFoJqwavmkTKu9gpUUQV+WZaP49K9Q00DgMIiP4Fkjlj0f8jRZQ/Zbe
+ 3/PRCteVkjCVOj3YS69w8lEt99PpY2nWtVLzW8DJh4dvE9BPnva3meP8ZJNgPt/Tpt3YaxeYq
+ DRh1ul25K858EuZdVNKA==
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Stefan,
+Remove MODULE_VERSION(), as it isn't needed at all: the only version
+making sense is the kernel version.
 
-On 4. Jan 2020, at 13.45, Stefan Seyfried =
-<stefan.seyfried@googlemail.com> wrote:
->> This would be for creating a "rfcomm service" for other devices to
->> connect to, right? (The equivalent of "rfcomm listen...")
->>=20
->> But how would I connect e.g. to my serial module (I got this for =
-trying
->> it by myself instead of relying on bugreporters results...), so =
-what's
->> the dbus equivalent of "rfcomm connect hci0 <bdaddr> <channel>"?
->=20
-> OK, now I found https://github.com/tonyespy/bluez5-spp-example which
-> explains how to do this.
->=20
-> I'd still think an example in the bluez documentation would be useful,
-> because=E2=80=A6
+Signed-off-by: Enrico Weigelt, metux IT consult <info@metux.net>
+---
+ net/8021q/vlan.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-Doesn=E2=80=99t test/test-profile give a pretty good overview of both =
-server- and client-role usage of the Profile D-Bus API? The main =
-difference to the RFCOMM ioctls is that instead of a TTY you get a file =
-descriptor (which I guess you could convert to a TTY using a pty). For =
-client, another difference is that it=E2=80=99s a two-step process, i.e. =
-first you register the client role profile and then you call e.g. =
-ConnectProfile (which test-profile doesn=E2=80=99t cover).
-
-Johan
+diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
+index d4bcfd8f95bf..ded7bf7229cf 100644
+--- a/net/8021q/vlan.c
++++ b/net/8021q/vlan.c
+@@ -36,15 +36,10 @@
+ #include "vlan.h"
+ #include "vlanproc.h"
+ 
+-#define DRV_VERSION "1.8"
+-
+ /* Global VLAN variables */
+ 
+ unsigned int vlan_net_id __read_mostly;
+ 
+-const char vlan_fullname[] = "802.1Q VLAN Support";
+-const char vlan_version[] = DRV_VERSION;
+-
+ /* End of global variables definitions. */
+ 
+ static int vlan_group_prealloc_vid(struct vlan_group *vg,
+@@ -683,7 +678,7 @@ static int __init vlan_proto_init(void)
+ {
+ 	int err;
+ 
+-	pr_info("%s v%s\n", vlan_fullname, vlan_version);
++	pr_info("802.1Q VLAN Support\n");
+ 
+ 	err = register_pernet_subsys(&vlan_net_ops);
+ 	if (err < 0)
+@@ -739,4 +734,3 @@ module_init(vlan_proto_init);
+ module_exit(vlan_cleanup_module);
+ 
+ MODULE_LICENSE("GPL");
+-MODULE_VERSION(DRV_VERSION);
+-- 
+2.11.0
 
