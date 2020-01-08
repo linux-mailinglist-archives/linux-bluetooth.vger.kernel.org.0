@@ -2,71 +2,127 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 67627134DF3
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 21:53:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 63EC2134E2A
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 21:57:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727159AbgAHUxk convert rfc822-to-8bit (ORCPT
+        id S1726721AbgAHU5J convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 8 Jan 2020 15:53:40 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:57107 "EHLO
+        Wed, 8 Jan 2020 15:57:09 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:48276 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726155AbgAHUxk (ORCPT
+        with ESMTP id S1726155AbgAHU5J (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 8 Jan 2020 15:53:40 -0500
+        Wed, 8 Jan 2020 15:57:09 -0500
 Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 95B02CECFA;
-        Wed,  8 Jan 2020 22:02:55 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id ADCE2CECFA;
+        Wed,  8 Jan 2020 22:06:24 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
-Subject: Re: [PATCH v4] bluetooth: hci_bcm: enable IRQ capability from node
+Subject: Re: [PATCH] Bleutooth: Add definitions for LE Read Tx Power
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <11747601-6d29-d2c8-7639-896d654280a4@baylibre.com>
-Date:   Wed, 8 Jan 2020 21:53:39 +0100
-Cc:     Johan Hovold <johan@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        BlueZ devel list <linux-bluetooth@vger.kernel.org>,
-        nsaenzjulienne@suse.de, linux-kernel@vger.kernel.org,
-        khilman@baylibre.com
+In-Reply-To: <1578386915-1524-1-git-send-email-ankit.p.navik@intel.com>
+Date:   Wed, 8 Jan 2020 21:57:07 +0100
+Cc:     BlueZ devel list <linux-bluetooth@vger.kernel.org>
 Content-Transfer-Encoding: 8BIT
-Message-Id: <EE92382A-DB56-483C-8F85-D658A654CDE6@holtmann.org>
-References: <20191213105521.4290-1-glaroque@baylibre.com>
- <20191213111702.GX10631@localhost>
- <162e5588-a702-6042-6934-dd41b64fa1dc@baylibre.com>
- <20191213134404.GY10631@localhost>
- <08ae6108-0829-3bb4-f398-7e6a58719d29@baylibre.com>
- <8EBBCE1B-688D-4097-A2AF-6E099A0AD68B@holtmann.org>
- <11747601-6d29-d2c8-7639-896d654280a4@baylibre.com>
-To:     guillaume La Roque <glaroque@baylibre.com>
+Message-Id: <08B392B2-334A-47E3-A60F-AD7E21FAF9B2@holtmann.org>
+References: <1578386915-1524-1-git-send-email-ankit.p.navik@intel.com>
+To:     Ankit Navik <ankit.p.navik@intel.com>
 X-Mailer: Apple Mail (2.3608.40.2.2.4)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Guillaume,
+Hi Ankit,
 
->>>>>>> @@ -1421,6 +1422,7 @@ static int bcm_serdev_probe(struct serdev_device *serdev)
->>>>>>> #endif
->>>>>>> 	bcmdev->serdev_hu.serdev = serdev;
->>>>>>> 	serdev_device_set_drvdata(serdev, bcmdev);
->>>>>>> +	bcmdev->irq = of_irq_get(bcmdev->dev->of_node, 0);
->>>>>> Shouldn't you be used using of_irq_get_byname()?
->>>>> i can use it if you prefer but no other interrupt need to be defined
->>>> Maybe not needed then. Was just thinking it may make it more clear that
->>>> you now have two ways to specify the "host-wakeup" interrupt (and in
->>>> your proposed implementation the interrupts-property happens to take
->>>> priority). Perhaps that can be sorted out when you submit the binding
->>>> update for review.
->>> no problem i add a "host-wakeup" interrupt-name.
->>> you are right it will be more clear with name and we know why this interrupt is needed.
->> have I missed the v5 or are still sending it?
+> Add the definitions for LE read transmit power HCI commands to
+> read the minimum and maximum Tx power.
 > 
-> sorry i was in chrismas holidays .
+> Signed-off-by: Ankit Navik <ankit.p.navik@intel.com>
+> ---
+> include/net/bluetooth/hci.h      |  7 +++++++
+> include/net/bluetooth/hci_core.h |  3 +++
+> net/bluetooth/hci_event.c        | 18 ++++++++++++++++++
+> 3 files changed, 28 insertions(+)
 > 
-> v5 was sent before holiday and you comment it [1] ;) , on v5 you ask me to send v6 with tag.
+> diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+> index 07b6ece..6e8805f 100644
+> --- a/include/net/bluetooth/hci.h
+> +++ b/include/net/bluetooth/hci.h
+> @@ -1641,6 +1641,13 @@ struct hci_cp_le_ext_conn_param {
+> 	__le16 max_ce_len;
+> } __packed;
+> 
+> +#define HCI_OP_LE_READ_TX_POWER		0x204b
+> +struct hci_rp_le_read_tx_power {
+> +	__u8 status;
+> +	__s8 min_tx_power;
+> +	__s8 max_tx_power;
+> +} __packed;
+> +
+> #define HCI_OP_LE_READ_NUM_SUPPORTED_ADV_SETS	0x203b
 
-ok, then I am waiting for v6.
+can we please keep this list sorted by opcode.
+
+> struct hci_rp_le_read_num_supported_adv_sets {
+> 	__u8  status;
+> diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+> index faebe38..88c6e55 100644
+> --- a/include/net/bluetooth/hci_core.h
+> +++ b/include/net/bluetooth/hci_core.h
+> @@ -418,6 +418,9 @@ struct hci_dev {
+> 	__u8			scan_rsp_data[HCI_MAX_AD_LENGTH];
+> 	__u8			scan_rsp_data_len;
+> 
+> +	__s8			min_tx_power;
+> +	__s8			max_tx_power;
+> +
+
+They are LE specific so lets prefix them as le_ and put them together with other le_ data.
+
+> 	struct list_head	adv_instances;
+> 	unsigned int		adv_instance_cnt;
+> 	__u8			cur_adv_instance;
+> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+> index 6ddc4a7..fc154cf 100644
+> --- a/net/bluetooth/hci_event.c
+> +++ b/net/bluetooth/hci_event.c
+> @@ -988,6 +988,20 @@ static void hci_cc_le_read_adv_tx_power(struct hci_dev *hdev,
+> 	hdev->adv_tx_power = rp->tx_power;
+> }
+> 
+> +static void hci_cc_le_read_tx_power(struct hci_dev *hdev,
+> +					struct sk_buff *skb)
+
+Please do proper indentation.
+
+> +{
+> +	struct hci_rp_le_read_tx_power *rp = (void *) skb->data;
+> +
+> +	BT_DBG("%s status 0x%2.2x", hdev->name, rp->status);
+> +
+> +	if (rp->status)
+> +		return;
+> +
+> +	hdev->min_tx_power = rp->min_tx_power;
+> +	hdev->max_tx_power = rp->max_tx_power;
+> +}
+> +
+> static void hci_cc_user_confirm_reply(struct hci_dev *hdev, struct sk_buff *skb)
+> {
+> 	struct hci_rp_user_confirm_reply *rp = (void *) skb->data;
+> @@ -3414,6 +3428,10 @@ static void hci_cmd_complete_evt(struct hci_dev *hdev, struct sk_buff *skb,
+> 		hci_cc_le_read_max_data_len(hdev, skb);
+> 		break;
+> 
+> +	case HCI_OP_LE_READ_TX_POWER:
+> +		hci_cc_le_read_tx_power(hdev, skb);
+> +		break;
+> +
+> 	case HCI_OP_WRITE_LE_HOST_SUPPORTED:
+> 		hci_cc_write_le_host_supported(hdev, skb);
+> 		break;
 
 Regards
 
