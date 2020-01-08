@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 294E6133805
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 01:34:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F828133807
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 01:34:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727099AbgAHAeB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Jan 2020 19:34:01 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:56029 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727078AbgAHAeB (ORCPT
+        id S1727108AbgAHAeC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Jan 2020 19:34:02 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:32853 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726281AbgAHAeC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Jan 2020 19:34:01 -0500
-Received: by mail-pj1-f66.google.com with SMTP id d5so291127pjz.5
-        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Jan 2020 16:34:00 -0800 (PST)
+        Tue, 7 Jan 2020 19:34:02 -0500
+Received: by mail-pj1-f68.google.com with SMTP id u63so5717769pjb.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Jan 2020 16:34:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=BgAM/E2Zi8oiMSGPBJ1qVpBjV8Dt15AxwGSsMerk+Ow=;
-        b=FzI3iNz7ytxOLIi46eE/2n4b5jYcnjPLEWv+fgud2sRpPzG42f7IsBIkoK4uqoRKqr
-         hUeMn5C5rg8CkektJZFki8URbbsQmMHWGhcT0Z+Kig2P9X9f4q0f/OmzJaLTO7JZy2OB
-         awXsf6TkY/ZXJ7dvWg6gm0MQ8s0tOlBobKQ/3bZAtjlcr3Zk3TVKG4PYK2enwPz5R3FJ
-         azloGgs6ln9FYuBPwqSzs95GmaTLIYPy7FMHsXe25jf1NQUSgEAfRq0HGa3DqYnCXuek
-         YNFORVUqsXXji4uo+gqu8UjTUBETjvGoCBCo9sZZmBu2Nm4rFyWMY/8sHX93bZ4iXoIa
-         IU1Q==
+        bh=bu4oBw+goKYogLpgfJAv6oogbSfgCLkZb1y27cehctU=;
+        b=kY0edA1zRoDIP/qjlgpOaP0Ujwc3hGCL4kuoDzN4/iTUATxi9zR4IZ5xKzW78VQP0C
+         JNasxzACBfOou+Ad4YYUT2iffzP1wFgCFXbFAeSKqMh9zpC6EOd+9slyz/UsmlxlQ0Wc
+         l+nr6rW2WuyyCpsOUp+tr2ssUMUGQuT26+UwsW5r6pC/CEeNO90gIY3KaYN8w3N1CdC+
+         6qtnRCLnvSTgjqZb+H3AYMmiak2s/LWAt0zyHxGvUGSJq4GIcAc5NczMgmPecSUWcoRI
+         Ycssem1VWmy5SW93Kj339azquzL/ojTCBo95vg/S1M1avc/vQOdmzGS/Y3BOs/gmZVuQ
+         LqMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BgAM/E2Zi8oiMSGPBJ1qVpBjV8Dt15AxwGSsMerk+Ow=;
-        b=pY5+F+652khDHsRCrgi4b5URzvdx+Ao0xg6zZaSYX6+ejQ4vMXpK6lB19qjm4Xs5J+
-         REMjalj+5GJ8ebbr/3sH5Kxghwm3bmwGTGxHB8yqCPzrPAcBv600giExThdYrUUwYkkx
-         mDd4gn1OGoI6+9DB51QMEsxKv6+u+B/BJ2BPWYpncUkOQoFBMdfrGVTWFVXOTIBAQcoN
-         3d49rxmaPMJrf1AbjGnS7u/26dAZSrgwQsBghYYnjGQiwziduM1ci83wZdVdwfL7G97q
-         bm/FMDPe4BV4IhSk15TGZlJjgJnFxg/0NWqr8KX7wlIH+RUFQ+4mYZDqqtK2qiiu1wFg
-         YLyQ==
-X-Gm-Message-State: APjAAAXTX8XDy+X2y5CLhDBQGlljkDgyHvOHoUrxBz3RFW52toYfPJ1O
-        GcJTjHMcGOX03Tga+nBiZCeTRogTajQ=
-X-Google-Smtp-Source: APXvYqy9vgHlDvpHsB+Ji4Kg6Q1t58iILUGbEaPJM9RGLO/XnDmPRy/k1bU8/EQb8ZcwNmpsYytH7w==
-X-Received: by 2002:a17:902:8a8e:: with SMTP id p14mr2551129plo.28.1578443639908;
-        Tue, 07 Jan 2020 16:33:59 -0800 (PST)
+        bh=bu4oBw+goKYogLpgfJAv6oogbSfgCLkZb1y27cehctU=;
+        b=G3Rh8yIq1xbc5JCj+bhSWXXLXM/MUdqy+snu3PGZhiUz45HUoS09BBqpVJOIUnbJsG
+         nLUIXa6ZAr8VgRZqBgFix0gOu6QNZ1zkY0ED+CClAPff92ouwAJ/4SEdHTwtvUufS6Uw
+         2DzXLuLUaPUq0kYqiQeraeduqC4xgrZPR9nwztl8MqIVcVywMIgXvC/4pfBnlAP3EgNU
+         4inzTDPogp/9pW69xNzzUgQZJed5ak2Dm4Ofk6ZK6ZXAA3IK1nbotWqVGXsj97j6F8qJ
+         GzWUmtds3ClH3zd6GUxSmDFIxeqwj5IIgixKGxcjbm91XpkVMZ4ilPcqxEothFqtz79s
+         g8VA==
+X-Gm-Message-State: APjAAAUhKt5khDPBD665YRHoHZLwEYbDFfAxXBECeHzG3GpFGr1aIpf5
+        bk45QuU0Pa+6X5FlxSHlRVbdpLY9+PA=
+X-Google-Smtp-Source: APXvYqwwrlZZLYn5y56CVvzABoSyeaLiykda1sRThCwR23RmkHp+qEo14u7o0om9k783qdGyzdVQ6g==
+X-Received: by 2002:a17:902:b785:: with SMTP id e5mr2522712pls.327.1578443641279;
+        Tue, 07 Jan 2020 16:34:01 -0800 (PST)
 Received: from localhost.localdomain ([192.102.209.43])
-        by smtp.gmail.com with ESMTPSA id u10sm925805pgg.41.2020.01.07.16.33.58
+        by smtp.gmail.com with ESMTPSA id u10sm925805pgg.41.2020.01.07.16.34.00
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2020 16:33:59 -0800 (PST)
+        Tue, 07 Jan 2020 16:34:00 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 16/22] gatt: Enable EATT bearer support
-Date:   Tue,  7 Jan 2020 16:33:36 -0800
-Message-Id: <20200108003342.15458-17-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 17/22] shared/gatt-server: Add support for Read Multiple Variable Length
+Date:   Tue,  7 Jan 2020 16:33:37 -0800
+Message-Id: <20200108003342.15458-18-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20200108003342.15458-1-luiz.dentz@gmail.com>
 References: <20200108003342.15458-1-luiz.dentz@gmail.com>
@@ -63,370 +63,256 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds support for EATT connections.
+The Read Multiple Variable Length Request is used to request that the
+server read two or more values of a set of attributes that have a
+variable or unknown value length and return their values in a
+Read Multiple Variable Length Response.
 ---
- src/device.c        |  11 +++++
- src/gatt-client.c   |  83 ++++++++++++++++++++++++++++++++++
- src/gatt-database.c | 107 +++++++++++++++++++++++++++++++++-----------
- 3 files changed, 175 insertions(+), 26 deletions(-)
+ src/shared/att-types.h   |   2 +
+ src/shared/gatt-server.c | 112 +++++++++++++++++++++++++++------------
+ 2 files changed, 80 insertions(+), 34 deletions(-)
 
-diff --git a/src/device.c b/src/device.c
-index dbbc59b15..f7f0bc789 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -5048,6 +5048,17 @@ bool device_attach_att(struct btd_device *dev, GIOChannel *io)
- 		return false;
- 	}
+diff --git a/src/shared/att-types.h b/src/shared/att-types.h
+index 7b88e7d92..cc9cc9fd6 100644
+--- a/src/shared/att-types.h
++++ b/src/shared/att-types.h
+@@ -75,6 +75,8 @@
+ #define BT_ATT_OP_HANDLE_VAL_NOT		0x1B
+ #define BT_ATT_OP_HANDLE_VAL_IND		0x1D
+ #define BT_ATT_OP_HANDLE_VAL_CONF		0x1E
++#define BT_ATT_OP_READ_MULT_VL_REQ		0x20
++#define BT_ATT_OP_READ_MULT_VL_RSP		0x21
  
-+	if (dev->att) {
-+		if (!bt_att_attach_fd(dev->att, g_io_channel_unix_get_fd(io))) {
-+			DBG("EATT channel connected");
-+			g_io_channel_set_close_on_unref(io, FALSE);
-+			return true;
-+		}
-+
-+		error("Failed to attach EATT channel");
-+		return false;
-+	}
-+
- 	if (sec_level == BT_IO_SEC_LOW && dev->le_state.paired) {
- 		DBG("Elevating security level since LTK is available");
+ /* Packed struct definitions for ATT protocol PDUs */
+ /* TODO: Complete these definitions for all opcodes */
+diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
+index ee0058486..55535abdf 100644
+--- a/src/shared/gatt-server.c
++++ b/src/shared/gatt-server.c
+@@ -102,6 +102,7 @@ struct bt_gatt_server {
+ 	unsigned int read_id;
+ 	unsigned int read_blob_id;
+ 	unsigned int read_multiple_id;
++	unsigned int read_multiple_vl_id;
+ 	unsigned int prep_write_id;
+ 	unsigned int exec_write_id;
  
-diff --git a/src/gatt-client.c b/src/gatt-client.c
-index 6bcdecf09..04a7e5319 100644
---- a/src/gatt-client.c
-+++ b/src/gatt-client.c
-@@ -35,9 +35,11 @@
- #include "lib/uuid.h"
+@@ -136,6 +137,7 @@ static void bt_gatt_server_free(struct bt_gatt_server *server)
+ 	bt_att_unregister(server->att, server->read_id);
+ 	bt_att_unregister(server->att, server->read_blob_id);
+ 	bt_att_unregister(server->att, server->read_multiple_id);
++	bt_att_unregister(server->att, server->read_multiple_vl_id);
+ 	bt_att_unregister(server->att, server->prep_write_id);
+ 	bt_att_unregister(server->att, server->exec_write_id);
  
- #include "gdbus/gdbus.h"
-+#include "btio/btio.h"
- 
- #include "log.h"
- #include "error.h"
-+#include "hcid.h"
- #include "adapter.h"
- #include "device.h"
- #include "src/shared/io.h"
-@@ -57,8 +59,11 @@
- #define GATT_CHARACTERISTIC_IFACE	"org.bluez.GattCharacteristic1"
- #define GATT_DESCRIPTOR_IFACE		"org.bluez.GattDescriptor1"
- 
-+#define EATT_MAX_BEARERS 2
-+
- struct btd_gatt_client {
- 	struct btd_device *device;
-+	uint8_t features;
- 	bool ready;
- 	char devaddr[18];
- 	struct gatt_db *db;
-@@ -2154,6 +2159,70 @@ static void register_notify(void *data, void *user_data)
- 	notify_client_free(notify_client);
+@@ -1013,9 +1015,10 @@ static void read_blob_cb(struct bt_att_chan *chan, uint8_t opcode,
+ 	handle_read_req(chan, server, opcode, handle, offset);
  }
  
-+static void eatt_connect_cb(GIOChannel *io, GError *gerr, gpointer user_data)
-+{
-+	struct btd_gatt_client *client = user_data;
-+
-+	if (gerr)
-+		return;
-+
-+	device_attach_att(client->device, io);
-+}
-+
-+static void eatt_connect(struct btd_gatt_client *client)
-+{
-+	struct btd_device *dev = client->device;
-+	struct btd_adapter *adapter = device_get_adapter(dev);
-+	GIOChannel *io;
-+	GError *gerr = NULL;
-+	char addr[18];
-+	int i;
-+
-+	ba2str(device_get_address(dev), addr);
-+
-+	DBG("Connection attempt to: %s", addr);
-+
-+	for (i = 0; i < EATT_MAX_BEARERS; i++) {
-+		io = bt_io_connect(eatt_connect_cb, client, NULL, NULL,
-+				BT_IO_OPT_SOURCE_BDADDR,
-+				btd_adapter_get_address(adapter),
-+				BT_IO_OPT_SOURCE_TYPE,
-+				btd_adapter_get_address_type(adapter),
-+				BT_IO_OPT_DEST_BDADDR, device_get_address(dev),
-+				BT_IO_OPT_DEST_TYPE,
-+				device_get_le_address_type(dev),
-+				BT_IO_OPT_MODE, BT_IO_MODE_ECRED,
-+				BT_IO_OPT_PSM, BT_ATT_EATT_PSM,
-+				BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_LOW,
-+				BT_IO_OPT_MTU, main_opts.gatt_mtu,
-+				BT_IO_OPT_INVALID);
-+		if (io == NULL) {
-+			/* Fallback to regular LE mode */
-+			io = bt_io_connect(eatt_connect_cb, client, NULL, &gerr,
-+					BT_IO_OPT_SOURCE_BDADDR,
-+					btd_adapter_get_address(adapter),
-+					BT_IO_OPT_SOURCE_TYPE,
-+					btd_adapter_get_address_type(adapter),
-+					BT_IO_OPT_DEST_BDADDR,
-+					device_get_address(dev),
-+					BT_IO_OPT_DEST_TYPE,
-+					device_get_le_address_type(dev),
-+					BT_IO_OPT_PSM, BT_ATT_EATT_PSM,
-+					BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_LOW,
-+					BT_IO_OPT_MTU, main_opts.gatt_mtu,
-+					BT_IO_OPT_INVALID);
-+			if (!io) {
-+				error("EATT bt_io_connect(%s): %s", addr,
-+								gerr->message);
-+				g_error_free(gerr);
-+				return;
-+			}
-+		}
-+
-+		g_io_channel_unref(io);
-+	}
-+}
-+
- void btd_gatt_client_ready(struct btd_gatt_client *client)
- {
- 	if (!client)
-@@ -2175,6 +2244,15 @@ void btd_gatt_client_ready(struct btd_gatt_client *client)
- 	DBG("GATT client ready");
- 
- 	create_services(client);
-+
-+	DBG("Features 0x%02x", client->features);
-+
-+	if (!client->features) {
-+		client->features = bt_gatt_client_get_features(client->gatt);
-+		DBG("Update Features 0x%02x", client->features);
-+		if (client->features & BT_GATT_CHRC_CLI_FEAT_EATT)
-+			eatt_connect(client);
-+	}
- }
- 
- void btd_gatt_client_connected(struct btd_gatt_client *client)
-@@ -2197,6 +2275,11 @@ void btd_gatt_client_connected(struct btd_gatt_client *client)
- 	 * for any pre-registered notification sessions.
- 	 */
- 	queue_foreach(client->all_notify_clients, register_notify, client);
-+
-+	if (!(client->features & BT_GATT_CHRC_CLI_FEAT_EATT))
-+		return;
-+
-+	eatt_connect(client);
- }
- 
- void btd_gatt_client_service_added(struct btd_gatt_client *client,
-diff --git a/src/gatt-database.c b/src/gatt-database.c
-index 419e4f9e1..47d32889d 100644
---- a/src/gatt-database.c
-+++ b/src/gatt-database.c
-@@ -48,14 +48,6 @@
- #include "profile.h"
- #include "service.h"
- 
--#ifndef ATT_CID
--#define ATT_CID 4
--#endif
--
--#ifndef ATT_PSM
--#define ATT_PSM 31
--#endif
--
- #define GATT_MANAGER_IFACE	"org.bluez.GattManager1"
- #define GATT_PROFILE_IFACE	"org.bluez.GattProfile1"
- #define GATT_SERVICE_IFACE	"org.bluez.GattService1"
-@@ -80,7 +72,8 @@ struct btd_gatt_database {
- 	struct gatt_db *db;
- 	unsigned int db_id;
- 	GIOChannel *le_io;
--	GIOChannel *l2cap_io;
-+	GIOChannel *eatt_io;
-+	GIOChannel *bredr_io;
- 	struct queue *records;
- 	struct queue *device_states;
- 	struct queue *ccc_callbacks;
-@@ -88,6 +81,7 @@ struct btd_gatt_database {
- 	struct gatt_db_attribute *svc_chngd_ccc;
- 	struct gatt_db_attribute *cli_feat;
- 	struct gatt_db_attribute *db_hash;
-+	struct gatt_db_attribute *eatt;
- 	struct queue *apps;
- 	struct queue *profiles;
+-struct read_multiple_resp_data {
++struct read_mult_data {
+ 	struct bt_att_chan *chan;
+ 	struct bt_gatt_server *server;
++	uint8_t opcode;
+ 	uint16_t *handles;
+ 	size_t cur_handle;
+ 	size_t num_handles;
+@@ -1024,7 +1027,7 @@ struct read_multiple_resp_data {
+ 	size_t mtu;
  };
-@@ -594,9 +588,14 @@ static void gatt_database_free(void *data)
- 		g_io_channel_unref(database->le_io);
+ 
+-static void read_multiple_resp_data_free(struct read_multiple_resp_data *data)
++static void read_mult_data_free(struct read_mult_data *data)
+ {
+ 	free(data->handles);
+ 	free(data->rsp_data);
+@@ -1035,15 +1038,16 @@ static void read_multiple_complete_cb(struct gatt_db_attribute *attr, int err,
+ 					const uint8_t *value, size_t len,
+ 					void *user_data)
+ {
+-	struct read_multiple_resp_data *data = user_data;
++	struct read_mult_data *data = user_data;
+ 	struct gatt_db_attribute *next_attr;
+ 	uint16_t handle = gatt_db_attribute_get_handle(attr);
+ 	uint8_t ecode;
++	uint16_t length;
+ 
+ 	if (err != 0) {
+-		bt_att_chan_send_error_rsp(data->chan,
+-					BT_ATT_OP_READ_MULT_REQ, handle, err);
+-		read_multiple_resp_data_free(data);
++		bt_att_chan_send_error_rsp(data->chan, data->opcode, handle,
++									err);
++		read_mult_data_free(data);
+ 		return;
  	}
  
--	if (database->l2cap_io) {
--		g_io_channel_shutdown(database->l2cap_io, FALSE, NULL);
--		g_io_channel_unref(database->l2cap_io);
-+	if (database->eatt_io) {
-+		g_io_channel_shutdown(database->eatt_io, FALSE, NULL);
-+		g_io_channel_unref(database->eatt_io);
+@@ -1051,29 +1055,45 @@ static void read_multiple_complete_cb(struct gatt_db_attribute *attr, int err,
+ 						BT_ATT_PERM_READ_AUTHEN |
+ 						BT_ATT_PERM_READ_ENCRYPT);
+ 	if (ecode) {
+-		bt_att_chan_send_error_rsp(data->chan,
+-					BT_ATT_OP_READ_MULT_REQ, handle, ecode);
+-		read_multiple_resp_data_free(data);
++		bt_att_chan_send_error_rsp(data->chan, data->opcode, handle,
++									ecode);
++		read_mult_data_free(data);
+ 		return;
+ 	}
+ 
+-	len = MIN(len, data->mtu - data->length - 1);
++	length = data->opcode == BT_ATT_OP_READ_MULT_VL_REQ ?
++			MIN(len, data->mtu - data->length - 3) :
++			MIN(len, data->mtu - data->length - 1);
+ 
+-	memcpy(data->rsp_data + data->length, value, len);
+-	data->length += len;
++	if (data->opcode == BT_ATT_OP_READ_MULT_VL_REQ) {
++		/* The Length Value Tuple List may be truncated within the first
++		 * two octets of a tuple due to the size limits of the current
++		 * ATT_MTU.
++		 */
++		put_le16(len, data->rsp_data + data->length);
++		data->length += 2;
 +	}
 +
-+	if (database->bredr_io) {
-+		g_io_channel_shutdown(database->bredr_io, FALSE, NULL);
-+		g_io_channel_unref(database->bredr_io);
++	memcpy(data->rsp_data + data->length, value, length);
++	data->length += length;
+ 
+ 	data->cur_handle++;
+ 
+-	if ((data->length >= data->mtu - 1) ||
+-				(data->cur_handle == data->num_handles)) {
+-		bt_att_chan_send_rsp(data->chan, BT_ATT_OP_READ_MULT_RSP,
++	len = data->opcode == BT_ATT_OP_READ_MULT_VL_REQ ?
++		data->mtu - data->length - 3 : data->mtu - data->length - 1;
++
++	if (!len || (data->cur_handle == data->num_handles)) {
++		bt_att_chan_send_rsp(data->chan, data->opcode + 1,
+ 						data->rsp_data, data->length);
+-		read_multiple_resp_data_free(data);
++		read_mult_data_free(data);
+ 		return;
  	}
  
- 	/* TODO: Persistently store CCC states before freeing them */
-@@ -717,7 +716,7 @@ static sdp_record_t *record_new(uuid_t *uuid, uint16_t start, uint16_t end)
- 	uuid_t root_uuid, proto_uuid, l2cap;
- 	sdp_record_t *record;
- 	sdp_data_t *psm, *sh, *eh;
--	uint16_t lp = ATT_PSM;
-+	uint16_t lp = BT_ATT_PSM;
+ 	util_debug(data->server->debug_callback, data->server->debug_data,
+-				"Read Multiple Req - #%zu of %zu: 0x%04x",
++				"%s Req - #%zu of %zu: 0x%04x",
++				data->opcode == BT_ATT_OP_READ_MULT_REQ ?
++				"Read Multiple" :
++				"Read Multiple Variable Length",
+ 				data->cur_handle + 1, data->num_handles,
+ 				data->handles[data->cur_handle]);
  
- 	if (uuid == NULL)
- 		return NULL;
-@@ -1098,7 +1097,10 @@ static void cli_feat_write_cb(struct gatt_db_attribute *attrib,
- {
- 	struct btd_gatt_database *database = user_data;
- 	struct device_state *state;
-+	uint8_t bits[] = { BT_GATT_CHRC_CLI_FEAT_ROBUST_CACHING,
-+				BT_GATT_CHRC_CLI_FEAT_EATT };
- 	uint8_t ecode = 0;
-+	unsigned int i;
- 
- 	DBG("Client Features write");
- 
-@@ -1113,13 +1115,12 @@ static void cli_feat_write_cb(struct gatt_db_attribute *attrib,
- 		goto done;
+@@ -1085,7 +1105,7 @@ static void read_multiple_complete_cb(struct gatt_db_attribute *attr, int err,
+ 					BT_ATT_OP_READ_MULT_REQ,
+ 					data->handles[data->cur_handle],
+ 					BT_ATT_ERROR_INVALID_HANDLE);
+-		read_multiple_resp_data_free(data);
++		read_mult_data_free(data);
+ 		return;
  	}
  
--	/* A client shall never clear a bit it has set.
--	 * TODO: make it generic to any bits.
--	 */
--	if (state->cli_feat[0] & BT_GATT_CHRC_CLI_FEAT_ROBUST_CACHING &&
--			!(value[0] & BT_GATT_CHRC_CLI_FEAT_ROBUST_CACHING)) {
--		ecode = BT_ATT_ERROR_VALUE_NOT_ALLOWED;
--		goto done;
-+	for (i = 0; i < sizeof(bits); i++) {
-+		/* A client shall never clear a bit it has set */
-+		if (state->cli_feat[0] & (1 << i) && !(value[0] & (1 << i))) {
-+			ecode = BT_ATT_ERROR_VALUE_NOT_ALLOWED;
-+			goto done;
-+		}
+@@ -1096,17 +1116,40 @@ static void read_multiple_complete_cb(struct gatt_db_attribute *attr, int err,
+ 						BT_ATT_OP_READ_MULT_REQ,
+ 						data->handles[data->cur_handle],
+ 						BT_ATT_ERROR_UNLIKELY);
+-		read_multiple_resp_data_free(data);
++		read_mult_data_free(data);
  	}
- 
- 	/* Shall we reallocate the feat array if bigger? */
-@@ -1129,7 +1130,7 @@ static void cli_feat_write_cb(struct gatt_db_attribute *attrib,
- 		len--;
- 	}
- 
--	state->cli_feat[0] &= BT_GATT_CHRC_CLI_FEAT_ROBUST_CACHING;
-+	state->cli_feat[0] &= ((1 << sizeof(bits)) - 1);
- 	state->change_aware = true;
- 
- done:
-@@ -1161,6 +1162,28 @@ static void db_hash_read_cb(struct gatt_db_attribute *attrib,
- 		state->change_aware = true;
  }
  
-+static void server_feat_read_cb(struct gatt_db_attribute *attrib,
-+					unsigned int id, uint16_t offset,
-+					uint8_t opcode, struct bt_att *att,
-+					void *user_data)
++static struct read_mult_data *read_mult_data_new(struct bt_gatt_server *server,
++						struct bt_att_chan *chan,
++						uint8_t opcode,
++						uint16_t num_handles)
 +{
-+	struct btd_gatt_database *database = user_data;
-+	struct device_state *state;
-+	uint8_t ecode = 0;
-+	uint8_t value = 0;
++	struct read_mult_data *data;
 +
-+	state = get_device_state(database, att);
-+	if (!state) {
-+		ecode = BT_ATT_ERROR_UNLIKELY;
-+		goto done;
-+	}
++	data = new0(struct read_mult_data, 1);
++	data->chan = chan;
++	data->opcode = opcode;
++	data->handles = new0(uint16_t, num_handles);
++	data->handles = NULL;
++	data->rsp_data = NULL;
++	data->server = server;
++	data->num_handles = num_handles;
++	data->cur_handle = 0;
++	data->mtu = bt_att_get_mtu(server->att);
++	data->length = 0;
++	data->rsp_data = new0(uint8_t, data->mtu - 1);
 +
-+	value |= BT_GATT_CHRC_SERVER_FEAT_EATT;
-+
-+done:
-+	gatt_db_attribute_read_result(attrib, id, ecode, &value, sizeof(value));
++	return data;
 +}
 +
- static void populate_gatt_service(struct btd_gatt_database *database)
+ static void read_multiple_cb(struct bt_att_chan *chan, uint8_t opcode,
+ 					const void *pdu, uint16_t length,
+ 					void *user_data)
  {
- 	bt_uuid_t uuid;
-@@ -1168,7 +1191,7 @@ static void populate_gatt_service(struct btd_gatt_database *database)
+ 	struct bt_gatt_server *server = user_data;
+ 	struct gatt_db_attribute *attr;
+-	struct read_multiple_resp_data *data = NULL;
++	struct read_mult_data *data = NULL;
+ 	uint8_t ecode = BT_ATT_ERROR_UNLIKELY;
+ 	size_t i = 0;
  
- 	/* Add the GATT service */
- 	bt_uuid16_create(&uuid, UUID_GATT);
--	service = gatt_db_add_service(database->db, &uuid, true, 8);
-+	service = gatt_db_add_service(database->db, &uuid, true, 10);
- 
- 	bt_uuid16_create(&uuid, GATT_CHARAC_SERVICE_CHANGED);
- 	database->svc_chngd = gatt_db_service_add_characteristic(service, &uuid,
-@@ -1191,6 +1214,11 @@ static void populate_gatt_service(struct btd_gatt_database *database)
- 				&uuid, BT_ATT_PERM_READ, BT_GATT_CHRC_PROP_READ,
- 				db_hash_read_cb, NULL, database);
- 
-+	bt_uuid16_create(&uuid, GATT_CHARAC_SERVER_FEAT);
-+	database->eatt = gatt_db_service_add_characteristic(service,
-+				&uuid, BT_ATT_PERM_READ, BT_GATT_CHRC_PROP_READ,
-+				server_feat_read_cb, NULL, database);
-+
- 	gatt_db_service_set_active(service, true);
- 
- 	database_add_record(database, service);
-@@ -3525,7 +3553,7 @@ struct btd_gatt_database *btd_gatt_database_new(struct btd_adapter *adapter)
- 					BT_IO_OPT_SOURCE_BDADDR, addr,
- 					BT_IO_OPT_SOURCE_TYPE,
- 					btd_adapter_get_address_type(adapter),
--					BT_IO_OPT_CID, ATT_CID,
-+					BT_IO_OPT_CID, BT_ATT_CID,
- 					BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_LOW,
- 					BT_IO_OPT_INVALID);
- 	if (!database->le_io) {
-@@ -3534,14 +3562,41 @@ struct btd_gatt_database *btd_gatt_database_new(struct btd_adapter *adapter)
- 		goto fail;
+@@ -1115,18 +1158,8 @@ static void read_multiple_cb(struct bt_att_chan *chan, uint8_t opcode,
+ 		goto error;
  	}
  
-+	/* EATT socket */
-+	database->eatt_io = bt_io_listen(connect_cb, NULL, NULL, NULL, NULL,
-+					BT_IO_OPT_SOURCE_BDADDR, addr,
-+					BT_IO_OPT_SOURCE_TYPE,
-+					btd_adapter_get_address_type(adapter),
-+					BT_IO_OPT_MODE, BT_IO_MODE_ECRED,
-+					BT_IO_OPT_PSM, BT_ATT_EATT_PSM,
-+					BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_LOW,
-+					BT_IO_OPT_MTU, main_opts.gatt_mtu,
-+					BT_IO_OPT_INVALID);
-+	if (!database->eatt_io) {
-+		/* Fallback to regular LE mode */
-+		database->eatt_io = bt_io_listen(connect_cb, NULL, NULL, NULL,
-+					&gerr,
-+					BT_IO_OPT_SOURCE_BDADDR, addr,
-+					BT_IO_OPT_SOURCE_TYPE,
-+					btd_adapter_get_address_type(adapter),
-+					BT_IO_OPT_PSM, BT_ATT_EATT_PSM,
-+					BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_LOW,
-+					BT_IO_OPT_MTU, main_opts.gatt_mtu,
-+					BT_IO_OPT_INVALID);
-+		if (!database->eatt_io) {
-+			g_error_free(gerr);
-+			goto fail;
-+		}
-+	}
+-	data = new0(struct read_multiple_resp_data, 1);
+-	data->chan = chan;
+-	data->handles = NULL;
+-	data->rsp_data = NULL;
+-	data->server = server;
+-	data->num_handles = length / 2;
+-	data->cur_handle = 0;
+-	data->mtu = bt_att_get_mtu(server->att);
+-	data->length = 0;
+-	data->rsp_data = malloc(data->mtu - 1);
+-
+-	if (!data->rsp_data)
++	data = read_mult_data_new(server, chan, opcode, length / 2);
++	if (!data)
+ 		goto error;
+ 
+ 	data->handles = new0(uint16_t, data->num_handles);
+@@ -1135,7 +1168,9 @@ static void read_multiple_cb(struct bt_att_chan *chan, uint8_t opcode,
+ 		data->handles[i] = get_le16(pdu + i * 2);
+ 
+ 	util_debug(server->debug_callback, server->debug_data,
+-			"Read Multiple Req - %zu handles, 1st: 0x%04x",
++			"%s Req - %zu handles, 1st: 0x%04x",
++			data->opcode == BT_ATT_OP_READ_MULT_REQ ?
++			"Read Multiple" : "Read Multiple Variable Length",
+ 			data->num_handles, data->handles[0]);
+ 
+ 	attr = gatt_db_get_attribute(server->db, data->handles[0]);
+@@ -1151,7 +1186,7 @@ static void read_multiple_cb(struct bt_att_chan *chan, uint8_t opcode,
+ 
+ error:
+ 	if (data)
+-		read_multiple_resp_data_free(data);
++		read_mult_data_free(data);
+ 
+ 	bt_att_chan_send_error_rsp(chan, opcode, 0, ecode);
+ }
+@@ -1588,6 +1623,15 @@ static bool gatt_server_register_att_handlers(struct bt_gatt_server *server)
+ 	if (!server->read_multiple_id)
+ 		return false;
+ 
++	/* Read Multiple Variable Length Request */
++	server->read_multiple_vl_id = bt_att_register(server->att,
++						BT_ATT_OP_READ_MULT_VL_REQ,
++						read_multiple_cb,
++						server, NULL);
 +
- 	/* BR/EDR socket */
--	database->l2cap_io = bt_io_listen(connect_cb, NULL, NULL, NULL, &gerr,
-+	database->bredr_io = bt_io_listen(connect_cb, NULL, NULL, NULL, &gerr,
- 					BT_IO_OPT_SOURCE_BDADDR, addr,
--					BT_IO_OPT_PSM, ATT_PSM,
-+					BT_IO_OPT_PSM, BT_ATT_PSM,
- 					BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_MEDIUM,
- 					BT_IO_OPT_MTU, main_opts.gatt_mtu,
- 					BT_IO_OPT_INVALID);
--	if (database->l2cap_io == NULL) {
-+	if (database->bredr_io == NULL) {
- 		error("Failed to start listening: %s", gerr->message);
- 		g_error_free(gerr);
- 		goto fail;
++	if (!server->read_multiple_vl_id)
++		return false;
++
+ 	/* Prepare Write Request */
+ 	server->prep_write_id = bt_att_register(server->att,
+ 						BT_ATT_OP_PREP_WRITE_REQ,
 -- 
 2.21.0
 
