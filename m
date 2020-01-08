@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E1D22133808
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 01:34:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FDC9133809
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 01:34:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727135AbgAHAeE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Jan 2020 19:34:04 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:41322 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726281AbgAHAeD (ORCPT
+        id S1727142AbgAHAeG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Jan 2020 19:34:06 -0500
+Received: from mail-pg1-f178.google.com ([209.85.215.178]:46712 "EHLO
+        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726281AbgAHAeF (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Jan 2020 19:34:03 -0500
-Received: by mail-pg1-f196.google.com with SMTP id x8so666766pgk.8
-        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Jan 2020 16:34:03 -0800 (PST)
+        Tue, 7 Jan 2020 19:34:05 -0500
+Received: by mail-pg1-f178.google.com with SMTP id z124so650707pgb.13
+        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Jan 2020 16:34:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=mdvyyyvPpQFaJbQGLewzvFtpyc9kHqej1Sc18Z5t20Y=;
-        b=HhJhZ6JbtVbTc9Z3tWPTrBC7dYlGj5VUuKuN1jDpB31phyLcrf212m6XwP9fs9iy6b
-         gRh7cnjqBfx2/3a6fbNgWvj+FN5OEKRgpEgeUO+RkPLTuRc+ptrbuAj3lx3II4RRXhFc
-         7e8sUG5e/7wdcfSpHtIH4Ng2PYqbb2/ajPwGQoNBslks8jWBzZdvAjIzy6ipuiQkui62
-         THBw3AtTah9vMJm8sHN85L7f3EfKhaFQ9b8iDIeBc3IlxbrGgP3QChXCygKjMowNiviz
-         UF/sVFLnR750BXNxIgfbzbDm02RMqb7u1e9Tk5UR4KE3sdmWPENavXKdmCsQZzbY+Tjh
-         MW2A==
+        bh=EXDlj0f4Fin4tduOJKMQpnxsBYpqgsV+gU/r2GsW0qk=;
+        b=G56RdSZGdc/XdqWtQjlJvhWKgA3NeKME+Tnif0KTsAi4UB/U1IDCszqfssUjsfXBSs
+         i1HoMzhPF75XqPGKoZmCERjewK4+uyb0lEMoclCpoUvBUPUgS7iV7RX/4AzSPnq5E4C4
+         Pcn3RPX/kcNhm0xMpzt5YAdZ/hCjNdvFTUeph7ZZbIKBQOuANEhN6Ug3LlRmZbWT1kxe
+         t9teTOvpt6CP+fXVg/QQKZSiSOtts7raAN8H9JGgC/N6mbg5tl//AUlUAbvCQ6AcyJPd
+         lKhfACY2pfdqGhZuht1uYJ7lingLwtjYEv7bp3wyuEJtC2IjIkFwCfB2sdQBU98YboWJ
+         bRQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mdvyyyvPpQFaJbQGLewzvFtpyc9kHqej1Sc18Z5t20Y=;
-        b=f0hQoawuQUHF3jcKWRQUT5j8XTempco80Nip58pOn12vjROl94dcCXn3Z+FUBV87VG
-         3+CbshifVWrm+47wguQ9ihVnD5CNicox9C7R6FiK2H31xZGWhxCOQP5yINyq+8bjr7S3
-         YG0PDMw1bFJThImKyJtiolX0GCS0Q7Ayeb6hiOducxDifH9EqkKKXVh8eR8JmCb+YOzx
-         MgBBBesvTVozKbAD/dAArw2UtfEmlyqKUmhOPgsGxbuHUTlaBOtGUm4o9DkNaOCkdqii
-         84da4OAHarFfnuHRzncZdCp8nITKYQFAOJR8bPOhfLtbXtS39pSVdXvGQIXvcR53dC6+
-         fSvg==
-X-Gm-Message-State: APjAAAW1uUgqXzYoJplX7HGwJmjKc+Nq48z4oJcWQJPWpi67YsZf6drB
-        9c/gy0LwW5dn8LvGdxeFP8MPURB8qno=
-X-Google-Smtp-Source: APXvYqwJNi/eVNHx7riRPoOneDcoz6fCxAYsk/vcjVtJ3dB05F54H07u2edvo37QPp1Uomk0NbdsxA==
-X-Received: by 2002:a63:b141:: with SMTP id g1mr2543433pgp.168.1578443642630;
-        Tue, 07 Jan 2020 16:34:02 -0800 (PST)
+        bh=EXDlj0f4Fin4tduOJKMQpnxsBYpqgsV+gU/r2GsW0qk=;
+        b=jOC6UqjgSjAzYJpVEK4EA/Kdx2nOaPN5Zcu//hthCkeupaPzV5GUH2YJQiHMlCqJqb
+         icHh/yUq9Bhny48p2oF9J37/K1PDplP2AYTgl5dI5YB8D4G0HEYSXtT1prKcZRVgWmdN
+         QQB7D/xTgKGGPusb5PhcsEZvpS0WTpxlnwdsOZSxFhgM8p1driUSxRdOeSMNNxIzAqx+
+         06wiz6GhW9Uitf0lSG2zdP3cSJtRWUvlSAkeADnL/NV1cVWpqTM0/jQ6W5HDP66bcNv3
+         Zv1cHzQEPh9mTCo+enXNiM2WSCwPeCtRfVZtSnuuhu8SwVZqd7+3r/qbeyI3+PQEM4Vl
+         c8mg==
+X-Gm-Message-State: APjAAAVwLGP/xR0LNcS9wOpoX2UbWMFG7S/8VwqZoO3sMi7XZkAULG4k
+        qn6ItCgKmst0zeZm0PWAqtzlcmL75NE=
+X-Google-Smtp-Source: APXvYqyCBjOjDeLkOqdNdEpK4SqIA9RVPsBwbaY3Nbpb5nigIox8W80YnDmrJfU0n04x212MiSdwoQ==
+X-Received: by 2002:a63:1210:: with SMTP id h16mr2350727pgl.171.1578443644044;
+        Tue, 07 Jan 2020 16:34:04 -0800 (PST)
 Received: from localhost.localdomain ([192.102.209.43])
-        by smtp.gmail.com with ESMTPSA id u10sm925805pgg.41.2020.01.07.16.34.01
+        by smtp.gmail.com with ESMTPSA id u10sm925805pgg.41.2020.01.07.16.34.02
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2020 16:34:01 -0800 (PST)
+        Tue, 07 Jan 2020 16:34:02 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 18/22] shared/gatt-client: Add support for Read Multiple Variable Length
-Date:   Tue,  7 Jan 2020 16:33:38 -0800
-Message-Id: <20200108003342.15458-19-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 19/22] shared/gatt: Add support for Handle Value Multiple Notifications
+Date:   Tue,  7 Jan 2020 16:33:39 -0800
+Message-Id: <20200108003342.15458-20-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20200108003342.15458-1-luiz.dentz@gmail.com>
 References: <20200108003342.15458-1-luiz.dentz@gmail.com>
@@ -63,84 +63,257 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-The Read Multiple Variable Length Request is used to request that the
-server read two or more values of a set of attributes that have a
-variable or unknown value length and return their values in a
-Read Multiple Variable Length Response.
+Handle Value Multiple Notification can be used to notify multiple
+values at once.
 ---
- src/shared/gatt-client.c | 37 +++++++++++++++++++++++++++++++++----
- 1 file changed, 33 insertions(+), 4 deletions(-)
+ src/shared/att-types.h   |  7 ++--
+ src/shared/att.c         | 16 ++++-----
+ src/shared/gatt-client.c | 76 ++++++++++++++++++++++++++--------------
+ src/shared/gatt-server.c |  4 +--
+ 4 files changed, 64 insertions(+), 39 deletions(-)
 
-diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
-index d4758c2de..aecf0ca5a 100644
---- a/src/shared/gatt-client.c
-+++ b/src/shared/gatt-client.c
-@@ -2639,7 +2639,9 @@ static void read_multiple_cb(uint8_t opcode, const void *pdu, uint16_t length,
- 	uint8_t att_ecode;
- 	bool success;
+diff --git a/src/shared/att-types.h b/src/shared/att-types.h
+index cc9cc9fd6..99b108990 100644
+--- a/src/shared/att-types.h
++++ b/src/shared/att-types.h
+@@ -72,11 +72,12 @@
+ #define BT_ATT_OP_PREP_WRITE_RSP		0x17
+ #define BT_ATT_OP_EXEC_WRITE_REQ		0x18
+ #define BT_ATT_OP_EXEC_WRITE_RSP		0x19
+-#define BT_ATT_OP_HANDLE_VAL_NOT		0x1B
+-#define BT_ATT_OP_HANDLE_VAL_IND		0x1D
+-#define BT_ATT_OP_HANDLE_VAL_CONF		0x1E
++#define BT_ATT_OP_HANDLE_NFY			0x1B
++#define BT_ATT_OP_HANDLE_IND			0x1D
++#define BT_ATT_OP_HANDLE_CONF			0x1E
+ #define BT_ATT_OP_READ_MULT_VL_REQ		0x20
+ #define BT_ATT_OP_READ_MULT_VL_RSP		0x21
++#define BT_ATT_OP_HANDLE_NFY_MULT		0x23
  
--	if (opcode != BT_ATT_OP_READ_MULT_RSP || (!pdu && length)) {
-+	if ((opcode != BT_ATT_OP_READ_MULT_RSP &&
-+			opcode != BT_ATT_OP_READ_MULT_VL_RSP) ||
-+			(!pdu && length)) {
- 		success = false;
+ /* Packed struct definitions for ATT protocol PDUs */
+ /* TODO: Complete these definitions for all opcodes */
+diff --git a/src/shared/att.c b/src/shared/att.c
+index 56ea40c46..6fa16e422 100644
+--- a/src/shared/att.c
++++ b/src/shared/att.c
+@@ -110,7 +110,7 @@ enum att_op_type {
+ 	ATT_OP_TYPE_RSP,
+ 	ATT_OP_TYPE_CMD,
+ 	ATT_OP_TYPE_IND,
+-	ATT_OP_TYPE_NOT,
++	ATT_OP_TYPE_NFY,
+ 	ATT_OP_TYPE_CONF,
+ 	ATT_OP_TYPE_UNKNOWN,
+ };
+@@ -144,9 +144,9 @@ static const struct {
+ 	{ BT_ATT_OP_PREP_WRITE_RSP,		ATT_OP_TYPE_RSP },
+ 	{ BT_ATT_OP_EXEC_WRITE_REQ,		ATT_OP_TYPE_REQ },
+ 	{ BT_ATT_OP_EXEC_WRITE_RSP,		ATT_OP_TYPE_RSP },
+-	{ BT_ATT_OP_HANDLE_VAL_NOT,		ATT_OP_TYPE_NOT },
+-	{ BT_ATT_OP_HANDLE_VAL_IND,		ATT_OP_TYPE_IND },
+-	{ BT_ATT_OP_HANDLE_VAL_CONF,		ATT_OP_TYPE_CONF },
++	{ BT_ATT_OP_HANDLE_NFY,			ATT_OP_TYPE_NFY },
++	{ BT_ATT_OP_HANDLE_IND,			ATT_OP_TYPE_IND },
++	{ BT_ATT_OP_HANDLE_CONF,		ATT_OP_TYPE_CONF },
+ 	{ }
+ };
  
- 		if (opcode == BT_ATT_OP_ERROR_RSP)
-@@ -2654,8 +2656,31 @@ static void read_multiple_cb(uint8_t opcode, const void *pdu, uint16_t length,
- 		att_ecode = 0;
+@@ -530,7 +530,7 @@ static bool can_write_data(struct io *io, void *user_data)
+ 		chan->in_req = false;
+ 		/* fall through */
+ 	case ATT_OP_TYPE_CMD:
+-	case ATT_OP_TYPE_NOT:
++	case ATT_OP_TYPE_NFY:
+ 	case ATT_OP_TYPE_CONF:
+ 	case ATT_OP_TYPE_UNKNOWN:
+ 	default:
+@@ -842,7 +842,7 @@ static void handle_conf(struct bt_att_chan *chan, uint8_t *pdu, ssize_t pdu_len)
  	}
  
--	if (op->callback)
-+	if (!op->callback)
-+		return;
+ 	if (op->callback)
+-		op->callback(BT_ATT_OP_HANDLE_VAL_CONF, NULL, 0, op->user_data);
++		op->callback(BT_ATT_OP_HANDLE_NFY, NULL, 0, op->user_data);
+ 
+ 	destroy_att_send_op(op);
+ 	chan->pending_ind = NULL;
+@@ -1042,7 +1042,7 @@ static bool can_read_data(struct io *io, void *user_data)
+ 		chan->in_req = true;
+ 		/* fall through */
+ 	case ATT_OP_TYPE_CMD:
+-	case ATT_OP_TYPE_NOT:
++	case ATT_OP_TYPE_NFY:
+ 	case ATT_OP_TYPE_UNKNOWN:
+ 	case ATT_OP_TYPE_IND:
+ 		/* fall through */
+@@ -1492,7 +1492,7 @@ unsigned int bt_att_send(struct bt_att *att, uint8_t opcode,
+ 		result = queue_push_tail(att->ind_queue, op);
+ 		break;
+ 	case ATT_OP_TYPE_CMD:
+-	case ATT_OP_TYPE_NOT:
++	case ATT_OP_TYPE_NFY:
+ 	case ATT_OP_TYPE_UNKNOWN:
+ 	case ATT_OP_TYPE_RSP:
+ 	case ATT_OP_TYPE_CONF:
+diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
+index aecf0ca5a..8c563cdcc 100644
+--- a/src/shared/gatt-client.c
++++ b/src/shared/gatt-client.c
+@@ -95,7 +95,7 @@ struct bt_gatt_client {
+ 	struct queue *notify_list;
+ 	struct queue *notify_chrcs;
+ 	int next_reg_id;
+-	unsigned int disc_id, notify_id, ind_id;
++	unsigned int disc_id, nfy_id, nfy_mult_id, ind_id;
+ 
+ 	/*
+ 	 * Handles of the GATT Service and the Service Changed characteristic
+@@ -2069,9 +2069,10 @@ done:
+ 	return true;
+ }
+ 
+-struct pdu_data {
+-	const void *pdu;
+-	uint16_t length;
++struct value_data {
++	uint16_t handle;
++	uint16_t len;
++	const void *data;
+ };
+ 
+ static void disable_ccc_callback(uint8_t opcode, const void *pdu,
+@@ -2122,25 +2123,18 @@ done:
+ static void notify_handler(void *data, void *user_data)
+ {
+ 	struct notify_data *notify_data = data;
+-	struct pdu_data *pdu_data = user_data;
+-	uint16_t value_handle;
+-	const uint8_t *value = NULL;
+-
+-	value_handle = get_le16(pdu_data->pdu);
++	struct value_data *value_data = user_data;
+ 
+-	if (notify_data->chrc->value_handle != value_handle)
++	if (notify_data->chrc->value_handle != value_data->handle)
+ 		return;
+ 
+-	if (pdu_data->length > 2)
+-		value = pdu_data->pdu + 2;
+-
+ 	/*
+ 	 * Even if the notify data has a pending ATT request to write to the
+ 	 * CCC, there is really no reason not to notify the handlers.
+ 	 */
+ 	if (notify_data->notify)
+-		notify_data->notify(value_handle, value, pdu_data->length - 2,
+-							notify_data->user_data);
++		notify_data->notify(value_data->handle, value_data->data,
++				value_data->len, notify_data->user_data);
+ }
+ 
+ static void notify_cb(struct bt_att_chan *chan, uint8_t opcode,
+@@ -2148,18 +2142,42 @@ static void notify_cb(struct bt_att_chan *chan, uint8_t opcode,
+ 					void *user_data)
+ {
+ 	struct bt_gatt_client *client = user_data;
+-	struct pdu_data pdu_data;
++	struct value_data data;
+ 
+ 	bt_gatt_client_ref(client);
+ 
+-	memset(&pdu_data, 0, sizeof(pdu_data));
+-	pdu_data.pdu = pdu;
+-	pdu_data.length = length;
++	memset(&data, 0, sizeof(data));
 +
-+	if (opcode == BT_ATT_OP_READ_MULT_RSP) {
- 		op->callback(success, att_ecode, pdu, length, op->user_data);
-+		return;
-+	}
++	if (opcode == BT_ATT_OP_HANDLE_NFY_MULT) {
++		while (length >= 4) {
++			data.handle = get_le16(pdu);
++			length -= 2;
++			pdu += 2;
 +
-+	/* Parse response */
-+	while (length >= 2) {
-+		uint16_t len;
++			data.len = get_le16(pdu);
++			length -= 2;
++			pdu += 2;
 +
-+		len = get_le16(pdu);
++			data.data = pdu;
++
++			queue_foreach(client->notify_list, notify_handler,
++								&data);
+ 
+-	queue_foreach(client->notify_list, notify_handler, &pdu_data);
++			length -= data.len;
++		}
++	} else {
++		data.handle = get_le16(pdu);
 +		length -= 2;
 +		pdu += 2;
 +
-+		/* The Length Value Tuple List may be truncated within the
-+		 * first two octets of a tuple due to the size limits of the
-+		 * current ATT_MTU.
-+		 */
-+		if (len > length)
-+			length = len;
-+
-+		op->callback(success, att_ecode, pdu, len, op->user_data);
++		data.len = length;
++		data.data = pdu;
+ 
+-	if (opcode == BT_ATT_OP_HANDLE_VAL_IND && !client->parent)
+-		bt_att_chan_send(chan, BT_ATT_OP_HANDLE_VAL_CONF, NULL, 0,
++		queue_foreach(client->notify_list, notify_handler, &data);
 +	}
- }
- 
- unsigned int bt_gatt_client_read_multiple(struct bt_gatt_client *client,
-@@ -2667,6 +2692,7 @@ unsigned int bt_gatt_client_read_multiple(struct bt_gatt_client *client,
- 	uint8_t pdu[num_handles * 2];
- 	struct request *req;
- 	struct read_op *op;
-+	uint8_t opcode;
- 	int i;
- 
- 	if (!client)
-@@ -2696,8 +2722,11 @@ unsigned int bt_gatt_client_read_multiple(struct bt_gatt_client *client,
- 	for (i = 0; i < num_handles; i++)
- 		put_le16(handles[i], pdu + (2 * i));
- 
--	req->att_id = bt_att_send(client->att, BT_ATT_OP_READ_MULT_REQ,
--							pdu, sizeof(pdu),
-+	opcode = bt_gatt_client_get_features(client) &
-+		BT_GATT_CHRC_CLI_FEAT_EATT ? BT_ATT_OP_READ_MULT_VL_REQ :
-+		BT_GATT_CHRC_CLI_FEAT_EATT;
 +
-+	req->att_id = bt_att_send(client->att, opcode, pdu, sizeof(pdu),
- 							read_multiple_cb, req,
- 							request_unref);
- 	if (!req->att_id) {
++	if (opcode == BT_ATT_OP_HANDLE_IND && !client->parent)
++		bt_att_chan_send(chan, BT_ATT_OP_HANDLE_CONF, NULL, 0,
+ 							NULL, NULL, NULL);
+ 
+ 	bt_gatt_client_unref(client);
+@@ -2178,7 +2196,8 @@ static void bt_gatt_client_free(struct bt_gatt_client *client)
+ 
+ 	if (client->att) {
+ 		bt_att_unregister_disconnect(client->att, client->disc_id);
+-		bt_att_unregister(client->att, client->notify_id);
++		bt_att_unregister(client->att, client->nfy_id);
++		bt_att_unregister(client->att, client->nfy_mult_id);
+ 		bt_att_unregister(client->att, client->ind_id);
+ 		bt_att_unref(client->att);
+ 	}
+@@ -2236,12 +2255,17 @@ static struct bt_gatt_client *gatt_client_new(struct gatt_db *db,
+ 	client->notify_chrcs = queue_new();
+ 	client->pending_requests = queue_new();
+ 
+-	client->notify_id = bt_att_register(att, BT_ATT_OP_HANDLE_VAL_NOT,
++	client->nfy_id = bt_att_register(att, BT_ATT_OP_HANDLE_NFY,
++						notify_cb, client, NULL);
++	if (!client->nfy_id)
++		goto fail;
++
++	client->nfy_mult_id = bt_att_register(att, BT_ATT_OP_HANDLE_NFY_MULT,
+ 						notify_cb, client, NULL);
+-	if (!client->notify_id)
++	if (!client->nfy_mult_id)
+ 		goto fail;
+ 
+-	client->ind_id = bt_att_register(att, BT_ATT_OP_HANDLE_VAL_IND,
++	client->ind_id = bt_att_register(att, BT_ATT_OP_HANDLE_IND,
+ 						notify_cb, client, NULL);
+ 	if (!client->ind_id)
+ 		goto fail;
+diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
+index 55535abdf..0711f1d75 100644
+--- a/src/shared/gatt-server.c
++++ b/src/shared/gatt-server.c
+@@ -1748,7 +1748,7 @@ bool bt_gatt_server_send_notification(struct bt_gatt_server *server,
+ 	put_le16(handle, pdu);
+ 	memcpy(pdu + 2, value, pdu_len - 2);
+ 
+-	result = !!bt_att_send(server->att, BT_ATT_OP_HANDLE_VAL_NOT, pdu,
++	result = !!bt_att_send(server->att, BT_ATT_OP_HANDLE_NFY, pdu,
+ 						pdu_len, NULL, NULL, NULL);
+ 	free(pdu);
+ 
+@@ -1809,7 +1809,7 @@ bool bt_gatt_server_send_indication(struct bt_gatt_server *server,
+ 	put_le16(handle, pdu);
+ 	memcpy(pdu + 2, value, pdu_len - 2);
+ 
+-	result = !!bt_att_send(server->att, BT_ATT_OP_HANDLE_VAL_IND, pdu,
++	result = !!bt_att_send(server->att, BT_ATT_OP_HANDLE_IND, pdu,
+ 							pdu_len, conf_cb,
+ 							data, destroy_ind_data);
+ 	if (!result)
 -- 
 2.21.0
 
