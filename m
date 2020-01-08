@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A05B41337FA
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 01:33:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0C581337FC
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 01:33:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726921AbgAHAdu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Jan 2020 19:33:50 -0500
-Received: from mail-pj1-f54.google.com ([209.85.216.54]:52856 "EHLO
-        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726836AbgAHAdt (ORCPT
+        id S1726932AbgAHAdv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Jan 2020 19:33:51 -0500
+Received: from mail-pj1-f45.google.com ([209.85.216.45]:52848 "EHLO
+        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726856AbgAHAdu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Jan 2020 19:33:49 -0500
-Received: by mail-pj1-f54.google.com with SMTP id a6so296956pjh.2
+        Tue, 7 Jan 2020 19:33:50 -0500
+Received: by mail-pj1-f45.google.com with SMTP id a6so296966pjh.2
         for <linux-bluetooth@vger.kernel.org>; Tue, 07 Jan 2020 16:33:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=Xw7R8bhSk0Uesb5CHUf8tUJSR0vt75vvm3Njgga7itA=;
-        b=KYq9gZuUzqBOpsoBngWB7f8Icuam6/RcKkn2eJUpMSD2OnDBYDP2niPxl6FKP00Qup
-         nLIMK1XojuA88kyESWavdF1bzsDQ1c68wjtAIIshCVZiofL4oUklnQqEDH8ExZLMrN8A
-         YASiT3yw//Fmz7vWpSeUw6B2J7N3a4s/D0nua3h+kBAPj3ha+TASECoIEKqWOW9l7Pvl
-         gVjK+53kTiXDEw6hFqmFrgGIE/j2pGpQM46MhV4lpEUFFA9GdiM/CoCQCE43i2hV/qLj
-         JdSmDKzpwhtsTHNcWZ+SaSzkNMtqUuOM9OLgvtfT7dJk7QsC4nyDzb33YF/5H+u8cUfi
-         /iHQ==
+        bh=Jbm/HArERlf6ukM7/6poE8pGXCnkfvAHld3teK8r7nw=;
+        b=iX7UfAm0bBb3Ra0u8JsXoGzHAmGpD1BT2km7bVvx8sydGDrUTj5mfFJoEb+sCzejxE
+         b4tDllkh3cHgqTIoL8VNdtDuMuK3PiO0koy7OFBNlmv2bgoefR8qoK79ZBsX3LnHdz/f
+         /BG9BJDXT8qgfNaFauKaGyP+JEl+ANFEhh/rVoKlvNMxra8+dDxXdiksBn5w3I2y4HZw
+         Q5506J1u/qhPrQbKLHl9Au3wgASh70SLG8tiLu9sbQGH8c4eGx27BfvxgBRuOFBST2LC
+         AVDzIFPAyMwUfgbrRaByL0QUS2nRyw2HRpc7RvAGxP4dOwNgZ5lDjifwoil7qEDpS7ns
+         lE3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Xw7R8bhSk0Uesb5CHUf8tUJSR0vt75vvm3Njgga7itA=;
-        b=pkJtSjQSar6C+TPAAKZrRxrZpU3+JBPnDFaj0dbp10GDQh5yHEHvkDX3mJT5H29hus
-         H17WKiP0C80RJRF0xdLth8tX4urh4cJhLETLB9B7sdwe+kajkA/xMTcmHRm/2lLCCetz
-         0zY5BMBqF3obzSi95lq5bTTptW6/rzLo8iyHj4j9o2DMzJ7hpBoQCXwa8Iq0uJgKORRX
-         1tYm8jP8+zYHdMK9FGOqaelSfpz1hbDhIE+0n00Hw9u5Zpmr6K/NtB2S1oidhIHHX6za
-         3pw+PD5pv+B8GZItZRXVIyV8S13Ev2tcA2XregQnC5EMs8lP8oupxWI0nAcbOLMHdT2/
-         A1Ug==
-X-Gm-Message-State: APjAAAXTRyCGlaVGEXaEEM6PMyS4/97gMjIKrwVbZOq2ikboUS2Bh+Mf
-        YlQ+2lEaNos5VY5HUpZqAd+my45W0gQ=
-X-Google-Smtp-Source: APXvYqyLFd4FZPBzbQIFOEyeXTLC8pgaNMhS9DuYXnskI5nlyFT7sW2+8aJxhwzJQJwWGo4SUbqG+A==
-X-Received: by 2002:a17:90a:ac0f:: with SMTP id o15mr1337062pjq.133.1578443627735;
-        Tue, 07 Jan 2020 16:33:47 -0800 (PST)
+        bh=Jbm/HArERlf6ukM7/6poE8pGXCnkfvAHld3teK8r7nw=;
+        b=mpmmJRJVBDVqpLWtoc7yPBGCwxi7A0k/7E/X7BCf40k+hpdQ6yB7+MGH9n0+eka6jz
+         adNZkrKQZjXL9Epm2HRpR1fOfIF4Ns7DAP2bFHQEP+DfORgztmX2QvLgKTURiOZR/XN/
+         KtMAizMFm5zdXDIwal86OyB/zMtK0HfIbAqSCl57vPXIvDdUUveszZXiRPFHFsZCbLZj
+         U1RpKwo+jXnD6KFHd9vRO2nEA9M1mU2ATX5YSC4VUTxhFeB++3viQOyEEbgcX1JQr+6r
+         PH06Z3Aqi73hiA/kZan7HtvuOpVepmWvzEmX6x8xXqTNxxnI78WhuwMNVba5yGfBxf5v
+         TTMA==
+X-Gm-Message-State: APjAAAWpHYMJ2L8NG3S8cCngYv8NY5k7B/2wUoQDsqab0vdMCoF+w6kX
+        YlqngC18dZTVrazcy+Ti4zBTinXCwPo=
+X-Google-Smtp-Source: APXvYqxsnpa8eBn6rQyQD5nbpbjqUOKn2cG5+vkA5s61h2z+LxPrTFI45gGVqobZrtap8o1vF86trA==
+X-Received: by 2002:a17:902:6802:: with SMTP id h2mr2496887plk.233.1578443628704;
+        Tue, 07 Jan 2020 16:33:48 -0800 (PST)
 Received: from localhost.localdomain ([192.102.209.43])
-        by smtp.gmail.com with ESMTPSA id u10sm925805pgg.41.2020.01.07.16.33.46
+        by smtp.gmail.com with ESMTPSA id u10sm925805pgg.41.2020.01.07.16.33.47
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2020 16:33:46 -0800 (PST)
+        Tue, 07 Jan 2020 16:33:48 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 04/22] tools: Add isotest tool
-Date:   Tue,  7 Jan 2020 16:33:24 -0800
-Message-Id: <20200108003342.15458-5-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 05/22] emulator: Add initial support for BT 5.2
+Date:   Tue,  7 Jan 2020 16:33:25 -0800
+Message-Id: <20200108003342.15458-6-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20200108003342.15458-1-luiz.dentz@gmail.com>
 References: <20200108003342.15458-1-luiz.dentz@gmail.com>
@@ -63,1061 +63,715 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds isotest tool which can be used to test ISO sockets.
+This adds the initial command/event decoding for 5.2.
 ---
- Makefile.tools  |    5 +-
- tools/isotest.c | 1019 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 1023 insertions(+), 1 deletion(-)
- create mode 100644 tools/isotest.c
+ emulator/btdev.c  | 271 +++++++++++++++++++++++++++++++++++++++-------
+ emulator/btdev.h  |   1 +
+ emulator/hciemu.c |   3 +
+ emulator/hciemu.h |   1 +
+ emulator/vhci.c   |   3 +-
+ 5 files changed, 236 insertions(+), 43 deletions(-)
 
-diff --git a/Makefile.tools b/Makefile.tools
-index 006554cf7..9628b83e3 100644
---- a/Makefile.tools
-+++ b/Makefile.tools
-@@ -190,7 +190,8 @@ noinst_PROGRAMS += tools/bdaddr tools/avinfo tools/avtest \
- 			tools/eddystone tools/ibeacon \
- 			tools/btgatt-client tools/btgatt-server \
- 			tools/test-runner tools/check-selftest \
--			tools/gatt-service profiles/iap/iapd
-+			tools/gatt-service profiles/iap/iapd \
-+			tools/isotest
+diff --git a/emulator/btdev.c b/emulator/btdev.c
+index 38d5b3b1f..02f408dd5 100644
+--- a/emulator/btdev.c
++++ b/emulator/btdev.c
+@@ -47,6 +47,9 @@
+ #define has_bredr(btdev)	(!((btdev)->features[4] & 0x20))
+ #define has_le(btdev)		(!!((btdev)->features[4] & 0x40))
  
- tools_bdaddr_SOURCES = tools/bdaddr.c src/oui.h src/oui.c
- tools_bdaddr_LDADD = lib/libbluetooth-internal.la $(UDEV_LIBS)
-@@ -296,6 +297,8 @@ tools_gatt_service_LDADD = $(GLIB_LIBS) $(DBUS_LIBS) gdbus/libgdbus-internal.la
- profiles_iap_iapd_SOURCES = profiles/iap/main.c
- profiles_iap_iapd_LDADD = gdbus/libgdbus-internal.la $(GLIB_LIBS) $(DBUS_LIBS)
++#define ACL_HANDLE 42
++#define ISO_HANDLE 44
++
+ struct hook {
+ 	btdev_hook_func handler;
+ 	void *user_data;
+@@ -92,6 +95,8 @@ struct btdev {
+ 	uint8_t  feat_page_2[8];
+ 	uint16_t acl_mtu;
+ 	uint16_t acl_max_pkt;
++	uint16_t iso_mtu;
++	uint16_t iso_max_pkt;
+ 	uint8_t  country_code;
+ 	uint8_t  bdaddr[6];
+ 	uint8_t  random_addr[6];
+@@ -438,6 +443,30 @@ static void set_le_50_commands(struct btdev *btdev)
+ 	btdev->commands[38] |= 0x40;	/* LE Read Periodic Adv List Size */
+ }
  
-+tools_isotest_LDADD = lib/libbluetooth-internal.la
++static void set_le_60_commands(struct btdev *btdev)
++{
++	btdev->commands[41] |= 0x20;	/* LE Read Buffer Size v2 */
++	btdev->commands[41] |= 0x40;	/* LE Read ISO TX Sync */
++	btdev->commands[41] |= 0x80;	/* LE Set CIG Parameters */
++	btdev->commands[42] |= 0x01;	/* LE Set CIG Parameters Test */
++	btdev->commands[42] |= 0x02;	/* LE Create CIS */
++	btdev->commands[42] |= 0x04;	/* LE Remove CIG */
++	btdev->commands[42] |= 0x08;	/* LE Accept CIS */
++	btdev->commands[42] |= 0x10;	/* LE Reject CIS */
++	btdev->commands[42] |= 0x20;	/* LE Create BIG */
++	btdev->commands[42] |= 0x40;	/* LE Create BIG Test */
++	btdev->commands[42] |= 0x80;	/* LE Terminate BIG */
++	btdev->commands[43] |= 0x01;	/* LE BIG Create Sync */
++	btdev->commands[43] |= 0x02;	/* LE BIG Terminate Sync */
++	btdev->commands[43] |= 0x04;	/* LE Request Peer SCA */
++	btdev->commands[43] |= 0x08;	/* LE Setup ISO Path */
++	btdev->commands[43] |= 0x10;	/* LE Remove ISO Path */
++	btdev->commands[43] |= 0x20;	/* LE ISO TX Test */
++	btdev->commands[43] |= 0x40;	/* LE ISO RX Test */
++	btdev->commands[43] |= 0x80;	/* LE ISO Read Test Counter */
++	btdev->commands[44] |= 0x01;	/* LE ISO Test End */
++}
 +
- dist_man_MANS += tools/rctest.1 tools/l2ping.1 tools/bccmd.1 tools/btattach.1
+ static void set_le_commands(struct btdev *btdev)
+ {
+ 	set_common_commands_all(btdev);
+@@ -482,6 +511,10 @@ static void set_le_commands(struct btdev *btdev)
+ 	/* Extra LE commands for >= 5.0 adapters */
+ 	if (btdev->type >= BTDEV_TYPE_BREDRLE50)
+ 		set_le_50_commands(btdev);
++
++	/* Extra LE commands for >= 6.0 adapters */
++	if (btdev->type >= BTDEV_TYPE_BREDRLE60)
++		set_le_60_commands(btdev);
+ }
  
- EXTRA_DIST += tools/bdaddr.1
-diff --git a/tools/isotest.c b/tools/isotest.c
-new file mode 100644
-index 000000000..f86ac243a
---- /dev/null
-+++ b/tools/isotest.c
-@@ -0,0 +1,1019 @@
-+/*
-+ *
-+ *  BlueZ - Bluetooth protocol stack for Linux
-+ *
-+ *  Copyright (C) 2002-2003  Maxim Krasnyansky <maxk@qualcomm.com>
-+ *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
-+ *
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, write to the Free Software
-+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-+ *
-+ */
+ static void set_bredrle_commands(struct btdev *btdev)
+@@ -550,6 +583,14 @@ static void set_bredrle_features(struct btdev *btdev)
+ 		btdev->le_features[1] |= 0x10;  /* LE EXT ADV */
+ 	}
+ 
++	if (btdev->type >= BTDEV_TYPE_BREDRLE60) {
++		btdev->le_features[3] |= 0x10;  /* LE CIS Master */
++		btdev->le_features[3] |= 0x20;  /* LE CIS Slave */
++		btdev->le_features[3] |= 0x40;  /* LE ISO Broadcaster */
++		btdev->le_features[3] |= 0x80;  /* LE Synchronized Receiver */
++		btdev->le_features[4] |= 0x01;  /* LE ISO channels */
++	}
 +
-+#ifdef HAVE_CONFIG_H
-+#include <config.h>
-+#endif
+ 	btdev->feat_page_2[0] |= 0x01;	/* CSB - Master Operation */
+ 	btdev->feat_page_2[0] |= 0x02;	/* CSB - Slave Operation */
+ 	btdev->feat_page_2[0] |= 0x04;	/* Synchronization Train */
+@@ -644,8 +685,9 @@ struct btdev *btdev_create(enum btdev_type type, uint16_t id)
+ 
+ 	memset(btdev, 0, sizeof(*btdev));
+ 
+-	if (type == BTDEV_TYPE_BREDRLE || type == BTDEV_TYPE_LE
+-				|| type == BTDEV_TYPE_BREDRLE50) {
++	if (type == BTDEV_TYPE_BREDRLE || type == BTDEV_TYPE_LE ||
++			type == BTDEV_TYPE_BREDRLE50 ||
++			type == BTDEV_TYPE_BREDRLE60) {
+ 		btdev->crypto = bt_crypto_new();
+ 		if (!btdev->crypto) {
+ 			free(btdev);
+@@ -661,6 +703,7 @@ struct btdev *btdev_create(enum btdev_type type, uint16_t id)
+ 	switch (btdev->type) {
+ 	case BTDEV_TYPE_BREDRLE:
+ 	case BTDEV_TYPE_BREDRLE50:
++	case BTDEV_TYPE_BREDRLE60:
+ 		btdev->version = 0x09;
+ 		set_bredrle_features(btdev);
+ 		set_bredrle_commands(btdev);
+@@ -700,6 +743,9 @@ struct btdev *btdev_create(enum btdev_type type, uint16_t id)
+ 	btdev->acl_mtu = 192;
+ 	btdev->acl_max_pkt = 1;
+ 
++	btdev->iso_mtu = 251;
++	btdev->iso_max_pkt = 1;
 +
-+#define _GNU_SOURCE
-+#include <stdio.h>
-+#include <errno.h>
-+#include <stdbool.h>
-+#include <ctype.h>
-+#include <unistd.h>
-+#include <stdlib.h>
-+#include <getopt.h>
-+#include <syslog.h>
-+#include <signal.h>
-+#include <sys/time.h>
-+#include <sys/socket.h>
-+
-+#include "lib/bluetooth.h"
-+#include "lib/hci.h"
-+#include "lib/hci_lib.h"
-+#include "lib/iso.h"
-+
-+#include "src/shared/util.h"
-+
-+/* Test modes */
-+enum {
-+	SEND,
-+	RECV,
-+	RECONNECT,
-+	MULTY,
-+	DUMP,
-+	CONNECT
-+};
-+
-+static unsigned char *buf;
-+
-+/* Default data size */
-+static long data_size = 251;
-+
-+static bdaddr_t bdaddr;
-+static int bdaddr_type = BDADDR_LE_PUBLIC;
-+
-+static int defer_setup = 0;
-+
-+struct bt_iso_qos *in_qos = NULL;
-+struct bt_iso_qos *out_qos = NULL;
-+static bool inout;
-+
-+struct lookup_table {
-+	const char *name;
-+	int flag;
-+};
-+
-+static struct lookup_table bdaddr_types[] = {
-+	{ "le_public",	BDADDR_LE_PUBLIC	},
-+	{ "le_random",	BDADDR_LE_RANDOM	},
-+	{ NULL,		0			},
-+};
-+
-+static int get_lookup_flag(struct lookup_table *table, char *name)
+ 	btdev->country_code = 0x00;
+ 
+ 	index = add_btdev(btdev);
+@@ -893,13 +939,13 @@ static void le_meta_event(struct btdev *btdev, uint8_t event,
+ 	send_event(btdev, BT_HCI_EVT_LE_META_EVENT, pkt_data, 1 + len);
+ }
+ 
+-static void num_completed_packets(struct btdev *btdev)
++static void num_completed_packets(struct btdev *btdev, uint16_t handle)
+ {
+ 	if (btdev->conn) {
+ 		struct bt_hci_evt_num_completed_packets ncp;
+ 
+ 		ncp.num_handles = 1;
+-		ncp.handle = cpu_to_le16(42);
++		ncp.handle = cpu_to_le16(handle);
+ 		ncp.count = cpu_to_le16(1);
+ 
+ 		send_event(btdev, BT_HCI_EVT_NUM_COMPLETED_PACKETS,
+@@ -1106,12 +1152,12 @@ static void conn_complete(struct btdev *btdev,
+ 		memcpy(cc.bdaddr, btdev->bdaddr, 6);
+ 		cc.encr_mode = 0x00;
+ 
+-		cc.handle = cpu_to_le16(42);
++		cc.handle = cpu_to_le16(ACL_HANDLE);
+ 		cc.link_type = 0x01;
+ 
+ 		send_event(remote, BT_HCI_EVT_CONN_COMPLETE, &cc, sizeof(cc));
+ 
+-		cc.handle = cpu_to_le16(42);
++		cc.handle = cpu_to_le16(ACL_HANDLE);
+ 		cc.link_type = 0x01;
+ 	} else {
+ 		cc.handle = cpu_to_le16(0x0000);
+@@ -1208,7 +1254,7 @@ static void le_conn_complete(struct btdev *btdev,
+ 			memcpy(cc->peer_addr, btdev->bdaddr, 6);
+ 
+ 		cc->role = 0x01;
+-		cc->handle = cpu_to_le16(42);
++		cc->handle = cpu_to_le16(ACL_HANDLE);
+ 		cc->interval = lecc->max_interval;
+ 		cc->latency = lecc->latency;
+ 		cc->supv_timeout = lecc->supv_timeout;
+@@ -1255,7 +1301,7 @@ static void le_ext_conn_complete(struct btdev *btdev,
+ 			memcpy(cc->peer_addr, btdev->bdaddr, 6);
+ 
+ 		cc->role = 0x01;
+-		cc->handle = cpu_to_le16(42);
++		cc->handle = cpu_to_le16(ACL_HANDLE);
+ 		cc->interval = lecc->max_interval;
+ 		cc->latency = lecc->latency;
+ 		cc->supv_timeout = lecc->supv_timeout;
+@@ -1356,6 +1402,46 @@ static void le_ext_conn_request(struct btdev *btdev,
+ 					BT_HCI_ERR_CONN_FAILED_TO_ESTABLISH);
+ }
+ 
++static void le_cis_estabilished(struct btdev *dev, uint8_t status)
 +{
-+	int i;
++	struct bt_hci_evt_le_cis_established evt;
 +
-+	for (i = 0; table[i].name; i++)
-+		if (!strcasecmp(table[i].name, name))
-+			return table[i].flag;
++	memset(&evt, 0, sizeof(evt));
 +
-+	return -1;
++	evt.status = status;
++
++	if (!evt.status) {
++		evt.conn_handle = cpu_to_le16(ISO_HANDLE);
++		evt.m_phy = 0x01;
++		evt.m_phy = 0x01;
++	}
++
++	le_meta_event(dev, BT_HCI_EVT_LE_CIS_ESTABLISHED, &evt, sizeof(evt));
++
++	if (dev->conn)
++		le_meta_event(dev->conn, BT_HCI_EVT_LE_CIS_ESTABLISHED, &evt,
++							sizeof(evt));
 +}
 +
-+static void print_lookup_values(struct lookup_table *table, char *header)
++static void le_cis_request(struct btdev *dev,
++				const struct bt_hci_cmd_le_create_cis *leccis)
 +{
-+	int i;
++	struct btdev *remote = dev->conn;
 +
-+	printf("%s\n", header);
++	if (remote) {
++		struct bt_hci_evt_le_cis_req evt;
 +
-+	for (i = 0; table[i].name; i++)
-+		printf("\t%s\n", table[i].name);
-+}
++		evt.acl_handle = cpu_to_le16(ACL_HANDLE);
++		evt.cis_handle = cpu_to_le16(ISO_HANDLE);
++		evt.cis_id = 0x00;
++		evt.cis_id = 0x00;
 +
-+static float tv2fl(struct timeval tv)
-+{
-+	return (float)tv.tv_sec + (float)(tv.tv_usec/1000000.0);
-+}
-+
-+static int do_connect(char *peer)
-+{
-+	struct sockaddr_iso addr;
-+	struct bt_iso_qos qos[2];
-+	socklen_t len;
-+	int sk;
-+
-+	/* Create socket */
-+	sk = socket(PF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_ISO);
-+	if (sk < 0) {
-+		syslog(LOG_ERR, "Can't create socket: %s (%d)",
-+							strerror(errno), errno);
-+		return -1;
-+	}
-+
-+	/* Bind to local address */
-+	memset(&addr, 0, sizeof(addr));
-+	addr.iso_family = AF_BLUETOOTH;
-+	bacpy(&addr.iso_bdaddr, &bdaddr);
-+	addr.iso_bdaddr_type = bdaddr_type;
-+
-+	if (bind(sk, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
-+		syslog(LOG_ERR, "Can't bind socket: %s (%d)",
-+							strerror(errno), errno);
-+		goto error;
-+	}
-+
-+	/* Set QoS if available */
-+	if (out_qos) {
-+		if (setsockopt(sk, SOL_BLUETOOTH, BT_ISO_OUT_QOS,
-+					out_qos, sizeof(*out_qos)) < 0) {
-+			syslog(LOG_ERR, "Can't set Output QoS socket option: "
-+					"%s (%d)", strerror(errno), errno);
-+		}
-+	}
-+
-+	if (in_qos) {
-+		if (!inout) {
-+			in_qos->phy = 0x00;
-+			in_qos->mtu = 0;
-+		}
-+
-+		if (setsockopt(sk, SOL_BLUETOOTH, BT_ISO_IN_QOS,
-+					in_qos, sizeof(*in_qos)) < 0) {
-+			syslog(LOG_ERR, "Can't set Input QoS socket option: "
-+					"%s (%d)", strerror(errno), errno);
-+		}
-+	}
-+
-+	/* Connect to remote device */
-+	memset(&addr, 0, sizeof(addr));
-+	addr.iso_family = AF_BLUETOOTH;
-+	str2ba(peer, &addr.iso_bdaddr);
-+	addr.iso_bdaddr_type = bdaddr_type;
-+
-+	if (connect(sk, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
-+		syslog(LOG_ERR, "Can't connect: %s (%d)",
-+							strerror(errno), errno);
-+		goto error;
-+	}
-+
-+	/* Read Out QOS */
-+	memset(&qos, 0, sizeof(qos));
-+	len = sizeof(qos[0]);
-+
-+	if (getsockopt(sk, SOL_BLUETOOTH, BT_ISO_IN_QOS, &qos[0], &len) < 0) {
-+		syslog(LOG_ERR, "Can't get Input QoS socket option: %s (%d)",
-+				strerror(errno), errno);
-+		goto error;
-+	}
-+
-+	if (getsockopt(sk, SOL_BLUETOOTH, BT_ISO_OUT_QOS, &qos[1], &len) < 0) {
-+		syslog(LOG_ERR, "Can't get Output QoS socket option: %s (%d)",
-+				strerror(errno), errno);
-+		goto error;
-+	}
-+
-+	syslog(LOG_INFO, "Connected [%s]", peer);
-+	syslog(LOG_INFO, "Input QoS [Interval %u us Framing 0x%02x Latency %u "
-+		"ms MTU %u PHY 0x%02x RTN %u]", qos[0].interval, qos[0].framing,
-+		qos[0].latency, qos[0].mtu, qos[0].phy, qos[0].rtn);
-+	syslog(LOG_INFO, "Output QoS [Interval %u us Framing 0x%02x Latency %u "
-+		"ms MTU %u PHY 0x%02x RTN %u]", qos[1].interval, qos[1].framing,
-+		qos[1].latency, qos[1].mtu, qos[1].phy, qos[1].rtn);
-+
-+	return sk;
-+
-+error:
-+	close(sk);
-+	return -1;
-+}
-+
-+static void do_listen(void (*handler)(int sk))
-+{
-+	struct sockaddr_iso addr;
-+	socklen_t optlen;
-+	int sk, nsk;
-+	char ba[18];
-+
-+	/* Create socket */
-+	sk = socket(PF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_ISO);
-+	if (sk < 0) {
-+		syslog(LOG_ERR, "Can't create socket: %s (%d)",
-+							strerror(errno), errno);
-+		exit(1);
-+	}
-+
-+	/* Bind to local address */
-+	memset(&addr, 0, sizeof(addr));
-+	addr.iso_family = AF_BLUETOOTH;
-+	bacpy(&addr.iso_bdaddr, &bdaddr);
-+	addr.iso_bdaddr_type = bdaddr_type;
-+
-+	if (bind(sk, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
-+		syslog(LOG_ERR, "Can't bind socket: %s (%d)",
-+							strerror(errno), errno);
-+		goto error;
-+	}
-+
-+	/* Enable deferred setup */
-+	if (defer_setup && setsockopt(sk, SOL_BLUETOOTH, BT_DEFER_SETUP,
-+				&defer_setup, sizeof(defer_setup)) < 0) {
-+		syslog(LOG_ERR, "Can't enable deferred setup : %s (%d)",
-+							strerror(errno), errno);
-+		goto error;
-+	}
-+
-+	/* Listen for connections */
-+	if (listen(sk, 10)) {
-+		syslog(LOG_ERR,"Can not listen on the socket: %s (%d)",
-+							strerror(errno), errno);
-+		goto error;
-+	}
-+
-+	syslog(LOG_INFO,"Waiting for connection ...");
-+
-+	while (1) {
-+		memset(&addr, 0, sizeof(addr));
-+		optlen = sizeof(addr);
-+
-+		nsk = accept(sk, (struct sockaddr *) &addr, &optlen);
-+		if (nsk < 0) {
-+			syslog(LOG_ERR,"Accept failed: %s (%d)",
-+							strerror(errno), errno);
-+			goto error;
-+		}
-+		if (fork()) {
-+			/* Parent */
-+			close(nsk);
-+			continue;
-+		}
-+		/* Child */
-+		close(sk);
-+
-+		ba2str(&addr.iso_bdaddr, ba);
-+		syslog(LOG_INFO, "Connect from %s", ba);
-+
-+		/* Handle deferred setup */
-+		if (defer_setup) {
-+			syslog(LOG_INFO, "Waiting for %d seconds",
-+							abs(defer_setup) - 1);
-+			sleep(abs(defer_setup) - 1);
-+
-+			if (defer_setup < 0) {
-+				close(nsk);
-+				exit(1);
-+			}
-+		}
-+
-+		handler(nsk);
-+
-+		syslog(LOG_INFO, "Disconnect");
-+		exit(0);
-+	}
-+
-+error:
-+	close(sk);
-+	exit(1);
-+}
-+
-+static void dump_mode(int sk)
-+{
-+	int len;
-+
-+	if (defer_setup) {
-+		len = read(sk, buf, data_size);
-+		if (len < 0)
-+			syslog(LOG_ERR, "Initial read error: %s (%d)",
-+						strerror(errno), errno);
-+		else
-+			syslog(LOG_INFO, "Initial bytes %d", len);
-+	}
-+
-+	syslog(LOG_INFO,"Receiving ...");
-+	while ((len = read(sk, buf, data_size)) > 0)
-+		syslog(LOG_INFO, "Received %d bytes", len);
-+}
-+
-+static void recv_mode(int sk)
-+{
-+	struct timeval tv_beg,tv_end,tv_diff;
-+	long total;
-+	int len;
-+
-+	if (defer_setup) {
-+		len = read(sk, buf, data_size);
-+		if (len < 0)
-+			syslog(LOG_ERR, "Initial read error: %s (%d)",
-+						strerror(errno), errno);
-+		else
-+			syslog(LOG_INFO, "Initial bytes %d", len);
-+	}
-+
-+	syslog(LOG_INFO, "Receiving ...");
-+
-+	while (1) {
-+		gettimeofday(&tv_beg, NULL);
-+		total = 0;
-+		while (total < data_size) {
-+			int r;
-+
-+			r = recv(sk, buf, data_size, 0);
-+			if (r <= 0) {
-+				if (r < 0)
-+					syslog(LOG_ERR, "Read failed: %s (%d)",
-+							strerror(errno), errno);
-+				if (errno != ENOTCONN)
-+					return;
-+				r = 0;
-+			}
-+			total += r;
-+		}
-+		gettimeofday(&tv_end, NULL);
-+
-+		timersub(&tv_end, &tv_beg, &tv_diff);
-+
-+		syslog(LOG_INFO,"%ld bytes in %.2fm speed %.2f kb", total,
-+			tv2fl(tv_diff) / 60.0,
-+			(float)( total / tv2fl(tv_diff) ) / 1024.0 );
++		le_meta_event(remote, BT_HCI_EVT_LE_CIS_REQ, &evt, sizeof(evt));
++	} else {
++		le_cis_estabilished(dev, BT_HCI_ERR_UNKNOWN_CONN_ID);
 +	}
 +}
 +
-+static void send_mode(char *peer)
-+{
-+	struct bt_iso_qos qos;
-+	socklen_t len;
-+	uint32_t seq;
-+	int i, sk;
-+
-+	sk = do_connect(peer);
-+	if (sk < 0) {
-+		syslog(LOG_ERR, "Can't connect to the server: %s (%d)",
-+							strerror(errno), errno);
-+		exit(1);
+ static void conn_request(struct btdev *btdev, const uint8_t *bdaddr)
+ {
+ 	struct btdev *remote = find_btdev_by_bdaddr(bdaddr);
+@@ -1464,8 +1550,10 @@ static void disconnect_complete(struct btdev *btdev, uint16_t handle,
+ 	dc.handle = cpu_to_le16(handle);
+ 	dc.reason = reason;
+ 
+-	btdev->conn = NULL;
+-	remote->conn = NULL;
++	if (dc.handle == ACL_HANDLE) {
++		btdev->conn = NULL;
++		remote->conn = NULL;
 +	}
-+
-+	syslog(LOG_INFO,"Sending ...");
-+
-+	/* Read Out QOS */
-+	memset(&qos, 0, sizeof(qos));
-+	len = sizeof(qos);
-+	if (getsockopt(sk, SOL_BLUETOOTH, BT_ISO_OUT_QOS, &qos, &len) < 0) {
-+		syslog(LOG_ERR, "Can't get Output QoS socket option: %s (%d)",
-+				strerror(errno), errno);
-+		qos.mtu = ISO_DEFAULT_MTU;
-+	}
-+
-+	for (i = 6; i < qos.mtu; i++)
-+		buf[i] = 0x7f;
-+
-+	seq = 0;
-+	while (1) {
-+		put_le32(seq, buf);
-+		put_le16(data_size, buf + 4);
-+
-+		seq++;
-+
-+		if (send(sk, buf, qos.mtu, 0) <= 0) {
-+			syslog(LOG_ERR, "Send failed: %s (%d)",
-+							strerror(errno), errno);
-+			exit(1);
-+		}
-+
-+		usleep(qos.interval);
-+	}
-+}
-+
-+static void reconnect_mode(char *peer)
-+{
-+	while (1) {
-+		int sk;
-+
-+		sk = do_connect(peer);
-+		if (sk < 0) {
-+			syslog(LOG_ERR, "Can't connect to the server: %s (%d)",
-+							strerror(errno), errno);
-+			exit(1);
-+		}
-+
-+		close(sk);
-+
-+		sleep(5);
-+	}
-+}
-+
-+static void multy_connect_mode(char *peer)
-+{
-+	while (1) {
-+		int i, sk;
-+
-+		for (i = 0; i < 10; i++){
-+			if (fork())
-+				continue;
-+
-+			/* Child */
-+			sk = do_connect(peer);
-+			if (sk < 0) {
-+				syslog(LOG_ERR, "Can't connect to the server: "
-+					"%s (%d)", strerror(errno), errno);
-+			}
-+			close(sk);
-+			exit(0);
-+		}
-+
-+		sleep(19);
-+	}
-+}
-+
-+static void usage(void)
-+{
-+	printf("isotest - ISO testing\n"
-+		"Usage:\n");
-+	printf("\tisotest <mode> [options] [bdaddr]\n");
-+	printf("Modes:\n"
-+		"\t-d dump (server)\n"
-+		"\t-c reconnect (client)\n"
-+		"\t-m multiple connects (client)\n"
-+		"\t-r receive (server)\n"
-+		"\t-s connect and send (client)\n"
-+		"\t-n connect and be silent (client)\n"
-+		"Options:\n"
-+		"\t[-b bytes]\n"
-+		"\t[-i device]\n"
-+		"\t[-W seconds] enable deferred setup\n"
-+		"\t[-M mtu]\n"
-+		"\t[-S sca]\n"
-+		"\t[-P packing]\n"
-+		"\t[-F framing]\n"
-+		"\t[-I interval]\n"
-+		"\t[-L latency]\n"
-+		"\t[-Y phy]\n"
-+		"\t[-R rtn]\n"
-+		"\t[-B preset]\n");
-+}
-+
-+static struct qos_preset {
-+	const char *name;
-+	bool inout;
-+	struct bt_iso_qos qos;
-+} presets[] = {
-+	{
-+		.name = "1.1",
-+		.inout = true,
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 8,
-+			.mtu = 30,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "1.2",
-+		.inout = true,
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 10,
-+			.mtu = 40,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "1.3",
-+		.inout = true,
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 8,
-+			.mtu = 45,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "1.4",
-+		.inout = true,
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 10,
-+			.mtu = 60,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "1.5",
-+		.inout = true,
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 8,
-+			.mtu = 60,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "1.6",
-+		.inout = true,
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 10,
-+			.mtu = 80,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "2.1",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 60,
-+			.mtu = 45,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "2.2",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 80,
-+			.mtu = 60,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "3.0",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 8,
-+			.mtu = 75,
-+			.phy = 0x02,
-+			.rtn = 3,
-+		}
-+	},
-+	{
-+		.name = "3.1",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 10,
-+			.mtu = 100,
-+			.phy = 0x02,
-+			.rtn = 3,
-+		}
-+	},
-+	{
-+		.name = "3.2",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 8,
-+			.mtu = 90,
-+			.phy = 0x02,
-+			.rtn = 3,
-+		}
-+	},
-+	{
-+		.name = "3.3",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 10,
-+			.mtu = 120,
-+			.phy = 0x02,
-+			.rtn = 3,
-+		}
-+	},
-+	{
-+		.name = "3.4",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 8,
-+			.mtu = 117,
-+			.phy = 0x02,
-+			.rtn = 3,
-+		}
-+	},
-+	{
-+		.name = "3.5",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 10,
-+			.mtu = 155,
-+			.phy = 0x02,
-+			.rtn = 3,
-+		}
-+	},
-+	{
-+		.name = "3.6",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10880,
-+			.latency = 11,
-+			.mtu = 120,
-+			.phy = 0x02,
-+			.rtn = 3,
-+		}
-+	},
-+	{
-+		.name = "4.0",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 60,
-+			.mtu = 75,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "4.1",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 80,
-+			.mtu = 100,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "4.2",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 60,
-+			.mtu = 90,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "4.3",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 60,
-+			.mtu = 180,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "4.4",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 80,
-+			.mtu = 120,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "4.5",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 80,
-+			.mtu = 240,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "4.6",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 60,
-+			.mtu = 117,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "4.7",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 7500,
-+			.latency = 60,
-+			.mtu = 234,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "4.8",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 80,
-+			.mtu = 155,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+	{
-+		.name = "4.9",
-+		.qos = {
-+			.sca = 0x07,
-+			.packing = 0x00,
-+			.framing = 0x00,
-+			.interval = 10000,
-+			.latency = 88,
-+			.mtu = 120,
-+			.phy = 0x02,
-+			.rtn = 2,
-+		}
-+	},
-+};
-+
-+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
-+
-+int main(int argc ,char *argv[])
-+{
-+	struct sigaction sa;
-+	int opt, sk, mode = RECV;
-+	unsigned int i;
-+
-+	while ((opt = getopt(argc, argv, "rdscmnb:i:V:W:M:S:P:F:I:L:Y:R:B:")) !=
-+									EOF) {
-+		switch(opt) {
-+		case 'r':
-+			mode = RECV;
-+			break;
-+
-+		case 's':
-+			mode = SEND;
-+			break;
-+
-+		case 'd':
-+			mode = DUMP;
-+			break;
-+
-+		case 'c':
-+			mode = RECONNECT;
-+			break;
-+
-+		case 'm':
-+			mode = MULTY;
-+			break;
-+
-+		case 'n':
-+			mode = CONNECT;
-+			break;
-+
-+		case 'b':
-+			data_size = atoi(optarg);
-+			break;
-+
-+		case 'i':
-+			if (!strncasecmp(optarg, "hci", 3))
-+				hci_devba(atoi(optarg + 3), &bdaddr);
-+			else
-+				str2ba(optarg, &bdaddr);
-+			break;
-+
-+		case 'V':
-+			bdaddr_type = get_lookup_flag(bdaddr_types, optarg);
-+
-+			if (bdaddr_type == -1) {
-+				print_lookup_values(bdaddr_types,
-+						"List Address types:");
-+				exit(1);
-+			}
-+
-+			break;
-+
-+		case 'W':
-+			defer_setup = atoi(optarg);
-+			break;
-+
-+		case 'M':
-+			if (!out_qos) {
-+				out_qos = malloc(sizeof(*out_qos));
-+				memset(out_qos, 0, sizeof(*out_qos));
-+			}
-+
-+			out_qos->mtu = atoi(optarg);
-+
-+			break;
-+
-+		case 'S':
-+			if (!out_qos) {
-+				out_qos = malloc(sizeof(*out_qos));
-+				memset(out_qos, 0, sizeof(*out_qos));
-+			}
-+
-+			out_qos->sca = atoi(optarg);
-+
-+			break;
-+
-+
-+		case 'P':
-+			if (!out_qos) {
-+				out_qos = malloc(sizeof(*out_qos));
-+				memset(out_qos, 0, sizeof(*out_qos));
-+			}
-+
-+			out_qos->packing = atoi(optarg);
-+
-+			break;
-+
-+		case 'F':
-+			if (!out_qos) {
-+				out_qos = malloc(sizeof(*out_qos));
-+				memset(out_qos, 0, sizeof(*out_qos));
-+			}
-+
-+			out_qos->framing = atoi(optarg);
-+
-+			break;
-+
-+		case 'I':
-+			if (!out_qos) {
-+				out_qos = malloc(sizeof(*out_qos));
-+				memset(out_qos, 0, sizeof(*out_qos));
-+			}
-+
-+			out_qos->interval = atoi(optarg);
-+
-+			break;
-+
-+		case 'L':
-+			if (!out_qos) {
-+				out_qos = malloc(sizeof(*out_qos));
-+				memset(out_qos, 0, sizeof(*out_qos));
-+			}
-+
-+			out_qos->latency = atoi(optarg);
-+
-+			break;
-+
-+		case 'Y':
-+			if (!out_qos) {
-+				out_qos = malloc(sizeof(*out_qos));
-+				memset(out_qos, 0, sizeof(*out_qos));
-+			}
-+
-+			out_qos->phy = atoi(optarg);
-+
-+			break;
-+
-+		case 'R':
-+			if (!out_qos) {
-+				out_qos = malloc(sizeof(*out_qos));
-+				memset(out_qos, 0, sizeof(*out_qos));
-+			}
-+
-+			out_qos->rtn = atoi(optarg);
-+
-+			break;
-+
-+		case 'B':
-+			for (i = 0; i < ARRAY_SIZE(presets); i++) {
-+				if (!strcmp(presets[i].name, optarg)) {
-+					out_qos = &presets[i].qos;
-+					inout = presets[i].inout;
-+					break;
-+				}
-+			}
-+
-+			if (out_qos)
-+				break;
-+
-+		/* Fallthrough */
-+		default:
-+			usage();
-+			exit(1);
-+		}
-+	}
-+
-+	if (!(argc - optind) && (mode != RECV && mode != DUMP)) {
-+		usage();
-+		exit(1);
-+	}
-+
-+	if (out_qos && !in_qos)
-+		in_qos = out_qos;
-+
-+	buf = malloc(data_size);
-+	if (!buf) {
-+		perror("Can't allocate data buffer");
-+		exit(1);
-+	}
-+
-+	memset(&sa, 0, sizeof(sa));
-+	sa.sa_handler = SIG_IGN;
-+	sa.sa_flags   = SA_NOCLDSTOP;
-+	sigaction(SIGCHLD, &sa, NULL);
-+
-+	openlog("isotest", LOG_PERROR | LOG_PID, LOG_LOCAL0);
-+
-+	switch( mode ){
-+	case RECV:
-+		do_listen(recv_mode);
+ 
+ 	send_event(btdev, BT_HCI_EVT_DISCONNECT_COMPLETE, &dc, sizeof(dc));
+ 	send_event(remote, BT_HCI_EVT_DISCONNECT_COMPLETE, &dc, sizeof(dc));
+@@ -1492,7 +1580,7 @@ static void link_key_req_reply_complete(struct btdev *btdev,
+ 		return;
+ 	}
+ 
+-	ev.handle = cpu_to_le16(42);
++	ev.handle = cpu_to_le16(ACL_HANDLE);
+ 
+ 	if (!memcmp(btdev->link_key, remote->link_key, 16))
+ 		ev.status = BT_HCI_ERR_SUCCESS;
+@@ -1587,7 +1675,7 @@ static void encrypt_change(struct btdev *btdev, uint8_t mode, uint8_t status)
+ 	struct bt_hci_evt_encrypt_change ev;
+ 
+ 	ev.status = status;
+-	ev.handle = cpu_to_le16(42);
++	ev.handle = cpu_to_le16(ACL_HANDLE);
+ 	ev.encr_mode = mode;
+ 
+ 	send_event(btdev, BT_HCI_EVT_ENCRYPT_CHANGE, &ev, sizeof(ev));
+@@ -1628,7 +1716,7 @@ static void pin_code_req_reply_complete(struct btdev *btdev,
+ 	}
+ 
+ 	if (remote->conn) {
+-		ev.handle = cpu_to_le16(42);
++		ev.handle = cpu_to_le16(ACL_HANDLE);
+ 		send_event(remote, BT_HCI_EVT_AUTH_COMPLETE, &ev, sizeof(ev));
+ 	} else {
+ 		conn_complete(remote, btdev->bdaddr, ev.status);
+@@ -1651,7 +1739,7 @@ static void pin_code_req_neg_reply_complete(struct btdev *btdev,
+ 	}
+ 
+ 	ev.status = BT_HCI_ERR_PIN_OR_KEY_MISSING;
+-	ev.handle = cpu_to_le16(42);
++	ev.handle = cpu_to_le16(ACL_HANDLE);
+ 
+ 	if (btdev->conn)
+ 		send_event(btdev, BT_HCI_EVT_AUTH_COMPLETE, &ev, sizeof(ev));
+@@ -1944,7 +2032,7 @@ static void ssp_complete(struct btdev *btdev, const uint8_t *bdaddr,
+ 	}
+ 
+ 	auth.status = status;
+-	auth.handle = cpu_to_le16(42);
++	auth.handle = cpu_to_le16(ACL_HANDLE);
+ 	send_event(init, BT_HCI_EVT_AUTH_COMPLETE, &auth, sizeof(auth));
+ }
+ 
+@@ -2207,7 +2295,7 @@ static void le_read_remote_features_complete(struct btdev *btdev)
+ 	memset(buf, 0, sizeof(buf));
+ 	buf[0] = BT_HCI_EVT_LE_REMOTE_FEATURES_COMPLETE;
+ 	ev->status = BT_HCI_ERR_SUCCESS;
+-	ev->handle = cpu_to_le16(42);
++	ev->handle = cpu_to_le16(ACL_HANDLE);
+ 	memcpy(ev->features, remote->le_features, 8);
+ 
+ 	send_event(btdev, BT_HCI_EVT_LE_META_EVENT, buf, sizeof(buf));
+@@ -2230,7 +2318,7 @@ static void le_start_encrypt_complete(struct btdev *btdev, uint16_t ediv,
+ 
+ 	memset(buf, 0, sizeof(buf));
+ 	buf[0] = BT_HCI_EVT_LE_LONG_TERM_KEY_REQUEST;
+-	ev->handle = cpu_to_le16(42);
++	ev->handle = cpu_to_le16(ACL_HANDLE);
+ 	ev->ediv = ediv;
+ 	ev->rand = rand;
+ 
+@@ -2244,7 +2332,7 @@ static void le_encrypt_complete(struct btdev *btdev)
+ 	struct btdev *remote = btdev->conn;
+ 
+ 	memset(&rp, 0, sizeof(rp));
+-	rp.handle = cpu_to_le16(42);
++	rp.handle = cpu_to_le16(ACL_HANDLE);
+ 
+ 	if (!remote) {
+ 		rp.status = BT_HCI_ERR_UNKNOWN_CONN_ID;
+@@ -2266,7 +2354,7 @@ static void le_encrypt_complete(struct btdev *btdev)
+ 		ev.encr_mode = 0x01;
+ 	}
+ 
+-	ev.handle = cpu_to_le16(42);
++	ev.handle = cpu_to_le16(ACL_HANDLE);
+ 
+ 	send_event(btdev, BT_HCI_EVT_ENCRYPT_CHANGE, &ev, sizeof(ev));
+ 	send_event(remote, BT_HCI_EVT_ENCRYPT_CHANGE, &ev, sizeof(ev));
+@@ -2279,7 +2367,7 @@ static void ltk_neg_reply_complete(struct btdev *btdev)
+ 	struct btdev *remote = btdev->conn;
+ 
+ 	memset(&rp, 0, sizeof(rp));
+-	rp.handle = cpu_to_le16(42);
++	rp.handle = cpu_to_le16(ACL_HANDLE);
+ 
+ 	if (!remote) {
+ 		rp.status = BT_HCI_ERR_UNKNOWN_CONN_ID;
+@@ -2293,7 +2381,7 @@ static void ltk_neg_reply_complete(struct btdev *btdev)
+ 
+ 	memset(&ev, 0, sizeof(ev));
+ 	ev.status = BT_HCI_ERR_PIN_OR_KEY_MISSING;
+-	ev.handle = cpu_to_le16(42);
++	ev.handle = cpu_to_le16(ACL_HANDLE);
+ 
+ 	send_event(remote, BT_HCI_EVT_ENCRYPT_CHANGE, &ev, sizeof(ev));
+ }
+@@ -2364,6 +2452,7 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 	const struct bt_hci_cmd_le_set_ext_scan_params *lsesp;
+ 	const struct bt_hci_le_scan_phy *lsp;
+ 	const struct bt_hci_cmd_le_set_ext_scan_enable *lsese;
++	const struct bt_hci_cmd_le_reject_cis *lrcis;
+ 	struct bt_hci_rsp_read_default_link_policy rdlp;
+ 	struct bt_hci_rsp_read_stored_link_key rslk;
+ 	struct bt_hci_rsp_write_stored_link_key wslk;
+@@ -2425,6 +2514,11 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 	struct bt_hci_evt_le_generate_dhkey_complete dh_evt;
+ 	struct bt_hci_rsp_le_read_num_supported_adv_sets rlrnsas;
+ 	struct bt_hci_rsp_le_set_ext_adv_params rlseap;
++	struct bt_hci_rsp_le_read_buffer_size_v2 lrbsv2;
++	struct lescp {
++		struct bt_hci_rsp_le_set_cig_params params;
++		uint16_t handle;
++	} __attribute__ ((packed)) lscp;
+ 	uint8_t status, page;
+ 
+ 	switch (opcode) {
+@@ -2960,7 +3054,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 
+ 	case BT_HCI_CMD_READ_LE_HOST_SUPPORTED:
+ 		if (btdev->type != BTDEV_TYPE_BREDRLE &&
+-				btdev->type != BTDEV_TYPE_BREDRLE50)
++				btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 		rlhs.status = BT_HCI_ERR_SUCCESS;
+ 		rlhs.supported = btdev->le_supported;
+@@ -2971,7 +3066,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 	case BT_HCI_CMD_WRITE_LE_HOST_SUPPORTED:
+ 		if (btdev->type != BTDEV_TYPE_BREDRLE &&
+ 				btdev->type != BTDEV_TYPE_LE &&
+-				btdev->type != BTDEV_TYPE_BREDRLE50)
++				btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 		wlhs = data;
+ 		btdev->le_supported = wlhs->supported;
+@@ -2982,7 +3078,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 
+ 	case BT_HCI_CMD_READ_SECURE_CONN_SUPPORT:
+ 		if (btdev->type != BTDEV_TYPE_BREDRLE &&
+-				btdev->type != BTDEV_TYPE_BREDRLE50)
++				btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 		rscs.status = BT_HCI_ERR_SUCCESS;
+ 		rscs.support = btdev->secure_conn_support;
+@@ -2991,7 +3088,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 
+ 	case BT_HCI_CMD_WRITE_SECURE_CONN_SUPPORT:
+ 		if (btdev->type != BTDEV_TYPE_BREDRLE &&
+-				btdev->type != BTDEV_TYPE_BREDRLE50)
++				btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 		wscs = data;
+ 		btdev->secure_conn_support = wscs->support;
+@@ -3001,7 +3099,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 
+ 	case BT_HCI_CMD_READ_LOCAL_OOB_EXT_DATA:
+ 		if (btdev->type != BTDEV_TYPE_BREDRLE &&
+-				btdev->type != BTDEV_TYPE_BREDRLE50)
++				btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 		rloed.status = BT_HCI_ERR_SUCCESS;
+ 		cmd_complete(btdev, opcode, &rloed, sizeof(rloed));
+@@ -3009,7 +3108,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 
+ 	case BT_HCI_CMD_READ_SYNC_TRAIN_PARAMS:
+ 		if (btdev->type != BTDEV_TYPE_BREDRLE &&
+-				btdev->type != BTDEV_TYPE_BREDRLE50)
++				btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 		rstp.status = BT_HCI_ERR_SUCCESS;
+ 		rstp.interval = cpu_to_le16(btdev->sync_train_interval);
+@@ -3160,7 +3260,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 	case BT_HCI_CMD_READ_ENCRYPT_KEY_SIZE:
+ 		if (btdev->type != BTDEV_TYPE_BREDRLE &&
+ 					btdev->type != BTDEV_TYPE_BREDR &&
+-					btdev->type != BTDEV_TYPE_BREDRLE50)
++					btdev->type != BTDEV_TYPE_BREDRLE50 &&
++					btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 		reks = data;
+ 		read_enc_key_size_complete(btdev, le16_to_cpu(reks->handle));
+@@ -3535,7 +3636,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 		cmd_complete(btdev, opcode, &lcprnr_rsp, sizeof(lcprnr_rsp));
+ 		break;
+ 	case BT_HCI_CMD_LE_READ_NUM_SUPPORTED_ADV_SETS:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		rlrnsas.status = BT_HCI_ERR_SUCCESS;
+@@ -3544,7 +3646,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 		cmd_complete(btdev, opcode, &rlrnsas, sizeof(rlrnsas));
+ 		break;
+ 	case BT_HCI_CMD_LE_SET_ADV_SET_RAND_ADDR:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		lsasra = data;
+@@ -3553,7 +3656,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 		cmd_complete(btdev, opcode, &status, sizeof(status));
+ 		break;
+ 	case BT_HCI_CMD_LE_SET_EXT_ADV_PARAMS:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		if (btdev->le_adv_enable) {
+@@ -3573,7 +3677,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 		cmd_complete(btdev, opcode, &rlseap, sizeof(rlseap));
+ 		break;
+ 	case BT_HCI_CMD_LE_SET_EXT_ADV_ENABLE:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		lseae = data;
+@@ -3588,7 +3693,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 			le_set_ext_adv_enable_complete(btdev);
+ 		break;
+ 	case BT_HCI_CMD_LE_SET_EXT_ADV_DATA:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		lsead = data;
+@@ -3598,7 +3704,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 		cmd_complete(btdev, opcode, &status, sizeof(status));
+ 		break;
+ 	case BT_HCI_CMD_LE_SET_EXT_SCAN_RSP_DATA:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		lsesrd = data;
+@@ -3608,14 +3715,16 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 		cmd_complete(btdev, opcode, &status, sizeof(status));
+ 		break;
+ 	case BT_HCI_CMD_LE_REMOVE_ADV_SET:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		status = BT_HCI_ERR_SUCCESS;
+ 		cmd_complete(btdev, opcode, &status, sizeof(status));
+ 		break;
+ 	case BT_HCI_CMD_LE_CLEAR_ADV_SETS:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		status = BT_HCI_ERR_SUCCESS;
+@@ -3636,7 +3745,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 		cmd_complete(btdev, opcode, &status, sizeof(status));
+ 		break;
+ 	case BT_HCI_CMD_LE_SET_EXT_SCAN_PARAMS:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		lsesp = data;
+@@ -3658,7 +3768,8 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 		cmd_complete(btdev, opcode, &status, sizeof(status));
+ 		break;
+ 	case BT_HCI_CMD_LE_SET_EXT_SCAN_ENABLE:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		lsese = data;
+@@ -3672,11 +3783,62 @@ static void default_cmd(struct btdev *btdev, uint16_t opcode,
+ 		cmd_complete(btdev, opcode, &status, sizeof(status));
+ 		break;
+ 	case BT_HCI_CMD_LE_EXT_CREATE_CONN:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
++			goto unsupported;
++
++		cmd_status(btdev, BT_HCI_ERR_SUCCESS, opcode);
 +		break;
 +
-+	case DUMP:
-+		do_listen(dump_mode);
++	case BT_HCI_CMD_LE_READ_BUFFER_SIZE_V2:
++		if (btdev->type != BTDEV_TYPE_BREDRLE60)
++			goto unsupported;
++		lrbsv2.status = BT_HCI_ERR_SUCCESS;
++		lrbsv2.acl_mtu = cpu_to_le16(btdev->acl_mtu);
++		lrbsv2.acl_max_pkt = btdev->acl_max_pkt;
++		lrbsv2.iso_mtu = cpu_to_le16(btdev->iso_mtu);
++		lrbsv2.iso_max_pkt = btdev->iso_max_pkt;
++		cmd_complete(btdev, opcode, &lrbsv2, sizeof(lrbsv2));
 +		break;
 +
-+	case SEND:
-+		send_mode(argv[optind]);
++	case BT_HCI_CMD_LE_SET_CIG_PARAMS:
++		if (btdev->type != BTDEV_TYPE_BREDRLE60)
++			goto unsupported;
++		lscp.params.status = BT_HCI_ERR_SUCCESS;
++		lscp.params.cig_id = 0x00;
++		lscp.params.num_handles = 1;
++		lscp.handle = cpu_to_le16(ISO_HANDLE);
++		cmd_complete(btdev, opcode, &lscp, sizeof(lscp));
 +		break;
 +
-+	case RECONNECT:
-+		reconnect_mode(argv[optind]);
++	case BT_HCI_CMD_LE_CREATE_CIS:
++		if (btdev->type != BTDEV_TYPE_BREDRLE60)
++			goto unsupported;
++
++		cmd_status(btdev, BT_HCI_ERR_SUCCESS, opcode);
++
 +		break;
 +
-+	case MULTY:
-+		multy_connect_mode(argv[optind]);
++	case BT_HCI_CMD_LE_ACCEPT_CIS:
++		if (btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			goto unsupported;
+ 
+ 		cmd_status(btdev, BT_HCI_ERR_SUCCESS, opcode);
++		le_cis_estabilished(btdev, BT_HCI_ERR_SUCCESS);
++
+ 		break;
++
++	case BT_HCI_CMD_LE_REJECT_CIS:
++		if (btdev->type != BTDEV_TYPE_BREDRLE60)
++			goto unsupported;
++
++		cmd_status(btdev, BT_HCI_ERR_SUCCESS, opcode);
++
++		lrcis = data;
++		le_cis_estabilished(btdev, lrcis->reason);
++
 +		break;
 +
-+	case CONNECT:
-+		sk = do_connect(argv[optind]);
-+		if (sk < 0)
-+			exit(1);
-+		dump_mode(sk);
+ 	default:
+ 		goto unsupported;
+ 	}
+@@ -3716,6 +3878,7 @@ static void default_cmd_completion(struct btdev *btdev, uint16_t opcode,
+ 	const struct bt_hci_cmd_le_set_scan_enable *lsse;
+ 	const struct bt_hci_cmd_le_set_ext_scan_enable *lsese;
+ 	const struct bt_hci_cmd_le_ext_create_conn *leecc;
++	const struct bt_hci_cmd_le_create_cis *leccis;
+ 
+ 	switch (opcode) {
+ 	case BT_HCI_CMD_INQUIRY:
+@@ -3912,19 +4075,28 @@ static void default_cmd_completion(struct btdev *btdev, uint16_t opcode,
+ 			le_set_scan_enable_complete(btdev);
+ 		break;
+ 	case BT_HCI_CMD_LE_SET_EXT_SCAN_ENABLE:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			return;
+ 		lsese = data;
+ 		if (btdev->le_scan_enable && lsese->enable)
+ 			le_set_ext_scan_enable_complete(btdev);
+ 		break;
+ 	case BT_HCI_CMD_LE_EXT_CREATE_CONN:
+-		if (btdev->type != BTDEV_TYPE_BREDRLE50)
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
+ 			return;
+ 		leecc = data;
+ 		btdev->le_scan_own_addr_type = leecc->own_addr_type;
+ 		le_ext_conn_request(btdev, leecc);
+ 		break;
++	case BT_HCI_CMD_LE_CREATE_CIS:
++		if (btdev->type != BTDEV_TYPE_BREDRLE50 &&
++				btdev->type != BTDEV_TYPE_BREDRLE60)
++			return;
++		leccis = data;
++		le_cis_request(btdev, leccis);
 +		break;
-+	}
+ 	}
+ }
+ 
+@@ -4033,6 +4205,16 @@ static void send_acl(struct btdev *conn, const void *data, uint16_t len)
+ 	send_packet(conn, iov, 3);
+ }
+ 
++static void send_iso(struct btdev *conn, const void *data, uint16_t len)
++{
++	struct iovec iov;
 +
-+	syslog(LOG_INFO, "Exit");
++	iov.iov_base = (void *) (data);
++	iov.iov_len = len;
 +
-+	closelog();
-+
-+	return 0;
++	send_packet(conn, &iov, 1);
 +}
++
+ void btdev_receive_h4(struct btdev *btdev, const void *data, uint16_t len)
+ {
+ 	uint8_t pkt_type;
+@@ -4052,7 +4234,12 @@ void btdev_receive_h4(struct btdev *btdev, const void *data, uint16_t len)
+ 	case BT_H4_ACL_PKT:
+ 		if (btdev->conn)
+ 			send_acl(btdev->conn, data, len);
+-		num_completed_packets(btdev);
++		num_completed_packets(btdev, ACL_HANDLE);
++		break;
++	case BT_H4_ISO_PKT:
++		num_completed_packets(btdev, ISO_HANDLE);
++		if (btdev->conn)
++			send_iso(btdev->conn, data, len);
+ 		break;
+ 	default:
+ 		printf("Unsupported packet 0x%2.2x\n", pkt_type);
+diff --git a/emulator/btdev.h b/emulator/btdev.h
+index 362d1e7a2..b535930de 100644
+--- a/emulator/btdev.h
++++ b/emulator/btdev.h
+@@ -64,6 +64,7 @@ enum btdev_type {
+ 	BTDEV_TYPE_AMP,
+ 	BTDEV_TYPE_BREDR20,
+ 	BTDEV_TYPE_BREDRLE50,
++	BTDEV_TYPE_BREDRLE60,
+ };
+ 
+ enum btdev_hook_type {
+diff --git a/emulator/hciemu.c b/emulator/hciemu.c
+index 1045043f1..23891a2ee 100644
+--- a/emulator/hciemu.c
++++ b/emulator/hciemu.c
+@@ -335,6 +335,9 @@ struct hciemu *hciemu_new(enum hciemu_type type)
+ 	case HCIEMU_TYPE_BREDRLE50:
+ 		hciemu->btdev_type = BTDEV_TYPE_BREDRLE50;
+ 		break;
++	case HCIEMU_TYPE_BREDRLE60:
++		hciemu->btdev_type = BTDEV_TYPE_BREDRLE60;
++		break;
+ 	default:
+ 		return NULL;
+ 	}
+diff --git a/emulator/hciemu.h b/emulator/hciemu.h
+index e37c069e1..6f651cb98 100644
+--- a/emulator/hciemu.h
++++ b/emulator/hciemu.h
+@@ -32,6 +32,7 @@ enum hciemu_type {
+ 	HCIEMU_TYPE_LE,
+ 	HCIEMU_TYPE_LEGACY,
+ 	HCIEMU_TYPE_BREDRLE50,
++	HCIEMU_TYPE_BREDRLE60,
+ };
+ 
+ enum hciemu_hook_type {
+diff --git a/emulator/vhci.c b/emulator/vhci.c
+index 8dec20a08..7a69b484e 100644
+--- a/emulator/vhci.c
++++ b/emulator/vhci.c
+@@ -89,6 +89,7 @@ static void vhci_read_callback(int fd, uint32_t events, void *user_data)
+ 	case BT_H4_CMD_PKT:
+ 	case BT_H4_ACL_PKT:
+ 	case BT_H4_SCO_PKT:
++	case BT_H4_ISO_PKT:
+ 		btdev_receive_h4(vhci->btdev, buf, len);
+ 		break;
+ 	}
+@@ -104,7 +105,7 @@ struct vhci *vhci_open(enum vhci_type type)
+ 
+ 	switch (type) {
+ 	case VHCI_TYPE_BREDRLE:
+-		btdev_type = BTDEV_TYPE_BREDRLE;
++		btdev_type = BTDEV_TYPE_BREDRLE60;
+ 		ctrl_type = HCI_PRIMARY;
+ 		break;
+ 	case VHCI_TYPE_BREDR:
 -- 
 2.21.0
 
