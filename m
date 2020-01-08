@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 94B8F1337FD
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 01:33:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CEF41337FE
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 01:33:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726947AbgAHAdw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Jan 2020 19:33:52 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:42262 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726856AbgAHAdv (ORCPT
+        id S1726962AbgAHAdx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Jan 2020 19:33:53 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:45872 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726856AbgAHAdx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Jan 2020 19:33:51 -0500
-Received: by mail-pg1-f194.google.com with SMTP id s64so664699pgb.9
-        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Jan 2020 16:33:51 -0800 (PST)
+        Tue, 7 Jan 2020 19:33:53 -0500
+Received: by mail-pl1-f195.google.com with SMTP id b22so365118pls.12
+        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Jan 2020 16:33:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=MsTuvN1FD4rrDl4eGlKLR6oGF2OUswmNU0jA2C+EVlY=;
-        b=N3c7Ff2/1rkGyZxLJXWpHc0IkMShrzSzHGRdTtPnQa7rzYBPfhn7hOjJrI2SktldJQ
-         br2G3stpIEBzuGRkgeUtuM8/c0iT4CBYsY/eMxKxkAUvZ8Rq6tdJ9H43F0cez0WjwO4p
-         Q/dkXB7ZF3nGMriJamXJtqN6GGUFnNeP/MQGV4DVE1PKsqKTx42lxQUQS7MoomANVGx+
-         GK/XPgkoqTs99GUyoENIuwclsB+1vfkYDEKLq78MbrKJC4VFJRCC4cqOXm+xQXSlmHjA
-         se82avEOVdLWtNoCUtm7nMlIkXA3m18zvRr9igGiKAckPGn+pw0L4e1BLptb+VlvtnhY
-         /gKQ==
+        bh=2huxQ0NpI2OvRyaQkNaSZk+YNddQsneUPoeWl1cling=;
+        b=bai50ikXyT5jhHt6nUgOarlEL56gR92zz4aG+1wn+y5loyqDu1CZtbJWjYMKInDT69
+         kOLUeY8wQIZenEGUCys2tuE66b9n8P2DLpBHTA+ByYDiqB2K8BnjBru2x99eZIbCC2oS
+         vvXHVus8IsqPdoPwRXGSpEOLgS9TwRXWm9bKpT7enY5/btkl6MMegIX8BLmqplwaksja
+         DbDw7UK0Gmv7NgpLsTwtMirXKUxK6wZQ1gPHwbidUlNlh+k4laie5YmaO1LRLjQJt0/t
+         GairOyqJdT0nZkZmuy34hZ7agH9NQyCGkq39OaRDJbR8uvqtd9aDjieduCUsgmaewJ9K
+         RPoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MsTuvN1FD4rrDl4eGlKLR6oGF2OUswmNU0jA2C+EVlY=;
-        b=YiEP3l2buhPZkws/S7uwHPiUpq7N+hi1eCgx6p5D/NioT40U1yKgSV8lxP+JKTIy1H
-         0z7nLwcbYMG2vZHZk+2YZz3kHxYoqa+Zj1C7GtA7KoVnbtwHHtqAXkAfTNYHTGb7dT+f
-         T2MSpU9JhBfnNcPpYGwJ6no/mWjhTRe8YTI4ja/hPAKLOF8g/wymnzcfL6jx0DhgmoKQ
-         xOMPkVyczWvC0zMw++8vGGcDgK8cb8DUt3Tcdbw+Fkk/yw/waw8zhPdRSlSHo7eDSmMh
-         vOpELvrGVRp9pldrJc2Rk85jwfRWmHWWwr2rFUQ715Mwx+JgHlhubgHm1cGkEPX4ANQC
-         +ryA==
-X-Gm-Message-State: APjAAAWgy3boSSVy2NU90jQmITvO+KqYI6/Bwl4gyczqQS2g0proONr5
-        3eZy8q1VUbQwHuRtE+G1kvu96CAL5Nc=
-X-Google-Smtp-Source: APXvYqwWb57alHr2LvZpZCYufai0P5xCFuoCuOvygzaDYOmnP+qQ3oyosoF/4hU6DHnEoXmLxUJwIg==
-X-Received: by 2002:a63:b64a:: with SMTP id v10mr2445155pgt.145.1578443630687;
-        Tue, 07 Jan 2020 16:33:50 -0800 (PST)
+        bh=2huxQ0NpI2OvRyaQkNaSZk+YNddQsneUPoeWl1cling=;
+        b=o2OvJD3nZMyYApHg14bnscSMpdFFVQc2SQfUl+kSJITe3M9UxMfMf7OSLuKemIYMwI
+         k82bAWaIx2ILWCf5Q8dCrvuoclZAEa/vAWofIKONxp+cYs1QKyZZfsdGcv18nXagsRxA
+         Nxykn3raq59Uvh8lP/+qpXQs0/U4KtKahGz9tSeSEnWnB01yhh8nsnXMjj7z6Zb9/Dlf
+         D4y6wuUCWTP9QUgjap6IOfn7J8FGdscxcrRCtgwFaxEN1DNmTGvy8oDjm8sdmvLIrWW9
+         6Bw7odBFRSlQcRSci/Up8+VS5AvSy4Lxw7uGb2MQ3IX26Papsw7HPPvflJDT1pzU8qRz
+         MvEw==
+X-Gm-Message-State: APjAAAVq++EcTRyLe9UP9aE6OT4k0OREXkbnxFA1dAP1/vXpiNFOUAoU
+        LEBTlRaCobhnJzgLiB4NrcRxWMIGhjY=
+X-Google-Smtp-Source: APXvYqxaELRxrtTADCacxX8dxMIinO1elU4z7jH+Rt4P2V4ez0IDoDo9MRtrR7WyI0AHacH6UgUT6Q==
+X-Received: by 2002:a17:90a:6:: with SMTP id 6mr1404702pja.71.1578443631812;
+        Tue, 07 Jan 2020 16:33:51 -0800 (PST)
 Received: from localhost.localdomain ([192.102.209.43])
-        by smtp.gmail.com with ESMTPSA id u10sm925805pgg.41.2020.01.07.16.33.49
+        by smtp.gmail.com with ESMTPSA id u10sm925805pgg.41.2020.01.07.16.33.50
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2020 16:33:49 -0800 (PST)
+        Tue, 07 Jan 2020 16:33:50 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 07/22] tools/btproxy: Add support for ISO packets
-Date:   Tue,  7 Jan 2020 16:33:27 -0800
-Message-Id: <20200108003342.15458-8-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 08/22] monitor: Fix decoding of CIS estabilished event
+Date:   Tue,  7 Jan 2020 16:33:28 -0800
+Message-Id: <20200108003342.15458-9-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20200108003342.15458-1-luiz.dentz@gmail.com>
 References: <20200108003342.15458-1-luiz.dentz@gmail.com>
@@ -63,76 +63,54 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This enables proxing ISO packets.
+The event has been changed in r06.
 ---
- tools/btproxy.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ monitor/bt.h     | 1 +
+ monitor/packet.c | 9 +++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tools/btproxy.c b/tools/btproxy.c
-index fb67a5735..a98bbb73f 100644
---- a/tools/btproxy.c
-+++ b/tools/btproxy.c
-@@ -73,14 +73,14 @@ static void hexdump_print(const char *str, void *user_data)
+diff --git a/monitor/bt.h b/monitor/bt.h
+index b08f145ab..c90338096 100644
+--- a/monitor/bt.h
++++ b/monitor/bt.h
+@@ -3445,6 +3445,7 @@ struct bt_hci_evt_le_cis_established {
+ 	uint8_t  s_ft;
+ 	uint16_t m_mtu;
+ 	uint16_t s_mtu;
++	uint16_t interval;
+ } __attribute__ ((packed));
+ 
+ #define BT_HCI_EVT_LE_CIS_REQ			BT_HCI_SUBEVT_5_2 + 1
+diff --git a/monitor/packet.c b/monitor/packet.c
+index 0ef8a5b86..377944284 100644
+--- a/monitor/packet.c
++++ b/monitor/packet.c
+@@ -10278,20 +10278,21 @@ static void le_cis_established_evt(const void *data, uint8_t size)
+ 	const struct bt_hci_evt_le_cis_established *evt = data;
+ 
+ 	print_status(evt->status);
+-	print_field("Connection Handle: %d", le16_to_cpu(evt->status));
++	print_field("Connection Handle: %d", le16_to_cpu(evt->conn_handle));
+ 	print_usec_interval("CIG Synchronization Delay", evt->cig_sync_delay);
+ 	print_usec_interval("CIS Synchronization Delay", evt->cis_sync_delay);
+ 	print_usec_interval("Master to Slave Latency", evt->m_latency);
+ 	print_usec_interval("Slave to Master Latency", evt->s_latency);
+ 	print_le_phy("Master to Slave PHY", evt->m_phy);
+-	print_le_phy("Slave to Master PHY", evt->m_phy);
++	print_le_phy("Slave to Master PHY", evt->s_phy);
+ 	print_field("Number of Subevents: %u", evt->nse);
+ 	print_field("Master to Slave Burst Number: %u", evt->m_bn);
+ 	print_field("Slave to Master Burst Number: %u", evt->s_bn);
+ 	print_field("Master to Slave Flush Timeout: %u", evt->m_ft);
+ 	print_field("Slave to Master Flush Timeout: %u", evt->s_ft);
+-	print_field("Master to Slave MTU: %u", evt->m_ft);
+-	print_field("Slave to Master MTU: %u", evt->s_ft);
++	print_field("Master to Slave MTU: %u", le16_to_cpu(evt->m_mtu));
++	print_field("Slave to Master MTU: %u", le16_to_cpu(evt->s_mtu));
++	print_field("ISO Interval: %u", le16_to_cpu(evt->interval));
  }
  
- struct proxy {
--	/* Receive commands, ACL and SCO data */
-+	/* Receive commands, ACL, SCO and ISO data */
- 	int host_fd;
- 	uint8_t host_buf[4096];
- 	uint16_t host_len;
- 	bool host_shutdown;
- 	bool host_skip_first_zero;
- 
--	/* Receive events, ACL and SCO data */
-+	/* Receive events, ACL, SCO and ISO data */
- 	int dev_fd;
- 	uint8_t dev_buf[4096];
- 	uint16_t dev_len;
-@@ -296,6 +296,7 @@ static void host_read_callback(int fd, uint32_t events, void *user_data)
- 	struct bt_hci_cmd_hdr *cmd_hdr;
- 	struct bt_hci_acl_hdr *acl_hdr;
- 	struct bt_hci_sco_hdr *sco_hdr;
-+	struct bt_hci_iso_hdr *iso_hdr;
- 	ssize_t len;
- 	uint16_t pktlen;
- 
-@@ -364,6 +365,13 @@ process_packet:
- 		sco_hdr = (void *) (proxy->host_buf + 1);
- 		pktlen = 1 + sizeof(*sco_hdr) + sco_hdr->dlen;
- 		break;
-+	case BT_H4_ISO_PKT:
-+		if (proxy->host_len < 1 + sizeof(*iso_hdr))
-+			return;
-+
-+		iso_hdr = (void *) (proxy->host_buf + 1);
-+		pktlen = 1 + sizeof(*iso_hdr) + cpu_to_le16(iso_hdr->dlen);
-+		break;
- 	case 0xff:
- 		/* Notification packet from /dev/vhci - ignore */
- 		proxy->host_len = 0;
-@@ -418,6 +426,7 @@ static void dev_read_callback(int fd, uint32_t events, void *user_data)
- 	struct bt_hci_evt_hdr *evt_hdr;
- 	struct bt_hci_acl_hdr *acl_hdr;
- 	struct bt_hci_sco_hdr *sco_hdr;
-+	struct bt_hci_iso_hdr *iso_hdr;
- 	ssize_t len;
- 	uint16_t pktlen;
- 
-@@ -476,6 +485,13 @@ process_packet:
- 		sco_hdr = (void *) (proxy->dev_buf + 1);
- 		pktlen = 1 + sizeof(*sco_hdr) + sco_hdr->dlen;
- 		break;
-+	case BT_H4_ISO_PKT:
-+		if (proxy->dev_len < 1 + sizeof(*iso_hdr))
-+			return;
-+
-+		iso_hdr = (void *) (proxy->dev_buf + 1);
-+		pktlen = 1 + sizeof(*iso_hdr) + cpu_to_le16(iso_hdr->dlen);
-+		break;
- 	default:
- 		fprintf(stderr, "Received unknown device packet type 0x%02x\n",
- 							proxy->dev_buf[0]);
+ static void le_req_cis_evt(const void *data, uint8_t size)
 -- 
 2.21.0
 
