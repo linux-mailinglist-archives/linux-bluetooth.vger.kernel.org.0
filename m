@@ -2,156 +2,116 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A659134DF1
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 21:52:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FC95134DF5
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2020 21:53:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727181AbgAHUwy convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 8 Jan 2020 15:52:54 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:42951 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726155AbgAHUwx (ORCPT
+        id S1726992AbgAHUxp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 8 Jan 2020 15:53:45 -0500
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:39008 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726155AbgAHUxo (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 8 Jan 2020 15:52:53 -0500
-Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id E2EB0CECFA;
-        Wed,  8 Jan 2020 22:02:08 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
-Subject: Re: [RFC 2/3] Bluetooth: Add BT_PHYS socket option
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <CABBYNZ+ykViH4h1usdsfudJ=iGGvqd2NkBoxNJT90bSO=g7zKQ@mail.gmail.com>
-Date:   Wed, 8 Jan 2020 21:52:51 +0100
-Cc:     =?utf-8?Q?Pali_Roh=C3=A1r?= <pali.rohar@gmail.com>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <EA740B73-BCB4-47E8-9A65-FFB15962C4DA@holtmann.org>
-References: <20200102230057.31326-1-luiz.dentz@gmail.com>
- <20200102230057.31326-2-luiz.dentz@gmail.com>
- <4DB89428-A3CC-4035-AED8-B2CE7090FBD1@holtmann.org>
- <CABBYNZ+ykViH4h1usdsfudJ=iGGvqd2NkBoxNJT90bSO=g7zKQ@mail.gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-X-Mailer: Apple Mail (2.3608.40.2.2.4)
+        Wed, 8 Jan 2020 15:53:44 -0500
+Received: by mail-oi1-f174.google.com with SMTP id a67so3940290oib.6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 08 Jan 2020 12:53:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7Z1gHOeWqaHhh5ruaHpP7OWGZVt4+rCp2rrObJwefHA=;
+        b=L4mHixGHnFyEJD/3I8xR8wBaMHO/ltLfFdZP6kgdw7+vcP+TD5mZmUH3gJ3/DF+0l7
+         +ES/+pda/DTWHZ+Qq5PQYquliWQT9GUCUw6E3XO6rKORmyDLNzSot4SeRrqFVeBwLfC/
+         S6lP5Am7yeus690CcgdJkqshc7Pryv5y4WeVo+ByCzQe6H3MslIEPRRzpyOty8pzKxEY
+         L0qzcdxYEXkza5LF+ppkKpapMrFDoBP1EwJE0k2YVDNSu9LGHOn/daaH7N0mszf7X90h
+         Wb4pnQTryAv5X4JdP+/kDDGApoZ+cVfRaCmqVVc1cEuxspzaCSn1c7I5VI6O2Yjgp/MY
+         ndfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7Z1gHOeWqaHhh5ruaHpP7OWGZVt4+rCp2rrObJwefHA=;
+        b=NrfL2MV7HbTfUrKvT3K8glX1md0L1khmsFwhzONkkFKSL5CKhvaH0xuTE6YJxljoH4
+         UsbimQ/v86dR7JrhCTes+fs6jTUHlO9Er8xwQUNLNCFrr6/G+J4mbOW3xi/GI7BMUROE
+         BHmCfVqfjxssfXqlAMIk+6ILggWa0V7YXrvUErY7YXIzak6ieYcksNOPmLuOr+D2/ka7
+         a7XbMOF6aD5UQf9U4nCmoOP664m7thsv7N5q07M3W2jh3/SPdjBmoBFFT314fPnkl9/z
+         BlKIX7Tk+sSzxMRyxWOv+qZPo+oI+Mn99Qvy3siMJewxcqGANw0S9WaIzyp0u2j+Cz/T
+         B4Cw==
+X-Gm-Message-State: APjAAAXOIerNIIqzu05L4XB47zsV74iuo6brsVgM0/Y1A5CXKA0qpF5N
+        Ndm1hBeMN1RWHTRsYwC1ckAaO1l4Ov/jJXOnjZBa8sRE
+X-Google-Smtp-Source: APXvYqw7YSoueuMPLsgQp+ukbsi8UwGz/Gcvfcu8QDZV3aNZypIQYsB+1RnbdehhSMioewReZC55dSLHOla1yQTI84Q=
+X-Received: by 2002:aca:b1d5:: with SMTP id a204mr424693oif.82.1578516823674;
+ Wed, 08 Jan 2020 12:53:43 -0800 (PST)
+MIME-Version: 1.0
+References: <85C0B54E4752CA4F873E7C78CF0B26F5020662DB2C@LNDWSMBX02.ad.mpc.local>
+ <CABBYNZ++9739ptHJm+tiUUJANN_MfRpurvfdD=a4Qw3OHE-Epg@mail.gmail.com> <ac3d2402-abad-96dc-b042-8c8c7d592124@moving-picture.com>
+In-Reply-To: <ac3d2402-abad-96dc-b042-8c8c7d592124@moving-picture.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 8 Jan 2020 12:53:31 -0800
+Message-ID: <CABBYNZKAkZLvce-MfpscV6Y=9+UBVXAdcVgKAWTH8HupW8_qVA@mail.gmail.com>
+Subject: Re: Limiting what devices can pair over Bluetooth?
+To:     James Pearson <james-p@moving-picture.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Luiz,
+Hi James,
 
->>> This adds BT_PHYS socket option which can be used to read the PHYs in
->>> use by the underline connection.
->>> 
->>> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
->>> ---
->>> include/net/bluetooth/bluetooth.h | 17 ++++++++
->>> include/net/bluetooth/hci_core.h  |  2 +
->>> net/bluetooth/hci_conn.c          | 64 +++++++++++++++++++++++++++++++
->>> net/bluetooth/l2cap_sock.c        | 13 +++++++
->>> net/bluetooth/sco.c               | 13 +++++++
->>> 5 files changed, 109 insertions(+)
->>> 
->>> diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
->>> index e42bb8e03c09..69c0e7eb26d9 100644
->>> --- a/include/net/bluetooth/bluetooth.h
->>> +++ b/include/net/bluetooth/bluetooth.h
->>> @@ -121,6 +121,23 @@ struct bt_voice {
->>> 
->>> #define BT_SNDMTU             12
->>> #define BT_RCVMTU             13
->>> +#define BT_PHYS                      14
->>> +
->>> +#define BT_PHY_BR_1M_1SLOT   0x00000001
->>> +#define BT_PHY_BR_1M_3SLOT   0x00000002
->>> +#define BT_PHY_BR_1M_5SLOT   0x00000004
->>> +#define BT_PHY_EDR_2M_1SLOT  0x00000008
->>> +#define BT_PHY_EDR_2M_3SLOT  0x00000010
->>> +#define BT_PHY_EDR_2M_5SLOT  0x00000020
->>> +#define BT_PHY_EDR_3M_1SLOT  0x00000040
->>> +#define BT_PHY_EDR_3M_3SLOT  0x00000080
->>> +#define BT_PHY_EDR_3M_5SLOT  0x00000100
->>> +#define BT_PHY_LE_1M_TX              0x00000200
->>> +#define BT_PHY_LE_1M_RX              0x00000400
->>> +#define BT_PHY_LE_2M_TX              0x00000800
->>> +#define BT_PHY_LE_2M_RX              0x00001000
->>> +#define BT_PHY_LE_CODED_TX   0x00002000
->>> +#define BT_PHY_LE_CODED_RX   0x00004000
->>> 
->>> __printf(1, 2)
->>> void bt_info(const char *fmt, ...);
->>> diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
->>> index faebe3859931..03cf3f0f22b9 100644
->>> --- a/include/net/bluetooth/hci_core.h
->>> +++ b/include/net/bluetooth/hci_core.h
->>> @@ -1467,6 +1467,8 @@ void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
->>> struct sk_buff *hci_cmd_sync(struct hci_dev *hdev, u16 opcode, u32 plen,
->>>                           const void *param, u32 timeout);
->>> 
->>> +u32 hci_conn_get_phys(struct hci_conn *conn);
->>> +
->>> /* ----- HCI Sockets ----- */
->>> void hci_send_to_sock(struct hci_dev *hdev, struct sk_buff *skb);
->>> void hci_send_to_channel(unsigned short channel, struct sk_buff *skb,
->>> diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
->>> index 87691404d0c6..386e6b0bd2ab 100644
->>> --- a/net/bluetooth/hci_conn.c
->>> +++ b/net/bluetooth/hci_conn.c
->>> @@ -1725,3 +1725,67 @@ struct hci_chan *hci_chan_lookup_handle(struct hci_dev *hdev, __u16 handle)
->>> 
->>>      return hchan;
->>> }
->>> +
->>> +u32 hci_conn_get_phys(struct hci_conn *conn)
->>> +{
->>> +     u32 phys = 0;
->>> +
->>> +     hci_dev_lock(conn->hdev);
->>> +
->>> +     switch (conn->type) {
->>> +     case ACL_LINK:
->>> +     case SCO_LINK:
->>> +             phys |= BT_PHY_BR_1M_1SLOT;
->>> +
->>> +             if (conn->pkt_type & (HCI_DM3 | HCI_DH3))
->>> +                     phys |= BT_PHY_BR_1M_3SLOT;
->>> +
->>> +             if (conn->pkt_type & (HCI_DM5 | HCI_DH5))
->>> +                     phys |= BT_PHY_BR_1M_5SLOT;
->>> +
->>> +             if (!(conn->pkt_type & HCI_2DH1))
->>> +                     phys |= BT_PHY_EDR_2M_1SLOT;
->>> +
->>> +             if (!(conn->pkt_type & HCI_2DH3))
->>> +                     phys |= BT_PHY_EDR_2M_3SLOT;
->>> +
->>> +             if (!(conn->pkt_type & HCI_2DH5))
->>> +                     phys |= BT_PHY_EDR_2M_5SLOT;
->>> +
->>> +             if (!(conn->pkt_type & HCI_3DH1))
->>> +                     phys |= BT_PHY_EDR_3M_1SLOT;
->>> +
->>> +             if (!(conn->pkt_type & HCI_3DH3))
->>> +                     phys |= BT_PHY_EDR_3M_3SLOT;
->>> +
->>> +             if (!(conn->pkt_type & HCI_3DH5))
->>> +                     phys |= BT_PHY_EDR_3M_5SLOT;
->>> +
->>> +             break;
->> 
->> Actually ACL packet types and eSCO packet types are different. You need to split this into packet helpers for L2CAP BR/EDR and LE and SCO/eSCO packet types.
-> 
-> Right the SCO and ESCO actually use EV packet types, though the
-> question is then should we map them to new bit-fields on BT_PHY
-> namespace or just use the same defines (RATE+SLOT) since the socket
-> family should be enough to indicate if they are EV rather than DH
-> packets? @Pali do you need the exact packet type for sco/esco, afaik
-> there is not so much use of them in that case because the codecs are
-> normally fixed rate over HFP.
+On Wed, Jan 8, 2020 at 12:15 PM James Pearson
+<james-p@moving-picture.com> wrote:
+>
+> Luiz Augusto von Dentz wrote:
+> > Hi James,
+> >
+> > On Wed, Jan 8, 2020 at 3:47 AM James Pearson
+> > <james-p@moving-picture.com> wrote:
+> >>
+> >> We don't normally enable Bluetooth on Linux (CentOS 7) installs for
+> >> security reasons, but we have a case where we would like to use a
+> >> Wacom tablet over Bluetooth
+> >>
+> >> I would like to be able to configure things so Bluetooth can _only_
+> >> be used to pair with Wacom tablets (or just HID devices?)
+> >>
+> >> As I never used Bluetooth in anger before, I'm struggling to find
+> >> out where to start looking - does anyone know how to do this - or
+> >> any pointers for where I should start looking?
+> >
+> > Are you asking this from the system or user perspective, from the
+> > system we don't have a configuration where you can restrict the
+> > types of devices that the user can pair, on the other hand there is
+> > nothing stopping the user interface (gnome, kde, etc) to implement
+> > such policy on their bluetooth settings, though be aware targeting a
+> > subset of HID devices may not be possible.
+>
+> Ideally I would want to limit this at the system level - although I can
+> not find anything user interface-wise that mentions limiting access
+> either (although I might be looking in the wrong places?)
+>
+> My aim is to prevent Bluetooth being used (in any way) to transfer
+> files/data on/off the workstation
+>
+> I've found that if I blacklist the bnep, cmtp and rfcomm kernel modules
+> (just leaving the bluetooth and hidp kernel modules enabled) then the
+> Wacom tablet still works over Bluetooth
 
-I am fine using the same definitions that we use in MGMT API. Do we plan also allowing to change packet types and also set up the initial packet types. So you can do socket(), ioctl(BT_PHYS), connect().
+bnep is for tethering, depending on the system that might be useful,
+and if you block RFCOMM you no only block usage of file transfer but
+also HFP, but perhaps you don't care about those so that would be fine
+to disable. Btw, for getting file sharing you would just need to
+disable obexd though it doesn't seems it is a user service which you
+can disable with systemctl.
 
-Regards
+> Would this be sufficient to prevent any kind of file transfer over
+> Bluetooth ?
+>
+> Thanks
+>
+> James Pearson
 
-Marcel
 
+
+-- 
+Luiz Augusto von Dentz
