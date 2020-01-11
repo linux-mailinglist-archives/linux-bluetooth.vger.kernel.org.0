@@ -2,116 +2,47 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D6F1813825C
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Jan 2020 17:21:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30F841383A3
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Jan 2020 22:12:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730224AbgAKQVe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 11 Jan 2020 11:21:34 -0500
-Received: from mout.kundenserver.de ([212.227.17.13]:50873 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730168AbgAKQVe (ORCPT
+        id S1731346AbgAKVMc convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 11 Jan 2020 16:12:32 -0500
+Received: from mail.a-hostel.com ([193.193.200.100]:38100 "EHLO
+        mail.a-hostel.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731339AbgAKVMc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 11 Jan 2020 11:21:34 -0500
-Received: from mail-qk1-f178.google.com ([209.85.222.178]) by
- mrelayeu.kundenserver.de (mreue108 [212.227.15.145]) with ESMTPSA (Nemesis)
- id 1MA7Om-1ixR3u1dyE-00BcEp; Sat, 11 Jan 2020 17:21:32 +0100
-Received: by mail-qk1-f178.google.com with SMTP id z76so4845525qka.2;
-        Sat, 11 Jan 2020 08:21:32 -0800 (PST)
-X-Gm-Message-State: APjAAAV+xPOTNIum1DTMGzBc32GfFKrD36xosqYU5whPE6L0ypkGfhN0
-        e/CWuzZwKUbcQ5CNQtd/J+PdGWaImwViev6zB/Y=
-X-Google-Smtp-Source: APXvYqyUQ+1umLAhS3Bm3WiAPaIa5zQhdGd1bt3YDgKZSygcwFwuyAG5XgGigoAyhcs9Z3KHaAN/PlWtbZai2e30oEo=
-X-Received: by 2002:a37:84a:: with SMTP id 71mr8365643qki.138.1578759691126;
- Sat, 11 Jan 2020 08:21:31 -0800 (PST)
+        Sat, 11 Jan 2020 16:12:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mail.a-hostel.com (Postfix) with ESMTP id 4CDA21B46A60;
+        Sat, 11 Jan 2020 23:12:30 +0200 (EET)
+Received: from mail.a-hostel.com ([127.0.0.1])
+        by localhost (mail.a-hostel.com [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 0B_7QlMjvrB3; Sat, 11 Jan 2020 23:12:30 +0200 (EET)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.a-hostel.com (Postfix) with ESMTP id 127881B46A6F;
+        Sat, 11 Jan 2020 23:12:30 +0200 (EET)
+X-Virus-Scanned: amavisd-new at a-hostel.com
+Received: from mail.a-hostel.com ([127.0.0.1])
+        by localhost (mail.a-hostel.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id MgWZ30n8f7to; Sat, 11 Jan 2020 23:12:30 +0200 (EET)
+Received: from DESKTOP-RUPS5UG.. (102-182-120-157.ip.afrihost.co.za [102.182.120.157])
+        by mail.a-hostel.com (Postfix) with ESMTPSA id D2C4A1B46A60;
+        Sat, 11 Jan 2020 23:12:25 +0200 (EET)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-References: <20200110204903.3495832-1-arnd@arndb.de> <20200110210512.GB30412@brightrain.aerifal.cx>
- <CAK8P3a2VONV2Z6rs=xpntJyzfX4W7YijqCFr-f-PNMm3g4zRyA@mail.gmail.com> <0BF859F5-AA95-4941-A80D-7D33F7AC3636@alum.mit.edu>
-In-Reply-To: <0BF859F5-AA95-4941-A80D-7D33F7AC3636@alum.mit.edu>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Sat, 11 Jan 2020 17:21:15 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a109n5JWNJG557i+NtqJuVDU3K0tYcY3DGhjopOHQWp4w@mail.gmail.com>
-Message-ID: <CAK8P3a109n5JWNJG557i+NtqJuVDU3K0tYcY3DGhjopOHQWp4w@mail.gmail.com>
-Subject: Re: [PATCH] hcidump: add support for time64 based libc
-To:     Guy Harris <guy@alum.mit.edu>
-Cc:     Rich Felker <dalias@libc.org>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        y2038 Mailman List <y2038@lists.linaro.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Deepa Dinamani <deepa.kernel@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:ZHrUmBaNX1d8ZysSWkioreCOyec215J+zph9SYHp039wOh7ZKTy
- nPo0hXRNl5bned2hNeZDNMgZ4yGTUF6x9U9vX2zHk4mxmaqAh8RuK7WOY1JqNjot/LgcNO3
- 6A9pAAcKddt2iEi2kFMksnzQa/k1pBQTC8mJRWb0GAC+Kc7VZ5zMC1xNT7nFX0SS2130Hj6
- cbd3tIpksoLMBDiD9naZA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8qeHBL42Pyw=:YBchiJbJMNRjohDgudsLeC
- eQe6ASoSR5d3ftFDgzuG7CB6HtZZI89pfS1kA5MZj7cDFfauBAC3NvdwhNU2+/TDVZqgXkbpv
- ucNTrqGZaefkX5e3o3wpNYYyjBRaeyTNsCcmTQ9xBXyRxgTO83GXdusT32mZjE3haU44f+6Xq
- m+qHguAQYQH1ng3Ko2XG+dWU5L+Cqxrb4ZT+FTOgSbBHWc9AxpYBDv1W7wp5aW06bOuPO+hy+
- AD1eEhx7uBGxOPuY9H1BUGdDfk3xM4mwNxCsKNVEd+hnxwkJJhy5vK5utADYh0D+nG5QzeR6L
- YGIZs+4a0265r4liIvowdQ8T0uz8maKcn4ZSen148gZl4nI18jfVFV00h8OvRAbs1zBVrkiGC
- 9HHidcd1DMQ1376vdji1iLprF1YRizlNGrlMbvI6Jm07aqlkJyAjpKqcvBKojW2/hFz7DMA91
- S/gIAOKnnfsrgnE3cJbGogo/uVkTScjMyQwSqR9f4pMbgcTwTUFVB/4AGJj+mZzYrorZwZ34k
- CT4OWeshSkio0UaA0+pbaOi1ygq2n6U0GgNmOpEntaLo2TRqgRrggDWIY2TtTPANaOpvlfoM+
- 6fAlyL1upnEE79eaJTvpbZe/NUNwBc2fUILffcnmBZRXHi7OfChK1TbDfFrJTtUDbb/Sddzpr
- nouCajXeYYS3INICEmtTxlHy12vrXoU8FRuw8nbtjLf/oI7jLROXorEnbWPnrj3DFJ6NOwPN6
- A8ZijVwFBT/o/tOeB8deN8DPtaCMTKhc3csKS2pLE6kChUB40wGruugtJJv9QWM6tVJEjjQuB
- JXUuoQAuJOTi9IVsjDveUVHaDg7s/yum7S5rDAsX12BlurpSICCBRp6ahc27pmU4kXFf2duOP
- tIdjp+QlmLCJymaF55UA==
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: IMFC-Finanzierung
+To:     Recipients <reservations@hotel-khreschatyk.kiev.ua>
+From:   "IMFC-Finanzierung" <reservations@hotel-khreschatyk.kiev.ua>
+Date:   Sat, 11 Jan 2020 13:12:17 -0800
+Reply-To: imfcompensationfunding@gmail.com
+Message-Id: <20200111211225.D2C4A1B46A60@mail.a-hostel.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
- was On Sat, Jan 11, 2020 at 12:32 AM Guy Harris <guy@alum.mit.edu> wrote:
->
-> On Jan 10, 2020, at 1:19 PM, Arnd Bergmann <arnd@arndb.de> wrote:
->
-> > On Fri, Jan 10, 2020 at 10:05 PM Rich Felker <dalias@libc.org> wrote:
-> >>
-> >> On Fri, Jan 10, 2020 at 09:49:03PM +0100, Arnd Bergmann wrote:
-> >>> musl is moving to a default of 64-bit time_t on all architectures,
-> >>> glibc will follow later. This breaks reading timestamps through cmsg
-> >>> data with the HCI_TIME_STAMP socket option.
-> >>>
-> >>> Change both copies of hcidump to work on all architectures.  This also
-> >>> fixes x32, which has never worked, and carefully avoids breaking sparc64,
-> >>> which is another special case.
-> >>
-> >> Won't it be broken on rv32 though? Based on my (albeit perhaps
-> >> incomplete) reading of the thread, I think use of HCI_TIME_STAMP
-> >> should just be dropped entirely in favor of using SO_TIMESTAMPNS -- my
-> >> understanding was that it works with bluetooth sockets too.
-> >
-> > All 32-bit architectures use old_timeval32 timestamps in the kernel
-> > here, even rv32 and x32. As a rule, we keep the types bug-for-bug
-> > compatible between architectures and fix them all at the same time.
-> >
-> > Changing hcidump to SO_TIMESTAMPNS would work as well, but
-> > that is a much bigger change and I don't know how to test that.
->
-> If so, maybe I'll just do that for libpcap.  Libpcap *does* have an API to request
->capturing with nanoseconds in tv_usec (and I plan to give it pcapng-flavored APIs
-> to deliver higher-resolution time stamps, as well as metadata such as "incoming"
-> vs. "outgoing", as well).
-
-Sounds good to me, just make sure that you no longer reference
-HCI_TIME_STAMP and it should be fine with both old and new libc
-versions.
-
-SO_TIMESTAMPNS was first added to the kernel in linux-2.6.22, which
-is probably older than anything you care about,  but I'm not sure what you
-need to do to use it on bluetooth. It appears to have first been added along
-with the monitor channel support in linux-3.4.
-
-On a semi-related note, I see that there is a y2038 compatibility in the
-libpcap definition of struct pcap_timeval, which uses a *signed* tv_sec
-field. I assume the sizes of the fields cannot be changed, but it would
-be good to investigate if you can just make it unsigned instead, changing
-the supported time range from 1902...2038 to 1970...2106.
-It probably makes sense to do this together with supporting nanosecond
-timestamps. You could also consider changing the format to use a
-64-bit nanosecond value starting at either 1970 or 1902 to give an
-even larger range.
-
-       Arnd
+Sie haben sich für den IMFC-Zuschuss von 2.500.000,00 Euro qualifiziert (Frau Ronnie Mara Holbrook) Email: imfcompensationfunding@gmail.com  
+Weitere Informationen zum Einfordern Ihrer Gelder
