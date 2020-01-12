@@ -2,56 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 537111385D8
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Jan 2020 11:34:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6C961386F6
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Jan 2020 16:56:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732599AbgALKed convert rfc822-to-8bit (ORCPT
+        id S1733077AbgALP40 convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 12 Jan 2020 05:34:33 -0500
-Received: from mail.kernel.org ([198.145.29.99]:48332 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732595AbgALKed (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 12 Jan 2020 05:34:33 -0500
-From:   bugzilla-daemon@bugzilla.kernel.org
-Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 205821] ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth
- Dongle (HCI mode)
-Date:   Sun, 12 Jan 2020 10:34:32 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: demonik_82@mail.ru
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-205821-62941-MvQthPbwO6@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-205821-62941@https.bugzilla.kernel.org/>
-References: <bug-205821-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Sun, 12 Jan 2020 10:56:26 -0500
+Received: from mail.a-hostel.com ([193.193.200.100]:33786 "EHLO
+        mail.a-hostel.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733064AbgALP40 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 12 Jan 2020 10:56:26 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mail.a-hostel.com (Postfix) with ESMTP id 6B5451B4E849;
+        Sun, 12 Jan 2020 16:14:37 +0200 (EET)
+Received: from mail.a-hostel.com ([127.0.0.1])
+        by localhost (mail.a-hostel.com [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 5UtBMuoPpcMt; Sun, 12 Jan 2020 16:14:37 +0200 (EET)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.a-hostel.com (Postfix) with ESMTP id 18E2C1B4E847;
+        Sun, 12 Jan 2020 16:14:37 +0200 (EET)
+X-Virus-Scanned: amavisd-new at a-hostel.com
+Received: from mail.a-hostel.com ([127.0.0.1])
+        by localhost (mail.a-hostel.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id pRKhlneXlqSk; Sun, 12 Jan 2020 16:14:36 +0200 (EET)
+Received: from DESKTOP-RUPS5UG.. (102-182-120-157.ip.afrihost.co.za [102.182.120.157])
+        by mail.a-hostel.com (Postfix) with ESMTPSA id C27441B4E730;
+        Sun, 12 Jan 2020 16:14:32 +0200 (EET)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: IMFC-FINANZIERUNG
+To:     Recipients <reservations@hotel-khreschatyk.kiev.ua>
+From:   =?utf-8?q?=22IMFC-Gew=C3=A4hren=22=3Creservations=40hotel-khreschatyk=2Ek?=@mail.a-hostel.com,
+        =?utf-8?q?iev=2Eua=3E?=@mail.a-hostel.com
+Date:   Sun, 12 Jan 2020 06:14:27 -0800
+Reply-To: imfcompensationfunding@gmail.com
+Message-Id: <20200112141432.C27441B4E730@mail.a-hostel.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=205821
-
---- Comment #4 from Mitai (demonik_82@mail.ru) ---
-Отдал свисток жене на Винду, завелся из коробки даже драйвера искать не
-пришлось, спасибо Linux сообществу за помощь!
-
--- 
-You are receiving this mail because:
-You are the assignee for the bug.
+Sie haben sich f�r den IMFC-Zuschuss von 2.500.000,00 Euro qualifiziert (Frau Ronnie Mara Holbrook) Email: imfcompensationfunding@gmail.com 
+Weitere Informationen zum Einfordern Ihrer Gelder
