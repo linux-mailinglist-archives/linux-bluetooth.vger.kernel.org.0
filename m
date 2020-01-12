@@ -2,341 +2,86 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 00658138702
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Jan 2020 17:16:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 824D5138A0F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jan 2020 04:55:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733097AbgALQQb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 12 Jan 2020 11:16:31 -0500
-Received: from mga11.intel.com ([192.55.52.93]:6404 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733030AbgALQQb (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 12 Jan 2020 11:16:31 -0500
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 12 Jan 2020 08:16:30 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,425,1571727600"; 
-   d="scan'208";a="240488502"
-Received: from bgi1-mobl2.amr.corp.intel.com ([10.255.229.216])
-  by fmsmga001.fm.intel.com with ESMTP; 12 Jan 2020 08:16:30 -0800
-From:   Brian Gix <brian.gix@intel.com>
+        id S2387470AbgAMDzB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 12 Jan 2020 22:55:01 -0500
+Received: from mail02.vodafone.es ([217.130.24.81]:52196 "EHLO
+        mail02.vodafone.es" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387417AbgAMDzB (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 12 Jan 2020 22:55:01 -0500
+IronPort-SDR: 2ABb4RDcgpfJnyozWR/qijS8TXeu7wTc8/4z/o5FkS1HD9Mr0v8Q64Sk37O4RCfIo5ajqnPBlA
+ O5jGlVOMKRGA==
+IronPort-PHdr: =?us-ascii?q?9a23=3AmD2mShxUp8oHa93XCy+O+j09IxM/srCxBDY+r6?=
+ =?us-ascii?q?Qd2uoTIJqq85mqBkHD//Il1AaPAdyAraga2qGI7ujJYi8p2d65qncMcZhBBV?=
+ =?us-ascii?q?cuqP49uEgeOvODElDxN/XwbiY3T4xoXV5h+GynYwAOQJ6tL1LdrWev4jEMBx?=
+ =?us-ascii?q?7xKRR6JvjvGo7Vks+7y/2+94fcbglVijexe61+IRSyoAnet8QbgZZpJ7osxB?=
+ =?us-ascii?q?fOvnZGYfldy3lyJVKUkRb858Ow84Bm/i9Npf8v9NNOXLvjcaggQrNWEDopM2?=
+ =?us-ascii?q?Yu5M32rhbDVheA5mEdUmoNjBVFBRXO4QzgUZfwtiv6sfd92DWfMMbrQ704RS?=
+ =?us-ascii?q?iu4qF2QxPujysJKiI2/3vSis1wla5WvhWhpwZnw47TeoGaLuZ+cb3EcdwEQ2?=
+ =?us-ascii?q?pNR9pcVzBdAoymc4QPD/QOPeNGoIn7u1sCtAWxBQ+1CO3ozT9IgGH53K0j3+?=
+ =?us-ascii?q?s/FwHNwQgsEtwSvHjIqdn4MroZX+Kow6nS1TjNYfNY2S3j5obLbx4uru2DU7?=
+ =?us-ascii?q?1rfMrNy0QgCx/JgkmMpYD7OT6ey+QDs3Kc7+plTe+hkXAoqx1vrTi128wjio?=
+ =?us-ascii?q?7JhoQaylvZ8ih52Jg6JcGmR05hb9+kF51Qty6BOot2WcMtWH1ntDwmxb0BvJ?=
+ =?us-ascii?q?63ZigKyJc+yhPZdveJcJCI7wr9WOqMIzp0nm9pdbyjixqo70StxffwW8e03V?=
+ =?us-ascii?q?tMsyFLiMPDtmoX2BzW8sWHT/x98Vq/1juXzADT7/1EIVgzlarGN54t2r4wmY?=
+ =?us-ascii?q?QXsUTEBiL2nV/5jK6SdkU+5Oeo7/jrb7r8qp+CMI97lxvxMqopmsy5H+s0KB?=
+ =?us-ascii?q?YBX3OD9eS90r3s41H5Ta1UgvErkKTVqo3WKMoHqqKjHQNY3Zwv5hi/Aju+1d?=
+ =?us-ascii?q?QXh3gHLFZLeBKdiIjpPknDIOjmAvejnVusijlqx/fAPr3uGZjNLmPDn6z9cr?=
+ =?us-ascii?q?pn90Fczw8zwcpf55JXEr0BOu78WlfttNzECR80Kwi0w+fhCNVg2YISQHmAAq?=
+ =?us-ascii?q?uEMKzMrV+I4eUvI/WMZIIOpjb9JOYq5+T0gX86h1AdZ6+p0oUTaHyiGfRmOU?=
+ =?us-ascii?q?qZMjLQhYIFEGEXrk80SPHnlFqFTT57eXm/ReQ/6ys9BYbgCp3MFbqgmLiQ4C?=
+ =?us-ascii?q?DuJpBKa3oONVeKHj+8b4iYVu0TbySdIsxhiTYPfbekQo4lkxqpsVmp5aBgK7?=
+ =?us-ascii?q?/s9zEVr9rc0956r7nLmA0/7yNzCcu103qHRCd/mWZORzxgj/M3mlB01lrWiP?=
+ =?us-ascii?q?swuPdfD9EGvKsRXw=3D=3D?=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2GUIwAv6RtemCMYgtlNGBoBAQEBAQE?=
+ =?us-ascii?q?BAQEDAQEBAREBAQECAgEBAQGBewIBGAEBgS6BTVIgEpNQgU0fg0OLY4EAgx4?=
+ =?us-ascii?q?VhggTDIFbDQEBAQEBNQIBAYRATgEXgQ8kOgQNAgMNAQEFAQEBAQEFBAEBAhA?=
+ =?us-ascii?q?BAQEBAQYNCwYphUqCHQweAQQBAQEBAwMDAQEMAYNdBxkPOUpMAQ4BU4MEgks?=
+ =?us-ascii?q?BATOccgGNBA0NAoUdgkcECoEJgRojgTYBjBgagUE/gSMhgisIAYIBgn8BEgF?=
+ =?us-ascii?q?sgkiCWQSNQhIhgQeIKZgXgkEEdolMjAKCNwEPiAGEMQMQgkUPgQmIA4ROgX2?=
+ =?us-ascii?q?jN1eBDA16cTMagiYagSBPGA2IG44tQIEWEAJPiS6CMgEB?=
+X-IPAS-Result: =?us-ascii?q?A2GUIwAv6RtemCMYgtlNGBoBAQEBAQEBAQEDAQEBAREBA?=
+ =?us-ascii?q?QECAgEBAQGBewIBGAEBgS6BTVIgEpNQgU0fg0OLY4EAgx4VhggTDIFbDQEBA?=
+ =?us-ascii?q?QEBNQIBAYRATgEXgQ8kOgQNAgMNAQEFAQEBAQEFBAEBAhABAQEBAQYNCwYph?=
+ =?us-ascii?q?UqCHQweAQQBAQEBAwMDAQEMAYNdBxkPOUpMAQ4BU4MEgksBATOccgGNBA0NA?=
+ =?us-ascii?q?oUdgkcECoEJgRojgTYBjBgagUE/gSMhgisIAYIBgn8BEgFsgkiCWQSNQhIhg?=
+ =?us-ascii?q?QeIKZgXgkEEdolMjAKCNwEPiAGEMQMQgkUPgQmIA4ROgX2jN1eBDA16cTMag?=
+ =?us-ascii?q?iYagSBPGA2IG44tQIEWEAJPiS6CMgEB?=
+X-IronPort-AV: E=Sophos;i="5.69,427,1571695200"; 
+   d="scan'208";a="323742168"
+Received: from mailrel04.vodafone.es ([217.130.24.35])
+  by mail02.vodafone.es with ESMTP; 13 Jan 2020 04:54:59 +0100
+Received: (qmail 24146 invoked from network); 12 Jan 2020 05:00:19 -0000
+Received: from unknown (HELO 192.168.1.3) (quesosbelda@[217.217.179.17])
+          (envelope-sender <peterwong@hsbc.com.hk>)
+          by mailrel04.vodafone.es (qmail-ldap-1.03) with SMTP
+          for <linux-bluetooth@vger.kernel.org>; 12 Jan 2020 05:00:19 -0000
+Date:   Sun, 12 Jan 2020 06:00:18 +0100 (CET)
+From:   Peter Wong <peterwong@hsbc.com.hk>
+Reply-To: Peter Wong <peterwonghkhsbc@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, inga.stotland@intel.com,
-        michal.lowas-rzechonek@silvair.com
-Subject: [PATCH BlueZ v4 1/1] mesh: Implement provisioning loop-back
-Date:   Sun, 12 Jan 2020 08:16:08 -0800
-Message-Id: <20200112161608.24919-2-brian.gix@intel.com>
-X-Mailer: git-send-email 2.21.1
-In-Reply-To: <20200112161608.24919-1-brian.gix@intel.com>
-References: <20200112161608.24919-1-brian.gix@intel.com>
+Message-ID: <788306.460705.1578805219465.JavaMail.cash@217.130.24.55>
+Subject: Investment opportunity
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This allows one App using the mesh daemon to provision another.
----
- mesh/pb-adv.c | 163 ++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 130 insertions(+), 33 deletions(-)
+Greetings,
+Please read the attached investment proposal and reply for more details.
+Are you interested in loan?
+Sincerely: Peter Wong
 
-diff --git a/mesh/pb-adv.c b/mesh/pb-adv.c
-index c9a2a6574..6ef45b8b0 100644
---- a/mesh/pb-adv.c
-+++ b/mesh/pb-adv.c
-@@ -39,6 +39,7 @@ struct pb_adv_session {
- 	mesh_prov_receive_func_t rx_cb;
- 	mesh_prov_ack_func_t ack_cb;
- 	struct l_timeout *tx_timeout;
-+	struct pb_adv_session *loop;
- 	uint32_t link_id;
- 	uint16_t exp_len;
- 	uint8_t exp_fcs;
-@@ -93,10 +94,43 @@ struct pb_close_ind {
- 	uint8_t reason;
- } __packed;
- 
--static struct pb_adv_session *pb_session = NULL;
-+struct idle_rx {
-+	struct pb_adv_session *session;
-+	uint16_t len;
-+	uint8_t data[PB_ADV_MTU + 6];
-+};
-+
-+static struct l_queue *pb_sessions = NULL;
- 
- static const uint8_t filter[1] = { MESH_AD_TYPE_PROVISION };
- 
-+static void pb_adv_packet(void *user_data, const uint8_t *pkt, uint16_t len);
-+
-+static void idle_rx_adv(void *user_data)
-+{
-+	struct idle_rx *rx = user_data;
-+
-+	pb_adv_packet(rx->session, rx->data, rx->len);
-+	l_free(rx);
-+}
-+
-+static void pb_adv_send(struct pb_adv_session *session,
-+					uint8_t count, uint16_t interval,
-+					void *data, uint16_t len)
-+{
-+	struct idle_rx *rx;
-+
-+	if (session->loop) {
-+		rx = l_new(struct idle_rx, 1);
-+		rx->session = session->loop;
-+		rx->len = len;
-+		memcpy(rx->data, data, len);
-+
-+		l_idle_oneshot(idle_rx_adv, rx, NULL);
-+	} else
-+		mesh_send_pkt(count, interval, data, len);
-+}
-+
- static void send_adv_segs(struct pb_adv_session *session, const uint8_t *data,
- 							uint16_t size)
- {
-@@ -135,7 +169,9 @@ static void send_adv_segs(struct pb_adv_session *session, const uint8_t *data,
- 	l_debug("max_seg: %2.2x", max_seg);
- 	l_debug("size: %2.2x, CRC: %2.2x", size, buf[9]);
- 	/* print_packet("PB-TX", buf + 1, init_size + 9); */
--	mesh_send_pkt(MESH_IO_TX_COUNT_UNLIMITED, 200, buf, init_size + 10);
-+
-+	pb_adv_send(session, MESH_IO_TX_COUNT_UNLIMITED, 200,
-+							buf, init_size + 10);
- 
- 	consumed = init_size;
- 
-@@ -152,19 +188,39 @@ static void send_adv_segs(struct pb_adv_session *session, const uint8_t *data,
- 
- 		/* print_packet("PB-TX", buf + 1, seg_size + 6); */
- 
--		mesh_send_pkt(MESH_IO_TX_COUNT_UNLIMITED, 200,
-+		pb_adv_send(session, MESH_IO_TX_COUNT_UNLIMITED, 200,
- 							buf, seg_size + 7);
- 
- 		consumed += seg_size;
- 	}
- }
- 
-+static bool session_match (const void *a, const void *b)
-+{
-+	return a == b;
-+}
-+
-+static bool uuid_match (const void *a, const void *b)
-+{
-+	const struct pb_adv_session *session = a;
-+	const uint8_t *uuid = b;
-+
-+	return !memcmp(session->uuid, uuid, sizeof(session->uuid));
-+}
-+
-+static bool user_match (const void *a, const void *b)
-+{
-+	const struct pb_adv_session *session = a;
-+
-+	return session->user_data == b;
-+}
-+
- static void tx_timeout(struct l_timeout *timeout, void *user_data)
- {
- 	struct pb_adv_session *session = user_data;
- 	mesh_prov_close_func_t cb;
- 
--	if (!session || pb_session != session)
-+	if (!l_queue_find(pb_sessions, session_match, session))
- 		return;
- 
- 	l_timeout_remove(session->tx_timeout);
-@@ -173,8 +229,8 @@ static void tx_timeout(struct l_timeout *timeout, void *user_data)
- 	mesh_send_cancel(filter, sizeof(filter));
- 
- 	l_info("TX timeout");
--	cb = pb_session->close_cb;
--	user_data = pb_session->user_data;
-+	cb = session->close_cb;
-+	user_data = session->user_data;
- 	cb(user_data, 1);
- }
- 
-@@ -182,7 +238,7 @@ static void pb_adv_tx(void *user_data, void *data, uint16_t len)
- {
- 	struct pb_adv_session *session = user_data;
- 
--	if (!session || pb_session != session)
-+	if (!l_queue_find(pb_sessions, session_match, session))
- 		return;
- 
- 	l_timeout_remove(session->tx_timeout);
-@@ -201,7 +257,8 @@ static void send_open_req(struct pb_adv_session *session)
- 	memcpy(open_req.uuid, session->uuid, 16);
- 
- 	mesh_send_cancel(filter, sizeof(filter));
--	mesh_send_pkt(MESH_IO_TX_COUNT_UNLIMITED, 500, &open_req,
-+
-+	pb_adv_send(session, MESH_IO_TX_COUNT_UNLIMITED, 500, &open_req,
- 							sizeof(open_req));
- }
- 
-@@ -214,7 +271,8 @@ static void send_open_cfm(struct pb_adv_session *session)
- 	open_cfm.opcode = PB_ADV_OPEN_CFM;
- 
- 	mesh_send_cancel(filter, sizeof(filter));
--	mesh_send_pkt(MESH_IO_TX_COUNT_UNLIMITED, 500, &open_cfm,
-+
-+	pb_adv_send(session, MESH_IO_TX_COUNT_UNLIMITED, 500, &open_cfm,
- 							sizeof(open_cfm));
- }
- 
-@@ -222,18 +280,21 @@ static void send_ack(struct pb_adv_session *session, uint8_t trans_num)
- {
- 	struct pb_ack ack = { MESH_AD_TYPE_PROVISION };
- 
-+	if (!l_queue_find(pb_sessions, session_match, session))
-+		return;
-+
- 	l_put_be32(session->link_id, &ack.link_id);
- 	ack.trans_num = trans_num;
- 	ack.opcode = PB_ADV_ACK;
- 
--	mesh_send_pkt(1, 100, &ack, sizeof(ack));
-+	pb_adv_send(session, 1, 100, &ack, sizeof(ack));
- }
- 
- static void send_close_ind(struct pb_adv_session *session, uint8_t reason)
- {
- 	struct pb_close_ind close_ind = { MESH_AD_TYPE_PROVISION };
- 
--	if (!pb_session || pb_session != session)
-+	if (!l_queue_find(pb_sessions, session_match, session))
- 		return;
- 
- 	l_put_be32(session->link_id, &close_ind.link_id);
-@@ -242,7 +303,8 @@ static void send_close_ind(struct pb_adv_session *session, uint8_t reason)
- 	close_ind.reason = reason;
- 
- 	mesh_send_cancel(filter, sizeof(filter));
--	mesh_send_pkt(10, 100, &close_ind, sizeof(close_ind));
-+
-+	pb_adv_send(session, 10, 100, &close_ind, sizeof(close_ind));
- }
- 
- static void pb_adv_packet(void *user_data, const uint8_t *pkt, uint16_t len)
-@@ -254,7 +316,7 @@ static void pb_adv_packet(void *user_data, const uint8_t *pkt, uint16_t len)
- 	uint8_t type;
- 	bool first;
- 
--	if (!pb_session || pb_session != session)
-+	if (!l_queue_find(pb_sessions, session_match, session))
- 		return;
- 
- 	link_id = l_get_be32(pkt + 1);
-@@ -337,8 +399,8 @@ static void pb_adv_packet(void *user_data, const uint8_t *pkt, uint16_t len)
- 			mesh_prov_close_func_t cb = session->close_cb;
- 			void *user_data = session->user_data;
- 
-+			l_queue_remove(pb_sessions, session);
- 			l_free(session);
--			pb_session = NULL;
- 			cb(user_data, pkt[0]);
- 		}
- 		break;
-@@ -442,37 +504,72 @@ bool pb_adv_reg(bool initiator, mesh_prov_open_func_t open_cb,
- 		mesh_prov_receive_func_t rx_cb, mesh_prov_ack_func_t ack_cb,
- 		uint8_t uuid[16], void *user_data)
- {
--	if (pb_session)
-+	struct pb_adv_session *session, *old_session;
-+
-+	if (!pb_sessions)
-+		pb_sessions = l_queue_new();
-+
-+	old_session = l_queue_find(pb_sessions, uuid_match, uuid);
-+
-+	/* Reject 2nd session if not looping back */
-+	if (l_queue_length(pb_sessions) && !old_session)
-+		return false;
-+
-+	/* Reject looping to more than one session or with same role*/
-+	if (old_session && (old_session->loop ||
-+					old_session->initiator == initiator))
- 		return false;
- 
--	pb_session = l_new(struct pb_adv_session, 1);
--	pb_session->open_cb = open_cb;
--	pb_session->close_cb = close_cb;
--	pb_session->rx_cb = rx_cb;
--	pb_session->ack_cb = ack_cb;
--	pb_session->user_data = user_data;
--	pb_session->initiator = initiator;
--	memcpy(pb_session->uuid, uuid, 16);
-+	session = l_new(struct pb_adv_session, 1);
-+	session->open_cb = open_cb;
-+	session->close_cb = close_cb;
-+	session->rx_cb = rx_cb;
-+	session->ack_cb = ack_cb;
-+	session->user_data = user_data;
-+	session->initiator = initiator;
-+	memcpy(session->uuid, uuid, 16);
- 
--	mesh_reg_prov_rx(pb_adv_packet, pb_session);
-+	l_queue_push_head(pb_sessions, session);
- 
- 	if (initiator) {
--		l_getrandom(&pb_session->link_id, sizeof(pb_session->link_id));
--		pb_session->tx_timeout = l_timeout_create(60, tx_timeout,
--							pb_session, NULL);
--		send_open_req(pb_session);
-+		l_getrandom(&session->link_id, sizeof(session->link_id));
-+		session->tx_timeout = l_timeout_create(60, tx_timeout,
-+							session, NULL);
-+	}
-+
-+	/* Setup Loop-back if complementary session with same UUID */
-+	if (old_session) {
-+		session->loop = old_session;
-+		old_session->loop = session;
-+		mesh_unreg_prov_rx(pb_adv_packet);
-+
-+		if (initiator)
-+			send_open_req(session);
-+		else
-+			send_open_req(old_session);
-+
-+		return true;
- 	}
- 
-+	mesh_reg_prov_rx(pb_adv_packet, session);
-+
-+	if (initiator)
-+		send_open_req(session);
-+
- 	return true;
- }
- 
- void pb_adv_unreg(void *user_data)
- {
--	if (!pb_session || pb_session->user_data != user_data)
-+	struct pb_adv_session *session = l_queue_find(pb_sessions,
-+						user_match, user_data);
-+
-+	if (!session)
- 		return;
- 
--	l_timeout_remove(pb_session->tx_timeout);
--	send_close_ind(pb_session, 0);
--	l_free(pb_session);
--	pb_session = NULL;
-+	l_timeout_remove(session->tx_timeout);
-+	session->tx_timeout = NULL;
-+	send_close_ind(session, 0);
-+	l_queue_remove(pb_sessions, session);
-+	l_free(session);
- }
--- 
-2.21.1
+
+
+
+----------------------------------------------------
+This email was sent by the shareware version of Postman Professional.
 
