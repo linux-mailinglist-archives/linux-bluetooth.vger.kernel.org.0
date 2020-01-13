@@ -2,177 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B8F6138A35
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jan 2020 05:31:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C131F138B69
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jan 2020 06:52:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387606AbgAMEbw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 12 Jan 2020 23:31:52 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:50890 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387571AbgAMEbv (ORCPT
+        id S2387629AbgAMFwq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Jan 2020 00:52:46 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:46148 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731584AbgAMFw0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 12 Jan 2020 23:31:51 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578889910; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=kLWHsDu+lXLZgOyBoFDbIPxxLyvvZ/yYAxYjOJEO5nQ=;
- b=jbUB79KCucy7gydTAAZcbFr5BSlC0g48y9ATvxvPgutwYFG52W0W5Loh6v0mC9Iaiw9n4oio
- v0YVPqxum8QTV7GfmHyjk5FOU2oXD8ng5fUrIm2G7OQyY3CURRrl8T9Nh+xEbcs9K3SzSB+r
- 5dWCKXl0ILgY6UAYXW4+PBS50fU=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI2MTA3ZSIsICJsaW51eC1ibHVldG9vdGhAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e1bf2b5.7f29f56eb768-smtp-out-n02;
- Mon, 13 Jan 2020 04:31:49 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7A4BBC433CB; Mon, 13 Jan 2020 04:31:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rjliao)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1F23C43383;
-        Mon, 13 Jan 2020 04:31:48 +0000 (UTC)
+        Mon, 13 Jan 2020 00:52:26 -0500
+Received: by mail-oi1-f193.google.com with SMTP id 13so7164405oij.13
+        for <linux-bluetooth@vger.kernel.org>; Sun, 12 Jan 2020 21:52:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=Rjbe3pVeMfYVPdmVklZ4b2stSqI32LIYp+bn/8NyJvk=;
+        b=El5YZgtDEXJCHEtZrRB1ujEJT5GnrR9nqQvx3oNXkD1KXWKAy5lE4fahagwXmNRBuY
+         Z373bCStdjZZAvrcMmyjZhqXNYKD7qS8gpQ1uKt4Zm/CJYofbOmd6y2KCfdaIf8lu4gx
+         e04Qq2Wd5k0QzXhgODgXLh9+BTAbr7mIJG1kvrHD2cB5892G2QaMtoQjZ8YbwAsn/v/R
+         qN1ulSwy8kLJzDOOwwvDkEa6g0paOaNUUW6lO8NcaOsOsQMTh2eV34LXY/bnRxfyDcL+
+         OFIAYoYpyWTxvo4nB11oXa8J2BNLiFXnr18VfN4DCPOmpXqWPT8f/9GzmZX8VWLxs4VK
+         s+8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=Rjbe3pVeMfYVPdmVklZ4b2stSqI32LIYp+bn/8NyJvk=;
+        b=slxG5vpkt1IbHYRgfzbhK0PapJuao5ZtAXZS9M/NbbiAorM7ye3gZHjKjtFCsmk/sm
+         LStyZQNUdERf9uVZEPzZfyVAjIOKnO8Lfvy2VKFS/jNakLlFwF2pDjIOZampGdKmMnbk
+         II/8FYHIfkUfRtgQk/GvU43bs1/iyvDWEAfTsdJGC+FDPTCmh0Q58PJLcIqzhPZZeM9Q
+         Dkl226lPnf9UUg3y2fGPkBbRQA4gYTv0HLQIeDQNKFgzzLjRHon9Ipq3mu8LrnAUMuAn
+         FntR0MiQ9fk/dE/Jyoj7Y/1/zQCIR8XcLm5S4EbocimO8J5FDstjey4qXy+XeKg9bgIH
+         Y/nQ==
+X-Gm-Message-State: APjAAAWo7MffUaDMTi9BEfXkaUkFjHwRpBcykzAkT0YmAwptyQNaX64p
+        ceyCCShzb09QxJHLbGK4xmxnuIxrwd3Zpke6c5U=
+X-Google-Smtp-Source: APXvYqy7JhGBt0ZjJ/1t4CT74GIhTuvbOMnCynReBbsGRcTAfZPwoiLBCe9XiPA9xaK1JAPmy14eucUMWI9DLkbKsUo=
+X-Received: by 2002:a54:4713:: with SMTP id k19mr11513430oik.113.1578894745174;
+ Sun, 12 Jan 2020 21:52:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Mon, 13 Jan 2020 12:31:48 +0800
-From:   Rocky Liao <rjliao@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-bluetooth-owner@vger.kernel.org
-Subject: Re: [PATCH v4] Bluetooth: hci_qca: Add qca_power_on() API to support
- both wcn399x and Rome power up
-In-Reply-To: <20200113042942.9526-1-rjliao@codeaurora.org>
-References: <20200107052601.32216-1-rjliao@codeaurora.org>
- <20200113042942.9526-1-rjliao@codeaurora.org>
-Message-ID: <43e209e870c8750f5bd154520cfaccbb@codeaurora.org>
-X-Sender: rjliao@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Received: by 2002:a4a:41cb:0:0:0:0:0 with HTTP; Sun, 12 Jan 2020 21:52:24
+ -0800 (PST)
+Reply-To: rickschaech@gmail.com
+From:   Rick Schaech <cathben72@gmail.com>
+Date:   Mon, 13 Jan 2020 01:52:24 -0400
+Message-ID: <CAEcBxO=TAnFn5LzizHa22hUC0Db5FuiZJF28m=yX3_9m--jRqg@mail.gmail.com>
+Subject: I wait for your swift response,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Sorry, please ignore this one. I was wanting to send v5...
+Dear, I'm Mr Rick Schaech, I am the General Account Auditor, Though i
+know we have not meet each other before but sometimes in life God have
+a reason of bringing two people from two different countries together
+as business partners or life partners.
 
-在 2020-01-13 12:29，Rocky Liao 写道：
-> This patch adds a unified API qca_power_on() to support both wcn399x 
-> and
-> Rome power on. For wcn399x it calls the qca_wcn3990_init() to init the
-> regulators, and for Rome it pulls up the bt_en GPIO to power up the 
-> btsoc.
-> It also moves all the power up operation from hdev->open() to
-> hdev->setup().
-> 
-> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
-> 
-> Changes in v2: None
-> Changes in v3:
->   -moved all the power up operation from open() to setup()
->   -updated the commit message
-> Changes in v4:
->   -made a single call to qca_power_on() in setup()
-> 
-> 
->  drivers/bluetooth/hci_qca.c | 48 +++++++++++++++++++++++--------------
->  1 file changed, 30 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 82e4cd4b6663..6a67e5489b16 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -541,7 +541,6 @@ static int qca_open(struct hci_uart *hu)
->  {
->  	struct qca_serdev *qcadev;
->  	struct qca_data *qca;
-> -	int ret;
-> 
->  	BT_DBG("hu %p qca_open", hu);
-> 
-> @@ -582,23 +581,10 @@ static int qca_open(struct hci_uart *hu)
->  	hu->priv = qca;
-> 
->  	if (hu->serdev) {
-> -
->  		qcadev = serdev_device_get_drvdata(hu->serdev);
-> -		if (!qca_is_wcn399x(qcadev->btsoc_type)) {
-> -			gpiod_set_value_cansleep(qcadev->bt_en, 1);
-> -			/* Controller needs time to bootup. */
-> -			msleep(150);
-> -		} else {
-> +		if (qca_is_wcn399x(qcadev->btsoc_type)) {
->  			hu->init_speed = qcadev->init_speed;
->  			hu->oper_speed = qcadev->oper_speed;
-> -			ret = qca_regulator_enable(qcadev);
-> -			if (ret) {
-> -				destroy_workqueue(qca->workqueue);
-> -				kfree_skb(qca->rx_skb);
-> -				hu->priv = NULL;
-> -				kfree(qca);
-> -				return ret;
-> -			}
->  		}
->  	}
-> 
-> @@ -1531,6 +1517,31 @@ static int qca_wcn3990_init(struct hci_uart *hu)
->  	return 0;
->  }
-> 
-> +static int qca_power_on(struct hci_dev *hdev)
-> +{
-> +	struct hci_uart *hu = hci_get_drvdata(hdev);
-> +	enum qca_btsoc_type soc_type = qca_soc_type(hu);
-> +	struct qca_serdev *qcadev;
-> +	int ret = 0;
-> +
-> +	/* Non-serdev device usually is powered by external power
-> +	 * and don't need additional action in driver for power on
-> +	 */
-> +	if (!hu->serdev)
-> +		return 0;
-> +
-> +	if (qca_is_wcn399x(soc_type)) {
-> +		ret = qca_wcn3990_init(hu);
-> +	} else {
-> +		qcadev = serdev_device_get_drvdata(hu->serdev);
-> +		gpiod_set_value_cansleep(qcadev->bt_en, 1);
-> +		/* Controller needs time to bootup. */
-> +		msleep(150);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
->  static int qca_setup(struct hci_uart *hu)
->  {
->  	struct hci_dev *hdev = hu->hdev;
-> @@ -1553,6 +1564,10 @@ static int qca_setup(struct hci_uart *hu)
->  	 */
->  	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
-> 
-> +	ret = qca_power_on(hdev);
-> +	if (ret)
-> +		return ret;
-> +
->  	if (qca_is_wcn399x(soc_type)) {
->  		bt_dev_info(hdev, "setting up wcn3990");
-> 
-> @@ -1562,9 +1577,6 @@ static int qca_setup(struct hci_uart *hu)
->  		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
->  		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
->  		hu->hdev->shutdown = qca_power_off;
-> -		ret = qca_wcn3990_init(hu);
-> -		if (ret)
-> -			return ret;
-> 
->  		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
->  		if (ret)
+My dear friend, I have the sum of 15.7 Million USD i wish to put in
+your name due to the death of my late client who died several years
+ago as his next of kin column still remain blank. Though the internet
+medium is highly abuse these days but am assuring you that this
+transaction is legitimate and I am contacting you that we may have a
+deal, note for your cooperation and collaboration 40% of the sum will
+be for you while the other 60% will be for me as well. I wait for your
+swift response for more details. please forward your response to my
+personal E-mail: rickschaech@gmail.com
+
+Yours sincerely,
+Rick Schaech.
