@@ -2,121 +2,97 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 12B3613BB93
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Jan 2020 09:56:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C5E0713BD2D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Jan 2020 11:13:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729213AbgAOI4K (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 15 Jan 2020 03:56:10 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:16478 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729205AbgAOI4J (ORCPT
+        id S1729575AbgAOKMr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 15 Jan 2020 05:12:47 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41817 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729602AbgAOKMr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 15 Jan 2020 03:56:09 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579078569; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=OccWxJb9txWIb6AmPcxbe0MUAwyb7v5wd/Ik42SRC7Q=; b=PDi0eR0jVRY/GVnvbKzyQJvWOn3JCS63Q8qIl8danvoODsx+daL+g9RMv8T238cDenvU1M/4
- KqVISYDug0uQaPYpRwaNQJIc5gLSELkPYzVttyxkXAJSXtAwtAHcnKZIFNtsZpObZb3ZS9Es
- D/Jwkqv3yb728wbNpckTofhzVBQ=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI2MTA3ZSIsICJsaW51eC1ibHVldG9vdGhAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e1ed3a6.7f2078f6d3b0-smtp-out-n03;
- Wed, 15 Jan 2020 08:56:06 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 422ADC447A6; Wed, 15 Jan 2020 08:56:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from rocky-Inspiron-7590.qca.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rjliao)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 22E3DC447AB;
-        Wed, 15 Jan 2020 08:56:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 22E3DC447AB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rjliao@codeaurora.org
-From:   Rocky Liao <rjliao@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, hemantg@codeaurora.org,
-        Rocky Liao <rjliao@codeaurora.org>
-Subject: [PATCH v4 3/3] Bluetooth: hci_qca: Enable power off/on support during hci down/up for QCA Rome
-Date:   Wed, 15 Jan 2020 16:55:52 +0800
-Message-Id: <20200115085552.11483-3-rjliao@codeaurora.org>
+        Wed, 15 Jan 2020 05:12:47 -0500
+Received: by mail-wr1-f67.google.com with SMTP id c9so15137196wrw.8
+        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Jan 2020 02:12:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=TphKRKgrx6UOwY938/z3zkU7XoFubfFhJvJRyw+ELVA=;
+        b=rF8UEv4+aHXN5U+ib7xcboRlT+K7H1VEqquEq+m7pEpwSQMFWwyN7guzslCrJoBYLW
+         b10OFL9WAPXXzizMArolKJSTLMvixZKpY52I7fDJeykkuO8Dbgki9oDi/vmP6GCjUZtB
+         xAXe20p9DG1M0X6Oo+c9IuhxHXQbgTq8Don5pILBFCXzx4gViqvNJ4XjJIzU39GpcF5N
+         QKksBAP5PAhksnj6Lx65spoPDoEBaph9dLDVYRbkwhGUqkkYVjP6+TnMhf/bNHby0aJA
+         9cO0GNII3uAE/jeHtsQoUeDtSVto0vEbEXh0MTbtkTHHPbRRCw/A9llmThD+IyBlYfOd
+         dfDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=TphKRKgrx6UOwY938/z3zkU7XoFubfFhJvJRyw+ELVA=;
+        b=DCvgOYGobOgW22sFOd9AqbVZKHV29v6G+tAx5fsmNHsp9lgb80Eve1RsbjVj140Kmm
+         cljaVilhxgJRua4hgbdtnnk7r+oU4YPoSMI43n21GEMRdl8dUP2iaX531aLzaB0+yabg
+         izqZwVPEaOSs+i4bKRTFpQse+ZenHwyhfTXZQl3al/0kKxFLlP6OOfATihLT3/BoHGNW
+         PN+U3qTOCdF2IK814+ZgbCL79G/k5Tx24XNLvcpyjw95h794R4hRORfEz+Uwo6V1I23L
+         M3ZGWx9XNo1aF7zseRL9E5inDRRihc6XRhT+I1DyxpcN5OZgOHCSSJYO6T8y0IPGb8VU
+         GWCw==
+X-Gm-Message-State: APjAAAX1ISc0ZngowiZ2KSIi4vXe8ygKwbiVURtLmOaEJz5XOKVs/3jk
+        XhHQTHoiK3CzbeQX4AW0mcZFNQ==
+X-Google-Smtp-Source: APXvYqyiJAvF67CsgbnfTuZzZ394kjvs04rbDKyhZy7BpSwsCoiFjVC73kNMLzdKqGiznx/yeOH5YA==
+X-Received: by 2002:adf:ed83:: with SMTP id c3mr29669763wro.51.1579083165363;
+        Wed, 15 Jan 2020 02:12:45 -0800 (PST)
+Received: from glaroque-ThinkPad-T480.baylibre.local (laubervilliers-658-1-213-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
+        by smtp.gmail.com with ESMTPSA id g7sm23828223wrq.21.2020.01.15.02.12.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jan 2020 02:12:44 -0800 (PST)
+From:   Guillaume La Roque <glaroque@baylibre.com>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org
+Cc:     johan@kernel.org, nsaenzjulienne@suse.de,
+        linux-kernel@vger.kernel.org, khilman@baylibre.com
+Subject: [PATCH v7 0/2] add support of interrupt for host wakeup from devicetree in BCM HCI driver
+Date:   Wed, 15 Jan 2020 11:12:41 +0100
+Message-Id: <20200115101243.17094-1-glaroque@baylibre.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200115085552.11483-1-rjliao@codeaurora.org>
-References: <20191225060317.5258-1-rjliao@codeaurora.org>
- <20200115085552.11483-1-rjliao@codeaurora.org>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch registers hdev->shutdown() callback and also sets
-HCI_QUIRK_NON_PERSISTENT_SETUP for QCA Rome. It will power-off the BT chip
-during hci down and power-on/initialize the chip again during hci up. As
-wcn399x already enabled this, this patch also removed the callback register
-and QUIRK setting in qca_setup() for wcn399x and uniformly do this in the
-probe() routine.
+add interrupts and interrupt-names properties to set host wakeup IRQ.
+actually driver find this IRQ from host-wakeup-gpios propety
+but some platforms are not supported gpiod_to_irq function.
+so to have possibility to use interrupt mode we need to add interrupts
+field in devicetree and support it in driver.
 
-Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
----
+change sinve v6:
+- depracate host-wakeup-gpios 
 
-Changes in v2: None
-Changes in v3: 
-  -moved the quirk and callback register to probe()
-Changes in v4:
-  -rebased the patch with latest code
-  -moved the quirk and callback register to probe() for wcn399x
-  -updated commit message
+change sinve v5:
+- add tags
 
- drivers/bluetooth/hci_qca.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+change sinve v4 [1]:
+- add patch to update Documentation
+- use of_irq_get_byname to be more clear and move call in bcm_of_probe
+- update commit message
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 1139142e8eed..3c6c6bd20177 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1569,12 +1569,7 @@ static int qca_setup(struct hci_uart *hu)
- 		return ret;
- 
- 	if (qca_is_wcn399x(soc_type)) {
--		/* Enable NON_PERSISTENT_SETUP QUIRK to ensure to execute
--		 * setup for every hci up.
--		 */
--		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
- 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
--		hu->hdev->shutdown = qca_power_off;
- 
- 		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
- 		if (ret)
-@@ -1813,6 +1808,7 @@ static int qca_init_regulators(struct qca_power *qca,
- static int qca_serdev_probe(struct serdev_device *serdev)
- {
- 	struct qca_serdev *qcadev;
-+	struct hci_dev *hdev;
- 	const struct qca_vreg_data *data;
- 	int err;
- 
-@@ -1881,7 +1877,13 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 			clk_disable_unprepare(qcadev->susclk);
- 	}
- 
--out:	return err;
-+out:
-+	if (!err) {
-+		hdev = qcadev->serdev_hu.hdev;
-+		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
-+		hdev->shutdown = qca_power_off;
-+	}
-+	return err;
- 
- }
- 
+change since v3:
+- move on of_irq instead of platform_get_irq
+
+change since v2:
+- fix commit message
+
+change since v1:
+- rebase patch
+
+[1] https://lore.kernel.org/linux-bluetooth/20191213105521.4290-1-glaroque@baylibre.com/
+
+Guillaume La Roque (2):
+  dt-bindings: net: bluetooth: add interrupts properties
+  bluetooth: hci_bcm: enable IRQ capability from devicetree
+
+ .../devicetree/bindings/net/broadcom-bluetooth.txt         | 7 +++++--
+ drivers/bluetooth/hci_bcm.c                                | 3 +++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+2.17.1
+
