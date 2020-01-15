@@ -2,95 +2,238 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A817013BD2C
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Jan 2020 11:12:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5260313BED9
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Jan 2020 12:51:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729632AbgAOKMw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 15 Jan 2020 05:12:52 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36811 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729539AbgAOKMt (ORCPT
+        id S1730140AbgAOLu7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 15 Jan 2020 06:50:59 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44322 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729892AbgAOLu7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 15 Jan 2020 05:12:49 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p17so17161356wma.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Jan 2020 02:12:48 -0800 (PST)
+        Wed, 15 Jan 2020 06:50:59 -0500
+Received: by mail-wr1-f68.google.com with SMTP id q10so15431813wrm.11
+        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Jan 2020 03:50:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tXpo5MYGeWvRjvLGBcgNx4X2h+6aZ6zfLICyaTGuIUI=;
-        b=hyEuRy4NBBXv9i1cTbMO4RPHvgNr++QeW3094lGhowrdyRoliaxSjDbZWQctWMoL1G
-         intGa8iv3u+cL72afwfD5VjnxaJZ4nxD8PgZsziSitVrI4arOlLO1wUNkUgvI5FugwZp
-         U/bGsGWeQWKacGmC2TChw7bSuhecxcEzZMeF7ZCcaBGEdwAFHYz5GXRHoaAQ1SFB6fCW
-         sBwzubZ+j4UWbeZEspJVuBLTqTupJerWahoGswge7QsgOUNjyFKKC2w7Nj11gNNOQmmX
-         pItcaVx9bvEA2B6Sr2mD98cFulwS/lO+lvXUR3SC2xtiIhY6PnJalBZ/GSpAezrOHixF
-         Gr4Q==
+        d=silvair-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3kAW6CuXLik4Dd8lYpo4G/qEALqscxuKG5AZ67rZeM8=;
+        b=u71rJnqkXryBSbATFcdu4mAAAhZvMQI+K4CYbTeeZSnmkBfvLqEyQg+DuvzQNpfaVp
+         2SDQNgX/raf7T1WCg9ToUwpvHU55t3kxIrY+OEQdoSF6sVu4RXV9vrzbKR9q/h0KRNcB
+         EoJBfj1ZBM+Vihh6FuQYNc6DtSNdGpStii7LN3qDKFIxObusGG964LQxWioRnseKOyt0
+         FPME2VuoJbOYbCxiChePap1syFDCyH7RWEUrdxWxAHxFXTy1NITvbdEzrQZ53KufqBHq
+         G8+JN29+mVFxvJhHh22q+Q8ReGHQD7gFzJHOoPa2X/rOw47kfZT3JhM7cU6N29oStgUM
+         PoDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=tXpo5MYGeWvRjvLGBcgNx4X2h+6aZ6zfLICyaTGuIUI=;
-        b=Lke4FzYPsK0/5JfrKgF+5uGHor24vubFih4x1WwWn4q+ZF95beBG4sPUTlfOuV/Pe+
-         q5xUA2ssuFI2ovbRKjO/TSjHbZhSAaK/9n4XVhOVSkv/dEyh276qoHHJIDwjVfCgmt9t
-         V0Dy0+d85BFgTgxJkX1wx1V/vFOEOM3tTtOPxzifziEKPd7A6iUmFtuFeDIbSdhVKxfM
-         +/37l5Q34kAQnCv73z3RE81VH1zePJlW0xMyD2i5fBfh2qw0g488icb3uinaMMbAjO5S
-         M/TsbrZ1j/hZhhMoPiRUhYuvrDspfne7xdKyBj6xFLoMVIjQiUAarq0c4JaBTJW2OMfr
-         dlgA==
-X-Gm-Message-State: APjAAAUNPu/EpA7oOlwpmc9L1pLwWYJdwdAQwT54RzC/UvOPYrDJ4C5N
-        nLhfhUDEbhIegy8dExEq8dAwJg==
-X-Google-Smtp-Source: APXvYqyeGSZDmYaqLCKbki2jn7P4jJyKO+UR19mLn+8i1Bj1Dxqrts7BUcZe4EUGD9P9TykOOeh0mQ==
-X-Received: by 2002:a7b:cc98:: with SMTP id p24mr31873993wma.139.1579083167531;
-        Wed, 15 Jan 2020 02:12:47 -0800 (PST)
-Received: from glaroque-ThinkPad-T480.baylibre.local (laubervilliers-658-1-213-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
-        by smtp.gmail.com with ESMTPSA id g7sm23828223wrq.21.2020.01.15.02.12.46
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3kAW6CuXLik4Dd8lYpo4G/qEALqscxuKG5AZ67rZeM8=;
+        b=IcdgUONoD1vgUacP8SNjWl6FJs57TU+HiICm6Su6G7fZF62rpebNW3JE0sHWhKkpZb
+         VF3ahvNttyXWXvPic1ozLZIT1d0NvPqPCTgifEvIh0KKQ7PxcQDqn3EzSeUTSWYXmQ96
+         788FChflb9P5XQ4uPTaTR7PUtE23Gue3VEpkmDsLT1IHvhXcuYUpc1pqMnYiifkyKOAf
+         t5IrUxFNiMbc22ZxijH2Nl/NUQ1EwdE0wjznN5VQFnUR+d5+CCvliaRCEl6ON+qQH1tn
+         CgLU0FtUkNS/GzLTiqL7hHB5JRMeot7fbKkAqckurANBtM3ZfxULps00tUvoDbaQVjdo
+         k0iQ==
+X-Gm-Message-State: APjAAAX5qDUPxjQEoV32WKXxGyYYQGiifPkMt/khMVaMbwp5cwc6dN5e
+        628a35rBM83F+ELxQcg14dHgMRGw4Cw=
+X-Google-Smtp-Source: APXvYqx07cGUD+xLM1L+cIVy/y+1Zg7Gpb2ZTv3dwzJzTph6ouyTvExaTJbdueEoouKoPOhdm2PgFg==
+X-Received: by 2002:adf:fe43:: with SMTP id m3mr31606022wrs.213.1579089054519;
+        Wed, 15 Jan 2020 03:50:54 -0800 (PST)
+Received: from mlowasrzechonek2133.silvair.lan ([217.153.94.18])
+        by smtp.gmail.com with ESMTPSA id z123sm24405987wme.18.2020.01.15.03.50.53
+        for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 02:12:47 -0800 (PST)
-From:   Guillaume La Roque <glaroque@baylibre.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org
-Cc:     johan@kernel.org, nsaenzjulienne@suse.de,
-        linux-kernel@vger.kernel.org, khilman@baylibre.com
-Subject: [PATCH v7 2/2] bluetooth: hci_bcm: enable IRQ capability from devicetree
-Date:   Wed, 15 Jan 2020 11:12:43 +0100
-Message-Id: <20200115101243.17094-3-glaroque@baylibre.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200115101243.17094-1-glaroque@baylibre.com>
-References: <20200115101243.17094-1-glaroque@baylibre.com>
+        Wed, 15 Jan 2020 03:50:53 -0800 (PST)
+From:   =?UTF-8?q?Micha=C5=82=20Lowas-Rzechonek?= 
+        <michal.lowas-rzechonek@silvair.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v3] mesh: Rename --index to --io, allow additional io types types.
+Date:   Wed, 15 Jan 2020 12:50:49 +0100
+Message-Id: <20200115115049.27504-1-michal.lowas-rzechonek@silvair.com>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add support for getting IRQ directly from DT instead of relying on
-converting a GPIO to IRQ. This is needed for platforms with GPIO
-controllers that that do not support gpiod_to_irq().
+This allows specifying io type and options when invoking the daemon.
 
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Guillaume La Roque <glaroque@baylibre.com>
+When no "-i" is passed, meshd still runs with MESH_IO_TYPE_GENERIC and
+tries to attach to the first available HCI interface.
+
+Options "-i <n>" and "-i hci<n>" are just shortcuts for
+"--io=generic:<n>" and "--io=generic:hci<n>", respectively.
 ---
- drivers/bluetooth/hci_bcm.c | 3 +++
- 1 file changed, 3 insertions(+)
+v3: Remove superfluous default configuration from main()
 
-diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
-index 769bb4404bd1..b236cb11c0dc 100644
---- a/drivers/bluetooth/hci_bcm.c
-+++ b/drivers/bluetooth/hci_bcm.c
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <linux/acpi.h>
- #include <linux/of.h>
-+#include <linux/of_irq.h>
- #include <linux/property.h>
- #include <linux/platform_data/x86/apple.h>
- #include <linux/platform_device.h>
-@@ -1151,6 +1152,8 @@ static int bcm_of_probe(struct bcm_device *bdev)
- 	device_property_read_u32(bdev->dev, "max-speed", &bdev->oper_speed);
- 	device_property_read_u8_array(bdev->dev, "brcm,bt-pcm-int-params",
- 				      bdev->pcm_int_params, 5);
-+	bdev->irq = of_irq_get_byname(bdev->dev->of_node, "host-wakeup");
-+
- 	return 0;
+ mesh/main.c | 86 ++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 66 insertions(+), 20 deletions(-)
+
+diff --git a/mesh/main.c b/mesh/main.c
+index 010edcf85..598398e9a 100644
+--- a/mesh/main.c
++++ b/mesh/main.c
+@@ -40,10 +40,11 @@
+ 
+ static const char *config_dir;
+ static const char *mesh_conf_fname;
+-static int ctlr_index = MGMT_INDEX_NONE;
++static enum mesh_io_type io_type;
++static void *io_opts;
+ 
+ static const struct option main_options[] = {
+-	{ "index",	required_argument,	NULL, 'i' },
++	{ "io",		required_argument,	NULL, 'i' },
+ 	{ "config",	optional_argument,	NULL, 'c' },
+ 	{ "nodetach",	no_argument,		NULL, 'n' },
+ 	{ "debug",	no_argument,		NULL, 'd' },
+@@ -54,16 +55,22 @@ static const struct option main_options[] = {
+ 
+ static void usage(void)
+ {
+-	l_info("");
+-	l_info("Usage:\n"
++	fprintf(stderr,
++		"Usage:\n"
+ 	       "\tbluetooth-meshd [options]\n");
+-	l_info("Options:\n"
+-	       "\t--index <hcinum>  Use specified controller\n"
++	fprintf(stderr,
++		"Options:\n"
++	       "\t--io <io>         Use specified io (default: generic)\n"
+ 	       "\t--config          Configuration directory\n"
+ 	       "\t--nodetach        Run in foreground\n"
+ 	       "\t--debug           Enable debug output\n"
+ 	       "\t--dbus-debug      Enable D-Bus debugging\n"
+ 	       "\t--help            Show %s information\n", __func__);
++	fprintf(stderr,
++	       "io:\n"
++	       "\t([hci]<index> | generic[:[hci]<index>])\n"
++	       "\t\tUse generic HCI io on interface hci<index>, or the first\n"
++	       "\t\tavailable one\n");
  }
  
+ static void do_debug(const char *str, void *user_data)
+@@ -100,8 +107,8 @@ static void request_name_callback(struct l_dbus *dbus, bool success,
+ 		return;
+ 	}
+ 
+-	if (!mesh_init(config_dir, mesh_conf_fname, MESH_IO_TYPE_GENERIC,
+-				&ctlr_index, mesh_ready_callback, dbus)) {
++	if (!mesh_init(config_dir, mesh_conf_fname, io_type, io_opts,
++					mesh_ready_callback, dbus)) {
+ 		l_error("Failed to initialize mesh");
+ 		l_main_quit();
+ 	}
+@@ -133,12 +140,45 @@ static void signal_handler(uint32_t signo, void *user_data)
+ 	terminated = true;
+ }
+ 
++static bool parse_io(const char *optarg, enum mesh_io_type *type, void **opts)
++{
++	if (strstr(optarg, "generic") == optarg) {
++		int *index = l_new(int, 1);
++
++		*type = MESH_IO_TYPE_GENERIC;
++		*opts = index;
++
++		optarg += strlen("generic");
++		if (!*optarg) {
++			*index = MGMT_INDEX_NONE;
++			return true;
++		}
++
++		if (*optarg != ':')
++			return false;
++
++		optarg++;
++
++		if (sscanf(optarg, "hci%d", index) == 1)
++			return true;
++
++		if (sscanf(optarg, "%d", index) == 1)
++			return true;
++
++		return false;
++	}
++
++	return false;
++}
++
+ int main(int argc, char *argv[])
+ {
+ 	int status;
+ 	bool detached = true;
+ 	bool dbus_debug = false;
+ 	struct l_dbus *dbus = NULL;
++	char *io = NULL;
++	int hci_index;
+ 
+ 	if (!l_main_init())
+ 		return -1;
+@@ -153,7 +193,6 @@ int main(int argc, char *argv[])
+ 
+ 	for (;;) {
+ 		int opt;
+-		const char *str;
+ 
+ 		opt = getopt_long(argc, argv, "i:c:f:ndbh", main_options, NULL);
+ 		if (opt < 0)
+@@ -161,18 +200,11 @@ int main(int argc, char *argv[])
+ 
+ 		switch (opt) {
+ 		case 'i':
+-			if (strlen(optarg) > 3 && !strncmp(optarg, "hci", 3))
+-				str = optarg + 3;
++			if (sscanf(optarg, "hci%d", &hci_index) == 1 ||
++					sscanf(optarg, "%d", &hci_index) == 1)
++				io = l_strdup_printf("generic:%s", optarg);
+ 			else
+-				str = optarg;
+-			if (!isdigit(*str)) {
+-				l_error("Invalid controller index value");
+-				status = EXIT_FAILURE;
+-				goto done;
+-			}
+-
+-			ctlr_index = atoi(str);
+-
++				io = l_strdup(optarg);
+ 			break;
+ 		case 'n':
+ 			detached = false;
+@@ -200,6 +232,14 @@ int main(int argc, char *argv[])
+ 		}
+ 	}
+ 
++	if (!io)
++		io = l_strdup_printf("generic");
++
++	if (!parse_io(io, &io_type, &io_opts)) {
++		l_error("Invalid io: %s", io);
++		status = EXIT_FAILURE;
++		goto done;
++	}
+ 
+ 	if (!detached)
+ 		umask(0077);
+@@ -225,6 +265,12 @@ int main(int argc, char *argv[])
+ 	status = l_main_run_with_signal(signal_handler, NULL);
+ 
+ done:
++	if (io)
++		l_free(io);
++
++	if (io_opts)
++		l_free(io_opts);
++
+ 	mesh_cleanup();
+ 	l_dbus_destroy(dbus);
+ 	l_main_exit();
 -- 
-2.17.1
+2.20.1
 
