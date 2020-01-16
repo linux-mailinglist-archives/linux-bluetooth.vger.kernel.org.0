@@ -2,83 +2,84 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 029F513F08B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Jan 2020 19:22:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0720013F5F1
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Jan 2020 20:00:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392214AbgAPSW0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 16 Jan 2020 13:22:26 -0500
-Received: from mail-lj1-f178.google.com ([209.85.208.178]:42242 "EHLO
-        mail-lj1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391385AbgAPSWP (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 16 Jan 2020 13:22:15 -0500
-Received: by mail-lj1-f178.google.com with SMTP id y4so23748725ljj.9
-        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Jan 2020 10:22:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=silvair-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=9KBfRM7eXnfM9NUuk/am9M5VHWFYz5dwmwZDCNcMWEo=;
-        b=VlfPf1mHzunZjCjZ7NVXXg/Z4N799y90f2h2QfCVnQGMIJukD7BnAtJhR9BEI+WfEP
-         1lrCZ/e82IcnHL6GxS3MJpO5TfLXIvLVonci4ynBEhjvY9BRB+JZEwIh6vp3fZ3rf6z7
-         e4p3gr4Lde4Swuth/BGgAgRDEq6NVgHYyPsfrHPw0EI2cL+a5/5PRG6X8FYIVD8reJIa
-         PHUxvkXI+5KfCHVmDwrZHoalO+0+RVyWg+eq7bAj34XZIAi5BSBKarP/gX2d3wUzVmHj
-         aH/zKJhmfqqMpOQwdGpEpjGEVmcGpu3BugM/wJrPqG0nJXJ04N/sYgjTxXW+DZV75P21
-         ncNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=9KBfRM7eXnfM9NUuk/am9M5VHWFYz5dwmwZDCNcMWEo=;
-        b=QgsU+CL7KmqpHCecI65FVtFnAWsH0X6Xq8dzK+acG6K9ZaRG8pBmTbOt3XsicaKIqE
-         GAxMkpHRYOvXG10r3ZDJsfEduXQCwTNMZKNvZwbxb+PlT6/heEvsB1hptTqrd4+/NVGx
-         rX4/g7FAcyWGZ1HDMlPflKEe6bGJYtlqGqkt3rPBhIqrEQJlQDhtnfT/noAcULE0rWQV
-         DuSEchkY3eQ5D6vsr15RZV3N4tstDpj1HHJRSOeucVYdvnYz6/Wn1jH9s2DwiPYFWRH3
-         /MZcSJsgpiNSmljVzpKuwUb2DcVHz1ObbENmeJwWUsvFcd80bp7ceVJfMKRagcdUObJl
-         bnjw==
-X-Gm-Message-State: APjAAAXUjCiqazXjyHLAtx+vSQZnd3U9lLgT6ZSx6yCQlDfHvvyc/Pvu
-        lla6JKYPFbqHmwHYRVbDJqiiezDXMEo=
-X-Google-Smtp-Source: APXvYqzthMZRpfH0Kk0P/l/B7rFS8ZcesO46ZxDcrlo4QOmjcteHxrGwCa/XXg4ReOm+BX0/iu98ow==
-X-Received: by 2002:a2e:3a13:: with SMTP id h19mr3159425lja.16.1579198933257;
-        Thu, 16 Jan 2020 10:22:13 -0800 (PST)
-Received: from kynes (apn-5-60-0-97.dynamic.gprs.plus.pl. [5.60.0.97])
-        by smtp.gmail.com with ESMTPSA id i16sm10842137lfo.87.2020.01.16.10.22.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2020 10:22:12 -0800 (PST)
-Date:   Thu, 16 Jan 2020 19:22:06 +0100
-From:   =?utf-8?Q?Micha=C5=82?= Lowas-Rzechonek 
-        <michal.lowas-rzechonek@silvair.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, inga.stotland@intel.com
-Subject: Re: [PATCH RESEND BlueZ v3 0/1] mesh: Streamline crypto functions
-Message-ID: <20200116182206.eo6un6kegdsckwai@kynes>
-Mail-Followup-To: linux-bluetooth@vger.kernel.org, brian.gix@intel.com,
-        inga.stotland@intel.com
-References: <20200113123110.2209-1-michal.lowas-rzechonek@silvair.com>
+        id S2388899AbgAPRGR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 16 Jan 2020 12:06:17 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36212 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388888AbgAPRGQ (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:06:16 -0500
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D739124653;
+        Thu, 16 Jan 2020 17:06:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1579194375;
+        bh=rn4pfLKM3XRU+IxIe6/WS+j0s2MfQwOgjyTvquAUgQk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=X01f7pf7F0gXTH5zBZGMfMo0ulW8oAH7vzDtxIShecrJQlVUVIVettKkvOqrJ2zig
+         SlgZiF9OjhvWxh9rzkQa+4gakoL9cbsi0aWehsh/hbDPpYHBqDgww+Nvn/BteUpp0F
+         bjcOPS0JNx/a/11z7RtnDVgPEfMGlcyv3WGD03wg=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
+        Jukka Rissanen <jukka.rissanen@linux.intel.com>,
+        Alexander Aring <aring@mojatatu.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-bluetooth@vger.kernel.org, linux-wpan@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 307/671] 6lowpan: Off by one handling ->nexthdr
+Date:   Thu, 16 Jan 2020 11:59:05 -0500
+Message-Id: <20200116170509.12787-44-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200116170509.12787-1-sashal@kernel.org>
+References: <20200116170509.12787-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200113123110.2209-1-michal.lowas-rzechonek@silvair.com>
-User-Agent: NeoMutt/20180716
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Brian,
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-On 01/13, Michał Lowas-Rzechonek wrote:
-> This is a followup to commits 79fd24af1 45beec16b and 37bbe30c9,
-> continuing a cleanup of mesh/crypto.
-> 
-> This version works with unit tests added in 06cf0fd1c.
+[ Upstream commit f57c4bbf34439531adccd7d3a4ecc14f409c1399 ]
 
-Any chances to apply this, or is there something I should improve?
+NEXTHDR_MAX is 255.  What happens here is that we take a u8 value
+"hdr->nexthdr" from the network and then look it up in
+lowpan_nexthdr_nhcs[].  The problem is that if hdr->nexthdr is 0xff then
+we read one element beyond the end of the array so the array needs to
+be one element larger.
 
+Fixes: 92aa7c65d295 ("6lowpan: add generic nhc layer interface")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Acked-by: Jukka Rissanen <jukka.rissanen@linux.intel.com>
+Acked-by: Alexander Aring <aring@mojatatu.com>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/6lowpan/nhc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/6lowpan/nhc.c b/net/6lowpan/nhc.c
+index 4fa2fdda174d..9e56fb98f33c 100644
+--- a/net/6lowpan/nhc.c
++++ b/net/6lowpan/nhc.c
+@@ -18,7 +18,7 @@
+ #include "nhc.h"
+ 
+ static struct rb_root rb_root = RB_ROOT;
+-static struct lowpan_nhc *lowpan_nexthdr_nhcs[NEXTHDR_MAX];
++static struct lowpan_nhc *lowpan_nexthdr_nhcs[NEXTHDR_MAX + 1];
+ static DEFINE_SPINLOCK(lowpan_nhc_lock);
+ 
+ static int lowpan_nhc_insert(struct lowpan_nhc *nhc)
 -- 
-Michał Lowas-Rzechonek <michal.lowas-rzechonek@silvair.com>
-Silvair http://silvair.com
-Jasnogórska 44, 31-358 Krakow, POLAND
+2.20.1
+
