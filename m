@@ -2,27 +2,27 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5140813EC13
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Jan 2020 18:54:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1C3613F12F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Jan 2020 19:27:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406099AbgAPRyf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 16 Jan 2020 12:54:35 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35814 "EHLO mail.kernel.org"
+        id S2436657AbgAPS1D (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 16 Jan 2020 13:27:03 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35372 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405928AbgAPRom (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:44:42 -0500
+        id S2403921AbgAPR0c (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:26:32 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7FB9624770;
-        Thu, 16 Jan 2020 17:44:40 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7D8EF246BC;
+        Thu, 16 Jan 2020 17:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579196681;
-        bh=JBhNtFJ94R8C17PryEob3YDZloOshI0//2W6ZOtVMxU=;
+        s=default; t=1579195591;
+        bh=rn4pfLKM3XRU+IxIe6/WS+j0s2MfQwOgjyTvquAUgQk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Xzh9U9velmeSev1R/cwzUo/oSz9AMbFf5zDjP8uupxE94wVRGSd1XvZ5CFfh8sYWz
-         MzhiaadVZYW43mV8OCC4xAUDNXXgTZ2e3pnOZwcfYgCuXh+7UYR4h8JG4uRzxaC46z
-         cXvxg+C55h8IY5dxGpS5ryON65bvgcX6AKxSEpY4=
+        b=stcOJe6T2M5WSwoPKWQYSpQzu8RCkZvbllZUvZIA4a2YUe5TQMpKuD9pqmk209a+O
+         BWdc0f34pZdvL8kIN7FVYRKl+NdqDTzjPkVri+rgaiHswAzryNc3VSO5wOtbyMgmmG
+         z7ZyKowlUWorkDkw3KAEqDS9D6vigkpq5XYkWhpU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
@@ -32,12 +32,12 @@ Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org, linux-wpan@vger.kernel.org,
         netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 079/174] 6lowpan: Off by one handling ->nexthdr
-Date:   Thu, 16 Jan 2020 12:41:16 -0500
-Message-Id: <20200116174251.24326-79-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 169/371] 6lowpan: Off by one handling ->nexthdr
+Date:   Thu, 16 Jan 2020 12:20:41 -0500
+Message-Id: <20200116172403.18149-112-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116174251.24326-1-sashal@kernel.org>
-References: <20200116174251.24326-1-sashal@kernel.org>
+In-Reply-To: <20200116172403.18149-1-sashal@kernel.org>
+References: <20200116172403.18149-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -68,7 +68,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/6lowpan/nhc.c b/net/6lowpan/nhc.c
-index 7008d53e455c..e61679bf0908 100644
+index 4fa2fdda174d..9e56fb98f33c 100644
 --- a/net/6lowpan/nhc.c
 +++ b/net/6lowpan/nhc.c
 @@ -18,7 +18,7 @@
