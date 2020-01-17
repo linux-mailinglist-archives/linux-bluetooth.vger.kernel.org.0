@@ -2,97 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BAAC014126D
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jan 2020 21:44:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 870891412FC
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jan 2020 22:28:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729727AbgAQUoi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Jan 2020 15:44:38 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:41195 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729684AbgAQUoi (ORCPT
+        id S1729304AbgAQV1f (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Jan 2020 16:27:35 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:50354 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729279AbgAQV1f (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Jan 2020 15:44:38 -0500
-Received: by mail-pf1-f196.google.com with SMTP id w62so12467487pfw.8
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jan 2020 12:44:37 -0800 (PST)
+        Fri, 17 Jan 2020 16:27:35 -0500
+Received: by mail-pj1-f67.google.com with SMTP id r67so3697054pjb.0
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jan 2020 13:27:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:subject:to:cc:message-id:in-reply-to:references
-         :mime-version;
-        bh=i2h0O1gU99AEuZaUmDXHRg2aO0OE8cDx8Heji2bKUVY=;
-        b=FKKQ5n+8Yqq68dsJ0PaFnlkzhllZelrpSD3TJtxWrl0tgxJ8xVIp565oYdTQWbgkAK
-         pxB8X0m8NFW0K0A3Ya1fkyO88n9Xv5+jjdtbSncP0cY2bqb0UfkAI6f8iw/zbti/qTfe
-         4eDW02jX06SsFiQiGFleRDghPPPlnYTLtHJVxKZa3P2WOWJJkW+HEpYHpZ5uu75WQEIS
-         xVlYL0eYNEPT0zc2kH1uhY1fpoQezi+BeqzGJyo0W/vAGN7Wg6Sxbvu4RGSoFdvhZQzB
-         AS/nS9CxlxH0WxGtUzWQRa763lBHL2OsZb9Li4m3AyHZg7LDxXI6DAcjC6oLJ4+oyJh0
-         xjNA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=g1l3obKwRCGQ8frlt+kT/Fwgd/74cacl1ClW7zB9H/o=;
+        b=CYHEf/2Cn6TJeeZKMkiqa5bNKoh9HBjN2YlyR5SrXNyPtSogq9fsIX8WlZlhoP9xBI
+         kUuFDVSg1b3/6VFpjCZKPOzOFZaFrWYvpEztWhQRjrDeDeig3MJprxaKPanOi9CzgY41
+         GjMkeexGflv2Z9YfniznQcGAokcOlZb99+4xw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:subject:to:cc:message-id:in-reply-to
-         :references:mime-version;
-        bh=i2h0O1gU99AEuZaUmDXHRg2aO0OE8cDx8Heji2bKUVY=;
-        b=Yp1S+SbDnEMv/lCqC3IsWzTOVvXRcZxia9tGCyxSFw6HrXUzaARx6bmyr1NXxiBEEM
-         d1GX2bOpPudKmFMLGWy7QV2yL8CBkEKQop8eWF7dESMwJMT+Vdz2+6AxD6o8fuY5LIXe
-         MveqxGP+wQc5wXapiHQjnB6QbyD/4SMvKsKE7dVQfoTEB5eVB3FYZzqcu8VnJmuaRDWK
-         t31BXud8oXbgBXrHNAycRLaDhdS0lrG+q/VRDUrSBdWBNffgeeZ3JZ5ReFcK8tixSHIm
-         M+0tZ9m/hbzt/P6UlRpvp0xf4zcZf+kKO3y7w0yPmEu8ETvgkZfBSGZSwZUFIIYqg1Yk
-         x8YA==
-X-Gm-Message-State: APjAAAWZuHMvcewJP7f0BQPrCoTZLGtVVUpFN4JCutJjYpK1/59bL4Vj
-        CF2MMwfngqZRpHwW/kt8hbs=
-X-Google-Smtp-Source: APXvYqzzbZ6CoYe2oiv7dD9spg/BQSFrcZXiu5qlmLmIN0eLEONjAxTY/mjdpFzbrudwJv8bluXyHw==
-X-Received: by 2002:a63:6b8a:: with SMTP id g132mr46591515pgc.127.1579293877214;
-        Fri, 17 Jan 2020 12:44:37 -0800 (PST)
-Received: from [10.175.242.213] ([192.102.209.37])
-        by smtp.gmail.com with ESMTPSA id s21sm30322931pfe.20.2020.01.17.12.44.36
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=g1l3obKwRCGQ8frlt+kT/Fwgd/74cacl1ClW7zB9H/o=;
+        b=AX2kUgs+8CMqqSfiUqnDa132cl6OsndnaZHtjpHLcD+gq7GCJpN1nCoP04hZ9eZaXn
+         2/eSpEQv1Qsd6v975hiAReIEZ4K5ZGsgsOfLBsAaq8/jrDVDBAwmsPzaZM8qELFOSro3
+         E2ptCyJZvczpXb+hk29kO6ur0ituiYLP+dK4kQJ/YLhtk5orr4EUReswfFt6peyPMNg9
+         weX6vLtRlyS1IMUX/7OabEDYoLSZtFguOrmlL+95HaxX4k1jyViDFxcsLVhJa3lHDzpU
+         HQBlaBrnEuyAybRVuqGYsweQhcdrtM81Uho1mcz1dcEB5y4+JYqYhY20ZaBkEveBm3jp
+         0DpQ==
+X-Gm-Message-State: APjAAAWEezSy7ys0ZJ5DK1KoMUB1hJha3xmCrrOnkLbv7feYcCruN4ai
+        vld4DobzEVb1D1/fvo+sDi9iBqgR67SRUA==
+X-Google-Smtp-Source: APXvYqxVIeRLkgGU2AYw+K1fB38PoJYs1C0RKehuSzanbrmAgoDINfQJ8oQXlOnlVXne+BFVhg9fyA==
+X-Received: by 2002:a17:902:9a42:: with SMTP id x2mr1384059plv.194.1579296454733;
+        Fri, 17 Jan 2020 13:27:34 -0800 (PST)
+Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
+        by smtp.gmail.com with ESMTPSA id k5sm6999655pju.29.2020.01.17.13.27.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2020 12:44:36 -0800 (PST)
-Date:   Fri, 17 Jan 2020 12:44:35 -0800
-From:   Luiz Von Dentz <luiz.dentz@gmail.com>
-Subject: Re: [Bluez PATCH] Adding missing op_code string conversion.
-To:     Alain Michaud <alainm@chromium.org>
-Cc:     linux-bluetooth@vger.kernel.org
-Message-Id: <1579293875.12244.4@gmail.com>
-In-Reply-To: <20200117042421.68430-1-alainm@chromium.org>
-References: <20200117042421.68430-1-alainm@chromium.org>
-X-Mailer: geary/3.32.2
+        Fri, 17 Jan 2020 13:27:34 -0800 (PST)
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+To:     marcel@holtmann.org, luiz.dentz@gmail.com, alainm@chromium.org
+Cc:     linux-bluetooth@vger.kernel.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/2] Bluetooth: Handle system suspend gracefully
+Date:   Fri, 17 Jan 2020 13:27:03 -0800
+Message-Id: <20200117212705.57436-1-abhishekpandit@chromium.org>
+X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Alain,
 
-On Thu, Jan 16, 2020 at 8:24 PM, Alain Michaud <alainm@chromium.org> 
-wrote:
-> Adding the missing string conversion for MGMG_OP_SET_BLOCKED_KEYS.
-> ---
-> 
->  lib/mgmt.h | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/lib/mgmt.h b/lib/mgmt.h
-> index 276445d0a..101cf5f95 100644
-> --- a/lib/mgmt.h
-> +++ b/lib/mgmt.h
-> @@ -893,6 +893,7 @@ static const char *mgmt_op[] = {
->  	"Set Appearance",
->  	"Get PHY Configuration",
->  	"Set PHY Configuration",
-> +	"Set Blocked Keys",
->  };
-> 
->  static const char *mgmt_ev[] = {
+Hi linux-bluetooth,
 
-Applied, thanks.
+This patch series prepares the Bluetooth controller for system suspend
+by disconnecting all devices and preparing the event filter and LE
+whitelist with devices that can wake the system from suspend.
 
+The main motivation for doing this is so we can enable Bluetooth as
+a wake up source during suspend without it being noisy. Bluetooth should
+wake the system when a HID device receives user input but otherwise not
+send any events to the host.
 
+This patch series was tested on several Chromebooks with both btusb and
+hci_serdev on kernel 4.19. The set of tests was basically the following:
+* Reconnects after suspend succeed
+* HID devices can wake the system from suspend (needs some related bluez
+  changes to call the Set Wake Capable management command)
+* System properly pauses and unpauses discovery + advertising around
+  suspend
+* System does not wake from any events from non wakeable devices
 
+Please review and provide any feedback.
+
+Thanks
+Abhishek
 
 
 
+Abhishek Pandit-Subedi (2):
+  Bluetooth: Add mgmt op set_wake_capable
+  Bluetooth: Handle PM_SUSPEND_PREPARE and PM_POST_SUSPEND
 
+ include/net/bluetooth/hci.h      |  30 +++-
+ include/net/bluetooth/hci_core.h |  46 +++++
+ include/net/bluetooth/mgmt.h     |   7 +
+ net/bluetooth/hci_core.c         |  71 ++++++++
+ net/bluetooth/hci_event.c        |  24 ++-
+ net/bluetooth/hci_request.c      | 297 ++++++++++++++++++++++++++++---
+ net/bluetooth/hci_request.h      |   4 +-
+ net/bluetooth/mgmt.c             |  94 +++++++++-
+ 8 files changed, 537 insertions(+), 36 deletions(-)
 
-
-
+-- 
+2.25.0.341.g760bfbb309-goog
 
