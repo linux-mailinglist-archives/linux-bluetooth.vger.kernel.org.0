@@ -2,127 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E53F1430B4
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 Jan 2020 18:17:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAC5E14324F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 Jan 2020 20:32:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728689AbgATRRr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 20 Jan 2020 12:17:47 -0500
-Received: from mga17.intel.com ([192.55.52.151]:27768 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728640AbgATRRr (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 20 Jan 2020 12:17:47 -0500
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 20 Jan 2020 09:17:46 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,342,1574150400"; 
-   d="scan'208";a="220719724"
-Received: from fmsmsx107.amr.corp.intel.com ([10.18.124.205])
-  by fmsmga007.fm.intel.com with ESMTP; 20 Jan 2020 09:17:46 -0800
-Received: from fmsmsx163.amr.corp.intel.com (10.18.125.72) by
- fmsmsx107.amr.corp.intel.com (10.18.124.205) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Mon, 20 Jan 2020 09:17:46 -0800
-Received: from FMSEDG002.ED.cps.intel.com (10.1.192.134) by
- fmsmsx163.amr.corp.intel.com (10.18.125.72) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Mon, 20 Jan 2020 09:17:46 -0800
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.109)
- by edgegateway.intel.com (192.55.55.69) with Microsoft SMTP Server (TLS) id
- 14.3.439.0; Mon, 20 Jan 2020 09:17:46 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=eUHudLgvqzu4J+4ch6GJhq9xqR4KvemS0HVZmRvl93nb6uqTJmXsEayd8zAl1gpDjelwSLj1Y4IGBP/KcOOJHQNSWNB5sQYxMTCRWfSqMXKZYBqju+Gd/iGj+FCiP7TkJjcFDeunqDxTVqwaZIPqve72u2dP+lF5czhJ7u+Mt/PDb7REZrT14aqq5UpVHsMNtxO2UD1MNwCWGxSYqiKPvzrUZKXJ1uHQJW3F/jPBva0yQJfUrOPmt87mfuVRToAtPlUDLIRxhGRR1EYMfkyRobcDfTTPF0q0s1j5o0MPL26WfoCEqptCCYlFkJqVAfu8dflRwThmAtW5gSOExIt6Lw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oMjK5IgY3JZtzz9atCAuGWXSZEATg95rfxZmEDvSgkM=;
- b=DVk78JyjmqXRCAbk5+2/DFHEtADw4Z2j3/e39KYxz/HlD+mxHU7qWbIG5E9JDv3av2IW3i2E4J0gAcGvx9WOoPt5eO+G5nVPdnTMQxgNJJnTcC6EeNilpYoUV6VQfOLRvUJjc7u9gCHgpP9KtvpX2RgEjOpa4qmOtWYXQKIFaIG0qVVZjsis5dOwbvgxFS9vkwK7Wy5vsti0U/evsMtcHr1mzjvwYBxGm6J04HtgRQo3J9Eh8d9FXzhMV3AYBRnha6hhRtE9ZuFi0LG4z9UxDGaG1KrEQ9IFgk3eUsBEg4uATZ8wW3H2Ue86Lzg3EgHSaYjScUSbTj8xoofaU35r/w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oMjK5IgY3JZtzz9atCAuGWXSZEATg95rfxZmEDvSgkM=;
- b=Mt2HFfDw6pM6ZpzIk/WNuxKf3q7e1iXDoQeA4aGV3fL+yQRB+18fHVxCrPu+E99VU5qYc0FLD+iQFDDl1effvtKhtisBHoHovZqYxl/Tf5dxm2BYE6x8aNKOb2ttCv+Cjfcavhnz9wDoSxF5w0+gC5MpOryAZ/PhjDrQ8vWjG+Y=
-Received: from MWHPR11MB1664.namprd11.prod.outlook.com (10.172.54.13) by
- MWHPR11MB0047.namprd11.prod.outlook.com (10.164.204.144) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2644.22; Mon, 20 Jan 2020 17:17:45 +0000
-Received: from MWHPR11MB1664.namprd11.prod.outlook.com
- ([fe80::e8fb:c0e8:5779:367e]) by MWHPR11MB1664.namprd11.prod.outlook.com
- ([fe80::e8fb:c0e8:5779:367e%6]) with mapi id 15.20.2644.024; Mon, 20 Jan 2020
- 17:17:45 +0000
-From:   "Gix, Brian" <brian.gix@intel.com>
-To:     "jakub.witowski@silvair.com" <jakub.witowski@silvair.com>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-CC:     "Stotland, Inga" <inga.stotland@intel.com>
-Subject: Re: [PATCH 0/3] Allow to reattach with new composition data
-Thread-Topic: [PATCH 0/3] Allow to reattach with new composition data
-Thread-Index: AQHVz6xZE3L9S8RQfkKy+Ikw7hve1Kfzy7UA
-Date:   Mon, 20 Jan 2020 17:17:45 +0000
-Message-ID: <56b3aa902dee18a45e91d826344085cf1fb3ecca.camel@intel.com>
-References: <20200120161114.6757-1-jakub.witowski@silvair.com>
-In-Reply-To: <20200120161114.6757-1-jakub.witowski@silvair.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=brian.gix@intel.com; 
-x-originating-ip: [192.55.54.40]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: da47a09f-dfe7-4d5d-f5e0-08d79dccaa44
-x-ms-traffictypediagnostic: MWHPR11MB0047:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <MWHPR11MB004730D9FF4D284EC4B71E95E1320@MWHPR11MB0047.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 0288CD37D9
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(346002)(376002)(366004)(396003)(39860400002)(136003)(189003)(199004)(81156014)(6506007)(316002)(5660300002)(36756003)(478600001)(71200400001)(110136005)(86362001)(8676002)(81166006)(66446008)(64756008)(66556008)(76116006)(6512007)(66476007)(107886003)(91956017)(66946007)(4326008)(2906002)(2616005)(6486002)(8936002)(26005)(186003);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHPR11MB0047;H:MWHPR11MB1664.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 5grNKj8TYUWo6yMTcTzZPP0CcwLVOJsLAGfTV9ZZ/eeK2pETuKgbzj5CpW0YRDwp4n4+XkwtPELloqOvIihUQNGkRQajBjboPZaUnggLyVePTLGp8Yt9Z++laiztVOnqmrd82FxUJ+SxY2A5omEtKGDx24znLs7DJ3I9xw5DPxFvN2mdc2kUXLOaFN8DvOHi4EvwZMWDO1jc7m7WpfnG7qSRrROvJuTTaaMPBhdtdeON4NRFKLe61C1M3fGJVbfJzluqaBFQlP5t+LOB4Z42s2LhkZdolCwTvgV5xCwizFLi7hGsJcZZ2lRpYNYL8USTkOsZpnuLVyzoAW7ZJ9ck+GbmNfX0DooP5MlPEzKEcz2vCZ+D4IOGN3bM+cWIUruAhtJ26MfGrMuoqJ091m42qtI8rprBcexyob8sVU71R00UKawyLLLrr14pQoHcD+aJ
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <F14D0EA733A36646B0355AAEB9E9A4B3@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        id S1727691AbgATTcJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 20 Jan 2020 14:32:09 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:39907 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727254AbgATTcA (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 20 Jan 2020 14:32:00 -0500
+Received: by mail-ed1-f66.google.com with SMTP id t17so595747eds.6
+        for <linux-bluetooth@vger.kernel.org>; Mon, 20 Jan 2020 11:31:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=z7I/Kq2V0EnXiuoACdRbnwoAql3KZ080nwyXVjlruyU=;
+        b=kLfnsSTIjE2YEe6HI6GtqXd6cMnhTRLMcstoRngEtLrpsW8Des52P9cJGak3H8TgGi
+         7pI7x0ReUsZVA5020Qw65cEVulbgAqf7PV7Yj5z98jIQHYXuhdjNseji1wTJmoRk9owd
+         jH0nw85bxKb6JNDbbMZz77rTtrhB/lrp1T9+1Yzp1e0fAmiYnPF2y/wqE3N2vxlEpqDg
+         Q62+v45VGQo8fprIjkXGYdl8n0+0lt4RTeTWLmEirmHeh05e1zsbOQ1RyEmjVmqN0eJc
+         PRg9w7tG3wGqyiL8Rgrtjody799fKx6nbHvtMQHhCmcCncWFfzoetJS1edNfQP320vCH
+         Vilg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=z7I/Kq2V0EnXiuoACdRbnwoAql3KZ080nwyXVjlruyU=;
+        b=iF5TniyPmnfDf/I7dsYN79GO47bmVEL8wBHBp13kcgVTj1RFnZszRRbs7nmXb196Pk
+         Kg9/YaO4VLmVDkr87uSalJyfgGIENvbEqbpMIr2Ev52UXJ5urHxljHWBdCW0me1rjP06
+         xG8RQB2OetBSaB1IyNBId+GT+rixNtPL5dOKl2PJppLx/lBisElTl3oGCn5GPcgOol01
+         FTrB90L7LxvawzL7b21l+xMRV242sMrPFvfDPXt3vpJhKgKx4cQneQ58UQEQiQOv9X0d
+         uiZr4VRpEb6fF8WN+gDyK6yRhaS+ozzQlFE5IvnmAJ52enP4IsIBgCd+liyMlWborQk/
+         KabQ==
+X-Gm-Message-State: APjAAAVP/FxuRRV+qiAFZplkIxTW99JByVAyZlYR5zjzylf4ZJu/R5JX
+        u8dQ7tKYWHYjpezjpODYDl37qno7cfTmbbAQJTw=
+X-Google-Smtp-Source: APXvYqwPh6D8ihOXjaVWGs/0GLulEekGPU0xOOyxhr7PagnLX+E8xWeQy/UQ09ZNp2jZFCCt0xVGiodDu+D5No4niKg=
+X-Received: by 2002:a05:6402:505:: with SMTP id m5mr609398edv.15.1579548719077;
+ Mon, 20 Jan 2020 11:31:59 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: da47a09f-dfe7-4d5d-f5e0-08d79dccaa44
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jan 2020 17:17:45.0500
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: g6YyUeTJz7g/8sjmjKT3kCPwg6BtBtKvNQscq6iep6nuuuZfFGR/+ZcdywRXHg7D5QtgcxDoZAlW8qH5R/hBCg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR11MB0047
-X-OriginatorOrg: intel.com
+Received: by 2002:a05:6402:22dc:0:0:0:0 with HTTP; Mon, 20 Jan 2020 11:31:57
+ -0800 (PST)
+Reply-To: mcclainejohn.13@gmail.com
+From:   "Prof, William Roberts" <eco.bank1204@gmail.com>
+Date:   Mon, 20 Jan 2020 20:31:57 +0100
+Message-ID: <CAOE+jAB9Cv76tHqc-hO92yWjVshCsALoX=zT1ruNmX+0-Bjyxw@mail.gmail.com>
+Subject: Contact Diplomatic Agent, Mr. Mcclaine John to receive your ATM CARD
+ valued the sum of $12.8Million United States Dollars
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-SGkgSmFrdWIsDQoNCmEgZmV3IHRoaW5ncy4uDQoNCkZpcnN0LCB0aGUgc3ViamVjdCBsaW5lIGZv
-ciB1c2VyIHNwYWNlIHBhdGNoZXMgc2hvdWxkIGFsd2F5cyBiZSBbQmx1ZVogUEFUQ0guLi5dIHRv
-IGRpZmZlcmVudGlhdGUgYmx1ZXouZ2l0DQpwYXRjaGVzIGZyb20ga2VybmVsIHBhdGNoZXMuDQoN
-CkFsc286ICBUaGUgdGl0bGUgb2YgdGhlIHBhdGNoIHNob3VsZCBhbHdheXMgc3RhcnQgd2l0aCB0
-aGUgY29tcG9uZW50IGJlaW5nIG1vZGlmaWVkLi4uIGluIHRoaXMgY2FzZSANCiJtZXNoOiBBbGxv
-dyByZWF0dGFjaC4uLiIgb3IgInRvb2xzL21lc2g6IFhYWFgiIGZvciBleGFtcGxlDQoNCk9uIE1v
-biwgMjAyMC0wMS0yMCBhdCAxNzoxMSArMDEwMCwgSmFrdWIgV2l0b3dza2kgd3JvdGU6DQo+IFRo
-aXMgcGF0Y2ggYWxsb3dzIHRoZSBhcHBsaWNhdGlvbiB0byBtb2RpZnkgdGhlIENJRCwgUElELCBW
-SUQgYW5kIENSUEwgaW4gdGhlIGNvbXBvc2l0aW9uIGRhdGEuDQoNClRoaXMgd2lsbCByZXF1aXJl
-IHNvbWUgZGlzY3Vzc2lvbi4gICBDdXJyZW50bHkgd2UgYXJlIHBsYW5uaW5nIGF0ICpsZWFzdCog
-dG8gbWFrZSBDUlBMIGVudGlyZWx5IHVuZGVyIHRoZQ0KY29udHJvbCBvZiBibHVldG9vdGgtbWVz
-aC5jb25mLCBiZWNhdXNlIHRoaXMgaGFzIGEgc2lnbmlmaWNhbnQgZGFlbW9uIGltcGFjdC4NCg0K
-VGhlIG90aGVyIHNldHRpbmdzIEkgYW0gbm90IGFzIGNvbmNlcm5lZCBhYm91dC4uLiAgSWYgdGhl
-IHNwZWMgcmVhbGx5IGRvZXMgYWxsb3cgdGhlaXIgYWx0ZXJhdGlvbiB0aG91Z2gsIEkgYW0NCndp
-bGxpbmcgdG8gY29uc2lkZXIgdGhlbS4NCg0KPiBBY2NvcmRpbmcgdGhlIE1lc2ggUHJvZmlsZSAo
-Mi4zLjQgRWxlbWVudHMpIHRoZSBtb2RpZmljYXRpb24gb2YgZmllbGRzIG90aGVyIHRoYW4gIkVs
-ZW1lbnRzIiBpcyBub3QNCj4gcHJvaGliaXRlZC4NCj4gDQo+IEFsc28gaW4gbXkgb3BpbmlvbiAo
-YXMgeW91IGNhbiBzZWUgaW4gdGhlIDFzdCBwYXRjaCksIHRoZXJlIGlzIG5vIG5lZWQgdG8gdXNl
-IHBvaW50ZXIgdG8gdGhlIG5vZGVfY29tcG9zaXRpb24NCj4gc3RydWN0Lg0KPiBUaGUgc3RhdGlj
-IGlzIG1vcmUgY2xlYXIgYW5kIGxlc3MgcHJvYmxlbWF0aWMuDQo+IA0KPiBKYWt1YiBXaXRvd3Nr
-aSAoMyk6DQo+ICAgbWVzaDogdXNlIHN0YXRpYyBub2RlX2NvbXAgaW5zdGVhZCBvZiB0aGUgcG9p
-bnRlcg0KPiAgIG1lc2g6IGFkZCBjb21wb3NpdGlvbiBkYXRhIHNldHRlcg0KPiAgIG1lc2g6IGFs
-bG93IHRvIHJlYXR0YWNoIHdpdGggbmV3IGNvbXBvc2l0aW9uIGRhdGENCj4gDQo+ICBtZXNoL21l
-c2gtY29uZmlnLWpzb24uYyB8IDQ2ICsrKysrKysrKysrKysrKy0tLS0tDQo+ICBtZXNoL21lc2gt
-Y29uZmlnLmggICAgICB8ICAyICsNCj4gIG1lc2gvbm9kZS5jICAgICAgICAgICAgIHwgOTYgKysr
-KysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0NCj4gIDMgZmlsZXMgY2hhbmdl
-ZCwgOTYgaW5zZXJ0aW9ucygrKSwgNDggZGVsZXRpb25zKC0pDQo+IA0K
+Attn: Dear Beneficiary,
+
+I wish to inform you that the diplomatic agent conveying your ATM CARD
+valued the sum of $12.8Million United States Dollars has misplaced
+your address and he is currently stranded at (George Bush
+International Airport) Houston Texas USA now
+We required you to reconfirm the following information's below to him
+so that he can deliver your Payment CARD to you today or tomorrow
+morning as information provided with open communications via email and
+telephone for security reasons.
+HERE IS THE DETAILS  HE NEED FROM YOU URGENT
+YOUR FULL NAME:========
+ADDRESS:========
+MOBILE NO:========
+NAME OF YOUR NEAREST AIRPORT:========
+A COPY OF YOUR IDENTIFICATION :========
+
+Note; do contact the diplomatic agent immediately through the
+information's listed below
+Contact Person: Diplomatic Agent, Mr. Mcclaine John
+EMAIL: mcclainejohn.13@gmail.com
+Tel:(223) 777-7518
+
+Contact the diplomatic agent immediately
+because he is waiting to hear from you today with the needed information's.
+
+NOTE: The Diplomatic agent does not know that the content of the
+consignment box is $12.800,000,00 Million United States Dollars and on
+no circumstances should you let him know the content. The consignment
+was moved from here as family treasures, so never allow him to open
+the box. Please I have paid delivery fees for you but the only money
+you must send to Mcclaine John is your ATM CARD delivery fee $25.00
+only. text Him as you contact Him Immediately
+
+Thanks,
+with Regards.
+Prof, William Roberts
+Director DHL COURIER SERVICES-Benin
