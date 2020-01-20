@@ -2,63 +2,80 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A611A141F99
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 Jan 2020 19:44:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A09F142F53
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 Jan 2020 17:11:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728852AbgASSo4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 19 Jan 2020 13:44:56 -0500
-Received: from mail-il1-f193.google.com ([209.85.166.193]:41104 "EHLO
-        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728853AbgASSo4 (ORCPT
+        id S1727285AbgATQLY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 20 Jan 2020 11:11:24 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39412 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726642AbgATQLY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 19 Jan 2020 13:44:56 -0500
-Received: by mail-il1-f193.google.com with SMTP id f10so25481434ils.8
-        for <linux-bluetooth@vger.kernel.org>; Sun, 19 Jan 2020 10:44:55 -0800 (PST)
+        Mon, 20 Jan 2020 11:11:24 -0500
+Received: by mail-wm1-f66.google.com with SMTP id 20so137444wmj.4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 20 Jan 2020 08:11:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=/o+CA7VDRA7UR3HGeT8+/tYzwEnOXwq5B8ZHP2/HeYc=;
-        b=frxwjTRIp+XgDBvVlMfTiQhQaXARjuhmZKvuCg0fbiQvc0jcqoJ5N06KXRMimf2ipV
-         hUPtfIPtPm2My5Mmi2xtE8PNIh4ec2Z/E+IxWiy0J9NFDyiy/wDmf7sfUKrmJl1I7q7T
-         i9+7yFlnGTsA5uK0vk2neF+Wum2OBPPzxKbXPSqtB3fiY+96zKZZMDA8Ye1x6zGAEV7+
-         5xDpsnWlxGtfjsKCF/uXtBOzmkzTPrjM57oTMkiy8m4RJynJEVle6lhb+3rLG0Kj3Odd
-         nRonxdfi9T9bISdf45oqNhq6SMpv/y8BIdEKECqh6AlFIP7XZ6silqJta2OddruS1Fx1
-         Darg==
+        d=silvair-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ecA0xiDygGi3YJpCX3Q+rtTc6zSQ/mOLVNTXguwjeVA=;
+        b=Fhqx908MiLR2xYa/3eFRLFglhZJKBpezrVz0NQLjBQ2t2hvDZoYJQruwuMEC4yMB4c
+         pCf7iPqkt1E2e+yMKtlcc7xReyInmnzz/Zd2At4fB/oDjIYFO1qF6ZV8ciMShWJPhKZy
+         lT9Tu0mkIXAynEHWYBiSQDQ5lQSWo8JFJ1ofntQ6axOdeAF6IxaZ7MQkLCJhruS9NEzY
+         PaeyXwvqQdjI6H8j5Ood1RuxtK4hJoYNUpUDC3WHFazRNYzXzdd6RQd1Uii3qXPWb9ar
+         Kf1jtIg86ST9R3blAbEdesfogOn2txB2grXAjPKXVA4BcgT3vtYZWnmB2vgNwKgVQTX/
+         9VAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=/o+CA7VDRA7UR3HGeT8+/tYzwEnOXwq5B8ZHP2/HeYc=;
-        b=lGBCfwcCNXS+O/SBUcn5VzKMB63zPo5bJQc871FHZ7hjl4f36zVRAx+W05NN7+h4Sj
-         50fFbamslcQcB2K6ojPADciHJoRwUnk4ggrR13kqIf/m9YrBrsizepGwTJsGQcolSWUi
-         Jf/v/81aPwPWa+xq9ZC64LN6ZSEgTjtkwhEeBZJJUGZ6avIZf9akI2Ip49W3nmoZoZ6x
-         2zn+AsC8VnRaPGxoLB+B0mCBo0ipitYIBEUKaugoMLWd5Ohx2y0Y3lXIVKe4u/215oQl
-         LsueH5iVs2lj4fltpYL8IX9M5RP8msV0j5HklAGDEzsvbu6/RN+i6nV75SBGQTxcPwl8
-         omYQ==
-X-Gm-Message-State: APjAAAWdUzsKX6oCmStVtII5yk25lZ0aZwVjid+oGCjWo4ascmIs0CT4
-        Da05IT/zWKzTP3n1OcRUdEi5TPzTlJi/t+ecvxI=
-X-Google-Smtp-Source: APXvYqwunf6TLONVcydOsD/K4p2fb+EOwhav1QOrqeu8+8G07aq34R9Hg5B1Ukz1B2r3cNBCizzmziQLI/4gi0D4r3s=
-X-Received: by 2002:a92:5e0c:: with SMTP id s12mr8141829ilb.19.1579459495550;
- Sun, 19 Jan 2020 10:44:55 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ecA0xiDygGi3YJpCX3Q+rtTc6zSQ/mOLVNTXguwjeVA=;
+        b=X649VYvErlunouNhxo1uPcb8IVmGfazGC6Tro9mOo+0g5PTjMk9ciqioOvUV1W3u7g
+         UO0j8q+aSP31kuEtrWKlPkRY/CnHE/2Ruvxn8EVSaDoa5ZV4qW99Vd87e6iX7YLFfnln
+         EtF62mhBkH4MYyheeIPThjHjtjeBT2mUn4u49uTAMQhkw7dDRmvuuC+EpSFykXXwkphC
+         JL4oasGwr86bw2AA/wN3y0nQlh1KUNcfNiTXIoQuVR8d9fr9RXi4yYCxyXa7+jdSYqXl
+         6loJa7c2iXcd9Qk1UOmPMxSMOjSBj6HCLSyTwFz8958RokgmJRdef26IfS7dzU9sA4Y0
+         LCiA==
+X-Gm-Message-State: APjAAAWCa0If2a8bIOl3q8Ts49wE9ynxzVCo9cD/Rw6ZiAsl7kIN5jot
+        FZvFNnmWVylWo21Ig+KoM1F+Ud9heCX7+Q==
+X-Google-Smtp-Source: APXvYqwbBo17BmpZVjc2ukFqpMtnqj2LU5y3s+xGZgu4hggo0g/Yn6G9tpB0QXyIFMk+XmZ5emXsWA==
+X-Received: by 2002:a7b:c765:: with SMTP id x5mr74638wmk.129.1579536681795;
+        Mon, 20 Jan 2020 08:11:21 -0800 (PST)
+Received: from localhost.localdomain ([217.153.94.18])
+        by smtp.gmail.com with ESMTPSA id 16sm22564602wmi.0.2020.01.20.08.11.19
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jan 2020 08:11:20 -0800 (PST)
+From:   Jakub Witowski <jakub.witowski@silvair.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH 0/3] Allow to reattach with new composition data
+Date:   Mon, 20 Jan 2020 17:11:11 +0100
+Message-Id: <20200120161114.6757-1-jakub.witowski@silvair.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Received: by 2002:a02:95c8:0:0:0:0:0 with HTTP; Sun, 19 Jan 2020 10:44:55
- -0800 (PST)
-Reply-To: favordens@email.com
-From:   Favor Desmond <contecindy5@gmail.com>
-Date:   Sun, 19 Jan 2020 18:44:55 +0000
-Message-ID: <CAOfCPNxSu9KUi1AXT1eCU3k_nDieFtnVEn9jEmoRmAm70LZ0JQ@mail.gmail.com>
-Subject: HELLO
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello Dear
-Greetings to you,I am Favor Desmond from Ivory coast currently living
-in  Togo Republic,I would like to know you more, so that i can tell
-you little amount myself and my photo, email address is
-favordens@email.com
-Thanks
-Favor
+This patch allows the application to modify the CID, PID, VID and CRPL in the composition data.
+
+According the Mesh Profile (2.3.4 Elements) the modification of fields other than "Elements" is not prohibited.
+
+Also in my opinion (as you can see in the 1st patch), there is no need to use pointer to the node_composition struct.
+The static is more clear and less problematic.
+
+Jakub Witowski (3):
+  mesh: use static node_comp instead of the pointer
+  mesh: add composition data setter
+  mesh: allow to reattach with new composition data
+
+ mesh/mesh-config-json.c | 46 +++++++++++++++-----
+ mesh/mesh-config.h      |  2 +
+ mesh/node.c             | 96 +++++++++++++++++++++++++----------------
+ 3 files changed, 96 insertions(+), 48 deletions(-)
+
+-- 
+2.20.1
+
