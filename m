@@ -2,69 +2,145 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6433F145E52
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Jan 2020 23:01:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EE08145EAB
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Jan 2020 23:35:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725970AbgAVWBM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 Jan 2020 17:01:12 -0500
-Received: from mailgw.unisannio.it ([193.206.108.11]:43859 "EHLO
-        mailgw.unisannio.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725884AbgAVWBM (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 22 Jan 2020 17:01:12 -0500
-X-Greylist: delayed 558 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Jan 2020 17:01:11 EST
-Received: from localhost (unknown [127.0.0.1])
-        by mailgw.unisannio.it (Postfix) with ESMTP id 2EA39500820;
-        Wed, 22 Jan 2020 21:54:56 +0000 (UTC)
-Received: from mailgw.unisannio.it ([127.0.0.1])
- by localhost (mailgw.unisannio.it [127.0.0.1]) (amavisd-maia, port 10024)
- with ESMTP id 01397-05; Wed, 22 Jan 2020 22:54:55 +0100 (CET)
-Received: from pamx1.unisannio.it (pamx1.unisannio.it [193.206.108.12])
-        by mailgw.unisannio.it (Postfix) with ESMTP id 12C82500821;
-        Wed, 22 Jan 2020 22:54:53 +0100 (CET)
-Received: from webmail.unisannio.it (webmail.unisannio.it [193.206.108.9])
-        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: attanasi)
-        by pamx1.unisannio.it (Postfix) with ESMTPSA id 9D3431E0320;
-        Wed, 22 Jan 2020 22:45:47 +0100 (CET)
+        id S1725933AbgAVWfd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Jan 2020 17:35:33 -0500
+Received: from mga04.intel.com ([192.55.52.120]:63302 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725884AbgAVWfd (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 22 Jan 2020 17:35:33 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 22 Jan 2020 14:35:32 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,351,1574150400"; 
+   d="scan'208";a="275741947"
+Received: from ingas-nuc1.sea.intel.com ([10.252.135.138])
+  by FMSMGA003.fm.intel.com with ESMTP; 22 Jan 2020 14:35:31 -0800
+From:   Inga Stotland <inga.stotland@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ] tools/mesh: Add commands for key refresh phase get/set
+Date:   Wed, 22 Jan 2020 14:35:31 -0800
+Message-Id: <20200122223531.19112-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.21.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
 Content-Transfer-Encoding: 8bit
-Date:   Thu, 23 Jan 2020 00:45:47 +0300
-From:   "Banca IMI S.P.A" <attanasi@unisannio.it>
-To:     undisclosed-recipients:;
-Subject: =?UTF-8?Q?Ekonomisk_hj=C3=A4lp_=28L=C3=A5n_=40_1=2C3=25=29?=
-Organization: Banca IMI S.P.A
-Reply-To: info.bancaimi.uk@gmail.com
-Mail-Reply-To: info.bancaimi.uk@gmail.com
-Message-ID: <0e69b1015c817ebed928fb731c2b16a9@unisannio.it>
-X-Sender: attanasi@unisannio.it
-User-Agent: Roundcube Webmail/1.3.9
-X-Virus-Scanned: Maia Mailguard 1.0.0
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Add commands to send KEY_REFRESH_PHASE_GET and KEY_REFRESH_PHASE_SET
+messages. Handle KEY_REFRESH_PHASE_STATUS response.
+---
+ tools/mesh/cfgcli.c | 69 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 69 insertions(+)
 
-
+diff --git a/tools/mesh/cfgcli.c b/tools/mesh/cfgcli.c
+index cfa573de3..97849ff0d 100644
+--- a/tools/mesh/cfgcli.c
++++ b/tools/mesh/cfgcli.c
+@@ -42,6 +42,7 @@
+ 
+ #define MIN_COMPOSITION_LEN 16
+ #define NO_RESPONSE 0xFFFFFFFF
++#define MAX_OPCODE_SZ 3
+ 
+ /* Default timeout for getting a response to a sent config command (seconds) */
+ #define DEFAULT_TIMEOUT 2
+@@ -538,6 +539,19 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 
+ 		break;
+ 
++	case OP_CONFIG_KEY_REFRESH_PHASE_STATUS:
++		if (len != 4)
++			return true;
++
++		bt_shell_printf("\nNode %4.4x Key Refresh Phase status %s\n",
++				src, mesh_status_str(data[0]));
++
++		net_idx = get_le16(data + 1);
++		bt_shell_printf("\tNetKey Index %3.3x, phase %d\n",
++							net_idx, data[3]);
++
++		break;
++
+ 	case OP_CONFIG_MODEL_PUB_STATUS:
+ 		if (len != 12 && len != 14)
+ 			return true;
+@@ -1537,6 +1551,57 @@ static void cmd_netkey_get(int argc, char *argv[])
+ 	cmd_default(OP_NETKEY_GET);
+ }
+ 
++static void cmd_kr_phase_get(int argc, char *argv[])
++{
++	uint16_t n;
++	uint8_t msg[MAX_OPCODE_SZ + 2];
++	int parm_cnt;
++
++	n = mesh_opcode_set(OP_CONFIG_KEY_REFRESH_PHASE_GET, msg);
++
++	parm_cnt = read_input_parameters(argc, argv);
++	if (parm_cnt != 1) {
++		bt_shell_printf("bad arguments\n");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	/* NetKey index */
++	put_le16(parms[0], msg + n);
++	n += 2;
++
++	if (!config_send(msg, n, OP_CONFIG_KEY_REFRESH_PHASE_GET))
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
++static void cmd_kr_phase_set(int argc, char *argv[])
++{
++	uint16_t n;
++	uint8_t msg[MAX_OPCODE_SZ + 3];
++	int parm_cnt;
++
++	n = mesh_opcode_set(OP_CONFIG_KEY_REFRESH_PHASE_SET, msg);
++
++	parm_cnt = read_input_parameters(argc, argv);
++	if (parm_cnt != 2) {
++		bt_shell_printf("bad arguments\n");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	/* NetKey index */
++	put_le16(parms[0], msg + n);
++	n += 2;
++
++	/* Transition */
++	msg[n++] = parms[1];
++
++	if (!config_send(msg, n, OP_CONFIG_KEY_REFRESH_PHASE_SET))
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
+ static bool tx_setup(model_send_msg_func_t send_func, void *user_data)
+ {
+ 	if (!send_func)
+@@ -1566,6 +1631,10 @@ static const struct bt_shell_menu cfg_menu = {
+ 				"Delete NetKey"},
+ 	{"netkey-get", NULL, cmd_netkey_get,
+ 				"List NetKeys known to the node"},
++	{"kr-phase-get", "<net_idx>", cmd_kr_phase_get,
++				"Get Key Refresh phase of the nodes's subnet"},
++	{"kr-phase-set", "<net_idx> <phase>", cmd_kr_phase_set,
++				"Set Key Refresh phase of the nodes's subnet"},
+ 	{"appkey-add", "<app_idx>", cmd_appkey_add,
+ 				"Add AppKey"},
+ 	{"appkey-update", "<app_idx>", cmd_appkey_update,
 -- 
-Hälsningar Herr/Fru,
+2.21.1
 
-Behöver du ekonomiskt stöd (lån)?
-Prata med oss på Banca IMI, vi löser dina ekonomiska problem.
-
-Vår ränta är 1,3% per år. Ansök nu och fyll i följande 
-ansökningsinformation:
-
-Fullständiga namn:____________________
-Lånebelopp: _______________________
-Lånets varaktighet: ___________________
-Lånsändamål: _________________
-Telefon:____________________
-
-Vi väntar på din ansökan så att din lånebegäran kan behandlas.
-
-Vänliga hälsningar
