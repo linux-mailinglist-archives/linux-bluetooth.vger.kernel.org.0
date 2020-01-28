@@ -2,79 +2,134 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DF9714C25E
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2020 22:53:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 70A7E14C25F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2020 22:53:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726276AbgA1VxW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 28 Jan 2020 16:53:22 -0500
-Received: from mga09.intel.com ([134.134.136.24]:27725 "EHLO mga09.intel.com"
+        id S1726292AbgA1Vx2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 28 Jan 2020 16:53:28 -0500
+Received: from mga02.intel.com ([134.134.136.20]:27638 "EHLO mga02.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726211AbgA1VxW (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 28 Jan 2020 16:53:22 -0500
+        id S1726211AbgA1Vx1 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 28 Jan 2020 16:53:27 -0500
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 28 Jan 2020 13:53:21 -0800
+  by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 28 Jan 2020 13:53:27 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.70,375,1574150400"; 
-   d="scan'208";a="246856232"
+   d="scan'208";a="246856245"
 Received: from bgi1-mobl2.amr.corp.intel.com ([10.255.84.27])
-  by orsmga002.jf.intel.com with ESMTP; 28 Jan 2020 13:53:21 -0800
+  by orsmga002.jf.intel.com with ESMTP; 28 Jan 2020 13:53:27 -0800
 From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     brian.gix@intel.com, inga.stotland@intel.com,
         rafal.gajda@silvair.com
-Subject: [PATCH BlueZ v3 0/5] mesh: Add NVM storage of Replay Protection List
-Date:   Tue, 28 Jan 2020 13:53:05 -0800
-Message-Id: <20200128215310.8205-1-brian.gix@intel.com>
+Subject: [PATCH BlueZ v3 1/5] mesh: Relocate tree deletion to util.c/h
+Date:   Tue, 28 Jan 2020 13:53:06 -0800
+Message-Id: <20200128215310.8205-2-brian.gix@intel.com>
 X-Mailer: git-send-email 2.21.1
+In-Reply-To: <20200128215310.8205-1-brian.gix@intel.com>
+References: <20200128215310.8205-1-brian.gix@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Version 3: Fix problem found by Rafał relating to the handling of
-sequence numbers of messages being handled internally (loop-backs),
-which were being rejected by the Replay Protection List (please see
-patch 3/5).
+---
+ mesh/mesh-config-json.c | 20 +-------------------
+ mesh/util.c             | 25 +++++++++++++++++++++++++
+ mesh/util.h             |  1 +
+ 3 files changed, 27 insertions(+), 19 deletions(-)
 
-Version 2: Fix path construction code when first reading RPL from NVM
-
-
-An oversight led to losing our Replay Protection List with every
-re-boot. This patch-set makes a number of Replay Protect List
-modifications that culminate in adding rpl.c/h, which stores the latest
-iv_index/sequence values for each node that handles an incoming packet.
-
-The first 4 patches, does some maintenance required to handle RPL
-according the the Mesh Specification.
-
-
-Brian Gix (5):
-  mesh: Relocate tree deletion to util.c/h
-  mesh: Move Replay Protection to mesh/net.c
-  mesh: Clean-up unneeded Sequence Number increments
-  mesh: Apply Replay Protection to all incoming packets
-  mesh: Add NVM storage of Replay Protection
-
- Makefile.mesh           |   1 +
- mesh/appkey.c           | 102 ---------------
- mesh/appkey.h           |   3 -
- mesh/mesh-config-json.c |  20 +--
- mesh/model.c            |  16 +--
- mesh/net.c              | 128 ++++++++++++++++---
- mesh/net.h              |   3 +
- mesh/rpl.c              | 277 ++++++++++++++++++++++++++++++++++++++++
- mesh/rpl.h              |  30 +++++
- mesh/util.c             |  25 ++++
- mesh/util.h             |   1 +
- 11 files changed, 456 insertions(+), 150 deletions(-)
- create mode 100644 mesh/rpl.c
- create mode 100644 mesh/rpl.h
-
+diff --git a/mesh/mesh-config-json.c b/mesh/mesh-config-json.c
+index 5855149e3..ad2d4d0f8 100644
+--- a/mesh/mesh-config-json.c
++++ b/mesh/mesh-config-json.c
+@@ -2253,24 +2253,6 @@ bool mesh_config_load_nodes(const char *cfgdir_name, mesh_config_node_func_t cb,
+ 	return true;
+ }
+ 
+-static int del_fobject(const char *fpath, const struct stat *sb, int typeflag,
+-						struct FTW *ftwbuf)
+-{
+-	switch (typeflag) {
+-	case FTW_DP:
+-		rmdir(fpath);
+-		l_debug("RMDIR %s", fpath);
+-		break;
+-
+-	case FTW_SL:
+-	default:
+-		remove(fpath);
+-		l_debug("RM %s", fpath);
+-		break;
+-	}
+-	return 0;
+-}
+-
+ void mesh_config_destroy(struct mesh_config *cfg)
+ {
+ 	char *node_dir, *node_name;
+@@ -2291,7 +2273,7 @@ void mesh_config_destroy(struct mesh_config *cfg)
+ 	if (strcmp(node_name, uuid))
+ 		return;
+ 
+-	nftw(node_dir, del_fobject, 5, FTW_DEPTH | FTW_PHYS);
++	del_path(node_dir);
+ 
+ 	/* Release node config object */
+ 	mesh_config_release(cfg);
+diff --git a/mesh/util.c b/mesh/util.c
+index 986ba4b28..43340f159 100644
+--- a/mesh/util.c
++++ b/mesh/util.c
+@@ -24,6 +24,7 @@
+ #define _GNU_SOURCE
+ #include <dirent.h>
+ #include <ftw.h>
++#include <unistd.h>
+ #include <stdio.h>
+ #include <limits.h>
+ #include <time.h>
+@@ -129,3 +130,27 @@ int create_dir(const char *dir_name)
+ 
+ 	return 0;
+ }
++
++static int del_fobject(const char *fpath, const struct stat *sb, int typeflag,
++						struct FTW *ftwbuf)
++{
++	switch (typeflag) {
++	case FTW_DP:
++		rmdir(fpath);
++		l_debug("RMDIR %s", fpath);
++		break;
++
++	case FTW_SL:
++	default:
++		remove(fpath);
++		l_debug("RM %s", fpath);
++		break;
++	}
++	return 0;
++}
++
++
++void del_path(const char *path)
++{
++	nftw(path, del_fobject, 5, FTW_DEPTH | FTW_PHYS);
++}
+diff --git a/mesh/util.h b/mesh/util.h
+index d1e83b573..092d33041 100644
+--- a/mesh/util.h
++++ b/mesh/util.h
+@@ -23,3 +23,4 @@ bool str2hex(const char *str, uint16_t in_len, uint8_t *out,
+ size_t hex2str(uint8_t *in, size_t in_len, char *out, size_t out_len);
+ void print_packet(const char *label, const void *data, uint16_t size);
+ int create_dir(const char *dir_name);
++void del_path(const char *path);
 -- 
 2.21.1
 
