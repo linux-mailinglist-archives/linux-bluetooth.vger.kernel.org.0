@@ -2,61 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ADA7514ADCE
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2020 02:59:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4EBB14ADD2
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2020 03:05:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727680AbgA1B7N (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 27 Jan 2020 20:59:13 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:37506 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727221AbgA1B7B (ORCPT
+        id S1726173AbgA1CFL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 27 Jan 2020 21:05:11 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:38390 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726164AbgA1CFL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 27 Jan 2020 20:59:01 -0500
-Received: by mail-pl1-f193.google.com with SMTP id c23so4465589plz.4
-        for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2020 17:59:01 -0800 (PST)
+        Mon, 27 Jan 2020 21:05:11 -0500
+Received: by mail-pf1-f194.google.com with SMTP id x185so5818274pfc.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2020 18:05:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lpOZX+dHz9XxjRDtH5GLorxQ2Si7tonYbZOshKJtM8M=;
-        b=fcoQcbFDoN5vbYWDPP9Wp2ic5JaIMTPATUx8ivh8JTvD8b+3c8cJLEyDd22ABwJVOi
-         E5abq61sDd8zUEA+sJeWJ2RQEu5qL5oXz5yxCLDoJy1INeOgE6TXeJRIYjo7ZJqrHbZ1
-         dQ2a19ezKQtu7wrvIy1PKh7UCYdJqPd4XL8Eo=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YehW6fGub6Pwi8VfSfLp5w1/7e08XsyNQJVG79iISfM=;
+        b=h9pBRg6hfCmwzQL8O5l6KHlTr4uFn2cFqhGqRLubntUxkRmqEB4ES/BU2VsXOZGEU4
+         RcbTX6ggoUzoeqFn0BuM3U4Wg4hqaAn2ed7cArRtJs6v2dbRXObiV/eUCFUBKMLTRAch
+         jc7kEcQ8YFcBDtNg71MvInaU3mbBJZNl8+PZM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lpOZX+dHz9XxjRDtH5GLorxQ2Si7tonYbZOshKJtM8M=;
-        b=jjTGujU+3GWpb9dIuTtIBgd0BGPdLaZMBujd+XdGLfe/wZUO2oCrsm54wfBMSMGTma
-         cjmn+s2PUzSW9LloFK83p19VVyhS6wx6JrGFowV6aRJ2nCOcHGNegQbuXxz3dEqisBcN
-         t8fB6AjKlPnLZjilTSuRDB1YmerQn7xPr62YpZXj4J6r3d2gb50w9MTkEAOYSAyFwp67
-         lADk2tKtFTePDoSx+aYiWHpOtp3nC8TmKl/6tw13r9ZvfbxarKB99fUni7vghJWPGJAy
-         oVP4xRSUwGO5RSrWTM5iP2g/oZbPRrMjUW5C70XjkktiNZqpC0Po+a1f7/xrMjsRrHZf
-         twRQ==
-X-Gm-Message-State: APjAAAXAx1PmTe47dGlN0oTT+j0Y+3sDbwUzam8tLmxpOKbvcX6VeCvd
-        OjOodPfIXH4pyvJHTpHj2aiAfA==
-X-Google-Smtp-Source: APXvYqzGkVvPG+VeW5WBWQ7FEUOErqJgtn8CgErajJWirEZi0wGmcm0S7JrkLLuZ+QkcMy0b4dXvZg==
-X-Received: by 2002:a17:902:222:: with SMTP id 31mr6454087plc.108.1580176740934;
-        Mon, 27 Jan 2020 17:59:00 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YehW6fGub6Pwi8VfSfLp5w1/7e08XsyNQJVG79iISfM=;
+        b=QbCYVm1/tyyNVOG0McsPzfEVoT235w90ZhaIL+bILG2Mt7P6k8fvvASJJuhwH9Z4Iw
+         SqdVd8sUR3n2LYRfBtWa8o7sR1zFq7TEiRE/ZoQs9qGiV60A+Vj3g6dOAEZ2OEJTbaoH
+         5L+o794jM75haUjQnGc2IIHjCRDaF06oSpbQR17v9+XNP+N3CJU2LLU1uRy7a7r53Ptm
+         inXpYmbCkJnb+v5gT47RpqWOIMOhFA45yZi3vRK0kfg8otCH8YjMyC0fA73qopMmbuGg
+         TRjGtNrUK1kRQnSf5WuEu89dO0Fz8k+riiCJpp2bnvbwCczl+QKeMIdlQXSRF1Uod8xQ
+         bA5A==
+X-Gm-Message-State: APjAAAX8YMdoQysClbucwkBHsmkyDHJ4I7PEprX6zZCQQwO13NPnwcQD
+        GSFx8LCiG1Unr1zrXjB5NYcg/g==
+X-Google-Smtp-Source: APXvYqxRQHFOeSynz3m24br4ZN2VGWjWP0n5YD9aLp8IKwFWfTi+58mEXLBMm5jKAj6Es2dqh/J3wQ==
+X-Received: by 2002:a65:64c6:: with SMTP id t6mr21682053pgv.392.1580177110799;
+        Mon, 27 Jan 2020 18:05:10 -0800 (PST)
 Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id a17sm364153pjv.6.2020.01.27.17.58.59
+        by smtp.gmail.com with ESMTPSA id z19sm17119015pfn.49.2020.01.27.18.05.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2020 17:59:00 -0800 (PST)
+        Mon, 27 Jan 2020 18:05:10 -0800 (PST)
 From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-To:     marcel@holtmann.org, luiz.dentz@gmail.com, alainm@chromium.org
+To:     luiz.dentz@gmail.com, marcel@holtmann.org, alainm@chromium.org
 Cc:     linux-bluetooth@vger.kernel.org,
         chromeos-bluetooth-upstreaming@chromium.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jakub Kicinski <kuba@kernel.org>
-Subject: [RFC PATCH v2 4/4] Bluetooth: Pause discovery and advertising during suspend
-Date:   Mon, 27 Jan 2020 17:58:48 -0800
-Message-Id: <20200127175842.RFC.v2.4.Iccdad520469ca3524a7e5966c5f88e5bca756e13@changeid>
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Subject: [BlueZ PATCH v3 0/5] device: Allow devices to be marked as wake capable
+Date:   Mon, 27 Jan 2020 18:05:00 -0800
+Message-Id: <20200128020505.239349-1-abhishekpandit@chromium.org>
 X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-In-Reply-To: <20200128015848.226966-1-abhishekpandit@chromium.org>
-References: <20200128015848.226966-1-abhishekpandit@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -64,198 +58,58 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-To prevent spurious wake ups, we disable any discovery or advertising
-when we enter suspend and restore it when we exit suspend. While paused,
-we disable any management requests to modify discovery or advertising.
 
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
----
+Hi bluez maintainers,
+
+This change accompanies changes in the kernel to mark HID devices as
+wake capable so they can wake the system from suspend. The
+implementation depends on the Set Wake Capable management operation. It
+is currently a separate management operation but it may be added as an
+extension to an exiting operand like add_device (need some feedback
+regarding this).
+
+Per request on the last patch, I've moved docs/mgmt-api.txt into its own
+patch so we can continue discussions on it.
+
+This change was tested with appropriate kernel changes on v4.19
+(verified that HID devices were being marked as wake capable in the
+kernel).
+
+Thanks
+Abhishek
+
+Changes in v3:
+* Added profile_wake_support and made wake_capable dependent on it
+* Added documentation for WakeCapable
+* Mark HID device to support wake from suspend
 
 Changes in v2:
-* Refactored pause discovery + advertising into its own patch
+* Separated docs/mgmt-api.txt into its own patch
+* Added dbus api "WakeCapable" to set value
+* Update device_set_wake_capable to be called by
+  adapter_set_wake_capable_complete so we can emit property changed
+* Newly added to show whether device is wake capable
+* Removed automatically setting wake capable for HID devices
 
- include/net/bluetooth/hci_core.h | 11 ++++++++
- net/bluetooth/hci_request.c      | 43 ++++++++++++++++++++++++++++++++
- net/bluetooth/mgmt.c             | 41 ++++++++++++++++++++++++++++++
- 3 files changed, 95 insertions(+)
+Abhishek Pandit-Subedi (5):
+  mgmt: Add docs for Set Wake Capable
+  device: Allow device to be marked as wake capable
+  client: Display wake capable property with info
+  doc/device-api: Add WakeCapable
+  input: Make HID devices wake capable
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 49eae4a802ac..cbfaa80067d6 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -91,6 +91,12 @@ struct discovery_state {
- #define SUSPEND_NOTIFIER_TIMEOUT	msecs_to_jiffies(2000) /* 2 seconds */
- 
- enum suspend_tasks {
-+	SUSPEND_PAUSE_DISCOVERY,
-+	SUSPEND_UNPAUSE_DISCOVERY,
-+
-+	SUSPEND_PAUSE_ADVERTISING,
-+	SUSPEND_UNPAUSE_ADVERTISING,
-+
- 	SUSPEND_LE_SET_SCAN_ENABLE,
- 	SUSPEND_DISCONNECTING,
- 
-@@ -405,6 +411,11 @@ struct hci_dev {
- 
- 	struct discovery_state	discovery;
- 
-+	int			discovery_old_state;
-+	bool			discovery_paused;
-+	int			advertising_old_state;
-+	bool			advertising_paused;
-+
- 	struct notifier_block	suspend_notifier;
- 	struct work_struct	suspend_prepare;
- 	enum suspended_state	suspend_state_next;
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index c930b9ff1cfd..487c84841351 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -1089,6 +1089,29 @@ void hci_req_prepare_suspend(struct hci_dev *hdev, enum suspended_state next)
- 
- 	hci_req_init(&req, hdev);
- 	if (next == BT_SUSPENDED) {
-+		/* Pause discovery if not already stopped */
-+		old_state = hdev->discovery.state;
-+		if (old_state != DISCOVERY_STOPPED) {
-+			set_bit(SUSPEND_PAUSE_DISCOVERY, hdev->suspend_tasks);
-+			hci_discovery_set_state(hdev, DISCOVERY_STOPPING);
-+			queue_work(hdev->req_workqueue, &hdev->discov_update);
-+		}
-+
-+		hdev->discovery_paused = true;
-+		hdev->discovery_old_state = old_state;
-+
-+		/* Stop advertising */
-+		old_state = hci_dev_test_flag(hdev, HCI_ADVERTISING);
-+		if (old_state) {
-+			set_bit(SUSPEND_PAUSE_ADVERTISING, hdev->suspend_tasks);
-+			cancel_delayed_work(&hdev->discov_off);
-+			queue_delayed_work(hdev->req_workqueue,
-+					   &hdev->discov_off, 0);
-+		}
-+
-+		hdev->advertising_paused = true;
-+		hdev->advertising_old_state = old_state;
-+
- 		/* Enable event filter for existing devices */
- 		hci_req_set_event_filter(&req);
- 
-@@ -1120,6 +1143,26 @@ void hci_req_prepare_suspend(struct hci_dev *hdev, enum suspended_state next)
- 		/* Reset passive/background scanning to normal */
- 		hci_req_enable_le_suspend_scan(&req, 0);
- 
-+		/* Unpause advertising */
-+		hdev->advertising_paused = false;
-+		if (hdev->advertising_old_state) {
-+			set_bit(SUSPEND_UNPAUSE_ADVERTISING,
-+				hdev->suspend_tasks);
-+			hci_dev_set_flag(hdev, HCI_ADVERTISING);
-+			queue_work(hdev->req_workqueue,
-+				   &hdev->discoverable_update);
-+			hdev->advertising_old_state = 0;
-+		}
-+
-+		/* Unpause discovery */
-+		hdev->discovery_paused = false;
-+		if (hdev->discovery_old_state != DISCOVERY_STOPPED &&
-+		    hdev->discovery_old_state != DISCOVERY_STOPPING) {
-+			set_bit(SUSPEND_UNPAUSE_DISCOVERY, hdev->suspend_tasks);
-+			hci_discovery_set_state(hdev, DISCOVERY_STARTING);
-+			queue_work(hdev->req_workqueue, &hdev->discov_update);
-+		}
-+
- 		hci_req_run(&req, le_suspend_req_complete);
- 	}
- 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 269ce70e501c..b3bd7a5ae718 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1383,6 +1383,12 @@ static int set_discoverable(struct sock *sk, struct hci_dev *hdev, void *data,
- 		goto failed;
- 	}
- 
-+	if (hdev->advertising_paused) {
-+		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_DISCOVERABLE,
-+				      MGMT_STATUS_BUSY);
-+		goto failed;
-+	}
-+
- 	if (!hdev_is_powered(hdev)) {
- 		bool changed = false;
- 
-@@ -3866,6 +3872,13 @@ void mgmt_start_discovery_complete(struct hci_dev *hdev, u8 status)
- 	}
- 
- 	hci_dev_unlock(hdev);
-+
-+	/* Handle suspend notifier */
-+	if (test_and_clear_bit(SUSPEND_UNPAUSE_DISCOVERY,
-+			       hdev->suspend_tasks)) {
-+		BT_DBG("Unpaused discovery");
-+		wake_up(&hdev->suspend_wait_q);
-+	}
- }
- 
- static bool discovery_type_is_valid(struct hci_dev *hdev, uint8_t type,
-@@ -3927,6 +3940,13 @@ static int start_discovery_internal(struct sock *sk, struct hci_dev *hdev,
- 		goto failed;
- 	}
- 
-+	/* Can't start discovery when it is paused */
-+	if (hdev->discovery_paused) {
-+		err = mgmt_cmd_complete(sk, hdev->id, op, MGMT_STATUS_BUSY,
-+					&cp->type, sizeof(cp->type));
-+		goto failed;
-+	}
-+
- 	/* Clear the discovery filter first to free any previously
- 	 * allocated memory for the UUID list.
- 	 */
-@@ -4094,6 +4114,12 @@ void mgmt_stop_discovery_complete(struct hci_dev *hdev, u8 status)
- 	}
- 
- 	hci_dev_unlock(hdev);
-+
-+	/* Handle suspend notifier */
-+	if (test_and_clear_bit(SUSPEND_PAUSE_DISCOVERY, hdev->suspend_tasks)) {
-+		BT_DBG("Paused discovery");
-+		wake_up(&hdev->suspend_wait_q);
-+	}
- }
- 
- static int stop_discovery(struct sock *sk, struct hci_dev *hdev, void *data,
-@@ -4325,6 +4351,17 @@ static void set_advertising_complete(struct hci_dev *hdev, u8 status,
- 	if (match.sk)
- 		sock_put(match.sk);
- 
-+	/* Handle suspend notifier */
-+	if (test_and_clear_bit(SUSPEND_PAUSE_ADVERTISING,
-+			       hdev->suspend_tasks)) {
-+		BT_DBG("Paused advertising");
-+		wake_up(&hdev->suspend_wait_q);
-+	} else if (test_and_clear_bit(SUSPEND_UNPAUSE_ADVERTISING,
-+				      hdev->suspend_tasks)) {
-+		BT_DBG("Unpaused advertising");
-+		wake_up(&hdev->suspend_wait_q);
-+	}
-+
- 	/* If "Set Advertising" was just disabled and instance advertising was
- 	 * set up earlier, then re-enable multi-instance advertising.
- 	 */
-@@ -4376,6 +4413,10 @@ static int set_advertising(struct sock *sk, struct hci_dev *hdev, void *data,
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_ADVERTISING,
- 				       MGMT_STATUS_INVALID_PARAMS);
- 
-+	if (hdev->advertising_paused)
-+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_ADVERTISING,
-+				       MGMT_STATUS_BUSY);
-+
- 	hci_dev_lock(hdev);
- 
- 	val = !!cp->val;
+ client/main.c           |   1 +
+ doc/device-api.txt      |   5 ++
+ doc/mgmt-api.txt        |  19 +++++++
+ lib/mgmt.h              |   9 ++++
+ profiles/input/device.c |   1 +
+ profiles/input/hog.c    |   1 +
+ src/adapter.c           |  65 ++++++++++++++++++++++
+ src/adapter.h           |   2 +
+ src/device.c            | 116 ++++++++++++++++++++++++++++++++++++++++
+ src/device.h            |   5 ++
+ 10 files changed, 224 insertions(+)
+
 -- 
 2.25.0.341.g760bfbb309-goog
 
