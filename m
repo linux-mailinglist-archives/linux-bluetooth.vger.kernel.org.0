@@ -2,103 +2,57 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EA7214C513
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Jan 2020 04:56:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0957214C514
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Jan 2020 04:56:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726795AbgA2Dzz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 28 Jan 2020 22:55:55 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:50530 "EHLO
+        id S1726789AbgA2D4S convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 28 Jan 2020 22:56:18 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:54240 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726338AbgA2Dzy (ORCPT
+        with ESMTP id S1726771AbgA2D4S (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 28 Jan 2020 22:55:54 -0500
+        Tue, 28 Jan 2020 22:56:18 -0500
 Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 4D713CECE7;
-        Wed, 29 Jan 2020 05:05:13 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 22F57CECE7;
+        Wed, 29 Jan 2020 05:05:37 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: [PATCH 1/1] Bluetooth: Fix refcount use-after-free issue
+Subject: Re: bluetooth: If unknown option in L2CAP Configuration Request is a
+ hint, Bluetooth stack responds with "Command Reject" instead of
+ "Configuration Response"
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200128105322.1.If741898c727a5d948cbb10fdf9225b84efd443c8@changeid>
-Date:   Wed, 29 Jan 2020 04:55:52 +0100
-Cc:     Yoni Shavit <yshavit@chromium.org>,
-        linux-bluetooth@vger.kernel.org,
-        Alain Michaud <alainmichaud@google.com>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        ChromeOS Bluetooth Upstreaming 
-        <chromeos-bluetooth-upstreaming@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jakub Kicinski <kuba@kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <49CDADD8-2079-4E65-996A-4090BB85BBAE@holtmann.org>
-References: <20200128185414.158541-1-mmandlik@google.com>
- <20200128105322.1.If741898c727a5d948cbb10fdf9225b84efd443c8@changeid>
-To:     Manish Mandlik <mmandlik@google.com>
+In-Reply-To: <3020b8d0c7d39428aec573153b3c3414213be7ce.camel@peiker-cee.de>
+Date:   Wed, 29 Jan 2020 04:56:16 +0100
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <89F234DA-089E-4F45-9D32-7A09CC52E8CD@holtmann.org>
+References: <3020b8d0c7d39428aec573153b3c3414213be7ce.camel@peiker-cee.de>
+To:     Konstantin Forostyan <konstantin.forostyan@peiker-cee.de>
 X-Mailer: Apple Mail (2.3608.60.0.2.5)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Manish,
+Hi Konstantin,
 
-> There is no lock preventing both l2cap_sock_release() and
-> chan->ops->close() from running at the same time.
+> It seems that there's a bug in Bluetooth stack of 4.20 kernel. I
+> discovered it during Bluetooth qualification tests. L2CAP/COS/CFD/BV-
+> 12-C [Unknown Option Response] test fails because instead of
+> "Configuration Response" with error code 0x0003 "unknown option" the
+> Bluetooth stack generates "Command Reject".
 > 
-> If we consider Thread A running l2cap_chan_timeout() and Thread B running
-> l2cap_sock_release(), expected behavior is:
-> A::l2cap_chan_timeout()->l2cap_chan_close()->l2cap_sock_teardown_cb()
-> A::l2cap_chan_timeout()->l2cap_sock_close_cb()->l2cap_sock_kill()
-> B::l2cap_sock_release()->sock_orphan()
-> B::l2cap_sock_release()->l2cap_sock_kill()
+> I think, this happens because the tester (Bluetooth SIG PTS) uses hints
+> as unknown options, and the Bluetooth stack has special handling for
+> hints. 
 > 
-> where,
-> sock_orphan() clears "sk->sk_socket" and l2cap_sock_teardown_cb() marks
-> socket as SOCK_ZAPPED.
-> 
-> In l2cap_sock_kill(), there is an "if-statement" that checks if both
-> sock_orphan() and sock_teardown() has been run i.e. sk->sk_socket is NULL
-> and socket is marked as SOCK_ZAPPED. Socket is killed if the condition is
-> satisfied.
-> 
-> In the race condition, following occurs:
-> A::l2cap_chan_timeout()->l2cap_chan_close()->l2cap_sock_teardown_cb()
-> B::l2cap_sock_release()->sock_orphan()
-> B::l2cap_sock_release()->l2cap_sock_kill()
-> A::l2cap_chan_timeout()->l2cap_sock_close_cb()->l2cap_sock_kill()
-> 
-> In this scenario, "if-statement" is true in both B::l2cap_sock_kill() and
-> A::l2cap_sock_kill() and we hit "refcount: underflow; use-after-free" bug.
-> 
-> Similar condition occurs at other places where teardown/sock_kill is
-> happening:
-> l2cap_disconnect_rsp()->l2cap_chan_del()->l2cap_sock_teardown_cb()
-> l2cap_disconnect_rsp()->l2cap_sock_close_cb()->l2cap_sock_kill()
-> 
-> l2cap_conn_del()->l2cap_chan_del()->l2cap_sock_teardown_cb()
-> l2cap_conn_del()->l2cap_sock_close_cb()->l2cap_sock_kill()
-> 
-> l2cap_disconnect_req()->l2cap_chan_del()->l2cap_sock_teardown_cb()
-> l2cap_disconnect_req()->l2cap_sock_close_cb()->l2cap_sock_kill()
-> 
-> l2cap_sock_cleanup_listen()->l2cap_chan_close()->l2cap_sock_teardown_cb()
-> l2cap_sock_cleanup_listen()->l2cap_sock_kill()
-> 
-> Protect teardown/sock_kill and orphan/sock_kill by adding hold_lock on
-> l2cap channel to ensure that the socket is killed only after marked as
-> zapped and orphan.
-> 
-> Signed-off-by: Manish Mandlik <mmandlik@google.com>
-> ---
-> 
-> net/bluetooth/l2cap_core.c | 26 +++++++++++++++-----------
-> net/bluetooth/l2cap_sock.c | 16 +++++++++++++---
-> 2 files changed, 28 insertions(+), 14 deletions(-)
+> I made a small patch in order to overcome this problem. Please confirm,
+> that the patch is feasible. If not, please suggest how to fix the
+> "Command Reject" problem.
 
-patch has been applied to bluetooth-next tree.
+is the limited to 4.20 kernel or does it also happen with the latest 5.5 kernel?
 
 Regards
 
