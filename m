@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2533114DCDB
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jan 2020 15:34:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 317B614DCD9
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jan 2020 15:34:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727458AbgA3Oei (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Jan 2020 09:34:38 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34954 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727139AbgA3Oeh (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
+        id S1727454AbgA3Oeh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Thu, 30 Jan 2020 09:34:37 -0500
-Received: by mail-wm1-f65.google.com with SMTP id b17so4511342wmb.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jan 2020 06:34:33 -0800 (PST)
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36925 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727142AbgA3Oeg (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 30 Jan 2020 09:34:36 -0500
+Received: by mail-wr1-f65.google.com with SMTP id w15so4322203wru.4
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jan 2020 06:34:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=silvair-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=+CcPEBgHGsNQE6ylPPKFriDFM9lo0brzFEEYjimckF4=;
-        b=qfsf2+iZs9TnFVRJ3p52x7nh4i3haW9gjYcuBx0gPiV2r98f+NQjxOe/4BgLRBkzC2
-         ngB4UVwT0Op/BUu6tnuviW2xAoFirWzyp+lE2WwvtSYn6JBDhEFHsNtezSmuw5jKVKch
-         4SF9s+G7uBjBzPQkm5aSzqzpZDAsjMHQ1oteRmCuecOfis8twPx6O9Ulqh/YJY7Bd/p4
-         YK/hFdcCd0edW+z3SpTiMTfItDIFAhSXBWFEMfQJu9wsDBdLXZ6+QyWyeJ180En73x9V
-         i1j+dwqPrUN5rUt1J7ZxDK13WwHlMOQRlW12VmlGCsKdGZ7TkEpnsUBEL9fYN+YOY6A/
-         3dXw==
+        bh=DJ6Q57hGK1VsvuqVochs9G8UKuI8NFxmGEDJ9WKl60k=;
+        b=tiY41AokQS+g+vYHbnd9StQRUZvWXjNza08Jy3AlCE1KJe2UTx6kZl7Ik0HQGTeSqg
+         D073Cy/P3aRYfNcsGjYFU5fe5KOlFh0ah8OhGbRPXUz2fvWUnwnp3gALHSIbamRvWOmU
+         NeKr9qJG+9+vFdpyt2jKWDRijAxLAc+zbEEXtVQimd+mcghPAg/egmrsc9fhEHoTyvSo
+         jpjJRA+PR49ssX6pg6Uiw1+7xpIPihqnSMqDVJsZCwZmAULV5Nt2WxjnGqDBnQOrShFR
+         /G/icBHU3ejgD4THo6NwHZeLcttJ9UVy5vozaVDfMGWoaqJZGDiKc88J463O5UhYo48i
+         qXyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+CcPEBgHGsNQE6ylPPKFriDFM9lo0brzFEEYjimckF4=;
-        b=IdMFaPnyjO4rJx0785FQEuyO+ms8BjREScYwLi8QONNF5tFxE9mM0JW/qcHOfXuy4/
-         8jZqqvPFl0jeF8ux2ev1Csjpq/MV5LodFS7fNe5kLfQcaaTtqENM/9gf2GDavWVOjmJm
-         OKlbgIc8VSgqfLSAzapfbv9F3xAqs0MC9U7Tjh/GNSi+ioBehMlV7TdqeDq9ueGHQLEH
-         lU2JysPFsNxwkJWYUrWPpl9lMNbPFNMDiUuSyFAavMB2DjZZq2OEZ5N1WQgE9GMOFE5Y
-         CAt+zF0mPFlc5+EFApho5tAkmSLlVC/a4sQl0hblq0IYavmvFqnzREdwxiizo+jryzoY
-         Amnw==
-X-Gm-Message-State: APjAAAUZP8MkWmt0IDwx7kRbrxDh8FOwA+bAn4zfyieapqfQRpc9KCck
-        n7KuDyl+dpwZZGjjbnc1Wj3+Qxtjvzom2Q==
-X-Google-Smtp-Source: APXvYqwOHt0EToU3AFNIbZGEvQL+Aem3wn1mhhdrMTUvjDZwkNZVfVPtREeX0G7aTlYoQmWwT7GkRQ==
-X-Received: by 2002:a7b:cc09:: with SMTP id f9mr6190618wmh.71.1580394872276;
-        Thu, 30 Jan 2020 06:34:32 -0800 (PST)
+        bh=DJ6Q57hGK1VsvuqVochs9G8UKuI8NFxmGEDJ9WKl60k=;
+        b=mzQN2Ltm8gH772/h6etVlMg2k7FVKIJD0bnCyeswz/LWe1y/DEVeBpA0lpK+dI5JHr
+         AY7f6TnJHw9Z105z9LDG5S/vF63aoNUZVAXDL1KRWf5q1mgXDY2cmxE2eIBXldJQBaDL
+         HA2DxqEUdkHKQr55hFUIKJSV6cdNDMWYOAVwC8XBbvUwflIuZz7DUl6urZqLWNY8FTi+
+         9XBA5/OBqrafUl9paWQKOiS5XKem+uoE9qKxUX5UNXly1/NjdzfUe2TuQ2nTY0DtIv4P
+         jCBJgAT0tB2yTcbRf1ZVWO4F4nxuGT1mF25zOnxHHktGh+qrssMnzJds7VrxWbNyBN2m
+         Zu1Q==
+X-Gm-Message-State: APjAAAX2W7C2xP7iwtrQ+9+YhkWBwnDbVDhNFunSO34+GaA/m3TgrL2l
+        4eyp3hSr80DS98m8ZfdD9vfxatVSy10rMw==
+X-Google-Smtp-Source: APXvYqyDlgKRUMpvopsLMCkoa5oLJWAt1ACpe116BscWZn94ET4H6HHufV9Jq4VPgRSoQoWyLed4NQ==
+X-Received: by 2002:a5d:6551:: with SMTP id z17mr6033796wrv.269.1580394873221;
+        Thu, 30 Jan 2020 06:34:33 -0800 (PST)
 Received: from localhost.localdomain ([217.153.94.18])
-        by smtp.gmail.com with ESMTPSA id x10sm7353310wrv.60.2020.01.30.06.34.31
+        by smtp.gmail.com with ESMTPSA id x10sm7353310wrv.60.2020.01.30.06.34.32
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jan 2020 06:34:31 -0800 (PST)
+        Thu, 30 Jan 2020 06:34:32 -0800 (PST)
 From:   Jakub Witowski <jakub.witowski@silvair.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 1/4] mesh: use static node_comp instead of the pointer
-Date:   Thu, 30 Jan 2020 15:34:22 +0100
-Message-Id: <20200130143425.5844-2-jakub.witowski@silvair.com>
+Subject: [PATCH BlueZ v2 2/4] mesh: add cid/pid/vid setter
+Date:   Thu, 30 Jan 2020 15:34:23 +0100
+Message-Id: <20200130143425.5844-3-jakub.witowski@silvair.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200130143425.5844-1-jakub.witowski@silvair.com>
 References: <20200130143425.5844-1-jakub.witowski@silvair.com>
@@ -61,158 +61,92 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-There is no need to use the pointer to the node_comp data.
-This pach uses static node_comp instead.
+This patch adds the setter for the CID PID and VID.
 ---
- mesh/node.c | 56 +++++++++++++++++++++++------------------------------
- 1 file changed, 24 insertions(+), 32 deletions(-)
+ mesh/mesh-config-json.c | 40 ++++++++++++++++++++++++++++++++--------
+ mesh/mesh-config.h      |  2 ++
+ 2 files changed, 34 insertions(+), 8 deletions(-)
 
-diff --git a/mesh/node.c b/mesh/node.c
-index de6e74c4f..6fe70742d 100644
---- a/mesh/node.c
-+++ b/mesh/node.c
-@@ -90,7 +90,7 @@ struct mesh_node {
- 	uint32_t seq_number;
- 	bool provisioner;
- 	uint16_t primary;
--	struct node_composition *comp;
-+	struct node_composition comp;
- 	struct {
- 		uint16_t interval;
- 		uint8_t cnt;
-@@ -336,7 +336,6 @@ static void free_node_resources(void *data)
- 	free_node_dbus_resources(node);
- 
- 	mesh_net_free(node->net);
--	l_free(node->comp);
- 	l_free(node->storage_dir);
- 	l_free(node);
- }
-@@ -503,11 +502,10 @@ static bool init_from_storage(struct mesh_config_node *db_node,
- 
- 	l_queue_push_tail(nodes, node);
- 
--	node->comp = l_new(struct node_composition, 1);
--	node->comp->cid = db_node->cid;
--	node->comp->pid = db_node->pid;
--	node->comp->vid = db_node->vid;
--	node->comp->crpl = db_node->crpl;
-+	node->comp.cid = db_node->cid;
-+	node->comp.pid = db_node->pid;
-+	node->comp.vid = db_node->vid;
-+	node->comp.crpl = db_node->crpl;
- 	node->lpn = db_node->modes.lpn;
- 
- 	node->proxy = db_node->modes.proxy;
-@@ -753,7 +751,7 @@ uint16_t node_get_crpl(struct mesh_node *node)
- 	if (!node)
- 		return 0;
- 
--	return node->comp->crpl;
-+	return node->comp.crpl;
- }
- 
- uint8_t node_relay_mode_get(struct mesh_node *node, uint8_t *count,
-@@ -886,18 +884,18 @@ uint16_t node_generate_comp(struct mesh_node *node, uint8_t *buf, uint16_t sz)
- 	uint16_t num_ele = 0;
- 	const struct l_queue_entry *ele_entry;
- 
--	if (!node || !node->comp || sz < MIN_COMP_SIZE)
-+	if (!node || sz < MIN_COMP_SIZE)
- 		return 0;
- 
- 	n = 0;
- 
--	l_put_le16(node->comp->cid, buf + n);
-+	l_put_le16(node->comp.cid, buf + n);
- 	n += 2;
--	l_put_le16(node->comp->pid, buf + n);
-+	l_put_le16(node->comp.pid, buf + n);
- 	n += 2;
--	l_put_le16(node->comp->vid, buf + n);
-+	l_put_le16(node->comp.vid, buf + n);
- 	n += 2;
--	l_put_le16(node->comp->crpl, buf + n);
-+	l_put_le16(node->comp.crpl, buf + n);
- 	n += 2;
- 
- 	features = 0;
-@@ -1198,10 +1196,10 @@ static void convert_node_to_storage(struct mesh_node *node,
- {
- 	const struct l_queue_entry *entry;
- 
--	db_node->cid = node->comp->cid;
--	db_node->pid = node->comp->pid;
--	db_node->vid = node->comp->vid;
--	db_node->crpl = node->comp->crpl;
-+	db_node->cid = node->comp.cid;
-+	db_node->pid = node->comp.pid;
-+	db_node->vid = node->comp.vid;
-+	db_node->crpl = node->comp.crpl;
- 	db_node->modes.lpn = node->lpn;
- 	db_node->modes.proxy = node->proxy;
- 
-@@ -1285,29 +1283,28 @@ static bool get_app_properties(struct mesh_node *node, const char *path,
- 
- 	l_debug("path %s", path);
- 
--	node->comp = l_new(struct node_composition, 1);
--	node->comp->crpl = mesh_get_crpl();
-+	node->comp.crpl = mesh_get_crpl();
- 
- 	while (l_dbus_message_iter_next_entry(properties, &key, &variant)) {
- 		if (!cid && !strcmp(key, "CompanyID")) {
- 			if (!l_dbus_message_iter_get_variant(&variant, "q",
--							&node->comp->cid))
--				goto fail;
-+							&node->comp.cid))
-+				return false;
- 			cid = true;
- 			continue;
- 		}
- 
- 		if (!pid && !strcmp(key, "ProductID")) {
- 			if (!l_dbus_message_iter_get_variant(&variant, "q",
--							&node->comp->pid))
--				goto fail;
-+							&node->comp.pid))
-+				return false;
- 			pid = true;
- 			continue;
- 		}
- 
- 		if (!vid && !strcmp(key, "VersionID")) {
- 			if (!l_dbus_message_iter_get_variant(&variant, "q",
--							&node->comp->vid))
-+							&node->comp.vid))
- 				return false;
- 			vid = true;
- 			continue;
-@@ -1315,21 +1312,16 @@ static bool get_app_properties(struct mesh_node *node, const char *path,
- 
- 		if (!strcmp(key, "CRPL")) {
- 			if (!l_dbus_message_iter_get_variant(&variant, "q",
--							&node->comp->crpl))
--				goto fail;
-+							&node->comp.crpl))
-+				return false;
- 			continue;
- 		}
- 	}
- 
- 	if (!cid || !pid || !vid)
--		goto fail;
-+		return false;
- 
+diff --git a/mesh/mesh-config-json.c b/mesh/mesh-config-json.c
+index 5855149e3..0574c166e 100644
+--- a/mesh/mesh-config-json.c
++++ b/mesh/mesh-config-json.c
+@@ -1456,6 +1456,24 @@ static bool write_mode(json_object *jobj, const char *keyword, int value)
  	return true;
--fail:
--	l_free(node->comp);
--	node->comp = NULL;
--
--	return false;
  }
  
- static bool add_local_node(struct mesh_node *node, uint16_t unicast, bool kr,
++static bool write_comp_id(json_object *jobj, uint16_t cid, uint16_t pid,
++								uint16_t vid)
++{
++	if (!jobj)
++		return false;
++
++	if (!write_uint16_hex(jobj, "cid", cid))
++		return false;
++
++	if (!write_uint16_hex(jobj, "pid", pid))
++		return false;
++
++	if (!write_uint16_hex(jobj, "vid", vid))
++		return false;
++
++	return true;
++}
++
+ bool mesh_config_write_mode(struct mesh_config *cfg, const char *keyword,
+ 								int value)
+ {
+@@ -1595,16 +1613,10 @@ static struct mesh_config *create_config(const char *cfg_path,
+ 
+ 	jnode = json_object_new_object();
+ 
+-	/* CID, PID, VID, crpl */
+-	if (!write_uint16_hex(jnode, "cid", node->cid))
+-		return NULL;
+-
+-	if (!write_uint16_hex(jnode, "pid", node->pid))
+-		return NULL;
+-
+-	if (!write_uint16_hex(jnode, "vid", node->vid))
++	if (!write_comp_id(jnode, node->cid, node->pid, node->vid))
+ 		return NULL;
+ 
++	/* CRPL */
+ 	if (!write_uint16_hex(jnode, "crpl", node->crpl))
+ 		return NULL;
+ 
+@@ -2052,6 +2064,18 @@ bool mesh_config_write_ttl(struct mesh_config *cfg, uint8_t ttl)
+ 	return save_config(cfg->jnode, cfg->node_dir_path);
+ }
+ 
++bool mesh_config_write_comp_id(struct mesh_config *cfg, uint16_t cid,
++						uint16_t pid, uint16_t vid)
++{
++	if (!cfg)
++		return false;
++
++	if (!write_comp_id(cfg->jnode, cid, pid, vid))
++		return false;
++
++	return true;
++}
++
+ static bool load_node(const char *fname, const uint8_t uuid[16],
+ 				mesh_config_node_func_t cb, void *user_data)
+ {
+diff --git a/mesh/mesh-config.h b/mesh/mesh-config.h
+index a5b12bbad..9a5d6e57a 100644
+--- a/mesh/mesh-config.h
++++ b/mesh/mesh-config.h
+@@ -135,6 +135,8 @@ bool mesh_config_write_unicast(struct mesh_config *cfg, uint16_t unicast);
+ bool mesh_config_write_relay_mode(struct mesh_config *cfg, uint8_t mode,
+ 					uint8_t count, uint16_t interval);
+ bool mesh_config_write_ttl(struct mesh_config *cfg, uint8_t ttl);
++bool mesh_config_write_comp_id(struct mesh_config *cfg, uint16_t cid,
++						uint16_t pid, uint16_t vid);
+ bool mesh_config_write_mode(struct mesh_config *cfg, const char *keyword,
+ 								int value);
+ bool mesh_config_model_binding_add(struct mesh_config *cfg, uint16_t ele_addr,
 -- 
 2.20.1
 
