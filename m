@@ -2,80 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6182E150478
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Feb 2020 11:41:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F7CC150608
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Feb 2020 13:21:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727170AbgBCKlL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 3 Feb 2020 05:41:11 -0500
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:14206 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726100AbgBCKlL (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 3 Feb 2020 05:41:11 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Feb 2020 16:11:08 +0530
-Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 03 Feb 2020 16:10:45 +0530
-Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id A6A1E21187; Mon,  3 Feb 2020 16:10:43 +0530 (IST)
-From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, robh@kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, tientzu@chromium.org,
-        seanpaul@chromium.org, rjliao@codeaurora.org, yshavit@google.com,
-        devicetree@vger.kernel.org,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [PATCH v3 2/2] dt-bindings: net: bluetooth: Add device tree bindings for QTI chip WCN3991
-Date:   Mon,  3 Feb 2020 16:10:41 +0530
-Message-Id: <1580726441-1100-2-git-send-email-gubbaven@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1580726441-1100-1-git-send-email-gubbaven@codeaurora.org>
-References: <1580726441-1100-1-git-send-email-gubbaven@codeaurora.org>
+        id S1727907AbgBCMVx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 3 Feb 2020 07:21:53 -0500
+Received: from mail.kernel.org ([198.145.29.99]:47040 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726272AbgBCMVx (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 3 Feb 2020 07:21:53 -0500
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 03B232084E
+        for <linux-bluetooth@vger.kernel.org>; Mon,  3 Feb 2020 12:21:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1580732513;
+        bh=Z8AmSuTHoH3U7PXAIrg0XTsSVuG72xM+6emNuLCC6ck=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=UiOJ1TNQvYCF04xwbxGH14JpF271flGGtAQ8TWLpTBsiGiexVFtp8jDMa7KvXlJDU
+         QV/EatIKWdj1ZqI6VtsA41Bn1wxLnwzYpWGO3Bg9uO6baRIN3SJ707J0/QrSzBy0VE
+         sn5JvuahknHkvLtzYTizZiYjpB7x4ZPwzEovsxEc=
+Received: by mail-io1-f44.google.com with SMTP id s24so16468193iog.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 03 Feb 2020 04:21:52 -0800 (PST)
+X-Gm-Message-State: APjAAAUbYvFZ34ifpb6KF0EwQD8f4axo7MBcAnaXePDfrN4yfgteE7GN
+        SuqX/K6mkofm58C2FnwW19M8wC1+LyTEajXBmDA=
+X-Google-Smtp-Source: APXvYqw4KMVy9luq7dpTzqAkg61txWGudDZr6cicXptlAYtvbC6P429s4Z6CLRXAcDDBTdp8SOfvoOqRmVHP80RYM9E=
+X-Received: by 2002:a5e:8505:: with SMTP id i5mr17882962ioj.158.1580732512408;
+ Mon, 03 Feb 2020 04:21:52 -0800 (PST)
+MIME-Version: 1.0
+References: <BYAPR02MB600646BA6832ADB7C920A45A920C0@BYAPR02MB6006.namprd02.prod.outlook.com>
+In-Reply-To: <BYAPR02MB600646BA6832ADB7C920A45A920C0@BYAPR02MB6006.namprd02.prod.outlook.com>
+From:   Josh Boyer <jwboyer@kernel.org>
+Date:   Mon, 3 Feb 2020 07:20:29 -0500
+X-Gmail-Original-Message-ID: <CA+5PVA7np-4XTV9FRv-A7OR5eus0Wvb3oV_=0qUHB7jeSXRb1g@mail.gmail.com>
+Message-ID: <CA+5PVA7np-4XTV9FRv-A7OR5eus0Wvb3oV_=0qUHB7jeSXRb1g@mail.gmail.com>
+Subject: Re: [PULL] btqca firmware 20200122
+To:     Kalle Valo <kvalo@qca.qualcomm.com>
+Cc:     "linux-firmware@kernel.org" <linux-firmware@kernel.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add compatible string for the Qualcomm WCN3991 Bluetooth controller
+On Wed, Jan 22, 2020 at 11:54 AM Kalle Valo <kvalo@qca.qualcomm.com> wrote:
+>
+> Hi linux-firmware maintainers,
+>
+> here's a pull request for btqca bluetooth driver. Please let me know if you have any problems.
+>
+> Kalle
+>
+> The following changes since commit 1eb2408c6feacccd10b02a49214745f15d1c6fb7:
+>
+>   linux-firmware: Update firmware file for Intel Bluetooth AX200 (2020-01-22 06:26:14 -0500)
+>
+> are available in the git repository at:
+>
+>   git://git.kernel.org/pub/scm/linux/kernel/git/kvalo/linux-firmware.git bt-20200122
+>
+> for you to fetch changes up to 30550605b75c16489ee75fa1cf8be6aea8506068:
+>
+>   qca: update bluetooth firmware for QCA6174 (2020-01-22 18:27:20 +0200)
+>
+> ----------------------------------------------------------------
+> Kalle Valo (1):
+>       qca: update bluetooth firmware for QCA6174
+>
+>  WHENCE                        |   7 ++++++-
+>  qca/nvm_00440302_eu.bin       | Bin 0 -> 2041 bytes
+>  qca/nvm_00440302_i2s_eu.bin   | Bin 0 -> 2041 bytes
+>  qca/nvm_usb_00000302_eu.bin   | Bin 0 -> 1998 bytes
+>  qca/rampatch_00440302.tlv     | Bin 0 -> 66332 bytes
+>  qca/rampatch_usb_00000302.tlv | Bin 0 -> 66964 bytes
+>  6 files changed, 6 insertions(+), 1 deletion(-)
+>  create mode 100644 qca/nvm_00440302_eu.bin
+>  create mode 100644 qca/nvm_00440302_i2s_eu.bin
+>  create mode 100644 qca/nvm_usb_00000302_eu.bin
+>  create mode 100644 qca/rampatch_00440302.tlv
+>  create mode 100644 qca/rampatch_usb_00000302.tlv
 
-Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
----
-v3:
-  *Updated clocks with <&rpmhcc RPMH_RF_CLK2>  
----
- Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 3 +++
- 1 file changed, 3 insertions(+)
+Pulled and pushed out.
 
-diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-index 68b67d9..beca646 100644
---- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-+++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-@@ -11,6 +11,7 @@ Required properties:
-  - compatible: should contain one of the following:
-    * "qcom,qca6174-bt"
-    * "qcom,wcn3990-bt"
-+   * "qcom,wcn3991-bt"
-    * "qcom,wcn3998-bt"
- 
- Optional properties for compatible string qcom,qca6174-bt:
-@@ -30,6 +31,7 @@ Optional properties for compatible string qcom,wcn399x-bt:
- 
-  - max-speed: see Documentation/devicetree/bindings/serial/slave-device.txt
-  - firmware-name: specify the name of nvm firmware to load
-+ - clocks: clock provided to the controller
- 
- Examples:
- 
-@@ -56,5 +58,6 @@ serial@898000 {
- 		vddch0-supply = <&vreg_l25a_3p3>;
- 		max-speed = <3200000>;
- 		firmware-name = "crnv21.bin";
-+		clocks = <&rpmhcc RPMH_RF_CLK2>;
- 	};
- };
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+josh
