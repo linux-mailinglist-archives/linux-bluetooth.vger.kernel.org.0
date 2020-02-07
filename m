@@ -2,72 +2,108 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 363B2155FBF
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Feb 2020 21:40:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 796021560D7
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Feb 2020 22:54:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727018AbgBGUkW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 7 Feb 2020 15:40:22 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:45231 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727129AbgBGUkW (ORCPT
+        id S1727556AbgBGVyZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 Feb 2020 16:54:25 -0500
+Received: from fallback12.mail.ru ([94.100.179.29]:37922 "EHLO
+        fallback12.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727550AbgBGVyZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 7 Feb 2020 15:40:22 -0500
-Received: by mail-oi1-f193.google.com with SMTP id v19so3256067oic.12
-        for <linux-bluetooth@vger.kernel.org>; Fri, 07 Feb 2020 12:40:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=8cDRXBFOpE9J1p6S5H+HXSQg9q3m7pUJ3iUuQ5MPcDc=;
-        b=G3vURSQOvSfym6GqL5qCR0Eef9YA9bo0RtU0UNSHZ0P154liq6nj0pP6gcjlFqJJPA
-         pKRQnkScBgv932UZHHNblcbuEqzuQEzPM4yp7Nm998F2nvPItHJ3Ww86OtAhmrCQq+nI
-         pKIm6N7lKoBlralx8ETPINJ1E+AnXPlOwJdNOgmWsgIaWAQBcgIsfne+6cMtPhGZTouS
-         KhX63qJv3f3PpVpkavcRkfRhDEkZgWtVbogMANo4KNIi2bptCtgkKE6QGBA7TGY3eShL
-         Az3jTVCoxKK0zJncfJ0H2PBVgz1Pz/iWQoEx1CaAejuBuCcK+rZ/kN/STxyjt5y3quR3
-         S7Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=8cDRXBFOpE9J1p6S5H+HXSQg9q3m7pUJ3iUuQ5MPcDc=;
-        b=AvbjUnsANcwKZNQJgIBx6KwAJvYaeuINB+ZIEeI+UJ0kU6/mPghZ8aBjh36nqbY23d
-         MmU19yRuU88BVLzxm4xocMOMJL+whF/nyVHeSDf1HJjp1z3FyrQO9CHrEqxRA1JPC5pN
-         MEPg9JiKP1V9AK/RVq89fN8szoIPb+fF2qRdU5/Vr3VUK0HLp/7rPnWUNVR9h8eGhWaW
-         NHaNIif1hY6piOb8t45RJwT0L/z/2NbM82xtZT01hLFfN3uAGQ8T0/fQKBMIUuX0mX+o
-         ijnf9A1iwxQvGJeDdGq6Mrr703gl3C2+0kAuxgydZfg/v5GYBxv7MJEYfd+DdkYEGMZs
-         PlXg==
-X-Gm-Message-State: APjAAAXGHnNjw/C/mUiDU9MyAwrRGW7cr3yeTWw+GynGO8DAy7bcmBV5
-        9VJfK0ImpNpIXKhilKVOL6qGIW07JgaP/SZqfWM=
-X-Google-Smtp-Source: APXvYqzN7ajbuLnyLYQwurekLKD61VAgl70puXn2VR1xZnNL2UAjutIg/nsSAZ38o1qV0L9IzzdWg9SxMg/UJXSMP94=
-X-Received: by 2002:aca:c691:: with SMTP id w139mr3358062oif.17.1581108021108;
- Fri, 07 Feb 2020 12:40:21 -0800 (PST)
+        Fri, 7 Feb 2020 16:54:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=prok.pw; s=mailru;
+        h=Content-Type:MIME-Version:Message-Id:Cc:To:Subject:From:Date; bh=TyjR/RGbFLKzbl4cjXM7D+zhgcAe8kQTWKH+I0BwKFs=;
+        b=HmsAECuB9kbu5BkXeCnb2jdkj6/6zQI5QIjkxSV9FMXGDpCIMIWVNn5sWC7jnFyhiT5eA4cgBidTSRO0BEYMKu+/+lpqf80t8cUmPOZ84UypsGqeeOvx1RXi4sdLxLdurOczWPsBpQ5xQtFg3/nIr+2N2NZm6ERmdq/pRnKu0t0=;
+Received: from [10.161.64.54] (port=44482 helo=smtp46.i.mail.ru)
+        by fallback12.m.smailru.net with esmtp (envelope-from <me@prok.pw>)
+        id 1j0BZu-0007NA-6d
+        for linux-bluetooth@vger.kernel.org; Sat, 08 Feb 2020 00:54:22 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=prok.pw; s=mailru;
+        h=Content-Type:MIME-Version:Message-Id:Cc:To:Subject:From:Date; bh=TyjR/RGbFLKzbl4cjXM7D+zhgcAe8kQTWKH+I0BwKFs=;
+        b=HmsAECuB9kbu5BkXeCnb2jdkj6/6zQI5QIjkxSV9FMXGDpCIMIWVNn5sWC7jnFyhiT5eA4cgBidTSRO0BEYMKu+/+lpqf80t8cUmPOZ84UypsGqeeOvx1RXi4sdLxLdurOczWPsBpQ5xQtFg3/nIr+2N2NZm6ERmdq/pRnKu0t0=;
+Received: by smtp46.i.mail.ru with esmtpa (envelope-from <me@prok.pw>)
+        id 1j0BZp-0004Qg-6H; Sat, 08 Feb 2020 00:54:18 +0300
+Date:   Sat, 08 Feb 2020 05:54:14 +0800
+From:   Sergey Shatunov <me@prok.pw>
+Subject: [PATCH] Bluetooth: btusb: Add support for 13d3:3548 Realtek 8822CE
+ device
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     linux-bluetooth@vger.kernel.org
+Message-Id: <1581112454.2855.0@prok.pw>
+X-Mailer: geary/3.34.2
 MIME-Version: 1.0
-Received: by 2002:a4a:d508:0:0:0:0:0 with HTTP; Fri, 7 Feb 2020 12:40:20 -0800 (PST)
-Reply-To: auch197722@gmail.com
-From:   "Mr. Theophilus Odadudu" <cristinamedina0010@gmail.com>
-Date:   Fri, 7 Feb 2020 15:40:20 -0500
-Message-ID: <CAPNvSTib=Bg9sRNNHErSAmBj=QFzRMn8DZQEN5XBwkcVkSHcMw@mail.gmail.com>
-Subject: LETTER OF INQUIRY
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+X-7564579A: 78E4E2B564C1792B
+X-77F55803: 0A44E481635329DB0E1AA8A03B392317179C3E6C7981FFF2772FB3A37D9F32984C71E1CC1B48DA16F688BCB05C26794D4E6B314396EDB1E3309A4477F54F7B8FAC0955AC946F9B5668939298A824F05D
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE745C0EDBD94D46193EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637E00859DD2B9ABE7B8638F802B75D45FF5571747095F342E8C7A0BC55FA0FE5FC02593C0E0E11E1E4305B80522D22868EEA02E2E0DA74F0F5389733CBF5DBD5E913377AFFFEAFD269176DF2183F8FC7C0DEC8C2C8BCD2534D8941B15DA834481FCF19DD082D7633A0E7DDDDC251EA7DABA471835C12D1D977725E5C173C3A84C3E97D2AE7161E217F117882F4460429728AD0CFFFB425014E40A5AABA2AD371193AA81AA40904B5D9A18204E546F3947CFBBF6D3A4198F0AF302FCEF25BFAB3454AD6D5ED66289B52E1A3F18E62937ED6302FCEF25BFAB345725E5C173C3A84C302C9A5A762CE99BDBA3038C0950A5D36B5C8C57E37DE458B0B4866841D68ED3522CA9DD8327EE4933F735096452955E3D2457FAF19517CF2C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F9A3D58A9A349F5073B503F486389A921A5CC5B56E945C8DA
+X-Mailru-Sender: 8FB30DBD5012A5E0F8DD91FE6246306CB3D3739E16D37B7742A1AE927C158FC3951A21FE2E6BE567DDD964020EFBB07D027D9DD7AE85109531CA6688BB30A5B47A93073D7E3D38797B58C9710036D86A67EA787935ED9F1B
+X-Mras: OK
+X-7564579A: EEAE043A70213CC8
+X-77F55803: E8DB3678F13EF3E07F9F52485CB584D7271FD7DF62800FDCC2EAB853CDEF5717533D8F7850B0E40DCF3878852476F7B0A2F4C925627A32F5
+X-7FA49CB5: 0D63561A33F958A5FEC8C01B143F58E9D62D43B45547828525D46E602E69E6D78941B15DA834481FA18204E546F3947C989FD0BDF65E50FBF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B60CDF180582EB8FBA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C22497F378122B062093B76E601842F6C81A12EF20D2F80756B5F012D6517FE479FCD76E601842F6C81A127C277FBC8AE2E8B42D492BDE3C795E73AA81AA40904B5D99449624AB7ADAF3726B9191E2D567F0E725E5C173C3A84C3D12A30AAA9C65F1C35872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C975FAC89DD1A0FDCBE5BFE6E7EFDEDCD789D4C264860C145E
+X-Mailru-MI: 800
+X-Mailru-Sender: A5480F10D64C9005C3FADA55C8765CC317F91E769ACB28CF533D8F7850B0E40DC9F871340C5A6C408BA0E2A9D6159BD266FEC6BF5C9C28D9A91CF0FA91B32267255DC5169939796B8DAAFE1477B51D223453F38A29522196
+X-Mras: OK
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Good Day,
+The ASUS FX505DV laptop contains RTL8822CE device with an
+associated BT chip using a USB ID of 13d3:3548.
+This patch add fw download support for it.
 
-I work as a clerk in a Bank here in Nigeria, I have a very
-confidential Business Proposition for you. There is a said amount of
-money floating in the bank unclaimed, belonging to the bank Foreign
-customer who die with his family in the Ethiopian Airline crash of
-March 11, 2019.
+T: Bus=03 Lev=01 Prnt=01 Port=03 Cnt=03 Dev#= 4 Spd=12 MxCh= 0
+D: Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs= 1
+P: Vendor=13d3 ProdID=3548 Rev= 0.00
+S: Manufacturer=Realtek
+S: Product=Bluetooth Radio
+S: SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=1ms
+E: Ad=02(O) Atr=02(Bulk) MxPS= 64 Ivl=0ms
+E: Ad=82(I) Atr=02(Bulk) MxPS= 64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 0 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 0 Ivl=1ms
+I: If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 9 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 9 Ivl=1ms
+I: If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 17 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 17 Ivl=1ms
+I: If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 25 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 25 Ivl=1ms
+I: If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 33 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 33 Ivl=1ms
+I: If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 49 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 49 Ivl=1ms
 
-I seek your good collaboration to move the fund for our benefit. we
-have agreed that 40% be yours once you help claim.
+Signed-off-by: Sergey Shatunov <me@prok.pw>
+---
+ drivers/bluetooth/btusb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Do get back to with 1) Your Full Name: (2) Residential Address: (3)
-Phone, Mobile  (4) Scan Copy of Your ID. to apply for claims of the
-funds.
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index f5924f3e8b8d..fa207b715012 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -387,6 +387,7 @@ static const struct usb_device_id blacklist_table[] 
+= {
 
-Regards
-Theophilus Odadudu
+  /* Additional Realtek 8822CE Bluetooth devices */
+  { USB_DEVICE(0x04ca, 0x4005), .driver_info = BTUSB_REALTEK },
++ { USB_DEVICE(0x13d3, 0x3548), .driver_info = BTUSB_REALTEK },
+
+  /* Silicon Wave based devices */
+  { USB_DEVICE(0x0c10, 0x0000), .driver_info = BTUSB_SWAVE },
+-- 
+2.25.0
+
+
+
