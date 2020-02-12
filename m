@@ -2,121 +2,227 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D0E8C15B14F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Feb 2020 20:49:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 46A2615B2A7
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Feb 2020 22:19:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728767AbgBLTtU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 12 Feb 2020 14:49:20 -0500
-Received: from gateway36.websitewelcome.com ([192.185.188.18]:40248 "EHLO
-        gateway36.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727439AbgBLTtU (ORCPT
+        id S1729095AbgBLVTK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 12 Feb 2020 16:19:10 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:46369 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727548AbgBLVTK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 12 Feb 2020 14:49:20 -0500
-X-Greylist: delayed 1233 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Feb 2020 14:49:19 EST
-Received: from cm13.websitewelcome.com (cm13.websitewelcome.com [100.42.49.6])
-        by gateway36.websitewelcome.com (Postfix) with ESMTP id 168F140955E0A
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Feb 2020 12:42:49 -0600 (CST)
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with SMTP
-        id 1xgjj0ha9RP4z1xgjjSKhS; Wed, 12 Feb 2020 13:28:45 -0600
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=GLQRqO9qBiBgvx5iIVYH7SAy6igUj4/Se4YJcTpd4Uc=; b=djvwU+RtA4hzE8ETixJL+QtaCH
-        DPmZeGdoGlryypEb/bZCGw85EkV5aOI+Up5JbbulEpxubacWLqiFETsw/YNFcVRYLqQbU5IhyHsqo
-        kqNxXDv9fpX9wCISf9bryT4alB2hy2cSFa3wMR71d1NFIxqAhB+J6iriahyU2E78HGQNpY03FbTDY
-        SaR6BOe8aQ4aQcdXNFgGz+L0eRwxTre5U8iPSDK6K4RvPoj5Zczt+XfiKvaXrDxhxJsZ5n0HaX4Nk
-        HgmoAioHcPEO+HJv7rugmZWVCw0D2zgYafZ10TRCRDCEf94Y95j3/1n+T4DopDWUu4dl+2mcxz/zY
-        i+/Sqqkw==;
-Received: from [201.144.174.25] (port=14408 helo=embeddedor)
-        by gator4166.hostgator.com with esmtpa (Exim 4.92)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1j1xgi-0016Mw-Gn; Wed, 12 Feb 2020 13:28:44 -0600
-Date:   Wed, 12 Feb 2020 13:31:19 -0600
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH] Bluetooth: hci_intel: Replace zero-length array with
- flexible-array member
-Message-ID: <20200212193119.GA27048@embeddedor>
+        Wed, 12 Feb 2020 16:19:10 -0500
+Received: by mail-ot1-f65.google.com with SMTP id g64so3392440otb.13
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Feb 2020 13:19:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kMa21Giv+GY1ft1XzVP4imOruGEaQE8XM4+rjwpZrT8=;
+        b=i2yza1UkLnLyNz3CfT/vt+lbSC0kxE0pVhMXI0+fyGX1yiGZYu7SyWIruKVMjrLDDS
+         Ujn1smJdNFQzLMRcY9CRZJK9Spzx78pDF35Z3IruK4DAtXLtD/BWyW+wqMAhfSX/ScrK
+         8Cp2qN+XyIghX4bhnu6bytX3+jCBBwaQA51K5SqOmsrjb4DNLp/TwjVOnHcvLvwStNj6
+         JFDf9Ii9OeIjE3Mdfn2nBWl8U6GlyrooPBAsDsHXOgArzJuruIq83WpjHcjxc+wTJmuL
+         QEkjo+cbpUvvXtVehf0w1Z0V8qdGNIojITSDyIEiAfTUCfX8X9FNX0fxSyzc60bCmg3Y
+         t3bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kMa21Giv+GY1ft1XzVP4imOruGEaQE8XM4+rjwpZrT8=;
+        b=AmedbtUZSs/AMHdB9sV6x/w8jBwWgobObjSMzawdFC5EYTetvotdKNtatOdvCYCiLh
+         QZ4XGfrVmDYiwMTsYB4z+qhT8RzPhTKA1Ap1zu1rtsF3TR4aMM8mbDsz5Oeqf7hoLglS
+         QzNO7/5LMmq4T/JXJSmcsZyaomjdWMqP0m0InR6NU6jThtu5vS7JdqouVH16xGhv26Jr
+         w3Xw+8OZOnEcGBrLbBCXy9DIsLbhit/CqD1E9CBliGAygJWZm+BogMXTkuymxWOMt8G9
+         kNoDJSyzjwCybMSiHgI18/QTk5JlW44e09hzt+Qfep+v6eCXMTl69uI3SA5y1oh0pgAB
+         RcMw==
+X-Gm-Message-State: APjAAAUi6QMly98sHj751yR3aJHTGZsNEj8jqGxHuqkaDPBAQicQs/4R
+        PLrwFAcZDWnv409Tjt2ApW7HmFgbjno4l/FAu0I=
+X-Google-Smtp-Source: APXvYqzU1zyLs6S6HOd1V1AHJqH0Ipuj/HjprCRk7ivkLKl9skL6oeJel9We+fiL9aUGTludjqIX7seiwGBGh1tqVjM=
+X-Received: by 2002:a9d:3cf:: with SMTP id f73mr10953570otf.11.1581542348751;
+ Wed, 12 Feb 2020 13:19:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 201.144.174.25
-X-Source-L: No
-X-Exim-ID: 1j1xgi-0016Mw-Gn
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (embeddedor) [201.144.174.25]:14408
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 15
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
+References: <20200212212729.Bluez.v2.1.I333a90ad3c75882c6f008c94a28ca7d3e8f6c76e@changeid>
+In-Reply-To: <20200212212729.Bluez.v2.1.I333a90ad3c75882c6f008c94a28ca7d3e8f6c76e@changeid>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 12 Feb 2020 13:18:56 -0800
+Message-ID: <CABBYNZKpJmNvW1vB1AxrLkESkUGc88+TjkCTxVmU=jaCyk9FYg@mail.gmail.com>
+Subject: Re: [Bluez PATCH v2] core: Add new policy for Just-Works repairing
+To:     Howard Chung <howardchung@google.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        Luiz Augusto Von Dentz <luiz.von.dentz@intel.com>,
+        chromeos-bluetooth-upstreaming@chromium.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The current codebase makes use of the zero-length array language
-extension to the C90 standard, but the preferred mechanism to declare
-variable-length types such as these ones is a flexible array member[1][2],
-introduced in C99:
+Hi Howard,
 
-struct foo {
-        int stuff;
-        struct boo array[];
-};
+On Wed, Feb 12, 2020 at 5:30 AM Howard Chung <howardchung@google.com> wrote:
+>
+> From: "howardchung@google.com" <howardchung@google.com>
+>
+> When kernel find out that the incoming Just-Works pairing is
+> initiated by a paired device, it is user space's responsibility to
+> decide the next action.
+>
+> This patch includes the following:
+> - add JustWorksRepairing policy as an option in main.conf
+> - handle the confirmation request from kernel
+>
+> ---
+> The Just-Works repairing policy could be one of the following:
+> - never: default; reject the repairing immediately.
+> - confirm: prompt a confirmation dialog to user.
+> - always: always accept the repairing.
+>
+> Changes in v2:
+> - let RequestAuthorization handle the situation
+> - remove the changes in client/
+>
+>  src/agent.c   | 16 ++++++++++++++++
+>  src/hcid.h    |  8 ++++++++
+>  src/main.c    | 27 +++++++++++++++++++++++++++
+>  src/main.conf |  5 +++++
+>  4 files changed, 56 insertions(+)
+>
+> diff --git a/src/agent.c b/src/agent.c
+> index e0ffcd22f..e013ec85f 100644
+> --- a/src/agent.c
+> +++ b/src/agent.c
+> @@ -773,12 +773,28 @@ int agent_request_authorization(struct agent *agent, struct btd_device *device,
+>                                                 GDestroyNotify destroy)
+>  {
+>         struct agent_request *req;
+> +       DBusError dbus_err;
+>         int err;
+>
+>         err = agent_has_request(agent, device, AGENT_REQUEST_AUTHORIZATION);
+>         if (err)
+>                 return err;
+>
+> +       /* Just-Works repairing policy */
+> +       if (device_is_paired(device, BDADDR_BREDR) ||
+> +                               device_is_paired(device, BDADDR_LE_PUBLIC)) {
+> +               if (main_opts.jw_repairing == JW_REPAIRING_NEVER) {
+> +                       dbus_error_init(&dbus_err);
+> +                       dbus_set_error_const(&dbus_err,
+> +                                       ERROR_INTERFACE ".Rejected", NULL);
+> +                       cb(agent, &dbus_err, user_data);
+> +                       return 0;
 
-By making use of the mechanism above, we will get a compiler warning
-in case the flexible array does not occur last in the structure, which
-will help us prevent some kind of undefined behavior bugs from being
-inadvertenly introduced[3] to the codebase from now on.
+Can't we just return an error here instead of creating a D-Bus error
+just to call the callback?
 
-Also, notice that, dynamic memory allocations won't be affected by
-this change:
+> +               } else if (main_opts.jw_repairing == JW_REPAIRING_ALWAYS) {
+> +                       cb(agent, NULL, user_data);
+> +                       return 0;
+> +               }
+> +       }
+> +
+>         DBG("Calling Agent.RequestAuthorization: name=%s, path=%s",
+>                                                 agent->owner, agent->path);
+>
+> diff --git a/src/hcid.h b/src/hcid.h
+> index adea85ce2..bcd2b9fa1 100644
+> --- a/src/hcid.h
+> +++ b/src/hcid.h
+> @@ -35,6 +35,12 @@ typedef enum {
+>         BT_GATT_CACHE_NO,
+>  } bt_gatt_cache_t;
+>
+> +enum {
+> +       JW_REPAIRING_NEVER,
+> +       JW_REPAIRING_CONFIRM,
+> +       JW_REPAIRING_ALWAYS,
+> +} jw_repairing_t;
+> +
+>  struct main_opts {
+>         char            *name;
+>         uint32_t        class;
+> @@ -58,6 +64,8 @@ struct main_opts {
+>         uint16_t        gatt_mtu;
+>
+>         uint8_t         key_size;
+> +
+> +       jw_repairing_t  jw_repairing;
+>  };
+>
+>  extern struct main_opts main_opts;
+> diff --git a/src/main.c b/src/main.c
+> index 1a6ab36a3..d67f469f1 100644
+> --- a/src/main.c
+> +++ b/src/main.c
+> @@ -93,6 +93,7 @@ static const char *supported_options[] = {
+>         "MultiProfile",
+>         "FastConnectable",
+>         "Privacy",
+> +       "JustWorksRepairing",
+>         NULL
+>  };
+>
+> @@ -193,6 +194,20 @@ static bt_gatt_cache_t parse_gatt_cache(const char *cache)
+>         }
+>  }
+>
+> +static jw_repairing_t parse_jw_repairing(const char *jw_repairing)
+> +{
+> +       if (!strcmp(jw_repairing, "never")) {
+> +               return JW_REPAIRING_NEVER;
+> +       } else if (!strcmp(jw_repairing, "confirm")) {
+> +               return JW_REPAIRING_CONFIRM;
+> +       } else if (!strcmp(jw_repairing, "always")) {
+> +               return JW_REPAIRING_ALWAYS;
+> +       } else {
+> +               return JW_REPAIRING_NEVER;
+> +       }
+> +}
+> +
+> +
+>  static void check_options(GKeyFile *config, const char *group,
+>                                                 const char **options)
+>  {
+> @@ -331,6 +346,18 @@ static void parse_config(GKeyFile *config)
+>                 g_free(str);
+>         }
+>
+> +       str = g_key_file_get_string(config, "General",
+> +                                               "JustWorksRepairing", &err);
+> +       if (err) {
+> +               DBG("%s", err->message);
+> +               g_clear_error(&err);
+> +               main_opts.jw_repairing = JW_REPAIRING_NEVER;
+> +       } else {
+> +               DBG("just_works_repairing=%s", str);
+> +               main_opts.jw_repairing = parse_jw_repairing(str);
+> +               g_free(str);
+> +       }
+> +
+>         str = g_key_file_get_string(config, "General", "Name", &err);
+>         if (err) {
+>                 DBG("%s", err->message);
+> diff --git a/src/main.conf b/src/main.conf
+> index 40687a755..bb5ff5b15 100644
+> --- a/src/main.conf
+> +++ b/src/main.conf
+> @@ -72,6 +72,11 @@
+>  # Defaults to "off"
+>  # Privacy = off
+>
+> +# Specify the policy to the JUST-WORKS repairing initiated by peer
+> +# Possible values: "never", "confirm", "always"
+> +# Defaults to "never"
+> +#JustWorksRepairing = never
+> +
+>  [GATT]
+>  # GATT attribute cache.
+>  # Possible values:
+> --
+> 2.25.0.225.g125e21ebc7-goog
+>
 
-"Flexible array members have incomplete type, and so the sizeof operator
-may not be applied. As a quirk of the original implementation of
-zero-length arrays, sizeof evaluates to zero."[1]
 
-This issue was found with the help of Coccinelle.
-
-[1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-[2] https://github.com/KSPP/linux/issues/21
-[3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
-
-Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
----
- drivers/bluetooth/hci_intel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/bluetooth/hci_intel.c b/drivers/bluetooth/hci_intel.c
-index 31f25153087d..f1299da6eed8 100644
---- a/drivers/bluetooth/hci_intel.c
-+++ b/drivers/bluetooth/hci_intel.c
-@@ -49,7 +49,7 @@
- struct hci_lpm_pkt {
- 	__u8 opcode;
- 	__u8 dlen;
--	__u8 data[0];
-+	__u8 data[];
- } __packed;
- 
- struct intel_device {
 -- 
-2.25.0
-
+Luiz Augusto von Dentz
