@@ -2,51 +2,75 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B6A015BA07
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Feb 2020 08:27:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5593F15BA14
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Feb 2020 08:30:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729864AbgBMH1Y convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 13 Feb 2020 02:27:24 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:46878 "EHLO
+        id S1729735AbgBMHaL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 13 Feb 2020 02:30:11 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:40442 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729735AbgBMH1Y (ORCPT
+        with ESMTP id S1727123AbgBMHaL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 13 Feb 2020 02:27:24 -0500
+        Thu, 13 Feb 2020 02:30:11 -0500
 Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 44F04CECD1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Feb 2020 08:36:46 +0100 (CET)
-From:   Marcel Holtmann <marcel@holtmann.org>
+        by mail.holtmann.org (Postfix) with ESMTPSA id EF4B6CECD1;
+        Thu, 13 Feb 2020 08:39:32 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
-Content-Transfer-Encoding: 8BIT
 Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: [RFC v3] Bluetooth: Add debugfs option to enable runtime debug
- statements
-Date:   Thu, 13 Feb 2020 08:27:22 +0100
-References: <20200203153603.61931-1-marcel@holtmann.org>
-To:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
-In-Reply-To: <20200203153603.61931-1-marcel@holtmann.org>
-Message-Id: <AF6B4197-8AFE-429A-ACFB-14500A7D500F@holtmann.org>
+Subject: Re: [PATCH] Bluetooth: hci_intel: Replace zero-length array with
+ flexible-array member
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20200212193119.GA27048@embeddedor>
+Date:   Thu, 13 Feb 2020 08:30:08 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <FF0626D1-A20C-4CD8-BD3A-40DD30366B76@holtmann.org>
+References: <20200212193119.GA27048@embeddedor>
+To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>
 X-Mailer: Apple Mail (2.3608.60.0.2.5)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+Hi Gustavo,
 
-> Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+> The current codebase makes use of the zero-length array language
+> extension to the C90 standard, but the preferred mechanism to declare
+> variable-length types such as these ones is a flexible array member[1][2],
+> introduced in C99:
+> 
+> struct foo {
+>        int stuff;
+>        struct boo array[];
+> };
+> 
+> By making use of the mechanism above, we will get a compiler warning
+> in case the flexible array does not occur last in the structure, which
+> will help us prevent some kind of undefined behavior bugs from being
+> inadvertenly introduced[3] to the codebase from now on.
+> 
+> Also, notice that, dynamic memory allocations won't be affected by
+> this change:
+> 
+> "Flexible array members have incomplete type, and so the sizeof operator
+> may not be applied. As a quirk of the original implementation of
+> zero-length arrays, sizeof evaluates to zero."[1]
+> 
+> This issue was found with the help of Coccinelle.
+> 
+> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+> [2] https://github.com/KSPP/linux/issues/21
+> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
+> 
+> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
 > ---
-> include/net/bluetooth/bluetooth.h | 10 +++++
-> net/bluetooth/Kconfig             |  7 +++
-> net/bluetooth/af_bluetooth.c      |  2 +
-> net/bluetooth/lib.c               | 73 +++++++++++++++++++++++++++++++
-> 4 files changed, 92 insertions(+)
+> drivers/bluetooth/hci_intel.c | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
 
-does anybody have any comments on this. It is not the final solution, but as an interim it might be a good start.
-
-I have not seen any kbuild issues popping up. However I like to get some Tested-By, Reviewed-By lines added to the patch and I can send a patch version with proper commit message if there is interest in getting this upstream.
+patch has been applied to bluetooth-next tree.
 
 Regards
 
