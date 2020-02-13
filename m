@@ -2,32 +2,33 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5593F15BA14
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Feb 2020 08:30:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 938A315BA13
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Feb 2020 08:30:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729735AbgBMHaL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 13 Feb 2020 02:30:11 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:40442 "EHLO
+        id S1729873AbgBMHaO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 13 Feb 2020 02:30:14 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:50273 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727123AbgBMHaL (ORCPT
+        with ESMTP id S1729858AbgBMHaO (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 13 Feb 2020 02:30:11 -0500
+        Thu, 13 Feb 2020 02:30:14 -0500
 Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id EF4B6CECD1;
-        Thu, 13 Feb 2020 08:39:32 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 815F6CECD3;
+        Thu, 13 Feb 2020 08:39:35 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: [PATCH] Bluetooth: hci_intel: Replace zero-length array with
+Subject: Re: [PATCH] Bluetooth: btintel: Replace zero-length array with
  flexible-array member
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200212193119.GA27048@embeddedor>
-Date:   Thu, 13 Feb 2020 08:30:08 +0100
+In-Reply-To: <20200212192807.GA25300@embeddedor>
+Date:   Thu, 13 Feb 2020 08:30:12 +0100
 Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        linux-kernel@vger.kernel.org
 Content-Transfer-Encoding: 7bit
-Message-Id: <FF0626D1-A20C-4CD8-BD3A-40DD30366B76@holtmann.org>
-References: <20200212193119.GA27048@embeddedor>
+Message-Id: <CEB64C73-3868-4D26-A610-560F2ABDAF9D@holtmann.org>
+References: <20200212192807.GA25300@embeddedor>
 To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>
 X-Mailer: Apple Mail (2.3608.60.0.2.5)
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -67,8 +68,8 @@ Hi Gustavo,
 > 
 > Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
 > ---
-> drivers/bluetooth/hci_intel.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
+> drivers/bluetooth/btintel.c | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
 
 patch has been applied to bluetooth-next tree.
 
