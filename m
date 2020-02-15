@@ -2,90 +2,42 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A289015F542
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Feb 2020 19:39:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38BB015FBFF
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 15 Feb 2020 02:25:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388529AbgBNS0l (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 14 Feb 2020 13:26:41 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:44966 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387833AbgBNS0l (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 14 Feb 2020 13:26:41 -0500
-Received: by mail-oi1-f193.google.com with SMTP id d62so10272619oia.11
-        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Feb 2020 10:26:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=KgVOFyOZ+a9ix5l6En2g5zR0wBoOVgcTRgg+tuBAT5A=;
-        b=CVNlNM/Hv2X27cs1gU11Dw47A4YDwMUj0pJC35tDPMNjxiWaGhIW6LyxlE7//WDSKN
-         EfPt/zUjFoTb+hi4keoVZvka5OLP3xuyYPXUqlPYf/r9jv2guQ8PZvZIoJ/qk75nYfab
-         qVOT64P01GQAiz0qzfC9KI0BZF8PvD25nE4XiwTTXY3npvO2f1jYvBGe9jGk+hwTTXwF
-         9tkQE/6CqVOq6cKravHPhPMMcvUuUMXaM4ROizW0DPsUB5yrLg0MjJHFUM0hmrmT9Yb3
-         ol0/cw61OVxDe8npNZFYWBCraD2VIF6P5lGmnfrteDQkJg40kQDBLgtSOwMNyaErjfjG
-         p8Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KgVOFyOZ+a9ix5l6En2g5zR0wBoOVgcTRgg+tuBAT5A=;
-        b=mwzX4RdQfvy72LFmtqHVQI0Cslin3pGRwotGg5Z6JSZt5kxfUMkDLHFVWQld3XkJQx
-         bQC64hdeuyrko007qMouGDkCqSEFUuzgE5SER8wddGg+y+FtPLGbkynIo1UtUrJ+PNPj
-         QlwzaJN7F9cQri85dKVR7Q2B/zu3PbmFQuviBkk0rzRqTmAT6q3aanUw5W2WNonuWFYA
-         nnfAhk47mGE3xpx1weHLPFayvCBsZArxQ50WAPMOo5BKs35Ng1TWK2/QL07uImKXetBv
-         FAfT0PWQv0q/X2JuQXlNLsch60D8p7aAxMlhLdjbg2g0bXYXbgMQHyIsGRVN8dze4CwF
-         tILw==
-X-Gm-Message-State: APjAAAU74gfUZUnoNe6+LGPfqcW/f7m8/spYiX86xGlLPv2qv4c3rJBj
-        W3ZGQ8fODXHqudgQafpxWwV8AmPL0+3Nt1y9BvA=
-X-Google-Smtp-Source: APXvYqz+jfhBX8dnN11k/KHaKn+E2HZRqt051GAqW5Hch/48BeA7DEEyJXrowMR/uBgywCdIz8juKRJSIddVwxCILUc=
-X-Received: by 2002:aca:ab51:: with SMTP id u78mr2792877oie.21.1581704800388;
- Fri, 14 Feb 2020 10:26:40 -0800 (PST)
+        id S1727763AbgBOBZN convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 14 Feb 2020 20:25:13 -0500
+Received: from l37-192-35-170.novotelecom.ru ([37.192.35.170]:61611 "EHLO
+        glpak.ru" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727649AbgBOBZN (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 14 Feb 2020 20:25:13 -0500
+Received: from alex.glpak.ru (localhost [127.0.0.1])
+        by glpak.ru (Postfix) with ESMTP id 20B61A3DB62
+        for <linux-bluetooth@vger.kernel.org>; Sat, 15 Feb 2020 08:07:34 +0700 (NOVT)
+X-Virus-Scanned: amavisd-new at glpak.ru
+Received: from glpak.ru ([127.0.0.1])
+        by alex.glpak.ru (glpak.ru [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id FOTB5x-BRmde for <linux-bluetooth@vger.kernel.org>;
+        Sat, 15 Feb 2020 08:07:34 +0700 (NOVT)
+Received: from [192.168.88.250] (unknown [185.248.13.181])
+        by glpak.ru (Postfix) with ESMTPA id 5C2F5A3DB52
+        for <linux-bluetooth@vger.kernel.org>; Sat, 15 Feb 2020 08:07:33 +0700 (NOVT)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-References: <20200214114350.Bluez.v3.1.I333a90ad3c75882c6f008c94a28ca7d3e8f6c76e@changeid>
- <1BEAEE28-6159-491D-BCCC-4C5298891987@gmail.com>
-In-Reply-To: <1BEAEE28-6159-491D-BCCC-4C5298891987@gmail.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Fri, 14 Feb 2020 10:26:29 -0800
-Message-ID: <CABBYNZ+x5r_YY7jJ=oDdpcshvvoJWm_eXpj+DbCbFGg79R4j-w@mail.gmail.com>
-Subject: Re: [Bluez PATCH v3] core: Add new policy for Just-Works repairing
-To:     Johan Hedberg <johan.hedberg@gmail.com>
-Cc:     Howard Chung <howardchung@google.com>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        Luiz Von Dentz <luiz.von.dentz@intel.com>,
-        ChromeOS Bluetooth Upstreaming 
-        <chromeos-bluetooth-upstreaming@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: zionitld3@gmail.com
+To:     linux-bluetooth@vger.kernel.org
+From:   anna@glpak.ru
+Date:   Fri, 14 Feb 2020 17:09:18 -0800
+Reply-To: zionitld3@gmail.com
+X-Antivirus: Avast (VPS 200214-0, 02/14/2020), Outbound message
+X-Antivirus-Status: Clean
+Message-Id: <20200215010734.20B61A3DB62@glpak.ru>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Howard,
-
-On Thu, Feb 13, 2020 at 11:35 PM Johan Hedberg <johan.hedberg@gmail.com> wr=
-ote:
->
-> Hi Howard,
->
-> On 14. Feb 2020, at 5.45, Howard Chung <howardchung@google.com> wrote:
-> > @@ -6141,6 +6141,22 @@ int device_confirm_passkey(struct btd_device *de=
-vice, uint8_t type,
-> >       struct authentication_req *auth;
-> >       int err;
-> >
-> > +     /* Just-Works repairing policy */
-> > +     if (confirm_hint && (device_is_paired(device, BDADDR_BREDR) ||
-> > +                             device_is_paired(device, BDADDR_LE_PUBLIC=
-))) {
->
-> Wouldn=E2=80=99t a single call to device_is_paired() using =E2=80=9Ctype=
-=E2=80=9D (the address type that=E2=80=99s part of the mgmt event) be the r=
-ight thing to do here?
-
-+1, other than that it looks pretty good now so we should be able to
-merge after this change.
-
---=20
-Luiz Augusto von Dentz
+Hello, We from Zion Finance Group currently offers loans to customers at a low interest rate of 3%. This is an opportunity that you cannot miss. We have a few questions to ask; Do you have debts? Do you want to pay off your debts? Do you want to be financially equipped? If so, request a loan today from Zion Finance Group. Interested, customers are expected to contact zionitld3@gmail.com for more information. We wish to assist you with a loan. Greetings, Mr. Bernard.
