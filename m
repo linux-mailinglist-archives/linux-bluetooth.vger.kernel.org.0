@@ -2,104 +2,118 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A7B116017F
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 16 Feb 2020 04:12:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 574891601AA
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 16 Feb 2020 05:39:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727691AbgBPDMx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 15 Feb 2020 22:12:53 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35358 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727685AbgBPDMx (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 15 Feb 2020 22:12:53 -0500
-Received: by mail-wm1-f65.google.com with SMTP id b17so14897891wmb.0
-        for <linux-bluetooth@vger.kernel.org>; Sat, 15 Feb 2020 19:12:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=t0TLC5mt6zw20J38nO6UV1Kz+5E95WBtIXeRkoxQ4a0=;
-        b=t9E/auRDZ2NhuwJg8c7fdI6cTavfVIkYj8aSuYWfHS4sN2USGnzhGQE4Ep5t7N9V7j
-         aGQH/tjHx070ySTmGuvmUzZWWVEhu7pzVtkIG25eKGdHbAZbYyQSvY2EH46FhwV5DGK7
-         Do813mWHW/rdYq8MST/Jhg8K6tSTSk1e9edfsgWU47cRXtAuNWGgqemBy2AGuhyjVxCh
-         ARNePePfbETLUmXTuQKHNZmBWq+UaGktV5GQJNEFk0am/xGVpQA7q4mkAeB5pFZRQZN9
-         gJjDCP8x16NSxumLlHrZ6NwDoW70BMsxH7Al4C4J4yAHrr/ilAJGJ1eZFjny7v3NDq3z
-         10CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=t0TLC5mt6zw20J38nO6UV1Kz+5E95WBtIXeRkoxQ4a0=;
-        b=V6+Ny6GyNgbaHle4czjZI10hBTN2dTIv/k2DJn+C8COpTdZmpknHZVSjnUbJ9ibXL7
-         aavLjCn3ncJ/KB6ucMNF/7uWhWmeWLm2+moBFa+iXopJekdcRO28JsSRxc96U/plrutH
-         dSfg7Qb5VznEH4J/lFzNVGCem7Kkv+BRsJ+MYHXaitHBR3CkZ0O2rw/sxK3YKoM+41Xb
-         uOozuZnIlyNr2aGhPym1HaRy2DrZN54oHshP0Gu4/bKoHEUHxpSdXaXzGMZy8PcBrZII
-         pl43ZsfPkA8WpOUrasGkrGlSdu5WbD4oz8X/fN6MAlLij1iv/qFVvJy722GwOA0e7vv6
-         /DIQ==
-X-Gm-Message-State: APjAAAU6RJmjITCZMH84pSmR9dYoYjrRFy4sMdCq/CzFkaVxAaABZn7u
-        UM0YqR9QPSYuyzdfZUVgE1AsjcI63DSailwfR+w=
-X-Google-Smtp-Source: APXvYqwvlw4SI9bgKBPwZePjexDET4/rtoytQKZYlF8Iozd8fIyZzsIyzcREjHMM3pdpVJoKf2y3VLXJSTYN5nAB2oc=
-X-Received: by 2002:a1c:7d8b:: with SMTP id y133mr14142688wmc.165.1581822771566;
- Sat, 15 Feb 2020 19:12:51 -0800 (PST)
+        id S1726681AbgBPEjR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 15 Feb 2020 23:39:17 -0500
+Received: from hoster906.com ([192.252.156.27]:36364 "EHLO hoster906.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726651AbgBPEjR (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 15 Feb 2020 23:39:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=mnmoran.org; h=subject
+        :to:references:from:message-id:date:mime-version:in-reply-to
+        :content-type:content-transfer-encoding; s=dkim; bh=CqnKB2/YqKrL
+        vCtk8C2pyfTKfpdLAIfGR66nayRwVp0=; b=RQLEU+Ms15yrIYekGLPQK8nJF/oN
+        +by30R6uYnvBDhqsFpzikkOLiYrfHiwBOUZOzjST2JMoPd6i7+mW2ZRGZxFxhRJA
+        TYPXadYYYkiWcfx41BmCnwXI6zNvHeLcAuI8vksbG6Zlyc3XXcYopSPkrnPRbuj8
+        kRJACbmBHcuJLto=
+Received: (qmail 13505 invoked by uid 503); 16 Feb 2020 04:39:16 -0000
+Received: from unknown (HELO ?192.168.254.100?) (pop-before-smtp@162.39.210.60)
+  by hoster906.com with ESMTPA; 16 Feb 2020 04:39:16 -0000
+Subject: Re: mesh: Send mesh model message to group address
+To:     "Gix, Brian" <brian.gix@intel.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+References: <848c1b0b-83c6-41a3-fc66-1359fa9a72bb@mnmoran.org>
+ <e2f322b4ba3abb81b59a51d8bb5c3611b968cd4f.camel@intel.com>
+From:   "Michael N. Moran" <mike@mnmoran.org>
+Message-ID: <410faf08-70e6-ebb2-df7d-79ea1ee0b9f4@mnmoran.org>
+Date:   Sat, 15 Feb 2020 23:39:10 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Reply-To: mrsanna.h.bruun119@gmail.com
-Received: by 2002:a5d:6701:0:0:0:0:0 with HTTP; Sat, 15 Feb 2020 19:12:50
- -0800 (PST)
-From:   "Mrs. Anna H. Bruun" <mrsanna.h.bruun119@gmail.com>
-Date:   Sat, 15 Feb 2020 19:12:50 -0800
-X-Google-Sender-Auth: v8n70C2JnobQxi8BnJ66Kx_WTPg
-Message-ID: <CAKipdRnigysA_HLCjucc_1O=Y=-n8xB=JUB9--6=945exD+_-A@mail.gmail.com>
-Subject: My Greetings
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <e2f322b4ba3abb81b59a51d8bb5c3611b968cd4f.camel@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-My Dear
+Hi Brian,
 
-My Name is Mrs. Anna H. Bruun, from Norway. I know that this message
-will be a surprise to you. Firstly, I am married to Mr. Patrick Bruun,
-A gold merchant who owns a small gold Mine in Burkina Faso; He died of
-Cardiovascular Disease in mid-March 2011. During his life time he
-deposited the sum of =E2=82=AC 8.5 Million Euro) Eight million, Five hundre=
-d
-thousand Euros in a bank in Ouagadougou the capital city of Burkina
-Faso. The deposited money was from the sale of the shares, death
-benefits payment and entitlements of my deceased husband by his
-company.
+Thanks for the quick reply.
 
-I am sending this message to you praying that it will reach you in
-good health, since I am not in good health condition in which I sleep
-every night without knowing if I may be alive to see the next day. I
-am suffering from long time cancer and presently i am partially
-suffering from a stroke illness which has become almost impossible for
-me to move around. I am married to my late husband for over 4 years
-before he died and is unfortunately that we don't have a child, my
-doctor confided in me that i have less chance to live. Having known my
-health condition, I decided to contact you to claim the fund since I
-don't have any relation I grew up from the orphanage home,
+On 2/15/20 2:50 PM, Gix, Brian wrote:
+> Hi Michael,
+> On Sat, 2020-02-15 at 13:20 -0500, Michael N. Moran wrote:
+>> I've been using meshctl to provision/configure a group of
+>> mesh nodes.
+> 
+> First off, don't use meshctl for work going forward, unless for some reason you *require* GATT support.  Mesh
+> is designed to primarily be an Advertising based system, and so all current work is being done on the
+> bluetooth-meshd daemon, which does not yet have GATT support.
 
-I have decided to donate what I have to you for the support of helping
-Motherless babies/Less privileged/Widows' because I am dying and
-diagnosed of cancer for about 2 years ago. I have been touched by God
-Almighty to donate from what I have inherited from my late husband to
-you for good work of God Almighty. I have asked Almighty God to
-forgive me and believe he has, because He is a Merciful God I will be
-going in for an operation surgery soon
+I've been working on a mesh stack implementation since June, 
+so I have a pretty good understanding of the protocol.
 
-This is the reason i need your services to stand as my next of kin or
-an executor to claim the funds for charity purposes. If this money
-remains unclaimed after my death, the bank executives or the
-government will take the money as unclaimed fund and maybe use it for
-selfish and worthless ventures, I need a very honest person who can
-claim this money and use it for Charity works, for orphanages, widows
-and also build schools for less privilege that will be named after my
-late husband and my name; I need your urgent answer to know if you
-will be able to execute this project, and I will give you more
-Information on how the fund will be transferred to your bank account.
+I started the development using a now defunct Linux meshd 
+project that used PB-ADV for provisioning. It never had much 
+mesh support beyond provisioning.
 
-Thanks
-Mrs. Anna H.
+Later, I moved to meshctl after I implemented Mesh 
+Provisioning and Mesh Proxy over GATT.
+
+More recently I've been using various silicon vendor Android 
+based mesh apps, which all use GATT exclusively.
+
+At the moment, I'm working on the LPN and Friend support.
+
+> We currently have a pretty robust solution based on:
+> 
+> 1. Run mesh/bluetooth-meshd as root
+>      1.1 You may need to first install, *or* copy
+>          mesh/bluetooth-mesh.conf --> /etc/dbus-1/system.d/bluetooth-mesh.conf
+> 
+>      1.2 Make sure mesh/bluetooth-meshd has a dedicated v4.0 or
+>          better controller. This can be done by stopping bluetoothd,
+>          or by having a 2nd controller in the system and making sure
+>          that in /etc/bluetooth/main.conf, AutoEnable=false
+> 
+>      1.3 reboot
+> 
+> 2. Run tools/mesh-cfgclient
+> 
+
+OK. I'm currently using bluez-5.50 on some rapberry-pi zero 
+w unis with in a Yocto build. I use one pi to run meshctl.
+
+Obviously, bluez has changed since I started. :-)
+
+>> There does not seem to be a mechanism in meshctl to send
+>> model messages to group addresses or virtual addresses.
+>>
+>> As an example, consider the simple OnOff model. I can
+>> configure the subscription for an OnOff model with a group
+>> address. However, the meshctl onoff command will not work
+>> with a group address set for the onoff target.
+>>
+>> I have modified the cmd_set() function in onoff-model.c by
+>> removing the node_find_by_addr(target) check and this works
+>> fine. Obviously, that only works for the OnOff model. I'd
+>> happily submit a patch for that model, but that doesn't seem
+>> to be a very good general solution.
+>>
+>> So is meshctl the right (only) tool to use on Linux?
+>> Is there a newer tool that is planned or under development?
+> 
+> See above, and use the tip of the repository (currently at v5.53)
+
+I cloned the tip and have poked around a bit. However, I 
+don't see any OnOff model work other than the 
+tools/mesh-gatt/onoff-model.c, which does not *appear* to be 
+a part of the mesh-cfgclient build.
+
+I'm probably missing something.
+How is this supported in mesh-cfgclient?
