@@ -2,182 +2,104 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 52F08160145
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 16 Feb 2020 01:50:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A7B116017F
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 16 Feb 2020 04:12:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726565AbgBPAuO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 15 Feb 2020 19:50:14 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:37067 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726504AbgBPAuN (ORCPT
+        id S1727691AbgBPDMx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 15 Feb 2020 22:12:53 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35358 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727685AbgBPDMx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 15 Feb 2020 19:50:13 -0500
-Received: by mail-ot1-f67.google.com with SMTP id l2so6598927otp.4;
-        Sat, 15 Feb 2020 16:50:13 -0800 (PST)
+        Sat, 15 Feb 2020 22:12:53 -0500
+Received: by mail-wm1-f65.google.com with SMTP id b17so14897891wmb.0
+        for <linux-bluetooth@vger.kernel.org>; Sat, 15 Feb 2020 19:12:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uyRNNBKtZ/pBAy6wlcISFvmc40pdoR2VRPKkepKzyLM=;
-        b=Q0WMVYVIM+b2pr/Pn3tUSRAGxAZgv4nYkNxBhG9toP/WvAIaLdYxyP/EisHgN+9XtK
-         cO+219jw4OkNMwxE1dme0AOosSoMn1fSVZZezJDyfLaLCP5mmKJ+B1up/4dGma5d7fcD
-         R35KuDmUMpPqQVeLbfnR2tQqq0819mnmLSfQWwSaE2ZD+kOEk8SvqG0v7mZ1ShkHU/0b
-         ef7TfSzPlXhbF9ibeJZ+jLq434eAPDRc7Tt93/ZyRczazQP6fIrJ7x4LJy6xnAgZXr5v
-         DVfR/DdYNvvpVowKpq+XUhfgOFeD1fDdfo9bv29ZlPLmc7Ez6QBHK9xBsk/lAcmUFOEk
-         ebCg==
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=t0TLC5mt6zw20J38nO6UV1Kz+5E95WBtIXeRkoxQ4a0=;
+        b=t9E/auRDZ2NhuwJg8c7fdI6cTavfVIkYj8aSuYWfHS4sN2USGnzhGQE4Ep5t7N9V7j
+         aGQH/tjHx070ySTmGuvmUzZWWVEhu7pzVtkIG25eKGdHbAZbYyQSvY2EH46FhwV5DGK7
+         Do813mWHW/rdYq8MST/Jhg8K6tSTSk1e9edfsgWU47cRXtAuNWGgqemBy2AGuhyjVxCh
+         ARNePePfbETLUmXTuQKHNZmBWq+UaGktV5GQJNEFk0am/xGVpQA7q4mkAeB5pFZRQZN9
+         gJjDCP8x16NSxumLlHrZ6NwDoW70BMsxH7Al4C4J4yAHrr/ilAJGJ1eZFjny7v3NDq3z
+         10CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uyRNNBKtZ/pBAy6wlcISFvmc40pdoR2VRPKkepKzyLM=;
-        b=b+OF5cWF1xEtNNlVKUh6+EI79Jd3sirBzooN/6LZDWMMjI/3qAr9iq0kVBvgUo7xUa
-         AjhcObNZo0dxpXVNbQs6L5gucvT0tGBfMcfX2pDRwIylmI5He5iZzjOW+zOqw5sdeM39
-         vyOt7mE8vd2bOCT29NV/gAjGK3tg8wxYTAPssIZc/2LdOuAgW5PDe/moUyW9ZzHnIfRA
-         zJzKDZ+sm4BIfVCWqV2fe3oCLS5UTVs249trhI81pBqjWf8pErp14m6ih3mEn8zx4G2O
-         YKzHP3ZL8/ROhDLWwJ6Qg0XhDxDutuPXNHN440ghn98kNkBqhYrWByBIFNr5mz4guSXt
-         yyYg==
-X-Gm-Message-State: APjAAAVI9nypy+HvWwLk+wovsqI+9bKhsSwuI0fbY0puO2+wswRzuj5X
-        MK37TY5MJ0Oymf1P7AHLbV9pmIm5
-X-Google-Smtp-Source: APXvYqw24cLn9pSDb30se6fd1ilKzuFGImR7J+NkDrn/Y/GrxMH5sclpTk/kehtaW2O3M77GOCbRMA==
-X-Received: by 2002:a05:6830:138b:: with SMTP id d11mr7101057otq.38.1581814212513;
-        Sat, 15 Feb 2020 16:50:12 -0800 (PST)
-Received: from ubuntu-m2-xlarge-x86 ([2604:1380:4111:8b00::1])
-        by smtp.gmail.com with ESMTPSA id g25sm3678506otr.8.2020.02.15.16.50.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 15 Feb 2020 16:50:11 -0800 (PST)
-Date:   Sat, 15 Feb 2020 17:50:10 -0700
-From:   Nathan Chancellor <natechancellor@gmail.com>
-To:     Howard Chung <howardchung@google.com>
-Cc:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        chromeos-bluetooth-upstreaming@chromium.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        clang-built-linux@googlegroups.com
-Subject: Re: [Bluez PATCH v5] bluetooth: secure bluetooth stack from bluedump
- attack
-Message-ID: <20200216005010.GA24335@ubuntu-m2-xlarge-x86>
-References: <20200214191609.Bluez.v5.1.Ia71869d2f3e19a76a6a352c61088a085a1d41ba6@changeid>
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=t0TLC5mt6zw20J38nO6UV1Kz+5E95WBtIXeRkoxQ4a0=;
+        b=V6+Ny6GyNgbaHle4czjZI10hBTN2dTIv/k2DJn+C8COpTdZmpknHZVSjnUbJ9ibXL7
+         aavLjCn3ncJ/KB6ucMNF/7uWhWmeWLm2+moBFa+iXopJekdcRO28JsSRxc96U/plrutH
+         dSfg7Qb5VznEH4J/lFzNVGCem7Kkv+BRsJ+MYHXaitHBR3CkZ0O2rw/sxK3YKoM+41Xb
+         uOozuZnIlyNr2aGhPym1HaRy2DrZN54oHshP0Gu4/bKoHEUHxpSdXaXzGMZy8PcBrZII
+         pl43ZsfPkA8WpOUrasGkrGlSdu5WbD4oz8X/fN6MAlLij1iv/qFVvJy722GwOA0e7vv6
+         /DIQ==
+X-Gm-Message-State: APjAAAU6RJmjITCZMH84pSmR9dYoYjrRFy4sMdCq/CzFkaVxAaABZn7u
+        UM0YqR9QPSYuyzdfZUVgE1AsjcI63DSailwfR+w=
+X-Google-Smtp-Source: APXvYqwvlw4SI9bgKBPwZePjexDET4/rtoytQKZYlF8Iozd8fIyZzsIyzcREjHMM3pdpVJoKf2y3VLXJSTYN5nAB2oc=
+X-Received: by 2002:a1c:7d8b:: with SMTP id y133mr14142688wmc.165.1581822771566;
+ Sat, 15 Feb 2020 19:12:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200214191609.Bluez.v5.1.Ia71869d2f3e19a76a6a352c61088a085a1d41ba6@changeid>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Reply-To: mrsanna.h.bruun119@gmail.com
+Received: by 2002:a5d:6701:0:0:0:0:0 with HTTP; Sat, 15 Feb 2020 19:12:50
+ -0800 (PST)
+From:   "Mrs. Anna H. Bruun" <mrsanna.h.bruun119@gmail.com>
+Date:   Sat, 15 Feb 2020 19:12:50 -0800
+X-Google-Sender-Auth: v8n70C2JnobQxi8BnJ66Kx_WTPg
+Message-ID: <CAKipdRnigysA_HLCjucc_1O=Y=-n8xB=JUB9--6=945exD+_-A@mail.gmail.com>
+Subject: My Greetings
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Howard,
+My Dear
 
-On Fri, Feb 14, 2020 at 07:16:41PM +0800, Howard Chung wrote:
-> Attack scenario:
-> 1. A Chromebook (let's call this device A) is paired to a legitimate
->    Bluetooth classic device (e.g. a speaker) (let's call this device
->    B).
-> 2. A malicious device (let's call this device C) pretends to be the
->    Bluetooth speaker by using the same BT address.
-> 3. If device A is not currently connected to device B, device A will
->    be ready to accept connection from device B in the background
->    (technically, doing Page Scan).
-> 4. Therefore, device C can initiate connection to device A
->    (because device A is doing Page Scan) and device A will accept the
->    connection because device A trusts device C's address which is the
->    same as device B's address.
-> 5. Device C won't be able to communicate at any high level Bluetooth
->    profile with device A because device A enforces that device C is
->    encrypted with their common Link Key, which device C doesn't have.
->    But device C can initiate pairing with device A with just-works
->    model without requiring user interaction (there is only pairing
->    notification). After pairing, device A now trusts device C with a
->    new different link key, common between device A and C.
-> 6. From now on, device A trusts device C, so device C can at anytime
->    connect to device A to do any kind of high-level hijacking, e.g.
->    speaker hijack or mouse/keyboard hijack.
-> 
-> Since we don't know whether the repairing is legitimate or not,
-> leave the decision to user space if all the conditions below are met.
-> - the pairing is initialized by peer
-> - the authorization method is just-work
-> - host already had the link key to the peer
-> 
-> Signed-off-by: Howard Chung <howardchung@google.com>
-> ---
-> 
-> Changes in v5:
-> - Rephrase the comment
-> 
-> Changes in v4:
-> - optimise the check in smp.c.
-> 
-> Changes in v3:
-> - Change confirm_hint from 2 to 1
-> - Fix coding style (declaration order)
-> 
-> Changes in v2:
-> - Remove the HCI_PERMIT_JUST_WORK_REPAIR debugfs option
-> - Fix the added code in classic
-> - Add a similar fix for LE
-> 
->  net/bluetooth/hci_event.c | 10 ++++++++++
->  net/bluetooth/smp.c       | 19 +++++++++++++++++++
->  2 files changed, 29 insertions(+)
-> 
-> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-> index 2c833dae9366..e6982f4f51ea 100644
-> --- a/net/bluetooth/hci_event.c
-> +++ b/net/bluetooth/hci_event.c
-> @@ -4571,6 +4571,16 @@ static void hci_user_confirm_request_evt(struct hci_dev *hdev,
->  			goto confirm;
->  		}
->  
-> +		/* If there already exists link key in local host, leave the
-> +		 * decision to user space since the remote device could be
-> +		 * legitimate or malicious.
-> +		 */
-> +		if (hci_find_link_key(hdev, &ev->bdaddr)) {
-> +			bt_dev_warn(hdev, "Local host already has link key");
-> +			confirm_hint = 1;
-> +			goto confirm;
-> +		}
-> +
->  		BT_DBG("Auto-accept of user confirmation with %ums delay",
->  		       hdev->auto_accept_delay);
->  
-> diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-> index 2cba6e07c02b..25dbf77d216b 100644
-> --- a/net/bluetooth/smp.c
-> +++ b/net/bluetooth/smp.c
-> @@ -2192,6 +2192,25 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
->  		smp_send_cmd(conn, SMP_CMD_PAIRING_RANDOM, sizeof(smp->prnd),
->  			     smp->prnd);
->  		SMP_ALLOW_CMD(smp, SMP_CMD_DHKEY_CHECK);
-> +
-> +		/* Only Just-Works pairing requires extra checks */
-> +		if (smp->method != JUST_WORKS)
-> +			goto mackey_and_ltk;
-> +
-> +		/* If there already exists link key in local host, leave the
-> +		 * decision to user space since the remote device could be
-> +		 * legitimate or malicious.
-> +		 */
-> +		if (hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type,
-> +				 hcon->role)) {
-> +			err = mgmt_user_confirm_request(hcon->hdev, &hcon->dst,
-> +							hcon->type,
-> +							hcon->dst_type, passkey,
+My Name is Mrs. Anna H. Bruun, from Norway. I know that this message
+will be a surprise to you. Firstly, I am married to Mr. Patrick Bruun,
+A gold merchant who owns a small gold Mine in Burkina Faso; He died of
+Cardiovascular Disease in mid-March 2011. During his life time he
+deposited the sum of =E2=82=AC 8.5 Million Euro) Eight million, Five hundre=
+d
+thousand Euros in a bank in Ouagadougou the capital city of Burkina
+Faso. The deposited money was from the sale of the shares, death
+benefits payment and entitlements of my deceased husband by his
+company.
 
-We received a report from the 0day bot when building with clang that
-passkey is uninitialized when used here:
+I am sending this message to you praying that it will reach you in
+good health, since I am not in good health condition in which I sleep
+every night without knowing if I may be alive to see the next day. I
+am suffering from long time cancer and presently i am partially
+suffering from a stroke illness which has become almost impossible for
+me to move around. I am married to my late husband for over 4 years
+before he died and is unfortunately that we don't have a child, my
+doctor confided in me that i have less chance to live. Having known my
+health condition, I decided to contact you to claim the fund since I
+don't have any relation I grew up from the orphanage home,
 
-https://groups.google.com/forum/#!topic/clang-built-linux/kyRKCjRsGoU
+I have decided to donate what I have to you for the support of helping
+Motherless babies/Less privileged/Widows' because I am dying and
+diagnosed of cancer for about 2 years ago. I have been touched by God
+Almighty to donate from what I have inherited from my late husband to
+you for good work of God Almighty. I have asked Almighty God to
+forgive me and believe he has, because He is a Merciful God I will be
+going in for an operation surgery soon
 
-It appears to be legitimate as if we get to this point, we have not
-touched the value of passkey but I do not know if there is any
-contextual code flow going on where this can never happen but I do not
-see how.
+This is the reason i need your services to stand as my next of kin or
+an executor to claim the funds for charity purposes. If this money
+remains unclaimed after my death, the bank executives or the
+government will take the money as unclaimed fund and maybe use it for
+selfish and worthless ventures, I need a very honest person who can
+claim this money and use it for Charity works, for orphanages, widows
+and also build schools for less privilege that will be named after my
+late husband and my name; I need your urgent answer to know if you
+will be able to execute this project, and I will give you more
+Information on how the fund will be transferred to your bank account.
 
-Would you mind looking into it?
-
-Cheers,
-Nathan
+Thanks
+Mrs. Anna H.
