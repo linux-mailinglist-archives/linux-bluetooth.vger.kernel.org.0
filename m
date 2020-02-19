@@ -2,53 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 473221643FF
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2020 13:15:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2CC616459B
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2020 14:36:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726736AbgBSMPW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 19 Feb 2020 07:15:22 -0500
-Received: from ip-78-45-52-129.net.upcbroadband.cz ([78.45.52.129]:35384 "EHLO
-        ixit.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726495AbgBSMPW (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 19 Feb 2020 07:15:22 -0500
-X-Greylist: delayed 318 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Feb 2020 07:15:21 EST
-Received: from localhost.localdomain (227.146.230.94.awnet.cz [94.230.146.227])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 675232014A;
-        Wed, 19 Feb 2020 13:10:01 +0100 (CET)
-From:   David Heidelberg <david@ixit.cz>
-To:     marcel@holtmann.org
-Cc:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
-        luiz.dentz@gmail.com, pali.rohar@gmail.com, pavel@ucw.cz
-Subject: Re: HCI Set custom bandwidth for AuriStream SCO codec
-Date:   Wed, 19 Feb 2020 13:09:40 +0100
-Message-Id: <20200219120940.1509224-1-david@ixit.cz>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <B6A143FD-717D-44F9-B62F-17CF357961A1@holtmann.org>
-References: <B6A143FD-717D-44F9-B62F-17CF357961A1@holtmann.org>
+        id S1727263AbgBSNgc convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 19 Feb 2020 08:36:32 -0500
+Received: from scm.imp.edu.mx ([132.247.16.103]:18945 "EHLO scm.imp.edu.mx"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726548AbgBSNgc (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 19 Feb 2020 08:36:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by scm.imp.edu.mx (Postfix) with ESMTP id 1A6EC18AC7C;
+        Wed, 19 Feb 2020 06:11:25 -0600 (CST)
+X-Virus-Scanned: by SpamTitan at imp.edu.mx
+Received: from scm.imp.edu.mx (localhost [127.0.0.1])
+        by scm.imp.edu.mx (Postfix) with ESMTP id 3BDD118DA14;
+        Wed, 19 Feb 2020 04:51:46 -0600 (CST)
+Authentication-Results: scm.imp.edu.mx; none
+Received: from imp.edu.mx (unknown [10.249.93.105])
+        by scm.imp.edu.mx (Postfix) with ESMTP id 39D5318D9F9;
+        Wed, 19 Feb 2020 04:51:42 -0600 (CST)
+Received: from localhost (localhost [127.0.0.1])
+        by imp.edu.mx (Postfix) with ESMTP id 23609180635F4E;
+        Wed, 19 Feb 2020 04:51:43 -0600 (CST)
+Received: from imp.edu.mx ([127.0.0.1])
+        by localhost (imp.edu.mx [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id VKJQCI3YEdu1; Wed, 19 Feb 2020 04:51:43 -0600 (CST)
+Received: from localhost (localhost [127.0.0.1])
+        by imp.edu.mx (Postfix) with ESMTP id 0235E180635F44;
+        Wed, 19 Feb 2020 04:51:43 -0600 (CST)
+X-Virus-Scanned: amavisd-new at imp.edu.mx
+Received: from imp.edu.mx ([127.0.0.1])
+        by localhost (imp.edu.mx [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id lUsOR2y12Kdm; Wed, 19 Feb 2020 04:51:42 -0600 (CST)
+Received: from [45.147.4.119] (unknown [45.147.4.119])
+        by imp.edu.mx (Postfix) with ESMTPSA id A3A89180635F4E;
+        Wed, 19 Feb 2020 04:51:41 -0600 (CST)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: 19-02-2020
+To:     Recipients <mucios@imp.edu.mx>
+From:   "urs portmann" <mucios@imp.edu.mx>
+Date:   Wed, 19 Feb 2020 21:51:39 +1100
+Reply-To: onube@qq.com
+Message-Id: <20200219105141.A3A89180635F4E@imp.edu.mx>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello Marcel,
+Guten Morgen,
+                                          19-02-2020
+Wir haben versucht, Sie zu erreichen und haben noch nichts von Ihnen gehört. Haben Sie unsere letzte E-Mail über Ihre S.p.e.n.d.e erhalten? Wenn nicht, melden Sie sich bitte bei uns, um weitere Informationen zu erhalten.
 
-first thank you for reviewing Pali's work.
+Wir warten darauf, von Ihnen zu hören, sobald Sie diese Nachricht erhalten, die Sie bei der weiteren Vorgehensweise unterstützt.
 
-As I understood you'd like more minimal interface, but since Pali has been
-working on bluetooth stack for really long and there is no better option,
-would you be willing accept this code?
-
-I know it may sounds like compromise, but no-one came with better solution
-in given time.
-
-In my opinion upstream can benefit from already (well) designed
-and tested solution, than waiting for messaiah with possibly perfect solution
-which doesn't exist yet (may never shows up).
-
-Best regards
-David Heidelberg
+Mfg
+urs portmann
