@@ -2,58 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F14C165396
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Feb 2020 01:28:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34FD01653E1
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Feb 2020 01:55:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727184AbgBTA2j (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 19 Feb 2020 19:28:39 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:35026 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726811AbgBTA2i (ORCPT
+        id S1727277AbgBTAzZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 19 Feb 2020 19:55:25 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:40078 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726824AbgBTAzY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 19 Feb 2020 19:28:38 -0500
-Received: by mail-pj1-f68.google.com with SMTP id q39so109257pjc.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2020 16:28:38 -0800 (PST)
+        Wed, 19 Feb 2020 19:55:24 -0500
+Received: by mail-oi1-f194.google.com with SMTP id a142so25829493oii.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2020 16:55:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Sgn26Luz9XVSjFD2jqkmBUZAZcGhcXdUtpU3GjpAf84=;
-        b=SpVCiCH4qxnkOHiKeuO2+uerhzIlHICbwjJ4v4yVB5TzupsmElr5hHSOFc9qYizVx/
-         L235RMj8a1ennulSDnlByKqA6twy/mtHjDkRtonIglFBy6NHgciS6h09ZyyJS/dBNg64
-         5yBeWuVhP4mqo/T6Ldrgy0qx3utYA0Ba/2PlvR5oDSv0sRmyXUvKgsGKMzhOUzRJUuDg
-         Ulxjk0sJkEiPKN+3GDj6U/rbr4vF8vAdr3vQQVc9zicP3zQUdU/Ws0+yh7NpSP8cjS4t
-         mTWR6XjVqWDqEYZrzMypMe5f/eW8rX4fEtE1FrPdkpDY0Ry+3PQCDM1Kjg3ytEw3YIWM
-         0qsg==
+        bh=+5iyro5dL5q833u0D7Sw6LWpoy/E1PZqzaXCOHpKQVQ=;
+        b=qigpnAhTJOkcq1xfHS7s5SvkNY0jlbhvJ50iRgkksQmFAjFCjLnat2yaLdS8HlUEbn
+         61AhaZhgohzRRDf+N/dpyCMtr1lC7Y1sxyGIDq/xiM2jSeeyhGs7MgSqVft18U9o0rwV
+         RAnTLlbEMmkRL1kdC3UnJVsSXon7Vr25SpgnlmU4j9BIvGCj6/OeRGYMnN/62IPqBnYS
+         1hSS8RMorAO9Y/mE40YOOkmPhH6ohy1V3GG8kfut1noe/p+NduO99PS3Nt7w+G9GqYRX
+         +xc0i3z9ThHKfLfNDFKrB2lbbkKOKctj1582iHP1J5VIXpajGGXCA3Guvcj68gtvVF5Q
+         XLoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Sgn26Luz9XVSjFD2jqkmBUZAZcGhcXdUtpU3GjpAf84=;
-        b=CfYVxaj/MsCqFbMWKdIRs0FzRb73PRkfVLEjNof285v/Pq2JJ66FELV+0RCy5a9FXN
-         E+ZyX2ziaMxNmMdtg2WVPSotAVLx0q4jJeo83YCfiQ2TpjzO+yS/kddqAoSI5OT3/iSt
-         59ayHSCLog0f3vOf9rl/F1ighah/RVEHqFYlB2CkXzJR6fq9Q2mLBYnbRLrmUt+CcnK+
-         2NaW6YlJ/tD3JYkGL8q8w1TaFLdInd0TzTFVO8GFSnxznqE/2jfPqlpW//5JVezqurAJ
-         GDSToHZLbbPp3E7evFhktG2471+vKzxzYhqe1yHi4aBlzSi6p5xyJmJIthVS36RcvotQ
-         USlg==
-X-Gm-Message-State: APjAAAWUF8B+6uRFzahETzYFXiczSzHKMcW28Ut4Jf13OQ89YqsiwbLr
-        5Sw2HFw4pnKB3fVxu9E5Y3e6VN6AcXI=
-X-Google-Smtp-Source: APXvYqzUPotkXLfnKf+pzSvaGdKcPXjZOfD6uAVwJk9uvTMJqBGuvd6kHTOX335lZwibWMG9jWbGYQ==
-X-Received: by 2002:a17:90a:af81:: with SMTP id w1mr438243pjq.14.1582158517924;
-        Wed, 19 Feb 2020 16:28:37 -0800 (PST)
-Received: from vudentzs-t460s.amr.corp.intel.com ([2601:1c0:6800:1640::3287])
-        by smtp.gmail.com with ESMTPSA id c68sm769213pfc.156.2020.02.19.16.28.37
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+5iyro5dL5q833u0D7Sw6LWpoy/E1PZqzaXCOHpKQVQ=;
+        b=MzPACCblvrj38YjhTqTbNTm71jTxLGRkxRwAsc4mnq7jSiZ9K+xXrVz6GNnjDiwnWU
+         UGF0d6o/y9qxlHZ0VZrTBTqEmsQs4mgDjg7jel1DThIzQO0Ytf9MtA6wnFM/qH0vAAwi
+         1VSaCdRGlaLN3xq88j4RWIuV98n/tKsB6mOKOUhT3WziPWfJCf/nJRT5Bbn/l/5wkT3i
+         lSDW7QuKZGQb1SyfmhgR56hx+p3y+pKf05ccOFnAi6dDGRMciqVtOPY/pO8jW9Gsg8/f
+         0b7PaU5E1llVaUCke8BwAO6XRT9UpMeTdJNEy9ne7mXyrGUpbCVRumpGgVSfN5LXUzH6
+         bt4w==
+X-Gm-Message-State: APjAAAVe/riIM1WzMwHx0IsxxcyQd0mJRZFgiO3ZCFrcPUqi1atuYx4T
+        3qvR0GViRCqje0Rp1PKe6bDfW73btDU=
+X-Google-Smtp-Source: APXvYqy0KX9BEPYKEZ0SQaD0+OPVJ0mmMR6x+VQnbTJNctvIDTfAjo2ec/QEaBlOn7i+uixA4lKRIw==
+X-Received: by 2002:a17:90b:11cd:: with SMTP id gv13mr484574pjb.94.1582159682769;
+        Wed, 19 Feb 2020 16:48:02 -0800 (PST)
+Received: from vudentzs-t460s.hsd1.or.comcast.net ([2601:1c0:6800:1640::3287])
+        by smtp.gmail.com with ESMTPSA id y15sm855680pgj.78.2020.02.19.16.48.01
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 16:28:37 -0800 (PST)
+        Wed, 19 Feb 2020 16:48:01 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 3/3] client: Add scan.pattern command
-Date:   Wed, 19 Feb 2020 16:28:35 -0800
-Message-Id: <20200220002835.8929-3-luiz.dentz@gmail.com>
+Subject: [PATCH] Bluetooth: Fix crash when using new BT_PHY option
+Date:   Wed, 19 Feb 2020 16:48:01 -0800
+Message-Id: <20200220004801.19944-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.1
-In-Reply-To: <20200220002835.8929-1-luiz.dentz@gmail.com>
-References: <20200220002835.8929-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -63,98 +61,45 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This uses the new Pattern filter:
+This fixes the invalid check for connected socket which causes the
+following trace due to sco_pi(sk)->conn being NULL:
 
-[bluetooth]# scan.pattern Living
-[bluetooth]# scan on
-SetDiscoveryFilter success
-Discovery started
-[CHG] Controller XX:XX:XX:XX:XX:XX Discovering: yes
-[NEW] Device XX:XX:XX:XX:XX:XX Living Room TV
+RIP: 0010:sco_sock_getsockopt+0x2ff/0x800 net/bluetooth/sco.c:966
+
+L2CAP has also been fixed since it has the same problem.
+
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- client/main.c | 33 ++++++++++++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c | 2 +-
+ net/bluetooth/sco.c        | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/client/main.c b/client/main.c
-index 8bd0bac9e..422da5593 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -1157,6 +1157,7 @@ static void cmd_default_agent(int argc, char *argv[])
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 9fb47b2b13c9..305710446e66 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -605,7 +605,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 		break;
  
- static struct set_discovery_filter_args {
- 	char *transport;
-+	char *pattern;
- 	dbus_uint16_t rssi;
- 	dbus_int16_t pathloss;
- 	char **uuids;
-@@ -1241,6 +1242,10 @@ static void set_discovery_filter_setup(DBusMessageIter *iter, void *user_data)
- 						DBUS_TYPE_BOOLEAN,
- 						&args->discoverable);
+ 	case BT_PHY:
+-		if (sk->sk_state == BT_CONNECTED) {
++		if (sk->sk_state != BT_CONNECTED) {
+ 			err = -ENOTCONN;
+ 			break;
+ 		}
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 29ab3e12fb46..c8c3d38cdc7b 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -958,7 +958,7 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
+ 		break;
  
-+	if (args->pattern != NULL)
-+		g_dbus_dict_append_entry(&dict, "Pattern", DBUS_TYPE_STRING,
-+						&args->pattern);
-+
- 	dbus_message_iter_close_container(iter, &dict);
- }
- 
-@@ -1440,6 +1445,22 @@ static void cmd_scan_filter_discoverable(int argc, char *argv[])
- 		set_discovery_filter(false);
- }
- 
-+static void cmd_scan_filter_pattern(int argc, char *argv[])
-+{
-+	if (argc < 2 || !strlen(argv[1])) {
-+		bt_shell_printf("Pattern: %s\n", filter.pattern);
-+		return bt_shell_noninteractive_quit(EXIT_SUCCESS);
-+	}
-+
-+	free(filter.pattern);
-+	filter.pattern = strdup(argv[1]);
-+
-+	filter.set = false;
-+
-+	if (filter.active)
-+		set_discovery_filter(false);
-+}
-+
- static void filter_clear_uuids(void)
- {
- 	g_strfreev(filter.uuids);
-@@ -1473,6 +1494,12 @@ static void filter_clear_discoverable(void)
- 	filter.discoverable = false;
- }
- 
-+static void filter_clear_pattern(void)
-+{
-+	free(filter.pattern);
-+	filter.pattern = NULL;
-+}
-+
- struct clear_entry {
- 	const char *name;
- 	void (*clear) (void);
-@@ -1485,6 +1512,7 @@ static const struct clear_entry filter_clear[] = {
- 	{ "transport", filter_clear_transport },
- 	{ "duplicate-data", filter_clear_duplicate },
- 	{ "discoverable", filter_clear_discoverable },
-+	{ "pattern", filter_clear_pattern },
- 	{}
- };
- 
-@@ -2639,8 +2667,11 @@ static const struct bt_shell_menu scan_menu = {
- 	{ "discoverable", "[on/off]", cmd_scan_filter_discoverable,
- 				"Set/Get discoverable filter",
- 				NULL },
-+	{ "pattern", "[value]", cmd_scan_filter_pattern,
-+				"Set/Get pattern filter",
-+				NULL },
- 	{ "clear",
--		"[uuids/rssi/pathloss/transport/duplicate-data/discoverable]",
-+	"[uuids/rssi/pathloss/transport/duplicate-data/discoverable/pattern]",
- 				cmd_scan_filter_clear,
- 				"Clears discovery filter.",
- 				filter_clear_generator },
+ 	case BT_PHY:
+-		if (sk->sk_state == BT_CONNECTED) {
++		if (sk->sk_state != BT_CONNECTED) {
+ 			err = -ENOTCONN;
+ 			break;
+ 		}
 -- 
 2.21.1
 
