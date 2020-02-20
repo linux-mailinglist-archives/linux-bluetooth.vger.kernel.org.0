@@ -2,111 +2,81 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 940B71658E6
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Feb 2020 09:02:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08D90165AD9
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Feb 2020 11:00:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726839AbgBTIBX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 20 Feb 2020 03:01:23 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:35237 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726248AbgBTIBX (ORCPT
+        id S1727946AbgBTKAE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 20 Feb 2020 05:00:04 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:40099 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727227AbgBTKAD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 20 Feb 2020 03:01:23 -0500
-Received: by mail-oi1-f196.google.com with SMTP id b18so26698580oie.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Feb 2020 00:01:23 -0800 (PST)
+        Thu, 20 Feb 2020 05:00:03 -0500
+Received: by mail-pl1-f194.google.com with SMTP id y1so1361605plp.7
+        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Feb 2020 02:00:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LD998h2IWdu5aq+JNuGMG/AJkcgIqqf6dSEUP+iywDA=;
-        b=X1p6DOgIKa92nyeufTz7R2CO3VxH0mzXplxk3tfzOa9+fgCHTnJXpCNkUcQf7M5SpI
-         IzdHB7qKdnAJOgRx3HUWB8df8dSpv836syu0sy9uwanXCHAXyfNe6DMie7uHswX2JwJI
-         L4Uy5NUPvkQx5y0ifq15xlw3fgQ8S/tu47EXpj1mlMCg+pUYrsmJPA/BdJpZ6MAo92Go
-         1VswtPVB4AQTaNM5m2vcCSAt+hlXMd9b/a3helxh2ykowrmHIDWUFHWu5cZ/n4UN9IpE
-         0MRkafSnAqmUCDQU6cwv8/umPz3WiyOvEJU2kAjx2yJzuxzdGC9r+VtcKJdwOIJrzoCW
-         b8GQ==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=xsUbPWAhYtsZRE8nHbpZ90/dMr+6ACJOvf/o3gzcGwM=;
+        b=AH5lieLCrIYw049wsVcDwlLl0GFlR2w/1SgXx54g1hDP93g885PAGbcDDTU7rxBupt
+         uXy0sugTIisxbGnADpyz4r58uq+g0yGeRRocFE0L+fCdOgnH/gQTA2I0Cw7ZfU79Szo7
+         0QzWlAvSWvEcqUKmQI/wkZSwkq0zQQLXlh3b01qhvhCXCWxG8ruZETTWmigLQl/Jrn7F
+         MrKyGUkQDq8RuwBmAt4fSA07sE7BnkgwF0W4ziFYGkE17ylImS4/abb+CfYxxiehhKQU
+         Uhyy5/WDX+r7X+y+EHAZO8emfVUn1c19lGHowMtUzM+DDy6/9ABBjA5YK0Dvp+0kbMu/
+         ESnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LD998h2IWdu5aq+JNuGMG/AJkcgIqqf6dSEUP+iywDA=;
-        b=GWlzDkNlW8zu6CzFV6b3vHy4oBTCjLvicO29zqRVlYvwaYYwOpDTQRYm4pkojZAYIh
-         8LBWkeo5a6DLMxu/qNN9BrIZk2WQ9NqcIMLx+htRYr618gA6blg4m+m2bNA3WrlfqkGG
-         nQpMID4Cfyck2v8vY7P7qFQEdI5cZt5pCfksVhNqRy9KUK+D8ZDVukLZ0heJf5yb0zJS
-         RYEVwFutiEIKV4gzyrAH16aKgC+baeptvaOLbgsqlKr7BD+E4gE4eEJyX4FxbzHZZXfo
-         EglTYBhglXm6bGpqd9UU6i/tT9iV/WO1qBG0WJ7cXMKTVud016+JdWB56Ehy1BLCMg1n
-         rxVw==
-X-Gm-Message-State: APjAAAW+ZniXk2cl+y9pd4iZ5aXMYXSBGK4ge6ang9C9826e3OIw57yU
-        8kVFNgzbt4Q8sBa7h4f877p0g7PpQQ4ZbaeVRhPUWgGY
-X-Google-Smtp-Source: APXvYqw6uL3F2QQo+bAo4vfqSBuUwokaYyyUIaJpx7NtHLlbQitOeHCSZDTB0+zJDvG9RCpiVwrnw5YC5Haa2/p/X9c=
-X-Received: by 2002:aca:d610:: with SMTP id n16mr1162242oig.108.1582185682580;
- Thu, 20 Feb 2020 00:01:22 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=xsUbPWAhYtsZRE8nHbpZ90/dMr+6ACJOvf/o3gzcGwM=;
+        b=VCYJPqScr0D9dBe00ZgYwM2Hfb9jp4losJw34MZ5lQZ9jIFr9ZFiJG36Bzyy+xOYDS
+         SzFGLXTg+JlEyqcrOkvbhkUAeinutAVizUzGDo1R2uZ5Kh9sWLsTgm2uovklaBOjYcrw
+         DexM1F3Eh0s08w/g8wSkouTvJAua5GGVGAhMWsA6G25f8HCTVfEebBqvWJX6XDjoqps5
+         5AvCvj6kn12jycZXPP2Ax2b3jNK/zA/zu4N7kZYapYViW6hm10Jf1OiZSUTc0m6xHWCe
+         J77H0Iauypi2o8bllNJkT0fOG51tOA954jqW3tGf8l7hFCa4lFqNIgV/yxACGKLeERM5
+         is6A==
+X-Gm-Message-State: APjAAAXC4Nq/KCYfSPmZkXn7nc+ildv7ks54s2PsYCaak8JoEtpNZx0Y
+        u/TlXgBAKw/cH1kAMeT9Q7ugken3y11OR7lsuJE=
+X-Google-Smtp-Source: APXvYqwA8n50tXWR5SrjNg4VsIIdMEvPrmm08xkMwa/OcOpLP6EegnFUnSqS92IPbY2xPKK8iKv6SxgPMbon4/ysPYA=
+X-Received: by 2002:a17:902:7b94:: with SMTP id w20mr30389882pll.257.1582192802907;
+ Thu, 20 Feb 2020 02:00:02 -0800 (PST)
 MIME-Version: 1.0
-References: <20200220010328.10132-1-luiz.dentz@gmail.com> <A50805F7-FFAC-4B0A-B918-E1EA24B115F0@holtmann.org>
-In-Reply-To: <A50805F7-FFAC-4B0A-B918-E1EA24B115F0@holtmann.org>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Thu, 20 Feb 2020 00:01:11 -0800
-Message-ID: <CABBYNZ+q70NxjP5p2+FUb0KdG2zGu7keC5mro6gOmQAWJjfbOQ@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: Fix crash when using new BT_PHY option
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Received: by 2002:a17:90a:90f:0:0:0:0 with HTTP; Thu, 20 Feb 2020 02:00:02
+ -0800 (PST)
+Reply-To: cagesusan199@gmail.com
+From:   "Mrs. Susan S. Cage" <drgoodluckebelejonathan061@gmail.com>
+Date:   Thu, 20 Feb 2020 02:00:02 -0800
+Message-ID: <CALjo5=-rRrA1501A5OOVr2Q-Yun753shbPf_ZDKj87r8zs=TJw@mail.gmail.com>
+Subject: Attention:Beneficiary
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Marcel,
-
-On Wed, Feb 19, 2020 at 10:26 PM Marcel Holtmann <marcel@holtmann.org> wrote:
->
-> Hi Luiz,
->
-> > This fixes the invalid check for connected socket which causes the
-> > following trace due to sco_pi(sk)->conn being NULL:
-> >
-> > RIP: 0010:sco_sock_getsockopt+0x2ff/0x800 net/bluetooth/sco.c:966
-> >
-> > L2CAP has also been fixed since it has the same problem.
-> >
-> > Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> > ---
-> > net/bluetooth/l2cap_sock.c | 2 +-
-> > net/bluetooth/sco.c        | 2 +-
-> > 2 files changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-> > index 9fb47b2b13c9..305710446e66 100644
-> > --- a/net/bluetooth/l2cap_sock.c
-> > +++ b/net/bluetooth/l2cap_sock.c
-> > @@ -605,7 +605,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
-> >               break;
-> >
-> >       case BT_PHY:
-> > -             if (sk->sk_state == BT_CONNECTED) {
-> > +             if (sk->sk_state != BT_CONNECTED) {
-> >                       err = -ENOTCONN;
-> >                       break;
-> >               }
-> > diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-> > index 29ab3e12fb46..c8c3d38cdc7b 100644
-> > --- a/net/bluetooth/sco.c
-> > +++ b/net/bluetooth/sco.c
-> > @@ -958,7 +958,7 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
-> >               break;
-> >
-> >       case BT_PHY:
-> > -             if (sk->sk_state == BT_CONNECTED) {
-> > +             if (sk->sk_state != BT_CONNECTED) {
-> >                       err = -ENOTCONN;
-> >                       break;
-> >               }
->
-> is there something wrong with your mailer? I have this patch 3 times and already applied one of them to bluetooth-next. Is the one incorrect?
-
-It appears my outbox had the same patch multiple times, sorry about
-that the intention was to to send the RFCOMM change and these got in
-the way, so please disregard this one.
-
 -- 
-Luiz Augusto von Dentz
+Dearest Friend,
+
+Sorry for invading your privacy, my name is Susan S. Cage I am 81
+years, citizen of United States and presently in hospital undergoing
+chromatography for bronchogenic carcinomas (Lung cancer) which
+affected both Lungs. The doctors said I have few days to live because
+the cancer has now affected my brain.
+
+My late husband left Fifteen Million, Five Hundred British Pounds
+Sterling in my account, I want to transfer the money to you and I want
+you to use it as a donate for charitable and help the needy,
+motherless, less privileged and widows within your location.
+
+I need your assurance that you will use the fund for charity, once I a
+favorable reply from you, will inform my Bank through my lawyer to
+transfer the fund to you as my Next of Kin and Sole Beneficiary. Once
+I receive your response, I will inform my bank in writing through my
+lawyer.
+
+
+
+Thank you and God bless you.
+
+Mrs. Susan S. Cage
