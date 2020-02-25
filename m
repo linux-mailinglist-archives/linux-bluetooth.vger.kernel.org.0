@@ -2,122 +2,129 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0529D16B418
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 24 Feb 2020 23:33:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A0DE16B62F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Feb 2020 01:01:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727670AbgBXWdP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 24 Feb 2020 17:33:15 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:36744 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726651AbgBXWdO (ORCPT
+        id S1728524AbgBYAAt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 24 Feb 2020 19:00:49 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:55650 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728501AbgBYAAs (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 24 Feb 2020 17:33:14 -0500
-Received: by mail-ot1-f65.google.com with SMTP id j20so10306513otq.3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Feb 2020 14:33:14 -0800 (PST)
+        Mon, 24 Feb 2020 19:00:48 -0500
+Received: by mail-pj1-f66.google.com with SMTP id d5so454189pjz.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Feb 2020 16:00:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7ik8Suev1wn9gM+r6boW5emKP4kGGDxI8AQFnWGxpzs=;
-        b=LzrrnZStsmhe13X2FRsryeRzs0hsO5y2uEEFwDj0YGBPMbUUC3bntxoDfivcdfcrXo
-         1fXVTqogg/F28ex2IpbQJBmxgBePrvMzb80Dm74m5Bx2MRbw/XDKCPwGqpR8PCKUalR6
-         8JqKx90pIpbk6eHKwl+qUTlQ2POboXQmN4Gs9wuvTiScJRbWnZJu4I7rHMxe5xUc8LyN
-         hcuXKRniX+SwRHFAOfv2Q+P0opysuMD2iiwfMHqUG8hWcU4fVRTUqOeBFS6T4ncGHeaT
-         o8mRLZwZImhLONuLtNFhA9oD4xulNmxGSaQF3J8HYsugsaAcsVFhAkgyd89THsPNcu8m
-         x0xA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5+8ngQIB3GNYZhQp96LbiuLKzGQX6teIB6tS+tcQAEI=;
+        b=jc5CHOxAioIkjj1QZAS40yykoz02ZFZzTowxaz1evbUBDn+APB+dg5yi/CqMRUHBPO
+         CaS+PgoTg7kAlqDJ6pxDt/OaBB5uOGPxArVMkdbJ3VqoIWjg1xF8GVZLATzkElJ/Loww
+         bUDs0l+DbGjuRVS0AnyNkLI+IfFwSvxJeLnB0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7ik8Suev1wn9gM+r6boW5emKP4kGGDxI8AQFnWGxpzs=;
-        b=UgxP6W9s+3b8FzBhriaxhn1wmedajBnZsgQqJxhjeVIi4oCKXTYpvFl5NACYFWJb5e
-         MNmevty7FJrjWZZb+qdUtiSI0oEboQ29uSy2e7CIcSnGewSwm9vvwKi4de/FifR/BjEJ
-         rqAzYqv95PfJ0EfPM33XZIx0d184Rrh6lFUjHuW+qE/zxJcRqbFUpIZpZH1ljqPQKeSy
-         vMMwpXK0f48fpDZKRYalbmfShZ+RPM3OAOpgYy2aGA1Eo/fUobA7gdx8S0tqvMvcS+at
-         I1VTCvL9PzgNH+h6ddjkwxhBNn6qTj2f3cHaTh08kSNx4toRe/HKNFFx/G2PyAHGD8AD
-         JdLg==
-X-Gm-Message-State: APjAAAX5zPahctKXCWhDACPfPNIfxOIfWq5XQkpbe+NO2MVdfh3jGq+b
-        CUZVSj4Na1sYw7k2TqeyoDBN2bIdXHr2zudeX7g=
-X-Google-Smtp-Source: APXvYqyX7MK5E2/Hw9ro/NYVKxDh6GduxfyRDSBs5OoX7M8+PFwuF1IMucqY0S9VME/7IEWN1XuXdC0GE8xr55Ecwrg=
-X-Received: by 2002:a05:6830:88:: with SMTP id a8mr27527566oto.177.1582583593619;
- Mon, 24 Feb 2020 14:33:13 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5+8ngQIB3GNYZhQp96LbiuLKzGQX6teIB6tS+tcQAEI=;
+        b=HPenMyB9My7ak7QWC8h6WPLEnw5IzaN0IAhuNTErM27dSjDKgKSSPS40M89x5rZLhB
+         552pv6btZXzyFTGJLcmTRk/arY0Kcc2/hZQCKhH0xzGnpkNo9D9mBvU9NvUKbcQEHe8f
+         Bo1obeoC+6dZWHi79KoXbc8bOOErdxTTDPdpd0X/tUdQRV87QafwOXcxpHiaEgoqz65V
+         5cxZIVmdnjdNN33idl0x6FGh2zJOIceQJfsqnhTpDEhxlVh9buToddzG9HixDAaMOCZw
+         96CwAgaA+LCR+hcPQvy2sRY6aVJv+lQnfu5StVYJxU2MtbdVeB5p78RMM6I2MgXHcSBJ
+         ItPQ==
+X-Gm-Message-State: APjAAAVu4gMTWpdOJVq18aYcL9qHA0S/FkV/120OW2gweiDjpaTQX2pF
+        Co6aglR/D6uz/3A6GbmzsClwFg==
+X-Google-Smtp-Source: APXvYqzj/EmbtyPe0tewAX+jrs6CxwD84WnIm3mzFDz0oyXPS0y+ZDGcKiyEel+jbzhFqho5VvozQw==
+X-Received: by 2002:a17:90a:330c:: with SMTP id m12mr1868860pjb.18.1582588847029;
+        Mon, 24 Feb 2020 16:00:47 -0800 (PST)
+Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
+        by smtp.gmail.com with ESMTPSA id c188sm14477657pfb.151.2020.02.24.16.00.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Feb 2020 16:00:46 -0800 (PST)
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+To:     marcel@holtmann.org, luiz.dentz@gmail.com, alainm@chromium.org
+Cc:     linux-bluetooth@vger.kernel.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jakub Kicinski <kuba@kernel.org>
+Subject: [RFC PATCH v3 0/5] Bluetooth: Handle system suspend gracefully
+Date:   Mon, 24 Feb 2020 16:00:31 -0800
+Message-Id: <20200225000036.156250-1-abhishekpandit@chromium.org>
+X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
 MIME-Version: 1.0
-References: <CAJ_gUqbKKxt15OhizRN_x4Dy-RvyuEUH0Bwcah_KEcMsQakQoA@mail.gmail.com>
- <CABBYNZKG6hFMgy7ifuEW2kxyQYd=Gw0cWefjBy-fdWS00OWL+g@mail.gmail.com> <CAJ_gUqZ5rsV55tO5O07fUYxEoJa=CG0gAz5P3hJ-Lb-kYws2rg@mail.gmail.com>
-In-Reply-To: <CAJ_gUqZ5rsV55tO5O07fUYxEoJa=CG0gAz5P3hJ-Lb-kYws2rg@mail.gmail.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Mon, 24 Feb 2020 14:33:01 -0800
-Message-ID: <CABBYNZJhPqb=H0r93mTnLxBMR-AazXdfopHTT-pw+ZXgj1QzeA@mail.gmail.com>
-Subject: Re: Adding support for DuplicateData into the kernel
-To:     Scott Shawcroft <scott@adafruit.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Scott,
 
-On Mon, Feb 24, 2020 at 1:51 PM Scott Shawcroft <scott@adafruit.com> wrote:
->
-> On Mon, Feb 24, 2020 at 10:57 AM Luiz Augusto von Dentz
-> <luiz.dentz@gmail.com> wrote:
-> >
-> > Hi Scott,
-> >
-> > On Thu, Feb 20, 2020 at 8:34 PM Scott Shawcroft <scott@adafruit.com> wrote:
-> > >
-> > > Hi!
-> > >
-> > > I'm trying to create a bridge between BLE advertisements and the web
-> > > for sensor data logging. The BLE advertisements use manufacturer data
-> > > to transmit the sensor data. I'm running on a Raspberry Pi 3b.
-> > >
-> > > I've been trying to use the Bluez dbus interface with DuplicateData,
-> > > trying both true and false, and I never seem to get duplicates back. I
-> > > dug into it via hcidump and noticed that the scan enable still has
-> > > filter duplicates set to true regardless. I can only manage to get it
-> > > set to False when using hcitool.
-> > >
-> > > I believe I've tracked the issue down into the kernel here:
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/tree/net/bluetooth/hci_request.c#n858
-> > > where enabling duplicate filtering is hardcoded. It seems that hcitool
-> > > side steps this by talking directly to the hci device.
-> >
-> > Yep, the kernel code don't actually allow setting the duplicate filter
-> > unfortunately.
-> >
-> > > Could someone confirm I'm on the right track? I'd be willing to plumb
-> > > the DuplicateData value through to the kernel if someone could help me
-> > > find the call path down.
-> >
-> > In the past Marcel was against turning off the duplicate filtering but
-> > since we do have a similar setting over D-Bus, though the later shall
-> > not be confused since tracks duplicates by itself since over D-Bus we
-> > are doing it to prevent duplicate signals, Im with the opinion that
-> > DuplicateData could be used to disable duplicate filtering, default
-> > should be still be enabled though.
-> >
-> > --
-> > Luiz Augusto von Dentz
->
-> Thanks for the reply!
->
-> I agree the default should be to filter duplicates. I'd love to see
-> the Dbus setting actually used in the kernel. Did I find the correct
-> place to change? I'm not sure how it is called from bluez though.
-> (Maybe through the mgmt API?)
+Hi linux-bluetooth,
 
-Yes, we would need to add it to Start Service Discover or create a new
-one, while at it we may add support for adding both the interval and
-window to SetDiscoveryFilter, Id actually think we might be better off
-adding a new command e.g. Start Filtered Discover which can then
-accomodate all these details, but it probably won't be very simple to
-do as we learn from the addition of the filters making it work with
-multiple clients complicates it a little bit, anyway I don't think we
-want this to be global but rather per client.
+This patch series prepares the Bluetooth controller for system suspend
+by disconnecting all devices and preparing the event filter and LE
+whitelist with devices that can wake the system from suspend.
 
+The main motivation for doing this is so we can enable Bluetooth as
+a wake up source during suspend without it being noisy. Bluetooth should
+wake the system when a HID device receives user input but otherwise not
+send any events to the host.
+
+This patch series was tested on several Chromebooks with both btusb and
+hci_serdev on kernel 4.19. The set of tests was basically the following:
+* Reconnects after suspend succeed
+* HID devices can wake the system from suspend (needs some related bluez
+  changes to call the Set Wake Capable management command)
+* System properly pauses and unpauses discovery + advertising around
+  suspend
+* System does not wake from any events from non wakeable devices
+
+Series 2 has refactored the change into multiple smaller commits as
+requested. I tried to simplify some of the whitelist filtering edge
+cases but unfortunately it remains quite complex.
+
+Series 3 has refactored it further and should have resolved the
+whitelisting complexity in series 2.
+
+Please review and provide any feedback.
+
+Thanks
+Abhishek
+
+
+Changes in v3:
+* Refactored to only handle BR/EDR devices
+* Split LE changes into its own commit
+
+Changes in v2:
+* Moved pm notifier registration into its own patch and moved params out
+  of separate suspend_state
+* Refactored filters and whitelist settings to its own patch
+* Refactored update_white_list to have clearer edge cases
+* Add connected devices to whitelist (previously missing corner case)
+* Refactored pause discovery + advertising into its own patch
+
+Abhishek Pandit-Subedi (5):
+  Bluetooth: Add mgmt op set_wake_capable
+  Bluetooth: Handle PM_SUSPEND_PREPARE and PM_POST_SUSPEND
+  Bluetooth: Handle BR/EDR devices during suspend
+  Bluetooth: Handle LE devices during suspend
+  Bluetooth: Pause discovery and advertising during suspend
+
+ include/net/bluetooth/hci.h      |  17 +-
+ include/net/bluetooth/hci_core.h |  41 ++++
+ include/net/bluetooth/mgmt.h     |   7 +
+ net/bluetooth/hci_core.c         |  86 ++++++++
+ net/bluetooth/hci_event.c        |  24 +++
+ net/bluetooth/hci_request.c      | 327 ++++++++++++++++++++++++++-----
+ net/bluetooth/hci_request.h      |   2 +
+ net/bluetooth/mgmt.c             |  92 +++++++++
+ 8 files changed, 536 insertions(+), 60 deletions(-)
 
 -- 
-Luiz Augusto von Dentz
+2.25.0.265.gbab2e86ba0-goog
+
