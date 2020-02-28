@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D5D1E17437B
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 29 Feb 2020 00:47:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB3FA17437D
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 29 Feb 2020 00:47:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbgB1XrG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 28 Feb 2020 18:47:06 -0500
-Received: from mail-pj1-f45.google.com ([209.85.216.45]:33922 "EHLO
-        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726525AbgB1XrF (ORCPT
+        id S1726658AbgB1XrH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 28 Feb 2020 18:47:07 -0500
+Received: from mail-pl1-f172.google.com ([209.85.214.172]:44861 "EHLO
+        mail-pl1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726621AbgB1XrG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 28 Feb 2020 18:47:05 -0500
-Received: by mail-pj1-f45.google.com with SMTP id f2so4702733pjq.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Feb 2020 15:47:05 -0800 (PST)
+        Fri, 28 Feb 2020 18:47:06 -0500
+Received: by mail-pl1-f172.google.com with SMTP id d9so1827783plo.11
+        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Feb 2020 15:47:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=a4mt3tuBEtrcFQaO04FkgRzkU5NWsbNKqrXQXndd3Lo=;
-        b=JAE41cfzDEddUoF89z01cmKJCa1ICMR9riB04GVa9TLtSknXNHkpIhyyppzRG53vzz
-         oDDlUJSbi00CAGUrQYi6DafximPtDrQ1fWeMxJK8vCs4CY8jk8qHkt8J4XWnaJOUu251
-         8GtmkHypZ1exTEl3lYL9KVrymahP1MJI2ePCtuIXsOAcxZfeBB2wgNUPk+wAqRb9uztF
-         BHwqk6++kEmceWxEyDaGrxTF2kFefVKSExvVLIf0RK63Qd7QRLDc7xClGDrmaUCWw9aq
-         3kam9VAO5+FAoO5VjIiEAhLyXuyaBSbg6Tjt8T4jIg9hl5yPoYew9qdMFDduvaaq1zx0
-         WNSQ==
+        bh=XGWE9lkXskeRh9mJU7EOBpH5ngFpikJQY3KMiOnIcZA=;
+        b=CVarktRLphIVsaupESJaDJPI+GeH5pN9S1eJJtuTaUIwhvvdjuPBOnshRQkp8Wt79B
+         3GRDcnAeq4E2wn2duzDr482x9iwR37Ak0oaDuOa8WxQ8in+8QqLcSlBsLQqPRIUtzfJ/
+         8NYQB9luotpofWUyZUfN1Um/A34Ba0zC1b7cwlKmzzj2amf1hcO1ug/OnEdsjmur9f/5
+         d8WgjtNnDMqu3uzu++Y/AfE6tXK/BdH59mbBnOBIhJJeFWDaSsevFlPxi4AvDy0UIWT7
+         ih+RsQjXzlZzyCUTpSITkypXIkHVdv/+R75POcwJ4/UHqFgNSXArZlYv0CMfylc14FoS
+         ViEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=a4mt3tuBEtrcFQaO04FkgRzkU5NWsbNKqrXQXndd3Lo=;
-        b=HbGTZ4yrGL0yPwPbwcBfuZfiDz0++fZeHgM2k1y55RYmj6cmfS0cxITModReyGvh5j
-         JAFQ9dVNCFKF82N7BRKtYQbVrfesRVwIDBod7Ymoa0vQajO+3NxV8XpyPc7Ca4qJoSw9
-         mK4msGW74E/AIfqCC2MOjibRspowaFcCv+IyMLPASxNdw/6pf6neIW/3IF2ijNJrTVhA
-         aCam9+Bi+kp9MapQEEkHScS5YbZ9Wc5Ya/wD4BohEyy6S1OJHe/5GznQkYTWDZqPlk6U
-         2FGn0q8SlnJyW1VKeR+VTwwaHPG67shQE4wlZontk5siw6ZaKSv1x8b6DPSnX2eEghcA
-         c4SA==
-X-Gm-Message-State: APjAAAVOH2dOk50cmmjkjoWIcB7GkGyyWRjxT1jxxWap9ou8jqctC9Pk
-        GY5FIXX+cwrMTg2hFome8ppxVUaRAkk=
-X-Google-Smtp-Source: APXvYqwblYvciv7f7kHmDiW0jcNlt2mK1qRYN2plv6ZAr9Rs3xy9LrI88P8X2YIIRAdtYLuJZPMc4Q==
-X-Received: by 2002:a17:90a:17e5:: with SMTP id q92mr7484160pja.28.1582933624183;
-        Fri, 28 Feb 2020 15:47:04 -0800 (PST)
+        bh=XGWE9lkXskeRh9mJU7EOBpH5ngFpikJQY3KMiOnIcZA=;
+        b=Co+AKcbDL/GhPGlgfrxQ2mTHthILgIO9Rahm1qlgvfsoQOpQ5Cx/RtCjbhwL6WQHtk
+         uQwyAy0EUn0MAwpYDYbVgqbuRDDmVaNpjuK5lLvkNS1BSf6k94RyvQe18wfuywT8wnGU
+         5dzgNlbTmpiKTRldxN5QmNg4lUB7E/RcY2QEQ3Oi9HGFcZVSXeCJkYh8rmDHsmJa+646
+         gawLa9YTtXvkFLFHqTuMJUqNDrworCPABzdOuMi/+jQFTAVatrIefZBFXfagDbBWuCAz
+         m2xoVRXx1wNzSCbeHvhr2bEKh52p6XuLzjRE1vT1y8AwBSYk/5gAW5qD7tJUG9WdXfwj
+         mr/w==
+X-Gm-Message-State: APjAAAWv8Bc4XVIWpy0kbvtlUpgFodWsUKrcHTJ6WHKZUi8LZC438IfC
+        GnNaUdbOnwFFKOsdHrr0HOe6CbAEge0=
+X-Google-Smtp-Source: APXvYqzxouOEocRjtAd84wyirrhsFWVMy42AjkdaOacpoeWN117HE9Az+aByaDJvxb/M/J7bDOJD/g==
+X-Received: by 2002:a17:902:c113:: with SMTP id 19mr6390408pli.138.1582933625315;
+        Fri, 28 Feb 2020 15:47:05 -0800 (PST)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id q13sm13643954pfn.162.2020.02.28.15.47.03
+        by smtp.gmail.com with ESMTPSA id q13sm13643954pfn.162.2020.02.28.15.47.04
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2020 15:47:03 -0800 (PST)
+        Fri, 28 Feb 2020 15:47:04 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 01/12] lib: Add definitions for Enhanced Credits Based Mode
-Date:   Fri, 28 Feb 2020 15:46:50 -0800
-Message-Id: <20200228234701.14614-2-luiz.dentz@gmail.com>
+Subject: [PATCH v2 02/12] btio: Add mode to for Enhanced Credit Mode
+Date:   Fri, 28 Feb 2020 15:46:51 -0800
+Message-Id: <20200228234701.14614-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.1
 In-Reply-To: <20200228234701.14614-1-luiz.dentz@gmail.com>
 References: <20200228234701.14614-1-luiz.dentz@gmail.com>
@@ -63,36 +63,114 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
+This adds BT_IO_MODE_ECRED which directly maps to L2CAP_MODE_ECRED.
 ---
- lib/bluetooth.h | 2 ++
- lib/l2cap.h     | 1 +
- 2 files changed, 3 insertions(+)
+ btio/btio.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++------
+ btio/btio.h |  3 ++-
+ 2 files changed, 49 insertions(+), 7 deletions(-)
 
-diff --git a/lib/bluetooth.h b/lib/bluetooth.h
-index d14217eac..47521d50e 100644
---- a/lib/bluetooth.h
-+++ b/lib/bluetooth.h
-@@ -141,6 +141,8 @@ struct bt_voice {
- #define BT_PHY_LE_CODED_TX	0x00002000
- #define BT_PHY_LE_CODED_RX	0x00004000
+diff --git a/btio/btio.c b/btio/btio.c
+index db37b99da..4c84da0ee 100644
+--- a/btio/btio.c
++++ b/btio/btio.c
+@@ -630,18 +630,34 @@ static gboolean set_le_imtu(int sock, uint16_t imtu, GError **err)
+ 	return TRUE;
+ }
  
-+#define BT_MODE			15
++static gboolean set_le_mode(int sock, uint8_t mode, GError **err)
++{
++	if (setsockopt(sock, SOL_BLUETOOTH, BT_MODE, &mode,
++						sizeof(mode)) < 0) {
++		ERROR_FAILED(err, "setsockopt(BT_MODE)", errno);
++		return FALSE;
++	}
 +
- /* Connection and socket states */
- enum {
- 	BT_CONNECTED = 1, /* Equal to TCP_ESTABLISHED to make net code happy */
-diff --git a/lib/l2cap.h b/lib/l2cap.h
-index 5ce94c4ee..f9ceb2f33 100644
---- a/lib/l2cap.h
-+++ b/lib/l2cap.h
-@@ -197,6 +197,7 @@ typedef struct {
- #define L2CAP_MODE_FLOWCTL	0x02
- #define L2CAP_MODE_ERTM		0x03
- #define L2CAP_MODE_STREAMING	0x04
-+#define L2CAP_MODE_EXT_FLOWCTL	0x81
++	return TRUE;
++}
++
+ static gboolean l2cap_set(int sock, uint8_t src_type, int sec_level,
+ 				uint16_t imtu, uint16_t omtu, uint8_t mode,
+ 				int master, int flushable, uint32_t priority,
+ 				GError **err)
+ {
+ 	if (imtu || omtu || mode) {
+-		gboolean ret;
++		gboolean ret = FALSE;
  
- #define L2CAP_SERVTYPE_NOTRAFFIC	0x00
- #define L2CAP_SERVTYPE_BESTEFFORT	0x01
+ 		if (src_type == BDADDR_BREDR)
+ 			ret = set_l2opts(sock, imtu, omtu, mode, err);
+-		else
+-			ret = set_le_imtu(sock, imtu, err);
++		else {
++			if (imtu)
++				ret = set_le_imtu(sock, imtu, err);
++
++			if (ret && mode)
++				ret = set_le_mode(sock, mode, err);
++		}
+ 
+ 		if (!ret)
+ 			return ret;
+@@ -980,6 +996,30 @@ static int get_phy(int sock, uint32_t *phy)
+ 	return 0;
+ }
+ 
++static int get_le_imtu(int sock, uint16_t *mtu)
++{
++	socklen_t len;
++
++	len = sizeof(*mtu);
++
++	if (getsockopt(sock, SOL_BLUETOOTH, BT_RCVMTU, mtu, &len) < 0)
++		return -errno;
++
++	return 0;
++}
++
++static int get_le_mode(int sock, uint8_t *mode)
++{
++	socklen_t len;
++
++	len = sizeof(*mode);
++
++	if (getsockopt(sock, SOL_BLUETOOTH, BT_MODE, mode, &len) < 0)
++		return -errno;
++
++	return 0;
++}
++
+ static gboolean l2cap_get(int sock, GError **err, BtIOOption opt1,
+ 								va_list args)
+ {
+@@ -999,10 +1039,11 @@ static gboolean l2cap_get(int sock, GError **err, BtIOOption opt1,
+ 	memset(&l2o, 0, sizeof(l2o));
+ 
+ 	if (src.l2_bdaddr_type != BDADDR_BREDR) {
+-		len = sizeof(l2o.imtu);
+-		if (getsockopt(sock, SOL_BLUETOOTH, BT_RCVMTU,
+-						&l2o.imtu, &len) == 0)
++		if (get_le_imtu(sock, &l2o.imtu) == 0) {
++			/* Older kernels may not support BT_MODE */
++			get_le_mode(sock, &l2o.mode);
+ 			goto parse_opts;
++		}
+ 
+ 		/* Non-LE CoC enabled kernels will return one of these
+ 		 * in which case we need to fall back to L2CAP_OPTIONS.
+diff --git a/btio/btio.h b/btio/btio.h
+index 41a017acb..5ebfb85c6 100644
+--- a/btio/btio.h
++++ b/btio/btio.h
+@@ -71,7 +71,8 @@ typedef enum {
+ 	BT_IO_MODE_RETRANS,
+ 	BT_IO_MODE_FLOWCTL,
+ 	BT_IO_MODE_ERTM,
+-	BT_IO_MODE_STREAMING
++	BT_IO_MODE_STREAMING,
++	BT_IO_MODE_EXT_FLOWCTL = 0x81
+ } BtIOMode;
+ 
+ typedef void (*BtIOConfirm)(GIOChannel *io, gpointer user_data);
 -- 
 2.21.1
 
