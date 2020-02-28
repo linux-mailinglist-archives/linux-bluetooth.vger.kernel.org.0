@@ -2,53 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A58B174137
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Feb 2020 21:51:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 565D217437C
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 29 Feb 2020 00:47:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726687AbgB1Uvw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 28 Feb 2020 15:51:52 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:35076 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725805AbgB1Uvw (ORCPT
+        id S1726642AbgB1XrG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 28 Feb 2020 18:47:06 -0500
+Received: from mail-pj1-f54.google.com ([209.85.216.54]:36567 "EHLO
+        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726525AbgB1XrG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 28 Feb 2020 15:51:52 -0500
-Received: by mail-vs1-f65.google.com with SMTP id u26so2846663vsg.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Feb 2020 12:51:51 -0800 (PST)
+        Fri, 28 Feb 2020 18:47:06 -0500
+Received: by mail-pj1-f54.google.com with SMTP id gv17so1921537pjb.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Feb 2020 15:47:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=pFJTaE2xrNcAanqHyoHceUjLy2NQv7Ru7eflVQr0amA=;
-        b=TOB9UA49RZk66S1xgAVImJjLgvIY7LOObSCwDyLgbLZkjptYvFJA+gE2dzPoR1qEfd
-         TwrPnKNnQokZ2YlLCQbAu+uCUh8JIEMRCHWLg+qSVaIeovpZYwyyGzbgjirbr6nCs4y6
-         +g4XnmcLhUWsZEqwtDMMdl31vizWkpFBHV46Y=
+        bh=vGeJvn5f/TortUIRqyBMZXkJuSujmHw43Jjf8CfXFrs=;
+        b=O2b4J8ryDahyS7lpY8162t3HFqXeCp0CXxcNxL/8YSXZd+jYAj3ZeWDLe/AkVbDFQD
+         BDRMjxlRFkpkFDD7MmoaVM4skqhRKyxHIullb8DIgkUF5udY53w8eFSbvMm74viRioX/
+         Z9NwUZCMgFQJ6vVfbGL0DDTu4twyKP7ZbwicJseqfJGRhYLQYd0CtpokdqD20h1Hx4FR
+         HLH/S2HBRkS2J+zM9pB9gH4XEnpwIaB/YU5+9XqjZymNlnSHxrV5YLxbE2cH7RDfUcfi
+         476A/cCYwJnse0N4nX/JdOthimp/WQqnRjePJmsVnu8JyTKmPfYU6NJwyH7uOVjejjSK
+         nVMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=pFJTaE2xrNcAanqHyoHceUjLy2NQv7Ru7eflVQr0amA=;
-        b=oO+Y9TKO5jjOjhtcE7ulyecJWZp37byzM/ARhsafx1n4aX1pZjcjGSDv5TS9pf/TXF
-         UT+YqcND0x/BAJyKS507FQT3PG8JR4Ea+dUINSqXa9ZQK9inwe+MojkYp9LV4v1rLVxs
-         vZ+TPA0QcdeL3nyy+7kpHESbYe4uznR14+Uwjf4NYlACV5/0meeCMfMQS1vErS+rdP1z
-         WjtoEhgAY0qetrui4w7LRHYLRG6wYFq9qOY2zo3GNZOfyezjt48yAQo57MpDeO5K1BSY
-         f0IveisMGuIRIOnk1oD09dVOHNfsvgrKB/DXOWMDB3DLcUKFBLi2dzB2I9gpwnT8Cwm7
-         pNcg==
-X-Gm-Message-State: ANhLgQ22ux+IahjBryl84WRHT5Ep03WDP6PjpvOY5jaQ5FNzbcunUnYy
-        5UYCm9ucHYWBp2XfM6PYPI1VnoBKiuQ=
-X-Google-Smtp-Source: ADFU+vsBsdygaxGLUJNu5Ltvf7rJWvhSnPS4wl9lZyeJhMhzzuIVivkkbfSArSkJLUGxjvUaLm4nrw==
-X-Received: by 2002:a67:ecc1:: with SMTP id i1mr3635952vsp.145.1582923111198;
-        Fri, 28 Feb 2020 12:51:51 -0800 (PST)
-Received: from alain.c.googlers.com.com (39.119.74.34.bc.googleusercontent.com. [34.74.119.39])
-        by smtp.gmail.com with ESMTPSA id 22sm3290201vkz.39.2020.02.28.12.51.50
+        bh=vGeJvn5f/TortUIRqyBMZXkJuSujmHw43Jjf8CfXFrs=;
+        b=LbKaiBpEESWaYwgARGJslJnfYdYWvAxB45IEw3PYTLZrssI4u+fsCZee/BTuDS6lrT
+         +mmVbq80ZyUgxajpFcC3z/BBqPs77XqS5eUXTRrvYIGeENvve7RLiGL3wnftB9XHVF6Q
+         cD6cKlWGjgqvsHSi2aWNvtN3jkfH0s1YMg1oOGOAABiuBAP2pKjVJq2Nh0KD0BILsEej
+         WEwvbD1O0ptzB9zZpyWBFEE4K7JzIthZeknXLucncjc3sde+GcxOvougpr1mC54VtKgx
+         5PmsjhU8BgC+O3GyDD5rOSegsco3QhF5BfYcUuXONi8a/FE6Ie9jr93dSXLTe5OwbJMP
+         gikw==
+X-Gm-Message-State: APjAAAWPI332+LXDzzuuB+juITkTbQPIl2a1G+NSrXsAHM8aSPJksDOr
+        Iu/O6x0LnTjadMTMyHKhv8qAaap7XC8=
+X-Google-Smtp-Source: APXvYqz7o4tEOhiX/UEouRTs8Mpl2TR2tej2rEwpTfGwMtn+U8eUwtBzsW2X3TImABtjejKcQzmGTw==
+X-Received: by 2002:a17:902:7797:: with SMTP id o23mr5940809pll.298.1582933623334;
+        Fri, 28 Feb 2020 15:47:03 -0800 (PST)
+Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id q13sm13643954pfn.162.2020.02.28.15.47.02
+        for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2020 12:51:50 -0800 (PST)
-From:   Alain Michaud <alainm@chromium.org>
+        Fri, 28 Feb 2020 15:47:02 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Cc:     Alain Michaud <alainm@chromium.org>
-Subject: [PATCH v1] bluetooth: guard against controllers sending zero'd events
-Date:   Fri, 28 Feb 2020 20:51:46 +0000
-Message-Id: <20200228205146.161229-1-alainm@chromium.org>
-X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
+Subject: [PATCH v2 00/12] Userspace Bluetooth 5.2 initial support
+Date:   Fri, 28 Feb 2020 15:46:49 -0800
+Message-Id: <20200228234701.14614-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.21.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -56,40 +59,66 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Some controllers have been observed to send zero'd events under some
-conditions.  This change guards against this condition as well as adding
-a trace to facilitate diagnosability of this condition.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Signed-off-by: Alain Michaud <alainm@chromium.org>
----
+This introduces the initial support for Bluetooth 5.2 features:
 
- net/bluetooth/hci_event.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+* ISO channels:
+        + tools/isotest command line tool to run validation tests
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 591e7477e925..f865eddb8d69 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5868,7 +5868,8 @@ void hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
- 	u8 status = 0, event = hdr->evt, req_evt = 0;
- 	u16 opcode = HCI_OP_NOP;
- 
--	if (hdev->sent_cmd && bt_cb(hdev->sent_cmd)->hci.req_event == event) {
-+	if (hdev->sent_cmd && event &&
-+	    bt_cb(hdev->sent_cmd)->hci.req_event == event) {
- 		struct hci_command_hdr *cmd_hdr = (void *) hdev->sent_cmd->data;
- 		opcode = __le16_to_cpu(cmd_hdr->opcode);
- 		hci_req_cmd_complete(hdev, opcode, status, &req_complete,
-@@ -5876,6 +5877,9 @@ void hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
- 		req_evt = event;
- 	}
- 
-+	if (!event)
-+		BT_ERR("Received unexpected HCI Event 00000000");
-+
- 	/* If it looks like we might end up having to call
- 	 * req_complete_skb, store a pristine copy of the skb since the
- 	 * various handlers may modify the original one through
+* L2CAP Enhanced Credit Based Flow Control Mode
+        + tools/l2test has been update to include the new mode
+
+* Enhanced ATT Bearer:
+        + Client and Server support
+        + Include all new procedures
+        + Automaticlly detects and enables channels
+        + Number of channels configurable via main.conf
+
+v2: Dropped ISO changes since there still under discussions how it will be
+supported, change ECRED to EXT_FLOWCTL and use BT_MODE to set it.
+
+Luiz Augusto von Dentz (12):
+  lib: Add definitions for Enhanced Credits Based Mode
+  btio: Add mode to for Enhanced Credit Mode
+  l2test: Add support for L2CAP_EXT_FLOWCTL_MODE
+  share/att: Add EATT support
+  shared/gatt-client: Add support for EATT features
+  gatt: Enable EATT bearer support
+  shared/gatt-server: Add support for Read Multiple Variable Length
+  shared/gatt-client: Add support for Read Multiple Variable Length
+  shared/gatt: Add support for Handle Value Multiple Notifications
+  gatt: Add support for Notify Multiple
+  core: Add support for setting the number of GATT bearers
+  monitor: Add support for decoding EATT
+
+ attrib/gattrib.c         |   5 +-
+ btio/btio.c              |  53 ++-
+ btio/btio.h              |   3 +-
+ lib/bluetooth.h          |   2 +
+ lib/l2cap.h              |   1 +
+ lib/uuid.h               |   3 +
+ monitor/l2cap.c          |  39 ++
+ peripheral/gatt.c        |   2 +-
+ src/device.c             |  18 +-
+ src/gatt-client.c        |  85 +++++
+ src/gatt-database.c      | 125 +++++--
+ src/hcid.h               |   1 +
+ src/main.c               |  14 +
+ src/main.conf            |   5 +
+ src/shared/att-types.h   |  25 +-
+ src/shared/att.c         | 780 ++++++++++++++++++++++++++-------------
+ src/shared/att.h         |  18 +-
+ src/shared/gatt-client.c | 287 +++++++++++---
+ src/shared/gatt-client.h |   5 +-
+ src/shared/gatt-server.c | 389 ++++++++++++-------
+ src/shared/gatt-server.h |   2 +-
+ tools/btgatt-client.c    |   2 +-
+ tools/btgatt-server.c    |   4 +-
+ tools/l2test.c           |  10 +-
+ unit/test-gatt.c         |  25 +-
+ 25 files changed, 1407 insertions(+), 496 deletions(-)
+
 -- 
-2.25.0.265.gbab2e86ba0-goog
+2.21.1
 
