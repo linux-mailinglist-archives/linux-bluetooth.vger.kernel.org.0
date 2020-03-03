@@ -2,94 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F154C177B2C
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Mar 2020 16:56:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9928178156
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Mar 2020 20:01:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729979AbgCCPzm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 3 Mar 2020 10:55:42 -0500
-Received: from mail-vs1-f53.google.com ([209.85.217.53]:45525 "EHLO
-        mail-vs1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729577AbgCCPzm (ORCPT
+        id S2388069AbgCCSBz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 3 Mar 2020 13:01:55 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:33357 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388091AbgCCSBz (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 3 Mar 2020 10:55:42 -0500
-Received: by mail-vs1-f53.google.com with SMTP id m4so2654522vsa.12
-        for <linux-bluetooth@vger.kernel.org>; Tue, 03 Mar 2020 07:55:40 -0800 (PST)
+        Tue, 3 Mar 2020 13:01:55 -0500
+Received: by mail-io1-f68.google.com with SMTP id r15so4661908iog.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 03 Mar 2020 10:01:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2DXAgA0BV232zHIduMsuc1xsDnUh5eMDqf5PhGpC/9A=;
-        b=jA3lbRTy7cJKHa9xvLbON4NhLI2peCy/qc6y3k5kqmJfaaR+76IFHySznqozXG7EZr
-         qd8ZSE/Lh9GEmOZ7OD6hO2axXLNMEGRPq361Iz+XPN/NVRDGcXAI6kUTIJc4ZWU22R+U
-         SYOePYPgOIrlXzscUhbebcUYSFJYHQgQw/1Rw=
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=42VRx4KA+cD1ZZnhz/34yl/kjJSKnU+ahvHX6e7S6BM=;
+        b=TNrB465lOoQUEHml85m3CMT7CqTKrcPNORRbDy9Hz8Um6Pc5Izf0YkBI0nHs9Jg47G
+         gTMYWtyqgaA6BNnZysJlbF1kiVKs2w3nRCfDhKZkonsPc/h8P5/bx6HmxspWseysrchB
+         UsEa12e0Bmk740yUTHFdx8MEUZaMqwm1DaIVkxRx+gK8XA8YZb3jwhx0CSurevMGKavz
+         iS78OfhK2784uVWxWXXNddaIuJzx42IEenccUmVSsfNp+0ZF0cyHiYmbCSf5yjv7YWyZ
+         2DFBnjGojPs8ezu5HzFPY2fEZhBXRd3c9XAe9NSkUcIIj2dteM6BotV4x/uQkjWEXFeI
+         E9Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2DXAgA0BV232zHIduMsuc1xsDnUh5eMDqf5PhGpC/9A=;
-        b=ALCNB7uFYgDeHjetWyNYB94Dtv3jBEwdBB2KOG4xMt3XOOPx/UkU0+89xZk80uD90Y
-         sTPUVj5h2HxZ3wkKMj8NuBL9IKl72YPWYDHKtUFJHAtjW47TV53zGX6ySaO6VzVdMAJu
-         2JpmPxGBse3XrbLQi4HGl45+I4U7Ll2SaajXjk4aEScJ3+NGo3fhlmxCgXM3QMYs4FMi
-         uWWptq7lO9HHuoOwLPQkOLpm3oQNszAgndW58pnYtiigKFcxy09dxuijgwwGWNiEgVBZ
-         dTvk8kqQx1z5h9w84H2vCdzd1L9LhEe5FPo1+tfa0tC7ukwAeXIqJQh6vWEtelxuF9Rq
-         /4gw==
-X-Gm-Message-State: ANhLgQ0Y2qoIiGtcpnuZUblM0J7UMYiG3HxNHdxOme8yKn9rjJgThF1o
-        gkZLE2BKfNfG8oFp4lZE/WRhS7h0OQw=
-X-Google-Smtp-Source: ADFU+vs3iQ3TWT7ioPNqwteK9+AVyAWQqEG4DEdsz92RNe5XEbLAefHbZTVYq6QwrMId4H+e6o6ehA==
-X-Received: by 2002:a67:fe05:: with SMTP id l5mr2751338vsr.77.1583250939643;
-        Tue, 03 Mar 2020 07:55:39 -0800 (PST)
-Received: from alain.c.googlers.com.com (39.119.74.34.bc.googleusercontent.com. [34.74.119.39])
-        by smtp.gmail.com with ESMTPSA id v65sm6549559vke.13.2020.03.03.07.55.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2020 07:55:38 -0800 (PST)
-From:   Alain Michaud <alainm@chromium.org>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Alain Michaud <alainm@chromium.org>
-Subject: [PATCH v3] bluetooth: guard against controllers sending zero'd events
-Date:   Tue,  3 Mar 2020 15:55:34 +0000
-Message-Id: <20200303155534.127645-1-alainm@chromium.org>
-X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=42VRx4KA+cD1ZZnhz/34yl/kjJSKnU+ahvHX6e7S6BM=;
+        b=tNROaDdh3qJrpPdoN9rlAYUIT7MAvBxXYcCV3WthVClZTNAG5sOXK48o0cKyoaTW1w
+         mpU02JJCcpXjUEtdAVERZS3qh3QAC7YHV6ELUpAhesB6nEBYrjMI+wXTv+LrqP/2mPM3
+         YtT/f4QcvhDBWaGWKXIqZe25WcaEcbEGPEQ5u3JyrqFt3Xy4XohGX/VEcCcAkd06UVk0
+         g4HlyseLcIqXx/wOuu2MQb1m+HjVwSSXAWPDfUHW2OPb36U8qYENGBSFIEO5j+obppIo
+         BqhUNhXw2/NmXXDOiNmAco8DF3Pa1Itc4S4RlIq0N9yd8mQt0+rjTdeOiTk0Ek2viAoJ
+         a/jA==
+X-Gm-Message-State: ANhLgQ3XaLlCu4QZeKRRypEu0IycDdtj+cK9FDZkxRtIcBqlnklgeVDT
+        VSJc9AAy2dEjYhYiMxyWh3YuvfyapbchcyCQ1js=
+X-Google-Smtp-Source: ADFU+vs53/ow2DJbJqeOq7oBFGPf/IECU+9jzJZBVIQMANOIBVZiZkCmeS0bJPVF9YLFGJc8iQaM12MqmAjMPwc4/Uo=
+X-Received: by 2002:a02:c84a:: with SMTP id r10mr5064994jao.105.1583258514344;
+ Tue, 03 Mar 2020 10:01:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a02:9f04:0:0:0:0:0 with HTTP; Tue, 3 Mar 2020 10:01:54 -0800 (PST)
+Reply-To: dr.challynoah@gmail.com
+From:   DR CHALLY NOAH <mayorabrahamedge404@gmail.com>
+Date:   Tue, 3 Mar 2020 19:01:54 +0100
+Message-ID: <CALqVJWcOi_6WjT7c3z7gWgWd34RMWE=x9jo6o=LSODttEYZiGg@mail.gmail.com>
+Subject: Hello Dear
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Some controllers have been observed to send zero'd events under some
-conditions.  This change guards against this condition as well as adding
-a trace to facilitate diagnosability of this condition.
-
-Signed-off-by: Alain Michaud <alainm@chromium.org>
----
-
- net/bluetooth/hci_event.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 591e7477e925..a40ed31f6eb8 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5868,6 +5868,11 @@ void hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
- 	u8 status = 0, event = hdr->evt, req_evt = 0;
- 	u16 opcode = HCI_OP_NOP;
- 
-+	if (!event) {
-+		bt_dev_warn(hdev, "Received unexpected HCI Event 00000000");
-+		goto done;
-+	}
-+
- 	if (hdev->sent_cmd && bt_cb(hdev->sent_cmd)->hci.req_event == event) {
- 		struct hci_command_hdr *cmd_hdr = (void *) hdev->sent_cmd->data;
- 		opcode = __le16_to_cpu(cmd_hdr->opcode);
-@@ -6079,6 +6084,7 @@ void hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
- 		req_complete_skb(hdev, status, opcode, orig_skb);
- 	}
- 
-+done:
- 	kfree_skb(orig_skb);
- 	kfree_skb(skb);
- 	hdev->stat.evt_rx++;
--- 
-2.25.1.481.gfbce0eb801-goog
-
+Hello Dear,
+What Have Kept You Waiting To Claim Your $600,000.00 USD Compensation Award?
+This said fund was issued out by the UNITED NATIONS To compensate
+you.Please If You Have Not Claim Your Fund (Award),Kindly contact me
+at   DR.CHALLYNOAH@GMAIL.COM   for further details on how to proceed your
+fund (award)release to you or better still reply back Immediately You
+Receive This Information For An Urgent Confirmation And Release Of Your
+Fund To You Without Delays, as your email was listed among those to be
+compensated this year.Congratulations..
+Best Regards,
+Dr Chally Noah.
+Minister Of Finance On Foreign Remittance:
