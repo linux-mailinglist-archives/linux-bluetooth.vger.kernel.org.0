@@ -2,53 +2,49 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36B26178B43
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Mar 2020 08:25:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF0BE178B49
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Mar 2020 08:28:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728216AbgCDHZM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 Mar 2020 02:25:12 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:53906 "EHLO
+        id S1727026AbgCDH2G (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 4 Mar 2020 02:28:06 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:33199 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725797AbgCDHZM (ORCPT
+        with ESMTP id S1725825AbgCDH2G (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Mar 2020 02:25:12 -0500
+        Wed, 4 Mar 2020 02:28:06 -0500
 Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 644EECECD9;
-        Wed,  4 Mar 2020 08:34:37 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 3DE21CECDA;
+        Wed,  4 Mar 2020 08:37:32 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: [PATCH v1] Bluetooth: hci_qca: Make bt_en and susclk not
- mandatory for QCA Rome
+Subject: Re: [PATCH v3] bluetooth: guard against controllers sending zero'd
+ events
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200304015429.20615-1-rjliao@codeaurora.org>
-Date:   Wed, 4 Mar 2020 08:25:08 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org
+In-Reply-To: <20200303155534.127645-1-alainm@chromium.org>
+Date:   Wed, 4 Mar 2020 08:28:04 +0100
+Cc:     linux-bluetooth@vger.kernel.org
 Content-Transfer-Encoding: 7bit
-Message-Id: <259034EC-04FB-4256-ABF9-91F3D350333A@holtmann.org>
-References: <20200304015429.20615-1-rjliao@codeaurora.org>
-To:     Rocky Liao <rjliao@codeaurora.org>
+Message-Id: <3F146946-8F93-4541-B2EC-9EAE4262176F@holtmann.org>
+References: <20200303155534.127645-1-alainm@chromium.org>
+To:     Alain Michaud <alainm@chromium.org>
 X-Mailer: Apple Mail (2.3608.60.0.2.5)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Rocky,
+Hi Alain,
 
-> On some platforms the bt_en pin and susclk are default on and there
-> is no exposed resource to control them. This patch makes the bt_en
-> and susclk not mandatory to have BT work. It also will not set the
-> HCI_QUIRK_NON_PERSISTENT_SETUP and shutdown() callback if bt_en is
-> not available.
+> Some controllers have been observed to send zero'd events under some
+> conditions.  This change guards against this condition as well as adding
+> a trace to facilitate diagnosability of this condition.
 > 
-> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> Signed-off-by: Alain Michaud <alainm@chromium.org>
 > ---
-> drivers/bluetooth/hci_qca.c | 47 ++++++++++++++++++++-----------------
-> 1 file changed, 26 insertions(+), 21 deletions(-)
+> 
+> net/bluetooth/hci_event.c | 6 ++++++
+> 1 file changed, 6 insertions(+)
 
 patch has been applied to bluetooth-next tree.
 
