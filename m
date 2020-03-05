@@ -2,67 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B86317A30C
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Mar 2020 11:25:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 962A917A337
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Mar 2020 11:34:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726635AbgCEKZX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 Mar 2020 05:25:23 -0500
-Received: from mail-lj1-f178.google.com ([209.85.208.178]:37574 "EHLO
-        mail-lj1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726048AbgCEKZX (ORCPT
+        id S1726170AbgCEKen (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 Mar 2020 05:34:43 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:37174 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727069AbgCEKen (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 5 Mar 2020 05:25:23 -0500
-Received: by mail-lj1-f178.google.com with SMTP id q23so5448108ljm.4
-        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Mar 2020 02:25:22 -0800 (PST)
+        Thu, 5 Mar 2020 05:34:43 -0500
+Received: by mail-lf1-f66.google.com with SMTP id j11so4173159lfg.4
+        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Mar 2020 02:34:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=7v2qakqZLXTnR2+lwRs7AvWKSbDWJBDIvfkxAASUMSY=;
-        b=DfXIgglAOKC4B/icphXgNJsSQuiEkt/2sj7J1lqgrv+St/5FX7/VNm90UCWVwGrpb7
-         5o0VPiDMGUsSCXLYMVrTOD9XjDWPvL4BjZyXCkF1vZX9U+VWokvkqOAxZv/ZyHZI3McI
-         2GgXd8aoPv5nj2JfXx/4L5gaVm1TaW+MZ63q/2vuTVC2usSh0IohUs8AotOK6lX79cGQ
-         4rIj3445hvEr3mUoLpz/0wF0xy1RWf0VddmWq93q/SWPhGnFSjGcmQifSVANN59HPZC1
-         cKTMZFY0GXdrTciQgTFyR/lHI3zTFat3MOuOPNN4viD1LrFp8dZDKbcKHo/m2qAR64s8
-         SOgA==
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=zdxUWMWXTEs/zs0LJh1bxLoOHpDg1k5nkLimqXptzik=;
+        b=fz2DAL/hCVOBzgx+g45rdprPzuuFcQsUW1ZHNo4nDuWKCX/fmtcJFi6lbSs9P/RfJA
+         lAVCHt1fNQbO92SbHey4yazD8D+BRVnEqK7PVKp1rcMy40FqhDMG89bJ58GSzMbwvj8U
+         zAnHbCvHz8cMGM9KEggtHMrJgl6JBjlHSjxVfYCRhwYPKx+Jjq/D+Io2Qn9ywDnb1vG6
+         OscJGDR+ktAt1dSFKcBwqG0UklQUo5kR+xK1xD7ZN4ey+k79Dp/cQzpwPp4ZcFKOa/hp
+         HQXr9qb2tQ0y+avLLK+wgv/3Axz+CmJlkglRa4MPyv4tObLkJ7AkbgA7LI04c8TOXAVI
+         wgbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=7v2qakqZLXTnR2+lwRs7AvWKSbDWJBDIvfkxAASUMSY=;
-        b=DahmOTCP7D0YzJkqPj+2DOOjARNUvac9afuCrEQjdT/s3fQxGHWrt7C2DfsJGog3v5
-         ezpNIKFsUjnRqv/JC6wAC1MRxaiBX3nqAHAxoYyUJt0uoEvvxqfTjCM78JTidfNcET52
-         AHgcM3kROhWlFTsqhwTo3kzmq/7rFFzF6K+8v+UYMxus7snTti9l0QkTS5ofrTDObcMG
-         kys2V8oROpeIePe16OFV32Wq6hFxqVAmhZB4H0CSW1TSWOpRKlW/2X6WE9z9J1B+UDVC
-         W+kjHr6WF0H9ocIJulh3wUaewh00AlO/uc3UgOvV5ZAD+6O7wBWwzzPgw/XInkiYLcmn
-         m/6A==
-X-Gm-Message-State: ANhLgQ0W6o9ya4tXecPxIHAOQaeiVjhPaEHbfDEtI3GoeM5L0gor1DI4
-        tfT9lemon+CVs8cz+gmzzg5s51mTcR6Q+wTvEqxR7nZiH2w=
-X-Google-Smtp-Source: ADFU+vuAoyto8poC2X5y7qxwwa84dslxDFgqlTP7dbn2NKoMI3jROSkRakZ3WlzIu3PdqcG1K/rkHTR810to4TTEPnU=
-X-Received: by 2002:a2e:9dc8:: with SMTP id x8mr4843455ljj.38.1583403921103;
- Thu, 05 Mar 2020 02:25:21 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=zdxUWMWXTEs/zs0LJh1bxLoOHpDg1k5nkLimqXptzik=;
+        b=CXxrYmh/nUKg98R95b6FmnstsY7qJ5QuEi5ctSM5CHVDPEzZlAdQisojwe4kkDRWv0
+         0su4+oVlHd4ObLhDm4MnZgAxCnd7t9ep+DMd6gjd8WPtEoIMvehAEb3K6JgijITuYi/h
+         KXSSaPHXqDesRcIf4CYtLt9bp0tjZYaMDIeojiohJejGeEnwOf7J309XmP8tJzNI8FEh
+         T282vtz3b50a0q07K7a3A6vm7gVvAyDVUhdun6Spw1bIIffNfNYU3Vay4/uWHjpaxLI3
+         ONcNSTzgzx174RjZRGkemHkYGijECNv97k6G4hWpf8B+TFvAN8wt1Nqyq0vG7Vhc3Nan
+         PRwA==
+X-Gm-Message-State: ANhLgQ2/LkYP7dO10oKvEW0aWb60PmdTHLtNchTIYiTzxK5otHJQb7ky
+        GP4gFPV63S2PFXd4bGlVHVb7JxZv07FORcxmg04=
+X-Google-Smtp-Source: ADFU+vt4p78g3SCPLp2SkhMI2bIlerfed0N6TLid+L8CMxk399v6WJ1kSPdTuUyeuRHmX7GoHE72hDaaexbZ9WYxFUU=
+X-Received: by 2002:a19:c714:: with SMTP id x20mr5096973lff.107.1583404479393;
+ Thu, 05 Mar 2020 02:34:39 -0800 (PST)
 MIME-Version: 1.0
-From:   Anatoly Trosinenko <anatoly.trosinenko@gmail.com>
-Date:   Thu, 5 Mar 2020 13:25:10 +0300
-Message-ID: <CAE5jQCeQfyPu7T4mHutYwUjK04P8MyYS8NmTC8pm4sZkHQRRNA@mail.gmail.com>
-Subject: On reporting issues with potential security implications
-To:     linux-bluetooth@vger.kernel.org
+Received: by 2002:ab3:5d10:0:0:0:0:0 with HTTP; Thu, 5 Mar 2020 02:34:38 -0800 (PST)
+Reply-To: ayishagddafio@mail.ru
+From:   AISHA GADDAFI <mahasaliou4444@gmail.com>
+Date:   Thu, 5 Mar 2020 02:34:38 -0800
+Message-ID: <CAKHB8qf7CPHeUuxPD-D07960Jx9qxdLt6hBH1AJUj0AYDreUzA@mail.gmail.com>
+Subject: Lieber Freund (Assalamu Alaikum),?
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+--=20
+Lieber Freund (Assalamu Alaikum),
 
-Many projects have some private mail list or some other policies for
-reporting issues with possible security implications. I mean some bugs
-that the reporter cannot qualify for sure as a "safe to publicly
-disclose" (still, they can turn out to be not security-related after
-review).
+Ich bin vor einer privaten Suche auf Ihren E-Mail-Kontakt gesto=C3=9Fen
+Ihre Hilfe. Mein Name ist Aisha Al-Qaddafi, eine alleinerziehende
+Mutter und eine Witwe
+mit drei Kindern. Ich bin die einzige leibliche Tochter des Sp=C3=A4tlibysc=
+hen
+Pr=C3=A4sident (verstorbener Oberst Muammar Gaddafi).
 
-BlueZ, on the other hand, has a policy of "never write to them
-[developers] directly" and no easily grep-able guidelines on reporting
-possibly security-related issues. So, what is the preferred way for
-reporting such things?
+Ich habe Investmentfonds im Wert von siebenundzwanzig Millionen
+f=C3=BCnfhunderttausend
+United State Dollar ($ 27.500.000.00) und ich brauche eine
+vertrauensw=C3=BCrdige Investition
+Manager / Partner aufgrund meines aktuellen Fl=C3=BCchtlingsstatus bin ich =
+jedoch
+M=C3=B6glicherweise interessieren Sie sich f=C3=BCr die Unterst=C3=BCtzung =
+von
+Investitionsprojekten in Ihrem Land
+Von dort aus k=C3=B6nnen wir in naher Zukunft Gesch=C3=A4ftsbeziehungen auf=
+bauen.
 
-Best regards
-Anatoly
+Ich bin bereit, mit Ihnen =C3=BCber das Verh=C3=A4ltnis zwischen Investitio=
+n und
+Unternehmensgewinn zu verhandeln
+Basis f=C3=BCr die zuk=C3=BCnftige Investition Gewinne zu erzielen.
+
+Wenn Sie bereit sind, dieses Projekt in meinem Namen zu bearbeiten,
+antworten Sie bitte dringend
+Damit ich Ihnen mehr Informationen =C3=BCber die Investmentfonds geben kann=
+.
+
+Ihre dringende Antwort wird gesch=C3=A4tzt. schreibe mir an diese email adr=
+esse (
+ayishagddafio@mail.ru ) zur weiteren Diskussion.
+
+Freundliche Gr=C3=BC=C3=9Fe
+Frau Aisha Al-Qaddafi
