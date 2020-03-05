@@ -2,87 +2,87 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 321A217A3B4
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Mar 2020 12:08:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9276D17A399
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Mar 2020 12:04:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727152AbgCELId (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 Mar 2020 06:08:33 -0500
-Received: from ulan.pagasa.dost.gov.ph ([202.90.128.205]:45842 "EHLO
-        mailgw.pagasa.dost.gov.ph" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726048AbgCELId (ORCPT
+        id S1727152AbgCELDx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 Mar 2020 06:03:53 -0500
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:51198 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725903AbgCELDx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 5 Mar 2020 06:08:33 -0500
-X-Greylist: delayed 1193 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Mar 2020 06:08:31 EST
-Received: from webmail.pagasa.dost.int ([10.10.11.8])
-        by mailgw.pagasa.dost.gov.ph  with ESMTP id 025AknBo006293-025AknBq006293
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 5 Mar 2020 18:46:49 +0800
-Received: from localhost (localhost [127.0.0.1])
-        by webmail.pagasa.dost.int (Postfix) with ESMTP id 1EB172981BC0;
-        Thu,  5 Mar 2020 18:46:49 +0800 (PST)
-Received: from webmail.pagasa.dost.int ([127.0.0.1])
-        by localhost (webmail.pagasa.dost.int [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id BQLwVh4haVpM; Thu,  5 Mar 2020 18:46:48 +0800 (PST)
-Received: from localhost (localhost [127.0.0.1])
-        by webmail.pagasa.dost.int (Postfix) with ESMTP id 175292981BD4;
-        Thu,  5 Mar 2020 18:46:48 +0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 webmail.pagasa.dost.int 175292981BD4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pagasa.dost.gov.ph;
-        s=96B9A03E-48B0-11EA-A7E8-92F42F537CE2; t=1583405208;
-        bh=RC75T5p3JPNk7JUNB+lH0UfaFQO1Ac584gPL3SIL6h8=;
-        h=Date:From:Message-ID:MIME-Version;
-        b=vwxX3L8Z7uHnDJPZBIix9IBQi0XMBiY4sLQTc/9+h6pT2FHeTz61v6B+3f3w6WhXh
-         jUdnW3+FuZCvkf1pcG3LkjpsYvCQO7zO587a10BanpMqFFL6zPGTaTUsrqnCnsqpAd
-         CtN8Atz3iXBEFHZeiXsfNfnWSfk0n7tqEffbmBy8=
-X-Virus-Scanned: amavisd-new at pagasa.dost.int
-Received: from webmail.pagasa.dost.int ([127.0.0.1])
-        by localhost (webmail.pagasa.dost.int [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id AzhqNaAHLoc6; Thu,  5 Mar 2020 18:46:47 +0800 (PST)
-Received: from webmail.pagasa.dost.int (webmail.pagasa.dost.int [10.11.1.8])
-        by webmail.pagasa.dost.int (Postfix) with ESMTP id 5119729819D2;
-        Thu,  5 Mar 2020 18:46:46 +0800 (PST)
-Date:   Thu, 5 Mar 2020 18:46:46 +0800 (PST)
-From:   "Juanito S. Galang" <juanito.galang@pagasa.dost.gov.ph>
-Message-ID: <1980644409.3575157.1583405206290.JavaMail.zimbra@pagasa.dost.gov.ph>
-Subject: 
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Zimbra 8.8.15_GA_3899 (ZimbraWebClient - GC79 (Win)/8.8.15_GA_3895)
-Thread-Index: lWYDQbv6QI/eIWKrWUD3NPCXqIIr9A==
-Thread-Topic: 
-X-FEAS-DKIM: Valid
-Authentication-Results: mailgw.pagasa.dost.gov.ph;
-        dkim=pass header.i=@pagasa.dost.gov.ph
-To:     unlisted-recipients:; (no To-header on input)
+        Thu, 5 Mar 2020 06:03:53 -0500
+Received: by mail-pf1-f201.google.com with SMTP id r13so3458929pfr.17
+        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Mar 2020 03:03:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=40RegrjQ0uhIkykj0kL7AG4CRI+gslX64W+LbXlWAC4=;
+        b=Gz/16O9LMGROHAYLhiswzkjw3HaQRoPNcGravZIPSkNsv+laaxK4dHhCmyLHDkEa6c
+         A5vaIjif7fe8hc9hcFv68hoIL3DIT/bWUql3Bb1AovsPcw68Q6SbnrfUjZPEidnbHh4G
+         U3f3ktyCGhojtiNxxyR3KwdL0CFNqP0vewWknAEZ6IVIlL3EAWgCbFnWlPuT4YtUGPrT
+         eoak1Jx23jy+LQHyX82XswphVD7682W9FrH+j7mPb9dcDJ7OQmck/aXPx7WKHQQK4uL2
+         0DHTdKqIa87ubEwEv7Mp/h1y1KPeZWA0Nm1UBrIWcLbDiOVS4WP6qY85wgM/c24aJa6Q
+         diQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=40RegrjQ0uhIkykj0kL7AG4CRI+gslX64W+LbXlWAC4=;
+        b=MfkbFG6pYz2odHZevjE/lsnbTGv8IITsYWYRhp/s4x2ZeHJqk4Be2nqZI9GHV6gbGg
+         qxwDdPofo87c6qRB/tvgKWkzy50dOH7r2QZQlpY/UUieuGJZ+hoNqP04LUMjyf/uq7uN
+         cv4Ht9+oeKRVOsokPEwCsdAKZLLMMfObH1IF08SDR7JZ3PqVMxY6vok0+VIBzsBGBjzg
+         Xsyg4cc8KTqtsafofuUmCao5k0QCXvwdpiGlcRKhlQzCWgGGhMC0tf0NWSr0gwKdgrF1
+         EDFSY385jnWNrsv87eaGLJBJDGJHrHoIOC8sIgk5GTTl7Dn4Jfxd0bm/wFU+5HuDe7NW
+         T0Bg==
+X-Gm-Message-State: ANhLgQ3AQ+a7Ny7C9lIW7vOY9cuvUXgLHSEK2JRoRQKI6stpedQlesgz
+        bHWssPRBt2/jUgqG0KFLUj9A9PU40B/Z4QJ1ffCPVZkYNOZ880sZjiIWQWv0+RpVE2brCY1W77G
+        xh43L7TBMewMk8mn3kbEWaiecVT+bs5U3n6K05zFVpAsl9T8S1PNCePwWgEfievvfHitLMxb9Zj
+        /3NKO3i/O7+Kw=
+X-Google-Smtp-Source: ADFU+vu+LnKX88jndq92ncTWsKuc7AZVrmBP0UalyNXA+qyczk7DCKO85NrKR/RHuh+neHjepA/+0w5XkJnX5ChF1Q==
+X-Received: by 2002:a63:4707:: with SMTP id u7mr7265196pga.221.1583406230475;
+ Thu, 05 Mar 2020 03:03:50 -0800 (PST)
+Date:   Thu,  5 Mar 2020 19:03:40 +0800
+Message-Id: <20200305185904.Bluez.v1.1.I6c78c0eb9826eb17c944c4903132ee75c1324136@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
+Subject: [Bluez PATCH v1] avdtp: Fix crashes in avdtp_abort
+From:   Howard Chung <howardchung@google.com>
+To:     linux-bluetooth@vger.kernel.org, luiz.von.dentz@intel.com
+Cc:     chromeos-bluetooth-upstreaming@chromium.org,
+        Howard Chung <howardchung@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Initialized avdtp_local_sep later since stream could be NULL.
+---
 
+ profiles/audio/avdtp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Herzlichen Gl=C3=BCckwunsch Lieber Beg=C3=BCnstigter,Sie erhalten diese E-M=
-ail von der Robert Bailey Foundation. Ich bin ein pensionierter Regierungsa=
-ngestellter aus Harlem und ein Gewinner des Powerball Lottery Jackpot im We=
-rt von 343,8 Millionen US-Dollar. Ich bin der gr=C3=B6=C3=9Fte Jackpot-Gewi=
-nner in der Geschichte der New Yorker Lotterie im US-Bundesstaat Amerika. I=
-ch habe diese Lotterie am 27. Oktober 2018 gewonnen und m=C3=B6chte Sie dar=
-=C3=BCber informieren, dass Google in Zusammenarbeit mit Microsoft Ihre "E-=
-Mail-Adresse" auf meine Bitte, einen Spendenbetrag von 3.000.000,00 Million=
-en Euro zu erhalten, =C3=BCbermittelt hat. Ich spende diese 3 Millionen Eur=
-o an Sie, um den Wohlt=C3=A4tigkeitsheimen und armen Menschen in Ihrer Geme=
-inde zu helfen, damit wir die Welt f=C3=BCr alle verbessern k=C3=B6nnen.Wei=
-tere Informationen finden Sie auf der folgenden Website, damit Sie nicht sk=
-eptisch sind
-Diese Spende von 3 Mio. EUR.https://nypost.com/2018/11/14/meet-the-winner-o=
-f-the-biggest-lottery-jackpot-in-new-york-history/Sie k=C3=B6nnen auch mein=
- YouTube f=C3=BCr mehr Best=C3=A4tigung aufpassen:
-https://www.youtube.com/watch?v=3DH5vT18Ysavc
-Bitte beachten Sie, dass alle Antworten an (robertdonation7@gmail.com=C2=A0=
- ) gesendet werden, damit wir das k=C3=B6nnen
-Fahren Sie fort, um das gespendete Geld an Sie zu =C3=BCberweisen.E-Mail: r=
-obertdonation7@gmail.comFreundliche Gr=C3=BC=C3=9Fe,
-Robert Bailey
-* * * * * * * * * * * * * * * *
-Powerball Jackpot Gewinner
+diff --git a/profiles/audio/avdtp.c b/profiles/audio/avdtp.c
+index 0e075f9ff..12d984866 100644
+--- a/profiles/audio/avdtp.c
++++ b/profiles/audio/avdtp.c
+@@ -3566,7 +3566,7 @@ int avdtp_abort(struct avdtp *session, struct avdtp_stream *stream)
+ {
+ 	struct seid_req req;
+ 	int ret;
+-	struct avdtp_local_sep *sep = stream->lsep;
++	struct avdtp_local_sep *sep;
+ 
+ 	if (!stream && session->discover) {
+ 		/* Don't call cb since it being aborted */
+@@ -3581,6 +3581,7 @@ int avdtp_abort(struct avdtp *session, struct avdtp_stream *stream)
+ 	if (stream->lsep->state == AVDTP_STATE_ABORTING)
+ 		return -EINVAL;
+ 
++	sep = stream->lsep;
+ 	avdtp_sep_set_state(session, sep, AVDTP_STATE_ABORTING);
+ 
+ 	if (session->req && stream == session->req->stream)
+-- 
+2.25.0.265.gbab2e86ba0-goog
+
