@@ -2,21 +2,21 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E66F4181793
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Mar 2020 13:14:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45B4E1817A9
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Mar 2020 13:18:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729130AbgCKMOW convert rfc822-to-8bit (ORCPT
+        id S1729291AbgCKMS5 convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 11 Mar 2020 08:14:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55416 "EHLO mail.kernel.org"
+        Wed, 11 Mar 2020 08:18:57 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56384 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728996AbgCKMOV (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 11 Mar 2020 08:14:21 -0400
+        id S1729286AbgCKMS4 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 11 Mar 2020 08:18:56 -0400
 From:   bugzilla-daemon@bugzilla.kernel.org
 Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
 To:     linux-bluetooth@vger.kernel.org
 Subject: [Bug 196621] bluez-5.46: unit/test-gatt segfaults when running tests
-Date:   Wed, 11 Mar 2020 12:14:21 +0000
+Date:   Wed, 11 Mar 2020 12:18:56 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -32,7 +32,7 @@ X-Bugzilla-Priority: P1
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
 X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-196621-62941-aojY2qollm@https.bugzilla.kernel.org/>
+Message-ID: <bug-196621-62941-awcV0txWkU@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-196621-62941@https.bugzilla.kernel.org/>
 References: <bug-196621-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -47,15 +47,11 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 https://bugzilla.kernel.org/show_bug.cgi?id=196621
 
---- Comment #7 from Pacho Ramos (pachoramos1@gmail.com) ---
-(In reply to Pacho Ramos from comment #6)
-> It seems that CONFIG_CRYPTO_USER_API_HASH is the only needed (at least with
-> 5.50)
+--- Comment #8 from Pacho Ramos (pachoramos1@gmail.com) ---
+Per
+http://www.linuxfromscratch.org/blfs/view/svn/general/bluez.html
 
-is that really needed only for tests or for general USE? To know if I need to
-enforce that option for regular users or only for those wanting to run tests.
-
-Thanks a lot for the info
+it seems only for tests :)
 
 -- 
 You are receiving this mail because:
