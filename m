@@ -2,322 +2,172 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B985418384B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Mar 2020 19:11:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03C08183877
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Mar 2020 19:21:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbgCLSLF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 12 Mar 2020 14:11:05 -0400
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:54833 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726650AbgCLSLE (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 12 Mar 2020 14:11:04 -0400
-Received: by mail-pj1-f65.google.com with SMTP id np16so2869370pjb.4
-        for <linux-bluetooth@vger.kernel.org>; Thu, 12 Mar 2020 11:11:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1jkZ7AJWeJX31pPItMtQ3M7DJKtphTFHpNhNX7Qly0U=;
-        b=QoAb6gFKX7EfE1bIK+nwkeGcKII1LO23g2lG+2k9ljWhdBxBLx+6Krl+oiCa7RY6o0
-         R3Bbn1pcxNUThhpZQb/I32tuTg7DwkutwXkw3C4aEAeYT1JyEpULlM0IvYXniJNOt0SM
-         BiaSTyTiDsmdVoKDEZXNdp9xJMQn9nre+Smuo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1jkZ7AJWeJX31pPItMtQ3M7DJKtphTFHpNhNX7Qly0U=;
-        b=PsGp7aNUejiWKnGuKQJnzERMmiJhYdVx/tpSIBwZLxv5iBieHgkFYKS/vG1G8mDTfw
-         4RsnDpG9lJa8+wJhNlZLT7MQeIwFS+bd0RATyRBmo0BZWn59CEslVjzB+M3h1hUKTMpt
-         t7V2bjyFRmP6NC99YhIPQX8U8UKPt/8In3MWpAAyjFWbaeWeZT4rXAzFOkqIbtYCa2/i
-         WLsbbStP9290+aidaz6scUt4m/xogkYnIjAv076vO41raj1hpcpmfNs1nywTh4tFy/pl
-         sPiaxleyp5oMghu5hc2YA+j3InHCQtUIWN7+ey7REF4fUjiUZ8UbaThbOufsvBZQNtD/
-         jrFQ==
-X-Gm-Message-State: ANhLgQ0y+qjbWdfSYekJQK0b/37PO6AnUFJmdZaZ+RVq7jOMrYzKWPXZ
-        XoLJDY/LlG5zYR8oK1CN/XJdiQ==
-X-Google-Smtp-Source: ADFU+vsw3NahFCEBMGteIDtAocT6JndFQtFXaZTMSfXyJ7YszBfVl6Cp8D1TwzxJuXr/PNcj+vWU4g==
-X-Received: by 2002:a17:902:ba83:: with SMTP id k3mr8898506pls.26.1584036662845;
-        Thu, 12 Mar 2020 11:11:02 -0700 (PDT)
-Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id b18sm56787876pfd.63.2020.03.12.11.11.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2020 11:11:02 -0700 (PDT)
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-To:     marcel@holtmann.org, linux-bluetooth@vger.kernel.org
-Cc:     chromeos-bluetooth-upstreaming@chromium.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 1/1] Bluetooth: Prioritize SCO traffic on slow interfaces
-Date:   Thu, 12 Mar 2020 11:10:55 -0700
-Message-Id: <20200312111036.1.I17e2220fd0c0822c76a15ef89b882fb4cfe3fe89@changeid>
-X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
-In-Reply-To: <20200312181055.94038-1-abhishekpandit@chromium.org>
-References: <20200312181055.94038-1-abhishekpandit@chromium.org>
+        id S1726528AbgCLSVH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 12 Mar 2020 14:21:07 -0400
+Received: from mga05.intel.com ([192.55.52.43]:39791 "EHLO mga05.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726362AbgCLSVH (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 12 Mar 2020 14:21:07 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 12 Mar 2020 11:21:06 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,545,1574150400"; 
+   d="scan'208";a="243124125"
+Received: from orsmsx107.amr.corp.intel.com ([10.22.240.5])
+  by orsmga003.jf.intel.com with ESMTP; 12 Mar 2020 11:21:06 -0700
+Received: from orsmsx123.amr.corp.intel.com (10.22.240.116) by
+ ORSMSX107.amr.corp.intel.com (10.22.240.5) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Thu, 12 Mar 2020 11:21:05 -0700
+Received: from ORSEDG001.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX123.amr.corp.intel.com (10.22.240.116) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Thu, 12 Mar 2020 11:21:05 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.177)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Thu, 12 Mar 2020 11:20:01 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GlHp6JRwNFNVoq0gBcvkM3znOTMC643i52rlHMRnin5N9AjsjZ48xNcrJ0N0BBOZExxddk/p/lk5EqBgwaFcGz8ewc+Kj5mKW2CsMc66TpCHtvBMCNQdqAo94qB9uRrCkUFPMi+BkhGkwzJMzHrYl94f2FCC+3DHlhTpU0jzDtxTIFVUx7FlmsKfAUOEKJf/swnqgFHCKaqIZ2hq79+fWQBIVsyPG1AyZIV3m8Eguoj2FHxattLGHqOrqW6MXviMe+QiOofKmXZuE7SBToKZCpJUVhvxucVLkAG4P57EMYQ1IqT+Dktv3VsDsPDjjCUWIUoy/vtw1rVNAQD2HdQ/Gw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=B7qFqrbkrSO5xwSTkeBumIzxGivD3YmicLPP83qB05Q=;
+ b=Ui6v4UUH1gPe6ADdVmXBfse9dy/Mz5Ew81UT6OSrevPifksWwKM/QGhZIT1+8zh1ZZnP/VqQ0CEEBA/x9kCvQyjs3G5rK4L8nRTobH+ubqC9UNOpgZFXIa2X4o2jslgFnE8Ob/I6J/QEQRFFoz4gguICR+NYJWo5wqVBpLxyDlw2zrQHNH2niD3UF1/DlQy/ZfZFd98lYAyp+UPstLq4isvW9uxpjx0qZXuhfVt+Sah7q4xxJ1sXdnGAM+sg9+WQv5x2X6yTgMUMpcNs1aOBszt0DO3b71iSZ9kqkj8TmmM+tfaM092qWTu1EzKyipw6FNI9FMbtEwioN2/3+c3vWQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=B7qFqrbkrSO5xwSTkeBumIzxGivD3YmicLPP83qB05Q=;
+ b=av2WgQ60HjCOUkA533D/NPhD47pk2PyNwqJolynq2MZXJtb3jGMEHMXAL24EtbhLob4+qPkQu6bqJh+kI2oP+bmJM228/xyoQ3B5Kukj3d+IjId6FFxfzEVk4rftvAhY62yMtLvxtbPH3oufnilcmigoYKMuVF1QQRlr1eYVf5E=
+Received: from MW3PR11MB4539.namprd11.prod.outlook.com (2603:10b6:303:2f::13)
+ by MW3PR11MB4746.namprd11.prod.outlook.com (2603:10b6:303:5f::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2793.17; Thu, 12 Mar
+ 2020 18:19:59 +0000
+Received: from MW3PR11MB4539.namprd11.prod.outlook.com
+ ([fe80::39a4:4e3:2bb2:dd3a]) by MW3PR11MB4539.namprd11.prod.outlook.com
+ ([fe80::39a4:4e3:2bb2:dd3a%3]) with mapi id 15.20.2793.018; Thu, 12 Mar 2020
+ 18:19:59 +0000
+From:   "Gix, Brian" <brian.gix@intel.com>
+To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+CC:     "testtgsh@gmail.com" <testtgsh@gmail.com>,
+        "Stotland, Inga" <inga.stotland@intel.com>
+Subject: Re: [PATCH BlueZ v2] tools/mesh-cfgclient: Add support for Static OOB
+ key
+Thread-Topic: [PATCH BlueZ v2] tools/mesh-cfgclient: Add support for Static
+ OOB key
+Thread-Index: AQHV9/jQvIv81MzAhE2Mt9J8HJWpbqhFRboA
+Date:   Thu, 12 Mar 2020 18:19:59 +0000
+Message-ID: <662ab7993d46a10c04f4736c27b5168ac5ae5b02.camel@intel.com>
+References: <20200311225940.6628-1-brian.gix@intel.com>
+In-Reply-To: <20200311225940.6628-1-brian.gix@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=brian.gix@intel.com; 
+x-originating-ip: [192.55.54.40]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 45436727-cf26-4377-a3ae-08d7c6b1f9d5
+x-ms-traffictypediagnostic: MW3PR11MB4746:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <MW3PR11MB474680B5B272479779753B4CE1FD0@MW3PR11MB4746.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:121;
+x-forefront-prvs: 0340850FCD
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(376002)(346002)(396003)(136003)(39860400002)(199004)(2616005)(5660300002)(86362001)(478600001)(81166006)(6506007)(8936002)(8676002)(2906002)(81156014)(26005)(6512007)(6486002)(6916009)(186003)(4326008)(36756003)(107886003)(54906003)(66946007)(66446008)(91956017)(71200400001)(316002)(66556008)(64756008)(76116006)(66476007);DIR:OUT;SFP:1102;SCL:1;SRVR:MW3PR11MB4746;H:MW3PR11MB4539.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: aO/Snuj0hmtOIR/jMFSmPjFdX+I1LsegGphbhghZccVPshVDEvEE9VgsoRGS0CDlglIDTUZeg+8X9tVTOnoXA1jaj/wOLNkYbzXfuxpYwtPNrsBZivtINIIxdknPILNW5iRIUlM49Q73pxnTmil1LmNMs5OIrXOp8IVTYMvBTgdJXtsEBuY0pV3VPJfmS58hP8XX2b+vhXX47WMRiHV8Z35d+YXR5orK41etlVEV4t3vF90i36LEeI/Qhu/cYw0jVQ4Py2gOAtq07cFbdWaVmeWXZzNkN0uGgBKZKI0HiFyB/j5tO7LaXbyysJXbhhTb9GGDpgPA065JOlhrwr4zro6Vby/xVA1F9hUP6igaUVDZdqjBqU/5PTHja1uouE1piBKD4nJMNaAnPEDyoMRT1cTJX9a1RsNDP95DXSREM/XKgOGdI5/PCO/gGojGitHK
+x-ms-exchange-antispam-messagedata: 3UPiVcnz0Pr+4IaIY/sJfK4mERgcGwxIZA6B5fdsycI2Ra2u/PFBYVtuOwWNsB0Uf98kvzjekwLIjMQx6jGKkQFuFrQxLEgXF5MPhISv+OYQZzwdmCatfGQWfH/C4MaozagAILyBgM8Rk2M6tICUiQ==
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <A201FCA25B2ECB4BBE2AFC603A13A55D@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-CrossTenant-Network-Message-Id: 45436727-cf26-4377-a3ae-08d7c6b1f9d5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Mar 2020 18:19:59.7087
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xqKl6T7X817KOkYjkgKGGJPAM/UzNEe70bXeaeZywf0prlheYFjk8xBDHZdg95SyAqKRvwf2Sx6Wi2Z8XWQyxQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR11MB4746
+X-OriginatorOrg: intel.com
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When scheduling TX packets, send all SCO/eSCO packets first and then
-send only 1 ACL/LE packet in a loop while checking that there are no SCO
-packets pending. This is done to make sure that we can meet SCO
-deadlines on slow interfaces like UART. If we were to queue up multiple
-ACL packets without checking for a SCO packet, we might miss the SCO
-timing. For example:
-
-The time it takes to send a maximum size ACL packet (1024 bytes):
-t = 10/8 * 1024 bytes * 8 bits/byte * 1 packet / baudrate
-        where 10/8 is uart overhead due to start/stop bits per byte
-
-Replace t = 3.75ms (SCO deadline), which gives us a baudrate of 2730666
-and is pretty close to a common baudrate of 3000000 used for BT. At this
-baudrate, if we sent two 1024 byte ACL packets, we would miss the 3.75ms
-timing window.
-
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
----
-
- include/net/bluetooth/hci_core.h |  1 +
- net/bluetooth/hci_core.c         | 91 +++++++++++++++++++++++++-------
- 2 files changed, 73 insertions(+), 19 deletions(-)
-
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index d4e28773d378..f636c89f1fe1 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -315,6 +315,7 @@ struct hci_dev {
- 	__u8		ssp_debug_mode;
- 	__u8		hw_error_code;
- 	__u32		clock;
-+	__u8		sched_limit;
- 
- 	__u16		devid_source;
- 	__u16		devid_vendor;
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index dbd2ad3a26ed..00a72265cd96 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4239,18 +4239,32 @@ static void __check_timeout(struct hci_dev *hdev, unsigned int cnt)
- 	}
- }
- 
--static void hci_sched_acl_pkt(struct hci_dev *hdev)
-+/* Limit packets in flight when SCO/eSCO links are active. */
-+static bool hci_sched_limit(struct hci_dev *hdev)
-+{
-+	return hdev->sched_limit && hci_conn_num(hdev, SCO_LINK);
-+}
-+
-+static bool hci_sched_acl_pkt(struct hci_dev *hdev)
- {
- 	unsigned int cnt = hdev->acl_cnt;
- 	struct hci_chan *chan;
- 	struct sk_buff *skb;
- 	int quote;
-+	bool sched_limit = hci_sched_limit(hdev);
-+	bool resched = false;
- 
- 	__check_timeout(hdev, cnt);
- 
- 	while (hdev->acl_cnt &&
- 	       (chan = hci_chan_sent(hdev, ACL_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
-+
-+		if (sched_limit && quote > 0) {
-+			resched = true;
-+			quote = 1;
-+		}
-+
- 		while (quote-- && (skb = skb_peek(&chan->data_q))) {
- 			BT_DBG("chan %p skb %p len %d priority %u", chan, skb,
- 			       skb->len, skb->priority);
-@@ -4271,19 +4285,26 @@ static void hci_sched_acl_pkt(struct hci_dev *hdev)
- 			chan->sent++;
- 			chan->conn->sent++;
- 		}
-+
-+		if (resched && cnt != hdev->acl_cnt)
-+			break;
- 	}
- 
--	if (cnt != hdev->acl_cnt)
-+	if (hdev->acl_cnt == 0 && cnt != hdev->acl_cnt)
- 		hci_prio_recalculate(hdev, ACL_LINK);
-+
-+	return resched;
- }
- 
--static void hci_sched_acl_blk(struct hci_dev *hdev)
-+static bool hci_sched_acl_blk(struct hci_dev *hdev)
- {
- 	unsigned int cnt = hdev->block_cnt;
- 	struct hci_chan *chan;
- 	struct sk_buff *skb;
- 	int quote;
- 	u8 type;
-+	bool sched_limit = hci_sched_limit(hdev);
-+	bool resched = false;
- 
- 	__check_timeout(hdev, cnt);
- 
-@@ -4297,6 +4318,12 @@ static void hci_sched_acl_blk(struct hci_dev *hdev)
- 	while (hdev->block_cnt > 0 &&
- 	       (chan = hci_chan_sent(hdev, type, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
-+
-+		if (sched_limit && quote > 0) {
-+			resched = true;
-+			quote = 1;
-+		}
-+
- 		while (quote > 0 && (skb = skb_peek(&chan->data_q))) {
- 			int blocks;
- 
-@@ -4311,7 +4338,7 @@ static void hci_sched_acl_blk(struct hci_dev *hdev)
- 
- 			blocks = __get_blocks(hdev, skb);
- 			if (blocks > hdev->block_cnt)
--				return;
-+				return false;
- 
- 			hci_conn_enter_active_mode(chan->conn,
- 						   bt_cb(skb)->force_active);
-@@ -4325,33 +4352,39 @@ static void hci_sched_acl_blk(struct hci_dev *hdev)
- 			chan->sent += blocks;
- 			chan->conn->sent += blocks;
- 		}
-+
-+		if (resched && cnt != hdev->block_cnt)
-+			break;
- 	}
- 
--	if (cnt != hdev->block_cnt)
-+	if (hdev->block_cnt == 0 && cnt != hdev->block_cnt)
- 		hci_prio_recalculate(hdev, type);
-+
-+	return resched;
- }
- 
--static void hci_sched_acl(struct hci_dev *hdev)
-+static bool hci_sched_acl(struct hci_dev *hdev)
- {
- 	BT_DBG("%s", hdev->name);
- 
- 	/* No ACL link over BR/EDR controller */
- 	if (!hci_conn_num(hdev, ACL_LINK) && hdev->dev_type == HCI_PRIMARY)
--		return;
-+		goto done;
- 
- 	/* No AMP link over AMP controller */
- 	if (!hci_conn_num(hdev, AMP_LINK) && hdev->dev_type == HCI_AMP)
--		return;
-+		goto done;
- 
- 	switch (hdev->flow_ctl_mode) {
- 	case HCI_FLOW_CTL_MODE_PACKET_BASED:
--		hci_sched_acl_pkt(hdev);
--		break;
-+		return hci_sched_acl_pkt(hdev);
- 
- 	case HCI_FLOW_CTL_MODE_BLOCK_BASED:
--		hci_sched_acl_blk(hdev);
--		break;
-+		return hci_sched_acl_blk(hdev);
- 	}
-+
-+done:
-+	return false;
- }
- 
- /* Schedule SCO */
-@@ -4402,16 +4435,18 @@ static void hci_sched_esco(struct hci_dev *hdev)
- 	}
- }
- 
--static void hci_sched_le(struct hci_dev *hdev)
-+static bool hci_sched_le(struct hci_dev *hdev)
- {
- 	struct hci_chan *chan;
- 	struct sk_buff *skb;
- 	int quote, cnt, tmp;
-+	bool sched_limit = hci_sched_limit(hdev);
-+	bool resched = false;
- 
- 	BT_DBG("%s", hdev->name);
- 
- 	if (!hci_conn_num(hdev, LE_LINK))
--		return;
-+		return resched;
- 
- 	cnt = hdev->le_pkts ? hdev->le_cnt : hdev->acl_cnt;
- 
-@@ -4420,6 +4455,12 @@ static void hci_sched_le(struct hci_dev *hdev)
- 	tmp = cnt;
- 	while (cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
-+
-+		if (sched_limit && quote > 0) {
-+			resched = true;
-+			quote = 1;
-+		}
-+
- 		while (quote-- && (skb = skb_peek(&chan->data_q))) {
- 			BT_DBG("chan %p skb %p len %d priority %u", chan, skb,
- 			       skb->len, skb->priority);
-@@ -4437,6 +4478,9 @@ static void hci_sched_le(struct hci_dev *hdev)
- 			chan->sent++;
- 			chan->conn->sent++;
- 		}
-+
-+		if (resched && cnt != tmp)
-+			break;
- 	}
- 
- 	if (hdev->le_pkts)
-@@ -4444,24 +4488,33 @@ static void hci_sched_le(struct hci_dev *hdev)
- 	else
- 		hdev->acl_cnt = cnt;
- 
--	if (cnt != tmp)
-+	if (cnt == 0 && cnt != tmp)
- 		hci_prio_recalculate(hdev, LE_LINK);
-+
-+	return resched;
- }
- 
- static void hci_tx_work(struct work_struct *work)
- {
- 	struct hci_dev *hdev = container_of(work, struct hci_dev, tx_work);
- 	struct sk_buff *skb;
-+	bool resched;
- 
- 	BT_DBG("%s acl %d sco %d le %d", hdev->name, hdev->acl_cnt,
- 	       hdev->sco_cnt, hdev->le_cnt);
- 
- 	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
- 		/* Schedule queues and send stuff to HCI driver */
--		hci_sched_acl(hdev);
--		hci_sched_sco(hdev);
--		hci_sched_esco(hdev);
--		hci_sched_le(hdev);
-+		do {
-+			/* SCO and eSCO send all packets until emptied */
-+			hci_sched_sco(hdev);
-+			hci_sched_esco(hdev);
-+
-+			/* Acl and Le send based on quota (priority on ACL per
-+			 * loop)
-+			 */
-+			resched = hci_sched_acl(hdev) || hci_sched_le(hdev);
-+		} while (resched);
- 	}
- 
- 	/* Send next queued raw (unknown type) packet */
--- 
-2.25.1.481.gfbce0eb801-goog
-
+QXBwbGllZA0KT24gV2VkLCAyMDIwLTAzLTExIGF0IDE1OjU5IC0wNzAwLCBCcmlhbiBHaXggd3Jv
+dGU6DQo+IFRoaXMgZml4ZXMgYSBidWcgdGhhdCBkaWRuJ3QgYWxsb3cgMTYgb2N0ZXQgU3RhdGlj
+IE9PQiBzdHJpbmdzIGR1cmluZw0KPiBwcm92aXNpb25pbmcuDQo+IC0tLQ0KPiAgdG9vbHMvbWVz
+aC1jZmdjbGllbnQuYyB8IDI5ICsrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tDQo+ICB0b29s
+cy9tZXNoL2FnZW50LmMgICAgIHwgMTAgKysrKysrLS0tLQ0KPiAgMiBmaWxlcyBjaGFuZ2VkLCAy
+NSBpbnNlcnRpb25zKCspLCAxNCBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS90b29s
+cy9tZXNoLWNmZ2NsaWVudC5jIGIvdG9vbHMvbWVzaC1jZmdjbGllbnQuYw0KPiBpbmRleCBiNGQ3
+NmRlOTMuLjRiN2JkMjIwMCAxMDA2NDQNCj4gLS0tIGEvdG9vbHMvbWVzaC1jZmdjbGllbnQuYw0K
+PiArKysgYi90b29scy9tZXNoLWNmZ2NsaWVudC5jDQo+IEBAIC0zNzIsMTIgKzM3MiwxMSBAQCBz
+dGF0aWMgdm9pZCBhZ2VudF9pbnB1dF9kb25lKG9vYl90eXBlX3QgdHlwZSwgdm9pZCAqYnVmLCB1
+aW50MTZfdCBsZW4sDQo+ICAJc3RydWN0IGxfZGJ1c19tZXNzYWdlICpyZXBseSA9IE5VTEw7DQo+
+ICAJc3RydWN0IGxfZGJ1c19tZXNzYWdlX2J1aWxkZXIgKmJ1aWxkZXI7DQo+ICAJdWludDMyX3Qg
+dmFsX3UzMjsNCj4gLQl1aW50OF90IGFzY2lpWzE2XTsNCj4gKwl1aW50OF90IG9vYl9kYXRhWzE2
+XTsNCj4gIA0KPiAgCXN3aXRjaCAodHlwZSkgew0KPiAgCWNhc2UgTk9ORToNCj4gIAljYXNlIE9V
+VFBVVDoNCj4gLQljYXNlIEhFWEFERUNJTUFMOg0KPiAgCWRlZmF1bHQ6DQo+ICAJCWJyZWFrOw0K
+PiAgDQo+IEBAIC0zODYsMTIgKzM4NSwxOCBAQCBzdGF0aWMgdm9pZCBhZ2VudF9pbnB1dF9kb25l
+KG9vYl90eXBlX3QgdHlwZSwgdm9pZCAqYnVmLCB1aW50MTZfdCBsZW4sDQo+ICAJCQlidF9zaGVs
+bF9wcmludGYoIkJhZCBpbnB1dCBsZW5ndGhcbiIpOw0KPiAgCQkJYnJlYWs7DQo+ICAJCX0NCj4g
+KwkJLyogRmFsbCBUaHJvdWdoICovDQo+ICANCj4gLQkJbWVtc2V0KGFzY2lpLCAwLCAxNik7DQo+
+IC0JCW1lbWNweShhc2NpaSwgYnVmLCBsZW4pOw0KPiArCWNhc2UgSEVYQURFQ0lNQUw6DQo+ICsJ
+CWlmIChsZW4gPiAxNikgew0KPiArCQkJYnRfc2hlbGxfcHJpbnRmKCJCYWQgaW5wdXQgbGVuZ3Ro
+XG4iKTsNCj4gKwkJCWJyZWFrOw0KPiArCQl9DQo+ICsJCW1lbXNldChvb2JfZGF0YSwgMCwgMTYp
+Ow0KPiArCQltZW1jcHkob29iX2RhdGEsIGJ1ZiwgbGVuKTsNCj4gIAkJcmVwbHkgPSBsX2RidXNf
+bWVzc2FnZV9uZXdfbWV0aG9kX3JldHVybihtc2cpOw0KPiAgCQlidWlsZGVyID0gbF9kYnVzX21l
+c3NhZ2VfYnVpbGRlcl9uZXcocmVwbHkpOw0KPiAtCQlhcHBlbmRfYnl0ZV9hcnJheShidWlsZGVy
+LCBhc2NpaSwgMTYpOw0KPiArCQlhcHBlbmRfYnl0ZV9hcnJheShidWlsZGVyLCBvb2JfZGF0YSwg
+MTYpOw0KPiAgCQlsX2RidXNfbWVzc2FnZV9idWlsZGVyX2ZpbmFsaXplKGJ1aWxkZXIpOw0KPiAg
+CQlsX2RidXNfbWVzc2FnZV9idWlsZGVyX2Rlc3Ryb3koYnVpbGRlcik7DQo+ICAJCWJyZWFrOw0K
+PiBAQCAtNTM5LDEyICs1NDQsMTYgQEAgc3RhdGljIHN0cnVjdCBsX2RidXNfbWVzc2FnZSAqcHJv
+bXB0X3N0YXRpY19jYWxsKHN0cnVjdCBsX2RidXMgKmRidXMsDQo+ICAJCXJldHVybiBsX2RidXNf
+bWVzc2FnZV9uZXdfZXJyb3IobXNnLCBkYnVzX2Vycl9mYWlsLCBOVUxMKTsNCj4gIAl9DQo+ICAN
+Cj4gLQlpZiAoIXN0cmNtcChzdHIsICJpbi1hbHBoYSIpICYmICFzdHJjbXAoc3RyLCAib3V0LWFs
+cGhhIikpDQo+IC0JCXJldHVybiBsX2RidXNfbWVzc2FnZV9uZXdfZXJyb3IobXNnLCBkYnVzX2Vy
+cl9zdXBwb3J0LCBOVUxMKTsNCj4gLQ0KPiAtCWxfZGJ1c19tZXNzYWdlX3JlZihtc2cpOw0KPiAt
+CWFnZW50X2lucHV0X3JlcXVlc3QoQVNDSUksIDgsICJFbnRlciBkaXNwbGF5ZWQgQXNjaWkgY29k
+ZSIsDQo+ICsJaWYgKCFzdHJjbXAoc3RyLCAiaW4tYWxwaGEiKSB8fCAhc3RyY21wKHN0ciwgIm91
+dC1hbHBoYSIpKSB7DQo+ICsJCWxfZGJ1c19tZXNzYWdlX3JlZihtc2cpOw0KPiArCQlhZ2VudF9p
+bnB1dF9yZXF1ZXN0KEFTQ0lJLCA4LCAiRW50ZXIgZGlzcGxheWVkIEFzY2lpIGNvZGUiLA0KPiAg
+CQkJCQkJCWFnZW50X2lucHV0X2RvbmUsIG1zZyk7DQo+ICsJfSBlbHNlIGlmICghc3RyY21wKHN0
+ciwgInN0YXRpYy1vb2IiKSkgew0KPiArCQlsX2RidXNfbWVzc2FnZV9yZWYobXNnKTsNCj4gKwkJ
+YWdlbnRfaW5wdXRfcmVxdWVzdChIRVhBREVDSU1BTCwgMTYsICJFbnRlciBTdGF0aWMgS2V5IiwN
+Cj4gKwkJCQkJCQlhZ2VudF9pbnB1dF9kb25lLCBtc2cpOw0KPiArCX0gZWxzZQ0KPiArCQlyZXR1
+cm4gbF9kYnVzX21lc3NhZ2VfbmV3X2Vycm9yKG1zZywgZGJ1c19lcnJfc3VwcG9ydCwgTlVMTCk7
+DQo+ICANCj4gIAlyZXR1cm4gTlVMTDsNCj4gIH0NCj4gZGlmZiAtLWdpdCBhL3Rvb2xzL21lc2gv
+YWdlbnQuYyBiL3Rvb2xzL21lc2gvYWdlbnQuYw0KPiBpbmRleCAxZjgzMzQ3YmYuLjAyNThhMzgw
+MyAxMDA2NDQNCj4gLS0tIGEvdG9vbHMvbWVzaC9hZ2VudC5jDQo+ICsrKyBiL3Rvb2xzL21lc2gv
+YWdlbnQuYw0KPiBAQCAtODEsMTUgKzgxLDE2IEBAIHN0YXRpYyBib29sIHN0cjJoZXgoY29uc3Qg
+Y2hhciAqc3RyLCB1aW50MTZfdCBpbl9sZW4sIHVpbnQ4X3QgKm91dCwNCj4gIHN0YXRpYyB2b2lk
+IHJlc3BvbnNlX2hleGFkZWNpbWFsKGNvbnN0IGNoYXIgKmlucHV0LCB2b2lkICp1c2VyX2RhdGEp
+DQo+ICB7DQo+ICAJdWludDhfdCBidWZbTUFYX0hFWEFERUNJTUFMX09PQl9MRU5dOw0KPiArCXVp
+bnQxNl90IGxlbiA9IHBlbmRpbmdfcmVxdWVzdC5sZW47DQo+ICANCj4gIAlpZiAoIXN0cjJoZXgo
+aW5wdXQsIHN0cmxlbihpbnB1dCksIGJ1ZiwgcGVuZGluZ19yZXF1ZXN0LmxlbikgKSB7DQo+ICAJ
+CWJ0X3NoZWxsX3ByaW50ZigiSW5jb3JyZWN0IGlucHV0OiBleHBlY3RpbmcgJWQgaGV4IG9jdGV0
+c1xuIiwNCj4gIAkJCSAgcGVuZGluZ19yZXF1ZXN0Lmxlbik7DQo+IC0JCXJldHVybjsNCj4gKwkJ
+bGVuID0gMDsNCj4gIAl9DQo+ICANCj4gIAlpZiAocGVuZGluZ19yZXF1ZXN0LmNiKQ0KPiAtCQlw
+ZW5kaW5nX3JlcXVlc3QuY2IoSEVYQURFQ0lNQUwsIGJ1ZiwgcGVuZGluZ19yZXF1ZXN0LmxlbiwN
+Cj4gKwkJcGVuZGluZ19yZXF1ZXN0LmNiKEhFWEFERUNJTUFMLCBidWYsIGxlbiwNCj4gIAkJCQkJ
+cGVuZGluZ19yZXF1ZXN0LnVzZXJfZGF0YSk7DQo+ICANCj4gIAlyZXNldF9pbnB1dF9yZXF1ZXN0
+KCk7DQo+IEBAIC05OCwxNCArOTksMTUgQEAgc3RhdGljIHZvaWQgcmVzcG9uc2VfaGV4YWRlY2lt
+YWwoY29uc3QgY2hhciAqaW5wdXQsIHZvaWQgKnVzZXJfZGF0YSkNCj4gIHN0YXRpYyB2b2lkIHJl
+c3BvbnNlX2RlY2ltYWwoY29uc3QgY2hhciAqaW5wdXQsIHZvaWQgKnVzZXJfZGF0YSkNCj4gIHsN
+Cj4gIAl1aW50OF90IGJ1ZltERUNJTUFMX09PQl9MRU5dOw0KPiArCXVpbnQxNl90IGxlbiA9IERF
+Q0lNQUxfT09CX0xFTjsNCj4gIA0KPiAgCWlmIChzdHJsZW4oaW5wdXQpID4gcGVuZGluZ19yZXF1
+ZXN0LmxlbikNCj4gLQkJcmV0dXJuOw0KPiArCQlsZW4gPSAwOw0KPiAgDQo+ICAJYnRfcHV0X2Jl
+MzIoYXRvaShpbnB1dCksIGJ1Zik7DQo+ICANCj4gIAlpZiAocGVuZGluZ19yZXF1ZXN0LmNiKQ0K
+PiAtCQlwZW5kaW5nX3JlcXVlc3QuY2IoREVDSU1BTCwgYnVmLCBERUNJTUFMX09PQl9MRU4sDQo+
+ICsJCXBlbmRpbmdfcmVxdWVzdC5jYihERUNJTUFMLCBidWYsIGxlbiwNCj4gIAkJCQkJcGVuZGlu
+Z19yZXF1ZXN0LnVzZXJfZGF0YSk7DQo+ICANCj4gIAlyZXNldF9pbnB1dF9yZXF1ZXN0KCk7DQo=
