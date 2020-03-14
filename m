@@ -2,74 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26845185808
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 15 Mar 2020 02:53:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E072185839
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 15 Mar 2020 02:58:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727216AbgCOBxv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 14 Mar 2020 21:53:51 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:51804 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726643AbgCOBxv (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 14 Mar 2020 21:53:51 -0400
-Received: from DGGEMS410-HUB.china.huawei.com (unknown [172.30.72.60])
-        by Forcepoint Email with ESMTP id 53A42D97348215CCE5A9;
-        Sat, 14 Mar 2020 18:06:23 +0800 (CST)
-Received: from localhost (10.173.223.234) by DGGEMS410-HUB.china.huawei.com
- (10.3.19.210) with Microsoft SMTP Server id 14.3.487.0; Sat, 14 Mar 2020
- 18:06:13 +0800
-From:   YueHaibing <yuehaibing@huawei.com>
-To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
-        <davem@davemloft.net>, <kuba@kernel.org>,
-        <luiz.von.dentz@intel.com>
-CC:     <linux-bluetooth@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, YueHaibing <yuehaibing@huawei.com>
-Subject: [PATCH -next] Bluetooth: L2CAP: remove set but not used variable 'credits'
-Date:   Sat, 14 Mar 2020 18:06:06 +0800
-Message-ID: <20200314100606.41532-1-yuehaibing@huawei.com>
-X-Mailer: git-send-email 2.10.2.windows.1
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.173.223.234]
-X-CFilter-Loop: Reflected
+        id S1727601AbgCOB6F convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 14 Mar 2020 21:58:05 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:34600 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726853AbgCOB6F (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 14 Mar 2020 21:58:05 -0400
+Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 95D57CED19;
+        Sat, 14 Mar 2020 19:59:44 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: [PATCH -next] Bluetooth: L2CAP: remove set but not used variable
+ 'credits'
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20200314100606.41532-1-yuehaibing@huawei.com>
+Date:   Sat, 14 Mar 2020 19:50:14 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>, kuba@kernel.org,
+        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <DB8D6DBD-7FE3-4BF3-A284-4A0DF78F2A98@holtmann.org>
+References: <20200314100606.41532-1-yuehaibing@huawei.com>
+To:     YueHaibing <yuehaibing@huawei.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-net/bluetooth/l2cap_core.c: In function l2cap_ecred_conn_req:
-net/bluetooth/l2cap_core.c:5848:6: warning: variable credits set but not used [-Wunused-but-set-variable]
+Hi Yue,
 
-commit 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-involved this unused variable, remove it.
+> net/bluetooth/l2cap_core.c: In function l2cap_ecred_conn_req:
+> net/bluetooth/l2cap_core.c:5848:6: warning: variable credits set but not used [-Wunused-but-set-variable]
+> 
+> commit 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+> involved this unused variable, remove it.
+> 
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> ---
+> net/bluetooth/l2cap_core.c | 3 +--
+> 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
----
- net/bluetooth/l2cap_core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+patch has been applied to bluetooth-next tree.
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 5e6e35ab44dd..8b0fca39989d 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5845,7 +5845,7 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
- 		__le16 dcid[5];
- 	} __packed pdu;
- 	struct l2cap_chan *chan, *pchan;
--	u16 credits, mtu, mps;
-+	u16 mtu, mps;
- 	__le16 psm;
- 	u8 result, len = 0;
- 	int i, num_scid;
-@@ -5868,7 +5868,6 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
- 	}
- 
- 	psm  = req->psm;
--	credits = 0;
- 
- 	BT_DBG("psm 0x%2.2x mtu %u mps %u", __le16_to_cpu(psm), mtu, mps);
- 
--- 
-2.20.1
+Regards
 
+Marcel
 
