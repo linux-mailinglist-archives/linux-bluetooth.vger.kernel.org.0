@@ -2,76 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D119185A1B
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 15 Mar 2020 05:57:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98EB7185A45
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 15 Mar 2020 06:23:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726473AbgCOE5j (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 15 Mar 2020 00:57:39 -0400
-Received: from correo.santafe.edu.ar ([200.12.192.40]:57338 "EHLO
-        correo.santafe.edu.ar" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726417AbgCOE5j (ORCPT
+        id S1727897AbgCOFXv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 15 Mar 2020 01:23:51 -0400
+Received: from Chamillionaire.breakpoint.cc ([193.142.43.52]:41332 "EHLO
+        Chamillionaire.breakpoint.cc" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727875AbgCOFXv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 15 Mar 2020 00:57:39 -0400
-Received: from correo.santafe.edu.ar (localhost [127.0.0.1])
-        by correo.santafe.edu.ar (Postfix) with ESMTP id 48fhPH04RZz5717
-        for <linux-bluetooth@vger.kernel.org>; Sat, 14 Mar 2020 09:16:19 -0300 (-03)
-Authentication-Results: correo.santafe.edu.ar (amavisd-new);
-        dkim=pass (1024-bit key) reason="pass (just generated, assumed good)"
-        header.d=santafe.edu.ar
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=santafe.edu.ar;
-         h=content-transfer-encoding:organization:message-id:user-agent
-        :reply-to:subject:subject:to:from:from:date:date:content-type
-        :content-type:mime-version; s=dkim; t=1584188178; x=1586780179;
-         bh=Ch8MeA3o5Ps+sTgYQ/2xKYhD8wOfsokQchWDCmvcX0s=; b=qmuH0rQghkSJ
-        l7gS86LMMZnYO/0QglXkZ3bxfjDwIcSmcV+WfUnxerbXoB47RN1oP6CwkpEVs+nK
-        G58wpI4GakNaC0Pfo/YDAluRK15EafP8bnPiywkepAFvpo8Nvpf+SLTI9a3r2gOh
-        1FOsp6lO9slshArvP1edK+HvAYKgnSA=
-X-Virus-Scanned: Debian amavisd-new at debian9-asiserver.santafe.gob.ar
-Received: from correo.santafe.edu.ar ([127.0.0.1])
-        by correo.santafe.edu.ar (correo.santafe.edu.ar [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id Uc-YUHsWOdwv for <linux-bluetooth@vger.kernel.org>;
-        Sat, 14 Mar 2020 09:16:18 -0300 (-03)
-Received: from localhost (localhost [127.0.0.1])
-        by correo.santafe.edu.ar (Postfix) with ESMTPSA id 48fhNs6J9hz6pf;
-        Sat, 14 Mar 2020 09:15:57 -0300 (-03)
+        Sun, 15 Mar 2020 01:23:51 -0400
+Received: from fw by Chamillionaire.breakpoint.cc with local (Exim 4.92)
+        (envelope-from <fw@strlen.de>)
+        id 1jDGyy-0003hV-Vn; Sun, 15 Mar 2020 01:18:21 +0100
+Date:   Sun, 15 Mar 2020 01:18:20 +0100
+From:   Florian Westphal <fw@strlen.de>
+To:     syzbot <syzbot+437bf61d165c87bd40fb@syzkaller.appspotmail.com>
+Cc:     coreteam@netfilter.org, davem@davemloft.net, fw@strlen.de,
+        johan.hedberg@gmail.com, kadlec@netfilter.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, max.chou@realtek.com, netdev@vger.kernel.org,
+        netfilter-devel@vger.kernel.org, pablo@netfilter.org,
+        syzkaller-bugs@googlegroups.com
+Subject: Re: BUG: corrupted list in __nf_tables_abort
+Message-ID: <20200315001820.GD979@breakpoint.cc>
+References: <0000000000001ba488059c65d352@google.com>
+ <0000000000007f2c5b05a0d8f312@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Date:   Sat, 14 Mar 2020 13:15:57 +0100
-From:   Acaceres <acaceres@santafe.edu.ar>
-To:     undisclosed-recipients:;
-Subject: AW:
-Reply-To: niklaszennstromcare@gmail.com
-User-Agent: Roundcube Webmail
-Message-ID: <4d570b05d16c014bd859a717708e8804@santafe.edu.ar>
-X-Sender: acaceres@santafe.edu.ar
-Organization: niklaszennstromcare@gmail.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0000000000007f2c5b05a0d8f312@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+syzbot <syzbot+437bf61d165c87bd40fb@syzkaller.appspotmail.com> wrote:
+> syzbot suspects this bug was fixed by commit:
+> 
+> commit 34682110abc50ffea7e002b0c2fd7ea9e0000ccc
+> Author: Max Chou <max.chou@realtek.com>
+> Date:   Wed Nov 27 03:01:07 2019 +0000
+> 
+>     Bluetooth: btusb: Edit the logical value for Realtek Bluetooth reset
+> 
+> bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=113e9919e00000
+> start commit:   d5d359b0 Merge branch 'for-linus' of git://git.kernel.org/..
+> git tree:       upstream
+> kernel config:  https://syzkaller.appspot.com/x/.config?x=83c00afca9cf5153
+> dashboard link: https://syzkaller.appspot.com/bug?extid=437bf61d165c87bd40fb
+> syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=168a1611e00000
+> C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=162f0376e00000
+> 
+> If the result looks correct, please mark the bug fixed by replying with:
 
+Looks wrong, better candidate:
 
---=20
-Sch=C3=B6nen Tag,
-
-Herr Niklas Zennstr=C3=B6m, ein schwedischer Wirtschaftsmagnat, Investor =
-und=20
-Philanthrop, der weltweit rund =C2=A3208.3 Millionen Pfund an=20
-Menschenrechtsorganisationen / Wohlt=C3=A4tigkeitsorganisationen gespende=
-t=20
-hat, hat sich ebenfalls verpflichtet, den Rest von 25% in diesem Jahr=20
-2020 zu verschenken, und Ihre E-Mail erfolgte nach dem Zufallsprinzip=20
-Das Team von Google Inc. wurde als aktiver Web-Nutzer ausgew=C3=A4hlt, um=
-=20
-eine Spende in H=C3=B6he von $1 Million USD im Rahmen des=20
-Wohlt=C3=A4tigkeitsprojekts Zennstr=C3=B6m Philanthropies zu erhalten. Bi=
-tte=20
-best=C3=A4tigen Sie den Besitz Ihrer E-Mail-Adresse, indem Sie sich per=20
-E-Mail an Niklas Zennstr=C3=B6m wenden: niklaszennstromcare@gmail.com =C2=
-=A0F=C3=BCr=20
-den Anspruch
-
-Name des Ansprechpartners: Herr Niklas Zennstr=C3=B6m
+#syz fix: netfilter: nf_tables: autoload modules from the abort path
