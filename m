@@ -2,162 +2,384 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B67AE18905E
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Mar 2020 22:31:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84D2D18912B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Mar 2020 23:15:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726991AbgCQVbY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 17 Mar 2020 17:31:24 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:34004 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726494AbgCQVbY (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 17 Mar 2020 17:31:24 -0400
-Received: by mail-ot1-f67.google.com with SMTP id j16so23342939otl.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 17 Mar 2020 14:31:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RPvFEGqI9mQfsI11OXNvHEax6/EWC7cYKUYPPbuRuNc=;
-        b=G3cjS5SQyh+SIE9K+C2ZISwdXjUafqtw835Q1wkiVVhkmfM2uVxybVugh+1Jp4Bhxt
-         dn1xXTvFPQb/kg6XIPST/RG7J+Mbidivx5iV1tx25vER9gDW9/KvQmilaz7L4U8bFBUQ
-         Kx623N1BCsuHJ688zbh6Oca+cuFHyZXMcH5V3Jr4uaQXYtkl+LB1Zdtyd68nbCu4m1vW
-         h9X4iRqZ25krCp27O4SUat0yFHA0x6qN/Ugn68g+qTfH7SfVWsGfzxF4H7xD2dEpYKMW
-         lgA5DLZOEuTY63Z8NZuZaFziA2w8WHC38wqyu9aSiA2KXPwgVi9IDcSqwpEOPPoJEKN8
-         28ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RPvFEGqI9mQfsI11OXNvHEax6/EWC7cYKUYPPbuRuNc=;
-        b=a8F0iVKOznS1aOHD1fMGdudV5NgmrHDmkHldG/n/ZBVBe4uNkI2o3nPzwbxOceFCwL
-         HwdwFDEr/GKSSt/GyZvG8C8rXM6vrJK+a/1H3cEr+WtnS+2pzn6NM3bovP2po29vC1hQ
-         4svyZKsgLmK3Jewm/ZHjTyIek1DIyafxrj4ESWzSXmzwtkAdH58x1mhcQkwU2v7W/Eb1
-         HytYIaQ44XPrC921Dm3cwHTm8iz+h/TVtxfWO1gbMgAMF8LHDYRsvvUZuT2ibS+GyL+T
-         bFFBdcW0052OOsYIfLxRWK+DkkgZU65mY7/F6KljfA/H5t8Rr0cw9GoVRCjmjlDJhXlS
-         vcAw==
-X-Gm-Message-State: ANhLgQ3uVvtaTx4YRdVl/21A1sElf5qi6PC9JXnBb8R/T5iR0JorPMlS
-        FWMpuYgonXJiKdnK4YnMEfqkC2OhMBQsJtcFz81Raw==
-X-Google-Smtp-Source: ADFU+vt4UzM37z9zbq7PL9IyM3kZo0DDeipLmO/d+IkSR4lJ0QZ++UWySKdw8CfUfBH2ZqaJUGwSA6O0gdfygOJ45b0=
-X-Received: by 2002:a9d:3f4b:: with SMTP id m69mr1103353otc.146.1584480683699;
- Tue, 17 Mar 2020 14:31:23 -0700 (PDT)
+        id S1726721AbgCQWPs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 17 Mar 2020 18:15:48 -0400
+Received: from mga17.intel.com ([192.55.52.151]:25747 "EHLO mga17.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726476AbgCQWPs (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 17 Mar 2020 18:15:48 -0400
+IronPort-SDR: 7tau6AsrCrqKTdtJdHBKMFLIFmtGW55aic6XlchKqihBJHBF0hpeHqPV+ZdfKSaM9k4zmzAunr
+ N7kXlH1oX5RQ==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2020 15:15:47 -0700
+IronPort-SDR: j7hSFeOLpEv24q6KPLodu1b/nXfc4OiOpUidarP2guwIEjDN7qC7PRKG5K64sl7Tm7Dpc92eas
+ ZowFaCEJOzVA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,565,1574150400"; 
+   d="scan'208";a="417711489"
+Received: from ingas-nuc1.sea.intel.com ([10.255.228.139])
+  by orsmga005.jf.intel.com with ESMTP; 17 Mar 2020 15:15:47 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ v2 1/2] tools/mesh-cfgclient: Implement node-reset command
+Date:   Tue, 17 Mar 2020 15:15:45 -0700
+Message-Id: <20200317221546.22440-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.21.1
 MIME-Version: 1.0
-References: <20200316123914.Bluez.v1.1.I2c83372de789a015c1ee506690bb795ee0b0b0d9@changeid>
- <CABBYNZL1D44M4z2c+4zbjLgZ=PMHsTwy1VpYZpsJbpFJ9POZug@mail.gmail.com> <CAJQfnxEFM81DSvZb+ULG7+nwQuy-GWj26GWn4OP+Bp--24N1CQ@mail.gmail.com>
-In-Reply-To: <CAJQfnxEFM81DSvZb+ULG7+nwQuy-GWj26GWn4OP+Bp--24N1CQ@mail.gmail.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Tue, 17 Mar 2020 14:31:11 -0700
-Message-ID: <CABBYNZ+=wMNuvjJ5VK2zpd6euqeEZ8JXbd67RmPgxDfdCgce9w@mail.gmail.com>
-Subject: Re: [Bluez PATCH v1] input: disconnect intr channel before ctrl channel
-To:     Archie Pusaka <apusaka@google.com>
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Archie,
+This implements one-pass removal oa a remote node from a mesh network
+by issuing a node-reset command from config menu. The following actions
+are performed:
+- Config Node Reset message is sent to a remote node
+- Upon either receiving Config Node Reset Status or response timeout,
+  node record is removed from configuration client's database and,
+  by calling DeleteRemoteNode() method on mesh.Management interface
 
-On Mon, Mar 16, 2020 at 11:53 PM Archie Pusaka <apusaka@google.com> wrote:
->
-> Hi Luiz,
->
-> Luckily you asked, because I found out that actually the patch didn't
-> wait for the disconnection response for any case. It does delay the
-> disconnection of the ctrl channel slightly though, but that doesn't
-> guarantee a proper order of disconnection. Therefore, as of now, this
-> patch is not fixing anything.
->
-> Digging more into this matter, I found out by removing this condition
-> (sk->sk_shutdown == SHUTDOWN_MASK) in [1], it makes intr_watch_cb()
-> called after truly receiving the interrupt disconnection response.
-> However, I haven't checked whether removal of such condition will
-> break other things.
-> Do you have any suggestions?
+node-delete command from the main menu is removed.
+---
+ tools/mesh-cfgclient.c | 77 ++++++++++++++++--------------------------
+ tools/mesh/cfgcli.c    | 60 ++++++++++++++++++++++++++++----
+ tools/mesh/cfgcli.h    |  4 ++-
+ tools/mesh/mesh-db.c   | 39 +++++++++++++++++++++
+ tools/mesh/remote.c    | 20 +++++++++++
+ tools/mesh/remote.h    |  1 +
+ 6 files changed, 147 insertions(+), 54 deletions(-)
 
-I see, we shutdown the socket immediately since the socket API itself
-don't seem to have a concept of disconnect syscall not sure if other
-values could be passed to shutdown second parameter to indicate we
-want to actually wait it to be disconnected.
-
-> With this patch and removal of that condition, I confirm that it works
-> with situations where the device is being removed and/or just being
-> disconnected. It also works with virtual cable unplug when UHID is
-> used.
-> * Virtual cable unplug has another problem which doesn't adhere to the
-> specs, but it is unrelated to disconnection.
->
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/tree/net/bluetooth/af_bluetooth.c#n470
->
-> Thanks,
-> Archie
->
-> On Tue, 17 Mar 2020 at 04:58, Luiz Augusto von Dentz
-> <luiz.dentz@gmail.com> wrote:
-> >
-> > Hi Archie,
-> >
-> > On Sun, Mar 15, 2020 at 9:40 PM Archie Pusaka <apusaka@google.com> wrote:
-> > >
-> > > From: Archie Pusaka <apusaka@chromium.org>
-> > >
-> > > According to bluetooth HID Profile spec Ver 1.0, section 7.2.2, A
-> > > host or device shall always complete the disconnection of the
-> > > interrupt channel before disconnecting the control channel.
-> > > However, the current implementation disconnects them both
-> > > simultaneously.
-> > >
-> > > This patch postpone the disconnection of control channel to the
-> > > callback of interrupt watch, which shall be called upon receiving
-> > > interrupt channel disconnection response.
-> > > ---
-> > >
-> > >  profiles/input/device.c | 15 ++++++++++-----
-> > >  1 file changed, 10 insertions(+), 5 deletions(-)
-> > >
-> > > diff --git a/profiles/input/device.c b/profiles/input/device.c
-> > > index 8ada1b4ff..8ef3714c9 100644
-> > > --- a/profiles/input/device.c
-> > > +++ b/profiles/input/device.c
-> > > @@ -1010,14 +1010,19 @@ static bool is_connected(struct input_device *idev)
-> > >
-> > >  static int connection_disconnect(struct input_device *idev, uint32_t flags)
-> > >  {
-> > > +       int sock;
-> > > +
-> > >         if (!is_connected(idev))
-> > >                 return -ENOTCONN;
-> > >
-> > > -       /* Standard HID disconnect */
-> > > -       if (idev->intr_io)
-> > > -               g_io_channel_shutdown(idev->intr_io, TRUE, NULL);
-> > > -       if (idev->ctrl_io)
-> > > -               g_io_channel_shutdown(idev->ctrl_io, TRUE, NULL);
-> > > +       /* Standard HID disconnect
-> > > +        * Intr channel must be disconnected before ctrl channel, so only
-> > > +        * disconnect intr here, ctrl is disconnected in intr_watch_cb.
-> > > +        */
-> > > +       if (idev->intr_io) {
-> > > +               sock = g_io_channel_unix_get_fd(idev->intr_io);
-> > > +               shutdown(sock, SHUT_RDWR);
-> > > +       }
-> > >
-> > >         if (idev->uhid)
-> > >                 return 0;
-> > > --
-> > > 2.25.1.481.gfbce0eb801-goog
-> >
-> > Just to confirm, have you checked if this works with both situation
-> > where the device is being removed or just being disconnected,
-> > specially the case of HIDP_CTRL_VIRTUAL_CABLE_UNPLUG which perhaps was
-> > not working before as well since we disconnect the ctrl channel before
-> > transmitting it.
-> >
-> > --
-> > Luiz Augusto von Dentz
-
-
-
+diff --git a/tools/mesh-cfgclient.c b/tools/mesh-cfgclient.c
+index 4b7bd2200..e4523e5fc 100644
+--- a/tools/mesh-cfgclient.c
++++ b/tools/mesh-cfgclient.c
+@@ -342,9 +342,38 @@ static bool send_key(void *user_data, uint16_t dst, uint16_t key_idx,
+ 				send_key_setup, NULL, req, l_free) != 0;
+ }
+ 
++static void delete_node_setup(struct l_dbus_message *msg, void *user_data)
++{
++	struct generic_request *req = user_data;
++	uint16_t primary;
++	uint8_t ele_cnt;
++
++	primary = (uint16_t) req->arg1;
++	ele_cnt = (uint8_t) req->arg2;
++
++	l_dbus_message_set_arguments(msg, "qy", primary, ele_cnt);
++}
++
++static void delete_node(uint16_t primary, uint8_t ele_cnt)
++{
++	struct generic_request *req;
++
++	if (!local || !local->proxy || !local->mgmt_proxy) {
++		bt_shell_printf("Node is not attached\n");
++		return;
++	}
++
++	req = l_new(struct generic_request, 1);
++	req->arg1 = primary;
++	req->arg2 = ele_cnt;
++
++	l_dbus_proxy_method_call(local->mgmt_proxy, "DeleteRemoteNode",
++				delete_node_setup, NULL, req, l_free);
++}
++
+ static void client_init(void)
+ {
+-	cfgcli = cfgcli_init(send_key, (void *) app.ele.path);
++	cfgcli = cfgcli_init(send_key, delete_node, (void *) app.ele.path);
+ 	cfgcli->ops.set_send_func(send_msg, (void *) app.ele.path);
+ }
+ 
+@@ -801,50 +830,6 @@ static void free_generic_request(void *data)
+ 	l_free(req);
+ }
+ 
+-static void delete_node_setup(struct l_dbus_message *msg, void *user_data)
+-{
+-	struct generic_request *req = user_data;
+-	uint16_t primary;
+-	uint8_t ele_cnt;
+-
+-	primary = (uint16_t) req->arg1;
+-	ele_cnt = (uint8_t) req->arg2;
+-
+-	l_dbus_message_set_arguments(msg, "qy", primary, ele_cnt);
+-}
+-
+-static void cmd_delete_node(int argc, char *argv[])
+-{
+-	struct generic_request *req;
+-
+-	if (!local || !local->proxy || !local->mgmt_proxy) {
+-		bt_shell_printf("Node is not attached\n");
+-		return;
+-	}
+-
+-	if (argc < 3) {
+-		bt_shell_printf("Unicast and element count are required\n");
+-		return;
+-	}
+-
+-	req = l_new(struct generic_request, 1);
+-
+-	if (sscanf(argv[1], "%04x", &req->arg1) != 1)
+-		goto fail;
+-
+-	if (sscanf(argv[2], "%u", &req->arg2) != 1)
+-		goto fail;
+-
+-	l_dbus_proxy_method_call(local->mgmt_proxy, "DeleteRemoteNode",
+-				delete_node_setup, NULL, req, l_free);
+-
+-	/* TODO:: Delete node from configuration */
+-	return;
+-
+-fail:
+-	l_free(req);
+-}
+-
+ static void import_node_reply(struct l_dbus_proxy *proxy,
+ 				struct l_dbus_message *msg, void *user_data)
+ {
+@@ -1359,8 +1344,6 @@ static const struct bt_shell_menu main_menu = {
+ 	{ "node-import", "<uuid> <net_idx> <primary> <ele_count> <dev_key>",
+ 			cmd_import_node,
+ 			"Import an externally provisioned remote node"},
+-	{ "node-delete", "<primary> <ele_count>", cmd_delete_node,
+-			"Delete a remote node"},
+ 	{ "list-nodes", NULL, cmd_list_nodes,
+ 			"List remote mesh nodes"},
+ 	{ "keys", NULL, cmd_keys,
+diff --git a/tools/mesh/cfgcli.c b/tools/mesh/cfgcli.c
+index 33e77d878..0c82d9f82 100644
+--- a/tools/mesh/cfgcli.c
++++ b/tools/mesh/cfgcli.c
+@@ -65,6 +65,7 @@ static struct l_queue *groups;
+ 
+ static void *send_data;
+ static model_send_msg_func_t send_msg;
++static delete_remote_func_t mgr_del_remote;
+ 
+ static void *key_data;
+ static key_send_func_t send_key_msg;
+@@ -191,6 +192,15 @@ static const char *opcode_str(uint32_t opcode)
+ 	return cmd->desc;
+ }
+ 
++static void reset_remote_node(uint16_t addr)
++{
++	uint8_t ele_cnt = remote_del_node(addr);
++
++	bt_shell_printf("Remote removed (primary %4.4x)\n", addr);
++	if (ele_cnt && mgr_del_remote)
++		mgr_del_remote(addr, ele_cnt);
++}
++
+ static void free_request(void *a)
+ {
+ 	struct pending_req *req = a;
+@@ -222,6 +232,10 @@ static void wait_rsp_timeout(struct l_timeout *timeout, void *user_data)
+ 	bt_shell_printf("No response for \"%s\" from %4.4x\n",
+ 						req->cmd->desc, req->addr);
+ 
++	/* Node reset case: delete the remote even if there is no response */
++	if (req->cmd->opcode == OP_NODE_RESET)
++		reset_remote_node(req->addr);
++
+ 	l_queue_remove(requests, req);
+ 	free_request(req);
+ }
+@@ -713,11 +727,9 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 
+ 	/* Per Mesh Profile 4.3.2.54 */
+ 	case OP_NODE_RESET_STATUS:
+-		if (len != 1)
+-			return true;
+ 
+-		bt_shell_printf("Node %4.4x reset status %s\n",
+-				src, mesh_status_str(data[0]));
++		bt_shell_printf("Node %4.4x is reset\n", src);
++		reset_remote_node(src);
+ 
+ 		break;
+ 
+@@ -1656,7 +1668,41 @@ static void cmd_friend_get(int argc, char *argv[])
+ 
+ static void cmd_node_reset(int argc, char *argv[])
+ {
+-	cmd_default(OP_NODE_RESET);
++	uint16_t n, i;
++	uint8_t msg[8];
++	struct pending_req *req;
++
++	if (IS_UNASSIGNED(target)) {
++		bt_shell_printf("Destination not set\n");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	/* Cannot remet self */
++	if (target == 0x0001) {
++		bt_shell_printf("Resetting self not allowed\n");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	n = mesh_opcode_set(OP_NODE_RESET, msg);
++
++	req = l_new(struct pending_req, 1);
++	req->addr = target;
++	req->cmd = get_cmd(OP_NODE_RESET);
++
++	/*
++	 * As a courtesy to the remote node, send the reset command
++	 * several times. Treat this as a single request with a longer
++	 * response timeout.
++	 */
++	req->timer = l_timeout_create(rsp_timeout * 2,
++				wait_rsp_timeout, req, NULL);
++
++	l_queue_push_tail(requests, req);
++
++	for (i = 0; i < 5; i++)
++		send_msg(send_data, target, APP_IDX_DEV_REMOTE, msg, n);
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
+ }
+ 
+ static void cmd_netkey_get(int argc, char *argv[])
+@@ -1831,13 +1877,15 @@ static struct model_info cli_info = {
+ 	.vendor_id = VENDOR_ID_INVALID
+ };
+ 
+-struct model_info *cfgcli_init(key_send_func_t key_send, void *user_data)
++struct model_info *cfgcli_init(key_send_func_t key_send,
++				delete_remote_func_t del_node, void *user_data)
+ {
+ 	if (!key_send)
+ 		return NULL;
+ 
+ 	send_key_msg = key_send;
+ 	key_data = user_data;
++	mgr_del_remote = del_node;
+ 	requests = l_queue_new();
+ 	groups = mesh_db_load_groups();
+ 	bt_shell_add_submenu(&cfg_menu);
+diff --git a/tools/mesh/cfgcli.h b/tools/mesh/cfgcli.h
+index 9b283d9d5..89a67f5de 100644
+--- a/tools/mesh/cfgcli.h
++++ b/tools/mesh/cfgcli.h
+@@ -25,6 +25,8 @@ struct mesh_group {
+ 
+ typedef bool (*key_send_func_t) (void *user_data, uint16_t dst,
+ 				 uint16_t idx, bool is_appkey, bool update);
++typedef void (*delete_remote_func_t) (uint16_t primary, uint8_t ele_cnt);
+ 
+-struct model_info *cfgcli_init(key_send_func_t key_func, void *user_data);
++struct model_info *cfgcli_init(key_send_func_t key_func,
++				delete_remote_func_t del_node, void *user_data);
+ void cfgcli_cleanup(void);
+diff --git a/tools/mesh/mesh-db.c b/tools/mesh/mesh-db.c
+index 4a26a667e..e938ee733 100644
+--- a/tools/mesh/mesh-db.c
++++ b/tools/mesh/mesh-db.c
+@@ -845,6 +845,45 @@ fail:
+ 	return false;
+ }
+ 
++bool mesh_db_del_node(uint16_t unicast)
++{
++	json_object *jarray;
++	int i, sz;
++
++	if (!json_object_object_get_ex(cfg->jcfg, "nodes", &jarray))
++		return false;
++
++	if (!jarray || json_object_get_type(jarray) != json_type_array)
++		return false;
++
++	sz = json_object_array_length(jarray);
++
++	for (i = 0; i < sz; ++i) {
++		json_object *jentry, *jval;
++		uint16_t addr;
++		const char *str;
++
++		jentry = json_object_array_get_idx(jarray, i);
++		if (!json_object_object_get_ex(jentry, "unicastAddress",
++								&jval))
++			continue;
++
++		str = json_object_get_string(jval);
++		if (sscanf(str, "%04hx", &addr) != 1)
++			continue;
++
++		if (addr == unicast)
++			break;
++	}
++
++	if (i == sz)
++		return true;
++
++	json_object_array_del_idx(jarray, i, 1);
++
++	return mesh_config_save((struct mesh_config *) cfg, true, NULL, NULL);
++}
++
+ bool mesh_db_get_token(uint8_t token[8])
+ {
+ 	if (!cfg || !cfg->jcfg)
+diff --git a/tools/mesh/remote.c b/tools/mesh/remote.c
+index 533d59b28..b9bc6b5c0 100644
+--- a/tools/mesh/remote.c
++++ b/tools/mesh/remote.c
+@@ -89,6 +89,26 @@ static bool match_bound_key(const void *a, const void *b)
+ 	return (net_idx == keys_get_bound_key(app_idx));
+ }
+ 
++uint8_t remote_del_node(uint16_t unicast)
++{
++	struct remote_node *rmt;
++	uint8_t num_ele;
++
++	rmt = l_queue_remove_if(nodes, match_node_addr, L_UINT_TO_PTR(unicast));
++	if (!rmt)
++		return 0;
++
++	num_ele = rmt->num_ele;
++
++	l_queue_destroy(rmt->net_keys, NULL);
++	l_queue_destroy(rmt->app_keys, NULL);
++	l_free(rmt);
++
++	mesh_db_del_node(unicast);
++
++	return num_ele;
++}
++
+ bool remote_add_node(const uint8_t uuid[16], uint16_t unicast,
+ 					uint8_t ele_cnt, uint16_t net_idx)
+ {
+diff --git a/tools/mesh/remote.h b/tools/mesh/remote.h
+index f2a6f48dd..63382ed90 100644
+--- a/tools/mesh/remote.h
++++ b/tools/mesh/remote.h
+@@ -19,6 +19,7 @@
+ 
+ bool remote_add_node(const uint8_t uuid[16], uint16_t unicast,
+ 					uint8_t ele_cnt, uint16_t net_idx);
++uint8_t remote_del_node(uint16_t unicast);
+ uint16_t remote_get_next_unicast(uint16_t low, uint16_t high, uint8_t ele_cnt);
+ bool remote_add_net_key(uint16_t addr, uint16_t net_idx);
+ bool remote_del_net_key(uint16_t addr, uint16_t net_idx);
 -- 
-Luiz Augusto von Dentz
+2.21.1
+
