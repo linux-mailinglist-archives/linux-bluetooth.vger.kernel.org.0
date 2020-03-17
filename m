@@ -2,124 +2,111 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36CB51877B7
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Mar 2020 03:11:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCC7118794F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Mar 2020 06:40:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbgCQCLu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 16 Mar 2020 22:11:50 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:35223 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726121AbgCQCLu (ORCPT
+        id S1726132AbgCQFkh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 17 Mar 2020 01:40:37 -0400
+Received: from mail-ua1-f73.google.com ([209.85.222.73]:36827 "EHLO
+        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725943AbgCQFkf (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 16 Mar 2020 22:11:50 -0400
-Received: by mail-pf1-f194.google.com with SMTP id u68so11044702pfb.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Mar 2020 19:11:49 -0700 (PDT)
+        Tue, 17 Mar 2020 01:40:35 -0400
+Received: by mail-ua1-f73.google.com with SMTP id m10so2175688uap.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Mar 2020 22:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=xPp4LX+rEwNnncRsIX9QEd5PbhIfT9a4PKD3hVnmrgE=;
-        b=UADu3K2fnUpFm10dcm7mP1INOM1vSIzOu9NeB7XK7wxRdfDP4ljzW7BJcGz5XOT+96
-         4Vx9vgwCycQBx2f/2zkJpgEgeIbO0tIu9HLfethumAIpb2EdQq9m4tdKK0WkcDWu9X6x
-         JLc7ZhYgL/v8twHBOJ5Mbb82jva+4YbDrFqwIbcD6wBtW8VDuwHrWmAJ8rR+Zs1wEYNS
-         hjiu8Szn9Sbeo3fKIAf4iyQ9I5HwAIuQ7cYWMXBM9Ot7u0jyxbVcXEzHYND9NiDrrQAE
-         rhyr+VI68hSmLRxrMXB1hfsv766B5P47U6xduoXbL14O2pAQi7THzOwygDcgyIjWTCqg
-         Amcw==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=el82hvu8NsarLBH+1bSM5mOhPUGbPGRaUwoQglxhFZs=;
+        b=PYz7uO05mG25NfUmMbpjZKCOZbxuF3u1CeNkjJDeW4SMOhqxfZ8/yJnrMmXdi5VeV9
+         jLeEmHj7qIs4osoWmBuCse20pEigoQMUyodNp4LVCkIFfxAmuJGBmppBctcZwXwFJswS
+         OvZOFL6C0u/qSaIFvukwFUyXBft83T5SZ5hENFMj2ZDSiVK95DInCXLMfOWVnKSZx5El
+         8gf+eV+iBgYPGi0qZWqUk+HDBB8rxlPmuysjBNfDUEerKhf6EvCQqedBOafPX0dlv4lP
+         IcCYZvNxs09Abb1wNrlU1kT9ge6uVBZGxxeopIZQYjEiRQECmydKvBsibIEdfkGryNnY
+         mPrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xPp4LX+rEwNnncRsIX9QEd5PbhIfT9a4PKD3hVnmrgE=;
-        b=LNSmNtrWMwCEBgPqA5MKdENzk5XA5x9GqpCLPDHZVnQB7B1fv9AEIbEWGhWM9fKE17
-         EkQv27k0GxhS8gjykozg/RoM6WBUKm8TprHUi+clSAapwSjdB72jV+n7bV4yEVcUs3t0
-         mFGWI2khFhAPVdoFZQyjooMtRbrsi0/0fYzykHGTm6GGQR4eXw7RSkqq+qmBJqyNoWHj
-         mj++DcyEnXH73PCDBG0XRf6SIr5k4yJMIQXFUVD4lx4/CBFCPgh3wYnx3B0Em/f+zMEZ
-         KzN/e+db7l/NjNS5CstS6F3gR4zuOojdfTudOiRbQIWiKoWrGhT+bauuEWJtcnbRIop5
-         Grww==
-X-Gm-Message-State: ANhLgQ28l4Qx+LR6bxRdFrh8lJmT2XrPE3N6LN/cVTCg3CeOIC+/G4SG
-        5zqTneAtgqhPAGAXeGsty0cA85B6atk=
-X-Google-Smtp-Source: ADFU+vt1ONZGY5SRKKF17jFQVf8Ngj037vB9YGTPO+YdcOReGYWmOeFAvqo29kr7wQE2SPFxy2U4Jw==
-X-Received: by 2002:a63:7c02:: with SMTP id x2mr2847856pgc.236.1584411108831;
-        Mon, 16 Mar 2020 19:11:48 -0700 (PDT)
-Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id f19sm700769pgf.33.2020.03.16.19.11.48
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2020 19:11:48 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 6/6] gatt: Enable connecting to EATT channel using Ext-Flowctl mode
-Date:   Mon, 16 Mar 2020 19:11:41 -0700
-Message-Id: <20200317021141.16398-6-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.21.1
-In-Reply-To: <20200317021141.16398-1-luiz.dentz@gmail.com>
-References: <20200317021141.16398-1-luiz.dentz@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=el82hvu8NsarLBH+1bSM5mOhPUGbPGRaUwoQglxhFZs=;
+        b=kz9XCF0kOSdNWARrAfeN227HgoCkjjOPY96/5ckv1PlheJGUasQpXUinVgF6Ut348g
+         yaXMbMEUBcXjzKvK89cWbfMlJw3DvjRP3cF3Wil77fDWfpSwCShSoAKTJRANPoXdnTuS
+         OvaX1l2SXejpnky8KFi4KBpiU/PAaZeRnrDemSeUQfKDAc54RBAbYT6M4wC0wx/10VFF
+         YvPL8Pasy5BsP6ic6MQE6tTyUjzVfaTj36JpYVhkRoqyVAAxOdCtBMRIKz3jQQjoJqSi
+         oPuit7bz3mjoOLI1F4avkmmt9HIhWPQGQPv5u+Jlt+UTgLNw6vXQLvSn5C2T0xD+uy66
+         lOuA==
+X-Gm-Message-State: ANhLgQ0cEUw1gbXVYp2+OdwNDdeqPxVI/iWAbjPDOnT1ja/6BP962tad
+        /wwvPeBetP+0oVPCfZ7qygAnBJGgxddiQQ==
+X-Google-Smtp-Source: ADFU+vvobSt7t9RrwR/m04uzP8LCbT1bE28OruemFxbEsN4zMun2S8b74DOmhSvpXfrTSMb4P36QDEyPRn8AGw==
+X-Received: by 2002:ab0:614c:: with SMTP id w12mr2373505uan.141.1584423632602;
+ Mon, 16 Mar 2020 22:40:32 -0700 (PDT)
+Date:   Mon, 16 Mar 2020 22:40:27 -0700
+Message-Id: <20200316224023.1.I002569822232363cfbb5af1f33a293ea390c24c7@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
+Subject: [PATCH] Bluetooth: Do not cancel advertising when starting a scan
+From:   Manish Mandlik <mmandlik@google.com>
+To:     marcel@holtmann.org
+Cc:     Yoni Shavit <yshavit@chromium.org>,
+        Alain Michaud <alainm@chromium.org>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        linux-bluetooth@vger.kernel.org,
+        Dmitry Grinberg <dmitrygr@google.com>,
+        Manish Mandlik <mmandlik@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jakub Kicinski <kuba@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Dmitry Grinberg <dmitrygr@google.com>
 
-This makes use of BT_IO_MODE_EXT_FLOWCTL to connect to EATT channels.
+BlueZ cancels adv when starting a scan, but does not cancel a scan when
+starting to adv. Neither is required, so this brings both to a
+consistent state (of not affecting each other). Some very rare (I've
+never seen one) BT 4.0 chips will fail to do both at once. Even this is
+ok since the command that will fail will be the second one, and thus the
+common sense logic of first-come-first-served is preserved for BLE
+requests.
+
+Signed-off-by: Dmitry Grinberg <dmitrygr@google.com>
+Signed-off-by: Manish Mandlik <mmandlik@google.com>
 ---
- src/gatt-client.c | 28 +++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/src/gatt-client.c b/src/gatt-client.c
-index 20efb7ae9..f7e5f38f4 100644
---- a/src/gatt-client.c
-+++ b/src/gatt-client.c
-@@ -2185,6 +2185,9 @@ static void eatt_connect(struct btd_gatt_client *client)
- 	DBG("Connection attempt to: %s", addr);
+ net/bluetooth/hci_request.c | 17 -----------------
+ 1 file changed, 17 deletions(-)
+
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index bf83179ab9d19..649e1e5ed446a 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -2727,23 +2727,6 @@ static int active_scan(struct hci_request *req, unsigned long opt)
  
- 	for (i = bt_att_get_channels(att); i < main_opts.gatt_channels; i++) {
-+		int defer_timeout = i + 1 < main_opts.gatt_channels ? 1 : 0;
-+
-+		/* Attempt to connect using the Ext-Flowctl */
- 		io = bt_io_connect(eatt_connect_cb, client, NULL, &gerr,
- 					BT_IO_OPT_SOURCE_BDADDR,
- 					btd_adapter_get_address(adapter),
-@@ -2194,15 +2197,34 @@ static void eatt_connect(struct btd_gatt_client *client)
- 					device_get_address(dev),
- 					BT_IO_OPT_DEST_TYPE,
- 					device_get_le_address_type(dev),
-+					BT_IO_OPT_MODE, BT_IO_MODE_EXT_FLOWCTL,
- 					BT_IO_OPT_PSM, BT_ATT_EATT_PSM,
- 					BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_LOW,
- 					BT_IO_OPT_MTU, main_opts.gatt_mtu,
-+					BT_IO_OPT_DEFER_TIMEOUT, defer_timeout,
- 					BT_IO_OPT_INVALID);
- 		if (!io) {
--			error("EATT bt_io_connect(%s): %s", addr,
--							gerr->message);
- 			g_error_free(gerr);
--			return;
-+			/* Fallback to legacy LE Mode */
-+			io = bt_io_connect(eatt_connect_cb, client, NULL, &gerr,
-+					BT_IO_OPT_SOURCE_BDADDR,
-+					btd_adapter_get_address(adapter),
-+					BT_IO_OPT_SOURCE_TYPE,
-+					btd_adapter_get_address_type(adapter),
-+					BT_IO_OPT_DEST_BDADDR,
-+					device_get_address(dev),
-+					BT_IO_OPT_DEST_TYPE,
-+					device_get_le_address_type(dev),
-+					BT_IO_OPT_PSM, BT_ATT_EATT_PSM,
-+					BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_LOW,
-+					BT_IO_OPT_MTU, main_opts.gatt_mtu,
-+					BT_IO_OPT_INVALID);
-+			if (!io) {
-+				error("EATT bt_io_connect(%s): %s", addr,
-+							gerr->message);
-+				g_error_free(gerr);
-+				return;
-+			}
- 		}
+ 	BT_DBG("%s", hdev->name);
  
- 		g_io_channel_unref(io);
+-	if (hci_dev_test_flag(hdev, HCI_LE_ADV)) {
+-		hci_dev_lock(hdev);
+-
+-		/* Don't let discovery abort an outgoing connection attempt
+-		 * that's using directed advertising.
+-		 */
+-		if (hci_lookup_le_connect(hdev)) {
+-			hci_dev_unlock(hdev);
+-			return -EBUSY;
+-		}
+-
+-		cancel_adv_timeout(hdev);
+-		hci_dev_unlock(hdev);
+-
+-		__hci_req_disable_advertising(req);
+-	}
+-
+ 	/* If controller is scanning, it means the background scanning is
+ 	 * running. Thus, we should temporarily stop it in order to set the
+ 	 * discovery scanning parameters.
 -- 
-2.21.1
+2.25.1.481.gfbce0eb801-goog
 
