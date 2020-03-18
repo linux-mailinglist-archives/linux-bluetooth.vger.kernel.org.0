@@ -2,96 +2,66 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36E8B18912C
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Mar 2020 23:15:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34249189553
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Mar 2020 06:25:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726965AbgCQWPt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 17 Mar 2020 18:15:49 -0400
-Received: from mga17.intel.com ([192.55.52.151]:25747 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726476AbgCQWPs (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 17 Mar 2020 18:15:48 -0400
-IronPort-SDR: jZeE3IXnPh5H58S6TBF6C41o2A7RrFza7UbGWckF2aqxnmhtQJPAXI3eW54h2ulzN5PpCi7lvP
- b2+RcSIdYI6g==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2020 15:15:48 -0700
-IronPort-SDR: hPbHt4VgGXzOdKvfrh83K07cizsltCF09tc+ul0j09btMr4zRlcqRGRv8KfzisPwoXWkm8yWqV
- Z6LIm3jzrM6Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,565,1574150400"; 
-   d="scan'208";a="417711494"
-Received: from ingas-nuc1.sea.intel.com ([10.255.228.139])
-  by orsmga005.jf.intel.com with ESMTP; 17 Mar 2020 15:15:48 -0700
-From:   Inga Stotland <inga.stotland@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ v2 2/2] mesh: Fix processing of Config Node Reset message
-Date:   Tue, 17 Mar 2020 15:15:46 -0700
-Message-Id: <20200317221546.22440-2-inga.stotland@intel.com>
-X-Mailer: git-send-email 2.21.1
-In-Reply-To: <20200317221546.22440-1-inga.stotland@intel.com>
-References: <20200317221546.22440-1-inga.stotland@intel.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1726954AbgCRFZb convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 18 Mar 2020 01:25:31 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:56511 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726478AbgCRFZb (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 18 Mar 2020 01:25:31 -0400
+Received: from [192.168.1.91] (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 1991ECECF0;
+        Wed, 18 Mar 2020 06:35:00 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: [Bluez PATCH v1] input: disconnect intr channel before ctrl
+ channel
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <CABBYNZ+=wMNuvjJ5VK2zpd6euqeEZ8JXbd67RmPgxDfdCgce9w@mail.gmail.com>
+Date:   Wed, 18 Mar 2020 06:24:59 +0100
+Cc:     Archie Pusaka <apusaka@google.com>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <14E46BF4-0688-4A0B-AE84-46C4426C5E9A@holtmann.org>
+References: <20200316123914.Bluez.v1.1.I2c83372de789a015c1ee506690bb795ee0b0b0d9@changeid>
+ <CABBYNZL1D44M4z2c+4zbjLgZ=PMHsTwy1VpYZpsJbpFJ9POZug@mail.gmail.com>
+ <CAJQfnxEFM81DSvZb+ULG7+nwQuy-GWj26GWn4OP+Bp--24N1CQ@mail.gmail.com>
+ <CABBYNZ+=wMNuvjJ5VK2zpd6euqeEZ8JXbd67RmPgxDfdCgce9w@mail.gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This fixes a condition when a node continues processing messages
-after it has been reset by a remote configuration client.
-Upon receiving Config Node Reset message, node removal happens after
-a grace interval to allow sending of Config Node Reset Status reply.
----
- mesh/cfgmod-server.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+Hi Luiz,
 
-diff --git a/mesh/cfgmod-server.c b/mesh/cfgmod-server.c
-index a1f682765..8db2ef43c 100644
---- a/mesh/cfgmod-server.c
-+++ b/mesh/cfgmod-server.c
-@@ -695,12 +695,11 @@ static int hb_subscription_set(struct mesh_net *net, uint16_t src,
- 	return MESH_STATUS_SUCCESS;
- }
- 
--static void node_reset(struct l_timeout *timeout, void *user_data)
-+static void node_reset(void *user_data)
- {
- 	struct mesh_node *node = user_data;
- 
- 	l_debug("Node Reset");
--	l_timeout_remove(timeout);
- 	node_remove(node);
- }
- 
-@@ -1223,20 +1222,17 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
- 
- 	case OP_NODE_RESET:
- 		n = mesh_model_opcode_set(OP_NODE_RESET_STATUS, msg);
--		/*
--		 * Delay node removal to give it a chance to send back the
--		 * status
--		 */
--		l_timeout_create(1, node_reset, node, NULL);
-+
-+		/* Delay node removal to give it a chance to send the status */
-+		l_idle_oneshot(node_reset, node, NULL);
- 		break;
- 	}
- 
--	if (n) {
--		/* print_packet("App Tx", long_msg ? long_msg : msg, n); */
-+	if (n)
- 		mesh_model_send(node, dst, src,
- 				APP_IDX_DEV_LOCAL, net_idx, DEFAULT_TTL,
- 				long_msg ? long_msg : msg, n);
--	}
-+
- 	l_free(long_msg);
- 
- 	return true;
--- 
-2.21.1
+>> Luckily you asked, because I found out that actually the patch didn't
+>> wait for the disconnection response for any case. It does delay the
+>> disconnection of the ctrl channel slightly though, but that doesn't
+>> guarantee a proper order of disconnection. Therefore, as of now, this
+>> patch is not fixing anything.
+>> 
+>> Digging more into this matter, I found out by removing this condition
+>> (sk->sk_shutdown == SHUTDOWN_MASK) in [1], it makes intr_watch_cb()
+>> called after truly receiving the interrupt disconnection response.
+>> However, I haven't checked whether removal of such condition will
+>> break other things.
+>> Do you have any suggestions?
+> 
+> I see, we shutdown the socket immediately since the socket API itself
+> don't seem to have a concept of disconnect syscall not sure if other
+> values could be passed to shutdown second parameter to indicate we
+> want to actually wait it to be disconnected.
+
+in a blocking synchronous system call world we have SO_LINGER for that. In the world of asynchronous IO handling (what we do), we need to check what is the right way of handling this.
+
+Regards
+
+Marcel
 
