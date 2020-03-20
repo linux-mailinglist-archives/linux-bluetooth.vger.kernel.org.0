@@ -2,46 +2,46 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DB0518C415
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 01:07:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8B9C18C417
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 01:07:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727256AbgCTAHa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 19 Mar 2020 20:07:30 -0400
-Received: from mail-pf1-f172.google.com ([209.85.210.172]:33144 "EHLO
-        mail-pf1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727202AbgCTAHa (ORCPT
+        id S1727299AbgCTAHc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 19 Mar 2020 20:07:32 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:33239 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726827AbgCTAHb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 19 Mar 2020 20:07:30 -0400
-Received: by mail-pf1-f172.google.com with SMTP id n7so2321521pfn.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Mar 2020 17:07:29 -0700 (PDT)
+        Thu, 19 Mar 2020 20:07:31 -0400
+Received: by mail-pf1-f194.google.com with SMTP id n7so2321548pfn.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Mar 2020 17:07:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kLb0ZW3Gt56un5tXJnGrDhWNvjh5tVVZUmrjKBTkr+I=;
-        b=LY7Fc+nlEVtHs0x3b9ctNL+6CrOSlcR+dUMnjqvjQwijmEnKO6WMGSwm7kxpjqqoOP
-         rQrvu1SMuG56ettv/vRNoQUuSnEvkfcvf9DdCO+i+sU1NuOcoAkGsBA2HbbgokioRHFt
-         OUg11p+DIaNLmdcadaLQASLwXes5a1rc+XT9Y=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=PQXtrFBK0FlZQNQPvUALv+UR85FSVb3kUvsKXL/U5Nc=;
+        b=TEvD6Q64qVYmIQlbmaLjnNAY+7OlBcvgfXNGmoM8H/sSiTi7kDeL1NdArsDpd6XdQP
+         UopKYZ+HGb4EiFgFJNZUtac5kGMrZRQpz/m4OuxcwNtKFmoTQbeDusSuIIgC+Gpg1MUt
+         +3+VGvMUj5tfzJ/QcW1KuKU/1IEDdJdPTfRQM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kLb0ZW3Gt56un5tXJnGrDhWNvjh5tVVZUmrjKBTkr+I=;
-        b=fYSTKu/mEf33UuWGM+gpxDg4LBXMqt+GPI0UAwkoiZeue774q3gizpYWBzDS4ZGFGf
-         c12fcOgKKBoU8JOb1qu8eU/vO+a+T9uzg/nn5Ed+o7cWtgIr09zknjOhrvDZTolxG4Ne
-         8tmNu9lg8FO9OqxDUIima8hotN9jBtSFPBL9t5BVvZ6Nt/Fqo8ZTZo4Sj1H8JKaQ0sTT
-         mIXpMvmaVXyitZNSdH/gfNeZ8cTbJGV/3tXnDAp0b+ZmjhnDj1mZ+ezi5TDag363FHKN
-         WWhNVd9i4+WHR+8FhPHzHIs1IeMoJCdDkAOqHjL9oKeqbHxZ8MGXuU+BEWJmQuATpG4l
-         z4Aw==
-X-Gm-Message-State: ANhLgQ2ay8aViqI7sFyi8rVUV4NqonD/3chpcsMa8JtJZSpouvscxmvN
-        xpNqOmHXlfcNsRrXYvdFHkxJ7g==
-X-Google-Smtp-Source: ADFU+vu+R8yEHZtvdwQOflPfI/ieY4C1RoRUB74THQ9itVUwbo0VQhUooKemv0uAcyg5F8tYTYvIFQ==
-X-Received: by 2002:a63:c507:: with SMTP id f7mr5766872pgd.278.1584662849286;
-        Thu, 19 Mar 2020 17:07:29 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=PQXtrFBK0FlZQNQPvUALv+UR85FSVb3kUvsKXL/U5Nc=;
+        b=CYl2nLLKnjZIA3DvM+eDKm+hlCnGuN7h2XpmOslq1MATGt30Pe0wAYevhUyn/Gusf3
+         ZhK0OCPQiim+q3/6Tz+x/1QykJJa7eTcTAB+2Eb9hnJdr3qy4FQ9AQ3FlpGXg3FOY10Z
+         19wPLb0iQYuu2X/6lqMfuCJraQBSvZEWtDkjdfrVcLgURmv/Gzrv0MlkJnboJ7nwz9zO
+         bZmgAFHERqrEKjwpN+1Ccru5b2w4FHIRdO1ZjeVRwWhBXd7rzIclsGQM/WeW8HC1/Yb9
+         3CptgcVLAO67zgjjqoOoiskM5iHzllNzcRA0bm/fyDkZ34huyVLVOthaDLb9OnHfozpV
+         nDWw==
+X-Gm-Message-State: ANhLgQ0nQstKkYDb7eeB9a3r/82MLrabMHRKXdK4MFCcqSZKlcAAIlzK
+        tLu9rLtOLzlFjKbBVYUoMJEGeQ==
+X-Google-Smtp-Source: ADFU+vtOCz6ZIdxB66p7W+0Ice1rjK2QrirMgDN1ixu5hAnGyJU2ZhDTWPnn8LAZR5Dj63+UeS+nxw==
+X-Received: by 2002:aa7:86ce:: with SMTP id h14mr6580091pfo.311.1584662850242;
+        Thu, 19 Mar 2020 17:07:30 -0700 (PDT)
 Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id m12sm2928292pjf.25.2020.03.19.17.07.28
+        by smtp.gmail.com with ESMTPSA id m12sm2928292pjf.25.2020.03.19.17.07.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 17:07:28 -0700 (PDT)
+        Thu, 19 Mar 2020 17:07:29 -0700 (PDT)
 From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 To:     marcel@holtmann.org, linux-bluetooth@vger.kernel.org
 Cc:     chromeos-bluetooth-upstreaming@chromium.org,
@@ -50,10 +50,12 @@ Cc:     chromeos-bluetooth-upstreaming@chromium.org,
         Johan Hedberg <johan.hedberg@gmail.com>,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
         Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 0/2] Bluetooth: Suspend related bugfixes
-Date:   Thu, 19 Mar 2020 17:07:11 -0700
-Message-Id: <20200320000713.32899-1-abhishekpandit@chromium.org>
+Subject: [PATCH 1/2] Bluetooth: Restore running state if suspend fails
+Date:   Thu, 19 Mar 2020 17:07:12 -0700
+Message-Id: <20200319170708.1.I83970586f8340022b3909dccac1d79d191c6c70a@changeid>
 X-Mailer: git-send-email 2.25.1.696.g5e7596f4ac-goog
+In-Reply-To: <20200320000713.32899-1-abhishekpandit@chromium.org>
+References: <20200320000713.32899-1-abhishekpandit@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -61,34 +63,81 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+If Bluetooth fails to enter the suspended state correctly, restore the
+state to running (re-enabling scans). PM_POST_SUSPEND is only sent to
+notifiers that successfully return from PM_PREPARE_SUSPEND notification
+so we should recover gracefully if it fails.
 
-Hi Marcel,
+Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+---
 
-After further automated testing of the upstreamed suspend patches,
-I found two issues:
-- A failure in PM_SUSPEND_PREPARE wasn't calling PM_POST_SUSPEND.
-  I misread the docs and thought it would call it for all notifiers
-  already run but it only does so for the ones that returned
-  successfully from PM_SUSPEND_PREPARE.
-- hci_conn_complete_evt wasn't completing on auto-connects (an else
-  block was removed during a refactor incorrectly)
+ net/bluetooth/hci_core.c | 39 ++++++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
-With the following patches, I've run a suspend stress test on a couple
-of Chromebooks for several dozen iterations (each) successfully.
-
-Thanks
-Abhishek
-
-
-
-Abhishek Pandit-Subedi (2):
-  Bluetooth: Restore running state if suspend fails
-  Bluetooth: Fix incorrect branch in connection complete
-
- net/bluetooth/hci_core.c  | 39 ++++++++++++++++++++-------------------
- net/bluetooth/hci_event.c | 17 +++++++++--------
- 2 files changed, 29 insertions(+), 27 deletions(-)
-
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index dbd2ad3a26ed..2e7bc2da8371 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3305,6 +3305,15 @@ static void hci_prepare_suspend(struct work_struct *work)
+ 	hci_dev_unlock(hdev);
+ }
+ 
++static int hci_change_suspend_state(struct hci_dev *hdev,
++				    enum suspended_state next)
++{
++	hdev->suspend_state_next = next;
++	set_bit(SUSPEND_PREPARE_NOTIFIER, hdev->suspend_tasks);
++	queue_work(hdev->req_workqueue, &hdev->suspend_prepare);
++	return hci_suspend_wait_event(hdev);
++}
++
+ static int hci_suspend_notifier(struct notifier_block *nb, unsigned long action,
+ 				void *data)
+ {
+@@ -3330,32 +3339,24 @@ static int hci_suspend_notifier(struct notifier_block *nb, unsigned long action,
+ 		 *    connectable (disabling scanning)
+ 		 *  - Second, program event filter/whitelist and enable scan
+ 		 */
+-		hdev->suspend_state_next = BT_SUSPEND_DISCONNECT;
+-		set_bit(SUSPEND_PREPARE_NOTIFIER, hdev->suspend_tasks);
+-		queue_work(hdev->req_workqueue, &hdev->suspend_prepare);
+-		ret = hci_suspend_wait_event(hdev);
++		ret = hci_change_suspend_state(hdev, BT_SUSPEND_DISCONNECT);
+ 
+-		/* If the disconnect portion failed, don't attempt to complete
+-		 * by configuring the whitelist. The suspend notifier will
+-		 * follow a cancelled suspend with a PM_POST_SUSPEND
+-		 * notification.
+-		 */
+-		if (!ret) {
+-			hdev->suspend_state_next = BT_SUSPEND_COMPLETE;
+-			set_bit(SUSPEND_PREPARE_NOTIFIER, hdev->suspend_tasks);
+-			queue_work(hdev->req_workqueue, &hdev->suspend_prepare);
+-			ret = hci_suspend_wait_event(hdev);
+-		}
++		/* Only configure whitelist if disconnect succeeded */
++		if (!ret)
++			ret = hci_change_suspend_state(hdev,
++						       BT_SUSPEND_COMPLETE);
+ 	} else if (action == PM_POST_SUSPEND) {
+-		hdev->suspend_state_next = BT_RUNNING;
+-		set_bit(SUSPEND_PREPARE_NOTIFIER, hdev->suspend_tasks);
+-		queue_work(hdev->req_workqueue, &hdev->suspend_prepare);
+-		ret = hci_suspend_wait_event(hdev);
++		ret = hci_change_suspend_state(hdev, BT_RUNNING);
+ 	}
+ 
++	/* If suspend failed, restore it to running */
++	if (ret && action == PM_SUSPEND_PREPARE)
++		hci_change_suspend_state(hdev, BT_RUNNING);
++
+ done:
+ 	return ret ? notifier_from_errno(-EBUSY) : NOTIFY_STOP;
+ }
++
+ /* Alloc HCI device */
+ struct hci_dev *hci_alloc_dev(void)
+ {
 -- 
 2.25.1.696.g5e7596f4ac-goog
 
