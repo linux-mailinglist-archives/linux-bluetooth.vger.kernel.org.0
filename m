@@ -2,57 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F324118C4F2
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 02:50:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0A0218C521
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 03:02:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727402AbgCTBud (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 19 Mar 2020 21:50:33 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:46670 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727411AbgCTBuc (ORCPT
+        id S1727240AbgCTCCC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 19 Mar 2020 22:02:02 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:43782 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727192AbgCTCCC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 19 Mar 2020 21:50:32 -0400
-Received: by mail-pl1-f196.google.com with SMTP id r3so1832990pls.13
-        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Mar 2020 18:50:32 -0700 (PDT)
+        Thu, 19 Mar 2020 22:02:02 -0400
+Received: by mail-pl1-f194.google.com with SMTP id f8so1848896plt.10
+        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Mar 2020 19:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DfSSR55MLYDi3PSWtKuQhudT+yQxp3dfMZoaynRORc0=;
-        b=nN4ECh2vEbK6E4nOaAfv8m3kF0O8q6jQr71Prf7fXog6jlgdDV95kXPcAfjYbLPFVx
-         AWTngBBQJL443t4jrpyYllBtOtbqikx0GEtSh2iN9wI7KSxdHJizKNMpHrLAVTqRgs0m
-         zH7pE1s0KoOOiuiA7yiWyEK06EpirH0v/gCpo=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WeyRq0Bbk2RSmZHgEPCvdWM5jbjVDDe5W4E9CInHi0c=;
+        b=nI5ulvVv/nvxRZe2zSkfLXLUG8f5/8rBe9na7G3cgR5oFJNs4hueir+3tAw/CQezO4
+         TJiS593SCUNa0EEGx9K4JeiGyWzQUK4fw+GYXvdwrhjll63fSCq/PZMbdQHm8BEvgC+S
+         wlh+lRcRcu+o+BH2PA/8+NVCdi2a3SrGugkz8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DfSSR55MLYDi3PSWtKuQhudT+yQxp3dfMZoaynRORc0=;
-        b=rMJlUcfIYd2T1w0BHqhfZDZX/dRThUuJtBuNglu8VgCSg4ZMy8qm6u0jaBX0PeK9dA
-         nLPtovdFAcLtGD6HiRyEL5GWDwPVz83rkVVdBn39JZ1tLKvAkFwBxt/A4JDB8q178O+x
-         UYEQUh5O/GrYSZrkuIThIcal2rSF8CUjPlEKgCXybDP8gDzvMEjHMs3NiIWC4iLd26SJ
-         W1alGtJHBhC6NwkuKDkKgMYMFoK7atfpUcHkV8pjmxBfgNOgODx4V9hlD5X6fsQnjgZF
-         jWBdvicOxsFpRFAqzm/bPN7LdK7R6gSHEzlGvunHG0mNHEBoSx1133zt2fvQTc3RTkie
-         hmkw==
-X-Gm-Message-State: ANhLgQ02tnIvv7Tc+/rh3LZjEQzzGKOJ501uvMBUeforHvWuuatCj8aK
-        Szuj+3JB7U8P1s7jtkxIiw8M1UB4s6k=
-X-Google-Smtp-Source: ADFU+vsDQbEhsN2tuFHtUsI/7N3So4T9imSCXTf3HpOZDKL+p8NNTg8ql2UrgUz1pzIsY6iXshykqA==
-X-Received: by 2002:a17:902:82c7:: with SMTP id u7mr1585982plz.10.1584669031576;
-        Thu, 19 Mar 2020 18:50:31 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WeyRq0Bbk2RSmZHgEPCvdWM5jbjVDDe5W4E9CInHi0c=;
+        b=Wg6S5pS5NFHOurJpMSeroYVsjOjXQlqa9YCx84cs6q678nuz3VSHacoQWedIPiBJq/
+         X09QCz+NgyqLCFMDkLhp+F4Q10tiUOB2rpsEG5wKrdnTXSOXu05nRbFc08PgRkhrovMz
+         QaTEAmblS2Tw2xeRjBiZtnZ+daWICwKeh9mwuDwXk7y7J+XMxIRKLwbo6cXicpjChnC3
+         HONTcufzC088GiCMGBcJ3ffjErZEZnixObtxMaFWbWRf/J7i2t5WkkgI9iw0o6yBFYRY
+         yFnc+tgLyTDQBa3uEmYs18in7vDwN1/jo1Pleu0hq2h6HqrjBgF+++8PYYr48jd4H3vS
+         348Q==
+X-Gm-Message-State: ANhLgQ0QXURqUyVoqsyI0i2pIKT3tKY2itI34MAh/USP8iSJk6iGTyiS
+        zb9aSi9ZOsjOqrWvIM2du2wLQw==
+X-Google-Smtp-Source: ADFU+vtuipaonYkXPOtPWNXbbTxyKTJprONJWA7md1SSm0Equk8vCQ2nX8F/bQllzMXTgTP1I7bGng==
+X-Received: by 2002:a17:90a:e98e:: with SMTP id v14mr6815170pjy.114.1584669721211;
+        Thu, 19 Mar 2020 19:02:01 -0700 (PDT)
 Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id 136sm3410485pgh.26.2020.03.19.18.50.30
+        by smtp.gmail.com with ESMTPSA id y13sm3475705pfp.88.2020.03.19.19.02.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 18:50:31 -0700 (PDT)
+        Thu, 19 Mar 2020 19:02:00 -0700 (PDT)
 From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-To:     luiz.dentz@gmail.com, marcel@holtmann.org
-Cc:     alainm@chromium.org, chromeos-bluetooth-upstreaming@chromium.org,
-        linux-bluetooth@vger.kernel.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Subject: [BlueZ PATCH v4 5/5] input: Make HID devices support wake
-Date:   Thu, 19 Mar 2020 18:50:23 -0700
-Message-Id: <20200319185000.BlueZ.v4.5.Ie24be91b472c0a274606191bc4d14df030fe3598@changeid>
+To:     marcel@holtmann.org, linux-bluetooth@vger.kernel.org,
+        ulf.hansson@linaro.org
+Cc:     chromeos-bluetooth-upstreaming@chromium.org, mka@chromium.org,
+        dianders@chromium.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/1] Bluetooth: btmrvl: Reset SDIO card on hang
+Date:   Thu, 19 Mar 2020 19:01:52 -0700
+Message-Id: <20200320020153.98280-1-abhishekpandit@chromium.org>
 X-Mailer: git-send-email 2.25.1.696.g5e7596f4ac-goog
-In-Reply-To: <20200320015023.85896-1-abhishekpandit@chromium.org>
-References: <20200320015023.85896-1-abhishekpandit@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -60,47 +61,35 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-HID devices can wake the host from a suspended state. Mark the profiles
-to support wake when they are accepted.
----
 
-Changes in v4:
-* Renamed device_set_profile_wake_support to just
-  device_set_wake_support
+Hi Marcel,
 
-Changes in v3:
-* Mark HID device to support wake from suspend
+This patch adds an error recovery mechanism to the btmrvl driver. We
+have been using it on ChromeOS on kernel v4.19 and it has been on the
+stable channel release of ChromeOS for a few months now.
 
-Changes in v2: None
+A side effect of this change is that other functions on the same card
+will be affected by the reset. The necessary patches to support this
+reset have already been added to the mwifiex driver by Ulf:
 
- profiles/input/device.c | 1 +
- profiles/input/hog.c    | 1 +
- 2 files changed, 2 insertions(+)
+11239229 New          [v3,1/3] mwifiex: Re-work support for SDIO HW reset
+11239233 New          [v3,2/3] mmc: core: Drop check for mmc_card_is_removable() in mmc_rescan()
+11239237 New          [v3,3/3] mmc: core: Re-work HW reset for SDIO cards
 
-diff --git a/profiles/input/device.c b/profiles/input/device.c
-index d89da2d7c..d2a4ec82e 100644
---- a/profiles/input/device.c
-+++ b/profiles/input/device.c
-@@ -1402,6 +1402,7 @@ int input_device_register(struct btd_service *service)
- 	}
- 
- 	btd_service_set_user_data(service, idev);
-+	device_set_wake_support(device, true);
- 
- 	return 0;
- }
-diff --git a/profiles/input/hog.c b/profiles/input/hog.c
-index 327a1d1c3..0e4bd1c34 100644
---- a/profiles/input/hog.c
-+++ b/profiles/input/hog.c
-@@ -168,6 +168,7 @@ static int hog_probe(struct btd_service *service)
- 		return -EINVAL;
- 
- 	btd_service_set_user_data(service, dev);
-+	device_set_wake_support(device, true);
- 	return 0;
- }
- 
+You can see more information at crbug.com/1004473
+
+Thanks
+Abhishek
+
+
+
+Matthias Kaehlcke (1):
+  Bluetooth: btmrvl: Detect hangs and force a reset of the SDIO card
+
+ drivers/bluetooth/btmrvl_sdio.c | 24 ++++++++++++++++++++++++
+ drivers/bluetooth/btmrvl_sdio.h |  1 +
+ 2 files changed, 25 insertions(+)
+
 -- 
 2.25.1.696.g5e7596f4ac-goog
 
