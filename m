@@ -2,71 +2,128 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A4CD18CC53
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 12:08:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C9D9218CE5B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 14:02:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727297AbgCTLIj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 20 Mar 2020 07:08:39 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:37906 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726970AbgCTLIi (ORCPT
+        id S1726956AbgCTNCE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 20 Mar 2020 09:02:04 -0400
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:36192 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726814AbgCTNCE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 20 Mar 2020 07:08:38 -0400
-Received: by mail-ot1-f67.google.com with SMTP id t28so5558456ott.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Mar 2020 04:08:38 -0700 (PDT)
+        Fri, 20 Mar 2020 09:02:04 -0400
+Received: by mail-wm1-f44.google.com with SMTP id g62so6231065wme.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Mar 2020 06:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=kuhba0bbR9oJup1oQ7P5tNPZ9FqBHXE57QqcfHgaIHo=;
-        b=qdFBBLXjKzye7Gnzwa+SkZqASgCgnMGeKRQMrqJguOuBtaa+l5Di41GfmmSCVunwIg
-         8vJ98NbdwWWuCt6t0FkMEUW07RK0K1683R+A97zU1ABN4lnZSNkbV4rNNIwJXXYIaMte
-         E98M7yfRRMdjslU/n2NYMDEsUzplnBetjODx683Dnkl38xZXwifJmPbyeisn6qmF2DYC
-         prS4BIfcKjTcHmK9wH+wh1BqJvLLN8eZMtIFuiPUyEh9TVLbDMS/pKc+ek3XtlzsBKUm
-         w48c7I8b6cTTOW3+RDOk/rHgHHRx76fE5dTkt67j5peeEjYx7lMg6Lwf5PoYVuGkcw+J
-         1DmQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Q0ftB85Jx6aGt+1mPXwJgjIaSB2cWkfI0dQ+W6Udl4U=;
+        b=itCQwaGI2b+KWkmaJQBEgn25VzjZyzKe2y0v7YXEo4h5qnD9eWr0bgg4ein0ITVAgx
+         /UFnlPoiBMORzFtY7P+MmDJ4//hLE3CmTRFTwV17td8S5nlC/iqyMccE5A2tqoV9blyF
+         2AzXJroAOQfCtKSMJYKVYuEQYqG1DTOG1es0OjoBO0yqNOmD0zbtwWJDUj4GVDVV0lyr
+         kUYqe2M/xo1ZD3nxRpZteaNWqcHLNV6PNttinAtJRxpAbnDT1s2/D6xS/83r/6IQyGu0
+         Let/Sh8J8QdbMVyQvIZkvabgqCVB5lMuCem3aggVuLzW7yPRaTJZF98Ogtaw4Me/3g5e
+         H78A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=kuhba0bbR9oJup1oQ7P5tNPZ9FqBHXE57QqcfHgaIHo=;
-        b=a0n0HfFKw+0MPbJlqS2/hp1oQa+h9JkZLbbM8QTqg4tl2ClNDYVuERytwpWvPiFEXm
-         4dCyaQMN59mjNPstxHsTnv/sNcW75w3NiOaRhepuz7tPJjC9n8B+wVI49MrpW4JBUiNO
-         2zsae9JUyPolI2DqzQ1t70dppu6Oa1PWzLrvNeD3u+crX9OOPxO8pVn3C+w+pwkf0GUp
-         t4Gs3G0zWlwZThkvbX8ArpdxGhxs1Ud21+iy7EdfiDvuvHnQqzbsPbbo/Mk8bxIzBkur
-         txb6xEPYCnXXJfqgTrEkB6BIvyjSqJ3GSCNBItj2OvvZ80GXJtk4Pz1WrPEuO4Dg5hgw
-         BnUg==
-X-Gm-Message-State: ANhLgQ3OXSzeK44b1f52xXd8BbyVyEEo2O/5puHUTVrCLHEfvIcSEck+
-        NP2XxukbwzBEoGyBEp+vzsESZNe1j2YyrXyX50M=
-X-Google-Smtp-Source: ADFU+vu0Fp/qa5yO7ttU7pl/a0lMxFe5RhKS2Qf0P36OXKobczOKBtBvsgJDIicttvg2hGwWj4WU0F1pjF7HLp3Z1rQ=
-X-Received: by 2002:a9d:282:: with SMTP id 2mr6104706otl.178.1584702518023;
- Fri, 20 Mar 2020 04:08:38 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Q0ftB85Jx6aGt+1mPXwJgjIaSB2cWkfI0dQ+W6Udl4U=;
+        b=SsfyKa/1VD0O8RqJEl5JwIBnGL+0VK7f0DkCEu9Jnr1/ZsTgNvbFG8n5KddhN0asgM
+         TaEFzspNCZyvqdUtCocIdiDf4qd77XtLqqcV7wsM8T7Q814nKKaI/XD5uKKq4BNJB3ug
+         S4grhI1h1UbPh5h0lKyJqnKgWJyLh5BSx9rxdxPvHjlnt5w6dnm6ERPxRzSf5MsCBnoM
+         vsR1f3JZWr3Vxsjrqw/aqb7s0kbDUHoh6RYoBiG9UXkoVxaaVBZucnz9nX9HGnEr8TGy
+         j+iivDJHKafO8EiYEDa9THhaZol0Gmb+nN1rT4Rw4Chb21FGwtmSeFgig8XD0zGHzS9D
+         dT2w==
+X-Gm-Message-State: ANhLgQ1SzbzfBgb8heTp0KkvTwUp06FD/f969ANmf5/F1WcA7f3qWPwN
+        NEu4sW4CcEcJhIF2ymY5ORI=
+X-Google-Smtp-Source: ADFU+vsyveOie/hJBObHpBOJ8oPGVsgj2tF41udAZZ3g76idGYIuU3tuscAVv7qlNd0vw19gJ+cgeg==
+X-Received: by 2002:a1c:1d15:: with SMTP id d21mr10034013wmd.101.1584709321395;
+        Fri, 20 Mar 2020 06:02:01 -0700 (PDT)
+Received: from pali ([2a02:2b88:2:1::5cc6:2f])
+        by smtp.gmail.com with ESMTPSA id z12sm8737064wrt.27.2020.03.20.06.01.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Mar 2020 06:02:00 -0700 (PDT)
+Date:   Fri, 20 Mar 2020 14:01:59 +0100
+From:   Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        David Heidelberg <david@ixit.cz>
+Subject: Re: bluez: Export SDP "Remote audio volume control" item for HSP
+ profile
+Message-ID: <20200320130159.cm2shncjg5qo6xgh@pali>
+References: <20191212172944.hgt6se2qz2hpsbo2@pali>
+ <CABBYNZKCovNDcAaMMeYZgKAAq-8oz+pcs6xmS3A_Qt-28aoEbQ@mail.gmail.com>
+ <20191212230314.g5gt6rxkphzpwucd@pali>
+ <20200209130243.u4kpbj3cwhbdqa56@pali>
 MIME-Version: 1.0
-Received: by 2002:a4a:c897:0:0:0:0:0 with HTTP; Fri, 20 Mar 2020 04:08:37
- -0700 (PDT)
-From:   federa bureau of inteligence <federabureauofinteligence@gmail.com>
-Date:   Fri, 20 Mar 2020 11:08:37 +0000
-Message-ID: <CAE9o6LCGFPECwgnUVOcmqSfCfL3EKC6Wt_=AvLUS5Qp+03q4JA@mail.gmail.com>
-Subject: HAPPY SURVIVAL OF CORONAVIRUS
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200209130243.u4kpbj3cwhbdqa56@pali>
+User-Agent: NeoMutt/20180716
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Sir,
+On Sunday 09 February 2020 14:02:43 Pali Rohár wrote:
+> On Friday 13 December 2019 00:03:14 Pali Rohár wrote:
+> > On Thursday 12 December 2019 21:42:27 Luiz Augusto von Dentz wrote:
+> > > Hi Pali,
+> > > 
+> > > On Thu, Dec 12, 2019 at 7:31 PM Pali Rohár <pali.rohar@gmail.com> wrote:
+> > > >
+> > > > Hello!
+> > > >
+> > > > According to HSP 1.2 specification, section 4.7 Remote Audio Volume
+> > > > Control, Support for remote audio volume control is optional, so an
+> > > > implementation may support none, either, or both of the controls for
+> > > > microphone volume and speaker volume.
+> > > >
+> > > > According to HSP 1.2 specification, section 5.3 SDP Interoperability
+> > > > Requirements, bluetooth device with HSP profile announce via SDP "Remote
+> > > > audio volume control" field information if device itself supports volume
+> > > > control.
+> > > >
+> > > > But currently I did not found any way how to access "Remote audio volume
+> > > > control" SDP field in (pulseaudio) application as bluez does not export
+> > > > it.
+> > > >
+> > > > Can you please export this field? E.g. for HFP profile all optional
+> > > > features from SDP are passed to NewConnection() DBus method via
+> > > > fd_properties dictionary under Features key. Could you export that
+> > > > "Remote audio volume control" bit for HSP profile in Features key?
+> > > >
+> > > > And in same way, this needs to be handled also in RegisterProfile() DBus
+> > > > method.
+> > > 
+> > > Do you have a use case in mind?
+> > 
+> > Yes, checking in pulseaudio if remote side announce that supports remote
+> > volume control or not. And based on this switch to software volume
+> > level.
+> 
+> Hello Luiz! Is it is possible to export this field?
 
-HAPPY SURVIVAL OF CORONAVIRUS
+Hello, I have not got any answer to my question.
 
-We are reaching for a very interesting business transaction which we
-feel will of great benefit.We the FBI unit in the western subregion of
-Africa have a fund which we confiscated and lodge it in a bank
+So may I ask again how to retrieve SDP attribute 0x0302 "Remote audio
+volume control" for a remote bluetooth headset with HSP profile?
 
-This fund is worth of $12.5 million dollars.We will need your
-assistance to recieve this fund into your account for investment in
-your country.
+It is really important as this attribute says if remote bluetooth
+headset supports volume control or not. In case it does not support, we
+need to switch to software volume control on host side.
 
-We will need your urgent response for details
+There is open pulseaudio bug that on some headsets it is not possible to
+control volume level and therefore pulseaudio needs to switch to
+software volume control.
 
-Inspector Greg Adams,
-For and on behalf of Cote D'Ivoire FBI
-Tel 00225 6716 6756
+But without checking this SDP attribute 0x0302 this is not possible.
+
+-- 
+Pali Rohár
+pali.rohar@gmail.com
