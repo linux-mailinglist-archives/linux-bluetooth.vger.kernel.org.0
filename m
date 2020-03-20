@@ -2,117 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C57A18C46E
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 01:58:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75B9618C4EA
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 02:50:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727238AbgCTA6O convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 19 Mar 2020 20:58:14 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:46443 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726663AbgCTA6O (ORCPT
+        id S1727297AbgCTBt7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 19 Mar 2020 21:49:59 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42196 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727207AbgCTBt6 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 19 Mar 2020 20:58:14 -0400
-Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id AAB67CEC82;
-        Fri, 20 Mar 2020 02:07:42 +0100 (CET)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: [PATCH v3 3/3] Bluetooth: Add BT_MODE socket option
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200318215019.21494-4-luiz.dentz@gmail.com>
-Date:   Fri, 20 Mar 2020 01:58:11 +0100
-Cc:     linux-bluetooth@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <DDA058C0-9DF5-43F4-9A41-001595A95573@holtmann.org>
-References: <20200318215019.21494-1-luiz.dentz@gmail.com>
- <20200318215019.21494-4-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+        Thu, 19 Mar 2020 21:49:58 -0400
+Received: by mail-pf1-f196.google.com with SMTP id x2so2408646pfn.9
+        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Mar 2020 18:49:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ETiO7XhZXke6GDuUI6KgWzLWxeC6pDtcPaOKYiXplXI=;
+        b=m4sQ4Ar/8AeFnghpsJxl9gzWUZo4dkOoUwggHTi6im5WlyMNlukpG8VR0Q2/aUzlme
+         02l5QGH1Xrq+7tg/kjZPFQHGm7wKWT3JWEVQlGcCjcWqtMDhhJahpUJPnJ5E0aDmdeuK
+         swdqraUeWGR9It54oI3HvYrX+c4TDyHbXzs9Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ETiO7XhZXke6GDuUI6KgWzLWxeC6pDtcPaOKYiXplXI=;
+        b=uOjAk4gHZP63zVWUmpHJ3/6aJwEvzmugvvjdDuU938e6o5u4eaqkgQE7u6HsYzABBl
+         c2tsQ9HSAVjhHg1QwnXHKtT5ZVhZPnxgsb8eFhFagXWAIty0GgDxP7/qXoVoJB4s9oKp
+         BF+Y3pk8eaoEcBxYaLOf0/USdewEyJnk28L5C538v8f44jGFGUXOtlp/29DhXJMkMCEv
+         GHyiQbHhSvwctOkD5Rfx5Zge5/dif/vqXPM/HKV0mTIyAnSG8Zwy8kcq/mWZj9t9pf0c
+         m6NRnn/o0HxnWDIxEMk8jToMR7yJDtRKVGhSiE1o+Fsy3d7QTodWhbaYlWT9YKJDoexz
+         +ecg==
+X-Gm-Message-State: ANhLgQ2aVnovP5nnHTcSC/+XbLXkOQONURf8qRu8DIqDBkXBpmEsf1iQ
+        PDbHZLW9LGTB9paPmNj5W0z0nw==
+X-Google-Smtp-Source: ADFU+vvuzGeaFQfV3LmVCl2fYFHJkCPG3vQj22hjOiMNGRgRkQ8YWCLc+24CB5sgyp+JeL/7tHgiqQ==
+X-Received: by 2002:a62:1946:: with SMTP id 67mr7337219pfz.0.1584668997488;
+        Thu, 19 Mar 2020 18:49:57 -0700 (PDT)
+Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
+        by smtp.gmail.com with ESMTPSA id y9sm3450235pgo.80.2020.03.19.18.49.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2020 18:49:57 -0700 (PDT)
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+To:     marcel@holtmann.org, luiz.dentz@gmail.com
+Cc:     linux-bluetooth@vger.kernel.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jakub Kicinski <kuba@kernel.org>
+Subject: [RFC PATCH 0/1] Bluetooth: Set wakeable flag via add_device
+Date:   Thu, 19 Mar 2020 18:49:48 -0700
+Message-Id: <20200320014950.85018-1-abhishekpandit@chromium.org>
+X-Mailer: git-send-email 2.25.1.696.g5e7596f4ac-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Luiz,
 
-> This adds BT_MODE socket option which can be used to set L2CAP modes,
-> including modes only supported over LE which were not supported using
-> the L2CAP_OPTIONS.
-> 
-> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> ---
-> include/net/bluetooth/bluetooth.h | 11 ++++
-> net/bluetooth/l2cap_sock.c        | 96 +++++++++++++++++++++++++++++++
-> 2 files changed, 107 insertions(+)
-> 
-> diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
-> index 1576353a2773..34191e34bfdc 100644
-> --- a/include/net/bluetooth/bluetooth.h
-> +++ b/include/net/bluetooth/bluetooth.h
-> @@ -139,6 +139,17 @@ struct bt_voice {
-> #define BT_PHY_LE_CODED_TX	0x00002000
-> #define BT_PHY_LE_CODED_RX	0x00004000
-> 
-> +#define BT_MODE			15
-> +
-> +#define BT_MODE_BASIC		0x00
-> +#define BT_MODE_RETRANS		0x01
-> +#define BT_MODE_FLOWCTL		0x02
-> +#define BT_MODE_ERTM		0x03
-> +#define BT_MODE_STREAMING	0x04
-> +#define BT_MODE_EXT_FLOWCTL	0x05
-> +
-> +#define BT_MODE_LE_FLOWCTL	0x80
-> +
+Hi Marcel and Luiz,
 
-what I would do is just this:
+As suggested, I've updated the add_device mgmt op to accept flags on the
+device and added support for the wakeable flag. I've prototyped an
+implementation in Bluez as well that will send the mask + value on any
+add_device and then clear it on the add_device completion.
 
-	BASIC		0x00
-	ERTM		0x01
-	STREAMING	0x02
-	LE_FLOWCTL	0x03
-	EXT_FLOWCTL	0x04
+This seems to work fairly well and allows updating flags during runtime
+as well (for example, via dbus property setting).
 
-Trying to cling onto some old L2CAP definition from the 2.1 days is not helpful. I would really make a clean cut here.
+Please take a look. I will also send up the Bluez changes so you can
+look at how userspace would use this.
 
-This way we can also cleanly check the available modes per selected socket and have either setsockopt or connect fail appropriately.
+Thanks
+Abhishek
 
-> __printf(1, 2)
-> void bt_info(const char *fmt, ...);
-> __printf(1, 2)
-> diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-> index 117ba20ea194..f2bb376c699f 100644
-> --- a/net/bluetooth/l2cap_sock.c
-> +++ b/net/bluetooth/l2cap_sock.c
-> @@ -500,6 +500,25 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
-> 	return err;
-> }
-> 
-> +static u8 l2cap_get_mode(struct l2cap_chan *chan)
-> +{
-> +	switch (chan->mode) {
-> +	case L2CAP_MODE_BASIC:
-> +	case L2CAP_MODE_RETRANS:
-> +	case L2CAP_MODE_FLOWCTL:
-> +	case L2CAP_MODE_ERTM:
-> +	case L2CAP_MODE_STREAMING:
-> +		/* Mode above are the same on both old and new sockopt */
-> +		return chan->mode;
-> +	case L2CAP_MODE_LE_FLOWCTL:
-> +		return BT_MODE_FLOWCTL;
-> +	case L2CAP_MODE_EXT_FLOWCTL:
-> +		return BT_MODE_EXT_FLOWCTL;
-> +	}
-> +
-> +	return chan->mode;
-> +}
-> +
 
-Don’t bother with this. Keep the old socket and new socket independent code. I also want to add Kconfig option later that will allow us to disable the old socket options once we have SOL_L2CAP requirement eradicated.
 
-Regards
+Abhishek Pandit-Subedi (1):
+  Bluetooth: Update add_device to accept flags
 
-Marcel
+ include/net/bluetooth/mgmt.h |  5 ++++-
+ net/bluetooth/mgmt.c         | 42 +++++++++++++++++++++++++++++++++++-
+ 2 files changed, 45 insertions(+), 2 deletions(-)
+
+-- 
+2.25.1.696.g5e7596f4ac-goog
 
