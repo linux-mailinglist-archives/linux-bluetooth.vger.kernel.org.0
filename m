@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B0B418D998
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 21:40:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1428818D99A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 21:40:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727196AbgCTUkp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 20 Mar 2020 16:40:45 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:45036 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726956AbgCTUko (ORCPT
+        id S1727244AbgCTUkr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 20 Mar 2020 16:40:47 -0400
+Received: from mail-pj1-f53.google.com ([209.85.216.53]:33200 "EHLO
+        mail-pj1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726956AbgCTUkr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 20 Mar 2020 16:40:44 -0400
-Received: by mail-pg1-f196.google.com with SMTP id 37so3641311pgm.11
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Mar 2020 13:40:43 -0700 (PDT)
+        Fri, 20 Mar 2020 16:40:47 -0400
+Received: by mail-pj1-f53.google.com with SMTP id dw20so3810624pjb.0
+        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Mar 2020 13:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=redNRYVw53Y2nCzF8YK8qJRWg+E/jmn8Yib4eOsg8Yw=;
-        b=QRVa27SI0X+SW7TPhBf5bpAgL9vXmnw+L3f3zUTH5d0ql6PupNVFUL/Om5dI2dSAvO
-         zcatTLGImEOjW0Kj//63N8dhn6UPaz0LDMQAmHOthfJQ/TFTA4OZmfNVyrGPJ22Ya8qm
-         TM93P8+fEyyu9+ztnlfUL1c9zbz0R8V9Hoft3ye85s8kpuGn2IqjtY6b9g+BcvnjBjQB
-         a/7EY0I0dNpo0Tr6C/gAKixUgC7bayr8VuJr1k7cmNCDcYk/TTGDUEqCFfaBrCK44Qlm
-         fpI9dlXZIuOvWPr3UJ9BH5Tqp7vazAff5NwvDV9LN0xnD0EnAcHcoGfPP6xuk5Oy0hM5
-         7xsQ==
+        bh=SPtZQZoHH1qWeINarZdm7D/9wA67EdiU96Um/PCrOyA=;
+        b=DL5l9EiKp6UfR3q516DsC14JYaovy3UzvzPjiV9aF1z8bkuC/hGSUvPOWxp+j8GfGL
+         tsJG1kOVhq2Dy7nG7kgo2T3uz4jn6DqqONHUN4a2J8WwR1attKWKPC4QkgCUlqF1sWlv
+         mTEdo7FyfpnyJJIHoaH3XzhpKr6gQ4+UW31yXTiA09Gn5d9XvPDBXl/vttkjgi2ccdLr
+         HROj3YnjxQmRDHFJ/f1BK5KP92Bc7RFJgSNg0sQipgyvylntgR/FCk104ouT+AFGURva
+         UVYHJ3WzXLPQNCcSxQPy0q7eXKHu5QQCwPjNqNMR44KYODIgQbu8DGds39EDZtJLFYmq
+         ovZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=redNRYVw53Y2nCzF8YK8qJRWg+E/jmn8Yib4eOsg8Yw=;
-        b=f1nLteKU5Kw4ILLRYLHqdhPZS6oRCUqpO0dEOqndc2xAQOhpkI8HuUYsJKX/NDgoik
-         r3rmbOqk2Z3sI95ttyLudslhRLqZjpl0jXlZf6iAurMAnyuX747ZXShF7b3VbrMRN8xp
-         RmPc/WpA0+ygQVw668hYXjjT4eL57AR1ll/qkMhkRwdw8URMSCh566TPAF+ZWy9OD37I
-         iob6UhYE+u2Gw9P+TGG5/tUZsWSeLmD2mkhpniy8vh/bQFrKpU6Fn5gIyqcp5P8epDlm
-         OXAkCH3y5kBKzYIDKkDNNy27eyTJyKQuxBRo8uHxoTu9lK98OyFFOlolYE7aDD+udaib
-         Cm/A==
-X-Gm-Message-State: ANhLgQ0lVCJNo/zB+5sXn4cffhwpFzXRklQsicQvNcFK0T3bI5oBzCTk
-        btRWpc9z/uPxZQgv97gPgTTJkbu6
-X-Google-Smtp-Source: ADFU+vujeSQkRIaayKuK4ZL81AIk/et17mSMe8Di6h0XTOt5pjgnj3rAeTyprQjvcZli5Uu/gTueFA==
-X-Received: by 2002:a62:1c4c:: with SMTP id c73mr11219435pfc.64.1584736842887;
-        Fri, 20 Mar 2020 13:40:42 -0700 (PDT)
+        bh=SPtZQZoHH1qWeINarZdm7D/9wA67EdiU96Um/PCrOyA=;
+        b=onJP4NdxvqnAe6WVCplxRErv2EUv+XMUfPuOSpMufoljij5bk4QvpUfxl4Wnq16J/b
+         ajQjpsNOl3haGskNbVJIPRi7Xf8TKB50UskbOwCo94yehwZCMe0R/MS3cs3t4iqwwoNO
+         IlP6CKqYN0+auqDjVrWz1jKskoeLc4pvNEx4L3/IH6RP9JJHDFs0ueakD1FY3YT7Uset
+         9spIc1nVipJbcYWywuiBy3eP30bdeGXdP8nLuxVU/pPWJDtxIlb88lq9GPfQfWbFMILp
+         wU5iaFn+00ImsTCHaUkwX9GlL6UpbSsUIvhaljda+zLqAsYlEHYOLu/CbITsFSMTquXB
+         bBow==
+X-Gm-Message-State: ANhLgQ0wIVhzBAhdCHnkI81eC9Eju4k5K2RTSi1yAN3KJe97Qag0MbsZ
+        s3fJRg1kRLmQ7C9DrCUX2BuZCD9g
+X-Google-Smtp-Source: ADFU+vuLm+ra7KMu8J9pCWFVLmoOHXMZW+EZ9cQyOoab13mpFIDOb/MhvAZwQX0rQIT9g5UGgpySYg==
+X-Received: by 2002:a17:90a:aa0c:: with SMTP id k12mr11749811pjq.193.1584736844036;
+        Fri, 20 Mar 2020 13:40:44 -0700 (PDT)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id d5sm6219522pga.36.2020.03.20.13.40.41
+        by smtp.gmail.com with ESMTPSA id d5sm6219522pga.36.2020.03.20.13.40.42
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Mar 2020 13:40:42 -0700 (PDT)
+        Fri, 20 Mar 2020 13:40:43 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v4 4/6] emulator/bthost: Add support for ECRED Connection request/response
-Date:   Fri, 20 Mar 2020 13:40:36 -0700
-Message-Id: <20200320204038.11799-4-luiz.dentz@gmail.com>
+Subject: [PATCH v4 5/6] tools/l2cap-tester: Add test for Ext-Flowctl mode
+Date:   Fri, 20 Mar 2020 13:40:37 -0700
+Message-Id: <20200320204038.11799-5-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.1
 In-Reply-To: <20200320204038.11799-1-luiz.dentz@gmail.com>
 References: <20200320204038.11799-1-luiz.dentz@gmail.com>
@@ -63,102 +63,388 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds support for ECRED Connection request/response which will be
-used by l2cap-runner to test L2CAP_MODE_EXT_FLOWCTL mode.
+This adds tests for Ext-Flowctl which uses ECRED PDUs.
 ---
- emulator/bthost.c | 72 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+ tools/l2cap-tester.c | 174 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 136 insertions(+), 38 deletions(-)
 
-diff --git a/emulator/bthost.c b/emulator/bthost.c
-index 6482bbecc..0fa283464 100644
---- a/emulator/bthost.c
-+++ b/emulator/bthost.c
-@@ -1773,6 +1773,69 @@ static bool l2cap_le_conn_rsp(struct bthost *bthost, struct btconn *conn,
- 	return true;
+diff --git a/tools/l2cap-tester.c b/tools/l2cap-tester.c
+index 945f82caf..329bf65c8 100644
+--- a/tools/l2cap-tester.c
++++ b/tools/l2cap-tester.c
+@@ -61,6 +61,7 @@ struct l2cap_data {
+ 	uint16_t client_psm;
+ 	uint16_t server_psm;
+ 	uint16_t cid;
++	uint8_t mode;
+ 	int expect_err;
+ 
+ 	uint8_t send_cmd_code;
+@@ -91,7 +92,7 @@ struct l2cap_data {
+ 	uint8_t *client_bdaddr;
+ 	bool server_not_advertising;
+ 	bool direct_advertising;
+-	bool close_one_socket;
++	bool close_1;
+ };
+ 
+ static void mgmt_debug(const char *str, void *user_data)
+@@ -474,17 +475,17 @@ static const struct l2cap_data le_client_close_socket_test_2 = {
+ 	.server_not_advertising = true,
+ };
+ 
+-static const struct l2cap_data le_client_two_sockets_same_client = {
++static const struct l2cap_data le_client_2_same_client = {
+ 	.client_psm = 0x0080,
+ 	.server_psm = 0x0080,
+ 	.server_not_advertising = true,
+ };
+ 
+-static const struct l2cap_data le_client_two_sockets_close_one = {
++static const struct l2cap_data le_client_2_close_1 = {
+ 	.client_psm = 0x0080,
+ 	.server_psm = 0x0080,
+ 	.server_not_advertising = true,
+-	.close_one_socket = true,
++	.close_1 = true,
+ };
+ 
+ static const struct l2cap_data le_client_connect_nval_psm_test = {
+@@ -549,6 +550,49 @@ static const struct l2cap_data le_att_server_success_test_1 = {
+ 	.cid = 0x0004,
+ };
+ 
++static const struct l2cap_data ext_flowctl_client_connect_success_test_1 = {
++	.client_psm = 0x0080,
++	.server_psm = 0x0080,
++	.mode = BT_MODE_EXT_FLOWCTL,
++};
++
++static const struct l2cap_data ext_flowctl_client_connect_adv_success_test_1 = {
++	.client_psm = 0x0080,
++	.server_psm = 0x0080,
++	.mode = BT_MODE_EXT_FLOWCTL,
++	.direct_advertising = true,
++};
++
++static const struct l2cap_data ext_flowctl_client_connect_success_test_2 = {
++	.client_psm = 0x0080,
++	.server_psm = 0x0080,
++	.mode = BT_MODE_EXT_FLOWCTL,
++	.sec_level  = BT_SECURITY_MEDIUM,
++};
++
++static const struct l2cap_data ext_flowctl_client_connect_reject_test_1 = {
++	.client_psm = 0x0080,
++	.mode = BT_MODE_EXT_FLOWCTL,
++	.send_cmd = cmd_reject_rsp,
++	.send_cmd_len = sizeof(cmd_reject_rsp),
++	.expect_err = ECONNREFUSED,
++};
++
++static const struct l2cap_data ext_flowctl_client_2 = {
++	.client_psm = 0x0080,
++	.server_psm = 0x0080,
++	.mode = BT_MODE_EXT_FLOWCTL,
++	.server_not_advertising = true,
++};
++
++static const struct l2cap_data ext_flowctl_client_2_close_1 = {
++	.client_psm = 0x0080,
++	.server_psm = 0x0080,
++	.mode = BT_MODE_EXT_FLOWCTL,
++	.server_not_advertising = true,
++	.close_1 = true,
++};
++
+ static void client_cmd_complete(uint16_t opcode, uint8_t status,
+ 					const void *param, uint8_t len,
+ 					void *user_data)
+@@ -1031,7 +1075,7 @@ failed:
  }
  
-+static bool l2cap_ecred_conn_req(struct bthost *bthost, struct btconn *conn,
-+				uint8_t ident, const void *data, uint16_t len)
-+{
-+	const struct bt_l2cap_pdu_ecred_conn_req *req = data;
-+	struct {
-+		struct bt_l2cap_pdu_ecred_conn_rsp pdu;
-+		uint16_t dcid[5];
-+	} __attribute__ ((packed)) rsp;
-+	uint16_t psm;
-+	int num_scid, i = 0;
-+
-+	if (len < sizeof(*req))
-+		return false;
-+
-+	psm = le16_to_cpu(req->psm);
-+
-+	memset(&rsp, 0, sizeof(rsp));
-+
-+	rsp.pdu.mtu = 64;
-+	rsp.pdu.mps = 64;
-+	rsp.pdu.credits = 1;
-+
-+	if (!bthost_find_l2cap_cb_by_psm(bthost, psm)) {
-+		rsp.pdu.result = cpu_to_le16(0x0002); /* PSM Not Supported */
-+		goto respond;
+ static int create_l2cap_sock(struct test_data *data, uint16_t psm,
+-						uint16_t cid, int sec_level)
++				uint16_t cid, int sec_level, uint8_t mode)
+ {
+ 	const struct l2cap_data *l2data = data->test_data;
+ 	const uint8_t *master_bdaddr;
+@@ -1091,6 +1135,17 @@ static int create_l2cap_sock(struct test_data *data, uint16_t psm,
+ 		}
+ 	}
+ 
++	if (mode) {
++		if (setsockopt(sk, SOL_BLUETOOTH, BT_MODE, &mode,
++							sizeof(mode)) < 0) {
++			err = -errno;
++			tester_warn("Can't set mode: %s (%d)", strerror(errno),
++									errno);
++			close(sk);
++			return err;
++		}
 +	}
 +
-+	len -= sizeof(rsp.pdu);
-+	num_scid = len / sizeof(*req->scid);
-+
-+	for (; i < num_scid; i++)
-+		rsp.dcid[i] = cpu_to_le16(conn->next_cid++);
-+
-+respond:
-+	l2cap_sig_send(bthost, conn, BT_L2CAP_PDU_ECRED_CONN_RSP, ident, &rsp,
-+			sizeof(rsp.pdu) + i * sizeof(*rsp.dcid));
-+
-+	return true;
-+}
-+
-+static bool l2cap_ecred_conn_rsp(struct bthost *bthost, struct btconn *conn,
-+				uint8_t ident, const void *data, uint16_t len)
-+{
-+	const struct  {
-+		const struct bt_l2cap_pdu_ecred_conn_rsp *pdu;
-+		uint16_t scid[5];
-+	} __attribute__ ((packed)) *rsp = data;
-+	int num_scid, i;
-+
-+	if (len < sizeof(*rsp))
-+		return false;
-+
-+	num_scid = len / sizeof(*rsp->scid);
-+
-+	for (i = 0; i < num_scid; i++)
-+		/* TODO add L2CAP connection before with proper PSM */
-+		bthost_add_l2cap_conn(bthost, conn, 0,
-+				      le16_to_cpu(rsp->scid[i]), 0);
-+
-+
-+	return true;
-+}
-+
- static void l2cap_le_sig(struct bthost *bthost, struct btconn *conn,
- 						const void *data, uint16_t len)
- {
-@@ -1819,6 +1882,15 @@ static void l2cap_le_sig(struct bthost *bthost, struct btconn *conn,
- 		ret = l2cap_le_conn_rsp(bthost, conn, hdr->ident,
- 						data + sizeof(*hdr), hdr_len);
- 		break;
-+	case BT_L2CAP_PDU_ECRED_CONN_REQ:
-+		ret = l2cap_ecred_conn_req(bthost, conn, hdr->ident,
-+						data + sizeof(*hdr), hdr_len);
-+		break;
-+
-+	case BT_L2CAP_PDU_ECRED_CONN_RSP:
-+		ret = l2cap_ecred_conn_rsp(bthost, conn, hdr->ident,
-+						data + sizeof(*hdr), hdr_len);
-+		break;
+ 	return sk;
+ }
  
- 	default:
- 		printf("Unknown L2CAP code 0x%02x\n", hdr->code);
+@@ -1212,7 +1267,8 @@ static void test_connect(const void *test_data)
+ 		hciemu_add_master_post_command_hook(data->hciemu,
+ 						direct_adv_cmd_complete, NULL);
+ 
+-	sk = create_l2cap_sock(data, 0, l2data->cid, l2data->sec_level);
++	sk = create_l2cap_sock(data, 0, l2data->cid, l2data->sec_level,
++							l2data->mode);
+ 	if (sk < 0) {
+ 		tester_test_failed();
+ 		return;
+@@ -1241,7 +1297,8 @@ static void test_connect_reject(const void *test_data)
+ 	const struct l2cap_data *l2data = data->test_data;
+ 	int sk;
+ 
+-	sk = create_l2cap_sock(data, 0, l2data->cid, l2data->sec_level);
++	sk = create_l2cap_sock(data, 0, l2data->cid, l2data->sec_level,
++							l2data->mode);
+ 	if (sk < 0) {
+ 		tester_test_failed();
+ 		return;
+@@ -1256,29 +1313,40 @@ static void test_connect_reject(const void *test_data)
+ 	close(sk);
+ }
+ 
+-static void connect_socket(const uint8_t *client_bdaddr, int *sk_holder,
+-							GIOFunc connect_cb)
++static int connect_socket(const uint8_t *client_bdaddr, GIOFunc connect_cb,
++								bool defer)
+ {
+ 	struct test_data *data = tester_get_data();
+ 	const struct l2cap_data *l2data = data->test_data;
+ 	GIOChannel *io;
+ 	int sk;
+ 
+-	sk = create_l2cap_sock(data, 0, l2data->cid, l2data->sec_level);
++	sk = create_l2cap_sock(data, 0, l2data->cid, l2data->sec_level,
++							l2data->mode);
+ 	if (sk < 0) {
+ 		tester_print("Error in create_l2cap_sock");
+ 		tester_test_failed();
+-		return;
++		return -1;
+ 	}
+ 
+-	*sk_holder = sk;
++	if (defer) {
++		int opt = 1;
++
++		if (setsockopt(sk, SOL_BLUETOOTH, BT_DEFER_SETUP, &opt,
++							sizeof(opt)) < 0) {
++			tester_print("Can't enable deferred setup: %s (%d)",
++						strerror(errno), errno);
++			tester_test_failed();
++			return -1;
++		}
++	}
+ 
+ 	if (connect_l2cap_impl(sk, client_bdaddr, BDADDR_LE_PUBLIC,
+ 			l2data->client_psm, l2data->cid) < 0) {
+ 		tester_print("Error in connect_l2cap_sock");
+ 		close(sk);
+ 		tester_test_failed();
+-		return;
++		return -1;
+ 	}
+ 
+ 	if (connect_cb) {
+@@ -1290,7 +1358,10 @@ static void connect_socket(const uint8_t *client_bdaddr, int *sk_holder,
+ 		g_io_channel_unref(io);
+ 	}
+ 
+-	tester_print("Connect in progress, sk = %d", sk);
++	tester_print("Connect in progress, sk = %d %s", sk,
++				defer ? "(deferred)" : "");
++
++	return sk;
+ }
+ 
+ static gboolean test_close_socket_1_part_3(gpointer arg)
+@@ -1457,11 +1528,11 @@ static void test_close_socket(const void *test_data)
+ 	else
+ 		client_bdaddr = hciemu_get_client_bdaddr(data->hciemu);
+ 
+-	connect_socket(client_bdaddr, &data->sk, NULL);
++	data->sk = connect_socket(client_bdaddr, NULL, false);
+ }
+ 
+-static uint8_t test_two_sockets_connect_cb_cnt;
+-static gboolean test_two_sockets_connect_cb(GIOChannel *io, GIOCondition cond,
++static uint8_t test_2_connect_cb_cnt;
++static gboolean test_2_connect_cb(GIOChannel *io, GIOCondition cond,
+ 							gpointer user_data)
+ {
+ 	struct test_data *data = tester_get_data();
+@@ -1485,15 +1556,15 @@ static gboolean test_two_sockets_connect_cb(GIOChannel *io, GIOCondition cond,
+ 	}
+ 
+ 	tester_print("Successfully connected");
+-	test_two_sockets_connect_cb_cnt++;
++	test_2_connect_cb_cnt++;
+ 
+-	if (test_two_sockets_connect_cb_cnt == 2) {
++	if (test_2_connect_cb_cnt == 2) {
+ 		close(data->sk);
+ 		close(data->sk2);
+ 		tester_test_passed();
+ 	}
+ 
+-	if (l2data->close_one_socket && test_two_sockets_connect_cb_cnt == 1) {
++	if (l2data->close_1 && test_2_connect_cb_cnt == 1) {
+ 		close(data->sk2);
+ 		tester_test_passed();
+ 	}
+@@ -1510,16 +1581,16 @@ static gboolean enable_advertising(gpointer args)
+ 	return FALSE;
+ }
+ 
+-static void test_connect_two_sockets_part_2(void)
++static void test_connect_2_part_2(void)
+ {
+ 	struct test_data *data = tester_get_data();
+ 	const struct l2cap_data *l2data = data->test_data;
+ 	const uint8_t *client_bdaddr;
+ 
+ 	client_bdaddr = hciemu_get_client_bdaddr(data->hciemu);
+-	connect_socket(client_bdaddr, &data->sk2, test_two_sockets_connect_cb);
++	data->sk2 = connect_socket(client_bdaddr, test_2_connect_cb, false);
+ 
+-	if (l2data->close_one_socket) {
++	if (l2data->close_1) {
+ 		tester_print("Closing first socket! %d", data->sk);
+ 		close(data->sk);
+ 	}
+@@ -1528,7 +1599,7 @@ static void test_connect_two_sockets_part_2(void)
+ }
+ 
+ static uint8_t test_scan_enable_counter;
+-static void test_connect_two_sockets_router(uint16_t opcode, const void *param,
++static void test_connect_2_router(uint16_t opcode, const void *param,
+ 					uint8_t length, void *user_data)
+ {
+ 	const struct bt_hci_cmd_le_set_scan_enable *scan_params = param;
+@@ -1538,23 +1609,24 @@ static void test_connect_two_sockets_router(uint16_t opcode, const void *param,
+ 						scan_params->enable == true) {
+ 		test_scan_enable_counter++;
+ 		if (test_scan_enable_counter == 1)
+-			test_connect_two_sockets_part_2();
++			test_connect_2_part_2();
+ 		else if (test_scan_enable_counter == 2)
+ 			g_idle_add(enable_advertising, NULL);
+ 	}
+ }
+ 
+-static void test_connect_two_sockets(const void *test_data)
++static void test_connect_2(const void *test_data)
+ {
+ 	struct test_data *data = tester_get_data();
+ 	const struct l2cap_data *l2data = data->test_data;
+ 	const uint8_t *client_bdaddr;
++	bool defer;
+ 
+-	test_two_sockets_connect_cb_cnt = 0;
++	test_2_connect_cb_cnt = 0;
+ 	test_scan_enable_counter = 0;
+ 
+ 	hciemu_add_master_post_command_hook(data->hciemu,
+-				test_connect_two_sockets_router, data);
++				test_connect_2_router, data);
+ 
+ 	if (l2data->server_psm) {
+ 		struct bthost *bthost = hciemu_client_get_host(data->hciemu);
+@@ -1564,12 +1636,14 @@ static void test_connect_two_sockets(const void *test_data)
+ 						NULL, NULL);
+ 	}
+ 
++	defer = (l2data->mode == BT_MODE_EXT_FLOWCTL);
++
+ 	client_bdaddr = hciemu_get_client_bdaddr(data->hciemu);
+-	if (l2data->close_one_socket)
+-		connect_socket(client_bdaddr, &data->sk, NULL);
++	if (l2data->close_1)
++		data->sk = connect_socket(client_bdaddr, NULL, defer);
+ 	else
+-		connect_socket(client_bdaddr, &data->sk,
+-						test_two_sockets_connect_cb);
++		data->sk = connect_socket(client_bdaddr, test_2_connect_cb,
++								defer);
+ }
+ 
+ static gboolean l2cap_listen_cb(GIOChannel *io, GIOCondition cond,
+@@ -1727,7 +1801,8 @@ static void test_server(const void *test_data)
+ 
+ 	if (l2data->server_psm || l2data->cid) {
+ 		sk = create_l2cap_sock(data, l2data->server_psm,
+-					l2data->cid, l2data->sec_level);
++					l2data->cid, l2data->sec_level,
++					l2data->mode);
+ 		if (sk < 0) {
+ 			tester_test_failed();
+ 			return;
+@@ -1776,7 +1851,7 @@ static void test_getpeername_not_connected(const void *test_data)
+ 	socklen_t len;
+ 	int sk;
+ 
+-	sk = create_l2cap_sock(data, 0, 0, 0);
++	sk = create_l2cap_sock(data, 0, 0, 0, 0);
+ 	if (sk < 0) {
+ 		tester_test_failed();
+ 		return;
+@@ -1902,14 +1977,14 @@ int main(int argc, char *argv[])
+ 				test_close_socket);
+ 
+ 	test_l2cap_le("L2CAP LE Client - Open two sockets",
+-				&le_client_two_sockets_same_client,
++				&le_client_2_same_client,
+ 				setup_powered_client,
+-				test_connect_two_sockets);
++				test_connect_2);
+ 
+ 	test_l2cap_le("L2CAP LE Client - Open two sockets close one",
+-				&le_client_two_sockets_close_one,
++				&le_client_2_close_1,
+ 				setup_powered_client,
+-				test_connect_two_sockets);
++				test_connect_2);
+ 
+ 	test_l2cap_le("L2CAP LE Client - Invalid PSM",
+ 					&le_client_connect_nval_psm_test,
+@@ -1920,6 +1995,29 @@ int main(int argc, char *argv[])
+ 					setup_powered_server, test_server);
+ 
+ 
++	test_l2cap_le("L2CAP Ext-Flowctl Client - Success",
++				&ext_flowctl_client_connect_success_test_1,
++				setup_powered_client, test_connect);
++	test_l2cap_le("L2CAP Ext-Flowctl Client, Direct Advertising - Success",
++				&ext_flowctl_client_connect_adv_success_test_1,
++				setup_powered_client, test_connect);
++	test_l2cap_le("L2CAP Ext-Flowctl Client SMP - Success",
++				&ext_flowctl_client_connect_success_test_2,
++				setup_powered_client, test_connect);
++	test_l2cap_le("L2CAP Ext-Flowctl Client - Command Reject",
++				&ext_flowctl_client_connect_reject_test_1,
++				setup_powered_client, test_connect);
++
++	test_l2cap_le("L2CAP Ext-Flowctl Client - Open two sockets",
++				&ext_flowctl_client_2,
++				setup_powered_client,
++				test_connect_2);
++
++	test_l2cap_le("L2CAP Ext-Flowctl Client - Open two sockets close one",
++				&ext_flowctl_client_2_close_1,
++				setup_powered_client,
++				test_connect_2);
++
+ 	test_l2cap_le("L2CAP LE ATT Client - Success",
+ 				&le_att_client_connect_success_test_1,
+ 				setup_powered_client, test_connect);
 -- 
 2.21.1
 
