@@ -2,61 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F89118C4EC
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 02:50:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B90218C4ED
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Mar 2020 02:50:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbgCTBuA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 19 Mar 2020 21:50:00 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:36117 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727238AbgCTBt7 (ORCPT
+        id S1727297AbgCTBu2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 19 Mar 2020 21:50:28 -0400
+Received: from mail-pg1-f179.google.com ([209.85.215.179]:33616 "EHLO
+        mail-pg1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727192AbgCTBu1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 19 Mar 2020 21:49:59 -0400
-Received: by mail-pg1-f193.google.com with SMTP id z72so2272500pgz.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Mar 2020 18:49:58 -0700 (PDT)
+        Thu, 19 Mar 2020 21:50:27 -0400
+Received: by mail-pg1-f179.google.com with SMTP id d17so1696274pgo.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Mar 2020 18:50:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6QLaOkw0qL1wPTVBV/NhMql+CDMGWPnkMDm6IsgeElU=;
-        b=OULc9rPlk2rUQzIDcIrf58PV9+9wgXPLPQ6+yzpj1XqvMhf1y3VqVMvf09vzGVLKx3
-         CISOnH+R6lbyR5raETRXNjtqzrRPA8AihLQqzftMUzmlN0bfE/Ak5q4u+1qKgaL2rT/d
-         M7wfPpBaDVSzNUNgl3/QSqQfSKiCCNE0qlGUM=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PU9kgEpwwuugzuBur1kbsdnAZUff4cZ6r30c+t/EDPo=;
+        b=htsh1BsIw/p7dOlQFwSVIjtvBlNnQQBXdQHQTuQF3StdBMVFSVUxzIfacwg2jrIsJ+
+         eB2DXlJPRxuCzrGfnlxhGp2iyaekqTuAbvOvl8ZqRI0IgVhWsN9IRznxLnVgpcZDMxdN
+         qGSTjoR+PG5aRIB8b5DYDkOmAa+mdOR/bKVb0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6QLaOkw0qL1wPTVBV/NhMql+CDMGWPnkMDm6IsgeElU=;
-        b=V0o81JWDSb2YFBfWdn5/gVWJcn8k2iNmQXsjAhtPnuZgbsso4tD1PO73mv2NUECsqi
-         PDqx9/VDcYmfr13KasmropSNRuEK8Qr0ePoZL74iLnPVs13sOFpbFBROw/ybh7ZmNfAy
-         eLVAFWudsUl/lzx4WAp+Sx/kdzx6xG3tHhveYcRmOsOlP0zWvrsS+magQ+VEd9TvY0te
-         k3uhxa2VA4JCCNF2BGK/pnSG11S2zqM3nC2y3/CMo6gBTbzIEC55obfmtUZTHGS4HmGy
-         ZchjXEWMJwCaWzlkXl2JCBcC0obSPcdftqH/2jtEYfwpQUcHcQm/gIMDCYkO42K3r0Tw
-         MBBw==
-X-Gm-Message-State: ANhLgQ24SmPRwUL4QkxgSBnYtD0PDjvKEiERyVZGKgmbNYLfsyiMcknv
-        3hegE1a1y4TfZVYe8QCHRL/YpA==
-X-Google-Smtp-Source: ADFU+vuoTqkL9jVYXdk5dtCMX6E69hGo5tascQrKBeEwatu0Y9WND0HIhZq9ZviX8oqzCN2ewNF4HA==
-X-Received: by 2002:a63:67c5:: with SMTP id b188mr6178221pgc.111.1584668998355;
-        Thu, 19 Mar 2020 18:49:58 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PU9kgEpwwuugzuBur1kbsdnAZUff4cZ6r30c+t/EDPo=;
+        b=AEeB/Wy8+A7yNBdOhoV3Ki/YAiHlAwH1N9vIgNgriHv8oLrMponh8kiW/ZTdqMxcQg
+         xIDn4z1SMSxr1ypz2Iro3EjmTzwd0fO+9GFbv9bLq4RjqB62gh30NCruL7VO5hqgVUaF
+         y0ZKqNmQN8pDn558yUuXdxiw9RsPxOdv9w1q7jQG2C9YoFJdc3OC3bR5ZgGFIcgSdh80
+         vSJ6ONkZpjYT1pHy8Kh3irFCWyHssP9+mg8D2w9RaU8EX+7DNKCnzIFfroem2rQEsubp
+         8jrzNejXKn2Fyy7Z/GrMg+BKia0QqMOptmpU6kw9waHQA8t/wltwiJKp6//S1JB8F1in
+         k69Q==
+X-Gm-Message-State: ANhLgQ1FdUdo4S4Hl/Wql/jyggeQilysiKDgFUZ7W8EpWuYwfC2HtVbD
+        L/ezMxCV6GjiDftBuXGu4hiQxQ==
+X-Google-Smtp-Source: ADFU+vuNGk1q3voL+KRzq2IxinBDyIMJGrndR83ZhF17Nmqo01Y7Zbj4XJ57TmhpoNgRNpN0lf+bWA==
+X-Received: by 2002:a63:c550:: with SMTP id g16mr6481154pgd.9.1584669026690;
+        Thu, 19 Mar 2020 18:50:26 -0700 (PDT)
 Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id y9sm3450235pgo.80.2020.03.19.18.49.57
+        by smtp.gmail.com with ESMTPSA id 136sm3410485pgh.26.2020.03.19.18.50.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 18:49:58 -0700 (PDT)
+        Thu, 19 Mar 2020 18:50:26 -0700 (PDT)
 From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-To:     marcel@holtmann.org, luiz.dentz@gmail.com
-Cc:     linux-bluetooth@vger.kernel.org,
-        chromeos-bluetooth-upstreaming@chromium.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jakub Kicinski <kuba@kernel.org>
-Subject: [RFC PATCH 1/1] Bluetooth: Update add_device to accept flags
-Date:   Thu, 19 Mar 2020 18:49:49 -0700
-Message-Id: <20200319184913.RFC.1.I4657d5566e8562d9813915e16a1a38a27195671d@changeid>
+To:     luiz.dentz@gmail.com, marcel@holtmann.org
+Cc:     alainm@chromium.org, chromeos-bluetooth-upstreaming@chromium.org,
+        linux-bluetooth@vger.kernel.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Subject: [BlueZ PATCH v4 0/5] device: Allow devices to be marked as wake capable
+Date:   Thu, 19 Mar 2020 18:50:18 -0700
+Message-Id: <20200320015023.85896-1-abhishekpandit@chromium.org>
 X-Mailer: git-send-email 2.25.1.696.g5e7596f4ac-goog
-In-Reply-To: <20200320014950.85018-1-abhishekpandit@chromium.org>
-References: <20200320014950.85018-1-abhishekpandit@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -64,105 +58,84 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add the capability to set flags on devices being added via add_device.
-The first flag being used is the wakeable flag which allows the device
-to wake the system from suspend.
 
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
----
+Hi Luiz and Marcel,
 
- include/net/bluetooth/mgmt.h |  5 ++++-
- net/bluetooth/mgmt.c         | 42 +++++++++++++++++++++++++++++++++++-
- 2 files changed, 45 insertions(+), 2 deletions(-)
+Please do not merge this until the accompanying kernel change is
+accepted. I am sending this series to show how I plan on using the
+changes to the Add Device management operation.
 
-diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
-index f41cd87550dc..e9db9b1a4436 100644
---- a/include/net/bluetooth/mgmt.h
-+++ b/include/net/bluetooth/mgmt.h
-@@ -445,8 +445,11 @@ struct mgmt_rp_get_clock_info {
- struct mgmt_cp_add_device {
- 	struct mgmt_addr_info addr;
- 	__u8	action;
-+	__u8	flags_mask;
-+	__u8	flags_value;
- } __packed;
--#define MGMT_ADD_DEVICE_SIZE		(MGMT_ADDR_INFO_SIZE + 1)
-+#define MGMT_ADD_DEVICE_SIZE		(MGMT_ADDR_INFO_SIZE + 3)
-+#define DEVICE_FLAG_WAKEABLE		(1 << 0)
- 
- #define MGMT_OP_REMOVE_DEVICE		0x0034
- struct mgmt_cp_remove_device {
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 6552003a170e..ae241f541713 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -5759,6 +5759,25 @@ static int hci_conn_params_set(struct hci_dev *hdev, bdaddr_t *addr,
- 	return 0;
- }
- 
-+static int hci_conn_params_set_flags(struct hci_dev *hdev, bdaddr_t *addr,
-+				     u8 addr_type, u8 flags_mask,
-+				     u8 flags_value)
-+{
-+	struct hci_conn_params *params =
-+		hci_conn_params_add(hdev, addr, addr_type);
-+
-+	if (!params)
-+		return -EIO;
-+
-+	if (flags_mask & DEVICE_FLAG_WAKEABLE)
-+		params->wakeable = flags_mask & DEVICE_FLAG_WAKEABLE;
-+
-+	bt_dev_dbg(hdev, "addr %pMR (type %u) flag mask %u, values %u", addr,
-+		   addr_type, flags_mask, flags_value);
-+
-+	return 0;
-+}
-+
- static void device_added(struct sock *sk, struct hci_dev *hdev,
- 			 bdaddr_t *bdaddr, u8 type, u8 action)
- {
-@@ -5805,11 +5824,23 @@ static int add_device(struct sock *sk, struct hci_dev *hdev,
- 
- 		err = hci_bdaddr_list_add(&hdev->whitelist, &cp->addr.bdaddr,
- 					  cp->addr.type);
--		if (err)
-+		if (err && err != -EEXIST)
- 			goto unlock;
- 
- 		hci_req_update_scan(hdev);
- 
-+		/* Modify wake capable property if set. */
-+		if (cp->flags_mask & DEVICE_FLAG_WAKEABLE) {
-+			if (cp->flags_value & DEVICE_FLAG_WAKEABLE)
-+				hci_bdaddr_list_add(&hdev->wakeable,
-+						    &cp->addr.bdaddr,
-+						    cp->addr.type);
-+			else
-+				hci_bdaddr_list_del(&hdev->wakeable,
-+						    &cp->addr.bdaddr,
-+						    cp->addr.type);
-+		}
-+
- 		goto added;
- 	}
- 
-@@ -5845,6 +5876,15 @@ static int add_device(struct sock *sk, struct hci_dev *hdev,
- 		goto unlock;
- 	}
- 
-+	/* Set or clear flags that were configured for this device */
-+	if (hci_conn_params_set_flags(hdev, &cp->addr.bdaddr, addr_type,
-+				      cp->flags_mask, cp->flags_value)) {
-+		err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_ADD_DEVICE,
-+					MGMT_STATUS_FAILED, &cp->addr,
-+					sizeof(cp->addr));
-+		goto unlock;
-+	}
-+
- 	hci_update_background_scan(hdev);
- 
- added:
+Pending questions I have for this series:
+* Do I need to distinguish whether the kernel supports the updated Add
+  Device structure? (It will probably reject it if the size isn't
+  correct)
+* Can we allow HID devices to default to Wake Allowed? I think its
+  preferable to allow newly paired HID devices to wake the system from
+  sleep without any additional changes.
+
+--
+
+This change accompanies a change in the kernel to allow marking devices
+as wakeable so they can wake the system from suspend. Currently, only
+HID devices support this and will be configured to allow this setting to
+be changed via the WakeAllowed property.
+
+In order to set this flag, Bluez must call the Add Device management
+operation with the DEVICE_FLAG_WAKEABLE flag mask and value set. This
+call can be made multiple times with the same address (the kernel will
+add the device the first time but only update the action or flags on
+subsequent calls).
+
+This change was tested with appropriate kernel changes on v4.19
+(verified that HID devices were being marked as wake capable in the
+kernel).
+
+Thanks
+Abhishek
+
+Changes in v4:
+* Newly added support in Add Device for flags
+* Renamed wake_capable to wake_allowed
+* Removed set_wake_capable mgmt op and updated add_device to accept
+  flags to set whether a device is wakeable
+* Refactored adapter_whitelist_add and adapter_auto_connect_add to call
+  adapter_add_device
+* Renamed WakeCapable to WakeAllowed
+* Renamed WakeCapable to WakeAllowed
+* Renamed device_set_profile_wake_support to just
+  device_set_wake_support
+
+Changes in v3:
+* Added profile_wake_support and made wake_capable dependent on it
+* Added documentation for WakeCapable
+* Mark HID device to support wake from suspend
+
+Changes in v2:
+* Added dbus api "WakeCapable" to set value
+* Update device_set_wake_capable to be called by
+  adapter_set_wake_capable_complete so we can emit property changed
+* Newly added to show whether device is wake capable
+* Removed automatically setting wake capable for HID devices
+
+Abhishek Pandit-Subedi (5):
+  mgmt: Update docs for Add Device
+  device: Support marking a device with wake allowed
+  client: Display wake allowed property with info
+  doc/device-api: Add WakeAllowed
+  input: Make HID devices support wake
+
+ client/main.c           |   1 +
+ doc/device-api.txt      |   5 ++
+ doc/mgmt-api.txt        |  12 ++++
+ lib/mgmt.h              |   3 +
+ profiles/input/device.c |   1 +
+ profiles/input/hog.c    |   1 +
+ src/adapter.c           | 112 +++++++++++++----------------------
+ src/adapter.h           |   1 +
+ src/device.c            | 125 ++++++++++++++++++++++++++++++++++++++++
+ src/device.h            |   8 +++
+ 10 files changed, 197 insertions(+), 72 deletions(-)
+
 -- 
 2.25.1.696.g5e7596f4ac-goog
 
