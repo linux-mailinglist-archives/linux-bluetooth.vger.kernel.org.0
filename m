@@ -2,60 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E6D5D18DBAC
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 21 Mar 2020 00:19:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30A3618E313
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 21 Mar 2020 17:55:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727357AbgCTXTh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 20 Mar 2020 19:19:37 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:40999 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727334AbgCTXTh (ORCPT
+        id S1727069AbgCUQz5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 21 Mar 2020 12:55:57 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40365 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726961AbgCUQz5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 20 Mar 2020 19:19:37 -0400
-Received: by mail-pl1-f193.google.com with SMTP id t16so3136588plr.8
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Mar 2020 16:19:36 -0700 (PDT)
+        Sat, 21 Mar 2020 12:55:57 -0400
+Received: by mail-wr1-f67.google.com with SMTP id f3so11302380wrw.7
+        for <linux-bluetooth@vger.kernel.org>; Sat, 21 Mar 2020 09:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JBbo2a0i4CpeeOBbaJAqxpqZkTg0B0uov6ptYoUJLXE=;
-        b=nTUt91ZEzn7KN+96nvAiwT5uJeEgtaFB6p/zLnXCPviaemLK3N6Rz9SbujG3zDvQxL
-         i6iAKg68I+a+vYC5sGqSFLolNRnM+C9KLwK529/DTaVJH+grA8EA1PJP+20OGWW825rD
-         yyIL+wuvLu/wj1YBafS8dlzz3teE8iQhI5ccE=
+        bh=+Z9C2aPYvbuORVExRgoCw7kkRywT67u5qzBQLpOjpHo=;
+        b=N/5jFwyRB5MTQzbrJOLNdC2NqzISVpKXk3jztZdKE1iM3Oe6yYewt24y6EVrYH1ftu
+         sjmrxfAoHtgX1c6GbjII21bo23RpRJkTtZMUDqdcQRTkKA/CzUE5/hh5Ve+K5zoi3HiB
+         SHn58SBNMNZcalefIlY/dqzSFn0JyynxC8YCKaGHQfA8tgifsOIlfj7/+WYj3prcs4OZ
+         GTYv3UuUXXAU7ftzT5HY1SHG8hya09bLGFYg1iDi7YSasS58iRf7TApXBs8MsSfJTxVl
+         gE771zZ57w6CfiBLUChiWxAeA+vxl/5K1s2tpJ0vTwAO+R+GNMxzX3MGk8vMyRDjzsbF
+         s1XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JBbo2a0i4CpeeOBbaJAqxpqZkTg0B0uov6ptYoUJLXE=;
-        b=KMPsn+oNXKuY0Rfk6eevVkR/KUJINrWhGy56LyvdSPxAQj3NGplKWzofXTIjv/Yf+n
-         CfiM5/9j11dUIIFDH+Zu22w6rZTeLt0hpw794MHwYAVvDKfWDlZCM/FXgUxlFNQLEams
-         QxEkexIy+GVDoIwpGWN7Xx7zisiKoW8ph2bIWJSsLhE599wiRhSYdYm+l21qELrkbNgB
-         5KlsXiZ6jxALHTyEmvK1WFRvEpZNg27SuQxNtRPwhKocX23CPfYsxQqNAiJ34Jf++Kec
-         TVCQwG40wMVkPRdAELGst8q5v0CtTjs/P76ca9iFauaOPc5bmJZfSTMT7ePBzIsYnT1v
-         8mzw==
-X-Gm-Message-State: ANhLgQ130P1TSbRHRlRosbdu2NC3g1bpBUxfE85ee87VyzOZP1hp4wra
-        Kf5w5VlK73d3qZ+5q8UDtmuNZg==
-X-Google-Smtp-Source: ADFU+vu36KI4hQQw1uYmd4xi1dI6lDNiSRM2UM3nk1wYDI7VYganw1JJLf3SF+zolVdWRJKZehzgFQ==
-X-Received: by 2002:a17:902:9a45:: with SMTP id x5mr10286830plv.296.1584746376114;
-        Fri, 20 Mar 2020 16:19:36 -0700 (PDT)
-Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id q26sm6530773pff.63.2020.03.20.16.19.34
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=+Z9C2aPYvbuORVExRgoCw7kkRywT67u5qzBQLpOjpHo=;
+        b=XVec9EqobcM4RDYCM5K1ipTKmgRMZ1A4xmgOBHJCEvn7/fKHSb7/7/3NJ1wijqN42U
+         2aoZ8a7QiAgtv2JlSyp6Ie/zzZZGFkSHpD0fqM+QJNWjrFXbiJ63FOXrr1s6jDi/8su3
+         98GwPf74r/njznvNi1i5duOEgudeBTC3jbuuVXsIx4Qy0kdAe+mFISiEhN+jHMw3NCOg
+         1yypnVvHY2xJkMlE+RoCpupiWXyF47rFgF53VWbLVTL4zQcxbEYdjnCxMhkkV0BR7EgQ
+         SDPowz07nrf/uTYWTvRoAOSU4FrT4CKymrvpMll2G6lazCzTI6e8C/yVDBMCGPoow26c
+         j0dw==
+X-Gm-Message-State: ANhLgQ0aDzycBplo7D/kVBnVZsZiyUghrfdwQahnSN6Hn562NUZoVNhH
+        G17adC04NovLqMTyoAkpKWk=
+X-Google-Smtp-Source: ADFU+vvdqT+DW1ZLl+RIxludvHWVbi2gbKm34sRtJCm9Ooo2deSkAkDaUQPZ6CAANLjcldvWwCS+pg==
+X-Received: by 2002:adf:c587:: with SMTP id m7mr18995749wrg.64.1584809753372;
+        Sat, 21 Mar 2020 09:55:53 -0700 (PDT)
+Received: from heartofgold.home ([90.114.80.84])
+        by smtp.gmail.com with ESMTPSA id o4sm14074462wrp.84.2020.03.21.09.55.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Mar 2020 16:19:35 -0700 (PDT)
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-To:     marcel@holtmann.org, linux-bluetooth@vger.kernel.org
-Cc:     chromeos-bluetooth-upstreaming@chromium.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH v2 1/1] Bluetooth: Prioritize SCO traffic
-Date:   Fri, 20 Mar 2020 16:19:28 -0700
-Message-Id: <20200320161922.v2.1.I17e2220fd0c0822c76a15ef89b882fb4cfe3fe89@changeid>
-X-Mailer: git-send-email 2.25.1.696.g5e7596f4ac-goog
-In-Reply-To: <20200320231928.137720-1-abhishekpandit@chromium.org>
-References: <20200320231928.137720-1-abhishekpandit@chromium.org>
+        Sat, 21 Mar 2020 09:55:52 -0700 (PDT)
+From:   Guillaume Martres <smarter@ubuntu.com>
+To:     sathish.narasimman@intel.com, marcel@holtmann.org
+Cc:     linux-bluetooth@vger.kernel.org
+Subject: Re: [PATCH v6 2/2] bluetooth:btusb: handle msbc audio over USB Endpoints
+Date:   Sat, 21 Mar 2020 17:55:51 +0100
+Message-Id: <20200321165551.11928-1-smarter@ubuntu.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <F7B49142-FD11-4512-B2D4-0840556FC0D3@holtmann.org>
+References: <F7B49142-FD11-4512-B2D4-0840556FC0D3@holtmann.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -63,184 +61,33 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When scheduling TX packets, send all SCO/eSCO packets first, check for
-pending SCO/eSCO packets after every ACL/LE packet and send them if any
-are pending.  This is done to make sure that we can meet SCO deadlines
-on slow interfaces like UART.
+From: Guillaume Martres <smarter3@gmail.com>
 
-If we were to queue up multiple ACL packets without checking for a SCO
-packet, we might miss the SCO timing. For example:
+Hi Sathish, Marcel,
 
-The time it takes to send a maximum size ACL packet (1024 bytes):
-t = 10/8 * 1024 bytes * 8 bits/byte * 1 packet / baudrate
-        where 10/8 is uart overhead due to start/stop bits per byte
+> I would really prefer to have some Tested-by lines from people that can verify that this patch works.
 
-Replace t = 3.75ms (SCO deadline), which gives us a baudrate of 2730666.
+Here's my experience: a recent pulseaudio MR [1] added support for mSBC. When I
+tried it using my laptop (Intel AX200) and headphones (Bose Headphone 700), the
+voice quality was extremely bad. I eventually realized that this could be fixed
+by ignoring all zero-filled packets sent by the headphones when decoding
+mSBC [2], after that everything worked fine.
 
-At a baudrate of 3000000, if we didn't check for SCO packets within 1024
-bytes, we would miss the 3.75ms timing window.
+Since then, I was made aware of the existence of this patchset, after applying
+this patch (and [3] which apparently only exists as v5 and not v6), my
+headphones stopped sending zero-filled packets, but:
+- the recorded audio quality is again extremely bad and robotic.
+- when audio is being played, the headphones do not emit any sound.
 
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
----
+Note that I applied this patchset on top of the current Ubuntu 20.04 kernel [4],
+let me know if it's worth retesting on top of the mainline kernel, or if there
+is something else I could try.
 
-Changes in v2:
-* Refactor to check for SCO/eSCO after each ACL/LE packet sent
-* Enabled SCO priority all the time and removed the sched_limit variable
+Hope this helps,
+Guillaume
 
- net/bluetooth/hci_core.c | 111 +++++++++++++++++++++------------------
- 1 file changed, 61 insertions(+), 50 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index dbd2ad3a26ed..a29177e1a9d0 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4239,6 +4239,60 @@ static void __check_timeout(struct hci_dev *hdev, unsigned int cnt)
- 	}
- }
- 
-+/* Schedule SCO */
-+static void hci_sched_sco(struct hci_dev *hdev)
-+{
-+	struct hci_conn *conn;
-+	struct sk_buff *skb;
-+	int quote;
-+
-+	BT_DBG("%s", hdev->name);
-+
-+	if (!hci_conn_num(hdev, SCO_LINK))
-+		return;
-+
-+	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, SCO_LINK, &quote))) {
-+		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
-+			BT_DBG("skb %p len %d", skb, skb->len);
-+			hci_send_frame(hdev, skb);
-+
-+			conn->sent++;
-+			if (conn->sent == ~0)
-+				conn->sent = 0;
-+		}
-+	}
-+}
-+
-+static void hci_sched_esco(struct hci_dev *hdev)
-+{
-+	struct hci_conn *conn;
-+	struct sk_buff *skb;
-+	int quote;
-+
-+	BT_DBG("%s", hdev->name);
-+
-+	if (!hci_conn_num(hdev, ESCO_LINK))
-+		return;
-+
-+	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, ESCO_LINK,
-+						     &quote))) {
-+		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
-+			BT_DBG("skb %p len %d", skb, skb->len);
-+			hci_send_frame(hdev, skb);
-+
-+			conn->sent++;
-+			if (conn->sent == ~0)
-+				conn->sent = 0;
-+		}
-+	}
-+}
-+
-+static void hci_sched_sync(struct hci_dev *hdev)
-+{
-+	hci_sched_sco(hdev);
-+	hci_sched_esco(hdev);
-+}
-+
- static void hci_sched_acl_pkt(struct hci_dev *hdev)
- {
- 	unsigned int cnt = hdev->acl_cnt;
-@@ -4270,6 +4324,9 @@ static void hci_sched_acl_pkt(struct hci_dev *hdev)
- 			hdev->acl_cnt--;
- 			chan->sent++;
- 			chan->conn->sent++;
-+
-+			/* Send pending SCO packets right away */
-+			hci_sched_sync(hdev);
- 		}
- 	}
- 
-@@ -4354,54 +4411,6 @@ static void hci_sched_acl(struct hci_dev *hdev)
- 	}
- }
- 
--/* Schedule SCO */
--static void hci_sched_sco(struct hci_dev *hdev)
--{
--	struct hci_conn *conn;
--	struct sk_buff *skb;
--	int quote;
--
--	BT_DBG("%s", hdev->name);
--
--	if (!hci_conn_num(hdev, SCO_LINK))
--		return;
--
--	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, SCO_LINK, &quote))) {
--		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
--			BT_DBG("skb %p len %d", skb, skb->len);
--			hci_send_frame(hdev, skb);
--
--			conn->sent++;
--			if (conn->sent == ~0)
--				conn->sent = 0;
--		}
--	}
--}
--
--static void hci_sched_esco(struct hci_dev *hdev)
--{
--	struct hci_conn *conn;
--	struct sk_buff *skb;
--	int quote;
--
--	BT_DBG("%s", hdev->name);
--
--	if (!hci_conn_num(hdev, ESCO_LINK))
--		return;
--
--	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, ESCO_LINK,
--						     &quote))) {
--		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
--			BT_DBG("skb %p len %d", skb, skb->len);
--			hci_send_frame(hdev, skb);
--
--			conn->sent++;
--			if (conn->sent == ~0)
--				conn->sent = 0;
--		}
--	}
--}
--
- static void hci_sched_le(struct hci_dev *hdev)
- {
- 	struct hci_chan *chan;
-@@ -4436,6 +4445,9 @@ static void hci_sched_le(struct hci_dev *hdev)
- 			cnt--;
- 			chan->sent++;
- 			chan->conn->sent++;
-+
-+			/* Send pending SCO packets right away */
-+			hci_sched_sync(hdev);
- 		}
- 	}
- 
-@@ -4458,9 +4470,8 @@ static void hci_tx_work(struct work_struct *work)
- 
- 	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
- 		/* Schedule queues and send stuff to HCI driver */
-+		hci_sched_sync(hdev);
- 		hci_sched_acl(hdev);
--		hci_sched_sco(hdev);
--		hci_sched_esco(hdev);
- 		hci_sched_le(hdev);
- 	}
- 
--- 
-2.25.1.696.g5e7596f4ac-goog
-
+[1]: https://gitlab.freedesktop.org/pulseaudio/pulseaudio/-/merge_requests/254
+[2]: https://gitlab.freedesktop.org/smarter/pulseaudio/-/commit/bb716b03002841e1092b4200935566d5c1a951fe
+[3]: https://www.spinics.net/lists/linux-bluetooth/msg82149.html
+[4]: https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/focal/commit/?h=Ubuntu-5.4.0-18.22&id=93dfa5b8e12fed29933f3451db44d88c0e4b5aed
