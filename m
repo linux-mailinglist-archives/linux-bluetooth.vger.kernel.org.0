@@ -2,56 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F65718FF98
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Mar 2020 21:35:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2435018FF9B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Mar 2020 21:35:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725913AbgCWUfD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 23 Mar 2020 16:35:03 -0400
-Received: from mail-pj1-f45.google.com ([209.85.216.45]:34734 "EHLO
-        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbgCWUfD (ORCPT
+        id S1726145AbgCWUfF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 23 Mar 2020 16:35:05 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38075 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726007AbgCWUfE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 23 Mar 2020 16:35:03 -0400
-Received: by mail-pj1-f45.google.com with SMTP id q16so356518pje.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Mar 2020 13:35:01 -0700 (PDT)
+        Mon, 23 Mar 2020 16:35:04 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w3so6422924plz.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Mar 2020 13:35:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=M5n88d4CAjfgbtlVPfJZ39Ij7gmtiwMS0vvdbSJWMQ8=;
-        b=dmKtK7goN3f3bSIeFN6xmkvnYAxqjQdwxgP10hHEo4RJRGCaxf3vLHQzqJKvEFraGK
-         QYt3CGXwAr6RsQTyiphwRsAGzcivTHvzC4k/eDCGX+WZkEVk1/6xfPF9rK0tpzXeFElf
-         jEa3Y2SXtdr96Tw9wwY/4+Kp8nsNYog8t1GJiu2nL7n6e4W7H8ACPVZAh59lhVAlgOhB
-         aBP2/JSxjGl/yy9pM9+Bj0ILH61fW5rXtR6E0vo/SOA3VmKHdyRCUmeI4+qeKog1edqj
-         U4EP+RzuZ3UEw1jodUW5fT5BhbO7MVTRXZm6tYgfa0LQPMuw+Dt8q6gGKBQFt3ITMkfH
-         ybJg==
+        bh=VVQ7vhvCR/dzXjhnVWZBKnsMGVGyca6I+XsQHNIPA+E=;
+        b=epGuupSZqKI2RoPNpW3BKmwAAxYPbR/BkRLGvlG8wFlzDdsAPMRKJ1lyJiakdMZ2pb
+         2DqUoS/NHUeigZ7UeH3/gOpSS/Nbyi8m5oenpH7sWMg7fL0FRskfBPKd6SJjP0nrES10
+         +VVNJYVPzBTGY0C3000vEyueabt0Yuq8pCcqAbLwtvmEFueCJgA7mrDpy0yDZWXyuh9q
+         f+WNLqfVE4uVsBnz1jHEsjDNX6T1MKHCMe7R8VxbJoirSS0x+C2uBLYcu7vclfXmH2lE
+         jRyJDYA/Nh9pEB/b6tYR8VrT8xG9kYofZsVnFs4V6Zb6yRV1AoJGQBzZeSeMYfi41Y18
+         GX7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M5n88d4CAjfgbtlVPfJZ39Ij7gmtiwMS0vvdbSJWMQ8=;
-        b=oh9tEEcpk6LVLKMSW1UFb6OBqYutp+SS+Ql1LucyOZyaM1YuJkdcIAgWatPJ22BOfv
-         832xqW96MWhvQWoevLivLYPsPVNJceWkn3E3Ji+13/aFVhsbmmEOScZwssxvaUFkdr03
-         7ql+M3He1JaT3/p5qcliirDFRxTbU17uT1/nbB90tRzh7n/RM8U0ZGE9ZuWWlOE1XK4v
-         cnxR5GrFPGlSf9OchPDOz0YoxeAAiUNbOA6RcbHjPRB8/eENh2wrrMFADx2aCU2DPJ8F
-         NnAfJHPIT6KmNCgPBAKMl7fzjzMZFXi6BhXeyoqlNm8nuUXdzIULFpR4+Edh7eFgiVt4
-         oxMA==
-X-Gm-Message-State: ANhLgQ2yFZYauIPoD1kcfBgNrRcNvmjjwkEXSdcsqPDh28ia4k615pGC
-        TRnW4p3NNLlsvYDdCMHQlJFtw7Ty
-X-Google-Smtp-Source: ADFU+vuM84GFhwgcO7YCOQW17AtQCfbbGXl+MUO3YDh/0xLBlDYCWrygq3pdwbSCgQmV/0MqquspEw==
-X-Received: by 2002:a17:90a:bf0b:: with SMTP id c11mr1345746pjs.28.1584995700645;
-        Mon, 23 Mar 2020 13:35:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VVQ7vhvCR/dzXjhnVWZBKnsMGVGyca6I+XsQHNIPA+E=;
+        b=SurhtGujj+UQldX370mT32RZmE/kmLSL2Bk2cIkBc6G5xDzhV2LZom1fASLcCE/hjd
+         biYwoRu7fxaUR5ODHCBrZc1BMDsY2HGtm3not17ziTP8pziBTNDYxRb5NqO+LPA3NeSm
+         i4FPdSlJ8hlNRSVWK3zv7UKMVpTuXs4x5bEcnsCRSw4YMS9mTfHtr3w1E1s/AzzPbVfb
+         Du36TZi2dR0BdUMb80UNcKqy9GyJyfnYq1P6Z/X33zRb3nsv3hT60n6zO5BLI72zHNBs
+         6hLgdhb4palWzRIsg8Lx6jSVnQdl3YGCnKXtHPWkih4FouT8ah8M4PGKM4J/gFSTqKaC
+         2WxA==
+X-Gm-Message-State: ANhLgQ2RMkg4SkaTxZ+M0GvggAhStodFINdC+uGVd+MrN6B06PQpLlVC
+        AOEXLUgmN0VwSKTfIUWwkldOOyb/
+X-Google-Smtp-Source: ADFU+vtJ+98TrOP/hFTclDZYGAxYz0gd3p5nuJzh4K77oYXeaywyHPx1qcJC8+Tpn4f53+jfWwa7rA==
+X-Received: by 2002:a17:902:ba8e:: with SMTP id k14mr9259436pls.103.1584995701433;
+        Mon, 23 Mar 2020 13:35:01 -0700 (PDT)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id q71sm440469pjb.5.2020.03.23.13.34.58
+        by smtp.gmail.com with ESMTPSA id q71sm440469pjb.5.2020.03.23.13.35.00
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2020 13:34:59 -0700 (PDT)
+        Mon, 23 Mar 2020 13:35:00 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v5 0/3] Enable use of L2CAP_MODE_EXT_FLOWCTL
-Date:   Mon, 23 Mar 2020 13:34:55 -0700
-Message-Id: <20200323203458.24733-1-luiz.dentz@gmail.com>
+Subject: [PATCH v5 1/3] Bluetooth: L2CAP: Add get_peer_pid callback
+Date:   Mon, 23 Mar 2020 13:34:56 -0700
+Message-Id: <20200323203458.24733-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.21.1
+In-Reply-To: <20200323203458.24733-1-luiz.dentz@gmail.com>
+References: <20200323203458.24733-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -61,244 +63,52 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This enables use of BT_MODE_EXT_FLOWCTL with BT_MODE socketopt, in
-addition to that add support for DEFER_SETUP to be used with client
-sockets so they can be grouped and sent together.
+This adds a callback to read the socket pid.
 
-BT_MODE is not compatible with L2CAP_OPTIONS so attempting to use them
-both will cause an error to be returned to the applicatio.
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ include/net/bluetooth/l2cap.h | 1 +
+ net/bluetooth/l2cap_sock.c    | 8 ++++++++
+ 2 files changed, 9 insertions(+)
 
-This has been tested by introducing support for L2CAP_MODE_EXT_FLOWCTL
-into l2cap-tester which now produces the following trace:
-
-Enable ecred PDUs:
-#echo 1 > /sys/module/bluetooth/parameters/enable_ecred
-
-#sudo tools/l2cap-tester -p "L2CAP Ext-Flowctl"
-L2CAP Ext-Flowctl Client - Success - init
-  Read Index List callback
-    Status: 0x00
-  New hciemu instance created
-  Index Added callback
-    Index: 0x0000
-  Read Info callback
-    Status: 0x00
-    Address: 00:AA:01:00:00:00
-    Version: 0x09
-    Manufacturer: 0x003f
-    Supported settings: 0x0001be1b
-    Current settings: 0x00000200
-    Class: 0x000000
-    Name:
-    Short name:
-L2CAP Ext-Flowctl Client - Success - setup
-  Powering on controller
-  Controller powered on
-  Client set connectable status 0x00
-L2CAP Ext-Flowctl Client - Success - setup complete
-L2CAP Ext-Flowctl Client - Success - run
-  Connect in progress
-  Successfully connected
-L2CAP Ext-Flowctl Client - Success - test passed
-L2CAP Ext-Flowctl Client - Success - teardown
-  Index Removed callback
-    Index: 0x0000
-L2CAP Ext-Flowctl Client - Success - teardown complete
-L2CAP Ext-Flowctl Client - Success - done
-
-L2CAP Ext-Flowctl Client, Direct Advertising - Success - init
-  Read Index List callback
-    Status: 0x00
-  New hciemu instance created
-  Index Added callback
-    Index: 0x0000
-  Read Info callback
-    Status: 0x00
-    Address: 00:AA:01:00:00:00
-    Version: 0x09
-    Manufacturer: 0x003f
-    Supported settings: 0x0001be1b
-    Current settings: 0x00000200
-    Class: 0x000000
-    Name:
-    Short name:
-L2CAP Ext-Flowctl Client, Direct Advertising - Success - setup
-  Powering on controller
-  Controller powered on
-  Client set connectable status 0x00
-L2CAP Ext-Flowctl Client, Direct Advertising - Success - setup complete
-L2CAP Ext-Flowctl Client, Direct Advertising - Success - run
-  Connect in progress
-  Received advertising parameters HCI command
-L2CAP Ext-Flowctl Client, Direct Advertising - Success - test passed
-L2CAP Ext-Flowctl Client, Direct Advertising - Success - teardown
-  Index Removed callback
-    Index: 0x0000
-L2CAP Ext-Flowctl Client, Direct Advertising - Success - teardown complete
-L2CAP Ext-Flowctl Client, Direct Advertising - Success - done
-
-L2CAP Ext-Flowctl Client SMP - Success - init
-  Read Index List callback
-    Status: 0x00
-  New hciemu instance created
-  Index Added callback
-    Index: 0x0000
-  Read Info callback
-    Status: 0x00
-    Address: 00:AA:01:00:00:00
-    Version: 0x09
-    Manufacturer: 0x003f
-    Supported settings: 0x0001be1b
-    Current settings: 0x00000200
-    Class: 0x000000
-    Name:
-    Short name:
-L2CAP Ext-Flowctl Client SMP - Success - setup
-  Powering on controller
-  Controller powered on
-  Client set connectable status 0x00
-L2CAP Ext-Flowctl Client SMP - Success - setup complete
-L2CAP Ext-Flowctl Client SMP - Success - run
-  Connect in progress
-  Successfully connected
-L2CAP Ext-Flowctl Client SMP - Success - test passed
-L2CAP Ext-Flowctl Client SMP - Success - teardown
-  Index Removed callback
-    Index: 0x0000
-L2CAP Ext-Flowctl Client SMP - Success - teardown complete
-L2CAP Ext-Flowctl Client SMP - Success - done
-
-L2CAP Ext-Flowctl Client - Command Reject - init
-  Read Index List callback
-    Status: 0x00
-  New hciemu instance created
-  Index Added callback
-    Index: 0x0000
-  Read Info callback
-    Status: 0x00
-    Address: 00:AA:01:00:00:00
-    Version: 0x09
-    Manufacturer: 0x003f
-    Supported settings: 0x0001be1b
-    Current settings: 0x00000200
-    Class: 0x000000
-    Name:
-    Short name:
-L2CAP Ext-Flowctl Client - Command Reject - setup
-  Powering on controller
-  Controller powered on
-  Client set connectable status 0x00
-L2CAP Ext-Flowctl Client - Command Reject - setup complete
-L2CAP Ext-Flowctl Client - Command Reject - run
-  Connect in progress
-  New connection with handle 0x002a
-  Connect failed: Connection refused (111)
-L2CAP Ext-Flowctl Client - Command Reject - test passed
-L2CAP Ext-Flowctl Client - Command Reject - teardown
-  Index Removed callback
-    Index: 0x0000
-L2CAP Ext-Flowctl Client - Command Reject - teardown complete
-L2CAP Ext-Flowctl Client - Command Reject - done
-
-L2CAP Ext-Flowctl Client - Open two sockets - init
-  Read Index List callback
-    Status: 0x00
-  New hciemu instance created
-  Index Added callback
-    Index: 0x0000
-  Read Info callback
-    Status: 0x00
-    Address: 00:AA:01:00:00:00
-    Version: 0x09
-    Manufacturer: 0x003f
-    Supported settings: 0x0001be1b
-    Current settings: 0x00000200
-    Class: 0x000000
-    Name:
-    Short name:
-L2CAP Ext-Flowctl Client - Open two sockets - setup
-  Powering on controller
-  Controller powered on
-L2CAP Ext-Flowctl Client - Open two sockets - setup complete
-L2CAP Ext-Flowctl Client - Open two sockets - run
-  Connect in progress, sk = 19 (deferred)
-  HCI Command 0x200b length 7
-  HCI Command 0x200c length 2
-  Connect in progress, sk = 20
-  Client set connectable status 0x00
-  HCI Command 0x200c length 2
-  HCI Command 0x200d length 25
-  HCI Command 0x2016 length 2
-  Successfully connected
-  Successfully connected
-L2CAP Ext-Flowctl Client - Open two sockets - test passed
-L2CAP Ext-Flowctl Client - Open two sockets - teardown
-  Index Removed callback
-    Index: 0x0000
-L2CAP Ext-Flowctl Client - Open two sockets - teardown complete
-L2CAP Ext-Flowctl Client - Open two sockets - done
-
-L2CAP Ext-Flowctl Client - Open two sockets close one - init
-  Read Index List callback
-    Status: 0x00
-  New hciemu instance created
-  Index Added callback
-    Index: 0x0000
-  Read Info callback
-    Status: 0x00
-    Address: 00:AA:01:00:00:00
-    Version: 0x09
-    Manufacturer: 0x003f
-    Supported settings: 0x0001be1b
-    Current settings: 0x00000200
-    Class: 0x000000
-    Name:
-    Short name:
-L2CAP Ext-Flowctl Client - Open two sockets close one - setup
-  Powering on controller
-  Controller powered on
-L2CAP Ext-Flowctl Client - Open two sockets close one - setup complete
-L2CAP Ext-Flowctl Client - Open two sockets close one - run
-  Connect in progress, sk = 19 (deferred)
-  HCI Command 0x200b length 7
-  HCI Command 0x200c length 2
-  Connect in progress, sk = 20
-  Closing first socket! -1
-  Client set connectable status 0x00
-  HCI Command 0x200c length 2
-  HCI Command 0x200d length 25
-  HCI Command 0x2016 length 2
-  Successfully connected
-L2CAP Ext-Flowctl Client - Open two sockets close one - test passed
-L2CAP Ext-Flowctl Client - Open two sockets close one - teardown
-  Index Removed callback
-    Index: 0x0000
-L2CAP Ext-Flowctl Client - Open two sockets close one - teardown complete
-L2CAP Ext-Flowctl Client - Open two sockets close one - done
-
-
-Test Summary
-------------
-L2CAP Ext-Flowctl Client - Success                   Passed       0.068 seconds
-L2CAP Ext-Flowctl Client, Direct Advertising - Success Passed       0.023 seconds
-L2CAP Ext-Flowctl Client SMP - Success               Passed       0.027 seconds
-L2CAP Ext-Flowctl Client - Command Reject            Passed       0.046 seconds
-L2CAP Ext-Flowctl Client - Open two sockets          Passed       0.014 seconds
-L2CAP Ext-Flowctl Client - Open two sockets close one Passed       0.066 seconds
-Total: 6, Passed: 6 (100.0%), Failed: 0, Not Run: 0
-Overall execution time: 0.247 seconds
-
-Luiz Augusto von Dentz (3):
-  Bluetooth: L2CAP: Add get_peer_pid callback
-  Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections
-  Bluetooth: Add BT_MODE socket option
-
- include/net/bluetooth/bluetooth.h |  11 +++
- include/net/bluetooth/l2cap.h     |   5 ++
- net/bluetooth/l2cap_core.c        | 136 +++++++++++++++++++++++++++---
- net/bluetooth/l2cap_sock.c        | 104 +++++++++++++++++++++++
- 4 files changed, 246 insertions(+), 10 deletions(-)
-
+diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
+index 537aaead259f..2d7d28474d34 100644
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -660,6 +660,7 @@ struct l2cap_ops {
+ 	void			(*suspend) (struct l2cap_chan *chan);
+ 	void			(*set_shutdown) (struct l2cap_chan *chan);
+ 	long			(*get_sndtimeo) (struct l2cap_chan *chan);
++	struct pid		*(*get_peer_pid) (struct l2cap_chan *chan);
+ 	struct sk_buff		*(*alloc_skb) (struct l2cap_chan *chan,
+ 					       unsigned long hdr_len,
+ 					       unsigned long len, int nb);
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 40fb10b591bd..117ba20ea194 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1504,6 +1504,13 @@ static long l2cap_sock_get_sndtimeo_cb(struct l2cap_chan *chan)
+ 	return sk->sk_sndtimeo;
+ }
+ 
++static struct pid *l2cap_sock_get_peer_pid_cb(struct l2cap_chan *chan)
++{
++	struct sock *sk = chan->data;
++
++	return sk->sk_peer_pid;
++}
++
+ static void l2cap_sock_suspend_cb(struct l2cap_chan *chan)
+ {
+ 	struct sock *sk = chan->data;
+@@ -1525,6 +1532,7 @@ static const struct l2cap_ops l2cap_chan_ops = {
+ 	.suspend		= l2cap_sock_suspend_cb,
+ 	.set_shutdown		= l2cap_sock_set_shutdown_cb,
+ 	.get_sndtimeo		= l2cap_sock_get_sndtimeo_cb,
++	.get_peer_pid		= l2cap_sock_get_peer_pid_cb,
+ 	.alloc_skb		= l2cap_sock_alloc_skb_cb,
+ };
+ 
 -- 
 2.21.1
 
