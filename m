@@ -2,136 +2,202 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EA8681919DB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Mar 2020 20:28:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 692FB1919E3
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Mar 2020 20:30:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727100AbgCXT2d (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 Mar 2020 15:28:33 -0400
-Received: from mailout4.samsung.com ([203.254.224.34]:37938 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727070AbgCXT2b (ORCPT
+        id S1727144AbgCXTaE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 Mar 2020 15:30:04 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:41690 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727105AbgCXTaE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 Mar 2020 15:28:31 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20200324192829epoutp042f6b97d1de7cf88423bb49222fda9ea1~-VCSKo60_0411104111epoutp04S
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Mar 2020 19:28:29 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20200324192829epoutp042f6b97d1de7cf88423bb49222fda9ea1~-VCSKo60_0411104111epoutp04S
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1585078109;
-        bh=TBPPkHs4BrAC5rcQRKVwe6avbPthA1l8jMhLQvgJNbE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=anRSu+v4wf/RstUv8fEm0r7kkIIfXGoLNddt3MZXIf0N0uiGYmzY6J6CUqtxvYg0+
-         bVE4KVRC9HNI3YS4Ksl7hEUjC1ngcR0w7g8Avu0xet0Os6hDpXExnawEgwvSkp40Dh
-         saMSN+FLGD5n3eM+j4M9/yExUNEOCoX0/i66l/tc=
-Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
-        epcas5p4.samsung.com (KnoxPortal) with ESMTP id
-        20200324192828epcas5p47ccb547898e194ea646e08c91d711a24~-VCRYjznV2607026070epcas5p4w;
-        Tue, 24 Mar 2020 19:28:28 +0000 (GMT)
-Received: from epsmges5p1new.samsung.com (unknown [182.195.40.197]) by
-        epsnrtp3.localdomain (Postfix) with ESMTP id 48n1WH4lkPzMqYkY; Tue, 24 Mar
-        2020 19:28:27 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        DA.62.04782.B5F5A7E5; Wed, 25 Mar 2020 04:28:27 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-        20200324192827epcas5p3f70d5e24d6042786ffea8bdbd5ddc8e8~-VCPvFNC40624506245epcas5p3M;
-        Tue, 24 Mar 2020 19:28:27 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20200324192827epsmtrp185c785f58164cd9c4918040cf36ad1f8~-VCPp5PNS3078230782epsmtrp1M;
-        Tue, 24 Mar 2020 19:28:27 +0000 (GMT)
-X-AuditID: b6c32a49-8b3ff700000012ae-69-5e7a5f5b6a31
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        59.2A.04158.A5F5A7E5; Wed, 25 Mar 2020 04:28:27 +0900 (KST)
-Received: from SyamLinux.sa.corp.samsungelectronics.net (unknown
-        [107.109.107.247]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20200324192826epsmtip12ee8c704ad95daf3e05d5051674c4642~-VCPEltpu0279802798epsmtip1T;
-        Tue, 24 Mar 2020 19:28:26 +0000 (GMT)
-From:   Prathyusha Nelluri <prathyusha.n@samsung.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     s.syam@samsung.com, Prathyusha N <prathyusha.n@samsung.com>
-Subject: [PATCH 1/1] mesh: Validate Provisioning Start PDU values
-Date:   Wed, 25 Mar 2020 00:57:24 +0530
-Message-Id: <1585078044-14974-10-git-send-email-prathyusha.n@samsung.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1585078044-14974-1-git-send-email-prathyusha.n@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLKsWRmVeSWpSXmKPExsWy7bCmum50fFWcwdU3KhZzrvUxW/xfeovd
-        YtK+DywOzB59W1YxenzeJBfAFJVjk5GamJJapJCal5yfkpmXbqvkHRzvHG9qZmCoa2hpYa6k
-        kJeYm2qr5OIToOuWmQO0Q0mhLDGnFCgUkFhcrKRvZ1OUX1qSqpCRX1xiq5RakJJTYGhUoFec
-        mFtcmpeul5yfa2VoYGBkClSZkJOxc8c79oIrnBWTZ+xgbGD8yN7FyMkhIWAisarxD1sXIxeH
-        kMBuRoktx6azQjifGCWur3rADOF8Y5SY9WweXMve5efAbCGBvYwSN56bQhR1MEksW7qKESTB
-        JmAscf7mKyYQW0RAWeLZvsNgNrOAvcSRH99ZQGxhAUeJPytfgNksAqoSd58dAOvlFfCU+Hvy
-        NyvEMjmJm+c6mUFsTqD42ivHGCHiD1klFi4zh7BdJJrb9zND2MISr45vgTpUSuJlfxuU3c0o
-        sfuNK8ihEgJTGCXuvQA5iAPIsZeY8IIfxGQW0JRYv0sf4kw+id7fT6AqeCU62oQgpihIrJo6
-        kQnCFpNYN/0L1HQPiS9nNrJAgmEOo8TZ64/YJzDKzkKYuoCRcRWjZGpBcW56arFpgWFeajly
-        PG1iBCcdLc8djLPO+RxiFOBgVOLhbXhcGSfEmlhWXJl7iFGCg1lJhHdzakWcEG9KYmVValF+
-        fFFpTmrxIUZTYPhNZJYSTc4HJsS8knhDUyMzMwNLA1NjCzNDJXHeSaxXY4QE0hNLUrNTUwtS
-        i2D6mDg4pRoY2ZkWGfitUOoo9AzZZbyH/VJ3D6f2o067cp6LP5/OvLbT/bXFga+vH080uzst
-        lNH25P+Lfvv3KmbM0ctYU1rC63cieyfb9gyenT1falbOOXnewWf9i6r9VlN7F0WF9bLc+JAT
-        3mls69qlwmI65572h3uuck2+S/POtGwTXDWld+oFRq1TtudXKbEUZyQaajEXFScCAHbtwYVQ
-        AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkluLIzCtJLcpLzFFi42LZdlhJTjc6virO4E0bo8Wca33MFv+X3mK3
-        mLTvA4sDs0ffllWMHp83yQUwRXHZpKTmZJalFunbJXBl7Nzxjr3gCmfF5Bk7GBsYP7J3MXJy
-        SAiYSOxdfg7I5uIQEtjNKDFzw1OohJjEmxUnoGxhiZX/nkMVtTFJfNt/lgUkwSZgLHH+5ism
-        EFtEQFni2b7DYDazgKPEpyvz2EBsYSD7z8oXYPUsAqoSd58dYASxeQU8Jf6e/M0KsUBO4ua5
-        TmYQmxMovvbKMbAaIQEPiT+dM9kmMPItYGRYxSiZWlCcm55bbFhglJdarlecmFtcmpeul5yf
-        u4kRHDBaWjsYT5yIP8QowMGoxMOr8bAyTog1say4MvcQowQHs5II7+bUijgh3pTEyqrUovz4
-        otKc1OJDjNIcLErivPL5xyKFBNITS1KzU1MLUotgskwcnFINjOVaNTX6Xhoxz1kmJbIq6i7l
-        n/vl9oeINRMaX+fqPz73o+i+iZzERu9fp96evaW/cfVy0St/pbTK9O6IyzEnZjPFLNmpfJLb
-        Ye2P5rmvJE562Gt/1J5Wv8es8KJJ2czXqharrVsMrHdprA7/fO6VdpqOwJ3Zn94fsBC3si+S
-        s/HaX8QTeuhsuxJLcUaioRZzUXEiAGbrFyYUAgAA
-X-CMS-MailID: 20200324192827epcas5p3f70d5e24d6042786ffea8bdbd5ddc8e8
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20200324192827epcas5p3f70d5e24d6042786ffea8bdbd5ddc8e8
-References: <1585078044-14974-1-git-send-email-prathyusha.n@samsung.com>
-        <CGME20200324192827epcas5p3f70d5e24d6042786ffea8bdbd5ddc8e8@epcas5p3.samsung.com>
+        Tue, 24 Mar 2020 15:30:04 -0400
+Received: by mail-io1-f65.google.com with SMTP id y24so19331460ioa.8
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Mar 2020 12:30:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=I1Lp5ErzQY7aQfom99TDhDfGZD38/iC3dvfnr1eRNlw=;
+        b=Dy6jWN5FKI6d2urMmVBGmEPv5vMJCRzLjtBUBHlpNpDVkDRs+UKHr5vpoPnnxMrhZT
+         1gXFl8MRl7hSy1Ht8DAKLxJrzZVpG7GXArsTucBIUdSfTfqFR/Y4HNFU96cfNzZ3m4A8
+         T0NAs/e5M55wEzCijFO/C/GbcSCDtxqXUtS9gOuDPoIMbPz3MUWv4MM58KmWrN6/VlJk
+         2Feu6GyXWy4NnyOZu6kzd15tiVarbuOeGA/5VfNBOBbsAiqzh8fAdQfGuwKtVQsV10jM
+         H/IH/Nr5/jGgOexiWt/1lWrwvR1MVpyam6uATtBI8hriU37bRrZ8hRuPN6ddlG14Vc5z
+         s0zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=I1Lp5ErzQY7aQfom99TDhDfGZD38/iC3dvfnr1eRNlw=;
+        b=HtLhl611vYmDtrGn/gLuSuBAnC1AP3cZWawvFG8BsOIOV1L1tykFHZZ+2Q244p6C/6
+         pIE6ai3Ufn9lZeIj7AVYnBpj38u/4IgjpriaBJN7VZUUoAA2soYEfxaf1SRei32+FF2o
+         uTI53BDng01hLav7yVeTpDO1QrR/wU+CXr17QjbOgGLtAFVObaMGBm769x4yE5Ef6wuU
+         3PhRp8uvrR02tTu9MIA8/c2ReLOTSiJiT6BmOjecnsm7HkKKJehAgj+KUZkc3DiQKzy+
+         /k0SVdfViHRXtmWUMV551G1m5uSx67cYnQhP4oeZdNWda5RNr4gfGqivRhDTFmvaE1wz
+         Pe3A==
+X-Gm-Message-State: ANhLgQ3AFhMYzYUzOr1TrdFO/XFPn7dk8bLMV9ONrvBm8NFsv/2c8c9U
+        KMVMLgOcV3icJAZchcj9o5p2eyDIHfOmTvfljpMOqz+T
+X-Google-Smtp-Source: ADFU+vshU5Mw4ft9k0npR5q8eWCNkhTclXDjmygG4LzTBDLRyAwHdme40QjLD6pKlE5BVuhGojuQY1qsfxh5NZUstcY=
+X-Received: by 2002:a02:cc37:: with SMTP id o23mr14980162jap.106.1585078202414;
+ Tue, 24 Mar 2020 12:30:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200320133748.154926-1-alainm@chromium.org> <CALWDO_WSHiNw+uwcZzufJ7rjHr=zpMs6f3ry=rdLMGLz2gJZ=w@mail.gmail.com>
+ <1ACCF17B-90EB-4DE1-BD8C-A927ABEC3913@holtmann.org> <CALWDO_V=6NXLTZ=XTc+uAe3YUVkUfe88c4beWWoqWK7+vK4+8g@mail.gmail.com>
+ <992DB845-DB7F-41B9-93E0-538B08BDF910@holtmann.org>
+In-Reply-To: <992DB845-DB7F-41B9-93E0-538B08BDF910@holtmann.org>
+From:   Alain Michaud <alainmichaud@google.com>
+Date:   Tue, 24 Mar 2020 15:29:51 -0400
+Message-ID: <CALWDO_WF4n_Ta-fYoxTv4OF_guZy=d8urEyrosUPgWdHXo8Pag@mail.gmail.com>
+Subject: Re: [PATCH v2] bluetooth: Enforce classic key size verification.
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Alain Michaud <alainm@chromium.org>,
+        Marcel Holtmann <marcel.holtmann@intel.com>,
+        BlueZ <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Prathyusha N <prathyusha.n@samsung.com>
+On Tue, Mar 24, 2020 at 2:33 PM Marcel Holtmann <marcel@holtmann.org> wrote=
+:
+>
+> Hi Alain,
+>
+> >>>> This change introduces a new configuration to strictly enforce key s=
+ize
+> >>>> checks.  This ensures that systems are in a secured configuration by
+> >>>> default while allowing for a compatible posture via a Kconfig option=
+ to
+> >>>> support controllers who may not support the read encryption key size
+> >>>> command.
+> >>>>
+> >>>> Signed-off-by: Alain Michaud <alainm@chromium.org>
+> >>>> ---
+> >>>>
+> >>>> net/bluetooth/Kconfig     | 20 ++++++++++++++++++++
+> >>>> net/bluetooth/hci_core.c  | 10 ++++++++++
+> >>>> net/bluetooth/hci_event.c |  4 ++++
+> >>>> 3 files changed, 34 insertions(+)
+> >>>>
+> >>>> diff --git a/net/bluetooth/Kconfig b/net/bluetooth/Kconfig
+> >>>> index 165148c7c4ce..8e177d4f3f02 100644
+> >>>> --- a/net/bluetooth/Kconfig
+> >>>> +++ b/net/bluetooth/Kconfig
+> >>>> @@ -128,4 +128,24 @@ config BT_DEBUGFS
+> >>>>         Provide extensive information about internal Bluetooth state=
+s
+> >>>>         in debugfs.
+> >>>>
+> >>>> +config BT_EXPERT
+> >>>> +       bool "Expert Bluetooth options"
+> >>>> +       depends on BT
+> >>>> +       default n
+> >>>> +       help
+> >>>> +         Provides a set of expert options and configurations that s=
+hould
+> >>>> +         only be used deliberately by BT experts.  This is consider=
+ed a
+> >>>> +         global switch to ensure these advanced features or options=
+ that
+> >>>> +         depends on BT_EXPERT are only used in expert mode.
+> >>>> +
+> >>>> +config BT_ENFORCE_CLASSIC_KEY_SIZES
+> >>>> +       bool "Enforces security requirements for Bluetooth classic"
+> >>>> +       depends on BT && BT_EXPERT
+> >>>> +       default y
+> >>>> +       help
+> >>>> +         Enforces Bluetooth classic security requirements by disall=
+owing
+> >>>> +         use of insecure Bluetooth controllers, i.e. that doesn't s=
+upport
+> >>>> +         Read Encryption Key Size command to prevent BT classic con=
+nection
+> >>>> +         with very short encryption key.
+> >>>> +
+> >>>> source "drivers/bluetooth/Kconfig"
+> >>>> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+> >>>> index 4e6d61a95b20..142130d4b66b 100644
+> >>>> --- a/net/bluetooth/hci_core.c
+> >>>> +++ b/net/bluetooth/hci_core.c
+> >>>> @@ -1540,6 +1540,16 @@ static int hci_dev_do_open(struct hci_dev *hd=
+ev)
+> >>>>
+> >>>>       clear_bit(HCI_INIT, &hdev->flags);
+> >>>>
+> >>>> +#ifdef BT_ENFORCE_CLASSIC_KEY_SIZES
+> >>>> +       /* Don't allow usage of Bluetooth if the chip doesn't suppor=
+t */
+> >>>> +       /* Read Encryption Key Size command */
+> >>>> +       if (!ret && !(hdev->commands[20] & 0x10)) {
+> >>>> +               bt_dev_err(hdev,
+> >>>> +                          "Disabling BT, Read Encryption Key Size !=
+supported");
+> >>>> +               ret =3D -EIO;
+> >>>> +       }
+> >>>> +#endif
+> >>> Just FYI, I haven't changed this bit yet.  I'll wait for your guidanc=
+e
+> >>> on where best to put this to leave the controller in the right state.
+> >>
+> >> while I was writing a patch to show how to use unconfigured state for =
+controllers that don=E2=80=99t support the Read Encryption Key Size command=
+, I was wonder why put this into the kernel in the first place.
+> >>
+> >> I was thinking that essentially userspace can just make the decision t=
+o use a controller, or use it in LE only mode or not use a controller at al=
+l. So all we need is to collect the security information of the controller =
+and kernel and expose them to bluetoothd.
+> >>
+> >> +Read Security Features Command
+> >> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
+> >> +
+> >> +       Command Code:           0x0048
+> >> +       Controller Index:       <controller id>
+> >> +       Command Parameters:
+> >> +       Return Parameters:      Security_Features (4 Octets)
+> >> +
+> >> +       This command is used to retrieve the supported security featur=
+es
+> >> +       by the controller or the kernel.
+> >> +
+> >> +       The Security_Features parameter is a bitmask with currently th=
+e
+> >> +       following available bits:
+> >> +
+> >> +               0       Encryption Key Size enforcement (BR/EDR)
+> >> +               1       Encryption Key Size enforcement (LE)
+> >> +
+> >> +       This command generates a Command Complete event on success or
+> >> +       a Command Status event on failure.
+> >> +
+> >> +       Possible errors:        Invalid Parameters
+> >> +                               Invalid Index
+> >> +
+> >> +
+> >>
+> >> I was also considering that we additionally add the ECDH Public Key va=
+lidation here as supported bits. And in the future even more security relat=
+ed information that we want to enforce. However the enforcement to power on=
+ or not use a controller is left to bluetoothd and its main.conf configurat=
+ion. Thoughts?
+> > I like the idea.  However, I feel we will still need to guard against
+> > the Read Encryption Key Size failing.  Perhaps we can just do this
+> > unconditionally (where it is reported as supported but fails, we
+> > simply set the encryption key size to 0 and move on).
+>
+> I was thinking the same thing. Lets just set the encryption size to zero =
+and report the error. Care to send a patch for it or should I send one?
+I'll do it shortly.
 
-Check for inconsistent Authentication method versus Authentication
-Action and Authentication Size fields before proceeding for
-exchanging public keys. Check for Public Key OOB in Capabilities
-and Start PDU.
----
- mesh/prov-acceptor.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Would you want to send patch you suggested (eg: Read Security Features
+Command) or should I?
 
-diff --git a/mesh/prov-acceptor.c b/mesh/prov-acceptor.c
-index 03972c227..d0ae77322 100644
---- a/mesh/prov-acceptor.c
-+++ b/mesh/prov-acceptor.c
-@@ -393,6 +393,21 @@ static void acp_prov_rx(void *user_data, const uint8_t *data, uint16_t len)
- 			goto failure;
- 		}
- 
-+		if (prov->conf_inputs.start.auth_method < 2 &&
-+				(prov->conf_inputs.start.auth_action ||
-+					prov->conf_inputs.start.auth_size)) {
-+			l_debug("inconsistent auth method and action");
-+			fail.reason = PROV_ERR_INVALID_FORMAT;
-+			goto failure;
-+		}
-+
-+		if (prov->conf_inputs.caps.pub_type !=
-+				prov->conf_inputs.start.pub_key) {
-+			l_debug("inconsistent pubkey type");
-+			fail.reason = PROV_ERR_INVALID_FORMAT;
-+			goto failure;
-+		}
-+
- 		if (prov->conf_inputs.start.pub_key) {
- 			if (prov->conf_inputs.caps.pub_type) {
- 				/* Prompt Agent for Private Key of OOB */
--- 
-2.17.1
-
+>
+> Regards
+>
+> Marcel
+>
