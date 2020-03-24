@@ -2,133 +2,146 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C25E21916C6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Mar 2020 17:47:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3581419170B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Mar 2020 17:57:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727382AbgCXQrI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 Mar 2020 12:47:08 -0400
-Received: from smtprelay0192.hostedemail.com ([216.40.44.192]:53410 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727065AbgCXQrI (ORCPT
+        id S1727783AbgCXQ4z (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 Mar 2020 12:56:55 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:43273 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727382AbgCXQ4z (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 Mar 2020 12:47:08 -0400
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay02.hostedemail.com (Postfix) with ESMTP id 3277FA89DE;
-        Tue, 24 Mar 2020 16:47:07 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 50,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:800:960:967:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1535:1543:1593:1594:1605:1711:1730:1747:1777:1792:2393:2525:2553:2560:2563:2682:2685:2828:2859:2892:2933:2937:2939:2942:2945:2947:2951:2954:3022:3138:3139:3140:3141:3142:3622:3865:3866:3867:3868:3870:3871:3872:3874:3934:3936:3938:3941:3944:3947:3950:3953:3956:3959:4250:4321:4605:5007:6117:6691:7688:7875:7903:7904:8531:8957:9025:9121:10004:10400:10471:10848:11026:11232:11658:11914:12043:12295:12296:12297:12438:12740:12760:12895:13255:13439:14096:14097:14180:14181:14659:14721:21060:21080:21627:21740:30054:30055:30060:30075:30090:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
-X-HE-Tag: seat22_3ddc47581f618
-X-Filterd-Recvd-Size: 5278
-Received: from XPS-9350.home (unknown [47.151.136.130])
-        (Authenticated sender: joe@perches.com)
-        by omf05.hostedemail.com (Postfix) with ESMTPA;
-        Tue, 24 Mar 2020 16:47:04 +0000 (UTC)
-Message-ID: <8c1916c8a0f769f390a53aeba1ffd6043e12611a.camel@perches.com>
-Subject: Re: [PATCH v1 1/2] Bluetooth: btusb: Indicate Microsoft vendor
- extension for Intel 9460/9560 and 9160/9260
-From:   Joe Perches <joe@perches.com>
-To:     Alain Michaud <alainmichaud@google.com>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        Bluetooth Kernel Mailing List 
-        <linux-bluetooth@vger.kernel.org>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Alain Michaud <alainm@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>
-Date:   Tue, 24 Mar 2020 09:45:15 -0700
-In-Reply-To: <CALWDO_U8hruyjvZmN5P3kYz-awhD8t7yNbX9K0uXd5OdDejdMA@mail.gmail.com>
-References: <20200323072824.254495-1-mcchou@chromium.org>
-         <20200323002820.v1.1.I0e975833a6789e8acc74be7756cd54afde6ba98c@changeid>
-         <04021BE3-63F7-4B19-9F0E-145785594E8C@holtmann.org>
-         <421d27670f2736c88e8c0693e3ff7c0dcfceb40b.camel@perches.com>
-         <57C56801-7F3B-478A-83E9-1D2376C60666@holtmann.org>
-         <03547be94c4944ca672c7aef2dd38b0fb1eedc84.camel@perches.com>
-         <CALWDO_U5Cnt3_Ss2QQNhtuKS_8qq7oyNH4d97J68pmbmQMe=3w@mail.gmail.com>
-         <b7b6e52eccca921ccea16b7679789eb3e2115871.camel@perches.com>
-         <CALWDO_U8hruyjvZmN5P3kYz-awhD8t7yNbX9K0uXd5OdDejdMA@mail.gmail.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.34.1-2 
+        Tue, 24 Mar 2020 12:56:55 -0400
+Received: by mail-oi1-f194.google.com with SMTP id p125so19115181oif.10
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Mar 2020 09:56:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Cd9wiim2w2g/X9A2/p0S6xeLGjOLXJd2upS5lm+e1Cw=;
+        b=RcMrUA7PFak/Mfrpj0n3OCSFPzsIYfLLlerKJkeopRZP5xmmp9iGGWo73kKWVDchqb
+         +b7mF/HGgzveL16yssM2oPDfnEolb+uai9jxFMTUohXbbZJgTyvGGd1eP+2Bhsnez4cA
+         1XsNwzLdSPsjUUJCb1K1YuwGLMoNOJf8FD4p/uxYXa3YxSWp8Z7QWzkrFm01zedmsuOy
+         okM0z1MFhxhoD3Ixk3TE2L1yMGrHH7x4KKrdVpFnzTEyU7YEK7hoQIJ6IDm2W0K+87ru
+         XyxtK9TlZuAijQtP/BSCOXr5gGUC+ux4Fl9u76vzRa5E6erdemxoxssdkBzn0tRG8Nji
+         HXMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Cd9wiim2w2g/X9A2/p0S6xeLGjOLXJd2upS5lm+e1Cw=;
+        b=oaf5nOmIyOoFS7ICqcVxmXOrzMpFZ3yByGJZlSiox8bXiXoXCt0sOhB5YnXrzt4zSe
+         XkURuiqHQrYSdr2zaaV8ow9XQkVaQ18dnf8epGUj7LlJAu8ZQZCeOmLee6yvyBxCX+vo
+         ZyEt6iduEVTjRMZOXcQSykc/BYBzCRqTEtJbPEcBk+jYCq6Pc7W3kqCg8UiTTjOB2pXS
+         cVnH6pw7msEikREKaRWOyqCciNhJQzfvZcr3OH4b5IBd5N9e6FjC0MhTgxK71W/+DmAL
+         62jibaeahGXMhc0WXD0+rBGw8sqc+c/mwm9jo/BUEtSDD3tsNxQnTIbm7KB3K0B8DWj1
+         dCtA==
+X-Gm-Message-State: ANhLgQ2ftQ6eA7R4SFavPgk4Dy0H37p/wHSOhGACi6NRV0xShCMphwY/
+        vqWEJfOz15Ztcqa/WgmDQEnbTxUYGn8nHgdXZeMPWQ==
+X-Google-Smtp-Source: ADFU+vtNT9gHsaSgDiG+dqgs/yEhvaAY2Z0hYZpQWQB64nM6bZ8TbZ/+c9VQyhwGg8jgexW3Q+Q4IhJiFD13oEKtE2Y=
+X-Received: by 2002:a54:4e13:: with SMTP id a19mr4249536oiy.108.1585069013016;
+ Tue, 24 Mar 2020 09:56:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+References: <20200323203458.24733-1-luiz.dentz@gmail.com> <20200323203458.24733-4-luiz.dentz@gmail.com>
+ <90C51C98-B30D-44A6-9E87-321A4758C684@holtmann.org>
+In-Reply-To: <90C51C98-B30D-44A6-9E87-321A4758C684@holtmann.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Tue, 24 Mar 2020 09:56:41 -0700
+Message-ID: <CABBYNZJefwjHOJdLHe_pj6g_sZzSdAqWgprfAs3bgQOY8=ESHA@mail.gmail.com>
+Subject: Re: [PATCH v5 3/3] Bluetooth: Add BT_MODE socket option
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Tue, 2020-03-24 at 11:24 -0400, Alain Michaud wrote:
-> On Tue, Mar 24, 2020 at 11:19 AM Joe Perches <joe@perches.com> wrote:
-> > On Tue, 2020-03-24 at 11:10 -0400, Alain Michaud wrote:
-> > > On Mon, Mar 23, 2020 at 4:11 PM Joe Perches <joe@perches.com> wrote:
-> > > > On Mon, 2020-03-23 at 19:48 +0100, Marcel Holtmann wrote:
-> > > > > Hi Joe,
-> > > > 
-> > > > Hello Marcel.
-> > > > 
-> > > > > > > > This adds a bit mask of driver_info for Microsoft vendor extension and
-> > > > > > > > indicates the support for Intel 9460/9560 and 9160/9260. See
-> > > > > > > > https://docs.microsoft.com/en-us/windows-hardware/drivers/bluetooth/
-> > > > > > > > microsoft-defined-bluetooth-hci-commands-and-events for more information
-> > > > > > > > about the extension. This was verified with Intel ThunderPeak BT controller
-> > > > > > > > where msft_vnd_ext_opcode is 0xFC1E.
-> > > > > > []
-> > > > > > > > diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-> > > > > > []
-> > > > > > > > @@ -315,6 +315,10 @@ struct hci_dev {
-> > > > > > > >         __u8            ssp_debug_mode;
-> > > > > > > >         __u8            hw_error_code;
-> > > > > > > >         __u32           clock;
-> > > > > > > > +       __u16           msft_vnd_ext_opcode;
-> > > > > > > > +       __u64           msft_vnd_ext_features;
-> > > > > > > > +       __u8            msft_vnd_ext_evt_prefix_len;
-> > > > > > > > +       void            *msft_vnd_ext_evt_prefix;
-> > > > > > 
-> > > > > > msft is just another vendor.
-> > > > > > 
-> > > > > > If there are to be vendor extensions, this should
-> > > > > > likely use a blank line above and below and not
-> > > > > > be prefixed with msft_
-> > > > > 
-> > > > > there are other vendors, but all of them are different. So this needs to be prefixed with msft_ actually. But I agree that having empty lines above and below makes it more readable.
-> > > > 
-> > > > So struct hci_dev should become a clutter
-> > > > of random vendor extensions?
-> > > > 
-> > > > Perhaps there should instead be something like
-> > > > an array of char at the end of the struct and
-> > > > various vendor specific extensions could be
-> > > > overlaid on that array or just add a void *
-> > > > to whatever info that vendors require.
-> > > I don't particularly like trailing buffers, but I agree we could
-> > > possibly organize this a little better by with a struct.  something
-> > > like:
-> > > 
-> > > struct msft_vnd_ext {
-> > >     bool       f       supported; // <-- Clearly calls out if the
-> > > extension is supported.
-> > >     __u16           msft_vnd_ext_opcode; // <-- Note that this also
-> > > needs to be provided by the driver.  I don't recommend we have this
-> > > read from the hardware since we just cause an extra redirection that
-> > > isn't necessary.  Ideally, this should come from the usb_table const.
-> > >     __u64           msft_vnd_ext_features;
-> > >     __u8             msft_vnd_ext_evt_prefix_len;
-> > >     void             *msft_vnd_ext_evt_prefix;
-> > > };
-> > > 
-> > > And then simply add the struct msft_vnd_ext (and any others) to hci_dev.
-> > 
-> > Or use an anonymous union
-> That would also work, but would need to be an array of unions, perhaps
-> following your original idea to have them be in a trailing array of
-> unions since a controller may support more than one extension.  This
-> might be going overboard :)
+Hi Marcel,
 
-True.
+On Tue, Mar 24, 2020 at 1:44 AM Marcel Holtmann <marcel@holtmann.org> wrote=
+:
+>
+> Hi Luiz,
+>
+> > This adds BT_MODE socket option which can be used to set L2CAP modes,
+> > including modes only supported over LE which were not supported using
+> > the L2CAP_OPTIONS.
+> >
+> > Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> > ---
+> > include/net/bluetooth/bluetooth.h |   8 ++
+> > include/net/bluetooth/l2cap.h     |   6 ++
+> > net/bluetooth/l2cap_sock.c        | 124 ++++++++++++++++++++++++++++++
+> > 3 files changed, 138 insertions(+)
+> >
+> > diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/=
+bluetooth.h
+> > index 1576353a2773..3fa7b1e3c5d9 100644
+> > --- a/include/net/bluetooth/bluetooth.h
+> > +++ b/include/net/bluetooth/bluetooth.h
+> > @@ -139,6 +139,14 @@ struct bt_voice {
+> > #define BT_PHY_LE_CODED_TX    0x00002000
+> > #define BT_PHY_LE_CODED_RX    0x00004000
+> >
+> > +#define BT_MODE                      15
+> > +
+> > +#define BT_MODE_BASIC                0x00
+> > +#define BT_MODE_ERTM         0x01
+> > +#define BT_MODE_STREAMING    0x02
+> > +#define BT_MODE_LE_FLOWCTL   0x03
+> > +#define BT_MODE_EXT_FLOWCTL  0x04
+> > +
+> > __printf(1, 2)
+> > void bt_info(const char *fmt, ...);
+> > __printf(1, 2)
+> > diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2ca=
+p.h
+> > index dada14d0622c..56f727ba23bd 100644
+> > --- a/include/net/bluetooth/l2cap.h
+> > +++ b/include/net/bluetooth/l2cap.h
+> > @@ -720,9 +720,15 @@ struct l2cap_user {
+> > /* ----- L2CAP socket info ----- */
+> > #define l2cap_pi(sk) ((struct l2cap_pinfo *) sk)
+> >
+> > +#define L2CAP_PI_OPTION_UNSET                0x00
+> > +#define L2CAP_PI_OPTION_LEGACY               0x01
+> > +#define L2CAP_PI_OPTION_BT_MODE              0x02
+> > +
+> > struct l2cap_pinfo {
+> >       struct bt_sock          bt;
+> >       struct l2cap_chan       *chan;
+> > +     u8                      option;
+> > +     u8                      bt_mode;
+> >       struct sk_buff          *rx_busy_skb;
+> > };
+>
+> why do you want to store bt_mode here. Whatever we have in l2cap_chan sho=
+uld be plenty.
 
-Especially true if the controller supports multiple
-concurrent extensions.
+Ive thought it would be cleaner to mess with types that comes from the
+spec itself so l2cap_chan would continue to use them.
+
+> I also looked at l2cap_sock_setsockopt_old and if you use L2CAP_OPTIONS a=
+nd want to read BT_MODE, then everything should be fine. Same as setting BT=
+_MODE (except EXT_FLOWCTL) and then reading L2CAP_OPTIONS is fine as well. =
+We can all translate this properly and with have EINVAL return errors for n=
+ot supported / disabled modes.
+>
+> So the only time L2CAP_OPTIONS read should fail is if you use BT_MODE wit=
+h EXT_FLOWCTL as mode. So you can just check the mode set in l2cap_chan. An=
+d we start using our new mode definition there and then convert it for L2CA=
+P_OPTIONS.
+
+Sure, I thought it would be more efficient to not have conversions
+back and forth but Im fine either way.
+
+> Regards
+>
+> Marcel
+>
 
 
+--=20
+Luiz Augusto von Dentz
