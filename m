@@ -2,96 +2,103 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E544C1920DA
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Mar 2020 06:59:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64F3D192189
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Mar 2020 08:04:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726072AbgCYF7B (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 25 Mar 2020 01:59:01 -0400
-Received: from mout.web.de ([217.72.192.78]:40259 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725832AbgCYF7A (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 25 Mar 2020 01:59:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1585115939;
-        bh=aKZdMuu02dgCWIUwE7ox7pBEw0Hhv5T6B3WvcFmPNz0=;
-        h=X-UI-Sender-Class:From:Date:Subject:To;
-        b=Wi5kgFLBkp3FuJ54ZOZZH1rKwa3oHGwG1hwUwGR4plmx6i6x4+ZwPEaqMaK1q2P3F
-         K+ikKu4siHPFz7V9WlHKOvz7iR2Jhp8pwYSMweegVl2xSD9LGikb5E8L2kqEChhwXQ
-         gluWb4g4GDwzw8RH7es8CL1z7DXhOj9rmHqiRRyM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.188.43] ([79.251.37.20]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lh6QF-1jdcV21djz-00oUnS for
- <linux-bluetooth@vger.kernel.org>; Wed, 25 Mar 2020 06:58:59 +0100
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-From:   Christian Fischer <panig291088@web.de>
-Mime-Version: 1.0 (1.0)
-Date:   Wed, 25 Mar 2020 06:58:58 +0100
-Subject: a2dp stream delayed if playback started immediately after connect
-Message-Id: <9ADFBCB6-94B9-49D1-92AD-2211B8F7A9C6@web.de>
-To:     linux-bluetooth@vger.kernel.org
-X-Mailer: iPhone Mail (17D50)
-X-Provags-ID: V03:K1:865bGIVVZ9kIf6E6wgxwKO/fwFT0IBajl6dV1gst7RJYVQk9Y0t
- uQi/FXATQBN8Iz40V+jANag/qktUE0Dywcc9eawCbq0b4dkaxiX9QRGOcbY21/zLEyLgMXl
- 7XUIdfiv521DRlX7wzZ22OdAvAmE2hhQVmHjnFzUQAflAvJEYH3IE7tecqHIqIHWJuYKAFc
- R7EGlbtra7l/VK21jlyCQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ypbCyxrG+Co=:60l8aXjdGkVB9vLEvnDlxu
- +qQZbRVlEuIFz+ghCCi2d0k9WK9MENgRM3iGnr9/ltmoA1AXG8rDHhnjtwTH+G6cqNRQN7i9i
- FUVy5qANp5K7Dnen6qnQTULAFfCuDxj3/ay5US2T3dfxgX6qkERa9qtxpN9n4OqBpXauxWm9p
- hCaEOeSM2FEwY7Ex9cjgzr5mR3+pBfHx0156YiwSBjQhZn1v0RhpdaDucueBKYRSPMpB3Ph7P
- 5UZ1Fc1C2RtMIwnOtU7g170iD0CYKcrTbwDaLJ1Y2ivAbcrhtKtamuyMoZ4VGd2sEo9rbMHqE
- ddRvMCHgEnAJDTtMq1PiCvjPA/Cya+KdsNAaAnRizFFD9HlBmqh9HWUdwzHXYwGreeP2jUSvA
- IMwS8ZZL4MCgPj9SgCEH4QVPrw0AP+Ek37ES0tAPX+FP20zWy/Pvf2MF8f/2MYkjgJuV/lVGV
- C8VXpX1uM2VcUt5Gc6aQjtjID0XfkdPTVX9x1plf1+gtbaRfsLbRaglYuF8jUuQxHyvGSJ479
- /MageBXByEDRbTNMFIG0krb5S4IqboEzjicKNkxfJBkYBB2Q1oJKkw5pZEw9GqdvbLXc5tOGD
- CTbmUVVjzz11EBKhXViPI4agFVXRUpTvLVa8X7Gb2omXn8UKFL3f1JxMizI/kMAzwWauJZcub
- vuu6HrAtUSd9PY+GNJrM1/L6nnzZYw6RdC8Y3mk0rWWRYqS5j7qlVOUFqd7wX+AcSCejZhg4g
- 1EnK3RlfYQ+7P5xpPr0gB3c5Fimc2uwDG95+pqxvdko4ZIUx9FYelYsZsv3MfXsLBqLx/0EeO
- jZTzrpNLcmWAZ9et0oNaI+dPrSCa/6NdUuJ3GQ2YwEGIy0rTLzfW77UGriCljujqGh4rc768l
- HN78tGRrDZ9kLcXMpHqE0lJq34ilBXF3VYAXnR4YnDQPCt/MzzFkEBPRv9QXvoCprv+BVVNZP
- zUhmAYmpcM3btbYwdvQ49nT5k9bt5UatXhY3WR3Z/DJPMp4+X+SMVXLJP9p+Jk1hr//0x+IKj
- xbb69aKrymxLdTkz38scPMyZI/oZZwH9dCBRcIfKNj2EqCiUuOftw2vdY/5Pwj0NWj2DlG/7s
- QnaX4VqVsxbwRdsnQTA2MaJdL3g199emzjsPeUaiEs/cvm4foHmktnJX9oLEVyJdCUlh7l4Xp
- a+dDm7JK5ZoqXdUj5OA3HdmGce6tFGPZG/cQCPgmoWTe5ZhnOPcM6lbozGVL62O6YaTDmOVXF
- WkpXh6YkUP7mz3zbB
+        id S1727388AbgCYHD7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 25 Mar 2020 03:03:59 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44046 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725907AbgCYHDm (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 25 Mar 2020 03:03:42 -0400
+Received: by mail-pf1-f195.google.com with SMTP id b72so583586pfb.11
+        for <linux-bluetooth@vger.kernel.org>; Wed, 25 Mar 2020 00:03:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3zectWcNtEHLyfgTx3MqEvfVsHuSppDOUvlE/pNSxGo=;
+        b=eDH9ZcoDABpzKQNT0W42ZM9EZTxmNCn8VtZHqGhC4DgNYBaIK4lYcelsJYUzDFvL3O
+         SFBcP8ZgJpAwzl7F83Mg140MZtjEsYFktuvzhl/RrkmDRywgy1pvkJbztd5rzmjQu7Ko
+         25CKRpOyUNpcdgjcKCQ8svfd06vdDShg7GQvc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3zectWcNtEHLyfgTx3MqEvfVsHuSppDOUvlE/pNSxGo=;
+        b=DwdT1ZmMYiDNgqkTfMLNxYkzIJm7L8PgShdNdR/gImf81zzmRJ3NCH8vartjF4dBcX
+         HTd/yZflTIEOj8a0/tF9OHTTy1hbnwifvGoqkyY7NhPMBIo5WLWRFsundQm5EsSwUiu2
+         0tKmFVNpWRsyPfaRhR6j6cyLxoac9PWtKbtb5oTFHv4P5dMS5by5nkOrQT7KJxg4frdH
+         CLnqwB1RcmPGdIOlUB7BeMhSbqCx2+6FbIU/jh6B5Jis1+zIs6gFYAHzR4iqtgmbLHv1
+         Z1naSSXmXGsEGzZ5NwIZNGEMwL8qFY50e0Dge+BQcjRNZwqk0Idlp2zccmq1bcnLplwd
+         +Blg==
+X-Gm-Message-State: ANhLgQ2Soz70yJo34a9fhNUvSOw21epqfhuv8X5ilTx+XrIRzwGZT6Po
+        CzEaK/gSuSZM0EfFFIRb5L7giN0A9b0=
+X-Google-Smtp-Source: ADFU+vs2i23A8PQwyTj/QbXxX6iqtgCkNFZDCp31M6+qiIky3n7aCBt1nI8B0kuo1z2jbOQoc6JmQA==
+X-Received: by 2002:a65:53c5:: with SMTP id z5mr1872714pgr.0.1585119820635;
+        Wed, 25 Mar 2020 00:03:40 -0700 (PDT)
+Received: from mcchou0.mtv.corp.google.com ([2620:15c:202:201:b46:ac84:1014:9555])
+        by smtp.gmail.com with ESMTPSA id i34sm566240pgm.83.2020.03.25.00.03.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Mar 2020 00:03:39 -0700 (PDT)
+From:   Miao-chen Chou <mcchou@chromium.org>
+To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
+Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Alain Michaud <alainm@chromium.org>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH v2 0/2] btusb: Introduce the use of vendor extension(s)
+Date:   Wed, 25 Mar 2020 00:03:34 -0700
+Message-Id: <20200325070336.1097-1-mcchou@chromium.org>
+X-Mailer: git-send-email 2.24.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello guys, i have a little problem a2dp related.
-I've written a mono c# application which will wait for a specific device (ph=
-one) is connected and will then start the music playback immediatly.
-Pulseaudio is playing the music on its connected usb-soundcard. So at the mo=
-ment when my phone gets connected the stream starts playing.
-So when i press forward at the phone its command is delayed by approx. 2 sec=
-onds, so in the bluetoothd debug output i can see that AVRCP command is rece=
-ived immediatly. But the stream got a delay.
-When i press pause and wait till this:
-bluetoothd[20399]: profiles/audio/avdtp.c:avdtp_sep_set_state() stream state=
- changed: STREAMING -> OPEN
-bluetoothd[20399]: profiles/audio/source.c:source_set_state() State changed /=
-org/bluez/hci0/dev_F0_98_9D_D8_46_19: SOURCE_STATE_PLAYING -> SOURCE_STATE_C=
-ONNECTED
-bluetoothd[20399]: profiles/audio/transport.c:transport_update_playing() /or=
-g/bluez/hci0/dev_F0_98_9D_D8_46_19/sep1/fd1 State=3DTRANSPORT_STATE_ACTIVE P=
-laying=3D0
-bluetoothd[20399]: profiles/audio/transport.c:media_transport_remove_owner()=
- Transport /org/bluez/hci0/dev_F0_98_9D_D8_46_19/sep1/fd1 Owner :1.56
-bluetoothd[20399]: profiles/audio/transport.c:media_owner_free() Owner :1.56=
+Hi Marcel and Luiz,
 
-bluetoothd[20399]: profiles/audio/transport.c:transport_set_state() State ch=
-anged /org/bluez/hci0/dev_F0_98_9D_D8_46_19/sep1/fd1: TRANSPORT_STATE_ACTIVE=
- -> TRANSPORT_STATE_IDLE
-bluetoothd[20399]: profiles/audio/a2dp.c:a2dp_sep_unlock() SEP 0x114f798 unl=
-ocked
-bluetoothd[20399]: src/device.c:connect_profiles() /org/bluez/hci0/dev_F0_98=
-_9D_D8_46_19 (all), client :1.73
-=20
-And start again, all commands and streams are back in sync.
-Any tips? Is that Maybe pulseaudio related?
-=20
-Thanks in advice,
-chris=
+The standard HCI does not provide commands/events regarding to
+advertisement monitoring with content filter while there are few vendors
+providing this feature. Chrome OS BT would like to introduce the use of
+vendor specific features where Microsoft vendor extension is targeted at
+this moment.
+
+Chrome OS BT would like to utilize Microsoft vendor extension's
+advertisement monitoring feature which is not yet a part of standard
+Bluetooth specification. This series introduces the driver information for
+Microsoft vendor extension, and this was verified with kernel 4.4 on Atlas
+Chromebook.
+
+Thanks
+Miao
+
+Changes in v2:
+- Define struct msft_vnd_ext and add a field of this type to struct
+hci_dev to facilitate the support of Microsoft vendor extension.
+- Issue a HCI_VS_MSFT_Read_Supported_Features command with
+__hci_cmd_sync() instead of constructing a request.
+
+Miao-chen Chou (2):
+  Bluetooth: btusb: Indicate Microsoft vendor extension for Intel
+    9460/9560 and 9160/9260
+  Bluetooth: btusb: Read the supported features of Microsoft vendor
+    extension
+
+ drivers/bluetooth/btusb.c          | 17 ++++++-
+ include/net/bluetooth/hci_core.h   | 10 ++++
+ include/net/bluetooth/vendor_hci.h | 51 +++++++++++++++++++
+ net/bluetooth/hci_core.c           | 78 ++++++++++++++++++++++++++++++
+ 4 files changed, 154 insertions(+), 2 deletions(-)
+ create mode 100644 include/net/bluetooth/vendor_hci.h
+
+-- 
+2.24.1
 
