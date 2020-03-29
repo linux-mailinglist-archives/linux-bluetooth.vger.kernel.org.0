@@ -2,200 +2,126 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C67FA197060
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 29 Mar 2020 22:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B469197088
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 29 Mar 2020 23:33:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728619AbgC2U4S (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 29 Mar 2020 16:56:18 -0400
-Received: from mga04.intel.com ([192.55.52.120]:20805 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728475AbgC2U4R (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 29 Mar 2020 16:56:17 -0400
-IronPort-SDR: gVL2dAVWRoK5rqqhlz55PyL2Nqi9ZNiU77ybFa+g5IW8c2TfpmhBCbwMP6woeETwoe+cO7or39
- YIy9uO5GJvwQ==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2020 13:56:17 -0700
-IronPort-SDR: 2yZ91HX/YcbQX8CHwLDatVZf/ZmGn8xWJOFTNJUn8uF8wunRcrYu7MEXcNFGA698+AK8UQjJ84
- w5jPpFHDf8Hw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,321,1580803200"; 
-   d="scan'208";a="294412312"
-Received: from ingas-nuc1.sea.intel.com ([10.252.139.119])
-  by FMSMGA003.fm.intel.com with ESMTP; 29 Mar 2020 13:56:17 -0700
-From:   Inga Stotland <inga.stotland@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ 2/2] tools/mesh-cfgclient: Add commands for Key Refresh Phase
-Date:   Sun, 29 Mar 2020 13:56:15 -0700
-Message-Id: <20200329205615.22090-2-inga.stotland@intel.com>
-X-Mailer: git-send-email 2.21.1
-In-Reply-To: <20200329205615.22090-1-inga.stotland@intel.com>
-References: <20200329205615.22090-1-inga.stotland@intel.com>
+        id S1728780AbgC2Vcg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 29 Mar 2020 17:32:36 -0400
+Received: from mail-pj1-f45.google.com ([209.85.216.45]:40308 "EHLO
+        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727370AbgC2Vcg (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 29 Mar 2020 17:32:36 -0400
+Received: by mail-pj1-f45.google.com with SMTP id kx8so6438290pjb.5;
+        Sun, 29 Mar 2020 14:32:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:mime-version
+         :content-disposition:user-agent;
+        bh=GrpNMhLH/0irTvzJOWjdmC5wzGKWEVEhUezDwVQIJ4g=;
+        b=QFDa4rHZz8QvOh1R+OacXXxaN3guL1r8ep02Y0W/7IXGz9s0Te/GnLIosU24APNij8
+         864FXYH6UbTFkWybaaR/J+MYWEp5CxD06LVVFxD0YVkV34hd2+xA+KnIXliTGqdHuPRb
+         y8FksIrBTwrrbRagobOlZfOEGtEkd2qDOfRP4beHMickv8/+vjAORaf08jHCV3YwL5Jq
+         N9c3L4VSvcdW3kT8YB4jsiktUD248i9SAb/ZO5VOdu0POGIMouI0BpPcb40gJ17fOf9X
+         zom+vlxFOJ2r9Vu9b6j5VOxq+pHbV4sxGtKuyJZZZJwoPCpyQq2EA0uTapP6qCOrMRaK
+         caZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:mime-version:content-disposition:user-agent;
+        bh=GrpNMhLH/0irTvzJOWjdmC5wzGKWEVEhUezDwVQIJ4g=;
+        b=ChWcUOqY/puLFGYxlp1KR8oBLtgUHKjkTMK5ft6wOWCkLRF8GMXTzoA57AdbDbeleq
+         A1GWKzwYZHJJ7bMu3YxBYdWYSY0JcDAzH0voWyMea5r30HW+kNb5EKrWp9PtO4ImB1sE
+         pYS4dYUhtkEYhiOZ0K9kZjSbuVAsuSOTERuE+YMN9a+yAizLHt+m7FlkoAHfNTabMOex
+         nhEHT35yRG6IPiXIjOW4jOh4jPbrcCiaBGr1EjFuEsUKo4Jlo7ICQUd61UbFTqvSl2jc
+         ZdAiYTQmwE8fmVHmfz/6PE7MjUvXoTLEOj5dKDGHJQU5IrjnuVIz4O/uNt5FrPAGclNJ
+         PZLA==
+X-Gm-Message-State: ANhLgQ3K2j7zWROucPa84lo/fl17vbF4Q2AdBx3lpaSVnBfmlt4hAhoI
+        WLgYohlrGZPwUa0aRsIrh5qESUsi1Vq2mw==
+X-Google-Smtp-Source: ADFU+vv+dO8iJZdfAUO5eiNhbA6ssongekkPUVf6Nlq13iEMD3CKn32UJBDYfcPNYw5IpIdvpziL6Q==
+X-Received: by 2002:a17:90b:292:: with SMTP id az18mr12121962pjb.126.1585517553168;
+        Sun, 29 Mar 2020 14:32:33 -0700 (PDT)
+Received: from localhost (fmdmzpr03-ext.fm.intel.com. [192.55.54.38])
+        by smtp.gmail.com with ESMTPSA id c62sm8631337pfc.136.2020.03.29.14.32.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Mar 2020 14:32:32 -0700 (PDT)
+Date:   Mon, 30 Mar 2020 00:32:28 +0300
+From:   Johan Hedberg <johan.hedberg@gmail.com>
+To:     davem@davemloft.net
+Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: pull request: bluetooth-next 2020-03-29
+Message-ID: <20200329213228.GA16750@sharonc1-mobl.ger.corp.intel.com>
+Mail-Followup-To: davem@davemloft.net, linux-bluetooth@vger.kernel.org,
+        netdev@vger.kernel.org
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="T4sUOijqQbZv57TR"
+Content-Disposition: inline
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds two new menu commands:
-"kr-phase-get" - sends Config Key Refresh Phase Get message
-"kr-phase-set" - sends Config Key Refresh Phase Set message
+
+--T4sUOijqQbZv57TR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Hi Dave,
+
+Here are a few more Bluetooth patches for the 5.7 kernel:
+
+ - Fix assumption of encryption key size when reading fails
+ - Add support for DEFER_SETUP with L2CAP Enhanced Credit Based Mode
+ - Fix issue with auto-connected devices
+ - Fix suspend handling when entering the state fails
+
+Please let me know if there are any issues pulling. Thanks.
+
+Johan
+
 ---
- tools/mesh/cfgcli.c | 84 +++++++++++++++++++++++++++++++++++++++++++++
- tools/mesh/keys.c   | 15 ++++++++
- tools/mesh/keys.h   |  1 +
- 3 files changed, 100 insertions(+)
+The following changes since commit 0d7043f355d0045bd38b025630a7defefa3ec07f:
 
-diff --git a/tools/mesh/cfgcli.c b/tools/mesh/cfgcli.c
-index 0c82d9f82..d9f1c9b72 100644
---- a/tools/mesh/cfgcli.c
-+++ b/tools/mesh/cfgcli.c
-@@ -516,6 +516,18 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
- 
- 		break;
- 
-+	case OP_CONFIG_KEY_REFRESH_PHASE_STATUS:
-+		if (len != 4)
-+			break;
-+
-+		bt_shell_printf("Node %4.4x Key Refresh Phase status %s\n", src,
-+						mesh_status_str(data[0]));
-+		net_idx = get_le16(data + 1) & 0xfff;
-+
-+		bt_shell_printf("\tNetKey %3.3x\n", net_idx);
-+		bt_shell_printf("\tKR Phase %2.2x\n", data[3]);
-+		break;
-+
- 	case OP_MODEL_APP_STATUS:
- 		if (len != 7 && len != 9)
- 			break;
-@@ -950,6 +962,74 @@ static void cmd_netkey_del(int argc, char *argv[])
- 	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
- }
- 
-+static void cmd_kr_phase_get(int argc, char *argv[])
-+{
-+	uint16_t n;
-+	uint8_t msg[32];
-+
-+	if (IS_UNASSIGNED(target)) {
-+		bt_shell_printf("Destination not set\n");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	n = mesh_opcode_set(OP_CONFIG_KEY_REFRESH_PHASE_GET, msg);
-+
-+	if (read_input_parameters(argc, argv) != 1)
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+
-+	put_le16(parms[0], msg + n);
-+	n += 2;
-+
-+	if (!config_send(msg, n, OP_CONFIG_KEY_REFRESH_PHASE_GET))
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+
-+	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
-+}
-+
-+static void cmd_kr_phase_set(int argc, char *argv[])
-+{
-+	uint16_t n;
-+	uint8_t msg[32];
-+	uint8_t phase;
-+
-+	if (IS_UNASSIGNED(target)) {
-+		bt_shell_printf("Destination not set\n");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	n = mesh_opcode_set(OP_CONFIG_KEY_REFRESH_PHASE_SET, msg);
-+
-+	if (read_input_parameters(argc, argv) != 2)
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+
-+	if (parms[1] != KEY_REFRESH_PHASE_TWO &&
-+				parms[1] != KEY_REFRESH_PHASE_THREE) {
-+		bt_shell_printf("Invalid KR transition value %u\n", parms[1]);
-+		bt_shell_printf("Allowed values: 2 or 3\n");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	if (!keys_get_net_key_phase((uint16_t) parms[0], &phase)) {
-+		bt_shell_printf("Subnet KR state not found\n");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	if (phase != (parms[1] % KEY_REFRESH_PHASE_THREE)) {
-+		bt_shell_printf("Subnet's phase must be updated first!\n");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	put_le16(parms[0], msg + n);
-+	n += 2;
-+
-+	msg[n++] = parms[1];
-+
-+	if (!config_send(msg, n, OP_CONFIG_KEY_REFRESH_PHASE_SET))
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+
-+	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
-+}
-+
- static void cmd_appkey_del(int argc, char *argv[])
- {
- 	uint16_t n;
-@@ -1788,6 +1868,10 @@ static const struct bt_shell_menu cfg_menu = {
- 				"Delete NetKey"},
- 	{"netkey-get", NULL, cmd_netkey_get,
- 				"List NetKeys known to the node"},
-+	{"kr-phase-get", "<net_idx>", cmd_kr_phase_get,
-+				"Get Key Refresh phase of a NetKey"},
-+	{"kr-phase-set", "<net_idx> <phase>", cmd_kr_phase_set,
-+				"Set Key Refresh phase transition of a NetKey"},
- 	{"appkey-add", "<app_idx>", cmd_appkey_add,
- 				"Add AppKey"},
- 	{"appkey-update", "<app_idx>", cmd_appkey_update,
-diff --git a/tools/mesh/keys.c b/tools/mesh/keys.c
-index e7b065beb..b7d36599a 100644
---- a/tools/mesh/keys.c
-+++ b/tools/mesh/keys.c
-@@ -116,6 +116,21 @@ void keys_set_net_key_phase(uint16_t net_idx, uint8_t phase)
- 		bt_shell_printf("Failed to save updated KR phase\n");
- }
- 
-+bool keys_get_net_key_phase(uint16_t net_idx, uint8_t *phase)
-+{
-+	struct net_key *key;
-+
-+	if (!phase || !net_keys)
-+		return false;
-+
-+	key = l_queue_find(net_keys, net_idx_match, L_UINT_TO_PTR(net_idx));
-+	if (!key)
-+		return false;
-+
-+	*phase = key->phase;
-+	return true;
-+}
-+
- void keys_add_app_key(uint16_t net_idx, uint16_t app_idx)
- {
- 	struct net_key *key;
-diff --git a/tools/mesh/keys.h b/tools/mesh/keys.h
-index e05e57997..3a90fa14b 100644
---- a/tools/mesh/keys.h
-+++ b/tools/mesh/keys.h
-@@ -21,6 +21,7 @@
- void keys_add_net_key(uint16_t net_idx);
- void keys_del_net_key(uint16_t net_idx);
- void keys_set_net_key_phase(uint16_t net_idx, uint8_t phase);
-+bool keys_get_net_key_phase(uint16_t net_idx, uint8_t *phase);
- void keys_add_app_key(uint16_t net_idx, uint16_t app_idx);
- void keys_del_app_key(uint16_t app_idx);
- uint16_t keys_get_bound_key(uint16_t app_idx);
--- 
-2.21.1
+  Merge tag 'mac80211-next-for-net-next-2020-03-20' of git://git.kernel.org/pub/scm/linux/kernel/git/jberg/mac80211-next (2020-03-20 08:57:38 -0700)
 
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git for-upstream
+
+for you to fetch changes up to da49b602f7f75ccc91386e1274b3ef71676cd092:
+
+  Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections (2020-03-25 22:16:08 +0100)
+
+----------------------------------------------------------------
+Abhishek Pandit-Subedi (2):
+      Bluetooth: Restore running state if suspend fails
+      Bluetooth: Fix incorrect branch in connection complete
+
+Alain Michaud (1):
+      Bluetooth: don't assume key size is 16 when the command fails
+
+Luiz Augusto von Dentz (2):
+      Bluetooth: L2CAP: Add get_peer_pid callback
+      Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections
+
+ include/net/bluetooth/l2cap.h |   5 ++
+ net/bluetooth/hci_core.c      |  39 ++++++------
+ net/bluetooth/hci_event.c     |  25 ++++----
+ net/bluetooth/l2cap_core.c    | 137 +++++++++++++++++++++++++++++++++++++++---
+ net/bluetooth/l2cap_sock.c    |   8 +++
+ 5 files changed, 173 insertions(+), 41 deletions(-)
+
+--T4sUOijqQbZv57TR
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQQ8m6QjaLXd1XJ73Dsfyv3T9pQ3KgUCXoET6AAKCRAfyv3T9pQ3
+Khc9AQDEDhqbnaeUlcdZsBAL4oUARERnZCLhbVKRNzq4WibPjgEA6XUoUq3yNMO5
+/fQ5MUVKufpAgIJbzkwMrRuKGWZC+As=
+=TX1R
+-----END PGP SIGNATURE-----
+
+--T4sUOijqQbZv57TR--
