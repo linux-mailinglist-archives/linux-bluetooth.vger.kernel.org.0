@@ -2,50 +2,50 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F0DD1974CC
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Mar 2020 09:02:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 828E11974D3
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Mar 2020 09:04:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729405AbgC3HCQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Mar 2020 03:02:16 -0400
-Received: from mail-ua1-f74.google.com ([209.85.222.74]:38169 "EHLO
-        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729404AbgC3HCP (ORCPT
+        id S1728731AbgC3HEv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Mar 2020 03:04:51 -0400
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:37308 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728489AbgC3HEu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Mar 2020 03:02:15 -0400
-Received: by mail-ua1-f74.google.com with SMTP id t10so7338064uaj.5
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Mar 2020 00:02:13 -0700 (PDT)
+        Mon, 30 Mar 2020 03:04:50 -0400
+Received: by mail-pg1-f201.google.com with SMTP id q15so14171327pgb.4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Mar 2020 00:04:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:message-id:mime-version:subject:from:to:cc;
-        bh=GdYWbWFlv53UTK+JR9SjzdWX32BHmnSxKAdSkwsVD+4=;
-        b=Chufib3LlEIVtBvpGQ6OH+yWuI31WOCVYCLBNV6sa18vQ3a2npxSDe7gGOtiGnNjFq
-         yclYhJe6ECn/XQsKHdnbspt/Ek2kVUhfOnNDKGQRU0OUKiMLsI0U6hQwYQNxkVwmf9cA
-         r3dvfivvnESV/xwzi+jZP+0UXwJ58TSR+Q3FBHW3A+Y+EGXgCTcfmjMnAXhBimzsi1+r
-         Rfjv2VvH3Dt1t1bklCRB0LLU32adPO+fz2d0MJ2X7LmyRo4We+ISQSWFj+zzQgNu6A9q
-         DTjZkY5MjR5imCfCVjUJPlvbN3pOLTiq3L8FfHmjqUYkyxzAnLtlvChY6egfmltJxtwF
-         L2PQ==
+        bh=c38wUvtWc9xaFSLYpIT9xHL1ndQr3Bpo0kDMTwnucV4=;
+        b=KjR0nK+ERVfHJF1VnyvrvMfQTqWtr1W7PFe6j4IJs39tT5k+AI8dtbHiSRBj4qxIEh
+         4cm1Dv1t1EBSTmwlVU8hBKghCXlWMmbjw18Fy4QNKk3Hh9PDP4JWBoJ7wbkI4MyjpqF3
+         Py8yEHuo4bqa1SW3dv828zfKZGv183BK1nNVUOkGs6Bu2aKU3plm4urJNvUqy931lZVS
+         9teUsah0noMbHtgbAWXq93Vy8mETjIpaDk0J1hPfQ1ez5b+ADzjPxxmUC/aiwUJZtNzZ
+         g0nMuMHH0JH6EkZMbe9Qe8fQm7llcvWt4Jd1d7PjZN3lcpgusGoPJFgWv7HoKs9CZAqo
+         0lOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=GdYWbWFlv53UTK+JR9SjzdWX32BHmnSxKAdSkwsVD+4=;
-        b=W//rM5tfrMr4SvB3p3tTHr3XNo8U00zkWe7rDD9AaT8nzpnd4xI8Ys3Xrkj9bobBh1
-         gNu/kfPr7yLFKLYJN5W+51URImkF7sG/8FxmF4EwYjXjjSq5LswdAxM4+WKGz820BGSe
-         0b56tHKUg5jIX781YfI4DBLspyUedVdR7ixejVHNlB7zsb+1k/WYJUxnnT5dZmDZsIMC
-         /X1fa4k/MtXsmoaxZug/S59V8auofID6AsoRttoWulN9O2XhkP0M+OfPpjSIbDXHe6eo
-         iqC7MvXwd/8j3v2dznLvmGn2587mlZCTRNso+j4L59PWpiG+TSxJ9SIkZmjfZ0oswyH5
-         D/xw==
-X-Gm-Message-State: AGi0Puak7W/u/sTqTzKjKBfSHLWKR2Hokq4xnp2AfCbSKi/9EMbUeApA
-        N8Nkgo14PVEA9VZ3l9pqZvHOXuuF2PSIubo7rOtD+lmIzxyC1IYg/RzNgSzg6hpOwFUKCZxy7j3
-        J+G+b3fa05/yHEAIhOnNhWeF8VgsuyaxbWAUD6x0lTTdO/PrZFZvBbz1I2sw+2M8t+VddOBbEdj
-        25pHf+HzZVI0g=
-X-Google-Smtp-Source: APiQypJaKYQ1/cjtxsADVOjlXK4KNDi8epi0DX8T8rj7Ces7Fj6EoTyzP+pFq5qzLEqoL1uwTZZ1ZdvuDB8e4wFp3Q==
-X-Received: by 2002:ab0:72c6:: with SMTP id g6mr6904193uap.24.1585551732369;
- Mon, 30 Mar 2020 00:02:12 -0700 (PDT)
-Date:   Mon, 30 Mar 2020 15:02:06 +0800
-Message-Id: <20200330150145.Bluez.v1.1.I0238396807efb194dc5b61945b2c738d8dd8b64a@changeid>
+        bh=c38wUvtWc9xaFSLYpIT9xHL1ndQr3Bpo0kDMTwnucV4=;
+        b=f9Y3MAifR6h4s3exxa8y2wcvK16bap9++zPuV0URfSfmk+DRRuo/zKiResVux1SBV9
+         dTc8UFOz2raXH1TDLmfqPhz39K046UmODpKXwlZ+ROFuXC7L1K/oUeAIGN+zxJTL68ku
+         UA0pYvGECWFK9o9xROmFLXOtivpG6LTSuDPRfyWdXfvS9I3hJYFJKgLc1Vi7k+lvaWp+
+         hBGTztV4A2Wsef3kNpVlYRuXfOTlTmvj5coWRZQVX3Sc4rrthHnPtUef337UKMPxgosf
+         XB47SZfsyBpLuy0+8heGULAZ2OQn8SzNZOfOZbxP/9OCYjcVmk0PeqsmBaq0nuOXcqLO
+         xujQ==
+X-Gm-Message-State: ANhLgQ2/k1rKYcZZoi7P+Oj8z+H+qQ/eRKG34LKURCNektG0GRjtRByR
+        aeay7E5QngpcVxldLAwS0u9hU7IjHIQCJaHRQQhkN3ITxlIzgPH0uqUp+ax/aZG5yu+6i5ZYw+T
+        +Tyd74vl7JvW0S42wojNDeem0ZkV74ljC8ingcPmCBj0jH42jkIM/arqYzhymoroIv4TvrMo9lR
+        udIEoKXrbiDxM=
+X-Google-Smtp-Source: ADFU+vs5jMRxDgzu6yRVnf3veHVY2Cbv0YsIcnXpg7l5wfPoFAyfAGDRD3XteIue9LvhJUF7l2gJYBxtmG17tSAHhQ==
+X-Received: by 2002:a17:90a:4497:: with SMTP id t23mr13764726pjg.102.1585551887593;
+ Mon, 30 Mar 2020 00:04:47 -0700 (PDT)
+Date:   Mon, 30 Mar 2020 15:04:32 +0800
+Message-Id: <20200330070438.37316-1-howardchung@google.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.26.0.rc2.310.g2932bb562d-goog
-Subject: [Bluez PATCH v1] lib/mgmt: Fix missing mgmt op string
+Subject: [Bluez PATCH v1 0/6] Add support of setting advertiing intervals.
 From:   Howard Chung <howardchung@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.von.dentz@intel.com
 Cc:     chromeos-bluetooth-upstreaming@chromium.org,
@@ -56,24 +56,53 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-MGMT_OP_SET_WIDEBAND_SPEECH (0x0047) is missing in mgmt op.
----
+Hi Linux bluetooth, this is a series of patches for supporting
+setting of LE advertising intervals from D-Bus API.
 
- lib/mgmt.h | 1 +
- 1 file changed, 1 insertion(+)
+Hi linux bluetooth, this is the lib/mgmt part of supporting LE
+set advertising interval series patches.
+Thanks
 
-diff --git a/lib/mgmt.h b/lib/mgmt.h
-index 7682537fe..7520c7ae9 100644
---- a/lib/mgmt.h
-+++ b/lib/mgmt.h
-@@ -897,6 +897,7 @@ static const char *mgmt_op[] = {
- 	"Get PHY Configuration",
- 	"Set PHY Configuration",
- 	"Set Blocked Keys",
-+	"Set Wideband Speech",
- };
- 
- static const char *mgmt_ev[] = {
+Hi linux bluetooth, this is the advertising part of supporting LE
+set advertising interval series patches.
+Thanks
+
+Hi linux bluetooth, this is the documentation part of supporting LE
+set advertising interval series patches.
+Thanks
+
+Hi linux bluetooth, this is the monitor part of supporting LE
+set advertising interval series patches.
+Thanks
+
+Hi linux bluetooth, this is the test part of supporting LE set
+advertising interval series patches.
+Thanks
+
+Hi linux bluetooth, this patch is the btmgmt part of supporting
+LE Set Advertising Interval series.
+Thanks
+
+
+Howard Chung (6):
+  lib/mgmt: Add LE Set Advertising Interval definition
+  core/advertising: Add support for LE set adverting interval
+  doc: Add documentation for LE Set Advertising Interval
+  monitor: Add support for decoding LE Set Advertising Interval
+  test: Add test for LE Set Advertising Interval
+  tools/btmgmt: Add setting string for LE Set Advertising Interval
+
+ doc/advertising-api.txt            | 13 +++++
+ doc/mgmt-api.txt                   | 25 +++++++++
+ lib/mgmt.h                         | 11 ++++
+ monitor/control.c                  |  1 +
+ monitor/packet.c                   | 21 +++++++
+ src/advertising.c                  | 90 ++++++++++++++++++++++++++++++
+ test/example-advertising-intervals | 48 ++++++++++++++++
+ tools/btmgmt.c                     |  1 +
+ 8 files changed, 210 insertions(+)
+ create mode 100644 test/example-advertising-intervals
+
 -- 
 2.26.0.rc2.310.g2932bb562d-goog
 
