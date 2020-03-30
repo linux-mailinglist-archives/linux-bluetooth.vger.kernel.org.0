@@ -2,50 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E9CCB1983BB
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Mar 2020 20:49:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEEF419864A
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Mar 2020 23:18:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727962AbgC3St4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Mar 2020 14:49:56 -0400
-Received: from shards.monkeyblade.net ([23.128.96.9]:41164 "EHLO
-        shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726385AbgC3Stz (ORCPT
+        id S1729106AbgC3VSS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Mar 2020 17:18:18 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:57108 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728393AbgC3VSQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Mar 2020 14:49:55 -0400
-Received: from localhost (unknown [IPv6:2601:601:9f00:477::3d5])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: davem-davemloft)
-        by shards.monkeyblade.net (Postfix) with ESMTPSA id 895B415C6C87E;
-        Mon, 30 Mar 2020 11:49:55 -0700 (PDT)
-Date:   Mon, 30 Mar 2020 11:49:54 -0700 (PDT)
-Message-Id: <20200330.114954.1491102317925579419.davem@davemloft.net>
-To:     johan.hedberg@gmail.com
-Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: pull request: bluetooth-next 2020-03-29
-From:   David Miller <davem@davemloft.net>
-In-Reply-To: <20200329213228.GA16750@sharonc1-mobl.ger.corp.intel.com>
-References: <20200329213228.GA16750@sharonc1-mobl.ger.corp.intel.com>
-X-Mailer: Mew version 6.8 on Emacs 26.1
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
+        Mon, 30 Mar 2020 17:18:16 -0400
+Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 4D472CECA3;
+        Mon, 30 Mar 2020 23:27:47 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: [PATCH v2 1/2] Bluetooth: hci_qca: Add support for Qualcomm
+ Bluetooth SoC QCA6390
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20200325022638.14325-1-rjliao@codeaurora.org>
+Date:   Mon, 30 Mar 2020 23:18:14 +0200
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        thierry.escande@linaro.org, netdev <netdev@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bluetooth Kernel Mailing List 
+        <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
+        mka@chromium.org
 Content-Transfer-Encoding: 7bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12 (shards.monkeyblade.net [149.20.54.216]); Mon, 30 Mar 2020 11:49:55 -0700 (PDT)
+Message-Id: <AAAA8547-5298-476C-8BB6-54957E896F51@holtmann.org>
+References: <20200314094328.3331-1-rjliao@codeaurora.org>
+ <20200325022638.14325-1-rjliao@codeaurora.org>
+To:     Rocky Liao <rjliao@codeaurora.org>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Johan Hedberg <johan.hedberg@gmail.com>
-Date: Mon, 30 Mar 2020 00:32:28 +0300
+Hi Rocky,
 
-> Here are a few more Bluetooth patches for the 5.7 kernel:
+> This patch adds support for QCA6390, including the devicetree and acpi
+> compatible hwid matching, and patch/nvm downloading.
 > 
->  - Fix assumption of encryption key size when reading fails
->  - Add support for DEFER_SETUP with L2CAP Enhanced Credit Based Mode
->  - Fix issue with auto-connected devices
->  - Fix suspend handling when entering the state fails
+> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> ---
 > 
-> Please let me know if there are any issues pulling. Thanks.
+> Changes in v2:
+>  -removed the use of macro QCA_IS_3991_6390
+>  -removed the qca_send_enhancelog_enable_cmd()
+> 
+> drivers/bluetooth/btqca.c   | 18 ++++++++++++-----
+> drivers/bluetooth/btqca.h   |  3 ++-
+> drivers/bluetooth/hci_qca.c | 40 ++++++++++++++++++++++++++++++-------
+> 3 files changed, 48 insertions(+), 13 deletions(-)
 
-Pulled, thanks.
+patch has been applied to bluetooth-next tree.
+
+Regards
+
+Marcel
+
