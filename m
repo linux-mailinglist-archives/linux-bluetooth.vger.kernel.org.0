@@ -2,232 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A6417197964
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Mar 2020 12:36:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C67E81979B3
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Mar 2020 12:52:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728788AbgC3Kgm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Mar 2020 06:36:42 -0400
-Received: from mail-yb1-f202.google.com ([209.85.219.202]:36401 "EHLO
-        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728656AbgC3Kgm (ORCPT
+        id S1729504AbgC3Kw2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Mar 2020 06:52:28 -0400
+Received: from mail-vk1-f194.google.com ([209.85.221.194]:43233 "EHLO
+        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729354AbgC3Kw2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Mar 2020 06:36:42 -0400
-Received: by mail-yb1-f202.google.com with SMTP id u1so4655396ybm.3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Mar 2020 03:36:40 -0700 (PDT)
+        Mon, 30 Mar 2020 06:52:28 -0400
+Received: by mail-vk1-f194.google.com with SMTP id v129so4184700vkf.10
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Mar 2020 03:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=SJeKMKG0mEpNFe6waj8HgqpQAmJ2X8vTQ/aK8SaCZog=;
-        b=H3RSlvL/zkAewnloFzWpsA+UICgzdOFdOMgxlQVsvVxh5EJEm3wiEt0QMxJknh6sDh
-         jEAjHzGipt6zDJMnoMa0VvZmYSaiTtrXusjQ49kbFkjU9z1Hq5lAzfr7R1f1MJi3gj1U
-         f2X02WY+9g4Z2CCAoSGU4YQ31Z+9KCnh/HT6vIGRI9Fbnf1SRnCMh8AKZSUpqM+8wI8F
-         Ts0NarVEgOR/B6aSrYaTp+wkdYMuJcPPmKmZQnzBg1iYfWEoNnyZ+xOzvsq79vQZvH1W
-         9TDIHxEUbXkwWCU3MPwnvmLSHHLQQWeYeXdjmoNCniM0ec4wGqW8zXGJWZvZhtic0ZNu
-         mAbA==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=82B0OONv9gwbZlPp43NzThDz2fRV+KRFwafOQ16joDw=;
+        b=W/pqz5d7jRz2XhuR0NPXi/HrPrA1EYS2PHHQ1FpsLUolfOVyK7H009Wnc0lrOJx6Hi
+         8vUUF/pk3PeclHcAYXDWVsOIJGvMQpXmWA9vT3q5H+Fq3bPr7slBRNCq5ggPLqTXWSUN
+         WeDqQdBB3Fj9UYma7K77X5d+kEKTp6fOD5VReaWt0mRVZHR6HEobypypOg452dQIxRuj
+         xU65Ut9jAR+y63swe5g9KvSFt96uljniqy4kiAqd2Y/ynJzIziUhlZ91pwoD0sDfF2kV
+         2p+fbv2x6QZq8+EhnWOm9VRs7gRyumQNwl/HLY+Ct1f3AZKCEqIBhRL3NUkC6PiM1Er/
+         am5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=SJeKMKG0mEpNFe6waj8HgqpQAmJ2X8vTQ/aK8SaCZog=;
-        b=JZsPOma3waiyI81P0DwC2wWXZIeg6pq555AT0PHfkOXLHGPqDbkK98ookm0d4MR0q/
-         j1vZnYtYotV+FTCXklP7XKeTrypE4pzWipMWr5Qtr95IeWACVpOHtYoNnkZ0XH27NjPW
-         qZjcCVdSj9/mAZ2TqXl4vqUOHE2C87INYbC5CsrfIvIEFi9rVqipnC7wJJMDek4JqA/4
-         vURGJk1QtpzGTCHWaPa8qwrYlfFRzqyETziHZe8jfLDCqEcFTaqRG4+hUWipQMptqIKC
-         17qfewmM4hdjFfHEffK9Ytw0jk4mFzMCZI8o7+JOKHPlZ/whVS5CWxhQ88Gafn+uDByp
-         QpHA==
-X-Gm-Message-State: ANhLgQ0V6V4xF0DHGo/ypkgqOVL4QjW5txCSSo1jdTuoILS51c0V3GRc
-        /xJ3/PpXdTTIAN357fqccRG/5Z45UejHkLjRIWdREAcHUf84svnaCSyILokPnmX5bDYlNPlHT4D
-        bytsifiRb0u1xI0SmdLaBcd/rTZS7d5mlueJuVpNmCRTJqaFjN7r5vN0K3nLHlXuSxZtuuVb6GF
-        UW
-X-Google-Smtp-Source: ADFU+vtzhGsp6WxY1/Qw+mNW8mHMgOOQ9JCJMV2S5Iw9BMbxYyCF89vkI6muvCrDh9tmHUYtCi+RJWv4Z+k1
-X-Received: by 2002:a25:d9c1:: with SMTP id q184mr19985293ybg.349.1585564599463;
- Mon, 30 Mar 2020 03:36:39 -0700 (PDT)
-Date:   Mon, 30 Mar 2020 18:36:31 +0800
-Message-Id: <20200330183400.Bluez.v2.1.Id504860f0b01d123e0b29ed953dbdf02d738fed7@changeid>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.26.0.rc2.310.g2932bb562d-goog
-Subject: [Bluez PATCH v2] shared/att: Check the signature of att packets
-From:   Archie Pusaka <apusaka@google.com>
-To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     Archie Pusaka <apusaka@chromium.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=82B0OONv9gwbZlPp43NzThDz2fRV+KRFwafOQ16joDw=;
+        b=CpBGJftOhjMmhpDJZTYoj0FqkIK1fKp7fudGR3LsSU7vEpmmOvonp5BW5Zu5fuCmbW
+         TwcIqSDU4De5Tu5vh+sBdB7XoT1xbSErc4ih+3NBaPvcINf/A9KEJYL7Jige6pTbdMWa
+         T3Ak+p9Bi6DmTyU469QtbjOM2wo2Ms3GdNQ1nBTRJjydnLrIfKwmY84ZSq50HcU2RMFZ
+         z/xAqOBB3D1qtkIb33tg2ALRmkN4zKcz0yCb5581g5e4NFCfCDeqvdZfR0GypFOrUhQU
+         BTc7m9NZmcEi5wYkQaer5fbD4i2dFnSjr3rCT3kQugw0vVR7N4V3epIt1IHHWMzx4ySE
+         w+LQ==
+X-Gm-Message-State: AGi0PuZCCyYE5fASfHI+4UCKvHAKHIe3ZZH+apj/j2/1zK61Tvd0ygbK
+        sa+X8oVdBESRLkGNHOTVBZdQRab4PjIUViE99Ws=
+X-Google-Smtp-Source: APiQypKDRP4A2GOOhX29xPbS6X6J2bOe+cEnGPGhkRlrf/LV9QYV7GSVV1iViigrqjvUPzJfpKV+0f/QlvWFf/q+m5k=
+X-Received: by 2002:a1f:2c4b:: with SMTP id s72mr7433998vks.93.1585565545391;
+ Mon, 30 Mar 2020 03:52:25 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a67:c005:0:0:0:0:0 with HTTP; Mon, 30 Mar 2020 03:52:24
+ -0700 (PDT)
+Reply-To: maryalice00.12@postribe.com
+From:   Maryalice Williams <maryalicewilliams730@gmail.com>
+Date:   Mon, 30 Mar 2020 08:52:24 -0200
+Message-ID: <CAKwdjspKQpXNN-muj712Ym+s=yC75k8CUdb6ULnvzKHxbYXvwA@mail.gmail.com>
+Subject: Reply For More Details.
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Archie Pusaka <apusaka@chromium.org>
-
-According to bluetooth spec Ver 5.1, Vol 3, Part C (GAP), 10.4.2
-A device receiving signed data shall authenticate it by performing
-the Signing Algorithm. The signed data shall be authenticated by
-performing the Signing Algorithm where m is the Data PDU to be
-authenticated, k is the stored CSRK and the SignCounter is the
-received counter value. If the MAC computed by the Signing
-Algorithm does not match the received MAC, the verification fails
-and the Host shall ignore the received Data PDU.
-
-Currently bluez ignore the signature of received signed att
-packets, as the function bt_crypto_sign_att() only generates the
-signature, and not actually make any check about the genuineness
-of the signature itself.
-
-This patch also fix a wrong boolean condition which prevents
-handle_signed() to be called.
-
-Tested to pass these BT certification test
-SM/MAS/SIGN/BV-03-C
-SM/MAS/SIGN/BI-01-C
----
-
-Changes in v2:
-- Move the signature verification part to crypto.c
-- Attempt not to copy the whole pdu while verifying the signature
-  by not separating the opcode from the rest of pdu too early, so
-  we don't have to rejoin them later.
-
- src/shared/att.c    | 25 ++++++++++++-------------
- src/shared/crypto.c | 22 ++++++++++++++++++++--
- src/shared/crypto.h |  2 ++
- 3 files changed, 34 insertions(+), 15 deletions(-)
-
-diff --git a/src/shared/att.c b/src/shared/att.c
-index 948a5548b..31c6901fb 100644
---- a/src/shared/att.c
-+++ b/src/shared/att.c
-@@ -881,15 +881,15 @@ static void respond_not_supported(struct bt_att *att, uint8_t opcode)
- 									NULL);
- }
- 
--static bool handle_signed(struct bt_att *att, uint8_t opcode, uint8_t *pdu,
--								ssize_t pdu_len)
-+static bool handle_signed(struct bt_att *att, uint8_t *pdu, ssize_t pdu_len)
- {
- 	uint8_t *signature;
- 	uint32_t sign_cnt;
- 	struct sign_info *sign;
-+	uint8_t opcode = pdu[0];
- 
- 	/* Check if there is enough data for a signature */
--	if (pdu_len < 2 + BT_ATT_SIGNATURE_LEN)
-+	if (pdu_len < 3 + BT_ATT_SIGNATURE_LEN)
- 		goto fail;
- 
- 	sign = att->remote_sign;
-@@ -903,10 +903,8 @@ static bool handle_signed(struct bt_att *att, uint8_t opcode, uint8_t *pdu,
- 	if (!sign->counter(&sign_cnt, sign->user_data))
- 		goto fail;
- 
--	/* Generate signature and verify it */
--	if (!bt_crypto_sign_att(att->crypto, sign->key, pdu,
--				pdu_len - BT_ATT_SIGNATURE_LEN, sign_cnt,
--				signature))
-+	/* Verify received signature */
-+	if (!bt_crypto_verify_att_sign(att->crypto, sign->key, pdu, pdu_len))
- 		goto fail;
- 
- 	return true;
-@@ -918,15 +916,16 @@ fail:
- 	return false;
- }
- 
--static void handle_notify(struct bt_att_chan *chan, uint8_t opcode,
--						uint8_t *pdu, ssize_t pdu_len)
-+static void handle_notify(struct bt_att_chan *chan, uint8_t *pdu,
-+							ssize_t pdu_len)
- {
- 	struct bt_att *att = chan->att;
- 	const struct queue_entry *entry;
- 	bool found;
-+	uint8_t opcode = pdu[0];
- 
--	if ((opcode & ATT_OP_SIGNED_MASK) && !att->crypto) {
--		if (!handle_signed(att, opcode, pdu, pdu_len))
-+	if ((opcode & ATT_OP_SIGNED_MASK) && att->crypto) {
-+		if (!handle_signed(att, pdu, pdu_len))
- 			return;
- 		pdu_len -= BT_ATT_SIGNATURE_LEN;
- 	}
-@@ -963,7 +962,7 @@ static void handle_notify(struct bt_att_chan *chan, uint8_t opcode,
- 		found = true;
- 
- 		if (notify->callback)
--			notify->callback(chan, opcode, pdu, pdu_len,
-+			notify->callback(chan, opcode, pdu + 1, pdu_len - 1,
- 							notify->user_data);
- 
- 		/* callback could remove all entries from notify list */
-@@ -1054,7 +1053,7 @@ static bool can_read_data(struct io *io, void *user_data)
- 		util_debug(att->debug_callback, att->debug_data,
- 					"(chan %p) ATT PDU received: 0x%02x",
- 					chan, opcode);
--		handle_notify(chan, opcode, pdu + 1, bytes_read - 1);
-+		handle_notify(chan, pdu, bytes_read);
- 		break;
- 	}
- 
-diff --git a/src/shared/crypto.c b/src/shared/crypto.c
-index 5c5e1217d..879ebd35d 100644
---- a/src/shared/crypto.c
-+++ b/src/shared/crypto.c
-@@ -75,6 +75,8 @@ struct af_alg_iv {
- /* Maximum message length that can be passed to aes_cmac */
- #define CMAC_MSG_MAX	80
- 
-+#define ATT_SIGN_LEN	12
-+
- struct bt_crypto {
- 	int ref_count;
- 	int ecb_aes;
-@@ -265,7 +267,8 @@ static inline void swap_buf(const uint8_t *src, uint8_t *dst, uint16_t len)
- 
- bool bt_crypto_sign_att(struct bt_crypto *crypto, const uint8_t key[16],
- 				const uint8_t *m, uint16_t m_len,
--				uint32_t sign_cnt, uint8_t signature[12])
-+				uint32_t sign_cnt,
-+				uint8_t signature[ATT_SIGN_LEN])
- {
- 	int fd;
- 	int len;
-@@ -319,10 +322,25 @@ bool bt_crypto_sign_att(struct bt_crypto *crypto, const uint8_t key[16],
- 	 * 12 octets
- 	 */
- 	swap_buf(out, tmp, 16);
--	memcpy(signature, tmp + 4, 12);
-+	memcpy(signature, tmp + 4, ATT_SIGN_LEN);
- 
- 	return true;
- }
-+
-+bool bt_crypto_verify_att_sign(struct bt_crypto *crypto, const uint8_t key[16],
-+				const uint8_t *pdu, uint16_t pdu_len)
-+{
-+	uint8_t generated_sign[ATT_SIGN_LEN];
-+	const uint8_t *sign = pdu + pdu_len - ATT_SIGN_LEN;
-+	uint32_t sign_cnt = get_le32(sign);
-+
-+	if (!bt_crypto_sign_att(crypto, key, pdu, pdu_len - ATT_SIGN_LEN,
-+						sign_cnt, generated_sign))
-+		return false;
-+
-+	return memcmp(generated_sign, sign, ATT_SIGN_LEN) == 0;
-+}
-+
- /*
-  * Security function e
-  *
-diff --git a/src/shared/crypto.h b/src/shared/crypto.h
-index c58d2e104..d17daa835 100644
---- a/src/shared/crypto.h
-+++ b/src/shared/crypto.h
-@@ -62,5 +62,7 @@ bool bt_crypto_h6(struct bt_crypto *crypto, const uint8_t w[16],
- bool bt_crypto_sign_att(struct bt_crypto *crypto, const uint8_t key[16],
- 				const uint8_t *m, uint16_t m_len,
- 				uint32_t sign_cnt, uint8_t signature[12]);
-+bool bt_crypto_verify_att_sign(struct bt_crypto *crypto, const uint8_t key[16],
-+				const uint8_t *pdu, uint16_t pdu_len);
- bool bt_crypto_gatt_hash(struct bt_crypto *crypto, struct iovec *iov,
- 				size_t iov_len, uint8_t res[16]);
 -- 
-2.26.0.rc2.310.g2932bb562d-goog
+My dear,
 
+I am Mrs Maryalice Williams, I want to send you donation of two
+million seven hundred thousand Dollars ($2.7M) for volunteer projects
+in your country due to my ill health that could not permit me. Kindly
+reply for more details, and also send me the following details, as per
+below, your full Name ..........,  Address...........,
+Age...............,  Occupation ...............
+
+Remain blessed,
+Mrs. Maryalice Williams.
