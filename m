@@ -2,59 +2,57 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B8B8D198E52
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 31 Mar 2020 10:28:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2792D198E76
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 31 Mar 2020 10:30:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730143AbgCaI2N (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 31 Mar 2020 04:28:13 -0400
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:40911 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730107AbgCaI2L (ORCPT
+        id S1730026AbgCaIah (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 31 Mar 2020 04:30:37 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:56212 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726397AbgCaIah (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 31 Mar 2020 04:28:11 -0400
-Received: by mail-wm1-f52.google.com with SMTP id a81so1534075wmf.5
-        for <linux-bluetooth@vger.kernel.org>; Tue, 31 Mar 2020 01:28:10 -0700 (PDT)
+        Tue, 31 Mar 2020 04:30:37 -0400
+Received: by mail-wm1-f66.google.com with SMTP id r16so1469518wmg.5
+        for <linux-bluetooth@vger.kernel.org>; Tue, 31 Mar 2020 01:30:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=silvair-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=r3KIKeOoCXTzCSOwCnlRZi5CXO6ooZd8wIikiuhvKRk=;
-        b=KF3KmpYY0aCnLJOtMWTfnVz0Lun85v9ES/c/hZVm7j5TF17DS6KuQLCiDuh+p4rIE5
-         Ig9FCUkFHCPxH8J9LLG5apgVdb3sRQ9YRDC87RpTbduAr7WM74Q7wM8bgKsqVy0DsVox
-         m6bvM3+OoD2LNxV9njzDhM377bz491aeZra4ZX5oTdyEpG+aZGX+O6rpcIhY6sWEcLCE
-         pJb/exYVqUlc4ni3Md4lS+84VJcMGFI2LX7oQ2mceqKVGiFl2vYui/48ZeSUIfOF9u6Q
-         gT62bBx1OIybAwm7Boyzjs2EzpVjMBNxWR/v5PfQimkNOkdVxv8FxeHz150GMKpNI53o
-         APfg==
+        bh=UDWh3DZ5NCFsjNdxv0kUkXCUq+AttxLWLiBeX4JFPTE=;
+        b=qv4McKkwK5PQMfLWDE2zzjxi5ghnL5CXdgFrmjcemBo7aFjAO9wmxSJkZIB2LT6s2c
+         z4Buzuyj1jdnrOF9xJAaCk8rzBls/zYP7LM9V5NYeocUfiwSn1kUV+32TQKahLzjSX8j
+         zQj5zJ9XIFpiV6brwXy9soW6hqcPYb5YKuE1dxi9cVd6ZBntijcNZjgSrX/lpBwyat7d
+         K1vV/GSqR0ZJQhgL6IK7rVbbFu1ZmnwusTPdm1qXNSVqU34HGBCXqsSoFVSGZy1wwESg
+         GXt79qhnGWQMpYAvohE7wwHjjmkcn2l5CsSMbxZSdcnj+4kc9IsXiVta03h+5nV67pFU
+         8xJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=r3KIKeOoCXTzCSOwCnlRZi5CXO6ooZd8wIikiuhvKRk=;
-        b=t6F63zq8huN2e27OWNWYwhNNf7eXnvBQuT6ygtXAIgMsESjjHXJux7FPw+uyT43UuS
-         3r8rN9+zxuTHhy+tt6cntv9UuPRsqIVQHoSMqCa4mTSBxbkW8j8ml5cTKZwN9EiFD/HX
-         BKeWRcGDjVDX27Gsw+Su9dyiLA9FU/Pb2HrL2dg3p0o08oK570xa6UtQ2Za3W1MwMFdr
-         Us/+494GdSEe19brDT4b8kVZSuYaVxpAhLl0FHHn3L1rJYjcQEtXAWu6Ze8zIIEZZgSt
-         FHmdk4FmgRz8pHezQApruWT/vHKk4a0fWKMWJsTOFnaElhKVe8EYcQ2zf6vf4JUmUg0S
-         0a0w==
-X-Gm-Message-State: ANhLgQ0hSyAYLQyiVKgvBBogFUR0eVrs9Hy7kFzn79RmrTxwatte5EG/
-        1PmPwlhWiysL/IXsVwqJJIZDUm8gnmVqPQ==
-X-Google-Smtp-Source: ADFU+vsCaCxk39ZoF8JK/STztDkFqYzGHUrALeAGa4HQrJkaVGSSQ1YjE8KgwDQ5bbLotawuefM3bw==
-X-Received: by 2002:a05:600c:21cb:: with SMTP id x11mr2277580wmj.111.1585643289984;
-        Tue, 31 Mar 2020 01:28:09 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UDWh3DZ5NCFsjNdxv0kUkXCUq+AttxLWLiBeX4JFPTE=;
+        b=iKwyRPQ0Cxvp/wDc0V4fvGU2JNdNhOtDxz9wdX5J+GT38sYh4qbb2JJmeLywhTfuVU
+         KL71azZrfKDLcEdeztKuLujvUu9K6z2t9YheP8vPCa/lwJU7lyc4IKSr0H/z9O8QRLOu
+         Pn1jYYHHG1hBLdAm1bK64XNsXiGNETyoV3L1bns73ozC5SOWnc9Ft6xilwuI1eL2sRZI
+         64mW6ZFMfe7ljw3/dPhN+wRlI/St9a1Wip05bJgTsv4KoPInzDJ8qgIPmjPwPkUTLmI3
+         u4boBY7QlXlRfeaBjJTht85UWi2VoY6cz9dPzDV2Z1UEf3s1FdODn7nq+zVmKvyXN+jp
+         RKiQ==
+X-Gm-Message-State: ANhLgQ0TReFA0TiE1L4WLRSP0SzvM9kt0o8uHZkT87B+qY0s19tGIkgH
+        /auv5Zu8KGhU4u0j5O1gnQCY4Jpe8HLCvg==
+X-Google-Smtp-Source: ADFU+vtsFDzjWcc3lSLAkxs9cBMdnekyjb4YqsNvuv+QyyvOv1e+BHNa7ZPgvqmhqUCuj/Sauyxcfg==
+X-Received: by 2002:a1c:e30b:: with SMTP id a11mr2124151wmh.7.1585643433330;
+        Tue, 31 Mar 2020 01:30:33 -0700 (PDT)
 Received: from mlowasrzechonek2133.silvair.lan ([217.153.94.18])
-        by smtp.gmail.com with ESMTPSA id x16sm6172296wrn.71.2020.03.31.01.28.09
+        by smtp.gmail.com with ESMTPSA id d7sm11206529wrr.77.2020.03.31.01.30.32
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 01:28:09 -0700 (PDT)
+        Tue, 31 Mar 2020 01:30:32 -0700 (PDT)
 From:   =?UTF-8?q?Micha=C5=82=20Lowas-Rzechonek?= 
         <michal.lowas-rzechonek@silvair.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 6/6] doc/mesh-api: OOB Information field is 16 bit, not 32
-Date:   Tue, 31 Mar 2020 10:28:10 +0200
-Message-Id: <20200331082810.10856-7-michal.lowas-rzechonek@silvair.com>
+Subject: [PATCH BlueZ]  SG-311: Fix FPE in overcommit logic.
+Date:   Tue, 31 Mar 2020 10:30:41 +0200
+Message-Id: <20200331083041.13108-1-michal.lowas-rzechonek@silvair.com>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200331082810.10856-1-michal.lowas-rzechonek@silvair.com>
-References: <20200331082810.10856-1-michal.lowas-rzechonek@silvair.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -62,23 +60,34 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
----
- doc/mesh-api.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+During overcommit, mesh_config_save is called in asynchronous mode to
+avoid blocking Send() calls. This means that update of cfg->write_time
+is scheduled via l_idle_oneshot, so if the next Send() gets scheduled
+first, the code may see elapsed time of zero.
 
-diff --git a/doc/mesh-api.txt b/doc/mesh-api.txt
-index 848106335..513b021d8 100644
---- a/doc/mesh-api.txt
-+++ b/doc/mesh-api.txt
-@@ -950,7 +950,7 @@ Object path	freely definable
+If this happens, then the overcommit logic was already executed and the
+overcommit is pending, so we can just return.
+---
+ mesh/mesh-config-json.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/mesh/mesh-config-json.c b/mesh/mesh-config-json.c
+index ad2d4d0f8..21f2cfc37 100644
+--- a/mesh/mesh-config-json.c
++++ b/mesh/mesh-config-json.c
+@@ -2014,6 +2014,12 @@ bool mesh_config_write_seq_number(struct mesh_config *cfg, uint32_t seq,
+ 		timersub(&now, &cfg->write_time, &elapsed);
+ 		elapsed_ms = elapsed.tv_sec * 1000 + elapsed.tv_usec / 1000;
  
- 		The data parameter is a variable length byte array, that may
- 		have 1, 2 or 3 distinct fields contained in it including the 16
--		byte remote device UUID (always), a 32 bit mask of OOB
-+		byte remote device UUID (always), a 16 bit mask of OOB
- 		authentication flags (optional), and a 32 bit URI hash (if URI
- 		bit set in OOB mask). Whether these fields exist or not is a
- 		decision of the remote device.
++		/* If time since last write is zero, this means that
++		 * idle_save_config is already pending, so we don't need to do
++		 * anything. */
++		if (!elapsed_ms)
++			return true;
++
+ 		cached = seq + (seq - cfg->write_seq) *
+ 					1000 * MIN_SEQ_CACHE_TIME / elapsed_ms;
+ 
 -- 
 2.20.1
 
