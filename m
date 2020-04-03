@@ -2,81 +2,129 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DD9019E079
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Apr 2020 23:45:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F7AE19E15D
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  4 Apr 2020 01:15:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727924AbgDCVpG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 3 Apr 2020 17:45:06 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:42698 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726460AbgDCVpG (ORCPT
+        id S1727950AbgDCXPF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 3 Apr 2020 19:15:05 -0400
+Received: from jax4mhfb02.myregisteredsite.com ([64.69.218.95]:35384 "EHLO
+        jax4mhfb02.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727829AbgDCXPE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 3 Apr 2020 17:45:06 -0400
-Received: by mail-oi1-f193.google.com with SMTP id e4so7473788oig.9
-        for <linux-bluetooth@vger.kernel.org>; Fri, 03 Apr 2020 14:45:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+6AVOof6asm5hcDloaKNuyIUKdyCsywzyeOEfgn1Rrw=;
-        b=fFX2qFpcOeghqczgr5V3xKJkQCTP6XGnEhRX9nPM4JRWuNouMHsLzUTqJ8b4Ep9NMP
-         /dypDFgln39dIeFoqv6lFxLCyARSITA4Fb11o+CjNrlcT77hjEbjHBMX7DqHLJrOs+bN
-         KVkYK6Ft1BYq9slVKM3HbIm0LRJhE/Tew7nbGu46QUgwBoZ3YImOKR1Z4qN+tqWdN+i8
-         XGJEPDnoqtgCQ8aSMKYvS3atH3c9fXIUkKf0NWWytVFC20hjLW7BNf9knVp3NP6mLiRm
-         BeOhf/xwy6rFIyZU457kdpy5Po/I9XZRkkm5+SMm8q5/GMrx05Xp5q3sP7jLQdOH1Lfc
-         LQZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+6AVOof6asm5hcDloaKNuyIUKdyCsywzyeOEfgn1Rrw=;
-        b=n0sBBJHQoBZ1mWTurBwbIBhK7YtcB/tcwWkfKnjERg7jPcM0EoJ4d9UfvQHLnkzHi0
-         F4hqqC7iqNEJO4LLtAnnrbIaa2Od5kMpV1oHy4m5GcLI3cHrUUADRnXCg1DWj7d8FV0a
-         9/M+AozYI/S5CW5Syv14KrzXo8QRKneuhSTf0fK88v36JZAoE/AW0YqT1ZH8Q30Tq8SR
-         5O6pZ8o6UZTKRsu4A3EOJaqcxNCC5hEoA+IBgpVX1sie9ARCdL26wMiDRtL/+fOeDDxq
-         jbC4+HRw5nIKG83hQp4Wam2FQ6Gt53BLgEwFHsV/TPUNt8iw3TSxtRaUtiGrHypf9Vd7
-         Y2BA==
-X-Gm-Message-State: AGi0PubyvNPH67ovXnGe/8hbVquNs3YnsK8B841+7TgbA25sucHyBiwX
-        HAyBON3lBUXIVNnO+0cVc4NBv/BzPxF4+h0IWbcdmBcN
-X-Google-Smtp-Source: APiQypJBmq2HrH7/BaZ3s0MsbZJbGUSjkkMOASDif93h6pM9x05y3U98TBS8UYml8BE+iSxPNBfjlkkvHII1xwshbCU=
-X-Received: by 2002:aca:5345:: with SMTP id h66mr4918669oib.110.1585950305594;
- Fri, 03 Apr 2020 14:45:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <1585899591-14623-1-git-send-email-thorsten.klein@bshg.com>
-In-Reply-To: <1585899591-14623-1-git-send-email-thorsten.klein@bshg.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Fri, 3 Apr 2020 14:44:53 -0700
-Message-ID: <CABBYNZLM63OXFcQvP-Z6M_rrYZMVrZyN_EjriaqejJTr5PUn9w@mail.gmail.com>
-Subject: Re: [PATCH BlueZ] Added Manufacturer Data for Scan Response
-To:     "Klein, Thorsten (BSH)" <kleinkastel@googlemail.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "Klein, Thorsten (BSH)" <thorsten.klein@bshg.com>
+        Fri, 3 Apr 2020 19:15:04 -0400
+X-Greylist: delayed 563 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Apr 2020 19:15:03 EDT
+Received: from atl4mhob15.registeredsite.com (atl4mhob15.registeredsite.com [209.17.115.53])
+        by jax4mhfb02.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id 033N5b5S014956
+        for <linux-bluetooth@vger.kernel.org>; Fri, 3 Apr 2020 19:05:38 -0400
+Received: from mailpod.hostingplatform.com (atl4qobmail01pod5.registeredsite.com [10.30.71.94])
+        by atl4mhob15.registeredsite.com (8.14.4/8.14.4) with ESMTP id 033N5asE014293
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
+        for <linux-bluetooth@vger.kernel.org>; Fri, 3 Apr 2020 19:05:36 -0400
+Received: (qmail 168384 invoked by uid 0); 3 Apr 2020 23:05:36 -0000
+X-TCPREMOTEIP: 208.85.15.155
+X-Authenticated-UID: sbrown@opensat.com
+Received: from unknown (HELO 155-15-85-208.altiusbb.net) (sbrown@opensat.com@208.85.15.155)
+  by 0 with ESMTPA; 3 Apr 2020 23:05:36 -0000
+Received: from localhost (localhost [127.0.0.1])
+        by 155-15-85-208.altiusbb.net (Postfix) with ESMTP id 1BD4E1540543
+        for <linux-bluetooth@vger.kernel.org>; Fri,  3 Apr 2020 19:05:35 -0400 (EDT)
+X-Virus-Scanned: Debian amavisd-new at ewol.com
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-999 required=6.31
+        tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham autolearn_force=no
+Received: from 155-15-85-208.altiusbb.net ([127.0.0.1])
+        by localhost (fl-server.ewol.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id JFg6C4h89jId for <linux-bluetooth@vger.kernel.org>;
+        Fri,  3 Apr 2020 19:05:28 -0400 (EDT)
+Received: from w7.lan (w7.lan [192.168.1.9])
+        by 155-15-85-208.altiusbb.net (Postfix) with ESMTP id DED1F1540459
+        for <linux-bluetooth@vger.kernel.org>; Fri,  3 Apr 2020 19:05:28 -0400 (EDT)
+Message-ID: <65249ba1d4762186088e6b4496508510e0a06d93.camel@ewol.com>
+Subject: mesh: test/test-mesh fails to provision node
+From:   Steve Brown <sbrown@ewol.com>
+To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Date:   Fri, 03 Apr 2020 19:05:28 -0400
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.34.1-2 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Thorsten,
+test/test-mesh can no longer provision a node.
 
-On Fri, Apr 3, 2020 at 12:43 AM Klein, Thorsten (BSH)
-<kleinkastel@googlemail.com> wrote:
->
-> A ManufacturerData field is added to the ScanResponse. Keys are the Manufacturer ID to associate with the data.
->
-> Schachschal, Maximilian (BSH) (1):
->   ManufacturerData field added to ScanResponse
->
->  doc/advertising-api.txt |  6 ++++++
->  src/advertising.c       | 25 +++++++++++++++++++------
->  2 files changed, 25 insertions(+), 6 deletions(-)
->
-> --
-> 2.7.4
+mesh-cfgclient correctly provisions the same node.
 
-Was this suppose to be a cover letter? Imo it is pointless to send
-these for 1 patch set so please be more verbose on the actual patch
-description.
+In poking around with d-feet, the interface
+org.freedesktop.DBus.Properties isn't created by test/test-mesh, but is
+by mesh-cfgclient.
 
--- 
-Luiz Augusto von Dentz
+Steve
+
+================
+
+test/test-mesh fails with:
+
+create
+Creating with UUID 0e04050a0b090d0c0108060f0a020307
+Created mesh network with token bb0f18f8901f3587
+Attach mesh node to bluetooth-meshd daemon
+Mesh app registered: /org/bluez/mesh/node0e04050a0b090d0c0108060f0a020307
+scan
+Scanning...
+Scan procedure started
+ScanResult >> RSSI: -34 UUID: acda451feca3903e4560f6a3a25a437a OOB Data: 0000
+uuid
+Enter 32-digit hex remote UUID:
+acda451feca3903e4560f6a3a25a437a
+add
+Adding dev UUID acda451feca3903e4560f6a3a25a437a
+AddNode procedure failed  org.bluez.mesh.Error.Failed: Failed to start provisioning initiator
+
+=====================================
+
+syslog:
+
+Apr  3 18:41:10 mesh0 bluetooth-meshd[6648]: mesh/manager.c:add_node_call() AddNode request
+Apr  3 18:41:10 mesh0 bluetooth-meshd[6648]: mesh/manager.c:scan_cancel() scan_cancel
+Apr  3 18:41:10 mesh0 bluetooth-meshd[6648]: Agent failed (org.freedesktop.DBus.Error.UnknownMethod), Traceback (most recent call last):
+Apr  3 18:41:10 mesh0 bluetooth-meshd[6648]:   File "/usr/lib/python3/dist-packages/dbus/service.py", line 658, in _message_cb
+Apr  3 18:41:10 mesh0 bluetooth-meshd[6648]:     (candidate_method, parent_method) = _method_lookup(self, method_name, interface_name)
+Apr  3 18:41:10 mesh0 bluetooth-meshd[6648]:   File "/usr/lib/python3/dist-packages/dbus/service.py", line 248, in _method_lookup
+Apr  3 18:41:10 mesh0 bluetooth-meshd[6648]:     raise UnknownMethodException('%s is not a valid method of interface %s' % (method_name, dbus_interface))
+Apr  3 18:41:10 mesh0 bluetooth-meshd[6648]: dbus.exceptions.UnknownMethodException: org.freedesktop.DBus.Error.UnknownMethod: Unknown method: GetAll is not a valid method of interface org.
+
+=============================================
+
+dbus-monitor log:
+
+method call time=1585918004.102388 sender=:1.409 -> destination=:1.301 serial=14 path=/org/bluez/mesh/node0a060d08020f03050b090c0a07010e04; interface=org.bluez.mesh.Management1; member=AddNode
+   array of bytes [
+      ac da 45 1f ec a3 90 3e 45 60 f6 a3 a2 5a 43 7a
+   ]
+   array [
+   ]
+method call time=1585918004.104726 sender=:1.301 -> destination=:1.409 serial=307 path=/mesh/test/agent; interface=org.freedesktop.DBus.Properties; member=GetAll
+   string "org.bluez.mesh.ProvisionAgent1"
+error time=1585918004.110353 sender=:1.409 -> destination=:1.301 error_name=org.freedesktop.DBus.Error.UnknownMethod reply_serial=307
+   string "Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/dbus/service.py", line 658, in _message_cb
+    (candidate_method, parent_method) = _method_lookup(self, method_name, interface_name)
+  File "/usr/lib/python3/dist-packages/dbus/service.py", line 248, in _method_lookup
+    raise UnknownMethodException('%s is not a valid method of interface %s' % (method_name, dbus_interface))
+dbus.exceptions.UnknownMethodException: org.freedesktop.DBus.Error.UnknownMethod: Unknown method: GetAll is not a valid method of interface org.freedesktop.DBus.Properties
+"
+error time=1585918004.112011 sender=:1.301 -> destination=:1.409 error_name=org.bluez.mesh.Error.Failed reply_serial=14
+   string "Failed to start provisioning initiator"
+
+
+signal time=1585918441.305863 sender=:1.2 -> destination=(null destination) serial=176 path=/org/freedesktop/timesync1; interface=org.freedesktop.DBus.Properties; member=PropertiesChanged
+   string "org.freedesktop.timesync1.Manager"
+   array [
+      dict entry(
+
+
