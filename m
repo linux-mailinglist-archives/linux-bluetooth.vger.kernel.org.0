@@ -2,52 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B395419DEB4
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Apr 2020 21:44:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 199AF19E062
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Apr 2020 23:34:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728154AbgDCToR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 3 Apr 2020 15:44:17 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:46320 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728121AbgDCToO (ORCPT
+        id S1727907AbgDCVeN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 3 Apr 2020 17:34:13 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:43677 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727829AbgDCVeN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 3 Apr 2020 15:44:14 -0400
-Received: from localhost.localdomain (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 41728CED06
-        for <linux-bluetooth@vger.kernel.org>; Fri,  3 Apr 2020 21:53:47 +0200 (CEST)
-From:   Marcel Holtmann <marcel@holtmann.org>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 10/10] Bluetooth: Add HCI device identifier for VIRTIO devices
-Date:   Fri,  3 Apr 2020 21:44:07 +0200
-Message-Id: <20200403194407.784943-11-marcel@holtmann.org>
-X-Mailer: git-send-email 2.25.1
+        Fri, 3 Apr 2020 17:34:13 -0400
+Received: by mail-oi1-f195.google.com with SMTP id k5so7453167oiw.10
+        for <linux-bluetooth@vger.kernel.org>; Fri, 03 Apr 2020 14:34:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ctI9475A8sRuqLMfAJ9sQiA/zqDADVZwrDE+bSG2srs=;
+        b=D66f1K0UQreKZGNIgsvyUlhbYHGSZNHlvEPrj1IVpKYAF8w+4rmQK1rzXsFPB67/+U
+         CZq85DpIsu3yfDSJQcs3zPeD9DS9Md4NczEFmaGgeJmK3bBSqIdLkVJPvPYEytglWIk4
+         ghy2ScyY9AEeVK7eMGMS9IiN0daO+PG7jHNqHfkGq1j4wjHoNl3uO4+HNxGkewSnwWGF
+         rKU7XiVNUslYmzn3OIF7jX+FL1dTd3+XEvSpP+cmkthlTMVO0Rib6pzdrP3VqZmpWhJA
+         vx+/ICZac6o6fVkD7TI/7peFVEPPVoewK1kf4U8u3JpyAOeVRej4gIhW5g0arPwfmfKn
+         duHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ctI9475A8sRuqLMfAJ9sQiA/zqDADVZwrDE+bSG2srs=;
+        b=j1mdPW/9Ug5XpOiHpQrBf62zUIf/EXmv0V2hzo+o7XZ56fIVK3HicHP4E0lL2ZBtGX
+         wsGpXrxC3De7KmXpLZpbU38FiQnRcqLKd/LG03gZcbBtBr5RB40Z7CkCqbb9g5++Whpy
+         Zjxupn57IFDdQOQvq46RE6FbxOW08g6k0YPseWpBXlKuIOSXFfoEnLKuwlkc/OSqxmDe
+         w+ZRhiNjw1YCfjof7da7NSICnaVMYLC0UrWkUbeN/zf+uLMoswamZa6qEmTdetZ5O6H2
+         DV6BYJ4dxAGZIdlTg9k/uc7/K/+M15Za0undP135QRsoc+SMDfm57lMNThJlnKN94XdA
+         a9Pg==
+X-Gm-Message-State: AGi0PuYNQHwHNwemcoM1EYkxEACti/ptyBCdyZ1/imQLwbn5U1rO4J7w
+        ii4t0n2FbhzTx3PO87VYuwZG9AlOErCuPBGmDi0=
+X-Google-Smtp-Source: APiQypIxVAGxCD3sjHd1y2PjIu2OtCyPPijKWpIJ7xACXrdVvyEwecbVYlAOMGaCO4FfXPmP9LjY31Op7NotgDSdbWE=
+X-Received: by 2002:aca:5345:: with SMTP id h66mr4891653oib.110.1585949652218;
+ Fri, 03 Apr 2020 14:34:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1585899568-14564-1-git-send-email-thorsten.klein@bshg.com> <1585899568-14564-2-git-send-email-thorsten.klein@bshg.com>
+In-Reply-To: <1585899568-14564-2-git-send-email-thorsten.klein@bshg.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 3 Apr 2020 14:34:00 -0700
+Message-ID: <CABBYNZKfkNGPqna6WZ9-11_CqoYZTsudHHBv=zqLjVnUSpe4kA@mail.gmail.com>
+Subject: Re: [PATCH BlueZ] fix dbus error code in case of invalid offset (org.bluez.Error.InvalidOffset)
+To:     "Klein, Thorsten (BSH)" <kleinkastel@googlemail.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "Ryll, Jan (BSH)" <jan.ryll@bshg.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch assigns the next free HCI device identifier to Bluetooth
-devices based on VIRTIO devices.
+Hi Thorsten,
 
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
----
- include/net/bluetooth/hci.h | 1 +
- 1 file changed, 1 insertion(+)
+You may want to fix the commit message to state that this is for the
+client, e.g.
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 086a9e9d5d03..79de2a659dd6 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -68,6 +68,7 @@
- #define HCI_SPI		7
- #define HCI_I2C		8
- #define HCI_SMD		9
-+#define HCI_VIRTIO	10
- 
- /* HCI controller types */
- #define HCI_PRIMARY	0x00
+client: Fix not sending InvalidOffset
+
+...<some description why it is needed>
+
+On Fri, Apr 3, 2020 at 12:42 AM Klein, Thorsten (BSH)
+<kleinkastel@googlemail.com> wrote:
+>
+> From: "Ryll, Jan (BSH)" <jan.ryll@bshg.com>
+>
+> ---
+>  client/gatt.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/client/gatt.c b/client/gatt.c
+> index 416eda9..cf2cb17 100644
+> --- a/client/gatt.c
+> +++ b/client/gatt.c
+> @@ -2276,6 +2276,10 @@ static DBusMessage *chrc_write_value(DBusConnection *conn, DBusMessage *msg,
+>         if (prep_authorize)
+>                 return g_dbus_create_reply(msg, DBUS_TYPE_INVALID);
+>
+> +    if (offset >= (chrc->max_val_len))
+> +        return g_dbus_create_error(msg,
+> +                               "org.bluez.Error.InvalidOffset", NULL);
+> +
+>         if (write_value(&chrc->value_len, &chrc->value, value, value_len,
+>                                                 offset, chrc->max_val_len))
+>                 return g_dbus_create_error(msg,
+> --
+> 2.7.4
+>
+
+
 -- 
-2.25.1
-
+Luiz Augusto von Dentz
