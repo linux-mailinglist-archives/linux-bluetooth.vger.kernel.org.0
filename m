@@ -2,70 +2,163 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F54E1A0133
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Apr 2020 00:43:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62E091A0001
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 Apr 2020 23:14:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbgDFWn0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 6 Apr 2020 18:43:26 -0400
-Received: from 2.mo2.mail-out.ovh.net ([188.165.53.149]:34809 "EHLO
-        2.mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbgDFWn0 (ORCPT
+        id S1726230AbgDFVOc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 6 Apr 2020 17:14:32 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:34371 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726084AbgDFVOc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 6 Apr 2020 18:43:26 -0400
-X-Greylist: delayed 4201 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Apr 2020 18:43:25 EDT
-Received: from player694.ha.ovh.net (unknown [10.108.35.223])
-        by mo2.mail-out.ovh.net (Postfix) with ESMTP id 7F6B31D12AA
-        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Apr 2020 22:14:13 +0200 (CEST)
-Received: from labapart.com (i577BCB24.versanet.de [87.123.203.36])
-        (Authenticated sender: olivier@labapart.com)
-        by player694.ha.ovh.net (Postfix) with ESMTPSA id 1F0EA11165BFB;
-        Mon,  6 Apr 2020 20:14:12 +0000 (UTC)
-From:   Olivier Martin <olivier@labapart.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Olivier Martin <olivier@labapart.com>
-Subject: [PATCH BlueZ] emulator: Fix command line parameters with optional argument
-Date:   Mon,  6 Apr 2020 22:14:10 +0200
-Message-Id: <20200406201410.11803-1-olivier@labapart.com>
-X-Mailer: git-send-email 2.17.1
-X-Ovh-Tracer-Id: 10202060534162615884
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduhedrudefgddugedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpefhvffufffkofestddtredtredttdenucfhrhhomhepqfhlihhvihgvrhcuofgrrhhtihhnuceoohhlihhvihgvrheslhgrsggrphgrrhhtrdgtohhmqeenucfkpheptddrtddrtddrtddpkeejrdduvdefrddvtdefrdefieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphdqohhuthdphhgvlhhopehplhgrhigvrheileegrdhhrgdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomhepohhlihhvihgvrheslhgrsggrphgrrhhtrdgtohhmpdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+        Mon, 6 Apr 2020 17:14:32 -0400
+Received: by mail-ot1-f66.google.com with SMTP id m2so938109otr.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 06 Apr 2020 14:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WonRw+4ODStzR6anIq5922KAmURvty+C1tiuaqgbIXo=;
+        b=pJynulQq3FKQd2FI/LjSkzZ7kQT7z0th/3p4JCtf2+IZL3W4C9rpYmuLrFGAD3+ywl
+         Hfrqasn81+X+w+mwg93SxRkUS5pjRGjsxgyzhQVLaUazNo4Su/YGpY1PwJ97EMgpJEBH
+         qnNIiPQJDi9zNYUxJf3oMlv1VLH1Rn9casLTXQ0NozSqPrICBbAzlH6H+NZdRK4bgGnX
+         Sw23YoC0EMUs5FbhVfMnIVPcB2mEr96DIPg/cJPyJZRmxyILO4ToQPupkW0AtuOlCc+O
+         YfoE6jK/7TCE96lgnEaHSeixG5e8YGmU5cJBkgH40TE8U1zcWBqh4RYOqF6gZojIeZsl
+         wNWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WonRw+4ODStzR6anIq5922KAmURvty+C1tiuaqgbIXo=;
+        b=J9WRdPb7LWJPQ9pn04DTjGG6Ace9GotHEiJ0h1b/RiQUayAu8ZOssOcwYr9tGf7rHm
+         7qDWdjjn/XNrCV65MAMNMIdjDhujpkq/GDbJVFpCl4OXlZ952WrRJ3SiIdH2LZoJoK+6
+         bWsw1dSYhjv0ikVjQeJZG3SZhm4rqQYvsTBWDJNEgKtXuxZWBpfUzMTGJ4nJA84yWEBT
+         6BHGmFLfsm+HiGnH04hb1hl8MDBMlUJcqS7VD9zR2/vEdKHjo57qBvmWhNzN56bEVZyk
+         PfiKLz2wufLkZicZ64KUQF1WvjBp4xkCTY83C9067zFA7znFDw2WB6oErMM8SYudo662
+         JJTg==
+X-Gm-Message-State: AGi0PuY9eCfK+1APtIupIsLg63SQ0Hz0znmhAwhB7KNICqJmF85s0aNU
+        dhUA+HM28tL+eGpKzh+wUgI7d0wdE66RXbMIsNk=
+X-Google-Smtp-Source: APiQypLo65jayM3qm/M2ScstvUWhwHfjGMqtYdA96bta4Owe3bVVQl4n2vPPvD067K174cxjgLIttK1OxizjDOvM1GM=
+X-Received: by 2002:a9d:67c6:: with SMTP id c6mr19207142otn.11.1586207671050;
+ Mon, 06 Apr 2020 14:14:31 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200406114845.255532-1-apusaka@google.com> <20200406194749.Bluez.v3.2.Ieda68013af7fbafbf53fbf7c8fd85ea295153e5e@changeid>
+In-Reply-To: <20200406194749.Bluez.v3.2.Ieda68013af7fbafbf53fbf7c8fd85ea295153e5e@changeid>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Mon, 6 Apr 2020 14:14:19 -0700
+Message-ID: <CABBYNZJwQ5e1iULGDnNKaqnmRpXhEJWC=_TUmMFoBepGmzJJBw@mail.gmail.com>
+Subject: Re: [Bluez PATCH v3 2/3] unit/test-crypto: test for bt_crypto_verify_att_sign
+To:     Archie Pusaka <apusaka@google.com>
+Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Archie Pusaka <apusaka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Some parameters were missing the indication that additional
-argument could be expected.
----
- emulator/main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Hi Archie,
 
-diff --git a/emulator/main.c b/emulator/main.c
-index 68c53488e..3e32bf95d 100644
---- a/emulator/main.c
-+++ b/emulator/main.c
-@@ -58,8 +58,10 @@ static void usage(void)
- 		"\t-s                    Create local server sockets\n"
- 		"\t-l [num]              Number of local controllers\n"
- 		"\t-L                    Create LE only controller\n"
-+		"\t-U [num]              Number of test LE controllers\n"
- 		"\t-B                    Create BR/EDR only controller\n"
- 		"\t-A                    Create AMP controller\n"
-+		"\t-T [num]              Number of test AMP controllers\n"
- 		"\t-h, --help            Show help options\n");
- }
- 
-@@ -97,7 +99,7 @@ int main(int argc, char *argv[])
- 	for (;;) {
- 		int opt;
- 
--		opt = getopt_long(argc, argv, "Ssl::LBAUTvh",
-+		opt = getopt_long(argc, argv, "Ssl::LBAU::T::vh",
- 						main_options, NULL);
- 		if (opt < 0)
- 			break;
+On Mon, Apr 6, 2020 at 4:49 AM Archie Pusaka <apusaka@google.com> wrote:
+>
+> From: Archie Pusaka <apusaka@chromium.org>
+>
+> Adding tests for verifying att signature
+>
+> ---
+>
+> Changes in v3:
+> - Add unit test
+>
+> Changes in v2: None
+>
+>  unit/test-crypto.c | 59 ++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 59 insertions(+)
+>
+> diff --git a/unit/test-crypto.c b/unit/test-crypto.c
+> index e20b2fa66..3bc944be8 100644
+> --- a/unit/test-crypto.c
+> +++ b/unit/test-crypto.c
+> @@ -272,6 +272,58 @@ static void test_gatt_hash(gconstpointer data)
+>         tester_test_passed();
+>  }
+>
+> +struct verify_sign_test_data {
+> +       const uint8_t *msg;
+> +       uint16_t msg_len;
+> +       const uint8_t *key;
+> +       bool match;
+> +};
+> +
+> +static const uint8_t msg_to_verify_pass[] = {
+> +       0xd2, 0x12, 0x00, 0x13, 0x37, 0x01, 0x00, 0x00, 0x00, 0xF1, 0x87, 0x1E,
+> +       0x93, 0x3C, 0x90, 0x0F, 0xf2
+> +};
+> +
+> +static const struct verify_sign_test_data verify_sign_pass_data = {
+> +       .msg = msg_to_verify_pass,
+> +       .msg_len = sizeof(msg_to_verify_pass),
+> +       .key = key_5,
+> +       .match = true,
+> +};
+> +
+> +static const uint8_t msg_to_verify_bad_sign[] = {
+> +       0xd2, 0x12, 0x00, 0x13, 0x37, 0x01, 0x00, 0x00, 0x00, 0xF1, 0x87, 0x1E,
+> +       0x93, 0x3C, 0x90, 0x0F, 0xf1
+> +};
+> +
+> +static const struct verify_sign_test_data verify_sign_bad_sign_data = {
+> +       .msg = msg_to_verify_bad_sign,
+> +       .msg_len = sizeof(msg_to_verify_bad_sign),
+> +       .key = key_5,
+> +       .match = false,
+> +};
+> +
+> +static const uint8_t msg_to_verify_too_short[] = {
+> +       0xd2, 0x12, 0x00, 0x13, 0x37
+> +};
+> +
+> +static const struct verify_sign_test_data verify_sign_too_short_data = {
+
+These should be msg_to_verify_too_short.
+
+> +       .msg = msg_to_verify_bad_sign,
+> +       .msg_len = sizeof(msg_to_verify_bad_sign),
+> +       .key = key_5,
+> +       .match = false,
+> +};
+> +
+> +static void test_verify_sign(gconstpointer data)
+> +{
+> +       const struct verify_sign_test_data *d = data;
+> +       bool result = bt_crypto_verify_att_sign(crypto, d->key, d->msg,
+> +                                               d->msg_len);
+> +       g_assert(result == d->match);
+> +
+> +       tester_test_passed();
+> +}
+> +
+>  int main(int argc, char *argv[])
+>  {
+>         int exit_status;
+> @@ -292,6 +344,13 @@ int main(int argc, char *argv[])
+>
+>         tester_add("/crypto/gatt_hash", NULL, NULL, test_gatt_hash, NULL);
+>
+> +       tester_add("/crypto/verify_sign_pass", &verify_sign_pass_data,
+> +                                               NULL, test_verify_sign, NULL);
+> +       tester_add("/crypto/verify_sign_bad_sign", &verify_sign_bad_sign_data,
+> +                                               NULL, test_verify_sign, NULL);
+> +       tester_add("/crypto/verify_sign_too_short", &verify_sign_too_short_data,
+> +                                               NULL, test_verify_sign, NULL);
+> +
+>         exit_status = tester_run();
+>
+>         bt_crypto_unref(crypto);
+> --
+> 2.26.0.292.g33ef6b2f38-goog
+>
+
+
 -- 
-2.17.1
-
+Luiz Augusto von Dentz
