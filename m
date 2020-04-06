@@ -2,157 +2,70 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E53119FE3D
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 Apr 2020 21:43:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F54E1A0133
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Apr 2020 00:43:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbgDFTn0 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 6 Apr 2020 15:43:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53206 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725957AbgDFTn0 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 6 Apr 2020 15:43:26 -0400
-From:   bugzilla-daemon@bugzilla.kernel.org
-Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+        id S1726254AbgDFWn0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 6 Apr 2020 18:43:26 -0400
+Received: from 2.mo2.mail-out.ovh.net ([188.165.53.149]:34809 "EHLO
+        2.mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbgDFWn0 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 6 Apr 2020 18:43:26 -0400
+X-Greylist: delayed 4201 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Apr 2020 18:43:25 EDT
+Received: from player694.ha.ovh.net (unknown [10.108.35.223])
+        by mo2.mail-out.ovh.net (Postfix) with ESMTP id 7F6B31D12AA
+        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Apr 2020 22:14:13 +0200 (CEST)
+Received: from labapart.com (i577BCB24.versanet.de [87.123.203.36])
+        (Authenticated sender: olivier@labapart.com)
+        by player694.ha.ovh.net (Postfix) with ESMTPSA id 1F0EA11165BFB;
+        Mon,  6 Apr 2020 20:14:12 +0000 (UTC)
+From:   Olivier Martin <olivier@labapart.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 60824] [PATCH][regression] Cambridge Silicon Radio, Ltd
- Bluetooth Dongle unusable
-Date:   Mon, 06 Apr 2020 19:43:23 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: alexplose@gmail.com
-X-Bugzilla-Status: REOPENED
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-60824-62941-VPrYoKar22@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-60824-62941@https.bugzilla.kernel.org/>
-References: <bug-60824-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
-MIME-Version: 1.0
+Cc:     Olivier Martin <olivier@labapart.com>
+Subject: [PATCH BlueZ] emulator: Fix command line parameters with optional argument
+Date:   Mon,  6 Apr 2020 22:14:10 +0200
+Message-Id: <20200406201410.11803-1-olivier@labapart.com>
+X-Mailer: git-send-email 2.17.1
+X-Ovh-Tracer-Id: 10202060534162615884
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduhedrudefgddugedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpefhvffufffkofestddtredtredttdenucfhrhhomhepqfhlihhvihgvrhcuofgrrhhtihhnuceoohhlihhvihgvrheslhgrsggrphgrrhhtrdgtohhmqeenucfkpheptddrtddrtddrtddpkeejrdduvdefrddvtdefrdefieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphdqohhuthdphhgvlhhopehplhgrhigvrheileegrdhhrgdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomhepohhlihhvihgvrheslhgrsggrphgrrhhtrdgtohhmpdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=60824
+Some parameters were missing the indication that additional
+argument could be expected.
+---
+ emulator/main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Alexandre (alexplose@gmail.com) changed:
-
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |alexplose@gmail.com
-
---- Comment #59 from Alexandre (alexplose@gmail.com) ---
-
-
-(In reply to Alex from comment #55)
-> Hi,
-> My issue with this device looks a little different, and after applying the
-> latest patch from the thread I still have the issue.
-> 
-> btmon shows the following (last lines, see Set Event Filter error):
-> 
-> #20 [hci0] 9.289041
->       Read Number of Supported IAC (0x03|0x0038) ncmd 1
->         Status: Success (0x00)
->         Number of IAC: 2
-> < HCI Command: Read Current IAC LAP (0x03|0x0039) plen 0                    
-> #21 [hci0] 9.289050
-> > HCI Event: Command Complete (0x0e) plen 8                                   
-> >                                                          #22 [hci0]
-> 9.291043
->       Read Current IAC LAP (0x03|0x0039) ncmd 1
->         Status: Success (0x00)
->         Number of IAC: 1
->         Access code: 0x9e8b33 (General Inquiry)
-> < HCI Command: Set Event Filter (0x03|0x0005) plen 1                        
-> #23 [hci0] 9.291049
->         Type: Clear All Filters (0x00)
-> > HCI Event: Command Complete (0x0e) plen 4                                   
-> >                                                          #24 [hci0]
-> 9.293040
->       Set Event Filter (0x03|0x0005) ncmd 1
->         Status: Invalid HCI Command Parameters (0x12)
-> = Close Index: 00:1A:7D:DA:71:12                                            
-> [hci0] 9.293052
-> 
-> 
-> and the device stays down and inaccessible
-> Here is data from my system:
-> 
-> hciconfig -a 
-> hci0: Type: Primary  Bus: USB
->       BD Address: 00:1A:7D:DA:71:12  ACL MTU: 679:8  SCO MTU: 48:16
->       DOWN 
->       RX bytes:706 acl:0 sco:0 events:22 errors:0
->       TX bytes:68 acl:0 sco:0 commands:22 errors:0
->       Features: 0xbf 0x2e 0x4d 0xfa 0xd8 0x3d 0x7b 0x87
->       Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV3 
->       Link policy: 
->       Link mode: SLAVE ACCEPT 
-> 
-> hciconfig  hci0 up
-> Can't init device hci0: Invalid argument (22)
-> 
-> [bluetooth]# list
-> [bluetooth]# 
-> 
-> lsusb
-> Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
-> Bus 001 Device 005: ID 14cd:125c Super Top SD card reader
-> Bus 001 Device 004: ID 046d:c52b Logitech, Inc. Unifying Receiver
-> Bus 001 Device 018: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth
-> Dongle (HCI mode)
-> Bus 001 Device 003: ID 04b3:3025 IBM Corp. NetVista Full Width Keyboard
-> Bus 001 Device 002: ID 0bda:b812 Realtek Semiconductor Corp. 
-> Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
-> 
-> dmesg (extract)
-> [ 5284.357208] usbcore: deregistering interface driver btusb
-> [ 5287.608129] usb 1-7: new full-speed USB device number 18 using xhci_hcd
-> [ 5287.758895] usb 1-7: config 1 interface 1 altsetting 0 endpoint 0x3 has
-> wMaxPacketSize 0, skipping
-> [ 5287.758904] usb 1-7: config 1 interface 1 altsetting 0 endpoint 0x83 has
-> wMaxPacketSize 0, skipping
-> [ 5287.759639] usb 1-7: New USB device found, idVendor=0a12, idProduct=0001,
-> bcdDevice=88.91
-> [ 5287.759647] usb 1-7: New USB device strings: Mfr=0, Product=2,
-> SerialNumber=0
-> [ 5287.759651] usb 1-7: Product: BT DONGLE10
-> [ 5287.785780] btusb: New fixups. Device: 0x0a12:0x0001/0x8891. Rule 1/1 (5
-> terms): 0x0a12:0x0001/0x8891
-> [ 5287.785781] btusb: driver flags: initial => 0x0000000000000004
-> [ 5287.785783] btusb: driver flags: masked  => 0x0000000000800000
-> [ 5287.785902] usbcore: registered new interface driver btusb
-> [ 5395.553658] debugfs: File 'dut_mode' in directory 'hci0' already present!
-> 
-> hcidump -X is attached
-> Any suggestions/fixes are really appreciated.
-> Please let me know if some info is missing.
-> 
-> Thanks,
-> Alex.
-
-
-
-I'm having the same issue on a raspberry with an aliexpress dongle, Set Event
-fails, looking at hci_core.c the set filter and previous calls are made only if
-device supports BREDR, is there any way to tell device doesn't support, or
-patch this ? 
-I'm on latest raspberry pi 4, latest kernel 4.19.113-v7l+
-
+diff --git a/emulator/main.c b/emulator/main.c
+index 68c53488e..3e32bf95d 100644
+--- a/emulator/main.c
++++ b/emulator/main.c
+@@ -58,8 +58,10 @@ static void usage(void)
+ 		"\t-s                    Create local server sockets\n"
+ 		"\t-l [num]              Number of local controllers\n"
+ 		"\t-L                    Create LE only controller\n"
++		"\t-U [num]              Number of test LE controllers\n"
+ 		"\t-B                    Create BR/EDR only controller\n"
+ 		"\t-A                    Create AMP controller\n"
++		"\t-T [num]              Number of test AMP controllers\n"
+ 		"\t-h, --help            Show help options\n");
+ }
+ 
+@@ -97,7 +99,7 @@ int main(int argc, char *argv[])
+ 	for (;;) {
+ 		int opt;
+ 
+-		opt = getopt_long(argc, argv, "Ssl::LBAUTvh",
++		opt = getopt_long(argc, argv, "Ssl::LBAU::T::vh",
+ 						main_options, NULL);
+ 		if (opt < 0)
+ 			break;
 -- 
-You are receiving this mail because:
-You are the assignee for the bug.
+2.17.1
+
