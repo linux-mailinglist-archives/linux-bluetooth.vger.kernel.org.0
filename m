@@ -2,24 +2,24 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3934F1A1374
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Apr 2020 20:19:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F5BF1A153D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Apr 2020 20:49:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726380AbgDGSTH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Apr 2020 14:19:07 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:56631 "EHLO
+        id S1726806AbgDGStm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Apr 2020 14:49:42 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:38048 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726277AbgDGSTH (ORCPT
+        with ESMTP id S1726795AbgDGStm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Apr 2020 14:19:07 -0400
+        Tue, 7 Apr 2020 14:49:42 -0400
 Received: from localhost.localdomain (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 83F17CECDA
-        for <linux-bluetooth@vger.kernel.org>; Tue,  7 Apr 2020 20:28:40 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 7AD9ACECDA
+        for <linux-bluetooth@vger.kernel.org>; Tue,  7 Apr 2020 20:59:15 +0200 (CEST)
 From:   Marcel Holtmann <marcel@holtmann.org>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH] Bluetooth: Configure controller address resolution if available
-Date:   Tue,  7 Apr 2020 20:19:01 +0200
-Message-Id: <20200407181901.976627-1-marcel@holtmann.org>
+Subject: [PATCH v2] Bluetooth: Configure controller address resolution if available
+Date:   Tue,  7 Apr 2020 20:49:36 +0200
+Message-Id: <20200407184936.987369-1-marcel@holtmann.org>
 X-Mailer: git-send-email 2.25.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -78,7 +78,7 @@ index 2f3275f1d1c4..663ffde9bd1d 100644
  #define use_ext_scan(dev) (((dev)->commands[37] & 0x20) && \
  			   ((dev)->commands[37] & 0x40))
 diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 649e1e5ed446..97ba343cd75e 100644
+index 649e1e5ed446..14cfa59ea9ed 100644
 --- a/net/bluetooth/hci_request.c
 +++ b/net/bluetooth/hci_request.c
 @@ -676,6 +676,12 @@ void hci_req_add_le_scan_disable(struct hci_request *req)
@@ -99,7 +99,7 @@ index 649e1e5ed446..97ba343cd75e 100644
  		filter_policy |= 0x02;
  
 +	if (use_ll_privacy(hdev) &&
-+	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION)) {
++	    !hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION)) {
 +		__u8 enable = 0x01;
 +		hci_req_add(req, HCI_OP_LE_SET_ADDR_RESOLV_ENABLE, 1, &enable);
 +	}
