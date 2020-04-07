@@ -2,81 +2,153 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DCC201A0645
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Apr 2020 07:12:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65C0D1A06E4
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Apr 2020 07:59:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726889AbgDGFMy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Apr 2020 01:12:54 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:37339 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726865AbgDGFMm (ORCPT
+        id S1726965AbgDGF67 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Apr 2020 01:58:59 -0400
+Received: from new2-smtp.messagingengine.com ([66.111.4.224]:38603 "EHLO
+        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725817AbgDGF6u (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Apr 2020 01:12:42 -0400
-Received: by mail-ua1-f67.google.com with SMTP id l18so846441uak.4
-        for <linux-bluetooth@vger.kernel.org>; Mon, 06 Apr 2020 22:12:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=38NlpNEbzNFWb7RFQtfvRASB+B576yw7dNc7pozf3pc=;
-        b=m9m/DCsFRus/zRmIuphflM5sHyenmkMN/TOEnECOGthbLJHVg8u2+iqtFZpNbyb2/k
-         2tLF//qwyXGtNVJKRleGUy+KbEtVjN+06Aw6FbGL98d5M/QEqB9c9SHaIsBPFlQYoUCh
-         Lj+P9EPUGdvyQRip4KeH3oSvDVhqDTV0IJcbcI66BzYP/b9Y/1y4LF++1q0teLhPl3GM
-         v15gBTxOBB8qvH4CNaCnwdm2sugBL+St8qIlm7SqBWweWj6hdsos1F0mjeWO8qJt64R9
-         xl3tya8AfljNAFdSOkZ4tC7INitomO8JQPFHHcp+JAODUsaup01At9KIYDntXEoTQZb0
-         DmdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=38NlpNEbzNFWb7RFQtfvRASB+B576yw7dNc7pozf3pc=;
-        b=WAM2JXL4/jJaT9Uo5c2Hgx5B95Rq4ALYNSH6Je8jnMGxPUaAjQL4DFaKvOmAI9zDni
-         fpuYjjgsSf9DgOTl2PrNur0xurvyqj/ZqdZhK+z0vMu43AEPRl4qtmf/B3gdUMoFaUAq
-         UZMBq0H0jhGWBDvDuZfff/BM8xeVh0qfCGOawKygIpbWJbU5GYpOgJJaSPdQPhQIV1wr
-         +HmCO+ph7c1ylxO4mU62godhRS94zjnuHjTzgTzqFPPnRFBatpTNA8H2d/M0Cb0Glp1V
-         MwVntkJ/5x6IbRoynJRTCooBxnw3voaiLo35yZnYgzKGHzkNfplyvrbhqOTpyrcZoGPV
-         IXgQ==
-X-Gm-Message-State: AGi0PuZcCdzcyzR+luzJtUIMFCKKBQuYMIhs/M29dbOuBWUIurUwDas+
-        sc73rogMZqrGaqb8CxrgYAaxcku+zxzm6iNpFW0=
-X-Google-Smtp-Source: APiQypIYXniGQUHEpASwiGNjKth4Cu9ElCz4yjrJ2uXbYBYunhfz0887D/TRydUbTstl7MwaeVftG8QxF1P80ST3qos=
-X-Received: by 2002:ab0:a9:: with SMTP id 38mr504317uaj.61.1586236361040; Mon,
- 06 Apr 2020 22:12:41 -0700 (PDT)
+        Tue, 7 Apr 2020 01:58:50 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 678CC580307;
+        Tue,  7 Apr 2020 01:58:48 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Tue, 07 Apr 2020 01:58:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+         h=from:to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm3; bh=luaDFvJ4QP7HzTgY7DFCyyfDI0
+        BXcg59edPeu9moQnE=; b=iWAedFWIY7AyUqXyEMCmfDoc8Nak2DLftjwUhJLLQk
+        KNRmOJFxDfJQelE4tQso8nqPqTCL31xTtxABsBPSsUcMfpIKe1bykpddaAqUbthw
+        /vl/Z9Jq9bNHA24yGTdB69hoCYVyLgtsVsk7fePlLWGZWDXCGTMZdXa8TOgiK85V
+        pd9dsCtIU1YBudJZhbVYYjac0Y5fLIArn6ezaAN9xQZ8SgqJ9uqFjcLMOMc8sYIz
+        pRYAU02EllzACZNByxAtfsQAs/LYL+tVt3ON7SLv7vLHKb1/P6OhdK+5WTx2v1+/
+        ZC3VWm3Fjv58Przl49QI2qupSTk3MVYS9A+WJ432J4eA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=luaDFvJ4QP7HzTgY7
+        DFCyyfDI0BXcg59edPeu9moQnE=; b=HU2zYuIb3dTywfn6VPUoR6iQ4DvjVfA6a
+        HM+TF/HO7pF27scVLRt1zH0A/0lI70UatZoD3GNQUy243gLrac3W2iCay50Ov+YT
+        K27RqrE9PzGeydBTzz+TX34aCWjfjGqUSjOQiuF3Yrf8V7jEkGczMYXQUOxhp6dF
+        /iBC2Hhu8aP65ZgX5Ldf7ZPKt3kIkaApsciNqonHlE920OwyE2Qfa78gcday7Qwp
+        YgfzosNZnOFO2keUO9YaeEk0bycSC7uosnwKgi/xES5kl3cwi1NmXCK05r9Zp5xc
+        7DftnpnfR8u1zPQkjZwM8FokfE80X/uvWlbHtWuIxC34zO2n7eDSQ==
+X-ME-Sender: <xms:lBaMXql_AK8NiqoqaaeLDZYYzQWffz2wIKyiEM7Yw5BBFWfrk_F9yA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudeggdellecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
+    dtnecuhfhrohhmpeetlhhishhtrghirhcuhfhrrghntghishcuoegrlhhishhtrghirhes
+    rghlihhsthgrihhrvdefrdhmvgeqnecuffhomhgrihhnpeguvghvihgtvghtrhgvvgdroh
+    hrghenucfkphepjeefrdelfedrkeegrddvtdeknecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomheprghlihhsthgrihhrsegrlhhishhtrghirhdvfe
+    drmhgv
+X-ME-Proxy: <xmx:lBaMXqBF7Q_unFFUXTNyMVF3JuktDwLWCQ_9obH00fUJqGWQx1og_w>
+    <xmx:lBaMXgsRucZ3VE9D9WFeHAiyxWkz-QH1boPQTPKGfsc80MYKdVyEsQ>
+    <xmx:lBaMXkuKECeRlmoFykZo8892QfqB5oSg-NiZ2_-VMXo7cF22NI8HZw>
+    <xmx:mBaMXnCjFgTFBSbWfIFyKYlmRZ3ZfVedIjjlZJfkBnVEJqixEVUmBA>
+Received: from alistair-xps-14z.alistair23.me (c-73-93-84-208.hsd1.ca.comcast.net [73.93.84.208])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 869D6328005A;
+        Tue,  7 Apr 2020 01:58:43 -0400 (EDT)
+From:   Alistair Francis <alistair@alistair23.me>
+To:     netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-bluetooth@vger.kernel.org, mripard@kernel.org, wens@csie.org
+Cc:     anarsoul@gmail.com, devicetree@vger.kernel.org,
+        alistair23@gmail.com, linux-arm-kernel@lists.infradead.org,
+        Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH v2 1/3] dt-bindings: net: bluetooth: Add rtl8723bs-bluetooth
+Date:   Mon,  6 Apr 2020 22:58:35 -0700
+Message-Id: <20200407055837.3508017-1-alistair@alistair23.me>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Received: by 2002:ab0:4929:0:0:0:0:0 with HTTP; Mon, 6 Apr 2020 22:12:40 -0700 (PDT)
-From:   SANDRA DEWI <dewisandra154@gmail.com>
-Date:   Tue, 7 Apr 2020 05:12:40 +0000
-Message-ID: <CABRVPWys0xe4CWBkaU0ZXQW+4d=tjDOjyo8cKohc5-VFkWPkcA@mail.gmail.com>
-Subject: whether this is your correct email address or not
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear ,Pastor
+From: Vasily Khoruzhick <anarsoul@gmail.com>
 
+Add binding document for bluetooth part of RTL8723BS/RTL8723CS
 
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Signed-off-by: Alistair Francis <alistair@alistair23.me>
+---
+v2:
+ - Update bindings based on upstream feedback
+ - Add RTL8822CS
+ - Remove unused/unsupported fields
+ - Remove firmware-postfix field
+ - Small formatting changes
 
-I have a client who is an oil business man and he made a fixed deposit
-of $26 million USD in my bank, where I am the director of the branch,
-My client died with his entire family in Jordanian
+ .../bindings/net/realtek,rtl8723bs-bt.yaml    | 55 +++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/realtek,rtl8723bs-bt.yaml
 
-50% of the fund will be for the church  for the work of God,the
-balance 50% we share it in the ratio of 50/50. Meaning 50% to you and
-50% for me
+diff --git a/Documentation/devicetree/bindings/net/realtek,rtl8723bs-bt.yaml b/Documentation/devicetree/bindings/net/realtek,rtl8723bs-bt.yaml
+new file mode 100644
+index 000000000000..a03ce1bbc56f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/realtek,rtl8723bs-bt.yaml
+@@ -0,0 +1,55 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/realtek,rtl8723bs-bt.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: RTL8723BS/RTL8723CS/RTL8822CS Bluetooth Device Tree Bindings
++
++maintainers:
++  - Vasily Khoruzhick <anarsoul@gmail.com>
++  - Alistair Francis <alistair@alistair23.me>
++
++description:
++  RTL8723CS/RTL8723CS/RTL8822CS is WiFi + BT chip. WiFi part is connected over
++  SDIO, while BT is connected over serial. It speaks H5 protocol with few
++  extra commands to upload firmware and change module speed.
++
++properties:
++  compatible:
++    oneOf:
++      - "realtek,rtl8723bs-bt"
++      - "realtek,rtl8723cs-bt"
++      - "realtek,rtl8822cs-bt"
++
++  device-wake-gpios:
++    maxItems: 1
++    description:
++      GPIO specifier, used to wakeup the BT module
++
++  enable-gpios:
++    maxItems: 1
++    description:
++      GPIO specifier, used to enable the BT module
++
++  host-wake-gpios:
++    maxItems: 1
++    desciption:
++      GPIO specifier, used to wakeup the host processor
++
++required:
++  - compatible
++
++examples:
++  - |
++    &uart1 {
++        pinctrl-names = "default";
++        pinctrl-0 = <&uart1_pins>, <&uart1_rts_cts_pins>;
++        uart-has-rtscts = <1>;
++
++        bluetooth {
++            compatible = "realtek,rtl8723bs-bt";
++            device-wake-gpios = <&r_pio 0 5 GPIO_ACTIVE_HIGH>; /* PL5 */
++            host-wakeup-gpios = <&r_pio 0 6 GPIO_ACTIVE_HIGH>; /* PL6 */
++        };
++    };
+-- 
+2.25.1
 
-intervention in the Syrian Civil War 2014 leaving behind no next of
-kin. I Propose to present you as next of kin to claim the funds, if
-interested reply me for full details and how we are to
-
-
-
-proceed to close this deal.
-
-
-
-
-Mrs. Sandra Dewi
-
-
-
-Email  mrsdewi@gmx.com
