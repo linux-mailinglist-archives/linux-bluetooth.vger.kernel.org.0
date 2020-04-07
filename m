@@ -2,86 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A722F1A1156
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Apr 2020 18:29:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B39B1A1171
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Apr 2020 18:33:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726883AbgDGQ3a convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Apr 2020 12:29:30 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:34262 "EHLO
+        id S1728358AbgDGQd2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Apr 2020 12:33:28 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:46496 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726776AbgDGQ3a (ORCPT
+        with ESMTP id S1726833AbgDGQd2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Apr 2020 12:29:30 -0400
+        Tue, 7 Apr 2020 12:33:28 -0400
 Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id DCFCCCECD8;
-        Tue,  7 Apr 2020 18:39:02 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id E88BACECD8;
+        Tue,  7 Apr 2020 18:43:00 +0200 (CEST)
 Content-Type: text/plain;
-        charset=utf-8
+        charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [bug report] Bluetooth: btusb: handle mSBC audio over USB
- Endpoints
+Subject: Re: [PATCH v2] Bluetooth: debugfs option to unset MITM flag
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200407123215.GA101015@mwanda>
-Date:   Tue, 7 Apr 2020 18:29:27 +0200
-Cc:     Sathish Narsimman <sathish.narasimman@intel.com>,
-        linux-bluetooth@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <00145007-5EFD-4C0E-9662-6CF1CAE217FB@holtmann.org>
-References: <20200407123215.GA101015@mwanda>
-To:     Dan Carpenter <dan.carpenter@oracle.com>
+In-Reply-To: <20200407122522.v2.1.Ibfc500cbf0bf2dc8429b17f064e960e95bb228e9@changeid>
+Date:   Tue, 7 Apr 2020 18:33:26 +0200
+Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Archie Pusaka <apusaka@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, netdev@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <9FED3BF8-B784-4E71-86C2-5BFACB18F1AA@holtmann.org>
+References: <20200407122522.v2.1.Ibfc500cbf0bf2dc8429b17f064e960e95bb228e9@changeid>
+To:     Archie Pusaka <apusaka@google.com>
 X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Dan,
+Hi Archie,
 
-> This is a semi-automatic email about new static checker warnings.
+> The BT qualification test SM/MAS/PKE/BV-01-C needs us to turn off
+> the MITM flag when pairing, and at the same time also set the io
+> capability to something other than no input no output.
 > 
-> The patch baac6276c0a9: "Bluetooth: btusb: handle mSBC audio over USB
-> Endpoints" from Apr 3, 2020, leads to the following Smatch complaint:
+> Currently the MITM flag is only unset when the io capability is set
+> to no input no output, therefore the test cannot be executed.
 > 
->    drivers/bluetooth/btusb.c:1665 btusb_work()
->    error: we previously assumed 'data->isoc' could be null (see line 1642)
+> This patch introduces a debugfs option to force MITM flag to be
+> turned off.
 > 
-> drivers/bluetooth/btusb.c
->  1641			if (!test_bit(BTUSB_DID_ISO_RESUME, &data->flags)) {
->  1642				err = usb_autopm_get_interface(data->isoc ? data->isoc : data->intf);
->                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> This code assumes that "data->isoc" can be NULL.
+> Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+> ---
 > 
->  1643				if (err < 0) {
->  1644					clear_bit(BTUSB_ISOC_RUNNING, &data->flags);
->  1645					usb_kill_anchored_urbs(&data->isoc_anchor);
->  1646					return;
->  1647				}
->  1648	
->  1649				set_bit(BTUSB_DID_ISO_RESUME, &data->flags);
->  1650			}
->  1651	
->  1652			if (data->air_mode == HCI_NOTIFY_ENABLE_SCO_CVSD) {
->  1653				if (hdev->voice_setting & 0x0020) {
->  1654					static const int alts[3] = { 2, 4, 5 };
->  1655	
->  1656					new_alts = alts[data->sco_num - 1];
->  1657				} else {
->  1658					new_alts = data->sco_num;
->  1659				}
->  1660			} else if (data->air_mode == HCI_NOTIFY_ENABLE_SCO_TRANSP) {
->  1661	
->  1662				data->usb_alt6_packet_flow = true;
->  1663	
->  1664				/* Check if Alt 6 is supported for Transparent audio */
->  1665				if (btusb_find_altsetting(data, 6))
->                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
-> The new btusb_find_altsetting() dereferences it without checking.
+> Changes in v2:
+> - Rename flag to HCI_FORCE_NO_MITM
+> - Move debugfs functions to hci_debugfs.c
+> - Add comments on not setting SMP_AUTH_MITM
 > 
->  1666					new_alts = 6;
->  1667				else
+> include/net/bluetooth/hci.h |  1 +
+> net/bluetooth/hci_debugfs.c | 46 +++++++++++++++++++++++++++++++++++++
+> net/bluetooth/smp.c         | 15 ++++++++----
+> 3 files changed, 57 insertions(+), 5 deletions(-)
 
-while it is unlikely that data->isoc is NULL, this can actually happen in some weird cases where the USB device doesn’t provide ISOC endpoints, but still has SCO transport support. So yes, we should be adding a NULL check in btusb_find_altsetting.
+patch has been applied to bluetooth-next tree.
 
 Regards
 
