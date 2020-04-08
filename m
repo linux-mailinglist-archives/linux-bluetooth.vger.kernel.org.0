@@ -2,86 +2,99 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ED341A27D4
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Apr 2020 19:18:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9210E1A27F9
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Apr 2020 19:31:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728043AbgDHRSk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 8 Apr 2020 13:18:40 -0400
-Received: from mga06.intel.com ([134.134.136.31]:3465 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727327AbgDHRSk (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 8 Apr 2020 13:18:40 -0400
-IronPort-SDR: sC0rOGPXB4ZrxE0woCzP/viOyL5oIbsIbo+biWdXf1Dhafkpp0zve98KLEoqHCv1L0oaE8Es0o
- b+4SnZbRSg8g==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2020 10:15:53 -0700
-IronPort-SDR: A1JB7K9djg3gtPIgGAPjVkfMX0vgRTEdIrlLsNaToaDwziA/j7u9OWFu8/ReRK9LXGYSq+m9sn
- 1vqvFSq4ux7A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,359,1580803200"; 
-   d="scan'208";a="452882090"
-Received: from bgi1-mobl2.amr.corp.intel.com ([10.209.85.198])
-  by fmsmga006.fm.intel.com with ESMTP; 08 Apr 2020 10:15:51 -0700
-From:   Brian Gix <brian.gix@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, inga.stotland@intel.com,
-        rafal.gajda@silvair.com
-Subject: [PATCH BlueZ v2] mesh: Ignore beacons with IVU if IV already updated
-Date:   Wed,  8 Apr 2020 10:15:16 -0700
-Message-Id: <20200408171516.15151-1-brian.gix@intel.com>
-X-Mailer: git-send-email 2.21.1
+        id S1729033AbgDHRbw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 8 Apr 2020 13:31:52 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:40090 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728771AbgDHRbw (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 8 Apr 2020 13:31:52 -0400
+Received: by mail-ot1-f66.google.com with SMTP id q2so4824845otk.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 08 Apr 2020 10:31:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=0J+Uc3K4QIzN8q8ABovJI3Th/Qfglwe5LIEnPdnRzcQ=;
+        b=fiil9+7kofmUpICFlmtltyb4cut6qCnZwYtZc72cTnD7vDAByKSPC++cK/GcOaZFkM
+         KxbY4nqfyt7TezCIAlA/b6ODZuRTwq6yc3AA5PyaWf6lXkRuiGIwgdB2m0YDOFT8h5K0
+         we6ef0ZgkWPNwQkkA8n3JI8jLcfkCum/FFQ/c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=0J+Uc3K4QIzN8q8ABovJI3Th/Qfglwe5LIEnPdnRzcQ=;
+        b=U7E81ly8033L7Bd1W3N65hJZ4JbPapd5Sie+0YO+PW9mG547bQc9JwlWMsAWEfGBs4
+         N1obVQIAthtjaoXIxm55orz7oLHJrZLWHTtSMreA6wA4Uq7u4EIbtKi1TwHUuBT1HqcL
+         aJLlpG01H5z5mPoF4r2fE3bhL5g14ZhM/jxxVOa0DR9Jm4FZNSb58P+B3Fb8NCkGb0iG
+         m2XvfEWtbP27MqlJ03a1eX/XYGqS42eOw7XVeLxxS50HpRbfTuNUJJ4DlxThIC3qGZZN
+         1VnkwObxYxrzcpoimTGm/gL3KexE6OVFjEWpu1Uf8i0Xe1SgRUFT6dArhgIh27kZtZL9
+         mcjA==
+X-Gm-Message-State: AGi0PuZnEzkx6e9avAh/+ha2fX01wDG+yR670/2brDx+3ML3zCOPJPqv
+        f0pufVhizm9gxw+Hf3TCi0vvi87PMJJSn4JE7j92imtU
+X-Google-Smtp-Source: APiQypLdpvwhmybuDa6m+PJMgRKbULiwBlJl9/rDjWwaIDxYM1AGAXkbMEk/tF5rM8hqOsFUbZiAfOizgRXX+oyoEl0=
+X-Received: by 2002:a9d:1b6d:: with SMTP id l100mr6188288otl.70.1586367109445;
+ Wed, 08 Apr 2020 10:31:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <DB9E4FAE-C54D-4158-ACE3-45B62C85E2CB@holtmann.org> <20200406180402.7782-1-sonnysasaka@chromium.org>
+In-Reply-To: <20200406180402.7782-1-sonnysasaka@chromium.org>
+From:   Sonny Sasaka <sonnysasaka@chromium.org>
+Date:   Wed, 8 Apr 2020 10:31:38 -0700
+Message-ID: <CAOxioN=EVTKYGyYrmiRCJUzP_oHLvRgkm9J9Qkw1BB+h8Dp9jQ@mail.gmail.com>
+Subject: Re: [PATCH v2] Bluetooth: Always request for user confirmation for
+ Just Works (LE SC)
+To:     BlueZ <linux-bluetooth@vger.kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Rafał Gajda <rafal.gajda@silvair.com>
+Hi Marcel,
 
-When daemon receives beacon with IV=n+1, IVU=False it will
-start sending messages with new IV and set sequence to 0.
-However if daemon receives another beacon with IV=n+1, IVU=True it
-will go back to sending messages with old IV=n (IVU set to True).
-Because sequence number has been reset those messages will be dropped
-by replay protection and node will lose communication.
+Could you please take another look at this v2 patch based on your
+suggestions? Thanks.
 
-Once IV is updated daemon should not go back to using the old value.
-
-This patch adds beacon rejection if IV has already been updated.
----
- mesh/net.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/mesh/net.c b/mesh/net.c
-index 9a56d2ee8..bfb9c4435 100644
---- a/mesh/net.c
-+++ b/mesh/net.c
-@@ -2696,6 +2696,10 @@ static void update_iv_ivu_state(struct mesh_net *net, uint32_t iv_index,
- 	/* If first beacon seen, accept without judgement */
- 	if (net->iv_upd_state == IV_UPD_INIT) {
- 		if (ivu) {
-+			/* Ignore beacons with IVU if IV already updated */
-+			if (iv_index == net->iv_index && !net->iv_update)
-+				return;
-+
- 			/* Other devices will be accepting old or new iv_index,
- 			 * but we don't know how far through update they are.
- 			 * Starting permissive state will allow us maximum
-@@ -2717,6 +2721,10 @@ static void update_iv_ivu_state(struct mesh_net *net, uint32_t iv_index,
- 			return;
- 		}
- 
-+		/* Ignore beacons with IVU if IV already updated */
-+		if (iv_index == net->iv_index)
-+			return;
-+
- 		if (!net->iv_update) {
- 			l_info("iv_upd_state = IV_UPD_UPDATING");
- 			net->iv_upd_state = IV_UPD_UPDATING;
--- 
-2.21.1
-
+On Mon, Apr 6, 2020 at 11:04 AM Sonny Sasaka <sonnysasaka@chromium.org> wrote:
+>
+> To improve security, always give the user-space daemon a chance to
+> accept or reject a Just Works pairing (LE). The daemon may decide to
+> auto-accept based on the user's intent.
+>
+> This patch is similar to the previous patch but applies for LE Secure
+> Connections (SC).
+>
+> Signed-off-by: Sonny Sasaka <sonnysasaka@chromium.org>
+> ---
+>  net/bluetooth/smp.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+> index d0b695ee49f6..2f48518d120b 100644
+> --- a/net/bluetooth/smp.c
+> +++ b/net/bluetooth/smp.c
+> @@ -2202,7 +2202,7 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
+>         if (err)
+>                 return SMP_UNSPECIFIED;
+>
+> -       if (smp->method == JUST_WORKS || smp->method == REQ_OOB) {
+> +       if (smp->method == REQ_OOB) {
+>                 if (hcon->out) {
+>                         sc_dhkey_check(smp);
+>                         SMP_ALLOW_CMD(smp, SMP_CMD_DHKEY_CHECK);
+> @@ -2217,6 +2217,9 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
+>         confirm_hint = 0;
+>
+>  confirm:
+> +       if (smp->method == JUST_WORKS)
+> +               confirm_hint = 1;
+> +
+>         err = mgmt_user_confirm_request(hcon->hdev, &hcon->dst, hcon->type,
+>                                         hcon->dst_type, passkey, confirm_hint);
+>         if (err)
+> --
+> 2.17.1
+>
