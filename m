@@ -2,124 +2,97 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D7EA1A4D28
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Apr 2020 03:19:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E07891A4D42
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Apr 2020 03:34:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726892AbgDKBTx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Apr 2020 21:19:53 -0400
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:39789 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726701AbgDKBTx (ORCPT
+        id S1726687AbgDKBep (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Apr 2020 21:34:45 -0400
+Received: from mail-pj1-f54.google.com ([209.85.216.54]:52379 "EHLO
+        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726641AbgDKBep (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Apr 2020 21:19:53 -0400
-Received: by mail-pj1-f66.google.com with SMTP id o1so512744pjs.4;
-        Fri, 10 Apr 2020 18:19:53 -0700 (PDT)
+        Fri, 10 Apr 2020 21:34:45 -0400
+Received: by mail-pj1-f54.google.com with SMTP id ng8so1400637pjb.2;
+        Fri, 10 Apr 2020 18:34:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=q76ZSajaC/YJBLj5bVJ6v4ueopAFGHt7xFuqf9dHOiA=;
-        b=m0o/5Q26w51bz/i8QX0xLdmc8c3ZYgQccVoUadlaBxY5748EImtGd6leTW9Trq0L7O
-         T6OXGpCYgjCUaVDw8a89mvZE7VJIXkXjrFtBrmuxRophoecdwdlGtcKQpitmeAQgfyBK
-         b1DU3fYHeyvYuKUb2EKYjgxkzE6d4eeqGsLa4f6KGuG9Gw6aoPXzOAEFNakP9FTb/uRZ
-         Ho1V2iOo/MH/G/MvLUKobVlSBqIY+dNcL0CSE/UavvRdVZa8sEaUbHUnAeafwGKtc2mW
-         i4xU45QmCyUylww0kfcEO+yYjymJGqISK3NP1Schr/e2rUXOEHhIN3HSbvDz5CSuBwn3
-         jd3w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2vXnmY4GE13NUJnVdfudjFEgcp4akceqh2aSAgwoRhs=;
+        b=bTvMgCFnWZeWHXjUFWgncuseF/in8S/JaQ9DCc+Qb6IUbMATNI86dPex4TaZSiPgxX
+         lG6q4g34Rv3jxbhxL7FPwUMnl7F/K/PziHdckNyAgZZ5pN8OkRRI/jX+cs7Zpq8ZYwTv
+         FzY2KI0sS2gZs379kKgPijpvlsWjQtnVj8YyAZU6K46+ReDCs4IBBxLvYWkYc4lFEcud
+         PuMGh36Wgw2DMuEMbrvrfzSg3DgczQx/Ze2ZUbZ5rczZYtehIV+PJ/xxksX0qmb7XFJI
+         HbjfM1ULizim3GUPYEdbheYAa65HeBafuSj8E+ZbfI0+1NWZXQXcvrN3A025zSeOiRKI
+         h1TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=q76ZSajaC/YJBLj5bVJ6v4ueopAFGHt7xFuqf9dHOiA=;
-        b=CZj4SJ9PuBENuH6efh1xlsG3PUCg+MuevimkpzdbkkBu0TSVIzqwi6xhiHOuTE+UiZ
-         vysHyKVxXiC3pRHQWivXg/W3fzx1OTLwUWP31yehGW5Jx0ajPeD9Ra/GfAzEA+bUoLCR
-         QwHfYoKfpm1iA7V2bBqHMdbJJ6gnMY0HCqyHrCc4B9H4hA410A+JenKIy75s61ElquXs
-         vOg8Z1A2+oBGYsf9irUjkwNZnMfiTMvNI5wycK4CNbJj1OGatbuDdrSGGZ1ZiPI+7Tx1
-         fFNleDbhXxqjWLu3uszYv/+oklsmd3TAfshdRfkqhtHGeJJKHDrsjELcgzjko1PQ2HBK
-         UODQ==
-X-Gm-Message-State: AGi0PuYoWNZAJFXHEwBVTzIF4xTZfoMExT/Mi6bzmJAVd4PTK30n4jGc
-        0b1eRejl0Q+xAusL+R6BOuM=
-X-Google-Smtp-Source: APiQypLV+LFP74oTLjRpgu3lSxCWC5nNL7O5GpBPXhJclCHv0BTdgEhV3lV0B7jZupzjYMe591ttmA==
-X-Received: by 2002:a17:90b:90e:: with SMTP id bo14mr8406843pjb.104.1586567992343;
-        Fri, 10 Apr 2020 18:19:52 -0700 (PDT)
-Received: from i7.zsun.org ([209.132.188.80])
-        by smtp.gmail.com with ESMTPSA id e187sm2879946pfe.50.2020.04.10.18.19.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Apr 2020 18:19:51 -0700 (PDT)
-Subject: Re: [PATCH v2 1/1] Bluetooth: btrtl: Add support for RTL8761B
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Bluetooth Kernel Mailing List 
-        <linux-bluetooth@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>, icenowy@aosc.io
-References: <20200410145420.108868-1-sztsian@gmail.com>
- <20200410145420.108868-2-sztsian@gmail.com>
- <5CD9EBAA-44A6-4DFF-870E-4F862FB7A60E@holtmann.org>
-From:   Zamir SUN <sztsian@gmail.com>
-Message-ID: <bb48d88a-3b4f-dfa6-bbed-777a76d072ed@gmail.com>
-Date:   Sat, 11 Apr 2020 09:19:41 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        bh=2vXnmY4GE13NUJnVdfudjFEgcp4akceqh2aSAgwoRhs=;
+        b=YaUtGbYbYVzqJfucdtCeuClXDa5tYrazBkH4wWfXo4y0EhwX3n/+w1PydaKG7ZMjST
+         hm7++R4d4w5G5dFP1KC829cCy0/y38lSAm+A4u1fTY5ddS22NEGfkaTmdNjka6fzv3qL
+         aU5fWiKHG19TIGzNVyZ0G/7vLCjSLgJqX3mFTmLvGMB1+GG5KsBHWA7DGPd711Hsjo4U
+         bWkNMgFBhq+I16KjSqv/DJIlYL0VACwhMmhigIPCE8EMdlmFeJfFjPgVfJrhY4jd5RQW
+         YPHqeToDIVCWZqMfsM5s0wix847D2LIjTK3V4VBE3fSaa54WM7njn7Ip4DBOKPycuCE+
+         pXFQ==
+X-Gm-Message-State: AGi0Pua0sFLkuosn71APPLhf/iHhWRADxyX6zWUEHa4UTYkV0O8y6Ksk
+        eA+reL0Do5ADRKO8OkYhl2Q+6lgEvzY=
+X-Google-Smtp-Source: APiQypJXLOYqKf66FVVRwlr7CGclYwDFR1DjV2T1eGTrEr+hfP8WSZvncKCywIXTQF0ljfcgCaueHA==
+X-Received: by 2002:a17:902:7582:: with SMTP id j2mr7036794pll.309.1586568884323;
+        Fri, 10 Apr 2020 18:34:44 -0700 (PDT)
+Received: from i7.zsun.org.com ([209.132.188.80])
+        by smtp.gmail.com with ESMTPSA id mg20sm2808571pjb.12.2020.04.10.18.34.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Apr 2020 18:34:43 -0700 (PDT)
+From:   sztsian@gmail.com
+To:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-bluetooth@vger.kernel.org
+Cc:     sztsian@gmail.com, linux-kernel@vger.kernel.org, icenowy@aosc.io
+Subject: [PATCH v3 0/1] Bluetooth: btrtl: Add support for RTL8761B
+Date:   Sat, 11 Apr 2020 09:34:26 +0800
+Message-Id: <20200411013427.152103-1-sztsian@gmail.com>
+X-Mailer: git-send-email 2.25.2
 MIME-Version: 1.0
-In-Reply-To: <5CD9EBAA-44A6-4DFF-870E-4F862FB7A60E@holtmann.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+From: Ziqian SUN (Zamir) <sztsian@gmail.com>
 
+This patch adds support for the RTL8761B USB Bluetooth dongle.
 
-On 4/11/20 1:36 AM, Marcel Holtmann wrote:
-> Hi Zamir,
-> 
->> Add new compatible device RTL8761B.
->>
->> Signed-off-by: Ziqian SUN (Zamir) <sztsian@gmail.com>
->> ---
->> drivers/bluetooth/btrtl.c | 10 +++++++++-
->> 1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> can you also please include the content of /sys/kernel/debug/usb/devices for this device in the commit message.
-> 
-> And if you run btmon before plugging it in, I like to see what LE Features of Bluetooth 5.0 this dongle really offers.
-> 
+When I got the RTL8761B dongle, I see it is actually recognised as
+RTL8761A in my system (5.5.15-200.fc31.x86_64 on Fedora). And the
+userspace cannot detect bluetooth devices in such situation.
 
-Hi Marcel,
+[34689.158047] Bluetooth: hci0: RTL: examining hci_ver=0a hci_rev=000b lmp_ver=0a lmp_subver=8761
+[34689.159083] Bluetooth: hci0: RTL: rom_version status=0 version=1
+[34689.159088] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761a_fw.bin
+[34689.159498] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761a_config.bin
+[34689.159522] bluetooth hci0: Direct firmware load for rtl_bt/rtl8761a_config.bin failed with error -2
+[34689.159529] Bluetooth: hci0: RTL: cfg_sz -2, total sz 20204
+[34691.248484] Bluetooth: hci0: command 0xfc20 tx timeout
 
-I think you want this section
+Icenowy Zheng offered great help by identifying the firmware
+from the vendor-provided Windows driver. After applying this patch along
+with the firmware I am able to use this dongle.
 
-         Supported settings: 0x0001bfff
-           Powered
-           Connectable
-           Fast Connectable
-           Discoverable
-           Bondable
-           Link Security
-           Secure Simple Pairing
-           BR/EDR
-           High Speed
-           Low Energy
-           Advertising
-           Secure Connections
-           Debug Keys
-           Privacy
-           Static Address
-           PHY Configuration
+Note, I don't have RTL8761A device, so I would appreciate if someone 
+can help test in case this patch breaks RTL8761A.
+The RTL8761A information is from the following Github issue
+https://github.com/lwfinger/rtlwifi_new/issues/58
 
-Full log of btmon is available here, with the mac address masked 
-http://fars.ee/Lu85
+[   41.468873] Bluetooth: hci0: rtl: examining hci_ver=06 hci_rev=000a lmp_ver=06 lmp_subver=8761
 
-I'll send a v3 to include the usb info in the commit message shortly.
+Ziqian SUN (Zamir) (1):
+  Bluetooth: btrtl: Add support for RTL8761B
 
-> Regards
-> 
-> Marcel
-> 
+ drivers/bluetooth/btrtl.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 -- 
-Zamir SUN
-Fedora user
-GPG : 1D86 6D4A 49CE 4BBD 72CF FCF5 D856 6E11 F2A0 525E
+2.25.2
+
