@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B4B9A1A54D0
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Apr 2020 01:08:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC61A1A597F
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Apr 2020 01:38:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728748AbgDKXHt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 11 Apr 2020 19:07:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44072 "EHLO mail.kernel.org"
+        id S1728887AbgDKXIR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 11 Apr 2020 19:08:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44888 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728740AbgDKXHt (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 11 Apr 2020 19:07:49 -0400
+        id S1728879AbgDKXIP (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 11 Apr 2020 19:08:15 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9DFC52173E;
-        Sat, 11 Apr 2020 23:07:48 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2B5A3214D8;
+        Sat, 11 Apr 2020 23:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586646469;
-        bh=S6TKNCCtj26VouFt79OMxAj/QJCUGWiEe3uRGuZdZhk=;
+        s=default; t=1586646495;
+        bh=t7cIWUb42ZwzSGKMzGbVwz0yuANHChXgEkTj7EQFjCk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TFtCaI+Y1MasLkRxaLAbhRzWfeZAxyYm4mvPOAPgCYnDZupxQLqsmyh/D8Kr3K/Pd
-         +pjmkp7T7aaegKF8QYREAh+04KJHlBCCBH6TmeAnWSfmp5m3F4SlZAHJIeOjT1NDCk
-         7Th3X1+wXP0SxnNFLp4rRacNMVzCxuA+G+NkbSi0=
+        b=JFHEsb7T60TX5YL53/XYLfDp74U9VIheFRUMcpOKkmvuc+BBgrH1ybAVyvC3qgvFw
+         KUIhgB6qv115581I46EG1IobbidPaPYoLefK4ZfGlomu6X91gP8lLvXWFZ3/3WkhuO
+         160/clAvlY4HM8Dt31BM72iymVmoU24ngEMTVMWc=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Rocky Liao <rjliao@codeaurora.org>,
+Cc:     Sergey Shatunov <me@prok.pw>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.5 036/121] Bluetooth: btqca: Fix the NVM baudrate tag offcet for wcn3991
-Date:   Sat, 11 Apr 2020 19:05:41 -0400
-Message-Id: <20200411230706.23855-36-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.5 058/121] Bluetooth: btusb: Add support for 13d3:3548 Realtek 8822CE device
+Date:   Sat, 11 Apr 2020 19:06:03 -0400
+Message-Id: <20200411230706.23855-58-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200411230706.23855-1-sashal@kernel.org>
 References: <20200411230706.23855-1-sashal@kernel.org>
@@ -44,62 +44,63 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Rocky Liao <rjliao@codeaurora.org>
+From: Sergey Shatunov <me@prok.pw>
 
-[ Upstream commit b63882549b2bf2979cb1506bdf783edf8b45c613 ]
+[ Upstream commit eb3939e386ec8df6049697d388298590231ac79c ]
 
-The baudrate set byte of wcn3991 in the NVM tag is byte 1, not byte 2.
-This patch will set correct byte for wcn3991.
+The ASUS FX505DV laptop contains RTL8822CE device with an
+associated BT chip using a USB ID of 13d3:3548.
+This patch add fw download support for it.
 
-Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+T:  Bus=03 Lev=01 Prnt=01 Port=03 Cnt=03 Dev#=  4 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3548 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Signed-off-by: Sergey Shatunov <me@prok.pw>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btusb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index ec69e5dd7bd3e..a16845c0751d3 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -139,7 +139,7 @@ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
- EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a6dad2f6995ae..317167d0e5d6b 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -386,6 +386,7 @@ static const struct usb_device_id blacklist_table[] = {
  
- static void qca_tlv_check_data(struct qca_fw_config *config,
--				const struct firmware *fw)
-+		const struct firmware *fw, enum qca_btsoc_type soc_type)
- {
- 	const u8 *data;
- 	u32 type_len;
-@@ -148,6 +148,7 @@ static void qca_tlv_check_data(struct qca_fw_config *config,
- 	struct tlv_type_hdr *tlv;
- 	struct tlv_type_patch *tlv_patch;
- 	struct tlv_type_nvm *tlv_nvm;
-+	uint8_t nvm_baud_rate = config->user_baud_rate;
+ 	/* Additional Realtek 8822CE Bluetooth devices */
+ 	{ USB_DEVICE(0x04ca, 0x4005), .driver_info = BTUSB_REALTEK },
++	{ USB_DEVICE(0x13d3, 0x3548), .driver_info = BTUSB_REALTEK },
  
- 	tlv = (struct tlv_type_hdr *)fw->data;
- 
-@@ -216,7 +217,10 @@ static void qca_tlv_check_data(struct qca_fw_config *config,
- 				tlv_nvm->data[0] |= 0x80;
- 
- 				/* UART Baud Rate */
--				tlv_nvm->data[2] = config->user_baud_rate;
-+				if (soc_type == QCA_WCN3991)
-+					tlv_nvm->data[1] = nvm_baud_rate;
-+				else
-+					tlv_nvm->data[2] = nvm_baud_rate;
- 
- 				break;
- 
-@@ -354,7 +358,7 @@ static int qca_download_firmware(struct hci_dev *hdev,
- 		return ret;
- 	}
- 
--	qca_tlv_check_data(config, fw);
-+	qca_tlv_check_data(config, fw, soc_type);
- 
- 	segment = fw->data;
- 	remain = fw->size;
+ 	/* Silicon Wave based devices */
+ 	{ USB_DEVICE(0x0c10, 0x0000), .driver_info = BTUSB_SWAVE },
 -- 
 2.20.1
 
