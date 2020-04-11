@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36AFD1A5B36
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Apr 2020 01:48:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F8051A5B2D
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Apr 2020 01:48:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727329AbgDKXEl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 11 Apr 2020 19:04:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38228 "EHLO mail.kernel.org"
+        id S1727377AbgDKXEn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 11 Apr 2020 19:04:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38290 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727314AbgDKXEk (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 11 Apr 2020 19:04:40 -0400
+        id S1727361AbgDKXEn (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 11 Apr 2020 19:04:43 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 41C2621744;
-        Sat, 11 Apr 2020 23:04:40 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 75C12214D8;
+        Sat, 11 Apr 2020 23:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586646280;
-        bh=S6TKNCCtj26VouFt79OMxAj/QJCUGWiEe3uRGuZdZhk=;
+        s=default; t=1586646283;
+        bh=A6KO02u9HP+jDAo+joquhsaqmcvlEcEHNFs8Fwa8mA0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Lz8BnSDtGK6qw8soZ0jQLurvrRdMhV1JHmBdJlibBDJjy++nJmsOXkSio8U6/bCDH
-         KbpWYz0pFLWJy8vQb2kxKcMYWVVk8DKzOCWshlBWQ/pijvQ74ZiD0xnN3CcUKuMguZ
-         jlPvIukoRvp3/Oy3AUil14+pUsgbXirTjB7KEEHc=
+        b=VLH2/BqniR7QpE6CAhmjJTH22BNSrrzpVyfxtl0Kq98XaAphI16e9P5lqyHuhw37P
+         olLOtfZWrWW6QA4glKjZ4mHIwjVcNQrUwRnucDIgw6gjnmP6T6SoMmh9V3VrOnA/ox
+         vroaEzB0rHE9u+VafufOf+ge69FyjS7xPzuhzGE4=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Rocky Liao <rjliao@codeaurora.org>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.6 043/149] Bluetooth: btqca: Fix the NVM baudrate tag offcet for wcn3991
-Date:   Sat, 11 Apr 2020 19:02:00 -0400
-Message-Id: <20200411230347.22371-43-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.6 045/149] Bluetooth: hci_qca: Not send vendor pre-shutdown command for QCA Rome
+Date:   Sat, 11 Apr 2020 19:02:02 -0400
+Message-Id: <20200411230347.22371-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200411230347.22371-1-sashal@kernel.org>
 References: <20200411230347.22371-1-sashal@kernel.org>
@@ -46,60 +46,37 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Rocky Liao <rjliao@codeaurora.org>
 
-[ Upstream commit b63882549b2bf2979cb1506bdf783edf8b45c613 ]
+[ Upstream commit 4f9ed5bd63dc16d061cdeb00eeff9d56e86a6beb ]
 
-The baudrate set byte of wcn3991 in the NVM tag is byte 1, not byte 2.
-This patch will set correct byte for wcn3991.
+QCA Rome doesn't support the pre-shutdown vendor hci command, this patch
+will check the soc type in qca_power_off() and only send this command
+for wcn399x.
 
+Fixes: ae563183b647 ("Bluetooth: hci_qca: Enable power off/on support during hci down/up for QCA Rome")
 Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_qca.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index ec69e5dd7bd3e..a16845c0751d3 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -139,7 +139,7 @@ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
- EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
- 
- static void qca_tlv_check_data(struct qca_fw_config *config,
--				const struct firmware *fw)
-+		const struct firmware *fw, enum qca_btsoc_type soc_type)
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index d6e0c99ee5eb1..7e5a097bd0ed8 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1726,9 +1726,11 @@ static int qca_power_off(struct hci_dev *hdev)
  {
- 	const u8 *data;
- 	u32 type_len;
-@@ -148,6 +148,7 @@ static void qca_tlv_check_data(struct qca_fw_config *config,
- 	struct tlv_type_hdr *tlv;
- 	struct tlv_type_patch *tlv_patch;
- 	struct tlv_type_nvm *tlv_nvm;
-+	uint8_t nvm_baud_rate = config->user_baud_rate;
+ 	struct hci_uart *hu = hci_get_drvdata(hdev);
+ 	struct qca_data *qca = hu->priv;
++	enum qca_btsoc_type soc_type = qca_soc_type(hu);
  
- 	tlv = (struct tlv_type_hdr *)fw->data;
- 
-@@ -216,7 +217,10 @@ static void qca_tlv_check_data(struct qca_fw_config *config,
- 				tlv_nvm->data[0] |= 0x80;
- 
- 				/* UART Baud Rate */
--				tlv_nvm->data[2] = config->user_baud_rate;
-+				if (soc_type == QCA_WCN3991)
-+					tlv_nvm->data[1] = nvm_baud_rate;
-+				else
-+					tlv_nvm->data[2] = nvm_baud_rate;
- 
- 				break;
- 
-@@ -354,7 +358,7 @@ static int qca_download_firmware(struct hci_dev *hdev,
- 		return ret;
+ 	/* Stop sending shutdown command if soc crashes. */
+-	if (qca->memdump_state == QCA_MEMDUMP_IDLE) {
++	if (qca_is_wcn399x(soc_type)
++		&& qca->memdump_state == QCA_MEMDUMP_IDLE) {
+ 		qca_send_pre_shutdown_cmd(hdev);
+ 		usleep_range(8000, 10000);
  	}
- 
--	qca_tlv_check_data(config, fw);
-+	qca_tlv_check_data(config, fw, soc_type);
- 
- 	segment = fw->data;
- 	remain = fw->size;
 -- 
 2.20.1
 
