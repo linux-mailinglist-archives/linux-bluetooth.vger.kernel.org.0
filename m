@@ -1,207 +1,112 @@
 Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from vger.kernel.org (unknown [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DF4A31A6189
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Apr 2020 04:32:50 +0200 (CEST)
+Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
+	by mail.lfdr.de (Postfix) with ESMTP id AA1ED1A65EE
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Apr 2020 13:51:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728022AbgDMCct (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 12 Apr 2020 22:32:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.18]:41110 "EHLO
+        id S1729167AbgDMLvY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Apr 2020 07:51:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727520AbgDMCct (ORCPT
+        with ESMTP id S1729191AbgDMLty (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 12 Apr 2020 22:32:49 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2588AC0A3BE0
-        for <linux-bluetooth@vger.kernel.org>; Sun, 12 Apr 2020 19:32:49 -0700 (PDT)
-IronPort-SDR: +pQpDa9sFK3tjGQpoAX/+EClCG5Mc0LeJ4PpFyb5MPJ22kerb5Q3W4jiTIzU6hMFPqGz9/v11A
- 7eGRWKIxz9Jw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2020 19:32:48 -0700
-IronPort-SDR: Q0V06113X/wZTdo2Tm323OaSGGRjtDG2QHgEsqeLkHCe+7j5Y9OsCf5BvePlU75joV8pXFFvy2
- VoeqWXFBr5hg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,377,1580803200"; 
-   d="scan'208";a="454076309"
-Received: from sguggill-mobl.amr.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.254.105.177])
-  by fmsmga006.fm.intel.com with ESMTP; 12 Apr 2020 19:32:47 -0700
-From:   Brian Gix <brian.gix@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     inga.stotland@intel.com, brian.gix@intel.com,
-        michal.lowas-rzechonek@silvair.com, przemyslaw.fierek@silvair.com
-Subject: [PATCH BlueZ v3 4/4] mesh: Add Time-outs to critical dbus send-with-replies
-Date:   Sun, 12 Apr 2020 19:32:17 -0700
-Message-Id: <20200413023217.20472-5-brian.gix@intel.com>
-X-Mailer: git-send-email 2.21.1
-In-Reply-To: <20200413023217.20472-1-brian.gix@intel.com>
-References: <20200413023217.20472-1-brian.gix@intel.com>
+        Mon, 13 Apr 2020 07:49:54 -0400
+X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Apr 2020 07:49:44 EDT
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A47C3C008610
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Apr 2020 04:41:09 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id e4so5884297ils.4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Apr 2020 04:41:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=qlKWExEze9qCqlwbpw1q4+d2Zjr4ETGVa64TcX+dTlk=;
+        b=HxOaFJZljqXQIeSLw7dw+YeTIVe76Yo57NkC3rYQjPPsruaWLZEetJYgTw7mDA7iYw
+         4KM/sQKuVdxfTyBgHy0QGrcgvhBAp/s2WR+7lhwMEms7c5U3ARzlxX4w9gHN6kyIVCTo
+         InVjjBwajQbgYMLlLr/dGAnfAOq75HLmi2bmQShdg5UrDH6ZNHdmpjirCjsFE3E+W3lI
+         4HPNdhIk9GHy3wOVy8qt79oLhQ3V0WJ+l2R8YfTk5No8OB207Mc1ssyzLdiNdU6iDIon
+         HSnId1sWR9JHq8BkscMOY+TVCS7WuDDdfTSRJRDObUGUY3pKdsd/NGq97n4qtv5szVJr
+         IEMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=qlKWExEze9qCqlwbpw1q4+d2Zjr4ETGVa64TcX+dTlk=;
+        b=iwdr9CIcqHf9iQWj88LcACIg/4hJ5wOFq4wTUx8f++b7ZZB9bpsSdeBBthbhaNjfe6
+         ruqrDEaHYlxfnhILpIt2tcelzZguUEe7RebIIvExS5tH9Ieh3hBEucZZOlN+LnoXBLyd
+         9fai9Gh881D7ZZmD+fUTMEU7L+4TjTQmg/iJsiiFpjhtMZafNdzFpHApOYnYawd7BMZE
+         +n+GY0Nc11IyvLZI3hembdJUMxfgdoxEQ+qAPmQ8lIkJggn0uNhBGkqdDkmdrWpV8FnM
+         z/cgbrudOaYajVEXdtBuK9r+/bPfRF8nBk4Vm+uSLRpCPUhVTDT/1mdcrdlxhRy2lMV2
+         V2Zg==
+X-Gm-Message-State: AGi0PuaZQPWv6PYDBsRnjnmNkZ1zhHaB0o1EXrT3icAuQO3sMgSMsY+2
+        SFvgE1Nc9uIDxkC41tvdNLsG0iuC1npANM9WAg==
+X-Google-Smtp-Source: APiQypJ8Xf5JZIaJmuakcegBHklRN/w3ObzOY1fG2hZhiF0393fUgrxf6qaSVcLD5pLEm/4TEQgoj9oGK8tQ5EeyGAU=
+X-Received: by 2002:a05:6e02:c8f:: with SMTP id b15mr14965961ile.35.1586778068198;
+ Mon, 13 Apr 2020 04:41:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a02:5e49:0:0:0:0:0 with HTTP; Mon, 13 Apr 2020 04:41:07
+ -0700 (PDT)
+Reply-To: mgbenin903@gmail.com
+From:   Barrister Robert Richter UN-Attorney at Law Court-Benin 
+        <info.zennitbankplcnigerian@gmail.com>
+Date:   Mon, 13 Apr 2020 13:41:07 +0200
+Message-ID: <CABHzvrm3rWryg1yAooKeHwdxzrKD47PRAEfC+ay1A6i5z3Wdiw@mail.gmail.com>
+Subject: I have already sent you first payment US$5000.00 this morning through
+ MONEY Gram service.it is available to pick up in address now.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-JoinComplete() dbus method calls are the only time that node tokens are
-delivered to client Applications, so if the call fails for any reason
-(including time-outs) the daemon has a way to clean-up the stale unused
-node data.
----
- mesh/dbus.c | 43 +++++++++++++++++++++++++++++++++++++++++++
- mesh/dbus.h |  6 ++++++
- mesh/mesh.c | 22 ++++++++++++----------
- 3 files changed, 61 insertions(+), 10 deletions(-)
+ATTN DEAR BENEFICIARY.
 
-diff --git a/mesh/dbus.c b/mesh/dbus.c
-index 6b9694ab7..2c9dd3ae0 100644
---- a/mesh/dbus.c
-+++ b/mesh/dbus.c
-@@ -37,6 +37,14 @@ struct error_entry {
- 	const char *default_desc;
- };
- 
-+struct send_info {
-+	struct l_dbus *dbus;
-+	struct l_timeout *timeout;
-+	dbus_send_with_to_func_t cb;
-+	void *user_data;
-+	uint32_t serial;
-+};
-+
- /*
-  * Important: The entries in this table follow the order of
-  * enumerated values in mesh_error (file error.h)
-@@ -143,3 +151,38 @@ void dbus_append_dict_entry_basic(struct l_dbus_message_builder *builder,
- 	l_dbus_message_builder_leave_variant(builder);
- 	l_dbus_message_builder_leave_dict(builder);
- }
-+
-+static void send_reply(struct l_dbus_message *message, void *user_data)
-+{
-+	struct send_info *info = user_data;
-+	bool failed = l_dbus_message_is_error(message);
-+
-+	l_timeout_remove(info->timeout);
-+	info->cb(failed, info->user_data);
-+	l_free(info);
-+}
-+
-+static void send_to(struct l_timeout *timeout, void *user_data)
-+{
-+	struct send_info *info = user_data;
-+
-+	l_dbus_cancel(info->dbus, info->serial);
-+	l_timeout_remove(info->timeout);
-+	info->cb(true, info->user_data);
-+	l_free(info);
-+}
-+
-+void dbus_send_with_timeout(struct l_dbus *dbus, struct l_dbus_message *msg,
-+						dbus_send_with_to_func_t cb,
-+						void *user_data,
-+						unsigned int seconds)
-+{
-+	struct send_info *info = l_new(struct send_info, 1);
-+
-+	info->dbus = dbus;
-+	info->cb = cb;
-+	info->user_data = user_data;
-+	info->serial = l_dbus_send_with_reply(dbus, msg, send_reply,
-+								info, NULL);
-+	info->timeout = l_timeout_create(seconds, send_to, info, NULL);
-+}
-diff --git a/mesh/dbus.h b/mesh/dbus.h
-index e7643a59d..31c174367 100644
---- a/mesh/dbus.h
-+++ b/mesh/dbus.h
-@@ -20,6 +20,8 @@
- #define BLUEZ_MESH_PATH "/org/bluez/mesh"
- #define BLUEZ_MESH_SERVICE "org.bluez.mesh"
- 
-+typedef void (*dbus_send_with_to_func_t) (bool failed, void *user_data);
-+
- bool dbus_init(struct l_dbus *dbus);
- struct l_dbus *dbus_get_bus(void);
- void dbus_append_byte_array(struct l_dbus_message_builder *builder,
-@@ -31,3 +33,7 @@ bool dbus_match_interface(struct l_dbus_message_iter *interfaces,
- 							const char *match);
- struct l_dbus_message *dbus_error(struct l_dbus_message *msg, int err,
- 						const char *description);
-+void dbus_send_with_timeout(struct l_dbus *dbus, struct l_dbus_message *msg,
-+						dbus_send_with_to_func_t cb,
-+						void *user_data,
-+						unsigned int seconds);
-diff --git a/mesh/mesh.c b/mesh/mesh.c
-index 8c9aa9187..f46e676d9 100644
---- a/mesh/mesh.c
-+++ b/mesh/mesh.c
-@@ -429,10 +429,9 @@ static void send_join_failed(const char *owner, const char *path,
- 	free_pending_join_call(true);
- }
- 
--static void prov_join_complete_reply_cb(struct l_dbus_message *message,
--								void *user_data)
-+static void prov_join_complete_reply_cb(bool failed, void *user_data)
- {
--	bool failed = l_dbus_message_is_error(message);
-+	l_debug("prov_join_complete_reply_cb");
- 
- 	if (!failed)
- 		node_attach_io(join_pending->node, mesh.io);
-@@ -468,13 +467,14 @@ static bool prov_complete_cb(void *user_data, uint8_t status,
- 
- 	token = node_get_token(join_pending->node);
- 
-+	l_debug("Calling JoinComplete (prov)");
- 	msg = l_dbus_message_new_method_call(dbus, owner, path,
- 						MESH_APPLICATION_INTERFACE,
- 						"JoinComplete");
- 
- 	l_dbus_message_set_arguments(msg, "t", l_get_be64(token));
--	l_dbus_send_with_reply(dbus, msg,
--				prov_join_complete_reply_cb, NULL, NULL);
-+	dbus_send_with_timeout(dbus, msg, prov_join_complete_reply_cb,
-+								NULL, 30);
- 
- 	return true;
- }
-@@ -668,12 +668,13 @@ static struct l_dbus_message *leave_call(struct l_dbus *dbus,
- 	return l_dbus_message_new_method_return(msg);
- }
- 
--static void create_join_complete_reply_cb(struct l_dbus_message *message,
--								void *user_data)
-+static void create_join_complete_reply_cb(bool failed, void *user_data)
- {
- 	struct mesh_node *node = user_data;
- 
--	if (l_dbus_message_is_error(message)) {
-+	l_debug("create_join_complete_reply_cb");
-+
-+	if (failed) {
- 		node_remove(node);
- 		return;
- 	}
-@@ -713,13 +714,14 @@ static void create_node_ready_cb(void *user_data, int status,
- 	path = node_get_app_path(node);
- 	token = node_get_token(node);
- 
-+	l_debug("Calling JoinComplete (create)");
- 	msg = l_dbus_message_new_method_call(dbus, owner, path,
- 						MESH_APPLICATION_INTERFACE,
- 						"JoinComplete");
- 
- 	l_dbus_message_set_arguments(msg, "t", l_get_be64(token));
--	l_dbus_send_with_reply(dbus, msg,
--				create_join_complete_reply_cb, node, NULL);
-+	dbus_send_with_timeout(dbus, msg, create_join_complete_reply_cb,
-+								node, 30);
- }
- 
- static struct l_dbus_message *create_network_call(struct l_dbus *dbus,
--- 
-2.21.1
+GOOD NEWS.
 
+I have already sent you first payment US$5000.00 this morning through
+MONEY Gram service.it is available to pick up in address now.
+
+So we advise you to Contact This Money Gram office to pick up your
+transfer $US5000.00 today.
+
+
+Note that your compensation payment funds is total amount $US2.800,000
+Million Dollars.We have instructed the Money Gram Agent,Mr. James
+Gadner to keep sending the transfer to you daily, but the maximum
+amount you will be receiving everyday is US$5000.00. Contact Agent now
+to pick up your first payment $US5000.00 immediately.
+
+Contact Person, Mr. James Gadner, Dir. Money Gram Benin.
+Email: mgbenin903@gmail.com
+Telephone Numbers: +229 62819378/ +229 98477762
+
+HERE IS YOUR PAYMENT DETAILS FOR THE FIRST =C2=A3US5000.00 SENT TODAY.
+
+Track View Website link:
+https://secure.moneygram.com/track
+Sender=E2=80=99s First name: David
+Sender=E2=80=99s Last Name: Joiner
+Money Transfer Control Number (MTCN) (REFERENCE)# 26046856
+
+Contact the Mmoney Gram Urgent and reconfirm your address to the
+office before, they will allow you to pick up the transfer today.
+
+HERE IS WHAT REQUIRED OF YOU.
+
+YOUR FULL NAME---------
+ADDRESS--------------
+COUNTRY-----------------------------
+TELEPHONE NUMBERS-----------------
+
+Note, I paid the transfer fee for you, but only you are required to
+send to the office is $75 only,Been Your Payment File activation fee,
+Send once you contact the office,before you can able to pick up your
+transfer today.
+
+Let me know once you pick up first payment today.
+
+Barrister Robert Richter UN-Attorney at Law Court-Benin
