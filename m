@@ -2,110 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7A181A7637
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Apr 2020 10:33:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 376181A76B6
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Apr 2020 10:55:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436880AbgDNIcS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 14 Apr 2020 04:32:18 -0400
-Received: from mail.zx2c4.com ([192.95.5.64]:52379 "EHLO mail.zx2c4.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2436826AbgDNIcL (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 14 Apr 2020 04:32:11 -0400
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d220a78;
-        Tue, 14 Apr 2020 08:22:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=subject:to:cc
-        :references:from:message-id:date:mime-version:in-reply-to
-        :content-type:content-transfer-encoding; s=mail; bh=Bn42dUX94nPZ
-        VI2aresTt2verm4=; b=sx6IKJIxzuEOA3MDWmGK5eH/64R8mpMYlG8WURWdfzRD
-        XFeah0rjLnpfJ/wNxDNPuLqvGkOXg2tTc6/J9yxFJV/B/IyVASTm/xV1AWFh8sOT
-        E+Zkl2VUcl4Y0wf6Mu5iapMmn3g8Ztyi36JLXdlWN66PEuOJynjCGScQFzOu0tep
-        4+h/FZal3et8UceGQF9vqtL2mbwwUOtzAFh6NniwZkygh5iiMorXd4zwhnYD2AoL
-        UBjxDBvR+PqwgLJDDNN43HRxAe1Ka1ICHvrV5FNQIfjCNS9xZTJzxiJXAqnsHyrN
-        w3BT8jw4OmracAotC1L9+6WCZMUQn8YWdWOjpIB/Jw==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e4f42b92 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 14 Apr 2020 08:22:18 +0000 (UTC)
-Subject: Re: [PATCH 1/2] mm, treewide: Rename kzfree() to kfree_sensitive()
-To:     Waiman Long <longman@redhat.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        David Howells <dhowells@redhat.com>,
-        Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
-        James Morris <jmorris@namei.org>,
-        "Serge E. Hallyn" <serge@hallyn.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Joe Perches <joe@perches.com>,
-        Matthew Wilcox <willy@infradead.org>,
-        David Rientjes <rientjes@google.com>
-Cc:     linux-mm@kvack.org, keyrings@vger.kernel.org,
-        linux-kernel@vger.kernel.org, x86@kernel.org,
-        linux-crypto@vger.kernel.org, linux-s390@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
-        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
-        intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
-        wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
-        devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
-        target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
-        linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
-        kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
-        linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
-        linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
-        cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
-        linux-integrity@vger.kernel.org
-References: <20200413211550.8307-1-longman@redhat.com>
- <20200413211550.8307-2-longman@redhat.com>
-From:   "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <4babf834-c531-50ba-53f6-e88410b15ce3@zx2c4.com>
-Date:   Tue, 14 Apr 2020 02:32:03 -0600
+        id S2437248AbgDNIzx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 14 Apr 2020 04:55:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43074 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2437215AbgDNIzn (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 14 Apr 2020 04:55:43 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CB59C0A3BDC
+        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Apr 2020 01:55:43 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id x25so12129990wmc.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Apr 2020 01:55:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=silvair-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HmN12xntwSzzHYA614R5tce78fEORuWoO5H77KCpCGU=;
+        b=XHwHQtx2tBAIW1GgB0FTTQbEoygC09efxYxg//bDODjUE9huD3qW9ArNY3xOI/PHCi
+         2G/HWl2W+nIDGEAzeVQozSJ65ZWROv328F/dbN9MS9+rGx/8RunYeKSDpWKirsvIZyxq
+         VfgGtiyVhCO4jEMuHo+ed+ejCXguDTDi9oIr78Ap6Yb3IfZ3sIxrM6O6K0UF1tpC+Pnl
+         iOYFhZ3dOzMBT+ddE3v6c8nmNnI3IIISbowc8c8e8JqZ62JfUTLZJBuOC5q7tt/FDk4C
+         KNKCuBonAqsBl0yZmoZ+P/afiFLvkTYuECtn6YKSP/BlRGc/4O9zRSpZQuvKgoRwCc8X
+         126Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HmN12xntwSzzHYA614R5tce78fEORuWoO5H77KCpCGU=;
+        b=OIP+9Z4RZehMFNplO68c17Nj6mzYzDAE46lBtbFDf89LlDgO7/J9uyTDmN5evcEUWu
+         52W5ozfKLOnQAB453C+nXDS3XQavKdtwcBz9fVaAWnDfqX/3wD5J8CxSQ4kJxYBuEK7R
+         foXZrSG96OwAXpEhpW30RrS6LQuj+wXp8m453t5RIiwQJQCn4wKmVNP23pUkSDK8XbsR
+         Mevv4J/Qtj/YmiPBlDkGqYuiK9KJvlkPuQgkuepVJc8CV1JZ5I+BpJiVpZZ7ziVmZYXk
+         570tHQF6nxVjH8sQ6Jk9+XHIJcmEBUTU+t5FTsb+P5X6FSbEvujUyjGUqiVJbegk9nwt
+         v5fg==
+X-Gm-Message-State: AGi0PuakeGZ4nYdhUiasdQ5ZW2yKpffMrnsU0l3yYSNGe66DgLpO5O7t
+        UyQWoKTXj7OrtCs+UIc7iPamW4lOFig=
+X-Google-Smtp-Source: APiQypKYCEloNr4PeEEq649B8BFqONbrBrJQvHQJEMV9QmwO+j4x/3EyATwOoIGPFFVor+NZ3EcJjg==
+X-Received: by 2002:a1c:dc8b:: with SMTP id t133mr22901245wmg.117.1586854541116;
+        Tue, 14 Apr 2020 01:55:41 -0700 (PDT)
+Received: from mlowasrzechonek2133.silvair.lan ([217.153.94.18])
+        by smtp.gmail.com with ESMTPSA id w83sm18361553wmb.37.2020.04.14.01.55.40
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2020 01:55:40 -0700 (PDT)
+From:   =?UTF-8?q?Micha=C5=82=20Lowas-Rzechonek?= 
+        <michal.lowas-rzechonek@silvair.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v5 0/4] mesh: Always deliver tokens via JoinComplete
+Date:   Tue, 14 Apr 2020 10:55:53 +0200
+Message-Id: <20200414085557.23464-1-michal.lowas-rzechonek@silvair.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20200413211550.8307-2-longman@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On 4/13/20 3:15 PM, Waiman Long wrote:
-> As said by Linus:
-> 
->    A symmetric naming is only helpful if it implies symmetries in use.
->    Otherwise it's actively misleading.
-> 
->    In "kzalloc()", the z is meaningful and an important part of what the
->    caller wants.
-> 
->    In "kzfree()", the z is actively detrimental, because maybe in the
->    future we really _might_ want to use that "memfill(0xdeadbeef)" or
->    something. The "zero" part of the interface isn't even _relevant_.
-> 
-> The main reason that kzfree() exists is to clear sensitive information
-> that should not be leaked to other future users of the same memory
-> objects.
-> 
-> Rename kzfree() to kfree_sensitive() to follow the example of the
-> recently added kvfree_sensitive() and make the intention of the API
-> more explicit. 
+This patchset implements API change discussed in
+https://marc.info/?l=linux-bluetooth&m=157660821400352&w=2
 
-Seems reasonable to me. One bikeshed, that you can safely discard and 
-ignore as a mere bikeshed: kfree_memzero or kfree_scrub or 
-kfree_{someverb} seems like a better function name, as it describes what 
-the function does, rather than "_sensitive" that suggests something 
-about the data maybe but who knows what that entails. If you disagree, 
-not a big deal either way.
+v5:
+ - Updated wording in doc/mesh-api.txt
+ - Rearranged patches to include error checking fix and logs in
+   patch #2
 
- > In addition, memzero_explicit() is used to clear the
- > memory to make sure that it won't get optimized away by the compiler.
+v4:
+ - Restore original C parameters on the response for dbus
+   send_with_reply.  Any parameters can now be "returned" by the App,
+   and a NULL message indicates an internally generated time-out
 
-This had occurred to me momentarily a number of years ago, but I was 
-under the impression that the kernel presumes extern function calls to 
-always imply a compiler barrier, making it difficult for the compiler to 
-reason about what happens in/after kfree, in order to be able to 
-optimize out the preceding memset. With LTO, that rule obviously 
-changes. I guess new code should be written with cross-object 
-optimizations in mind now a days? [Meanwhile, it would be sort of 
-interesting to teach gcc about kfree to enable additional scary 
-optimizations...]
+v3:
+ - Add distribution independant timeout for JoinComplete() method calls
+   such that a 30 second timeout of the call is treated as failure, so
+   stale nodes clean up correctly
+
+v2:
+ - Fix mesh-cfgclient to send JoinComplete reply before calling Attach
+
+Brian Gix (1):
+  mesh: Add Time-outs to critical dbus send-with-replies
+
+Michał Lowas-Rzechonek (1):
+  doc/mesh: Change API to deliver tokens via JoinComplete
+
+Przemysław Fierek (2):
+  mesh: Change API to deliver tokens via JoinComplete
+  tools/mesh-cfgclient: Add waiting for 'JoinComplete'
+
+ doc/mesh-api.txt       | 30 +++++++++-------
+ mesh/dbus.c            | 40 ++++++++++++++++++++++
+ mesh/dbus.h            |  6 ++++
+ mesh/mesh.c            | 68 ++++++++++++++++++++++++++++--------
+ tools/mesh-cfgclient.c | 78 +++++++++++++++++++++++++-----------------
+ 5 files changed, 162 insertions(+), 60 deletions(-)
+
+-- 
+2.20.1
+
