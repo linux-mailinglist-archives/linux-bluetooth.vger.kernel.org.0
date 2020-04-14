@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD7831A76B2
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Apr 2020 10:55:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 802B71A76B4
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Apr 2020 10:55:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437245AbgDNIzu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 14 Apr 2020 04:55:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43080 "EHLO
+        id S2437246AbgDNIzw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 14 Apr 2020 04:55:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2437240AbgDNIzq (ORCPT
+        by vger.kernel.org with ESMTP id S2437241AbgDNIzq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Tue, 14 Apr 2020 04:55:46 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD26DC008748
-        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Apr 2020 01:55:44 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id e26so12110029wmk.5
-        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Apr 2020 01:55:44 -0700 (PDT)
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 120F6C008749
+        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Apr 2020 01:55:46 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id x4so12119169wmj.1
+        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Apr 2020 01:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=silvair-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=o+E8MAsU/VToF7MpC+vzMgQnq8ejVDOjf7uiE778Eyo=;
-        b=Vv8//iXZb1dTLP7nhR8g73eLsbEC3YSbXIO0aizialkvv+12RGJpAc8NGuI2g11C7A
-         9NgWbxWh8QB45ife7hOl6PC+e10yycFMChb1Vv4gYEP7DJdnBFmteqXhc0QY6LbMnUHe
-         IflJULVsuxAVeQWJUoCdzW6wU+yoDWIjOKh0e4GMnjq5ZNBlMBUXsL7bGLf7Wy1guKWk
-         wJn3fvdQO8Gxx6Io2EjNLSCsLKKLZd+QNwZl6SQZ+7DmLRKCLvjUe5WCOOtlrzD9E4HS
-         3zVwIAbEJiN5rcHN+ZjXimgODnJPsJL3FT/k0+wNVBB97WDm8ihzS+drMqdb9moNbpv9
-         5RBA==
+        bh=WYw83xQZWPThAtROU1oga8r97ZB97JOahIrkX+lwcrw=;
+        b=g5CdbYabWHDPDzbLX/KIqGC+4iWYugLaR0E+5no8fMdeCHL9UfOHPqBv8ZFVPP6UD2
+         POo5AdlmmaTqNioQ5KFQhiK+S246EVrPLQb1IPuRRVzkbvYOJe1F2A8V6uXK6XI6IYe4
+         v3Tl5HKWtOaGRuxDilTFRM4xYedOvFHBRfVbYcuMNzvIJ5NFtcd7p3J6FsnghrYVX5CG
+         c8cyFK+oARpU1RzCAI0TIajc63PVhJtn/FPvcki9OWm7/uKatnRxvDBaEZ2RoSOewu9f
+         j7XN6GGNRy/CE76o8dvLIr7fUtGWnocYbg6rtD0GSxApi8/UN8Ahjbqv/T08YWdCUV5O
+         Tumw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=o+E8MAsU/VToF7MpC+vzMgQnq8ejVDOjf7uiE778Eyo=;
-        b=UPhFdH9nmp3C+rBZofZJE/qE2rpks7yAX8E5tXeFFfTHKcqWL1haQtEVigcjq5Oqaq
-         M8r5iDGxWpGGcIBH50psZmHz27OOUGE+Iw6HaP/gnF73mqy5jY6kbnI6Wtg/LDIO5sjM
-         +tlasG2qmmz3hhrSSgiEpBXWaIzvCduFK8kdIeN/c68bEJn+X1RhwmzG1tAjPAFYxcbI
-         rpWa5dS7PRLO8cSIZuZWWYC7j4FsvZeMHcDVHfIrGninYiPV2+NeVpxaFCXdrWCjeVTo
-         aNzRXcTzG78/sVz/FPlPrH+bFbedRV6whsrM0/QWYcIsekgI8/VrgERHUXHCYFhqI6Z0
-         gkgQ==
-X-Gm-Message-State: AGi0Pubp3UhRVl1g2R+jbdDygXUpSu1pWdi6vp04djuns4xDY+1xgz6T
-        a3OriRKmvFbA36GyzEJm8VMX1aRCbSk=
-X-Google-Smtp-Source: APiQypKUM3hfqc+1Oh3thbNMM4ySEAQSXWXWOeji+r15Znnw0JnNcsltUfZJBRfWAIyJNNweacTJbw==
-X-Received: by 2002:a1c:8106:: with SMTP id c6mr22272032wmd.88.1586854543200;
-        Tue, 14 Apr 2020 01:55:43 -0700 (PDT)
+        bh=WYw83xQZWPThAtROU1oga8r97ZB97JOahIrkX+lwcrw=;
+        b=WLWh/qA+txalY5f2xIBVg0nxaMgSeAKyLa5RnJAZH4b9XQ1ZnBvXUbvawIIwvYcyNr
+         8aDMzRg5UbJI19cl5CnPKh0h/OAPTHCa21nngKNfudCn4UTvXlHBaGYhT/2ue504Bv9l
+         yhaKpD84I1UPYqEILGGdjqx5PnGHjMbxS8o352FuhYEJ8Gwfu2AUiTbLZQ1kfdxDhFSC
+         NZrjDGWPbG4WzALF8E6KnbT8speKoCQXd/PXVpFr5HTzP2Pa6TUVjzfvCOYEdtlFvaLs
+         eMhYs9obMzGWVUzeGVxH/U1WK/reaOStba6bNzL8DHs54FElonGJ5sQlvbrxX/hA6Gez
+         +QZQ==
+X-Gm-Message-State: AGi0Pua/NB1KuLeKgwN56IVwTVKb8NLo25EpU6wzhF8pDv3s+K0T8jfj
+        o8kLAytfl07Zez2yJAbqa31baiiQJO8=
+X-Google-Smtp-Source: APiQypIQ3mpGTqvECB3o5fJni4zf8cMrn2iwHMNdYPVXbpdrqPpK9qfQgwmIE/wRNra9m6mEscDWsQ==
+X-Received: by 2002:a7b:c1da:: with SMTP id a26mr21383196wmj.125.1586854544349;
+        Tue, 14 Apr 2020 01:55:44 -0700 (PDT)
 Received: from mlowasrzechonek2133.silvair.lan ([217.153.94.18])
-        by smtp.gmail.com with ESMTPSA id w83sm18361553wmb.37.2020.04.14.01.55.42
+        by smtp.gmail.com with ESMTPSA id w83sm18361553wmb.37.2020.04.14.01.55.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 01:55:42 -0700 (PDT)
+        Tue, 14 Apr 2020 01:55:43 -0700 (PDT)
 From:   =?UTF-8?q?Micha=C5=82=20Lowas-Rzechonek?= 
         <michal.lowas-rzechonek@silvair.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     =?UTF-8?q?Przemys=C5=82aw=20Fierek?= 
         <przemyslaw.fierek@silvair.com>
-Subject: [PATCH BlueZ v5 2/4] mesh: Change API to deliver tokens via JoinComplete
-Date:   Tue, 14 Apr 2020 10:55:55 +0200
-Message-Id: <20200414085557.23464-3-michal.lowas-rzechonek@silvair.com>
+Subject: [PATCH BlueZ v5 3/4] tools/mesh-cfgclient: Add waiting for 'JoinComplete'
+Date:   Tue, 14 Apr 2020 10:55:56 +0200
+Message-Id: <20200414085557.23464-4-michal.lowas-rzechonek@silvair.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200414085557.23464-1-michal.lowas-rzechonek@silvair.com>
 References: <20200414085557.23464-1-michal.lowas-rzechonek@silvair.com>
@@ -69,143 +69,127 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Przemysław Fierek <przemyslaw.fierek@silvair.com>
 
-This patch changes Import and CreateNetwork API to deliver tokens via
-the JoinComplete method call.  When application doesn't raise any error
-during handling JoinComplete then it is assumed that the token has been
-saved, otherwise when application replies with an error message then the
-node is removed.
 ---
- mesh/mesh.c | 68 +++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 53 insertions(+), 15 deletions(-)
+ tools/mesh-cfgclient.c | 78 +++++++++++++++++++++++++-----------------
+ 1 file changed, 46 insertions(+), 32 deletions(-)
 
-diff --git a/mesh/mesh.c b/mesh/mesh.c
-index 9b3768b69..01e39e916 100644
---- a/mesh/mesh.c
-+++ b/mesh/mesh.c
-@@ -430,6 +430,20 @@ static void send_join_failed(const char *owner, const char *path,
- 	free_pending_join_call(true);
+diff --git a/tools/mesh-cfgclient.c b/tools/mesh-cfgclient.c
+index 5b018eb4a..6db65cd49 100644
+--- a/tools/mesh-cfgclient.c
++++ b/tools/mesh-cfgclient.c
+@@ -707,44 +707,13 @@ static void attach_node_setup(struct l_dbus_message *msg, void *user_data)
+ static void create_net_reply(struct l_dbus_proxy *proxy,
+ 				struct l_dbus_message *msg, void *user_data)
+ {
+-	char *str;
+-	uint64_t tmp;
+-
+ 	if (l_dbus_message_is_error(msg)) {
+ 		const char *name;
+ 
+ 		l_dbus_message_get_error(msg, &name, NULL);
+ 		l_error("Failed to create network: %s", name);
+ 		return;
+-
+-	}
+-
+-	if (!l_dbus_message_get_arguments(msg, "t", &tmp))
+-		return;
+-
+-	local = l_new(struct meshcfg_node, 1);
+-	local->token.u64 = l_get_be64(&tmp);
+-	str = l_util_hexstring(&local->token.u8[0], 8);
+-	bt_shell_printf("Created new node with token %s\n", str);
+-	l_free(str);
+-
+-	if (!mesh_db_create(cfg_fname, local->token.u8,
+-						"Mesh Config Client Network")) {
+-		l_free(local);
+-		local = NULL;
+-		return;
+ 	}
+-
+-	mesh_db_set_addr_range(low_addr, high_addr);
+-	keys_add_net_key(PRIMARY_NET_IDX);
+-	mesh_db_net_key_add(PRIMARY_NET_IDX);
+-
+-	remote_add_node(app.uuid, 0x0001, 1, PRIMARY_NET_IDX);
+-	mesh_db_add_node(app.uuid, 0x0001, 1, PRIMARY_NET_IDX);
+-
+-	l_dbus_proxy_method_call(net_proxy, "Attach", attach_node_setup,
+-						attach_node_reply, NULL,
+-						NULL);
  }
  
-+static void prov_join_complete_reply_cb(struct l_dbus_message *message,
-+								void *user_data)
-+{
-+	bool failed = false;
-+
-+	if (!message || l_dbus_message_is_error(message))
-+		failed = true;
-+
-+	if (!failed)
-+		node_attach_io(join_pending->node, mesh.io);
-+
-+	free_pending_join_call(failed);
-+}
-+
- static bool prov_complete_cb(void *user_data, uint8_t status,
- 					struct mesh_prov_node_info *info)
+ static void create_net_setup(struct l_dbus_message *msg, void *user_data)
+@@ -1727,7 +1696,7 @@ static struct l_dbus_message *add_node_fail_call(struct l_dbus *dbus,
+ static void setup_prov_iface(struct l_dbus_interface *iface)
  {
-@@ -456,18 +470,16 @@ static bool prov_complete_cb(void *user_data, uint8_t status,
- 		return false;
- 	}
+ 	l_dbus_interface_method(iface, "ScanResult", 0, scan_result_call, "",
+-						"naya{sv}", "rssi", "data", "options");
++					"naya{sv}", "rssi", "data", "options");
  
--	node_attach_io(join_pending->node, mesh.io);
- 	token = node_get_token(join_pending->node);
- 
-+	l_debug("Calling JoinComplete (prov)");
- 	msg = l_dbus_message_new_method_call(dbus, owner, path,
- 						MESH_APPLICATION_INTERFACE,
- 						"JoinComplete");
- 
- 	l_dbus_message_set_arguments(msg, "t", l_get_be64(token));
--
--	l_dbus_send(dbus, msg);
--
--	free_pending_join_call(false);
-+	l_dbus_send_with_reply(dbus, msg,
-+				prov_join_complete_reply_cb, NULL, NULL);
- 
+ 	l_dbus_interface_method(iface, "RequestProvData", 0, req_prov_call,
+ 				"qq", "y", "net_index", "unicast", "count");
+@@ -1779,6 +1748,48 @@ static bool crpl_getter(struct l_dbus *dbus,
  	return true;
  }
-@@ -662,11 +674,28 @@ static struct l_dbus_message *leave_call(struct l_dbus *dbus,
- 	return l_dbus_message_new_method_return(msg);
- }
  
-+static void create_join_complete_reply_cb(struct l_dbus_message *message,
-+								void *user_data)
++static void attach_node(void *user_data)
 +{
-+	struct mesh_node *node = user_data;
-+
-+	if (!message || l_dbus_message_is_error(message)) {
-+		node_remove(node);
-+		return;
-+	}
-+
-+	node_attach_io(node, mesh.io);
++	l_dbus_proxy_method_call(net_proxy, "Attach", attach_node_setup,
++						attach_node_reply, NULL,
++						NULL);
 +}
 +
- static void create_node_ready_cb(void *user_data, int status,
- 							struct mesh_node *node)
- {
-+	struct l_dbus *dbus = dbus_get_bus();
- 	struct l_dbus_message *reply;
- 	struct l_dbus_message *pending_msg;
-+	struct l_dbus_message *msg;
-+	const char *owner;
-+	const char *path;
- 	const uint8_t *token;
- 
- 	pending_msg = l_queue_find(pending_queue, simple_match, user_data);
-@@ -675,20 +704,29 @@ static void create_node_ready_cb(void *user_data, int status,
- 
- 	if (status != MESH_ERROR_NONE) {
- 		reply = dbus_error(pending_msg, status, NULL);
--		goto done;
--	}
- 
--	node_attach_io(node, mesh.io);
-+		l_dbus_send(dbus_get_bus(), reply);
-+		l_queue_remove(pending_queue, pending_msg);
-+		return;
++static struct l_dbus_message *join_complete(struct l_dbus *dbus,
++						struct l_dbus_message *message,
++						void *user_data)
++{
++	char *str;
++	uint64_t tmp;
++
++	if (!l_dbus_message_get_arguments(message, "t", &tmp))
++		return l_dbus_message_new_error(message, dbus_err_args, NULL);
++
++	local = l_new(struct meshcfg_node, 1);
++	local->token.u64 = l_get_be64(&tmp);
++	str = l_util_hexstring(&local->token.u8[0], 8);
++	bt_shell_printf("Created new node with token %s\n", str);
++	l_free(str);
++
++	if (!mesh_db_create(cfg_fname, local->token.u8,
++					"Mesh Config Client Network")) {
++		l_free(local);
++		local = NULL;
++		return l_dbus_message_new_error(message, dbus_err_fail, NULL);
 +	}
- 
- 	reply = l_dbus_message_new_method_return(pending_msg);
 +
-+	l_dbus_send(dbus, reply);
-+	l_queue_remove(pending_queue, pending_msg);
++	mesh_db_set_addr_range(low_addr, high_addr);
++	keys_add_net_key(PRIMARY_NET_IDX);
++	mesh_db_net_key_add(PRIMARY_NET_IDX);
 +
-+	owner = l_dbus_message_get_sender(pending_msg);
-+	path = node_get_app_path(node);
- 	token = node_get_token(node);
++	remote_add_node(app.uuid, 0x0001, 1, PRIMARY_NET_IDX);
++	mesh_db_add_node(app.uuid, 0x0001, 1, PRIMARY_NET_IDX);
++
++	l_idle_oneshot(attach_node, NULL, NULL);
++
++	return l_dbus_message_new_method_return(message);
++}
++
+ static void setup_app_iface(struct l_dbus_interface *iface)
+ {
+ 	l_dbus_interface_property(iface, "CompanyID", 0, "q", cid_getter,
+@@ -1789,6 +1800,9 @@ static void setup_app_iface(struct l_dbus_interface *iface)
+ 									NULL);
+ 	l_dbus_interface_property(iface, "CRPL", 0, "q", crpl_getter, NULL);
  
--	l_debug();
--	l_dbus_message_set_arguments(reply, "t", l_get_be64(token));
-+	l_debug("Calling JoinComplete (create)");
-+	msg = l_dbus_message_new_method_call(dbus, owner, path,
-+						MESH_APPLICATION_INTERFACE,
-+						"JoinComplete");
- 
--done:
--	l_dbus_send(dbus_get_bus(), reply);
--	l_queue_remove(pending_queue, pending_msg);
-+	l_dbus_message_set_arguments(msg, "t", l_get_be64(token));
-+	l_dbus_send_with_reply(dbus, msg,
-+				create_join_complete_reply_cb, node, NULL);
++	l_dbus_interface_method(iface, "JoinComplete", 0, join_complete,
++							"", "t", "token");
++
+ 	/* TODO: Methods */
  }
  
- static struct l_dbus_message *create_network_call(struct l_dbus *dbus,
-@@ -842,11 +880,11 @@ static void setup_network_interface(struct l_dbus_interface *iface)
- 								"token");
- 
- 	l_dbus_interface_method(iface, "CreateNetwork", 0, create_network_call,
--					"t", "oay", "token", "app", "uuid");
-+					"", "oay", "app", "uuid");
- 
- 	l_dbus_interface_method(iface, "Import", 0,
- 					import_call,
--					"t", "oayayayqa{sv}uq", "token",
-+					"", "oayayayqa{sv}uq",
- 					"app", "uuid", "dev_key", "net_key",
- 					"net_index", "flags", "iv_index",
- 					"unicast");
 -- 
 2.20.1
 
