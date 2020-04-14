@@ -2,183 +2,119 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C4F41A76B5
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Apr 2020 10:55:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F2641A76E1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Apr 2020 11:01:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437247AbgDNIzw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 14 Apr 2020 04:55:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43088 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2437242AbgDNIzr (ORCPT
+        id S2437307AbgDNJBi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 14 Apr 2020 05:01:38 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38554 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437280AbgDNJBh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 14 Apr 2020 04:55:47 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFCFFC008769
-        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Apr 2020 01:55:46 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id x18so9079834wrq.2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Apr 2020 01:55:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=silvair-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1vJvsZdK9Zte0jn8KQyvh97y2PKBP0yP5HpQaCPeJ7g=;
-        b=IzhGtzvb+v5xTtbf2GhcWg73YVCvNaiQQJ4rPxfZW+1TMBsNA+casulg/kUJzzqrTi
-         aeSdZIjd4gZF59w4R+5gpt5Lc5hDBB7kCfQaU7IF0y1gwyu3PJTrEtKaXAslV1V0NKkz
-         /0Sc9APzYgjCKVNQ7j/y5OLlcvuhoCgnkcsjpLPzS645LIwQMyerhyifRDY0l92CB2os
-         m4bUTBKm4Vjv++OVfeK37PlLh9k2548huKjJgYY8RL9Jjk7fI8C5prWjE+JWLZJtez6i
-         u7sjcCzR4Ou5DYNC9TB1s9o1Z00kzBC6w117GLAHv2HeqCd8Yxcy5rC3lLL/Op4T86fc
-         dZ3Q==
+        Tue, 14 Apr 2020 05:01:37 -0400
+Received: by mail-wm1-f65.google.com with SMTP id g12so5210235wmh.3;
+        Tue, 14 Apr 2020 02:01:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1vJvsZdK9Zte0jn8KQyvh97y2PKBP0yP5HpQaCPeJ7g=;
-        b=ewpKNUhOGlCibMGesXHJ6aMm1nTx7Ke2zzuU6Ym3//2Y8VylQ585OtD5V4zjW3gzZ4
-         l55mgDrJQawWOR7wJ398mpwmBv2YgoSN/Jbd/c/1D6XYllYqazELQe9IBMxeMnBXh5TD
-         ZATC+f6ZSnwVJCzG6Q1tXhkMgJ4pHqn+wOnisrEg/YENC6OeSEOLsYDaqOa9Rwpxk9cs
-         4k9eGsEeolNLBmOkLOKs9U9k0BgagWoY/Dr4fy+MBK2xhiFirJXwuG2mHZtIdUsviED6
-         wGvGFRgrEJE+AzA58wR99G3zK4ksr5nwosO7WDr4MNVbQeWUs6VYu/9ILLFE7srSqisl
-         lIlw==
-X-Gm-Message-State: AGi0Pua3VnrhZKB4nBApvixwKk7KkTQfc6r5qiE9VxMfUMoAJBawCvS4
-        Nl1UY4gfk3VbYPjZ6JrP9aUKJjMeQno=
-X-Google-Smtp-Source: APiQypIi/d1Ny+uaF2GVoosCR+5a0xmFlmljyKWuUHetngZzDRNdRMNHEfkcBe9v5l2RofkG+Qo7pQ==
-X-Received: by 2002:a05:6000:8f:: with SMTP id m15mr19574914wrx.19.1586854545363;
-        Tue, 14 Apr 2020 01:55:45 -0700 (PDT)
-Received: from mlowasrzechonek2133.silvair.lan ([217.153.94.18])
-        by smtp.gmail.com with ESMTPSA id w83sm18361553wmb.37.2020.04.14.01.55.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZSEHFc2eh+N6K60wyVHbBWfK0AmjMN90oe2OMNtMMJ0=;
+        b=VZcdmcPfe6bokelP+VcFo/KKk2US9O6S8tRgNtF/gLstaIJygVoMVr8X5z7aVnpfwx
+         jGWGcCIyIgFX1qffbo5S4TmA9T/iLJ2Q0bT9GNRqVXaIfaO26J4K3BvaIU8/N/famYYr
+         /Vzb3JOQMfu9RVXx6Bpfb/EFXzrUyx0L6hYIh3nTQjuAUmNc5PFB2moXYPWzc5+1uoKL
+         VmqQFll+et195bcMN/B5vHfEjmD6kX7vTy47aaOOymqcG0eLYjjDaN7bgl0HghLX6r2H
+         x5fja3K7pItACo6LAcf8KM9Q8pUzmB7j4w5YTazUVAxnL3Ecgxz4soRhBQlJPpMXAquC
+         JSTQ==
+X-Gm-Message-State: AGi0PuaRcU49yxnL2rzL+ZED8gAyGbXieOsW7r3oPqKXnqp2UpcU96/U
+        XwPSodKQc3rqeZ01ta/hip0=
+X-Google-Smtp-Source: APiQypIjMMKQ1krTcIb7iRe2Mn/fScrYHKTluZiYEwYRZsrwjhiGsUjKHrgwCKNk20IxGSD17N1euw==
+X-Received: by 2002:a1c:a913:: with SMTP id s19mr23660673wme.134.1586854891811;
+        Tue, 14 Apr 2020 02:01:31 -0700 (PDT)
+Received: from localhost (ip-37-188-180-223.eurotel.cz. [37.188.180.223])
+        by smtp.gmail.com with ESMTPSA id n6sm18637096wrs.81.2020.04.14.02.01.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 01:55:44 -0700 (PDT)
-From:   =?UTF-8?q?Micha=C5=82=20Lowas-Rzechonek?= 
-        <michal.lowas-rzechonek@silvair.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Brian Gix <brian.gix@intel.com>
-Subject: [PATCH BlueZ v5 4/4] mesh: Add Time-outs to critical dbus send-with-replies
-Date:   Tue, 14 Apr 2020 10:55:57 +0200
-Message-Id: <20200414085557.23464-5-michal.lowas-rzechonek@silvair.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200414085557.23464-1-michal.lowas-rzechonek@silvair.com>
-References: <20200414085557.23464-1-michal.lowas-rzechonek@silvair.com>
+        Tue, 14 Apr 2020 02:01:30 -0700 (PDT)
+Date:   Tue, 14 Apr 2020 11:01:29 +0200
+From:   Michal Hocko <mhocko@kernel.org>
+To:     Waiman Long <longman@redhat.com>
+Cc:     Andrew Morton <akpm@linux-foundation.org>,
+        David Howells <dhowells@redhat.com>,
+        Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+        James Morris <jmorris@namei.org>,
+        "Serge E. Hallyn" <serge@hallyn.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Joe Perches <joe@perches.com>,
+        Matthew Wilcox <willy@infradead.org>,
+        David Rientjes <rientjes@google.com>, linux-mm@kvack.org,
+        keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
+        x86@kernel.org, linux-crypto@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+        intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
+        wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
+        devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
+        target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
+        linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+        kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+        linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+        linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+        cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
+        linux-integrity@vger.kernel.org
+Subject: Re: [PATCH 1/2] mm, treewide: Rename kzfree() to kfree_sensitive()
+Message-ID: <20200414090129.GE4629@dhcp22.suse.cz>
+References: <20200413211550.8307-1-longman@redhat.com>
+ <20200413211550.8307-2-longman@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200413211550.8307-2-longman@redhat.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Brian Gix <brian.gix@intel.com>
+On Mon 13-04-20 17:15:49, Waiman Long wrote:
+> As said by Linus:
+> 
+>   A symmetric naming is only helpful if it implies symmetries in use.
+>   Otherwise it's actively misleading.
+> 
+>   In "kzalloc()", the z is meaningful and an important part of what the
+>   caller wants.
+> 
+>   In "kzfree()", the z is actively detrimental, because maybe in the
+>   future we really _might_ want to use that "memfill(0xdeadbeef)" or
+>   something. The "zero" part of the interface isn't even _relevant_.
+> 
+> The main reason that kzfree() exists is to clear sensitive information
+> that should not be leaked to other future users of the same memory
+> objects.
+> 
+> Rename kzfree() to kfree_sensitive() to follow the example of the
+> recently added kvfree_sensitive() and make the intention of the API
+> more explicit. In addition, memzero_explicit() is used to clear the
+> memory to make sure that it won't get optimized away by the compiler.
+> 
+> The renaming is done by using the command sequence:
+> 
+>   git grep -w --name-only kzfree |\
+>   xargs sed -i 's/\bkzfree\b/kfree_sensitive/'
+> 
+> followed by some editing of the kfree_sensitive() kerneldoc and the
+> use of memzero_explicit() instead of memset().
+> 
+> Suggested-by: Joe Perches <joe@perches.com>
+> Signed-off-by: Waiman Long <longman@redhat.com>
 
-JoinComplete() dbus method calls are the only time that node tokens are
-delivered to client Applications, so if the call fails for any reason
-(including time-outs) the daemon has a way to clean-up the stale unused
-node data.
----
- mesh/dbus.c | 40 ++++++++++++++++++++++++++++++++++++++++
- mesh/dbus.h |  6 ++++++
- mesh/mesh.c |  8 ++++----
- 3 files changed, 50 insertions(+), 4 deletions(-)
+Makes sense. I haven't checked all the conversions and will rely on the
+script doing the right thing. The core MM part is correct.
 
-diff --git a/mesh/dbus.c b/mesh/dbus.c
-index 6b9694ab7..bf0f73bd9 100644
---- a/mesh/dbus.c
-+++ b/mesh/dbus.c
-@@ -37,6 +37,14 @@ struct error_entry {
- 	const char *default_desc;
- };
- 
-+struct send_info {
-+	struct l_dbus *dbus;
-+	struct l_timeout *timeout;
-+	l_dbus_message_func_t cb;
-+	void *user_data;
-+	uint32_t serial;
-+};
-+
- /*
-  * Important: The entries in this table follow the order of
-  * enumerated values in mesh_error (file error.h)
-@@ -143,3 +151,35 @@ void dbus_append_dict_entry_basic(struct l_dbus_message_builder *builder,
- 	l_dbus_message_builder_leave_variant(builder);
- 	l_dbus_message_builder_leave_dict(builder);
- }
-+
-+static void send_reply(struct l_dbus_message *message, void *user_data)
-+{
-+	struct send_info *info = user_data;
-+
-+	l_timeout_remove(info->timeout);
-+	info->cb(message, info->user_data);
-+	l_free(info);
-+}
-+
-+static void send_timeout(struct l_timeout *timeout, void *user_data)
-+{
-+	struct send_info *info = user_data;
-+
-+	l_dbus_cancel(info->dbus, info->serial);
-+	send_reply(NULL, info);
-+}
-+
-+void dbus_send_with_timeout(struct l_dbus *dbus, struct l_dbus_message *msg,
-+						l_dbus_message_func_t cb,
-+						void *user_data,
-+						unsigned int seconds)
-+{
-+	struct send_info *info = l_new(struct send_info, 1);
-+
-+	info->dbus = dbus;
-+	info->cb = cb;
-+	info->user_data = user_data;
-+	info->serial = l_dbus_send_with_reply(dbus, msg, send_reply,
-+								info, NULL);
-+	info->timeout = l_timeout_create(seconds, send_timeout, info, NULL);
-+}
-diff --git a/mesh/dbus.h b/mesh/dbus.h
-index e7643a59d..aafb85f6b 100644
---- a/mesh/dbus.h
-+++ b/mesh/dbus.h
-@@ -20,6 +20,8 @@
- #define BLUEZ_MESH_PATH "/org/bluez/mesh"
- #define BLUEZ_MESH_SERVICE "org.bluez.mesh"
- 
-+#define DEFAULT_DBUS_TIMEOUT	30
-+
- bool dbus_init(struct l_dbus *dbus);
- struct l_dbus *dbus_get_bus(void);
- void dbus_append_byte_array(struct l_dbus_message_builder *builder,
-@@ -31,3 +33,7 @@ bool dbus_match_interface(struct l_dbus_message_iter *interfaces,
- 							const char *match);
- struct l_dbus_message *dbus_error(struct l_dbus_message *msg, int err,
- 						const char *description);
-+void dbus_send_with_timeout(struct l_dbus *dbus, struct l_dbus_message *msg,
-+						l_dbus_message_func_t cb,
-+						void *user_data,
-+						unsigned int seconds);
-diff --git a/mesh/mesh.c b/mesh/mesh.c
-index 01e39e916..21e1517db 100644
---- a/mesh/mesh.c
-+++ b/mesh/mesh.c
-@@ -478,8 +478,8 @@ static bool prov_complete_cb(void *user_data, uint8_t status,
- 						"JoinComplete");
- 
- 	l_dbus_message_set_arguments(msg, "t", l_get_be64(token));
--	l_dbus_send_with_reply(dbus, msg,
--				prov_join_complete_reply_cb, NULL, NULL);
-+	dbus_send_with_timeout(dbus, msg, prov_join_complete_reply_cb,
-+						NULL, DEFAULT_DBUS_TIMEOUT);
- 
- 	return true;
- }
-@@ -725,8 +725,8 @@ static void create_node_ready_cb(void *user_data, int status,
- 						"JoinComplete");
- 
- 	l_dbus_message_set_arguments(msg, "t", l_get_be64(token));
--	l_dbus_send_with_reply(dbus, msg,
--				create_join_complete_reply_cb, node, NULL);
-+	dbus_send_with_timeout(dbus, msg, create_join_complete_reply_cb,
-+						node, DEFAULT_DBUS_TIMEOUT);
- }
- 
- static struct l_dbus_message *create_network_call(struct l_dbus *dbus,
+Acked-by: Michal Hocko <mhocko@suse.com>
 -- 
-2.20.1
-
+Michal Hocko
+SUSE Labs
