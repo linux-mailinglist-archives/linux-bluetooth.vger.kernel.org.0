@@ -2,46 +2,46 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A5341AE38C
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Apr 2020 19:16:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 910761AE38F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Apr 2020 19:17:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728454AbgDQRQr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Apr 2020 13:16:47 -0400
-Received: from us-smtp-2.mimecast.com ([207.211.31.81]:34266 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729687AbgDQRQr (ORCPT
+        id S1729206AbgDQRQx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Apr 2020 13:16:53 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:45374 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1729710AbgDQRQx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Apr 2020 13:16:47 -0400
+        Fri, 17 Apr 2020 13:16:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1587143806;
+        s=mimecast20190719; t=1587143811;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=vWBTUfX4h0qFQMftuBWZYnImAcC3+Kc3kLWX3ba0HJ4=;
-        b=BhauOamf+6/7NF4XPbg7Y814puQ/aOxv5H/+KTyEJNy5rd4f5Th9syUPYAC9t13ceqXEg6
-        WHz7I4JT4EKcfc7pSct+9bUuKdP2Dx+9Qidf0/+WiVxwJr1pH1soruhHZNqzzoxqBT7tXN
-        dkHlnNZZBrDzg7Dy+/M8UtlmQpNhVUc=
+        bh=HwMhgNUQiCkIMdW07uPbS1uP55IP65k0HuUDpGRwChs=;
+        b=ccSwLOj6ILce5JffdWVWxvRoxoJIpUzjXvruQc53SUSLiMoIhm5BFpwM5WfJv4lts5H0sY
+        WAEUMCFT5zQpRvw19XKZvftYRIza10q5krHPQE5ErQsl4EQOYwX7d/tVZrkp0mtS/adp8p
+        g2jy8BGVxC28t5Gm88m8qFagc55DLj0=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-458-yA5XRcAzPsGHfwUnrUXu8Q-1; Fri, 17 Apr 2020 13:15:42 -0400
-X-MC-Unique: yA5XRcAzPsGHfwUnrUXu8Q-1
+ us-mta-482-gjRw5rbFPkGFghlByDoWDw-1; Fri, 17 Apr 2020 13:15:43 -0400
+X-MC-Unique: gjRw5rbFPkGFghlByDoWDw-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
         (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 9B944DB62;
-        Fri, 17 Apr 2020 17:15:41 +0000 (UTC)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id DCC3D104FB69;
+        Fri, 17 Apr 2020 17:15:42 +0000 (UTC)
 Received: from x1.localdomain.com (ovpn-112-195.ams2.redhat.com [10.36.112.195])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 9A5CC60BE0;
-        Fri, 17 Apr 2020 17:15:40 +0000 (UTC)
+        by smtp.corp.redhat.com (Postfix) with ESMTP id E078160BE0;
+        Fri, 17 Apr 2020 17:15:41 +0000 (UTC)
 From:   Hans de Goede <hdegoede@redhat.com>
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>
 Cc:     Hans de Goede <hdegoede@redhat.com>,
         linux-bluetooth@vger.kernel.org
-Subject: [PATCH 6/8] Bluetooth: btbcm: Bail sooner from btbcm_initialize() when not loading fw
-Date:   Fri, 17 Apr 2020 19:15:30 +0200
-Message-Id: <20200417171532.448053-6-hdegoede@redhat.com>
+Subject: [PATCH 7/8] Bluetooth: btbcm: Try multiple Patch filenames when loading the Patch firmware
+Date:   Fri, 17 Apr 2020 19:15:31 +0200
+Message-Id: <20200417171532.448053-7-hdegoede@redhat.com>
 In-Reply-To: <20200417171532.448053-1-hdegoede@redhat.com>
 References: <20200417171532.448053-1-hdegoede@redhat.com>
 MIME-Version: 1.0
@@ -52,49 +52,144 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-If we have already loaded the firmware/patchram and btbcm_initialize()
-is called to re-init the HCI after this then there is no need to get
-the USB device-ids and build a firmware-filename out of these.
+Currently the bcm_uart_subver_ and bcm_usb_subver_table-s lack entries
+for various newer chipsets. This makes the code use just "BCM" as prefix
+for the filename to pass to request-firmware, making it harder for users
+to figure out which firmware they need. This especially a problem with
+UART attached devices where this leads to the filename being "BCM.hcd".
+
+If we add new entries to the subver-tables now, then this will change
+what firmware file the kernel looks for, e.g. currently linux-firmware
+contains a brcm/BCM-0bb4-0306.hcd file. If we add the info for the
+BCM20703A1 to the subver table, then this will change to
+brcm/BCM20703A1-0bb4-0306.hcd. This will cause the file to no longer
+get loaded breaking Bluetooth for existing users, going against the
+no regressions policy.
+
+To avoid this regression make the btbcm code try multiple filenames,
+first try the fullname, e.g. BCM20703A1-0bb4-0306.hcd and if that is
+not found, then fallback to the name with just BCM as prefix.
+
+This commit also adds an info message which filename was used,
+this makes the output look like this for example:
+
+[   57.387867] Bluetooth: hci0: BCM20703A1
+[   57.387870] Bluetooth: hci0: BCM20703A1 (001.001.005) build 0000
+[   57.389438] Bluetooth: hci0: BCM20703A1 'brcm/BCM20703A1-0a5c-6410.hcd=
+' Patch
+[   58.681769] Bluetooth: hci0: BCM20703A1 Generic USB 20Mhz fcbga_BU
+[   58.681772] Bluetooth: hci0: BCM20703A1 (001.001.005) build 0481
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 ---
- drivers/bluetooth/btbcm.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/bluetooth/btbcm.c | 59 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 43 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
-index cc3628cace35..9fa153b35825 100644
+index 9fa153b35825..739ba1200f5d 100644
 --- a/drivers/bluetooth/btbcm.c
 +++ b/drivers/bluetooth/btbcm.c
-@@ -463,6 +463,13 @@ int btbcm_initialize(struct hci_dev *hdev, bool *fw_=
-load_done)
- 		}
+@@ -28,6 +28,9 @@
+ #define BDADDR_BCM43341B (&(bdaddr_t) {{0xac, 0x1f, 0x00, 0x1b, 0x34, 0x=
+43}})
+=20
+ #define BCM_FW_NAME_LEN			64
++#define BCM_FW_NAME_COUNT_MAX		2
++/* For kmalloc-ing the fw-name array instead of putting it on the stack =
+*/
++typedef char bcm_fw_name[BCM_FW_NAME_LEN];
+=20
+ int btbcm_check_bdaddr(struct hci_dev *hdev)
+ {
+@@ -420,11 +423,13 @@ static const struct bcm_subver_table bcm_usb_subver=
+_table[] =3D {
+ int btbcm_initialize(struct hci_dev *hdev, bool *fw_load_done)
+ {
+ 	u16 subver, rev, pid, vid;
+-	const char *hw_name =3D "BCM";
+ 	struct sk_buff *skb;
+ 	struct hci_rp_read_local_version *ver;
+ 	const struct bcm_subver_table *bcm_subver_table;
+-	char fw_name[BCM_FW_NAME_LEN];
++	const char *hw_name =3D NULL;
++	char postfix[16] =3D "";
++	int fw_name_count =3D 0;
++	bcm_fw_name *fw_name;
+ 	const struct firmware *fw;
+ 	int i, err;
+=20
+@@ -464,7 +469,7 @@ int btbcm_initialize(struct hci_dev *hdev, bool *fw_l=
+oad_done)
  	}
 =20
-+	bt_dev_info(hdev, "%s (%3.3u.%3.3u.%3.3u) build %4.4u",
-+		    hw_name, (subver & 0xe000) >> 13,
-+		    (subver & 0x1f00) >> 8, (subver & 0x00ff), rev & 0x0fff);
-+
-+	if (*fw_load_done)
-+		return 0;
-+
- 	if (hdev->bus =3D=3D HCI_USB) {
- 		/* Read USB Product Info */
- 		skb =3D btbcm_read_usb_product(hdev);
-@@ -479,13 +486,6 @@ int btbcm_initialize(struct hci_dev *hdev, bool *fw_=
-load_done)
- 		snprintf(fw_name, BCM_FW_NAME_LEN, "brcm/%s.hcd", hw_name);
- 	}
-=20
--	bt_dev_info(hdev, "%s (%3.3u.%3.3u.%3.3u) build %4.4u",
+ 	bt_dev_info(hdev, "%s (%3.3u.%3.3u.%3.3u) build %4.4u",
 -		    hw_name, (subver & 0xe000) >> 13,
--		    (subver & 0x1f00) >> 8, (subver & 0x00ff), rev & 0x0fff);
--
--	if (*fw_load_done)
++		    hw_name ? hw_name : "BCM", (subver & 0xe000) >> 13,
+ 		    (subver & 0x1f00) >> 8, (subver & 0x00ff), rev & 0x0fff);
+=20
+ 	if (*fw_load_done)
+@@ -480,24 +485,46 @@ int btbcm_initialize(struct hci_dev *hdev, bool *fw=
+_load_done)
+ 		pid =3D get_unaligned_le16(skb->data + 3);
+ 		kfree_skb(skb);
+=20
+-		snprintf(fw_name, BCM_FW_NAME_LEN, "brcm/%s-%4.4x-%4.4x.hcd",
+-			 hw_name, vid, pid);
+-	} else {
+-		snprintf(fw_name, BCM_FW_NAME_LEN, "brcm/%s.hcd", hw_name);
++		snprintf(postfix, sizeof(postfix), "-%4.4x-%4.4x", vid, pid);
+ 	}
+=20
+-	err =3D request_firmware(&fw, fw_name, &hdev->dev);
+-	if (err) {
+-		bt_dev_info(hdev, "BCM: Patch %s not found", fw_name);
 -		return 0;
--
- 	err =3D request_firmware(&fw, fw_name, &hdev->dev);
- 	if (err) {
- 		bt_dev_info(hdev, "BCM: Patch %s not found", fw_name);
++	fw_name =3D kmalloc(BCM_FW_NAME_COUNT_MAX * BCM_FW_NAME_LEN, GFP_KERNEL=
+);
++	if (!fw_name)
++		return -ENOMEM;
++
++	if (hw_name) {
++		snprintf(fw_name[fw_name_count], BCM_FW_NAME_LEN,
++			 "brcm/%s%s.hcd", hw_name, postfix);
++		fw_name_count++;
+ 	}
+=20
+-	err =3D btbcm_patchram(hdev, fw);
+-	if (err)
+-		bt_dev_info(hdev, "BCM: Patch failed (%d)", err);
++	snprintf(fw_name[fw_name_count], BCM_FW_NAME_LEN,
++		 "brcm/BCM%s.hcd", postfix);
++	fw_name_count++;
++
++	for (i =3D 0; i < fw_name_count; i++) {
++		err =3D firmware_request_nowarn(&fw, fw_name[i], &hdev->dev);
++		if (err =3D=3D 0) {
++			bt_dev_info(hdev, "%s '%s' Patch",
++				    hw_name ? hw_name : "BCM", fw_name[i]);
++			*fw_load_done =3D true;
++			break;
++		}
++	}
++
++	if (*fw_load_done) {
++		err =3D btbcm_patchram(hdev, fw);
++		if (err)
++			bt_dev_info(hdev, "BCM: Patch failed (%d)", err);
++
++		release_firmware(fw);
++	} else {
++		bt_dev_err(hdev, "BCM: firmware Patch file not found, tried:");
++		for (i =3D 0; i < fw_name_count; i++)
++			bt_dev_err(hdev, "BCM: '%s'", fw_name[i]);
++	}
+=20
+-	release_firmware(fw);
+-	*fw_load_done =3D true;
++	kfree(fw_name);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(btbcm_initialize);
 --=20
 2.26.0
 
