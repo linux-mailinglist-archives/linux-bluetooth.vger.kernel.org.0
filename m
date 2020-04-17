@@ -2,46 +2,46 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1F891AE38B
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Apr 2020 19:16:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 275CF1AE397
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Apr 2020 19:17:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729691AbgDQRQr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Apr 2020 13:16:47 -0400
-Received: from us-smtp-1.mimecast.com ([207.211.31.81]:29304 "EHLO
-        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728088AbgDQRQr (ORCPT
+        id S1729761AbgDQRRI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Apr 2020 13:17:08 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:24953 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1729089AbgDQRRD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Apr 2020 13:16:47 -0400
+        Fri, 17 Apr 2020 13:17:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1587143806;
+        s=mimecast20190719; t=1587143822;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=qHwkqC/4pocBCW8rE1cuZp145riqd8MlnpYqgaiib/M=;
-        b=CuGLKFoM+ix2OsfVexCWsqoWHAEGzbp/xEPOuj4v+Uy3A8fqDbaSXiodW4nJMnfOjtiI82
-        6YF4s4+MDMXcCY/NCrs0e9ZdYR4NBJBQZSIE0rAtDnMWkZhSl9GNU2Ey9Ugd87RQ2S2oj4
-        H/IedxrBmi/D2/3atWvvxwty9TgntOI=
+        bh=Z6l/zWDZCEaXbXc/ePUQ9stSahTa93C4eKw2IG5XIZw=;
+        b=OE08oA6oG4D+GMWtVbgEj5qSX7fsnebApflgwAmuozxpZ5zzBzNQBwBRMRgw70chJM04s4
+        YfAEftlm9v0k/ORryUhgjb0w5KXdz0h8JTTzqioTE76SwqquRJEG7PuH0CMxk+VOaNypy4
+        iYLQhjGg357qN+tFvb3R8dukR+4U9gw=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-471-NaZsJRmYOY2NTQU6y4SyuQ-1; Fri, 17 Apr 2020 13:15:40 -0400
-X-MC-Unique: NaZsJRmYOY2NTQU6y4SyuQ-1
+ us-mta-142-gJl3UALLMs2u7MqkWeqrdw-1; Fri, 17 Apr 2020 13:15:41 -0400
+X-MC-Unique: gJl3UALLMs2u7MqkWeqrdw-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
         (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 11BD3104FB63;
-        Fri, 17 Apr 2020 17:15:39 +0000 (UTC)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 527A21088382;
+        Fri, 17 Apr 2020 17:15:40 +0000 (UTC)
 Received: from x1.localdomain.com (ovpn-112-195.ams2.redhat.com [10.36.112.195])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 149D760BF7;
-        Fri, 17 Apr 2020 17:15:37 +0000 (UTC)
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 5667760BE0;
+        Fri, 17 Apr 2020 17:15:39 +0000 (UTC)
 From:   Hans de Goede <hdegoede@redhat.com>
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>
 Cc:     Hans de Goede <hdegoede@redhat.com>,
         linux-bluetooth@vger.kernel.org
-Subject: [PATCH 4/8] Bluetooth: btbcm: Make btbcm_initialize() print local-name on re-init too
-Date:   Fri, 17 Apr 2020 19:15:28 +0200
-Message-Id: <20200417171532.448053-4-hdegoede@redhat.com>
+Subject: [PATCH 5/8] Bluetooth: btbcm: Make btbcm_setup_patchram use btbcm_finalize
+Date:   Fri, 17 Apr 2020 19:15:29 +0200
+Message-Id: <20200417171532.448053-5-hdegoede@redhat.com>
 In-Reply-To: <20200417171532.448053-1-hdegoede@redhat.com>
 References: <20200417171532.448053-1-hdegoede@redhat.com>
 MIME-Version: 1.0
@@ -52,70 +52,110 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Make btbcm_initialize() get and print the device's local-name on re-init
-too, this will make us also print the local-name after loading the
-Patch on UART attached devices making things more consistent.
+On UART attached devices we do:
 
-This also removes some code duplication from btbcm_setup_patchram()
-and allows more code duplication removal there in a follow-up patch.
+1. btbcm_initialize()
+2. Setup UART baudrate, etc.
+3. btbcm_finalize()
+
+After our previous changes we can now also use btbcm_finalize() from
+the btbcm_setup_patchram() function used on USB devices without any
+functional changes. This completes unifying the USB and UART paths
+as much as possible.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 ---
- drivers/bluetooth/btbcm.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/bluetooth/btbcm.c   | 27 ++++++++-------------------
+ drivers/bluetooth/btbcm.h   |  4 ++--
+ drivers/bluetooth/hci_bcm.c |  2 +-
+ 3 files changed, 11 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
-index c22e90a5e288..3404021b10bd 100644
+index 3404021b10bd..cc3628cace35 100644
 --- a/drivers/bluetooth/btbcm.c
 +++ b/drivers/bluetooth/btbcm.c
-@@ -360,6 +360,13 @@ static int btbcm_read_info(struct hci_dev *hdev)
- 	bt_dev_info(hdev, "BCM: features 0x%2.2x", skb->data[1]);
- 	kfree_skb(skb);
+@@ -502,15 +502,16 @@ int btbcm_initialize(struct hci_dev *hdev, bool *fw=
+_load_done)
+ }
+ EXPORT_SYMBOL_GPL(btbcm_initialize);
 =20
-+	return 0;
-+}
-+
-+static int btbcm_print_local_name(struct hci_dev *hdev)
-+{
-+	struct sk_buff *skb;
-+
- 	/* Read Local Name */
- 	skb =3D btbcm_read_local_name(hdev);
- 	if (IS_ERR(skb))
-@@ -442,6 +449,9 @@ int btbcm_initialize(struct hci_dev *hdev, bool *fw_l=
-oad_done)
- 		if (err)
- 			return err;
- 	}
-+	err =3D btbcm_print_local_name(hdev);
-+	if (err)
-+		return err;
-=20
- 	bcm_subver_table =3D (hdev->bus =3D=3D HCI_USB) ? bcm_usb_subver_table =
-:
- 						    bcm_uart_subver_table;
-@@ -513,7 +523,6 @@ EXPORT_SYMBOL_GPL(btbcm_finalize);
- int btbcm_setup_patchram(struct hci_dev *hdev)
+-int btbcm_finalize(struct hci_dev *hdev)
++int btbcm_finalize(struct hci_dev *hdev, bool *fw_load_done)
  {
- 	bool fw_load_done =3D false;
--	struct sk_buff *skb;
+-	bool fw_load_done =3D true;
  	int err;
 =20
- 	/* Initialize */
-@@ -529,14 +538,6 @@ int btbcm_setup_patchram(struct hci_dev *hdev)
+-	/* Re-initialize */
+-	err =3D btbcm_initialize(hdev, &fw_load_done);
+-	if (err)
+-		return err;
++	/* Re-initialize if necessary */
++	if (*fw_load_done) {
++		err =3D btbcm_initialize(hdev, fw_load_done);
++		if (err)
++			return err;
++	}
+=20
+ 	btbcm_check_bdaddr(hdev);
+=20
+@@ -530,20 +531,8 @@ int btbcm_setup_patchram(struct hci_dev *hdev)
  	if (err)
  		return err;
 =20
--	/* Read Local Name */
--	skb =3D btbcm_read_local_name(hdev);
--	if (IS_ERR(skb))
--		return PTR_ERR(skb);
+-	if (!fw_load_done)
+-		goto done;
 -
--	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
--	kfree_skb(skb);
+ 	/* Re-initialize after loading Patch */
+-	err =3D btbcm_initialize(hdev, &fw_load_done);
+-	if (err)
+-		return err;
 -
- done:
- 	btbcm_check_bdaddr(hdev);
+-done:
+-	btbcm_check_bdaddr(hdev);
+-
+-	set_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks);
+-
+-	return 0;
++	return btbcm_finalize(hdev, &fw_load_done);
+ }
+ EXPORT_SYMBOL_GPL(btbcm_setup_patchram);
+=20
+diff --git a/drivers/bluetooth/btbcm.h b/drivers/bluetooth/btbcm.h
+index 8437caba421d..8bf01565fdfc 100644
+--- a/drivers/bluetooth/btbcm.h
++++ b/drivers/bluetooth/btbcm.h
+@@ -63,7 +63,7 @@ int btbcm_setup_patchram(struct hci_dev *hdev);
+ int btbcm_setup_apple(struct hci_dev *hdev);
+=20
+ int btbcm_initialize(struct hci_dev *hdev, bool *fw_load_done);
+-int btbcm_finalize(struct hci_dev *hdev);
++int btbcm_finalize(struct hci_dev *hdev, bool *fw_load_done);
+=20
+ #else
+=20
+@@ -109,7 +109,7 @@ static inline int btbcm_initialize(struct hci_dev *hd=
+ev, bool *fw_load_done)
+ 	return 0;
+ }
+=20
+-static inline int btbcm_finalize(struct hci_dev *hdev)
++static inline int btbcm_finalize(struct hci_dev *hdev, bool *fw_load_don=
+e)
+ {
+ 	return 0;
+ }
+diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
+index 6f0c3f2599c0..0c34b6c57f7d 100644
+--- a/drivers/bluetooth/hci_bcm.c
++++ b/drivers/bluetooth/hci_bcm.c
+@@ -603,7 +603,7 @@ static int bcm_setup(struct hci_uart *hu)
+ 		btbcm_write_pcm_int_params(hu->hdev, &params);
+ 	}
+=20
+-	err =3D btbcm_finalize(hu->hdev);
++	err =3D btbcm_finalize(hu->hdev, &fw_load_done);
+ 	if (err)
+ 		return err;
 =20
 --=20
 2.26.0
