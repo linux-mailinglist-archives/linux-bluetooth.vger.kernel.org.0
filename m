@@ -2,98 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86F301AE38D
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Apr 2020 19:16:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 464F01AE410
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Apr 2020 19:49:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729707AbgDQRQu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Apr 2020 13:16:50 -0400
-Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:30118 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1729687AbgDQRQu (ORCPT
+        id S1730141AbgDQRt0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Apr 2020 13:49:26 -0400
+Received: from shards.monkeyblade.net ([23.128.96.9]:38378 "EHLO
+        shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729804AbgDQRt0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Apr 2020 13:16:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1587143808;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=CGv2fgPNnWkB6F6rrs/oOKVeGJrIM+/McUrhS/YxLMo=;
-        b=VVhpBpp8cJuAs12CVTYPZttmS/4ElHYAsEqw3FIVR2td552hQxL8GsEYTn1b90y8jycfyM
-        297phkZpSv8xvVOdlxVwUPOc5rOHogUinCOMvfwkiEsY2bCpJoLTvDYm3FEtTNofIxmWPL
-        KUCE6ta4pcbDDUIJB9ymT6XNQaUxbAs=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-10-jYFzj31_MdiSZ7idJWqFKg-1; Fri, 17 Apr 2020 13:15:45 -0400
-X-MC-Unique: jYFzj31_MdiSZ7idJWqFKg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 2781518CA242;
-        Fri, 17 Apr 2020 17:15:44 +0000 (UTC)
-Received: from x1.localdomain.com (ovpn-112-195.ams2.redhat.com [10.36.112.195])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 2FB0760BE0;
-        Fri, 17 Apr 2020 17:15:43 +0000 (UTC)
-From:   Hans de Goede <hdegoede@redhat.com>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>
-Cc:     Hans de Goede <hdegoede@redhat.com>,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH 8/8] Bluetooth: btbcm: Add 2 missing models to subver tables
-Date:   Fri, 17 Apr 2020 19:15:32 +0200
-Message-Id: <20200417171532.448053-8-hdegoede@redhat.com>
-In-Reply-To: <20200417171532.448053-1-hdegoede@redhat.com>
-References: <20200417171532.448053-1-hdegoede@redhat.com>
-MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-Content-Transfer-Encoding: quoted-printable
+        Fri, 17 Apr 2020 13:49:26 -0400
+Received: from localhost (unknown [IPv6:2601:601:9f00:477::3d5])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: davem-davemloft)
+        by shards.monkeyblade.net (Postfix) with ESMTPSA id 7CAF61281077C;
+        Fri, 17 Apr 2020 10:49:25 -0700 (PDT)
+Date:   Fri, 17 Apr 2020 10:49:24 -0700 (PDT)
+Message-Id: <20200417.104924.675136533926590542.davem@davemloft.net>
+To:     johan.hedberg@gmail.com
+Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: pull request: bluetooth-next 2020-04-17
+From:   David Miller <davem@davemloft.net>
+In-Reply-To: <20200417084313.GA48142@oeltahan-mobl.ger.corp.intel.com>
+References: <20200417084313.GA48142@oeltahan-mobl.ger.corp.intel.com>
+X-Mailer: Mew version 6.8 on Emacs 26.1
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12 (shards.monkeyblade.net [149.20.54.216]); Fri, 17 Apr 2020 10:49:25 -0700 (PDT)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Currently the bcm_uart_subver_ and bcm_usb_subver_table-s lack entries
-for the BCM4324B5 and BCM20703A1 chipsets. This makes the code use just
-"BCM" as prefix for the filename to pass to request-firmware, making it
-harder for users to figure out which firmware they need. This especially
-is problematic with the UART attached BCM4324B5 where this leads to the
-filename being just "BCM.hcd".
+From: Johan Hedberg <johan.hedberg@gmail.com>
+Date: Fri, 17 Apr 2020 11:43:13 +0300
 
-Add the 2 missing devices to subver tables. This has been tested on:
+> Here's the first bluetooth-next pull request for the 5.8 kernel:
+> 
+>  - Added debugfs option to control MITM flag usage during pairing
+>  - Added new BT_MODE socket option
+>  - Added support for Qualcom QCA6390 device
+>  - Added support for Realtek RTL8761B device
+>  - Added support for mSBC audio codec over USB endpoints
+>  - Added framework for Microsoft HCI vendor extensions
+>  - Added new Read Security Information management command
+>  - Fixes/cleanup to link layer privacy related code
+>  - Various other smaller cleanups & fixes
+> 
+> Please let me know if there are any issues pulling. Thanks.
 
-1. A Dell XPS15 9550 where this makes btbcm.c try to load
-"BCM20703A1-0a5c-6410.hcd" before it tries to load "BCM-0a5c-6410.hcd".
-
-2. A Thinkpad 8 where this makes btbcm.c try to load
-"BCM4324B5.hcd" before it tries to load "BCM.hcd"
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
----
- drivers/bluetooth/btbcm.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
-index 739ba1200f5d..df7a8a22e53c 100644
---- a/drivers/bluetooth/btbcm.c
-+++ b/drivers/bluetooth/btbcm.c
-@@ -392,6 +392,7 @@ static const struct bcm_subver_table bcm_uart_subver_=
-table[] =3D {
- 	{ 0x410e, "BCM43341B0"	},	/* 002.001.014 */
- 	{ 0x4204, "BCM2076B1"	},	/* 002.002.004 */
- 	{ 0x4406, "BCM4324B3"	},	/* 002.004.006 */
-+	{ 0x4606, "BCM4324B5"	},	/* 002.006.006 */
- 	{ 0x6109, "BCM4335C0"	},	/* 003.001.009 */
- 	{ 0x610c, "BCM4354"	},	/* 003.001.012 */
- 	{ 0x2122, "BCM4343A0"	},	/* 001.001.034 */
-@@ -407,6 +408,7 @@ static const struct bcm_subver_table bcm_uart_subver_=
-table[] =3D {
- };
-=20
- static const struct bcm_subver_table bcm_usb_subver_table[] =3D {
-+	{ 0x2105, "BCM20703A1"	},	/* 001.001.005 */
- 	{ 0x210b, "BCM43142A0"	},	/* 001.001.011 */
- 	{ 0x2112, "BCM4314A0"	},	/* 001.001.018 */
- 	{ 0x2118, "BCM20702A0"	},	/* 001.001.024 */
---=20
-2.26.0
-
+Pulled, thank you.
