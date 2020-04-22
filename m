@@ -2,139 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A00111B35C4
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Apr 2020 05:53:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01E5D1B4887
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Apr 2020 17:24:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726500AbgDVDxp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Apr 2020 23:53:45 -0400
-Received: from new1-smtp.messagingengine.com ([66.111.4.221]:40837 "EHLO
-        new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726422AbgDVDxo (ORCPT
+        id S1726151AbgDVPYr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Apr 2020 11:24:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54328 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725779AbgDVPYq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Apr 2020 23:53:44 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 4C4E25803F4;
-        Tue, 21 Apr 2020 23:53:43 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Tue, 21 Apr 2020 23:53:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
-         h=from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=fm3; bh=ILg74KFQ4/u/i
-        LEbpVIGKPDUn0lqkuyVDFTjVVQFF4M=; b=Wv97607xPWtRVGaOEQH8OktWOwXs+
-        V7yXLHTFOj6OqTwSz1IzFUzbG65S6h0sTrevJ/K2FFkZTA6Xd/T9XihviBgTmJCL
-        CBmgWTiuzJtUNW9GZFYHfhYxvCo9Z6hYbmmxh5uTpPS02yDV61PkgPSiM9PUXj+l
-        ofsciwklmnohoDNyaDjjNt7MmleGtYA3NWCCV5Qtcpm11sMNIY+kLyRsis97Vp48
-        GBzhdcS6FS16RgyOmqtRyfC0/gTIPwlAf9jZ+dgNM60hduOOYbSDxd60b6IX1VT2
-        BiI1fDzWYOkcdD4ZGNLXd6HoKCBgvESWv9oGjzouKXIjDd7BPa2s+YWgA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; bh=ILg74KFQ4/u/iLEbpVIGKPDUn0lqkuyVDFTjVVQFF4M=; b=SPdn04y7
-        5O+FwlwSZUaBva56KCa1KdMuTWgrJm3rcHYFu/JB2041cQDHwzNLJlvFVGHcNm/W
-        RL9mziBXzOh3u6jmffwMQ609Axegcua8e5a7RhcBfBXoc9mM4Pss+jt2G+vcYPAH
-        MAWDgRESzjQeUDhf+Kr71gknujjBwWoJK5DLIfkKvhSF34/USfi7CO5K/caHrF8k
-        TkHx4BBHCfGs5TigGnfkulpkh3xTirRmvr4BF89qdxeNDQ2SygemahWN8I+sgtZZ
-        4sPKYtqRmpL6KqpfWo+djDR5CIjb2nlSt95GgkkeCSdkM8egNSSnzHsh7O8oFeZD
-        Ddc60Fu86RfIdw==
-X-ME-Sender: <xms:x7-fXkSt4UKXIs5uFgWnvjkfbVK8Tg71eoRgD3E4W9gAHMF9kNnZOQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrgeeigdejhecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
-    ertddtnecuhfhrohhmpeetlhhishhtrghirhcuhfhrrghntghishcuoegrlhhishhtrghi
-    rhesrghlihhsthgrihhrvdefrdhmvgeqnecukfhppeejfedrleefrdekgedrvddtkeenuc
-    evlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpegrlhhishht
-    rghirhesrghlihhsthgrihhrvdefrdhmvg
-X-ME-Proxy: <xmx:x7-fXnDncP3mNbJS1YMLwjAoi4JfRM1SyxLBCkB60khr9oxH98G0bw>
-    <xmx:x7-fXjjK1Kzi1L6oHfe17353xipTLo7ca0YaKqYmmFKLSTHl3xK2uA>
-    <xmx:x7-fXgNgMfQ4r1Gs6Y2ugYwrdHjFif162-1j6GV8F-u7GCyie11Ktg>
-    <xmx:x7-fXrIPz1i6BgJrX98EgeIL5aN7oiFIpfjnaDdW0wJevP7yCXn2Rg>
-Received: from alistair-xps-14z.alistair23.me (c-73-93-84-208.hsd1.ca.comcast.net [73.93.84.208])
-        by mail.messagingengine.com (Postfix) with ESMTPA id D31483280063;
-        Tue, 21 Apr 2020 23:53:41 -0400 (EDT)
-From:   Alistair Francis <alistair@alistair23.me>
-To:     netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-bluetooth@vger.kernel.org, mripard@kernel.org, wens@csie.org
-Cc:     anarsoul@gmail.com, devicetree@vger.kernel.org,
-        alistair23@gmail.com, linux-arm-kernel@lists.infradead.org,
-        Alistair Francis <alistair@alistair23.me>
-Subject: [DO-NOT-MERGE][PATCH v4 3/3] arm64: allwinner: Enable Bluetooth and WiFi on sopine baseboard
-Date:   Tue, 21 Apr 2020 20:53:33 -0700
-Message-Id: <20200422035333.1118351-3-alistair@alistair23.me>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200422035333.1118351-1-alistair@alistair23.me>
-References: <20200422035333.1118351-1-alistair@alistair23.me>
+        Wed, 22 Apr 2020 11:24:46 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE453C03C1A9
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Apr 2020 08:24:44 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id a8so1805392edv.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Apr 2020 08:24:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=B1TftnPtnrSEPoU16eD2M6e3FXwAxSdcnJV604U4Mj4=;
+        b=dGiEWwRgdBrB4rOrB6/Ic3W8Z68aiqzjegG/XXUIx5dhozpwXR2MGuZX3xdxHey/fY
+         VIHSWtBdshjvgnFmqsjI5eA0xYec3JdiwGdGz4iZUdGIEUslFGT5dQ3wH9HVvZYnuD+S
+         TwZWYiNIzz3f4xsXWFDomlMyh53drgE0FGC6PccHcxTIUjZEW1uvf19A0rsCzHPlaGrG
+         0+WXUpUX0iDuE6Bc5t137ZDJZiyvKad0B12FMitGCNwbRmwysFjVp8gPZM1QWNuvoNWv
+         x2u0KBpiwITzPaP8BXF5YYjvNNe57gs8EuK2ibCBdFZDt/sfGG+pzh2AYs7gxwLEP7qH
+         xHkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B1TftnPtnrSEPoU16eD2M6e3FXwAxSdcnJV604U4Mj4=;
+        b=Pf9Mu2mJnixGL8/CIbF3A7L7hKQUP8x0nT3d6wPxPaBOpah5+2WnLJLEyfmVuAfBSu
+         yRZ6eLTY7UC2gg5OtpamidRGgwWr9OQdP/beK5WilU//cF8ie3tpQZT9r4GlJ28NQjfN
+         HtXoSvl53qjDWObW4so/LL3+MSqcGY0q5Vwk2lO6YtDi1QpiHha5M/udlQA/8Jjg4kuz
+         N1SWEXD3EnXoHxHDGTqstWgNVrNkJf9EqjHP3EHBghFuQw9sFSCNtlud67hxN2gQLxia
+         2Gr5UxOBAyxwjUbg+T20LYkt/OkFbdoN5bdXLS5tld3F5yvyi79aQbwoNA7dmQji2Q/4
+         bHfw==
+X-Gm-Message-State: AGi0PuY/1EJMY6db5bczhfTptn1vr7h+i97MzvTeW2FqRhTZ7a/CVSw7
+        zu5NPjp79+h1lYlhIZ6GpAnus9ZbskffbgoRjzNe8to7
+X-Google-Smtp-Source: APiQypLnS6yn4PUTVA0h3Mn2NIS7jaW4UA9tBz68Myavgvf5lApUBFI/VkWFL2L5JxXb6qcWFgL1PXRymFI8kHVRm1s=
+X-Received: by 2002:a05:6402:1ad0:: with SMTP id ba16mr23935097edb.11.1587569083052;
+ Wed, 22 Apr 2020 08:24:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAPHZWUeGeaN5jmNHv56VzSsdmCvS1WKfSnaYE+YCfd5E8+3S-Q@mail.gmail.com>
+ <CABBYNZJ4MhhEWvxX+hw8fR9uOpqXd8XWQBsy2VjP_dVtL0R+7w@mail.gmail.com>
+In-Reply-To: <CABBYNZJ4MhhEWvxX+hw8fR9uOpqXd8XWQBsy2VjP_dVtL0R+7w@mail.gmail.com>
+From:   Yun-hao Chung <howardchung@google.com>
+Date:   Wed, 22 Apr 2020 23:24:31 +0800
+Message-ID: <CAPHZWUdaXVtde+i4jN16bHE1mznSX1gvyDXQwrspWcRMaSniug@mail.gmail.com>
+Subject: Re: Auto-connect after disconnection from user on trusted devices
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        Sonny Sasaka <sonnysasaka@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The sopine board has an optional RTL8723BS WiFi + BT module that can be
-connected to UART1. Add this to the device tree so that it will work
-for users if connected.
+Thanks for sharing your thoughts!
 
-Signed-off-by: Alistair Francis <alistair@alistair23.me>
----
- .../allwinner/sun50i-a64-sopine-baseboard.dts | 29 +++++++++++++++++++
- 1 file changed, 29 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-sopine-baseboard.dts b/arch/arm64/boot/dts/allwinner/sun50i-a64-sopine-baseboard.dts
-index 2f6ea9f3f6a2..34357ba143cb 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-a64-sopine-baseboard.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-sopine-baseboard.dts
-@@ -42,6 +42,11 @@ reg_vcc1v8: vcc1v8 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <1800000>;
- 	};
-+
-+	wifi_pwrseq: wifi_pwrseq {
-+		compatible = "mmc-pwrseq-simple";
-+		reset-gpios = <&r_pio 0 2 GPIO_ACTIVE_LOW>; /* PL2 */
-+	};
- };
- 
- &ac_power_supply {
-@@ -103,6 +108,17 @@ ext_rgmii_phy: ethernet-phy@1 {
- 	};
- };
- 
-+&mmc1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&mmc1_pins>;
-+	vmmc-supply = <&reg_dldo4>;
-+	vqmmc-supply = <&reg_eldo1>;
-+	mmc-pwrseq = <&wifi_pwrseq>;
-+	non-removable;
-+	bus-width = <4>;
-+	status = "okay";
-+};
-+
- &mmc2 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&mmc2_pins>;
-@@ -174,6 +190,19 @@ &uart0 {
- 	status = "okay";
- };
- 
-+&uart1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart1_pins>, <&uart1_rts_cts_pins>;
-+	uart-has-rtscts = <1>;
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "realtek,rtl8723bs-bt";
-+		device-wake-gpios = <&r_pio 0 5 GPIO_ACTIVE_HIGH>; /* PL5 */
-+		host-wake-gpios = <&r_pio 0 6 GPIO_ACTIVE_HIGH>; /* PL6 */
-+	};
-+};
-+
- /* On Pi-2 connector */
- &uart2 {
- 	pinctrl-names = "default";
--- 
-2.26.0
-
+On Wed, Apr 22, 2020 at 2:12 AM Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
+>
+> Hi,
+>
+> On Mon, Apr 20, 2020 at 9:30 PM Yun-hao Chung <howardchung@google.com> wrote:
+> >
+> > Hi linux-bluetooth,
+> >
+> > Bluez doesn't disable auto-connect for trusted devices even in
+> > device.Disconnect. This causes users can't disconnect from peripherals
+> > unless they untrust the device.
+> >
+> > The behavior seems to change into this way intentionally after this change:
+> > https://www.spinics.net/lists/linux-bluetooth/msg72898.html
+> >
+> > I would like to understand why this change is needed and what is the
+> > suggestion to disconnect a trusted device.
+>
+> This has been there for a while but if I recall correctly the problem
+> is that we cannot really tell when the auto-connect was disabled,
+> besides it was not really honoring that in case the daemon is
+> restarted, etc, so instead of having yet another setting to persist it
+> was simpler to just use the trust, or block, properties to control
+> auto-connect which are persisted properly, that said maybe we can make
+> disconnect auto block the device and then connect to unblock
+> automatically but I think that having the application set the block
+> property is probably clearer that we don't want it to be reconnected.
+>
+> --
+> Luiz Augusto von Dentz
