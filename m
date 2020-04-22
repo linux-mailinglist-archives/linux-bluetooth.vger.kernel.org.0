@@ -2,61 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5138C1B344D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Apr 2020 03:02:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D53371B35CB
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Apr 2020 05:54:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726442AbgDVBCT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Apr 2020 21:02:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33752 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726400AbgDVBCS (ORCPT
+        id S1726445AbgDVDxm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 21 Apr 2020 23:53:42 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:46385 "EHLO
+        new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726422AbgDVDxm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Apr 2020 21:02:18 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15550C0610D5
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Apr 2020 18:02:18 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id a32so129356pje.5
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Apr 2020 18:02:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XgwhZFS0Rs1DmjjLWXYIXNbCEvvD1OpfDu4g1IJLmNw=;
-        b=DC5EyCiKVt3wvnqQTrN7RcJhdcaxucmTkiZTDIhuXcD0lDnK8k/eEd9pEAlCuDLbO4
-         +WbI5UK+eqwS1wpCzEm/BiGkwHC9pfAUAItd/hzm/oYelvmfjW4RkWlKE+OBgMNl5J8a
-         v0GOvk8RWAbVkUtjlC6IHQhM8lefXKfiTXDaQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XgwhZFS0Rs1DmjjLWXYIXNbCEvvD1OpfDu4g1IJLmNw=;
-        b=BQMkiNB37QbdpXnSIpltFNEXszl3O0NXx5Ovq1lp/uZ3hCM8Sw0Nj7vkX32opUe9DD
-         sR3s/LrmxfDNiXd2+8rTbfO6bUzRJ96JIHUXono5IOb5xNybqQ+as8cpmqvJhXhJI+Yj
-         o7uw5IFnxnslgLC1AY1aL99oWcIehWnKmV/ARabNCwd9uyL+pgMjlGE9VZcTMz0wWLwA
-         g1vz1f/QBCH7TE5nx0czpNOR5AprK0Hq3D4B8VNvwMPY7qYHYs6p0T0EkXUlGa3gI+KC
-         wL0ZZBnsYLYZxXybpN0TdzgQ6SNkZ2kFSI/b9WI64qhzoPVcP7Uo42zHMiQRDtqp7Sb5
-         mYpQ==
-X-Gm-Message-State: AGi0PuZVYkrHatFRgd+bmmRFO+OO+uO9VbII65Ir6PwGbZFtRixEi+ec
-        crgHf+GqmMKh32s1Obqp+JHyQSHrqu8=
-X-Google-Smtp-Source: APiQypIS7RM4b7iEYNaIPx12MJ2BwlbwuIISAVlPe7oF6ajJbbAD+s8knwxZmrMYkDYV9qDPTX/zAA==
-X-Received: by 2002:a17:90a:db53:: with SMTP id u19mr8851367pjx.41.1587517337006;
-        Tue, 21 Apr 2020 18:02:17 -0700 (PDT)
-Received: from mcchou0.mtv.corp.google.com ([2620:15c:202:201:b46:ac84:1014:9555])
-        by smtp.gmail.com with ESMTPSA id u2sm3547400pjn.20.2020.04.21.18.02.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Apr 2020 18:02:16 -0700 (PDT)
-From:   Miao-chen Chou <mcchou@chromium.org>
-To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
-Cc:     Yoni Shavit <yshavit@chromium.org>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Michael Sun <michaelfsun@google.com>,
-        Alain Michaud <alainm@chromium.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Miao-chen Chou <mcchou@chromium.org>
-Subject: [BlueZ PATCH v2] doc: Describe the new Advertisement Monitor support
-Date:   Tue, 21 Apr 2020 18:02:11 -0700
-Message-Id: <20200421180155.BlueZ.v2.1.If9f6be992cbaeaa35423de29da6db28675b35fcc@changeid>
-X-Mailer: git-send-email 2.24.1
+        Tue, 21 Apr 2020 23:53:42 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 0053E5801C2;
+        Tue, 21 Apr 2020 23:53:40 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Tue, 21 Apr 2020 23:53:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+         h=from:to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm3; bh=+EfqkUSWnK5oB5LHgnO1Rxb0VK
+        C+TbEqPBLo0jnqFfY=; b=Vv5txikFjhlLvXI1tIKdx81CnUOtqX04ItqrZd++y+
+        ylJ31YHwF9JMljYOhGIr0CzgOzvU/p2AtiHnJCBQO2aNv4D0S7Uo11jpZT9bzM3b
+        k9Zvk2D00RhMXhgO0bdcOTcL0p+VteTb9+w+O6Sp/bh5YUTvtDUw94xN+Kbl9sFL
+        kvMjh8pPqD7n9bVAdcJxSzMkKIbg3R4s/L249Gi4aYRjqieTpehR7x8+CvR+sok2
+        hEbvykXcCj1lGXw8kV2i4sfjkJw6GFykcqpRq45d/fwJVKQIDOp582m9frc+CYjD
+        rUBPqYpRaNU9Gl8V8XsQDtYHtXMP/LSu/peBI2yQRCQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=+EfqkUSWnK5oB5LHg
+        nO1Rxb0VKC+TbEqPBLo0jnqFfY=; b=nZ+ub6QOBaRpvVC0ToDUQ/DS9jU1jSut6
+        8xhF9m2WCT9D1g7LqyhyMWu+DMzvzYkRSfJVjb5hikK/Pg4rLuzPt+Rrp+DMnY/w
+        qqE2v6M3Shup8k2wJxpf5T38BgSprvn72s9eTAeZBgiBi70/05lEkh42UNOQTEUz
+        U3ZzTHD/xNt61V7THd04ZuTvHZgyWoV/kYz441BNOke/5wNGbtVtR0GL33p4ksRX
+        ljtf6iLNfKk1dSpy4V3hqBUg2X5vfYSQ4vq/8PYsJgJocah0GLKl1UEmnNoMWOeY
+        m6pe7yc3Ohrikuf93td82cEEmMDhnr3rL1+yGNIPymRV6neLJJ0xQ==
+X-ME-Sender: <xms:xL-fXtryYa-E56bp_MQzrv-ZweNWTYg05pQAnuoEmzx1HfOe41hu5Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrgeeigdejhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
+    dtnecuhfhrohhmpeetlhhishhtrghirhcuhfhrrghntghishcuoegrlhhishhtrghirhes
+    rghlihhsthgrihhrvdefrdhmvgeqnecuffhomhgrihhnpeguvghvihgtvghtrhgvvgdroh
+    hrghenucfkphepjeefrdelfedrkeegrddvtdeknecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomheprghlihhsthgrihhrsegrlhhishhtrghirhdvfe
+    drmhgv
+X-ME-Proxy: <xmx:xL-fXr8vh1tErFKMmMRrFOTVByOqqyMkfXEtEH26SDrz7EFWnS9uqA>
+    <xmx:xL-fXs_3hyJxHZuB3nFymkNYyhhsZBAf5w077Be9d4wkzft2tzpbUQ>
+    <xmx:xL-fXqsc8KlVQcN7vc5oQgLnA133RjHzuQpd1eKLFoSrVfeFhSkT9g>
+    <xmx:xL-fXhodnDceTjkOrAp2U-6b0io9GgFzDco_ANuCj-16ht-gxFtHhg>
+Received: from alistair-xps-14z.alistair23.me (c-73-93-84-208.hsd1.ca.comcast.net [73.93.84.208])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 15DD33280063;
+        Tue, 21 Apr 2020 23:53:39 -0400 (EDT)
+From:   Alistair Francis <alistair@alistair23.me>
+To:     netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-bluetooth@vger.kernel.org, mripard@kernel.org, wens@csie.org
+Cc:     anarsoul@gmail.com, devicetree@vger.kernel.org,
+        alistair23@gmail.com, linux-arm-kernel@lists.infradead.org,
+        Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH v4 1/3] dt-bindings: net: bluetooth: Add rtl8723bs-bluetooth
+Date:   Tue, 21 Apr 2020 20:53:31 -0700
+Message-Id: <20200422035333.1118351-1-alistair@alistair23.me>
+X-Mailer: git-send-email 2.26.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -64,116 +70,77 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This describes the following commands.
-- Add Advertisement Patterns Monitor
-- Remove Advertisement Monitors
-Note that the content of a monitor can differ based on its type. For now we
-introduce only pattern-based monitor, so you may find that unlike the
-command of removing monitor(s), the Add command is tied to a specific type.
+From: Vasily Khoruzhick <anarsoul@gmail.com>
+
+Add binding document for bluetooth part of RTL8723BS/RTL8723CS
+
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Signed-off-by: Alistair Francis <alistair@alistair23.me>
 ---
+ .../bindings/net/realtek-bluetooth.yaml       | 54 +++++++++++++++++++
+ 1 file changed, 54 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/realtek-bluetooth.yaml
 
-Changes in v2:
-- Combine commands to remove one monitor and remove all monitors. The
-refined command takes multiple handles and an extra field to indicate
-whether to remove all monitors.
-
- doc/mgmt-api.txt | 83 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 83 insertions(+)
-
-diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
-index 39f23c456..d5d402361 100644
---- a/doc/mgmt-api.txt
-+++ b/doc/mgmt-api.txt
-@@ -3138,6 +3138,89 @@ Read Security Information Command
- 				Invalid Index
- 
- 
-+Add Advertisement Patterns Monitor Command
-+=========================================
+diff --git a/Documentation/devicetree/bindings/net/realtek-bluetooth.yaml b/Documentation/devicetree/bindings/net/realtek-bluetooth.yaml
+new file mode 100644
+index 000000000000..4eb141b00fcb
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/realtek-bluetooth.yaml
+@@ -0,0 +1,54 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/realtek,rtl8723bs-bt.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+	Command Code:		0x0049
-+	Controller Index:	<controller id>
-+	Command Parameters:	Pattern_count (1 Octets)
-+				Pattern1 {
-+					AD_Data_Type (1 Octet)
-+					Offset (1 Octet)
-+					Length (1 Octet)
-+					Value (variable length)
-+				}
-+				Pattern2 { }
-+				...
-+	Return Parameters:	Monitor_Handle (8 Octets)
++title: RTL8723BS/RTL8723CS/RTL8822CS Bluetooth Device Tree Bindings
 +
-+	This command is used to add an advertisement monitor whose filtering
-+	conditions are patterns. The kernel would track the number of registered
-+	monitors to determine whether to perform LE scanning while there is
-+	ongoing LE scanning for other intentions, such as auto-reconnection and
-+	discovery session. If the controller supports Microsoft HCI extension,
-+	the kernel would offload the content filtering to the controller in
-+	order to reduce power consumption; otherwise the kernel ignore the
-+	content of the monitor. Note that if the there are more than one
-+	patterns, OR logic would applied among patterns during filtering. In
-+	other words, any advertisement matching at least one pattern in a given
-+	monitor would be considered as a match.
++maintainers:
++  - Vasily Khoruzhick <anarsoul@gmail.com>
++  - Alistair Francis <alistair@alistair23.me>
 +
-+	A pattern contain the following fields.
-+		AD_Data_Type	Advertising Data Type. The possible values are
-+				defined in Core Specification Supplement.
-+		Offset		The start index where pattern matching shall be
-+				performed with in the AD data.
-+		Length		The length of the pattern value in bytes.
-+		Value		The value of the pattern in bytes.
++description:
++  RTL8723CS/RTL8723CS/RTL8822CS is WiFi + BT chip. WiFi part is connected over
++  SDIO, while BT is connected over serial. It speaks H5 protocol with few
++  extra commands to upload firmware and change module speed.
 +
-+	Here is an example of a pattern.
-+		{
-+			0x16, // Service Data - 16-bit UUID
-+			0x02, // Skip the UUID part.
-+			0x04,
-+			{0x11, 0x22, 0x33, 0x44},
-+		}
++properties:
++  compatible:
++    oneOf:
++      - const: "realtek,rtl8723bs-bt"
++      - const: "realtek,rtl8723cs-bt"
++      - const: "realtek,rtl8822cs-bt"
 +
-+	Possible errors:	Failed
-+				Busy
-+				Invalid Parameters
++  device-wake-gpios:
++    maxItems: 1
++    description: GPIO specifier, used to wakeup the BT module
 +
++  enable-gpios:
++    maxItems: 1
++    description: GPIO specifier, used to enable the BT module
 +
-+Remove Advertisement Monitors Command
-+=====================================
++  host-wake-gpios:
++    maxItems: 1
++    description: GPIO specifier, used to wakeup the host processor
 +
-+	Command Code:		0x004A
-+	Controller Index:	<controller id>
-+	Command Parameters:	Remove_All (1 Octet)
-+				Monitor_Count (2 Octets)
-+				Monitor_Handle[i] (8 Octets)
-+	Return Parameters:	Removed_Monitor_Count (2 Octets)
-+				Removed_Monitor_Handle[i] (8 Octets)
++required:
++  - compatible
 +
-+	This command is used to remove advertisement monitor(s). The kernel
-+	would remove the monitor(s) with Monitor_Index and update the LE
-+	scanning. If the controller supports Microsoft HCI extension and the
-+	monitor(s) has been offloaded, the kernel would cancel the offloading;
-+	otherwise the kernel takes no further actions other than removing the
-+	monitor(s) from the list.
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
 +
-+	Remove_All can be the following values.
-+		Value		Operation
-+		-------------------------
-+		0x00		Removes only the monitors with handles specified
-+				in Monitor_Handle[i], so there must be at least
-+				one handle.
-+		0x01		Removes all existing monitor(s), so
-+				Monitor_Count must be 0, and Monitor_Handle
-+				must be empty.
++    uart1 {
++        pinctrl-names = "default";
++        pinctrl-0 = <&uart1_pins>, <&uart1_rts_cts_pins>;
++        uart-has-rtscts = <1>;
 +
-+	Possible errors:	Failed
-+				Busy
-+				Invalid Index
-+				Invalid Parameters
-+
-+
- Command Complete Event
- ======================
- 
++        bluetooth {
++            compatible = "realtek,rtl8723bs-bt";
++            device-wake-gpios = <&r_pio 0 5 GPIO_ACTIVE_HIGH>; /* PL5 */
++            host-wakeup-gpios = <&r_pio 0 6 GPIO_ACTIVE_HIGH>; /* PL6 */
++        };
++    };
 -- 
-2.24.1
+2.26.0
 
