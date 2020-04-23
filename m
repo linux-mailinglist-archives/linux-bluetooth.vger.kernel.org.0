@@ -2,92 +2,161 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AE7E1B63A8
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Apr 2020 20:27:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92B911B654A
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Apr 2020 22:18:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730386AbgDWS1i (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 Apr 2020 14:27:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52822 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730293AbgDWS0w (ORCPT
+        id S1726056AbgDWUSV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 Apr 2020 16:18:21 -0400
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:46268
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725877AbgDWUSV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 Apr 2020 14:26:52 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76225C025490
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Apr 2020 11:26:51 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id b12so7489984ion.8
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Apr 2020 11:26:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=DHzQtr3OkXyFWXbvXEU307GvVJtF7cl8Gt7nfdQPyE8=;
-        b=g40sBMuaO0eKdotmx6qgQBl63DKBmrekz5bvyEQHA4wVZtcqrxc+aFVgh/QD84O9VQ
-         7GeGJGwCstc5CQBYUut5JFB/SR9hiHRBoNucBdQ5+M/xcZE7LYnQNVriX94nlJDQQ53M
-         WWNnGuPMmJMtuCxOc6M3BOG48McWyi9pwkfv1qCbwmDhh95byI3UmcGK9ZJ59xQm/kqA
-         giNgZwxUHu+XTIAoqn/uu1orK63Ur+6hMBQW2TB101zb0oJ5HpVThkCq6id/TjpQtg27
-         HPMb1DcYsj7bM6wQaeV1UkPK6mgUhECRFNV10F5zDhvx1RXP4ikb8uuEIGMKOSNWVb51
-         vLew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=DHzQtr3OkXyFWXbvXEU307GvVJtF7cl8Gt7nfdQPyE8=;
-        b=IE0agMOG/YUAB4pOHDQvqo3vVGSDzdvObFLuVgcD2NVZFdKCYWmY5qIdZZPnw05d0N
-         mJMsEGq2B73PBkaQXBsa+z4l6NAP7ADZf1upNG3uiDgc8OkPa6AMy0pJlXAwJuxt0uIS
-         voPOR7D6LNq2o2/21PHqRlfjzHKIF60B+KPwOLjEVYbaKkHcB8XeTUQFCcAIODi2WNbf
-         Nq5fx5z7++ddm/RcEZGbXBs0MS8NlGgeBZAYDDI2YCJGWbgEG433wfj0/C2D3tLBcxgI
-         hxLDnjvRWjUCl86pbqYwSFvp2QYT5nXGOa6KCpBqSY0fRCFmZnLPFQ+UgnigGJ62sFP7
-         kicw==
-X-Gm-Message-State: AGi0PuY1JG8vX5MQRysvlSEsL//tQonzM7vLftVHZSasPOfaAzt9ffzD
-        K7iWWW6qtq/9vM/q+TJIrB93o6sVoNTTiIpbTQ==
-X-Google-Smtp-Source: APiQypKZ88CB7WlyCjo0k9+cU4PX0VcggKkKtzSKgRJHkcPGizF0yZXAjzEMBgo6XH4xzBXv0KAOMjPM9p1sgpp6/70=
-X-Received: by 2002:a5e:9416:: with SMTP id q22mr2547966ioj.93.1587666410194;
- Thu, 23 Apr 2020 11:26:50 -0700 (PDT)
+        Thu, 23 Apr 2020 16:18:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=6rp4w2husmdhljsd36xpa6qg7i74gvwa; d=belchamber.com; t=1587673098;
+        h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:Content-Type;
+        bh=SiU/b5w5V0dqCLfu7+sRfErvTAlN/oKmX8DM94GLTEk=;
+        b=bvYbJTx6z/YrOVSOUg2lbTbQLO7hn38i3HShV+VHoYM8RuDROHQAf3vaqIuFDts0
+        EsAAubRZzZijX8wIClXYn8kv9Zv97UqZVrfxVANY9rmCnVMAf9+QBkrR9znM9xQ0kB1
+        Vzd6LKvQOoqvkJwDkmQB0wZdflDgN7b95iivqsd8=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1587673098;
+        h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:Content-Type:Feedback-ID;
+        bh=SiU/b5w5V0dqCLfu7+sRfErvTAlN/oKmX8DM94GLTEk=;
+        b=HLvpC39ma6J91XKa/UuwP4qUAiv4kkHcLGjDcCXG5i8pG16xd4Gukz69bAoAbFMZ
+        OWAMuZ1Q6EgHq5PyXYznP2b4q8eUwKAqmzZR0QOg7hn5ILMOw/THPInMZrxCVg5UcdX
+        1a2JUoYGyCORfRpaEoT6ofGuhM0kZsAwEwlOOlZI=
+X-Gm-Message-State: AGi0PuZLhGHxOJal6cRAAUXQngmPLyicfRTX4tejdVP/fEsuJtK3A8e+
+        voBQTaieXlF4AES4n8gJfni8+ygzpP6kXFb/hMw=
+X-Google-Smtp-Source: APiQypLTblAkT+yoH0yWPAVBm7j6ZGnyK49dR1LUApawrxTo6TM4HnOe/p3DRBr5jJhNP9Os9EDLFG/kKu6n5tgZaE4=
+X-Received: by 2002:a02:c9cb:: with SMTP id c11mr4701549jap.93.1587673097019;
+ Thu, 23 Apr 2020 13:18:17 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a02:c845:0:0:0:0:0 with HTTP; Thu, 23 Apr 2020 11:26:49
- -0700 (PDT)
-Reply-To: boa.benin107@yahoo.com
-From:   "Mrs. Angella Michelle" <info.zennitbankplcnigerian@gmail.com>
-Date:   Thu, 23 Apr 2020 20:26:49 +0200
-Message-ID: <CABHzvr=N78snvtMHePMOa+RLFdcZEjXLPkuhkojt4VoZGNzBsQ@mail.gmail.com>
-Subject: Contact Bank of Africa-Benin to receive your payment funds transfer
- amount of $12.800.000,00 Million USD,approved this morning by IMF.
-To:     undisclosed-recipients:;
+References: <010201715012e482-bca51111-db3c-4101-9bd4-208b69a0ff03-000000@eu-west-1.amazonses.com>
+ <01020171a3203016-7d1d5c39-46ee-4ba9-8ff3-a6928a329d2a-000000@eu-west-1.amazonses.com>
+ <CABBYNZJ2tn6Riz7uouxD0qa1M-dT7GbtUSkD-dbn1nj1B372iQ@mail.gmail.com>
+ <01020171a6b79a42-76ec69a9-7293-441a-911e-e48f8baf418b-000000@eu-west-1.amazonses.com>
+ <CABBYNZLfkWSpJHw82jct05buyuPVC_0jb1ykncRQZEk35vkTyw@mail.gmail.com>
+In-Reply-To: <CABBYNZLfkWSpJHw82jct05buyuPVC_0jb1ykncRQZEk35vkTyw@mail.gmail.com>
+From:   James Belchamber <james@belchamber.com>
+Date:   Thu, 23 Apr 2020 20:18:18 +0000
+X-Gmail-Original-Message-ID: <CADQov_jtPFmNkyyNqDQXpNMgBqXjOp2ABpVgZK88VMuPwBeoAQ@mail.gmail.com>
+Message-ID: <01020171a8b0e8ca-4409846d-fa53-4a90-b251-022d894af095-000000@eu-west-1.amazonses.com>
+Subject: Re: Setup Synchronous Connection fails when switching Sony WH-H900N
+ headset to HSP
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-SES-Outgoing: 2020.04.23-54.240.7.11
+Feedback-ID: 1.eu-west-1.iLkSOx0ll0H29nNg//Fx25T4fmIhOvUmYvVubjmmX6g=:AmazonSES
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Attn Dear.
-Contact Bank of Africa-Benin to receive your payment funds transfer amount =
-of
-$12.800.000,00 Million USD,approved this morning by IMF.
-Happy to inform you, we have finally deposited your payment funds
-$12.8 million us dollars with the Paying Bank of Africa-Benin
-to transfer the payment amount of $12.800,000,00 Million Us Dollars to you
-Contact the bank immediately you receive this email now.
-Director Bank of Africa-Benin: Dr. Festus Obiara
-Email id:  boa.benin107@yahoo.com
-Tel/mobile, (229) 62819378
-BOA-BENIN | GROUPE BANK OF AFRICA, boa-benin
-Avenue Jean-Paul II - 08 BP 0879 - Cotonou - B=C3=A9nin
-Phone:(229) 62819378.
-2020 GROUPE BANK OF AFRICA
-Be advised to re-confirm your bank details to this bank as listed.
-Your account Holder's name----------------
-Bank Name----------------------------------------------------------
-Bank address----------------------------------------------
-Account Numbers---------------------------------------
-Rounting-----------------------------------------------------------------
-Your direct Phone Numbers----------------------------------------------
-Note,I have paid the deposit and insurance fees for you
-But the only money you are to send to this bank is $150.00 us dollars
-Been for the wire transfer fees of your funds
-Contact Him now to receive your transfer deposited this morning
-I wait for your reply upon confirmation
-Mrs. Angella Michelle
-Editor, Zenith Bank- Companies Benin
-mrsa9389@gmail.com
+I got btmon piped to a file on ChromeOS, turned on my headphones,
+opened an app that required a mic, closed the app, then disconnected
+again.
+
+Paste is here: https://paste.c-net.org/BaldwinMarital
+
+I can't see any AT commands but btmon spits out far too much for me to
+be able to parse it without knowing what I'm looking for.
+
+On Thu, 23 Apr 2020 at 17:43, Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
+>
+> Hi James,
+>
+> On Thu, Apr 23, 2020 at 4:06 AM James Belchamber <james@belchamber.com> wrote:
+> >
+> > Only difference in the btmon output is the handle (256 instead of 67)
+> > - otherwise it all looks the same and it connects first time.
+> >
+> > What logs are useful? I have the Chromebook in developer mode and so I
+> > can capture whatever you want (hopefully!)
+>
+> Then I think this is because PulseAudio is using HSP not HFP, the
+> headset might be expecting a call to exist, or something similar on
+> HSP, in order to accept the SCO connection so the state machine is not
+> ready, have a look if Chrome OS is sending any AT command before
+> trying to connect SCO, or just past the btmon logs in some
+> pastebing/gist.github.com so we can analyze what is going on.
+>
+> > On Wed, 22 Apr 2020 at 23:32, Luiz Augusto von Dentz
+> > <luiz.dentz@gmail.com> wrote:
+> > >
+> > > Hi James,
+> > >
+> > > On Wed, Apr 22, 2020 at 11:27 AM James Belchamber <james@belchamber.com> wrote:
+> > > >
+> > > > Just bumping this for visibility, still an issue with the latest kernel.
+> > > >
+> > > > Happy to test anything thrown my way.
+> > > >
+> > > > On Mon, 6 Apr 2020 at 16:19, James Belchamber <james@belchamber.com> wrote:
+> > > > >
+> > > > > When using my Sony WH-H900N headphones and switching from A2DP to
+> > > > > HSP/HFP the following error appears in journalctl:
+> > > > >
+> > > > > (  60.063|   0.000) D: [pulseaudio] module-bluez5-device.c: Acquiring
+> > > > > transport /org/bluez/hci0/dev_04_5D_4B_E9_C9_90/fd34
+> > > > > (  60.063|   0.000) I: [pulseaudio] backend-native.c: doing connect
+> > > > > (  60.174|   0.111) E: [pulseaudio] backend-native.c: connect():
+> > > > > Function not implemented
+> > > > >
+> > > > > And using btmon I can see the HCI command comes back with a failure
+> > > > > (full log attached):
+> > > > >
+> > > > > < HCI Command: Setup Synchronous Connection (0x01|0x0028) plen 17
+> > > > >         Handle: 67
+> > > > >         Transmit bandwidth: 8000
+> > > > >         Receive bandwidth: 8000
+> > > > >         Max latency: 10
+> > > > >         Setting: 0x0060
+> > > > >           Input Coding: Linear
+> > > > >           Input Data Format: 2's complement
+> > > > >           Input Sample Size: 16-bit
+> > > > >           # of bits padding at MSB: 0
+> > > > >           Air Coding Format: CVSD
+> > > > >         Retransmission effort: Optimize for power consumption (0x01)
+> > > > >         Packet type: 0x0380
+> > > > >           3-EV3 may not be used
+> > > > >           2-EV5 may not be used
+> > > > >           3-EV5 may not be used
+> > > > > > HCI Event: Command Status (0x0f) plen 4
+> > > > >       Setup Synchronous Connection (0x01|0x0028) ncmd 1
+> > > > >         Status: Success (0x00)
+> > > > > > HCI Event: Max Slots Change (0x1b) plen 3
+> > > > >         Handle: 67
+> > > > >         Max slots: 1
+> > > > > > HCI Event: Synchronous Connect Complete (0x2c) plen 17
+> > > > >         Status: Unspecified Error (0x1f)
+> > > > >         Handle: 67
+> > > > >         Address: 04:5D:4B:E9:C9:90 (Sony Corporation)
+> > > > >         Link type: eSCO (0x02)
+> > > > >         Transmission interval: 0x00
+> > > > >         Retransmission window: 0x00
+> > > > >         RX packet length: 0
+> > > > >         TX packet length: 0
+> > > > >         Air mode: u-law log (0x00)
+> > > > >
+> > > > > This works on ChromeOS, which also uses a (modified) BlueZ stack -
+> > > > > though I can't work out why :)
+> > >
+> > > It doesn't look like it is a host problem and Ive never seem this
+> > > error before, have you tried with the same controller on Chrome OS? It
+> > > may be worth trying to capture the logs in Chrome OS so we can compare
+> > > if there is something different in the command parameters, but it
+> > > could as well be that Chrome uses HFP instead of HSP as PulseAudio
+> > > does and the headset is sensitive to that.
+> > >
+> > > --
+> > > Luiz Augusto von Dentz
+>
+>
+>
+> --
+> Luiz Augusto von Dentz
