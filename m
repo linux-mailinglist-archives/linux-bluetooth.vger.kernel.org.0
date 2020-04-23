@@ -2,227 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C97FA1B51AE
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Apr 2020 03:13:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70B181B51E3
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Apr 2020 03:35:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726436AbgDWBNB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 Apr 2020 21:13:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60968 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725846AbgDWBNB (ORCPT
+        id S1726358AbgDWBej (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Apr 2020 21:34:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36056 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbgDWBej (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 22 Apr 2020 21:13:01 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7CB8C03C1AA
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Apr 2020 18:13:00 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id r17so3383806lff.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Apr 2020 18:13:00 -0700 (PDT)
+        Wed, 22 Apr 2020 21:34:39 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60CA3C03C1AA;
+        Wed, 22 Apr 2020 18:34:37 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id x23so3424171lfq.1;
+        Wed, 22 Apr 2020 18:34:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WIxIDnkpkhXz/Rc3cKucNn2E6xJY9rIKzkCq4UkDqbE=;
-        b=DCPCgQQbkwvxW+acPi2jNXJa75MrIF7s0fecTlKtK1XtknhlFTWaxIWPZcKmhZULS/
-         Mu3ezsYSCJJtg7HVA1jzXPjqG6S7BM/KVr4iYjOeH4rZWDF0wsDxDh+VFRaHgfvBNoOh
-         gwRIHrskoLJcBOKSlhcfbqiztk6YpqD1eMH+U=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=DAjDO2syVihYfSYHVPHnBlRhOt9duNjgHctpjQ0ix6c=;
+        b=eUVd8k2O2d2zxPxp8rFtZ7IDbc6v/LYYWEtLilnhk89o1oS1POopQeOtxW9hMjQyrg
+         hnw/uKRLApQXMBqmHw/Wt1ybEHUXEO/j3o89rYQ66McADGjAU4fNtKTq2EaPMwpreHHd
+         bXwGW7BOqm+gSJUhWf2JJAt2AEr2eKDsv1ao6iRVY3v24ywl8+I3ExhuRUVChw7ndNmr
+         Omd48AdkdaZ/KhfwVtv3jM/KGdyyGL4+zhSwzouhXsYP2T6uJLH22W/sYD184aEu+sCF
+         qaA0MweY69Y5u+ZdsvkDLb8XI4t27jeR3Y5DYLWq+tQJWM9QY2KbDHod5HHOL/FRyekp
+         dPJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WIxIDnkpkhXz/Rc3cKucNn2E6xJY9rIKzkCq4UkDqbE=;
-        b=LXqNaWa2gYOmkIPnersxQr/GNfYwoczukJY6gTow4Ld5NyWLt4uA03HnSO9ck6ixox
-         TdGJjkWPyHvUvoCyaJah2ZNK/xR0BiJHMVBAy0s+EF8XVUHyHLsSdQWBL2xbHZFjAcmi
-         Ecuj5ZpEyqZnQVeaA/xw2g4Wo3r4Sb5rfF+c6Rl0j1TjungUoZS5SNmFC3UQ0xtCmkZT
-         5zzaBGXD2aDcMgf+oElbQ+OW3HDrqj0xcuOf8zhCMbaEzRNk+dkWGnAlzGCeFb6qWhC+
-         Ly8p91afMcnu+NGvXdv92kZXs7hQtzXYCXwzny60dGt7kQ0o9azlD0PjBL2CYg7qGzQ/
-         nURA==
-X-Gm-Message-State: AGi0PuaAIOgu5t05pDmTEiMW/ytmdPK+7G6kJxkzQcpEqhcoiNPKIjiE
-        QKz/PTMR5G1i91M0fmtefQDFB+b0yJmVKmAwSeB0LFsD
-X-Google-Smtp-Source: APiQypKqN/FPs/eo8pxt/2mx0D3SfSWh2nPztdQgTnVZdw74iV+izYb5WHgupaY6HSsrNlls4QybxxsTCyQipmipsug=
-X-Received: by 2002:a05:6512:308e:: with SMTP id z14mr797307lfd.110.1587604378911;
- Wed, 22 Apr 2020 18:12:58 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200422180939.BlueZ.v2.1.If9f6be992cbaeaa35423de29da6db28675b35fcc@changeid>
-In-Reply-To: <20200422180939.BlueZ.v2.1.If9f6be992cbaeaa35423de29da6db28675b35fcc@changeid>
-From:   Miao-chen Chou <mcchou@chromium.org>
-Date:   Wed, 22 Apr 2020 18:12:47 -0700
-Message-ID: <CABmPvSEFc+0Cm4CQk9vU3LJvjp57pFEFdbodpnKoLfLGxkB5fg@mail.gmail.com>
-Subject: Re: [BlueZ PATCH v2] doc: Describe the new Advertisement Monitor support
-To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
-Cc:     Alain Michaud <alainm@chromium.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Yoni Shavit <yshavit@chromium.org>,
-        Michael Sun <michaelfsun@google.com>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=DAjDO2syVihYfSYHVPHnBlRhOt9duNjgHctpjQ0ix6c=;
+        b=JFBOPHlJXmorpcAWw8baAoQhv2uFR+YrT8gkkI67rR2TYX4sGj2N2Ljo9KC1xDOk60
+         K8ey5apnP3Z5Hd7PsNCU+wVKYKp6bS1j9uqaglTgw0DRIaGPiGueVMCYRgPQ/wl6BKlD
+         INhUx8E5zSueCxEXEEpmshE0cuy2y1xSiABo8N+kQ6hEGhPqMeeZ17SECt41MBMnMmok
+         F1qgn4+0a/yNW5cVImOCgV2HfRvrSiPOHVBBZ77iNDBZsWUyY4ZKpJonWuHRazd7XUMr
+         lvsaXHhF9Mpi92oFmuBuXq22LUN0ed2scXoZMzAWu6gNt3W4VARsxPkxBh7NXdvPitV0
+         pt+Q==
+X-Gm-Message-State: AGi0PubDDIJ+VBkSg2FyMbevtE29hHp8hI4LFevKpe32BBrphV+IV2Za
+        qR2btzHK/hqlmXfJp3M6i/Q=
+X-Google-Smtp-Source: APiQypLVF8k5uqxjiwCBFvVf1xeH58dehjnKwlyRN+zx1HBI6paxUET+mG4Tcr86VknKMveN0sPEbg==
+X-Received: by 2002:a19:946:: with SMTP id 67mr848245lfj.142.1587605675892;
+        Wed, 22 Apr 2020 18:34:35 -0700 (PDT)
+Received: from localhost.localdomain ([87.200.95.144])
+        by smtp.gmail.com with ESMTPSA id h21sm564967lfp.1.2020.04.22.18.34.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Apr 2020 18:34:35 -0700 (PDT)
+From:   Christian Hewitt <christianshewitt@gmail.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        Christian Hewitt <christianshewitt@gmail.com>
+Subject: [PATCH v2 0/3] Bluetooth: hci_qca: add support for QCA9377
+Date:   Thu, 23 Apr 2020 01:34:27 +0000
+Message-Id: <20200423013430.21399-1-christianshewitt@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Please ignore this patch, I should have update the version number.
+From: Christian Hewittt <christianshewitt@gmail.com>
 
-On Wed, Apr 22, 2020 at 6:10 PM Miao-chen Chou <mcchou@chromium.org> wrote:
->
-> This describes the following commands and event.
-> - Read Advertisement Monitor Features command
-> - Add Advertisement Patterns Monitor command
-> - Remove Advertisement Monitor command
-> - Advertisement Monitor Added event
-> - Advertisement Monitor Removed event
-> Note that the content of a monitor can differ based on its type. For now we
-> introduce only pattern-based monitor, so you may find that unlike the
-> command of removing monitor(s), the Add command is tied to a specific type.
-> ---
->
-> Changes in v3:
-> - Remove Advertisement Monitor can perform the removal of one monitor
-> or all monitors.
-> - Add Read Advertisement Monitor Features command.
-> - Add Advertisement Monitor Added event and dvertisement Monitor Removed
-> event.
->
-> Changes in v2:
-> - Combine commands to remove one monitor and remove all monitors. The
-> refined command takes multiple handles and an extra field to indicate
-> whether to remove all monitors.
->
->  doc/mgmt-api.txt | 118 +++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 118 insertions(+)
->
-> diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
-> index 39f23c456..3cef3edbf 100644
-> --- a/doc/mgmt-api.txt
-> +++ b/doc/mgmt-api.txt
-> @@ -3138,6 +3138,102 @@ Read Security Information Command
->                                 Invalid Index
->
->
-> +Read Advertisement Monitor Features Command
-> +===========================================
-> +
-> +       Command Code:           0x0049
-> +       Controller Index:       <controller id>
-> +       Command Parameters:
-> +       Return Parameters:      Supported_Features (4 octets)
-> +                               Adopted_Features (4 octets)
-> +
-> +       This command is used to read the advertisement monitor features supported
-> +       by the controller and stack. Supported_Features lists all related
-> +       features supported by the controller while Adopted_Features lists the
-> +       ones currently adopted by the stack.
-> +
-> +       Supported_Features and Adopted_Features are bitmasks with currently the
-> +       following available bits:
-> +
-> +               1       Advertisement content monitoring based on Microsoft HCI
-> +                       extension.
-> +
-> +
-> +Add Advertisement Patterns Monitor Command
-> +=========================================
-> +
-> +       Command Code:           0x004A
-> +       Controller Index:       <controller id>
-> +       Command Parameters:     Pattern_count (1 Octets)
-> +                               Pattern1 {
-> +                                       AD_Data_Type (1 Octet)
-> +                                       Offset (1 Octet)
-> +                                       Length (1 Octet)
-> +                                       Value (variable length)
-> +                               }
-> +                               Pattern2 { }
-> +                               ...
-> +       Return Parameters:      Monitor_Handle (4 Octets)
-> +
-> +       This command is used to add an advertisement monitor whose filtering
-> +       conditions are patterns. The kernel would track the number of registered
-> +       monitors to determine whether to perform LE scanning while there is
-> +       ongoing LE scanning for other intentions, such as auto-reconnection and
-> +       discovery session. If the controller supports advertisement filtering,
-> +       the kernel would offload the content filtering to the controller in
-> +       order to reduce power consumption; otherwise the kernel ignore the
-> +       content of the monitor. Note that if the there are more than one
-> +       patterns, OR logic would applied among patterns during filtering. In
-> +       other words, any advertisement matching at least one pattern in a given
-> +       monitor would be considered as a match.
-> +
-> +       A pattern contain the following fields.
-> +               AD_Data_Type    Advertising Data Type. The possible values are
-> +                               defined in Core Specification Supplement.
-> +               Offset          The start index where pattern matching shall be
-> +                               performed with in the AD data.
-> +               Length          The length of the pattern value in bytes.
-> +               Value           The value of the pattern in bytes.
-> +
-> +       Here is an example of a pattern.
-> +               {
-> +                       0x16, // Service Data - 16-bit UUID
-> +                       0x02, // Skip the UUID part.
-> +                       0x04,
-> +                       {0x11, 0x22, 0x33, 0x44},
-> +               }
-> +
-> +       Possible errors:        Failed
-> +                               Busy
-> +                               Invalid Parameters
-> +
-> +
-> +Remove Advertisement Monitor Command
-> +====================================
-> +
-> +       Command Code:           0x004B
-> +       Controller Index:       <controller id>
-> +       Command Parameters:     Monitor_Handle (4 Octets)
-> +       Return Parameters:
-> +
-> +       This command is used to remove advertisement monitor(s). The kernel
-> +       would remove the monitor(s) with Monitor_Index and update the LE
-> +       scanning. If the controller supports advertisement filtering and the
-> +       monitor(s) has been offloaded, the kernel would cancel the offloading;
-> +       otherwise the kernel takes no further actions other than removing the
-> +       monitor(s) from the list.
-> +
-> +       Monitor_Handle can be the following values.
-> +               Value           Operation
-> +               -------------------------
-> +               0x00000000              Removes all existing monitor(s)
-> +               0x00000001 or greater   Removes the monitor with that handle
-> +
-> +       Possible errors:        Failed
-> +                               Busy
-> +                               Invalid Index
-> +
-> +
->  Command Complete Event
->  ======================
->
-> @@ -4020,3 +4116,25 @@ PHY Configuration Changed Event
->         one through which the change was triggered.
->
->         Refer Get PHY Configuration command for PHYs parameter.
-> +
-> +
-> +Advertisement Monitor Added Event
-> +=================================
-> +
-> +       Event Code:             0x0027
-> +       Controller Index:       <controller id>
-> +       Event Parameters:       Monitor_Handle (4 Octets)
-> +
-> +       This event indicates that an advertisement monitor has been added using
-> +       the Add Advertisement Monitor command.
-> +
-> +
-> +Advertisement Monitor Removed Event
-> +===================================
-> +
-> +       Event Code:             0x0028
-> +       Controller Index:       <controller id>
-> +       Event Parameters:       Monitor_Handle (4 Octets)
-> +
-> +       This event indicates that an advertisement monitor has been removed
-> +       using the Remove Advertisement Monitor command.
-> --
-> 2.24.1
->
+This series adds a new compatible for the QCA9377 BT device that is found
+in many Android TV box devices, makes minor changes to allow max-speed
+values for the device to be read from device-tree, and updates bindings
+to reflect those changes.
+
+v2 changes: rebase against bluetooth-next
+
+Christian Hewitt (3):
+  dt-bindings: net: bluetooth: Add device tree bindings for QCA9377
+  Bluetooth: hci_qca: add compatible for QCA9377
+  Bluetooth: hci_qca: allow max-speed to be set for QCA9377 devices
+
+ .../bindings/net/qualcomm-bluetooth.txt         |  5 +++++
+ drivers/bluetooth/hci_qca.c                     | 17 ++++++++++-------
+ 2 files changed, 15 insertions(+), 7 deletions(-)
+
+-- 
+2.17.1
+
