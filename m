@@ -2,97 +2,145 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA1FF1B8666
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 25 Apr 2020 14:04:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B02BB1B8785
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 25 Apr 2020 17:55:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726073AbgDYMEI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 25 Apr 2020 08:04:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46642 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725925AbgDYMEI (ORCPT
+        id S1726155AbgDYPzn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 25 Apr 2020 11:55:43 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:44051 "EHLO
+        new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726112AbgDYPzm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 25 Apr 2020 08:04:08 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0A19C09B04B
-        for <linux-bluetooth@vger.kernel.org>; Sat, 25 Apr 2020 05:04:07 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id g13so14665666wrb.8
-        for <linux-bluetooth@vger.kernel.org>; Sat, 25 Apr 2020 05:04:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=fSauoZcALwfeTaeC6VG+uGNIgG+Zcdx8fX15Nm5SZws=;
-        b=Qk0W3yHDzbx8mpMQv9Qnc3+uYDoe3LFPfxGyOY37RjgraCKr02pwCzgwLvRyg2Lf4H
-         m+z2xPZfhF08GAG1uhtru9g/w4nskNqox+dRRlkK/q4UltEU5ZVsp0O3ETgByAydwk8G
-         0/QYGAFbeZtqEWCRcVX69f7CgW+na/HdEX64suVJzvR7byX4JOwiS0P+eDO2AUl+ZBQj
-         cnJf4Fu0J6mXldZsYbQjZPaSIw5AZyUzqMf/mCptZDBR57R4SsNkR1P7B/hVc5QW2Bfy
-         rf9gPqsJKvLvE3WFImrkN9s3nSMpxYxgdPP9QGSjnsiLiYDNIisqcAEn6Mmi+IcC8J1M
-         zL0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=fSauoZcALwfeTaeC6VG+uGNIgG+Zcdx8fX15Nm5SZws=;
-        b=SYpVUS0EsHnLR5BBlDU9ybVhphYJiqE/ZDTIwaP5Qs4Pz08xQRe94n8hENKGHYWeKv
-         4U3yzhnXCvYgiqK76Vc3jb40iF/LBmNHjgQq/XXyr8zyeAFpkuNmOBWfbjYlWeK3fKPe
-         6S/kq9ujmGB3qHM4kp+9VfyhClXH7avNX0FeSYHNhh0IfAR0E4yWx4Gjn3oLcbUHgkKF
-         se3xAw4xUrsmT21FLZJIf3qmm9SMvWcCxQszK2IsZQwy3LgbMSKg5gFrU9PRgahduMDr
-         MenlXxIBaD5yBlDEICQiftj0xViRlCrsOOGSiCVibuqdxhd6BPqEDyxsn7OkyueEH24B
-         fCyg==
-X-Gm-Message-State: AGi0PubOLNM+NUGEVrlkQCH+PSLlS6hbBkdUPwy0rgfRqP1V9wkSl0Ic
-        AS3dKWS/Bi7nA96WmsPrwCaTVYkFKa4=
-X-Google-Smtp-Source: APiQypIfr1peIx0pZJ1yQ3O7X1HwshnPtfBuXyYK3mqAzseRWRvw8b1hhRuKa4UvzxRMLjSeQ60b4A==
-X-Received: by 2002:a5d:4404:: with SMTP id z4mr16449488wrq.316.1587816246123;
-        Sat, 25 Apr 2020 05:04:06 -0700 (PDT)
-Received: from black-betty (lfbn-idf1-1-1445-133.w90-90.abo.wanadoo.fr. [90.90.130.133])
-        by smtp.gmail.com with ESMTPSA id k6sm7410694wma.19.2020.04.25.05.04.04
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Apr 2020 05:04:05 -0700 (PDT)
-Message-ID: <c56e5983093556f4fecf3a788c082639287bd332.camel@gmail.com>
-Subject: 0b05:1825 - HSP/HFP - command to route SCO to HCI
-From:   Nicolas Fabbro <nicolas.fabbro@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Date:   Sat, 25 Apr 2020 14:03:40 +0200
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.2 
+        Sat, 25 Apr 2020 11:55:42 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 3BF3E5803BF;
+        Sat, 25 Apr 2020 11:55:41 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Sat, 25 Apr 2020 11:55:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+         h=from:to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm3; bh=xudYb/gSOwoNebonFD9XGdvc59
+        XtcGplDNYOwu4XiUI=; b=oLRotAyWbPWDaOLtuIJgzBAtTHjhY7DmziVPQmclZl
+        WUo4BDGpu3mn2Ur5v5gJkCuI2FuyjbSV5vWiUO5y83wQqfcs0k3MAC7HufB+e1RG
+        dAYPuJ0HKdiIgqTwVBhFhSnrGzch43Kt7w0D+QArp5ixAgJBTZGgarIVdnLahwVx
+        +b18cyqBFvA85lzInhHG+3gxFQ7wPdh1+mvsn6HeOL/PYhI02pwsP7Tp9xGUTp16
+        bIcRDYlcnuDpmb9UV4Jt9+VpifYEPliJvzSE3rl+BlXuWbphsflPDjJv0byVxYqm
+        BM1JSHXt5UZduBdMGegE3V35ZWN6ce8c/prlQKKpHSpQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=xudYb/gSOwoNebonF
+        D9XGdvc59XtcGplDNYOwu4XiUI=; b=cGUmEnNLLNp/LIyM+YdFX1OIhSj5qWbs7
+        xdYdpL+kmZWHj45VdWNmP6C1NU15B0om5vI6EXHh5sE8H+fSyHN7xKeZXSjQHtQu
+        eGCe6mvlh0n7udr4Pk6Qjra5Et7eKo6F4CZ7tJobdRKloU4pDFu/iBf8c+dZ7Mub
+        7AQgWu39oJ/Lc/xaIzlt9a2hbX8YikFobNGkS1FRabHivuUwlXmI26XhptbpZM/5
+        0aCVCogvbXeMRGJ05zglZkDEQTtdBNHLzQ16CnoznJ362tK2jJnR0KCgXBVgd+DU
+        teqVfQCS3u85DKHxZ9lJKqrJrVPHx2KC+n1L6lwxJ3OTgiv+czeUw==
+X-ME-Sender: <xms:d12kXppr3YaNqcTfGxpZ5rYR479U31CJOFf3XhgySqVTuXtRy6toxw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrheeggdejvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
+    dtnecuhfhrohhmpeetlhhishhtrghirhcuhfhrrghntghishcuoegrlhhishhtrghirhes
+    rghlihhsthgrihhrvdefrdhmvgeqnecuffhomhgrihhnpeguvghvihgtvghtrhgvvgdroh
+    hrghenucfkphepjeefrdelfedrkeegrddvtdeknecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomheprghlihhsthgrihhrsegrlhhishhtrghirhdvfe
+    drmhgv
+X-ME-Proxy: <xmx:d12kXv4hELo9Q_14xXo5RwPbJbeHJC6CGZmT8PWqL_06m5_k9nzW3g>
+    <xmx:d12kXhOaOxPF7zvZn5xNuD2T8hgV1wuO92RlonMqQtf_vsJcjpyQoA>
+    <xmx:d12kXpO1UE_kb03adDxVDTHdVyB2yIZCK8Hfs9t-grySCISP6JYpXA>
+    <xmx:fV2kXm3Cn9faCTDQ2kM13sFSBciBs76a6XS8akneDfGoC3iYzbTHgw>
+Received: from alistair-xps-14z.alistair23.me (c-73-93-84-208.hsd1.ca.comcast.net [73.93.84.208])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 041E83280063;
+        Sat, 25 Apr 2020 11:55:33 -0400 (EDT)
+From:   Alistair Francis <alistair@alistair23.me>
+To:     netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-bluetooth@vger.kernel.org, mripard@kernel.org, wens@csie.org
+Cc:     anarsoul@gmail.com, devicetree@vger.kernel.org,
+        alistair23@gmail.com, linux-arm-kernel@lists.infradead.org,
+        Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH v4 1/3] dt-bindings: net: bluetooth: Add rtl8723bs-bluetooth
+Date:   Sat, 25 Apr 2020 08:55:29 -0700
+Message-Id: <20200425155531.2816584-1-alistair@alistair23.me>
+X-Mailer: git-send-email 2.26.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello, 
+From: Vasily Khoruzhick <anarsoul@gmail.com>
 
-I'm trying to get my bluetooth headset working under HSP/HFP.
-Currently, I can connect my headset to the bluetooth adapter, listen to
-audio without issues using A2DP profile. However, when switching to
-HSP/HFP, audio and mic do not work. For instance, when trying to
-troubleshoot using the parecord command, the stream seems to get stuck
-at a very early stage (after 0.028 sec). When opening the resulting
-test file, it's empty.
+Add binding document for bluetooth part of RTL8723BS/RTL8723CS
 
-After investigating, my current conclusion is that I need to use a
-hardware specific hcitool command in order to route SCO traffic to the
-HCI interface. Nevertheless, I could not find the command to use for my
-bluetooth chipset. I am therefore contacting the mailing list to find
-out if anyone would know it by any chance.
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Signed-off-by: Alistair Francis <alistair@alistair23.me>
+---
+ .../bindings/net/realtek-bluetooth.yaml       | 54 +++++++++++++++++++
+ 1 file changed, 54 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/realtek-bluetooth.yaml
 
-Hardware information:
-- Motherboard : Asus Strix Z270E Gaming
-- Bluetooth chipset : ID 0b05:1825 ASUSTek Computer, Inc. Qualcomm
-Bluetooth 4.1
-
-Software information : 
-- Void Linux
-- BlueZ v5.54
-- Pulseaudio v13.0
-
-Thank you very much in advance for your help, I'll happily provide
-additional information if needed.
-
-Best Regards,
-Nicolas
-
+diff --git a/Documentation/devicetree/bindings/net/realtek-bluetooth.yaml b/Documentation/devicetree/bindings/net/realtek-bluetooth.yaml
+new file mode 100644
+index 000000000000..f15a5e5e4859
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/realtek-bluetooth.yaml
+@@ -0,0 +1,54 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/realtek-bluetooth.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: RTL8723BS/RTL8723CS/RTL8822CS Bluetooth Device Tree Bindings
++
++maintainers:
++  - Vasily Khoruzhick <anarsoul@gmail.com>
++  - Alistair Francis <alistair@alistair23.me>
++
++description:
++  RTL8723CS/RTL8723CS/RTL8822CS is WiFi + BT chip. WiFi part is connected over
++  SDIO, while BT is connected over serial. It speaks H5 protocol with few
++  extra commands to upload firmware and change module speed.
++
++properties:
++  compatible:
++    oneOf:
++      - const: "realtek,rtl8723bs-bt"
++      - const: "realtek,rtl8723cs-bt"
++      - const: "realtek,rtl8822cs-bt"
++
++  device-wake-gpios:
++    maxItems: 1
++    description: GPIO specifier, used to wakeup the BT module
++
++  enable-gpios:
++    maxItems: 1
++    description: GPIO specifier, used to enable the BT module
++
++  host-wake-gpios:
++    maxItems: 1
++    description: GPIO specifier, used to wakeup the host processor
++
++required:
++  - compatible
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    uart1 {
++        pinctrl-names = "default";
++        pinctrl-0 = <&uart1_pins>, <&uart1_rts_cts_pins>;
++        uart-has-rtscts = <1>;
++
++        bluetooth {
++            compatible = "realtek,rtl8723bs-bt";
++            device-wake-gpios = <&r_pio 0 5 GPIO_ACTIVE_HIGH>; /* PL5 */
++            host-wakeup-gpios = <&r_pio 0 6 GPIO_ACTIVE_HIGH>; /* PL6 */
++        };
++    };
+-- 
+2.26.0
 
