@@ -2,59 +2,110 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB81D1B825C
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 25 Apr 2020 01:10:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C9351B833D
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 25 Apr 2020 04:35:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbgDXXKt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 24 Apr 2020 19:10:49 -0400
-Received: from mga06.intel.com ([134.134.136.31]:53475 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725874AbgDXXKs (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 24 Apr 2020 19:10:48 -0400
-IronPort-SDR: y+TBCLh8YpoWyply/a0pdZ9xkv/J709ViH8abDxSp/hgI+4lzq3t0u/F4R4zuhArDdMBgd5UaS
- 5B/9sMWZqAEA==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2020 16:10:48 -0700
-IronPort-SDR: 5iDSxUQBU9rpIrvXQjKpDZj6w2XSHw827/D2M1v9kf6GHyR0Qwgqnlh2Bi6tpGJqsdhf2yeNZd
- VFWdPFAuZt6Q==
-X-IronPort-AV: E=Sophos;i="5.73,313,1583222400"; 
-   d="scan'208";a="274776829"
-Received: from han1-mobl3.jf.intel.com ([10.54.74.15])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2020 16:10:48 -0700
-From:   Tedd Ho-Jeong An <tedd.an@linux.intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Tedd Ho-Jeong An <tedd.an@linux.intel.com>
-Subject: [PATCH] Test patch: build fail
-Date:   Fri, 24 Apr 2020 16:10:42 -0700
-Message-Id: <20200424231042.127237-1-tedd.an@linux.intel.com>
-X-Mailer: git-send-email 2.25.3
+        id S1726059AbgDYCfO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 24 Apr 2020 22:35:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43526 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726040AbgDYCfN (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 24 Apr 2020 22:35:13 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98028C09B049
+        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Apr 2020 19:35:13 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id 59so3621023qva.13
+        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Apr 2020 19:35:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:in-reply-to:references;
+        bh=pFFmqybnz4DXK7VzqS0BSsTAjfaxu6Zvl3akQKMCYJs=;
+        b=SG/dnp7Jas5bgJQgJgh89msu0i5JQkFxs62G6p3B+o9dVrxLIXdFzjjAVbh0Sgj2oI
+         AhWZb4AZrZHMOe9pwr8gSENu94hHjkM0S63VsG/JOSsZnIxgFv99jjUrQp2rMqncO75a
+         u7chlTO9dzaTPeiiurkZrMYc2JpcS5WeHycPBDau0uVFJgc5I5S1fMDfAZi9wX1WwHNg
+         RPnl2mSXPYUnyd5nlmW1SoaWmUTLiBfOMwRMCwG+yJHW113GRbUN7WBMFRNrCO0U4AoF
+         +Jl+JvrB6h2mtamPzwxeOZl8b/fYl0P7giXTF5PBnHMYicBXkphA3SM5t+gsIQcUNbfc
+         nhdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :in-reply-to:references;
+        bh=pFFmqybnz4DXK7VzqS0BSsTAjfaxu6Zvl3akQKMCYJs=;
+        b=UmZNombUw6vn4U9NTqtwD8SAOOMy/9OgNazpb77vbKxdQqCOJlTkPcJ1Mrpaa7Nr4b
+         TvMYuWVi2kAcOhqKyLh25GjWmHu2n1sDDTAJrzBMciywoNA0pL1pAtzzc8im37p5Bo2s
+         k0qtdQ+v1mqnl+VkHZHtGpgQnUIed0z4jKQru5NVFHsQzkSoLTFGnVNIR5HRUKj0AqAf
+         ndCVoMY01thp81GOP70ZMI2TqOVAU7ENixEXlKX65uf76918BHw9PqCLrlTlPn331N9Y
+         X7Sd2SDG36efdbVxoi9aAtnUX9z8+SvGuoCus6m5tbDXajSlYAGmvC9R/c7v10JLYpOe
+         kgBg==
+X-Gm-Message-State: AGi0PuYjnMjAVj/DGBGsHWSlzfcvdYSH3r6DkHoSYzVIWK5P6bJaEslj
+        i3YwSmYXmKia59jNTuVmnREfkNnZp9M=
+X-Google-Smtp-Source: APiQypKHLnYpi5qt2osbOf8SB5vwnJqpjJubkQmHsh7cjZl31BqQmv79DjrnO0LlVuvpyduFnneb+g==
+X-Received: by 2002:a0c:ef05:: with SMTP id t5mr11880750qvr.113.1587782112566;
+        Fri, 24 Apr 2020 19:35:12 -0700 (PDT)
+Received: from [172.17.0.2] ([52.252.99.182])
+        by smtp.gmail.com with ESMTPSA id m11sm4817072qkg.130.2020.04.24.19.35.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Apr 2020 19:35:12 -0700 (PDT)
+Message-ID: <5ea3a1e0.1c69fb81.747dc.019c@mx.google.com>
+Date:   Fri, 24 Apr 2020 19:35:12 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============1854484666968621217=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, tedd.an@linux.intel.com
+Subject: RE: [1/3] Test patch #1: LONG_LINE_COMMENT
+In-Reply-To: <20200424231026.127164-1-tedd.an@linux.intel.com>
+References: <20200424231026.127164-1-tedd.an@linux.intel.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-DO NOT MERGE
+--===============1854484666968621217==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+
+This is automated email and please do not replay to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While we are preparing for reviewing the patches, we found the following
+issue/warning.
+
+
+Test Result:
+Checkpatch Failed
+
+Patch Title:
+[1/3] Test patch #1: LONG_LINE_COMMENT
+
+Output:
+WARNING:LONG_LINE_COMMENT: line over 80 characters
+#18: FILE: tools/btpclient.c:3163:
++	/* This is a test comment to test checkpatch.pl for long line over 80 column line */
+
+- total: 0 errors, 1 warnings, 8 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+Your patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+
+For more details about BlueZ coding style guide, please find it
+in doc/coding-style.txt
+
 ---
- tools/btpclient.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/btpclient.c b/tools/btpclient.c
-index f9c693056..04c83f6ae 100644
---- a/tools/btpclient.c
-+++ b/tools/btpclient.c
-@@ -3215,7 +3215,7 @@ int main(int argc, char *argv[])
- 
- 	l_free(socket_path);
- 
--	l_main_exit();
-+	l_main_exit()
- 
- 	return EXIT_SUCCESS;
- }
--- 
-2.25.3
-
+--===============1854484666968621217==--
