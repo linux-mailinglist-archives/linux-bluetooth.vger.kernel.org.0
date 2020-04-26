@@ -2,104 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 72CE01B911C
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 26 Apr 2020 17:15:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C1631B941F
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 26 Apr 2020 23:02:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726154AbgDZPPd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 26 Apr 2020 11:15:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59284 "EHLO mail.kernel.org"
+        id S1726216AbgDZVCP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 26 Apr 2020 17:02:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33426 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725975AbgDZPPc (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 26 Apr 2020 11:15:32 -0400
+        id S1725996AbgDZVCP (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 26 Apr 2020 17:02:15 -0400
 Received: from pali.im (pali.im [31.31.79.79])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 83DDF2070A;
-        Sun, 26 Apr 2020 15:15:31 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id F178320700
+        for <linux-bluetooth@vger.kernel.org>; Sun, 26 Apr 2020 21:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1587914131;
-        bh=Ut9eCrJ1zUUTzIQMadS0VxSRBI1mGDqKcK50d1sAm9o=;
-        h=Date:From:To:Subject:References:In-Reply-To:From;
-        b=eYi7ApRO18foIy3uFmmtIY6QEDmZkPjljALgTWhk0zPAtMRiMkrB0pvRzryDESFZL
-         F0bq1xs15KlIXTIRp4Vc/ntoVVFZj2tndbp0m5BFU91zC8HsV+RX5zAyDJ6pDhIbqp
-         Zv7FCOmZm7p48wElde3x+jCN7CB/l5QaYAndMv3E=
+        s=default; t=1587934935;
+        bh=TjO0H2HDzlHnC88Oif0p9ELRNOWtjJmgg35GDPNQP88=;
+        h=From:To:Subject:Date:From;
+        b=picvcPUrb5MNSLoW3wOchmS3SxBMDD9BRHfnUt33kXmLE5WAN7Cgpme+Obim+hotU
+         jc22rxqNVJz96rtqwoIaLbxcKRipFt0T3faMHeKPi6M+hqkPB7x9cWDNgvWLX32s9R
+         Q9zz0CXnvtel+yJaq9iNTqTpMSTCBNpeUkAc+v48=
 Received: by pali.im (Postfix)
-        id 8EEC5B71; Sun, 26 Apr 2020 17:15:29 +0200 (CEST)
-Date:   Sun, 26 Apr 2020 17:15:29 +0200
-From:   Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
-To:     linux-bluetooth@vger.kernel.org,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Subject: Re: bluetoothd crashes when tryting to change A2DP codec via DBus
-Message-ID: <20200426151529.dpzojinssjqagsaq@pali>
-References: <20200426150435.s562o34mertpj6ct@pali>
+        id BD8F2B71; Sun, 26 Apr 2020 23:02:12 +0200 (CEST)
+From:   =?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH] device: Fix calling DisconnectProfile DBus call with disconnected profile UUID
+Date:   Sun, 26 Apr 2020 23:02:02 +0200
+Message-Id: <20200426210202.700-1-pali@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200426150435.s562o34mertpj6ct@pali>
-User-Agent: NeoMutt/20180716
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Sunday 26 April 2020 17:04:35 Pali Rohár wrote:
-> Hello!
-> 
-> Bluez bluetoothd daemon compiled from git master branch crashes when I
-> try to call DBus method for switching A2DP codec. Below is stacktrace
-> from gdb. It looks like NULL pointer dereference. It is reproducible.
-> 
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x000055e1b3659c1a in avdtp_find_remote_sep (session=0x55e1b408bf80, lsep=0x0) at profiles/audio/avdtp.c:1221
-> 1221            if (lsep->info.inuse)
-> (gdb) bt
-> #0  0x000055e1b3659c1a in avdtp_find_remote_sep (session=0x55e1b408bf80, lsep=0x0) at profiles/audio/avdtp.c:1221
-> #1  0x000055e1b36568fc in find_remote_sep (sep=<optimized out>, chan=<optimized out>, chan=<optimized out>) at profiles/audio/a2dp.c:1169
-> #2  0x000055e1b3656955 in a2dp_reconfigure (data=0x55e1b40a1e10) at profiles/audio/a2dp.c:1188
-> #3  0x00007f4e07e90863 in ?? () from /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
-> #4  0x00007f4e07e8fdd8 in g_main_context_dispatch () from /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
-> #5  0x00007f4e07e901c8 in ?? () from /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
-> #6  0x00007f4e07e904c2 in g_main_loop_run () from /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
-> #7  0x000055e1b36ef725 in mainloop_run () at src/shared/mainloop-glib.c:79
-> #8  0x000055e1b36efb02 in mainloop_run_with_signal (func=<optimized out>, user_data=0x0) at src/shared/mainloop-notify.c:201
-> #9  0x000055e1b364b15e in main (argc=<optimized out>, argv=<optimized out>) at src/main.c:770
-> (gdb) print lsep
-> $1 = (struct avdtp_local_sep *) 0x0
+When DisconnectProfile is called with disconnected UUID, bluetooth daemon
+often returned error "Operation already in progress". This change fixed it
+and no error message is returned for this case.
+---
+ src/device.c  | 5 +++++
+ src/service.c | 3 ++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-It always happens if I kill target application (pulseaudio) during
-bluetooth daemon is connecting to remote bluetooth headset. I guess that
-there is a race condition between unregistering application agent
-(together with unregistering all its local seps) and trying to use /
-choose local sep for a new remote connection.
-
-Here is simple patch which prevent bluetooth daemon crash:
-
-diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
-index a5590b24c..2f0fcd974 100644
---- a/profiles/audio/a2dp.c
-+++ b/profiles/audio/a2dp.c
-@@ -1184,8 +1184,14 @@ static gboolean a2dp_reconfigure(gpointer data)
- 		rsep_codec = (struct avdtp_media_codec_capability *) cap->data;
- 	}
+diff --git a/src/device.c b/src/device.c
+index 149c45160..229579378 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -2054,6 +2054,9 @@ static DBusMessage *disconnect_profile(DBusConnection *conn, DBusMessage *msg,
+ 	if (dev->disconnect)
+ 		return btd_error_in_progress(msg);
  
--	if (!setup->rsep || sep->codec != rsep_codec->media_codec_type)
-+	if (!setup->rsep || sep->codec != rsep_codec->media_codec_type) {
-+		if (!sep->lsep) {
-+			error("no lsep");
-+			posix_err = -EINVAL;
-+			goto failed;
-+		}
- 		setup->rsep = find_remote_sep(setup->chan, sep);
-+	}
++	if (btd_service_get_state(service) == BTD_SERVICE_STATE_DISCONNECTED)
++		return dbus_message_new_method_return(msg);
++
+ 	dev->disconnect = dbus_message_ref(msg);
  
- 	posix_err = avdtp_set_configuration(setup->session, setup->rsep->sep,
- 						sep->lsep,
+ 	err = btd_service_disconnect(service);
+@@ -2065,6 +2068,8 @@ static DBusMessage *disconnect_profile(DBusConnection *conn, DBusMessage *msg,
+ 
+ 	if (err == -ENOTSUP)
+ 		return btd_error_not_supported(msg);
++	else if (err == -EALREADY)
++		return dbus_message_new_method_return(msg);
+ 
+ 	return btd_error_failed(msg, strerror(-err));
+ }
+diff --git a/src/service.c b/src/service.c
+index c14ee0aca..e4d747a6e 100644
+--- a/src/service.c
++++ b/src/service.c
+@@ -281,8 +281,9 @@ int btd_service_disconnect(struct btd_service *service)
+ 	case BTD_SERVICE_STATE_UNAVAILABLE:
+ 		return -EINVAL;
+ 	case BTD_SERVICE_STATE_DISCONNECTED:
+-	case BTD_SERVICE_STATE_DISCONNECTING:
+ 		return -EALREADY;
++	case BTD_SERVICE_STATE_DISCONNECTING:
++		return 0;
+ 	case BTD_SERVICE_STATE_CONNECTING:
+ 	case BTD_SERVICE_STATE_CONNECTED:
+ 		break;
+-- 
+2.20.1
 
-After applying this patch I get following error message without any
-crash in bluetooth log:
-
-bluetoothd[...]: Error on avdtp_open Invalid argument (22)
-
-Which is probably OK, as target application is not running anymore and
-connect request could not be finished.
