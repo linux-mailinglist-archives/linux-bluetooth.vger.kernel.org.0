@@ -2,96 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B91271BA03B
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Apr 2020 11:45:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE4911BA2B7
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Apr 2020 13:42:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726880AbgD0JpR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 27 Apr 2020 05:45:17 -0400
-Received: from mga09.intel.com ([134.134.136.24]:55032 "EHLO mga09.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726349AbgD0JpR (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 27 Apr 2020 05:45:17 -0400
-IronPort-SDR: nkz1cqoLIP8ZZ5NbYAtjFGbHEV98fyuYpt9TXeTrhRKJ0iX5fZctWlCFb1Doel1OuaiuoQm65b
- 3QQGREAjeVJQ==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2020 02:45:16 -0700
-IronPort-SDR: gQ5b3qqcwQbABd7NJHgiFsJ011sAqAxvYfaKb9npIJt3tGwJWCtIYf6NFQxU2q46Sh+BkRO9R3
- lXOXK4M3p+Kg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,323,1583222400"; 
-   d="scan'208";a="260664835"
-Received: from unknown (HELO intel-Lenovo-Legion-Y540-15IRH-PG0.iind.intel.com) ([10.224.186.95])
-  by orsmga006.jf.intel.com with ESMTP; 27 Apr 2020 02:45:13 -0700
-From:   Amit K Bag <amit.k.bag@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     ravishankar.srivatsa@intel.com, chethan.tumkur.narayan@intel.com,
-        kiran.k@intel.com, "Hegde, Raghuram" <raghuram.hegde@intel.com>,
-        Amit K Bag <amit.k.bag@intel.com>, Tumkur@vger.kernel.org,
-        Narayan@vger.kernel.org
-Subject: [PATCH v3 1/2] Bluetooth: btusb: Add support for Intel Bluetooth Device Typhoon Peak (8087:0032)
-Date:   Mon, 27 Apr 2020 15:15:58 +0530
-Message-Id: <20200427094558.16649-1-amit.k.bag@intel.com>
-X-Mailer: git-send-email 2.17.1
+        id S1727069AbgD0Llf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 27 Apr 2020 07:41:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36072 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727016AbgD0Lle (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 27 Apr 2020 07:41:34 -0400
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1179C09B051
+        for <linux-bluetooth@vger.kernel.org>; Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
+Received: by mail-io1-xd41.google.com with SMTP id u11so18491795iow.4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=F+HbPvxQnRBlqBFKy/zn6110uxUPAWY6eSsMY6+ckPY=;
+        b=uI1U3pP4FazEZaTfkDGgaf1Qyb1hL6AlgZB9tozzlJtw0tc2p0xAeW9BNdbY4A2XuL
+         JYn8lE6gg3HqjBgRaTT8CTSOLDZ9E79yDyBM0EGnWldSdHyzrk+BT/7frJGn/PAhMIrE
+         VCZdq7yfljhgiOOYhIeLP2AIIFXvLFMREe3IREMgf/Wimn5okrCaqK4gkS0+n2Tqfq3c
+         EFYh4cYLyK3nIET0YOm2adzDe5W5QN3hsgSvwW72euh+PRPDs3oxC82+7cfg/ZGTOz8/
+         eTagf6SblJMWIJeJ59y/zg3//EVOq9RPByBfKkQCDUJB6vE62XJLcx9qUgZNIxoYrz8S
+         JAeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=F+HbPvxQnRBlqBFKy/zn6110uxUPAWY6eSsMY6+ckPY=;
+        b=HtOKysSbwTXuQh2gOlZys6NbaeII/a6wdt0/QtQODOIelBaCaEe1vMmnK74xlWM10p
+         TqrJLnX3OHVDS1T4kK5V1T71W3VSoE1hXr4CU4tEdbVtjH0Ey//5nob0VOYDI+DYJWrO
+         TLNLZA1qV8KxcpzEaTbVBNsSRCLJwnZ15eMNcy4aU5oOyJx6Z50WVA+bCDcLCCB4xlo+
+         fFYWvZRLlVYUza5qecDTtYLrN1Lnzd9/M9Qpvx9BSKPOxhOrP6azqwBD6a+iF4M0c6mR
+         J1SFDpOtsdmxA0MMqTRRZ8nL+OcOnZI9A10Tjw7icrRH6btcAe6omcQ4dflYcGvAD/qx
+         PyOw==
+X-Gm-Message-State: AGi0PuamOqWwZG+NkSMI3LKDG3xX3JT3zQPXWXF7iVvOCtzgzapOb0m0
+        htMX4t32UG8jSxDjZ5xzUBBdWfXlV4xvvWtTZg4=
+X-Google-Smtp-Source: APiQypJWdjzUZMbeRoAX94bUJV0IgwyoF5kUG7iPo3CBzKxW8lStFNsM/6tz3An/TyzRuH2Qw14DtavsVumw6JVLls0=
+X-Received: by 2002:a6b:7d4a:: with SMTP id d10mr4072296ioq.70.1587987694042;
+ Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a5d:8f89:0:0:0:0:0 with HTTP; Mon, 27 Apr 2020 04:41:33
+ -0700 (PDT)
+Reply-To: convy0090@gmail.com
+From:   Ruben CONVY <andrewboccc@gmail.com>
+Date:   Mon, 27 Apr 2020 12:41:33 +0100
+Message-ID: <CAHVC0+Ag87TMCmfNNwWbxXOFxn5166q8GG5wEfPjwtixj9=EXQ@mail.gmail.com>
+Subject: Why continued silence 2
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: "Hegde, Raghuram" <raghuram.hegde@intel.com>
-
-Device from /sys/kernel/debug/usb/devices:
-
-T:  Bus=01 Lev=01 Prnt=01 Port=13 Cnt=02 Dev#=  3 Spd=12   MxCh= 0
-D:  Ver= 2.01 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=8087 ProdID=0032 Rev= 0.00
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-
-Signed-off-by: Amit K Bag <amit.k.bag@intel.com>
-Signed-off-by: Tumkur Narayan, Chethan <chethan.tumkur.narayan@intel.com>
----
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 09913cadd1ca..7a71d851b6c9 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -340,6 +340,8 @@ static const struct usb_device_id blacklist_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x8087, 0x0029), .driver_info = BTUSB_INTEL_NEW |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x8087, 0x0032), .driver_info = BTUSB_INTEL_NEW |
-+                                                     BTUSB_WIDEBAND_SPEECH},
- 	{ USB_DEVICE(0x8087, 0x07da), .driver_info = BTUSB_CSR },
- 	{ USB_DEVICE(0x8087, 0x07dc), .driver_info = BTUSB_INTEL },
- 	{ USB_DEVICE(0x8087, 0x0a2a), .driver_info = BTUSB_INTEL },
--- 
-2.17.1
-
+Did you receive my previous email regarding your family inheritance?
+Reply strictly through: convy0090@gmail.com
+Best Regards,
+Ruben CONVY
