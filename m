@@ -2,24 +2,24 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C18A91C6460
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 May 2020 01:20:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D62971C6464
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 May 2020 01:20:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729515AbgEEXUq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 5 May 2020 19:20:46 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:45723 "EHLO
+        id S1729517AbgEEXUr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 5 May 2020 19:20:47 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:51173 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729457AbgEEXUp (ORCPT
+        with ESMTP id S1729449AbgEEXUq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 5 May 2020 19:20:45 -0400
+        Tue, 5 May 2020 19:20:46 -0400
 Received: from localhost.localdomain (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id BF00ACED00
+        by mail.holtmann.org (Postfix) with ESMTPSA id E262CCED01
         for <linux-bluetooth@vger.kernel.org>; Wed,  6 May 2020 01:30:25 +0200 (CEST)
 From:   Marcel Holtmann <marcel@holtmann.org>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 4/7] Bluetooth: Introduce HCI_MGMT_HDEV_OPTIONAL option
-Date:   Wed,  6 May 2020 01:20:36 +0200
-Message-Id: <32fc749671997c463575394666b2e003917355f5.1588720791.git.marcel@holtmann.org>
+Subject: [PATCH v2 5/7] Bluetooth: Replace BT_DBG with bt_dev_dbg for security manager  support
+Date:   Wed,  6 May 2020 01:20:37 +0200
+Message-Id: <f55405684917adad79e9031df1bef804ed3245a2.1588720791.git.marcel@holtmann.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <cover.1588720791.git.marcel@holtmann.org>
 References: <cover.1588720791.git.marcel@holtmann.org>
@@ -30,50 +30,54 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When setting HCI_MGMT_HDEV_OPTIONAL it is possible to target a specific
-conntroller or a global interface.
+The security manager operates on a specific controller and thus use
+bt_dev_dbg to indetify the controller for each debug message.
 
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 ---
- include/net/bluetooth/hci_core.h |  1 +
- net/bluetooth/hci_sock.c         | 12 +++++++-----
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ net/bluetooth/smp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 239ab72f16c6..0c7f3ad76665 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1554,6 +1554,7 @@ void hci_sock_dev_event(struct hci_dev *hdev, int event);
- #define HCI_MGMT_NO_HDEV	BIT(1)
- #define HCI_MGMT_UNTRUSTED	BIT(2)
- #define HCI_MGMT_UNCONFIGURED	BIT(3)
-+#define HCI_MGMT_HDEV_OPTIONAL	BIT(4)
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index df22cbf94693..5510017cf9ff 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -508,7 +508,7 @@ bool smp_irk_matches(struct hci_dev *hdev, const u8 irk[16],
+ 	if (!chan || !chan->data)
+ 		return false;
  
- struct hci_mgmt_handler {
- 	int (*func) (struct sock *sk, struct hci_dev *hdev, void *data,
-diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
-index 9c4a093f8960..caf38a8ea6a8 100644
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -1579,11 +1579,13 @@ static int hci_mgmt_cmd(struct hci_mgmt_chan *chan, struct sock *sk,
- 		}
- 	}
+-	BT_DBG("RPA %pMR IRK %*phN", bdaddr, 16, irk);
++	bt_dev_dbg(hdev, "RPA %pMR IRK %*phN", bdaddr, 16, irk);
  
--	no_hdev = (handler->flags & HCI_MGMT_NO_HDEV);
--	if (no_hdev != !hdev) {
--		err = mgmt_cmd_status(sk, index, opcode,
--				      MGMT_STATUS_INVALID_INDEX);
--		goto done;
-+	if (!(handler->flags & HCI_MGMT_HDEV_OPTIONAL)) {
-+		no_hdev = (handler->flags & HCI_MGMT_NO_HDEV);
-+		if (no_hdev != !hdev) {
-+			err = mgmt_cmd_status(sk, index, opcode,
-+					      MGMT_STATUS_INVALID_INDEX);
-+			goto done;
-+		}
- 	}
+ 	err = smp_ah(irk, &bdaddr->b[3], hash);
+ 	if (err)
+@@ -534,7 +534,7 @@ int smp_generate_rpa(struct hci_dev *hdev, const u8 irk[16], bdaddr_t *rpa)
+ 	if (err < 0)
+ 		return err;
  
- 	var_len = (handler->flags & HCI_MGMT_VAR_LEN);
+-	BT_DBG("RPA %pMR", rpa);
++	bt_dev_dbg(hdev, "RPA %pMR", rpa);
+ 
+ 	return 0;
+ }
+@@ -551,7 +551,7 @@ int smp_generate_oob(struct hci_dev *hdev, u8 hash[16], u8 rand[16])
+ 	smp = chan->data;
+ 
+ 	if (hci_dev_test_flag(hdev, HCI_USE_DEBUG_KEYS)) {
+-		BT_DBG("Using debug keys");
++		bt_dev_dbg(hdev, "Using debug keys");
+ 		err = set_ecdh_privkey(smp->tfm_ecdh, debug_sk);
+ 		if (err)
+ 			return err;
+@@ -1867,7 +1867,7 @@ static u8 sc_send_public_key(struct smp_chan *smp)
+ {
+ 	struct hci_dev *hdev = smp->conn->hcon->hdev;
+ 
+-	BT_DBG("");
++	bt_dev_dbg(hdev, "");
+ 
+ 	if (test_bit(SMP_FLAG_LOCAL_OOB, &smp->flags)) {
+ 		struct l2cap_chan *chan = hdev->smp_data;
 -- 
 2.26.2
 
