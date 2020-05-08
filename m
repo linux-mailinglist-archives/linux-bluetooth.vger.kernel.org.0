@@ -2,121 +2,84 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45C781CA395
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 May 2020 08:07:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9C8E1CA567
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 May 2020 09:47:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727785AbgEHGHc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 8 May 2020 02:07:32 -0400
-Received: from helcar.hmeau.com ([216.24.177.18]:40194 "EHLO fornost.hmeau.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725937AbgEHGHb (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 8 May 2020 02:07:31 -0400
-Received: from gwarestrin.me.apana.org.au ([192.168.0.7] helo=gwarestrin.arnor.me.apana.org.au)
-        by fornost.hmeau.com with smtp (Exim 4.89 #2 (Debian))
-        id 1jWw3Z-00053g-CX; Fri, 08 May 2020 16:00:22 +1000
-Received: by gwarestrin.arnor.me.apana.org.au (sSMTP sendmail emulation); Fri, 08 May 2020 16:07:01 +1000
-Date:   Fri, 8 May 2020 16:07:01 +1000
-From:   Herbert Xu <herbert@gondor.apana.org.au>
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     linux-crypto@vger.kernel.org, cychiang@chromium.org,
-        ecryptfs@vger.kernel.org, enric.balletbo@collabora.com,
-        gilad@benyossef.com, groeck@chromium.org, jesper.nilsson@axis.com,
-        k.konieczny@samsung.com, keyrings@vger.kernel.org, krzk@kernel.org,
-        k.opasiak@samsung.com, lars.persson@axis.com,
-        linux-bluetooth@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-nfs@vger.kernel.org, linux-sctp@vger.kernel.org,
-        r.baldyga@samsung.com, thomas.lendacky@amd.com, vz@mleia.com,
-        xuzaibo@huawei.com
-Subject: Re: [PATCH 00/20] crypto: introduce crypto_shash_tfm_digest()
-Message-ID: <20200508060700.GA24956@gondor.apana.org.au>
+        id S1726792AbgEHHrc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 8 May 2020 03:47:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41786 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbgEHHrc (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 8 May 2020 03:47:32 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97AC1C05BD43
+        for <linux-bluetooth@vger.kernel.org>; Fri,  8 May 2020 00:47:31 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 188so662671lfa.10
+        for <linux-bluetooth@vger.kernel.org>; Fri, 08 May 2020 00:47:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc;
+        bh=jZKTFHMIJlGMM14PZe7K6scszTebsc+OXnRVGapY1wo=;
+        b=cVYHpBNJup7Ybow21yoOrENNJdMGniycST/M5yDZkgJYB4CVS9FYuwg4Z1eZkrW4hs
+         x2gfe5uqVbFqnKSjXaIZw77HMwfx8VDs1TLgWYMcZ6Nx11CWywcGP8YcJeGSzjHlWPRz
+         vtYHrFcKP8Uw5q7ZBMaIC8ESwepS2X7JCROxudveOk0nTBNeSopZLpTXBUIWbukJ2HiD
+         Cz8VZECMUVbX52rYDkq7J5ebdCI1APpxVTrtuxo8IgdbmS1rviuYNQuWZglCzmITH/Of
+         kDwjqFxLVgBUKKGdnKEAlnEtAhM9mvg+xVXSejROOLaBQc4qvHdRKtekpUuSTYpF+glY
+         Rzaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc;
+        bh=jZKTFHMIJlGMM14PZe7K6scszTebsc+OXnRVGapY1wo=;
+        b=ohOs7Apw/hY8hYuV5YH1P4l2Gp5rYPdL37/Xx/1xUtfTkNwva9jTvs2lG7v3Dqo5y6
+         19+BbZF6xZVQMrW8A5WU/tfBPUnC6pF2Jeljadg0PKNH8ZI4mY0TjVuVh+781pwIAABu
+         a51ApyNLOJOI5RF7xkW0fLJya4VX1G2I6XP9Uz+8Q56qF/00OGFrdwyteNWv+cNsOx9x
+         MjKmHC++cauDg1hjsrVbKbKnNs6ItpaduIWbfjdpx2opf1yr/rLr6sQKIbLFqSA2Dwgh
+         6NySxPLpghvGAqTy9iX/Vor9+BW9DPJJRG5pumK0AJWvS8eBhRy5DAGGL0lOMQCIBASK
+         YT5g==
+X-Gm-Message-State: AOAM531oEj0f06iv/YOVsmIFkc11ZVp48tUPnr5xxCRTsP+Xizpr9BCA
+        /uPFe1Q1bgKFIdMAHczAAQq7kVQz+po/nIR//OoZi8bH61I=
+X-Google-Smtp-Source: ABdhPJwWmcMBBb3OXLumXMKLGXDdakp5JGunYN8AJdBlz5U5OOU5ngZwk5UFSLsVIF8oUR1R7NBrl+gZ5PApWAW2f/E=
+X-Received: by 2002:a19:10:: with SMTP id 16mr991130lfa.145.1588924049500;
+ Fri, 08 May 2020 00:47:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200502053122.995648-1-ebiggers@kernel.org>
-X-Newsgroups: apana.lists.os.linux.cryptoapi
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <CA+icZUWtcQOVcb4-a6aCztjszh4gmk_QVXgHsn9FLOeb-zpLpg@mail.gmail.com>
+In-Reply-To: <CA+icZUWtcQOVcb4-a6aCztjszh4gmk_QVXgHsn9FLOeb-zpLpg@mail.gmail.com>
+Reply-To: sedat.dilek@gmail.com
+From:   Sedat Dilek <sedat.dilek@gmail.com>
+Date:   Fri, 8 May 2020 09:47:18 +0200
+Message-ID: <CA+icZUVXpY8bu+QNeCmnrqhZ2XMc-8hnATi3nd2bKeK+Ls0yhQ@mail.gmail.com>
+Subject: Re: [btintel][ID 8086:0189 Intel Corp.] unexpected event for opcode
+ 0x0000 / SCO packet for unknown connection handle
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Eric Biggers <ebiggers@kernel.org> wrote:
-> This series introduces a helper function crypto_shash_tfm_digest() which
-> replaces the following common pattern:
-> 
->        {
->                SHASH_DESC_ON_STACK(desc, tfm);
->                int err;
-> 
->                desc->tfm = tfm;
-> 
->                err = crypto_shash_digest(desc, data, len, out);
-> 
->                shash_desc_zero(desc);
->        }
-> 
-> with:
-> 
->        err = crypto_shash_tfm_digest(tfm, data, len, out);
-> 
-> Patch 1 introduces this helper function, and patches 2-20 convert all
-> relevant users to use it.
-> 
-> IMO, it would be easiest to take all these patches through the crypto
-> tree.  But taking just the "crypto:" ones and then me trying to get the
-> rest merged later via subsystem trees is also an option.
-> 
-> Eric Biggers (20):
->  crypto: hash - introduce crypto_shash_tfm_digest()
->  crypto: arm64/aes-glue - use crypto_shash_tfm_digest()
->  crypto: essiv - use crypto_shash_tfm_digest()
->  crypto: artpec6 - use crypto_shash_tfm_digest()
->  crypto: ccp - use crypto_shash_tfm_digest()
->  crypto: ccree - use crypto_shash_tfm_digest()
->  crypto: hisilicon/sec2 - use crypto_shash_tfm_digest()
->  crypto: mediatek - use crypto_shash_tfm_digest()
->  crypto: n2 - use crypto_shash_tfm_digest()
->  crypto: omap-sham - use crypto_shash_tfm_digest()
->  crypto: s5p-sss - use crypto_shash_tfm_digest()
->  nfc: s3fwrn5: use crypto_shash_tfm_digest()
->  fscrypt: use crypto_shash_tfm_digest()
->  ecryptfs: use crypto_shash_tfm_digest()
->  nfsd: use crypto_shash_tfm_digest()
->  ubifs: use crypto_shash_tfm_digest()
->  Bluetooth: use crypto_shash_tfm_digest()
->  sctp: use crypto_shash_tfm_digest()
->  KEYS: encrypted: use crypto_shash_tfm_digest()
->  ASoC: cros_ec_codec: use crypto_shash_tfm_digest()
-> 
-> arch/arm64/crypto/aes-glue.c               |  4 +--
-> crypto/essiv.c                             |  4 +--
-> crypto/shash.c                             | 16 +++++++++
-> drivers/crypto/axis/artpec6_crypto.c       | 10 ++----
-> drivers/crypto/ccp/ccp-crypto-sha.c        |  9 ++---
-> drivers/crypto/ccree/cc_cipher.c           |  9 ++---
-> drivers/crypto/hisilicon/sec2/sec_crypto.c |  5 ++-
-> drivers/crypto/mediatek/mtk-sha.c          |  7 ++--
-> drivers/crypto/n2_core.c                   |  7 ++--
-> drivers/crypto/omap-sham.c                 | 20 +++--------
-> drivers/crypto/s5p-sss.c                   | 39 ++++------------------
-> drivers/nfc/s3fwrn5/firmware.c             | 10 +-----
-> fs/crypto/fname.c                          |  7 +---
-> fs/crypto/hkdf.c                           |  6 +---
-> fs/ecryptfs/crypto.c                       | 17 +---------
-> fs/nfsd/nfs4recover.c                      | 26 ++++-----------
-> fs/ubifs/auth.c                            | 20 ++---------
-> fs/ubifs/master.c                          |  9 ++---
-> fs/ubifs/replay.c                          | 14 ++------
-> include/crypto/hash.h                      | 19 +++++++++++
-> net/bluetooth/smp.c                        |  6 +---
-> net/sctp/auth.c                            | 10 ++----
-> net/sctp/sm_make_chunk.c                   | 23 +++++--------
-> security/keys/encrypted-keys/encrypted.c   | 18 ++--------
-> sound/soc/codecs/cros_ec_codec.c           |  9 +----
-> 25 files changed, 95 insertions(+), 229 deletions(-)
+Addendum:
 
-All applied.  Thanks.
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+# hciconfig -a
+hci0:   Type: Primary  Bus: USB
+        BD Address: 88:53:2E:AC:C3:16  ACL MTU: 310:10  SCO MTU: 64:8
+        UP RUNNING PSCAN ISCAN
+        RX bytes:603027 acl:2085 sco:0 events:288 errors:0
+        TX bytes:9260 acl:169 sco:0 commands:81 errors:0
+        Features: 0xff 0xff 0x8f 0xfe 0x9b 0xff 0x59 0x87
+        Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3
+        Link policy: RSWITCH HOLD SNIFF PARK
+        Link mode: SLAVE ACCEPT
+        Name: 'iniza'
+        Class: 0x1c010c
+        Service Classes: Rendering, Capturing, Object Transfer
+        Device Class: Computer, Laptop
+        HCI Version: 3.0 (0x5)  Revision: 0x1b07
+        LMP Version: 3.0 (0x5)  Subversion: 0xfc00
+        Manufacturer: Intel Corp. (2)
+
+- Sedat -
