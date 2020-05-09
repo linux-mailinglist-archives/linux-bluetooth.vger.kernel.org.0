@@ -2,34 +2,34 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DB391CBB86
+	by mail.lfdr.de (Postfix) with ESMTP id EB8471CBB87
 	for <lists+linux-bluetooth@lfdr.de>; Sat,  9 May 2020 02:00:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbgEIAA2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 8 May 2020 20:00:28 -0400
-Received: from mga04.intel.com ([192.55.52.120]:65492 "EHLO mga04.intel.com"
+        id S1728372AbgEIAA3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 8 May 2020 20:00:29 -0400
+Received: from mga04.intel.com ([192.55.52.120]:65494 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728355AbgEIAA1 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 8 May 2020 20:00:27 -0400
-IronPort-SDR: XHREUZgc6FakBlPi0kI2yLuTFXacmII+qBrddVpxDVr6uUsjHSzfhD0Y9ZyH/tzj4cnaLbYdg/
- gkb0QwQ2ZxWA==
+        id S1728351AbgEIAA2 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 8 May 2020 20:00:28 -0400
+IronPort-SDR: +gqOE3ba+hkID4hGVhVuue38zW3VCNU+uX4Ve5V8N1s7+lT0NSJJa/t9XPPU8BnovbrNU5CpZs
+ tIBz77P1Q6iA==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
   by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2020 17:00:27 -0700
-IronPort-SDR: D/TLFg/HW1FsLUGamigzTDQWTPcv8ap8LPTy5y2UVG+nDo2ZfiMt7/Q09PubXjtjGrf/cMSZ+A
- mlHfeBYM1JTQ==
+IronPort-SDR: 18J4PDrRCI27uTUOSbexTEd1OC6lDhgcZb1Wp4Xf0WP+0udlc1ADaV76jcLAobn5CJxHJvKM2I
+ ykpcDPXut0eQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,369,1583222400"; 
-   d="scan'208";a="408275096"
+   d="scan'208";a="408275101"
 Received: from ingas-nuc1.sea.intel.com ([10.254.110.242])
-  by orsmga004.jf.intel.com with ESMTP; 08 May 2020 17:00:26 -0700
+  by orsmga004.jf.intel.com with ESMTP; 08 May 2020 17:00:27 -0700
 From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ 2/4] mesh: Avoid saving duplicate fields in node config
-Date:   Fri,  8 May 2020 17:00:22 -0700
-Message-Id: <20200509000024.5704-3-inga.stotland@intel.com>
+Subject: [PATCH BlueZ 3/4] mesh: Allow updating CID, PID, VID & CRPL on node attach
+Date:   Fri,  8 May 2020 17:00:23 -0700
+Message-Id: <20200509000024.5704-4-inga.stotland@intel.com>
 X-Mailer: git-send-email 2.21.3
 In-Reply-To: <20200509000024.5704-1-inga.stotland@intel.com>
 References: <20200509000024.5704-1-inga.stotland@intel.com>
@@ -40,104 +40,106 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This modifies miscellaneous utility functions in mesh-config-json.c:
-when writing a new value to a node configuration file, delete
-the existing field containing an old value first.
+This allows to update settings of the following composition fields
+when an existing node (application) attaches to the daemon:
+Company ID (CID), Product ID (PID), Versioin ID (VID),
+CRPL (replay protection depth)
 ---
- mesh/mesh-config-json.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ mesh/mesh-config-json.c | 32 ++++++++++++++++++++++++++++++++
+ mesh/mesh-config.h      |  4 ++++
+ mesh/node.c             | 17 +++++++++++++++++
+ 3 files changed, 53 insertions(+)
 
 diff --git a/mesh/mesh-config-json.c b/mesh/mesh-config-json.c
-index 7362112f2..ce7058b5a 100644
+index ce7058b5a..9ac3979f8 100644
 --- a/mesh/mesh-config-json.c
 +++ b/mesh/mesh-config-json.c
-@@ -105,7 +105,7 @@ static bool get_int(json_object *jobj, const char *keyword, int *value)
- 	return true;
+@@ -2057,6 +2057,38 @@ bool mesh_config_write_ttl(struct mesh_config *cfg, uint8_t ttl)
+ 	return save_config(cfg->jnode, cfg->node_dir_path);
  }
  
--static bool add_u64_value(json_object *jobject, const char *desc,
-+static bool add_u64_value(json_object *jobj, const char *desc,
- 					const uint8_t u64[8])
++bool mesh_config_update_company_id(struct mesh_config *cfg, uint16_t cid)
++{
++	if (!cfg || !write_uint16_hex(cfg->jnode, "cid", cid))
++		return false;
++
++	return save_config(cfg->jnode, cfg->node_dir_path);
++}
++
++bool mesh_config_update_product_id(struct mesh_config *cfg, uint16_t pid)
++{
++	if (!cfg || !write_uint16_hex(cfg->jnode, "pid", pid))
++		return false;
++
++	return save_config(cfg->jnode, cfg->node_dir_path);
++}
++
++bool mesh_config_update_version_id(struct mesh_config *cfg, uint16_t vid)
++{
++	if (!cfg || !write_uint16_hex(cfg->jnode, "vid", vid))
++		return false;
++
++	return save_config(cfg->jnode, cfg->node_dir_path);
++}
++
++bool mesh_config_update_crpl(struct mesh_config *cfg, uint16_t crpl)
++{
++	if (!cfg || !write_uint16_hex(cfg->jnode, "crpl", crpl))
++		return false;
++
++	return save_config(cfg->jnode, cfg->node_dir_path);
++}
++
+ static bool load_node(const char *fname, const uint8_t uuid[16],
+ 				mesh_config_node_func_t cb, void *user_data)
  {
- 	json_object *jstring;
-@@ -116,11 +116,12 @@ static bool add_u64_value(json_object *jobject, const char *desc,
- 	if (!jstring)
- 		return false;
- 
--	json_object_object_add(jobject, desc, jstring);
-+	json_object_object_del(jobj, desc);
-+	json_object_object_add(jobj, desc, jstring);
+diff --git a/mesh/mesh-config.h b/mesh/mesh-config.h
+index a5b12bbad..25002f5a7 100644
+--- a/mesh/mesh-config.h
++++ b/mesh/mesh-config.h
+@@ -172,3 +172,7 @@ bool mesh_config_net_key_set_phase(struct mesh_config *cfg, uint16_t idx,
+ bool mesh_config_write_address(struct mesh_config *cfg, uint16_t address);
+ bool mesh_config_write_iv_index(struct mesh_config *cfg, uint32_t idx,
+ 								bool update);
++bool mesh_config_update_company_id(struct mesh_config *cfg, uint16_t cid);
++bool mesh_config_update_product_id(struct mesh_config *cfg, uint16_t pid);
++bool mesh_config_update_version_id(struct mesh_config *cfg, uint16_t vid);
++bool mesh_config_update_crpl(struct mesh_config *cfg, uint16_t crpl);
+diff --git a/mesh/node.c b/mesh/node.c
+index e3f9e52e3..a96c0cae1 100644
+--- a/mesh/node.c
++++ b/mesh/node.c
+@@ -1374,6 +1374,21 @@ static bool add_local_node(struct mesh_node *node, uint16_t unicast, bool kr,
  	return true;
  }
  
--static bool add_key_value(json_object *jobject, const char *desc,
-+static bool add_key_value(json_object *jobj, const char *desc,
- 					const uint8_t key[16])
++static void update_composition(struct mesh_node *node, struct mesh_node *attach)
++{
++	if (node->comp.cid != attach->comp.cid)
++		mesh_config_update_company_id(node->cfg, attach->comp.cid);
++
++	if (node->comp.pid != attach->comp.pid)
++		mesh_config_update_product_id(node->cfg, attach->comp.pid);
++
++	if (node->comp.vid != attach->comp.vid)
++		mesh_config_update_version_id(node->cfg, attach->comp.vid);
++
++	if (node->comp.crpl != attach->comp.crpl)
++		mesh_config_update_crpl(node->cfg, attach->comp.crpl);
++}
++
+ static bool check_req_node(struct managed_obj_request *req)
  {
- 	json_object *jstring;
-@@ -131,7 +132,8 @@ static bool add_key_value(json_object *jobject, const char *desc,
- 	if (!jstring)
- 		return false;
+ 	uint8_t node_comp[MAX_MSG_LEN - 2];
+@@ -1444,6 +1459,8 @@ static bool attach_req_node(struct mesh_node *attach, struct mesh_node *node)
+ 	attach->owner = node->owner;
+ 	node->owner = NULL;
  
--	json_object_object_add(jobject, desc, jstring);
-+	json_object_object_del(jobj, desc);
-+	json_object_object_add(jobj, desc, jstring);
- 	return true;
- }
- 
-@@ -1398,6 +1400,7 @@ static bool write_uint16_hex(json_object *jobj, const char *desc,
- 	if (!jstring)
- 		return false;
- 
-+	json_object_object_del(jobj, desc);
- 	json_object_object_add(jobj, desc, jstring);
- 	return true;
- }
-@@ -1412,21 +1415,21 @@ static bool write_uint32_hex(json_object *jobj, const char *desc, uint32_t val)
- 	if (!jstring)
- 		return false;
- 
-+	json_object_object_del(jobj, desc);
- 	json_object_object_add(jobj, desc, jstring);
- 	return true;
- }
- 
--static bool write_int(json_object *jobj, const char *keyword, int val)
-+static bool write_int(json_object *jobj, const char *desc, int val)
- {
- 	json_object *jvalue;
- 
--	json_object_object_del(jobj, keyword);
--
- 	jvalue = json_object_new_int(val);
- 	if (!jvalue)
- 		return false;
- 
--	json_object_object_add(jobj, keyword, jvalue);
-+	json_object_object_del(jobj, desc);
-+	json_object_object_add(jobj, desc, jvalue);
- 	return true;
- }
- 
-@@ -1442,7 +1445,7 @@ static const char *mode_to_string(int mode)
- 	}
- }
- 
--static bool write_mode(json_object *jobj, const char *keyword, int value)
-+static bool write_mode(json_object *jobj, const char *desc, int value)
- {
- 	json_object *jstring;
- 
-@@ -1451,7 +1454,8 @@ static bool write_mode(json_object *jobj, const char *keyword, int value)
- 	if (!jstring)
- 		return false;
- 
--	json_object_object_add(jobj, keyword, jstring);
-+	json_object_object_del(jobj, desc);
-+	json_object_object_add(jobj, desc, jstring);
++	update_composition(node, attach);
++
+ 	node_remove(node);
  
  	return true;
- }
 -- 
 2.21.3
 
