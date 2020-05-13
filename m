@@ -2,78 +2,70 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 871A71D0626
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 May 2020 06:56:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C123E1D090F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 May 2020 08:52:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbgEME4o convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 13 May 2020 00:56:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52496 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725898AbgEME4o (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 13 May 2020 00:56:44 -0400
-From:   bugzilla-daemon@bugzilla.kernel.org
-Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 207629] BISECTED Bluetooth: hci0: command 0x2042 tx timeout -
- suspend fails - Dell XPS 9300
-Date:   Wed, 13 May 2020 04:56:43 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: lenb@kernel.org
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-207629-62941-UYDYHEu6qX@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-207629-62941@https.bugzilla.kernel.org/>
-References: <bug-207629-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
-MIME-Version: 1.0
+        id S1729761AbgEMGwR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 13 May 2020 02:52:17 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:41606 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729355AbgEMGwR (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 13 May 2020 02:52:17 -0400
+Received: from [192.168.1.91] (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 35DC6CED06;
+        Wed, 13 May 2020 09:01:58 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: [PATCH 0/2] Bluetooth: Update LE scanning parameters for suspend
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20200513020933.102443-1-abhishekpandit@chromium.org>
+Date:   Wed, 13 May 2020 08:51:45 +0200
+Cc:     BlueZ <linux-bluetooth@vger.kernel.org>,
+        ChromeOS Bluetooth Upstreaming 
+        <chromeos-bluetooth-upstreaming@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        netdev <netdev@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <037EB7A4-BC2B-4776-B911-423A72F763A3@holtmann.org>
+References: <20200513020933.102443-1-abhishekpandit@chromium.org>
+To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=207629
+Hi Abhishek,
 
---- Comment #13 from Len Brown (lenb@kernel.org) ---
-Re: rfkill
+> This series updates the values used for window and interval when the
+> system suspends. It also fixes a u8 vs u16 bug when setting up passive
+> scanning.
+> 
+> The values chosen for window and interval are 11.25ms and 640ms. I have
+> tested these on several Chromebooks with different LE peers (mouse,
+> keyboard, Raspberry Pi running bluez) and all of them are able to wake
+> the system with those parameters.
+> 
+> Thanks
+> Abhishek
+> 
+> 
+> 
+> Abhishek Pandit-Subedi (2):
+>  Bluetooth: Fix incorrect type for window and interval
+>  Bluetooth: Modify LE window and interval for suspend
+> 
+> net/bluetooth/hci_request.c | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
 
-$ sudo rfkill
-ID TYPE      DEVICE      SOFT      HARD
- 0 wlan      phy0   unblocked unblocked
- 1 bluetooth hci0   unblocked unblocked
+both patches have been applied to bluetooth-next tree.
 
-$ sudo rfkill event
-2020-05-13 00:41:30,772265-0400: idx 0 type 1 op 0 soft 0 hard 0
-2020-05-13 00:41:30,772289-0400: idx 1 type 2 op 0 soft 0 hard 0
+Regards
 
-Here I ran 10 suspend/resume attempts (4 succeeded),
-but rfkill didn't print any more lines.
+Marcel
 
-If I manually run "bluetooth off", rfkill prints this:
-
-2020-05-13 00:49:00,003851-0400: idx 1 type 2 op 2 soft 1 hard 0
-
-If I manually run "bluetooth on", rfkill prints this:
-
-2020-05-13 00:49:15,297390-0400: idx 1 type 2 op 2 soft 0 hard 0
-
-I get the same two lines by turning bluetooth off/on in the
-system settings GUI, no matter if the bluetooth program is available or not.
-
--- 
-You are receiving this mail because:
-You are the assignee for the bug.
