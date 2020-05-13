@@ -2,106 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3C261D04C7
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 May 2020 04:20:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66A7B1D05B9
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 May 2020 06:00:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728659AbgEMCTu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 12 May 2020 22:19:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35840 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728534AbgEMCTg (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 12 May 2020 22:19:36 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A723C061A0E
-        for <linux-bluetooth@vger.kernel.org>; Tue, 12 May 2020 19:19:36 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id t11so7088432pgg.2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 12 May 2020 19:19:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=XY9o4PMaJYaO2R8EhFQqhMvaTSOOlIIvMuAUeMmeUOI=;
-        b=C8Aco4ESAdgnHiLfDM2byt4dDD+oa/T+cWmKnu8BQYbhBo6LRp9U1jMyyluLEMl2cJ
-         sxeleYRnu1D4cNv6opkhro4gi0u/jMF3bwtdRz/kOMwIwaQEBeQVXNq25/YQTHF9VEAW
-         jDUT22MkDElv7Dhtkr+wbPANacbcs1eITwizU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=XY9o4PMaJYaO2R8EhFQqhMvaTSOOlIIvMuAUeMmeUOI=;
-        b=cC+qSxg/YqK4DTEDJccSDXCP5aJzpBt63UdrDb8+8+cfsKJjVJXGHsE5osRbf2xuGt
-         uWxTujXWgkoFsqavM04smO/28FPDqRpHKZH9lHIYZv5ZnyewzrEDON+aV6NKxNIVxa7g
-         V3uQwg4iP318wG4j3SoaNKUPuwtzgoD0/V7epqKmvduV08gNc1EqNjuxqwr7rZ3zS+NT
-         lVDP2iWnd6/podRnN1ijOTbPIJ6QFSLy5PUrvOAJjVcF9tpcCyl/OifksQ+IsUsnQNDB
-         Db6ePxY/I3XRTLWkZxdk5uxgiFmbGUJLjhL0xAl/k1VvUramzZhEor801C2EeLP+cNz0
-         UDyg==
-X-Gm-Message-State: AGi0PuYReYmYletYm9HrEmsBF1TVNKvPIoGpVLD8xsmhihDzoLmOgU1k
-        ifnjeyU6V3YakbuTndBNcjDedQ==
-X-Google-Smtp-Source: APiQypJfcGRTCMS+eutRkjoY4piQYyahEUu2m7R3wSh9zeupmG5+5vbUl4+CAShJOgLPjgj4uWsz9Q==
-X-Received: by 2002:a63:d60a:: with SMTP id q10mr22951807pgg.37.1589336375736;
-        Tue, 12 May 2020 19:19:35 -0700 (PDT)
-Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id w2sm14170600pja.53.2020.05.12.19.19.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 19:19:35 -0700 (PDT)
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-To:     marcel@holtmann.org, linux-bluetooth@vger.kernel.org
-Cc:     chromeos-bluetooth-upstreaming@chromium.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Alain Michaud <alainm@chromium.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] Bluetooth: btusb: Implement hdev->prevent_wake
-Date:   Tue, 12 May 2020 19:19:27 -0700
-Message-Id: <20200512191838.3.Ic08447a6d2fa9668ae0f2f485db5c3c5d1bee39e@changeid>
-X-Mailer: git-send-email 2.26.2.645.ge9eca65c58-goog
-In-Reply-To: <20200513021927.115700-1-abhishekpandit@chromium.org>
-References: <20200513021927.115700-1-abhishekpandit@chromium.org>
+        id S1725925AbgEMEAS convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 13 May 2020 00:00:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60708 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725837AbgEMEAS (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 13 May 2020 00:00:18 -0400
+From:   bugzilla-daemon@bugzilla.kernel.org
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 207629] BISECTED Bluetooth: hci0: command 0x2042 tx timeout -
+ suspend fails - Dell XPS 9300
+Date:   Wed, 13 May 2020 04:00:17 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: lenb@kernel.org
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: attachments.created
+Message-ID: <bug-207629-62941-cUB2eFjcot@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-207629-62941@https.bugzilla.kernel.org/>
+References: <bug-207629-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Implement the prevent_wake hook by checking device_may_wakeup on the usb
-interface. This prevents the Bluetooth core from enabling scanning when
-the device isn't expected to wake from suspend.
+https://bugzilla.kernel.org/show_bug.cgi?id=207629
 
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Reviewed-by: Alain Michaud <alainm@chromium.org>
----
+--- Comment #10 from Len Brown (lenb@kernel.org) ---
+Created attachment 289101
+  --> https://bugzilla.kernel.org/attachment.cgi?id=289101&action=edit
+dmesg 5.7-rc5
 
- drivers/bluetooth/btusb.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+# file 'hci_core.c +p' > /sys/kernel/debug/dynamic_debug/control
+# file 'hci_request.c +p' > /sys/kernel/debug/dynamic_debug/control
+# file 'hci_event.c +p' > /sys/kernel/debug/dynamic_debug/control
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 8ae3ad7a60131..c17359c0e3201 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3698,6 +3698,13 @@ static void btusb_check_needs_reset_resume(struct usb_interface *intf)
- 		interface_to_usbdev(intf)->quirks |= USB_QUIRK_RESET_RESUME;
- }
- 
-+static bool btusb_prevent_wake(struct hci_dev *hdev)
-+{
-+	struct btusb_data *data = hci_get_drvdata(hdev);
-+
-+	return !device_may_wakeup(&data->udev->dev);
-+}
-+
- static int btusb_probe(struct usb_interface *intf,
- 		       const struct usb_device_id *id)
- {
-@@ -3831,6 +3838,7 @@ static int btusb_probe(struct usb_interface *intf,
- 	hdev->flush  = btusb_flush;
- 	hdev->send   = btusb_send_frame;
- 	hdev->notify = btusb_notify;
-+	hdev->prevent_wake = btusb_prevent_wake;
- 
- #ifdef CONFIG_PM
- 	err = btusb_config_oob_wake(hdev);
+# sleepgraph -m freeze -multi 10 0
+
+where the 1st and 5th suspend cycles succeeded, and the other 8 failed due to
+bluetooth.
+
+dmesg attached.
+
 -- 
-2.26.2.645.ge9eca65c58-goog
-
+You are receiving this mail because:
+You are the assignee for the bug.
