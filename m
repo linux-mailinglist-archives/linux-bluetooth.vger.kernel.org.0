@@ -2,49 +2,49 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CC1E1D04A3
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 May 2020 04:10:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7DB91D04C0
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 May 2020 04:20:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728881AbgEMCJp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 12 May 2020 22:09:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34302 "EHLO
+        id S1728228AbgEMCTd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 12 May 2020 22:19:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728504AbgEMCJn (ORCPT
+        with ESMTP id S1726885AbgEMCTd (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 12 May 2020 22:09:43 -0400
+        Tue, 12 May 2020 22:19:33 -0400
 Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A94F3C05BD09
-        for <linux-bluetooth@vger.kernel.org>; Tue, 12 May 2020 19:09:43 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id mq3so10430843pjb.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 12 May 2020 19:09:43 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30411C061A0E
+        for <linux-bluetooth@vger.kernel.org>; Tue, 12 May 2020 19:19:33 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id j13so294436pjm.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 12 May 2020 19:19:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8MeJ34SnvYHzMHHvMnJ7xniPWpeltfCL/1NFcCqodmE=;
-        b=Y1F/OwmkgG6a/vJSNdeI/glSNcKRNQhR1ng7pGL2w59MihUJLZYgexQEWUZuyMbmHS
-         mFk8UbtWEBPqVMJsNeKFvBtlZ/TxIOMHq68Y2wuKPqG6/AG78hEtZkXw8k/fGwC2k9XT
-         EvxSQTcfn3/wAg4QKCrM77pL1R02TQfdm0DJE=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lkqIDoib68FB2JDTnUdkS+sJ6c0KSJCfPM4XCGL9+wo=;
+        b=i4oyZDhasB3BK4N58xBJKFV7wb9fn+1SGRZKwR34UdXB63m/A0ctudRtq27LnDuPzX
+         TLoqbyusguNq5jwMxryJrk5tkyJWysGVxhcZ+27xGGZmOdC3T+RzhjNVrpG1o6ewhF9f
+         MtCITc7U9pKFK3h0/jGDni3RSnjduO3gFObFI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8MeJ34SnvYHzMHHvMnJ7xniPWpeltfCL/1NFcCqodmE=;
-        b=uf7mqr8E/YCw9rZFtAjKt7VLkr+4gnAGLxek2gusprF/4PyZH0x9/lQKVlfrWIGKC9
-         C2istqsxFZC9C6JxQvLIoJF/keGP6tI+C7AI8c964qVWiI4vvsQApPE4warI/Q8jckKU
-         iWk5ldbw/PuKppt4G3bGjouP2Mfips2nVsiYZhz2bzl0mPaZm8WyDd27IjBCYcmM95J3
-         lhbyRqrmX2jqGJhPwSFb0d4eb6io8wmoQvO1gA5oEQD8xDigjXCF6fMToQerJbEDUXUe
-         t2cB+qxVKnHG9Puq8SlACapBen8U1fqT6VnVh01rbR+CRtz4XfbcrMckWyxvb2C2J2Gv
-         lyhA==
-X-Gm-Message-State: AGi0PuYRcLcDIujQ1mWck3TaD3Aj1hokv0e0XA/gDAZslPHs65WdsBs/
-        A6gBxAGeLre5YIWKAs3CgummXQ==
-X-Google-Smtp-Source: APiQypL5VhmJml8Eed/W5CjePHC1qJ4xGeTRfq/uu6YZm5Sp5R8CkjoREdA/z3nYr6+ZeuAsu5y9zg==
-X-Received: by 2002:a17:90a:8b82:: with SMTP id z2mr32211504pjn.124.1589335783268;
-        Tue, 12 May 2020 19:09:43 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lkqIDoib68FB2JDTnUdkS+sJ6c0KSJCfPM4XCGL9+wo=;
+        b=OVlJOb4J5CTYQ4UPmz2sM3U57ru6Kojpuz6XhKz5pKLrUBiGiL+bEcH/kkXZsQph1q
+         u3DqkwFnzKlb34Q768T1DPYTRC8VaZ7fUgJK0BmI+ynd66HhNTE5xqH9Cdt1B/Hcv3+Q
+         68wJ6cVo5mNOYIroUVvXbCQZ1O7xYbZ4XtgQiXeh4TdP+BJD+lwrDdCOGhHLgREkPhO5
+         4Otr304jq0CzLkatA1VD34YrtuP4zjstfiFrTfAoalAS/xIUsYSwBJNiBNLe+w4CCMTf
+         6JMOBXOVYC/Y+fe2aa87Oz40VFRhjt2k5JF2MUO5wtBWkJInR4La0wq3V71dgEZ26Bet
+         P0Ug==
+X-Gm-Message-State: AOAM533S9Ll+ywSQjdpMw0cMYGwVK3HyaNv2Grr5UhokIyUGTvsY2TRQ
+        GrKqLf2wfQK9V2qet9I9wSoIlQ==
+X-Google-Smtp-Source: ABdhPJy1z/U/SgoeHL7kpt3JfXpLpI+JwdlQqILbEJfVHiYHPh4Qblisl0P/YTYl50n/NcdWbdpM8Q==
+X-Received: by 2002:a17:902:fe8d:: with SMTP id x13mr1122508plm.198.1589336372539;
+        Tue, 12 May 2020 19:19:32 -0700 (PDT)
 Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
-        by smtp.gmail.com with ESMTPSA id x7sm13456749pfj.122.2020.05.12.19.09.42
+        by smtp.gmail.com with ESMTPSA id w2sm14170600pja.53.2020.05.12.19.19.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 19:09:42 -0700 (PDT)
+        Tue, 12 May 2020 19:19:32 -0700 (PDT)
 From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 To:     marcel@holtmann.org, linux-bluetooth@vger.kernel.org
 Cc:     chromeos-bluetooth-upstreaming@chromium.org,
@@ -53,12 +53,10 @@ Cc:     chromeos-bluetooth-upstreaming@chromium.org,
         Johan Hedberg <johan.hedberg@gmail.com>,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
         Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 2/2] Bluetooth: Modify LE window and interval for suspend
-Date:   Tue, 12 May 2020 19:09:33 -0700
-Message-Id: <20200512190924.2.Ibdf1535b0d4c63aaf337161a333b419d6d32c364@changeid>
+Subject: [PATCH 0/3] Bluetooth: Prevent scanning when device is not configured for wakeup
+Date:   Tue, 12 May 2020 19:19:24 -0700
+Message-Id: <20200513021927.115700-1-abhishekpandit@chromium.org>
 X-Mailer: git-send-email 2.26.2.645.ge9eca65c58-goog
-In-Reply-To: <20200513020933.102443-1-abhishekpandit@chromium.org>
-References: <20200513020933.102443-1-abhishekpandit@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -66,32 +64,33 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When a device is suspended, it doesn't need to be as responsive to
-connection events. Increase the interval to 640ms (creating a duty cycle
-of roughly 1.75%) so that passive scanning uses much less power (vs
-previous duty cycle of 18.75%). The new window + interval combination
-has been tested to work with HID devices (which are currently the only
-devices capable of wake up).
 
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
----
+Hi linux-bluetooth,
 
- net/bluetooth/hci_request.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This patch series adds a hook to prevent Bluetooth from scanning during
+suspend if it is not configured to wake up. It's not always clear who
+the wakeup owner is from looking at hdev->dev so we need the driver to
+inform us whether to set up scanning.
 
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index f6870e98faab2..6b45e31432a77 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -35,7 +35,7 @@
- #define HCI_REQ_CANCELED  2
- 
- #define LE_SUSPEND_SCAN_WINDOW		0x0012
--#define LE_SUSPEND_SCAN_INTERVAL	0x0060
-+#define LE_SUSPEND_SCAN_INTERVAL	0x0400
- 
- void hci_req_init(struct hci_request *req, struct hci_dev *hdev)
- {
+By default, when no `prevent_wake` hook is implemented, we always
+configure scanning for wake-up.
+
+Thanks
+Abhishek
+
+
+
+Abhishek Pandit-Subedi (3):
+  Bluetooth: Rename BT_SUSPEND_COMPLETE
+  Bluetooth: Add hook for driver to prevent wake from suspend
+  Bluetooth: btusb: Implement hdev->prevent_wake
+
+ drivers/bluetooth/btusb.c        | 8 ++++++++
+ include/net/bluetooth/hci_core.h | 3 ++-
+ net/bluetooth/hci_core.c         | 8 +++++---
+ net/bluetooth/hci_request.c      | 2 +-
+ 4 files changed, 16 insertions(+), 5 deletions(-)
+
 -- 
 2.26.2.645.ge9eca65c58-goog
 
