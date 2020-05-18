@@ -2,61 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF1891D7274
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 May 2020 10:05:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8F271D76F5
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 May 2020 13:25:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727831AbgERIDi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 18 May 2020 04:03:38 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:57289 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726828AbgERIDi (ORCPT
+        id S1727933AbgERLZC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 18 May 2020 07:25:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57054 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726339AbgERLZC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 18 May 2020 04:03:38 -0400
-Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 182A8CECE3;
-        Mon, 18 May 2020 10:13:21 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH v2] Bluetooth: hci_qca: Enable WBS support for wcn3991
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200514131338.v2.1.I68404fc395a3dbc57c8a89ca02490013e8003a87@changeid>
-Date:   Mon, 18 May 2020 10:03:36 +0200
-Cc:     BlueZ <linux-bluetooth@vger.kernel.org>, bgodavar@codeaurora.org,
-        alainm@chromium.org, mka@chromium.org,
-        chromeos-bluetooth-upstreaming@chromium.org,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <8BFF0708-07AF-4034-8FEF-C1D95975404B@holtmann.org>
-References: <20200514131338.v2.1.I68404fc395a3dbc57c8a89ca02490013e8003a87@changeid>
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        Mon, 18 May 2020 07:25:02 -0400
+X-Greylist: delayed 1254 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 18 May 2020 04:25:01 PDT
+Received: from vps.dvp24.com (unknown [IPv6:2a02:348:36:5b8c::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABBBEC061A0C;
+        Mon, 18 May 2020 04:25:01 -0700 (PDT)
+Received: from localhost ([127.0.0.1] helo=dvp24.com)
+        by vps.dvp24.com with esmtpa (Exim 4.77)
+        (envelope-from <abhay@dvp24.com>)
+        id 1jadYi-0006sv-08; Mon, 18 May 2020 13:03:48 +0200
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Mon, 18 May 2020 12:03:47 +0100
+From:   pedro hills <abhay@dvp24.com>
+To:     undisclosed-recipients:;
+Subject: (DONATION) $2 Million Has Been Donated
+Reply-To: <pedrohills@outlook.es>
+Mail-Reply-To: <pedrohills@outlook.es>
+Message-ID: <48fae56db7d72b6c8944f63bdd887348@dvp24.com>
+X-Sender: abhay@dvp24.com
+User-Agent: Roundcube Webmail/0.7.1
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Abhishek,
 
-> WCN3991 supports transparent WBS (host encoded mSBC). Add a flag to the
-> device match data to show WBS is supported.
-> 
-> This requires the matching firmware for WCN3991 in linux-firmware:
->        1a8b0dc00f77 (qca: Enable transparent WBS for WCN3991)
-> 
-> Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> ---
-> 
-> Changes in v2:
-> - Rename struct to qca_capabilities and fix enum naming
-> 
-> drivers/bluetooth/hci_qca.c | 23 +++++++++++++++++------
-> 1 file changed, 17 insertions(+), 6 deletions(-)
 
-patch has been applied to bluetooth-next tree.
+-- 
+$2 Million Has Been Donated To You,By PEDRO this is Real For More Info
+  Contact PEDRO immediately for your clame This Email:
+  pedrohills@outlook.es
 
-Regards
+  Contact phone number +34632232897
+  Send Your Response To: pedrohills@outlook.es
 
-Marcel
+  2 Millionen US-Dollar wurden an Sie gespendet. Von PEDRO ist dies für
+weitere Informationen real
+  Wenden Sie sich umgehend an PEDRO. Diese E-Mail:
+  pedrohills@outlook.es
 
+  Kontakttelefonnummer +34632232897
+  Senden Sie Ihre Antwort an: pedrohills@outlook.es
