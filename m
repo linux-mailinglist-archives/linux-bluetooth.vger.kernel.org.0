@@ -2,84 +2,71 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2E0E1D7261
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 May 2020 09:58:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B261C1D7263
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 May 2020 09:59:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726800AbgERH6Z (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 18 May 2020 03:58:25 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:46559 "EHLO
+        id S1726998AbgERH7s convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 18 May 2020 03:59:48 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:43617 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726489AbgERH6Z (ORCPT
+        with ESMTP id S1726489AbgERH7s (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 18 May 2020 03:58:25 -0400
+        Mon, 18 May 2020 03:59:48 -0400
 Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 86539CECE2;
-        Mon, 18 May 2020 10:08:06 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 256C1CECE2;
+        Mon, 18 May 2020 10:09:31 +0200 (CEST)
 Content-Type: text/plain;
-        charset=us-ascii
+        charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH] Bluetooth: L2CAP: Replace zero-length array with
- flexible-array
+Subject: Re: [PATCH] bluetooth/smp: Fix for GAP/SEC/SEM/BI-10-C
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200513171556.GA21969@embeddedor>
-Date:   Mon, 18 May 2020 09:58:22 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        BlueZ <linux-bluetooth@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>, linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <5C6DAE24-2E3B-4E89-AFA2-9B0E27B40815@holtmann.org>
-References: <20200513171556.GA21969@embeddedor>
-To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
+In-Reply-To: <20200513081853.362-1-lukasz.rymanowski@codecoup.pl>
+Date:   Mon, 18 May 2020 09:59:47 +0200
+Cc:     linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <86292E0B-2816-414C-82FD-7ACFFD4C9587@holtmann.org>
+References: <20200513081853.362-1-lukasz.rymanowski@codecoup.pl>
+To:     =?utf-8?Q?=C5=81ukasz_Rymanowski?= <lukasz.rymanowski@codecoup.pl>
 X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Gustavo,
+Hi Lukasz,
 
-> The current codebase makes use of the zero-length array language
-> extension to the C90 standard, but the preferred mechanism to declare
-> variable-length types such as these ones is a flexible array member[1][2],
-> introduced in C99:
+> Security Mode 1 level 4, force us to use have key size 16 octects long.
+> This patch adds check for that.
 > 
-> struct foo {
->        int stuff;
->        struct boo array[];
-> };
+> This is required for the qualification test GAP/SEC/SEM/BI-10-C
 > 
-> By making use of the mechanism above, we will get a compiler warning
-> in case the flexible array does not occur last in the structure, which
-> will help us prevent some kind of undefined behavior bugs from being
-> inadvertently introduced[3] to the codebase from now on.
+> Logs from test when ATT is configured with sec level BT_SECURITY_FIPS
 > 
-> Also, notice that, dynamic memory allocations won't be affected by
-> this change:
+> < ACL Data TX: Handle 3585 flags 0x00 dlen 11                                                                       #28 [hci0] 3.785965
+>      SMP: Pairing Request (0x01) len 6
+>        IO capability: DisplayYesNo (0x01)
+>        OOB data: Authentication data not present (0x00)
+>        Authentication requirement: Bonding, MITM, SC, No Keypresses (0x0d)
+>        Max encryption key size: 16
+>        Initiator key distribution: EncKey Sign (0x05)
+>        Responder key distribution: EncKey IdKey Sign (0x07)
+>> ACL Data RX: Handle 3585 flags 0x02 dlen 11                                                                       #35 [hci0] 3.883020
+>      SMP: Pairing Response (0x02) len 6
+>        IO capability: DisplayYesNo (0x01)
+>        OOB data: Authentication data not present (0x00)
+>        Authentication requirement: Bonding, MITM, SC, No Keypresses (0x0d)
+>        Max encryption key size: 7
+>        Initiator key distribution: EncKey Sign (0x05)
+>        Responder key distribution: EncKey IdKey Sign (0x07)
+> < ACL Data TX: Handle 3585 flags 0x00 dlen 6                                                                        #36 [hci0] 3.883136
+>      SMP: Pairing Failed (0x05) len 1
+>        Reason: Encryption key size (0x06)
 > 
-> "Flexible array members have incomplete type, and so the sizeof operator
-> may not be applied. As a quirk of the original implementation of
-> zero-length arrays, sizeof evaluates to zero."[1]
-> 
-> sizeof(flexible-array-member) triggers a warning because flexible array
-> members have incomplete type[1]. There are some instances of code in
-> which the sizeof operator is being incorrectly/erroneously applied to
-> zero-length arrays and the result is zero. Such instances may be hiding
-> some bugs. So, this work (flexible-array member conversions) will also
-> help to get completely rid of those sorts of issues.
-> 
-> This issue was found with the help of Coccinelle.
-> 
-> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-> [2] https://github.com/KSPP/linux/issues/21
-> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
-> 
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> Signed-off-by: Łukasz Rymanowski <lukasz.rymanowski@codecoup.pl>
 > ---
-> include/net/bluetooth/l2cap.h | 6 +++---
-> 1 file changed, 3 insertions(+), 3 deletions(-)
+> net/bluetooth/smp.c | 4 ++++
+> 1 file changed, 4 insertions(+)
 
 patch has been applied to bluetooth-next tree.
 
