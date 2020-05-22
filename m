@@ -2,34 +2,34 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 292461DF0EF
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 May 2020 23:13:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D12A1DF0F1
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 May 2020 23:13:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731056AbgEVVNR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 22 May 2020 17:13:17 -0400
+        id S1731064AbgEVVNS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 22 May 2020 17:13:18 -0400
 Received: from mga14.intel.com ([192.55.52.115]:48185 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731041AbgEVVNQ (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 22 May 2020 17:13:16 -0400
-IronPort-SDR: v9uLO1+6xSk0M/3AzNcPNpWhtI/QPCjjl+O6b7OdXA7SSW5v/lvarYkIHXcztRXWC4pvdQEBRR
- DEZYQIY+DFcQ==
+        id S1731021AbgEVVNR (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 22 May 2020 17:13:17 -0400
+IronPort-SDR: duhiBFFNBM2jr4YqEqn4PsYVAQUUL/YX0nLWK2VUr/mgJAQDQQZrYf8/1cUhR84sCBq1F1JuSJ
+ IkFhi1hedGEg==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga007.fm.intel.com ([10.253.24.52])
   by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2020 14:13:15 -0700
-IronPort-SDR: R5EREKU611aelqhjOQoVvNNBUD/hIEjGCceS/9iCeqpp5/eT8KnDfhTj2JNysU3tCNy2OnY22M
- CY15SxT8QWQA==
+IronPort-SDR: 8Bl5tcd3R2NnHSVQdW55YaRl/U/TRPM57q5k1G0Mp6mRU16pQ+dYsnoLHMu1FmjyeDw6WkYhUJ
+ HbvU+jep6skw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,423,1583222400"; 
-   d="scan'208";a="254372379"
+   d="scan'208";a="254372384"
 Received: from bgi1-mobl2.amr.corp.intel.com ([10.254.68.94])
   by fmsmga007.fm.intel.com with ESMTP; 22 May 2020 14:13:15 -0700
 From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     inga.stotland@intel.com, brian.gix@intel.com
-Subject: [PATCH BlueZ v2 1/4] mesh: Fix using uninitialized bytes
-Date:   Fri, 22 May 2020 14:13:06 -0700
-Message-Id: <20200522211309.233824-2-brian.gix@intel.com>
+Subject: [PATCH BlueZ v2 2/4] mesh: Fix leaked mesh_net allocation
+Date:   Fri, 22 May 2020 14:13:07 -0700
+Message-Id: <20200522211309.233824-3-brian.gix@intel.com>
 X-Mailer: git-send-email 2.25.4
 In-Reply-To: <20200522211309.233824-1-brian.gix@intel.com>
 References: <20200522211309.233824-1-brian.gix@intel.com>
@@ -40,36 +40,22 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Fixes two problems found with static analysis
 ---
- mesh/crypto.c | 1 +
- mesh/node.c   | 2 ++
- 2 files changed, 3 insertions(+)
+ mesh/node.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/mesh/crypto.c b/mesh/crypto.c
-index 99536594b..70b96c51b 100644
---- a/mesh/crypto.c
-+++ b/mesh/crypto.c
-@@ -553,6 +553,7 @@ bool mesh_crypto_packet_build(bool ctl, uint8_t ttl,
- 	if (seq > SEQ_MASK)
- 		return false;
- 
-+	packet[0] = 0;
- 	l_put_be32(seq, packet + 1);
- 	packet[1] = (ctl ? CTL : 0) | (ttl & TTL_MASK);
- 
 diff --git a/mesh/node.c b/mesh/node.c
-index dd28dfd77..49ba7c885 100644
+index 49ba7c885..db888d27c 100644
 --- a/mesh/node.c
 +++ b/mesh/node.c
-@@ -1596,6 +1596,8 @@ static void get_managed_objects_cb(struct l_dbus_message *msg, void *user_data)
- 		/* Generate device and primary network keys */
- 		l_getrandom(dev_key, sizeof(dev_key));
- 		l_getrandom(net_key.old_key, sizeof(net_key.old_key));
-+		memcpy(net_key.new_key, net_key.old_key,
-+						sizeof(net_key.old_key));
- 		net_key.net_idx = PRIMARY_NET_IDX;
- 		net_key.phase = KEY_REFRESH_PHASE_NONE;
+@@ -1313,8 +1313,6 @@ static bool add_local_node(struct mesh_node *node, uint16_t unicast, bool kr,
+ 				bool ivu, uint32_t iv_idx, uint8_t dev_key[16],
+ 				uint16_t net_key_idx, uint8_t net_key[16])
+ {
+-	node->net = mesh_net_new(node);
+-
+ 	if (!nodes)
+ 		nodes = l_queue_new();
  
 -- 
 2.25.4
