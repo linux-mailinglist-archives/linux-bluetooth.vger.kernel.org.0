@@ -2,66 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6408B1DF9CF
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 23 May 2020 20:00:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC44C1E0137
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 24 May 2020 19:41:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728310AbgEWSAU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 23 May 2020 14:00:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55716 "EHLO
+        id S2387814AbgEXRla (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 24 May 2020 13:41:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726868AbgEWSAT (ORCPT
+        with ESMTP id S2387656AbgEXRl3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 23 May 2020 14:00:19 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87516C061A0E
-        for <linux-bluetooth@vger.kernel.org>; Sat, 23 May 2020 11:00:19 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id z9so6234875qvi.12
-        for <linux-bluetooth@vger.kernel.org>; Sat, 23 May 2020 11:00:19 -0700 (PDT)
+        Sun, 24 May 2020 13:41:29 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81990C061A0E;
+        Sun, 24 May 2020 10:41:29 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id c11so16229431ljn.2;
+        Sun, 24 May 2020 10:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=F3NMDrR9dummcUXdRfruEEfbIS6yB2vx68nB8Asq/5Q=;
-        b=DLUdlLdqK1bsV3DbEuTTyBWxouo7TOwyxri4APWQD3NqiMSIjirU+KuWgkxjC+SPXd
-         U5bKcUrFxXkujPWjXtLFF/k/nfilKzP5EjBajrS/8510fneO07cpMqdcHCxwrpi40/q7
-         /O0e1HoJlTbh5NB1junI0CHT5u7OlL96wLc3EVtoU1jy6h6mu/94Ij3+HmmWjDrdLWVh
-         jTwO4Rc/jE6wel14tPJDJsn6k0/UDkI9Or/XCFS691xyvyogoxyI2h7yK06Suh6ePv/U
-         +lZz7VywgsFgSxYL/B5mLPOXcZ0fktkIkUnyPxHg9tbmvqat4Bb8GZAodniIxvBVB3XB
-         mJxw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4DJnVhkC0smUm5PBOJDcd8TAmlHR8nF02N00TJklYYQ=;
+        b=IvBLdksWxW/9lWBFTdOtkxBKw0ZNRyZcRM5cSzd/Qfzo3v/KNB3EBAVpDzlRIpuSHH
+         ejgjQKeWwBm4DXQMwURZFcb/f5wPmXyHOlPv2N/lgcxVx4wm5MDeil6YbyLoq35oPsdL
+         DIqhR0vAPFM0NxGWIi6ypdqJ5lky1jIxUzBTYRReYLSI1ET6tnJ99rH3MeaPsgWaPVBg
+         +C3MVhgUdCpqbC2TwkY3tC/VXvJzjhYu6KL8hbrBjOhwYeXmPMnXiYXPwYqzfRq9izYi
+         p2ZNCeJPdtvo5DJXYE2Jenbc9/VpAeeqc50K3LI9ES4mAlVw1gpT3C7G+KDWovzm/N63
+         NDHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=F3NMDrR9dummcUXdRfruEEfbIS6yB2vx68nB8Asq/5Q=;
-        b=AtovDA+F/dayVa04hh8Q7nRlO3oYFknvCYNSdzMAyaBcwhmPEsLdU99aaOX6S6C2fL
-         YMHp/mbuvJmM9uP+N30Kmj9kBSWuNpLbznYu3tUWDI6woN9uICWolYhJKKx6YXSs4Zdh
-         TjPxY2Yw9ninHsA0kzkZS0ENwuTs30yhYn1tYVw5fqsWgESN6Iu8BvLgAdJJUGRYMcbX
-         QlO2xV3j8VPQZDCOj3iBkm3HVYWsKGJv0CzM3ngsh8sxicIzT8nwqZKB25d5VWhP5xib
-         PzaxeX2zAtP+OnTCzd8RnZPi8CxNnq+MzOnD4kG0J9ZGBr7b8rvd2ErI9YRN41Yas+Qh
-         Jrkg==
-X-Gm-Message-State: AOAM5303X/JTIXVny+bZUpwP8+J7iddPklvGwpyWvhyWV1duTl1SvoQo
-        1T3zcHXq7JRmmMEMdmGFNxB2dZ/LFKR3CrijTos=
-X-Google-Smtp-Source: ABdhPJxI0GNvtYFRzubiNKehFnBmeNa8IdxO7hQ3TxAldsg7mTxyy0v9X6v2Fayhxp/lnxt7tCbB9QFJVJ60H98MgEQ=
-X-Received: by 2002:a0c:ed4b:: with SMTP id v11mr9120627qvq.179.1590256818769;
- Sat, 23 May 2020 11:00:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4DJnVhkC0smUm5PBOJDcd8TAmlHR8nF02N00TJklYYQ=;
+        b=BHNeFmU3qcAwjn+I4Rx7hNrzHtrOl0hL3anmx8Nh6kXaJVp+yCB8TrsccZzSOond8p
+         H8SCUIDS9XCjTVdsg42UPVGisWwaP73TorItAyQIDIj3VYwCvX790MP5Sr7kMbQtUKZc
+         H12BotD0Xtccg64ICAXeG2TBjxnomWQxOYpcilN+mDSdNZDRwFxnYO9PimNtub/2CYTR
+         BZ8pCUXhov34NT11kgAECQZXZhOYJ7UDjkm2qipeQ9jeztpSXnwj/RQj46QVYCwgO+JB
+         frXQMbJWmbC4DGwsTygnEywyeZksQ8aklvx5kUjLC25sAwwKtGRyBmpk8HikoCb5zzKF
+         GyeQ==
+X-Gm-Message-State: AOAM5311Elp6N7febNsy24fBMRYtVPbb+JcQqIAJ5XqAg6nDeeYvxVdD
+        VZSj86dmTLMimDGiWdP+DHY=
+X-Google-Smtp-Source: ABdhPJzZk+yfj1Ja13ec/de2TyVXKMy4/esJqt6+09zYGUJ3TAy8+GjWdPQ8wcmrRk5EmADWUdtzKg==
+X-Received: by 2002:a2e:9dd5:: with SMTP id x21mr10626462ljj.426.1590342086046;
+        Sun, 24 May 2020 10:41:26 -0700 (PDT)
+Received: from icewind.winter.local ([93.185.31.54])
+        by smtp.gmail.com with ESMTPSA id x3sm2957430lji.110.2020.05.24.10.41.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 May 2020 10:41:25 -0700 (PDT)
+From:   "Azamat H. Hackimov" <azamat.hackimov@gmail.com>
+Cc:     azamat.hackimov@gmail.com, Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-bluetooth@vger.kernel.org (open list:BLUETOOTH DRIVERS),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] Bluetooth: btbcm: Added 003.006.007, changed 001.003.015
+Date:   Sun, 24 May 2020 20:41:29 +0300
+Message-Id: <20200524174129.29372-1-azamat.hackimov@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Received: by 2002:aed:3ac5:0:0:0:0:0 with HTTP; Sat, 23 May 2020 11:00:18
- -0700 (PDT)
-Reply-To: mrs.chantala2055@gmail.com
-From:   mrs chantal <mrs.chantaltwo@gmail.com>
-Date:   Sat, 23 May 2020 18:00:18 +0000
-Message-ID: <CAGVwK0UnqGdMqCxvjeR06i5Ca=SScOHB3E1kfQEUa4_tgZN-cQ@mail.gmail.com>
-Subject: jjCompliment
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-     Compliment of the day to you. I am Mrs.CHANTAL I am sending this brief
-    letter to solicit your partnership to transfer $13.5 Million US
-    Dollars.I shall send you more information and procedures when I receive
-    positive response From you. Please send me a message in My private
-    email address is ( mrschantal066@gmail.com  )
-    Best Regards
-    MrS.Chantal
+Added new Broadcom device BCM4350C5, changed BCM4354A2 to BCM4356A2.
+
+Based on Broadcom Windows drivers 001.003.015 should be BCM4356A2. I
+have user report that firmware name is misplaced
+(https://github.com/winterheart/broadcom-bt-firmware/issues/3).
+
+Signed-off-by: Azamat H. Hackimov <azamat.hackimov@gmail.com>
+---
+ drivers/bluetooth/btbcm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
+index df7a8a22e..1b9743b7f 100644
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -414,11 +414,12 @@ static const struct bcm_subver_table bcm_usb_subver_table[] = {
+ 	{ 0x2118, "BCM20702A0"	},	/* 001.001.024 */
+ 	{ 0x2126, "BCM4335A0"	},	/* 001.001.038 */
+ 	{ 0x220e, "BCM20702A1"	},	/* 001.002.014 */
+-	{ 0x230f, "BCM4354A2"	},	/* 001.003.015 */
++	{ 0x230f, "BCM4356A2"	},	/* 001.003.015 */
+ 	{ 0x4106, "BCM4335B0"	},	/* 002.001.006 */
+ 	{ 0x410e, "BCM20702B0"	},	/* 002.001.014 */
+ 	{ 0x6109, "BCM4335C0"	},	/* 003.001.009 */
+ 	{ 0x610c, "BCM4354"	},	/* 003.001.012 */
++	{ 0x6607, "BCM4350C5"	},	/* 003.006.007 */
+ 	{ }
+ };
+ 
+-- 
+2.26.2
+
