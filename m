@@ -2,46 +2,100 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E2CA1E6FD7
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 May 2020 01:00:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0C321E6F0C
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 May 2020 00:31:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437415AbgE1W75 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 28 May 2020 18:59:57 -0400
-Received: from mail.bnv.gob.ve ([201.249.200.115]:44422 "EHLO
-        correo.bnv.gob.ve" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S2437397AbgE1W7z (ORCPT
+        id S2436963AbgE1WbQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 28 May 2020 18:31:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60862 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436803AbgE1WbP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 28 May 2020 18:59:55 -0400
-Received: from localhost (localhost.bnv.gob.ve [127.0.0.1])
-        by correo.bnv.gob.ve (Postfix) with ESMTP id 3830638E1509;
-        Thu, 28 May 2020 14:55:26 -0400 (-04)
-Received: from correo.bnv.gob.ve ([127.0.0.1])
-        by localhost (correo.bnv.gob.ve [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id JtMKUd6TO587; Thu, 28 May 2020 14:55:26 -0400 (-04)
-Received: from localhost (localhost.bnv.gob.ve [127.0.0.1])
-        by correo.bnv.gob.ve (Postfix) with ESMTP id 1B9B738E0662;
-        Thu, 28 May 2020 13:32:38 -0400 (-04)
-X-Virus-Scanned: amavisd-new at bnv.gob.ve
-Received: from correo.bnv.gob.ve ([127.0.0.1])
-        by localhost (correo.bnv.gob.ve [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id hoxaWsoJmjh7; Thu, 28 May 2020 13:32:38 -0400 (-04)
-Received: from [10.19.23.127] (unknown [105.0.4.230])
-        by correo.bnv.gob.ve (Postfix) with ESMTPSA id 047A338E0A16;
-        Thu, 28 May 2020 12:30:03 -0400 (-04)
-Content-Type: text/plain; charset="iso-8859-1"
+        Thu, 28 May 2020 18:31:15 -0400
+Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0873FC08C5C6
+        for <linux-bluetooth@vger.kernel.org>; Thu, 28 May 2020 15:31:15 -0700 (PDT)
+Received: by mail-oo1-xc42.google.com with SMTP id g22so86244oop.13
+        for <linux-bluetooth@vger.kernel.org>; Thu, 28 May 2020 15:31:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ygMGdSPW2a6G+W3D6/dXKHgrqatfcTprCi/d3AI44KQ=;
+        b=hDwiAsVi5gjL6BO4gw2f3g+vjRTXfIVmkRf8p5bg5eG87K+LUK9WfIHnmW1u+T1nPU
+         0OEpWiM1EmAkIPh55vC1HPan8sQV3RheBIutHi4llqQq2SONzvEMhcMUMJYBJ3Zv1B8g
+         wLRpe4/CcyMrhiehrn8cQot/PzgeWgd3+aXIMtza8AnCpUrIPXbMqb7CVIZBKscChI3b
+         x8xjA4o+yODSg6vDRBKTAriNK1ImdiE1+w0M82NhNz8eCUUG7MgiUkTvmNK58nSZuxrL
+         DJ3HPCc9EVqn0dM/VDy5483MaSzImOt1FLwLZPPrVrd1fHFrWYkws6QI7cry+JlHhsp9
+         oFbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ygMGdSPW2a6G+W3D6/dXKHgrqatfcTprCi/d3AI44KQ=;
+        b=qyXnlAhtFPDXM2FnqJkCxfOIl+CBIjxIFN9AgNdglToet7amJomjD0oYSva385/Fm3
+         iYSpjU/Eb6vLSRBg+71+RUn8h9OUJa5jTrGUB7B1jBcWjUh8iSAWjjK0BkbnulSvnB1v
+         WcP5ZRP2Bwq1ejrvDPYlctu2fE7tFBjeFgyOOlvefvoLquDD1TCpP715UDJHDp3atLIf
+         x5aswaBi34+M9oJkADa48nO8Z7c10EvLsi9He11oDx1dsWAr/JG1E9k1UpjDJgr3Yxh+
+         hT9Sr6T7TGrqJIxH2UPEB2ebCZZwXSmXXOIdrgOXSkVYLVAII6L0KhilzKlDxvgssbxE
+         IRhg==
+X-Gm-Message-State: AOAM530szQEwuPcf6tN6X91lxiqMy/4mhqa8nNxYDHeQQ12eAZ//1c+x
+        CO642O6NpHMpDpo41rzhZ/RLYCt3Exp37QLPExc=
+X-Google-Smtp-Source: ABdhPJy49q+xL2O9qU6G6wZIgNU8cidR0FOHpJToHhM6A+zGY5QnUJUwwROv8pZVgNjlh/fA1ai4b2upFxYQah7MjBk=
+X-Received: by 2002:a4a:e795:: with SMTP id x21mr4129135oov.91.1590705074376;
+ Thu, 28 May 2020 15:31:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Spende von 2.000.000,00 Euro
-To:     Recipients <manuel@info.com>
-From:   "manuel franco" <manuel@info.com>
-Date:   Thu, 28 May 2020 18:29:51 +0200
-Reply-To: manuelfrancospende11@gmail.com
-Message-Id: <20200528163006.047A338E0A16@correo.bnv.gob.ve>
+References: <20200528172525.216354-1-luiz.dentz@gmail.com> <20200528172525.216354-2-luiz.dentz@gmail.com>
+ <0eb5cec7-a79a-a513-8303-a23b1bd7a0ce@gmail.com>
+In-Reply-To: <0eb5cec7-a79a-a513-8303-a23b1bd7a0ce@gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Thu, 28 May 2020 15:31:02 -0700
+Message-ID: <CABBYNZLieGyLBWREu1E5D3W+bh-S48S0S5OY2KfQfs270+oniA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] avrcp: Don't attempt to load settings if on volume
+ changed is supported
+To:     Andrey Semashev <andrey.semashev@gmail.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Ich bin Manuel Franco, ich spende Ihnen 2.000.000,00 Euro. Nehmen Sie jetzt Kontakt mit mir auf, damit wir fortfahren können.
+Hi Andrey,
+
+On Thu, May 28, 2020 at 11:56 AM Andrey Semashev
+<andrey.semashev@gmail.com> wrote:
+>
+> On 2020-05-28 20:25, Luiz Augusto von Dentz wrote:
+> > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> >
+> > If only volume changed is supported that means the player cannot really
+> > indicate track/metadata changes so don't attempt to read them.
+> > ---
+> >   profiles/audio/avrcp.c | 4 ++++
+> >   1 file changed, 4 insertions(+)
+> >
+> > diff --git a/profiles/audio/avrcp.c b/profiles/audio/avrcp.c
+> > index 75811bf98..d46ac0ab7 100644
+> > --- a/profiles/audio/avrcp.c
+> > +++ b/profiles/audio/avrcp.c
+> > @@ -3814,6 +3814,10 @@ static gboolean avrcp_get_capabilities_resp(struct avctp *conn, uint8_t code,
+> >       if (!session->controller || !session->controller->player)
+> >               return FALSE;
+> >
+> > +     /* Skip if player status/metadata if only volume changes is supported */
+> > +     if (events == AVRCP_EVENT_VOLUME_CHANGED)
+> > +             return FALSE;
+> > +
+> >       if ((session->controller->features & AVRCP_FEATURE_PLAYER_SETTINGS) &&
+> >                       !(events & (1 << AVRCP_EVENT_SETTINGS_CHANGED)))
+> >               avrcp_list_player_attributes(session);
+> >
+>
+> The result is still the same with this patch - MTW2 reboots after
+> GetPlayStatus.
+
+Looks like the test was wrong, Ive send a v3 fixing that.
+
+-- 
+Luiz Augusto von Dentz
