@@ -2,89 +2,86 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F1941E81FF
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 May 2020 17:39:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A9201E82AB
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 May 2020 17:59:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727090AbgE2PjT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 29 May 2020 11:39:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51462 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726898AbgE2PjR (ORCPT
+        id S1727961AbgE2P73 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 29 May 2020 11:59:29 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:61661 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727062AbgE2P71 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 29 May 2020 11:39:17 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8AA6C03E969
-        for <linux-bluetooth@vger.kernel.org>; Fri, 29 May 2020 08:39:17 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id c12so2521618qkk.13
-        for <linux-bluetooth@vger.kernel.org>; Fri, 29 May 2020 08:39:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=DIy0ITn9dm7qe6UG4VpiKzHkUR6AtBQiINnZO05xR8s=;
-        b=Aa5V73cif+gdEaDwEGBJm8eyvKNPOr90C2CpFn3RCboehUPcZSghn/C4l6AJlKcoZ9
-         YCnBLaFIcIdurUINcdDeg6XSffsdcbZCwn0aAY1j5grkO5RSARH1DmKIZi1NabJmLE5k
-         rfFnS+MPSwxozxULEAswtPv/FsyI73ht3RYQMJX11Tnxg9TZBxUBos6u+KISCzLnN96C
-         GgY9IK8ngCCzBEvFIwjy3BMfoWMByW8Ym7PPJ4s14P7qXEdFQUMrUczXjOM8KolJL3I7
-         danxRa6j7kd09ebllZ9Xnc75ktg+r1cAOyGkC1LcinPr/yVCYQ2hGLhbRZQ+l8CrZf3q
-         T8JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=DIy0ITn9dm7qe6UG4VpiKzHkUR6AtBQiINnZO05xR8s=;
-        b=EVmAlAiDxlHSiacBcydmSOwzT1u9B9+jMJn3/b1m4XLZi8h0bndBQtuXQxmd2iI1W+
-         q0oWr5h2mR7BLoFHdqt1+LapPxDPAp37IJrvKdkvBlh8tzuHaNcGN8+afumj4QuJH9Mq
-         MtbqQiBprx0IcU5c0UkP5so5WjnZYki2v4RATCMCBAPNpC29eDDd06yIEm/205u3sw/E
-         btI7dyozqwjTM311z4ZGC5AowYI+/WhfMIEwl6aK5dIIsLePwSX2E2ZOw2lUcISuZ7DP
-         uTSbwtbYFp9aKqblcyAiBlqgMQua12b9iC/lZNwGrzsiRvk3/LdjEiNXuPvLTHGF92a0
-         urvA==
-X-Gm-Message-State: AOAM532qNxihXluCNtZM644DY4CZVALHNFFyt7tSIKTEku7KpjIJiIxg
-        BiDbkDdoOqys3eOUoqNnyAOq+pKANA0=
-X-Google-Smtp-Source: ABdhPJy40bgf8v/YZWFr0tg+kPTGpvSKgcziTILR0WwUbVbkvLOqDSf8ePMQPjlpx9SRb75qTlbsiA==
-X-Received: by 2002:a37:4e02:: with SMTP id c2mr7779196qkb.97.1590766756758;
-        Fri, 29 May 2020 08:39:16 -0700 (PDT)
-Received: from [172.17.0.2] ([13.90.47.33])
-        by smtp.gmail.com with ESMTPSA id n13sm8831027qtb.20.2020.05.29.08.39.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2020 08:39:16 -0700 (PDT)
-Message-ID: <5ed12ca4.1c69fb81.c0757.3bda@mx.google.com>
-Date:   Fri, 29 May 2020 08:39:16 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============2492585243667061215=="
-MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, alainm@chromium.org
-Subject: RE: Load default system configuration from file.
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200529152940.208214-2-alainm@chromium.org>
-References: <20200529152940.208214-2-alainm@chromium.org>
+        Fri, 29 May 2020 11:59:27 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590767967; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=D/JMvgaJGqi1jK8NRGNKnGGrv9rdFQusuj9ABakOAT0=; b=Oa+x6caV83pVotJTr9lQOmxOTwfJnkpmvW6Yg0Il5KVs+ZfNfwqd2iknfAE4V5WJ98SKT7hH
+ r9dGOw1xWaDIfZ+soj+OAGg8wGqg5HiCeguwhLQAsT9DYN/UiBW33MZ+kOlPUHSKpjJJjp/C
+ RPhabb6DhsoO6Er2ON17piRabaE=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI2MTA3ZSIsICJsaW51eC1ibHVldG9vdGhAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5ed131483ac6f4f603087c71 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 15:59:04
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3FE88C433CB; Fri, 29 May 2020 15:59:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B3176C433C6;
+        Fri, 29 May 2020 15:59:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B3176C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     sean.wang@mediatek.com, marcel@holtmann.org,
+        johan.hedberg@gmail.com, matthias.bgg@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, mka@chromium.org,
+        zijuhu@codeaurora.org
+Subject: [PATCH v1] Bluetooth: btmtkuart: Use serdev_device_write_buf() instead of serdev_device_write()
+Date:   Fri, 29 May 2020 23:58:56 +0800
+Message-Id: <1590767936-21907-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============2492585243667061215==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: base64
+serdev_device_write() is not appropriate at here because
+serdev_device_write_wakeup() is not used to release completion hold
+by the former at @write_wakeup member of struct serdev_device_ops.
 
-ClRoaXMgaXMgYXV0b21hdGVkIGVtYWlsIGFuZCBwbGVhc2UgZG8gbm90IHJlcGx5IHRvIHRoaXMg
-ZW1haWwhCgpEZWFyIHN1Ym1pdHRlciwKClRoYW5rIHlvdSBmb3Igc3VibWl0dGluZyB0aGUgcGF0
-Y2hlcyB0byB0aGUgbGludXggYmx1ZXRvb3RoIG1haWxpbmcgbGlzdC4KV2hpbGUgd2UgYXJlIHBy
-ZXBhcmluZyBmb3IgcmV2aWV3aW5nIHRoZSBwYXRjaGVzLCB3ZSBmb3VuZCB0aGUgZm9sbG93aW5n
-Cmlzc3VlL3dhcm5pbmcuCgpUZXN0IFJlc3VsdDoKY2hlY2tidWlsZCBGYWlsZWQKCk91dHB1dHM6
-CmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQgKHNlZSBg
-VScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQgKHNl
-ZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQg
-KHNlZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1
-bHQgKHNlZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRl
-ZmF1bHQgKHNlZSBgVScpCnNyYy9tYWluLmM6MTUzOjE4OiBlcnJvcjogaW5pdGlhbGl6YXRpb24g
-ZGlzY2FyZHMg4oCYY29uc3TigJkgcXVhbGlmaWVyIGZyb20gcG9pbnRlciB0YXJnZXQgdHlwZSBb
-LVdlcnJvcj1kaXNjYXJkZWQtcXVhbGlmaWVyc10KICAxNTMgfCAgeyAiQ29udHJvbGxlciIsIGNv
-bnRyb2xsZXJfb3B0aW9ucyB9LAogICAgICB8ICAgICAgICAgICAgICAgICAgXn5+fn5+fn5+fn5+
-fn5+fn5+CmNjMTogYWxsIHdhcm5pbmdzIGJlaW5nIHRyZWF0ZWQgYXMgZXJyb3JzCm1ha2VbMV06
-ICoqKiBbTWFrZWZpbGU6ODkwMTogc3JjL2JsdWV0b290aGQtbWFpbi5vXSBFcnJvciAxCm1ha2U6
-ICoqKiBbTWFrZWZpbGU6NDAxMDogYWxsXSBFcnJvciAyCgoKCi0tLQpSZWdhcmRzLApMaW51eCBC
-bHVldG9vdGgK
+Fix by using serdev_device_write_buf() instead of serdev_device_write().
 
---===============2492585243667061215==--
+Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+---
+ drivers/bluetooth/btmtkuart.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/bluetooth/btmtkuart.c b/drivers/bluetooth/btmtkuart.c
+index 8a81fbca5c9d..6c40bc75fb5b 100644
+--- a/drivers/bluetooth/btmtkuart.c
++++ b/drivers/bluetooth/btmtkuart.c
+@@ -695,8 +695,7 @@ static int btmtkuart_change_baudrate(struct hci_dev *hdev)
+ 
+ 	/* Send a dummy byte 0xff to activate the new baudrate */
+ 	param = 0xff;
+-	err = serdev_device_write(bdev->serdev, &param, sizeof(param),
+-				  MAX_SCHEDULE_TIMEOUT);
++	err = serdev_device_write_buf(bdev->serdev, &param, sizeof(param));
+ 	if (err < 0 || err < sizeof(param))
+ 		return err;
+ 
+-- 
+2.7.4
+
