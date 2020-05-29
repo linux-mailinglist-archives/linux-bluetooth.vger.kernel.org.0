@@ -2,126 +2,89 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 052EB1E8202
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 May 2020 17:39:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F1941E81FF
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 May 2020 17:39:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727053AbgE2Pji (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 29 May 2020 11:39:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51520 "EHLO
+        id S1727090AbgE2PjT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 29 May 2020 11:39:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726838AbgE2Pji (ORCPT
+        with ESMTP id S1726898AbgE2PjR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 29 May 2020 11:39:38 -0400
-Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14490C03E969
-        for <linux-bluetooth@vger.kernel.org>; Fri, 29 May 2020 08:39:38 -0700 (PDT)
-Received: by mail-vs1-xe33.google.com with SMTP id a68so1733172vsd.8
-        for <linux-bluetooth@vger.kernel.org>; Fri, 29 May 2020 08:39:38 -0700 (PDT)
+        Fri, 29 May 2020 11:39:17 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8AA6C03E969
+        for <linux-bluetooth@vger.kernel.org>; Fri, 29 May 2020 08:39:17 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id c12so2521618qkk.13
+        for <linux-bluetooth@vger.kernel.org>; Fri, 29 May 2020 08:39:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=F2ZqteO5Fl457QXeO6VJQuX//SkTDU319wEQJIAHCbg=;
-        b=S1MxHWQz8z5UywgSr+lZEtNog26SLKx72uEnIjRWgBPzD5pmIqZGRjTyiBrZy8LUSd
-         Hzl4SNJk8JvxrSvXiZ0Y/ihuO3eOFjYOgxtB4AGy5jXpMzH//6l/vqxJCG9YuIPSvcKi
-         /cXkLrp3WqdTPIx+IJmvOr11Onho3SPsjZSoM=
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=DIy0ITn9dm7qe6UG4VpiKzHkUR6AtBQiINnZO05xR8s=;
+        b=Aa5V73cif+gdEaDwEGBJm8eyvKNPOr90C2CpFn3RCboehUPcZSghn/C4l6AJlKcoZ9
+         YCnBLaFIcIdurUINcdDeg6XSffsdcbZCwn0aAY1j5grkO5RSARH1DmKIZi1NabJmLE5k
+         rfFnS+MPSwxozxULEAswtPv/FsyI73ht3RYQMJX11Tnxg9TZBxUBos6u+KISCzLnN96C
+         GgY9IK8ngCCzBEvFIwjy3BMfoWMByW8Ym7PPJ4s14P7qXEdFQUMrUczXjOM8KolJL3I7
+         danxRa6j7kd09ebllZ9Xnc75ktg+r1cAOyGkC1LcinPr/yVCYQ2hGLhbRZQ+l8CrZf3q
+         T8JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=F2ZqteO5Fl457QXeO6VJQuX//SkTDU319wEQJIAHCbg=;
-        b=AwIea9pOX9fXsZkU4XMRZtgDUekHUswlyACkYNHJ6/fixeDjiFwE5xm4ETstA46fVV
-         hiExgjHucCYXXCkZAfXQnfeTCKF/hYm/rCIgfRAgP3d/fVw4I23M3Pgg22sdtUgMW7p3
-         Y5ZgGvzW+g8SRT1HZKNmEKrHFTKp03911krGSOWAZSYyogErPsQuAEB5cyqZFybeOQpE
-         lV3j2IodZoVgdJx7rCKbVPey8wKpt4nsxjXSpvf8UsIE6N0zyGvwkVMbccHzNkBx0zNB
-         ZigUbc8jKLG+wWwMg0LVkpWN7I/cq1okK7tId/fz7uZ6CZFL4fvJU9p1vw2ohysG5jBE
-         b+6w==
-X-Gm-Message-State: AOAM531iFYm11J3FV5T74ALeA6MdzIwgAdfWZ8BKlCeVyr2XlAG0kxyH
-        fkr+YhcCfeKYGYPMUeR3/N6ptLGhdXQ=
-X-Google-Smtp-Source: ABdhPJxAi3Z3IKipMbtQ7u7AT7YxSzLA6WLAq+ptZYdMLujqJc8gqZhS59VX1UShfRgn72JnKXuR5Q==
-X-Received: by 2002:a67:407:: with SMTP id 7mr6129672vse.95.1590766777026;
-        Fri, 29 May 2020 08:39:37 -0700 (PDT)
-Received: from alain.c.googlers.com.com (252.177.243.35.bc.googleusercontent.com. [35.243.177.252])
-        by smtp.gmail.com with ESMTPSA id o2sm1309494vkl.27.2020.05.29.08.39.36
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=DIy0ITn9dm7qe6UG4VpiKzHkUR6AtBQiINnZO05xR8s=;
+        b=EVmAlAiDxlHSiacBcydmSOwzT1u9B9+jMJn3/b1m4XLZi8h0bndBQtuXQxmd2iI1W+
+         q0oWr5h2mR7BLoFHdqt1+LapPxDPAp37IJrvKdkvBlh8tzuHaNcGN8+afumj4QuJH9Mq
+         MtbqQiBprx0IcU5c0UkP5so5WjnZYki2v4RATCMCBAPNpC29eDDd06yIEm/205u3sw/E
+         btI7dyozqwjTM311z4ZGC5AowYI+/WhfMIEwl6aK5dIIsLePwSX2E2ZOw2lUcISuZ7DP
+         uTSbwtbYFp9aKqblcyAiBlqgMQua12b9iC/lZNwGrzsiRvk3/LdjEiNXuPvLTHGF92a0
+         urvA==
+X-Gm-Message-State: AOAM532qNxihXluCNtZM644DY4CZVALHNFFyt7tSIKTEku7KpjIJiIxg
+        BiDbkDdoOqys3eOUoqNnyAOq+pKANA0=
+X-Google-Smtp-Source: ABdhPJy40bgf8v/YZWFr0tg+kPTGpvSKgcziTILR0WwUbVbkvLOqDSf8ePMQPjlpx9SRb75qTlbsiA==
+X-Received: by 2002:a37:4e02:: with SMTP id c2mr7779196qkb.97.1590766756758;
+        Fri, 29 May 2020 08:39:16 -0700 (PDT)
+Received: from [172.17.0.2] ([13.90.47.33])
+        by smtp.gmail.com with ESMTPSA id n13sm8831027qtb.20.2020.05.29.08.39.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2020 08:39:36 -0700 (PDT)
-From:   Alain Michaud <alainm@chromium.org>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Alain Michaud <alainm@chromium.org>
-Subject: [BlueZ PATCH v3 4/4] fixing const decoration warnins on options.
-Date:   Fri, 29 May 2020 15:38:17 +0000
-Message-Id: <20200529153814.213125-5-alainm@chromium.org>
-X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652-goog
-In-Reply-To: <20200529153814.213125-1-alainm@chromium.org>
-References: <20200529153814.213125-1-alainm@chromium.org>
+        Fri, 29 May 2020 08:39:16 -0700 (PDT)
+Message-ID: <5ed12ca4.1c69fb81.c0757.3bda@mx.google.com>
+Date:   Fri, 29 May 2020 08:39:16 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2492585243667061215=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, alainm@chromium.org
+Subject: RE: Load default system configuration from file.
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20200529152940.208214-2-alainm@chromium.org>
+References: <20200529152940.208214-2-alainm@chromium.org>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This changes fixes const decoration warnins on options.
+--===============2492585243667061215==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
 
----
+ClRoaXMgaXMgYXV0b21hdGVkIGVtYWlsIGFuZCBwbGVhc2UgZG8gbm90IHJlcGx5IHRvIHRoaXMg
+ZW1haWwhCgpEZWFyIHN1Ym1pdHRlciwKClRoYW5rIHlvdSBmb3Igc3VibWl0dGluZyB0aGUgcGF0
+Y2hlcyB0byB0aGUgbGludXggYmx1ZXRvb3RoIG1haWxpbmcgbGlzdC4KV2hpbGUgd2UgYXJlIHBy
+ZXBhcmluZyBmb3IgcmV2aWV3aW5nIHRoZSBwYXRjaGVzLCB3ZSBmb3VuZCB0aGUgZm9sbG93aW5n
+Cmlzc3VlL3dhcm5pbmcuCgpUZXN0IFJlc3VsdDoKY2hlY2tidWlsZCBGYWlsZWQKCk91dHB1dHM6
+CmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQgKHNlZSBg
+VScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQgKHNl
+ZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQg
+KHNlZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1
+bHQgKHNlZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRl
+ZmF1bHQgKHNlZSBgVScpCnNyYy9tYWluLmM6MTUzOjE4OiBlcnJvcjogaW5pdGlhbGl6YXRpb24g
+ZGlzY2FyZHMg4oCYY29uc3TigJkgcXVhbGlmaWVyIGZyb20gcG9pbnRlciB0YXJnZXQgdHlwZSBb
+LVdlcnJvcj1kaXNjYXJkZWQtcXVhbGlmaWVyc10KICAxNTMgfCAgeyAiQ29udHJvbGxlciIsIGNv
+bnRyb2xsZXJfb3B0aW9ucyB9LAogICAgICB8ICAgICAgICAgICAgICAgICAgXn5+fn5+fn5+fn5+
+fn5+fn5+CmNjMTogYWxsIHdhcm5pbmdzIGJlaW5nIHRyZWF0ZWQgYXMgZXJyb3JzCm1ha2VbMV06
+ICoqKiBbTWFrZWZpbGU6ODkwMTogc3JjL2JsdWV0b290aGQtbWFpbi5vXSBFcnJvciAxCm1ha2U6
+ICoqKiBbTWFrZWZpbGU6NDAxMDogYWxsXSBFcnJvciAyCgoKCi0tLQpSZWdhcmRzLApMaW51eCBC
+bHVldG9vdGgK
 
-Changes in v3: None
-Changes in v2: None
-
- src/main.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/src/main.c b/src/main.c
-index ca27f313d..cea50a3d2 100644
---- a/src/main.c
-+++ b/src/main.c
-@@ -80,7 +80,7 @@ static enum {
- 	MPS_MULTIPLE,
- } mps = MPS_OFF;
- 
--static const char *supported_options[] = {
-+static const char * const supported_options[] = {
- 	"Name",
- 	"Class",
- 	"DiscoverableTimeout",
-@@ -129,7 +129,7 @@ static const char * const controller_options[] = {
- 	NULL
- };
- 
--static const char *policy_options[] = {
-+static const char * const policy_options[] = {
- 	"ReconnectUUIDs",
- 	"ReconnectAttempts",
- 	"ReconnectIntervals",
-@@ -137,7 +137,7 @@ static const char *policy_options[] = {
- 	NULL
- };
- 
--static const char *gatt_options[] = {
-+static const char * const gatt_options[] = {
- 	"Cache",
- 	"KeySize",
- 	"ExchangeMTU",
-@@ -146,8 +146,8 @@ static const char *gatt_options[] = {
- };
- 
- static const struct group_table {
--	const char *name;
--	const char **options;
-+	const char * const name;
-+	const char * const * const options;
- } valid_groups[] = {
- 	{ "General",	supported_options },
- 	{ "Controller", controller_options },
-@@ -243,7 +243,7 @@ static enum jw_repairing_t parse_jw_repairing(const char *jw_repairing)
- 
- 
- static void check_options(GKeyFile *config, const char *group,
--						const char **options)
-+					const char * const * const options)
- {
- 	char **keys;
- 	int i;
--- 
-2.27.0.rc0.183.gde8f92d652-goog
-
+--===============2492585243667061215==--
