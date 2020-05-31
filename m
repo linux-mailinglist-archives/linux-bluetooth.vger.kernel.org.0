@@ -2,91 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DE871E95C1
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 31 May 2020 07:08:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35AA61E9840
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 31 May 2020 16:48:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726001AbgEaFIY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 31 May 2020 01:08:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33730 "EHLO
+        id S1728120AbgEaOsm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 31 May 2020 10:48:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725895AbgEaFIX (ORCPT
+        with ESMTP id S1725889AbgEaOsl (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 31 May 2020 01:08:23 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B3BC05BD43
-        for <linux-bluetooth@vger.kernel.org>; Sat, 30 May 2020 22:08:23 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id g28so5425990qkl.0
-        for <linux-bluetooth@vger.kernel.org>; Sat, 30 May 2020 22:08:23 -0700 (PDT)
+        Sun, 31 May 2020 10:48:41 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2D3C061A0E
+        for <linux-bluetooth@vger.kernel.org>; Sun, 31 May 2020 07:48:40 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id x1so6758741ejd.8
+        for <linux-bluetooth@vger.kernel.org>; Sun, 31 May 2020 07:48:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=/x8nYvAaPSL3XCmiL2kwH0Mic4EeC53mssndxnU3kM8=;
-        b=ZhpOskFR05vybXPDcOCOnNPltwOlCUP7Gt62lPGPyOvUWQVNihsCl9UtVrnI/EKt7N
-         1QvrPwCgVlcRiiYU6xoF8bzYA3uvnDTM7CbRTLWU+w5n5MeG579C+vWHhIjJBkHbSKIT
-         Cbo4VtdL8AbAFuhLeveFC6kNKW2X//rJBVHbZilEABr2nbcH/3hHuV7luuJLC4pCPsE+
-         1UgGsUE5TH98KV8hFwE+UeJWyPZdrN3B3auVtuyKcG5oCE/uH5JpfdZpQ3mJ1EMIY0Kw
-         J+R52gTibuN/rOekAAGZ+ksriKJhW6UBzXijgxnHBVgIUD5MdsDjfCtzEAGs7vwSehXj
-         evnw==
+        d=noa-labs.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=QOLKLtuEbtRh7GCfNluxpoQGx5B4CjLi+p8ryZb4UKY=;
+        b=eJmItA1D549hG1erGwfbvioJ4quADH3ILKkUA47tQfHcTLOqKer0Nrh2kX+eINdvaI
+         2BfJs0+TO5Gdx/3ANZ89o8IalDES2eDJn4eVzIXCmLfyIlrRLGCVhYZgjRtJ5Z5GnoO1
+         7Y7l467uUXHDPs+bPrRmb1i6MzcLeK9ZsZN/E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=/x8nYvAaPSL3XCmiL2kwH0Mic4EeC53mssndxnU3kM8=;
-        b=YXWzy/pEYJGEjzzshWxpT5pWTwqslWQoXznOTycJqEx/PLoFQtlGhQVuiNxihvtg7Q
-         NQtfHFY5qlAf0qnX+n+XBPJCbT5u1PtKF4Cw9q2JvQ75BerfGHZCZPg7hOx8V92R5+l7
-         CBYW+70HekKI8YF8UWv57fUli/lirSv0fuvSwCbhdfphRz/YfgGZ2s8Xy2YiJI+Ua2HM
-         OcWnnvbjBpDbncblJ+Jvh+G0hFFfQoW7UhpYUaKufpbRUWA0Ob7OcVYmoUjevMkzFgRA
-         C4a/YgKsww++3q1HbQtpa/obIUTdxR7cG7UdtRdH6EYiD5tB3e7DfDzOoZl6k4ErwITd
-         iWPA==
-X-Gm-Message-State: AOAM533h52CKn2QwwT0pKbgV7zJ1rUChcFHCOiSDakjtXTcxRMggRn0a
-        t4rJoFsHq4z56BSBEOCz4mPd29VvmWA=
-X-Google-Smtp-Source: ABdhPJzE7Xcl1HdiN8oUog+l4MSnjL2ORynj1XX4oUjs7MDuzcy348y5QJYBjbLNqnSRRmOdcDD8VA==
-X-Received: by 2002:a37:38c:: with SMTP id 134mr12689484qkd.434.1590901702536;
-        Sat, 30 May 2020 22:08:22 -0700 (PDT)
-Received: from [172.17.0.2] ([20.186.64.244])
-        by smtp.gmail.com with ESMTPSA id d9sm11884978qtq.56.2020.05.30.22.08.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 May 2020 22:08:22 -0700 (PDT)
-Message-ID: <5ed33bc6.1c69fb81.ad95c.3131@mx.google.com>
-Date:   Sat, 30 May 2020 22:08:22 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============8431105606806830260=="
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=QOLKLtuEbtRh7GCfNluxpoQGx5B4CjLi+p8ryZb4UKY=;
+        b=qJdEZIYZfi83TCl7xFPeQM+WMp97NGZGm08cDIx0VVs25JdnDpos9ITm2DnS0fiJ0a
+         UTQ6tO28lOOte9mCwLGhaoO/bTtfEh1rklPR1Eybe7dbM/MI6yaxCNQwyiS5H28P6N7n
+         bYqSVxk4E/OsIAq+hqRucs80uMxd7v43jIcmjQTNfBZ8LesdQO4cAO2JlybW9avo2ePo
+         9Z2h0smP4JywkX5/EtOg1uND2+YyWlhcBT5YLC/Fz81zHZpw3Dbhd+102jLmwY7SzxEa
+         hb1TeWjcwbxVh8MRuU2T9syEuf6DbQUww4Fe9crhNZUrHxfwze+Cf81TELVfZXaTu7WJ
+         2o7g==
+X-Gm-Message-State: AOAM532Si211chvQlYoKUeFfj7MwOVHdozXro4xy2Rpsf5C8gqcqaDYk
+        J9KsloQd1rijCQAqnGzK/KKlE8YDor3rcWdwufXE7sUasm1U5LYF
+X-Google-Smtp-Source: ABdhPJw0yI1IaT1fPQZavG0htmUlkS94gOy9zmh5FKS3RcfaDOwWOBj9VjXOpBd1hp8q1eIFxBk+Wp4c+USeKzbfJUI=
+X-Received: by 2002:a17:906:404:: with SMTP id d4mr8124935eja.173.1590936518721;
+ Sun, 31 May 2020 07:48:38 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, inga.stotland@intel.com
-Subject: RE: [BlueZ,v2,4/5] mesh: Clean up style in net.c
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200531044128.16734-5-inga.stotland@intel.com>
-References: <20200531044128.16734-5-inga.stotland@intel.com>
+From:   Pavel Nikulin <pavel@noa-labs.com>
+Date:   Sun, 31 May 2020 20:48:27 +0600
+Message-ID: <CAG-pW8FPh=Nyc5wFZ3xasOsenPAhE7qW-Ey58pQsL5W+QscWeQ@mail.gmail.com>
+Subject: [Bluez] GATT battery service doesn't seem to function
+To:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============8431105606806830260==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello,
 
+I have to return to the topic of GATT battery service, it doesn't seem
+to be working. My Rapoo bt 4.0 mouse shows
+"0000180f-0000-1000-8000-00805f9b34fb" attribute ("battery service",)
+but I see nothing exposed on the dbus interface.
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While we are preparing for reviewing the patches, we found the following
-issue/warning.
-
-Test Result:
-checkgitlint Failed
-
-Outputs:
-3: B6 Body message is missing
-
-
-
----
-Regards,
-Linux Bluetooth
-
---===============8431105606806830260==--
+Can somebody with a BT 4.0 mouse that has battery service check if it
+works for them?
