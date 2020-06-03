@@ -2,119 +2,162 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42CC11ED467
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jun 2020 18:32:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D06A91ED4CE
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jun 2020 19:16:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725956AbgFCQcq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Jun 2020 12:32:46 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:34191 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725866AbgFCQcq (ORCPT
+        id S1725992AbgFCRQG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 3 Jun 2020 13:16:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725956AbgFCRQG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 3 Jun 2020 12:32:46 -0400
-Received: by mail-oi1-f193.google.com with SMTP id b8so2376788oic.1;
-        Wed, 03 Jun 2020 09:32:45 -0700 (PDT)
+        Wed, 3 Jun 2020 13:16:06 -0400
+Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76FDAC08C5C0
+        for <linux-bluetooth@vger.kernel.org>; Wed,  3 Jun 2020 10:16:06 -0700 (PDT)
+Received: by mail-il1-x141.google.com with SMTP id z2so3296500ilq.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Jun 2020 10:16:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CMCpsHUTNz4uoieqPTxZU+bogZX6IL51BPCrwDaWeJ4=;
+        b=hIL0DyWKlyYLBQlEfashDCo6q/pclt1ZtHXAWa6nZyTTj/jga47K5ghpl4JPdU7NT4
+         uH2t6DejbtsyBPjsXKvMTFcAeCMaN2IrollezojBQQLDjfgkl4SffjE8HcUuHFtrmYs7
+         yOU+jnmjpoWojqs/Zco7ZgsR+HTIEqK0GrUa03gGzUKyyYOhfp40yYnSEaUo2QfdjcFC
+         Dq44P2uzy8CQPfY/LoldMNS6XvkBfk880qLxtE9CXPX3JPaRWsqtBXuW28ZouCmk9hiT
+         2U6U4EJ7R1FFLT+Lwg5kCkIscBtISmd2javPLlj175vEPna2BXhy3utz3cZO2v3kz/9r
+         0fRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=8eVVamDCZsIXed1FQdAjYh2BNwd5A5G0fRXGVIZoFWM=;
-        b=FbfqrSLgcK5XwKzujDlED+V2dplMD2J0Li78KRQQsGuJQHEth8zHqf6P0mk7VOHCWu
-         ENvO66jlp0IatYh0cg+VDxTX+k1PqbgKHP27GUylTKjx0klmibLz1G7+V7Zct7ZR5pSa
-         NGzxNK9P6kwu6FX5zgf1zOKIlKSRNAxyDUEFWpM6QvlyjwpZS8ZBSUK8Cv7E7z7msNNk
-         FoPeuCK2GIj0LOqVYyhfCrROfXYIWgmVtlbI4tcUBWCKg2uBWmiW+v+iLp4VfPPcmeaV
-         l0MJ2V54T5i/e/wgVrbxTHmsA2QCSmCh6tEJ8iditgpBpgEwoXPBJpcfE3OCJKyUdNXk
-         E5Bg==
-X-Gm-Message-State: AOAM530W+hX/0vKJuzYQtjWLT3Yn9Hf4bs+dZB5wsZhxs6UfJBTzfNpm
-        iIuSliv/0xpls2c96zuAofDj9Qz4SuUN5H8GLCsUIQ8u
-X-Google-Smtp-Source: ABdhPJz0XArac/3LIuFoc/H/3+Ble7c2chheFZ1rjEzLZvOE7U6XFbZtXKWmLGb80Lg2DNZ1rGGjiNejavWr1SRQL/w=
-X-Received: by 2002:aca:ad88:: with SMTP id w130mr392135oie.103.1591201965522;
- Wed, 03 Jun 2020 09:32:45 -0700 (PDT)
+        bh=CMCpsHUTNz4uoieqPTxZU+bogZX6IL51BPCrwDaWeJ4=;
+        b=fdmXwzX6nwOot7Taru5XzD+9qNp7gUL34dr6YbIwq1beq2xRG25HTDnwYVJiwwPlep
+         jYVWvIxncIgXqIPe0b5B7zUnf53zFWoVsIDz1nrVOh4vmi7ZjG0za0RoeqlTacOUUC0Q
+         dpHn6S4WAk76QyO0SJ5ej8aBeRr6peatsMeWWz1hKsOmzu7pjJnF8H8XDYM2jonsafkS
+         9izlgDFLTyi4ufZYCCQXQDZzOsX0B1+QlV5d+NRwiyOFV7U/gMq37qd/ET2Vp3OlHzP/
+         6XU+WTCV7qy/xyon6NGcjc70UcNyqvaMt75YK0iw0yck7B8tLbyn0EHHc65Ns/xlTvmz
+         Ty1Q==
+X-Gm-Message-State: AOAM531s5ynGJR8kdJqe7gVoixixUegXizvvqryQO3WVEVaAUiQuPRlK
+        YYuSni2cbqjNIf/z4rEf7HlOfWek4752zEVvWYjptUkzlA0=
+X-Google-Smtp-Source: ABdhPJzxoVjqkbB7g7QTvyujvGQzCe8hIa4REeNgfn4jT4GXQO/4kLnuPTyep0oYtnukdcIEX/uq9UNrsUpvw9GU+BQ=
+X-Received: by 2002:a92:de41:: with SMTP id e1mr491988ilr.199.1591204565832;
+ Wed, 03 Jun 2020 10:16:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAJZ5v0gA9Egmff0y4yTm2UH=ge+jJH1nMbLhTsRbUtP=+m8OLg@mail.gmail.com>
- <CANFp7mWTk9qFqUhvwhxZY97_J=MwwWV-8ctJYFGT8_QJw_bPmA@mail.gmail.com>
-In-Reply-To: <CANFp7mWTk9qFqUhvwhxZY97_J=MwwWV-8ctJYFGT8_QJw_bPmA@mail.gmail.com>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Wed, 3 Jun 2020 18:32:34 +0200
-Message-ID: <CAJZ5v0jmdAK2R_oo50w0WLqG5rfGeeAxoDetuH-FEMRh=Oz4tw@mail.gmail.com>
-Subject: Re: Problematic BT commit in Linux 5.7
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>,
-        Len Brown <len.brown@intel.com>,
-        Todd Brandt <todd.e.brandt@linux.intel.com>,
-        "Zhang, Rui" <rui.zhang@intel.com>
+References: <20200407205611.1002903-1-marcel@holtmann.org> <CAOVXEJJeriSp=5ywt4ZxND7mYY=yepShCC5U-8s8=_rWQup3wQ@mail.gmail.com>
+In-Reply-To: <CAOVXEJJeriSp=5ywt4ZxND7mYY=yepShCC5U-8s8=_rWQup3wQ@mail.gmail.com>
+From:   Sathish Narasimman <nsathish41@gmail.com>
+Date:   Wed, 3 Jun 2020 22:45:54 +0530
+Message-ID: <CAOVXEJLEdf34P6ZHT6YYNNRtWgN-BLb4ZRiifqTC64BfKZAjYQ@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: Update resolving list when updating whitelist
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Abhishek,
+Hi Marcel
 
-On Wed, Jun 3, 2020 at 6:29 PM Abhishek Pandit-Subedi
-<abhishekpandit@chromium.org> wrote:
+On Tue, May 5, 2020 at 6:41 PM Sathish Narasimman <nsathish41@gmail.com> wrote:
 >
-> Hi Rafael,
+> Hi Marcel
 >
-> I left a comment on the bugzilla post as well but I agree with you now
-> that it's probably bad to fail suspend when this occurs.
+> On Wed, Apr 8, 2020 at 2:26 AM Marcel Holtmann <marcel@holtmann.org> wrote:
+> >
+> > When the whitelist is updated, then also update the entries of the
+> > resolving list for devices where IRKs are available.
+> >
+> > Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+> > ---
+> >  net/bluetooth/hci_request.c | 37 +++++++++++++++++++++++++++++++++++--
+> >  1 file changed, 35 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+> > index efec2a0bb824..45fbda5323af 100644
+> > --- a/net/bluetooth/hci_request.c
+> > +++ b/net/bluetooth/hci_request.c
+> > @@ -695,6 +695,21 @@ static void del_from_white_list(struct hci_request *req, bdaddr_t *bdaddr,
+> >         bt_dev_dbg(req->hdev, "Remove %pMR (0x%x) from whitelist", &cp.bdaddr,
+> >                    cp.bdaddr_type);
+> >         hci_req_add(req, HCI_OP_LE_DEL_FROM_WHITE_LIST, sizeof(cp), &cp);
+> > +
+> > +       if (use_ll_privacy(req->hdev)) {
+> > +               struct smp_irk *irk;
+> > +
+> > +               irk = hci_find_irk_by_addr(req->hdev, bdaddr, bdaddr_type);
+> > +               if (irk) {
+> > +                       struct hci_cp_le_del_from_resolv_list cp;
+> > +
+> > +                       cp.bdaddr_type = bdaddr_type;
+> > +                       bacpy(&cp.bdaddr, bdaddr);
+> > +
+> > +                       hci_req_add(req, HCI_OP_LE_DEL_FROM_RESOLV_LIST,
+> > +                                   sizeof(cp), &cp);
+> > +               }
+> > +       }
+> >  }
+> >
+> >  /* Adds connection to white list if needed. On error, returns -1. */
+> > @@ -715,7 +730,7 @@ static int add_to_white_list(struct hci_request *req,
+> >                 return -1;
+> >
+> >         /* White list can not be used with RPAs */
+> > -       if (!allow_rpa &&
+> > +       if (!allow_rpa && !use_ll_privacy(hdev) &&
+> >             hci_find_irk_by_addr(hdev, &params->addr, params->addr_type)) {
+> >                 return -1;
+> >         }
+> > @@ -732,6 +747,24 @@ static int add_to_white_list(struct hci_request *req,
+> >                    cp.bdaddr_type);
+> >         hci_req_add(req, HCI_OP_LE_ADD_TO_WHITE_LIST, sizeof(cp), &cp);
+> >
+> > +       if (use_ll_privacy(hdev)) {
+> > +               struct smp_irk *irk;
+> > +
+> > +               irk = hci_find_irk_by_addr(hdev, &params->addr,
+> > +                                          params->addr_type);
+> > +               if (irk) {
+> > +                       struct hci_cp_le_add_to_resolv_list cp;
+> > +
+> > +                       cp.bdaddr_type = params->addr_type;
+> > +                       bacpy(&cp.bdaddr, &params->addr);
+> > +                       memcpy(cp.peer_irk, irk->val, 16);
+> > +                       memset(cp.local_irk, 0, 16);
+> Shall we memcpy hdev->irk as local_irk here.
+> if  privacy (HCI_PRIVACY)  is enabled. also if controller supports
+> LL_PRIVACY so that stack can utilize it.
+> else continue with HCI_PRIVACY.
+> Is there any drawback with this approach. please guide
+> > +
+> > +                       hci_req_add(req, HCI_OP_LE_ADD_TO_RESOLV_LIST,
+> > +                                   sizeof(cp), &cp);
+> > +               }
+> > +       }
+> > +
+> >         return 0;
+> >  }
+> >
+> > @@ -772,7 +805,7 @@ static u8 update_white_list(struct hci_request *req)
+> >                 }
+> >
+> >                 /* White list can not be used with RPAs */
+> > -               if (!allow_rpa &&
+> > +               if (!allow_rpa && !use_ll_privacy(hdev) &&
+> >                     hci_find_irk_by_addr(hdev, &b->bdaddr, b->bdaddr_type)) {
+> >                         return 0x00;
+> >                 }
+> > --
+> > 2.25.2
+> >
+
+I have uploaded patch v2 with a slight modification over your patch.
+can you please review
 >
-> At https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/tree/net/bluetooth/hci_core.c#n3363,
-> we try to recover from a failed suspend by restoring running state and
-> returning an -EBUSY.
-> I think if we change this logic to not attempt to restore until
-> resume, log the error and allow suspend, that would probably be
-> preferable from a suspend perspective.
-> I will make this change, test it out and send the patch today.
+> Regards
+> Sathish N
 
-Thank you!
-
-Please CC linux-pm as well as Len Brown and Todd Brandt (both in the
-CC list of this message) on that patch.
-
-Thanks!
-
-
-> On Wed, Jun 3, 2020 at 9:16 AM Rafael J. Wysocki <rafael@kernel.org> wrote:
-> >
-> > Hi Marcel,
-> >
-> > Unfortunately, we are observing system suspend failures on multiple
-> > lab machines as reported in the BZ entry at
-> >
-> > https://bugzilla.kernel.org/show_bug.cgi?id=207629
-> >
-> > which is due to the following commit:
-> >
-> > commit dd522a7429b07e4441871ae75ebbfcf53635bdd4
-> > Author: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> > Date:   Wed Mar 11 08:54:02 2020 -0700
-> >
-> >     Bluetooth: Handle LE devices during suspend
-> >
-> > Ostensibly, this is because the BT firmware on the machines in
-> > question does not match the new kernel code, but the firmware update
-> > requirement is not entirely obvious to the users and the steps to take
-> > in order to upgrade the firmware are not clear.
-> >
-> > Apart from the above, failing system suspend for a reason like a
-> > protocol timeout isn't really user-friendly, because the user may just
-> > have closed the lid of a laptop and is expecting the system to be
-> > suspended (so it may go into a backpack or similar).  Yes, the driver
-> > may not be able to suspend its device gracefully, but failing the
-> > entire system suspend really is a big deal and should be treated as a
-> > last-resort type of action.
-> >
-> > As stated in the BZ above, reverting the above commit along with
-> > "Bluetooth: Pause discovery and advertising during suspend"
-> > (4867bd007d25a8dfd4ffc558534f7aec8b361789) makes the issue go away, so
-> > can you please consider doing that?
-> >
-> > Alternatively, would it be possible to address the issue in a way that
-> > would not require many users to update firmware on their systems?
-> >
-> > Cheers,
-> > Rafael
+Regards
+Sathish N
