@@ -2,78 +2,84 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB2D71ED524
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jun 2020 19:42:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F0DA1ED548
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jun 2020 19:48:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726166AbgFCRmX convert rfc822-to-8bit (ORCPT
+        id S1726393AbgFCRrz convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Jun 2020 13:42:23 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:48206 "EHLO
+        Wed, 3 Jun 2020 13:47:55 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:35918 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726061AbgFCRmX (ORCPT
+        with ESMTP id S1726103AbgFCRry (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 3 Jun 2020 13:42:23 -0400
+        Wed, 3 Jun 2020 13:47:54 -0400
 Received: from marcel-macbook.fritz.box (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 1E3C1CED2C;
-        Wed,  3 Jun 2020 19:52:09 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id D637ACED2E;
+        Wed,  3 Jun 2020 19:57:39 +0200 (CEST)
 Content-Type: text/plain;
-        charset=us-ascii
+        charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH v2 1/2] Bluetooth: Add support to Intel read supported
- feature
+Subject: Re: [PATCH 0/4] marvell: Fix firmware filenames for sd8977/sd8997
+ chipsets
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200603101523.12547-1-kiran.k@intel.com>
-Date:   Wed, 3 Jun 2020 19:42:20 +0200
-Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        ravishankar.srivatsa@intel.com,
-        Chethan T N <chethan.tumkur.narayan@intel.com>,
-        Ps@vger.kernel.org, AyappadasX <AyappadasX.Ps@intel.com>
+In-Reply-To: <20200603082229.15043-1-pali@kernel.org>
+Date:   Wed, 3 Jun 2020 19:47:51 +0200
+Cc:     Ganapathi Bhat <ganapathi.bhat@nxp.com>,
+        Amitkumar Karwar <amitkarwar@gmail.com>,
+        Xinming Hu <huxinming820@gmail.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        =?utf-8?Q?Marek_Beh=C3=BAn?= <marek.behun@nic.cz>,
+        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+        Hemantkumar Suthar <shemant@marvell.com>,
+        Rakesh Parmar <rakeshp@marvell.com>,
+        Zhaoyang Liu <liuzy@marvell.com>, Cathy Luo <cluo@marvell.com>
 Content-Transfer-Encoding: 8BIT
-Message-Id: <E929E0E0-E28A-4874-B168-A5E03C40F1F8@holtmann.org>
-References: <20200603101523.12547-1-kiran.k@intel.com>
-To:     Kiran K <kiran.k@intel.com>
+Message-Id: <3159E2B0-8B61-42AC-8DBC-BC036B809A85@holtmann.org>
+References: <20200603082229.15043-1-pali@kernel.org>
+To:     =?utf-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
 X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Kiran,
+Hi Pali,
 
-> The command shall read the Intel controller supported
-> feature. Based on the supported features addtional debug
-> configuration shall be enabled.
+> This patch series fixes mwifiex and btmrvl drivers to load firmware for sd8977
+> and sd8997 chipsets from correct filename.
 > 
-> Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
-> Signed-off-by: Ps, AyappadasX <AyappadasX.Ps@intel.com>
-> Signed-off-by: Kiran K <kiran.k@intel.com>
-> ---
-> drivers/bluetooth/btintel.c | 34 ++++++++++++++++++++++++++++++++++
-> drivers/bluetooth/btintel.h | 14 ++++++++++++++
-> drivers/bluetooth/btusb.c   |  8 +++++++-
-> 3 files changed, 55 insertions(+), 1 deletion(-)
+> Both Marvell distribution package and linux-firmware repository [1] contain
+> firmware for these chipsets in files sdsd8977_combo_v2.bin/sdsd8997_combo_v4.bin.
 > 
-> diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-> index 6a0e2c5a8beb..09e697b92426 100644
-> --- a/drivers/bluetooth/btintel.c
-> +++ b/drivers/bluetooth/btintel.c
-> @@ -754,6 +754,40 @@ void btintel_reset_to_bootloader(struct hci_dev *hdev)
-> }
-> EXPORT_SYMBOL_GPL(btintel_reset_to_bootloader);
+> Linux drivers mwifiex and btmrvl try to load firmware for these chipsets from
+> sd8977_uapsta.bin/sd8997_uapsta.bin files which obviously fails as these files
+> do not exist neither in linux-firmware [1] nor in Marvell distribution packages.
 > 
-> +int btintel_read_supported_features(struct hci_dev *hdev,
-> +	struct intel_supported_features *supported_features)
-> +{
-> +	struct sk_buff *skb;
-> +	u8 page_no = 1;
-> +
-> +	/* Intel controller supports two pages, each page is of 128-bit
-> +	 * feature bit mask. And each bit defines specific feature support
-> +	 */
-> +	skb = __hci_cmd_sync(hdev, 0xfca6, sizeof(page_no), &page_no,
-> +		HCI_INIT_TIMEOUT);
+> So the result is that Marvell sd8977 and sd8997 chipsets via mainline kernel
+> drivers (mwifiex and btmrvl) do not work out of box.
+> 
+> Each patch in this series fixes particular git commit which introduced usage
+> of incorrect firmware filename. Also each patch contains Fixes: line for easier
+> backporting to stable kernels.
+> 
+> mwifiex (1/4, 2/4) and btmrvl (3/4, 4/4) parts of this patch series can be
+> applied separately via wireless and bluetooth trees. I'm sending all four
+> patches in one patch series for easier review.
+> 
+> [1] - https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/mrvl
+> 
+> Pali Rohár (4):
+>  mwifiex: Fix firmware filename for sd8977 chipset
+>  mwifiex: Fix firmware filename for sd8997 chipset
+>  btmrvl: Fix firmware filename for sd8977 chipset
+>  btmrvl: Fix firmware filename for sd8997 chipset
+> 
+> drivers/bluetooth/btmrvl_sdio.c             | 8 ++++----
+> drivers/net/wireless/marvell/mwifiex/sdio.h | 4 ++--
+> 2 files changed, 6 insertions(+), 6 deletions(-)
 
-Please get the coding style right first. We have plenty of examples in the same file on how to do this.
+all 4 patches have been applied to bluetooth-next tree.
 
 Regards
 
