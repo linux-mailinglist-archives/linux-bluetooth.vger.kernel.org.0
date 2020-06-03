@@ -2,140 +2,150 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8243E1ED817
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jun 2020 23:31:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 53F331ED8E7
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Jun 2020 01:04:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726034AbgFCVbM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Jun 2020 17:31:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36966 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725961AbgFCVbL (ORCPT
+        id S1726135AbgFCXDV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 3 Jun 2020 19:03:21 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:40024 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726062AbgFCXDU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 3 Jun 2020 17:31:11 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AD24C08C5C0
-        for <linux-bluetooth@vger.kernel.org>; Wed,  3 Jun 2020 14:31:10 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id t132so2038955vst.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Jun 2020 14:31:10 -0700 (PDT)
+        Wed, 3 Jun 2020 19:03:20 -0400
+Received: by mail-pg1-f195.google.com with SMTP id o8so2625311pgm.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Jun 2020 16:03:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JUaeWtaycwIzCev5kfRxlW9qrUY+p8Hm/aqijsovNfY=;
-        b=oFj9Ts67r+0LFpea3FIfUHxM4TANETordKvibgmkjMpGDDLUFCSbH/kuh9lIGPl2Rn
-         +fma5i6tVDsGXZSRh8ugXVEaKvRCbvlcEMgwDwafb7+ncHNLbrQlv8SWOETsPHJ8Nd5i
-         Z1Yd4Mry/xXUGfMaiUhQQkPSZIT0T7O5rnR0U=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ez/bvlepDduVIxHglwNwBFWJmOXjR008iaFnpJzBvrU=;
+        b=ElHgxlfyjmI7NpucOINNAzsvZ5SNoxnKGKnesGMsgq+IQV/BDLWGnfmdpJzmimiXXu
+         ZvbjRqNFBCupDLSbotVaavThprfaI9hOeZQFEefs91YYMupST4hZ86HLrYoqd/Wi7Brt
+         HKq8EBzLAbHemO26c3THGoxqcIuMiXxhsmFMk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JUaeWtaycwIzCev5kfRxlW9qrUY+p8Hm/aqijsovNfY=;
-        b=kkJW2hnHkHacsmnb2Qu7PtONLKxgFdkrmwV1f/AHhfbjdawsRSH2Z1POWTGyqiT32u
-         g6POR2RHf+mJ5GNBWESYDhNu3Q8ApxkM750ag0oHTlhjhPUmnFdEAffYdtC347VNr/2v
-         I2cxVL+0PBtdDrCw6+2a7Zpcgu3pNT8tH40aowlkA6c//t0bFhiJT28BX9PCgLk0cynR
-         OcYFehxfeD3Hxoaz7QGXN8IZYJeSv7zKLWUqJsv6Qxuxq9mGqSsP1mlvcFbFbr5SBUWp
-         wcTi2FYAJfcbXMIW/YdwZ69ZzRqggxfZoMGgB8g7rrRHTB4HebpLXDw+k2eHt3XbU+bf
-         KGgQ==
-X-Gm-Message-State: AOAM533Q0pUHrtfLsflm0F2/5y6/ywPlllV9M7YI5ainY8zS9oyj651W
-        WX6vuWRYU77FD8YMAsn7Krrv/JW/Fckf4QvONpqwHg==
-X-Google-Smtp-Source: ABdhPJwFcYbNTcopnrN4YAmNTrC+Qxlv6gAVC12W0WU7kgh2pTRMPlBfn6XuFpceDw+ZKvXLPW2oKaX344QBepbbRP8=
-X-Received: by 2002:a67:7307:: with SMTP id o7mr1113957vsc.93.1591219869527;
- Wed, 03 Jun 2020 14:31:09 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ez/bvlepDduVIxHglwNwBFWJmOXjR008iaFnpJzBvrU=;
+        b=VW19QaVrVqBX7VccyLcvJROc6DqFXZHH7l1LYtSvvyZblV2CeB/p6wuf6FyElMxZVu
+         mGIZwom0gRhJKv6l77j9bIqQoFGYGqfEk2ABzJbhMx0yPiWaNqMdMoA8UViXUYK16sNK
+         jPyA3HanidVlbaDc7MbMFQ1N4b/2o638Cp45+5L755dvk28pt1dgbnABc6eG2WFt/wpe
+         v0/wt93fsfSqTcSF/vynciKjOfusHEXlArNwqLtb2sf7sp7L5NYG3LAlKw7s1SIUgJqE
+         XHrue8kjRK/qx0WU08w/WyX5KALz+lTtbnG1+Ugfl2F2Z0Ra8NQ9a7gvOb25rdWQ6Zaw
+         Zzzw==
+X-Gm-Message-State: AOAM532kvyf9Q60umDPSMQA28Txo9bXWhi3ZLnUYZf3yvIHH5opkXxue
+        Q5ri1vLQPKHGfSEAgtDVg+zyet7KEH8=
+X-Google-Smtp-Source: ABdhPJzXfRYYgZFvZFZg1PG4JNnOp9p91vozXqd+fMmZBzV1SkYLmbUgwhnlA3AHb8tArt7NlPxYOg==
+X-Received: by 2002:a65:5206:: with SMTP id o6mr1568522pgp.16.1591225332425;
+        Wed, 03 Jun 2020 16:02:12 -0700 (PDT)
+Received: from mcchou0.mtv.corp.google.com ([2620:15c:202:201:b46:ac84:1014:9555])
+        by smtp.gmail.com with ESMTPSA id b11sm2715999pfd.178.2020.06.03.16.02.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Jun 2020 16:02:11 -0700 (PDT)
+From:   Miao-chen Chou <mcchou@chromium.org>
+To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
+Cc:     Alain Michaud <alainm@chromium.org>,
+        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        Manish Mandlik <mmandlik@chromium.org>,
+        Michael Sun <michaelfsun@google.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Yoni Shavit <yshavit@chromium.org>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH v2 1/7] Bluetooth: Add definitions for advertisement monitor features
+Date:   Wed,  3 Jun 2020 16:01:44 -0700
+Message-Id: <20200603160058.v2.1.I636f906bf8122855dfd2ba636352bbdcb50c35ed@changeid>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-References: <CAJZ5v0gA9Egmff0y4yTm2UH=ge+jJH1nMbLhTsRbUtP=+m8OLg@mail.gmail.com>
- <CANFp7mWTk9qFqUhvwhxZY97_J=MwwWV-8ctJYFGT8_QJw_bPmA@mail.gmail.com> <CAJZ5v0jmdAK2R_oo50w0WLqG5rfGeeAxoDetuH-FEMRh=Oz4tw@mail.gmail.com>
-In-Reply-To: <CAJZ5v0jmdAK2R_oo50w0WLqG5rfGeeAxoDetuH-FEMRh=Oz4tw@mail.gmail.com>
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Date:   Wed, 3 Jun 2020 14:30:55 -0700
-Message-ID: <CANFp7mXdJbVk_4zpUPV+5sstUfErycO-yuhBc0MrzO++8c7kag@mail.gmail.com>
-Subject: Re: Problematic BT commit in Linux 5.7
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>,
-        Len Brown <len.brown@intel.com>,
-        Todd Brandt <todd.e.brandt@linux.intel.com>,
-        "Zhang, Rui" <rui.zhang@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-I've sent a patch to fix this titled: [PATCH] Bluetooth: Allow suspend
-even when preparation has failed
-https://patchwork.kernel.org/patch/11586223/
+This adds support for Advertisement Monitor API. Here are the commands
+and events added.
+- Read Advertisement Monitor Feature command
+- Add Advertisement Pattern Monitor command
+- Remove Advertisement Monitor command
+- Advertisement Monitor Added event
+- Advertisement Monitor Removed event
 
-Please take a look.
+Signed-off-by: Miao-chen Chou <mcchou@chromium.org>
+---
 
-Thanks
-Abhishek
+Changes in v2: None
 
-On Wed, Jun 3, 2020 at 9:32 AM Rafael J. Wysocki <rafael@kernel.org> wrote:
->
-> Hi Abhishek,
->
-> On Wed, Jun 3, 2020 at 6:29 PM Abhishek Pandit-Subedi
-> <abhishekpandit@chromium.org> wrote:
-> >
-> > Hi Rafael,
-> >
-> > I left a comment on the bugzilla post as well but I agree with you now
-> > that it's probably bad to fail suspend when this occurs.
-> >
-> > At https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/tree/net/bluetooth/hci_core.c#n3363,
-> > we try to recover from a failed suspend by restoring running state and
-> > returning an -EBUSY.
-> > I think if we change this logic to not attempt to restore until
-> > resume, log the error and allow suspend, that would probably be
-> > preferable from a suspend perspective.
-> > I will make this change, test it out and send the patch today.
->
-> Thank you!
->
-> Please CC linux-pm as well as Len Brown and Todd Brandt (both in the
-> CC list of this message) on that patch.
->
-> Thanks!
->
->
-> > On Wed, Jun 3, 2020 at 9:16 AM Rafael J. Wysocki <rafael@kernel.org> wrote:
-> > >
-> > > Hi Marcel,
-> > >
-> > > Unfortunately, we are observing system suspend failures on multiple
-> > > lab machines as reported in the BZ entry at
-> > >
-> > > https://bugzilla.kernel.org/show_bug.cgi?id=207629
-> > >
-> > > which is due to the following commit:
-> > >
-> > > commit dd522a7429b07e4441871ae75ebbfcf53635bdd4
-> > > Author: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> > > Date:   Wed Mar 11 08:54:02 2020 -0700
-> > >
-> > >     Bluetooth: Handle LE devices during suspend
-> > >
-> > > Ostensibly, this is because the BT firmware on the machines in
-> > > question does not match the new kernel code, but the firmware update
-> > > requirement is not entirely obvious to the users and the steps to take
-> > > in order to upgrade the firmware are not clear.
-> > >
-> > > Apart from the above, failing system suspend for a reason like a
-> > > protocol timeout isn't really user-friendly, because the user may just
-> > > have closed the lid of a laptop and is expecting the system to be
-> > > suspended (so it may go into a backpack or similar).  Yes, the driver
-> > > may not be able to suspend its device gracefully, but failing the
-> > > entire system suspend really is a big deal and should be treated as a
-> > > last-resort type of action.
-> > >
-> > > As stated in the BZ above, reverting the above commit along with
-> > > "Bluetooth: Pause discovery and advertising during suspend"
-> > > (4867bd007d25a8dfd4ffc558534f7aec8b361789) makes the issue go away, so
-> > > can you please consider doing that?
-> > >
-> > > Alternatively, would it be possible to address the issue in a way that
-> > > would not require many users to update firmware on their systems?
-> > >
-> > > Cheers,
-> > > Rafael
+ include/net/bluetooth/mgmt.h | 49 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+
+diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
+index 16e0d87bd8fae..df36c50d15f53 100644
+--- a/include/net/bluetooth/mgmt.h
++++ b/include/net/bluetooth/mgmt.h
+@@ -702,6 +702,45 @@ struct mgmt_rp_set_exp_feature {
+ 	__le32 flags;
+ } __packed;
+ 
++#define MGMT_ADV_MONITOR_FEATURE_MASK_OR_PATTERNS    BIT(0)
++
++#define MGMT_OP_READ_ADV_MONITOR_FEATURES	0x004B
++#define MGMT_READ_ADV_MONITOR_FEATURES_SIZE	0
++struct mgmt_rp_read_adv_monitor_features {
++	__u32 supported_features;
++	__u32 enabled_features;
++	__u16 max_num_handles;
++	__u8 max_num_patterns;
++	__u16 num_handles;
++	__u16 handles[];
++}  __packed;
++
++struct mgmt_adv_pattern {
++	__u8 ad_type;
++	__u8 offset;
++	__u8 length;
++	__u8 value[31];
++} __packed;
++
++#define MGMT_OP_ADD_ADV_PATTERNS_MONITOR	0x004C
++struct mgmt_cp_add_adv_patterns_monitor {
++	__u8 pattern_count;
++	struct mgmt_adv_pattern patterns[];
++} __packed;
++#define MGMT_ADD_ADV_PATTERNS_MONITOR_SIZE	1
++struct mgmt_rp_add_adv_patterns_monitor {
++	__u16 monitor_handle;
++} __packed;
++
++#define MGMT_OP_REMOVE_ADV_MONITOR		0x004D
++struct mgmt_cp_remove_adv_monitor {
++	__u16 monitor_handle;
++} __packed;
++#define MGMT_REMOVE_ADV_MONITOR_SIZE		2
++struct mgmt_rp_remove_adv_monitor {
++	__u16 monitor_handle;
++} __packed;
++
+ #define MGMT_EV_CMD_COMPLETE		0x0001
+ struct mgmt_ev_cmd_complete {
+ 	__le16	opcode;
+@@ -933,3 +972,13 @@ struct mgmt_ev_exp_feature_changed {
+ 	__u8	uuid[16];
+ 	__le32	flags;
+ } __packed;
++
++#define MGMT_EV_ADV_MONITOR_ADDED	0x0028
++struct mgmt_ev_adv_monitor_added {
++	__u16 monitor_handle;
++}  __packed;
++
++#define MGMT_EV_ADV_MONITOR_REMOVED	0x0029
++struct mgmt_ev_adv_monitor_removed {
++	__u16 monitor_handle;
++}  __packed;
+-- 
+2.26.2
+
