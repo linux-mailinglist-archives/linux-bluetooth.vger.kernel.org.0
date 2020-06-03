@@ -2,102 +2,78 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C3F91ED133
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jun 2020 15:48:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB4CB1ED1A3
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jun 2020 16:04:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726088AbgFCNsw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Jun 2020 09:48:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50098 "EHLO
+        id S1725937AbgFCOEW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 3 Jun 2020 10:04:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbgFCNsu (ORCPT
+        with ESMTP id S1725833AbgFCOEW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 3 Jun 2020 09:48:50 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF41C08C5C4
-        for <linux-bluetooth@vger.kernel.org>; Wed,  3 Jun 2020 06:48:48 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id j12so1372378lfh.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Jun 2020 06:48:48 -0700 (PDT)
+        Wed, 3 Jun 2020 10:04:22 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F6B8C08C5C0
+        for <linux-bluetooth@vger.kernel.org>; Wed,  3 Jun 2020 07:04:22 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id k11so2289009ejr.9
+        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Jun 2020 07:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
-        bh=H8rDQEJouwBJIElP/Vpqq+PrvTZxQQy2H7A/MvyMMB0=;
-        b=LImzFWfFZ5MGhzJT1qzCsgEXVo7xW37sUIdrDLCKiXHQE0/Tq0rYX6Af/ld5dvlhmE
-         opFt8B8vUrhAfyxGIRs7eIQZmnu+cHCt7Dz4gEu/fnBWHDlMa8iVHDbM7XgqJUtNcgor
-         I4Oj1yGJ3ygOniFn6Dr+FHDS5BV48N/ldz+eBwWbR5/ADnYCL6KuztRZu9mrKJOxMODU
-         fmVICwwGmTYXXsgICTxE6unupuMdGq6+YZvkWKysZVLYK3Wwxrg7U2ecMo3WGycHWcU1
-         w35jxyjuynpm30G3kj/I18A4vO2Y2WN0kfTajUkGc1Xe9t84eQuWhnB4AGlAS8dbrawc
-         iC3A==
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=NZ6dOJJHuwK9cUIB8XV0gWGLAPOtvUoYd7NP06AHxTI=;
+        b=Sz8AMdDIhurzxYzZYP43jMKRn3ogzaEUG5iLv//140mjIfkp/LBh47rvx+gzP9EI76
+         IZETuzGdPPTIH9+lYjpdUcVYxmG3SAXA0pySLAncPFyaembyv88E+JNDG0I/hOL2A3Mf
+         85F7/LcoW6m9+Cd/5HUWAfEspIiqEIbWwMXQuTIa8cBzj9QfFigAMIoZkDMBmpZPQ7vi
+         Sa7xYs8OwqOzvO5vo/mqJaPRd2wQOsZvhr5Pa7vhamgkgTqoS0/FAgVKvdQK29YSDPGM
+         VTBfcQAoJe4AemNPFGNOaFA37oLDRXBeBgDo6U6S4ELkwIj6S7MnaIlVngMDxiaUEeYA
+         bHiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to;
-        bh=H8rDQEJouwBJIElP/Vpqq+PrvTZxQQy2H7A/MvyMMB0=;
-        b=IWBm6lfAUYRYkYhIAFGCUz58Lry8w9Kq/Bu2yWGMZ44sZF+5EsCLYXrrtTCczFL92X
-         dRooFXmcM0F0kLozO39dGMTzyDsKx2uX9ARv91HBewwuIjJqWBT/auQCQj/tYGalO1Om
-         s7ln3qGoFY1iRRmojFoAFoOQnpXGRKUXg39xi6uxcpCF6GDO7RKJT1I8JQlD1xc08eeZ
-         AzusDOef1V1TmtQfEv26fARhw2Gg3v1y0MTLikVmKQLIbOJszQdibEv9qCqew1WtGbxO
-         Zvivq/yWnk2bjlgSOJVNJ8ESqNDAuJCbhw7LNnRXeoqRg4Cl+6wJJVaon1BbtWIHSjvc
-         VCOQ==
-X-Gm-Message-State: AOAM533XAXbHaEmI39kVYXqZkCBj159Z7g2e/KyvlTDY4FmasoDWMFq+
-        bY9SEY0EoHX3/+TXfUmBK9rEM/boSBIatfK//UU=
-X-Google-Smtp-Source: ABdhPJzc66PsPJ7uf2JiXrqj7zfh07Ra5BpBms0TPKeexmxkWkfXYY+ch/Os+E85wJbdOE6Lm+0ANdybV/7KRG4HAcU=
-X-Received: by 2002:a05:6512:308e:: with SMTP id z14mr2566308lfd.29.1591192127287;
- Wed, 03 Jun 2020 06:48:47 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=NZ6dOJJHuwK9cUIB8XV0gWGLAPOtvUoYd7NP06AHxTI=;
+        b=OFMB5o6n5M2NVLxzKIiMC6Cy+uQ9PlTrrVo/+FabbiV5caf2QQ1g1LetaXbABayYbW
+         DXGAwR8WRAPZyJpem8tMb4r/iJCjOZF/t1omX76+CM4DGh8V4cyFbmG6eWeNRRf6z2zZ
+         65wBk8MyXREHcdfeOd15LF5aFzN8Ap0Fe1Yr+7lfVo5zUHExZpXhH0nc39HFyDB8e0Vl
+         aQGVo1bTuVjE7U8SCAzWgHe1vaIZl4YIrPDGwX5MUfdRoEGxjh8rrXtmHsCuK5IYXrjl
+         E++v5eciJM3g5JtJOqBgyvr3vBAiSQvwMShAw2OWG3EkM+UImDNB05PDUqO51blDLZ4b
+         SrNA==
+X-Gm-Message-State: AOAM532sLG90ilwlUIRi12YBLJtASNaVI0SNCXxZnlklSqDBZnc4LLWJ
+        H2Hr6FI4s4tVINANur68tJu+YUvMGQcGly0vTHDrpN61CPQ=
+X-Google-Smtp-Source: ABdhPJzAvuwVs/IJSaUqWt324KiOcjIuYByIfTOsxKOOs78Cy+5cblip3RCPooYNFilfHv6cdHSD27C5E1QPqabqtW0=
+X-Received: by 2002:a17:906:9a02:: with SMTP id ai2mr26955480ejc.97.1591193060186;
+ Wed, 03 Jun 2020 07:04:20 -0700 (PDT)
 MIME-Version: 1.0
-Reply-To: susanjones.wife@gmail.com
-Received: by 2002:a19:a405:0:0:0:0:0 with HTTP; Wed, 3 Jun 2020 06:48:46 -0700 (PDT)
-From:   "Mrs.Susan Jones" <joneswife.susan@gmail.com>
-Date:   Wed, 3 Jun 2020 14:48:46 +0100
-X-Google-Sender-Auth: aH2vam-ZraP3yG1gz3ryctMgTE4
-Message-ID: <CALBhdBfusXWup1N4iFuTS3D1AZxWbZbTDS_qa-wA3FkbkE7MrQ@mail.gmail.com>
-Subject: HELLO: I AM MRS SUSAN JONES
-To:     undisclosed-recipients:;
+From:   Yun-hao Chung <howardchung@google.com>
+Date:   Wed, 3 Jun 2020 22:04:08 +0800
+Message-ID: <CAPHZWUe9sLt8jsD57i3=PQxMfjODP7dUYLBm2qpSXFdgd9cvAQ@mail.gmail.com>
+Subject: Should we disable ERTM as default?
+To:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
+Cc:     ChromeOS BT Qualification <chromeos-bt-qual@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-OUR GOLDEN OPPORTUNITY
+Hi Linux-bluetooth,
 
-Hello Dear Friend,
+When I ran the following tests in PTS qualification on Chrome OS, I
+couldn=E2=80=99t pass all of them because they all failed to create an AVDT=
+P
+connection with channel type as =E2=80=98Streaming=E2=80=99 or =E2=80=98Enh=
+anced
+Retransmission=E2=80=99.
 
-Complement of the day, i hope you are doing great today. However, I am
-Mrs.Susan Jones, an auditor with one of the new generation banks here
-in Burkina Faso.
+- MPS/AG-SRC-TG/HFAV/CLH/SD/BV-03-I
+- MPS/AG-SRC-TG/HFAV/CLH/SD/BV-04-I
+- MPS/AG-SRC-TG/HFAV/CLH/SD/BV-05-I
+- MPS/AG-SRC-TG/HFAV/CLH/SD/BV-06-I
 
-I am writing you this letter based on the latest development at my
-Department. i discovered some abandoned huge amount of money, Ten
-Million, Five hundred thousand  United States Dollars.($10.500.000).
-Now I am only contacting you as a foreigner because this money cannot
-be approved to a local bank account here, but can only be approved to
-any foreign account and foreign beneficiary because the money is in US
-dollars
+It looks like bluez doesn=E2=80=99t want to change its mode even though it
+claims it supports them. Our question is do we still want to enable
+this feature as default?
 
-This will be  a legitimate transaction once you accept to build trust
-with me and follow simple instruction doing the transfer process,
-until the total sum transfer out of the bank here to your own bank
-account any where in the world, and I agreed to share the total money
-50/50 with you once you successful confirmed it in your bank account.
-But any expenses doing the transfer process will be deduct from the
-amount before sharing, If you are interested to work with me and
-provide a good receiving bank account, get back to me as soon as
-possible with the following details below.
-
-Your full name
-Your Profession
-Your direct mobile phone number
-Your Scanned International passport or any of your identity
-
-NOTE: PLEASE IT YOU ARE NOT INTERESTED DON'T BORDER TO RESPOND BACK TO
-AVOID TIME WASTED.
-
-As soon as I receive these data's, I will forward to you the
-application form which you will send to the bank for the claim and
-transfer of the fund into your bank account as the  new beneficial.
-
-I am waiting to hear from you soon
-
-Yours
-Mrs.Susan Jones
+Thanks.
