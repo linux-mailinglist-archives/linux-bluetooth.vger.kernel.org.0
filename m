@@ -2,124 +2,122 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BB511EFB66
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jun 2020 16:28:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB3AA1EFB84
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jun 2020 16:36:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728203AbgFEO2O (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Jun 2020 10:28:14 -0400
-Received: from mga12.intel.com ([192.55.52.136]:50946 "EHLO mga12.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728094AbgFEO2N (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Jun 2020 10:28:13 -0400
-IronPort-SDR: /Z5lhJ3tYI3kDAJ4hOKLckjdWGOnbLt+r8coW11gSpG0gleDS4FFUc3BUZXjtYz0+n7FUFT6Ca
- 06whQfC/or1g==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2020 07:28:12 -0700
-IronPort-SDR: AYsc9DJbjHNmxJ2J8QXbc3Q3B+iw2+kkQrb3UZJJ6dAJCk8AvE4+kA5djl5/ZwnT554F8XqcwQ
- gtQuNK7jjJYg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,476,1583222400"; 
-   d="scan'208";a="471808362"
-Received: from amit-h97m-d3h.iind.intel.com (HELO localhost.localdomain) ([10.223.96.198])
-  by fmsmga006.fm.intel.com with ESMTP; 05 Jun 2020 07:28:11 -0700
-From:   Amitsi5x <amitx.k.singh@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     amitx.k.singh@intel.com
-Subject: [PATCH] bluez:update handle for large database
-Date:   Fri,  5 Jun 2020 19:55:41 +0530
-Message-Id: <20200605142541.28412-5-amitx.k.singh@intel.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200605142541.28412-1-amitx.k.singh@intel.com>
-References: <20200605142541.28412-1-amitx.k.singh@intel.com>
+        id S1728249AbgFEOgY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 Jun 2020 10:36:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51804 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728247AbgFEOgY (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 5 Jun 2020 10:36:24 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83454C08C5C2
+        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Jun 2020 07:36:23 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id 205so9868085qkg.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Jun 2020 07:36:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=gsPztTTj8o6dFTrzl5/4NLUmN/skgnWP9ZqvEzDONS4=;
+        b=BU+z13YPw4KjjcY3yLG2evWbdRQGAwRd5ELnT9ocHbvxybhdBxor9YyAD3DBWSoeZS
+         di7MSilnFkj+WkzU8MXoNBAcuu3uAgz9qyF7a6yPSawsSLebI2IkkmwF2++dGJ0Fj82X
+         9ZDUFD60jlSdW4SYdOpXTKZcShqnbjXtlujEMw6F9WDCQJMGd2WEnIs9uMDb5lAWVn5L
+         h128cDu0jDoYCjPScrpTN7Jb4CHMkXxsUOwd/rEl+MxSeouj211etnDYM6HMvF+eNmwB
+         uqVom29Hf+CRpHTidGFERH/htL0R+SADWtYPqRcXxgVQhLWU1sK/4OIoRxjdqELTnkri
+         59dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=gsPztTTj8o6dFTrzl5/4NLUmN/skgnWP9ZqvEzDONS4=;
+        b=mOwC9Hn4X1A6jlqqMLkz5DWHHnlzM/fVL3qD1B44YbkJwjfNgFl1AFQ243v0e8sfXQ
+         PqsQt8h0pilswDZhfpNbOxfUimjUZ9URJMBq8C0+W//kB3YFLm1MTicodUe6LuMdopu2
+         pElGtuuK7oRIoC5gODFOJ5dYiPFRjNlN9dzz5/HlMp1hLTqCmxFrNQ2AKYMzrZOMLJdJ
+         f1GqA3FAfdOePNWdcBfShmcl+QFsP02RLYV6p3DhLIpGWfBJCFs44TmBf+vhbehmCgs+
+         xQ6EImlxTQUL4xT0CKanlleChqSF8iXpJzVUCTlqBrFMYyKHAO3wji/kfFPEHzaXMsjx
+         pyPA==
+X-Gm-Message-State: AOAM531vFsYMacPduP6OnFQBI6Tb7Pupe806cOQA721mnlYYcKDOLy5+
+        HhJo7LQ5KHwwJTETmPBWSX8Cjj2PoaU=
+X-Google-Smtp-Source: ABdhPJz2AC2bebzy5WJdUZse21gtWLSBRdyNT4Phrw2zpiB2HNCq2YLxr8za/Wxh6FAd4UtqwqaIwg==
+X-Received: by 2002:a37:384:: with SMTP id 126mr9863919qkd.325.1591367782600;
+        Fri, 05 Jun 2020 07:36:22 -0700 (PDT)
+Received: from [172.17.0.2] ([20.36.191.85])
+        by smtp.gmail.com with ESMTPSA id g28sm7399636qts.88.2020.06.05.07.36.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jun 2020 07:36:21 -0700 (PDT)
+Message-ID: <5eda5865.1c69fb81.d636.95b9@mx.google.com>
+Date:   Fri, 05 Jun 2020 07:36:21 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============3496837522988973021=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, amitx.k.singh@intel.com
+Subject: RE: bluez:update handle for large database
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20200605142541.28412-5-amitx.k.singh@intel.com>
+References: <20200605142541.28412-5-amitx.k.singh@intel.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: amit <amitx.k.singh@intel.com>
+--===============3496837522988973021==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Update handle for large database and
-added condition before free to avoid double free
 
-Signed-off-by: amit <amitx.k.singh@intel.com>
----
- src/shared/gatt-client.c | 12 +++++++-----
- src/shared/gatt-db.c     | 15 +++++++++------
- 2 files changed, 16 insertions(+), 11 deletions(-)
+This is automated email and please do not reply to this email!
 
-diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
-index 19ff6ab65..3cb6ae443 100644
---- a/src/shared/gatt-client.c
-+++ b/src/shared/gatt-client.c
-@@ -1131,8 +1131,6 @@ static void discover_secondary_cb(bool success, uint8_t att_ecode,
- 				success = false;
- 				goto done;
- 			}
--			/* Database has changed adjust last handle */
--			op->last = end;
- 		}
- 
- 		/* Update pending list */
-@@ -1392,9 +1390,13 @@ static void db_hash_read_cb(bool success, uint8_t att_ecode,
- 	util_hexdump(' ', value, len, client->debug_callback,
- 						client->debug_data);
- 
--	/* Store ithe new hash in the db */
--	gatt_db_attribute_write(op->hash, 0, value, len, 0, NULL,
--					db_hash_write_value_cb, client);
-+	/* Store the new hash in the db */
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While we are preparing for reviewing the patches, we found the following
+issue/warning.
+
+Test Result:
+checkpatch Failed
+
+Outputs:
+ERROR:SPACING: space required before the open parenthesis '('
+#32: FILE: src/shared/gatt-client.c:1394:
 +	if(gatt_db_attribute_write(op->hash, 0, value, len, 0, NULL,
-+						db_hash_write_value_cb, client)) {
-+		util_debug(client->debug_callback, client->debug_data,"DB Hash match write: skipping discovery");
-+		queue_remove_all(op->pending_svcs, NULL, NULL, NULL);
-+	}
-+
- 
- discover:
- 	if (!op->success) {
-diff --git a/src/shared/gatt-db.c b/src/shared/gatt-db.c
-index b44f7b5e9..15af4c20a 100644
---- a/src/shared/gatt-db.c
-+++ b/src/shared/gatt-db.c
-@@ -344,10 +344,15 @@ static bool db_hash_update(void *user_data)
- 	gatt_db_foreach_service(db, NULL, service_gen_hash_m, &hash);
- 	bt_crypto_gatt_hash(db->crypto, hash.iov, db->next_handle, db->hash);
- 
--	for (i = 0; i < hash.i; i++)
--		free(hash.iov[i].iov_base);
-+	for (i = 0; i < hash.i; i++) {
-+		if(hash.iov[i].iov_base)
-+			free(hash.iov[i].iov_base);
-+	}
-+
-+	if(hash.iov)
-+		free(hash.iov);
- 
--	free(hash.iov);
-+	hash.iov = NULL;
- 
- 	return false;
- }
-@@ -689,7 +694,7 @@ struct gatt_db_attribute *gatt_db_insert_service(struct gatt_db *db,
- 	service->num_handles = num_handles;
- 
- 	/* Fast-forward next_handle if the new service was added to the end */
--	db->next_handle = MAX(handle + num_handles, db->next_handle);
-+	db->next_handle += num_handles;
- 
- 	return service->attributes[0];
- 
-@@ -811,8 +816,6 @@ service_insert_characteristic(struct gatt_db_service *service,
- 	 * declaration. All characteristic definitions shall have a
- 	 * Characteristic Value declaration.
- 	 */
--	if (handle == UINT16_MAX)
--		return NULL;
- 
- 	i = get_attribute_index(service, 1);
- 	if (!i)
--- 
-2.17.1
 
+WARNING:LONG_LINE: line over 80 characters
+#33: FILE: src/shared/gatt-client.c:1395:
++						db_hash_write_value_cb, client)) {
+
+ERROR:SPACING: space required after that ',' (ctx:VxV)
+#34: FILE: src/shared/gatt-client.c:1396:
++		util_debug(client->debug_callback, client->debug_data,"DB Hash match write: skipping discovery");
+ 		                                                     ^
+
+ERROR:SPACING: space required before the open parenthesis '('
+#52: FILE: src/shared/gatt-db.c:348:
++		if(hash.iov[i].iov_base)
+
+ERROR:SPACING: space required before the open parenthesis '('
+#56: FILE: src/shared/gatt-db.c:352:
++	if(hash.iov)
+
+- total: 4 errors, 1 warnings, 58 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+Your patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+
+---
+Regards,
+Linux Bluetooth
+
+--===============3496837522988973021==--
