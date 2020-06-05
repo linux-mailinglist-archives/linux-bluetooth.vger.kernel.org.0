@@ -2,91 +2,151 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 298E41EEEAF
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jun 2020 02:12:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9841B1EEEAB
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jun 2020 02:12:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726068AbgFEAMu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 4 Jun 2020 20:12:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59042 "EHLO
+        id S1726021AbgFEAMI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 4 Jun 2020 20:12:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725986AbgFEAMu (ORCPT
+        with ESMTP id S1725986AbgFEAMI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 4 Jun 2020 20:12:50 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46788C08C5C0
-        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Jun 2020 17:12:49 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id b27so8161806qka.4
-        for <linux-bluetooth@vger.kernel.org>; Thu, 04 Jun 2020 17:12:49 -0700 (PDT)
+        Thu, 4 Jun 2020 20:12:08 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D395AC08C5C0
+        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Jun 2020 17:12:06 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id b18so6249580oti.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 04 Jun 2020 17:12:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=hc1osGXZBqZMEbdtS21QOC2f6qIo9WDKdYyGEqk70po=;
-        b=iRZ4HdqI11HXeMd0erG/NMBxzXFhMtIiUaifVb+X+bf89NG9TxnRnbgbcdShqAzokX
-         zi3a5jETB7l9bntyN2/EgkXmqNGbNJJB9ogRdQhTkyanjXXAbKO0V7JFgQk9D8Y/AE0h
-         2o94MgIeKB7Sj6i203mpLOj692Y6//RlTgE7my5fB+cLM9JjMtpouX3skxSs7KlIYfcm
-         mqSQH6wa5Uy/VmouYsVlw1EsNTRSLdajNUyGYZjlkpY/dTqn+829gJYF7xYCKz03I2xR
-         I0fJqM6/3saoE2SFAPBNfW5dkq7wJy9duvKtBIruAWxDdzWiPpd0cK+p3lqHK3Xgk4Sz
-         PfSg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=DNLU9SVwrEq2VnP0O58aXHrPI/KPyFMB2pG4V1owunM=;
+        b=YED3WxuGqq3HMFCJ9ovUwbpLTC/f/AsAt6P0DKlSelIOOTLwjiRtSA4/QPXO4L9/Ji
+         /1p8QMRibpcyuX2PRrVXbvZlTvZSMchWwZM/kmUpgBI8Hf3fkr8IQpnS/3jdDK5iU3Uo
+         Bk+p2V7MBdT5dgeFr8nVt5HZmcs0VbTtVuPBHO3+x+Wo89z38k2O4hWlrsdrQ9v5AdYY
+         T54/rVbCYy1wTrbJpDFtHd7A1TiEcnoU1gHoq0oPZHniMb+zqqJtyZqPNOxdhgInEVaq
+         bmrlRmZSQ7X7kXBmR8hL0vAMKOPf7b+fNun/NYPU9YsKsoTtJ1tx5h0AdHZ+9asoO3Sr
+         n7cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=hc1osGXZBqZMEbdtS21QOC2f6qIo9WDKdYyGEqk70po=;
-        b=fdhp4SG7TCaI8TNiGj1iUBmGlfabiEWlGpKRSFdZ/NoQbON/kHZTenST6iLUsiCHHd
-         Ft7mSOWz6j3tmVkcEP8mv8tt8pTt1KqKcB2Ug4YiRqyTob2hrr77ObB5XfGZqQ4YNTeD
-         Ezx8kusaLTExuB+CuB81xOdJ6VfLixzfdoZQIS+ftMkOTKiHe03o84d+zYV+hBcoypc9
-         Herg8qtAu2nuZTpOe+odoFmva0pvX7eTzbzg4LikhvXNem23qKNftT8PLEhdKd7Tw/6i
-         XDky9GubTJTYYCycQ8QU1P0vdZLrSSxAhDKPe67qrh4uU+qHg+SP8MoRA6goumuEPeTC
-         xyCA==
-X-Gm-Message-State: AOAM533k6yaJ3XICRjoMv8ZoqrlgUHg/8M2EsrHh8w/p9D3FbVhiTzUu
-        MX8rzCMcI4vvhu1Hknvr55H07ehgtmw=
-X-Google-Smtp-Source: ABdhPJwPrD4izc7MgpscvBXLPxRr9X1kEIW3IEAtLibv+PejOpkx3WuzcGGVotBSd9EyiWX2WDTeag==
-X-Received: by 2002:a05:620a:14b6:: with SMTP id x22mr7137616qkj.448.1591315968462;
-        Thu, 04 Jun 2020 17:12:48 -0700 (PDT)
-Received: from [172.17.0.2] ([52.138.85.28])
-        by smtp.gmail.com with ESMTPSA id d14sm6113085qtr.17.2020.06.04.17.12.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2020 17:12:48 -0700 (PDT)
-Message-ID: <5ed98e00.1c69fb81.34673.28af@mx.google.com>
-Date:   Thu, 04 Jun 2020 17:12:48 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============8324068411868692985=="
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=DNLU9SVwrEq2VnP0O58aXHrPI/KPyFMB2pG4V1owunM=;
+        b=Ctrfu8kHFe1J5cNBuv5bbsA7xmIZIz7NO/DyogD0xNFxZGTe1NmYzeP9Fxp6vFJ+SS
+         fgR+YDw416MVDaPAaZCfsGWrWfe7ip3ASpEtBXiqkKAIhauuICFsJvPjQVs9vBDa8LeW
+         RJD4wlVd3qGCgvdeWGh2eVGIIQcJPLo7ZbksnAztP8j1dz67Y9aY4s9ZOVT0JzO//tzv
+         AWswDEIRHysvkZfXZUM2e3OXV3dvkT42x+4QTlbUHz28IhSpc8GFTe7AvR6rPg22g7M1
+         sO7ok0E361Gy6g3OJTRW1dY7vL4OdGB7Uz7v9Q9vYsFo+Ft5jsWu2SCB62onJLBbExgd
+         RAiw==
+X-Gm-Message-State: AOAM532hw6f0MGvAsVFJDg8C+xHKU3cYOT50Yr9E4R+WRG2CfbMwCJ0N
+        3fp41x5gghvh1fmBHCtcoRdNFugbeCx11A1rdiw=
+X-Google-Smtp-Source: ABdhPJwo5AmOA+tWvteECjWVCTSD6gyi953YW0c1/xnhGWm+zw7muOw9uSjfRAbvxEqbvxtQ/fDeZl+xYD9G1hK5mzQ=
+X-Received: by 2002:a05:6830:14c4:: with SMTP id t4mr5859148otq.79.1591315925978;
+ Thu, 04 Jun 2020 17:12:05 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, pali@kernel.org
-Subject: RE: sap: Improve error messages
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200604232433.4951-1-pali@kernel.org>
-References: <20200604232433.4951-1-pali@kernel.org>
+References: <20200604231541.4170-1-pali@kernel.org>
+In-Reply-To: <20200604231541.4170-1-pali@kernel.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 5 Jun 2020 00:11:54 -0700
+Message-ID: <CABBYNZ+3QO8C_h15=6AgVYSY=Ki-eq=Mg2_mv_cp7QjkTHVpuw@mail.gmail.com>
+Subject: Re: [PATCH] btio: Fix registering Object Push, File Transfer and
+ other L2CAP profiles
+To:     =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============8324068411868692985==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hi Pali,
+
+On Thu, Jun 4, 2020 at 4:18 PM Pali Roh=C3=A1r <pali@kernel.org> wrote:
+>
+> When bluetoothd daemon is starting, it prints following error messages:
+>
+> bluetoothd[19117]: src/profile.c:ext_start_servers() L2CAP server failed =
+for Message Notification: setsockopt(L2CAP_OPTIONS): Invalid argument (22)
+> bluetoothd[19117]: src/profile.c:ext_start_servers() L2CAP server failed =
+for Message Access: setsockopt(L2CAP_OPTIONS): Invalid argument (22)
+> bluetoothd[19117]: src/profile.c:ext_start_servers() L2CAP server failed =
+for Phone Book Access: setsockopt(L2CAP_OPTIONS): Invalid argument (22)
+> bluetoothd[19117]: src/profile.c:ext_start_servers() L2CAP server failed =
+for File Transfer: setsockopt(L2CAP_OPTIONS): Invalid argument (22)
+> bluetoothd[19117]: src/profile.c:ext_start_servers() L2CAP server failed =
+for Object Push: setsockopt(L2CAP_OPTIONS): Invalid argument (22)
+>
+> Result is that Object Push and File Transfer profiles do not work at all.
+>
+> Debugging set_l2opts() function showed me that src/profile.c calls it wit=
+h
+> L2CAP mode 0x01 (L2CAP_MODE_RETRANS). But kernel bluetooth code in functi=
+on
+> l2cap_sock_setsockopt_old() for L2CAP_OPTIONS option disallows to set L2C=
+AP
+> method to 0x01 (L2CAP_MODE_RETRANS) and just returns -EINVAL (22).
+>
+> These bluetooth profiles have in src/profile.c file defined L2CAP mode to
+> BT_IO_MODE_ERTM and not to RETRANS. So it means that BT_IO_MODE_ERTM valu=
+e
+> defined in 'enum BtIOMode' must be incorrect.
+>
+> Digging into git history, it appears that 'enum BtIOMode' was broken in
+> commit f2418bf97d ("btio: Add mode to for Enhanced Credit Mode") which
+> basically broke all those Object Push, File Transfer, Phone Book Access,
+> Message Access and Message Notification L2CAP profiles. That commit remov=
+ed
+> some values from 'enum BtIOMode' and therefore broke all bluetooth code
+> which uses 'enum BtIOMode' for communication with kernel.
+>
+> This patch fixes 'enum BtIOMode' by reverting back BT_IO_MODE_RETRANS and
+> BT_IO_MODE_FLOWCTL modes, so BT_IO_MODE_ERTM has again correct value 0x03=
+.
+>
+> After applying this patch, Object Push and File Transfer profiles work
+> again.
+>
+> Fixes: f2418bf97d ("btio: Add mode to for Enhanced Credit Mode")
+> ---
+>
+> Hello Luiz, could you please review this patch? As that problematic commi=
+t
+> f2418bf97d was introduced by you.
+>
+> I'm curious why nobody else reported this issue about broken Object Push
+> and File Transfer profile as it should print those error messages... Or
+> maybe error message is visible only in debug build and nobody is using
+> Bluetooth File Transfer anymore?
+
+Looks like you are right but, see bellow.
+
+> ---
+>  btio/btio.h | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/btio/btio.h b/btio/btio.h
+> index 23e0ef72b..0d183e3ce 100644
+> --- a/btio/btio.h
+> +++ b/btio/btio.h
+> @@ -68,6 +68,8 @@ typedef enum {
+>
+>  typedef enum {
+>         BT_IO_MODE_BASIC =3D 0,
+> +       BT_IO_MODE_RETRANS,
+> +       BT_IO_MODE_FLOWCTL,
+>         BT_IO_MODE_ERTM,
+>         BT_IO_MODE_STREAMING,
+>         BT_IO_MODE_LE_FLOWCTL,
+> --
+> 2.20.1
+
+These modes were never supported by the kernel thus why Ive dropped
+them, so might want to translate them to the old L2CAP modes when
+set_l2opts is called.
 
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While we are preparing for reviewing the patches, we found the following
-issue/warning.
-
-Test Result:
-checkgitlint Failed
-
-Outputs:
-5: B1 Line exceeds max length (96>80): "bluetoothd[19117]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed."
-
-
-
----
-Regards,
-Linux Bluetooth
-
---===============8324068411868692985==--
+--=20
+Luiz Augusto von Dentz
