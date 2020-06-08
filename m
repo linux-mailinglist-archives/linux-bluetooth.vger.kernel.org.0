@@ -2,76 +2,153 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A2A2A1F2EC8
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jun 2020 02:45:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 093C41F3114
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jun 2020 03:07:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732632AbgFIAov (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 8 Jun 2020 20:44:51 -0400
-Received: from mga07.intel.com ([134.134.136.100]:14447 "EHLO mga07.intel.com"
+        id S1728431AbgFIBFO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 8 Jun 2020 21:05:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51250 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729012AbgFHXL4 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 8 Jun 2020 19:11:56 -0400
-IronPort-SDR: t3CtxWuUBkJxeTf5/UeOLB5MdhVG3vy6qrpuD5Oyv1MNL+b99WbyE8TgMjsUCx4ZSVYHyt3Z5j
- mrbuDPnfSvhg==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2020 16:11:54 -0700
-IronPort-SDR: ovrY0aFQoGrgf9GQ1/cdng8chJlyYt6+YbsG0kYtrtzb1u+pkhlQ5asO7PQUC1vCw6LaGLxeDC
- jRaExKMT5Q8g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,489,1583222400"; 
-   d="scan'208";a="259949492"
-Received: from bgi1-mobl2.amr.corp.intel.com ([10.255.228.29])
-  by fmsmga008.fm.intel.com with ESMTP; 08 Jun 2020 16:11:54 -0700
-From:   Brian Gix <brian.gix@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     inga.stotland@intel.com, brian.gix@intel.com
-Subject: [PATCH BlueZ] mesh: Fix clean-up introduced check
-Date:   Mon,  8 Jun 2020 16:11:51 -0700
-Message-Id: <20200608231151.956258-1-brian.gix@intel.com>
-X-Mailer: git-send-email 2.25.4
+        id S1727841AbgFHXHR (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 8 Jun 2020 19:07:17 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 83D152089D;
+        Mon,  8 Jun 2020 23:07:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1591657636;
+        bh=Snd7PMcynuCJPLlRp2/soooBq43eZjoArhY5AeZ/2bA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=ieou2wXcPbW+BzWU6f9gWDgSCgswitXkWfeFdJPhY0eWZadv9sFHp0j6rCvJr2sO5
+         sueyccK0YxsBuCR+rF4Kw54DUxO9/8j3aWsIdc0qexJP9QoDA6fn7f/Hg0VNt4B+32
+         IZM4h3XHmkIWuJmG88MOIJitzGQbir05R6Uet6FM=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Hsin-Yu Chao <hychao@chromium.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.7 054/274] Bluetooth: Add SCO fallback for invalid LMP parameters error
+Date:   Mon,  8 Jun 2020 19:02:27 -0400
+Message-Id: <20200608230607.3361041-54-sashal@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200608230607.3361041-1-sashal@kernel.org>
+References: <20200608230607.3361041-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Before the clean-up we were making a useless check of an otherwise
-unused boolean (net->provisioner). The was replaced a check where we
-actually take the node type (node->provisioner).  However, it turns out
-that the check was incorrect in the first place.
----
- mesh/model.c | 2 +-
- mesh/net.c   | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+From: Hsin-Yu Chao <hychao@chromium.org>
 
-diff --git a/mesh/model.c b/mesh/model.c
-index f2dfb2644..5ed95afac 100644
---- a/mesh/model.c
-+++ b/mesh/model.c
-@@ -907,7 +907,7 @@ bool mesh_model_rx(struct mesh_node *node, bool szmict, uint32_t seq0,
- 	 * The packet needs to be decoded by the correct key which
- 	 * is hinted by key_aid, but is not necessarily definitive
- 	 */
--	if (key_aid == APP_AID_DEV || node_is_provisioner(node))
-+	if (key_aid == APP_AID_DEV)
- 		decrypt_idx = dev_packet_decrypt(node, data, size, szmict, src,
- 						dst, key_aid, seq0, iv_index,
- 						clear_text);
-diff --git a/mesh/net.c b/mesh/net.c
-index c12dd6541..7dbe45f7d 100644
---- a/mesh/net.c
-+++ b/mesh/net.c
-@@ -108,7 +108,6 @@ struct mesh_net {
- 	bool friend_enable;
- 	bool beacon_enable;
- 	bool proxy_enable;
--	bool provisioner;
- 	bool friend_seq;
- 	struct l_timeout *iv_update_timeout;
- 	enum _iv_upd_state iv_upd_state;
+[ Upstream commit 56b5453a86203a44726f523b4133c1feca49ce7c ]
+
+Bluetooth PTS test case HFP/AG/ACC/BI-12-I accepts SCO connection
+with invalid parameter at the first SCO request expecting AG to
+attempt another SCO request with the use of "safe settings" for
+given codec, base on section 5.7.1.2 of HFP 1.7 specification.
+
+This patch addresses it by adding "Invalid LMP Parameters" (0x1e)
+to the SCO fallback case. Verified with below log:
+
+< HCI Command: Setup Synchronous Connection (0x01|0x0028) plen 17
+        Handle: 256
+        Transmit bandwidth: 8000
+        Receive bandwidth: 8000
+        Max latency: 13
+        Setting: 0x0003
+          Input Coding: Linear
+          Input Data Format: 1's complement
+          Input Sample Size: 8-bit
+          # of bits padding at MSB: 0
+          Air Coding Format: Transparent Data
+        Retransmission effort: Optimize for link quality (0x02)
+        Packet type: 0x0380
+          3-EV3 may not be used
+          2-EV5 may not be used
+          3-EV5 may not be used
+> HCI Event: Command Status (0x0f) plen 4
+      Setup Synchronous Connection (0x01|0x0028) ncmd 1
+        Status: Success (0x00)
+> HCI Event: Number of Completed Packets (0x13) plen 5
+        Num handles: 1
+        Handle: 256
+        Count: 1
+> HCI Event: Max Slots Change (0x1b) plen 3
+        Handle: 256
+        Max slots: 1
+> HCI Event: Synchronous Connect Complete (0x2c) plen 17
+        Status: Invalid LMP Parameters / Invalid LL Parameters (0x1e)
+        Handle: 0
+        Address: 00:1B:DC:F2:21:59 (OUI 00-1B-DC)
+        Link type: eSCO (0x02)
+        Transmission interval: 0x00
+        Retransmission window: 0x02
+        RX packet length: 0
+        TX packet length: 0
+        Air mode: Transparent (0x03)
+< HCI Command: Setup Synchronous Connection (0x01|0x0028) plen 17
+        Handle: 256
+        Transmit bandwidth: 8000
+        Receive bandwidth: 8000
+        Max latency: 8
+        Setting: 0x0003
+          Input Coding: Linear
+          Input Data Format: 1's complement
+          Input Sample Size: 8-bit
+          # of bits padding at MSB: 0
+          Air Coding Format: Transparent Data
+        Retransmission effort: Optimize for link quality (0x02)
+        Packet type: 0x03c8
+          EV3 may be used
+          2-EV3 may not be used
+          3-EV3 may not be used
+          2-EV5 may not be used
+          3-EV5 may not be used
+> HCI Event: Command Status (0x0f) plen 4
+      Setup Synchronous Connection (0x01|0x0028) ncmd 1
+        Status: Success (0x00)
+> HCI Event: Max Slots Change (0x1b) plen 3
+        Handle: 256
+        Max slots: 5
+> HCI Event: Max Slots Change (0x1b) plen 3
+        Handle: 256
+        Max slots: 1
+> HCI Event: Synchronous Connect Complete (0x2c) plen 17
+        Status: Success (0x00)
+        Handle: 257
+        Address: 00:1B:DC:F2:21:59 (OUI 00-1B-DC)
+        Link type: eSCO (0x02)
+        Transmission interval: 0x06
+        Retransmission window: 0x04
+        RX packet length: 30
+        TX packet length: 30
+        Air mode: Transparent (0x03)
+
+Signed-off-by: Hsin-Yu Chao <hychao@chromium.org>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/bluetooth/hci_event.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 0a591be8b0ae..b11f8d391ad8 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4292,6 +4292,7 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev,
+ 	case 0x11:	/* Unsupported Feature or Parameter Value */
+ 	case 0x1c:	/* SCO interval rejected */
+ 	case 0x1a:	/* Unsupported Remote Feature */
++	case 0x1e:	/* Invalid LMP Parameters */
+ 	case 0x1f:	/* Unspecified error */
+ 	case 0x20:	/* Unsupported LMP Parameter value */
+ 		if (conn->out) {
 -- 
-2.25.4
+2.25.1
 
