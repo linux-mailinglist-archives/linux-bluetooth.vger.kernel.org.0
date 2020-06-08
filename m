@@ -2,109 +2,96 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A3D41F21B4
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jun 2020 00:02:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFE371F2262
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jun 2020 01:08:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726820AbgFHWB7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 8 Jun 2020 18:01:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55888 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726794AbgFHWB6 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 8 Jun 2020 18:01:58 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E665FC08C5C4
-        for <linux-bluetooth@vger.kernel.org>; Mon,  8 Jun 2020 15:01:57 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id d10so9372403pgn.4
-        for <linux-bluetooth@vger.kernel.org>; Mon, 08 Jun 2020 15:01:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=aCeukELY0ktEDa4JcWYXXOlSHj1N5l5OhM42CLYrj2I=;
-        b=H5Ow6BFAmQ/m0mqI67xkgyLBWRlq5f+PtfHeGgJMZdtnOzSRarfqXFbqs7EVd64igw
-         0Sl5x3S8khCxTtgasSg4BVtKc6JUKT9M4+gaRdmAGTQWEj1TaEAXqDSOAR4HQ+pt6yCa
-         DFXYTg1Grp/earOjmEdAZyCToWZDJX4TvE57d0JXFEIVS6ki7tePN1QlNtR5GlR6kEks
-         nT5UoPdQnNiGF4naf9gM79RdZ1Is0ZYQuwjjC/2onZcWMaMJW2aOp7HlBzcZN7EpLBKP
-         z++Y7/F5+9TxcZWmraWVbZPvgAv0sLIrUXgWftrxDuza3hD3H+56ncDl7CltaLjFM6MC
-         pRHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aCeukELY0ktEDa4JcWYXXOlSHj1N5l5OhM42CLYrj2I=;
-        b=iAJ7N5qugsEqjUjtV5NnXMBB9JGYotvR4aOHWwqb3h6mGW1CIgqG3Ro2+B4fcbVXj7
-         u5yof34PzwpNs0FCfXKVUhbo7lIvBVT/ZHVqlRh5494sybO+V9teoiU3Avljw1LASZS4
-         1TwAoWfevfZ7y/dd6OXrUAV0PICYQQvU9O6tBvF0xbo/GBct4NpIKI4OWRnzA1TgHskK
-         pcmpw1jfsC6j9OSfQspm07KQ473srRMA5XOQzjxSAitQxHxAaadk7u1dVklHAYrobpTK
-         9lXM0IDH2Nrwfy9ZGN5p8GQ4tJekRo+/I9NTxsevGYD2mPN7N4MKr/f5itQQZ5n4e5eJ
-         3m7Q==
-X-Gm-Message-State: AOAM530T9iD5rlP6B+vAqfwKedav/fqZ3SfrQSODI6/7fc7eMZN25nFy
-        9Mb5t16L0MGOsh5B9AbxIW6UwlzD
-X-Google-Smtp-Source: ABdhPJyWenKks0tAY0mPFxkOVr9iKDuwtLrpOjX1HXtVv6jnLaBagC/mChCRkNycvvyq9ZRyoCXMDg==
-X-Received: by 2002:a05:6a00:1510:: with SMTP id q16mr21895979pfu.164.1591653717085;
-        Mon, 08 Jun 2020 15:01:57 -0700 (PDT)
-Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id b140sm7870172pfb.119.2020.06.08.15.01.55
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2020 15:01:56 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 3/3] adapter: Fix possible crash when stopping discovery
-Date:   Mon,  8 Jun 2020 15:01:53 -0700
-Message-Id: <20200608220153.880790-3-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.25.3
-In-Reply-To: <20200608220153.880790-1-luiz.dentz@gmail.com>
-References: <20200608220153.880790-1-luiz.dentz@gmail.com>
+        id S1728028AbgFHXHw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 8 Jun 2020 19:07:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52522 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728018AbgFHXHu (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 8 Jun 2020 19:07:50 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id F2B5020888;
+        Mon,  8 Jun 2020 23:07:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1591657669;
+        bh=i46RftpKozMzFrPCBibhwcY0IyjVuViuW1HQ66oKYgU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=hz6sPk0StMHKEAqNeGhUiGMl9VyhZZ83r09Y6r8QQIUOazlmgFPp4Yqz2wLks1WZg
+         Kvp2GOy2wjWCrr32VbKJOSaVoSdcxC9GStl/dhTKCdhNCnu/hIrlxFdtcqXKnAvFdk
+         zlTmHhlzPwFSjTqukUhn8pwatu8Q2iAexUN1bXuA=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Zijun Hu <zijuhu@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.7 079/274] Bluetooth: hci_qca: Fix suspend/resume functionality failure
+Date:   Mon,  8 Jun 2020 19:02:52 -0400
+Message-Id: <20200608230607.3361041-79-sashal@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200608230607.3361041-1-sashal@kernel.org>
+References: <20200608230607.3361041-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Zijun Hu <zijuhu@codeaurora.org>
 
-If the client disconnect/crash while MGMT_OP_STOP_DISCOVERY was pending
-it would possibly cause a crash as the client pointer is passed to
-mgmt_send and accessed in the callback after being freed.
+[ Upstream commit feac90d756c03b03b83fabe83571bd88ecc96b78 ]
 
-To fix this the adapter itself is now passed to the callback so the
-client is not accessed directly, instead the code now checks if
-discovery_list has not been cleared in the meantime and only then
-proceed to access the client pointer which is how
-MGMT_OP_START_DISCOVERY is handled.
+@dev parameter of qca_suspend()/qca_resume() represents
+serdev_device, but it is mistook for hci_dev and causes
+succedent unexpected memory access.
+
+Fix by taking @dev as serdev_device.
+
+Fixes: 41d5b25fed0 ("Bluetooth: hci_qca: add PM support")
+Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- src/adapter.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/bluetooth/hci_qca.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/src/adapter.c b/src/adapter.c
-index c23c84175..64815ecd2 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -1926,11 +1926,19 @@ static bool set_discovery_discoverable(struct btd_adapter *adapter, bool enable)
- static void stop_discovery_complete(uint8_t status, uint16_t length,
- 					const void *param, void *user_data)
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 439392b1c043..0b1036e5e963 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1953,8 +1953,9 @@ static void qca_serdev_remove(struct serdev_device *serdev)
+ 
+ static int __maybe_unused qca_suspend(struct device *dev)
  {
--	struct watch_client *client = user_data;
--	struct btd_adapter *adapter = client->adapter;
-+	struct btd_adapter *adapter = user_data;
-+	struct watch_client *client;
+-	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
+-	struct hci_uart *hu = hci_get_drvdata(hdev);
++	struct serdev_device *serdev = to_serdev_device(dev);
++	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
++	struct hci_uart *hu = &qcadev->serdev_hu;
+ 	struct qca_data *qca = hu->priv;
+ 	unsigned long flags;
+ 	int ret = 0;
+@@ -2033,8 +2034,9 @@ static int __maybe_unused qca_suspend(struct device *dev)
  
- 	DBG("status 0x%02x", status);
+ static int __maybe_unused qca_resume(struct device *dev)
+ {
+-	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
+-	struct hci_uart *hu = hci_get_drvdata(hdev);
++	struct serdev_device *serdev = to_serdev_device(dev);
++	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
++	struct hci_uart *hu = &qcadev->serdev_hu;
+ 	struct qca_data *qca = hu->priv;
  
-+	/* Is there are no clients the discovery must have been stopped while
-+	 * discovery command was pending.
-+	 */
-+	if (!adapter->discovery_list)
-+		return;
-+
-+	client = adapter->discovery_list->data;
-+
- 	discovery_reply(client, status);
- 
- 	if (status != MGMT_STATUS_SUCCESS)
+ 	clear_bit(QCA_SUSPENDING, &qca->flags);
 -- 
-2.25.3
+2.25.1
 
