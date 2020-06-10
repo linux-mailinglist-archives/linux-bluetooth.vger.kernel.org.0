@@ -2,85 +2,124 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88F001F5A87
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Jun 2020 19:31:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A73E1F5A85
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Jun 2020 19:31:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726637AbgFJRbx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 10 Jun 2020 13:31:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35476 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbgFJRbw (ORCPT
+        id S1726350AbgFJRbu convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 10 Jun 2020 13:31:50 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:47430 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbgFJRbt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 10 Jun 2020 13:31:52 -0400
-Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CE66C03E96B
-        for <linux-bluetooth@vger.kernel.org>; Wed, 10 Jun 2020 10:31:52 -0700 (PDT)
-Received: by mail-vk1-xa44.google.com with SMTP id i1so780938vkp.8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 10 Jun 2020 10:31:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ndxJ2dUG7tcQpwf9b8QyaY0jspcb89QKZoq+HINk/ZA=;
-        b=JX0IbVHCvLJ/Prz30N/rwWhjOFgrM9ss4p3zsT7TInCT41bUgTmRfrf+UeTpU6QLID
-         xrDoCDSG7Qa19K9diMRXXwq1AvlBnT/Llb2dlRL/5WTNXOKOX3C0Anqr3kh2puq7UA1G
-         UKWgSjr42Gz7x9Zph2SK4EeIzjSwRDE1NMC9o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ndxJ2dUG7tcQpwf9b8QyaY0jspcb89QKZoq+HINk/ZA=;
-        b=Ckrka5wTGsOmql+bMhZiTxd2V6wxwMU9B/loj7heixeNwP+USYiuUrbtt2m3yLH2DD
-         g6cPKMdoLL6Mz5fNBNnxAiTnkEIx7yRI7TwidVWzbWv/I7XERJTyoDQSja2/j9GefDWY
-         vkMlT4i3OVFjXVY71ntOzJokpOzo+Q1LPa0uAZrsaDDhgQqe+eTk5cpAcV91xLs6KcCs
-         HZILAvpO3kEEzq/Hl2XxCkpbZR/S1dwO6cY1iz775O5aKS/WuSWSTNPV6Wr9XxOit/0M
-         +aE2+xbimoP+ZIQYgxNuxTDmVSIdLBwvotXec/fexn8aJjNLHhoMDWWUjwyLD/EyHF10
-         VGeg==
-X-Gm-Message-State: AOAM531U2rabHxDzehaFKgi2MAwyugHSu0dWH8yO0PbrSATwPYXwllhl
-        P7zjsyfZ/ai0YdsYj3msKQ6dNuLrdyIfrNDpdV0nQLIsiTE=
-X-Google-Smtp-Source: ABdhPJwK8OxBYFQPkUHilEIHtFjKVn6ubgd1Nzz15NZ1pygZ/xqQLUBRDekuLrquuGxWlhbPiJtM5Q+fDyq+qCK4ulk=
-X-Received: by 2002:a1f:9946:: with SMTP id b67mr2509353vke.100.1591810311173;
- Wed, 10 Jun 2020 10:31:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200406180331.891822-1-marcel@holtmann.org> <CANFp7mXe3QtkKL8+TgTp=jwvpydABhDkiXks=3h4+op20rWhGQ@mail.gmail.com>
- <AC887BAA-95ED-456B-84D2-2D1EF6A8339F@holtmann.org> <CANFp7mU2+Z3f1ZqR8RCsOUu6Crc_xng12gcgn0YCwjzfH9Y-nQ@mail.gmail.com>
- <8FE42946-ED27-4F9F-8F30-2744D0AC2AB0@holtmann.org>
-In-Reply-To: <8FE42946-ED27-4F9F-8F30-2744D0AC2AB0@holtmann.org>
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Date:   Wed, 10 Jun 2020 10:31:39 -0700
-Message-ID: <CANFp7mUdL2eB8pWf1sfL_zC0zqTvc7QQuv8xR-pBSDds-Mg5Qw@mail.gmail.com>
-Subject: Re: [PATCH] doc: Add commands and event for handling device flags
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Wed, 10 Jun 2020 13:31:49 -0400
+Received: from marcel-macbook.fritz.box (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 59225CECE9;
+        Wed, 10 Jun 2020 19:41:37 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: [PATCH] Install avinfo utility
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20200610093306.zt3q3s2wmwp3almw@pali>
+Date:   Wed, 10 Jun 2020 19:31:47 +0200
+Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        David Heidelberg <david@ixit.cz>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <7672C0A0-AF6A-41B2-B50F-7836B3E5CC73@holtmann.org>
+References: <20200506193435.3746-1-pali@kernel.org>
+ <CECA6D9A-0F26-40E8-BFDF-A24CD972307D@holtmann.org>
+ <20200610093306.zt3q3s2wmwp3almw@pali>
+To:     =?utf-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Thanks Marcel.
+Hi Pali,
 
-Do you want to handle the implementation in the kernel or shall I send
-up a patch?
+>>> This utility is very useful for determining which A2DP codecs are supported
+>>> by remote side. So install it to system as part of bluez package.
+>>> ---
+>>> Makefile.tools | 4 ++--
+>>> 1 file changed, 2 insertions(+), 2 deletions(-)
+>>> 
+>>> diff --git a/Makefile.tools b/Makefile.tools
+>>> index 9b9236609..d52721612 100644
+>>> --- a/Makefile.tools
+>>> +++ b/Makefile.tools
+>>> @@ -176,9 +176,9 @@ endif
+>>> if TOOLS
+>>> bin_PROGRAMS += tools/rctest tools/l2test tools/l2ping tools/bccmd \
+>>> 			tools/bluemoon tools/hex2hcd tools/mpris-proxy \
+>>> -			tools/btattach
+>>> +			tools/btattach tools/avinfo
+>>> 
+>>> -noinst_PROGRAMS += tools/bdaddr tools/avinfo tools/avtest \
+>>> +noinst_PROGRAMS += tools/bdaddr tools/avtest \
+>>> 			tools/scotest tools/amptest tools/hwdb \
+>>> 			tools/hcieventmask tools/hcisecfilter \
+>>> 			tools/btinfo tools/btconfig \
+>> 
+>> I had no intention to install that tool since it is too limited
+> 
+> Sorry, but I have not seen any limitations with this tool yet. I'm using
+> it very often. And also other people who use it have not mentioned any
+> limitations or problems.
+> 
+> So could you be more specific what are those limitations?
+> 
+> Also it is the first thing which I'm saying people that should run and
+> send me output of it if something related to A2DP does not work.
+> 
+> And because linux distributions do not package this utility and bluez
+> developers (for me for unknown reasons) decided to not install it,
+> result is that people have to always compile bluez from source to run
+> this utility if their A2DP audio does not work or "remote" debugging of
+> A2DP is needed.
+> 
+> So result is that who want to know why A2DP audio does not work is
+> forced to compile & install bluez from sources and not to use from
+> distribution package. And this probably not the expected state.
+> 
+> In any case, nobody reported to me any limitation with one exception
+> that it cannot decode capabilities of some custom vendor codecs. But
+> most of them are already supported as I sent needed patches in past.
+> 
+>> and makes too many assumption.
+> 
+> For example which assumptions?
 
-Abhishek
+that nothing else is happening right now. It backstabs the actual AVDTP and A2DP implementation.
 
-On Wed, Jun 10, 2020 at 10:23 AM Marcel Holtmann <marcel@holtmann.org> wrote:
->
-> Hi Abhishek,
->
-> > Coming back to this device flags idea, I think I would prefer the
-> > original design over adding new management commands for each flag.
-> > Bluez will just have to maintain the current flags and pending flags
-> > (i.e. mgmt call) to decide when to emit property changed events for
-> > the device WakeAllowed property.
-> >
-> > 0x0049 and 0x004A are now taken for experimental features but you have
-> > my reviewed-by for the next available values for the original patch.
->
-> I updated the patch and applied it.
->
-> Regards
->
-> Marcel
->
+>> In addition it has a bad name with no Bluetooth prefix.
+> 
+> So, lets rename it. What about "btavinfo"?
+
+Lets extend btinfo with all sort of capabilities. Make the av portion just one of. I want to remove the multitudes of test utilities anyway. We have to many tiny utilities that are just scattered around and avinfo is just one of them.
+
+> 
+>> If we think it is useful to have such a test utility, then we need to clean this up first
+> 
+> What exactly to clean up first?
+> 
+> Note that I have already done cleanup of this utility.
+> 
+>> and put this into a larger btinfo work to gather appropriate information from a remote device for debug purposes.
+> 
+> I do not see how btinfo can be used for A2DP purposes. Seems this is
+> utility for local controller info and not for remove A2DP.
+
+This needs a bit thinking, but pretty much simple things like this:
+
+	btinfo local
+	btinfo avdtp <remote_bdaddr>
+
+We can create a module handling system so that you can easily links existing tiny utilities into one.
+
+Regards
+
+Marcel
+
