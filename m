@@ -2,91 +2,97 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0E8E1F5F3E
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Jun 2020 02:35:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8E311F5FB5
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Jun 2020 03:54:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727038AbgFKAfw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 10 Jun 2020 20:35:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44500 "EHLO
+        id S1726559AbgFKByI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 10 Jun 2020 21:54:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726999AbgFKAfw (ORCPT
+        with ESMTP id S1726510AbgFKByF (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 10 Jun 2020 20:35:52 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D433FC08C5C1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 10 Jun 2020 17:35:50 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id q8so4018044qkm.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 10 Jun 2020 17:35:50 -0700 (PDT)
+        Wed, 10 Jun 2020 21:54:05 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB081C08C5C2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 10 Jun 2020 18:54:03 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id k2so1593111pjs.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 10 Jun 2020 18:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=/i/zK71gymuqJezGK4E7P7L8fTocECH46UpHtKjBkpA=;
-        b=JkQXji1dktmNdFLiHn4KYqyDWxAGsrkWLgOAYgccT8pcfkogKBkJLI2m0KQdVS+7m+
-         1nGl4pp/UIB+K3BjG11PJV3G3wovjOPfJfHPLpLPCidTsYAkHqd/XzcNUMvlESDC3rdm
-         xqc3e+EuXGRtOA068e2tXx6nK62yISsAo4givfHrBi2aZDa7dPVS7RGCWzC7Op+17Ipb
-         qqxjbbg2c1y/FJTLyb3Tx4q2ItqzCkFyMCruIJKOY6wSVZhbA61eVnmzkSlKmZoCbrw6
-         xdt5Q3+GUqdF33/O02DJyLp+wPEtssZlQu8h/VYJtLPTeNezlOeAX8O9z4Zrun2MPwLb
-         5cmg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7FIHdEi8UE53+gw/wkyvavC5pix798rp5qt0URRecvU=;
+        b=XtvA4Ph3g3MspYhX7MexC/1pPRVk8clbXmFgZwPX+0uFXwvuCcMAkL3nYEuJBoOnuJ
+         tZmkRbXGrnZRApp9+PDNUzEZPdvrhqhgOfv6hBlfHM1W2PnxmDhEmspyc0hRZHz167Wg
+         QO0Zsa+OSzvbCLDiAAW1FEy5j6torlfwDO6+0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=/i/zK71gymuqJezGK4E7P7L8fTocECH46UpHtKjBkpA=;
-        b=Bi1QHFfNJQH6SmaAlRd2x7+l9g/nruHnx854iDcLFHN0QrSrzddPq/b20U3/t8Xrf7
-         AH2Ua0PTwb5suNEXsYX04UYrrUiWSX+R4RetrsrwelM1IiewmFE16NBH6vaWhLCTiLs6
-         JNJpTqlUn6kFg3xW+EMetk5pGyHaF/JUhBvxfGmbFDMu1iJ/GGCimybkRihuCv6+PgQ0
-         oZy1W4OzoegNzhlAFB2fXAAPpPVyWZqovloMWlWqVm4MOBGgT7B0WEIH5HsWzg+J8o3S
-         qgGvRLB/1u9C3uHdwOmydus4VumJnxJFuyw0LIzBrHB2YWOmN0MGw3/fsybucbKK3vJi
-         mffw==
-X-Gm-Message-State: AOAM53169cRKniUaNHmAkneqCDe/6C0guwklHmnhn6AEVtMGU5k4izUK
-        SOPC+i0/OSbL0x3zfXOhujkRlFDcCFg=
-X-Google-Smtp-Source: ABdhPJw0mHyBYjrCJ1++zry3MjmgUrcFVPd5PaTIRkfHYU1ROsRRy2mLQ6Z5aLX4+jxIfvfN2yUQ9Q==
-X-Received: by 2002:a05:620a:11b2:: with SMTP id c18mr5753556qkk.480.1591835750064;
-        Wed, 10 Jun 2020 17:35:50 -0700 (PDT)
-Received: from [172.17.0.2] ([104.209.145.45])
-        by smtp.gmail.com with ESMTPSA id y1sm1203176qta.82.2020.06.10.17.35.49
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7FIHdEi8UE53+gw/wkyvavC5pix798rp5qt0URRecvU=;
+        b=UTh2xDNUGpoCvOPW4a+3wGiSnXKCT0Bzd+k8Lg0kMf0MXKawP7PL6mvYCMH6UlqQOA
+         dftzvg0SUIERX18VwcXOx2jP5SoHfospRMsPNm4yCXqcCzII0MLeJqb+jDuurqVmsem2
+         X7ynXTO6Tsnpi5yAlnU1c4tth33xh85E06hiRQJU85b/kKiDSv99jUp6o4+OfNcBtZs6
+         dOvWsm7GDHdSTCmS3XP449+9SpXcFokD2tvqtXMvcKFhYjyptIyxAgfeLdZNOwxSK12k
+         mnv6CrySPQqAazZgGnVWRZa3bau2DfRdPGJ13WLZeWGPC03BX85i2cDOOJiaso8oF/N4
+         5k4A==
+X-Gm-Message-State: AOAM532Cl3GUwldwY1NvMb5TOZ0p+fLptLIhgobM8sofL4Zl6Oas1+Dm
+        72NC9VGplflA/wOw3ReqyPPjtw==
+X-Google-Smtp-Source: ABdhPJwm1qpCZt/RJk/duXvKTfZz6w74AwJtNSO3tuhVfXLQAx19+C/jnR6GatyZcF1ohWTIaI2+SQ==
+X-Received: by 2002:a17:90a:ae04:: with SMTP id t4mr5472625pjq.131.1591840443230;
+        Wed, 10 Jun 2020 18:54:03 -0700 (PDT)
+Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
+        by smtp.gmail.com with ESMTPSA id b191sm998661pga.13.2020.06.10.18.54.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2020 17:35:49 -0700 (PDT)
-Message-ID: <5ee17c65.1c69fb81.997bb.89d6@mx.google.com>
-Date:   Wed, 10 Jun 2020 17:35:49 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============7614803705217581314=="
+        Wed, 10 Jun 2020 18:54:02 -0700 (PDT)
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+To:     marcel@holtman.org, linux-bluetooth@vger.kernel.org
+Cc:     alainm@chromium.org, chromeos-bluetooth-upstreaming@chromium.org,
+        mka@chromium.org, dianders@chromium.org, linux-pm@vger.kernel.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/3] Bluetooth: btmrvl_sdio: Refactor remote wakeup support
+Date:   Wed, 10 Jun 2020 18:53:52 -0700
+Message-Id: <20200611015355.186666-1-abhishekpandit@chromium.org>
+X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9-goog
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, alainm@chromium.org
-Subject: RE: mgmt:syncing configuration commands to the documentation.
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200611002345.148620-1-alainm@chromium.org>
-References: <20200611002345.148620-1-alainm@chromium.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============7614803705217581314==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
 
+Hi linux-bluetooth,
 
-This is automated email and please do not reply to this email!
+This patch series is refactoring the btmrvl driver to add better support
+for controlling remote wakeup during suspend. Previously, the hci device
+was getting created as /sys/devices/virtual/bluetooth/hci0 and there
+wasn't a way to control wakeup for the device from userspace. This
+series of changes adds the proper parent for the hci device, allows irq
+configuration via power/wakeup and properly disables scanning during
+suspend if wakeup isn't enabled.
 
-Dear submitter,
+This was tested on a Veyron Mighty Chromebook running the 4.19 kernel
+with these patches. It passes both automated and manual suspend+resume
+tests that make sure wakeup is working properly.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While we are preparing for reviewing the patches, we found the following
-issue/warning.
-
-Test Result:
-checkgitlint Failed
-
-Outputs:
-1: T3 Title has trailing punctuation (.): "mgmt:syncing configuration commands to the documentation."
+Thanks
+Abhishek
 
 
 
----
-Regards,
-Linux Bluetooth
+Abhishek Pandit-Subedi (3):
+  Bluetooth: btmrvl_sdio: Set parent dev to hdev
+  Bluetooth: btmrvl_sdio: Implement prevent_wake
+  Bluetooth: btmrvl_sdio: Refactor irq wakeup
 
---===============7614803705217581314==--
+ drivers/bluetooth/btmrvl_main.c | 11 +++++++++++
+ drivers/bluetooth/btmrvl_sdio.c | 13 ++++++++++---
+ 2 files changed, 21 insertions(+), 3 deletions(-)
+
+-- 
+2.27.0.278.ge193c7cf3a9-goog
+
