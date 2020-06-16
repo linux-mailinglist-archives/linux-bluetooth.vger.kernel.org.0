@@ -2,115 +2,244 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AC491FB9EB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jun 2020 18:07:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 388101FBBB1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jun 2020 18:30:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732690AbgFPQHY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 16 Jun 2020 12:07:24 -0400
-Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:36186 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1732266AbgFPPrE (ORCPT
+        id S1730252AbgFPQ2Q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 16 Jun 2020 12:28:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730099AbgFPQ2N (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 16 Jun 2020 11:47:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1592322422;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=djkgmBs6vxKrnF2svfHTCwO6iJZv0MD8YpKSjFl2MGs=;
-        b=anxZyJvaFpuLChSMwUR/a7qLSGGcT0Nzy4aiSkqCpI/xVk6zVIcE9J7iV1341dFYQpdAwe
-        QNobub7hXN4Ms1OW18fOfvph9zqDj6d3Es9xcqmAm7V7WWOGLDbJFRK2rhytEAPFfTLrAb
-        z8prG6hZN2mOJEmSXgQ9/SksTn2gcSw=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-218-nWeeH7oNN9eY6skcHYs3nQ-1; Tue, 16 Jun 2020 11:46:56 -0400
-X-MC-Unique: nWeeH7oNN9eY6skcHYs3nQ-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 0B3678DEEE2;
-        Tue, 16 Jun 2020 15:46:51 +0000 (UTC)
-Received: from warthog.procyon.org.uk (ovpn-114-66.rdu2.redhat.com [10.10.114.66])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 3EC3B60C05;
-        Tue, 16 Jun 2020 15:46:41 +0000 (UTC)
-Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
-        Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
-        Kingdom.
-        Registered in England and Wales under Company Registration No. 3798903
-From:   David Howells <dhowells@redhat.com>
-In-Reply-To: <56c2304c-73cc-8f48-d8d0-5dd6c39f33f3@redhat.com>
-References: <56c2304c-73cc-8f48-d8d0-5dd6c39f33f3@redhat.com> <20200616015718.7812-1-longman@redhat.com> <20200616015718.7812-2-longman@redhat.com> <20200616033035.GB902@sol.localdomain>
-To:     Waiman Long <longman@redhat.com>
-Cc:     Andrew Morton <akpm@linux-foundation.org>, ebiggers@kernel.org,
-        David Howells <dhowells@redhat.com>,
-        Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
-        James Morris <jmorris@namei.org>,
-        "Serge E. Hallyn" <serge@hallyn.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Joe Perches <joe@perches.com>,
-        Matthew Wilcox <willy@infradead.org>,
-        David Rientjes <rientjes@google.com>,
-        Michal Hocko <mhocko@suse.com>,
-        Johannes Weiner <hannes@cmpxchg.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        David Sterba <dsterba@suse.cz>,
-        "Jason A . Donenfeld" <Jason@zx2c4.com>, linux-mm@kvack.org,
-        keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
-        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
-        linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
-        linux-wireless@vger.kernel.org, devel@driverdev.osuosl.org,
-        linux-scsi@vger.kernel.org, target-devel@vger.kernel.org,
-        linux-btrfs@vger.kernel.org, linux-cifs@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
-        kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
-        linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
-        linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
-        linux-security-module@vger.kernel.org,
-        linux-integrity@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] mm/slab: Use memzero_explicit() in kzfree()
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <879078.1592322400.1@warthog.procyon.org.uk>
-Date:   Tue, 16 Jun 2020 16:46:40 +0100
-Message-ID: <879079.1592322400@warthog.procyon.org.uk>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+        Tue, 16 Jun 2020 12:28:13 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4F18C061755
+        for <linux-bluetooth@vger.kernel.org>; Tue, 16 Jun 2020 09:28:12 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id l184so17247784qkb.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 16 Jun 2020 09:28:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=We8MnYtBaG4t88DyFPaEaI/3JbDRE1+6v3kM+jWwEtw=;
+        b=twJ3EoJyQcjR+d+L58Wh0mCUcbuU0+QAPzB6rQHEnZENPLcQAx6EyybBFWdDulFrRu
+         J+xYIN0w3N2j1OTLubTC0Z3/jMGTHmMEsMPwbbi1Va8gSib0TNwb6JQG2B15hvLIduDf
+         qvffpC/NY5VWez+haI1YnTr5R/IzVvBS6rCm51x+Y8S/7MwI3Co9fs2IBlueJtb+DiRm
+         uiYfQM8xkBPA31QHXbdQiOtkLC3jgb5PqnDmKfROWQbON9TeEHtuYjr1bKkByTF8iqxW
+         e/quk5yfVTrn2+46OxKdNHH1aWfy5zIgqBhm7pTYxlIY3ZpxpNj8sdxP8J1IcybZQdiW
+         KT0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=We8MnYtBaG4t88DyFPaEaI/3JbDRE1+6v3kM+jWwEtw=;
+        b=TqjHCJ64CicBLHg384IeXZ/mCaYuRYzQkDiS/8xERZhQOl8RPvZ/NthxPR6Bxb+W6d
+         i7NCSG2kVVr1hVIrveKAAwQwL3Qq5TWQowAs5FHeXr1UDMu2yChRNlNFYUaucMaRonKl
+         m8DSulBuyidAn2xnGPGGmC7TaRSrijCIvFfrKVNKhON0zHa8oikcFj/4AX+AfQq5W6cn
+         x87zhc0jpJbExyjuxuw7wUgRUXalhcvlsq5C62B3htowY1xmsYTdutcjtZNg/aQbsO19
+         ctQYsDOupqBConthY4TgGVOZSvTugTlV6QfbYqdJADCvbkMi6+3A4rI4Z36ROT5vsRH+
+         Nigg==
+X-Gm-Message-State: AOAM533MF2Be4Kdz2x5klmbBUXsoStuI66/seKoqg+DaU0Cw8diTFVxC
+        kfuIN+mzfBOfjHLCKD7hJ37URAtWpDyWIA==
+X-Google-Smtp-Source: ABdhPJxSJhezPui+2TcwUkCJnNFInLrEP/g22g01ekicafFP/qnFgKnxpBHUD1MX9kPOnf4BHKk7214nYOqT/A==
+X-Received: by 2002:a05:6214:1842:: with SMTP id d2mr3087871qvy.197.1592324891019;
+ Tue, 16 Jun 2020 09:28:11 -0700 (PDT)
+Date:   Tue, 16 Jun 2020 09:28:02 -0700
+Message-Id: <20200616092341.v2.1.I9dd050ead919f2cc3ef83d4e866de537c7799cf3@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.27.0.111.gc72c7da667-goog
+Subject: [PATCH v2] Bluetooth: Terminate the link if pairing is cancelled
+From:   Manish Mandlik <mmandlik@google.com>
+To:     marcel@holtmann.org, luiz.dentz@gmail.com
+Cc:     linux-bluetooth@vger.kernel.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        Alain Michaud <alainm@chromium.org>,
+        Manish Mandlik <mmandlik@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Waiman Long <longman@redhat.com> wrote:
+If user decides to cancel the ongoing pairing process (e.g. by clicking
+the cancel button on pairing/passkey window), abort any ongoing pairing
+and then terminate the link if it was created because of the pair
+device action.
 
-> The kzfree() function is normally used to clear some sensitive
-> information, like encryption keys, in the buffer before freeing it back
-> to the pool. Memset()
+Signed-off-by: Manish Mandlik <mmandlik@google.com>
+---
 
-"memset()" is all lowercase.
+Changes in v2:
+- Added code to track if the connection was triggered because of the pair
+  device action and then only terminate the link on pairing cancel.
 
-> is currently used for buffer clearing. However unlikely, there is still a
-> non-zero probability
+ include/net/bluetooth/hci_core.h | 14 ++++++++++++--
+ net/bluetooth/hci_conn.c         | 11 ++++++++---
+ net/bluetooth/l2cap_core.c       |  6 ++++--
+ net/bluetooth/mgmt.c             | 22 ++++++++++++++++++----
+ 4 files changed, 42 insertions(+), 11 deletions(-)
 
-I'd say "a possibility".
-
-> that
-
-and I'd move "in [the] future" here.
-
-> the compiler may choose to optimize away the
-> memory clearing especially if LTO is being used in the future. To make sure
-> that this optimization will never happen
-
-"in these cases"
-
-> , memzero_explicit(), which is introduced in v3.18, is now used in
-
-"instead of"?
-
-> kzfree() to future-proof it.
-
-Davod
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index f5b28c7cae9f2..236ffbc36b2c3 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -519,6 +519,12 @@ struct hci_dev {
+ 
+ #define HCI_PHY_HANDLE(handle)	(handle & 0xff)
+ 
++enum conn_reasons {
++	CONN_REASON_PAIR_DEVICE,
++	CONN_REASON_L2CAP_CHAN,
++	CONN_REASON_SCO_CONNECT,
++};
++
+ struct hci_conn {
+ 	struct list_head list;
+ 
+@@ -567,6 +573,8 @@ struct hci_conn {
+ 	__s8		max_tx_power;
+ 	unsigned long	flags;
+ 
++	enum conn_reasons conn_reason;
++
+ 	__u32		clock;
+ 	__u16		clock_accuracy;
+ 
+@@ -991,12 +999,14 @@ struct hci_chan *hci_chan_lookup_handle(struct hci_dev *hdev, __u16 handle);
+ 
+ struct hci_conn *hci_connect_le_scan(struct hci_dev *hdev, bdaddr_t *dst,
+ 				     u8 dst_type, u8 sec_level,
+-				     u16 conn_timeout);
++				     u16 conn_timeout,
++				     enum conn_reasons conn_reason);
+ struct hci_conn *hci_connect_le(struct hci_dev *hdev, bdaddr_t *dst,
+ 				u8 dst_type, u8 sec_level, u16 conn_timeout,
+ 				u8 role, bdaddr_t *direct_rpa);
+ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
+-				 u8 sec_level, u8 auth_type);
++				 u8 sec_level, u8 auth_type,
++				 enum conn_reasons conn_reason);
+ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 				 __u16 setting);
+ int hci_conn_check_link_mode(struct hci_conn *conn);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 3ea1bdf5d1e35..1353d7e3f1012 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1157,7 +1157,8 @@ static int hci_explicit_conn_params_set(struct hci_dev *hdev,
+ /* This function requires the caller holds hdev->lock */
+ struct hci_conn *hci_connect_le_scan(struct hci_dev *hdev, bdaddr_t *dst,
+ 				     u8 dst_type, u8 sec_level,
+-				     u16 conn_timeout)
++				     u16 conn_timeout,
++				     enum conn_reasons conn_reason)
+ {
+ 	struct hci_conn *conn;
+ 
+@@ -1202,6 +1203,7 @@ struct hci_conn *hci_connect_le_scan(struct hci_dev *hdev, bdaddr_t *dst,
+ 	conn->sec_level = BT_SECURITY_LOW;
+ 	conn->pending_sec_level = sec_level;
+ 	conn->conn_timeout = conn_timeout;
++	conn->conn_reason = conn_reason;
+ 
+ 	hci_update_background_scan(hdev);
+ 
+@@ -1211,7 +1213,8 @@ struct hci_conn *hci_connect_le_scan(struct hci_dev *hdev, bdaddr_t *dst,
+ }
+ 
+ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
+-				 u8 sec_level, u8 auth_type)
++				 u8 sec_level, u8 auth_type,
++				 enum conn_reasons conn_reason)
+ {
+ 	struct hci_conn *acl;
+ 
+@@ -1231,6 +1234,7 @@ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
+ 
+ 	hci_conn_hold(acl);
+ 
++	acl->conn_reason = conn_reason;
+ 	if (acl->state == BT_OPEN || acl->state == BT_CLOSED) {
+ 		acl->sec_level = BT_SECURITY_LOW;
+ 		acl->pending_sec_level = sec_level;
+@@ -1247,7 +1251,8 @@ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	struct hci_conn *acl;
+ 	struct hci_conn *sco;
+ 
+-	acl = hci_connect_acl(hdev, dst, BT_SECURITY_LOW, HCI_AT_NO_BONDING);
++	acl = hci_connect_acl(hdev, dst, BT_SECURITY_LOW, HCI_AT_NO_BONDING,
++			      CONN_REASON_SCO_CONNECT);
+ 	if (IS_ERR(acl))
+ 		return acl;
+ 
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index bdbf37337bc6c..ee71b68582f48 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -7224,11 +7224,13 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		else
+ 			hcon = hci_connect_le_scan(hdev, dst, dst_type,
+ 						   chan->sec_level,
+-						   HCI_LE_CONN_TIMEOUT);
++						   HCI_LE_CONN_TIMEOUT,
++						   CONN_REASON_L2CAP_CHAN);
+ 
+ 	} else {
+ 		u8 auth_type = l2cap_get_auth_type(chan);
+-		hcon = hci_connect_acl(hdev, dst, chan->sec_level, auth_type);
++		hcon = hci_connect_acl(hdev, dst, chan->sec_level, auth_type,
++				       CONN_REASON_L2CAP_CHAN);
+ 	}
+ 
+ 	if (IS_ERR(hcon)) {
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index db7023dfcd253..06cc8d30f8f00 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2940,7 +2940,7 @@ static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
+ 
+ 	if (cp->addr.type == BDADDR_BREDR) {
+ 		conn = hci_connect_acl(hdev, &cp->addr.bdaddr, sec_level,
+-				       auth_type);
++				       auth_type, CONN_REASON_PAIR_DEVICE);
+ 	} else {
+ 		u8 addr_type = le_addr_type(cp->addr.type);
+ 		struct hci_conn_params *p;
+@@ -2959,9 +2959,9 @@ static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		if (p->auto_connect == HCI_AUTO_CONN_EXPLICIT)
+ 			p->auto_connect = HCI_AUTO_CONN_DISABLED;
+ 
+-		conn = hci_connect_le_scan(hdev, &cp->addr.bdaddr,
+-					   addr_type, sec_level,
+-					   HCI_LE_CONN_TIMEOUT);
++		conn = hci_connect_le_scan(hdev, &cp->addr.bdaddr, addr_type,
++					   sec_level, HCI_LE_CONN_TIMEOUT,
++					   CONN_REASON_PAIR_DEVICE);
+ 	}
+ 
+ 	if (IS_ERR(conn)) {
+@@ -3062,6 +3062,20 @@ static int cancel_pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
+ 
+ 	err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE, 0,
+ 				addr, sizeof(*addr));
++
++	/* Since user doesn't want to proceed with the connection, abort any
++	 * ongoing pairing and then terminate the link if it was created
++	 * because of the pair device action.
++	 */
++	if (addr->type == BDADDR_BREDR)
++		hci_remove_link_key(hdev, &addr->bdaddr);
++	else
++		smp_cancel_and_remove_pairing(hdev, &addr->bdaddr,
++					      le_addr_type(addr->type));
++
++	if (conn->conn_reason == CONN_REASON_PAIR_DEVICE)
++		hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
++
+ unlock:
+ 	hci_dev_unlock(hdev);
+ 	return err;
+-- 
+2.27.0.111.gc72c7da667-goog
 
