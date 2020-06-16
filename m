@@ -2,117 +2,158 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F26711FA4F4
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jun 2020 02:14:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 195481FA50B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jun 2020 02:26:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726506AbgFPANw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Jun 2020 20:13:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43616 "EHLO
+        id S1726625AbgFPAZM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Jun 2020 20:25:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726332AbgFPANv (ORCPT
+        with ESMTP id S1726327AbgFPAZL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Jun 2020 20:13:51 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D87C6C061A0E
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jun 2020 17:13:49 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id dp10so8658034qvb.10
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jun 2020 17:13:49 -0700 (PDT)
+        Mon, 15 Jun 2020 20:25:11 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36F3DC08C5C3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jun 2020 17:25:11 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id m2so701644pjv.2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jun 2020 17:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=di6vSDYtyjyjdvksPaySKrQaM5rYisw6RcOthPYfrZQ=;
-        b=gj6qirZ1hUwEDP4vi3HI3TRH/O0HpnINidZpsfSLZ6ODU9sQOBGnU6Cfg1tlv81Enx
-         QJRabrbjYXeeefRQl7Hwe0f2Clni2yzLge262+iMiJVMUcCM6mnxyhlHHksPGVXDDzb6
-         ToDObRHFixCVFJls20Gfqzs8+d1CeqpuEJHUXqWGw8LpEVjqTJrYmQcJVUTT1y3luJ9O
-         H8L2uhl0GpPyOcDmi1T1lpkrD+Jo46bLp619fd1U+FltinahOIzqyRV6zqG9RB/jqSY3
-         KZLJTvXg5StuvwyEcZ2H7t5i6DwhPgesFPPDyHD5AIq9DBPlhg457vuFNV10MdI5pmjI
-         SzWg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=26J9i57XuI3tG/PuFvKTO+VO1i2nL2WVB2t8LtWV05c=;
+        b=BSEPUpGU1bfDNggNEUP0Nqj8JTnaO9oNkCnioW9UyA6ww9VVZNq9IKAow/hJO5/x7E
+         K0a10xuT2S8dYWvAS+OXJg+2PHzFd//cNbC1MX+hx4O8Gjm4Qnb2PA9mZaQ+M3UePUPU
+         qznnlg6z29H6l1ei7e5Kvg21Zcq5Wbt/vWFN8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=di6vSDYtyjyjdvksPaySKrQaM5rYisw6RcOthPYfrZQ=;
-        b=naZS4FQCaEquYUYwpQbLxNUgc3uiRMJomaQKEb0a2SK+1sn+7y9Eq6bUwz8CR5mh00
-         uvlGhhKImkF+RZwnEVK59bMHQnz1QmaLVv4c66FHex73FQA36XFtiNVxXHaZ4UsIGkw5
-         zzsQs/LD5Gm+oCNZiU8jGuM5uA/sKyk6un15FkqQaHwVj7qPj0ttj4eMNYDAts9IlcdH
-         1g/bT1jHlpprCMjbl2XoTi7fHPhulhO3nOz3wsHjrLv5GCS0CDUrJjiQ/gDShE7k3TQs
-         lBPn8Pj8srH3SSmxSP8hAkFRKERfHuMYXNHfxxVCTFohQmN3i42HumniL/9CahBvBRkx
-         N6dg==
-X-Gm-Message-State: AOAM532Kpl240i2tgXKIjC3enRDqMF1Gc+3xhZ876Fq9UfQD01nRi2Oa
-        sDqPycAsElQwjtzNvV/Fe9Ep+IYN
-X-Google-Smtp-Source: ABdhPJz6R8ciq3yVmgUBL+lfGkO7nplG339MuRSMpWUiKUEXl3l+UAQ8O+6oDsSehbFkmZuAw9bMzA==
-X-Received: by 2002:a0c:f3ce:: with SMTP id f14mr349132qvm.68.1592266428789;
-        Mon, 15 Jun 2020 17:13:48 -0700 (PDT)
-Received: from [172.17.0.2] ([20.36.191.240])
-        by smtp.gmail.com with ESMTPSA id w3sm13149336qkb.85.2020.06.15.17.13.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 17:13:48 -0700 (PDT)
-Message-ID: <5ee80ebc.1c69fb81.d99e6.ba46@mx.google.com>
-Date:   Mon, 15 Jun 2020 17:13:48 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============5560753200112618724=="
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=26J9i57XuI3tG/PuFvKTO+VO1i2nL2WVB2t8LtWV05c=;
+        b=MTcXagtOxCgaC6Hl9w4HVBBmFPwNYy05jP9B8Qvv6FzmFm7Wo7m6lMMrYvwYODhaHB
+         3ePBfcj6mPA6tcvqf+cm5NStQDQ1tma7v8tsBnwRoVwB5QC/2AUP0Q3KdQEzO4hiwA+y
+         bwmWniI3QzAmsQbWYkyxph6rgnJAm/EE+aa/Jwgqw1RXtzH0R7el2WvqoqxegBrP0SE4
+         VMoCewrQQSc2NgTG++9McAb5k3zP5kJnba8yrPpuTZkthUXCAFmA5pCsAl++t2dm+/XK
+         A1dEFeloJSCe8i8h5gOs2vqCvoNhi4zkfxrpCmG1Zf8VoUTPo+/oOrAam0Z+5fUg9dnR
+         paDQ==
+X-Gm-Message-State: AOAM532ONdssqFeioy8K57sLdRcTQd+Y8yCt53LDAmHHQ5x1zJwUalFv
+        pNPwCwrwk8SGyv+M27W6hH1eXsrLQyk=
+X-Google-Smtp-Source: ABdhPJxVB/SPUO4YceUOYDXgO9v7NEYHhRiD2wKqsOs65ag64IEdo4Lgk8Sgle21byjXPyLlrM8QFg==
+X-Received: by 2002:a17:902:9301:: with SMTP id bc1mr397515plb.116.1592267110266;
+        Mon, 15 Jun 2020 17:25:10 -0700 (PDT)
+Received: from mcchou0.mtv.corp.google.com ([2620:15c:202:201:b46:ac84:1014:9555])
+        by smtp.gmail.com with ESMTPSA id x2sm14783781pfr.186.2020.06.15.17.25.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Jun 2020 17:25:09 -0700 (PDT)
+From:   Miao-chen Chou <mcchou@chromium.org>
+To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
+Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Alain Michaud <alainm@chromium.org>,
+        Yoni Shavit <yshavit@chromium.org>,
+        Michael Sun <michaelfsun@google.com>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH v5 1/7] Bluetooth: Add definitions for advertisement monitor features
+Date:   Mon, 15 Jun 2020 17:24:59 -0700
+Message-Id: <20200615172440.v5.1.I636f906bf8122855dfd2ba636352bbdcb50c35ed@changeid>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, michaelfsun@google.com
-Subject: RE: Add new commands in btmgmt to support adv monitor
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200616000318.42664-2-michaelfsun@google.com>
-References: <20200616000318.42664-2-michaelfsun@google.com>
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5560753200112618724==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: base64
+This adds support for Advertisement Monitor API. Here are the commands
+and events added.
+- Read Advertisement Monitor Feature command
+- Add Advertisement Pattern Monitor command
+- Remove Advertisement Monitor command
+- Advertisement Monitor Added event
+- Advertisement Monitor Removed event
 
-ClRoaXMgaXMgYXV0b21hdGVkIGVtYWlsIGFuZCBwbGVhc2UgZG8gbm90IHJlcGx5IHRvIHRoaXMg
-ZW1haWwhCgpEZWFyIHN1Ym1pdHRlciwKClRoYW5rIHlvdSBmb3Igc3VibWl0dGluZyB0aGUgcGF0
-Y2hlcyB0byB0aGUgbGludXggYmx1ZXRvb3RoIG1haWxpbmcgbGlzdC4KV2hpbGUgd2UgYXJlIHBy
-ZXBhcmluZyBmb3IgcmV2aWV3aW5nIHRoZSBwYXRjaGVzLCB3ZSBmb3VuZCB0aGUgZm9sbG93aW5n
-Cmlzc3VlL3dhcm5pbmcuCgpUZXN0IFJlc3VsdDoKY2hlY2tidWlsZCBGYWlsZWQKCk91dHB1dHM6
-CmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQgKHNlZSBg
-VScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQgKHNl
-ZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQg
-KHNlZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1
-bHQgKHNlZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRl
-ZmF1bHQgKHNlZSBgVScpCnRvb2xzL2J0bWdtdC5jOiBJbiBmdW5jdGlvbiDigJhhZHZtb25fZmVh
-dHVyZXMyc3Ry4oCZOgp0b29scy9idG1nbXQuYzo0NjA4OjE2OiBlcnJvcjogY29tcGFyaXNvbiBv
-ZiBpbnRlZ2VyIGV4cHJlc3Npb25zIG9mIGRpZmZlcmVudCBzaWduZWRuZXNzOiDigJhpbnTigJkg
-YW5kIOKAmGxvbmcgdW5zaWduZWQgaW504oCZIFstV2Vycm9yPXNpZ24tY29tcGFyZV0KIDQ2MDgg
-fCAgZm9yIChpID0gMDsgaSA8IE5FTEVNKGFkdm1vbl9mZWF0dXJlc19zdHIpOyBpKyspIHsKICAg
-ICAgfCAgICAgICAgICAgICAgICBeCnRvb2xzL2J0bWdtdC5jOjQ2MDk6NDE6IGVycm9yOiBjb21w
-YXJpc29uIG9mIGludGVnZXIgZXhwcmVzc2lvbnMgb2YgZGlmZmVyZW50IHNpZ25lZG5lc3M6IOKA
-mGludOKAmSBhbmQg4oCYbG9uZyB1bnNpZ25lZCBpbnTigJkgWy1XZXJyb3I9c2lnbi1jb21wYXJl
-XQogNDYwOSB8ICAgaWYgKChmZWF0dXJlcyAmICgxIDw8IGkpKSAhPSAwICYmIG9mZiA8IHNpemVv
-ZihzdHIpKQogICAgICB8ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBe
-CnRvb2xzL2J0bWdtdC5jOiBJbiBmdW5jdGlvbiDigJhzdHIycGF0dGVybuKAmToKdG9vbHMvYnRt
-Z210LmM6NDY5Mjo0NDogZXJyb3I6IHVudXNlZCB2YXJpYWJsZSDigJhsZW5ndGjigJkgWy1XZXJy
-b3I9dW51c2VkLXZhcmlhYmxlXQogNDY5MiB8ICBpbnQgdHlwZV9sZW4sIG9mZnNldF9sZW4sIG9m
-ZnNldF9lbmRfcG9zLCBsZW5ndGgsIHN0cl9sZW47CiAgICAgIHwgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIF5+fn5+fgp0b29scy9idG1nbXQuYzogSW4gZnVuY3Rp
-b24g4oCYY21kX2Fkdm1vbl9hZGTigJk6CnRvb2xzL2J0bWdtdC5jOjQ3NzE6MTI6IGVycm9yOiBp
-bnZhbGlkIGFwcGxpY2F0aW9uIG9mIOKAmHNpemVvZuKAmSB0byBpbmNvbXBsZXRlIHR5cGUg4oCY
-c3RydWN0IG1nbXRfY3BfYWRkX2Fkdl9wYXR0ZXJuc19tb25pdG9y4oCZCiA0NzcxIHwgICAgIHNp
-emVvZihzdHJ1Y3QgbWdtdF9jcF9hZGRfYWR2X3BhdHRlcm5zX21vbml0b3IpICsKICAgICAgfCAg
-ICAgICAgICAgIF5+fn5+fgp0b29scy9idG1nbXQuYzo0Nzc2OjY6IGVycm9yOiBkZXJlZmVyZW5j
-aW5nIHBvaW50ZXIgdG8gaW5jb21wbGV0ZSB0eXBlIOKAmHN0cnVjdCBtZ210X2NwX2FkZF9hZHZf
-cGF0dGVybnNfbW9uaXRvcuKAmQogNDc3NiB8ICAgICAgLT5wYXR0ZXJuX2NvdW50ID0gcGF0dGVy
-bl9jb3VudDsKICAgICAgfCAgICAgIF5+CnRvb2xzL2J0bWdtdC5jOjQ3OTk6MjM6IGVycm9yOiDi
-gJhNR01UX09QX0FERF9BRFZfUEFUVEVSTlNfTU9OSVRPUuKAmSB1bmRlY2xhcmVkIChmaXJzdCB1
-c2UgaW4gdGhpcyBmdW5jdGlvbik7IGRpZCB5b3UgbWVhbiDigJhNR01UX09QX0FERF9BRFZfTU9O
-SVRPUuKAmT8KIDQ3OTkgfCAgaWYgKCFtZ210X3NlbmQobWdtdCwgTUdNVF9PUF9BRERfQURWX1BB
-VFRFUk5TX01PTklUT1IsIGluZGV4LCBjcF9sZW4sCiAgICAgIHwgICAgICAgICAgICAgICAgICAg
-ICAgIF5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+CiAgICAgIHwgICAgICAgICAgICAg
-ICAgICAgICAgIE1HTVRfT1BfQUREX0FEVl9NT05JVE9SCnRvb2xzL2J0bWdtdC5jOjQ3OTk6MjM6
-IG5vdGU6IGVhY2ggdW5kZWNsYXJlZCBpZGVudGlmaWVyIGlzIHJlcG9ydGVkIG9ubHkgb25jZSBm
-b3IgZWFjaCBmdW5jdGlvbiBpdCBhcHBlYXJzIGluCnRvb2xzL2J0bWdtdC5jOjQ3NDQ6MTE6IGVy
-cm9yOiB1bnVzZWQgdmFyaWFibGUg4oCYaeKAmSBbLVdlcnJvcj11bnVzZWQtdmFyaWFibGVdCiA0
-NzQ0IHwgIGludCBvcHQsIGk7CiAgICAgIHwgICAgICAgICAgIF4KY2MxOiBhbGwgd2FybmluZ3Mg
-YmVpbmcgdHJlYXRlZCBhcyBlcnJvcnMKbWFrZVsxXTogKioqIFtNYWtlZmlsZTo2NzkxOiB0b29s
-cy9idG1nbXQub10gRXJyb3IgMQptYWtlOiAqKiogW01ha2VmaWxlOjQwMTA6IGFsbF0gRXJyb3Ig
-MgoKCgotLS0KUmVnYXJkcywKTGludXggQmx1ZXRvb3RoCg==
+Signed-off-by: Miao-chen Chou <mcchou@chromium.org>
+---
 
---===============5560753200112618724==--
+Changes in v5: None
+Changes in v4: None
+Changes in v3:
+- Update command/event opcodes.
+- Correct data types.
+
+Changes in v2: None
+
+ include/net/bluetooth/mgmt.h | 49 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+
+diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
+index 16e0d87bd8fae..fcc5d0349f549 100644
+--- a/include/net/bluetooth/mgmt.h
++++ b/include/net/bluetooth/mgmt.h
+@@ -702,6 +702,45 @@ struct mgmt_rp_set_exp_feature {
+ 	__le32 flags;
+ } __packed;
+ 
++#define MGMT_ADV_MONITOR_FEATURE_MASK_OR_PATTERNS    BIT(0)
++
++#define MGMT_OP_READ_ADV_MONITOR_FEATURES	0x0051
++#define MGMT_READ_ADV_MONITOR_FEATURES_SIZE	0
++struct mgmt_rp_read_adv_monitor_features {
++	__le32 supported_features;
++	__le32 enabled_features;
++	__le16 max_num_handles;
++	__u8 max_num_patterns;
++	__le16 num_handles;
++	__le16 handles[];
++}  __packed;
++
++struct mgmt_adv_pattern {
++	__u8 ad_type;
++	__u8 offset;
++	__u8 length;
++	__u8 value[31];
++} __packed;
++
++#define MGMT_OP_ADD_ADV_PATTERNS_MONITOR	0x0052
++struct mgmt_cp_add_adv_patterns_monitor {
++	__u8 pattern_count;
++	struct mgmt_adv_pattern patterns[];
++} __packed;
++#define MGMT_ADD_ADV_PATTERNS_MONITOR_SIZE	1
++struct mgmt_rp_add_adv_patterns_monitor {
++	__le16 monitor_handle;
++} __packed;
++
++#define MGMT_OP_REMOVE_ADV_MONITOR		0x0053
++struct mgmt_cp_remove_adv_monitor {
++	__le16 monitor_handle;
++} __packed;
++#define MGMT_REMOVE_ADV_MONITOR_SIZE		2
++struct mgmt_rp_remove_adv_monitor {
++	__le16 monitor_handle;
++} __packed;
++
+ #define MGMT_EV_CMD_COMPLETE		0x0001
+ struct mgmt_ev_cmd_complete {
+ 	__le16	opcode;
+@@ -933,3 +972,13 @@ struct mgmt_ev_exp_feature_changed {
+ 	__u8	uuid[16];
+ 	__le32	flags;
+ } __packed;
++
++#define MGMT_EV_ADV_MONITOR_ADDED	0x002b
++struct mgmt_ev_adv_monitor_added {
++	__le16 monitor_handle;
++}  __packed;
++
++#define MGMT_EV_ADV_MONITOR_REMOVED	0x002c
++struct mgmt_ev_adv_monitor_removed {
++	__le16 monitor_handle;
++}  __packed;
+-- 
+2.26.2
+
