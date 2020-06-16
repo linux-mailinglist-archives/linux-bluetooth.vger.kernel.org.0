@@ -2,50 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FA4A1FA46A
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jun 2020 01:37:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18F911FA4D9
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jun 2020 02:03:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbgFOXg1 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Jun 2020 19:36:27 -0400
-Received: from mail.bnv.gob.ve ([201.249.200.115]:41330 "EHLO
-        correo.bnv.gob.ve" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726763AbgFOXg1 (ORCPT
+        id S1726312AbgFPAD1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Jun 2020 20:03:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42020 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725960AbgFPAD0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Jun 2020 19:36:27 -0400
-Received: from localhost (localhost.bnv.gob.ve [127.0.0.1])
-        by correo.bnv.gob.ve (Postfix) with ESMTP id DAEFE3633AA0;
-        Mon, 15 Jun 2020 17:55:06 -0400 (-04)
-Received: from correo.bnv.gob.ve ([127.0.0.1])
-        by localhost (correo.bnv.gob.ve [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id jf94gQ1eUUbn; Mon, 15 Jun 2020 17:55:06 -0400 (-04)
-Received: from localhost (localhost.bnv.gob.ve [127.0.0.1])
-        by correo.bnv.gob.ve (Postfix) with ESMTP id 8BCF43633A66;
-        Mon, 15 Jun 2020 17:55:06 -0400 (-04)
-X-Virus-Scanned: amavisd-new at bnv.gob.ve
-Received: from correo.bnv.gob.ve ([127.0.0.1])
-        by localhost (correo.bnv.gob.ve [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id KleZlbyWK1MW; Mon, 15 Jun 2020 17:55:06 -0400 (-04)
-Received: from [10.122.16.20] (unknown [105.12.7.63])
-        by correo.bnv.gob.ve (Postfix) with ESMTPSA id 762A63633A6B;
-        Mon, 15 Jun 2020 17:54:57 -0400 (-04)
-Content-Type: text/plain; charset="iso-8859-1"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: donation of Euro 2,000,000.00.
-To:     Recipients <manuel@info.com>
-From:   "manuel franco" <manuel@info.com>
-Date:   Mon, 15 Jun 2020 23:54:48 +0200
-Reply-To: manuelfrancospende22@gmail.com
-Message-Id: <20200615215457.762A63633A6B@correo.bnv.gob.ve>
+        Mon, 15 Jun 2020 20:03:26 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCDADC061A0E
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jun 2020 17:03:23 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id 140so15524267qko.23
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jun 2020 17:03:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=Bvv70ySE2kGaWTe3hi2XH2e2escaSetwJoff/dLUEkY=;
+        b=naNt3icrQQV3V8h4cS6mFVqYzmchdRXR67BAKSnJSON8Y/ThhkNngwKMMjRcV3/E3h
+         yFYxk+gzGPhr+sAhNDZK8qM8g0usFeom+HMEs7CfT9OnLE27hA7rJ7j6iqrMKNPSKpZm
+         8PBeHTeq4R2wBHa+sGjiflCxxnZModh7B49hnkdy+teiSSmRiaPGHYovx3QO0gWillAw
+         e82YJzEtEx3HZ6tWWCdepgwqx+/a8d7VfNJPdGu4pDuaO3Ye6FVTlzcOZ4EVjCufWxRM
+         K7zYbG/G4Pel751yrn0ZidBofiMdrJ6RZKMxhjrK4YR2FAx+F13dRfLJFucyE1l01nM+
+         xfPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=Bvv70ySE2kGaWTe3hi2XH2e2escaSetwJoff/dLUEkY=;
+        b=bYveXIEebQxvwyxOHCMLc2DStWKk9oA+MxQpodFn0ACfHjc8WL23HYlLUwcKdgYPod
+         8z5vf2gLjYJ87RkBM94EqeOMDIely0xIr/4FY5OMhcouozqBN7lakqzMi4yHpB2+owSv
+         VivwNd/efco8mkUPRZ/iLoRveUHxnBXsUFjzwJx1MmZFCoh5ddFtmXU1yUYDTTPMIMVB
+         f6RiOeOotoJUk6n6OI7qpooPJjDvp9IZmZmX5kGLRa/hI2xy/4CFEaoc0tYl4F7dm5e+
+         4kDbGqMhcXYMeR38sV6efetORyB540syXCUP+bb+XciI/tHJMFrrQkQuRMKGL0uy+Yje
+         ajvg==
+X-Gm-Message-State: AOAM533MoCV8AL/weeNPjjl/0Z9DxoiJqX+uwNPNff2efcgZBTAquEIo
+        pRSGyPV6jxQ85JoApUqEtZqQEDoV6UCKqt97zlJDcJWuA9p1l2ZMRecpAvW1ov3c+PfVojICgEg
+        l2Olfnbe+lxicSg7WMoSO4tt/KyY72zvYv6oRyDIl6elaMZ9WbYQhSNztLKI/uuusuItUXFzvwO
+        qguQY0fgVOQ6E=
+X-Google-Smtp-Source: ABdhPJwvWds9q8ASgikgEafyYhc1zMJQb7cUBmeUmMrecc00dgLHkCvkh/DkJdtAWK1lxYKz4zFOQoUdQ+4E+V0S2A==
+X-Received: by 2002:a05:6214:b33:: with SMTP id w19mr260605qvj.7.1592265802732;
+ Mon, 15 Jun 2020 17:03:22 -0700 (PDT)
+Date:   Mon, 15 Jun 2020 17:03:15 -0700
+Message-Id: <20200616000318.42664-1-michaelfsun@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.27.0.290.gba653c62da-goog
+Subject: [bluez PATCH v1 0/3] Add new commands in btmgmt to support adv monitor
+From:   Michael Sun <michaelfsun@google.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     luiz.von.dentz@intel.com,
+        chromeos-bluetooth-upstreaming@chromium.org, mcchou@chromium.org,
+        alainm@chromium.org, Michael Sun <michaelfsun@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-You have a donation of Euro 2,000,000.00.
+Hi linux-bluetooth,
 
-My name is Manuel Franco from the United States.
+This series of patches add support for new advertisement monitor mgmt
+opcodes by introducing new btmgmt commands. The new commands are
+=E2=80=98advmon-features=E2=80=99, =E2=80=98advmon-add=E2=80=99, and =E2=80=
+=98advmon-remove=E2=80=99. They provide the
+ability for users to query supported advertisement monitoring features
+and add/remove monitor filters through btmgmt console.
 
-I won the America lottery worth $768 million and I am donating a portion of it to just 5 lucky people and a few Orphanage homes as a memorandum of goodwill to humanity.email: manuelfrancospende@gmail.com
+
+Michael Sun (3):
+  btmgmt: Add btmgmt command advmon-features
+  btmgmt: Add btmgmt command advmon-remove
+  btmgmt: Add btmgmt command advmon-add
+
+ tools/btmgmt.c | 294 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 294 insertions(+)
+
+--=20
+2.27.0.290.gba653c62da-goog
+
