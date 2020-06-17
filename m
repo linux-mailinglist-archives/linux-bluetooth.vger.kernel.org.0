@@ -2,24 +2,24 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 623951FCFCF
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Jun 2020 16:39:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C4191FCFCD
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Jun 2020 16:39:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727022AbgFQOjc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 Jun 2020 10:39:32 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:39578 "EHLO
+        id S1727063AbgFQOjb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Jun 2020 10:39:31 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:49147 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727031AbgFQOja (ORCPT
+        with ESMTP id S1727055AbgFQOja (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 17 Jun 2020 10:39:30 -0400
 Received: from localhost.localdomain (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
-        by mail.holtmann.org (Postfix) with ESMTPSA id C6B32CECE2
+        by mail.holtmann.org (Postfix) with ESMTPSA id E7F95CECE3
         for <linux-bluetooth@vger.kernel.org>; Wed, 17 Jun 2020 16:49:17 +0200 (CEST)
 From:   Marcel Holtmann <marcel@holtmann.org>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 13/14] Bluetooth: Terminate the link if pairing is cancelled
-Date:   Wed, 17 Jun 2020 16:39:19 +0200
-Message-Id: <d9233675e37458675f209bd3a6b5636e6a8f752d.1592404644.git.marcel@holtmann.org>
+Subject: [PATCH v2 14/14] Bluetooth: mgmt: Use command complete on success for set system config
+Date:   Wed, 17 Jun 2020 16:39:20 +0200
+Message-Id: <13f017e592c175aa4af83f09521305da3c7edd74.1592404644.git.marcel@holtmann.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <cover.1592404644.git.marcel@holtmann.org>
 References: <cover.1592404644.git.marcel@holtmann.org>
@@ -30,182 +30,31 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Manish Mandlik <mmandlik@google.com>
+The command status reply is only for failure. When completing set system
+config command, the reply has to be command complete.
 
-If user decides to cancel the ongoing pairing process (e.g. by clicking
-the cancel button on pairing/passkey window), abort any ongoing pairing
-and then terminate the link if it was created because of the pair
-device action.
-
-Signed-off-by: Manish Mandlik <mmandlik@google.com>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Reviewed-by: Alain Michaud <alainm@chromium.org>
 ---
- include/net/bluetooth/hci_core.h | 14 ++++++++++++--
- net/bluetooth/hci_conn.c         | 11 ++++++++---
- net/bluetooth/l2cap_core.c       |  6 ++++--
- net/bluetooth/mgmt.c             | 22 ++++++++++++++++++----
- 4 files changed, 42 insertions(+), 11 deletions(-)
+ net/bluetooth/mgmt_config.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 524057598ffd..77d29341b064 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -564,6 +564,12 @@ struct hci_dev {
+diff --git a/net/bluetooth/mgmt_config.c b/net/bluetooth/mgmt_config.c
+index 8e7ad2a51dbb..8d01a8ff85e9 100644
+--- a/net/bluetooth/mgmt_config.c
++++ b/net/bluetooth/mgmt_config.c
+@@ -247,9 +247,8 @@ int set_def_system_config(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		buffer += exp_len;
+ 	}
  
- #define HCI_PHY_HANDLE(handle)	(handle & 0xff)
- 
-+enum conn_reasons {
-+	CONN_REASON_PAIR_DEVICE,
-+	CONN_REASON_L2CAP_CHAN,
-+	CONN_REASON_SCO_CONNECT,
-+};
-+
- struct hci_conn {
- 	struct list_head list;
- 
-@@ -615,6 +621,8 @@ struct hci_conn {
- 	__s8		max_tx_power;
- 	unsigned long	flags;
- 
-+	enum conn_reasons conn_reason;
-+
- 	__u32		clock;
- 	__u16		clock_accuracy;
- 
-@@ -1040,12 +1048,14 @@ struct hci_chan *hci_chan_lookup_handle(struct hci_dev *hdev, __u16 handle);
- 
- struct hci_conn *hci_connect_le_scan(struct hci_dev *hdev, bdaddr_t *dst,
- 				     u8 dst_type, u8 sec_level,
--				     u16 conn_timeout);
-+				     u16 conn_timeout,
-+				     enum conn_reasons conn_reason);
- struct hci_conn *hci_connect_le(struct hci_dev *hdev, bdaddr_t *dst,
- 				u8 dst_type, u8 sec_level, u16 conn_timeout,
- 				u8 role, bdaddr_t *direct_rpa);
- struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
--				 u8 sec_level, u8 auth_type);
-+				 u8 sec_level, u8 auth_type,
-+				 enum conn_reasons conn_reason);
- struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
- 				 __u16 setting);
- int hci_conn_check_link_mode(struct hci_conn *conn);
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 9bdffc4e79b0..47f3a45d7dcb 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1174,7 +1174,8 @@ static int hci_explicit_conn_params_set(struct hci_dev *hdev,
- /* This function requires the caller holds hdev->lock */
- struct hci_conn *hci_connect_le_scan(struct hci_dev *hdev, bdaddr_t *dst,
- 				     u8 dst_type, u8 sec_level,
--				     u16 conn_timeout)
-+				     u16 conn_timeout,
-+				     enum conn_reasons conn_reason)
- {
- 	struct hci_conn *conn;
- 
-@@ -1219,6 +1220,7 @@ struct hci_conn *hci_connect_le_scan(struct hci_dev *hdev, bdaddr_t *dst,
- 	conn->sec_level = BT_SECURITY_LOW;
- 	conn->pending_sec_level = sec_level;
- 	conn->conn_timeout = conn_timeout;
-+	conn->conn_reason = conn_reason;
- 
- 	hci_update_background_scan(hdev);
- 
-@@ -1228,7 +1230,8 @@ struct hci_conn *hci_connect_le_scan(struct hci_dev *hdev, bdaddr_t *dst,
+-	return mgmt_cmd_status(sk, hdev->id,
+-			       MGMT_OP_SET_DEF_SYSTEM_CONFIG,
+-			       MGMT_STATUS_SUCCESS);
++	return mgmt_cmd_complete(sk, hdev->id,
++				 MGMT_OP_SET_DEF_SYSTEM_CONFIG, 0, NULL, 0);
  }
  
- struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
--				 u8 sec_level, u8 auth_type)
-+				 u8 sec_level, u8 auth_type,
-+				 enum conn_reasons conn_reason)
- {
- 	struct hci_conn *acl;
- 
-@@ -1248,6 +1251,7 @@ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
- 
- 	hci_conn_hold(acl);
- 
-+	acl->conn_reason = conn_reason;
- 	if (acl->state == BT_OPEN || acl->state == BT_CLOSED) {
- 		acl->sec_level = BT_SECURITY_LOW;
- 		acl->pending_sec_level = sec_level;
-@@ -1264,7 +1268,8 @@ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
- 	struct hci_conn *acl;
- 	struct hci_conn *sco;
- 
--	acl = hci_connect_acl(hdev, dst, BT_SECURITY_LOW, HCI_AT_NO_BONDING);
-+	acl = hci_connect_acl(hdev, dst, BT_SECURITY_LOW, HCI_AT_NO_BONDING,
-+			      CONN_REASON_SCO_CONNECT);
- 	if (IS_ERR(acl))
- 		return acl;
- 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index fe913a5c754a..35d2bc569a2d 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7893,11 +7893,13 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
- 		else
- 			hcon = hci_connect_le_scan(hdev, dst, dst_type,
- 						   chan->sec_level,
--						   HCI_LE_CONN_TIMEOUT);
-+						   HCI_LE_CONN_TIMEOUT,
-+						   CONN_REASON_L2CAP_CHAN);
- 
- 	} else {
- 		u8 auth_type = l2cap_get_auth_type(chan);
--		hcon = hci_connect_acl(hdev, dst, chan->sec_level, auth_type);
-+		hcon = hci_connect_acl(hdev, dst, chan->sec_level, auth_type,
-+				       CONN_REASON_L2CAP_CHAN);
- 	}
- 
- 	if (IS_ERR(hcon)) {
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index ec66160a673c..2a732cab1dc9 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2931,7 +2931,7 @@ static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
- 
- 	if (cp->addr.type == BDADDR_BREDR) {
- 		conn = hci_connect_acl(hdev, &cp->addr.bdaddr, sec_level,
--				       auth_type);
-+				       auth_type, CONN_REASON_PAIR_DEVICE);
- 	} else {
- 		u8 addr_type = le_addr_type(cp->addr.type);
- 		struct hci_conn_params *p;
-@@ -2950,9 +2950,9 @@ static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
- 		if (p->auto_connect == HCI_AUTO_CONN_EXPLICIT)
- 			p->auto_connect = HCI_AUTO_CONN_DISABLED;
- 
--		conn = hci_connect_le_scan(hdev, &cp->addr.bdaddr,
--					   addr_type, sec_level,
--					   HCI_LE_CONN_TIMEOUT);
-+		conn = hci_connect_le_scan(hdev, &cp->addr.bdaddr, addr_type,
-+					   sec_level, HCI_LE_CONN_TIMEOUT,
-+					   CONN_REASON_PAIR_DEVICE);
- 	}
- 
- 	if (IS_ERR(conn)) {
-@@ -3053,6 +3053,20 @@ static int cancel_pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
- 
- 	err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE, 0,
- 				addr, sizeof(*addr));
-+
-+	/* Since user doesn't want to proceed with the connection, abort any
-+	 * ongoing pairing and then terminate the link if it was created
-+	 * because of the pair device action.
-+	 */
-+	if (addr->type == BDADDR_BREDR)
-+		hci_remove_link_key(hdev, &addr->bdaddr);
-+	else
-+		smp_cancel_and_remove_pairing(hdev, &addr->bdaddr,
-+					      le_addr_type(addr->type));
-+
-+	if (conn->conn_reason == CONN_REASON_PAIR_DEVICE)
-+		hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
-+
- unlock:
- 	hci_dev_unlock(hdev);
- 	return err;
+ int read_def_runtime_config(struct sock *sk, struct hci_dev *hdev, void *data,
 -- 
 2.26.2
 
