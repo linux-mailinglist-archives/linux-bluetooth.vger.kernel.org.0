@@ -2,105 +2,148 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBFE51FC84F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Jun 2020 10:08:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D9CB1FC87B
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Jun 2020 10:24:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726355AbgFQIIa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 Jun 2020 04:08:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56514 "EHLO
+        id S1726328AbgFQIYK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Jun 2020 04:24:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726044AbgFQII3 (ORCPT
+        with ESMTP id S1725846AbgFQIYK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 17 Jun 2020 04:08:29 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABAE1C06174E
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Jun 2020 01:08:28 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id w90so824893qtd.8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Jun 2020 01:08:28 -0700 (PDT)
+        Wed, 17 Jun 2020 04:24:10 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B403C061573
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Jun 2020 01:24:08 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id s1so1828823ljo.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Jun 2020 01:24:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=wjmhI1f1Bja9bnCk6ClvWOz706+HMKljdbHKbGGjl+w=;
-        b=bSGJc9CfbVA36F/6Bvd4E+QSLRdnQcxEbQRsm1Ug9fHf9w1Y0x8lmKsxyv2aLn81i0
-         FrELTUa08UCT0jfkIySyDK/uSBDWmvFVaWQiN6eugwf5xK/lt+lCQj5pvRse1WyL3irW
-         bKCzUTRhTzOyaxpieJ5IBaw+oNyzIo6iUcZESjC1ZvNZHWq6VWhAhJVoUepAB1/OWHat
-         HFEmyIIpmuT90Q+XL5o8puJYo0vKGR9DtRuoP6r16J6SW4HeLWOoaGRELhb/JwPEb0vm
-         0nY8Y4MJNVL2ccEeKe3N4++HOcH3apQQmaeVmNaC0dLUJCoAOf9vhvWKaTPO6sy1FqZz
-         KrYQ==
+        d=silvair-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=VJ/NRH+QmbQ7xXGqJiL5ePg9uJTpuwFMgQd2vOtCWdw=;
+        b=tjvVoOLHuxkT5Aq2HBtFJGoDdbkjzEGmwdXWidfKCb3rMhak1N+7Nu6vaokPv9zzOu
+         bdxW/qvBcVYIY1npQc9Z7bVaFHgZ7/sEHAkLd3meNJaA21uJWAz3E4WBfymZDljX0b2k
+         sKsYvEiMV8i3Ed52kcCfJTto8R/p9CXlPtxJ+NvMBWAIYLuEkc8xlnmjfx+BVuE5zNUU
+         4K2LwKCWcmJZbovAPgcWCU5BBiJ1KPjkKxC551bV7c4/k8HVsAllcYJ5gL1qB00d/bZg
+         UIeK9lFzme2b74D8xISFvaBg24GoQY0ptvILD7JHa0VVmXy0Ux7AzGy7tJxf3NxcGknU
+         na5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=wjmhI1f1Bja9bnCk6ClvWOz706+HMKljdbHKbGGjl+w=;
-        b=rQdE/OTLHq6152dMFnJnMa2mCbSIPg7PqvK6zUW6BTrxtbqzL5nSewvSoI7gX7Lg6l
-         xWeWlQBdEMSLsfaK9XOmlNuGPmh7hO0JeHzB38clbkg86/VgxhczcHtTnAw0pXcO0kab
-         Lzha/l3oz014o0k5/kTOC8cJuVsUqU7tY+pp1bM3iZ13kNqqYuznfdmzVgHA1uwGZRdx
-         l7FiI8Hw4HzslX4hCZ20s89dpQYLGHZDE2uCTDQ8QJ6p4eNgdaMis8uT6iY9jJyFT3l1
-         qCV0+ZG0TqACm1KpRsgEB6r2Mj6j2c6Uy25UFzPgtmh0qEXcp2VfXHC8kesOar5s3v8/
-         HGHA==
-X-Gm-Message-State: AOAM531/3gZUEyuzo+NYQ8K8IeV4rUhRIDvQ0rDIbltqiSVMcOpm7v+Q
-        Mw00e0AVTlo62K1NrFL9gBW0vE7d9wA=
-X-Google-Smtp-Source: ABdhPJyZKpywu7fpbWedhC/bj+LfJuEfOewwUE+jQEKkjPcjZBMsfsdzJuTpmQLIacOE0Qk0LD8XGQ==
-X-Received: by 2002:aed:2a19:: with SMTP id c25mr25202960qtd.345.1592381307856;
-        Wed, 17 Jun 2020 01:08:27 -0700 (PDT)
-Received: from [172.17.0.2] ([52.188.175.166])
-        by smtp.gmail.com with ESMTPSA id 69sm16510399qkh.15.2020.06.17.01.08.27
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=VJ/NRH+QmbQ7xXGqJiL5ePg9uJTpuwFMgQd2vOtCWdw=;
+        b=j69I46UXWQcCXecENoCRNe5VEIofb9KUb8EkKYHZTH4PGzthhb6B5DAiMv0SQ2H2fn
+         N1gOHTU87xQDPXM7OH1w26+n6I0WqO8VLlM84r5gMft8KHlDKwGtJ3p2cj3olo1Ro0qN
+         2we1pAHJpDX9hxtWzH50bYKGnI9WVTes9ReVnrKlOrHsPRE+C9aDihBtJle5EwWKGCe4
+         gqT5xyb24IPQXHG8mIdEaWblOgTQpCp+qQHgPcbQS5LvpfcsM0/fhfL0wjCBUrNg37MM
+         vibKtr6WqewV4YKo/rHfi/uWyss0DdCEPTPVUe0elRgP8tdszjGmv9hBq1mEexGNcDY5
+         uqRg==
+X-Gm-Message-State: AOAM531xN+6N1pMb2fbMoSPCZM9uldk2GWt9ipRPgQU3tW74VOsBUaok
+        FHQ1r8TTQz+EMMsfCJji9+pH8tJ1PwftnA==
+X-Google-Smtp-Source: ABdhPJx/EPJSk/zNiMQgk+9XbetD8kkNyEshhN4AHs6IgiuFlM9ckcGd2i3qCpB8X/eAsbadTm++PA==
+X-Received: by 2002:a2e:b5a3:: with SMTP id f3mr3184259ljn.361.1592382246919;
+        Wed, 17 Jun 2020 01:24:06 -0700 (PDT)
+Received: from mlowasrzechonek2133 ([217.153.94.18])
+        by smtp.gmail.com with ESMTPSA id p15sm4862640ljn.53.2020.06.17.01.24.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 01:08:27 -0700 (PDT)
-Message-ID: <5ee9cf7b.1c69fb81.c4ae0.aa1e@mx.google.com>
-Date:   Wed, 17 Jun 2020 01:08:27 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============1900447084002323670=="
+        Wed, 17 Jun 2020 01:24:06 -0700 (PDT)
+Date:   Wed, 17 Jun 2020 10:24:30 +0200
+From:   "michal.lowas-rzechonek@silvair.com" 
+        <michal.lowas-rzechonek@silvair.com>
+To:     "Gix, Brian" <brian.gix@intel.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "Stotland, Inga" <inga.stotland@intel.com>,
+        "przemyslaw.fierek@silvair.com" <przemyslaw.fierek@silvair.com>
+Subject: Re: [RFC BlueZ 0/2] mesh: Deliver mesh packets over datagram socket
+Message-ID: <20200617082430.hezshwckqtxq73bc@mlowasrzechonek2133>
+Mail-Followup-To: "Gix, Brian" <brian.gix@intel.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "Stotland, Inga" <inga.stotland@intel.com>,
+        "przemyslaw.fierek@silvair.com" <przemyslaw.fierek@silvair.com>
+References: <20200616122745.25056-1-michal.lowas-rzechonek@silvair.com>
+ <cf1b99049f6b843affbdc7355038a97331993d14.camel@intel.com>
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, michaelfsun@google.com
-Subject: RE: [bluez,v3,3/3] btmgmt: Add command "add" into "monitor" btmgmt submenu
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200617005531.bluez.v3.3.I55df963e4055bf1778db6f9e46f166b88472e051@changeid>
-References: <20200617005531.bluez.v3.3.I55df963e4055bf1778db6f9e46f166b88472e051@changeid>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cf1b99049f6b843affbdc7355038a97331993d14.camel@intel.com>
+User-Agent: NeoMutt/20180716
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============1900447084002323670==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Brian,
 
+On 06/16, Gix, Brian wrote:
+> This has the feeling of something that has been developed as the
+> result of a stress test to see how much data can be pushed through
+> the system as fast as possible, which should not be a common mesh use
+> case.
 
-This is automated email and please do not reply to this email!
+Well, not really. We came up with this mechanism because of performance
+issues with *real world* networks on embedded platforms. And by "real
+world" I mean a single network of 200+ nodes.
 
-Dear submitter,
+We need a way to monitor the nodes in such networks, and potentially
+much bigger ones too - mesh addess space is 32k+ nodes, and we already
+have runnin installations with ~1k nodes, all of which are publishing
+sensor data.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While we are preparing for reviewing the patches, we found the following
-issue/warning.
+Without this, bluetooth-meshd is *unusable*.
 
-Test Result:
-checkpatch Failed
+> I also worry about the increase in system socket resorces...
+> Currently the daemon consumes 1 socket for App <--> daemon
+> communication (the one to the dbus daemon), and each App currently
+> being supported uses one more (again, to dbus daemon) And all
+> MUXing, marshaling and unmarshaling of messages is handled by
+> DBUS...   the very reason for it's existance. While creating a
+> new socket between App and daemon would make the messages flow
+> faster, it comes at the cost of re-inventing MUXing, marshaling,
+> unmarshaling plus all the additional sockets. A larger code
+> footprint, and a *much* larger resource footprint.
 
-Outputs:
-WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
-#168: FILE: tools/btmgmt.c:4784:
-+			/* fall through */
+As you can see in the patch, serialization format is very simple (*much*
+simpler than D-Bus marshalling).
 
-- total: 0 errors, 1 warnings, 191 lines checked
+As for MUXing, I don't really understand what you mean? A node can have
+only one application attached to it, so the daemon knows exactly which
+socket to use. Same for the application.
 
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
+About file descriptors: this patch targets primarily an embedded
+platform. While I've seen issues with number of open files on busy
+network servers, I don't think an IoT device is going to face such
+problems.
 
-Your patch has style problems, please review.
+As for the "resource footprint", it's a tradeoff between open files vs.
+CPU. By using D-Bus calls to deliver network packets, you need to:
 
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING
+ - copy the packet from the mesh daemon to dbus daemon
+ - have the daemon look up the application by D-Bus address
+ - have the daemon deserialize the message header and check permissions
+ - copy the packet from dbus daemon to application
 
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+This requires an additional copy and an additional context switch, and a
+potentially costly permission check (I've mentioned AppArmor in the
+previous mail).
 
+So this delivery method in fact consumes *more* resources.
 
+> This just feels to me like the kind of customization that is fine
+> for a vendor to do for a specialized high-flow mesh, but not
+> something that we want to impose on everyone who uses Mesh in the
+> open source community.
 
----
-Regards,
-Linux Bluetooth
+I don't want to "impose" anything... the API is entirely optional and
+the "regular" Attach() works as it used to, and might be perfectly fine
+for simpler applications.
 
---===============1900447084002323670==--
+Note that GATT API does the same thing wrt. AquireNotify() call.
+
+-- 
+Michał Lowas-Rzechonek <michal.lowas-rzechonek@silvair.com>
+Silvair http://silvair.com
+Jasnogórska 44, 31-358 Krakow, POLAND
