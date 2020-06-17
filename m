@@ -2,24 +2,24 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 859821FCFD8
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Jun 2020 16:39:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19CB21FCFCA
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Jun 2020 16:39:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727021AbgFQOji (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 Jun 2020 10:39:38 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:48178 "EHLO
+        id S1727029AbgFQOj3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Jun 2020 10:39:29 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:51845 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726969AbgFQOj0 (ORCPT
+        with ESMTP id S1726977AbgFQOj0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 17 Jun 2020 10:39:26 -0400
 Received: from localhost.localdomain (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 64717CECD6
+        by mail.holtmann.org (Postfix) with ESMTPSA id 82D7ACECD7
         for <linux-bluetooth@vger.kernel.org>; Wed, 17 Jun 2020 16:49:16 +0200 (CEST)
 From:   Marcel Holtmann <marcel@holtmann.org>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 01/14] Bluetooth: mgmt: Add commands for runtime configuration
-Date:   Wed, 17 Jun 2020 16:39:07 +0200
-Message-Id: <33f8fb3c32ce1940f2cb41adfe440ca0f77fc39c.1592404644.git.marcel@holtmann.org>
+Subject: [PATCH v2 02/14] Bluetooth: Add bdaddr_list_with_flags for classic whitelist
+Date:   Wed, 17 Jun 2020 16:39:08 +0200
+Message-Id: <0ec7794d0a40d3462433de4fe57f74b3c7f5a9b7.1592404644.git.marcel@holtmann.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <cover.1592404644.git.marcel@holtmann.org>
 References: <cover.1592404644.git.marcel@holtmann.org>
@@ -30,90 +30,179 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds the required read/set commands for runtime configuration. Even
-while currently no parameters are specified, the commands are made
-available.
+From: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+In order to more easily add device flags to classic devices, create
+a new type of bdaddr_list that supports setting flags.
+
+Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 Reviewed-by: Alain Michaud <alainm@chromium.org>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 ---
- net/bluetooth/mgmt.c        |  7 +++++++
- net/bluetooth/mgmt_config.c | 18 ++++++++++++++++++
- net/bluetooth/mgmt_config.h |  6 ++++++
- 3 files changed, 31 insertions(+)
+ include/net/bluetooth/hci_core.h | 18 ++++++++--
+ net/bluetooth/hci_core.c         | 58 ++++++++++++++++++++++++++++++++
+ net/bluetooth/hci_event.c        |  8 ++---
+ net/bluetooth/mgmt.c             |  5 +--
+ 4 files changed, 81 insertions(+), 8 deletions(-)
 
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 0d5dbb6cb5a0..95a3935325bb 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -136,6 +136,13 @@ struct bdaddr_list_with_irk {
+ 	u8 local_irk[16];
+ };
+ 
++struct bdaddr_list_with_flags {
++	struct list_head list;
++	bdaddr_t bdaddr;
++	u8 bdaddr_type;
++	u32 current_flags;
++};
++
+ struct bt_uuid {
+ 	struct list_head list;
+ 	u8 uuid[16];
+@@ -1169,12 +1176,19 @@ struct bdaddr_list *hci_bdaddr_list_lookup(struct list_head *list,
+ struct bdaddr_list_with_irk *hci_bdaddr_list_lookup_with_irk(
+ 				    struct list_head *list, bdaddr_t *bdaddr,
+ 				    u8 type);
++struct bdaddr_list_with_flags *
++hci_bdaddr_list_lookup_with_flags(struct list_head *list, bdaddr_t *bdaddr,
++				  u8 type);
+ int hci_bdaddr_list_add(struct list_head *list, bdaddr_t *bdaddr, u8 type);
+ int hci_bdaddr_list_add_with_irk(struct list_head *list, bdaddr_t *bdaddr,
+-					u8 type, u8 *peer_irk, u8 *local_irk);
++				 u8 type, u8 *peer_irk, u8 *local_irk);
++int hci_bdaddr_list_add_with_flags(struct list_head *list, bdaddr_t *bdaddr,
++				   u8 type, u32 flags);
+ int hci_bdaddr_list_del(struct list_head *list, bdaddr_t *bdaddr, u8 type);
+ int hci_bdaddr_list_del_with_irk(struct list_head *list, bdaddr_t *bdaddr,
+-								u8 type);
++				 u8 type);
++int hci_bdaddr_list_del_with_flags(struct list_head *list, bdaddr_t *bdaddr,
++				   u8 type);
+ void hci_bdaddr_list_clear(struct list_head *list);
+ 
+ struct hci_conn_params *hci_conn_params_lookup(struct hci_dev *hdev,
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 4f1052a7c488..8a471bec2731 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3023,6 +3023,20 @@ struct bdaddr_list_with_irk *hci_bdaddr_list_lookup_with_irk(
+ 	return NULL;
+ }
+ 
++struct bdaddr_list_with_flags *
++hci_bdaddr_list_lookup_with_flags(struct list_head *bdaddr_list,
++				  bdaddr_t *bdaddr, u8 type)
++{
++	struct bdaddr_list_with_flags *b;
++
++	list_for_each_entry(b, bdaddr_list, list) {
++		if (!bacmp(&b->bdaddr, bdaddr) && b->bdaddr_type == type)
++			return b;
++	}
++
++	return NULL;
++}
++
+ void hci_bdaddr_list_clear(struct list_head *bdaddr_list)
+ {
+ 	struct bdaddr_list *b, *n;
+@@ -3084,6 +3098,30 @@ int hci_bdaddr_list_add_with_irk(struct list_head *list, bdaddr_t *bdaddr,
+ 	return 0;
+ }
+ 
++int hci_bdaddr_list_add_with_flags(struct list_head *list, bdaddr_t *bdaddr,
++				   u8 type, u32 flags)
++{
++	struct bdaddr_list_with_flags *entry;
++
++	if (!bacmp(bdaddr, BDADDR_ANY))
++		return -EBADF;
++
++	if (hci_bdaddr_list_lookup(list, bdaddr, type))
++		return -EEXIST;
++
++	entry = kzalloc(sizeof(*entry), GFP_KERNEL);
++	if (!entry)
++		return -ENOMEM;
++
++	bacpy(&entry->bdaddr, bdaddr);
++	entry->bdaddr_type = type;
++	entry->current_flags = flags;
++
++	list_add(&entry->list, list);
++
++	return 0;
++}
++
+ int hci_bdaddr_list_del(struct list_head *list, bdaddr_t *bdaddr, u8 type)
+ {
+ 	struct bdaddr_list *entry;
+@@ -3123,6 +3161,26 @@ int hci_bdaddr_list_del_with_irk(struct list_head *list, bdaddr_t *bdaddr,
+ 	return 0;
+ }
+ 
++int hci_bdaddr_list_del_with_flags(struct list_head *list, bdaddr_t *bdaddr,
++				   u8 type)
++{
++	struct bdaddr_list_with_flags *entry;
++
++	if (!bacmp(bdaddr, BDADDR_ANY)) {
++		hci_bdaddr_list_clear(list);
++		return 0;
++	}
++
++	entry = hci_bdaddr_list_lookup_with_flags(list, bdaddr, type);
++	if (!entry)
++		return -ENOENT;
++
++	list_del(&entry->list);
++	kfree(entry);
++
++	return 0;
++}
++
+ /* This function requires the caller holds hdev->lock */
+ struct hci_conn_params *hci_conn_params_lookup(struct hci_dev *hdev,
+ 					       bdaddr_t *addr, u8 addr_type)
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index cfeaee347db3..8981954ff4c4 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2697,10 +2697,10 @@ static void hci_conn_request_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 	 */
+ 	if (hci_dev_test_flag(hdev, HCI_MGMT) &&
+ 	    !hci_dev_test_flag(hdev, HCI_CONNECTABLE) &&
+-	    !hci_bdaddr_list_lookup(&hdev->whitelist, &ev->bdaddr,
+-				    BDADDR_BREDR)) {
+-		    hci_reject_conn(hdev, &ev->bdaddr);
+-		    return;
++	    !hci_bdaddr_list_lookup_with_flags(&hdev->whitelist, &ev->bdaddr,
++					       BDADDR_BREDR)) {
++		hci_reject_conn(hdev, &ev->bdaddr);
++		return;
+ 	}
+ 
+ 	/* Connection accepted */
 diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 99fbfd467d04..ecfdfc4df486 100644
+index ecfdfc4df486..d0d0fa832c8a 100644
 --- a/net/bluetooth/mgmt.c
 +++ b/net/bluetooth/mgmt.c
-@@ -114,6 +114,8 @@ static const u16 mgmt_commands[] = {
- 	MGMT_OP_SET_EXP_FEATURE,
- 	MGMT_OP_READ_DEF_SYSTEM_CONFIG,
- 	MGMT_OP_SET_DEF_SYSTEM_CONFIG,
-+	MGMT_OP_READ_DEF_RUNTIME_CONFIG,
-+	MGMT_OP_SET_DEF_RUNTIME_CONFIG,
- };
+@@ -6000,8 +6000,9 @@ static int add_device(struct sock *sk, struct hci_dev *hdev,
+ 			goto unlock;
+ 		}
  
- static const u16 mgmt_events[] = {
-@@ -166,6 +168,7 @@ static const u16 mgmt_untrusted_commands[] = {
- 	MGMT_OP_READ_SECURITY_INFO,
- 	MGMT_OP_READ_EXP_FEATURES_INFO,
- 	MGMT_OP_READ_DEF_SYSTEM_CONFIG,
-+	MGMT_OP_READ_DEF_RUNTIME_CONFIG,
- };
+-		err = hci_bdaddr_list_add(&hdev->whitelist, &cp->addr.bdaddr,
+-					  cp->addr.type);
++		err = hci_bdaddr_list_add_with_flags(&hdev->whitelist,
++						     &cp->addr.bdaddr,
++						     cp->addr.type, 0);
+ 		if (err)
+ 			goto unlock;
  
- static const u16 mgmt_untrusted_events[] = {
-@@ -7305,6 +7308,10 @@ static const struct hci_mgmt_handler mgmt_handlers[] = {
- 						HCI_MGMT_UNTRUSTED },
- 	{ set_def_system_config,   MGMT_SET_DEF_SYSTEM_CONFIG_SIZE,
- 						HCI_MGMT_VAR_LEN },
-+	{ read_def_runtime_config, MGMT_READ_DEF_RUNTIME_CONFIG_SIZE,
-+						HCI_MGMT_UNTRUSTED },
-+	{ set_def_runtime_config,  MGMT_SET_DEF_RUNTIME_CONFIG_SIZE,
-+						HCI_MGMT_VAR_LEN },
- };
- 
- void mgmt_index_added(struct hci_dev *hdev)
-diff --git a/net/bluetooth/mgmt_config.c b/net/bluetooth/mgmt_config.c
-index f6dfbe93542c..8e7ad2a51dbb 100644
---- a/net/bluetooth/mgmt_config.c
-+++ b/net/bluetooth/mgmt_config.c
-@@ -251,3 +251,21 @@ int set_def_system_config(struct sock *sk, struct hci_dev *hdev, void *data,
- 			       MGMT_OP_SET_DEF_SYSTEM_CONFIG,
- 			       MGMT_STATUS_SUCCESS);
- }
-+
-+int read_def_runtime_config(struct sock *sk, struct hci_dev *hdev, void *data,
-+			    u16 data_len)
-+{
-+	bt_dev_dbg(hdev, "sock %p", sk);
-+
-+	return mgmt_cmd_complete(sk, hdev->id,
-+				 MGMT_OP_READ_DEF_RUNTIME_CONFIG, 0, NULL, 0);
-+}
-+
-+int set_def_runtime_config(struct sock *sk, struct hci_dev *hdev, void *data,
-+			   u16 data_len)
-+{
-+	bt_dev_dbg(hdev, "sock %p", sk);
-+
-+	return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_DEF_SYSTEM_CONFIG,
-+			       MGMT_STATUS_INVALID_PARAMS);
-+}
-diff --git a/net/bluetooth/mgmt_config.h b/net/bluetooth/mgmt_config.h
-index 51da6e63b1a0..a4965f107891 100644
---- a/net/bluetooth/mgmt_config.h
-+++ b/net/bluetooth/mgmt_config.h
-@@ -9,3 +9,9 @@ int read_def_system_config(struct sock *sk, struct hci_dev *hdev, void *data,
- 
- int set_def_system_config(struct sock *sk, struct hci_dev *hdev, void *data,
- 			  u16 data_len);
-+
-+int read_def_runtime_config(struct sock *sk, struct hci_dev *hdev, void *data,
-+			    u16 data_len);
-+
-+int set_def_runtime_config(struct sock *sk, struct hci_dev *hdev, void *data,
-+			   u16 data_len);
 -- 
 2.26.2
 
