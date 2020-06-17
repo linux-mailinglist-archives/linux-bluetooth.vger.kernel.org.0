@@ -2,24 +2,24 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CE9C1FCB1B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Jun 2020 12:42:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 164E71FCB10
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Jun 2020 12:42:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726728AbgFQKmW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 Jun 2020 06:42:22 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:39671 "EHLO
+        id S1726573AbgFQKmL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Jun 2020 06:42:11 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:44876 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725967AbgFQKmL (ORCPT
+        with ESMTP id S1726541AbgFQKmL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 17 Jun 2020 06:42:11 -0400
 Received: from localhost.localdomain (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
-        by mail.holtmann.org (Postfix) with ESMTPSA id CC35FCECD4
+        by mail.holtmann.org (Postfix) with ESMTPSA id E6DDDCECD5
         for <linux-bluetooth@vger.kernel.org>; Wed, 17 Jun 2020 12:52:01 +0200 (CEST)
 From:   Marcel Holtmann <marcel@holtmann.org>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 02/14] Bluetooth: Add bdaddr_list_with_flags for classic whitelist
-Date:   Wed, 17 Jun 2020 12:41:53 +0200
-Message-Id: <0ec7794d0a40d3462433de4fe57f74b3c7f5a9b7.1592390407.git.marcel@holtmann.org>
+Subject: [PATCH 03/14] Bluetooth: Replace wakeable list with flag
+Date:   Wed, 17 Jun 2020 12:41:54 +0200
+Message-Id: <71a3186aa0d3d08981e2e3289e5669c737c79c21.1592390407.git.marcel@holtmann.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <cover.1592390407.git.marcel@holtmann.org>
 References: <cover.1592390407.git.marcel@holtmann.org>
@@ -32,176 +32,96 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 
-In order to more easily add device flags to classic devices, create
-a new type of bdaddr_list that supports setting flags.
+Since the classic device list now supports flags, convert the wakeable
+list into a flag on the existing device list.
 
 Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 Reviewed-by: Alain Michaud <alainm@chromium.org>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 ---
- include/net/bluetooth/hci_core.h | 18 ++++++++--
- net/bluetooth/hci_core.c         | 58 ++++++++++++++++++++++++++++++++
- net/bluetooth/hci_event.c        |  8 ++---
- net/bluetooth/mgmt.c             |  5 +--
- 4 files changed, 81 insertions(+), 8 deletions(-)
+ include/net/bluetooth/hci_core.h | 11 ++++++++++-
+ net/bluetooth/hci_core.c         |  1 -
+ net/bluetooth/hci_request.c      | 12 ++++++++----
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
 diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 0d5dbb6cb5a0..95a3935325bb 100644
+index 95a3935325bb..0643c737ba85 100644
 --- a/include/net/bluetooth/hci_core.h
 +++ b/include/net/bluetooth/hci_core.h
-@@ -136,6 +136,13 @@ struct bdaddr_list_with_irk {
- 	u8 local_irk[16];
+@@ -143,6 +143,16 @@ struct bdaddr_list_with_flags {
+ 	u32 current_flags;
  };
  
-+struct bdaddr_list_with_flags {
-+	struct list_head list;
-+	bdaddr_t bdaddr;
-+	u8 bdaddr_type;
-+	u32 current_flags;
++enum hci_conn_flags {
++	HCI_CONN_FLAG_REMOTE_WAKEUP,
++	HCI_CONN_FLAG_MAX
 +};
++
++#define hci_conn_test_flag(nr, flags) ((flags) & (1U << nr))
++
++/* Make sure number of flags doesn't exceed sizeof(current_flags) */
++static_assert(HCI_CONN_FLAG_MAX < 32);
 +
  struct bt_uuid {
  	struct list_head list;
  	u8 uuid[16];
-@@ -1169,12 +1176,19 @@ struct bdaddr_list *hci_bdaddr_list_lookup(struct list_head *list,
- struct bdaddr_list_with_irk *hci_bdaddr_list_lookup_with_irk(
- 				    struct list_head *list, bdaddr_t *bdaddr,
- 				    u8 type);
-+struct bdaddr_list_with_flags *
-+hci_bdaddr_list_lookup_with_flags(struct list_head *list, bdaddr_t *bdaddr,
-+				  u8 type);
- int hci_bdaddr_list_add(struct list_head *list, bdaddr_t *bdaddr, u8 type);
- int hci_bdaddr_list_add_with_irk(struct list_head *list, bdaddr_t *bdaddr,
--					u8 type, u8 *peer_irk, u8 *local_irk);
-+				 u8 type, u8 *peer_irk, u8 *local_irk);
-+int hci_bdaddr_list_add_with_flags(struct list_head *list, bdaddr_t *bdaddr,
-+				   u8 type, u32 flags);
- int hci_bdaddr_list_del(struct list_head *list, bdaddr_t *bdaddr, u8 type);
- int hci_bdaddr_list_del_with_irk(struct list_head *list, bdaddr_t *bdaddr,
--								u8 type);
-+				 u8 type);
-+int hci_bdaddr_list_del_with_flags(struct list_head *list, bdaddr_t *bdaddr,
-+				   u8 type);
- void hci_bdaddr_list_clear(struct list_head *list);
- 
- struct hci_conn_params *hci_conn_params_lookup(struct hci_dev *hdev,
+@@ -463,7 +473,6 @@ struct hci_dev {
+ 	struct list_head	mgmt_pending;
+ 	struct list_head	blacklist;
+ 	struct list_head	whitelist;
+-	struct list_head	wakeable;
+ 	struct list_head	uuids;
+ 	struct list_head	link_keys;
+ 	struct list_head	long_term_keys;
 diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 4f1052a7c488..8a471bec2731 100644
+index 8a471bec2731..8e01afb2ee8c 100644
 --- a/net/bluetooth/hci_core.c
 +++ b/net/bluetooth/hci_core.c
-@@ -3023,6 +3023,20 @@ struct bdaddr_list_with_irk *hci_bdaddr_list_lookup_with_irk(
- 	return NULL;
- }
+@@ -3499,7 +3499,6 @@ struct hci_dev *hci_alloc_dev(void)
+ 	INIT_LIST_HEAD(&hdev->mgmt_pending);
+ 	INIT_LIST_HEAD(&hdev->blacklist);
+ 	INIT_LIST_HEAD(&hdev->whitelist);
+-	INIT_LIST_HEAD(&hdev->wakeable);
+ 	INIT_LIST_HEAD(&hdev->uuids);
+ 	INIT_LIST_HEAD(&hdev->link_keys);
+ 	INIT_LIST_HEAD(&hdev->long_term_keys);
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index a7f572ad38ef..a5b53d3ea508 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -968,15 +968,19 @@ static void hci_req_clear_event_filter(struct hci_request *req)
  
-+struct bdaddr_list_with_flags *
-+hci_bdaddr_list_lookup_with_flags(struct list_head *bdaddr_list,
-+				  bdaddr_t *bdaddr, u8 type)
-+{
+ static void hci_req_set_event_filter(struct hci_request *req)
+ {
+-	struct bdaddr_list *b;
 +	struct bdaddr_list_with_flags *b;
-+
-+	list_for_each_entry(b, bdaddr_list, list) {
-+		if (!bacmp(&b->bdaddr, bdaddr) && b->bdaddr_type == type)
-+			return b;
-+	}
-+
-+	return NULL;
-+}
-+
- void hci_bdaddr_list_clear(struct list_head *bdaddr_list)
- {
- 	struct bdaddr_list *b, *n;
-@@ -3084,6 +3098,30 @@ int hci_bdaddr_list_add_with_irk(struct list_head *list, bdaddr_t *bdaddr,
- 	return 0;
- }
+ 	struct hci_cp_set_event_filter f;
+ 	struct hci_dev *hdev = req->hdev;
+-	u8 scan;
++	u8 scan = SCAN_DISABLED;
  
-+int hci_bdaddr_list_add_with_flags(struct list_head *list, bdaddr_t *bdaddr,
-+				   u8 type, u32 flags)
-+{
-+	struct bdaddr_list_with_flags *entry;
-+
-+	if (!bacmp(bdaddr, BDADDR_ANY))
-+		return -EBADF;
-+
-+	if (hci_bdaddr_list_lookup(list, bdaddr, type))
-+		return -EEXIST;
-+
-+	entry = kzalloc(sizeof(*entry), GFP_KERNEL);
-+	if (!entry)
-+		return -ENOMEM;
-+
-+	bacpy(&entry->bdaddr, bdaddr);
-+	entry->bdaddr_type = type;
-+	entry->current_flags = flags;
-+
-+	list_add(&entry->list, list);
-+
-+	return 0;
-+}
-+
- int hci_bdaddr_list_del(struct list_head *list, bdaddr_t *bdaddr, u8 type)
- {
- 	struct bdaddr_list *entry;
-@@ -3123,6 +3161,26 @@ int hci_bdaddr_list_del_with_irk(struct list_head *list, bdaddr_t *bdaddr,
- 	return 0;
- }
+ 	/* Always clear event filter when starting */
+ 	hci_req_clear_event_filter(req);
  
-+int hci_bdaddr_list_del_with_flags(struct list_head *list, bdaddr_t *bdaddr,
-+				   u8 type)
-+{
-+	struct bdaddr_list_with_flags *entry;
+-	list_for_each_entry(b, &hdev->wakeable, list) {
++	list_for_each_entry(b, &hdev->whitelist, list) {
++		if (!hci_conn_test_flag(HCI_CONN_FLAG_REMOTE_WAKEUP,
++					b->current_flags))
++			continue;
 +
-+	if (!bacmp(bdaddr, BDADDR_ANY)) {
-+		hci_bdaddr_list_clear(list);
-+		return 0;
-+	}
-+
-+	entry = hci_bdaddr_list_lookup_with_flags(list, bdaddr, type);
-+	if (!entry)
-+		return -ENOENT;
-+
-+	list_del(&entry->list);
-+	kfree(entry);
-+
-+	return 0;
-+}
-+
- /* This function requires the caller holds hdev->lock */
- struct hci_conn_params *hci_conn_params_lookup(struct hci_dev *hdev,
- 					       bdaddr_t *addr, u8 addr_type)
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index cfeaee347db3..8981954ff4c4 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2697,10 +2697,10 @@ static void hci_conn_request_evt(struct hci_dev *hdev, struct sk_buff *skb)
- 	 */
- 	if (hci_dev_test_flag(hdev, HCI_MGMT) &&
- 	    !hci_dev_test_flag(hdev, HCI_CONNECTABLE) &&
--	    !hci_bdaddr_list_lookup(&hdev->whitelist, &ev->bdaddr,
--				    BDADDR_BREDR)) {
--		    hci_reject_conn(hdev, &ev->bdaddr);
--		    return;
-+	    !hci_bdaddr_list_lookup_with_flags(&hdev->whitelist, &ev->bdaddr,
-+					       BDADDR_BREDR)) {
-+		hci_reject_conn(hdev, &ev->bdaddr);
-+		return;
+ 		memset(&f, 0, sizeof(f));
+ 		bacpy(&f.addr_conn_flt.bdaddr, &b->bdaddr);
+ 		f.flt_type = HCI_FLT_CONN_SETUP;
+@@ -985,9 +989,9 @@ static void hci_req_set_event_filter(struct hci_request *req)
+ 
+ 		bt_dev_dbg(hdev, "Adding event filters for %pMR", &b->bdaddr);
+ 		hci_req_add(req, HCI_OP_SET_EVENT_FLT, sizeof(f), &f);
++		scan = SCAN_PAGE;
  	}
  
- 	/* Connection accepted */
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index ecfdfc4df486..d0d0fa832c8a 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -6000,8 +6000,9 @@ static int add_device(struct sock *sk, struct hci_dev *hdev,
- 			goto unlock;
- 		}
- 
--		err = hci_bdaddr_list_add(&hdev->whitelist, &cp->addr.bdaddr,
--					  cp->addr.type);
-+		err = hci_bdaddr_list_add_with_flags(&hdev->whitelist,
-+						     &cp->addr.bdaddr,
-+						     cp->addr.type, 0);
- 		if (err)
- 			goto unlock;
+-	scan = !list_empty(&hdev->wakeable) ? SCAN_PAGE : SCAN_DISABLED;
+ 	hci_req_add(req, HCI_OP_WRITE_SCAN_ENABLE, 1, &scan);
+ }
  
 -- 
 2.26.2
