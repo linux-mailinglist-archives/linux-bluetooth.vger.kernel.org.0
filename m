@@ -2,78 +2,89 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 017D32019C9
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Jun 2020 19:53:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75747201A09
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Jun 2020 20:10:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393280AbgFSRwL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 19 Jun 2020 13:52:11 -0400
-Received: from mailgw01.mediatek.com ([210.61.82.183]:30411 "EHLO
-        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1731445AbgFSRwL (ORCPT
+        id S1732352AbgFSSKa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 19 Jun 2020 14:10:30 -0400
+Received: from de-out1.bosch-org.com ([139.15.230.186]:58992 "EHLO
+        de-out1.bosch-org.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732326AbgFSSK1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 19 Jun 2020 13:52:11 -0400
-X-UUID: 4478a7f4d29c44a0baeac7527268ac55-20200620
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=sIDH8EdAE4qcmj93nhKlzx7c6UAV1dzXbtm0oufG89w=;
-        b=P3vPznNbBFt87BddjbeK4q1uarTDy5M62LRiA60qFwjamgD6+S/0/pXdGMxxKeHEZuKtFb8AAqQ2+jC7qp6Y1sWZdOePsSSRpV3ueXiW0dPCVpDqYopHUHo5lPTbuLmWXcjd0NYTQgmEbaRgfKZY/hmtFuGp/5lKZF8Ja/Y+nqA=;
-X-UUID: 4478a7f4d29c44a0baeac7527268ac55-20200620
-Received: from mtkcas07.mediatek.inc [(172.21.101.84)] by mailgw01.mediatek.com
-        (envelope-from <sean.wang@mediatek.com>)
-        (Cellopoint E-mail Firewall v4.1.10 Build 0809 with TLS)
-        with ESMTP id 1320373898; Sat, 20 Jun 2020 01:52:05 +0800
-Received: from mtkcas08.mediatek.inc (172.21.101.126) by
- mtkmbs08n1.mediatek.inc (172.21.101.55) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Sat, 20 Jun 2020 01:52:02 +0800
-Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas08.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Sat, 20 Jun 2020 01:52:01 +0800
-From:   <sean.wang@mediatek.com>
-To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>
-CC:     <linux-bluetooth@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, Sean Wang <sean.wang@mediatek.com>,
-        Mark Chen <Mark-YW.Chen@mediatek.com>
-Subject: [PATCH v2 2/2] Bluetooth: btmtksdio: fix up firmware download sequence
-Date:   Sat, 20 Jun 2020 01:52:02 +0800
-Message-ID: <8ed6746c7d2ce6a38eb88c78c81593c0cbd4451f.1592588740.git.sean.wang@mediatek.com>
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <7d835850c16e07d1346c763900cc8c880182f497.1592588740.git.sean.wang@mediatek.com>
-References: <7d835850c16e07d1346c763900cc8c880182f497.1592588740.git.sean.wang@mediatek.com>
+        Fri, 19 Jun 2020 14:10:27 -0400
+Received: from si0vm1948.rbesz01.com (unknown [139.15.230.188])
+        by fe0vms0186.rbdmz01.com (Postfix) with ESMTPS id 49pRg462wFz1XLFjP
+        for <linux-bluetooth@vger.kernel.org>; Fri, 19 Jun 2020 20:10:24 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bshg.com;
+        s=key1-intmail; t=1592590224;
+        bh=DtQdrwnwtqpNnlEyroFs6PYLb5etDZmDNMRh890itbs=; l=10;
+        h=From:Subject:From:Reply-To:Sender;
+        b=R92physTDureWNn5o4oigc29W2Zo0kXaboEzO2xv33Ork/d6eCpUyKEKHuCguBZh2
+         qgSZLxsyNj3NZMHEsHuC9mwGUgPHg3gIwtzzFMQEnHWCCFGo1f2OnqG1hVpz9tuZdB
+         DCriOmBJjOTHtqdwzpxxGlBC0NuXfR4xqyFEG+5w=
+Received: from fe0vm02900.rbesz01.com (unknown [10.58.172.176])
+        by si0vm1948.rbesz01.com (Postfix) with ESMTPS id 49pRg45hjRz2p9
+        for <linux-bluetooth@vger.kernel.org>; Fri, 19 Jun 2020 20:10:24 +0200 (CEST)
+X-AuditID: 0a3aad0c-cdbff7000000304a-44-5eecff9045b1
+Received: from fe0vm1651.rbesz01.com ( [10.58.173.29])
+        (using TLS with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by fe0vm02900.rbesz01.com (SMG Outbound) with SMTP id 6B.08.12362.09FFCEE5; Fri, 19 Jun 2020 20:10:24 +0200 (CEST)
+Received: from SI0SWIEXHC02.bsh.corp.bshg.com (si0swiexhc02.bsh.corp.bshg.com [10.49.76.142])
+        by fe0vm1651.rbesz01.com (Postfix) with ESMTPS id 49pRg44f8bzvl8
+        for <linux-bluetooth@vger.kernel.org>; Fri, 19 Jun 2020 20:10:24 +0200 (CEST)
+Received: from SI0SWIEXMB2A.bsh.corp.bshg.com (10.49.76.131) by
+ SI0SWIEXHC02.bsh.corp.bshg.com (10.49.76.142) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.1979.3; Fri, 19 Jun 2020 20:10:24 +0200
+Received: from SI0SWIEXMB2B.bsh.corp.bshg.com (10.49.76.132) by
+ SI0SWIEXMB2A.bsh.corp.bshg.com (10.49.76.131) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1979.3; Fri, 19 Jun 2020 20:10:24 +0200
+Received: from SI0SWIEXMB2B.bsh.corp.bshg.com ([fe80::5154:c3ab:d4e0:8272]) by
+ SI0SWIEXMB2B.bsh.corp.bshg.com ([fe80::5154:c3ab:d4e0:8272%5]) with mapi id
+ 15.01.1979.003; Fri, 19 Jun 2020 20:10:24 +0200
+From:   "Ryll, Jan (GED-SDD2)" <Jan.Ryll@bshg.com>
+To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Subject: Question regarding Generic Attribute Service and characteristic
+Thread-Topic: Question regarding Generic Attribute Service and characteristic
+Thread-Index: AdZGZORl1AmsIUXhSDmQX5NABVkz+w==
+Date:   Fri, 19 Jun 2020 18:10:24 +0000
+Message-ID: <909baa33d2f847cfaa3f86cc7f554c03@bshg.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.49.87.14]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MTK:  N
-Content-Transfer-Encoding: base64
+X-EXCLAIMER-MD-CONFIG: fd782ad6-06f5-4690-bfdd-57c58a3839e9
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMLMWRmVeSWpSXmKPExsXCZbVWVnfC/zdxBmd7dCzmXOtjdmD0+LxJ
+        LoAxissmJTUnsyy1SN8ugSvj3eFWtoJfjBU/tz9naWA8zdjFyMEhIWAicaidt4uRk0NIYCaT
+        xLevIV2MXED2B0aJLW1/WSGcJiaJK19vMEM4fxklmqb+YYJwzjFKzPn5jxmkn03AQOJa1x0w
+        W0TAXWLP/tuMILawgIfEsyvPmCDivhK7p61hh7D1JH7u/ABWwyKgKvF6+yOwGl4Bc4mF3R/B
+        4owCshIbNpwHm8ksIC6x6dl3VhBbQkBAYskeiLiEgKjEy8f/oOLyEvOXb2aEqNeRWLD7ExuE
+        rS2xbOFrZoj5ghInZz5hgai3lli++QHjBEaxWUhWzELSPgtJ+ywk7QsYWVYxiqWlGpTlGhhZ
+        GhjoFSWlFlcZGOol5+duYoTEC88OxlM9H/QOMTJxMB5ilOBgVhLhPfz+TZwQb0piZVVqUX58
+        UWlOavEhRmkOFiVxXhWejXFCAumJJanZqakFqUUwWSYOTqkGJq6/sievvP/n2/Rh9Y6Yhc9P
+        9X7e07eI39OnpdN/g+ZPxv4eo+mfM7SLcu5xc1TvEcz3Twg4dlV+4+EqcZulD/7YT07b+PtW
+        RNuvVYaKl+o0vhz5ovy+30riTdu5n7d1TLxF3WSeVJ9k15O3YOH7+srqkLunTXLTqxqDYwll
+        d+rfdK3ZLbS1ujvx4q09b3+71Ws6pJ0VLMzneuHn8DDQaJpky9myBe5VjT7ubmc43lT6vZqz
+        79vRrxvWVzlNZT5XuFHxblnzrOmNOav26DFOsbhTuFb6o226/7GC286Jj/3+ivPann1Y84yj
+        20/33Zkdf7dwefwrN3g17XhhaItp5KEvTP/W/VGYnr4vITFeTYmlOCPRUIu5qDgRAJkF/2sG
+        AwAA
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-RnJvbTogU2VhbiBXYW5nIDxzZWFuLndhbmdAbWVkaWF0ZWsuY29tPg0KDQpEYXRhIFJBTSBvbiB0
-aGUgZGV2aWNlIGhhdmUgdG8gYmUgcG93ZXJlZCBvbiBiZWZvcmUgc3RhcnRpbmcgdG8gZG93bmxv
-YWQNCnRoZSBmaXJtd2FyZS4NCg0KdjEtPnYyOg0KCXJlYmFzZWQgdG8gYmx1ZXRvb3RoLW5leHQN
-Cg0KRml4ZXM6IDlhZWJmZDRhMjIwMCAoIkJsdWV0b290aDogbWVkaWF0ZWs6IGFkZCBzdXBwb3J0
-IGZvciBNZWRpYVRlayBNVDc2NjNTIGFuZCBNVDc2NjhTIFNESU8gZGV2aWNlcyIpDQpDby1kZXZl
-bG9wZWQtYnk6IE1hcmsgQ2hlbiA8TWFyay1ZVy5DaGVuQG1lZGlhdGVrLmNvbT4NClNpZ25lZC1v
-ZmYtYnk6IE1hcmsgQ2hlbiA8TWFyay1ZVy5DaGVuQG1lZGlhdGVrLmNvbT4NClNpZ25lZC1vZmYt
-Ynk6IFNlYW4gV2FuZyA8c2Vhbi53YW5nQG1lZGlhdGVrLmNvbT4NCi0tLQ0KIGRyaXZlcnMvYmx1
-ZXRvb3RoL2J0bXRrc2Rpby5jIHwgMTYgKysrKysrKysrKysrKysrLQ0KIDEgZmlsZSBjaGFuZ2Vk
-LCAxNSBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQoNCmRpZmYgLS1naXQgYS9kcml2ZXJz
-L2JsdWV0b290aC9idG10a3NkaW8uYyBiL2RyaXZlcnMvYmx1ZXRvb3RoL2J0bXRrc2Rpby5jDQpp
-bmRleCA1MTk3ODhjNDQyY2EuLjExNDk0Y2QyYTk4MiAxMDA2NDQNCi0tLSBhL2RyaXZlcnMvYmx1
-ZXRvb3RoL2J0bXRrc2Rpby5jDQorKysgYi9kcml2ZXJzL2JsdWV0b290aC9idG10a3NkaW8uYw0K
-QEAgLTY4NSw3ICs2ODUsNyBAQCBzdGF0aWMgaW50IG10a19zZXR1cF9maXJtd2FyZShzdHJ1Y3Qg
-aGNpX2RldiAqaGRldiwgY29uc3QgY2hhciAqZnduYW1lKQ0KIAljb25zdCB1OCAqZndfcHRyOw0K
-IAlzaXplX3QgZndfc2l6ZTsNCiAJaW50IGVyciwgZGxlbjsNCi0JdTggZmxhZzsNCisJdTggZmxh
-ZywgcGFyYW07DQogDQogCWVyciA9IHJlcXVlc3RfZmlybXdhcmUoJmZ3LCBmd25hbWUsICZoZGV2
-LT5kZXYpOw0KIAlpZiAoZXJyIDwgMCkgew0KQEAgLTY5Myw2ICs2OTMsMjAgQEAgc3RhdGljIGlu
-dCBtdGtfc2V0dXBfZmlybXdhcmUoc3RydWN0IGhjaV9kZXYgKmhkZXYsIGNvbnN0IGNoYXIgKmZ3
-bmFtZSkNCiAJCXJldHVybiBlcnI7DQogCX0NCiANCisJLyogUG93ZXIgb24gZGF0YSBSQU0gdGhl
-IGZpcm13YXJlIHJlbGllcyBvbi4gKi8NCisJcGFyYW0gPSAxOw0KKwl3bXRfcGFyYW1zLm9wID0g
-TVRLX1dNVF9GVU5DX0NUUkw7DQorCXdtdF9wYXJhbXMuZmxhZyA9IDM7DQorCXdtdF9wYXJhbXMu
-ZGxlbiA9IHNpemVvZihwYXJhbSk7DQorCXdtdF9wYXJhbXMuZGF0YSA9ICZwYXJhbTsNCisJd210
-X3BhcmFtcy5zdGF0dXMgPSBOVUxMOw0KKw0KKwllcnIgPSBtdGtfaGNpX3dtdF9zeW5jKGhkZXYs
-ICZ3bXRfcGFyYW1zKTsNCisJaWYgKGVyciA8IDApIHsNCisJCWJ0X2Rldl9lcnIoaGRldiwgIkZh
-aWxlZCB0byBwb3dlciBvbiBkYXRhIFJBTSAoJWQpIiwgZXJyKTsNCisJCXJldHVybiBlcnI7DQor
-CX0NCisNCiAJZndfcHRyID0gZnctPmRhdGE7DQogCWZ3X3NpemUgPSBmdy0+c2l6ZTsNCiANCi0t
-IA0KMi4yNS4xDQo=
+Hi Everybody,
+
+the Bluetooth Standard defines a "Generic Attribute Service" (since 4.2) wi=
+th exactly 1 characteristic "service changed".
+Is that service per default enabled in the Bluetooth/bluez stack?
+
+Best regards and stay healthy
+Jan
 
