@@ -2,74 +2,105 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 983F6204E9E
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Jun 2020 11:58:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CF95205037
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Jun 2020 13:13:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732201AbgFWJ6G (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 23 Jun 2020 05:58:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40480 "EHLO
+        id S1732348AbgFWLNr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 23 Jun 2020 07:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731947AbgFWJ6F (ORCPT
+        with ESMTP id S1732432AbgFWLNq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 23 Jun 2020 05:58:05 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B858C061573
-        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Jun 2020 02:58:05 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id c4so9313828iot.4
-        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Jun 2020 02:58:05 -0700 (PDT)
+        Tue, 23 Jun 2020 07:13:46 -0400
+Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42851C061573
+        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Jun 2020 04:13:46 -0700 (PDT)
+Received: by mail-il1-x144.google.com with SMTP id p5so18889945ile.6
+        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Jun 2020 04:13:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=orcam.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=z+NLoHvR7pL7e9bXEqE7ANamElXGMJmyWSurZyi8Vgw=;
-        b=iejA/IPZgvNy/iKsht0lKMmbfoxxizdebWTL+2c7YzrghNgzTsevG2pBiQENomZxn1
-         47EuHjvwknDegBmLyOPDqGpTo+FJyOotInftUfsBihOYD7Ee8rt3upeuWpdjv2oAtnwJ
-         lcBigT5vpw4OMa9librWOhvAdjpCNLI4p4XF0=
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
+        b=pja+sD3lYNamNxxQdsgMjabhTWV8OSKrh1lfZkSBkPTJk0fqugK+Z5/zDroVIKQX+P
+         QNMxk3n4aYkvFnuHBOWxu9akBqW0pHTjMD7bxcCwviCz+ghofkMfOEf1ywZazd6F2iC8
+         vuVbAInO6Po3G6VzgXRU5NrsWyK1PPRfFR8VixG28QLYRQeafZdKkbH2OFsA2x02+2Nj
+         9joLjl+8THcHxFFuOYpiMyyI2ZCZ8bhVbSot2QaoevFoiiU8JWQy6T8QbG+CAbM5tHfK
+         CxoNGmsTQgDYPPcGGEe2NLwLkA4qT1e5iXnbnH8GlXBMAqKDdwqVgRD1JyLonEnQ6myM
+         I7MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=z+NLoHvR7pL7e9bXEqE7ANamElXGMJmyWSurZyi8Vgw=;
-        b=UPuiHUzxjLYkF94VUU6KAsVmzBUfiPMPf1wjFU9LgGh8W4Mo+z6j86uirPmnVOxoSy
-         1j0wRD8NkXwWG4ebqblFc412mvbb9CbYGRVK6Zei5E6ZaPfj+VxUie5EWVXVTtuno/9f
-         he8o98og0x3WR7KcDRdUii79i3+PeJjVDATjqRFPCqVE3A0Uu1Qg9S15iL8/v3LcPa3u
-         ioMXv84xnho0fh335/qgl9c1FAlaWJzvyu4bu+nMrzdI4QbdVDMPc56MOsOOI9PA+I8j
-         n0yaUOusPFK5DjRh3onE3BjJ4APfQInEjtQhtJCWdJGAUtTZGXYJ2RIpyzbdLisgWfHy
-         hfCA==
-X-Gm-Message-State: AOAM533X0l1aSY2gj0jD4zfyWHdtxDIln9GNQqPu1Uoce3z5X0mxF6WR
-        lQoLZdC0i9LoLm1SRZyiSJitvsw2FBq5srKpLyjqnuZcbq9vtQ==
-X-Google-Smtp-Source: ABdhPJydyv5Rz77rQUZnxeNVCfFhxeN7H6fwXaNaSHY1G2f6Mog7gajVNGhJrPSF8RLieHX8Vj/9vVXcE79VpArqzCA=
-X-Received: by 2002:a5d:8b53:: with SMTP id c19mr22952353iot.93.1592906284693;
- Tue, 23 Jun 2020 02:58:04 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
+        b=cO/DaYZ3ZwRzls1ALmH1sC7d2DNsXr3114rIXYVloqvG0HD2r3yYsoehvGQZ+s6fh1
+         Yeqq/GTqYmdUPLw3AE39djcr7mu2v6yOLiK0JTOV3G5rEomrhy7w1VS/ev0UM7tpVO1J
+         6USaYFuWoTOaGQI+STBo/kyjEkeyTPzhY+Q1gqW0O1LDPoRjQp24NAivGptyr0wIIL0C
+         Dl9gD/w43AfeZABG2W7PgX3arXXRZEjUWBBvd/vtk9MCD3vz7dSDCcpn/ZfgDrZz7qI1
+         HDeCUQb7u609aEGCOF910V+TeXbiQ9QRXjx8ak4qxREnhpQDZO9Tn7qldchNKIDq5DOI
+         VqZQ==
+X-Gm-Message-State: AOAM532vcYrfkgg150tyzlR94DO94wJntCFsZ7LC0/L0fPd9ciP5Dto5
+        R5wUzJjcmNjgfw8bWbBLQn+r1ZKlWrk5hacehLY=
+X-Google-Smtp-Source: ABdhPJzIEurHd7iC70yNwaNq6+qw7rYB5KdDbEokntYaJQini2dcISbYcUVlJQximgCeuFWdJ1LNgy5ayV5ak4F+yxY=
+X-Received: by 2002:a05:6e02:c:: with SMTP id h12mr21559251ilr.125.1592910825697;
+ Tue, 23 Jun 2020 04:13:45 -0700 (PDT)
 MIME-Version: 1.0
-From:   Ordit Gross <ordit.gross@orcam.com>
-Date:   Tue, 23 Jun 2020 12:57:53 +0300
-Message-ID: <CAB+bgRbZ+40TsjrjPnA2UDQLyeVvwqBcQ6nmQfvfvu2xNE547g@mail.gmail.com>
-Subject: avoid speaker (br/edr) reconnect
-To:     linux-bluetooth@vger.kernel.org
+Received: by 2002:a05:6638:14d3:0:0:0:0 with HTTP; Tue, 23 Jun 2020 04:13:45
+ -0700 (PDT)
+Reply-To: sarahkoffi389@yahoo.co.jp
+From:   Sarah Koffi <elnana194@gmail.com>
+Date:   Tue, 23 Jun 2020 12:13:45 +0100
+Message-ID: <CA+NUCuT9WL-s01W1FbOtvx=cRuGU4z=pgGT8ZX6-UpZ1jjpa7Q@mail.gmail.com>
+Subject: Greetings From Mrs. Sarah Koffi
+To:     sarahkoffi389@yahoo.co.jp
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-hi all,
+Greetings From Mrs. Sarah Koffi
 
-our device (audio source) has the capability to connect to audio
-speakers (using code that is based on bluetoothctl bluez v5.47).
-I understand that the first connection to the speaker is initiated
-from our device,
-whereas further connections are initiated by the speaker. (still
-looking for documentation for that behavior, but have observed it in
-hci dump).
+I'm contacting you based on your good profiles I read and for a good
+reasons, I am in search of a property to buy in your country as I
+intended to come over to your
+country for investment, Though I have not meet with you before but I
+believe that one has to risk confiding in someone to succeed sometimes
+in life.
 
-When user removes credentials of the speaker on our device, the audio
-speaker still connects to us, pair, but mediaControl connects and
-disconnects immediately, so we can't open pcm device.
+My name is Mrs. Sarah Koffi. My late husband deals on Crude Oil with
+Federal Government of Sudan and he has a personal Oil firm in Bentiu
+Oil zone town and Upper
+Nile city. What I have experience physically, I don't wish to
+experience it again in my life due to the recent civil Ethnic war
+cause by our President Mr. Salva Kiir
+and the rebel leader Mr Riek Machar, I have been Under United Nation
+refuge camp in chad to save my life and that of my little daughter.
 
-1. What is the recommended way for canceling the auto reconnect of a
-speaker to a known device? (is the only way reset speaker? or can
-source device do something?)
+Though, I do not know how you will feel to my proposal, but the truth
+is that I sneaked into Chad our neighboring country where I am living
+now as a refugee.
+I escaped with my little daughter when the rebels bust into our house
+and killed my husband as one of the big oil dealers in the country,
+ever since then, I have being on the run.
 
-2. Considering we have removed credentials on the source side, why
-does flow get stuck?
+I left my country and move to Chad our neighboring country with the
+little ceasefire we had, due to the face to face peace meeting accord
+coordinated by the US Secretary of State, Mr John Kerry and United
+Nations in Ethiopia (Addis Ababa) between our President Mr Salva Kiir
+and the rebel leader Mr Riek Machar to stop this war.
 
-any help would be appreciated
+I want to solicit for your partnership with trust to invest the $8
+million dollars deposited by my late husband in Bank because my life
+is no longer safe in our country, since the rebels are looking for the
+families of all the oil business men in the country to kill, saying
+that they are they one that is milking the country dry.
+
+I will offer you 20% of the total fund for your help while I will
+partner with you for the investment in your country.
+If I get your reply.
+
+I will wait to hear from you so as to give you details.With love from
+
+ i need you to contact me here sarahkoffi389@yahoo.co.jp
+
+Mrs. Sarah Koffi
