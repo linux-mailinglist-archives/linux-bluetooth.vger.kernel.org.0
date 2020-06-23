@@ -2,66 +2,174 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 338B72051B0
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Jun 2020 14:03:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7903205285
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Jun 2020 14:32:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732448AbgFWMC7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 23 Jun 2020 08:02:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60014 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732396AbgFWMC7 (ORCPT
+        id S1732556AbgFWMcZ convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 23 Jun 2020 08:32:25 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:51717 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729611AbgFWMcZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 23 Jun 2020 08:02:59 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAA93C061573
-        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Jun 2020 05:02:58 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id g13so4742965qtv.8
-        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Jun 2020 05:02:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=7fNnQnFssZCc2Jtw2cUlJB4v7zrpRiQS682aXMZO9+Q=;
-        b=aGCDFCjzgVvFrFs54jwI+x5t5FDSbEFHbAptaTOD/7pqMFJQgzggclg9Cw/RVpcqlp
-         VxVHjoZocWUZ4qUeWqm40S+es9U+mgd3cWscdUQLKTBhXHoFQ+O/r/4exYgZGtQz7s2i
-         z5+0c1NWObCkA+poLVbLtC5gAaldZWVWpA/0aYin9YSGn78NRfYn/iA2dvURWjqFEsHT
-         SyM/Kfk8AxoPQiiUlIMDH+rdEAXbFDVkIgBM1JNX6N4624a4NWyywiPLA8EB8kXCLjMh
-         K05lU8m1CUBMNfZFA2R8Sa6INceBy9jmoc1wU+V+yImi670eSdBbqL0DV2btp7e1/hk4
-         s2Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=7fNnQnFssZCc2Jtw2cUlJB4v7zrpRiQS682aXMZO9+Q=;
-        b=H2xQgFAgKamauySDgIanG5W8VrxQkSwNGFh4YeFr6vY5hWBTvGQE8ZZpiX9K/8H1j+
-         4T7AzcjerVv+emKzuk9nv1MqlLY37hxFuyDMamyy+Lq7l5RB5aPA9w65UO4E9z+JtUtZ
-         gTpXW1Z6tJJWS4txqoXlMAidTR00GF/9/eCq6dG9DyrkWSMfYbYerFV7vxpzJ9oT6TE9
-         ekqKGSoMClnRZ7os9jNapHQyhwRpoxvuvgX9uLKuEDwoii8LlS/gX3uYyjYU0+fsEEvD
-         mUzjfaG6M+9OnbyynDSB8mR7YDxusSHMd3ACq/Z1S4roDdbIqkloWHhYI+aUduXm/GR+
-         65vw==
-X-Gm-Message-State: AOAM533NujuIqWRyeti2QIyz4mouMUZ54uoBC5RYZyqCttUWItsS8toZ
-        dKirk+usXI/Pfysk3vscxVeaeSCS/QWXdwdrM0U=
-X-Google-Smtp-Source: ABdhPJwe1Y/5myX3Rz252Kxh3brXb43ehDb4GmmcsszmIVmeoQTvpdo/y7wzy1HVSTbhlfognTOkwktvAS0afLC8tcA=
-X-Received: by 2002:ac8:40da:: with SMTP id f26mr21437232qtm.9.1592913778277;
- Tue, 23 Jun 2020 05:02:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ac8:47c2:0:0:0:0:0 with HTTP; Tue, 23 Jun 2020 05:02:57
- -0700 (PDT)
-Reply-To: bektery@outlook.com
-From:   YAVUZ BEKTER <bakert.jg@gmail.com>
-Date:   Tue, 23 Jun 2020 05:02:57 -0700
-Message-ID: <CAAUSuTV91u_wLDGy-Y3gPJtbM71itmyqGb_oMP=t-v8EsuRGRg@mail.gmail.com>
-Subject: Hello.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+        Tue, 23 Jun 2020 08:32:25 -0400
+Received: from marcel-macpro.fritz.box (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
+        by mail.holtmann.org (Postfix) with ESMTPSA id E544ECECC3;
+        Tue, 23 Jun 2020 14:42:14 +0200 (CEST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: [PATCH v1] bluetooth: use configured params for ext adv
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <CABBYNZLJQRCzcrCCVGkeVSDhi8B35dc9z4SAh4dFbgT9DVm4Mg@mail.gmail.com>
+Date:   Tue, 23 Jun 2020 14:32:21 +0200
+Cc:     Alain Michaud <alainmichaud@google.com>,
+        Alain Michaud <alainm@chromium.org>,
+        BlueZ <linux-bluetooth@vger.kernel.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        Daniel Winkler <danielwinkler@google.com>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <8B47E3EE-682C-4022-8096-2F1FCA59B661@holtmann.org>
+References: <20200618210659.142284-1-alainm@chromium.org>
+ <C5D30F5E-B50F-4DE7-A909-F48F6C555661@holtmann.org>
+ <CALWDO_XLRELJhe1n9AVq2w9fQYkgGLC+bdXQ-1-M4f-cUfEwGQ@mail.gmail.com>
+ <CABBYNZLEsUXFW_hrmcvSALRpeZwkmvk=c9SYPt+owO7tn+hMBw@mail.gmail.com>
+ <CALWDO_V2Hnc-HHYQQ5LfnW8a2FWzkTBOE1Cti0ZQzyw4CouAgw@mail.gmail.com>
+ <9DA76AAC-F625-408C-8C74-DAE3ED42AC45@holtmann.org>
+ <CABBYNZLJQRCzcrCCVGkeVSDhi8B35dc9z4SAh4dFbgT9DVm4Mg@mail.gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-I am the foreign operations director of Bank of Turkey.
-My name is Mr, Yavuz. I have a sensitive investment project to discuss
-with you, please reply now.
-________________________
-Ik ben de directeur buitenlandse activiteiten van de Bank of Turkey.
-Mijn naam is meneer Yavuz. Ik moet een gevoelig investeringsproject bespreken
-met u, antwoord dan nu.
+Hi Luiz,
+
+>>>>>> please use “Bluetooth: “ prefix for the subject.
+>>>>> 
+>>>>> ack.
+>>>>>> 
+>>>>>> 
+>>>>>>> When the extended advertisement feature is enabled, a hardcoded min and
+>>>>>>> max interval of 0x8000 is used.  This patches fixes this issue by using
+>>>>>>> the configured min/max value.
+>>>>>>> 
+>>>>>>> This was validated by setting min/max in main.conf and making sure the
+>>>>>>> right setting is applied:
+>>>>>>> 
+>>>>>>> < HCI Command: LE Set Extended Advertising Parameters (0x08|0x0036) plen
+>>>>>>> 25                                          #93 [hci0] 10.953011
+>>>>>>> …
+>>>>>>> Min advertising interval: 181.250 msec (0x0122)
+>>>>>>> Max advertising interval: 181.250 msec (0x0122)
+>>>>>>> …
+>>>>>>> 
+>>>>>>> Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+>>>>>>> Reviewed-by: Daniel Winkler <danielwinkler@google.com>
+>>>>>>> 
+>>>>>>> Signed-off-by: Alain Michaud <alainm@chromium.org>
+>>>>>> 
+>>>>>> The Reviewed-by lines go after your Signed-off-by.
+>>>>> 
+>>>>> ack.
+>>>>>> 
+>>>>>> 
+>>>>>>> ---
+>>>>>>> 
+>>>>>>> net/bluetooth/hci_request.c | 10 ++++++----
+>>>>>>> 1 file changed, 6 insertions(+), 4 deletions(-)
+>>>>>>> 
+>>>>>>> diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+>>>>>>> index 29decd7e8051..08818b9bf89f 100644
+>>>>>>> --- a/net/bluetooth/hci_request.c
+>>>>>>> +++ b/net/bluetooth/hci_request.c
+>>>>>>> @@ -1799,8 +1799,9 @@ int __hci_req_setup_ext_adv_instance(struct hci_request *req, u8 instance)
+>>>>>>>     int err;
+>>>>>>>     struct adv_info *adv_instance;
+>>>>>>>     bool secondary_adv;
+>>>>>>> -     /* In ext adv set param interval is 3 octets */
+>>>>>>> -     const u8 adv_interval[3] = { 0x00, 0x08, 0x00 };
+>>>>>>> +     /* In ext adv set param interval is 3 octets in le format */
+>>>>>>> +     const __le32 min_adv_interval = cpu_to_le32(hdev->le_adv_min_interval);
+>>>>>>> +     const __le32 max_adv_interval = cpu_to_le32(hdev->le_adv_max_interval);
+>>>>>> 
+>>>>>> Scrap the const here.
+>>>>> 
+>>>>> I'd like to understand why it isn't prefered to use const when you
+>>>>> don't intend to modify it in the code.
+>>>>>> 
+>>>>>> 
+>>>>>> And it is wrong since your hdev->le_adv_{min,max}_interval is actually __u16. So that first needs to be extended to a __u16 value.
+>>>>> 
+>>>>> The macro actually leads to a function call that has a __u32 as a
+>>>>> parameter so the __u16 gets upcasted to a __u32 already.
+>>>>>> 
+>>>>>> 
+>>>>>> That said, if we have this in the Load Default System Configuration list, we should extended it to __le32 there as well.
+>>>>> 
+>>>>> I agree, this means the range of default system configuration may not
+>>>>> be sufficient to accept all possible values that the newer command
+>>>>> supports, although I think this is a separate issue from what this
+>>>>> patch is trying to solve.
+>>>>>> 
+>>>>>> 
+>>>>>>>     if (instance > 0) {
+>>>>>>>             adv_instance = hci_find_adv_instance(hdev, instance);
+>>>>>>> @@ -1833,8 +1834,9 @@ int __hci_req_setup_ext_adv_instance(struct hci_request *req, u8 instance)
+>>>>>>> 
+>>>>>>>     memset(&cp, 0, sizeof(cp));
+>>>>>>> 
+>>>>>>> -     memcpy(cp.min_interval, adv_interval, sizeof(cp.min_interval));
+>>>>>>> -     memcpy(cp.max_interval, adv_interval, sizeof(cp.max_interval));
+>>>>>>> +     /* take least significant 3 bytes */
+>>>>>>> +     memcpy(cp.min_interval, &min_adv_interval, sizeof(cp.min_interval));
+>>>>>>> +     memcpy(cp.max_interval, &max_adv_interval, sizeof(cp.max_interval));
+>>>>>> 
+>>>>>> This is dangerous and I think it actually break in case of unaligned access platforms.
+>>>>> 
+>>>>> Since it is in le format already and the 3 bytes from the cmd struct
+>>>>> are raw, I'm not sure how this can be dangerous.  It effectively
+>>>>> yields the exact same results as your suggestions below.
+>>>> 
+>>>> In zephyr we end up doing helper functions for 24 bits:
+>>>> 
+>>>> https://github.com/zephyrproject-rtos/zephyr/blob/master/include/sys/byteorder.h#L316
+>>>> 
+>>>> I guess that is safer in terms of alignment access and it would work
+>>>> independent of the host order which apparently was not the case in the
+>>>> code above since it doesn't do the conversion to le32 (or perhaps the
+>>>> intervals are already in le32), anyway having something like that is
+>>>> probably much simpler to maintain given that most intervals use for
+>>>> things like ISO are also 24 bits long.
+>>> I like this. Would you put this in hci.h or keep to a lower scope?
+>>> 
+>>> static inline void hci_cpu_to_le24(__u32 val, __u8 dst[3])
+>>> {
+>>> dst[0] = val & 0xff;
+>>> dst[1] = (val & 0xff00) >> 8;
+>>> dst[2] = (val & 0xff0000) >> 16;
+>>> }
+>> 
+>> hmmm, how many 24-bit fields do we have in Bluetooth HCI spec? If it is just one, then lets keep it close to the usage, if not, I have also no object to put it in a higher level.
+> 
+> These are the instances of 24-bit fields:
+> 
+> include/net/bluetooth/hci.h:    __u8      min_interval[3];
+> include/net/bluetooth/hci.h:    __u8      max_interval[3];
+> include/net/bluetooth/hci.h:    __u8    m_interval[3];
+> include/net/bluetooth/hci.h:    __u8    s_interval[3];
+> include/net/bluetooth/hci.h:    __u8  cig_sync_delay[3];
+> include/net/bluetooth/hci.h:    __u8  cis_sync_delay[3];
+> include/net/bluetooth/hci.h:    __u8  m_latency[3];
+> include/net/bluetooth/hci.h:    __u8  s_latency[3];
+> 
+> I guess they all could benefit from having such a helper so we don't
+> have to resort in cpu_to_32 + memcpy.
+
+I see, the new ISO channel support also used 24-bit variables heavily.
+
+Regards
+
+Marcel
+
