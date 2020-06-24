@@ -2,64 +2,117 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD4FF207B85
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jun 2020 20:29:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6774A207B9E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jun 2020 20:34:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405988AbgFXS3K (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 24 Jun 2020 14:29:10 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:37734 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404995AbgFXS3K (ORCPT
+        id S2406145AbgFXSe0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 24 Jun 2020 14:34:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60500 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406095AbgFXSeZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 24 Jun 2020 14:29:10 -0400
-Received: from marcel-macbook.fritz.box (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 4A888CECDB;
-        Wed, 24 Jun 2020 20:39:02 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH] Bluetooth: btusb: BTUSB_WAKEUP_DISABLE prevents wake
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200624112428.1.Ib42ab202cfd82e7734571c302071da30a24ea27b@changeid>
-Date:   Wed, 24 Jun 2020 20:29:08 +0200
-Cc:     linux-bluetooth@vger.kernel.org,
-        chromeos-bluetooth-upstreaming@chromium.org,
+        Wed, 24 Jun 2020 14:34:25 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701CCC061795
+        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Jun 2020 11:34:25 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id u8so1493111pje.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Jun 2020 11:34:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Q0SFa2U1n/gw/Ov9iaCh0A1BsBXlbDSR7iGMtKgrzh4=;
+        b=M3ywDaEt0dPEA9Zei6WnBet8lO2g/RxcJupW42tD+Z1GN89NYkAYWwE6kIpHPpB0rJ
+         qipLOy0qWQtG00GCJnzFKZbMB+Xv9r3oZKL4ZEHNE01UTf/rThsqs1IcKn+PXnSXydf/
+         vmxiMyxlqV4w21Dy8aual9+OdpoY+1TEwWh6c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Q0SFa2U1n/gw/Ov9iaCh0A1BsBXlbDSR7iGMtKgrzh4=;
+        b=qHWtddiuwPv7O8e1vgAYqvfBRu+pzlGtOFwiQwU6oW849MqCAJu3J5ELqgyM7gov40
+         SR+v2nMkXNxP9MHymHAsJSM3qWC7igI+daOvRvg78cuJQ5zMkEs+ryCijHxv2PMNjbky
+         mlk+JQGzXr1qq3JEdHBk3asvB4mB8ebdmAqYGAaKLdBLgQ3jDj000eNZAgY81vdimSvM
+         YmHvAbUVp7z7QBBkEl+ueu5sZVZ+XiswhPnESAf/NVTGMFxiVcmYDJxPZul9sFk7NW/c
+         v8RapVJZJgxO5gwBR6RYNcvEApFVuIxfeRvmLH+Fz05b4t1zrrZcOYaqYX2L+PdH8K0e
+         nBug==
+X-Gm-Message-State: AOAM532wOM5mNFp+1SUrc9+FkZcoIEFEXobkeH/q0xfTx1HeK4AzWgZx
+        N2SwJzKSrFQJUbLZBJjIr9fwrg==
+X-Google-Smtp-Source: ABdhPJw46RbXduZ9/vIbsjF3HOOykc1RJam9QQxJpRAMnqFUFinIl8ll04+dNKIrzY5607VmlQPE0g==
+X-Received: by 2002:a17:90a:294f:: with SMTP id x15mr28400108pjf.97.1593023664707;
+        Wed, 24 Jun 2020 11:34:24 -0700 (PDT)
+Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:e09a:8d06:a338:aafb])
+        by smtp.gmail.com with ESMTPSA id e15sm11983263pgt.17.2020.06.24.11.34.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jun 2020 11:34:24 -0700 (PDT)
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+To:     marcel@holtmann.org, linux-bluetooth@vger.kernel.org,
+        alainm@chromium.org
+Cc:     chromeos-bluetooth-upstreaming@chromium.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
         Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <51656AF4-EB93-44D1-8C1E-CD00A2BBA781@holtmann.org>
-References: <20200624112428.1.Ib42ab202cfd82e7734571c302071da30a24ea27b@changeid>
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH] Bluetooth: Don't restart scanning if paused
+Date:   Wed, 24 Jun 2020 11:34:19 -0700
+Message-Id: <20200624113351.1.Ic6b1fca2b1b3fe989db21ceae76bab80bd87d387@changeid>
+X-Mailer: git-send-email 2.27.0.111.gc72c7da667-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Abhishek,
+When restarting LE scanning, check if it's currently paused before
+enabling passive scanning.
 
-> When the BTUSB_WAKEUP_DISABLE flag is set, always return true for
-> prevent wake. This tells the suspend notifier not to prepare the
-> controller for reconnections during suspend.
-> 
-> Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> ---
-> Realtek chipsets currently lose their firmware when suspending (except
-> in autosuspend where they assert remote_wakeup on the usb interface).
-> There's no need to configure the Bluetooth stack for wake-up in this
-> case so use the BTUSB_WAKEUP_DISABLE flag to also prevent wakeup from
-> being configured.
-> 
-> This was tested on Chromebooks with Realtek chipsets running both 4.14
-> and 5.4 kernel. It was tested with suspend functional tests and
-> a suspend stress test for 50 iterations.
-> 
-> drivers/bluetooth/btusb.c | 3 +++
-> 1 file changed, 3 insertions(+)
+Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+---
+When running suspend stress tests on Chromebooks, we discovered
+instances where the Chromebook didn't enter the deepest idle states
+(i.e. S0ix). After some debugging, we found that passive scanning was
+being enabled AFTER the suspend notifier had run (and disabled all
+scanning).
 
-patch has been applied to bluetooth-next tree.
+For this fix, I simply looked at all the places where we call
+HCI_OP_LE_SET_SCAN_ENABLE and added a guard clause for suspend. With
+this fix, we were able to get through 100+ iterations of the suspend
+stress test without any problems entering S0ix.
 
-Regards
 
-Marcel
+ net/bluetooth/hci_request.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index 86ae4b953a011e..116207009dde01 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -819,6 +819,11 @@ static void hci_req_start_scan(struct hci_request *req, u8 type, u16 interval,
+ {
+ 	struct hci_dev *hdev = req->hdev;
+ 
++	if (hdev->scanning_paused) {
++		bt_dev_dbg(hdev, "Scanning is paused for suspend");
++		return;
++	}
++
+ 	/* Use ext scanning if set ext scan param and ext scan enable is
+ 	 * supported
+ 	 */
+@@ -2657,6 +2662,11 @@ static int le_scan_restart(struct hci_request *req, unsigned long opt)
+ 	if (!hci_dev_test_flag(hdev, HCI_LE_SCAN))
+ 		return 0;
+ 
++	if (hdev->scanning_paused) {
++		bt_dev_dbg(hdev, "Scanning is paused for suspend");
++		return 0;
++	}
++
+ 	hci_req_add_le_scan_disable(req);
+ 
+ 	if (use_ext_scan(hdev)) {
+-- 
+2.27.0.111.gc72c7da667-goog
 
