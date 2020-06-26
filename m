@@ -2,96 +2,74 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9741520A96E
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Jun 2020 01:48:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FCF520A97E
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Jun 2020 02:02:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726507AbgFYXsB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 25 Jun 2020 19:48:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48780 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726398AbgFYXsB (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 25 Jun 2020 19:48:01 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB721C08C5C1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jun 2020 16:48:00 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id e11so7287006qkm.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jun 2020 16:48:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=XjwTOBhLqLk3lbD/LuqxrbU8FsGj6dGhLCi+5tHF7gA=;
-        b=rQydd0aKz8YtSLPHoByCxPosfoknbELIDbJhoxkF4/S0+5sdRdeP/okEkIwIXPbGns
-         nseo8vYGQi0WYNowyrjxAsp//dc5BSabu38uK5EQsZUoIPpSrvjzQCtfUCs9i6G1TXAc
-         7aoct3/VHUuOCaPu/nl99YlteG48sSIT09w0rDyeEJVz8M+AAdFDwxb/36QHILmY6mmg
-         djZmZI0DYVjvaIwt13qHgVFhyzzJ3LgAK7TJtIdqfL1LG1CAaHHch28hHUAsPcAugqey
-         QIpkRITcsjcy8h25joXdei4VboWqsGswrXPlMuhxmWp8rlq0AhM8kiLDM2V8P76rY9QF
-         MOqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=XjwTOBhLqLk3lbD/LuqxrbU8FsGj6dGhLCi+5tHF7gA=;
-        b=nC4m8iTSwW5TEdYgfuMfn+lVvPjx6E0limTCt5O8apyW8WGPu6P+pAkp5fgWOXENRs
-         AXqYa1M7jnpFRvgRsMmXZCaCQQMqKf0nwYzt6bhB7V0bJ1Hl9Wx3o7CqhisJeQyhgOl3
-         RFLxpB2z8HeDhUiqra3T1RMLwXcqTKYwoQu52OT/SUVtvLdvFZjdHW68dBQQEmTdMsO1
-         xI1Q6Xj6swZTu+sQ/h+7rIgts+Alr+LAWjlAo42E9UV+3+kzCSxAepuIDjO931YfIHJE
-         wa3fQJ+Pg1SRnqX5GpsvcLhfBMuDiRlhC11/n7Q4CAvSmGJIMgi+F8rF/YyrE/9Pptbt
-         B2fg==
-X-Gm-Message-State: AOAM533EZj9XJw4O62MqoPsHoYa+Ot3UhzdKHgdlQMuKhowiLD39wIB/
-        0yql8bH0AXchUSOg18ucjz50cYq1WHY=
-X-Google-Smtp-Source: ABdhPJzureThYlxGt4tQqBwxc0m5JHFR5jf77v/yVn3fSQHsbFC66OSQsOdxXeeTg7Da/jpF3P9+qg==
-X-Received: by 2002:a37:9c8f:: with SMTP id f137mr213725qke.63.1593128878985;
-        Thu, 25 Jun 2020 16:47:58 -0700 (PDT)
-Received: from [172.17.0.2] ([52.247.57.48])
-        by smtp.gmail.com with ESMTPSA id z77sm7085083qka.59.2020.06.25.16.47.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 16:47:58 -0700 (PDT)
-Message-ID: <5ef537ae.1c69fb81.d2589.8353@mx.google.com>
-Date:   Thu, 25 Jun 2020 16:47:58 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============5604472060624089469=="
-MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, tedd.an@linux.intel.com
-Subject: RE: [BlueZ] btp: Update connect event structure
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <c77abd13007953bce8b42203d4ec08c756832df1.camel@linux.intel.com>
-References: <c77abd13007953bce8b42203d4ec08c756832df1.camel@linux.intel.com>
+        id S1726697AbgFZACW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 25 Jun 2020 20:02:22 -0400
+Received: from mga04.intel.com ([192.55.52.120]:11173 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726061AbgFZACW (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 25 Jun 2020 20:02:22 -0400
+IronPort-SDR: yNfaRnewle2pHeZgCcgz+zBLxJbNuofr0/3acxKfc1wQ54TgozRA405CS8vA6KVXG1AkFP1jmK
+ 5gN7v+2SNEaw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9663"; a="142634088"
+X-IronPort-AV: E=Sophos;i="5.75,281,1589266800"; 
+   d="scan'208";a="142634088"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jun 2020 17:02:21 -0700
+IronPort-SDR: rcjBeEG7DTaAkCeG6gO232pKRI/6ahh/Yjjq7el6PJIRhHFEXecSjYIzjJIGg7rgGiQmQXPdlk
+ XHrRUVVxphUQ==
+X-IronPort-AV: E=Sophos;i="5.75,281,1589266800"; 
+   d="scan'208";a="479822520"
+Received: from han1-xps-13-9350.jf.intel.com ([10.54.74.33])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jun 2020 17:02:20 -0700
+Message-ID: <37bbc9912da0efcf5e7afd252eba90309f53c79a.camel@linux.intel.com>
+Subject: [BlueZ PATCH V2] btp: Update connect event structure
+From:   Tedd Ho-Jeong An <tedd.an@linux.intel.com>
+To:     Linux Bluetooth Mailing List <linux-bluetooth@vger.kernel.org>
+Date:   Thu, 25 Jun 2020 17:02:19 -0700
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5604472060624089469==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
+This patch updates the connect event struct to align withe the btp spec.
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While we are preparing for reviewing the patches, we found the following
-issue/warning.
-
-Test Result:
-checkgitlint Failed
-
-Outputs:
-6: B3 Line contains hard tab characters (\t): "    Controller Index:	<controller id>"
-7: B3 Line contains hard tab characters (\t): "    Event parameters:	Address_Type (1 octet)"
-8: B3 Line contains hard tab characters (\t): "			Address (6 octets)"
-9: B3 Line contains hard tab characters (\t): "			Connection Interval (2 octets)"
-10: B3 Line contains hard tab characters (\t): "			Connection Latency (2 octets)"
-11: B3 Line contains hard tab characters (\t): "			Supervision Timeout (2 octets)"
-
-
-
+ Opcode 0x82 - Device Connected event
+    Controller Index:   <controller id>
+    Event parameters:   Address_Type (1 octet)
+                        Address (6 octets)
+                        Connection Interval (2 octets)
+                        Connection Latency (2 octets)
+                        Supervision Timeout (2 octets)
 ---
-Regards,
-Linux Bluetooth
+ src/shared/btp.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
---===============5604472060624089469==--
+diff --git a/src/shared/btp.h b/src/shared/btp.h
+index f0ac3a1ee..cc71a71df 100644
+--- a/src/shared/btp.h
++++ b/src/shared/btp.h
+@@ -259,6 +259,9 @@ struct btp_device_found_ev {
+ struct btp_gap_device_connected_ev {
+ 	uint8_t address_type;
+ 	bdaddr_t address;
++	uint16_t connection_interval;
++	uint16_t connection_latency;
++	uint16_t supervision_timeout;
+ } __packed;
+ 
+ #define BTP_EV_GAP_DEVICE_DISCONNECTED		0x83
+-- 
+2.17.1
+
+
