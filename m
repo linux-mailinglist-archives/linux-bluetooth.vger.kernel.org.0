@@ -2,75 +2,103 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D2B220E378
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jun 2020 00:03:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C94220E58A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jun 2020 00:07:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388618AbgF2VOU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 29 Jun 2020 17:14:20 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:43155 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729877AbgF2S5l (ORCPT
+        id S1728630AbgF2ViM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 29 Jun 2020 17:38:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38680 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388236AbgF2ViH (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:57:41 -0400
-Received: from marcel-macpro.fritz.box (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 012ABCECD6;
-        Mon, 29 Jun 2020 17:51:57 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH] Bluetooth: fix kernel null pointer dereference error on
- suspend
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200629142600.GA3102@cosmos>
-Date:   Mon, 29 Jun 2020 17:42:02 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>, linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <C9C778D8-E453-4400-9475-E5127F5FA575@holtmann.org>
-References: <20200629142600.GA3102@cosmos>
-To:     Vamshi K Sthambamkadi <vamshi.k.sthambamkadi@gmail.com>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        Mon, 29 Jun 2020 17:38:07 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76205C061755
+        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Jun 2020 14:38:06 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id 5so14806330oty.11
+        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Jun 2020 14:38:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3DxrQSJgRWZhZIu+kcajfBCwUzlLVUL7fFgiTLJrLQQ=;
+        b=F5TtFytdWFhWn8yqtqkAPKB21EtwsdJPpieCYk8hL0y9bXt360IV903rvGJP0CLTt9
+         jq+IwXOID/40JRIMGUmSjRp35pWKXiC1h1RZACLAdOr9ax3x26A2snLzl3n/9/30m9M9
+         MinecbOxpc3JRxWgTxQIsut5gGZii26XZgbyFEf554pSFvHYCCIQJP0tWZWgwS0H4kqq
+         /0PXG8MWBlH5y2UNBdEJuRhrjC8nbnDc+Eir/ERQ/xyx7Sgvlzu/IMC6h1tvbnHF+brX
+         8bfxNyuZHVKcXw8inUc6cVkPdHeqeFIVtOFkI1hPP/snji/ok7Xgq6j4DFEculihYWKS
+         O1aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3DxrQSJgRWZhZIu+kcajfBCwUzlLVUL7fFgiTLJrLQQ=;
+        b=f/Ug7icAdYffacxrieEJytuD/BN0oKmrcZ0mM4a5HWJQGxBokOXC24pS1ll5/CK/jN
+         wUjqaDVWGdsqYMHyrc9cXE1inoTS02R4sKHQXhzDfZ+um0oC7zsdP5f316Q67xQMqxPZ
+         SH8dwCLQE2dtxJf0r/v0U3EkrgaQhylZVz7/emoXS7LkLBqQUnF7HSJIMik5Cp7fKCXz
+         o/sIuGV4riy8cJ1Y4HCvzJkHlXjqs54WdHUQDVJTjilvql8r/sl01FuDWNRUf2EzVPda
+         KJ3V5J+jkkAdWsKs4eMyczx0Sk5Oiz1VXZq3GDw6aw1LwZ/9k67b/XZKyR6NBmSz+afL
+         2dhQ==
+X-Gm-Message-State: AOAM532/0c9J8WyNVIeUqTJEb8QfgKCDXQ1RRVoakGGxqdsQTCpgCZl4
+        irjQZr7a7K/T8PHcjDkCHgZ1g0z326EUd7PuPgo=
+X-Google-Smtp-Source: ABdhPJyefF4V5RM/u6TSk8oFQ2QMfMTC64YYeYXRq1DAIq3PdbvWm5LligD/JGNd8uk7Pyo7aEUsrpT9ATeejXLS9e0=
+X-Received: by 2002:a05:6830:1e85:: with SMTP id n5mr14770351otr.362.1593466685764;
+ Mon, 29 Jun 2020 14:38:05 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200601155858.156798-1-alainm@chromium.org> <CALWDO_WDhOZigHU8SWtkTV1TcUeDRae910fiiHJmiyo8NPp6pg@mail.gmail.com>
+In-Reply-To: <CALWDO_WDhOZigHU8SWtkTV1TcUeDRae910fiiHJmiyo8NPp6pg@mail.gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Mon, 29 Jun 2020 14:37:54 -0700
+Message-ID: <CABBYNZKSAj7V7u7YYuv2eRv+OGJ7rc45HyAV2mh6jG-br4OADQ@mail.gmail.com>
+Subject: Re: [BlueZ PATCH] a2dp:fixing typo in endpoint_setconf_ind
+To:     Alain Michaud <alainmichaud@google.com>
+Cc:     Alain Michaud <alainm@chromium.org>,
+        BlueZ <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Vamshi,
+Hi Alain,
 
-> BUG Call Trace:
->  queue_work_on+0x39/0x40
->  hci_adv_monitors_clear+0x71/0x90 [bluetooth]
->  hci_unregister_dev+0x18a/0x2f0 [bluetooth]
->  btusb_disconnect+0x68/0x150 [btusb]
->  usb_unbind_interface+0x7f/0x260
->  device_release_driver_internal+0xec/0x1b0
->  device_release_driver+0x12/0x20
->  bus_remove_device+0xe1/0x150
->  device_del+0x17d/0x3e0
->  usb_disable_device+0x9f/0x250
->  usb_disconnect+0xc6/0x270
->  hub_event+0x6da/0x18d0
->  process_one_work+0x20c/0x400
->  worker_thread+0x34/0x400
-> 
-> RIP: 0010:__queue_work+0x92/0x3f0
-> 
-> NULL deference occurs in hci_update_background_scan() while it tries
-> to queue_work on already destroyed workqueues.
-> 
-> Change hci_unregister_dev() to invoke destroy_workqueues after the
-> call to hci_adv_monitors_clear().
-> 
-> Signed-off-by: Vamshi K Sthambamkadi <vamshi.k.sthambamkadi@gmail.com>
-> ---
-> net/bluetooth/hci_core.c | 6 +++---
-> 1 file changed, 3 insertions(+), 3 deletions(-)
+On Mon, Jun 29, 2020 at 12:43 PM Alain Michaud <alainmichaud@google.com> wrote:
+>
+> Hi Luiz,
+>
+> Just a friendly nudge, this is an easy one :)
+>
+> Thanks,
+> Alain
+>
+>
+> On Mon, Jun 1, 2020 at 11:59 AM Alain Michaud <alainm@chromium.org> wrote:
+> >
+> > This patch simply fixes a typo in endpoint_setconf_ind.
+> >
+> > ---
+> >
+> >  profiles/audio/a2dp.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
+> > index 6f46c92bf..e3d6cfc9e 100644
+> > --- a/profiles/audio/a2dp.c
+> > +++ b/profiles/audio/a2dp.c
+> > @@ -654,7 +654,7 @@ static gboolean endpoint_setconf_ind(struct avdtp *session,
+> >                                                 endpoint_setconf_cb,
+> >                                                 a2dp_sep->user_data);
+> >                 if (ret == 0) {
+> > -                       /* Attempt to reverve discover if there are no remote
+> > +                       /* Attempt to reverse discover if there are no remote
+> >                          * SEPs.
+> >                          */
+> >                         if (queue_isempty(setup->chan->seps))
+> > --
+> > 2.27.0.rc2.251.g90737beb825-goog
+> >
 
-patch has been applied to bluetooth-next tree.
+Applied, thanks.
 
-Regards
-
-Marcel
-
+-- 
+Luiz Augusto von Dentz
