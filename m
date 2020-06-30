@@ -2,68 +2,143 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F6A820F440
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jun 2020 14:14:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6B4D20F56F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jun 2020 15:11:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387532AbgF3MOJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 30 Jun 2020 08:14:09 -0400
-Received: from smtp3.sd73.bc.ca ([142.24.50.246]:49800 "EHLO smtp3.sd73.bc.ca"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387472AbgF3MOI (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 30 Jun 2020 08:14:08 -0400
-X-Greylist: delayed 11772 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Jun 2020 08:14:07 EDT
-Received: from smtp.sd73.bc.ca (smtp.sd73.bc.ca [10.10.10.14])
-        by smtp3.sd73.bc.ca (Postfix) with ESMTP id 10528663EF;
-        Tue, 30 Jun 2020 01:18:08 -0700 (PDT)
-Received: from zimbra2.sd73.bc.ca (zimbra.sd73.bc.ca [10.10.10.7])
-        by smtp.sd73.bc.ca (Postfix) with ESMTP id 612B4E03D4;
-        Tue, 30 Jun 2020 01:18:11 -0700 (PDT)
-Received: from zimbra2.sd73.bc.ca (localhost [127.0.0.1])
-        by zimbra2.sd73.bc.ca (Postfix) with ESMTPS id F10AA5C0DD1833;
-        Tue, 30 Jun 2020 01:11:21 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra2.sd73.bc.ca (Postfix) with ESMTP id A32B45C0DEC83E;
-        Tue, 30 Jun 2020 01:11:21 -0700 (PDT)
-Received: from zimbra2.sd73.bc.ca ([127.0.0.1])
-        by localhost (zimbra2.sd73.bc.ca [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id SZn60R0k52Q7; Tue, 30 Jun 2020 01:11:21 -0700 (PDT)
-Received: from zimbra2.sd73.bc.ca (zimbra3.sd73.bc.ca [10.10.10.7])
-        by zimbra2.sd73.bc.ca (Postfix) with ESMTP id 453BA5C0E3C01B;
-        Tue, 30 Jun 2020 01:11:20 -0700 (PDT)
-Date:   Tue, 30 Jun 2020 01:11:20 -0700 (PDT)
-From:   charles jackson <lisa.petel@sd73.bc.ca>
-Reply-To: charles jackson <charlesjacksonjr001@gmail.com>
-Message-ID: <1411465558.67040289.1593504680110.JavaMail.zimbra@zimbra.sd73.bc.ca>
-Subject: =?UTF-8?Q?=5BPossible_Spam=5D_Covid?= =?UTF-8?Q?_19_Wohlt=C3=A4tigkeitsfon?= =?UTF-8?Q?ds?=
+        id S1728191AbgF3NLF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 30 Jun 2020 09:11:05 -0400
+Received: from rtits2.realtek.com ([211.75.126.72]:53132 "EHLO
+        rtits2.realtek.com.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbgF3NLE (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 30 Jun 2020 09:11:04 -0400
+Authenticated-By: 
+X-SpamFilter-By: ArmorX SpamTrap 5.69 with qID 05UD9m3N2022713, This message is accepted by code: ctloc85258
+Received: from mail.realtek.com (rtexmb06.realtek.com.tw[172.21.6.99])
+        by rtits2.realtek.com.tw (8.15.2/2.66/5.86) with ESMTPS id 05UD9m3N2022713
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+        Tue, 30 Jun 2020 21:09:48 +0800
+Received: from RTEXMB04.realtek.com.tw (172.21.6.97) by
+ RTEXMB06.realtek.com.tw (172.21.6.99) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1779.2; Tue, 30 Jun 2020 21:09:48 +0800
+Received: from localhost.localdomain (172.21.87.237) by
+ RTEXMB04.realtek.com.tw (172.21.6.97) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1779.2; Tue, 30 Jun 2020 21:09:47 +0800
+From:   <hildawu@realtek.com>
+To:     <marcel@holtmann.org>
+CC:     <johan.hedberg@gmail.com>, <matthias.bgg@gmail.com>,
+        <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>, <max.chou@realtek.com>,
+        <alex_lu@realsil.com.cn>, <kidman@realtek.com>
+Subject: [PATCH v2] Bluetooth: btusb: USB alternate setting 1 for WBS
+Date:   Tue, 30 Jun 2020 21:09:40 +0800
+Message-ID: <20200630130940.14339-1-hildawu@realtek.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.10.10.90]
-X-Mailer: Zimbra 8.6.0_GA_1242 (zclient/8.6.0_GA_1242)
-Thread-Topic: Covid 19 =?utf-8?Q?Wohlt=C3=A4tigkeitsfonds?=
-Thread-Index: gUOvViSEw4yBqtfjznm1r6T8tlYG7g==
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain
+X-Originating-IP: [172.21.87.237]
+X-ClientProxiedBy: RTEXMB03.realtek.com.tw (172.21.6.96) To
+ RTEXMB04.realtek.com.tw (172.21.6.97)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+From: Hilda Wu <hildawu@realtek.com>
 
+RTL8822CE supports transparent WBS to apply USB alternate setting 1.
+Add a flag to the device match data to apply alternate setting 1 which
+meet the transfer speed for WBS support.
 
+Signed-off-by: Hilda Wu <hildawu@realtek.com>
+---
+Changes in v2:
+- More descriptive commit log and short description.
+- Use BTUSB_USE_ALT1_FOR_WBS replace BTUSB_WBS_ALT1 for descriptive name.
+- Move alternate setting 1 check into the btusb_probe() function and adjust position of data->isoc for alternate setting check.
+---
+---
+ drivers/bluetooth/btusb.c | 34 ++++++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index c7cc8e594166..e4a12c58501e 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -453,6 +453,7 @@ static const struct dmi_system_id btusb_needs_reset_resume_table[] = {
+ #define BTUSB_HW_RESET_ACTIVE	12
+ #define BTUSB_TX_WAIT_VND_EVT	13
+ #define BTUSB_WAKEUP_DISABLE	14
++#define BTUSB_USE_ALT1_FOR_WBS	15
+ 
+ struct btusb_data {
+ 	struct hci_dev       *hdev;
+@@ -1666,14 +1667,15 @@ static void btusb_work(struct work_struct *work)
+ 				new_alts = data->sco_num;
+ 			}
+ 		} else if (data->air_mode == HCI_NOTIFY_ENABLE_SCO_TRANSP) {
+-
+-			data->usb_alt6_packet_flow = true;
+-
+ 			/* Check if Alt 6 is supported for Transparent audio */
+-			if (btusb_find_altsetting(data, 6))
++			if (btusb_find_altsetting(data, 6)) {
++				data->usb_alt6_packet_flow = true;
+ 				new_alts = 6;
+-			else
++			} else if (test_bit(BTUSB_USE_ALT1_FOR_WBS, &data->flags)) {
++				new_alts = 1;
++			} else {
+ 				bt_dev_err(hdev, "Device does not support ALT setting 6");
++			}
+ 		}
+ 
+ 		if (btusb_switch_alt_setting(hdev, new_alts) < 0)
+@@ -3954,6 +3956,15 @@ static int btusb_probe(struct usb_interface *intf,
+ 		btusb_check_needs_reset_resume(intf);
+ 	}
+ 
++	if (id->driver_info & BTUSB_AMP) {
++		/* AMP controllers do not support SCO packets */
++		data->isoc = NULL;
++	} else {
++		/* Interface orders are hardcoded in the specification */
++		data->isoc = usb_ifnum_to_if(data->udev, ifnum_base + 1);
++		data->isoc_ifnum = ifnum_base + 1;
++	}
++
+ 	if (IS_ENABLED(CONFIG_BT_HCIBTUSB_RTL) &&
+ 	    (id->driver_info & BTUSB_REALTEK)) {
+ 		hdev->setup = btrtl_setup_realtek;
+@@ -3965,21 +3976,16 @@ static int btusb_probe(struct usb_interface *intf,
+ 		 * (DEVICE_REMOTE_WAKEUP)
+ 		 */
+ 		set_bit(BTUSB_WAKEUP_DISABLE, &data->flags);
++		if (btusb_find_altsetting(data, 1))
++			set_bit(BTUSB_USE_ALT1_FOR_WBS, &data->flags);
++		else
++			bt_dev_err(hdev, "Device does not support ALT setting 1");
+ 
+ 		err = usb_autopm_get_interface(intf);
+ 		if (err < 0)
+ 			goto out_free_dev;
+ 	}
+ 
+-	if (id->driver_info & BTUSB_AMP) {
+-		/* AMP controllers do not support SCO packets */
+-		data->isoc = NULL;
+-	} else {
+-		/* Interface orders are hardcoded in the specification */
+-		data->isoc = usb_ifnum_to_if(data->udev, ifnum_base + 1);
+-		data->isoc_ifnum = ifnum_base + 1;
+-	}
+-
+ 	if (!reset)
+ 		set_bit(HCI_QUIRK_RESET_ON_CLOSE, &hdev->quirks);
+ 
 -- 
-Hallo
- 
- Ich bin Charles W. Jackson aus North Carolina, Vereinigte Staaten von Amerika, und ich bin der Gewinner des Mega-Millionen-Jackpots von 344 Millionen US-Dollar. Ich spende die Summe von 2.000.000 Millionen Euro als Teil der Hilfsgelder f&uuml;r das Corona-Virus.
- 
- Dies ist Ihr Spendencode: [CJ530342019]
- 
- www.youtube.com/watch?v=BSr8myiLPMQ
- 
- Bitte antworten Sie auf diese E-Mail mit dem SPENDERCODE:
- 
- charlesjacksonjr001@gmail.com
- 
- Ich hoffe, dass Sie und Ihre Familie dies durchkommen
- 
- 
- Herr Charles Jackson
+2.17.1
+
