@@ -2,60 +2,50 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A432F20F9EB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jun 2020 18:55:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9272C20F9ED
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jun 2020 18:55:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389565AbgF3Qzb convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 30 Jun 2020 12:55:31 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:43189 "EHLO
+        id S2389903AbgF3Qzd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 30 Jun 2020 12:55:33 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:60223 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389308AbgF3Qzb (ORCPT
+        with ESMTP id S2389899AbgF3Qzc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 30 Jun 2020 12:55:31 -0400
+        Tue, 30 Jun 2020 12:55:32 -0400
 Received: from marcel-macpro.fritz.box (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 8CF1ACECEE;
-        Tue, 30 Jun 2020 19:05:24 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id E7DEDCECED;
+        Tue, 30 Jun 2020 19:05:25 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH v2] Bluetooth: btusb: USB alternate setting 1 for WBS
+Subject: Re: [PATCH v2] Bluetooth: use configured default params for active
+ scans
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200630130940.14339-1-hildawu@realtek.com>
-Date:   Tue, 30 Jun 2020 18:55:29 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        kernel list <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, max.chou@realtek.com,
-        alex_lu@realsil.com.cn, kidman@realtek.com
-Content-Transfer-Encoding: 8BIT
-Message-Id: <5A548628-4B7E-4E25-A728-B1CD06C28F39@holtmann.org>
-References: <20200630130940.14339-1-hildawu@realtek.com>
-To:     hildawu@realtek.com
+In-Reply-To: <20200629170415.3227892-1-alainm@chromium.org>
+Date:   Tue, 30 Jun 2020 18:55:31 +0200
+Cc:     linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <CDDEA1C8-EF15-46D5-B637-11B0E845C96B@holtmann.org>
+References: <20200629170415.3227892-1-alainm@chromium.org>
+To:     Alain Michaud <alainm@chromium.org>
 X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Hilda,
+Hi Alain,
 
-> RTL8822CE supports transparent WBS to apply USB alternate setting 1.
-> Add a flag to the device match data to apply alternate setting 1 which
-> meet the transfer speed for WBS support.
+> This patch fixes active scans to use the configured default parameters.
 > 
-> Signed-off-by: Hilda Wu <hildawu@realtek.com>
+> Signed-off-by: Alain Michaud <alainm@chromium.org>
 > ---
+> 
 > Changes in v2:
-> - More descriptive commit log and short description.
-> - Use BTUSB_USE_ALT1_FOR_WBS replace BTUSB_WBS_ALT1 for descriptive name.
-> - Move alternate setting 1 check into the btusb_probe() function and adjust position of data->isoc for alternate setting check.
-> ---
-> ---
-> drivers/bluetooth/btusb.c | 34 ++++++++++++++++++++--------------
-> 1 file changed, 20 insertions(+), 14 deletions(-)
+> - Rebase onto master
+> 
+> net/bluetooth/hci_request.c | 11 ++++++-----
+> 1 file changed, 6 insertions(+), 5 deletions(-)
 
 patch has been applied to bluetooth-next tree.
 
