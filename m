@@ -2,39 +2,41 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 05BB520FC4F
+	by mail.lfdr.de (Postfix) with ESMTP id 88BE020FC50
 	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jun 2020 20:56:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726237AbgF3S4U (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S1726385AbgF3S4U (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Tue, 30 Jun 2020 14:56:20 -0400
 Received: from mga05.intel.com ([192.55.52.43]:57132 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726207AbgF3S4T (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 30 Jun 2020 14:56:19 -0400
-IronPort-SDR: kBZjAsK7k+1S+EQEPzg2mXLjMwHjoERIqdZuuzFBHklp/sXHJlpQdyoHGVyjp7TBqcAfjtFUvI
- 3XKSGwsVDY/A==
-X-IronPort-AV: E=McAfee;i="6000,8403,9668"; a="231222951"
+        id S1726207AbgF3S4U (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 30 Jun 2020 14:56:20 -0400
+IronPort-SDR: lSjb/vKyQfKfsiquppXIKvMymr3s/C6MqKMLtL4gOUKEigS4S5FfQX4vm5K5tIgj4ZkxQ41Wxx
+ IePXfJPIJmnQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9668"; a="231222955"
 X-IronPort-AV: E=Sophos;i="5.75,298,1589266800"; 
-   d="scan'208";a="231222951"
+   d="scan'208";a="231222955"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2020 11:56:19 -0700
-IronPort-SDR: t4lCX5bdzNGY2n6qKsUURRHzll4gyZzCU21OcFqodRPO2y3VNtsbYMBlBSQVbYV3u/jWUfMiAE
- qSYlksyx7+4g==
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2020 11:56:20 -0700
+IronPort-SDR: L6rWgbEQzsSc2Y9vgiJc4OFQLTySxJd3KnZ2/HVDDGdQNaAUkOSSbOPDCpBGRDdcWLsgetYQ1f
+ EtsSxNCbL9Rg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.75,298,1589266800"; 
-   d="scan'208";a="355864248"
+   d="scan'208";a="355864252"
 Received: from mlindstr-mobl1.amr.corp.intel.com (HELO ingas-nuc1.sea.intel.com) ([10.254.108.27])
-  by orsmga001.jf.intel.com with ESMTP; 30 Jun 2020 11:56:18 -0700
+  by orsmga001.jf.intel.com with ESMTP; 30 Jun 2020 11:56:20 -0700
 From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     brian.gix@intel.com, michal.lowas-rzechonek@silvair.com,
         Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ v2 0/4] Add options to Models and VendorModels
-Date:   Tue, 30 Jun 2020 11:56:13 -0700
-Message-Id: <20200630185617.14755-1-inga.stotland@intel.com>
+Subject: [PATCH BlueZ v2 1/4] doc/mesh-api: Add dictionary to model properties
+Date:   Tue, 30 Jun 2020 11:56:14 -0700
+Message-Id: <20200630185617.14755-2-inga.stotland@intel.com>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200630185617.14755-1-inga.stotland@intel.com>
+References: <20200630185617.14755-1-inga.stotland@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -42,52 +44,78 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-v2:
+This changes the signature of "Models" and "VendorModels" properties
+on org.bluez.mesh.Element1 interface to contain a dictionary with
+model options.
 
-Changes constaned to patch 0002:
+Models: signature change "aq" -> "a(qa{sv})"
+VendorModels: signature change "a(qq)" -> "a(qqa{sv})"
 
-- Fixed returned status in config pub/sub model calls
-- Consistent use of pub_enabled & sub_enabled in the code
+Currently, the defined keywords for the options dictionary are
+"Publish" - indicates whether the model supports publication mechanism.
+            If not present, publication is enabled.
+"Subscribe" - indicates whether the model supports subscription mechanism.
+            If not present, subscriptions are enabled.
 
-************
-If a model does not support either subscription mechanism,
-Config Server is supposed to return "Not a Subscribe Model" if a Config Client sends
-a subscription add/overwrite message.
+The dictionary allowed to be empty.
+---
+ doc/mesh-api.txt | 40 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 34 insertions(+), 6 deletions(-)
 
-Similarly, if a model does not support publication, "Invalid Publish Parameters"
-should be returned in response to Publication Set message.
-
-Since config server is running even when an app is not attached, the only way to collect
-these model capabilities is on Attach, Join, Create, Import methods when the
-object manager collects app info.
-
-To address this issue, signatures for properties "Models" and "VendorModels" on Element
-interface change to include "options" dictionary:
-    Models: signature change "aq" -> "a(qa{sv})"
-    VendorModels: signature change "a(qq)" -> "a(qqa{sv})"
-    
-The defined keywords for the options dictionary are:
-    "Publish" - indicates whether the model supports publication mechanism.
-                If not present, publication is enabled.
-    "Subscribe" - indicates whether the model supports subscription mechanism.
-                If not present, subscriptions are enabled.
-
-Inga Stotland (4):
-  doc/mesh-api: Add dictionary to model properties
-  mesh: Check app model settings of pub/sub support
-  tools/mesh-cfgclient: Add options to "Models" property
-  test/test-mesh: Add options to "Models" property
-
- doc/mesh-api.txt        |  40 ++++++++--
- mesh/mesh-config-json.c |  76 +++++++++++++++++-
- mesh/mesh-config.h      |   8 ++
- mesh/model.c            |  98 +++++++++++++++++++----
- mesh/model.h            |   6 ++
- mesh/node.c             | 168 ++++++++++++++++++++++++++++++++--------
- test/test-mesh          |  21 ++---
- tools/mesh-cfgclient.c  |  25 ++++--
- 8 files changed, 374 insertions(+), 68 deletions(-)
-
+diff --git a/doc/mesh-api.txt b/doc/mesh-api.txt
+index 3be11e342..495f95b0b 100644
+--- a/doc/mesh-api.txt
++++ b/doc/mesh-api.txt
+@@ -888,15 +888,43 @@ Properties:
+ 		Element index. It is required that the application follows
+ 		sequential numbering scheme for the elements, starting with 0.
+ 
+-	array{uint16} Models [read-only]
++	array{(uint16 id, dict caps)} Models [read-only]
+ 
+-		An array of SIG Model Identifiers. The array may be empty.
++		An array of SIG Models:
+ 
+-	array{(uint16, uint16)} VendorModels [read-only]
++			id - SIG Model Identifier
+ 
+-		An array of pairs (vendor, model ID): vendor is a 16-bit
+-		Bluetooth-assigned Company ID as defined by Bluetooth SIG.
+-		model ID is a 16-bit vendor-assigned Model Identifier
++			options - a dictionary that may contain additional model
++			info. The following keys are defined:
++
++				boolean Publish - indicates whether the model
++					supports publication mechanism. If not
++					present, publication is enabled.
++
++				boolean Subscribe - indicates whether the model
++					supports subscription mechanism. If not
++					present, subscriptons are enabled.
++
++		The array may be empty.
++
++
++	array{(uint16 vendor, uint16 id, dict options)} VendorModels [read-only]
++
++		An array of Vendor Models:
++
++			vendor - a 16-bit Bluetooth-assigned Company ID as
++			defined by Bluetooth SIG.
++
++			id - a 16-bit vendor-assigned Model Identifier
++
++			options - a dictionary that may contain additional model
++			info. The following keys are defined:
++
++				boolean Publish - indicates whether the model
++					supports publication mechanism
++
++				boolean Subscribe - indicates whether the model
++					supports subscription mechanism
+ 
+ 		The array may be empty.
+ 
 -- 
 2.26.2
 
