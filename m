@@ -2,199 +2,159 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A8EB2108CF
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Jul 2020 12:01:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 638F4210B2F
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Jul 2020 14:46:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729772AbgGAKBh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 1 Jul 2020 06:01:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37232 "EHLO
+        id S1730609AbgGAMqh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 1 Jul 2020 08:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725440AbgGAKBg (ORCPT
+        with ESMTP id S1730604AbgGAMqf (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 1 Jul 2020 06:01:36 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 749FFC061755
-        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Jul 2020 03:01:36 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id e8so11479848pgc.5
-        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Jul 2020 03:01:36 -0700 (PDT)
+        Wed, 1 Jul 2020 08:46:35 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C79FC03E97B
+        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Jul 2020 05:46:35 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id s1so26759109ljo.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Jul 2020 05:46:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Tofe5K0oXmYz1C+QMUjX7aijC98yv1W6QBb5sW/j1KE=;
-        b=Twp2rHZ5iwjWizLno7mIZY8KPEPwttjiFcf2vnx4Nj4Gw6UH6yHG4vKuOIPwQ6dde4
-         ll2dzkEDsW3Vl3KpcP8FK6R/WvOPgkmA5nx8JLNiGtxv8evU/PD35u2qNEvM9H8thNdj
-         nvdy5YXyReu32zkZO0Iva4/SbWvvRkk90IDd2heOd0dZkJUa4IE82BeXjwqk+PVpOwmv
-         rlrse0CHYldXXW3Vf4Lv5iGgYUQ6EWpW9lPTReAX60ErpuxwI4dgI5E17ZdpIk0+LR3C
-         f7ZvxXXbpiOdwgTJoMwDSUytFwwGNMZEctoPFq/YlXqLMyc/ObDHrCw8JQLtUKWlp5UR
-         u6mA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zOvTyVPom8sy12IqSAPoAUTKHIeIoMVlwU22bcDjqVI=;
+        b=oqT6qh0IRRfF/hnPkpSxBlCyj8JlcIeGScOsmu3MknpD1FOeumlsiueZV9yQrK6CbT
+         irSqPO/UzaDN6TU8bs6xDqkerVRlNw8OtpvQIms+HZuijJce976FRgfZHVOMOzJ+iuX4
+         KBxf6UE202KXfO2JbQ1mpcEZVV9gmuk+p/140T9mOkIVSVCp87s5NiE61LmBwFODPUiU
+         HwuzN2rXXXp45jIAlyYWd2kpJooAB9pHBRbaHLSeoDnG954hScv6X8EOLIonsgOKOnvQ
+         x+nCGPJrXDOssJfQ48uLMfwawqYhSXcU+SF7oq5ZY1VWDhKG4AUadO3Gth8hyX8CbkSG
+         AdfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Tofe5K0oXmYz1C+QMUjX7aijC98yv1W6QBb5sW/j1KE=;
-        b=NN2ABA3cL6SBwVcBoeNh/c/CkjZ8ddf2WyZg8AcjPM2FWDkPGuX9xGshc37wE+FLLA
-         OEZ8aPKODWF/FHwnhKyRqB8C9vpUEDMSs13sObw3xKiPB6SYluMdf2QANxoFqX70EZNi
-         ok/aOSGKhMLcjI2cYOY9GkEQSuTHGCoxeU10LI5pzxWVZ7vKyPlMDqML9gcm7sGkS3RO
-         Utq6kXR8xSLrJn7uyQA2OtCi137VZrG+KovMdddIj5nM681vkRHWYaCUb+StN5XdJdeb
-         dvy+QWxkP39niARl93tuOs8jira+OP6aIcTRni4T2e7Ti1/C1VXgJuh6wPaZXVkBNiF5
-         bopw==
-X-Gm-Message-State: AOAM5302LFOOfY3StHLlbEkjU7uQrmuX9qe58tKT0f+EHRKlSudKDxKC
-        Ba9q+3O4cLbyKM7QZdiRXtCAOIkjG1MGeA==
-X-Google-Smtp-Source: ABdhPJxmBmgJhpRJEGupfI4CgEleUolgb6zw7Q2qQncK/TwtxLFicyJWMAFJszLrQ6EmmeGT1+y9cQ==
-X-Received: by 2002:a62:195:: with SMTP id 143mr16252194pfb.226.1593597695503;
-        Wed, 01 Jul 2020 03:01:35 -0700 (PDT)
-Received: from nsathish-Latitude-7480.iind.intel.com ([192.55.55.43])
-        by smtp.gmail.com with ESMTPSA id d37sm5381961pgd.18.2020.07.01.03.01.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2020 03:01:35 -0700 (PDT)
-From:   Sathish Narasimman <nsathish41@gmail.com>
-X-Google-Original-From: Sathish Narasimman <sathish.narasimman@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Sathish Narasimman <sathish.narasimman@intel.com>
-Subject: [PATCH v3 8/8] Bluetooth: Add support to enable LL PRIVACY using set_privacy
-Date:   Wed,  1 Jul 2020 15:34:32 +0530
-Message-Id: <20200701100432.28038-9-sathish.narasimman@intel.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200701100432.28038-1-sathish.narasimman@intel.com>
-References: <20200701100432.28038-1-sathish.narasimman@intel.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zOvTyVPom8sy12IqSAPoAUTKHIeIoMVlwU22bcDjqVI=;
+        b=KAvdC9OU3TvjaGJgqTTsY21Ncty5GftFyMPBphNYN0phALJMSZYOEeWKq0NkLVuviA
+         0HURDVnTkhRQgP3mQJb5oPpnesqblW67OjApMYcS1SmW99EK84ClEmOHiriOKhD7L8cQ
+         uMcqIc062dkKbjvRTLHwZRPevJE0I/lboyZaGa8ylQnxAsZ3zHhv3q13gNNTT5/WJIvU
+         Vxoc9NCNEmwi+gRRKFYxZKumZ/Mfzooj0YnB6zBcAJowhYhF7ttFNqfUvhqkEuDd+WBY
+         D8f10TpD/5JcJ6uKS0sHUklIm9VmK2Ws9fi/Jy9UY5On0mNBKw8BZWHlo2TsF2ausTfR
+         U8Sg==
+X-Gm-Message-State: AOAM531ooEZvbriKkM5JqJqvOBlHu5gv272NhSGJXg+aZA5WmuUbQybF
+        0AsHJPZB3bH8Zhlew73HxHovWyyyh12lAW5CVMliUnwP6K4=
+X-Google-Smtp-Source: ABdhPJyqoZrcGcxMfGqgL0Ym5t+DxEuMVFUjY74p7t/TokcsIbFUid9tbE1q0whKvuYnl7vgX2sWaFjlwZnne9EfZcM=
+X-Received: by 2002:a2e:85d8:: with SMTP id h24mr12658637ljj.274.1593607593233;
+ Wed, 01 Jul 2020 05:46:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200630164204.1.I2cc415fa5793b3e55acfd521ba8f0a71e79aa5f1@changeid>
+ <20200701043001.73qhxyyjx6bayn2m@wunner.de> <20200701113904.7zh534vmlvjvojia@mobilestation>
+In-Reply-To: <20200701113904.7zh534vmlvjvojia@mobilestation>
+From:   Alain Michaud <alainmichaud@google.com>
+Date:   Wed, 1 Jul 2020 08:46:21 -0400
+Message-ID: <CALWDO_VbstuRPw-M13gf9JxsHb3Jhr7KEnCpFMoV6ZdDUohG1Q@mail.gmail.com>
+Subject: Re: [PATCH] Revert "serial: 8250: Fix max baud limit in generic 8250 port"
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        BlueZ <linux-bluetooth@vger.kernel.org>
+Cc:     Lukas Wunner <lukas@wunner.de>,
+        Daniel Winkler <danielwinkler@google.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        linux-serial@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        chromeos-bluetooth-upstreaming 
+        <chromeos-bluetooth-upstreaming@chromium.org>,
+        Aaron Sierra <asierra@xes-inc.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jslaby@suse.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Enable LL Privacy using mgmt set_privacy command. The privacy
-value 0x03 is used here to enable LL Privacy.
-Still to use LL Privacy controller support is must.
+Adding the bluetooth list as well per the Bluetooth impact.
 
-Signed-off-by: Sathish Narasimman <sathish.narasimman@intel.com>
----
- include/net/bluetooth/hci.h |  1 +
- net/bluetooth/hci_event.c   |  6 ++++--
- net/bluetooth/hci_request.c | 15 ++++++++++-----
- net/bluetooth/mgmt.c        |  6 +++++-
- 4 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 4ff2fc4498f3..2a42c7ceabb2 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -286,6 +286,7 @@ enum {
- 	HCI_SC_ONLY,
- 	HCI_PRIVACY,
- 	HCI_LIMITED_PRIVACY,
-+	HCI_ENABLE_LL_PRIVACY,
- 	HCI_RPA_EXPIRED,
- 	HCI_RPA_RESOLVING,
- 	HCI_HS_ENABLED,
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 47a4050462ed..589bac9859ce 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2301,7 +2301,8 @@ static void cs_le_create_conn(struct hci_dev *hdev, bdaddr_t *peer_addr,
- 	 * converted back into either public address or random address type
- 	 */
- 	if (use_ll_privacy(hdev) &&
--	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION)) {
-+	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION) &&
-+	    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY)) {
- 		switch (own_address_type) {
- 		case ADDR_LE_DEV_PUBLIC_RESOLVED:
- 			own_address_type = ADDR_LE_DEV_PUBLIC;
-@@ -5223,7 +5224,8 @@ static void hci_le_enh_conn_complete_evt(struct hci_dev *hdev,
- 			     le16_to_cpu(ev->supervision_timeout));
- 
- 	if (use_ll_privacy(hdev) &&
--	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION))
-+	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION) &&
-+	    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY))
- 		hci_req_disable_address_resolution(hdev);
- }
- 
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 0dc587026753..e1c2e2c13456 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -678,7 +678,8 @@ void hci_req_add_le_scan_disable(struct hci_request *req, bool rpa_le_conn)
- 
- 	/* Disable address resolution */
- 	if (use_ll_privacy(hdev) &&
--	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION) && !rpa_le_conn) {
-+	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION) && !rpa_le_conn &&
-+	    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY)) {
- 		__u8 enable = 0x00;
- 		hci_req_add(req, HCI_OP_LE_SET_ADDR_RESOLV_ENABLE, 1, &enable);
- 	}
-@@ -696,7 +697,8 @@ static void del_from_white_list(struct hci_request *req, bdaddr_t *bdaddr,
- 		   cp.bdaddr_type);
- 	hci_req_add(req, HCI_OP_LE_DEL_FROM_WHITE_LIST, sizeof(cp), &cp);
- 
--	if (use_ll_privacy(req->hdev)) {
-+	if (use_ll_privacy(req->hdev) &&
-+	    hci_dev_test_flag(req->hdev, HCI_ENABLE_LL_PRIVACY)) {
- 		struct smp_irk *irk;
- 
- 		irk = hci_find_irk_by_addr(req->hdev, bdaddr, bdaddr_type);
-@@ -748,7 +750,8 @@ static int add_to_white_list(struct hci_request *req,
- 		   cp.bdaddr_type);
- 	hci_req_add(req, HCI_OP_LE_ADD_TO_WHITE_LIST, sizeof(cp), &cp);
- 
--	if (use_ll_privacy(hdev)) {
-+	if (use_ll_privacy(hdev) &&
-+	    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY)) {
- 		struct smp_irk *irk;
- 
- 		irk = hci_find_irk_by_addr(hdev, &params->addr,
-@@ -869,7 +872,8 @@ static void hci_req_start_scan(struct hci_request *req, u8 type, u16 interval,
- 		return;
- 	}
- 
--	if (use_ll_privacy(hdev) && addr_resolv) {
-+	if (use_ll_privacy(hdev) && addr_resolv &&
-+	    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY)) {
- 		u8 enable = 0x01;
- 		hci_req_add(req, HCI_OP_LE_SET_ADDR_RESOLV_ENABLE, 1, &enable);
- 	}
-@@ -2226,7 +2230,8 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
- 		/* If Controller supports LL Privacy use own address type is
- 		 * 0x03
- 		 */
--		if (use_ll_privacy(hdev))
-+		if (use_ll_privacy(hdev) &&
-+		    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY))
- 			*own_addr_type = ADDR_LE_DEV_RANDOM_RESOLVED;
- 		else
- 			*own_addr_type = ADDR_LE_DEV_RANDOM;
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 65d93a38e5b3..c1106d97e3a9 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -5652,7 +5652,8 @@ static int set_privacy(struct sock *sk, struct hci_dev *hdev, void *cp_data,
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_PRIVACY,
- 				       MGMT_STATUS_NOT_SUPPORTED);
- 
--	if (cp->privacy != 0x00 && cp->privacy != 0x01 && cp->privacy != 0x02)
-+	if (cp->privacy != 0x00 && cp->privacy != 0x01 && cp->privacy != 0x02
-+	    && cp->privacy != 0x03)
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_PRIVACY,
- 				       MGMT_STATUS_INVALID_PARAMS);
- 
-@@ -5674,6 +5675,8 @@ static int set_privacy(struct sock *sk, struct hci_dev *hdev, void *cp_data,
- 		hci_adv_instances_set_rpa_expired(hdev, true);
- 		if (cp->privacy == 0x02)
- 			hci_dev_set_flag(hdev, HCI_LIMITED_PRIVACY);
-+		else if (cp->privacy == 0x03)
-+			hci_dev_set_flag(hdev, HCI_ENABLE_LL_PRIVACY);
- 		else
- 			hci_dev_clear_flag(hdev, HCI_LIMITED_PRIVACY);
- 	} else {
-@@ -5682,6 +5685,7 @@ static int set_privacy(struct sock *sk, struct hci_dev *hdev, void *cp_data,
- 		hci_dev_clear_flag(hdev, HCI_RPA_EXPIRED);
- 		hci_adv_instances_set_rpa_expired(hdev, false);
- 		hci_dev_clear_flag(hdev, HCI_LIMITED_PRIVACY);
-+		hci_dev_clear_flag(hdev, HCI_ENABLE_LL_PRIVACY);
- 	}
- 
- 	err = send_settings_rsp(sk, MGMT_OP_SET_PRIVACY, hdev);
--- 
-2.17.1
-
+On Wed, Jul 1, 2020 at 7:39 AM Serge Semin
+<Sergey.Semin@baikalelectronics.ru> wrote:
+>
+> Hello Lukas,
+>
+> On Wed, Jul 01, 2020 at 06:30:01AM +0200, Lukas Wunner wrote:
+> > On Tue, Jun 30, 2020 at 04:42:11PM -0700, Daniel Winkler wrote:
+> > > This reverts commit 0eeaf62981ecc79e8395ca8caa1570eaf3a12257.
+> >
+> > That is not an upstream commit.  You probably mean:
+> >
+> >     commit 7b668c064ec33f3d687c3a413d05e355172e6c92
+> >     Author: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> >     Date:   Thu May 7 02:31:32 2020 +0300
+> >
+> >     serial: 8250: Fix max baud limit in generic 8250 port
+> >
+> > And you didn't cc the commit author (hereby fixed).
+> >
+> > Thanks,
+> >
+> > Lukas
+>
+> Thanks for Cc'ing me.
+>
+> >
+> > >
+> > > The change regresses the QCA6174A-3 bluetooth chip, preventing
+> > > firmware from being properly loaded. We have verified that without
+> > > this patch, the chip works as intended.
+>
+> That text doesn't say what is really wrong and why the firmware couldn't be loaded.
+> The original commit gets back the 8250 port baud rate limitation so if the baud
+> gets out of the range [uartclk / 16 / UART_DIV_MAX; (port->uartclk + tolerance) /
+> 16], then it will be clamped to be within it. That range is what the standard
+> 8250 port supports. Acceptance of out of that range values will cause a
+> problem further in calling serial8250_get_divisor() and uart_get_divisor()
+> methods (see the original patch log message) for standard 8250 ports. Any different
+> behavior must be taken into account by a custom set_termios() callbacks or at
+> least must be workarounded so the standard 8250 ports wouldn't be affected. So in
+> order to investigate the root cause of the problem it would be good to at least
+> know what your platform was and what UART port has been used in the attempt to
+> load the QCA6174A-3 chip firmware.
+>
+> -Sergey
+>
+> > >
+> > > Signed-off-by: Daniel Winkler <danielwinkler@google.com>
+> > > ---
+> > >
+> > >  drivers/tty/serial/8250/8250_port.c | 4 +---
+> > >  1 file changed, 1 insertion(+), 3 deletions(-)
+> > >
+> > > diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+> > > index 1632f7d25acca..e057c65ac1580 100644
+> > > --- a/drivers/tty/serial/8250/8250_port.c
+> > > +++ b/drivers/tty/serial/8250/8250_port.c
+> > > @@ -2618,8 +2618,6 @@ static unsigned int serial8250_get_baud_rate(struct uart_port *port,
+> > >                                          struct ktermios *termios,
+> > >                                          struct ktermios *old)
+> > >  {
+> > > -   unsigned int tolerance = port->uartclk / 100;
+> > > -
+> > >     /*
+> > >      * Ask the core to calculate the divisor for us.
+> > >      * Allow 1% tolerance at the upper limit so uart clks marginally
+> > > @@ -2628,7 +2626,7 @@ static unsigned int serial8250_get_baud_rate(struct uart_port *port,
+> > >      */
+> > >     return uart_get_baud_rate(port, termios, old,
+> > >                               port->uartclk / 16 / UART_DIV_MAX,
+> > > -                             (port->uartclk + tolerance) / 16);
+> > > +                             port->uartclk);
+> > >  }
+> > >
+> > >  void
+> > > --
+> > > 2.27.0.212.ge8ba1cc988-goog
+>
+> --
+> You received this message because you are subscribed to the Google Groups "ChromeOS Bluetooth Upstreaming" group.
+> To unsubscribe from this group and stop receiving emails from it, send an email to chromeos-bluetooth-upstreaming+unsubscribe@chromium.org.
+> To post to this group, send email to chromeos-bluetooth-upstreaming@chromium.org.
+> To view this discussion on the web visit https://groups.google.com/a/chromium.org/d/msgid/chromeos-bluetooth-upstreaming/20200701113904.7zh534vmlvjvojia%40mobilestation.
