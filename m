@@ -2,123 +2,157 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F32502173EE
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Jul 2020 18:28:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57E13217457
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Jul 2020 18:44:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728172AbgGGQ2S (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Jul 2020 12:28:18 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:46180 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726911AbgGGQ2S (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Jul 2020 12:28:18 -0400
-Received: by mail-oi1-f193.google.com with SMTP id l63so33924109oih.13;
-        Tue, 07 Jul 2020 09:28:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qqA8J6CgHJ1oaRzYuw9U/pBjnnBjCWF7/6JXnD6SNeI=;
-        b=fAiVt3yqIgVL/Vd9TRAgthE4dRaHiCqRkxSnfarLUPMS4LYutAu8xdEPhJoA4bi1pw
-         ne+rdWwu/aQAaFAuqIVf6IhdMBWAy8XRlMOowocJ1sYWMhD0srRbqDv89rlbaN1lLCoD
-         XbGJ892l6I7pVFjPd1ngGQgTn/dGqaWpqXVZl4vhf8M47bXZdysOt/0C1mTkYbGxT7B8
-         xvqn1X1xssyxWuJTpJQZS5pwKr2e84+Cn2qinjANbazLFS6iUiph9U9GwLYdaVN2yn2N
-         7Wped44lTUlbjZ2Xt3V9lkaaWTm1VM0uLXkOpIazHk53EK/Hl3oD+xBUAgLekBUK3cER
-         X/wQ==
-X-Gm-Message-State: AOAM530Y4wubsuDnbmiZXxo9vUubteHb0wgrD+VSwvzdp37gXBro5BHr
-        GTZpZ4wFHZJn053oxSPBGllrVQJ75OdKc2vfBoo=
-X-Google-Smtp-Source: ABdhPJwWEu1nW2hVdT2oditOw+IT/F4slchce0IYqSxCLUtcrqN8q00tngKV7H/5HMxNHixTJq1zO157Gf900Ep315g=
-X-Received: by 2002:aca:f58a:: with SMTP id t132mr3798335oih.68.1594139296771;
- Tue, 07 Jul 2020 09:28:16 -0700 (PDT)
+        id S1728155AbgGGQot (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Jul 2020 12:44:49 -0400
+Received: from mga03.intel.com ([134.134.136.65]:62900 "EHLO mga03.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728073AbgGGQot (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 7 Jul 2020 12:44:49 -0400
+IronPort-SDR: 4MMHdr2gbIQbT9W2XLLV/MwOsyUhWBDfncWD7lA76htGQRnumqNBb2PQZ5TcQZAmTfVd+XfqsU
+ eakmiqgQslwQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9675"; a="147657525"
+X-IronPort-AV: E=Sophos;i="5.75,324,1589266800"; 
+   d="scan'208";a="147657525"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2020 09:44:40 -0700
+IronPort-SDR: JLP6Xz/YBRmEUso3fbskmMKTEYHUoAE+f0LEAY67oo4ZRwa8GmEF64m2AzHmQrkO2paptUhRI8
+ cXIwwojdTClw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,324,1589266800"; 
+   d="scan'208";a="323592430"
+Received: from jdlachim-mobl.amr.corp.intel.com (HELO ingas-nuc1.intel.com) ([10.255.230.123])
+  by orsmga007.jf.intel.com with ESMTP; 07 Jul 2020 09:44:40 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ 1/2] mesh: Get rid of "unreliable opcodes" in config server
+Date:   Tue,  7 Jul 2020 09:44:38 -0700
+Message-Id: <20200707164439.24146-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-References: <20200707162417.3514284-1-abhishekpandit@chromium.org> <20200707092406.v4.1.I51f5a0be89595b73c4dc17e6cf4cc6f26dc7f2fc@changeid>
-In-Reply-To: <20200707092406.v4.1.I51f5a0be89595b73c4dc17e6cf4cc6f26dc7f2fc@changeid>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Tue, 7 Jul 2020 18:28:05 +0200
-Message-ID: <CAJZ5v0iyvge_Hqgm46_vfjh45YFdnsJ7ksvY7DqD6gx+f+1dvg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/1] power: Emit changed uevent on wakeup_sysfs_add/remove
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>,
-        chromeos-bluetooth-upstreaming@chromium.org,
-        Rafael Wysocki <rafael.j.wysocki@intel.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Tue, Jul 7, 2020 at 6:24 PM Abhishek Pandit-Subedi
-<abhishekpandit@chromium.org> wrote:
->
-> Udev rules that depend on the power/wakeup attribute don't get triggered
-> correctly if device_set_wakeup_capable is called after the device is
-> created. This can happen for several reasons (driver sets wakeup after
-> device is created, wakeup is changed on parent device, etc) and it seems
-> reasonable to emit a changed event when adding or removing attributes on
-> the device.
->
-> Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> ---
->
-> Changes in v4:
-> - Fix warning where returning from void and tested on device
->
-> Changes in v3:
-> - Simplified error handling
->
-> Changes in v2:
-> - Add newline at end of bt_dev_err
->
->  drivers/base/power/sysfs.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/base/power/sysfs.c b/drivers/base/power/sysfs.c
-> index 24d25cf8ab1487..aeb58d40aac8de 100644
-> --- a/drivers/base/power/sysfs.c
-> +++ b/drivers/base/power/sysfs.c
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0
->  /* sysfs entries for device PM */
->  #include <linux/device.h>
-> +#include <linux/kobject.h>
->  #include <linux/string.h>
->  #include <linux/export.h>
->  #include <linux/pm_qos.h>
-> @@ -739,12 +740,18 @@ int dpm_sysfs_change_owner(struct device *dev, kuid_t kuid, kgid_t kgid)
->
->  int wakeup_sysfs_add(struct device *dev)
->  {
-> -       return sysfs_merge_group(&dev->kobj, &pm_wakeup_attr_group);
-> +       int ret = sysfs_merge_group(&dev->kobj, &pm_wakeup_attr_group);
-> +
-> +       if (ret)
-> +               return ret;
-> +
-> +       return kobject_uevent(&dev->kobj, KOBJ_CHANGE);
+This removes an old notion of unreliable opcodes in config server
+model , i.e., a correctly formatted acknowledged message always
+gets a response.
+---
+ mesh/cfgmod-server.c | 31 +++++++++++--------------------
+ mesh/model.h         |  2 --
+ 2 files changed, 11 insertions(+), 22 deletions(-)
 
-So let me repeat the previous comment:
+diff --git a/mesh/cfgmod-server.c b/mesh/cfgmod-server.c
+index c525d9d24..8ba9bc6ec 100644
+--- a/mesh/cfgmod-server.c
++++ b/mesh/cfgmod-server.c
+@@ -98,9 +98,8 @@ static void config_pub_get(struct mesh_node *node, uint16_t net_idx,
+ }
+ 
+ static void config_pub_set(struct mesh_node *node, uint16_t net_idx,
+-					uint16_t src, uint16_t dst,
+-					const uint8_t *pkt, bool virt,
+-					bool vendor, bool unreliable)
++				uint16_t src, uint16_t dst,
++				const uint8_t *pkt, bool virt, bool vendor)
+ {
+ 	uint32_t mod_id;
+ 	uint16_t ele_addr, idx, ota = UNASSIGNED_ADDRESS;
+@@ -143,9 +142,8 @@ static void config_pub_set(struct mesh_node *node, uint16_t net_idx,
+ 					status, ele_addr, ota, mod_id, idx);
+ 
+ 	if (status != MESH_STATUS_SUCCESS) {
+-		if (!unreliable)
+-			send_pub_status(node, net_idx, src, dst, status,
+-					ele_addr, mod_id, 0, 0, 0, 0, 0, 0);
++		send_pub_status(node, net_idx, src, dst, status, ele_addr,
++						mod_id, 0, 0, 0, 0, 0, 0);
+ 
+ 		return;
+ 	}
+@@ -180,10 +178,8 @@ static void config_pub_set(struct mesh_node *node, uint16_t net_idx,
+ 			status = MESH_STATUS_STORAGE_FAIL;
+ 	}
+ 
+-	if (!unreliable)
+-		send_pub_status(node, net_idx, src, dst, status, ele_addr,
+-					mod_id, ota, idx, cred_flag, ttl,
+-					period, retransmit);
++	send_pub_status(node, net_idx, src, dst, status, ele_addr, mod_id, ota,
++				idx, cred_flag, ttl, period, retransmit);
+ }
+ 
+ static void send_sub_status(struct mesh_node *node, uint16_t net_idx,
+@@ -311,7 +307,6 @@ static void config_sub_set(struct mesh_node *node, uint16_t net_idx,
+ 					bool virt, uint32_t opcode)
+ {
+ 	uint16_t grp, ele_addr;
+-	bool unreliable = !!(opcode & OP_UNRELIABLE);
+ 	uint32_t mod_id;
+ 	const uint8_t *addr = NULL;
+ 	int status = MESH_STATUS_SUCCESS;
+@@ -369,7 +364,7 @@ static void config_sub_set(struct mesh_node *node, uint16_t net_idx,
+ 	} else
+ 		grp = UNASSIGNED_ADDRESS;
+ 
+-	switch (opcode & ~OP_UNRELIABLE) {
++	switch (opcode) {
+ 	default:
+ 		l_debug("Bad opcode: %x", opcode);
+ 		return;
+@@ -411,8 +406,8 @@ static void config_sub_set(struct mesh_node *node, uint16_t net_idx,
+ 		grp = UNASSIGNED_ADDRESS;
+ 		/* Fall Through */
+ 	case OP_CONFIG_MODEL_SUB_DELETE:
+-		status = mesh_model_sub_del(node, ele_addr, mod_id,
+-							addr, virt, &grp);
++		status = mesh_model_sub_del(node, ele_addr, mod_id, addr, virt,
++									&grp);
+ 
+ 		if (status == MESH_STATUS_SUCCESS)
+ 			save_config_sub(node, ele_addr, mod_id, vendor, addr,
+@@ -421,10 +416,7 @@ static void config_sub_set(struct mesh_node *node, uint16_t net_idx,
+ 		break;
+ 	}
+ 
+-	if (!unreliable)
+-		send_sub_status(node, net_idx, src, dst, status, ele_addr,
+-								grp, mod_id);
+-
++	send_sub_status(node, net_idx, src, dst, status, ele_addr, grp, mod_id);
+ }
+ 
+ static void send_model_app_status(struct mesh_node *node, uint16_t net_idx,
+@@ -786,8 +778,7 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
+ 			return true;
+ 
+ 		config_pub_set(node, net_idx, src, dst, pkt, virt,
+-						size == 13 || size == 27,
+-						!!(opcode & OP_UNRELIABLE));
++						size == 13 || size == 27);
+ 		break;
+ 
+ 	case OP_CONFIG_MODEL_PUB_GET:
+diff --git a/mesh/model.h b/mesh/model.h
+index f717fb00c..0377d3fdd 100644
+--- a/mesh/model.h
++++ b/mesh/model.h
+@@ -19,8 +19,6 @@
+ 
+ struct mesh_model;
+ 
+-#define OP_UNRELIABLE			0x0100
+-
+ #define MAX_BINDINGS	10
+ #define MAX_GRP_PER_MOD	10
+ 
+-- 
+2.26.2
 
-If you return an error here, it may confuse the caller to think that
-the operation has failed completely, whereas the merging of the
-attribute group has been successful already.
-
-I don't think that an error can be returned at this point.
-
->  }
->
->  void wakeup_sysfs_remove(struct device *dev)
->  {
->         sysfs_unmerge_group(&dev->kobj, &pm_wakeup_attr_group);
-> +       kobject_uevent(&dev->kobj, KOBJ_CHANGE);
->  }
->
->  int pm_qos_sysfs_add_resume_latency(struct device *dev)
-> --
-> 2.27.0.212.ge8ba1cc988-goog
->
