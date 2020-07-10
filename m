@@ -2,137 +2,111 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E6F121BE69
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Jul 2020 22:27:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01AE521BE8C
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Jul 2020 22:35:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727038AbgGJU1S (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Jul 2020 16:27:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42738 "EHLO
+        id S1727101AbgGJUfY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Jul 2020 16:35:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726828AbgGJU1S (ORCPT
+        with ESMTP id S1726725AbgGJUfY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Jul 2020 16:27:18 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BD16C08C5DC
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jul 2020 13:27:18 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id p26so1236408oos.7
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jul 2020 13:27:18 -0700 (PDT)
+        Fri, 10 Jul 2020 16:35:24 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CB37C08C5DC
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jul 2020 13:35:24 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id 12so5852580oir.4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jul 2020 13:35:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=GlueREa58b7R7VgL4TssSAMNWNyU4cNA/gxFnLfVl+c=;
-        b=HVBBdLnXBVyVmBkn+U8swcNvwrekcAUYiq9XAL/9Jx17Y/CEgfq1lwNp4dB/qhNYmR
-         Nxk08EfnmjL8vG0XO8JL3nCTjjzhpdysRO0bPoCo4pBhMkZXJHHKU9BMfN0IUwcYa7ac
-         Js2kOpqY4vDJSB1sso6tQ/Skl3LGJDnETckjEuuleTUgIpfhIF6ytiCEi/DiaYyivSZx
-         55bxfLddOXGmC/76sAQT6ONhcqtZY/Nr+ZuYx76BsvG6p9f9O5U1ZHuy/iOnqjH74btI
-         fRFu4ZxGm/nvUutVVSK8CgOjJnD+lRCzNhVYCltHpAAWT6cPpMeOlGuQiGWZVyHNwigg
-         MwSg==
+        bh=4rTNzcMkZJncAMvaHB7Lfn854pyoDmxRixBWBSIhfgI=;
+        b=nH3uQQIgRl8BJOB1JmvfzBYe2itQSvKYw9MxwKIkyLHMU6htIhdTLAp0Tc1Vtv8swB
+         QL20Od7WB1ceqIA3K2LXOCtCe6xA7CA99IjJ11+sGKTJ1Ycix1KadoI6/ZWhR1Rm4giJ
+         ovn9KitsVJ/vRpI/iwtw8qXbsmiMKkhl+zBsBgnicARuv//mpeND5q6xSqdNEU4paQDC
+         5lfjP7NY1a7TX43r8sfgvmnd9VuBDsvDfWU7R3hVHmZhPTSGvd96jXJoOGzuu4lGeXG/
+         1bz3OkqeZjMmhq9dbwFLDXbabQx5WiVd5alQdmXGt1X/IaWg5e5wq2Vo4ugONaMGCLyl
+         1zdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=GlueREa58b7R7VgL4TssSAMNWNyU4cNA/gxFnLfVl+c=;
-        b=nRXiOzkt9PwQIEd/pOqKOPoW4vDacg2wPJD8rw9Ob4onyFMpKI3YkEJCuADJr+YohN
-         1o9asr53WICAjAmfqawIKVXOcxLC8H2jRQ69N6yN/VRGO3ZyEfszf7rHEnNCAYE/laPK
-         H9wm1ZPFYs4u6fpYz+Ap3jGFbed++2fGoE4iYhEGHwHSrzTR2tTD+1ab4JdzfZ+HmXKn
-         WDEJRx7YMeP/h3DEkwy55na6cxxC7oMWEG7gF6azV5d3Nr2qzditW0EhLALHpIiFJJmT
-         L/x7XRmBeSmqqbCgH0/xIv7cJ854LgzZyUXi7+5ZCuVIFWeCqB/W0VLAkLttwUU5nu7g
-         U/iw==
-X-Gm-Message-State: AOAM532XXNcKPpQzOI5CwbHeCp7uU6uIo38uEL8LwBwp3TV1K8fNhDck
-        HU6jRjTr4bEElTNz/+ndrTY1UqyIIFLE2GaqhES37JDD
-X-Google-Smtp-Source: ABdhPJyzxmQbbgtFuQaFSVkySsG4ZUkgrRodCAHhtsAFP0B5YZr3/TaXUnPjZL0SR2iNG/Se/hJ5rLJQVSNL6X9vCA8=
-X-Received: by 2002:a4a:b284:: with SMTP id k4mr22935561ooo.49.1594412836576;
- Fri, 10 Jul 2020 13:27:16 -0700 (PDT)
+        bh=4rTNzcMkZJncAMvaHB7Lfn854pyoDmxRixBWBSIhfgI=;
+        b=czL+cKNX+Vyfkbkg2kyog60lcOCBYaThwVsf0EmfhKlR3VtaNvm3i+lvRTBFeRgCUR
+         rE05apc1/Nxdot3kzRl0KBk8b0E5TAm9xcBPGI168Ri3YkdJT8AZK5+icIYVh8kjdG00
+         jIjM6KZRyrbf3N+VUVvrDEti99gZ2kLNmw9W1Cf1I38U+lCWUhG2ZCgLV+3N8hqiZM2W
+         1oOEu8I05G774fFQ/VU0zSZLwwEpo7RCprqKkpv19qncaRgeh9gIySGl4URfm0FLJAnz
+         SwF/jgxK0qafZu35590OUoM+p3ZPDPwixNrxppKgfGpYU48SEgh/e9uXaI/mz2DafXUM
+         4mWg==
+X-Gm-Message-State: AOAM531ET6yevy/mO4JeZZ7eEmT6s2ZHDMoe6gNnD1ezF7c7ynmA+wMh
+        HcMYT6xgRPYpDxiwAeOmlE8Q353rTSVnCfxKZnDHTqDX
+X-Google-Smtp-Source: ABdhPJzChgFtQ49ZrVHUfbZvfrxnk3Mp40ik/ET2zyu7S37Fj1eB8URv06dQvcC2jhzJTr3JDv/gCICSlWJFIt1OOVU=
+X-Received: by 2002:aca:4a04:: with SMTP id x4mr5294868oia.152.1594413323851;
+ Fri, 10 Jul 2020 13:35:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAEQQxWxKs7ewwVyq4mnsyLbRhErQe9vZc5joNK6zfGSO3wN5bg@mail.gmail.com>
- <d9eca20059088ad8bdaac70d7d98811166839b27.camel@hadess.net>
- <CAEQQxWyz-9iDU5Cs_NjHm81A6kdr0WUXPggp_2DTHeVVAQXUZQ@mail.gmail.com>
- <CABBYNZLzQH5ow02xB61d8pF7pcxXoP7Boa06G-HNxJ0Q66FGRg@mail.gmail.com>
- <CAEQQxWwzzZoFiGQg7minJU6pLRY=B5-yLSOun+xksZHUAEWgRA@mail.gmail.com>
- <ddb9a0761e52a2e70e1c0dcc6fcefca02937dda6.camel@hadess.net>
- <CABBYNZ+y9UTv1yakyB3Z+1oa+B4dw5TmSiuhCmWQCq88sXpXgw@mail.gmail.com> <3f9aeb5d7aa896770946a8c04bd8483e9d7ba4f3.camel@hadess.net>
-In-Reply-To: <3f9aeb5d7aa896770946a8c04bd8483e9d7ba4f3.camel@hadess.net>
+References: <20200709090631.Bluez.v1.1.I6aa22c6e425e5b19c321c0768f50ca3fc2c090da@changeid>
+In-Reply-To: <20200709090631.Bluez.v1.1.I6aa22c6e425e5b19c321c0768f50ca3fc2c090da@changeid>
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Fri, 10 Jul 2020 13:27:05 -0700
-Message-ID: <CABBYNZJ2ak66EK42owiLtk1Gqu-RMoXUHu8a1eQVVNQ+syh5cw@mail.gmail.com>
-Subject: Re: Temporary device removal during discovery
-To:     Bastien Nocera <hadess@hadess.net>
-Cc:     Andrey Batyiev <batyiev@gmail.com>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>
+Date:   Fri, 10 Jul 2020 13:35:12 -0700
+Message-ID: <CABBYNZ+43QgENg6ZrF9ZVxnPSkJaE3OUeZH5aeN_zrP9N5OwNQ@mail.gmail.com>
+Subject: Re: [Bluez PATCH v1] audio/media - Fix volume sync between media and transport
+To:     Yu Liu <yudiliu@google.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        Hsin-Yu Chao <hychao@chromium.org>,
+        Sonny Sasaka <sonnysasaka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Bastien,
+Hi,
 
-On Fri, Jul 10, 2020 at 12:00 PM Bastien Nocera <hadess@hadess.net> wrote:
+On Thu, Jul 9, 2020 at 9:10 AM Yu Liu <yudiliu@google.com> wrote:
 >
-> On Fri, 2020-07-10 at 11:06 -0700, Luiz Augusto von Dentz wrote:
-> > Hi Bastien,
-> >
-> > On Thu, Jul 9, 2020 at 1:26 AM Bastien Nocera <hadess@hadess.net>
-> > wrote:
-> > > On Thu, 2020-07-09 at 01:57 +0300, Andrey Batyiev wrote:
-> > > > Hi Luiz,
-> > > >
-> > > > On Thu, Jul 9, 2020 at 12:14 AM Luiz Augusto von Dentz
-> > > > <luiz.dentz@gmail.com> wrote:
-> > > > > The delta logic might be a nice addition as a separate patch,
-> > > > > it is
-> > > > > more for detecting devices disappearing then actually cleanup
-> > > > > during
-> > > > > power off.
-> > > > No-no, it's not about adapter powering off.
-> > > >
-> > > > I meant that (external) devices never disappear from the bluez
-> > > > device
-> > > > list during the discovery,
-> > > > even if the (external) devices are turned off (i.e. they should
-> > > > be
-> > > > purged by bluez).
-> > > >
-> > > > So:
-> > > > - bluez is central
-> > > > - bluez is discovering
-> > > > - peripheral appear for a moment, than disappear (i.e. peripheral
-> > > > would be turned off)
-> > > > - bluez would not remove device from the list (at least until
-> > > > discovery is stopped)
-> > > >
-> > > > Use case:
-> > > > - bluez is monitoring environment (discovering literally forever)
-> > > > - peripherals are brought in and out of bluez visibility range
-> > > > - bluez list of visible devices grows infinitely and causes
-> > > > problems
-> > > > (hundreds of devices)
-> > >
-> > > I'd also expect devices that are recently discovered to disappear
-> > > if
-> > > they haven't replied to a discovery in 30 seconds. It would stop
-> > > GNOME's Bluetooth Settings's Bluetooth list forever expanding.
-> > >
-> > > Or we need to give the ability for front-ends to do that by
-> > > exporting
-> > > the "last seen" dates.
-> >
-> > I am fine with that as well, 30 seconds doesn't sound too bad even
-> > for
-> > cleanup temporary devices as the current 3 minutes seems awful long
-> > sometimes, we could perhaps have a filter for configuring that though
-> > so if the application wants to have its own timeout, the only problem
-> > is if there are multiple application doing that on parallel we would
-> > need a strategy on how to handle that.
+> From: Hsin-Yu Chao <hychao@chromium.org>
 >
-> In which case it might be easier to export that last seen date,
-> otherwise that's just a lot of moving parts inside bluetoothd when we
-> could filter it trivially in the front-ends.
+> A volume value is cached on the global media player object. And a
+> check was used to NOT update volume to each transport if this
+> value doesn't change. That is causing problem at disconnect then
+> reconnect when the new constructed transport never receive update
+> about the last used volume value.
+
+I think this might be related to the other bug we have where the
+transport is created after the fetch of the volume so the volume we
+have stored in mp->volume is never updated in the transport, see my
+comments on the other patch.
+
+> Reviewed-by: sonnysasaka@chromium.org
+> Reviewed-by: hychao@chromium.org
 >
-Right, we still need to clean up the temporary devices though, but
-perhaps adding a LastSeen property is not a bad idea after all so
-applications can do this sort of filtering themselves.
+> ---
+>
+> Changes in v1:
+> - Initial change
+>
+>  profiles/audio/media.c | 3 ---
+>  1 file changed, 3 deletions(-)
+>
+> diff --git a/profiles/audio/media.c b/profiles/audio/media.c
+> index 993ecb3b3..92e363de9 100644
+> --- a/profiles/audio/media.c
+> +++ b/profiles/audio/media.c
+> @@ -1204,9 +1204,6 @@ static void set_volume(uint8_t volume, struct btd_device *dev, void *user_data)
+>         struct media_player *mp = user_data;
+>         GSList *l;
+>
+> -       if (mp->volume == volume)
+> -               return;
+> -
+>         mp->volume = volume;
+>
+>         for (l = mp->adapter->endpoints; l; l = l->next) {
+> --
+> 2.27.0.383.g050319c2ae-goog
+>
+
 
 -- 
 Luiz Augusto von Dentz
