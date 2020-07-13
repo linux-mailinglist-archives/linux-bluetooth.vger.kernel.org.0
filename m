@@ -2,94 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 37E5E21CF75
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jul 2020 08:17:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7DAA21CF92
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jul 2020 08:21:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727890AbgGMGRe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Jul 2020 02:17:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36586 "EHLO
+        id S1728541AbgGMGVK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Jul 2020 02:21:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726571AbgGMGRe (ORCPT
+        with ESMTP id S1728463AbgGMGVK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Jul 2020 02:17:34 -0400
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E892DC061794
-        for <linux-bluetooth@vger.kernel.org>; Sun, 12 Jul 2020 23:17:33 -0700 (PDT)
-Received: by mail-io1-xd42.google.com with SMTP id k23so12203294iom.10
-        for <linux-bluetooth@vger.kernel.org>; Sun, 12 Jul 2020 23:17:33 -0700 (PDT)
+        Mon, 13 Jul 2020 02:21:10 -0400
+Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53C11C061794
+        for <linux-bluetooth@vger.kernel.org>; Sun, 12 Jul 2020 23:21:10 -0700 (PDT)
+Received: by mail-il1-x143.google.com with SMTP id i18so10199584ilk.10
+        for <linux-bluetooth@vger.kernel.org>; Sun, 12 Jul 2020 23:21:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Gj7c2u/6Xj4mWnH3j6aEe5TRH2mmbMZCrZufKif45fA=;
-        b=eocS2KjVFzniq451GRWftEmQK0Rziw1optkroY/jV85O4iAYswEGWXkdg5Ac6xOhi7
-         zWeGq5u5BxHcuOdZNMjKPJjhQxS91XkaHO1ZJXgMQlZgw7cTsixvT7BnlX83PmIVFCCx
-         e2alrWDAafkQb9FuE86qNRrrxPbWZ7UlSdId6fwnZIsING613+jCUQSeIJOvfUAyR1wo
-         BTp+FfUzPQHuZKWbgxt1IMFJY1AE9CYNnKDpCe8UfSppwk8N2/hlBjbHzlto9D0A8+E9
-         notOoZLe8/T1ANJg09o/WurYi7PCy8MciE0OvM0nbxYjNZZE+wm6t6IxLk2RTL7rCmgh
-         grOQ==
+        bh=h4CintOxCJTb1rZhZ+UdVT8MIuTrjLv1VUQEptjjqko=;
+        b=K3F9LSHwPzlZ9x9z0kFRnWC0uAp006SVtLvwdNYlndkuhxrL9+S7E7K1UxuMpxIHaQ
+         X8ez5yqWm2swVms3Ouf2X6HffxNS3LE+q1Il3rGd4qltLZbLmHUj5wOkJD88RVvU4V3D
+         HH5osWpCOiEfE1WToL7ezBubrdQCkTZPnK/QnGPP1DcuCFi1TlWrTQ/f0NswEvWAcF2W
+         /QvnbHRwCRz4FatGSJk6nB0f3sJl7wyrf+pW4/j0V1/qz/t8+XY+VNf0Fp13F3k/C9eR
+         PlbIseQekz48JOLLLcHYR/mtowmBpIxuRzgtmCVWSfpXF311hURcMU8J7rYYVMum/bm/
+         IoUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Gj7c2u/6Xj4mWnH3j6aEe5TRH2mmbMZCrZufKif45fA=;
-        b=rTA8jByAsWMRzAO22GaXf2EI0J2TkLLN4InkjcZrcNG5GU2ZUewtCC+WY1P2Cx+Hu8
-         AgeSVfFFY6aYkRHJ1SgAdpIF8AvCYgeesVN0hCEhfN7kzj6KXTO/F99NUpp47TZU8cFH
-         RLtEyKD82i0zA2JloS3Gt1DF6qNa6m6KyHLXEuyDJcNSY9APQbSiZHkwRkxUELqg9hAJ
-         1WKlh1vley1fdoHmgj0psE69bq5TuSYrZhKrsrFcwGcXM1zd73beXBnI5wXGUUjCUuR0
-         x8/ssR5UFaBTP5JVsTfMIxIuVWupCzpwRU8/ekoYJW88QsypUS0gHkuQCoNRA1DualYE
-         y3WA==
-X-Gm-Message-State: AOAM533BqM+2Dv9NnNPPFzFWkbAnfm5Xjt7m3yEETFwfVSa+eI9Awqtx
-        EsH4+UqfE9dwcCGCUMYpaTXaQxdpjejmfEWOkAk4705O
-X-Google-Smtp-Source: ABdhPJzS5UktmnrkldUOpvqq5Zlx+xxS6td3Bvics4XsH2o9MOoVWGC91pR5BUDKb4VQZYhvfyw+kAqbT3E/gt7VqDg=
-X-Received: by 2002:a05:6602:21c7:: with SMTP id c7mr59628814ioc.1.1594621053137;
- Sun, 12 Jul 2020 23:17:33 -0700 (PDT)
+        bh=h4CintOxCJTb1rZhZ+UdVT8MIuTrjLv1VUQEptjjqko=;
+        b=hpQWt4dvbRC2WrYgNJxWpicI+tXbxqoGsjrnYSUsM7xKMdcGSVhQJB9eY62NfcLNEf
+         TWSMm6YtURD/kpwXUhDlwVsldb1oAcr/jld1PmNmAWz4l02PRcBDBpzFUViF2BgKMUzd
+         qUmxXvFSZPilwyGPTsk4qa/s6t6MKJ+k+5EwXTnykGsflaFOU7TmXK5DPIcd98LOhCwL
+         Kzui/rlB5Axt67yqirIxR2D0OzxDyoc17vQsIV/cesavNBI5cDaZGn3DWFv/DeXX3Xvv
+         IUeuQMXdVy7MzVHQTHKf9iULgAKAgQQ3MXgkAEUeDKKZfGhFFnrVUd8nJsB5CsG5jfLv
+         U7HA==
+X-Gm-Message-State: AOAM530+nWxelqD3+H7sW7EH1ajPyadZH1/3pqmQL9JDr1ReYfEKmE+S
+        lV1k3uqLvw43vAnNC3x2TCuunEKvev8NE4sXL9Q=
+X-Google-Smtp-Source: ABdhPJxvfKx+pQ0cdNgeKbHvP48JPiumYI+f0z5MDjSmNqS9Pb2Tqx0idn1T6BFRfgbVZuiDTe+GK0yKJa4SMqygPoo=
+X-Received: by 2002:a92:aa92:: with SMTP id p18mr63077577ill.199.1594621269557;
+ Sun, 12 Jul 2020 23:21:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200713061220.3252-1-sathish.narasimman@intel.com>
-In-Reply-To: <20200713061220.3252-1-sathish.narasimman@intel.com>
+References: <20200701100432.28038-1-sathish.narasimman@intel.com>
+ <20200701100432.28038-9-sathish.narasimman@intel.com> <10FB84C9-79E7-48F9-88A5-B10FB67CB585@holtmann.org>
+In-Reply-To: <10FB84C9-79E7-48F9-88A5-B10FB67CB585@holtmann.org>
 From:   Sathish Narasimman <nsathish41@gmail.com>
-Date:   Mon, 13 Jul 2020 11:47:22 +0530
-Message-ID: <CAOVXEJJfx367B3M=+nBYztJ1-OMX-Xkj8BknmZ2tQZurJuTyZA@mail.gmail.com>
-Subject: Re: [PATCH 0/8] LL Privacy Support
-To:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
-Cc:     Sathish Narasimman <sathish.narasimman@intel.com>
+Date:   Mon, 13 Jul 2020 11:50:58 +0530
+Message-ID: <CAOVXEJ++6NLoZ+T3mpcR4JnHdm7t-O5CciNZpOFu9QOp12-0cw@mail.gmail.com>
+Subject: Re: [PATCH v3 8/8] Bluetooth: Add support to enable LL PRIVACY using set_privacy
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Sathish Narasimman <sathish.narasimman@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Please Ignore this version as failed to mention the Version in the Subject
+Hi Marcel
 
-On Mon, Jul 13, 2020 at 11:38 AM Sathish Narasimman
-<nsathish41@gmail.com> wrote:
+On Thu, Jul 2, 2020 at 6:51 PM Marcel Holtmann <marcel@holtmann.org> wrote:
 >
-> V4: patches are rebased
-> Added support to use set Experimental feature to enable controller
-> address resolution
+> Hi Sathish,
 >
-> Marcel Holtmann (3):
->   Bluetooth: Translate additional address type correctly
->   Bluetooth: Configure controller address resolution if available
->   Bluetooth: Update resolving list when updating whitelist
+> > Enable LL Privacy using mgmt set_privacy command. The privacy
+> > value 0x03 is used here to enable LL Privacy.
+> > Still to use LL Privacy controller support is must.
 >
-> Sathish Narasimman (5):
->   Bluetooth: Translate additional address type during le_conn
->   Bluetooth: Let controller creates RPA during le create conn
->   Bluetooth: Enable/Disable address resolution during le create conn
->   Bluetooth: Enable RPA Timeout
->   Bluetooth: Enable controller RPA resolution using Experimental feature
+> that is not what I meant. And it is also misleading since Set Privacy is enabling RPA usage and not RPA resolution. So what I meant was using the Set Experimental Features mgmt command to enable usage of RPA resolution in the controller.
+
+Updated v4 of the patches
+Please review them
+
 >
->  include/net/bluetooth/hci.h      |   9 ++-
->  include/net/bluetooth/hci_core.h |   3 +
->  net/bluetooth/hci_conn.c         |   7 +-
->  net/bluetooth/hci_core.c         |  17 +++++
->  net/bluetooth/hci_event.c        |  21 ++++++
->  net/bluetooth/hci_request.c      | 120 ++++++++++++++++++++++++++-----
->  net/bluetooth/hci_request.h      |   3 +-
->  net/bluetooth/mgmt.c             |  54 +++++++++++++-
->  8 files changed, 213 insertions(+), 21 deletions(-)
+> Regards
 >
-> --
-> 2.17.1
+> Marcel
 >
+
+Regards
+Sathish N
