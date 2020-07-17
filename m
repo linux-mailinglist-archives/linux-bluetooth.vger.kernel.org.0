@@ -2,99 +2,83 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B18132244F6
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jul 2020 22:14:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F7BA224539
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jul 2020 22:32:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728432AbgGQUN5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Jul 2020 16:13:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727871AbgGQUN4 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Jul 2020 16:13:56 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97044C0619D2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jul 2020 13:13:56 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id c25so7754821otf.7
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jul 2020 13:13:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=wnVFsN0Fi5deQ7siuUTnPpQvD4/RnQHeHH1eSFWHzW8=;
-        b=ENOqu9KM9VOKT1NQzZu9nQAF5iWeaHC/x92DzXH4mvfUoi9KSW44U+JNSNmpOXtOsK
-         P9DrTwctLkQtXwiDKLPNmyxXFDu9KXMKIKKwAKLckpMCAvDahPR+9Eif/WsccURRMV48
-         L2sIWPn7HC4eBHzQeRfeunZBiVNUV99bgA2RE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=wnVFsN0Fi5deQ7siuUTnPpQvD4/RnQHeHH1eSFWHzW8=;
-        b=jRWBztC2yiPhvKPtde7Qu5MlejAAHl5yytSJTh8zJlcK4gb6QuE4bZK1Eq9Jpe4DFy
-         89D3bvPMAKvM1ePM239iaqlqmhk2hKfCFrisb1vAzU/9se+i6HjAjVP2MlL2f3UyjlHE
-         zJO4PgpgeivLcZhvNXZCWMuq2kXkRVbRJeHUnI+c2iVslSqUWM00S+t3cZ9ueQIIYnRq
-         osEnlwkN2Z7+EUYbN6lMJNrFbp55GkdrbaFbOXjudvY4j8Ki8ugP/G9DxbHCJQkJ2304
-         xhwU+GYs0Dz4yRg5I72bLgq/n0tcYaaot9/IaLCO/9qkA0vDApaHpqHBZq3VQPWKIJhN
-         Z3ZA==
-X-Gm-Message-State: AOAM5307NtLImZ4hOcP8cyBoPEbMBwbesW4UhtKdLiXcKxtac4t7JfHw
-        6ND8al6JrsdUvhez+bz8WXNxeifuos3EfzTrPhLiTAbJ5dM=
-X-Google-Smtp-Source: ABdhPJy53/cgClluap7XHPqI1ltOGT6BGJmscXjVyLIMN7qVysDp5UXuAEbhF6JeMd1C1DvyLOmr/Jb7JUOMA22Eb04=
-X-Received: by 2002:a9d:554d:: with SMTP id h13mr9638517oti.329.1595016835648;
- Fri, 17 Jul 2020 13:13:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <CABBYNZKDuCbwG7c94HbMXq7WqvMgL7qDaH9_JrQsHzORrr9GOw@mail.gmail.com>
- <20200715224740.238527-1-sonnysasaka@chromium.org>
-In-Reply-To: <20200715224740.238527-1-sonnysasaka@chromium.org>
-From:   Sonny Sasaka <sonnysasaka@chromium.org>
-Date:   Fri, 17 Jul 2020 13:13:44 -0700
-Message-ID: <CAOxioNm_D1E9RY6R6U0F356HfTUJtkGFFhJaa=44hBLevHzTjQ@mail.gmail.com>
-Subject: Re: [PATCH BlueZ v2] profile: Add exception to battery profile for
- external access
-To:     BlueZ <linux-bluetooth@vger.kernel.org>
+        id S1726815AbgGQUcn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Jul 2020 16:32:43 -0400
+Received: from mga14.intel.com ([192.55.52.115]:2113 "EHLO mga14.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726510AbgGQUcm (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 17 Jul 2020 16:32:42 -0400
+IronPort-SDR: 7tO5FxpnGBEJmCtfVfz7C0jw+AMlBHKKxK8EEQuDTlyNZlRV27Of4CsumHgCOl0z7EOqsEEV2s
+ G5JmUoQFObCA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9685"; a="148838010"
+X-IronPort-AV: E=Sophos;i="5.75,364,1589266800"; 
+   d="scan'208";a="148838010"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2020 13:32:42 -0700
+IronPort-SDR: jUqe6VIU5KO2Csf6fLCX273pxhcYanHtlVNrJLROxKK4V3ubSsWQv7GIQFTu4gGvd5HdFyrFaa
+ r99teEklcoWA==
+X-IronPort-AV: E=Sophos;i="5.75,364,1589266800"; 
+   d="scan'208";a="325524639"
+Received: from han1-mobl3.jf.intel.com ([10.254.113.127])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2020 13:32:42 -0700
+Message-ID: <dac373c76940dbf30302a1420fceaf7a01e00397.camel@linux.intel.com>
+Subject: Re: [BlueZ,1/5] shared/att: Fix possible crash on disconnect
+From:   Tedd Ho-Jeong An <tedd.an@linux.intel.com>
+To:     "Von Dentz, Luiz" <luiz.von.dentz@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org
+Date:   Fri, 17 Jul 2020 13:32:41 -0700
+In-Reply-To: <5f11facb.1c69fb81.6f815.57f7@mx.google.com>
+References: <20200717191515.220621-1-luiz.dentz@gmail.com>
+         <5f11facb.1c69fb81.6f815.57f7@mx.google.com>
+Organization: Intel Corporation
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Friendly ping on this simple patch.
+Hi Luiz,
 
-On Wed, Jul 15, 2020 at 3:47 PM Sonny Sasaka <sonnysasaka@chromium.org> wrote:
->
-> This gives exception to battery profile to be shared both internally and
-> externally.
->
+The failure is from test-gatt
+
+DEBUG   :FAIL: unit/test-gatt
+
+I will update the CI to include the test result.
+
+Regards,
+Tedd
+
+On Fri, 2020-07-17 at 12:23 -0700, bluez.test.bot@gmail.com wrote:
+> This is automated email and please do not reply to this email!
+> 
+> Dear submitter,
+> 
+> Thank you for submitting the patches to the linux bluetooth mailing list.
+> While we are preparing for reviewing the patches, we found the following
+> issue/warning.
+> 
+> Test Result:
+> makecheck Failed
+> 
+> Outputs:
+> ./test-driver: line 107: 14830 Bus error               (core dumped) "$@" >
+> $log_file 2>&1
+> make[3]: *** [Makefile:9726: test-suite.log] Error 1
+> make[2]: *** [Makefile:9834: check-TESTS] Error 2
+> make[1]: *** [Makefile:10228: check-am] Error 2
+> make: *** [Makefile:10230: check] Error 2
+> 
+> 
+> 
 > ---
->  profiles/battery/battery.c | 1 +
->  src/profile.h              | 4 ++++
->  2 files changed, 5 insertions(+)
->
-> diff --git a/profiles/battery/battery.c b/profiles/battery/battery.c
-> index 4da4355a1..c9a1af4b9 100644
-> --- a/profiles/battery/battery.c
-> +++ b/profiles/battery/battery.c
-> @@ -354,6 +354,7 @@ static struct btd_profile batt_profile = {
->         .device_remove  = batt_remove,
->         .accept         = batt_accept,
->         .disconnect     = batt_disconnect,
-> +       .external       = true,
->  };
->
->  static int batt_init(void)
-> diff --git a/src/profile.h b/src/profile.h
-> index 4448a2a6d..95523e50a 100644
-> --- a/src/profile.h
-> +++ b/src/profile.h
-> @@ -35,6 +35,10 @@ struct btd_profile {
->         const char *remote_uuid;
->
->         bool auto_connect;
-> +       /* Some profiles are considered safe to be handled internally and also
-> +        * be exposed in the GATT API. This flag give such profiles exception
-> +        * from being claimed internally.
-> +        */
->         bool external;
->
->         int (*device_probe) (struct btd_service *service);
-> --
-> 2.26.2
->
+> Regards,
+> Linux Bluetooth
+
