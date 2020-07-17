@@ -2,230 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DBD622387D
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jul 2020 11:35:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D95B223987
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jul 2020 12:42:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726563AbgGQJfX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Jul 2020 05:35:23 -0400
-Received: from proxima.lasnet.de ([78.47.171.185]:53924 "EHLO
-        proxima.lasnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725932AbgGQJfX (ORCPT
+        id S1726079AbgGQKmo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Jul 2020 06:42:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37264 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbgGQKmo (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Jul 2020 05:35:23 -0400
-X-Greylist: delayed 522 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Jul 2020 05:35:19 EDT
-Received: from localhost.localdomain (p200300e9d737160bc31b0c5d63306033.dip0.t-ipconnect.de [IPv6:2003:e9:d737:160b:c31b:c5d:6330:6033])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: stefan@datenfreihafen.org)
-        by proxima.lasnet.de (Postfix) with ESMTPSA id B77EDC0617;
-        Fri, 17 Jul 2020 11:26:35 +0200 (CEST)
-Subject: Re: [PATCH 05/22] net: remove compat_sock_common_{get,set}sockopt
-To:     Christoph Hellwig <hch@lst.de>,
-        "David S. Miller" <davem@davemloft.net>
-Cc:     Alexei Starovoitov <ast@kernel.org>,
-        Daniel Borkmann <daniel@iogearbox.net>,
-        Chas Williams <3chas3@gmail.com>,
-        Pablo Neira Ayuso <pablo@netfilter.org>,
-        Jozsef Kadlecsik <kadlec@netfilter.org>,
-        Florian Westphal <fw@strlen.de>,
-        Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
-        Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        bpf@vger.kernel.org, netfilter-devel@vger.kernel.org,
-        linux-sctp@vger.kernel.org, linux-arch@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, bridge@lists.linux-foundation.org,
-        linux-can@vger.kernel.org, dccp@vger.kernel.org,
-        linux-wpan@vger.kernel.org, mptcp@lists.01.org
-References: <20200717062331.691152-1-hch@lst.de>
- <20200717062331.691152-6-hch@lst.de>
-From:   Stefan Schmidt <stefan@datenfreihafen.org>
-Message-ID: <52d031f9-70c2-89c1-941f-c8187a6a2b68@datenfreihafen.org>
-Date:   Fri, 17 Jul 2020 11:26:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        Fri, 17 Jul 2020 06:42:44 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40EEDC061755
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jul 2020 03:42:44 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id e8so6491020pgc.5
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jul 2020 03:42:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=rQKMQ1kqbR8Gl0+GJv0CY/jTM8wgLqzh+7PcecIdixo=;
+        b=Kbk9Ib8DpDnLtoQkjrcmoq9qmBcXRgmqhKXafji6Xlp4F0OE69U9ZfyAnw+VIP/yeL
+         qYDfvy3Jj3LX1v50jfZ+MoXPG0IU/33nUReQi7R/I9J1hBw3UoB72N+qFElCm0HAcpL7
+         mVRhXs5QOcpkwXjBscXuW2ULqyfOUUSljjlY7bsdD7b2cDQanRVudFj33Z/r2ZQ2n1rG
+         Xgs6DXvSNA6YOrRjU/NVTEJRfy2HBHmROaLWxN+054MruVNLyCqGGh+1owlZ1kdnL0I/
+         fYt8rm1RViJUGz+jWcL3tVEg2+z6mgk+dgubEjjHoLbR2BIqVrfu4+RdAYnHS/wkOc4w
+         hLDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=rQKMQ1kqbR8Gl0+GJv0CY/jTM8wgLqzh+7PcecIdixo=;
+        b=dBf+o5/g4RUG67FavB/DWtBaOX7cpdh1nnDkdYIJxUTFlJVdNZokGAO4JTutkxQ23j
+         VhooOUgOvP2vQO+emgNcsAWkYI772e6D7x36juZOvZEcF4ux5tegDorSLSZS9RKYFNOd
+         CMyfTVxHXu2rHhLkptuiI6NiAMybLV9JXtR5QHlIKuMAThSJbw1i6dm+kQu6n7NzHgss
+         R/pEw2EHZKvE8G3eTYenvDZhT1ciIicgo9CCM/16DTPBAbnmmCfF2qvk+lQgnhEntGGZ
+         E6MmqG4+ewhC8EfNyzK2GrKPi8cGSuJcHu20poinzBYVUVr1CWX+uAjrlhx+PgNN2CZQ
+         sQzg==
+X-Gm-Message-State: AOAM532sDvciZx12ovpVK/G5clMmM1+2MeYD+Wkwun0ps6Ipn2ph9jeS
+        Szk7is8RgQv/NrFhR4Y33QatSDTJy1qvfYzNSB8=
+X-Google-Smtp-Source: ABdhPJwnuHWMVhRMbfyHhL4AZ1SYoJ8vucSZZR6SGOKxCMZPFKQxDGX5j+mglU2pcxeZTHfTmqM8GWk1Ocp7f0fl4F4=
+X-Received: by 2002:a62:640a:: with SMTP id y10mr7524519pfb.190.1594982563525;
+ Fri, 17 Jul 2020 03:42:43 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200717062331.691152-6-hch@lst.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a17:90a:1c10:0:0:0:0 with HTTP; Fri, 17 Jul 2020 03:42:42
+ -0700 (PDT)
+Reply-To: robertandersonhappy1@gmail.com
+From:   robert <ekeulp02@gmail.com>
+Date:   Fri, 17 Jul 2020 03:42:42 -0700
+Message-ID: <CAHBEWJn78e=jpePn=B-ALDVr79=zcF7Y3LEmK__LOnzz-PiqtA@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello.
+Good day my good friend.
 
-On 17.07.20 08:23, Christoph Hellwig wrote:
-> Add the compat handling to sock_common_{get,set}sockopt instead,
-> keyed of in_compat_syscall().  This allow to remove the now unused
-> ->compat_{get,set}sockopt methods from struct proto_ops.
-> 
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-> ---
->   include/linux/net.h      |  6 ------
->   include/net/sock.h       |  4 ----
->   net/core/sock.c          | 30 ++++++------------------------
->   net/dccp/ipv4.c          |  4 ----
->   net/dccp/ipv6.c          |  2 --
->   net/ieee802154/socket.c  |  8 --------
->   net/ipv4/af_inet.c       |  6 ------
->   net/ipv6/af_inet6.c      |  4 ----
->   net/ipv6/ipv6_sockglue.c | 12 ++----------
->   net/ipv6/raw.c           |  2 --
->   net/l2tp/l2tp_ip.c       |  4 ----
->   net/l2tp/l2tp_ip6.c      |  2 --
->   net/mptcp/protocol.c     |  6 ------
->   net/phonet/socket.c      |  8 --------
->   net/sctp/ipv6.c          |  2 --
->   net/sctp/protocol.c      |  4 ----
->   16 files changed, 8 insertions(+), 96 deletions(-)
-> 
-> diff --git a/include/linux/net.h b/include/linux/net.h
-> index 016a9c5faa3479..858ff1d981540d 100644
-> --- a/include/linux/net.h
-> +++ b/include/linux/net.h
-> @@ -165,12 +165,6 @@ struct proto_ops {
->   				      int optname, char __user *optval, unsigned int optlen);
->   	int		(*getsockopt)(struct socket *sock, int level,
->   				      int optname, char __user *optval, int __user *optlen);
-> -#ifdef CONFIG_COMPAT
-> -	int		(*compat_setsockopt)(struct socket *sock, int level,
-> -				      int optname, char __user *optval, unsigned int optlen);
-> -	int		(*compat_getsockopt)(struct socket *sock, int level,
-> -				      int optname, char __user *optval, int __user *optlen);
-> -#endif
->   	void		(*show_fdinfo)(struct seq_file *m, struct socket *sock);
->   	int		(*sendmsg)   (struct socket *sock, struct msghdr *m,
->   				      size_t total_len);
-> diff --git a/include/net/sock.h b/include/net/sock.h
-> index 4bf8841651486d..1fd7cf5fc7516c 100644
-> --- a/include/net/sock.h
-> +++ b/include/net/sock.h
-> @@ -1744,10 +1744,6 @@ int sock_common_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
->   			int flags);
->   int sock_common_setsockopt(struct socket *sock, int level, int optname,
->   				  char __user *optval, unsigned int optlen);
-> -int compat_sock_common_getsockopt(struct socket *sock, int level,
-> -		int optname, char __user *optval, int __user *optlen);
-> -int compat_sock_common_setsockopt(struct socket *sock, int level,
-> -		int optname, char __user *optval, unsigned int optlen);
->   
->   void sk_common_release(struct sock *sk);
->   
-> diff --git a/net/core/sock.c b/net/core/sock.c
-> index e085df79482520..018404d1762682 100644
-> --- a/net/core/sock.c
-> +++ b/net/core/sock.c
-> @@ -3199,23 +3199,14 @@ int sock_common_getsockopt(struct socket *sock, int level, int optname,
->   {
->   	struct sock *sk = sock->sk;
->   
-> -	return sk->sk_prot->getsockopt(sk, level, optname, optval, optlen);
-> -}
-> -EXPORT_SYMBOL(sock_common_getsockopt);
-> -
->   #ifdef CONFIG_COMPAT
-> -int compat_sock_common_getsockopt(struct socket *sock, int level, int optname,
-> -				  char __user *optval, int __user *optlen)
-> -{
-> -	struct sock *sk = sock->sk;
-> -
-> -	if (sk->sk_prot->compat_getsockopt != NULL)
-> +	if (in_compat_syscal() && sk->sk_prot->compat_getsockopt)
->   		return sk->sk_prot->compat_getsockopt(sk, level, optname,
->   						      optval, optlen);
-> +#endif
->   	return sk->sk_prot->getsockopt(sk, level, optname, optval, optlen);
->   }
-> -EXPORT_SYMBOL(compat_sock_common_getsockopt);
-> -#endif
-> +EXPORT_SYMBOL(sock_common_getsockopt);
->   
->   int sock_common_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
->   			int flags)
-> @@ -3240,23 +3231,14 @@ int sock_common_setsockopt(struct socket *sock, int level, int optname,
->   {
->   	struct sock *sk = sock->sk;
->   
-> -	return sk->sk_prot->setsockopt(sk, level, optname, optval, optlen);
-> -}
-> -EXPORT_SYMBOL(sock_common_setsockopt);
-> -
->   #ifdef CONFIG_COMPAT
-> -int compat_sock_common_setsockopt(struct socket *sock, int level, int optname,
-> -				  char __user *optval, unsigned int optlen)
-> -{
-> -	struct sock *sk = sock->sk;
-> -
-> -	if (sk->sk_prot->compat_setsockopt != NULL)
-> +	if (in_compat_syscall() && sk->sk_prot->compat_setsockopt)
->   		return sk->sk_prot->compat_setsockopt(sk, level, optname,
->   						      optval, optlen);
-> +#endif
->   	return sk->sk_prot->setsockopt(sk, level, optname, optval, optlen);
->   }
-> -EXPORT_SYMBOL(compat_sock_common_setsockopt);
-> -#endif
-> +EXPORT_SYMBOL(sock_common_setsockopt);
->   
->   void sk_common_release(struct sock *sk)
->   {
-> diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
-> index a7e989919c5307..316cc5ac0da72b 100644
-> --- a/net/dccp/ipv4.c
-> +++ b/net/dccp/ipv4.c
-> @@ -999,10 +999,6 @@ static const struct proto_ops inet_dccp_ops = {
->   	.recvmsg	   = sock_common_recvmsg,
->   	.mmap		   = sock_no_mmap,
->   	.sendpage	   = sock_no_sendpage,
-> -#ifdef CONFIG_COMPAT
-> -	.compat_setsockopt = compat_sock_common_setsockopt,
-> -	.compat_getsockopt = compat_sock_common_getsockopt,
-> -#endif
->   };
->   
->   static struct inet_protosw dccp_v4_protosw = {
-> diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-> index 650187d688519c..b50f85a72cd5fc 100644
-> --- a/net/dccp/ipv6.c
-> +++ b/net/dccp/ipv6.c
-> @@ -1083,8 +1083,6 @@ static const struct proto_ops inet6_dccp_ops = {
->   	.sendpage	   = sock_no_sendpage,
->   #ifdef CONFIG_COMPAT
->   	.compat_ioctl	   = inet6_compat_ioctl,
-> -	.compat_setsockopt = compat_sock_common_setsockopt,
-> -	.compat_getsockopt = compat_sock_common_getsockopt,
->   #endif
->   };
->   
-> diff --git a/net/ieee802154/socket.c b/net/ieee802154/socket.c
-> index d93d4531aa9bc5..94ae9662133e30 100644
-> --- a/net/ieee802154/socket.c
-> +++ b/net/ieee802154/socket.c
-> @@ -423,10 +423,6 @@ static const struct proto_ops ieee802154_raw_ops = {
->   	.recvmsg	   = sock_common_recvmsg,
->   	.mmap		   = sock_no_mmap,
->   	.sendpage	   = sock_no_sendpage,
-> -#ifdef CONFIG_COMPAT
-> -	.compat_setsockopt = compat_sock_common_setsockopt,
-> -	.compat_getsockopt = compat_sock_common_getsockopt,
-> -#endif
->   };
->   
->   /* DGRAM Sockets (802.15.4 dataframes) */
-> @@ -986,10 +982,6 @@ static const struct proto_ops ieee802154_dgram_ops = {
->   	.recvmsg	   = sock_common_recvmsg,
->   	.mmap		   = sock_no_mmap,
->   	.sendpage	   = sock_no_sendpage,
-> -#ifdef CONFIG_COMPAT
-> -	.compat_setsockopt = compat_sock_common_setsockopt,
-> -	.compat_getsockopt = compat_sock_common_getsockopt,
-> -#endif
+How are you doing today? It has been long i hear from you, what is going on
+your side? Today i am very much happy to inform you about my success in
+getting those inheritance funds transferred under the co-operation of a new
+partner from India Asia. He is a Canadian but based in India, but presently
+i'm in India for investment projects with my own share of the total sum of
+millions dollars. meanwhile, i didn't forget your past efforts and attempts
+to assist me in transferring those inheritance funds despite that it failed
+us some how, i want you to contact my secretary in Lome Togo Republic West
+Africa, her name is solomon brand, this is he email address (
+solomonbrand003@gmail.com ), ask her to contact Ecobank were i
+kept the sum of $350,000.00, for your compensation, this compensation fund
+is for all the past efforts and attempts to assist me in the passed
+transaction. I appreciated your efforts at that time very much. so feel
+free and contact my secretary Mr solomon brand, and instruct her where
+Ecobank will transfer the total sum of $350,000.00.
 
-For the ieee802154 part:
+Please do let me know immediately Ecobank transfer the fund $350.000.00
+into your own bank account, in the moment, I am too busy here because of
+the investment projects which i am having with my new partner at hand, so
+get in touch with Mr solomon brand on he email address, he will
+contact Ecobank on your behalf without any delay. Stay safe of Covid 19.
 
-Acked-by: Stefan Schmidt <stefan@datenfreihafen.org>
-
-regards
-Stefan Schmidt
+Best regards,
+Dr. robert anderson
