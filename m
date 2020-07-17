@@ -2,59 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABF44224408
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jul 2020 21:15:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9071D22440A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jul 2020 21:15:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728182AbgGQTPS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Jul 2020 15:15:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60234 "EHLO
+        id S1728238AbgGQTPV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Jul 2020 15:15:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728103AbgGQTPS (ORCPT
+        with ESMTP id S1728202AbgGQTPU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Jul 2020 15:15:18 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5091AC0619D2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jul 2020 12:15:18 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id ch3so6979603pjb.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jul 2020 12:15:18 -0700 (PDT)
+        Fri, 17 Jul 2020 15:15:20 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AE26C0619D2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jul 2020 12:15:20 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id gc9so6980696pjb.2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jul 2020 12:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=ofcSy59ESp8nBAyKdvQXxbumDxZMg6HeTOxTvE1Riuw=;
-        b=GCvz0vrAe6peAes71/uhyAz4RxWuVIZ6EJVpFx1bpx0QH2ajnjswhEyEPoXFUROncO
-         UWERIRfXVaF6ccdX/rGWLNkrQcgB+JpvTofCeVzF0gyIQ4BQoX+7oDV0sCeGUHYpDfeE
-         6g2Bus9RC30tromji8Fb39/GiCBm2DFY17leGo6DqH70X/nHfGXb1L8SNfxeO1SkWcEs
-         zdidIoZEXKmWBOEI/dxiA/lX22eMeGiytVTUhCbx3TeSZwDMB6hHVA8NMLhVZ3f3zjJn
-         UyYR7KhvPSkgVM6wDGVNRRA4xdpmP7MEjUJ3d8z9IdzOlKPryvkkMXbaVmm8yfEfa6eX
-         VScg==
+        bh=gNYmXc4mJEmOu5CETp29vjI9I1CoKaM9O5sbDcmH11I=;
+        b=iub5c/007xX6B3c843zs99TwrWVioltW41PZQX6AbfGcdi6SgxY120mV5CDc++qhbk
+         yTszbsp6O675hDh5kYegPxk/7W3h1XEnTSD/0Q9yspPWFDxC4W2TGrbpXVM6pthuNIoW
+         V7Tl5s6Zck3RlEfEHyovFt6dqlOpTNEnLyH6qUGpuhPrf2ebE28SfILLvzVUZ5Zq06n3
+         /cvRUsKw4rJL7d18zfmT9podkQUh4NnsJ8MzRb79nAP4m7W33AIEtdXp9/PjAl9MKs9H
+         weOvCM8/yGxZcbyNfdW9mNRrs9wMgvwwRrrdxHDzGOJ17B9+jjDhIcFTVlsvooskUrHj
+         EMGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ofcSy59ESp8nBAyKdvQXxbumDxZMg6HeTOxTvE1Riuw=;
-        b=NC8QU44RbwaMKqQ6QeVHi0z27Hc3douw+YOLFSSruinVvsfy4SHgBxtJbvDfB1/E27
-         KNr7ghIv0bHYI+4NP05XLC486QoALZtZ5SsFfBYDtJXgSCf0/ZRTUOa020N/6lTDh9xr
-         /qMwbpA8XebZoNLmdrQzz/s9B1WyqLvJpQRIlQWTPx9ghIJYKSUB0CwqaA0dQXt3VHRo
-         5i4PKYn62jXz1bvQgq7W2xiJjyVTXFWx5BeODO8jiPjQbq//xawRLRKZ+WXV0Lsz12sj
-         kXW8U+Bgn3uPv13QY07QOQWyACXkhAI7B5KiDx08c3wwMxylWwKW7ElepVfikAM7Ft4s
-         zBrQ==
-X-Gm-Message-State: AOAM530ooA14wO0dk35Z4H9rYtUemUTCAxLlfVKBjDGAFXaMbg2Hutk5
-        KtViNnx7AP/pAM2Ue58zTnvW893A/qI=
-X-Google-Smtp-Source: ABdhPJx/sGMBavpUlFB5fLaeOBrNdy3bilHEaO8dnIRw/UVQ6yaIX0A2p++GJWZjpEIRchuDrszixw==
-X-Received: by 2002:a17:90a:cc03:: with SMTP id b3mr10444585pju.80.1595013317189;
-        Fri, 17 Jul 2020 12:15:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=gNYmXc4mJEmOu5CETp29vjI9I1CoKaM9O5sbDcmH11I=;
+        b=VK3iwBd6SIQ5uUaJO1cChZUJxQj1SMcUe8zrg8qwzVHGGLrOPq4pKeZlkM0czFn8G7
+         1OqkPzfHm1wfcCd2HAIKMdnNrVOvTfu3kBXHbYbeXyRuiwFN5zRbOLyMyaM2THTtmy6d
+         hK4JGvCbUpSUlC22zEkvPjJdOliptNSfYY1hMVKpdY8m6+NFCKllryctiv0XPLYy4WIM
+         XWM9DtqgOSDaePHkaSvyZkzVnV0d9yAHcPVp7NdEO/jWW3o/vRoKZA2ozWr9xkr268oC
+         o/gtFlenCxzqA8iVnYAJw4KzewHBT5adbJ1xyl4Q53uRLTSrmmO5DC7pH5EkgeTMIg9X
+         SpwA==
+X-Gm-Message-State: AOAM532XGCqAbe6XvldFvdh9HpZAdkO4G/R83HKBhuvN/OHivDQNJ+MD
+        2lEYYMqCx1JExDQ9fr/ai1lIOm79WM0=
+X-Google-Smtp-Source: ABdhPJwAbT2zm+o2JO3CRnlgp9Dtf7KOk/A2akVkwzWFCw3/VVSf9NxriJUqRCRFxwtUbjAlinwPoA==
+X-Received: by 2002:a17:90a:a783:: with SMTP id f3mr11466177pjq.142.1595013318353;
+        Fri, 17 Jul 2020 12:15:18 -0700 (PDT)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id p9sm6488334pgc.77.2020.07.17.12.15.16
+        by smtp.gmail.com with ESMTPSA id p9sm6488334pgc.77.2020.07.17.12.15.17
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jul 2020 12:15:16 -0700 (PDT)
+        Fri, 17 Jul 2020 12:15:17 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 1/5] shared/att: Fix possible crash on disconnect
-Date:   Fri, 17 Jul 2020 12:15:11 -0700
-Message-Id: <20200717191515.220621-1-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 2/5] shared/gatt-db: Add support for notifying attribute changes
+Date:   Fri, 17 Jul 2020 12:15:12 -0700
+Message-Id: <20200717191515.220621-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200717191515.220621-1-luiz.dentz@gmail.com>
+References: <20200717191515.220621-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -64,142 +66,189 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-If there are pending request while disconnecting they would be notified
-but clients may endup being freed in the proccess which will then be
-calling bt_att_cancel to cancal its requests causing the following
-trace:
-
-Invalid read of size 4
-   at 0x1D894C: enable_ccc_callback (gatt-client.c:1627)
-   by 0x1D247B: disc_att_send_op (att.c:417)
-   by 0x1CCC17: queue_remove_all (queue.c:354)
-   by 0x1D47B7: disconnect_cb (att.c:635)
-   by 0x1E0707: watch_callback (io-glib.c:170)
-   by 0x48E963B: g_main_context_dispatch (in /usr/lib/libglib-2.0.so.0.6400.4)
-   by 0x48E9AC7: ??? (in /usr/lib/libglib-2.0.so.0.6400.4)
-   by 0x48E9ECF: g_main_loop_run (in /usr/lib/libglib-2.0.so.0.6400.4)
-   by 0x1E0E97: mainloop_run (mainloop-glib.c:79)
-   by 0x1E13B3: mainloop_run_with_signal (mainloop-notify.c:201)
-   by 0x12BC3B: main (main.c:770)
- Address 0x7d40a28 is 24 bytes inside a block of size 32 free'd
-   at 0x484A2E0: free (vg_replace_malloc.c:540)
-   by 0x1CCC17: queue_remove_all (queue.c:354)
-   by 0x1CCC83: queue_destroy (queue.c:73)
-   by 0x1D7DD7: bt_gatt_client_free (gatt-client.c:2209)
-   by 0x16497B: batt_free (battery.c:77)
-   by 0x16497B: batt_remove (battery.c:286)
-   by 0x1A0013: service_remove (service.c:176)
-   by 0x1A9B7B: device_remove_gatt_service (device.c:3691)
-   by 0x1A9B7B: gatt_service_removed (device.c:3805)
-   by 0x1CC90B: queue_foreach (queue.c:220)
-   by 0x1DE27B: notify_service_changed.isra.0.part.0 (gatt-db.c:369)
-   by 0x1DE387: notify_service_changed (gatt-db.c:361)
-   by 0x1DE387: gatt_db_service_destroy (gatt-db.c:385)
-   by 0x1DE3EF: gatt_db_remove_service (gatt-db.c:519)
-   by 0x1D674F: discovery_op_complete (gatt-client.c:388)
-   by 0x1D6877: discover_primary_cb (gatt-client.c:1260)
-   by 0x1E220B: discovery_op_complete (gatt-helpers.c:628)
-   by 0x1E249B: read_by_grp_type_cb (gatt-helpers.c:730)
-   by 0x1D247B: disc_att_send_op (att.c:417)
-   by 0x1CCC17: queue_remove_all (queue.c:354)
-   by 0x1D47B7: disconnect_cb (att.c:635)
+This enables to get notified when an attribute has been changed e.g.
+it is being removed so the code can detect changes changes at attribute
+level.
 ---
- src/shared/att.c | 46 ++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 40 insertions(+), 6 deletions(-)
+ src/shared/gatt-db.c | 103 +++++++++++++++++++++++++++++++++++++++++++
+ src/shared/gatt-db.h |   8 ++++
+ 2 files changed, 111 insertions(+)
 
-diff --git a/src/shared/att.c b/src/shared/att.c
-index ed3af2920..58f23dfcb 100644
---- a/src/shared/att.c
-+++ b/src/shared/att.c
-@@ -84,6 +84,7 @@ struct bt_att {
- 	struct queue *req_queue;	/* Queued ATT protocol requests */
- 	struct queue *ind_queue;	/* Queued ATT protocol indications */
- 	struct queue *write_queue;	/* Queue of PDUs ready to send */
-+	bool in_disc;			/* Cleanup queues on disconnect_cb */
+diff --git a/src/shared/gatt-db.c b/src/shared/gatt-db.c
+index 5eccab3b9..e939ddc3a 100644
+--- a/src/shared/gatt-db.c
++++ b/src/shared/gatt-db.c
+@@ -81,6 +81,13 @@ struct notify {
+ 	void *user_data;
+ };
  
- 	bt_att_timeout_func_t timeout_callback;
- 	bt_att_destroy_func_t timeout_destroy;
-@@ -222,8 +223,10 @@ static void destroy_att_send_op(void *data)
- 	free(op);
++struct attribute_notify {
++	unsigned int id;
++	gatt_db_attribute_cb_t removed;
++	gatt_db_destroy_func_t destroy;
++	void *user_data;
++};
++
+ struct pending_read {
+ 	struct gatt_db_attribute *attrib;
+ 	unsigned int id;
+@@ -114,6 +121,9 @@ struct gatt_db_attribute {
+ 
+ 	unsigned int write_id;
+ 	struct queue *pending_writes;
++
++	unsigned int next_notify_id;
++	struct queue *notify_list;
+ };
+ 
+ struct gatt_db_service {
+@@ -171,6 +181,16 @@ static void pending_write_free(void *data)
+ 	pending_write_result(p, -ECANCELED);
  }
  
--static void cancel_att_send_op(struct att_send_op *op)
-+static void cancel_att_send_op(void *data)
- {
-+	struct att_send_op *op = data;
-+
- 	if (op->destroy)
- 		op->destroy(op->user_data);
- 
-@@ -631,11 +634,6 @@ static bool disconnect_cb(struct io *io, void *user_data)
- 	/* Dettach channel */
- 	queue_remove(att->chans, chan);
- 
--	/* Notify request callbacks */
--	queue_remove_all(att->req_queue, NULL, NULL, disc_att_send_op);
--	queue_remove_all(att->ind_queue, NULL, NULL, disc_att_send_op);
--	queue_remove_all(att->write_queue, NULL, NULL, disc_att_send_op);
--
- 	if (chan->pending_req) {
- 		disc_att_send_op(chan->pending_req);
- 		chan->pending_req = NULL;
-@@ -654,6 +652,15 @@ static bool disconnect_cb(struct io *io, void *user_data)
- 
- 	bt_att_ref(att);
- 
-+	att->in_disc = true;
-+
-+	/* Notify request callbacks */
-+	queue_remove_all(att->req_queue, NULL, NULL, disc_att_send_op);
-+	queue_remove_all(att->ind_queue, NULL, NULL, disc_att_send_op);
-+	queue_remove_all(att->write_queue, NULL, NULL, disc_att_send_op);
-+
-+	att->in_disc = false;
-+
- 	queue_foreach(att->disconn_list, disconn_handler, INT_TO_PTR(err));
- 
- 	bt_att_unregister_all(att);
-@@ -1574,6 +1581,30 @@ bool bt_att_chan_cancel(struct bt_att_chan *chan, unsigned int id)
- 	return true;
- }
- 
-+static bool bt_att_disc_cancel(struct bt_att *att, unsigned int id)
++static void attribute_notify_destroy(void *data)
 +{
-+	struct att_send_op *op;
++	struct attribute_notify *notify = data;
 +
-+	op = queue_find(att->req_queue, match_op_id, UINT_TO_PTR(id));
-+	if (op)
-+		goto done;
++	if (notify->destroy)
++		notify->destroy(notify->user_data);
 +
-+	op = queue_find(att->ind_queue, match_op_id, UINT_TO_PTR(id));
-+	if (op)
-+		goto done;
++	free(notify);
++}
 +
-+	op = queue_find(att->write_queue, match_op_id, UINT_TO_PTR(id));
+ static void attribute_destroy(struct gatt_db_attribute *attribute)
+ {
+ 	/* Attribute was not initialized by user */
+@@ -179,6 +199,7 @@ static void attribute_destroy(struct gatt_db_attribute *attribute)
+ 
+ 	queue_destroy(attribute->pending_reads, pending_read_free);
+ 	queue_destroy(attribute->pending_writes, pending_write_free);
++	queue_destroy(attribute->notify_list, attribute_notify_destroy);
+ 
+ 	free(attribute->value);
+ 	free(attribute);
+@@ -208,6 +229,7 @@ static struct gatt_db_attribute *new_attribute(struct gatt_db_service *service,
+ 
+ 	attribute->pending_reads = queue_new();
+ 	attribute->pending_writes = queue_new();
++	attribute->notify_list = queue_new();
+ 
+ 	return attribute;
+ 
+@@ -352,12 +374,38 @@ static bool db_hash_update(void *user_data)
+ 	return false;
+ }
+ 
++static void handle_attribute_notify(void *data, void *user_data)
++{
++	struct attribute_notify *notify = data;
++	struct gatt_db_attribute *attrib = user_data;
 +
-+done:
-+	if (!op)
++	if (notify->removed)
++		notify->removed(attrib, notify->user_data);
++}
++
++static void notify_attribute_changed(struct gatt_db_service *service)
++{
++	int i;
++
++	for (i = 0; i < service->num_handles; i++) {
++		struct gatt_db_attribute *attr = service->attributes[i];
++
++		if (!attr)
++			continue;
++
++		queue_foreach(attr->notify_list, handle_attribute_notify, attr);
++	}
++}
++
+ static void notify_service_changed(struct gatt_db *db,
+ 						struct gatt_db_service *service,
+ 						bool added)
+ {
+ 	struct notify_data data;
+ 
++	if (!added)
++		notify_attribute_changed(service);
++
+ 	if (queue_isempty(db->notify_list))
+ 		return;
+ 
+@@ -1993,3 +2041,58 @@ void *gatt_db_attribute_get_user_data(struct gatt_db_attribute *attrib)
+ 
+ 	return attrib->user_data;
+ }
++
++static bool match_attribute_notify_id(const void *a, const void *b)
++{
++	const struct attribute_notify *notify = a;
++	unsigned int id = PTR_TO_UINT(b);
++
++	return notify->id == id;
++}
++
++unsigned int gatt_db_attribute_register(struct gatt_db_attribute *attrib,
++					gatt_db_attribute_cb_t removed,
++					void *user_data,
++					gatt_db_destroy_func_t destroy)
++{
++	struct attribute_notify *notify;
++
++	if (!attrib || !removed)
++		return 0;
++
++	notify = new0(struct attribute_notify, 1);
++	notify->removed = removed;
++	notify->destroy = destroy;
++	notify->user_data = user_data;
++
++	if (attrib->next_notify_id < 1)
++		attrib->next_notify_id = 1;
++
++	notify->id = attrib->next_notify_id++;
++
++	if (!queue_push_tail(attrib->notify_list, notify)) {
++		free(notify);
++		return 0;
++	}
++
++	return notify->id;
++}
++
++bool gatt_db_attribute_unregister(struct gatt_db_attribute *attrib,
++						unsigned int id)
++{
++	struct attribute_notify *notify;
++
++	if (!attrib || !id)
 +		return false;
 +
-+	/* Just cancel since disconnect_cb will be cleaning up */
-+	cancel_att_send_op(op);
++	notify = queue_find(attrib->notify_list, match_attribute_notify_id,
++						UINT_TO_PTR(id));
++	if (!notify)
++		return false;
++
++	queue_remove(attrib->notify_list, notify);
++	attribute_notify_destroy(notify);
 +
 +	return true;
 +}
-+
- bool bt_att_cancel(struct bt_att *att, unsigned int id)
- {
- 	const struct queue_entry *entry;
-@@ -1591,6 +1622,9 @@ bool bt_att_cancel(struct bt_att *att, unsigned int id)
- 			return true;
- 	}
+diff --git a/src/shared/gatt-db.h b/src/shared/gatt-db.h
+index a0fd66c53..5bf19d302 100644
+--- a/src/shared/gatt-db.h
++++ b/src/shared/gatt-db.h
+@@ -281,3 +281,11 @@ bool gatt_db_attribute_write_result(struct gatt_db_attribute *attrib,
+ bool gatt_db_attribute_reset(struct gatt_db_attribute *attrib);
  
-+	if (att->in_disc)
-+		return bt_att_disc_cancel(att, id);
+ void *gatt_db_attribute_get_user_data(struct gatt_db_attribute *attrib);
 +
- 	op = queue_remove_if(att->req_queue, match_op_id, UINT_TO_PTR(id));
- 	if (op)
- 		goto done;
++unsigned int gatt_db_attribute_register(struct gatt_db_attribute *attrib,
++					gatt_db_attribute_cb_t removed,
++					void *user_data,
++					gatt_db_destroy_func_t destroy);
++
++bool gatt_db_attribute_unregister(struct gatt_db_attribute *attrib,
++						unsigned int id);
 -- 
 2.26.2
 
