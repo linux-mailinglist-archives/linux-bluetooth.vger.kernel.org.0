@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EE0A22AF7F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Jul 2020 14:35:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 093C622AF80
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Jul 2020 14:35:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728820AbgGWMff (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 Jul 2020 08:35:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59896 "EHLO
+        id S1728824AbgGWMfi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 Jul 2020 08:35:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726109AbgGWMff (ORCPT
+        with ESMTP id S1726109AbgGWMfi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 Jul 2020 08:35:35 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44600C0619DC
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jul 2020 05:35:35 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id md7so3001651pjb.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jul 2020 05:35:35 -0700 (PDT)
+        Thu, 23 Jul 2020 08:35:38 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB09C0619DC
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jul 2020 05:35:38 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id t6so3045814pgq.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jul 2020 05:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PK9IFrqGA8tYf+eWNXSfj5UIMsffCcBtO2fOhU2TTN4=;
-        b=dFRzsf1dtJ5p3hfGbld7FnwiV7O43cPZARtjXsGsdizh1lJyrpqfrGxBUbiNOnTvqT
-         9/Pn56r33XsbHvFLfBBmLtnUXF3rfyhMDnzUG4Svu+h8CsdQAvU4zxDP0dsEzNPpOBeo
-         au4WPYmWQ5T++DmrKur/z+rJxYYc7Fo6A38oVHQfdb9d8XS8ZPEmB+cuFQWbIiyud2C6
-         +PnIMn9b4PVz7M9oM2QChdLr9Oy9yU/sH2WQzyLTaFebu4yq02sXUIDjsjVT68EerR1p
-         EZen6NzAzCL4DdyIHfDzxmX2BqKtO+bnKtCQRu0fjM3CcY/1KmbZuLmuNecPQXqQ77Vb
-         Zj2w==
+        bh=0Cu/75K3lWYeUyKuqT51YSaA/+7LYwDoT1W120nqRIs=;
+        b=hn1nOYbly6tmPQdjT3TVUn/PN1teCiDYOjV376GsjOYZYsLBcijPfp8EMvrPNR9HTD
+         wMZT84IRM0cq/leX0uboSHeBpiqZA+49sxApeD2PmPQKWSU5FjMHbrYBMv5Vngy/30h8
+         Ehe18QZAyRt6ymUMDzij6coaCvCqYYb2CQD6fcOWJuJkGlQTWvtMa2usQH9mD9I4vPHV
+         H1enKQqa9NCJeAPmClQZQ6XCgJ+jSPP/JysNwsHSyTrsGmBtsQyxsa29t4F1EdtB2Px6
+         ihPvZPt4o9cyrSXF/GebaGhmfjxhl616B69ReUKmv7nEW19ia3rGY/UBduhcvHoJ2vyQ
+         OE9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=PK9IFrqGA8tYf+eWNXSfj5UIMsffCcBtO2fOhU2TTN4=;
-        b=lItbP/XdrV9Wy0U3MwknDLV2ls/DjrUtlbsHbkfjo8jldYGPbXZc5e+iemcxHMSFwE
-         3cD2PzEX+OQXhw0GW/o1vbnOOeOzuxWq8YpEBOdmiL96JZvHf8IoXtZ/rAoh9/xROB+k
-         FLdBfmXVnNqNti/HnsUj286dNKwLXIABZWdTE4Mz5BV/freywpifrZ44JgWA+hxoCkUG
-         fiK1RqZvyamVwHe+uX0q/8Ow4uQx4AAWpbbS+tjmACr+dCZYQ0+icACycqNP56SMtxkt
-         gZHmE5kFVz+vwW9v1sIsMWX54ZgDA419Laa6EQ+yjKSexdTHDZKOdTOpPWfPPaksGyZq
-         3i9A==
-X-Gm-Message-State: AOAM532bUbdSvMI9eddl/M82EDtngtNFnPYmOkn9NDBIFw0K9b7nLHf6
-        txNHuW/+GF2JSxfJK9rNAMidxspi2MDwNA==
-X-Google-Smtp-Source: ABdhPJwg0oMH2ei7aOXDJJOrLjMJeU6NykB9GOZPJityNhfQwu2vRE/9WRj+ch7l9/53LyWzQxpkhw==
-X-Received: by 2002:a17:90a:c295:: with SMTP id f21mr214701pjt.208.1595507734661;
-        Thu, 23 Jul 2020 05:35:34 -0700 (PDT)
+        bh=0Cu/75K3lWYeUyKuqT51YSaA/+7LYwDoT1W120nqRIs=;
+        b=MHFPIKNCC0bik/6lvMICH5B9exOwcHMH0QKe/51XFt3xnpyFnvS7dkUwhsxWSZiKNi
+         gzT0KHiWazcWqWnabxwA4+bPpXljHcCR36YnJ5Yf4ExxeYHQuDwshPcMj2drZAKeqRWy
+         G7Kpg/qHlTiNroljadBNzTEhDj+JN4hXd0sko8x2DAexioii87/0337yX14tzAtIGCvH
+         GL/febrVcJfJWj7DXdeQK0v/PD8aNWBgsDdRFPcHDhDy8MSGqG7U4Nd9xzzwrdBxaO7i
+         K9C4k7lkZcd47MielI5IT9tU+t5RSpl80DPA7tqQy2TbfMisERsoqth3UPQGKL8UaIPD
+         gXLw==
+X-Gm-Message-State: AOAM530rbmVnSjT0F+DBuDU+/Xkw7u9BAe4kIbYcnCbMhaRUcsTuvrsY
+        uyQG7Hm+6r94kqB6tPjMxiuMo41XgZg7Xg==
+X-Google-Smtp-Source: ABdhPJwZ+rnaYcxKI5mpspMN6aYKRKpe0HUc7eXO4pIawMa4JYUNbTUiYkoCw1DKaxRfQgDoBSQAkA==
+X-Received: by 2002:aa7:970a:: with SMTP id a10mr4107521pfg.319.1595507737452;
+        Thu, 23 Jul 2020 05:35:37 -0700 (PDT)
 Received: from nsathish-Latitude-7480.iind.intel.com ([192.55.54.42])
-        by smtp.gmail.com with ESMTPSA id z11sm2849823pfr.71.2020.07.23.05.35.32
+        by smtp.gmail.com with ESMTPSA id z11sm2849823pfr.71.2020.07.23.05.35.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jul 2020 05:35:34 -0700 (PDT)
+        Thu, 23 Jul 2020 05:35:37 -0700 (PDT)
 From:   Sathish Narasimman <nsathish41@gmail.com>
 X-Google-Original-From: Sathish Narasimman <sathish.narasimman@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Sathish Narasimman <sathish.narasimman@intel.com>
-Subject: [PATCH v5 7/8] Bluetooth: Enable RPA Timeout
-Date:   Thu, 23 Jul 2020 18:09:02 +0530
-Message-Id: <20200723123903.29337-7-sathish.narasimman@intel.com>
+Subject: [PATCH v5 8/8] Bluetooth: Enable controller RPA resolution using Experimental feature
+Date:   Thu, 23 Jul 2020 18:09:03 +0530
+Message-Id: <20200723123903.29337-8-sathish.narasimman@intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200723123903.29337-1-sathish.narasimman@intel.com>
 References: <20200723123903.29337-1-sathish.narasimman@intel.com>
@@ -62,48 +62,220 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Enable RPA timeout during bluetooth initialization.
-The RPA timeout value is used from hdev, which initialized from
-debug_fs
+This patch adds support to enable the use of RPA Address resolution
+using expermental feature mgmt command.
 
 Signed-off-by: Sathish Narasimman <sathish.narasimman@intel.com>
 ---
- include/net/bluetooth/hci.h | 2 ++
- net/bluetooth/hci_core.c    | 8 ++++++++
- 2 files changed, 10 insertions(+)
+ include/net/bluetooth/hci.h |   1 +
+ net/bluetooth/hci_event.c   |   1 +
+ net/bluetooth/hci_request.c |   7 ++-
+ net/bluetooth/mgmt.c        | 112 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 120 insertions(+), 1 deletion(-)
 
 diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index abab8b5981a7..4ff2fc4498f3 100644
+index 4ff2fc4498f3..55205d805c22 100644
 --- a/include/net/bluetooth/hci.h
 +++ b/include/net/bluetooth/hci.h
-@@ -1637,6 +1637,8 @@ struct hci_rp_le_read_resolv_list_size {
+@@ -307,6 +307,7 @@ enum {
+ 	HCI_FORCE_BREDR_SMP,
+ 	HCI_FORCE_STATIC_ADDR,
+ 	HCI_LL_RPA_RESOLUTION,
++	HCI_ENABLE_LL_PRIVACY,
+ 	HCI_CMD_PENDING,
+ 	HCI_FORCE_NO_MITM,
  
- #define HCI_OP_LE_SET_ADDR_RESOLV_ENABLE 0x202d
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 628831b15c0a..33d8458fdd4a 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5230,6 +5230,7 @@ static void hci_le_enh_conn_complete_evt(struct hci_dev *hdev,
+ 			     le16_to_cpu(ev->supervision_timeout));
  
-+#define HCI_OP_LE_SET_RPA_TIMEOUT	0x202e
+ 	if (use_ll_privacy(hdev) &&
++	    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY) &&
+ 	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION))
+ 		hci_req_disable_address_resolution(hdev);
+ }
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index 70e077cc7dfa..435400a43a78 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -678,8 +678,10 @@ void hci_req_add_le_scan_disable(struct hci_request *req, bool rpa_le_conn)
+ 
+ 	/* Disable address resolution */
+ 	if (use_ll_privacy(hdev) &&
++	    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY) &&
+ 	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION) && !rpa_le_conn) {
+ 		__u8 enable = 0x00;
 +
- #define HCI_OP_LE_READ_MAX_DATA_LEN	0x202f
- struct hci_rp_le_read_max_data_len {
- 	__u8	status;
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 4af208b82138..2030536cc5d8 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -762,6 +762,14 @@ static int hci_init3_req(struct hci_request *req, unsigned long opt)
- 			hci_req_add(req, HCI_OP_LE_CLEAR_RESOLV_LIST, 0, NULL);
+ 		hci_req_add(req, HCI_OP_LE_SET_ADDR_RESOLV_ENABLE, 1, &enable);
+ 	}
+ }
+@@ -870,8 +872,11 @@ static void hci_req_start_scan(struct hci_request *req, u8 type, u16 interval,
+ 		return;
+ 	}
+ 
+-	if (use_ll_privacy(hdev) && addr_resolv) {
++	if (use_ll_privacy(hdev) &&
++	    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY) &&
++	    addr_resolv) {
+ 		u8 enable = 0x01;
++
+ 		hci_req_add(req, HCI_OP_LE_SET_ADDR_RESOLV_ENABLE, 1, &enable);
+ 	}
+ 
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 47bcfe2fb14c..adde92cf015d 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -3759,6 +3759,12 @@ static const u8 simult_central_periph_uuid[16] = {
+ 	0x96, 0x46, 0xc0, 0x42, 0xb5, 0x10, 0x1b, 0x67,
+ };
+ 
++/* 15c0a148-c273-11ea-b3de-0242ac130004 */
++static const u8 rpa_resolution_uuid[16] = {
++	0x04, 0x00, 0x13, 0xac, 0x42, 0x02, 0xde, 0xb3,
++	0xea, 0x11, 0x73, 0xc2, 0x48, 0xa1, 0xc0, 0x15,
++};
++
+ static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
+ 				  void *data, u16 data_len)
+ {
+@@ -3795,6 +3801,21 @@ static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
+ 		idx++;
+ 	}
+ 
++	if (use_ll_privacy(hdev)) {
++		if (hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY)) {
++			flags = BIT(0);
++			if (!hci_dev_test_flag(hdev, HCI_ADVERTISING))
++				flags |= BIT(1);
++		} else
++			flags = 0;
++
++		memcpy(rp->features[idx].uuid, rpa_resolution_uuid, 16);
++		rp->features[idx].flags = cpu_to_le32(flags);
++		idx++;
++
++		new_settings(hdev, sk);
++	}
++
+ 	rp->feature_count = cpu_to_le16(idx);
+ 
+ 	/* After reading the experimental features information, enable
+@@ -3807,6 +3828,27 @@ static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
+ 				 0, rp, sizeof(*rp) + (20 * idx));
+ }
+ 
++static int exp_ll_privacy_feature_changed(bool enabled, struct sock *skip)
++{
++	struct mgmt_ev_exp_feature_changed ev;
++	u32 flags;
++
++	memset(&ev, 0, sizeof(ev));
++	memcpy(ev.uuid, rpa_resolution_uuid, 16);
++
++	if (enabled)
++		flags = 0x03;
++	else
++		flags = 0;
++
++	ev.flags = cpu_to_le32(flags);
++
++	return mgmt_limited_event(MGMT_EV_EXP_FEATURE_CHANGED, NULL,
++				  &ev, sizeof(ev),
++				  HCI_MGMT_EXP_FEATURE_EVENTS, skip);
++
++}
++
+ #ifdef CONFIG_BT_FEATURE_DEBUG
+ static int exp_debug_feature_changed(bool enabled, struct sock *skip)
+ {
+@@ -3845,6 +3887,18 @@ static int set_exp_feature(struct sock *sk, struct hci_dev *hdev,
  		}
+ #endif
  
-+		if (hdev->commands[35] & 0x40) {
-+			__le16 rpa_timeout = cpu_to_le16(hdev->rpa_timeout);
++		if (use_ll_privacy(hdev)) {
++			bool changed;
 +
-+			/* Set RPA timeout */
-+			hci_req_add(req, HCI_OP_LE_SET_RPA_TIMEOUT, 2,
-+				    &rpa_timeout);
++			changed = hci_dev_test_flag(hdev,
++						    HCI_ENABLE_LL_PRIVACY);
++
++			hci_dev_clear_flag(hdev, HCI_ENABLE_LL_PRIVACY);
++
++			if (changed)
++				exp_ll_privacy_feature_changed(false, sk);
 +		}
 +
- 		if (hdev->le_features[0] & HCI_LE_DATA_LEN_EXT) {
- 			/* Read LE Maximum Data Length */
- 			hci_req_add(req, HCI_OP_LE_READ_MAX_DATA_LEN, 0, NULL);
+ 		hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
+ 
+ 		return mgmt_cmd_complete(sk, hdev ? hdev->id : MGMT_INDEX_NONE,
+@@ -3895,6 +3949,64 @@ static int set_exp_feature(struct sock *sk, struct hci_dev *hdev,
+ 	}
+ #endif
+ 
++	if (!memcmp(cp->uuid, rpa_resolution_uuid, 16)) {
++		bool val, changed;
++		int err;
++		u32 flags;
++
++		/* Parameters are limited to a single octet */
++		if (data_len != MGMT_SET_EXP_FEATURE_SIZE + 1)
++			return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
++					       MGMT_OP_SET_EXP_FEATURE,
++					       MGMT_STATUS_INVALID_PARAMS);
++
++		/* Only boolean on/off is supported */
++		if (cp->param[0] != 0x00 && cp->param[0] != 0x01)
++			return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
++					       MGMT_OP_SET_EXP_FEATURE,
++					       MGMT_STATUS_INVALID_PARAMS);
++
++		val = !!cp->param[0];
++
++		if (val) {
++			changed = !hci_dev_test_flag(hdev,
++						     HCI_ENABLE_LL_PRIVACY);
++
++			hci_dev_set_flag(hdev, HCI_ENABLE_LL_PRIVACY);
++
++			/* Enable LL privacy */
++			flags = BIT(0);
++			/* Disable HCI_ADVERTISING flag */
++			flags |= BIT(1);
++
++			hci_dev_clear_flag(hdev, HCI_ADVERTISING);
++
++		} else {
++			changed = hci_dev_test_flag(hdev,
++						    HCI_ENABLE_LL_PRIVACY);
++			hci_dev_clear_flag(hdev, HCI_ENABLE_LL_PRIVACY);
++
++			flags = 0;
++		}
++
++		memcpy(rp.uuid, rpa_resolution_uuid, 16);
++
++		rp.flags = cpu_to_le32(flags);
++
++		hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
++
++		err = mgmt_cmd_complete(sk, MGMT_INDEX_NONE,
++					MGMT_OP_SET_EXP_FEATURE, 0,
++					&rp, sizeof(rp));
++
++		if (changed) {
++			exp_ll_privacy_feature_changed(val, sk);
++			new_settings(hdev, sk);
++		}
++
++		return err;
++	}
++
+ 	return mgmt_cmd_status(sk, hdev ? hdev->id : MGMT_INDEX_NONE,
+ 			       MGMT_OP_SET_EXP_FEATURE,
+ 			       MGMT_STATUS_NOT_SUPPORTED);
 -- 
 2.17.1
 
