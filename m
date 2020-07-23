@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21D7222AF7C
+	by mail.lfdr.de (Postfix) with ESMTP id 8D3FF22AF7D
 	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Jul 2020 14:35:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728792AbgGWMf1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 Jul 2020 08:35:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59868 "EHLO
+        id S1728797AbgGWMf3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 Jul 2020 08:35:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726109AbgGWMf0 (ORCPT
+        with ESMTP id S1726109AbgGWMf3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 Jul 2020 08:35:26 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94590C0619DC
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jul 2020 05:35:26 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id l6so2499204plt.7
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jul 2020 05:35:26 -0700 (PDT)
+        Thu, 23 Jul 2020 08:35:29 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75D0CC0619DC
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jul 2020 05:35:29 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id 72so2507329ple.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jul 2020 05:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bwkuLTs6JjWfQ9Oc/vq1HcUJ3U5T2anKNWaBV3h5b4U=;
-        b=t34FZrqpJguHXObyN++EfG8CiEe1r70HOONJmln+mbhgRW+GbH4f1buS8rMj9fSW+g
-         RcOp6eK4BVKBwGlh+a+Smq6qeIg4F4XLDal6X2VUVhn9SJDeoGo4FhB+8UCX7F18pD5u
-         B+aJG9kybl/3NJi8FA+p2Rct5dVLWhHkkfwRG5ds/k3U4T/v+kLijxZwDeuFgXtkfmRo
-         dSZ03ZBSCrjmSTfWM3FiNUVKQDwaDdJcQkiOwKCoK1r1lHBWe1CUEZySpBp91ZyD4O1z
-         7iY0LST6wt2rGB91SPlsyDoRxBCZmXlsCuTgfVzcnLb05XoHniB9AH9j3Cd3/40V5al9
-         ZutA==
+        bh=6RSAZAZCD/2zvtqQwxc8kimw5YBb8FQUpkwthAppgoM=;
+        b=qal8nDsq0om4u2aaDE6pcQwPdv763EX+ngNdNXdmJc/QkMTCc4pM3LoKF2mUiPaav8
+         4TfWVAAnVYwmrKRrYWcLAo8LQum3tq1iq8cOt0SgpntLPpz4g/t86iO5QXTasYYUrEK2
+         WZKpCQvaJgwShVkNlilQBh/mQSIjVHEkYnSi858k81NGVYECAfmTASzCJRd0unb6Pn1B
+         7QCKT+nNCRNO3tvKkypFdBhYDDZoqr0cT3UG9hOZJzpF8++19hIIV0XJU/einrC8iv9F
+         oSQfUM2Dg6zAfOGJ0ralWP8prXhi4IsXpmwuTabYHmC52WVki0u8wMHxh014pk/2t+R+
+         wlqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=bwkuLTs6JjWfQ9Oc/vq1HcUJ3U5T2anKNWaBV3h5b4U=;
-        b=oQ1ZXZfJTfhJvhYmULIZoJUDoFlacyf+CZod1k04sbTbvCyIqPIiznx5nL1HBQ4eyS
-         lv5ojT2NE1WoqLQgSpy8NbRu4yF3Cs2YtxUdPwk8NIYUI924mrn+LmsPwTjwVHSVRp7N
-         kpPdE0oxgRgooCHGyMTRBJKMgJZE4bhlQV37mxoYgssQijWwI/3mxGVvtfeV7pkqFzAV
-         jE4HrSLLjognxrieNV7Kl1XgknWuWd37maEE4GbPZcLYsh0pXqC+H7gry3ZjFtsQDPNJ
-         Rt4b1mrmZngjXO37nzv1mQpiSC3OnHAmqkZRkfMMEwabnk0dEi8ZbnZGWNi1v9mG9pVR
-         DumQ==
-X-Gm-Message-State: AOAM531Oybrn5QLp2eiXgtIOxMhtITo85IF9UYCdqm9+MJKFWV6FGR5t
-        yaSN4C7j2R1sX3MPY7Wwy0jr1CAEPMADDA==
-X-Google-Smtp-Source: ABdhPJwgU9AyjfneBLNPjhnm1MnH0AufFjYwpW6dkFZFaII5j4d2y7Y6obC+Y/K/Vt32vhcjIxLwwg==
-X-Received: by 2002:a17:902:322:: with SMTP id 31mr3626123pld.33.1595507725921;
-        Thu, 23 Jul 2020 05:35:25 -0700 (PDT)
+        bh=6RSAZAZCD/2zvtqQwxc8kimw5YBb8FQUpkwthAppgoM=;
+        b=AwYc16AyqNs4IDscbTIs68w3oGUbKQyi4FrFZKx28BX3/ADwXcOt9xC+9dINc19hjS
+         LchmpVLM5oFBXgflWrSY2a7+iVk5oUgjckbg8BVxNeZXMM9DKEyG5fg0U/0kWOz3xCly
+         lrF0V3sbPHs7S1c1ogY4EweaBCGQk2v43RSsX0t/C86zhUiKHJwvROLnI5S93y/XnUd6
+         Cg94jS0UOVcleDJdxsLhNAPvdw2xICDCxOsN3LSN4DvY4RJqXg70WM2N4KYFktwd3se8
+         55FNs4DZVVgEfqNha4GhOWYfxmcylRFKNKK0Z+hGCsrvuyWogrsXv9mS9qPoSiKS59xo
+         hcmA==
+X-Gm-Message-State: AOAM531pMBFFGkuBkleoqFrfl5YgAVk/etQfotVsP4jDqVS0C+YyTSSx
+        O4ekQK+u9OaOEZqQV1FoerjeHAkBqUppCw==
+X-Google-Smtp-Source: ABdhPJz78QFN8ZkZLfp1Cze+RNjKlr4DkYy2DTbdaRcpSPZSVg8EMVaPbRHDUqt146KMLZ18i7hYJg==
+X-Received: by 2002:a17:90a:7487:: with SMTP id p7mr178809pjk.233.1595507728801;
+        Thu, 23 Jul 2020 05:35:28 -0700 (PDT)
 Received: from nsathish-Latitude-7480.iind.intel.com ([192.55.54.42])
-        by smtp.gmail.com with ESMTPSA id z11sm2849823pfr.71.2020.07.23.05.35.24
+        by smtp.gmail.com with ESMTPSA id z11sm2849823pfr.71.2020.07.23.05.35.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jul 2020 05:35:25 -0700 (PDT)
+        Thu, 23 Jul 2020 05:35:28 -0700 (PDT)
 From:   Sathish Narasimman <nsathish41@gmail.com>
 X-Google-Original-From: Sathish Narasimman <sathish.narasimman@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Sathish Narasimman <sathish.narasimman@intel.com>
-Subject: [PATCH v5 4/8] Bluetooth: Translate additional address type during le_conn
-Date:   Thu, 23 Jul 2020 18:08:59 +0530
-Message-Id: <20200723123903.29337-4-sathish.narasimman@intel.com>
+Subject: [PATCH v5 5/8] Bluetooth: Let controller creates RPA during le create conn
+Date:   Thu, 23 Jul 2020 18:09:00 +0530
+Message-Id: <20200723123903.29337-5-sathish.narasimman@intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200723123903.29337-1-sathish.narasimman@intel.com>
 References: <20200723123903.29337-1-sathish.narasimman@intel.com>
@@ -62,45 +62,33 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When using controller based address resolution, then the new address
-types 0x02 and 0x03 are used. These types need to be converted back into
-either public address or random address types.
-
-This patch is specially during LE_CREATE_CONN if using own_add_type as 0x02
-or 0x03.
+When address resolution is enabled and set_privacy is enabled let's
+use own address type as 0x03
 
 Signed-off-by: Sathish Narasimman <sathish.narasimman@intel.com>
 ---
- net/bluetooth/hci_event.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/bluetooth/hci_request.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 61f8c4d12028..6388fb55b4d2 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2296,6 +2296,22 @@ static void cs_le_create_conn(struct hci_dev *hdev, bdaddr_t *peer_addr,
- 	if (!conn)
- 		return;
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index 85de1f356610..e48f0945a417 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -2242,7 +2242,13 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
+ 	if (use_rpa) {
+ 		int to;
  
-+	/* When using controller based address resolution, then the new
-+	 * address types 0x02 and 0x03 are used. These types need to be
-+	 * converted back into either public address or random address type
-+	 */
-+	if (use_ll_privacy(hdev) &&
-+	    hci_dev_test_flag(hdev, HCI_LL_RPA_RESOLUTION)) {
-+		switch (own_address_type) {
-+		case ADDR_LE_DEV_PUBLIC_RESOLVED:
-+			own_address_type = ADDR_LE_DEV_PUBLIC;
-+			break;
-+		case ADDR_LE_DEV_RANDOM_RESOLVED:
-+			own_address_type = ADDR_LE_DEV_RANDOM;
-+			break;
-+		}
-+	}
-+
- 	/* Store the initiator and responder address information which
- 	 * is needed for SMP. These values will not change during the
- 	 * lifetime of the connection.
+-		*own_addr_type = ADDR_LE_DEV_RANDOM;
++		/* If Controller supports LL Privacy use own address type is
++		 * 0x03
++		 */
++		if (use_ll_privacy(hdev))
++			*own_addr_type = ADDR_LE_DEV_RANDOM_RESOLVED;
++		else
++			*own_addr_type = ADDR_LE_DEV_RANDOM;
+ 
+ 		if (!hci_dev_test_and_clear_flag(hdev, HCI_RPA_EXPIRED) &&
+ 		    !bacmp(&hdev->random_addr, &hdev->rpa))
 -- 
 2.17.1
 
