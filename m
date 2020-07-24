@@ -2,29 +2,29 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 535E922C503
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 24 Jul 2020 14:20:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 487A422C504
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 24 Jul 2020 14:21:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726329AbgGXMUy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 24 Jul 2020 08:20:54 -0400
-Received: from lucky1.263xmail.com ([211.157.147.134]:47410 "EHLO
+        id S1726381AbgGXMVJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 24 Jul 2020 08:21:09 -0400
+Received: from lucky1.263xmail.com ([211.157.147.134]:47542 "EHLO
         lucky1.263xmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726258AbgGXMUy (ORCPT
+        with ESMTP id S1726258AbgGXMVI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 24 Jul 2020 08:20:54 -0400
-Received: from localhost (unknown [192.168.167.209])
-        by lucky1.263xmail.com (Postfix) with ESMTP id F2AC9C0907
-        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Jul 2020 20:20:44 +0800 (CST)
+        Fri, 24 Jul 2020 08:21:08 -0400
+Received: from localhost (unknown [192.168.167.139])
+        by lucky1.263xmail.com (Postfix) with ESMTP id 8B7C1C09FF
+        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Jul 2020 20:21:01 +0800 (CST)
 X-MAIL-GRAY: 0
 X-MAIL-DELIVERY: 1
 X-ADDR-CHECKED: 0
 X-ANTISPAM-LEVEL: 2
 X-ABS-CHECKED: 0
 Received: from localhost.localdomain (unknown [113.57.152.160])
-        by smtp.263.net (postfix) whith ESMTP id P20417T140494254360320S1595593245635670_;
-        Fri, 24 Jul 2020 20:20:46 +0800 (CST)
+        by smtp.263.net (postfix) whith ESMTP id P25385T139645017696000S1595593261558820_;
+        Fri, 24 Jul 2020 20:21:02 +0800 (CST)
 X-IP-DOMAINF: 1
-X-UNIQUE-TAG: <4363d5b6be41cca5a42b152a2cef72e2>
+X-UNIQUE-TAG: <d40bc9a2c0679184093307d58c9195d8>
 X-RL-SENDER: chengbo@uniontech.com
 X-SENDER: chengbo@uniontech.com
 X-LOGIN-NAME: chengbo@uniontech.com
@@ -36,8 +36,8 @@ X-System-Flag: 0
 From:   chengbo <515672508@qq.com>
 To:     linux-bluetooth@vger.kernel.org
 Subject: [PATCH BlueZ] src: Event callback registration optimization
-Date:   Fri, 24 Jul 2020 20:20:45 +0800
-Message-Id: <20200724122045.17245-1-515672508@qq.com>
+Date:   Fri, 24 Jul 2020 20:21:01 +0800
+Message-Id: <20200724122101.17300-1-515672508@qq.com>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
