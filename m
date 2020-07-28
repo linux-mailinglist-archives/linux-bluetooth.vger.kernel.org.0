@@ -2,51 +2,51 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF488230391
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jul 2020 09:12:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94443230398
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jul 2020 09:13:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727854AbgG1HMI convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 28 Jul 2020 03:12:08 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:50874 "EHLO
+        id S1727798AbgG1HNK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 28 Jul 2020 03:13:10 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:49209 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726854AbgG1HMI (ORCPT
+        with ESMTP id S1726854AbgG1HNJ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 28 Jul 2020 03:12:08 -0400
+        Tue, 28 Jul 2020 03:13:09 -0400
 Received: from marcel-macbook.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 93A20CECCD;
-        Tue, 28 Jul 2020 09:22:07 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id D2B49CECCD;
+        Tue, 28 Jul 2020 09:23:09 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH 1/2] Bluetooth: hci_h5: Set HCI_UART_RESET_ON_INIT to
- correct flags
+Subject: Re: [PATCH] Bluetooth: Return NOTIFY_DONE for hci_suspend_notifier
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200721103652.1.Idbc7eddf1f24f750a8bbcbc8e06743736ae3be31@changeid>
-Date:   Tue, 28 Jul 2020 09:12:05 +0200
-Cc:     Hans de Goede <hdegoede@redhat.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <BE8271CC-D9F4-4CE1-80A3-92E2F878B2B0@holtmann.org>
-References: <20200721103652.1.Idbc7eddf1f24f750a8bbcbc8e06743736ae3be31@changeid>
-To:     Nicolas Boichat <drinkcat@chromium.org>
+In-Reply-To: <20200723104742.19780-1-max.chou@realtek.com>
+Date:   Tue, 28 Jul 2020 09:13:08 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        netdev <netdev@vger.kernel.org>, linux-kernel@vger.kernel.org,
+        alex_lu@realsil.com.cn, hildawu@realtek.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <818B8B6F-F093-40DC-9B02-CFF0B9C9DE08@holtmann.org>
+References: <20200723104742.19780-1-max.chou@realtek.com>
+To:     max.chou@realtek.com
 X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Nicolas,
+Hi Max,
 
-> HCI_UART_RESET_ON_INIT belongs in hdev_flags, not flags.
+> The original return is NOTIFY_STOP, but notifier_call_chain would stop
+> the future call for register_pm_notifier even registered on other Kernel
+> modules with the same priority which value is zero.
 > 
-> Fixes: ce945552fde4a09 ("Bluetooth: hci_h5: Add support for serdev enumerated devices")
-> Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
-> 
+> Signed-off-by: Max Chou <max.chou@realtek.com>
 > ---
-> 
-> drivers/bluetooth/hci_h5.c | 2 +-
+> net/bluetooth/hci_core.c | 2 +-
 > 1 file changed, 1 insertion(+), 1 deletion(-)
 
 patch has been applied to bluetooth-next tree.
