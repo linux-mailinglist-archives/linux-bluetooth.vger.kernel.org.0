@@ -2,63 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D9242311C2
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jul 2020 20:30:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97F4F23141F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jul 2020 22:41:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732442AbgG1SaY convert rfc822-to-8bit (ORCPT
+        id S1728828AbgG1Ulu convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 28 Jul 2020 14:30:24 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:39362 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732429AbgG1SaY (ORCPT
+        Tue, 28 Jul 2020 16:41:50 -0400
+Received: from customer-201-134-139-73.uninet-ide.com.mx ([201.134.139.73]:59874
+        "EHLO correo.tlalpan.gob.mx" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728453AbgG1Ulu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 28 Jul 2020 14:30:24 -0400
-Received: from marcel-macbook.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
-        by mail.holtmann.org (Postfix) with ESMTPSA id A31F8CECD6;
-        Tue, 28 Jul 2020 20:40:23 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH v1] Bluetooth: hci_qca: Stop collecting memdump again for
- command timeout during SSR
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1595951580-16724-1-git-send-email-gubbaven@codeaurora.org>
-Date:   Tue, 28 Jul 2020 20:30:21 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        kernel list <linux-kernel@vger.kernel.org>,
-        Bluetooth Kernel Mailing List 
-        <linux-bluetooth@vger.kernel.org>,
-        Hemantg <hemantg@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org
+        Tue, 28 Jul 2020 16:41:50 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by correo.tlalpan.gob.mx (Postfix) with ESMTP id 917525A1A50;
+        Tue, 28 Jul 2020 06:23:20 -0500 (CDT)
+Received: from correo.tlalpan.gob.mx ([127.0.0.1])
+        by localhost (correo.tlalpan.gob.mx [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id CCxkMpEo1E3N; Tue, 28 Jul 2020 06:23:20 -0500 (CDT)
+Received: from localhost (localhost [127.0.0.1])
+        by correo.tlalpan.gob.mx (Postfix) with ESMTP id 139974AE7A5;
+        Tue, 28 Jul 2020 04:28:19 -0500 (CDT)
+X-Virus-Scanned: amavisd-new at tlalpan.gob.mx
+Received: from correo.tlalpan.gob.mx ([127.0.0.1])
+        by localhost (correo.tlalpan.gob.mx [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id OCKjn_47fEsA; Tue, 28 Jul 2020 04:28:19 -0500 (CDT)
+Received: from [10.85.108.11] (unknown [105.8.2.12])
+        by correo.tlalpan.gob.mx (Postfix) with ESMTPSA id 80EF5466506;
+        Tue, 28 Jul 2020 03:54:20 -0500 (CDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8BIT
-Message-Id: <44CF30D5-CBD7-4979-8BF4-50565D21FA39@holtmann.org>
-References: <1595951580-16724-1-git-send-email-gubbaven@codeaurora.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+Content-Description: Mail message body
+Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
+To:     Recipients <aguayenergia@tlalpan.gob.mx>
+From:   ''Tayeb Souami'' <aguayenergia@tlalpan.gob.mx>
+Date:   Tue, 28 Jul 2020 10:58:38 +0200
+Reply-To: Tayebsouam.spende@gmail.com
+Message-Id: <20200728085420.80EF5466506@correo.tlalpan.gob.mx>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Venkata,
+Lieber Freund,
 
-> Setting memdump state to idle prior to setting of callback function
-> pointer for command timeout to NULL,causing the issue.Now moved the
-> initialisation of memdump state to qca_setup().
-> 
-> Fixes: d841502c79e3 ("Bluetooth: hci_qca: Collect controller memory dump during SSR")
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> ---
-> drivers/bluetooth/hci_qca.c | 9 +++++----
-> 1 file changed, 5 insertions(+), 4 deletions(-)
+Ich bin Herr Tayeb Souami, New Jersey, Vereinigte Staaten von Amerika, der Mega-Gewinner von $ 315million In Mega Millions Jackpot, spende ich an 5 zufällige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Mail nach einem Spinball ausgewählt.Ich habe den größten Teil meines Vermögens auf eine Reihe von Wohltätigkeitsorganisationen und Organisationen verteilt.Ich habe mich freiwillig dazu entschieden, die Summe von € 2.000.000,00 an Sie als eine der ausgewählten 5 zu spenden, um meine Gewinne zu überprüfen, sehen Sie bitte meine You Tube Seite unten.
 
-patch has been applied to bluetooth-next tree.
+UHR MICH HIER: https://www.youtube.com/watch?v=Z6ui8ZDQ6Ks
 
-Regards
 
-Marcel
+Das ist dein Spendencode: [TS530342018]
 
+
+Antworten Sie mit dem SPENDE-CODE an diese
+
+E-Mail:Tayebsouam.spende@gmail.com
+
+
+Ich hoffe, Sie und Ihre Familie glücklich zu machen.
+
+Grüße
+Herr Tayeb Souami
