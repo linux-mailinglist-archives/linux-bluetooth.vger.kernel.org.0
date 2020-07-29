@@ -2,65 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3CCD23175A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Jul 2020 03:43:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 647FA231771
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Jul 2020 03:55:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730867AbgG2Bmq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 28 Jul 2020 21:42:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55186 "EHLO
+        id S1730428AbgG2Bzr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 28 Jul 2020 21:55:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730807AbgG2Bmp (ORCPT
+        with ESMTP id S1728401AbgG2Bzr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 28 Jul 2020 21:42:45 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE6E5C0619D4
-        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jul 2020 18:42:44 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id f193so1676826pfa.12
-        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jul 2020 18:42:44 -0700 (PDT)
+        Tue, 28 Jul 2020 21:55:47 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E0E8C061794
+        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jul 2020 18:55:47 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id t6so11071436plo.3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jul 2020 18:55:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TTWGYBvqA0FGBCBxpUVNcj7EdtNcrKdKGjNiWmgR93Y=;
-        b=U2MIefGuIXd13cnSb0ZAFli4kl4ZOOR8ESIZZM35Xu6end7x/RZIhzk2AB1jw7Tya3
-         c+kEyj5sx3+PWUHz3h1ddt1JKTWHqFyY7djoFc1Kt+ztjb7HCk5uh96R5Ix7d94NXgEw
-         rirq+arwB4xxA8aQUpmNRPyxa3TNqFtT3wS/Q=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0mg8uMGqdODjV0twVLdps/ZZK7k46XwhUkh9iWxwZlk=;
+        b=aTzRitfxz9zopfIM5sf1aA962vCcQ41AV5sAyCoKScsjH8DBz42gqa7qT0+4acAQTl
+         O3gUENOJcN6Nj3BNQpvAtljk8vlMT+RkpJZv0/+UjMvCGDOBNW1m5yQXB2JsFh8UfJnG
+         8G0Uubw1tHMZJ/KXSOTNZI2GR2BWt4JnO5tP8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TTWGYBvqA0FGBCBxpUVNcj7EdtNcrKdKGjNiWmgR93Y=;
-        b=LLJkeELVFC6JzUCw3izTNPItyhDtj9zKvrOIs5oYfMEFouYjOu+IOyY+1HzrWgpRfO
-         UIQWEo96iNZTXbhTJy7/4ORVF0y/l9IJcpMEciBdrnH5DSUsbsAZelwJdQdsw5QGILPg
-         rWYu9Tuw70AIgv+5FjS84aeooEoGMMIIWtwzediZjGHb+rSYu5YC1sMWXpL5GDDsMDSW
-         xpB4Ilsi6ER5U4TH5iUhW0vPMoXsd2mkhbJ/U0mliXMCczD1OdNqAjFZt8rBhb4k/cAU
-         bBZzoKRDTkVA9VFXDPuVTgFn9qYuzuOEXCaHrEpYvWPV3rSHn48OGa26khzAdM75kMGD
-         zX7w==
-X-Gm-Message-State: AOAM532Y/qCddJgOdITsYkZmG98j6h0QzLwwKaXkEPUaYv0hX/OyGi/8
-        1fL3QPsh4JSSPkwMzzK04oMIyA==
-X-Google-Smtp-Source: ABdhPJwxlR53Zt2NE7zO6R6YwgjRkRxgrjeVb59NedA9DKp000Hg/dnFnwY6rUOYxeUcxo+iWLrFTw==
-X-Received: by 2002:a63:2223:: with SMTP id i35mr27980589pgi.64.1595986964426;
-        Tue, 28 Jul 2020 18:42:44 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0mg8uMGqdODjV0twVLdps/ZZK7k46XwhUkh9iWxwZlk=;
+        b=aTQdo0V6m3isXEtheAdw56nF3rCTxMp2tpNREgQEkQdRhLFMOuqxtrHbzyt6VmW0R2
+         BkQRQrNrz9GAGBXN84D36WU2sdiaIL4IC240d9Tmu7Umll/nVw1ovAFxccr3U629bfWo
+         dB+lwpN2KmX/157gLXU1H6F3zViLJfej0JYUyKRBOBNu3apcHecrQNvcC6gbaMWJSPDu
+         xci1rZ5p2Lt78pdxskQ1afCBRes2K0dproxfUgp27K8x5JVQ0OyHmuMXav9PjdSh2G0K
+         dfMSht6XxH9fCuaKaGbxy8M7UeGYfDZOTm99tiRxcBL1f+hwg4oqgU/e5GE0miNA2F+9
+         B6GA==
+X-Gm-Message-State: AOAM533MDdlJs3eFuaeHWU9rvPfLfVHZR+qfsqarMmfB8c23Xe84Mk7K
+        HCed7m9fcGPzfSrpL3eXpr2T5g==
+X-Google-Smtp-Source: ABdhPJxhkc0GWRy4AcCb9BdoANI6K3BqmozunmTWCY/XpstZW0eebZ82Nhp2Ej8T4dNGEWBGxeFHOA==
+X-Received: by 2002:a17:90a:d30e:: with SMTP id p14mr7466443pju.72.1595987746779;
+        Tue, 28 Jul 2020 18:55:46 -0700 (PDT)
 Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:7220:84ff:fe09:2b94])
-        by smtp.gmail.com with ESMTPSA id e124sm280678pfe.176.2020.07.28.18.42.42
+        by smtp.gmail.com with ESMTPSA id lr1sm371128pjb.27.2020.07.28.18.55.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 18:42:42 -0700 (PDT)
+        Tue, 28 Jul 2020 18:55:46 -0700 (PDT)
 From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-To:     marcel@holtmann.org, luiz.dentz@gmail.com
+To:     luiz.dentz@gmail.com, marcel@holtmann.org
 Cc:     chromeos-bluetooth-upstreaming@chromium.org,
         linux-bluetooth@vger.kernel.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 3/3] Bluetooth: Emit controller suspend and resume events
-Date:   Tue, 28 Jul 2020 18:42:25 -0700
-Message-Id: <20200728184205.3.I905caec7d7bf0eb7a3ed9899b5afb9aebaf6f8a8@changeid>
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Subject: [RFC Bluez PATCH 0/3] adapter: Reconnect audio when resuming from suspend
+Date:   Tue, 28 Jul 2020 18:55:37 -0700
+Message-Id: <20200729015540.1848987-1-abhishekpandit@chromium.org>
 X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
-In-Reply-To: <20200729014225.1842177-1-abhishekpandit@chromium.org>
-References: <20200729014225.1842177-1-abhishekpandit@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -68,210 +61,78 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Emit controller suspend and resume events when we are ready for suspend
-and we've resumed from suspend.
 
-The controller suspend event will report whatever suspend state was
-successfully entered. The controller resume event will check the first
-HCI event that was received after we finished preparing for suspend and,
-if it was a connection event, store the address of the peer that caused
-the event. If it was not a connection event, we mark the wake reason as
-an unexpected event.
+Hi Luiz and Marcel,
 
-Here is a sample btmon trace with these events:
+This is a quality of life improvement for the behavior of audio devices
+during system suspend. This depends on a kernel change that emits
+suspend/resume events:
 
-@ MGMT Event: Controller Suspended (0x002d) plen 1
-        Suspend state: Page scanning and/or passive scanning (2)
+https://patchwork.kernel.org/project/bluetooth/list/?series=325771
 
-@ MGMT Event: Controller Resumed (0x002e) plen 8
-        Wake reason: Remote wake due to peer device connection (2)
-        LE Address: CD:F3:CD:13:C5:9A (OUI CD-F3-CD)
+Right now, audio devices will be disconnected as part of suspend but
+won't be reconnected when the system resumes without user interaction.
+This is annoying to some users as it causes an interruption to their
+normal work flow.
 
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
----
+This change reconnects audio devices that were disconnected for suspend
+using the following logic:
 
- include/net/bluetooth/hci_core.h |  3 ++
- include/net/bluetooth/mgmt.h     |  4 ++
- net/bluetooth/hci_core.c         | 26 +++++++++++-
- net/bluetooth/hci_event.c        | 73 ++++++++++++++++++++++++++++++++
- 4 files changed, 105 insertions(+), 1 deletion(-)
+ * In the Device Disconnected management event, if the disconnect reason
+   was 0x5 (Disconnected by Local Host for Suspend) and the device is an
+   audio sink (implements major services Audio + Rendering), then it is
+   queued for reconnect.
+ * When the Controller Resumed management event is seen, we check if
+   an audio device needs to be reconnected. If yes, we queue a delayed
+   callback to do the reconnection. The delay is 5s by default and is
+   meant to allow sufficient time for any Wi-Fi activity that may occur
+   during resume (since Bluetooth connect may adversely affect that).
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 1b336e6ebe66aa..7314798e47c3d6 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -484,6 +484,9 @@ struct hci_dev {
- 	enum suspended_state	suspend_state;
- 	bool			scanning_paused;
- 	bool			suspended;
-+	u8			wake_reason;
-+	bdaddr_t		wake_addr;
-+	u8			wake_addr_type;
- 
- 	wait_queue_head_t	suspend_wait_q;
- 	DECLARE_BITMAP(suspend_tasks, __SUSPEND_NUM_TASKS);
-diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
-index 1a98f836aad126..052fe443484112 100644
---- a/include/net/bluetooth/mgmt.h
-+++ b/include/net/bluetooth/mgmt.h
-@@ -1040,3 +1040,7 @@ struct mgmt_ev_controller_resume {
- 	__u8	wake_reason;
- 	struct mgmt_addr_info addr;
- } __packed;
-+
-+#define MGMT_WAKE_REASON_NON_BT_WAKE		0x0
-+#define MGMT_WAKE_REASON_UNEXPECTED		0x1
-+#define MGMT_WAKE_REASON_REMOTE_WAKE		0x2
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 4ba23b821cbf4a..2cc121731d6a7e 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3470,12 +3470,24 @@ static int hci_change_suspend_state(struct hci_dev *hdev,
- 	return hci_suspend_wait_event(hdev);
- }
- 
-+static void hci_clear_wake_reason(struct hci_dev *hdev)
-+{
-+	hci_dev_lock(hdev);
-+
-+	hdev->wake_reason = 0;
-+	bacpy(&hdev->wake_addr, BDADDR_ANY);
-+	hdev->wake_addr_type = 0;
-+
-+	hci_dev_unlock(hdev);
-+}
-+
- static int hci_suspend_notifier(struct notifier_block *nb, unsigned long action,
- 				void *data)
- {
- 	struct hci_dev *hdev =
- 		container_of(nb, struct hci_dev, suspend_notifier);
- 	int ret = 0;
-+	u8 state = BT_RUNNING;
- 
- 	/* If powering down, wait for completion. */
- 	if (mgmt_powering_down(hdev)) {
-@@ -3496,15 +3508,27 @@ static int hci_suspend_notifier(struct notifier_block *nb, unsigned long action,
- 		 *  - Second, program event filter/whitelist and enable scan
- 		 */
- 		ret = hci_change_suspend_state(hdev, BT_SUSPEND_DISCONNECT);
-+		if (!ret)
-+			state = BT_SUSPEND_DISCONNECT;
- 
- 		/* Only configure whitelist if disconnect succeeded and wake
- 		 * isn't being prevented.
- 		 */
--		if (!ret && !(hdev->prevent_wake && hdev->prevent_wake(hdev)))
-+		if (!ret && !(hdev->prevent_wake && hdev->prevent_wake(hdev))) {
- 			ret = hci_change_suspend_state(hdev,
- 						BT_SUSPEND_CONFIGURE_WAKE);
-+			if (!ret)
-+				state = BT_SUSPEND_CONFIGURE_WAKE;
-+		}
-+
-+		hci_clear_wake_reason(hdev);
-+		mgmt_suspending(hdev, state);
-+
- 	} else if (action == PM_POST_SUSPEND) {
- 		ret = hci_change_suspend_state(hdev, BT_RUNNING);
-+
-+		mgmt_resuming(hdev, hdev->wake_reason, &hdev->wake_addr,
-+			      hdev->wake_addr_type);
- 	}
- 
- done:
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 61f8c4d1202823..e92311ead456e5 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5979,6 +5979,76 @@ static bool hci_get_cmd_complete(struct hci_dev *hdev, u16 opcode,
- 	return true;
- }
- 
-+static void hci_store_wake_reason(struct hci_dev *hdev, u8 event,
-+				  struct sk_buff *skb)
-+{
-+	struct hci_ev_le_advertising_info *adv;
-+	struct hci_ev_le_direct_adv_info *direct_adv;
-+	struct hci_ev_le_ext_adv_report *ext_adv;
-+	const struct hci_ev_conn_complete *conn_complete = (void *)skb->data;
-+	const struct hci_ev_conn_request *conn_request = (void *)skb->data;
-+
-+	hci_dev_lock(hdev);
-+
-+	/* If we are currently suspended and this is the first BT event seen,
-+	 * save the wake reason associated with the event.
-+	 */
-+	if (!hdev->suspended || hdev->wake_reason)
-+		goto unlock;
-+
-+	/* Default to remote wake. Values for wake_reason are documented in the
-+	 * Bluez mgmt api docs.
-+	 */
-+	hdev->wake_reason = MGMT_WAKE_REASON_REMOTE_WAKE;
-+
-+	/* Once configured for remote wakeup, we should only wake up for
-+	 * reconnections. It's useful to see which device is waking us up so
-+	 * keep track of the bdaddr of the connection event that woke us up.
-+	 */
-+	if (event == HCI_EV_CONN_REQUEST) {
-+		bacpy(&hdev->wake_addr, &conn_complete->bdaddr);
-+		hdev->wake_addr_type = BDADDR_BREDR;
-+	} else if (event == HCI_EV_CONN_COMPLETE) {
-+		bacpy(&hdev->wake_addr, &conn_request->bdaddr);
-+		hdev->wake_addr_type = BDADDR_BREDR;
-+	} else if (event == HCI_EV_LE_META) {
-+		struct hci_ev_le_meta *le_ev = (void *)skb->data;
-+		u8 subevent = le_ev->subevent;
-+		u8 *ptr = &skb->data[sizeof(*le_ev)];
-+		u8 num_reports = *ptr;
-+
-+		if ((subevent == HCI_EV_LE_ADVERTISING_REPORT ||
-+		     subevent == HCI_EV_LE_DIRECT_ADV_REPORT ||
-+		     subevent == HCI_EV_LE_EXT_ADV_REPORT) &&
-+		    num_reports) {
-+			adv = (void *)(ptr + 1);
-+			direct_adv = (void *)(ptr + 1);
-+			ext_adv = (void *)(ptr + 1);
-+
-+			switch (subevent) {
-+			case HCI_EV_LE_ADVERTISING_REPORT:
-+				bacpy(&hdev->wake_addr, &adv->bdaddr);
-+				hdev->wake_addr_type = adv->bdaddr_type;
-+				break;
-+
-+			case HCI_EV_LE_DIRECT_ADV_REPORT:
-+				bacpy(&hdev->wake_addr, &direct_adv->bdaddr);
-+				hdev->wake_addr_type = direct_adv->bdaddr_type;
-+				break;
-+			case HCI_EV_LE_EXT_ADV_REPORT:
-+				bacpy(&hdev->wake_addr, &ext_adv->bdaddr);
-+				hdev->wake_addr_type = ext_adv->bdaddr_type;
-+				break;
-+			}
-+		}
-+	} else {
-+		hdev->wake_reason = MGMT_WAKE_REASON_UNEXPECTED;
-+	}
-+
-+unlock:
-+	hci_dev_unlock(hdev);
-+}
-+
- void hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct hci_event_hdr *hdr = (void *) skb->data;
-@@ -6012,6 +6082,9 @@ void hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
- 
- 	skb_pull(skb, HCI_EVENT_HDR_SIZE);
- 
-+	/* Store wake reason if we're suspended */
-+	hci_store_wake_reason(hdev, event, skb);
-+
- 	switch (event) {
- 	case HCI_EV_INQUIRY_COMPLETE:
- 		hci_inquiry_complete_evt(hdev, skb);
+A reconnect is only attempted once after the controller resumes and the
+delay between resume and reconnect is configurable via the
+ReconnectAudioDelay key in the General settings. The 5s delay was chosen
+arbitrarily and I think anywhere up to 10s is probably ok. A longer
+delay is better to account for spurious wakeups and Wi-Fi reconnection
+time (avoiding any co-ex issues) at the downside of reconnection speed.
+
+Here are the tests I have done with this:
+- Single suspend and verified the headphones reconnect
+- Suspend stress test for 25 iterations and verify both Wi-Fi and
+  Bluetooth audio reconnect on resume. (Ran with wake minimum time of
+  10s)
+- Suspend test with wake time < 5s to verify that BT reconnect isn't
+  attempted. Ran 5 iterations with low wake time and then let it stay
+  awake to confirm reconnect finally completed after 5s+ wake time.
+- Suspend test with wake time between 3s - 6s. Ran with 5 iterations and
+  verified it wasn't connected at the end. A connection attempt was
+  made but not completed due to suspend. A reconnect attempt was not
+  made afterwards, which is by design.
+
+  Luiz@ Marcel@: Does this sound ok (give up after an attempt)?
+
+I've tested this on a Pixelbook Go (AC-9260 controller) and HP
+Chromebook 14a (RTL8822CE controller) with GID6B headset. I'm hoping to
+test this with a few more headsets to make sure this is ok and I'm
+looking for some early feedback.
+
+Thanks
+Abhishek
+
+
+
+Abhishek Pandit-Subedi (3):
+  mgmt: Add controller suspend and resume events
+  monitor: Add btmon support for Suspend and Resume events
+  adapter: Reconnect audio on controller resume
+
+ lib/mgmt.h       | 14 +++++++++
+ monitor/packet.c | 55 ++++++++++++++++++++++++++++++++
+ src/adapter.c    | 82 ++++++++++++++++++++++++++++++++++++++++++++++++
+ src/device.c     | 27 ++++++++++++++++
+ src/device.h     |  2 ++
+ src/main.conf    |  6 ++++
+ 6 files changed, 186 insertions(+)
+
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
