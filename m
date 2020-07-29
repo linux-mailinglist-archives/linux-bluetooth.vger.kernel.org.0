@@ -2,46 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 317AD231A2C
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Jul 2020 09:17:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 080F9231A22
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Jul 2020 09:16:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727884AbgG2HRM convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 29 Jul 2020 03:17:12 -0400
-Received: from customer-201-134-139-73.uninet-ide.com.mx ([201.134.139.73]:54732
-        "EHLO correo.tlalpan.gob.mx" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727873AbgG2HRL (ORCPT
+        id S1726907AbgG2HQg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 29 Jul 2020 03:16:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49670 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726476AbgG2HQg (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 29 Jul 2020 03:17:11 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by correo.tlalpan.gob.mx (Postfix) with ESMTP id E19A465D931;
-        Tue, 28 Jul 2020 13:48:42 -0500 (CDT)
-Received: from correo.tlalpan.gob.mx ([127.0.0.1])
-        by localhost (correo.tlalpan.gob.mx [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id ZZy7YNHhpxg5; Tue, 28 Jul 2020 13:48:42 -0500 (CDT)
-Received: from localhost (localhost [127.0.0.1])
-        by correo.tlalpan.gob.mx (Postfix) with ESMTP id BDE80541CF7;
-        Tue, 28 Jul 2020 07:47:38 -0500 (CDT)
-X-Virus-Scanned: amavisd-new at tlalpan.gob.mx
-Received: from correo.tlalpan.gob.mx ([127.0.0.1])
-        by localhost (correo.tlalpan.gob.mx [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id B7YAkVErK6cg; Tue, 28 Jul 2020 07:47:38 -0500 (CDT)
-Received: from [192.168.1.180] (156-155-138-16.ip.internet.co.za [156.155.138.16])
-        by correo.tlalpan.gob.mx (Postfix) with ESMTPSA id 2E938566508;
-        Tue, 28 Jul 2020 05:54:19 -0500 (CDT)
-Content-Type: text/plain; charset="iso-8859-1"
+        Wed, 29 Jul 2020 03:16:36 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97321C061794
+        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Jul 2020 00:16:35 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id a21so23200359ejj.10
+        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Jul 2020 00:16:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/5ABK+eA36c0ZVESFTkjpcE0rr+cIOhB5EPocStv7k0=;
+        b=kzoKD1v7bqKf1htaxYKCzZpk1oJXbqeDaRnGRhBXNT1QfhYnUEtXBLkPIRcKR/B5i5
+         mFo/8Oee7oPHws+x2UOZeK0DBJI4y8s//M9lpWs52NYUzMttIHRNRl5Ce4Kg+dPYNAlL
+         b/7pIv41ehMuXOvbwQTuuaLkemCHMn95Z086EwXClFwbvf/X5QmNDWG8llAxoVog0929
+         Kw0juE1tu4tdKB4AbF1ajkmklzlM6W97FMUyR/Qi8NPpFZ+txO0VpD4SmhrwQDDhqwAM
+         niW1/wkpgvRaT5KRahgpD3mcrMO/ziDLTXIwgT15SxCh6Wa+FmG4OwWWbMDgQYwYvYYL
+         QrBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/5ABK+eA36c0ZVESFTkjpcE0rr+cIOhB5EPocStv7k0=;
+        b=YX0CPE5EkE0ni+bfqBDMzyNHMoJWDWuClrqo4PwJou+raLjAn0mLEuZ/4PlYiZGsd2
+         h0l/orn4Y4iAqf5QOuyaKqMcbKHj6p74Lbaxg0uFz3gOe1MSNPb9G/Rrso+117LFJycw
+         XBifNm7TrorM4kRUpXHe4kGTxqtoZwEPjRSB35zxLxoE5+LdwOpwCgQP+ot1wMF9F5XL
+         P7dTJ9JqSol3jX4v2IaPsVkG7qJqs9HH5nZXWWTMNwmOcZWX7vyPHQYNlbJvmxdvrYRI
+         KGhGtZ6j6oMzVvsgS+Tl0WO7QiT0PmSh97TCbHSa9ZkQZq0tVd7eM3295OR2z3D6WBh+
+         K3LQ==
+X-Gm-Message-State: AOAM533HtPMTUNJ6oVHuXrdpVIMVXaaYpL5VzMJjtGmFdPEP00o//Fyb
+        Jd/1N1wVWl/Fbf/t9UUXyO1czERG4sY=
+X-Google-Smtp-Source: ABdhPJwYjjzKxuUn70nbK8GCVjgcPZ9eGfobET2BnmBTw3WEspN12Hy9KnuoTHoYYYBKq2Uu+izfjA==
+X-Received: by 2002:a17:906:c56:: with SMTP id t22mr30617962ejf.50.1596006993978;
+        Wed, 29 Jul 2020 00:16:33 -0700 (PDT)
+Received: from niels-laptop.telenet.be (ptr-usc1wvbea8yt39w15k.18120a2.ip6.access.telenet.be. [2a02:1810:1c80:7200:d1cb:60bc:b806:b2d8])
+        by smtp.gmail.com with ESMTPSA id cf10sm867853ejb.4.2020.07.29.00.16.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2020 00:16:33 -0700 (PDT)
+From:   Niels Avonds <niels.avonds@gmail.com>
+X-Google-Original-From: Niels Avonds <niels@nobi.life>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Niels Avonds <niels@nobi.life>
+Subject: [PATCH BlueZ] device: Don't mark services resolved on error
+Date:   Wed, 29 Jul 2020 09:16:02 +0200
+Message-Id: <20200729071602.12868-1-niels@nobi.life>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Spende
-To:     Recipients <aguayenergia@tlalpan.gob.mx>
-From:   aguayenergia@tlalpan.gob.mx
-Date:   Tue, 28 Jul 2020 03:58:40 -0700
-Reply-To: julieleeach@yahoo.com
-Message-Id: <20200728105421.2E938566508@correo.tlalpan.gob.mx>
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hallo, Sie haben eine Spende in Höhe von 3,000,000.00 EURO. Ich habe die America-Lotterie in Amerika im Wert von $ 310.5 Millionen US-Dollar gewonnen und einen Teil davon an fünf glückliche Menschen und Wohltätigkeitsorganisationen gespendet, um an das Leben meines verstorbenen Sohnes zu erinnern, der an Krebs or gest , kontaktieren mich für weitere Informationen unter
+This fixes a bug where the service UUIDs were not rediscovered after a
+failed bonding attempt because the svc_resolved flag remained set even
+though the uuids list was empty.
+---
+ src/device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/device.c b/src/device.c
+index bb8e07e8f..e20c2d240 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -2591,7 +2591,8 @@ static void device_svc_resolved(struct btd_device *dev, uint8_t browse_type,
+ 
+ 	DBG("%s err %d", dev->path, err);
+ 
+-	state->svc_resolved = true;
++	if (err == 0)
++		state->svc_resolved = true;
+ 
+ 	/* Disconnection notification can happen before this function
+ 	 * gets called, so don't set svc_refreshed for a disconnected
+-- 
+2.18.0
+
