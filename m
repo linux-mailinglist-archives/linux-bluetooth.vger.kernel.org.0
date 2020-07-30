@@ -2,47 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69C15232FF2
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jul 2020 11:56:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D1C32337D4
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jul 2020 19:40:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728693AbgG3J4h (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Jul 2020 05:56:37 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:57345 "EHLO
+        id S1726353AbgG3RkS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 30 Jul 2020 13:40:18 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:51233 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726946AbgG3J4h (ORCPT
+        with ESMTP id S1726275AbgG3RkR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 Jul 2020 05:56:37 -0400
-Received: from marcel-macbook.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 31140CECF2;
-        Thu, 30 Jul 2020 12:06:38 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH 8/8] Bluetooth: Enable controller RPA resolution using
- Experimental feature
+        Thu, 30 Jul 2020 13:40:17 -0400
+Received: from localhost.localdomain (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 597B9CECFC
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jul 2020 19:50:17 +0200 (CEST)
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <CAOVXEJ+hz7j9MnYU1hWrvM5itg_xumjWgyYTTYOQazEG9Y17gQ@mail.gmail.com>
-Date:   Thu, 30 Jul 2020 11:56:36 +0200
-Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <E88DC211-F19B-4E67-B706-DD9DF0DFCFBD@holtmann.org>
-References: <20200730091421.48847-8-marcel@holtmann.org>
- <CAOVXEJ+hz7j9MnYU1hWrvM5itg_xumjWgyYTTYOQazEG9Y17gQ@mail.gmail.com>
-To:     Sathish Narasimman <nsathish41@gmail.com>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH] Bluetooth: Increment management interface revision
+Date:   Thu, 30 Jul 2020 19:40:11 +0200
+Message-Id: <20200730174011.71784-1-marcel@holtmann.org>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Satish,
+Increment the mgmt revision due to the recently added new commands.
 
-> I am ok with your changes.
-> Including all the patches
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+---
+ net/bluetooth/mgmt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-ok, all 8 patches have been applied to bluetooth-next tree.
-
-Regards
-
-Marcel
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 4ec0fee80344..5bbe71002fb9 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -40,7 +40,7 @@
+ #include "msft.h"
+ 
+ #define MGMT_VERSION	1
+-#define MGMT_REVISION	17
++#define MGMT_REVISION	18
+ 
+ static const u16 mgmt_commands[] = {
+ 	MGMT_OP_READ_INDEX_LIST,
+-- 
+2.26.2
 
