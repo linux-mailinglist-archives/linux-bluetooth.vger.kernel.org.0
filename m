@@ -2,151 +2,133 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AA46233CBC
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 31 Jul 2020 03:05:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DD80233D9F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 31 Jul 2020 05:13:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728588AbgGaBFk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Jul 2020 21:05:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40344 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728080AbgGaBFj (ORCPT
+        id S1731282AbgGaDN3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 30 Jul 2020 23:13:29 -0400
+Received: from mail-il1-f198.google.com ([209.85.166.198]:37561 "EHLO
+        mail-il1-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731297AbgGaDNY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 Jul 2020 21:05:39 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD361C061574
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jul 2020 18:05:39 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id s20so14968169vsq.5
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jul 2020 18:05:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XL5rU5YC60frM3gP4UMCvKHyUzU+TZFJvAqINKMI6/E=;
-        b=C8l0mXCQI4PP7k7BzBzwn63GljjNdROnpiBppAXoHj8EuD5jzgQeauXCNdEq0bkOyG
-         cQazyxuAMC0HhsLQDMhNoya2W4bAtSN3cjm00MJv55Mvmxqhmsqn0lAihFXIbybfAQk4
-         tw6VM7v6heHmWB6J8p8xfBfPUGGK60CUc485k=
+        Thu, 30 Jul 2020 23:13:24 -0400
+Received: by mail-il1-f198.google.com with SMTP id k69so2042030ilg.4
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jul 2020 20:13:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XL5rU5YC60frM3gP4UMCvKHyUzU+TZFJvAqINKMI6/E=;
-        b=jF8dFVfLNDleaLs6zkPUtDxN+iTL25XeE0Hj9b/2FPgywaTa7GELJn2lyPzXQ49pv2
-         RQa7Xs+Z1OCkNLuTALbrgib/uPWWjIO3WdjKcP6W7TKA2PoSN3YRqUq3z+aDJfpObGff
-         FpdMdVLM/65eYrNy+8SedO3M12CY+XaVtL/Fxnk8G/q/77ENn1LzEVNg4WKzRulmGCLZ
-         qPHWixz6eQS36dLYLv3Nl75ya+ojJ12Sk6jjeORj+bM9eAEzEAPsiLX8K14e0LAmt6KM
-         kJ06gdyBpPh+puFC7GhDm2LMP1siuSSKHlJKz/ozD6p/le8qO7X5pShM7CUR130MX6K2
-         xlLg==
-X-Gm-Message-State: AOAM531yRCtb+LSODm2behYTI8HIk4Xv7yEqtCXBvdyTr9xiGK2Ohy4U
-        U3vrlghh5GK5A78xzRL4Zi8KyVwSujo=
-X-Google-Smtp-Source: ABdhPJzrwa6/9L8GG30Dt/jpgz3bqBnMkSBKMB4UmarP2YKaOViUJ7X+/zWSnq40NhBahCLfyA6tGQ==
-X-Received: by 2002:a67:eb92:: with SMTP id e18mr1486085vso.96.1596157538598;
-        Thu, 30 Jul 2020 18:05:38 -0700 (PDT)
-Received: from alain.c.googlers.com.com (252.177.243.35.bc.googleusercontent.com. [35.243.177.252])
-        by smtp.gmail.com with ESMTPSA id n62sm1009914vke.12.2020.07.30.18.05.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jul 2020 18:05:37 -0700 (PDT)
-From:   Alain Michaud <alainm@chromium.org>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Alain Michaud <alainm@chromium.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Yu Liu <yudiliu@google.com>
-Subject: [PATCH v2] Bluetooth: use the proper scan params when conn is pending
-Date:   Fri, 31 Jul 2020 01:05:34 +0000
-Message-Id: <20200731010535.1422455-1-alainm@chromium.org>
-X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6-goog
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=wX4UxClPuPiSj/FUSxb7K5H0GkdpHs3QFxD4LPSNLqA=;
+        b=rDvmR2wnRHUaRop0ZH/jLjJjo1bm5rcC5QZbNRgKj1EOTAIBmifuKLQDICqblhGvTt
+         iKMzgf2tnxtv6707htmncpdTJ79SriYawvHBXBr0ur6ztSq/vaq9iJiIQr2wdi9ZGQU5
+         JPT4dXAgMaTAI6sAMvurCHrn9BpV0UMW9msOUIPyC93z6J2bnJVZmXVyHvZ+tM+hEWYK
+         T3Vf1O8Drb2cmpA1oXXNciP69VOdz2uiWA1r7xyyMkxduY/ly8CHM9VZJKrwCZht9YGG
+         Tb0kGl6anKGQkGJGZ3HKgau9jIVkBMG2AOjthOOUm4XEoFiqH9CshoCbAGXoPXYfz7k/
+         AjeA==
+X-Gm-Message-State: AOAM532KG8CBMP/wI8MH/EDDX407L9loSiW9qzdIg1QTb00TJlgewVyZ
+        Z7Oy4KwgrUL+i2obsF3nb331gyJka/jOWEosChoe2O9taDoq
+X-Google-Smtp-Source: ABdhPJwwXeZjCISUCoDvHg+GBVSC0YtBkDu6ONKcAkrSJGzoKHuoinf8LqGYz/vtMMcNSmMI7chfpv+l8rlLTtfpCN5AQvrvvTv3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a92:8b11:: with SMTP id i17mr1662247ild.212.1596165203611;
+ Thu, 30 Jul 2020 20:13:23 -0700 (PDT)
+Date:   Thu, 30 Jul 2020 20:13:23 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <000000000000f6d80505abb42b60@google.com>
+Subject: WARNING in cancel_delayed_work
+From:   syzbot <syzbot+35e70efb794757d7e175@syzkaller.appspotmail.com>
+To:     davem@davemloft.net, johan.hedberg@gmail.com, kuba@kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, netdev@vger.kernel.org,
+        syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When an LE connection is requested and an RPA update is needed via
-hci_connect_le_scan, the default scanning parameters are used rather
-than the connect parameters.  This leads to significant delays in the
-connection establishment process when using lower duty cycle scanning
-parameters.
+Hello,
 
-The patch simply looks at the pended connection list when trying to
-determine which scanning parameters should be used.
+syzbot found the following issue on:
 
-Before:
-< HCI Command: LE Set Extended Scan Parameters (0x08|0x0041) plen 8
-                            #378 [hci0] 1659.247156
-        Own address type: Public (0x00)
-        Filter policy: Ignore not in white list (0x01)
-        PHYs: 0x01
-        Entry 0: LE 1M
-          Type: Passive (0x00)
-          Interval: 367.500 msec (0x024c)
-          Window: 37.500 msec (0x003c)
+HEAD commit:    83bdc727 random32: remove net_rand_state from the latent e..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=10479f12900000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=e59ee776d5aa8d55
+dashboard link: https://syzkaller.appspot.com/bug?extid=35e70efb794757d7e175
+compiler:       clang version 10.0.0 (https://github.com/llvm/llvm-project/ c2443155a0fb245c8f17f2c1c72b6ea391e86e81)
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1160faa2900000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=11816098900000
 
-After:
-< HCI Command: LE Set Extended Scan Parameters (0x08|0x0041) plen 8
-                               #39 [hci0] 7.422109
-        Own address type: Public (0x00)
-        Filter policy: Ignore not in white list (0x01)
-        PHYs: 0x01
-        Entry 0: LE 1M
-          Type: Passive (0x00)
-          Interval: 60.000 msec (0x0060)
-          Window: 60.000 msec (0x0060)
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+35e70efb794757d7e175@syzkaller.appspotmail.com
 
-Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Reviewed-by: Yu Liu <yudiliu@google.com>
-Signed-off-by: Alain Michaud <alainm@chromium.org>
+------------[ cut here ]------------
+ODEBUG: assert_init not available (active state 0) object type: timer_list hint: 0x0
+WARNING: CPU: 0 PID: 6889 at lib/debugobjects.c:488 debug_print_object lib/debugobjects.c:485 [inline]
+WARNING: CPU: 0 PID: 6889 at lib/debugobjects.c:488 debug_object_assert_init+0x1fa/0x250 lib/debugobjects.c:870
+Kernel panic - not syncing: panic_on_warn set ...
+CPU: 0 PID: 6889 Comm: syz-executor259 Not tainted 5.8.0-rc7-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x1f0/0x31e lib/dump_stack.c:118
+ panic+0x264/0x7a0 kernel/panic.c:231
+ __warn+0x227/0x250 kernel/panic.c:600
+ report_bug+0x1b1/0x2e0 lib/bug.c:198
+ handle_bug+0x42/0x80 arch/x86/kernel/traps.c:235
+ exc_invalid_op+0x16/0x40 arch/x86/kernel/traps.c:255
+ asm_exc_invalid_op+0x12/0x20 arch/x86/include/asm/idtentry.h:540
+RIP: 0010:debug_print_object lib/debugobjects.c:485 [inline]
+RIP: 0010:debug_object_assert_init+0x1fa/0x250 lib/debugobjects.c:870
+Code: e8 ab ec 11 fe 4c 8b 45 00 48 c7 c7 0f b7 14 89 48 c7 c6 09 b6 14 89 48 c7 c2 22 30 2c 89 31 c9 49 89 d9 31 c0 e8 16 9e a4 fd <0f> 0b ff 05 02 ca eb 05 48 83 c5 38 48 89 e8 48 c1 e8 03 42 80 3c
+RSP: 0018:ffffc90001477828 EFLAGS: 00010046
+RAX: 8d1db38e33234900 RBX: 0000000000000000 RCX: ffff888091cfe200
+RDX: 0000000000000000 RSI: 0000000080000000 RDI: 0000000000000000
+RBP: ffffffff894edb20 R08: ffffffff815dd389 R09: ffffed1015d041c3
+R10: ffffed1015d041c3 R11: 0000000000000000 R12: dffffc0000000000
+R13: ffff8880a687e200 R14: 0000000000000002 R15: ffffffff8ba2a2a0
+ debug_timer_assert_init kernel/time/timer.c:737 [inline]
+ debug_assert_init kernel/time/timer.c:782 [inline]
+ del_timer+0x2f/0x340 kernel/time/timer.c:1208
+ try_to_grab_pending+0xba/0x9f0 kernel/workqueue.c:1249
+ __cancel_work kernel/workqueue.c:3221 [inline]
+ cancel_delayed_work+0x37/0x2b0 kernel/workqueue.c:3250
+ l2cap_clear_timer include/net/bluetooth/l2cap.h:879 [inline]
+ l2cap_chan_del+0x5bf/0x760 net/bluetooth/l2cap_core.c:661
+ l2cap_chan_close+0x7bf/0xae0 net/bluetooth/l2cap_core.c:824
+ l2cap_sock_shutdown+0x39f/0x700 net/bluetooth/l2cap_sock.c:1339
+ l2cap_sock_release+0x63/0x190 net/bluetooth/l2cap_sock.c:1382
+ __sock_release net/socket.c:605 [inline]
+ sock_close+0xd8/0x260 net/socket.c:1278
+ __fput+0x2f0/0x750 fs/file_table.c:281
+ task_work_run+0x137/0x1c0 kernel/task_work.c:135
+ exit_task_work include/linux/task_work.h:25 [inline]
+ do_exit+0x601/0x1f80 kernel/exit.c:805
+ do_group_exit+0x161/0x2d0 kernel/exit.c:903
+ get_signal+0x139b/0x1d30 kernel/signal.c:2743
+ do_signal+0x33/0x610 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop arch/x86/entry/common.c:235 [inline]
+ __prepare_exit_to_usermode+0xd7/0x1e0 arch/x86/entry/common.c:269
+ do_syscall_64+0x7f/0xe0 arch/x86/entry/common.c:393
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x446d69
+Code: Bad RIP value.
+RSP: 002b:00007ffc9b702c28 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: fffffffffffffffc RBX: 0000000000000003 RCX: 0000000000446d69
+RDX: 000000000000000e RSI: 0000000020000040 RDI: 0000000000000004
+RBP: 00007ffc9b702c60 R08: 0000000000000000 R09: 00000000000000ff
+R10: 0000000000000004 R11: 0000000000000246 R12: 0000000000000004
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+Kernel Offset: disabled
+Rebooting in 86400 seconds..
+
 
 ---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-Changes in v2:
- - Fixing Yu's email tag
-
- net/bluetooth/hci_request.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 435400a43a78..e0269192f2e5 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -953,6 +953,27 @@ static void hci_req_start_scan(struct hci_request *req, u8 type, u16 interval,
- 	}
- }
- 
-+/* Returns true if an le connection is in the scanning state */
-+static inline bool hci_is_le_conn_scanning(struct hci_dev *hdev)
-+{
-+	struct hci_conn_hash *h = &hdev->conn_hash;
-+	struct hci_conn  *c;
-+
-+	rcu_read_lock();
-+
-+	list_for_each_entry_rcu(c, &h->list, list) {
-+		if (c->type == LE_LINK && c->state == BT_CONNECT &&
-+		    test_bit(HCI_CONN_SCANNING, &c->flags)) {
-+			rcu_read_unlock();
-+			return true;
-+		}
-+	}
-+
-+	rcu_read_unlock();
-+
-+	return false;
-+}
-+
- /* Ensure to call hci_req_add_le_scan_disable() first to disable the
-  * controller based address resolution to be able to reconfigure
-  * resolving list.
-@@ -1003,6 +1024,9 @@ void hci_req_add_le_passive_scan(struct hci_request *req)
- 	if (hdev->suspended) {
- 		window = hdev->le_scan_window_suspend;
- 		interval = hdev->le_scan_int_suspend;
-+	} else if (hci_is_le_conn_scanning(hdev)) {
-+		window = hdev->le_scan_window_connect;
-+		interval = hdev->le_scan_int_connect;
- 	} else {
- 		window = hdev->le_scan_window;
- 		interval = hdev->le_scan_interval;
--- 
-2.28.0.163.g6104cc2f0b6-goog
-
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+syzbot can test patches for this issue, for details see:
+https://goo.gl/tpsmEJ#testing-patches
