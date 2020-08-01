@@ -2,115 +2,74 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 167B223535D
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 Aug 2020 18:30:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 355A6235364
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 Aug 2020 18:33:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726947AbgHAQ37 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 1 Aug 2020 12:29:59 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:37301 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726300AbgHAQ37 (ORCPT
+        id S1727057AbgHAQdH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 1 Aug 2020 12:33:07 -0400
+Received: from mail-io1-f69.google.com ([209.85.166.69]:48561 "EHLO
+        mail-io1-f69.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726748AbgHAQdG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 1 Aug 2020 12:29:59 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 08F835C00CD;
-        Sat,  1 Aug 2020 12:29:58 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Sat, 01 Aug 2020 12:29:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sholland.org; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=fm3; bh=FhcIa5vl19H1Q
-        blhkWUef9NQmw0YCfpphgojts1RzX8=; b=QpBmy8JELAjTsoUSWhhnQ8Xsdarfx
-        j45BkSPOB3LmOa0asJz/gYTMUMp5RIRFpnsT4ckK0XkbW0KtxgNAzAlY2MQDaAD7
-        uKnqjuJs9BxSAAbvY68kZipHASbjPK+VBpKO3Pu/8vyaHKke9447zy1H1py4od+Y
-        4PdihZQL/7lj9/oAr5KL98gFrioLT5d+cfUTjR6e7Ssl6KI8C0EhPmcxz7n6Db87
-        0R+oCAEauWH0HZUXuwAmO7v63EyZXCTj1V1zH5WxLh3IjlaNqjGMGPFZ7mucaXUt
-        EVqlxbFtq4+QPd9sGV1jhe48Vqgls/5khhHO2I5GoUQByr410L+DPgqLQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; bh=FhcIa5vl19H1QblhkWUef9NQmw0YCfpphgojts1RzX8=; b=gmwiPuLf
-        ty1/QDRZRbPvvrv/SqW6plo6h4QMXFosA6rGaWIqn8N6gdztx5cuQTZVzZLktmVA
-        UzI8GGNGoZl1o1Y7Zt38/f2oPhDVt42ac6erQVMjl2q6dFmvyAjnhFq2h70bAuaF
-        S4P+b+aQ3VhZOzXYqhrCFbmLwxJOn8Y79II4dCRVc7NRmdXNBvHfKmH7z+R2czZt
-        6vloy6fyudN8+JJyosbv5cLijoRtAjiqfo2khnRwPkJ2QQx84NGAjiMijvz5YFtk
-        qfzAjzsSJoXp683vK/FPektO9wso9u/I07yMZXV+zQoSpcdRqYO5ng/Tlzb9IIe6
-        q6tdD6wXVLjJhg==
-X-ME-Sender: <xms:hZglX-zzVCEIuYxrRQvlXZ8ffFA6pNqOl_gOufbNw3j0_q9YLt2sBg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrjedtgddutdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefurghmuhgv
-    lhcujfholhhlrghnugcuoehsrghmuhgvlhesshhhohhllhgrnhgurdhorhhgqeenucggtf
-    frrghtthgvrhhnpeduhfejfedvhffgfeehtefghfeiiefgfeehgfdvvdevfeegjeehjedv
-    gfejheeuieenucfkphepjedtrddufeehrddugeekrdduhedunecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepshgrmhhuvghlsehshhholhhlrghn
-    ugdrohhrgh
-X-ME-Proxy: <xmx:hZglX6T_11FImR_VqxvSK0Okm5jIBH_klhrlqv9zyWj_hA634qyI9Q>
-    <xmx:hZglXwWJNcNxBH1tNwasgUlcibr1fHyeAFS4EQ73qV2G7YXn06gsNg>
-    <xmx:hZglX0hBZSKGFCDdYP9I8oN_N2P-bAz0oNynOsuI3zc6vkGhya9IKA>
-    <xmx:hpglXzO6UewIaOa9yafvbfqzrlXCpHXMfd0901VORoXUHbO40w85lg>
-Received: from titanium.stl.sholland.net (70-135-148-151.lightspeed.stlsmo.sbcglobal.net [70.135.148.151])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 8C2C23060067;
-        Sat,  1 Aug 2020 12:29:57 -0400 (EDT)
-From:   Samuel Holland <samuel@sholland.org>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>
-Cc:     Gustavo Padovan <gustavo.padovan@collabora.co.uk>,
-        Hans de Goede <hdegoede@redhat.com>,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Samuel Holland <samuel@sholland.org>
-Subject: [PATCH 2/2] Bluetooth: hci_ldisc/hci_serdev: Cancel init work before unregistering
-Date:   Sat,  1 Aug 2020 11:29:56 -0500
-Message-Id: <20200801162956.22610-2-samuel@sholland.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200801162956.22610-1-samuel@sholland.org>
-References: <20200801162956.22610-1-samuel@sholland.org>
+        Sat, 1 Aug 2020 12:33:06 -0400
+Received: by mail-io1-f69.google.com with SMTP id r9so23382100ioa.15
+        for <linux-bluetooth@vger.kernel.org>; Sat, 01 Aug 2020 09:33:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id:subject
+         :from:to;
+        bh=SIdCK8Q+4LKw+jmzrptYCoQd/JoF3mumY50X9Ph/hTE=;
+        b=Yp5CxSqrfh5++OZ58NE4K92opZrfKm6sWxb3Sh29nkbmZefsyHQpOvzEiTfT20mvWL
+         Ylhe3sPibXiwVfUgvZrdkbqz8Zr1Nu+xJbQeqDb9tUBAyfKEMNhx3SQ7Ex3WQW8cUk44
+         AQGRxWyP3MGm2V/bGpTA3E/T+l8l1QxEkZ9RzoF6AKlIzIrq6NX/JnoydDnhBLBhtFY6
+         aLiQRCcXxhnDNcvQqGJy6c+TCi/wXwqHqqiXx7r3Z7E2IhDBKu80KjBogAesWguaxiqs
+         vc529Ruw6D747421twHXyXQ71iD9yCYDGdNc8L5j2nyNXTZhIpF+cRGFKdRguHm/xs1h
+         ++hg==
+X-Gm-Message-State: AOAM531ikU1A02RHKRDrBaHjOnF1W2UZte/i+cXMW3XYOgS3zRXjJnaC
+        gApwWs2OzCRPbJGjlF3q4qIBruDp26F8JRzrAYdcorTD0LDg
+X-Google-Smtp-Source: ABdhPJxr/wL4FBG9BjuUQiXlSC8n5B0989oGaJ3+8JI4slsvtNxiaGVvvNeo1Fc/qvwpgTWkAaur6QYbJbGO5vawji+M3kZenXYs
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a05:6602:1343:: with SMTP id i3mr8889517iov.134.1596299585453;
+ Sat, 01 Aug 2020 09:33:05 -0700 (PDT)
+Date:   Sat, 01 Aug 2020 09:33:05 -0700
+In-Reply-To: <000000000000f298fc05abb42b70@google.com>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <000000000000bf03f305abd37535@google.com>
+Subject: Re: WARNING: ODEBUG bug in cancel_delayed_work
+From:   syzbot <syzbot+338f014a98367a08a114@syzkaller.appspotmail.com>
+To:     bhumirks@gmail.com, coreteam@netfilter.org, davem@davemloft.net,
+        devel@driverdev.osuosl.org, gregkh@linuxfoundation.org,
+        johan.hedberg@gmail.com, kaber@trash.net, kadlec@blackhole.kfki.hu,
+        kuba@kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marcel@holtmann.org,
+        netdev@vger.kernel.org, netfilter-devel@vger.kernel.org,
+        pablo@netfilter.org, syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-If hci_uart_tty_close() or hci_uart_unregister_device() is called while
-hu->init_ready is scheduled, hci_register_dev() could be called after
-the hci_uart is torn down. Avoid this by ensuring the work is complete
-or canceled before checking the HCI_UART_REGISTERED flag.
+syzbot has bisected this issue to:
 
-Fixes: 9f2aee848fe6 ("Bluetooth: Add delayed init sequence support for UART controllers")
-Signed-off-by: Samuel Holland <samuel@sholland.org>
----
- drivers/bluetooth/hci_ldisc.c  | 1 +
- drivers/bluetooth/hci_serdev.c | 2 ++
- 2 files changed, 3 insertions(+)
+commit 43ff7f53de2294a83dcf84b35de6ffa1ffafae9d
+Author: Bhumika Goyal <bhumirks@gmail.com>
+Date:   Thu Oct 6 18:10:01 2016 +0000
 
-diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
-index 85a30fb9177b..f83d67eafc9f 100644
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -538,6 +538,7 @@ static void hci_uart_tty_close(struct tty_struct *tty)
- 		clear_bit(HCI_UART_PROTO_READY, &hu->flags);
- 		percpu_up_write(&hu->proto_lock);
- 
-+		cancel_work_sync(&hu->init_ready);
- 		cancel_work_sync(&hu->write_work);
- 
- 		if (hdev) {
-diff --git a/drivers/bluetooth/hci_serdev.c b/drivers/bluetooth/hci_serdev.c
-index 7b233312e723..3977bba485c2 100644
---- a/drivers/bluetooth/hci_serdev.c
-+++ b/drivers/bluetooth/hci_serdev.c
-@@ -355,6 +355,8 @@ void hci_uart_unregister_device(struct hci_uart *hu)
- 	struct hci_dev *hdev = hu->hdev;
- 
- 	clear_bit(HCI_UART_PROTO_READY, &hu->flags);
-+
-+	cancel_work_sync(&hu->init_ready);
- 	if (test_bit(HCI_UART_REGISTERED, &hu->flags))
- 		hci_unregister_dev(hdev);
- 	hci_free_dev(hdev);
--- 
-2.26.2
+    Staging: vc04_services: vchiq_arm: Remove unused function remote_event_destroy
 
+bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=107c810c900000
+start commit:   d8b9faec Merge tag 'drm-fixes-2020-07-31' of git://anongit..
+git tree:       upstream
+final oops:     https://syzkaller.appspot.com/x/report.txt?x=127c810c900000
+console output: https://syzkaller.appspot.com/x/log.txt?x=147c810c900000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=c0cfcf935bcc94d2
+dashboard link: https://syzkaller.appspot.com/bug?extid=338f014a98367a08a114
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1111ad5c900000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=16565d5c900000
+
+Reported-by: syzbot+338f014a98367a08a114@syzkaller.appspotmail.com
+Fixes: 43ff7f53de22 ("Staging: vc04_services: vchiq_arm: Remove unused function remote_event_destroy")
+
+For information about bisection process see: https://goo.gl/tpsmEJ#bisection
