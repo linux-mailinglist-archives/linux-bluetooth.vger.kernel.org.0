@@ -2,37 +2,37 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 358C323C09F
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Aug 2020 22:17:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DADE23C0A4
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Aug 2020 22:17:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726859AbgHDURt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 4 Aug 2020 16:17:49 -0400
+        id S1726984AbgHDURz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 4 Aug 2020 16:17:55 -0400
 Received: from mga09.intel.com ([134.134.136.24]:64989 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726720AbgHDURs (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 4 Aug 2020 16:17:48 -0400
-IronPort-SDR: Eobp0Wk3gS6c+LAvKzWJe26WNYJW8BCPNC+5RP7gC0LXSL9FhQ6eefLhM9mVVtdkP07VQjWFfK
- T9ZIcikeBF5A==
-X-IronPort-AV: E=McAfee;i="6000,8403,9703"; a="153565390"
+        id S1726789AbgHDURt (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 4 Aug 2020 16:17:49 -0400
+IronPort-SDR: 51mzmAnOZFda4tHcmnISHRtbn4fnqiWJ3JApP/hIuurV9ZK3ciEZlCHDeFi2GUVU/GVT2v+5uL
+ YCnsJlzkihCQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9703"; a="153565393"
 X-IronPort-AV: E=Sophos;i="5.75,434,1589266800"; 
-   d="scan'208";a="153565390"
+   d="scan'208";a="153565393"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga002.fm.intel.com ([10.253.24.26])
   by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2020 13:17:48 -0700
-IronPort-SDR: P5s/Xm0nn+psuihhxMk87xs/lrftw2Lb8XIjZ9csDGe1S3hNXZGEiJ0VjhDRCE36OyJ86AJRRR
- 5pbmOgJyOEYw==
+IronPort-SDR: yYxMPNnptyVkbpV4iz+vou+d7DPTps8lCIU2X+TOVGVaJqifGBOAMCTFxs1z8HtkLe0mOo72d4
+ 7n73rOriGvIg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.75,434,1589266800"; 
-   d="scan'208";a="324783840"
+   d="scan'208";a="324783843"
 Received: from unknown (HELO ingas-nuc1.intel.com) ([10.254.118.65])
-  by fmsmga002.fm.intel.com with ESMTP; 04 Aug 2020 13:17:47 -0700
+  by fmsmga002.fm.intel.com with ESMTP; 04 Aug 2020 13:17:48 -0700
 From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ v3 05/10] mesh: Clean up handling of config net and app key messages
-Date:   Tue,  4 Aug 2020 13:17:39 -0700
-Message-Id: <20200804201744.23327-5-inga.stotland@intel.com>
+Subject: [PATCH BlueZ v3 06/10] mesh: Clean up handling of config relay messages
+Date:   Tue,  4 Aug 2020 13:17:40 -0700
+Message-Id: <20200804201744.23327-6-inga.stotland@intel.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200804201744.23327-1-inga.stotland@intel.com>
 References: <20200804201744.23327-1-inga.stotland@intel.com>
@@ -46,200 +46,71 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 This modification allows using a single point for sending out
 the composed status messages by the Config Server.
 ---
- mesh/cfgmod-server.c | 147 ++++++++++++++++++++++---------------------
- 1 file changed, 75 insertions(+), 72 deletions(-)
+ mesh/cfgmod-server.c | 38 ++++++++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 12 deletions(-)
 
 diff --git a/mesh/cfgmod-server.c b/mesh/cfgmod-server.c
-index 57646543d..030f9e744 100644
+index 030f9e744..6ca1c1dd1 100644
 --- a/mesh/cfgmod-server.c
 +++ b/mesh/cfgmod-server.c
-@@ -547,6 +547,73 @@ static void node_reset(void *user_data)
- 	node_remove(node);
+@@ -396,6 +396,30 @@ static uint16_t model_app_bind(struct mesh_node *node, const uint8_t *pkt,
+ 	return n;
  }
  
-+static uint16_t cfg_appkey_msg(struct mesh_node *node, const uint8_t *pkt,
++static uint16_t cfg_relay_msg(struct mesh_node *node, const uint8_t *pkt,
 +								int opcode)
 +{
-+	uint16_t n_idx, a_idx, n;
-+	struct mesh_net *net = node_get_net(node);
++	uint8_t count;
++	uint16_t interval;
++	uint16_t n;
 +
-+	n_idx = l_get_le16(pkt) & 0xfff;
-+	a_idx = l_get_le16(pkt + 1) >> 4;
++	if (pkt[0] > 0x01)
++		return 0;
 +
-+	n = mesh_model_opcode_set(OP_APPKEY_STATUS, msg);
++	if (opcode == OP_CONFIG_RELAY_SET) {
++		count = (pkt[1] & 0x7) + 1;
++		interval = ((pkt[1] >> 3) + 1) * 10;
++		node_relay_mode_set(node, !!pkt[0], count, interval);
++	}
 +
-+	if (opcode == OP_APPKEY_ADD)
-+		msg[n] = appkey_key_add(net, n_idx, a_idx, pkt + 3);
-+	else if (opcode == OP_APPKEY_UPDATE)
-+		msg[n] = appkey_key_update(net, n_idx, a_idx, pkt + 3);
-+	else
-+		msg[n] = appkey_key_delete(net, n_idx, a_idx);
++	n = mesh_model_opcode_set(OP_CONFIG_RELAY_STATUS, msg);
 +
-+	l_debug("AppKey Command %s: Net_Idx %3.3x, App_Idx %3.3x",
-+			(msg[n] == MESH_STATUS_SUCCESS) ? "success" : "fail",
-+								n_idx, a_idx);
++	msg[n++] = node_relay_mode_get(node, &count, &interval);
++	msg[n++] = (count - 1) + ((interval/10 - 1) << 3);
 +
-+	memcpy(msg + n + 1, &pkt[0], 3);
-+
-+	return n + 4;
++	return n;
 +}
 +
-+static uint16_t cfg_netkey_msg(struct mesh_node *node, const uint8_t *pkt,
-+								int opcode)
-+{
-+	uint16_t n_idx, n;
-+	struct mesh_net *net = node_get_net(node);
-+
-+	n_idx = l_get_le16(pkt);
-+	n = mesh_model_opcode_set(OP_NETKEY_STATUS, msg);
-+
-+	if (opcode == OP_NETKEY_ADD)
-+		msg[n] = mesh_net_add_key(net, n_idx, pkt + 2);
-+	else if (opcode == OP_NETKEY_UPDATE)
-+		msg[n] = mesh_net_update_key(net, n_idx, pkt + 2);
-+	else
-+		msg[n] = mesh_net_del_key(net, n_idx);
-+
-+	l_debug("NetKey Command %s: Net_Idx %3.3x",
-+			(msg[n] == MESH_STATUS_SUCCESS) ? "success" : "fail",
-+									n_idx);
-+
-+	memcpy(msg + n + 1, &pkt[0], 2);
-+
-+	return n + 3;
-+}
-+
-+static uint16_t cfg_get_appkeys_msg(struct mesh_node *node, const uint8_t *pkt)
-+{
-+	uint16_t n_idx, sz, n;
-+
-+	n_idx = l_get_le16(pkt);
-+
-+	n = mesh_model_opcode_set(OP_APPKEY_LIST, msg);
-+	l_put_le16(n_idx, msg + n + 1);
-+
-+	msg[n] = appkey_list(node_get_net(node), n_idx, msg + n + 3,
-+						MAX_MSG_LEN - (n + 3), &sz);
-+
-+	return n + 3 + sz;
-+}
-+
- static uint16_t get_composition(struct mesh_node *node, uint8_t page,
- 								uint8_t *buf)
+ static void hb_pub_timeout_func(struct l_timeout *timeout, void *user_data)
  {
-@@ -585,7 +652,7 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
- 	uint32_t opcode, tmp32;
- 	int b_res = MESH_STATUS_SUCCESS;
- 	struct mesh_net_heartbeat *hb;
--	uint16_t n_idx, a_idx;
-+	uint16_t n_idx;
- 	uint8_t state, status;
- 	uint8_t phase;
- 	bool virt = false;
-@@ -856,60 +923,19 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
- 		if (size != 19)
- 			return true;
- 
--		n_idx = l_get_le16(pkt) & 0xfff;
--		a_idx = l_get_le16(pkt + 1) >> 4;
--
--		if (opcode == OP_APPKEY_ADD)
--			b_res = appkey_key_add(net, n_idx, a_idx, pkt + 3);
--		else
--			b_res = appkey_key_update(net, n_idx, a_idx,
--								pkt + 3);
--
--		l_debug("Add/Update AppKey %s: Net_Idx %3.3x, App_Idx %3.3x",
--			(b_res == MESH_STATUS_SUCCESS) ? "success" : "fail",
--							n_idx, a_idx);
--
--
--		n = mesh_model_opcode_set(OP_APPKEY_STATUS, msg);
--
--		msg[n++] = b_res;
--		msg[n++] = pkt[0];
--		msg[n++] = pkt[1];
--		msg[n++] = pkt[2];
--		break;
--
-+		/* Fall Through */
- 	case OP_APPKEY_DELETE:
--		if (size != 3)
-+		if (opcode == OP_APPKEY_DELETE && size != 3)
- 			return true;
- 
--		n_idx = l_get_le16(pkt) & 0xfff;
--		a_idx = l_get_le16(pkt + 1) >> 4;
--		b_res = appkey_key_delete(net, n_idx, a_idx);
--		l_debug("Delete AppKey %s Net_Idx %3.3x to App_Idx %3.3x",
--			(b_res == MESH_STATUS_SUCCESS) ? "success" : "fail",
--							n_idx, a_idx);
--
--		n = mesh_model_opcode_set(OP_APPKEY_STATUS, msg);
--		msg[n++] = b_res;
--		msg[n++] = pkt[0];
--		msg[n++] = pkt[1];
--		msg[n++] = pkt[2];
-+		n = cfg_appkey_msg(node, pkt, opcode);
+ 	struct mesh_net *net = user_data;
+@@ -765,24 +789,14 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
  		break;
  
- 	case OP_APPKEY_GET:
- 		if (size != 2)
+ 	case OP_CONFIG_RELAY_SET:
+-		if (size != 2 || pkt[0] > 0x01)
++		if (size != 2)
+ 			return true;
+-
+-		count = (pkt[1] & 0x7) + 1;
+-		interval = ((pkt[1] >> 3) + 1) * 10;
+-		node_relay_mode_set(node, !!pkt[0], count, interval);
+ 		/* Fall Through */
+-
+ 	case OP_CONFIG_RELAY_GET:
+ 		if (opcode == OP_CONFIG_RELAY_GET && size != 0)
  			return true;
  
--		n_idx = l_get_le16(pkt);
+-		n = mesh_model_opcode_set(OP_CONFIG_RELAY_STATUS, msg);
 -
--		n = mesh_model_opcode_set(OP_APPKEY_LIST, msg);
+-		msg[n++] = node_relay_mode_get(node, &count, &interval);
+-		msg[n++] = (count - 1) + ((interval/10 - 1) << 3);
 -
--		status = appkey_list(net, n_idx, msg + n + 3,
--						MAX_MSG_LEN - n - 3, &size);
--
--		msg[n] = status;
--		l_put_le16(n_idx, msg + n + 1);
--		n += (size + 3);
-+		n = cfg_get_appkeys_msg(node, pkt);
+-		l_debug("Get/Set Relay Config (%d)", msg[n-1]);
++		n = cfg_relay_msg(node, pkt, opcode);
  		break;
  
- 	case OP_NETKEY_ADD:
-@@ -917,35 +943,12 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
- 		if (size != 18)
- 			return true;
- 
--		n_idx = l_get_le16(pkt);
--
--		if (opcode == OP_NETKEY_ADD)
--			b_res = mesh_net_add_key(net, n_idx, pkt + 2);
--		else
--			b_res = mesh_net_update_key(net, n_idx, pkt + 2);
--
--		l_debug("NetKey Add/Update %s",
--			(b_res == MESH_STATUS_SUCCESS) ? "success" : "fail");
--
--		n = mesh_model_opcode_set(OP_NETKEY_STATUS, msg);
--		msg[n++] = b_res;
--		l_put_le16(l_get_le16(pkt), msg + n);
--		n += 2;
--		break;
--
-+		/* Fall Through */
- 	case OP_NETKEY_DELETE:
--		if (size != 2)
-+		if (opcode == OP_NETKEY_DELETE && size != 2)
- 			return true;
- 
--		b_res = mesh_net_del_key(net, l_get_le16(pkt));
--
--		l_debug("NetKey delete %s",
--			(b_res == MESH_STATUS_SUCCESS) ? "success" : "fail");
--
--		n = mesh_model_opcode_set(OP_NETKEY_STATUS, msg);
--		msg[n++] = b_res;
--		l_put_le16(l_get_le16(pkt), msg + n);
--		n += 2;
-+		n = cfg_netkey_msg(node, pkt, opcode);
- 		break;
- 
- 	case OP_NETKEY_GET:
+ 	case OP_CONFIG_NETWORK_TRANSMIT_SET:
 -- 
 2.26.2
 
