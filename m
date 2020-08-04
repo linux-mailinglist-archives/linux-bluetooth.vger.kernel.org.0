@@ -2,330 +2,909 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EE87223BF81
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Aug 2020 20:54:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E341D23C09D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Aug 2020 22:17:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726942AbgHDSyR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 4 Aug 2020 14:54:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41642 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726847AbgHDSyR (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 4 Aug 2020 14:54:17 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79E45C06174A
-        for <linux-bluetooth@vger.kernel.org>; Tue,  4 Aug 2020 11:54:17 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id 93so21217265otx.2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 04 Aug 2020 11:54:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ps2dcnol61iF2JZhyG1S/i1/3uCM6kYo4ZVmCayz3mk=;
-        b=QtOKEYFaITmw8WtiXDBNJl1pCfhTFeeN+q3fvuo5jlOoF4mibmu6fKVmzL9OvpUo58
-         SjWJHIBadllhhfJj+PWuHhgDHxxCdqPhNjJnNDSHSEWWVdXh5lYdNOp0rpHxvClTtfxU
-         EbQvhJVBNNgxNQIQzCbnu375TZ65As5a+lsjYQDLHEu2dMWdrrmaYgDv2VdCWPA6esmD
-         mKKJ8GVRLBN617JIc327MDqZsVzYtEkor+YBgT1Z3DVoAxhtnWy3Pl1p+K+w58y0pZbo
-         tGcV5CEEm2HtHm+gyBpEsCQGnLVStC2qzLh5tm09d7Dl4teKVy69rCk0z1KeDl0R8Bgp
-         F5IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ps2dcnol61iF2JZhyG1S/i1/3uCM6kYo4ZVmCayz3mk=;
-        b=oLrR1F2aR9OTHWN5K6JV28EhOG8z9y3B10spVO2+DozlVHn1kR4jfOZUv/zxtgxKlx
-         Dkr/F0b9Sce8pzHmXaLLJXuNsqVMcF9Io+U8LxJ5Gn51fc59tBHvsWycB9vSphWpkWGu
-         QIjIyhgo6ih5Pt4pnVJOC3l6hJYU0WXfzNH2uMUGUpFadxGhq8AMjxyDkzPzqvSnpsE7
-         Q39KWNbRJRp+pkv506QZF64TGBySN/cyA6Rr9o2V/WixWn1ctuPyqfT/8UBUiuh6HlIm
-         2gxohfe5KyCSrVd/D0UzIaxCNVwKlU8aArdezSFqn7HKhUWlWQxpjDjW3o3LTIAoCy2L
-         8BGA==
-X-Gm-Message-State: AOAM531mp7D2IHGv+hQxZS1dLNGLELRFDSia1e5QYayMDzRDMD6e1gUG
-        2YD2qMHm5kjDHwxbV7amFErlHbz/zYG7zYo7H/Y=
-X-Google-Smtp-Source: ABdhPJw5WlgvZ99C2zsQjJTLnF6S0EUXlaCnDaZg5J1G0PfJhSXm1j3l/EtuOs7FpogDlRxklZZkZbDrOe+vORiOHrM=
-X-Received: by 2002:a9d:39c2:: with SMTP id y60mr18787426otb.91.1596567256419;
- Tue, 04 Aug 2020 11:54:16 -0700 (PDT)
+        id S1726752AbgHDURs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 4 Aug 2020 16:17:48 -0400
+Received: from mga09.intel.com ([134.134.136.24]:64991 "EHLO mga09.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726113AbgHDURs (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 4 Aug 2020 16:17:48 -0400
+IronPort-SDR: JHSS/TuJOiBR4JrH3ZD7G6zeWsn2W5W0+5fbg56ilEfaaJbcmiP/umuT09TLTtCtK710rvybJa
+ qPNwenMPxSSA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9703"; a="153565368"
+X-IronPort-AV: E=Sophos;i="5.75,434,1589266800"; 
+   d="scan'208";a="153565368"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2020 13:17:45 -0700
+IronPort-SDR: m8XF26v8hJu+Eh4ncXmEJ1zFGHQkCJHYUPsMG2Rk7KPWJELT9/SJjiFD5oxAi0bsHY/ckyPSxa
+ 8XyB9yXya2qw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,434,1589266800"; 
+   d="scan'208";a="324783822"
+Received: from unknown (HELO ingas-nuc1.intel.com) ([10.254.118.65])
+  by fmsmga002.fm.intel.com with ESMTP; 04 Aug 2020 13:17:45 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ v3 01/10] mesh: Clean up handling of config subscription messages
+Date:   Tue,  4 Aug 2020 13:17:35 -0700
+Message-Id: <20200804201744.23327-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-References: <20200729015540.1848987-1-abhishekpandit@chromium.org> <5f20d725.1c69fb81.6d882.1d23@mx.google.com>
-In-Reply-To: <5f20d725.1c69fb81.6d882.1d23@mx.google.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Tue, 4 Aug 2020 11:54:06 -0700
-Message-ID: <CABBYNZJMHCWm9-F3R1vpqcaazcieA=Dp9+fppQzmm+_-hfhzcw@mail.gmail.com>
-Subject: Re: [RFC Bluez PATCH 3/3] adapter: Reconnect audio on controller resume
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        ChromeOS Bluetooth Upstreaming 
-        <chromeos-bluetooth-upstreaming@chromium.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        Sonny Sasaka <sonnysasaka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Abhishek,
+This provides better functional grouping based on whether a group or
+a virtual label is used for the subscription address.
 
-On Tue, Jul 28, 2020 at 6:55 PM Abhishek Pandit-Subedi
-<abhishekpandit@chromium.org> wrote:
->
-> During system suspend, all peer devices are disconnected. On resume, HID
-> devices will reconnect but audio devices stay disconnected. As a quality
-> of life improvement, keep track of the last audio device disconnected
-> during suspend and try to reconnect when the controller resumes from
-> suspend.
->
-> Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
-> ---
-> Hey Luiz,
->
-> On our internal review, two things stood out in this commit that we
-> weren't able to come to a consensus on internally:
->
-> * Is it better to use the audio device class or should we compare to the
->   A2DP, HFP and HSP uuids?
-> * Constructing the dbus message internally before calling dev_connect
->   looks a bit weird. I couldn't figure out how to internally trigger
->   this function (since it seems to require a msg to respond to on
->   success/failure). Any thoughts?
->
->
->  src/adapter.c | 82 +++++++++++++++++++++++++++++++++++++++++++++++++++
->  src/device.c  | 27 +++++++++++++++++
->  src/device.h  |  2 ++
->  src/main.conf |  6 ++++
->  4 files changed, 117 insertions(+)
->
-> diff --git a/src/adapter.c b/src/adapter.c
-> index 5e896a9f0..b1073c439 100644
-> --- a/src/adapter.c
-> +++ b/src/adapter.c
-> @@ -90,6 +90,7 @@
->  #define IDLE_DISCOV_TIMEOUT (5)
->  #define TEMP_DEV_TIMEOUT (3 * 60)
->  #define BONDING_TIMEOUT (2 * 60)
-> +#define RECONNECT_AUDIO_DELAY (5)
->
->  #define SCAN_TYPE_BREDR (1 << BDADDR_BREDR)
->  #define SCAN_TYPE_LE ((1 << BDADDR_LE_PUBLIC) | (1 << BDADDR_LE_RANDOM))
-> @@ -269,6 +270,15 @@ struct btd_adapter {
->         struct btd_device *connect_le;  /* LE device waiting to be connected */
->         sdp_list_t *services;           /* Services associated to adapter */
->
-> +       /* audio device to reconnect after resuming from suspend */
-> +       struct reconnect_audio_info {
-> +               bdaddr_t addr;
-> +               uint8_t addr_type;
-> +               bool reconnect;
-> +        } reconnect_audio;
-> +       guint reconnect_audio_timeout;  /* timeout for reconnect on resume */
-> +       uint32_t reconnect_audio_delay; /* delay reconnect after resume */
-> +
->         struct btd_gatt_database *database;
->         struct btd_adv_manager *adv_manager;
->
-> @@ -6256,6 +6266,7 @@ static void load_config(struct btd_adapter *adapter)
->         /* Get discoverable mode */
->         adapter->stored_discoverable = g_key_file_get_boolean(key_file,
->                                         "General", "Discoverable", &gerr);
-> +
->         if (gerr) {
->                 adapter->stored_discoverable = false;
->                 g_error_free(gerr);
-> @@ -6271,6 +6282,16 @@ static void load_config(struct btd_adapter *adapter)
->                 gerr = NULL;
->         }
->
-> +       /* Get audio reconnect delay */
-> +       adapter->reconnect_audio_delay = g_key_file_get_integer(
-> +               key_file, "General", "ReconnectAudioDelay", &gerr);
-> +
-> +       if (gerr) {
-> +               adapter->reconnect_audio_delay = RECONNECT_AUDIO_DELAY;
-> +               g_error_free(gerr);
-> +               gerr = NULL;
-> +       }
-> +
->         g_key_file_free(key_file);
->  }
->
-> @@ -7820,6 +7841,15 @@ static void dev_disconnected(struct btd_adapter *adapter,
->         if (device) {
->                 adapter_remove_connection(adapter, device, addr->type);
->                 disconnect_notify(device, reason);
-> +
-> +               if (reason == MGMT_DEV_DISCONN_LOCAL_HOST_SUSPEND &&
-> +                   device_class_is_audio(device)) {
-> +                       adapter->reconnect_audio.reconnect = true;
-> +                       adapter->reconnect_audio.addr_type =
-> +                               btd_device_get_bdaddr_type(device);
-> +                       bacpy(&adapter->reconnect_audio.addr,
-> +                             device_get_address(device));
-> +               }
->         }
->
->         bonding_attempt_complete(adapter, &addr->bdaddr, addr->type,
-> @@ -8766,6 +8796,53 @@ static void connected_callback(uint16_t index, uint16_t length,
->         eir_data_free(&eir_data);
->  }
->
-> +static gboolean reconnect_audio_timeout(gpointer user_data)
-> +{
-> +       struct btd_adapter *adapter = user_data;
-> +
-> +       adapter->reconnect_audio_timeout = 0;
-> +
-> +       if (adapter->reconnect_audio.reconnect) {
-> +               struct btd_device *dev = btd_adapter_find_device(
-> +                       adapter, &adapter->reconnect_audio.addr,
-> +                       adapter->reconnect_audio.addr_type);
-> +
-> +               adapter->reconnect_audio.reconnect = false;
-> +
-> +               if (!dev || btd_device_is_connected(dev))
-> +                       return FALSE;
-> +
-> +               device_internal_connect(dev);
-> +       }
-> +
-> +       return FALSE;
-> +}
-> +
-> +static void controller_resume_callback(uint16_t index, uint16_t length,
-> +                                      const void *param, void *user_data)
-> +{
-> +       const struct mgmt_ev_controller_resume *ev = param;
-> +       struct btd_adapter *adapter = user_data;
-> +
-> +       if (length < sizeof(*ev)) {
-> +               btd_error(adapter->dev_id, "Too small device resume event");
-> +               return;
-> +       }
-> +
-> +       DBG("Controller resume with wake event 0x%x", ev->wake_reason);
-> +
-> +       if (adapter->reconnect_audio_timeout > 0) {
-> +               g_source_remove(adapter->reconnect_audio_timeout);
-> +               adapter->reconnect_audio_timeout = 0;
-> +       }
-> +
-> +       if (adapter->reconnect_audio.reconnect) {
-> +               adapter->reconnect_audio_timeout =
-> +                       g_timeout_add_seconds(adapter->reconnect_audio_delay,
-> +                                             reconnect_audio_timeout, adapter);
-> +       }
-> +}
-> +
->  static void device_blocked_callback(uint16_t index, uint16_t length,
->                                         const void *param, void *user_data)
->  {
-> @@ -9389,6 +9466,11 @@ static void read_info_complete(uint8_t status, uint16_t length,
->                                                 user_passkey_notify_callback,
->                                                 adapter, NULL);
->
-> +       mgmt_register(adapter->mgmt, MGMT_EV_CONTROLLER_RESUME,
-> +                                               adapter->dev_id,
-> +                                               controller_resume_callback,
-> +                                               adapter, NULL);
-> +
->         set_dev_class(adapter);
->
->         set_name(adapter, btd_adapter_get_name(adapter));
-> diff --git a/src/device.c b/src/device.c
-> index bb8e07e8f..8b165ffa4 100644
-> --- a/src/device.c
-> +++ b/src/device.c
-> @@ -747,6 +747,12 @@ gboolean device_is_trusted(struct btd_device *device)
->         return device->trusted;
->  }
->
-> +bool device_class_is_audio(struct btd_device *device)
-> +{
-> +       /* Look for major service classes Audio (0x20) + Rendering (0x4) */
-> +       return ((device->class >> 16) & 0x24) == 0x24;
-> +}
-> +
->  static gboolean dev_property_get_address(const GDBusPropertyTable *property,
->                                         DBusMessageIter *iter, void *data)
->  {
-> @@ -6853,6 +6859,27 @@ struct btd_service *btd_device_get_service(struct btd_device *dev,
->         return NULL;
->  }
->
-> +/* Internal function to connect to a device. This fakes the dbus message used to
-> + * call the "Connect" api on the device so that the same function can be called
-> + * by bluez internally.
-> + */
-> +bool device_internal_connect(struct btd_device *dev)
-> +{
-> +       DBusMessage *msg;
-> +
-> +       if (!device_is_connectable(dev))
-> +               return false;
-> +
-> +       msg = dbus_message_new_method_call("org.bluez",
-> +                                               device_get_path(dev),
-> +                                               DEVICE_INTERFACE,
-> +                                               "Connect");
-> +       /* Sending the message usually sets serial. Fake it here. */
-> +       dbus_message_set_serial(msg, 1);
-> +
-> +       dev_connect(dbus_conn, msg, dev);
-> +}
-> +
->  void btd_device_init(void)
->  {
->         dbus_conn = btd_get_dbus_connection();
-> diff --git a/src/device.h b/src/device.h
-> index 956fec1ae..82f97b5bd 100644
-> --- a/src/device.h
-> +++ b/src/device.h
-> @@ -98,6 +98,7 @@ bool device_is_connectable(struct btd_device *device);
->  bool device_is_paired(struct btd_device *device, uint8_t bdaddr_type);
->  bool device_is_bonded(struct btd_device *device, uint8_t bdaddr_type);
->  gboolean device_is_trusted(struct btd_device *device);
-> +bool device_class_is_audio(struct btd_device *device);
->  void device_set_paired(struct btd_device *dev, uint8_t bdaddr_type);
->  void device_set_unpaired(struct btd_device *dev, uint8_t bdaddr_type);
->  void btd_device_set_temporary(struct btd_device *device, bool temporary);
-> @@ -186,6 +187,7 @@ int btd_device_connect_services(struct btd_device *dev, GSList *services);
->  uint32_t btd_device_get_current_flags(struct btd_device *dev);
->  void btd_device_flags_changed(struct btd_device *dev, uint32_t supported_flags,
->                               uint32_t current_flags);
-> +bool device_internal_connect(struct btd_device *dev);
->
->  void btd_device_init(void);
->  void btd_device_cleanup(void);
-> diff --git a/src/main.conf b/src/main.conf
-> index f41203b96..c6bb78a84 100644
-> --- a/src/main.conf
-> +++ b/src/main.conf
-> @@ -82,6 +82,12 @@
->  # 0 = disable timer, i.e. never keep temporary devices
->  #TemporaryTimeout = 30
->
-> +# How long to wait after controller resume before reconnecting to last used
-> +# audio device.
-> +# The value is in seconds.
-> +# Default: 5
-> +#ReconnectAudioDelay = 5
-> +
->  [Controller]
->  # The following values are used to load default adapter parameters.  BlueZ loads
->  # the values into the kernel before the adapter is powered if the kernel
-> --
-> 2.28.0.rc0.142.g3c755180ce-goog
+Also, use a single point for sending out the composed Config Server
+status messages.
+---
+ mesh/cfgmod-server.c    | 344 +++++++++++++++++-----------------------
+ mesh/mesh-config-json.c |  12 +-
+ mesh/mesh-config.h      |   6 +-
+ mesh/model.c            | 211 ++++++++++++++----------
+ mesh/model.h            |  21 ++-
+ 5 files changed, 296 insertions(+), 298 deletions(-)
 
-Usually connection policy is handled by the policy plugin since there
-may be platforms that want implement their own connection policies on
-top of bluetoothd so they can just disable the policy plugin, iirc we
-do have reconnection policies for unexpected disconnect which should
-probably be used in the event a suspend actually trigger a
-disconnection see:
-
-https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/plugins/policy.c#n761
-
-We might need a reason code to indicate to the policy when a
-disconnect happens due to suspend logic.
-
+diff --git a/mesh/cfgmod-server.c b/mesh/cfgmod-server.c
+index 7672ad3b6..cd0e8b94c 100644
+--- a/mesh/cfgmod-server.c
++++ b/mesh/cfgmod-server.c
+@@ -32,6 +32,10 @@
+ #include "mesh/mesh-config.h"
+ #include "mesh/cfgmod.h"
+ 
++#define CFG_SET_ID(vendor, pkt)	((vendor) ?	\
++		(SET_ID(l_get_le16((pkt)), l_get_le16((pkt) + 2))) :	\
++		(SET_ID(SIG_VENDOR, l_get_le16(pkt))))
++
+ /* Supported composition pages, sorted high to low */
+ /* Only page 0 is currently supported */
+ static const uint8_t supported_pages[] = {
+@@ -185,237 +189,177 @@ static void config_pub_set(struct mesh_node *node, uint16_t net_idx,
+ 				idx, cred_flag, ttl, period, retransmit);
+ }
+ 
+-static void send_sub_status(struct mesh_node *node, uint16_t net_idx,
+-					uint16_t src, uint16_t dst,
+-					uint8_t status, uint16_t ele_addr,
+-					uint16_t addr, uint32_t id)
++static uint16_t cfg_sub_get_msg(struct mesh_node *node, const uint8_t *pkt,
++								uint16_t size)
+ {
+-	int n = mesh_model_opcode_set(OP_CONFIG_MODEL_SUB_STATUS, msg);
+-
+-	msg[n++] = status;
+-	l_put_le16(ele_addr, msg + n);
+-	n += 2;
+-	l_put_le16(addr, msg + n);
+-	n += 2;
+-
+-	if (IS_VENDOR(id)) {
+-		l_put_le16(VENDOR_ID(id), msg + n);
+-		l_put_le16(MODEL_ID(id), msg + n + 2);
+-		n += 4;
+-	} else {
+-		l_put_le16(MODEL_ID(id), msg + n);
+-		n += 2;
+-	}
+-
+-	mesh_model_send(node, dst, src, APP_IDX_DEV_LOCAL, net_idx, DEFAULT_TTL,
+-								false, msg, n);
+-}
+-
+-static bool config_sub_get(struct mesh_node *node, uint16_t net_idx,
+-					uint16_t src, uint16_t dst,
+-					const uint8_t *pkt, uint16_t size)
+-{
+-	uint16_t ele_addr;
++	uint16_t ele_addr, n, sub_len;
+ 	uint32_t id;
+-	uint16_t n = 0;
+-	int status;
+-	uint8_t *msg_status;
+-	uint16_t buf_size;
++	int opcode;
++	bool vendor = (size == 6);
+ 
+-	/* Incoming message has already been size-checked */
+ 	ele_addr = l_get_le16(pkt);
++	id = CFG_SET_ID(vendor, pkt + 2);
++	opcode = vendor ? OP_CONFIG_VEND_MODEL_SUB_LIST :
++						OP_CONFIG_MODEL_SUB_LIST;
++	n = mesh_model_opcode_set(opcode, msg);
++	memcpy(msg + n + 1, pkt, size);
+ 
+-	switch (size) {
+-	default:
+-		l_debug("Bad length %d", size);
+-		return false;
+-
+-	case 4:
+-		id = l_get_le16(pkt + 2);
+-		n = mesh_model_opcode_set(OP_CONFIG_MODEL_SUB_LIST, msg);
+-		msg_status = msg + n;
+-		msg[n++] = 0;
+-		l_put_le16(ele_addr, msg + n);
+-		n += 2;
+-		l_put_le16(id, msg + n);
+-		n += 2;
+-		id = SET_ID(SIG_VENDOR, id);
+-		break;
+-
+-	case 6:
+-		id = SET_ID(l_get_le16(pkt + 2), l_get_le16(pkt + 4));
+-		n = mesh_model_opcode_set(OP_CONFIG_VEND_MODEL_SUB_LIST, msg);
+-		msg_status = msg + n;
+-		msg[n++] = 0;
+-		l_put_le16(ele_addr, msg + n);
+-		n += 2;
+-		l_put_le16(VENDOR_ID(id), msg + n);
+-		n += 2;
+-		l_put_le16(MODEL_ID(id), msg + n);
+-		n += 2;
+-		break;
+-	}
+-
+-	buf_size = sizeof(uint16_t) * MAX_GRP_PER_MOD;
+-	status = mesh_model_sub_get(node, ele_addr, id, msg + n, buf_size,
+-									&size);
+-
+-	if (status == MESH_STATUS_SUCCESS)
+-		n += size;
++	msg[n] = mesh_model_sub_get(node, ele_addr, id, msg + n + 1 + size,
++					MAX_MSG_LEN - (n + 1 + size), &sub_len);
+ 
+-	*msg_status = (uint8_t) status;
++	if (msg[n] == MESH_STATUS_SUCCESS)
++		n += sub_len;
+ 
+-	mesh_model_send(node, dst, src, APP_IDX_DEV_LOCAL, net_idx, DEFAULT_TTL,
+-								false, msg, n);
+-	return true;
++	n += (size + 1);
++	return n;
+ }
+ 
+-static bool save_config_sub(struct mesh_node *node, uint16_t ele_addr,
+-					uint32_t id, bool vendor,
+-					const uint8_t *addr, bool virt,
+-					uint16_t grp, uint32_t opcode)
++static bool save_cfg_sub(struct mesh_node *node, uint16_t ele_addr,
++				uint32_t id, bool vendor, const uint8_t *label,
++				bool virt, uint16_t grp, uint32_t opcode)
+ {
++	struct mesh_config *cfg = node_config_get(node);
+ 	struct mesh_config_sub db_sub = {
+ 				.virt = virt,
+-				.src.addr = grp
++				.addr.grp = grp
+ 				};
+ 
++	id = (vendor) ? id : MODEL_ID(id);
++
+ 	if (virt)
+-		memcpy(db_sub.src.virt_addr, addr, 16);
++		memcpy(db_sub.addr.label, label, 16);
++
++	if (opcode == OP_CONFIG_MODEL_SUB_VIRT_DELETE &&
++			opcode == OP_CONFIG_MODEL_SUB_DELETE)
++		return mesh_config_model_sub_del(cfg, ele_addr, id, vendor,
++								&db_sub);
+ 
+ 	if (opcode == OP_CONFIG_MODEL_SUB_VIRT_OVERWRITE ||
+ 					opcode == OP_CONFIG_MODEL_SUB_OVERWRITE)
+-		mesh_config_model_sub_del_all(node_config_get(node), ele_addr,
+-						vendor ? id : MODEL_ID(id),
+-									vendor);
+ 
+-	if (opcode != OP_CONFIG_MODEL_SUB_VIRT_DELETE &&
+-			opcode != OP_CONFIG_MODEL_SUB_DELETE)
+-		return mesh_config_model_sub_add(node_config_get(node),
+-					ele_addr, vendor ? id : MODEL_ID(id),
+-					vendor, &db_sub);
+-	else
+-		return mesh_config_model_sub_del(node_config_get(node),
+-					ele_addr, vendor ? id : MODEL_ID(id),
+-					vendor, &db_sub);
++		if (!mesh_config_model_sub_del_all(cfg, ele_addr, id, vendor))
++			return false;
++
++	return mesh_config_model_sub_add(cfg, ele_addr, id, vendor, &db_sub);
+ }
+ 
+-static void config_sub_set(struct mesh_node *node, uint16_t net_idx,
+-					uint16_t src, uint16_t dst,
+-					const uint8_t *pkt, uint16_t size,
+-					bool virt, uint32_t opcode)
++static uint16_t cfg_sub_add_msg(struct mesh_node *node, const uint8_t *pkt,
++					bool vendor, uint32_t opcode)
+ {
+-	uint16_t grp, ele_addr;
++	uint16_t addr, ele_addr, n;
+ 	uint32_t id;
+-	const uint8_t *addr = NULL;
+-	int status = MESH_STATUS_SUCCESS;
+-	bool vendor = false;
+ 
+-	switch (size) {
+-	default:
+-		l_error("Bad length: %d", size);
+-		return;
+-	case 4:
+-		if (opcode != OP_CONFIG_MODEL_SUB_DELETE_ALL)
+-			return;
++	addr = l_get_le16(pkt + 2);
+ 
+-		id = SET_ID(SIG_VENDOR, l_get_le16(pkt + 2));
+-		break;
+-	case 6:
+-		if (virt)
+-			return;
++	if (!IS_GROUP(addr))
++		return 0;
+ 
+-		if (opcode != OP_CONFIG_MODEL_SUB_DELETE_ALL) {
+-			id = SET_ID(SIG_VENDOR, l_get_le16(pkt + 4));
+-		} else {
+-			id = SET_ID(l_get_le16(pkt + 2), l_get_le16(pkt + 4));
+-			vendor = true;
+-		}
++	ele_addr = l_get_le16(pkt);
++	id = CFG_SET_ID(vendor, pkt + 4);
+ 
+-		break;
+-	case 8:
+-		if (virt)
+-			return;
++	n = mesh_model_opcode_set(OP_CONFIG_MODEL_SUB_STATUS, msg);
+ 
+-		id = SET_ID(l_get_le16(pkt + 4), l_get_le16(pkt + 6));
+-		vendor = true;
+-		break;
+-	case 20:
+-		if (!virt)
+-			return;
++	if (opcode == OP_CONFIG_MODEL_SUB_OVERWRITE)
++		msg[n] = mesh_model_sub_ovrt(node, ele_addr, id, addr);
++	else if (opcode == OP_CONFIG_MODEL_SUB_ADD)
++		msg[n] = mesh_model_sub_add(node, ele_addr, id, addr);
++	else
++		msg[n] = mesh_model_sub_del(node, ele_addr, id, addr);
+ 
+-		id = SET_ID(SIG_VENDOR, l_get_le16(pkt + 18));
+-		break;
+-	case 22:
+-		if (!virt)
+-			return;
++	if (msg[n] == MESH_STATUS_SUCCESS &&
++			!save_cfg_sub(node, ele_addr, id, vendor, NULL, false,
++								addr, opcode))
++		msg[n] = MESH_STATUS_STORAGE_FAIL;
+ 
+-		vendor = true;
+-		id = SET_ID(l_get_le16(pkt + 18), l_get_le16(pkt + 20));
+-		break;
++	if (vendor) {
++		memcpy(msg + n + 1, pkt, 8);
++		n += 9;
++	} else {
++		memcpy(msg + n + 1, pkt, 6);
++		n += 7;
+ 	}
+ 
++	return n;
++}
++
++static uint16_t cfg_virt_sub_add_msg(struct mesh_node *node, const uint8_t *pkt,
++						bool vendor, uint32_t opcode)
++{
++	uint16_t addr, ele_addr, n;
++	uint32_t id;
++	const uint8_t *label;
++
++	n = mesh_model_opcode_set(OP_CONFIG_MODEL_SUB_STATUS, msg);
++
+ 	ele_addr = l_get_le16(pkt);
++	label = pkt + 2;
++	id = CFG_SET_ID(vendor, pkt + 18);
++
++	if (opcode == OP_CONFIG_MODEL_SUB_VIRT_OVERWRITE)
++		msg[n] = mesh_model_virt_sub_ovrt(node, ele_addr, id, label,
++									&addr);
++	else if (opcode == OP_CONFIG_MODEL_SUB_VIRT_ADD)
++		msg[n] = mesh_model_virt_sub_add(node, ele_addr, id, label,
++									&addr);
++	else
++		msg[n] = mesh_model_virt_sub_del(node, ele_addr, id, label,
++									&addr);
+ 
+-	if (opcode != OP_CONFIG_MODEL_SUB_DELETE_ALL) {
+-		addr = pkt + 2;
+-		grp = l_get_le16(addr);
+-	} else
+-		grp = UNASSIGNED_ADDRESS;
++	if (msg[n] == MESH_STATUS_SUCCESS &&
++				!save_cfg_sub(node, ele_addr, id, vendor,
++						label, true, addr, opcode))
++		msg[n] = MESH_STATUS_STORAGE_FAIL;
+ 
+-	switch (opcode) {
+-	default:
+-		l_debug("Bad opcode: %x", opcode);
+-		return;
++	l_put_le16(ele_addr, msg + n + 1);
++	l_put_le16(addr, msg + n + 3);
+ 
+-	case OP_CONFIG_MODEL_SUB_DELETE_ALL:
+-		status = mesh_model_sub_del_all(node, ele_addr, id);
++	if (vendor) {
++		l_put_le16(VENDOR_ID(id), msg + n + 5);
++		l_put_le16(MODEL_ID(id), msg + n + 7);
++		n += 9;
++	} else {
++		l_put_le16(MODEL_ID(id), msg + n + 5);
++		n += 7;
++	}
+ 
+-		if (status == MESH_STATUS_SUCCESS)
+-			mesh_config_model_sub_del_all(node_config_get(node),
+-					ele_addr, vendor ? id : MODEL_ID(id),
+-									vendor);
+-		break;
++	return n;
++}
+ 
+-	case OP_CONFIG_MODEL_SUB_VIRT_OVERWRITE:
+-		grp = UNASSIGNED_ADDRESS;
+-		/* Fall Through */
+-	case OP_CONFIG_MODEL_SUB_OVERWRITE:
+-		status = mesh_model_sub_ovr(node, ele_addr, id,
+-							addr, virt, &grp);
++static uint16_t config_sub_del_all(struct mesh_node *node, const uint8_t *pkt,
++								bool vendor)
++{
++	uint16_t ele_addr, n, grp = UNASSIGNED_ADDRESS;
++	uint32_t id;
+ 
+-		if (status == MESH_STATUS_SUCCESS)
+-			save_config_sub(node, ele_addr, id, vendor, addr,
+-							virt, grp, opcode);
+-		break;
+-	case OP_CONFIG_MODEL_SUB_VIRT_ADD:
+-		grp = UNASSIGNED_ADDRESS;
+-		/* Fall Through */
+-	case OP_CONFIG_MODEL_SUB_ADD:
+-		status = mesh_model_sub_add(node, ele_addr, id,
+-							addr, virt, &grp);
++	n = mesh_model_opcode_set(OP_CONFIG_MODEL_SUB_STATUS, msg);
+ 
+-		if (status == MESH_STATUS_SUCCESS &&
+-				!save_config_sub(node, ele_addr, id, vendor,
+-						addr, virt, grp, opcode))
+-			status = MESH_STATUS_STORAGE_FAIL;
++	ele_addr = l_get_le16(pkt);
++	id = CFG_SET_ID(vendor, pkt + 2);
+ 
+-		break;
+-	case OP_CONFIG_MODEL_SUB_VIRT_DELETE:
+-		grp = UNASSIGNED_ADDRESS;
+-		/* Fall Through */
+-	case OP_CONFIG_MODEL_SUB_DELETE:
+-		status = mesh_model_sub_del(node, ele_addr, id, addr, virt,
+-									&grp);
++	msg[n] = mesh_model_sub_del_all(node, ele_addr, id);
+ 
+-		if (status == MESH_STATUS_SUCCESS)
+-			save_config_sub(node, ele_addr, id, vendor, addr,
+-							virt, grp, opcode);
++	if (msg[n] == MESH_STATUS_SUCCESS) {
++		struct mesh_config *cfg = node_config_get(node);
+ 
+-		break;
++		if (!mesh_config_model_sub_del_all(cfg, ele_addr,
++						vendor ? id : MODEL_ID(id),
++						vendor))
++			msg[n] = MESH_STATUS_STORAGE_FAIL;
++	}
++
++	l_put_le16(ele_addr, msg + n + 1);
++	l_put_le16(grp, msg + n + 3);
++
++	if (vendor) {
++		l_put_le16(VENDOR_ID(id), msg + n + 5);
++		l_put_le16(MODEL_ID(id), msg + n + 7);
++		n += 9;
++	} else {
++		l_put_le16(MODEL_ID(id), msg + n + 5);
++		n += 7;
+ 	}
+ 
+-	send_sub_status(node, net_idx, src, dst, status, ele_addr, grp, id);
++	return n;
+ }
+ 
+ static void send_model_app_status(struct mesh_node *node, uint16_t net_idx,
+@@ -797,28 +741,38 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
+ 	case OP_CONFIG_VEND_MODEL_SUB_GET:
+ 		if (size != 6)
+ 			return true;
+-
+-		config_sub_get(node, net_idx, src, dst, pkt, size);
+-		break;
++		/* Fall Through */
+ 
+ 	case OP_CONFIG_MODEL_SUB_GET:
+-		if (size != 4)
++		if (size != 4 && opcode == OP_CONFIG_MODEL_SUB_GET)
+ 			return true;
+ 
+-		config_sub_get(node, net_idx, src, dst, pkt, size);
++		n = cfg_sub_get_msg(node, pkt, size);
+ 		break;
+ 
+ 	case OP_CONFIG_MODEL_SUB_VIRT_OVERWRITE:
+ 	case OP_CONFIG_MODEL_SUB_VIRT_DELETE:
+ 	case OP_CONFIG_MODEL_SUB_VIRT_ADD:
+-		virt = true;
+-		/* Fall Through */
++		if (size != 20 && size != 22)
++			return true;
++
++		n = cfg_virt_sub_add_msg(node, pkt, size == 22, opcode);
++		break;
++
+ 	case OP_CONFIG_MODEL_SUB_OVERWRITE:
+ 	case OP_CONFIG_MODEL_SUB_DELETE:
+ 	case OP_CONFIG_MODEL_SUB_ADD:
++		if (size != 6 && size != 8)
++			return true;
++
++		n = cfg_sub_add_msg(node, pkt, size == 8, opcode);
++		break;
++
+ 	case OP_CONFIG_MODEL_SUB_DELETE_ALL:
+-		config_sub_set(node, net_idx, src, dst, pkt, size, virt,
+-									opcode);
++		if (size != 4 && size != 6)
++			return true;
++
++		n = config_sub_del_all(node, pkt, size == 6);
+ 		break;
+ 
+ 	case OP_CONFIG_RELAY_SET:
+diff --git a/mesh/mesh-config-json.c b/mesh/mesh-config-json.c
+index deb0019f9..a40f92c01 100644
+--- a/mesh/mesh-config-json.c
++++ b/mesh/mesh-config-json.c
+@@ -1069,11 +1069,11 @@ static bool parse_model_subscriptions(json_object *jsubs,
+ 
+ 		switch (len) {
+ 		case 4:
+-			if (sscanf(str, "%04hx", &subs[i].src.addr) != 1)
++			if (sscanf(str, "%04hx", &subs[i].addr.grp) != 1)
+ 				goto fail;
+ 		break;
+ 		case 32:
+-			if (!str2hex(str, len, subs[i].src.virt_addr, 16))
++			if (!str2hex(str, len, subs[i].addr.label, 16))
+ 				goto fail;
+ 			subs[i].virt = true;
+ 			break;
+@@ -2068,10 +2068,10 @@ bool mesh_config_model_sub_add(struct mesh_config *cfg, uint16_t ele_addr,
+ 		return false;
+ 
+ 	if (!sub->virt) {
+-		snprintf(buf, 5, "%4.4x", sub->src.addr);
++		snprintf(buf, 5, "%4.4x", sub->addr.grp);
+ 		len = 4;
+ 	} else {
+-		hex2str(sub->src.virt_addr, 16, buf, 33);
++		hex2str(sub->addr.label, 16, buf, 33);
+ 		len = 32;
+ 	}
+ 
+@@ -2122,10 +2122,10 @@ bool mesh_config_model_sub_del(struct mesh_config *cfg, uint16_t ele_addr,
+ 		return true;
+ 
+ 	if (!sub->virt) {
+-		snprintf(buf, 5, "%4.4x", sub->src.addr);
++		snprintf(buf, 5, "%4.4x", sub->addr.grp);
+ 		len = 4;
+ 	} else {
+-		hex2str(sub->src.virt_addr, 16, buf, 33);
++		hex2str(sub->addr.label, 16, buf, 33);
+ 		len = 32;
+ 	}
+ 
+diff --git a/mesh/mesh-config.h b/mesh/mesh-config.h
+index 7dfa9f20c..f15f3f376 100644
+--- a/mesh/mesh-config.h
++++ b/mesh/mesh-config.h
+@@ -24,9 +24,9 @@ struct mesh_config;
+ struct mesh_config_sub {
+ 	bool virt;
+ 	union {
+-		uint16_t	addr;
+-		uint8_t	virt_addr[16];
+-	} src;
++		uint16_t grp;
++		uint8_t	label[16];
++	} addr;
+ };
+ 
+ struct mesh_config_pub {
+diff --git a/mesh/model.c b/mesh/model.c
+index ef7668147..3c9b6577a 100644
+--- a/mesh/model.c
++++ b/mesh/model.c
+@@ -664,7 +664,7 @@ static int update_binding(struct mesh_node *node, uint16_t addr, uint32_t id,
+ 		return MESH_STATUS_SUCCESS;
+ 	}
+ 
+-	if (l_queue_length(mod->bindings) >= MAX_BINDINGS)
++	if (l_queue_length(mod->bindings) >= MAX_MODEL_BINDINGS)
+ 		return MESH_STATUS_INSUFF_RESOURCES;
+ 
+ 	if (!mesh_config_model_binding_add(node_config_get(node), addr,
+@@ -737,7 +737,7 @@ static int set_virt_pub(struct mesh_model *mod, const uint8_t *label,
+ }
+ 
+ static int add_virt_sub(struct mesh_net *net, struct mesh_model *mod,
+-			     const uint8_t *label, uint16_t *dst)
++				const uint8_t *label, uint16_t *addr)
+ {
+ 	struct mesh_virtual *virt = l_queue_find(mod->virtuals,
+ 						find_virt_by_label, label);
+@@ -745,40 +745,35 @@ static int add_virt_sub(struct mesh_net *net, struct mesh_model *mod,
+ 	if (!virt) {
+ 		virt = add_virtual(label);
+ 		if (!virt)
+-			return MESH_STATUS_STORAGE_FAIL;
++			return MESH_STATUS_INSUFF_RESOURCES;
+ 
+ 		l_queue_push_head(mod->virtuals, virt);
+ 		mesh_net_dst_reg(net, virt->addr);
+ 		l_debug("Added virtual sub addr %4.4x", virt->addr);
+ 	}
+ 
+-	if (dst)
+-		*dst = virt->addr;
++	if (addr)
++		*addr = virt->addr;
+ 
+ 	return MESH_STATUS_SUCCESS;
+ }
+ 
+ static int add_sub(struct mesh_net *net, struct mesh_model *mod,
+-			const uint8_t *group, bool b_virt, uint16_t *dst)
++							uint16_t addr)
+ {
+-	uint16_t grp;
+-
+-	if (b_virt)
+-		return add_virt_sub(net, mod, group, dst);
+-
+-	grp = l_get_le16(group);
+-	if (dst)
+-		*dst = grp;
++	if (!mod->subs)
++		mod->subs = l_queue_new();
+ 
+-	if (!l_queue_find(mod->subs, simple_match, L_UINT_TO_PTR(grp))) {
++	if (l_queue_find(mod->subs, simple_match, L_UINT_TO_PTR(addr)))
++		return MESH_STATUS_SUCCESS;
+ 
+-		if (!mod->subs)
+-			mod->subs = l_queue_new();
++	if ((l_queue_length(mod->subs) + l_queue_length(mod->virtuals)) >=
++						MAX_MODEL_SUBS)
++		return MESH_STATUS_INSUFF_RESOURCES;
+ 
+-		l_queue_push_tail(mod->subs, L_UINT_TO_PTR(grp));
+-		mesh_net_dst_reg(net, grp);
+-		l_debug("Added group subscription %4.4x", grp);
+-	}
++	l_queue_push_tail(mod->subs, L_UINT_TO_PTR(addr));
++	mesh_net_dst_reg(net, addr);
++	l_debug("Added group subscription %4.4x", addr);
+ 
+ 	return MESH_STATUS_SUCCESS;
+ }
+@@ -1454,8 +1449,8 @@ int mesh_model_sub_get(struct mesh_node *node, uint16_t addr, uint32_t id,
+ 	return MESH_STATUS_SUCCESS;
+ }
+ 
+-int mesh_model_sub_add(struct mesh_node *node, uint16_t addr, uint32_t id,
+-			const uint8_t *group, bool is_virt, uint16_t *dst)
++int mesh_model_sub_add(struct mesh_node *node, uint16_t ele_addr, uint32_t id,
++								uint16_t addr)
+ {
+ 	struct mesh_model *mod;
+ 	int status, ele_idx = node_get_element_idx(node, addr);
+@@ -1470,7 +1465,35 @@ int mesh_model_sub_add(struct mesh_node *node, uint16_t addr, uint32_t id,
+ 	if (!mod->sub_enabled || (mod->cbs && !(mod->cbs->sub)))
+ 		return MESH_STATUS_NOT_SUB_MOD;
+ 
+-	status = add_sub(node_get_net(node), mod, group, is_virt, dst);
++	status = add_sub(node_get_net(node), mod, addr);
++	if (status != MESH_STATUS_SUCCESS)
++		return status;
++
++	if (!mod->cbs)
++		/* External models */
++		cfg_update_model_subs(node, ele_idx, mod);
++
++	return MESH_STATUS_SUCCESS;
++}
++
++int mesh_model_virt_sub_add(struct mesh_node *node, uint16_t ele_addr,
++				uint32_t id, const uint8_t *label,
++				uint16_t *pub_addr)
++{
++	struct mesh_model *mod;
++	int status, ele_idx = node_get_element_idx(node, ele_addr);
++
++	if (ele_idx < 0)
++		return MESH_STATUS_INVALID_ADDRESS;
++
++	mod = get_model(node, (uint8_t) ele_idx, id);
++	if (!mod)
++		return MESH_STATUS_INVALID_MODEL;
++
++	if (!mod->sub_enabled || (mod->cbs && !(mod->cbs->sub)))
++		return MESH_STATUS_NOT_SUB_MOD;
++
++	status = add_virt_sub(node_get_net(node), mod, label, pub_addr);
+ 
+ 	if (status != MESH_STATUS_SUCCESS)
+ 		return status;
+@@ -1482,12 +1505,11 @@ int mesh_model_sub_add(struct mesh_node *node, uint16_t addr, uint32_t id,
+ 	return MESH_STATUS_SUCCESS;
+ }
+ 
+-int mesh_model_sub_ovr(struct mesh_node *node, uint16_t addr, uint32_t id,
+-			const uint8_t *group, bool is_virt, uint16_t *dst)
++int mesh_model_sub_ovrt(struct mesh_node *node, uint16_t ele_addr, uint32_t id,
++								uint16_t addr)
+ {
+-	struct l_queue *virtuals, *subs;
+ 	struct mesh_model *mod;
+-	int status, ele_idx = node_get_element_idx(node, addr);
++	int ele_idx = node_get_element_idx(node, addr);
+ 
+ 	if (ele_idx < 0)
+ 		return MESH_STATUS_INVALID_ADDRESS;
+@@ -1499,36 +1521,39 @@ int mesh_model_sub_ovr(struct mesh_node *node, uint16_t addr, uint32_t id,
+ 	if (!mod->sub_enabled || (mod->cbs && !(mod->cbs->sub)))
+ 		return MESH_STATUS_NOT_SUB_MOD;
+ 
+-	subs = mod->subs;
+-	virtuals = mod->virtuals;
+-	mod->subs = l_queue_new();
+-	mod->virtuals = l_queue_new();
++	l_queue_clear(mod->subs, NULL);
++	l_queue_clear(mod->virtuals, unref_virt);
+ 
+-	if (!mod->subs || !mod->virtuals)
+-		return MESH_STATUS_INSUFF_RESOURCES;
++	add_sub(node_get_net(node), mod, addr);
+ 
+-	status = add_sub(node_get_net(node), mod, group, is_virt, dst);
++	if (!mod->cbs)
++		/* External models */
++		cfg_update_model_subs(node, ele_idx, mod);
+ 
+-	if (status != MESH_STATUS_SUCCESS) {
+-		/* Adding new group failed, so revert to old lists */
+-		l_queue_destroy(mod->subs, NULL);
+-		mod->subs = subs;
+-		l_queue_destroy(mod->virtuals, unref_virt);
+-		mod->virtuals = virtuals;
+-	} else {
+-		const struct l_queue_entry *entry;
+-		struct mesh_net *net = node_get_net(node);
++	return MESH_STATUS_SUCCESS;
++}
++
++int mesh_model_virt_sub_ovrt(struct mesh_node *node, uint16_t ele_addr,
++					uint32_t id, const uint8_t *label,
++					uint16_t *addr)
++{
++	struct mesh_model *mod;
++	int status, ele_idx = node_get_element_idx(node, ele_addr);
++
++	if (ele_idx < 0)
++		return MESH_STATUS_INVALID_ADDRESS;
++
++	mod = get_model(node, (uint8_t) ele_idx, id);
++	if (!mod)
++		return MESH_STATUS_INVALID_MODEL;
+ 
+-		entry = l_queue_get_entries(subs);
++	if (!mod->sub_enabled || (mod->cbs && !(mod->cbs->sub)))
++		return MESH_STATUS_NOT_SUB_MOD;
+ 
+-		for (; entry; entry = entry->next)
+-			mesh_net_dst_unreg(net,
+-					(uint16_t) L_PTR_TO_UINT(entry->data));
++	l_queue_clear(mod->subs, NULL);
++	l_queue_clear(mod->virtuals, unref_virt);
+ 
+-		/* Destroy old lists */
+-		l_queue_destroy(subs, NULL);
+-		l_queue_destroy(virtuals, unref_virt);
+-	}
++	status = add_virt_sub(node_get_net(node), mod, label, addr);
+ 
+ 	if (!mod->cbs)
+ 		/* External models */
+@@ -1537,10 +1562,9 @@ int mesh_model_sub_ovr(struct mesh_node *node, uint16_t addr, uint32_t id,
+ 	return status;
+ }
+ 
+-int mesh_model_sub_del(struct mesh_node *node, uint16_t addr, uint32_t id,
+-			const uint8_t *group, bool is_virt, uint16_t *dst)
++int mesh_model_sub_del(struct mesh_node *node, uint16_t ele_addr, uint32_t id,
++								uint16_t addr)
+ {
+-	uint16_t grp;
+ 	struct mesh_model *mod;
+ 	int ele_idx = node_get_element_idx(node, addr);
+ 
+@@ -1554,26 +1578,47 @@ int mesh_model_sub_del(struct mesh_node *node, uint16_t addr, uint32_t id,
+ 	if (!mod->sub_enabled || (mod->cbs && !(mod->cbs->sub)))
+ 		return MESH_STATUS_NOT_SUB_MOD;
+ 
+-	if (is_virt) {
+-		struct mesh_virtual *virt;
++	if (l_queue_remove(mod->subs, L_UINT_TO_PTR(addr))) {
++		mesh_net_dst_unreg(node_get_net(node), addr);
+ 
+-		virt = l_queue_find(mod->virtuals, find_virt_by_label, group);
+-		if (virt) {
+-			l_queue_remove(mod->virtuals, virt);
+-			grp = virt->addr;
+-			unref_virt(virt);
+-		} else {
+-			if (!mesh_crypto_virtual_addr(group, &grp))
+-				return MESH_STATUS_STORAGE_FAIL;
+-		}
+-	} else {
+-		grp = l_get_le16(group);
++		if (!mod->cbs)
++			/* External models */
++			cfg_update_model_subs(node, ele_idx, mod);
+ 	}
+ 
+-	*dst = grp;
++	return MESH_STATUS_SUCCESS;
++}
+ 
+-	if (l_queue_remove(mod->subs, L_UINT_TO_PTR(grp))) {
+-		mesh_net_dst_unreg(node_get_net(node), grp);
++int mesh_model_virt_sub_del(struct mesh_node *node, uint16_t ele_addr,
++					uint32_t id, const uint8_t *label,
++					uint16_t *addr)
++{
++	struct mesh_model *mod;
++	struct mesh_virtual *virt;
++	int ele_idx = node_get_element_idx(node, ele_addr);
++
++	if (ele_idx < 0)
++		return MESH_STATUS_INVALID_ADDRESS;
++
++	mod = get_model(node, (uint8_t) ele_idx, id);
++	if (!mod)
++		return MESH_STATUS_INVALID_MODEL;
++
++	if (!mod->sub_enabled || (mod->cbs && !(mod->cbs->sub)))
++		return MESH_STATUS_NOT_SUB_MOD;
++
++	virt = l_queue_remove_if(mod->virtuals, find_virt_by_label, label);
++
++	if (virt) {
++		*addr = virt->addr;
++		unref_virt(virt);
++	} else {
++		*addr = UNASSIGNED_ADDRESS;
++		return MESH_STATUS_SUCCESS;
++	}
++
++	if (l_queue_remove(mod->subs, L_UINT_TO_PTR(*addr))) {
++		mesh_net_dst_unreg(node_get_net(node), *addr);
+ 
+ 		if (!mod->cbs)
+ 			/* External models */
+@@ -1614,9 +1659,9 @@ static struct mesh_model *model_setup(struct mesh_net *net, uint8_t ele_idx,
+ 	struct mesh_config_pub *pub = db_mod->pub;
+ 	uint32_t i;
+ 
+-	if (db_mod->num_bindings > MAX_BINDINGS) {
++	if (db_mod->num_bindings > MAX_MODEL_BINDINGS) {
+ 		l_warn("Binding list too long %u (max %u)",
+-					db_mod->num_bindings, MAX_BINDINGS);
++				db_mod->num_bindings, MAX_MODEL_BINDINGS);
+ 		return NULL;
+ 	}
+ 
+@@ -1670,22 +1715,12 @@ static struct mesh_model *model_setup(struct mesh_net *net, uint8_t ele_idx,
+ 		return mod;
+ 
+ 	for (i = 0; i < db_mod->num_subs; i++) {
+-		uint16_t group;
+-		uint8_t *src;
++		struct mesh_config_sub *sub = &db_mod->subs[i];
+ 
+-		/*
+-		 * To keep calculations for virtual label coherent,
+-		 * convert to little endian.
+-		 */
+-		l_put_le16(db_mod->subs[i].src.addr, &group);
+-		src = db_mod->subs[i].virt ? db_mod->subs[i].src.virt_addr :
+-			(uint8_t *) &group;
+-
+-		if (add_sub(net, mod, src, db_mod->subs[i].virt, NULL) !=
+-							MESH_STATUS_SUCCESS) {
+-			mesh_model_free(mod);
+-			return NULL;
+-		}
++		if (!sub->virt)
++			add_sub(net, mod, sub->addr.grp);
++		else
++			add_virt_sub(net, mod, sub->addr.label, NULL);
+ 	}
+ 
+ 	return mod;
+diff --git a/mesh/model.h b/mesh/model.h
+index 0d8dddf92..3221379af 100644
+--- a/mesh/model.h
++++ b/mesh/model.h
+@@ -19,8 +19,8 @@
+ 
+ struct mesh_model;
+ 
+-#define MAX_BINDINGS	10
+-#define MAX_GRP_PER_MOD	10
++#define MAX_MODEL_BINDINGS	10
++#define MAX_MODEL_SUBS		10
+ 
+ #define ACTION_ADD	1
+ #define ACTION_UPDATE	2
+@@ -89,12 +89,21 @@ int mesh_model_get_bindings(struct mesh_node *node, uint16_t ele_addr,
+ 				uint32_t id, uint8_t *buf, uint16_t buf_sz,
+ 								uint16_t *len);
+ int mesh_model_sub_add(struct mesh_node *node, uint16_t ele_addr, uint32_t id,
+-				const uint8_t *grp, bool b_virt, uint16_t *dst);
++								uint16_t grp);
++int mesh_model_virt_sub_add(struct mesh_node *node, uint16_t ele_addr,
++					uint32_t id, const uint8_t *label,
++					uint16_t *addr);
+ int mesh_model_sub_del(struct mesh_node *node, uint16_t ele_addr, uint32_t id,
+-				const uint8_t *grp, bool b_virt, uint16_t *dst);
++								uint16_t grp);
++int mesh_model_virt_sub_del(struct mesh_node *node, uint16_t ele_addr,
++					uint32_t id, const uint8_t *label,
++					uint16_t *addr);
+ int mesh_model_sub_del_all(struct mesh_node *node, uint16_t addr, uint32_t id);
+-int mesh_model_sub_ovr(struct mesh_node *node, uint16_t addr, uint32_t id,
+-				const uint8_t *grp, bool b_virt, uint16_t *dst);
++int mesh_model_sub_ovrt(struct mesh_node *node, uint16_t ele_addr, uint32_t id,
++								uint16_t addr);
++int mesh_model_virt_sub_ovrt(struct mesh_node *node, uint16_t ele_addr,
++					uint32_t id, const uint8_t *label,
++					uint16_t *addr);
+ int mesh_model_sub_get(struct mesh_node *node, uint16_t ele_addr, uint32_t id,
+ 			uint8_t *buf, uint16_t buf_size, uint16_t *size);
+ uint16_t mesh_model_cfg_blk(uint8_t *pkt);
 -- 
-Luiz Augusto von Dentz
+2.26.2
+
