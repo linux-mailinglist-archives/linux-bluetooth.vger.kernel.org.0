@@ -2,208 +2,143 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF1DA23D09A
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Aug 2020 21:51:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3348423D1D6
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Aug 2020 22:06:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728242AbgHETvM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Aug 2020 15:51:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47356 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728244AbgHETuw (ORCPT
+        id S1728189AbgHEUGt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 Aug 2020 16:06:49 -0400
+Received: from mail-pg1-f200.google.com ([209.85.215.200]:48770 "EHLO
+        mail-pg1-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726986AbgHEQed (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Aug 2020 15:50:52 -0400
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D8EC061575
-        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Aug 2020 12:50:52 -0700 (PDT)
-Received: by mail-oi1-x241.google.com with SMTP id e6so20473090oii.4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Aug 2020 12:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+uvhSulsTo3IYqkmirIw+uCMi1pBoea9+GY2Ru9yZyY=;
-        b=o44XPh0hnxv6lw/4AMZHgdfmf/+lWcU04OKR3IjWzINiSv5taRh+U6neT/ONZz06rJ
-         0DL+4vvgGOERkOYfAaokmDH70dpTm0uRANPyh+ZlOLNoIgn8/WquQ8RtmYkFB9F/1Yff
-         EyFUGY9EcOoYaC0NJzRMzg9lxCHkOQ+P2TUCdZFXaKX08L1Uai3wZtxmjQ70pu6TP3hO
-         dWAIGBQjnX21mfQISf9Es7yqCKGRUBv3+cyGOruzrRSTjbY3weCnKlIXeGyFHHk4q4NM
-         heosTO6q/L8I2B6yMazu1M+rhHATol5t9N/WguRMPUM4ymSpBaIwW6YQmKDP25r2F7EA
-         XBOw==
+        Wed, 5 Aug 2020 12:34:33 -0400
+Received: by mail-pg1-f200.google.com with SMTP id k32so2130669pgm.15
+        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Aug 2020 09:34:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+uvhSulsTo3IYqkmirIw+uCMi1pBoea9+GY2Ru9yZyY=;
-        b=KQCv+PrKyiRW3DTTMj8AWqh39gI3IT7QeOcCfUiqFB6xFZiwzEoi9hdfeMTRk1H6F1
-         99XB+vK6BvNttBxXXVmF7wFUIQ9ilgr/mRgpJFwPgPvdZZ4bN4Vb80A3NjPZ4nKyB1VV
-         aFPABDd/5CivqRD09At2/9An39dFOoDN/4CQyHvqROVGKfNYa8UhnvWeQZ0pnYBZibY+
-         2AiqGXzdGUNLRZI4QRVs4btQp5v2WtccXsbQM1kShStmdI+qdKsYlXSxenr+G08fmmB4
-         ZAXCD5CpIY2xShcYUVtO3lAEnDjvpeb5Ta23BwYW8taUWzVgXVB281tQyDE9hrCgnxwH
-         UNdA==
-X-Gm-Message-State: AOAM531wsvuWE8Gpjs532dAGUI125wsgdn6nhtFoEI5FIURyCcnfGR9w
-        tWKAGGtn0KPJPu7rZ0w+0KfRKrtAyH98J+2Y+H0=
-X-Google-Smtp-Source: ABdhPJznKOj8VOEhnUGQLG9tX/RNqeFHc58b//dIUARm2o/sHJW+kStwIyCsk09ur2uqfhHAkhcpS21orBtUUj4j2pc=
-X-Received: by 2002:aca:cc50:: with SMTP id c77mr3948006oig.152.1596657051339;
- Wed, 05 Aug 2020 12:50:51 -0700 (PDT)
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=vD/veeEc05bcXlG0e+JSfe9O59TwwwUvH3Hr6H/SIyA=;
+        b=TWBJCGlPk9ZLOIl7WWeZt/iFerGhW9MW1R5RXz6L3d/xiTXtmRIQfzajtKxyKxdBaZ
+         Ejk0A4KKv0uDna1aVUsCh9LnPrbgeWCxws3lR3N3JqqBkzoCO9/iLNc+iNYvt1weJJua
+         IQI3IvpKz5rNiukyLgb7B3vXJqAULIhzwrUG6YMXj+GmejBtGA1Oc/52DWzQUM33KV6i
+         IJZf+5vX2WZVjNlYF3IgQWnm9rbJR1OhTsu0XLa7OR+EWWM37f7N6MaWT86tjtzzkESg
+         K0u25eeC9QlVHri2alYsq5Jgk0QpSgxInpmPvzMOacN3C4Z/7KyiGL6/iSujc0Ih6Uhv
+         ACOg==
+X-Gm-Message-State: AOAM531OjpdCXRiM2SSj5Xq1KX1NYqZHVmxiPMOdQAd9rR9sjDhaxpKP
+        BqRVLaRknl8dLjIHKRjFMgToktVXOYx4vfy/HLHxA1zX7PJw
+X-Google-Smtp-Source: ABdhPJyCIyEAmTjH3mqmhkj1F6rTlvWQHvwfZk6hoXyQVk34+x2BOvU/JDLR5tpGpsL3ZeWGnfdbt0fxmuRIfqVtucp3aBL6viaF
 MIME-Version: 1.0
-References: <20200805100342.bluez.v3.1.I6076fdf5621a5ce59b7307967a8c997638c1d1c8@changeid>
-In-Reply-To: <20200805100342.bluez.v3.1.I6076fdf5621a5ce59b7307967a8c997638c1d1c8@changeid>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 5 Aug 2020 12:50:41 -0700
-Message-ID: <CABBYNZ+=ZjPe147Jr8vEVCRixjFoq9xMYWObOLYHErGF3e5DCg@mail.gmail.com>
-Subject: Re: [bluez PATCH v3] avrcp: include all player settings in notif event
-To:     Howard Chung <howardchung@google.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        Archie Pusaka <apusaka@chromium.org>
+X-Received: by 2002:a92:dcc6:: with SMTP id b6mr4591063ilr.147.1596642980561;
+ Wed, 05 Aug 2020 08:56:20 -0700 (PDT)
+Date:   Wed, 05 Aug 2020 08:56:20 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <000000000000b087a705ac2369dd@google.com>
+Subject: INFO: trying to register non-static key in l2cap_chan_del
+From:   syzbot <syzbot+abfc0f5e668d4099af73@syzkaller.appspotmail.com>
+To:     davem@davemloft.net, johan.hedberg@gmail.com, kuba@kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, netdev@vger.kernel.org,
+        syzkaller-bugs@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Howard,
+Hello,
 
-On Tue, Aug 4, 2020 at 7:06 PM Howard Chung <howardchung@google.com> wrote:
->
-> According to AVRCP 1.6.2 spec section 6.7.2 table 6.39, all player
-> application settings should be returned to the CT and let CT to
-> determine which settings have changed. Currently bluez only returns
-> the changed attribute instead. This patch also addresses a potential
-> issue on which the number of application settings mismatches with
-> the actual number returned.
->
-> Reviewed-by: Archie Pusaka <apusaka@chromium.org>
-> ---
->
-> Changes in v3:
-> - Rebase to master
->
-> Changes in v2:
-> - Fixed unused variables
->
->  profiles/audio/avrcp.c | 71 +++++++++++++++++++-----------------------
->  1 file changed, 32 insertions(+), 39 deletions(-)
->
-> diff --git a/profiles/audio/avrcp.c b/profiles/audio/avrcp.c
-> index 4e7ff75c0..5d0256c52 100644
-> --- a/profiles/audio/avrcp.c
-> +++ b/profiles/audio/avrcp.c
-> @@ -370,6 +370,7 @@ static uint32_t company_ids[] = {
->  };
->
->  static void avrcp_register_notification(struct avrcp *session, uint8_t event);
-> +static GList *player_list_settings(struct avrcp_player *player);
->
->  static sdp_record_t *avrcp_ct_record(void)
->  {
-> @@ -744,6 +745,35 @@ static int play_status_to_val(const char *status)
->         return -EINVAL;
->  }
->
-> +static uint16_t player_settings_changed(struct avrcp_player *player,
-> +                                               struct avrcp_header *pdu)
-> +{
-> +       GList *settings = player_list_settings(player);
-> +       int size = 2;
-> +
-> +       for (; settings; settings = settings->next) {
-> +               const char *key = settings->data;
-> +               int attr;
-> +               int val;
-> +
-> +               attr = attr_to_val(key);
-> +               if (attr < 0)
-> +                       continue;
-> +
-> +               val = player_get_setting(player, attr);
-> +               if (val < 0)
-> +                       continue;
-> +
-> +               pdu->params[size++] = attr;
-> +               pdu->params[size++] = val;
-> +       }
-> +
-> +       g_list_free(settings);
-> +
-> +       pdu->params[1] = (size - 2) >> 1;
-> +       return size;
-> +}
-> +
->  void avrcp_player_event(struct avrcp_player *player, uint8_t id,
->                                                         const void *data)
->  {
-> @@ -752,8 +782,6 @@ void avrcp_player_event(struct avrcp_player *player, uint8_t id,
->         uint8_t code;
->         uint16_t size;
->         GSList *l;
-> -       int attr;
-> -       int val;
->
->         if (player->sessions == NULL)
->                 return;
-> @@ -792,19 +820,7 @@ void avrcp_player_event(struct avrcp_player *player, uint8_t id,
->                 size = 1;
->                 break;
->         case AVRCP_EVENT_SETTINGS_CHANGED:
-> -               size = 2;
-> -               pdu->params[1] = 1;
-> -
-> -               attr = attr_to_val(data);
-> -               if (attr < 0)
-> -                       return;
-> -
-> -               val = player_get_setting(player, attr);
-> -               if (val < 0)
-> -                       return;
-> -
-> -               pdu->params[size++] = attr;
-> -               pdu->params[size++] = val;
-> +               size = player_settings_changed(player, pdu);
->                 break;
->         case AVRCP_EVENT_ADDRESSED_PLAYER_CHANGED:
->                 size = 5;
-> @@ -1597,7 +1613,6 @@ static uint8_t avrcp_handle_register_notification(struct avrcp *session,
->         uint16_t len = ntohs(pdu->params_len);
->         uint64_t uid;
->         int8_t volume;
-> -       GList *settings;
->
->         /*
->          * 1 byte for EventID, 4 bytes for Playback interval but the latest
-> @@ -1628,29 +1643,7 @@ static uint8_t avrcp_handle_register_notification(struct avrcp *session,
->                 len = 1;
->                 break;
->         case AVRCP_EVENT_SETTINGS_CHANGED:
-> -               len = 1;
-> -               settings = player_list_settings(player);
-> -
-> -               pdu->params[len++] = g_list_length(settings);
-> -               for (; settings; settings = settings->next) {
-> -                       const char *key = settings->data;
-> -                       int attr;
-> -                       int val;
-> -
-> -                       attr = attr_to_val(key);
-> -                       if (attr < 0)
-> -                               continue;
-> -
-> -                       val = player_get_setting(player, attr);
-> -                       if (val < 0)
-> -                               continue;
-> -
-> -                       pdu->params[len++] = attr;
-> -                       pdu->params[len++] = val;
-> -               }
-> -
-> -               g_list_free(settings);
-> -
-> +               len = player_settings_changed(player, pdu);
->                 break;
->         case AVRCP_EVENT_ADDRESSED_PLAYER_CHANGED:
->                 len = 5;
-> --
-> 2.28.0.163.g6104cc2f0b6-goog
+syzbot found the following issue on:
 
-Applied, thanks.
+HEAD commit:    442489c2 Merge tag 'timers-core-2020-08-04' of git://git.k..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=15aa9494900000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=669b4bedb6478222
+dashboard link: https://syzkaller.appspot.com/bug?extid=abfc0f5e668d4099af73
+compiler:       gcc (GCC) 10.1.0-syz 20200507
 
--- 
-Luiz Augusto von Dentz
+Unfortunately, I don't have any reproducer for this issue yet.
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+abfc0f5e668d4099af73@syzkaller.appspotmail.com
+
+INFO: trying to register non-static key.
+the code is fine but needs lockdep annotation.
+turning off the locking correctness validator.
+CPU: 1 PID: 27 Comm: kworker/1:1 Not tainted 5.8.0-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Workqueue: events l2cap_chan_timeout
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x18f/0x20d lib/dump_stack.c:118
+ assign_lock_key kernel/locking/lockdep.c:894 [inline]
+ register_lock_class+0x157d/0x1630 kernel/locking/lockdep.c:1206
+ __lock_acquire+0xf9/0x5640 kernel/locking/lockdep.c:4305
+ lock_acquire+0x1f1/0xad0 kernel/locking/lockdep.c:5005
+ __raw_spin_lock_bh include/linux/spinlock_api_smp.h:135 [inline]
+ _raw_spin_lock_bh+0x2f/0x40 kernel/locking/spinlock.c:175
+ spin_lock_bh include/linux/spinlock.h:359 [inline]
+ lock_sock_nested+0x3b/0x110 net/core/sock.c:3070
+ l2cap_sock_teardown_cb+0x88/0x400 net/bluetooth/l2cap_sock.c:1520
+ l2cap_chan_del+0xad/0x1300 net/bluetooth/l2cap_core.c:618
+ l2cap_chan_close+0x118/0xb10 net/bluetooth/l2cap_core.c:824
+ l2cap_chan_timeout+0x173/0x450 net/bluetooth/l2cap_core.c:436
+ process_one_work+0x94c/0x1670 kernel/workqueue.c:2269
+ worker_thread+0x64c/0x1120 kernel/workqueue.c:2415
+ kthread+0x3b5/0x4a0 kernel/kthread.c:292
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:293
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+#PF: supervisor instruction fetch in kernel mode
+#PF: error_code(0x0010) - not-present page
+PGD 32376067 P4D 32376067 PUD 9356f067 PMD 0 
+Oops: 0010 [#1] PREEMPT SMP KASAN
+CPU: 1 PID: 27 Comm: kworker/1:1 Not tainted 5.8.0-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Workqueue: events l2cap_chan_timeout
+RIP: 0010:0x0
+Code: Bad RIP value.
+RSP: 0018:ffffc90000e17b60 EFLAGS: 00010246
+RAX: dffffc0000000000 RBX: ffff88808d94c000 RCX: ffffffff8723aa4f
+RDX: 1ffff11005e48c8c RSI: ffffffff8723ac9c RDI: ffff88802f246000
+RBP: 0000000000000005 R08: 0000000000000001 R09: ffff88802f246067
+R10: 0000000000000009 R11: 0000000000000001 R12: 000000000000006f
+R13: ffff88802f246000 R14: 0000000000000000 R15: 0000000000000005
+FS:  0000000000000000(0000) GS:ffff8880ae700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffffffffffd6 CR3: 0000000094fa9000 CR4: 00000000001426e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ l2cap_sock_teardown_cb+0x374/0x400 net/bluetooth/l2cap_sock.c:1547
+ l2cap_chan_del+0xad/0x1300 net/bluetooth/l2cap_core.c:618
+ l2cap_chan_close+0x118/0xb10 net/bluetooth/l2cap_core.c:824
+ l2cap_chan_timeout+0x173/0x450 net/bluetooth/l2cap_core.c:436
+ process_one_work+0x94c/0x1670 kernel/workqueue.c:2269
+ worker_thread+0x64c/0x1120 kernel/workqueue.c:2415
+ kthread+0x3b5/0x4a0 kernel/kthread.c:292
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:293
+Modules linked in:
+CR2: 0000000000000000
+---[ end trace 661471e896caece1 ]---
+RIP: 0010:0x0
+Code: Bad RIP value.
+RSP: 0018:ffffc90000e17b60 EFLAGS: 00010246
+RAX: dffffc0000000000 RBX: ffff88808d94c000 RCX: ffffffff8723aa4f
+RDX: 1ffff11005e48c8c RSI: ffffffff8723ac9c RDI: ffff88802f246000
+RBP: 0000000000000005 R08: 0000000000000001 R09: ffff88802f246067
+R10: 0000000000000009 R11: 0000000000000001 R12: 000000000000006f
+R13: ffff88802f246000 R14: 0000000000000000 R15: 0000000000000005
+FS:  0000000000000000(0000) GS:ffff8880ae700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffffffffffd6 CR3: 0000000094fa9000 CR4: 00000000001426e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+
+
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
