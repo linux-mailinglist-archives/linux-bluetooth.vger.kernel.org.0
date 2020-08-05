@@ -2,134 +2,80 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCAB223CE0F
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Aug 2020 20:11:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1703323CF62
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Aug 2020 21:20:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729158AbgHESLT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Aug 2020 14:11:19 -0400
-Received: from mail-io1-f71.google.com ([209.85.166.71]:43024 "EHLO
-        mail-io1-f71.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729165AbgHESJX (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Aug 2020 14:09:23 -0400
-Received: by mail-io1-f71.google.com with SMTP id f19so8145793iol.10
-        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Aug 2020 11:09:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id:subject
-         :from:to;
-        bh=YloGL6E01nHExHJj20pzTeVaG7arypuWNvc/TTQM6GU=;
-        b=twXCNRo9w6147W3HskG4yBRiknV4vMSs883mZfQImTQ3mUMjrm9/DVmQiLy71GOG+K
-         P8PjmVSt9Kv5tIOAgufUo+nmE3cLDeV/jKop5JGbtyzdoPv6WpC1nipBQPPEhMPLTSwJ
-         kkU5jO850Bj5m9cpursVtV4SMXjCDUIm4SxDlpdyTxM+oMULLQ1zYWbpr/WIZT1q1/26
-         C6pVW6+jhwdImNfUH8P/PQvyfkf2HRqm5+mWuPFY8hofmc+VSCR237aLi98AMZrfJhBT
-         jlapPXPhswKh4rScvty1U20zRUaTIAjNWUGqQUyCmLzgXMXHdaE6SoFGPvKI3+ZgxGeP
-         eNGQ==
-X-Gm-Message-State: AOAM530nsWRCX0qr51NJPQusfGcnFB4NiOHOkA387GCz9PlRNQN54nAi
-        b3wp7c08kMalWWpDC+ACoctLnpOcZwo8ZB1MMd92QumkpV1q
-X-Google-Smtp-Source: ABdhPJxKKv7Wr77Bbzsv5urdfzRqc3Ro2et+RbGkg6ws9iwd9GeFuikYIHMlqbLtnzqWa1N3LL1eyj/v5jRCbV2oUEfjHNWPBA2z
+        id S1728507AbgHETUQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 Aug 2020 15:20:16 -0400
+Received: from mga05.intel.com ([192.55.52.43]:42213 "EHLO mga05.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728959AbgHERsm (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 5 Aug 2020 13:48:42 -0400
+IronPort-SDR: M4ofSXJ3SM3mNWO9lfkMD6WQqkUlsypVWtK2eNPbIuyxP2v5Tk+GFD0SuMz0i7v+evZlQoc7vr
+ lAYjmMvqdB+A==
+X-IronPort-AV: E=McAfee;i="6000,8403,9704"; a="237470599"
+X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
+   d="scan'208";a="237470599"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2020 10:44:57 -0700
+IronPort-SDR: +yHScxxKYp1319fLV3oiV2j8kplv4RaoZ7+LNK5nJe7NgB3RpWacCe87zoGaTwcl7jQBMv6vqA
+ PKec3VjAAaAg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
+   d="scan'208";a="437245692"
+Received: from unknown (HELO ingas-nuc1.intel.com) ([10.254.118.189])
+  by orsmga004.jf.intel.com with ESMTP; 05 Aug 2020 10:44:56 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ v4 00/10] Mesh Config Server clean up
+Date:   Wed,  5 Aug 2020 10:44:46 -0700
+Message-Id: <20200805174456.49342-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-X-Received: by 2002:a05:6638:2493:: with SMTP id x19mr5753725jat.53.1596650962939;
- Wed, 05 Aug 2020 11:09:22 -0700 (PDT)
-Date:   Wed, 05 Aug 2020 11:09:22 -0700
-In-Reply-To: <000000000000b087a705ac2369dd@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <00000000000079f28205ac254528@google.com>
-Subject: Re: INFO: trying to register non-static key in l2cap_chan_del
-From:   syzbot <syzbot+abfc0f5e668d4099af73@syzkaller.appspotmail.com>
-To:     davem@davemloft.net, johan.hedberg@gmail.com, kuba@kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marcel@holtmann.org, netdev@vger.kernel.org,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-syzbot has found a reproducer for the following issue on:
+v4 - Further fixes in handling Key Refresh Phase Set message
 
-HEAD commit:    4c900a6b farsync: switch from 'pci_' to 'dma_' API
-git tree:       net-next
-console output: https://syzkaller.appspot.com/x/log.txt?x=1561801a900000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=91a13b78c7dc258d
-dashboard link: https://syzkaller.appspot.com/bug?extid=abfc0f5e668d4099af73
-compiler:       gcc (GCC) 10.1.0-syz 20200507
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=15bdcc3a900000
+*******************
+ v3 - address Brian's comments
+ 
+*******************
+This patch set groups functionality by config messages.
+Also, fixes the cases where malformed messages should be  silently
+ignored and the situations when incorrect error status
+is sent in response.
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+abfc0f5e668d4099af73@syzkaller.appspotmail.com
+Inga Stotland (10):
+  mesh: Clean up handling of config subscription messages
+  mesh: Clean up handling of config model binding messages
+  mesh: Clean up handling of config node identity message
+  mesh: Clean up handling of config publication messages
+  mesh: Clean up handling of config net and app key messages
+  mesh: Clean up handling of config relay messages
+  mesh: Clean up handling of config poll timeout message
+  mesh: Clean up handling of config net transmit messages
+  mesh: Clean up handling of config KR phase messages
+  mesh: Refactor heartbeat pub/sub
 
-INFO: trying to register non-static key.
-the code is fine but needs lockdep annotation.
-turning off the locking correctness validator.
-CPU: 0 PID: 5 Comm: kworker/0:0 Not tainted 5.8.0-rc7-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: events l2cap_chan_timeout
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x18f/0x20d lib/dump_stack.c:118
- assign_lock_key kernel/locking/lockdep.c:894 [inline]
- register_lock_class+0x157d/0x1630 kernel/locking/lockdep.c:1206
- __lock_acquire+0xfa/0x56e0 kernel/locking/lockdep.c:4259
- lock_acquire+0x1f1/0xad0 kernel/locking/lockdep.c:4959
- __raw_spin_lock_bh include/linux/spinlock_api_smp.h:135 [inline]
- _raw_spin_lock_bh+0x2f/0x40 kernel/locking/spinlock.c:175
- spin_lock_bh include/linux/spinlock.h:358 [inline]
- lock_sock_nested+0x3b/0x110 net/core/sock.c:3019
- l2cap_sock_teardown_cb+0x88/0x400 net/bluetooth/l2cap_sock.c:1520
- l2cap_chan_del+0xad/0x1300 net/bluetooth/l2cap_core.c:618
- l2cap_chan_close+0x118/0xb10 net/bluetooth/l2cap_core.c:823
- l2cap_chan_timeout+0x173/0x450 net/bluetooth/l2cap_core.c:436
- process_one_work+0x94c/0x1670 kernel/workqueue.c:2269
- worker_thread+0x64c/0x1120 kernel/workqueue.c:2415
- kthread+0x3b5/0x4a0 kernel/kthread.c:291
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:293
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-#PF: supervisor instruction fetch in kernel mode
-#PF: error_code(0x0010) - not-present page
-PGD 0 P4D 0 
-Oops: 0010 [#1] PREEMPT SMP KASAN
-CPU: 0 PID: 5 Comm: kworker/0:0 Not tainted 5.8.0-rc7-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: events l2cap_chan_timeout
-RIP: 0010:0x0
-Code: Bad RIP value.
-RSP: 0018:ffffc90000cbfb60 EFLAGS: 00010246
-RAX: dffffc0000000000 RBX: ffff8880931bd000 RCX: ffffffff8728bc2f
-RDX: 1ffff11014549a8c RSI: ffffffff8728be7c RDI: ffff8880a2a4d000
-RBP: 0000000000000005 R08: 0000000000000001 R09: ffff8880a2a4d067
-R10: 0000000000000009 R11: 0000000000000001 R12: 000000000000006f
-R13: ffff8880a2a4d000 R14: 0000000000000000 R15: 0000000000000005
-FS:  0000000000000000(0000) GS:ffff8880ae600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffffffffd6 CR3: 00000000929e6000 CR4: 00000000001406f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- l2cap_sock_teardown_cb+0x374/0x400 net/bluetooth/l2cap_sock.c:1547
- l2cap_chan_del+0xad/0x1300 net/bluetooth/l2cap_core.c:618
- l2cap_chan_close+0x118/0xb10 net/bluetooth/l2cap_core.c:823
- l2cap_chan_timeout+0x173/0x450 net/bluetooth/l2cap_core.c:436
- process_one_work+0x94c/0x1670 kernel/workqueue.c:2269
- worker_thread+0x64c/0x1120 kernel/workqueue.c:2415
- kthread+0x3b5/0x4a0 kernel/kthread.c:291
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:293
-Modules linked in:
-CR2: 0000000000000000
----[ end trace ecb0577583d92fc1 ]---
-RIP: 0010:0x0
-Code: Bad RIP value.
-RSP: 0018:ffffc90000cbfb60 EFLAGS: 00010246
-RAX: dffffc0000000000 RBX: ffff8880931bd000 RCX: ffffffff8728bc2f
-RDX: 1ffff11014549a8c RSI: ffffffff8728be7c RDI: ffff8880a2a4d000
-RBP: 0000000000000005 R08: 0000000000000001 R09: ffff8880a2a4d067
-R10: 0000000000000009 R11: 0000000000000001 R12: 000000000000006f
-R13: ffff8880a2a4d000 R14: 0000000000000000 R15: 0000000000000005
-FS:  0000000000000000(0000) GS:ffff8880ae600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffffffffd6 CR3: 00000000929e6000 CR4: 00000000001406f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ mesh/cfgmod-server.c    | 1196 +++++++++++++++++----------------------
+ mesh/cfgmod.h           |    2 +-
+ mesh/mesh-config-json.c |   12 +-
+ mesh/mesh-config.h      |    6 +-
+ mesh/mesh-defs.h        |    3 +
+ mesh/model.c            |  234 ++++----
+ mesh/model.h            |   21 +-
+ mesh/net.c              |  326 +++++++----
+ mesh/net.h              |   54 +-
+ mesh/node.h             |    4 -
+ 10 files changed, 912 insertions(+), 946 deletions(-)
+
+-- 
+2.26.2
 
