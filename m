@@ -2,38 +2,40 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1703323CF62
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Aug 2020 21:20:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 018E123CF6F
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Aug 2020 21:21:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728507AbgHETUQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Aug 2020 15:20:16 -0400
+        id S1728888AbgHETUn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 Aug 2020 15:20:43 -0400
 Received: from mga05.intel.com ([192.55.52.43]:42213 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728959AbgHERsm (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Aug 2020 13:48:42 -0400
-IronPort-SDR: M4ofSXJ3SM3mNWO9lfkMD6WQqkUlsypVWtK2eNPbIuyxP2v5Tk+GFD0SuMz0i7v+evZlQoc7vr
- lAYjmMvqdB+A==
-X-IronPort-AV: E=McAfee;i="6000,8403,9704"; a="237470599"
+        id S1728987AbgHERr2 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 5 Aug 2020 13:47:28 -0400
+IronPort-SDR: CCSYNJadoEpWMG6Wxyr0at1auLtruYX53uY15jy2z5e07XzfjJjDq2LrxxZPFfhFQLPpTUO/qz
+ vWUlAdf4R0zQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9704"; a="237470653"
 X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
-   d="scan'208";a="237470599"
+   d="scan'208";a="237470653"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2020 10:44:57 -0700
-IronPort-SDR: +yHScxxKYp1319fLV3oiV2j8kplv4RaoZ7+LNK5nJe7NgB3RpWacCe87zoGaTwcl7jQBMv6vqA
- PKec3VjAAaAg==
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2020 10:45:00 -0700
+IronPort-SDR: WAsY6ol6J9SOdoFWzuZuf7GiSCm9tY9IgAZRGXHmIpHOroj7tY+EFqomV7semR9+C2f8rJalrg
+ TFWjSQD3W62Q==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
-   d="scan'208";a="437245692"
+   d="scan'208";a="437245747"
 Received: from unknown (HELO ingas-nuc1.intel.com) ([10.254.118.189])
-  by orsmga004.jf.intel.com with ESMTP; 05 Aug 2020 10:44:56 -0700
+  by orsmga004.jf.intel.com with ESMTP; 05 Aug 2020 10:45:00 -0700
 From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ v4 00/10] Mesh Config Server clean up
-Date:   Wed,  5 Aug 2020 10:44:46 -0700
-Message-Id: <20200805174456.49342-1-inga.stotland@intel.com>
+Subject: [PATCH BlueZ v4 06/10] mesh: Clean up handling of config relay messages
+Date:   Wed,  5 Aug 2020 10:44:52 -0700
+Message-Id: <20200805174456.49342-7-inga.stotland@intel.com>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200805174456.49342-1-inga.stotland@intel.com>
+References: <20200805174456.49342-1-inga.stotland@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -41,41 +43,74 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-v4 - Further fixes in handling Key Refresh Phase Set message
+This modification allows using a single point for sending out
+the composed status messages by the Config Server.
+---
+ mesh/cfgmod-server.c | 38 ++++++++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 12 deletions(-)
 
-*******************
- v3 - address Brian's comments
+diff --git a/mesh/cfgmod-server.c b/mesh/cfgmod-server.c
+index 030f9e744..6ca1c1dd1 100644
+--- a/mesh/cfgmod-server.c
++++ b/mesh/cfgmod-server.c
+@@ -396,6 +396,30 @@ static uint16_t model_app_bind(struct mesh_node *node, const uint8_t *pkt,
+ 	return n;
+ }
  
-*******************
-This patch set groups functionality by config messages.
-Also, fixes the cases where malformed messages should be  silently
-ignored and the situations when incorrect error status
-is sent in response.
-
-Inga Stotland (10):
-  mesh: Clean up handling of config subscription messages
-  mesh: Clean up handling of config model binding messages
-  mesh: Clean up handling of config node identity message
-  mesh: Clean up handling of config publication messages
-  mesh: Clean up handling of config net and app key messages
-  mesh: Clean up handling of config relay messages
-  mesh: Clean up handling of config poll timeout message
-  mesh: Clean up handling of config net transmit messages
-  mesh: Clean up handling of config KR phase messages
-  mesh: Refactor heartbeat pub/sub
-
- mesh/cfgmod-server.c    | 1196 +++++++++++++++++----------------------
- mesh/cfgmod.h           |    2 +-
- mesh/mesh-config-json.c |   12 +-
- mesh/mesh-config.h      |    6 +-
- mesh/mesh-defs.h        |    3 +
- mesh/model.c            |  234 ++++----
- mesh/model.h            |   21 +-
- mesh/net.c              |  326 +++++++----
- mesh/net.h              |   54 +-
- mesh/node.h             |    4 -
- 10 files changed, 912 insertions(+), 946 deletions(-)
-
++static uint16_t cfg_relay_msg(struct mesh_node *node, const uint8_t *pkt,
++								int opcode)
++{
++	uint8_t count;
++	uint16_t interval;
++	uint16_t n;
++
++	if (pkt[0] > 0x01)
++		return 0;
++
++	if (opcode == OP_CONFIG_RELAY_SET) {
++		count = (pkt[1] & 0x7) + 1;
++		interval = ((pkt[1] >> 3) + 1) * 10;
++		node_relay_mode_set(node, !!pkt[0], count, interval);
++	}
++
++	n = mesh_model_opcode_set(OP_CONFIG_RELAY_STATUS, msg);
++
++	msg[n++] = node_relay_mode_get(node, &count, &interval);
++	msg[n++] = (count - 1) + ((interval/10 - 1) << 3);
++
++	return n;
++}
++
+ static void hb_pub_timeout_func(struct l_timeout *timeout, void *user_data)
+ {
+ 	struct mesh_net *net = user_data;
+@@ -765,24 +789,14 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
+ 		break;
+ 
+ 	case OP_CONFIG_RELAY_SET:
+-		if (size != 2 || pkt[0] > 0x01)
++		if (size != 2)
+ 			return true;
+-
+-		count = (pkt[1] & 0x7) + 1;
+-		interval = ((pkt[1] >> 3) + 1) * 10;
+-		node_relay_mode_set(node, !!pkt[0], count, interval);
+ 		/* Fall Through */
+-
+ 	case OP_CONFIG_RELAY_GET:
+ 		if (opcode == OP_CONFIG_RELAY_GET && size != 0)
+ 			return true;
+ 
+-		n = mesh_model_opcode_set(OP_CONFIG_RELAY_STATUS, msg);
+-
+-		msg[n++] = node_relay_mode_get(node, &count, &interval);
+-		msg[n++] = (count - 1) + ((interval/10 - 1) << 3);
+-
+-		l_debug("Get/Set Relay Config (%d)", msg[n-1]);
++		n = cfg_relay_msg(node, pkt, opcode);
+ 		break;
+ 
+ 	case OP_CONFIG_NETWORK_TRANSMIT_SET:
 -- 
 2.26.2
 
