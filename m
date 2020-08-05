@@ -2,40 +2,66 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A96723CDCD
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Aug 2020 19:53:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01CC923CE3D
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Aug 2020 20:22:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728999AbgHERxb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Aug 2020 13:53:31 -0400
-Received: from mga05.intel.com ([192.55.52.43]:42213 "EHLO mga05.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729036AbgHERuz (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Aug 2020 13:50:55 -0400
-IronPort-SDR: CL9dOmAUyumlRHlyqJ8guF3MDWmtmGZUT2KAHdf9LnWXFCF6DgUd87BU9ncrDokFWt1DlCWGoL
- 5qqdQ4esDYpw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9704"; a="237470643"
-X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
-   d="scan'208";a="237470643"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2020 10:44:59 -0700
-IronPort-SDR: a81zaGdrVDutwySX5zxfF//JtmG8/9BO72B40fk34+HayY2HE6IbNwS80ojI0nVejq84nTWx1X
- tEHZt0ZU+Mmg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
-   d="scan'208";a="437245739"
-Received: from unknown (HELO ingas-nuc1.intel.com) ([10.254.118.189])
-  by orsmga004.jf.intel.com with ESMTP; 05 Aug 2020 10:44:59 -0700
-From:   Inga Stotland <inga.stotland@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ v4 05/10] mesh: Clean up handling of config net and app key messages
-Date:   Wed,  5 Aug 2020 10:44:51 -0700
-Message-Id: <20200805174456.49342-6-inga.stotland@intel.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200805174456.49342-1-inga.stotland@intel.com>
-References: <20200805174456.49342-1-inga.stotland@intel.com>
+        id S1728367AbgHESVS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 Aug 2020 14:21:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729181AbgHESLW (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 5 Aug 2020 14:11:22 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A2CCC06138D;
+        Wed,  5 Aug 2020 11:10:32 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id s15so16744045qvv.7;
+        Wed, 05 Aug 2020 11:10:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CSOoq3zhF6z2fZ+X97MfanJIRrTuyK8BNIkdVGDMQEQ=;
+        b=WkEWqptLDy3R6ioOulhs9LCTz33DYC1YwZpUJavPXOLVGV2Oh1GCAetOfpDiAicnfC
+         bnnTTBfinXKPD8zwEhxTo3jAr1u6b1KivySeOrU9BiBn/I6UQAqhjBJCNsMKvG0hkImf
+         ALAyJ0TBul74xRJlxBK0ORqfKLnd46HXDgh18AjaR8DPqu0fHH8ldssbfQi1trX6tRB7
+         5UW7Vc1V2K2qydneRegNu1wCNbnVqa8s8SaDMEMPNS65YHhlNkvARMGJz77FYBEcMec3
+         v1SU3F9ISIdfIyZiYpIFsVgMAzZcO+5s6AMfJZRSIANi/QySkiAvuVZebvBhIVj14HNN
+         KJ6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CSOoq3zhF6z2fZ+X97MfanJIRrTuyK8BNIkdVGDMQEQ=;
+        b=a4Plm0h/9rXTD4DSDFG67hE/2D5IY1EAldWANby4cPctLkiqPo4Ped9khm/Z1iUGuX
+         soLEHmcfXVsL2O3zVZSsvIzjZGDrzdeJfP7kAo5cjj1UTD3u+GxwICQgQW5Ffvisjqc1
+         WMc/mS1lTjSmN7w3GcdzWX2R/14/TPkHIsuSZMj3OeCew7e96gBJCVGz9diRbEBL+I9r
+         seAheRMgxGkRCxnFvXscmqKwnljpGc83bQSouqJdjkMq/xtk7nG4wPlKZ5Vx1jYpjR/y
+         UCl/re5o8+CpdaWuAoWv4Bvs5oYxW053tWhI3oNqceyFn1dYBfAwKBLXoiaOPPnym312
+         OT4w==
+X-Gm-Message-State: AOAM530BDCfwX1T4ctGYQKfWyNjVotXgZnz12wqWqp4YweWjpH8dQfH6
+        ibluYCAoc+ODEW6S1UTe+Q==
+X-Google-Smtp-Source: ABdhPJybD0CTplQH9PaqhvAh94r4pvrJHLy/2Cb1rWWuo+HcvlxTLUJMXYleqq82a0Jy8907RV108g==
+X-Received: by 2002:ad4:438f:: with SMTP id s15mr5142142qvr.164.1596651031728;
+        Wed, 05 Aug 2020 11:10:31 -0700 (PDT)
+Received: from localhost.localdomain (146-115-88-66.s3894.c3-0.sbo-ubr1.sbo.ma.cable.rcncustomer.com. [146.115.88.66])
+        by smtp.gmail.com with ESMTPSA id i7sm2571560qtb.27.2020.08.05.11.10.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Aug 2020 11:10:31 -0700 (PDT)
+From:   Peilin Ye <yepeilin.cs@gmail.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>
+Cc:     Peilin Ye <yepeilin.cs@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel-mentees@lists.linuxfoundation.org,
+        linux-kernel@vger.kernel.org
+Subject: [Linux-kernel-mentees] [PATCH net] Bluetooth: Fix slab-out-of-bounds read in hci_le_direct_adv_report_evt()
+Date:   Wed,  5 Aug 2020 14:09:02 -0400
+Message-Id: <20200805180902.684024-1-yepeilin.cs@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -43,203 +69,71 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This modification allows using a single point for sending out
-the composed status messages by the Config Server.
----
- mesh/cfgmod-server.c | 147 ++++++++++++++++++++++---------------------
- 1 file changed, 75 insertions(+), 72 deletions(-)
+`num_reports` is not being properly checked. A malformed event packet with
+a large `num_reports` number makes hci_le_direct_adv_report_evt() read out
+of bounds. Fix it.
 
-diff --git a/mesh/cfgmod-server.c b/mesh/cfgmod-server.c
-index 57646543d..030f9e744 100644
---- a/mesh/cfgmod-server.c
-+++ b/mesh/cfgmod-server.c
-@@ -547,6 +547,73 @@ static void node_reset(void *user_data)
- 	node_remove(node);
+Reported-and-tested-by: syzbot+24ebd650e20bd263ca01@syzkaller.appspotmail.com
+Fixes: 2f010b55884e ("Bluetooth: Add support for handling LE Direct Advertising Report events")
+Link: https://syzkaller.appspot.com/bug?extid=24ebd650e20bd263ca01
+Signed-off-by: Peilin Ye <yepeilin.cs@gmail.com>
+---
+I moved the initialization of `ev` out of the loop and restructured the
+function a bit, since otherwise the check would look like:
+
+	if (!num_reports || skb->len < num_reports * sizeof(struct hci_ev_le_direct_adv_info) + 1)
+		return;
+
+Therefore I used the similar structure with hci_inquiry_result_evt() etc.
+
+hci_le_adv_report_evt() and hci_le_ext_adv_report_evt() also have the
+same issue with `num_reports`, but I'm not sure how to perform the check
+for them, since they use variable-length reports. Should we do something
+like this? (take hci_le_adv_report_evt() as example:)
+
+	if (!num_reports ||
+	    skb->len < num_reports * (sizeof(*ev) + HCI_MAX_AD_LENGTH + 1) + 1)
+		return;
+
+Then how about hci_le_ext_adv_report_evt()? There is no such
+`HCI_MAX_AD_LENGTH` restrictions on `ev->length` for it, I assume?
+
+Would like to hear your opinion. Thank you!
+
+ net/bluetooth/hci_event.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
+
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 4b7fc430793c..aec43ae488d1 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5863,21 +5863,19 @@ static void hci_le_direct_adv_report_evt(struct hci_dev *hdev,
+ 					 struct sk_buff *skb)
+ {
+ 	u8 num_reports = skb->data[0];
+-	void *ptr = &skb->data[1];
++	struct hci_ev_le_direct_adv_info *ev = (void *)&skb->data[1];
+ 
+-	hci_dev_lock(hdev);
++	if (!num_reports || skb->len < num_reports * sizeof(*ev) + 1)
++		return;
+ 
+-	while (num_reports--) {
+-		struct hci_ev_le_direct_adv_info *ev = ptr;
++	hci_dev_lock(hdev);
+ 
++	for (; num_reports; num_reports--, ev++)
+ 		process_adv_report(hdev, ev->evt_type, &ev->bdaddr,
+ 				   ev->bdaddr_type, &ev->direct_addr,
+ 				   ev->direct_addr_type, ev->rssi, NULL, 0,
+ 				   false);
+ 
+-		ptr += sizeof(*ev);
+-	}
+-
+ 	hci_dev_unlock(hdev);
  }
  
-+static uint16_t cfg_appkey_msg(struct mesh_node *node, const uint8_t *pkt,
-+								int opcode)
-+{
-+	uint16_t n_idx, a_idx, n;
-+	struct mesh_net *net = node_get_net(node);
-+
-+	n_idx = l_get_le16(pkt) & 0xfff;
-+	a_idx = l_get_le16(pkt + 1) >> 4;
-+
-+	n = mesh_model_opcode_set(OP_APPKEY_STATUS, msg);
-+
-+	if (opcode == OP_APPKEY_ADD)
-+		msg[n] = appkey_key_add(net, n_idx, a_idx, pkt + 3);
-+	else if (opcode == OP_APPKEY_UPDATE)
-+		msg[n] = appkey_key_update(net, n_idx, a_idx, pkt + 3);
-+	else
-+		msg[n] = appkey_key_delete(net, n_idx, a_idx);
-+
-+	l_debug("AppKey Command %s: Net_Idx %3.3x, App_Idx %3.3x",
-+			(msg[n] == MESH_STATUS_SUCCESS) ? "success" : "fail",
-+								n_idx, a_idx);
-+
-+	memcpy(msg + n + 1, &pkt[0], 3);
-+
-+	return n + 4;
-+}
-+
-+static uint16_t cfg_netkey_msg(struct mesh_node *node, const uint8_t *pkt,
-+								int opcode)
-+{
-+	uint16_t n_idx, n;
-+	struct mesh_net *net = node_get_net(node);
-+
-+	n_idx = l_get_le16(pkt);
-+	n = mesh_model_opcode_set(OP_NETKEY_STATUS, msg);
-+
-+	if (opcode == OP_NETKEY_ADD)
-+		msg[n] = mesh_net_add_key(net, n_idx, pkt + 2);
-+	else if (opcode == OP_NETKEY_UPDATE)
-+		msg[n] = mesh_net_update_key(net, n_idx, pkt + 2);
-+	else
-+		msg[n] = mesh_net_del_key(net, n_idx);
-+
-+	l_debug("NetKey Command %s: Net_Idx %3.3x",
-+			(msg[n] == MESH_STATUS_SUCCESS) ? "success" : "fail",
-+									n_idx);
-+
-+	memcpy(msg + n + 1, &pkt[0], 2);
-+
-+	return n + 3;
-+}
-+
-+static uint16_t cfg_get_appkeys_msg(struct mesh_node *node, const uint8_t *pkt)
-+{
-+	uint16_t n_idx, sz, n;
-+
-+	n_idx = l_get_le16(pkt);
-+
-+	n = mesh_model_opcode_set(OP_APPKEY_LIST, msg);
-+	l_put_le16(n_idx, msg + n + 1);
-+
-+	msg[n] = appkey_list(node_get_net(node), n_idx, msg + n + 3,
-+						MAX_MSG_LEN - (n + 3), &sz);
-+
-+	return n + 3 + sz;
-+}
-+
- static uint16_t get_composition(struct mesh_node *node, uint8_t page,
- 								uint8_t *buf)
- {
-@@ -585,7 +652,7 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
- 	uint32_t opcode, tmp32;
- 	int b_res = MESH_STATUS_SUCCESS;
- 	struct mesh_net_heartbeat *hb;
--	uint16_t n_idx, a_idx;
-+	uint16_t n_idx;
- 	uint8_t state, status;
- 	uint8_t phase;
- 	bool virt = false;
-@@ -856,60 +923,19 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
- 		if (size != 19)
- 			return true;
- 
--		n_idx = l_get_le16(pkt) & 0xfff;
--		a_idx = l_get_le16(pkt + 1) >> 4;
--
--		if (opcode == OP_APPKEY_ADD)
--			b_res = appkey_key_add(net, n_idx, a_idx, pkt + 3);
--		else
--			b_res = appkey_key_update(net, n_idx, a_idx,
--								pkt + 3);
--
--		l_debug("Add/Update AppKey %s: Net_Idx %3.3x, App_Idx %3.3x",
--			(b_res == MESH_STATUS_SUCCESS) ? "success" : "fail",
--							n_idx, a_idx);
--
--
--		n = mesh_model_opcode_set(OP_APPKEY_STATUS, msg);
--
--		msg[n++] = b_res;
--		msg[n++] = pkt[0];
--		msg[n++] = pkt[1];
--		msg[n++] = pkt[2];
--		break;
--
-+		/* Fall Through */
- 	case OP_APPKEY_DELETE:
--		if (size != 3)
-+		if (opcode == OP_APPKEY_DELETE && size != 3)
- 			return true;
- 
--		n_idx = l_get_le16(pkt) & 0xfff;
--		a_idx = l_get_le16(pkt + 1) >> 4;
--		b_res = appkey_key_delete(net, n_idx, a_idx);
--		l_debug("Delete AppKey %s Net_Idx %3.3x to App_Idx %3.3x",
--			(b_res == MESH_STATUS_SUCCESS) ? "success" : "fail",
--							n_idx, a_idx);
--
--		n = mesh_model_opcode_set(OP_APPKEY_STATUS, msg);
--		msg[n++] = b_res;
--		msg[n++] = pkt[0];
--		msg[n++] = pkt[1];
--		msg[n++] = pkt[2];
-+		n = cfg_appkey_msg(node, pkt, opcode);
- 		break;
- 
- 	case OP_APPKEY_GET:
- 		if (size != 2)
- 			return true;
- 
--		n_idx = l_get_le16(pkt);
--
--		n = mesh_model_opcode_set(OP_APPKEY_LIST, msg);
--
--		status = appkey_list(net, n_idx, msg + n + 3,
--						MAX_MSG_LEN - n - 3, &size);
--
--		msg[n] = status;
--		l_put_le16(n_idx, msg + n + 1);
--		n += (size + 3);
-+		n = cfg_get_appkeys_msg(node, pkt);
- 		break;
- 
- 	case OP_NETKEY_ADD:
-@@ -917,35 +943,12 @@ static bool cfg_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
- 		if (size != 18)
- 			return true;
- 
--		n_idx = l_get_le16(pkt);
--
--		if (opcode == OP_NETKEY_ADD)
--			b_res = mesh_net_add_key(net, n_idx, pkt + 2);
--		else
--			b_res = mesh_net_update_key(net, n_idx, pkt + 2);
--
--		l_debug("NetKey Add/Update %s",
--			(b_res == MESH_STATUS_SUCCESS) ? "success" : "fail");
--
--		n = mesh_model_opcode_set(OP_NETKEY_STATUS, msg);
--		msg[n++] = b_res;
--		l_put_le16(l_get_le16(pkt), msg + n);
--		n += 2;
--		break;
--
-+		/* Fall Through */
- 	case OP_NETKEY_DELETE:
--		if (size != 2)
-+		if (opcode == OP_NETKEY_DELETE && size != 2)
- 			return true;
- 
--		b_res = mesh_net_del_key(net, l_get_le16(pkt));
--
--		l_debug("NetKey delete %s",
--			(b_res == MESH_STATUS_SUCCESS) ? "success" : "fail");
--
--		n = mesh_model_opcode_set(OP_NETKEY_STATUS, msg);
--		msg[n++] = b_res;
--		l_put_le16(l_get_le16(pkt), msg + n);
--		n += 2;
-+		n = cfg_netkey_msg(node, pkt, opcode);
- 		break;
- 
- 	case OP_NETKEY_GET:
 -- 
-2.26.2
+2.25.1
 
