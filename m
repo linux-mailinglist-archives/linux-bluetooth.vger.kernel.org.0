@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C1C423E094
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Aug 2020 20:38:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8939723E112
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Aug 2020 20:42:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728680AbgHFSf5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Aug 2020 14:35:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59522 "EHLO
+        id S1729979AbgHFSkK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 Aug 2020 14:40:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729234AbgHFSfN (ORCPT
+        with ESMTP id S1729981AbgHFSkI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Aug 2020 14:35:13 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0670EC06179F
-        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Aug 2020 11:17:16 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id u185so25562269pfu.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Aug 2020 11:17:16 -0700 (PDT)
+        Thu, 6 Aug 2020 14:40:08 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEEAFC0617A0
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Aug 2020 11:17:17 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id mt12so7282848pjb.4
+        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Aug 2020 11:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=v4tqhlgmt81cyWp6+Y/SY9rGMdsYRprJ694OWSXWLMo=;
-        b=N1wD0R3AOnK+Q8wxwi6DORvnLVCVh6x4akbZdRH3ntsI8qF+pzu97Mn2I2dhvK8r5G
-         EwaRJwU39vn+lWySty/ey+AHPTfcVgTpmDxuaD6nFZ4cNBfOXWLwEE0Cx4ZK/AIGc8+S
-         BNAV9WWVO1W7LO0ZBgPJ5kl8HyYiyFu5y0Sa312XdbdMLkdSBj9OP0mAF+yVReKKp1Xh
-         K7TBORSoO/JMHwSHNj1or/lkTZ5MhUXDdPmGDv7+1gjygTwnA8gI2UC6AotNjpk3vc+T
-         GPWFVVgXsLqrdm7c0qtBxKfPw+BiysVSCtrG7lkIdvoZCEuG2GPZgWEubQsgUtnz7lyN
-         RZkA==
+        bh=QrCSGaZo3W622aXcnbTdNOpWK+XU36Ue7MMISwHaE48=;
+        b=OPwELL54m6rtl08l7IuN5lrL+6LgIu2mHgTOEQ4EIHVwQqa6sHGHonzyMenwmqw9vm
+         KEGmy/EaFgX6TCFJqHHr56AAFPx3BZ8gL3Sw9i+DKLe83nBf78d4v86slQUEHxYvyHGB
+         d98VwaS+wbrpG5ICQ3jBP314AmPrmuE0EPlolPcr8gEbDBZD6UM0hVnqS91yjVmsxpTD
+         wV5WFmNgiw7LofDE2HGZ9KV5mrSK+J0luEwhyEWZYl9AE+1WsldZ1OnDIj93mx9R0wYc
+         J6n9Mmy5h2uighwZB8/2npjSm+Bp/vf2epv/SS7rQ88c7GGvWudaqZptnOCLedpwu7nP
+         jiug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=v4tqhlgmt81cyWp6+Y/SY9rGMdsYRprJ694OWSXWLMo=;
-        b=Zp3lAAuxKYpNod7n7x0WTJkp8xARbEQpbLCpVUg6Z0fLiWh6pmacP9hS0FB72n+NCb
-         V1CJ+MRgztlNSPWPqY5Bx4BBhi3OlSnDNGBIwd+zY7YjxpoAfvTpjmPOoQxiRABO7UkX
-         rrcHB6MbcSVvRQGBA3/eGgTd3u/1ObqMi8R//b+rRLg3PipFZsoR7XGBbXoTzVKhX9RN
-         vAHBbTaC/2nhp5f6vZj9bTiqvc8d11bpBqsgd/USMldufZASfUmtVVricnJEFDtdsdDs
-         W3D475evhP59uwUCvT2c/PYKqWc37hFIq01PsMisT70VM1xgXPBX9nJ6yyS3tWcYU5xt
-         B9cg==
-X-Gm-Message-State: AOAM532xM71mQiPsZufaJlsRdNuJJ3xREeSlQEcpe34w36GKnCy6uUsv
-        1jdGqnge+4BEDOgG6ufuMTCHa18a
-X-Google-Smtp-Source: ABdhPJxhZQK4/QjC5TvcUKEuVGKnFNar2XCWpt2GDQ1UXfltcdLJMZ3F+f409ESGhSomqUs6mMtKoA==
-X-Received: by 2002:a62:fc08:: with SMTP id e8mr9044462pfh.208.1596737836164;
-        Thu, 06 Aug 2020 11:17:16 -0700 (PDT)
+        bh=QrCSGaZo3W622aXcnbTdNOpWK+XU36Ue7MMISwHaE48=;
+        b=ka2h0T8I/Xvx8cmCmEV9YVAxHEOIWZ9VliotrM0pDmwtAiDWPEwrPEraDP4/ROYGwV
+         HaE8nHOBYBypOrWAd/A14wlLprgC6DBuOZ7Vm0bdEhJgzpUF4n5PJg3coX5a0K9L2YhE
+         cnDOHhT2HxGtmpWepGrnqR6xX+7Z8y1aazEvOtHuvwigOLOjicCtlaoO+nLq1iaxEdto
+         0L/nUHxJE6cI8hva1Og7mVXQn9mHW3Cusvg6EfOnKSAFsTAB4KZJaJ/iaXIqNyRBtcLZ
+         4+nmeGrs4goYRjhqSivKstPIzHO4v3E3LEbWsRJdyl/NTQQ5kDLa91pNHGsVFwU8CpbY
+         ming==
+X-Gm-Message-State: AOAM532okFW73ZDbd3KmaJYYvlC2f05Xaj02mToX9WzWJLDjyKvVSh63
+        SnPnZSqmb85eU1ydYX/C0douDCqD
+X-Google-Smtp-Source: ABdhPJxAvHDYOWeibSFHSpMpOG+Juf4MXbo63ZW3bbqWWr40VCY5GaduLbm/v4E3viMH7YoF1HRYqA==
+X-Received: by 2002:a17:902:7605:: with SMTP id k5mr9226566pll.122.1596737837096;
+        Thu, 06 Aug 2020 11:17:17 -0700 (PDT)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id o16sm10341078pfu.188.2020.08.06.11.17.15
+        by smtp.gmail.com with ESMTPSA id o16sm10341078pfu.188.2020.08.06.11.17.16
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2020 11:17:15 -0700 (PDT)
+        Thu, 06 Aug 2020 11:17:16 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 3/4] Bluetooth: Disable High Speed by default
-Date:   Thu,  6 Aug 2020 11:17:13 -0700
-Message-Id: <20200806181714.3216076-3-luiz.dentz@gmail.com>
+Subject: [PATCH 4/4] Bluetooth: MGMT: Fix not checking if BT_HS is enabled
+Date:   Thu,  6 Aug 2020 11:17:14 -0700
+Message-Id: <20200806181714.3216076-4-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200806181714.3216076-1-luiz.dentz@gmail.com>
 References: <20200806181714.3216076-1-luiz.dentz@gmail.com>
@@ -66,26 +66,39 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Bluetooth High Speed requires hardware support which is very uncommon
-nowadays since HS has not pickup interest by the industry.
+This checks if BT_HS is enabled relecting it on MGMT_SETTING_HS instead
+of always reporting it as supported.
 
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- net/bluetooth/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ net/bluetooth/mgmt.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/Kconfig b/net/bluetooth/Kconfig
-index e2497d764e97..64e669acd42f 100644
---- a/net/bluetooth/Kconfig
-+++ b/net/bluetooth/Kconfig
-@@ -64,7 +64,6 @@ source "net/bluetooth/hidp/Kconfig"
- config BT_HS
- 	bool "Bluetooth High Speed (HS) features"
- 	depends on BT_BREDR
--	default y
- 	help
- 	  Bluetooth High Speed includes support for off-loading
- 	  Bluetooth connections via 802.11 (wifi) physical layer
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 5bbe71002fb9..5758ccb524ef 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -782,7 +782,8 @@ static u32 get_supported_settings(struct hci_dev *hdev)
+ 
+ 		if (lmp_ssp_capable(hdev)) {
+ 			settings |= MGMT_SETTING_SSP;
+-			settings |= MGMT_SETTING_HS;
++			if (IS_ENABLED(CONFIG_BT_HS))
++				settings |= MGMT_SETTING_HS;
+ 		}
+ 
+ 		if (lmp_sc_capable(hdev))
+@@ -1815,6 +1816,10 @@ static int set_hs(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
+ 
+ 	bt_dev_dbg(hdev, "sock %p", sk);
+ 
++	if (!IS_ENABLED(CONFIG_BT_HS))
++		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_HS,
++				       MGMT_STATUS_NOT_SUPPORTED);
++
+ 	status = mgmt_bredr_support(hdev);
+ 	if (status)
+ 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_HS, status);
 -- 
 2.26.2
 
