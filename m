@@ -2,109 +2,105 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D356A23E5D3
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Aug 2020 04:26:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66FAC23E65F
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Aug 2020 05:49:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbgHGC03 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Aug 2020 22:26:29 -0400
-Received: from mail-io1-f69.google.com ([209.85.166.69]:51546 "EHLO
-        mail-io1-f69.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726027AbgHGC01 (ORCPT
+        id S1726202AbgHGDtc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 Aug 2020 23:49:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60280 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726126AbgHGDtb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Aug 2020 22:26:27 -0400
-Received: by mail-io1-f69.google.com with SMTP id l1so505401ioh.18
-        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Aug 2020 19:26:26 -0700 (PDT)
+        Thu, 6 Aug 2020 23:49:31 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43C13C061756
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Aug 2020 20:49:31 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id b2so174104qvp.9
+        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Aug 2020 20:49:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=szxJQP+sEk661ULD0Fm7uL5R+vWdcxCH+iUQg7SvJG4=;
+        b=LLPOZQJrT8DXRl3OUjklo9TO960ZBqP+4M8bniNGRSbNuSDwW0tHv7gGwqN+h9SWtP
+         kl50EsLIDGFySeoQC62TlBF9nxddebsjpwqbZIKipPJaCNCQ+j863nYnmuuB3t+sUYcc
+         aRSgOOZmEuhP+w185Em42bwMqUoabvBG39LWWiqRK1x3XdNRd5dg3Ql7eKJK9pDm/AMz
+         NTlRpVoeXRxRmeRFa8xDrWYvXdRKAvVGdnntyCqCGBqpD65dQOYtG2HNBivHMeIXNNQS
+         Sp9Wm5ZSib87Z8XrgtuRL3PH0ZSqbGo5FtaIvWBnjtsy6pRUaVwJlybP0kNmSYHPthzo
+         p2iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=P4HaL8fuExeVT2ON4Wu7436r4YukaeyETCtLgx2utNk=;
-        b=oQXnr9yh3miiJBV5KOmOPj3Lx9fpdydDmCEtj6p1QeEV7wpi83ZoOmhUmEoIauxEu4
-         GNsrQnaSibC+eSIAe6odw0XukskvMNWMTYqFRdjFT0z0bt5vcP8gPxaTgpnhL+zOepwc
-         les1OdtaODQUqHncjSvfrBXSrN6GHIhO39FzX/XES+O4iFGj7gTUl+n442aMP8LNssC1
-         PZ5rGmrs2F3bjCL5IHeUPcxAEz5Syx1WiksO8NfUr/2C6GZ2XrrfMKmLOtev+fP0gN9Y
-         qCc4hvriWdLxVIlcl4Hc4ViVnyku1cGonyHiKcto+nVV7zIGYpyBNfRkbsTN8AKx08Pn
-         YdUg==
-X-Gm-Message-State: AOAM531aelOh+1uBKYG47EmI/+6lxKgsZrzGpcDUMU/2fPLIU2QEWHj8
-        SZgajMOgVwSivxT81yvJvaXVMVW6KhD66ULo6XuMigYLue79
-X-Google-Smtp-Source: ABdhPJxC+84P4eA4etCMj8bj2rNpwjY7+2e8369KBCiLW0ybXGFHpcCp84efsiZ87C3C9o/rgJ/W/0ZmK9AIsZ8STNyY0l/N0nb5
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=szxJQP+sEk661ULD0Fm7uL5R+vWdcxCH+iUQg7SvJG4=;
+        b=QF/Ic8xaBaJUkzwu5vpSDdCXCzh/mtcgoSEcOLiEchd5X3ooKTVxCrTpEduG+qCGLS
+         /2JH/vNW0wG1PejCKjQGMcqbb3fVpVPo3uk5YZOo6s4iBGgVT9VRUBm+YPGmpokKDP57
+         x5qKGWwPESLg9ZZx8BFkAqzFp8AprYjvUUOK46mt/C6yBo3AeLAZ020DDBFkG4ttKD27
+         2yGEws8DtXZ2keHD2z3+2aMzBrtqoz4gMZqifiFkqabOxklmw261d2CIHAclMd9x6+0a
+         v/GdJyXlHT/DkMFjAHukE+ZL1A86wSRk6ba0DwTWuhp5L8dCWsN/uPd+sQTAvH7RCpq0
+         w+Qg==
+X-Gm-Message-State: AOAM532/X/U7KHbb6EOTtBa/baFP3NFo3r17+4Uxd4Z7T09b6Tvxm3VF
+        gJh28sZWvwyLmNTG9LKvhtRTwzM9f4E=
+X-Google-Smtp-Source: ABdhPJwpDVrZpZYN1QR08eIVGbhoHDN1CyQhGGkXUj9V82SUvm5PR4seyJKHGnhgFD++7eQr/J3hlQ==
+X-Received: by 2002:a0c:b791:: with SMTP id l17mr13206725qve.44.1596772167157;
+        Thu, 06 Aug 2020 20:49:27 -0700 (PDT)
+Received: from [172.17.0.2] ([52.251.91.70])
+        by smtp.gmail.com with ESMTPSA id t12sm5706430qkt.56.2020.08.06.20.49.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Aug 2020 20:49:26 -0700 (PDT)
+Message-ID: <5f2ccf46.1c69fb81.4f4fe.eb7e@mx.google.com>
+Date:   Thu, 06 Aug 2020 20:49:26 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============5005600605274241964=="
 MIME-Version: 1.0
-X-Received: by 2002:a6b:8b10:: with SMTP id n16mr2168652iod.11.1596767185982;
- Thu, 06 Aug 2020 19:26:25 -0700 (PDT)
-Date:   Thu, 06 Aug 2020 19:26:25 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000e8d94d05ac40540a@google.com>
-Subject: WARNING: refcount bug in bt_accept_dequeue
-From:   syzbot <syzbot+6048aa700d088954b0fc@syzkaller.appspotmail.com>
-To:     davem@davemloft.net, johan.hedberg@gmail.com, kuba@kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marcel@holtmann.org, netdev@vger.kernel.org,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, inga.stotland@intel.com
+Subject: RE: [BlueZ,v5,01/10] mesh: Clean up handling of config subscription messages
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20200807013834.123263-2-inga.stotland@intel.com>
+References: <20200807013834.123263-2-inga.stotland@intel.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+--===============5005600605274241964==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-syzbot found the following issue on:
 
-HEAD commit:    47ec5303 Merge git://git.kernel.org/pub/scm/linux/kernel/g..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=1083e7ec900000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=e0c783f658542f35
-dashboard link: https://syzkaller.appspot.com/bug?extid=6048aa700d088954b0fc
-compiler:       clang version 10.0.0 (https://github.com/llvm/llvm-project/ c2443155a0fb245c8f17f2c1c72b6ea391e86e81)
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=11c227dc900000
+This is automated email and please do not reply to this email!
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+6048aa700d088954b0fc@syzkaller.appspotmail.com
+Dear submitter,
 
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 1 PID: 3805 at lib/refcount.c:25 refcount_warn_saturate+0x13d/0x1a0 lib/refcount.c:25
-Kernel panic - not syncing: panic_on_warn set ...
-CPU: 1 PID: 3805 Comm: krfcommd Not tainted 5.8.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x1f0/0x31e lib/dump_stack.c:118
- panic+0x264/0x7a0 kernel/panic.c:231
- __warn+0x227/0x250 kernel/panic.c:600
- report_bug+0x1b1/0x2e0 lib/bug.c:198
- handle_bug+0x42/0x80 arch/x86/kernel/traps.c:235
- exc_invalid_op+0x16/0x40 arch/x86/kernel/traps.c:255
- asm_exc_invalid_op+0x12/0x20 arch/x86/include/asm/idtentry.h:536
-RIP: 0010:refcount_warn_saturate+0x13d/0x1a0 lib/refcount.c:25
-Code: c7 93 1e 15 89 31 c0 e8 71 0c a9 fd 0f 0b eb a3 e8 88 66 d7 fd c6 05 97 4d ed 05 01 48 c7 c7 ca 1e 15 89 31 c0 e8 53 0c a9 fd <0f> 0b eb 85 e8 6a 66 d7 fd c6 05 7a 4d ed 05 01 48 c7 c7 f6 1e 15
-RSP: 0018:ffffc90001997b80 EFLAGS: 00010246
-RAX: b5077223a4630100 RBX: 0000000000000002 RCX: ffff88809902e380
-RDX: 0000000000000000 RSI: 0000000080000000 RDI: 0000000000000000
-RBP: 0000000000000002 R08: ffffffff815dffd9 R09: ffffed1015d262c0
-R10: ffffed1015d262c0 R11: 0000000000000000 R12: ffff88808df4b4b8
-R13: ffff88808df4b080 R14: 0000000000000000 R15: dffffc0000000000
- refcount_add include/linux/refcount.h:205 [inline]
- refcount_inc include/linux/refcount.h:241 [inline]
- sock_hold include/net/sock.h:692 [inline]
- bt_accept_dequeue+0x34e/0x560 net/bluetooth/af_bluetooth.c:206
- l2cap_sock_accept+0x21c/0x430 net/bluetooth/l2cap_sock.c:332
- kernel_accept+0x143/0x410 net/socket.c:3569
- rfcomm_accept_connection net/bluetooth/rfcomm/core.c:1931 [inline]
- rfcomm_process_sessions+0x1c5/0xc540 net/bluetooth/rfcomm/core.c:1990
- rfcomm_run+0x3b5/0x900 net/bluetooth/rfcomm/core.c:2086
- kthread+0x37e/0x3a0 drivers/block/aoe/aoecmd.c:1234
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:294
-Kernel Offset: disabled
-Rebooting in 86400 seconds..
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While we are preparing for reviewing the patches, we found the following
+issue/warning.
+
+Test Result:
+checkpatch Failed
+
+Outputs:
+WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
+#398: FILE: mesh/cfgmod-server.c:744:
++		/* Fall Through */
+
+- total: 0 errors, 1 warnings, 811 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+Your patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
 
 
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+Regards,
+Linux Bluetooth
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-syzbot can test patches for this issue, for details see:
-https://goo.gl/tpsmEJ#testing-patches
+--===============5005600605274241964==--
