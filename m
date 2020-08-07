@@ -2,97 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02CBB23E796
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Aug 2020 09:16:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5514423E7D7
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Aug 2020 09:21:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726550AbgHGHQZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 7 Aug 2020 03:16:25 -0400
-Received: from mail-io1-f70.google.com ([209.85.166.70]:36986 "EHLO
-        mail-io1-f70.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726450AbgHGHQY (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 7 Aug 2020 03:16:24 -0400
-Received: by mail-io1-f70.google.com with SMTP id f6so997210ioa.4
-        for <linux-bluetooth@vger.kernel.org>; Fri, 07 Aug 2020 00:16:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=OO3Q8CrVHRBuOi/YH4CBh0Wwl12/N/j2vjuXZ553ypI=;
-        b=ryjgWeQ1cFYkqxwaa8vJSRpkabbdzmDy8zXpLDoVxaWE9tgQ2cwEJlfT8vi7X1nie8
-         Mx+JUOxMVH3tD7ggQD/NTXKHmbRWy3VQcszRSwUlqQ8dk7g76g/CrnZbw6fLcsYI9ZVn
-         kQ0BeHccVTTDa/yPzezhFI9tzjJoMD9lU0hfBrC94lkIc8ZJ++V+y5c5BCckqt2GTuJK
-         ijHu0XM/siNqF632ukbqgo75t+qOzt0H9kDC7HNnahAu4bZq9pXozlPDpeUTq+01Uy3b
-         rcMkDFpwt21vp0x16+ypzqcV+g1tUGJQImOPtO1/KgrSAOvqTOFW2tCPLJm28rXJsn2v
-         Sx7w==
-X-Gm-Message-State: AOAM533WAr/G41N8ohRaCZsmcs0Xb0nhkMVclZmhe2PJGDWfeg4gshMa
-        VeBwsocLPrjL9UGanEEAYMEWGSSKyzESECn/JV+fjL7gGgbm
-X-Google-Smtp-Source: ABdhPJwEIVuxGhXN9XBU+72Oqwehxi/aQnjzwAa7mc9utApu36Le+7G9OqhYyrqGjB5wKOnma3Rh22T/vpSIEhtceZUEhd14Nbal
+        id S1726486AbgHGHV0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 Aug 2020 03:21:26 -0400
+Received: from verein.lst.de ([213.95.11.211]:52859 "EHLO verein.lst.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725805AbgHGHV0 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 7 Aug 2020 03:21:26 -0400
+Received: by verein.lst.de (Postfix, from userid 2407)
+        id A67A168D0F; Fri,  7 Aug 2020 09:21:20 +0200 (CEST)
+Date:   Fri, 7 Aug 2020 09:21:20 +0200
+From:   Christoph Hellwig <hch@lst.de>
+To:     Eric Dumazet <eric.dumazet@gmail.com>
+Cc:     Christoph Hellwig <hch@lst.de>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Alexei Starovoitov <ast@kernel.org>,
+        Daniel Borkmann <daniel@iogearbox.net>,
+        Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
+        Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>,
+        Eric Dumazet <edumazet@google.com>,
+        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, bpf@vger.kernel.org,
+        netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
+        linux-sctp@vger.kernel.org, linux-hams@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, bridge@lists.linux-foundation.org,
+        linux-can@vger.kernel.org, dccp@vger.kernel.org,
+        linux-decnet-user@lists.sourceforge.net,
+        linux-wpan@vger.kernel.org, linux-s390@vger.kernel.org,
+        mptcp@lists.01.org, lvs-devel@vger.kernel.org,
+        rds-devel@oss.oracle.com, linux-afs@lists.infradead.org,
+        tipc-discussion@lists.sourceforge.net, linux-x25@vger.kernel.org,
+        Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: Re: [PATCH 25/26] net: pass a sockptr_t into ->setsockopt
+Message-ID: <20200807072120.GB2086@lst.de>
+References: <20200723060908.50081-1-hch@lst.de> <20200723060908.50081-26-hch@lst.de> <6357942b-0b6e-1901-7dce-e308c9fac347@gmail.com>
 MIME-Version: 1.0
-X-Received: by 2002:a92:9116:: with SMTP id t22mr3026831ild.305.1596784583029;
- Fri, 07 Aug 2020 00:16:23 -0700 (PDT)
-Date:   Fri, 07 Aug 2020 00:16:23 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000dabdc805ac4461b5@google.com>
-Subject: INFO: trying to register non-static key in l2cap_chan_close
-From:   syzbot <syzbot+3ae233f384d5b0aaa9e0@syzkaller.appspotmail.com>
-To:     davem@davemloft.net, johan.hedberg@gmail.com, kuba@kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marcel@holtmann.org, netdev@vger.kernel.org,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6357942b-0b6e-1901-7dce-e308c9fac347@gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+On Thu, Aug 06, 2020 at 03:21:25PM -0700, Eric Dumazet wrote:
+> converting get_user(...)   to  copy_from_sockptr(...) really assumed the optlen
+> has been validated to be >= sizeof(int) earlier.
+> 
+> Which is not always the case, for example here.
 
-syzbot found the following issue on:
+Yes.  And besides the bpfilter mess the main reason I even had to add
+the sockptr vs just copying optlen in the high-level socket code.
 
-HEAD commit:    01830e6c Add linux-next specific files for 20200731
-git tree:       linux-next
-console output: https://syzkaller.appspot.com/x/log.txt?x=171e3dc6900000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=2e226b2d1364112c
-dashboard link: https://syzkaller.appspot.com/bug?extid=3ae233f384d5b0aaa9e0
-compiler:       gcc (GCC) 10.1.0-syz 20200507
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=15e18fec900000
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+3ae233f384d5b0aaa9e0@syzkaller.appspotmail.com
-
-INFO: trying to register non-static key.
-the code is fine but needs lockdep annotation.
-turning off the locking correctness validator.
-CPU: 0 PID: 6982 Comm: kworker/0:1 Not tainted 5.8.0-rc7-next-20200731-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: events l2cap_chan_timeout
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x18f/0x20d lib/dump_stack.c:118
- assign_lock_key kernel/locking/lockdep.c:894 [inline]
- register_lock_class+0x157d/0x1630 kernel/locking/lockdep.c:1206
- __lock_acquire+0xf9/0x5640 kernel/locking/lockdep.c:4303
- lock_acquire+0x1f1/0xad0 kernel/locking/lockdep.c:5003
- __raw_spin_lock_bh include/linux/spinlock_api_smp.h:135 [inline]
- _raw_spin_lock_bh+0x2f/0x40 kernel/locking/spinlock.c:175
- spin_lock_bh include/linux/spinlock.h:359 [inline]
- lock_sock_nested+0x3b/0x110 net/core/sock.c:3048
- l2cap_sock_teardown_cb+0x88/0x400 net/bluetooth/l2cap_sock.c:1520
- l2cap_chan_close+0x2cc/0xb10 net/bluetooth/l2cap_core.c:832
- l2cap_chan_timeout+0x173/0x450 net/bluetooth/l2cap_core.c:436
- process_one_work+0x94c/0x1670 kernel/workqueue.c:2269
- worker_thread+0x64c/0x1120 kernel/workqueue.c:2415
- kthread+0x3b5/0x4a0 kernel/kthread.c:292
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:294
-
-
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-syzbot can test patches for this issue, for details see:
-https://goo.gl/tpsmEJ#testing-patches
+Please take a look at the patch in the other thread to just revert to
+the "dumb" version everywhere.
