@@ -2,105 +2,117 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF0C323E65E
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Aug 2020 05:49:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0107D23E78E
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Aug 2020 09:07:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726166AbgHGDtb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Aug 2020 23:49:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60276 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726038AbgHGDtb (ORCPT
+        id S1726459AbgHGHHS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 Aug 2020 03:07:18 -0400
+Received: from mail-io1-f69.google.com ([209.85.166.69]:48499 "EHLO
+        mail-io1-f69.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725805AbgHGHHR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Aug 2020 23:49:31 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1D80C061574
-        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Aug 2020 20:49:30 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id c12so381086qtn.9
-        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Aug 2020 20:49:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=NEu1QocgVLoaGMVACuICewytF2Fj42EX58ouyCXb0sU=;
-        b=q+smDEOQePWETTuwhlfWOGGgqiRxw3AjECzNiPx36dUfQ+IYT/sNol6P2D1uQ2wkyL
-         yk6PCyuhPn+opMDADrTeAF2DU1F2Ul94lOs8KtwYR9DtId5TgkVmR8RpqVxlipA8h/De
-         yHHtCszZVttxHF3dLYCN3w+v3j6IsDeFu7upSepcKyk3ETiVDUxdrL3Th1Nbh6jQkilz
-         5XRqLQDfsqGz3RbCj4w3RUEvV/7k9Xg01rFjMZ6AVnKOis0MYirzOhXWErISqz+VtnOO
-         mFGvoY7TyyVXIrNSoj7VZR1nDK0Bm3dkUqEwN/R4l8bizKez6vFTkxXq/uAED1XqcK9G
-         k50w==
+        Fri, 7 Aug 2020 03:07:17 -0400
+Received: by mail-io1-f69.google.com with SMTP id k10so955009iow.15
+        for <linux-bluetooth@vger.kernel.org>; Fri, 07 Aug 2020 00:07:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=NEu1QocgVLoaGMVACuICewytF2Fj42EX58ouyCXb0sU=;
-        b=dX5Y1Ybb01eFlYXcNwB4PF93lBXqYbjkCr6vDXA86vBpnMAT1kvLoQ0O5pUBVCzJTD
-         tPhwc01ykvUovGLLCIUg70NtXNlGPUenAVoCwK+lV9U23cCyJwH5hu//c0HufNgOP5Z2
-         rK4AD81ZazYuJ91l3jVdri2LAOOwD8wtboPeYKIS2n/+soE5FD3HIVRdCanHGdIfmrxL
-         xvWxdLXpMMPDl+0RIjukNhqBGXkeYi8bIiLAMrZnkhyGSeRysG4wAPQTCxjn6CV7FecV
-         SmH5SheCmhqsIxlSHsKN81HJ+wZwaxare78wRdm74GjjotAd1X2wV+nN8vPdUMU7gQc4
-         /fIQ==
-X-Gm-Message-State: AOAM5312X5oJGXdJNw1wLniyCgszIYbM+7KvHkW+0QQ+jLsP1rTFUAwP
-        4q7+fb4Dk8Rb9TeAyKroMd1Xitw/EuY=
-X-Google-Smtp-Source: ABdhPJzkbDq1tPnWARF72l7Z2oDa29QsOv9Hpg5Lx3bFUsxjwuE3P5p9XWPECelkICIcNwrQE1abrg==
-X-Received: by 2002:ac8:1a14:: with SMTP id v20mr12379916qtj.269.1596772169154;
-        Thu, 06 Aug 2020 20:49:29 -0700 (PDT)
-Received: from [172.17.0.2] ([52.251.91.70])
-        by smtp.gmail.com with ESMTPSA id v28sm7491153qtk.28.2020.08.06.20.49.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2020 20:49:28 -0700 (PDT)
-Message-ID: <5f2ccf48.1c69fb81.6d7c3.7937@mx.google.com>
-Date:   Thu, 06 Aug 2020 20:49:28 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============8324179757018013729=="
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=qv4lE7G2xaxTSAJq3kTpN12XBqorrrJ0WTduANv5o2E=;
+        b=tW8bGikvrU7PBdLwv8YUS9vnGbrHU+xw0c1YCXMDgu1nnA2u97fE3di7518QeFgDCt
+         /+NmhBGy6uzM1ki4c5h0AgZtnWXiGBFeiYV0GiiE3hYENwRpw/PbcSpz56SG3UbeBNxV
+         IDKrQuX2e7xOssXvChL+0WXSMkpSUXtd7ay5Pj8Z1UemPjqdat6dA2FlzQFCVZ4NVcfH
+         U+djKx4BtFkcZyVoBDArJLzOpdGqs5ARuHf1iWRFM9qj3K3mnHU0FbPmPcYhOhEgYYCf
+         Gur7crIL70eLKUoaUliyVFuqWpIMWY5VRyWA0KSVUe4kpXSv/Xe1boWmktVPZU3kKsme
+         DStw==
+X-Gm-Message-State: AOAM533JihuAxdVrPUkerBDZNHfBX/8CEE+WzBwpIWWcllZkaZ3Nf2eg
+        Oku9hM/IskWS104rfyG6xrc8d5CAOtK6BrH8o6Ht3D6OWHex
+X-Google-Smtp-Source: ABdhPJz+Fp2qewsy1tzCgdnTssJIOpyK1pr79B/YED4ieO7jQXedDYAOnf7J2eMFO/mmqoemvNgL3LD3hRLj31KCKx4NqGvCI7Iu
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, inga.stotland@intel.com
-Subject: RE: [BlueZ,v5,10/10] mesh: Refactor heartbeat pub/sub
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200807013834.123263-11-inga.stotland@intel.com>
-References: <20200807013834.123263-11-inga.stotland@intel.com>
+X-Received: by 2002:a92:d8d2:: with SMTP id l18mr2843601ilo.94.1596784036194;
+ Fri, 07 Aug 2020 00:07:16 -0700 (PDT)
+Date:   Fri, 07 Aug 2020 00:07:16 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <00000000000042af6205ac444172@google.com>
+Subject: WARNING: locking bug in l2cap_chan_del
+From:   syzbot <syzbot+01d7fc00b2a0419d01cc@syzkaller.appspotmail.com>
+To:     davem@davemloft.net, johan.hedberg@gmail.com, kuba@kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, netdev@vger.kernel.org,
+        syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============8324179757018013729==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello,
 
+syzbot found the following issue on:
 
-This is automated email and please do not reply to this email!
+HEAD commit:    47ec5303 Merge git://git.kernel.org/pub/scm/linux/kernel/g..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=111d93fa900000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=7bb894f55faf8242
+dashboard link: https://syzkaller.appspot.com/bug?extid=01d7fc00b2a0419d01cc
+compiler:       gcc (GCC) 10.1.0-syz 20200507
 
-Dear submitter,
+Unfortunately, I don't have any reproducer for this issue yet.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While we are preparing for reviewing the patches, we found the following
-issue/warning.
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+01d7fc00b2a0419d01cc@syzkaller.appspotmail.com
 
-Test Result:
-checkpatch Failed
-
-Outputs:
-WARNING:UNNECESSARY_INT: Prefer 'long' over 'long int' as the int is unnecessary
-#88: FILE: mesh/cfgmod-server.c:485:
-+	if (time_now.tv_sec >= (long int) sub->period)
-
-- total: 0 errors, 1 warnings, 784 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-Your patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
+------------[ cut here ]------------
+DEBUG_LOCKS_WARN_ON(1)
+WARNING: CPU: 0 PID: 12006 at kernel/locking/lockdep.c:183 hlock_class kernel/locking/lockdep.c:183 [inline]
+WARNING: CPU: 0 PID: 12006 at kernel/locking/lockdep.c:183 hlock_class kernel/locking/lockdep.c:172 [inline]
+WARNING: CPU: 0 PID: 12006 at kernel/locking/lockdep.c:183 check_wait_context kernel/locking/lockdep.c:4100 [inline]
+WARNING: CPU: 0 PID: 12006 at kernel/locking/lockdep.c:183 __lock_acquire+0x1674/0x5640 kernel/locking/lockdep.c:4376
+Kernel panic - not syncing: panic_on_warn set ...
+CPU: 0 PID: 12006 Comm: kworker/0:14 Not tainted 5.8.0-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Workqueue: events l2cap_chan_timeout
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x18f/0x20d lib/dump_stack.c:118
+ panic+0x2e3/0x75c kernel/panic.c:231
+ __warn.cold+0x20/0x45 kernel/panic.c:600
+ report_bug+0x1bd/0x210 lib/bug.c:198
+ handle_bug+0x38/0x90 arch/x86/kernel/traps.c:235
+ exc_invalid_op+0x14/0x40 arch/x86/kernel/traps.c:255
+ asm_exc_invalid_op+0x12/0x20 arch/x86/include/asm/idtentry.h:536
+RIP: 0010:hlock_class kernel/locking/lockdep.c:183 [inline]
+RIP: 0010:hlock_class kernel/locking/lockdep.c:172 [inline]
+RIP: 0010:check_wait_context kernel/locking/lockdep.c:4100 [inline]
+RIP: 0010:__lock_acquire+0x1674/0x5640 kernel/locking/lockdep.c:4376
+Code: d2 0f 85 f1 36 00 00 44 8b 15 b0 8e 57 09 45 85 d2 0f 85 1c fa ff ff 48 c7 c6 80 af 4b 88 48 c7 c7 80 aa 4b 88 e8 ce 36 eb ff <0f> 0b e9 02 fa ff ff c7 44 24 38 fe ff ff ff 41 bf 01 00 00 00 c7
+RSP: 0018:ffffc900065878e0 EFLAGS: 00010086
+RAX: 0000000000000000 RBX: 0000000000000004 RCX: 0000000000000000
+RDX: ffff888051186380 RSI: ffffffff815d8eb7 RDI: fffff52000cb0f0e
+RBP: ffff888051186cf0 R08: 0000000000000000 R09: ffffffff89bcb3c3
+R10: 00000000000010e6 R11: 0000000000000001 R12: 0000000000000000
+R13: 000000000000126a R14: ffff888051186380 R15: 0000000000040000
+ lock_acquire+0x1f1/0xad0 kernel/locking/lockdep.c:5005
+ __raw_spin_lock_bh include/linux/spinlock_api_smp.h:135 [inline]
+ _raw_spin_lock_bh+0x2f/0x40 kernel/locking/spinlock.c:175
+ spin_lock_bh include/linux/spinlock.h:359 [inline]
+ lock_sock_nested+0x3b/0x110 net/core/sock.c:3040
+ l2cap_sock_teardown_cb+0x88/0x400 net/bluetooth/l2cap_sock.c:1520
+ l2cap_chan_del+0xad/0x1300 net/bluetooth/l2cap_core.c:618
+ l2cap_chan_close+0x118/0xb10 net/bluetooth/l2cap_core.c:823
+ l2cap_chan_timeout+0x173/0x450 net/bluetooth/l2cap_core.c:436
+ process_one_work+0x94c/0x1670 kernel/workqueue.c:2269
+ worker_thread+0x64c/0x1120 kernel/workqueue.c:2415
+ kthread+0x3b5/0x4a0 kernel/kthread.c:292
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:294
+Kernel Offset: disabled
+Rebooting in 86400 seconds..
 
 
 ---
-Regards,
-Linux Bluetooth
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
---===============8324179757018013729==--
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
