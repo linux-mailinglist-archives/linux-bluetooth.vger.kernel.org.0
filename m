@@ -2,39 +2,38 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57A0823E573
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Aug 2020 03:17:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7D2323E587
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Aug 2020 03:38:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbgHGBRV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Aug 2020 21:17:21 -0400
-Received: from mga03.intel.com ([134.134.136.65]:31449 "EHLO mga03.intel.com"
+        id S1726038AbgHGBih (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 Aug 2020 21:38:37 -0400
+Received: from mga18.intel.com ([134.134.136.126]:43978 "EHLO mga18.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726049AbgHGBRU (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Aug 2020 21:17:20 -0400
-IronPort-SDR: FQD3XSe1QiarS2NroEoqlHumxtjWzcWZfxr70b8ZpJX6srOBCfdCRF79vlarXB1E5HRCmZ7mko
- JiZzsSNAipdA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9705"; a="152936391"
+        id S1725947AbgHGBih (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 6 Aug 2020 21:38:37 -0400
+IronPort-SDR: QyEwnpsYG57s9w9/JOM/uMQOAfNy2T47JOsVAKJskj0iNvV/CAAHej7WoesqRjVeB8mcCMiAGA
+ m/i/b82SpDjw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9705"; a="140558035"
 X-IronPort-AV: E=Sophos;i="5.75,443,1589266800"; 
-   d="scan'208";a="152936391"
+   d="scan'208";a="140558035"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2020 18:17:17 -0700
-IronPort-SDR: TSyuzHD6ml2jaXtM9ekBHxOHx1FfjghLQG2i46/AyCEIkmVVCNZBkWXd/2uk9VLB/mR1bBMbIp
- IexxbN19++ig==
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2020 18:38:36 -0700
+IronPort-SDR: PD8tttQWi2/Ra55aAh0VmpofO12MqFE/dKUDAD1IFfRk3S4ulJNgB0WMzhDHsuf2cTUq31n/bu
+ P/noJS2AyUww==
+X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.75,443,1589266800"; 
-   d="scan'208";a="493876851"
-Received: from apazhamp-mobl.amr.corp.intel.com (HELO han1-mobl3.jf.intel.com) ([10.254.82.188])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2020 18:17:17 -0700
-From:   tedd.an@linux.intel.com
+   d="scan'208";a="397442060"
+Received: from unknown (HELO ingas-nuc1.intel.com) ([10.254.119.50])
+  by fmsmga001.fm.intel.com with ESMTP; 06 Aug 2020 18:38:36 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
-Subject: [PATCH 3/3] btpclient: Fix gap reset not sending response
-Date:   Thu,  6 Aug 2020 18:17:03 -0700
-Message-Id: <20200807011703.22087-3-tedd.an@linux.intel.com>
-X-Mailer: git-send-email 2.25.4
-In-Reply-To: <20200807011703.22087-1-tedd.an@linux.intel.com>
-References: <20200807011703.22087-1-tedd.an@linux.intel.com>
+Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ v5 00/10] Mesh Config Server clean up
+Date:   Thu,  6 Aug 2020 18:38:24 -0700
+Message-Id: <20200807013834.123263-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -42,82 +41,45 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tedd Ho-Jeong An <tedd.an@intel.com>
+v5 - addressed more of Brian's comments. Added missing range checking
 
-This patch fixes the GAP reset command to response the default settings
-after resetting the stack.
----
- tools/btpclient.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+*******************
+v4 - Further fixes in handling Key Refresh Phase Set message
 
-diff --git a/tools/btpclient.c b/tools/btpclient.c
-index f9c693056..38e326670 100644
---- a/tools/btpclient.c
-+++ b/tools/btpclient.c
-@@ -521,6 +521,19 @@ static void reset_unreg_agent_reply(struct l_dbus_proxy *proxy,
- 	ag.registered = false;
- }
+*******************
+ v3 - address Brian's comments
  
-+static void update_current_settings(struct btp_adapter *adapter,
-+							uint32_t new_settings)
-+{
-+	struct btp_new_settings_ev ev;
-+
-+	adapter->current_settings = new_settings;
-+
-+	ev.current_settings = L_CPU_TO_LE32(adapter->current_settings);
-+
-+	btp_send(btp, BTP_GAP_SERVICE, BTP_EV_GAP_NEW_SETTINGS, adapter->index,
-+							sizeof(ev), &ev);
-+}
-+
- static void btp_gap_reset(uint8_t index, const void *param, uint16_t length,
- 								void *user_data)
- {
-@@ -528,6 +541,7 @@ static void btp_gap_reset(uint8_t index, const void *param, uint16_t length,
- 	const struct l_queue_entry *entry;
- 	uint8_t status;
- 	bool prop;
-+	uint32_t default_settings;
- 
- 	if (!adapter) {
- 		status = BTP_ERROR_INVALID_INDEX;
-@@ -570,10 +584,13 @@ static void btp_gap_reset(uint8_t index, const void *param, uint16_t length,
- 			goto failed;
- 		}
- 
--	adapter->current_settings = adapter->default_settings;
-+	default_settings = adapter->default_settings;
-+
-+	update_current_settings(adapter, default_settings);
- 
- 	/* TODO for we assume all went well */
--	btp_send(btp, BTP_GAP_SERVICE, BTP_OP_GAP_RESET, index, 0, NULL);
-+	btp_send(btp, BTP_GAP_SERVICE, BTP_OP_GAP_RESET, index,
-+				sizeof(default_settings), &default_settings);
- 	return;
- 
- failed:
-@@ -644,19 +661,6 @@ failed:
- 	btp_send_error(btp, BTP_GAP_SERVICE, index, status);
- }
- 
--static void update_current_settings(struct btp_adapter *adapter,
--							uint32_t new_settings)
--{
--	struct btp_new_settings_ev ev;
--
--	adapter->current_settings = new_settings;
--
--	ev.current_settings = L_CPU_TO_LE32(adapter->current_settings);
--
--	btp_send(btp, BTP_GAP_SERVICE, BTP_EV_GAP_NEW_SETTINGS, adapter->index,
--							sizeof(ev), &ev);
--}
--
- static void btp_gap_set_connectable(uint8_t index, const void *param,
- 					uint16_t length, void *user_data)
- {
+*******************
+This patch set groups functionality by config messages.
+Also, fixes the cases where malformed messages should be  silently
+ignored and the situations when incorrect error status
+is sent in response.
+
+
+Inga Stotland (10):
+  mesh: Clean up handling of config subscription messages
+  mesh: Clean up handling of config model binding messages
+  mesh: Clean up handling of config node identity message
+  mesh: Clean up handling of config publication messages
+  mesh: Clean up handling of config net and app key messages
+  mesh: Clean up handling of config relay messages
+  mesh: Clean up handling of config poll timeout message
+  mesh: Clean up handling of config net transmit messages
+  mesh: Clean up handling of config KR phase messages
+  mesh: Refactor heartbeat pub/sub
+
+ mesh/cfgmod-server.c    | 1198 +++++++++++++++++----------------------
+ mesh/cfgmod.h           |    2 +-
+ mesh/mesh-config-json.c |   12 +-
+ mesh/mesh-config.h      |    6 +-
+ mesh/mesh-defs.h        |    6 +
+ mesh/model.c            |  238 ++++----
+ mesh/model.h            |   21 +-
+ mesh/net.c              |  326 +++++++----
+ mesh/net.h              |   54 +-
+ mesh/node.h             |    4 -
+ 10 files changed, 924 insertions(+), 943 deletions(-)
+
 -- 
-2.25.4
+2.26.2
 
