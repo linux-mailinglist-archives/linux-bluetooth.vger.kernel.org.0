@@ -2,73 +2,72 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C473823FC1A
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  9 Aug 2020 03:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BB6323FCDB
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  9 Aug 2020 07:15:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726050AbgHIB5R (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 8 Aug 2020 21:57:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60042 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726009AbgHIB5Q (ORCPT
+        id S1726207AbgHIFPK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 9 Aug 2020 01:15:10 -0400
+Received: from mail-il1-f198.google.com ([209.85.166.198]:40889 "EHLO
+        mail-il1-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725988AbgHIFPK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 8 Aug 2020 21:57:16 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B93C061756
-        for <linux-bluetooth@vger.kernel.org>; Sat,  8 Aug 2020 18:57:15 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id kq25so5955334ejb.3
-        for <linux-bluetooth@vger.kernel.org>; Sat, 08 Aug 2020 18:57:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:mime-version:content-transfer-encoding
-         :content-description:subject:to:from:date:reply-to;
-        bh=snYPqYzMcRAFVusSDm1wEdLO3zZSz5O+T7SH8YmSs98=;
-        b=lda/SeaRPx0HrtcGZSYmaZXI7cUF+q0DFdsQYD67JtRH3WG0NEzA8cXH/nLhBTpH/M
-         BnzOz1ruXo06VmcFev6AnGlK4S3CzEgm9hx+9No4xVvsp3JMml/0I/mogxvYLZ1lQpGv
-         tPKcniL4Mp0zOHtaksqwMcm533KjdLMkAhamuirHNiXkcswl1+LlH9S8JCHnKRHc+b5X
-         vxahTUNa7SkEdrw68r/Ks7nWVF6X25EfgLESX40L9GcjiaDGLAy/TGGlRh2Tz3r5iOWU
-         SGCYdkK8jWKk3dY7RP91ON1/9aIYtiULFAolHZmtqoXjlSFljbzb4VOvOtXKW3o9q5vS
-         f68g==
+        Sun, 9 Aug 2020 01:15:10 -0400
+Received: by mail-il1-f198.google.com with SMTP id z16so5194194ill.7
+        for <linux-bluetooth@vger.kernel.org>; Sat, 08 Aug 2020 22:15:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:content-description:subject:to:from:date
-         :reply-to;
-        bh=snYPqYzMcRAFVusSDm1wEdLO3zZSz5O+T7SH8YmSs98=;
-        b=RLX6/2KgbUvuPV+8cB/qXC+5NYADR09IoVMP1QHUOKhRjudJrO71rfjtKEWbBuUylq
-         qETJhZRs4BdZfJPUf7wAAyMBw4ywxZdH+rJzh33MQsvxA4qz4ZFqs3Q3B2Q9h7/6Iqg5
-         nD5mBF9bh3R1Scnr8MzwxjqaoS+6ICehr7dAD6UzcK/Z7pEknGFe+ABX8trZcD8kOfXB
-         pSaFTKbpTEjFNCCF1V7uODAODqm8du/p+MIS0EI+3yd5E0Su2iiPMcra6qcda9pBkP63
-         JH77QSaAKRcqK0CeTh8zNQuoY1DWKxS2Aa4Wl5+l6XmhvoKKAnL6mYij964we903z7Fl
-         bajQ==
-X-Gm-Message-State: AOAM533NzzYShn0EULXwhR4BZhzOhaDCbIbQTHbaDyYUfLt6tQAE8qYb
-        1jKqoH51KP76kjfN7YmlkSI=
-X-Google-Smtp-Source: ABdhPJwHrU3lYFKT7Dg1wH1sb3rzh8YydW4CqLRQPENUI+bb+wCy1oypvwAcy9eIxsOQF0plhXJenw==
-X-Received: by 2002:a17:906:1f8e:: with SMTP id t14mr16186056ejr.336.1596938233897;
-        Sat, 08 Aug 2020 18:57:13 -0700 (PDT)
-Received: from [192.168.0.108] ([196.171.37.220])
-        by smtp.gmail.com with ESMTPSA id bn7sm9619505ejb.100.2020.08.08.18.57.09
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 08 Aug 2020 18:57:13 -0700 (PDT)
-Message-ID: <5f2f57f9.1c69fb81.291dd.86e1@mx.google.com>
-Content-Type: text/plain; charset="iso-8859-1"
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id:subject
+         :from:to;
+        bh=+7GquL5yQSGcFGMZlACJ2Y2BFlEpHb0ViyNa4GHMUYI=;
+        b=rMKqoFXSgY4F1MrcXxUWWLOI1YxA02DIucJqt6GA/qnHq0Lqy1rdIzoaFX36EM6uk1
+         H3QItdZ0+08Av+qyXWN3LQ4+OrRnWodNafFoWs1QrhruU7bIrDbX0oflBSQR2raDSLZE
+         YhFGFsMEJkAAWWDrxqojK36VM8PYIm9xachapP9AVSwgSLEs1RiCmRYlvXPmbZ4B07o4
+         g6Zge+9zIfViO0HZDcSJG7mECiSD0iVVzR1cq4dmvQWsCPNp7hloss6zdojhnOYrR8gq
+         Om27rNxzUQtyq+loq5anRYzoOUXV97zqnkQesAR2NBcoFLpOFhlZK1YLPFxObYvlA1TS
+         FFKg==
+X-Gm-Message-State: AOAM533yueFchy2l0DgS6YPmeqHgzmEUHmS0sN3sBfOdCd506mTIOTQb
+        JM6IOpkLG4Ti0g/vDj4MIbl46Yg7wS+x5KiCR+/eruSohhcx
+X-Google-Smtp-Source: ABdhPJwnoROO8orXk27MbZoY6LmPmQEmrUZnYlYAjH2J4bAGvlMJDDzVwIZ0hH60TV5qaTtB7u2wVG/qNSiGwWh/MNVTaKiDIsBk
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Hello
-To:     Recipients <ourogounimouhamed@gmail.com>
-From:   "Sophia" <ourogounimouhamed@gmail.com>
-Date:   Sun, 09 Aug 2020 01:56:57 +0000
-Reply-To: sophiawillians00@gmail.com
+X-Received: by 2002:a92:918b:: with SMTP id e11mr12138160ill.201.1596950109419;
+ Sat, 08 Aug 2020 22:15:09 -0700 (PDT)
+Date:   Sat, 08 Aug 2020 22:15:09 -0700
+In-Reply-To: <000000000000cde53e05ac446157@google.com>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <000000000000fefd5e05ac6aeb99@google.com>
+Subject: Re: WARNING: ODEBUG bug in put_device
+From:   syzbot <syzbot+a9290936c6e87b3dc3c2@syzkaller.appspotmail.com>
+To:     bgolaszewski@baylibre.com, davem@davemloft.net,
+        gregkh@linuxfoundation.org, jdelvare@suse.com,
+        johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux@roeck-us.net, marcel@holtmann.org, netdev@vger.kernel.org,
+        rafael@kernel.org, syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello Dear,
+syzbot has bisected this issue to:
 
-How are you doing,
-My name is Sophia Williams
-Please reply, so that we can know more better =
+commit 6f8c8f3c31015808100ee54fc471ff5dffdf1734
+Author: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Date:   Thu Aug 8 08:01:44 2019 +0000
 
-and share photos,
-Thank you.
+    hwmon: pmbus: ucd9000: remove unneeded include
+
+bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=1550298a900000
+start commit:   47ec5303 Merge git://git.kernel.org/pub/scm/linux/kernel/g..
+git tree:       upstream
+final oops:     https://syzkaller.appspot.com/x/report.txt?x=1750298a900000
+console output: https://syzkaller.appspot.com/x/log.txt?x=1350298a900000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=7bb894f55faf8242
+dashboard link: https://syzkaller.appspot.com/bug?extid=a9290936c6e87b3dc3c2
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=11b69a52900000
+
+Reported-by: syzbot+a9290936c6e87b3dc3c2@syzkaller.appspotmail.com
+Fixes: 6f8c8f3c3101 ("hwmon: pmbus: ucd9000: remove unneeded include")
+
+For information about bisection process see: https://goo.gl/tpsmEJ#bisection
