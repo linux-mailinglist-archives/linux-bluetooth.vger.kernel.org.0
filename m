@@ -2,160 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1C5223F91F
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  8 Aug 2020 23:27:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C473823FC1A
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  9 Aug 2020 03:57:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726375AbgHHV1R (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 8 Aug 2020 17:27:17 -0400
-Received: from mail-io1-f69.google.com ([209.85.166.69]:43465 "EHLO
-        mail-io1-f69.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726205AbgHHV1R (ORCPT
+        id S1726050AbgHIB5R (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 8 Aug 2020 21:57:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60042 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726009AbgHIB5Q (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 8 Aug 2020 17:27:17 -0400
-Received: by mail-io1-f69.google.com with SMTP id f19so4385122iol.10
-        for <linux-bluetooth@vger.kernel.org>; Sat, 08 Aug 2020 14:27:16 -0700 (PDT)
+        Sat, 8 Aug 2020 21:57:16 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B93C061756
+        for <linux-bluetooth@vger.kernel.org>; Sat,  8 Aug 2020 18:57:15 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id kq25so5955334ejb.3
+        for <linux-bluetooth@vger.kernel.org>; Sat, 08 Aug 2020 18:57:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:mime-version:content-transfer-encoding
+         :content-description:subject:to:from:date:reply-to;
+        bh=snYPqYzMcRAFVusSDm1wEdLO3zZSz5O+T7SH8YmSs98=;
+        b=lda/SeaRPx0HrtcGZSYmaZXI7cUF+q0DFdsQYD67JtRH3WG0NEzA8cXH/nLhBTpH/M
+         BnzOz1ruXo06VmcFev6AnGlK4S3CzEgm9hx+9No4xVvsp3JMml/0I/mogxvYLZ1lQpGv
+         tPKcniL4Mp0zOHtaksqwMcm533KjdLMkAhamuirHNiXkcswl1+LlH9S8JCHnKRHc+b5X
+         vxahTUNa7SkEdrw68r/Ks7nWVF6X25EfgLESX40L9GcjiaDGLAy/TGGlRh2Tz3r5iOWU
+         SGCYdkK8jWKk3dY7RP91ON1/9aIYtiULFAolHZmtqoXjlSFljbzb4VOvOtXKW3o9q5vS
+         f68g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=IADNMrokZmxOUKia7Uum9r4PEiRU6p/oiYSUbRzW15k=;
-        b=KwDoG/YQAHYOn/2wkxMFffEVAImrlnfaTi1cS9k6rm3W1COxbwH2RDiOEv+CZ8LAk1
-         lXkrPjZZIho/5lx66FeJGPjBdErCTc38VqKyqw0qMbA5eDIP4sFhwulePllOQGBc3vOv
-         NfG+N5YfPAULmmT+ph7fP3+odCm3X3GRNDcx95VubU84T36H1dV4GPR1zIJNC9m4HwNX
-         6Fcmzvc1zAfV+26Kk39h7W4uDmTUrHV+7/iVmkoW8pFb2PoNKbEopg5kTicbwC+r41do
-         yRZ8Vs62T920C/xXvBUHRD8QqnjPpBLp9CcQyXcrytS6yvkTeQqJ03nRsEvODm/qjPKX
-         goIg==
-X-Gm-Message-State: AOAM530SODZ1s9LazLWXEzy0noi1VymD6kCvGm9A11I9U+zgklzOZ0bd
-        jGLwrdeykEDG7Cfcc373r/CKlsbMvJ8ZUYKJR4CsuxeOGksX
-X-Google-Smtp-Source: ABdhPJwi//OPGAqjzWtcAVqRFu+q32nwkVhlurk0BWqeIBfa0Ekl0+QoU8oNh+cSdWS3Pxj6iDOfUcGVs6UiB/m7Cr7fogCDrGei
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:content-description:subject:to:from:date
+         :reply-to;
+        bh=snYPqYzMcRAFVusSDm1wEdLO3zZSz5O+T7SH8YmSs98=;
+        b=RLX6/2KgbUvuPV+8cB/qXC+5NYADR09IoVMP1QHUOKhRjudJrO71rfjtKEWbBuUylq
+         qETJhZRs4BdZfJPUf7wAAyMBw4ywxZdH+rJzh33MQsvxA4qz4ZFqs3Q3B2Q9h7/6Iqg5
+         nD5mBF9bh3R1Scnr8MzwxjqaoS+6ICehr7dAD6UzcK/Z7pEknGFe+ABX8trZcD8kOfXB
+         pSaFTKbpTEjFNCCF1V7uODAODqm8du/p+MIS0EI+3yd5E0Su2iiPMcra6qcda9pBkP63
+         JH77QSaAKRcqK0CeTh8zNQuoY1DWKxS2Aa4Wl5+l6XmhvoKKAnL6mYij964we903z7Fl
+         bajQ==
+X-Gm-Message-State: AOAM533NzzYShn0EULXwhR4BZhzOhaDCbIbQTHbaDyYUfLt6tQAE8qYb
+        1jKqoH51KP76kjfN7YmlkSI=
+X-Google-Smtp-Source: ABdhPJwHrU3lYFKT7Dg1wH1sb3rzh8YydW4CqLRQPENUI+bb+wCy1oypvwAcy9eIxsOQF0plhXJenw==
+X-Received: by 2002:a17:906:1f8e:: with SMTP id t14mr16186056ejr.336.1596938233897;
+        Sat, 08 Aug 2020 18:57:13 -0700 (PDT)
+Received: from [192.168.0.108] ([196.171.37.220])
+        by smtp.gmail.com with ESMTPSA id bn7sm9619505ejb.100.2020.08.08.18.57.09
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 08 Aug 2020 18:57:13 -0700 (PDT)
+Message-ID: <5f2f57f9.1c69fb81.291dd.86e1@mx.google.com>
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-X-Received: by 2002:a92:c7d0:: with SMTP id g16mr10954289ilk.101.1596922035608;
- Sat, 08 Aug 2020 14:27:15 -0700 (PDT)
-Date:   Sat, 08 Aug 2020 14:27:15 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000aaa4a905ac646223@google.com>
-Subject: KASAN: use-after-free Read in __queue_work (3)
-From:   syzbot <syzbot+77e5e02c6c81136cdaff@syzkaller.appspotmail.com>
-To:     davem@davemloft.net, johan.hedberg@gmail.com, kuba@kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marcel@holtmann.org, netdev@vger.kernel.org,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Hello
+To:     Recipients <ourogounimouhamed@gmail.com>
+From:   "Sophia" <ourogounimouhamed@gmail.com>
+Date:   Sun, 09 Aug 2020 01:56:57 +0000
+Reply-To: sophiawillians00@gmail.com
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+Hello Dear,
 
-syzbot found the following issue on:
+How are you doing,
+My name is Sophia Williams
+Please reply, so that we can know more better =
 
-HEAD commit:    c0842fbc random32: move the pseudo-random 32-bit definitio..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=127a8d66900000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=cf567e8c7428377e
-dashboard link: https://syzkaller.appspot.com/bug?extid=77e5e02c6c81136cdaff
-compiler:       gcc (GCC) 10.1.0-syz 20200507
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=140e36a4900000
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+77e5e02c6c81136cdaff@syzkaller.appspotmail.com
-
-==================================================================
-BUG: KASAN: use-after-free in __queue_work+0xc6c/0xf20 kernel/workqueue.c:1412
-Read of size 4 at addr ffff88809f1ab9c0 by task syz-executor.3/16144
-
-CPU: 0 PID: 16144 Comm: syz-executor.3 Not tainted 5.8.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x18f/0x20d lib/dump_stack.c:118
- print_address_description.constprop.0.cold+0xae/0x436 mm/kasan/report.c:383
- __kasan_report mm/kasan/report.c:513 [inline]
- kasan_report.cold+0x1f/0x37 mm/kasan/report.c:530
- __queue_work+0xc6c/0xf20 kernel/workqueue.c:1412
- queue_work_on+0x18b/0x200 kernel/workqueue.c:1518
- queue_work include/linux/workqueue.h:507 [inline]
- req_run+0x2c5/0x4a0 net/bluetooth/hci_request.c:90
- hci_req_run_skb net/bluetooth/hci_request.c:102 [inline]
- __hci_req_sync+0x1dd/0x830 net/bluetooth/hci_request.c:215
- hci_req_sync+0x8a/0xc0 net/bluetooth/hci_request.c:282
- hci_dev_cmd+0x5b3/0x950 net/bluetooth/hci_core.c:2011
- hci_sock_ioctl+0x3fa/0x800 net/bluetooth/hci_sock.c:1053
- sock_do_ioctl+0xcb/0x2d0 net/socket.c:1048
- sock_ioctl+0x3b8/0x730 net/socket.c:1199
- vfs_ioctl fs/ioctl.c:48 [inline]
- ksys_ioctl+0x11a/0x180 fs/ioctl.c:753
- __do_sys_ioctl fs/ioctl.c:762 [inline]
- __se_sys_ioctl fs/ioctl.c:760 [inline]
- __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:760
- do_syscall_64+0x60/0xe0 arch/x86/entry/common.c:384
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-RIP: 0033:0x45cce9
-Code: 2d b6 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 0f 83 fb b5 fb ff c3 66 2e 0f 1f 84 00 00 00 00
-RSP: 002b:00007f18d49bfc78 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 000000000001d300 RCX: 000000000045cce9
-RDX: 0000000020000000 RSI: 00000000400448de RDI: 0000000000000004
-RBP: 000000000078c080 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 000000000078c04c
-R13: 00007ffc84a6ab1f R14: 00007f18d49c09c0 R15: 000000000078c04c
-
-Allocated by task 9187:
- save_stack+0x1b/0x40 mm/kasan/common.c:48
- set_track mm/kasan/common.c:56 [inline]
- __kasan_kmalloc.constprop.0+0xc2/0xd0 mm/kasan/common.c:494
- __do_kmalloc mm/slab.c:3656 [inline]
- __kmalloc+0x17a/0x340 mm/slab.c:3665
- kmalloc include/linux/slab.h:560 [inline]
- kzalloc include/linux/slab.h:669 [inline]
- alloc_workqueue+0x166/0xe50 kernel/workqueue.c:4265
- hci_register_dev+0x1b5/0x930 net/bluetooth/hci_core.c:3509
- __vhci_create_device+0x2ac/0x5b0 drivers/bluetooth/hci_vhci.c:124
- vhci_create_device drivers/bluetooth/hci_vhci.c:148 [inline]
- vhci_open_timeout+0x38/0x50 drivers/bluetooth/hci_vhci.c:305
- process_one_work+0x94c/0x1670 kernel/workqueue.c:2269
- worker_thread+0x64c/0x1120 kernel/workqueue.c:2415
- kthread+0x3b5/0x4a0 kernel/kthread.c:292
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:293
-
-Freed by task 16170:
- save_stack+0x1b/0x40 mm/kasan/common.c:48
- set_track mm/kasan/common.c:56 [inline]
- kasan_set_free_info mm/kasan/common.c:316 [inline]
- __kasan_slab_free+0xf5/0x140 mm/kasan/common.c:455
- __cache_free mm/slab.c:3426 [inline]
- kfree+0x103/0x2c0 mm/slab.c:3757
- rcu_do_batch kernel/rcu/tree.c:2427 [inline]
- rcu_core+0x5c7/0x1190 kernel/rcu/tree.c:2655
- __do_softirq+0x2de/0xa24 kernel/softirq.c:298
-
-The buggy address belongs to the object at ffff88809f1ab800
- which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 448 bytes inside of
- 1024-byte region [ffff88809f1ab800, ffff88809f1abc00)
-The buggy address belongs to the page:
-page:ffffea00027c6ac0 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0
-flags: 0xfffe0000000200(slab)
-raw: 00fffe0000000200 ffffea00028becc8 ffffea00028ddbc8 ffff8880aa000c40
-raw: 0000000000000000 ffff88809f1ab000 0000000100000002 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff88809f1ab880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88809f1ab900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff88809f1ab980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                           ^
- ffff88809f1aba00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88809f1aba80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-
-
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-syzbot can test patches for this issue, for details see:
-https://goo.gl/tpsmEJ#testing-patches
+and share photos,
+Thank you.
