@@ -2,27 +2,27 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDA6A240F28
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Aug 2020 21:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63686240EFF
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Aug 2020 21:17:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729872AbgHJTNu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 10 Aug 2020 15:13:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45184 "EHLO mail.kernel.org"
+        id S1729983AbgHJTRd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 10 Aug 2020 15:17:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46434 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729858AbgHJTNt (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 10 Aug 2020 15:13:49 -0400
+        id S1729996AbgHJTOW (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 10 Aug 2020 15:14:22 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7EFF02224D;
-        Mon, 10 Aug 2020 19:13:47 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id E596322BED;
+        Mon, 10 Aug 2020 19:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597086828;
-        bh=WpV52KAFDM0xr311bUeYlAhrwM/hcvWw2VepPjQWodA=;
+        s=default; t=1597086861;
+        bh=htSXr8sF7+JHBcxaFrOXAmW3pF9fyFXPzeVcUuhuPrE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=G8s9sivkTJypQYTZtJlZV2Wto+vc3VLNv6YHYaAS/knBXXRP4svKazj6iGegy7y83
-         w5e4kNna4OXDWs5evc4XbqcjuPWhaOOkZ9chuunEmO8IgaxCEtYf4INFQss9WQIYND
-         kjF6h7IoI1Va3uwWrn5m4dZSt7z6ATZSNIQdACfI=
+        b=YHU5PVL7MtvN4sqXe5veRBvUOzXyb0d3snJr3EMie71lQrGitiGgDigfeX/n9z0+I
+         4GSME1H9Wm4/1gD+KtD6jjMZ3HRbswFRGHqlc0Q7KEpEY9y5mAkPVGci8PBRILxCtB
+         zKAlJnqAsVixenu+UgM56M+4LGXn+R5hR87KpdDU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Lihong Kou <koulihong@huawei.com>,
@@ -30,12 +30,12 @@ Cc:     Lihong Kou <koulihong@huawei.com>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 02/22] Bluetooth: add a mutex lock to avoid UAF in do_enale_set
-Date:   Mon, 10 Aug 2020 15:13:24 -0400
-Message-Id: <20200810191345.3795166-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 02/17] Bluetooth: add a mutex lock to avoid UAF in do_enale_set
+Date:   Mon, 10 Aug 2020 15:14:03 -0400
+Message-Id: <20200810191418.3795394-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200810191345.3795166-1-sashal@kernel.org>
-References: <20200810191345.3795166-1-sashal@kernel.org>
+In-Reply-To: <20200810191418.3795394-1-sashal@kernel.org>
+References: <20200810191418.3795394-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -139,7 +139,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+)
 
 diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 357475cceec61..9a75f9b00b512 100644
+index 21096c8822231..3bfd747aa515b 100644
 --- a/net/bluetooth/6lowpan.c
 +++ b/net/bluetooth/6lowpan.c
 @@ -57,6 +57,7 @@ static bool enable_6lowpan;
@@ -150,7 +150,7 @@ index 357475cceec61..9a75f9b00b512 100644
  
  struct lowpan_peer {
  	struct list_head list;
-@@ -1082,12 +1083,14 @@ static void do_enable_set(struct work_struct *work)
+@@ -1187,12 +1188,14 @@ static void do_enable_set(struct work_struct *work)
  
  	enable_6lowpan = set_enable->flag;
  
@@ -165,7 +165,7 @@ index 357475cceec61..9a75f9b00b512 100644
  
  	kfree(set_enable);
  }
-@@ -1139,11 +1142,13 @@ static ssize_t lowpan_control_write(struct file *fp,
+@@ -1244,11 +1247,13 @@ static ssize_t lowpan_control_write(struct file *fp,
  		if (ret == -EINVAL)
  			return ret;
  
