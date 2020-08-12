@@ -2,122 +2,121 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2456324303C
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Aug 2020 22:51:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B46AD243073
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Aug 2020 23:24:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726573AbgHLUvq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 12 Aug 2020 16:51:46 -0400
-Received: from mga18.intel.com ([134.134.136.126]:41644 "EHLO mga18.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726528AbgHLUvq (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 12 Aug 2020 16:51:46 -0400
-IronPort-SDR: 8Q+Y9XsAUqvFzoC4mJqmKxedXRozZLCtUYawixh041+J+57d33ptGTW5VW9ZZ1Pex4qLw8+7Lk
- Qrbs593Mm3Dg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9711"; a="141695146"
-X-IronPort-AV: E=Sophos;i="5.76,305,1592895600"; 
-   d="scan'208";a="141695146"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Aug 2020 13:49:40 -0700
-IronPort-SDR: 3f70OIRZdGrryAUlQ+ctiXfVAnZ4MvLplQClcoh2VXac5sbcYq8pYredHR2PupNxK2UV5VxBnZ
- 8up6u98H81uA==
-X-IronPort-AV: E=Sophos;i="5.76,305,1592895600"; 
-   d="scan'208";a="276669184"
-Received: from kwang8-mobl1.amr.corp.intel.com (HELO han1-mobl3.jf.intel.com) ([10.254.80.72])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Aug 2020 13:49:40 -0700
-From:   tedd.an@linux.intel.com
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
-Subject: [V2 3/3] btpclient: Fix gap reset not sending response
-Date:   Wed, 12 Aug 2020 13:49:32 -0700
-Message-Id: <20200812204932.25627-3-tedd.an@linux.intel.com>
-X-Mailer: git-send-email 2.25.4
-In-Reply-To: <20200812204932.25627-1-tedd.an@linux.intel.com>
-References: <20200812204932.25627-1-tedd.an@linux.intel.com>
+        id S1726490AbgHLVYn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 12 Aug 2020 17:24:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53878 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725934AbgHLVYn (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 12 Aug 2020 17:24:43 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFC62C061383
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Aug 2020 14:24:42 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id b14so3465205qkn.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Aug 2020 14:24:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=oSv9lNjLIcC+dSOR04T0KHy3KMdDW83IZKCS+JX1+YQ=;
+        b=GSH3b4FsClaIQFZjp5TZkpSdI0sWWok33kV84CPaMyGVsG43bYSD+YwjeEnSr6ersQ
+         zalSPLBtKNKBi/xYbdekj9pSCLn4WJpS4+QR5xocb6B9ypNFTklnwcO1MqHV7iOrgSFN
+         b1AVWdWDm8ZmMViHbzHqu0dRxE+ABf86pdt4COz43y6SwhkGtKA4CNQNr8jWn19bRgqW
+         NTWU0JDnonbrPybyPY4yV5fF2qkZAEUKbz+wEfDXNl6UlJ7ebZQpI+ARWJ6Zvds2TjRg
+         jBJlHOGwpWw4HJ9xtwgEyZsvTlvvOCCWvSjqc6AzXoTsES5Xuo3uPt0KVerMintLzMHh
+         3f7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=oSv9lNjLIcC+dSOR04T0KHy3KMdDW83IZKCS+JX1+YQ=;
+        b=FY49TmwfN7yXanrgWyspyG80s8YdP5ZxRvkqZHa4y/RfHSLTCZbUjI4hADGGfExu7K
+         aDRg5ATToifb/nbgjuGbc940sA4QyKS8e+g1c1gPV5/THXxV48RGeKRdwEWdNBqTB22x
+         s/w9Rh8B/7vNv/1tgjXqPQTx3/zOS3vcEQXy4TuYoqpRpmfkS4PsvBnK7bBafvjJ7HWK
+         ZB9Qj1AqJtFChfBFkAEKimNpR+UhjFERwnG59fNLeQmISBElS3mkPK7LVrww6XPhyCYR
+         pSzw6xg6g+mN+GB0ppF5c+CSEoQZ812t+1P7zu0Tfuy++ryfIYsVEyOycnSZVY2heRPm
+         3oXQ==
+X-Gm-Message-State: AOAM531dtVJh0IT28kvv2XIyGROh6cNYa2LjB8HqnvHJ1ybo+J2Fl0GO
+        bLn/8WYJvJqmgJOhmSQujdeZR0RKkQs=
+X-Google-Smtp-Source: ABdhPJxiouZnj3zR+EALTDOvyHkBJY/9tnu4FYQGgffoNdssHUeAC3ABJIUrIrP88TYtKAdHFApGWA==
+X-Received: by 2002:a05:620a:13c9:: with SMTP id g9mr1921845qkl.436.1597267481847;
+        Wed, 12 Aug 2020 14:24:41 -0700 (PDT)
+Received: from [172.17.0.2] ([52.247.8.108])
+        by smtp.gmail.com with ESMTPSA id o25sm3311884qkm.42.2020.08.12.14.24.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Aug 2020 14:24:41 -0700 (PDT)
+Message-ID: <5f345e19.1c69fb81.cce10.d6f2@mx.google.com>
+Date:   Wed, 12 Aug 2020 14:24:41 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============7821008023768021923=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, tedd.an@linux.intel.com
+Subject: RE: [V2,2/3] tools/btpclientctl: Add btpclient test application
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20200812204932.25627-2-tedd.an@linux.intel.com>
+References: <20200812204932.25627-2-tedd.an@linux.intel.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tedd Ho-Jeong An <tedd.an@intel.com>
+--===============7821008023768021923==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This patch fixes the GAP reset command to response the default settings
-after resetting the stack.
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While we are preparing for reviewing the patches, we found the following
+issue/warning.
+
+Test Result:
+checkpatch Failed
+
+Outputs:
+WARNING:SPDX_LICENSE_TAG: Missing or malformed SPDX-License-Identifier tag in line 1
+#49: FILE: tools/btpclientctl.c:1:
++/*
+
+ERROR:FSF_MAILING_ADDRESS: Do not include the paragraph about writing to the Free Software Foundation's mailing address from the sample GPL notice. The FSF has changed addresses in the past, and may do so again. Linux already includes a copy of the GPL.
+#67: FILE: tools/btpclientctl.c:19:
++ *  along with this program; if not, write to the Free Software$
+
+ERROR:FSF_MAILING_ADDRESS: Do not include the paragraph about writing to the Free Software Foundation's mailing address from the sample GPL notice. The FSF has changed addresses in the past, and may do so again. Linux already includes a copy of the GPL.
+#68: FILE: tools/btpclientctl.c:20:
++ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA$
+
+WARNING:TYPO_SPELLING: 'arguement' may be misspelled - perhaps 'argument'?
+#215: FILE: tools/btpclientctl.c:167:
++	bt_shell_printf("Invalid arguement %s\n", argv[1]);
+
+WARNING:STATIC_CONST_CHAR_ARRAY: static const char * array should probably be static const char * const
+#2124: FILE: tools/btpclientctl.c:2076:
++static const char *help[] = {
+
+- total: 2 errors, 3 warnings, 2175 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+Your patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+
 ---
- tools/btpclient.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/btpclient.c b/tools/btpclient.c
-index f9c693056..38e326670 100644
---- a/tools/btpclient.c
-+++ b/tools/btpclient.c
-@@ -521,6 +521,19 @@ static void reset_unreg_agent_reply(struct l_dbus_proxy *proxy,
- 	ag.registered = false;
- }
- 
-+static void update_current_settings(struct btp_adapter *adapter,
-+							uint32_t new_settings)
-+{
-+	struct btp_new_settings_ev ev;
-+
-+	adapter->current_settings = new_settings;
-+
-+	ev.current_settings = L_CPU_TO_LE32(adapter->current_settings);
-+
-+	btp_send(btp, BTP_GAP_SERVICE, BTP_EV_GAP_NEW_SETTINGS, adapter->index,
-+							sizeof(ev), &ev);
-+}
-+
- static void btp_gap_reset(uint8_t index, const void *param, uint16_t length,
- 								void *user_data)
- {
-@@ -528,6 +541,7 @@ static void btp_gap_reset(uint8_t index, const void *param, uint16_t length,
- 	const struct l_queue_entry *entry;
- 	uint8_t status;
- 	bool prop;
-+	uint32_t default_settings;
- 
- 	if (!adapter) {
- 		status = BTP_ERROR_INVALID_INDEX;
-@@ -570,10 +584,13 @@ static void btp_gap_reset(uint8_t index, const void *param, uint16_t length,
- 			goto failed;
- 		}
- 
--	adapter->current_settings = adapter->default_settings;
-+	default_settings = adapter->default_settings;
-+
-+	update_current_settings(adapter, default_settings);
- 
- 	/* TODO for we assume all went well */
--	btp_send(btp, BTP_GAP_SERVICE, BTP_OP_GAP_RESET, index, 0, NULL);
-+	btp_send(btp, BTP_GAP_SERVICE, BTP_OP_GAP_RESET, index,
-+				sizeof(default_settings), &default_settings);
- 	return;
- 
- failed:
-@@ -644,19 +661,6 @@ failed:
- 	btp_send_error(btp, BTP_GAP_SERVICE, index, status);
- }
- 
--static void update_current_settings(struct btp_adapter *adapter,
--							uint32_t new_settings)
--{
--	struct btp_new_settings_ev ev;
--
--	adapter->current_settings = new_settings;
--
--	ev.current_settings = L_CPU_TO_LE32(adapter->current_settings);
--
--	btp_send(btp, BTP_GAP_SERVICE, BTP_EV_GAP_NEW_SETTINGS, adapter->index,
--							sizeof(ev), &ev);
--}
--
- static void btp_gap_set_connectable(uint8_t index, const void *param,
- 					uint16_t length, void *user_data)
- {
--- 
-2.25.4
-
+--===============7821008023768021923==--
