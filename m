@@ -2,66 +2,161 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 27BE7244AF6
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Aug 2020 15:58:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 959C4244E9F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Aug 2020 20:59:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728238AbgHNN6b (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 14 Aug 2020 09:58:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32920 "EHLO
+        id S1727773AbgHNS7g (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 14 Aug 2020 14:59:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728132AbgHNN62 (ORCPT
+        with ESMTP id S1726285AbgHNS7g (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 14 Aug 2020 09:58:28 -0400
-Received: from mail-yb1-xb44.google.com (mail-yb1-xb44.google.com [IPv6:2607:f8b0:4864:20::b44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E5F8C061388
-        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Aug 2020 06:58:27 -0700 (PDT)
-Received: by mail-yb1-xb44.google.com with SMTP id q16so5235948ybk.6
-        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Aug 2020 06:58:27 -0700 (PDT)
+        Fri, 14 Aug 2020 14:59:36 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAF4AC061385
+        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Aug 2020 11:59:35 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id x24so8398984otp.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Aug 2020 11:59:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=ADSxHTiClFeEpnekIgxMm+4vNveMDrQOPCHPEgxRQmY=;
-        b=OuCR0lVGqzd5H5FQmJLbFMNQ+eyV0gzEwr4HY3cd3GF6Lnsu1xJVt3zglMz7Jw3m6g
-         6tlQS1f9t9BYgSgXfDaRlV7w8WD3il1PEMBvmswjf0OZgEHzc1jHtX67zkOtBSyBoxLc
-         xSp/eQJ4+Ex7HAoy43U5Nx1I2rFcFsarYX4GCS2LVaBXZjUMWYC5HD7BH4nlOsnKw5vX
-         zu9ygJ4Ak8kbLaUIR+Wg4wOkXpQbQFuB6AS3nSIngBGrfhH2iurIYvgHPK9vFRdVn4tn
-         No2wYXX7H+1SF39WsLEjuvUdeAfdZx1+eqojEu1sK7RLckN57Cb59z1zh3/DfitQjmxg
-         khiA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=f9NmrfjmloOjIBZHPMZM+Y6w3bDNQCvO94f8urAGQjQ=;
+        b=uXnhT0ecVqTx4Xo/qctxxvCCVaxdpI1vvezlZ9ZDnlUqFZy5fkr1vWrVM06WGL1Iz0
+         EDXUTEe7jkeUthaYw5uhDZdQd2gwwhdr4BLz30VF5SHdOZDN9knAP9NkH322/RNATqBM
+         gjI7tTwZM0ZiN1OyNDOx9bPq4I7V+m//+vIy73Ak5Pn6uk9Zr3VYZESE5mCfbku96tT1
+         DKpomGSbSCKVVlO60JfBqtZKapGbbM49opT7qY1h6lk87oK5pveCI34qRxZjaoUiD9TX
+         oRhPQsL7SZ/pPuldAdBmneVepXI873Wy+ssuq1bRv3eAAe4R9Rd5S7Q0nKmnElFSvoki
+         I90g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=ADSxHTiClFeEpnekIgxMm+4vNveMDrQOPCHPEgxRQmY=;
-        b=YKjxAfz/ANBuDV7fWKUPyFQ/ye+WYSWErK5AShmHZpbedRPpA2myn6k1aBljcVS4j+
-         l95b49+3Gjq93LxLNUWOXB32nE+AMOLgKOy0y4IGLYLJbQom2A3J09DKpQPbodKfdmka
-         +tM7vKHXJmVKk3aKUTZ2Rd1hPPXe/oklhCeA119vXiscm6NiK03AqpjXhi0me7tEh9Eh
-         wyE5rByQdkjwtMtO86xfA3/ryi8cXCsl73Hv//AH+bJHWJpWeO6xk7PVnvhoGNQlT/bk
-         yVnygzv417ZvZ3GfTrhWT1niR3rotpxG8/yS61cK94S8vIPm4xRV82b/fcnQuX0Yd452
-         8AFQ==
-X-Gm-Message-State: AOAM530rfDNUb/v00nXWlhsMFkn14TvXn/bpHrR18Xg2EdN+u9srY7a9
-        PU24JchTpxp9dV3kHRZyxie+PIu1482WpDWLSdU=
-X-Google-Smtp-Source: ABdhPJxSW2CH4l3gAV3UQbiDhKcbIln2aHe6a5DgwtK9XXMnm22hlYpRVpHOZ1RfSDgnZMpqgrmaN7TH4tMfw5Vx2lE=
-X-Received: by 2002:a25:7c01:: with SMTP id x1mr782217ybc.357.1597413505967;
- Fri, 14 Aug 2020 06:58:25 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=f9NmrfjmloOjIBZHPMZM+Y6w3bDNQCvO94f8urAGQjQ=;
+        b=IRpzOAN5EAGHjJ1ITs8tpfnnkPY25A4BXHCPqglvjPbckp54SadwZPqXapfQbFC+vt
+         UesdFobMKtGqnPgn0NW93tkJK+1OmbgOMyKc+Cc3iLUFnlf+qgdUcpJNL2botflIEOct
+         6plDw2ClYQGVQ+x5tXqU7vmvk+VBaR2cC5jcwT6Lj2CckSCK2vU6LG8BNr9yK4lsdexU
+         JUdXrG3rFsCbDJNnZc7dVi3gyWVtRFXFsML4opEaOBjGFmMOB1MJ3Ej9RVyUCyksoe3q
+         kOVkk1gfx19lacwJfSoETEysvHb5Lzyfpr7XFXFduJHT7v2YmBm/dhgvuxfIXzNxrUX8
+         DxWw==
+X-Gm-Message-State: AOAM531neVGwOj8N2yWSYOq2A6qXT+p7ubMUWIAuOeHQp+tAtfLE9kGu
+        OLzPl/+Dqlj+Qa2tYhsFYn8ddiZlRK3HBK2djQ8=
+X-Google-Smtp-Source: ABdhPJxuaxXn66br6UualO06iWGRChAzWOopn0ZjnMHf+rtJSiFLvDidoIMrx4qNYcCuqsbxkBlhvDm/eWtd+HQTCFk=
+X-Received: by 2002:a9d:24e7:: with SMTP id z94mr2915575ota.91.1597431575159;
+ Fri, 14 Aug 2020 11:59:35 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:ce42:0:0:0:0:0 with HTTP; Fri, 14 Aug 2020 06:58:25
- -0700 (PDT)
-Reply-To: alexanadi111@gmail.com
-From:   Alex Anadi <debtpaymentsettlementcenter201@gmail.com>
-Date:   Fri, 14 Aug 2020 14:58:25 +0100
-Message-ID: <CANm_i2ZZaffMNzbC+-T=vYbsmQZ-2aL-nGfz+G8fS=qjR86-6w@mail.gmail.com>
-Subject: OK.
-To:     undisclosed-recipients:;
+References: <20200812121946.Bluez.v1.1.I254123a1c85e8cb22739cbbb1ffa2f56ac41faa8@changeid>
+In-Reply-To: <20200812121946.Bluez.v1.1.I254123a1c85e8cb22739cbbb1ffa2f56ac41faa8@changeid>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 14 Aug 2020 11:59:25 -0700
+Message-ID: <CABBYNZKUDn-gWfkZzH4kO5c6kRNMomH9-o8XHJ_Lv+7ujrMNrw@mail.gmail.com>
+Subject: Re: [Bluez PATCH v1] input: Don't browse SDP if HIDSDPDisable is set
+To:     Archie Pusaka <apusaka@google.com>
+Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>,
+        Sonny Sasaka <sonnysasaka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Sir/Madam,
+Hi Archie,
 
-I want to know if you authorized Ms Diane Webb to put claims for your
-funds valued at $10.6M
+On Tue, Aug 11, 2020 at 9:21 PM Archie Pusaka <apusaka@google.com> wrote:
+>
+> From: Archie Pusaka <apusaka@chromium.org>
+>
+> According to the HID1.1 spec, part 5.3.4.9:
+> The HIDSDPDisable attribute is a Boolean value, which indicates
+> whether connection to the SDP channel and Control or Interrupt
+> channels are mutually exclusive. This feature supports Bluetooth
+> HID devices that have minimal resources, and multiplex those
+> resources between servicing the initialization (SDP) and runtime
+> (Control and Interrupt) channels.
+>
+> However, Bluez still tries to connect SDP upon HID connection,
+> regardless of the existence of the HIDSDPDisable attribute.
+>
+> This patch prevents the connection of SDP after HID has been
+> established, if the device has HIDSDPDisable attribute.
+>
+> Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
+> ---
+>
+>  profiles/input/device.c | 2 ++
+>  src/device.c            | 8 +++++++-
+>  src/device.h            | 1 +
+>  3 files changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/profiles/input/device.c b/profiles/input/device.c
+> index 6ec0a4c63..fac8c6896 100644
+> --- a/profiles/input/device.c
+> +++ b/profiles/input/device.c
+> @@ -1373,6 +1373,8 @@ static struct input_device *input_device_new(struct btd_service *service)
+>         /* Initialize device properties */
+>         extract_hid_props(idev, rec);
+>
+> +       device_set_skip_passive_sdp_discovery(device, idev->disable_sdp);
 
-Regards,
-Alex Anadi.
+Shouldn't you actually be checking for the presence of HIDSDPDisable,
+I suppose the first time when you pair with it the SDP must be active
+in order for us to be able to probe the drivers, then once we get the
+SDP records stored we should inhibit the refresh of the records.
+
+>         return idev;
+>  }
+>
+> diff --git a/src/device.c b/src/device.c
+> index 2237a7670..a67787a2d 100644
+> --- a/src/device.c
+> +++ b/src/device.c
+> @@ -195,6 +195,7 @@ struct btd_device {
+>         bool            le;
+>         bool            pending_paired;         /* "Paired" waiting for SDP */
+>         bool            svc_refreshed;
+> +       bool            skip_passive_sdp_discovery;
+>
+>         /* Manage whether this device can wake the system from suspend.
+>          * - wake_support: Requires a profile that supports wake (i.e. HID)
+> @@ -1472,6 +1473,10 @@ static gboolean dev_property_wake_allowed_exist(
+>         return device_get_wake_support(device);
+>  }
+>
+> +void device_set_skip_passive_sdp_discovery(struct btd_device *dev, bool skip)
+> +{
+> +       dev->skip_passive_sdp_discovery = skip;
+> +}
+>
+>  static gboolean disconnect_all(gpointer user_data)
+>  {
+> @@ -1805,7 +1810,8 @@ done:
+>                                 btd_error_failed(dev->connect, strerror(-err)));
+>         } else {
+>                 /* Start passive SDP discovery to update known services */
+> -               if (dev->bredr && !dev->svc_refreshed)
+> +               if (dev->bredr && !dev->svc_refreshed &&
+> +                                       !dev->skip_passive_sdp_discovery)
+>                         device_browse_sdp(dev, NULL);
+>                 g_dbus_send_reply(dbus_conn, dev->connect, DBUS_TYPE_INVALID);
+>         }
+> diff --git a/src/device.h b/src/device.h
+> index cb8d884e8..5348d2652 100644
+> --- a/src/device.h
+> +++ b/src/device.h
+> @@ -145,6 +145,7 @@ void device_set_wake_override(struct btd_device *device, bool wake_override);
+>  void device_set_wake_allowed(struct btd_device *device, bool wake_allowed,
+>                              guint32 id);
+>  void device_set_wake_allowed_complete(struct btd_device *device);
+> +void device_set_skip_passive_sdp_discovery(struct btd_device *dev, bool skip);
+>
+>  typedef void (*disconnect_watch) (struct btd_device *device, gboolean removal,
+>                                         void *user_data);
+> --
+> 2.28.0.236.gb10cc79966-goog
+>
+
+
+-- 
+Luiz Augusto von Dentz
