@@ -2,75 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E978A2441C6
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Aug 2020 01:39:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32929244306
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Aug 2020 04:31:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726587AbgHMXjb convert rfc822-to-8bit (ORCPT
+        id S1726570AbgHNCb0 convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 13 Aug 2020 19:39:31 -0400
-Received: from [186.47.21.114] ([186.47.21.114]:57552 "EHLO mail.hmvi.gob.ec"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726526AbgHMXja (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 13 Aug 2020 19:39:30 -0400
-X-Greylist: delayed 15224 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Aug 2020 19:39:30 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.hmvi.gob.ec (Postfix) with ESMTP id A8902C0313BA9;
-        Thu, 13 Aug 2020 12:47:26 -0500 (-05)
-Received: from mail.hmvi.gob.ec ([127.0.0.1])
-        by localhost (mail.hmvi.gob.ec [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id D-FG9aVllKLZ; Thu, 13 Aug 2020 12:47:26 -0500 (-05)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.hmvi.gob.ec (Postfix) with ESMTP id 90CFFC0326E2A;
-        Thu, 13 Aug 2020 12:33:52 -0500 (-05)
-X-Virus-Scanned: amavisd-new at hmvi.gob.ec
-Received: from mail.hmvi.gob.ec ([127.0.0.1])
-        by localhost (mail.hmvi.gob.ec [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 6QwRH7L6ghUp; Thu, 13 Aug 2020 12:33:52 -0500 (-05)
-Received: from [10.73.80.190] (unknown [105.8.3.183])
-        by mail.hmvi.gob.ec (Postfix) with ESMTPSA id 8C66BC036D7BA;
-        Thu, 13 Aug 2020 12:21:28 -0500 (-05)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
+        Thu, 13 Aug 2020 22:31:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54372 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726564AbgHNCbZ (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 13 Aug 2020 22:31:25 -0400
+From:   bugzilla-daemon@bugzilla.kernel.org
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 207169] Bluetooth: hci0: command 0x200c tx timeout cause
+ suspend failed
+Date:   Fri, 14 Aug 2020 02:31:24 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: youling257@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-207169-62941-DUdeRbQ6wV@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-207169-62941@https.bugzilla.kernel.org/>
+References: <bug-207169-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
-To:     Recipients <danny.puetate@mail.hmvi.gob.ec>
-From:   ''Tayeb Souami'' <danny.puetate@mail.hmvi.gob.ec>
-Date:   Thu, 13 Aug 2020 19:21:07 +0200
-Reply-To: Tayebsouam.spende@gmail.com
-Message-Id: <20200813172128.8C66BC036D7BA@mail.hmvi.gob.ec>
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Lieber Freund,
+https://bugzilla.kernel.org/show_bug.cgi?id=207169
 
-Ich bin Herr Tayeb Souami, New Jersey, Vereinigte Staaten von Amerika,
-der Mega-Gewinner von $ 315million In Mega Millions Jackpot, spende ich
-an 5 zufällige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre
-E-Mail nach einem Spinball ausgewählt.Ich habe den größten Teil meines
-Vermögens auf eine Reihe von Wohltätigkeitsorganisationen und
-Organisationen verteilt.Ich habe mich freiwillig dazu entschieden, die
-Summe von € 2.000.000,00 an Sie als eine der ausgewählten 5 zu spenden,
-um meine Gewinne zu überprüfen, sehen Sie bitte meine You Tube Seite
-unten.
+--- Comment #15 from youling257@gmail.com ---
+test linux kernel 5.9 can suspend.
 
+[  140.585885] PM: suspend entry (s2idle)
+[  140.624364] Filesystems sync: 0.038 seconds
 
-UHR MICH HIER: https://www.youtube.com/watch?v=Z6ui8ZDQ6Ks
+[  142.648683] Bluetooth: hci0: Timed out waiting for suspend events
+[  142.648688] Bluetooth: hci0: Suspend timeout bit: 4
+[  142.648691] Bluetooth: hci0: Suspend notifier action (3) failed: -110
+[  142.648696] Freezing user space processes ...
+[  142.650906] Bluetooth: hci0: command 0x0c1a tx timeout
 
+[  142.652280] (elapsed 0.003 seconds) done.
+[  142.652290] OOM killer disabled.
+[  142.652292] Freezing remaining freezable tasks ... (elapsed 0.002 seconds)
+done.                                                                          
+                                 [  142.654571] printk: Suspending console(s)
+(use no_console_suspend to debug)
+[  142.720243] rt5640 i2c-10EC5640:00: disabling jack detect before suspend    
+                                                                               
+                               [  142.740141] RTW:  suspend start
+[  142.743909] RTW: rtw_dev_unload: driver not in IPS
+[  142.759916] RTW: rtw suspend success in 20 ms
+[  143.302475] serial 00:02: disabled
+[  143.302513] rtc_cmos 00:00: suspend, ctrl 02
 
-Das ist dein Spendencode: [TS530342018]
+[  153.664622] RTW: resume start                                               
+                                                                               
+                               [  153.665044] RTW: == SDIO Card Info ==
+[  153.665050] RTW:   clock: 50000000 Hz                                       
+                                                                               
+                               [  153.665053] RTW:   timing spec :
+[  153.665055] sd high-speed                                                   
+                                                                               
+                               [  153.665060] RTW:   sd3_bus_mode: FALSE
+[  153.665063] RTW: ================
+[  153.693327] rtc_cmos 00:00: resume, ctrl 02                                 
+                                                                               
+                               [  153.722253] rt5640 i2c-10EC5640:00:
+re-enabling jack detect after resume
+[  153.729674] rt5640 i2c-10EC5640:00: irq status 0x110                        
+                                                                               
+                               [  154.994299] RTW: wlan0- hw port(0) mac_addr
+=8c:18:d9:27:71:71
+[  155.006720] RTW: rtw_resume_common:0 in 1342 ms
+[  155.157170] OOM killer enabled.
+[  155.157173] Restarting tasks ... done.
 
+[  157.187320] Bluetooth: hci0: Timed out waiting for suspend events
+[  157.187324] Bluetooth: hci0: Suspend timeout bit: 5
+[  157.187328] Bluetooth: hci0: Suspend notifier action (4) failed: -110
+[  157.187332] PM: suspend exit
+[  157.188315] Bluetooth: hci0: command 0x0c05 tx timeout
+[  159.239690] Bluetooth: hci0: command 0x200b tx timeout
 
-Antworten Sie mit dem SPENDE-CODE an diese
-
-E-Mail:Tayebsouam.spende@gmail.com
-
-
-Ich hoffe, Sie und Ihre Familie glücklich zu machen.
-
-
-Grüße
-
-Herr Tayeb Souami
+-- 
+You are receiving this mail because:
+You are the assignee for the bug.
