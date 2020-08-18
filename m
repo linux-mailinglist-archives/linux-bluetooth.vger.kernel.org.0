@@ -2,93 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38D222480B5
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Aug 2020 10:34:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C45CE248C05
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Aug 2020 18:51:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726391AbgHRIeD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 Aug 2020 04:34:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726043AbgHRIeC (ORCPT
+        id S1727049AbgHRQvf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 Aug 2020 12:51:35 -0400
+Received: from sender4-op-o11.zoho.com ([136.143.188.11]:17155 "EHLO
+        sender4-op-o11.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726840AbgHRQvc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 Aug 2020 04:34:02 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC6EC061389;
-        Tue, 18 Aug 2020 01:34:01 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id l60so9093507pjb.3;
-        Tue, 18 Aug 2020 01:34:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=szP+8DM2fo2Wg0FXKp5oArkPY3dRWu1AVOY6u2GDxKg=;
-        b=kXXy4d11xMBXcJj+fsuZKlC40XsOYUs9qFdqzuKei+P99PVGYB4cy5YvPiCQ9SE5gc
-         nwowHtPWMwFGXmPyaIHawdQfK5b06JAnIyDjOBe3YW++Q1BV0EX6kfoY8km/11uZY8hV
-         YprH1emQ2HNL0jUmKDhfxqGEcu+tHvd3Vtkby05p+VNjxGkQZQBEPYl+7IXbofAl6BG3
-         hhOroOHfCMUIFb1yeteG3XTgjOWMSn+dJWzkVa23ynA8tSGk1jcOWqU1t6F/2rg4cH0O
-         Xw3eM1EmBGSLh20rgcywQjdmExvL2tkXvXtQYrrhFcy/p1TGSvWno4qJpYUyybKlEz3c
-         pc1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=szP+8DM2fo2Wg0FXKp5oArkPY3dRWu1AVOY6u2GDxKg=;
-        b=GEUMHkv9et6kytyATo1Bjk5Dq3sclEtC9cwA8XFEEgoWrai68JVpkjmtMOSxliZ256
-         HnyzfqLr6ImkQNkFS0EVN3ZqC3HgbpLZda4OKq5/wpc58oIl6qKyU7GY+uSBHJY3dUPZ
-         FRtwQP/WOI5baBNrBUB20/zbrD7MJ9yL6PkJA54lnkEiCZQCE5jVK61pJf9SfauKXgya
-         REeSCba++qEpCnBmS6l82T4AHLd6vrR/gHGs7l/GVDCmfp6OmxCokmtGH+VsZyn1lvlu
-         +WXfCX9Oy0PqKr1h83i+CkC+DDMeDL15bWIIJ8nxrqoouMBGmPIAa4eyVRpyEZKuSLgU
-         XEFg==
-X-Gm-Message-State: AOAM532HqF4zYRm2aWzo6aDlXBuO6F+5uZ4NwkUzzlkQ0OmEUvcKTDp1
-        gwvheujqq17jGDVP0CIPzpxjKODRq1A=
-X-Google-Smtp-Source: ABdhPJx/UC+X2o5gXzjptm7LMgpeuMJeCeHbSRiXInZVSqmm1lN4kB/ZsnKF8m/DRi8+r0YbjnrTpw==
-X-Received: by 2002:a17:902:bd90:: with SMTP id q16mr14299265pls.196.1597739641056;
-        Tue, 18 Aug 2020 01:34:01 -0700 (PDT)
-Received: from oppo (69-172-89-151.static.imsbiz.com. [69.172.89.151])
-        by smtp.gmail.com with ESMTPSA id l78sm23898616pfd.130.2020.08.18.01.33.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 01:34:00 -0700 (PDT)
-Date:   Tue, 18 Aug 2020 16:33:57 +0800
-From:   Qingyu Li <ieatmuttonchuan@gmail.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, davem@davemloft.net,
-        kuba@kernel.org, matthieu.baerts@tessares.net,
-        stefan@datenfreihafen.org, arnd@arndb.de, gustavoars@kernel.org,
-        bigeasy@linutronix.de
-Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] net/bluetooth/rfcomm/sock.c: add CAP_NET_RAW check.
-Message-ID: <20200818083357.GA5442@oppo>
+        Tue, 18 Aug 2020 12:51:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1597768585; cv=none; 
+        d=zohomail.com; s=zohoarc; 
+        b=CON19CHeR1Xgocqgddwew1x9zb8XNEnAnl9AxuWX5rPucmdYiQczRYVTu16WYDXR2BhZK9GoDpEtbsPYWYj0t5YINYxt3AjNjF4JbjqsqYmuVjcHUuNvuvqND+BZyKY88Pw6OsiCLG5A3YOGSXrq1P0uNfB3gBl3aYrcdEqfTl8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+        t=1597768585; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:MIME-Version:Message-ID:Subject:To; 
+        bh=hxsuXnoF+ernwmZV6yS/o5gUrMIRlNZG3bcfp4HIIhQ=; 
+        b=M/wWy+c7pLDY02KvkYwh6PlXIx1Zii6NwXf46XPSfY+H1BR0EnBhCGvmqaXmas/8VO6bQPTJM+y1fQu7GYTwwKvAYTSdobv/whcMbAnZBxehscmWG6/BviBbCdh90hvtFR5MhA77jC3nyzHlwOsZ6dXlNNqeOA+bRwJva5uqens=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+        dkim=pass  header.i=dptechnics.com;
+        spf=pass  smtp.mailfrom=daan@dptechnics.com;
+        dmarc=pass header.from=<daan@dptechnics.com> header.from=<daan@dptechnics.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1597768585;
+        s=zoho; d=dptechnics.com; i=daan@dptechnics.com;
+        h=From:To:Cc:Message-ID:Subject:Date:MIME-Version:Content-Transfer-Encoding:Content-Type;
+        bh=hxsuXnoF+ernwmZV6yS/o5gUrMIRlNZG3bcfp4HIIhQ=;
+        b=ZAzOzV+9bK4tA4+mH28ZVTDclkfeNHDKUy1RAmocW3QwOmdhzPdpbtmFErekbs2a
+        Wz1CchP36EIHGssp6IFPaDircdsvMhPyIQOXmB19o98u1ia+Gv+DJnpPB4tUqtlpWH5
+        DyKihsR32KrbkoN8PuDrz6JdkCBnbfN8WnLsFBJE=
+Received: from daan-devbox.dptechnics.local (178-116-74-88.access.telenet.be [178.116.74.88]) by mx.zohomail.com
+        with SMTPS id 1597768581616726.7700689087546; Tue, 18 Aug 2020 09:36:21 -0700 (PDT)
+From:   Daan Pape <daan@dptechnics.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Daan Pape <daan@dptechnics.com>
+Message-ID: <20200818163611.57656-1-daan@dptechnics.com>
+Subject: [PATCH BlueZ 0/1] Fixed issue in bluetooth-meshd which causes HCI
+Date:   Tue, 18 Aug 2020 18:36:10 +0200
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf8
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When creating a raw PF_BLUETOOTH socket,
-CAP_NET_RAW needs to be checked first.
+I had compiled bluez for OpenWRT and was running the bluetooth-meshd
+daemon with a Fanstel BT680T module which implement the Bluetooth 5.0
+core specification.
 
-Signed-off-by: Qingyu Li <ieatmuttonchuan@gmail.com>
----
- net/bluetooth/rfcomm/sock.c | 3 +++
- 1 file changed, 3 insertions(+)
+The daemon did not properly start and failed with error:
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index ae6f80730561..d67d49e5aa00 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -321,6 +321,9 @@ static int rfcomm_sock_create(struct net *net, struct socket *sock,
- 	if (sock->type != SOCK_STREAM && sock->type != SOCK_RAW)
- 		return -ESOCKTNOSUPPORT;
+LE Scan enable failed (0x12)
 
-+	if (sock->type == SOCK_RAW && !kern && !capable(CAP_NET_RAW))
-+		return -EPERM;
-+
- 	sock->ops = &rfcomm_sock_ops;
+This error is described on page 2496 of the Bluetooth Core Specification
+Version 5.2 and is caused by the fact that no random address was
+initialized. The issue is resolved by falling back to using the default
+HCI advertisement settings which use the public device address in it's
+advertisements.
 
- 	sk = rfcomm_sock_alloc(net, sock, protocol, GFP_ATOMIC, kern);
---
-2.17.1
+This is the first time that I contribute to Bluez so please forgive me
+if I made any styling mistake in the patch format. I also did not include
+my details in the 'AUTHORS' file just yet as I first wanted to wait
+for your reaction. In case the patch is accepted my name can be added
+to the 'AUTHORS' file as:
+
+Daan Pape <daan@dptechnics.com>
+
+Please do not hesitate to ask any further questions if neccesary.
+
+Kind regards,
+Daan Pape
+
+Daan Pape (1):
+  Fixed issue in bluetooth-meshd which causes HCI error 0x12 when LE
+    scanning is enabled because no random address was set. This is fixed
+    by using the default HCI own device address option.
+
+ mesh/mesh-io-generic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--=20
+2.20.1
+
 
