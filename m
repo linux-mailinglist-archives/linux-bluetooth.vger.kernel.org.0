@@ -2,111 +2,140 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFC8524913B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Aug 2020 00:53:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C8A624916E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Aug 2020 01:28:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727013AbgHRWxF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 Aug 2020 18:53:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46306 "EHLO
+        id S1726751AbgHRX2b (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 Aug 2020 19:28:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726799AbgHRWxE (ORCPT
+        with ESMTP id S1726703AbgHRX23 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 Aug 2020 18:53:04 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE43BC061389
-        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Aug 2020 15:53:03 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id x12so16477574qtp.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Aug 2020 15:53:03 -0700 (PDT)
+        Tue, 18 Aug 2020 19:28:29 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30648C061389
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Aug 2020 16:28:29 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id m34so10457536pgl.11
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Aug 2020 16:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=w0Pl0CMcn8lEqI4RTOD0WCr2ZYgpItdGmyjIIKw3hds=;
-        b=dQNYBu1z0oBEJIzACOLNOP0DMlz1QIuQ3PjBGJeMlIxIdCzMezB5K7PK97M9yJtlK/
-         RHS15O3zNhreTfCcKbZt/VwiyC6j/N14cBJZWLHexg9soUZC6BzTt16sx2ciMIAeVdgW
-         B7eDHlNg8RSNUTDmNkZlHpIa77uG8P+sKDylDxqp49C0RGrVGSd9xhepwLYi+JUOnUnX
-         tDDUNk2l1GyF9SIX3WJOjDoERUgR1MIXcguoS9SSH7mZc3a6CznXtJ6yLvc1TwiGWaii
-         thbeztC0ZpVaigQVXCqeGstEZJRv+ayA3ASbKrFGimuFWI2vovO7TzakjmGa23sWY5vm
-         Y0MA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aejUMU5zSaqd7+wMdIKicjWFXZOWAZwkVCeBUjAPWDo=;
+        b=WlylnxkI57Y1zTA6NXRygvE9ERDqhBsF2EY1i+DnVp6hopJ6eaEgBLEGqUxBbHuUVj
+         6PwdNpEJeekqjYyMxQZMrnptbVvKO/v7YQdhRe9Qdl6dSA/Aj6Rki2J0naWhuK7x3ey0
+         Vieu5cpDuS93RHmGP+T8JC0AxeUruh/FkBcu0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=w0Pl0CMcn8lEqI4RTOD0WCr2ZYgpItdGmyjIIKw3hds=;
-        b=G/nZPZMOWbnxs0ZyYRp6eE77qR3zxSQwOIZPu0vmOxoJWSL0QgoFWU2vLBREV5tHPr
-         u6zCOqKz21ol0sxVZIbLQ6gy4bqcNLtzg9xQWibb0rU9VK6JsM2WAK+kSTAksKvKie9h
-         kmCon9xMtkE84fX76i6wGcJybo+e1FPEeNPQCbyGmUGssLHl6J4Csw9BfzSq2n9t0YaU
-         +Kxh+jRu4OGt0cHXcuu7hcDeyq5jEoEEp1z+M5iGJZPmd+V/sJ5txHZU8KQRkCI4n1TF
-         4yXxXsWp2MCEsyQ5zsn6llSXOv5bTR/B9wOq9ISNiKAFTXsbD4mKGozzWorIW56HcDzF
-         p0FA==
-X-Gm-Message-State: AOAM531iMbD7huohiRsa1qhB0dZbq7idugtTfaxDzw4bmr21BIMf5J6e
-        Hn+5bZn0ko8WE23jxt885OPB2qfQTeKpaA==
-X-Google-Smtp-Source: ABdhPJzhXtyYVHEftwdFYqAUNQWf20+Y4FGGDZGh2IdEHCrKjizhi2v2+Mjrk+JQjyUkxhZ209JqhA==
-X-Received: by 2002:ac8:7650:: with SMTP id i16mr19827711qtr.215.1597791182794;
-        Tue, 18 Aug 2020 15:53:02 -0700 (PDT)
-Received: from [172.17.0.2] ([52.251.53.181])
-        by smtp.gmail.com with ESMTPSA id 3sm22960673qkm.117.2020.08.18.15.53.02
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aejUMU5zSaqd7+wMdIKicjWFXZOWAZwkVCeBUjAPWDo=;
+        b=HydFy3tn48PjeqTyQ5YdpYxBoPLi2iruaxIsPCXdjKWvwu/Tho16+PAwDB2cBjY/oI
+         0QGihD7rX2mZoFgEZq2rJRYT9nSE2dbNPnbdD1aYNyVhQOa2mYfZpkS5jTikjwmnC/ih
+         teP7PMvin0RMpWpBolqrLZJDrFSxhpU55zMPASxgpGKwe/37Q1extVo8UtkVEwPPGKgF
+         MStcQcy0z6rEYjpIZSuoGJ7tA+8VcUSj/lhE7rO3I4ROH25ZTdrMfhujqkpV6+W2O/oh
+         W8BGM3Pa7m4TwlNqOo4/y9WE6CnfoOvYNT+ttZbMBFhzF+DtNThzOICKLdiNtcu8+2Uz
+         BSfg==
+X-Gm-Message-State: AOAM533aQh43vvD7hIxDtmQtFv5m8zsf09Ph4w1gA5yGz6OUur6o5fsz
+        m1u23JPJvAfCu0YUGGFpnbG29w==
+X-Google-Smtp-Source: ABdhPJyNH1vmStdwacwVR7XwfepJJGMq4Osrp+xllXoBHnt3Zv3+vrQl4a8ytgwrxBlK/osjffzvkg==
+X-Received: by 2002:a62:838a:: with SMTP id h132mr16810693pfe.72.1597793308492;
+        Tue, 18 Aug 2020 16:28:28 -0700 (PDT)
+Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:7220:84ff:fe09:2b94])
+        by smtp.gmail.com with ESMTPSA id 30sm904747pjz.24.2020.08.18.16.28.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 15:53:02 -0700 (PDT)
-Message-ID: <5f3c5bce.1c69fb81.89999.eda0@mx.google.com>
-Date:   Tue, 18 Aug 2020 15:53:02 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============0553159514088848311=="
+        Tue, 18 Aug 2020 16:28:27 -0700 (PDT)
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+To:     luiz.dentz@gmail.com, marcel@holtmann.org
+Cc:     chromeos-bluetooth-upstreaming@chromium.org,
+        linux-bluetooth@vger.kernel.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Subject: [Bluez PATCH v2 0/3] adapter: Reconnect audio when resuming from suspend
+Date:   Tue, 18 Aug 2020 16:28:19 -0700
+Message-Id: <20200818232822.1645054-1-abhishekpandit@chromium.org>
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, mcchou@chromium.org
-Subject: RE: [BlueZ,v1,1/7] adv_monitor: Introduce org.bluez.AdvertisementMonitorManager1 interface
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200818152612.BlueZ.v1.1.I205718871f4e636958904f3cfb171cfd381c54b1@changeid>
-References: <20200818152612.BlueZ.v1.1.I205718871f4e636958904f3cfb171cfd381c54b1@changeid>
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0553159514088848311==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: base64
 
-ClRoaXMgaXMgYXV0b21hdGVkIGVtYWlsIGFuZCBwbGVhc2UgZG8gbm90IHJlcGx5IHRvIHRoaXMg
-ZW1haWwhCgpEZWFyIHN1Ym1pdHRlciwKClRoYW5rIHlvdSBmb3Igc3VibWl0dGluZyB0aGUgcGF0
-Y2hlcyB0byB0aGUgbGludXggYmx1ZXRvb3RoIG1haWxpbmcgbGlzdC4KV2hpbGUgd2UgYXJlIHBy
-ZXBhcmluZyBmb3IgcmV2aWV3aW5nIHRoZSBwYXRjaGVzLCB3ZSBmb3VuZCB0aGUgZm9sbG93aW5n
-Cmlzc3VlL3dhcm5pbmcuCgpUZXN0IFJlc3VsdDoKY2hlY2tidWlsZCBGYWlsZWQKCk91dHB1dHM6
-CmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQgKHNlZSBg
-VScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQgKHNl
-ZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1bHQg
-KHNlZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRlZmF1
-bHQgKHNlZSBgVScpCmFyOiBgdScgbW9kaWZpZXIgaWdub3JlZCBzaW5jZSBgRCcgaXMgdGhlIGRl
-ZmF1bHQgKHNlZSBgVScpCnNyYy9hZHZfbW9uaXRvci5jOjk4OjE2OiBlcnJvcjog4oCYQlRfQURf
-TUFYX0RBVEFfTEVO4oCZIHVuZGVjbGFyZWQgaGVyZSAobm90IGluIGEgZnVuY3Rpb24pCiAgIDk4
-IHwgIHVpbnQ4X3QgdmFsdWVbQlRfQURfTUFYX0RBVEFfTEVOXTsKICAgICAgfCAgICAgICAgICAg
-ICAgICBefn5+fn5+fn5+fn5+fn5+fn4Kc3JjL2Fkdl9tb25pdG9yLmM6IEluIGZ1bmN0aW9uIOKA
-mG1vbml0b3JfbWF0Y2jigJk6CnNyYy9hZHZfbW9uaXRvci5jOjI4NDozNTogZXJyb3I6IHBhc3Np
-bmcgYXJndW1lbnQgMSBvZiDigJhnX2RidXNfcHJveHlfZ2V0X3BhdGjigJkgZGlzY2FyZHMg4oCY
-Y29uc3TigJkgcXVhbGlmaWVyIGZyb20gcG9pbnRlciB0YXJnZXQgdHlwZSBbLVdlcnJvcj1kaXNj
-YXJkZWQtcXVhbGlmaWVyc10KICAyODQgfCAgaWYgKHN0cmNtcChnX2RidXNfcHJveHlfZ2V0X3Bh
-dGgocHJveHkpLCBtb25pdG9yLT5wYXRoKSAhPSAwKQogICAgICB8ICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICBefn5+fgpJbiBmaWxlIGluY2x1ZGVkIGZyb20gc3JjL2Fkdl9tb25p
-dG9yLmM6MzE6Ci4vZ2RidXMvZ2RidXMuaDozMzY6MTM6IG5vdGU6IGV4cGVjdGVkIOKAmEdEQnVz
-UHJveHkgKuKAmSB7YWthIOKAmHN0cnVjdCBHREJ1c1Byb3h5ICrigJl9IGJ1dCBhcmd1bWVudCBp
-cyBvZiB0eXBlIOKAmGNvbnN0IEdEQnVzUHJveHkgKuKAmSB7YWthIOKAmGNvbnN0IHN0cnVjdCBH
-REJ1c1Byb3h5ICrigJl9CiAgMzM2IHwgY29uc3QgY2hhciAqZ19kYnVzX3Byb3h5X2dldF9wYXRo
-KEdEQnVzUHJveHkgKnByb3h5KTsKICAgICAgfCAgICAgICAgICAgICBefn5+fn5+fn5+fn5+fn5+
-fn5+fn4Kc3JjL2Fkdl9tb25pdG9yLmM6IEluIGZ1bmN0aW9uIOKAmHBhcnNlX3BhdHRlcm5z4oCZ
-OgpzcmMvYWR2X21vbml0b3IuYzo0OTM6MzY6IGVycm9yOiBzdWdnZXN0IHBhcmVudGhlc2VzIGFy
-b3VuZCDigJgmJuKAmSB3aXRoaW4g4oCYfHzigJkgWy1XZXJyb3I9cGFyZW50aGVzZXNdCiAgNDkz
-IHwgICBpZiAoYWRfdHlwZSA+IEJUX0FEXzNEX0lORk9fREFUQSAmJgpzcmMvYWR2X21vbml0b3Iu
-Yzo0MzM6MTE6IGVycm9yOiB1bnVzZWQgdmFyaWFibGUg4oCYbnVtX3BhdHRlcm5z4oCZIFstV2Vy
-cm9yPXVudXNlZC12YXJpYWJsZV0KICA0MzMgfCAgdWludDE2X3QgbnVtX3BhdHRlcm5zID0gMDsK
-ICAgICAgfCAgICAgICAgICAgXn5+fn5+fn5+fn5+CnNyYy9hZHZfbW9uaXRvci5jOiBJbiBmdW5j
-dGlvbiDigJhnZXRfc3VwcG9ydGVkX21vbml0b3JfdHlwZXPigJk6CnNyYy9hZHZfbW9uaXRvci5j
-Ojc2MTozNDogZXJyb3I6IHVudXNlZCB2YXJpYWJsZSDigJhtYW5hZ2Vy4oCZIFstV2Vycm9yPXVu
-dXNlZC12YXJpYWJsZV0KICA3NjEgfCAgc3RydWN0IGJ0ZF9hZHZfbW9uaXRvcl9tYW5hZ2VyICpt
-YW5hZ2VyID0gZGF0YTsKICAgICAgfCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBe
-fn5+fn5+CmNjMTogYWxsIHdhcm5pbmdzIGJlaW5nIHRyZWF0ZWQgYXMgZXJyb3JzCm1ha2VbMV06
-ICoqKiBbTWFrZWZpbGU6OTI3Mjogc3JjL2JsdWV0b290aGQtYWR2X21vbml0b3Iub10gRXJyb3Ig
-MQptYWtlOiAqKiogW01ha2VmaWxlOjQwMTQ6IGFsbF0gRXJyb3IgMgoKCgotLS0KUmVnYXJkcywK
-TGludXggQmx1ZXRvb3RoCg==
+Hi Luiz and Marcel,
 
---===============0553159514088848311==--
+This is a quality of life improvement for the behavior of audio devices
+during system suspend. This depends on a kernel change that emits
+suspend/resume events:
+
+https://patchwork.kernel.org/project/bluetooth/list/?series=325771
+
+Right now, audio devices will be disconnected as part of suspend but
+won't be reconnected when the system resumes without user interaction.
+This is annoying to some users as it causes an interruption to their
+normal work flow.
+
+This change reconnects audio devices that were disconnected for suspend
+using the following logic:
+
+ * Register a callback for controller resume in the policy plugin.
+ * In the device disconnect callback, mark any devices with the A2DP
+   service uuid for reconnect on resume after a delay.
+ * In the controller resume callback, queue any policy items that are
+   marked to reconnect on resume for connection with the
+   ReconnectAudioDelay value (default = 5s for Wi-Fi coexistence).
+
+A reconnect is only attempted once after the controller resumes and the
+delay between resume and reconnect is configurable via the
+ReconnectAudioDelay key in the Policy settings. The 5s delay was chosen
+arbitrarily and I think anywhere up to 10s is probably ok. A longer
+delay is better to account for spurious wakeups and Wi-Fi reconnection
+time (avoiding any co-ex issues) at the downside of reconnection speed.
+
+Here are the tests I have done with this:
+- Single suspend and verified the headphones reconnect
+- Suspend stress test for 25 iterations and verify both Wi-Fi and
+  Bluetooth audio reconnect on resume. (Ran with wake minimum time of
+  10s)
+- Suspend test with wake time < 5s to verify that BT reconnect isn't
+  attempted. Ran 5 iterations with low wake time and then let it stay
+  awake to confirm reconnect finally completed after 5s+ wake time.
+- Suspend test with wake time between 3s - 6s. Ran with 5 iterations and
+  verified it wasn't connected at the end. A connection attempt was
+  made but not completed due to suspend. A reconnect attempt was not
+  made afterwards, which is by design.
+
+  Luiz@ Marcel@: Does this sound ok (give up after an attempt)?
+
+I've tested this on a Pixelbook Go (AC-9260 controller) and HP
+Chromebook 14a (RTL8822CE controller) with GID6B headset.
+
+I've also tested this with the Pixel Buds 2. These earbuds actually
+reconnect automatically to the Chromebook (even without this policy
+change) and I verified that the new changes don't break the reconnection
+mechanism.
+
+Thanks
+Abhishek
+
+
+Changes in v2:
+- Refactored to use policy instead of connecting directly in adapter
+
+Abhishek Pandit-Subedi (3):
+  mgmt: Add controller suspend and resume events
+  monitor: Add btmon support for Suspend and Resume events
+  policy: Reconnect audio on controller resume
+
+ lib/mgmt.h       | 14 +++++++++++
+ monitor/packet.c | 55 +++++++++++++++++++++++++++++++++++++++++
+ plugins/policy.c | 64 +++++++++++++++++++++++++++++++++++++++++++++---
+ src/adapter.c    | 45 ++++++++++++++++++++++++++++++++++
+ src/adapter.h    |  6 +++++
+ src/main.c       |  1 +
+ src/main.conf    |  9 +++++++
+ 7 files changed, 190 insertions(+), 4 deletions(-)
+
+-- 
+2.28.0.297.g1956fa8f8d-goog
+
