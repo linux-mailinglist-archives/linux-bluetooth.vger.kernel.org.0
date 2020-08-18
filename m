@@ -2,84 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57AD7248C04
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Aug 2020 18:51:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31504248DF1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Aug 2020 20:26:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726974AbgHRQve (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 Aug 2020 12:51:34 -0400
-Received: from sender4-op-o11.zoho.com ([136.143.188.11]:17124 "EHLO
-        sender4-op-o11.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726715AbgHRQvc (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 Aug 2020 12:51:32 -0400
-X-Greylist: delayed 905 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Aug 2020 12:51:32 EDT
-ARC-Seal: i=1; a=rsa-sha256; t=1597768587; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=N0GrxEhOEDYs/e1/1yq7Crb2xLfUfNEFauIXrRH4OujoFxhGCYvTcjP0pQqmS2yUpAJf6qoDnNIlYwF3zSS9HSoK3uxQh7Hu4UG0jJo/52L1CeweAvDl3gJYB5o7EoaF4HeS7UpXjlEpgufd/kg9dMJshFKDMD8+jRs7IpxRKvk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1597768587; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
-        bh=MT2STI3D/C0IsbHcGVmVjss1gyVSWlFxJWLW8Trr2tk=; 
-        b=ly1OCPZHpJiV2owQhxFIJd0SmHYnZygJUASqKCtTOuSLdLlCTW3EGWi5jtcJm71kMweDQUCE0WNVO8pdFVSWeH6WZQF0aoHwjHogF1yIuXRXMrOPElYsX4P9FeAvBeJwp/Dha1b2A9ahiwoya6IhKrfrClR3SKLbDWYMabL80Bc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        dkim=pass  header.i=dptechnics.com;
-        spf=pass  smtp.mailfrom=daan@dptechnics.com;
-        dmarc=pass header.from=<daan@dptechnics.com> header.from=<daan@dptechnics.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1597768587;
-        s=zoho; d=dptechnics.com; i=daan@dptechnics.com;
-        h=From:To:Cc:Message-ID:Subject:Date:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Content-Type;
-        bh=MT2STI3D/C0IsbHcGVmVjss1gyVSWlFxJWLW8Trr2tk=;
-        b=AihgrU43knZAUw9Qiwwa6Y8I0DN8V9co7TN4uZK74HAqqpVaEFLpbk1SNy/c931g
-        6tukEMOoWPQlBSk1iwmbHGrm7ScVFadJ81fMeBPTXyg5DOTb01X3fWQFnImKwARwVxN
-        42LXrGK/13HQ04YskiNJRtK8/GxudRrQhRAExnbg=
-Received: from daan-devbox.dptechnics.local (178-116-74-88.access.telenet.be [178.116.74.88]) by mx.zohomail.com
-        with SMTPS id 1597768585055945.5832986315066; Tue, 18 Aug 2020 09:36:25 -0700 (PDT)
-From:   Daan Pape <daan@dptechnics.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Daan Pape <daan@dptechnics.com>
-Message-ID: <20200818163611.57656-2-daan@dptechnics.com>
-Subject: [PATCH BlueZ 1/1] Fixed issue in bluetooth-meshd which causes HCI error 0x12 when LE scanning is enabled because no random address was set. This is fixed by using the default HCI own device address option.
-Date:   Tue, 18 Aug 2020 18:36:11 +0200
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200818163611.57656-1-daan@dptechnics.com>
-References: <20200818163611.57656-1-daan@dptechnics.com>
+        id S1726653AbgHRS0H (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 Aug 2020 14:26:07 -0400
+Received: from mga01.intel.com ([192.55.52.88]:24086 "EHLO mga01.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726652AbgHRS0G (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 18 Aug 2020 14:26:06 -0400
+IronPort-SDR: dHpTq1qXN7/4wYILMELe3w7gwqEQMGwU/P0Xnykja7gFHXhd+S6x8Y3LPQpFz7SiR3W7s7ZWwN
+ gSzggFfq5eeA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9717"; a="173032866"
+X-IronPort-AV: E=Sophos;i="5.76,328,1592895600"; 
+   d="scan'208";a="173032866"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Aug 2020 11:26:07 -0700
+IronPort-SDR: oC63Dy7qujs42aK44MwCv4Dhj/DyNLMFkIj7OrB6Wo3dyWwXxaBa53jFFRkn+6oI33G8ssXBWI
+ i+KMeWZnBm/w==
+X-IronPort-AV: E=Sophos;i="5.76,328,1592895600"; 
+   d="scan'208";a="441318282"
+Received: from jbrandeb-mobl3.amr.corp.intel.com (HELO localhost) ([10.212.158.55])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Aug 2020 11:26:06 -0700
+Date:   Tue, 18 Aug 2020 11:26:05 -0700
+From:   Jesse Brandeburg <jesse.brandeburg@intel.com>
+To:     Qingyu Li <ieatmuttonchuan@gmail.com>
+Cc:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
+        <davem@davemloft.net>, <kuba@kernel.org>,
+        <linux-bluetooth@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] net/bluetooth/hci_sock.c: add CAP_NET_RAW check.
+Message-ID: <20200818112605.0000735f@intel.com>
+In-Reply-To: <20200818075648.GA29124@oppo>
+References: <20200818075648.GA29124@oppo>
+X-Mailer: Claws Mail 3.12.0 (GTK+ 2.24.28; i686-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
-Content-Type: text/plain; charset=utf8
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
----
- mesh/mesh-io-generic.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On Tue, 18 Aug 2020 15:56:48 +0800
+Qingyu Li <ieatmuttonchuan@gmail.com> wrote:
 
-diff --git a/mesh/mesh-io-generic.c b/mesh/mesh-io-generic.c
-index 67b13a1b9..65fd1c7b9 100644
---- a/mesh/mesh-io-generic.c
-+++ b/mesh/mesh-io-generic.c
-@@ -321,7 +321,7 @@ static void scan_disable_rsp(const void *buf, uint8_t s=
-ize,
- =09cmd.type =3D pvt->active ? 0x01 : 0x00;=09/* Passive/Active scanning */
- =09cmd.interval =3D L_CPU_TO_LE16(0x0010);=09/* 10 ms */
- =09cmd.window =3D L_CPU_TO_LE16(0x0010);=09/* 10 ms */
--=09cmd.own_addr_type =3D 0x01;=09=09/* ADDR_TYPE_RANDOM */
-+=09cmd.own_addr_type =3D 0x00; =09=09/* Public Device Address */
- =09cmd.filter_policy =3D 0x00;=09=09/* Accept all */
-=20
- =09bt_hci_send(pvt->hci, BT_HCI_CMD_LE_SET_SCAN_PARAMETERS,
-@@ -579,7 +579,7 @@ static void set_send_adv_params(const void *buf, uint8_=
-t size,
- =09cmd.min_interval =3D L_CPU_TO_LE16(hci_interval);
- =09cmd.max_interval =3D L_CPU_TO_LE16(hci_interval);
- =09cmd.type =3D 0x03; /* ADV_NONCONN_IND */
--=09cmd.own_addr_type =3D 0x01; /* ADDR_TYPE_RANDOM */
-+=09cmd.own_addr_type =3D 0x00; /* Public Device Address */
- =09cmd.direct_addr_type =3D 0x00;
- =09memset(cmd.direct_addr, 0, 6);
- =09cmd.channel_map =3D 0x07;
---=20
-2.20.1
+> When creating a raw PF_BLUETOOTH socket,
+> CAP_NET_RAW needs to be checked first.
+> 
 
+Thanks for the patch! Your subject doesn't need to end in a period. In
+your commit message, I can guess why you'd want this patch, but your
+commit message should include more info about why the kernel wants this
+patch included. Especially since this is a user visible change and
+likely a fix of a bug. Please review:
+https://www.kernel.org/doc/html/latest/networking/netdev-FAQ.html
+specifically:
+https://www.kernel.org/doc/html/latest/networking/netdev-FAQ.html#q-any-other-tips-to-help-ensure-my-net-net-next-patch-gets-ok-d
 
+This looks like a fix, please add a Fixes tag.
