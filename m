@@ -2,91 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B59824912A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Aug 2020 00:50:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28F8524913C
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Aug 2020 00:53:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727000AbgHRWu2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 Aug 2020 18:50:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45900 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726799AbgHRWu2 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 Aug 2020 18:50:28 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E96B5C061389
-        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Aug 2020 15:50:26 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id i20so5717927qkk.8
-        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Aug 2020 15:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=QNciXq1K04EUWNgTRLRsyw4jITsDyOiX1UyGmAA6u0w=;
-        b=RtjwGElDX+E9fD+wN6kTQ/bSkcBZrP/jHbiULSwArQpmEdBBodnXaeKCQT4CNfU/an
-         F2bB+5yr4mBmTSqese7laQyRQzrGsn05hb1rW6BR/SFyMXtmgV0bERYGfFq4koJI9okX
-         DRLrOqPA3QmvCcWupbFYTnIfBD2n03sbeRJXlGRUJJUVQchzc0/UUBcW6oPVaofZB46s
-         O4R4IhnR2ffGvi0ycehOq27ZLesAyr2SERadPI6/BbbG2SM4aBLwxpUsDD7M8WfJHTT+
-         w54ABFR8YPrZm72yjtKPAsskXuu4UTF3Q67bgTWPR90EcItsVqoljFfObApA8f38bBFN
-         6t2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=QNciXq1K04EUWNgTRLRsyw4jITsDyOiX1UyGmAA6u0w=;
-        b=NoObDhR0KFz63GwUe45mR+Io6iOkDGj0pnrf0YhQOSt9pNcaPPLSsUAgok7RHzXLA6
-         f5Yer+Q2153JG1g6P0ztxtK/cB6BrRTeOcAC5f8rqbxuawp2s5DGmealzqLJLU2Yz3s/
-         QvOQJB3GddrnsaHtUmumAEtq7wd8GFdpop3hXg1Zp3gXNwrXECT+I313+QOYIKySm26x
-         cX/TJ+FyBHXoqsAVuyNAlbBpTepVN3RYwE/GsH1pmpkv5WuE6vancmSqexAp/loxbERK
-         s+0H8H2gPm2if+zXO+xFXppzBCUPUvsL3VHxClZA2ETgJdxsMMgFGzPint6tbbE6VJgE
-         G7XA==
-X-Gm-Message-State: AOAM530rJ0V0k8l8WF3MUbJuR7F/0fjHGTnlFs4QzdF79/ExPG4T7H+A
-        s/90G5AS8eVMymt7jq6//e/KE0nAzJnDvQ==
-X-Google-Smtp-Source: ABdhPJzlgpbW/7/L1rvJwg3D9JnvNzTrLnzPbXVuQkHRle5KKrTmzQVULiFkQXfy0ncQ+t3mbPlBpw==
-X-Received: by 2002:a37:9c58:: with SMTP id f85mr18284567qke.345.1597791025308;
-        Tue, 18 Aug 2020 15:50:25 -0700 (PDT)
-Received: from [172.17.0.2] ([52.251.53.181])
-        by smtp.gmail.com with ESMTPSA id i7sm25191657qtb.27.2020.08.18.15.50.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 15:50:24 -0700 (PDT)
-Message-ID: <5f3c5b30.1c69fb81.6bc90.79ea@mx.google.com>
-Date:   Tue, 18 Aug 2020 15:50:24 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============2803597289067355322=="
+        id S1727021AbgHRWxF convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 Aug 2020 18:53:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60046 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726992AbgHRWxF (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 18 Aug 2020 18:53:05 -0400
+From:   bugzilla-daemon@bugzilla.kernel.org
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 60824] [PATCH][regression] Cambridge Silicon Radio, Ltd
+ Bluetooth Dongle unusable
+Date:   Tue, 18 Aug 2020 22:53:02 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: swyterzone@gmail.com
+X-Bugzilla-Status: REOPENED
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-60824-62941-7Fy24nzPBK@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-60824-62941@https.bugzilla.kernel.org/>
+References: <bug-60824-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, mcchou@chromium.org
-Subject: RE: [BlueZ,v1,7/7] doc/advertisement-monitor-api: Update Advertisement Monitor API description
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200818152612.BlueZ.v1.7.Iee7e9d13c78dd02c5b283a203dea11a4a4ffa7cc@changeid>
-References: <20200818152612.BlueZ.v1.7.Iee7e9d13c78dd02c5b283a203dea11a4a4ffa7cc@changeid>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============2803597289067355322==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+https://bugzilla.kernel.org/show_bug.cgi?id=60824
 
+--- Comment #137 from Swyter (swyterzone@gmail.com) ---
+Hi! There's actually a script that should help with this, at least as
+reference:
+https://gist.github.com/nevack/6b36b82d715dc025163d9e9124840a07
 
-This is automated email and please do not reply to this email!
+It's for newer kernels, though. So while the btusb.c part should more or less
+apply cleanly (because the existing/original CSR workaround stuff has been
+there for a while) the ERR_DATA_REPORTING stuff (on hci_core.c) is new and will
+need to be stripped out when back-porting the patch.
 
-Dear submitter,
+Who knows, maybe it's a good idea to ask someone from Canonical to add it to
+Ubuntu, once it's been more battle-tested. Hopefully (as it officially gets
+into stable kernels) distros downstream will pick this up, even on super old
+Linux versions.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While we are preparing for reviewing the patches, we found the following
-issue/warning.
+Hope that helps. :)
 
-Test Result:
-checkgitlint Failed
-
-Outputs:
-1: T1 Title exceeds max length (75>72): "doc/advertisement-monitor-api: Update Advertisement Monitor API description"
-
-
-
----
-Regards,
-Linux Bluetooth
-
---===============2803597289067355322==--
+-- 
+You are receiving this mail because:
+You are the assignee for the bug.
