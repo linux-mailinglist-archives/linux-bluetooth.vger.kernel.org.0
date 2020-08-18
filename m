@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF6B3248029
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Aug 2020 10:07:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2F5324804A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Aug 2020 10:16:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726592AbgHRIHJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 Aug 2020 04:07:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47394 "EHLO
+        id S1726420AbgHRIQA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 Aug 2020 04:16:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726203AbgHRIHI (ORCPT
+        with ESMTP id S1726341AbgHRIP7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 Aug 2020 04:07:08 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ACD7C061389;
-        Tue, 18 Aug 2020 01:07:08 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id mw10so8894821pjb.2;
-        Tue, 18 Aug 2020 01:07:08 -0700 (PDT)
+        Tue, 18 Aug 2020 04:15:59 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33AB6C061389;
+        Tue, 18 Aug 2020 01:15:59 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id o5so9421042pgb.2;
+        Tue, 18 Aug 2020 01:15:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:mime-version:content-disposition
          :user-agent;
-        bh=StFFVCyyrqOkn7U9cLGxAfuLpee/KXFwmS5u87kiIm4=;
-        b=iwISd+CWW2R7LQdicuTPCO4Djz+Ep8Wv035bwy+fTHpfPjAldOMn8249OlRIpvpyYZ
-         Es6G5h55Cgvnd5ZDOOavmtGyfZnD+VnPHVberGV9wsB8LFiNcn/CCEBvZihm+MMiKOkX
-         PfmRfyf3M4cNxWUJyD3RrKMTFpQ9FaIhU9R7OODxee8pa6G5EZAUreV2v6KCC+qgm3YY
-         EwdmAZMuo5VKfz2Sx/rmwABbnrjqwN4nR+MNGziHsy5iJIAd2Z5/XGrc3rrnE8wUfqnA
-         T0KRi/2W5GALncOgHIcHIwci8ERvgLydaFzAcNzFeG+BFq5lTQ8OdIDdcWIjCrGtuT44
-         HCTA==
+        bh=efKFji4wZbV4ryr84E81ykO6FthaFggVytOSX8yMq3Y=;
+        b=j+erm+9yXM4DR4o7ac1+SNFpUbtVt7I+meQmJ9mwt1rWnlVx3+DV0yFmieYZ9XpIUz
+         fj9fyWBBf0gLW3MQKfglYyXP62+cvv12b+wuDmpcOqZDvXab83Hf+/cMrnmlNSaItrO1
+         CpIw1hvTMf+QACLdXFmi7Y/BI3Ohgo17bIrAkONlOeYksHZ7jjNNYJWzRMdTENdsGqjO
+         PpG0yz734CNm3MvjDxWeG7hNf44ABwTgVnkf+CTRyIEWBaGklzmuAupD5C2idxmBfCPy
+         DruKenMqsbuJLjKLMpFo3J095x95IG9MMeoeCDmExu/OyAJUWoYwgZ7D5/+c7hkNDF3H
+         ITJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
          :content-disposition:user-agent;
-        bh=StFFVCyyrqOkn7U9cLGxAfuLpee/KXFwmS5u87kiIm4=;
-        b=TDb+jx0pDP3p5VDPnrONNz2imG8tIlQu0KppL6VzcxKq3qfNvE5YIvIyLvRDCmbnQW
-         ZhFzPDACYXZIXKng5Q/MZp53afYSTpM7E31vHBahiIRbr0nSGXlAQxBsPtDzAB34AYSR
-         2Gu8yegmzfNmzpYUHpdfjWsAFMVnsBxDKW+gGReQNYQy1EKm09L5IRGLzEV6sNglMnB2
-         lPCfzkoKcBTg29QVCNsYChcAjFv9I9rM+2P/wdUPX9MJlnfCwv9vUaV7XCGqaVcKB035
-         kNZznGNRQEw+dhiRmIZswxIWNkFWy2oLwxdeH4cntzXtVXi2Fbui6mTKh+tczxB+S70q
-         J2MA==
-X-Gm-Message-State: AOAM531MESycJtOOg0ZZuLb+tsWGWzFgycuG9sfk747GeICoIXZwkHWk
-        Y4K28LBU3DkhJjE4w6FOLjoOD1F9F1E=
-X-Google-Smtp-Source: ABdhPJz8H1EB4gkEEbz+CgswsYmcAgHxH1hWTh2rxtMgeriPdI0/FERnAKJJOo4zzNahWr410ikthA==
-X-Received: by 2002:a17:90a:8d85:: with SMTP id d5mr14752437pjo.45.1597738027502;
-        Tue, 18 Aug 2020 01:07:07 -0700 (PDT)
+        bh=efKFji4wZbV4ryr84E81ykO6FthaFggVytOSX8yMq3Y=;
+        b=r3IE5poXfBQCalz4YvMP01y5oHZm8c0246lXhlrX3snH+CCU48qVN4q73cD9l9yQ/y
+         g26X6MpcnLK1tlofc1o+IADaqZKhzFELX2mErQD7wD/zOhrxGDsEMcPSzWDFPoo83r9+
+         5hGYnIbIW6nd3Nbv+XQOWPEZThND5R9JM/jEINMaDIQ3vFW/T6utcjScSnacZqkoFsTs
+         nFCLWQF2KXYp/8SptEG8fgHAU0FhW2dlJBrgd7bUAiD0LczKsfXwjjMmLPW7DEcS8LEx
+         5MshqqfQuhUC/XjbwfsXNtZ7ahqRrFbvp111EDOT4kibk2n9rR8TYDx5UxEuekjA/lRM
+         w4dQ==
+X-Gm-Message-State: AOAM530Nsy8QmhAjXPUJnaybATvY8te2LhR0ShKpB1wV0ZFtGy4NX4Z0
+        ZLXpw3YkSj85m9fNfnt5pcLx+TvPT+M=
+X-Google-Smtp-Source: ABdhPJyHJGPp/aTkTMW7Ie/M2t3v4BMfISMnMoQO4IWHF2fIZIMsBP0/H7MRTu+ep8AUqS87MVWcQA==
+X-Received: by 2002:a62:9254:: with SMTP id o81mr14137225pfd.73.1597738558202;
+        Tue, 18 Aug 2020 01:15:58 -0700 (PDT)
 Received: from oppo (69-172-89-151.static.imsbiz.com. [69.172.89.151])
-        by smtp.gmail.com with ESMTPSA id kb2sm20369902pjb.34.2020.08.18.01.07.05
+        by smtp.gmail.com with ESMTPSA id d13sm23367913pfq.118.2020.08.18.01.15.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 01:07:06 -0700 (PDT)
-Date:   Tue, 18 Aug 2020 16:07:03 +0800
+        Tue, 18 Aug 2020 01:15:57 -0700 (PDT)
+Date:   Tue, 18 Aug 2020 16:15:55 +0800
 From:   Qingyu Li <ieatmuttonchuan@gmail.com>
 To:     marcel@holtmann.org, johan.hedberg@gmail.com, davem@davemloft.net,
-        kuba@kernel.org
+        kuba@kernel.org, isdn@linux-pingi.de
 Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] net/bluetooth/bnep/sock.c: add CAP_NET_RAW check.
-Message-ID: <20200818080703.GA31526@oppo>
+Subject: [PATCH] net/bluetooth/cmtp/sock.c: add CAP_NET_RAW check.
+Message-ID: <20200818081555.GA1349@oppo>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -70,21 +70,21 @@ CAP_NET_RAW needs to be checked first.
 
 Signed-off-by: Qingyu Li <ieatmuttonchuan@gmail.com>
 ---
- net/bluetooth/bnep/sock.c | 3 +++
+ net/bluetooth/cmtp/sock.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/bnep/sock.c b/net/bluetooth/bnep/sock.c
-index d515571b2afb..e06787a3b5ce 100644
---- a/net/bluetooth/bnep/sock.c
-+++ b/net/bluetooth/bnep/sock.c
-@@ -204,6 +204,9 @@ static int bnep_sock_create(struct net *net, struct socket *sock, int protocol,
+diff --git a/net/bluetooth/cmtp/sock.c b/net/bluetooth/cmtp/sock.c
+index 96d49d9fae96..476ccc9bee7c 100644
+--- a/net/bluetooth/cmtp/sock.c
++++ b/net/bluetooth/cmtp/sock.c
+@@ -207,6 +207,9 @@ static int cmtp_sock_create(struct net *net, struct socket *sock, int protocol,
  	if (sock->type != SOCK_RAW)
  		return -ESOCKTNOSUPPORT;
 
 +	if (!capable(CAP_NET_RAW))
 +		return -EPERM;
 +
- 	sk = sk_alloc(net, PF_BLUETOOTH, GFP_ATOMIC, &bnep_proto, kern);
+ 	sk = sk_alloc(net, PF_BLUETOOTH, GFP_ATOMIC, &cmtp_proto, kern);
  	if (!sk)
  		return -ENOMEM;
 --
