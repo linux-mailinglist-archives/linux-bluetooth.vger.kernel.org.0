@@ -2,194 +2,175 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C1D524A5ED
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Aug 2020 20:25:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42F6C24A622
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Aug 2020 20:45:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726715AbgHSSZr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 19 Aug 2020 14:25:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58728 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbgHSSZp (ORCPT
+        id S1726603AbgHSSpC convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 19 Aug 2020 14:45:02 -0400
+Received: from s01.spamexperts.axc.nl ([185.182.56.9]:60145 "EHLO
+        s01.spamexperts.axc.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726211AbgHSSpB (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 19 Aug 2020 14:25:45 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77F70C061757;
-        Wed, 19 Aug 2020 11:25:45 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id x24so19842704otp.3;
-        Wed, 19 Aug 2020 11:25:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Uj2G5qDhsm+bapptHCJ7Bq0u40iHl5V2rOPjbm76rTA=;
-        b=hE17SsbRqQpRbkfOlDKQ7cHbfmXUCJ0VwlKiGbZoC2ttuB63xjWR6C00YVa12lip+H
-         5Asa0XO6gTnbfwrYxuWZ3ol5YiA0QBQdkUPdpJ5TwkCl00rK0Sio3v6UDQCfl3a3OZRC
-         nkVBzNoGfS+3q7RZy4Qep59FvFffEAvV1aMebFGXjGCN9CDSDpVmhHi3gE0WprXGlXir
-         9JMn9lLil/9r56iq7V1W7A/CLbZkGasag9MGOaS7kt0J4tv0m5RzyRMpUXKPa3uYenzy
-         7aHsknBx/m6nOLZBPz4cYKibvDOhl5BUwdrud2oKoxuv88+ERZIeymKB/LtV/hUoguCY
-         Qitw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Uj2G5qDhsm+bapptHCJ7Bq0u40iHl5V2rOPjbm76rTA=;
-        b=N/Uoss4WLC/vRYkwLdIJTZy8FdlWVEUsS1pOXCt45bhTEl0CQ2neJ7pFXsiSSIU9ry
-         KUJRLBCjZLhiJ8nDYF6n7OY+SR09jUqCvFJuvjAZLugZQJ2KTtZhZXam6pLvA0hWD1hf
-         hjdbalHrwEi+fhcTi0g6gXRpPJR1+N7Aihqo8F+lGkyR9g1+u7fdKhGyLpN8u3+v3+AJ
-         fQayyHsetHgSPuwRqgzgEFpK7naGy6KUsAm1e7Zkqy0BNu2FplEMWyFQvC/2obKnZUh7
-         1bxcXhEbXhj93vnr4H77TcPRZCQqSy7CM8Ds4IchsmDas6wSOJ4T4oMMN6NK3HdMeCTp
-         Yj3w==
-X-Gm-Message-State: AOAM531GTGzzKhOzYS416T1AMdheOC1PWVdmCs4DGGKgY0iV9D6yxPGM
-        aPR0bRp6/7bM1WVgzFATRoEuEVU2X4OjSah1lOs=
-X-Google-Smtp-Source: ABdhPJwJR8sF/ZcOD7xlXzSk86ZIVJ765re8VslROHCqbVK/phzo2qOwJwntqdZES6IBnWgK5FawZmDnJIMv7glO6L8=
-X-Received: by 2002:a9d:24e7:: with SMTP id z94mr19379061ota.91.1597861544816;
- Wed, 19 Aug 2020 11:25:44 -0700 (PDT)
+        Wed, 19 Aug 2020 14:45:01 -0400
+X-Greylist: delayed 6292 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Aug 2020 14:44:59 EDT
+Received: from vserver85.axc.nl ([185.182.56.185])
+        by s01.spamexperts.axc.nl with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.92)
+        (envelope-from <dave@daveborghuis.nl>)
+        id 1k8RRT-0006rp-HE
+        for linux-bluetooth@vger.kernel.org; Wed, 19 Aug 2020 19:00:06 +0200
+Received: from mail.axc.nl ([185.182.56.42])
+        by vserver85.axc.nl with esmtp (Exim 4.94)
+        (envelope-from <dave@daveborghuis.nl>)
+        id 1k8RRS-00AA0T-1E
+        for linux-bluetooth@vger.kernel.org; Wed, 19 Aug 2020 19:00:02 +0200
+To:     linux-bluetooth@vger.kernel.org
+From:   Dave Borghuis <dave@daveborghuis.nl>
+Autocrypt: addr=dave@daveborghuis.nl; prefer-encrypt=mutual; keydata=
+ mQINBFI9hacBEADBe9EcShlbkN2x/o3x/5S1u+m6kCJC+kNmzMHecJWzbwxsGLfUzApqImPF
+ WGjy7yGVDp9Rl80Sz2gSijZjFkN17PSILsiHM3LvwfyBS/IMLPG0E+dB9ejrATuXrEdeXl8q
+ QG6ZBE2ZaBgEMLhu7lAIS/E50jSij1yzSSlzcjd1m0d3kGaseiHWO0PM8sggwclI9XYOGxJK
+ vmWAz9ayhMZNhdvkfAxsdh3hQYC7RkaBH9kjh9l5qt5t1xRcABkX3pa9ct4rzwlEswOCjURe
+ rhaj6IHwroTNaRW1djxml4vTgyM8b7NmNmfRvwMaImUgQweb9k0wRfPEgSWthNml7aNPCRqj
+ rF3sLiBl5xxJsm8Y9ROdiyeTyl+3iAdtQ91hAWfgK2ZFQvHNPPlelfRupXgupY6h9UJzdEkn
+ A1F8Yx3xyizkKLbsbDt/uB9XYiIH594WbCHt6S0k8bWuTdqlYiLhKe32ij53tZy+J92tqMti
+ HWhM3qv9CR6qLop9rIk3G6ZUDahb1NrYPT8ahh+gcjif+LFhFooLZiNxqAzguuAgrExU/NIi
+ WuG+2So2pO04y0DcMQ1+BT+fs6tqQXdvVU23QwDY+cS+WNqh4nPg7ZYm63vPb2rlirJ/Mhq3
+ Xjk74WqTmKzUnWLlu5OQDp91t8Lf86hNCb/FV66dnSGyoG8xEwARAQABtCREYXZlIEJvcmdo
+ dWlzIDxkYXZlQGRhdmVib3JnaHVpcy5ubD6JAjsEEwECACUCGy8GCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheABQJSvzddAhkBAAoJEIa6Ru419rKq+9kQAIHcW/vakREY0/OLx4tTMO2WPwX+
+ e1pare/zdJwejcS6LksxFZ/8dwj0kk/s1ME3Zztg2vDkpQjQISFrtuNmOYekY6geRUjKgr3U
+ BdPq+sYoge4kBIlAQnDMaVY48QtnLXZQBsXBhfRIQNj+TWuUVbHYwyLGGw9pRaJHsDJBc1cd
+ qvCUyCOyXb0tWZCfv83jMMv/9gEJngkPC0JuIWPl0rfJ9QPTlArJw9vbMTYaUmm9vskjP1I/
+ qZSR7kpLrTtCcPtvWDtm2v+akrZnV9aKUY4XFkutZErJmSkk2Hp9Sz/hhAzzgfYlI3tg1Ljt
+ EmMI5XDViPAoqLljtUKr0aIbqW2wOb8zgpx2MrO0JKqpNgEQfvGAVyXsH0PTOcshS5ri/8oC
+ b84eHMwPqKuK9YD0990UQKNw7hN2yyqqYb22wty0PWYglfpJKUQdYMbQi3KCxGzn7Nu/E/Pk
+ 1QTbCOVokei8wTZLGmg6L5RFF6xHLZ56mtmXSY+Oy5r8PGICdVE/nnJXN3Mg0jGliTovDz97
+ Wng4/Zq50chtx9fA3P00IoYuoDwvAJza3ggntTlXGN9pwGVZET+k6LkJaJ0bpHj/t+8LCcpF
+ HJa2/wsz8cYAGlNvKpl5jjwtNLndJApG35GFB9CT2EFjNFEtOKlDCgiv9lgZOB1Gl6NfGOAI
+ UeuO/I47uQINBFI9hacBEAD1U4TDKLPSjYGd2Ot/FkU/24VwDQ2zTCUtR4hzUTjj4zjwCL5I
+ GCEek0LcQToDONF2t0h6pm7HKb9NOicXYsiekUY3mYkH5C/VSCxoqdYi4lhexOZH34RO+5Ln
+ jqtF0TpdFXTFpVQ3O3eHhAYmGMt7BjEaesOAzIR9D2+bhvgIyh/APebCS4gVfQpthCjTYDvd
+ ol8igOnMg9O/gY932gSSe7BL+BVJCMIokUu4dOe+k1EhIrC4h7gZYFpKaanE8rmg1hLni0cy
+ kSh1joJVv/czkklzmyMGeUZrkTkxu/d3J/IgafrndW/kQ/XSJ4N5ghEegjjWlN821i+1NXRa
+ NGxxNxo6CA+Rl12+78uGQcwL68wmyFlrrXmgr9DW70XDIEFkiAfUhkQPAq5VT6HDDjh6djco
+ e3FbbYncJn41e4y4E/BLIC+rGimOXlbHJAIh1QFdSyoNiZD0IUr1BK+nIUTCRPAkF8GKrGN/
+ UthF345iFhDsKV4Oe3y5cZcOloyWbTzVnHfnD+iH65a75G34zdiUVV2g8RihiYvdC78EgkKM
+ UIzCsvFPJHy6SGETX1d5o4lf7D71DlSr2OsaqGAnPtIMbjQPaXBhT5zenEGeoLOMs2lF/SAr
+ fz7+5gcYiIkyR46AFlmb/COkDS4AaVZzvDBmOn0R5/hwMdD+Fw+TWoP5GQARAQABiQQ+BBgB
+ AgAJBQJSPYWnAhsuAikJEIa6Ru419rKqwV0gBBkBAgAGBQJSPYWnAAoJEMK3KLEisodrljYP
+ /23fop22dU9WxUksPxTQYIlsOIWSjw5RLqontCN4JeZYkDVPiDVe+PB3ZMNOhgMyY9XSy1Vm
+ QyoM27Td+XisJ5nKcYlCZxDkxi+xyE+rz2SfpW76Qw54di3EeAEx/Qb/Al94BJ1poR6HU+fN
+ saMZtpvY1VM/9m3N71JPLf5E50jABPARuvsRGA5eDAhxrbm+yIM5msqZgEYyxY0fLrt4qV1S
+ wDUAMDhbOlX3U7CrnlTD4VaHZYwkv2eSZ/JcINgMaEbhKMZeYYM91/7PyS+QXHfjNngxKyTN
+ 6yFXDOjsTycRRqWO7nnnHYNrzZZ3xSRXsUiHyWIORl6mYzKIcptb3MvRqw1h0+wz86ujCr8p
+ sP0MRAq/iIEGdciPTqUHQKJgOO5FLCcV4oxlP/wESFXFbXlgzv40SvhZPDjPeLauLssKGVbk
+ i/5CduYuKCb6Wwc2htKJXPMNE/H4W+Bdwz1hXiwVzyUlmv6PV78ArSLvKRB5h5Ogo1vsnar2
+ 6JcBcxwJ//7fd2N3hMUf/tfotCPzjs6nsJINI8LZxJHLNWOs+zztwD1iEN3BiSUSsyHvluIj
+ agg9blWzvpcRvj9KW4X7gwZwyAzfkGMjXIbl9p+97s+Gs9wNI/+Bxc5mrWIc3hY/O53sPlaB
+ tWW6fXK/uXj59gGq+ZE8+dYARKVD4YI+4o0KlIsP/3MLFL4Axn3OEsCh21p1++P5ejpGqHPh
+ x+ioPXqqxahWJVPKmLjhgmHmuh5cQFYePvC8Ou5AUL+4ooU3SVwOKaeWfyU0Gy6/00ZOVWD6
+ IEiQnKntzXdAmR8uFH+2s5UlYIM3S374Ly3vitM/arrkeRlzW9XDnslfkvjdsi++OgZGZUJY
+ sp6QQfGWTlwzZ4DShSQmJdX7mGE3fe2GZ6VhVCHPhhqAEHpxbw9kAvN/G2iRYmRDD3ux1IHZ
+ E1u8ScC5wYh0RIoDp+Nq3sux2XmwHfvLvK5rhIg3jszHTQRRzieOqmvriAESxuq92y+oFhfb
+ jEIPtCvBOD4txGYPLad1bQVEH/aMIhYWdpJQ701TqMRHEtbO0c9o64S/Y2j7xomBbIyZr0/R
+ HGkWSaS1UL2q0v3xeo46WROGSXcX8p8NXEkgVqC5hV3v6gIj9kfjxg7KiUCZAeH3qqaBTGnc
+ aLeZzcCUG39JtZPoWGTbXHBuR6vay6FZienaalSMBOQXfqJJvePMlFpqKoeRCPCJ4ZnSZXaJ
+ awgMeKHMUnsHtCR5DNQmH/p+/20/2a7k2YAim6P25sMay8nVNcwwvAu5ktONmRB3JAeugnTr
+ lb/vdLbu/mv1PTwgvzxK3x45dv0uAtlP++y4TKwxfRXwopt5/rFL2/x6OzAMCGU1Pj1+emQW 0G/D
+Subject: Cant see Android Covid Exposure notification beacon (no problem with
+ iPhone beacons)
+Message-ID: <b39b3395-ad80-bf76-caea-490666cea671@daveborghuis.nl>
+Date:   Wed, 19 Aug 2020 19:00:01 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.11.0
 MIME-Version: 1.0
-References: <20200813084129.332730-1-josephsih@chromium.org>
- <20200813164059.v1.2.I03247d3813c6dcbcdbeab26d068f9fd765edb1f5@changeid>
- <CABBYNZJ-nBXeujF2WkMEPYPQhXAphqKCV39gr-QYFdTC3GvjXg@mail.gmail.com>
- <20200819143716.iimo4l3uul7lrpjn@pali> <CABBYNZJVDk6LWqyY7h8=KwpA4Oub+aCb3WEWnxk_AGWPvgmatg@mail.gmail.com>
- <20200819182306.wvyht6ocyqpo75tp@pali>
-In-Reply-To: <20200819182306.wvyht6ocyqpo75tp@pali>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 19 Aug 2020 11:25:34 -0700
-Message-ID: <CABBYNZ+F=-YsZoL4B9=XQvHSs9wU=0W3iqbYn4s65JMAJAmAKw@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] Bluetooth: sco: expose WBS packet length in socket option
-To:     =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
-Cc:     Joseph Hwang <josephsih@chromium.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Joseph Hwang <josephsih@google.com>,
-        ChromeOS Bluetooth Upstreaming 
-        <chromeos-bluetooth-upstreaming@chromium.org>,
-        Alain Michaud <alainm@chromium.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Content-Language: en-US
+PrimaryMX: Accepted email from trusted host.  Hint: This skips spam scanning so make sure other host is not vulnerable
+X-Relay-Host: 185.182.56.42
+X-Spam-Score: 0.0 (/)
+X-Spam-Report: Spam detection software, running on the system "vserver85.axc.nl",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ the administrator of that system for details.
+ Content preview:  Hi all, I don't know if this is the right place to ask, if
+    not feel free to forward the mail or point me in the right direction. If
+   I look with btmon i see no Covid exposure notification beacons from android
+    phones, i see these beacons from a iphone. When I check with a ESP32 with
+    a monitor I see both beacons (from iPhone and A [...] 
+ Content analysis details:   (0.0 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -0.0 RCVD_IN_DNSWL_NONE     RBL: Sender listed at https://www.dnswl.org/,
+                              no trust
+                             [185.182.56.42 listed in list.dnswl.org]
+SpamTally: Final spam score: 0
+X-AuthUser: 
+X-Originating-IP: 185.182.56.185
+X-SpamExperts-Domain: vserver85.axc.nl
+X-SpamExperts-Username: 185.182.56.185
+Authentication-Results: spamexperts.axc.nl; auth=pass smtp.auth=185.182.56.185@vserver85.axc.nl
+X-SpamExperts-Outgoing-Class: ham
+X-SpamExperts-Outgoing-Evidence: Combined (0.11)
+X-Recommended-Action: accept
+X-Filter-ID: Mvzo4OR0dZXEDF/gcnlw0Uc1Z+hCSaILZIw3vLzlsGSpSDasLI4SayDByyq9LIhVYtIe3Q6Ueykn
+ Pvf+cPo2l0TNWdUk1Ol2OGx3IfrIJKywOmJyM1qr8uRnWBrbSAGDkyaV/HSuvhtrCrYZnJyJprfA
+ vZjgXTjXZ7MYLJNQ9qfEV6mG7REFdc/y+N+WUcRUrHrxZWvesWDvIZD81C02avq2Gb7u1BCYlN7N
+ u1YChzu5cEt3QSU508Q6A7wRhsaYdmq9xo0GjtWFBExS79GWRamHZ7x6u9Brd8pYitTyb+Iigr59
+ rlmv/GHWoLSyMb15AwCaU+JKXuJDa3LaePMOFRkhzVJFWn887ct0NFXnFWKxnGmiI3p9NEdyvIai
+ 1RA3JU4jwn/j8E2/0SgHcP07MMV+dz7akF52ekPgsD93vyq/ACCTOiwBg1W4fRYdQHYhH+5TduRS
+ 72K5pleHE5QR33QmZupE66h/n5scs0KBvjbXs2KsRjKrCowEavDwQuKow/uHSYVMpt/Uo2J0FRFF
+ QZMcLrnY3nGbRXqkywVTWWifU642KNtk4n/u8nyV2xsjehIqUczFWeS6sE8e1b5/Uj/i4hYVfUxI
+ FxiN15g3w5z9HjheqKGe/Xw9Eqs27yPa56U4tSVR+PkAWM7EDktWGqU9EyOgYBbfvk3hETr+b0IH
+ mFDqewO9xyOqCYO8P1aHuylOWoVldtjaf1T8hyYAn+byoVLxqGq1sXT6ejmEoSQMhGfTGKeYohdq
+ JlHBQlshXt8dlQXuSXw6QX3vO2l6zs7fXl7o5hhgRuEQkQsBWeNYzdyzoRUEpYNmzltPrdLiRSrv
+ GBrIgRh1MRcQAKU4P1FfEoXm0/FPF8PR0w363lk0mtdFubkFnXxurL3w551wUWKOQLOVGdmQ+BhN
+ hOPwXKBe7/mqdKAYqg1HpF7XcTyzMeoUaX8fmEyqwIC0fLJSuG6xVdphrUpYQO+Raqyt3AWevvg3
+ 5E1ZQVrEeUBpJbnjGc6oaCkj/CHHhRGXKIbimLNXS3W8YK6tYVOVBH2QeU+HBvHh6GQL5BmhodkO
+ jeg=
+X-Report-Abuse-To: spam@s01.spamexperts.axc.nl
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Wed, Aug 19, 2020 at 11:23 AM Pali Roh=C3=A1r <pali@kernel.org> wrote:
->
-> On Wednesday 19 August 2020 11:21:00 Luiz Augusto von Dentz wrote:
-> > Hi Pali,
-> >
-> > On Wed, Aug 19, 2020 at 7:37 AM Pali Roh=C3=A1r <pali@kernel.org> wrote=
-:
-> > >
-> > > On Friday 14 August 2020 12:56:05 Luiz Augusto von Dentz wrote:
-> > > > Hi Joseph,
-> > > >
-> > > > On Thu, Aug 13, 2020 at 1:42 AM Joseph Hwang <josephsih@chromium.or=
-g> wrote:
-> > > > >
-> > > > > It is desirable to expose the wideband speech packet length via
-> > > > > a socket option to the user space so that the user space can set
-> > > > > the value correctly in configuring the sco connection.
-> > > > >
-> > > > > Reviewed-by: Alain Michaud <alainm@chromium.org>
-> > > > > Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> > > > > Signed-off-by: Joseph Hwang <josephsih@chromium.org>
-> > > > > ---
-> > > > >
-> > > > >  include/net/bluetooth/bluetooth.h | 2 ++
-> > > > >  net/bluetooth/sco.c               | 8 ++++++++
-> > > > >  2 files changed, 10 insertions(+)
-> > > > >
-> > > > > diff --git a/include/net/bluetooth/bluetooth.h b/include/net/blue=
-tooth/bluetooth.h
-> > > > > index 9125effbf4483d..922cc03143def4 100644
-> > > > > --- a/include/net/bluetooth/bluetooth.h
-> > > > > +++ b/include/net/bluetooth/bluetooth.h
-> > > > > @@ -153,6 +153,8 @@ struct bt_voice {
-> > > > >
-> > > > >  #define BT_SCM_PKT_STATUS      0x03
-> > > > >
-> > > > > +#define BT_SCO_PKT_LEN         17
-> > > > > +
-> > > > >  __printf(1, 2)
-> > > > >  void bt_info(const char *fmt, ...);
-> > > > >  __printf(1, 2)
-> > > > > diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-> > > > > index dcf7f96ff417e6..97e4e7c7b8cf62 100644
-> > > > > --- a/net/bluetooth/sco.c
-> > > > > +++ b/net/bluetooth/sco.c
-> > > > > @@ -67,6 +67,7 @@ struct sco_pinfo {
-> > > > >         __u32           flags;
-> > > > >         __u16           setting;
-> > > > >         __u8            cmsg_mask;
-> > > > > +       __u32           pkt_len;
-> > > > >         struct sco_conn *conn;
-> > > > >  };
-> > > > >
-> > > > > @@ -267,6 +268,8 @@ static int sco_connect(struct sock *sk)
-> > > > >                 sco_sock_set_timer(sk, sk->sk_sndtimeo);
-> > > > >         }
-> > > > >
-> > > > > +       sco_pi(sk)->pkt_len =3D hdev->sco_pkt_len;
-> > > > > +
-> > > > >  done:
-> > > > >         hci_dev_unlock(hdev);
-> > > > >         hci_dev_put(hdev);
-> > > > > @@ -1001,6 +1004,11 @@ static int sco_sock_getsockopt(struct sock=
-et *sock, int level, int optname,
-> > > > >                         err =3D -EFAULT;
-> > > > >                 break;
-> > > > >
-> > > > > +       case BT_SCO_PKT_LEN:
-> > > > > +               if (put_user(sco_pi(sk)->pkt_len, (u32 __user *)o=
-ptval))
-> > > > > +                       err =3D -EFAULT;
-> > > > > +               break;
-> > > >
-> > > > Couldn't we expose this via BT_SNDMTU/BT_RCVMTU?
-> > >
-> > > Hello!
-> > >
-> > > There is already SCO_OPTIONS sock option, uses struct sco_options and
-> > > contains 'mtu' member.
-> > >
-> > > I think that instead of adding new sock option, existing SCO_OPTIONS
-> > > option should be used.
-> >
-> > We are moving away from type specific options to so options like
-> > BT_SNDMTU/BT_RCVMTU should be supported in all socket types.
->
-> Yes, this make sense.
->
-> But I guess that SCO_OPTIONS should be provided for backward
-> compatibility as it is already used by lot of userspace applications.
->
-> So for me it looks like that BT_SNDMTU/BT_RCVMTU should return same
-> value as SCO_OPTIONS.
+Hi all,
 
-Yep, luckily we can do this here because SCO MTU is symmetric.
+I don't know if this is the right place to ask, if not feel free to
+forward the mail or point me in the right direction.
 
-> > >
-> > > > >         default:
-> > > > >                 err =3D -ENOPROTOOPT;
-> > > > >                 break;
-> > > > > --
-> > > > > 2.28.0.236.gb10cc79966-goog
-> > > > >
-> > > >
-> > > >
-> > > > --
-> > > > Luiz Augusto von Dentz
-> >
-> >
-> >
-> > --
-> > Luiz Augusto von Dentz
+If I look with btmon i see no Covid exposure notification beacons from
+android phones, i see these beacons from a iphone. When I check with a
+ESP32 with a monitor I see both beacons (from iPhone and Android).
+
+I using Raspberry Pi 4 with  with all software updated. I updated bluez
+to last release (from 5.50 -> 5.54) with same results.
+
+Used software versions :
+
+Installed image : Raspberry Pi OS (32-bit) with desktop Release date :
+2020-05-27
+
+Bleuz version 5.50 and last release 5.54 (build from source)
+
+If needed I can recompile from source a new version. I tried to find
+source of a more up-to-date developer version then 5.54 but could not
+find this.
+
+So is there something I can do to enable to see Android Covid exposure
+notification ? Do I something wrong or is there a bug in the bluez stack?
+
+Background : I am making a 'CoronaCounter' app in python, I want to
+count the Covid exposure notification that I see. In python i use
+beacontools. I noticed I don't see any android beacons. More about this
+projcect you can find on https://github.com/zeno4ever/CoronaTeller
+
+Regards,
+
+Dave
 
 
-
---=20
-Luiz Augusto von Dentz
