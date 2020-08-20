@@ -2,73 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A04D24C3D7
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Aug 2020 18:57:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D031424C3E1
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Aug 2020 18:59:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728324AbgHTQ5Y (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 20 Aug 2020 12:57:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41506 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727972AbgHTQ5T (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 20 Aug 2020 12:57:19 -0400
-Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59F55C061385
-        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Aug 2020 09:57:19 -0700 (PDT)
-Received: by mail-ua1-x936.google.com with SMTP id s29so780630uae.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Aug 2020 09:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=QYuR2e8AkRz6vIxG3CqwQqEQ7G/qCpkD6SKe9AUP/Rg=;
-        b=E0rxJ6YBO2Ep5q2WB3Hki5mUK6bXNhjLmh23hVYGsYhh2eh8h0SeCbLhpeSf5x0RHY
-         wIuMss2ECTZkkbiNAz0YjV+gjbISwMjfFGqj2EHARF0FfujtYjWBmE/0QkNzEPRHzQdx
-         poND40MbXd8K2NAHuAG2L6zhdOlsg5EHSXots=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=QYuR2e8AkRz6vIxG3CqwQqEQ7G/qCpkD6SKe9AUP/Rg=;
-        b=Zu2EsEvU3rMGHhxzJuCK1EfmYZn+srcZb5T/RLgwuOOeFeTrReCcjVFSuLE15okLWy
-         dpLE6I+3VEZB1BM1dH7rxVvxUWMpPjpVWL+SMX8Cipu6ZPuHrYmMJgH+slRmOGEhWKN3
-         8ymi5ffH8B6S1YK1MY3x5iRxh9uOC70Uip0uprkG4uHIRJlVpskVrUvM//42zshy6hDZ
-         G1JBNS0Rt3fqf56XifK08tipfZrEsMlSDQGWSJbIv1XUrsTNEP5PJ2m1EhCTOwtwbq+S
-         r7otytG7RULKQuFDpjP/tjNHunjMYdvyxangq57arOGKO+Fh6c1TK50i5ePPfLViYjPA
-         6Xqg==
-X-Gm-Message-State: AOAM533gaeCJbiJYkoUzAvVeqj/2PYDzAWM56FyrVsgPo1Y//CDGUYGR
-        cSdAuky0HUFZJrIOYro0HUZ4YwbIKg4Vr5UrpwdmZw==
-X-Google-Smtp-Source: ABdhPJxuiPNsNRab4REiueDhEETHzegNMG3ZBMS8VZdE2G7/syTOMsdkXHxsD8c9BBsm0AK9nSGmqyLkyVnC3fw0VU8=
-X-Received: by 2002:ab0:624d:: with SMTP id p13mr2316482uao.136.1597942636770;
- Thu, 20 Aug 2020 09:57:16 -0700 (PDT)
-MIME-Version: 1.0
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Date:   Thu, 20 Aug 2020 09:57:06 -0700
-Message-ID: <CANFp7mV=Uf37Hk0RgNY3dUpr46DZOSTtKzcp7ptWF8YCKEzuCQ@mail.gmail.com>
-Subject: Request to queue patch for 5.7 and 5.8 stable
-To:     netdev <netdev@vger.kernel.org>
-Cc:     aros@gmx.com, Manish Mandlik <mmandlik@google.com>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>
+        id S1728060AbgHTQ7d convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 20 Aug 2020 12:59:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47692 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726749AbgHTQ73 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 20 Aug 2020 12:59:29 -0400
+From:   bugzilla-daemon@bugzilla.kernel.org
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 207629] BISECTED Bluetooth: hci0: command 0x2042 tx timeout -
+ suspend fails - Dell XPS 9300, Dell XPS 7390, Dell Inspiron 7386, Intel
+ NUC7JYB
+Date:   Thu, 20 Aug 2020 16:59:29 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: abhishekpandit@chromium.org
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-207629-62941-uTtK7AFwuK@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-207629-62941@https.bugzilla.kernel.org/>
+References: <bug-207629-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi netdev@,
+https://bugzilla.kernel.org/show_bug.cgi?id=207629
 
-Please include upstream commit
-6fb00d4e94bc28c39fa077b03e6531956de87802 for release to stable
-branches 5.7 and 5.8.
+--- Comment #28 from Abhishek Pandit-Subedi (abhishekpandit@chromium.org) ---
+Hi Artem,
 
-This fixes a suspend/resume issue on Bluetooth controllers and has
-been extensively tested on Chromebooks. It's also needed to fix the
-bug reported at https://bugzilla.kernel.org/show_bug.cgi?id=207629
+5.7.16 got one of the fixes but not the other. I've sent a follow-up email to
+netdev@ to add the missing one and cc-ed you.
 
-I assume this is the right way to request a stable patch following the
-faq at https://www.kernel.org/doc/Documentation/networking/netdev-FAQ.txt.
-If this is incorrect, please let me know the correct procedure. I
-think this patch was missed in normal stable backporting because it is
-missing a Fixes: tag. We will be more vigilant about the inclusion of
-this tag during code review going forward.
-
-Thanks
-Abhishek
+-- 
+You are receiving this mail because:
+You are the assignee for the bug.
