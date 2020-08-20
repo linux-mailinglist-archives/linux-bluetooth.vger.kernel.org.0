@@ -2,23 +2,23 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE16A24BD82
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Aug 2020 15:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D45324BF7D
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Aug 2020 15:50:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729788AbgHTNHS convert rfc822-to-8bit (ORCPT
+        id S1728688AbgHTNjC convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 20 Aug 2020 09:07:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41152 "EHLO mail.kernel.org"
+        Thu, 20 Aug 2020 09:39:02 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48674 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728877AbgHTNHR (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 20 Aug 2020 09:07:17 -0400
+        id S1730426AbgHTNiz (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 20 Aug 2020 09:38:55 -0400
 From:   bugzilla-daemon@bugzilla.kernel.org
 Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
 To:     linux-bluetooth@vger.kernel.org
 Subject: [Bug 207629] BISECTED Bluetooth: hci0: command 0x2042 tx timeout -
  suspend fails - Dell XPS 9300, Dell XPS 7390, Dell Inspiron 7386, Intel
  NUC7JYB
-Date:   Thu, 20 Aug 2020 13:07:16 +0000
+Date:   Thu, 20 Aug 2020 13:38:54 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -33,8 +33,8 @@ X-Bugzilla-Resolution:
 X-Bugzilla-Priority: P1
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc blocked
-Message-ID: <bug-207629-62941-PJJaXaU1d8@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-207629-62941-kGVugyV1tK@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-207629-62941@https.bugzilla.kernel.org/>
 References: <bug-207629-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -49,21 +49,23 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 https://bugzilla.kernel.org/show_bug.cgi?id=207629
 
-Artem S. Tashkinov (aros@gmx.com) changed:
+--- Comment #27 from Artem S. Tashkinov (aros@gmx.com) ---
+(In reply to Abhishek Pandit-Subedi from comment #25)
+> Todd, can you confirm you picked up both
+> https://patchwork.kernel.org/patch/11582831/ and
+> https://patchwork.kernel.org/patch/11586221/?
+> 
+> Also, what kind of failure are you seeing? Is it failing to enter suspend
+> completely? Is it waking spuriously? Is it not entering S0ix? (sent up a fix
+> for this recently)
+> 
+> It would be helpful to have logs for a failure case. Could you collect some
+> logs with dynamic debug for BT (see comment #11) and collect a btmon trace
+> (btmon -w /tmp/btsnoop) when reproducing this issue?
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |aros@gmx.com
-             Blocks|178231                      |208975
+Why haven't these patches been merged with stable? Linux 5.7.15 has neither of
+them.
 
-
-Referenced Bugs:
-
-https://bugzilla.kernel.org/show_bug.cgi?id=178231
-[Bug 178231] Meta-bug: Linux suspend-to-mem and freeze performance optimization
-https://bugzilla.kernel.org/show_bug.cgi?id=208975
-[Bug 208975] The bluetooth module prevents suspend: Bluetooth: hci0: command
-0x2042 tx timeout
 -- 
 You are receiving this mail because:
 You are the assignee for the bug.
