@@ -2,87 +2,91 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64DED24F1B3
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 24 Aug 2020 05:54:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC9F824F1F0
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 24 Aug 2020 06:28:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728093AbgHXDyU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 23 Aug 2020 23:54:20 -0400
-Received: from mga07.intel.com ([134.134.136.100]:64622 "EHLO mga07.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728083AbgHXDyT (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 23 Aug 2020 23:54:19 -0400
-IronPort-SDR: Y9fTsTkdclU8y1P9pKIap9+Dqx7vi1dup1ZI21ncB1GdOvFeo6CfaLmzLb1ZATs0nyql8M1yho
- FG8caJFcCfRw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9722"; a="220106403"
-X-IronPort-AV: E=Sophos;i="5.76,347,1592895600"; 
-   d="scan'208";a="220106403"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Aug 2020 20:54:19 -0700
-IronPort-SDR: uBAWpxkAW+8fNMdxbjOnomFUqqhUiKzvTQt8pd1QP2mbTEzgf0bzckcOHudCpcRYpwhluGVjsy
- oU2X3zySH07Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.76,347,1592895600"; 
-   d="scan'208";a="322017102"
-Received: from jlpajela-mobl.amr.corp.intel.com (HELO ingas-nuc1.intel.com) ([10.252.134.16])
-  by fmsmga004.fm.intel.com with ESMTP; 23 Aug 2020 20:54:19 -0700
-From:   Inga Stotland <inga.stotland@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ 4/4] test/test-mesh: Add "options" to Send/Publish
-Date:   Sun, 23 Aug 2020 20:54:15 -0700
-Message-Id: <20200824035415.13420-5-inga.stotland@intel.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200824035415.13420-1-inga.stotland@intel.com>
-References: <20200824035415.13420-1-inga.stotland@intel.com>
+        id S1726971AbgHXE15 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 24 Aug 2020 00:27:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52154 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726765AbgHXE15 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 24 Aug 2020 00:27:57 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAC53C061573
+        for <linux-bluetooth@vger.kernel.org>; Sun, 23 Aug 2020 21:27:56 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id m7so6330803qki.12
+        for <linux-bluetooth@vger.kernel.org>; Sun, 23 Aug 2020 21:27:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=TgYhbpDn3D0QSoFG2P+Jzpa0v4YA7FN0UjYK2FNiWsQ=;
+        b=qSnacnz1I1cf4KLLZQMOyGCoh6NtlMhwUwWi3/HcTlMNbDkBJ9OsRJp/6VNI57Rfze
+         uU1U+STFuozTanmdTeB1Ovb9L9qC24rbj/WOiHDM/IKEPyTp3lJl4Zx4YrPNpwqWMTL7
+         y4lx36+mHxKGwOl7tNbUFNVXwfU46lN9QoUkjhAYaUFVAWyJ5jk8J68cdPygn2ryUqyc
+         zJlqzQHhS887a78x4ggezCCGPtzyeAPKXJI/spdOGMW5OkW+TC4zd7V8OCMfPNaTyELB
+         iQxiqN0faGviplVQi9nlhBipwzC5QKMSQz+XYIhpl/tpP/NnD1tB9OA1uFuzhrbBuHrz
+         4doA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=TgYhbpDn3D0QSoFG2P+Jzpa0v4YA7FN0UjYK2FNiWsQ=;
+        b=DlgeWqKdWO4kENSFZQ1UfKU9e/UZ208DVMK8UgUqxp8zhLE89x7N7rxPorT/R5Yduy
+         2UDg5y/pz1566JbPVM99gE6BX37OHDaQTpzjKdt+9tjpmIOqAbhMtDDmnqN4FdVCUofv
+         ahofuDs2vSSq+FIS6nNK/NtTAjxbLD376RQTHoNN71KdTig336vkbcvWGMlQZ0YmqT7B
+         y9/N8l1EmP6bi/lBTYQ/De8ndLhWMmJnSjkvTkcRt2XLr53raE9QGYnZvCzyKHm0f6h4
+         LRgls6zFISAzlRgr2sCTouotzBxxjBCYKU6DnGsxI5AeNjyaUnW6J7gV3hF3DeW4lTKM
+         +OyA==
+X-Gm-Message-State: AOAM532ObOhyRcPkr547LoSJ4rwgHBEM3g9AvlsEz7awu8Kn4apglAm2
+        26+lBgUltUBYLpLNxudlGHkqh/AOGSw2MQ==
+X-Google-Smtp-Source: ABdhPJzKnNroZADnOg/ujqXYqfTIWxdUuRbG7X9U9AZ+tPN9lMe3dFMI+ddJUaS/6nGmyt55Ri8i8Q==
+X-Received: by 2002:a05:620a:652:: with SMTP id a18mr3206729qka.165.1598243275619;
+        Sun, 23 Aug 2020 21:27:55 -0700 (PDT)
+Received: from [172.17.0.2] ([20.186.104.30])
+        by smtp.gmail.com with ESMTPSA id n33sm10246879qtd.43.2020.08.23.21.27.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Aug 2020 21:27:55 -0700 (PDT)
+Message-ID: <5f4341cb.1c69fb81.9bb8a.9693@mx.google.com>
+Date:   Sun, 23 Aug 2020 21:27:55 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============3150478193455029858=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, inga.stotland@intel.com
+Subject: RE: [BlueZ,1/4] doc/mesh-api: Add "options" dictionary to Send/Publish
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20200824035415.13420-2-inga.stotland@intel.com>
+References: <20200824035415.13420-2-inga.stotland@intel.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds a new dictionary paramenter (empty by default) when
-invoking Send() or Publish() methods.
+--===============3150478193455029858==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While we are preparing for reviewing the patches, we found the following
+issue/warning.
+
+Test Result:
+checkgitlint Failed
+
+Outputs:
+8: B3 Line contains hard tab characters (\t): "    		      one-segment messages"
+
+
+
 ---
- test/test-mesh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/test/test-mesh b/test/test-mesh
-index 5da0278d6..918ec8799 100755
---- a/test/test-mesh
-+++ b/test/test-mesh
-@@ -183,6 +183,8 @@ current_menu = None
- 
- user_input = 0
- input_error = False
-+#send_opts = {'ForcedSegmented' : dbus.Boolean(False)}
-+send_opts = dbus.Dictionary(signature='sv')
- 
- def raise_error(str_value):
- 	global input_error
-@@ -538,14 +540,18 @@ class Model():
- 		self.pub_period = period
- 
- 	def send_publication(self, data):
-+		global send_opts
-+
- 		print('Send publication ', end='')
- 		print(data)
--		node.Publish(self.path, self.model_id, data,
-+		node.Publish(self.path, self.model_id, send_opts, data,
- 						reply_handler=generic_reply_cb,
- 						error_handler=generic_error_cb)
- 
- 	def send_message(self, dest, key, data):
--		node.Send(self.path, dest, key, data,
-+		global send_opts
-+
-+		node.Send(self.path, dest, key, send_opts, data,
- 						reply_handler=generic_reply_cb,
- 						error_handler=generic_error_cb)
- 
--- 
-2.26.2
-
+--===============3150478193455029858==--
