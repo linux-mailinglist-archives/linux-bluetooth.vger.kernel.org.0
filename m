@@ -2,68 +2,72 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3DEC24EC05
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Aug 2020 09:47:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED44224F1B2
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 24 Aug 2020 05:54:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726429AbgHWHoc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 23 Aug 2020 03:44:32 -0400
-Received: from mail.zju.edu.cn ([61.164.42.155]:21746 "EHLO zju.edu.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726231AbgHWHoc (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 23 Aug 2020 03:44:32 -0400
-Received: from localhost.localdomain (unknown [210.32.144.184])
-        by mail-app2 (Coremail) with SMTP id by_KCgDnz55VHkJfniscAg--.14603S4;
-        Sun, 23 Aug 2020 15:44:25 +0800 (CST)
-From:   Dinghao Liu <dinghao.liu@zju.edu.cn>
-To:     dinghao.liu@zju.edu.cn, kjlu@umn.edu
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] Bluetooth: btusb: Fix memleak in btusb_mtk_submit_wmt_recv_urb
-Date:   Sun, 23 Aug 2020 15:44:21 +0800
-Message-Id: <20200823074421.20769-1-dinghao.liu@zju.edu.cn>
-X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID: by_KCgDnz55VHkJfniscAg--.14603S4
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-        VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYs7CY07I20VC2zVCF04k26cxKx2IYs7xG
-        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-        A2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j
-        6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
-        Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-        I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
-        4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY02Avz4vE14v_GF4l
-        42xK82IYc2Ij64vIr41l42xK82IY6x8ErcxFaVAv8VW8uw4UJr1UMxC20s026xCaFVCjc4
-        AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE
-        17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMI
-        IF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Wr1j6rW3
-        Jr1lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcS
-        sGvfC2KfnxnUUI43ZEXa7VUbhiSPUUUUU==
-X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAgoSBlZdtPnBhAA7sk
+        id S1728058AbgHXDyT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 23 Aug 2020 23:54:19 -0400
+Received: from mga07.intel.com ([134.134.136.100]:64620 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727986AbgHXDyS (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 23 Aug 2020 23:54:18 -0400
+IronPort-SDR: hIPanseINlgVPxm8fwq3LbPy7vyD+3Tmog33PEJXHEvLt4txy0dSzO12sQz+w8gET9Se+Yp6/j
+ 4r9HJuhAKioA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9722"; a="220106398"
+X-IronPort-AV: E=Sophos;i="5.76,347,1592895600"; 
+   d="scan'208";a="220106398"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Aug 2020 20:54:16 -0700
+IronPort-SDR: Sww/gu6kXdHsYlo903CDDiFJTzU/Q7q5XjcOyTHCTiHlhsWAwGR2VgXckpZrz8VfpDwSymH76k
+ widMGTf4cMzA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.76,347,1592895600"; 
+   d="scan'208";a="322017085"
+Received: from jlpajela-mobl.amr.corp.intel.com (HELO ingas-nuc1.intel.com) ([10.252.134.16])
+  by fmsmga004.fm.intel.com with ESMTP; 23 Aug 2020 20:54:16 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ 0/4] Mesh send/publish API change
+Date:   Sun, 23 Aug 2020 20:54:11 -0700
+Message-Id: <20200824035415.13420-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When kmalloc() on buf fails, urb should be freed just like
-when kmalloc() on dr fails.
+This patch set modifies Send, DevKeySend, Publish & VendorPublish
+methods on bleuz.mesh.Node interface to include additional argument
+"options".
+This new argument is a dictionary that currently has only one
+new key word defined:
+    "ForceSegmented" - to force small payloads to be sent as
+    		      one-segment messages
 
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
----
- drivers/bluetooth/btusb.c | 1 +
- 1 file changed, 1 insertion(+)
+Other key words may be defined in future to accommodate evolving
+requirements of Mesh Profile specification.
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 8d2608ddfd08..f88968bcdd6a 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2896,6 +2896,7 @@ static int btusb_mtk_submit_wmt_recv_urb(struct hci_dev *hdev)
- 	buf = kmalloc(size, GFP_KERNEL);
- 	if (!buf) {
- 		kfree(dr);
-+		usb_free_urb(urb);
- 		return -ENOMEM;
- 	}
- 
+
+Inga Stotland (4):
+  doc/mesh-api: Add "options" dictionary to Send/Publish
+  mesh: Handle "options" dictionary in Send/Publish methods
+  tools/mesh-cfglient: Add "options" to Send/DevKeySend
+  test/test-mesh: Add "options" to Send/Publish
+
+ doc/mesh-api.txt       | 47 ++++++++++++++++++--
+ mesh/cfgmod-server.c   |  2 +-
+ mesh/model.c           |  6 +--
+ mesh/model.h           |  9 ++--
+ mesh/node.c            | 99 +++++++++++++++++++++++++++++-------------
+ test/test-mesh         | 10 ++++-
+ tools/mesh-cfgclient.c |  8 ++++
+ 7 files changed, 136 insertions(+), 45 deletions(-)
+
 -- 
-2.17.1
+2.26.2
 
