@@ -2,38 +2,40 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94382250DE4
+	by mail.lfdr.de (Postfix) with ESMTP id 2546A250DE3
 	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Aug 2020 02:54:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728375AbgHYAyp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 24 Aug 2020 20:54:45 -0400
-Received: from mga02.intel.com ([134.134.136.20]:44188 "EHLO mga02.intel.com"
+        id S1728371AbgHYAym (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 24 Aug 2020 20:54:42 -0400
+Received: from mga02.intel.com ([134.134.136.20]:44191 "EHLO mga02.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726189AbgHYAyk (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        id S1728352AbgHYAyk (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
         Mon, 24 Aug 2020 20:54:40 -0400
-IronPort-SDR: 8i91yPBQPauaZPMd0NCgsATOme5mhGU++07OIugMn27oiv+i26RgHvanE4+0bNhS/MGXa0Bqb+
- 3BLb+5vfHojw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9723"; a="143797438"
+IronPort-SDR: kdCLiXOH0NePraQIvD2KGxE8WS3IkNSrUV8Htw0FKCM6pti+JmYYuwOQ9QE35zai2Eyw72K9UV
+ SFAzqX7Jxavw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9723"; a="143797442"
 X-IronPort-AV: E=Sophos;i="5.76,350,1592895600"; 
-   d="scan'208";a="143797438"
+   d="scan'208";a="143797442"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2020 17:54:38 -0700
-IronPort-SDR: Upinc3hlHcKC9N/G5UQ3dvvVsTgIAxyP1YM92V75+VXVrzCXCbz6b9qM5qrYp/qEx5zx1NHxqA
- 01PHZqO+4W6Q==
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2020 17:54:40 -0700
+IronPort-SDR: E4rEponhjLdmNFMt3a6mFfNhCoVcA+rTj0dGUtHrv/TQnK8QV5ujoGsnSTVEtgXBmuDJsr1fn3
+ VjdgS4qhYBRQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.76,350,1592895600"; 
-   d="scan'208";a="474141831"
+   d="scan'208";a="474141834"
 Received: from apaharia-mobl.gar.corp.intel.com (HELO ingas-nuc1.intel.com) ([10.255.231.108])
-  by orsmga005.jf.intel.com with ESMTP; 24 Aug 2020 17:54:37 -0700
+  by orsmga005.jf.intel.com with ESMTP; 24 Aug 2020 17:54:39 -0700
 From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ v2 0/4] Mesh send/publish API change
-Date:   Mon, 24 Aug 2020 17:54:31 -0700
-Message-Id: <20200825005435.26566-1-inga.stotland@intel.com>
+Subject: [PATCH BlueZ v2 1/4] doc/mesh-api: Add "options" dictionary to Send/Publish
+Date:   Mon, 24 Aug 2020 17:54:32 -0700
+Message-Id: <20200825005435.26566-2-inga.stotland@intel.com>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200825005435.26566-1-inga.stotland@intel.com>
+References: <20200825005435.26566-1-inga.stotland@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
@@ -41,38 +43,138 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch set modifies Send, DevKeySend and Publish methods
-on bluez.mesh.Node interface to include additional argument "options".
-
+This modifies Send, DevKeySend and Publish methods
+on mesh.Node interface to include additional argument "options".
 This new argument is a dictionary that currently has only one
 new key word defined for Send() and DevKeySend():
     "ForceSegmented" - to force small payloads to be sent as
-                      one-segment messages
+    		      one-segment messages
+
+In case of Publish(), and additional keyword is defined
+     "Vendor" -  16-bit Company ID as defined by the Bluetooth SIG
 
 Other key words may be defined in future to accommodate evolving
 requirements of Mesh Profile specification.
 
-********* v2 ************    
-In case of Publish(), and additional keyword is defined
-    "Vendor" -  16-bit Company ID as defined by the Bluetooth SIG
-        
-This allows to eliminate VendorPublish() method.
+Also, the addition of "options" dictionary to Publish allows to
+eliminate VendorPublish() method (taken care by "Vendor" keyword).
+---
+ doc/mesh-api.txt | 57 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 33 insertions(+), 24 deletions(-)
 
-Inga Stotland (4):
-  doc/mesh-api: Add "options" dictionary to Send/Publish
-  mesh: Handle "options" dictionary in Send/Publish methods
-  tools/mesh-cfglient: Add "options" to Send/DevKeySend
-  test/test-mesh: Add "options" to Send/Publish
-
- doc/mesh-api.txt       |  57 ++++++++++-------
- mesh/cfgmod-server.c   |   2 +-
- mesh/model.c           |   6 +-
- mesh/model.h           |   9 +--
- mesh/node.c            | 140 ++++++++++++++++++++---------------------
- test/test-mesh         |  11 +++-
- tools/mesh-cfgclient.c |   8 +++
- 7 files changed, 125 insertions(+), 108 deletions(-)
-
+diff --git a/doc/mesh-api.txt b/doc/mesh-api.txt
+index 495f95b0b..cae80d694 100644
+--- a/doc/mesh-api.txt
++++ b/doc/mesh-api.txt
+@@ -229,7 +229,7 @@ Object path	/org/bluez/mesh/node<uuid>
+ 
+ Methods:
+ 	void Send(object element_path, uint16 destination, uint16 key_index,
+-							array{byte} data)
++						dict options, array{byte} data)
+ 
+ 		This method is used to send a message originated by a local
+ 		model.
+@@ -248,6 +248,14 @@ Methods:
+ 		this element. Otherwise, org.bluez.mesh.Error.NotAuthorized will
+ 		be returned.
+ 
++		The options parameter is a dictionary with the following keys
++		defined:
++
++			bool ForceSegmented
++				Specifies whether to force sending of a short
++				message as one-segment payload. If not present,
++				the default setting is "false".
++
+ 		The data parameter is an outgoing message to be encypted by the
+ 		bluetooth-meshd daemon and sent on.
+ 
+@@ -257,7 +265,7 @@ Methods:
+ 			org.bluez.mesh.Error.NotFound
+ 
+ 	void DevKeySend(object element_path, uint16 destination, boolean remote,
+-					uint16 net_index, array{byte} data)
++			uint16 net_index, dict options, array{byte} data)
+ 
+ 		This method is used to send a message originated by a local
+ 		model encoded with the device key of the remote node.
+@@ -279,6 +287,14 @@ Methods:
+ 		The net_index parameter is the subnet index of the network on
+ 		which the message is to be sent.
+ 
++		The options parameter is a dictionary with the following keys
++		defined:
++
++			bool ForceSegmented
++				Specifies whether to force sending of a short
++				message as one-segment payload. If not present,
++				the default setting is "false".
++
+ 		The data parameter is an outgoing message to be encypted by the
+ 		meshd daemon and sent on.
+ 
+@@ -344,7 +360,8 @@ Methods:
+ 			org.bluez.mesh.Error.InvalidArguments
+ 			org.bluez.mesh.Error.NotFound
+ 
+-	void Publish(object element_path, uint16 model, array{byte} data)
++	void Publish(object element_path, uint16 model, dict options,
++							array{byte} data)
+ 
+ 		This method is used to send a publication originated by a local
+ 		model. If the model does not exist, or it has no publication
+@@ -358,30 +375,21 @@ Methods:
+ 		The model parameter contains a model ID, as defined by the
+ 		Bluetooth SIG.
+ 
+-		Since only one Publish record may exist per element-model, the
+-		destination and key_index are obtained from the Publication
+-		record cached by the daemon.
+-
+-		Possible errors:
+-			org.bluez.mesh.Error.DoesNotExist
+-			org.bluez.mesh.Error.InvalidArguments
+-
+-	void VendorPublish(object element_path, uint16 vendor, uint16 model_id,
+-							array{byte} data)
+-
+-		This method is used to send a publication originated by a local
+-		vendor model. If the model does not exist, or it has no
+-		publication record, the method returns
+-		org.bluez.mesh.Error.DoesNotExist error.
++		The options parameter is a dictionary with the following keys
++		defined:
+ 
+-		The element_path parameter is the object path of an element from
+-		a collection of the application elements (see Mesh Application
+-		Hierarchy section).
++			bool ForceSegmented
++				Specifies whether to force sending of a short
++				message as one-segment payload. If not present,
++				the default setting is "false".
++				uint16 Vendor
+ 
+-		The vendor parameter is a 16-bit Bluetooth-assigned Company ID.
++			uint16 Vendor
++				A 16-bit Company ID as defined by the
++				Bluetooth SIG
+ 
+-		The model_id parameter is a 16-bit vendor-assigned Model
+-		Identifier.
++		The data parameter is an outgoing message to be encypted by the
++		meshd daemon and sent on.
+ 
+ 		Since only one Publish record may exist per element-model, the
+ 		destination and key_index are obtained from the Publication
+@@ -391,6 +399,7 @@ Methods:
+ 			org.bluez.mesh.Error.DoesNotExist
+ 			org.bluez.mesh.Error.InvalidArguments
+ 
++
+ Properties:
+ 	dict Features [read-only]
+ 
 -- 
 2.26.2
 
