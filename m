@@ -2,88 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDAB3257E2E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Aug 2020 18:06:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F916257E4E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Aug 2020 18:11:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728228AbgHaQGV convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 31 Aug 2020 12:06:21 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:48615 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727019AbgHaQGU (ORCPT
+        id S1728494AbgHaQLi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 31 Aug 2020 12:11:38 -0400
+Received: from sender4-op-o11.zoho.com ([136.143.188.11]:17166 "EHLO
+        sender4-op-o11.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728454AbgHaQLg (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 31 Aug 2020 12:06:20 -0400
-Received: from marcel-macbook.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
-        by mail.holtmann.org (Postfix) with ESMTPSA id BF220CECCE;
-        Mon, 31 Aug 2020 18:16:27 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Re: [PATCH] Bluetooth: fix "list_add double add" in
- hci_conn_complete_evt
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200823010022.938532-1-coiby.xu@gmail.com>
-Date:   Mon, 31 Aug 2020 18:06:18 +0200
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        linux-kernel-mentees@lists.linuxfoundation.org,
-        Greg KH <gregkh@linuxfoundation.org>,
-        syzkaller-bugs@googlegroups.com,
-        syzbot+dd768a260f7358adbaf9@syzkaller.appspotmail.com,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <C0A907BA-9C0D-4124-A2AF-3748055DB062@holtmann.org>
-References: <000000000000c57f2d05ac4c5b8e@google.com>
- <20200823010022.938532-1-coiby.xu@gmail.com>
-To:     Coiby Xu <coiby.xu@gmail.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
+        Mon, 31 Aug 2020 12:11:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1598890293; cv=none; 
+        d=zohomail.com; s=zohoarc; 
+        b=O5DzV0rHwHMSbxw19SwOqV/F2ihuZ6Lq5dBgzMGe8XnMO0gsV60f634PCvWPtE82fodWfw9skLt7w+EQG2y3nyi+/ZmbiOtCoYwKm2A/Fiwp1v4fZPPwIHvw8oUnH2QdDMoeeXez2m9N7mRcv4vWlz1I5i9sYUeEHeawImO+xZA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+        t=1598890293; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:MIME-Version:Message-ID:Subject:To; 
+        bh=U7zU+T4UJWebKnXuLS0gsJ3b4OHTI28SbTdILGqbn8s=; 
+        b=ewjx1AdUEsPa/21pr6HFo6u7xRTtspiea3In2Ny2OubQvjmh1ssbturyDuylLriR6FTS35m+KfM+soLFWg2mScIHOZ20hOg4lkfSyGx/YxXiaibrLk0R9/L4uGfXJEY0x4v8OJAMSB2avFpfzT28HKU383oDo/Pp0K7NJ4qsx7M=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+        dkim=pass  header.i=dptechnics.com;
+        spf=pass  smtp.mailfrom=daan@dptechnics.com;
+        dmarc=pass header.from=<daan@dptechnics.com> header.from=<daan@dptechnics.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1598890293;
+        s=zoho; d=dptechnics.com; i=daan@dptechnics.com;
+        h=From:To:Cc:Message-ID:Subject:Date:MIME-Version:Content-Transfer-Encoding:Content-Type;
+        bh=U7zU+T4UJWebKnXuLS0gsJ3b4OHTI28SbTdILGqbn8s=;
+        b=O+1iS6ZMgdZ+Ea0q6THZjAPrMT2IvDfFgQy2qn2+U1gzyLoHGIlEpaEwJJwQS1z9
+        rAHnqRQ2EHSKFkAHYhUT5n8TREaApDnUKx4zXk236FjkKurs73y7eAVegIDMO6LA1sn
+        ZpyNJmNAdculwAOfxnqYH16ykAl5zbwkH2UJ9vGc=
+Received: from daan-devbox.dptechnics.local (178-116-74-88.access.telenet.be [178.116.74.88]) by mx.zohomail.com
+        with SMTPS id 1598890288445151.68956055259991; Mon, 31 Aug 2020 09:11:28 -0700 (PDT)
+From:   Daan Pape <daan@dptechnics.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Daan Pape <daan@dptechnics.com>
+Message-ID: <20200831161116.15975-1-daan@dptechnics.com>
+Subject: [PATCH BlueZ 0/1] Mesh HCI interface init scan interval fixed
+Date:   Mon, 31 Aug 2020 18:11:15 +0200
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf8
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Coiby,
+The HCI initialization function of bluetooth-meshd was not converting
+to the correct byte order when initializing the LE Scan Parameters. This
+is now fixed.
 
-> When two HCI_EV_CONN_COMPLETE event packets with status=0 of the same
-> HCI connection are received, device_add would be called twice which
-> leads to kobject_add being called twice. Thus duplicate
-> (struct hci_conn *conn)->dev.kobj.entry would be inserted into
-> (struct hci_conn *conn)->dev.kobj.kset->list.
-> 
-> This issue can be fixed by checking (struct hci_conn *conn)->debugfs.
-> If it's not NULL, it means the HCI connection has been completed and we
-> won't duplicate the work as for processing the first
-> HCI_EV_CONN_COMPLETE event.
+Daan Pape (1):
+  Mesh HCI interface init scan interval fixed
 
-do you have a btmon trace for this happening?
+ AUTHORS                | 1 +
+ mesh/mesh-io-generic.c | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-> Reported-and-tested-by: syzbot+dd768a260f7358adbaf9@syzkaller.appspotmail.com
-> Link: https://syzkaller.appspot.com/bug?extid=dd768a260f7358adbaf9
-> Signed-off-by: Coiby Xu <coiby.xu@gmail.com>
-> ---
-> net/bluetooth/hci_event.c | 5 +++++
-> 1 file changed, 5 insertions(+)
-> 
-> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-> index 4b7fc430793c..1233739ce760 100644
-> --- a/net/bluetooth/hci_event.c
-> +++ b/net/bluetooth/hci_event.c
-> @@ -2605,6 +2605,11 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
-> 	}
-> 
-> 	if (!ev->status) {
-> +		if (conn->debugfs) {
-> +			bt_dev_err(hdev, "The connection has been completed");
-> +			goto unlock;
-> +		}
-> +
+--=20
+2.25.1
 
-And instead of doing papering over a hole, I would rather detect that the HCI event is not valid since we already received one for this connection.
-
-Regards
-
-Marcel
 
