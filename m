@@ -2,51 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A770257E15
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Aug 2020 17:59:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80C18257E26
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Aug 2020 18:04:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727931AbgHaP7C (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 31 Aug 2020 11:59:02 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:55544 "EHLO
+        id S1728312AbgHaQEQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 31 Aug 2020 12:04:16 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:48809 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726946AbgHaP7B (ORCPT
+        with ESMTP id S1727955AbgHaQEP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 31 Aug 2020 11:59:01 -0400
+        Mon, 31 Aug 2020 12:04:15 -0400
 Received: from marcel-macbook.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 12AE3CECCD;
-        Mon, 31 Aug 2020 18:09:09 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 32811CECCD;
+        Mon, 31 Aug 2020 18:14:23 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Re: [PATCH] Bluetooth: btusb: Update boot parameter specific to SKU
+Subject: Re: [PATCH] Bluetooth: btusb: Fix memleak in
+ btusb_mtk_submit_wmt_recv_urb
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200826095432.18825-1-kiran.k@intel.com>
-Date:   Mon, 31 Aug 2020 17:58:58 +0200
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        "Srivatsa, Ravishankar" <ravishankar.srivatsa@intel.com>,
-        Kiran K <kiran.k@intel.com>,
-        Chethan T N <chethan.tumkur.narayan@intel.com>
+In-Reply-To: <20200823074421.20769-1-dinghao.liu@zju.edu.cn>
+Date:   Mon, 31 Aug 2020 18:04:13 +0200
+Cc:     kjlu@umn.edu, Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Transfer-Encoding: 7bit
-Message-Id: <67D8B90A-27CF-46EB-9C3D-9947F6B1A8B8@holtmann.org>
-References: <20200826095432.18825-1-kiran.k@intel.com>
-To:     Kiran K <kiraank@gmail.com>
+Message-Id: <0A2A956F-C10C-401E-9D87-416FE8A8E597@holtmann.org>
+References: <20200823074421.20769-1-dinghao.liu@zju.edu.cn>
+To:     Dinghao Liu <dinghao.liu@zju.edu.cn>
 X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Kiran,
+Hi Dinghao,
 
-> boot parameter gets updated during firmware download process. Use the
-> updated boot parameter while doing soft reset of controller. This patch
-> fixes updating of boot parameter.
+> When kmalloc() on buf fails, urb should be freed just like
+> when kmalloc() on dr fails.
 > 
-> Reviewed-by: Chethan T N <chethan.tumkur.narayan@intel.com>
-> Signed-off-by: Kiran K <kiran.k@intel.com>
+> Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
 > ---
-> drivers/bluetooth/btusb.c | 8 ++++----
-> 1 file changed, 4 insertions(+), 4 deletions(-)
+> drivers/bluetooth/btusb.c | 1 +
+> 1 file changed, 1 insertion(+)
 
 patch has been applied to bluetooth-next tree.
 
