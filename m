@@ -2,135 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07592258FF5
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Sep 2020 16:12:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B99B9259059
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Sep 2020 16:26:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727992AbgIANCh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 1 Sep 2020 09:02:37 -0400
-Received: from sender4-op-o11.zoho.com ([136.143.188.11]:17101 "EHLO
-        sender4-op-o11.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727964AbgIALzA (ORCPT
+        id S1728060AbgIAO0q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 1 Sep 2020 10:26:46 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:53509 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728381AbgIAOZJ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 1 Sep 2020 07:55:00 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1598961275; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=NHOprI/StTQi0D0aNa96kDcalZLnX2cKYp74nndDLQRG74Y5S1MM42VPRRg2XHiJPJgIqWY12w/B9ciLMIqB1iOadomEAugOEjNnLvvhVCl3Qlxeu/fikbRSF5mVVPIdvj0I46AF2t8pJqNgtSwEL3yM1yRW/efxZnRScXlkzLo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1598961275; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
-        bh=lRDbOVyWTCk7HLMsMU0bFp+2XW5GTAjfDlZ82+nrDas=; 
-        b=Oa5fjTkgq/kwoda5VenSRo1Pd+6q6asw1SFDxJS4DwiTbvDcYeii12sgrnqFwRuZQhv/KMeX+z+0P1i/pp/YkOo78bBkLAwMPsN6jy6tpbROQJKIkMieuzWDxjwtGv9hki7KzDlgMjm6oZ5EbQstBoMxyaeizW9u1Zxw7wyn6Lo=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        dkim=pass  header.i=dptechnics.com;
-        spf=pass  smtp.mailfrom=daan@dptechnics.com;
-        dmarc=pass header.from=<daan@dptechnics.com> header.from=<daan@dptechnics.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1598961275;
-        s=zoho; d=dptechnics.com; i=daan@dptechnics.com;
-        h=From:To:Cc:Message-ID:Subject:Date:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Content-Type;
-        bh=lRDbOVyWTCk7HLMsMU0bFp+2XW5GTAjfDlZ82+nrDas=;
-        b=dMZh9U0JsGGFVquVdkoMw+CFpn6bDrHXIrDy+l3iQjFTswYqxdZHpZi/HTUSCwl/
-        i4rwHzUpWDCw7KzZgvyCJWcd2M+DAj06EBQY0JRum5MGt/YBZzCnlTA6FQkFBHLp1bz
-        +KQxhqNHXm0XigJ5fQSRTgMnXJootErWM06actDQ=
-Received: from daan-devbox.dptechnics.local (178-116-74-88.access.telenet.be [178.116.74.88]) by mx.zohomail.com
-        with SMTPS id 1598961273662400.6309226412743; Tue, 1 Sep 2020 04:54:33 -0700 (PDT)
-From:   Daan Pape <daan@dptechnics.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Daan Pape <daan@dptechnics.com>
-Message-ID: <20200901115418.82056-2-daan@dptechnics.com>
-Subject: [PATCH BlueZ 1/1] Mesh: make SIG model header file locations more consistent
-Date:   Tue,  1 Sep 2020 13:54:18 +0200
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200901115418.82056-1-daan@dptechnics.com>
-References: <20200901115418.82056-1-daan@dptechnics.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
-Content-Type: text/plain; charset=utf8
+        Tue, 1 Sep 2020 10:25:09 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 01 Sep 2020 07:24:57 -0700
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 Sep 2020 07:24:55 -0700
+Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 01 Sep 2020 19:54:32 +0530
+Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
+        id A078321B32; Tue,  1 Sep 2020 19:54:30 +0530 (IST)
+From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org,
+        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Subject: [PATCH v1 0/2] Close UART port if NON_PERSISTENT_SETUP is set
+Date:   Tue,  1 Sep 2020 19:54:25 +0530
+Message-Id: <1598970267-7170-1-git-send-email-gubbaven@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
----
- tools/mesh-gatt/onoff-model.c |  2 +-
- tools/mesh-gatt/onoff-model.h | 33 ---------------------------------
- tools/meshctl.c               |  2 +-
- 3 files changed, 2 insertions(+), 35 deletions(-)
- delete mode 100644 tools/mesh-gatt/onoff-model.h
+When HCI_QUIRK_NON_PERSISTENT_SETUP is set by drivers,
+it indicates that BT SoC will be completely powered OFF
+during BT OFF. On next BT ON firmware must be downloaded
+again. Holding UART port open during BT OFF is draining
+the battery. Now during BT OFF, UART port is closed if
+qurik HCI_QUIRK_NON_PERSISTENT_SETUP is set by clearing
+HCI_UART_PROTO_READY proto flag. On next BT ON, UART
+port is opened if HCI_UART_PROTO_READY proto flag is cleared.
 
-diff --git a/tools/mesh-gatt/onoff-model.c b/tools/mesh-gatt/onoff-model.c
-index be519c969..140dddb79 100644
---- a/tools/mesh-gatt/onoff-model.c
-+++ b/tools/mesh-gatt/onoff-model.c
-@@ -47,7 +47,7 @@
- #include "tools/mesh-gatt/node.h"
- #include "tools/mesh-gatt/prov-db.h"
- #include "tools/mesh-gatt/util.h"
--#include "tools/mesh-gatt/onoff-model.h"
-+#include "tools/mesh/generic-onoff-model.h"
-=20
- static uint8_t trans_id;
- static uint16_t onoff_app_idx =3D APP_IDX_INVALID;
-diff --git a/tools/mesh-gatt/onoff-model.h b/tools/mesh-gatt/onoff-model.h
-deleted file mode 100644
-index 31599056d..000000000
---- a/tools/mesh-gatt/onoff-model.h
-+++ /dev/null
-@@ -1,33 +0,0 @@
--/*
-- *
-- *  BlueZ - Bluetooth protocol stack for Linux
-- *
-- *  Copyright (C) 2017  Intel Corporation. All rights reserved.
-- *
-- *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
-- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 =
- USA
-- *
-- */
--
--#define GENERIC_ONOFF_SERVER_MODEL_ID=090x1000
--#define GENERIC_ONOFF_CLIENT_MODEL_ID=090x1001
--
--#define OP_GENERIC_ONOFF_GET=09=09=090x8201
--#define OP_GENERIC_ONOFF_SET=09=09=090x8202
--#define OP_GENERIC_ONOFF_SET_UNACK=09=090x8203
--#define OP_GENERIC_ONOFF_STATUS=09=09=090x8204
--
--void onoff_set_node(const char *args);
--bool onoff_client_init(uint8_t ele);
-diff --git a/tools/meshctl.c b/tools/meshctl.c
-index 57998fded..e8eafff01 100644
---- a/tools/meshctl.c
-+++ b/tools/meshctl.c
-@@ -50,6 +50,7 @@
-=20
- #include "mesh/agent.h"
- #include "mesh/config-model.h"
-+#include "mesh/generic-onoff-model.h"
-=20
- #include "mesh-gatt/mesh-net.h"
- #include "mesh-gatt/gatt.h"
-@@ -60,7 +61,6 @@
- #include "mesh-gatt/prov.h"
- #include "mesh-gatt/util.h"
- #include "mesh-gatt/prov-db.h"
--#include "mesh-gatt/onoff-model.h"
-=20
- /* String display constants */
- #define COLORED_NEW=09COLOR_GREEN "NEW" COLOR_OFF
---=20
-2.25.1
+Venkata Lakshmi Narayana Gubba (2):
+  Bluetooth: hci_serdev: Close UART port if NON_PERSISTENT_SETUP is set
+  Bluetooth: hci_qca: Remove duplicate power off in proto close
 
+ drivers/bluetooth/hci_qca.c    |  5 ++---
+ drivers/bluetooth/hci_serdev.c | 36 +++++++++++++++++++++++++++++++++---
+ 2 files changed, 35 insertions(+), 6 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
