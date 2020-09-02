@@ -2,243 +2,168 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AB0A425A9F0
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Sep 2020 13:04:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E8B925AA26
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Sep 2020 13:23:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727838AbgIBLDi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 2 Sep 2020 07:03:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45716 "EHLO mail.kernel.org"
+        id S1726310AbgIBLXf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 2 Sep 2020 07:23:35 -0400
+Received: from mga09.intel.com ([134.134.136.24]:22206 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726521AbgIBLBK (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 2 Sep 2020 07:01:10 -0400
-Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1A6792137B;
-        Wed,  2 Sep 2020 11:01:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599044469;
-        bh=gjlI9Gga3bx1Zf/LGWOYJ4nihY5+cfkZy7nlCQlaazY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=2XE3WeRuxlNb6+ZPPAgtZXFp7dVh6G/BByCKuHQz2l8cpuv2S/8ruzkJmq3jnnP8M
-         dZs8N8pEDMx5xKbZRkXlsHM17Hx0ONV/GzfFLcj2skOmQY5LyDNcedLKpquF984ESR
-         FdnTGT2VZ/QXSgfFbdoqd2YHbcPKo1ACwoTBVicw=
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     himadrispandya@gmail.com, dvyukov@google.com,
-        linux-usb@vger.kernel.org
-Cc:     perex@perex.cz, tiwai@suse.com, stern@rowland.harvard.ed,
-        linux-kernel@vger.kernel.org, marcel@holtmann.org,
-        johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 10/10] Bluetooth: ath3k: use usb_control_msg_send() and usb_control_msg_recv()
-Date:   Wed,  2 Sep 2020 13:01:15 +0200
-Message-Id: <20200902110115.1994491-14-gregkh@linuxfoundation.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200902110115.1994491-1-gregkh@linuxfoundation.org>
+        id S1726183AbgIBLXc (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 2 Sep 2020 07:23:32 -0400
+IronPort-SDR: OZs/v5oW+sxnuedzK2ZWYU1Ye74M4OsEe5k7ugN0NoSAx1fJ/R0ilLhnocn+XtxC/Bzmy6Wxik
+ HhRlD472xVRA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9731"; a="158360807"
+X-IronPort-AV: E=Sophos;i="5.76,381,1592895600"; 
+   d="scan'208";a="158360807"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2020 04:23:31 -0700
+IronPort-SDR: OqNCIjSk4VpEk9lplIyXWdoWV7hgkGe5Iq51Opx0ujwSKJuJVa80CDtRvjRjmjAzIKCfjyV5JS
+ kPXG16VU6E3w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.76,381,1592895600"; 
+   d="scan'208";a="331402380"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by orsmga008.jf.intel.com with ESMTP; 02 Sep 2020 04:23:28 -0700
+Received: from andy by smile with local (Exim 4.94)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1kDQrN-00Dhr3-5n; Wed, 02 Sep 2020 14:23:25 +0300
+Date:   Wed, 2 Sep 2020 14:23:25 +0300
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     himadrispandya@gmail.com, dvyukov@google.com,
+        linux-usb@vger.kernel.org, perex@perex.cz, tiwai@suse.com,
+        stern@rowland.harvard.ed, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-bluetooth@vger.kernel.org, alsa-devel@alsa-project.org,
+        Alan Stern <stern@rowland.harvard.edu>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: Re: [PATCH 03/10] USB: core: message.c: use usb_control_msg_send()
+ in a few places
+Message-ID: <20200902112325.GL1891694@smile.fi.intel.com>
 References: <20200902110115.1994491-1-gregkh@linuxfoundation.org>
+ <20200902110115.1994491-4-gregkh@linuxfoundation.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200902110115.1994491-4-gregkh@linuxfoundation.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The usb_control_msg_send() and usb_control_msg_recv() calls can return
-an error if a "short" write/read happens, and they can handle data off
-of the stack, so move the driver over to using those calls instead,
-saving some logic when dynamically allocating memory.
+On Wed, Sep 02, 2020 at 01:01:05PM +0200, Greg Kroah-Hartman wrote:
+> There are a few calls to usb_control_msg() that can be converted to use
+> usb_control_msg_send() instead, so do that in order to make the error
+> checking a bit simpler.
 
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: Johan Hedberg <johan.hedberg@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/bluetooth/ath3k.c | 90 +++++++++++----------------------------
- 1 file changed, 26 insertions(+), 64 deletions(-)
+Makes sense. Others will take this as a good example of API in use.
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-diff --git a/drivers/bluetooth/ath3k.c b/drivers/bluetooth/ath3k.c
-index 4ce270513695..1472cccfd0b3 100644
---- a/drivers/bluetooth/ath3k.c
-+++ b/drivers/bluetooth/ath3k.c
-@@ -212,19 +212,16 @@ static int ath3k_load_firmware(struct usb_device *udev,
- 
- 	BT_DBG("udev %p", udev);
- 
--	pipe = usb_sndctrlpipe(udev, 0);
--
- 	send_buf = kmalloc(BULK_SIZE, GFP_KERNEL);
- 	if (!send_buf) {
- 		BT_ERR("Can't allocate memory chunk for firmware");
- 		return -ENOMEM;
- 	}
- 
--	memcpy(send_buf, firmware->data, FW_HDR_SIZE);
--	err = usb_control_msg(udev, pipe, USB_REQ_DFU_DNLOAD, USB_TYPE_VENDOR,
--			      0, 0, send_buf, FW_HDR_SIZE,
--			      USB_CTRL_SET_TIMEOUT);
--	if (err < 0) {
-+	err = usb_control_msg_send(udev, 0, USB_REQ_DFU_DNLOAD, USB_TYPE_VENDOR,
-+				   0, 0, firmware->data, FW_HDR_SIZE,
-+				   USB_CTRL_SET_TIMEOUT);
-+	if (err) {
- 		BT_ERR("Can't change to loading configuration err");
- 		goto error;
- 	}
-@@ -259,44 +256,17 @@ static int ath3k_load_firmware(struct usb_device *udev,
- 
- static int ath3k_get_state(struct usb_device *udev, unsigned char *state)
- {
--	int ret, pipe = 0;
--	char *buf;
--
--	buf = kmalloc(sizeof(*buf), GFP_KERNEL);
--	if (!buf)
--		return -ENOMEM;
--
--	pipe = usb_rcvctrlpipe(udev, 0);
--	ret = usb_control_msg(udev, pipe, ATH3K_GETSTATE,
--			      USB_TYPE_VENDOR | USB_DIR_IN, 0, 0,
--			      buf, sizeof(*buf), USB_CTRL_SET_TIMEOUT);
--
--	*state = *buf;
--	kfree(buf);
--
--	return ret;
-+	return usb_control_msg_recv(udev, 0, ATH3K_GETSTATE,
-+				    USB_TYPE_VENDOR | USB_DIR_IN, 0, 0,
-+				    state, 1, USB_CTRL_SET_TIMEOUT);
- }
- 
- static int ath3k_get_version(struct usb_device *udev,
- 			struct ath3k_version *version)
- {
--	int ret, pipe = 0;
--	struct ath3k_version *buf;
--	const int size = sizeof(*buf);
--
--	buf = kmalloc(size, GFP_KERNEL);
--	if (!buf)
--		return -ENOMEM;
--
--	pipe = usb_rcvctrlpipe(udev, 0);
--	ret = usb_control_msg(udev, pipe, ATH3K_GETVERSION,
--			      USB_TYPE_VENDOR | USB_DIR_IN, 0, 0,
--			      buf, size, USB_CTRL_SET_TIMEOUT);
--
--	memcpy(version, buf, size);
--	kfree(buf);
--
--	return ret;
-+	return usb_control_msg_recv(udev, 0, ATH3K_GETVERSION,
-+				    USB_TYPE_VENDOR | USB_DIR_IN, 0, 0,
-+				    version, sizeof(*version), USB_CTRL_SET_TIMEOUT);
- }
- 
- static int ath3k_load_fwfile(struct usb_device *udev,
-@@ -316,13 +286,10 @@ static int ath3k_load_fwfile(struct usb_device *udev,
- 	}
- 
- 	size = min_t(uint, count, FW_HDR_SIZE);
--	memcpy(send_buf, firmware->data, size);
- 
--	pipe = usb_sndctrlpipe(udev, 0);
--	ret = usb_control_msg(udev, pipe, ATH3K_DNLOAD,
--			USB_TYPE_VENDOR, 0, 0, send_buf,
--			size, USB_CTRL_SET_TIMEOUT);
--	if (ret < 0) {
-+	ret = usb_control_msg_send(udev, 0, ATH3K_DNLOAD, USB_TYPE_VENDOR, 0, 0,
-+				   firmware->data, size, USB_CTRL_SET_TIMEOUT);
-+	if (ret) {
- 		BT_ERR("Can't change to loading configuration err");
- 		kfree(send_buf);
- 		return ret;
-@@ -355,23 +322,19 @@ static int ath3k_load_fwfile(struct usb_device *udev,
- 	return 0;
- }
- 
--static int ath3k_switch_pid(struct usb_device *udev)
-+static void ath3k_switch_pid(struct usb_device *udev)
- {
--	int pipe = 0;
--
--	pipe = usb_sndctrlpipe(udev, 0);
--	return usb_control_msg(udev, pipe, USB_REG_SWITCH_VID_PID,
--			USB_TYPE_VENDOR, 0, 0,
--			NULL, 0, USB_CTRL_SET_TIMEOUT);
-+	usb_control_msg_send(udev, 0, USB_REG_SWITCH_VID_PID, USB_TYPE_VENDOR,
-+			     0, 0, NULL, 0, USB_CTRL_SET_TIMEOUT);
- }
- 
- static int ath3k_set_normal_mode(struct usb_device *udev)
- {
- 	unsigned char fw_state;
--	int pipe = 0, ret;
-+	int ret;
- 
- 	ret = ath3k_get_state(udev, &fw_state);
--	if (ret < 0) {
-+	if (ret) {
- 		BT_ERR("Can't get state to change to normal mode err");
- 		return ret;
- 	}
-@@ -381,10 +344,9 @@ static int ath3k_set_normal_mode(struct usb_device *udev)
- 		return 0;
- 	}
- 
--	pipe = usb_sndctrlpipe(udev, 0);
--	return usb_control_msg(udev, pipe, ATH3K_SET_NORMAL_MODE,
--			USB_TYPE_VENDOR, 0, 0,
--			NULL, 0, USB_CTRL_SET_TIMEOUT);
-+	return usb_control_msg_send(udev, 0, ATH3K_SET_NORMAL_MODE,
-+				    USB_TYPE_VENDOR, 0, 0, NULL, 0,
-+				    USB_CTRL_SET_TIMEOUT);
- }
- 
- static int ath3k_load_patch(struct usb_device *udev)
-@@ -397,7 +359,7 @@ static int ath3k_load_patch(struct usb_device *udev)
- 	int ret;
- 
- 	ret = ath3k_get_state(udev, &fw_state);
--	if (ret < 0) {
-+	if (ret) {
- 		BT_ERR("Can't get state to change to load ram patch err");
- 		return ret;
- 	}
-@@ -408,7 +370,7 @@ static int ath3k_load_patch(struct usb_device *udev)
- 	}
- 
- 	ret = ath3k_get_version(udev, &fw_version);
--	if (ret < 0) {
-+	if (ret) {
- 		BT_ERR("Can't get version to change to load ram patch err");
- 		return ret;
- 	}
-@@ -449,13 +411,13 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- 	int clk_value, ret;
- 
- 	ret = ath3k_get_state(udev, &fw_state);
--	if (ret < 0) {
-+	if (ret) {
- 		BT_ERR("Can't get state to change to load configuration err");
- 		return -EBUSY;
- 	}
- 
- 	ret = ath3k_get_version(udev, &fw_version);
--	if (ret < 0) {
-+	if (ret) {
- 		BT_ERR("Can't get version to change to load ram patch err");
- 		return ret;
- 	}
-@@ -529,7 +491,7 @@ static int ath3k_probe(struct usb_interface *intf,
- 			return ret;
- 		}
- 		ret = ath3k_set_normal_mode(udev);
--		if (ret < 0) {
-+		if (ret) {
- 			BT_ERR("Set normal mode failed");
- 			return ret;
- 		}
+> Cc: Alan Stern <stern@rowland.harvard.edu>
+> Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+> Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Cc: linux-usb@vger.kernel.org
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  drivers/usb/core/message.c | 38 +++++++++++++++++++-------------------
+>  1 file changed, 19 insertions(+), 19 deletions(-)
+> 
+> diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
+> index 6aa49b237717..dfd079485c76 100644
+> --- a/drivers/usb/core/message.c
+> +++ b/drivers/usb/core/message.c
+> @@ -1081,7 +1081,7 @@ int usb_set_isoch_delay(struct usb_device *dev)
+>  	if (dev->speed < USB_SPEED_SUPER)
+>  		return 0;
+>  
+> -	return usb_control_msg(dev, usb_sndctrlpipe(dev, 0),
+> +	return usb_control_msg_send(dev, 0,
+>  			USB_REQ_SET_ISOCH_DELAY,
+>  			USB_DIR_OUT | USB_TYPE_STANDARD | USB_RECIP_DEVICE,
+>  			dev->hub_delay, 0, NULL, 0,
+> @@ -1203,13 +1203,13 @@ int usb_clear_halt(struct usb_device *dev, int pipe)
+>  	 * (like some ibmcam model 1 units) seem to expect hosts to make
+>  	 * this request for iso endpoints, which can't halt!
+>  	 */
+> -	result = usb_control_msg(dev, usb_sndctrlpipe(dev, 0),
+> -		USB_REQ_CLEAR_FEATURE, USB_RECIP_ENDPOINT,
+> -		USB_ENDPOINT_HALT, endp, NULL, 0,
+> -		USB_CTRL_SET_TIMEOUT);
+> +	result = usb_control_msg_send(dev, 0,
+> +				      USB_REQ_CLEAR_FEATURE, USB_RECIP_ENDPOINT,
+> +				      USB_ENDPOINT_HALT, endp, NULL, 0,
+> +				      USB_CTRL_SET_TIMEOUT);
+>  
+>  	/* don't un-halt or force to DATA0 except on success */
+> -	if (result < 0)
+> +	if (result)
+>  		return result;
+>  
+>  	/* NOTE:  seems like Microsoft and Apple don't bother verifying
+> @@ -1558,9 +1558,10 @@ int usb_set_interface(struct usb_device *dev, int interface, int alternate)
+>  	if (dev->quirks & USB_QUIRK_NO_SET_INTF)
+>  		ret = -EPIPE;
+>  	else
+> -		ret = usb_control_msg(dev, usb_sndctrlpipe(dev, 0),
+> -				   USB_REQ_SET_INTERFACE, USB_RECIP_INTERFACE,
+> -				   alternate, interface, NULL, 0, 5000);
+> +		ret = usb_control_msg_send(dev, 0,
+> +					   USB_REQ_SET_INTERFACE,
+> +					   USB_RECIP_INTERFACE, alternate,
+> +					   interface, NULL, 0, 5000);
+>  
+>  	/* 9.4.10 says devices don't need this and are free to STALL the
+>  	 * request if the interface only has one alternate setting.
+> @@ -1570,7 +1571,7 @@ int usb_set_interface(struct usb_device *dev, int interface, int alternate)
+>  			"manual set_interface for iface %d, alt %d\n",
+>  			interface, alternate);
+>  		manual = 1;
+> -	} else if (ret < 0) {
+> +	} else if (ret) {
+>  		/* Re-instate the old alt setting */
+>  		usb_hcd_alloc_bandwidth(dev, NULL, alt, iface->cur_altsetting);
+>  		usb_enable_lpm(dev);
+> @@ -1718,11 +1719,10 @@ int usb_reset_configuration(struct usb_device *dev)
+>  		mutex_unlock(hcd->bandwidth_mutex);
+>  		return retval;
+>  	}
+> -	retval = usb_control_msg(dev, usb_sndctrlpipe(dev, 0),
+> -			USB_REQ_SET_CONFIGURATION, 0,
+> -			config->desc.bConfigurationValue, 0,
+> -			NULL, 0, USB_CTRL_SET_TIMEOUT);
+> -	if (retval < 0)
+> +	retval = usb_control_msg_send(dev, 0, USB_REQ_SET_CONFIGURATION, 0,
+> +				      config->desc.bConfigurationValue, 0,
+> +				      NULL, 0, USB_CTRL_SET_TIMEOUT);
+> +	if (retval)
+>  		goto reset_old_alts;
+>  	mutex_unlock(hcd->bandwidth_mutex);
+>  
+> @@ -2103,10 +2103,10 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
+>  	}
+>  	kfree(new_interfaces);
+>  
+> -	ret = usb_control_msg(dev, usb_sndctrlpipe(dev, 0),
+> -			      USB_REQ_SET_CONFIGURATION, 0, configuration, 0,
+> -			      NULL, 0, USB_CTRL_SET_TIMEOUT);
+> -	if (ret < 0 && cp) {
+> +	ret = usb_control_msg_send(dev, 0, USB_REQ_SET_CONFIGURATION, 0,
+> +				   configuration, 0, NULL, 0,
+> +				   USB_CTRL_SET_TIMEOUT);
+> +	if (ret && cp) {
+>  		/*
+>  		 * All the old state is gone, so what else can we do?
+>  		 * The device is probably useless now anyway.
+> -- 
+> 2.28.0
+> 
+
 -- 
-2.28.0
+With Best Regards,
+Andy Shevchenko
+
 
