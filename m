@@ -2,68 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 824D0263C3D
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Sep 2020 06:48:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E6B5263C3E
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Sep 2020 06:48:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725971AbgIJEsP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 10 Sep 2020 00:48:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50252 "EHLO
+        id S1725992AbgIJEsT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 10 Sep 2020 00:48:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725372AbgIJEsA (ORCPT
+        with ESMTP id S1725887AbgIJEsC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 10 Sep 2020 00:48:00 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB6B6C061573
-        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Sep 2020 21:47:59 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id k25so3907618qtu.4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Sep 2020 21:47:59 -0700 (PDT)
+        Thu, 10 Sep 2020 00:48:02 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AA63C061757
+        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Sep 2020 21:48:00 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id y11so3876590qtn.9
+        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Sep 2020 21:48:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
          :references;
-        bh=dRJXS6ZKSWz+MF1RiAgo9X2u0aseXPtPiJ6GHIkJpRk=;
-        b=I7py7RlJ2hGlvd86wNvkon657dwVWoj5Ct/TlH8OdVDVOcT53GkQBbqyv7X7VEAVH+
-         Z+vsen4QSfNqeMVXj2brnhJQlUwxOcCwDbpbPA9jejd9AJmb/WKukuXn8IExp30S9DSp
-         NGPZIBug2O/b7VTjcw6AvxR8Wed5CkH1efxICbf3xwnWngUqbZVOX8HZ6wGkGiNT5WAx
-         VXIfcwgPr3byuw2S181hv4ZSqvTr1vEcYQNtQ6DA+NKfafcuBcEhGO9rBGurX3CtQEzx
-         A3NvC4ShZhhBQaZgNAVu2vb2u6bUtdwcGzMysNHEJBHeAPCLbOqJDd50BpNX4ZVb+nOX
-         WTkw==
+        bh=wAuESQ5dCEhkjNiNxWhtQHwcrrqfz0y6AMYdbWMZAJc=;
+        b=c8ENxH9EYhzsyv/nSGXofPgfAuTNlnmd+iz1ubdh0qfyWmOWIcUNT4EiUCGYCY9JE5
+         O4S6QqZrSPv+fQ3ZZ32ixG6xpwhgu/iGBTv/APIAxXeD5oTKM9RL9TmgIxoI8P3lEQPI
+         +Ngbk2psVEtSNnN2o6ty+vEuZaJETOcdtJjI6D+Xtcy5OSU152BLKTU+QehdDLgMoixB
+         TNGkPVZhrZkA/JzbcFgfgjUzrLbD33nlP37GZ6HGGS1pBHoFFV7+F702ZrXwAHcZ3mAT
+         1mXLAn6G7Uidcp/zQmbjylVYz0yx6kKEdlQ8bNIIOpAwTM08TnZ6Upv3BE82vyS9Xdnd
+         UW8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:date:mime-version:from:to:subject
          :reply-to:in-reply-to:references;
-        bh=dRJXS6ZKSWz+MF1RiAgo9X2u0aseXPtPiJ6GHIkJpRk=;
-        b=pSqkGm7UNx/XtJ80BJ9/5Q2SdUDGNolnJIv5pxAhFM3XT5iiblO/MOFNBY7DlAvw4i
-         1pZtLI0F3FTSbFl7aMb/Ucu6N0vEJUZM/+OQguMGheVHyBIwMjyaJD04WbJgDzDd3rSV
-         UyK49hBLRMcQi1o4hLq73Q6U9eUIJbSBQ1DxhgEcIm1/kwGstCiBOIOogEOy1nkw9Qze
-         kz4z3NzA3NBXO7kLigGOz5kYAe3Gi237NUh+fD6XUCNuowH14y8VluY5YPmEQuEVtosF
-         HpQCE+lgK3ZOzydTUoXCnivrHx4wSNV8O9/EP7OOkN8n1cf4JwMKRA4FxHxGCEpTR7cs
-         Cpiw==
-X-Gm-Message-State: AOAM531c+EJrPTXU4nJGL3sNf6ZGp8wU00B0tAwCydEnmURrFRCNfn/W
-        hL+TiUzvFLKGcCQsj/1w9TM6hm502qHOeA==
-X-Google-Smtp-Source: ABdhPJxOABUD0h+HZGeunL2TheQnMt82LLsHZhS5+wFMZ3pLtKXBFo3Y03D5Xx5b9vV5zPdXEW7Lxg==
-X-Received: by 2002:ac8:4d07:: with SMTP id w7mr6434161qtv.243.1599713278438;
-        Wed, 09 Sep 2020 21:47:58 -0700 (PDT)
+        bh=wAuESQ5dCEhkjNiNxWhtQHwcrrqfz0y6AMYdbWMZAJc=;
+        b=PTCIqIlWX0Z7XPeQGVrDzwHllPjpHUh6XjuQW5/FWl1ueKe5nq/kvQGUOD7k1/Jgjv
+         k6zNX7cftZcQORga4rl1Hadhl410FJ8UHzx5XgsERCeU4WsG+/x+ZPOV5Cenlb6L3T7M
+         DY6DYhWs/wRKjtxbGePyl854e1qVAVAmqDZNgKDse3K0V5mN1S/caGlwpjf9t6gZFP3d
+         z/lUwxPe7RgNcfmS83sgtM0lUnIqoYUiZzIDS9KpU9fG9qzG2mUX6U3/luygPnM2Xo5l
+         P+G0FyTOXU0S1v0EPMapngldZ3Tv9+lULFcU6TxkfLxi1o/y3j1AHae2wtmo0pqnoJ9G
+         VI8w==
+X-Gm-Message-State: AOAM533AUaE40mx1+v4yua2L26ubdVV1wezYFN72m4i3vsPgaqZbapu3
+        Il5lDbnjGpDF5Vzvse3NLeB2yHW/CIb6lg==
+X-Google-Smtp-Source: ABdhPJxMvgT1qYaFFqxftvXfledSU8CCMOdRX3EOzRzQ+vAsh0Ebu6zV/fopfFRXrUMh69pXuiOQcg==
+X-Received: by 2002:ac8:4d1a:: with SMTP id w26mr6446247qtv.220.1599713279443;
+        Wed, 09 Sep 2020 21:47:59 -0700 (PDT)
 Received: from [172.17.0.2] ([40.84.25.207])
-        by smtp.gmail.com with ESMTPSA id g37sm5667580qtk.76.2020.09.09.21.47.58
+        by smtp.gmail.com with ESMTPSA id i66sm5140602qkc.63.2020.09.09.21.47.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2020 21:47:58 -0700 (PDT)
-Message-ID: <5f59affe.1c69fb81.298d4.accb@mx.google.com>
-Date:   Wed, 09 Sep 2020 21:47:58 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============8446680284482479787=="
+        Wed, 09 Sep 2020 21:47:59 -0700 (PDT)
+Message-ID: <5f59afff.1c69fb81.a663e.8e17@mx.google.com>
+Date:   Wed, 09 Sep 2020 21:47:59 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============5369202452627928207=="
 MIME-Version: 1.0
 From:   bluez.test.bot@gmail.com
 To:     linux-bluetooth@vger.kernel.org, mcchou@chromium.org
-Subject: RE: [BlueZ,v2,1/7] PRE-UPSTREAM: adv_monitor: Introduce org.bluez.AdvertisementMonitorManager1 interface
+Subject: RE: [BlueZ,v2,2/7] PRE-UPSTREAM: adv_monitor: Implement Get functions of Adv monitor manager properties
 Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20200909213423.BlueZ.v2.1.I205718871f4e636958904f3cfb171cfd381c54b1@changeid>
-References: <20200909213423.BlueZ.v2.1.I205718871f4e636958904f3cfb171cfd381c54b1@changeid>
+In-Reply-To: <20200909213423.BlueZ.v2.2.I9960e45d36be3edb5f17de025e7eb8257d3cddef@changeid>
+References: <20200909213423.BlueZ.v2.2.I9960e45d36be3edb5f17de025e7eb8257d3cddef@changeid>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============8446680284482479787==
+--===============5369202452627928207==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -81,7 +81,7 @@ Test Result:
 checkgitlint Failed
 
 Outputs:
-1: T1 Title exceeds max length (85>72): "PRE-UPSTREAM: adv_monitor: Introduce org.bluez.AdvertisementMonitorManager1 interface"
+1: T1 Title exceeds max length (84>72): "PRE-UPSTREAM: adv_monitor: Implement Get functions of Adv monitor manager properties"
 
 
 
@@ -89,4 +89,4 @@ Outputs:
 Regards,
 Linux Bluetooth
 
---===============8446680284482479787==--
+--===============5369202452627928207==--
