@@ -2,60 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F2A2B266578
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Sep 2020 19:04:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 719ED2665E8
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Sep 2020 19:18:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbgIKRD5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 11 Sep 2020 13:03:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48970 "EHLO
+        id S1726076AbgIKRR5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 11 Sep 2020 13:17:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726305AbgIKRD1 (ORCPT
+        with ESMTP id S1726247AbgIKRNM (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 11 Sep 2020 13:03:27 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 052A2C061757
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 10:03:26 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id n14so7835205pff.6
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 10:03:26 -0700 (PDT)
+        Fri, 11 Sep 2020 13:13:12 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EE44C061786
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 10:13:11 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id l191so7092676pgd.5
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 10:13:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=message-id:from:to:cc:subject:date:mime-version
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qRtDh97ORt4HovJLKdTF3WD92y4b2IDBRblpYLEE9bs=;
-        b=dJVxsJcX8QwG1cCd9nM0kqLVfSwuDe4APIAa8BtNHYsyMYxCBw/p1N7EcZeTKxdpe7
-         cS4veSRiTv6M4LDyxP7mtZ6iQo0YvYef4Kdh/7oPYjo+cKFv0BsACj+S7oXqn69EISpt
-         8NQxsdKS26ru+HxYdjZyNsxGvxZgnuK4jl1Jg=
+        bh=9xx/aNqVyo8F+vwS35kGQGZUtQETH2qUMc7jEIvGGiw=;
+        b=GZDyuoKHjUGYRo0q4YPBblihRY7pVBrudliixlJ7RLgVwDc+Kb5t+Undpb8QD8ma1k
+         LxcEc4G4bBSIQ2egiR316Cnaz8Lb6jVplZhJXxXv4s5AQPe7Bhs1z9tnzvyqBP56gnxi
+         fxVvfLI3EnCu4SpB/ycK4W7PuhQE1S57liyYA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:to:cc:subject:date:mime-version
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qRtDh97ORt4HovJLKdTF3WD92y4b2IDBRblpYLEE9bs=;
-        b=Vl+NcX74+X9/rwMGPmOEGEugnnialN7QTlugpszEGZR5b547jqFYZbJl8zfs0KBqYZ
-         9FeA+RtmSyG2eEnNStPUiXhsvzvG/QygySmxl9XYOJKPRZyil5IAEE+DmH81SNRVH2Ju
-         S3gcFTK/d1MD4BzMW+f7PWrf2PwBuj+PGLlknz8AO5WNoo+Pep/9wKELlA9RkBZxf0Zk
-         /Dy+zqjEkQVZUtiDm8ow40tGGgdr8faBUukZE9/2MSj/62l56aeKGlvbmLekICWCvIzq
-         M0PfljfOONoGX6VaflG+zR+PYPSy+sT/esY0sIKhmKsQ2zzOWHJW1GH4bL3Px8SJTDh3
-         7+1A==
-X-Gm-Message-State: AOAM530DYIynr6vxcloEoaksdY7HKRbeKi62aK+WmCyT2rrBUXwg8DgW
-        KVJ+7/diK3qq2szge0+DJkhnPg==
-X-Google-Smtp-Source: ABdhPJw7sDOAisikq+F/mVJQrRg8pbzocfSBl45sp+09hdh3wWhJ9hDo4+UdBQZMAetb42PEHKjHIw==
-X-Received: by 2002:a63:f1d:: with SMTP id e29mr2319480pgl.358.1599843805452;
-        Fri, 11 Sep 2020 10:03:25 -0700 (PDT)
+        bh=9xx/aNqVyo8F+vwS35kGQGZUtQETH2qUMc7jEIvGGiw=;
+        b=TnCnbk+TFYXnEgpKEp/Lg0hAvl/wh/MMF3ufZnZlZnStibh6CKxh4ofQ5bjjKF8Qmf
+         /q3L3jJFcDXtxCSEQ4ob0pK2BVTBtZv7VpUlHIuxRAYjqEq2Ef7u6dfhs73YA3xCcgID
+         Qqizq2LJ1PHHA5mNiNoJGsBOP5fDTOSQxCxZ6G6O+H2+La1Xt1XrAgrXA7lGBnf/Yvne
+         Xri7PBfthXFwoOCkf8Z9kMpSnKU0ydASNb5cleXC6zcMYnfNcRSTbY3tdm0x7H3AJ9Rz
+         LRuc8FNEpn0nfYoZlTS8anzf71bHsoOG5tjB+M3z5yeo0FlmyPg311hJNARvGQAOibR2
+         yF5w==
+X-Gm-Message-State: AOAM530KFyQsQq/4ljFCVxaOAxIs5j7l2j9GoyPITBNHOtliDWIMnafF
+        /GKcBcOFO9iwZGK2MZ+7J9HSBA==
+X-Google-Smtp-Source: ABdhPJydKYhFb52mw7so7AX3H27Z2tg1yZLck6RxPp1D+3/fVJBJsaDGZl3UZMOdjs43ONG+bWVCPA==
+X-Received: by 2002:a63:4d5:: with SMTP id 204mr2422300pge.0.1599844391141;
+        Fri, 11 Sep 2020 10:13:11 -0700 (PDT)
 Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:7220:84ff:fe09:2b94])
-        by smtp.gmail.com with ESMTPSA id q16sm3103738pfj.117.2020.09.11.10.03.24
+        by smtp.gmail.com with ESMTPSA id h9sm2787452pfc.28.2020.09.11.10.13.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2020 10:03:24 -0700 (PDT)
-Message-ID: <5f5baddc.1c69fb81.8c960.760a@mx.google.com>
-X-Google-Original-Message-ID: <20200911100258.RESEND Bluez.v2.1.I9181af521cf0fba8f4315c9b89975848d437d6dd@changeid>
+        Fri, 11 Sep 2020 10:13:10 -0700 (PDT)
 From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 To:     marcel@holtmann.org, luiz.dentz@gmail.com
 Cc:     chromeos-bluetooth-upstreaming@chromium.org,
         linux-bluetooth@vger.kernel.org,
         Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Alain Michaud <alainm@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>
-Subject: [RESEND Bluez PATCH v2] doc: Add Suspend and Resume events
-Date:   Fri, 11 Sep 2020 10:03:17 -0700
+        "David S. Miller" <davem@davemloft.net>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jakub Kicinski <kuba@kernel.org>
+Subject: [RESEND PATCH 0/3] Bluetooth: Emit events for suspend/resume
+Date:   Fri, 11 Sep 2020 10:13:03 -0700
+Message-Id: <20200911171306.3758642-1-abhishekpandit@chromium.org>
 X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -64,87 +65,34 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add Controller Suspend Event and Controller Resume Event to identify
-suspend or resume of the Bluetooth stack has occurred.
 
-Also update Device Disconnected Event to indicate a new disconnect
-reason: "Connection terminated by local host for suspend"
+Hi Marcel,
 
-Reviewed-by: Alain Michaud <alainm@chromium.org>
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
----
-Re-sending along with kernel changes.
+This series adds the suspend/resume events suggested in
+https://patchwork.kernel.org/patch/11771001/.
 
-Changes in v2:
-- Moved Wake_Reason to first value
-- Reduced Wake_Reason to not Bluetooth, unexpected event and remote wake
+I have tested it with some userspace changes that monitors the
+controller resumed event to trigger audio device reconnection and
+verified that the events are correctly emitted.
 
- doc/mgmt-api.txt | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+Patch for btmon changes: https://patchwork.kernel.org/patch/11743863/
 
-diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
-index ca0d38469..e7a713824 100644
---- a/doc/mgmt-api.txt
-+++ b/doc/mgmt-api.txt
-@@ -3834,6 +3834,7 @@ Device Disconnected Event
- 		2	Connection terminated by local host
- 		3	Connection terminated by remote host
- 		4	Connection terminated due to authentication failure
-+		5	Connection terminated by local host for suspend
- 
- 	Note that the local/remote distinction just determines which side
- 	terminated the low-level connection, regardless of the
-@@ -4577,3 +4578,50 @@ Advertisement Monitor Removed Event
- 
- 	The event will only be sent to management sockets other than the
- 	one through which the command was sent.
-+
-+
-+Controller Suspend Event
-+========================
-+
-+	Event code:		0x002d
-+	Controller Index:	<controller_id>
-+	Event Parameters:	Suspend_State (1 octet)
-+
-+	This event indicates that the controller is suspended for host suspend.
-+
-+	Possible values for the Suspend_State parameter:
-+		0	Running (not disconnected)
-+		1	Disconnected and not scanning
-+		2	Page scanning and/or passive scanning.
-+
-+	The value 0 is used for the running state and may be sent if the
-+	controller could not be configured to suspend properly.
-+
-+	This event will be sent to all management sockets.
-+
-+
-+Controller Resume Event
-+=======================
-+
-+	Event code:		0x002e
-+	Controller Index:	<controller_id>
-+	Event Parameters:	Wake_Reason (1 octet)
-+				Address (6 octets)
-+				Address_Type (1 octet)
-+
-+	This event indicates that the controller has resumed from suspend.
-+
-+	Possible values for the Wake_Reason parameter:
-+		0	Resume from non-Bluetooth wake source
-+		1	Wake due to unexpected event
-+		2	Remote wake due to peer device connection
-+
-+	Currently, we expect that only peer reconnections should wake us from
-+	the suspended state. Any other events that occurred while the system
-+	should have been suspended results in wake due to unexpected event.
-+
-+	If the Wake_Reason is Remote wake due to connection, the address of the
-+	peer device that caused the event will be shared in Address and
-+	Address_Type. Otherwise, Address and Address_Type will both be zero.
-+
-+	This event will be sent to all management sockets.
+Please take a look.
+Abhishek
+
+
+Abhishek Pandit-Subedi (3):
+  Bluetooth: Add mgmt suspend and resume events
+  Bluetooth: Add suspend reason for device disconnect
+  Bluetooth: Emit controller suspend and resume events
+
+ include/net/bluetooth/hci_core.h |  6 +++
+ include/net/bluetooth/mgmt.h     | 16 +++++++
+ net/bluetooth/hci_core.c         | 26 +++++++++++-
+ net/bluetooth/hci_event.c        | 73 ++++++++++++++++++++++++++++++++
+ net/bluetooth/mgmt.c             | 28 ++++++++++++
+ 5 files changed, 148 insertions(+), 1 deletion(-)
+
 -- 
 2.28.0.618.gf4bc123cb7-goog
 
