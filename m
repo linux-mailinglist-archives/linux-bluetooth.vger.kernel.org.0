@@ -2,93 +2,100 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E00E265F4C
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Sep 2020 14:13:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D0D2265FD2
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Sep 2020 14:52:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725818AbgIKMML (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 11 Sep 2020 08:12:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59522 "EHLO
+        id S1725850AbgIKMwL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 11 Sep 2020 08:52:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725813AbgIKMKp (ORCPT
+        with ESMTP id S1725916AbgIKMuV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 11 Sep 2020 08:10:45 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC67C061786
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 05:09:50 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 78so5960289pgf.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 05:09:50 -0700 (PDT)
+        Fri, 11 Sep 2020 08:50:21 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30231C061786
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 05:50:20 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id t10so11388483wrv.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 05:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=Mx6dIe1hDH83C2Uvj8bO8v9+XJULtPHkuvI4kGsXlTU=;
-        b=tQLDZxIy/tzQaswMkrU95LGQMuZ8szJIH57vivJhYO4bEJny3gbd8LssjMK/+pzPS2
-         7REI1TMPjV/l9RKFISmXEdRwxVAEYiVTwsVVVXStN9bJ/49owkdwCGtRzn6n/av3jWxJ
-         GFU4V9zYqV2QMNFO0XngR8/AqxMMRlrE/biuz9XkXFu+2kjBz3dRWDz5ZdOA5x4EfcJt
-         2cDdCFbO6gthGCsxkgGhCBRLyGwVAKOFWsdqLhqfe3AMzluzJ/2tctKpmhDWL9W6Xawz
-         +YLBTRqTQAm0O+N5WZNVcngaUjhsoLjaqGZpT7COYU++xnPS8IyjldI4A7BqTedY2zBB
-         wBUA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xHXq+qbTwT1oiw0iWkZ04umRIfDUZBSQvLrUtjixjAE=;
+        b=QtHGzHGRHluMVpFObRS8xYeQNADcXN58be9Ho4YCS9cGv5yZyJIm6mRGBlBuliuRwz
+         thjhLpUqfJok9kRurUrdVW+VofJUnJjv2WC5La6pSXDYIhWKrwxbxfoFPuSwyhGETisu
+         TyWpRTnyngPZxRYSq9wNXMMglWrVTYTpP6d+T9pQ2s+6tJOYY4mdD1lEZPhXkpNYroHM
+         0vZZzMsOefGtN425P+/8bXAIOXYG8bc4z+ArGCfQqizU9a/CJBxzx/f+lRuXrZtKYL2c
+         z7BveapoqZUpqwWUTAcLS+ePQDGHfvmJ0b3F9V+QOjhMsxOrNkeqFyMT/LFfdRmgKL/W
+         Tgsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Mx6dIe1hDH83C2Uvj8bO8v9+XJULtPHkuvI4kGsXlTU=;
-        b=TfTBYIP4fMQFLBXrAanpmNh9GEPIq9cErceBOt8K6VYhg2SBz9na51Q1ASDevFhTwq
-         jbYLFNOkbuLmcdHwfYT8CwQlTlw74gW1Dt9r2HXAcj9LD1sEjm+SgQ7P4CO8//mWKFX/
-         uofCE0ykbbldh3RI46Q6qWaJyQM7oCgfCAjDjBuClCt3yIkxD7xmT9YfeDNda0fMPIdt
-         s3IQ5ZMbdtnoEKSIvtH7xRBuSpIDgC1cEV4gTmEvvfdFSy35/0fxMDYT1s/7P3EOHmu5
-         +2nosRbniJShjOWNy8vE1auxkncZU++VI5nPzoIxB+bzzNxh/BhkRsGpKf8wDlikyKHt
-         1LyQ==
-X-Gm-Message-State: AOAM532U2UfhYmpcNkrBx8+5qDXqYSuPzHrhR0/8C1w5OuXfxaqeBueq
-        1hdm/YjUqy9zRp+UcqbNBbSR0kWWjv4SCIpIUVdzJ1lPVGS6WB3UFptaMIn1tRqEU91VWUF2YrY
-        b3e4CFXjva4Es2QoLVdczqLqfFfRQdeeaBTixjFdPGUYCsXpKTaJuyB237J7C1FbGdOMOFZSqHy
-        AnrQtKyRYS844=
-X-Google-Smtp-Source: ABdhPJwsSBErXN5V6v8ghPcAuA7OgBD2dFzYFXgL1KyIUqAr0nAGiIn8UTis2ctbLNZAcEk+J3Hq2Mpa4avT6TqPTg==
-X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:f693:9fff:fef4:4e45])
- (user=howardchung job=sendgmr) by 2002:a62:7a05:: with SMTP id
- v5mr1932342pfc.18.1599826190013; Fri, 11 Sep 2020 05:09:50 -0700 (PDT)
-Date:   Fri, 11 Sep 2020 20:09:29 +0800
-In-Reply-To: <20200911200839.BlueZ.v3.1.I8e067a74d324751fc788f53e0c14f60923683d01@changeid>
-Message-Id: <20200911200839.BlueZ.v3.4.Ieffbe3452565ace2af46a63501c767c8798fd88c@changeid>
-Mime-Version: 1.0
-References: <20200911200839.BlueZ.v3.1.I8e067a74d324751fc788f53e0c14f60923683d01@changeid>
-X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
-Subject: [BlueZ PATCH v3 4/4] PRE-UPSTREAM: core: Add AdvertisementMonitor to bluetooth.conf
-From:   Howard Chung <howardchung@google.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     mmandlik@chromium.org, mcchou@chromium.org,
-        luiz.von.dentz@intel.com, alainm@chromium.org,
-        Howard Chung <howardchung@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xHXq+qbTwT1oiw0iWkZ04umRIfDUZBSQvLrUtjixjAE=;
+        b=GCjKt7vjdI3JFgM8d0Ni+s1T1AYSFJhT+STDF3XEd+tDQlVabYHIzOx60fZrJodGRf
+         Nqc9BGB7cwimcnOry8sFTUO3yydxFy/opPoFCfFIChrT8G5a8RcJ+XY1jX/98g2FEblx
+         n2uBDWoKndXnAXm6fMZE3D+E4QwfG9t4Yw752pqoU/SUcktV9F+4oA0SlFLezve9FYWc
+         lCZhigwbtoCwvQbhalRi+oreaf26cBRYTFzsZ0Ego9yTENujqU2PDZeYLRVgPCG0B7AD
+         62LfwzvkHqDWOXqW/miUDeSqPE+pfda6/I3Z2pth1TxnjfiPpkJB60jpyEpv2XO8W+g0
+         s4MQ==
+X-Gm-Message-State: AOAM533fdSmdVqKBlz1Li/O30kwH4jvtUlDMbpV3lyuxHhTmIsqkgf0q
+        VSWA2CLL8kAA79u/XZJ0nD6/+v2arHxilCAkQ1K5/t/jxZR3+w==
+X-Google-Smtp-Source: ABdhPJwqxbeXO3d2lKd3Bo2RUBD9VFkl3yBYi8Z2STHJhfinRqdeyGrESTFYSa6n7VQ0h5hX/hAIRkFnIhUstpjf3rs=
+X-Received: by 2002:adf:dcc3:: with SMTP id x3mr1917679wrm.120.1599828618505;
+ Fri, 11 Sep 2020 05:50:18 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200901115913.Bluez.v2.1.Ieeae14ab680eda03474551fdb7a0a020f950e9c1@changeid>
+In-Reply-To: <20200901115913.Bluez.v2.1.Ieeae14ab680eda03474551fdb7a0a020f950e9c1@changeid>
+From:   Archie Pusaka <apusaka@google.com>
+Date:   Fri, 11 Sep 2020 20:50:07 +0800
+Message-ID: <CAJQfnxEx8E0Gt-em5CPX0hBRTkr_eLB6KSzyPoM17v=hrehaeg@mail.gmail.com>
+Subject: Re: [Bluez PATCH v2] audio/transport: Don't set volume if it's invalid
+To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-AdvertisementMonitor must be included in bluetooth.conf in order to
-be able to call Release
+Hi Bluez maintainers,
 
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-Reviewed-by: Manish Mandlik <mmandlik@chromium.org>
----
+Could you take another look at this patch?
 
-(no changes since v1)
+Thanks,
+Archie
 
- src/bluetooth.conf | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/src/bluetooth.conf b/src/bluetooth.conf
-index 8a1e25801..b6c614908 100644
---- a/src/bluetooth.conf
-+++ b/src/bluetooth.conf
-@@ -10,6 +10,7 @@
-   <policy user="root">
-     <allow own="org.bluez"/>
-     <allow send_destination="org.bluez"/>
-+    <allow send_interface="org.bluez.AdvertisementMonitor1"/>
-     <allow send_interface="org.bluez.Agent1"/>
-     <allow send_interface="org.bluez.MediaEndpoint1"/>
-     <allow send_interface="org.bluez.MediaPlayer1"/>
--- 
-2.28.0.618.gf4bc123cb7-goog
-
+On Tue, 1 Sep 2020 at 12:00, Archie Pusaka <apusaka@google.com> wrote:
+>
+> From: Archie Pusaka <apusaka@chromium.org>
+>
+> Adding a check inside media_transport_update_volume to prevent
+> the volume being updated with an invalid value.
+> ---
+>
+> Changes in v2:
+> * Move the check from media.c:set_configuration
+>
+>  profiles/audio/transport.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/profiles/audio/transport.c b/profiles/audio/transport.c
+> index a2c4f7dfb..dd1c553a2 100644
+> --- a/profiles/audio/transport.c
+> +++ b/profiles/audio/transport.c
+> @@ -941,6 +941,9 @@ void media_transport_update_volume(struct media_transport *transport,
+>  {
+>         struct a2dp_transport *a2dp = transport->data;
+>
+> +       if (volume < 0)
+> +               return;
+> +
+>         /* Check if volume really changed */
+>         if (a2dp->volume == volume)
+>                 return;
+> --
+> 2.28.0.402.g5ffc5be6b7-goog
+>
