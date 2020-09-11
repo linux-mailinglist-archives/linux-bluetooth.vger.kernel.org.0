@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC2F6265FD1
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Sep 2020 14:52:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD1C0266277
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Sep 2020 17:48:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725997AbgIKMv3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 11 Sep 2020 08:51:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37528 "EHLO
+        id S1726551AbgIKPsX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 11 Sep 2020 11:48:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725958AbgIKMug (ORCPT
+        with ESMTP id S1726479AbgIKPnj (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 11 Sep 2020 08:50:36 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90824C061795
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 05:50:35 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id e16so11400584wrm.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 05:50:35 -0700 (PDT)
+        Fri, 11 Sep 2020 11:43:39 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68D40C061756
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 08:43:39 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id g10so8685087otq.9
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 08:43:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=9zpvoIknYzOcak/srr5UyAFlRBj0Vd0whcdZwIrzcFc=;
-        b=Mgs8WOrammTSYbbtT4z5MyWKNphx+gqBJfNtCzwQEs8SKVKRxzk4AauhBD+sMuuD7X
-         Fz26Pq8/7WahNMa8mO7G4N3qN+y7B0pquw+JWo7Brm9fFwGZDZAojkHLLd/nnyjYpECJ
-         X1HBDg5xeoiwfApJY8YXsFDAOTO3bSZoMvJ8Sue41cGGOtsshiu24AdJ2FJwZ2gTQdzU
-         1LX0m5R684S+MWj+McKRFpW3vQm/6U8vcudTJ+1gxAo9snd0ogbAowU3A1ibXRI9y+IR
-         qWn+R6tcWlbwWgVMUXDXjXdD/VhxNIaQXass1Fqwt+32kwLsi9rg+RY8cumsdoBfDD37
-         2n4w==
+        bh=XzDgWNnuKrqNaQUU+av4P/MQZuzcjuXvW2alEkzqcAM=;
+        b=OfFDLjYVZq93cM8+BpkOhGQw1cPxXC81jWiU+/nucVDw3SCbOdqHuD/FLIDqL58ajM
+         +SApiaXhKPmTlQjjZKNU3IaEjj3UxdXrhN4mDUlYiilGfFMWlIVfePin7V6fxtnALZSr
+         EEgZKNLMEmFKHI4q9UtG9hyzNGMnUHF3Kpeo41PrPV5hbXc9sXdSm8iHMFFbMxVbXgdk
+         KMNWNZiqHyVMjFO8lZQGeai5LyD5qjzLeGRQQE+P1HK3CH197mG38ZBzi8CUUxs0O62o
+         V3zfmKZMmpONTiZPZPDwVNjK5VSw23ghalE0KwwG2nMJp2gXFv19KZXPvsh8pj5zarHM
+         /lKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9zpvoIknYzOcak/srr5UyAFlRBj0Vd0whcdZwIrzcFc=;
-        b=Sy7LnW+NnmAaaMoGFRCaeWHi4ms7eV6Ydr0lkzzPlOUm0tawNarFXrXGKbNBUsZjEk
-         rx9tC8RvnSaDgCKrKNx5M4Wjb8NKJOGTBYQr69iXnlHOGEtlNrbHvLOlPvUByede5xiR
-         gvWYbzog87ODFjU2Q0c49YHb1UY/B27v7D+TH6s/LbEG0AwzUjm5Uvoxaig7EULJ0c1C
-         7anrh2KO0Pqo1O8saRsEyzpwxvBW2oi5pLiU81QRAXs03b5Qga5JzrtOoIztmhm/aI98
-         pgTZwo/RvZbBdkwGpichHOrc+eAchjSeupu/1+wQOMuvdBtsTwrTWw1R67s1A+Y0ZPxT
-         PUig==
-X-Gm-Message-State: AOAM530FWw/FN+E+CwTSvalgZg/Oz9ecF0IKDn2hP7EYhSAFtgeP8Gf0
-        lN/i3i2gAodO+mBEufSrXirCz3/9PVZNomGRrwKG8TWRjJ/WoA==
-X-Google-Smtp-Source: ABdhPJw94WKu3PC0Ny+QNdJTsv1zKbw7tOaXQB1Y+KyCWa4OHaeGwGISe7g8foAhM4Th9911C/fRvwlh88AFXI8Y4Qk=
-X-Received: by 2002:adf:8544:: with SMTP id 62mr1928192wrh.262.1599828633777;
- Fri, 11 Sep 2020 05:50:33 -0700 (PDT)
+        bh=XzDgWNnuKrqNaQUU+av4P/MQZuzcjuXvW2alEkzqcAM=;
+        b=fJVfcgBtOXjBw2o8OVhmf/dY0wFGKXkacbU/v2n3gdtWqVhnk6I5spAhJN5um82r78
+         FtcVehsxpDgKrPVvlpLpSNm0Zl0cCTzumrm5PznWDxMBt3RF+/oko8enogGofOFJJ+/8
+         h4ZEaUSXvY//PLuTOg4NSXFT1HgQL1GshEBEyyo0FVfZd0FL/E6toXTpRRb9QNN8UgmJ
+         WrKqGWJoJYlfsWMOz+BPLpDRv/CO5L5xKLW954et1ZjTgZ2/Rbmxnbo7Og8SXMmPNW4u
+         q25EyyTdaBq/5MQ2oE2DXRj6YxLQnj8usITx0bPvTflG9TywuHmuhg/VvTVkPuQyK4II
+         RiOQ==
+X-Gm-Message-State: AOAM530zohdwmjvBYnG+7zQmNUPYHvnS9sU5Hqyc82x9gYSlIhflDWQv
+        rOzNHdQeDV8wZwGNM28+9VVUOzls1B819wW0Bms=
+X-Google-Smtp-Source: ABdhPJwh6sVu9L6n9x7JEhC/Ei8IrRlZTQuLMXw1B6/hn7VvgDURleyxoc/J0+Zac2Bt0iI/AS2Vh5oVa1MOkNmfITw=
+X-Received: by 2002:a9d:4695:: with SMTP id z21mr1573352ote.91.1599839018223;
+ Fri, 11 Sep 2020 08:43:38 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200902125726.Bluez.v1.1.I732df55cd70d552fc48e87686fb53c3f8ccbefa5@changeid>
 In-Reply-To: <20200902125726.Bluez.v1.1.I732df55cd70d552fc48e87686fb53c3f8ccbefa5@changeid>
-From:   Archie Pusaka <apusaka@google.com>
-Date:   Fri, 11 Sep 2020 20:50:22 +0800
-Message-ID: <CAJQfnxEHOx9mipC=y6NbTpXmmsowqXVCFbVUA4RVN4ncuwWD8Q@mail.gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 11 Sep 2020 08:43:27 -0700
+Message-ID: <CABBYNZKtMFwYZFwzoO=G54YQJVMyyyJF45eaPM9pM4_5d9j-dA@mail.gmail.com>
 Subject: Re: [Bluez PATCH v1] avrcp: Add handler for GET_TOTAL_NUMBER_OF_ITEMS
-To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+To:     Archie Pusaka <apusaka@google.com>
+Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
         Archie Pusaka <apusaka@chromium.org>,
         Yun-Hao Chung <howardchung@google.com>,
         Michael Sun <michaelfsun@google.com>
@@ -63,14 +63,9 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Bluez maintainers,
+Hi Archie,
 
-Could you take another look at this patch?
-
-Thanks,
-Archie
-
-On Wed, 2 Sep 2020 at 12:57, Archie Pusaka <apusaka@google.com> wrote:
+On Tue, Sep 1, 2020 at 9:57 PM Archie Pusaka <apusaka@google.com> wrote:
 >
 > From: Archie Pusaka <apusaka@chromium.org>
 >
@@ -188,3 +183,8 @@ On Wed, 2 Sep 2020 at 12:57, Archie Pusaka <apusaka@google.com> wrote:
 > --
 > 2.28.0.402.g5ffc5be6b7-goog
 >
+
+Applied, thanks.
+
+-- 
+Luiz Augusto von Dentz
