@@ -2,254 +2,133 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A05D267860
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 12 Sep 2020 08:52:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB14926785A
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 12 Sep 2020 08:51:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725857AbgILGwW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 12 Sep 2020 02:52:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35640 "EHLO
+        id S1725836AbgILGvc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 12 Sep 2020 02:51:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725833AbgILGwT (ORCPT
+        with ESMTP id S1725805AbgILGv0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 12 Sep 2020 02:52:19 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3BC8C061573
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 23:52:19 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id kk9so2732963pjb.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 23:52:19 -0700 (PDT)
+        Sat, 12 Sep 2020 02:51:26 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD8BBC061573
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 23:51:25 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id q10so6373507qvs.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Sep 2020 23:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=OIsvcCCe4eEzn40v5J1tH5z/WLp46x3UEfdIUBIffwU=;
-        b=iQEJlcx0UPQ/rre2YHa6Cz+hUs97ueji945vqIfBLQXxlJmWR+ugRTQKaccbjUfTrC
-         xU0n50oI6wBCldbIm7dvvK/7TM1OfMxc7jfwuMxYmC0qmlI7J/z4/TPAnuaw0W0L+wcN
-         m4D4lYGXNU60LM+neAKxHsewJsnwQx0Opsbgw=
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=W0otCJb0t2exDZa01G6rEt6eaiFdxQucf1NvvEpIOI8=;
+        b=O9b9GbDHEF1+xpCqb9iWvbaaLMQLrMtAcl38JqT9OHj4evlbCVZTo2+I9NTag9eFwr
+         EM+FhoKKe0FPJu5rPdFxPuE2HafN8sEWHeNED9mH2mTHCsDhdt8Q7SaLdRaxFQF0AKUs
+         CWIKDNVFRjztfWbNoH9okvQf5Y6HewZZ0vn59Z4RL9vitum6uSxEHvdUerBf8cmRiVs4
+         kafo01kQYGBRX7G45aKfz73UFF+UspidGi30f/h3wD7kXYsTnuY3NcukAtVNazrTSBCW
+         mkori1MIYjzE0izkD758mebymITi5ohKjasoNZBmAvIqahcDCY4pWoOeCSln7IRCigiU
+         v98A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=OIsvcCCe4eEzn40v5J1tH5z/WLp46x3UEfdIUBIffwU=;
-        b=bjjdLMyO03B05C5Pf/O9DVrv9/0+oP+ArSJ/bO5XmbHFyPn8mw1E7sZR6JlHS8Fevr
-         0Wbv/mgAWf/SzqkNuZF+czbA+9tvT7689DXpk3/c6Zk3Vp/1m/R0i5oWEnImLx8WBexK
-         HCpR0G0oQiuCOWGtvhmnuSGYkbj5kZrDew4rdj+6ffESXVPvBQHKEKtTGpQ+VGH6JXoD
-         zOPqP/CDfJcEhpeCmMqGPhnJZsx8z2pzueDgsvuNVKoxAqQYuaNm4gDCnJi5I6TtGe3q
-         K4FIlOtHa26744N9wAv9QRH1AL1TD6yasAL0EHJ3POlTWlkiignFezF3G8ZTBTJyQOhj
-         gDEw==
-X-Gm-Message-State: AOAM533nB6lLxH/Jl/Yxo4OW5hqtV4LtW4d/5qecSnBY3ffTNXLX1KgE
-        qgBLFAwTWUZKjXZ9cqWmJPpPBZEEng+n2g==
-X-Google-Smtp-Source: ABdhPJz8AyHkDMKYKwekYXelrG3s6YYBVlc1p5JstlHjY3sMpgAfT/TSWT8/ZxPS0Yqes97xIYhy1Q==
-X-Received: by 2002:a17:90b:1918:: with SMTP id mp24mr5246474pjb.110.1599893538347;
-        Fri, 11 Sep 2020 23:52:18 -0700 (PDT)
-Received: from mcchou0.mtv.corp.google.com ([2620:15c:202:201:de4a:3eff:fe75:1314])
-        by smtp.gmail.com with ESMTPSA id hg16sm3440913pjb.37.2020.09.11.23.52.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Sep 2020 23:52:17 -0700 (PDT)
-From:   Miao-chen Chou <mcchou@chromium.org>
-To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
-Cc:     Manish Mandlik <mmandlik@chromium.org>,
-        Howard Chung <howardchung@google.com>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Alain Michaud <alainm@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Subject: [BlueZ PATCH v5 3/8] adv_monitor: Implement Get functions of Adv monitor manager properties
-Date:   Fri, 11 Sep 2020 23:51:23 -0700
-Message-Id: <20200911235104.BlueZ.v5.3.I9960e45d36be3edb5f17de025e7eb8257d3cddef@changeid>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200911235104.BlueZ.v5.1.Iaa9dc2a66de5fbfa97627e1dbeb800116d3aa91e@changeid>
-References: <20200911235104.BlueZ.v5.1.Iaa9dc2a66de5fbfa97627e1dbeb800116d3aa91e@changeid>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=W0otCJb0t2exDZa01G6rEt6eaiFdxQucf1NvvEpIOI8=;
+        b=EcKtu9tPGC0DM3COg/oSZ5OOh0m8SghiDFplYU7XYeepmbCzbVquvaWky4Lax6/fiD
+         hEN3+KPfArLqqyQ/+zrxnmLITM+lOuzw65/pRU7X74D3xzpf8fJjZ5ZLLCzAKuoZUPJD
+         69YH41YZCw2qkciAzYMdcCXJotO87w/4fZ8HYXakJzyinSiyG/bBhmz4LMLcukwdl7N4
+         yHkB/r8v5aQ6SejX/9FrSO4idJ9PeO8g7H5q+EkJ4Kr16Mq7TVWnbuX3FVP0aJBHn14r
+         4XL0m4L9JIRGAQ8RgugTz0UD4GWXp+4dQCnreqDqOppQi6xT5j0h1bt9FVzt0H+lI3Pf
+         O8Rg==
+X-Gm-Message-State: AOAM531KMOcOGYjMADagSGBxCrnn3x5Vli3lDjmJmmbxsbQTVWWjDhed
+        n8+Meo2bXVZkkxjiN0CRd20yGrdsSqIYlQ==
+X-Google-Smtp-Source: ABdhPJyA/54hdT1Q81HZ2cRvVceHyoaGIO4Y7UCb8ruDWGs0bTZZ3LrCHC5NQQrE/W4fuXMTuMWhCw==
+X-Received: by 2002:a0c:e5cf:: with SMTP id u15mr5296017qvm.14.1599893484257;
+        Fri, 11 Sep 2020 23:51:24 -0700 (PDT)
+Received: from [172.17.0.2] ([40.84.17.224])
+        by smtp.gmail.com with ESMTPSA id r34sm6310970qtr.18.2020.09.11.23.51.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Sep 2020 23:51:23 -0700 (PDT)
+Message-ID: <5f5c6feb.1c69fb81.ac4d3.0c03@mx.google.com>
+Date:   Fri, 11 Sep 2020 23:51:23 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============6419365277445898984=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, tedd.an@linux.intel.com
+Subject: RE: [BlueZ,04/17] client: Add SPDX License Identifer
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20200912062357.23926-5-tedd.an@linux.intel.com>
+References: <20200912062357.23926-5-tedd.an@linux.intel.com>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This implements the Get functions of SupportedMonitorTypes and
-SupportedFeatures.
+--===============6419365277445898984==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-The following test was performed.
-- Issue dbus-send to read SupportedMonitorTypes and SupportedFeatures.
 
-Reviewed-by: Yun-Hao Chung <howardchung@google.com>
-Reviewed-by: Manish Mandlik <mmandlik@chromium.org>
-Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While we are preparing for reviewing the patches, we found the following
+issue/warning.
+
+Test Result:
+checkpatch Failed
+
+Outputs:
+WARNING:SPDX_LICENSE_TAG: Improper SPDX comment style for 'client/advertising.h', please use '/*' instead
+#38: FILE: client/advertising.h:1:
++// SPDX-License-Identifier: GPL-2.0-or-later
+
+WARNING:SPDX_LICENSE_TAG: Missing or malformed SPDX-License-Identifier tag in line 1
+#38: FILE: client/advertising.h:1:
++// SPDX-License-Identifier: GPL-2.0-or-later
+
+WARNING:SPDX_LICENSE_TAG: Improper SPDX comment style for 'client/agent.h', please use '/*' instead
+#56: FILE: client/agent.h:1:
++// SPDX-License-Identifier: GPL-2.0-or-later
+
+WARNING:SPDX_LICENSE_TAG: Missing or malformed SPDX-License-Identifier tag in line 1
+#56: FILE: client/agent.h:1:
++// SPDX-License-Identifier: GPL-2.0-or-later
+
+WARNING:SPDX_LICENSE_TAG: Improper SPDX comment style for 'client/display.h', please use '/*' instead
+#74: FILE: client/display.h:1:
++// SPDX-License-Identifier: GPL-2.0-or-later
+
+WARNING:SPDX_LICENSE_TAG: Missing or malformed SPDX-License-Identifier tag in line 1
+#74: FILE: client/display.h:1:
++// SPDX-License-Identifier: GPL-2.0-or-later
+
+WARNING:SPDX_LICENSE_TAG: Improper SPDX comment style for 'client/gatt.h', please use '/*' instead
+#92: FILE: client/gatt.h:1:
++// SPDX-License-Identifier: GPL-2.0-or-later
+
+WARNING:SPDX_LICENSE_TAG: Missing or malformed SPDX-License-Identifier tag in line 1
+#92: FILE: client/gatt.h:1:
++// SPDX-License-Identifier: GPL-2.0-or-later
+
+- total: 0 errors, 8 warnings, 36 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+Your patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+
 ---
+Regards,
+Linux Bluetooth
 
-Changes in v5:
-- Remove unused variable.
-
- src/adv_monitor.c | 126 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 121 insertions(+), 5 deletions(-)
-
-diff --git a/src/adv_monitor.c b/src/adv_monitor.c
-index ad3f64cbe..48aa6838d 100644
---- a/src/adv_monitor.c
-+++ b/src/adv_monitor.c
-@@ -28,6 +28,9 @@
- #include <dbus/dbus.h>
- #include <gdbus/gdbus.h>
- 
-+#include "lib/bluetooth.h"
-+#include "lib/mgmt.h"
-+
- #include "adapter.h"
- #include "dbus-common.h"
- #include "log.h"
-@@ -42,6 +45,11 @@ struct btd_adv_monitor_manager {
- 	struct btd_adapter *adapter;
- 	struct mgmt *mgmt;
- 	uint16_t adapter_id;
-+
-+	uint32_t supported_features;	/* MGMT_ADV_MONITOR_FEATURE_MASK_* */
-+	uint32_t enabled_features;	/* MGMT_ADV_MONITOR_FEATURE_MASK_* */
-+	uint16_t max_num_monitors;
-+	uint8_t max_num_patterns;
- };
- 
- static const GDBusMethodTable adv_monitor_methods[] = {
-@@ -54,10 +62,77 @@ static const GDBusMethodTable adv_monitor_methods[] = {
- 	{ }
- };
- 
-+enum monitor_type {
-+	MONITOR_TYPE_OR_PATTERNS,
-+};
-+
-+const struct adv_monitor_type {
-+	enum monitor_type type;
-+	const char *name;
-+} supported_types[] = {
-+	{ MONITOR_TYPE_OR_PATTERNS, "or_patterns" },
-+	{ },
-+};
-+
-+/* Gets SupportedMonitorTypes property */
-+static gboolean get_supported_monitor_types(const GDBusPropertyTable *property,
-+						DBusMessageIter *iter,
-+						void *data)
-+{
-+	DBusMessageIter entry;
-+	const struct adv_monitor_type *t;
-+
-+	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
-+						DBUS_TYPE_STRING_AS_STRING,
-+						&entry);
-+
-+	for (t = supported_types; t->name; t++) {
-+		dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING,
-+						&t->name);
-+	}
-+
-+	dbus_message_iter_close_container(iter, &entry);
-+
-+	return TRUE;
-+}
-+
-+const struct adv_monitor_feature {
-+	uint32_t mask;
-+	const char *name;
-+} supported_features[] = {
-+	{ MGMT_ADV_MONITOR_FEATURE_MASK_OR_PATTERNS, "controller-patterns" },
-+	{ }
-+};
-+
-+/* Gets SupportedFeatures property */
-+static gboolean get_supported_features(const GDBusPropertyTable *property,
-+						DBusMessageIter *iter,
-+						void *data)
-+{
-+	DBusMessageIter entry;
-+	const struct adv_monitor_feature *f;
-+	struct btd_adv_monitor_manager *manager = data;
-+
-+	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
-+						DBUS_TYPE_STRING_AS_STRING,
-+						&entry);
-+
-+	for (f = supported_features; f->name; f++) {
-+		if (manager->supported_features & f->mask) {
-+			dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING,
-+							&f->name);
-+		}
-+	}
-+
-+	dbus_message_iter_close_container(iter, &entry);
-+
-+	return TRUE;
-+}
-+
- static const GDBusPropertyTable adv_monitor_properties[] = {
--	{"SupportedMonitorTypes", "as", NULL, NULL, NULL,
-+	{"SupportedMonitorTypes", "as", get_supported_monitor_types, NULL, NULL,
- 					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL},
--	{"SupportedFeatures", "as", NULL, NULL, NULL,
-+	{"SupportedFeatures", "as", get_supported_features, NULL, NULL,
- 					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL},
- 	{ }
- };
-@@ -104,6 +179,42 @@ static void manager_destroy(struct btd_adv_monitor_manager *manager)
- 	manager_free(manager);
- }
- 
-+/* Initiates manager's members based on the return of
-+ * MGMT_OP_READ_ADV_MONITOR_FEATURES
-+ */
-+static void read_adv_monitor_features_cb(uint8_t status, uint16_t length,
-+						const void *param,
-+						void *user_data)
-+{
-+	const struct mgmt_rp_read_adv_monitor_features *rp = param;
-+	struct btd_adv_monitor_manager *manager = user_data;
-+
-+	if (status != MGMT_STATUS_SUCCESS || !param) {
-+		btd_error(manager->adapter_id, "Failed to Read Adv Monitor "
-+				"Features with status 0x%02x", status);
-+		return;
-+	}
-+
-+	if (length < sizeof(*rp)) {
-+		btd_error(manager->adapter_id,
-+				"Wrong size of Read Adv Monitor Features "
-+				"response");
-+		return;
-+	}
-+
-+	manager->supported_features = le32_to_cpu(rp->supported_features);
-+	manager->enabled_features = le32_to_cpu(rp->enabled_features);
-+	manager->max_num_monitors = le16_to_cpu(rp->max_num_handles);
-+	manager->max_num_patterns = rp->max_num_patterns;
-+
-+	btd_info(manager->adapter_id, "Adv Monitor Manager created with "
-+			"supported features:0x%08x, enabled features:0x%08x, "
-+			"max number of supported monitors:%d, "
-+			"max number of supported patterns:%d",
-+			manager->supported_features, manager->enabled_features,
-+			manager->max_num_monitors, manager->max_num_patterns);
-+}
-+
- /* Creates a manager and registers its D-Bus interface */
- struct btd_adv_monitor_manager *btd_adv_monitor_manager_create(
- 						struct btd_adapter *adapter,
-@@ -128,9 +239,14 @@ struct btd_adv_monitor_manager *btd_adv_monitor_manager_create(
- 		return NULL;
- 	}
- 
--	btd_info(manager->adapter_id,
--			"Adv Monitor Manager created for adapter %s",
--			adapter_get_path(manager->adapter));
-+	if (!mgmt_send(manager->mgmt, MGMT_OP_READ_ADV_MONITOR_FEATURES,
-+			manager->adapter_id, 0, NULL,
-+			read_adv_monitor_features_cb, manager, NULL)) {
-+		btd_error(manager->adapter_id,
-+				"Failed to send Read Adv Monitor Features");
-+		manager_destroy(manager);
-+		return NULL;
-+	}
- 
- 	return manager;
- }
--- 
-2.26.2
-
+--===============6419365277445898984==--
