@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41A02267D75
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 13 Sep 2020 05:34:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D60EF267D7C
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 13 Sep 2020 05:39:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725916AbgIMDeC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 12 Sep 2020 23:34:02 -0400
-Received: from mga04.intel.com ([192.55.52.120]:11485 "EHLO mga04.intel.com"
+        id S1725920AbgIMDjB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 12 Sep 2020 23:39:01 -0400
+Received: from mga17.intel.com ([192.55.52.151]:47404 "EHLO mga17.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725899AbgIMDeA (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 12 Sep 2020 23:34:00 -0400
-IronPort-SDR: RaIX+sT5IeIKAKcBQqngOq8hTgdz/pxVGO0jQJDJ4m+7e2MUHaahX3HDYdhCYeYiFAV2srljj9
- e4ZMmgwl+Eww==
-X-IronPort-AV: E=McAfee;i="6000,8403,9742"; a="156354723"
+        id S1725912AbgIMDi7 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 12 Sep 2020 23:38:59 -0400
+IronPort-SDR: a2I3ZEVf+kiD4rq5u+Ir636Pb2mvnU4U0awObFyy6Dkp/wYs+rMx12bGC9RBKAvargA5zHGoto
+ DBKomeQ2U+Pw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9742"; a="138973030"
 X-IronPort-AV: E=Sophos;i="5.76,421,1592895600"; 
-   d="scan'208";a="156354723"
+   d="scan'208";a="138973030"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2020 20:33:59 -0700
-IronPort-SDR: F83DnkvVUuqVntE2vnajK0+mQqjSIBUvGHL5Kq40a3B6vrtX+O+OjSL1Pc9+dDcz5+tzMDiNTq
- JzIUq0laG7kw==
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2020 20:33:59 -0700
+IronPort-SDR: PMf+aqsvCmAAAqC1i0n00Ln1pBo7Gk3rdOjNUBrKUspx+emTKvzJt3sZ5GEvRs3XKuZK202TJW
+ j/gdV1MSswTw==
 X-IronPort-AV: E=Sophos;i="5.76,421,1592895600"; 
-   d="scan'208";a="301347195"
+   d="scan'208";a="301347206"
 Received: from han1-mobl3.jf.intel.com ([10.251.29.101])
   by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2020 20:33:59 -0700
 From:   tedd.an@linux.intel.com
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
-Subject: [BlueZ v2 03/17] btio: Add SPDX License Identifier
-Date:   Sat, 12 Sep 2020 20:33:27 -0700
-Message-Id: <20200913033341.4639-4-tedd.an@linux.intel.com>
+Subject: [BlueZ v2 06/17] gdbus: Add SPDX License Identifier
+Date:   Sat, 12 Sep 2020 20:33:30 -0700
+Message-Id: <20200913033341.4639-7-tedd.an@linux.intel.com>
 X-Mailer: git-send-email 2.25.4
 In-Reply-To: <20200913033341.4639-1-tedd.an@linux.intel.com>
 References: <20200913033341.4639-1-tedd.an@linux.intel.com>
@@ -49,34 +49,78 @@ This patch adds SPDX License Identifier.
 -------------------------------------
        License            COUNT
 -------------------------------------
- GPL-2.0-or-later     :      2
+ GPL-2.0-or-later     :      6
 
 License: GPL-2.0-or-later
-   btio/btio.h
-   btio/btio.c
+   gdbus/mainloop.c
+   gdbus/object.c
+   gdbus/polkit.c
+   gdbus/client.c
+   gdbus/watch.c
+   gdbus/gdbus.h
 ---
- btio/btio.c | 1 +
- btio/btio.h | 1 +
- 2 files changed, 2 insertions(+)
+ gdbus/client.c   | 1 +
+ gdbus/gdbus.h    | 1 +
+ gdbus/mainloop.c | 1 +
+ gdbus/object.c   | 1 +
+ gdbus/polkit.c   | 1 +
+ gdbus/watch.c    | 1 +
+ 6 files changed, 6 insertions(+)
 
-diff --git a/btio/btio.c b/btio/btio.c
-index 844d6007f..42874e13c 100644
---- a/btio/btio.c
-+++ b/btio/btio.c
+diff --git a/gdbus/client.c b/gdbus/client.c
+index 86e1c7693..6caa2143d 100644
+--- a/gdbus/client.c
++++ b/gdbus/client.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
  /*
   *
-  *  BlueZ - Bluetooth protocol stack for Linux
-diff --git a/btio/btio.h b/btio/btio.h
-index 23e0ef72b..f1f8c99a9 100644
---- a/btio/btio.h
-+++ b/btio/btio.h
+  *  D-Bus helper library
+diff --git a/gdbus/gdbus.h b/gdbus/gdbus.h
+index 1a601c591..60e3e8bb5 100644
+--- a/gdbus/gdbus.h
++++ b/gdbus/gdbus.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
  /*
   *
-  *  BlueZ - Bluetooth protocol stack for Linux
+  *  D-Bus helper library
+diff --git a/gdbus/mainloop.c b/gdbus/mainloop.c
+index b90a8447c..e39eeb117 100644
+--- a/gdbus/mainloop.c
++++ b/gdbus/mainloop.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  *
+  *  D-Bus helper library
+diff --git a/gdbus/object.c b/gdbus/object.c
+index 49b578087..80ac8d7a7 100644
+--- a/gdbus/object.c
++++ b/gdbus/object.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  *
+  *  D-Bus helper library
+diff --git a/gdbus/polkit.c b/gdbus/polkit.c
+index 9e95fa384..e66a50c2f 100644
+--- a/gdbus/polkit.c
++++ b/gdbus/polkit.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  *
+  *  D-Bus helper library
+diff --git a/gdbus/watch.c b/gdbus/watch.c
+index 447e48671..83e8bd8be 100644
+--- a/gdbus/watch.c
++++ b/gdbus/watch.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  *
+  *  D-Bus helper library
 -- 
 2.17.1
 
