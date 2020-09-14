@@ -2,123 +2,80 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 43F95268D2E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Sep 2020 16:17:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2695268FAA
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Sep 2020 17:23:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726515AbgINORb convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 14 Sep 2020 10:17:31 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:53460 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726586AbgINN02 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 14 Sep 2020 09:26:28 -0400
-Received: from marcel-macpro.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
-        by mail.holtmann.org (Postfix) with ESMTPSA id DC189CECDD;
-        Mon, 14 Sep 2020 15:32:44 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Re: [PATCH v1] Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855
- support
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <c177f408186da437db722d855a01c846@codeaurora.org>
-Date:   Mon, 14 Sep 2020 15:25:47 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
-        mka@chromium.org, linux-bluetooth-owner@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <0C779191-3BD1-40BF-83E6-733F9C78EA03@holtmann.org>
-References: <0101017457c6b810-cb8b79ae-4663-436b-83d0-4c70c245bd25-000000@us-west-2.amazonses.com>
- <2E48211B-D62D-43D8-9C97-014966FBB2CB@holtmann.org>
- <c177f408186da437db722d855a01c846@codeaurora.org>
-To:     Rocky Liao <rjliao@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
+        id S1726168AbgINPXq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 14 Sep 2020 11:23:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38582 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726058AbgINPXL (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 14 Sep 2020 11:23:11 -0400
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2BE5B20639;
+        Mon, 14 Sep 2020 15:23:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600096990;
+        bh=EBqqQRsDxhvM1nw92/w69eMe9mZazFwm//Ofb5xCjvc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NhxFEZ5hFRzKcHM5UdRESvNf5RWMR93f2OaogAsqv4akh7DGDkhvKhkLXVh3XCM0k
+         bsyO24n6WDGAe+S0tayv+05GZAfma4r1iry3NA2mq4riIC66xgJYRRiAOYGhZ3L7Wk
+         KZNptsHILBCJ9AFv6G0mXT/Pfdx9wAbjVpWcRzH4=
+Date:   Mon, 14 Sep 2020 17:23:09 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Alan Stern <stern@rowland.harvard.edu>
+Cc:     himadrispandya@gmail.com, dvyukov@google.com,
+        linux-usb@vger.kernel.org, perex@perex.cz, tiwai@suse.com,
+        stern@rowland.harvard.ed, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-bluetooth@vger.kernel.org, alsa-devel@alsa-project.org
+Subject: Re: [PATCH v2 04/11] USB: core: hub.c: use usb_control_msg_send() in
+ a few places
+Message-ID: <20200914152309.GA3394411@kroah.com>
+References: <20200907145108.3766613-1-gregkh@linuxfoundation.org>
+ <20200907145108.3766613-5-gregkh@linuxfoundation.org>
+ <20200907150858.GD762136@rowland.harvard.edu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200907150858.GD762136@rowland.harvard.edu>
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Rocky,
+On Mon, Sep 07, 2020 at 11:08:58AM -0400, Alan Stern wrote:
+> On Mon, Sep 07, 2020 at 04:51:01PM +0200, Greg Kroah-Hartman wrote:
+> > There are a few calls to usb_control_msg() that can be converted to use
+> > usb_control_msg_send() instead, so do that in order to make the error
+> > checking a bit simpler and the code smaller.
+> > 
+> > Cc: Alan Stern <stern@rowland.harvard.edu>
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > ---
+> > v2:
+> >  - dropped changes to usb_req_set_sel() thanks to review from Alan
+> 
+> > @@ -4056,7 +4035,7 @@ static void usb_enable_link_state(struct usb_hcd *hcd, struct usb_device *udev,
+> >  	 * associated with the link state we're about to enable.
+> >  	 */
+> >  	ret = usb_req_set_sel(udev, state);
+> > -	if (ret < 0) {
+> > +	if (ret) {
+> >  		dev_warn(&udev->dev, "Set SEL for device-initiated %s failed.\n",
+> >  				usb3_lpm_names[state]);
+> >  		return;
+> 
+> Did this change survive by mistake?
+> 
+> Actually, it looks like usb_req_set_sel needs to check the value 
+> returned by usb_control_msg -- a perfect example of the sort of thing 
+> you were trying to fix in the first place!
 
->>> This patch add support for WCN6855 i.e. patch and nvm download
->>> support.
->>> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
->>> ---
->>> drivers/bluetooth/btusb.c | 42 +++++++++++++++++++++++++++++++++++----
->>> 1 file changed, 38 insertions(+), 4 deletions(-)
->>> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
->>> index fe80588c7bd3..e51e754ca9b8 100644
->>> --- a/drivers/bluetooth/btusb.c
->>> +++ b/drivers/bluetooth/btusb.c
->>> @@ -59,6 +59,7 @@ static struct usb_driver btusb_driver;
->>> #define BTUSB_MEDIATEK		0x200000
->>> #define BTUSB_WIDEBAND_SPEECH	0x400000
->>> #define BTUSB_VALID_LE_STATES   0x800000
->>> +#define BTUSB_QCA_WCN6855	0x1000000
->>> static const struct usb_device_id btusb_table[] = {
->>> 	/* Generic Bluetooth USB device */
->>> @@ -273,6 +274,10 @@ static const struct usb_device_id blacklist_table[] = {
->>> 	{ USB_DEVICE(0x13d3, 0x3496), .driver_info = BTUSB_QCA_ROME },
->>> 	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME },
->>> +	/* QCA WCN6855 chipset */
->>> +	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
->>> +						     BTUSB_WIDEBAND_SPEECH },
->>> +
->>> 	/* Broadcom BCM2035 */
->>> 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
->>> 	{ USB_DEVICE(0x0a5c, 0x200a), .driver_info = BTUSB_WRONG_SCO_MTU },
->>> @@ -3391,6 +3396,26 @@ static int btusb_set_bdaddr_ath3012(struct hci_dev *hdev,
->>> 	return 0;
->>> }
->>> +static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
->>> +				const bdaddr_t *bdaddr)
->>> +{
->>> +	struct sk_buff *skb;
->>> +	u8 buf[6];
->>> +	long ret;
->>> +
->>> +	memcpy(buf, bdaddr, sizeof(bdaddr_t));
->>> +
->>> +	skb = __hci_cmd_sync(hdev, 0xfc14, sizeof(buf), buf, HCI_INIT_TIMEOUT);
->>> +	if (IS_ERR(skb)) {
->>> +		ret = PTR_ERR(skb);
->>> +		bt_dev_err(hdev, "Change address command failed (%ld)", ret);
->>> +		return ret;
->>> +	}
->>> +	kfree_skb(skb);
->>> +
->>> +	return 0;
->>> +}
->> What is wrong with using qca_set_bdaddr() function.
-> WCN6855 is using different VSC to set the bt addr
+Ugh, good catch, and yes, the original code is buggy :)
 
-int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)                 
-{                                                                                
-        struct sk_buff *skb;                                                     
-        int err;                                                                 
-                                                                                 
-        skb = __hci_cmd_sync_ev(hdev, EDL_WRITE_BD_ADDR_OPCODE, 6, bdaddr,       
-                                HCI_EV_VENDOR, HCI_INIT_TIMEOUT);                
-        if (IS_ERR(skb)) {                                                       
-                err = PTR_ERR(skb);                                              
-                bt_dev_err(hdev, "QCA Change address cmd failed (%d)", err);     
-                return err;                                                      
-        }                                                                        
-                                                                                 
-        kfree_skb(skb);                                                          
-                                                                                 
-        return 0;                                                                
-}                                                                                
-EXPORT_SYMBOL_GPL(qca_set_bdaddr);
+thanks,
 
-I see that the other command is using HCI_EV_VENDOR, but is that on purpose or an accident? Might want to confirm with the btmon trace.
-
-Regards
-
-Marcel
-
+greg k-h
