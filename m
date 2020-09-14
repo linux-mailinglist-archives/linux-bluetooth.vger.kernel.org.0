@@ -2,157 +2,275 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C4312691AA
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Sep 2020 18:34:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6F7A2693C9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Sep 2020 19:43:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726137AbgINQd4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 14 Sep 2020 12:33:56 -0400
-Received: from userp2120.oracle.com ([156.151.31.85]:37796 "EHLO
-        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726028AbgINPoj (ORCPT
+        id S1725944AbgINRnG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 14 Sep 2020 13:43:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45822 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726208AbgINMX2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 14 Sep 2020 11:44:39 -0400
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 08EFiFC6141963;
-        Mon, 14 Sep 2020 15:44:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=corp-2020-01-29;
- bh=eq4LTC2Yd5sfvcCLwppvKF+HmjZnZ6bst/Dh6vKmwQ4=;
- b=RLRAX6BrM34Ih+gjIw+Epxc9xBzMUxjRCzA49x9waBmG5ROyH122zIRNrKiJcl9F4jMG
- o5vlXfAT76qxk9mGooEGm/w6UYM4CCE3WCBuFtR+4iaDo4nWs6vrmB8arGC7QccFXZSe
- VtHLWWOWHlPYBIcfMkraiW/aC9MBB7N2cvKZt3LkD1WKoJbZL147JheLdjJKGzCnX0Ss
- IeoCGLYVBe9oQ4aZyDIr/uu9HrZapDkRL6gUQ2umnPvjwv4HxsI4nQKDZdgQARax9ZdL
- G5UdZXSmS3zQytLdUz5zKalVJIjdKEvbw6goCGJZhgXmGY10EVQtklnmB5CNlCMbejZk Vw== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by userp2120.oracle.com with ESMTP id 33j91d916q-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 14 Sep 2020 15:44:18 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 08EFPMNK113211;
-        Mon, 14 Sep 2020 15:44:17 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-        by aserp3020.oracle.com with ESMTP id 33h881tn8s-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 14 Sep 2020 15:44:17 +0000
-Received: from abhmp0019.oracle.com (abhmp0019.oracle.com [141.146.116.25])
-        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 08EFiDnQ017022;
-        Mon, 14 Sep 2020 15:44:14 GMT
-Received: from kadam (/41.57.98.10)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Mon, 14 Sep 2020 15:44:13 +0000
-Date:   Mon, 14 Sep 2020 18:44:05 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Anmol Karn <anmol.karan123@gmail.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel-mentees@lists.linuxfoundation.org,
-        linux-kernel@vger.kernel.org, syzkaller-bugs@googlegroups.com,
-        netdev@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        kuba@kernel.org, davem@davemloft.net,
-        syzbot+0bef568258653cff272f@syzkaller.appspotmail.com
-Subject: Re: [Linux-kernel-mentees] [PATCH] net: bluetooth: Fix null pointer
- dereference in hci_event_packet()
-Message-ID: <20200914154405.GC18329@kadam>
-References: <20200910043424.19894-1-anmol.karan123@gmail.com>
- <20200910104918.GF12635@kadam>
- <20200912091028.GA67109@Thinkpad>
+        Mon, 14 Sep 2020 08:23:28 -0400
+Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com [IPv6:2607:f8b0:4864:20::b43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2F9EC0698C4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 14 Sep 2020 05:18:40 -0700 (PDT)
+Received: by mail-yb1-xb43.google.com with SMTP id h20so11651064ybj.8
+        for <linux-bluetooth@vger.kernel.org>; Mon, 14 Sep 2020 05:18:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=95MkvjALtD+pWjI9L+dX9jS5l3VsX/dwVwk6PdF2H90=;
+        b=BUvMIK5XM9/nSld70H/GBdIBvh2rIH9jwVh7E1IIo3gf+O+eVnOdStAbg+NveSxK7z
+         e/XTV+vzv/3uHTlycyTHZ6NAP3kzlg0reNW4YWL71VPf1wB8oGisMQBQgAgMNPIx3cnN
+         Vvdt2NZHPLkg9yIAdHfj9DXEGJdPO7P5XqRo7dAiPsBeZhDsOwN1CtuCy4G+Msha0XO0
+         JslegxXzxikldWKnjhEcEWvtQKwuSqXWQJRSm0llo1ZOmwPqN/v29jLjAWYhfeJHfWgq
+         FcK3c/fpRNXSvH2lCrn/2KY4t2uEbmR4g5XA1l31V2d0hsN7k0jwLeisbZ0ZByI78EPU
+         CfCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=95MkvjALtD+pWjI9L+dX9jS5l3VsX/dwVwk6PdF2H90=;
+        b=EAMfSOZJPfLciSAd5Dk3L3VoOpco1jNvBWXkHLAN1BdV4uuiEM34K119H6v7OweGYI
+         MnDiojR7aHOzIdy4ifeCZ1nT1yU94aG/GCQjdwnaIMNDVQzu4J1lsnMTojYhtnbPcjk4
+         XEUWkbABVy31PKRlEnJWcYdOVSkCuMETcFLgCMDWnITarGgoKsVOCfgMsDwQj90RRk6v
+         YyFsb5bpVUnihNVN4VT7tOWFaCKkbg82jm4/AYdcv7BcllFCmOEL+YT2000EOFgoQHpq
+         HvHOZVhWC8JypFiaK1aJRLrnzIiIzg+n6jt0uqWKRr4s3zz1DDz0hl92wJue7iexafUl
+         Y1rQ==
+X-Gm-Message-State: AOAM533jfpgy8ymdUNzZEj0F4cXE36eRIFzpOR17Hnu5Eb6HidXGLDMd
+        pXw1ew0O11n+h5ijzL5x+WkV/uOt8nzR5uGztYEONQ==
+X-Google-Smtp-Source: ABdhPJxjgaCTkVcsuVGglaPfAZXtOAa3ztmw6wM6ggRMFf1DI4xOOd4Bkak99KEX4rW77bs7qnBN4tc79sW8Wyszurk=
+X-Received: by 2002:a25:db88:: with SMTP id g130mr20706294ybf.193.1600085919205;
+ Mon, 14 Sep 2020 05:18:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200912091028.GA67109@Thinkpad>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9744 signatures=668679
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 spamscore=0 adultscore=0
- suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
- definitions=main-2009140125
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9744 signatures=668679
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 impostorscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 mlxlogscore=999
- clxscore=1015 adultscore=0 lowpriorityscore=0 spamscore=0 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2009140126
+References: <20200910060403.144524-1-josephsih@chromium.org>
+ <20200910140342.v3.1.I56de28ec171134cb9f97062e2c304a72822ca38b@changeid> <20200910081842.yunymr2l4fnle5nl@pali>
+In-Reply-To: <20200910081842.yunymr2l4fnle5nl@pali>
+From:   Joseph Hwang <josephsih@google.com>
+Date:   Mon, 14 Sep 2020 20:18:27 +0800
+Message-ID: <CAHFy418Ln9ONHGVhg513g0v+GxUZMDtLpe5NFONO3HuAZz=r7g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] Bluetooth: btusb: define HCI packet sizes of USB Alts
+To:     =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
+Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        chromeos-bluetooth-upstreaming 
+        <chromeos-bluetooth-upstreaming@chromium.org>,
+        Alain Michaud <alainm@chromium.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Sat, Sep 12, 2020 at 02:40:28PM +0530, Anmol Karn wrote:
-> On Thu, Sep 10, 2020 at 01:49:18PM +0300, Dan Carpenter wrote:
-> > On Thu, Sep 10, 2020 at 10:04:24AM +0530, Anmol Karn wrote:
-> > > Prevent hci_phy_link_complete_evt() from dereferencing 'hcon->amp_mgr'
-> > > as NULL. Fix it by adding pointer check for it.
-> > > 
-> > > Reported-and-tested-by: syzbot+0bef568258653cff272f@syzkaller.appspotmail.com
-> > > Link: https://syzkaller.appspot.com/bug?extid=0bef568258653cff272f 
-> > > Signed-off-by: Anmol Karn <anmol.karan123@gmail.com>
-> > > ---
-> > >  net/bluetooth/hci_event.c | 5 +++++
-> > >  1 file changed, 5 insertions(+)
-> > > 
-> > > diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-> > > index 4b7fc430793c..871e16804433 100644
-> > > --- a/net/bluetooth/hci_event.c
-> > > +++ b/net/bluetooth/hci_event.c
-> > > @@ -4936,6 +4936,11 @@ static void hci_phy_link_complete_evt(struct hci_dev *hdev,
-> > >  		return;
-> > >  	}
-> > >  
-> > > +	if (IS_ERR_OR_NULL(hcon->amp_mgr)) {
-> > 
-> > It can't be an error pointer.  Shouldn't we call hci_conn_del() on this
-> > path?  Try to find the Fixes tag to explain how this bug was introduced.
-> > 
-> > (Don't rush to send a v2.  The patch requires quite a bit more digging
-> > and detective work before it is ready).
-> > 
-> > > +		hci_dev_unlock(hdev);
-> > > +		return;
-> > > +	}
-> > > +
-> > >  	if (ev->status) {
-> > >  		hci_conn_del(hcon);
-> > >  		hci_dev_unlock(hdev);
-> > 
-> > regards,
-> > dan carpenter
-> > 
-> 
-> Sir,
-> 
-> I need little advice in continuing with this Patch,
-> 
-> I have looked into the Bisected logs and the problem occurs from this commit:
-> 
-> 941992d29447 ("ethernet: amd: use IS_ENABLED() instead of checking for built-in or module")
-> 
+On Thu, Sep 10, 2020 at 4:18 PM Pali Roh=C3=A1r <pali@kernel.org> wrote:
+>
+> On Thursday 10 September 2020 14:04:01 Joseph Hwang wrote:
+> > It is desirable to define the HCI packet payload sizes of
+> > USB alternate settings so that they can be exposed to user
+> > space.
+> >
+> > Reviewed-by: Alain Michaud <alainm@chromium.org>
+> > Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+> > Signed-off-by: Joseph Hwang <josephsih@chromium.org>
+> > ---
+> >
+> > Changes in v3:
+> > - Set hdev->sco_mtu to rp->sco_mtu if the latter is smaller.
+> >
+> > Changes in v2:
+> > - Used sco_mtu instead of a new sco_pkt_len member in hdev.
+> > - Do not overwrite hdev->sco_mtu in hci_cc_read_buffer_size
+> >   if it has been set in the USB interface.
+> >
+> >  drivers/bluetooth/btusb.c | 45 +++++++++++++++++++++++++++++----------
+> >  net/bluetooth/hci_event.c | 14 +++++++++++-
+> >  2 files changed, 47 insertions(+), 12 deletions(-)
+> >
+> > diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> > index fe80588c7bd3a8..651d5731a6c6cf 100644
+> > --- a/drivers/bluetooth/btusb.c
+> > +++ b/drivers/bluetooth/btusb.c
+> > @@ -459,6 +459,24 @@ static const struct dmi_system_id btusb_needs_rese=
+t_resume_table[] =3D {
+> >  #define BTUSB_WAKEUP_DISABLE 14
+> >  #define BTUSB_USE_ALT1_FOR_WBS       15
+> >
+> > +/* Per core spec 5, vol 4, part B, table 2.1,
+> > + * list the hci packet payload sizes for various ALT settings.
+> > + * This is used to set the packet length for the wideband speech.
+> > + * If a controller does not probe its usb alt setting, the default
+> > + * value will be 0. Any clients at upper layers should interpret it
+> > + * as a default value and set a proper packet length accordingly.
+> > + *
+> > + * To calculate the HCI packet payload length:
+> > + *   for alternate settings 1 - 5:
+> > + *     hci_packet_size =3D suggested_max_packet_size * 3 (packets) -
+> > + *                       3 (HCI header octets)
+> > + *   for alternate setting 6:
+> > + *     hci_packet_size =3D suggested_max_packet_size - 3 (HCI header o=
+ctets)
+> > + *   where suggested_max_packet_size is {9, 17, 25, 33, 49, 63}
+> > + *   for alt settings 1 - 6.
+>
+> Thank you for update, now I see what you mean!
+>
+> > + */
+> > +static const int hci_packet_size_usb_alt[] =3D { 0, 24, 48, 72, 96, 14=
+4, 60 };
+>
+> Now the another question, why you are using hci_packet_size_usb_alt[1]
+> and hci_packet_size_usb_alt[6] values from this array?
 
-That's just the patch which made the code testable by syzbot.  It didn't
-introduce the bug.
+Will answer it per the spec in the next patch series.
 
-> 
-> Here is a diff of patch which i modified from last patch,
-> 
-> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-> index 4b7fc430793c..6ce435064e0b 100644
-> --- a/net/bluetooth/hci_event.c
-> +++ b/net/bluetooth/hci_event.c
-> @@ -4936,6 +4936,12 @@ static void hci_phy_link_complete_evt(struct hci_dev *hdev,
->                 return;
->         }
-> 
-> +       if (!hcon->amp_mgr) {
-> +               hci_conn_del(hcon);
-> +               hci_dev_unlock(hdev);
+>
+> > +
+> >  struct btusb_data {
+> >       struct hci_dev       *hdev;
+> >       struct usb_device    *udev;
+> > @@ -3959,6 +3977,15 @@ static int btusb_probe(struct usb_interface *int=
+f,
+> >       hdev->notify =3D btusb_notify;
+> >       hdev->prevent_wake =3D btusb_prevent_wake;
+> >
+> > +     if (id->driver_info & BTUSB_AMP) {
+> > +             /* AMP controllers do not support SCO packets */
+> > +             data->isoc =3D NULL;
+> > +     } else {
+> > +             /* Interface orders are hardcoded in the specification */
+> > +             data->isoc =3D usb_ifnum_to_if(data->udev, ifnum_base + 1=
+);
+> > +             data->isoc_ifnum =3D ifnum_base + 1;
+> > +     }
+> > +
+> >  #ifdef CONFIG_PM
+> >       err =3D btusb_config_oob_wake(hdev);
+> >       if (err)
+> > @@ -4022,6 +4049,10 @@ static int btusb_probe(struct usb_interface *int=
+f,
+> >               hdev->set_diag =3D btintel_set_diag;
+> >               hdev->set_bdaddr =3D btintel_set_bdaddr;
+> >               hdev->cmd_timeout =3D btusb_intel_cmd_timeout;
+> > +
+> > +             if (btusb_find_altsetting(data, 6))
+> > +                     hdev->sco_mtu =3D hci_packet_size_usb_alt[6];
+>
+> Why you are setting this sco_mtu only for Intel adapter? Is not this
+> whole code generic to USB?
 
-I have no idea if calling hci_conn_del() is really the correct, thing.
-I don't know the code at all.  Anyway, do some research and figure out
-for sure what the correct thing is.
+Please refer to the answer to the Realtek adapter below. Thanks.
 
-Also look for similar bugs in other places where hcon->amp_mgr is
-dereferenced.  For example, amp_read_loc_assoc_final_data() seems to
-have a similar bug.
+>
+> > +
+> >               set_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks)=
+;
+> >               set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+> >               set_bit(HCI_QUIRK_NON_PERSISTENT_DIAG, &hdev->quirks);
+> > @@ -4063,15 +4094,6 @@ static int btusb_probe(struct usb_interface *int=
+f,
+> >               btusb_check_needs_reset_resume(intf);
+> >       }
+> >
+> > -     if (id->driver_info & BTUSB_AMP) {
+> > -             /* AMP controllers do not support SCO packets */
+> > -             data->isoc =3D NULL;
+> > -     } else {
+> > -             /* Interface orders are hardcoded in the specification */
+> > -             data->isoc =3D usb_ifnum_to_if(data->udev, ifnum_base + 1=
+);
+> > -             data->isoc_ifnum =3D ifnum_base + 1;
+> > -     }
+> > -
+> >       if (IS_ENABLED(CONFIG_BT_HCIBTUSB_RTL) &&
+> >           (id->driver_info & BTUSB_REALTEK)) {
+> >               hdev->setup =3D btrtl_setup_realtek;
+> > @@ -4083,9 +4105,10 @@ static int btusb_probe(struct usb_interface *int=
+f,
+> >                * (DEVICE_REMOTE_WAKEUP)
+> >                */
+> >               set_bit(BTUSB_WAKEUP_DISABLE, &data->flags);
+> > -             if (btusb_find_altsetting(data, 1))
+> > +             if (btusb_find_altsetting(data, 1)) {
+> >                       set_bit(BTUSB_USE_ALT1_FOR_WBS, &data->flags);
+> > -             else
+> > +                     hdev->sco_mtu =3D hci_packet_size_usb_alt[1];
+>
+> And this part of code which you write is Realtek specific.
 
-regards,
-dan carpenter
+We currently only have Intel and Realtek platforms to test with. If
+making it generic without proper testing platforms is fine, I will
+make it generic. Or do you think it might be better to make it
+customized with particular vendors for now; and make it generic later
+when it works well with sufficient vendors?
 
+>
+> I thought that this is something generic to bluetooth usb as you pointed
+> to bluetooth documentation "core spec 5, vol 4, part B, table 2.1".
+>
+> > +             } else
+> >                       bt_dev_err(hdev, "Device does not support ALT set=
+ting 1");
+> >       }
+>
+> Also this patch seems to be for me incomplete or not fully correct as
+> USB altsetting is chosen in function btusb_work() and it depends on
+> selected AIR mode (which is configured by another setsockopt).
+>
+> So despite what is written in commit message, this patch looks for me
+> like some hack for Intel and Realtek bluetooth adapters and does not
+> solve problems in vendor independent manner.
+
+You are right that sco_mtu should be changed according to the air
+mode. Here are some issues to handle and what I plan to do. I would
+like to solicit your comments before I submit the next series.
+
+[Issue 1] The air mode is determined in btusb_work() which is
+triggered by hci_sync_conn_complete_evt(). So =E2=80=9Cconn->mtu =3D
+hdev->sco_mtu=E2=80=9D should not be done in  sco_conn_add() in the early
+connecting stage. Instead, it will be moved to near the end of
+hci_sync_conn_complete_evt().
+
+[Issue 2] The btusb_work() is performed by a worker. There would be a
+timing issue here if we let btusb_work() to do =E2=80=9Chdev->sco_mtu =3D
+hci_packet_size_usb_alt[i]=E2=80=9D because there is no guarantee how soon =
+the
+btusb_work() can be finished and get =E2=80=9Chdev->sco_mtu=E2=80=9D value =
+set
+correctly. In order to avoid the potential race condition, I suggest
+to determine air_mode in btusb_notify() before
+schedule_work(&data->work) is executed so that =E2=80=9Chdev->sco_mtu =3D
+hci_packet_size_usb_alt[i]=E2=80=9D is guaranteed to be performed when
+btusb_notify() finished. In this way, hci_sync_conn_complete_evt() can
+set conn->mtu correctly as described in [Issue 1] above.
+
+[Issue 3] Concerning CVSD: The above flow is good when the transparent
+mode is selected. When it is the CVSD mode, we should set
+hdev->sco_mtu and conn->mtu back to the original mtu size returned by
+hci_cc_read_buffer_size(). This is because we do not have a reliable
+way to determine what size is used with CVSD. AFAIK, controllers
+connected through USB use 48 bytes; and controllers connected through
+UART use 60 bytes. It seems to me that these numbers are not recorded
+in the kernel(?). It seems beyond the scope of this patch to set the
+proper value for CVSD. So we will let hdev->sco_mtu and conn->mtu go
+back to their original values and are not affected by this patch.
+
+I am wondering if such directions of fixing this patch look good to you?
+
+Thanks and regards!
+Joseph
+
+
+
+--=20
+
+Joseph Shyh-In Hwang
+Email: josephsih@google.com
