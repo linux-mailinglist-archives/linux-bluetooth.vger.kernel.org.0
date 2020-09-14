@@ -2,27 +2,27 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4A7D2691B6
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Sep 2020 18:36:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC1062691A4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Sep 2020 18:33:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726379AbgINQd7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 14 Sep 2020 12:33:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47812 "EHLO mail.kernel.org"
+        id S1726498AbgINPpG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 14 Sep 2020 11:45:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48036 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726055AbgINPiQ (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 14 Sep 2020 11:38:16 -0400
+        id S1726163AbgINPiX (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 14 Sep 2020 11:38:23 -0400
 Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AC67C208DB;
-        Mon, 14 Sep 2020 15:38:11 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CC3DB21D41;
+        Mon, 14 Sep 2020 15:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600097892;
-        bh=K8GDmgIFok61DBUhIpFd8GKKp/6PoQOtGoTpJAfvjV4=;
+        s=default; t=1600097896;
+        bh=XYLL0KUMv9QFPVZiQoCBglWmF6MD1JN+dd5eHYK5nys=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=f8A/tP09/VdJtaE+8mhb6hj4aJFUw7hWS4RjTJvFMbVRTV5DlQoZSeJ/dbIyjjK6P
-         otm4FHhaHt6yHc8pfIbd0RU0UCXy1svPu77Xkmmpo7xGIg1W+cIY1YOaIUF32oqnhW
-         wz1S8q3dSA8dQD+UQq7ICE8A2tAgWVYdTZ+JU19w=
+        b=0RLRsiGw9J2HBRKIUDSkJWq/Wk+SLqdTbiRnMNsax1+8/6zw0h38/xrtWyJsYH7ir
+         j2EtHv9H2WhVDq5qBZLxfUo1+xEFswCPCdKLRRmeMryiXmTolxO5IB2E4cJd1qCTR+
+         5C/KkJF39VnFJy6YJBV/l40mEs1Eju5mU018bPFo=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     himadrispandya@gmail.com, dvyukov@google.com,
         linux-usb@vger.kernel.org
@@ -30,10 +30,11 @@ Cc:     perex@perex.cz, tiwai@suse.com, stern@rowland.harvard.ed,
         linux-kernel@vger.kernel.org, marcel@holtmann.org,
         johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
         alsa-devel@alsa-project.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH v3 02/11] USB: add usb_control_msg_send() and usb_control_msg_recv()
-Date:   Mon, 14 Sep 2020 17:37:47 +0200
-Message-Id: <20200914153756.3412156-3-gregkh@linuxfoundation.org>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH v3 04/11] USB: core: hub.c: use usb_control_msg_send() in a few places
+Date:   Mon, 14 Sep 2020 17:37:49 +0200
+Message-Id: <20200914153756.3412156-5-gregkh@linuxfoundation.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200914153756.3412156-1-gregkh@linuxfoundation.org>
 References: <20200914153756.3412156-1-gregkh@linuxfoundation.org>
@@ -44,193 +45,209 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-New core functions to make sending/receiving USB control messages easier
-and saner.
+There are a few calls to usb_control_msg() that can be converted to use
+usb_control_msg_send() instead, so do that in order to make the error
+checking a bit simpler and the code smaller.
 
-In discussions, it turns out that the large majority of users of
-usb_control_msg() do so in potentially incorrect ways.  The most common
-issue is where a "short" message is received, yet never detected
-properly due to "incorrect" error handling.
-
-Handle all of this in the USB core with two new functions to try to make
-working with USB control messages simpler.
-
-No more need for dynamic data, messages can be on the stack, and only
-"complete" send/receive will work without causing an error.
-
+Cc: Alan Stern <stern@rowland.harvard.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
 v3:
- - no change from v2
+ - drop change in usb_enable_link_state() as it was not needed now
+   thanks to review from Alan
+ - minor changes requested by checkpatch.pl
 
 v2:
- - no change from v1
+ - dropped changes to usb_req_set_sel() thanks to review from Alan
 
- drivers/usb/core/message.c | 133 +++++++++++++++++++++++++++++++++++++
- include/linux/usb.h        |   6 ++
- 2 files changed, 139 insertions(+)
+ drivers/usb/core/hub.c | 99 +++++++++++++++++-------------------------
+ 1 file changed, 40 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
-index ae1de9cc4b09..1dc53b12a26a 100644
---- a/drivers/usb/core/message.c
-+++ b/drivers/usb/core/message.c
-@@ -162,6 +162,139 @@ int usb_control_msg(struct usb_device *dev, unsigned int pipe, __u8 request,
+diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
+index 5b768b80d1ee..5742ddeb0455 100644
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -410,8 +410,8 @@ static int get_hub_descriptor(struct usb_device *hdev,
+  */
+ static int clear_hub_feature(struct usb_device *hdev, int feature)
+ {
+-	return usb_control_msg(hdev, usb_sndctrlpipe(hdev, 0),
+-		USB_REQ_CLEAR_FEATURE, USB_RT_HUB, feature, 0, NULL, 0, 1000);
++	return usb_control_msg_send(hdev, 0, USB_REQ_CLEAR_FEATURE, USB_RT_HUB,
++				    feature, 0, NULL, 0, 1000);
  }
- EXPORT_SYMBOL_GPL(usb_control_msg);
  
-+/**
-+ * usb_control_msg_send - Builds a control "send" message, sends it off and waits for completion
-+ * @dev: pointer to the usb device to send the message to
-+ * @endpoint: endpoint to send the message to
-+ * @request: USB message request value
-+ * @requesttype: USB message request type value
-+ * @value: USB message value
-+ * @index: USB message index value
-+ * @driver_data: pointer to the data to send
-+ * @size: length in bytes of the data to send
-+ * @timeout: time in msecs to wait for the message to complete before timing
-+ *	out (if 0 the wait is forever)
-+ *
-+ * Context: !in_interrupt ()
-+ *
-+ * This function sends a control message to a specified endpoint that is not
-+ * expected to fill in a response (i.e. a "send message") and waits for the
-+ * message to complete, or timeout.
-+ *
-+ * Do not use this function from within an interrupt context. If you need
-+ * an asynchronous message, or need to send a message from within interrupt
-+ * context, use usb_submit_urb(). If a thread in your driver uses this call,
-+ * make sure your disconnect() method can wait for it to complete. Since you
-+ * don't have a handle on the URB used, you can't cancel the request.
-+ *
-+ * The data pointer can be made to a reference on the stack, or anywhere else,
-+ * as it will not be modified at all.  This does not have the restriction that
-+ * usb_control_msg() has where the data pointer must be to dynamically allocated
-+ * memory (i.e. memory that can be successfully DMAed to a device).
-+ *
-+ * Return: If successful, 0 is returned, Otherwise, a negative error number.
-+ */
-+int usb_control_msg_send(struct usb_device *dev, __u8 endpoint, __u8 request,
-+			 __u8 requesttype, __u16 value, __u16 index,
-+			 const void *driver_data, __u16 size, int timeout)
-+{
-+	unsigned int pipe = usb_sndctrlpipe(dev, endpoint);
-+	int ret;
-+	u8 *data = NULL;
-+
-+	if (usb_pipe_type_check(dev, pipe))
-+		return -EINVAL;
-+
-+	if (size) {
-+		data = kmemdup(driver_data, size, GFP_KERNEL);
-+		if (!data)
-+			return -ENOMEM;
-+	}
-+
-+	ret = usb_control_msg(dev, pipe, request, requesttype, value, index,
-+			      data, size, timeout);
-+	kfree(data);
-+
-+	if (ret < 0)
-+		return ret;
-+	if (ret == size)
-+		return 0;
-+	return -EINVAL;
-+}
-+EXPORT_SYMBOL_GPL(usb_control_msg_send);
-+
-+/**
-+ * usb_control_msg_recv - Builds a control "receive" message, sends it off and waits for completion
-+ * @dev: pointer to the usb device to send the message to
-+ * @endpoint: endpoint to send the message to
-+ * @request: USB message request value
-+ * @requesttype: USB message request type value
-+ * @value: USB message value
-+ * @index: USB message index value
-+ * @driver_data: pointer to the data to be filled in by the message
-+ * @size: length in bytes of the data to be received
-+ * @timeout: time in msecs to wait for the message to complete before timing
-+ *	out (if 0 the wait is forever)
-+ *
-+ * Context: !in_interrupt ()
-+ *
-+ * This function sends a control message to a specified endpoint that is
-+ * expected to fill in a response (i.e. a "receive message") and waits for the
-+ * message to complete, or timeout.
-+ *
-+ * Do not use this function from within an interrupt context. If you need
-+ * an asynchronous message, or need to send a message from within interrupt
-+ * context, use usb_submit_urb(). If a thread in your driver uses this call,
-+ * make sure your disconnect() method can wait for it to complete. Since you
-+ * don't have a handle on the URB used, you can't cancel the request.
-+ *
-+ * The data pointer can be made to a reference on the stack, or anywhere else
-+ * that can be successfully written to.  This function does not have the
-+ * restriction that usb_control_msg() has where the data pointer must be to
-+ * dynamically allocated memory (i.e. memory that can be successfully DMAed to a
-+ * device).
-+ *
-+ * The "whole" message must be properly received from the device in order for
-+ * this function to be successful.  If a device returns less than the expected
-+ * amount of data, then the function will fail.  Do not use this for messages
-+ * where a variable amount of data might be returned.
-+ *
-+ * Return: If successful, 0 is returned, Otherwise, a negative error number.
-+ */
-+int usb_control_msg_recv(struct usb_device *dev, __u8 endpoint, __u8 request,
-+			 __u8 requesttype, __u16 value, __u16 index,
-+			 void *driver_data, __u16 size, int timeout)
-+{
-+	unsigned int pipe = usb_rcvctrlpipe(dev, endpoint);
-+	int ret;
-+	u8 *data;
-+
-+	if (!size || !driver_data || usb_pipe_type_check(dev, pipe))
-+		return -EINVAL;
-+
-+	data = kmalloc(size, GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	ret = usb_control_msg(dev, pipe, request, requesttype, value, index,
-+			      data, size, timeout);
-+
-+	if (ret < 0)
-+		goto exit;
-+
-+	if (ret == size) {
-+		memcpy(driver_data, data, size);
-+		ret = 0;
-+	} else {
-+		ret = -EINVAL;
-+	}
-+
-+exit:
-+	kfree(data);
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(usb_control_msg_recv);
-+
- /**
-  * usb_interrupt_msg - Builds an interrupt urb, sends it off and waits for completion
-  * @usb_dev: pointer to the usb device to send the message to
-diff --git a/include/linux/usb.h b/include/linux/usb.h
-index 0b3963d7ec38..a5460f08126e 100644
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -1802,6 +1802,12 @@ extern int usb_bulk_msg(struct usb_device *usb_dev, unsigned int pipe,
- 	int timeout);
+ /*
+@@ -419,9 +419,8 @@ static int clear_hub_feature(struct usb_device *hdev, int feature)
+  */
+ int usb_clear_port_feature(struct usb_device *hdev, int port1, int feature)
+ {
+-	return usb_control_msg(hdev, usb_sndctrlpipe(hdev, 0),
+-		USB_REQ_CLEAR_FEATURE, USB_RT_PORT, feature, port1,
+-		NULL, 0, 1000);
++	return usb_control_msg_send(hdev, 0, USB_REQ_CLEAR_FEATURE, USB_RT_PORT,
++				    feature, port1, NULL, 0, 1000);
+ }
  
- /* wrappers around usb_control_msg() for the most common standard requests */
-+int usb_control_msg_send(struct usb_device *dev, __u8 endpoint, __u8 request,
-+			 __u8 requesttype, __u16 value, __u16 index,
-+			 const void *data, __u16 size, int timeout);
-+int usb_control_msg_recv(struct usb_device *dev, __u8 endpoint, __u8 request,
-+			 __u8 requesttype, __u16 value, __u16 index,
-+			 void *data, __u16 size, int timeout);
- extern int usb_get_descriptor(struct usb_device *dev, unsigned char desctype,
- 	unsigned char descindex, void *buf, int size);
- extern int usb_get_status(struct usb_device *dev,
+ /*
+@@ -429,9 +428,8 @@ int usb_clear_port_feature(struct usb_device *hdev, int port1, int feature)
+  */
+ static int set_port_feature(struct usb_device *hdev, int port1, int feature)
+ {
+-	return usb_control_msg(hdev, usb_sndctrlpipe(hdev, 0),
+-		USB_REQ_SET_FEATURE, USB_RT_PORT, feature, port1,
+-		NULL, 0, 1000);
++	return usb_control_msg_send(hdev, 0, USB_REQ_SET_FEATURE, USB_RT_PORT,
++				    feature, port1, NULL, 0, 1000);
+ }
+ 
+ static char *to_led_name(int selector)
+@@ -755,15 +753,14 @@ hub_clear_tt_buffer(struct usb_device *hdev, u16 devinfo, u16 tt)
+ 	/* Need to clear both directions for control ep */
+ 	if (((devinfo >> 11) & USB_ENDPOINT_XFERTYPE_MASK) ==
+ 			USB_ENDPOINT_XFER_CONTROL) {
+-		int status = usb_control_msg(hdev, usb_sndctrlpipe(hdev, 0),
+-				HUB_CLEAR_TT_BUFFER, USB_RT_PORT,
+-				devinfo ^ 0x8000, tt, NULL, 0, 1000);
++		int status = usb_control_msg_send(hdev, 0,
++						  HUB_CLEAR_TT_BUFFER, USB_RT_PORT,
++						  devinfo ^ 0x8000, tt, NULL, 0, 1000);
+ 		if (status)
+ 			return status;
+ 	}
+-	return usb_control_msg(hdev, usb_sndctrlpipe(hdev, 0),
+-			       HUB_CLEAR_TT_BUFFER, USB_RT_PORT, devinfo,
+-			       tt, NULL, 0, 1000);
++	return usb_control_msg_send(hdev, 0, HUB_CLEAR_TT_BUFFER, USB_RT_PORT,
++				    devinfo, tt, NULL, 0, 1000);
+ }
+ 
+ /*
+@@ -1049,11 +1046,10 @@ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
+ 	 */
+ 	if (type != HUB_RESUME) {
+ 		if (hdev->parent && hub_is_superspeed(hdev)) {
+-			ret = usb_control_msg(hdev, usb_sndctrlpipe(hdev, 0),
+-					HUB_SET_DEPTH, USB_RT_HUB,
+-					hdev->level - 1, 0, NULL, 0,
+-					USB_CTRL_SET_TIMEOUT);
+-			if (ret < 0)
++			ret = usb_control_msg_send(hdev, 0, HUB_SET_DEPTH, USB_RT_HUB,
++						   hdev->level - 1, 0, NULL, 0,
++						   USB_CTRL_SET_TIMEOUT);
++			if (ret)
+ 				dev_err(hub->intfdev,
+ 						"set hub depth failed\n");
+ 		}
+@@ -2329,13 +2325,10 @@ static int usb_enumerate_device_otg(struct usb_device *udev)
+ 		/* enable HNP before suspend, it's simpler */
+ 		if (port1 == bus->otg_port) {
+ 			bus->b_hnp_enable = 1;
+-			err = usb_control_msg(udev,
+-				usb_sndctrlpipe(udev, 0),
+-				USB_REQ_SET_FEATURE, 0,
+-				USB_DEVICE_B_HNP_ENABLE,
+-				0, NULL, 0,
+-				USB_CTRL_SET_TIMEOUT);
+-			if (err < 0) {
++			err = usb_control_msg_send(udev, 0, USB_REQ_SET_FEATURE, 0,
++						   USB_DEVICE_B_HNP_ENABLE, 0,
++						   NULL, 0, USB_CTRL_SET_TIMEOUT);
++			if (err) {
+ 				/*
+ 				 * OTG MESSAGE: report errors here,
+ 				 * customize to match your product.
+@@ -2347,13 +2340,10 @@ static int usb_enumerate_device_otg(struct usb_device *udev)
+ 		} else if (desc->bLength == sizeof
+ 				(struct usb_otg_descriptor)) {
+ 			/* Set a_alt_hnp_support for legacy otg device */
+-			err = usb_control_msg(udev,
+-				usb_sndctrlpipe(udev, 0),
+-				USB_REQ_SET_FEATURE, 0,
+-				USB_DEVICE_A_ALT_HNP_SUPPORT,
+-				0, NULL, 0,
+-				USB_CTRL_SET_TIMEOUT);
+-			if (err < 0)
++			err = usb_control_msg_send(udev, 0, USB_REQ_SET_FEATURE, 0,
++						   USB_DEVICE_A_ALT_HNP_SUPPORT, 0,
++						   NULL, 0, USB_CTRL_SET_TIMEOUT);
++			if (err)
+ 				dev_err(&udev->dev,
+ 					"set a_alt_hnp_support failed: %d\n",
+ 					err);
+@@ -3121,10 +3111,8 @@ int usb_disable_ltm(struct usb_device *udev)
+ 	if (!udev->actconfig)
+ 		return 0;
+ 
+-	return usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
+-			USB_REQ_CLEAR_FEATURE, USB_RECIP_DEVICE,
+-			USB_DEVICE_LTM_ENABLE, 0, NULL, 0,
+-			USB_CTRL_SET_TIMEOUT);
++	return usb_control_msg_send(udev, 0, USB_REQ_CLEAR_FEATURE, USB_RECIP_DEVICE,
++				    USB_DEVICE_LTM_ENABLE, 0, NULL, 0, USB_CTRL_SET_TIMEOUT);
+ }
+ EXPORT_SYMBOL_GPL(usb_disable_ltm);
+ 
+@@ -3143,10 +3131,8 @@ void usb_enable_ltm(struct usb_device *udev)
+ 	if (!udev->actconfig)
+ 		return;
+ 
+-	usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
+-			USB_REQ_SET_FEATURE, USB_RECIP_DEVICE,
+-			USB_DEVICE_LTM_ENABLE, 0, NULL, 0,
+-			USB_CTRL_SET_TIMEOUT);
++	usb_control_msg_send(udev, 0, USB_REQ_SET_FEATURE, USB_RECIP_DEVICE,
++			     USB_DEVICE_LTM_ENABLE, 0, NULL, 0, USB_CTRL_SET_TIMEOUT);
+ }
+ EXPORT_SYMBOL_GPL(usb_enable_ltm);
+ 
+@@ -3163,17 +3149,14 @@ EXPORT_SYMBOL_GPL(usb_enable_ltm);
+ static int usb_enable_remote_wakeup(struct usb_device *udev)
+ {
+ 	if (udev->speed < USB_SPEED_SUPER)
+-		return usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
+-				USB_REQ_SET_FEATURE, USB_RECIP_DEVICE,
+-				USB_DEVICE_REMOTE_WAKEUP, 0, NULL, 0,
+-				USB_CTRL_SET_TIMEOUT);
++		return usb_control_msg_send(udev, 0, USB_REQ_SET_FEATURE, USB_RECIP_DEVICE,
++					    USB_DEVICE_REMOTE_WAKEUP, 0,
++					    NULL, 0, USB_CTRL_SET_TIMEOUT);
+ 	else
+-		return usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
+-				USB_REQ_SET_FEATURE, USB_RECIP_INTERFACE,
+-				USB_INTRF_FUNC_SUSPEND,
+-				USB_INTRF_FUNC_SUSPEND_RW |
+-					USB_INTRF_FUNC_SUSPEND_LP,
+-				NULL, 0, USB_CTRL_SET_TIMEOUT);
++		return usb_control_msg_send(udev, 0, USB_REQ_SET_FEATURE, USB_RECIP_INTERFACE,
++					    USB_INTRF_FUNC_SUSPEND,
++					    USB_INTRF_FUNC_SUSPEND_RW | USB_INTRF_FUNC_SUSPEND_LP,
++					    NULL, 0, USB_CTRL_SET_TIMEOUT);
+ }
+ 
+ /*
+@@ -3189,15 +3172,13 @@ static int usb_enable_remote_wakeup(struct usb_device *udev)
+ static int usb_disable_remote_wakeup(struct usb_device *udev)
+ {
+ 	if (udev->speed < USB_SPEED_SUPER)
+-		return usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
+-				USB_REQ_CLEAR_FEATURE, USB_RECIP_DEVICE,
+-				USB_DEVICE_REMOTE_WAKEUP, 0, NULL, 0,
+-				USB_CTRL_SET_TIMEOUT);
++		return usb_control_msg_send(udev, 0, USB_REQ_CLEAR_FEATURE, USB_RECIP_DEVICE,
++					    USB_DEVICE_REMOTE_WAKEUP, 0, NULL, 0,
++					    USB_CTRL_SET_TIMEOUT);
+ 	else
+-		return usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
+-				USB_REQ_SET_FEATURE, USB_RECIP_INTERFACE,
+-				USB_INTRF_FUNC_SUSPEND,	0, NULL, 0,
+-				USB_CTRL_SET_TIMEOUT);
++		return usb_control_msg_send(udev, 0, USB_REQ_SET_FEATURE, USB_RECIP_INTERFACE,
++					    USB_INTRF_FUNC_SUSPEND, 0, NULL, 0,
++					    USB_CTRL_SET_TIMEOUT);
+ }
+ 
+ /* Count of wakeup-enabled devices at or below udev */
 -- 
 2.28.0
 
