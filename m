@@ -2,174 +2,150 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51A4626AA23
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Sep 2020 18:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DB2026AAE9
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Sep 2020 19:42:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726586AbgIOQ5H (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 15 Sep 2020 12:57:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56508 "EHLO
+        id S1727723AbgIORmU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 15 Sep 2020 13:42:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727685AbgIOQwa (ORCPT
+        with ESMTP id S1727937AbgIORl5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 15 Sep 2020 12:52:30 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22778C061788
-        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Sep 2020 09:51:24 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id c10so3848573otm.13
-        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Sep 2020 09:51:24 -0700 (PDT)
+        Tue, 15 Sep 2020 13:41:57 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3109C06174A
+        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Sep 2020 10:41:56 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id bd2so1724050plb.7
+        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Sep 2020 10:41:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vZJ5c1oNq+PSxzLvAz6o8y4iFvnbqXrW0+p9q2WgnWU=;
-        b=CUfXU1IkphycK6bsRwjflyuwE1/Em2IzPeqsbuVF34bcaPNQLzbGwk1mMZposk5ytP
-         cBA1etA0WnkgscwRRK9xXLU+xokgCoukPb8T4/VF1Lo4e7F+7bAiTHh1Aje+uv3RRPpT
-         qBEZ60QP2t8zg3JT92AFTllXyhW1FoKu6JmtS57M8OAv8aHQ7nf0ZjilA5Lc+DnZtKBq
-         BSjDC2qrvPzURPONKJxdBgjGh21bTdmaAI6DosdUmCtIg/XpM7CRuOGgiTnHVxcgOyju
-         vCwRSQJWU3tov7sYF6g6cNfsYB3unEEHyDJxMfS69xwS7wWwaQDBkZ2856ezU/PYujoi
-         qJ/A==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mSVukHJaf23dU18xrmYveJEVtHAOgsrL/FM6fto8MZ0=;
+        b=iL0KxC3JRJNuDjTFZsEYYrqoKEgxAtpjRiXqy436MhG07ru7gDqa1a7R3MsDjmDSY8
+         Z6g7JzpYn0N11Lsbz2mjNuYm4QtAT5fH4MuxjHDPYow0U/QeLI765Jox8ermxjrEre1R
+         wuvmzubPUJAi++Wd7AUVbfw0qZSYQSAWblpp4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vZJ5c1oNq+PSxzLvAz6o8y4iFvnbqXrW0+p9q2WgnWU=;
-        b=n+OCETZ+pU0ChlSJHVBxkd7K7hDjJ80GX2t9dTPfzBoymHNUSAUdQDD8GQBMKfFZmF
-         eGDOsSsOZI0mOYc7FOgIwvkHfIH+tgphnFBIWndwjSwPkJXoq5/h7RwuGYsuxBKOFPzh
-         ICorghw8EQwbRTdoFDooHaLBxatyV5iTnl1zbSUtnKILW1AwOKbfaIjpHaamJFqmFXU/
-         9GAVH2FzXd+s94hjlD1/TLz0X+IHkKwvZZeflHTJSlgieudTYtli++ar9nD9aeqolglb
-         dViFix3m2CxFGMBGlydWTGowVoRFqnHDP4li+h/QkWTF0sVl+EjCoDcqSf0dT11kpLe3
-         vWQg==
-X-Gm-Message-State: AOAM532l+MLuDU4ALHqU5LFiOHpvjquE1caGTG5alBNqD0v5jTnUImB6
-        PeQxoB5bDyA2rRDfuKowXn40Wj1M0qcdCBrCil4=
-X-Google-Smtp-Source: ABdhPJxhUHXJFxe9onWBC/pAzZbGIRjTdV/gF/IjfEU8TbaxsJC9Ub+nrOO8pPWuR3iCqcpP49s9nZooE8buK3ToCFE=
-X-Received: by 2002:a9d:5a8:: with SMTP id 37mr5439144otd.362.1600188683403;
- Tue, 15 Sep 2020 09:51:23 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mSVukHJaf23dU18xrmYveJEVtHAOgsrL/FM6fto8MZ0=;
+        b=c1PkMZS2p820SQcVY8yUh3N7lwUKuyfNeNlpOXu3frJFOUin3+O7WHBQb6bC168OOb
+         qAAKMjq8A7o9PFHbaYpstC1U2c5T0Hr/5/9Yx3DgKH4J/yTb5PDdyCI3Aj+XKeNCD31k
+         B/fkj8MsRQoBZbJxVnVCUbG4k5R9Xh/pKdIiucZzgCV9dXPDM2Wi4+IkWGnO5ng5fV2N
+         rOXNxbyiyTd/KkcryBFrSgnZsqKwssVV8j4GO7Ei5Rsdl9C4ewQvGUWd/cULREliFHv6
+         613nXLKUqe0IqxXA862gwugB8LsmeJbbFQgeaP97OSLzIUp1+L9vbFtGqaCON/XVJrEI
+         gn4w==
+X-Gm-Message-State: AOAM533l7sB3xZOFrQruIPKuKerZ4ipv+0jjAIUV523DsNWkQRvE0m6c
+        W75xiuPb9iqlbHEi2jraZhiFMg==
+X-Google-Smtp-Source: ABdhPJywvk6gs4v3oj8E7xFuwTHAL28fQaX+WXa7jY6xwOS32lw/CwWN5z+fwYDg+dgrvnfAD6tFnQ==
+X-Received: by 2002:a17:90a:cb0f:: with SMTP id z15mr446612pjt.76.1600191716217;
+        Tue, 15 Sep 2020 10:41:56 -0700 (PDT)
+Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:7220:84ff:fe09:2b94])
+        by smtp.gmail.com with ESMTPSA id y29sm15490232pfq.207.2020.09.15.10.41.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2020 10:41:55 -0700 (PDT)
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+To:     luiz.dentz@gmail.com, marcel@holtmann.org
+Cc:     chromeos-bluetooth-upstreaming@chromium.org,
+        linux-bluetooth@vger.kernel.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Subject: [Bluez PATCH v5 0/4] adapter: Reconnect audio when resuming from suspend
+Date:   Tue, 15 Sep 2020 10:41:42 -0700
+Message-Id: <20200915174146.1693687-1-abhishekpandit@chromium.org>
+X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
 MIME-Version: 1.0
-References: <20200915110347.Bluez.v3.1.If16fd16b4a629ec4d4093a974256225a95b58044@changeid>
-In-Reply-To: <20200915110347.Bluez.v3.1.If16fd16b4a629ec4d4093a974256225a95b58044@changeid>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Tue, 15 Sep 2020 09:51:12 -0700
-Message-ID: <CABBYNZKQhnQDaTQ_e-FA6hCEW5ZChaOdOQ-qCx3gpQXSPBD29g@mail.gmail.com>
-Subject: Re: [Bluez PATCH v3] device: don't wait for timeout if RemoveDevice
- is called
-To:     Archie Pusaka <apusaka@google.com>
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>,
-        Daniel Winkler <danielwinkler@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Archie,
 
-On Mon, Sep 14, 2020 at 8:04 PM Archie Pusaka <apusaka@google.com> wrote:
->
-> From: Archie Pusaka <apusaka@chromium.org>
->
-> RemoveDevice on adapter interface used to remove a device, even when
-> the device is connected. However, since the introduction of the new
-> 30 seconds timeout when setting a device as temporary, RemoveDevice
-> doesn't immediately remove a connected device, but only disconnects
-> it and waits for the timer to expire before effectively removes it.
->
-> This patch removes the device as soon as it gets disconnected,
-> provided the disconnection is triggered by a call to RemoveDevice.
-> The regular timeout still applies for other cases.
->
-> Tested manually by calling RemoveDevice on a connected device,
-> and with ChromeOS autotest setup.
->
-> Reviewed-by: Daniel Winkler <danielwinkler@google.com>
-> ---
->
-> Changes in v3:
-> * Rebasing again
->
-> Changes in v2:
-> * Rebasing to HEAD
->
->  src/adapter.c |  2 --
->  src/adapter.h |  2 ++
->  src/device.c  | 11 +++++++++++
->  3 files changed, 13 insertions(+), 2 deletions(-)
->
-> diff --git a/src/adapter.c b/src/adapter.c
-> index df628a7fd..4e27bd74b 100644
-> --- a/src/adapter.c
-> +++ b/src/adapter.c
-> @@ -80,8 +80,6 @@
->  #include "adv_monitor.h"
->  #include "eir.h"
->
-> -#define ADAPTER_INTERFACE      "org.bluez.Adapter1"
-> -
->  #define MODE_OFF               0x00
->  #define MODE_CONNECTABLE       0x01
->  #define MODE_DISCOVERABLE      0x02
-> diff --git a/src/adapter.h b/src/adapter.h
-> index c70a7b0da..2f1e4b737 100644
-> --- a/src/adapter.h
-> +++ b/src/adapter.h
-> @@ -29,6 +29,8 @@
->  #include <lib/bluetooth.h>
->  #include <lib/sdp.h>
->
-> +#define ADAPTER_INTERFACE      "org.bluez.Adapter1"
-> +
->  #define MAX_NAME_LENGTH                248
->
->  /* Invalid SSP passkey value used to indicate negative replies */
-> diff --git a/src/device.c b/src/device.c
-> index 8f73ce4d3..3e7784034 100644
-> --- a/src/device.c
-> +++ b/src/device.c
-> @@ -3007,6 +3007,7 @@ void device_remove_connection(struct btd_device *device, uint8_t bdaddr_type)
->  {
->         struct bearer_state *state = get_state(device, bdaddr_type);
->         DBusMessage *reply;
-> +       bool remove_device = false;
->
->         if (!state->connected)
->                 return;
-> @@ -3036,6 +3037,10 @@ void device_remove_connection(struct btd_device *device, uint8_t bdaddr_type)
->         while (device->disconnects) {
->                 DBusMessage *msg = device->disconnects->data;
->
-> +               if (dbus_message_is_method_call(msg, ADAPTER_INTERFACE,
-> +                                                               "RemoveDevice"))
-> +                       remove_device = true;
-> +
->                 g_dbus_send_reply(dbus_conn, msg, DBUS_TYPE_INVALID);
->                 device->disconnects = g_slist_remove(device->disconnects, msg);
->                 dbus_message_unref(msg);
-> @@ -3061,6 +3066,9 @@ void device_remove_connection(struct btd_device *device, uint8_t bdaddr_type)
->
->         g_dbus_emit_property_changed(dbus_conn, device->path,
->                                                 DEVICE_INTERFACE, "Connected");
-> +
-> +       if (remove_device)
-> +               btd_adapter_remove_device(device->adapter, device);
->  }
->
->  guint device_add_disconnect_watch(struct btd_device *device,
-> @@ -4482,6 +4490,9 @@ void device_remove(struct btd_device *device, gboolean remove_stored)
->                 disconnect_all(device);
->         }
->
-> +       if (device->temporary_timer > 0)
-> +               g_source_remove(device->temporary_timer);
-> +
->         if (device->store_id > 0) {
->                 g_source_remove(device->store_id);
->                 device->store_id = 0;
-> --
-> 2.28.0.618.gf4bc123cb7-goog
->
+Hi Luiz and Marcel,
 
-Applied, thanks.
+This is a quality of life improvement for the behavior of audio devices
+during system suspend. This depends on a kernel change that emits
+suspend/resume events:
+
+https://patchwork.kernel.org/project/bluetooth/list/?series=325771
+
+Right now, audio devices will be disconnected as part of suspend but
+won't be reconnected when the system resumes without user interaction.
+This is annoying to some users as it causes an interruption to their
+normal work flow.
+
+This change reconnects audio devices that were disconnected for suspend
+using the following logic:
+
+ * In the device disconnect callback, mark any devices with the A2DP
+   service uuid for reconnect. The reconnect will not be queued until
+   resume.
+ * In the controller resume callback, queue any policy items that are
+   marked to reconnect on resume for connection with the ResumeDelay
+   value (default = 2s).
+
+A reconnect is queued after the controller resumes and the delay
+between resume and reconnect is configurable via the ResumeDelay key in
+the Policy settings. The 2s delay was chosen arbitrarily and I think
+anywhere up to 10s is probably ok. A longer delay is better to account
+for spurious wakeups and Wi-Fi reconnection time (avoiding any co-ex
+issues) at the downside of reconnection speed.
+
+Here are the tests I have done with this:
+- Single suspend and verified the headphones reconnect
+- Suspend stress test for 25 iterations and verify both Wi-Fi and
+  Bluetooth audio reconnect on resume. (Ran with wake minimum time of
+  10s)
+- Suspend test with wake time = 1s to verify that BT reconnect isn't
+  attempted. Ran 5 iterations with low wake time and then let it stay
+  awake to confirm reconnect finally completed on last resume.
+- Suspend test with wake time between 1s - 4s. Ran with 5 iterations and
+  verified it connected several times in the middle and finally at the
+  end.
+
+I've tested this on a Pixelbook Go (AC-9260 controller) and HP
+Chromebook 14a (RTL8822CE controller) with GID6B headset.
+
+I've also tested this with the Pixel Buds 2. These earbuds actually
+reconnect automatically to the Chromebook (even without this policy
+change) and I verified that the new changes don't break the reconnection
+mechanism.
+
+Thanks
+Abhishek
+
+
+Changes in v5:
+- Remove use of !! in has_kernel_features
+
+Changes in v4:
+- Set reconnect timer in disconnect if resume events aren't supported
+- Only set reconnect timer if adapter matches current notification
+- Refactor changes in src/adapter to its own commit
+- Refactor enabling A2DP_SINK_UUID into its own commit
+
+Changes in v3:
+- Refactored resume notification to use btd_adapter_driver
+- Renamed ReconnectAudioDelay to ResumeDelay and set default to 2
+- Added A2DP_SINK_UUID to default reconnect list
+
+Changes in v2:
+- Refactored to use policy instead of connecting directly in adapter
+
+Abhishek Pandit-Subedi (4):
+  adapter: Refactor kernel feature globals
+  adapter: Handle controller resume and notify drivers
+  policy: Enable reconnect for a2dp-sink in defaults
+  policy: Reconnect audio on controller resume
+
+ plugins/policy.c |  87 +++++++++++++++++++++++++++++++++-------
+ src/adapter.c    | 102 +++++++++++++++++++++++++++++++++--------------
+ src/adapter.h    |  11 +++++
+ src/main.c       |   1 +
+ src/main.conf    |  11 ++++-
+ 5 files changed, 168 insertions(+), 44 deletions(-)
 
 -- 
-Luiz Augusto von Dentz
+2.28.0.618.gf4bc123cb7-goog
+
