@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0C34269A1F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Sep 2020 02:05:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3F8E269A24
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Sep 2020 02:06:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726161AbgIOAFm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 14 Sep 2020 20:05:42 -0400
+        id S1726095AbgIOAGB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 14 Sep 2020 20:06:01 -0400
 Received: from mga09.intel.com ([134.134.136.24]:37105 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726157AbgIOAFh (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 14 Sep 2020 20:05:37 -0400
-IronPort-SDR: tDnSSDDBaepl0vrcqRwMW7/nBDD/RAE0NqbpLgvWBHLCODR/PK3jb5l9yBdm3l5fMBQvjx9N5d
- mRuwWtefTtKg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9744"; a="160112045"
+        id S1726152AbgIOAFn (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 14 Sep 2020 20:05:43 -0400
+IronPort-SDR: tEYOD2n5LcQV+98rjF2UqhgTGeKB0vu1z2eihVFRLZUHLlPyeQG08ICOQoOvB86HhUu2B/E8Me
+ UNOKgyQaNkvA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9744"; a="160112049"
 X-IronPort-AV: E=Sophos;i="5.76,427,1592895600"; 
-   d="scan'208";a="160112045"
+   d="scan'208";a="160112049"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:34 -0700
-IronPort-SDR: +HOr/HIrX3frJHBvQWqXBoNktKqZw5VlXpP0KqNta+pJcp2uJ5bqodKVYHqYv4pbr0BMwn7Uub
- h8HXm7wKkv2A==
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:35 -0700
+IronPort-SDR: RRMh1NKVJWboJE8cTp216m25pkOfUysCUfmnTPOpAI4/TaR7bxwlm+155VPlRv/a10hytqsfsO
+ aWohXXL/EApw==
 X-IronPort-AV: E=Sophos;i="5.76,427,1592895600"; 
-   d="scan'208";a="507333189"
+   d="scan'208";a="507333194"
 Received: from azvasil-mobl.amr.corp.intel.com (HELO han1-mobl3.jf.intel.com) ([10.254.127.225])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:33 -0700
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:35 -0700
 From:   tedd.an@linux.intel.com
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
-Subject: [BlueZ v3 12/17] peripheral: Add SPDX License Identifier
-Date:   Mon, 14 Sep 2020 17:04:52 -0700
-Message-Id: <20200915000457.22988-13-tedd.an@linux.intel.com>
+Subject: [BlueZ v3 13/17] plugins: Add SPDX License Identifier
+Date:   Mon, 14 Sep 2020 17:04:53 -0700
+Message-Id: <20200915000457.22988-14-tedd.an@linux.intel.com>
 X-Mailer: git-send-email 2.25.4
 In-Reply-To: <20200915000457.22988-1-tedd.an@linux.intel.com>
 References: <20200915000457.22988-1-tedd.an@linux.intel.com>
@@ -49,359 +49,228 @@ This patch adds SPDX License Identifier and removes the license text.
 -------------------------------------
        License            COUNT
 -------------------------------------
- LGPL-2.1-or-later    :     11
+ GPL-2.0-or-later     :      7
 
-License: LGPL-2.1-or-later
-   peripheral/log.h
-   peripheral/main.c
-   peripheral/efivars.c
-   peripheral/attach.h
-   peripheral/gatt.c
-   peripheral/attach.c
-   peripheral/log.c
-   peripheral/gap.h
-   peripheral/efivars.h
-   peripheral/gap.c
-   peripheral/gatt.h
+License: GPL-2.0-or-later
+   plugins/autopair.c
+   plugins/hostname.c
+   plugins/neard.c
+   plugins/policy.c
+   plugins/sixaxis.c
+   plugins/wiimote.c
+   plugins/external-dummy.c
 ---
- peripheral/attach.c  | 15 +--------------
- peripheral/attach.h  | 15 +--------------
- peripheral/efivars.c | 15 +--------------
- peripheral/efivars.h | 15 +--------------
- peripheral/gap.c     | 15 +--------------
- peripheral/gap.h     | 15 +--------------
- peripheral/gatt.c    | 15 +--------------
- peripheral/gatt.h    | 15 +--------------
- peripheral/log.c     | 15 +--------------
- peripheral/log.h     | 15 +--------------
- peripheral/main.c    | 15 +--------------
- 11 files changed, 11 insertions(+), 154 deletions(-)
+ plugins/autopair.c       | 15 +--------------
+ plugins/external-dummy.c | 15 +--------------
+ plugins/hostname.c       | 15 +--------------
+ plugins/neard.c          | 15 +--------------
+ plugins/policy.c         | 15 +--------------
+ plugins/sixaxis.c        | 15 +--------------
+ plugins/wiimote.c        | 15 +--------------
+ 7 files changed, 7 insertions(+), 98 deletions(-)
 
-diff --git a/peripheral/attach.c b/peripheral/attach.c
-index 1de02ac04..f7dc7ecea 100644
---- a/peripheral/attach.c
-+++ b/peripheral/attach.c
+diff --git a/plugins/autopair.c b/plugins/autopair.c
+index 3089430a8..665a4f4a6 100644
+--- a/plugins/autopair.c
++++ b/plugins/autopair.c
 @@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
++// SPDX-License-Identifier: GPL-2.0-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
 @@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
+  *  Copyright (C) 2012 Google Inc.
   *
   *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
 - *
-- *  This library is distributed in the hope that it will be useful,
+- *  This program is distributed in the hope that it will be useful,
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
 - *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
 - *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/peripheral/attach.h b/peripheral/attach.h
-index f76e2fba2..c8d787d76 100644
---- a/peripheral/attach.h
-+++ b/peripheral/attach.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
+diff --git a/plugins/external-dummy.c b/plugins/external-dummy.c
+index 536ad0663..1c209e8b7 100644
+--- a/plugins/external-dummy.c
++++ b/plugins/external-dummy.c
+@@ -1,21 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
   *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
 - *
-- *  This library is distributed in the hope that it will be useful,
+- *  This program is distributed in the hope that it will be useful,
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
 - *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
-- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-- *
-  */
- 
- void attach_start(void);
-diff --git a/peripheral/efivars.c b/peripheral/efivars.c
-index 3cc213c0c..74fceed3e 100644
---- a/peripheral/efivars.c
-+++ b/peripheral/efivars.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
 - *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/peripheral/efivars.h b/peripheral/efivars.h
-index 430d14330..5dac95395 100644
---- a/peripheral/efivars.h
-+++ b/peripheral/efivars.h
+diff --git a/plugins/hostname.c b/plugins/hostname.c
+index 4f9dfe6d8..f7ab9e8bc 100644
+--- a/plugins/hostname.c
++++ b/plugins/hostname.c
 @@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
++// SPDX-License-Identifier: GPL-2.0-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
 @@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
+  *  Copyright (C) 2004-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
 - *
-- *  This library is distributed in the hope that it will be useful,
+- *  This program is distributed in the hope that it will be useful,
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
 - *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
-- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-- *
-  */
- 
- #define EFIVARS_NON_VOLATILE			0x00000001
-diff --git a/peripheral/gap.c b/peripheral/gap.c
-index 52a7bed9b..b12e08b3d 100644
---- a/peripheral/gap.c
-+++ b/peripheral/gap.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
 - *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/peripheral/gap.h b/peripheral/gap.h
-index 6d6737810..da307a2ad 100644
---- a/peripheral/gap.h
-+++ b/peripheral/gap.h
+diff --git a/plugins/neard.c b/plugins/neard.c
+index 6ffcd6e10..ff5de11f4 100644
+--- a/plugins/neard.c
++++ b/plugins/neard.c
 @@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
++// SPDX-License-Identifier: GPL-2.0-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
 @@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
+  *  Copyright (C) 2012-2013  Tieto Poland
   *
   *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
 - *
-- *  This library is distributed in the hope that it will be useful,
+- *  This program is distributed in the hope that it will be useful,
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
 - *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
-- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-- *
-  */
- 
- #include <stdint.h>
-diff --git a/peripheral/gatt.c b/peripheral/gatt.c
-index bbbf3f59f..ff1354cb4 100644
---- a/peripheral/gatt.c
-+++ b/peripheral/gatt.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
 - *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/peripheral/gatt.h b/peripheral/gatt.h
-index 5b68f3573..7e2418a70 100644
---- a/peripheral/gatt.h
-+++ b/peripheral/gatt.h
+diff --git a/plugins/policy.c b/plugins/policy.c
+index de51e58b9..bf7cf03bb 100644
+--- a/plugins/policy.c
++++ b/plugins/policy.c
 @@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
++// SPDX-License-Identifier: GPL-2.0-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
 @@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
+  *  Copyright (C) 2013  Intel Corporation.
   *
   *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
 - *
-- *  This library is distributed in the hope that it will be useful,
+- *  This program is distributed in the hope that it will be useful,
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
 - *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
-- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-- *
-  */
- 
- #include <stdint.h>
-diff --git a/peripheral/log.c b/peripheral/log.c
-index d5834eb72..ac674b2df 100644
---- a/peripheral/log.c
-+++ b/peripheral/log.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
 - *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/peripheral/log.h b/peripheral/log.h
-index 36619b36e..29d1d6ac0 100644
---- a/peripheral/log.h
-+++ b/peripheral/log.h
+diff --git a/plugins/sixaxis.c b/plugins/sixaxis.c
+index 939fed759..1ec9ba9fc 100644
+--- a/plugins/sixaxis.c
++++ b/plugins/sixaxis.c
 @@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
++// SPDX-License-Identifier: GPL-2.0-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
+@@ -7,20 +8,6 @@
+  *  Copyright (C) 2013  Szymon Janc <szymon.janc@gmail.com>
   *
   *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
 - *
-- *  This library is distributed in the hope that it will be useful,
+- *  This program is distributed in the hope that it will be useful,
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
 - *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
 - *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
- void log_open(void);
-diff --git a/peripheral/main.c b/peripheral/main.c
-index 75427ab3a..6ce729178 100644
---- a/peripheral/main.c
-+++ b/peripheral/main.c
+ #ifdef HAVE_CONFIG_H
+diff --git a/plugins/wiimote.c b/plugins/wiimote.c
+index 0ced27514..9c4e0a58b 100644
+--- a/plugins/wiimote.c
++++ b/plugins/wiimote.c
 @@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
++// SPDX-License-Identifier: GPL-2.0-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
 @@ -5,20 +6,6 @@
-  *  Copyright (C) 2015  Intel Corporation. All rights reserved.
+  *  Copyright (C) 2011-2012 David Herrmann <dh.herrmann@googlemail.com>
   *
   *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
 - *
-- *  This library is distributed in the hope that it will be useful,
+- *  This program is distributed in the hope that it will be useful,
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
 - *
-- *  You should have received a copy of the GNU Lesser General Public
-- *  License along with this library; if not, write to the Free Software
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
 - *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
