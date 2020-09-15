@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE67F269A17
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Sep 2020 02:05:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E1AA269A18
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Sep 2020 02:05:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726106AbgIOAFW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 14 Sep 2020 20:05:22 -0400
+        id S1726061AbgIOAF1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 14 Sep 2020 20:05:27 -0400
 Received: from mga09.intel.com ([134.134.136.24]:37077 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726073AbgIOAFV (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 14 Sep 2020 20:05:21 -0400
-IronPort-SDR: koDL7gn7BLZd2OK5QiNz1K7y1Gv3VO/cPxpU57myl788F0irIdNI/LezGzduoE9x2nQ4THOgCQ
- 3TkUMZ7OuWsQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9744"; a="160112016"
+        id S1726038AbgIOAFX (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 14 Sep 2020 20:05:23 -0400
+IronPort-SDR: ajrnIUkUuf6tx1gThOJZGiLd44c9cq7AB6N51H8B6/Nx4MKZjdaJMZG5PjaYEJfGoiuKb67NUr
+ 9PR0rX72SulQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9744"; a="160112020"
 X-IronPort-AV: E=Sophos;i="5.76,427,1592895600"; 
-   d="scan'208";a="160112016"
+   d="scan'208";a="160112020"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:19 -0700
-IronPort-SDR: Sf7JuREqVGnfDZ5bP6Cjc7JT8n6rr7jIsnhufGgeGqDGoJT5JHPfNXvulgkcQowYWjkpAzd01h
- /TcsDTFC3rOA==
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:21 -0700
+IronPort-SDR: AFlnE0MHrZnHOnj2sqJis+hylWukG7dkCFQb3cKKWtbKFrnar/aQn6p5fo9t5S/jyPtZPyXd1N
+ 0mVZtR6XPq0g==
 X-IronPort-AV: E=Sophos;i="5.76,427,1592895600"; 
-   d="scan'208";a="507333121"
+   d="scan'208";a="507333132"
 Received: from azvasil-mobl.amr.corp.intel.com (HELO han1-mobl3.jf.intel.com) ([10.254.127.225])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:19 -0700
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:20 -0700
 From:   tedd.an@linux.intel.com
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
-Subject: [BlueZ v3 03/17] btio: Add SPDX License Identifier
-Date:   Mon, 14 Sep 2020 17:04:43 -0700
-Message-Id: <20200915000457.22988-4-tedd.an@linux.intel.com>
+Subject: [BlueZ v3 04/17] client: Add SPDX License Identifier
+Date:   Mon, 14 Sep 2020 17:04:44 -0700
+Message-Id: <20200915000457.22988-5-tedd.an@linux.intel.com>
 X-Mailer: git-send-email 2.25.4
 In-Reply-To: <20200915000457.22988-1-tedd.an@linux.intel.com>
 References: <20200915000457.22988-1-tedd.an@linux.intel.com>
@@ -49,27 +49,41 @@ This patch adds SPDX License Identifier and removes the license text.
 -------------------------------------
        License            COUNT
 -------------------------------------
- GPL-2.0-or-later     :      2
+ GPL-2.0-or-later     :      9
 
 License: GPL-2.0-or-later
-   btio/btio.h
-   btio/btio.c
+   client/advertising.h
+   client/display.c
+   client/main.c
+   client/display.h
+   client/agent.h
+   client/gatt.c
+   client/agent.c
+   client/advertising.c
+   client/gatt.h
 ---
- btio/btio.c | 15 +--------------
- btio/btio.h | 15 +--------------
- 2 files changed, 2 insertions(+), 28 deletions(-)
+ client/advertising.c | 15 +--------------
+ client/advertising.h | 15 +--------------
+ client/agent.c       | 15 +--------------
+ client/agent.h       | 15 +--------------
+ client/display.c     | 15 +--------------
+ client/display.h     | 15 +--------------
+ client/gatt.c        | 15 +--------------
+ client/gatt.h        | 15 +--------------
+ client/main.c        | 15 +--------------
+ 9 files changed, 9 insertions(+), 126 deletions(-)
 
-diff --git a/btio/btio.c b/btio/btio.c
-index 844d6007f..c18b6a012 100644
---- a/btio/btio.c
-+++ b/btio/btio.c
+diff --git a/client/advertising.c b/client/advertising.c
+index 1aa28e749..c1a00502e 100644
+--- a/client/advertising.c
++++ b/client/advertising.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -6,20 +7,6 @@
-  *  Copyright (C) 2009-2010  Nokia Corporation
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2016  Intel Corporation. All rights reserved.
   *
   *
 - *  This program is free software; you can redistribute it and/or modify
@@ -89,17 +103,17 @@ index 844d6007f..c18b6a012 100644
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/btio/btio.h b/btio/btio.h
-index 23e0ef72b..f0259cf1d 100644
---- a/btio/btio.h
-+++ b/btio/btio.h
+diff --git a/client/advertising.h b/client/advertising.h
+index 9967e657b..25e6aee99 100644
+--- a/client/advertising.h
++++ b/client/advertising.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -6,20 +7,6 @@
-  *  Copyright (C) 2009-2010  Nokia Corporation
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2016  Intel Corporation. All rights reserved.
   *
   *
 - *  This program is free software; you can redistribute it and/or modify
@@ -117,8 +131,218 @@ index 23e0ef72b..f0259cf1d 100644
 - *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
- #ifndef BT_IO_H
- #define BT_IO_H
+ 
+ void ad_register(DBusConnection *conn, GDBusProxy *manager, const char *type);
+diff --git a/client/agent.c b/client/agent.c
+index 4def1b478..c8e1560e7 100644
+--- a/client/agent.c
++++ b/client/agent.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2012  Intel Corporation. All rights reserved.
+  *
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #ifdef HAVE_CONFIG_H
+diff --git a/client/agent.h b/client/agent.h
+index 30f302cdc..5d902a717 100644
+--- a/client/agent.h
++++ b/client/agent.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2012  Intel Corporation. All rights reserved.
+  *
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ void agent_register(DBusConnection *conn, GDBusProxy *manager,
+diff --git a/client/display.c b/client/display.c
+index 05613865b..a590a1388 100644
+--- a/client/display.c
++++ b/client/display.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2012  Intel Corporation. All rights reserved.
+  *
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #ifdef HAVE_CONFIG_H
+diff --git a/client/display.h b/client/display.h
+index e991d191a..eb5bd1153 100644
+--- a/client/display.h
++++ b/client/display.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2012  Intel Corporation. All rights reserved.
+  *
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #define COLOR_OFF	"\x1B[0m"
+diff --git a/client/gatt.c b/client/gatt.c
+index e5bab6dd0..21fd38ecf 100644
+--- a/client/gatt.c
++++ b/client/gatt.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2014  Intel Corporation. All rights reserved.
+  *
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #ifdef HAVE_CONFIG_H
+diff --git a/client/gatt.h b/client/gatt.h
+index 09ca618d3..fc2b8a8a6 100644
+--- a/client/gatt.h
++++ b/client/gatt.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2014  Intel Corporation. All rights reserved.
+  *
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ void gatt_add_service(GDBusProxy *proxy);
+diff --git a/client/main.c b/client/main.c
+index da877b546..9aaa0106e 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2012  Intel Corporation. All rights reserved.
+  *
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #ifdef HAVE_CONFIG_H
 -- 
 2.25.4
 
