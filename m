@@ -2,40 +2,41 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C331269A1D
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Sep 2020 02:05:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54818269A23
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Sep 2020 02:06:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726156AbgIOAFh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 14 Sep 2020 20:05:37 -0400
-Received: from mga09.intel.com ([134.134.136.24]:37105 "EHLO mga09.intel.com"
+        id S1726169AbgIOAFn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 14 Sep 2020 20:05:43 -0400
+Received: from mga09.intel.com ([134.134.136.24]:37104 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726152AbgIOAFc (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 14 Sep 2020 20:05:32 -0400
-IronPort-SDR: 32urIuYvMzcr2+tj7qFXVZJwV5mlRSWCj1rlD8qYk10ujyqwPKLiHg0QlD3Z7HacEuP/uiY0SG
- NCly2JDrol9g==
-X-IronPort-AV: E=McAfee;i="6000,8403,9744"; a="160112033"
+        id S1726136AbgIOAFj (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 14 Sep 2020 20:05:39 -0400
+IronPort-SDR: V/nKsfKh/XiAZBm/KxjNyZovTxKZiCCB2YwCu5W8rY8ZDjiUOcb8LG97q/M0HPFRbQaC2XxG8B
+ 6ZJhxWH665gA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9744"; a="160112038"
 X-IronPort-AV: E=Sophos;i="5.76,427,1592895600"; 
-   d="scan'208";a="160112033"
+   d="scan'208";a="160112038"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:28 -0700
-IronPort-SDR: 5nIMtZlyWlzRBg+VpbTby9+Bq6p3PjhWaoINE0PUQ4ZlkkqNOnPO6HgTJfkWpLVeoKm3iNoh5f
- 2QGMJFpoVT8Q==
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:30 -0700
+IronPort-SDR: hR0fGCjvmDEhySBE6vxNHipelQ7pAezDu5B4EKwRnF678wTH69Hry0uP63QeJFtFWnsw/ZDk64
+ 3MwzWvuqk3dA==
 X-IronPort-AV: E=Sophos;i="5.76,427,1592895600"; 
-   d="scan'208";a="507333161"
+   d="scan'208";a="507333170"
 Received: from azvasil-mobl.amr.corp.intel.com (HELO han1-mobl3.jf.intel.com) ([10.254.127.225])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:28 -0700
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2020 17:05:30 -0700
 From:   tedd.an@linux.intel.com
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
-Subject: [BlueZ v3 09/17] mesh: Add SPDX License Identifier
-Date:   Mon, 14 Sep 2020 17:04:49 -0700
-Message-Id: <20200915000457.22988-10-tedd.an@linux.intel.com>
+Subject: [BlueZ v3 10/17] monitor: Add SPDX License Identifier
+Date:   Mon, 14 Sep 2020 17:04:50 -0700
+Message-Id: <20200915000457.22988-11-tedd.an@linux.intel.com>
 X-Mailer: git-send-email 2.25.4
 In-Reply-To: <20200915000457.22988-1-tedd.an@linux.intel.com>
 References: <20200915000457.22988-1-tedd.an@linux.intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
@@ -49,119 +50,117 @@ This patch adds SPDX License Identifier and removes the license text.
 -------------------------------------
        License            COUNT
 -------------------------------------
- LGPL-2.1-or-later    :     48
+ LGPL-2.1-or-later    :     47
 
 License: LGPL-2.1-or-later
-   mesh/mesh-mgmt.h
-   mesh/mesh-mgmt.c
-   mesh/net-keys.c
-   mesh/mesh-io-api.h
-   mesh/mesh.h
-   mesh/net-keys.h
-   mesh/model.h
-   mesh/util.h
-   mesh/appkey.c
-   mesh/cfgmod.h
-   mesh/appkey.h
-   mesh/prov.h
-   mesh/prov-acceptor.c
-   mesh/net.c
-   mesh/dbus.h
-   mesh/friend.h
-   mesh/mesh-io-generic.c
-   mesh/main.c
-   mesh/util.c
-   mesh/dbus.c
-   mesh/error.h
-   mesh/mesh-config-json.c
-   mesh/agent.h
-   mesh/pb-adv.c
-   mesh/crypto.c
-   mesh/crypto.h
-   mesh/friend.c
-   mesh/pb-adv.h
-   mesh/provision.h
-   mesh/mesh-config.h
-   mesh/mesh-io-generic.h
-   mesh/agent.c
-   mesh/cfgmod-server.c
-   mesh/mesh-io.h
-   mesh/keyring.h
-   mesh/net.h
-   mesh/keyring.c
-   mesh/mesh-defs.h
-   mesh/mesh.c
-   mesh/rpl.c
-   mesh/manager.c
-   mesh/model.c
-   mesh/mesh-io.c
-   mesh/node.c
-   mesh/prov-initiator.c
-   mesh/rpl.h
-   mesh/node.h
-   mesh/manager.h
+   monitor/bt.h
+   monitor/hcidump.h
+   monitor/avdtp.h
+   monitor/crc.c
+   monitor/sdp.c
+   monitor/hwdb.c
+   monitor/intel.h
+   monitor/avctp.c
+   monitor/control.h
+   monitor/display.c
+   monitor/a2dp.c
+   monitor/ll.c
+   monitor/ll.h
+   monitor/jlink.h
+   monitor/broadcom.h
+   monitor/lmp.c
+   monitor/keys.c
+   monitor/ellisys.c
+   monitor/main.c
+   monitor/ellisys.h
+   monitor/hwdb.h
+   monitor/display.h
+   monitor/jlink.c
+   monitor/rfcomm.h
+   monitor/packet.c
+   monitor/crc.h
+   monitor/keys.h
+   monitor/sdp.h
+   monitor/rfcomm.c
+   monitor/avdtp.c
+   monitor/a2dp.h
+   monitor/avctp.h
+   monitor/vendor.h
+   monitor/hcidump.c
+   monitor/intel.c
+   monitor/tty.h
+   monitor/control.c
+   monitor/lmp.h
+   monitor/analyze.c
+   monitor/bnep.c
+   monitor/l2cap.c
+   monitor/vendor.c
+   monitor/packet.h
+   monitor/broadcom.c
+   monitor/analyze.h
+   monitor/l2cap.h
+   monitor/bnep.h
 ---
- mesh/agent.c            | 11 +----------
- mesh/agent.h            | 11 +----------
- mesh/appkey.c           | 11 +----------
- mesh/appkey.h           | 11 +----------
- mesh/cfgmod-server.c    | 11 +----------
- mesh/cfgmod.h           | 11 +----------
- mesh/crypto.c           | 11 +----------
- mesh/crypto.h           | 11 +----------
- mesh/dbus.c             | 11 +----------
- mesh/dbus.h             | 11 +----------
- mesh/error.h            | 11 +----------
- mesh/friend.c           | 11 +----------
- mesh/friend.h           | 11 +----------
- mesh/keyring.c          | 11 +----------
- mesh/keyring.h          | 11 +----------
- mesh/main.c             | 11 +----------
- mesh/manager.c          | 11 +----------
- mesh/manager.h          | 11 +----------
- mesh/mesh-config-json.c | 11 +----------
- mesh/mesh-config.h      | 11 +----------
- mesh/mesh-defs.h        | 12 +-----------
- mesh/mesh-io-api.h      | 11 +----------
- mesh/mesh-io-generic.c  | 11 +----------
- mesh/mesh-io-generic.h  | 11 +----------
- mesh/mesh-io.c          | 11 +----------
- mesh/mesh-io.h          | 11 +----------
- mesh/mesh-mgmt.c        | 11 +----------
- mesh/mesh-mgmt.h        | 11 +----------
- mesh/mesh.c             | 11 +----------
- mesh/mesh.h             | 11 +----------
- mesh/model.c            | 11 +----------
- mesh/model.h            | 11 +----------
- mesh/net-keys.c         | 11 +----------
- mesh/net-keys.h         | 11 +----------
- mesh/net.c              | 11 +----------
- mesh/net.h              | 11 +----------
- mesh/node.c             | 11 +----------
- mesh/node.h             | 11 +----------
- mesh/pb-adv.c           | 11 +----------
- mesh/pb-adv.h           | 11 +----------
- mesh/prov-acceptor.c    | 11 +----------
- mesh/prov-initiator.c   | 11 +----------
- mesh/prov.h             | 11 +----------
- mesh/provision.h        | 11 +----------
- mesh/rpl.c              | 11 +----------
- mesh/rpl.h              | 11 +----------
- mesh/util.c             | 11 +----------
- mesh/util.h             | 11 +----------
- 48 files changed, 48 insertions(+), 481 deletions(-)
+ monitor/a2dp.c     | 15 +--------------
+ monitor/a2dp.h     | 15 +--------------
+ monitor/analyze.c  | 15 +--------------
+ monitor/analyze.h  | 15 +--------------
+ monitor/avctp.c    | 15 +--------------
+ monitor/avctp.h    | 15 +--------------
+ monitor/avdtp.c    | 15 +--------------
+ monitor/avdtp.h    | 15 +--------------
+ monitor/bnep.c     | 15 +--------------
+ monitor/bnep.h     | 15 +--------------
+ monitor/broadcom.c | 15 +--------------
+ monitor/broadcom.h | 15 +--------------
+ monitor/bt.h       | 15 +--------------
+ monitor/control.c  | 15 +--------------
+ monitor/control.h  | 15 +--------------
+ monitor/crc.c      | 15 +--------------
+ monitor/crc.h      | 15 +--------------
+ monitor/display.c  | 15 +--------------
+ monitor/display.h  | 15 +--------------
+ monitor/ellisys.c  | 15 +--------------
+ monitor/ellisys.h  | 15 +--------------
+ monitor/hcidump.c  | 15 +--------------
+ monitor/hcidump.h  | 15 +--------------
+ monitor/hwdb.c     | 15 +--------------
+ monitor/hwdb.h     | 15 +--------------
+ monitor/intel.c    | 15 +--------------
+ monitor/intel.h    | 15 +--------------
+ monitor/jlink.c    | 15 +--------------
+ monitor/jlink.h    | 15 +--------------
+ monitor/keys.c     | 15 +--------------
+ monitor/keys.h     | 15 +--------------
+ monitor/l2cap.c    | 15 +--------------
+ monitor/l2cap.h    | 15 +--------------
+ monitor/ll.c       | 15 +--------------
+ monitor/ll.h       | 15 +--------------
+ monitor/lmp.c      | 15 +--------------
+ monitor/lmp.h      | 15 +--------------
+ monitor/main.c     | 15 +--------------
+ monitor/packet.c   | 15 +--------------
+ monitor/packet.h   | 15 +--------------
+ monitor/rfcomm.c   | 15 +--------------
+ monitor/rfcomm.h   | 15 +--------------
+ monitor/sdp.c      | 15 +--------------
+ monitor/sdp.h      | 15 +--------------
+ monitor/tty.h      | 15 +--------------
+ monitor/vendor.c   | 15 +--------------
+ monitor/vendor.h   | 15 +--------------
+ 47 files changed, 47 insertions(+), 658 deletions(-)
 
-diff --git a/mesh/agent.c b/mesh/agent.c
-index 4d200416f..b0d523d16 100644
---- a/mesh/agent.c
-+++ b/mesh/agent.c
+diff --git a/monitor/a2dp.c b/monitor/a2dp.c
+index 4a1d0e1c4..ac2e1a228 100644
+--- a/monitor/a2dp.c
++++ b/monitor/a2dp.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2018  Pali Rohár <pali.rohar@gmail.com>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -174,20 +173,24 @@ index 4d200416f..b0d523d16 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/agent.h b/mesh/agent.h
-index 6cc3d0f71..6664c2226 100644
---- a/mesh/agent.h
-+++ b/mesh/agent.h
+diff --git a/monitor/a2dp.h b/monitor/a2dp.h
+index 72a8f1f45..814c8ed90 100644
+--- a/monitor/a2dp.h
++++ b/monitor/a2dp.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2015  Andrzej Kaczmarek <andrzej.kaczmarek@codecoup.pl>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -200,20 +203,24 @@ index 6cc3d0f71..6664c2226 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- struct mesh_agent;
-diff --git a/mesh/appkey.c b/mesh/appkey.c
-index a4771bd7d..7efb8f5c4 100644
---- a/mesh/appkey.c
-+++ b/mesh/appkey.c
+ bool a2dp_codec_cap(uint8_t codec, uint8_t losc, struct l2cap_frame *frame);
+diff --git a/monitor/analyze.c b/monitor/analyze.c
+index 4dc2891a1..784f9a0a4 100644
+--- a/monitor/analyze.c
++++ b/monitor/analyze.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2017-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -226,20 +233,24 @@ index a4771bd7d..7efb8f5c4 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/appkey.h b/mesh/appkey.h
-index 23b474a0a..3bb70445b 100644
---- a/mesh/appkey.h
-+++ b/mesh/appkey.h
+diff --git a/monitor/analyze.h b/monitor/analyze.h
+index c643d3502..774ac9db5 100644
+--- a/monitor/analyze.h
++++ b/monitor/analyze.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -252,20 +263,24 @@ index 23b474a0a..3bb70445b 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- /* TODO: get this number from configuration */
-diff --git a/mesh/cfgmod-server.c b/mesh/cfgmod-server.c
-index 2e5da863a..0009a1bee 100644
---- a/mesh/cfgmod-server.c
-+++ b/mesh/cfgmod-server.c
+ void analyze_trace(const char *path);
+diff --git a/monitor/avctp.c b/monitor/avctp.c
+index 6c2c2cac0..dc03195a8 100644
+--- a/monitor/avctp.c
++++ b/monitor/avctp.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2020  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -278,20 +293,24 @@ index 2e5da863a..0009a1bee 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/cfgmod.h b/mesh/cfgmod.h
-index 6d73656a7..f47a42c60 100644
---- a/mesh/cfgmod.h
-+++ b/mesh/cfgmod.h
+diff --git a/monitor/avctp.h b/monitor/avctp.h
+index 2613f14f3..1cca5a756 100644
+--- a/monitor/avctp.h
++++ b/monitor/avctp.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -304,20 +323,24 @@ index 6d73656a7..f47a42c60 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- #define CONFIG_SRV_MODEL	SET_ID(SIG_VENDOR, 0x0000)
-diff --git a/mesh/crypto.c b/mesh/crypto.c
-index 70b96c51b..da227ebbb 100644
---- a/mesh/crypto.c
-+++ b/mesh/crypto.c
+ void avctp_packet(const struct l2cap_frame *frame);
+diff --git a/monitor/avdtp.c b/monitor/avdtp.c
+index 6a342a282..9fe72d240 100644
+--- a/monitor/avdtp.c
++++ b/monitor/avdtp.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2015  Andrzej Kaczmarek <andrzej.kaczmarek@codecoup.pl>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -330,20 +353,24 @@ index 70b96c51b..da227ebbb 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/crypto.h b/mesh/crypto.h
-index 7d3f89cde..2f31dc3de 100644
---- a/mesh/crypto.h
-+++ b/mesh/crypto.h
+diff --git a/monitor/avdtp.h b/monitor/avdtp.h
+index f77d82ee2..1bc4dd03d 100644
+--- a/monitor/avdtp.h
++++ b/monitor/avdtp.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2015  Andrzej Kaczmarek <andrzej.kaczmarek@codecoup.pl>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -355,21 +382,355 @@ index 7d3f89cde..2f31dc3de 100644
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ void avdtp_packet(const struct l2cap_frame *frame);
+diff --git a/monitor/bnep.c b/monitor/bnep.c
+index 6af54e0c5..3b8b284a9 100644
+--- a/monitor/bnep.c
++++ b/monitor/bnep.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #ifdef HAVE_CONFIG_H
+diff --git a/monitor/bnep.h b/monitor/bnep.h
+index 38340d6c1..3ccc1b766 100644
+--- a/monitor/bnep.h
++++ b/monitor/bnep.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ void bnep_packet(const struct l2cap_frame *frame);
+diff --git a/monitor/broadcom.c b/monitor/broadcom.c
+index 787ff2950..4f8455583 100644
+--- a/monitor/broadcom.c
++++ b/monitor/broadcom.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #ifdef HAVE_CONFIG_H
+diff --git a/monitor/broadcom.h b/monitor/broadcom.h
+index ceda0e18b..5cb51d81d 100644
+--- a/monitor/broadcom.h
++++ b/monitor/broadcom.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #include <stdint.h>
+diff --git a/monitor/bt.h b/monitor/bt.h
+index 37e81e8a3..aca847d7c 100644
+--- a/monitor/bt.h
++++ b/monitor/bt.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #include <stdint.h>
+diff --git a/monitor/control.c b/monitor/control.c
+index 273075888..962da4980 100644
+--- a/monitor/control.c
++++ b/monitor/control.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #ifdef HAVE_CONFIG_H
+diff --git a/monitor/control.h b/monitor/control.h
+index ddf485f1f..29616c4f1 100644
+--- a/monitor/control.h
++++ b/monitor/control.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #include <stdint.h>
+diff --git a/monitor/crc.c b/monitor/crc.c
+index 912b37ebc..8d0e31db9 100644
+--- a/monitor/crc.c
++++ b/monitor/crc.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #ifdef HAVE_CONFIG_H
+diff --git a/monitor/crc.h b/monitor/crc.h
+index 772388b80..c59775100 100644
+--- a/monitor/crc.h
++++ b/monitor/crc.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #include <stdint.h>
+diff --git a/monitor/display.c b/monitor/display.c
+index 990395425..b11b71d5d 100644
+--- a/monitor/display.c
++++ b/monitor/display.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #ifdef HAVE_CONFIG_H
+diff --git a/monitor/display.h b/monitor/display.h
+index 98073b99e..f3a614b81 100644
+--- a/monitor/display.h
++++ b/monitor/display.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
  #include <stdbool.h>
-diff --git a/mesh/dbus.c b/mesh/dbus.c
-index 63ea420ed..a7abdc428 100644
---- a/mesh/dbus.c
-+++ b/mesh/dbus.c
+diff --git a/monitor/ellisys.c b/monitor/ellisys.c
+index e533eeceb..61ac24c23 100644
+--- a/monitor/ellisys.c
++++ b/monitor/ellisys.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019 Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -381,21 +742,25 @@ index 63ea420ed..a7abdc428 100644
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/dbus.h b/mesh/dbus.h
-index 89d6b1d31..8f00434d6 100644
---- a/mesh/dbus.h
-+++ b/mesh/dbus.h
+diff --git a/monitor/ellisys.h b/monitor/ellisys.h
+index 8be888dfe..c0c4ff192 100644
+--- a/monitor/ellisys.h
++++ b/monitor/ellisys.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -408,46 +773,24 @@ index 89d6b1d31..8f00434d6 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
-  */
- 
- #define BLUEZ_MESH_PATH "/org/bluez/mesh"
-diff --git a/mesh/error.h b/mesh/error.h
-index 2809915b0..6d9ccdb59 100644
---- a/mesh/error.h
-+++ b/mesh/error.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
- /*
-diff --git a/mesh/friend.c b/mesh/friend.c
-index d27da9592..1e67704b8 100644
---- a/mesh/friend.c
-+++ b/mesh/friend.c
+ #include <stdint.h>
+diff --git a/monitor/hcidump.c b/monitor/hcidump.c
+index 8b6f846d3..690b9b913 100644
+--- a/monitor/hcidump.c
++++ b/monitor/hcidump.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -460,20 +803,24 @@ index d27da9592..1e67704b8 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/friend.h b/mesh/friend.h
-index 2351dee31..ba6053426 100644
---- a/mesh/friend.h
-+++ b/mesh/friend.h
+diff --git a/monitor/hcidump.h b/monitor/hcidump.h
+index c90865068..d32b33c81 100644
+--- a/monitor/hcidump.h
++++ b/monitor/hcidump.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -486,20 +833,24 @@ index 2351dee31..ba6053426 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- #define OP_FRND_REQUEST			0x8040
-diff --git a/mesh/keyring.c b/mesh/keyring.c
-index e8dd1e463..bbe501063 100644
---- a/mesh/keyring.c
-+++ b/mesh/keyring.c
+ int hcidump_tracing(void);
+diff --git a/monitor/hwdb.c b/monitor/hwdb.c
+index f2431fad8..22de9edfb 100644
+--- a/monitor/hwdb.c
++++ b/monitor/hwdb.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -512,20 +863,24 @@ index e8dd1e463..bbe501063 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/keyring.h b/mesh/keyring.h
-index 2fab6b0dc..c2d38e9ff 100644
---- a/mesh/keyring.h
-+++ b/mesh/keyring.h
+diff --git a/monitor/hwdb.h b/monitor/hwdb.h
+index 79f505a2d..5789b6507 100644
+--- a/monitor/hwdb.h
++++ b/monitor/hwdb.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -538,20 +893,24 @@ index 2fab6b0dc..c2d38e9ff 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- struct keyring_net_key {
-diff --git a/mesh/main.c b/mesh/main.c
-index 5a3cbf290..4356e3f65 100644
---- a/mesh/main.c
-+++ b/mesh/main.c
+ #include <stdint.h>
+diff --git a/monitor/intel.c b/monitor/intel.c
+index 41e70ba0c..18840f3e7 100644
+--- a/monitor/intel.c
++++ b/monitor/intel.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2017-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -564,20 +923,54 @@ index 5a3cbf290..4356e3f65 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/manager.c b/mesh/manager.c
-index 8ef681366..d70993e3b 100644
---- a/mesh/manager.c
-+++ b/mesh/manager.c
+diff --git a/monitor/intel.h b/monitor/intel.h
+index 573b23f3f..bf00ad491 100644
+--- a/monitor/intel.h
++++ b/monitor/intel.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #include <stdint.h>
+diff --git a/monitor/jlink.c b/monitor/jlink.c
+index afa9d9323..9aaa4ebd8 100644
+--- a/monitor/jlink.c
++++ b/monitor/jlink.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2019  Intel Corporation. All rights reserved.
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2018  Codecoup
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -590,20 +983,24 @@ index 8ef681366..d70993e3b 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/manager.h b/mesh/manager.h
-index 5a4c7d94a..a45a1f1c4 100644
---- a/mesh/manager.h
-+++ b/mesh/manager.h
+diff --git a/monitor/jlink.h b/monitor/jlink.h
+index d7c76704c..e445e553c 100644
+--- a/monitor/jlink.h
++++ b/monitor/jlink.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2019  Intel Corporation. All rights reserved.
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2018  Codecoup
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -616,20 +1013,24 @@ index 5a4c7d94a..a45a1f1c4 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- bool manager_dbus_init(struct l_dbus *dbus);
-diff --git a/mesh/mesh-config-json.c b/mesh/mesh-config-json.c
-index 30c90170d..ec9ecb786 100644
---- a/mesh/mesh-config-json.c
-+++ b/mesh/mesh-config-json.c
+ int jlink_init(void);
+diff --git a/monitor/keys.c b/monitor/keys.c
+index e60aa9386..d2fa3b23f 100644
+--- a/monitor/keys.c
++++ b/monitor/keys.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -641,21 +1042,25 @@ index 30c90170d..ec9ecb786 100644
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/mesh-config.h b/mesh/mesh-config.h
-index 738cff9dd..420775829 100644
---- a/mesh/mesh-config.h
-+++ b/mesh/mesh-config.h
+diff --git a/monitor/keys.h b/monitor/keys.h
+index 61ec50a4c..e40c90fa9 100644
+--- a/monitor/keys.h
++++ b/monitor/keys.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -668,73 +1073,24 @@ index 738cff9dd..420775829 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
-  */
- 
- #define MIN_COMP_SIZE 14
-diff --git a/mesh/mesh-defs.h b/mesh/mesh-defs.h
-index 1a41e987b..43bdf5aab 100644
---- a/mesh/mesh-defs.h
-+++ b/mesh/mesh-defs.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,17 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
- #define MESH_AD_TYPE_PROVISION	0x29
-diff --git a/mesh/mesh-io-api.h b/mesh/mesh-io-api.h
-index 7a5b49c60..61f79f224 100644
---- a/mesh/mesh-io-api.h
-+++ b/mesh/mesh-io-api.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- struct mesh_io_private;
-diff --git a/mesh/mesh-io-generic.c b/mesh/mesh-io-generic.c
-index 67304d201..4eb7f27ce 100644
---- a/mesh/mesh-io-generic.c
-+++ b/mesh/mesh-io-generic.c
+ #include <stdint.h>
+diff --git a/monitor/l2cap.c b/monitor/l2cap.c
+index 41c766863..ca1997a0c 100644
+--- a/monitor/l2cap.c
++++ b/monitor/l2cap.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -747,20 +1103,24 @@ index 67304d201..4eb7f27ce 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/mesh-io-generic.h b/mesh/mesh-io-generic.h
-index 4bf4d5cb7..915e376bf 100644
---- a/mesh/mesh-io-generic.h
-+++ b/mesh/mesh-io-generic.h
+diff --git a/monitor/l2cap.h b/monitor/l2cap.h
+index 07864caee..e46042db4 100644
+--- a/monitor/l2cap.h
++++ b/monitor/l2cap.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -773,20 +1133,24 @@ index 4bf4d5cb7..915e376bf 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- extern const struct mesh_io_api mesh_io_generic;
-diff --git a/mesh/mesh-io.c b/mesh/mesh-io.c
-index c4eaecefd..62fc5d12e 100644
---- a/mesh/mesh-io.c
-+++ b/mesh/mesh-io.c
+ #include <stdint.h>
+diff --git a/monitor/ll.c b/monitor/ll.c
+index 4b3f567bd..cf93647e0 100644
+--- a/monitor/ll.c
++++ b/monitor/ll.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -799,20 +1163,24 @@ index c4eaecefd..62fc5d12e 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/mesh-io.h b/mesh/mesh-io.h
-index fc0422020..b11c6c6e1 100644
---- a/mesh/mesh-io.h
-+++ b/mesh/mesh-io.h
+diff --git a/monitor/ll.h b/monitor/ll.h
+index 98e0bf489..35d631363 100644
+--- a/monitor/ll.h
++++ b/monitor/ll.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -825,20 +1193,24 @@ index fc0422020..b11c6c6e1 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- struct mesh_io;
-diff --git a/mesh/mesh-mgmt.c b/mesh/mesh-mgmt.c
-index 2cf2ebac2..754093dbc 100644
---- a/mesh/mesh-mgmt.c
-+++ b/mesh/mesh-mgmt.c
+ #include <stdint.h>
+diff --git a/monitor/lmp.c b/monitor/lmp.c
+index 3088c5ee2..0d17f5c98 100644
+--- a/monitor/lmp.c
++++ b/monitor/lmp.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2019  SILVAIR sp. z o.o. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -851,20 +1223,24 @@ index 2cf2ebac2..754093dbc 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/mesh-mgmt.h b/mesh/mesh-mgmt.h
-index 93ad7995e..90ac14e73 100644
---- a/mesh/mesh-mgmt.h
-+++ b/mesh/mesh-mgmt.h
+diff --git a/monitor/lmp.h b/monitor/lmp.h
+index 9564c7779..d29ad8e46 100644
+--- a/monitor/lmp.h
++++ b/monitor/lmp.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2019  SILVAIR sp. z o.o. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -877,20 +1253,24 @@ index 93ad7995e..90ac14e73 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
- #include <stdbool.h>
  
-diff --git a/mesh/mesh.c b/mesh/mesh.c
-index bc170371d..f29e8b6be 100644
---- a/mesh/mesh.c
-+++ b/mesh/mesh.c
+ #include <stdint.h>
+diff --git a/monitor/main.c b/monitor/main.c
+index 24ec3c567..e6a40703c 100644
+--- a/monitor/main.c
++++ b/monitor/main.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -902,47 +1282,25 @@ index bc170371d..f29e8b6be 100644
 - *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/mesh.h b/mesh/mesh.h
-index eb887723d..0f77ebc58 100644
---- a/mesh/mesh.h
-+++ b/mesh/mesh.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- #define BLUEZ_MESH_NAME "org.bluez.mesh"
-diff --git a/mesh/model.c b/mesh/model.c
-index 5716f5e22..c8eb8c607 100644
---- a/mesh/model.c
-+++ b/mesh/model.c
+diff --git a/monitor/packet.c b/monitor/packet.c
+index bef134095..d83552f74 100644
+--- a/monitor/packet.c
++++ b/monitor/packet.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2020  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -955,20 +1313,24 @@ index 5716f5e22..c8eb8c607 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/model.h b/mesh/model.h
-index 2eec761a0..8df4f205f 100644
---- a/mesh/model.h
-+++ b/mesh/model.h
+diff --git a/monitor/packet.h b/monitor/packet.h
+index 3a139ecb7..409bf0e54 100644
+--- a/monitor/packet.h
++++ b/monitor/packet.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2020  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -981,20 +1343,24 @@ index 2eec761a0..8df4f205f 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- struct mesh_model;
-diff --git a/mesh/net-keys.c b/mesh/net-keys.c
-index 7dfabf922..e42cac70c 100644
---- a/mesh/net-keys.c
-+++ b/mesh/net-keys.c
+ #include <stdint.h>
+diff --git a/monitor/rfcomm.c b/monitor/rfcomm.c
+index 94d28de31..9b88a3440 100644
+--- a/monitor/rfcomm.c
++++ b/monitor/rfcomm.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -1007,20 +1373,24 @@ index 7dfabf922..e42cac70c 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/net-keys.h b/mesh/net-keys.h
-index 4f480fcda..70b3d22c3 100644
---- a/mesh/net-keys.h
-+++ b/mesh/net-keys.h
+diff --git a/monitor/rfcomm.h b/monitor/rfcomm.h
+index c15735234..81ab55b21 100644
+--- a/monitor/rfcomm.h
++++ b/monitor/rfcomm.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -1033,20 +1403,24 @@ index 4f480fcda..70b3d22c3 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- #define BEACON_TYPE_SNB		0x01
-diff --git a/mesh/net.c b/mesh/net.c
-index 6c7311732..01a475d74 100644
---- a/mesh/net.c
-+++ b/mesh/net.c
+ #define RFCOMM_SABM	0x2f
+diff --git a/monitor/sdp.c b/monitor/sdp.c
+index 575eda536..10bc0a121 100644
+--- a/monitor/sdp.c
++++ b/monitor/sdp.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -1059,20 +1433,24 @@ index 6c7311732..01a475d74 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/net.h b/mesh/net.h
-index 7bec6d0fc..4dbc94b8b 100644
---- a/mesh/net.h
-+++ b/mesh/net.h
+diff --git a/monitor/sdp.h b/monitor/sdp.h
+index c8a9bb0cd..4fffb30f9 100644
+--- a/monitor/sdp.h
++++ b/monitor/sdp.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -1085,20 +1463,54 @@ index 7bec6d0fc..4dbc94b8b 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
- #ifndef __packed
-diff --git a/mesh/node.c b/mesh/node.c
-index f7ac5ff67..76d8fd6e9 100644
---- a/mesh/node.c
-+++ b/mesh/node.c
+ void sdp_packet(const struct l2cap_frame *frame);
+diff --git a/monitor/tty.h b/monitor/tty.h
+index f0ba0c5c0..87b3fd53c 100644
+--- a/monitor/tty.h
++++ b/monitor/tty.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
+ /*
+  *
+  *  BlueZ - Bluetooth protocol stack for Linux
+@@ -5,20 +6,6 @@
+  *  Copyright (C) 2016  Intel Corporation
+  *
+  *
+- *  This library is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU Lesser General Public
+- *  License as published by the Free Software Foundation; either
+- *  version 2.1 of the License, or (at your option) any later version.
+- *
+- *  This library is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- *  Lesser General Public License for more details.
+- *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
+  */
+ 
+ #include <stdint.h>
+diff --git a/monitor/vendor.c b/monitor/vendor.c
+index 3dda2ae3b..ecbfcf2eb 100644
+--- a/monitor/vendor.c
++++ b/monitor/vendor.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: LGPL-2.1-or-later
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2017-2020  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -1111,20 +1523,24 @@ index f7ac5ff67..76d8fd6e9 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+- *
   */
  
  #ifdef HAVE_CONFIG_H
-diff --git a/mesh/node.h b/mesh/node.h
-index 7874b8692..30d53db33 100644
---- a/mesh/node.h
-+++ b/mesh/node.h
+diff --git a/monitor/vendor.h b/monitor/vendor.h
+index f5792b3c5..c70552b66 100644
+--- a/monitor/vendor.h
++++ b/monitor/vendor.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: LGPL-2.1-or-later */
  /*
   *
   *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
+@@ -6,20 +7,6 @@
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
   *
   *
 - *  This library is free software; you can redistribute it and/or
@@ -1137,269 +1553,13 @@ index 7874b8692..30d53db33 100644
 - *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 - *  Lesser General Public License for more details.
 - *
-  */
- 
- struct mesh_net;
-diff --git a/mesh/pb-adv.c b/mesh/pb-adv.c
-index ae5b81391..c74dae79f 100644
---- a/mesh/pb-adv.c
-+++ b/mesh/pb-adv.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
+- *  You should have received a copy of the GNU Lesser General Public
+- *  License along with this library; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 - *
   */
  
- #ifdef HAVE_CONFIG_H
-diff --git a/mesh/pb-adv.h b/mesh/pb-adv.h
-index 80d53d234..5b1e03dae 100644
---- a/mesh/pb-adv.h
-+++ b/mesh/pb-adv.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- bool pb_adv_reg(bool initiator, mesh_prov_open_func_t open_cb,
-diff --git a/mesh/prov-acceptor.c b/mesh/prov-acceptor.c
-index 96f7e15ad..a03ee1ce5 100644
---- a/mesh/prov-acceptor.c
-+++ b/mesh/prov-acceptor.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- #ifdef HAVE_CONFIG_H
-diff --git a/mesh/prov-initiator.c b/mesh/prov-initiator.c
-index 4de4df62d..8399282ee 100644
---- a/mesh/prov-initiator.c
-+++ b/mesh/prov-initiator.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018-2019  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- #ifdef HAVE_CONFIG_H
-diff --git a/mesh/prov.h b/mesh/prov.h
-index 11b20b31f..99e864c50 100644
---- a/mesh/prov.h
-+++ b/mesh/prov.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- #ifndef __packed
-diff --git a/mesh/provision.h b/mesh/provision.h
-index 1d78ed8e2..1a11b691b 100644
---- a/mesh/provision.h
-+++ b/mesh/provision.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- 
-diff --git a/mesh/rpl.c b/mesh/rpl.c
-index 792c52ad6..7cea8e346 100644
---- a/mesh/rpl.c
-+++ b/mesh/rpl.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2020  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- #ifdef HAVE_CONFIG_H
-diff --git a/mesh/rpl.h b/mesh/rpl.h
-index 2bbbdc9b9..9e988e7c5 100644
---- a/mesh/rpl.h
-+++ b/mesh/rpl.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2020  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- struct mesh_rpl {
-diff --git a/mesh/util.c b/mesh/util.c
-index 7d283331a..308e7d998 100644
---- a/mesh/util.c
-+++ b/mesh/util.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- #ifdef HAVE_CONFIG_H
-diff --git a/mesh/util.h b/mesh/util.h
-index 93c2d8687..085ec3330 100644
---- a/mesh/util.h
-+++ b/mesh/util.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
- /*
-  *
-  *  BlueZ - Bluetooth protocol stack for Linux
-@@ -5,16 +6,6 @@
-  *  Copyright (C) 2018  Intel Corporation. All rights reserved.
-  *
-  *
-- *  This library is free software; you can redistribute it and/or
-- *  modify it under the terms of the GNU Lesser General Public
-- *  License as published by the Free Software Foundation; either
-- *  version 2.1 of the License, or (at your option) any later version.
-- *
-- *  This library is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- *  Lesser General Public License for more details.
-- *
-  */
- 
- uint32_t get_timestamp_secs(void);
+ #include <stdint.h>
 -- 
 2.25.4
 
