@@ -2,193 +2,120 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5ED9326C6C1
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Sep 2020 20:02:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0611226CAD8
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Sep 2020 22:16:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727780AbgIPSCr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Sep 2020 14:02:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37998 "EHLO
+        id S1728006AbgIPUQ0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 16 Sep 2020 16:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727775AbgIPSCd (ORCPT
+        with ESMTP id S1728261AbgIPUQK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Sep 2020 14:02:33 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 049B3C061788
-        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 11:02:31 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id k15so4409618pfc.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 11:02:31 -0700 (PDT)
+        Wed, 16 Sep 2020 16:16:10 -0400
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6347BC061788
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 13:16:10 -0700 (PDT)
+Received: by mail-qk1-x74a.google.com with SMTP id 6so7116469qko.8
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 13:16:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oKK+R4vB+7dRT25SkGFNImJ3MtLBDRDqIznhx0nRzAs=;
-        b=RAv+ZcfpNEyAbGataYWi56XvH+C0d2XlA3emc1lqWb35HAVu5yFwWC1CUAL88Z3rz8
-         O113BD6SSZ7xE1R6gCYR+5Uiv8Wz4wRppiA+tTQym8I/NnqdG+l6StU2B0twqgdGYvAS
-         wUJLqUDnBrTeDpBjWcEAif4I6ydTNJmouwBy4=
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=MdhjrW4vcBDFIsP592gsDVtZRkvVNqCEWObBUfpScyE=;
+        b=S/LoxaBxieC8lVQIkT05JmeKWV2q00m0KOl6lbdUZjttEi6gPmAODOXo+OXyxqrhp5
+         jxPED41CrMMYGGYzgcLlvcapQJkQdfTUu9i2QXM7GJj+w4SlufZvPPq7CGx+WtQs5XXo
+         I7YllF7a+UdR+tYaO2wRl5ZyHZ08LTfmccXArvii4SlsuqhTQSdMvOeJoNCanj/J/7Wq
+         Vk8TR0Obzm/HN+IlfEHsaQMXotor2YyiQBI+pjYMRM8fXogZlhgu+SnJz3gWWC4Fqk3b
+         iMPaxRdAqigrr2GENqry48MO3EbiyvN+S1Mii7DlJQe0FygQPQ4B5YRNsIT0vZcGSpL4
+         sXdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oKK+R4vB+7dRT25SkGFNImJ3MtLBDRDqIznhx0nRzAs=;
-        b=SVAUL3y72DRxq5z/i8dAqCu066LHHJco9/mFVnTYNov44DDYx0x+s+N2QlYD+VYoMR
-         aOeUqvy8UuaFLrii1mjcKg9SXwXHiKW/JNtxuCfetKu0BzEWprWFCciD3LZTAILEFvFj
-         YtP+fV5gyUPV53XKwlTrOd5y4XpnXKox9kd6BcgR7fv8ungPtbv39D7+SCnZ7iQteTO5
-         7WseGDEo1rwmWg7BSZI/p4r+1WkJmCNyW+ZUiaRuuMr1psMLO1i5spLR999twVSAfQlY
-         HMR+BpRs2xN2V3Nss2IEZTY5giK14GG21cLthKFlWBJsYp5fDCfQoN7BgAKBP73EeLIU
-         q5Bg==
-X-Gm-Message-State: AOAM5328rYZZEh5lR4GMsgKKy3MG4ILUi1FIFsMUi22W3HsqwahWpWMK
-        vInf1fYSEAvgVnfyki+OHzGMgQ==
-X-Google-Smtp-Source: ABdhPJyByD4aTCPLAJcpe/mnCOM1dCgtz7cfGxhzyAuNU3s+nJ2bpn6PbSwbInUI7LZr3ekI7PjsjQ==
-X-Received: by 2002:a62:3044:0:b029:142:2501:398b with SMTP id w65-20020a6230440000b02901422501398bmr7496943pfw.80.1600279350855;
-        Wed, 16 Sep 2020 11:02:30 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id z1sm17315402pfz.70.2020.09.16.11.02.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Sep 2020 11:02:30 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 11:02:29 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, abhishekpandit@chromium.org
-Subject: Re: [PATCH v1] Bluetooth: Use NVM files based on SoC ID for WCN3991
-Message-ID: <20200916180229.GA3560556@google.com>
-References: <1600184605-31611-1-git-send-email-gubbaven@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1600184605-31611-1-git-send-email-gubbaven@codeaurora.org>
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=MdhjrW4vcBDFIsP592gsDVtZRkvVNqCEWObBUfpScyE=;
+        b=RiO+YbaK/0yHT7tBo2NzGx0ZJCSz5FNF1XSVbsUO1ySftW37UjxrmLcMtIX5zuIC7f
+         t04iujXV0v2kfybTT467/pQ1nizcqAwMBBWSxggxE9L4Gfp/wUB4qPFhtfBRcqvreU7e
+         VWGq8tI0zerLr5wQXOblijYJ5PsavwZxruvs+vPM4QP2UoHAUnSpkqte7xcwTMC3G3vr
+         /nLpp/s7flepecJ3cMGWth8XGaIs0sqPs6Og4A+H3vJ2B75KLeiQljXti/rUXBvF1pk3
+         aXzCzTtEblDW49wKTRxhtXkmSU2B1dBfA9ksPV7Mk0PB/c2XZg2TvWAQ1f8Y7UURqEv2
+         f1bA==
+X-Gm-Message-State: AOAM533k66Pfc8W2bc/dU+43N2YfKBGC8w+v4ICkM1nJt3NSUSDHLfVy
+        GwBnbwefhQUgMh1kZwILS6MMbq3oUtsSVFT3rlHeUsww7x9MGyc6iyCCGun4EOHsrpITcrZ5XRf
+        IbDC/1RsQjqk4I6FBnv/EwXcogEQ/mPRk4SldY3mU41GNxcnNzZFdm+ym8w/QXAkqHZ/QZlNbNE
+        ps5L13BDlspqo2jPQE
+X-Google-Smtp-Source: ABdhPJywYsxto73uCa5oqtF8W1GKrdTZFnMdhJn+ZM5F44wJqwc0/cZMV6OE3nz415keyKpfasZRfYqZsOwq7WwwtBWA
+X-Received: from danielwinkler-linux.mtv.corp.google.com ([2620:15c:202:201:f693:9fff:fef4:4e59])
+ (user=danielwinkler job=sendgmr) by 2002:ad4:57a7:: with SMTP id
+ g7mr25361605qvx.10.1600287369377; Wed, 16 Sep 2020 13:16:09 -0700 (PDT)
+Date:   Wed, 16 Sep 2020 13:15:56 -0700
+Message-Id: <20200916201602.1223002-1-danielwinkler@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
+Subject: [PATCH 0/6] Bluetooth: Add new MGMT interface for advertising add
+From:   Daniel Winkler <danielwinkler@google.com>
+To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org
+Cc:     chromeos-bluetooth-upstreaming@chromium.org,
+        Daniel Winkler <danielwinkler@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Venkata,
+Hi Maintainers,
 
-I agree with Marcel that the version magic is confusing ...
+This patch series defines the new two-call MGMT interface for adding
+new advertising instances. Similarly to the hci advertising commands, a
+mgmt call to set parameters is expected to be first, followed by a mgmt
+call to set advertising data/scan response. The members of the
+parameters request are optional; the caller defines a "params" bitfield
+in the structure that indicates which parameters were intentionally set,
+and others are set to defaults.
 
-On Tue, Sep 15, 2020 at 09:13:25PM +0530, Venkata Lakshmi Narayana Gubba wrote:
-> This change will allow to use different NVM file based
-> on WCN3991 BT SoC ID.Need to use different NVM file based on
-> fab location for WCN3991 BT SoC.
-> 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> ---
->  drivers/bluetooth/btqca.c   | 41 +++++++++++++++++++++++++----------------
->  drivers/bluetooth/btqca.h   | 13 ++++++++-----
->  drivers/bluetooth/hci_qca.c | 11 +++++------
->  3 files changed, 38 insertions(+), 27 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index ce9dcff..a7e72f1 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -14,12 +14,11 @@
->  
->  #define VERSION "0.1"
->  
-> -int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
-> +int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
->  			 enum qca_btsoc_type soc_type)
->  {
->  	struct sk_buff *skb;
->  	struct edl_event_hdr *edl;
-> -	struct qca_btsoc_version *ver;
->  	char cmd;
->  	int err = 0;
->  	u8 event_type = HCI_EV_VENDOR;
-> @@ -70,9 +69,9 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
->  	}
->  
->  	if (soc_type >= QCA_WCN3991)
-> -		memmove(&edl->data, &edl->data[1], sizeof(*ver));
-> -
-> -	ver = (struct qca_btsoc_version *)(edl->data);
-> +		memcpy(ver, &edl->data[1], sizeof(*ver));
-> +	else
-> +		memcpy(ver, &edl->data, sizeof(*ver));
->  
->  	bt_dev_info(hdev, "QCA Product ID   :0x%08x",
->  		    le32_to_cpu(ver->product_id));
-> @@ -83,13 +82,7 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
->  	bt_dev_info(hdev, "QCA Patch Version:0x%08x",
->  		    le16_to_cpu(ver->patch_ver));
->  
-> -	/* QCA chipset version can be decided by patch and SoC
-> -	 * version, combination with upper 2 bytes from SoC
-> -	 * and lower 2 bytes from patch will be used.
-> -	 */
-> -	*soc_version = (le32_to_cpu(ver->soc_id) << 16) |
-> -		       (le16_to_cpu(ver->rom_ver) & 0x0000ffff);
-> -	if (*soc_version == 0)
-> +	if (le32_to_cpu(ver->soc_id) == 0 || le16_to_cpu(ver->rom_ver) == 0)
->  		err = -EILSEQ;
->  
->  out:
-> @@ -446,15 +439,25 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
->  EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
->  
->  int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
-> -		   enum qca_btsoc_type soc_type, u32 soc_ver,
-> +		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
->  		   const char *firmware_name)
->  {
->  	struct qca_fw_config config;
->  	int err;
->  	u8 rom_ver = 0;
-> +	u32 soc_ver;
->  
->  	bt_dev_dbg(hdev, "QCA setup on UART");
->  
-> +	/* QCA chipset version can be decided by patch and SoC
-> +	 * version, combination with upper 2 bytes from SoC
-> +	 * and lower 2 bytes from patch will be used.
-> +	 */
-> +	soc_ver = (le32_to_cpu(ver.soc_id) << 16) |
-> +		       (le16_to_cpu(ver.rom_ver) & 0x0000ffff);
-> +
+The main feature here is the introduction of min/max parameters and tx
+power that can be requested by the client. Min/max parameters will be
+used both with and without extended advertising support, and tx power
+will be used with extended advertising support. After a call for hci
+advertising parameters, a new TX_POWER_SELECTED event will be emitted to
+alert userspace to the actual chosen tx power.
 
-Can we at least do the leN_to_cpu conversions in qca_read_soc_version()
-as previously to make this less clunky?
+Additionally, to inform userspace of the controller LE Tx power
+capabilities for the client's benefit, this series also adds an MGMT
+command to query controller capabilities, which returns a flexible TLV
+format for future flexibility.
 
-And/or define a macro to extract 'soc_ver' to unclunkify this further.
+All changes have been tested on hatch (extended advertising) and kukui
+(no extended advertising) chromebooks with manual testing verifying
+correctness of parameters/data in btmon traces, and our automated test
+suite of 25 single- and multi-advertising usage scenarios.
 
-> +	bt_dev_info(hdev, "QCA controller version 0x%08x", soc_ver);
-> +
->  	config.user_baud_rate = baudrate;
->  
->  	/* Download rampatch file */
-> @@ -491,9 +494,15 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->  	if (firmware_name)
->  		snprintf(config.fwname, sizeof(config.fwname),
->  			 "qca/%s", firmware_name);
-> -	else if (qca_is_wcn399x(soc_type))
-> -		snprintf(config.fwname, sizeof(config.fwname),
-> -			 "qca/crnv%02x.bin", rom_ver);
-> +	else if (qca_is_wcn399x(soc_type)) {
-> +		if (ver.soc_id == QCA_WCN3991_SOC_ID) {
-> +			snprintf(config.fwname, sizeof(config.fwname),
-> +				 "qca/crnv%02xu.bin", rom_ver);
-> +		} else {
-> +			snprintf(config.fwname, sizeof(config.fwname),
-> +				 "qca/crnv%02x.bin", rom_ver);
-> +		}
-> +	}
->  	else if (soc_type == QCA_QCA6390)
->  		snprintf(config.fwname, sizeof(config.fwname),
->  			 "qca/htnv%02x.bin", rom_ver);
-> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-> index d81b74c..d01a9f5 100644
-> --- a/drivers/bluetooth/btqca.h
-> +++ b/drivers/bluetooth/btqca.h
-> @@ -34,6 +34,8 @@
->  #define QCA_HCI_CC_OPCODE		0xFC00
->  #define QCA_HCI_CC_SUCCESS		0x00
->  
-> +#define QCA_WCN3991_SOC_ID		(0x40014320)
+A separate patch series will add support in bluetoothd. Thanks in
+advance for your feedback!
 
-The QCA_ prefix seems a bit verbose, given that this is a QCA driver and
-WCN3991 uniquely identifies the chip. Having the prefix just needlessly
-clutters conditions, I suggest to just call it SOC_ID_WCN3991.
+Daniel Winkler
+
+
+
+Daniel Winkler (6):
+  Bluetooth: Add helper to set adv data
+  Bluetooth: Break add adv into two mgmt commands
+  Bluetooth: Use intervals and tx power from mgmt cmds
+  Bluetooth: Emit tx power chosen on ext adv params completion
+  Bluetooth: Query LE tx power on startup
+  Bluetooth: Add MGMT command for controller capabilities
+
+ include/net/bluetooth/hci.h      |   7 +
+ include/net/bluetooth/hci_core.h |  14 +-
+ include/net/bluetooth/mgmt.h     |  48 ++++
+ net/bluetooth/hci_core.c         |  47 +++-
+ net/bluetooth/hci_event.c        |  22 ++
+ net/bluetooth/hci_request.c      |  29 ++-
+ net/bluetooth/mgmt.c             | 420 ++++++++++++++++++++++++++++++-
+ 7 files changed, 561 insertions(+), 26 deletions(-)
+
+-- 
+2.28.0.618.gf4bc123cb7-goog
+
