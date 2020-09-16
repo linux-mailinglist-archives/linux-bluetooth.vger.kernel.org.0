@@ -2,181 +2,250 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10C9526CADF
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Sep 2020 22:17:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF23726CC62
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Sep 2020 22:43:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726890AbgIPURi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Sep 2020 16:17:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58980 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728326AbgIPUQq (ORCPT
+        id S1728410AbgIPUnn convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 16 Sep 2020 16:43:43 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:52797 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726692AbgIPRD2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Sep 2020 16:16:46 -0400
-Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B66AC061220
-        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 13:16:23 -0700 (PDT)
-Received: by mail-qv1-xf4a.google.com with SMTP id di5so5516499qvb.13
-        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 13:16:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=mV/LFuTshHzotksH3grmXFg7Xs0h6PleCimRLiw3IeY=;
-        b=EQRl+RIO/iMmVWfKcZ8ED17Om52TeR9DzT0HzQt62GI8XYzbTx4iSE/e53TWLeRrC4
-         SinrfVtyjrg8237Bs3Z5Y6SWftmvQrUM2sPw4RnMoJ5vk10M2ZWGgSsoXIBGfqPA3DZW
-         dRiCE4KtBUMZZNXBlXikUyz/9lx9HSLDr/p1IjtZnwFCNbEYGhOtEnek7cUlCDGJ81RW
-         byBJJkGtNWPwky/MpFaZ8fHoDZpF4odneqa6wytQFAdaoV5xhvHMH8Nm5kYI/J+BiSyH
-         BThka3ZSKn46911pMjZGg8Q+1xXtdHCnJDIMl/URjQcO3oXG6Fpo6hfqmf9FQwAApsZL
-         mGzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=mV/LFuTshHzotksH3grmXFg7Xs0h6PleCimRLiw3IeY=;
-        b=tLlgR8/VWwIJg4eO58wXER+8OkHlj9HieASLa4di3m5a40duWQ7Iv3b0A+m+rhkPE1
-         mZ/nPR5xzoYoKc7p5gyavK0WNd/tqhbRVNBz5g6GoSQW29jrBcHRo4NSt44Ju2IBqarv
-         OgBilYGJmg8s5Mb6g0jImsNECRlv4wtJrQ6PUAxi+mon2T94Zm87IhUZvtQSrFX+b+Sm
-         e3aL1e9/tLlCsZ4atkcUMWNPHVoH8RgWlyPMBPKffl1pY5FnqIZH/Vg81ou48V7ZItK8
-         15ryixKRF2hLASsJWMtByhnZ79pB8d6vnRFLFhVhWZCNfQJ2iWqQiQ0UJakFiSwpWrzE
-         NjRg==
-X-Gm-Message-State: AOAM530GRZ184EVblYinnAdok9HT3Slz/ovowvCb4vSE1/pdgTNooZ3O
-        JyWD00imF29pHNTWoyE58X2OtpCG/I3Ih4Sz6aCl0W3X71yGqPpX3oY/+CXDETku9YI6MoR8xIE
-        TdEOsJEvotPouViFpC38ozG8yYmvsoEtZe44L5yEe7A6d5uVO3Dlcu7LD1OgFxMM2SPOSjQLfWu
-        b3BGPtSk1QlZMbDTD1
-X-Google-Smtp-Source: ABdhPJx9rr/wInvexTzLGszPhP52de+s7E+VegnMknnOC50bFToSeEmk3oEZlbiKA9jVdE7FHbXQXJRUfSF8TKP5DSid
-X-Received: from danielwinkler-linux.mtv.corp.google.com ([2620:15c:202:201:f693:9fff:fef4:4e59])
- (user=danielwinkler job=sendgmr) by 2002:a0c:c244:: with SMTP id
- w4mr25344793qvh.12.1600287382444; Wed, 16 Sep 2020 13:16:22 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 13:16:02 -0700
-In-Reply-To: <20200916201602.1223002-1-danielwinkler@google.com>
-Message-Id: <20200916131430.6.I5068c01cae3cea674a96e103a0cf4d8c81425a4f@changeid>
-Mime-Version: 1.0
-References: <20200916201602.1223002-1-danielwinkler@google.com>
-X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
-Subject: [PATCH 6/6] Bluetooth: Add MGMT command for controller capabilities
-From:   Daniel Winkler <danielwinkler@google.com>
-To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org
-Cc:     chromeos-bluetooth-upstreaming@chromium.org,
-        Daniel Winkler <danielwinkler@google.com>,
-        Sonny Sasaka <sonnysasaka@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Wed, 16 Sep 2020 13:03:28 -0400
+Received: from marcel-macbook.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 6372ECED04;
+        Wed, 16 Sep 2020 16:34:38 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Re: [PATCH v1] Bluetooth: Use NVM files based on SoC ID for WCN3991
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1600184605-31611-1-git-send-email-gubbaven@codeaurora.org>
+Date:   Wed, 16 Sep 2020 16:27:41 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Hemantg <hemantg@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <A07A6C72-55B6-4DE6-BA4A-987ED4DB88E0@holtmann.org>
+References: <1600184605-31611-1-git-send-email-gubbaven@codeaurora.org>
+To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-For advertising, we wish to know the LE tx power capabilities of the
-controller in userspace, so this patch adds a new MGMT command to query
-controller capabilities. The data returned is in TLV format, so it can
-be easily used to convey any data determined to be useful in the future,
-but for now it simply contains LE min and max tx power.
+Hi Venkata,
 
-The change was tested by manually verifying that the new MGMT command
-returns the tx power range as expected in userspace.
+> This change will allow to use different NVM file based
+> on WCN3991 BT SoC ID.Need to use different NVM file based on
+> fab location for WCN3991 BT SoC.
+> 
+> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+> ---
+> drivers/bluetooth/btqca.c   | 41 +++++++++++++++++++++++++----------------
+> drivers/bluetooth/btqca.h   | 13 ++++++++-----
+> drivers/bluetooth/hci_qca.c | 11 +++++------
+> 3 files changed, 38 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index ce9dcff..a7e72f1 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -14,12 +14,11 @@
+> 
+> #define VERSION "0.1"
+> 
+> -int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+> +int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
+> 			 enum qca_btsoc_type soc_type)
+> {
+> 	struct sk_buff *skb;
+> 	struct edl_event_hdr *edl;
+> -	struct qca_btsoc_version *ver;
+> 	char cmd;
+> 	int err = 0;
+> 	u8 event_type = HCI_EV_VENDOR;
+> @@ -70,9 +69,9 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+> 	}
+> 
+> 	if (soc_type >= QCA_WCN3991)
+> -		memmove(&edl->data, &edl->data[1], sizeof(*ver));
+> -
+> -	ver = (struct qca_btsoc_version *)(edl->data);
+> +		memcpy(ver, &edl->data[1], sizeof(*ver));
 
-Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
-Signed-off-by: Daniel Winkler <danielwinkler@google.com>
----
+any reason to use &edl->data[1] and not just edl->data + 1?
 
- include/net/bluetooth/mgmt.h |  9 +++++++++
- net/bluetooth/mgmt.c         | 39 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+> +	else
+> +		memcpy(ver, &edl->data, sizeof(*ver));
+> 
+> 	bt_dev_info(hdev, "QCA Product ID   :0x%08x",
+> 		    le32_to_cpu(ver->product_id));
+> @@ -83,13 +82,7 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+> 	bt_dev_info(hdev, "QCA Patch Version:0x%08x",
+> 		    le16_to_cpu(ver->patch_ver));
+> 
+> -	/* QCA chipset version can be decided by patch and SoC
+> -	 * version, combination with upper 2 bytes from SoC
+> -	 * and lower 2 bytes from patch will be used.
+> -	 */
+> -	*soc_version = (le32_to_cpu(ver->soc_id) << 16) |
+> -		       (le16_to_cpu(ver->rom_ver) & 0x0000ffff);
+> -	if (*soc_version == 0)
+> +	if (le32_to_cpu(ver->soc_id) == 0 || le16_to_cpu(ver->rom_ver) == 0)
+> 		err = -EILSEQ;
+> 
+> out:
+> @@ -446,15 +439,25 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+> EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+> 
+> int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+> -		   enum qca_btsoc_type soc_type, u32 soc_ver,
+> +		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+> 		   const char *firmware_name)
+> {
+> 	struct qca_fw_config config;
+> 	int err;
+> 	u8 rom_ver = 0;
+> +	u32 soc_ver;
+> 
+> 	bt_dev_dbg(hdev, "QCA setup on UART");
+> 
+> +	/* QCA chipset version can be decided by patch and SoC
+> +	 * version, combination with upper 2 bytes from SoC
+> +	 * and lower 2 bytes from patch will be used.
+> +	 */
+> +	soc_ver = (le32_to_cpu(ver.soc_id) << 16) |
+> +		       (le16_to_cpu(ver.rom_ver) & 0x0000ffff);
 
-diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
-index db64cf4747554c..9aa792e5efc8d0 100644
---- a/include/net/bluetooth/mgmt.h
-+++ b/include/net/bluetooth/mgmt.h
-@@ -815,6 +815,15 @@ struct mgmt_rp_add_ext_adv_data {
- 	__u8	instance;
- } __packed;
- 
-+#define MGMT_CAP_LE_TX_PWR_MIN	0x0000
-+#define MGMT_CAP_LE_TX_PWR_MAX	0x0001
-+
-+#define MGMT_OP_READ_CONTROLLER_CAP	0x0056
-+#define MGMT_OP_READ_CONTROLLER_CAP_SIZE	0
-+struct mgmt_rp_read_controller_cap {
-+	__u8     capabilities[0];
-+} __packed;
-+
- #define MGMT_EV_CMD_COMPLETE		0x0001
- struct mgmt_ev_cmd_complete {
- 	__le16	opcode;
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index b9347ff1a1e961..d2e5bc4b3ddb8f 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -124,6 +124,7 @@ static const u16 mgmt_commands[] = {
- 	MGMT_OP_REMOVE_ADV_MONITOR,
- 	MGMT_OP_ADD_EXT_ADV_PARAMS,
- 	MGMT_OP_ADD_EXT_ADV_DATA,
-+	MGMT_OP_READ_CONTROLLER_CAP,
- };
- 
- static const u16 mgmt_events[] = {
-@@ -181,6 +182,7 @@ static const u16 mgmt_untrusted_commands[] = {
- 	MGMT_OP_READ_EXP_FEATURES_INFO,
- 	MGMT_OP_READ_DEF_SYSTEM_CONFIG,
- 	MGMT_OP_READ_DEF_RUNTIME_CONFIG,
-+	MGMT_OP_READ_CONTROLLER_CAP,
- };
- 
- static const u16 mgmt_untrusted_events[] = {
-@@ -4356,6 +4358,42 @@ static int remove_adv_monitor(struct sock *sk, struct hci_dev *hdev,
- 	return err;
- }
- 
-+static int read_controller_cap(struct sock *sk, struct hci_dev *hdev,
-+			       void *data, u16 len)
-+{
-+	u8 i = 0;
-+
-+	/* This command will return its data in TVL format. Currently we only
-+	 * wish to include LE tx power parameters, so this struct can be given
-+	 * a fixed size as data types are not changing.
-+	 */
-+	struct {
-+		struct mgmt_tlv entry;
-+		__s8 value;
-+	} __packed cap[2];
-+
-+	BT_DBG("request for %s", hdev->name);
-+	memset(cap, 0, sizeof(cap));
-+
-+	hci_dev_lock(hdev);
-+
-+	/* Append LE tx power bounds */
-+	cap[i].entry.type = MGMT_CAP_LE_TX_PWR_MIN;
-+	cap[i].entry.length = sizeof(__s8);
-+	cap[i].value = hdev->min_le_tx_power;
-+	i++;
-+
-+	cap[i].entry.type = MGMT_CAP_LE_TX_PWR_MAX;
-+	cap[i].entry.length = sizeof(__s8);
-+	cap[i].value = hdev->max_le_tx_power;
-+	i++;
-+
-+	hci_dev_unlock(hdev);
-+
-+	return mgmt_cmd_complete(sk, hdev->id, MGMT_OP_READ_CONTROLLER_CAP,
-+				 MGMT_STATUS_SUCCESS, cap, sizeof(cap));
-+}
-+
- static void read_local_oob_data_complete(struct hci_dev *hdev, u8 status,
- 				         u16 opcode, struct sk_buff *skb)
- {
-@@ -8208,6 +8246,7 @@ static const struct hci_mgmt_handler mgmt_handlers[] = {
- 						HCI_MGMT_VAR_LEN },
- 	{ add_ext_adv_data,        MGMT_ADD_EXT_ADV_DATA_SIZE,
- 						HCI_MGMT_VAR_LEN },
-+	{ read_controller_cap,     MGMT_OP_READ_CONTROLLER_CAP_SIZE },
- };
- 
- void mgmt_index_added(struct hci_dev *hdev)
--- 
-2.28.0.618.gf4bc123cb7-goog
+Please indent this properly.
+
+I am also confused about the 0x0000ffff since it is just 16-bit value in the first place. Also where do you want to shift the 32-bit value to.
+
+Frankly, I find all this version magic kinda questionable.
+
+> +
+> +	bt_dev_info(hdev, "QCA controller version 0x%08x", soc_ver);
+> +
+> 	config.user_baud_rate = baudrate;
+> 
+> 	/* Download rampatch file */
+> @@ -491,9 +494,15 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+> 	if (firmware_name)
+> 		snprintf(config.fwname, sizeof(config.fwname),
+> 			 "qca/%s", firmware_name);
+> -	else if (qca_is_wcn399x(soc_type))
+> -		snprintf(config.fwname, sizeof(config.fwname),
+> -			 "qca/crnv%02x.bin", rom_ver);
+> +	else if (qca_is_wcn399x(soc_type)) {
+> +		if (ver.soc_id == QCA_WCN3991_SOC_ID) {
+> +			snprintf(config.fwname, sizeof(config.fwname),
+> +				 "qca/crnv%02xu.bin", rom_ver);
+> +		} else {
+> +			snprintf(config.fwname, sizeof(config.fwname),
+> +				 "qca/crnv%02x.bin", rom_ver);
+> +		}
+> +	}
+> 	else if (soc_type == QCA_QCA6390)
+> 		snprintf(config.fwname, sizeof(config.fwname),
+> 			 "qca/htnv%02x.bin", rom_ver);
+> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+> index d81b74c..d01a9f5 100644
+> --- a/drivers/bluetooth/btqca.h
+> +++ b/drivers/bluetooth/btqca.h
+> @@ -34,6 +34,8 @@
+> #define QCA_HCI_CC_OPCODE		0xFC00
+> #define QCA_HCI_CC_SUCCESS		0x00
+> 
+> +#define QCA_WCN3991_SOC_ID		(0x40014320)
+> +
+> enum qca_baudrate {
+> 	QCA_BAUDRATE_115200 	= 0,
+> 	QCA_BAUDRATE_57600,
+> @@ -136,9 +138,9 @@ enum qca_btsoc_type {
+> 
+> int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr);
+> int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+> -		   enum qca_btsoc_type soc_type, u32 soc_ver,
+> +		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+> 		   const char *firmware_name);
+> -int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+> +int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
+> 			 enum qca_btsoc_type);
+> int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr);
+> int qca_send_pre_shutdown_cmd(struct hci_dev *hdev);
+> @@ -155,13 +157,14 @@ static inline int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdad
+> }
+> 
+> static inline int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+> -				 enum qca_btsoc_type soc_type, u32 soc_ver,
+> -				 const char *firmware_name)
+> +		enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+> +				const char *firmware_name)
+
+Please use proper indentation.
+
+> {
+> 	return -EOPNOTSUPP;
+> }
+> 
+> -static inline int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+> +static inline int qca_read_soc_version(struct hci_dev *hdev,
+> +				       struct qca_btsoc_version *ver,
+> 				       enum qca_btsoc_type)
+> {
+> 	return -EOPNOTSUPP;
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index 244b8fe..4c32c60 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -1649,7 +1649,7 @@ static int qca_setup(struct hci_uart *hu)
+> 	enum qca_btsoc_type soc_type = qca_soc_type(hu);
+> 	const char *firmware_name = qca_get_firmware_name(hu);
+> 	int ret;
+> -	int soc_ver = 0;
+> +	struct qca_btsoc_version ver;
+> 
+> 	ret = qca_check_speeds(hu);
+> 	if (ret)
+> @@ -1678,7 +1678,7 @@ static int qca_setup(struct hci_uart *hu)
+> 	if (qca_is_wcn399x(soc_type)) {
+> 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
+> 
+> -		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
+> +		ret = qca_read_soc_version(hdev, &ver, soc_type);
+> 		if (ret)
+> 			return ret;
+> 	} else {
+> @@ -1697,15 +1697,14 @@ static int qca_setup(struct hci_uart *hu)
+> 
+> 	if (!qca_is_wcn399x(soc_type)) {
+> 		/* Get QCA version information */
+> -		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
+> +		ret = qca_read_soc_version(hdev, &ver, soc_type);
+> 		if (ret)
+> 			return ret;
+> 	}
+> 
+> -	bt_dev_info(hdev, "QCA controller version 0x%08x", soc_ver);
+> 	/* Setup patch / NVM configurations */
+> -	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, soc_ver,
+> -			firmware_name);
+> +	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, ver,
+> +			     firmware_name);
+> 	if (!ret) {
+> 		set_bit(QCA_IBS_ENABLED, &qca->flags);
+> 		qca_debugfs_init(hdev);
+
+Regards
+
+Marcel
 
