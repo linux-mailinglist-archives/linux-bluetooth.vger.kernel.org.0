@@ -2,72 +2,71 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F7A526C01B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Sep 2020 11:06:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A5B926C6DC
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Sep 2020 20:06:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726571AbgIPJGe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Sep 2020 05:06:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46238 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726129AbgIPJGb (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Sep 2020 05:06:31 -0400
-Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B20F921974;
-        Wed, 16 Sep 2020 09:06:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600247190;
-        bh=Dfwbci88DTkyCRzDTgwvZH7qGaycD4hKjVm1q2R6nDI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bsWQuzvWoVSuUq700Adg7BMCU+7Pad8dakDZORQGKVPwk48j/EqXdFnRrGzLT44TS
-         oWbbT033KjoAt97oXXS1a6qmCQwJ9WUqELN0czuU7AO8AfvZBv/JXdcnYCjj9M+5kf
-         GQRn/mLUWDrHjqL9HyfVntGTUcmgZZMahsKZZ84w=
-Date:   Wed, 16 Sep 2020 11:06:41 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Alan Stern <stern@rowland.harvard.edu>
-Cc:     himadrispandya@gmail.com, dvyukov@google.com,
-        linux-usb@vger.kernel.org, perex@perex.cz, tiwai@suse.com,
-        stern@rowland.harvard.ed, linux-kernel@vger.kernel.org,
-        marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-bluetooth@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: Re: [PATCH v3 04/11] USB: core: hub.c: use usb_control_msg_send() in
- a few places
-Message-ID: <20200916090641.GA710715@kroah.com>
-References: <20200914153756.3412156-1-gregkh@linuxfoundation.org>
- <20200914153756.3412156-5-gregkh@linuxfoundation.org>
- <20200914180616.GB972479@rowland.harvard.edu>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200914180616.GB972479@rowland.harvard.edu>
+        id S1727760AbgIPSCT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 16 Sep 2020 14:02:19 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:41719 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727752AbgIPSCL (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 16 Sep 2020 14:02:11 -0400
+Received: from marcel-macbook.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
+        by mail.holtmann.org (Postfix) with ESMTPSA id B0D7ECED03;
+        Wed, 16 Sep 2020 16:29:44 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Re: [PATCH] Bluetooth: pause/resume advertising around suspend
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20200915141229.1.Icfac86f8dfa0813bba6c7604c420d11c3820b4ab@changeid>
+Date:   Wed, 16 Sep 2020 16:22:47 +0200
+Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        netdev@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <21AC2E8F-BEC6-431D-89BB-8F2E3EDFBBC1@holtmann.org>
+References: <20200915141229.1.Icfac86f8dfa0813bba6c7604c420d11c3820b4ab@changeid>
+To:     Daniel Winkler <danielwinkler@google.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Sender: linux-bluetooth-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Mon, Sep 14, 2020 at 02:06:16PM -0400, Alan Stern wrote:
-> On Mon, Sep 14, 2020 at 05:37:49PM +0200, Greg Kroah-Hartman wrote:
-> > There are a few calls to usb_control_msg() that can be converted to use
-> > usb_control_msg_send() instead, so do that in order to make the error
-> > checking a bit simpler and the code smaller.
-> > 
-> > Cc: Alan Stern <stern@rowland.harvard.edu>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> > v3:
-> >  - drop change in usb_enable_link_state() as it was not needed now
-> >    thanks to review from Alan
-> >  - minor changes requested by checkpatch.pl
-> > 
-> > v2:
-> >  - dropped changes to usb_req_set_sel() thanks to review from Alan
-> > 
-> >  drivers/usb/core/hub.c | 99 +++++++++++++++++-------------------------
-> >  1 file changed, 40 insertions(+), 59 deletions(-)
+Hi Daniel,
+
+> Currently, the controller will continue advertising when the system
+> enters suspend. This patch makes sure that all advertising instances are
+> paused when entering suspend, and resumed when suspend exits.
 > 
-> Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+> The Advertising and Suspend/Resume test suites were both run on this
+> change on 4.19 kernel with both hardware offloaded multi-advertising and
+> software rotated multi-advertising. In addition, a new test was added
+> that performs the following steps:
+> * Register 3 advertisements via bluez RegisterAdvertisement
+> * Verify reception of all advertisements by remote peer
+> * Enter suspend on DUT
+> * Verify failure to receive all advertisements by remote peer
+> * Exit suspend on DUT
+> * Verify reception of all advertisements by remote peer
+> 
+> Signed-off-by: Daniel Winkler <danielwinkler@google.com>
+> Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+> ---
+> 
+> net/bluetooth/hci_request.c | 67 +++++++++++++++++++++++++++++++------
+> 1 file changed, 57 insertions(+), 10 deletions(-)
 
-Thanks for the review!
+Patch has been applied to bluetooth-next tree.
 
-greg k-h
+Regards
+
+Marcel
+
