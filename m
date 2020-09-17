@@ -2,349 +2,473 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A9B026CFDD
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Sep 2020 02:18:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB30526D29A
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Sep 2020 06:30:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726007AbgIQARb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Sep 2020 20:17:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39838 "EHLO
+        id S1726055AbgIQEaG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Sep 2020 00:30:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbgIQARa (ORCPT
+        with ESMTP id S1725267AbgIQEaF (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Sep 2020 20:17:30 -0400
-X-Greylist: delayed 572 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Sep 2020 20:17:30 EDT
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30A56C061797
-        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 17:17:30 -0700 (PDT)
-Received: by mail-oi1-x241.google.com with SMTP id a3so411342oib.4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 17:17:30 -0700 (PDT)
+        Thu, 17 Sep 2020 00:30:05 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CD9DC06174A
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 21:30:05 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id y1so602002pgk.8
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Sep 2020 21:30:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rbjSy2gcW5T8/jgPNs6ByC2L9lU5F0205z1v1qv0Y0A=;
-        b=E9mfOvr3iqR2HRvMHaEUPDjIDirYVQrfmUu5CJfBzM2FoEHijkYMfly+QK9Skeulhj
-         vzkX6BXOcCKBFeDOrNSKR9Xq96/6i6YXXmse9sdfK3ITow81AVe7EBVfC0ZUtDXzHHLr
-         f5oLJG9XvKSurBqG9+M7afNX5x2EdNSilPpKsrxc0kgX+lkf1LOmiYnbKl56i2gfPoR0
-         MxY21oBi4clhoRvgsOYL/OBfn5MTeXZSmOsMG2dECLOVB5za+ebTnqCet9sauoH0OwuL
-         tWOlwCPlgw/fJ3CPuZs1NwjgCV7mzpn8uYLRcyxVKC3vuacSfGOl+HIrhTWIlZBsNi2b
-         F79g==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+TD3v7UAVWHCDzf41YKy6vU75ZLiejjugH1t0skQm7g=;
+        b=eENsEc4G6T+1dGFQM99qD3a535oJX7lQVb/ptcArLVIJGLPA1gjZV4AncrFLaoVSAO
+         SXiz9i2HeybAa00zSX+EYk4LTvRpPzJsJDy2D9U55N5ARfQtjYKvDIYEet8dTfUZHTBv
+         1HTMEeF4Tm3xKyNfZhMDviy2MQ9FV8GLPIh+U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rbjSy2gcW5T8/jgPNs6ByC2L9lU5F0205z1v1qv0Y0A=;
-        b=EKx2n4Q//FgBWzM9OB4Zm7Vkwo6eRy3j8pWDqxoYRRlhZxTACZq/1lmyT5fhAskDKL
-         02WWgynT7ose0W57ZwqSUheln76sFMA4YBuhuRg7btPQ6jB5GyEhhIQnfLhYkN4CJbMs
-         FIMmM5pOUEoan78ROxVd5uDpEyBMZycpWH2FXJYhH7nFlhBlgliwrsYfEVb/O6Ds8zfr
-         CtvmqWHzV3VC8CzuivMBq4QXtrslZxz74I9ncxeUfn+zC8jODydI7U0qg7XleWxg3wST
-         6Aok0ty+/7B1e3cWYoWtGO8j5LcSTlSSqTHJLWmieFIEP3Wjbu271QtwyA+f2sLRBzt+
-         eSVg==
-X-Gm-Message-State: AOAM532awhD1UgIL4c2pxWbTvXE8MhX2ptzVJKlvJuTW6swNeLacsvMS
-        Ddd8E8PlBYetyq4oTmxXJBUE6o2gpSuRTJLmxuk=
-X-Google-Smtp-Source: ABdhPJxweE1Xu9xoRVMB28v1eCtr6UegQHbnGomiNdJ0IKYhokuhNvc8XeIqh1nJWt5bxEbeR5u6qHS562UQ2OJ5QX4=
-X-Received: by 2002:aca:3e08:: with SMTP id l8mr4412989oia.152.1600301849422;
- Wed, 16 Sep 2020 17:17:29 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+TD3v7UAVWHCDzf41YKy6vU75ZLiejjugH1t0skQm7g=;
+        b=EUT043oXnJziOGdxEQZiOuVVDtrcAtJSm4jqNfiqDpBzvZnPavRV9tjK6KWojI1Kf3
+         YFYqsdsauInayGst1Da5gZtMC4j3NS0tNMQTdR9WaYXrWHmPtu62B5CFjXxzU+dS/aNj
+         5+GbdpOnkybaabH+K1modtlEPqlo4+PM0XuEAwrEkw//cjC712X1ZWYm32Mnht4Lm2qa
+         zFMJqjz1bkKJ629Op/xTMkiZN2WN8cOORsvb6D+Xi2cdYrTKngGN5AJ9Ftah3BXGM2Wg
+         qpndIrWYgd1nctGfDDbsrchIRB3/4ly1pv+hdOPKFH+RAayvmSfal2WM+jZ0tnHP9k2E
+         R9yg==
+X-Gm-Message-State: AOAM533FBR1qYZDWnyb1nClyGst1l8gdzvJG0zSTL4u+Lm3QJRANKZ06
+        YOP2ImdHERFgGRKyukaAzCkDeldNOhMSFg==
+X-Google-Smtp-Source: ABdhPJxrKVqVJrVrSQUflTu+0JnbbM/yQNkokFDM4CZWBoMN2hJ+YaxncJOMEkIpk4k4bKReGBDryQ==
+X-Received: by 2002:a05:6a00:14cb:b029:142:2501:34eb with SMTP id w11-20020a056a0014cbb0290142250134ebmr9336088pfu.68.1600317003718;
+        Wed, 16 Sep 2020 21:30:03 -0700 (PDT)
+Received: from mcchou0.mtv.corp.google.com ([2620:15c:202:201:de4a:3eff:fe75:1314])
+        by smtp.gmail.com with ESMTPSA id 99sm4169562pjo.40.2020.09.16.21.30.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Sep 2020 21:30:02 -0700 (PDT)
+From:   Miao-chen Chou <mcchou@chromium.org>
+To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        Alain Michaud <alainm@chromium.org>,
+        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        Howard Chung <howardchung@google.com>,
+        Manish Mandlik <mmandlik@chromium.org>,
+        Manish Mandlik <mmandlik@google.com>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        Miao-chen Chou <mcchou@chromium.org>
+Subject: [BlueZ PATCH v1 1/8] adv_monitor: Implement RSSI Filter logic for background scanning
+Date:   Wed, 16 Sep 2020 21:29:45 -0700
+Message-Id: <20200916212926.BlueZ.v1.1.I2830b9c1212a64b062201ed9f2b71294f50ad22d@changeid>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-References: <20200916232542.1584854-1-danielwinkler@google.com> <20200916162155.Bluez.10.If15d3d09724ded2bcc7240d29f6888f2ad12e723@changeid>
-In-Reply-To: <20200916162155.Bluez.10.If15d3d09724ded2bcc7240d29f6888f2ad12e723@changeid>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 16 Sep 2020 17:17:18 -0700
-Message-ID: <CABBYNZKKu55vC2vzCCN5iE5N66=RBj8T_+XfRDQMS1eYins04g@mail.gmail.com>
-Subject: Re: [Bluez PATCH 10/10] doc/mgmt-api: Add new MGMT interfaces to mgmt-api
-To:     Daniel Winkler <danielwinkler@google.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        ChromeOS Bluetooth Upstreaming 
-        <chromeos-bluetooth-upstreaming@chromium.org>,
-        Sonny Sasaka <sonnysasaka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Daniel,
+From: Manish Mandlik <mmandlik@google.com>
 
-On Wed, Sep 16, 2020 at 4:26 PM Daniel Winkler <danielwinkler@google.com> wrote:
->
-> This patch adds the following to mgmt-api:
-> - Add Extended Advertising Parameters Command
-> - Add Extended Advertising Data Command
-> - Read Controller Capabilities Command
-> - Advertisement Tx Power Selected Event
->
-> Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
-> ---
->
->  doc/mgmt-api.txt | 243 +++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 243 insertions(+)
->
-> diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
-> index ca0d38469..6e8914611 100644
-> --- a/doc/mgmt-api.txt
-> +++ b/doc/mgmt-api.txt
-> @@ -3574,6 +3574,235 @@ Remove Advertisement Monitor Command
->                                 Busy
->
->
-> +Add Extended Advertising Parameters Command
-> +=======================
-> +
-> +       Command Code:           0x0054
-> +       Controller Index:       <controller id>
-> +       Command Parameters:     Instance (1 Octet)
-> +                               Flags (4 Octets)
-> +                               Params (2 Octets)
-> +                               Duration (2 Octets)
-> +                               Timeout (2 Octets)
-> +                               MinInterval (4 Octets)
-> +                               MaxInterval (4 Octets)
-> +                               TxPower (1 Octet)
-> +       Return Parameters:      Instance (1 Octet)
-> +
+This patch implements the RSSI Filter logic for background scanning.
 
-There seems to be an extra empty like here.
+This was unit-tested by running tests in unit/test-adv-monitor.c
 
-> +       This command is used to configure the parameters for Bluetooth Low
-> +       Energy advertising instance. This command is expected to be followed
-> +       by an Add Extended Advertising Data command to complete and enable
-> +       the advertising instance.
-> +
-> +       Added advertising information with this command will not be visible
-> +       immediately if advertising is enabled via the Set Advertising
-> +       command. The usage of the Set Advertising command takes precedence
-> +       over this command. Instance information is stored and will be
-> +       advertised once advertising via Set Advertising has been disabled.
-> +
-> +       The Instance identifier is a value between 1 and the number of
-> +       supported instances. The value 0 is reserved.
-> +
-> +       With the Flags value the type of advertising is controlled and
-> +       the following flags are defined:
-> +
-> +               0       Switch into Connectable mode
-> +               1       Advertise as Discoverable
-> +               2       Advertise as Limited Discoverable
-> +               3       Add Flags field to Adv_Data
-> +               4       Add TX Power field to Adv_Data
-> +               5       Add Appearance field to Scan_Rsp
-> +               6       Add Local Name in Scan_Rsp
-> +               7       Secondary Channel with LE 1M
-> +               8       Secondary Channel with LE 2M
-> +               9       Secondary Channel with LE Coded
-> +
-> +       When the connectable flag is set, then the controller will use
-> +       undirected connectable advertising. The value of the connectable
-> +       setting can be overwritten this way. This is useful to switch a
-> +       controller into connectable mode only for LE operation. This is
-> +       similar to the mode 0x02 from the Set Advertising command.
-> +
-> +       When the connectable flag is not set, then the controller will
-> +       use advertising based on the connectable setting. When using
-> +       non-connectable or scannable advertising, the controller will
-> +       be programmed with a non-resolvable random address. When the
-> +       system is connectable, then the identity address or resolvable
-> +       private address will be used.
-> +
-> +       Using the connectable flag is useful for peripheral mode support
-> +       where BR/EDR (and/or LE) is controlled by Add Device. This allows
-> +       making the peripheral connectable without having to interfere
-> +       with the global connectable setting.
-> +
-> +       Secondary channel flags can be used to advertise in secondary
-> +       channel with the corresponding PHYs. These flag bits are mutually
-> +       exclusive and setting multiple will result in Invalid Parameter
-> +       error. Choosing either LE 1M or LE 2M will result in using
-> +       extended advertising on the primary channel with LE 1M and the
-> +       respectively LE 1M or LE 2M on the secondary channel. Choosing
-> +       LE Coded will result in using extended advertising on the primary
-> +       and secondary channels with LE Coded. Choosing none of these flags
-> +       will result in legacy advertising.
-> +
-> +       To allow future parameters to be optionally extended in this structure,
-> +       the Params member is used to specify which of the structure fields were
-> +       purposefully set by the caller. Unspecified parameters will be given
-> +       sensible defaults by the kernel before the advertisement is registered.
-> +       The Params bit field uses the following bit to parameter relationship:
-> +
-> +               0       The Duration parameter should be used
-> +               1       The Timeout parameter should be used
-> +               2       The Interval parameters should be used
-> +               3       The Tx Power parameter should be used
-> +
-> +       The Duration parameter configures the length of an Instance. The
-> +       value is in seconds. The default is 2 seconds.
-> +
-> +       If only one advertising Instance has been added, then the Duration
-> +       value will be ignored. It only applies for the case where multiple
-> +       Instances are configured. In that case every Instance will be
-> +       available for the Duration time and after that it switches to
-> +       the next one. This is a simple round-robin based approach.
-> +
-> +       The Timeout parameter configures the life-time of an Instance. In
-> +       case the value 0 is used it indicates no expiration time. If a
-> +       timeout value is provided, then the advertising Instance will be
-> +       automatically removed when the timeout passes. The value for the
-> +       timeout is in seconds. Powering down a controller will invalidate
-> +       all advertising Instances and it is not possible to add a new
-> +       Instance with a timeout when the controller is powered down.
-> +
-> +       When a Timeout is provided, then the Duration subtracts from
-> +       the actual Timeout value of that Instance. For example an Instance
-> +       with Timeout of 5 and Duration of 2 will be scheduled exactly 3
-> +       times, twice with 2 seconds and once with one second. Other
-> +       Instances have no influence on the Timeout.
-> +
-> +       MinInterval and MaxInterval define the minimum and maximum advertising
-> +       intervals, with units as number of .625ms advertising slots. The Max
-> +       interval is expected to be greater than or equal to the Min interval,
-> +       and both must have values in the range [0x000020, 0xFFFFFF]. If either
-> +       condition is not met, the registration will fail.
-> +
-> +       The provided Tx Power parameter will only be used if the controller
-> +       supports it, which can be determined by the presence of the
-> +       CanSetTxPower member of the Read Advertising Features command.
-> +
-> +       The acceptable range for requested Tx Power is defined in the spec
-> +       (Version 5.2 | Vol 4, Part E, page 2585) to be [-127, +20] dBm, and the
-> +       controller will select a power value up to the requested one. The
-> +       transmission power selected by the controller is not guaranteed
-> +       to match the requested one, but the caller can determine the power
-> +       chosen by the controller by listening for the Tx Power Selected MGMT
-> +       event that follows this command. If the requested Tx Power is outside
-> +       the valid range, the registration will fail.
-> +
-> +       Re-adding an already existing instance (i.e. issuing the Add Extended
-> +       Advertising Parameters command with an Instance identifier of an
-> +       existing instance) will update that instance's configuration.
-> +
-> +       An instance being added or changed while another instance is
-> +       being advertised will not be visible immediately but only when
-> +       the new/changed instance is being scheduled by the round robin
-> +       advertising algorithm.
-> +
-> +       Changes to an instance that is currently being advertised will
-> +       cancel that instance and switch to the next instance. The changes
-> +       will be visible the next time the instance is scheduled for
-> +       advertising. In case a single instance is active, this means
-> +       that changes will be visible right away.
-> +
-> +       LE must already be enabled, and the controller must be powered,
-> +       otherwise a "rejected" status will be returned.
-> +
-> +       This command generates a Command Complete event on success or a
-> +       Command Status event on failure.
-> +
-> +       Possible errors:        Failed
-> +                               Rejected
-> +                               Not Supported
-> +                               Invalid Parameters
-> +                               Busy
-> +
-> +
-> +Add Extended Advertising Data Command
-> +=======================
-> +
-> +       Command Code:           0x0055
-> +       Controller Index:       <controller id>
-> +       Command Parameters:     Instance (1 Octet)
-> +                               Advertising Data Length (1 Octet)
-> +                               Scan Response Length (1 Octet)
-> +                               Advertising Data (0-255 Octets)
-> +                               Scan Response (0-255 Octets)
-> +       Return Parameters:      Instance (1 Octet)
-> +
-> +       The Add Extended Advertising Data command is used to update the
-> +       advertising data of an existing advertising instance known to the
-> +       kernel. It is expected to be called after an Add Extended Advertising
-> +       Parameters command, as part of the advertisement registration
-> +       process.
-> +
-> +       If extended advertising is available, this call will initiate HCI
-> +       commands to set the instance's advertising data, set scan response
-> +       data, and then enable the instance. If extended advertising is
-> +       unavailable, the advertising instance structure maintained in kernel
-> +       will have its advertising data and scan response updated, and the
-> +       instance will either be scheduled immediately or left in the queue
-> +       for later advertisement as part of round-robin advertisement rotation
-> +       in software.
-> +
-> +       If Scan_Rsp_Len is zero and the flags defined in Add Extended
-> +       Advertising Parameters command do not have connectable flag set and
-> +       the global connectable setting is off, then non-connectable
-> +       advertising is used. If Scan_Rsp_Len is larger than zero and
-> +       connectable flag is not set and the global advertising is off,
-> +       then scannable advertising is used. This small difference is
-> +       supported to provide less air traffic for devices implementing
-> +       broadcaster role.
-> +
-> +       If the Instance provided does not match a known instance, or if the
-> +       provided advertising data or scan response are in an unrecognized
-> +       format, an "Invalid Parameters" status will be returned.
-> +
-> +       If a "Set LE" or Advertising command is still in progress, a "Busy"
-> +       status will be returned.
-> +
-> +       If the controller is not powered, a "rejected" status will be returned.
-> +
-> +       This command generates a Command Complete event on success or a
-> +       Command Status event on failure.
-> +
-> +       Possible errors:        Failed
-> +                               Rejected
-> +                               Invalid Parameters
-> +                               Busy
-> +
-> +
-> +Read Controller Capabilities Command
-> +====================================
-> +
-> +       Command Code:           0x0056
-> +       Controller Index:       <controller id>
-> +       Command Parameters:
-> +       Return Parameters:      Parameter1 {
-> +                                       Capability_Tag (2 Octet)
-> +                                       Value_Length (1 Octet)
-> +                                       Value (0-255 Octets)
-> +                               }
-> +                               Parameter2 { }
-> +                               ...
-> +
-> +       This command is used to read a list of controller capabilities.
-> +
-> +       Currently defined Capability_Tag values are:
-> +
-> +               0x0000  Minimum Supported LE Tx Power (dBm)
-> +               0x0001  Maximum Supported LE Tx Power (dBm)
-> +
-> +
->  Command Complete Event
->  ======================
->
-> @@ -4577,3 +4806,17 @@ Advertisement Monitor Removed Event
->
->         The event will only be sent to management sockets other than the
->         one through which the command was sent.
-> +
-> +
-> +Advertisement Tx Power Selected Event
-> +===================================
-> +
-> +       Event Code:             0x002f
-> +       Controller Index:       <controller id>
-> +       Event Parameters:       Instance (1 Octet)
-> +                               TxPower (1 Octet)
-> +
-> +       This event indicates that the controller selected a transmission
-> +       power for an advertising instance. The event is emitted on platforms
-> +       that support extended advertising after an Add Extended Advertising
-> +       Parameters command is submitted.
-> \ No newline at end of file
-> --
-> 2.28.0.618.gf4bc123cb7-goog
+     unit/test-adv-monitor.c file. Verified all tests PASS by running:
+     USE="-bluez-next bluez-upstream" FEATURES=test emerge-hatch bluez
 
-I see you had the documentation at the end, this should probably go in
-the beginning so we can agree on the API first.
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Reviewed-by: Alain Michaud <alainm@chromium.org>
+Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+Reviewed-by: Howard Chung <howardchung@google.com>
+---
 
+ doc/advertisement-monitor-api.txt |   5 +
+ src/adapter.c                     |   1 +
+ src/adv_monitor.c                 | 286 +++++++++++++++++++++++++++++-
+ src/adv_monitor.h                 |   4 +
+ 4 files changed, 292 insertions(+), 4 deletions(-)
 
+diff --git a/doc/advertisement-monitor-api.txt b/doc/advertisement-monitor-api.txt
+index e09b6fd25..92c8ffc38 100644
+--- a/doc/advertisement-monitor-api.txt
++++ b/doc/advertisement-monitor-api.txt
+@@ -70,6 +70,11 @@ Properties	string Type [read-only]
+ 			dBm indicates unset. The valid range of a timer is 1 to
+ 			300 seconds while 0 indicates unset.
+ 
++			If the peer device advertising interval is greater than the
++			HighRSSIThresholdTimer, the device will never be found. Similarly,
++			if it is greater than LowRSSIThresholdTimer, the device will be
++			considered as lost. Consider configuring these values accordingly.
++
+ 		array{(uint8, uint8, array{byte})} Patterns [read-only, optional]
+ 
+ 			If Type is set to 0x01, this must exist and has at least
+diff --git a/src/adapter.c b/src/adapter.c
+index b2bd8b3f1..415d6e06b 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -1227,6 +1227,7 @@ void btd_adapter_remove_device(struct btd_adapter *adapter,
+ 	adapter->connect_list = g_slist_remove(adapter->connect_list, dev);
+ 
+ 	adapter->devices = g_slist_remove(adapter->devices, dev);
++	btd_adv_monitor_device_remove(adapter->adv_monitor_manager, dev);
+ 
+ 	adapter->discovery_found = g_slist_remove(adapter->discovery_found,
+ 									dev);
+diff --git a/src/adv_monitor.c b/src/adv_monitor.c
+index 737da1c90..7baa5317f 100644
+--- a/src/adv_monitor.c
++++ b/src/adv_monitor.c
+@@ -35,6 +35,7 @@
+ 
+ #include "adapter.h"
+ #include "dbus-common.h"
++#include "device.h"
+ #include "log.h"
+ #include "src/error.h"
+ #include "src/shared/ad.h"
+@@ -44,6 +45,8 @@
+ 
+ #include "adv_monitor.h"
+ 
++static void monitor_device_free(void *data);
++
+ #define ADV_MONITOR_INTERFACE		"org.bluez.AdvertisementMonitor1"
+ #define ADV_MONITOR_MGR_INTERFACE	"org.bluez.AdvertisementMonitorManager1"
+ 
+@@ -104,15 +107,36 @@ struct adv_monitor {
+ 
+ 	enum monitor_state state;	/* MONITOR_STATE_* */
+ 
+-	int8_t high_rssi;		/* high RSSI threshold */
+-	uint16_t high_rssi_timeout;	/* high RSSI threshold timeout */
+-	int8_t low_rssi;		/* low RSSI threshold */
+-	uint16_t low_rssi_timeout;	/* low RSSI threshold timeout */
++	int8_t high_rssi;		/* High RSSI threshold */
++	uint16_t high_rssi_timeout;	/* High RSSI threshold timeout */
++	int8_t low_rssi;		/* Low RSSI threshold */
++	uint16_t low_rssi_timeout;	/* Low RSSI threshold timeout */
++	struct queue *devices;		/* List of adv_monitor_device objects */
+ 
+ 	enum monitor_type type;		/* MONITOR_TYPE_* */
+ 	struct queue *patterns;
+ };
+ 
++/* Some data like last_seen, timer/timeout values need to be maintained
++ * per device. struct adv_monitor_device maintains such data.
++ */
++struct adv_monitor_device {
++	struct adv_monitor *monitor;
++	struct btd_device *device;
++
++	time_t high_rssi_first_seen;	/* Start time when RSSI climbs above
++					 * the high RSSI threshold
++					 */
++	time_t low_rssi_first_seen;	/* Start time when RSSI drops below
++					 * the low RSSI threshold
++					 */
++	time_t last_seen;		/* Time when last Adv was received */
++	bool device_found;		/* State of the device - lost/found */
++	guint device_lost_timer;	/* Timer to track if the device goes
++					 * offline/out-of-range
++					 */
++};
++
+ struct app_match_data {
+ 	const char *owner;
+ 	const char *path;
+@@ -159,6 +183,9 @@ static void monitor_free(void *data)
+ 	g_dbus_proxy_unref(monitor->proxy);
+ 	g_free(monitor->path);
+ 
++	queue_destroy(monitor->devices, monitor_device_free);
++	monitor->devices = NULL;
++
+ 	queue_destroy(monitor->patterns, pattern_free);
+ 
+ 	free(monitor);
+@@ -257,6 +284,7 @@ static struct adv_monitor *monitor_new(struct adv_monitor_app *app,
+ 	monitor->high_rssi_timeout = ADV_MONITOR_UNSET_TIMER;
+ 	monitor->low_rssi = ADV_MONITOR_UNSET_RSSI;
+ 	monitor->low_rssi_timeout = ADV_MONITOR_UNSET_TIMER;
++	monitor->devices = queue_new();
+ 
+ 	monitor->type = MONITOR_TYPE_NONE;
+ 	monitor->patterns = NULL;
+@@ -932,3 +960,253 @@ void btd_adv_monitor_manager_destroy(struct btd_adv_monitor_manager *manager)
+ 
+ 	manager_destroy(manager);
+ }
++
++/* Matches a device based on btd_device object */
++static bool monitor_device_match(const void *a, const void *b)
++{
++	const struct adv_monitor_device *dev = a;
++	const struct btd_device *device = b;
++
++	if (!dev)
++		return false;
++
++	if (dev->device != device)
++		return false;
++
++	return true;
++}
++
++/* Frees a monitor device object */
++static void monitor_device_free(void *data)
++{
++	struct adv_monitor_device *dev = data;
++
++	if (!dev)
++		return;
++
++	if (dev->device_lost_timer) {
++		g_source_remove(dev->device_lost_timer);
++		dev->device_lost_timer = 0;
++	}
++
++	dev->monitor = NULL;
++	dev->device = NULL;
++
++	g_free(dev);
++}
++
++/* Removes a device from monitor->devices list */
++static void remove_device_from_monitor(void *data, void *user_data)
++{
++	struct adv_monitor *monitor = data;
++	struct btd_device *device = user_data;
++	struct adv_monitor_device *dev = NULL;
++
++	if (!monitor)
++		return;
++
++	dev = queue_remove_if(monitor->devices, monitor_device_match, device);
++	if (dev) {
++		DBG("Device removed from the Adv Monitor at path %s",
++		    monitor->path);
++		monitor_device_free(dev);
++	}
++}
++
++/* Removes a device from every monitor in an app */
++static void remove_device_from_app(void *data, void *user_data)
++{
++	struct adv_monitor_app *app = data;
++	struct btd_device *device = user_data;
++
++	if (!app)
++		return;
++
++	queue_foreach(app->monitors, remove_device_from_monitor, device);
++}
++
++/* Removes a device from every monitor in all apps */
++void btd_adv_monitor_device_remove(struct btd_adv_monitor_manager *manager,
++				   struct btd_device *device)
++{
++	if (!manager || !device)
++		return;
++
++	queue_foreach(manager->apps, remove_device_from_app, device);
++}
++
++/* Creates a device object to track the per-device information */
++static struct adv_monitor_device *monitor_device_create(
++			struct adv_monitor *monitor,
++			struct btd_device *device)
++{
++	struct adv_monitor_device *dev = NULL;
++
++	dev = g_try_malloc0(sizeof(struct adv_monitor_device));
++	if (!dev)
++		return NULL;
++
++	dev->monitor = monitor;
++	dev->device = device;
++
++	queue_push_tail(monitor->devices, dev);
++
++	return dev;
++}
++
++/* Includes found/lost device's object path into the dbus message */
++static void report_device_state_setup(DBusMessageIter *iter, void *user_data)
++{
++	const char *path = device_get_path(user_data);
++
++	dbus_message_iter_append_basic(iter, DBUS_TYPE_OBJECT_PATH, &path);
++}
++
++/* Handles a situation where the device goes offline/out-of-range */
++static gboolean handle_device_lost_timeout(gpointer user_data)
++{
++	struct adv_monitor_device *dev = user_data;
++	struct adv_monitor *monitor = dev->monitor;
++	time_t curr_time = time(NULL);
++
++	DBG("Device Lost timeout triggered for device %p "
++	    "for the Adv Monitor at path %s", dev->device, monitor->path);
++
++	dev->device_lost_timer = 0;
++
++	if (dev->device_found && dev->last_seen) {
++		/* We were tracking for the Low RSSI filter. Check if there is
++		 * any Adv received after the timeout function is invoked.
++		 * If not, report the Device Lost event.
++		 */
++		if (difftime(curr_time, dev->last_seen) >=
++		    monitor->low_rssi_timeout) {
++			dev->device_found = false;
++
++			DBG("Calling DeviceLost() on Adv Monitor of owner %s "
++			    "at path %s", monitor->app->owner, monitor->path);
++
++			g_dbus_proxy_method_call(monitor->proxy, "DeviceLost",
++						 report_device_state_setup,
++						 NULL, dev->device, NULL);
++		}
++	}
++
++	return FALSE;
++}
++
++/* Filters an Adv based on its RSSI value */
++static void adv_monitor_filter_rssi(struct adv_monitor *monitor,
++				    struct btd_device *device, int8_t rssi)
++{
++	struct adv_monitor_device *dev = NULL;
++	time_t curr_time = time(NULL);
++	uint16_t adapter_id = monitor->app->manager->adapter_id;
++
++	/* If the RSSI thresholds and timeouts are not specified, report the
++	 * DeviceFound() event without tracking for the RSSI as the Adv has
++	 * already matched the pattern filter.
++	 */
++	if (monitor->high_rssi == ADV_MONITOR_UNSET_RSSI &&
++		monitor->low_rssi == ADV_MONITOR_UNSET_RSSI &&
++		monitor->high_rssi_timeout == ADV_MONITOR_UNSET_TIMER &&
++		monitor->low_rssi_timeout == ADV_MONITOR_UNSET_TIMER) {
++		DBG("Calling DeviceFound() on Adv Monitor of owner %s "
++		    "at path %s", monitor->app->owner, monitor->path);
++
++		g_dbus_proxy_method_call(monitor->proxy, "DeviceFound",
++					 report_device_state_setup, NULL,
++					 device, NULL);
++
++		return;
++	}
++
++	dev = queue_find(monitor->devices, monitor_device_match, device);
++	if (!dev)
++		dev = monitor_device_create(monitor, device);
++	if (!dev) {
++		btd_error(adapter_id, "Failed to create Adv Monitor "
++				      "device object.");
++		return;
++	}
++
++	if (dev->device_lost_timer) {
++		g_source_remove(dev->device_lost_timer);
++		dev->device_lost_timer = 0;
++	}
++
++	/* Reset the timings of found/lost if a device has been offline for
++	 * longer than the high/low timeouts.
++	 */
++	if (dev->last_seen) {
++		if (difftime(curr_time, dev->last_seen) >
++		    monitor->high_rssi_timeout) {
++			dev->high_rssi_first_seen = 0;
++		}
++
++		if (difftime(curr_time, dev->last_seen) >
++		    monitor->low_rssi_timeout) {
++			dev->low_rssi_first_seen = 0;
++		}
++	}
++	dev->last_seen = curr_time;
++
++	/* Check for the found devices (if the device is not already found) */
++	if (!dev->device_found && rssi > monitor->high_rssi) {
++		if (dev->high_rssi_first_seen) {
++			if (difftime(curr_time, dev->high_rssi_first_seen) >=
++			    monitor->high_rssi_timeout) {
++				dev->device_found = true;
++
++				DBG("Calling DeviceFound() on Adv Monitor "
++				    "of owner %s at path %s",
++				    monitor->app->owner, monitor->path);
++
++				g_dbus_proxy_method_call(
++					monitor->proxy, "DeviceFound",
++					report_device_state_setup, NULL,
++					dev->device, NULL);
++			}
++		} else {
++			dev->high_rssi_first_seen = curr_time;
++		}
++	} else {
++		dev->high_rssi_first_seen = 0;
++	}
++
++	/* Check for the lost devices (only if the device is already found, as
++	 * it doesn't make any sense to report the Device Lost event if the
++	 * device is not found yet)
++	 */
++	if (dev->device_found && rssi < monitor->low_rssi) {
++		if (dev->low_rssi_first_seen) {
++			if (difftime(curr_time, dev->low_rssi_first_seen) >=
++			    monitor->low_rssi_timeout) {
++				dev->device_found = false;
++
++				DBG("Calling DeviceLost() on Adv Monitor "
++				    "of owner %s at path %s",
++				    monitor->app->owner, monitor->path);
++
++				g_dbus_proxy_method_call(
++					monitor->proxy, "DeviceLost",
++					report_device_state_setup, NULL,
++					dev->device, NULL);
++			}
++		} else {
++			dev->low_rssi_first_seen = curr_time;
++		}
++	} else {
++		dev->low_rssi_first_seen = 0;
++	}
++
++	/* Setup a timer to track if the device goes offline/out-of-range, only
++	 * if we are tracking for the Low RSSI Threshold. If we are tracking
++	 * the High RSSI Threshold, nothing needs to be done.
++	 */
++	if (dev->device_found) {
++		dev->device_lost_timer =
++			g_timeout_add_seconds(monitor->low_rssi_timeout,
++					      handle_device_lost_timeout, dev);
++	}
++}
+diff --git a/src/adv_monitor.h b/src/adv_monitor.h
+index 69ea348f8..14508e7d1 100644
+--- a/src/adv_monitor.h
++++ b/src/adv_monitor.h
+@@ -21,6 +21,7 @@
+ #define __ADV_MONITOR_H
+ 
+ struct mgmt;
++struct btd_device;
+ struct btd_adapter;
+ struct btd_adv_monitor_manager;
+ 
+@@ -29,4 +30,7 @@ struct btd_adv_monitor_manager *btd_adv_monitor_manager_create(
+ 						struct mgmt *mgmt);
+ void btd_adv_monitor_manager_destroy(struct btd_adv_monitor_manager *manager);
+ 
++void btd_adv_monitor_device_remove(struct btd_adv_monitor_manager *manager,
++				   struct btd_device *device);
++
+ #endif /* __ADV_MONITOR_H */
 -- 
-Luiz Augusto von Dentz
+2.26.2
+
