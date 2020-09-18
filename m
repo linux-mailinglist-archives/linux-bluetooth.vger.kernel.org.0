@@ -2,36 +2,38 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4DBC26F3B7
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Sep 2020 05:10:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CD2126F3AD
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Sep 2020 05:10:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727593AbgIRDIx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 17 Sep 2020 23:08:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49290 "EHLO mail.kernel.org"
+        id S1730599AbgIRDIW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Sep 2020 23:08:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49898 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726126AbgIRCDQ (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 17 Sep 2020 22:03:16 -0400
+        id S1727099AbgIRCDb (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 17 Sep 2020 22:03:31 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1F37A2311A;
-        Fri, 18 Sep 2020 02:03:15 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 50A6C2376F;
+        Fri, 18 Sep 2020 02:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600394595;
-        bh=45ox9onnmbXiXm6UdydB2JxE3ku3xC/QAXT2+dTKYKs=;
+        s=default; t=1600394611;
+        bh=KYttkS2Umz7dHsgslJdO4PLnHstjNvLIcBm6I8m1c2Y=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=X2WpcrHhs7nDl2+jbxry5raPqKtts0rXtH9m8kysHWqmeQJECbyB7qlVUPh29OkGp
-         wFMCqFcWMa7nKDhT62K6tPRXcdxPMXppD0pSQPpPPpf0DKj8VDTNJHKmmXB84MDpxZ
-         F+nB82f9gYofvO40S57GMU+F+5YumHd6Xjwib2gw=
+        b=mce3ditgCxWM0INVbRznGIC5m9W9elP0MmpL6PzEze2wm9ZLNOnXpp02WSKGyXDQ4
+         2S9hdo5j71VDxBF0a/vF0A9n8YzuETJvMwEHhPQJ1QjgbEvxlbNt14Gv5HSFNdCBU3
+         5W8ynox64IMMly7auWUt0k1RQxjqoZBfpcHNWae4=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Maxim Mikityanskiy <maxtram95@gmail.com>,
+Cc:     Hillf Danton <hdanton@sina.com>,
+        syzbot+c3c5bdea7863886115dc@syzkaller.appspotmail.com,
+        Manish Mandlik <mmandlik@google.com>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 103/330] Bluetooth: btrtl: Use kvmalloc for FW allocations
-Date:   Thu, 17 Sep 2020 21:57:23 -0400
-Message-Id: <20200918020110.2063155-103-sashal@kernel.org>
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 114/330] Bluetooth: prefetch channel before killing sock
+Date:   Thu, 17 Sep 2020 21:57:34 -0400
+Message-Id: <20200918020110.2063155-114-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200918020110.2063155-1-sashal@kernel.org>
 References: <20200918020110.2063155-1-sashal@kernel.org>
@@ -43,103 +45,58 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+From: Hillf Danton <hdanton@sina.com>
 
-[ Upstream commit 268d3636dfb22254324774de1f8875174b3be064 ]
+[ Upstream commit 2a154903cec20fb64ff4d7d617ca53c16f8fd53a ]
 
-Currently, kmemdup is applied to the firmware data, and it invokes
-kmalloc under the hood. The firmware size and patch_length are big (more
-than PAGE_SIZE), and on some low-end systems (like ASUS E202SA) kmalloc
-may fail to allocate a contiguous chunk under high memory usage and
-fragmentation:
+Prefetch channel before killing sock in order to fix UAF like
 
-Bluetooth: hci0: RTL: examining hci_ver=06 hci_rev=000a lmp_ver=06 lmp_subver=8821
-Bluetooth: hci0: RTL: rom_version status=0 version=1
-Bluetooth: hci0: RTL: loading rtl_bt/rtl8821a_fw.bin
-kworker/u9:2: page allocation failure: order:4, mode:0x40cc0(GFP_KERNEL|__GFP_COMP), nodemask=(null),cpuset=/,mems_allowed=0
-<stack trace follows>
+ BUG: KASAN: use-after-free in l2cap_sock_release+0x24c/0x290 net/bluetooth/l2cap_sock.c:1212
+ Read of size 8 at addr ffff8880944904a0 by task syz-fuzzer/9751
 
-As firmware load happens on each resume, Bluetooth will stop working
-after several iterations, when the kernel fails to allocate an order-4
-page.
-
-This patch replaces kmemdup with kvmalloc+memcpy. It's not required to
-have a contiguous chunk here, because it's not mapped to the device
-directly.
-
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Reported-by: syzbot+c3c5bdea7863886115dc@syzkaller.appspotmail.com
+Fixes: 6c08fc896b60 ("Bluetooth: Fix refcount use-after-free issue")
+Cc: Manish Mandlik <mmandlik@google.com>
+Signed-off-by: Hillf Danton <hdanton@sina.com>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btrtl.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ net/bluetooth/l2cap_sock.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index bf3c02be69305..0dfaf90a31b06 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -370,11 +370,11 @@ static int rtlbt_parse_firmware(struct hci_dev *hdev,
- 	 * the end.
- 	 */
- 	len = patch_length;
--	buf = kmemdup(btrtl_dev->fw_data + patch_offset, patch_length,
--		      GFP_KERNEL);
-+	buf = kvmalloc(patch_length, GFP_KERNEL);
- 	if (!buf)
- 		return -ENOMEM;
- 
-+	memcpy(buf, btrtl_dev->fw_data + patch_offset, patch_length - 4);
- 	memcpy(buf + patch_length - 4, &epatch_info->fw_version, 4);
- 
- 	*_buf = buf;
-@@ -460,8 +460,10 @@ static int rtl_load_file(struct hci_dev *hdev, const char *name, u8 **buff)
- 	if (ret < 0)
- 		return ret;
- 	ret = fw->size;
--	*buff = kmemdup(fw->data, ret, GFP_KERNEL);
--	if (!*buff)
-+	*buff = kvmalloc(fw->size, GFP_KERNEL);
-+	if (*buff)
-+		memcpy(*buff, fw->data, ret);
-+	else
- 		ret = -ENOMEM;
- 
- 	release_firmware(fw);
-@@ -499,14 +501,14 @@ static int btrtl_setup_rtl8723b(struct hci_dev *hdev,
- 		goto out;
- 
- 	if (btrtl_dev->cfg_len > 0) {
--		tbuff = kzalloc(ret + btrtl_dev->cfg_len, GFP_KERNEL);
-+		tbuff = kvzalloc(ret + btrtl_dev->cfg_len, GFP_KERNEL);
- 		if (!tbuff) {
- 			ret = -ENOMEM;
- 			goto out;
- 		}
- 
- 		memcpy(tbuff, fw_data, ret);
--		kfree(fw_data);
-+		kvfree(fw_data);
- 
- 		memcpy(tbuff + ret, btrtl_dev->cfg_data, btrtl_dev->cfg_len);
- 		ret += btrtl_dev->cfg_len;
-@@ -519,14 +521,14 @@ static int btrtl_setup_rtl8723b(struct hci_dev *hdev,
- 	ret = rtl_download_firmware(hdev, fw_data, ret);
- 
- out:
--	kfree(fw_data);
-+	kvfree(fw_data);
- 	return ret;
- }
- 
- void btrtl_free(struct btrtl_device_info *btrtl_dev)
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index ab65304f3f637..390a9afab6473 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1193,6 +1193,7 @@ static int l2cap_sock_release(struct socket *sock)
  {
--	kfree(btrtl_dev->fw_data);
--	kfree(btrtl_dev->cfg_data);
-+	kvfree(btrtl_dev->fw_data);
-+	kvfree(btrtl_dev->cfg_data);
- 	kfree(btrtl_dev);
+ 	struct sock *sk = sock->sk;
+ 	int err;
++	struct l2cap_chan *chan;
+ 
+ 	BT_DBG("sock %p, sk %p", sock, sk);
+ 
+@@ -1202,15 +1203,16 @@ static int l2cap_sock_release(struct socket *sock)
+ 	bt_sock_unlink(&l2cap_sk_list, sk);
+ 
+ 	err = l2cap_sock_shutdown(sock, 2);
++	chan = l2cap_pi(sk)->chan;
+ 
+-	l2cap_chan_hold(l2cap_pi(sk)->chan);
+-	l2cap_chan_lock(l2cap_pi(sk)->chan);
++	l2cap_chan_hold(chan);
++	l2cap_chan_lock(chan);
+ 
+ 	sock_orphan(sk);
+ 	l2cap_sock_kill(sk);
+ 
+-	l2cap_chan_unlock(l2cap_pi(sk)->chan);
+-	l2cap_chan_put(l2cap_pi(sk)->chan);
++	l2cap_chan_unlock(chan);
++	l2cap_chan_put(chan);
+ 
+ 	return err;
  }
- EXPORT_SYMBOL_GPL(btrtl_free);
 -- 
 2.25.1
 
