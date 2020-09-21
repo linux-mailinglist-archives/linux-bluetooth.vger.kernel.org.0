@@ -2,158 +2,171 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 466772719DB
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Sep 2020 06:23:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81092271A15
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Sep 2020 06:28:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726419AbgIUEXh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 21 Sep 2020 00:23:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60636 "EHLO
+        id S1726365AbgIUE2d (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 21 Sep 2020 00:28:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726011AbgIUEXd (ORCPT
+        with ESMTP id S1726011AbgIUE2d (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 21 Sep 2020 00:23:33 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A734DC0613CF
-        for <linux-bluetooth@vger.kernel.org>; Sun, 20 Sep 2020 21:23:32 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id q2so11959774ybo.5
-        for <linux-bluetooth@vger.kernel.org>; Sun, 20 Sep 2020 21:23:32 -0700 (PDT)
+        Mon, 21 Sep 2020 00:28:33 -0400
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2C1C061755
+        for <linux-bluetooth@vger.kernel.org>; Sun, 20 Sep 2020 21:28:33 -0700 (PDT)
+Received: by mail-qt1-x84a.google.com with SMTP id a16so12025651qtj.7
+        for <linux-bluetooth@vger.kernel.org>; Sun, 20 Sep 2020 21:28:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=epV5Kf267asYL9EhY6AdeHNontynwjSLiF3gUn0z2B0=;
-        b=NrHx8f/+pxqzILxbiJcQa7zh9LcPo1bS/hZTFXyHHyuFKJAfummZGCmO7UjcYW7Bto
-         oHJLUrOYH1a7HSTXqwKXU9FC5QxUAmPvT3Qb/TmMQk6AZSF2VGXAqP2cM3Qq0kbCLiw0
-         cOkhpOmk0BAYqZ4FMN7Vl2NS1Mc+KoLZuQxCU/RFmmN1E9NfghqIjT/0ryHWFkIILjXA
-         eDCRz4+v/A2KJ7hRgz7b6JDh8Ayv3JkM2V4+ipR3XxXW+0wA5xEn0qxFohle890HJjof
-         4kksU0m3A2OD5gtFthYOQKE9hNaK7FFDEchwk8CgprAXx7DkSV3vKICyyEWFYKVaV8Q9
-         YZNQ==
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=fC9C6NlE7ABAb/uqOE5M5b3A+T5ojcafIgUq12Ln5lA=;
+        b=qhDWnzfOcDtYQw+no0IcMQyNUUEor4MAOuTA/mq2GZggIG38AXuHtVXDB+ZnCou2Hd
+         I+Ahu+HI66UYI0SB16kXe67Ig9fErqxxCUWdZ2WXszokxrwEHhQbh/2uidptAgYCMY1y
+         XaGxZwz0LU19Co3ScHClqkUSR5b/lhf8v7bcDbUkMrCh2VzPwIWUsId+W3wQDh+okEIp
+         V6um9u4ooNsloi/eBYRqpekX+CieQr3ENgJAUwqq30b0fw2JSEM71APtL8L/i4Mzp+Z2
+         x5qlMnW0xOcosnnajUMp+Z4Bnk7MK4NXM41HGp44JAgcxYW6iA2b8l3k3a54dBIRtJgy
+         aqYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=epV5Kf267asYL9EhY6AdeHNontynwjSLiF3gUn0z2B0=;
-        b=uO5znCZ9haXHGPnq+tnzTmziN1E+2CPz/jIG5gnp9XR+70F3pF6ywHKD3l2CAKo1PP
-         Jt44dLmeXRk8VVAYsBal3A1Tbd2o/KMgCtRl77PPmeUdkFkvhU9WIWEe/07Hvs0BhuUm
-         LPQtZ9ZL5tzM5aDZblvcGF1gx8UUUPOVSzAPjX/GKNal5UlhlKU8on1CZbyJlYJCbfvR
-         PKCXiYHR31wVf72c/7/4oe0eVbfiCWcym/ycvbyjqv5v8XW6ShqPOHEyGpnijo5EBg2Y
-         TNbjv6s8X1uIbjlkbGq7VR+KnkDtqaSRF0ISPXSoxFOwT0p4T3QDbXZwAuINDxs6EIeu
-         0TZw==
-X-Gm-Message-State: AOAM532j00JxJ6OVtlkvc55rXbnGfISCja8dUu8IrsRWSLkOoa87P8BW
-        7igwDOXEbLoqd26UrIXSYg6Z07NZWE6gk8Tk0QYbxE+MomokGTVIq7yKZJ/MLKbYMdhm4CyLY3f
-        wmYSiZvUIYWidY2QsQEPIMtqrKv+FSfgT+FeG2MdD416s7KwvfwR5jl9mErG4xkc2BKvtCmIvb9
-        rilmFoaH2KqDY=
-X-Google-Smtp-Source: ABdhPJyyCNP9bHpy8nwOUFwlrx6vXZ/QBNe3dSUwlLKUeoogRqulu5Xd8SJnXa/GaEVHDNG3YZwzCLtP4OeTaMsvBQ==
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=fC9C6NlE7ABAb/uqOE5M5b3A+T5ojcafIgUq12Ln5lA=;
+        b=kTTS0z7IyMdJ8oNg70nGK0UIfUIrGSEtmjfCg+YmMI1i89a5F5AWkKkVCQRgqiGzM2
+         03zMdGloi5MbqfYGkKRPf77dajYsfyAraq/CclNARJpAKvA29qKc3pMMGlyu/7qHToUk
+         OZZHkhueOHWgLPTcdL3Y9TcVHXEFoTgS1+f8ejUGVrNY5zv3cWXxIWortQuy+uH8lxwg
+         TtSFJKFRYuHSfV/JkribIeAxiUUEzz6jYQH7Fu1NQdttx9F62mHxUcxopiggcFva3ntF
+         7ELal9JnmbABpgeRGrBQcZUei/dNBgvmIE9UkcCTUX7C/rFehHcCFjZheKq68ILoOp0O
+         yzCw==
+X-Gm-Message-State: AOAM530mlDNZXcJ9t7Cm7EUGpu1/t1mIZqQmA9SqXQlry5jMWNjcIEaN
+        447Y0AYuoOyvoJHryXaJZJ/W8+De6W2th3S6El5G4/CWaSm4tOOg1DODXpmXlxpkV8bdu4FHWWy
+        i4Y5YmVs+CLp818glYerchStXntpTUNmf65ZjIQNgOHJQEY/Iposa+jEpv7+ah/Z5XciE9V+8WR
+        GqEf+6YS4qimo=
+X-Google-Smtp-Source: ABdhPJxgk/8S0bxhQGnBj5Ve94q24v904tgYlwf2XHZllId+zTIL4JajhnToSWxaaXfU45waSOgsN/QUtVk2Sae6YQ==
 Sender: "howardchung via sendgmr" 
         <howardchung@howardchung-p920.tpe.corp.google.com>
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:f693:9fff:fef4:4e45])
- (user=howardchung job=sendgmr) by 2002:a25:e83:: with SMTP id
- 125mr65805362ybo.376.1600662211746; Sun, 20 Sep 2020 21:23:31 -0700 (PDT)
-Date:   Mon, 21 Sep 2020 12:23:08 +0800
-In-Reply-To: <20200921122216.v4.1.Ib75f58e90c477f9b82c5598f00c59f0e95a1a352@changeid>
-Message-Id: <20200921122216.v4.4.I756c1fecc03bcc0cd94400b4992cd7e743f4b3e2@changeid>
+ (user=howardchung job=sendgmr) by 2002:ad4:43e5:: with SMTP id
+ f5mr44353106qvu.12.1600662511449; Sun, 20 Sep 2020 21:28:31 -0700 (PDT)
+Date:   Mon, 21 Sep 2020 12:28:23 +0800
+Message-Id: <20200921042824.1265006-1-howardchung@google.com>
 Mime-Version: 1.0
-References: <20200921122216.v4.1.Ib75f58e90c477f9b82c5598f00c59f0e95a1a352@changeid>
 X-Mailer: git-send-email 2.28.0.681.g6f77f65b4e-goog
-Subject: [PATCH v4 4/4] Bluetooth: Add toggle to switch off interleave scan
+Subject: [BlueZ PATCH v3 1/2] core: Add params to set interleaving durations
 From:   Howard Chung <howardchung@google.com>
-To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        luiz.dentz@gmail.com
-Cc:     alainm@chromium.org, mcchou@chromium.org, mmandlik@chromium.orgi,
-        Howard Chung <howardchung@google.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Cc:     mcchou@chromium.org, mmandlik@chromium.org, luiz.dentz@gmail.com,
+        alainm@chromium.org, Howard Chung <howardchung@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch add a configurable parameter to switch off the interleave
-scan feature.
-
-Signed-off-by: Howard Chung <howardchung@google.com>
-Reviewed-by: Alain Michaud <alainm@chromium.org>
+This patch adds parameters to control the durations of allowlist scan
+and no-filter scan when the kernel is doing interleaving scan.
 ---
-Changes in v4:
+
+Changes in v3:
 - Set EnableAdvMonInterleaveScan default to Disable
-- Fix 80 chars limit in mgmt_config.c
 
- include/net/bluetooth/hci_core.h | 1 +
- net/bluetooth/hci_core.c         | 1 +
- net/bluetooth/hci_request.c      | 3 ++-
- net/bluetooth/mgmt_config.c      | 5 +++++
- 4 files changed, 9 insertions(+), 1 deletion(-)
+Changes in v2:
+- Fix typo in the commit title
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 179350f869fdb..c3253f1cac0c2 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -363,6 +363,7 @@ struct hci_dev {
- 	__u32		clock;
- 	__u16		advmon_allowlist_duration;
- 	__u16		advmon_no_filter_duration;
-+	__u16		enable_advmon_interleave_scan;
+ src/adapter.c | 18 ++++++++++++++++++
+ src/hcid.h    |  3 +++
+ src/main.c    | 10 ++++++++++
+ src/main.conf |  7 +++++++
+ 4 files changed, 38 insertions(+)
+
+diff --git a/src/adapter.c b/src/adapter.c
+index b2bd8b3f1d01..c0e95b48a1c4 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -4431,6 +4431,24 @@ static void load_default_system_params(struct btd_adapter *adapter)
+ 		len += sizeof(params[i].u16);
+ 	}
  
- 	__u16		devid_source;
- 	__u16		devid_vendor;
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 6c8850149265a..d5769ae682893 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3595,6 +3595,7 @@ struct hci_dev *hci_alloc_dev(void)
- 	/* The default values will be chosen in the future */
- 	hdev->advmon_allowlist_duration = 300;
- 	hdev->advmon_no_filter_duration = 500;
-+	hdev->enable_advmon_interleave_scan = 0x0000;	/* Default to disable */
++	if (main_opts.default_params.advmon_allowlist_scan_duration) {
++		params[i].entry.type = 0x001d;
++		params[i].entry.length = sizeof(params[i].u16);
++		params[i].u16 =
++			main_opts.default_params.advmon_allowlist_scan_duration;
++		++i;
++		len += sizeof(params[i].u16);
++	}
++
++	if (main_opts.default_params.advmon_no_filter_scan_duration) {
++		params[i].entry.type = 0x001e;
++		params[i].entry.length = sizeof(params[i].u16);
++		params[i].u16 =
++			main_opts.default_params.advmon_no_filter_scan_duration;
++		++i;
++		len += sizeof(params[i].u16);
++	}
++
+ 	err = mgmt_send(adapter->mgmt, MGMT_OP_SET_DEF_SYSTEM_CONFIG,
+ 			adapter->dev_id, len, params, NULL, NULL, NULL);
+ 	if (!err)
+diff --git a/src/hcid.h b/src/hcid.h
+index 3624ba6ea163..c3e5fe803543 100644
+--- a/src/hcid.h
++++ b/src/hcid.h
+@@ -93,6 +93,9 @@ struct main_opts {
+ 		uint16_t	le_conn_latency;
+ 		uint16_t	le_conn_lsto;
+ 		uint16_t	le_autoconnect_timeout;
++
++		uint16_t	advmon_allowlist_scan_duration;
++		uint16_t	advmon_no_filter_scan_duration;
+ 	} default_params;
  
- 	hdev->sniff_max_interval = 800;
- 	hdev->sniff_min_interval = 80;
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 1fcf6736811e4..bb38e1dead68f 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -500,7 +500,8 @@ static void __hci_update_background_scan(struct hci_request *req)
- 		if (hci_dev_test_flag(hdev, HCI_LE_SCAN))
- 			hci_req_add_le_scan_disable(req, false);
  
--		if (!update_adv_monitor_scan_state(hdev)) {
-+		if (!hdev->enable_advmon_interleave_scan ||
-+		    !update_adv_monitor_scan_state(hdev)) {
- 			hci_req_add_le_passive_scan(req);
- 			bt_dev_dbg(hdev, "%s starting background scanning",
- 				   hdev->name);
-diff --git a/net/bluetooth/mgmt_config.c b/net/bluetooth/mgmt_config.c
-index 2d3ad288c78ac..34585ab4680b5 100644
---- a/net/bluetooth/mgmt_config.c
-+++ b/net/bluetooth/mgmt_config.c
-@@ -69,6 +69,7 @@ int read_def_system_config(struct sock *sk, struct hci_dev *hdev, void *data,
- 						def_le_autoconnect_timeout),
- 		HDEV_PARAM_U16(0x001d, advmon_allowlist_duration),
- 		HDEV_PARAM_U16(0x001e, advmon_no_filter_duration),
-+		HDEV_PARAM_U16(0x001f, enable_advmon_interleave_scan),
+diff --git a/src/main.c b/src/main.c
+index 038f867b5a6d..e222ed3bf855 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -123,6 +123,8 @@ static const char *controller_options[] = {
+ 	"LEConnectionLatency",
+ 	"LEConnectionSupervisionTimeout",
+ 	"LEAutoconnecttimeout",
++	"AdvMonAllowlistScanDuration",
++	"AdvMonNoFilterScanDuration",
+ 	NULL
+ };
+ 
+@@ -434,6 +436,14 @@ static void parse_controller_config(GKeyFile *config)
+ 		  &main_opts.default_params.le_autoconnect_timeout,
+ 		  0x0001,
+ 		  0x4000},
++		{ "AdvMonAllowlistScanDuration",
++		  &main_opts.default_params.advmon_allowlist_scan_duration,
++		  1,
++		  10000},
++		{ "AdvMonNoFilterScanDuration",
++		  &main_opts.default_params.advmon_no_filter_scan_duration,
++		  1,
++		  10000},
  	};
- 	struct mgmt_rp_read_def_system_config *rp = (void *)params;
+ 	uint16_t i;
  
-@@ -142,6 +143,7 @@ int set_def_system_config(struct sock *sk, struct hci_dev *hdev, void *data,
- 		case 0x001b:
- 		case 0x001d:
- 		case 0x001e:
-+		case 0x001f:
- 			if (len != sizeof(u16)) {
- 				bt_dev_warn(hdev, "invalid length %d, exp %zu for type %d",
- 					    len, sizeof(u16), type);
-@@ -261,6 +263,9 @@ int set_def_system_config(struct sock *sk, struct hci_dev *hdev, void *data,
- 		case 0x0001e:
- 			hdev->advmon_no_filter_duration = TLV_GET_LE16(buffer);
- 			break;
-+		case 0x0001f:
-+			hdev->enable_advmon_interleave_scan = TLV_GET_LE16(buffer);
-+			break;
- 		default:
- 			bt_dev_warn(hdev, "unsupported parameter %u", type);
- 			break;
+diff --git a/src/main.conf b/src/main.conf
+index 8d85702d4316..3b341f44c9cf 100644
+--- a/src/main.conf
++++ b/src/main.conf
+@@ -152,6 +152,13 @@
+ #LEConnectionSupervisionTimeout=
+ #LEAutoconnecttimeout=
+ 
++# Scan duration during interleaving scan. Only used when scanning for ADV
++# monitors. The units are msec.
++# Default: 300
++#AdvMonAllowlistScanDuration=
++# Default: 500
++#AdvMonNoFilterScanDuration=
++
+ [GATT]
+ # GATT attribute cache.
+ # Possible values:
 -- 
 2.28.0.681.g6f77f65b4e-goog
 
