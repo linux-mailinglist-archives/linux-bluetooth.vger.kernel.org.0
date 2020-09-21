@@ -2,110 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC87B273624
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Sep 2020 01:02:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09AA027366E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Sep 2020 01:12:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728750AbgIUXC5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 21 Sep 2020 19:02:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36098 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727693AbgIUXC5 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 21 Sep 2020 19:02:57 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A50EEC061755
-        for <linux-bluetooth@vger.kernel.org>; Mon, 21 Sep 2020 16:02:57 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id m7so18934896oie.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 21 Sep 2020 16:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=jIpvO3JBFKmFmDmgHQ+JYCNJpS0NlN/6NqbpCynEYPs=;
-        b=Jm6XHRuIGVjJ/J+SEng04dSRuY4v74HvyQncP/xU7H6gsskGsldyDmYFtcxdjesr09
-         Guepsvtcqnzk83QwP4zbGfqDoJBg10vOvBmlxDpyDTymeUMyLkdFvdiwKJToBw165nEe
-         HM9b9W6l6EjctuWnVjkfXwqS8PNxlR2u/lQYwiw3wjFw9pjoBXR8x61WTQ22zk97X7pU
-         xw6xrzg/7KJL6dXTEPIU6qjIhZHuNDMK6SAxxJ4zk8fwV2oEApQb9MsbULsLvsNATINE
-         1CMs4Vn92L8fQhnVnpxkeLuNRIxFZ7QtFfJcMaHQEPIl/ZoFOhwyJf5lkDO9cIqECndy
-         A6+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=jIpvO3JBFKmFmDmgHQ+JYCNJpS0NlN/6NqbpCynEYPs=;
-        b=VLjJdLOd9D4QscL7i8MxDaphkNbUDkvD9hxQbJR7ZzycWvyNNZ/k/zfFhnZzK9xP7R
-         TiTsm4ch6vUrbmo+7bSUkVHHEyKTjFai7WDRS1TaNVoOd0hRSzrqZ4cTrSsX2RX3FdQx
-         3I0L/0fy0Go6JWhstMTSMSvshNEb6siUHrp9qV2N4iY/VvgHfMuiLbmirFwlnS2TEUbF
-         ogxUDyx223P+08/S4TQj9JIOXMO+bVydWwhxEZIH3Q0ndmrK/TV7h+2Myk6FjiLIWmqj
-         gQcDlY6KjrvnK8S3rp0NPHVSR6kxdNnrN/E5OQZ7xKgjOSS0qnw1/9kqv1m09+04rJsH
-         Bvkg==
-X-Gm-Message-State: AOAM532gI37Wzhv7LqFESVV+ZyM4Td/ojGLV2T/KsH3wksYnU5UrJqme
-        o+BTzSSbGgJaHgFmYi8XC71m5u+67zGqlz34bYOdkJvk
-X-Google-Smtp-Source: ABdhPJxl/T+udIPnOSyW5u4ATnf9awci9wmi49hkgMSTq6T+2aeGb53SODfpmUNGvOVbyn0IFBMJQyoHSGLXXko9JVw=
-X-Received: by 2002:aca:3e08:: with SMTP id l8mr942302oia.152.1600729376768;
- Mon, 21 Sep 2020 16:02:56 -0700 (PDT)
+        id S1728811AbgIUXMV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 21 Sep 2020 19:12:21 -0400
+Received: from mail.rusoil.net ([188.128.114.25]:58282 "EHLO mail.rusoil.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728741AbgIUXMV (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 21 Sep 2020 19:12:21 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Sep 2020 19:12:11 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.rusoil.net (Postfix) with ESMTP id 9EF1840C07;
+        Tue, 22 Sep 2020 04:08:14 +0500 (YEKT)
+Received: from mail.rusoil.net ([127.0.0.1])
+        by localhost (mail.rusoil.net [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id SVpSP78GR2pZ; Tue, 22 Sep 2020 04:08:14 +0500 (YEKT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.rusoil.net (Postfix) with ESMTP id 3D89E40D78;
+        Tue, 22 Sep 2020 04:08:13 +0500 (YEKT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rusoil.net 3D89E40D78
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rusoil.net;
+        s=maildkim; t=1600729693;
+        bh=6R3BgBYiA7fkqGiiNDuwPskBnpH9JXyNAW/l3ZEA+wY=;
+        h=Date:From:Message-ID:MIME-Version;
+        b=Vnjy6nBVnSTcINEW6kER3ugTxQ4KBYKS36YiGFr6YA3B4INc+KiGVhbak8MS9Qjs4
+         d1hbAool1vpcT5tqzIahdEndE3qiAPgBOX6jsmCcvHSMZhz19GFDJ1aQySn107enqY
+         lwxWqbZRY2a+BQ8VxoJh3Rpje7MgA+/fhr9SupmU=
+X-Virus-Scanned: amavisd-new at mail.rusoil.net
+Received: from mail.rusoil.net ([127.0.0.1])
+        by localhost (mail.rusoil.net [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id KLkCjnFIcNrK; Tue, 22 Sep 2020 04:08:12 +0500 (YEKT)
+Received: from mail.rusoil.net (mail.rusoil.net [172.16.7.34])
+        by mail.rusoil.net (Postfix) with ESMTP id 6147940C07;
+        Tue, 22 Sep 2020 04:08:10 +0500 (YEKT)
+Date:   Tue, 22 Sep 2020 04:08:09 +0500 (YEKT)
+From:   Blue Oak Mortgage and Loans <em@rusoil.net>
+Reply-To: Blue Oak Mortgage and Loans <info@bluelmtg.net>
+Message-ID: <2020026523.907101.1600729689731.JavaMail.zimbra@rusoil.net>
+Subject: Wir finanzieren Projekte und Unternehmen
 MIME-Version: 1.0
-References: <20200918173436.3184738-1-luiz.dentz@gmail.com>
-In-Reply-To: <20200918173436.3184738-1-luiz.dentz@gmail.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Mon, 21 Sep 2020 16:02:45 -0700
-Message-ID: <CABBYNZLuWifcGnf-LbquAu5+9bPb6Ft=TgzAGSLB-yXMXqMSRA@mail.gmail.com>
-Subject: Re: [PATCH v2] avdtp: Fix not checking if stream is already set as
- pending open
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [192.210.183.69]
+X-Mailer: Zimbra 8.8.12_GA_3803 (ZimbraWebClient - FF79 (Win)/8.8.12_GA_3794)
+Thread-Index: IhGK+mMcCqn+S/Et9t28g8ApaUDaLg==
+Thread-Topic: Wir finanzieren Projekte und Unternehmen
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
 
-On Fri, Sep 18, 2020 at 10:34 AM Luiz Augusto von Dentz
-<luiz.dentz@gmail.com> wrote:
->
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
->
-> When receiving a Open command the stream will be set as pending_open but
-> the remote may attempt to send yet another Open command in the meantime
-> resulting in another setup and yet another timer leaving the old timer
-> active which will likely cause a crash when it expires.
-> ---
->  profiles/audio/avdtp.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/profiles/audio/avdtp.c b/profiles/audio/avdtp.c
-> index 782268c08..e0c6f44f0 100644
-> --- a/profiles/audio/avdtp.c
-> +++ b/profiles/audio/avdtp.c
-> @@ -1687,7 +1687,7 @@ static gboolean avdtp_open_cmd(struct avdtp *session, uint8_t transaction,
->
->         stream = sep->stream;
->
-> -       if (sep->ind && sep->ind->open) {
-> +       if (sep->ind && sep->ind->open && !session->pending_open) {
->                 if (!sep->ind->open(session, sep, stream, &err,
->                                         sep->user_data))
->                         goto failed;
-> @@ -1699,11 +1699,13 @@ static gboolean avdtp_open_cmd(struct avdtp *session, uint8_t transaction,
->                                                 AVDTP_OPEN, NULL, 0))
->                 return FALSE;
->
-> -       stream->open_acp = TRUE;
-> -       session->pending_open = stream;
-> -       stream->timer = g_timeout_add_seconds(REQ_TIMEOUT,
-> +       if (!session->pending_open) {
-> +               stream->open_acp = TRUE;
-> +               session->pending_open = stream;
-> +               stream->timer = g_timeout_add_seconds(REQ_TIMEOUT,
->                                                 stream_open_timeout,
->                                                 stream);
-> +       }
->
->         return TRUE;
->
-> --
-> 2.26.2
 
-Pushed.
+Dies ist ein Newsletter von Blue Oak Mortgage and Loans. Bitte melden Sie s=
+ich ab, wenn Sie keine E-Mail mehr von uns erhalten m=C3=B6chten.
 
--- 
-Luiz Augusto von Dentz
+
+Eine kurze Einf=C3=BChrung.
+
+Wir sind ein f=C3=BChrendes Finanzierungsunternehmen in Europa. Wir finanzi=
+eren Startups / etablierte Unternehmen, finanzieren Gro=C3=9Fprojekte (Bau,=
+ Landwirtschaft, Immobilien und dergleichen) zu einem niedrigen Zinssatz vo=
+n 2% pro Jahr.
+
+
+Darlehensverfahren
+
+1. Sie m=C3=BCssen das Online-Bewerbungsformular ausf=C3=BCllen und eine or=
+dnungsgem=C3=A4=C3=9F unterschriebene Kopie an uns zur=C3=BCcksenden.
+
+2. M=C3=B6glicherweise m=C3=BCssen Sie Finanzdokumente als unterst=C3=BCtze=
+nden Nachweis f=C3=BCr die F=C3=A4higkeit zur R=C3=BCckzahlung von Krediten=
+ vorlegen.
+
+3. Wenn Ihr Darlehen genehmigt wurde, m=C3=BCssen Sie eine Versicherungsgar=
+antie f=C3=BCr die Darlehenssicherheit vorlegen. Wir empfehlen eine Versich=
+erungsgesellschaft. Sie sind allein verantwortlich f=C3=BCr die Zahlung und=
+ den Erwerb der Anleihe, die als Sicherheit dienen. Die H=C3=B6he der Anlei=
+he h=C3=A4ngt von Ihrem Darlehensbetrag ab. Die Versicherungsgesellschaft w=
+ird Sie durch den Prozess f=C3=BChren. (F=C3=BCr Gro=C3=9Fprojekte)
+
+4. Ihr =C3=9Cberweisungsprozess wird eingeleitet, sobald die Versicherungsa=
+nleihe =C3=BCberpr=C3=BCft wurde. Ihr Darlehensr=C3=BCckzahlungsplan wird i=
+m NC-Darlehensvertragsformular aufgef=C3=BChrt.
+
+Wenn die Bedingungen Sie beruhigen, k=C3=B6nnen Sie uns =C3=BCber die Whats=
+App-Nummer / E-Mail kontaktieren und auch unsere Website besuchen, um weite=
+re Informationen zu erhalten. Wir freuen uns darauf, von Ihnen zu h=C3=B6re=
+n.
+
+WhatsApp: + 90-552-365-3483
+E-Mail: info@bluelmtg.net
