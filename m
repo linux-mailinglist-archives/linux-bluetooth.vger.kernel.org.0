@@ -2,131 +2,89 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D2C4277864
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Sep 2020 20:20:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2BB4277A3F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Sep 2020 22:30:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728739AbgIXSUN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 24 Sep 2020 14:20:13 -0400
-Received: from mga01.intel.com ([192.55.52.88]:62030 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727753AbgIXSUM (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 24 Sep 2020 14:20:12 -0400
-IronPort-SDR: tz83bI2GBWY1wsziebgSSRoA9Fa16cnAIqX10ref14N4rBmpiEOyMpYkZFYs5Hn1C4O8OtQ3Ie
- 6hURWhpiOmrA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9754"; a="179388563"
-X-IronPort-AV: E=Sophos;i="5.77,298,1596524400"; 
-   d="scan'208";a="179388563"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2020 11:20:11 -0700
-IronPort-SDR: lcugOTTOcgyb2KqkBSHyFGzGf5bk22rJresY+K5jXCKkCQ5wffybItd/zo5zx+Weh++KU1f6OR
- JfjG8WoDI3iw==
-X-IronPort-AV: E=Sophos;i="5.77,298,1596524400"; 
-   d="scan'208";a="291325245"
-Received: from ypan13-mobl1.ccr.corp.intel.com (HELO ingas-nuc1.intel.com) ([10.254.97.189])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2020 11:20:11 -0700
-From:   Inga Stotland <inga.stotland@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     luiz.dentz@gmail.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ] shared/io-ell: Fix ELL io wrapper
-Date:   Thu, 24 Sep 2020 11:20:02 -0700
-Message-Id: <20200924182002.22978-1-inga.stotland@intel.com>
-X-Mailer: git-send-email 2.26.2
+        id S1726595AbgIXU34 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 24 Sep 2020 16:29:56 -0400
+Received: from [125.140.134.231] ([125.140.134.231]:59260 "EHLO
+        WIN-DAONO245HJF" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726281AbgIXU34 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 24 Sep 2020 16:29:56 -0400
+Received: from User ([185.191.231.247]) by WIN-DAONO245HJF with Microsoft SMTPSVC(8.5.9600.16384);
+         Fri, 25 Sep 2020 05:26:34 +0900
+Reply-To: <samthong5555@yahoo.com>
+From:   "SAM THONG" <samthong5555@gmail.com>
+Subject: Business Acquisition 1
+Date:   Thu, 24 Sep 2020 13:26:34 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+Message-ID: <WIN-DAONO245HJFc4tf00e70a05@WIN-DAONO245HJF>
+X-OriginalArrivalTime: 24 Sep 2020 20:26:34.0476 (UTC) FILETIME=[FF0A1AC0:01D692B0]
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This modifies the internal io structure inside io-ell to retain
-correct user data associated with write and read handlers and
-to return these data with the corresponding callbacks.
----
- src/shared/io-ell.c | 54 +++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 50 insertions(+), 4 deletions(-)
 
-diff --git a/src/shared/io-ell.c b/src/shared/io-ell.c
-index c4a115478..485c613e0 100644
---- a/src/shared/io-ell.c
-+++ b/src/shared/io-ell.c
-@@ -22,8 +22,48 @@
- 
- struct io {
- 	struct l_io *l_io;
-+	io_callback_func_t read_cb;
-+	io_destroy_func_t read_destroy;
-+	void *read_data;
-+	io_callback_func_t write_cb;
-+	io_destroy_func_t write_destroy;
-+	void *write_data;
- };
- 
-+static bool read_callback(struct l_io *l_io, void *user_data)
-+{
-+	struct io *io = user_data;
-+	bool result = false;
-+
-+	if (!io)
-+		return false;
-+
-+	if (io->read_cb)
-+		result = io->read_cb(io, io->read_data);
-+
-+	if (io->read_destroy)
-+		io->read_destroy(io->read_data);
-+
-+	return result;
-+}
-+
-+static bool write_callback(struct l_io *l_io, void *user_data)
-+{
-+	struct io *io = user_data;
-+	bool result = false;
-+
-+	if (!io)
-+		return false;
-+
-+	if (io->write_cb)
-+		result = io->write_cb(io, io->write_data);
-+
-+	if (io->write_destroy)
-+		io->write_destroy(io->write_data);
-+
-+	return result;
-+}
-+
- struct io *io_new(int fd)
- {
- 	struct io *io;
-@@ -80,8 +120,11 @@ bool io_set_read_handler(struct io *io, io_callback_func_t callback,
- 	if (!io || !io->l_io)
- 		return false;
- 
--	return l_io_set_read_handler(io->l_io, (l_io_read_cb_t) callback,
--							user_data, destroy);
-+	io->read_cb = callback;
-+	io->read_data = user_data;
-+	io->read_destroy = destroy;
-+
-+	return l_io_set_read_handler(io->l_io, read_callback, io, NULL);
- }
- 
- bool io_set_write_handler(struct io *io, io_callback_func_t callback,
-@@ -90,8 +133,11 @@ bool io_set_write_handler(struct io *io, io_callback_func_t callback,
- 	if (!io || !io->l_io)
- 		return false;
- 
--	return l_io_set_write_handler(io->l_io, (l_io_write_cb_t) callback,
--							user_data, destroy);
-+	io->write_cb = callback;
-+	io->write_data = user_data;
-+	io->write_destroy = destroy;
-+
-+	return l_io_set_write_handler(io->l_io, write_callback, io, NULL);
- }
- 
- bool io_set_disconnect_handler(struct io *io, io_callback_func_t callback,
--- 
-2.26.2
+
+Dear sir
+
+Our underwriter company is seeking the attention of genuine and reliable persons, companies
+
+who are indeed in need of funds as investment capital or business expansion in form of a
+
+direct loan to partner with us and benefit in our new Loan and Project funding programs.
+
+
+
+We offer flexible loans and funding for various projects at very affordable low interest
+
+rate of 3% annually for a period of 1-15 years on Non collateral loan/funding . We offer
+
+loan/funding from a minimum of Euro ? / USD$ 1 Million to Euro ? / USD$ 1 Billion. Max,
+
+depending on the nature of business/project.
+
+We are currently funding for:-
+
+
+
+* Starting up a Franchise
+
+* Business Acquisition
+
+* Business Expansion
+
+* Commercial Real Estate purchase
+
+* Consultancy and Contract Execution, Marine , ETC.
+
+
+
+Kindly get in touch for further details and procedure. samthong5555@yahoo.com 
+
+
+
+Respectfully,
+
+
+SAM THONG
+
+
+
+
+
+
+
+	
+
+
 
