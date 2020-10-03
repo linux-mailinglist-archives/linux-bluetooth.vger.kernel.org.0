@@ -2,65 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E834281BDC
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  2 Oct 2020 21:23:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23F862821DC
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  3 Oct 2020 08:41:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388601AbgJBTX3 convert rfc822-to-8bit (ORCPT
+        id S1725681AbgJCGlf convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 2 Oct 2020 15:23:29 -0400
-Received: from mx.metalurgs.lv ([81.198.125.103]:65054 "EHLO mx.metalurgs.lv"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388589AbgJBTX3 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 2 Oct 2020 15:23:29 -0400
-X-Greylist: delayed 552 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Oct 2020 15:23:29 EDT
-Received: from mx.metalurgs.lv (localhost [127.0.0.1])
-        by mx.metalurgs.lv (Postfix) with ESMTP id 473C962A81
-        for <linux-bluetooth@vger.kernel.org>; Fri,  2 Oct 2020 22:14:14 +0300 (EEST)
-Received: from kas30pipe.localhost (localhost [127.0.0.1])
-        by mx.metalurgs.lv (Postfix) with ESMTP id 2B30F62A73
-        for <linux-bluetooth@vger.kernel.org>; Fri,  2 Oct 2020 22:14:14 +0300 (EEST)
-Received: by mx.metalurgs.lv (Postfix, from userid 1005)
-        id 9D28C62A30; Fri,  2 Oct 2020 22:14:13 +0300 (EEST)
-Received: from [100.64.1.74] (unknown [190.15.125.50])
-        (Authenticated sender: admin)
-        by mx.metalurgs.lv (Postfix) with ESMTPA id 60954622E9;
-        Fri,  2 Oct 2020 22:14:07 +0300 (EEST)
-MIME-Version: 1.0
-Content-Description: Mail message body
-To:     Recipients <financialcapability6@gmail.com>
-From:   "Mr. Hashim Bin" <financialcapability6@gmail.com>
-Date:   Fri, 02 Oct 2020 16:14:00 -0300
-Reply-To: binmurrah@gmail.com
-X-SpamTest-Envelope-From: financialcapability6@gmail.com
-X-SpamTest-Group-ID: 00000000
-X-SpamTest-Info: Profiles 71303 [Jan 01 2015]
-X-SpamTest-Info: {TO: forged address, i.e. recipient, investors, public, etc.}
-X-SpamTest-Info: {DATE: unreal year}
-X-SpamTest-Method: none
-X-SpamTest-Rate: 55
-X-SpamTest-Status: Not detected
-X-SpamTest-Status-Extended: not_detected
-X-SpamTest-Version: SMTP-Filter Version 3.0.0 [0284], KAS30/Release
-Message-ID: <20201002191413.9D28C62A30@mx.metalurgs.lv>
-Content-Type: text/plain; charset="iso-8859-1"
+        Sat, 3 Oct 2020 02:41:35 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:53870 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725446AbgJCGle (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 3 Oct 2020 02:41:34 -0400
+Received: from marcel-macbook.fritz.box (p4fefc7f4.dip0.t-ipconnect.de [79.239.199.244])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 00601CECF8;
+        Sat,  3 Oct 2020 08:48:32 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Re: [PATCH v4] Bluetooth: btintel: Add *setup* function for new
+ generation Intel controllers
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <CABBYNZJW=9p=wV4okj=_WtJjEsZhuh9ZHEB-U_7ZMLEbxJ+UXQ@mail.gmail.com>
+Date:   Sat, 3 Oct 2020 08:41:32 +0200
+Cc:     Kiran K <kiraank@gmail.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        Sathish Narasimman <sathish.narasimman@intel.com>,
+        Chethan T N <chethan.tumkur.narayan@intel.com>,
+        "Srivatsa, Ravishankar" <ravishankar.srivatsa@intel.com>,
+        Kiran K <kiran.k@intel.com>, Amit K Bag <amit.k.bag@intel.com>,
+        Raghuram Hegde <raghuram.hegde@intel.com>
 Content-Transfer-Encoding: 8BIT
-Subject: Low Rate Loan.
-X-Anti-Virus: Kaspersky Anti-Virus for Linux Mail Server 5.6.39/RELEASE,
-         bases: 20140401 #7726142, check: 20201002 notchecked
+Message-Id: <9E9FAF70-08C3-465A-98C5-2EBCBB50D699@holtmann.org>
+References: <1601621530-2803-1-git-send-email-kiran.k@intel.com>
+ <CABBYNZJW=9p=wV4okj=_WtJjEsZhuh9ZHEB-U_7ZMLEbxJ+UXQ@mail.gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello Dear,
+Hi Luiz,
 
-We are Investment Company offering Corporate and Personal
-Loan at 3% Interest Rate for a duration of 10Years.
+>> Signed-off-by: Kiran K <kiran.k@intel.com>
+>> Signed-off-by: Amit K Bag <amit.k.bag@intel.com>
+>> Signed-off-by: Raghuram Hegde <raghuram.hegde@intel.com>
+>> Reviewed-by: Sathish Narasimman <Sathish.Narasimman@intel.com>
+>> Reviewed-by: Chethan T N <chethan.tumkur.narayan@intel.com>
+>> Reviewed-by: Srivatsa Ravishankar <ravishankar.srivatsa@intel.com>
+>> ---
+>> drivers/bluetooth/btintel.h |   6 +
+>> drivers/bluetooth/btusb.c   | 324 +++++++++++++++++++++++++++++++++++++++++++-
+>> 2 files changed, 328 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/bluetooth/btintel.h b/drivers/bluetooth/btintel.h
+>> index 09346ae..c4e28a8 100644
+>> --- a/drivers/bluetooth/btintel.h
+>> +++ b/drivers/bluetooth/btintel.h
+>> @@ -132,6 +132,12 @@ struct intel_debug_features {
+>>        __u8    page1[16];
+>> } __packed;
+>> 
+>> +#define INTEL_HW_PLATFORM(cnvx_bt)     ((u8)(((cnvx_bt) & 0x0000ff00) >> 8))
+>> +#define INTEL_HW_VARIANT(cnvx_bt)      ((u8)(((cnvx_bt) & 0x003f0000) >> 16))
+>> +#define INTEL_CNVX_TOP_TYPE(cnvx_top)  ((cnvx_top) & 0x00000fff)
+>> +#define INTEL_CNVX_TOP_STEP(cnvx_top)  (((cnvx_top) & 0x0f000000) >> 24)
+>> +#define INTEL_CNVX_TOP_PACK_SWAB(t, s) __swab16(((__u16)(((t) << 4) | (s))))
+>> +
+>> #if IS_ENABLED(CONFIG_BT_INTEL)
+>> 
+>> int btintel_check_bdaddr(struct hci_dev *hdev);
+>> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+>> index 1005b6e..5e51749 100644
+>> --- a/drivers/bluetooth/btusb.c
+>> +++ b/drivers/bluetooth/btusb.c
+>> @@ -60,6 +60,7 @@ static struct usb_driver btusb_driver;
+>> #define BTUSB_WIDEBAND_SPEECH  0x400000
+>> #define BTUSB_VALID_LE_STATES   0x800000
+>> #define BTUSB_QCA_WCN6855      0x1000000
+>> +#define BTUSB_INTEL_NEWGEN     0x2000000
+> 
+> I wonder if it is a good idea to keep adding such flags per model
+> here, it should be possible to pass the pid/vid so we don't have to
+> add generation after generation here.
 
-We also pay 1% commission to brokers, who introduce project
-owners for finance or other opportunities.
+We agreed to first add the next gen controller as an independent setup method. And then later combine them into a single one that detects what version it is. We also need to unify it with our first generation ROM products.
 
-Please get back to me if you are interested for more
-details.
+Regards
 
-Yours faithfully,
-Hashim Bin 
+Marcel
+
