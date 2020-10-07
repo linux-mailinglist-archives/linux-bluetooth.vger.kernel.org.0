@@ -2,544 +2,79 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F9C3286310
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Oct 2020 18:03:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 807D02863BA
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Oct 2020 18:23:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728998AbgJGQDO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 7 Oct 2020 12:03:14 -0400
-Received: from mxout04.lancloud.ru ([89.108.124.63]:57036 "EHLO
-        mxout04.lancloud.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728989AbgJGQDN (ORCPT
+        id S1728306AbgJGQXT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 7 Oct 2020 12:23:19 -0400
+Received: from sonic309-14.consmr.mail.bf2.yahoo.com ([74.6.129.124]:33337
+        "EHLO sonic309-14.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728300AbgJGQXS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 7 Oct 2020 12:03:13 -0400
-X-Greylist: delayed 467 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Oct 2020 12:03:08 EDT
-Received: from LanCloud
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxout04.lancloud.ru 589BC2153C10
-Received: from LanCloud
-Received: from LanCloud
-Received: from LanCloud
-Subject: [PATCH 2/2] bluetooth: hci_event: reduce indentation levels
-From:   Sergey Shtylyov <s.shtylyov@omprussia.ru>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        <linux-bluetooth@vger.kernel.org>
-CC:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, <netdev@vger.kernel.org>
-References: <bbdd9cbe-b65e-b309-1188-71a3a4ca6fdc@omprussia.ru>
-Organization: Open Mobile Platform, LLC
-Message-ID: <46cf8b72-978e-1b63-85b4-5003e5d8bf73@omprussia.ru>
-Date:   Wed, 7 Oct 2020 18:55:19 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        Wed, 7 Oct 2020 12:23:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1602087796; bh=PxMwWzXvs+dqOoH0/FHvFmQpYH2JguaCUHYAVLLmaiw=; h=Date:From:Reply-To:Subject:References:From:Subject; b=OpD6sdWmMpCqHH9mdd6ZvDXA8BMNItdBBEhuwaMT76h/ZLwAekJxmf3sL5Tm7F6u5J5Cwz3tNhOynMD0jOIXwmaFKMMySfkal/fGH8C3frbWm3GjElucUfyWIfoQLs+2Acqjwxi8XBSg7us+PxpuSmwx44NQ14JudcHftB4hVpWbttBe4fAY4BfnjSftQacVGKmJzRyL2FbE8Gaw8zXbhokDV7l5wpcFqxc9SWnIBNYmyCEGgU2Vp9OwY9jVjBgFQU3r4J9VcUICkltohTAWyw647+t6CbThr29420FmwAJctvWmP4r3ngo51sgMI//J7rAYi/YTvjIjEPMgLI9DQw==
+X-YMail-OSG: qdWaPgcVM1nuXamhTbr65jyGHWDsrGkhJB.qfE.Lfo2FpLfQyyasqNkGf1j47_q
+ OJvYA2b6MUUnf9.6qujXe3GeKTTp_MYBehMMmR8oSMUwEkTynKoUjb4klILw5ADfUwW39yqq5xFx
+ eUtvnjHRN807W8dSJpFHCTEbJS5XJqvv7k1KMITaVe6OC1wEqpii_1dz5tz7e51Vk0vIG9_Bd_GK
+ _TULgsBB844J9ZzJrTwXWorQNmL1jETFenupE9YitzsxHMe3ZaXTNTAzgRfWHrD881PEISLj2KhF
+ F0QD3D2DHsEGEg1sV7hoqsJdPm8_tx972v1V.dZk5AfZ6H_rv_W_lKt.nuDTLzkpAaR4qkQHrys4
+ ukGn3NqmJw6sBP.ZK53Xf3Blew.gdsdZDg7INoJWCyvkCkAyk6JAhm07wmK3Q7Q0iEgHHesNYRAz
+ qJIHop5k0MGBVdIgWf1x0yDbLxKSSHNVuHCnaWvghfkPhenBEHKOREuLxjBdI8v.lEFTkoglm_um
+ 6YnVPGTU3r.TR8vW6XgA2sN4UdER_JsYoewZlV78qxupoXIozNaoHbA6ucd.Yef4p2_BVHPNTJ70
+ vG6YE7aL1ILvluIlRv5lxS77YyFnCHwonGpVHXdaOjcv3pHbUCIGiFHLkv.jUHEQTdJ6KpgxQq2L
+ gdBmhuG8T2YkdCB1vv.ZZsQDfGhU50ZzancfNiYVC3i8ca5HGiYOnLmc_4gKN1NGcjFHSwPw_.Rm
+ BXHA9w0si3QMc38ea7m16_N8oTx9IEwq.BQJ_1Wjzp7sEQv4J8BxOHlA1ZrOGozutPTbHXLrGr0E
+ L_ZLjYhAum7Fh1dHObJgzvogElKK4W5kMy8Q2curCohzVy7mwZqpIk3JZuwUiU3j1sacsOly7iPY
+ fJtIz3k11_O1GOYi.wJby7cbFemBwUE82ZDltiNysuKWOhxX0ufGSRjneyt9U6ZVK5a8UxeGHyIX
+ __lElV24E72BlLlcPIsh9fXG5YFkeOv78kOi59kVdOB0shwj4cB9Y1x9OIsnG8H.jWqeNTFjSDch
+ K6.n8yDBoWyc0g9cdWhZZpQKskoUUUlHwwQkg39gsiEg0vmHwVBcMpflUsO3INGl_yIRmLyo_Rc4
+ ivYQ9JVu3YpaNvvCXvdGmLGkGdFlvBYjfgC4zKpNbjojlUB7UvrI7VhiLwxtYRE6NYP1Oa2vDOO5
+ .Hh7KZC1SU9vQzQOFJkr8Cd6.FEeE5Tuj0R_CB1JhQXpvtYbPNIetCm1lO7VULS7bjP11BBjiaZA
+ d95CwwdG1tHb7J.LnPVBB1C3qNPWEN5U7jSeMrkX.UAI2Vsmy7LUUYH16mQRKSg_rg0y6PWI.mom
+ 4rR2SzMtRlOZG6j7U_gn95yzLVSc1mpVtw9qC8qHt4C7KJOTKXzNFvx7C5hVvttFe8Gz3hUNCayX
+ XRTWYNSirxrh7a9DIALhjNDavLEWMzKLo6MmP
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.bf2.yahoo.com with HTTP; Wed, 7 Oct 2020 16:23:16 +0000
+Date:   Wed, 7 Oct 2020 16:23:14 +0000 (UTC)
+From:   Marilyn Robert <fredodinga22@gmail.com>
+Reply-To: marilyobert@gmail.com
+Message-ID: <851832897.153495.1602087794366@mail.yahoo.com>
+Subject: =?UTF-8?B?0J3QsNGY0LzQuNC70LAg0LrQsNGYINCz0L7RgdC/0L7QtNCw0YDQvtGC?=
 MIME-Version: 1.0
-In-Reply-To: <bbdd9cbe-b65e-b309-1188-71a3a4ca6fdc@omprussia.ru>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [213.87.153.155]
-X-ClientProxiedBy: LFEXT01.lancloud.ru (fd00:f066::141) To
- LFEX1908.lancloud.ru (fd00:f066::208)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+References: <851832897.153495.1602087794366.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.16795 YMailNodin Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Reduce the indentation levels in the HCI driver, mostly by using *goto* in
-the error paths (and also by collapsing "double" *if* statements into the
-"singular" ones).  This makes the coding style more consistent across the
-HCI driver.
-
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omprussia.ru>
-
----
- net/bluetooth/hci_event.c |  316 ++++++++++++++++++++++++----------------------
- 1 file changed, 170 insertions(+), 146 deletions(-)
-
-Index: bluetooth-next/net/bluetooth/hci_event.c
-===================================================================
---- bluetooth-next.orig/net/bluetooth/hci_event.c
-+++ bluetooth-next/net/bluetooth/hci_event.c
-@@ -1861,13 +1861,11 @@ static void hci_cs_create_conn(struct hc
- 			} else
- 				conn->state = BT_CONNECT2;
- 		}
--	} else {
--		if (!conn) {
--			conn = hci_conn_add(hdev, ACL_LINK, &cp->bdaddr,
--					    HCI_ROLE_MASTER);
--			if (!conn)
--				bt_dev_err(hdev, "no memory for new connection");
--		}
-+	} else if (!conn) {
-+		conn = hci_conn_add(hdev, ACL_LINK, &cp->bdaddr,
-+				    HCI_ROLE_MASTER);
-+		if (!conn)
-+			bt_dev_err(hdev, "no memory for new connection");
- 	}
- 
- 	hci_dev_unlock(hdev);
-@@ -1895,16 +1893,19 @@ static void hci_cs_add_sco(struct hci_de
- 	hci_dev_lock(hdev);
- 
- 	acl = hci_conn_hash_lookup_handle(hdev, handle);
--	if (acl) {
--		sco = acl->link;
--		if (sco) {
--			sco->state = BT_CLOSED;
-+	if (!acl)
-+		goto unlock;
- 
--			hci_connect_cfm(sco, status);
--			hci_conn_del(sco);
--		}
--	}
-+	sco = acl->link;
-+	if (!sco)
-+		goto unlock;
- 
-+	sco->state = BT_CLOSED;
-+
-+	hci_connect_cfm(sco, status);
-+	hci_conn_del(sco);
-+
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -1925,13 +1926,13 @@ static void hci_cs_auth_requested(struct
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
--	if (conn) {
--		if (conn->state == BT_CONFIG) {
--			hci_connect_cfm(conn, status);
--			hci_conn_drop(conn);
--		}
--	}
-+	if (!conn || conn->state != BT_CONFIG)
-+		goto unlock;
-+
-+	hci_connect_cfm(conn, status);
-+	hci_conn_drop(conn);
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -1952,13 +1953,13 @@ static void hci_cs_set_conn_encrypt(stru
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
--	if (conn) {
--		if (conn->state == BT_CONFIG) {
--			hci_connect_cfm(conn, status);
--			hci_conn_drop(conn);
--		}
--	}
-+	if (!conn || conn->state != BT_CONFIG)
-+		goto unlock;
- 
-+	hci_connect_cfm(conn, status);
-+	hci_conn_drop(conn);
-+
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -2128,13 +2129,13 @@ static void hci_cs_read_remote_features(
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
--	if (conn) {
--		if (conn->state == BT_CONFIG) {
--			hci_connect_cfm(conn, status);
--			hci_conn_drop(conn);
--		}
--	}
-+	if (!conn || conn->state != BT_CONFIG)
-+		goto unlock;
- 
-+	hci_connect_cfm(conn, status);
-+	hci_conn_drop(conn);
-+
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -2155,13 +2156,13 @@ static void hci_cs_read_remote_ext_featu
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
--	if (conn) {
--		if (conn->state == BT_CONFIG) {
--			hci_connect_cfm(conn, status);
--			hci_conn_drop(conn);
--		}
--	}
-+	if (!conn || conn->state != BT_CONFIG)
-+		goto unlock;
-+
-+	hci_connect_cfm(conn, status);
-+	hci_conn_drop(conn);
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -2187,16 +2188,19 @@ static void hci_cs_setup_sync_conn(struc
- 	hci_dev_lock(hdev);
- 
- 	acl = hci_conn_hash_lookup_handle(hdev, handle);
--	if (acl) {
--		sco = acl->link;
--		if (sco) {
--			sco->state = BT_CLOSED;
-+	if (!acl)
-+		goto unlock;
- 
--			hci_connect_cfm(sco, status);
--			hci_conn_del(sco);
--		}
--	}
-+	sco = acl->link;
-+	if (!sco)
-+		goto unlock;
-+
-+	sco->state = BT_CLOSED;
-+
-+	hci_connect_cfm(sco, status);
-+	hci_conn_del(sco);
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -2217,13 +2221,15 @@ static void hci_cs_sniff_mode(struct hci
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
--	if (conn) {
--		clear_bit(HCI_CONN_MODE_CHANGE_PEND, &conn->flags);
-+	if (!conn)
-+		goto unlock;
- 
--		if (test_and_clear_bit(HCI_CONN_SCO_SETUP_PEND, &conn->flags))
--			hci_sco_setup(conn, status);
--	}
-+	clear_bit(HCI_CONN_MODE_CHANGE_PEND, &conn->flags);
-+
-+	if (test_and_clear_bit(HCI_CONN_SCO_SETUP_PEND, &conn->flags))
-+		hci_sco_setup(conn, status);
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -2244,13 +2250,14 @@ static void hci_cs_exit_sniff_mode(struc
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
--	if (conn) {
--		clear_bit(HCI_CONN_MODE_CHANGE_PEND, &conn->flags);
-+	if (!conn)
-+		goto unlock;
- 
--		if (test_and_clear_bit(HCI_CONN_SCO_SETUP_PEND, &conn->flags))
--			hci_sco_setup(conn, status);
--	}
-+	clear_bit(HCI_CONN_MODE_CHANGE_PEND, &conn->flags);
- 
-+	if (test_and_clear_bit(HCI_CONN_SCO_SETUP_PEND, &conn->flags))
-+		hci_sco_setup(conn, status);
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -2406,13 +2413,13 @@ static void hci_cs_le_read_remote_featur
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
--	if (conn) {
--		if (conn->state == BT_CONFIG) {
--			hci_connect_cfm(conn, status);
--			hci_conn_drop(conn);
--		}
--	}
-+	if (!conn || conn->state != BT_CONFIG)
-+		goto unlock;
-+
-+	hci_connect_cfm(conn, status);
-+	hci_conn_drop(conn);
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -3171,15 +3178,17 @@ static void hci_change_link_key_complete
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(ev->handle));
--	if (conn) {
--		if (!ev->status)
--			set_bit(HCI_CONN_SECURE, &conn->flags);
-+	if (!conn)
-+		goto unlock;
- 
--		clear_bit(HCI_CONN_AUTH_PEND, &conn->flags);
-+	if (!ev->status)
-+		set_bit(HCI_CONN_SECURE, &conn->flags);
- 
--		hci_key_change_cfm(conn, ev->status);
--	}
-+	clear_bit(HCI_CONN_AUTH_PEND, &conn->flags);
-+
-+	hci_key_change_cfm(conn, ev->status);
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -3737,15 +3746,17 @@ static void hci_role_change_evt(struct h
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &ev->bdaddr);
--	if (conn) {
--		if (!ev->status)
--			conn->role = ev->role;
-+	if (!conn)
-+		goto unlock;
- 
--		clear_bit(HCI_CONN_RSWITCH_PEND, &conn->flags);
-+	if (!ev->status)
-+		conn->role = ev->role;
- 
--		hci_role_switch_cfm(conn, ev->status, ev->role);
--	}
-+	clear_bit(HCI_CONN_RSWITCH_PEND, &conn->flags);
-+
-+	hci_role_switch_cfm(conn, ev->status, ev->role);
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -3898,21 +3909,22 @@ static void hci_mode_change_evt(struct h
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(ev->handle));
--	if (conn) {
--		conn->mode = ev->mode;
-+	if (!conn)
-+		goto unlock;
- 
--		if (!test_and_clear_bit(HCI_CONN_MODE_CHANGE_PEND,
--					&conn->flags)) {
--			if (conn->mode == HCI_CM_ACTIVE)
--				set_bit(HCI_CONN_POWER_SAVE, &conn->flags);
--			else
--				clear_bit(HCI_CONN_POWER_SAVE, &conn->flags);
--		}
-+	conn->mode = ev->mode;
- 
--		if (test_and_clear_bit(HCI_CONN_SCO_SETUP_PEND, &conn->flags))
--			hci_sco_setup(conn, ev->status);
-+	if (!test_and_clear_bit(HCI_CONN_MODE_CHANGE_PEND, &conn->flags)) {
-+		if (conn->mode == HCI_CM_ACTIVE)
-+			set_bit(HCI_CONN_POWER_SAVE, &conn->flags);
-+		else
-+			clear_bit(HCI_CONN_POWER_SAVE, &conn->flags);
- 	}
- 
-+	if (test_and_clear_bit(HCI_CONN_SCO_SETUP_PEND, &conn->flags))
-+		hci_sco_setup(conn, ev->status);
-+
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -4011,27 +4023,29 @@ static void hci_link_key_request_evt(str
- 	       &ev->bdaddr);
- 
- 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &ev->bdaddr);
--	if (conn) {
--		clear_bit(HCI_CONN_NEW_LINK_KEY, &conn->flags);
-+	if (!conn)
-+		goto found;
- 
--		if ((key->type == HCI_LK_UNAUTH_COMBINATION_P192 ||
--		     key->type == HCI_LK_UNAUTH_COMBINATION_P256) &&
--		    conn->auth_type != 0xff && (conn->auth_type & 0x01)) {
--			BT_DBG("%s ignoring unauthenticated key", hdev->name);
--			goto not_found;
--		}
-+	clear_bit(HCI_CONN_NEW_LINK_KEY, &conn->flags);
- 
--		if (key->type == HCI_LK_COMBINATION && key->pin_len < 16 &&
--		    (conn->pending_sec_level == BT_SECURITY_HIGH ||
--		     conn->pending_sec_level == BT_SECURITY_FIPS)) {
--			BT_DBG("%s ignoring key unauthenticated for high security",
--			       hdev->name);
--			goto not_found;
--		}
-+	if ((key->type == HCI_LK_UNAUTH_COMBINATION_P192 ||
-+	     key->type == HCI_LK_UNAUTH_COMBINATION_P256) &&
-+	    conn->auth_type != 0xff && (conn->auth_type & 0x01)) {
-+		BT_DBG("%s ignoring unauthenticated key", hdev->name);
-+		goto not_found;
-+	}
- 
--		conn_set_key(conn, key->type, key->pin_len);
-+	if (key->type == HCI_LK_COMBINATION && key->pin_len < 16 &&
-+	    (conn->pending_sec_level == BT_SECURITY_HIGH ||
-+	     conn->pending_sec_level == BT_SECURITY_FIPS)) {
-+		BT_DBG("%s ignoring key unauthenticated for high security",
-+		       hdev->name);
-+		goto not_found;
- 	}
- 
-+	conn_set_key(conn, key->type, key->pin_len);
-+
-+found:
- 	bacpy(&cp.bdaddr, &ev->bdaddr);
- 	memcpy(cp.link_key, key->val, HCI_LINK_KEY_SIZE);
- 
-@@ -4155,11 +4169,13 @@ static void hci_pscan_rep_mode_evt(struc
- 	hci_dev_lock(hdev);
- 
- 	ie = hci_inquiry_cache_lookup(hdev, &ev->bdaddr);
--	if (ie) {
--		ie->data.pscan_rep_mode = ev->pscan_rep_mode;
--		ie->timestamp = jiffies;
--	}
-+	if (!ie)
-+		goto unlock;
-+
-+	ie->data.pscan_rep_mode = ev->pscan_rep_mode;
-+	ie->timestamp = jiffies;
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -5041,11 +5057,13 @@ static void hci_disconn_phylink_complete
- 	hci_dev_lock(hdev);
- 
- 	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
--	if (hcon) {
--		hcon->state = BT_CLOSED;
--		hci_conn_del(hcon);
--	}
-+	if (!hcon)
-+		goto unlock;
-+
-+	hcon->state = BT_CLOSED;
-+	hci_conn_del(hcon);
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- #endif
-@@ -5198,14 +5216,16 @@ static void le_conn_complete_evt(struct
- 
- 	params = hci_pend_le_action_lookup(&hdev->pend_le_conns, &conn->dst,
- 					   conn->dst_type);
--	if (params) {
--		list_del_init(&params->action);
--		if (params->conn) {
--			hci_conn_drop(params->conn);
--			hci_conn_put(params->conn);
--			params->conn = NULL;
--		}
--	}
-+	if (!params)
-+		goto unlock;
-+
-+	list_del_init(&params->action);
-+	if (!params->conn)
-+		goto unlock;
-+
-+	hci_conn_drop(params->conn);
-+	hci_conn_put(params->conn);
-+	params->conn = NULL;
- 
- unlock:
- 	hci_update_background_scan(hdev);
-@@ -5286,12 +5306,14 @@ static void hci_le_conn_update_complete_
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(ev->handle));
--	if (conn) {
--		conn->le_conn_interval = le16_to_cpu(ev->interval);
--		conn->le_conn_latency = le16_to_cpu(ev->latency);
--		conn->le_supv_timeout = le16_to_cpu(ev->supervision_timeout);
--	}
-+	if (!conn)
-+		goto unlock;
- 
-+	conn->le_conn_interval = le16_to_cpu(ev->interval);
-+	conn->le_conn_latency = le16_to_cpu(ev->latency);
-+	conn->le_supv_timeout = le16_to_cpu(ev->supervision_timeout);
-+
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -5700,34 +5722,36 @@ static void hci_le_remote_feat_complete_
- 	hci_dev_lock(hdev);
- 
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(ev->handle));
--	if (conn) {
--		if (!ev->status)
--			memcpy(conn->features[0], ev->features, 8);
-+	if (!conn)
-+		goto unlock;
- 
--		if (conn->state == BT_CONFIG) {
--			__u8 status;
-+	if (!ev->status)
-+		memcpy(conn->features[0], ev->features, 8);
- 
--			/* If the local controller supports slave-initiated
--			 * features exchange, but the remote controller does
--			 * not, then it is possible that the error code 0x1a
--			 * for unsupported remote feature gets returned.
--			 *
--			 * In this specific case, allow the connection to
--			 * transition into connected state and mark it as
--			 * successful.
--			 */
--			if ((hdev->le_features[0] & HCI_LE_SLAVE_FEATURES) &&
--			    !conn->out && ev->status == 0x1a)
--				status = 0x00;
--			else
--				status = ev->status;
-+	if (conn->state == BT_CONFIG) {
-+		__u8 status;
- 
--			conn->state = BT_CONNECTED;
--			hci_connect_cfm(conn, status);
--			hci_conn_drop(conn);
--		}
-+		/* If the local controller supports slave-initiated
-+		 * features exchange, but the remote controller does
-+		 * not, then it is possible that the error code 0x1a
-+		 * for unsupported remote feature gets returned.
-+		 *
-+		 * In this specific case, allow the connection to
-+		 * transition into connected state and mark it as
-+		 * successful.
-+		 */
-+		if ((hdev->le_features[0] & HCI_LE_SLAVE_FEATURES) &&
-+		    !conn->out && ev->status == 0x1a)
-+			status = 0x00;
-+		else
-+			status = ev->status;
-+
-+		conn->state = BT_CONNECTED;
-+		hci_connect_cfm(conn, status);
-+		hci_conn_drop(conn);
- 	}
- 
-+unlock:
- 	hci_dev_unlock(hdev);
- }
- 
+DQoNCtCd0LDRmNC80LjQu9CwINC60LDRmCDQs9C+0YHQv9C+0LTQsNGA0L7Rgg0KDQrQiNCw0YEg
+0YHRg9C8IDY4LdCz0L7QtNC40YjQvdCwINC20LXQvdCwLCDQutC+0ZjQsCDRgdGC0YDQsNC00LAg
+0L7QtCDQv9GA0L7QtNC+0LvQttC10L0g0LrQsNGA0YbQuNC90L7QvCDQvdCwINC00L7RmNC60LAs
+INC+0LQg0YHQuNGC0LUg0LzQtdC00LjRhtC40L3RgdC60Lgg0LjQvdC00LjQutCw0YbQuNC4LCDQ
+vNC+0ZjQsNGC0LAg0YHQvtGB0YLQvtGY0LHQsCDQvdCw0LLQuNGB0YLQuNC90LAg0YHQtSDQstC7
+0L7RiNC4INC4INC+0YfQuNCz0LvQtdC00L3QviDQtSDQtNC10LrQsCDQvNC+0LbQtdCx0Lgg0L3Q
+tdC80LAg0LTQsCDQttC40LLQtdCw0Lwg0L/QvtCy0LXRnNC1INC+0LQg0YjQtdGB0YIg0LzQtdGB
+0LXRhtC4INC60LDQutC+INGA0LXQt9GD0LvRgtCw0YIg0L3QsCDQsdGA0LfQuNC+0YIg0YDQsNGB
+0YIg0Lgg0LHQvtC70LrQsNGC0LAg0YjRgtC+INGB0LUg0ZjQsNCy0YPQstCwINC60LDRmCDQvdC1
+0LAuINCc0L7RmNC+0YIg0YHQvtC/0YDRg9CzINC/0L7Rh9C40L3QsCDQvdC10LrQvtC70LrRgyDQ
+s9C+0LTQuNC90Lgg0L3QsNC90LDQt9Cw0LQg0Lgg0L3QsNGI0LjRgtC1INC00L7Qu9Cz0Lgg0LPQ
+vtC00LjQvdC4INCx0YDQsNC6INC90LUg0LHQtdCwINCx0LvQsNCz0L7RgdC70L7QstC10L3QuCDR
+gdC+INC90LjRgtGDINC10LTQvdC+INC00LXRgtC1LCDQv9C+INC90LXQs9C+0LLQsNGC0LAg0YHQ
+vNGA0YIg0LPQviDQvdCw0YHQu9C10LTQuNCyINGG0LXQu9C+0YLQviDQvdC10LPQvtCy0L4g0LHQ
+vtCz0LDRgtGB0YLQstC+Lg0KDQrQlNC+0LDRk9Cw0Lwg0LrQsNGYINCy0LDRgSDQvtGC0LrQsNC6
+0L4g0YHQtSDQv9C+0LzQvtC70LjQsiDQt9CwINGC0L7QsCwg0L/QvtC00LPQvtGC0LLQtdC9INGB
+0YPQvCDQtNCwINC00L7QvdC40YDQsNC8INGB0YPQvNCwINC+0LQgMiwgMzAwLCAwMDAg0LXQstGA
+0LAg0LfQsCDQv9C+0LzQvtGIINC90LAg0YHQuNGA0L7QvNCw0YjQvdC40YLQtSwg0YHQuNGA0L7Q
+vNCw0YjQvdC40YLQtSDQuCDQv9C+0LzQsNC70LrRgyDQv9GA0LjQstC40LvQtdCz0LjRgNCw0L3Q
+uNGC0LUg0LzQtdGT0YMg0LLQsNGI0LjRgtC1INGB0L7QsdGA0LDQvdC40ZjQsCAvINC+0L/RiNGC
+0LXRgdGC0LLQvi4g0JfQsNCx0LXQu9C10LbQtdGC0LUg0LTQtdC60LAg0L7QstC+0Zgg0YTQvtC9
+0LQg0LUg0LTQtdC/0L7QvdC40YDQsNC9INCy0L4g0LHQsNC90LrQsCDQutCw0LTQtSDRiNGC0L4g
+0YDQsNCx0L7RgtC10YjQtSDQvNC+0ZjQvtGCINGB0L7Qv9GA0YPQsy4gQXBwcmVjaWF0ZdC1INGG
+0LXQvdCw0Lwg0LDQutC+INC+0LHRgNC90LXRgtC1INCy0L3QuNC80LDQvdC40LUg0L3QsCDQvNC+
+0LXRgtC+INCx0LDRgNCw0ZrQtSDQt9CwINC/0YDQvtC/0LDQs9C40YDQsNGa0LUg0L3QsCDQvNCw
+0YHQsNC20LDRgtCwINC90LAg0LrRgNCw0LvRgdGC0LLQvtGC0L4sINGc0LUg0LLQuCDQtNCw0LTQ
+sNC8INC/0L7QstC10ZzQtSDQtNC10YLQsNC70Lgg0LfQsCDRgtC+0LAg0LrQsNC60L4g0LTQsCDQ
+v9C+0YHRgtCw0L/QuNGC0LUuDQoNCtCR0LvQsNCz0L7QtNCw0YDQsNC8DQrQky3Rk9CwINCc0LXR
+gNC40LvQuNC9INCg0L7QsdC10YDRgg==
