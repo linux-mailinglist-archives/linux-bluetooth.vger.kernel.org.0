@@ -2,94 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64D6A28A30C
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 11 Oct 2020 01:05:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D568628A468
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 11 Oct 2020 01:33:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726817AbgJJXFH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 10 Oct 2020 19:05:07 -0400
-Received: from xtrwsqzp.outbound-mail.sendgrid.net ([167.89.100.227]:47123
-        "EHLO xtrwsqzp.outbound-mail.sendgrid.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726664AbgJJXEo (ORCPT
+        id S1726923AbgJJXdE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 10 Oct 2020 19:33:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47490 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725855AbgJJXdD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 10 Oct 2020 19:04:44 -0400
-X-Greylist: delayed 1561 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Oct 2020 19:04:44 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=simko.xyz;
-        h=from:subject:mime-version:to:cc:content-transfer-encoding:
-        content-type;
-        s=s1; bh=XV5QsdCC39iZ2ICU0c9axvg5IcFTPNI/9RcdR2RsPyU=;
-        b=QHxk2my8Dw9tVqdn+97ZLFxQq5m6GeYyq+QthwM0aSgp9P7g5rXdAyCc5SZESK1vtwhJ
-        7THrZAI+thkFz0sTY47YUBz1fylmPAzwnMLobxV4tJRZPLuku+F65nhsGfBYjnnoBMMCXD
-        MhF2vtCdFkF6joOwyU9WAQtma67bz+ATc=
-Received: by filterdrecv-p3mdw1-6685f47d68-78qj6 with SMTP id filterdrecv-p3mdw1-6685f47d68-78qj6-18-5F823550-11
-        2020-10-10 22:27:28.209801416 +0000 UTC m=+258684.658973014
-Received: from mail.simko.xyz (unknown)
-        by ismtpd0089p1iad2.sendgrid.net (SG) with ESMTP id 9m770onmSl6g1XQlfrzHTA
-        for <linux-bluetooth@vger.kernel.org>;
-        Sat, 10 Oct 2020 22:27:28.137 +0000 (UTC)
-Received: from localhost.localdomain (d01-0316a.kn.vutbr.cz [147.229.206.50])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.simko.xyz (Postfix) with ESMTPSA id 073F64001B;
-        Sat, 10 Oct 2020 22:27:26 +0000 (UTC)
-From:   =?utf-8?q?Daniel_=C5=A0imko?= <daniel@simko.xyz>
-Subject: [PATCH BlueZ] profiles: Fix segfault when using headset controls
-Date:   Sat, 10 Oct 2020 22:27:28 +0000 (UTC)
-Message-Id: <20201010222719.439956-1-daniel@simko.xyz>
-X-Mailer: git-send-email 2.28.0
+        Sat, 10 Oct 2020 19:33:03 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B50CC0613D0
+        for <linux-bluetooth@vger.kernel.org>; Sat, 10 Oct 2020 16:33:04 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id c5so10978114qtw.3
+        for <linux-bluetooth@vger.kernel.org>; Sat, 10 Oct 2020 16:33:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=IXO8s1FSJPFYxMSzOK1b5Mo6OFU8qq0Dsu04m7ZMRYs=;
+        b=pD+ObALXldoyjJbXh36qa5TdIEOGEIZYka5IMF4U4mkFBmgWT/xcz/Csd8XNcQGNbT
+         wYZ5hwpEm02ruGSkGZ5R6spuLQnJ9fytekEAd2riOy/0Tf6XRKGnPc+V+APPNjC84jlf
+         O97Wvwv3DalFmMxwKf0QSsjru2BqrQTccbFl5qX3EOt/w/SW3Gj7J4kpXcXUFy5RBQ05
+         azHw6J+a0WzKZMk95KDmq8dY/aWDeyZMbRSOboXl0vKSxElLrwyG0vhBwqyig9aZreo3
+         /wO6BhHtaptnuNuIiQ8RVUDxrFfz0FkPGd+XbJoPDAkfnOApB/lX5wgRfL8k+18IMqy3
+         1Bgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=IXO8s1FSJPFYxMSzOK1b5Mo6OFU8qq0Dsu04m7ZMRYs=;
+        b=KVGiy6P88x62aD4rni1Kf3k0Ju3SA3OrP8Qp6hILPmoWxIpR4xTE6AQ4wWrmsByYGe
+         U/NrQ7fsot+79y8hxlDB5YY953IA3XtaX7loR/wtzFOPO3s0LUen9zLxJo9qs9v7v9lb
+         mZ+KMdQzHxd3ls6eFjdGfKdb5jus+XQBMyRFX3F5wClnB6C0iPVpbQGFfBY5v0z19keW
+         n4HosaUbYbh0ER46sSMjAUbFd1TeUj4t+3vg82SyPigHxdYs+nfxLV2v7YN5bmCAcZr6
+         R0wjCcDI89iUSOkn2X00IaxdiCIJrwAHY4TeP1AtYG1uFGuFzlL/ST9Aj9UBvH71FLtN
+         DZHg==
+X-Gm-Message-State: AOAM530h5nhotFf3lrmb6ZbMkK1ss0QdgICKjmpjIN0xLWOJjpKnxguE
+        SrqjqBA8viOFwtSFaCdIfryND68EkIMfxQ==
+X-Google-Smtp-Source: ABdhPJwnzir/hX9GsrcQ54ZzbqLoCxqTNKWvJc3tQBdqaP77cozeuyUpqG9+UOYSDKc1UwMVnLVRTQ==
+X-Received: by 2002:aed:35cb:: with SMTP id d11mr4240119qte.324.1602372783044;
+        Sat, 10 Oct 2020 16:33:03 -0700 (PDT)
+Received: from [172.17.0.2] ([52.167.162.52])
+        by smtp.gmail.com with ESMTPSA id l12sm9269950qkg.54.2020.10.10.16.33.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Oct 2020 16:33:02 -0700 (PDT)
+Message-ID: <5f8244ae.1c69fb81.ce543.bf05@mx.google.com>
+Date:   Sat, 10 Oct 2020 16:33:02 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============5792907437120680591=="
 MIME-Version: 1.0
-X-SG-EID: =?us-ascii?Q?Q0J120W4ZU2dvxvzBhStZdG+rm2wlg3B=2FGgVYVk6RjFkhGd+OCWLLV9qz+=2FCrg?=
- =?us-ascii?Q?eDN2ZBxWYMNf0SMk2W+KW5c2+Ng28QAa+b9R1K+?=
- =?us-ascii?Q?dJeDGJVfArq8j7I9nc6GIpUXojP1iN10ebMt6mT?=
- =?us-ascii?Q?WGuzFQkfNeHkn+NwPZWbOZAlKO5fn3KqJuICpQm?=
- =?us-ascii?Q?11bphz32ebs3EXn=2Fg=2FRVP7Jef4nOk5BTKamcFFr?=
- =?us-ascii?Q?RSmCq4JlQSMevxdtFEQvOkpYiGAS97tefrOeH1u?=
- =?us-ascii?Q?tufot9y4WPZI2pMWfk8Rg=3D=3D?=
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Daniel =?iso-8859-2?b?qWlta28=?= <daniel@simko.xyz>
-X-Entity-ID: OBdE83deZemUHEPHEgiyMA==
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=us-ascii
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, daniel@simko.xyz
+Subject: RE: [BlueZ] profiles: Fix segfault when using headset controls
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20201010222719.439956-1-daniel@simko.xyz>
+References: <20201010222719.439956-1-daniel@simko.xyz>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This fixes a segmentation fault caused by controls trying to notify an
-unregistered player.
+--===============5792907437120680591==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-When an unregistered player is replaced by another valid player from the
-list, the session is not referenced in the sessions list of the player
-and when this player is unregistered, its reference is not removed from
-the session.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=362639
+
+---Test result---
+
+##############################
+Test: CheckPatch - PASS
+
+##############################
+Test: CheckGitLint - PASS
+
+##############################
+Test: CheckBuild - PASS
+
+##############################
+Test: MakeCheck - PASS
+
+
+
 ---
- profiles/audio/avrcp.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/profiles/audio/avrcp.c b/profiles/audio/avrcp.c
-index ed436de3b..70f52efe8 100644
---- a/profiles/audio/avrcp.c
-+++ b/profiles/audio/avrcp.c
-@@ -4441,8 +4441,19 @@ void avrcp_unregister_player(struct avrcp_player *player)
- 		if (target == NULL)
- 			continue;
- 
--		if (target->player == player)
--			target->player = g_slist_nth_data(server->players, 0);
-+		if (target->player == player) {
-+			struct avrcp_player *next_player = g_slist_nth_data(
-+								server->players,
-+								0);
-+
-+			target->player = next_player;
-+
-+			if (next_player) {
-+				next_player->sessions = g_slist_append(
-+							next_player->sessions,
-+							session);
-+			}
-+		}
- 	}
- 
- 	avrcp_player_event(player,
--- 
-2.28.0
 
+--===============5792907437120680591==--
