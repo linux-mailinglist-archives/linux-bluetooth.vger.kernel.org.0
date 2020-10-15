@@ -2,73 +2,148 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D12E628F8B1
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Oct 2020 20:34:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F6BB28FA2C
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Oct 2020 22:37:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387766AbgJOSeY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 15 Oct 2020 14:34:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38842 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731154AbgJOSeX (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 15 Oct 2020 14:34:23 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6316AC061755
-        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Oct 2020 11:34:23 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id d24so4726118lfa.8
-        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Oct 2020 11:34:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=fXumMw6Ct4LQffIPTraW0kvUrjf7lJM7fYG/Hlb1Ns8=;
-        b=SEjs/0m6xvJWyfWondopry3ouLFUWLfeCr6XNOyCPKvUPwoqsq4dzOwfUI8gUS52PZ
-         ZDfpt0TOaEzbyZ8q7TDa9gjYAe+7zqgAXN+dJ4brwQL3GK0szUwzucvnkv7d37FFkjIX
-         Cwuoxq6AOvaTwLNjYVBBWMTrhaNTSv0YOeEPUxZb9ip3APRUySCIn5qZ2mVKmVY99Mos
-         JOwqUsOJP5vnYwUZaMFoFOt2tveB9JBs5Hq/KSMSxqMPLt6b+isneD5j9xyh/Vu2bHhJ
-         hCDUP4g7iiIqwA3CG3UHEENp4xFbuNPSNuXpzE6mSZUec8+hFFpXezt6fzquOuwDlM82
-         /GBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=fXumMw6Ct4LQffIPTraW0kvUrjf7lJM7fYG/Hlb1Ns8=;
-        b=G3c5hqRu+HFf3x/lonOKeHAXcw742BbcqxkJxhJ/DivoOEFB2W4gR3Hj8DqaIFs5E2
-         0EegkI6mcMlmlfiEw/Yd+18JFVRKWI3jC7PHfZxh43OxJ+auhpNqZw85zJBjefjAVAq9
-         FufIv6R5qNBUlS/0Jwbt+YbiwMJjJ0NFlTIn5HMGi8wVV5x4G5jtZeVYro9ncA1TUF7G
-         Glv+zpb4zlLhuYHohPYxWQVMM7k0UrL8t4939Rt2lx8jfBD4bpQGxudW+XC0AMCsd4Yg
-         ruIQ7tBecd//WMaMJm7Tm2kjwXhum2WjbjBxNkU4vm3Ev8CZIvSYe64OyQ7w9L3CuGli
-         /B/w==
-X-Gm-Message-State: AOAM531bFZZrUU9968tu/ygiBOC6cUf6UfWdENnyctk8P8UTzyvjN+mt
-        lfbhW9uNBZrE6Z/mBzTcYRmJ6VgKLro9hxMLfTU+PD32BhOu6A==
-X-Google-Smtp-Source: ABdhPJzyNEqTfCDaw3xJHfxOtHtmcX+e2vx3yvVavGQTm2U2RnZ2MxJBTpBK6avSCx9b/ND6m6P8GSJiZT+0phSGlnQ=
-X-Received: by 2002:a19:e014:: with SMTP id x20mr1417359lfg.444.1602786861547;
- Thu, 15 Oct 2020 11:34:21 -0700 (PDT)
-MIME-Version: 1.0
-From:   Alexandre Augusto <alexandre.a.giron@gmail.com>
-Date:   Thu, 15 Oct 2020 15:34:09 -0300
-Message-ID: <CABLzjm8S1J5MRhrwFu1pbX9fub7X5nXmYRWmtRsmVRObeJOCbw@mail.gmail.com>
-Subject: Entropy source based on the RSSI
-To:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
+        id S2392330AbgJOUgt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 15 Oct 2020 16:36:49 -0400
+Received: from know-smtprelay-omc-9.server.virginmedia.net ([80.0.253.73]:57275
+        "EHLO know-smtprelay-omc-9.server.virginmedia.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2392305AbgJOUgK (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 15 Oct 2020 16:36:10 -0400
+Received: from mail.snewbury.org.uk ([86.24.188.28])
+        by cmsmtp with ESMTPA
+        id T9ypkHyjXq8OAT9ypkJajR; Thu, 15 Oct 2020 21:36:07 +0100
+X-Originating-IP: [86.24.188.28]
+X-Authenticated-User: sjnewbury@virginmedia.com
+X-Spam: 0
+X-Authority: v=2.3 cv=WuMFz+Xv c=1 sm=1 tr=0 a=1Au+4VMCrm8g9YIHxruHCQ==:117
+ a=1Au+4VMCrm8g9YIHxruHCQ==:17 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=afefHYAZSVUA:10 a=N1CowNylAAAA:8 a=VwQbUJbxAAAA:8 a=RC3RnfkK1g4JzTiRlqcA:9
+ a=8VnVOQpA_V8CsW3A:21 a=SrWvuh-4m88bLPUN:21 a=QEXdDO2ut3YA:10
+ a=sPYuha5Ws6K-Rx_L469D:22 a=AjGcO6oz07-iQ99wixmX:22
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=snewbury.org.uk;
+         h=content-transfer-encoding:mime-version:user-agent
+        :content-type:content-type:references:in-reply-to:date:date:from
+        :from:subject:subject:message-id; s=eater; t=1602793983; x=
+        1604608384; bh=AFHh+kkZwqzb6xIgL1AT2r9dg3goMuPq0MeM9NSV7e8=; b=h
+        KG0t6ki0v7UUFyfXavFsbj6rI8/78D1tzjM/yk6i6JsU7WC8sfjHpGGPdewEylbg
+        fpqsuNVRBaof0boVRSZW4EaTAQD06iVeNbCqqWk4rMvXrA3neG+b0m0euWkAsIXk
+        iillgRSjaYwE74u1j3avpL+yjl4LF1IFUYW3I8wB+Y=
+X-Virus-Scanned: amavisd-new at snewbury.org.uk
+Received: from artifact.local ([IPv6:2001:470:6efd:f101:0:0:0:a58])
+        (authenticated bits=0)
+        by mail.snewbury.org.uk (8.16.1/8.16.1) with ESMTPSA id 09FKX3e8161608
+        (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+        Thu, 15 Oct 2020 21:33:03 +0100
+Message-ID: <5a48225728860dbee779ea54c112e8cfa2cfddfd.camel@snewbury.org.uk>
+Subject: Re: [PATCH] 100% CPU usage on keyboard disconnect
+From:   Steven Newbury <steve@snewbury.org.uk>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Date:   Thu, 15 Oct 2020 21:36:14 +0100
+In-Reply-To: <CABBYNZ+ahHHmZx2dOx8zpQ34LEiYk0btpLQ_6Kv8e6+d_Ko66g@mail.gmail.com>
+References: <f6d623eecc635022b85a31359b2f11b0104267c5.camel@snewbury.org.uk>
+         <CABBYNZ+ahHHmZx2dOx8zpQ34LEiYk0btpLQ_6Kv8e6+d_Ko66g@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfIaHNptCJnMmu1cLt464pmQg37fMjlU4LT+1//wf6q1Bbqz6b1VahenYijhT5gmsgiIyzYj1P+MH3oS7zBm7dnW8VSwKhRFBHoPwHlqanzkGuF0GWlSH
+ GmEKQ+OFeUYAEbZW9sZVniUM/20C+Jc5xqive6Im9Jz6MQMuQMwRNxDIbO9uzQ7+fIDf2/VEqVPO0R8xEHkGTwS/SBe8JleQYTjEIAMCYzlqHt48jspUw5bC
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+On Thu, 2020-10-15 at 10:12 -0700, Luiz Augusto von Dentz wrote:
+> Hi Steven,
+> 
+> On Thu, Oct 15, 2020 at 4:13 AM Steven Newbury <steve@snewbury.org.uk
+> > wrote:
+> > There are a couple of issues with g_io_channel usage in bluez which
+> > cause CPUs to spin on half-closed channels.
+> > 
+> > This patch fixes bugs where bluetooth keyboards fail to work on
+> > initial
+> > connection, and cause 100% cpu on disconnect.
+> > 
+> > Also fix bug with similar symptoms triggered by some other HID
+> > devices
+> > such as Sony PS3 BD Remotes.
+> > 
+> > In the previous discussion on the kernel bugzilla below, it was
+> > suggested to remove sec_watch, and I attached a follow-up patch to
+> > do
+> > so, however that change causes problems with current bluez-5
+> > releases
+> > where a fd is used after being closed.
+> > 
+> > See https://bugzilla.kernel.org/show_bug.cgi?id=204275
+> > 
+> > Signed-off-by: Steven Newbury <steve@snewbury.org.uk>
+> > ---
+> >  attrib/interactive.c    | 4 +++-
+> >  profiles/input/device.c | 3 ++-
+> >  2 files changed, 6 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/attrib/interactive.c b/attrib/interactive.c
+> > index 9a7976d34..453ff064e 100644
+> > --- a/attrib/interactive.c
+> > +++ b/attrib/interactive.c
+> > @@ -64,6 +64,7 @@ static int opt_psm = 0;
+> >  static int opt_mtu = 0;
+> >  static int start;
+> >  static int end;
+> > +static guint gsrc;
+> > 
+> >  static void cmd_help(int argcp, char **argvp);
+> > 
+> > @@ -193,6 +194,7 @@ static void disconnect_io()
+> >         attrib = NULL;
+> >         opt_mtu = 0;
+> > 
+> > +       g_source_remove(gsrc);
+> >         g_io_channel_shutdown(iochannel, FALSE, NULL);
+> >         g_io_channel_unref(iochannel);
+> >         iochannel = NULL;
+> > @@ -415,7 +417,7 @@ static void cmd_connect(int argcp, char
+> > **argvp)
+> >                 error("%s\n", gerr->message);
+> >                 g_error_free(gerr);
+> >         } else
+> > -               g_io_add_watch(iochannel, G_IO_HUP,
+> > channel_watcher, NULL);
+> > +               gsrc = g_io_add_watch(iochannel, G_IO_HUP,
+> > channel_watcher, NULL);
+> >  }
+> 
+> I wouldn't bother with the fix above since the attrib part will be
+> going away soon.
+> 
+> >  static void cmd_disconnect(int argcp, char **argvp)
+> > diff --git a/profiles/input/device.c b/profiles/input/device.c
+> > index a711ef527..9abf595f6 100644
+> > --- a/profiles/input/device.c
+> > +++ b/profiles/input/device.c
+> > @@ -982,7 +982,8 @@ static int hidp_add_connection(struct
+> > input_device *idev)
+> >                 }
+> > 
+> >                 idev->req = req;
+> > -               idev->sec_watch = g_io_add_watch(idev->intr_io,
+> > G_IO_OUT,
+> > +               if (!idev->sec_watch)
+> > +                       idev->sec_watch = g_io_add_watch(idev-
+> > >intr_io, G_IO_IN,
+> >                                                         encrypt_not
+> > ify, idev);
+> 
+> If this is happening isn't there a idev->req already set and we are
+> overwriting it?
+> 
+It was definitely causing a problem, but I can't remember exactly what
+occurred, I wrote the patch originally years ago!  I think it leaked
+the watch.
 
-based on the motivation that IoT devices do not have many entropy
-sources available, and also on the fact that trusting in a single
-source may be risky, I have researched some additional ways to collect
-randomness for the device, using bluetooth technology for that
-purpose.
 
-For those who are interested in:
-
-Github: https://github.com/AAGiron/Bluerandom
-Presentation: https://www.youtube.com/watch?v=iAKaKAmqCFo
-
-I also want to say thanks in advance to Emil Lenngren for his valuable
-comments, here in this mailing list (back in 2019), and also to the
-Bluez community.
-
--- 
-Alexandre Augusto Giron
