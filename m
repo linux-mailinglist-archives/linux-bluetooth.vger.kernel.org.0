@@ -2,65 +2,148 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 860FB29054E
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Oct 2020 14:37:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C648D2903FB
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Oct 2020 13:28:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407584AbgJPMhZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 16 Oct 2020 08:37:25 -0400
-Received: from cpanel.giganet.cl ([190.96.78.139]:39766 "EHLO
-        cpanel.giganet.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407562AbgJPMhY (ORCPT
+        id S2406175AbgJPL23 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 16 Oct 2020 07:28:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([63.128.21.124]:43140 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2406032AbgJPL22 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 16 Oct 2020 08:37:24 -0400
-X-Greylist: delayed 20782 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Oct 2020 08:37:10 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=dplgrout.cl
-        ; s=default; h=Content-Transfer-Encoding:Content-Type:Message-ID:Reply-To:
-        Subject:To:From:Date:MIME-Version:Sender:Cc:Content-ID:Content-Description:
-        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=TrgUs68YRs3neP+PfrvGhLoeMXh3YzKv5z9oCWPJ0m4=; b=m/ABHCVvyLYD2QkkwOjuWUgGFG
-        i9BJXsIic9wHOFEzjhXFPbcsR2XTWptcrmKLSqDrJOV7hGJM6za5nSEFhd4CC/+eaHHsgS48/E2jM
-        qvMpEeazlOlIrwSs4xM+Zdf/REorOK5GVU6ZAJUjCzQuCMv9dTVBPKuexZxj1Qoi2hPLiQ576Ik0L
-        XzwzerIXphINfmlVQ0r0UMIuChB1Vcn201QVmD2skB/Nh9D/yp0E95Av9ZMQq7ln6H0uEUnu/2/5Y
-        /CHuMEs39xrrgaYDtG7jTh3PfukIIcCJEs3b52/mZokA1w+tDL1dp0MaV2Z+qYj+Bzs13o0ru0vv/
-        Mq733mMw==;
-Received: from [::1] (port=55048 helo=cpanel.giganet.cl)
-        by cpanel.giganet.cl with esmtpa (Exim 4.93)
-        (envelope-from <info@controlypotencia.com>)
-        id 1kTJ7f-0009vt-N3; Fri, 16 Oct 2020 03:21:51 -0300
+        Fri, 16 Oct 2020 07:28:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1602847707;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Uncw1p8wEaEZ4da7CrqyMdu3Pcg9RwYIjaA2lxjM3PI=;
+        b=SDLmcbYpoLpj9rL2a/v2ATeG/yrbjsYpg8waXYjNLbUuQ6PxRAysm3GBGJnl/jsF7CYJoE
+        Po2dkmi47upUtvnXcVsLuM1GDdWeTZsDwJYV7o5mkM+SlwwXq1OQf+AYVAW0uYAFg8I6Jr
+        Ak6b2AQbfMnPXAUxAcKT+EcfsH2pXXE=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-264-DaUrxY2QOmOs84QA-IJtlQ-1; Fri, 16 Oct 2020 07:28:26 -0400
+X-MC-Unique: DaUrxY2QOmOs84QA-IJtlQ-1
+Received: by mail-ed1-f69.google.com with SMTP id dn20so876600edb.14
+        for <linux-bluetooth@vger.kernel.org>; Fri, 16 Oct 2020 04:28:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Uncw1p8wEaEZ4da7CrqyMdu3Pcg9RwYIjaA2lxjM3PI=;
+        b=R3SHphtpvOug/Qdpg6mlYyWIwwPMfzJLchJYdvoO4oyX/d/WJkzqAtBPowSDxiQz2c
+         6W+VkZR7geQTB2x3UxwQrt9bbcnL+z3z31EV4ekX8TOaJrihLjGdRUrdFVuZvaAQq0sm
+         75UirxXB4auW1LdYvr5S32WBgQirP5I19kUjsa+nGPW9uZMudVnJDe636Xs1oUUwIGDH
+         kcxPptyJhyNY8I1V7d1tixIYeM9pPJOIg+vb/w7NgBnKB7MS7w2qpNJAazaQIYU6daqA
+         q1jz9YU+SHxjYy6D1dRH0aiKBKYrIzuFpS9d4bJ4Q3CiL4g2JvlC3BAREHNeRTwt3vmg
+         XBYg==
+X-Gm-Message-State: AOAM532DxGF0iZTPD6nOH8DT7dokwUaI79yOaJUnedC5lO9MJGDfzsH2
+        Iw6PQcuV+H6GWup24lBNdhptW3NeB6UjQ8DjWuF/33f7m12IDP68fkid6zjY6KywbWzlU2ngqUO
+        kavb6Z0bh+Ux2AC1KnP5XT5XE3O6E
+X-Received: by 2002:a17:907:43c6:: with SMTP id i6mr3108687ejs.207.1602847704750;
+        Fri, 16 Oct 2020 04:28:24 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxafcuee0i5hxOgusCBNcMWWy78Vr/YlDZ8KxL6yLiWe2S8E6BQLTMsRHYg7w1v3h++iMg/pQ==
+X-Received: by 2002:a17:907:43c6:: with SMTP id i6mr3108655ejs.207.1602847704363;
+        Fri, 16 Oct 2020 04:28:24 -0700 (PDT)
+Received: from x1.localdomain (2001-1c00-0c0c-fe00-d2ea-f29d-118b-24dc.cable.dynamic.v6.ziggo.nl. [2001:1c00:c0c:fe00:d2ea:f29d:118b:24dc])
+        by smtp.gmail.com with ESMTPSA id i5sm1335818ejs.121.2020.10.16.04.28.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Oct 2020 04:28:23 -0700 (PDT)
+Subject: Re: [PATCH v4] bluetooth: hci_h5: fix memory leak in h5_close
+To:     Anant Thazhemadam <anant.thazhemadam@gmail.com>
+Cc:     linux-kernel-mentees@lists.linuxfoundation.org,
+        syzbot+6ce141c55b2f7aafd1c4@syzkaller.appspotmail.com,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20201007034803.7554-1-anant.thazhemadam@gmail.com>
+From:   Hans de Goede <hdegoede@redhat.com>
+Message-ID: <2a79ece2-c63b-a881-bc19-65b59952344f@redhat.com>
+Date:   Fri, 16 Oct 2020 13:28:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.1
 MIME-Version: 1.0
-Date:   Fri, 16 Oct 2020 03:21:50 -0300
-From:   Ying Chongan <info@controlypotencia.com>
-To:     undisclosed-recipients:;
-Subject: Investment opportunity
-Reply-To: yingchongan@zohomail.com
-User-Agent: Roundcube Webmail/1.4.8
-Message-ID: <e70e5a6e462f92c7f06eea146a612430@controlypotencia.com>
-X-Sender: info@controlypotencia.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20201007034803.7554-1-anant.thazhemadam@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel.giganet.cl
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - controlypotencia.com
-X-Get-Message-Sender-Via: cpanel.giganet.cl: authenticated_id: mariapaz.lopez@dplgrout.cl
-X-Authenticated-Sender: cpanel.giganet.cl: mariapaz.lopez@dplgrout.cl
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Greetings,
+Hi,
 
-This email is for an opportunity to invest in any lucrative business in 
-your country.
+On 10/7/20 5:48 AM, Anant Thazhemadam wrote:
+> If h5_close is called when !hu->serdev, h5 is directly freed.
+> However, h5->rx_skb is not freed, which causes a memory leak.
+> 
+> Freeing h5->rx_skb fixes this memory leak.
+> 
+> In case hu->serdev exists, h5->rx_skb is then set to NULL,
+> since we do not want to risk a potential NULL pointer 
+> dereference.
+> 
+> Fixes: ce945552fde4 ("Bluetooth: hci_h5: Add support for serdev enumerated devices")
+> Reported-by: syzbot+6ce141c55b2f7aafd1c4@syzkaller.appspotmail.com
+> Tested-by: syzbot+6ce141c55b2f7aafd1c4@syzkaller.appspotmail.com
+> Signed-off-by: Anant Thazhemadam <anant.thazhemadam@gmail.com>h5_close v4
+> ---
+> Changes in v4:
+> 	* Free h5->rx_skb even when hu->serdev
+> 	(Suggested by Hans de Goede <hdegoede@redhat.com>)
+> 	* If hu->serdev, then assign h5->rx_skb = NULL
+> 
+> Changes in v3:
+> 	* Free h5->rx_skb when !hu->serdev, and fix the memory leak
+> 	* Do not incorrectly and unnecessarily call serdev_device_close()
+> 
+> Changes in v2:
+> 	* Fixed the Fixes tag
+> 
+>  drivers/bluetooth/hci_h5.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
+> index e41854e0d79a..39f9553caa5c 100644
+> --- a/drivers/bluetooth/hci_h5.c
+> +++ b/drivers/bluetooth/hci_h5.c
+> @@ -245,11 +245,15 @@ static int h5_close(struct hci_uart *hu)
+>  	skb_queue_purge(&h5->rel);
+>  	skb_queue_purge(&h5->unrel);
+>  
+> +	kfree_skb(h5->rx_skb);
+> +
+>  	if (h5->vnd && h5->vnd->close)
+>  		h5->vnd->close(h5);
+>  
+>  	if (!hu->serdev)
+>  		kfree(h5);
+> +	else
+> +		h5->rx_skb = NULL;
 
-We offer a quick loan at low interest rate, if you are interested, 
-please reply to yingchongan@gmail.com for more details.
+Please just do this unconditionally directly after
+the kfree_skb()
 
-Sincerely: Ying Chongan
+So after this comment has been addressed the end result should
+look like this:
+
+	skb_queue_purge(&h5->rel);
+	skb_queue_purge(&h5->unrel);
+	kfree_skb(h5->rx_skb);
+	h5->rx_skb = NULL;
+
+	if (h5->vnd && h5->vnd->close)
+		h5->vnd->close(h5);
+
+	if (!hu->serdev)
+		kfree(h5);
+ 
+ 	return 0;
+
+Regards,
+
+Hans
+
