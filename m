@@ -2,27 +2,27 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 00DBE291C74
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 18 Oct 2020 21:38:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2CCF291BFB
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 18 Oct 2020 21:35:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732866AbgJRTiP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 18 Oct 2020 15:38:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39424 "EHLO mail.kernel.org"
+        id S1731632AbgJRT0T (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 18 Oct 2020 15:26:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41392 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731160AbgJRTZI (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 18 Oct 2020 15:25:08 -0400
+        id S1731618AbgJRT0S (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 18 Oct 2020 15:26:18 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9ACFB222C8;
-        Sun, 18 Oct 2020 19:25:06 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EE268207DE;
+        Sun, 18 Oct 2020 19:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603049107;
-        bh=HDCMGJf1kIhpPN93Q61Pxo3Rl/dSL5wdEcz8+ka9Cs8=;
+        s=default; t=1603049175;
+        bh=GwReP5S7w2Fjy/LChrZty43c7cfGrzddYTZbZCLqK08=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TivyR0MCKlLVV/ttghSQDIf1PWjE61FQ0CbxV+d4hMX0M/KmA65/cRqyJ6axS5o5X
-         wrbHZOds14DmC5ZPi/nGLfpNCctiyBu/vl5TdqpoaoUIjrhNh9NYCsMo701Bij4EUf
-         kLhsM0i1EC/KEcZtTnb75ZgF3adkh4KemFG0HMsY=
+        b=Oi1qaE53fLZ5RauzVJzjcW1Rgacfy2gp6DZ7Z4pW02wt1JeW4v7MKojjpbfpcnPOq
+         R/O9QDKdJSjC4wC/ZVR/8tVaFrOmikExTtka8LDB0w9oRODWcoVv3siBCJWbQavhL0
+         JgzWIpr5u6oYa1kIZoKle8wD873L4RHZWdST8+Io=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
@@ -31,12 +31,12 @@ Cc:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 41/56] Bluetooth: Only mark socket zapped after unlocking
-Date:   Sun, 18 Oct 2020 15:24:02 -0400
-Message-Id: <20201018192417.4055228-41-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 38/52] Bluetooth: Only mark socket zapped after unlocking
+Date:   Sun, 18 Oct 2020 15:25:15 -0400
+Message-Id: <20201018192530.4055730-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201018192417.4055228-1-sashal@kernel.org>
-References: <20201018192417.4055228-1-sashal@kernel.org>
+In-Reply-To: <20201018192530.4055730-1-sashal@kernel.org>
+References: <20201018192530.4055730-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -85,10 +85,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 5572042f04531..eb979532a3839 100644
+index 511a1da6ca971..3c4e56167a760 100644
 --- a/net/bluetooth/l2cap_sock.c
 +++ b/net/bluetooth/l2cap_sock.c
-@@ -1341,8 +1341,6 @@ static void l2cap_sock_teardown_cb(struct l2cap_chan *chan, int err)
+@@ -1342,8 +1342,6 @@ static void l2cap_sock_teardown_cb(struct l2cap_chan *chan, int err)
  
  	parent = bt_sk(sk)->parent;
  
@@ -97,7 +97,7 @@ index 5572042f04531..eb979532a3839 100644
  	switch (chan->state) {
  	case BT_OPEN:
  	case BT_BOUND:
-@@ -1369,8 +1367,11 @@ static void l2cap_sock_teardown_cb(struct l2cap_chan *chan, int err)
+@@ -1370,8 +1368,11 @@ static void l2cap_sock_teardown_cb(struct l2cap_chan *chan, int err)
  
  		break;
  	}
