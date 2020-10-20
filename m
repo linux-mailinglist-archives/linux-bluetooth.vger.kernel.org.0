@@ -2,105 +2,79 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60F7F2942F0
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Oct 2020 21:20:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA05C294324
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Oct 2020 21:37:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391720AbgJTTUO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 20 Oct 2020 15:20:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57126 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391532AbgJTTUO (ORCPT
+        id S2391097AbgJTTh3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 20 Oct 2020 15:37:29 -0400
+Received: from seventeen.qservers.net ([72.52.251.1]:41956 "EHLO
+        seventeen.qservers.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391212AbgJTTh2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 20 Oct 2020 15:20:14 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF39C0613CE
-        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Oct 2020 12:20:12 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id a28so3246523ljn.3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Oct 2020 12:20:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7GU1H0h9UBubdWAWqWMxlmAZQoK+Olw+C+P1XGiZZQE=;
-        b=rJoI2FaQ3pkxI7xH6L3mHmcjOwBSF2V4W3WJJaeCNiY4P/QOtOKIVCS5KWKWD9Tvsk
-         m6PWSWFQLaVnFRg/eYnR2YA/IvoMtZQ96boy6GcZcY0kFQ3ukrDAycpbf8jzetR7krtK
-         Ok2RgfBUcxOyjl4dFhT9zccT/1Uh/j/JH+9G8p/k/4oZXa/BET0BMpvfilAQK6Hn9McX
-         QMXeWLzSadm/ieuGytCak30Q1FellkT4y7p8YHiMTehGejxKHbGvRTyz4DRC+vebuRhP
-         RPAW3Eo16i06mAhFA4CXwSH3DWveZknPTKPY9prZKtLWEPcixQADHeYVIu4JwtTmPVY6
-         XlNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7GU1H0h9UBubdWAWqWMxlmAZQoK+Olw+C+P1XGiZZQE=;
-        b=Eoyp2+ve8N188Fd1SknDSJCpFqHFS+WbFlm8VFnOnjso7tKbQrwQ4kKD42sUSf098h
-         0JXUVPxCqWyEIden2TTd8Kn7RGnwbAQc0S7VOXyghUfxDkhgcT9w5QP4czdBtuSFBxkU
-         GhlnOQCA/HsJrzX/3Tac/pOBmNqRr07Vw2IITLh7HASKfJYO7H7euyccnVRbm7IcRPGX
-         1QojWHbMVoINTPkrBTxzbrL0CQRTTKIlCk68wFtNXYgP2IGDkk8Ec0BdcS2YHacjF00s
-         2OuTw5ZZ64H2zzZ89VioiLKkBc5H0JSndArPFQh7O129L9+IuAjmTrqfAvfls705/NwA
-         hGBg==
-X-Gm-Message-State: AOAM533ox25t++736UUMHPHccyWuAVQ41lSL8Fp532uXi5rpDIovDYhf
-        laO9p5kCErEm3JCloL6jVGcZDT8SIXgtQzjDYa8y9edoBXM=
-X-Google-Smtp-Source: ABdhPJxgdEqkIXGQy3IogWIvWlUp0vYEJHgbHUyKgUy8UNqVJVyv18woifb4GRFTZVJxVz+eFxRUKU13EzJXXdiHJPI=
-X-Received: by 2002:a2e:b528:: with SMTP id z8mr1803374ljm.205.1603221611161;
- Tue, 20 Oct 2020 12:20:11 -0700 (PDT)
+        Tue, 20 Oct 2020 15:37:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bhwo.org;
+         s=default; h=MIME-Version:Content-Type:Reply-to:Subject:To:From:Message-ID:
+        Date:Sender:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=1kIOV0Wi64hZbQYONKBHXTqw8fC7qsCGsTJDxx5wgWU=; b=hubQN4r4mxjtXKzs36cF35g+1I
+        9ZG2lIampYIKXb3a2D1C4uum4/dNrkYRPJg+mt5LBnsXzNLZ+m2IOL9oay+yZuJfGqfY5OkByaH1M
+        IFkmfYPQyUo5Fua2lBwEZVZFGMGNDbetL7WQgBIlpicMosoyx/4orUB+atCpJPoMbNKlYLEoAeIV0
+        10KkCRIv3gX7xAmXrhyAChHUyxivZGdJytEbrZ1zIffW03t0zMoq2swpbePkoRcTaRuLVEX28xFdT
+        5XVMr5DMh3L9QtR1Z3yOCDTNXcLcH3blJ3jcUkQumRdMxkXVWCHqZeu0lz9t1NpfwB7AvcvTm5iyR
+        WJGX8Neg==;
+Received: from localhost ([127.0.0.1]:35806 helo=seventeen.qservers.net)
+        by seventeen.qservers.net with esmtp (Exim 4.93)
+        (envelope-from <fi-consultant@bhwo.org>)
+        id 1kUxOa-0005Qp-0S; Tue, 20 Oct 2020 20:34:08 +0100
+Received: from seventeen.qservers.net ([127.0.0.1] helo=seventeen.qservers.net)
+        by seventeen.qservers.net with ESMTP (ASSP 1.9.9); 20 Oct 2020
+        20:34:07 +0100
+Received: from [105.112.108.171] ([105.112.108.171]) by bhwo.org (Horde
+ Framework) with HTTP; Tue, 20 Oct 2020 20:34:07 +0100
+Date:   Tue, 20 Oct 2020 20:34:07 +0100
+Message-ID: <20201020203407.Horde.dhongEnFZxJZF1mw0t1PLzJ@bhwo.org>
+From:   Fredrick Idahosa <fi-consultant@bhwo.org>
+Subject: GOOD DAY
+Reply-to: fredrick.idahosa@consultant.com
+User-Agent: Horde Application Framework 5
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-References: <CABLzjm8S1J5MRhrwFu1pbX9fub7X5nXmYRWmtRsmVRObeJOCbw@mail.gmail.com>
- <B67F1317-2644-4803-8A16-2A2E7CC425F3@holtmann.org>
-In-Reply-To: <B67F1317-2644-4803-8A16-2A2E7CC425F3@holtmann.org>
-From:   Alexandre Augusto <alexandre.a.giron@gmail.com>
-Date:   Tue, 20 Oct 2020 16:19:59 -0300
-Message-ID: <CABLzjm-8-=73XQFxsqoGaqXYS=1E7jA5m_bqsGKmRj8gdt+e+g@mail.gmail.com>
-Subject: Re: Entropy source based on the RSSI
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - seventeen.qservers.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - bhwo.org
+X-Get-Message-Sender-Via: seventeen.qservers.net: acl_c_authenticated_local_user: root
+X-Authenticated-Sender: seventeen.qservers.net: root
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Sorry, I think I misunderstood your email Marcel, apologies for that.
-But yes, I have a sketch for this as a kernel driver (but still non
-functional).
-Nevertheless, in my repo there is a proof-of-concept version that I
-used in the experiments presented in the video.
-
-Thanks for the feedback.
-
-Em ter., 20 de out. de 2020 =C3=A0s 15:38, Marcel Holtmann
-<marcel@holtmann.org> escreveu:
->
-> Hi Alexandre,
->
-> > based on the motivation that IoT devices do not have many entropy
-> > sources available, and also on the fact that trusting in a single
-> > source may be risky, I have researched some additional ways to collect
-> > randomness for the device, using bluetooth technology for that
-> > purpose.
-> >
-> > For those who are interested in:
-> >
-> > Github: https://github.com/AAGiron/Bluerandom
-> > Presentation: https://www.youtube.com/watch?v=3DiAKaKAmqCFo
-> >
-> > I also want to say thanks in advance to Emil Lenngren for his valuable
-> > comments, here in this mailing list (back in 2019), and also to the
-> > Bluez community.
->
-> I would integrate as kernel driver. The Bluetooth stack could just use it=
-s
-> own LE random generator and an initial passive scan to gather RSSI values=
-.
-> No need to push this into user space.
->
-> Regards
->
-> Marcel
->
 
 
---=20
-Alexandre Augusto Giron
-Professor da UTFPR
-Doutorando em Ci=C3=AAncia da Computa=C3=A7=C3=A3o (UFSC)
+-- 
+Good Day,
+
+My name is Fredrick Idahosa, a registered Forex Broker with ETX
+Capital. I am soliciting on behalf of a private Client who held a
+Government Position in his Country and wishes to invest the sum of
+$10.5 Million [Ten Million, Five Hundred Thousand U.S Dollars] in
+viable business ventures with a foreign partner.
+
+My Client is willing to negotiate Sharing Percentage upon hearing from
+you. If you wish, I shall arrange a meeting with my client prior to
+the commencement of the transaction.
+If this proposal is acceptable to you, do not take undue advantage of
+the trust bestowed on you.
+   I await your urgent response.
+Sincerely,
+Fredrick Idahosa
+
+
