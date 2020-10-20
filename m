@@ -2,79 +2,117 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA05C294324
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Oct 2020 21:37:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BF7629440A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Oct 2020 22:41:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391097AbgJTTh3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 20 Oct 2020 15:37:29 -0400
-Received: from seventeen.qservers.net ([72.52.251.1]:41956 "EHLO
-        seventeen.qservers.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391212AbgJTTh2 (ORCPT
+        id S2409589AbgJTUlX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 20 Oct 2020 16:41:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41436 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405178AbgJTUlW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 20 Oct 2020 15:37:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bhwo.org;
-         s=default; h=MIME-Version:Content-Type:Reply-to:Subject:To:From:Message-ID:
-        Date:Sender:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
-        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=1kIOV0Wi64hZbQYONKBHXTqw8fC7qsCGsTJDxx5wgWU=; b=hubQN4r4mxjtXKzs36cF35g+1I
-        9ZG2lIampYIKXb3a2D1C4uum4/dNrkYRPJg+mt5LBnsXzNLZ+m2IOL9oay+yZuJfGqfY5OkByaH1M
-        IFkmfYPQyUo5Fua2lBwEZVZFGMGNDbetL7WQgBIlpicMosoyx/4orUB+atCpJPoMbNKlYLEoAeIV0
-        10KkCRIv3gX7xAmXrhyAChHUyxivZGdJytEbrZ1zIffW03t0zMoq2swpbePkoRcTaRuLVEX28xFdT
-        5XVMr5DMh3L9QtR1Z3yOCDTNXcLcH3blJ3jcUkQumRdMxkXVWCHqZeu0lz9t1NpfwB7AvcvTm5iyR
-        WJGX8Neg==;
-Received: from localhost ([127.0.0.1]:35806 helo=seventeen.qservers.net)
-        by seventeen.qservers.net with esmtp (Exim 4.93)
-        (envelope-from <fi-consultant@bhwo.org>)
-        id 1kUxOa-0005Qp-0S; Tue, 20 Oct 2020 20:34:08 +0100
-Received: from seventeen.qservers.net ([127.0.0.1] helo=seventeen.qservers.net)
-        by seventeen.qservers.net with ESMTP (ASSP 1.9.9); 20 Oct 2020
-        20:34:07 +0100
-Received: from [105.112.108.171] ([105.112.108.171]) by bhwo.org (Horde
- Framework) with HTTP; Tue, 20 Oct 2020 20:34:07 +0100
-Date:   Tue, 20 Oct 2020 20:34:07 +0100
-Message-ID: <20201020203407.Horde.dhongEnFZxJZF1mw0t1PLzJ@bhwo.org>
-From:   Fredrick Idahosa <fi-consultant@bhwo.org>
-Subject: GOOD DAY
-Reply-to: fredrick.idahosa@consultant.com
-User-Agent: Horde Application Framework 5
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+        Tue, 20 Oct 2020 16:41:22 -0400
+Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF0EC0613D3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Oct 2020 13:41:21 -0700 (PDT)
+Received: by mail-vk1-xa2e.google.com with SMTP id s2so804723vks.13
+        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Oct 2020 13:41:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8oNb4bPuTPJc9IazjKYiO1BrhZxahR3FAJrD2QNpZEE=;
+        b=GoQ+EVKaGML1O0xuJJyCjTyBiaV9U1ZfOBGG8NL6oeTeU5wmSLXa0hXtERape/LFcS
+         qtAE7eYPxGswSe7yyoFdd27uU/nT8A6GhdRO4zLnhYDUh1mpbyNp66Mfg/QfLYOugVpR
+         H07ef9O5BRyU6uQFsy3Yu6D/+/T9GWoSvHj4U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8oNb4bPuTPJc9IazjKYiO1BrhZxahR3FAJrD2QNpZEE=;
+        b=TwOo5Q2zvStAAICiwIGzCU0zx6FSl5aLO3zNk51FRyor6NOw5YLSkHEdxpynt2DQSd
+         7Yvir2QT82atxm9QhHb999O21/FAKyvgduweCbce3IF7W8XLbpvPTuz3qQUoWqn2n2+0
+         IZfG+zC07Xa1EAWPDrH07e+ByuEglwY765W2jKvJh0LTTZCxnmYrnJXusBOIoAMLQ+rA
+         5sIbg1Gn+Yf93uzlmKXlzFOl7gWVdPkcn9JWE+A7IkaMnxnQ60aHxOc01AD83IcYaMXY
+         2v6e5UPBI6/2VZ1y4Q8cZqYYwi6NNZzC77TwQuWIFos06BXVV44mRJetwzd/wH6W64Vy
+         zJPg==
+X-Gm-Message-State: AOAM530BjgVdFDvKQluHHnh7dfL02Hdorsoqt+cwFXg03MBtJ/A+JnVY
+        KR4Urv24UGUt2+ncERdhLT6Hiq26m8+8pQ7axCyIqQ==
+X-Google-Smtp-Source: ABdhPJzr5l3bDAXW3EOAftEuudCHyMKi5cGy1Hw3cWDeuY2TudVm6cfkI7qnQuUSnjYigue2Up2FbPDYaIBW9jh8e/k=
+X-Received: by 2002:a1f:9d0e:: with SMTP id g14mr2712231vke.2.1603226480594;
+ Tue, 20 Oct 2020 13:41:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Disposition: inline
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - seventeen.qservers.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - bhwo.org
-X-Get-Message-Sender-Via: seventeen.qservers.net: acl_c_authenticated_local_user: root
-X-Authenticated-Sender: seventeen.qservers.net: root
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-To:     unlisted-recipients:; (no To-header on input)
+References: <b74ea9cb201bb98691ecbfb3893d2a49@codeaurora.org> <CANFp7mXMfvHrAcaJhY7q2oZk3MtqOMxLGOEpNc-hnzVSyA+LZA@mail.gmail.com>
+In-Reply-To: <CANFp7mXMfvHrAcaJhY7q2oZk3MtqOMxLGOEpNc-hnzVSyA+LZA@mail.gmail.com>
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Date:   Tue, 20 Oct 2020 13:41:09 -0700
+Message-ID: <CANFp7mWTPLKx=eKxgZvXGEPi5KbphDJnSGZb12Efe_SWTKdDdg@mail.gmail.com>
+Subject: Re: Update WCN3991 FW file
+To:     asitshah@codeaurora.org
+Cc:     linux-firmware@kernel.org, jwboyer@kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, Hemantg <hemantg@codeaurora.org>,
+        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+It looks like we hadn't merged an earlier update to crnv32.bin in ChromeOS:
+ad1da95 - QCA : Updated firmware files for WCN3991 (3 weeks ago) <Asit Shah>
 
+After merging that commit, everything is working as expected.
+--
 
--- 
-Good Day,
+Tested-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 
-My name is Fredrick Idahosa, a registered Forex Broker with ETX
-Capital. I am soliciting on behalf of a private Client who held a
-Government Position in his Country and wishes to invest the sum of
-$10.5 Million [Ten Million, Five Hundred Thousand U.S Dollars] in
-viable business ventures with a foreign partner.
-
-My Client is willing to negotiate Sharing Percentage upon hearing from
-you. If you wish, I shall arrange a meeting with my client prior to
-the commencement of the transaction.
-If this proposal is acceptable to you, do not take undue advantage of
-the trust bestowed on you.
-   I await your urgent response.
-Sincerely,
-Fredrick Idahosa
-
-
+On Mon, Oct 19, 2020 at 2:37 PM Abhishek Pandit-Subedi
+<abhishekpandit@chromium.org> wrote:
+>
+> Nack.
+>
+> This resulted in a boot loop on ChromeOS. It looks like only
+> 'crbtfw32.tlv' was changed and not 'crnv32.bin'.
+>
+> Abhishek
+>
+> On Sat, Oct 17, 2020 at 8:33 AM <asitshah@codeaurora.org> wrote:
+> >
+> >
+> > Hi Team,
+> >
+> > Please include updated firmware bin for WCN3991.
+> >
+> > Snapshot of pull request is as below, let me know if anything is
+> > missing.
+> >
+> > >>>>>
+> >
+> > The following changes since commit
+> > 58d41d0facca2478d3e45f6321224361519aee96:
+> >
+> >    ice: Add comms package file for Intel E800 series driver (2020-10-05
+> > 08:09:03 -0400)
+> >
+> > are available in the git repository at:
+> >
+> >    https://github.com/shahasit/bt-linux-firmware/tree/master
+> >
+> > for you to fetch changes up to 8877322c1254f327f47c86ec02c46013b68b9a47:
+> >
+> >    QCA : Updated firmware file for WCN3991 (2020-10-17 20:53:36 +0530)
+> >
+> > ----------------------------------------------------------------
+> > Asit Shah (1):
+> >        QCA : Updated firmware file for WCN3991
+> >
+> >   qca/crbtfw32.tlv | Bin 126300 -> 126832 bytes
+> >   1 file changed, 0 insertions(+), 0 deletions(-)
+> >
+> > <<<<<<
+> >
+> > Regards,
+> > Asit
