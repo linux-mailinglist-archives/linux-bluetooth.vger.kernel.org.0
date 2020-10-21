@@ -2,96 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 74C6E295113
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Oct 2020 18:47:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2CE4295206
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Oct 2020 20:14:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2444510AbgJUQrz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 21 Oct 2020 12:47:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58474 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438600AbgJUQrz (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 21 Oct 2020 12:47:55 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C02CBC0613CE
-        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Oct 2020 09:47:53 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id w7so701573oow.7
-        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Oct 2020 09:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Kl3ukS93Y+C7sUZ/gc8WCCTv3ZdrG2VWemUndMBKV2s=;
-        b=jPmGzM8M+BuzRx1U48MPn4m91B4jlHHwo1oDKh+w0cs8d5VBOfuGgSGiyu+yh4v64x
-         pbHD7xCRBjLxwMl1RdE6bEfLiJYBEzpRA+VKvuV8u+mSjOylRzZghfdbR0PFaU4329LB
-         C1IEL/TDdJHiCRCkH8oKhDsjZQQ7BZL0Xlwf6IU9Vfd9CS0w6pJU1VSjEOhCeANRR8T8
-         15EVIxZK3SOoD9yrrf1S8i2kFlZi7r8xtggVoTibArHXQ6RXBW/4gjDlRXf0oCRio3UQ
-         OxCQOUqzunTka22KjR/CamPi0KOde2B2sojRM2zIdyAan8MwoQHK1NRODQMPBO6J8xoW
-         ieFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Kl3ukS93Y+C7sUZ/gc8WCCTv3ZdrG2VWemUndMBKV2s=;
-        b=SZo0TPzEtebbJfCMdeP5FUoFvp7wsMQebtUiVNK7KNLjXgi87tXY5UQuGmUMqPD6SM
-         /BC5HxrGpfCQZfnCCrDpMqVuqW7hnPp+AiOLso6OvVZnjfoVhrVWYYx6W0HwF7u5BnrB
-         bAXZsJuHsFPpO61SuexuVBG6OwgnZT0Ga87buxiCfrfqC/MqBiIB2w1u2QQNGK8zu2PY
-         1jHXxXV/JINriyZtFmOWHumZynW2zOGbEJ+MEqDCByTPejYRhhkLiEw9dqqeHS4BOJwF
-         MOCRXDUijSvyjRXJlYxvlRvif2JCAa7WFKPtMYWsh/naEgQqBgcVCQD3rMgnPPcdMDVJ
-         7J3A==
-X-Gm-Message-State: AOAM5323WB0wwsIBycBqbgIqZDi5UeunjSfsYrK1TUX3lxuJGndqkbwO
-        GR66aI0wR1vkOp3Ogg9lpdX3QGvGALRGkRHbO6JSQ9Ng
-X-Google-Smtp-Source: ABdhPJzfuBQFLX0zUTfh8xwsHtFSE7uJov0kvYCJ+bG70LEEuz2PBz7mJ5Oed6/MzOzYlO2Cm3BrH0N4ElfkRDnVgOA=
-X-Received: by 2002:a4a:5385:: with SMTP id n127mr3219709oob.63.1603298872705;
- Wed, 21 Oct 2020 09:47:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201020180230.Bluez.1.I67bbd887ee5c0b214a77cb0ed8f9e1d3812ffe73@changeid>
- <5f8ebd43.1c69fb81.78a60.5ecc@mx.google.com>
-In-Reply-To: <5f8ebd43.1c69fb81.78a60.5ecc@mx.google.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 21 Oct 2020 09:47:41 -0700
-Message-ID: <CABBYNZKGdFyy2vWb=zkf+bLzqe0uaxcnQpqVAb8nEDtLt+PYhg@mail.gmail.com>
-Subject: Re: [Bluez] device: fix temporary_timer double free
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Cc:     Archie Pusaka <apusaka@google.com>
+        id S2405222AbgJUSON convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 21 Oct 2020 14:14:13 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35404 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405151AbgJUSON (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 21 Oct 2020 14:14:13 -0400
+From:   bugzilla-daemon@bugzilla.kernel.org
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 208965] not working bluetooth mouse low energy rtl8822ce
+Date:   Wed, 21 Oct 2020 18:14:12 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: high
+X-Bugzilla-Who: david.zakarias@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-208965-62941-FD017VaX9b@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-208965-62941@https.bugzilla.kernel.org/>
+References: <bug-208965-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Archie,
+https://bugzilla.kernel.org/show_bug.cgi?id=208965
 
-On Tue, Oct 20, 2020 at 4:30 AM <bluez.test.bot@gmail.com> wrote:
->
-> This is automated email and please do not reply to this email!
->
-> Dear submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> This is a CI test results with your patch series:
-> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=367425
->
-> ---Test result---
->
-> ##############################
-> Test: CheckPatch - PASS
->
-> ##############################
-> Test: CheckGitLint - PASS
->
-> ##############################
-> Test: CheckBuild - PASS
->
-> ##############################
-> Test: MakeCheck - PASS
->
->
->
-> ---
-> Regards,
-> Linux Bluetooth
+david.zakarias@gmail.com changed:
 
-Applied, thanks.
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |david.zakarias@gmail.com
+
+--- Comment #6 from david.zakarias@gmail.com ---
+Same problem here on Redmibook 16, RTL8822CE, with Microsoft Modern Mobile
+Mouse.
 
 -- 
-Luiz Augusto von Dentz
+You are receiving this mail because:
+You are the assignee for the bug.
