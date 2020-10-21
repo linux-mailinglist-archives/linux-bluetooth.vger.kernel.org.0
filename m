@@ -2,157 +2,46 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCE3D2954DB
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Oct 2020 00:34:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 118422956B7
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Oct 2020 05:24:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409819AbgJUWeT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 21 Oct 2020 18:34:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55510 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387512AbgJUWeT (ORCPT
+        id S2443799AbgJVDYf convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 21 Oct 2020 23:24:35 -0400
+Received: from [193.193.200.125] ([193.193.200.125]:50778 "EHLO
+        mail.pmo.org.ua" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S2443668AbgJVDYf (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 21 Oct 2020 18:34:19 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE18BC0613CE
-        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Oct 2020 15:34:18 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id j62so3629626qtd.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Oct 2020 15:34:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=I/qpHK7Nmc3Z0ruuCNNcK9HZxnOr1K9TX4L/nj7nsn8=;
-        b=j0NBxwuVhtKZDK3wVpFnhoHGTU2tY/KpwC1Ue/ytxe7iGmCKPueCTUAf1aS/cEAj0m
-         nmkXQxXMgRXlhm9lXEOVW/QRmz/JmajxBFlpgy+c21PC0a2konmdoGCx9JW031oN0Ei/
-         qBzLlGU+sAi/qYuAEekv0rbTIyPFRMF/aauKIbNqsF6iD3qAYcig/2Ni4m53pdrnt74b
-         rmeYc1gXWC5BvYICujhbiigc2N+QPuEJ12jCUxon+b5V7Yw+Ou+JxF0Yga7RRE+9at9J
-         +jJi0xGFJPYgYG5e1lWuWT5YFiFoILCC7Q7gG0d5tsy/V9PW14nVKdSsIYS7bnqohZXy
-         wMfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=I/qpHK7Nmc3Z0ruuCNNcK9HZxnOr1K9TX4L/nj7nsn8=;
-        b=qEeU/Y2+NYxP9wkJg+NbTebDJt7NcB76Rk2P/OpTRkrgJ+MrjDbdD5YtufsrpmvSt8
-         +v7TV3Hk1kFuuyLbLzMFHK0fgvChPlOFX1goHpt/TIen3msKo7Le147JUSMKdHr/B3R/
-         zaYrEi7XKGIPBHjMW7toY8O6rBSjYR1J7AH4tJYVFebi1BEgYmRiPR7fe3BFe2dRglCG
-         3PdKhwsxUI9Xd/4W97PHEAYEW3KmOIfs7MkVUWZtaJUvS38kLyGA3pWDET1FF6mqwsIF
-         xIqihs99ncXAhBnkXuI8NGWdm9yU3j3p+BINKg+5F3+j6ew9M4mNQmBV98swrg9sTxwp
-         b+vQ==
-X-Gm-Message-State: AOAM531RZTdYKhYZcI+8ZwxJ8DBxaT1SbtRARZhB1Kk1PV08rttZ5otz
-        PZE9hHXJDOwAFU4sOYxSShREwLXoQfmA7g==
-X-Google-Smtp-Source: ABdhPJwLo+5L4wgvW1Jgv9sElBeIzx/yVPURAZoqR2K5jqwqvGNdcLV5MGzdgBsZ8QoiDlzVR5Wc8g==
-X-Received: by 2002:ac8:1ae3:: with SMTP id h32mr5002035qtk.325.1603319657776;
-        Wed, 21 Oct 2020 15:34:17 -0700 (PDT)
-Received: from [172.17.0.2] ([20.36.180.174])
-        by smtp.gmail.com with ESMTPSA id 67sm2343679qkd.14.2020.10.21.15.34.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2020 15:34:17 -0700 (PDT)
-Message-ID: <5f90b769.1c69fb81.a62f8.f43d@mx.google.com>
-Date:   Wed, 21 Oct 2020 15:34:17 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============8245763326845435321=="
+        Wed, 21 Oct 2020 23:24:35 -0400
+X-Greylist: delayed 21618 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Oct 2020 23:24:34 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by mail.pmo.org.ua (Postfix) with ESMTP id 6A0BC3D243F5;
+        Wed, 21 Oct 2020 22:47:42 +0300 (EEST)
+Received: from mail.pmo.org.ua ([127.0.0.1])
+        by localhost (mail.pmo.org.ua [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id dhs454iyQelW; Wed, 21 Oct 2020 22:47:42 +0300 (EEST)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.pmo.org.ua (Postfix) with ESMTP id 51E3B3D243B9;
+        Wed, 21 Oct 2020 22:47:35 +0300 (EEST)
+X-Virus-Scanned: amavisd-new at pmo.org.ua
+Received: from mail.pmo.org.ua ([127.0.0.1])
+        by localhost (mail.pmo.org.ua [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id BA-gF4F6qEQO; Wed, 21 Oct 2020 22:47:34 +0300 (EEST)
+Received: from [160.20.147.163] (unknown [160.20.147.163])
+        by mail.pmo.org.ua (Postfix) with ESMTPSA id 0EAEA3D242EE;
+        Wed, 21 Oct 2020 22:47:24 +0300 (EEST)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, marijns95@gmail.com
-Subject: RE: [BlueZ] audio: avrcp: Split supported events between target and controller
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20201021221931.931878-1-marijns95@gmail.com>
-References: <20201021221931.931878-1-marijns95@gmail.com>
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Updates..
+To:     Recipients <info@trust.net>
+From:   info@trust.net
+Date:   Wed, 21 Oct 2020 12:47:22 -0700
+Reply-To: the.trustees1@consultant.com
+Message-Id: <20201021194725.0EAEA3D242EE@mail.pmo.org.ua>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============8245763326845435321==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=368467
-
----Test result---
-
-##############################
-Test: CheckPatch - FAIL
-Output:
-audio: avrcp: Split supported events between target and controller
-WARNING:COMMIT_LOG_LONG_LINE: Possible unwrapped commit description (prefer a maximum 75 chars per line)
-#42: 
-[1]: https://android.googlesource.com/platform/system/bt/+/android-11.0.0_r4/bta/av/bta_av_main.cc#761
-
-WARNING:LONG_LINE_COMMENT: line over 80 characters
-#55: FILE: profiles/audio/avrcp.c:274:
-+	/* Events the Remote Target expects based on peer Remote Controller version */
-
-WARNING:LONG_LINE_COMMENT: line over 80 characters
-#57: FILE: profiles/audio/avrcp.c:276:
-+	/* Events the Remote Controller expects based on peer Remote Target version */
-
-WARNING:SPACE_BEFORE_TAB: please, no space before tabs
-#155: FILE: profiles/audio/avrcp.c:4210:
-+^I// ^I^I^I(1 << AVRCP_EVENT_STATUS_CHANGED) |$
-
-WARNING:SPACE_BEFORE_TAB: please, no space before tabs
-#156: FILE: profiles/audio/avrcp.c:4211:
-+^I// ^I^I^I(1 << AVRCP_EVENT_TRACK_CHANGED) |$
-
-WARNING:SPACE_BEFORE_TAB: please, no space before tabs
-#157: FILE: profiles/audio/avrcp.c:4212:
-+^I// ^I^I^I(1 << AVRCP_EVENT_TRACK_REACHED_START) |$
-
-WARNING:SPACE_BEFORE_TAB: please, no space before tabs
-#158: FILE: profiles/audio/avrcp.c:4213:
-+^I// ^I^I^I(1 << AVRCP_EVENT_TRACK_REACHED_END) |$
-
-WARNING:SPACE_BEFORE_TAB: please, no space before tabs
-#159: FILE: profiles/audio/avrcp.c:4214:
-+^I// ^I^I^I(1 << AVRCP_EVENT_SETTINGS_CHANGED);$
-
-WARNING:LONG_LINE_COMMENT: line over 80 characters
-#166: FILE: profiles/audio/avrcp.c:4221:
-+				// (1 << AVRCP_EVENT_AVAILABLE_PLAYERS_CHANGED) |
-
-WARNING:LINE_SPACING: Missing a blank line after declarations
-#193: FILE: profiles/audio/transport.c:994:
-+		struct media_transport *transport = l->data;
-+		if (transport->device != dev)
-
-- total: 0 errors, 10 warnings, 144 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-Your patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-##############################
-Test: CheckGitLint - FAIL
-Output:
-audio: avrcp: Split supported events between target and controller
-38: B1 Line exceeds max length (102>80): "[1]: https://android.googlesource.com/platform/system/bt/+/android-11.0.0_r4/bta/av/bta_av_main.cc#761"
-
-
-##############################
-Test: CheckBuild - PASS
-
-##############################
-Test: MakeCheck - PASS
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============8245763326845435321==--
+Once again we attempt to contact you regards the estate of our deceased client who made you one of the beneficiaries of his estate. Do get back to me at your earliest convenience. The Trustees
