@@ -2,95 +2,97 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 440F12979EA
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 24 Oct 2020 02:22:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CD172979ED
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 24 Oct 2020 02:24:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756239AbgJXAWz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 23 Oct 2020 20:22:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37454 "EHLO
+        id S1756253AbgJXAY3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 23 Oct 2020 20:24:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756220AbgJXAWz (ORCPT
+        with ESMTP id S1756249AbgJXAY3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 23 Oct 2020 20:22:55 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06CDEC0613D2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Oct 2020 17:22:55 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id o1so120984pjt.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Oct 2020 17:22:55 -0700 (PDT)
+        Fri, 23 Oct 2020 20:24:29 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49CECC0613CE
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Oct 2020 17:24:29 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id o14so2987552otj.6
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Oct 2020 17:24:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=+3aaflF5Tz0VrPCtbEIRim7aCcJTv5mtklnSSPu1iQc=;
-        b=U2v6YsFXe2xwPzhhsYnWQm3boWHJ+JnRjS7A0/F4pEtrj5Q4n0yHBsJVoV6cOCPOae
-         IbLIutTjTkmsTJYZ/4fxu64mogEbu69KCvo8GGyga246ByEWtz0nJD9/jB1NcdvmArF3
-         p/nUzYVL41O48nM1m63KimYdepXnpy4KNvdJlZWQIWpLejO7F24iETXDuxUWw/4Z1o0x
-         Hw+qTjvpMVyMlWNjimsJp64pLCullSLaSHpPYFhFLBJIR5HHtgtReWQz/+oFGVnTSprQ
-         vQ/SR5rAbGVHpaGrA72Nre5qLw4eZJI8JNz+3jRyGaJYbeoHCc09LjkJG8MtRHEQ3e1F
-         QUXQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=E4ekgIU6WasOt/Gf2fDfVdquVnYldF3bZVa1GB9jUOs=;
+        b=MD0EHiZinXYW7N2sGLYyn2flx9N4mVW+xn1jC2T/RdMxCX38TxCpuB+xu4yueSTBEf
+         b+D8cvvEsXvs3uRvkQCBDjFL/aeDU+FpwVJOf14HelleqDPVa/wWPX7NjgcSw9Ch9fzM
+         KGSz7oEQrvcMOdWywZeArP8eO48G0VZlRYTCUC5hnQ5+BDCsLqccgRT0aPJ42dVS5oQG
+         Y71/pJi01vbcrD1OSHe/AbPCkLU/NZM4M/AOKEbw9CktaSgHVqXRkHRPs+LKaZm+xHGj
+         i9uhk+nCzPXxbiimNPGBraVgwhNZR/yheJcM2KOsv6ZU7gD4sHvCkd7rg/LVpD2XPCjt
+         QkJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+3aaflF5Tz0VrPCtbEIRim7aCcJTv5mtklnSSPu1iQc=;
-        b=LmFW5FRF/Z0YMHno81Yi0prJcT+BAqlTrjnE6JxDD83w/l/98DF+s9jll5I8OkLfGx
-         iVInRpIV+gOtlU6Y4TIZfl0YpMJh5UgXqfOWbfSjOddXfuTBZo4yPz7E1Qb5JMvN8kzr
-         z0elagI8KwlHeLE0dM1Rwr/+6VBdp8xaL/9cKVT0rCTwO/eUu0rz3K3O5zxDme3trucB
-         0sgDicVFCGjiBn4c+LzODw8a/drfhxOQSiCdo5oROb+WTuRyh1ysUASytiigY0JKOL2S
-         yx+w5dCAxu6RWBI+pDPlgdP3OiKiBZ7alP+GO8XweJ9IJn+tGtT9SWgay0/P9Daq+J0V
-         8Blg==
-X-Gm-Message-State: AOAM531M4YjVCFAIFFGLfZQLolUVmNNm7PwcB8EgMX5eEYCLl5lYz9Me
-        ykKP3nZFmRR4DdXICw3ze4uw1ugQnscrbg==
-X-Google-Smtp-Source: ABdhPJyfgLikVrGvBXhqBm/oBXzjdLH2Ym9Qd02YESRFirEcHRe4Pw8a2rlG8j63lDd+vh967WnX+Q==
-X-Received: by 2002:a17:902:724b:b029:d5:a5e2:51c4 with SMTP id c11-20020a170902724bb02900d5a5e251c4mr1494132pll.80.1603498974351;
-        Fri, 23 Oct 2020 17:22:54 -0700 (PDT)
-Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id q8sm3195099pfl.100.2020.10.23.17.22.53
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 17:22:53 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v3 2/2] Bluetooth: A2MP: Fix not setting request ID
-Date:   Fri, 23 Oct 2020 17:22:51 -0700
-Message-Id: <20201024002251.1389267-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201024002251.1389267-1-luiz.dentz@gmail.com>
-References: <20201024002251.1389267-1-luiz.dentz@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=E4ekgIU6WasOt/Gf2fDfVdquVnYldF3bZVa1GB9jUOs=;
+        b=J9yz8Ykoc2w8l7YKwg3IwhhvSQRYaIm/eBJ4mtPkzkr9ww+AFVgVD0HBuEncML5ZRU
+         AWeBHwJliC90BFp2/mVOLfYF5ObI2IgPt2AvTVIOdM9tXFrDyK/qfCxrCNuJx6NA7/PX
+         0xKqocHBEwi18L4NLaSXh7qU9VKb5pY143stH3An7C908eZwqR4x1t6cQB3b8nTbNrv+
+         zJo+E74n6Dxnsy1FNRrf7T9kQ3SfI/ql7bQmsO8FHSdq4mGukcsiMpLP+bxC2AAv9p8Z
+         fEZPa0OMYRKckUzud9wwmz6lPrXXavx/TXqCKDuN66NCisI0A/uxwNvWAgh/MAvyx1YS
+         1GUw==
+X-Gm-Message-State: AOAM531BPxXjQR/rG47LsCJOMPEvuWYzwQ0F+U4jIwUILBawMwCXOet7
+        LSal98QKpJaQ+EAU7XrbDzyVmid6hhhvwe9w9a0vH1ZAvfA=
+X-Google-Smtp-Source: ABdhPJzSsyrI55xrovE6gkHE6ogq0Pj7X2EZZOW8VOZMlTOQT9u/Dm+xrskIpYARkschqjJ1JOh3IzpRLB7vdmn1JkY=
+X-Received: by 2002:a9d:6a0a:: with SMTP id g10mr4118341otn.44.1603499068636;
+ Fri, 23 Oct 2020 17:24:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201019172529.1179996-1-luiz.dentz@gmail.com>
+ <20201019172529.1179996-2-luiz.dentz@gmail.com> <20201022210009.GA64331@jhedberg-mac01.home>
+ <CABBYNZKJK+obAMiwnG+QWV4TNEdRxkajRonhwx_LPekNiH=t3g@mail.gmail.com> <20201023085402.GB64331@jhedberg-mac01.home>
+In-Reply-To: <20201023085402.GB64331@jhedberg-mac01.home>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 23 Oct 2020 17:24:17 -0700
+Message-ID: <CABBYNZKBAn3bWZUYw_X=ki_ocZvqLv3aL0-67o0AU3OXZU0XtQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] Bluetooth: A2MP: Fix not setting request ID
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hi Johan,
 
-This fixes not resetting of the request ID when sending
-A2MP_GETAMPASSOC_RSP.
+On Fri, Oct 23, 2020 at 1:54 AM Johan Hedberg <johan.hedberg@gmail.com> wrote:
+>
+> Hi Luiz,
+>
+> On Thu, Oct 22, 2020, Luiz Augusto von Dentz wrote:
+> > > On Mon, Oct 19, 2020, Luiz Augusto von Dentz wrote:
+> > > > This fixes not resetting of the request ID when sending
+> > > > A2MP_GETAMPASSOC_RSP.
+> > > >
+> > > > Fixes: Bluetooth: A2MP: Fix not initializing all members
+> > > > Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> > > > ---
+> > > >  net/bluetooth/a2mp.c | 3 ++-
+> > > >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > >
+> > > The fix itself looks fine, but I think the "Fixes: ..." line should
+> > > contain the commit id followed by the commit summary within parentheses,
+> > > at least based on how I can see this style of annotation used in other
+> > > commits in the tree.
+> >
+> > I did not add a commit id because it did not reached the Linus tree
+> > yet
+>
+> Yes it did:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=eddb7732119d53400f48a02536a84c509692faa8
 
-Fixes: eddb7732119d53400f48a02536a84c509692faa8 ("Bluetooth: A2MP: Fix not initializing all members")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
----
- net/bluetooth/a2mp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Somehow I missed that, or git.kernel.org was playing tricks on me, Ive
+now updated the v3 to include it.
 
-diff --git a/net/bluetooth/a2mp.c b/net/bluetooth/a2mp.c
-index da7fd7c8c2dc..7a1e0b785f45 100644
---- a/net/bluetooth/a2mp.c
-+++ b/net/bluetooth/a2mp.c
-@@ -381,10 +381,11 @@ static int a2mp_getampassoc_req(struct amp_mgr *mgr, struct sk_buff *skb,
- 	hdev = hci_dev_get(req->id);
- 	if (!hdev || hdev->amp_type == AMP_TYPE_BREDR || tmp) {
- 		struct a2mp_amp_assoc_rsp rsp;
--		rsp.id = req->id;
- 
- 		memset(&rsp, 0, sizeof(rsp));
- 
-+		rsp.id = req->id;
-+
- 		if (tmp) {
- 			rsp.status = A2MP_STATUS_COLLISION_OCCURED;
- 			amp_mgr_put(tmp);
+> Johan
+
+
+
 -- 
-2.26.2
-
+Luiz Augusto von Dentz
