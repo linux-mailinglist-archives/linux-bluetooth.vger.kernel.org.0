@@ -2,84 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 879F529D562
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Oct 2020 23:01:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E7A8D29D6BF
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Oct 2020 23:19:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729445AbgJ1WAe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Oct 2020 18:00:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50518 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727779AbgJ1WAd (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:00:33 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBDC2C0613D1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 15:00:32 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id i26so633065pgl.5
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 15:00:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Af2E6VaP4qbVM30IdJ+8yzV/rlXswBtvlDIzGMk5vCE=;
-        b=HH4V0onQuS6sm4ZSE2k3Ufx0Lgv0r1o5TtCRP66PFJFsgzwbkB37aNKyTApO5E3u82
-         RFkpF+C+8Hy3AItw0OGNBfZAQb7D4BPfYKE0If0RfAz2uiqSkzTckA6xc3c/Z7UbqIHx
-         hKjW0arhGF1BkXErmV9Lf2cB6QRoYuncqkQJfJ5sxkYuRGTBSdLF4nHkfiykYF8hIoVW
-         FTY4hJpl15UFgZCm3bbX7Cqeh+s/cpx6fe1ToEglBg8MRkIjJF3rxdfWSUIjigdkRGSp
-         uTeorFJl/7WESTllF66K28hj5ym7BawW6D6ULXFYyPuY0AV4tAdn7I5SGm+2x7kdfGW6
-         nVoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Af2E6VaP4qbVM30IdJ+8yzV/rlXswBtvlDIzGMk5vCE=;
-        b=erRgJCELGLKG8jc6S8wdq9BryxmYQTtxRZqn3OhVhmybhkmGW6weRcSzT8qPANb2d1
-         RylQ/LmnRt+gbxEdJRWAJQdX5FhNtd3e0BB+H6Ubq3vCHdUiQaWacQ51lhxB/wX/mXrK
-         gX/u8n9YZ35hJWCLea3QCm0ggF5OzVhOxCoBkVivxvEnr+MROXYPn2s6QiYfP22IjCtB
-         nV3ESuYGVmzofBVKVw9c7v82sQn+/OohViqXi6l1Wj5DuoDCqhRps++RxcmNABpirce5
-         jizyLpggZs+tFDajYW66Bb45cUYrvYCYAA+TRg3QGGyL4mqSM3QXaZyj7dWwZTaDS47t
-         gD/A==
-X-Gm-Message-State: AOAM530uG/A7fbJkbON8mBgZQyjCbJVcGFQdedQGsl6/eFJh4Pqn/lkq
-        7O9TfI63qVozwdFhBPSFiH1qcGB8t3m/kxMQxHuQOHwL
-X-Google-Smtp-Source: ABdhPJxZO+OlC0iB8KeqHOV2V5ZbSLY/k4LUBP/houdX7ugmisnb4pFDxYQKH4Wn0vCYVc9VvaWA8YtmKnftg+FTFsI=
-X-Received: by 2002:a92:99ce:: with SMTP id t75mr4664029ilk.257.1603862791354;
- Tue, 27 Oct 2020 22:26:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201022082435.31831-1-sathish.narasimman@intel.com>
-In-Reply-To: <20201022082435.31831-1-sathish.narasimman@intel.com>
-From:   Sathish Narasimman <nsathish41@gmail.com>
-Date:   Wed, 28 Oct 2020 10:56:20 +0530
-Message-ID: <CAOVXEJ+NZ-=y4xcGBOsdmjumw53ZpSjfXnPMSSyjaPzDV0ExAg@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Bluetooth:btintel parse TLV structure
-To:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
-Cc:     Chethan T N <chethan.tumkur.narayan@intel.com>,
-        ravishankar.srivatsa@intel.com, kiran.k@intel.com,
-        Sathish Narasimman <sathish.narasimman@intel.com>
+        id S1731682AbgJ1WRk convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Oct 2020 18:17:40 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60534 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731667AbgJ1WRj (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 28 Oct 2020 18:17:39 -0400
+From:   bugzilla-daemon@bugzilla.kernel.org
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 209745] Bluetooth connection to Logitech MX Master 2S lost
+ after each reboot
+Date:   Wed, 28 Oct 2020 12:55:08 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: matias@ufscar.br
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-209745-62941-fQh4QN2kDm@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-209745-62941@https.bugzilla.kernel.org/>
+References: <bug-209745-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-hi
-gentle reminder
+https://bugzilla.kernel.org/show_bug.cgi?id=209745
 
-On Thu, Oct 22, 2020 at 1:49 PM Sathish Narasimman <nsathish41@gmail.com> wrote:
->
-> Latest intel firmware supports TLV structure in operational mode for intel
-> read version. so made changes accordingly to support both bootloader
-> and operational mode . These changes are only to specific intel bluetooth
-> controller for example ThP, CcP.
->
-> Sathish Narasimman (3):
->   Bluetooth: btintel: seperated TLV parsing as new function
->   Bluetooth: btintel: Introducing new btintel read version
->   Bluetooth: btusb: Use the new btintel read version
->
->  drivers/bluetooth/btintel.c | 105 +++++++++++++++++++++++++++---------
->  drivers/bluetooth/btintel.h |  16 ++++++
->  drivers/bluetooth/btusb.c   |  41 ++++++++++----
->  3 files changed, 129 insertions(+), 33 deletions(-)
->
-> --
-> 2.17.1
->
+--- Comment #8 from matias (matias@ufscar.br) ---
+https://lore.kernel.org/linux-bluetooth/20201022082304.31757-1-sathish.narasimman@intel.com/
+works for me.
+
+-- 
+You are receiving this mail because:
+You are the assignee for the bug.
