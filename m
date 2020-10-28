@@ -2,627 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BE5029DACE
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:32:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4885A29DB10
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:43:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390709AbgJ1Xcz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Oct 2020 19:32:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37914 "EHLO
+        id S1732189AbgJ1XnH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Oct 2020 19:43:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390461AbgJ1Xcx (ORCPT
+        with ESMTP id S1728306AbgJ1Xd3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:32:53 -0400
-Received: from mail-vs1-xe4a.google.com (mail-vs1-xe4a.google.com [IPv6:2607:f8b0:4864:20::e4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1EB8C0613CF
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:32:52 -0700 (PDT)
-Received: by mail-vs1-xe4a.google.com with SMTP id s25so181498vsn.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:32:52 -0700 (PDT)
+        Wed, 28 Oct 2020 19:33:29 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2AF9C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:33:29 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id k6so1416293ior.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:33:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=wIEUrtgDYzIAcGyMAX8gDtwyNKYw6+N0l7rAaSZZBO4=;
-        b=jpFvTB7++L+eiHOadERX7XmRSM/8omrIF5mnnx7z7Ak5PrLRzzqb0H95kyhxsEBpND
-         R8Xp81Hoh5XYJliUJnrb4Er3fQ3RSOrS4fM0i53x1pLFoBiRVc5PVvMHHPjIFQ2uYihU
-         bMugia8+gwXOFnGBDY41qHREpepanfd8iXFAS7hLkf0kSxCWGDLgC/RXv0A2rNIrdy5p
-         Few81xoDtNTp+0UmHqeGUFgAWrlwc9ufvqiqT1V7wN3O9ALyIkCxYUKIw6BlBarqENsr
-         j254q7jPtiuuxFucJ66K2SmS2pmyI8czoAFbdR4N+AhcMZK+ajVPlU+ML0mkLfttPxAN
-         8U+A==
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=LDi5xnUDIfDvwvCaody/BlX3k7LdPP30Au5+3qgahoU=;
+        b=KG7MNk85okXJsBeKJYtMo8jp4rXA2nc8ZzchSqjIW5AE2kI4N0tsSgcW3IIDIWCPuZ
+         c//K8EQ7dpC5JRyAMhYU0QqcAgG9AAYBTRarhDQuL+6ehJhlZUSfag8UY0CIqT2715v0
+         SrnIGetyMV7mI3jjaL0rzO1VVNxzm8OHf+uqQFGDkKZ0S/jlTTKkxitY+68iFUD8SXO/
+         fQi4PRAKtywNLjsIlA6uGiVrimcwlsHYHvd16EWDSAd83aqygpV6mgXAPzjXJjJZZPIY
+         bvr7gErwUpkPjHC47jRk7j8rLSVRhs+rjYAR/yNwrMOhJgJyVJ7CUVPedvbbfdcYGmqP
+         aAlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=wIEUrtgDYzIAcGyMAX8gDtwyNKYw6+N0l7rAaSZZBO4=;
-        b=o/RFh+uNVzPBqKGXWy5xFdievJQBiB2ifPjjxpfmIBOEkFYnS5vBr+Axs5wfVQcNqD
-         LbGNpB2yU/vP6fe7yJ7ibmY8SVjMNw+6UM4S6GgQ8wtP2XW07FEkT9vcLv06AhoZeiEc
-         OPZltrXH+YbVzU9UzoXkh2zHECeAnbwkgnvuzjN07sqY55WDyuGAcyppO2evenMEiuzt
-         JkRl955qY4rR+GEDty6cc2PD7WtX4UUeAI9KH20F3ZRhYS4SdGevdh+JssTGug/2MXoi
-         ajvNyoeifQOhqF7qkhTH4zPpOlVIvGedxD1RK2nnsAo5151TQTDJ3BqATlssDsbxzJQc
-         Eyjg==
-X-Gm-Message-State: AOAM533uuOnWxkgIQYbAMtIJAl0IqV7K988WUbHCyxwwo04I4wk+qUKA
-        +ciRIXsi7vzACRPHQUgrfdESUXnzBiFktzE7LfiRLLcXxSiUa0JdROHnRkY+AYrJoIjXqioz6wK
-        O6GOf/3WFK9knm58ANnjFVj+v6I3eFFhf+2kJ57TauDFgWVkcOK1TMVrNnhpaloVWPmL2uiFK5X
-        TrX6+SFSSvIko=
-X-Google-Smtp-Source: ABdhPJzhxhs2iw0JHAtEPr7B3go6QPLRnAwALYtcqIcA5Qb0UxyqA18ihDINs0cNWyms9qBbxmspTUV2e1gqLzYS3g==
-Sender: "howardchung via sendgmr" 
-        <howardchung@howardchung-p920.tpe.corp.google.com>
-X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:f693:9fff:fef4:4e45])
- (user=howardchung job=sendgmr) by 2002:a0c:cc12:: with SMTP id
- r18mr7303060qvk.2.1603885982267; Wed, 28 Oct 2020 04:53:02 -0700 (PDT)
-Date:   Wed, 28 Oct 2020 19:52:47 +0800
-In-Reply-To: <20201028195132.BlueZ.v5.1.I2fa28644a012f69c4665977e5816bcf8a51963f5@changeid>
-Message-Id: <20201028195132.BlueZ.v5.2.I2fa28644a012f69c4665977e5816bcf8a51963f5@changeid>
-Mime-Version: 1.0
-References: <20201028195132.BlueZ.v5.1.I2fa28644a012f69c4665977e5816bcf8a51963f5@changeid>
-X-Mailer: git-send-email 2.29.0.rc2.309.g374f81d7ae-goog
-Subject: [BlueZ PATCH v5 2/2] core: Add support of variable length params in mgmt_config
-From:   Howard Chung <howardchung@google.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     apusaka@chromium.org, mmandlik@chromium.org, alainm@chromium.org,
-        luiz.dentz@gmail.com, mcchou@chromium.org,
-        Howard Chung <howardchung@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=LDi5xnUDIfDvwvCaody/BlX3k7LdPP30Au5+3qgahoU=;
+        b=Adrf/3tmH7Y+LxKBwDfAubYUayThvGFqCRYwtqMJlffq4qjsavb3t9bjg/rx75IZEz
+         7hFBuTZ8R3ahC0yF9Cghr4g2yY/mgw3CrY2NZRZEm8mjVdADHRRpwAqzaHpg626QDVlE
+         OyxPxME3dZUYv6w+SwH7ss0tq35G7bdfdUt3BhBZQ9+h4jmGWyL6Q8TjxtdtRw+VQxqN
+         PnXJlRyKzV/0AA6jTm7luOXSyqOCbAR+QPfTIL2gyZw5qU9ndkSKqZXtat23h4yVl4i2
+         DKoxMvTgk+rycLQRJ2P9QwoWOLm9eiqgCoPEvV0COXUsilEwMuOfpvCa2Qw5f+tdR1bj
+         z6zQ==
+X-Gm-Message-State: AOAM533GCn1BwLlueSQChp/iXlZhQWgXTkOIDdl2MEoH3pj0HO8/6v8/
+        8HVoOni7sl/gjjaEbxVAV9rVdT03x3E=
+X-Google-Smtp-Source: ABdhPJwuXqH3PFp8QRujsu1z4VFsTu671ofREK25opSL+gsphUbALV0I1sNtlB8TdxzUufzGHnXbBg==
+X-Received: by 2002:a5e:da45:: with SMTP id o5mr1491339iop.62.1603928009060;
+        Wed, 28 Oct 2020 16:33:29 -0700 (PDT)
+Received: from [172.17.0.2] ([104.208.243.174])
+        by smtp.gmail.com with ESMTPSA id k18sm691833ioj.21.2020.10.28.16.33.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2020 16:33:28 -0700 (PDT)
+Message-ID: <5f99ffc8.1c69fb81.8d6b8.3e16@mx.google.com>
+Date:   Wed, 28 Oct 2020 16:33:28 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============7084044108655641264=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, danielwinkler@google.com
+Subject: RE: [Bluez] adapter: Use initial temporary status to decide device removal
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20201028154914.Bluez.1.I8216fab388e34d8a1373efc71a252c2c5a085564@changeid>
+References: <20201028154914.Bluez.1.I8216fab388e34d8a1373efc71a252c2c5a085564@changeid>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds support of variable length parameters in mgmt_config.
-Also fixed the endian issue.
+--===============7084044108655641264==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=372435
+
+---Test result---
+
+##############################
+Test: CheckPatch - PASS
+
+##############################
+Test: CheckGitLint - PASS
+
+##############################
+Test: CheckBuild - PASS
+
+##############################
+Test: MakeCheck - PASS
 
 
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+
 ---
-Changes in v5:
-- use mgmt_tlv api
+Regards,
+Linux Bluetooth
 
-Changes in v4:
-- fix type of buf_len
 
-Changes in v3:
-- use iovec to fill buffer
-
-Changes in v2:
-- fix multiple line dereference issue
-
- src/adapter.c | 264 +++++++++++++++++++-------------------------------
- src/main.c    |  35 ++++++-
- 2 files changed, 130 insertions(+), 169 deletions(-)
-
-diff --git a/src/adapter.c b/src/adapter.c
-index c0053000ac19..62b7bfbae021 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -4165,267 +4165,197 @@ static void probe_devices(void *user_data)
- 
- static void load_default_system_params(struct btd_adapter *adapter)
- {
--	struct {
--		struct mgmt_tlv entry;
--		union {
--			uint16_t u16;
--		};
--	} __packed *params;
--	uint16_t i = 0;
--	size_t len = 0;
--	unsigned int err;
-+	struct mgmt_tlv_list *tlv_list;
-+	unsigned int err = 0;
- 
- 	if (!main_opts.default_params.num_entries ||
- 	    !btd_has_kernel_features(KERNEL_SET_SYSTEM_CONFIG))
- 		return;
- 
--	params = malloc0(sizeof(*params) *
--			main_opts.default_params.num_entries);
--
--	len = sizeof(params->entry) * main_opts.default_params.num_entries;
-+	tlv_list = mgmt_tlv_list_new();
- 
- 	if (main_opts.default_params.br_page_scan_type != 0xFFFF) {
--		params[i].entry.type = 0x0000;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.br_page_scan_type;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0000,
-+			sizeof(main_opts.default_params.br_page_scan_type),
-+			&main_opts.default_params.br_page_scan_type);
- 	}
- 
- 	if (main_opts.default_params.br_page_scan_interval) {
--		params[i].entry.type = 0x0001;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.br_page_scan_interval;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0001,
-+			sizeof(main_opts.default_params.br_page_scan_interval),
-+			&main_opts.default_params.br_page_scan_interval);
- 	}
- 
- 	if (main_opts.default_params.br_page_scan_win) {
--		params[i].entry.type = 0x0002;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.br_page_scan_win;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0002,
-+			sizeof(main_opts.default_params.br_page_scan_win),
-+			&main_opts.default_params.br_page_scan_win);
- 	}
- 
- 	if (main_opts.default_params.br_scan_type != 0xFFFF) {
--		params[i].entry.type = 0x0003;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.br_scan_type;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0003,
-+			sizeof(main_opts.default_params.br_scan_type),
-+			&main_opts.default_params.br_scan_type);
- 	}
- 
- 	if (main_opts.default_params.br_scan_interval) {
--		params[i].entry.type = 0x0004;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.br_scan_interval;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0004,
-+			sizeof(main_opts.default_params.br_scan_interval),
-+			&main_opts.default_params.br_scan_interval);
- 	}
- 
- 	if (main_opts.default_params.br_scan_win) {
--		params[i].entry.type = 0x0005;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.br_scan_win;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0005,
-+			sizeof(main_opts.default_params.br_scan_win),
-+			&main_opts.default_params.br_scan_win);
- 	}
- 
- 	if (main_opts.default_params.br_link_supervision_timeout) {
--		params[i].entry.type = 0x0006;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.br_link_supervision_timeout;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0006,
-+			sizeof(main_opts.default_params.br_link_supervision_timeout),
-+			&main_opts.default_params.br_link_supervision_timeout);
- 	}
- 
- 	if (main_opts.default_params.br_page_timeout) {
--		params[i].entry.type = 0x0007;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.br_page_timeout;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0007,
-+			sizeof(main_opts.default_params.br_page_timeout),
-+			&main_opts.default_params.br_page_timeout);
- 	}
- 
- 	if (main_opts.default_params.br_min_sniff_interval) {
--		params[i].entry.type = 0x0008;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.br_min_sniff_interval;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0008,
-+			sizeof(main_opts.default_params.br_min_sniff_interval),
-+			&main_opts.default_params.br_min_sniff_interval);
- 	}
- 
- 	if (main_opts.default_params.br_max_sniff_interval) {
--		params[i].entry.type = 0x0009;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.br_max_sniff_interval;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0009,
-+			sizeof(main_opts.default_params.br_max_sniff_interval),
-+			&main_opts.default_params.br_max_sniff_interval);
- 	}
- 
- 	if (main_opts.default_params.le_min_adv_interval) {
--		params[i].entry.type = 0x000a;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.le_min_adv_interval;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x000a,
-+			sizeof(main_opts.default_params.le_min_adv_interval),
-+			&main_opts.default_params.le_min_adv_interval);
- 	}
- 
- 	if (main_opts.default_params.le_max_adv_interval) {
--		params[i].entry.type = 0x000b;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.le_max_adv_interval;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x000b,
-+			sizeof(main_opts.default_params.le_max_adv_interval),
-+			&main_opts.default_params.le_max_adv_interval);
- 	}
- 
- 	if (main_opts.default_params.le_multi_adv_rotation_interval) {
--		params[i].entry.type = 0x000c;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.le_multi_adv_rotation_interval;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x000c,
-+			sizeof(main_opts.default_params.le_multi_adv_rotation_interval),
-+			&main_opts.default_params.le_multi_adv_rotation_interval);
- 	}
- 
- 	if (main_opts.default_params.le_scan_interval_autoconnect) {
--		params[i].entry.type = 0x000d;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.le_scan_interval_autoconnect;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x000d,
-+			sizeof(main_opts.default_params.le_scan_interval_autoconnect),
-+			&main_opts.default_params.le_scan_interval_autoconnect);
- 	}
- 
- 	if (main_opts.default_params.le_scan_win_autoconnect) {
--		params[i].entry.type = 0x000e;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.le_scan_win_autoconnect;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x000e,
-+			sizeof(main_opts.default_params.le_scan_win_autoconnect),
-+			&main_opts.default_params.le_scan_win_autoconnect);
- 	}
- 
- 	if (main_opts.default_params.le_scan_interval_suspend) {
--		params[i].entry.type = 0x000f;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.le_scan_interval_suspend;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x000f,
-+			sizeof(main_opts.default_params.le_scan_interval_suspend),
-+			&main_opts.default_params.le_scan_interval_suspend);
- 	}
- 
- 	if (main_opts.default_params.le_scan_win_suspend) {
--		params[i].entry.type = 0x0010;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.le_scan_win_suspend;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0010,
-+			sizeof(main_opts.default_params.le_scan_win_suspend),
-+			&main_opts.default_params.le_scan_win_suspend);
- 	}
- 
- 	if (main_opts.default_params.le_scan_interval_discovery) {
--		params[i].entry.type = 0x0011;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.le_scan_interval_discovery;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0011,
-+			sizeof(main_opts.default_params.le_scan_interval_discovery),
-+			&main_opts.default_params.le_scan_interval_discovery);
- 	}
- 
- 	if (main_opts.default_params.le_scan_win_discovery) {
--		params[i].entry.type = 0x0012;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.le_scan_win_discovery;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0012,
-+			sizeof(main_opts.default_params.le_scan_win_discovery),
-+			&main_opts.default_params.le_scan_win_discovery);
- 	}
- 
- 	if (main_opts.default_params.le_scan_interval_adv_monitor) {
--		params[i].entry.type = 0x0013;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.le_scan_interval_adv_monitor;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0013,
-+			sizeof(main_opts.default_params.le_scan_interval_adv_monitor),
-+			&main_opts.default_params.le_scan_interval_adv_monitor);
- 	}
- 
- 	if (main_opts.default_params.le_scan_win_adv_monitor) {
--		params[i].entry.type = 0x0014;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.le_scan_win_adv_monitor;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0014,
-+			sizeof(main_opts.default_params.le_scan_win_adv_monitor),
-+			&main_opts.default_params.le_scan_win_adv_monitor);
- 	}
- 
- 	if (main_opts.default_params.le_scan_interval_connect) {
--		params[i].entry.type = 0x0015;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 =
--			main_opts.default_params.le_scan_interval_connect;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0015,
-+			sizeof(main_opts.default_params.le_scan_interval_connect),
-+			&main_opts.default_params.le_scan_interval_connect);
- 	}
- 
- 	if (main_opts.default_params.le_scan_win_connect) {
--		params[i].entry.type = 0x0016;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.le_scan_win_connect;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0016,
-+			sizeof(main_opts.default_params.le_scan_win_connect),
-+			&main_opts.default_params.le_scan_win_connect);
- 	}
- 
- 	if (main_opts.default_params.le_min_conn_interval) {
--		params[i].entry.type = 0x0017;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.le_min_conn_interval;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0017,
-+			sizeof(main_opts.default_params.le_min_conn_interval),
-+			&main_opts.default_params.le_min_conn_interval);
- 	}
- 
- 	if (main_opts.default_params.le_max_conn_interval) {
--		params[i].entry.type = 0x0018;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.le_max_conn_interval;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0018,
-+			sizeof(main_opts.default_params.le_max_conn_interval),
-+			&main_opts.default_params.le_max_conn_interval);
- 	}
- 
- 	if (main_opts.default_params.le_conn_latency) {
--		params[i].entry.type = 0x0019;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.le_conn_latency;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x0019,
-+			sizeof(main_opts.default_params.le_conn_latency),
-+			&main_opts.default_params.le_conn_latency);
- 	}
- 
- 	if (main_opts.default_params.le_conn_lsto) {
--		params[i].entry.type = 0x001a;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.le_conn_lsto;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x001a,
-+			sizeof(main_opts.default_params.le_conn_lsto),
-+			&main_opts.default_params.le_conn_lsto);
- 	}
- 
- 	if (main_opts.default_params.le_autoconnect_timeout) {
--		params[i].entry.type = 0x001b;
--		params[i].entry.length = sizeof(params[i].u16);
--		params[i].u16 = main_opts.default_params.le_autoconnect_timeout;
--		++i;
--		len += sizeof(params[i].u16);
-+		err |= !mgmt_tlv_add(tlv_list, 0x001b,
-+			sizeof(main_opts.default_params.le_autoconnect_timeout),
-+			&main_opts.default_params.le_autoconnect_timeout);
-+	}
-+
-+	if (err) {
-+		btd_error(adapter->dev_id, "Failed to add tlv to list");
-+		goto done;
- 	}
- 
--	err = mgmt_send(adapter->mgmt, MGMT_OP_SET_DEF_SYSTEM_CONFIG,
--			adapter->dev_id, len, params, NULL, NULL, NULL);
-+	err = mgmt_send_tlv(adapter->mgmt, MGMT_OP_SET_DEF_SYSTEM_CONFIG,
-+			adapter->dev_id, tlv_list, NULL, NULL, NULL);
-+
- 	if (!err)
- 		btd_error(adapter->dev_id,
- 				"Failed to set default system config for hci%u",
- 				adapter->dev_id);
--
--	free(params);
-+done:
-+	mgmt_tlv_list_free(tlv_list);
- }
- 
- static void load_devices(struct btd_adapter *adapter)
-diff --git a/src/main.c b/src/main.c
-index 77be776686a8..b83f7bffb485 100644
---- a/src/main.c
-+++ b/src/main.c
-@@ -305,120 +305,149 @@ static void parse_controller_config(GKeyFile *config)
- {
- 	static const struct {
- 		const char * const val_name;
--		uint16_t * const val;
-+		void * const val;
-+		const size_t size;
- 		const uint16_t min;
- 		const uint16_t max;
- 	} params[] = {
- 		{ "BRPageScanType",
- 		  &main_opts.default_params.br_page_scan_type,
-+		  sizeof(main_opts.default_params.br_page_scan_type),
- 		  0,
- 		  1},
- 		{ "BRPageScanInterval",
- 		  &main_opts.default_params.br_page_scan_interval,
-+		  sizeof(main_opts.default_params.br_page_scan_interval),
- 		  0x0012,
- 		  0x1000},
- 		{ "BRPageScanWindow",
- 		  &main_opts.default_params.br_page_scan_win,
-+		  sizeof(main_opts.default_params.br_page_scan_win),
- 		  0x0011,
- 		  0x1000},
- 		{ "BRInquiryScanType",
- 		  &main_opts.default_params.br_scan_type,
-+		  sizeof(main_opts.default_params.br_scan_type),
- 		  0,
- 		  1},
- 		{ "BRInquiryScanInterval",
- 		  &main_opts.default_params.br_scan_interval,
-+		  sizeof(main_opts.default_params.br_scan_interval),
- 		  0x0012,
- 		  0x1000},
- 		{ "BRInquiryScanWindow",
- 		  &main_opts.default_params.br_scan_win,
-+		  sizeof(main_opts.default_params.br_scan_win),
- 		  0x0011,
- 		  0x1000},
- 		{ "BRLinkSupervisionTimeout",
- 		  &main_opts.default_params.br_link_supervision_timeout,
-+		  sizeof(main_opts.default_params.br_link_supervision_timeout),
- 		  0x0001,
- 		  0xFFFF},
- 		{ "BRPageTimeout",
- 		  &main_opts.default_params.br_page_timeout,
-+		  sizeof(main_opts.default_params.br_page_scan_win),
- 		  0x0001,
- 		  0xFFFF},
- 		{ "BRMinSniffInterval",
- 		  &main_opts.default_params.br_min_sniff_interval,
-+		  sizeof(main_opts.default_params.br_min_sniff_interval),
- 		  0x0001,
- 		  0xFFFE},
- 		{ "BRMaxSniffInterval",
- 		  &main_opts.default_params.br_max_sniff_interval,
-+		  sizeof(main_opts.default_params.br_max_sniff_interval),
- 		  0x0001,
- 		  0xFFFE},
- 		{ "LEMinAdvertisementInterval",
- 		  &main_opts.default_params.le_min_adv_interval,
-+		  sizeof(main_opts.default_params.le_min_adv_interval),
- 		  0x0020,
- 		  0x4000},
- 		{ "LEMaxAdvertisementInterval",
- 		  &main_opts.default_params.le_max_adv_interval,
-+		  sizeof(main_opts.default_params.le_max_adv_interval),
- 		  0x0020,
- 		  0x4000},
- 		{ "LEMultiAdvertisementRotationInterval",
- 		  &main_opts.default_params.le_multi_adv_rotation_interval,
-+		  sizeof(main_opts.default_params.le_multi_adv_rotation_interval),
- 		  0x0001,
- 		  0xFFFF},
- 		{ "LEScanIntervalAutoConnect",
- 		  &main_opts.default_params.le_scan_interval_autoconnect,
-+		  sizeof(main_opts.default_params.le_scan_interval_autoconnect),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEScanWindowAutoConnect",
- 		  &main_opts.default_params.le_scan_win_autoconnect,
-+		  sizeof(main_opts.default_params.le_scan_win_autoconnect),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEScanIntervalSuspend",
- 		  &main_opts.default_params.le_scan_interval_suspend,
-+		  sizeof(main_opts.default_params.le_scan_interval_suspend),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEScanWindowSuspend",
- 		  &main_opts.default_params.le_scan_win_suspend,
-+		  sizeof(main_opts.default_params.le_scan_win_suspend),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEScanIntervalDiscovery",
- 		  &main_opts.default_params.le_scan_interval_discovery,
-+		  sizeof(main_opts.default_params.le_scan_interval_discovery),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEScanWindowDiscovery",
- 		  &main_opts.default_params.le_scan_win_discovery,
-+		  sizeof(main_opts.default_params.le_scan_win_discovery),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEScanIntervalAdvMonitor",
- 		  &main_opts.default_params.le_scan_interval_adv_monitor,
-+		  sizeof(main_opts.default_params.le_scan_interval_adv_monitor),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEScanWindowAdvMonitor",
- 		  &main_opts.default_params.le_scan_win_adv_monitor,
-+		  sizeof(main_opts.default_params.le_scan_win_adv_monitor),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEScanIntervalConnect",
- 		  &main_opts.default_params.le_scan_interval_connect,
-+		  sizeof(main_opts.default_params.le_scan_interval_connect),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEScanWindowConnect",
- 		  &main_opts.default_params.le_scan_win_connect,
-+		  sizeof(main_opts.default_params.le_scan_win_connect),
- 		  0x0004,
- 		  0x4000},
- 		{ "LEMinConnectionInterval",
- 		  &main_opts.default_params.le_min_conn_interval,
-+		  sizeof(main_opts.default_params.le_min_conn_interval),
- 		  0x0006,
- 		  0x0C80},
- 		{ "LEMaxConnectionInterval",
- 		  &main_opts.default_params.le_max_conn_interval,
-+		  sizeof(main_opts.default_params.le_max_conn_interval),
- 		  0x0006,
- 		  0x0C80},
- 		{ "LEConnectionLatency",
- 		  &main_opts.default_params.le_conn_latency,
-+		  sizeof(main_opts.default_params.le_conn_latency),
- 		  0x0000,
- 		  0x01F3},
- 		{ "LEConnectionSupervisionTimeout",
- 		  &main_opts.default_params.le_conn_lsto,
-+		  sizeof(main_opts.default_params.le_conn_lsto),
- 		  0x000A,
- 		  0x0C80},
- 		{ "LEAutoconnecttimeout",
- 		  &main_opts.default_params.le_autoconnect_timeout,
-+		  sizeof(main_opts.default_params.le_autoconnect_timeout),
- 		  0x0001,
- 		  0x4000},
- 	};
-@@ -439,7 +468,9 @@ static void parse_controller_config(GKeyFile *config)
- 
- 			val = MAX(val, params[i].min);
- 			val = MIN(val, params[i].max);
--			*params[i].val = val;
-+
-+			val = htobl(val);
-+			memcpy(params[i].val, &val, params[i].size);
- 			++main_opts.default_params.num_entries;
- 		}
- 	}
--- 
-2.29.0.rc2.309.g374f81d7ae-goog
-
+--===============7084044108655641264==--
