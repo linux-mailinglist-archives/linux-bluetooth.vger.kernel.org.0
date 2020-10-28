@@ -2,55 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7A8D29D6BF
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Oct 2020 23:19:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0705929D824
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Oct 2020 23:30:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731682AbgJ1WRk convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Oct 2020 18:17:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60534 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731667AbgJ1WRj (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:17:39 -0400
-From:   bugzilla-daemon@bugzilla.kernel.org
-Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 209745] Bluetooth connection to Logitech MX Master 2S lost
- after each reboot
-Date:   Wed, 28 Oct 2020 12:55:08 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: matias@ufscar.br
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-209745-62941-fQh4QN2kDm@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-209745-62941@https.bugzilla.kernel.org/>
-References: <bug-209745-62941@https.bugzilla.kernel.org/>
+        id S1732936AbgJ1W35 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Oct 2020 18:29:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55694 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387530AbgJ1W3z (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 28 Oct 2020 18:29:55 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D427C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 15:29:55 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id h24so1127799ejg.9
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 15:29:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:in-reply-to:references:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=NeBKMsyaOhwbafDqgThroGDniBUy61UYUZ4SjDBmGjQ=;
+        b=rvzob8W/4f21SdU9dtwyDgV8EYW4YZW3RCa2o2mHXIyIdNLKCSFhtrvRkRV+mWSvtV
+         qRP39LLPNx+R7rMnd7xhE2yN0IbQE4R+uni5RVsae5L78V3kfZi/xpEtl5LHwUYqFq8C
+         Tp1CrMEl+QdVAXfRyho7dbkKyGUJ893Lt78U/IEvHMcUofYz/Of/5pn39umaNm1KxkZW
+         xaYhzv41gx7t9zj9fuQ0MeImywha0c3RA/1sjQw0Pi0hAWe+k8fyt5bZoLRReyyOdMov
+         AUuunAbp+6zdEgAf1Ys5niBNhqabCBfReSfMzi5BZ/6N7SijDIKz5hJfk2MHLcp7SFLS
+         r9kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=NeBKMsyaOhwbafDqgThroGDniBUy61UYUZ4SjDBmGjQ=;
+        b=uaMBpdt4o8Qi1DmaxVFpeEpG8QbY0H+1fAfIBw+6WvZo6enRVrUZGnyFOceAl0VwQN
+         YhFw9AMB6Thig8MuUJUCTijnF/Eyqktkr2wtKPyRlwymEKZ58ZSdAaNV9C44RtupkBnc
+         Er4vFbTTKTfnBw8lpcKpkzDn7HSwUPj+m7XkRq1xbPFF1usciS0LrzHhVianOU3NZ2h/
+         0rIWVLqiNZHWkOeS2M/v9l8WMqHIbGfWrMt2KQWVTo5BAfjfxKRlqOXX6fOoqXJwFyyX
+         67+ZxcaeRL8LzA1yk5plBHC9cW1NHK9HBNWX6+3EYwk5QvN96qUJWwie0PUEFs9Dzzal
+         A9yg==
+X-Gm-Message-State: AOAM533wdZiqfT3oPt5G9OrPXa/bXuBwHFDIyqAG4Ai+CWNmM3JHUjxz
+        VKNqnvWICCkEDDKonNa02biUvUwESXnV6Q==
+X-Google-Smtp-Source: ABdhPJzW0P9wT6/wtcvEwrpmORVpYOf86CNmAw4IcvnGpOzba1l61WudiVwyHkGS6ctk0qj7Y/1lqg==
+X-Received: by 2002:aa7:c98b:: with SMTP id c11mr229128edt.24.1603909543200;
+        Wed, 28 Oct 2020 11:25:43 -0700 (PDT)
+Received: from jurupari (firewall.seitwerk.net. [80.155.46.66])
+        by smtp.gmail.com with ESMTPSA id m16sm255226edj.37.2020.10.28.11.25.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2020 11:25:42 -0700 (PDT)
+Message-ID: <01a23e10715b0be35dd4efba6a2bb7ab14cb4a4d.camel@gmail.com>
+Subject: Re: Bluetooth: Allow to use configure SCO socket codec parameters
+From:   Joschi 127 <127.joschi@gmail.com>
+To:     Paul Stejskal <paul.stejskal@gmail.com>,
+        linux-bluetooth@vger.kernel.org, pali@kernel.org
+Date:   Wed, 28 Oct 2020 19:25:41 +0100
+In-Reply-To: <0a520235-f1be-2b51-b047-4960f58e0715@gmail.com>
+References: <0a520235-f1be-2b51-b047-4960f58e0715@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+User-Agent: Evolution 3.36.5 
 MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=209745
 
---- Comment #8 from matias (matias@ufscar.br) ---
-https://lore.kernel.org/linux-bluetooth/20201022082304.31757-1-sathish.narasimman@intel.com/
-works for me.
+Am Mittwoch, den 28.10.2020, 11:29 -0500 schrieb Paul Stejskal:
+> What can we do to get this published?
+> 
 
--- 
-You are receiving this mail because:
-You are the assignee for the bug.
+As far as I understand Pali is waiting for feedback for his updated
+suggestion from this email 
+https://lore.kernel.org/linux-bluetooth/20191121224455.orhslaa6zdmlwe43@pali/
+ with this patch attached 
+https://lore.kernel.org/linux-bluetooth/20191121224455.orhslaa6zdmlwe43@pali/1.2-sco.patch
+
+And as soon as this approach is confirmed I guess he could provide a
+new updated patch in the required format and updated to the latest
+mainline kernel version?
+
+@Pali: Not sure if I got it right. Maybe you can check yourself and
+confirm or correct me if I'm wrong.
+
+Thanks to all!
+
