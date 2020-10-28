@@ -2,134 +2,226 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB01229DAFD
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:42:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 890D629DB47
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:48:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726552AbgJ1XmV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Oct 2020 19:42:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39348 "EHLO
+        id S1731046AbgJ1XsW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Oct 2020 19:48:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725968AbgJ1Xlu (ORCPT
+        with ESMTP id S1725768AbgJ1XsW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:41:50 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31D6C0613CF
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:41:50 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id 15so803692pgd.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:41:50 -0700 (PDT)
+        Wed, 28 Oct 2020 19:48:22 -0400
+Received: from mail-oo1-xc49.google.com (mail-oo1-xc49.google.com [IPv6:2607:f8b0:4864:20::c49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDED3C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:48:21 -0700 (PDT)
+Received: by mail-oo1-xc49.google.com with SMTP id t9so394792oon.9
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:48:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ztIBTxTOCqVSao9pMJM3OJrR4WGp4y7BufKyjyEK6BY=;
-        b=GC8ILkXtp+MRlJWpDOA/BSY4ey3n/pFoVmRRfZMmevVIsg6CkGqxBV+3mnUgSDtT12
-         FbMTwWc94OveYhP+nORDTYgNV/wtIgAGGoURDw5UcPn2xHi9H317N3rjdXI44TAJxHYh
-         QGxd2STPBJBNNjs+h2bVYgzOlAVCJcfHU57J5rKs8XzgaFUdbBz5EdvGK4QETOrcn1N6
-         gP7q2HicU28fk05VtOU/KNa1eTAYidHPgS9uWcoa7KSvIJlRAngheHzcdPtKxG+aKIVq
-         +HI89U8XQJe+mfpBPzWj1d4qSX4puMCmwfIbBtdENbSYd5rQVgzyks1GTsv9w/bnoAPn
-         yGaA==
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=5ukqu3eD+sBtgJjiHf4OJ2+rkm1jUG9yhNQ5PdOd7KQ=;
+        b=lp53cvzlZvlprwJM36+J6rFotTTnggS1qfnDDp5ybCRY1SOJ3wZS6stG79iW1iNT4c
+         xdwwYwlseHmE875z6yteCh7+TEkr83lmW99laWrcUCZL8mYnC64V3oiD2xd3yj9cy8k5
+         PnHL7BcmzmfTMe7EPXjYNkeE+9ERaSCNdBcrw//aAA95Bjf6QEfdbzomilp2o7mGRp8B
+         ylGf88Syduo53m21tuNOhhDDBH3FgPOh33YXIC/DMCjY0cVFNjoz9DBikhiKZD5VO4zg
+         BNT+Ow0CTA0M035/RGqw1KjIbJt9/LYXfjgbEjcae4TI5taz5T8alfFgmzsTaeQAIaai
+         ItOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ztIBTxTOCqVSao9pMJM3OJrR4WGp4y7BufKyjyEK6BY=;
-        b=h5ma2mfREnKZVccAb2qiHRpTq3tn1P1wewUw3bh0hAArW3zhk1JZ+oko2AFkz87YP9
-         79J+SI0/pcQt0iHMugTOS2vsHUtFPDDAsIuuLEwAq0467JYlqMcC5DKIwEKQZ4etLF39
-         YoiR9tWRkm3p7su4hvWCYlqUT3zWrsPFAuJ7nTqhKnPydeSHd71PqoY7LU0t30ktP21l
-         RXgVkw+FX+sgvI9PZBfkIIwJ7958RrBzHObMkNyyK+Bz5pNcZ52PCWMMh9P0VUYlbTls
-         CHmW/UNbWfE+AWFnzHVT6l1/HrcLLdqpfQxOd/KyiiiIXYN8krtp/3x52EbqW9hd7LvJ
-         +vaw==
-X-Gm-Message-State: AOAM533YzDy5JicPSqwfjAM5FivMzSQqUHUQcjd1kypcoJBLqsYud1SR
-        U1jumTgTDEnDGNShUH75qK2dFBM0Bes+wrr9AdlMy9OyVAC0Rg==
-X-Google-Smtp-Source: ABdhPJzchCZ3oPRe21STUr3D4O/c38z1LuUQPqkyPQZyrbQnCkhMqE9s2/QKjAeMOklv1Mx7R9EGhrrSx7VMQdyC6hI=
-X-Received: by 2002:a6b:f610:: with SMTP id n16mr4960911ioh.103.1603863062431;
- Tue, 27 Oct 2020 22:31:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201022082304.31757-1-sathish.narasimman@intel.com>
-In-Reply-To: <20201022082304.31757-1-sathish.narasimman@intel.com>
-From:   Sathish Narasimman <nsathish41@gmail.com>
-Date:   Wed, 28 Oct 2020 11:00:51 +0530
-Message-ID: <CAOVXEJL1qCPmpY-jGW8AsycxGytCzuJQR4hv-bXPPSNyO=5GZQ@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: Fix: LL PRivacy BLE device fails to connect
-To:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
-Cc:     Chethan T N <chethan.tumkur.narayan@intel.com>,
-        ravishankar.srivatsa@intel.com, kiran.k@intel.com,
-        Sathish Narasimman <sathish.narasimman@intel.com>
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=5ukqu3eD+sBtgJjiHf4OJ2+rkm1jUG9yhNQ5PdOd7KQ=;
+        b=GQxvcPBQfU4Jj4WZbArWjjBaFDunortXroJwTgujhlhb96m9UetNAthU1pRARw4UGh
+         r75jGjouiESwrBjWCV+Zb4AUzDT2Gda/lsv3C8tVSnljCRmOGt0Z2eLvILmXc4AlTqlX
+         HuTAeyESSY6JTFS6mB6nUxg+O2gLh9vrErnUII7NDUPRaGaW05Fw49utApJO4VwMXWt9
+         ZQv78pTAlPI9jYY0l5Pbo+x+ZCd4qo0qJJVg84m6inGL5UOxurqUf22IzCiABQ1RD8Qg
+         7AJVF0bSz+s9mECHWljiWNEpF2wdgdNMxE0b4zuEDTMttwZ0KPxpX5MwLLtfo/Xooxfg
+         oiFA==
+X-Gm-Message-State: AOAM532cL+Hl9WyG2BjI856r4yZ8q4kEWJE0YjgSOvQ+BvBoY1qJ2clH
+        bpjbxABnJTWuLGqzef9EhqU61lBcOxz1lQDJ1H/ftDh8aOX+b13AVotLiEeKMyDJ/yKbE/fPfP4
+        6mOPO78sHtDSOsZVVLTYXrsmrobpd3NTAxRT66Yo9tqj8TmiVuFW3nn0e0NUYdt4V5Rvh8tl/GW
+        TS9o8Cvng4Iy8=
+X-Google-Smtp-Source: ABdhPJysdReBYvsICqx3cSAcj0wL8GFzy3328Ptzu3/uB2N8/cUP4/ib1KorTPP7SEwuYEB/DQNm76gt9WSXipkN7Q==
+Sender: "howardchung via sendgmr" 
+        <howardchung@howardchung-p920.tpe.corp.google.com>
+X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:f693:9fff:fef4:4e45])
+ (user=howardchung job=sendgmr) by 2002:a25:d441:: with SMTP id
+ m62mr10016672ybf.422.1603885978195; Wed, 28 Oct 2020 04:52:58 -0700 (PDT)
+Date:   Wed, 28 Oct 2020 19:52:46 +0800
+Message-Id: <20201028195132.BlueZ.v5.1.I2fa28644a012f69c4665977e5816bcf8a51963f5@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.29.0.rc2.309.g374f81d7ae-goog
+Subject: [BlueZ PATCH v5 1/2] mgmt: Add support of mgmt TLV API
+From:   Howard Chung <howardchung@google.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     apusaka@chromium.org, mmandlik@chromium.org, alainm@chromium.org,
+        luiz.dentz@gmail.com, mcchou@chromium.org,
+        Howard Chung <howardchung@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi
+This adds API to send multiple TLVs to kernel, it is useful for
+mgmt set system config command.
+---
 
-On Thu, Oct 22, 2020 at 1:47 PM Sathish Narasimman <nsathish41@gmail.com> wrote:
->
-> When adding device to white list the device is added to resolving list
-> also it has to be added only when HCI_ENABLE_LL_PRIVACY flag is set.
-> HCI_ENABLE_LL_PRIVACY flag has to be tested before adding/deleting devices
-> to resolving list. use_ll_privacy macro is used only to check if controller
-> supports LL_Privacy.
->
-> https://bugzilla.kernel.org/show_bug.cgi?id=209745
->
-> Signed-off-by: Sathish Narasimman <sathish.narasimman@intel.com>
-> ---
->  net/bluetooth/hci_request.c | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-> index 6f12bab4d2fa..610ed0817bd7 100644
-> --- a/net/bluetooth/hci_request.c
-> +++ b/net/bluetooth/hci_request.c
-> @@ -698,7 +698,8 @@ static void del_from_white_list(struct hci_request *req, bdaddr_t *bdaddr,
->                    cp.bdaddr_type);
->         hci_req_add(req, HCI_OP_LE_DEL_FROM_WHITE_LIST, sizeof(cp), &cp);
->
-> -       if (use_ll_privacy(req->hdev)) {
-> +       if (use_ll_privacy(req->hdev) &&
-> +           hci_dev_test_flag(req->hdev, HCI_ENABLE_LL_PRIVACY)) {
->                 struct smp_irk *irk;
->
->                 irk = hci_find_irk_by_addr(req->hdev, bdaddr, bdaddr_type);
-> @@ -732,7 +733,8 @@ static int add_to_white_list(struct hci_request *req,
->                 return -1;
->
->         /* White list can not be used with RPAs */
-> -       if (!allow_rpa && !use_ll_privacy(hdev) &&
-> +       if (!allow_rpa &&
-> +           !hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY) &&
->             hci_find_irk_by_addr(hdev, &params->addr, params->addr_type)) {
->                 return -1;
->         }
-> @@ -750,7 +752,8 @@ static int add_to_white_list(struct hci_request *req,
->                    cp.bdaddr_type);
->         hci_req_add(req, HCI_OP_LE_ADD_TO_WHITE_LIST, sizeof(cp), &cp);
->
-> -       if (use_ll_privacy(hdev)) {
-> +       if (use_ll_privacy(hdev) &&
-> +           hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY)) {
->                 struct smp_irk *irk;
->
->                 irk = hci_find_irk_by_addr(hdev, &params->addr,
-> @@ -812,7 +815,8 @@ static u8 update_white_list(struct hci_request *req)
->                 }
->
->                 /* White list can not be used with RPAs */
-> -               if (!allow_rpa && !use_ll_privacy(hdev) &&
-> +               if (!allow_rpa &&
-> +                   !hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY) &&
->                     hci_find_irk_by_addr(hdev, &b->bdaddr, b->bdaddr_type)) {
->                         return 0x00;
->                 }
-> --
-> 2.17.1
->
+Changes in v5:
+- Implement mgmt_tlv API in src/shared/mgmt.c
 
+Changes in v4:
+- fix type of buf_len
 
-Gentle reminder.
-Seems Many devices are failing to reconnect after every on 5.9 kernel
+Changes in v3:
+- use iovec to fill buffer
 
-This patch will FIX the issue
+Changes in v2:
+- fix multiple line dereference issue
 
-Regards
-Sathish N
+ src/shared/mgmt.c | 94 +++++++++++++++++++++++++++++++++++++++++++++++
+ src/shared/mgmt.h |  9 +++++
+ 2 files changed, 103 insertions(+)
+
+diff --git a/src/shared/mgmt.c b/src/shared/mgmt.c
+index b327b4088c6f..9ea9974f5535 100644
+--- a/src/shared/mgmt.c
++++ b/src/shared/mgmt.c
+@@ -68,6 +68,11 @@ struct mgmt_notify {
+ 	void *user_data;
+ };
+ 
++struct mgmt_tlv_list {
++	struct queue *tlv_queue;
++	uint16_t size;
++};
++
+ static void destroy_request(void *data)
+ {
+ 	struct mgmt_request *request = data;
+@@ -558,6 +563,95 @@ static struct mgmt_request *create_request(uint16_t opcode, uint16_t index,
+ 	return request;
+ }
+ 
++struct mgmt_tlv_list *mgmt_tlv_list_new(void)
++{
++	struct mgmt_tlv_list *tlv_list = new0(struct mgmt_tlv_list, 1);
++
++	tlv_list->tlv_queue = queue_new();
++	tlv_list->size = 0;
++
++	return tlv_list;
++}
++
++static struct mgmt_tlv *mgmt_tlv_new(uint16_t type, uint8_t length,
++								void *value)
++{
++	struct mgmt_tlv *entry = malloc(sizeof(*entry) + length);
++
++	if (!entry)
++		return NULL;
++
++	entry->type = htobs(type);
++	entry->length = length;
++	memcpy(entry->value, value, length);
++
++	return entry;
++}
++
++static void mgmt_tlv_free(struct mgmt_tlv *entry)
++{
++	free(entry);
++}
++
++void mgmt_tlv_list_free(struct mgmt_tlv_list *tlv_list)
++{
++	queue_destroy(tlv_list->tlv_queue, NULL);
++	free(tlv_list);
++}
++
++bool mgmt_tlv_add(struct mgmt_tlv_list *tlv_list, uint16_t type, uint8_t length,
++								void *value)
++{
++	struct mgmt_tlv *entry = mgmt_tlv_new(type, length, value);
++
++	if (!entry)
++		return false;
++
++	if (!queue_push_tail(tlv_list->tlv_queue, entry)) {
++		mgmt_tlv_free(entry);
++		return false;
++	}
++
++	tlv_list->size += sizeof(*entry) + entry->length;
++	return true;
++}
++
++static void mgmt_tlv_to_buf(void *data, void *user_data)
++{
++	struct mgmt_tlv *entry = data;
++	uint8_t **buf_ptr = user_data;
++	size_t entry_size = sizeof(*entry) + entry->length;
++
++	memcpy(*buf_ptr, entry, entry_size);
++	*buf_ptr += entry_size;
++}
++
++unsigned int mgmt_send_tlv(struct mgmt *mgmt, uint16_t opcode, uint16_t index,
++				struct mgmt_tlv_list *tlv_list,
++				mgmt_request_func_t callback,
++				void *user_data, mgmt_destroy_func_t destroy)
++{
++	uint8_t *buf, *buf_ptr;
++	unsigned int ret;
++
++	if (!tlv_list)
++		return 0;
++
++	buf = malloc(tlv_list->size);
++
++	if (!buf)
++		return 0;
++
++	buf_ptr = buf;
++
++	queue_foreach(tlv_list->tlv_queue, mgmt_tlv_to_buf, &buf_ptr);
++
++	ret = mgmt_send(mgmt, opcode, index, tlv_list->size, (void *)buf,
++						callback, user_data, destroy);
++	free(buf);
++	return ret;
++}
++
+ unsigned int mgmt_send(struct mgmt *mgmt, uint16_t opcode, uint16_t index,
+ 				uint16_t length, const void *param,
+ 				mgmt_request_func_t callback,
+diff --git a/src/shared/mgmt.h b/src/shared/mgmt.h
+index 6608faa7ed0f..74b8befd87bd 100644
+--- a/src/shared/mgmt.h
++++ b/src/shared/mgmt.h
+@@ -16,6 +16,7 @@
+ typedef void (*mgmt_destroy_func_t)(void *user_data);
+ 
+ struct mgmt;
++struct mgmt_tlv_list;
+ 
+ struct mgmt *mgmt_new(int fd);
+ struct mgmt *mgmt_new_default(void);
+@@ -33,6 +34,14 @@ bool mgmt_set_close_on_unref(struct mgmt *mgmt, bool do_close);
+ typedef void (*mgmt_request_func_t)(uint8_t status, uint16_t length,
+ 					const void *param, void *user_data);
+ 
++struct mgmt_tlv_list *mgmt_tlv_list_new(void);
++void mgmt_tlv_list_free(struct mgmt_tlv_list *tlv_list);
++bool mgmt_tlv_add(struct mgmt_tlv_list *tlv_list, uint16_t type, uint8_t length,
++								void *value);
++unsigned int mgmt_send_tlv(struct mgmt *mgmt, uint16_t opcode, uint16_t index,
++				struct mgmt_tlv_list *tlv_list,
++				mgmt_request_func_t callback,
++				void *user_data, mgmt_destroy_func_t destroy);
+ unsigned int mgmt_send(struct mgmt *mgmt, uint16_t opcode, uint16_t index,
+ 				uint16_t length, const void *param,
+ 				mgmt_request_func_t callback,
+-- 
+2.29.0.rc2.309.g374f81d7ae-goog
+
