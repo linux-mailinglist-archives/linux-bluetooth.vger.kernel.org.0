@@ -2,49 +2,49 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1464E29D9FE
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:08:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFEE029D9F5
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:08:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727311AbgJ1XIp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Oct 2020 19:08:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33734 "EHLO
+        id S2389082AbgJ1XI3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Oct 2020 19:08:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726122AbgJ1XHb (ORCPT
+        with ESMTP id S1727329AbgJ1XHu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:07:31 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA00C0613CF
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:07:30 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id w11so369910pll.8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:07:30 -0700 (PDT)
+        Wed, 28 Oct 2020 19:07:50 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65387C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:07:49 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id 13so723188pfy.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:07:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=drdqwJoWpvQRBGbW7XyM9wUffENd+fD30055WmYqe3s=;
-        b=G4msOv00qzt1HhKuQD3m7duXsvlOUfxT5WesNjuTdK7xqePa7BECYTiCOQMTKl12k5
-         UcL6uqI86j5PwLps1Jih4Q6Csc3OA+2dGMston0eNllx5YX/7LZErOdH2AhE7iferopJ
-         2VDPTlZnAtwKNiTkaXyjV+8fb4jH/fPXqkjIw=
+        bh=DZl3oN00arRcB58FBKAJ5c/slPFqplS5wnLF/UKMxhY=;
+        b=BMmZr8zqE5f3ko1+ErUYbvvE1qPZ/3mkwTJIjnfitTxPzQiQCc+zu4KrOdFet/yN5S
+         NkZ/yyJlWhPCzpYK7HxTjqfiYT91meILHuLdWUV8IxoGBlZ0OAJeEheFLXWXc9rWt3P9
+         Rn0Ojsmvt3Iwq8ylhVmXGGIaP2Ecb6kcNcOT8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=drdqwJoWpvQRBGbW7XyM9wUffENd+fD30055WmYqe3s=;
-        b=YBslK5gNcs1GXbFOzIr0iUIL86vmzYIbcuvenRhQcQ4Vcx7QD6cVFx8Q4yRShXHIFw
-         R88oNeUB+FiwLWT4jV+9pOfFxFsHFgychE/rcDatZYlhZaVkYPV1myCp4IPkIYWeo+r8
-         MuckwAok9146CJJRaR7en1IwWKH3t+ZQjgTNlEj7SxmZvospfmgXCsM2Qk5ddEQzMzIc
-         ZxkdCkRC7+ArIgatK0lPT4vzVf33p2Qxb1Uf5RmMH3nsMnMrhjOvi/inLllyXFjJNv+G
-         svxtjrjO41wjnVyAKLlW6Wm6kc4FPLIr6dwxvfv2y9odRf0oLIVtYjGzqCT6rTIs/ms7
-         yPzQ==
-X-Gm-Message-State: AOAM532qoheir3kiSCxaZ8l4aBqHPAulSqR4/Nim90rymml6tSsdk1Iu
-        7HJbOCUlfdHhu1jB5KYLxbyPd7z6k6s9TQ==
-X-Google-Smtp-Source: ABdhPJzJC5O2dssXD0SvwSxrxQT8/FML/XNxglZVIVRou1ndjW5buu0hFpPZqepVj2OJspkAtF1FfQ==
-X-Received: by 2002:a17:902:9889:b029:d6:5337:a758 with SMTP id s9-20020a1709029889b02900d65337a758mr1244986plp.28.1603926449858;
-        Wed, 28 Oct 2020 16:07:29 -0700 (PDT)
+        bh=DZl3oN00arRcB58FBKAJ5c/slPFqplS5wnLF/UKMxhY=;
+        b=BsExcHJ2lrAFjKdPfLxukAoc3g5UCngiiHW87IRTxI8GTB9omSYzj4OaIlLIkXQ+Vc
+         MXJoB88vt2K/IUprIwyBElPcV9vlyg7U7aYACfEimmcAzMmIFN7mHi1rrhpH8BpgXbPo
+         y6pBUm57eO5d1qzM/kmowV7LG3rdU8Qp8a4DyroQvAVUPzvd6FENK8gZ2BU8VZV+8nMS
+         dk/EvTjO60P1+ly0qA6lTZNF0AuWtzt1vGBh2ZUZ66icexrMmOT+GzdF6/FbCjb3Xrim
+         ZgBBCligjn/O0RYDV1tU236NFCAJMwlVOXgtSAC3gw/U9p1CYH42t1KlmslOAq0fDcrD
+         2cSQ==
+X-Gm-Message-State: AOAM532tvzCuDOXkiVQRGjBk49BtveQbEVnelviafgK41Qe/i73WWzCu
+        A5sOAO+tj9gv13leKbf2bmZPWcJ+HxEs+A==
+X-Google-Smtp-Source: ABdhPJyCQHiTTYL5SfnDvlx6RN9wRp+xwdn8cQi5FX0fO4oCtfJjalWkFhsPb2IGPAG/mTk3PC7crQ==
+X-Received: by 2002:a17:90b:16c2:: with SMTP id iy2mr1176971pjb.172.1603926468313;
+        Wed, 28 Oct 2020 16:07:48 -0700 (PDT)
 Received: from mcchou0.mtv.corp.google.com ([2620:15c:202:201:de4a:3eff:fe75:1314])
-        by smtp.gmail.com with ESMTPSA id y137sm644134pfc.77.2020.10.28.16.07.28
+        by smtp.gmail.com with ESMTPSA id y137sm644134pfc.77.2020.10.28.16.07.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Oct 2020 16:07:29 -0700 (PDT)
+        Wed, 28 Oct 2020 16:07:47 -0700 (PDT)
 From:   Miao-chen Chou <mcchou@chromium.org>
 To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
 Cc:     Alain Michaud <alainm@chromium.org>,
@@ -54,9 +54,9 @@ Cc:     Alain Michaud <alainm@chromium.org>,
         chromeos-bluetooth-upstreaming@chromium.org,
         Marcel Holtmann <marcel@holtmann.org>,
         Miao-chen Chou <mcchou@chromium.org>
-Subject: [BlueZ PATCH v7 5/7] adv_monitor: Implement Add Adv Patterns Monitor cmd handler
-Date:   Wed, 28 Oct 2020 16:05:34 -0700
-Message-Id: <20201028160433.BlueZ.v7.5.Ibbcb11712b613ef95c31b41207c3ea945c830018@changeid>
+Subject: [BlueZ PATCH v7 6/7] adv_monitor: Fix return type of RegisterMonitor() method
+Date:   Wed, 28 Oct 2020 16:05:36 -0700
+Message-Id: <20201028160433.BlueZ.v7.6.Ic8dbe9115e82704b4c0c860eee27ad897db13237@changeid>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201028160433.BlueZ.v7.1.I2830b9c1212a64b062201ed9f2b71294f50ad22d@changeid>
 References: <20201028160433.BlueZ.v7.1.I2830b9c1212a64b062201ed9f2b71294f50ad22d@changeid>
@@ -66,132 +66,53 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Howard Chung <howardchung@google.com>
+This modifies the D-Bus call return type to be asynchronous for
+RegisterMonitor() method call.
 
-- Send the MGMT_OP command to kernel upon registration of a Adv patterns
-monitor.
-- Call Activate() or Release() to client depending on the reply from
-  kernel
+The following test was performed:
+- Enter bluetoothctl, exit the console and re-enter the console without
+AlreadyExist error for RegisterMonitor() upon bring-up of the console.
 
-Reviewed-by: Alain Michaud <alainm@chromium.org>
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+Reviewed-by: Howard Chung <howardchung@google.com>
 Reviewed-by: Manish Mandlik <mmandlik@chromium.org>
 ---
 
-Changes in v7:
-- Rename MONITOR_STATE_HONORED to MONITOR_STATE_ACTIVE
-- Rebase on the adoption of bt_ad_pattern
+(no changes since v1)
 
- src/adv_monitor.c | 69 +++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 67 insertions(+), 2 deletions(-)
+ src/adv_monitor.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/adv_monitor.c b/src/adv_monitor.c
-index 9a04da6e1..9d2a400a3 100644
+index 9d2a400a3..dbc3b2a92 100644
 --- a/src/adv_monitor.c
 +++ b/src/adv_monitor.c
-@@ -78,7 +78,7 @@ enum monitor_state {
- 	MONITOR_STATE_NEW,	/* New but not yet init'ed with actual values */
- 	MONITOR_STATE_FAILED,	/* Failed to be init'ed */
- 	MONITOR_STATE_INITED,	/* Init'ed but not yet sent to kernel */
--	MONITOR_STATE_HONORED,	/* Accepted by kernel */
-+	MONITOR_STATE_ACTIVE,	/* Accepted by kernel */
- };
+@@ -694,6 +694,8 @@ static struct adv_monitor_app *app_create(DBusConnection *conn,
  
- struct adv_monitor {
-@@ -545,11 +545,59 @@ done:
- 	return monitor->state != MONITOR_STATE_FAILED;
+ 	app->monitors = queue_new();
+ 
++	app->reg = dbus_message_ref(msg);
++
+ 	g_dbus_client_set_disconnect_watch(app->client, app_disconnect_cb, app);
+ 
+ 	/* Note that any property changes on a monitor object would not affect
+@@ -705,8 +707,6 @@ static struct adv_monitor_app *app_create(DBusConnection *conn,
+ 
+ 	g_dbus_client_set_ready_watch(app->client, app_ready_cb, app);
+ 
+-	app->reg = dbus_message_ref(msg);
+-
+ 	return app;
  }
  
-+/* Handles the callback of Add Adv Patterns Monitor command */
-+static void add_adv_patterns_monitor_cb(uint8_t status, uint16_t length,
-+					const void *param, void *user_data)
-+{
-+	const struct mgmt_rp_add_adv_patterns_monitor *rp = param;
-+	struct adv_monitor *monitor = user_data;
-+	uint16_t adapter_id = monitor->app->manager->adapter_id;
-+
-+	if (status != MGMT_STATUS_SUCCESS || !param) {
-+		btd_error(adapter_id, "Failed to Add Adv Patterns Monitor "
-+				"with status 0x%02x", status);
-+		monitor_release(monitor, NULL);
-+		return;
-+	}
-+
-+	if (length < sizeof(*rp)) {
-+		btd_error(adapter_id, "Wrong size of Add Adv Patterns Monitor "
-+				"response");
-+		monitor_release(monitor, NULL);
-+		return;
-+	}
-+
-+	monitor->state = MONITOR_STATE_ACTIVE;
-+
-+	DBG("Calling Activate() on Adv Monitor of owner %s at path %s",
-+		monitor->app->owner, monitor->path);
-+
-+	g_dbus_proxy_method_call(monitor->proxy, "Activate", NULL, NULL, NULL,
-+					NULL);
-+
-+	DBG("Adv Monitor with handle:0x%04x added",
-+					le16_to_cpu(rp->monitor_handle));
-+}
-+
-+static void monitor_copy_patterns(void *data, void *user_data)
-+{
-+	struct bt_ad_pattern *pattern = data;
-+	struct mgmt_cp_add_adv_monitor *cp = user_data;
-+
-+	if (!pattern)
-+		return;
-+
-+	memcpy(cp->patterns + cp->pattern_count, pattern, sizeof(*pattern));
-+	cp->pattern_count++;
-+}
-+
- /* Handles an Adv Monitor D-Bus proxy added event */
- static void monitor_proxy_added_cb(GDBusProxy *proxy, void *user_data)
- {
- 	struct adv_monitor *monitor;
- 	struct adv_monitor_app *app = user_data;
-+	struct mgmt_cp_add_adv_monitor *cp = NULL;
-+	uint8_t pattern_count, cp_len;
- 	uint16_t adapter_id = app->manager->adapter_id;
- 	const char *path = g_dbus_proxy_get_path(proxy);
- 	const char *iface = g_dbus_proxy_get_interface(proxy);
-@@ -582,7 +630,24 @@ static void monitor_proxy_added_cb(GDBusProxy *proxy, void *user_data)
- 
- 	queue_push_tail(app->monitors, monitor);
- 
-+	pattern_count = queue_length(monitor->patterns);
-+	cp_len = sizeof(struct mgmt_cp_add_adv_monitor) +
-+			pattern_count * sizeof(struct mgmt_adv_pattern);
-+
-+	cp = malloc0(cp_len);
-+	queue_foreach(monitor->patterns, monitor_copy_patterns, cp);
-+
-+	if (!mgmt_send(app->manager->mgmt, MGMT_OP_ADD_ADV_PATTERNS_MONITOR,
-+			adapter_id, cp_len, cp, add_adv_patterns_monitor_cb,
-+			monitor, NULL)) {
-+		error("Unable to send Add Adv Patterns Monitor command");
-+		goto done;
-+	}
-+
- 	DBG("Adv Monitor allocated for the object at path %s", path);
-+
-+done:
-+	free(cp);
+@@ -800,7 +800,7 @@ static DBusMessage *unregister_monitor(DBusConnection *conn,
  }
  
- /* Handles the removal of an Adv Monitor D-Bus proxy */
-@@ -946,7 +1011,7 @@ static void adv_match_per_monitor(void *data, void *user_data)
- 		return;
- 	}
- 
--	if (monitor->state != MONITOR_STATE_HONORED)
-+	if (monitor->state != MONITOR_STATE_ACTIVE)
- 		return;
- 
- 	if (monitor->type == MONITOR_TYPE_OR_PATTERNS &&
+ static const GDBusMethodTable adv_monitor_methods[] = {
+-	{ GDBUS_EXPERIMENTAL_METHOD("RegisterMonitor",
++	{ GDBUS_EXPERIMENTAL_ASYNC_METHOD("RegisterMonitor",
+ 					GDBUS_ARGS({ "application", "o" }),
+ 					NULL, register_monitor) },
+ 	{ GDBUS_EXPERIMENTAL_ASYNC_METHOD("UnregisterMonitor",
 -- 
 2.26.2
 
