@@ -2,292 +2,134 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35CC129D9FA
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:08:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB01229DAFD
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:42:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727345AbgJ1XI3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Oct 2020 19:08:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33860 "EHLO
+        id S1726552AbgJ1XmV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Oct 2020 19:42:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbgJ1XIQ (ORCPT
+        with ESMTP id S1725968AbgJ1Xlu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:08:16 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC151C0613CF
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:08:15 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id s22so753333pga.9
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:08:15 -0700 (PDT)
+        Wed, 28 Oct 2020 19:41:50 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31D6C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:41:50 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id 15so803692pgd.12
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RYshsJ2zM56tgOKjlW4AxLdnwjqh8QbCbfXq9IQfVhM=;
-        b=aA+Kyiq4n+ngWsa0DmYfAazPchL0lxGKb9DBaj9Z2F2TYNN06U68wnP8Ve/9KRCVJU
-         8Pd4vzRiv0XwT1g19RAL37OpyFro4OCHuyE4EPvOm/f3PmxdEC4e4THXa0CaNclB2Uu5
-         +NNjYOUT9+zjt9UhEiOSOpmOngOOXwGt6NuyQ=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ztIBTxTOCqVSao9pMJM3OJrR4WGp4y7BufKyjyEK6BY=;
+        b=GC8ILkXtp+MRlJWpDOA/BSY4ey3n/pFoVmRRfZMmevVIsg6CkGqxBV+3mnUgSDtT12
+         FbMTwWc94OveYhP+nORDTYgNV/wtIgAGGoURDw5UcPn2xHi9H317N3rjdXI44TAJxHYh
+         QGxd2STPBJBNNjs+h2bVYgzOlAVCJcfHU57J5rKs8XzgaFUdbBz5EdvGK4QETOrcn1N6
+         gP7q2HicU28fk05VtOU/KNa1eTAYidHPgS9uWcoa7KSvIJlRAngheHzcdPtKxG+aKIVq
+         +HI89U8XQJe+mfpBPzWj1d4qSX4puMCmwfIbBtdENbSYd5rQVgzyks1GTsv9w/bnoAPn
+         yGaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RYshsJ2zM56tgOKjlW4AxLdnwjqh8QbCbfXq9IQfVhM=;
-        b=ejlrvoMxJQ6RsJXDFu155TnrN4wRgGmNTQh35U8tMfGcZ92YPenGebmXxGnR68Lokz
-         IcuH3iQkmosLZ5FLa6Awd//JQCiH2KNDvSIm1KOpAOU1JHc5gzS5op/AjK38JBZjBf3b
-         lscyN7kAK1HQghynvhTB/iiM/Y/ISX38NOtKS0ujZ3GnVa2AS7fUcXai9wxqCabnf+vx
-         8QjIX/nnc72itWEf9KFrEMWkaRM7YQcHYXYykXustokLzfhTBMeH8XBS6YMBfo6I4w1+
-         yekUL2m6cWE0PqVgtuxSoCTp8kTIyIVUcPgIjOa2LzvfO9WOZAt/ifjPGbEWn4nIBy2e
-         R6/A==
-X-Gm-Message-State: AOAM530idw6kwMxRWmQ7XS4kfRCsurV8+QbWYwFESM7qkPamfDxhwQ85
-        8AHd64ngP53GTNuuXBNGB41+Y4hwuNtfkQ==
-X-Google-Smtp-Source: ABdhPJyOdoqvzryhG6633M5viTRkDxTRWCtk6ACHx3sAZukcVP0bnLDezXcCrryQnx4pMOzoiuk2tA==
-X-Received: by 2002:a17:90a:8b16:: with SMTP id y22mr1203432pjn.46.1603926494984;
-        Wed, 28 Oct 2020 16:08:14 -0700 (PDT)
-Received: from mcchou0.mtv.corp.google.com ([2620:15c:202:201:de4a:3eff:fe75:1314])
-        by smtp.gmail.com with ESMTPSA id y137sm644134pfc.77.2020.10.28.16.08.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Oct 2020 16:08:14 -0700 (PDT)
-From:   Miao-chen Chou <mcchou@chromium.org>
-To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
-Cc:     Alain Michaud <alainm@chromium.org>,
-        Manish Mandlik <mmandlik@chromium.org>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Howard Chung <howardchung@google.com>,
-        chromeos-bluetooth-upstreaming@chromium.org,
-        Marcel Holtmann <marcel@holtmann.org>
-Subject: [BlueZ PATCH v7 7/7] adv_monitor: Issue Remove Adv Monitor mgmt call
-Date:   Wed, 28 Oct 2020 16:05:38 -0700
-Message-Id: <20201028160433.BlueZ.v7.7.Ifda683c92ff520bf58ac37c02dc40b8d9598d1b0@changeid>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201028160433.BlueZ.v7.1.I2830b9c1212a64b062201ed9f2b71294f50ad22d@changeid>
-References: <20201028160433.BlueZ.v7.1.I2830b9c1212a64b062201ed9f2b71294f50ad22d@changeid>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ztIBTxTOCqVSao9pMJM3OJrR4WGp4y7BufKyjyEK6BY=;
+        b=h5ma2mfREnKZVccAb2qiHRpTq3tn1P1wewUw3bh0hAArW3zhk1JZ+oko2AFkz87YP9
+         79J+SI0/pcQt0iHMugTOS2vsHUtFPDDAsIuuLEwAq0467JYlqMcC5DKIwEKQZ4etLF39
+         YoiR9tWRkm3p7su4hvWCYlqUT3zWrsPFAuJ7nTqhKnPydeSHd71PqoY7LU0t30ktP21l
+         RXgVkw+FX+sgvI9PZBfkIIwJ7958RrBzHObMkNyyK+Bz5pNcZ52PCWMMh9P0VUYlbTls
+         CHmW/UNbWfE+AWFnzHVT6l1/HrcLLdqpfQxOd/KyiiiIXYN8krtp/3x52EbqW9hd7LvJ
+         +vaw==
+X-Gm-Message-State: AOAM533YzDy5JicPSqwfjAM5FivMzSQqUHUQcjd1kypcoJBLqsYud1SR
+        U1jumTgTDEnDGNShUH75qK2dFBM0Bes+wrr9AdlMy9OyVAC0Rg==
+X-Google-Smtp-Source: ABdhPJzchCZ3oPRe21STUr3D4O/c38z1LuUQPqkyPQZyrbQnCkhMqE9s2/QKjAeMOklv1Mx7R9EGhrrSx7VMQdyC6hI=
+X-Received: by 2002:a6b:f610:: with SMTP id n16mr4960911ioh.103.1603863062431;
+ Tue, 27 Oct 2020 22:31:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201022082304.31757-1-sathish.narasimman@intel.com>
+In-Reply-To: <20201022082304.31757-1-sathish.narasimman@intel.com>
+From:   Sathish Narasimman <nsathish41@gmail.com>
+Date:   Wed, 28 Oct 2020 11:00:51 +0530
+Message-ID: <CAOVXEJL1qCPmpY-jGW8AsycxGytCzuJQR4hv-bXPPSNyO=5GZQ@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: Fix: LL PRivacy BLE device fails to connect
+To:     Bluez mailing list <linux-bluetooth@vger.kernel.org>
+Cc:     Chethan T N <chethan.tumkur.narayan@intel.com>,
+        ravishankar.srivatsa@intel.com, kiran.k@intel.com,
+        Sathish Narasimman <sathish.narasimman@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Alain Michaud <alainm@chromium.org>
+Hi
 
-This calls Remove Adv Monitor command to kernel and handles the callback
-during a monitor removal initiated by a D-Bus client. This also
-registers callback for getting notified on Adv Monitor Removed event, so
-that the Adv monitor manager can invalidate the monitor by calling
-Release() on its proxy.
+On Thu, Oct 22, 2020 at 1:47 PM Sathish Narasimman <nsathish41@gmail.com> wrote:
+>
+> When adding device to white list the device is added to resolving list
+> also it has to be added only when HCI_ENABLE_LL_PRIVACY flag is set.
+> HCI_ENABLE_LL_PRIVACY flag has to be tested before adding/deleting devices
+> to resolving list. use_ll_privacy macro is used only to check if controller
+> supports LL_Privacy.
+>
+> https://bugzilla.kernel.org/show_bug.cgi?id=209745
+>
+> Signed-off-by: Sathish Narasimman <sathish.narasimman@intel.com>
+> ---
+>  net/bluetooth/hci_request.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+>
+> diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+> index 6f12bab4d2fa..610ed0817bd7 100644
+> --- a/net/bluetooth/hci_request.c
+> +++ b/net/bluetooth/hci_request.c
+> @@ -698,7 +698,8 @@ static void del_from_white_list(struct hci_request *req, bdaddr_t *bdaddr,
+>                    cp.bdaddr_type);
+>         hci_req_add(req, HCI_OP_LE_DEL_FROM_WHITE_LIST, sizeof(cp), &cp);
+>
+> -       if (use_ll_privacy(req->hdev)) {
+> +       if (use_ll_privacy(req->hdev) &&
+> +           hci_dev_test_flag(req->hdev, HCI_ENABLE_LL_PRIVACY)) {
+>                 struct smp_irk *irk;
+>
+>                 irk = hci_find_irk_by_addr(req->hdev, bdaddr, bdaddr_type);
+> @@ -732,7 +733,8 @@ static int add_to_white_list(struct hci_request *req,
+>                 return -1;
+>
+>         /* White list can not be used with RPAs */
+> -       if (!allow_rpa && !use_ll_privacy(hdev) &&
+> +       if (!allow_rpa &&
+> +           !hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY) &&
+>             hci_find_irk_by_addr(hdev, &params->addr, params->addr_type)) {
+>                 return -1;
+>         }
+> @@ -750,7 +752,8 @@ static int add_to_white_list(struct hci_request *req,
+>                    cp.bdaddr_type);
+>         hci_req_add(req, HCI_OP_LE_ADD_TO_WHITE_LIST, sizeof(cp), &cp);
+>
+> -       if (use_ll_privacy(hdev)) {
+> +       if (use_ll_privacy(hdev) &&
+> +           hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY)) {
+>                 struct smp_irk *irk;
+>
+>                 irk = hci_find_irk_by_addr(hdev, &params->addr,
+> @@ -812,7 +815,8 @@ static u8 update_white_list(struct hci_request *req)
+>                 }
+>
+>                 /* White list can not be used with RPAs */
+> -               if (!allow_rpa && !use_ll_privacy(hdev) &&
+> +               if (!allow_rpa &&
+> +                   !hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY) &&
+>                     hci_find_irk_by_addr(hdev, &b->bdaddr, b->bdaddr_type)) {
+>                         return 0x00;
+>                 }
+> --
+> 2.17.1
+>
 
-The following tests were performed.
-- In bluetoothctl console, add a monitor and remove the monitor by its
-index and verify the removal in both the output of btmgmt and syslog.
-- In bluetoothctl console, add a monitor, remove the monitor via
-btmgmt and verify the removal in syslog.
 
-Reviewed-by: Howard Chung <howardchung@google.com>
-Reviewed-by: Alain Michaud <alainm@chromium.org>
----
+Gentle reminder.
+Seems Many devices are failing to reconnect after every on 5.9 kernel
 
-Changes in v7:
-- Rename MONITOR_STATE_HONORED to MONITOR_STATE_ACTIVE
+This patch will FIX the issue
 
-Changes in v4:
-- Fix build error
-
-Changes in v3:
-- Fix const qualifier of a pointer
-
- src/adv_monitor.c | 132 +++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 124 insertions(+), 8 deletions(-)
-
-diff --git a/src/adv_monitor.c b/src/adv_monitor.c
-index dbc3b2a92..c786015c8 100644
---- a/src/adv_monitor.c
-+++ b/src/adv_monitor.c
-@@ -79,6 +79,7 @@ enum monitor_state {
- 	MONITOR_STATE_FAILED,	/* Failed to be init'ed */
- 	MONITOR_STATE_INITED,	/* Init'ed but not yet sent to kernel */
- 	MONITOR_STATE_ACTIVE,	/* Accepted by kernel */
-+	MONITOR_STATE_REMOVING,	/* Removing from kernel */
- };
- 
- struct adv_monitor {
-@@ -87,6 +88,7 @@ struct adv_monitor {
- 	char *path;
- 
- 	enum monitor_state state;	/* MONITOR_STATE_* */
-+	uint16_t monitor_handle;	/* Kernel Monitor Handle */
- 
- 	int8_t high_rssi;		/* High RSSI threshold */
- 	uint16_t high_rssi_timeout;	/* High RSSI threshold timeout */
-@@ -567,6 +569,7 @@ static void add_adv_patterns_monitor_cb(uint8_t status, uint16_t length,
- 		return;
- 	}
- 
-+	monitor->monitor_handle = le16_to_cpu(rp->monitor_handle);
- 	monitor->state = MONITOR_STATE_ACTIVE;
- 
- 	DBG("Calling Activate() on Adv Monitor of owner %s at path %s",
-@@ -575,8 +578,7 @@ static void add_adv_patterns_monitor_cb(uint8_t status, uint16_t length,
- 	g_dbus_proxy_method_call(monitor->proxy, "Activate", NULL, NULL, NULL,
- 					NULL);
- 
--	DBG("Adv Monitor with handle:0x%04x added",
--					le16_to_cpu(rp->monitor_handle));
-+	DBG("Adv monitor with handle:0x%04x added", monitor->monitor_handle);
- }
- 
- static void monitor_copy_patterns(void *data, void *user_data)
-@@ -650,20 +652,77 @@ done:
- 	free(cp);
- }
- 
-+/* Handles the callback of Remove Adv Monitor command */
-+static void remove_adv_monitor_cb(uint8_t status, uint16_t length,
-+				const void *param, void *user_data)
-+{
-+	struct adv_monitor *monitor = user_data;
-+	const struct mgmt_rp_remove_adv_monitor *rp = param;
-+	uint16_t adapter_id = monitor->app->manager->adapter_id;
-+
-+	if (status != MGMT_STATUS_SUCCESS || !param) {
-+		btd_error(adapter_id, "Failed to Remove Adv Monitor with "
-+			"status 0x%02x", status);
-+		goto done;
-+	}
-+
-+	if (length < sizeof(*rp)) {
-+		btd_error(adapter_id, "Wrong size of Remove Adv Monitor "
-+				"response");
-+		goto done;
-+	}
-+
-+done:
-+	queue_remove(monitor->app->monitors, monitor);
-+
-+	DBG("Adv Monitor removed with handle:0x%04x, path %s",
-+		monitor->monitor_handle, monitor->path);
-+
-+	monitor_free(monitor);
-+}
-+
-+
- /* Handles the removal of an Adv Monitor D-Bus proxy */
- static void monitor_proxy_removed_cb(GDBusProxy *proxy, void *user_data)
- {
- 	struct adv_monitor *monitor;
-+	struct mgmt_cp_remove_adv_monitor cp;
- 	struct adv_monitor_app *app = user_data;
-+	uint16_t adapter_id = app->manager->adapter_id;
- 
--	monitor = queue_remove_if(app->monitors, monitor_match, proxy);
--	if (monitor) {
--		DBG("Adv Monitor removed for the object at path %s",
--			monitor->path);
-+	monitor = queue_find(app->monitors, monitor_match, proxy);
- 
--		/* The object was gone, so we don't need to call Release() */
--		monitor_free(monitor);
-+	/* A monitor removed event from kernel can remove a monitor and notify
-+	 * the app on Release() where this callback can be invoked, so we
-+	 * simply skip here.
-+	 */
-+	if (!monitor)
-+		return;
-+
-+	if (monitor->state != MONITOR_STATE_ACTIVE)
-+		goto done;
-+
-+	monitor->state = MONITOR_STATE_REMOVING;
-+
-+	cp.monitor_handle = cpu_to_le16(monitor->monitor_handle);
-+
-+	if (!mgmt_send(app->manager->mgmt, MGMT_OP_REMOVE_ADV_MONITOR,
-+			adapter_id, sizeof(cp), &cp, remove_adv_monitor_cb,
-+			monitor, NULL)) {
-+		btd_error(adapter_id, "Unable to send Remove Advt Monitor "
-+				"command");
-+		goto done;
- 	}
-+
-+	return;
-+
-+done:
-+	queue_remove(app->monitors, monitor);
-+
-+	DBG("Adv Monitor removed in state %02x with path %s", monitor->state,
-+		monitor->path);
-+
-+	monitor_free(monitor);
- }
- 
- /* Creates an app object, initiates it and sets D-Bus event handlers */
-@@ -872,6 +931,59 @@ static const GDBusPropertyTable adv_monitor_properties[] = {
- 	{ }
- };
- 
-+/* Matches a monitor based on its handle */
-+static bool removed_monitor_match(const void *data, const void *user_data)
-+{
-+	const uint16_t *handle = user_data;
-+	const struct adv_monitor *monitor = data;
-+
-+	if (!data || !handle)
-+		return false;
-+
-+	return monitor->monitor_handle == *handle;
-+}
-+
-+/* Remove the matched monitor and reports the removal to the app */
-+static void app_remove_monitor(void *data, void *user_data)
-+{
-+	struct adv_monitor_app *app = data;
-+	struct adv_monitor *monitor;
-+
-+	monitor = queue_find(app->monitors, removed_monitor_match, user_data);
-+	if (monitor) {
-+		if (monitor->state == MONITOR_STATE_ACTIVE)
-+			monitor_release(monitor, NULL);
-+
-+		queue_remove(app->monitors, monitor);
-+
-+		DBG("Adv Monitor at path %s removed", monitor->path);
-+
-+		monitor_free(monitor);
-+	}
-+}
-+
-+/* Processes Adv Monitor removed event from kernel */
-+static void adv_monitor_removed_callback(uint16_t index, uint16_t length,
-+					const void *param, void *user_data)
-+{
-+	struct btd_adv_monitor_manager *manager = user_data;
-+	const struct mgmt_ev_adv_monitor_removed *ev = param;
-+	uint16_t handle = ev->monitor_handle;
-+	const uint16_t adapter_id = manager->adapter_id;
-+
-+	if (length < sizeof(*ev)) {
-+		btd_error(adapter_id, "Wrong size of Adv Monitor Removed "
-+				"event");
-+		return;
-+	}
-+
-+	/* Traverse the apps to find the monitor */
-+	queue_foreach(manager->apps, app_remove_monitor, &handle);
-+
-+	DBG("Adv Monitor removed event with handle 0x%04x processed",
-+		ev->monitor_handle);
-+}
-+
- /* Allocates a manager object */
- static struct btd_adv_monitor_manager *manager_new(
- 						struct btd_adapter *adapter,
-@@ -891,6 +1003,10 @@ static struct btd_adv_monitor_manager *manager_new(
- 	manager->adapter_id = btd_adapter_get_index(adapter);
- 	manager->apps = queue_new();
- 
-+	mgmt_register(manager->mgmt, MGMT_EV_ADV_MONITOR_REMOVED,
-+			manager->adapter_id, adv_monitor_removed_callback,
-+			manager, NULL);
-+
- 	return manager;
- }
- 
--- 
-2.26.2
-
+Regards
+Sathish N
