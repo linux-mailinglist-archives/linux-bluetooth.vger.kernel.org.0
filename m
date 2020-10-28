@@ -2,67 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32AFA29DB0D
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:43:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09C3029DB66
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 00:54:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728036AbgJ1Xmw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Oct 2020 19:42:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38098 "EHLO
+        id S2390651AbgJ1XyB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Oct 2020 19:54:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390515AbgJ1Xd7 (ORCPT
+        with ESMTP id S2389984AbgJ1XyB (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:33:59 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB138C0613CF
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:33:59 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id p15so1435386ioh.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:33:59 -0700 (PDT)
+        Wed, 28 Oct 2020 19:54:01 -0400
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B095C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:53:59 -0700 (PDT)
+Received: by mail-io1-xd41.google.com with SMTP id u19so1458614ion.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Oct 2020 16:53:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
          :references;
-        bh=JzZZkqrz46b5AroLzCJSWKJYgE8rWDfEEsOIDZldTaU=;
-        b=b3tdOjRiZ+Zu2ybSQAie5D6cW2I8yrROLzkLlgyxDZe/efDQJKN+OoqukEZ4ND/pDD
-         1goLKnvdRyBfvmPSoyW2coxnDpZWJSJyLhogrM/hN3zTtgPFb7Xx5y3/E7ya2DNpIcTr
-         fSli6fmfwPCml1b6JnFL6ANm27n9IIEPUOAWvmhqzer+rHmhiwg0JEopImaYR95H/CqL
-         5czH2Z+BFH8j77hS2OYOvhgZqVytLF9kv9LEi1pwFrrPmSj5nZJ8vnDyNZLy1gwaG1cC
-         Yn0iD0HKr9dNCOgSJiUhXQumUavUYgZ8eDtRulGlwlhAC5TKQ0ZwIoIIoikPWp8xhDfA
-         9CVg==
+        bh=V6rlFkQf5dOMs+c+D1tMpcfSOd5ukJkB9+4ErZPUDjI=;
+        b=Mvhcbo1RAcN4ZxWCY2z7ThDWkRTewUFW2SbQlVhwgA4l2kt/1nOrvcvU12lNe4DU3X
+         FAENsKcAiA0YRhtN4tjgm7F2R4RJ0gqEuWHKjsa3nw5kW7Vzx8XiTpHRratMGNyjZVeu
+         c/JlbRS5gmkCyYa9MwwgA3nbS6cqh1jX7EnnMOE41bBKqn5m3fC57WZLOiaaFwtkZ+YJ
+         k72mulaMeKhI2l92hIkCMmeIdJQqDvK7gJU9hGrOnvpcqJ1ScDcUNjeIBs1KRdSF5dRC
+         bHfHrXSqsgWUh/nGdmjBkd46+K+Lw7tgqQ+keOxN+H5ILEfKw8DFdkY2sWmdnrb5ndw6
+         KksA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:date:mime-version:from:to:subject
          :reply-to:in-reply-to:references;
-        bh=JzZZkqrz46b5AroLzCJSWKJYgE8rWDfEEsOIDZldTaU=;
-        b=TPIOzXQGUc0FvDe8jiZHljBpNPAxNT5mr5ubCDZbXYm905fYQDEhCfsabvbHXakYiY
-         thkvl2M1zTJYpZZsikKZ1QcoOmEBXOUS0RqxcWIfwqh45vOwHJKV546677Hh2os5llWm
-         sTnk3/J+pD5E8Y4ZNpidx6r8tx+5sDW6hU54icA7R2JDtNlf+mOAGuOELkEQtdoluVK4
-         dtDdeDs5f8lWEAPN2pJ5rcnQ+pJ8ksLnO0LAaUrY2WP33KKeHXkaE/9JiZApmOd+Pp+T
-         2KiRY7BZjX3MZEydAwrKHxPAFVC0INp/wZgP2gRqesTm6maYY+swlG0sM7ZcECPpRxjH
-         zukA==
-X-Gm-Message-State: AOAM532US2Qc2nAoFGE8lVrPqVvdqS85gj3MOmuuK8NqTJ6ZL16Dqat0
-        nB+bTynvu6dRkXTIUXQRAufN6SVCh/Y=
-X-Google-Smtp-Source: ABdhPJz+vsoP0S/XRSJeYWkoXGxP4evENTT32MdGhZ7ffOEUFZpl8Pat6SOupJguIo2Hyr02JJbi/g==
-X-Received: by 2002:a6b:3f88:: with SMTP id m130mr1447703ioa.78.1603928039059;
-        Wed, 28 Oct 2020 16:33:59 -0700 (PDT)
-Received: from [172.17.0.2] ([52.179.189.227])
-        by smtp.gmail.com with ESMTPSA id 80sm926376ilv.13.2020.10.28.16.33.58
+        bh=V6rlFkQf5dOMs+c+D1tMpcfSOd5ukJkB9+4ErZPUDjI=;
+        b=O6RgT7S9+LlKNrEm7BRDDLNFCSiINV0u1jKD5zPS4O2csOtrLnTMRZnCGONbq2lyfF
+         Ed2JkxP8iagx41CSqTkPYsfbAkH9MvUGKEe1x9FHB/rZUMpztliTyW8TwHxMUuj1ZQ6j
+         S5+j1V3zjLFHUUOIGGHm3iQtcOelK4QdEndAqhjoy6QzLPxDjEbfzmOwIlFmhpjiL8j0
+         YKfcYmM82anCzCtMrqoaHlZCtRdm0YU9Vr0hYRdYdFudf+1EwyrvA/Yl38vQ4BWXb9v4
+         VS+0w50dXzIkPBmCjMxrRhaHeP+0WC3Cg+SZ7FSx1H022wLCWbnL6TMAFBSmHDwe0F2J
+         nqww==
+X-Gm-Message-State: AOAM530CGNMwUKq+n2ihfZdqOjBriRHVC3L4/nCI4u9PyO1KnsSJ1ELs
+        jyI4LwShoqRIl2YVYqjVB8XwDz32ESk=
+X-Google-Smtp-Source: ABdhPJzzS5prwPopxDZGh8QKA2X/Nwi0jowjlDLkfe6a+GnS8wZ8LH3vzMXNWkIRienWaEd/cQn5ig==
+X-Received: by 2002:a02:6342:: with SMTP id j63mr1325937jac.41.1603929238680;
+        Wed, 28 Oct 2020 16:53:58 -0700 (PDT)
+Received: from [172.17.0.2] ([40.65.201.112])
+        by smtp.gmail.com with ESMTPSA id v15sm844976ile.37.2020.10.28.16.53.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 16:33:58 -0700 (PDT)
-Message-ID: <5f99ffe6.1c69fb81.a9e8e.4fe7@mx.google.com>
-Date:   Wed, 28 Oct 2020 16:33:58 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============8972442694147168608=="
+        Wed, 28 Oct 2020 16:53:58 -0700 (PDT)
+Message-ID: <5f9a0496.1c69fb81.ca4e.493d@mx.google.com>
+Date:   Wed, 28 Oct 2020 16:53:58 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============7979117838570326410=="
 MIME-Version: 1.0
 From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, mcchou@chromium.org
-Subject: RE: [BlueZ,v7,1/7] adv_monitor: Implement RSSI Filter logic for background scanning
+To:     linux-bluetooth@vger.kernel.org, howardchung@google.com
+Subject: RE: [BlueZ,v5,1/2] mgmt: Add support of mgmt TLV API
 Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20201028160433.BlueZ.v7.1.I2830b9c1212a64b062201ed9f2b71294f50ad22d@changeid>
-References: <20201028160433.BlueZ.v7.1.I2830b9c1212a64b062201ed9f2b71294f50ad22d@changeid>
+In-Reply-To: <20201028195132.BlueZ.v5.1.I2fa28644a012f69c4665977e5816bcf8a51963f5@changeid>
+References: <20201028195132.BlueZ.v5.1.I2fa28644a012f69c4665977e5816bcf8a51963f5@changeid>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============8972442694147168608==
+--===============7979117838570326410==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -73,12 +73,70 @@ Dear submitter,
 
 Thank you for submitting the patches to the linux bluetooth mailing list.
 This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=372473
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=372511
 
 ---Test result---
 
 ##############################
-Test: CheckPatch - PASS
+Test: CheckPatch - FAIL
+Output:
+core: Add support of variable length params in mgmt_config
+WARNING:LONG_LINE: line over 80 characters
+#115: FILE: src/adapter.c:4215:
++			sizeof(main_opts.default_params.br_link_supervision_timeout),
+
+WARNING:LONG_LINE: line over 80 characters
+#182: FILE: src/adapter.c:4251:
++			sizeof(main_opts.default_params.le_multi_adv_rotation_interval),
+
+WARNING:LONG_LINE: line over 80 characters
+#183: FILE: src/adapter.c:4252:
++			&main_opts.default_params.le_multi_adv_rotation_interval);
+
+WARNING:LONG_LINE: line over 80 characters
+#194: FILE: src/adapter.c:4257:
++			sizeof(main_opts.default_params.le_scan_interval_autoconnect),
+
+WARNING:LONG_LINE: line over 80 characters
+#206: FILE: src/adapter.c:4263:
++			sizeof(main_opts.default_params.le_scan_win_autoconnect),
+
+WARNING:LONG_LINE: line over 80 characters
+#218: FILE: src/adapter.c:4269:
++			sizeof(main_opts.default_params.le_scan_interval_suspend),
+
+WARNING:LONG_LINE: line over 80 characters
+#241: FILE: src/adapter.c:4281:
++			sizeof(main_opts.default_params.le_scan_interval_discovery),
+
+WARNING:LONG_LINE: line over 80 characters
+#265: FILE: src/adapter.c:4293:
++			sizeof(main_opts.default_params.le_scan_interval_adv_monitor),
+
+WARNING:LONG_LINE: line over 80 characters
+#277: FILE: src/adapter.c:4299:
++			sizeof(main_opts.default_params.le_scan_win_adv_monitor),
+
+WARNING:LONG_LINE: line over 80 characters
+#289: FILE: src/adapter.c:4305:
++			sizeof(main_opts.default_params.le_scan_interval_connect),
+
+WARNING:LONG_LINE: line over 80 characters
+#456: FILE: src/main.c:375:
++		  sizeof(main_opts.default_params.le_multi_adv_rotation_interval),
+
+- total: 0 errors, 11 warnings, 524 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+Your patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
 
 ##############################
 Test: CheckGitLint - PASS
@@ -96,4 +154,4 @@ Regards,
 Linux Bluetooth
 
 
---===============8972442694147168608==--
+--===============7979117838570326410==--
