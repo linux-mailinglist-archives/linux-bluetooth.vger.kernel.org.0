@@ -2,139 +2,158 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4BE629F6C0
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 22:23:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1C9B29F6C1
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Oct 2020 22:23:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726226AbgJ2VXq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Oct 2020 17:23:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45304 "EHLO
+        id S1726320AbgJ2VXs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Oct 2020 17:23:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbgJ2VXq (ORCPT
+        with ESMTP id S1725948AbgJ2VXr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Oct 2020 17:23:46 -0400
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 012CDC0613CF
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Oct 2020 14:23:45 -0700 (PDT)
-Received: by mail-qv1-xf49.google.com with SMTP id eh4so2545239qvb.12
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Oct 2020 14:23:45 -0700 (PDT)
+        Thu, 29 Oct 2020 17:23:47 -0400
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB2F1C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Oct 2020 14:23:47 -0700 (PDT)
+Received: by mail-qk1-x74a.google.com with SMTP id x85so2632602qka.14
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Oct 2020 14:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=sender:date:message-id:mime-version:subject:from:to:cc;
-        bh=WyDGRz2pbkNZwiLvOIQy45H0kIvS2ltU85WXGIWP/yQ=;
-        b=uzwVuPq/le2AMhNgDudVXSjx2dWhjpxsiSSlKSTmkgtoLz5VaAucFdcnxklbC1vb8J
-         3Ao3EN/TJFzVtDqq+kpSt7ksNNwExyUVu0vshKBzaVcbSbOX6VOdbfvf2nP9dpdwRdsa
-         ZX9VtY+PEA5yTDFnT5NMn2nst0kzZbqr0HzB8q4CaRIdKqz21EFvTne5vonmBJkkN9Xm
-         xIGUbFK038fFBE3YsVazG6LQrc5vDKcuzXU8iGZtcLEcj2tkjewypDTRJXWNVdAD7XF+
-         y5pzjeWLq+1IcdFLOGY3KlF+Yp1Jn+xnxSWPD1TPAMASVCXRdH0ZP58s7djiFD5qZOrd
-         GNXQ==
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=txKoRgXFpX5OkMoNQV35XeQq+co/kJjUR3niRDei33Q=;
+        b=PNjemyS6pu+tgo4jjlNOk6+DABURU5fkxZ/HA/21CRZr+BqeQNEImZN+eWwKEpq2zk
+         qKkIT+PCVjm49sTgdOJUrdfkegN8g/EiKhYgnuwFaAvgYwzEAl02QQnK/jJL4eZZxqQf
+         O9gz7S5sydefKcuz78ERv6BU6BsEsZ/zy7/7mPNYs0NoWihVl42DHMWe/ydjg4TuWphZ
+         BN53T/zMf/PqRXhOhXgww0uEOzIvIQF61lOz/DG+YK9wccL/RYiWdPmxwVPQc18mG2qk
+         iS/Xdt/BV5lD/MwjbSrkAltu1COr474a6RSgkQ42fgfahK0QezzQA2f4wJzqBIOJRz9U
+         N8Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
-         :to:cc;
-        bh=WyDGRz2pbkNZwiLvOIQy45H0kIvS2ltU85WXGIWP/yQ=;
-        b=G3w9lNnzp7b7vTlPEue/RHG0VSviDwTk1XcDiao40g02KuHpgy6lMIyr0TcXPOhv3c
-         Bye9SrGehstPHUcspcnoQyzXCboLNzixtEhG/SH+KAqQFRMwjAiIuBxv+x8a+5jlZg6l
-         6omnpwcfSiY0l1P3IY8o1A+/f+Hu48lMIc3yCCnuOSqDUd1eHOYZke+pEWXgF18F0MrA
-         eBsQ6u1KRri7RFu8CIt+8cYp5bDt0fYMjX12CK58+onk3x4A7gXQh/iZOVh7xmJFLanZ
-         3vLzSZkpEmg52ql31prqIWDNUV0CjsnFAbI6Yv5T+Nn/SD0+U53vncVPL62I3jCHWqL+
-         F24g==
-X-Gm-Message-State: AOAM531ZLOsnefNyINDPJWwAmJ4TiyPL4l71U4NE+McI0q97Kf1zXsuH
-        yeC0yZmmq0KiooqNEJ/XLbEdQlarmt0IIXbiVMUQ
-X-Google-Smtp-Source: ABdhPJwHd8boNgQ1UN23fOMfz1AXhvPVHqAVi/SGS7GbEl6iqbA4i1d22nfLSP6UiCGt2gEgqb15If/BVjdDqN1d6Zhz
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=txKoRgXFpX5OkMoNQV35XeQq+co/kJjUR3niRDei33Q=;
+        b=r/4AHMtRGIa03WL8XbkKH9/Dny1Y+CDgFQT06PTAiK5shuTqeLmo+goVmXRkHKH/8y
+         t1BG0SpUU2AlfgdRtvb01wmPq88JSMOspSv0VbwpxFnbFCAHMJ2woHzf5GqMexLlD2Sb
+         kFa/RoFBjZ/zRqUFuB6JtUTG/7ScJvMGSSnTsV5a9bZUPLHF7WyQc1CCe4nc6LdBl0j1
+         9Uo+WCXNSbDnJnPI0e8HSDIpOm1Bvby7RMlN1zmOHt4RshLmWPvQOolJo0TcN5XnIBcO
+         aEzHqUu1mXWd7KO7K4pKgAL5+rSPgULvP2/0Nwn+FaNNcN3HbC7LxK4OXyvHOXRrstR7
+         uoWA==
+X-Gm-Message-State: AOAM533akoh3sRKKfAPfO2ePeF/JcQv5UTFWvP6aB/6u6dmIvSEdbnkk
+        rYqlQDpecTspmY/ILsrmy6b399w8XCAPmWyz1w8T
+X-Google-Smtp-Source: ABdhPJxWUj090iNAeJmqRNWcSY/dGZq4v/0KPg5SwBkxAfJXllUhjcbtQxN48aWHXPhcMeOxATg6QMSZgwclRYKrM6Ft
 Sender: "danielwinkler via sendgmr" 
         <danielwinkler@danielwinkler-linux.mtv.corp.google.com>
 X-Received: from danielwinkler-linux.mtv.corp.google.com ([2620:15c:202:201:f693:9fff:fef4:4e59])
- (user=danielwinkler job=sendgmr) by 2002:a0c:85e3:: with SMTP id
- o90mr5878142qva.46.1604006624988; Thu, 29 Oct 2020 14:23:44 -0700 (PDT)
-Date:   Thu, 29 Oct 2020 14:23:25 -0700
-Message-Id: <20201029212336.3283410-1-danielwinkler@google.com>
+ (user=danielwinkler job=sendgmr) by 2002:a0c:cb02:: with SMTP id
+ o2mr6342760qvk.8.1604006626942; Thu, 29 Oct 2020 14:23:46 -0700 (PDT)
+Date:   Thu, 29 Oct 2020 14:23:26 -0700
+In-Reply-To: <20201029212336.3283410-1-danielwinkler@google.com>
+Message-Id: <20201029141832.Bluez.v5.1.Ifaa96e71a871158e5d9d454073b2b6846eae339f@changeid>
 Mime-Version: 1.0
+References: <20201029212336.3283410-1-danielwinkler@google.com>
 X-Mailer: git-send-email 2.29.1.341.ge80a0c044ae-goog
-Subject: [Bluez PATCH v5 00/10] Bluetooth: Add new MGMT interface for
- advertising add
+Subject: [Bluez PATCH v5 01/10] doc/advertising-api: update API with new interface
 From:   Daniel Winkler <danielwinkler@google.com>
 To:     luiz.von.dentz@intel.com
 Cc:     linux-bluetooth@vger.kernel.org,
         chromeos-bluetooth-upstreaming@chromium.org,
-        Daniel Winkler <danielwinkler@google.com>
+        Daniel Winkler <danielwinkler@google.com>,
+        Sonny Sasaka <sonnysasaka@chromium.org>,
+        Alain Michaud <alainm@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Maintainers,
+This updates the advertising documentation to include the following
+features:
 
-This patch series defines the new two-call MGMT interface in userspace
-for adding advertising instances. Bluez will detect if kernel supports
-the new MGMT commands, and use them if so. Each new advertising instance
-will be configured by a MGMT call to set advertising parameters,
-followed by a MGMT call to set advertising data. The new data pipeline
-is meant to be unnoticeable from the clients' perspective, with the
-exception of new intervals and tx power support, and new exposed
-advertising manager properties.
+LE Advertising Manager:
+- New SupportedCapabilities property
 
-All changes have been tested on hatch (extended advertising) and kukui
-(no extended advertising) chromebooks with manual testing verifying
-correctness of parameters/data in btmon traces, and our automated test
-suite of 25 single- and multi-advertising usage scenarios.
+LE Advertisement:
+- New min/max interval properties
+- New tx power property
 
-V2 of the series puts documentation at the front as requested.
-
-Thank you in advance for your review!
-Daniel Winkler
-
+Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
+Reviewed-by: Alain Michaud <alainm@chromium.org>
+---
 
 Changes in v5:
 - Changed interval API from jiffies to milliseconds for clarity
 - Changed new dbus endpoints to be experimental
-- Only parse new properties if experimental flag is set
-- Verify capabilities MGMT command is supported before calling it
-- Make SupportedCapabilities experimental
 
-Changes in v4:
-- mgmt-api: moved optional params into 'flags' field
-- mgmt-api: added info for new return parameters for max data size
-- mgmt-api: Move Controller Capabilities MGMT doc into new patch
-- mgmt-api: Tx Power range put into single capabilities entry
-- Moved optional params into flags field
-- Use returned max data length in adv data length check
-- Move tx power range into single capability field
+Changes in v4: None
+Changes in v3: None
+Changes in v2: None
 
-Changes in v3:
-- Removed Tx Power Selected MGMT event
-- Changed Read Security Info cmd to  Read Controller Capabilities
-- Added selected tx power to MGMT params response
-- Removed Tx Power Selected MGMT event from monitor
+ doc/advertising-api.txt | 48 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-Changes in v2:
-- Removed extra space in Add Extended Advertising Parameters API
-- Uses btd_has_kernel_features to detect kernel command support
-- Cleaned fail path in add_adv_params_callback
-
-Daniel Winkler (10):
-  doc/advertising-api: update API with new interface
-  doc/mgmt-api: Add new Advertising MGMT interfaces to mgmt-api
-  doc/mgmt-api: Update controller capabilities MGMT command in mgmt-api
-  advertising: Detect if extended advertising mgmt commands are
-    supported
-  advertising: Parse intervals and tx power from adv
-  advertising: Use new mgmt interface for advertising add
-  advertising: Query LE TX range at manager initialization
-  advertising: Expose SupportedCapabilities for advertising
-  client: Add SupportedCapabilities to bluetoothctl
-  monitor: Add new MGMT adv commands and events to monitor
-
- client/main.c           |   1 +
- doc/advertising-api.txt |  48 +++++
- doc/mgmt-api.txt        | 238 +++++++++++++++++++++-
- lib/mgmt.h              |  46 ++++-
- monitor/packet.c        |  69 ++++++-
- src/adapter.c           |   8 +
- src/adapter.h           |   2 +
- src/advertising.c       | 428 ++++++++++++++++++++++++++++++++++++++--
- tools/btmgmt.c          |  12 +-
- 9 files changed, 819 insertions(+), 33 deletions(-)
-
+diff --git a/doc/advertising-api.txt b/doc/advertising-api.txt
+index b0565eab2..541c57004 100644
+--- a/doc/advertising-api.txt
++++ b/doc/advertising-api.txt
+@@ -138,6 +138,31 @@ Properties	string Type
+ 					"2M"
+ 					"Coded"
+ 
++		uint32 MinInterval [Experimental]
++
++			Minimum advertising interval to be used by the
++			advertising set, in milliseconds. Acceptable values
++			are in the range [20ms, 10,485s]. If the provided
++			MinInterval is larger than the provided MaxInterval,
++			the registration will return failure.
++
++		uint32 MaxInterval [Experimental]
++
++			Maximum advertising interval to be used by the
++			advertising set, in milliseconds. Acceptable values
++			are in the range [20ms, 10,485s]. If the provided
++			MinInterval is larger than the provided MaxInterval,
++			the registration will return failure.
++
++		int16 TxPower [Experimental]
++
++			Requested transmission power of this advertising set.
++			The provided value is used only if the "CanSetTxPower"
++			feature is enabled on the Advertising Manager. The
++			provided value must be in range [-127 to +20], where
++			units are in dBm.
++
++
+ LE Advertising Manager hierarchy
+ ================================
+ 
+@@ -209,3 +234,26 @@ Properties	byte ActiveInstances
+ 			Possible values: "1M"
+ 					 "2M"
+ 					 "Coded"
++
++		dict SupportedCapabilities [Experimental]
++
++			Enumerates Advertising-related controller capabilities
++			useful to the client.
++
++			Possible Values:
++
++				byte MaxAdvLen
++
++					Max advertising data length
++
++				byte MaxScnRspLen
++
++					Max advertising scan response length
++
++				int16 MinTxPower
++
++					Min advertising tx power (dBm)
++
++				int16 MaxTxPower
++
++					Max advertising tx power (dBm)
 -- 
 2.29.1.341.ge80a0c044ae-goog
 
