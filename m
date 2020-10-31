@@ -2,48 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EE0B72A128C
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 31 Oct 2020 02:27:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 557DB2A1854
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 31 Oct 2020 15:57:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726295AbgJaB1Q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 30 Oct 2020 21:27:16 -0400
-Received: from 93804.cloudwaysapps.com ([178.62.255.238]:56716 "EHLO
-        93804.cloudwaysapps.com" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726112AbgJaB1P (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 30 Oct 2020 21:27:15 -0400
-X-Greylist: delayed 12185 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Oct 2020 21:27:03 EDT
-Received: from 127.0.0.1 (93804.cloudwaysapps.com [127.0.0.1])
-        by 93804.cloudwaysapps.com (Postfix) with SMTP id C0065220DE;
-        Fri, 30 Oct 2020 19:28:41 +0000 (UTC)
-Received: from [10.92.248.238] by 127.0.0.1 with ESMTP id <744952-75524> for <linux-acpi@vger.kernel.org>; Sat, 31 Oct 2020 02:20:53 +0600
-Message-ID: <dic5wasb-2c8kb$78@lu916y>
-From:   "JOHN PHIL" <gerradfinancialplanning@gmail.com>
-Reply-To: "JOHN PHIL" <gerradfinancialplanning@gmail.com>
-To:     linux-acpi@vger.kernel.org
-Subject: November Equity Investment 20-20 
-Date:   Sat, 31 Oct 20 02:20:53 GMT
-X-Mailer: Microsoft Outlook IMO, Build 9.0.2416 (9.0.2910.0)
+        id S1726196AbgJaO5g convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 31 Oct 2020 10:57:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42764 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726089AbgJaO5f (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 31 Oct 2020 10:57:35 -0400
+From:   bugzilla-daemon@bugzilla.kernel.org
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 209493] Intel 9260 Wifi/BT USB Resets Repeatedly
+Date:   Sat, 31 Oct 2020 14:57:35 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: parker@finest.io
+X-Bugzilla-Status: RESOLVED
+X-Bugzilla-Resolution: INVALID
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: bug_status resolution
+Message-ID: <bug-209493-62941-wyidw0pvVi@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-209493-62941@https.bugzilla.kernel.org/>
+References: <bug-209493-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-        boundary="07B_9ED_4_"
-X-Priority: 1
-X-MSMail-Priority: High
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+https://bugzilla.kernel.org/show_bug.cgi?id=209493
 
---07B_9ED_4_
-Content-Type: text/plain;
-Content-Transfer-Encoding: quoted-printable
+Parker Newman (parker@finest.io) changed:
 
-How are you doing today I have a proposal which i think may interest you a=
-nd benefit you.I will like to give you full details of this via email:  ge=
-rradfinancialplanning@gmail.com
-Thanks.
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+             Status|NEW                         |RESOLVED
+         Resolution|---                         |INVALID
 
-John PHIL
+--- Comment #1 from Parker Newman (parker@finest.io) ---
+Bug was not related to WiFi/BT. It was the fingerprint reader that was taking
+down the hub
 
---07B_9ED_4_--
-
+-- 
+You are receiving this mail because:
+You are the assignee for the bug.
