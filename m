@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45F712A71E9
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Nov 2020 00:42:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 336C12A71E6
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Nov 2020 00:42:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732914AbgKDXmo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 Nov 2020 18:42:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47792 "EHLO
+        id S1732892AbgKDXmn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 4 Nov 2020 18:42:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732846AbgKDXmf (ORCPT
+        with ESMTP id S1732852AbgKDXmg (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Nov 2020 18:42:35 -0500
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2615C0613CF
-        for <linux-bluetooth@vger.kernel.org>; Wed,  4 Nov 2020 15:42:33 -0800 (PST)
-Received: by mail-pg1-x542.google.com with SMTP id f38so207041pgm.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Nov 2020 15:42:33 -0800 (PST)
+        Wed, 4 Nov 2020 18:42:36 -0500
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D18CEC0613D2
+        for <linux-bluetooth@vger.kernel.org>; Wed,  4 Nov 2020 15:42:34 -0800 (PST)
+Received: by mail-pl1-x644.google.com with SMTP id t6so72640plq.11
+        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Nov 2020 15:42:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=TDGhHpoe/eWfJsY+oKVEuX03napklo56SUJ6Lc7Lye0=;
-        b=rBRhtl/wC/GWgwvcvEI4X8u0nJSTue+xwkyXVUdUb+bhR1vFN/fbttf1qEug50V8kl
-         Un3oIUxnFmWJd2SFpnzRidOsg1KdazGeW5ZFwG1Kf68uMEX01SNU78EJZrP0FwHnmg1f
-         Cm/x8dqPSEnaC9PKTurdjXbsMkn7AAAPN3tqGeonXhm+uibS125Rz/zYNsaT9g0OhO0P
-         U0CWTxuB7N3iTuw6WtVNuCX1FD1RavhnWJfrMCMWqIT8O9THfL4b1VP37uILc7XVEza1
-         AjxdQELq8uGOFv1jzAUW2g92b44Iud1YCRZquGU3dVheeM+75bFxuE3luZ0DvLmfKQHW
-         EozQ==
+        bh=6NChTZTWnrvWHkaUljYKkJ1mGz7635riVFxovhAsZBY=;
+        b=qSj75rtKdvs5RsFohOV4J/dJbx49tZafKZVSj/Sq29uTeK1p9q0Ufzq7wxw3ECcift
+         b/gAqYNPFypjEvF1lyomaTsJdJvbIsaUMgWmHYC2eNXh9L28efGHftDX3hrS4ljcZc8C
+         JXzx/CVnr48VHPOxfR5uPqnZSlZZ53xilb+1sk85w7eJzFnXokiT96f1rL81XqeQd7d3
+         9JsoXFuxIy959qojzUOShC9gL4ZdeTEYelfJK8I0lLWk49G5ITyjOAzBGlpoRN4IK7Vm
+         xZCtukT4Up5VpSDkrAzIYtfabudhBELOcnRF3eLQ7EgjSLQwdPbBFEsJIQjbmcwZIWUP
+         9n0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TDGhHpoe/eWfJsY+oKVEuX03napklo56SUJ6Lc7Lye0=;
-        b=HZumO2vdk6UokxF8M4/F990acI1N/RmBAtyJydfnS/+ORE7s/A7bsitll/H5Anol7F
-         uE7JGYgZenauCkMsWUhyZn9i8jL8GEHmBUUhBsb3826CeJCZCYI0OrEDx7yZM/dGBWT+
-         +OTXyKwQWIhVkExetPj94SyTyQejliz/8CkZOPGlpoNsnZcrgKxEpJh7hkUw9yCA4RvO
-         BKJ4ZZNxR0UGwzvL7LUZXTWJElS0JCUDtQIPo5qLc+mtAWoP+RZlaIRSvoD2rHHBfkCZ
-         G3p1fjBmEPdsTbdQaTSG9tmeWZmoCzbxNH0NyI5pPy4akGSdUc54F8hLeCrvpkmLWTm0
-         HApQ==
-X-Gm-Message-State: AOAM530/s3/bkMrqgDF4sOq9pPbr2rbGeglOtyDlJ9p4OnSGPLmFaNa+
-        Dx+VuhkkJmAu+tJHeiiZ39mH7q82a5+Ipg==
-X-Google-Smtp-Source: ABdhPJzxGDHeIaUN782tj1aNcCfvp3LGpPFhHEyoinZjwlO9a28IXnyUP87fjQu6m1EtFHaSRR1STQ==
-X-Received: by 2002:a17:90a:6288:: with SMTP id d8mr336120pjj.210.1604533353393;
-        Wed, 04 Nov 2020 15:42:33 -0800 (PST)
+        bh=6NChTZTWnrvWHkaUljYKkJ1mGz7635riVFxovhAsZBY=;
+        b=NM2pDZRvfGGbuJ9+XaBdoxKUW7pq29eww3oCAcjV8KI2o+JfhST/unXmW0WCP+qTEj
+         CZe3JmBZyF0DdlQ0Hidz64s2SAoXvVPM/z8/oH8NvpY7oxlyi1zsF+fogfjKRLsyClCv
+         hIrjkk2ejkldElNN/2kBqPxmEl5m/1/EEm/zwnUTlqo7cJrL0J5FhVJsjuStiDCk69sA
+         uYIlghEUxPppCjzZMaV/KzyB66kCl0OG6UMDspHA4jhgM7RB1kmko/gO1CYoSr50ML6X
+         762wB0J5oHgdEfSHn4VhLngxZcxosXBmzzqViiHzO0mQXgLkJagJUssvZjFRzlauGW+i
+         lWWg==
+X-Gm-Message-State: AOAM531XgQrRVj86gUZA2aty8mJy6u+tSRrKpmKsnXdTdXaPSTxz5ve3
+        mJjoLMNFZld1nJP+1BEcVGTjGJL/DXc+Hw==
+X-Google-Smtp-Source: ABdhPJw6Sd7rJm9xmVR+oVEQQ9LKzCKlYKAuUU/PHHV6Eb4fdd5q5RmwIx0uMq0c5Xxb077GmfEwow==
+X-Received: by 2002:a17:902:778d:b029:d6:489c:67ee with SMTP id o13-20020a170902778db02900d6489c67eemr362047pll.52.1604533354192;
+        Wed, 04 Nov 2020 15:42:34 -0800 (PST)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id 30sm3361513pgl.45.2020.11.04.15.42.32
+        by smtp.gmail.com with ESMTPSA id 30sm3361513pgl.45.2020.11.04.15.42.33
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 15:42:32 -0800 (PST)
+        Wed, 04 Nov 2020 15:42:33 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 3/8] mgmt-tester: Print out the HCI received and expected cmd value
-Date:   Wed,  4 Nov 2020 15:42:23 -0800
-Message-Id: <20201104234228.2257427-3-luiz.dentz@gmail.com>
+Subject: [PATCH v2 4/8] mgmt-tester: Update set_connectable_off_adv_param
+Date:   Wed,  4 Nov 2020 15:42:24 -0800
+Message-Id: <20201104234228.2257427-4-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201104234228.2257427-1-luiz.dentz@gmail.com>
 References: <20201104234228.2257427-1-luiz.dentz@gmail.com>
@@ -65,27 +65,109 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This make it simpler to debug when the kernel has been updated and
-parameters no longer match:
+Parameters have been changed in the kernel which now uses the following:
+
+< HCI Command: LE Set Advertising Parameters (0x08|0x0006) plen 15
+        Min advertising interval: 62.500 msec (0x0064)
+        Max advertising interval: 93.750 msec (0x0096)
+        Type: Scannable undirected - ADV_SCAN_IND (0x02)
+        Own address type: Random (0x01)
+        Direct address type: Public (0x00)
+        Direct address: 00:00:00:00:00:00 (OUI 00-00-00)
+        Channel map: 37, 38, 39 (0x07)
+        Filter policy: Allow Scan Request from Any, Allow Connect Request from Any (0x00)
 ---
- tools/mgmt-tester.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/mgmt-tester.c | 42 +++++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
-index 27a5f0bab..4775fb18a 100644
+index 4775fb18a..55df2953c 100644
 --- a/tools/mgmt-tester.c
 +++ b/tools/mgmt-tester.c
-@@ -6381,7 +6381,9 @@ static void command_hci_callback(uint16_t opcode, const void *param,
- 	}
+@@ -898,10 +898,10 @@ static uint16_t settings_powered_le_connectable_advertising[] = {
+ 					MGMT_OP_SET_ADVERTISING,
+ 					MGMT_OP_SET_POWERED, 0 };
  
- 	if (memcmp(param, expect_hci_param, length) != 0) {
--		tester_warn("Unexpected HCI command parameter value");
-+		tester_warn("Unexpected HCI command parameter value:");
-+		util_hexdump('>', param, length, print_debug, "");
-+		util_hexdump('!', expect_hci_param, length, print_debug, "");
- 		tester_test_failed();
- 		return;
- 	}
+-static uint8_t set_connectable_off_adv_param[] = {
+-		0x00, 0x08,				/* min_interval */
+-		0x00, 0x08,				/* max_interval */
+-		0x03,					/* type */
++static uint8_t set_connectable_off_scan_adv_param[] = {
++		0x64, 0x00,				/* min_interval */
++		0x96, 0x00,				/* max_interval */
++		0x02,					/* type */
+ 		0x01,					/* own_addr_type */
+ 		0x00,					/* direct_addr_type */
+ 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	/* direct_addr */
+@@ -919,8 +919,8 @@ static const struct generic_data set_connectable_off_le_test_2 = {
+ 	.expect_len = sizeof(set_connectable_off_le_settings_2),
+ 	.expect_settings_unset = MGMT_SETTING_CONNECTABLE,
+ 	.expect_hci_command = BT_HCI_CMD_LE_SET_ADV_PARAMETERS,
+-	.expect_hci_param = set_connectable_off_adv_param,
+-	.expect_hci_len = sizeof(set_connectable_off_adv_param),
++	.expect_hci_param = set_connectable_off_scan_adv_param,
++	.expect_hci_len = sizeof(set_connectable_off_scan_adv_param),
+ };
+ 
+ static uint16_t settings_powered_le_discoverable[] = {
+@@ -946,8 +946,8 @@ static const struct generic_data set_connectable_off_le_test_3 = {
+ 	.expect_len = sizeof(set_connectable_off_le_settings_2),
+ 	.expect_settings_unset = MGMT_SETTING_CONNECTABLE,
+ 	.expect_hci_command = BT_HCI_CMD_LE_SET_ADV_PARAMETERS,
+-	.expect_hci_param = set_connectable_off_adv_param,
+-	.expect_hci_len = sizeof(set_connectable_off_adv_param),
++	.expect_hci_param = set_connectable_off_scan_adv_param,
++	.expect_hci_len = sizeof(set_connectable_off_scan_adv_param),
+ };
+ 
+ static const struct generic_data set_connectable_off_le_test_4 = {
+@@ -961,8 +961,8 @@ static const struct generic_data set_connectable_off_le_test_4 = {
+ 	.expect_len = sizeof(set_connectable_off_le_settings_2),
+ 	.expect_settings_unset = MGMT_SETTING_CONNECTABLE,
+ 	.expect_hci_command = BT_HCI_CMD_LE_SET_ADV_PARAMETERS,
+-	.expect_hci_param = set_connectable_off_adv_param,
+-	.expect_hci_len = sizeof(set_connectable_off_adv_param),
++	.expect_hci_param = set_connectable_off_scan_adv_param,
++	.expect_hci_len = sizeof(set_connectable_off_scan_adv_param),
+ };
+ 
+ static const char set_fast_conn_on_param[] = { 0x01 };
+@@ -4738,17 +4738,6 @@ static uint16_t settings_powered_le_connectable[] = {
+ 						MGMT_OP_SET_LE,
+ 						MGMT_OP_SET_CONNECTABLE, 0 };
+ 
+-static uint8_t set_connectable_off_scan_adv_param[] = {
+-		0x00, 0x08,				/* min_interval */
+-		0x00, 0x08,				/* max_interval */
+-		0x02,					/* type */
+-		0x01,					/* own_addr_type */
+-		0x00,					/* direct_addr_type */
+-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	/* direct_addr */
+-		0x07,					/* channel_map */
+-		0x00,					/* filter_policy */
+-};
+-
+ static const struct generic_data add_advertising_success_13 = {
+ 	.setup_settings = settings_powered_le,
+ 	.send_opcode = MGMT_OP_ADD_ADVERTISING,
+@@ -4762,6 +4751,17 @@ static const struct generic_data add_advertising_success_13 = {
+ 	.expect_hci_len = sizeof(set_connectable_off_scan_adv_param),
+ };
+ 
++static uint8_t set_connectable_off_adv_param[] = {
++		0x64, 0x00,				/* min_interval */
++		0x96, 0x00,				/* max_interval */
++		0x03,					/* type */
++		0x01,					/* own_addr_type */
++		0x00,					/* direct_addr_type */
++		0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	/* direct_addr */
++		0x07,					/* channel_map */
++		0x00,					/* filter_policy */
++};
++
+ static const struct generic_data add_advertising_success_14 = {
+ 	.setup_settings = settings_powered_le,
+ 	.send_opcode = MGMT_OP_ADD_ADVERTISING,
 -- 
 2.26.2
 
