@@ -2,114 +2,128 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 586D62A6F68
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Nov 2020 22:13:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3C862A71EA
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Nov 2020 00:42:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727098AbgKDVNv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 Nov 2020 16:13:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52752 "EHLO
+        id S1732916AbgKDXmp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 4 Nov 2020 18:42:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726777AbgKDVNv (ORCPT
+        with ESMTP id S1732679AbgKDXmc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Nov 2020 16:13:51 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BFDCC0613D3
-        for <linux-bluetooth@vger.kernel.org>; Wed,  4 Nov 2020 13:13:51 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id i18so128108ots.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Nov 2020 13:13:50 -0800 (PST)
+        Wed, 4 Nov 2020 18:42:32 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A108C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Wed,  4 Nov 2020 15:42:32 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id x13so188716pgp.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Nov 2020 15:42:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Du2JXkZDjjUO3w58gMtgZA9BL3as/j/kfsHWoUR1SQ4=;
-        b=Q6NRaUEwnogctSkqhm5DeOyHPK2mactl4UvVTN3DaunNHSRuzWF4aF9T1X07dQjzSs
-         MeJg+DVNfr5vJ2lgkFge/pRwhB5Q2AA5cb/e7518GWX28VZVIkVqj/AkaMckEN9L3B63
-         tiu0GSAA/XB16WiWVKs6hHzOK2C7bJyzr0mMgeGtEZpQ2K8bBLMQ7tecES5Fn75YaOLg
-         TAbDI12VgT5fal8v5vXzLXjMDDeg3FZkQM6Od1deiO2SRzTkpDNwDYPuymoSUBDsRzH3
-         9yT2OlTNxIRlc9fS82NA8JgMsqc63In1Z55dKImVqkva7ZpXAVslQOpsuY/7QXYQIt++
-         6O8g==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=keox1HEiUoj/RxUdrmJZB4KSQqLdljvvXfph5b9xClc=;
+        b=KL7oTEutdBAmQSFspMK+43DssP9YRs2tNlVpu6IfsBTUmQt6HFXxbR4x1CRlD3DkG8
+         Pb2T6XflWXynCl252YVidx8cHf4ZE7ZLgxkkmiL5BZglNpJCpblY9J0utFfelis176Ma
+         YEZb4igSH2DvFkXDd1COMf5tYCq4PbkPeAJ2uGS9oB9DvcEl9gZ8MsNx7RNC1+fxBy8M
+         zwFA3xRwR5dkF2GsbAdY3AcMrNREkVTkJrHwJgoeSD6I+amXUYM9jmVK1nueRRS/BIg5
+         f79vCgpRoSrqh6lyu4Sd1Mqkdio/JVC2cEuQoPpVmRKdw1kAqeVBq/DU5Mms6ik/EyC9
+         JY7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Du2JXkZDjjUO3w58gMtgZA9BL3as/j/kfsHWoUR1SQ4=;
-        b=K5fSn7z9CRfif1U07ZO3iXXYEs5V3lytSp9bDbyQMAtv4KB2R6DjBFbWEWIBQsKt95
-         K62JruyOOtSo/F2yZK2fAzwpO/P4BuEfHCDnPXfg1k0U6jzsjG8OEGEpvLKnoM0Q7+wo
-         puSK0QRF6fJfBppHmMkhnJojn1CPJt+THhPFxwYAauZHJrqRm1Ajggq3OusZCTa7V3rX
-         s1CP8K7i9FOGxEptbTyN1xC3pg1fDC51A/9Z5XNOJfpZeVyIsYBktmQTk9lMVCysDDB9
-         u+Ic+t5Qi3DTXKbFq123NiuIpM06O+FRwMcTXjTWATdyXeF/f3otPWmygN9qUV0pl2sa
-         J4yg==
-X-Gm-Message-State: AOAM533kFg2d/neR5MmQyUEKkjhvV3EwKRDuCgLEFMhjkhiEahC7lw5B
-        7rrhOh1tcCJ+aVO6PBRchb0H72jLtVuu5H9PTIA=
-X-Google-Smtp-Source: ABdhPJxWZCq3pmSvc9NynZQ6nB8AxHQCXxPMqhO2d4w93tb2E2L7EiuTkjz/GenAyKrkQ2GS1ip4Btd3FxMJmf75qAg=
-X-Received: by 2002:a05:6830:400d:: with SMTP id h13mr20857831ots.371.1604524430314;
- Wed, 04 Nov 2020 13:13:50 -0800 (PST)
-MIME-Version: 1.0
-References: <20201104133318.Bluez.v1.1.Ibb93fb0188187d11151855d2dcc737640b2b81da@changeid>
-In-Reply-To: <20201104133318.Bluez.v1.1.Ibb93fb0188187d11151855d2dcc737640b2b81da@changeid>
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=keox1HEiUoj/RxUdrmJZB4KSQqLdljvvXfph5b9xClc=;
+        b=qAQ0L3ckLMStT+vg/bqqSy3KnSx/DgzRiJGI0ZF30iDPXShQ1ltH+m9EdJBy/bqrG/
+         WCbteIbZEmIqr8noLfHKDf8ZwGObPQC9x9Zb7r+wBDb4Vr+lckiqPAhuGtOP2PxjLHKQ
+         RLD5/qOZ5jzCLgFH90HcowU3Z37KyopdZyKmys/sJotfKJrBasNCplxdQuDI7665q8gn
+         DwzcXg2Dbqnz39bu0yhSyZVTW8jMvdV/6uznR3IpYfh7A2d5SrgF2MKt/pY+xC4VJEmd
+         CNjQC8u0vUXHeNGc4SFayN3tLi1Bnck3odBuMVFjqlFK44Pi5m8lUh/odsTq9vJmkjUa
+         kIEQ==
+X-Gm-Message-State: AOAM5327AK/S126a7BXHQkJfCzHhFxNmaNsZNiqKYm5zhZr7fajwYzua
+        CNspP/w1nsDxoOsO3Y6jszKq0NQnaoXD3g==
+X-Google-Smtp-Source: ABdhPJwNT778/FKTEqF0bBs/X0dLj45S07xMXrWir9kKc4PoIgpm72u+aDMMa47HVU1USUFY2yaKEQ==
+X-Received: by 2002:a17:90a:8c89:: with SMTP id b9mr354705pjo.34.1604533351271;
+        Wed, 04 Nov 2020 15:42:31 -0800 (PST)
+Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id 30sm3361513pgl.45.2020.11.04.15.42.30
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2020 15:42:30 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 4 Nov 2020 13:13:39 -0800
-Message-ID: <CABBYNZKRhGcqtd1eUhE2AbF98RNnDkEfTHcg8p38JSB=ENXy1Q@mail.gmail.com>
-Subject: Re: [Bluez PATCH v1 1/3] policy: add checks before connecting
-To:     Archie Pusaka <apusaka@google.com>
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>,
-        Sonny Sasaka <sonnysasaka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH v2 1/8] doc: Add tester.config
+Date:   Wed,  4 Nov 2020 15:42:21 -0800
+Message-Id: <20201104234228.2257427-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Archie,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-On Tue, Nov 3, 2020 at 9:35 PM Archie Pusaka <apusaka@google.com> wrote:
->
-> From: Archie Pusaka <apusaka@chromium.org>
->
-> When policy_connect() is called, there might be a case where the
-> device is not ready, or even the adapter is down. Add some checks
-> by calling btd_device_connect_services() instead of directly calling
-> btd_service_connect().
+This adds tester.config which can be used as a reference to create
+kernel images to be run with test-runner.
+---
+ doc/tester.config | 48 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
+ create mode 100644 doc/tester.config
 
-But we could perform these checks in btd_service_connect or you also
-intended to use the pending list? Im a little hesitant with such a
-change though because there could be a pending connect already causing
-it to fail instead of just connecting in parallel.
-
-> Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
-> ---
->
->  plugins/policy.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/plugins/policy.c b/plugins/policy.c
-> index ba9e1be020..42b15cb65f 100644
-> --- a/plugins/policy.c
-> +++ b/plugins/policy.c
-> @@ -106,6 +106,7 @@ static void policy_connect(struct policy_data *data,
->  {
->         struct btd_profile *profile = btd_service_get_profile(service);
->         struct reconnect_data *reconnect;
-> +       GSList *l = NULL;
->
->         reconnect = reconnect_find(btd_service_get_device(service));
->         if (reconnect && reconnect->active)
-> @@ -113,7 +114,9 @@ static void policy_connect(struct policy_data *data,
->
->         DBG("%s profile %s", device_get_path(data->dev), profile->name);
->
-> -       btd_service_connect(service);
-> +       l = g_slist_prepend(l, service);
-> +       btd_device_connect_services(data->dev, l);
-> +       g_slist_free(l);
->  }
->
->  static void policy_disconnect(struct policy_data *data,
-> --
-> 2.29.1.341.ge80a0c044ae-goog
->
-
-
+diff --git a/doc/tester.config b/doc/tester.config
+new file mode 100644
+index 000000000..e90899714
+--- /dev/null
++++ b/doc/tester.config
+@@ -0,0 +1,48 @@
++CONFIG_VIRTIO=y
++CONFIG_VIRTIO_PCI=y
++
++CONFIG_NET=y
++CONFIG_INET=y
++
++CONFIG_NET_9P=y
++CONFIG_NET_9P_VIRTIO=y
++
++CONFIG_9P_FS=y
++CONFIG_9P_FS_POSIX_ACL=y
++
++CONFIG_SERIAL_8250=y
++CONFIG_SERIAL_8250_CONSOLE=y
++CONFIG_SERIAL_8250_PCI=y
++CONFIG_SERIAL_8250_NR_UARTS=4
++
++CONFIG_TMPFS=y
++CONFIG_TMPFS_POSIX_ACL=y
++CONFIG_TMPFS_XATTR=y
++
++CONFIG_DEVTMPFS=y
++CONFIG_DEBUG_FS=y
++
++CONFIG_BT=y
++CONFIG_BT_BREDR=y
++CONFIG_BT_RFCOMM=y
++CONFIG_BT_BNEP=y
++CONFIG_BT_HIDP=y
++CONFIG_BT_LE=y
++
++CONFIG_BT_HCIVHCI=y
++
++CONFIG_CRYPTO_CMAC=y
++CONFIG_CRYPTO_USER_API=y
++CONFIG_CRYPTO_USER_API_HASH=y
++CONFIG_CRYPTO_USER_API_SKCIPHER=y
++
++CONFIG_UNIX=y
++
++CONFIG_UHID=y
++
++CONFIG_LOCKDEP_SUPPORT=y
++CONFIG_DEBUG_SPINLOCK=y
++CONFIG_DEBUG_LOCK_ALLOC=y
++CONFIG_PROVE_LOCKING=y
++CONFIG_LOCKDEP=y
++CONFIG_DEBUG_MUTEXES=y
 -- 
-Luiz Augusto von Dentz
+2.26.2
+
