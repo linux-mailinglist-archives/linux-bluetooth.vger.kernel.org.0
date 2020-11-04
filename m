@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E8822A71EB
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Nov 2020 00:42:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45F712A71E9
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Nov 2020 00:42:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732911AbgKDXmo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S1732914AbgKDXmo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Wed, 4 Nov 2020 18:42:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47790 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732826AbgKDXmd (ORCPT
+        with ESMTP id S1732846AbgKDXmf (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Nov 2020 18:42:33 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1706FC0613CF
+        Wed, 4 Nov 2020 18:42:35 -0500
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2615C0613CF
         for <linux-bluetooth@vger.kernel.org>; Wed,  4 Nov 2020 15:42:33 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id i7so192610pgh.6
+Received: by mail-pg1-x542.google.com with SMTP id f38so207041pgm.2
         for <linux-bluetooth@vger.kernel.org>; Wed, 04 Nov 2020 15:42:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=Yytsr00+6Kp33M5vY3Jf40tOEkQR8081Jx2QjpPNKpM=;
-        b=fFbhY/7iEzmKzuKMgNTCpl6re4tZf7KqZ4u2Xr1i6YnJB747eG0/jBjOTzEVM6tSsx
-         Ws5DSYURK/gYtyz2A3ZepaA84JkBvSo7Fu48zXdyw6rWYdc2N8xOrZJpcUcLvEHNfTZ1
-         I3jyLtQHdGhUj+1aA5Lh/n5QE3NbtKNwVgmehCQS0znVZWldyH6tZXr+liea0oZSiRNG
-         Y+CowgTxSKz2z4sy0IwoQaQkdo0+jD/BtJHpQah3UZR2cyHQxdndCLyBUfgnYjnsl6Fu
-         whOq0ZlHAWfIrZQamiDn5/+kQVnkQ53m/Fefjf2efYJhk4vKnBPH20dkJ4zKJ9V8f4G7
-         XooA==
+        bh=TDGhHpoe/eWfJsY+oKVEuX03napklo56SUJ6Lc7Lye0=;
+        b=rBRhtl/wC/GWgwvcvEI4X8u0nJSTue+xwkyXVUdUb+bhR1vFN/fbttf1qEug50V8kl
+         Un3oIUxnFmWJd2SFpnzRidOsg1KdazGeW5ZFwG1Kf68uMEX01SNU78EJZrP0FwHnmg1f
+         Cm/x8dqPSEnaC9PKTurdjXbsMkn7AAAPN3tqGeonXhm+uibS125Rz/zYNsaT9g0OhO0P
+         U0CWTxuB7N3iTuw6WtVNuCX1FD1RavhnWJfrMCMWqIT8O9THfL4b1VP37uILc7XVEza1
+         AjxdQELq8uGOFv1jzAUW2g92b44Iud1YCRZquGU3dVheeM+75bFxuE3luZ0DvLmfKQHW
+         EozQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Yytsr00+6Kp33M5vY3Jf40tOEkQR8081Jx2QjpPNKpM=;
-        b=MQ+jOuwehYK4xngxNXqfLP/cQgqkJrS9Ox6Wys+n2fiQ9yCLkO/sxphfU3RHWmA11l
-         gjXtHH/ONj9RihOXJBY2MWP0KLrrupQqLPoM5ZCBixTipVzKhZ3vciiTWLWd5W2gqvr1
-         uRnqL80jucWZ+HIIArG1yft3tado71lb1LThDUTACsMFmVP2Fwv7Vlrbsns9e9WBi4Ex
-         8DakZfeOCj/weRElbjsGfaECB2J2dYoRncvvssRaj/nI+hC5ghoJgFVPCwQj8hDH4xLK
-         jh8cBEg2Z+vfL0NKUxN1hYoVvXEBxM8xjJ+vMZjif8zvSQJOX669QokQL+SUAe5MFpBQ
-         hIrw==
-X-Gm-Message-State: AOAM530ur0OJ2hrCd1rKLTHxL6GstVwwIfO0MAkv5yqnX+J8dh+0mVrj
-        NtJn1qpw0Z8dcdraMUUmTqJuRc5if8Q7AQ==
-X-Google-Smtp-Source: ABdhPJz9xzNI0H4mykZOMY9w2F2XIDwuUhWztyblolJgsNNm+REGHPKeg/kuNn+FAjQ0HMPJoPgqHw==
-X-Received: by 2002:a17:90a:540e:: with SMTP id z14mr274258pjh.187.1604533352343;
-        Wed, 04 Nov 2020 15:42:32 -0800 (PST)
+        bh=TDGhHpoe/eWfJsY+oKVEuX03napklo56SUJ6Lc7Lye0=;
+        b=HZumO2vdk6UokxF8M4/F990acI1N/RmBAtyJydfnS/+ORE7s/A7bsitll/H5Anol7F
+         uE7JGYgZenauCkMsWUhyZn9i8jL8GEHmBUUhBsb3826CeJCZCYI0OrEDx7yZM/dGBWT+
+         +OTXyKwQWIhVkExetPj94SyTyQejliz/8CkZOPGlpoNsnZcrgKxEpJh7hkUw9yCA4RvO
+         BKJ4ZZNxR0UGwzvL7LUZXTWJElS0JCUDtQIPo5qLc+mtAWoP+RZlaIRSvoD2rHHBfkCZ
+         G3p1fjBmEPdsTbdQaTSG9tmeWZmoCzbxNH0NyI5pPy4akGSdUc54F8hLeCrvpkmLWTm0
+         HApQ==
+X-Gm-Message-State: AOAM530/s3/bkMrqgDF4sOq9pPbr2rbGeglOtyDlJ9p4OnSGPLmFaNa+
+        Dx+VuhkkJmAu+tJHeiiZ39mH7q82a5+Ipg==
+X-Google-Smtp-Source: ABdhPJzxGDHeIaUN782tj1aNcCfvp3LGpPFhHEyoinZjwlO9a28IXnyUP87fjQu6m1EtFHaSRR1STQ==
+X-Received: by 2002:a17:90a:6288:: with SMTP id d8mr336120pjj.210.1604533353393;
+        Wed, 04 Nov 2020 15:42:33 -0800 (PST)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id 30sm3361513pgl.45.2020.11.04.15.42.31
+        by smtp.gmail.com with ESMTPSA id 30sm3361513pgl.45.2020.11.04.15.42.32
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 15:42:31 -0800 (PST)
+        Wed, 04 Nov 2020 15:42:32 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 2/8] test-runner: Fix using removed options
-Date:   Wed,  4 Nov 2020 15:42:22 -0800
-Message-Id: <20201104234228.2257427-2-luiz.dentz@gmail.com>
+Subject: [PATCH v2 3/8] mgmt-tester: Print out the HCI received and expected cmd value
+Date:   Wed,  4 Nov 2020 15:42:23 -0800
+Message-Id: <20201104234228.2257427-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201104234228.2257427-1-luiz.dentz@gmail.com>
 References: <20201104234228.2257427-1-luiz.dentz@gmail.com>
@@ -65,35 +65,27 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This removes -nodefconfig and -balloon which are not longer valid
-options:
-
-  qemu-system-x86_64: -nodefconfig: invalid option
-  qemu-system-x86_64: -balloon: invalid option
+This make it simpler to debug when the kernel has been updated and
+parameters no longer match:
 ---
- tools/test-runner.c | 2 --
- 1 file changed, 2 deletions(-)
+ tools/mgmt-tester.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/test-runner.c b/tools/test-runner.c
-index 6b7c33734..5d2dbb992 100644
---- a/tools/test-runner.c
-+++ b/tools/test-runner.c
-@@ -181,7 +181,6 @@ static void prepare_sandbox(void)
- static char *const qemu_argv[] = {
- 	"",
- 	"-nodefaults",
--	"-nodefconfig",
- 	"-no-user-config",
- 	"-monitor", "none",
- 	"-display", "none",
-@@ -190,7 +189,6 @@ static char *const qemu_argv[] = {
- 	"-nographic",
- 	"-vga", "none",
- 	"-net", "none",
--	"-balloon", "none",
- 	"-no-acpi",
- 	"-no-hpet",
- 	"-no-reboot",
+diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
+index 27a5f0bab..4775fb18a 100644
+--- a/tools/mgmt-tester.c
++++ b/tools/mgmt-tester.c
+@@ -6381,7 +6381,9 @@ static void command_hci_callback(uint16_t opcode, const void *param,
+ 	}
+ 
+ 	if (memcmp(param, expect_hci_param, length) != 0) {
+-		tester_warn("Unexpected HCI command parameter value");
++		tester_warn("Unexpected HCI command parameter value:");
++		util_hexdump('>', param, length, print_debug, "");
++		util_hexdump('!', expect_hci_param, length, print_debug, "");
+ 		tester_test_failed();
+ 		return;
+ 	}
 -- 
 2.26.2
 
