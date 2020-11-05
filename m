@@ -2,140 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 450EE2A7690
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Nov 2020 05:44:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A55222A7764
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Nov 2020 07:15:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730345AbgKEEoc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 Nov 2020 23:44:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37984 "EHLO
+        id S1729682AbgKEGOx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 Nov 2020 01:14:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728045AbgKEEoc (ORCPT
+        with ESMTP id S1728427AbgKEGOw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Nov 2020 23:44:32 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E36A6C0613CF
-        for <linux-bluetooth@vger.kernel.org>; Wed,  4 Nov 2020 20:44:31 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id y12so167777wrp.6
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Nov 2020 20:44:31 -0800 (PST)
+        Thu, 5 Nov 2020 01:14:52 -0500
+Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14C64C0613D1
+        for <linux-bluetooth@vger.kernel.org>; Wed,  4 Nov 2020 22:14:52 -0800 (PST)
+Received: by mail-il1-x143.google.com with SMTP id g7so369413ilr.12
+        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Nov 2020 22:14:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZyeSgPPUsuU6xAIcitPfcfg7EjZq+JAUC8raf9PCrZc=;
-        b=EOsMedtqux3uPG15CD2fR+j3+xGR0ByFXp9N/TNCKVJ2sgqDpv1LYwXkgcqHBaF0no
-         b1qNW1GuF5UEe8aiLnWTNsHt7Kf8FCejWXOa4LqY3xkCGiAe/bgoQnnxQ24EbXG3kq4x
-         +Pfrgd3UGHav1YTFFrU3MiiE1llKnnU3/h9QYzi5cd5EKf3KJQEJvkliCVCuLlFtsWXm
-         Al1pHevUyCi4q0V8X2w61Q2ituiOdu/l2VbiTnF1krhcEYriMu/EORo2KL+/pjnK0ZJe
-         boPpxLzPrH6fzOPPYIWMavsN2tx9GL0SPMV2qIsdGrVizwPRbw7EgPpUyhYmvcHbZS34
-         3/Lg==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=iBGnzN/+6loJkhrhbH/dzTk9PX3jtnMo9lpzqcBWYus=;
+        b=mMXlwMbl28LpHQegs21C2BwooPh9G/lEwiRakD+GOSSjhzo380dA1MJTZ7BSQCmbjK
+         RH2/V87xles1QCNZq8BuXpxclUMlTUQb8Ikeq31KXR8lmjbM2si/8syN66Io16XjeVP9
+         34QjnVEEWH5glZbutPO8dkMCKn2hfObN1Ck5bND9zV42ns7M4uooZrcdUL64R2/MLePV
+         GETQLICQjodWPCOMHd/nKduU0kSSzwMj8zroRWMiedHq3YbEX/PXbt8bJlnExbLeociw
+         3oDfH7U51CGjEhWBjK42CX2KuOnEDSJvB4vpPhdvUrj/V+t7MzOVatAC0Q6jk9r8LnRh
+         5zAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZyeSgPPUsuU6xAIcitPfcfg7EjZq+JAUC8raf9PCrZc=;
-        b=QX/AsgzD2yFLptfnee0Aleo21X4657ad8RKsRu0cTKTQg7lkrR/YVF6v04LnXc9kKL
-         LWDb1eVaHrpH4OuCngxobzL+KkeanVuYLYcxbyj0diOiSs+zNZTgCtz2qqaiuD/2ADhG
-         8dMCAHwpULeDdKq+Lw7yIrnfDKyw6qKX52SlvewO88UAuxNBlF3WC1BsqlUXBIwlkN/N
-         dG3GRDnsczY2+Q2gmnUMJbmQ2QVb13kvHFPJK9XRa2GNRWurFhxXp61PNxy30ZATIGDr
-         1wAko23QAI+XY5h+brP0/IxxThGj1kFZESTd0Km0Ir1RhiaFw6t3GpoxYkA7DsCnn3Ff
-         Sp5g==
-X-Gm-Message-State: AOAM53133IzYrsnGgVQ5wlNS80Al7PRLqwgfH7tylR0Iuc6pmkqDLYVm
-        VTJJU7OxnuoHTE3ThhGhNNCcbrJziScyFMfSSkY+zw==
-X-Google-Smtp-Source: ABdhPJwqcSAPJ8axNb8lpLxZa8N7J4rrvJMyBiNHmZY9g5hvK4x20Wgp2+bc2LQ790P5oFY1Wpv8nA3A5VLPh0Fvg14=
-X-Received: by 2002:adf:e8cf:: with SMTP id k15mr509247wrn.262.1604551470475;
- Wed, 04 Nov 2020 20:44:30 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=iBGnzN/+6loJkhrhbH/dzTk9PX3jtnMo9lpzqcBWYus=;
+        b=nPmYtZ9RFHwzfO6T47PQ6Ax6cotlTYoyrWwMYO7jQ/O0XWDWXMrkQjaZaGXgLk0f1c
+         fXheiDFea07PKZ5YpQPuWhS3utMvMm5Y8gapHjLyYWsoOUbME7qgu1/cFtzT3P3qwSAI
+         BN3REVdfdZsEjrHlZmSbb5MCbOVbUUHGe8Un+er7xgIJobYDxTvUgvoZGrpY3HS5bPQc
+         jZ9MIyPPYO+vL00lO2N7aLOQIYCtPv+RZu9E0w2AJNU/ocnj8C707nOJnElxYWEp3BCA
+         Epakj0g4myHWp/NZKWwDz9REjSCsxP2eWPNZ4LeqkzBozMoQDN9H4ctlT5jeE2bBMZds
+         iE4Q==
+X-Gm-Message-State: AOAM532wNN8CNbigaYUEaVAH3Hy9OCrgJZCHm5ptWREOR0XiuLDafO/a
+        PKnmALtVnbGLjHacrLYVLsadOmKRtpWgBHp4rC0=
+X-Google-Smtp-Source: ABdhPJz6Y2N3qUkRbnktek4nPLfmNCHWuyfcWdIRjunYgxyruVThFqJC+YstMJEDO8Fq8QnH8c7USv1hjqVGGm+SNBk=
+X-Received: by 2002:a92:ba96:: with SMTP id t22mr783949ill.209.1604556891251;
+ Wed, 04 Nov 2020 22:14:51 -0800 (PST)
 MIME-Version: 1.0
-References: <20201104133318.Bluez.v1.1.Ibb93fb0188187d11151855d2dcc737640b2b81da@changeid>
- <CABBYNZKRhGcqtd1eUhE2AbF98RNnDkEfTHcg8p38JSB=ENXy1Q@mail.gmail.com>
-In-Reply-To: <CABBYNZKRhGcqtd1eUhE2AbF98RNnDkEfTHcg8p38JSB=ENXy1Q@mail.gmail.com>
-From:   Archie Pusaka <apusaka@google.com>
-Date:   Thu, 5 Nov 2020 12:44:19 +0800
-Message-ID: <CAJQfnxGV_7ps3Lg4-vUcfJwMUf9Mby6kWvobEYFadaEURLXBZw@mail.gmail.com>
-Subject: Re: [Bluez PATCH v1 1/3] policy: add checks before connecting
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>,
-        Sonny Sasaka <sonnysasaka@chromium.org>
+Received: by 2002:a05:6622:409:0:0:0:0 with HTTP; Wed, 4 Nov 2020 22:14:50
+ -0800 (PST)
+Reply-To: tofilbaman@gmail.com
+From:   Tofil Bama <alainekamba1@gmail.com>
+Date:   Wed, 4 Nov 2020 22:14:50 -0800
+Message-ID: <CAJnPJCPySmMneJaav0_f-orkPUa5jj7a=2jsVrbWzEQUmV=WtQ@mail.gmail.com>
+Subject: KINDEST MESSAGE.
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Luiz,
+Dear,
 
-On Thu, 5 Nov 2020 at 05:13, Luiz Augusto von Dentz
-<luiz.dentz@gmail.com> wrote:
->
-> Hi Archie,
->
-> On Tue, Nov 3, 2020 at 9:35 PM Archie Pusaka <apusaka@google.com> wrote:
-> >
-> > From: Archie Pusaka <apusaka@chromium.org>
-> >
-> > When policy_connect() is called, there might be a case where the
-> > device is not ready, or even the adapter is down. Add some checks
-> > by calling btd_device_connect_services() instead of directly calling
-> > btd_service_connect().
->
-> But we could perform these checks in btd_service_connect or you also
-> intended to use the pending list? Im a little hesitant with such a
-> change though because there could be a pending connect already causing
-> it to fail instead of just connecting in parallel.
+My name is Mr Tofil Bama, I am the Bill and Exchange assistant
+Manager in Bank of Africa Ouagadougou Burkina Faso. In my department
+I discovered an abandoned sum of eighteen million three hundred
+thousand United State of American dollars (18.3MILLION USA DOLLARS)
+in an account that belongs to one of our foreign customer
+(late Mr Shitu Nuri) who died in Ethiopian Airlines Flight 409 that
+crashed into the Mediterranean Sea on 25th January 2010.
 
-Yes, we can also perform the checks in btd_service_connect or in policy_connect.
-I have no intention of using the pending list, and to be frank, I also
-don't know whether we should let the connection happen in parallel or
-we should form a queue.
+Since I got information about his death I have been expecting
+his next of kin to come over and claim his money because we
+cannot release it unless somebody applies for it as the next
+of kin or relation to the deceased as indicated in our banking guidelines,
+unfortunately we learnt that all his supposed next of kin or
+relation died alongside with him in the plane crash leaving
+nobody behind for the claim.
 
-This issue correlates with the other issues addressed in the second
-and third patch.
-However, if we leave this patch and only fix the second and third
-issue, this one would not cause a problem by itself because even when
-the adapter is down and policy_connect is called, it would just fail
-and we would recover cleanly.
-This patch is merely just to skip the unnecessary connection attempt.
-I will submit another patch which performs the check inside
-btd_service_connect, and I'll leave it to you to decide whether this
-optional patch is needed.
+It is therefore upon this discovery that I decided to make this
+business proposal to you and release the money to you as next of kin
+to the deceased for safety and subsequent disbursement since nobody is
+coming for the fund, it is 10 years now the money is lying pending in
+the account of our deceased and I don't want the money to go into the
+bank treasury as unclaimed bill.
 
->
-> > Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
-> > ---
-> >
-> >  plugins/policy.c | 5 ++++-
-> >  1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/plugins/policy.c b/plugins/policy.c
-> > index ba9e1be020..42b15cb65f 100644
-> > --- a/plugins/policy.c
-> > +++ b/plugins/policy.c
-> > @@ -106,6 +106,7 @@ static void policy_connect(struct policy_data *data,
-> >  {
-> >         struct btd_profile *profile = btd_service_get_profile(service);
-> >         struct reconnect_data *reconnect;
-> > +       GSList *l = NULL;
-> >
-> >         reconnect = reconnect_find(btd_service_get_device(service));
-> >         if (reconnect && reconnect->active)
-> > @@ -113,7 +114,9 @@ static void policy_connect(struct policy_data *data,
-> >
-> >         DBG("%s profile %s", device_get_path(data->dev), profile->name);
-> >
-> > -       btd_service_connect(service);
-> > +       l = g_slist_prepend(l, service);
-> > +       btd_device_connect_services(data->dev, l);
-> > +       g_slist_free(l);
-> >  }
-> >
-> >  static void policy_disconnect(struct policy_data *data,
-> > --
-> > 2.29.1.341.ge80a0c044ae-goog
-> >
->
->
-> --
-> Luiz Augusto von Dentz
+You will be entitled with 40% of the total sum while 60% will be for
+me after which I will visit your Country to invest my own share when
+the fund is successfully transferred into your account, Please I would
+like you to keep this transaction confidential and as a top secret
+between me and you until we successfully achieve this golden
+opportunity.
 
-Thanks,
-Archie
+Yours sincerely,
+Mr Tofil Bama.
