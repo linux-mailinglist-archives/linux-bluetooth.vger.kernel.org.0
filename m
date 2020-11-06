@@ -2,38 +2,38 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C6A32A9239
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Nov 2020 10:15:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EC6F2A923A
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Nov 2020 10:15:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbgKFJPH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 6 Nov 2020 04:15:07 -0500
-Received: from mga05.intel.com ([192.55.52.43]:30919 "EHLO mga05.intel.com"
+        id S1726201AbgKFJPg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 6 Nov 2020 04:15:36 -0500
+Received: from mga09.intel.com ([134.134.136.24]:5752 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725868AbgKFJPG (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 6 Nov 2020 04:15:06 -0500
-IronPort-SDR: 2cr2blRLUmDeCd42lAo4tn++BCr3bNw1p3UmI+I4lsOXFJtDQxSDG4fh+eSQTd9RgdaDh59NnI
- f3jTSRYMP65Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9796"; a="254228474"
+        id S1725868AbgKFJPg (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 6 Nov 2020 04:15:36 -0500
+IronPort-SDR: z562plbmu72qCLTAe55od1L+oAb6y9AW5ysEqXD4lmiVHBS33tG1Cp3IwpsdWNgwXznVkC7rP8
+ 5QCEbjKso3Zw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9796"; a="169671587"
 X-IronPort-AV: E=Sophos;i="5.77,456,1596524400"; 
-   d="scan'208";a="254228474"
+   d="scan'208";a="169671587"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2020 01:15:05 -0800
-IronPort-SDR: 27+GbXJIz6cQOylf48CDCtqQ37u34hlezwpHTdJBHHcdOCy2DkCUxxTSMqPmmRN+r3p2dn6L4b
- rdf9kxIfGpqg==
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2020 01:15:34 -0800
+IronPort-SDR: 2pr3fiL1hRyA2RF+Nq7ydAr13u/pOxqqeySufrCwCRH+3RxET3/iZMnCezUgR9FKHd0ZIWrSpg
+ RpB6QrivsM9Q==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.77,456,1596524400"; 
-   d="scan'208";a="353309373"
+   d="scan'208";a="397525115"
 Received: from nsathish-latitude-7480.iind.intel.com ([10.224.186.105])
-  by orsmga008.jf.intel.com with ESMTP; 06 Nov 2020 01:15:03 -0800
+  by orsmga001.jf.intel.com with ESMTP; 06 Nov 2020 01:15:32 -0800
 From:   Sathish Narasimman <sathish.narasimman@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     chethan.tumkur.narayan@intel.com, ravishankar.srivatsa@intel.com,
         Sathish Narasimman <sathish.narasimman@intel.com>
-Subject: [PATCH] Bluetooth: btintel parse TLV structure
-Date:   Fri,  6 Nov 2020 14:50:24 +0530
-Message-Id: <20201106092024.20430-1-sathish.narasimman@intel.com>
+Subject: [PATCH v3] Bluetooth: btintel parse TLV structure
+Date:   Fri,  6 Nov 2020 14:51:19 +0530
+Message-Id: <20201106092119.20486-1-sathish.narasimman@intel.com>
 X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
