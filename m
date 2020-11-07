@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD7DA2AA2EF
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  7 Nov 2020 08:03:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE4F52AA2F0
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  7 Nov 2020 08:03:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727809AbgKGHD3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 7 Nov 2020 02:03:29 -0500
+        id S1727813AbgKGHDa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 7 Nov 2020 02:03:30 -0500
 Received: from mga17.intel.com ([192.55.52.151]:45622 "EHLO mga17.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725985AbgKGHD3 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 7 Nov 2020 02:03:29 -0500
-IronPort-SDR: V/0cWZcYEfSyEEiZaJxycQLTjA4xE/6r2/v2NtNVNC8+8uK6fC3ypirfA9dwvJy9kPPaSEiBSo
- W1XbW/MRu1bg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9797"; a="149485514"
+        id S1725985AbgKGHDa (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 7 Nov 2020 02:03:30 -0500
+IronPort-SDR: tEKwUxU8A+jU6Z5BqXPdUT7vl0QNHIok9bzta4AqLBGXp6Wg+a9JcJoy0WAge7HeQrr8H2gU09
+ kkmphk9kD0Og==
+X-IronPort-AV: E=McAfee;i="6000,8403,9797"; a="149485515"
 X-IronPort-AV: E=Sophos;i="5.77,458,1596524400"; 
-   d="scan'208";a="149485514"
+   d="scan'208";a="149485515"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2020 23:03:29 -0800
-IronPort-SDR: sV8pnVHdorLtD3X4e9DyGW0njEJ1xe+gu0dlP1uPpxTlvbEoOdvmBD8AT/Mh6Jc2j4VhwSbKJt
- TQZmfYQXthFQ==
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2020 23:03:30 -0800
+IronPort-SDR: t/QIq2jT4TazEDnX7BRxEpEOzn+SiZtEcJyR3PcHfPTjHANRGbvqi5gQLEaqEF/IUnR11f7a9h
+ P61MazvqfpNA==
 X-IronPort-AV: E=Sophos;i="5.77,458,1596524400"; 
-   d="scan'208";a="359032019"
+   d="scan'208";a="359032023"
 Received: from ralassax-mobl.amr.corp.intel.com (HELO ingas-nuc1.intel.com) ([10.209.101.141])
   by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2020 23:03:29 -0800
 From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     luiz.von.dentz@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [RFC PATCH BlueZ 04/10] tools/sco-tester: Convert to use ELL library
-Date:   Fri,  6 Nov 2020 23:03:06 -0800
-Message-Id: <20201107070312.8561-5-inga.stotland@intel.com>
+Subject: [RFC PATCH BlueZ 05/10] tools/userchan-tester: Convert to use ELL library
+Date:   Fri,  6 Nov 2020 23:03:07 -0800
+Message-Id: <20201107070312.8561-6-inga.stotland@intel.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201107070312.8561-1-inga.stotland@intel.com>
 References: <20201107070312.8561-1-inga.stotland@intel.com>
@@ -44,129 +44,42 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 This reworks the source code to use ELL primitives and removes
 dependecies on GLib.
 ---
- Makefile.tools     |  4 ++--
- tools/sco-tester.c | 33 ++++++++++++++-------------------
- 2 files changed, 16 insertions(+), 21 deletions(-)
+ Makefile.tools          | 4 ++--
+ tools/userchan-tester.c | 2 --
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/Makefile.tools b/Makefile.tools
-index 259427443..15613a5c9 100644
+index 15613a5c9..7c29e115b 100644
 --- a/Makefile.tools
 +++ b/Makefile.tools
-@@ -154,12 +154,12 @@ tools_gap_tester_LDADD =  lib/libbluetooth-internal.la \
- 				src/libshared-ell.la $(ell_ldadd)
+@@ -165,12 +165,12 @@ tools_hci_tester_SOURCES = tools/hci-tester.c monitor/bt.h
+ tools_hci_tester_LDADD = src/libshared-glib.la $(GLIB_LIBS)
  
- tools_sco_tester_SOURCES = tools/sco-tester.c monitor/bt.h \
+ tools_userchan_tester_SOURCES = tools/userchan-tester.c monitor/bt.h \
 -				emulator/hciemu.h emulator/hciemu.c \
 +				emulator/hciemu.h emulator/hciemu-ell.c \
  				emulator/btdev.h emulator/btdev.c \
  				emulator/bthost.h emulator/bthost.c \
  				emulator/smp.c
- tools_sco_tester_LDADD = lib/libbluetooth-internal.la \
+ tools_userchan_tester_LDADD = lib/libbluetooth-internal.la \
 -				src/libshared-glib.la $(GLIB_LIBS)
 +				src/libshared-ell.la $(ell_ldadd)
+ endif
  
- tools_hci_tester_SOURCES = tools/hci-tester.c monitor/bt.h
- tools_hci_tester_LDADD = src/libshared-glib.la $(GLIB_LIBS)
-diff --git a/tools/sco-tester.c b/tools/sco-tester.c
-index 2b8dc0d4a..c3c43a1c3 100644
---- a/tools/sco-tester.c
-+++ b/tools/sco-tester.c
-@@ -17,7 +17,7 @@
+ if TOOLS
+diff --git a/tools/userchan-tester.c b/tools/userchan-tester.c
+index c17644fb8..21c853221 100644
+--- a/tools/userchan-tester.c
++++ b/tools/userchan-tester.c
+@@ -18,8 +18,6 @@
  #include <errno.h>
  #include <stdbool.h>
  
 -#include <glib.h>
-+#include <ell/ell.h>
- 
+-
  #include "lib/bluetooth.h"
- #include "lib/sco.h"
-@@ -36,7 +36,7 @@ struct test_data {
- 	uint16_t mgmt_index;
- 	struct hciemu *hciemu;
- 	enum hciemu_type hciemu_type;
--	unsigned int io_id;
-+	struct l_io *io;
- 	bool disable_esco;
- };
- 
-@@ -196,20 +196,21 @@ static void test_data_free(void *test_data)
- {
- 	struct test_data *data = test_data;
- 
--	if (data->io_id > 0)
--		g_source_remove(data->io_id);
-+	if (data->io) {
-+		l_io_destroy(data->io);
-+		data->io = NULL;
-+	}
- 
--	free(data);
-+	l_free(data);
- }
- 
- #define test_sco_full(name, data, setup, func, _disable_esco) \
- 	do { \
- 		struct test_data *user; \
--		user = malloc(sizeof(struct test_data)); \
-+		user = l_new(struct test_data, 1); \
- 		if (!user) \
- 			break; \
- 		user->hciemu_type = HCIEMU_TYPE_BREDRLE; \
--		user->io_id = 0; \
- 		user->test_data = data; \
- 		user->disable_esco = _disable_esco; \
- 		tester_add_full(name, data, \
-@@ -474,17 +475,14 @@ static int connect_sco_sock(struct test_data *data, int sk)
- 	return 0;
- }
- 
--static gboolean sco_connect_cb(GIOChannel *io, GIOCondition cond,
--							gpointer user_data)
-+static bool sco_connect_cb(struct l_io *io, void *user_data)
- {
- 	struct test_data *data = tester_get_data();
- 	const struct sco_client_data *scodata = data->test_data;
- 	int err, sk_err, sk;
- 	socklen_t len = sizeof(sk_err);
- 
--	data->io_id = 0;
--
--	sk = g_io_channel_unix_get_fd(io);
-+	sk = l_io_get_fd(io);
- 
- 	if (getsockopt(sk, SOL_SOCKET, SO_ERROR, &sk_err, &len) < 0)
- 		err = -errno;
-@@ -501,13 +499,12 @@ static gboolean sco_connect_cb(GIOChannel *io, GIOCondition cond,
- 	else
- 		tester_test_passed();
- 
--	return FALSE;
-+	return false;
- }
- 
- static void test_connect(const void *test_data)
- {
- 	struct test_data *data = tester_get_data();
--	GIOChannel *io;
- 	int sk;
- 
- 	sk = create_sco_sock(data);
-@@ -522,12 +519,10 @@ static void test_connect(const void *test_data)
- 		return;
- 	}
- 
--	io = g_io_channel_unix_new(sk);
--	g_io_channel_set_close_on_unref(io, TRUE);
--
--	data->io_id = g_io_add_watch(io, G_IO_OUT, sco_connect_cb, NULL);
-+	data->io = l_io_new(sk);
-+	l_io_set_close_on_destroy(data->io, true);
- 
--	g_io_channel_unref(io);
-+	l_io_set_write_handler(data->io, sco_connect_cb, NULL, NULL);
- 
- 	tester_print("Connect in progress");
- }
+ #include "lib/hci.h"
+ #include "lib/mgmt.h"
 -- 
 2.26.2
 
