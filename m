@@ -2,78 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 913832ABC53
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  9 Nov 2020 14:37:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D81C2AC13B
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  9 Nov 2020 17:47:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730753AbgKINgZ convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 9 Nov 2020 08:36:25 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:41296 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730383AbgKINEp (ORCPT
+        id S1730632AbgKIQro (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 9 Nov 2020 11:47:44 -0500
+Received: from mail.pidancet.net ([163.172.153.181]:46571 "EHLO
+        mail.pidancet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730450AbgKIQro (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 9 Nov 2020 08:04:45 -0500
-Received: from marcel-macbook.fritz.box (p4fefcf0f.dip0.t-ipconnect.de [79.239.207.15])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 2674ECECC6;
-        Mon,  9 Nov 2020 14:11:49 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: Re: [PATCH v5] bluetooth: hci_h5: fix memory leak in h5_close
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20201016131447.32107-1-anant.thazhemadam@gmail.com>
-Date:   Mon, 9 Nov 2020 14:04:40 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-kernel-mentees@lists.linuxfoundation.org,
-        syzbot+6ce141c55b2f7aafd1c4@syzkaller.appspotmail.com
-Content-Transfer-Encoding: 8BIT
-Message-Id: <46A02F1A-DABE-4CEE-A43B-F44766D15FFB@holtmann.org>
-References: <20201016131447.32107-1-anant.thazhemadam@gmail.com>
-To:     Anant Thazhemadam <anant.thazhemadam@gmail.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
+        Mon, 9 Nov 2020 11:47:44 -0500
+Received: from authenticated-user (mail.pidancet.net [163.172.153.181])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.pidancet.net (Postfix) with ESMTPSA id 65CD89F36E;
+        Mon,  9 Nov 2020 16:47:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=pidancet.net; s=mail;
+        t=1604940461; bh=tgiECD+5E5yF8Qr0w7CpIbiFA6KS9yzSS+wQAVkuKgg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=dLtS/fu7DgetFu/OHPw2aGVeKkAVc8AUlDH559wIB+B7UnQXW19IKqJMgfYA9XOiI
+         FsHUmn1pU4LiATeCnmcleWlXmKmqTQa/iWqvFHZBfiMmKSXBhuK9blUjgtRRrcu6Nx
+         XAXoZdRjecOUnVHNJ52qOSA+zmiV+etC5XUBKNO10VUVlASttxXfWUEe91KnZGU9g4
+         ru1Ua+GvhoRXwYveLir0wfhmtR/Z8DnJ9qIQXxmTYrgyL30e+ZEn+/116/Hj9jvxxO
+         z0Pu9yOcbdDJZ43KCD2OA4ojV3YAvkoHWBb6KJKmvnmct0Wrqgd8XHShRasEWGT99F
+         vch0iWhHYDjwA==
+From:   julian@pidancet.net
+To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org
+Cc:     Julian Pidancet <julian@pidancet.net>
+Subject: [PATCH v2] Bluetooth: btusb: Add support for 1358:c123 Realtek 8822CE device
+Date:   Mon,  9 Nov 2020 17:47:22 +0100
+Message-Id: <20201109164722.23501-1-julian@pidancet.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Anant,
+From: Julian Pidancet <julian@pidancet.net>
 
-> When h5_close() is called, h5 is directly freed when !hu->serdev.
-> However, h5->rx_skb is not freed, which causes a memory leak.
-> 
-> Freeing h5->rx_skb and setting it to NULL, fixes this memory leak.
-> 
-> Fixes: ce945552fde4 ("Bluetooth: hci_h5: Add support for serdev enumerated devices")
-> Reported-by: syzbot+6ce141c55b2f7aafd1c4@syzkaller.appspotmail.com
-> Tested-by: syzbot+6ce141c55b2f7aafd1c4@syzkaller.appspotmail.com
-> Signed-off-by: Anant Thazhemadam <anant.thazhemadam@gmail.com>
-> ---
-> Changes in v5:
-> 	* Set h5->rx_skb = NULL unconditionally - to improve code
-> 	  readability
-> 	* Update commit message accordingly
-> 
-> Changes in v4:
-> 	* Free h5->rx_skb even when hu->serdev
-> 	(Suggested by Hans de Goede <hdegoede@redhat.com>)
-> 	* If hu->serdev, then assign h5->rx_skb = NULL
-> 
-> Changes in v3:
-> 	* Free h5->rx_skb when !hu->serdev, and fix the memory leak
-> 	* Do not incorrectly and unnecessarily call serdev_device_close()
-> 
-> Changes in v2:
-> 	* Fixed the Fixes tag
-> 
-> 
-> drivers/bluetooth/hci_h5.c | 3 +++
-> 1 file changed, 3 insertions(+)
+Huawei Matebook 13 2020 AMD laptops (and probably other Matebook models)
+are equiped with a RTL8822CE chip using the 1358:c123 USB identifiers.
+This patch adds firmware loading support for it.
 
-patch has been applied to bluetooth-next tree.
+T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1358 ProdID=c123 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+Signed-off-by: Julian Pidancet <julian@pidancet.net>
+---
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Regards
-
-Marcel
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 4a1f877616d6..8c04727dfb29 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -441,6 +441,8 @@ static const struct usb_device_id blacklist_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x2ff8, 0x3051), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x1358, 0xc123), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 
+ 	/* Silicon Wave based devices */
+ 	{ USB_DEVICE(0x0c10, 0x0000), .driver_info = BTUSB_SWAVE },
+-- 
+2.27.0
 
