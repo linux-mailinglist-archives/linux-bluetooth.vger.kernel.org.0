@@ -2,97 +2,57 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 246932AB894
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  9 Nov 2020 13:50:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B0452ABD99
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  9 Nov 2020 14:47:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729493AbgKIMtt convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 9 Nov 2020 07:49:49 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:47946 "EHLO
+        id S1731491AbgKINr1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 9 Nov 2020 08:47:27 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:55320 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726410AbgKIMts (ORCPT
+        with ESMTP id S1727826AbgKIM5F (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 9 Nov 2020 07:49:48 -0500
+        Mon, 9 Nov 2020 07:57:05 -0500
 Received: from marcel-macbook.fritz.box (p4fefcf0f.dip0.t-ipconnect.de [79.239.207.15])
-        by mail.holtmann.org (Postfix) with ESMTPSA id F3DB3CECC6;
-        Mon,  9 Nov 2020 13:56:23 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 81D68CECC5;
+        Mon,  9 Nov 2020 14:04:10 +0100 (CET)
 Content-Type: text/plain;
-        charset=utf-8
+        charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: Re: [Bluez PATCH v6 03/10] doc/mgmt-api: Update controller
- capabilities MGMT command in mgmt-api
+Subject: Re: [PATCH v2] Bluetooth: Move force_bredr_smp debugfs into
+ hci_debugfs_create_bredr
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20201029160317.Bluez.v6.3.Iabfcf7ec8ac293130a7d903ee8094414256799b3@changeid>
-Date:   Mon, 9 Nov 2020 13:49:14 +0100
-Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        linux-bluetooth@vger.kernel.org,
-        chromeos-bluetooth-upstreaming@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <263DCED1-D5D0-4ABD-A6C9-5A4ACA45458E@holtmann.org>
-References: <20201029230623.3630069-1-danielwinkler@google.com>
- <20201029160317.Bluez.v6.3.Iabfcf7ec8ac293130a7d903ee8094414256799b3@changeid>
-To:     Daniel Winkler <danielwinkler@google.com>
+In-Reply-To: <20200929080324.632523-1-tientzu@chromium.org>
+Date:   Mon, 9 Nov 2020 13:57:01 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>, kuba@kernel.org,
+        netdev@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <4B6CE6A7-CE12-4057-AA58-32B4303D87F8@holtmann.org>
+References: <20200929080324.632523-1-tientzu@chromium.org>
+To:     Claire Chang <tientzu@chromium.org>
 X-Mailer: Apple Mail (2.3608.120.23.2.4)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Daniel,
+Hi Claire,
 
-> This patch changes Read Security Info MGMT to be called Read Controller
-> Capabilities Command
+> Avoid multiple attempts to create the debugfs entry, force_bredr_smp,
+> by moving it from the SMP registration to the BR/EDR controller init
+> section. hci_debugfs_create_bredr is only called when HCI_SETUP and
+> HCI_CONFIG is not set.
 > 
+> Signed-off-by: Claire Chang <tientzu@chromium.org>
 > ---
+> v2: correct a typo in commit message
 > 
-> Changes in v6: None
-> Changes in v5: None
-> Changes in v4:
-> - mgmt-api: Move Controller Capabilities MGMT doc into new patch
-> - mgmt-api: Tx Power range put into single capabilities entry
-> 
-> Changes in v3: None
-> Changes in v2: None
-> 
-> doc/mgmt-api.txt | 21 +++++++++++++++------
-> 1 file changed, 15 insertions(+), 6 deletions(-)
-> 
-> diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
-> index 7c899a8fe..1aa43d6c3 100644
-> --- a/doc/mgmt-api.txt
-> +++ b/doc/mgmt-api.txt
-> @@ -3110,19 +3110,19 @@ Set Wideband Speech Command
-> 				Invalid Index
-> 
-> 
-> -Read Security Information Command
-> -=================================
-> +Read Controller Capabilities Command
-> +====================================
-> 
-> 	Command Code:		0x0048
-> 	Controller Index:	<controller id>
-> 	Command Parameters:
-> -	Return Parameters:	Security_Data_Length (2 Octets)
-> -				Security_Data (0-65535 Octets)
-> +	Return Parameters:	Capabilities_Data_Length (2 Octets)
-> +				Capabilities_Data (0-65535 Octets)
-> 
-> -	This command is used to retrieve the supported security features
-> +	This command is used to retrieve the supported capabilities
-> 	by the controller or the host stack.
-> 
-> -	The Security_Data_Length and Security_Data parameters provide
-> +	The Capabilities_Data_Length and Capabilities_Data parameters provide
-> 	a list of security settings, features and information. It uses
-> 	the same format as EIR_Data, but with the namespace defined here.
-> 
-> @@ -3131,6 +3131,7 @@ Read Security Information Command
-> 		0x01		Flags
-> 		0x02		Max Encryption Key Size (BR/EDR)
-> 		0x03		Max Encryption Key Size (LE)
-> +		0x04		Supported Tx Power (LE)
+> net/bluetooth/hci_debugfs.c | 50 +++++++++++++++++++++++++++++++++++++
+> net/bluetooth/smp.c         | 44 ++------------------------------
+> net/bluetooth/smp.h         |  2 ++
+> 3 files changed, 54 insertions(+), 42 deletions(-)
 
-make this “Supported Min/Max TX Power”. Otherwise looks good and ready for Luiz to apply.
+patch has been applied to bluetooth-next tree.
 
 Regards
 
