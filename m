@@ -2,107 +2,341 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D2BE2AD340
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Nov 2020 11:13:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 320BA2AD37E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Nov 2020 11:19:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727536AbgKJKNn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 Nov 2020 05:13:43 -0500
-Received: from mail-dm6nam12on2053.outbound.protection.outlook.com ([40.107.243.53]:60240
-        "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726737AbgKJKNn (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Nov 2020 05:13:43 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VSSPxlwW/QPr09jMf/k6ytB+wz2Nu+AL91SyDtIDJCGFpVSVPGR8OJ69rPfK73CkAOTt6CnPE/RYOCs1r43KZrZGkj4E0MClagkH8pA3YjecOVdAY8bR0VBbcGzrcS2+7Lmg7pWs570sgixO2Gd72FpNcrQFRlFs51dSZcz/VuztG1xLJaIGBVPUDIXd/IrRQ9l1D18YZHfeYsaU0itznbwa8o4vz7N3Um8HypgxSKF1K49XXucjiJJ12EhgfcujYZjWmSrrAXj0O9qaJvhomgFUfW0+zS7PF+hy9We7zLG8uMiQeaV7vw/3QZoAYLXQLymO8jNpmBdubgmxKzFtvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Nk1tTI+1RUwg8nQksIovW/9WlTswIA8IS8jfkkAzqCc=;
- b=nM2MAPt+hJstUoZgbSL9MKBycCLwXHjeCmW8i+Zdfg9gtLa/eez2jJgSZLT2wZpLKfRbfqAoiFWgqUifD+z2tJZwfWcOJDQMNfRwyBltTkrYlQoJw1n66TRMpXCoBBEKo8GRpkbqGbUGBRHHBj800PUUvSl/wTiLwDWVR26vcdAy8lKs+5tDCsGl+tWbg1OoTgv5o+xqpoyZXus7xyeMWuoBkLG2D2x+AYWciPGpdfke9SmiPKSV8gUF+Mj09AOEV8zbFq5fSw660IrmgHe2GbfyW885DtmQsqkfBYdtocEcUV4EQm+lsasIXyLwH1VjAUOi38mZwC44ar3/5iFhEg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=windriver.com; dmarc=pass action=none
- header.from=windriver.com; dkim=pass header.d=windriver.com; arc=none
+        id S1727651AbgKJKSq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 Nov 2020 05:18:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49678 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726690AbgKJKSn (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 10 Nov 2020 05:18:43 -0500
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3985FC0613D3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Nov 2020 02:18:41 -0800 (PST)
+Received: by mail-qk1-x749.google.com with SMTP id t64so8307961qkd.5
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Nov 2020 02:18:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=windriversystems.onmicrosoft.com;
- s=selector2-windriversystems-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Nk1tTI+1RUwg8nQksIovW/9WlTswIA8IS8jfkkAzqCc=;
- b=QNc/ATkDwdrYiMM8sG/cY24NIYbBQLsmuOnGxd1noKk5zTCb411r6M8LmPD/5+ZO1f3rWCZFmcsgU1ER1eTXfk2r6/J/9hpT1/2zBvxrzHZM+ugtpmcPo/XByRVMgD0FokVz73noSzBuO6aP6fpNoAVm2Zg0rai/wEPOmQ+g8TU=
-Authentication-Results: holtmann.org; dkim=none (message not signed)
- header.d=none;holtmann.org; dmarc=none action=none header.from=windriver.com;
-Received: from PH0PR11MB5077.namprd11.prod.outlook.com (2603:10b6:510:3b::17)
- by PH0PR11MB4966.namprd11.prod.outlook.com (2603:10b6:510:42::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18; Tue, 10 Nov
- 2020 10:13:41 +0000
-Received: from PH0PR11MB5077.namprd11.prod.outlook.com
- ([fe80::3c06:91b4:3df0:a232]) by PH0PR11MB5077.namprd11.prod.outlook.com
- ([fe80::3c06:91b4:3df0:a232%7]) with mapi id 15.20.3541.025; Tue, 10 Nov 2020
- 10:13:41 +0000
-From:   Xiaolei Wang <xiaolei.wang@windriver.com>
-To:     marcel@holtmann.org
-Cc:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] Bluetooth: hci_ll: add a small delay for wl1271 enable bt_en
-Date:   Tue, 10 Nov 2020 18:13:11 +0800
-Message-Id: <20201110101311.1657220-1-xiaolei.wang@windriver.com>
-X-Mailer: git-send-email 2.25.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [60.247.85.82]
-X-ClientProxiedBy: HK0PR01CA0057.apcprd01.prod.exchangelabs.com
- (2603:1096:203:a6::21) To PH0PR11MB5077.namprd11.prod.outlook.com
- (2603:10b6:510:3b::17)
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from pek-lpggp7.wrs.com (60.247.85.82) by HK0PR01CA0057.apcprd01.prod.exchangelabs.com (2603:1096:203:a6::21) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.21 via Frontend Transport; Tue, 10 Nov 2020 10:13:39 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 11a16ed0-634d-494f-1bd2-08d885614bf8
-X-MS-TrafficTypeDiagnostic: PH0PR11MB4966:
-X-Microsoft-Antispam-PRVS: <PH0PR11MB4966C2C1570CA5CD4B64429395E90@PH0PR11MB4966.namprd11.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:5797;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Z/b74t/vUZERmVaSdFqe8jfA2dUcmbNDPcq1uGRxmklBYxb4aqr2ohSNzWRrgPPo0yN5+TU5005Z6oyTVvBq/dmB+zDxVcsE3D0rObtF6NDkMcrvc2SHfKdoT1A/EkyUZ5rJHmook9HX5l99hqngR2MMjwVT1d5icikMNMkiUJ9MuRkWObZHwWwMdClA5NrZ7UIJTpLakM2L/IsEpLzXCqditXf1C45XorPs2vnTDOhpMzWCXZTblQMyw2wSyM2OrOZW28oaT8VaH0k5vK3qZMzxYHoWO/yfWvR9lXArA+RSN+S199aifT5nqzKu1muNac8F46swLv/paKNo4Tsx9A==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR11MB5077.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39850400004)(396003)(346002)(366004)(376002)(136003)(66946007)(6512007)(316002)(6916009)(52116002)(66556008)(186003)(16526019)(36756003)(26005)(66476007)(86362001)(8676002)(4744005)(2616005)(5660300002)(6506007)(6666004)(8936002)(44832011)(1076003)(6486002)(956004)(478600001)(4326008)(2906002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: FlEevJ9arikWqDGo9nUYSJYgqOjT+XzgXNam3K60eI5U9qekvZJ71pUcanzNVEI2DL9T33+HSRzUJlSPlfXB12UAKLZdwcgz0bwA3rqZh8Ad9Hhvw5x6IHGQJSXI46OTr/WzAXIOeIMrGsWYGs7xeTwuZd+F6OUxaXoOsBiwE6WVZViUBAPUyU7StSWGdbzyI2vv0far2g/IpsLRRU2HFOn5tUFRzy6VDxt0G+5a5EjATXfVyc+nkkdP4sDW3tfN8A8NR7+oNLRDNn+wnL+xXti4Ecsqno1xvkieForJrbXP1kcvsIxk83vG62CCuH38GE8FAbWa98CZmx4jEYK2XRa++6KkHLF1jEaKQ71TMhtzYhWzJnA2PGWC/RIwDzSpLwgfclEKy04JDwfBIeTWkgOR1D3wTLQMdFxOGx7HPtQTHj/ryLzYSrK9YjDhDpK7bnWIalfTuaEPMziG6Lf2avuFt6sKMVVHhHKnk2wixXGPbSPxyq/T840sGjH47tAjrVkm5LEyAdvVKUi523XAC46Vyi95OuSsUZ1xXehAc2l0p4ti5Go/icYaSWEIm8xNUI9/L+GYdiNFKqKJidZR7l6PDGs3ELaV5zdAnFvggH3ER4x9/hvL0I+T39/QNuUyjq74puw+xXYxUAxEXC4qHg==
-X-OriginatorOrg: windriver.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 11a16ed0-634d-494f-1bd2-08d885614bf8
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR11MB5077.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2020 10:13:40.9452
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 8ddb2873-a1ad-4a18-ae4e-4644631433be
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mfU4FXmYmAnBi9LtgIj0UNZZxIVls5KCrShlhGObSZ4R1bdd5ZeCwp4aFUdf9QG68oBz08C2bgJO+ci0q8YgkcQ9yUXQUZxNIZ4azo1i2uE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4966
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=0MzzK5QGXbJzu974MwyqHzvYNMML0VPnlzv3We3j1VE=;
+        b=gMaOh1pCOTzr+9g5eOr5OLO7aIpnxmMEyu3xmSxpxYPSdkGfgrkLxaZfzzshis4tdX
+         hF+ClxyT0zL5M4649mabcs6d+dOwQJ4lwD2tuREi7yktBY1sLwtLgifpRjmyrBCUJ8HR
+         mYO56Y4kXjMHIJrPu8vqB475TN6fdBlZRR9MvQt3FD2XfaNtej2+ChG22UAGAGlWhuOA
+         3rKl7Y2t7miOL6cmGeZDpKrV2sEkpue5R/Y61pnJ+hCkLxCI2JqUF0qF0r7Gs8RptUST
+         k/cOZPONiaztuMQ26u4LnlUT3V9OXo+sFMATZsJagcxkK3vicgjQVuV8pcakCq42XMbw
+         HrtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=0MzzK5QGXbJzu974MwyqHzvYNMML0VPnlzv3We3j1VE=;
+        b=bFz1ZGc9Lb6RUAwmZIh4L8+Ai66b2J2J3qlxXZFbLBv2Kd/YzqBztknD5cKDAw7CoU
+         xedJeD27aBtW6w9w1CWqbBO61Zivsgv/+Vz6iUxb9MlY4Ac9QpBbQkdn2rbvFfWXqEx8
+         jI6GKm20CUUzjCcIFNGVfRqZy2fkLNjgRxmmsHA6n5HIH4su0rJ2Zarw29dKBjsJq9Fz
+         78AzPn9VpxWTa1WW2Fg5RrKGE9GWB6yEeonRKVUU7Ga+m7YUdt3RwICN2Gs1bOizDKLu
+         qhjbKTSBrKU+AJ6g4LPjidbanDscQ4lc+8X/07Wpxm3Dd8Jqf6UAeuTjjxvY2rn23U9C
+         KoNw==
+X-Gm-Message-State: AOAM532F53mXhJcDdfTW+dccRTnmZQGZgR/ya1Pw/oFvHXsdGPWMHYdt
+        tO4qlxP5QgYik0avzapn9Ar8+tFmFRRtbGdLOL14ez1Lx1n0LVVr/EiHbR43K7MW4Vk8FlBzvWD
+        h1+FHgePOVaP8pWvOLuqx2JdgsK9QUazb3aIbm3FmoBvm1YCR3BInsQDZUkqwyGbwos29WY4VJv
+        PFNDsq1e9D0po=
+X-Google-Smtp-Source: ABdhPJzem2k7PaSNYuBdVSkzysL4CxVpGuP/F0vc0CafxCaop/UtB27+JVNCZgYt4+knJCNXqmRuGv8SwDSptkbvww==
+Sender: "howardchung via sendgmr" 
+        <howardchung@howardchung-p920.tpe.corp.google.com>
+X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:f693:9fff:fef4:4e45])
+ (user=howardchung job=sendgmr) by 2002:a0c:ffd1:: with SMTP id
+ h17mr1569954qvv.20.1605003520117; Tue, 10 Nov 2020 02:18:40 -0800 (PST)
+Date:   Tue, 10 Nov 2020 18:17:50 +0800
+Message-Id: <20201110181740.v8.1.I55fa38874edc240d726c1de6e82b2ce57b64f5eb@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8-goog
+Subject: [PATCH v8 1/6] Bluetooth: Replace BT_DBG with bt_dev_dbg in HCI request
+From:   Howard Chung <howardchung@google.com>
+To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
+        luiz.dentz@gmail.com
+Cc:     mmandlik@chromium.org, mcchou@chromium.org, alainm@chromium.org,
+        Howard Chung <howardchung@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When using the wl1271 Bluetooth function of am335x, it is found that the
-Bluetooth module cannot respond in time after Bluetooth is enabled, and
-a small delay is needed to work normally, so whether to add a small
-mdelay.
+This replaces the BT_DBG function to bt_dev_dbg as it is cleaner to show
+the controller index in the debug message.
 
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Signed-off-by: Howard Chung <howardchung@google.com>
 ---
- drivers/bluetooth/hci_ll.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/hci_ll.c b/drivers/bluetooth/hci_ll.c
-index 8bfe024d1fcd..eb1e736efeeb 100644
---- a/drivers/bluetooth/hci_ll.c
-+++ b/drivers/bluetooth/hci_ll.c
-@@ -626,6 +626,7 @@ static int ll_setup(struct hci_uart *hu)
- 		gpiod_set_value_cansleep(lldev->enable_gpio, 0);
- 		msleep(5);
- 		gpiod_set_value_cansleep(lldev->enable_gpio, 1);
-+		mdelay(100);
- 		err = serdev_device_wait_for_cts(serdev, true, 200);
- 		if (err) {
- 			bt_dev_err(hu->hdev, "Failed to get CTS");
+Changes in v8:
+- Simplified logic in __hci_update_interleaved_scan
+- Remove hdev->name when calling bt_dev_dbg
+- Remove 'default' in hci_req_add_le_interleaved_scan switch block
+- Remove {} around :1915
+- Update commit message and title in v7 4/5
+- Add a cleanup patch for replacing BT_DBG with bt_dev_dbg
+
+Changes in v7:
+- Fix bt_dev_warn argument type warning
+
+Changes in v6:
+- Set parameter EnableAdvMonInterleaveScan to 1 byte long
+
+Changes in v5:
+- Rename 'adv_monitor' from many functions/variables
+- Move __hci_update_interleaved_scan into hci_req_add_le_passive_scan
+- Update the logic of update_adv_monitor_scan_state
+
+Changes in v4:
+- Rebase to bluetooth-next/master (previous 2 patches are applied)
+- Fix over 80 chars limit in mgmt_config.c
+- Set EnableAdvMonInterleaveScan default to Disable
+
+Changes in v3:
+- Remove 'Bluez' prefix
+
+Changes in v2:
+- remove 'case 0x001c' in mgmt_config.c
+
+ net/bluetooth/hci_request.c | 52 ++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
+
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index 6a74097c50d34..048d4db9d4ea5 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -58,7 +58,7 @@ static int req_run(struct hci_request *req, hci_req_complete_t complete,
+ 	struct sk_buff *skb;
+ 	unsigned long flags;
+ 
+-	BT_DBG("length %u", skb_queue_len(&req->cmd_q));
++	bt_dev_dbg(hdev, "length %u", skb_queue_len(&req->cmd_q));
+ 
+ 	/* If an error occurred during request building, remove all HCI
+ 	 * commands queued on the HCI request queue.
+@@ -102,7 +102,7 @@ int hci_req_run_skb(struct hci_request *req, hci_req_complete_skb_t complete)
+ static void hci_req_sync_complete(struct hci_dev *hdev, u8 result, u16 opcode,
+ 				  struct sk_buff *skb)
+ {
+-	BT_DBG("%s result 0x%2.2x", hdev->name, result);
++	bt_dev_dbg(hdev, "result 0x%2.2x", result);
+ 
+ 	if (hdev->req_status == HCI_REQ_PEND) {
+ 		hdev->req_result = result;
+@@ -115,7 +115,7 @@ static void hci_req_sync_complete(struct hci_dev *hdev, u8 result, u16 opcode,
+ 
+ void hci_req_sync_cancel(struct hci_dev *hdev, int err)
+ {
+-	BT_DBG("%s err 0x%2.2x", hdev->name, err);
++	bt_dev_dbg(hdev, "err 0x%2.2x", err);
+ 
+ 	if (hdev->req_status == HCI_REQ_PEND) {
+ 		hdev->req_result = err;
+@@ -131,7 +131,7 @@ struct sk_buff *__hci_cmd_sync_ev(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 	struct sk_buff *skb;
+ 	int err = 0;
+ 
+-	BT_DBG("%s", hdev->name);
++	bt_dev_dbg(hdev, "");
+ 
+ 	hci_req_init(&req, hdev);
+ 
+@@ -167,7 +167,7 @@ struct sk_buff *__hci_cmd_sync_ev(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 	skb = hdev->req_skb;
+ 	hdev->req_skb = NULL;
+ 
+-	BT_DBG("%s end: err %d", hdev->name, err);
++	bt_dev_dbg(hdev, "end: err %d", err);
+ 
+ 	if (err < 0) {
+ 		kfree_skb(skb);
+@@ -196,7 +196,7 @@ int __hci_req_sync(struct hci_dev *hdev, int (*func)(struct hci_request *req,
+ 	struct hci_request req;
+ 	int err = 0;
+ 
+-	BT_DBG("%s start", hdev->name);
++	bt_dev_dbg(hdev, "start");
+ 
+ 	hci_req_init(&req, hdev);
+ 
+@@ -260,7 +260,7 @@ int __hci_req_sync(struct hci_dev *hdev, int (*func)(struct hci_request *req,
+ 	hdev->req_skb = NULL;
+ 	hdev->req_status = hdev->req_result = 0;
+ 
+-	BT_DBG("%s end: err %d", hdev->name, err);
++	bt_dev_dbg(hdev, "end: err %d", err);
+ 
+ 	return err;
+ }
+@@ -300,7 +300,7 @@ struct sk_buff *hci_prepare_cmd(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 	if (plen)
+ 		skb_put_data(skb, param, plen);
+ 
+-	BT_DBG("skb len %d", skb->len);
++	bt_dev_dbg(hdev, "skb len %d", skb->len);
+ 
+ 	hci_skb_pkt_type(skb) = HCI_COMMAND_PKT;
+ 	hci_skb_opcode(skb) = opcode;
+@@ -315,7 +315,7 @@ void hci_req_add_ev(struct hci_request *req, u16 opcode, u32 plen,
+ 	struct hci_dev *hdev = req->hdev;
+ 	struct sk_buff *skb;
+ 
+-	BT_DBG("%s opcode 0x%4.4x plen %d", hdev->name, opcode, plen);
++	bt_dev_dbg(hdev, "opcode 0x%4.4x plen %d", opcode, plen);
+ 
+ 	/* If an error occurred during request building, there is no point in
+ 	 * queueing the HCI command. We can simply return.
+@@ -413,8 +413,8 @@ static void __hci_update_background_scan(struct hci_request *req)
+ 	 */
+ 	hci_discovery_filter_clear(hdev);
+ 
+-	BT_DBG("%s ADV monitoring is %s", hdev->name,
+-	       hci_is_adv_monitoring(hdev) ? "on" : "off");
++	bt_dev_dbg(hdev, "ADV monitoring is %s",
++		   hci_is_adv_monitoring(hdev) ? "on" : "off");
+ 
+ 	if (list_empty(&hdev->pend_le_conns) &&
+ 	    list_empty(&hdev->pend_le_reports) &&
+@@ -430,7 +430,7 @@ static void __hci_update_background_scan(struct hci_request *req)
+ 
+ 		hci_req_add_le_scan_disable(req, false);
+ 
+-		BT_DBG("%s stopping background scanning", hdev->name);
++		bt_dev_dbg(hdev, "stopping background scanning");
+ 	} else {
+ 		/* If there is at least one pending LE connection, we should
+ 		 * keep the background scan running.
+@@ -1826,7 +1826,7 @@ void hci_req_disable_address_resolution(struct hci_dev *hdev)
+ 
+ static void adv_enable_complete(struct hci_dev *hdev, u8 status, u16 opcode)
+ {
+-	BT_DBG("%s status %u", hdev->name, status);
++	bt_dev_dbg(hdev, "status %u", status);
+ }
+ 
+ void hci_req_reenable_advertising(struct hci_dev *hdev)
+@@ -1863,7 +1863,7 @@ static void adv_timeout_expire(struct work_struct *work)
+ 	struct hci_request req;
+ 	u8 instance;
+ 
+-	BT_DBG("%s", hdev->name);
++	bt_dev_dbg(hdev, "");
+ 
+ 	hci_dev_lock(hdev);
+ 
+@@ -2347,7 +2347,7 @@ static void set_random_addr(struct hci_request *req, bdaddr_t *rpa)
+ 	 */
+ 	if (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
+ 	    hci_lookup_le_connect(hdev)) {
+-		BT_DBG("Deferring random address update");
++		bt_dev_dbg(hdev, "Deferring random address update");
+ 		hci_dev_set_flag(hdev, HCI_RPA_EXPIRED);
+ 		return;
+ 	}
+@@ -2572,7 +2572,7 @@ void __hci_req_update_class(struct hci_request *req)
+ 	struct hci_dev *hdev = req->hdev;
+ 	u8 cod[3];
+ 
+-	BT_DBG("%s", hdev->name);
++	bt_dev_dbg(hdev, "");
+ 
+ 	if (!hdev_is_powered(hdev))
+ 		return;
+@@ -2741,7 +2741,7 @@ void __hci_abort_conn(struct hci_request *req, struct hci_conn *conn,
+ static void abort_conn_complete(struct hci_dev *hdev, u8 status, u16 opcode)
+ {
+ 	if (status)
+-		BT_DBG("Failed to abort connection: status 0x%2.2x", status);
++		bt_dev_dbg(hdev, "Failed to abort connection: status 0x%2.2x", status);
+ }
+ 
+ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+@@ -2804,7 +2804,7 @@ static int bredr_inquiry(struct hci_request *req, unsigned long opt)
+ 	const u8 liac[3] = { 0x00, 0x8b, 0x9e };
+ 	struct hci_cp_inquiry cp;
+ 
+-	BT_DBG("%s", req->hdev->name);
++	bt_dev_dbg(req->hdev, "");
+ 
+ 	hci_dev_lock(req->hdev);
+ 	hci_inquiry_cache_flush(req->hdev);
+@@ -2830,7 +2830,7 @@ static void le_scan_disable_work(struct work_struct *work)
+ 					    le_scan_disable.work);
+ 	u8 status;
+ 
+-	BT_DBG("%s", hdev->name);
++	bt_dev_dbg(hdev, "");
+ 
+ 	if (!hci_dev_test_flag(hdev, HCI_LE_SCAN))
+ 		return;
+@@ -2926,7 +2926,7 @@ static void le_scan_restart_work(struct work_struct *work)
+ 	unsigned long timeout, duration, scan_start, now;
+ 	u8 status;
+ 
+-	BT_DBG("%s", hdev->name);
++	bt_dev_dbg(hdev, "");
+ 
+ 	hci_req_sync(hdev, le_scan_restart, 0, HCI_CMD_TIMEOUT, &status);
+ 	if (status) {
+@@ -2980,7 +2980,7 @@ static int active_scan(struct hci_request *req, unsigned long opt)
+ 	bool addr_resolv = false;
+ 	int err;
+ 
+-	BT_DBG("%s", hdev->name);
++	bt_dev_dbg(hdev, "");
+ 
+ 	/* If controller is scanning, it means the background scanning is
+ 	 * running. Thus, we should temporarily stop it in order to set the
+@@ -3008,7 +3008,7 @@ static int interleaved_discov(struct hci_request *req, unsigned long opt)
+ {
+ 	int err;
+ 
+-	BT_DBG("%s", req->hdev->name);
++	bt_dev_dbg(req->hdev, "");
+ 
+ 	err = active_scan(req, opt);
+ 	if (err)
+@@ -3021,7 +3021,7 @@ static void start_discovery(struct hci_dev *hdev, u8 *status)
+ {
+ 	unsigned long timeout;
+ 
+-	BT_DBG("%s type %u", hdev->name, hdev->discovery.type);
++	bt_dev_dbg(hdev, "type %u", hdev->discovery.type);
+ 
+ 	switch (hdev->discovery.type) {
+ 	case DISCOV_TYPE_BREDR:
+@@ -3069,7 +3069,7 @@ static void start_discovery(struct hci_dev *hdev, u8 *status)
+ 	if (*status)
+ 		return;
+ 
+-	BT_DBG("%s timeout %u ms", hdev->name, jiffies_to_msecs(timeout));
++	bt_dev_dbg(hdev, "timeout %u ms", jiffies_to_msecs(timeout));
+ 
+ 	/* When service discovery is used and the controller has a
+ 	 * strict duplicate filter, it is important to remember the
+@@ -3094,7 +3094,7 @@ bool hci_req_stop_discovery(struct hci_request *req)
+ 	struct inquiry_entry *e;
+ 	bool ret = false;
+ 
+-	BT_DBG("%s state %u", hdev->name, hdev->discovery.state);
++	bt_dev_dbg(hdev, "state %u", hdev->discovery.state);
+ 
+ 	if (d->state == DISCOVERY_FINDING || d->state == DISCOVERY_STOPPING) {
+ 		if (test_bit(HCI_INQUIRY, &hdev->flags))
+@@ -3174,7 +3174,7 @@ static void discov_off(struct work_struct *work)
+ 	struct hci_dev *hdev = container_of(work, struct hci_dev,
+ 					    discov_off.work);
+ 
+-	BT_DBG("%s", hdev->name);
++	bt_dev_dbg(hdev, "");
+ 
+ 	hci_dev_lock(hdev);
+ 
 -- 
-2.25.1
+2.29.2.222.g5d2a92d10f8-goog
 
