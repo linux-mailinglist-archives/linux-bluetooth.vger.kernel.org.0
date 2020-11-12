@@ -2,115 +2,269 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD1E32AFC28
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Nov 2020 02:33:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 67A332AFEA9
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Nov 2020 06:39:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728571AbgKLBdR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 11 Nov 2020 20:33:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57858 "EHLO
+        id S1729610AbgKLFjZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 12 Nov 2020 00:39:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727796AbgKKXG3 (ORCPT
+        with ESMTP id S1728354AbgKLDkq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 11 Nov 2020 18:06:29 -0500
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 424C7C061A4B
-        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Nov 2020 15:04:36 -0800 (PST)
-Received: by mail-pf1-x42a.google.com with SMTP id y7so2666184pfq.11
-        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Nov 2020 15:04:36 -0800 (PST)
+        Wed, 11 Nov 2020 22:40:46 -0500
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AD36C0613D6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Nov 2020 19:40:46 -0800 (PST)
+Received: by mail-ej1-x641.google.com with SMTP id cw8so5683482ejb.8
+        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Nov 2020 19:40:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=CyCLFBOWsD7IBPaN8oe2uAyPXTqgGQd+HZN7ekvkkvs=;
-        b=Quhva8SFC1z/81pmjzzvbv4wa3LFfYKMW04ueVJYYLq5MDtH8NCFmiD2BuMq6hjbZE
-         wlgVMmPO9LdCohoreSTr/HMBflzkuFW+fKyz1JchPL0wT+I/pKsLIJWWOLnWuyUAxNTy
-         pRftCMUxn64VRujOs1L1a/fKOIZYz44hDsjPZQcozCpgT8Pd4k+9nqLOfy+48f+OzkHx
-         zts9d5LHIDqyzlop5RF5vuyvmQbX2ATQucpkIoTFW74p5Cdo04+S3oG2w/ljuH8Ks78F
-         UgW30v4hIduR3MwFdGx0st/KF6T61LO0AuQ26n/GEp4yiXV/VLf0RP/TJ7yJzcapKAAP
-         /o0g==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=To4HRRrNmKhGAD42q3JjCijVTRpTZsZMj/gYSYhTv8o=;
+        b=JOnC/AKQeiecbErbspMBd5TG4gY5qlzQbvgkFQaqwVtsBzSUgyWtA/zie2s8WC9r4X
+         LTQeq4CJLWpvUm3fmBLfcweLZhpmgCOVFJDvtOW0ci3ul7mXtb2dHMAJv+Nlfch71AQ4
+         C2mFphfFZ6e5+IQg80zo+5UzhtQReyUrV6MY6gf3bTBnksOovxmOsf/KAdXhVamEj2nW
+         wUlhjXR9RVI5G0j+kWAvztSjDSVs0OAF0QZIJLz+8/wgwm5BesWlTuDCO6RxNq4w5QJJ
+         gdTrYc3KncRdkDziH43LSMMwfLb7hgzwGf/uHrD+1bsjn6tSU/a7nobdkR2eJJqPX3nq
+         3pAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=CyCLFBOWsD7IBPaN8oe2uAyPXTqgGQd+HZN7ekvkkvs=;
-        b=fffROg1i9Uih9ybeYsxdoN2ODH88LH/L26YpUD4TD/9/k5nhUIycEWPFRf1ZKyxBAm
-         saC5zIGysGcWmtrYANpnmz1mvRna5d3yfpnclSi7lsQXVDinjsSRCypZPUn115JFUvZV
-         1sbvlSMrSK/l/snxher5RsDSKFXmtvZz5wwtopjk6ZBvzC4fgnr1RPTWmwzxD+wbsm2B
-         QWX+DpTrJRpUyCHIGyDIlDDlY5oHS1QjrA28oJonMb2SPz9Cqu5eaBYuyDuiCKzLCA+J
-         zHwRnMGUWobkI/VbZIFuJMBK3icDo0GvuBUEThTyBWfh1HWNVShBtPs0OtZl6ca8y0Iw
-         MBpg==
-X-Gm-Message-State: AOAM533cc9iu8XoPtBV5tzFRmb0LGWNi2hwYaUCErMc3XBp3NzNYyWN8
-        DMKzvprdrLJAYTftq7Lt5KjmqHl3mSjyAg==
-X-Google-Smtp-Source: ABdhPJyjdJbay7Lyr36Dhci6O+3otqzqN+Yoewbxn/Pwk7mDwlNpg1EeWXKxt00YjOMeH3PaS/8HZA==
-X-Received: by 2002:aa7:9f5a:0:b029:18b:594b:fb6c with SMTP id h26-20020aa79f5a0000b029018b594bfb6cmr25697552pfr.45.1605135875566;
-        Wed, 11 Nov 2020 15:04:35 -0800 (PST)
-Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id n27sm3867767pfq.59.2020.11.11.15.04.34
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 15:04:35 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 10/10] bthost: Fix sending uninitilized data
-Date:   Wed, 11 Nov 2020 15:04:21 -0800
-Message-Id: <20201111230421.3364932-11-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201111230421.3364932-1-luiz.dentz@gmail.com>
-References: <20201111230421.3364932-1-luiz.dentz@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=To4HRRrNmKhGAD42q3JjCijVTRpTZsZMj/gYSYhTv8o=;
+        b=J8d9KVBcKLry7TaH9vQBdAqoW2BLkMIMmKenLAlZAOaZkcZEpSZOQDtGAbkEDNKPMd
+         KhCGL9Om0aiUS/QAsGE6Hnlx0q9ghZsKdwWOpAO2v+WliwrXj3GVPjkR8jD3m7+FICfg
+         RfWQ8cHZU02zZIK5BWKHxBSUo5u3l92oNRKhapG0i/ZMkiEdZj/HhEp+T0pkl7vo8LVb
+         BzgjsZmLQD9e39Dt+Zj4PIWRYYiYiX3I09HEpY0iFrO8CCTRI5JLRW1ldI7bCuSGbnis
+         r2rjp0FBt/pz5jJROFtbbDXFZkLsaTAeZY9Oorzp9SkiTQ7EMxzEwT7N59SuzKLJI/jo
+         7+fg==
+X-Gm-Message-State: AOAM531uqGRhpr0J7VHPIjF4HNgAYMWZ0cI2nstX3BZA6MCdo+JglZpt
+        9lNPnwbY7580RYY3Tru4BldpQSgeBFrGK1/Y0sTwlA==
+X-Google-Smtp-Source: ABdhPJxH578IOP98WEnA2WvJ0R9/4iiLYmyXLLUa5uv9EZPYNBJtM8ji4hq5Tlg2kUHwjL3VCysE5lECyDS3M52vZ0E=
+X-Received: by 2002:a17:906:1a14:: with SMTP id i20mr29711499ejf.422.1605152444843;
+ Wed, 11 Nov 2020 19:40:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201111150115.v9.1.I55fa38874edc240d726c1de6e82b2ce57b64f5eb@changeid>
+ <20201111150115.v9.5.I9231b35b0be815c32c3a3ec48dcd1d68fa65daf4@changeid> <A5A4227D-58B7-4C08-AFC9-BC8A8D469179@holtmann.org>
+In-Reply-To: <A5A4227D-58B7-4C08-AFC9-BC8A8D469179@holtmann.org>
+From:   Yun-hao Chung <howardchung@google.com>
+Date:   Thu, 12 Nov 2020 11:40:33 +0800
+Message-ID: <CAPHZWUdoo_hh=8edYoHdFL8cn-Khz0JMi5QcF4QJjrP9c_zVnA@mail.gmail.com>
+Subject: Re: [PATCH v9 5/6] Bluetooth: Refactor read default sys config for
+ various types
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Alain Michaud <alainm@chromium.org>,
+        Manish Mandlik <mmandlik@chromium.org>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        netdev <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Wed, Nov 11, 2020 at 7:20 PM Marcel Holtmann <marcel@holtmann.org> wrote:
+>
+> Hi Howard,
+>
+> > Refactor read default system configuration function so that it's capable
+> > of returning different types than u16
+> >
+> > Signed-off-by: Howard Chung <howardchung@google.com>
+> > ---
+> >
+> > (no changes since v8)
+> >
+> > Changes in v8:
+> > - Update the commit title and message
+> >
+> > net/bluetooth/mgmt_config.c | 140 +++++++++++++++++++++---------------
+> > 1 file changed, 84 insertions(+), 56 deletions(-)
+> >
+> > diff --git a/net/bluetooth/mgmt_config.c b/net/bluetooth/mgmt_config.c
+> > index 2d3ad288c78ac..282fbf82f3192 100644
+> > --- a/net/bluetooth/mgmt_config.c
+> > +++ b/net/bluetooth/mgmt_config.c
+> > @@ -11,72 +11,100 @@
+> > #include "mgmt_util.h"
+> > #include "mgmt_config.h"
+> >
+> > -#define HDEV_PARAM_U16(_param_code_, _param_name_) \
+> > -{ \
+> > -     { cpu_to_le16(_param_code_), sizeof(__u16) }, \
+> > -     { cpu_to_le16(hdev->_param_name_) } \
+> > -}
+> > +#define HDEV_PARAM_U16(_param_name_) \
+> > +     struct {\
+> > +             struct mgmt_tlv entry; \
+> > +             __le16 value; \
+> > +     } __packed _param_name_
+> >
+> > -#define HDEV_PARAM_U16_JIFFIES_TO_MSECS(_param_code_, _param_name_) \
+> > -{ \
+> > -     { cpu_to_le16(_param_code_), sizeof(__u16) }, \
+> > -     { cpu_to_le16(jiffies_to_msecs(hdev->_param_name_)) } \
+> > -}
+> > +#define TLV_SET_U16(_param_code_, _param_name_) \
+> > +     { \
+> > +             { cpu_to_le16(_param_code_), sizeof(__u16) }, \
+> > +             cpu_to_le16(hdev->_param_name_) \
+> > +     }
+> > +
+> > +#define TLV_SET_U16_JIFFIES_TO_MSECS(_param_code_, _param_name_) \
+> > +     { \
+> > +             { cpu_to_le16(_param_code_), sizeof(__u16) }, \
+> > +             cpu_to_le16(jiffies_to_msecs(hdev->_param_name_)) \
+> > +     }
+> >
+> > int read_def_system_config(struct sock *sk, struct hci_dev *hdev, void *data,
+> >                          u16 data_len)
+> > {
+> > -     struct {
+> > -             struct mgmt_tlv entry;
+> > -             union {
+> > -                     /* This is a simplification for now since all values
+> > -                      * are 16 bits.  In the future, this code may need
+> > -                      * refactoring to account for variable length values
+> > -                      * and properly calculate the required buffer size.
+> > -                      */
+> > -                     __le16 value;
+> > -             };
+> > -     } __packed params[] = {
+> > +     int ret;
+> > +     struct mgmt_rp_read_def_system_config {
+> >               /* Please see mgmt-api.txt for documentation of these values */
+> > -             HDEV_PARAM_U16(0x0000, def_page_scan_type),
+> > -             HDEV_PARAM_U16(0x0001, def_page_scan_int),
+> > -             HDEV_PARAM_U16(0x0002, def_page_scan_window),
+> > -             HDEV_PARAM_U16(0x0003, def_inq_scan_type),
+> > -             HDEV_PARAM_U16(0x0004, def_inq_scan_int),
+> > -             HDEV_PARAM_U16(0x0005, def_inq_scan_window),
+> > -             HDEV_PARAM_U16(0x0006, def_br_lsto),
+> > -             HDEV_PARAM_U16(0x0007, def_page_timeout),
+> > -             HDEV_PARAM_U16(0x0008, sniff_min_interval),
+> > -             HDEV_PARAM_U16(0x0009, sniff_max_interval),
+> > -             HDEV_PARAM_U16(0x000a, le_adv_min_interval),
+> > -             HDEV_PARAM_U16(0x000b, le_adv_max_interval),
+> > -             HDEV_PARAM_U16(0x000c, def_multi_adv_rotation_duration),
+> > -             HDEV_PARAM_U16(0x000d, le_scan_interval),
+> > -             HDEV_PARAM_U16(0x000e, le_scan_window),
+> > -             HDEV_PARAM_U16(0x000f, le_scan_int_suspend),
+> > -             HDEV_PARAM_U16(0x0010, le_scan_window_suspend),
+> > -             HDEV_PARAM_U16(0x0011, le_scan_int_discovery),
+> > -             HDEV_PARAM_U16(0x0012, le_scan_window_discovery),
+> > -             HDEV_PARAM_U16(0x0013, le_scan_int_adv_monitor),
+> > -             HDEV_PARAM_U16(0x0014, le_scan_window_adv_monitor),
+> > -             HDEV_PARAM_U16(0x0015, le_scan_int_connect),
+> > -             HDEV_PARAM_U16(0x0016, le_scan_window_connect),
+> > -             HDEV_PARAM_U16(0x0017, le_conn_min_interval),
+> > -             HDEV_PARAM_U16(0x0018, le_conn_max_interval),
+> > -             HDEV_PARAM_U16(0x0019, le_conn_latency),
+> > -             HDEV_PARAM_U16(0x001a, le_supv_timeout),
+> > -             HDEV_PARAM_U16_JIFFIES_TO_MSECS(0x001b,
+> > -                                             def_le_autoconnect_timeout),
+> > -             HDEV_PARAM_U16(0x001d, advmon_allowlist_duration),
+> > -             HDEV_PARAM_U16(0x001e, advmon_no_filter_duration),
+> > +             HDEV_PARAM_U16(def_page_scan_type);
+> > +             HDEV_PARAM_U16(def_page_scan_int);
+> > +             HDEV_PARAM_U16(def_page_scan_window);
+> > +             HDEV_PARAM_U16(def_inq_scan_type);
+> > +             HDEV_PARAM_U16(def_inq_scan_int);
+> > +             HDEV_PARAM_U16(def_inq_scan_window);
+> > +             HDEV_PARAM_U16(def_br_lsto);
+> > +             HDEV_PARAM_U16(def_page_timeout);
+> > +             HDEV_PARAM_U16(sniff_min_interval);
+> > +             HDEV_PARAM_U16(sniff_max_interval);
+> > +             HDEV_PARAM_U16(le_adv_min_interval);
+> > +             HDEV_PARAM_U16(le_adv_max_interval);
+> > +             HDEV_PARAM_U16(def_multi_adv_rotation_duration);
+> > +             HDEV_PARAM_U16(le_scan_interval);
+> > +             HDEV_PARAM_U16(le_scan_window);
+> > +             HDEV_PARAM_U16(le_scan_int_suspend);
+> > +             HDEV_PARAM_U16(le_scan_window_suspend);
+> > +             HDEV_PARAM_U16(le_scan_int_discovery);
+> > +             HDEV_PARAM_U16(le_scan_window_discovery);
+> > +             HDEV_PARAM_U16(le_scan_int_adv_monitor);
+> > +             HDEV_PARAM_U16(le_scan_window_adv_monitor);
+> > +             HDEV_PARAM_U16(le_scan_int_connect);
+> > +             HDEV_PARAM_U16(le_scan_window_connect);
+> > +             HDEV_PARAM_U16(le_conn_min_interval);
+> > +             HDEV_PARAM_U16(le_conn_max_interval);
+> > +             HDEV_PARAM_U16(le_conn_latency);
+> > +             HDEV_PARAM_U16(le_supv_timeout);
+> > +             HDEV_PARAM_U16(def_le_autoconnect_timeout);
+> > +             HDEV_PARAM_U16(advmon_allowlist_duration);
+> > +             HDEV_PARAM_U16(advmon_no_filter_duration);
+> > +     } __packed rp = {
+> > +             TLV_SET_U16(0x0000, def_page_scan_type),
+> > +             TLV_SET_U16(0x0001, def_page_scan_int),
+> > +             TLV_SET_U16(0x0002, def_page_scan_window),
+> > +             TLV_SET_U16(0x0003, def_inq_scan_type),
+> > +             TLV_SET_U16(0x0004, def_inq_scan_int),
+> > +             TLV_SET_U16(0x0005, def_inq_scan_window),
+> > +             TLV_SET_U16(0x0006, def_br_lsto),
+> > +             TLV_SET_U16(0x0007, def_page_timeout),
+> > +             TLV_SET_U16(0x0008, sniff_min_interval),
+> > +             TLV_SET_U16(0x0009, sniff_max_interval),
+> > +             TLV_SET_U16(0x000a, le_adv_min_interval),
+> > +             TLV_SET_U16(0x000b, le_adv_max_interval),
+> > +             TLV_SET_U16(0x000c, def_multi_adv_rotation_duration),
+> > +             TLV_SET_U16(0x000d, le_scan_interval),
+> > +             TLV_SET_U16(0x000e, le_scan_window),
+> > +             TLV_SET_U16(0x000f, le_scan_int_suspend),
+> > +             TLV_SET_U16(0x0010, le_scan_window_suspend),
+> > +             TLV_SET_U16(0x0011, le_scan_int_discovery),
+> > +             TLV_SET_U16(0x0012, le_scan_window_discovery),
+> > +             TLV_SET_U16(0x0013, le_scan_int_adv_monitor),
+> > +             TLV_SET_U16(0x0014, le_scan_window_adv_monitor),
+> > +             TLV_SET_U16(0x0015, le_scan_int_connect),
+> > +             TLV_SET_U16(0x0016, le_scan_window_connect),
+> > +             TLV_SET_U16(0x0017, le_conn_min_interval),
+> > +             TLV_SET_U16(0x0018, le_conn_max_interval),
+> > +             TLV_SET_U16(0x0019, le_conn_latency),
+> > +             TLV_SET_U16(0x001a, le_supv_timeout),
+> > +             TLV_SET_U16_JIFFIES_TO_MSECS(0x001b,
+> > +                                          def_le_autoconnect_timeout),
+> > +             TLV_SET_U16(0x001d, advmon_allowlist_duration),
+> > +             TLV_SET_U16(0x001e, advmon_no_filter_duration),
+> >       };
+> > -     struct mgmt_rp_read_def_system_config *rp = (void *)params;
+> >
+> >       bt_dev_dbg(hdev, "sock %p", sk);
+> >
+> > -     return mgmt_cmd_complete(sk, hdev->id,
+> > -                              MGMT_OP_READ_DEF_SYSTEM_CONFIG,
+> > -                              0, rp, sizeof(params));
+> > +     ret = mgmt_cmd_complete(sk, hdev->id,
+> > +                             MGMT_OP_READ_DEF_SYSTEM_CONFIG,
+> > +                             0, &rp, sizeof(rp));
+> > +     return ret;
+> > }
+> >
+>
+> frankly I would prefer if we do the re-factoring first and only then add new
+> parameters.
 
-Syscall param writev(vector[...]) points to uninitialised byte(s)
-   at 0x4A8A497: writev (in /usr/lib64/libc-2.31.so)
-   by 0x1365C1: send_packet (bthost.c:509)
-   by 0x1365C1: send_packet (bthost.c:492)
-   by 0x1365C1: next_cmd (bthost.c:737)
-   by 0x137578: evt_cmd_complete (bthost.c:882)
-   by 0x137578: process_evt (bthost.c:1343)
-   by 0x137578: bthost_receive_h4 (bthost.c:2414)
-   by 0x12DF49: receive_bthost.part.0 (hciemu.c:134)
-   by 0x48B978E: g_main_context_dispatch (in /usr/lib64/libglib-2.0.so.0.6400.6)
-   by 0x48B9B17: ??? (in /usr/lib64/libglib-2.0.so.0.6400.6)
-   by 0x48B9E32: g_main_loop_run (in /usr/lib64/libglib-2.0.so.0.6400.6)
-   by 0x14A664: mainloop_run (mainloop-glib.c:66)
-   by 0x14AA41: mainloop_run_with_signal (mainloop-notify.c:188)
-   by 0x149A7B: tester_run (tester.c:871)
-   by 0x129C77: main (mgmt-tester.c:10219)
- Address 0x4c48c05 is 21 bytes inside a block of size 280 alloc'd
-   at 0x483CAE9: calloc (vg_replace_malloc.c:760)
-   by 0x136487: queue_command (bthost.c:472)
-   by 0x136487: send_command (bthost.c:715)
-   by 0x13948A: bthost_set_ext_adv_enable (bthost.c:2581)
-   by 0x12CEBF: trigger_device_found (mgmt-tester.c:8513)
-   by 0x148C9A: wait_callback (tester.c:749)
-   by 0x48BA330: ??? (in /usr/lib64/libglib-2.0.so.0.6400.6)
-   by 0x48B978E: g_main_context_dispatch (in /usr/lib64/libglib-2.0.so.0.6400.6)
-   by 0x48B9B17: ??? (in /usr/lib64/libglib-2.0.so.0.6400.6)
-   by 0x48B9E32: g_main_loop_run (in /usr/lib64/libglib-2.0.so.0.6400.6)
-   by 0x14A664: mainloop_run (mainloop-glib.c:66)
-   by 0x14AA41: mainloop_run_with_signal (mainloop-notify.c:188)
-   by 0x149A7B: tester_run (tester.c:871)
----
- emulator/bthost.c | 1 +
- 1 file changed, 1 insertion(+)
+Yes. This patch only does the refactor stuff and the next patch is the one that
+adds the new parameter.
 
-diff --git a/emulator/bthost.c b/emulator/bthost.c
-index f29bda06e..3b42c0664 100644
---- a/emulator/bthost.c
-+++ b/emulator/bthost.c
-@@ -2577,6 +2577,7 @@ void bthost_set_ext_adv_enable(struct bthost *bthost, uint8_t enable)
- 	send_command(bthost, BT_HCI_CMD_LE_SET_EXT_ADV_PARAMS,
- 							&cp, sizeof(cp));
- 
-+	memset(&cp_enable, 0, sizeof(cp_enable));
- 	cp_enable.enable = enable;
- 	send_command(bthost, BT_HCI_CMD_LE_SET_EXT_ADV_ENABLE, &cp_enable,
- 					sizeof(cp_enable));
--- 
-2.26.2
+>
+> While I am looking at this, I am also really confused about this
+> JIFFIES_TO_MSEC business. We should actually not store anything in jiffies
+> or use it in an API. Is there a good reason to keep storing things in
+> jiffies internally?
+>
 
+I don't know about this, but it looks like it should be in a different
+patch right?
+
+> Regards
+>
+> Marcel
+>
