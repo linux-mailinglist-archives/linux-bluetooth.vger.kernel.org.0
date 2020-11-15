@@ -2,39 +2,31 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C19D02B3601
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 15 Nov 2020 17:05:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19D912B3658
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 15 Nov 2020 17:43:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727267AbgKOQFa convert rfc822-to-8bit (ORCPT
+        id S1727049AbgKOQn3 convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 15 Nov 2020 11:05:30 -0500
-Received: from tigeramira.ro ([88.158.78.30]:38042 "EHLO mail.tigeramira.ro"
-        rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S1726605AbgKOQF3 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 15 Nov 2020 11:05:29 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by mail.tigeramira.ro (Postfix) with ESMTP id C3D4E9ABC09
-        for <linux-bluetooth@vger.kernel.org>; Fri, 13 Nov 2020 21:32:24 +0200 (EET)
-Received: from mail.tigeramira.ro ([127.0.0.1])
-        by localhost (mail.tigeramira.ro [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id GDlocSHWsVXG for <linux-bluetooth@vger.kernel.org>;
-        Fri, 13 Nov 2020 21:32:09 +0200 (EET)
-Received: from mail.tigeramira.ro (localhost [127.0.0.1])
-        by mail.tigeramira.ro (Postfix) with ESMTP id BAB9598E044
-        for <linux-bluetooth@vger.kernel.org>; Fri, 13 Nov 2020 18:31:06 +0200 (EET)
-Received: from [156.96.44.214] (unknown [192.168.12.254])
-        by mail.tigeramira.ro (Postfix) with ESMTP id 56679D3FA12
-        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Nov 2020 17:09:06 +0200 (EET)
+        Sun, 15 Nov 2020 11:43:29 -0500
+Received: from sw73-70-41.adsl.seed.net.tw ([203.73.70.41]:60467 "EHLO
+        oa.trendtek.com.tw" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S1726743AbgKOQn2 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 15 Nov 2020 11:43:28 -0500
+Received: from [156.96.44.214] ([156.96.44.214])
+        (authenticated bits=0)
+        by oa.trendtek.com.tw (8.13.8/8.13.1) with ESMTP id 0AFGh3iO029258
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Nov 2020 00:43:26 +0800
+Message-Id: <202011151643.0AFGh3iO029258@oa.trendtek.com.tw>
 Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8BIT
 Content-Description: Mail message body
-Subject: Corporate and Personal Loan/
+Subject: Corporate and Personal Loan *
 To:     linux-bluetooth@vger.kernel.org
 From:   "Investment  Corporate" <financialcapability6@gmail.com>
-Date:   Tue, 10 Nov 2020 06:09:34 -0800
+Date:   Sun, 15 Nov 2020 08:43:20 -0800
 Reply-To: hmurrah39@gmail.com
-Message-Id: <20201110150907.56679D3FA12@mail.tigeramira.ro>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
