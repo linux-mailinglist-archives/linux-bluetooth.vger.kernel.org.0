@@ -2,98 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0812D2B8582
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Nov 2020 21:27:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C09F32B87C4
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Nov 2020 23:32:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726666AbgKRU1C (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 18 Nov 2020 15:27:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38142 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726651AbgKRU1B (ORCPT
+        id S1726950AbgKRWcT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 18 Nov 2020 17:32:19 -0500
+Received: from gargamel.turcom.com.tr ([193.254.252.9]:58404 "EHLO
+        etrn.turcom.com.tr" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726156AbgKRWcT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 18 Nov 2020 15:27:01 -0500
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E5F1C0613D4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Nov 2020 12:27:01 -0800 (PST)
-Received: by mail-qk1-x72d.google.com with SMTP id y197so3169908qkb.7
-        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Nov 2020 12:27:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=u3JOD8+mK0iuTbXz0YA5jQH0DXtkcY9Y0IGLQ5hz7sA=;
-        b=eS1e/9IY7NcXGnKB2MEl43rENZkihMHNDwCIug3yJgImX60Vg4cviOuw5qycO0Ff01
-         Z7NyjFJCBcJVTWIXDMq74sgeMSuQeo+m6N3rf3lnQQl5waw9FasT42i9fm8AF6WnBg1i
-         HqGudiyqY+fK37dtdsCavZ43UzZxnsi2hEHTC2wcyoIRv7ccrtzWQmUsPlJJzycHJZ8W
-         6gNpqWlP7OdaPEyQdov/Yt600PEAQbKbx7QmOcy/Ict52XlqXVP1qENnyfg6Qu8xAq4g
-         FJnowqpk9EOkYU2WlSktWEGsrM3gtN9Rggmikp/fpVgOTyYwd7T/phAcrvowVrsENhqh
-         xImw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=u3JOD8+mK0iuTbXz0YA5jQH0DXtkcY9Y0IGLQ5hz7sA=;
-        b=qrzWvub0EQDnFnRPRJSbM6BFZVuxzwSwxhNGTYihN3u2hM2R/ynBsmxvs0jIV3GSQ5
-         1AlyvTsov0gHGQ4+kIscIHb5srKZ54kqus7B1wC15b3h/XSe4ArnKbsjEYniF+H1nIAo
-         TE7b39gAYXqVu6CVM1rxD84ML7pUKoux5kpPyeH7fTEi4KUZyJD8iTD6mfBG4OfZHIxr
-         FG9nctQbpYD/FZ9tIbhN3DZRn2TNfoZ1m/ZaPEVyGMZpTY/30vdp1VcJGMY9Y8orEfiV
-         8muOiE+vP5be9Qo36ypFpM6HHoh1wSTYYG3hOCxxmvHBk3uyfmuUQvTVONHGnQMHwyDH
-         T5Rg==
-X-Gm-Message-State: AOAM531xnzlfj5t0UzeLaDkpaWORn4V1/3kMIMCno5DiNKloqisyD9AS
-        fERz0nN2HoHUh4YrEKtKNPfbh4iwvjC59w==
-X-Google-Smtp-Source: ABdhPJyi9JcIsuZjTS/GgzWxHScdJYGZGdqwUzdsS7RCmUyDnZq+iQEsqOUDkms86uxgXBfAYthwGQ==
-X-Received: by 2002:a37:b204:: with SMTP id b4mr6908596qkf.217.1605731219522;
-        Wed, 18 Nov 2020 12:26:59 -0800 (PST)
-Received: from [172.17.0.2] ([52.251.54.44])
-        by smtp.gmail.com with ESMTPSA id r55sm17457212qte.8.2020.11.18.12.26.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 12:26:58 -0800 (PST)
-Message-ID: <5fb58392.1c69fb81.c6f6c.8c8c@mx.google.com>
-Date:   Wed, 18 Nov 2020 12:26:58 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============4492214734732275624=="
+        Wed, 18 Nov 2020 17:32:19 -0500
+X-Greylist: delayed 3899 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Nov 2020 17:32:18 EST
+Received: from mail.stargazete.com (mail.stargazete.com [88.255.77.166])
+        by etrn.turcom.com.tr (Postfix) with ESMTPS id E879611E6FB;
+        Thu, 19 Nov 2020 00:03:41 +0300 (+03)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.stargazete.com (Postfix) with ESMTP id CEDA89260727;
+        Wed, 18 Nov 2020 21:03:41 +0000 (UTC)
+Received: from mail.stargazete.com ([127.0.0.1])
+        by localhost (mail.stargazete.com [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id IHAG8xbDFkM5; Wed, 18 Nov 2020 21:03:41 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.stargazete.com (Postfix) with ESMTP id 2EBE99260769;
+        Wed, 18 Nov 2020 20:56:10 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.stargazete.com 2EBE99260769
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stargazete.com;
+        s=BE41E402-1210-11EB-A9CA-1AF0DF4E1435; t=1605732970;
+        bh=eS6YGRou0utqjQd2YaXZkaFeXSioe/GKdvIucbq5rMI=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=qpIZML1yQ8bADJXQnjVy7mOH+EvECE/CicspUmlt973l8rcJxQ38pHbdUOrJjreY5
+         9wb/6RSInc2qYChJGahkTUmNISnJ548qVRoUooYZYzKGAWLrFVHaHTPYyCECQ4Ku2/
+         Cxtx0vRK8MKvU/NfuOljFx9bHguwKbTo7CgWJMY2pElTRX8Nz1wf5id5gb8EtHqLtN
+         TejrkEfe5OiA4Tz3zxVNywmLlUy+sK9yloJr1c52iUZRpv82d9H19AcdKC41cKaX0J
+         rFUzpJ4szNZiWfRx8D2rEeXMN9vvCSN/eh8hcCuB9Nz3r+LGbyuguUjtDszBaQXqf0
+         q0nfMwIUYv7FQ==
+X-Virus-Scanned: amavisd-new at stargazete.com
+Received: from mail.stargazete.com ([127.0.0.1])
+        by localhost (mail.stargazete.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id gvjhn6wqSqlh; Wed, 18 Nov 2020 20:56:10 +0000 (UTC)
+Received: from [172.20.10.4] (unknown [154.230.136.106])
+        by mail.stargazete.com (Postfix) with ESMTPSA id 8DFA5924892D;
+        Wed, 18 Nov 2020 20:49:01 +0000 (UTC)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, inga.stotland@intel.com
-Subject: RE: [BlueZ] mesh: Fix regression error in HB subscription set
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20201118195600.30267-1-inga.stotland@intel.com>
-References: <20201118195600.30267-1-inga.stotland@intel.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Loan
+To:     Recipients <rtosun@stargazete.com>
+From:   rtosun@stargazete.com
+Date:   Wed, 18 Nov 2020 12:48:55 -0800
+Reply-To: samuelbrandon110@gmail.com
+Message-Id: <20201118204901.8DFA5924892D@mail.stargazete.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============4492214734732275624==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=387073
-
----Test result---
-
-##############################
-Test: CheckPatch - PASS
-
-##############################
-Test: CheckGitLint - PASS
-
-##############################
-Test: CheckBuild - PASS
-
-##############################
-Test: MakeCheck - PASS
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============4492214734732275624==--
+ARE YOU IN NEED OF LOAN @3% INTEREST RATE FOR BUSINESS AND PRIVATE
+PURPOSES? IF YES:
+FILL AND RETURN
+Name: =3D=3D=3D
+Amount needed: =3D=3D=3D
+Duration: =3D=3D
+country =3D=3D=3D
+Purpose: =3D=3D=3D
+Mobile number
+ Dear Sir/Madam
