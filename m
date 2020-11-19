@@ -2,65 +2,81 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9FC12B9137
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 19 Nov 2020 12:38:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C8B02B920C
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 19 Nov 2020 13:06:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727108AbgKSLiA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 19 Nov 2020 06:38:00 -0500
-Received: from mga11.intel.com ([192.55.52.93]:21909 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726334AbgKSLiA (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 19 Nov 2020 06:38:00 -0500
-IronPort-SDR: ECjb/JaUt+pe6n+TVRXqDKTgZW0RTWDkbNaM/jU3qGIyBHGpb4YNFVED31x1ZrlP/dQH8wQOXg
- wmG+C92mzpfw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9809"; a="167763764"
-X-IronPort-AV: E=Sophos;i="5.77,490,1596524400"; 
-   d="scan'208";a="167763764"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2020 03:37:59 -0800
-IronPort-SDR: yrI9yelQZEJE3yDPVhICpaQwGLlI8/X1s6gyHQefYu5epLeUrDS39JnzVwkkIm4vZwhYAaiTql
- yqlKYJAlJhkA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,490,1596524400"; 
-   d="scan'208";a="325950052"
-Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
-  by orsmga003.jf.intel.com with ESMTP; 19 Nov 2020 03:37:57 -0800
-From:   Kiran K <kiran.k@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     ravishankar.srivatsa@intel.com, chethan.tumkur.narayan@intel.com,
-        sathish.narasimman@intel.com, Kiran K <kiran.k@intel.com>
-Subject: [PATCH v8 5/5] Bluetooth: btusb: Map Typhoon peak controller to BTUSB_INTEL_NEWGEN
-Date:   Thu, 19 Nov 2020 17:09:43 +0530
-Message-Id: <20201119113943.13839-5-kiran.k@intel.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201119113943.13839-1-kiran.k@intel.com>
-References: <20201119113943.13839-1-kiran.k@intel.com>
+        id S1727098AbgKSMFN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 19 Nov 2020 07:05:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41548 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726886AbgKSMFN (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 19 Nov 2020 07:05:13 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19F24C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Nov 2020 04:05:11 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id a65so6530908wme.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Nov 2020 04:05:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=ABmPV5buimzO6XQ5s6EUSJ63eHUIp0T3veqrRJZb+MU=;
+        b=qKUOa2TaRa5bEtLpG8vKOB43DpClkmAzbyiFX3do8ywNnjIlHULkPOlrAd9h71D3iL
+         vm+nej/2w5wV1ffMXbAdYZvrLbGrHxuTLhFOtYwdrLKH16oeGn+Q2IBizSpUvvq6xA7Y
+         6swPi9YqD1BMb+mJLetYcVyENeePttmlObShrCJwpQQ+EhG6vC4UqMJRKGgNbbb++P1O
+         Svwc8FT9ptw5OqRN7xRPp1Z+q1ziZGjv/pih7qadEkmkbIcp7sJkWYOKA0GdVYM0RM3s
+         wF5CChHmeOBf+2lnMkMN56d4P8gC41xCLD3ndpa0PVGoBXauIZUre/Cmw26yFYgPkyZe
+         Ahjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=ABmPV5buimzO6XQ5s6EUSJ63eHUIp0T3veqrRJZb+MU=;
+        b=aJ5/cHgjhGT37YEx1PdBbd+ERvqFUEraCCNiqstPm3B1qGmzV2RPaBz6VqAFkLIsQR
+         FQhmjwS2GajtadKspVrNJEXDAd20jr3HJ1hCbu2GrsfYWf7ctQUFuztB02L75FvPp8y8
+         ci19/ES/CWxvEo7E8HCzkZbLqRaN3F7osIRvsflLm1ZXyWXtSBDIrfj2o4Fvpm+w5lMg
+         CmS8CNws/UdW6cCRnNZOQbHZI1RMVHqHG1T1/5hAtnq2VU9sua56Tav39M3HfTC4mvPD
+         /zCIB7Jc8R+Vs8ttfQ3PZb+B0xGXm6F6hj/H1p1L0HYH+G75MzX+JvO30JcAq7ZVEpqt
+         SzeA==
+X-Gm-Message-State: AOAM5322R4+dZutkFweciFha9yo9Q4t5ikw2KO87oQn8Wd0WzuVp1qCF
+        KPu5z2agzGY2jX7hqTqLy3CydwoTsjCYe+NdHWk=
+X-Google-Smtp-Source: ABdhPJyssNntgLrq3LWvKnNyCPgsiCFK6LhTyuMtDV3kamJ7CzlQWJGyilaOYpgiCqvOI7jUiBaB77zejhD69F4sYJ4=
+X-Received: by 2002:a1c:e0c3:: with SMTP id x186mr4210119wmg.21.1605787509838;
+ Thu, 19 Nov 2020 04:05:09 -0800 (PST)
+MIME-Version: 1.0
+Received: by 2002:a5d:67cc:0:0:0:0:0 with HTTP; Thu, 19 Nov 2020 04:05:09
+ -0800 (PST)
+Reply-To: sascha_grenda@aol.com
+From:   Sascha Grenda <tony.cruzloanfirm@gmail.com>
+Date:   Thu, 19 Nov 2020 15:05:09 +0300
+Message-ID: <CANyHexxPxW35jkR-FfTLBZcMUheD2y9ZdGv9H8_j4fTq4Ohj_A@mail.gmail.com>
+Subject: Darlehen Angebot
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Map Typhoon peak Intel controller to BTUSB_INTEL_NEWGEN
+--=20
+Hallo,
 
-Signed-off-by: Kiran K <kiran.k@intel.com>
----
- drivers/bluetooth/btusb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  Ich bin Frau Sascha Grenda, eine legitime, seri=C3=B6se Geldverleiherin.
+Wir sind ein Unternehmen mit finanzieller Unterst=C3=BCtzung. Wir leihen
+Gelder an Personen aus, die finanzielle Unterst=C3=BCtzung ben=C3=B6tigen o=
+der
+Geld ben=C3=B6tigen, um Rechnungen zu bezahlen und in Unternehmen zu
+investieren. Gerne biete ich Ihnen einen Kredit an. Mailen Sie uns
+jetzt =C3=BCber (sascha_grenda@aol.com)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index b3d470ec2622..4bab93f56677 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -366,7 +366,7 @@ static const struct usb_device_id blacklist_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x8087, 0x0029), .driver_info = BTUSB_INTEL_NEW |
- 						     BTUSB_WIDEBAND_SPEECH },
--	{ USB_DEVICE(0x8087, 0x0032), .driver_info = BTUSB_INTEL_NEW |
-+	{ USB_DEVICE(0x8087, 0x0032), .driver_info = BTUSB_INTEL_NEWGEN |
- 						     BTUSB_WIDEBAND_SPEECH},
- 	{ USB_DEVICE(0x8087, 0x07da), .driver_info = BTUSB_CSR },
- 	{ USB_DEVICE(0x8087, 0x07dc), .driver_info = BTUSB_INTEL },
--- 
-2.17.1
+Name des Beg=C3=BCnstigten:.........
+Land:............
+Ben=C3=B6tigte Menge...........
+Leihdauer: ..........
+Telefonnummer............
+Sex:............
+Heimatadresse:............
 
+Gr=C3=BC=C3=9Fe.
+Frau Sascha Grenda
