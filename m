@@ -2,118 +2,124 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F2FC2B889A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 19 Nov 2020 00:45:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D4832B8AC0
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 19 Nov 2020 06:16:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727377AbgKRXoK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 18 Nov 2020 18:44:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40526 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727363AbgKRXoI (ORCPT
+        id S1725816AbgKSFQB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 19 Nov 2020 00:16:01 -0500
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:42089 "EHLO
+        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725648AbgKSFQA (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 18 Nov 2020 18:44:08 -0500
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B670AC0613D4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Nov 2020 15:44:08 -0800 (PST)
-Received: by mail-pl1-x642.google.com with SMTP id j5so1905414plk.7
-        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Nov 2020 15:44:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iTB3bo1UF4JJAzKkMT7p3MoDedREDQBRrj3yyH4Dl9Y=;
-        b=WYix7Y11RrVt/dV88uG6yY7owq0gesu0k3Uq1qb9Jo40C/n097r0FsHMlWEZqBrVSI
-         ML5yXL/+0ZlmVhUqg0d7l3feJCosQNnAHwuZZOHbxACwxin1AUgod0sJcLMh4ULrPD/3
-         nos0h6RJi90luya6+9dAc3gfYPJU/Lau8xW2g=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iTB3bo1UF4JJAzKkMT7p3MoDedREDQBRrj3yyH4Dl9Y=;
-        b=cA1+36jO8bI9U9hUOFU0Bq9no5hWysfjitr3/vbup2fCxufeS9jgskFFVf21R4KEJs
-         W/CwgbHGtv9OgozOfrevo9YoQxQgMMmOjyDJ5TK7rhlptQ64Hp1yXcU6lx9IWvEZfm7Y
-         AwKME3GCBUQspeNAwvcYqt0HJzs1zWyLLWR9UIXxXCFIzVjfbpfZyEs45mq1AT5B4x2v
-         1pHCfFTMn1JS8gQjKCX4GrX1LwZsyXjw/GYOH7P1a3dn3rkP81Uywue6mRG1ztcVJ615
-         KHuJvEgt/CijqTCkk99cwaM7u8xeeFHgIHlbSYL3//grOLYlm/qFtqYt1XDoyvC4TPxy
-         rPyw==
-X-Gm-Message-State: AOAM533/940kO3Rc/NPhtKdBRlGOScb6UN6nXQWtPUM8JJsYtYaghsJi
-        pZeYU/ncZyqE/rgS9Linnwbu5Q==
-X-Google-Smtp-Source: ABdhPJx0o4QdC0y6N2nNJxQWQ+otJDXcwXowHU259cVnDIjOI+IOlgmejl3o0Homa+Q4GM9jUyawvQ==
-X-Received: by 2002:a17:902:9042:b029:d6:fe3f:6688 with SMTP id w2-20020a1709029042b02900d6fe3f6688mr6388780plz.75.1605743048346;
-        Wed, 18 Nov 2020 15:44:08 -0800 (PST)
-Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:7220:84ff:fe09:2b94])
-        by smtp.gmail.com with ESMTPSA id f6sm21437435pgi.70.2020.11.18.15.44.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 15:44:07 -0800 (PST)
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+        Thu, 19 Nov 2020 00:16:00 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id D1956AD6;
+        Thu, 19 Nov 2020 00:15:59 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Thu, 19 Nov 2020 00:16:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cadelwatson.com;
+         h=from:to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm2; bh=AO2CRwjJdfu5W/mjJyJZANVItq
+        JbZcykrD0Y22tWCgU=; b=USb7T/or/NtE5vWFhvMjip2wdD5GBFqefqF+VsWQ2w
+        orrII4LW0zZvvUZ6cZY+pz0CzdjkZJ8CGHn8vgP6wtxUMyztasWN/O9725lXD821
+        dpfU3aGAQXeQmRz6Gy9XJ/ab39TK4EPpYpInaTdf+CrNzCqRl+21zwqwXx7hFWBd
+        vjm8r8ll5jmbLYC2kcdmjwQQiTb7OSsZEE64zKpIN/1TECYYsz3GU6H4DLSzuCPO
+        3kgGLMDGwUyiLqjswWoj0oUFDBSAe8hxQp8X4qeJae9cp9Ahjh2+YXaed4rDWxSB
+        mWaBkvceGFepjsZbPM6RFWCITWi5HYx5BrMs1Hio1cdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=AO2CRwjJdfu5W/mjJ
+        yJZANVItqJbZcykrD0Y22tWCgU=; b=XVJUUjLxiYBaPGLdB9wNgtFs4wYkp0yw3
+        IMrTdrP6OTygEvIJ3036RxOeT2oj2fx0uDIGNWLmX2vGHA+XxeygkOw45a6kmZqX
+        89IoCBPw4LzATdlNiV5Pl4ahn6DamKaSZZm71KvteDi3JbRtcUuTu09uqHFgpv9r
+        IQp8yoTWLjkcYrpV6mR/igUyeopkQxV30bhTtyz5RhWameLmDr3L33lKRus7DGGE
+        ZGhn6F4KSq+iLO98Uk+EReocwZxb3lbUHHRtRqO1KDnGmu7pnQiHIs8eZWrFzF9/
+        lXYOaigiWip8LxDU60TzgN8tGd+gJvDLxrvhZc29WKjRUpbgP/7bQ==
+X-ME-Sender: <xms:j_-1X1b8CmZC_8XFeI1x0oP2xgZuqU2cuUQvWEf7gk9MQJtBGuZwQg>
+    <xme:j_-1X8bQoMxN2C6hIpt4ps4e7DkXBkSIM_PI6t9jdPodaPd_RcPU3N0MypvosYVWN
+    0l8exJlxamZ3DyOTgg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudefiedgkedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+    dttdenucfhrhhomhepvegruggvlhcuhggrthhsohhnuceotggruggvlhestggruggvlhif
+    rghtshhonhdrtghomheqnecuggftrfgrthhtvghrnhepvdffvdefueevjeduudfgueeile
+    efvddutdffjeeujeeggfefudektdejkedugeelnecukfhppeduuddurddvvddtrddvtddr
+    vddtudenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    gtrgguvghlsegtrgguvghlfigrthhsohhnrdgtohhm
+X-ME-Proxy: <xmx:j_-1X38g873V-4Mv8rLX34Phg0eXyGFrKzSchUEbq18X7c0wp3Nesw>
+    <xmx:j_-1XzpcrqtCeOUCyh0dg0XkDOWo5AJRKfZ6dqj3h-zvnQQmPOF2zw>
+    <xmx:j_-1Xwol1U13Rk6VUG6ASrrc9e78JnFOtWkRG-9zxW7DTgLaQEpZyw>
+    <xmx:j_-1X3QuLjnfXxzrO5nW3iTfQMu8MEJ1BA3JQ2QX1xfRm4-YKfzS3Q>
+Received: from localhost.localdomain (111-220-20-201.dyn.dodo.net.au [111.220.20.201])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 672FA3064AAE;
+        Thu, 19 Nov 2020 00:15:57 -0500 (EST)
+From:   Cadel Watson <cadel@cadelwatson.com>
 To:     marcel@holtmann.org, linux-bluetooth@vger.kernel.org
-Cc:     chromeos-bluetooth-upstreaming@chromium.org, mcchou@chromium.org,
-        danielwinkler@chromium.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] Bluetooth: btmrvl_sdio: Power down when suspending
-Date:   Wed, 18 Nov 2020 15:43:52 -0800
-Message-Id: <20201118154349.3.If6a8ea0def7ff7a1f6a8ba349b9c840201b1d1f0@changeid>
-X-Mailer: git-send-email 2.29.2.299.gdc1121823c-goog
-In-Reply-To: <20201118234352.2138694-1-abhishekpandit@chromium.org>
-References: <20201118234352.2138694-1-abhishekpandit@chromium.org>
+Cc:     Cadel Watson <cadel@cadelwatson.com>
+Subject: [PATCH] Bluetooth: btusb: Support 0bda:c123 Realtek 8822CE device
+Date:   Thu, 19 Nov 2020 16:16:25 +1100
+Message-Id: <20201119051625.2622105-1-cadel@cadelwatson.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-After seeing a large number of suspend failures due to -EBUSY, the most
-common cause for failure seems to be the log snippet below:
+Some Lenovo Ideapad laptop models use the 0bda:c123 USB identifier for
+their Bluetooth device, so load the appropriate firmware for Realtek
+8822CE.
 
-[ 4764.773873] Bluetooth: hci_cmd_timeout() hci0 command 0x0c14 tx timeout
-[ 4767.777897] Bluetooth: btmrvl_enable_hs() Host sleep enable command failed
-[ 4767.777920] Bluetooth: btmrvl_sdio_suspend() HS not actived, suspend failed!
-[ 4767.777946] dpm_run_callback(): pm_generic_suspend+0x0/0x48 returns -16
-[ 4767.777963] call mmc2:0001:2+ returned -16 after 4882288 usecs
+-Device(0bda:c123) from /sys/kernel/debug/usb/devices
+T:  Bus=03 Lev=01 Prnt=01 Port=03 Cnt=02 Dev#=  3 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0bda ProdID=c123 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-Since the sleep command is timing out, this points to the firmware as
-the most likely source of the problem and we don't have a way to address
-the fix there (this is an old controller). So, to mitigate this issue,
-we can simply power down the Bluetooth controller when entering suspend
-and power it back up when exiting suspend. We control setting this quirk
-via a module parameter, power_down_suspend (which defaults to false).
-
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Signed-off-by: Cadel Watson <cadel@cadelwatson.com>
 ---
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- drivers/bluetooth/btmrvl_sdio.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/bluetooth/btmrvl_sdio.c b/drivers/bluetooth/btmrvl_sdio.c
-index 33d58b30c5acfc..e2e4917b4fe589 100644
---- a/drivers/bluetooth/btmrvl_sdio.c
-+++ b/drivers/bluetooth/btmrvl_sdio.c
-@@ -35,6 +35,12 @@
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 71f62d532481..b515b17f4504 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -450,6 +450,8 @@ static const struct usb_device_id blacklist_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x1358, 0xc123), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0bda, 0xc123), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
- #define VERSION "1.0"
- 
-+/* Add module param to control whether the controller is powered down during
-+ * suspend. Default is False.
-+ */
-+static bool power_down_suspend;
-+module_param(power_down_suspend, bool, 0644);
-+
- static struct memory_type_mapping mem_type_mapping_tbl[] = {
- 	{"ITCM", NULL, 0, 0xF0},
- 	{"DTCM", NULL, 0, 0xF1},
-@@ -1587,6 +1593,10 @@ static int btmrvl_sdio_probe(struct sdio_func *func,
- 		goto disable_host_int;
- 	}
- 
-+	if (power_down_suspend)
-+		set_bit(HCI_QUIRK_POWER_DOWN_SYSTEM_SUSPEND,
-+			&priv->btmrvl_dev.hcidev->quirks);
-+
- 	return 0;
- 
- disable_host_int:
+ 	/* Silicon Wave based devices */
+ 	{ USB_DEVICE(0x0c10, 0x0000), .driver_info = BTUSB_SWAVE },
 -- 
-2.29.2.299.gdc1121823c-goog
+2.29.2
 
