@@ -2,70 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 909552BC037
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 21 Nov 2020 16:20:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23D812BC067
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 21 Nov 2020 17:01:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728188AbgKUPSl convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 21 Nov 2020 10:18:41 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43924 "EHLO mail.kernel.org"
+        id S1726192AbgKUQAh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 21 Nov 2020 11:00:37 -0500
+Received: from hoster906.com ([192.252.156.27]:37792 "EHLO hoster906.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727741AbgKUPSk (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 21 Nov 2020 10:18:40 -0500
-From:   bugzilla-daemon@bugzilla.kernel.org
-Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 208965] not working bluetooth mouse low energy rtl8822ce
-Date:   Sat, 21 Nov 2020 15:18:39 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: high
-X-Bugzilla-Who: francois@makotonoblog.be
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-208965-62941-iMnTzOvPVY@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-208965-62941@https.bugzilla.kernel.org/>
-References: <bug-208965-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        id S1725997AbgKUQAg (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 21 Nov 2020 11:00:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=mnmoran.org; h=to:cc
+        :from:subject:message-id:date:mime-version:content-type
+        :content-transfer-encoding; s=dkim; bh=x2MeThxf4kQyrjXWItgQkrd09
+        D6yalg27T1FVAsREl8=; b=NSoVyMeGAOiVztruyo8Wh1Prv5BAj7RdTxzeTsOKA
+        pfDy0EXT0kxT/RSFZpQAI4wa+z8tuagSv1bP2+YhIcn5eZOpqb1QI/fRhqJWvTE+
+        CyfHoMaqWYtIvWKLA1BSactfJo+YquCYPAO9m+k6HHXwBYw0FWjVtM3C3vd9gS1z
+        N4=
+Received: (qmail 6494 invoked by uid 503); 21 Nov 2020 16:00:35 -0000
+Received: from unknown (HELO ?192.168.254.79?) (mike@mnmoran.org@40.134.89.129)
+  by hoster906.com with ESMTPA; 21 Nov 2020 16:00:35 -0000
+To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Cc:     "Stotland, Inga" <inga.stotland@intel.com>,
+        "Gix, Brian" <brian.gix@intel.com>
+From:   "Michael N. Moran" <mike@mnmoran.org>
+Subject: Mesh UpdateModelConfiguration not invoked
+Message-ID: <10bbe715-fe62-2364-cd20-71c710424c87@mnmoran.org>
+Date:   Sat, 21 Nov 2020 11:00:35 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=208965
+Hi Meshers,
 
-Francois B (Makoto) (francois@makotonoblog.be) changed:
+I have a BlueZ Mesh application that implements some mesh client models.
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |francois@makotonoblog.be
+When I use the Attach(), I receive all of the configuration for the node. Among other things, this includes AppKey bindings for the models as expected.
 
---- Comment #38 from Francois B (Makoto) (francois@makotonoblog.be) ---
-(In reply to julian from comment #24)
-> I must admit I am clueless...
-> 
-> We should probably start by comparing Laptop models and distro used to see
-> if a pattern emerges.
-> 
-> I’m running Ubuntu 20.04 on a Huawei Matebook 13 AMD 2020 laptop. I’ve
-> applied my patch on top of the 5.4.0 Ubuntu kernel
-> (linux-image-unsigned-5.4.0-52-generic). I’m happy to share the .deb files
-> if someone wants to give it a try.
+However, if I add/remove AppKey bindings from the provisioner/configuration application (e.g. mesh-cfgclient), I expect my client application to receive a org.bluez.mesh.Element1 UpdateModelConfiguration() with the new bindings. This does not happen.
 
-It could be great if you can share your deb file. Thanks a lot :)
+Are my expectations wrong?
+
+I'm running 'bluetooth-meshd --nodetach --debug --dbus-debug'.
+
+I don't see any d-bus or other failures in the daemon output.
+
+If I kill my client application and restart it (Attach), I then receive all of the correct/new bindings.
+
+I have looked at the mesh daemon code and it seems to come down to the use of cfg_update_mod_bindings() and whether or not the node is an "External model" or an "Internal model". Obviously, my client application is classified as an "Internal model", which skips the cfg_update_mod_bindings().
+
+I suspect that this is an oversight in the daemon, but I'm not sure how to proceed.
+
+Thanks,
+
+mike
 
 -- 
-You are receiving this mail because:
-You are the assignee for the bug.
+Michael N. Moran           (h) 770 704 9751
+218 Wilshire Terrace       (c) 678 521 5460
+White, GA, USA 30184       http://mnmoran.org
+
