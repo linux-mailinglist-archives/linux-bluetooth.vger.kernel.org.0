@@ -2,88 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B115F2BC811
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 22 Nov 2020 19:30:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD42F2BC9A0
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 22 Nov 2020 22:48:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728454AbgKVSXi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 22 Nov 2020 13:23:38 -0500
-Received: from smtprelay0152.hostedemail.com ([216.40.44.152]:38070 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727938AbgKVSXh (ORCPT
+        id S1726375AbgKVVsI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 22 Nov 2020 16:48:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33440 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726339AbgKVVsI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 22 Nov 2020 13:23:37 -0500
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay05.hostedemail.com (Postfix) with ESMTP id 524371802912B;
-        Sun, 22 Nov 2020 18:23:34 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1540:1593:1594:1711:1730:1747:1777:1792:2393:2559:2562:2828:3138:3139:3140:3141:3142:3352:3622:3865:3866:3867:3868:3870:3871:3872:4250:4321:5007:6691:6742:6743:7903:10004:10400:10848:11232:11658:11914:12296:12297:12740:12760:12895:13019:13069:13161:13229:13311:13357:13439:14040:14096:14097:14659:14721:21080:21324:21433:21451:21627:30012:30054:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
-X-HE-Tag: match16_380b6892735e
-X-Filterd-Recvd-Size: 3051
-Received: from XPS-9350.home (unknown [47.151.128.180])
-        (Authenticated sender: joe@perches.com)
-        by omf14.hostedemail.com (Postfix) with ESMTPA;
-        Sun, 22 Nov 2020 18:23:29 +0000 (UTC)
-Message-ID: <dec07021e7fc11a02b14c98b713ae2c6e2a4ca00.camel@perches.com>
-Subject: Re: [RFC] MAINTAINERS tag for cleanup robot
-From:   Joe Perches <joe@perches.com>
-To:     James Bottomley <James.Bottomley@HansenPartnership.com>,
-        Tom Rix <trix@redhat.com>, Matthew Wilcox <willy@infradead.org>
-Cc:     clang-built-linux@googlegroups.com, linux-hyperv@vger.kernel.org,
-        linux-kernel@vger.kernel.org, xen-devel@lists.xenproject.org,
-        tboot-devel@lists.sourceforge.net, kvm@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-acpi@vger.kernel.org,
-        devel@acpica.org, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        netdev@vger.kernel.org, linux-media@vger.kernel.org,
-        MPT-FusionLinux.pdl@broadcom.com, linux-scsi@vger.kernel.org,
-        linux-wireless@vger.kernel.org,
-        ibm-acpi-devel@lists.sourceforge.net,
-        platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-omap@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        ecryptfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-        cluster-devel@redhat.com, linux-mtd@lists.infradead.org,
-        keyrings@vger.kernel.org, netfilter-devel@vger.kernel.org,
-        coreteam@netfilter.org, alsa-devel@alsa-project.org,
-        bpf@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-nfs@vger.kernel.org, patches@opensource.cirrus.com
-Date:   Sun, 22 Nov 2020 10:23:28 -0800
-In-Reply-To: <751803306cd957d0e7ef6a4fc3dbf12ebceaba92.camel@HansenPartnership.com>
-References: <20201121165058.1644182-1-trix@redhat.com>
-         <20201122032304.GE4327@casper.infradead.org>
-         <ddb08a27-3ca1-fb2e-d51f-4b471f1a56a3@redhat.com>
-         <20201122145635.GG4327@casper.infradead.org>
-         <0819ce06-c462-d4df-d3d9-14931dc5aefc@redhat.com>
-         <751803306cd957d0e7ef6a4fc3dbf12ebceaba92.camel@HansenPartnership.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.38.1-1 
+        Sun, 22 Nov 2020 16:48:08 -0500
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B01EC0613CF;
+        Sun, 22 Nov 2020 13:48:08 -0800 (PST)
+Received: by mail-ed1-x542.google.com with SMTP id l5so15100618edq.11;
+        Sun, 22 Nov 2020 13:48:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:sender:from:mime-version:content-transfer-encoding
+         :content-description:subject:to:date:reply-to;
+        bh=holMzMixu6L4mPkY4KLX0AXrH3B7KLU6Q1+gVZ1hbDo=;
+        b=e2XQXHGx+AFJmjt1DoCgIlODlB8ZUstez3DCuUv7j3Fs2CD8n5IMM/63hLOM8V3dgD
+         pyXD4zjFM/q9/NhAlmIJL52B6OeZ//J9N3VtzrzweM40mfKyq3BYQqHtdzhpn0xkJ1yI
+         UBLJEYBnWCNhkgretPuU8az0KqrZC3ws94ZbIIkXG3V+6Q13s2MHTOrmD0B4+3ciATGn
+         3YLTlnCsmr1KOi8TZ7GawYWf3exkjUF1ZrgsXqiL+PpRNu+d58HmthuDLvENurxro+sI
+         mVinmDUREXijb9fMLtufoHBJsi5MVid+AQwQ1HUjcUgi9wY1W7LLm5fwTz3lzny3f7Yj
+         wt9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:sender:from:mime-version
+         :content-transfer-encoding:content-description:subject:to:date
+         :reply-to;
+        bh=holMzMixu6L4mPkY4KLX0AXrH3B7KLU6Q1+gVZ1hbDo=;
+        b=cR4FFMFuNbfU2WIJoTqJ9ZT4uwonTl79nIpZ1OLw2Dum/gjfNbU6V/+mCoFUkN4Anc
+         9EV2TJOQxDoRt066HRo46WW8GJRNikNmiKNmVME5VJnrNQDLvGAR3PlLGDVOJ26sMfxk
+         jbd0NbkYzLrzRZ8kLjT11R50P3dyruJbuDRPuA8tw1U8DTOG9jeyUAviI1fTPfvKfSjC
+         26kK3bHTca7TcpHg2wR4KIfJ4k/GiCLsL2qcoEU5vAqg92Max93TCzTicl6QVkhl7xoZ
+         aFZBOEts8PDa9SBlOvpeu5naZVlrgwQVv3aWS1Uv0gIz8uWTiO/P6p2jqgrgm8GT32h2
+         vsyA==
+X-Gm-Message-State: AOAM532Gvm51R22DzR2DSm0tXHeE/Y32mfGbohjdNLZ2lpTWq+4LMxbn
+        JT8QoBxBuG/9NF0vKLi+ltY=
+X-Google-Smtp-Source: ABdhPJypc8imjAAmlWAsRMhHJIe2tLmKuQJKqAf8Iv2IEyM6od/nUDtqT7SYMXSQkjkgoR82uFX27Q==
+X-Received: by 2002:a05:6402:3076:: with SMTP id bs22mr10499891edb.267.1606081686863;
+        Sun, 22 Nov 2020 13:48:06 -0800 (PST)
+Received: from [192.168.43.48] ([197.210.35.67])
+        by smtp.gmail.com with ESMTPSA id e17sm4016232edc.45.2020.11.22.13.48.01
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 22 Nov 2020 13:48:06 -0800 (PST)
+Message-ID: <5fbadc96.1c69fb81.8dfc7.119f@mx.google.com>
+Sender: Baniko Diallo <banidiallo23@gmail.com>
+From:   Adelina Zeuki <adelinazeuki@gmail.com>
+X-Google-Original-From: "Adelina Zeuki" <  adelinazeuki@gmail.comm >
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Hello !!
+To:     Recipients <adelinazeuki@gmail.comm>
+Date:   Sun, 22 Nov 2020 21:47:56 +0000
+Reply-To: adelinazeuki@gmail.com
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Sun, 2020-11-22 at 08:49 -0800, James Bottomley wrote:
-> We can enforce sysfs_emit going forwards
-> using tools like checkpatch
+Hi dear,
 
-It's not really possible for checkpatch to find or warn about
-sysfs uses of sprintf. checkpatch is really just a trivial
-line-by-line parser and it has no concept of code intent.
-
-It just can't warn on every use of the sprintf family.
-There are just too many perfectly valid uses.
-
-> but there's no benefit and a lot of harm to
-> be done by trying to churn the entire tree
-
-Single uses of sprintf for sysfs is not really any problem.
-
-But likely there are still several possible overrun sprintf/snprintf
-paths in sysfs.  Some of them are very obscure and unlikely to be
-found by a robot as the logic for sysfs buf uses can be fairly twisty.
-
-But provably correct conversions IMO _should_ be done and IMO churn
-considerations should generally have less importance.
-
-
-
+Can i talk with you ?
