@@ -2,76 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 71D292BC28C
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 22 Nov 2020 00:00:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65CC92BC35A
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 22 Nov 2020 04:24:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726509AbgKUXAV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 21 Nov 2020 18:00:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49810 "EHLO
+        id S1727045AbgKVDXf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 21 Nov 2020 22:23:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726281AbgKUXAV (ORCPT
+        with ESMTP id S1726544AbgKVDXe (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 21 Nov 2020 18:00:21 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F45C0613CF
-        for <linux-bluetooth@vger.kernel.org>; Sat, 21 Nov 2020 15:00:19 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id w24so13830053wmi.0
-        for <linux-bluetooth@vger.kernel.org>; Sat, 21 Nov 2020 15:00:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=A582mc+X46A+mQGx7MsTNlhs58iMV3P1d1nvj5f3PXM=;
-        b=vb7afP0/v3DDelx4vRF/kev2bHlyOTBMHJLC3wyNEe0nJGN6cxKRP1V28y2wLI6GzB
-         1MMYwb5y+/tnV0DKuv1DwMf70Xk/NHAyhxXM02KmY6crIlwFM3//q21L51akP9kYwfWT
-         uAlXKnH/AlllXpCC3nbK0J1Yg0XwMsloGZZw/8hzZ937dYpL9/o5D5Lh4zKgcfAPywM7
-         xb2znChcEcvuEkiLZ+isTGacn9xoWOm/dyhNlY/+UDeLrAxuoZ/keCf7dCeMKh2j791m
-         hkfGSFrSrYoOjX10kSQkOoRj82BFdmlkWTYf/HV6dgtqxn8+Ga8RR9KdTFQDY0Iv/6gR
-         m7EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=A582mc+X46A+mQGx7MsTNlhs58iMV3P1d1nvj5f3PXM=;
-        b=f9Q3YOWLV1D61jJyQFG0Jw2gwpANOWL7VU+hKmh2ScETsNoQ8EeVJsGWvFFLTHbIyX
-         WL4KEwHKXgNnC5TpcognXosztH72THYn+IR5U332DZDSPU7y/QHdfZjTU6sGBL3eKRz3
-         HNyS57PEkJA13W9TRAHwmedGLFsGLNuUczW2wJ8mAbJ+jqxPWoF3PzBT6+FOnZsCb5vZ
-         QHimEjiyBpDVaZPVMDHD88mIVP/Vm/6azkHOWDpBXKTsZqrntTUSsUoxbajcgVYv9Drw
-         e4dif2m/YId3uJ1cyBNgK5A/XLq6du1EhkVNankEaMRWygL1sp0tDCx5kxXSuH9kLM8W
-         bXhw==
-X-Gm-Message-State: AOAM531Ed1BKMHGea3TEnGup9BVwCKUbv8BIAuZx9sPk8OljutYQcvX3
-        XrmYLi34A+z2/xY0Dn6Kzt/vV62FTFWCzA==
-X-Google-Smtp-Source: ABdhPJztZMa/pJTpJJh/F4YyMA2ibP5zoL8m1E/8vQ9Ah8B7MjClloX7/PhNDpxFtsaAlK7burGeqw==
-X-Received: by 2002:a1c:b0c4:: with SMTP id z187mr16046579wme.113.1605999617016;
-        Sat, 21 Nov 2020 15:00:17 -0800 (PST)
-Received: from ?IPv6:2003:ea:8f23:2800:f88a:cca6:feee:cbdc? (p200300ea8f232800f88acca6feeecbdc.dip0.t-ipconnect.de. [2003:ea:8f23:2800:f88a:cca6:feee:cbdc])
-        by smtp.googlemail.com with ESMTPSA id f16sm10404160wrp.66.2020.11.21.15.00.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Nov 2020 15:00:16 -0800 (PST)
-Subject: Re: Firmware version read error on Intel AX210
-From:   Heiner Kallweit <hkallweit1@gmail.com>
-To:     Kiran K <kiraank@gmail.com>, Kiran K <kiran.k@intel.com>
-Cc:     BlueZ development <linux-bluetooth@vger.kernel.org>
-References: <89a134d0-c6f6-c685-2aeb-7dc5eee1966f@gmail.com>
-Message-ID: <44820333-3e09-5405-a1aa-19f64087f164@gmail.com>
-Date:   Sun, 22 Nov 2020 00:00:09 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        Sat, 21 Nov 2020 22:23:34 -0500
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9E05C0613CF;
+        Sat, 21 Nov 2020 19:23:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=t7P1qjxLtvKyLv5lupmc5Zc5j0L3lqaoBXMlGIL9vWk=; b=BCb+FFzpwYCsAL5/GuZs0qQqU7
+        2wigu715rAloO1MXfHFDjsI/DCCkjrJ0RLz4Myz+wD98+zNWw6243kPWNzvqzMn6Tn8JVpmOuQv+x
+        7EKe3xartwVOhq4ran1ZhW92oaIukRN20h1OI3pPMusUrtae1AY4TqDUCPUPtiDgxz6eQOoVcrvcz
+        Ara6lCihfF7KrYMxKPcv522GOw1XE7kmR9pLBWd69WCJIf1380JdPIessAMMrwuE8sqCmQUL7YEHL
+        BXN0W+EBw/mKx6JrVL7roopk6K2PnHDj+T1EiV35semdke1klNMJQXZf1Gvzraa/TLsC310jvDxAq
+        zJ5cWKdw==;
+Received: from willy by casper.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1kgfxw-0001fc-2G; Sun, 22 Nov 2020 03:23:04 +0000
+Date:   Sun, 22 Nov 2020 03:23:04 +0000
+From:   Matthew Wilcox <willy@infradead.org>
+To:     trix@redhat.com
+Cc:     joe@perches.com, clang-built-linux@googlegroups.com,
+        linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
+        xen-devel@lists.xenproject.org, tboot-devel@lists.sourceforge.net,
+        kvm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-acpi@vger.kernel.org, devel@acpica.org,
+        amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, netdev@vger.kernel.org,
+        linux-media@vger.kernel.org, MPT-FusionLinux.pdl@broadcom.com,
+        linux-scsi@vger.kernel.org, linux-wireless@vger.kernel.org,
+        ibm-acpi-devel@lists.sourceforge.net,
+        platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        ecryptfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+        cluster-devel@redhat.com, linux-mtd@lists.infradead.org,
+        keyrings@vger.kernel.org, netfilter-devel@vger.kernel.org,
+        coreteam@netfilter.org, alsa-devel@alsa-project.org,
+        bpf@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-nfs@vger.kernel.org, patches@opensource.cirrus.com
+Subject: Re: [RFC] MAINTAINERS tag for cleanup robot
+Message-ID: <20201122032304.GE4327@casper.infradead.org>
+References: <20201121165058.1644182-1-trix@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <89a134d0-c6f6-c685-2aeb-7dc5eee1966f@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201121165058.1644182-1-trix@redhat.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Am 21.11.2020 um 23:12 schrieb Heiner Kallweit:
-> I have a new AX210 WiFi/Bluetooth card and btintel_read_version() fails
-> with error -22 (EINVAL). Underlying error is that the firmware version
-> read command returns with hdev->req_result = 18 (0x12). (req_status = 0)
->>From what I've read this means invalid command parameters.
-> Did something change with AX210 and command 0xfc05 requires specific
-> parameters now? Or what else may cause this issue?
+On Sat, Nov 21, 2020 at 08:50:58AM -0800, trix@redhat.com wrote:
+> The fixer review is
+> https://reviews.llvm.org/D91789
 > 
-Seems AX210 uses the new TLV infrastructure. btintel_read_version_tlv()
-returns valid data. Will TLV/AX210 support be added for 5.11?
+> A run over allyesconfig for x86_64 finds 62 issues, 5 are false positives.
+> The false positives are caused by macros passed to other macros and by
+> some macro expansions that did not have an extra semicolon.
+> 
+> This cleans up about 1,000 of the current 10,000 -Wextra-semi-stmt
+> warnings in linux-next.
+
+Are any of them not false-positives?  It's all very well to enable
+stricter warnings, but if they don't fix any bugs, they're just churn.
