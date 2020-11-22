@@ -2,95 +2,108 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64FCB2BC532
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 22 Nov 2020 11:59:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E01982BC591
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 22 Nov 2020 13:17:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727685AbgKVK5o (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 22 Nov 2020 05:57:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47012 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727391AbgKVK5n (ORCPT
+        id S1727424AbgKVMRf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 22 Nov 2020 07:17:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([63.128.21.124]:45224 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727318AbgKVMRe (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 22 Nov 2020 05:57:43 -0500
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B39AC0613CF
-        for <linux-bluetooth@vger.kernel.org>; Sun, 22 Nov 2020 02:57:43 -0800 (PST)
-Received: by mail-il1-x133.google.com with SMTP id k8so2480247ilr.4
-        for <linux-bluetooth@vger.kernel.org>; Sun, 22 Nov 2020 02:57:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=X+oAHiED3EqxBS4hJ3dAv6kV8uKh0SiSRJOiDAx52tk=;
-        b=KB01HnW3Xqqhuql1fzy4qsYogBkFuOfnsqmSdc5a7BEqqmdAgHYUWkGfuxbkK+nkWI
-         q6PFo4+I4MojxHqSIhV1o3cX7J1AbsD6HrbTi1PTlGMtE/QwrDb0h9cbaTYnfQTzOveF
-         3ZkYsTSGGFiGfix5gars7gPatpA5fInC3WUKzO6oQF3fxFUhxqj3+ayNDHs24Cg8MdCD
-         F2wzB29231JLb1iGx1pcbHiamgW7FCsA2kSy+m0/iFDx/bjvK55U+cTquJp66N5Z5+m9
-         eMGKzCQInPq31DqtmZXvgezXIblDH4drcsF96UE8bduR/E6Hc3csnoO7dbpB9nZIP8MC
-         4eYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=X+oAHiED3EqxBS4hJ3dAv6kV8uKh0SiSRJOiDAx52tk=;
-        b=f1RyhhGS6oyjDUmBUApH+MoxgbTw1hU4WB7NBaIUDhvsXB7KeXSEb0YL+vNmyINDmz
-         ObtrGKmgqlF8NvLL2f86H1XONJ695BHjetLqS0+aiMZtDBSl7Tg0ArFIkcGvKahxaA6t
-         jchso9xY85kcrb20hk5fI1hQDk291CVVE8hb7rZUDQPyF90iUNEoeB+lliNxBSjep2uh
-         EQ8JlZPUExWNwlmFnHb4LNRBmfxgtTBcMexgP0hN4Ad2rXde7vD2OaQo8xAjuRnTzroS
-         iK6sY01qkqRpdhO6uLzmi39Q9g8WeqY4gHaYAw3ZZlQQACy3ecu/tqkTImBjk9t/8O1M
-         sAcw==
-X-Gm-Message-State: AOAM531dVg+VN/d3cwXZ9LXyemONGCuFyxssYBDeA5YJDZHk0FlnfKXQ
-        kvHLGYBHLczZdB+90dDBWwmA0EPqWcw=
-X-Google-Smtp-Source: ABdhPJwEohibNNU9k6Ks7Znn/BvJQH/2BPcLjLeFCngbOxqtu3qpkwusiziFYp8M0er16ziKpF+XZQ==
-X-Received: by 2002:a05:6e02:e8c:: with SMTP id t12mr7130147ilj.302.1606042662653;
-        Sun, 22 Nov 2020 02:57:42 -0800 (PST)
-Received: from [172.17.0.2] ([20.36.196.114])
-        by smtp.gmail.com with ESMTPSA id s16sm5647202ilp.43.2020.11.22.02.57.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2020 02:57:42 -0800 (PST)
-Message-ID: <5fba4426.1c69fb81.a3572.30e5@mx.google.com>
-Date:   Sun, 22 Nov 2020 02:57:42 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============8937711951317612544=="
+        Sun, 22 Nov 2020 07:17:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1606047453;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=wx1TioL2Kr9OnCSpgdXiyjcV7iAtkvbWH8xFyP8x8Zk=;
+        b=ge3AqIzNPSkRBe2TrwGP/Vv8TiU92ace9QscEKwgyGQbmyKEgDRoCkXAdTvbJnFg8WLXmD
+        A89Ts/kUfNGkI46HkTlNz+bMwCl2+4Y+RtS0XBuwWsKdo6pB1hVjHonbXEbSRkDrEJqYTj
+        VEJ+adcGMtjgCkx8PMBjp2Q9daR3GLA=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-168-rlpPR-8lO-62kx2FthAJXQ-1; Sun, 22 Nov 2020 07:17:29 -0500
+X-MC-Unique: rlpPR-8lO-62kx2FthAJXQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 2649187950E;
+        Sun, 22 Nov 2020 12:17:28 +0000 (UTC)
+Received: from x1.localdomain.com (ovpn-112-104.ams2.redhat.com [10.36.112.104])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 1333C5D9DC;
+        Sun, 22 Nov 2020 12:17:26 +0000 (UTC)
+From:   Hans de Goede <hdegoede@redhat.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>
+Cc:     Hans de Goede <hdegoede@redhat.com>,
+        linux-bluetooth@vger.kernel.org,
+        Anant Thazhemadam <anant.thazhemadam@gmail.com>
+Subject: [PATCH] Bluetooth: revert: hci_h5: close serdev device and free hu in h5_close
+Date:   Sun, 22 Nov 2020 13:17:25 +0100
+Message-Id: <20201122121725.54351-1-hdegoede@redhat.com>
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, hdegoede@redhat.com
-Subject: RE: Bluetooth: hci_h5: Add OBDA0623 ACPI HID
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20201122103323.26116-1-hdegoede@redhat.com>
-References: <20201122103323.26116-1-hdegoede@redhat.com>
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============8937711951317612544==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+There have been multiple revisions of the patch fix the h5->rx_skb
+leak. Accidentally the first revision (which is buggy) and v5 have
+both been merged:
 
-This is automated email and please do not reply to this email!
+v1 commit 70f259a3f427 ("Bluetooth: hci_h5: close serdev device and free
+hu in h5_close");
+v5 commit 855af2d74c87 ("Bluetooth: hci_h5: fix memory leak in h5_close")
 
-Dear submitter,
+The correct v5 makes changes slightly higher up in the h5_close()
+function, which allowed both versions to get merged without conflict.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=389063
+The changes from v1 unconditionally frees the h5 data struct, this
+is wrong because in the serdev enumeration case the memory is
+allocated in h5_serdev_probe() like this:
 
----Test result---
+        h5 = devm_kzalloc(dev, sizeof(*h5), GFP_KERNEL);
 
-##############################
-Test: CheckPatch - PASS
+So its lifetime is tied to the lifetime of the driver being bound
+to the serdev and it is automatically freed when the driver gets
+unbound. In the serdev case the same h5 struct is re-used over
+h5_close() and h5_open() calls and thus MUST not be free-ed in
+h5_close().
 
-##############################
-Test: CheckGitLint - PASS
+The serdev_device_close() added to h5_close() is incorrect in the
+same way, serdev_device_close() is called on driver unbound too and
+also MUST no be called from h5_close().
 
-##############################
-Test: CheckBuildK - PASS
+This reverts the changes made by merging v1 of the patch, so that
+just the changes of the correct v5 remain.
 
-
-
+Cc: Anant Thazhemadam <anant.thazhemadam@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 ---
-Regards,
-Linux Bluetooth
+ drivers/bluetooth/hci_h5.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
+diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
+index 2cb5a48121f1..7be16a7f653b 100644
+--- a/drivers/bluetooth/hci_h5.c
++++ b/drivers/bluetooth/hci_h5.c
+@@ -251,12 +251,8 @@ static int h5_close(struct hci_uart *hu)
+ 	if (h5->vnd && h5->vnd->close)
+ 		h5->vnd->close(h5);
+ 
+-	if (hu->serdev)
+-		serdev_device_close(hu->serdev);
+-
+-	kfree_skb(h5->rx_skb);
+-	kfree(h5);
+-	h5 = NULL;
++	if (!hu->serdev)
++		kfree(h5);
+ 
+ 	return 0;
+ }
+-- 
+2.28.0
 
---===============8937711951317612544==--
