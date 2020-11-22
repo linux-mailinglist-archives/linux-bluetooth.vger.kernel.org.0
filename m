@@ -2,131 +2,160 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CAE892BC788
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 22 Nov 2020 18:44:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F2C12BC7F8
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 22 Nov 2020 19:30:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728057AbgKVRl5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 22 Nov 2020 12:41:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52338 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727567AbgKVRl5 (ORCPT
+        id S1728273AbgKVSWq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 22 Nov 2020 13:22:46 -0500
+Received: from smtprelay0168.hostedemail.com ([216.40.44.168]:37972 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728117AbgKVSWp (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 22 Nov 2020 12:41:57 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3A5EC0613CF
-        for <linux-bluetooth@vger.kernel.org>; Sun, 22 Nov 2020 09:41:56 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id b6so16246824wrt.4
-        for <linux-bluetooth@vger.kernel.org>; Sun, 22 Nov 2020 09:41:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=EKhb8NhsV/t7Voql2tnLUOimG3vKrjDJT5wJQd1Y+3Y=;
-        b=D1ZQHXBjyyv1uazFdNg8a2S4QEklsdXFEZjr5Ia/9MkyyrM52pn+i2WimNC7l9NXxQ
-         72SteUT2pR63hMQKefavoXTdTUVokx89nH0WwNlIxWr0j+xc9rV2qKU9Ex54f3AfeypV
-         fDlNGIz7fgR2Z8Ay9xH0cejkbYJG49uX7n0+eLDDzmqqoVD/X8YqTUnUmn74aro5yXcU
-         YlB+ymsU1PgkJQ61aBw5P9DPvBhNzKow98BxNzUwBwbjJU4xsGE//BsqVZ79eOEIkCwX
-         2yislG8133O/4BfdK43iNC3V1EJi+7PWmqS7j4vWzpMnkgfq3Vj5DsZqcHMi2XBfVU9b
-         vROw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=EKhb8NhsV/t7Voql2tnLUOimG3vKrjDJT5wJQd1Y+3Y=;
-        b=CojP5oAMVS6ihx7VTSkAhiEtlorvDpp626TMe/XVVwwP0wj274ZkpGbxTSGZiMdxYx
-         IEi4t4V1BNi/RyZaf9rOh7MGQB6RMizVfTJVUlEXodtoQLtGQq1+tgazYCgzAhCxW1oi
-         zUc7+nmahPI9nkYWgffTsT0JjRmRUdDvH7/Q1NhS1zCH1fBKfsOauM3Pj713zTJtlNuj
-         NIu0EJULEG0eTFjOiBVpdwyLWe6A8TL+CIwyJug536czov5uAx5Qle5jEzUHh0Afj6Ya
-         PsGQVxarGPacPaaGsIFUXnn+duu9h3vexrbmf6q+KZSo8fHUwwFwhFkg+wFa1Dd2/2WD
-         4bzw==
-X-Gm-Message-State: AOAM532AJ+TIzYc0UaYovO1tiKwBNJFiM3cVVzfsSnM5sZXs35XvD8vO
-        +I7urO5gRJZRuHk60DEQ45Q=
-X-Google-Smtp-Source: ABdhPJwjswWSR25IULqTgZbn/dlUpiGvqYpC8jT3LjkNmpUtheS5Gkdp0lP0dorDBEhOlfaxVPBVrg==
-X-Received: by 2002:a5d:6310:: with SMTP id i16mr26629184wru.284.1606066915570;
-        Sun, 22 Nov 2020 09:41:55 -0800 (PST)
-Received: from ?IPv6:2003:ea:8f23:2800:2dfa:b12a:a00c:90c6? (p200300ea8f2328002dfab12aa00c90c6.dip0.t-ipconnect.de. [2003:ea:8f23:2800:2dfa:b12a:a00c:90c6])
-        by smtp.googlemail.com with ESMTPSA id q12sm13470473wrx.86.2020.11.22.09.41.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Nov 2020 09:41:55 -0800 (PST)
-Subject: Re: Firmware version read error on Intel AX210
-To:     "K, Kiran" <kiran.k@intel.com>, Kiran K <kiraank@gmail.com>
-Cc:     BlueZ development <linux-bluetooth@vger.kernel.org>,
-        "Srivatsa, Ravishankar" <ravishankar.srivatsa@intel.com>,
-        "Tumkur Narayan, Chethan" <chethan.tumkur.narayan@intel.com>,
-        Marcel Holtmann <marcel@holtmann.org>
-References: <89a134d0-c6f6-c685-2aeb-7dc5eee1966f@gmail.com>
- <44820333-3e09-5405-a1aa-19f64087f164@gmail.com>
- <DM6PR11MB314662E82730EF100538531DF5FD0@DM6PR11MB3146.namprd11.prod.outlook.com>
-From:   Heiner Kallweit <hkallweit1@gmail.com>
-Message-ID: <65ed6733-6dd2-41fa-7757-55fe5b91f290@gmail.com>
-Date:   Sun, 22 Nov 2020 18:41:51 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        Sun, 22 Nov 2020 13:22:45 -0500
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay05.hostedemail.com (Postfix) with ESMTP id 5998D18029124;
+        Sun, 22 Nov 2020 18:22:42 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 50,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:800:960:967:973:982:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1535:1543:1593:1594:1605:1711:1730:1747:1777:1792:2393:2525:2560:2563:2682:2685:2828:2859:2933:2937:2939:2942:2945:2947:2951:2954:3022:3138:3139:3140:3141:3142:3622:3865:3866:3867:3868:3870:3871:3872:3874:3934:3936:3938:3941:3944:3947:3950:3953:3956:3959:4043:4321:5007:6119:6742:6743:7809:7903:8660:9025:10004:10400:10848:11026:11232:11473:11658:11914:12043:12295:12296:12297:12555:12663:12740:12760:12895:12986:13095:13148:13161:13229:13230:13439:14181:14659:14721:14822:21080:21324:21394:21433:21451:21627:21740:21811:21939:21987:30041:30054:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:2,LUA_SUMMARY:none
+X-HE-Tag: base07_180d0122735e
+X-Filterd-Recvd-Size: 5347
+Received: from XPS-9350.home (unknown [47.151.128.180])
+        (Authenticated sender: joe@perches.com)
+        by omf13.hostedemail.com (Postfix) with ESMTPA;
+        Sun, 22 Nov 2020 18:22:37 +0000 (UTC)
+Message-ID: <859bae8ddae3238116824192f6ddf1c91a381913.camel@perches.com>
+Subject: Re: [RFC] MAINTAINERS tag for cleanup robot
+From:   Joe Perches <joe@perches.com>
+To:     Tom Rix <trix@redhat.com>, clang-built-linux@googlegroups.com
+Cc:     linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
+        xen-devel@lists.xenproject.org, tboot-devel@lists.sourceforge.net,
+        kvm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-acpi@vger.kernel.org, devel@acpica.org,
+        amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, netdev@vger.kernel.org,
+        linux-media@vger.kernel.org, MPT-FusionLinux.pdl@broadcom.com,
+        linux-scsi@vger.kernel.org, linux-wireless@vger.kernel.org,
+        ibm-acpi-devel@lists.sourceforge.net,
+        platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        ecryptfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+        cluster-devel@redhat.com, linux-mtd@lists.infradead.org,
+        keyrings@vger.kernel.org, netfilter-devel@vger.kernel.org,
+        coreteam@netfilter.org, alsa-devel@alsa-project.org,
+        bpf@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-nfs@vger.kernel.org, patches@opensource.cirrus.com
+Date:   Sun, 22 Nov 2020 10:22:36 -0800
+In-Reply-To: <6e8c1926-4209-8f10-d0f9-72c875a85a88@redhat.com>
+References: <20201121165058.1644182-1-trix@redhat.com>
+         <2105f0c05e9eae8bee8e17dcc5314474b3c0bc73.camel@perches.com>
+         <6e8c1926-4209-8f10-d0f9-72c875a85a88@redhat.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.38.1-1 
 MIME-Version: 1.0
-In-Reply-To: <DM6PR11MB314662E82730EF100538531DF5FD0@DM6PR11MB3146.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Am 22.11.2020 um 09:35 schrieb K, Kiran:
-> Hi Heiner Kallweit,
+On Sun, 2020-11-22 at 08:33 -0800, Tom Rix wrote:
+> On 11/21/20 9:10 AM, Joe Perches wrote:
+> > On Sat, 2020-11-21 at 08:50 -0800, trix@redhat.com wrote:
+> > > A difficult part of automating commits is composing the subsystem
+> > > preamble in the commit log.  For the ongoing effort of a fixer producing
+> > > one or two fixes a release the use of 'treewide:' does not seem appropriate.
+> > > 
+> > > It would be better if the normal prefix was used.  Unfortunately normal is
+> > > not consistent across the tree.
+> > > 
+> > > So I am looking for comments for adding a new tag to the MAINTAINERS file
+> > > 
+> > > 	D: Commit subsystem prefix
+> > > 
+> > > ex/ for FPGA DFL DRIVERS
+> > > 
+> > > 	D: fpga: dfl:
+> > I'm all for it.  Good luck with the effort.  It's not completely trivial.
+> > 
+> > From a decade ago:
+> > 
+> > https://lore.kernel.org/lkml/1289919077.28741.50.camel@Joe-Laptop/
+> > 
+> > (and that thread started with extra semicolon patches too)
 > 
-> The patches to support  Intel AX210  are not fully upstreamed into bluetooth-next.  Final patch set review is in progress - https://patchwork.kernel.org/project/bluetooth/list/?series=387475
+> Reading the history, how about this.
 > 
-Good to hear and thanks for the link to the patch series.
-How about firmware, is it submitted to linux-firmware in parallel?
-
-
-Following is unrelated, however I hope you're the right addressee too.
-
-In btusb.c we have the following code. I interpret this in a way
-that once firmware was loaded the driver will never check for
-updated firmware.
-Shouldn't the driver always read the firmware file available on
-the system and check its version against the firmware version
-the device has (and apply it if it's newer)?
-But maybe I miss something ..
-
-bt_dev_info(hdev, "read Intel version: %02x%02x%02x%02x%02x%02x%02x%02x%02x",
-	    ver.hw_platform, ver.hw_variant, ver.hw_revision,
-	    ver.fw_variant,  ver.fw_revision, ver.fw_build_num,
-	    ver.fw_build_ww, ver.fw_build_yy, ver.fw_patch_num);
-
-/* fw_patch_num indicates the version of patch the device currently
- * have. If there is no patch data in the device, it is always 0x00.
- * So, if it is other than 0x00, no need to patch the device again.
- */
-if (ver.fw_patch_num) {
-	bt_dev_info(hdev, "Intel device is already patched. "
-		    "patch num: %02x", ver.fw_patch_num);
-	goto complete;
-}
-
-
-
-> Regards,
-> Kiran
+> get_maintainer.pl outputs a single prefix, if multiple files have the
+> same prefix it works, if they don't its an error.
 > 
-Thank you, Heiner
+> Another script 'commit_one_file.sh' does the call to get_mainainter.pl
+> to get the prefix and be called by run-clang-tools.py to get the fixer
+> specific message.
 
->> -----Original Message-----
->> From: Heiner Kallweit <hkallweit1@gmail.com>
->> Sent: Sunday, November 22, 2020 4:30 AM
->> To: Kiran K <kiraank@gmail.com>; K, Kiran <kiran.k@intel.com>
->> Cc: BlueZ development <linux-bluetooth@vger.kernel.org>
->> Subject: Re: Firmware version read error on Intel AX210
->>
->> Am 21.11.2020 um 23:12 schrieb Heiner Kallweit:
->>> I have a new AX210 WiFi/Bluetooth card and btintel_read_version()
->>> fails with error -22 (EINVAL). Underlying error is that the firmware
->>> version read command returns with hdev->req_result = 18 (0x12).
->>> (req_status = 0)
->>> >From what I've read this means invalid command parameters.
->>> Did something change with AX210 and command 0xfc05 requires specific
->>> parameters now? Or what else may cause this issue?
->>>
->> Seems AX210 uses the new TLV infrastructure. btintel_read_version_tlv()
->> returns valid data. Will TLV/AX210 support be added for 5.11?
+It's not whether the script used is get_maintainer or any other script,
+the question is really if the MAINTAINERS file is the appropriate place
+to store per-subsystem patch specific prefixes.
+
+It is.
+
+Then the question should be how are the forms described and what is the
+inheritance priority.  My preference would be to have a default of
+inherit the parent base and add basename(subsystem dirname).
+
+Commit history seems to have standardized on using colons as the separator
+between the commit prefix and the subject.
+
+A good mechanism to explore how various subsystems have uses prefixes in
+the past might be something like:
+
+$ git log --no-merges --pretty='%s' -<commit_count> <subsystem_path> | \
+  perl -n -e 'print substr($_, 0, rindex($_, ":") + 1) . "\n";' | \
+  sort | uniq -c | sort -rn
+
+Using 10000 for commit_count and drivers/scsi for subsystem_path, the
+top 40 entries are below:
+
+About 1% don't have a colon, and there is no real consistency even
+within individual drivers below scsi.  For instance, qla2xxx:
+
+     1	    814 scsi: qla2xxx:
+     2	    691 scsi: lpfc:
+     3	    389 scsi: hisi_sas:
+     4	    354 scsi: ufs:
+     5	    339 scsi:
+     6	    291 qla2xxx:
+     7	    256 scsi: megaraid_sas:
+     8	    249 scsi: mpt3sas:
+     9	    200 hpsa:
+    10	    190 scsi: aacraid:
+    11	    174 lpfc:
+    12	    153 scsi: qedf:
+    13	    144 scsi: smartpqi:
+    14	    139 scsi: cxlflash:
+    15	    122 scsi: core:
+    16	    110 [SCSI] qla2xxx:
+    17	    108 ncr5380:
+    18	     98 scsi: hpsa:
+    19	     97 
+    20	     89 treewide:
+    21	     88 mpt3sas:
+    22	     86 scsi: libfc:
+    23	     85 scsi: qedi:
+    24	     84 scsi: be2iscsi:
+    25	     81 [SCSI] qla4xxx:
+    26	     81 hisi_sas:
+    27	     81 block:
+    28	     75 megaraid_sas:
+    29	     71 scsi: sd:
+    30	     69 [SCSI] hpsa:
+    31	     68 cxlflash:
+    32	     65 scsi: libsas:
+    33	     65 scsi: fnic:
+    34	     61 scsi: scsi_debug:
+    35	     60 scsi: arcmsr:
+    36	     57 be2iscsi:
+    37	     53 atp870u:
+    38	     51 scsi: bfa:
+    39	     50 scsi: storvsc:
+    40	     48 sd:
+
 
