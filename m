@@ -2,95 +2,114 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A17AE2C1B07
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Nov 2020 02:43:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF5BB2C1B63
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Nov 2020 03:21:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728321AbgKXBgA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 23 Nov 2020 20:36:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36506 "EHLO
+        id S1728184AbgKXCT2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 23 Nov 2020 21:19:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726186AbgKXBf7 (ORCPT
+        with ESMTP id S1726817AbgKXCT2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 23 Nov 2020 20:35:59 -0500
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E58DC0613CF
-        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Nov 2020 17:35:59 -0800 (PST)
-Received: by mail-qv1-xf33.google.com with SMTP id q7so9855438qvt.12
-        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Nov 2020 17:35:59 -0800 (PST)
+        Mon, 23 Nov 2020 21:19:28 -0500
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA582C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Nov 2020 18:19:27 -0800 (PST)
+Received: by mail-lj1-x241.google.com with SMTP id j10so7831966lja.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Nov 2020 18:19:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=Nq/mzqfcc7jAhyKbfCoYyTwZUwUu1I8Y1D/EN38iVck=;
-        b=YpU2anu2GbPhbm4CGU9w0L8qzfS+dOZmFv6M8w1WsFr4Pc8+WpVFRoZI8G5xJzuFcF
-         PVJ1ENKm4HIUQYW3gynxXembkjB7r0xB75DGXwdiWS5DYsAwc1pQp8ELgOZLWimAnvyE
-         273DnjKnZKBImP2HMXVba2k31OMQYnfMICYc49aRRKv9mbCqGWapGAXCjzyiXZt6wido
-         TSAQ5XDowh2rk7dWCsv/ghIgxv+Q5s45UDRF95743iBLGvOTcbD+ox+qXlW3wXT2mEur
-         eH6Mtpp8X2Lgaqx4MyEw3opFa5CpUfOQ1Aihwyhhs3bReuEweuzZ1TfMNFd8HF2MSSp9
-         LqVQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IOKv3mcxUV9uixBz1vS09/A9Rysk4NprngCKfeqA81k=;
+        b=nxO8lwNasYBPz6j8tO9nozklc6EiB8hmHNafL96I6xaeh/5YuLEDBisqirTTmkz9bS
+         6Z9QwBbfehfdS4m5dGR7pZuKEZ8kt7AMEeZLZmsfFpg+6i3MG2rEgUSm5nue5oVqRE8U
+         u2rsw0VhFJb8OWU8RJbGD70gKN761Zc+jWRBe41cO7dPgZXTDr47kk2gBhM0O3/LY7Zq
+         RLO+jTauY29t12lZOexQaVDckxB5d5YN46KQmgWYFZXuotjIvlKWm0EHoPqeq+KXVDk9
+         yYCFGZ61pQB+oM1VvDyvY9r7VuiIZhwX9T0YBiTCuHdjOnBVy1wWeBxnwTR/RaxBzEqu
+         oFhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=Nq/mzqfcc7jAhyKbfCoYyTwZUwUu1I8Y1D/EN38iVck=;
-        b=m70ynOr5Q8JffJ0pnjOOEzKlGAqDw61N3AA4y7NqV9kY/UGgI69K2jAX3OYh7We4Jn
-         hg/hk9du90VeSOhNg2EqAvyVzX8g09qyvyE6/+sSynXAo2Ye9Ol48t/MK4CH7ipDWhS/
-         j0QhEf+g6/coWwSQlbyh5rIvr5wDV2oGSZIreW16YKVupdCXm/Bf59u+RZnYeIl0BOqi
-         GTJyv9AnYfkNJLUqGTQrcwJB7rt3ndF1Cio/dphqUzJ7H6NU6beH/R+XApkWFkZvnR5b
-         lbjrQbn6BaJFOheTwIQPj6WHA02ssCn/aGVNKhrHeKZGLr/0O7u6GZOvU1FVFK94W7pA
-         asWA==
-X-Gm-Message-State: AOAM533cIVTpzGwjb72XSiFdEUW/plMxZoXhCZenF/r6WXX+OtilsbvV
-        mTLUcmgIQ7pQwgbsn45tQx0w6mL2BV+zHw==
-X-Google-Smtp-Source: ABdhPJzGMwcRRuUHBTyWJD91PuCs+BPlaZAe4pE636Z2Lf8XkHuNqazIwHcOIwDtQHJQkYPFZvQIbA==
-X-Received: by 2002:ad4:5beb:: with SMTP id k11mr2459188qvc.20.1606181758711;
-        Mon, 23 Nov 2020 17:35:58 -0800 (PST)
-Received: from [172.17.0.2] ([40.84.35.204])
-        by smtp.gmail.com with ESMTPSA id h4sm11343344qkh.93.2020.11.23.17.35.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 17:35:58 -0800 (PST)
-Message-ID: <5fbc637e.1c69fb81.378b2.81de@mx.google.com>
-Date:   Mon, 23 Nov 2020 17:35:58 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============5661570842006864766=="
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IOKv3mcxUV9uixBz1vS09/A9Rysk4NprngCKfeqA81k=;
+        b=NOVfkkwXxOZ5lz0ZFhTB2/pigrZIoTUeElY52IS0YP5t54DsHGP6oiUP7KKBBaBnHi
+         9Z/UdHekD9H/OelUb8fH81sPygMgFrOXFKjxA0benGhq3rtDrVUm8bRodZBjFS2R/ApB
+         Vk7fcSgalJpktPhHCwyYqQqbCBhaE09mIM/M5/y8BlcZMfMaAULZtQfoEJYOEUTQyGOl
+         yGChfOw9SEUmVngxpWigz9N6XkIY245QcVimDZx3d3mJQbuPPfkbqzY/iIw1UAijpeL6
+         /EKOO1Jt+eF9gpXGG/ep7w3uMD5A7ySeNxPrjtgtrzo6eL9tT5K16mjix6bE6I8t4NjC
+         LR1w==
+X-Gm-Message-State: AOAM5315k6rGIY4FY7nFakbVd4InID3vzitmj9sVYhKNGbDBC/ElYx3T
+        O8XL+V7otE3Byc+OIz+kr1+RmtJqEm5TzIh6VDbVlBU3oTH+Zw==
+X-Google-Smtp-Source: ABdhPJxjFI370Mlf0p5oEQpHP02M5+SQSsFhDHPm204meeYLM14mXbDLRVKRz8EHruhYFp357musQTLZyseHZ0x5VkM=
+X-Received: by 2002:a05:651c:1248:: with SMTP id h8mr881261ljh.410.1606184364936;
+ Mon, 23 Nov 2020 18:19:24 -0800 (PST)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, sonnysasaka@chromium.org
-Subject: RE: Bluetooth: Cancel Inquiry before Create Connection
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20201124010906.340433-1-sonnysasaka@chromium.org>
-References: <20201124010906.340433-1-sonnysasaka@chromium.org>
+References: <20201027070203.13561-1-edwardvear@gmail.com>
+In-Reply-To: <20201027070203.13561-1-edwardvear@gmail.com>
+From:   Edward Vear <edwardvear@gmail.com>
+Date:   Mon, 23 Nov 2020 18:19:14 -0800
+Message-ID: <CAAe20a0iBPknh139soEKQXizP+7vjx1OL1XJGCmpUFAD_tcZzA@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: hci_core: Fix attempting to set RPA timeout
+ when unsupported
+To:     linux-bluetooth@vger.kernel.org
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, davem@davemloft.net,
+        kuba@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5661570842006864766==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Just following up on this. It appears several people have had success
+using this patch to get their bluetooth devices working:
+https://bugzilla.kernel.org/show_bug.cgi?id=208965. Is there anything
+else I should include?
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=389811
-
----Test result---
-
-##############################
-Test: CheckPatch - PASS
-
-##############################
-Test: CheckGitLint - PASS
-
-##############################
-Test: CheckBuildK - PASS
+Best,
+Edward
 
 
-
----
-Regards,
-Linux Bluetooth
-
-
---===============5661570842006864766==--
+On Tue, Oct 27, 2020 at 12:03 AM Edward Vear <edwardvear@gmail.com> wrote:
+>
+> During controller initialization, an LE Set RPA Timeout command is sent
+> to the controller if supported. However, the value checked to determine
+> if the command is supported is incorrect. Page 1921 of the Bluetooth
+> Core Spec v5.2 shows that bit 2 of octet 35 of the Supported_Commands
+> field corresponds to the LE Set RPA Timeout command, but currently
+> bit 6 of octet 35 is checked. This patch checks the correct value
+> instead.
+>
+> This issue led to the error seen in the following btmon output during
+> initialization of an adapter (rtl8761b) and prevented initialization
+> from completing.
+>
+> < HCI Command: LE Set Resolvable Private Address Timeout (0x08|0x002e) plen 2
+>         Timeout: 900 seconds
+> > HCI Event: Command Complete (0x0e) plen 4
+>       LE Set Resolvable Private Address Timeout (0x08|0x002e) ncmd 2
+>         Status: Unsupported Remote Feature / Unsupported LMP Feature (0x1a)
+> = Close Index: 00:E0:4C:6B:E5:03
+>
+> The error did not appear when running with this patch.
+>
+> Signed-off-by: Edward Vear <edwardvear@gmail.com>
+> ---
+>  net/bluetooth/hci_core.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+> index 502552d6e9af..c4aa2cbb9269 100644
+> --- a/net/bluetooth/hci_core.c
+> +++ b/net/bluetooth/hci_core.c
+> @@ -763,7 +763,7 @@ static int hci_init3_req(struct hci_request *req, unsigned long opt)
+>                         hci_req_add(req, HCI_OP_LE_CLEAR_RESOLV_LIST, 0, NULL);
+>                 }
+>
+> -               if (hdev->commands[35] & 0x40) {
+> +               if (hdev->commands[35] & 0x04) {
+>                         __le16 rpa_timeout = cpu_to_le16(hdev->rpa_timeout);
+>
+>                         /* Set RPA timeout */
+> --
+> 2.29.1
+>
