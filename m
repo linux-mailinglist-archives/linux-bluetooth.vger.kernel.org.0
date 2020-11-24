@@ -2,98 +2,133 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8D5C2C2F2F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Nov 2020 18:49:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29B132C2FB1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Nov 2020 19:08:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404022AbgKXRtt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 Nov 2020 12:49:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46158 "EHLO
+        id S2404215AbgKXSHx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 Nov 2020 13:07:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728945AbgKXRtt (ORCPT
+        with ESMTP id S2404063AbgKXSHw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 Nov 2020 12:49:49 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66B33C0613D6
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Nov 2020 09:49:49 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id u4so21538206qkk.10
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Nov 2020 09:49:49 -0800 (PST)
+        Tue, 24 Nov 2020 13:07:52 -0500
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D156AC0613D6
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Nov 2020 10:07:51 -0800 (PST)
+Received: by mail-qt1-x849.google.com with SMTP id d9so5411154qtr.5
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Nov 2020 10:07:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=cdxelZWUKt9EwdoMiYsyDKrhzvMWWpnKg+jhYk+h7N4=;
-        b=B/Jwx0vXlMomI6Kp9kWJ2XLsOm6MJ7vTKdJEPzSGyy/KofOdOYmdxo49zKSftZ+oxf
-         3a346h60FUSLGi1ajrn2NIYnqTmTbvuFcXy19Nv8uPzqhegBC+HdnUrfhsRUuqzfkkon
-         JWxVv3Fo3ZCE3RWwKSreAhwuIZFeVt9aRxHcNcXelkOs/+A6udgBP8xbZOfamtsjTsiH
-         0+ZW7p3w6NW6EaZvuy099G3vxsI+qj7vv9cYswZy1CxYXXLy/3AXqeyApPrMibMtuIwq
-         9ltkT6Z8RKQzwCOW6xxePb6YzBiSyrfbWwuHyyW2t+notF5OZu2+g/LpEb3aUUPeo0FK
-         0naQ==
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=Z/kyOoGlIHKVXedcCMowMmqq3ZBuH+yZQTVdupa8w8w=;
+        b=lCoNQAieJCOZuLHuiVlOMI4NqBdljo5E6elepEWZFsyFJCp3400ZJqpd5TGfaX1Wxe
+         IobtRh2jGl0raUg1cXFBriOWci5qkon4Wc6DxqX6Z+oe8lAanLAgLaTc3bAyjR+cZR+f
+         iL84Mmh6jOkc88h5kAUjPBvL9VvQl+j5ess63UC/LKv+jVK7rk/Px2texfid3Qm8uCEu
+         fWkJH/fVjnJJOn1+K03fur02YKRQ9aSOclHUN0uVtL98C/sTejATqhThW/rzWFXfKoJo
+         QtIKvOn+70WJ+wbX2Wf0WpGatnFrA5sUsxJ6RuZXMVvW+RMYNjzgW31C0/tVGNz5Qxi9
+         LLAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=cdxelZWUKt9EwdoMiYsyDKrhzvMWWpnKg+jhYk+h7N4=;
-        b=SZSKOkjlNMD3dBZvPbEDSuyrFR81oD0fDPKDlvJ+5W/Kv/kP79hoNwa9uoy0EyoKml
-         aR7r5+84WMS0pJ1SqjDKP1DADYXehF49z19Roy+QhKrIyT3taIYV1RvNYZrUvjRGhmAw
-         XWEEFh2yIeH1DNFLH2oeD+JG1fnw6X1syh03zDxiVWw2E/bGIWwJAdvg8MlDOU5bFyjZ
-         f2MEJn8voThuukkO7iYQ0MkuFeMoJQxDWRk4rvhR3Sj9wGukn0jp4gPqJtTyVvJjfgjk
-         kYA1ZSMVjM/5PLn1LCM0s4F8xl8arIj0YPDiJVCc8slTFDshTT48h30mQ93fzUSzC6Rs
-         ptiA==
-X-Gm-Message-State: AOAM530hF4uqUSEqRofqRYfQYpNPQJ74mzZqA2RlKa0jHwGSZyXigW25
-        89RW1d/tVCrBQuavf5cfzy8tcLdK+yU6oQ==
-X-Google-Smtp-Source: ABdhPJx3ElSxTamslDNIuILIH4k94ethKg4Lks2EAcfQ1MhOkZQ65cV0ygc5r27TDVpD7nhiWgH/zg==
-X-Received: by 2002:a05:620a:20c9:: with SMTP id f9mr6110553qka.378.1606240188526;
-        Tue, 24 Nov 2020 09:49:48 -0800 (PST)
-Received: from [172.17.0.2] ([40.75.107.77])
-        by smtp.gmail.com with ESMTPSA id t2sm9614150qkb.2.2020.11.24.09.49.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 09:49:47 -0800 (PST)
-Message-ID: <5fbd47bb.1c69fb81.64010.62fd@mx.google.com>
-Date:   Tue, 24 Nov 2020 09:49:47 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============4098499183067933962=="
-MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, danielwinkler@google.com
-Subject: RE: Add mgmt-tester coverage for new advertising MGMT APIs
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20201124092549.Bluez.1.Ia11a74cda6aa978ddd357bd37b1f9b0a363ba8bf@changeid>
-References: <20201124092549.Bluez.1.Ia11a74cda6aa978ddd357bd37b1f9b0a363ba8bf@changeid>
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=Z/kyOoGlIHKVXedcCMowMmqq3ZBuH+yZQTVdupa8w8w=;
+        b=I8QbzKcX1q1Sz0Tx3xx8JoPMzjG7HcKOV9pjIKnq57waihA3hs7xZ2T7tZeum9DXNm
+         gOmwQbTHM1SQ6DhWSpEARWUtPQEQ0ZObgV2AZXpY+dWEgJQBPPbPA5AFB4o+n9ruel0m
+         O1U6rfX4lnLckv27+PrxH+it0GqYpDZgMKIYL7o38OztbyZVDtxQ6o/USs0iLGG6URrV
+         YIs2jZTajcLwQwc/VJ5QPifWV0jbUenpheHs/tBYoQQNfeuOs+4ZCpAxiMHU/Zwst0rv
+         LYNatmrsceuUmqVb2/vm70KLrwAtmHuBFGZMknzX2boDTEaHfSG4mkrkVt7dNAUNH5aB
+         PFkA==
+X-Gm-Message-State: AOAM532EUlIlMjE6LEgkqBw3eIeyI6c6aGDebrXXPqOmVe7xpfKjdMM2
+        b5HxgRE4CO8LciWlrkixWGXS478jmA6timJoo3rh
+X-Google-Smtp-Source: ABdhPJyD2631V/wR+F3T0pRH+ZXLv1g13FWYBZsAp6JMokcjw9zpuWX4MrbJ/8satQGkRtsZVXQyMuD2ms7WRxKJXTjY
+Sender: "danielwinkler via sendgmr" 
+        <danielwinkler@danielwinkler-linux.mtv.corp.google.com>
+X-Received: from danielwinkler-linux.mtv.corp.google.com ([2620:15c:202:201:f693:9fff:fef4:4e59])
+ (user=danielwinkler job=sendgmr) by 2002:a25:3252:: with SMTP id
+ y79mr7127511yby.404.1606241271032; Tue, 24 Nov 2020 10:07:51 -0800 (PST)
+Date:   Tue, 24 Nov 2020 10:07:41 -0800
+Message-Id: <20201124180746.1773091-1-danielwinkler@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
+Subject: [PATCH v5 0/5] Bluetooth: Add new MGMT interface for advertising add
+From:   Daniel Winkler <danielwinkler@google.com>
+To:     marcel@holtmann.org
+Cc:     chromeos-bluetooth-upstreaming@chromium.org,
+        linux-bluetooth@vger.kernel.org,
+        Daniel Winkler <danielwinkler@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============4098499183067933962==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hi Maintainers,
 
-This is automated email and please do not reply to this email!
+This patch series defines the new two-call MGMT interface for adding
+new advertising instances. Similarly to the hci advertising commands, a
+mgmt call to set parameters is expected to be first, followed by a mgmt
+call to set advertising data/scan response. The members of the
+parameters request are optional; the caller defines a "params" bitfield
+in the structure that indicates which parameters were intentionally set,
+and others are set to defaults.
 
-Dear submitter,
+The main feature here is the introduction of min/max parameters and tx
+power that can be requested by the client. Min/max parameters will be
+used both with and without extended advertising support, and tx power
+will be used with extended advertising support. After a call for hci
+advertising parameters, a new TX_POWER_SELECTED event will be emitted to
+alert userspace to the actual chosen tx power.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=390411
+Additionally, to inform userspace of the controller LE Tx power
+capabilities for the client's benefit, this series also changes the
+security info MGMT command to more flexibly contain other capabilities,
+such as LE min and max tx power.
 
----Test result---
+All changes have been tested on hatch (extended advertising) and kukui
+(no extended advertising) chromebooks with manual testing verifying
+correctness of parameters/data in btmon traces, and our automated test
+suite of 25 single- and multi-advertising usage scenarios.
 
-##############################
-Test: CheckPatch - PASS
+A separate patch series will add support in bluetoothd. Thanks in
+advance for your feedback!
 
-##############################
-Test: CheckGitLint - PASS
-
-##############################
-Test: CheckBuild - PASS
-
-##############################
-Test: MakeCheck - PASS
-
-
-
----
-Regards,
-Linux Bluetooth
+Daniel Winkler
 
 
---===============4098499183067933962==--
+Changes in v5:
+- Ensure data/scan rsp length is returned for non-ext adv
+
+Changes in v4:
+- Add remaining data and scan response length to MGMT params response
+- Moving optional params into 'flags' field of MGMT command
+- Combine LE tx range into a single EIR field for MGMT capabilities cmd
+
+Changes in v3:
+- Adding selected tx power to adv params mgmt response, removing event
+- Re-using security info MGMT command to carry controller capabilities
+
+Changes in v2:
+- Fixed sparse error in Capabilities MGMT command
+
+Daniel Winkler (5):
+  Bluetooth: Add helper to set adv data
+  Bluetooth: Break add adv into two mgmt commands
+  Bluetooth: Use intervals and tx power from mgmt cmds
+  Bluetooth: Query LE tx power on startup
+  Bluetooth: Change MGMT security info CMD to be more generic
+
+ include/net/bluetooth/hci.h      |   7 +
+ include/net/bluetooth/hci_core.h |  12 +-
+ include/net/bluetooth/mgmt.h     |  49 +++-
+ net/bluetooth/hci_core.c         |  47 +++-
+ net/bluetooth/hci_event.c        |  19 ++
+ net/bluetooth/hci_request.c      |  29 ++-
+ net/bluetooth/mgmt.c             | 426 +++++++++++++++++++++++++++++--
+ 7 files changed, 544 insertions(+), 45 deletions(-)
+
+-- 
+2.29.2.454.gaff20da3a2-goog
+
