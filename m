@@ -2,56 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15D232C9054
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Nov 2020 22:57:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ABE902C9051
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Nov 2020 22:57:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730292AbgK3V5F (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Nov 2020 16:57:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60932 "EHLO
+        id S1730260AbgK3V5A (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Nov 2020 16:57:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728372AbgK3V5F (ORCPT
+        with ESMTP id S1728372AbgK3V5A (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Nov 2020 16:57:05 -0500
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A1AEC0613D3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:19 -0800 (PST)
-Received: by mail-pf1-x443.google.com with SMTP id s21so11279678pfu.13
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:19 -0800 (PST)
+        Mon, 30 Nov 2020 16:57:00 -0500
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68969C0613D4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:20 -0800 (PST)
+Received: by mail-pg1-x542.google.com with SMTP id w16so10901846pga.9
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qnjOyIqD02WVy6ZZ2x5bkuCTpr4hjumX5jR/HYlXCOk=;
-        b=AjeQGU+yh9dqL5kRg77EWgVXuxgKBpG1K7fWSJ+XWn2ITqpP/Zjny2emEQwDeFXEYP
-         W+dxJKgwuVmT0kczHU/xHWdr7h1tZM5kUkJY3tV1po+d0hFYGTqli7EP6SlmrvDHM5Lr
-         CQmisVfh+Y+vrv6FAjE8Y4Lrey2qT96RnZ71o=
+        bh=kh50OcTzrFmgdURg93OTnhuU/F5aplwBjH9orxXDq7k=;
+        b=ghPlUwLwhw/pqp+QpWEuygRloPeUt3j1qvEcXJouJb/Cskxj8VkgsjZU3HmDzqvRFD
+         c2Tf8BqtxlRjG/kbwa8VSYKg/0al3aA8h3qicqRLvXBgH80gsbqL+xNYIAUKheYV/r1h
+         CNabFGmWM6fJxr76/TolDZWIJ1OjNbbyNBT08=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qnjOyIqD02WVy6ZZ2x5bkuCTpr4hjumX5jR/HYlXCOk=;
-        b=Zbwv+b32U4ZxJZg5i2kIcq68dMNMckiPERPwzCB5aKfES+5vJ4Q5HXZR8RTlpzoS1s
-         9OwRERbJHmurcdA6EmsFNmnoUTeNISXiDITVw4HCMBFYfXD/InzNUkZeWNvLamrL1jvI
-         IcX3o1ewwY1meRzHu3OBd9wAWuLogT/wbrXVZjozpW0JBGJNB+RDo3M4yr9ckY+77zw5
-         Mati2IgvRHLU2h+p5cYxpYoOHTQ6m3KpKlagb0NICXatz3jm7Q4vZdHK/8q4prz6mX0E
-         Uzz2/w2NuCup9pen1L4o7eh/GDOmYEH9kUt7cZIpsAbZajvxmhnwKj8fwIlBbkL3xbCJ
-         nEFw==
-X-Gm-Message-State: AOAM531kVwds+x/myDnlKs8c2IVYMTOT0BNowt8yglZzADxosY1UbLCL
-        LNCMBCerMKwFuk4rcP5Sa5QZlwI7JyiivQ==
-X-Google-Smtp-Source: ABdhPJy1SDSh9IRwmAcDOg8NWJr5DeIzOJkO5Ef9PVDMWfP3yHVhqhEvBQPzxnWCxJP8Isv7gyT7XA==
-X-Received: by 2002:aa7:972b:0:b029:18b:89f:df0 with SMTP id k11-20020aa7972b0000b029018b089f0df0mr11446069pfg.39.1606773378455;
-        Mon, 30 Nov 2020 13:56:18 -0800 (PST)
+        bh=kh50OcTzrFmgdURg93OTnhuU/F5aplwBjH9orxXDq7k=;
+        b=RJmeh9HFLTMTdmdRSnAGFfxysWxWzf6C1Usp4yzI3QZpHsa+kIehv5853xFRLJnQSv
+         TW4mgD4/1KMihOVMDveThifxfXYCk2/a/kekA4SpKKeqTEthJiFIVVGmNQmpi1qWeJ5A
+         nIiOPFFClIOknWtFVab+6JJH9Kf+or+H/zWWxGG+5Kf5cEVpsXG2rIKSvdjBBD5bapzj
+         0KpphpCWZNb3Zipje+B5d0eCr2acieODrcNgyd2ivIDshZRcHwiWxP/xC5p3ULdtWOcn
+         0IqxxQwqT6JqdDmt1r3C1F8EWgPn2D87h2uQXwWLh+uguf0BWDAWv9cDGaRp5sOP19VB
+         0tCQ==
+X-Gm-Message-State: AOAM532de55mKqhdTr5nSZbQrzTnW3h0NelKzAX+Z5ab4BGpM+XqzpvR
+        epyM79zzeXKvOcFsbmD4haIIa0T/Udbg3A==
+X-Google-Smtp-Source: ABdhPJxhy1Tu79xQDA18RNzq3gxB9EJ+zSwpAvZDR1bDNRUluulrDHOW/KUvjnP/yw/5qinW3vKSsA==
+X-Received: by 2002:aa7:9699:0:b029:18a:e057:c44 with SMTP id f25-20020aa796990000b029018ae0570c44mr20784523pfk.34.1606773379646;
+        Mon, 30 Nov 2020 13:56:19 -0800 (PST)
 Received: from sonnysasaka-chrome.mtv.corp.google.com ([2620:15c:202:201:4a0f:cfff:fe66:e60c])
-        by smtp.gmail.com with ESMTPSA id 23sm17476588pfx.210.2020.11.30.13.56.17
+        by smtp.gmail.com with ESMTPSA id 23sm17476588pfx.210.2020.11.30.13.56.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Nov 2020 13:56:17 -0800 (PST)
+        Mon, 30 Nov 2020 13:56:19 -0800 (PST)
 From:   Sonny Sasaka <sonnysasaka@chromium.org>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Sonny Sasaka <sonnysasaka@chromium.org>,
         Miao-chen Chou <mcchou@chromium.org>
-Subject: [PATCH BlueZ v5 3/7] battery: Add Source property to Battery API
-Date:   Mon, 30 Nov 2020 13:55:58 -0800
-Message-Id: <20201130215602.386545-3-sonnysasaka@chromium.org>
+Subject: [PATCH BlueZ v5 4/7] doc: Add Battery Provider API doc
+Date:   Mon, 30 Nov 2020 13:55:59 -0800
+Message-Id: <20201130215602.386545-4-sonnysasaka@chromium.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201130215602.386545-1-sonnysasaka@chromium.org>
 References: <20201130215602.386545-1-sonnysasaka@chromium.org>
@@ -61,130 +61,81 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-As Battery API will be generalized for other battery reporting
-protocols, the Source property is useful for diagnostics purposes.
+This patch add the documentation of the Battery Provider which lets
+external clients feed battery information to BlueZ if they are able to
+decode battery reporting via any profile. BlueZ UI clients can then use
+the org.bluez.Battery1 API as a single source of battery information
+coming from many different profiles.
 
 Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 
 ---
- profiles/battery/battery.c |  3 ++-
- src/battery.c              | 35 +++++++++++++++++++++++++++++++----
- src/battery.h              |  2 +-
- 3 files changed, 34 insertions(+), 6 deletions(-)
+ doc/battery-api.txt | 55 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/profiles/battery/battery.c b/profiles/battery/battery.c
-index e1a61dd0b..2478816a4 100644
---- a/profiles/battery/battery.c
-+++ b/profiles/battery/battery.c
-@@ -126,7 +126,8 @@ static void batt_io_ccc_written_cb(uint16_t att_ecode, void *user_data)
- 		return;
- 	}
+diff --git a/doc/battery-api.txt b/doc/battery-api.txt
+index dc7dbeda2..9a6b4fd39 100644
+--- a/doc/battery-api.txt
++++ b/doc/battery-api.txt
+@@ -12,3 +12,58 @@ Object path	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
+ Properties	byte Percentage [readonly]
  
--	batt->battery = btd_battery_register(device_get_path(batt->device));
-+	batt->battery = btd_battery_register(device_get_path(batt->device),
-+					     "GATT Battery Service");
- 
- 	if (!batt->battery) {
- 		batt_reset(batt);
-diff --git a/src/battery.c b/src/battery.c
-index 87a6b91fb..8613d6e23 100644
---- a/src/battery.c
-+++ b/src/battery.c
-@@ -31,8 +31,9 @@
- #define BATTERY_MAX_PERCENTAGE 100
- 
- struct btd_battery {
--	char *path; /* D-Bus object path, owns pointer */
-+	char *path; /* D-Bus object path */
- 	uint8_t percentage; /* valid between 0 to 100 inclusively */
-+	char *source; /* Descriptive source of the battery info */
- };
- 
- static struct queue *batteries = NULL;
-@@ -62,13 +63,15 @@ static bool match_path(const void *data, const void *user_data)
- 	return g_strcmp0(battery->path, path) == 0;
- }
- 
--static struct btd_battery *battery_new(const char *path)
-+static struct btd_battery *battery_new(const char *path, const char *source)
- {
- 	struct btd_battery *battery;
- 
- 	battery = new0(struct btd_battery, 1);
- 	battery->path = g_strdup(path);
- 	battery->percentage = UINT8_MAX;
-+	if (source)
-+		battery->source = g_strdup(source);
- 
- 	return battery;
- }
-@@ -78,6 +81,9 @@ static void battery_free(struct btd_battery *battery)
- 	if (battery->path)
- 		g_free(battery->path);
- 
-+	if (battery->source)
-+		g_free(battery->source);
+ 			The percentage of battery left as an unsigned 8-bit integer.
 +
- 	free(battery);
- }
- 
-@@ -100,13 +106,34 @@ static gboolean property_percentage_exists(const GDBusPropertyTable *property,
- 	return battery->percentage <= BATTERY_MAX_PERCENTAGE;
- }
- 
-+static gboolean property_source_get(const GDBusPropertyTable *property,
-+				    DBusMessageIter *iter, void *data)
-+{
-+	struct btd_battery *battery = data;
++		string Source [readonly, optional, experimental]
 +
-+	dbus_message_iter_append_basic(iter, DBUS_TYPE_STRING,
-+				       &battery->source);
++			Describes where the battery information comes from
++			This property is informational only and may be useful
++			for debugging purposes.
++			Providers from BatteryProvider1 may make use of this
++			property to indicate where the battery report comes from
++			(e.g. "HFP 1.7", "HID", or the profile UUID).
 +
-+	return TRUE;
-+}
 +
-+static gboolean property_source_exists(const GDBusPropertyTable *property,
-+				       void *data)
-+{
-+	struct btd_battery *battery = data;
++Battery Provider Manager hierarchy
++==================================
++A battery provider starts by registering itself as a battery provider with the
++RegisterBatteryProvider method passing an object path as the provider ID. Then,
++it can start exposing org.bluez.BatteryProvider1 objects having the path
++starting with the given provider ID. It can also remove objects at any time.
++The objects and their properties exposed by battery providers will be reflected
++on org.bluez.Battery1 interface.
 +
-+	return battery->source != NULL;
-+}
++BlueZ will stop monitoring these exposed and removed objects after
++UnregisterBatteryProvider is called for that provider ID.
 +
- static const GDBusPropertyTable battery_properties[] = {
- 	{ "Percentage", "y", property_percentage_get, NULL,
- 	  property_percentage_exists },
-+	{ "Source", "s", property_source_get, NULL, property_source_exists,
-+	  G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
- 	{}
- };
- 
--struct btd_battery *btd_battery_register(const char *path)
-+struct btd_battery *btd_battery_register(const char *path, const char *source)
- {
- 	struct btd_battery *battery;
- 
-@@ -122,7 +149,7 @@ struct btd_battery *btd_battery_register(const char *path)
- 		return NULL;
- 	}
- 
--	battery = battery_new(path);
-+	battery = battery_new(path, source);
- 	battery_add(battery);
- 
- 	if (!g_dbus_register_interface(btd_get_dbus_connection(), battery->path,
-diff --git a/src/battery.h b/src/battery.h
-index 9c69b7afa..ff63454cd 100644
---- a/src/battery.h
-+++ b/src/battery.h
-@@ -10,6 +10,6 @@
- 
- struct btd_battery;
- 
--struct btd_battery *btd_battery_register(const char *path);
-+struct btd_battery *btd_battery_register(const char *path, const char *source);
- bool btd_battery_unregister(struct btd_battery *battery);
- bool btd_battery_update(struct btd_battery *battery, uint8_t percentage);
++Service		org.bluez
++Interface	org.bluez.BatteryProviderManager1 [experimental]
++Object path	/org/bluez/{hci0,hci1,...}
++
++Methods		void RegisterBatteryProvider(object provider)
++
++			This registers a battery provider. A registered
++			battery provider can then expose objects with
++			org.bluez.BatteryProvider1 interface described below.
++
++		void UnregisterBatteryProvider(object provider)
++
++			This unregisters a battery provider. After
++			unregistration, the BatteryProvider1 objects provided
++			by this client are ignored by BlueZ.
++
++
++Battery Provider hierarchy
++==========================
++
++Service		<client D-Bus address>
++Interface	org.bluez.BatteryProvider1 [experimental]
++Object path	{provider_root}/{unique battery object path}
++
++Properties	Objects provided on this interface contain the same properties
++		as org.bluez.Battery1 interface. Additionally, this interface
++		needs to have the Device property indicating the object path
++		of the device this battery provides.
++
++		object Device [readonly]
++
++			The object path of the device that has this battery.
 -- 
 2.26.2
 
