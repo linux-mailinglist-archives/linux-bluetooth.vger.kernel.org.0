@@ -2,604 +2,165 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C6482C905C
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Nov 2020 22:58:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DEF72C905F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Nov 2020 22:58:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387492AbgK3V5i (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Nov 2020 16:57:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32806 "EHLO
+        id S2387512AbgK3V5n (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Nov 2020 16:57:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387480AbgK3V5i (ORCPT
+        with ESMTP id S2387499AbgK3V5n (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Nov 2020 16:57:38 -0500
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D3C9C0617A7
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:24 -0800 (PST)
-Received: by mail-pg1-x543.google.com with SMTP id t3so10904798pgi.11
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:24 -0800 (PST)
+        Mon, 30 Nov 2020 16:57:43 -0500
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC9A5C0613D2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:57:02 -0800 (PST)
+Received: by mail-ej1-x641.google.com with SMTP id m19so2122297ejj.11
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:57:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Yzih2yHkUv+QElMJRHZIWXlalNtCAkPaD/ASJVteeio=;
-        b=Pg1G7PntunBM+EAA30gF/9iMxAaHELg6IJ/Zgoeoas39l9/7pXWg9L4unLigCPck/V
-         2VEBsr+U/Jdu+Vd/BYVi5mbkOFAy+iHRaHsyfiaDVGt4E+wzpcsKOKNhHO6JllozV6WP
-         gkQyrygWlB2t3eFyZaQKk1tkmBfirDDlY8rjc=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aqIEbGKcheEOMHK5QQOKkwuh74LyDjP4/ag1qEiyNPE=;
+        b=i0sXFQa8Jl8AN8WI8v8KGXVgwloKzqbvT18rsqUbZwb5872b+B/WFuc5ABNuD2VLtt
+         iqVctHMgBIT++UjFX6TEVuEm00XnGEauQIc6iI503z7LVGA9B1xhizxrClOs+MlIPKlm
+         2NRyV8zVAm8SglCpNy3PWOcI1Uxwle943i+n8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Yzih2yHkUv+QElMJRHZIWXlalNtCAkPaD/ASJVteeio=;
-        b=dTeS+XS51HR6cw/54d30NIr4hIC6Vuc7Tb4WOMsP3lkpyFM1oHRf3VidYI+tU707e0
-         Ec2vO35NahBt4JW7riNv3ZJTNGV4Rt1sksS9ESVkg/Ur1BG/rx1wSlYfWhlTE5LcKxU7
-         NEHCGoCTKej/Kh7nChVgU15qU7+ZWtx6lBvrm0T6fo/fW3dCeDNNj1J5Hv0Ew0agVsqD
-         nGLeNWrm5smhHyJk91hbgAllpDTstZvK5RArNPJieJmSW3f+XrnP4YUHPCmzSfP4ZvQD
-         ksmK4NhB4my/1vK7rMIt87kd0Og9ghl6vUpWwJPYmfshF4+6DXVSWfeu3sQ/tN1FzJ3k
-         x+VA==
-X-Gm-Message-State: AOAM533SdbpjDRluZC6HIhYGLf1bhFCCHx637XzifXwuQJMSMqthHYjT
-        xG9U3o2smZXVZvk3Vk8HjZobkHd2KDbxJg==
-X-Google-Smtp-Source: ABdhPJyUt92nx/Y0d/7GZer1MIvbUWOsWboUT5Ljx+5yOQHBgSeQg+EDqkh+tbSI1xBTyI7G+WNd6g==
-X-Received: by 2002:a63:887:: with SMTP id 129mr3344945pgi.383.1606773383542;
-        Mon, 30 Nov 2020 13:56:23 -0800 (PST)
-Received: from sonnysasaka-chrome.mtv.corp.google.com ([2620:15c:202:201:4a0f:cfff:fe66:e60c])
-        by smtp.gmail.com with ESMTPSA id 23sm17476588pfx.210.2020.11.30.13.56.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Nov 2020 13:56:22 -0800 (PST)
-From:   Sonny Sasaka <sonnysasaka@chromium.org>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Sonny Sasaka <sonnysasaka@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>
-Subject: [PATCH BlueZ v5 7/7] battery: Implement Battery Provider API
-Date:   Mon, 30 Nov 2020 13:56:02 -0800
-Message-Id: <20201130215602.386545-7-sonnysasaka@chromium.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201130215602.386545-1-sonnysasaka@chromium.org>
-References: <20201130215602.386545-1-sonnysasaka@chromium.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aqIEbGKcheEOMHK5QQOKkwuh74LyDjP4/ag1qEiyNPE=;
+        b=riXp8nfL/UQqtngx9nv3w8cPGTJuMzOZrisJkEhdTu0PwLyJbrBF4dwMtYvAr6MnO1
+         to8RZ1dlbAemvjk6P4xeuBWlPY+sZWqZMS7+1GO3sJZYMqgVYkDEMJWBIE6mS4QzImIn
+         fCdyN52d74MY7LcFlcQPeLaCsPE00JDXPK6eRqXboqivRXQvEmn3X7HAoJK8Zwe7ByhG
+         DqVhvlCgdik/cJfECnYyIJPl2q18E0WKNLAjm6cO5uOI/Azlj9waoP61z3nNkNGMDEUW
+         g4OhVjPrFxxYAAQRPIpqQYB0DZ0v6BB7Kn+bHitlzWX3hStsxNyB8N1kGKXZmT4pH/20
+         CwrQ==
+X-Gm-Message-State: AOAM532wllbwc8lDLYbkZRMdvHhQKdhhxIHY69cpiaxwBYQSvKSLZfoG
+        WurOCei7zIBdJzCUITgrUKkttI+NidaQig==
+X-Google-Smtp-Source: ABdhPJyWoFAuGbCZ4xV81oGU0jU9yf0RKFMOl1BvqyhGiJIxQVc1sRR+7G7BhHSNtIx636UovJPwTA==
+X-Received: by 2002:a17:906:1f44:: with SMTP id d4mr15326905ejk.368.1606773421074;
+        Mon, 30 Nov 2020 13:57:01 -0800 (PST)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id s5sm6928120eju.98.2020.11.30.13.57.00
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Nov 2020 13:57:00 -0800 (PST)
+Received: by mail-wr1-f47.google.com with SMTP id z7so18352724wrn.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:57:00 -0800 (PST)
+X-Received: by 2002:adf:c589:: with SMTP id m9mr2392909wrg.370.1606773419862;
+ Mon, 30 Nov 2020 13:56:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201130200307.386410-1-sonnysasaka@chromium.org>
+ <20201130200307.386410-4-sonnysasaka@chromium.org> <CABBYNZJQebV4_CWjaFUVC4Ab6ZWKqWz0K-sp0sdKgMGxVgtZLQ@mail.gmail.com>
+In-Reply-To: <CABBYNZJQebV4_CWjaFUVC4Ab6ZWKqWz0K-sp0sdKgMGxVgtZLQ@mail.gmail.com>
+From:   Sonny Sasaka <sonnysasaka@chromium.org>
+Date:   Mon, 30 Nov 2020 13:56:49 -0800
+X-Gmail-Original-Message-ID: <CAO271mka6V6sDAg0GH3Cw4Jeo83kH1sEEUegGRkth6L8L0oG2w@mail.gmail.com>
+Message-ID: <CAO271mka6V6sDAg0GH3Cw4Jeo83kH1sEEUegGRkth6L8L0oG2w@mail.gmail.com>
+Subject: Re: [PATCH BlueZ v4 4/7] doc: Add Battery Provider API doc
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        Miao-chen Chou <mcchou@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch implements the BatteryProvider1 and BatteryProviderManager1
-API. This is a means for external clients to feed battery information to
-BlueZ if they handle some profile and can decode battery reporting.
+Hi Luiz,
 
-The battery information is then exposed externally via the existing
-Battery1 interface. UI components can consume this API to display
-Bluetooth peripherals' battery via a unified BlueZ API.
-
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-
----
- profiles/battery/battery.c |   2 +-
- src/adapter.c              |  11 ++
- src/battery.c              | 387 ++++++++++++++++++++++++++++++++++++-
- src/battery.h              |  10 +-
- 4 files changed, 405 insertions(+), 5 deletions(-)
-
-diff --git a/profiles/battery/battery.c b/profiles/battery/battery.c
-index 2478816a4..81f849d57 100644
---- a/profiles/battery/battery.c
-+++ b/profiles/battery/battery.c
-@@ -127,7 +127,7 @@ static void batt_io_ccc_written_cb(uint16_t att_ecode, void *user_data)
- 	}
- 
- 	batt->battery = btd_battery_register(device_get_path(batt->device),
--					     "GATT Battery Service");
-+					     "GATT Battery Service", NULL);
- 
- 	if (!batt->battery) {
- 		batt_reset(batt);
-diff --git a/src/adapter.c b/src/adapter.c
-index 03d9d29e9..ec6a6a64c 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -66,6 +66,7 @@
- #include "advertising.h"
- #include "adv_monitor.h"
- #include "eir.h"
-+#include "battery.h"
- 
- #define MODE_OFF		0x00
- #define MODE_CONNECTABLE	0x01
-@@ -254,6 +255,8 @@ struct btd_adapter {
- 
- 	struct btd_adv_monitor_manager *adv_monitor_manager;
- 
-+	struct btd_battery_provider_manager *battery_provider_manager;
-+
- 	gboolean initialized;
- 
- 	GSList *pin_callbacks;
-@@ -6339,6 +6342,9 @@ static void adapter_remove(struct btd_adapter *adapter)
- 	btd_adv_monitor_manager_destroy(adapter->adv_monitor_manager);
- 	adapter->adv_monitor_manager = NULL;
- 
-+	btd_battery_provider_manager_destroy(adapter->battery_provider_manager);
-+	adapter->battery_provider_manager = NULL;
-+
- 	g_slist_free(adapter->pin_callbacks);
- 	adapter->pin_callbacks = NULL;
- 
-@@ -8659,6 +8665,11 @@ static int adapter_register(struct btd_adapter *adapter)
- 		}
- 	}
- 
-+	if (g_dbus_get_flags() & G_DBUS_FLAG_ENABLE_EXPERIMENTAL) {
-+		adapter->battery_provider_manager =
-+			btd_battery_provider_manager_create(adapter);
-+	}
-+
- 	db = btd_gatt_database_get_db(adapter->database);
- 	adapter->db_id = gatt_db_register(db, services_modified,
- 							services_modified,
-diff --git a/src/battery.c b/src/battery.c
-index 8613d6e23..77fee22b6 100644
---- a/src/battery.c
-+++ b/src/battery.c
-@@ -24,9 +24,13 @@
- #include "battery.h"
- #include "dbus-common.h"
- #include "adapter.h"
-+#include "device.h"
- #include "log.h"
-+#include "error.h"
- 
- #define BATTERY_INTERFACE "org.bluez.Battery1"
-+#define BATTERY_PROVIDER_INTERFACE "org.bluez.BatteryProvider1"
-+#define BATTERY_PROVIDER_MANAGER_INTERFACE "org.bluez.BatteryProviderManager1"
- 
- #define BATTERY_MAX_PERCENTAGE 100
- 
-@@ -34,10 +38,27 @@ struct btd_battery {
- 	char *path; /* D-Bus object path */
- 	uint8_t percentage; /* valid between 0 to 100 inclusively */
- 	char *source; /* Descriptive source of the battery info */
-+	char *provider_path; /* The provider root path, if any */
-+};
-+
-+struct btd_battery_provider_manager {
-+	struct btd_adapter *adapter; /* Does not own pointer */
-+	struct queue *battery_providers;
-+};
-+
-+struct battery_provider {
-+	struct btd_battery_provider_manager *manager; /* Does not own pointer */
-+
-+	char *owner; /* Owner D-Bus address */
-+	char *path; /* D-Bus object path */
-+
-+	GDBusClient *client;
- };
- 
- static struct queue *batteries = NULL;
- 
-+static void provider_disconnect_cb(DBusConnection *conn, void *user_data);
-+
- static void battery_add(struct btd_battery *battery)
- {
- 	if (!batteries)
-@@ -63,7 +84,8 @@ static bool match_path(const void *data, const void *user_data)
- 	return g_strcmp0(battery->path, path) == 0;
- }
- 
--static struct btd_battery *battery_new(const char *path, const char *source)
-+static struct btd_battery *battery_new(const char *path, const char *source,
-+				       const char *provider_path)
- {
- 	struct btd_battery *battery;
- 
-@@ -72,6 +94,8 @@ static struct btd_battery *battery_new(const char *path, const char *source)
- 	battery->percentage = UINT8_MAX;
- 	if (source)
- 		battery->source = g_strdup(source);
-+	if (provider_path)
-+		battery->provider_path = g_strdup(provider_path);
- 
- 	return battery;
- }
-@@ -133,7 +157,8 @@ static const GDBusPropertyTable battery_properties[] = {
- 	{}
- };
- 
--struct btd_battery *btd_battery_register(const char *path, const char *source)
-+struct btd_battery *btd_battery_register(const char *path, const char *source,
-+					 const char *provider_path)
- {
- 	struct btd_battery *battery;
- 
-@@ -149,7 +174,7 @@ struct btd_battery *btd_battery_register(const char *path, const char *source)
- 		return NULL;
- 	}
- 
--	battery = battery_new(path, source);
-+	battery = battery_new(path, source, provider_path);
- 	battery_add(battery);
- 
- 	if (!g_dbus_register_interface(btd_get_dbus_connection(), battery->path,
-@@ -216,3 +241,359 @@ bool btd_battery_update(struct btd_battery *battery, uint8_t percentage)
- 
- 	return true;
- }
-+
-+static struct btd_battery *find_battery_by_path(const char *path)
-+{
-+	return queue_find(batteries, match_path, path);
-+}
-+
-+static void provided_battery_property_changed_cb(GDBusProxy *proxy,
-+						 const char *name,
-+						 DBusMessageIter *iter,
-+						 void *user_data)
-+{
-+	uint8_t percentage;
-+	const char *export_path;
-+	DBusMessageIter dev_iter;
-+
-+	if (g_dbus_proxy_get_property(proxy, "Device", &dev_iter) == FALSE)
-+		return;
-+
-+	dbus_message_iter_get_basic(&dev_iter, &export_path);
-+
-+	if (strcmp(name, "Percentage") != 0)
-+		return;
-+
-+	if (dbus_message_iter_get_arg_type(iter) != DBUS_TYPE_BYTE)
-+		return;
-+
-+	dbus_message_iter_get_basic(iter, &percentage);
-+
-+	DBG("battery percentage changed on %s, percentage = %d",
-+	    g_dbus_proxy_get_path(proxy), percentage);
-+
-+	btd_battery_update(find_battery_by_path(export_path), percentage);
-+}
-+
-+static void provided_battery_added_cb(GDBusProxy *proxy, void *user_data)
-+{
-+	struct battery_provider *provider = user_data;
-+	struct btd_battery *battery;
-+	struct btd_device *device;
-+	const char *path = g_dbus_proxy_get_path(proxy);
-+	const char *export_path;
-+	const char *source = NULL;
-+	uint8_t percentage;
-+	DBusMessageIter iter;
-+
-+	if (g_dbus_proxy_get_property(proxy, "Device", &iter) == FALSE) {
-+		warn("Battery object %s does not specify device path", path);
-+		return;
-+	}
-+
-+	dbus_message_iter_get_basic(&iter, &export_path);
-+
-+	if (strcmp(g_dbus_proxy_get_interface(proxy),
-+		   BATTERY_PROVIDER_INTERFACE) != 0)
-+		return;
-+
-+	device = btd_adapter_find_device_by_path(provider->manager->adapter,
-+						 export_path);
-+	if (!device || device_is_temporary(device)) {
-+		warn("Ignoring non-existent device path for battery %s",
-+		     export_path);
-+		return;
-+	}
-+
-+	if (find_battery_by_path(export_path)) {
-+		DBG("Battery for %s is already provided, ignoring the new one",
-+		    export_path);
-+		return;
-+	}
-+
-+	g_dbus_proxy_set_property_watch(
-+		proxy, provided_battery_property_changed_cb, provider);
-+
-+	if (g_dbus_proxy_get_property(proxy, "Source", &iter) == TRUE)
-+		dbus_message_iter_get_basic(&iter, &source);
-+
-+	battery = btd_battery_register(export_path, source, provider->path);
-+
-+	DBG("provided battery added %s", path);
-+
-+	/* Percentage property may not be immediately available, that's okay
-+	 * since we monitor changes to this property.
-+	 */
-+	if (g_dbus_proxy_get_property(proxy, "Percentage", &iter) == FALSE)
-+		return;
-+
-+	dbus_message_iter_get_basic(&iter, &percentage);
-+
-+	btd_battery_update(battery, percentage);
-+}
-+
-+static void provided_battery_removed_cb(GDBusProxy *proxy, void *user_data)
-+{
-+	struct battery_provider *provider = user_data;
-+	struct btd_battery *battery;
-+	const char *export_path;
-+	DBusMessageIter iter;
-+
-+	if (g_dbus_proxy_get_property(proxy, "Device", &iter) == FALSE)
-+		return;
-+
-+	dbus_message_iter_get_basic(&iter, &export_path);
-+
-+	if (strcmp(g_dbus_proxy_get_interface(proxy),
-+		   BATTERY_PROVIDER_INTERFACE) != 0)
-+		return;
-+
-+	DBG("provided battery removed %s", g_dbus_proxy_get_path(proxy));
-+
-+	battery = find_battery_by_path(export_path);
-+	if (!battery)
-+		return;
-+
-+	if (g_strcmp0(battery->provider_path, provider->path) != 0)
-+		return;
-+
-+	g_dbus_proxy_set_property_watch(proxy, NULL, NULL);
-+
-+	btd_battery_unregister(battery);
-+}
-+
-+static bool match_provider_path(const void *data, const void *user_data)
-+{
-+	const struct battery_provider *provider = data;
-+	const char *path = user_data;
-+
-+	return strcmp(provider->path, path) == 0;
-+}
-+
-+static void unregister_if_path_has_prefix(void *data, void *user_data)
-+{
-+	struct btd_battery *battery = data;
-+	struct battery_provider *provider = user_data;
-+
-+	if (g_strcmp0(battery->provider_path, provider->path) == 0)
-+		btd_battery_unregister(battery);
-+}
-+
-+static void battery_provider_free(gpointer data)
-+{
-+	struct battery_provider *provider = data;
-+
-+	/* Unregister batteries under the root path of provider->path */
-+	queue_foreach(batteries, unregister_if_path_has_prefix, provider);
-+
-+	if (provider->owner)
-+		g_free(provider->owner);
-+
-+	if (provider->path)
-+		g_free(provider->path);
-+
-+	if (provider->client) {
-+		g_dbus_client_set_disconnect_watch(provider->client, NULL,
-+						   NULL);
-+		g_dbus_client_set_proxy_handlers(provider->client, NULL, NULL,
-+						 NULL, NULL);
-+		g_dbus_client_unref(provider->client);
-+	}
-+
-+	free(provider);
-+}
-+
-+static struct battery_provider *
-+battery_provider_new(DBusConnection *conn,
-+		     struct btd_battery_provider_manager *manager,
-+		     const char *path, const char *sender)
-+{
-+	struct battery_provider *provider;
-+
-+	provider = new0(struct battery_provider, 1);
-+	provider->manager = manager;
-+	provider->owner = g_strdup(sender);
-+	provider->path = g_strdup(path);
-+
-+	provider->client = g_dbus_client_new_full(conn, sender, path, path);
-+
-+	if (!provider->client) {
-+		error("error creating D-Bus client %s", path);
-+		battery_provider_free(provider);
-+		return NULL;
-+	}
-+
-+	g_dbus_client_set_disconnect_watch(provider->client,
-+					   provider_disconnect_cb, provider);
-+
-+	g_dbus_client_set_proxy_handlers(provider->client,
-+					 provided_battery_added_cb,
-+					 provided_battery_removed_cb, NULL,
-+					 provider);
-+
-+	return provider;
-+}
-+
-+static void provider_disconnect_cb(DBusConnection *conn, void *user_data)
-+{
-+	struct battery_provider *provider = user_data;
-+	struct btd_battery_provider_manager *manager = provider->manager;
-+
-+	DBG("battery provider client disconnected %s root path %s",
-+	    provider->owner, provider->path);
-+
-+	if (!queue_find(manager->battery_providers, NULL, provider)) {
-+		warn("Disconnection on a non-existing provider %s",
-+		     provider->path);
-+		return;
-+	}
-+
-+	queue_remove(manager->battery_providers, provider);
-+	battery_provider_free(provider);
-+}
-+
-+static DBusMessage *register_battery_provider(DBusConnection *conn,
-+					      DBusMessage *msg, void *user_data)
-+{
-+	struct btd_battery_provider_manager *manager = user_data;
-+	const char *sender = dbus_message_get_sender(msg);
-+	DBusMessageIter args;
-+	const char *path;
-+	struct battery_provider *provider;
-+
-+	if (!dbus_message_iter_init(msg, &args))
-+		return btd_error_invalid_args(msg);
-+
-+	if (dbus_message_iter_get_arg_type(&args) != DBUS_TYPE_OBJECT_PATH)
-+		return btd_error_invalid_args(msg);
-+
-+	dbus_message_iter_get_basic(&args, &path);
-+
-+	DBG("register battery provider path = %s", path);
-+
-+	if (!g_str_has_prefix(path, "/"))
-+		return btd_error_invalid_args(msg);
-+
-+	if (queue_find(manager->battery_providers, match_provider_path, path)) {
-+		return dbus_message_new_error(msg,
-+					      ERROR_INTERFACE ".AlreadyExists",
-+					      "Provider already exists");
-+	}
-+
-+	provider = battery_provider_new(conn, manager, path, sender);
-+	queue_push_head(manager->battery_providers, provider);
-+
-+	return dbus_message_new_method_return(msg);
-+}
-+
-+static DBusMessage *unregister_battery_provider(DBusConnection *conn,
-+						DBusMessage *msg,
-+						void *user_data)
-+{
-+	struct btd_battery_provider_manager *manager = user_data;
-+	const char *sender = dbus_message_get_sender(msg);
-+	DBusMessageIter args;
-+	const char *path;
-+	struct battery_provider *provider;
-+
-+	if (!dbus_message_iter_init(msg, &args))
-+		return btd_error_invalid_args(msg);
-+
-+	if (dbus_message_iter_get_arg_type(&args) != DBUS_TYPE_OBJECT_PATH)
-+		return btd_error_invalid_args(msg);
-+
-+	dbus_message_iter_get_basic(&args, &path);
-+
-+	DBG("unregister battery provider path = %s", path);
-+
-+	provider = queue_find(manager->battery_providers, match_provider_path,
-+			      path);
-+	if (!provider || strcmp(provider->owner, sender) != 0) {
-+		return dbus_message_new_error(msg,
-+					      ERROR_INTERFACE ".DoesNotExist",
-+					      "Provider does not exist");
-+	}
-+
-+	queue_remove(manager->battery_providers, provider);
-+	battery_provider_free(provider);
-+
-+	return dbus_message_new_method_return(msg);
-+}
-+
-+static const GDBusMethodTable methods[] = {
-+	{ GDBUS_EXPERIMENTAL_METHOD("RegisterBatteryProvider",
-+				    GDBUS_ARGS({ "provider", "o" }), NULL,
-+				    register_battery_provider) },
-+	{ GDBUS_EXPERIMENTAL_METHOD("UnregisterBatteryProvider",
-+				    GDBUS_ARGS({ "provider", "o" }), NULL,
-+				    unregister_battery_provider) },
-+	{}
-+};
-+
-+static struct btd_battery_provider_manager *
-+manager_new(struct btd_adapter *adapter)
-+{
-+	struct btd_battery_provider_manager *manager;
-+
-+	DBG("");
-+
-+	manager = new0(struct btd_battery_provider_manager, 1);
-+	manager->adapter = adapter;
-+	manager->battery_providers = queue_new();
-+
-+	return manager;
-+}
-+
-+static void manager_free(struct btd_battery_provider_manager *manager)
-+{
-+	if (!manager)
-+		return;
-+
-+	DBG("");
-+
-+	queue_destroy(manager->battery_providers, battery_provider_free);
-+
-+	free(manager);
-+}
-+
-+struct btd_battery_provider_manager *
-+btd_battery_provider_manager_create(struct btd_adapter *adapter)
-+{
-+	struct btd_battery_provider_manager *manager;
-+
-+	if (!adapter)
-+		return NULL;
-+
-+	manager = manager_new(adapter);
-+	if (!manager)
-+		return NULL;
-+
-+	if (!g_dbus_register_interface(btd_get_dbus_connection(),
-+				       adapter_get_path(manager->adapter),
-+				       BATTERY_PROVIDER_MANAGER_INTERFACE,
-+				       methods, NULL, NULL, manager, NULL)) {
-+		error("error registering " BATTERY_PROVIDER_MANAGER_INTERFACE
-+		      " interface");
-+		manager_free(manager);
-+		return NULL;
-+	}
-+
-+	info("Battery Provider Manager created");
-+
-+	return manager;
-+}
-+
-+void btd_battery_provider_manager_destroy(
-+	struct btd_battery_provider_manager *manager)
-+{
-+	if (!manager)
-+		return;
-+
-+	g_dbus_unregister_interface(btd_get_dbus_connection(),
-+				    adapter_get_path(manager->adapter),
-+				    BATTERY_PROVIDER_MANAGER_INTERFACE);
-+
-+	info("Battery Provider Manager destroyed");
-+
-+	manager_free(manager);
-+}
-diff --git a/src/battery.h b/src/battery.h
-index ff63454cd..271659474 100644
---- a/src/battery.h
-+++ b/src/battery.h
-@@ -8,8 +8,16 @@
-  *
-  */
- 
-+struct btd_adapter;
- struct btd_battery;
-+struct btd_battery_provider_manager;
- 
--struct btd_battery *btd_battery_register(const char *path, const char *source);
-+struct btd_battery *btd_battery_register(const char *path, const char *source,
-+					 const char *provider_path);
- bool btd_battery_unregister(struct btd_battery *battery);
- bool btd_battery_update(struct btd_battery *battery, uint8_t percentage);
-+
-+struct btd_battery_provider_manager *
-+btd_battery_provider_manager_create(struct btd_adapter *adapter);
-+void btd_battery_provider_manager_destroy(
-+	struct btd_battery_provider_manager *manager);
--- 
-2.26.2
-
+On Mon, Nov 30, 2020 at 1:28 PM Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
+>
+> Hi Sonny,
+>
+> On Mon, Nov 30, 2020 at 12:09 PM Sonny Sasaka <sonnysasaka@chromium.org> wrote:
+> >
+> > This patch add the documentation of the Battery Provider which lets
+> > external clients feed battery information to BlueZ if they are able to
+> > decode battery reporting via any profile. BlueZ UI clients can then use
+> > the org.bluez.Battery1 API as a single source of battery information
+> > coming from many different profiles.
+> >
+> > Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+> >
+> > ---
+> >  doc/battery-api.txt | 55 +++++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 55 insertions(+)
+> >
+> > diff --git a/doc/battery-api.txt b/doc/battery-api.txt
+> > index dc7dbeda2..9a6b4fd39 100644
+> > --- a/doc/battery-api.txt
+> > +++ b/doc/battery-api.txt
+> > @@ -12,3 +12,58 @@ Object path  [variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
+> >  Properties     byte Percentage [readonly]
+> >
+> >                         The percentage of battery left as an unsigned 8-bit integer.
+> > +
+> > +               string Source [readonly, optional, experimental]
+> > +
+> > +                       Describes where the battery information comes from
+> > +                       This property is informational only and may be useful
+> > +                       for debugging purposes.
+> > +                       Providers from BatteryProvider1 may make use of this
+> > +                       property to indicate where the battery report comes from
+> > +                       (e.g. "HFP 1.7", "HID", or the profile UUID).
+>
+> It seems you didn't address my concern related to use of friendly
+> names and version numbers here, although this is just an example. I'd
+> suggest we only accept UUIDs.
+I revised the patch. Please take another look.
+>
+> > +
+> > +
+> > +Battery Provider Manager hierarchy
+> > +==================================
+> > +A battery provider starts by registering itself as a battery provider with the
+> > +RegisterBatteryProvider method passing an object path as the provider ID. Then,
+> > +it can start exposing org.bluez.BatteryProvider1 objects having the path
+> > +starting with the given provider ID. It can also remove objects at any time.
+> > +The objects and their properties exposed by battery providers will be reflected
+> > +on org.bluez.Battery1 interface.
+> > +
+> > +BlueZ will stop monitoring these exposed and removed objects after
+> > +UnregisterBatteryProvider is called for that provider ID.
+> > +
+> > +Service                org.bluez
+> > +Interface      org.bluez.BatteryProviderManager1 [experimental]
+> > +Object path    /org/bluez/{hci0,hci1,...}
+> > +
+> > +Methods                void RegisterBatteryProvider(object provider)
+> > +
+> > +                       This registers a battery provider. A registered
+> > +                       battery provider can then expose objects with
+> > +                       org.bluez.BatteryProvider1 interface described below.
+> > +
+> > +               void UnregisterBatteryProvider(object provider)
+> > +
+> > +                       This unregisters a battery provider. After
+> > +                       unregistration, the BatteryProvider1 objects provided
+> > +                       by this client are ignored by BlueZ.
+> > +
+> > +
+> > +Battery Provider hierarchy
+> > +==========================
+> > +
+> > +Service                <client D-Bus address>
+> > +Interface      org.bluez.BatteryProvider1 [experimental]
+> > +Object path    {provider_root}/{unique battery object path}
+> > +
+> > +Properties     Objects provided on this interface contain the same properties
+> > +               as org.bluez.Battery1 interface. Additionally, this interface
+> > +               needs to have the Device property indicating the object path
+> > +               of the device this battery provides.
+> > +
+> > +               object Device [readonly]
+> > +
+> > +                       The object path of the device that has this battery.
+> > --
+> > 2.26.2
+> >
+>
+>
+> --
+> Luiz Augusto von Dentz
