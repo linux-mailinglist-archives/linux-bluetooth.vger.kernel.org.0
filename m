@@ -2,132 +2,136 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A6142C913B
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Nov 2020 23:36:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 46C922C91CC
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Dec 2020 00:01:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730838AbgK3Wfe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Nov 2020 17:35:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38678 "EHLO
+        id S2388773AbgK3W6w (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Nov 2020 17:58:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730753AbgK3Wfd (ORCPT
+        with ESMTP id S2388705AbgK3W6w (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Nov 2020 17:35:33 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB1FC0613CF
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 14:34:53 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id b144so12504232qkc.13
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 14:34:53 -0800 (PST)
+        Mon, 30 Nov 2020 17:58:52 -0500
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5010AC061A48
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 14:57:51 -0800 (PST)
+Received: by mail-qt1-x84a.google.com with SMTP id f29so7713459qtv.23
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 14:57:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=zd3JtJgA8CxKtxrkxH4JvjXXQSZXjnIrXgDE4Kv6b2Y=;
-        b=tX4MixU/Mj8/yZNoAgLceESS9CVjKI/bdnZ/6kZ2xoQgzi8KlCdft3BBtVbom1n1Qo
-         HinLq9Vp775MnvlIcJS/52+AugRkRJ6HvHBJCS870Aa7nlknk+4jNgidOc7OBLUVTF1z
-         FNNRoIJJM+0iHNR1Uqlzw8xXwFpKfRmP3KAMC1yOmolZ88NbEQBrgpW0JRK3T4o0YKsF
-         9PRUcFAQqFzGYEozNhaSr3cIblCapEoj6IRXHpUIqbTHpUo5zkXp8eXXj+7QVdGWqyIf
-         QqwfpUCyRuZUhtYmzp2ODbA9mmbkJztUAWxDJCvbsKnWB1NsJiRNhIIGf4ojfP7q5XVu
-         AKxw==
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=Dy6XabYltzDFFz13ChKYqu9T0LvhtUKRAOX7IwyjQ7E=;
+        b=dEc5VvYi5t+NBouAT/ZIGYMPddy8e3Yra8lkPDcyvSZ55Ml9hS3zvkynvCqSstBTfM
+         Bbc8CoLSfd0I9i/UpAZ9T9xUIvMpnEgKUsJbkSjDkAMC87QVrPDQ3vmgdQJrOzGE5iJe
+         tIJXIiLdE6SL+tFD+GLUKW9lXLrCiHSR+cBHerY3jMbmQo06ynOSLzUJ83Lre4ni0DFx
+         4Dzh9c64K26+7KJmkmJmMWY92x2Gf9yJiFVynBYPXmAv+oresiLxFn4FVSjewzVW5kZN
+         O3XhQ/DokyrqDpeJ67Nf2z8hIWxPfdJ3hHSAXwzCOqlRfdkdHWtUoxLHduAwENnj1t39
+         HdSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=zd3JtJgA8CxKtxrkxH4JvjXXQSZXjnIrXgDE4Kv6b2Y=;
-        b=tBbhTe3wg0RgoJCxwnUR+k+YZaMx8QLHYeQj7EjxFljoJO0QTmCTdjV79AMJ3ZA61H
-         ZDsAeLpvmxU9bSEOR5nKv6YEPBYgl4t5z1vLgSfY5IOHeeaFK3cVZB8RfmFfVkNSBSdD
-         7KBFu0sk7E3Qg+pnqlhRFg6YmAum7qBUQsfCWRAiAXWJY+EOXBcdL/1jCDjE5OkMg/ay
-         pgM+cEgYIE/JNJP63MiSudfpqVyH9NjwackR0WeQEtePHrhvJoDJ6oQwGv3TnaZHb7ME
-         tV21z3dhf5ALJA/w2GvKa5J7ulwmHZ03XOrIski3xgtv+9/1+i2Pi+Euvp1+i63R3JtN
-         ZGFA==
-X-Gm-Message-State: AOAM532uVWJk3dWI77/VZ1C7EA3MobjGXVnV1EW83XlJOhY6vlpMgGpM
-        c4i29yvqH8ZHAtysHC799Sv0g13dsYX+IA==
-X-Google-Smtp-Source: ABdhPJyz9YTPtvEBbBuyAHuNj3ssCU7VoTKsWWLNllqcsRSQR9QUPhekn7fzOqZ60zpO0cDAJiSxoQ==
-X-Received: by 2002:a05:620a:1435:: with SMTP id k21mr11710758qkj.375.1606775692576;
-        Mon, 30 Nov 2020 14:34:52 -0800 (PST)
-Received: from [172.17.0.2] ([20.186.96.76])
-        by smtp.gmail.com with ESMTPSA id d16sm17305119qkc.58.2020.11.30.14.34.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Nov 2020 14:34:52 -0800 (PST)
-Message-ID: <5fc5738c.1c69fb81.8e7df.5ba8@mx.google.com>
-Date:   Mon, 30 Nov 2020 14:34:52 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============0118614685827081986=="
-MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, sonnysasaka@chromium.org
-Subject: RE: [BlueZ,v5,1/7] battery: Add the internal Battery API
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20201130215602.386545-1-sonnysasaka@chromium.org>
-References: <20201130215602.386545-1-sonnysasaka@chromium.org>
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=Dy6XabYltzDFFz13ChKYqu9T0LvhtUKRAOX7IwyjQ7E=;
+        b=XlTMHXhc72e/Q+BS+QfjJG2v4fWEspoUJDmvc4UTSw+Y5Tc6JZDLJuigcZRz6Gdy+I
+         Pmg5f3Oxe+dUDit+huBd0cYEIAQHiEARO/Y2jMso6biY0z3dVbXfHsTXfdOO7iNMDBsV
+         iQuV0c8EPqzJeF2k1HvV+vLbvEnRlWHtkUuTozZPZccxhFCpRwFa7jNR/JqIW+ELqm8U
+         4gKMIUad0Co0Pnr1NEAxrDs5I13B41tt4j14+ZEq5XGLBRcwwGZThiU+txwsfBk8o6hJ
+         QH5xM0207O5t58zTXDyoSK0AqDzaCICIY/mfKqnMrjlBbRBqz4CYCS62mR+9Ct408xKj
+         7bUQ==
+X-Gm-Message-State: AOAM532+Wof7+H/YQOdwGwNLnHnmGWw5AWJwNdCFDlPllEU0FL/zYNgN
+        jkv44MvU1HL91FkXdq2up7AABZzvk6/fHdT8VVFU
+X-Google-Smtp-Source: ABdhPJy2dRmE6ae2DjfLyY8TSQlOGUXwrHCtfVYT2ZRwseNezxmF6I88pISzuaNxMRG4fBOFOpban8s1hk02ftjKQxLV
+Sender: "danielwinkler via sendgmr" 
+        <danielwinkler@danielwinkler-linux.mtv.corp.google.com>
+X-Received: from danielwinkler-linux.mtv.corp.google.com ([2620:15c:202:201:f693:9fff:fef4:4e59])
+ (user=danielwinkler job=sendgmr) by 2002:a0c:be02:: with SMTP id
+ k2mr25630951qvg.49.1606777070464; Mon, 30 Nov 2020 14:57:50 -0800 (PST)
+Date:   Mon, 30 Nov 2020 14:57:39 -0800
+Message-Id: <20201130225744.3793244-1-danielwinkler@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
+Subject: [PATCH v6 0/5] Bluetooth: Add new MGMT interface for advertising add
+From:   Daniel Winkler <danielwinkler@google.com>
+To:     marcel@holtmann.org
+Cc:     linux-bluetooth@vger.kernel.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        Daniel Winkler <danielwinkler@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0118614685827081986==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hi Maintainers,
 
-This is automated email and please do not reply to this email!
+This patch series defines the new two-call MGMT interface for adding
+new advertising instances. Similarly to the hci advertising commands, a
+mgmt call to set parameters is expected to be first, followed by a mgmt
+call to set advertising data/scan response. The members of the
+parameters request are optional; the caller defines a "params" bitfield
+in the structure that indicates which parameters were intentionally set,
+and others are set to defaults.
 
-Dear submitter,
+The main feature here is the introduction of min/max parameters and tx
+power that can be requested by the client. Min/max parameters will be
+used both with and without extended advertising support, and tx power
+will be used with extended advertising support. After a call to set
+advertising parameters, the selected transmission power will be
+propagated in the reponse to alert userspace to the actual power used.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=393559
+Additionally, to inform userspace of the controller LE Tx power
+capabilities for the client's benefit, this series also changes the
+security info MGMT command to more flexibly contain other capabilities,
+such as LE min and max tx power.
 
----Test result---
+All changes have been tested on hatch (extended advertising) and kukui
+(no extended advertising) chromebooks with manual testing verifying
+correctness of parameters/data in btmon traces, and our automated test
+suite of 25 single- and multi-advertising usage scenarios.
 
-##############################
-Test: CheckPatch - FAIL
-Output:
-battery: Add the internal Battery API
-ERROR:INITIALISED_STATIC: do not initialise statics to NULL
-#71: FILE: src/battery.c:38:
-+static struct queue *batteries = NULL;
+A separate patch series will add support in bluetoothd. Thanks in
+advance for your feedback!
 
-- total: 1 errors, 0 warnings, 215 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-"[PATCH] battery: Add the internal Battery API" has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-test: Add test app for Battery Provider API
-ERROR:EXECUTE_PERMISSIONS: do not set execute permissions for source files
-#12: FILE: test/example-battery-provider
-
-- total: 1 errors, 0 warnings, 232 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-"[PATCH] test: Add test app for Battery Provider API" has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+Daniel Winkler
 
 
-##############################
-Test: CheckGitLint - PASS
+Changes in v6:
+- Only populate LE tx power range if controller reports it
 
-##############################
-Test: CheckBuild - PASS
+Changes in v5:
+- Ensure data/scan rsp length is returned for non-ext adv
 
-##############################
-Test: MakeCheck - PASS
+Changes in v4:
+- Add remaining data and scan response length to MGMT params response
+- Moving optional params into 'flags' field of MGMT command
+- Combine LE tx range into a single EIR field for MGMT capabilities cmd
 
+Changes in v3:
+- Adding selected tx power to adv params mgmt response, removing event
+- Re-using security info MGMT command to carry controller capabilities
 
+Changes in v2:
+- Fixed sparse error in Capabilities MGMT command
 
----
-Regards,
-Linux Bluetooth
+Daniel Winkler (5):
+  Bluetooth: Add helper to set adv data
+  Bluetooth: Break add adv into two mgmt commands
+  Bluetooth: Use intervals and tx power from mgmt cmds
+  Bluetooth: Query LE tx power on startup
+  Bluetooth: Change MGMT security info CMD to be more generic
 
+ include/net/bluetooth/hci.h      |   7 +
+ include/net/bluetooth/hci_core.h |  12 +-
+ include/net/bluetooth/mgmt.h     |  49 +++-
+ net/bluetooth/hci_core.c         |  47 +++-
+ net/bluetooth/hci_event.c        |  19 ++
+ net/bluetooth/hci_request.c      |  29 ++-
+ net/bluetooth/mgmt.c             | 430 +++++++++++++++++++++++++++++--
+ 7 files changed, 548 insertions(+), 45 deletions(-)
 
---===============0118614685827081986==--
+-- 
+2.29.2.454.gaff20da3a2-goog
+
