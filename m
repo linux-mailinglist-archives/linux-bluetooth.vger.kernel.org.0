@@ -2,56 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CC2F2C9050
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Nov 2020 22:57:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15D232C9054
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Nov 2020 22:57:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730177AbgK3V46 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Nov 2020 16:56:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60928 "EHLO
+        id S1730292AbgK3V5F (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Nov 2020 16:57:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728372AbgK3V46 (ORCPT
+        with ESMTP id S1728372AbgK3V5F (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Nov 2020 16:56:58 -0500
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06027C0613D2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:18 -0800 (PST)
-Received: by mail-pl1-x644.google.com with SMTP id b23so7253684pls.11
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:18 -0800 (PST)
+        Mon, 30 Nov 2020 16:57:05 -0500
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A1AEC0613D3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:19 -0800 (PST)
+Received: by mail-pf1-x443.google.com with SMTP id s21so11279678pfu.13
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Nov 2020 13:56:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FTvIzX7GCozO99X7SEFRSY0nTaCgNWs0wH/hjeI4kek=;
-        b=AC36CpPCi6wHm4Vt2I0+P1+I073aplIcuATbV3ROkK/y5tOUcRyKFqHzD5KQYbzxWS
-         5UbnoesDAskOgeCsOtIb8IPDFRYrh6LBs0nmNKUf55yAc+rMA5VVsAZfg9EtXjyKhT/i
-         TLA7ANk6TWtoMkh5UlrV8SXKHPAXH6tHLk2oY=
+        bh=qnjOyIqD02WVy6ZZ2x5bkuCTpr4hjumX5jR/HYlXCOk=;
+        b=AjeQGU+yh9dqL5kRg77EWgVXuxgKBpG1K7fWSJ+XWn2ITqpP/Zjny2emEQwDeFXEYP
+         W+dxJKgwuVmT0kczHU/xHWdr7h1tZM5kUkJY3tV1po+d0hFYGTqli7EP6SlmrvDHM5Lr
+         CQmisVfh+Y+vrv6FAjE8Y4Lrey2qT96RnZ71o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FTvIzX7GCozO99X7SEFRSY0nTaCgNWs0wH/hjeI4kek=;
-        b=mkpb/PiHtJJmvyzbD4noxCSr5xMZOhdI34fcywGr2tDqCEVXkVk+rPFY0c2BEL1gTP
-         iqKLAyjJaVrnoAw+DDMUeqbiaaUbnZjlzVD/7d3Ih1YRziMWPifGonie8t7w20ANp7lO
-         PlgfdhbPwxD0c6Q0FWTvVV5k3gCb0qDnyOzViyGiuMCYiZVlbBUOUjQBLESxSDKH1m/L
-         PlUwhxcJBHFkA+z58qnxAKbw6ly/WmYXZpzDk1H5A4J6t5TTewP3NZJ/zy3KXnVYgNLb
-         l95hUp2SFG3y4EkSWc4zpPsPd6aFNzqyniitma2Y3sU/iDGYpsbD0VHcMjjT8eu4K0ME
-         DzXA==
-X-Gm-Message-State: AOAM5326qvmTzxvS6gopiN4tTUf1tYu3u20TuMYTuQ4w0LsHY39UD32w
-        DiLVPrVyF+eknqqSxZ/RuxPHzSRagquEXg==
-X-Google-Smtp-Source: ABdhPJxtnmZpMv6zkXuft7WyDBZTjWs+XdNxx6rX0imgHttcvcZP+N0Qa2BciVEEGBkovOQxk1GHog==
-X-Received: by 2002:a17:90a:4dc8:: with SMTP id r8mr982249pjl.1.1606773377249;
-        Mon, 30 Nov 2020 13:56:17 -0800 (PST)
+        bh=qnjOyIqD02WVy6ZZ2x5bkuCTpr4hjumX5jR/HYlXCOk=;
+        b=Zbwv+b32U4ZxJZg5i2kIcq68dMNMckiPERPwzCB5aKfES+5vJ4Q5HXZR8RTlpzoS1s
+         9OwRERbJHmurcdA6EmsFNmnoUTeNISXiDITVw4HCMBFYfXD/InzNUkZeWNvLamrL1jvI
+         IcX3o1ewwY1meRzHu3OBd9wAWuLogT/wbrXVZjozpW0JBGJNB+RDo3M4yr9ckY+77zw5
+         Mati2IgvRHLU2h+p5cYxpYoOHTQ6m3KpKlagb0NICXatz3jm7Q4vZdHK/8q4prz6mX0E
+         Uzz2/w2NuCup9pen1L4o7eh/GDOmYEH9kUt7cZIpsAbZajvxmhnwKj8fwIlBbkL3xbCJ
+         nEFw==
+X-Gm-Message-State: AOAM531kVwds+x/myDnlKs8c2IVYMTOT0BNowt8yglZzADxosY1UbLCL
+        LNCMBCerMKwFuk4rcP5Sa5QZlwI7JyiivQ==
+X-Google-Smtp-Source: ABdhPJy1SDSh9IRwmAcDOg8NWJr5DeIzOJkO5Ef9PVDMWfP3yHVhqhEvBQPzxnWCxJP8Isv7gyT7XA==
+X-Received: by 2002:aa7:972b:0:b029:18b:89f:df0 with SMTP id k11-20020aa7972b0000b029018b089f0df0mr11446069pfg.39.1606773378455;
+        Mon, 30 Nov 2020 13:56:18 -0800 (PST)
 Received: from sonnysasaka-chrome.mtv.corp.google.com ([2620:15c:202:201:4a0f:cfff:fe66:e60c])
-        by smtp.gmail.com with ESMTPSA id 23sm17476588pfx.210.2020.11.30.13.56.15
+        by smtp.gmail.com with ESMTPSA id 23sm17476588pfx.210.2020.11.30.13.56.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Nov 2020 13:56:16 -0800 (PST)
+        Mon, 30 Nov 2020 13:56:17 -0800 (PST)
 From:   Sonny Sasaka <sonnysasaka@chromium.org>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Sonny Sasaka <sonnysasaka@chromium.org>,
-        Daniel Winkler <danielwinkler@google.com>
-Subject: [PATCH BlueZ v5 2/7] profiles/battery: Refactor to use battery library
-Date:   Mon, 30 Nov 2020 13:55:57 -0800
-Message-Id: <20201130215602.386545-2-sonnysasaka@chromium.org>
+        Miao-chen Chou <mcchou@chromium.org>
+Subject: [PATCH BlueZ v5 3/7] battery: Add Source property to Battery API
+Date:   Mon, 30 Nov 2020 13:55:58 -0800
+Message-Id: <20201130215602.386545-3-sonnysasaka@chromium.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201130215602.386545-1-sonnysasaka@chromium.org>
 References: <20201130215602.386545-1-sonnysasaka@chromium.org>
@@ -61,139 +61,130 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This refactors profiles/battery to use the internal battery library that
-handles the D-Bus intricacies so that profiles/battery only handles the
-GATT BAS concerns.
+As Battery API will be generalized for other battery reporting
+protocols, the Source property is useful for diagnostics purposes.
 
-Reviewed-by: Daniel Winkler <danielwinkler@google.com>
+Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 
 ---
- profiles/battery/battery.c | 51 +++++++++++---------------------------
- 1 file changed, 15 insertions(+), 36 deletions(-)
+ profiles/battery/battery.c |  3 ++-
+ src/battery.c              | 35 +++++++++++++++++++++++++++++++----
+ src/battery.h              |  2 +-
+ 3 files changed, 34 insertions(+), 6 deletions(-)
 
 diff --git a/profiles/battery/battery.c b/profiles/battery/battery.c
-index 13c80d05c..e1a61dd0b 100644
+index e1a61dd0b..2478816a4 100644
 --- a/profiles/battery/battery.c
 +++ b/profiles/battery/battery.c
-@@ -23,14 +23,11 @@
- 
- #include <glib.h>
- 
--#include "gdbus/gdbus.h"
--
- #include "lib/bluetooth.h"
- #include "lib/hci.h"
- #include "lib/sdp.h"
- #include "lib/uuid.h"
- 
--#include "src/dbus-common.h"
- #include "src/shared/util.h"
- #include "src/shared/att.h"
- #include "src/shared/queue.h"
-@@ -42,6 +39,7 @@
- #include "src/profile.h"
- #include "src/service.h"
- #include "src/log.h"
-+#include "src/battery.h"
- #include "attrib/att.h"
- 
- #define BATTERY_INTERFACE "org.bluez.Battery1"
-@@ -50,7 +48,7 @@
- 
- /* Generic Attribute/Access Service */
- struct batt {
--	char *path; /* D-Bus path of device */
-+	struct btd_battery *battery;
- 	struct btd_device *device;
- 	struct gatt_db *db;
- 	struct bt_gatt_client *client;
-@@ -69,6 +67,8 @@ static void batt_free(struct batt *batt)
- 	bt_gatt_client_unref(batt->client);
- 	btd_device_unref(batt->device);
- 	g_free (batt->initial_value);
-+	if (batt->battery)
-+		btd_battery_unregister(batt->battery);
- 	g_free(batt);
- }
- 
-@@ -81,11 +81,9 @@ static void batt_reset(struct batt *batt)
- 	batt->client = NULL;
- 	g_free (batt->initial_value);
- 	batt->initial_value = NULL;
--	if (batt->path) {
--		g_dbus_unregister_interface(btd_get_dbus_connection(),
--					    batt->path, BATTERY_INTERFACE);
--		g_free(batt->path);
--		batt->path = NULL;
-+	if (batt->battery) {
-+		btd_battery_unregister(batt->battery);
-+		batt->battery = NULL;
- 	}
- }
- 
-@@ -98,8 +96,11 @@ static void parse_battery_level(struct batt *batt,
- 	if (batt->percentage != percentage) {
- 		batt->percentage = percentage;
- 		DBG("Battery Level updated: %d%%", percentage);
--		g_dbus_emit_property_changed(btd_get_dbus_connection(), batt->path,
--						BATTERY_INTERFACE, "Percentage");
-+		if (!batt->battery) {
-+			warn("Trying to update an unregistered battery");
-+			return;
-+		}
-+		btd_battery_update(batt->battery, batt->percentage);
- 	}
- }
- 
-@@ -115,22 +116,6 @@ static void batt_io_value_cb(uint16_t value_handle, const uint8_t *value,
- 	}
- }
- 
--static gboolean property_get_percentage(
--					const GDBusPropertyTable *property,
--					DBusMessageIter *iter, void *data)
--{
--	struct batt *batt = data;
--
--	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE, &batt->percentage);
--
--	return TRUE;
--}
--
--static const GDBusPropertyTable battery_properties[] = {
--	{ "Percentage", "y", property_get_percentage },
--	{ }
--};
--
- static void batt_io_ccc_written_cb(uint16_t att_ecode, void *user_data)
- {
- 	struct batt *batt = user_data;
-@@ -141,13 +126,9 @@ static void batt_io_ccc_written_cb(uint16_t att_ecode, void *user_data)
+@@ -126,7 +126,8 @@ static void batt_io_ccc_written_cb(uint16_t att_ecode, void *user_data)
  		return;
  	}
  
--	if (g_dbus_register_interface(btd_get_dbus_connection(),
--					batt->path, BATTERY_INTERFACE,
--					NULL, NULL,
--					battery_properties, batt,
--					NULL) == FALSE) {
--		error("Unable to register %s interface for %s",
--			BATTERY_INTERFACE, batt->path);
-+	batt->battery = btd_battery_register(device_get_path(batt->device));
-+
-+	if (!batt->battery) {
+-	batt->battery = btd_battery_register(device_get_path(batt->device));
++	batt->battery = btd_battery_register(device_get_path(batt->device),
++					     "GATT Battery Service");
+ 
+ 	if (!batt->battery) {
  		batt_reset(batt);
- 		return;
- 	}
-@@ -321,8 +302,6 @@ static int batt_accept(struct btd_service *service)
- 		return -1;
+diff --git a/src/battery.c b/src/battery.c
+index 87a6b91fb..8613d6e23 100644
+--- a/src/battery.c
++++ b/src/battery.c
+@@ -31,8 +31,9 @@
+ #define BATTERY_MAX_PERCENTAGE 100
+ 
+ struct btd_battery {
+-	char *path; /* D-Bus object path, owns pointer */
++	char *path; /* D-Bus object path */
+ 	uint8_t percentage; /* valid between 0 to 100 inclusively */
++	char *source; /* Descriptive source of the battery info */
+ };
+ 
+ static struct queue *batteries = NULL;
+@@ -62,13 +63,15 @@ static bool match_path(const void *data, const void *user_data)
+ 	return g_strcmp0(battery->path, path) == 0;
+ }
+ 
+-static struct btd_battery *battery_new(const char *path)
++static struct btd_battery *battery_new(const char *path, const char *source)
+ {
+ 	struct btd_battery *battery;
+ 
+ 	battery = new0(struct btd_battery, 1);
+ 	battery->path = g_strdup(path);
+ 	battery->percentage = UINT8_MAX;
++	if (source)
++		battery->source = g_strdup(source);
+ 
+ 	return battery;
+ }
+@@ -78,6 +81,9 @@ static void battery_free(struct btd_battery *battery)
+ 	if (battery->path)
+ 		g_free(battery->path);
+ 
++	if (battery->source)
++		g_free(battery->source);
++
+ 	free(battery);
+ }
+ 
+@@ -100,13 +106,34 @@ static gboolean property_percentage_exists(const GDBusPropertyTable *property,
+ 	return battery->percentage <= BATTERY_MAX_PERCENTAGE;
+ }
+ 
++static gboolean property_source_get(const GDBusPropertyTable *property,
++				    DBusMessageIter *iter, void *data)
++{
++	struct btd_battery *battery = data;
++
++	dbus_message_iter_append_basic(iter, DBUS_TYPE_STRING,
++				       &battery->source);
++
++	return TRUE;
++}
++
++static gboolean property_source_exists(const GDBusPropertyTable *property,
++				       void *data)
++{
++	struct btd_battery *battery = data;
++
++	return battery->source != NULL;
++}
++
+ static const GDBusPropertyTable battery_properties[] = {
+ 	{ "Percentage", "y", property_percentage_get, NULL,
+ 	  property_percentage_exists },
++	{ "Source", "s", property_source_get, NULL, property_source_exists,
++	  G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
+ 	{}
+ };
+ 
+-struct btd_battery *btd_battery_register(const char *path)
++struct btd_battery *btd_battery_register(const char *path, const char *source)
+ {
+ 	struct btd_battery *battery;
+ 
+@@ -122,7 +149,7 @@ struct btd_battery *btd_battery_register(const char *path)
+ 		return NULL;
  	}
  
--	batt->path = g_strdup (device_get_path(device));
--
- 	btd_service_connecting_complete(service, 0);
+-	battery = battery_new(path);
++	battery = battery_new(path, source);
+ 	battery_add(battery);
  
- 	return 0;
+ 	if (!g_dbus_register_interface(btd_get_dbus_connection(), battery->path,
+diff --git a/src/battery.h b/src/battery.h
+index 9c69b7afa..ff63454cd 100644
+--- a/src/battery.h
++++ b/src/battery.h
+@@ -10,6 +10,6 @@
+ 
+ struct btd_battery;
+ 
+-struct btd_battery *btd_battery_register(const char *path);
++struct btd_battery *btd_battery_register(const char *path, const char *source);
+ bool btd_battery_unregister(struct btd_battery *battery);
+ bool btd_battery_update(struct btd_battery *battery, uint8_t percentage);
 -- 
 2.26.2
 
