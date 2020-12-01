@@ -2,154 +2,139 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2763C2C9F43
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Dec 2020 11:33:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D4052CA836
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Dec 2020 17:27:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729909AbgLAKbF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 1 Dec 2020 05:31:05 -0500
-Received: from mail-il1-f200.google.com ([209.85.166.200]:50323 "EHLO
-        mail-il1-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726908AbgLAKbF (ORCPT
+        id S1726634AbgLAQ0E (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 1 Dec 2020 11:26:04 -0500
+Received: from relay2-d.mail.gandi.net ([217.70.183.194]:57179 "EHLO
+        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725979AbgLAQ0D (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 1 Dec 2020 05:31:05 -0500
-Received: by mail-il1-f200.google.com with SMTP id f66so1030002ilh.17
-        for <linux-bluetooth@vger.kernel.org>; Tue, 01 Dec 2020 02:30:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=d7M+NKlCF9pjVVnPz94y4zGxYLT2FaaBIfAbvboyFIc=;
-        b=oNX9QXj/4YIB3VwvISNFGMqX/TqbJ1nELnaoMM2r4LtosOgasAjuaKu5cU/lvkpaBr
-         i3947Q6qtXOZwI7f0LpkZThFdUJGn3PGx5xBRmFBw+AoQ5JT1AWwU+8XKprtX8kUkLS6
-         nz8Q4RQbkdV8jb8obUuXDX4MP/TPZ+adMvaNWRX3TZgO6m+evUyJ+S7x7cJA3OjJtze5
-         enIgGWLNE5mABCnCjvNQ+4XCOPSTdB/jx6jzJ+c7EVufFDB/BTKoYCMH7Yqz5bUvfm6/
-         fc8r2pgbEPznKMfE5o5HlQzS97gCKRCXi3P5Ctse6vgRxr/5lhwl58MsGT+zYU4HwX5b
-         eUew==
-X-Gm-Message-State: AOAM531ZU2uVbk/un+IjpgEoVJj2CtL6QTQlL9IoqFLp+KQIuGKOhbuV
-        2bn0l/D0vS8dg+Ih39abKvKlRihXJrKRB0VPQM1wBC+TmKDQ
-X-Google-Smtp-Source: ABdhPJwZTAyP00p2Op4WegyA8Tipw+xnSzukaJVz/NM4Lbdv4XET1Vlhx/hRAmqvRRfs1mPIQJOruL60VUaL/GCu942CmdVZjT88
-MIME-Version: 1.0
-X-Received: by 2002:a5d:9942:: with SMTP id v2mr1782431ios.78.1606818618093;
- Tue, 01 Dec 2020 02:30:18 -0800 (PST)
-Date:   Tue, 01 Dec 2020 02:30:18 -0800
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000f335f205b5649c70@google.com>
-Subject: KASAN: out-of-bounds Read in lock_sock_nested
-From:   syzbot <syzbot+664818c59309176d03ee@syzkaller.appspotmail.com>
-To:     davem@davemloft.net, johan.hedberg@gmail.com, kuba@kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marcel@holtmann.org, netdev@vger.kernel.org,
-        syzkaller-bugs@googlegroups.com
+        Tue, 1 Dec 2020 11:26:03 -0500
+X-Originating-IP: 82.255.60.242
+Received: from [192.168.0.28] (lns-bzn-39-82-255-60-242.adsl.proxad.net [82.255.60.242])
+        (Authenticated sender: hadess@hadess.net)
+        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 52CC140004;
+        Tue,  1 Dec 2020 16:25:21 +0000 (UTC)
+Message-ID: <e82cef2e672e9b7f413341264f82d90c3c268cf3.camel@hadess.net>
+Subject: Re: [PATCH BlueZ v5 4/7] doc: Add Battery Provider API doc
+From:   Bastien Nocera <hadess@hadess.net>
+To:     Sonny Sasaka <sonnysasaka@chromium.org>,
+        linux-bluetooth@vger.kernel.org
+Cc:     Miao-chen Chou <mcchou@chromium.org>
+Date:   Tue, 01 Dec 2020 17:25:20 +0100
+In-Reply-To: <20201130215602.386545-4-sonnysasaka@chromium.org>
+References: <20201130215602.386545-1-sonnysasaka@chromium.org>
+         <20201130215602.386545-4-sonnysasaka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.1 (3.38.1-1.fc33) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+On Mon, 2020-11-30 at 13:55 -0800, Sonny Sasaka wrote:
+> This patch add the documentation of the Battery Provider which lets
+> external clients feed battery information to BlueZ if they are able
+> to
+> decode battery reporting via any profile. BlueZ UI clients can then
+> use
+> the org.bluez.Battery1 API as a single source of battery information
+> coming from many different profiles.
+> 
+> Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+> 
+> ---
+>  doc/battery-api.txt | 55
+> +++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
+> 
+> diff --git a/doc/battery-api.txt b/doc/battery-api.txt
+> index dc7dbeda2..9a6b4fd39 100644
+> --- a/doc/battery-api.txt
+> +++ b/doc/battery-api.txt
+> @@ -12,3 +12,58 @@ Object path  [variable
+> prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
+>  Properties     byte Percentage [readonly]
+>  
+>                         The percentage of battery left as an unsigned
+> 8-bit integer.
+> +
+> +               string Source [readonly, optional, experimental]
+> +
+> +                       Describes where the battery information comes
+> from
+> +                       This property is informational only and may
+> be useful
+> +                       for debugging purposes.
+> +                       Providers from BatteryProvider1 may make use
+> of this
+> +                       property to indicate where the battery report
+> comes from
+> +                       (e.g. "HFP 1.7", "HID", or the profile UUID).
+> +
+> +
+> +Battery Provider Manager hierarchy
+> +==================================
+> +A battery provider starts by registering itself as a battery
+> provider with the
+> +RegisterBatteryProvider method passing an object path as the
+> provider ID. Then,
+> +it can start exposing org.bluez.BatteryProvider1 objects having the
+> path
+> +starting with the given provider ID. It can also remove objects at
+> any time.
+> +The objects and their properties exposed by battery providers will
+> be reflected
+> +on org.bluez.Battery1 interface.
+> +
+> +BlueZ will stop monitoring these exposed and removed objects after
+> +UnregisterBatteryProvider is called for that provider ID.
+> +
+> +Service                org.bluez
+> +Interface      org.bluez.BatteryProviderManager1 [experimental]
+> +Object path    /org/bluez/{hci0,hci1,...}
+> +
+> +Methods                void RegisterBatteryProvider(object provider)
+> +
+> +                       This registers a battery provider. A
+> registered
+> +                       battery provider can then expose objects with
+> +                       org.bluez.BatteryProvider1 interface
+> described below.
+> +
+> +               void UnregisterBatteryProvider(object provider)
+> +
+> +                       This unregisters a battery provider. After
+> +                       unregistration, the BatteryProvider1 objects
+> provided
+> +                       by this client are ignored by BlueZ.
+> +
+> +
+> +Battery Provider hierarchy
+> +==========================
+> +
+> +Service                <client D-Bus address>
+> +Interface      org.bluez.BatteryProvider1 [experimental]
+> +Object path    {provider_root}/{unique battery object path}
+> +
+> +Properties     Objects provided on this interface contain the same properties
+> +               as org.bluez.Battery1 interface. Additionally, this interface
+> +               needs to have the Device property indicating the object path
+> +               of the device this battery provides.
 
-syzbot found the following issue on:
+"this interface needs to have a Device property indicating the object
+path this battery information pertains to."
+or
+"this interface needs to have a Device property indicating the object
+path the battery information is provided for."
 
-HEAD commit:    fb3158ea Merge branch 'add-chacha20-poly1305-cipher-to-ker..
-git tree:       net-next
-console output: https://syzkaller.appspot.com/x/log.txt?x=159594e9500000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=df65150a33f23d8c
-dashboard link: https://syzkaller.appspot.com/bug?extid=664818c59309176d03ee
-compiler:       gcc (GCC) 10.1.0-syz 20200507
-
-Unfortunately, I don't have any reproducer for this issue yet.
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+664818c59309176d03ee@syzkaller.appspotmail.com
-
-==================================================================
-BUG: KASAN: out-of-bounds in __lock_acquire+0x400f/0x5c00 kernel/locking/lockdep.c:4700
-Read of size 8 at addr ffff8880687ab0a0 by task kworker/1:4/9766
-
-CPU: 1 PID: 9766 Comm: kworker/1:4 Not tainted 5.10.0-rc4-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: events l2cap_chan_timeout
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x107/0x163 lib/dump_stack.c:118
- print_address_description.constprop.0.cold+0xae/0x4c8 mm/kasan/report.c:385
- __kasan_report mm/kasan/report.c:545 [inline]
- kasan_report.cold+0x1f/0x37 mm/kasan/report.c:562
- __lock_acquire+0x400f/0x5c00 kernel/locking/lockdep.c:4700
- lock_acquire kernel/locking/lockdep.c:5435 [inline]
- lock_acquire+0x2a3/0x8c0 kernel/locking/lockdep.c:5400
- __raw_spin_lock_bh include/linux/spinlock_api_smp.h:135 [inline]
- _raw_spin_lock_bh+0x2f/0x40 kernel/locking/spinlock.c:175
- spin_lock_bh include/linux/spinlock.h:359 [inline]
- lock_sock_nested+0x3b/0x110 net/core/sock.c:3036
- l2cap_sock_teardown_cb+0xa1/0x660 net/bluetooth/l2cap_sock.c:1520
- l2cap_chan_del+0xbc/0xa80 net/bluetooth/l2cap_core.c:618
- l2cap_chan_close+0x1bc/0xaf0 net/bluetooth/l2cap_core.c:823
- l2cap_chan_timeout+0x17e/0x2f0 net/bluetooth/l2cap_core.c:436
- process_one_work+0x933/0x15a0 kernel/workqueue.c:2272
- worker_thread+0x64c/0x1120 kernel/workqueue.c:2418
- kthread+0x3af/0x4a0 kernel/kthread.c:292
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:296
-
-Allocated by task 21553:
- kasan_save_stack+0x1b/0x40 mm/kasan/common.c:48
- kasan_set_track mm/kasan/common.c:56 [inline]
- __kasan_kmalloc.constprop.0+0xc2/0xd0 mm/kasan/common.c:461
- kmalloc include/linux/slab.h:557 [inline]
- sk_prot_alloc+0x17a/0x300 net/core/sock.c:1666
- sk_alloc+0x32/0xbd0 net/core/sock.c:1720
- __netlink_create+0x63/0x340 net/netlink/af_netlink.c:630
- netlink_create+0x3a1/0x5d0 net/netlink/af_netlink.c:693
- __sock_create+0x3de/0x780 net/socket.c:1405
- sock_create net/socket.c:1456 [inline]
- __sys_socket+0xef/0x200 net/socket.c:1498
- __do_sys_socket net/socket.c:1507 [inline]
- __se_sys_socket net/socket.c:1505 [inline]
- __x64_sys_socket+0x6f/0xb0 net/socket.c:1505
- do_syscall_64+0x2d/0x70 arch/x86/entry/common.c:46
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-
-Last call_rcu():
- kasan_save_stack+0x1b/0x40 mm/kasan/common.c:48
- kasan_record_aux_stack+0xc0/0xf0 mm/kasan/generic.c:346
- __call_rcu kernel/rcu/tree.c:2953 [inline]
- call_rcu+0xbb/0x700 kernel/rcu/tree.c:3027
- netlink_release+0xd43/0x1cf0 net/netlink/af_netlink.c:802
- __sock_release+0xcd/0x280 net/socket.c:596
- sock_close+0x18/0x20 net/socket.c:1255
- __fput+0x285/0x920 fs/file_table.c:281
- task_work_run+0xdd/0x190 kernel/task_work.c:151
- tracehook_notify_resume include/linux/tracehook.h:188 [inline]
- exit_to_user_mode_loop kernel/entry/common.c:164 [inline]
- exit_to_user_mode_prepare+0x17e/0x1a0 kernel/entry/common.c:191
- syscall_exit_to_user_mode+0x38/0x260 kernel/entry/common.c:266
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-
-The buggy address belongs to the object at ffff8880687ab000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 160 bytes inside of
- 2048-byte region [ffff8880687ab000, ffff8880687ab800)
-The buggy address belongs to the page:
-page:00000000f09df1cc refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x687a8
-head:00000000f09df1cc order:3 compound_mapcount:0 compound_pincount:0
-flags: 0xfff00000010200(slab|head)
-raw: 00fff00000010200 dead000000000100 dead000000000122 ffff888010042000
-raw: 0000000000000000 0000000000080008 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff8880687aaf80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff8880687ab000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->ffff8880687ab080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-                               ^
- ffff8880687ab100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- ffff8880687ab180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-==================================================================
+> +
+> +               object Device [readonly]
+> +
+> +                       The object path of the device that has this
+> battery.
 
 
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
