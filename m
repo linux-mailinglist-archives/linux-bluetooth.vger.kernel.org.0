@@ -2,56 +2,93 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0ED42CBB1B
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Dec 2020 11:56:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C905E2CBD5D
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Dec 2020 13:55:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729590AbgLBKyn convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 2 Dec 2020 05:54:43 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42122 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726322AbgLBKyn (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 2 Dec 2020 05:54:43 -0500
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 204765] debugfs: File 'le_min_key_size' in directory 'hci0'
- already present!
-Date:   Wed, 02 Dec 2020 10:54:02 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: mirh@protonmail.ch
-X-Bugzilla-Status: RESOLVED
-X-Bugzilla-Resolution: CODE_FIX
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-204765-62941-5xEMhhIpBo@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-204765-62941@https.bugzilla.kernel.org/>
-References: <bug-204765-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
-MIME-Version: 1.0
+        id S1727151AbgLBMxM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 2 Dec 2020 07:53:12 -0500
+Received: from mout.kundenserver.de ([212.227.126.134]:54633 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725859AbgLBMxM (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 2 Dec 2020 07:53:12 -0500
+Received: from orion.localdomain ([77.7.48.174]) by mrelayeu.kundenserver.de
+ (mreue009 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1N6srH-1k75n72UEp-018Nq0; Wed, 02 Dec 2020 13:50:06 +0100
+From:   "Enrico Weigelt, metux IT consult" <info@metux.net>
+To:     linux-kernel@vger.kernel.org
+Cc:     davem@davemloft.net, kuba@kernel.org, mareklindner@neomailbox.ch,
+        sw@simonwunderlich.de, a@unstable.cc, sven@narfation.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com, roopa@nvidia.com,
+        nikolay@nvidia.com, edumazet@google.com, kuznet@ms2.inr.ac.ru,
+        yoshfuji@linux-ipv6.org, jmaloy@redhat.com, ying.xue@windriver.com,
+        kafai@fb.com, songliubraving@fb.com, yhs@fb.com,
+        john.fastabend@gmail.com, kpsingh@chromium.org,
+        netdev@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        tipc-discussion@lists.sourceforge.net,
+        linux-hyperv@vger.kernel.org, bpf@vger.kernel.org
+Subject: [PATCH 1/7] net: 8021q: remove unneeded MODULE_VERSION() usage
+Date:   Wed,  2 Dec 2020 13:49:53 +0100
+Message-Id: <20201202124959.29209-1-info@metux.net>
+X-Mailer: git-send-email 2.11.0
+X-Provags-ID: V03:K1:14LCbfn7CIm5dANaBLGKWLgN3xQE4jDUCMo9evmbx9Co8uVlQ6w
+ AJFD6ZJ02fqB/4hkD8UvpR4MIY+/p78jpG5aWRjgTooqf+IEH1eqCBcShQ2vV0dQpZD0PsW
+ 05u5MlL8i5N7ZlPrZ7WXbFUNvvFZsQXgZIGpcP3ZrL1oewC6MVHvqtu//f0C4Yd8k+NfXYW
+ VmowlQvXdv7smIRHA6edw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UEMJ2Q5iJaA=:yleuAQn1i2Rjq/ui4VdE+g
+ jyh2pVLY6s01oGU46RcJlPLxSSX8L2w/MBwEmg20CK/7Y310Z8JlnqRGDpqOM2nJS5End/sP4
+ /9Y1onXdJEthEHAa9BhU58Pusym8OBWDtyGF2XsodDUOCLKO8Al2CEIPKNwkS7PYWLzUetR1u
+ 6d1JaWAKKnYd0bQb4e/+Rn24Bv8Hwjp283Oc/mJZgpdGd1YNZapCGRlUHnDPGMvLvbAQ4suoX
+ K+qAXCsVWaWIdCkwo5qNVHF2IP7XbGZ74/fYL0MRsOi+/PZ9Ibn6yD2QQuUvJzs0/dmQvKbzv
+ sAqugRZrYpsuSsj3PnTQPdjGB8zs3Qs8ObLlivdv6bthFn3+TxlFxmTZJ66mNuyYS4u/hwzBI
+ cHIUHiSeDY4ksdHCmLz6WWwusj+S5xSj2/yUf7nw695XokUprP0W5b5CKP7Zw
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=204765
+Remove MODULE_VERSION(), as it isn't needed at all: the only version
+making sense is the kernel version.
 
---- Comment #12 from mirh (mirh@protonmail.ch) ---
-https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/commit/?id=82493316507a720b6faa2ec23971c0ca89c6dcb0
-("Bluetooth: Move force_bredr_smp debugfs into hci_debugfs_create_bredr")
+Signed-off-by: Enrico Weigelt, metux IT consult <info@metux.net>
+---
+ net/8021q/vlan.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-Guess we'll have to wait 5.11 if any kind of backporting is unthinkable.
-
+diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
+index f292e0267bb9..683e9e825b9e 100644
+--- a/net/8021q/vlan.c
++++ b/net/8021q/vlan.c
+@@ -36,15 +36,10 @@
+ #include "vlan.h"
+ #include "vlanproc.h"
+ 
+-#define DRV_VERSION "1.8"
+-
+ /* Global VLAN variables */
+ 
+ unsigned int vlan_net_id __read_mostly;
+ 
+-const char vlan_fullname[] = "802.1Q VLAN Support";
+-const char vlan_version[] = DRV_VERSION;
+-
+ /* End of global variables definitions. */
+ 
+ static int vlan_group_prealloc_vid(struct vlan_group *vg,
+@@ -687,7 +682,7 @@ static int __init vlan_proto_init(void)
+ {
+ 	int err;
+ 
+-	pr_info("%s v%s\n", vlan_fullname, vlan_version);
++	pr_info("802.1Q VLAN Support\n");
+ 
+ 	err = register_pernet_subsys(&vlan_net_ops);
+ 	if (err < 0)
+@@ -743,4 +738,3 @@ module_init(vlan_proto_init);
+ module_exit(vlan_cleanup_module);
+ 
+ MODULE_LICENSE("GPL");
+-MODULE_VERSION(DRV_VERSION);
 -- 
-You are receiving this mail because:
-You are the assignee for the bug.
+2.11.0
+
