@@ -2,79 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 43B322CF7D2
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Dec 2020 01:10:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1623C2CF81E
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Dec 2020 01:48:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727712AbgLEAKH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 4 Dec 2020 19:10:07 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45894 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725902AbgLEAKG (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 4 Dec 2020 19:10:06 -0500
-Date:   Fri, 4 Dec 2020 16:09:24 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607126966;
-        bh=3oHDGeeF1GqqXg4FoxMbracGhGTzKQb1qv5/cfL79bY=;
-        h=From:To:Cc:Subject:In-Reply-To:References:From;
-        b=nJnqUjjqRKv3uMisJCCjqn0XtrJM8B0EOjRYQ20aX4M8X+xSqYr3PDM3OYcnorhf4
-         /L0neFg27HAYYhqHGZdv6hJ8ldwV2rcOw7rNxX3T/gxArIRebME82QEbD77g4pZ7iJ
-         HRXeeJs7ji48F6F7OBMMtU5j1+3ioWzNca2FuRZuzk1IaRl3tjLoeIfQ6we5D9RrrD
-         VI1KauV38TShYhnQu7N4YK3YXmub1lbL9LMs5KkteMks8HTOyAg29BFekWUycHjLfg
-         OuDBydZ9kShVUCmsidr+q1JHR1YByzxubNHdncPV/PojXJhAKYx/uGvi3kl7gqSvi6
-         f2y2vlpBRsrWw==
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     "Enrico Weigelt, metux IT consult" <info@metux.net>
-Cc:     linux-kernel@vger.kernel.org, davem@davemloft.net,
-        mareklindner@neomailbox.ch, sw@simonwunderlich.de, a@unstable.cc,
-        sven@narfation.org, marcel@holtmann.org, johan.hedberg@gmail.com,
-        roopa@nvidia.com, nikolay@nvidia.com, edumazet@google.com,
-        kuznet@ms2.inr.ac.ru, yoshfuji@linux-ipv6.org, jmaloy@redhat.com,
-        ying.xue@windriver.com, kafai@fb.com, songliubraving@fb.com,
-        yhs@fb.com, john.fastabend@gmail.com, kpsingh@chromium.org,
-        netdev@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        tipc-discussion@lists.sourceforge.net,
-        linux-hyperv@vger.kernel.org, bpf@vger.kernel.org
-Subject: Re: [PATCH 1/7] net: 8021q: remove unneeded MODULE_VERSION() usage
-Message-ID: <20201204160924.2e170514@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
-In-Reply-To: <20201202124959.29209-1-info@metux.net>
-References: <20201202124959.29209-1-info@metux.net>
+        id S1730839AbgLEAq6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 4 Dec 2020 19:46:58 -0500
+Received: from vsm-gw.hyogo-dai.ac.jp ([202.244.76.12]:49526 "EHLO
+        vsm-gw.hyogo-dai.ac.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726485AbgLEAq5 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 4 Dec 2020 19:46:57 -0500
+X-Greylist: delayed 14573 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Dec 2020 19:46:41 EST
+Received: from humans-kc.hyogo-dai.ac.jp (humans-kc.hyogo-dai.ac.jp [202.244.77.11])
+        by vsm-gw.hyogo-dai.ac.jp (Postfix) with ESMTP id 274A31A5589;
+        Sat,  5 Dec 2020 04:44:55 +0900 (JST)
+Received: from humans-kc.hyogo-dai.ac.jp (humans-kc.hyogo-dai.ac.jp [127.0.0.1])
+        by postfix.imss71 (Postfix) with ESMTP id E5C39838858;
+        Sat,  5 Dec 2020 04:44:54 +0900 (JST)
+Received: from hyogo-dai.ac.jp (unknown [202.244.77.11])
+        by humans-kc.hyogo-dai.ac.jp (Postfix) with SMTP id B84F6838260;
+        Sat,  5 Dec 2020 04:44:54 +0900 (JST)
 MIME-Version: 1.0
+Message-ID: <20201204194454.00002B21.0147@hyogo-dai.ac.jp>
+Date:   Sat, 05 Dec 2020 04:44:54 +0900
+From:   "Dr.Raymond" <tabata@hyogo-dai.ac.jp>
+To:     <infocarferr1@aim.com>
+Reply-To: <infocarfer@aim.com>
+Subject: I am Vice Chairman of Hang Seng Bank, Dr. Raymond Chien
+         Kuo Fung I have Important Matter to Discuss with you concerning
+         my late client. Died without a NEXT OF KIN. Send me your private
+         email for full details information. 
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MAILER: Active! mail
+X-TM-AS-MML: disable
+X-TM-AS-Product-Ver: IMSS-7.1.0.1808-8.2.0.1013-25446.007
+X-TM-AS-Result: No--4.326-5.0-31-10
+X-imss-scan-details: No--4.326-5.0-31-10
+X-TM-AS-User-Approved-Sender: No
+X-TMASE-MatchedRID: +T4Z3mpR0x5ITndh1lLRASsOycAMAhSTkCM77ifYafsBLhz6t76Ce/bj
+        Enpjm61/Gf23dqZJjE4Erxo5p8V1/E1+zyfzlN7y/sToY2qzpx7w5nZ/qYg41XEWw1TkKAjcYff
+        qdBtG2ocgOkCKsW/kbuunGEBqPil++coAzulIP8gMTyJMXCOBhj9BWL7GG0LsKrauXd3MZDUZaR
+        NzIP3XI5u3uLPgwbAMH5RdHnhWfwyq9gpuf+A6coDeeVSgzszVDx5n520Z3eZyT7DDRtYlKaWBy
+        ZE9nSaC/rhfyjvqkZu/pNa4BidtZEMMprcbiest
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Wed,  2 Dec 2020 13:49:53 +0100 Enrico Weigelt, metux IT consult
-wrote:
-> Remove MODULE_VERSION(), as it isn't needed at all: the only version
-> making sense is the kernel version.
-> 
-> Signed-off-by: Enrico Weigelt, metux IT consult <info@metux.net>
+infocarfer@aim.com
 
-Thanks for the patches. Please drop the "metux IT consult" from the
-addresses. The from space is supposed to be for your name.
 
-> diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
-> index f292e0267bb9..683e9e825b9e 100644
-> --- a/net/8021q/vlan.c
-> +++ b/net/8021q/vlan.c
-> @@ -36,15 +36,10 @@
->  #include "vlan.h"
->  #include "vlanproc.h"
->  
-> -#define DRV_VERSION "1.8"
-> -
->  /* Global VLAN variables */
->  
->  unsigned int vlan_net_id __read_mostly;
->  
-> -const char vlan_fullname[] = "802.1Q VLAN Support";
-> -const char vlan_version[] = DRV_VERSION;
 
-This patches does not build. Please redo it more carefully.
-
-You'll need to fix and resend the entire series. When you do so please
-provide a cover letter, even if it only contains a couple of sentences
-and separate the patches for bluetooth and batman-adv out as stand
-alone patches, so the respective maintainers can pick them up.
