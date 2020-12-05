@@ -2,77 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A3A52CFDB1
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Dec 2020 19:53:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E50C82CFCD0
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Dec 2020 19:51:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727359AbgLESmz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 5 Dec 2020 13:42:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:52614 "EHLO mail.kernel.org"
+        id S1728740AbgLESTW convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 5 Dec 2020 13:19:22 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46296 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727455AbgLEQ45 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 5 Dec 2020 11:56:57 -0500
-Date:   Sat, 5 Dec 2020 08:56:04 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607187366;
-        bh=eYK2sVwutlChKihLleNVWiUi78sQBhnha5Lia/JugEk=;
-        h=From:To:Cc:Subject:In-Reply-To:References:From;
-        b=vMEN6qm/NY0zywdKx2ToXvTfnuHiO3H2aQZqbvE0CRZ7TVKJ0yvjmIBIONtYwMWba
-         YLl7gaW2CRwIsO/xb/4VbCmNjegduBOz8f/uV41Zxdlw7RcE1+A7jSSQYcK81ubKVj
-         7jTIHCoR+wk5wCcF+sEJ8KW/VN5cYqeJJVbfzo3AmYCB8akLA7NFgCPUUzO1FQCTQx
-         kjT1NMAWQshhIllcbcLtqsitlVu5YmRbjzDtQYozUAozstFMU+3mMSl8p/bK54g5ma
-         RKcO5OW7xC9qefs9dh3A2M8rahxLe8kCtew2cYQFjauuNtrxHXYUA8VrqbFDlBqSfR
-         Eq5raUj3FwnQw==
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Sven Eckelmann <sven@narfation.org>
-Cc:     linux-kernel@vger.kernel.org,
-        "Enrico Weigelt, metux IT consult" <info@metux.net>,
-        davem@davemloft.net, mareklindner@neomailbox.ch,
-        sw@simonwunderlich.de, a@unstable.cc, marcel@holtmann.org,
-        johan.hedberg@gmail.com, roopa@nvidia.com, nikolay@nvidia.com,
-        edumazet@google.com, kuznet@ms2.inr.ac.ru, yoshfuji@linux-ipv6.org,
-        jmaloy@redhat.com, ying.xue@windriver.com, kafai@fb.com,
-        songliubraving@fb.com, yhs@fb.com, john.fastabend@gmail.com,
-        kpsingh@chromium.org, netdev@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org,
-        tipc-discussion@lists.sourceforge.net,
-        linux-hyperv@vger.kernel.org, bpf@vger.kernel.org,
-        Matthias Schiffer <mschiffer@universe-factory.net>
-Subject: Re: [PATCH 2/7] net: batman-adv: remove unneeded MODULE_VERSION()
- usage
-Message-ID: <20201205085604.1e3fcaee@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
-In-Reply-To: <4581108.GXAFRqVoOG@sven-edge>
-References: <20201202124959.29209-1-info@metux.net>
-        <20201202124959.29209-2-info@metux.net>
-        <4581108.GXAFRqVoOG@sven-edge>
+        id S1727482AbgLESCG (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 5 Dec 2020 13:02:06 -0500
+From:   bugzilla-daemon@bugzilla.kernel.org
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 210453] rtl8822cu device : "Bluetooth : No device found"
+Date:   Sat, 05 Dec 2020 18:01:25 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: blocking
+X-Bugzilla-Who: forum.viennet@free.fr
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-210453-62941-ryazxpdzmL@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-210453-62941@https.bugzilla.kernel.org/>
+References: <bug-210453-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Sat, 05 Dec 2020 08:06:40 +0100 Sven Eckelmann wrote:
-> On Wednesday, 2 December 2020 13:49:54 CET Enrico Weigelt, metux IT consult wrote:
-> > Remove MODULE_VERSION(), as it isn't needed at all: the only version
-> > making sense is the kernel version.  
-> 
-> Is there some explanation besides an opinion? Some kind goal which you want to 
-> achieve with it maybe?
-> 
-> At least for us it was an easy way to query the release cycle information via 
-> batctl. Which made it easier for us to roughly figure out what an reporter/
-> inquirer was using - independent of whether he is using the in-kernel version 
-> or a backported version.
-> 
-> Loosing this source of information and breaking parts of batctl and other 
-> tools (respondd, ...) is not the end of the world. But I would at least know 
-> why this is now necessary.
+https://bugzilla.kernel.org/show_bug.cgi?id=210453
 
-No, no, if it breaks your user space we can't do it, let's leave batman
-alone, then.
+--- Comment #1 from Olivier V (forum.viennet@free.fr) ---
+Something about patches here :
+http://patchwork.ozlabs.org/project/ubuntu-kernel/list/?series=138556
 
-I think this is mostly a clean up. In-tree the kernel version is usually
-far more dependable because backports don't include version bumps.
+But I don't understand how to do something with this.
 
-Indeed it would be great if the clear motivation was spelled out in the
-cover letter and/or patches.
+-- 
+You are receiving this mail because:
+You are the assignee for the bug.
