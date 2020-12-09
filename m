@@ -2,284 +2,123 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E65E22D380B
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Dec 2020 02:01:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8088D2D3827
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Dec 2020 02:16:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726320AbgLIBB1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 8 Dec 2020 20:01:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53466 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726311AbgLIBB0 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 8 Dec 2020 20:01:26 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9DA9C0613D6
-        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Dec 2020 17:00:46 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id 4so49544plk.5
-        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Dec 2020 17:00:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=57I8J+9Sz1z5XdfhWdkGcileeg/1hRiY8h7G9YrC+8w=;
-        b=eacvLjFhNnhnAcM4COcFMhmfUvwmsFAFcrtKu+F7dk2mYtruQ7jFT9S21kIsbBfMb+
-         EwIgGUe4l6h96y/Ugux+4+JOnZkRuk9vu2nkRpMpFVeGPySbxV653zH393ug8kPF8MUZ
-         BL7NgJZ8Q3XlHO2g60H15YznGQvF37qDynlPI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=57I8J+9Sz1z5XdfhWdkGcileeg/1hRiY8h7G9YrC+8w=;
-        b=jiAFRFsVcDLuvj5e2NWjExdfQ0CMwYff7FTDAnj2U4PA7nBe3IdgASipSdP7cawOmB
-         lfsdtMYLFxdkdCNARzJAUzsOqrE1cOzFgN/QfXcn+VciqgZaxLokqwd77FKBFmJ6YXKZ
-         OBadlgZ5q7JpKRMPva7sOvdBdhboOHa9GeO6u8toSZ2zrB8Z6Yp8QgUcloQ0EqiLWutS
-         LbVFc0KkABV4sgPExOc1tD0V0AecitQ38jDy3sGpFtv4g4AO95OMO1hnBCsny4Sol/Q/
-         0XV+hTt8YKJR1bz91B9mvtgMUxJMKC7vAZzvIrCvIotllO2AEB82je0wXRnej7zzbpOS
-         wqUg==
-X-Gm-Message-State: AOAM532hcFvCeYRBqlyEMCfn3rfHmK2/f+LZQVsv005NLgRntHvGUY0M
-        Iy/cnh9apYJrojFxmTpbidiXa6rDnEgu6Q==
-X-Google-Smtp-Source: ABdhPJyJ5icm4tjopsai6NkVBYnuAtE0drBgTiAcW4z8uEU9UwZCfcWdILDmKYYO1R7GWeWL7UhE7g==
-X-Received: by 2002:a17:902:52a:b029:da:989f:6c01 with SMTP id 39-20020a170902052ab02900da989f6c01mr493409plf.45.1607475645875;
-        Tue, 08 Dec 2020 17:00:45 -0800 (PST)
-Received: from sonnysasaka-chrome.mtv.corp.google.com ([2620:15c:202:201:4a0f:cfff:fe66:e60c])
-        by smtp.gmail.com with ESMTPSA id 5sm28052pfw.12.2020.12.08.17.00.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Dec 2020 17:00:45 -0800 (PST)
-From:   Sonny Sasaka <sonnysasaka@chromium.org>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Sonny Sasaka <sonnysasaka@chromium.org>,
-        Alain Michaud <alainm@chromium.org>
-Subject: [PATCH BlueZ 2/2] input/hog: Cache the HID report map
-Date:   Tue,  8 Dec 2020 17:00:30 -0800
-Message-Id: <20201209010030.342632-2-sonnysasaka@chromium.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201209010030.342632-1-sonnysasaka@chromium.org>
-References: <20201209010030.342632-1-sonnysasaka@chromium.org>
+        id S1726474AbgLIBO1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 8 Dec 2020 20:14:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37866 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726307AbgLIBO1 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 8 Dec 2020 20:14:27 -0500
+Date:   Wed, 9 Dec 2020 02:13:36 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1607476419;
+        bh=4A8yCWIxhznzmlI1ZPuNu4AS4l63xedVoBbtG2oxRU8=;
+        h=From:To:Cc:Subject:References:In-Reply-To:From;
+        b=kOqJnToMislpKdi65lyRTW3iZmg1MA/IKwdGlZMJI6lYPrenh1pJx13qV+qBo9rGr
+         yU2EoZAr4k6gkLeO2BdE8AxZMpUQUNuSFqbqVL3zSbpHOXwAJi9vIkQnvHtl3DP8KN
+         clxjxKOTIRGRGLupfvpraZQv1W5VA7lX/xSCNQA2+pa4M07nH/Fj8qnFa/jQZ+Yas6
+         rlzSwF0EMkpXp4DNkMovpvELBH0IFaepsu3ROleJZIUj1ZCsVk0ldzBZYlSdY6H70D
+         EbE+Zzz9vxO6zltwmGKaF1vS4ot+o2EtriQ4ggnAX+CpC5d3VW11WMaUb/5BuK7cBt
+         0LA4TxZohzHqA==
+From:   Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
+To:     Trent Piepho <tpiepho@gmail.com>
+Cc:     Joseph Hwang <josephsih@google.com>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        chromeos-bluetooth-upstreaming 
+        <chromeos-bluetooth-upstreaming@chromium.org>,
+        Alain Michaud <alainm@chromium.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] Bluetooth: btusb: define HCI packet sizes of USB
+ Alts
+Message-ID: <20201209011336.4qdnnehnz3kdlqid@pali>
+References: <20200910060403.144524-1-josephsih@chromium.org>
+ <CAHFy418Ln9ONHGVhg513g0v+GxUZMDtLpe5NFONO3HuAZz=r7g@mail.gmail.com>
+ <20200923102215.hrfzl7c7q2omeiws@pali>
+ <9810329.nUPlyArG6x@zen.local>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <9810329.nUPlyArG6x@zen.local>
+User-Agent: NeoMutt/20180716
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-To optimize BLE HID devices reconnection response, we can cache the
-report map so that the subsequent reconnections do not need round trip
-time to read the report map.
+On Tuesday 08 December 2020 15:04:29 Trent Piepho wrote:
+> On Wednesday, September 23, 2020 3:22:15 AM PST Pali Rohár wrote:
+> > On Monday 14 September 2020 20:18:27 Joseph Hwang wrote:
+> > > On Thu, Sep 10, 2020 at 4:18 PM Pali Rohár <pali@kernel.org> wrote:
+> > > > And this part of code which you write is Realtek specific.
+> > > 
+> > > We currently only have Intel and Realtek platforms to test with. If
+> > > making it generic without proper testing platforms is fine, I will
+> > > make it generic. Or do you think it might be better to make it
+> > > customized with particular vendors for now; and make it generic later
+> > > when it works well with sufficient vendors?
+> > 
+> > I understood that those packet size changes are generic to bluetooth
+> > specification and therefore it is not vendor specific code. Those packet
+> > sizes for me really seems to be USB specific.
+> > 
+> > Therefore it should apply for all vendors, not only for Realtek and
+> > Intel.
+> 
+> I have tried to test WBS with some different USB adapters.  So far, all use 
+> these packet sizes.  Tested were:
+> 
+> Broadcom BRCM20702A
+> Realtek RTL8167B
+> Realtek RTL8821C
+> CSR CSR8510 (probably fake)
+> 
+> In all cases, WBS works best with packet size of (USB packet size for alt mode 
+> selected) * 3 packets - 3 bytes HCI header.  None of these devices support alt 
+> 6 mode, where supposedly one packet is better, but I can find no BT adapter on 
+> which to test this.
+> 
+> > +static const int hci_packet_size_usb_alt[] = { 0, 24, 48, 72, 96, 144, 60};
+> 
+> Note that the packet sizes here are based on the max isoc packet length for 
+> the USB alt mode used, e.g. alt 1 is 9 bytes.  That value is only a 
+> "recommended" value from the bluetooth spec.  It seems like it would be more 
+> correct use (btusb_data*)->isoc_tx_ep->wMaxPacketSize to find the MTU.
 
-Reviewed-by: Alain Michaud <alainm@chromium.org>
+Yea, wMaxPacketSize looks like a candidate for determining MTU. Can we
+use it or are there any known issues with it?
 
----
- profiles/input/hog-lib.c | 142 ++++++++++++++++++++++++++-------------
- 1 file changed, 96 insertions(+), 46 deletions(-)
+> > > [Issue 2] The btusb_work() is performed by a worker. There would be a
+> > > timing issue here if we let btusb_work() to do “hdev->sco_mtu =
+> > > hci_packet_size_usb_alt[i]” because there is no guarantee how soon the
+> > > btusb_work() can be finished and get “hdev->sco_mtu” value set
+> > > correctly. In order to avoid the potential race condition, I suggest
+> > > to determine air_mode in btusb_notify() before
+> > > schedule_work(&data->work) is executed so that “hdev->sco_mtu =
+> > > hci_packet_size_usb_alt[i]” is guaranteed to be performed when
+> > > btusb_notify() finished. In this way, hci_sync_conn_complete_evt() can
+> > > set conn->mtu correctly as described in [Issue 1] above.
+> 
+> Does this also give userspace a clear point at which to determine MTU setting, 
+> _before_ data is sent over SCO connection?  It will not work if sco_mtu is not 
+> valid until after userspace sends data to SCO connection with incorrect mtu.
 
-diff --git a/profiles/input/hog-lib.c b/profiles/input/hog-lib.c
-index ee811d301..1e198ea64 100644
---- a/profiles/input/hog-lib.c
-+++ b/profiles/input/hog-lib.c
-@@ -95,6 +95,8 @@ struct bt_hog {
- 	struct queue		*bas;
- 	GSList			*instances;
- 	struct queue		*gatt_op;
-+	uint8_t			report_map[HOG_REPORT_MAP_MAX_SIZE];
-+	ssize_t			report_map_len;
- };
- 
- struct report {
-@@ -276,6 +278,8 @@ static void find_included(struct bt_hog *hog, GAttrib *attrib,
- 	free(req);
- }
- 
-+static void uhid_create(struct bt_hog *hog);
-+
- static void report_value_cb(const guint8 *pdu, guint16 len, gpointer user_data)
- {
- 	struct report *report = user_data;
-@@ -924,57 +928,17 @@ static char *item2string(char *str, uint8_t *buf, uint8_t len)
- 	return str;
- }
- 
--static void report_map_read_cb(guint8 status, const guint8 *pdu, guint16 plen,
--							gpointer user_data)
-+static void uhid_create(struct bt_hog *hog)
- {
--	struct gatt_request *req = user_data;
--	struct bt_hog *hog = req->user_data;
--	uint8_t value[HOG_REPORT_MAP_MAX_SIZE];
- 	struct uhid_event ev;
--	ssize_t vlen;
--	char itemstr[20]; /* 5x3 (data) + 4 (continuation) + 1 (null) */
--	int i, err;
- 	GError *gerr = NULL;
-+	int i, err;
- 
--	destroy_gatt_req(req);
--
--	DBG("HoG inspecting report map");
--
--	if (status != 0) {
--		error("Report Map read failed: %s", att_ecode2str(status));
--		return;
--	}
--
--	vlen = dec_read_resp(pdu, plen, value, sizeof(value));
--	if (vlen < 0) {
--		error("ATT protocol error");
-+	if (!hog->report_map_len) {
-+		warn("Failed to initiate UHID_CREATE without report map");
- 		return;
- 	}
- 
--	DBG("Report MAP:");
--	for (i = 0; i < vlen;) {
--		ssize_t ilen = 0;
--		bool long_item = false;
--
--		if (get_descriptor_item_info(&value[i], vlen - i, &ilen,
--								&long_item)) {
--			/* Report ID is short item with prefix 100001xx */
--			if (!long_item && (value[i] & 0xfc) == 0x84)
--				hog->has_report_id = TRUE;
--
--			DBG("\t%s", item2string(itemstr, &value[i], ilen));
--
--			i += ilen;
--		} else {
--			error("Report Map parsing failed at %d", i);
--
--			/* Just print remaining items at once and break */
--			DBG("\t%s", item2string(itemstr, &value[i], vlen - i));
--			break;
--		}
--	}
--
--	/* create uHID device */
- 	memset(&ev, 0, sizeof(ev));
- 	ev.type = UHID_CREATE;
- 
-@@ -1004,8 +968,8 @@ static void report_map_read_cb(guint8 status, const guint8 *pdu, guint16 plen,
- 	ev.u.create.version = hog->version;
- 	ev.u.create.country = hog->bcountrycode;
- 	ev.u.create.bus = BUS_BLUETOOTH;
--	ev.u.create.rd_data = value;
--	ev.u.create.rd_size = vlen;
-+	ev.u.create.rd_data = hog->report_map;
-+	ev.u.create.rd_size = hog->report_map_len;
- 
- 	err = bt_uhid_send(hog->uhid, &ev);
- 	if (err < 0) {
-@@ -1018,6 +982,62 @@ static void report_map_read_cb(guint8 status, const guint8 *pdu, guint16 plen,
- 	bt_uhid_register(hog->uhid, UHID_SET_REPORT, set_report, hog);
- 
- 	hog->uhid_created = true;
-+}
-+
-+static void report_map_read_cb(guint8 status, const guint8 *pdu, guint16 plen,
-+							gpointer user_data)
-+{
-+	struct gatt_request *req = user_data;
-+	struct bt_hog *hog = req->user_data;
-+	ssize_t vlen;
-+	char itemstr[20]; /* 5x3 (data) + 4 (continuation) + 1 (null) */
-+	int i;
-+
-+	destroy_gatt_req(req);
-+
-+	DBG("HoG inspecting report map");
-+
-+	if (status != 0) {
-+		error("Report Map read failed: %s", att_ecode2str(status));
-+		return;
-+	}
-+
-+	vlen = dec_read_resp(pdu, plen, hog->report_map,
-+						sizeof(hog->report_map));
-+	if (vlen < 0) {
-+		error("ATT protocol error");
-+		return;
-+	}
-+
-+	hog->report_map_len = vlen;
-+
-+	DBG("Report MAP:");
-+	for (i = 0; i < vlen;) {
-+		ssize_t ilen = 0;
-+		bool long_item = false;
-+
-+		if (get_descriptor_item_info(&hog->report_map[i], vlen - i,
-+						&ilen, &long_item)) {
-+			/* Report ID is short item with prefix 100001xx */
-+			if (!long_item && (hog->report_map[i] & 0xfc) == 0x84)
-+				hog->has_report_id = TRUE;
-+
-+			DBG("\t%s", item2string(itemstr, &hog->report_map[i],
-+									ilen));
-+
-+			i += ilen;
-+		} else {
-+			error("Report Map parsing failed at %d", i);
-+
-+			/* Just print remaining items at once and break */
-+			DBG("\t%s", item2string(itemstr, &hog->report_map[i],
-+						vlen - i));
-+			break;
-+		}
-+	}
-+
-+	/* create uHID device */
-+	uhid_create(hog);
- 
- 	DBG("HoG created uHID device");
- }
-@@ -1602,6 +1622,12 @@ bool bt_hog_attach(struct bt_hog *hog, void *gatt)
- 		bt_hog_attach(instance, gatt);
- 	}
- 
-+	/* Try to initiate UHID_CREATE if we already have the report map to
-+	 * avoid re-reading the report map from the peer device.
-+	 */
-+	if (hog->report_map_len > 0)
-+		uhid_create(hog);
-+
- 	if (!hog->uhid_created) {
- 		DBG("HoG discovering characteristics");
- 		if (hog->attr)
-@@ -1627,6 +1653,29 @@ bool bt_hog_attach(struct bt_hog *hog, void *gatt)
- 	return true;
- }
- 
-+static void uhid_destroy(struct bt_hog *hog)
-+{
-+	int err;
-+	struct uhid_event ev;
-+
-+	if (!hog->uhid_created)
-+		return;
-+
-+	bt_uhid_unregister_all(hog->uhid);
-+
-+	memset(&ev, 0, sizeof(ev));
-+	ev.type = UHID_DESTROY;
-+
-+	err = bt_uhid_send(hog->uhid, &ev);
-+
-+	if (err < 0) {
-+		error("bt_uhid_send: %s", strerror(-err));
-+		return;
-+	}
-+
-+	hog->uhid_created = false;
-+}
-+
- void bt_hog_detach(struct bt_hog *hog)
- {
- 	GSList *l;
-@@ -1660,6 +1709,7 @@ void bt_hog_detach(struct bt_hog *hog)
- 	queue_foreach(hog->gatt_op, (void *) cancel_gatt_req, NULL);
- 	g_attrib_unref(hog->attrib);
- 	hog->attrib = NULL;
-+	uhid_destroy(hog);
- }
- 
- int bt_hog_set_control_point(struct bt_hog *hog, bool suspend)
--- 
-2.26.2
+IIRC connection is established after sync connection (SCO) complete
+event. And sending data is possible after connection is established. So
+based on these facts I think that userspace can determinate MTU settings
+prior sending data over SCO socket.
 
+Anyway, to whole MTU issue for SCO there is a nice workaround which
+worked fine with more tested USB adapters and headsets. As SCO socket is
+synchronous and most bluetooth headsets have own clocks, you can
+synchronize sending packets to headsets based on time events when you
+received packets from other side and also send packets of same size as
+you received. I.e. for every received packet send own packet of the same
+size.
