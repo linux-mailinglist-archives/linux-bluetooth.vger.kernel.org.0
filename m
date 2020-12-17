@@ -2,81 +2,126 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3D682DC36A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Dec 2020 16:50:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F9E52DCCE3
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Dec 2020 08:19:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726600AbgLPPu1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Dec 2020 10:50:27 -0500
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:58885 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726561AbgLPPu1 (ORCPT
+        id S1727120AbgLQHS2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Dec 2020 02:18:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54624 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727026AbgLQHSZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Dec 2020 10:50:27 -0500
-X-Originating-IP: 82.255.60.242
-Received: from [192.168.0.28] (lns-bzn-39-82-255-60-242.adsl.proxad.net [82.255.60.242])
-        (Authenticated sender: hadess@hadess.net)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 28A30E0011;
-        Wed, 16 Dec 2020 15:49:44 +0000 (UTC)
-Message-ID: <6e6d72ff9aa14a65d6d0df5bd68a6ad6887f31c2.camel@hadess.net>
-Subject: Re: [PATCH] Bluetooth: L2CAP: Try harder to accept device not
- knowing options
-From:   Bastien Nocera <hadess@hadess.net>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        Florian Dollinger <dollinger.florian@gmx.de>
-Date:   Wed, 16 Dec 2020 16:49:44 +0100
-In-Reply-To: <CABBYNZJNTDek+kKS5wtrr67Xx8DmFGvcV13cLSxULgJRa5N+3g@mail.gmail.com>
-References: <20201208172912.4352-1-hadess@hadess.net>
-         <CABBYNZJNTDek+kKS5wtrr67Xx8DmFGvcV13cLSxULgJRa5N+3g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.2 (3.38.2-1.fc33) 
+        Thu, 17 Dec 2020 02:18:25 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3D07C0617B0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Dec 2020 23:17:44 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id k65so9400403pgk.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Dec 2020 23:17:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TEO3/oQXoRDhA5Aynf5tOUBOZITapi4dUktMPWEGVZE=;
+        b=ndhZNq/pSBaAgASPaZht6Nko7YjlzT6/xcqnnYlTyx6Yzm41/zdeDh2EXZOVRR8jOU
+         L6jYs1DdTbipR0GET9I8bg6eOds5218HKB8ugQgwO1v0QJMjeVeuIy4L8tiJN5v56VcL
+         9jW6pcdLX16EGoR01wxXTe2H4BP6IELYAp5gg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TEO3/oQXoRDhA5Aynf5tOUBOZITapi4dUktMPWEGVZE=;
+        b=btylPdHMSN8XeqRcRwlua1rJRG4DM9FncbgQIgpQk45wnwmv9lG4Hweg1rSFlg9tgr
+         d/Q36snBezUY4hleFp0ZKmFJ7P10Nunky/jYGRf8XezjOcSVtE+5h0zdSDz0j4EGThE4
+         iM8Y0+dpzGKcSOhci+S1shcSmEbhXHnEgEt0ymKSFezyGVooVowhCkq3eT4NOKPZtBjl
+         FFHZYud0U2X+mvCPn5mv1tmhS/SiRMBQ75Bb83m/SJBoXBXHAA99YmFrGEoKOPuBqiCj
+         PyMDYuqpKSrz3cgOlHJO0V2KD/QGxljeLptZSva8qDxYF5dcF9Z6zrbSGi4MnrW8/wn7
+         sAig==
+X-Gm-Message-State: AOAM533NfWHJDUygnccy1TwQ39uDeXqegqO6oSYZBQe3vxzFcpWb2VfX
+        O0UJ4we0G+QGnwGkZS7EX9QmCKzrKsuCtg==
+X-Google-Smtp-Source: ABdhPJyfnhMZrex/tPAF6iMu7BaBNlY7Znatxxe8jrhqGqXY7JjT4xdxaIdYGm2/h8qhP/AaVc152g==
+X-Received: by 2002:a62:1716:0:b029:19d:b78b:ef02 with SMTP id 22-20020a6217160000b029019db78bef02mr8043307pfx.11.1608189463855;
+        Wed, 16 Dec 2020 23:17:43 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:de4a:3eff:fe75:1314])
+        by smtp.gmail.com with ESMTPSA id q26sm4723632pfl.219.2020.12.16.23.17.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Dec 2020 23:17:43 -0800 (PST)
+From:   Miao-chen Chou <mcchou@chromium.org>
+To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
+Cc:     Alain Michaud <alainm@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH v1 1/4] Bluetooth: Keep MSFT extension info throughout a hci_dev's life cycle
+Date:   Wed, 16 Dec 2020 23:17:27 -0800
+Message-Id: <20201216231652.v1.1.Id9bc5434114de07512661f002cdc0ada8b3d6d02@changeid>
+X-Mailer: git-send-email 2.29.2.684.gfbc64c5ab5-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Tue, 2020-12-08 at 10:09 -0800, Luiz Augusto von Dentz wrote:
-> Hi Bastien,
-> 
-> On Tue, Dec 8, 2020 at 9:36 AM Bastien Nocera <hadess@hadess.net>
-> wrote:
-> > 
-> > The current implementation of L2CAP options negotiation will
-> > continue
-> > the negotiation when a device responds with L2CAP_CONF_UNACCEPT
-> > ("unaccepted
-> > options"), but not when the device replies with L2CAP_CONF_UNKNOWN
-> > ("unknown
-> > options").
-> > 
-> > Trying to continue the negotiation without ERTM support will allow
-> > Bluetooth-capable XBox One controllers (notably models 1708 and
-> > 1797)
-> > to connect.
-> 
-> While the bellow traces looks fine we need to confirm that it doesn't
-> break the qualification tests e.g:
-> 
-> L2CAP/COS/CFD/BV-14-C [Unknown Mandatory Options Request]
-> 
-> • Test Purpose Verify that the IUT can give the appropriate error
-> code
-> when the Lower Tester proposes any number of unknown options where at
-> least one is mandatory.
-> 
-> Afaik it should be fine to continue with another round of
-> configuration given that it only expects the error 0x0003, but we
-> better confirm PTS doesn't expect a L2CAP Disconnect after it.
+This moves msft_do_close() from hci_dev_do_close() to
+hci_unregister_dev() to avoid clearing MSFT extension info. This also
+avoids retrieving MSFT info upon every msft_do_open() if MSFT extension
+has been initialized.
 
-The tests fail for me in the same on a kernel with and without the
-patch:
-- Expected that the IUT transmits an L2CAP_ConfigRsp includes the
-unsupported option that Lower Tester sent.
-Final Verdict:FAIL
-L2CAP/COS/CFD/BV-14-C finished
+The following test steps were performed.
+(1) boot the test device and verify the MSFT support debug log in syslog
+(2) restart bluetoothd and verify msft_do_close() doesn't get invoked
 
-Is this expected? I was using an 5.10-rc7 kernel with and without the
-patch I sent. I can send you the full results off-list if you want
-them.
+Signed-off-by: Miao-chen Chou <mcchou@chromium.org>
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Reviewed-by: Archie Pusaka <apusaka@chromium.org>
+---
+
+ net/bluetooth/hci_core.c | 4 ++--
+ net/bluetooth/msft.c     | 3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 9d2c9a1c552fd..8471be105a2ac 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1780,8 +1780,6 @@ int hci_dev_do_close(struct hci_dev *hdev)
+ 
+ 	hci_sock_dev_event(hdev, HCI_DEV_DOWN);
+ 
+-	msft_do_close(hdev);
+-
+ 	if (hdev->flush)
+ 		hdev->flush(hdev);
+ 
+@@ -3869,6 +3867,8 @@ void hci_unregister_dev(struct hci_dev *hdev)
+ 	unregister_pm_notifier(&hdev->suspend_notifier);
+ 	cancel_work_sync(&hdev->suspend_prepare);
+ 
++	msft_do_close(hdev);
++
+ 	hci_dev_do_close(hdev);
+ 
+ 	if (!test_bit(HCI_INIT, &hdev->flags) &&
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index 4b39534a14a18..d9d2269bc93ef 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -76,7 +76,8 @@ void msft_do_open(struct hci_dev *hdev)
+ {
+ 	struct msft_data *msft;
+ 
+-	if (hdev->msft_opcode == HCI_OP_NOP)
++	/* Skip if opcode is not supported or MSFT has been initiatlized */
++	if (hdev->msft_opcode == HCI_OP_NOP || hdev->msft_data)
+ 		return;
+ 
+ 	bt_dev_dbg(hdev, "Initialize MSFT extension");
+-- 
+2.29.2.684.gfbc64c5ab5-goog
 
