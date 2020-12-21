@@ -2,94 +2,75 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A7E82DFF8F
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Dec 2020 19:21:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C0102E002E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Dec 2020 19:43:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726227AbgLUSUY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 21 Dec 2020 13:20:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51264 "EHLO
+        id S1727482AbgLUSmK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 21 Dec 2020 13:42:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725898AbgLUSUX (ORCPT
+        with ESMTP id S1727188AbgLUSmJ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 21 Dec 2020 13:20:23 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D4D0C0613D6;
-        Mon, 21 Dec 2020 10:19:43 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id h22so16394543lfu.2;
-        Mon, 21 Dec 2020 10:19:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=nhDe/BCMy1bpe8hCLM6n7IPRX35zLkRkFl/2FWYE0uw=;
-        b=bBWPTdcOWNF92BGCJhlfyeagaCyjwJYP95MUzWvg0Gq5sFv/Nn3W+7XFNn6f8U1l5E
-         O6oow7bVnCet+4KRcT0unKxhsfttaHpCf8Ck/L69YMdklnTPer4Lma9jJeoV4D4lxqsP
-         qtBoi9B8v0pga1/ZYkv8jclxyLY/4mycCF9vllLy1gojO/LYzCRRmhARFHwwmKvAo7zD
-         8fOcyU7UZDv0XpQWaYCwb7Wrhhjmhtwzxc9TLGPo84Skw1QLRXrtoU++iPZF72FG+ep1
-         Bf4AUtJ0G7Q9+nj0MI5Yn2jewwtXe/5yKnw1O8nXOrGtGOymS6Ag1g2Q/gtlhEnIL8di
-         tSSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=nhDe/BCMy1bpe8hCLM6n7IPRX35zLkRkFl/2FWYE0uw=;
-        b=fPe4pNeEKuA0pzTSbF8LbM5/vXMofYdBX8+RtdEBMdwKzIqVLXaEd6sUNUy4Tsj8AM
-         NVtgsPrXcFuinHVhvnU9DqIZHMkCz2Bm60HiOsDaO4/wIZt3nn9bIDqaFVsh0Mhk3Yzn
-         t6TeqPnMBDIapQ44Z1u46a0+tcYGNW2BEjCxSo5p7wgPPwy+7EWtDjJ5yfwAQBDJ4rmF
-         uUtCSRfrtnSUHyZNhaZFwlZGwlLsJCX1Wejjr+iCuqRn/CP8ZeZPwE5Ky1DLQPiUxat/
-         qvD0QAhbpC9Upnbh0Hn7FjzyFvTEw+P+OsZHnIe7Ubma1UO3vyKXa2eigNH4mYCmebAQ
-         pzKw==
-X-Gm-Message-State: AOAM5328PuVYOu8cThWyT5omiiV8yzvBfG8C9Ar765U6DuJRtfxS9iEe
-        6Bdk2GlPYUnuDu0+MdgzOqJZIfFz9j8=
-X-Google-Smtp-Source: ABdhPJxypbmeb2XpRvaDP4/ZTe6ZZFdYrqnoeS28/f9lmNV2Gx1Bp3LzPG7EKopUAU6W1XKav2M5eg==
-X-Received: by 2002:ac2:5f06:: with SMTP id 6mr7275073lfq.135.1608574781591;
-        Mon, 21 Dec 2020 10:19:41 -0800 (PST)
-Received: from [192.168.2.145] (109-252-192-57.dynamic.spd-mgts.ru. [109.252.192.57])
-        by smtp.googlemail.com with ESMTPSA id c5sm2292599ljj.67.2020.12.21.10.19.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Dec 2020 10:19:40 -0800 (PST)
-Subject: Re: [PATCH v1] Bluetooth: Set missing suspend task bits
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc:     Howard Chung <howardchung@google.com>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        Alain Michaud <alainm@chromium.org>,
-        Manish Mandlik <mmandlik@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        Marcel Holtmann <marcel@holtmann.org>, apusaka@chromium.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>
-References: <20201204111038.v1.1.I4557a89427f61427e65d85bc51cca9e65607488e@changeid>
- <ec27a562-d53b-a947-1a93-bd55a2dfcc91@gmail.com>
- <CANFp7mXdz8jYB0=tkj-mzWETo+M-Tx9ecTwEquh-JoDXRT54qw@mail.gmail.com>
-From:   Dmitry Osipenko <digetx@gmail.com>
-Message-ID: <ff05fc01-3976-060f-ea68-8adf0f9321a2@gmail.com>
-Date:   Mon, 21 Dec 2020 21:19:39 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.2
+        Mon, 21 Dec 2020 13:42:09 -0500
+Received: from eggs.gnu.org (eggs.gnu.org [IPv6:2001:470:142:3::10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79D63C061793
+        for <linux-bluetooth@vger.kernel.org>; Mon, 21 Dec 2020 10:41:29 -0800 (PST)
+Received: from fencepost.gnu.org ([2001:470:142:3::e]:43226)
+        by eggs.gnu.org with esmtp (Exim 4.90_1)
+        (envelope-from <marius@gnu.org>)
+        id 1krQ7S-0006FQ-Is; Mon, 21 Dec 2020 13:41:18 -0500
+Received: from host-37-191-236-253.lynet.no ([37.191.236.253]:55836 helo=localhost)
+        by fencepost.gnu.org with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.82)
+        (envelope-from <marius@gnu.org>)
+        id 1krQ7R-0001J1-Sk; Mon, 21 Dec 2020 13:41:18 -0500
+From:   marius@gnu.org
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        linux-bluetooth@vger.kernel.org, Marius Bakke <marius@devup.no>
+Subject: [PATCH v2] sbc_primitives: Fix build on non-x86.
+Date:   Mon, 21 Dec 2020 19:41:14 +0100
+Message-Id: <20201221184114.1300-1-marius@gnu.org>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <PH0PR11MB51269918A2B84A3120EBD8E4D3C00@PH0PR11MB5126.namprd11.prod.outlook.com>
+References: <PH0PR11MB51269918A2B84A3120EBD8E4D3C00@PH0PR11MB5126.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-In-Reply-To: <CANFp7mXdz8jYB0=tkj-mzWETo+M-Tx9ecTwEquh-JoDXRT54qw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-21.12.2020 20:58, Abhishek Pandit-Subedi пишет:
-> Hi Dmitry,
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/commit/?id=295fa2a5647b13681594bb1bcc76c74619035218
-> should fix this issue.
-> 
-> Your issue seems the same as the one I encountered -- the
-> SUSPEND_DISABLE bit (0x4) wasn't being cleared by the request
-> completion handler.
+From: Marius Bakke <marius@devup.no>
 
-Hello Abhishek,
+Don't call __builtin_cpu_init unless targeting i386 or x86_64.
+Otherwise we get an error at link time:
 
-It fixes the problem using today's linux-next, which already includes
-that commit, thank you.
+  CC       sbc/sbc_primitives.lo
+sbc/sbc_primitives.c: In function ‘sbc_init_primitives_x86’:
+sbc/sbc_primitives.c:596:2: warning: implicit declaration of function ‘__builtin_cpu_init’; did you mean ‘__builtin_irint’? [-Wimplicit-function-declaration]
+[...]
+  CCLD     src/sbcdec
+ld: sbc/.libs/libsbc-private.a(sbc_primitives.o): in function `sbc_init_primitives':
+sbc_primitives.c:(.text+0x3a30): undefined reference to `__builtin_cpu_init'
+---
+ sbc/sbc_primitives.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/sbc/sbc_primitives.c b/sbc/sbc_primitives.c
+index 97a75be..d8e166a 100644
+--- a/sbc/sbc_primitives.c
++++ b/sbc/sbc_primitives.c
+@@ -593,7 +593,9 @@ static int sbc_calc_scalefactors_j(
+ 
+ static void sbc_init_primitives_x86(struct sbc_encoder_state *state)
+ {
++#if defined(__x86_64__) || defined(__i386__)
+ 	__builtin_cpu_init();
++#endif
+ 
+ #ifdef SBC_BUILD_WITH_MMX_SUPPORT
+ 	if (__builtin_cpu_supports("mmx"))
+-- 
+2.29.2
+
