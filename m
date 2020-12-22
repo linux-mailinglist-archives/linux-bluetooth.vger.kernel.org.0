@@ -2,124 +2,93 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 952452E08CC
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Dec 2020 11:28:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DF122E08DB
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Dec 2020 11:33:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726737AbgLVK2O (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 22 Dec 2020 05:28:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59104 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726701AbgLVK2N (ORCPT
+        id S1726513AbgLVKcd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 22 Dec 2020 05:32:33 -0500
+Received: from smtprelay0236.hostedemail.com ([216.40.44.236]:57638 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725985AbgLVKcc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 22 Dec 2020 05:28:13 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70F4EC0613D6
-        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Dec 2020 02:27:40 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id l11so30844816lfg.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Dec 2020 02:27:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xYKgqNkzqvID3abMuiIagsqPFVJtBgJOUAqa/JQpSSg=;
-        b=Nk6NpbPTGkku1M0NX28sxZKbaBmuz8IXNnqjfXNm515tBPe0fXzr1lzpQfZpECZyI2
-         7WxBxk1i5W4jkKCd5YwAS+/xr19U6BggGadEeimcOfSyHsG2/E/mSUZxlnTvLwZXimc0
-         H0tS/0Hj7seta/yket+ld84SXkzlksMCatdsbvg8uksYYuWAplqzqr7eILm9ugpiHKgW
-         7Kgk1fJ1P7iV8Wy4JX3WUTnKpioJeil6rWNQarR22vyqnxNLGGNVHqPMqWwKYq1av//0
-         Q8GsCbp/RGCrcWNtqyWF+BwMdGHRM6XM2t9GhLAB4zgK3bm1YTpqevBSbMX+4ofKMNyf
-         0JHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xYKgqNkzqvID3abMuiIagsqPFVJtBgJOUAqa/JQpSSg=;
-        b=ARxNSx8js4paVTfo+Vfr//hvCl2U2IfuFBcG0XlM9t+eCYDGpUOnuhtERynJbITDMA
-         VclTec+Dbh/gKZWGXhXwzvjoGf9asU4p1z/c1cvkcXbYnBLq25JT0Z36fhUqgkGmmGKx
-         WmFDWRQleQLJz67q5vWsb1h3F3MJzheqcadpeZ4kuf0HBHGeHQqQU0AZbyrWVck+sbbl
-         n5Kog8p9InOU3TsiQfX86cIQZCZY/0zaDxZB09hPSAAvMfJ5KGTdrTbte4Lw4gVo7VPU
-         4WXGYngCfLlyeJXfdCs6QZZbpWgnQZt+WhcC9r607zB8N+tnVgJJ0P858KvFkQBduW1y
-         LM8Q==
-X-Gm-Message-State: AOAM533ctuJCO8CkOIt+BGPUdzU+Zr2ioXuUQ5ty9R9raLcqZQcv38eE
-        pCJT/ANkaESoTBmHXn/ygfyb7VHwIJBXesEN47Adzg==
-X-Google-Smtp-Source: ABdhPJwD+uqHfnLKSg4sZ7kz80VgF+uYXIEP3vI2UejybH/pY9fIpjnt+kPoxmAT1h64UITODeMQKsoXHAM63XzbtnY=
-X-Received: by 2002:a2e:a58b:: with SMTP id m11mr9103960ljp.329.1608632858745;
- Tue, 22 Dec 2020 02:27:38 -0800 (PST)
-MIME-Version: 1.0
-References: <20201216043335.2185278-1-apusaka@google.com> <20201216123317.v3.4.I215b0904cb68d68ac780a0c75c06f7d12e6147b7@changeid>
- <73E2D097-F8D4-4BFA-8EC1-C04B079F1BFC@holtmann.org> <CAJQfnxHrvnsLRDHNFWAN9uPJmWiTpE6x4YAmgs77KO6QQBFW7w@mail.gmail.com>
- <8EB5497C-1D36-42B5-946C-3CC60D6F98CB@holtmann.org>
-In-Reply-To: <8EB5497C-1D36-42B5-946C-3CC60D6F98CB@holtmann.org>
-From:   Archie Pusaka <apusaka@google.com>
-Date:   Tue, 22 Dec 2020 18:27:27 +0800
-Message-ID: <CAJQfnxG_pRP7m+MKqUEJKLOXGR2aaAXKaboUXrMx+540Xcsv2A@mail.gmail.com>
-Subject: Re: [PATCH v3 4/5] Bluetooth: advmon offload MSFT handle controller reset
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        Yun-Hao Chung <howardchung@google.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
+        Tue, 22 Dec 2020 05:32:32 -0500
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay08.hostedemail.com (Postfix) with ESMTP id 98DC7182CF665;
+        Tue, 22 Dec 2020 10:31:51 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:800:960:966:968:973:988:989:1260:1277:1311:1313:1314:1345:1437:1515:1516:1518:1534:1541:1593:1594:1711:1730:1747:1777:1792:2196:2199:2393:2553:2559:2562:2828:2896:2899:3138:3139:3140:3141:3142:3352:3865:3867:3868:3871:4250:4321:4385:5007:6119:10004:10400:10848:11026:11232:11658:11914:12043:12296:12297:12438:12555:12760:13069:13095:13161:13229:13311:13357:13439:14181:14394:14659:14721:21080:21433:21451:21611:21627:21740:21990:30054:30090,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
+X-HE-Tag: limit40_2008c822745f
+X-Filterd-Recvd-Size: 2725
+Received: from XPS-9350.home (unknown [47.151.137.21])
+        (Authenticated sender: joe@perches.com)
+        by omf18.hostedemail.com (Postfix) with ESMTPA;
+        Tue, 22 Dec 2020 10:31:50 +0000 (UTC)
+Message-ID: <45b260bfe6a3d3c11c48e76dd5de7fa40665154c.camel@perches.com>
+Subject: [PATCH] Bluetooth: btusb: Remove duplicate newlines from logging
+From:   Joe Perches <joe@perches.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>
+Date:   Tue, 22 Dec 2020 02:31:49 -0800
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.38.1-1 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Marcel,
+The bt_dev_<level> macros already append a newline.
 
-I've sent a new v5 patch to address this issue.
+Signed-off-by: Joe Perches <joe@perches.com>
+---
 
-Thanks,
-Archie
+The "No memory" message could be removed as bt_skb_alloc already does
+a dump_stack() on allocation failure.
 
-On Tue, 22 Dec 2020 at 18:03, Marcel Holtmann <marcel@holtmann.org> wrote:
->
-> Hi Archie,
->
-> >>> When the controller is powered off, the registered advertising monitor
-> >>> is removed from the controller. This patch handles the re-registration
-> >>> of those monitors when the power is on.
-> >>>
-> >>> Signed-off-by: Archie Pusaka <apusaka@chromium.org>
-> >>> Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-> >>> Reviewed-by: Yun-Hao Chung <howardchung@google.com>
-> >>>
-> >>> ---
-> >>>
-> >>> (no changes since v1)
-> >>>
-> >>> net/bluetooth/msft.c | 79 +++++++++++++++++++++++++++++++++++++++++---
-> >>> 1 file changed, 74 insertions(+), 5 deletions(-)
-> >>>
-> >>> diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-> >>> index f5aa0e3b1b9b..7e33a85c3f1c 100644
-> >>> --- a/net/bluetooth/msft.c
-> >>> +++ b/net/bluetooth/msft.c
-> >>> @@ -82,8 +82,15 @@ struct msft_data {
-> >>>      struct list_head handle_map;
-> >>>      __u16 pending_add_handle;
-> >>>      __u16 pending_remove_handle;
-> >>> +
-> >>> +     struct {
-> >>> +             u8 reregistering:1;
-> >>> +     } flags;
-> >>> };
-> >>
-> >> hmmm. Do you have bigger plans with this struct? I would just skip it.
-> >>
-> > This struct is also used in patch 5/5 to store the "enabled" status of
-> > the filter.
-> > Suspend/resume would need to enable/disable the filter, but it is not
-> > yet implemented in this patch series.
->
-> just do it without the nested structs. I think you are overdoing it here.
->
-> Regards
->
-> Marcel
->
+ drivers/bluetooth/btusb.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index b630a1d54c02..9ff920de8d26 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -1899,7 +1899,7 @@ static int btusb_setup_csr(struct hci_dev *hdev)
+ 		    le16_to_cpu(rp->lmp_subver) == 0x1012 &&
+ 		    le16_to_cpu(rp->hci_rev) == 0x0810 &&
+ 		    le16_to_cpu(rp->hci_ver) == BLUETOOTH_VER_4_0) {
+-			bt_dev_warn(hdev, "CSR: detected a fake CSR dongle using a Barrot 8041a02 chip, this chip is very buggy and may have issues\n");
++			bt_dev_warn(hdev, "CSR: detected a fake CSR dongle using a Barrot 8041a02 chip, this chip is very buggy and may have issues");
+ 
+ 			pm_runtime_allow(&data->udev->dev);
+ 
+@@ -1907,7 +1907,7 @@ static int btusb_setup_csr(struct hci_dev *hdev)
+ 			if (ret >= 0)
+ 				msleep(200);
+ 			else
+-				bt_dev_err(hdev, "Failed to suspend the device for Barrot 8041a02 receive-issue workaround\n");
++				bt_dev_err(hdev, "Failed to suspend the device for Barrot 8041a02 receive-issue workaround");
+ 
+ 			pm_runtime_forbid(&data->udev->dev);
+ 
+@@ -3724,7 +3724,7 @@ static int marvell_config_oob_wake(struct hci_dev *hdev)
+ 
+ 	skb = bt_skb_alloc(sizeof(cmd), GFP_KERNEL);
+ 	if (!skb) {
+-		bt_dev_err(hdev, "%s: No memory\n", __func__);
++		bt_dev_err(hdev, "%s: No memory", __func__);
+ 		return -ENOMEM;
+ 	}
+ 
+@@ -3733,7 +3733,7 @@ static int marvell_config_oob_wake(struct hci_dev *hdev)
+ 
+ 	ret = btusb_send_frame(hdev, skb);
+ 	if (ret) {
+-		bt_dev_err(hdev, "%s: configuration failed\n", __func__);
++		bt_dev_err(hdev, "%s: configuration failed", __func__);
+ 		kfree_skb(skb);
+ 		return ret;
+ 	}
+
