@@ -2,114 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 09ADC2E1541
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Dec 2020 03:49:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBBD52E1749
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Dec 2020 04:11:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729780AbgLWCtO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 22 Dec 2020 21:49:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40444 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728249AbgLWCtN (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 22 Dec 2020 21:49:13 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F000AC0613D3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Dec 2020 18:48:31 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id s15so3989573plr.9
-        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Dec 2020 18:48:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6wxceAbHrG+QCjBzTytmyNX2D15zjk1S0lgoPggdlJc=;
-        b=mJOdDEe6UetRm0FbrBpFf2xHVLf9wFF/j4376J4i6So9hVah1v5R4rDg7qUy3j3vD9
-         9H9wl12ICipiVBDq+Fft7KzhW9xg56dFK509tgIj38MupYLLquSZoD2030QkWZhl8BpO
-         +l8KJ4D+0re54622aMPmL4KHPLK5UoCMOlG34=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6wxceAbHrG+QCjBzTytmyNX2D15zjk1S0lgoPggdlJc=;
-        b=cD0nNepbBmTa2UKfR0ohDqNMtXMgittKH2XKTABxyaBVuB+lZaHn4mk2QMeeRHl63b
-         Ja4Kh8+ej1t/Ep3Mn/98q2hHpX5/Ww0ZneiufWKPT/LV3gb/3RipAwwyKQ5sBHX5/V4i
-         b0bsn+fBR7kbHNfpxEXm0dBWhT9i/UzkyNlYDL6+Zq67G1MgnRZM7eRj/7/rtFyMbcU9
-         2swZwIlI9uFeMSRmYyIFaXMODtWUOpmTQOsKVt098M2N1SCvEDx4siUxY8vb8mFaj+v2
-         QaQp0DMLs6tHsinh5FW0V/YkdCSfiKKeoCLqZAaRN/04fGhfxKGooLyiJCnIHidqtXT9
-         Mb1g==
-X-Gm-Message-State: AOAM531xq12+aFjnhWMU7wrSlsJl01P7wdWoP/HD+pXQ81gQEOpTMsv1
-        cRhFEemIYouJ6qhJFyShnBVpxw==
-X-Google-Smtp-Source: ABdhPJzF9RZeNCMANXrHlY53rXD4WdbfrHMtZS7GERUgLYC8iaBNClRJod251v2CIVdnaNYa6n6Oxg==
-X-Received: by 2002:a17:90a:6604:: with SMTP id l4mr24693719pjj.119.1608691711404;
-        Tue, 22 Dec 2020 18:48:31 -0800 (PST)
-Received: from apsdesk.mtv.corp.google.com ([2620:15c:202:1:7220:84ff:fe09:2b94])
-        by smtp.gmail.com with ESMTPSA id t36sm20149913pfg.55.2020.12.22.18.48.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Dec 2020 18:48:30 -0800 (PST)
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-To:     marcel@holtmann.org
-Cc:     chromeos-bluetooth-upstreaming@chromium.org,
-        linux-bluetooth@vger.kernel.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Daniel Winkler <danielwinkler@google.com>,
-        linux-kernel@vger.kernel.org,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Subject: [PATCH] Bluetooth: btrtl: Add null check in setup
-Date:   Tue, 22 Dec 2020 18:48:24 -0800
-Message-Id: <20201222184753.1.I9438ef1f79fa1132e74c67b489123291080b9a8c@changeid>
-X-Mailer: git-send-email 2.29.2.729.g45daf8777d-goog
+        id S1728562AbgLWDIW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 22 Dec 2020 22:08:22 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46328 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728296AbgLWCSs (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 22 Dec 2020 21:18:48 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9BE0C233F8;
+        Wed, 23 Dec 2020 02:17:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1608689862;
+        bh=ajCKYMbnkIdOVdjAjFrhbmX2dU14EdXyW5/KTaq2T7I=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=s58sm+qK67eTOvoBwU2qMv8uK9gAFZ6INbzIYexvPCxXVA/8wZ4mwLodgIdv5yD71
+         hlXZvbMb/6yHkkbfq6JBUQIFOS3W7qWt4IcRoKmhw0P9vn/OS3OvRZtGwadpYxhdF9
+         Qhbee8Q8XCkdJsycjwQxrPh6HIs1GwEX+XvnWV8BMlF6Cyo0V3KdGey2OebNPzqR3Q
+         yd9p5z7OKndY477EbkryQY6yhrOAJLL2itfCpLuDC3tBmTUCfow7Ubf7IxkXUn2itD
+         djfBl0q+Y+bgFXJ3d4bwUCECNkEFMis4ZIg2pwO4fJVaRb3Etl2sZcwbjVm5gGgdB3
+         g23Qi/yzhiZUQ==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 058/217] Bluetooth: btqca: Add valid le states quirk
+Date:   Tue, 22 Dec 2020 21:13:47 -0500
+Message-Id: <20201223021626.2790791-58-sashal@kernel.org>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20201223021626.2790791-1-sashal@kernel.org>
+References: <20201223021626.2790791-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-btrtl_dev->ic_info is only available from the controller on cold boot
-(the lmp subversion matches the device model and this is used to look up
-the ic_info). On warm boots (firmware already loaded),
-btrtl_dev->ic_info is null.
+From: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 
-Fixes: 05672a2c14a4 (Bluetooth: btrtl: Enable central-peripheral role)
+[ Upstream commit 547801380ec7e6104ea679f599d03c342b4b39a0 ]
+
+WCN3991 supports connectable advertisements so we need to add the valid
+le states quirk so the 'central-peripheral' role is exposed in
+userspace.
+
 Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ drivers/bluetooth/hci_qca.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
- drivers/bluetooth/btrtl.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index 1abf6a4d672734f..978f3c773856b05 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -719,16 +719,19 @@ int btrtl_setup_realtek(struct hci_dev *hdev)
- 	 */
- 	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 244b8feba5232..2d3f1f179a1e3 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -78,6 +78,7 @@ enum qca_flags {
  
--	/* Enable central-peripheral role (able to create new connections with
--	 * an existing connection in slave role).
--	 */
--	switch (btrtl_dev->ic_info->lmp_subver) {
--	case RTL_ROM_LMP_8822B:
--		set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
--		break;
--	default:
--		rtl_dev_dbg(hdev, "Central-peripheral role not enabled.");
--		break;
-+	if (btrtl_dev->ic_info) {
-+		/* Enable central-peripheral role (able to create new
-+		 * connections with an existing connection in slave role).
-+		 */
-+		switch (btrtl_dev->ic_info->lmp_subver) {
-+		case RTL_ROM_LMP_8822B:
-+			set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
-+			break;
-+		default:
-+			rtl_dev_dbg(hdev,
-+				    "Central-peripheral role not enabled.");
-+			break;
-+		}
+ enum qca_capabilities {
+ 	QCA_CAP_WIDEBAND_SPEECH = BIT(0),
++	QCA_CAP_VALID_LE_STATES = BIT(1),
+ };
+ 
+ /* HCI_IBS transmit side sleep protocol states */
+@@ -1780,7 +1781,7 @@ static const struct qca_device_data qca_soc_data_wcn3991 = {
+ 		{ "vddch0", 450000 },
+ 	},
+ 	.num_vregs = 4,
+-	.capabilities = QCA_CAP_WIDEBAND_SPEECH,
++	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
+ };
+ 
+ static const struct qca_device_data qca_soc_data_wcn3998 = {
+@@ -2017,11 +2018,17 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 		hdev->shutdown = qca_power_off;
  	}
  
- 	btrtl_free(btrtl_dev);
+-	/* Wideband speech support must be set per driver since it can't be
+-	 * queried via hci.
+-	 */
+-	if (data && (data->capabilities & QCA_CAP_WIDEBAND_SPEECH))
+-		set_bit(HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED, &hdev->quirks);
++	if (data) {
++		/* Wideband speech support must be set per driver since it can't
++		 * be queried via hci. Same with the valid le states quirk.
++		 */
++		if (data->capabilities & QCA_CAP_WIDEBAND_SPEECH)
++			set_bit(HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED,
++				&hdev->quirks);
++
++		if (data->capabilities & QCA_CAP_VALID_LE_STATES)
++			set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
++	}
+ 
+ 	return 0;
+ }
 -- 
-2.29.2.729.g45daf8777d-goog
+2.27.0
 
