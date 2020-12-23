@@ -2,98 +2,114 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 153382E1163
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Dec 2020 02:28:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E35792E156F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Dec 2020 03:58:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbgLWB0I (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 22 Dec 2020 20:26:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55946 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725931AbgLWB0H (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 22 Dec 2020 20:26:07 -0500
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D356C0613D3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Dec 2020 17:25:27 -0800 (PST)
-Received: by mail-qv1-xf36.google.com with SMTP id bd6so6913587qvb.9
-        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Dec 2020 17:25:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=8La0G01PE7fdhNttetHO6j51Pu6hO4cgpXreRnf/RXc=;
-        b=JCf7DcllOBuIqKSC9DpC2TSkDvj21lRQMUHnA+a0CFFgt78Z1GM2QyxDnyoqx1nDzA
-         ngWMdLeaVZQnRFubv7swrj+ZVIRW55dtuMB0VTk05a40TfZzYEpH/m2irTU4VknwLC7w
-         4LRe+rhZttMMD9g3YuUK0LYA+QujnWYaYxmqdH8iqCG123fI70kxbICt3wMRT32zk3JM
-         PGs4tfbclfPh6Ezr+6DrIi3nzemQS0tsJfZHsM+SGjjsWwrvGYGghvWSaR4zIRQGO80d
-         K5YAbB9JTLyY3cJr3u3iwdpjtPVijuQ9W1SVQLHUOF/58Zgyzrxg3/D+DheU1JLLSJ0N
-         XF+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=8La0G01PE7fdhNttetHO6j51Pu6hO4cgpXreRnf/RXc=;
-        b=piO++QRwfDw3e2fkuWbCMISJL3lesDfUfn0iF8Rf09R7rHSpgMiyRdkF/LeBmSvgsV
-         Aq62QiZAVdKZhPNyno77Y1hg2o9m7oEC0clqsenMM13drPI4BH/T2S+4tpPRvKCFBTW1
-         y9pBHA9mQVrjwqV9exgha6ILO7OnVsqWUqR9ATEqwVLC8BdqorVRPhgfUUSHgafbFpEW
-         WA7pBxXVq0ti+GRwaEY10f3j5IIxs4tvy7wZ8xkXu2gg7iHCs9c5iIO2yrPpNvnYS8Yq
-         z3cSrQl+3bl4QXAZngeSqLmWOq3908IoWgN0oS+M6zcyhS8M376FYaARpUkjuBTqDUJ3
-         3dSA==
-X-Gm-Message-State: AOAM532QEB5OHaADTgFcuaKAAIgnxL2oFahs06rgft3MLbNKuIrWrQQ7
-        WzXkWUemBGFqmiSPDkZOcKUREZbPoiyoDw==
-X-Google-Smtp-Source: ABdhPJwItRO13Zmdg22GpHB7UcEv7z6Bu3Fpv9z0M7Je/7kUN/eL5EEOyARaa4Hfk95Lg0KOTXag+Q==
-X-Received: by 2002:a05:6214:184a:: with SMTP id d10mr24741280qvy.41.1608686726188;
-        Tue, 22 Dec 2020 17:25:26 -0800 (PST)
-Received: from [172.17.0.2] ([20.186.46.92])
-        by smtp.gmail.com with ESMTPSA id z40sm9169355qtz.81.2020.12.22.17.25.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Dec 2020 17:25:25 -0800 (PST)
-Message-ID: <5fe29c85.1c69fb81.c9750.b446@mx.google.com>
-Date:   Tue, 22 Dec 2020 17:25:25 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============0960001453487779475=="
+        id S1729451AbgLWCVo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 22 Dec 2020 21:21:44 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49898 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729440AbgLWCVn (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 22 Dec 2020 21:21:43 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0C0F22256F;
+        Wed, 23 Dec 2020 02:21:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1608690087;
+        bh=BMOzuK7goc7lyIgUrqsjQrJDXK5vhvo9v2GD2jclSpE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=MYDvh5Mknk2y54AZ8WJTVXgk3n4v4cYO8I8+oEt2o9a9aVLRPVSPq9XOQt6ObZE+l
+         6sQIjL9aRZQbLa30hpCj+m6Hc23ngB5FSmrTHR/ZI9aAgFRu5FnfBrF3nsAOLp1W6E
+         bYaApyZ/WTu3c+P1iwlD8j2Pf9KK4y6X88slLZLxRaKXUeZbMNGUBK4ijNMZ4hvUak
+         9OQdoUbezISprbSKXuoQjq/BjLSh9KtPF0Lnb7ZNSfUDLvUyeXmtEx3C6fFTfmLHYn
+         C9XAMr36OCbStqablvSCQx9aQ4FsSJCLadFQoMCHqAsE/iHGr7BxBhCyJuCeYTi9M2
+         IqasO9GXlpa1g==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     =?UTF-8?q?Ole=20Bj=C3=B8rn=20Midtb=C3=B8?= <omidtbo@cisco.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 19/87] Bluetooth: hidp: use correct wait queue when removing ctrl_wait
+Date:   Tue, 22 Dec 2020 21:19:55 -0500
+Message-Id: <20201223022103.2792705-19-sashal@kernel.org>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20201223022103.2792705-1-sashal@kernel.org>
+References: <20201223022103.2792705-1-sashal@kernel.org>
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, hj.tedd.an@gmail.com
-Subject: RE: [1/3] tools/mgmt-tester: Update sample data for adv features
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20201223002633.187612-1-tedd.an@intel.com>
-References: <20201223002633.187612-1-tedd.an@intel.com>
+Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0960001453487779475==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Ole Bjørn Midtbø <omidtbo@cisco.com>
 
-This is automated email and please do not reply to this email!
+[ Upstream commit cca342d98bef68151a80b024f7bf5f388d1fbdea ]
 
-Dear submitter,
+A different wait queue was used when removing ctrl_wait than when adding
+it. This effectively made the remove operation without locking compared
+to other operations on the wait queue ctrl_wait was part of. This caused
+issues like below where dead000000000100 is LIST_POISON1 and
+dead000000000200 is LIST_POISON2.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=405549
+ list_add corruption. next->prev should be prev (ffffffc1b0a33a08), \
+	but was dead000000000200. (next=ffffffc03ac77de0).
+ ------------[ cut here ]------------
+ CPU: 3 PID: 2138 Comm: bluetoothd Tainted: G           O    4.4.238+ #9
+ ...
+ ---[ end trace 0adc2158f0646eac ]---
+ Call trace:
+ [<ffffffc000443f78>] __list_add+0x38/0xb0
+ [<ffffffc0000f0d04>] add_wait_queue+0x4c/0x68
+ [<ffffffc00020eecc>] __pollwait+0xec/0x100
+ [<ffffffc000d1556c>] bt_sock_poll+0x74/0x200
+ [<ffffffc000bdb8a8>] sock_poll+0x110/0x128
+ [<ffffffc000210378>] do_sys_poll+0x220/0x480
+ [<ffffffc0002106f0>] SyS_poll+0x80/0x138
+ [<ffffffc00008510c>] __sys_trace_return+0x0/0x4
 
----Test result---
+ Unable to handle kernel paging request at virtual address dead000000000100
+ ...
+ CPU: 4 PID: 5387 Comm: kworker/u15:3 Tainted: G        W  O    4.4.238+ #9
+ ...
+ Call trace:
+  [<ffffffc0000f079c>] __wake_up_common+0x7c/0xa8
+  [<ffffffc0000f0818>] __wake_up+0x50/0x70
+  [<ffffffc000be11b0>] sock_def_wakeup+0x58/0x60
+  [<ffffffc000de5e10>] l2cap_sock_teardown_cb+0x200/0x224
+  [<ffffffc000d3f2ac>] l2cap_chan_del+0xa4/0x298
+  [<ffffffc000d45ea0>] l2cap_conn_del+0x118/0x198
+  [<ffffffc000d45f8c>] l2cap_disconn_cfm+0x6c/0x78
+  [<ffffffc000d29934>] hci_event_packet+0x564/0x2e30
+  [<ffffffc000d19b0c>] hci_rx_work+0x10c/0x360
+  [<ffffffc0000c2218>] process_one_work+0x268/0x460
+  [<ffffffc0000c2678>] worker_thread+0x268/0x480
+  [<ffffffc0000c94e0>] kthread+0x118/0x128
+  [<ffffffc000085070>] ret_from_fork+0x10/0x20
+  ---[ end trace 0adc2158f0646ead ]---
 
-##############################
-Test: CheckPatch - PASS
-
-##############################
-Test: CheckGitLint - PASS
-
-##############################
-Test: CheckBuild - PASS
-
-##############################
-Test: MakeCheck - PASS
-
-
-
+Signed-off-by: Ole Bjørn Midtbø <omidtbo@cisco.com>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-Regards,
-Linux Bluetooth
+ net/bluetooth/hidp/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/net/bluetooth/hidp/core.c b/net/bluetooth/hidp/core.c
+index 253975cce943e..0cbd0bca971ff 100644
+--- a/net/bluetooth/hidp/core.c
++++ b/net/bluetooth/hidp/core.c
+@@ -1282,7 +1282,7 @@ static int hidp_session_thread(void *arg)
+ 
+ 	/* cleanup runtime environment */
+ 	remove_wait_queue(sk_sleep(session->intr_sock->sk), &intr_wait);
+-	remove_wait_queue(sk_sleep(session->intr_sock->sk), &ctrl_wait);
++	remove_wait_queue(sk_sleep(session->ctrl_sock->sk), &ctrl_wait);
+ 	wake_up_interruptible(&session->report_queue);
+ 	hidp_del_timer(session);
+ 
+-- 
+2.27.0
 
---===============0960001453487779475==--
