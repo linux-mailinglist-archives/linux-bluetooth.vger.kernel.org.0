@@ -2,104 +2,100 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EEEE2E35B4
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 28 Dec 2020 11:08:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 972622E35F9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 28 Dec 2020 11:43:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727170AbgL1KF7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 28 Dec 2020 05:05:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49080 "EHLO
+        id S1727202AbgL1Knb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 28 Dec 2020 05:43:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727167AbgL1KF6 (ORCPT
+        with ESMTP id S1726958AbgL1Knb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 28 Dec 2020 05:05:58 -0500
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98290C061798
-        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Dec 2020 02:05:18 -0800 (PST)
-Received: by mail-qv1-xf49.google.com with SMTP id f7so8914563qvr.4
-        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Dec 2020 02:05:18 -0800 (PST)
+        Mon, 28 Dec 2020 05:43:31 -0500
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CA46C061798
+        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Dec 2020 02:42:51 -0800 (PST)
+Received: by mail-il1-x12d.google.com with SMTP id r17so9078450ilo.11
+        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Dec 2020 02:42:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=SvJkmW8trmd30n6OPTE0R++9r6zKxsd0lzJkBum7ukc=;
-        b=IgzhkxAVYzoA3f8UsY5mMZNNiDfp4nJZaOSsx0ZpwQIhkTeZMDHB3gK7XcyTfm4mPM
-         YA4P7yzo/dZEqonv1DQX+49Nx/WJO4gaPh7MkDb7tVkZvq8vjFIXEMGGJiapguncyDgm
-         ww4058KxQ/CyAp1bbHYzrNpQgkkt1xg7j1YzCRbE1HrfMy13QKbeQ+IULAOgfyqHYKMM
-         JI3Up8T4LQJ4rfCVCda20JVOQtPrpmXsIRPOOiv8Q6MTFD9ORnMG4exnThyQxZNibCG/
-         VfivwIxO/Q2ZWsAWoR1fF5cOp87yJhEXCrQQmCeO3BIGca0cTLnJopoe/LsR/VrNu1Gn
-         Wbvg==
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=ESvq7JDM0AwglaYauxg9ODpqV9v4QxfRybd8x5hURkg=;
+        b=lOvWcQzaw8w6ghkH0mK9T4R4X26UsTDZBLcilKORUKYqEuJ0wxg5gbsd24FtTBGSjO
+         DIYcvfVBS17DAhJixSQ2OMadZBi9y++mJr2thbylANoyPky6d9FBdkbtAQeQMnMyBqsd
+         /lwNVMWm/cHxXP92N6gvgQofzvjUTS4w+8doLPE9whiX2DABUDLXb5aE82mYmFkpYwXu
+         t9T8opR4wLSgCMDmuX2WAiFldsQrgYdoat1ueKW2U5h0frW7g0wES8DVPg1rezeUs6D7
+         60bBEuhd+KUTPDLN8IgwQ/ElVkaOl1nAaFFuE4jD4SydUjkHedp88zvutXuQZWWnW04h
+         jsTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=SvJkmW8trmd30n6OPTE0R++9r6zKxsd0lzJkBum7ukc=;
-        b=GT/G6fftVm2uEt813Bk9ZtSDqQ9SszYK+PgtQJ0vqazmvBRVrppROhnLXuOYPJbQ4t
-         CDIQwk9j/QkjTpwGfEwdJhSKzlSdMaeRtSkbjOcpJZ2pebLTa6eciCICNDQBmtJ2qf7g
-         pwErpVLP7GA25sxf6i+GFFzDzIynrx4ln6Sqt5X24zIV8MAmrB36lS0qcCpndHn2L9G9
-         3RTcO/EkGSCuJ/vhH6DQYTjuuKPPghsySZiTrMqtlUF0r2CAvEwKWQ4prvx/ExVmuhXB
-         ac2pAs8qAVmuj6NUGMuWiYsIX08tDBNikUHwhzisVZQqdPVuawk9SMpuc8Zgpe0eAvj/
-         l+RQ==
-X-Gm-Message-State: AOAM533ADt6+N182ISxga4HVYrigBh+wmYbyVY8rOF0qZ328Ilgnww6b
-        ADGSUHJlyXNnbJf0lzREUsTolA6IIlePAycYpjzWM/us+yLjftnm4/CaaZg7stZo70d7Hi/f4tM
-        E+HkyTBxkMvuZSvzLZ9mcQ9cZrC7ZlilbW4QF0SFBt5eX16wiYQiP7CGeTjVvp7A9bcziVxbSuw
-        wLUj3ZzI/TO58=
-X-Google-Smtp-Source: ABdhPJzroEoHfBGg7a7H3VLq0N7g56N4FsjLSJYGBKZyJZZT14U3fQiKEyKmbNYWreIanUwSlbOFUFoyrswQ5sywsg==
-Sender: "howardchung via sendgmr" 
-        <howardchung@howardchung-p920.tpe.corp.google.com>
-X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:f693:9fff:fef4:4e45])
- (user=howardchung job=sendgmr) by 2002:a0c:f283:: with SMTP id
- k3mr46508393qvl.48.1609149917733; Mon, 28 Dec 2020 02:05:17 -0800 (PST)
-Date:   Mon, 28 Dec 2020 18:04:58 +0800
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=ESvq7JDM0AwglaYauxg9ODpqV9v4QxfRybd8x5hURkg=;
+        b=Lx6bAvSTmYcMoPQifq6FNNz7srNm1EHGCae/0IlGzahLIx8u4Ma2sEHA9jOk9DM2St
+         qMcwhYHOOGtR48pHyHDIIlF2rda7E4CRmg1RrpUEBH/naTUqcoAJM8cEEOBMLFXirRv3
+         LaGQ7ZZCo2IeTCRv4vv42FHu0uYMoNlRHWZnWR8tWm5K4M5vgmpEqXouaEFa+9DECRiG
+         X1EWBP9584EEnp0vG8XJeg6IFIKtwYBBgDBV1ZtYDz+n4fGooH4uLxFIn+aT/ybipYsR
+         /ZcHbKnxJ8ldrov2bdd//7fzdwqhu+68vmbETzYIvw0hRPlB/Gqg6tKSSw0urKPQ/rkL
+         Pryg==
+X-Gm-Message-State: AOAM533DqBCmrtbzGFlA8TT1ysAVUH1cqdcUOiEIQ973qrge1wY+Rx/0
+        HDGCfZYOCLtUE6lD65vpcHGwJgoqFYE=
+X-Google-Smtp-Source: ABdhPJxpdLwrEPT5pbjj2fpRU+mI/M1t3vB/iUiHaDIzgjbz782OR4LDyRZdz9JisfLj3ovQiSMZew==
+X-Received: by 2002:a92:c6c3:: with SMTP id v3mr43161060ilm.281.1609152170347;
+        Mon, 28 Dec 2020 02:42:50 -0800 (PST)
+Received: from [172.17.0.2] ([137.116.58.25])
+        by smtp.gmail.com with ESMTPSA id o11sm27067038ilt.23.2020.12.28.02.42.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Dec 2020 02:42:49 -0800 (PST)
+Message-ID: <5fe9b6a9.1c69fb81.948f8.694f@mx.google.com>
+Date:   Mon, 28 Dec 2020 02:42:49 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============4355444511963207314=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, howardchung@google.com
+Subject: RE: [Bluez,v2,1/4] shared/mgmt: Add supports of parsing mgmt tlv list
+Reply-To: linux-bluetooth@vger.kernel.org
 In-Reply-To: <20201228180429.Bluez.v2.1.Ie32770d0eed2e7739ce9d17d920766fb6aee8583@changeid>
-Message-Id: <20201228180429.Bluez.v2.4.I43884adadc00a5095dd03d2261a71dc2ba80d986@changeid>
-Mime-Version: 1.0
 References: <20201228180429.Bluez.v2.1.Ie32770d0eed2e7739ce9d17d920766fb6aee8583@changeid>
-X-Mailer: git-send-email 2.29.2.729.g45daf8777d-goog
-Subject: [Bluez PATCH v2 4/4] shared/mgmt: Fix memory leak in mgmt_tlv_list
-From:   Howard Chung <howardchung@google.com>
-To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        luiz.dentz@gmail.com
-Cc:     mcchou@chromium.org, mmandlik@chromium.org, apusaka@chromium.org,
-        Howard Chung <howardchung@google.com>
-Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch freed the mgmt_tlv properly in mgmt_tlv_list_free.
+--===============4355444511963207314==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
 
-Reviewed-by: apusaka@chromium.org
-Reviewed-by: mcchou@chromium.org
----
+VGhpcyBpcyBhdXRvbWF0ZWQgZW1haWwgYW5kIHBsZWFzZSBkbyBub3QgcmVwbHkgdG8gdGhpcyBl
+bWFpbCEKCkRlYXIgc3VibWl0dGVyLAoKVGhhbmsgeW91IGZvciBzdWJtaXR0aW5nIHRoZSBwYXRj
+aGVzIHRvIHRoZSBsaW51eCBibHVldG9vdGggbWFpbGluZyBsaXN0LgpUaGlzIGlzIGEgQ0kgdGVz
+dCByZXN1bHRzIHdpdGggeW91ciBwYXRjaCBzZXJpZXM6ClBXIExpbms6aHR0cHM6Ly9wYXRjaHdv
+cmsua2VybmVsLm9yZy9wcm9qZWN0L2JsdWV0b290aC9saXN0Lz9zZXJpZXM9NDA2NzA5CgotLS1U
+ZXN0IHJlc3VsdC0tLQoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IENoZWNr
+UGF0Y2ggLSBGQUlMCk91dHB1dDoKYnRtZ210OiBBZGQgY29tbWFuZCBzZXQtc3lzY29uZmlnCldB
+Uk5JTkc6TkFLRURfU1NDQU5GOiB1bmNoZWNrZWQgc3NjYW5mIHJldHVybiB2YWx1ZQojNDI6IEZJ
+TEU6IHRvb2xzL2J0bWdtdC5jOjE4MTg6CisJCWlmICghc3NjYW5mKGlucHV0ICsgaSAqIDIsICIl
+MmhoeCIsICZ2YWx1ZVtpXSkpCisJCQlyZXR1cm4gZmFsc2U7CgotIHRvdGFsOiAwIGVycm9ycywg
+MSB3YXJuaW5ncywgMTIxIGxpbmVzIGNoZWNrZWQKCk5PVEU6IEZvciBzb21lIG9mIHRoZSByZXBv
+cnRlZCBkZWZlY3RzLCBjaGVja3BhdGNoIG1heSBiZSBhYmxlIHRvCiAgICAgIG1lY2hhbmljYWxs
+eSBjb252ZXJ0IHRvIHRoZSB0eXBpY2FsIHN0eWxlIHVzaW5nIC0tZml4IG9yIC0tZml4LWlucGxh
+Y2UuCgoiW1BBVENIXSBidG1nbXQ6IEFkZCBjb21tYW5kIHNldC1zeXNjb25maWciIGhhcyBzdHls
+ZSBwcm9ibGVtcywgcGxlYXNlIHJldmlldy4KCk5PVEU6IElnbm9yZWQgbWVzc2FnZSB0eXBlczog
+Q09NTUlUX01FU1NBR0UgQ09NUExFWF9NQUNSTyBDT05TVF9TVFJVQ1QgRklMRV9QQVRIX0NIQU5H
+RVMgTUlTU0lOR19TSUdOX09GRiBQUkVGRVJfUEFDS0VEIFNQTElUX1NUUklORyBTU0NBTkZfVE9f
+S1NUUlRPCgpOT1RFOiBJZiBhbnkgb2YgdGhlIGVycm9ycyBhcmUgZmFsc2UgcG9zaXRpdmVzLCBw
+bGVhc2UgcmVwb3J0CiAgICAgIHRoZW0gdG8gdGhlIG1haW50YWluZXIsIHNlZSBDSEVDS1BBVENI
+IGluIE1BSU5UQUlORVJTLgoKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwpUZXN0OiBD
+aGVja0dpdExpbnQgLSBQQVNTCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDog
+Q2hlY2tCdWlsZCAtIEZBSUwKT3V0cHV0Ogp0b29scy9idG1nbXQuYzogSW4gZnVuY3Rpb24g4oCY
+cmVhZF9zeXNjb25maWdfcnNw4oCZOgp0b29scy9idG1nbXQuYzoxNzY5OjE5OiBlcnJvcjogdW51
+c2VkIHZhcmlhYmxlIOKAmGVudHJ54oCZIFstV2Vycm9yPXVudXNlZC12YXJpYWJsZV0KIDE3Njkg
+fCAgc3RydWN0IG1nbXRfdGx2ICplbnRyeTsKICAgICAgfCAgICAgICAgICAgICAgICAgICBefn5+
+fgpjYzE6IGFsbCB3YXJuaW5ncyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycwptYWtlWzFdOiAqKiog
+W01ha2VmaWxlOjY3OTI6IHRvb2xzL2J0bWdtdC5vXSBFcnJvciAxCm1ha2U6ICoqKiBbTWFrZWZp
+bGU6NDAyMzogYWxsXSBFcnJvciAyCgoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRl
+c3Q6IE1ha2VDaGVjayAtIFNLSVBQRUQKT3V0cHV0OgpjaGVja2J1aWxkIG5vdCBzdWNjZXNzCgoK
+Ci0tLQpSZWdhcmRzLApMaW51eCBCbHVldG9vdGgKCg==
 
-Changes in v2:
-- Fix incompatible pointer type error of mgmt_tlv_free
-
- src/shared/mgmt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/src/shared/mgmt.c b/src/shared/mgmt.c
-index dc8107846668..0d0c957709d7 100644
---- a/src/shared/mgmt.c
-+++ b/src/shared/mgmt.c
-@@ -588,14 +588,15 @@ static struct mgmt_tlv *mgmt_tlv_new(uint16_t type, uint8_t length,
- 	return entry;
- }
- 
--static void mgmt_tlv_free(struct mgmt_tlv *entry)
-+static void mgmt_tlv_free(void *data)
- {
-+	struct mgmt_tlv *entry = data;
- 	free(entry);
- }
- 
- void mgmt_tlv_list_free(struct mgmt_tlv_list *tlv_list)
- {
--	queue_destroy(tlv_list->tlv_queue, NULL);
-+	queue_destroy(tlv_list->tlv_queue, mgmt_tlv_free);
- 	free(tlv_list);
- }
- 
--- 
-2.29.2.729.g45daf8777d-goog
-
+--===============4355444511963207314==--
