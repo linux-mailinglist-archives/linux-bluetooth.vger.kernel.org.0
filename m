@@ -2,99 +2,143 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B04372EF79F
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Jan 2021 19:46:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 238F12EF7D7
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Jan 2021 20:05:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728326AbhAHSpw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 8 Jan 2021 13:45:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38374 "EHLO
+        id S1728692AbhAHTFG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 8 Jan 2021 14:05:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727378AbhAHSpw (ORCPT
+        with ESMTP id S1728412AbhAHTFG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 8 Jan 2021 13:45:52 -0500
-Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5C4BC061380
-        for <linux-bluetooth@vger.kernel.org>; Fri,  8 Jan 2021 10:45:11 -0800 (PST)
-Received: by mail-vs1-xe33.google.com with SMTP id j140so6073027vsd.4
-        for <linux-bluetooth@vger.kernel.org>; Fri, 08 Jan 2021 10:45:11 -0800 (PST)
+        Fri, 8 Jan 2021 14:05:06 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420A6C061380
+        for <linux-bluetooth@vger.kernel.org>; Fri,  8 Jan 2021 11:04:26 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id a188so6812307pfa.11
+        for <linux-bluetooth@vger.kernel.org>; Fri, 08 Jan 2021 11:04:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=RE5qIkPBb5P73Uikw5zHxGDGdP5wktp/pXCbdIpYDOA=;
-        b=EdFID7NC+wbrF5quCGB1qe8seo/cxFf9wbxxnchF4SPwNKH1vj0QsjM4iUIB/mz37g
-         pqpZc6OFfE8FYMalw5YUt+/ooOEoEqlpkH9CltbC6Rgsg6cqiudfW7VmbEhVArHT79oM
-         Ff1ogtbK+IJxS3P1hcgvuKdN5LG7fk6nd4L2GIlPePUkXGCHv71fe2ESjcUdDQEM4hy5
-         lkwhZdg8fAnwhG3lqDWCY625jf9//rpRnujx21uM7R1wsCwwBpqnC6UZt/EqW1yJWLMR
-         aqowKwOsJ2ie7N0wt1B+8ooLm38h8yUYSsXZs8e4V/7STtvm7C2rNnk3jN6w9r48ANzr
-         cwwQ==
+        bh=Ylsb5NyQ3oFVpAQCIHeIiDlXNUKeqObj9MTroL10KcE=;
+        b=e/+XPyOe4wM6H9kdhmiWFRZiKzcXFkXmj5+2yeRfVxzvx3oLvXBcAJzXQtpUYEoz6d
+         iFCBUBIA0eVkt9g1VVWwc44IgP2j4dNWpBNMobeYxh3tBS1f/tozgRmom+tIo3QwO5C6
+         31IDJNy5nnboVoK8/iWTafNKIs+bTdL/7I7XMamq0fzypoYzFaJb20tNJ8lFWaStEJ4h
+         6WqNk5VtbQ7y9hF5k5RhL113cgqeE8E9oJnvjV6sx8vLLbK0XLuv1JZopgMuL3Uxs2Cg
+         6gcRNz+64P6EQM3IQoDfHf+NF5nLx9qDY9o7YE4Xjm60rZ3/hE+c2xYV/cmHhNQYAIcu
+         Dirg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to:content-transfer-encoding;
-        bh=RE5qIkPBb5P73Uikw5zHxGDGdP5wktp/pXCbdIpYDOA=;
-        b=ZyIrLWW5RUXRhpqHFW9PUS4DDYpEhRChh6xlk8RQJ1YadA2OZml5UQagy5B21yOgVM
-         mChqtGzJylBEfs9uvyt8O1Pgn5mC5yrBmTuzd1/NNGZrZXZA5U62DAt0FyMFsPCLsNyd
-         NCqO5OwG4UcxWfk2LhKa0mb2kXS4Wbjmu4eX953R1s2xReolSynQuFXBJerrSGrqxBjj
-         6dKpFMJfm3qsXcGS14u+1g8b5A8HBfwou2fvE4IzbDKwOKLFT1k+3vYWt+gVk1S+i4j+
-         u2nA15+fzCulmy0AtBXQzo9v9YrtzTKL99XkxD4DtBQCKq4Mb9uG+uDQMzC8qPys+Td4
-         0XmA==
-X-Gm-Message-State: AOAM5319x5qtpG/l0Y/YB3LozJOsIn4eACOgNKiJx9yPkxu0BiIyEJu+
-        zfya9IVJhpZ7hi4hBbJksIBcXJgDU3Gdd77vLjE=
-X-Google-Smtp-Source: ABdhPJxtCi+fDjvqq3sCLhskYV8nRnE3YqqJJB0WoLip9lZ6+b9DIIaQRlXc82hO7qNLZIogajqw+SsORe8MJFNENk8=
-X-Received: by 2002:a67:fd7c:: with SMTP id h28mr4296259vsa.29.1610131510958;
- Fri, 08 Jan 2021 10:45:10 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ylsb5NyQ3oFVpAQCIHeIiDlXNUKeqObj9MTroL10KcE=;
+        b=TPRM6HhXFt5W79oDC9RXBQkNgJ4K575OXnpJ57/GWBefgycehlElRBzKRehZB8Pb4j
+         ArfQNmwiesHEy3J4B7kAeZkv7ot1TFg85iZt6DMSVchHTy0+jdVbr6gR1hGRAHUjBOVV
+         h1d6ED2YF5gW/De8M/EUXiOacqaSpCpzXFkZ4T2+uR2VOyfgmEMWESyHIkhNoMbAMKPF
+         ihIQsTLXe2kkPyfFiJLaUcz1yFPEb/yBuiIlvW9ExEIAaNdybSv3LmC3C66OrGTGeAoz
+         v5izQ17B9Qj/cpYFmrwsxWmVn3SzSo5oUcQrmgBD1SYx1ocZuRMolRigs1rGZT4SgLiB
+         MI/A==
+X-Gm-Message-State: AOAM530b+Ssq44/FR4nIj06OKzT9S4kFqEbzyesZmobB7gAfJyD26vES
+        OWkQm7Fj8TyPqB0Ok2neTWCMMc2/PLU=
+X-Google-Smtp-Source: ABdhPJygiCUXULT60AgeL1a1rPl77W5iDwTkYkem3MeboQSbn4ndiD63xxxmIGjKZEuN9UQs92AeJQ==
+X-Received: by 2002:a65:458d:: with SMTP id o13mr8371595pgq.450.1610132665515;
+        Fri, 08 Jan 2021 11:04:25 -0800 (PST)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id g16sm9304181pfh.187.2021.01.08.11.04.24
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jan 2021 11:04:24 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/3] util: Introduce util_debug_va
+Date:   Fri,  8 Jan 2021 11:04:21 -0800
+Message-Id: <20210108190423.4185474-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Sender: mrpaulmartinatmsoffice@gmail.com
-Received: by 2002:ab0:2a43:0:0:0:0:0 with HTTP; Fri, 8 Jan 2021 10:45:10 -0800 (PST)
-From:   Mike Uba <mikeuba1975@gmail.com>
-Date:   Fri, 8 Jan 2021 10:45:10 -0800
-X-Google-Sender-Auth: PGsWndoTinKFoLFaP5f4eGgcqJc
-Message-ID: <CANVOMg6wkRWPUsTP=4AmtJpHH_189kqKO-9i0sbjzq1Uk5+r0w@mail.gmail.com>
-Subject: Liebes Betrugsopfer
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Indonesiens Korruptionsbek=C3=A4mpfung
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Kommission (Indonesisch: Komisi Pemberantasan Korupsi)
+This introduces util_debug_va which can take a va_list that enables
+callers to create wrapper functions if they need to.
+---
+ src/shared/util.c | 19 ++++++++++++++-----
+ src/shared/util.h |  4 ++++
+ 2 files changed, 18 insertions(+), 5 deletions(-)
 
+diff --git a/src/shared/util.c b/src/shared/util.c
+index 525302164..9c2054211 100644
+--- a/src/shared/util.c
++++ b/src/shared/util.c
+@@ -15,7 +15,6 @@
+ #define _GNU_SOURCE
+ #include <stdio.h>
+ #include <ctype.h>
+-#include <stdarg.h>
+ #include <stdbool.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+@@ -42,20 +41,30 @@ void *btd_malloc(size_t size)
+ 	return NULL;
+ }
+ 
++void util_debug_va(util_debug_func_t function, void *user_data,
++				const char *format, va_list va)
++{
++	char str[78];
++
++	if (!function || !format)
++		return;
++
++	vsnprintf(str, sizeof(str), format, va);
++
++	function(str, user_data);
++}
++
+ void util_debug(util_debug_func_t function, void *user_data,
+ 						const char *format, ...)
+ {
+-	char str[78];
+ 	va_list ap;
+ 
+ 	if (!function || !format)
+ 		return;
+ 
+ 	va_start(ap, format);
+-	vsnprintf(str, sizeof(str), format, ap);
++	util_debug_va(function, user_data, format, ap);
+ 	va_end(ap);
+-
+-	function(str, user_data);
+ }
+ 
+ void util_hexdump(const char dir, const unsigned char *buf, size_t len,
+diff --git a/src/shared/util.h b/src/shared/util.h
+index 6fb702797..d6de55885 100644
+--- a/src/shared/util.h
++++ b/src/shared/util.h
+@@ -10,6 +10,7 @@
+ 
+ #include <stdint.h>
+ #include <stdlib.h>
++#include <stdarg.h>
+ #include <alloca.h>
+ #include <byteswap.h>
+ #include <string.h>
+@@ -89,6 +90,9 @@ void *btd_malloc(size_t size);
+ 
+ typedef void (*util_debug_func_t)(const char *str, void *user_data);
+ 
++void util_debug_va(util_debug_func_t function, void *user_data,
++				const char *format, va_list va);
++
+ void util_debug(util_debug_func_t function, void *user_data,
+ 						const char *format, ...)
+ 					__attribute__((format(printf, 3, 4)));
+-- 
+2.26.2
 
-Liebes Betrugsopfer
-
-Ihr Name geh=C3=B6rt zu den Betrugsopfern, die im Begriff sind, eine
-Ausgleichszahlung f=C3=BCr die Gelder zu leisten, die wir von den
-Betr=C3=BCgern, die wir in unserer Obhut haben, zur=C3=BCckgefordert haben.=
- Der
-Grund, warum wir Sie =C3=BCber diesen Brief kontaktieren, ist, dass Ihr
-Name uns nach ernsthaften Ermittlungen von einem der Betr=C3=BCger in
-unserem Haftraum mitgeteilt wurde und unser Ziel darin besteht, alle
-verlorenen Gelder an seinen rechtm=C3=A4=C3=9Figen Eigent=C3=BCmer zur=C3=
-=BCckzuerstatten.
-
-Es wird Ihnen hiermit empfohlen, Ihre Daten unverz=C3=BCglich an dieses
-B=C3=BCro zu best=C3=A4tigen, damit wir diese an die zust=C3=A4ndige Beh=C3=
-=B6rde zur
-sofortigen Freigabe Ihrer Ausgleichsmittel an Sie weiterleiten k=C3=B6nnen.
-
-Vollst=C3=A4ndiger Name:
-
-Wohnadresse:
-
-Sex:
-
-Alter:
-
-Besetzung:
-
-Direkte Telefonnummer:
-
-Herr Michael Ub
-F=C3=BCr: Unabh=C3=A4ngige Kommission f=C3=BCr Korruptionspraktiken in Indo=
-nesien
-Korruptionsbek=C3=A4mpfung der KPK
-l
