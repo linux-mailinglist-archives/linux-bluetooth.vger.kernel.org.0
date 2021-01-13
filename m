@@ -2,62 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FA592F478D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 Jan 2021 10:32:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19FA42F478E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 Jan 2021 10:32:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725781AbhAMJ0d (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 13 Jan 2021 04:26:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56382 "EHLO
+        id S1726814AbhAMJ0s (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 13 Jan 2021 04:26:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725372AbhAMJ0d (ORCPT
+        with ESMTP id S1726700AbhAMJ0s (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 13 Jan 2021 04:26:33 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C7C0C061575
-        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Jan 2021 01:25:53 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id c1so876792pjo.6
-        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Jan 2021 01:25:53 -0800 (PST)
+        Wed, 13 Jan 2021 04:26:48 -0500
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 273A4C061786
+        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Jan 2021 01:26:08 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id v187so249949ybv.21
+        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Jan 2021 01:26:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=sender:date:message-id:mime-version:subject:from:to:cc;
-        bh=0rHTOkpzm5V1/jxGrAGt51exUDtofeZfYZnONSZz490=;
-        b=qXqmxk6JTkvOHV4ywRjOGVg2FggX1Ryo83cCojEDBI9jkmdzYEIgthiZ1vI4knxpcJ
-         +vZVvC5sLQSaauSG503p37J0/qrL7LN5jUELUBuBeXW1AdqqeDab4VBTVA5oW0JZKOD3
-         0egpSS3nhKaKWZebeiF30VhA65VbMviq4zoIu7O/XylFVCe4O3zZXaSU16b7Hy1jixtM
-         6pNinLdrFbJXJAvVUGmRYzLx7FrHGGY2dSJ7MLDV2N9pxDEstOhc92erhnJXfqMP+5NT
-         2c8bZO1m2rP624br/n1+/TITuVIxdDnB4w8Pk9ztKFHhforL2q/N/7jlx171zoQqF+7q
-         ARxw==
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=SRa8dd5e37oxGYqqIqTF7B45ms6xLoBbhxXPvy7fdvc=;
+        b=pURfbiieIZRKg81fdGT9egNRU/h09Itwt/ALFhqTaKXUNcq4Z7fKWJkVSzSRR+OBLw
+         1UL3q0XoYysaei7/UEi7/zS8uqG5/94FEpteMDthOiSrJSJoo6WnPTS9R1AgWlwr6ekl
+         IUncysHR6HaTY3flf9si/1uXNtPpMilk+k/hrjor3VQhQ0M639zJS/RvkGiwEuxrMCnh
+         9buqD/Q6oEifDs7OQKs1UXweXdIiCz6k7KOql9BbPIgMlkoWnF1gEpCJwjVciTLs+iCR
+         DXXUhdXWfK96ADBQXJEjYZG8dQsyOQJDgAQ9J0iHQZsI0wjCK4CFaATg0UcUchFupmvT
+         uEZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
-         :to:cc;
-        bh=0rHTOkpzm5V1/jxGrAGt51exUDtofeZfYZnONSZz490=;
-        b=gNt3ZLu8qf+kuqUr2xMv2rdgXFLV4sJhiHA61p4MrQ8I1RwOG094psa0it+gyPyIL0
-         zD1lJcXUYoKuP8EpTJSPovR24ezdPc9l5dnhxWJmhAQLHOuEoZx/LXCEIHnuTcM9Agam
-         te6rRn4zg1DYATBbPpubsUBAelJ8Zv4isP9dHvgh2bKI2hRk0JOuR79OUNYXl8rmS4iZ
-         Cj8+4gJ0c2mA1cz3DlRxmK/M81DTEwCzPEHb5ZIeUyZA9bI0Dkp3SIzrskGopbnDOx6B
-         6l7MxRr7AjNgBCTcS0J5bSOqUPhGXoeq5jxb9Tv2OPBfi7K7lZKgtdHWUbq4v4rC2TdD
-         S7zA==
-X-Gm-Message-State: AOAM531gcIVKfcsRyTIokpydZZAcEGHwYmXBaXovaNvB98lnzoH2hHci
-        t3PeB7XYefi+jbGHmXRlbf6FFQoteF7J0BtJPxM49tLOzkYWNrIo8+urUPM4cIALHvbO7nK7DPn
-        BxbQVGqNPG4xOyWWa2gxG/8V0nEHpB+0zSXcgLUMPxNxY3qxGGqsJRgbmxw9/wHw6PdssM2M+3F
-        2S
-X-Google-Smtp-Source: ABdhPJy0rJuTH4y3dIpKYEGkq72R6orIi7U+FUHjCIcvNY/DzBYXGVGx9oeUXh0Fs5fr6ktxQ/RQSRmPCimi
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=SRa8dd5e37oxGYqqIqTF7B45ms6xLoBbhxXPvy7fdvc=;
+        b=ebxINhLi/ppzJ2nYmmkXlEGO1mmOilYBtSW13gvff75DUG6JIki4Jdl5dnmJR4rh7b
+         kmYa+1Pxa9qAppjaodrb1su4Ihq+p2R+nGNNFve136ImbmWszp4WPRBJvjGKYUvnFER4
+         W2RFxJwp+tF9WzlZCsoka8XmONlWyursTGoW+SGgIt2bIm5AjO/gpt1MZ4uVT7NNvGrV
+         KfG09bj57Bci7sRhexSuNg9o+p9OtY3LYLaRQmkh85XMVHSjo3law88sVZZ4Uf3+JX/G
+         cS9AbUv8FPzoM+q0NDoRRW37LAH9I1zyxvTzkJcZBBjc8VoyoQ8ShncUAFmix+Nhehhb
+         oE5w==
+X-Gm-Message-State: AOAM531qra956ZhMr8F6+fGPLGkTGr3OY0x9bvKAefci6Hx4ErKhJCt1
+        D8vFdkKDk+DoYRLH1gbbKjbIv4YnFRDz9JFUvXBLYEjYoq4i8rHb/E+JAQV1N4CQ5oBYek0Y4iZ
+        FB0TytbqgjI2qSJAQ1XcwfdTauC7Pb65EtL6VCJJ2AY50ullUMDb0DRscBJOtNy0fsbYE6B+u/a
+        DX
+X-Google-Smtp-Source: ABdhPJwFKCzl58cnZ3Os/Ykp+/lEEiGxTg+k46rnAG0j5joVJQfHgFnPqVKoHoop3gS2Mpfdw+vZo2DiE88z
 Sender: "apusaka via sendgmr" <apusaka@apusaka-p920.tpe.corp.google.com>
 X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:b:f693:9fff:fef4:2347])
- (user=apusaka job=sendgmr) by 2002:a17:90a:8b94:: with SMTP id
- z20mr1074320pjn.1.1610529952067; Wed, 13 Jan 2021 01:25:52 -0800 (PST)
-Date:   Wed, 13 Jan 2021 17:25:30 +0800
-Message-Id: <20210113092534.2771034-1-apusaka@google.com>
+ (user=apusaka job=sendgmr) by 2002:a25:5a04:: with SMTP id
+ o4mr1499479ybb.269.1610529967306; Wed, 13 Jan 2021 01:26:07 -0800 (PST)
+Date:   Wed, 13 Jan 2021 17:25:32 +0800
+In-Reply-To: <20210113092534.2771034-1-apusaka@google.com>
+Message-Id: <20210113172337.Bluez.v1.1.I90bb4b25451e7f726fc2c8771cfe642b16312ce3@changeid>
 Mime-Version: 1.0
+References: <20210113092534.2771034-1-apusaka@google.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7-goog
-Subject: [Bluez PATCH v1 0/5] Support advertising monitor add pattern with
- RSSI opcode
+Subject: [Bluez PATCH v1 1/5] lib/mgmt: Adding Add Adv Patterns Monitor RSSI opcode.
 From:   Archie Pusaka <apusaka@google.com>
 To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>
+        Archie Pusaka <apusaka@chromium.org>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        Yun-Hao Chung <howardchung@google.com>,
+        Manish Mandlik <mmandlik@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
@@ -65,32 +70,42 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Archie Pusaka <apusaka@chromium.org>
 
-Hi linux-bluetooth,
+The new op is to utilize RSSI in advertisement monitor
 
-This series of patches adds a new MGMT command for adding a monitor
-with RSSI parameter. Changes are focused on passing parameters to
-the kernel via btmgmt and bluetoothctl.
+Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+Reviewed-by: Yun-Hao Chung <howardchung@google.com>
+Reviewed-by: Manish Mandlik <mmandlik@chromium.org>
+---
 
-PTAL and thanks for your feedback!
-Archie
+ lib/mgmt.h | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-
-Archie Pusaka (5):
-  lib/mgmt: Adding Add Adv Patterns Monitor RSSI opcode.
-  src/adv_monitor: add monitor with rssi support for mgmt
-  btmgmt: advmon add rssi support
-  bluetoothctl: advmon rssi support for mgmt
-  monitor: Decode add advmon with RSSI parameter
-
- client/adv_monitor.c |  90 ++++++++++++------------
- client/adv_monitor.h |   1 +
- client/main.c        |  29 ++++----
- lib/mgmt.h           |  15 ++++
- monitor/packet.c     |  43 ++++++++++--
- src/adv_monitor.c    | 143 +++++++++++++++++++++++++++++---------
- tools/btmgmt.c       | 160 ++++++++++++++++++++++++++++++++++++-------
- 7 files changed, 357 insertions(+), 124 deletions(-)
-
+diff --git a/lib/mgmt.h b/lib/mgmt.h
+index f37f7e6540..1b8fcc0e10 100644
+--- a/lib/mgmt.h
++++ b/lib/mgmt.h
+@@ -738,6 +738,21 @@ struct mgmt_rp_add_ext_adv_data {
+ 	uint8_t	instance;
+ } __packed;
+ 
++struct mgmt_adv_rssi_thresholds {
++	int8_t   high_threshold;
++	uint16_t high_threshold_timeout;
++	int8_t   low_threshold;
++	uint16_t low_threshold_timeout;
++	uint8_t  sampling_period;
++} __packed;
++
++#define MGMT_OP_ADD_ADV_PATTERNS_MONITOR_RSSI	0x0056
++struct mgmt_cp_add_adv_patterns_monitor_rssi {
++	uint8_t pattern_count;
++	struct mgmt_adv_rssi_thresholds rssi;
++	struct mgmt_adv_pattern patterns[0];
++} __packed;
++
+ #define MGMT_EV_CMD_COMPLETE		0x0001
+ struct mgmt_ev_cmd_complete {
+ 	uint16_t opcode;
 -- 
 2.30.0.284.gd98b1dd5eaa7-goog
 
