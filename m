@@ -2,162 +2,117 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B3E612FF2E6
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 21 Jan 2021 19:09:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B28B62FF949
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Jan 2021 01:16:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389708AbhAUSJC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 21 Jan 2021 13:09:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43570 "EHLO
+        id S1726222AbhAVAOc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 21 Jan 2021 19:14:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389251AbhAUSIu (ORCPT
+        with ESMTP id S1725868AbhAVAOV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 21 Jan 2021 13:08:50 -0500
-Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39A37C061756
-        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Jan 2021 10:08:10 -0800 (PST)
-Received: by mail-vs1-xe30.google.com with SMTP id o19so1559810vsn.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Jan 2021 10:08:10 -0800 (PST)
+        Thu, 21 Jan 2021 19:14:21 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F37A3C0613D6
+        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Jan 2021 16:13:40 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id g3so2258746plp.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Jan 2021 16:13:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=w5QgTLBTO6KI/Wir8QrnsKoondIbwMGDgfCI0iaRxNk=;
-        b=XEXHKF0gOBKJfMzkK6wQhBMUp/elDLkq5m84FWLkP6mqgAJ+orGy/QYpZt5t3Dg4xF
-         hNcDyrpeyZGTKfrkMLMz+yuBTukKIwXAQ6qiUoAUWRpJwHP2WIf6lbEC9QUgTRxS6zXh
-         M579NVhjc8NpJBDlWtlJ1glbv2Y+UdRjTmAfs=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3nnF+bkgtjz25uaf0FNhzS1otuiCUw75IC3zjjwwTtA=;
+        b=bpWQKD+UXxBwSgv3lf2TKYmhZF9IHnWZI4BVzjS7M6V0umMcNcee0I+XPoKQnRS0KD
+         D+UH1gOMCV7XPEbeSr3FfYP+qYhLiwP4zKSXiFxPqWzzxmYBzNUo4XDoI1Vp/BcwJbwr
+         zG7lbjQclOEreobob8o0ntIYlsjVPX7Strd+0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=w5QgTLBTO6KI/Wir8QrnsKoondIbwMGDgfCI0iaRxNk=;
-        b=KylqrKndESRwex5Ml2FqeHppbj5H91n+u75ObglLaLE1zb66tPRg05pATFr2KXAzNY
-         7R8ed8uB2q/ZXDaT5chBi2aRBYbPlUdzG49389aQULSdDmFZtSBFHmcw0DCGmF7AUZB1
-         Qul9HwvmTbqy0uf935z9W1uposKMXcJEOCe/bEm6UQjHpie7TZAyNw9kelGdZNTQkytj
-         VevLP+7YhASZGgF4HvMkxUsO+JAYe+6FImWmzODuOyeM0SGIoDDDvYWIiIZ9dK1N10tN
-         MzZFe0jP/TOOzkqr3cgUnerONO+Opw4VHvbIyDGVXyfbKcr+HahY/8G/BSRdyvzKH1Uz
-         uulw==
-X-Gm-Message-State: AOAM530cvwI0sNxWDD4N5qVSQFdGP6LHE3cUqBhEXBbFiWL6pJrrE31Z
-        gNzFAbbhmYxIwavwg09vkFlyT1WiVG8B6kTxnEW/zw==
-X-Google-Smtp-Source: ABdhPJzqx8YiNjmgvGESJNRr4lYAdFMPoLctq+oCwVK2qjKbdSiJTK9TvzTGeqAPitoq30FvB3wX1y4m8XmMzy8sttQ=
-X-Received: by 2002:a67:e353:: with SMTP id s19mr948518vsm.53.1611252489314;
- Thu, 21 Jan 2021 10:08:09 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3nnF+bkgtjz25uaf0FNhzS1otuiCUw75IC3zjjwwTtA=;
+        b=DFVsIX2Us50pRGSBEBBnq+ADxMyLacjsKPtUlghDiSwQzJ1fBX+xrLUqrJpk/RM3LA
+         0xnZydbXJ2Inwe8VCvxugdmHGRiECOT/Iwit9PQyu8VANsPucJjyApnhJHpz01MXvjKf
+         At3WcuKvElxkLr0N5hjIHB9fRvQFD8CmHlT6Abr9HIQpru2lHtw44IZsNYCfMCcn1GPO
+         yy076HRu7+c0lKx0n5mUgEGrtHwrVMuatDUiMVjnYdO2kIE9BAbucblZu1S7BulPLRfs
+         Bn1v0H13pAWAubC9RuKMTBiMuB1XRdGvkSNkdIibovsJ2T/C9JQhsJcG9e9Kc+Ur9cJY
+         nIzw==
+X-Gm-Message-State: AOAM532ZBAelyNp/EJvajNe+ABtcJQdYyTWsIvjOlIEwDP3DkHnry+I6
+        HXh4BZxwSwPh6aMQiL46bu3eYS/xz0VBzw==
+X-Google-Smtp-Source: ABdhPJwOLecPTgoWzp4+RsorSQVE8vUorN3Be1pHAJBN9cXSpy9YSU7Eq7eii9tThnH+kb7BqNDxvg==
+X-Received: by 2002:a17:90a:4314:: with SMTP id q20mr2209139pjg.87.1611274420230;
+        Thu, 21 Jan 2021 16:13:40 -0800 (PST)
+Received: from sonnysasaka-chrome.mtv.corp.google.com ([2620:15c:202:201:4a0f:cfff:fe66:e60c])
+        by smtp.gmail.com with ESMTPSA id b13sm6941900pfi.162.2021.01.21.16.13.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Jan 2021 16:13:39 -0800 (PST)
+From:   Sonny Sasaka <sonnysasaka@chromium.org>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Sonny Sasaka <sonnysasaka@chromium.org>
+Subject: [PATCH BlueZ v2 1/2] input/hog: Fix double registering report value callbacks
+Date:   Thu, 21 Jan 2021 16:13:25 -0800
+Message-Id: <20210122001326.14263-1-sonnysasaka@chromium.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-References: <20210119060746.7515-1-max.chou@realtek.com>
-In-Reply-To: <20210119060746.7515-1-max.chou@realtek.com>
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Date:   Thu, 21 Jan 2021 10:07:57 -0800
-Message-ID: <CANFp7mVh51=S9=wTE9rcKOtO4ro-_hEZ7ctRA+kAaEq=STGD+w@mail.gmail.com>
-Subject: Re: [PATCH v2] Bluetooth: btrtl: Enable WBS for the specific Realtek devices
-To:     max.chou@realtek.com
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Alex Lu <alex_lu@realsil.com.cn>, hildawu@realtek.com,
-        kidman@realtek.com, Shyh-In Hwang <josephsih@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Max,
+In commit 23b69ab3e484 ("input/hog: Cache the HID report map"), we
+optimized HOG reconnection by registering report value callbacks early,
+but there was a bug where we also re-register the same report value
+callbacks after at CCC write callback. We should handle this case by
+avoiding the second callback register if we know we have done it
+earlier.
 
-On Mon, Jan 18, 2021 at 10:07 PM <max.chou@realtek.com> wrote:
->
-> From: Max Chou <max.chou@realtek.com>
->
-> By this change, it will enable WBS supported on the specific Realtek BT
-> devices, such as RTL8822C and RTL8852A.
-> In the future, it's able to maintain what the Realtek devices support WBS
-> here.
->
-> Tested-by: Hilda Wu <hildawu@realtek.com>
-> Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> Signed-off-by: Max Chou <max.chou@realtek.com>
->
-> ---
-> v2:
->  - edit the null check
-> ---
->  drivers/bluetooth/btrtl.c | 28 ++++++++++++++++++++++++----
->  1 file changed, 24 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-> index 24f03a1f8d57..363e23b15faf 100644
-> --- a/drivers/bluetooth/btrtl.c
-> +++ b/drivers/bluetooth/btrtl.c
-> @@ -38,6 +38,19 @@
->         .hci_ver = (hciv), \
->         .hci_bus = (bus)
->
-> +enum  btrtl_chip_id {
-> +       CHIP_ID_8723A,          /* index  0 for RTL8723A*/
-> +       CHIP_ID_8723B,          /* index  1 for RTL8723B*/
-> +       CHIP_ID_8821A,          /* index  2 for RTL8821A*/
-> +       CHIP_ID_8761A,          /* index  3 for RTL8761A*/
-> +       CHIP_ID_8822B = 8,      /* index  8 for RTL8822B */
-> +       CHIP_ID_8723D,          /* index  9 for RTL8723D */
-> +       CHIP_ID_8821C,          /* index 10 for RTL8821C */
-> +       CHIP_ID_8822C = 13,     /* index 13 for RTL8822C */
-> +       CHIP_ID_8761B,          /* index 14 for RTL8761B */
-> +       CHIP_ID_8852A = 18,     /* index 18 for RTL8852A */
-> +};
-> +
->  struct id_table {
->         __u16 match_flags;
->         __u16 lmp_subver;
-> @@ -58,6 +71,7 @@ struct btrtl_device_info {
->         u8 *cfg_data;
->         int cfg_len;
->         bool drop_fw;
-> +       int project_id;
->  };
->
->  static const struct id_table ic_id_table[] = {
-> @@ -307,8 +321,10 @@ static int rtlbt_parse_firmware(struct hci_dev *hdev,
->
->         /* Find project_id in table */
->         for (i = 0; i < ARRAY_SIZE(project_id_to_lmp_subver); i++) {
-> -               if (project_id == project_id_to_lmp_subver[i].id)
-> +               if (project_id == project_id_to_lmp_subver[i].id) {
-> +                       btrtl_dev->project_id = project_id;
->                         break;
-> +               }
->         }
->
->         if (i >= ARRAY_SIZE(project_id_to_lmp_subver)) {
-> @@ -719,18 +735,22 @@ int btrtl_setup_realtek(struct hci_dev *hdev)
->          */
->         set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
->
-> -       if (!btrtl_dev->ic_info)
-> +       if (!btrtl_dev->project_id)
->                 goto done;
+---
+ profiles/input/hog-lib.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Since btrtl_dev->project_id is not a pointer, this check should not be
-necessary. The switch below has a default case that prints when
-project_id = 0.
+diff --git a/profiles/input/hog-lib.c b/profiles/input/hog-lib.c
+index 1f132aa4c..089f42826 100644
+--- a/profiles/input/hog-lib.c
++++ b/profiles/input/hog-lib.c
+@@ -80,6 +80,7 @@ struct bt_hog {
+ 	struct bt_uhid		*uhid;
+ 	int			uhid_fd;
+ 	bool			uhid_created;
++	bool			report_value_cb_registered;
+ 	gboolean		has_report_id;
+ 	uint16_t		bcdhid;
+ 	uint8_t			bcountrycode;
+@@ -336,6 +337,13 @@ static void report_ccc_written_cb(guint8 status, const guint8 *pdu,
+ 		return;
+ 	}
+ 
++	/* If we already had the report map cache, we must have registered UHID
++	 * and the report value callbacks. In that case, don't re-register the
++	 * report value callbacks here.
++	 */
++	if (hog->report_value_cb_registered)
++		return;
++
+ 	report->notifyid = g_attrib_register(hog->attrib,
+ 					ATT_OP_HANDLE_NOTIFY,
+ 					report->value_handle,
+@@ -1703,6 +1711,8 @@ bool bt_hog_attach(struct bt_hog *hog, void *gatt)
+ 					report_value_cb, r, NULL);
+ 	}
+ 
++	hog->report_value_cb_registered = true;
++
+ 	return true;
+ }
+ 
+@@ -1753,6 +1763,8 @@ void bt_hog_detach(struct bt_hog *hog)
+ 		}
+ 	}
+ 
++	hog->report_value_cb_registered = false;
++
+ 	if (hog->scpp)
+ 		bt_scpp_detach(hog->scpp);
+ 
+-- 
+2.29.2
 
->
->         /* Enable central-peripheral role (able to create new connections with
->          * an existing connection in slave role).
->          */
-> -       switch (btrtl_dev->ic_info->lmp_subver) {
-> -       case RTL_ROM_LMP_8822B:
-> +       /* Enable WBS supported for the specific Realtek devices. */
-> +       switch (btrtl_dev->project_id) {
-> +       case CHIP_ID_8822C:
-> +       case CHIP_ID_8852A:
->                 set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
-> +               set_bit(HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED, &hdev->quirks);
->                 break;
->         default:
->                 rtl_dev_dbg(hdev, "Central-peripheral role not enabled.");
-> +               rtl_dev_dbg(hdev, "WBS supported not enabled.");
->                 break;
->         }
->
-> --
-> 2.17.1
->
