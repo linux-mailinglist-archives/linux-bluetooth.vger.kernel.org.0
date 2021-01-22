@@ -2,65 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2589C2FFF06
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Jan 2021 10:25:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 039382FFF33
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Jan 2021 10:32:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727190AbhAVIkI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 22 Jan 2021 03:40:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32838 "EHLO
+        id S1727466AbhAVJaX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 22 Jan 2021 04:30:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727151AbhAVIip (ORCPT
+        with ESMTP id S1727030AbhAVIhL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 22 Jan 2021 03:38:45 -0500
-Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 283BEC061223
-        for <linux-bluetooth@vger.kernel.org>; Fri, 22 Jan 2021 00:36:54 -0800 (PST)
-Received: by mail-qv1-xf4a.google.com with SMTP id t16so3335201qvk.13
-        for <linux-bluetooth@vger.kernel.org>; Fri, 22 Jan 2021 00:36:54 -0800 (PST)
+        Fri, 22 Jan 2021 03:37:11 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65641C0617A7
+        for <linux-bluetooth@vger.kernel.org>; Fri, 22 Jan 2021 00:36:31 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id j37so3069584pgb.9
+        for <linux-bluetooth@vger.kernel.org>; Fri, 22 Jan 2021 00:36:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=lRQEkkyjpAQm1nKfuRC1QOgmElpLdb2DZOiHX/C9MNY=;
-        b=IkWUZrHp5KiQa8G9MJ3i4JiDn9C87pJ/kL572UWFbcmrshi7D7wAa2HqnpcC5hst7q
-         mt0h5dpxq133sFO+E4NlMAJtis+QsiId+IXUOS+XA8FyDH2/iXvQsyKvfBq9gJyy3J6f
-         dibjcDUVaB+4Q3WOL8tIkdnfY8pH7Yy/ggzRWmHIf2iW2f2uNuG0ecDCb3zOmhHiYyHk
-         W//kOLoMQJjvO9yzhoC4k+rvkj1+HAry/2QfrY4APuHYWDBG38P1d7gVjBZqb4gaRzBn
-         AqHBGjGD31CutWF8iV+kQF48PhU2vv5TqBjCPHRVfVECmnRyRULOHrhhNL6bywUyYXbt
-         SEGw==
+        bh=CqBKe6oYePVh78bm6EA9wFp4xOFAfIkVrKFxW6lHYXE=;
+        b=qLCnTczTK1A3PY2iesOwePsNTGg/LT4FgnaT8oec/FNUsmyP3RgWfWBROj5qBrXlAo
+         bwVJokJVJBImAdPEL0ZwLQqCJGg5QhSm3DfAiAHTCT/f8l2J7Lvm+YzQKoUiiYa73H3J
+         CCbH52OuX0rQkG1E/hG6PD5Ow6m+of+miJjtCXBKthnT4K94rr8JtP4uEQuCfXpTy3KP
+         kymBbU2Kh6+V9EF94vp+i1kKCDFWHEr9yM408f4R8o1Xams1SUpld/TQYvnD1f2QS2xX
+         S1B7k3NB7leFoxsP/oAG8PjO58rBZR3aizSA3BN7rNFUnjyJFogBIloy/4uD7sJSJpoI
+         3Iqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=lRQEkkyjpAQm1nKfuRC1QOgmElpLdb2DZOiHX/C9MNY=;
-        b=feqNA8YrUIRIHqe+ipp9BDLmynSSUOdlqWfdmf46keBzphzmQGVIlYLVwLtuM+qECT
-         DmWre6HimdP9XjXH8pPF3sPzEuwNoKRuvwonVhaomaz78Q8jG3t5Z4jIjkqxHpgjIl4w
-         PwhzsvIdVL6TSpc5kkfNR5rzp4ppWP3Ffma+gU4EyUwxPcCPcUbDuE9bucCW7dzxyj+Y
-         Hl0ppceN0I+a0P26be6x7tg4iF9KtbZXWgXfT50ArUNjeCwOPYziotslYNlR0Wkq7dhJ
-         D1ElatqgmVjlNzxABGrwCLuW7HHt4BAKUnR4AZc/fwpD9QtcaIbgiwydPzCyFs13fBAz
-         EFoQ==
-X-Gm-Message-State: AOAM5316vjJ74qtHlcC83RfeAQw2w0OpxMg3ONjDXwWIIFMGBjn8GnoX
-        rht8aFHpwKVbQKy7Wnfew5rXPsFxLAjLqhOFhXGsFLe+xxlKGChrgcCWTioOgQx+ICG84vw7jWm
-        esMBmPhz5Bp/Uf5rCeYC0YUmjLhq4eOHpB/zEUqxY3tSNjKkwT7yX7mrMYnTew5nOetUuebjBaG
-        KL
-X-Google-Smtp-Source: ABdhPJzE3xo/+kzABEL/SdwaMDGi7G78uCtqpQIckT8cwzgmqeNUknYkvXFGnk/yqqkthaXLWnOXiYbXoHMe
+        bh=CqBKe6oYePVh78bm6EA9wFp4xOFAfIkVrKFxW6lHYXE=;
+        b=SjVMaX7qfCjLDOcPOpONDi6m+qS7unAs/NCh/8wUo6F+dgW+oK4r7eJrdjDlFY/ILX
+         1Gg7IULZ0he5qT60/Fj3wuXBXUKuJYUpnysmKAWpdygvbR5D+9pMs0dnneAjejhqxKrs
+         0H1OWOxupvIMiAafQC2XHZu5FQnyyECUITb9weOscmYDqlbUynET5HoizLEfcyVJywjY
+         IK2PUfC7yU7VjJgNnetkHAirud2lw8UCIHx8zYUT191ytnkJPlplbut9mfnqvQnecHU1
+         i9WA8vY/Ysh9AvDac8hqFjJvHJBxoHKL/nOIMPaJqVGuVI1xkT01KTfsuG5m3K3qwUlb
+         XymQ==
+X-Gm-Message-State: AOAM533tBf4TCW+OxAdJq6rpqlRt/Ye8vHs+eFgTxEBf0nXlKZOGFbFu
+        MTAQoIq29eDFJOcm6/lhin4nP/t6kPVp5UiRP68RyLw9EuUbhZbBSgyBcRMrO5wuP9X7M1Cha0F
+        8FHlfRDJ2VL2WqVveBKfMSOrzOnnh2fnBKLZ/PRm6Bcgyq6taHQ370TcjLVdFKdBTo825XYgDzT
+        HQ
+X-Google-Smtp-Source: ABdhPJyEB0+xV8XPn6ODkfmPEAQuBH5NUSQEjDh+xzFljW6BY88cEKcB6r79vRnKg0hXHQgrRFvUVBy40lKj
 Sender: "apusaka via sendgmr" <apusaka@apusaka-p920.tpe.corp.google.com>
 X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:b:f693:9fff:fef4:2347])
- (user=apusaka job=sendgmr) by 2002:a0c:c30e:: with SMTP id
- f14mr3599792qvi.48.1611304613217; Fri, 22 Jan 2021 00:36:53 -0800 (PST)
-Date:   Fri, 22 Jan 2021 16:36:17 +0800
+ (user=apusaka job=sendgmr) by 2002:a17:90a:aa8d:: with SMTP id
+ l13mr843303pjq.0.1611304590221; Fri, 22 Jan 2021 00:36:30 -0800 (PST)
+Date:   Fri, 22 Jan 2021 16:36:11 +0800
 In-Reply-To: <20210122083617.3163489-1-apusaka@google.com>
-Message-Id: <20210122163457.v6.7.I21a23acb8380fe0fe88a47ebba030acfc587725c@changeid>
+Message-Id: <20210122163457.v6.1.I92d2e2a87419730d60136680cbe27636baf94b15@changeid>
 Mime-Version: 1.0
 References: <20210122083617.3163489-1-apusaka@google.com>
 X-Mailer: git-send-email 2.30.0.280.ga3ce27912f-goog
-Subject: [PATCH v6 7/7] Bluetooth: disable advertisement filters during suspend
+Subject: [PATCH v6 1/7] Bluetooth: advmon offload MSFT add rssi support
 From:   Archie Pusaka <apusaka@google.com>
 To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
         Marcel Holtmann <marcel@holtmann.org>
 Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Howard Chung <howardchung@google.com>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>,
+        Manish Mandlik <mmandlik@chromium.org>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        Yun-Hao Chung <howardchung@google.com>,
         "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
@@ -71,158 +73,360 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Howard Chung <howardchung@google.com>
+From: Archie Pusaka <apusaka@chromium.org>
 
-This adds logic to disable and reenable advertisement filters during
-suspend and resume. After this patch, we would only receive packets from
-devices in allow list during suspend.
+MSFT needs rssi parameter for monitoring advertisement packet,
+therefore we should supply them from mgmt. This adds a new opcode
+to add advertisement monitor with rssi parameters.
 
-Signed-off-by: Howard Chung <howardchung@google.com>
-Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+Reviewed-by: Manish Mandlik <mmandlik@chromium.org>
+Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+Reviewed-by: Yun-Hao Chung <howardchung@google.com>
+
 ---
 
-Changes in v6:
-* New patch "disable advertisement filters during suspend"
+(no changes since v4)
 
- include/net/bluetooth/hci_core.h |  2 ++
- net/bluetooth/hci_request.c      | 29 +++++++++++++++++++++++++++++
- net/bluetooth/msft.c             | 17 ++++++++++++-----
- net/bluetooth/msft.h             |  3 +++
- 4 files changed, 46 insertions(+), 5 deletions(-)
+Changes in v4:
+* Change the logic of merging add_adv_patterns_monitor with rssi
+* Aligning variable declaration on mgmt.h
+
+Changes in v3:
+* Flips the order of rssi and pattern_count on mgmt struct
+
+Changes in v2:
+* Add a new opcode instead of modifying an existing one
+
+ include/net/bluetooth/hci_core.h |   9 ++
+ include/net/bluetooth/mgmt.h     |  16 +++
+ net/bluetooth/mgmt.c             | 225 +++++++++++++++++++++----------
+ 3 files changed, 178 insertions(+), 72 deletions(-)
 
 diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 29cfc6a2d689..fd1d10fe2f11 100644
+index 677a8c50b2ad..8b7cf3620938 100644
 --- a/include/net/bluetooth/hci_core.h
 +++ b/include/net/bluetooth/hci_core.h
-@@ -105,6 +105,8 @@ enum suspend_tasks {
- 	SUSPEND_POWERING_DOWN,
- 
- 	SUSPEND_PREPARE_NOTIFIER,
-+
-+	SUSPEND_SET_ADV_FILTER,
- 	__SUSPEND_NUM_TASKS
+@@ -250,8 +250,17 @@ struct adv_pattern {
+ 	__u8 value[HCI_MAX_AD_LENGTH];
  };
  
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index d29a44d77b4e..e55976db4403 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -29,6 +29,7 @@
- 
- #include "smp.h"
- #include "hci_request.h"
-+#include "msft.h"
- 
- #define HCI_REQ_DONE	  0
- #define HCI_REQ_PEND	  1
-@@ -1242,6 +1243,29 @@ static void suspend_req_complete(struct hci_dev *hdev, u8 status, u16 opcode)
- 		clear_bit(SUSPEND_SCAN_DISABLE, hdev->suspend_tasks);
- 		wake_up(&hdev->suspend_wait_q);
- 	}
++struct adv_rssi_thresholds {
++	__s8 low_threshold;
++	__s8 high_threshold;
++	__u16 low_threshold_timeout;
++	__u16 high_threshold_timeout;
++	__u8 sampling_period;
++};
 +
-+	if (test_bit(SUSPEND_SET_ADV_FILTER, hdev->suspend_tasks)) {
-+		clear_bit(SUSPEND_SET_ADV_FILTER, hdev->suspend_tasks);
-+		wake_up(&hdev->suspend_wait_q);
-+	}
-+}
-+
-+static void hci_req_add_set_adv_filter_enable(struct hci_request *req,
-+					      bool enable)
-+{
-+	struct hci_dev *hdev = req->hdev;
-+
-+	switch (hci_get_adv_monitor_offload_ext(hdev)) {
-+	case HCI_ADV_MONITOR_EXT_MSFT:
-+		msft_req_add_set_filter_enable(req, enable);
-+		break;
-+	default:
-+		return;
-+	}
-+
-+	/* No need to block when enabling since it's on resume path */
-+	if (hdev->suspended && !enable)
-+		set_bit(SUSPEND_SET_ADV_FILTER, hdev->suspend_tasks);
- }
+ struct adv_monitor {
+ 	struct list_head patterns;
++	struct adv_rssi_thresholds rssi;
+ 	bool		active;
+ 	__u16		handle;
+ };
+diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
+index f9a6638e20b3..839a2028009e 100644
+--- a/include/net/bluetooth/mgmt.h
++++ b/include/net/bluetooth/mgmt.h
+@@ -821,6 +821,22 @@ struct mgmt_rp_add_ext_adv_data {
+ 	__u8	instance;
+ } __packed;
  
- /* Call with hci_dev_lock */
-@@ -1301,6 +1325,9 @@ void hci_req_prepare_suspend(struct hci_dev *hdev, enum suspended_state next)
- 			hci_req_add_le_scan_disable(&req, false);
- 		}
- 
-+		/* Disable advertisement filters */
-+		hci_req_add_set_adv_filter_enable(&req, false);
++struct mgmt_adv_rssi_thresholds {
++	__s8	high_threshold;
++	__le16	high_threshold_timeout;
++	__s8	low_threshold;
++	__le16	low_threshold_timeout;
++	__u8	sampling_period;
++} __packed;
 +
- 		/* Mark task needing completion */
- 		set_bit(SUSPEND_SCAN_DISABLE, hdev->suspend_tasks);
++#define MGMT_OP_ADD_ADV_PATTERNS_MONITOR_RSSI	0x0056
++struct mgmt_cp_add_adv_patterns_monitor_rssi {
++	struct mgmt_adv_rssi_thresholds rssi;
++	__u8	pattern_count;
++	struct mgmt_adv_pattern patterns[];
++} __packed;
++#define MGMT_ADD_ADV_PATTERNS_MONITOR_RSSI_SIZE	8
++
+ #define MGMT_EV_CMD_COMPLETE		0x0001
+ struct mgmt_ev_cmd_complete {
+ 	__le16	opcode;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 608dda5403b7..72d37c80e071 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -124,6 +124,7 @@ static const u16 mgmt_commands[] = {
+ 	MGMT_OP_REMOVE_ADV_MONITOR,
+ 	MGMT_OP_ADD_EXT_ADV_PARAMS,
+ 	MGMT_OP_ADD_EXT_ADV_DATA,
++	MGMT_OP_ADD_ADV_PATTERNS_MONITOR_RSSI,
+ };
  
-@@ -1340,6 +1367,8 @@ void hci_req_prepare_suspend(struct hci_dev *hdev, enum suspended_state next)
- 		hci_req_clear_event_filter(&req);
- 		/* Reset passive/background scanning to normal */
- 		__hci_update_background_scan(&req);
-+		/* Enable all of the advertisement filters */
-+		hci_req_add_set_adv_filter_enable(&req, true);
- 
- 		/* Unpause directed advertising */
- 		hdev->advertising_paused = false;
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index b2ef654b1d3d..47b104f318e9 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -579,9 +579,19 @@ int msft_remove_monitor(struct hci_dev *hdev, struct adv_monitor *monitor,
+ static const u16 mgmt_events[] = {
+@@ -4225,75 +4226,15 @@ static int read_adv_mon_features(struct sock *sk, struct hci_dev *hdev,
  	return err;
  }
  
--int msft_set_filter_enable(struct hci_dev *hdev, bool enable)
-+void msft_req_add_set_filter_enable(struct hci_request *req, bool enable)
+-static int add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
+-				    void *data, u16 len)
++static int __add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
++				      struct adv_monitor *m, u8 status, u16 op)
  {
-+	struct hci_dev *hdev = req->hdev;
- 	struct msft_cp_le_set_advertisement_filter_enable cp;
-+
-+	cp.sub_opcode = MSFT_OP_LE_SET_ADVERTISEMENT_FILTER_ENABLE;
-+	cp.enable = enable;
-+
-+	hci_req_add(req, hdev->msft_opcode, sizeof(cp), &cp);
-+}
-+
-+int msft_set_filter_enable(struct hci_dev *hdev, bool enable)
-+{
- 	struct hci_request req;
- 	struct msft_data *msft = hdev->msft_data;
- 	int err;
-@@ -589,11 +599,8 @@ int msft_set_filter_enable(struct hci_dev *hdev, bool enable)
- 	if (!msft)
- 		return -EOPNOTSUPP;
- 
--	cp.sub_opcode = MSFT_OP_LE_SET_ADVERTISEMENT_FILTER_ENABLE;
--	cp.enable = enable;
+-	struct mgmt_cp_add_adv_patterns_monitor *cp = data;
+ 	struct mgmt_rp_add_adv_patterns_monitor rp;
+-	struct adv_monitor *m = NULL;
+-	struct adv_pattern *p = NULL;
+-	unsigned int mp_cnt = 0, prev_adv_monitors_cnt;
+-	__u8 cp_ofst = 0, cp_len = 0;
+-	int err, i;
 -
- 	hci_req_init(&req, hdev);
--	hci_req_add(&req, hdev->msft_opcode, sizeof(cp), &cp);
-+	msft_req_add_set_filter_enable(&req, enable);
- 	err = hci_req_run_skb(&req, msft_le_set_advertisement_filter_enable_cb);
+-	BT_DBG("request for %s", hdev->name);
+-
+-	if (len <= sizeof(*cp) || cp->pattern_count == 0) {
+-		err = mgmt_cmd_status(sk, hdev->id,
+-				      MGMT_OP_ADD_ADV_PATTERNS_MONITOR,
+-				      MGMT_STATUS_INVALID_PARAMS);
+-		goto failed;
+-	}
+-
+-	m = kmalloc(sizeof(*m), GFP_KERNEL);
+-	if (!m) {
+-		err = -ENOMEM;
+-		goto failed;
+-	}
+-
+-	INIT_LIST_HEAD(&m->patterns);
+-	m->active = false;
+-
+-	for (i = 0; i < cp->pattern_count; i++) {
+-		if (++mp_cnt > HCI_MAX_ADV_MONITOR_NUM_PATTERNS) {
+-			err = mgmt_cmd_status(sk, hdev->id,
+-					      MGMT_OP_ADD_ADV_PATTERNS_MONITOR,
+-					      MGMT_STATUS_INVALID_PARAMS);
+-			goto failed;
+-		}
+-
+-		cp_ofst = cp->patterns[i].offset;
+-		cp_len = cp->patterns[i].length;
+-		if (cp_ofst >= HCI_MAX_AD_LENGTH ||
+-		    cp_len > HCI_MAX_AD_LENGTH ||
+-		    (cp_ofst + cp_len) > HCI_MAX_AD_LENGTH) {
+-			err = mgmt_cmd_status(sk, hdev->id,
+-					      MGMT_OP_ADD_ADV_PATTERNS_MONITOR,
+-					      MGMT_STATUS_INVALID_PARAMS);
+-			goto failed;
+-		}
+-
+-		p = kmalloc(sizeof(*p), GFP_KERNEL);
+-		if (!p) {
+-			err = -ENOMEM;
+-			goto failed;
+-		}
+-
+-		p->ad_type = cp->patterns[i].ad_type;
+-		p->offset = cp->patterns[i].offset;
+-		p->length = cp->patterns[i].length;
+-		memcpy(p->value, cp->patterns[i].value, p->length);
+-
+-		INIT_LIST_HEAD(&p->list);
+-		list_add(&p->list, &m->patterns);
+-	}
++	unsigned int prev_adv_monitors_cnt;
++	int err;
  
- 	return err;
-diff --git a/net/bluetooth/msft.h b/net/bluetooth/msft.h
-index f8e4d3a6d641..88ed613dfa08 100644
---- a/net/bluetooth/msft.h
-+++ b/net/bluetooth/msft.h
-@@ -20,6 +20,7 @@ __u64 msft_get_features(struct hci_dev *hdev);
- int msft_add_monitor_pattern(struct hci_dev *hdev, struct adv_monitor *monitor);
- int msft_remove_monitor(struct hci_dev *hdev, struct adv_monitor *monitor,
- 			u16 handle);
-+void msft_req_add_set_filter_enable(struct hci_request *req, bool enable);
- int msft_set_filter_enable(struct hci_dev *hdev, bool enable);
+-	if (mp_cnt != cp->pattern_count) {
+-		err = mgmt_cmd_status(sk, hdev->id,
+-				      MGMT_OP_ADD_ADV_PATTERNS_MONITOR,
+-				      MGMT_STATUS_INVALID_PARAMS);
++	if (status)
+ 		goto failed;
+-	}
  
- #else
-@@ -46,6 +47,8 @@ static inline int msft_remove_monitor(struct hci_dev *hdev,
- 	return -EOPNOTSUPP;
+ 	hci_dev_lock(hdev);
+ 
+@@ -4301,11 +4242,11 @@ static int add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
+ 
+ 	err = hci_add_adv_monitor(hdev, m);
+ 	if (err) {
+-		if (err == -ENOSPC) {
+-			mgmt_cmd_status(sk, hdev->id,
+-					MGMT_OP_ADD_ADV_PATTERNS_MONITOR,
+-					MGMT_STATUS_NO_RESOURCES);
+-		}
++		if (err == -ENOSPC)
++			status = MGMT_STATUS_NO_RESOURCES;
++		else
++			status = MGMT_STATUS_FAILED;
++
+ 		goto unlock;
+ 	}
+ 
+@@ -4316,7 +4257,7 @@ static int add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
+ 
+ 	rp.monitor_handle = cpu_to_le16(m->handle);
+ 
+-	return mgmt_cmd_complete(sk, hdev->id, MGMT_OP_ADD_ADV_PATTERNS_MONITOR,
++	return mgmt_cmd_complete(sk, hdev->id, op,
+ 				 MGMT_STATUS_SUCCESS, &rp, sizeof(rp));
+ 
+ unlock:
+@@ -4324,7 +4265,144 @@ static int add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
+ 
+ failed:
+ 	hci_free_adv_monitor(m);
+-	return err;
++	return mgmt_cmd_status(sk, hdev->id, op, status);
++}
++
++static void parse_adv_monitor_rssi(struct adv_monitor *m,
++				   struct mgmt_adv_rssi_thresholds *rssi)
++{
++	if (rssi) {
++		m->rssi.low_threshold = rssi->low_threshold;
++		m->rssi.low_threshold_timeout =
++		    __le16_to_cpu(rssi->low_threshold_timeout);
++		m->rssi.high_threshold = rssi->high_threshold;
++		m->rssi.high_threshold_timeout =
++		    __le16_to_cpu(rssi->high_threshold_timeout);
++		m->rssi.sampling_period = rssi->sampling_period;
++	} else {
++		/* Default values. These numbers are the least constricting
++		 * parameters for MSFT API to work, so it behaves as if there
++		 * are no rssi parameter to consider. May need to be changed
++		 * if other API are to be supported.
++		 */
++		m->rssi.low_threshold = -127;
++		m->rssi.low_threshold_timeout = 60;
++		m->rssi.high_threshold = -127;
++		m->rssi.high_threshold_timeout = 0;
++		m->rssi.sampling_period = 0;
++	}
++}
++
++static u8 parse_adv_monitor_pattern(struct adv_monitor *m, u8 pattern_count,
++				    struct mgmt_adv_pattern *patterns)
++{
++	u8 offset = 0, length = 0;
++	struct adv_pattern *p = NULL;
++	unsigned int mp_cnt = 0;
++	int i;
++
++	for (i = 0; i < pattern_count; i++) {
++		if (++mp_cnt > HCI_MAX_ADV_MONITOR_NUM_PATTERNS)
++			return MGMT_STATUS_INVALID_PARAMS;
++
++		offset = patterns[i].offset;
++		length = patterns[i].length;
++		if (offset >= HCI_MAX_AD_LENGTH ||
++		    length > HCI_MAX_AD_LENGTH ||
++		    (offset + length) > HCI_MAX_AD_LENGTH)
++			return MGMT_STATUS_INVALID_PARAMS;
++
++		p = kmalloc(sizeof(*p), GFP_KERNEL);
++		if (!p)
++			return MGMT_STATUS_NO_RESOURCES;
++
++		p->ad_type = patterns[i].ad_type;
++		p->offset = patterns[i].offset;
++		p->length = patterns[i].length;
++		memcpy(p->value, patterns[i].value, p->length);
++
++		INIT_LIST_HEAD(&p->list);
++		list_add(&p->list, &m->patterns);
++	}
++
++	if (mp_cnt != pattern_count)
++		return MGMT_STATUS_INVALID_PARAMS;
++
++	return MGMT_STATUS_SUCCESS;
++}
++
++static int add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
++				    void *data, u16 len)
++{
++	struct mgmt_cp_add_adv_patterns_monitor *cp = data;
++	struct adv_monitor *m = NULL;
++	u8 status = MGMT_STATUS_SUCCESS;
++	size_t expected_size = sizeof(*cp);
++
++	BT_DBG("request for %s", hdev->name);
++
++	if (len <= sizeof(*cp)) {
++		status = MGMT_STATUS_INVALID_PARAMS;
++		goto done;
++	}
++
++	expected_size += cp->pattern_count * sizeof(struct mgmt_adv_pattern);
++	if (len != expected_size) {
++		status = MGMT_STATUS_INVALID_PARAMS;
++		goto done;
++	}
++
++	m = kzalloc(sizeof(*m), GFP_KERNEL);
++	if (!m) {
++		status = MGMT_STATUS_NO_RESOURCES;
++		goto done;
++	}
++
++	INIT_LIST_HEAD(&m->patterns);
++
++	parse_adv_monitor_rssi(m, NULL);
++	status = parse_adv_monitor_pattern(m, cp->pattern_count, cp->patterns);
++
++done:
++	return __add_adv_patterns_monitor(sk, hdev, m, status,
++					  MGMT_OP_ADD_ADV_PATTERNS_MONITOR);
++}
++
++static int add_adv_patterns_monitor_rssi(struct sock *sk, struct hci_dev *hdev,
++					 void *data, u16 len)
++{
++	struct mgmt_cp_add_adv_patterns_monitor_rssi *cp = data;
++	struct adv_monitor *m = NULL;
++	u8 status = MGMT_STATUS_SUCCESS;
++	size_t expected_size = sizeof(*cp);
++
++	BT_DBG("request for %s", hdev->name);
++
++	if (len <= sizeof(*cp)) {
++		status = MGMT_STATUS_INVALID_PARAMS;
++		goto done;
++	}
++
++	expected_size += cp->pattern_count * sizeof(struct mgmt_adv_pattern);
++	if (len != expected_size) {
++		status = MGMT_STATUS_INVALID_PARAMS;
++		goto done;
++	}
++
++	m = kzalloc(sizeof(*m), GFP_KERNEL);
++	if (!m) {
++		status = MGMT_STATUS_NO_RESOURCES;
++		goto done;
++	}
++
++	INIT_LIST_HEAD(&m->patterns);
++
++	parse_adv_monitor_rssi(m, &cp->rssi);
++	status = parse_adv_monitor_pattern(m, cp->pattern_count, cp->patterns);
++
++done:
++	return __add_adv_patterns_monitor(sk, hdev, m, status,
++					 MGMT_OP_ADD_ADV_PATTERNS_MONITOR_RSSI);
  }
  
-+static inline void msft_req_add_set_filter_enable(struct hci_request *req,
-+						  bool enable) {}
- static inline int msft_set_filter_enable(struct hci_dev *hdev, bool enable)
- {
- 	return -EOPNOTSUPP;
+ static int remove_adv_monitor(struct sock *sk, struct hci_dev *hdev,
+@@ -8242,6 +8320,9 @@ static const struct hci_mgmt_handler mgmt_handlers[] = {
+ 						HCI_MGMT_VAR_LEN },
+ 	{ add_ext_adv_data,        MGMT_ADD_EXT_ADV_DATA_SIZE,
+ 						HCI_MGMT_VAR_LEN },
++	{ add_adv_patterns_monitor_rssi,
++				   MGMT_ADD_ADV_PATTERNS_MONITOR_RSSI_SIZE,
++						HCI_MGMT_VAR_LEN },
+ };
+ 
+ void mgmt_index_added(struct hci_dev *hdev)
 -- 
 2.30.0.280.ga3ce27912f-goog
 
