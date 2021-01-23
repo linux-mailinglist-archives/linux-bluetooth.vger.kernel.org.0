@@ -2,230 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87E4B3015CA
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 23 Jan 2021 15:26:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 912CB301730
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 23 Jan 2021 18:28:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725910AbhAWOYJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 23 Jan 2021 09:24:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49622 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725860AbhAWOYI (ORCPT
+        id S1726159AbhAWR1i (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 23 Jan 2021 12:27:38 -0500
+Received: from [201.76.146.12] ([201.76.146.12]:55007 "EHLO
+        portalandrecury.com.br" rhost-flags-FAIL-FAIL-OK-OK)
+        by vger.kernel.org with ESMTP id S1726119AbhAWR1f (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 23 Jan 2021 09:24:08 -0500
-X-Greylist: delayed 481 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 23 Jan 2021 06:23:23 PST
-Received: from mail.eh5.me (mail.eh5.me [IPv6:2001:19f0:7001:2deb:5400:2ff:fef8:7fd6])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1224BC06174A
-        for <linux-bluetooth@vger.kernel.org>; Sat, 23 Jan 2021 06:23:23 -0800 (PST)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id A50D1349AD63;
-        Sat, 23 Jan 2021 22:14:13 +0800 (CST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sokka.cn; s=dkim;
-        t=1611411258; h=from:subject:date:message-id:to:cc:mime-version:content-type;
-        bh=WC/f4qpelNC7jbBTZZhBAQlOAKp4q7EH7vDdxLL1BSo=;
-        b=WCHyMUw9MH2I5SO06tBcta0FXp2CqGOH1E7JWKdNzAiupb/qO8VvWcmo1OLahYz2y9sKD7
-        wFYkSBVIgmatTr77uH83AcEZiOVbr75D7kOBF0TgFJ9idgpt4bK+d3YYx/KBN/UujDUbvU
-        PapGM9BpEgdRTrsCJ51lODbY1F/YBSI=
-From:   Huang-Huang Bao <eh5@sokka.cn>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        =?UTF-8?Q?Fr=c3=a9d=c3=a9ric_Danis?= <frederic.danis@collabora.com>
-Subject: Some headsets appear don't work when BlueZ connecting with both HSP
- AG and HFP AG.
-Message-ID: <8b62372c-bb87-5dbe-200d-d32c7c94f50d@sokka.cn>
-Date:   Sat, 23 Jan 2021 22:14:01 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        Sat, 23 Jan 2021 12:27:35 -0500
+X-Greylist: delayed 10445 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Jan 2021 12:27:31 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=portalandrecury.com.br; s=default; h=Content-Transfer-Encoding:Content-Type
+        :Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Sender:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=aaeuXV98CCTt7v+FHcmLelF/UQ+pmIXURxeIiAglFQw=; b=K/5Zphf5kU7wRij3WVPB1cwF0F
+        zGeC9YRClEtTayTV45UFQmC+fdLIN39VtSrDNbdme29X43DcypN5HH9QR9u0j8s0PQ/h5TG8mHReL
+        szvsFzPf8jpwO+GbCpxHzm0mV8P0n39D+CAE1j6aaAyKCaDz0dd+z0X7JeJQAb1ywQmrPLrB8GeO0
+        tSKJjJgzT7h5FFua+nKAvqRtMEERSbac9jDtBNwuj4DfMcnU2t0p/6JGPx3Wwg1PVF9kZ6A93LAi5
+        M6vHIdSeIM2C2fXCuyvpN12ERBqurMo4j50P90u+yoC3eOXVPRyxawTAMkeMB5/jhLlmrOMPhS3cd
+        LaAh+Ygw==;
+Received: from [::1] (port=40136 helo=srv-cpanel.hybriddc.com.br)
+        by srv-cpanel.hybriddc.com.br with esmtpa (Exim 4.93)
+        (envelope-from <contato@portalandrecury.com.br>)
+        id 1l3Jv9-000H6P-8J; Sat, 23 Jan 2021 11:29:52 -0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="6sAv2Sg2i98Sr8bNb3NvvBWcbpeQVfwJ3"
-X-Last-TLS-Session-Version: TLSv1.3
+Date:   Sat, 23 Jan 2021 11:29:46 -0300
+From:   Francois Pinault <contato@portalandrecury.com.br>
+To:     undisclosed-recipients:;
+Subject: Read Your Email
+Reply-To: francoispinault1936@outlook.com
+User-Agent: Roundcube Webmail/1.4.10
+Message-ID: <867a87e3f538fac987b32e16246ab590@portalandrecury.com.br>
+X-Sender: contato@portalandrecury.com.br
+Organization: Donation
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-OutGoing-Spam-Status: No, score=2.8
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - srv-cpanel.hybriddc.com.br
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - portalandrecury.com.br
+X-Get-Message-Sender-Via: srv-cpanel.hybriddc.com.br: authenticated_id: contato@portalandrecury.com.br
+X-Authenticated-Sender: srv-cpanel.hybriddc.com.br: contato@portalandrecury.com.br
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---6sAv2Sg2i98Sr8bNb3NvvBWcbpeQVfwJ3
-Content-Type: multipart/mixed; boundary="7yoJUfDgnJiVBE5V3dlyGpFytgo1eGKCg";
- protected-headers="v1"
-From: Huang-Huang Bao <eh5@sokka.cn>
-To: linux-bluetooth@vger.kernel.org
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- =?UTF-8?Q?Fr=c3=a9d=c3=a9ric_Danis?= <frederic.danis@collabora.com>
-Message-ID: <8b62372c-bb87-5dbe-200d-d32c7c94f50d@sokka.cn>
-Subject: Some headsets appear don't work when BlueZ connecting with both HSP
- AG and HFP AG.
-
---7yoJUfDgnJiVBE5V3dlyGpFytgo1eGKCg
-Content-Type: multipart/mixed;
- boundary="------------9E72543E8E5A8434B01B65CF"
-Content-Language: en-US
-
-This is a multi-part message in MIME format.
---------------9E72543E8E5A8434B01B65CF
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: quoted-printable
-
-Hi linux-bluetooth,
 
 
-PipeWire recently got HFP AG support,
+-- 
+Hello, I am Mr. François Pinault, I made a donation to you. You can 
+verify my profile on wikipedia or forbes:
 
-its native headset backend registers both HSP AG profile and HFP AG=20
-profile with `AutoConnect` enabled by default.
+https://www.forbes.com/profile/francois-pinault/
+or
+https://en.wikipedia.org/wiki/Fran%C3%A7ois_Pinault
 
-Hence, BlueZ would trying to connect headset with both HSP and HFP.=20
-Seems it causes some headsets stop to work with HFP/HSP profile.
+For more information and donation claim, Kindly contact me as soon as 
+possible on this email: francoispinaultmail@orange.fr
 
-Discussions on PipeWire:=20
-https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/604#note_773590=
-
-
-Fr=A8=A6d=A8=A6ric Danis says:
- >Currently it seems to me that there are at least 3 behaviours when=20
-both native HSP and HFP are enabled, depending on the Headset/Speaker:
- >
- >    with Sony WH-1000XM3, iiuc:
- >        HFP is tried first, starting SLC process
- >        then a connection to HSP is rejected by the headset which=20
-stops to send AT commands on the HFP RFComm channel
- >        Audio is not working
- >    with Sony WH-CH710N:
- >        HFP is tried first, starting SLC process
- >        then a connection to HSP is rejected by the headset, but the=20
-headset keeps on sending AT commands on the HFP RFComm channel
- >        Audio is working
- >    with JBL GO 2 speaker:
- >        HFP is tried first, starting SLC process on a RFComm channel
- >        then HSP is connected on a second RFComm channel and following =
-
-HFP AT commands are sent on this second channel
- >        Audio is not working (iirc)
-
-Can it be fixed in BlueZ? For example, do not auto-connect HSP or HFP=20
-profile if the other one has been connected. Maybe to add an extra=20
-option "Conflicts" on "org.bluez.ProfileManager1.RegisterProfile()" to=20
-indicate UUIDs which conflict with registered profile.
-
-Regards,
-Bao
-
---------------9E72543E8E5A8434B01B65CF
-Content-Type: application/pgp-keys;
- name="OpenPGP_0x33C3271387A13D1B.asc"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="OpenPGP_0x33C3271387A13D1B.asc"
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-xsBNBF7ojvIBCACiWe/9ykeimw2DE152rsLJoAAetBxc9/D0ezCucAGi9o3p1aEm/tewgprmc=
-IyW
-r4HYA7YUVirLpPvaFBzj4z3VKEoarqjltZ8/NqHsWjmD3yOx//vDSAFJWKasnJ53LwM1UjBSP=
-oNJ
-fO4R6EVIaMYbfeOiQsm3sJ0iuQPz7Yyvmx/qKDYtnDfY3zRLowF7IR8D8rRpBRZVsI1o7lOa4=
-UlD
-4gjkNRgtOdBK70XfyQwvc2hAD0xvpskxL7eyiaWClT2tqA+iSjo4mtpPLAK29j7v6iNXZJatY=
-SpL
-Na90BT8hvGhDRk2AdbMjq7yyPXJcVqzcJC4wnp9ugq2RbGibFaiFABEBAAHNGkh1YW5nLUh1Y=
-W5n
-IEJhbyA8aUBlaDUubWU+wsCUBBMBCAA+FiEEBuXW2UEAaJ5CdDVHM8MnE4ehPRsFAl7okfoCG=
-wMF
-CQPCZwAFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQM8MnE4ehPRvEOwf/YcShzZXG2djjC=
-cJp
-8+vCaQLrZqe42VuwjaU57VHQaT8XxwUzxFA7Kqob5KUZyejt+CTdhHh8V8wiyGDXQS6upmv6P=
-CuO
-I5WXyKoG3+xBy7TtnWHKrRhR78Xegy7WYa0/xovQZR4cA4eowkxo346UPIgfydfCFhb1Twy35=
-NzN
-l1xXQcxnEwf4GSx7Kj7JgSYbR9rbU0Iy+dWGZr9OikfJnzuw47R1Bp1tjHm9CI3S5foa8n2bL=
-H3a
-x6jEiIIwcT7a0UoiX77+mfi+RGJT7Nn96igikpkmQ/z8l4XhH5t98QRJGleKRs0zncnE46vZW=
-E/4
-tE+i2f2gMbVz2S6LnAb2zcLA8wQQAQgAHRYhBHKYoaDXORsliPp1gjh9QFYLGYLIBQJe6JPDA=
-AoJ
-EDh9QFYLGYLIunUMAI/EcINbdqhFIsxbFI7GrUfRPCYX7F8346m9nk5etm51yWR04crGWpbJN=
-myg
-HWEZcMZTNpNl69CCuoaNTAABtawP0h1jcfzwtWuOWReMd6Z/SuqIFSBTcdI2+mRYgB2aeFwHC=
-HEr
-BBQhcQmtBIoeA7NE5I0SuAvOXPRegmgryNT1ABc6FbiDGeDMZFFTvQYX35fda3Px5LPznJd/T=
-4C6
-op6A6gyFCyHRaSsrv8EGe5MbWT4nbBTdsrhHKScrxEsoqHZj00EXXsl88I/kEZNwHdtY9RLYp=
-WKR
-6FrpF7HUPKY5vbEn6vGXsihsTwL9ooRHmpAoQOiNs18WYkOmnNmWI/6DFp+RqSPCjc+2IfFGE=
-UYE
-F311E574CdT5KvGy5OuXfG6Noh3+jJonxUNnozZoIiO9kCCpfVcPHhosTQVTTYJk4Sfnq7Ega=
-cEX
-DRnEIojp/b6bjqmxj2Zw6JKNLETfOSgLpHLYz8MV5BrzevCGsI/vHlNWecT0a8i1hWefmGEUI=
-M0e
-SHVhbmctSHVhbmcgQmFvIDxlaDVAc29ra2EuY24+wsCUBBMBCAA+FiEEBuXW2UEAaJ5CdDVHM=
-8Mn
-E4ehPRsFAl7ojvICGwMFCQPCZwAFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQM8MnE4ehP=
-RvW
-Sgf/Ru7jw7NGjL/1/xu69Nc2ScKMZ9B4ykQTlKe+4n4xEwy2ClkSrtZRY7w7iNoB6/JqMS/9x=
-DiI
-YutuLUjkdyz9Ji6PQmbBJROhuO/GmXQzu41v7t49Dgd6uwb1lhNrNIYdGW8Ns73qM0Q2IbWba=
-UwM
-jQQN3uJ5BNuzJ+B11//Y0FrE+BBw4/30MMdbMQTwCkRZSE6yC34qSsCjcBtXH6APACzZV1ipP=
-+FG
-byA0OG+X/XTvJSka0n2IAofSIzdezZBKS3+6ouHUtdzGs9n6FsfMFBTrHuUhaXLfLrXHZZ5sY=
-mf7
-YDNSwt2jv0oXaLL2sgrzixip+fJPBnHcnXAQet6lN8LA8wQQAQgAHRYhBHKYoaDXORsliPp1g=
-jh9
-QFYLGYLIBQJe6I/SAAoJEDh9QFYLGYLIm8gMAKv0sfNpxFsMaibIykJq5AiEPNOmPA6yE16Ig=
-4fW
-EKhlWeQCaDyAIybEbiDWRmpPwlsii62wB8xFHOQFVjI5krXOOLeiWpCdOz9GTVc5ug1Tk1OW/=
-rFl
-DhsGG9Rtk6NtVtHLSzofZNBmUFgQQgEwNLbbcUM1iz+Xzpmn//WqKQOpHaqNJpYoZRYLRFaP4=
-xRV
-XewF76V8BZlO8K7lCoFqbrPEsUXR73lPOOwEgF/W1tnwJmCPcVay0Y9raWKWCg8FzxddtLGU+=
-IPu
-+VvP84++E/0FyFH/Z7zBXip6nH9zYQejnX92qM7uoMRJ9XWPt9EucBIbA+H5Izv5JE9IMernK=
-KOv
-cL9+P8u8Oag6dVsZOpgKklVBn4etd0ugzVv+DztnzFPRTCR4L0KJbfYQm6ag6V9iEHM5POnz+=
-I5B
-Wh6cXcc5xRDWepRcEwJKvj5HI41re4HBG38TwFgfvmf8xmE4s9ILdzz1YnTqYuRez3ROTHr/D=
-ghD
-6hxB0/gCRLyb/rWpxs7ATQRe6I7yAQgA7Lso1hlO8lRXWw/OKsa3uWNM9EhQmSQtwCZfAal1s=
-pcV
-ZGlRJj83oYJ4f4h4QiHhugOt2c5ZTEx+2Tzwi9gJ0InpC7L2i0WdhDHQQW8Sdw2UhLjsqzhXN=
-yyY
-oouhkZAGW3/4Urm3vbJNnv/ZKQxdAbLJ02vuhVmJILdi7Bm/yW+0t8i8OznFIN9+gwa9jyQrd=
-dGe
-l2AjQXp3LfLGS0j7gFYlUCkcCfhQ9NikljF/jrPLuMTTv4L46aNH3LiYeOEywktvXoDkisKfw=
-4eI
-rCZKtYRdh1bSHwz+cWO+A9rV8mxu1eOcRLdJtK8kHCWVECY8JkeNN7mRH8xU7VxGQUiogwARA=
-QAB
-wsB8BBgBCAAmFiEEBuXW2UEAaJ5CdDVHM8MnE4ehPRsFAl7ojvICGwwFCQPCZwAACgkQM8MnE=
-4eh
-PRt63wgAhImuq0K+9wV/tM9eixhremNm7Lhk+fRy611C+lXCHeZCxBMSHf6wBSN9X8VaakUO0=
-8BP
-CAKsux/2sbd0f3ePwd9jPEh65cFGfDKv7RLm6Sk3NYyRxK0ahxgOKdwShhqC5i6DyLY/zRHxX=
-mXt
-8SX+Yxeww7NlByTxUXPL9lwOqZTeK9wvPYF3n9e3YFiFTH865eLPzqsfEqfORPm1w6Fm3CMca=
-oz+
-6+dDoGVdwW1FHDC21xq4wD7M6NA7oNAP8VsLeISaFEUUftA5WXfGx75IW5ZxuUMOnJZm26lcp=
-dfs
-zOf1zy85CJsIxkZEum8dXWR7yOsS8rAWZnOGQjgS3XeRmQ=3D=3D
-=3D/u99
------END PGP PUBLIC KEY BLOCK-----
-
---------------9E72543E8E5A8434B01B65CF--
-
---7yoJUfDgnJiVBE5V3dlyGpFytgo1eGKCg--
-
---6sAv2Sg2i98Sr8bNb3NvvBWcbpeQVfwJ3
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsB5BAABCAAjFiEEBuXW2UEAaJ5CdDVHM8MnE4ehPRsFAmAMLykFAwAAAAAACgkQM8MnE4ehPRv4
-+Af/dvjXgNIk8l5C3sVkqkiDJ01bvGstuN5w5Kn3azjvADu8oLiMFdKqebfMZg5yzIRaoX82C59+
-5TFpuLND7XwKPZM2bNjmZhQ40c3tHUM+FhK8TrH/NLbSeQLsjAwLAt+xr4Ljg8+ihv0FOAIvi5J/
-XTrKs289Oi+6pRWaBTH3B0k09shtaonAsQ9gA2nG9HxyCIgcG9ENVTKG5FHYYMZa+qBadcJWVegi
-KhYkTzFe+eHSrL9GvAJTGlnBCgLCU2M0R8jJD3D2Mdxgj5aWKkVpDIFcHvZDQmoQgnakW3COtAPt
-G8VMZ9j+hIE7mlL5ky5o4NPo916xP+qCLaRKwynj5A==
-=Ei8B
------END PGP SIGNATURE-----
-
---6sAv2Sg2i98Sr8bNb3NvvBWcbpeQVfwJ3--
+Yours sincerely,
+Mr. François Pinault
