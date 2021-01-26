@@ -2,128 +2,163 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D3CA30494B
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Jan 2021 20:56:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2666304CDD
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Jan 2021 23:58:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732367AbhAZFcu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 26 Jan 2021 00:32:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47148 "EHLO
+        id S1726630AbhAZW6e (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 26 Jan 2021 17:58:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728597AbhAZBbv (ORCPT
+        with ESMTP id S2391238AbhAZSj7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 25 Jan 2021 20:31:51 -0500
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0652CC061A86
-        for <linux-bluetooth@vger.kernel.org>; Mon, 25 Jan 2021 17:11:43 -0800 (PST)
-Received: by mail-pg1-x534.google.com with SMTP id o16so540517pgg.5
-        for <linux-bluetooth@vger.kernel.org>; Mon, 25 Jan 2021 17:11:43 -0800 (PST)
+        Tue, 26 Jan 2021 13:39:59 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B50ECC061573
+        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Jan 2021 10:37:27 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id w8so19575417oie.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Jan 2021 10:37:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Rd61baDo1O8agTqfKzI1LVnjDA9xt1ECM38/G+bIWJ4=;
-        b=RzKcQ5oVCP6kxQQptiP4bMvEGBoaa3Dg0+VkY9pws24AaEmhezUUF4Z2GlgxYYoHiW
-         qFhWGsI+HAmtQjzCO//8uQOA1mMG1Vc8CakpiPRdhgNCQTFATBCT5HfoUsL52bAK0nba
-         Xt/r2ptbey0nQ4w3NJLV/ieiiSWuYAKaAqWj4=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6euC258dhm6HMOOKStz6cLB6MW85J7zfU0xTcQNIhO8=;
+        b=luPr0pxGVJCbhHiKkxz5ZuqnDxb4HA/XdksarcMLktec6TMo02bTx+7Od7cq+K9HFz
+         sTLSW6s5ehOdlS1wpJQwOLyoy2IH2YF4VH8xQLKxYOdfZY7D4qDzdGGmPex5E/ChPFr0
+         Mi740agRDa/SR6qW2Y4wmnqXhRx+6eZnYXY5+L1+lf90BLnXsYaD1Yo+2KofQSvk869k
+         lwgvaUpmx/nWrSH4He6qucxKB5lFpzaevkzwmS7UlVQQxjNIM0M1ocRjkUewKBTnszxs
+         ThsLxgS5bQtintjjLzxtaP0EWXK+iUQQKlvO8lbmOc7YLsLX4iiChvdGyAcMIJe9K+oa
+         eM8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Rd61baDo1O8agTqfKzI1LVnjDA9xt1ECM38/G+bIWJ4=;
-        b=YIoYLxpYNkBqO0ZioleiiQn2KOUJdua9P/VgvU+OVamqpLQXHGFzyiL8vvragEidWW
-         bMVx504umLUaURcHMP7kLTrIuENp4v/oWGsN8oYqWQXsiYU8sqyrKMc3Fj3XxxNYG8dL
-         IYBtwZ2/Lj42y4uwXvL8MkQqAxMlQ2iAB6bZi8Xle/Jly17c7ZPHSNw++kj2zkHD1Buo
-         kJB2WRJb+wXhxqFiAvEYx7KmIhJzwAw2Q3amVjQuhomqHghcg1hBZRbB2INZk1poWlFi
-         Yg6/EewF1IqvmNIadSy8D4NT1nF8a8oO5a8PFI8gRtlB2Oe1eMv9CxLNg4SN2BgMPMVD
-         V9Pg==
-X-Gm-Message-State: AOAM533O6Acq3rEJRxMQcmKQTJF4b5cgEnrJmiWhlexESSiI5hUgdYX7
-        itr7YKaEhMHqo2HbF5RnUH9HS5srrmTM0A==
-X-Google-Smtp-Source: ABdhPJw6DT2NVWSz/fwB+JVdInE0tl/SKLYNLx3U4Xbe0bxAPCVPrCpvq95Z3ieNEEblaQkxYhyfHw==
-X-Received: by 2002:aa7:909a:0:b029:1bc:22d3:9e58 with SMTP id i26-20020aa7909a0000b02901bc22d39e58mr2837675pfa.29.1611623502288;
-        Mon, 25 Jan 2021 17:11:42 -0800 (PST)
-Received: from sonnysasaka-chrome.mtv.corp.google.com ([2620:15c:202:201:7c08:2ccf:8f7c:2eed])
-        by smtp.gmail.com with ESMTPSA id d76sm17776543pfd.193.2021.01.25.17.11.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jan 2021 17:11:41 -0800 (PST)
-From:   Sonny Sasaka <sonnysasaka@chromium.org>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Sonny Sasaka <sonnysasaka@chromium.org>
-Subject: [PATCH BlueZ] input/hog: Fix crashes of UAF of hog->attr
-Date:   Mon, 25 Jan 2021 17:11:30 -0800
-Message-Id: <20210126011130.5233-1-sonnysasaka@chromium.org>
-X-Mailer: git-send-email 2.29.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6euC258dhm6HMOOKStz6cLB6MW85J7zfU0xTcQNIhO8=;
+        b=T+Z9YM4U5b6AztvbElcmal/+kTm59dUEnHsOhqTe1j/h3lOQGaK6qq4v3q8B+RSQVv
+         1wTp+IioClwVMm0m7DBjDujF8cYUedTUTg+uG4QxtvxKNihhkJZIYsrP0A9JFTuEyOL4
+         0okKklWD9F7VVLqjcK+pq6GTRwxqGVaG/N3eZ/7Zsa9Llgbrvck2RIImK4GMweGM9+1d
+         JWIY/Qh/c6Mfpj2Ssiy00b+euCNrfbdbp+/F28Ks8L++l9NktZABCMALv5fDNxc5p7nG
+         wZ3hbSD7wpcxnYIxvccgV7ez7GnMyHSQ/EtPT5iVBNw7WeIXm2/4EoE6v7LjnpyN+Hec
+         IgQw==
+X-Gm-Message-State: AOAM5326Gsbl0Hy4HyJEfoxGJrzozbfv3SXAkmrLdgIUgUGpkMxXrHYY
+        zk8YYshrFgSkL3FUpPRtwxLMqST4TmaY7cncD6fS0zzDYk4=
+X-Google-Smtp-Source: ABdhPJzHJ8XHluIQYDb4a/BgCQvRK9L13ziT+BCRYKjob8dWdWa9NZGXYo9T+gIJB5L8Pp1uhLbQlU+/6pyJ8rBwDd4=
+X-Received: by 2002:aca:c693:: with SMTP id w141mr667891oif.58.1611686247076;
+ Tue, 26 Jan 2021 10:37:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210113232858.1181251-1-luiz.dentz@gmail.com>
+ <52613EEA-D992-4BDB-BA8A-E91DC4125F70@holtmann.org> <CABBYNZLu7nqgp8x6AWYfQOCXG4_Z6Da8PF=v=XAK9mj7Vg5FjQ@mail.gmail.com>
+ <341754CA-5C47-4FA7-BC34-210229FBC5CB@holtmann.org>
+In-Reply-To: <341754CA-5C47-4FA7-BC34-210229FBC5CB@holtmann.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Tue, 26 Jan 2021 10:37:15 -0800
+Message-ID: <CABBYNZJ-m3AArO33KbCJtOeyeFN+CeG6Wc0EQeBfXPNOxv8OFA@mail.gmail.com>
+Subject: Re: [RESEND 1/2] Bluetooth: btusb: Add support for queuing during
+ polling interval
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-hog->attr does not own pointer, so it may be invalid when hog object
-gets re-attached at bt_hog_attach(). To solve this, this patch
-intentionally clears hog->attr at bt_hog_detach() to mark it as invalid
-so that it can be repopulated with the valid pointer at bt_hog_attach().
-The same applies to all sub-instances.
+Hi Marcel,
 
-Sample stack trace:
-* thread #1, stop reason = signal SIGSEGV
-  * frame #0: 0x05ad49f2 bluetoothd`<name omitted> at gatt-db.c:1428
-    frame #1: 0x05a91922 bluetoothd`bt_hog_attach at hog-lib.c:1694
-    frame #2: 0x05a9160e bluetoothd`hog_accept at hog.c:212
-    frame #3: 0x05ab4784 bluetoothd`service_accept at service.c:203
-    frame #4: 0x05aba1e6 bluetoothd`device_attach_att at device.c:4542
-    frame #5: 0x05a9c4a2 bluetoothd`connect_cb at gatt-database.c:656
-    frame #6: 0x05a98e8c bluetoothd`server_cb at btio.c:264
-    frame #7: 0xec8e6a1a libglib-2.0.so.0`g_main_context_dispatch at gmain.c:3325
-    frame #8: 0xec8e6c58 libglib-2.0.so.0`g_main_context_iterate at gmain.c:4119
-    frame #9: 0xec8e6e52 libglib-2.0.so.0`g_main_loop_run at gmain.c:4317
-    frame #10: 0x05ad582e bluetoothd`mainloop_run at mainloop-glib.c:79
-    frame #11: 0x05ad5a64 bluetoothd`mainloop_run_with_signal at mainloop-notify.c:201
-    frame #12: 0x05ac35ac bluetoothd`main at main.c:1103
-    frame #13: 0xec6ed0a2 libc.so.6`__libc_start_main at libc-start.c:308
+On Tue, Jan 26, 2021 at 1:16 AM Marcel Holtmann <marcel@holtmann.org> wrote:
+>
+> Hi Luiz,
+>
+> >>> This makes btusb to queue ACL and events during a polling interval
+> >>> by using of a delayed work, with the interval working as a time window
+> >>> where frames received from different endpoints are considered to be
+> >>> arrived at same time and then attempt to resolve potential conflics by
+> >>> processing the events ahead of ACL packets.
+> >>>
+> >>> It worth noting though that priorizing events over ACL data may result
+> >>> in inverting the order compared to how they appeared over the air, for
+> >>> instance there may be packets received before a disconnect event that
+> >>> will be discarded and unencrypted packets received before encryption
+> >>> change which would considered encrypted, because of these potential
+> >>> changes on the order the support for queuing during the polling
+> >>> interval is not enabled by default so platforms have the following
+> >>> means to enable it:
+> >>>
+> >>> At build-time:
+> >>>
+> >>>   CONFIG_BT_HCIBTUSB_INTERVAL=y
+> >>>
+> >>> At runtime with use of module option:
+> >>>
+> >>>   enable_interval
+> >>>
+> >>> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> >>> ---
+> >>> drivers/bluetooth/Kconfig |  7 ++++
+> >>> drivers/bluetooth/btusb.c | 88 ++++++++++++++++++++++++++++++++++-----
+> >>> 2 files changed, 84 insertions(+), 11 deletions(-)
+> >>>
+> >>> diff --git a/drivers/bluetooth/Kconfig b/drivers/bluetooth/Kconfig
+> >>> index 4e73a531b377..2f20a853d946 100644
+> >>> --- a/drivers/bluetooth/Kconfig
+> >>> +++ b/drivers/bluetooth/Kconfig
+> >>> @@ -41,6 +41,13 @@ config BT_HCIBTUSB_AUTOSUSPEND
+> >>>        This can be overridden by passing btusb.enable_autosuspend=[y|n]
+> >>>        on the kernel commandline.
+> >>>
+> >>> +config BT_HCIBTUSB_INTERVAL
+> >>> +     bool "Enable notification of USB polling interval"
+> >>> +     depends on BT_HCIBTUSB
+> >>> +     help
+> >>> +       Say Y here to enable notification of USB polling interval for
+> >>> +       Bluetooth USB devices by default.
+> >>> +
+> >>> config BT_HCIBTUSB_BCM
+> >>>      bool "Broadcom protocol support"
+> >>>      depends on BT_HCIBTUSB
+> >>> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> >>> index b14102fba601..38cb5448fc69 100644
+> >>> --- a/drivers/bluetooth/btusb.c
+> >>> +++ b/drivers/bluetooth/btusb.c
+> >>> @@ -30,7 +30,7 @@
+> >>> static bool disable_scofix;
+> >>> static bool force_scofix;
+> >>> static bool enable_autosuspend = IS_ENABLED(CONFIG_BT_HCIBTUSB_AUTOSUSPEND);
+> >>> -
+> >>> +static bool enable_interval = IS_ENABLED(CONFIG_BT_HCIBTUSB_INTERVAL);
+> >>> static bool reset = true;
+> >>>
+> >>> static struct usb_driver btusb_driver;
+> >>> @@ -519,8 +519,12 @@ struct btusb_data {
+> >>>
+> >>>      unsigned long flags;
+> >>>
+> >>> -     struct work_struct work;
+> >>> -     struct work_struct waker;
+> >>> +     struct work_struct  work;
+> >>> +     struct work_struct  waker;
+> >>> +     struct delayed_work rx_work;
+> >>> +
+> >>> +     struct sk_buff_head acl_q;
+> >>> +     struct sk_buff_head evt_q;
+> >>
+> >> so does it make sense to keep them separate if we delay processing anyway.
+> >
+> >
+> > We need them to reorder in case they are received at the same time
+> > (within the same polling interval), we could reorder in place but then
+> > will need to iterate into the queue to find where to insert events,
+> > using 2 queues is a lot simpler to understand and probably perform
+> > better.
+>
+> do we actually have to queue the HCI event as well. Or just make sure that the bulk endpoints are processed at the same interval as the interrupt endpoint?
 
----
- profiles/input/hog-lib.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Perhaps you are suggesting to just maintain one queue for ACL data and
+then dequeue it if an event is received?
 
-diff --git a/profiles/input/hog-lib.c b/profiles/input/hog-lib.c
-index 1f132aa4c..7d1ea53bd 100644
---- a/profiles/input/hog-lib.c
-+++ b/profiles/input/hog-lib.c
-@@ -1651,12 +1651,19 @@ static void primary_cb(uint8_t status, GSList *services, void *user_data)
- bool bt_hog_attach(struct bt_hog *hog, void *gatt)
- {
- 	GSList *l;
-+	bt_uuid_t uuid;
- 
- 	if (hog->attrib)
- 		return false;
- 
- 	hog->attrib = g_attrib_ref(gatt);
- 
-+	if (!hog->attr && hog->gatt_db) {
-+		bt_uuid16_create(&uuid, HOG_UUID16);
-+		gatt_db_foreach_service(hog->gatt_db, &uuid,
-+					foreach_hog_service, hog);
-+	}
-+
- 	if (!hog->attr && !hog->primary) {
- 		discover_primary(hog, hog->attrib, NULL, primary_cb, hog);
- 		return true;
-@@ -1744,6 +1751,14 @@ void bt_hog_detach(struct bt_hog *hog)
- 		bt_hog_detach(instance);
- 	}
- 
-+	/* hog->attr doesn't own pointer, so it may be invalid when this hog
-+	 * object gets re-attached with bt_hog_attach(). So intentionally mark
-+	 * it as invalid and remove all instances so that the instances can be
-+	 * re-attached at bt_hog_attach().
-+	 */
-+	hog->attr = NULL;
-+	g_slist_free_full(hog->instances, hog_free);
-+
- 	for (l = hog->reports; l; l = l->next) {
- 		struct report *r = l->data;
- 
+> Regards
+>
+> Marcel
+>
+
+
 -- 
-2.29.2
-
+Luiz Augusto von Dentz
