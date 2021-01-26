@@ -2,65 +2,66 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C44F1305991
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Jan 2021 12:24:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDB7930598B
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Jan 2021 12:24:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S313772AbhAZW6I (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 26 Jan 2021 17:58:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60648 "EHLO
+        id S313821AbhAZW6O (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 26 Jan 2021 17:58:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393413AbhAZRt5 (ORCPT
+        with ESMTP id S2389694AbhAZSZM (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 26 Jan 2021 12:49:57 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E1DC061788
-        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Jan 2021 09:49:15 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id lw17so1618489pjb.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Jan 2021 09:49:15 -0800 (PST)
+        Tue, 26 Jan 2021 13:25:12 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52122C061574
+        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Jan 2021 10:24:32 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id v19so11966647pgj.12
+        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Jan 2021 10:24:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=u2aZKfq5FCs/M0zy6bHJijugjpc9A2MRnegy9e+obYM=;
-        b=p4G0a2rmaquFE6Ms20pgOeOOQM4kxs/T8wphU4G0tuj0T+CFN1+782LaoFbNFcskty
-         ILDJbLMuFWd1Bok0VCaWoSwhwtwcSQKe/Jiw4C2hCq9MEwo8aBUgfeuX7cNdghLRGdEx
-         TZzMxILjabS35etvPP/kaIEaWe5lYYbi/GOONABHVYsNB/moixBHpZOfuF9j3Fx2ZUYm
-         BndYUUrpw2mizHpFMJyyLWnfq2RKKAdMyBcWJzU8KNh1VqVaCBBU1IZMNd3Dr9EWh8cS
-         jLTfC3FeyBnPwD4kWMkLjNRqkftIU47Hagtz0ERayU5QqN5qroEuDL329h6l8Ls8SHr9
-         KRDA==
+        bh=1VPUesuAg4eJfWzK3lH54NswLymedCxjr1zvsNN7POo=;
+        b=j6suntPk+Xw2jn8dfKm0j36ZhOhMyJI+nJXsIBrmjNDSDoP7AmsozNySCodr6UVHGE
+         nyR41RRe1yPDwb12gcwzO+7Ny2vYFPor56uZg2iJmdwWrUl2bl6vosu5iameRo4CZrV9
+         GaIR7xHCXu3mUcUCVemXYxkPznNxz0MIXNepV27dfXBU0izjyJ20iJl/2kxD9fybkFy0
+         d0YjI4mVejrEj+N9CJEIDiqNmBeGTbFZKGENZ1Gd+tMG10pUYmm/y99WCnQjgOYzrWOp
+         7XdyVW3zFokgCQPofrMqx1vtiJBG2AWJrhdMsfK4gzH/U5w3ngJ1HuNulffHBGLKqpqX
+         sxaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=u2aZKfq5FCs/M0zy6bHJijugjpc9A2MRnegy9e+obYM=;
-        b=qj8tqt+9LdFMT82InTKLJ81IX0IS3AFAy9A5ToW7X7+UhA8laOkXzE8J987BO0+QBU
-         y8Ln/LY1Nm5r+5Fag9eT3fgsPz75q3hGzfG/KGhpnSZ9eieOjwPbfylBl1GOFLyLr0Nk
-         /I/uzcz/dSvwT7sGV7O8v8Ug9Rh/JaQZMTXesJYcHGrgZb19QA0tiC6hDSl7R6J6jynA
-         SI6FilUSP7aU3fhMtBEbZK45pbQeTWPk7QFsdRkoEkmUDhU32OX0yNq4mzX+Ws2ZK3W5
-         5+tEpI+ZSWz0fRt0HbrMib7NyYnSQ9OjIVJvbhL67auY/36kxRCkdaeadsQl1xjXQ5T8
-         6NUw==
-X-Gm-Message-State: AOAM533Npx5KVgtfbIc+gFxOzEHYNyLSd7Tvv7MLDIqm0lUtkp5Ot32J
-        9M4VAIEP2ZpC8sKDjQgWGZ40IifsFuQ5Dw==
-X-Google-Smtp-Source: ABdhPJwhPkOJSizEogr3CiVc8ZQsdZTW2h0xCMF/6oGlrl7m5JKI5nUqfJrniZpDUDGaHzgE/H1Fxw==
-X-Received: by 2002:a17:902:c14d:b029:de:3a7f:2c08 with SMTP id 13-20020a170902c14db02900de3a7f2c08mr7022176plj.7.1611683354586;
-        Tue, 26 Jan 2021 09:49:14 -0800 (PST)
+        bh=1VPUesuAg4eJfWzK3lH54NswLymedCxjr1zvsNN7POo=;
+        b=AVr4zOCF9CkOIW8p13pCYiGF7qHuSwHVuk3j1iTJCUD3MOOvXQomGEvIbJ+UY4TFIx
+         WM+/6BAYJl9Gjp0aYYyCzpZLVg0VwniwCHdYwghdyRmYDDyP/CR+5DZbNsyo+6wosneb
+         PrWTCvUi9mzAro77FCyul6y0LxwyNeDFDpnKp+a4s8xHPmG9V7uxDRMzzD2FKfTsoRrD
+         CgZSZ8YU9suQ8873F9mHDBt8gq6x3R0Nqq28hwl9EJwlbZRo3u1bBSItjAL7mkWXREaU
+         VRa5HUFnnrOCeSUrvRIgtVjauUykbG8jKUAZgoRC5fz7i2e+fLtQutB5FadL7v5EndGk
+         G+UQ==
+X-Gm-Message-State: AOAM532q1hoiuGPXtKOfIzRndl5FQKRvOANXJJaWhijmqzwcaw3IImUg
+        8WQBl85ogU8FpqkSgVKP+0/rwiKuPkTgOQ==
+X-Google-Smtp-Source: ABdhPJw1acqq5H5vJJXs9fohJkWmxVKLYLrqk6c1aksTvsBl5dE5xUsWJdkRjQBUHGssQCQXlFcZqA==
+X-Received: by 2002:a63:e210:: with SMTP id q16mr6805489pgh.249.1611685471583;
+        Tue, 26 Jan 2021 10:24:31 -0800 (PST)
 Received: from han1-XPS-13-9350.hsd1.or.comcast.net ([2601:1c0:6a01:30d0:3127:d904:e93e:f6b7])
-        by smtp.gmail.com with ESMTPSA id e17sm2901765pjh.39.2021.01.26.09.49.13
+        by smtp.gmail.com with ESMTPSA id q12sm19689649pgj.24.2021.01.26.10.24.30
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 09:49:13 -0800 (PST)
+        Tue, 26 Jan 2021 10:24:31 -0800 (PST)
 From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
-X-Google-Original-From: Tedd Ho-Jeong An <tedd.an@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2] tools/bluemoon: Display FW version of firmware file
-Date:   Tue, 26 Jan 2021 09:49:12 -0800
-Message-Id: <20210126174912.83822-1-tedd.an@intel.com>
+Subject: [PATCH BlueZ v3] tools/bluemoon: Display FW version of firmware file
+Date:   Tue, 26 Jan 2021 10:24:30 -0800
+Message-Id: <20210126182430.84718-1-hj.tedd.an@gmail.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
+
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
 This patch displays a FW version after parsing the WRITE_BOOT_PARAMS
 command in the firmeare file. It also change the display type for
