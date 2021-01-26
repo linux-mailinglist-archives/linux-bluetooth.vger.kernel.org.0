@@ -2,79 +2,133 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 538AF303AF2
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Jan 2021 12:00:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA8C3303E8B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Jan 2021 14:24:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404669AbhAZK7I (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 26 Jan 2021 05:59:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55582 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404571AbhAZK5n (ORCPT
+        id S2391645AbhAZMp1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 26 Jan 2021 07:45:27 -0500
+Received: from rtits2.realtek.com ([211.75.126.72]:47813 "EHLO
+        rtits2.realtek.com.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730893AbhAZKBh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 26 Jan 2021 05:57:43 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D301C061573
-        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Jan 2021 02:57:02 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id o10so1200501wmc.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Jan 2021 02:57:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding:thread-index:content-language;
-        bh=FLTsPjnA8WgoT/5ooeSvDEfgWw7jUfKsbc3DOWgNQP8=;
-        b=GRObe/6EbHhdKiIzMnSRUUWTne56mG7H6ZqTUrxASYY5Aga3lw74nXkaDYSG6szgwJ
-         oU7Ni6FtKwTvLttK3KwFN9M8RuISLm4QyneSjfxEuPMEGxS+x/JGzBiztdbWew6IdSkx
-         L3Qw29lJxdiXRBlSEXLeKCd6tm1HeUfHugRDxF1VIFsgWiVBbVwKKxTG0RTZMmSvMEKK
-         7YiMwHwolGhsNBkvo0RMxZpUMLF7uvDB0X8LWQbExdkMVM6rLQKDpMq7BXz2NC61isX4
-         rxWOs9onZT0i3U2PkwWeCpxcECM9eM+eITYB09HjP8hIWWXnizLBk0+sGDQU9uCQ5let
-         OoQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding:thread-index:content-language;
-        bh=FLTsPjnA8WgoT/5ooeSvDEfgWw7jUfKsbc3DOWgNQP8=;
-        b=fiM9Jn9ZOohFVBfHvnS+7iIsUD/xfEShqapXCRR9jEzVQykmNS+GhfZ/MPtdRYns2X
-         HU9lpYDijAfUzxR+Dd8hu78pbHxOPr71XzFlSqvzFSpTfDum+Wkp2uGok/4UCw3oxoM+
-         X+jf1lajFvQVZy0bKEffUkkkusu9xa3PO4Fn3Yt6AQkrU23ZjZucjlksKkz4H+NZSVXC
-         M9trK2pYptb9ZE3EfesZmdpHcU3xrPg5d0HQg7u4vpcLF1Ua/ftfTAdsS0b8eV85BcR2
-         x0ObkutHnc4YDMmHmt10YNgyw3GYktvqmXQIBcDhheENJt5SxoW5NCxvsLfgYf7todU0
-         ZEWw==
-X-Gm-Message-State: AOAM533g2DUgqQneU0YSYvTGECeQX7SzU5qN9uOdNT2YEpM5ZgkCxzel
-        ox6ISpZi4a2JZxy7odQRRKJ+Z+vGtJ4=
-X-Google-Smtp-Source: ABdhPJza3KrSEHJ2NrihHkYwh7d5jm+buDQUoomRBfrYROICT2JD5GJfQxk/oaxoJQg0MIC0TXaHmA==
-X-Received: by 2002:a1c:a406:: with SMTP id n6mr4132141wme.53.1611658620971;
-        Tue, 26 Jan 2021 02:57:00 -0800 (PST)
-Received: from DESKTOP7TC9KE2 ([2a01:388:5c7:110:b1a0:6008:73ad:7f61])
-        by smtp.gmail.com with ESMTPSA id n125sm2934610wmf.30.2021.01.26.02.57.00
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 26 Jan 2021 02:57:00 -0800 (PST)
-From:   <chinotameni@gmail.com>
-To:     <linux-bluetooth@vger.kernel.org>
-Subject: D-BUS Example Request
-Date:   Tue, 26 Jan 2021 10:56:59 -0000
-Message-ID: <078e01d6f3d1$f8abee60$ea03cb20$@gmail.com>
+        Tue, 26 Jan 2021 05:01:37 -0500
+Authenticated-By: 
+X-SpamFilter-By: ArmorX SpamTrap 5.73 with qID 10QA0gcE6022247, This message is accepted by code: ctloc85258
+Received: from mail.realtek.com (rtexmbs03.realtek.com.tw[172.21.6.96])
+        by rtits2.realtek.com.tw (8.15.2/2.70/5.88) with ESMTPS id 10QA0gcE6022247
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+        Tue, 26 Jan 2021 18:00:42 +0800
+Received: from localhost.localdomain (172.21.132.186) by
+ RTEXMBS03.realtek.com.tw (172.21.6.96) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Tue, 26 Jan 2021 18:00:42 +0800
+From:   <max.chou@realtek.com>
+To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
+        <luiz.dentz@gmail.com>, <linux-bluetooth@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <alex_lu@realsil.com.cn>, <hildawu@realtek.com>,
+        <kidman@realtek.com>, <max.chou@realtek.com>,
+        <abhishekpandit@chromium.org>, <josephsih@chromium.org>
+Subject: [PATCH v5] Bluetooth: btrtl: Enable WBS for the specific Realtek devices
+Date:   Tue, 26 Jan 2021 18:00:38 +0800
+Message-ID: <20210126100038.1278-1-max.chou@realtek.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: Adbz0fgGe9SYlZQoT7GIiHLp2QJDRw==
-Content-Language: en-gb
+Content-Type: text/plain
+X-Originating-IP: [172.21.132.186]
+X-ClientProxiedBy: RTEXMBS02.realtek.com.tw (172.21.6.95) To
+ RTEXMBS03.realtek.com.tw (172.21.6.96)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-My aim is to automate pairing, connecting process between Arduino and
-Raspberry Pi. The temperature data will be sent from Arduino to Pi without
-any human intervention. I am able to automate pairing process, however I
-fail at creating connection by using D-BUS. The connection is fine if I use
-deprecated tools such as rfcomm, it works also fine if I use python socket
-library, however D-BUS device methods Connect and ConnectProfile always
-fail. I am completely aware of examples in GitHub however I couldn't create
-a working example based on them. If anyone can provide working example or
-any related information where the Bluetooth connection between Arduino and
-Raspberry Pi is done by python script based on D-BUS I will appreciate it.
+From: Max Chou <max.chou@realtek.com>
+
+By this change, it will enable WBS supported on the specific Realtek BT
+devices, such as RTL8822C and RTL8852A.
+In the future, it's able to maintain what the Realtek devices support WBS
+here.
+
+Tested-by: Hilda Wu <hildawu@realtek.com>
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Signed-off-by: Max Chou <max.chou@realtek.com>
+
+---
+change in v5
+ -remove the extra space between "enum" and "btrtl_chip_id"
+---
+ drivers/bluetooth/btrtl.c | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+index 24f03a1f8d57..c80adf5f313d 100644
+--- a/drivers/bluetooth/btrtl.c
++++ b/drivers/bluetooth/btrtl.c
+@@ -38,6 +38,19 @@
+ 	.hci_ver = (hciv), \
+ 	.hci_bus = (bus)
  
-Best Regards,
++enum btrtl_chip_id {
++	CHIP_ID_8723A,
++	CHIP_ID_8723B,
++	CHIP_ID_8821A,
++	CHIP_ID_8761A,
++	CHIP_ID_8822B = 8,
++	CHIP_ID_8723D,
++	CHIP_ID_8821C,
++	CHIP_ID_8822C = 13,
++	CHIP_ID_8761B,
++	CHIP_ID_8852A = 18,
++};
++
+ struct id_table {
+ 	__u16 match_flags;
+ 	__u16 lmp_subver;
+@@ -58,6 +71,7 @@ struct btrtl_device_info {
+ 	u8 *cfg_data;
+ 	int cfg_len;
+ 	bool drop_fw;
++	int project_id;
+ };
+ 
+ static const struct id_table ic_id_table[] = {
+@@ -307,8 +321,10 @@ static int rtlbt_parse_firmware(struct hci_dev *hdev,
+ 
+ 	/* Find project_id in table */
+ 	for (i = 0; i < ARRAY_SIZE(project_id_to_lmp_subver); i++) {
+-		if (project_id == project_id_to_lmp_subver[i].id)
++		if (project_id == project_id_to_lmp_subver[i].id) {
++			btrtl_dev->project_id = project_id;
+ 			break;
++		}
+ 	}
+ 
+ 	if (i >= ARRAY_SIZE(project_id_to_lmp_subver)) {
+@@ -719,18 +735,19 @@ int btrtl_setup_realtek(struct hci_dev *hdev)
+ 	 */
+ 	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+ 
+-	if (!btrtl_dev->ic_info)
+-		goto done;
+-
+ 	/* Enable central-peripheral role (able to create new connections with
+ 	 * an existing connection in slave role).
+ 	 */
+-	switch (btrtl_dev->ic_info->lmp_subver) {
+-	case RTL_ROM_LMP_8822B:
++	/* Enable WBS supported for the specific Realtek devices. */
++	switch (btrtl_dev->project_id) {
++	case CHIP_ID_8822C:
++	case CHIP_ID_8852A:
+ 		set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
++		set_bit(HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED, &hdev->quirks);
+ 		break;
+ 	default:
+ 		rtl_dev_dbg(hdev, "Central-peripheral role not enabled.");
++		rtl_dev_dbg(hdev, "WBS supported not enabled.");
+ 		break;
+ 	}
+ 
+-- 
+2.17.1
 
