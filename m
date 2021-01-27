@@ -2,34 +2,34 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 786E2306330
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Jan 2021 19:25:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55C97306335
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Jan 2021 19:25:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236320AbhA0SYk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 27 Jan 2021 13:24:40 -0500
-Received: from mga05.intel.com ([192.55.52.43]:57913 "EHLO mga05.intel.com"
+        id S1343859AbhA0SZU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 27 Jan 2021 13:25:20 -0500
+Received: from mga07.intel.com ([134.134.136.100]:21028 "EHLO mga07.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233231AbhA0SYj (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 27 Jan 2021 13:24:39 -0500
-IronPort-SDR: AaMulYzN6tnQ6bBW9hYmmYVTetgQznonOZ6DqRhgjw3fSj70Nsx8nkfo72qUCNdD8tfSFUMc2q
- HNOtg9bgkdfw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9877"; a="264939096"
+        id S1343828AbhA0SZK (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 27 Jan 2021 13:25:10 -0500
+IronPort-SDR: 4noFpp+ANDEQPIqwQDgeDaZuG2WesRpkxmtegtFcPg5n4BhCS2/hxd7Jd3Pc16DS64LJ47+ni1
+ lGv8qFoN8Jjw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9877"; a="244190116"
 X-IronPort-AV: E=Sophos;i="5.79,380,1602572400"; 
-   d="scan'208";a="264939096"
+   d="scan'208";a="244190116"
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2021 10:23:59 -0800
-IronPort-SDR: iYyAULX94kuIHsdhEfbl1Bmy+GE/eR95QlaQofnNzl8dN6327G8MDfqiVn94qeXjadXVXiXRk1
- AVTelxt4gZ4w==
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2021 10:24:16 -0800
+IronPort-SDR: MrVNzXg9+xzFi+zGnDbf93AJkci45BrncU3jIb+OJb0TdmyFf0pvHNqDjdjin4Tj85T+ZqlFj6
+ /m9idgaYZfmg==
 X-IronPort-AV: E=Sophos;i="5.79,380,1602572400"; 
-   d="scan'208";a="430191947"
+   d="scan'208";a="430192018"
 Received: from bgi1-mobl2.amr.corp.intel.com ([10.212.3.187])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2021 10:23:58 -0800
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2021 10:24:15 -0800
 From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     luiz.dentz@gmail.com, brian.gix@intel.com
-Subject: [PATCH BlueZ v2 1/2] advertising: Make data size explicit for formats
-Date:   Wed, 27 Jan 2021 10:23:27 -0800
-Message-Id: <20210127182328.1542194-2-brian.gix@intel.com>
+Subject: [PATCH BlueZ v2 2/2] tools/mgmt-tester: Make data size explicit for log
+Date:   Wed, 27 Jan 2021 10:23:28 -0800
+Message-Id: <20210127182328.1542194-3-brian.gix@intel.com>
 X-Mailer: git-send-email 2.25.4
 In-Reply-To: <20210127182328.1542194-1-brian.gix@intel.com>
 References: <20210127182328.1542194-1-brian.gix@intel.com>
@@ -40,41 +40,38 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On some 32 bit systems sizeof does not return (unsigned long)
+On 32 bit systems, sizeof macro doesn't always return (unsigned long)
 
-Fixes the error:
+Fix following error:
 
-In file included from src/advertising.c:30:
-src/advertising.c: In function ‘read_controller_cap_complete’:
-src/log.h:60:20: error: format ‘%lu’ expects argument of type ‘long
-unsigned int’, but argument 5 has type ‘unsigned int’ [-Werror=format=]
-   60 |  btd_error(0xffff, "%s:%s() " fmt, __FILE__, __func__, ## arg)
-      |                    ^~~~~~~~~~
+tools/mgmt-tester.c: In function ‘read_50_controller_cap_complete’:
+tools/mgmt-tester.c:9124:58: error: format ‘%lu’ expects argument of type
+‘long unsigned int’, but argument 2 has type ‘unsigned int’ [-Werror=format=]
 
-src/advertising.c:1757:3: note: in expansion of macro ‘error’
- 1757 |   error("Controller capabilities malformed, size %lu != %u",
-      |   ^~~~~
-src/advertising.c:1757:52: note: format string is defined here
- 1757 |   error("Controller capabilities malformed, size %lu != %u",
-      |                                                  ~~^
-      |                                                    |
-      |                                             long unsigned int
-      |                                                  %u
+ 9124 |   tester_warn("Controller capabilities malformed, size %lu != %u",
+      |                                                        ~~^
+      |                                                          |
+      |                                                  long unsigned int
+      |                                                        %u
+ 9125 |     sizeof(rp->cap_len) + rp->cap_len, length);
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                         |
+      |                     unsigned int
 ---
- src/advertising.c | 2 +-
+ tools/mgmt-tester.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/advertising.c b/src/advertising.c
-index 4f5123fa1..36e737987 100644
---- a/src/advertising.c
-+++ b/src/advertising.c
-@@ -1755,7 +1755,7 @@ static void read_controller_cap_complete(uint8_t status, uint16_t length,
+diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
+index fe73a6d89..6bc40181e 100644
+--- a/tools/mgmt-tester.c
++++ b/tools/mgmt-tester.c
+@@ -9122,7 +9122,7 @@ static void read_50_controller_cap_complete(uint8_t status, uint16_t length,
  
  	if (sizeof(rp->cap_len) + rp->cap_len != length) {
- 		error("Controller capabilities malformed, size %lu != %u",
+ 		tester_warn("Controller capabilities malformed, size %lu != %u",
 -				sizeof(rp->cap_len) + rp->cap_len, length);
 +			(long) sizeof(rp->cap_len) + rp->cap_len, length);
- 		return;
+ 		tester_test_failed();
  	}
  
 -- 
