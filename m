@@ -2,116 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98B6E309140
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 30 Jan 2021 02:26:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2FBE309805
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 30 Jan 2021 20:26:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233054AbhA3BYy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 29 Jan 2021 20:24:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39638 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232616AbhA3BWk (ORCPT
+        id S229990AbhA3TZ4 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 30 Jan 2021 14:25:56 -0500
+Received: from mx1.integracja.org ([46.171.182.142]:60536 "EHLO
+        mail.integracja.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229468AbhA3TZx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 29 Jan 2021 20:22:40 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B226C06174A
-        for <linux-bluetooth@vger.kernel.org>; Fri, 29 Jan 2021 17:21:39 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id t63so10681805qkc.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 29 Jan 2021 17:21:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=BQExmW8eUyhM7cXz1UVIJfjaCeP5VIY+bFet0UrrVqA=;
-        b=ClFgVl/lIlxQ7pAf0n3Y4SvmQ77r8IWJeMmaIFAdydwyePIqJa0vo6YnMXnVf0+ljA
-         NM5Db3+DWzSJPjA5Og8sdx4Dn4OO1IGXUIMC+Rq/v81j3uHw5meHqOIN/YScmtA5jhRl
-         VQMN88VgsOAhywdsT6mQi4GUUtrOzmiAeKGqdTo5b9TiC7jXvUrdYvXTm/XD0HF52DNH
-         zWtb3deqPhei8sorCEwoARnrffoTpJdLdUkV2PD18kfu2NPll3MmN0l9wjzxOBKTCLqo
-         rTHCWYKy1wqzbvGx0NoZmQrQm6BtRFtz1WaRc1E8d+o2F7ZhWQ4/WSTHzAAuBnI8BRHb
-         hpww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=BQExmW8eUyhM7cXz1UVIJfjaCeP5VIY+bFet0UrrVqA=;
-        b=ZtVNvW0rfgBfC08OVGsQ+s1U/UkvzxJaiJ+ob+gD01qYDpp1xjC8a2LAIBPAlXt2Df
-         c/MnMK37ikZ3Cq99auq0DVJ0evq4hoft/HxECmBnnXDxct1QCWuywMZ7CKFyJgfB0AH3
-         3OAqj+LD5rPBtG8lBSwaxWFKiLnrsJhfshL35W4jh4Y8IktC2dtLRs15sdnawHxO2wRL
-         0KePWnygGqcXqZcN9GA5iNjJpNT8D4O+OPFzeEFaVcc+QxozrZdZnQTJYWKO2eVavTY3
-         /KUOMEGPg71mGyJf3vBIHkRqRFG5+RDeAPJX246f4KRRX0MSabYpzazjP9GsJ0AP7we0
-         fRow==
-X-Gm-Message-State: AOAM5333dtonRnuAu5Yoy936X2Gp7CaT7uchL6id0vwW1XQtsGvWBV4V
-        r2XDQ8nMXzgiP5hwkMp8zX8oTZd8IX/F/A==
-X-Google-Smtp-Source: ABdhPJzlPLnBUJAgex5vF2oBkQOqaxzciPa4lmTYRxmbXrMuX/J4l5SvSYJZaN4k4aBNCMwnr8ku/w==
-X-Received: by 2002:a05:620a:145a:: with SMTP id i26mr6654398qkl.346.1611969698186;
-        Fri, 29 Jan 2021 17:21:38 -0800 (PST)
-Received: from [172.17.0.2] ([40.70.188.140])
-        by smtp.gmail.com with ESMTPSA id i17sm7919657qtg.77.2021.01.29.17.21.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jan 2021 17:21:37 -0800 (PST)
-Message-ID: <6014b4a1.1c69fb81.cbb0a.e885@mx.google.com>
-Date:   Fri, 29 Jan 2021 17:21:37 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============8366720096188844225=="
+        Sat, 30 Jan 2021 14:25:53 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mail.integracja.org (Postfix) with ESMTP id 36B6234329;
+        Fri, 29 Jan 2021 21:44:21 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at #dep-poczta.spi-centrala.local
+X-Spam-Flag: NO
+X-Spam-Score: 1.202
+X-Spam-Level: *
+X-Spam-Status: No, score=1.202 tagged_above=-999 required=4.8
+        tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599, DCC_CHECK=2.17,
+        MISSING_MID=0.001, UNWANTED_LANGUAGE_BODY=2.8, US_DOLLARS_3=0.63]
+        autolearn=unavailable
+Received: from mail.integracja.org ([127.0.0.1])
+        by localhost (mail.integracja.org [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id idkanimYD3ir; Fri, 29 Jan 2021 21:44:21 +0100 (CET)
+Received: from [95.211.253.194] (unknown [95.211.253.194])
+        (Authenticated sender: test@integracja.org)
+        by mail.integracja.org (Postfix) with ESMTPSA id 0CC8332849;
+        Fri, 29 Jan 2021 20:01:46 +0100 (CET)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, hj.tedd.an@gmail.com
-Subject: RE: [BlueZ,v3,1/2] tools/bluemoon: Display FW version of firmware file
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20210130001519.91190-1-hj.tedd.an@gmail.com>
-References: <20210130001519.91190-1-hj.tedd.an@gmail.com>
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: DONATION
+To:     Recipients <test@integracja.org>
+From:   test@integracja.org
+Date:   Sat, 30 Jan 2021 02:56:45 -0800
+Reply-To: charlesjacksonjr2@gmail.com
+Message-Id: <20210129204421.36B6234329@mail.integracja.org>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============8366720096188844225==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=424647
-
----Test result---
-
-##############################
-Test: CheckPatch - FAIL
-Output:
-tools/bluemoon: Add support for checking other firmware file types
-WARNING:PREFER_DEFINED_ATTRIBUTE_MACRO: Prefer __packed over __attribute__((packed))
-#59: FILE: tools/bluemoon.c:757:
-+} __attribute__ ((packed));
-
-- total: 0 errors, 1 warnings, 168 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-"[PATCH] tools/bluemoon: Add support for checking other firmware file" has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-##############################
-Test: CheckGitLint - PASS
-
-##############################
-Test: CheckBuild - PASS
-
-##############################
-Test: MakeCheck - PASS
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============8366720096188844225==--
+My name is Charles W. Jackson Jr. and i won $344.6 million Powerball
+jackpot June 4, 2019.
+ I am giving donation to 5 randomly selected emails and yours is one
+of the email i selected from a raffle draw.
+I am donating the sum of $1,000,000 to you and your family in good faith.
+Contact me through email at charlesjacksonjr2@gmail.com to claim
+your donation
