@@ -2,98 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3102B309DBD
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 31 Jan 2021 16:48:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C6EA30CDBA
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Feb 2021 22:10:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229808AbhAaPrz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 31 Jan 2021 10:47:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37448 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229641AbhAaPrv (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 31 Jan 2021 10:47:51 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 2874B64E2B
-        for <linux-bluetooth@vger.kernel.org>; Sun, 31 Jan 2021 15:47:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612108026;
-        bh=vUTxVjaVyehaS+VDLVAufJBaSWHFiflvTGc6ekpj3uA=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=j5sb8aJdAmkOT8bFXI/zlOm2PT7EdnjSISmX/GA+kv5NBLpV7VpF20t7C+F5CIRDI
-         ghWJDQIMVqKWkJ5n4hc4rBHNy4SQ0Rw8c+IOUEYgBO03TIb5X+1w3iXGulX7rqeWBG
-         4Mo9VZcdqR4zjiJ7rqRCyFLozdJHyx9W14Ew/wDh3mqD7+Kt/vVnrcNQ7o2ce6lI4K
-         rLyI5T7pSmmNqPUYTzzdO3bbupk6KEWGQ4hRSOM3mmRP+8xSQaeYclKsjm2zTB3keI
-         mIt1mSflZgSDJm6dIn28xRNZXa9A7XqJOgXH6UqK5mSSSGVJRlX2DNCVYSMvxF+6Eq
-         0AyIODBAQXtTQ==
-Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id 226A165321; Sun, 31 Jan 2021 15:47:06 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 60824] [PATCH][regression] Cambridge Silicon Radio, Ltd
- Bluetooth Dongle unusable
-Date:   Sun, 31 Jan 2021 15:47:03 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: virtuousfox@gmail.com
-X-Bugzilla-Status: REOPENED
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-60824-62941-cpJhqCF0CE@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-60824-62941@https.bugzilla.kernel.org/>
-References: <bug-60824-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        id S233277AbhBBVKU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 2 Feb 2021 16:10:20 -0500
+Received: from [20.39.40.203] ([20.39.40.203]:65313 "EHLO optinix.in"
+        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+        id S231256AbhBBVKS (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 2 Feb 2021 16:10:18 -0500
+dkim-signature: v=1; a=rsa-sha256; d=digitalsol.in; s=dkim;
+        c=relaxed/relaxed; q=dns/txt; h=From:Reply-To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=wK2neTcOXNiSQ+RBxrnFed+mRrGUU/ndLGEgvo8IMCc=;
+        b=TP5ImnyHcJd6ZOutD2G4fr5f8wWoUQwQgOLW2PI/280OHeTqlZLToIxAIofahXeo75Wu3EjCyPUkWCAvONVwZu0fevODO9NabCWAisW+z0dGu9MXtR6qZycknhfK+mQQvORufc2uJdOyxsLmIaqgju02ah6NTaY7MUrrDAsnypqV/dHvFc1ZCeNq9M9cnBgI6P8moRvB3Uy5b0Di8H1i0zAyCi2Ui0iRGfGkTkO0ugXob5Evs8zBCz+bQn
+        OGNJsvkyEuoIiGf1dhK8ZygeNRPTDeubCEGrI3iP2v+CePRDNJj0O+GADoZLV93dYARi5DbbBgbqte2GtdOqu1KHIrhw==
+Received: from User (Unknown [52.231.31.5])
+        by optinix.in with ESMTP
+        ; Sat, 30 Jan 2021 02:13:52 +0000
+Message-ID: <8F335769-7194-475D-8960-10F7C26454EB@optinix.in>
+Reply-To: <ms.reem@yandex.com>
+From:   "Ms. Reem" <support@digitalsol.in>
+Subject: Re:read
+Date:   Sat, 30 Jan 2021 02:13:50 -0000
 MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D60824
+Hello,
 
---- Comment #171 from Sergey Kondakov (virtuousfox@gmail.com) ---
-(In reply to fredleb from comment #170)
-> Hi !
->=20
-> Not sure it helps but this is the one I bought: https://ebay.us/Om8h1k
->=20
-> Of course, before I discovered this thread...
->=20
-> Should I get another stick or is there any chance that this will ever wor=
-k ?
-> Anything I can do to help ?
->=20
-> Thanks for your efforts all !
->=20
-> Cheers,
-> FL
+My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
+and Petroleum" also "Minister of State for International Cooperation"
+in UAE. I write to you on behalf of my other "three (3) colleagues"
+who has approved me to solicit for your "partnership in claiming of
+{us$47=Million}" from a Financial Home in Cambodia on their behalf and
+for our "Mutual Benefits".
 
-Likely. After all fiddling about, I gave up on that thing.
+The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
+deal with Cambodian/Vietnam Government within 2013/2014, however, we
+don't want our government to know about the fund. If this proposal
+interests you, let me know, by sending me an email and I will send to
+you detailed information on how this business would be successfully
+transacted. Be informed that nobody knows about the secret of this
+fund except us, and we know how to carry out the entire transaction.
+So I am compelled to ask, that you will stand on our behalf and
+receive this fund into any account that is solely controlled by you.
 
-Instead I bought Orico BTA-508 (on BT5 RTL8761B chip) from
-https://www.aliexpress.com/item/1005001273586697.html They also have previo=
-us
-BT4 version of a dongle based on real CSR8510 chip and proper firmware:
-https://www.aliexpress.com/item/32734449020.html - I've seen reports that t=
-his
-one actually works too.
+We will compensate you with 15% of the total amount involved as
+gratification for being our partner in this transaction. Reply to:
+ms.reem@yandex.com
 
-For BT5 RTL8761B I had to manually extract firmware file from its Windows
-driver, current release kernel does not have any and one known from Github =
-did
-not work for me:
-https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/572#note_776534
+Regards,
+Ms. Reem.
 
---=20
-You may reply to this email to add a comment.
-
-You are receiving this mail because:
-You are the assignee for the bug.=
