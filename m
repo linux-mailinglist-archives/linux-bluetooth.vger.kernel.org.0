@@ -2,34 +2,34 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7984A3099F2
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 31 Jan 2021 03:12:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48310309CCF
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 31 Jan 2021 15:27:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232470AbhAaCMG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 30 Jan 2021 21:12:06 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55086 "EHLO mail.kernel.org"
+        id S232011AbhAaOUt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 31 Jan 2021 09:20:49 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49878 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230168AbhAaCME (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 30 Jan 2021 21:12:04 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 5654764E2E
-        for <linux-bluetooth@vger.kernel.org>; Sun, 31 Jan 2021 02:11:24 +0000 (UTC)
+        id S232509AbhAaNgv (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 31 Jan 2021 08:36:51 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 6761864E37
+        for <linux-bluetooth@vger.kernel.org>; Sun, 31 Jan 2021 13:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612059084;
-        bh=j1K+ib2w4ULaS756yH8S5/YN42YKAadkJ0IJ54C5S4c=;
+        s=k20201202; t=1612100167;
+        bh=4L+ebJzfhGmYxQzQWPAro6XT7ykzr01oWzLbtx4KQ9k=;
         h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=TaL6my70br9mIfjlI0WcwIyb1iURvfvRWG1nGQqZwkF0hrh8tbJ6shiBQBM7Ep+PW
-         A0h+JVkBB/aThpwHMuXvFDDdGldu7pwDqrS5/YNSasZ3IWXvBiBM96srHBikX5Fioa
-         C0oxgRUc3EOb6sCosDD+9Pnr538dh6FUxEX+WcutuRBc2UicDCbMvYPCXa3cGY+v1G
-         ymHoowRC1+xMdxGWZbLwvhqGpe5UYedY4SrJVKzfUE/8RNh+khaanJCZVXaopsj46V
-         +YHglzyOe0PwVk9EA4Tde6/Lh+cl0GrKzF+obYpPPOpKrsiowutsCv1evuEEtcVMG7
-         WFarDnqc1XNWQ==
+        b=Mx01sgEmYyO6KHIxacOf6/+m0ERifgAE/MLA6kS3Wx2Q0VV6vIU0RWzTJqjX7WlNH
+         4DQmcJiuNIsU2L5no+y6h/shc8aK27+hK56bMXaPAqH4ZiKgyKGirjTQ7qa2/lQPNU
+         sgdOhnjfmCrk3fSchO3olZXExVYTuMc9Ce+N50+6NPWbUY8PJoa8G7XWlXKEAaU7PF
+         oT+yyw/2tSflTIU89SUIWykSeebS2Yp41R2YEQ0n2au+J+BSTc56twigWa9QHZexjH
+         LQFSlOfe/hAyvOm4gxSmeva9Qd0TtV66MlyGXeUg+F8eoLD8F1CWDdi9vgVuNwGnor
+         odTbLStU0y9UQ==
 Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id 52F6C652F9; Sun, 31 Jan 2021 02:11:24 +0000 (UTC)
+        id 64C026531E; Sun, 31 Jan 2021 13:36:07 +0000 (UTC)
 From:   bugzilla-daemon@bugzilla.kernel.org
 To:     linux-bluetooth@vger.kernel.org
 Subject: [Bug 210681] kernel: Bluetooth: hci0: don't support firmware rome
  0x31010000
-Date:   Sun, 31 Jan 2021 02:11:23 +0000
+Date:   Sun, 31 Jan 2021 13:36:06 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -38,14 +38,14 @@ X-Bugzilla-Component: Bluetooth
 X-Bugzilla-Version: 2.5
 X-Bugzilla-Keywords: 
 X-Bugzilla-Severity: high
-X-Bugzilla-Who: igorognev@mail.ru
+X-Bugzilla-Who: jwrdegoede@fedoraproject.org
 X-Bugzilla-Status: NEW
 X-Bugzilla-Resolution: 
 X-Bugzilla-Priority: P1
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-210681-62941-GjRPJ3h7pq@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-210681-62941-EWcKXPpxo6@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-210681-62941@https.bugzilla.kernel.org/>
 References: <bug-210681-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -59,19 +59,22 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D210681
 
-igorog (igorognev@mail.ru) changed:
+--- Comment #25 from Hans de Goede (jwrdegoede@fedoraproject.org) ---
+> Is a fix for this bug planned?
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |igorognev@mail.ru
+As I've mentioned before someone needs to report this to the upstream bluet=
+ooth
+developers. Please send an email to:
 
---- Comment #23 from igorog (igorognev@mail.ru) ---
-Bluetooth: hci0: don't support firmware rome 0x1020200
->--------------------------------------------------------
-Arch Linux 5.10.11-arch1-1
->03:00.0 Network controller: Qualcomm Atheros AR9485 Wireless Network Adapt=
-er
->(rev 01)
+Rocky Liao <rjliao@codeaurora.org>
+
+Who is the author of the troublesome "Bluetooth: btusb: Add Qualcomm Blueto=
+oth
+SoC WCN6855 support" commit and add:
+
+linux-bluetooth@vger.kernel.org
+
+To the Cc of this email.
 
 --=20
 You may reply to this email to add a comment.
