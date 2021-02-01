@@ -2,83 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 526C0310BD0
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Feb 2021 14:32:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32429311230
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Feb 2021 21:20:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbhBENa4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Feb 2021 08:30:56 -0500
-Received: from youngberry.canonical.com ([91.189.89.112]:59746 "EHLO
-        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229991AbhBEN2h (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Feb 2021 08:28:37 -0500
-Received: from [123.112.66.2] (helo=[192.168.0.103])
-        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.86_2)
-        (envelope-from <hui.wang@canonical.com>)
-        id 1l818T-0001op-RB; Fri, 05 Feb 2021 13:26:58 +0000
-Subject: Re: [PATCH] Bluetooth: btusb: Add a parameter to load fw forcibly for
- Intel BT
-From:   Hui Wang <hui.wang@canonical.com>
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     linux-bluetooth@vger.kernel.org
-References: <20201130052753.111742-1-hui.wang@canonical.com>
- <116CA1BC-A38E-4622-99D7-91C7DF6EA463@holtmann.org>
- <efdddc31-bf46-42e6-8edd-710835ed3f4b@canonical.com>
-Message-ID: <10c5e78c-3f07-2891-cbeb-7130ec5d7895@canonical.com>
-Date:   Fri, 5 Feb 2021 21:26:50 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        id S233070AbhBESha (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 Feb 2021 13:37:30 -0500
+Received: from [20.39.40.203] ([20.39.40.203]:54986 "EHLO optinix.in"
+        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+        id S233003AbhBEPJb (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 5 Feb 2021 10:09:31 -0500
+dkim-signature: v=1; a=rsa-sha256; d=digitalsol.in; s=dkim;
+        c=relaxed/relaxed; q=dns/txt; h=From:Reply-To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=wK2neTcOXNiSQ+RBxrnFed+mRrGUU/ndLGEgvo8IMCc=;
+        b=UQEHlnVg5XQbvsB12U1Ol3bhaQI9w8E6XPoWFxWLZmrTEAjZvoQaEbrphRRSyBGIIWdRriBN1NgjJnIHHuwrDk7Jiepk7hcecgKlubZ8Cbf+eyLm3How+vKdkYfuxbESucRjBUGhM3uNAIEl+djc5YuHgus55Al0uLGG/w84VCgbq4C5haAYakmS1vYlSgFchzN2F++luNM29v8DFhI75uaDxJSrLZjsc+U9sEzNpAaOCR9pw2OgdpmsaX
+        RpEWSooLH5k7s+lJH9RwsRzupCIBYaSMrEgafQL+30fpkHM9MFjkLmthx4Z1XqGeg54bjdS4mLhUgJrpa/zvXopT6v+g==
+Received: from User (Unknown [52.231.31.5])
+        by optinix.in with ESMTP
+        ; Mon, 1 Feb 2021 08:49:51 +0000
+Message-ID: <7494048F-E4B5-4167-8C98-9021CA321467@optinix.in>
+Reply-To: <ms.reem@yandex.com>
+From:   "Ms. Reem" <support@digitalsol.in>
+Subject: Re:read
+Date:   Mon, 1 Feb 2021 08:49:50 -0000
 MIME-Version: 1.0
-In-Reply-To: <efdddc31-bf46-42e6-8edd-710835ed3f4b@canonical.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Hello,
 
+My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
+and Petroleum" also "Minister of State for International Cooperation"
+in UAE. I write to you on behalf of my other "three (3) colleagues"
+who has approved me to solicit for your "partnership in claiming of
+{us$47=Million}" from a Financial Home in Cambodia on their behalf and
+for our "Mutual Benefits".
 
->>>
->>>     /* controller is already having an operational firmware */
->>> -    if (ver.fw_variant == 0x23)
->>> +    if (ver.fw_variant == 0x23) {
->>> +        if (force_load_fw) {
->>> +            btintel_reset_to_bootloader(hdev);
->>> +            force_load_fw = false;
->>> +            return -EAGAIN;
->>> +        }
->>> +        bt_dev_info(hdev, "already in operational mode, not load 
->>> fw. Set force_load_fw=1 to load fw forcibly");
->>>         goto finish;
->>> +    }
->> I don’t like this approach. I rather do this in a more generic way 
->> that resets the controller and puts it into boot loader support if 
->> support. We can use the experimental mgmt setting for this.
-> OK, got it, will investigate it. Thanks.
+The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
+deal with Cambodian/Vietnam Government within 2013/2014, however, we
+don't want our government to know about the fund. If this proposal
+interests you, let me know, by sending me an email and I will send to
+you detailed information on how this business would be successfully
+transacted. Be informed that nobody knows about the secret of this
+fund except us, and we know how to carry out the entire transaction.
+So I am compelled to ask, that you will stand on our behalf and
+receive this fund into any account that is solely controlled by you.
 
-Hi Marcel,
+We will compensate you with 15% of the total amount involved as
+gratification for being our partner in this transaction. Reply to:
+ms.reem@yandex.com
 
-Do you mean use experimental features in the mgmt? Recently I read the 
-mgmt exp_features related code, looks like the userspace tool btmgmt 
-only supports 2 commands so far, they are expinfo and exp-debug, it 
-looks like expinfo read some info from kernel, exp-debug set one bool 
-value to kernel, but exp-debug sends the hard-coded uuid to kernel, my 
-understanding is this could only set FEATURE_DEBUG. If i add a new 
-feature like reset_controller_to_bootloader, I can't call it through 
-expinfo or exp-debug.
+Regards,
+Ms. Reem.
 
-And the kernel commit (cbbdfa6f3319 Bluetooth: Enable controller RPA 
-resolution using Experimental feature) add a new feature, how to set 
-this feature via expinfo and exp-debug or some userspace tool?
-
-Thanks,
-
-Hui.
-
->>
->> Regards
->>
->> Marcel
->>
