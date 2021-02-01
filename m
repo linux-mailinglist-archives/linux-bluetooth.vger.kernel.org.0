@@ -2,64 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C6EA30CDBA
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Feb 2021 22:10:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A43D1309FF6
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Feb 2021 02:23:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233277AbhBBVKU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 2 Feb 2021 16:10:20 -0500
-Received: from [20.39.40.203] ([20.39.40.203]:65313 "EHLO optinix.in"
-        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S231256AbhBBVKS (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 2 Feb 2021 16:10:18 -0500
-dkim-signature: v=1; a=rsa-sha256; d=digitalsol.in; s=dkim;
-        c=relaxed/relaxed; q=dns/txt; h=From:Reply-To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=wK2neTcOXNiSQ+RBxrnFed+mRrGUU/ndLGEgvo8IMCc=;
-        b=TP5ImnyHcJd6ZOutD2G4fr5f8wWoUQwQgOLW2PI/280OHeTqlZLToIxAIofahXeo75Wu3EjCyPUkWCAvONVwZu0fevODO9NabCWAisW+z0dGu9MXtR6qZycknhfK+mQQvORufc2uJdOyxsLmIaqgju02ah6NTaY7MUrrDAsnypqV/dHvFc1ZCeNq9M9cnBgI6P8moRvB3Uy5b0Di8H1i0zAyCi2Ui0iRGfGkTkO0ugXob5Evs8zBCz+bQn
-        OGNJsvkyEuoIiGf1dhK8ZygeNRPTDeubCEGrI3iP2v+CePRDNJj0O+GADoZLV93dYARi5DbbBgbqte2GtdOqu1KHIrhw==
-Received: from User (Unknown [52.231.31.5])
-        by optinix.in with ESMTP
-        ; Sat, 30 Jan 2021 02:13:52 +0000
-Message-ID: <8F335769-7194-475D-8960-10F7C26454EB@optinix.in>
-Reply-To: <ms.reem@yandex.com>
-From:   "Ms. Reem" <support@digitalsol.in>
-Subject: Re:read
-Date:   Sat, 30 Jan 2021 02:13:50 -0000
+        id S230439AbhBABXZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 31 Jan 2021 20:23:25 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56218 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231196AbhBABWM (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 31 Jan 2021 20:22:12 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id AA30964E3D
+        for <linux-bluetooth@vger.kernel.org>; Mon,  1 Feb 2021 01:21:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612142491;
+        bh=T9NoDW89lOSARoVOHI8MaJoQq+eA5GZiZpqthPHVUOg=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=j2pf1YpNiRcTjd/eN8InY5uFDygjgAvW0tn0YfH8N+aCieYJX8ejobsah/aFiiosJ
+         tVC/KHVco4Bbt/dgvWzmPTAtyigCFo+bpse1v96fJco9m1B2gO2ld9vFhaMtS3KVJ/
+         R+QhPv92uD28g52FVlgAqTHgTZYPX388LCDVZe7MgVJCNZOWzWif9Dc0upm8q6Y6YT
+         J2JdcEt/uadP5qFUWSAPWcZ3rycq2K6n+BFiF5V9KLkC1B+VE1HqOEN0exexvjMXGz
+         jRY3lcu2oVKMS6YHErSqqQN0hfuDuVWoPzM+6vk20xOmBMejbobk8v9HpuFw4sYiSA
+         2rqXJAGOhEx+g==
+Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
+        id A537465323; Mon,  1 Feb 2021 01:21:31 +0000 (UTC)
+From:   bugzilla-daemon@bugzilla.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 210681] kernel: Bluetooth: hci0: don't support firmware rome
+ 0x31010000
+Date:   Mon, 01 Feb 2021 01:21:30 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: high
+X-Bugzilla-Who: igorognev@mail.ru
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-210681-62941-93HDHlsiSy@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-210681-62941@https.bugzilla.kernel.org/>
+References: <bug-210681-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D210681
 
-My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
-and Petroleum" also "Minister of State for International Cooperation"
-in UAE. I write to you on behalf of my other "three (3) colleagues"
-who has approved me to solicit for your "partnership in claiming of
-{us$47=Million}" from a Financial Home in Cambodia on their behalf and
-for our "Mutual Benefits".
+--- Comment #27 from igorog (igorognev@mail.ru) ---
+linux-bluetooth@vger.kernel.org - not available
 
-The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
-deal with Cambodian/Vietnam Government within 2013/2014, however, we
-don't want our government to know about the fund. If this proposal
-interests you, let me know, by sending me an email and I will send to
-you detailed information on how this business would be successfully
-transacted. Be informed that nobody knows about the secret of this
-fund except us, and we know how to carry out the entire transaction.
-So I am compelled to ask, that you will stand on our behalf and
-receive this fund into any account that is solely controlled by you.
+--=20
+You may reply to this email to add a comment.
 
-We will compensate you with 15% of the total amount involved as
-gratification for being our partner in this transaction. Reply to:
-ms.reem@yandex.com
-
-Regards,
-Ms. Reem.
-
+You are receiving this mail because:
+You are the assignee for the bug.=
