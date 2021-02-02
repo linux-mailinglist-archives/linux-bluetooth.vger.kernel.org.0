@@ -2,26 +2,26 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62D8D30C257
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Feb 2021 15:49:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C51E30C2C0
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Feb 2021 15:59:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234615AbhBBOrf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 2 Feb 2021 09:47:35 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:50648 "EHLO
+        id S234951AbhBBO7U (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 2 Feb 2021 09:59:20 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:34126 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232227AbhBBOqS (ORCPT
+        with ESMTP id S234957AbhBBO6u (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 2 Feb 2021 09:46:18 -0500
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 02 Feb 2021 06:45:34 -0800
+        Tue, 2 Feb 2021 09:58:50 -0500
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 02 Feb 2021 06:58:10 -0800
 X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 Feb 2021 06:45:33 -0800
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 Feb 2021 06:58:08 -0800
 X-QCInternal: smtphost
 Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 02 Feb 2021 20:15:09 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 02 Feb 2021 20:27:45 +0530
 Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id EB59521DF9; Tue,  2 Feb 2021 20:15:08 +0530 (IST)
+        id 7F5C921DF9; Tue,  2 Feb 2021 20:27:44 +0530 (IST)
 From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
 To:     marcel@holtmann.org, johan.hedberg@gmail.com
 Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
@@ -30,9 +30,9 @@ Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
         rjliao@codeaurora.org, hbandi@codeaurora.org,
         abhishekpandit@chromium.org,
         Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [PATCH v1] Bluetooth: hci_qca: check for SSR triggered flag while suspend
-Date:   Tue,  2 Feb 2021 20:15:07 +0530
-Message-Id: <1612277107-12163-1-git-send-email-gubbaven@codeaurora.org>
+Subject: [PATCH v2] Bluetooth: hci_qca: check for SSR triggered flag while suspend
+Date:   Tue,  2 Feb 2021 20:27:42 +0530
+Message-Id: <1612277862-13022-1-git-send-email-gubbaven@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
@@ -43,6 +43,7 @@ controller.Currently qca_suspend() is waiting for SSR to complete
 based on flag QCA_IBS_DISABLED.Added to check for QCA_SSR_TRIGGERED
 flag too.
 
+Fixes: 2be43abac5a8 ("Bluetooth: hci_qca: Wait for timeout during suspend")
 Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
 ---
  drivers/bluetooth/hci_qca.c | 3 ++-
