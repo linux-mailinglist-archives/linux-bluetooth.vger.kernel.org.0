@@ -2,146 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 542C530D3E8
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Feb 2021 08:10:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DBC7B30DDE4
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Feb 2021 16:17:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232238AbhBCHKV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Feb 2021 02:10:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45160 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231902AbhBCHKS (ORCPT
+        id S234278AbhBCPQc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 3 Feb 2021 10:16:32 -0500
+Received: from 198-20-226-115.unifiedlayer.com ([198.20.226.115]:42716 "EHLO
+        198-20-226-115.unifiedlayer.com" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S233759AbhBCPOw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 3 Feb 2021 02:10:18 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03775C0613D6
-        for <linux-bluetooth@vger.kernel.org>; Tue,  2 Feb 2021 23:09:37 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id l10so26862976ybt.6
-        for <linux-bluetooth@vger.kernel.org>; Tue, 02 Feb 2021 23:09:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:message-id:mime-version:subject:from:to:cc;
-        bh=/wnbMtD0oy336W9EDCGq60PMZiiWzWFv7G6400JHFhs=;
-        b=ORpIZ9KqvA5JySv1a+xUn5mihk221WQUpgWJVo0oGIZRv5FvZ6QiHJy/rWa+IdEYjI
-         /8JHAUH81DnuGXTBISe7MuVXH1UcJOWYwxV1PZGf3qGUR5pivDIDyLTY1K5RB3RfjS8C
-         qdmy0O+f1yM9NW7yygT+6B3madCzZB+CdnwsAuZo5aU39rSboYuAaW580muhTehu4V3E
-         cigMubeYmMeWUvEC+mhwwHzpJVVgmmeuKNL4xxK0En3ZLAIZpDJxe/TO420R8rs1oIma
-         kUzrgy9y8ml3LVwxWfHb01cEiFrYwFZ5EH0TevmKlL2AdtqBUN0UMrChtJytP1Vhzq2q
-         7K6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
-         :to:cc;
-        bh=/wnbMtD0oy336W9EDCGq60PMZiiWzWFv7G6400JHFhs=;
-        b=N8GlJd+nPteHhV/ywYEP2UsC73n7Fuq/uqlMM/0u8izhEFR1Qn9MLvA4ElvZ7Tb9B+
-         wJ5suLmqivfqwmuiDAtdOOFENxeDxl67l7ejiOgP5TxIaFUsYUG4BS0DRYGddCNOfCpw
-         HwSb7mWVIUqNMXOhg4lngqkuwZhltn11fOYqAa4Kd2ESF7XUsA4Zsp/Ra+kpijZLSIeE
-         Amg8mE/T83ocIzTVKC4V0BzWT+n2saJnx+NkLt+5bl/MM4r2ZYubEinWFw2aRAVKXWJq
-         MXrJVAd9CYGhyU7jq2UqEJOVeY6is4bKZZd1w7TVe9TK1qvyofXqrbs13z0G76Termb6
-         LGAQ==
-X-Gm-Message-State: AOAM531IB6x8pQy6rfwZGv71CZAec0IGZtWjmPSS1vrk1Vi95PewcwNY
-        gtAgJxUOQonpIJOkomhvYgA1sk1L9ylybcqrd3nnHZoFQfLgAfoQQVnHefD+T+okLxh3nvWoy6+
-        F6NU9tXu8dVAXal3MtfOf9m6TqIFmtBNLdo9AfAYGRdIezZh2vrVS6+X3GPCGAywgzgCeYQP1z4
-        0z4w4+H6s2ExI=
-X-Google-Smtp-Source: ABdhPJypZNI/m4g+qfZiw1c1Kl/BP/d7kUrd1HrLK8IrMqiQE82/eoWXzK8jRUdUY1sUw071wrH5VFpy2dvkgYlXwA==
-Sender: "howardchung via sendgmr" 
-        <howardchung@howardchung-p920.tpe.corp.google.com>
-X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:c8ff:4e4a:dbd4:e8a6])
- (user=howardchung job=sendgmr) by 2002:a25:5cd7:: with SMTP id
- q206mr2627199ybb.150.1612336177210; Tue, 02 Feb 2021 23:09:37 -0800 (PST)
-Date:   Wed,  3 Feb 2021 15:09:29 +0800
-Message-Id: <20210203150907.v1.1.I23ab3f91f23508bf84908e62d470bfab1d844f63@changeid>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: [PATCH v1] Bluetooth: Fix crash in mgmt_add_adv_patterns_monitor_complete
-From:   Howard Chung <howardchung@google.com>
-To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org
-Cc:     Howard Chung <howardchung@google.com>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        Manish Mandlik <mmandlik@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Wed, 3 Feb 2021 10:14:52 -0500
+X-Greylist: delayed 28096 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Feb 2021 10:14:46 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=carnivalassure.com.bd; s=default; h=Content-Transfer-Encoding:Content-Type:
+        Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Sender:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=miRpAdBSO5eDo01VDX+EK9bqGCmqMjXHS3kO16T6iWw=; b=w0lK0VI/z8H0duCatAteN0Iwc5
+        3G/G54MwGNKCfqonH6LHTViaP8936x7eQK7+re2PBNWY4tVbChNBcJyeAJfnieX/3WISXqPlMwWOC
+        fl7fvJ1xZpB4SP6ggH7J9g1MIqK6ZpQXo4+y7tK4qobcbm6QHPDPvTn+fJ1KnlpXIkyaAwiKZIg3+
+        AaI+TpfhTlxhAdHttFu2ogg1F+UklUQvcNwyV7oyRuJIIioseeYpfZZ9fjg2p6LGrb1qfupeXXTpo
+        Zk277PG4P2oOVwGioBRam0zGTwQWVIN7rioU987VZDnZDGscFlAousTOyLt6QntFSQhAVrF2OLcYd
+        k+0e1Nyg==;
+Received: from [127.0.0.1] (port=45548 helo=dot.dotlines.com.sg)
+        by dot.dotlines.com.sg with esmtpa (Exim 4.93)
+        (envelope-from <noreply@carnivalassure.com.bd>)
+        id 1l7CVT-0005U9-8i; Wed, 03 Feb 2021 01:23:19 -0600
+MIME-Version: 1.0
+Date:   Wed, 03 Feb 2021 01:23:18 -0600
+From:   Francois Pinault <noreply@carnivalassure.com.bd>
+To:     undisclosed-recipients:;
+Subject: Hello/Hallo
+Organization: Donation
+Reply-To: francoispinault1936@outlook.com
+Mail-Reply-To: francoispinault1936@outlook.com
+Message-ID: <daf030622886954284fef423f887a757@carnivalassure.com.bd>
+X-Sender: noreply@carnivalassure.com.bd
+User-Agent: Roundcube Webmail/1.3.15
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - dot.dotlines.com.sg
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - carnivalassure.com.bd
+X-Get-Message-Sender-Via: dot.dotlines.com.sg: authenticated_id: noreply@carnivalassure.com.bd
+X-Authenticated-Sender: dot.dotlines.com.sg: noreply@carnivalassure.com.bd
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-If hci_add_adv_monitor is a pending command(e.g. forward to
-msft_add_monitor_pattern), it is possible that
-mgmt_add_adv_patterns_monitor_complete gets called before
-cmd->user_data gets set, which will cause a crash when we
-try to get the moniter handle through cmd->user_data in
-mgmt_add_adv_patterns_monitor_complete.
 
-This moves the cmd->user_data assignment earlier than
-hci_add_adv_monitor.
 
-RIP: 0010:mgmt_add_adv_patterns_monitor_complete+0x82/0x187 [bluetooth]
-Code: 1e bf 03 00 00 00 be 52 00 00 00 4c 89 ea e8 9e
-e4 02 00 49 89 c6 48 85 c0 0f 84 06 01 00 00 48 89 5d b8 4c 89 fb 4d 8b
-7e 30 <41> 0f b7 47 18 66 89 45 c0 45 84 e4 75 5a 4d 8b 56 28 48 8d 4d
-c8
-RSP: 0018:ffffae81807dbcb8 EFLAGS: 00010286
-RAX: ffff91c4bdf723c0 RBX: 0000000000000000 RCX: ffff91c4e5da5b80
-RDX: ffff91c405680000 RSI: 0000000000000052 RDI: ffff91c49d654c00
-RBP: ffffae81807dbd00 R08: ffff91c49fb157e0 R09: ffff91c49fb157e0
-R10: 000000000002a4f0 R11: ffffffffc0819cfd R12: 0000000000000000
-R13: ffff91c405680000 R14: ffff91c4bdf723c0 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffff91c4ea300000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000018 CR3: 0000000133612002 CR4:
-00000000003606e0
-Call Trace:
- ? msft_le_monitor_advertisement_cb+0x111/0x141
-[bluetooth]
- hci_event_packet+0x425e/0x631c [bluetooth]
- ? printk+0x59/0x73
- ? __switch_to_asm+0x41/0x70
- ?
-msft_le_set_advertisement_filter_enable_cb+0xa6/0xa6 [bluetooth]
- ? bt_dbg+0xb4/0xbb [bluetooth]
- ? __switch_to_asm+0x41/0x70
- hci_rx_work+0x101/0x319 [bluetooth]
- process_one_work+0x257/0x506
- worker_thread+0x10d/0x284
- kthread+0x14c/0x154
- ? process_one_work+0x506/0x506
- ? kthread_blkcg+0x2c/0x2c
- ret_from_fork+0x1f/0x40
-
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-Reviewed-by: Manish Mandlik <mmandlik@chromium.org>
-Reviewed-by: Archie Pusaka <apusaka@chromium.org>
-Signed-off-by: Howard Chung <howardchung@google.com>
----
-
- net/bluetooth/mgmt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 8ff9c4bb43d11..74971b4bd4570 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -4303,6 +4303,7 @@ static int __add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
- 		goto unlock;
- 	}
- 
-+	cmd->user_data = m;
- 	pending = hci_add_adv_monitor(hdev, m, &err);
- 	if (err) {
- 		if (err == -ENOSPC || err == -ENOMEM)
-@@ -4330,7 +4331,6 @@ static int __add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
- 
- 	hci_dev_unlock(hdev);
- 
--	cmd->user_data = m;
- 	return 0;
- 
- unlock:
 -- 
-2.30.0.365.g02bc693789-goog
+Hallo, ich bin Herr Francois Pinault, ich habe Ihnen gespendet. Sie 
+können mein Profil auf Wikipedia, Google oder Forbes überprüfen.
 
+Für Ihren Spendenanspruch und weitere Informationen kontaktieren Sie 
+mich umgehend unter francoispinault1936@outlook.com
+
+Mit freundlichen Grüßen,
+Herr Francois Pinault
