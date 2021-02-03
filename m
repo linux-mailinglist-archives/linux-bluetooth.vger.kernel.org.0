@@ -2,69 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBC7B30DDE4
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Feb 2021 16:17:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E57B130D494
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Feb 2021 09:04:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234278AbhBCPQc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Feb 2021 10:16:32 -0500
-Received: from 198-20-226-115.unifiedlayer.com ([198.20.226.115]:42716 "EHLO
-        198-20-226-115.unifiedlayer.com" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S233759AbhBCPOw (ORCPT
+        id S232160AbhBCID5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 3 Feb 2021 03:03:57 -0500
+Received: from youngberry.canonical.com ([91.189.89.112]:55841 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231738AbhBCIDx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 3 Feb 2021 10:14:52 -0500
-X-Greylist: delayed 28096 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Feb 2021 10:14:46 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=carnivalassure.com.bd; s=default; h=Content-Transfer-Encoding:Content-Type:
-        Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=miRpAdBSO5eDo01VDX+EK9bqGCmqMjXHS3kO16T6iWw=; b=w0lK0VI/z8H0duCatAteN0Iwc5
-        3G/G54MwGNKCfqonH6LHTViaP8936x7eQK7+re2PBNWY4tVbChNBcJyeAJfnieX/3WISXqPlMwWOC
-        fl7fvJ1xZpB4SP6ggH7J9g1MIqK6ZpQXo4+y7tK4qobcbm6QHPDPvTn+fJ1KnlpXIkyaAwiKZIg3+
-        AaI+TpfhTlxhAdHttFu2ogg1F+UklUQvcNwyV7oyRuJIIioseeYpfZZ9fjg2p6LGrb1qfupeXXTpo
-        Zk277PG4P2oOVwGioBRam0zGTwQWVIN7rioU987VZDnZDGscFlAousTOyLt6QntFSQhAVrF2OLcYd
-        k+0e1Nyg==;
-Received: from [127.0.0.1] (port=45548 helo=dot.dotlines.com.sg)
-        by dot.dotlines.com.sg with esmtpa (Exim 4.93)
-        (envelope-from <noreply@carnivalassure.com.bd>)
-        id 1l7CVT-0005U9-8i; Wed, 03 Feb 2021 01:23:19 -0600
+        Wed, 3 Feb 2021 03:03:53 -0500
+Received: from [123.112.66.186] (helo=localhost.localdomain)
+        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <hui.wang@canonical.com>)
+        id 1l7D82-0005tB-Bz; Wed, 03 Feb 2021 08:03:11 +0000
+From:   Hui Wang <hui.wang@canonical.com>
+To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org
+Cc:     hui.wang@canonical.com
+Subject: [PATCH] Bluetooth: btusb: Fix the autosuspend enable and disable
+Date:   Wed,  3 Feb 2021 16:02:45 +0800
+Message-Id: <20210203080245.5168-1-hui.wang@canonical.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Date:   Wed, 03 Feb 2021 01:23:18 -0600
-From:   Francois Pinault <noreply@carnivalassure.com.bd>
-To:     undisclosed-recipients:;
-Subject: Hello/Hallo
-Organization: Donation
-Reply-To: francoispinault1936@outlook.com
-Mail-Reply-To: francoispinault1936@outlook.com
-Message-ID: <daf030622886954284fef423f887a757@carnivalassure.com.bd>
-X-Sender: noreply@carnivalassure.com.bd
-User-Agent: Roundcube Webmail/1.3.15
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
 Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - dot.dotlines.com.sg
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - carnivalassure.com.bd
-X-Get-Message-Sender-Via: dot.dotlines.com.sg: authenticated_id: noreply@carnivalassure.com.bd
-X-Authenticated-Sender: dot.dotlines.com.sg: noreply@carnivalassure.com.bd
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+I tried to disable the autosuspend on btusb through the module
+parameter enable_autosuspend, this parameter is set to N, but the usb
+bluetooth device is still runtime suspended.
+$ cat /sys/module/btusb/parameters/enable_autosuspend
+N
+$ cat /sys/bus/usb/devices/3-10/power/runtime_status
+suspended
+$ cat /sys/bus/usb/devices/3-10/power/runtime_suspended_time
+65187
 
+We already set ".supports_autosuspend = 1" in the usb_driver, this
+device will be set autosuspend enabled by usb core, we don't need
+to call usb_enable_autosuspend() in the btusb_probe(). Instead if
+users set the parameter enable_autosuspend to N, we need to call
+usb_disable_autosuspend() in the btusb_probe(). After this change
+and set the parameter to N, we could see the device is not runtime
+suspended anymore.
+$ cat /sys/module/btusb/parameters/enable_autosuspend
+N
+$ cat /sys/bus/usb/devices/3-10/power/runtime_status
+active
+$ cat /sys/bus/usb/devices/3-10/power/runtime_suspended_time
+0
 
+And if we disable the autosuspend in the btusb_probe(), we need to
+enable the autosuspend in the disconnect(), this could guarantee
+that the device could be runtime suspended after we rmmod the btusb.
+
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+---
+ drivers/bluetooth/btusb.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index b14102fba601..e019a6d6e934 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -4639,8 +4639,8 @@ static int btusb_probe(struct usb_interface *intf,
+ 			data->diag = NULL;
+ 	}
+ 
+-	if (enable_autosuspend)
+-		usb_enable_autosuspend(data->udev);
++	if (!enable_autosuspend)
++		usb_disable_autosuspend(data->udev);
+ 
+ 	err = hci_register_dev(hdev);
+ 	if (err < 0)
+@@ -4700,6 +4700,9 @@ static void btusb_disconnect(struct usb_interface *intf)
+ 		gpiod_put(data->reset_gpio);
+ 
+ 	hci_free_dev(hdev);
++
++	if (!enable_autosuspend)
++		usb_enable_autosuspend(data->udev);
+ }
+ 
+ #ifdef CONFIG_PM
 -- 
-Hallo, ich bin Herr Francois Pinault, ich habe Ihnen gespendet. Sie 
-können mein Profil auf Wikipedia, Google oder Forbes überprüfen.
+2.25.1
 
-Für Ihren Spendenanspruch und weitere Informationen kontaktieren Sie 
-mich umgehend unter francoispinault1936@outlook.com
-
-Mit freundlichen Grüßen,
-Herr Francois Pinault
