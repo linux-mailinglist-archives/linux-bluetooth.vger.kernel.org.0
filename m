@@ -2,64 +2,103 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32429311230
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Feb 2021 21:20:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7468831156E
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Feb 2021 23:32:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233070AbhBESha (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Feb 2021 13:37:30 -0500
-Received: from [20.39.40.203] ([20.39.40.203]:54986 "EHLO optinix.in"
-        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S233003AbhBEPJb (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Feb 2021 10:09:31 -0500
-dkim-signature: v=1; a=rsa-sha256; d=digitalsol.in; s=dkim;
-        c=relaxed/relaxed; q=dns/txt; h=From:Reply-To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=wK2neTcOXNiSQ+RBxrnFed+mRrGUU/ndLGEgvo8IMCc=;
-        b=UQEHlnVg5XQbvsB12U1Ol3bhaQI9w8E6XPoWFxWLZmrTEAjZvoQaEbrphRRSyBGIIWdRriBN1NgjJnIHHuwrDk7Jiepk7hcecgKlubZ8Cbf+eyLm3How+vKdkYfuxbESucRjBUGhM3uNAIEl+djc5YuHgus55Al0uLGG/w84VCgbq4C5haAYakmS1vYlSgFchzN2F++luNM29v8DFhI75uaDxJSrLZjsc+U9sEzNpAaOCR9pw2OgdpmsaX
-        RpEWSooLH5k7s+lJH9RwsRzupCIBYaSMrEgafQL+30fpkHM9MFjkLmthx4Z1XqGeg54bjdS4mLhUgJrpa/zvXopT6v+g==
-Received: from User (Unknown [52.231.31.5])
-        by optinix.in with ESMTP
-        ; Mon, 1 Feb 2021 08:49:51 +0000
-Message-ID: <7494048F-E4B5-4167-8C98-9021CA321467@optinix.in>
-Reply-To: <ms.reem@yandex.com>
-From:   "Ms. Reem" <support@digitalsol.in>
-Subject: Re:read
-Date:   Mon, 1 Feb 2021 08:49:50 -0000
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-To:     unlisted-recipients:; (no To-header on input)
+        id S232139AbhBEWbu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 Feb 2021 17:31:50 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:51762 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232455AbhBEORE (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 5 Feb 2021 09:17:04 -0500
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 05 Feb 2021 07:37:44 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 05 Feb 2021 07:37:42 -0800
+X-QCInternal: smtphost
+Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 05 Feb 2021 21:07:18 +0530
+Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
+        id 3161A21E01; Fri,  5 Feb 2021 21:07:18 +0530 (IST)
+From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org,
+        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Subject: [PATCH v1] Bluetooth: hci_qca:Fixed issue during suspend
+Date:   Fri,  5 Feb 2021 21:07:16 +0530
+Message-Id: <1612539436-8498-1-git-send-email-gubbaven@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+If BT SoC is running with ROM FW then just return in
+qca_suspend function as ROM FW does not support
+in-band sleep.
 
-My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
-and Petroleum" also "Minister of State for International Cooperation"
-in UAE. I write to you on behalf of my other "three (3) colleagues"
-who has approved me to solicit for your "partnership in claiming of
-{us$47=Million}" from a Financial Home in Cambodia on their behalf and
-for our "Mutual Benefits".
+Fixes: 2be43abac5a8 ("Bluetooth: hci_qca: Wait for timeout during suspend")
+Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+---
+ drivers/bluetooth/hci_qca.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
-deal with Cambodian/Vietnam Government within 2013/2014, however, we
-don't want our government to know about the fund. If this proposal
-interests you, let me know, by sending me an email and I will send to
-you detailed information on how this business would be successfully
-transacted. Be informed that nobody knows about the secret of this
-fund except us, and we know how to carry out the entire transaction.
-So I am compelled to ask, that you will stand on our behalf and
-receive this fund into any account that is solely controlled by you.
-
-We will compensate you with 15% of the total amount involved as
-gratification for being our partner in this transaction. Reply to:
-ms.reem@yandex.com
-
-Regards,
-Ms. Reem.
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index ff2fb68..de36af6 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -77,7 +77,8 @@ enum qca_flags {
+ 	QCA_MEMDUMP_COLLECTION,
+ 	QCA_HW_ERROR_EVENT,
+ 	QCA_SSR_TRIGGERED,
+-	QCA_BT_OFF
++	QCA_BT_OFF,
++	QCA_ROM_FW
+ };
+ 
+ enum qca_capabilities {
+@@ -1664,6 +1665,7 @@ static int qca_setup(struct hci_uart *hu)
+ 	if (ret)
+ 		return ret;
+ 
++	clear_bit(QCA_ROM_FW, &qca->flags);
+ 	/* Patch downloading has to be done without IBS mode */
+ 	set_bit(QCA_IBS_DISABLED, &qca->flags);
+ 
+@@ -1721,12 +1723,14 @@ static int qca_setup(struct hci_uart *hu)
+ 		hu->hdev->cmd_timeout = qca_cmd_timeout;
+ 	} else if (ret == -ENOENT) {
+ 		/* No patch/nvm-config found, run with original fw/config */
++		set_bit(QCA_ROM_FW, &qca->flags);
+ 		ret = 0;
+ 	} else if (ret == -EAGAIN) {
+ 		/*
+ 		 * Userspace firmware loader will return -EAGAIN in case no
+ 		 * patch/nvm-config is found, so run with original fw/config.
+ 		 */
++		set_bit(QCA_ROM_FW, &qca->flags);
+ 		ret = 0;
+ 	}
+ 
+@@ -2103,6 +2107,12 @@ static int __maybe_unused qca_suspend(struct device *dev)
+ 
+ 	set_bit(QCA_SUSPENDING, &qca->flags);
+ 
++	/* if BT SoC is running with default firmware then it does not
++	 * support in-band sleep
++	 */
++	if (test_bit(QCA_ROM_FW, &qca->flags))
++		return 0;
++
+ 	/* During SSR after memory dump collection, controller will be
+ 	 * powered off and then powered on.If controller is powered off
+ 	 * during SSR then we should wait until SSR is completed.
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
