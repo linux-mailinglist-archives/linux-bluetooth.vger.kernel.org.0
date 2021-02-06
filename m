@@ -2,150 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2240F311D96
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Feb 2021 15:15:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DD8C311DC9
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Feb 2021 15:39:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230020AbhBFOPL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 6 Feb 2021 09:15:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46696 "EHLO
+        id S230188AbhBFOjV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 6 Feb 2021 09:39:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229999AbhBFOPJ (ORCPT
+        with ESMTP id S229839AbhBFOjL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 6 Feb 2021 09:15:09 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C638C061756
-        for <linux-bluetooth@vger.kernel.org>; Sat,  6 Feb 2021 06:14:28 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id f1so14794877lfu.3
-        for <linux-bluetooth@vger.kernel.org>; Sat, 06 Feb 2021 06:14:28 -0800 (PST)
+        Sat, 6 Feb 2021 09:39:11 -0500
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0A33C06178C
+        for <linux-bluetooth@vger.kernel.org>; Sat,  6 Feb 2021 06:38:56 -0800 (PST)
+Received: by mail-ot1-x32b.google.com with SMTP id s107so9848813otb.8
+        for <linux-bluetooth@vger.kernel.org>; Sat, 06 Feb 2021 06:38:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9k1YM7+WMW0ESXMJ6uw/g/9phZuX7TXSzi3wbRk4eU4=;
-        b=fNsSbCgcftFadPCfcH4GtgyhIfuhPq7FzYhVLxutg3hKJ3kaTPzg1e8P3jVVwpNZzH
-         5aClq+9Z6zF+EnaWm70ls0r1coi8jq30bsTeEqrA8GCsp3j8rgyS7EuxrGfbr/FXPucR
-         aYKMGGbHx41XSP/jKo5d1MGhwRU070sefy6VENuRuhtdUi+AmErLBGAbb3L+BYN+oON8
-         KMko6KOAE8Xm5r8RxreLB4Wnm8kHXZWi5uaF+n65S6HqZX9+rM9ciK2ebBloYKObwwnj
-         T61THhE6+lJqXbDgoLznBqIIV6vSpDWtDu4OA0fCLAureNYxjSxbFfvwnVGn+0U693Dk
-         8MUA==
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=sY4fgq/DSyThalwU7QX+pWYKs/8sGH7ZznMUn5qQ1EY=;
+        b=fb3fkDBx1yTMIMxldI8TrrkrwGSKL7VoJTJz9C1R5HE49oueQyTk7pNtQ80Tb5GCLF
+         9JxNrNcnDOvs3XZRBbkChViLzjJZVTP0NK+8PN+RgDHSx7c0QWcY0w3JZSo83yBurDIT
+         AP1ixvWzoMMjwgT0SfmvB6omGEuK1r1UdMc5hrRLUatw3WGfiD0nPdfmRmSkVNJBTYco
+         LXmrTvoSzSlJCPiscOEj89xNvY7H0evoc74YLK8vp/FJJMHGAC6+PMhrnOr5uPcR17E3
+         GfoT3BoYctK7XtTcAk1rfOFtNKVYg2FPk2L0f2I7X7c/CtICQmnOmkeQT5KGkcNrHNkE
+         UWWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9k1YM7+WMW0ESXMJ6uw/g/9phZuX7TXSzi3wbRk4eU4=;
-        b=Tg9R9RIIgEgSKWopeUtO7kMdkYZGAqRrf7FCVMW/HXVvq+7LToTTTeiPR6yT04v2aX
-         iW/zFmJ0xaSTSjHHB1mDkqq562PAt9VtwUxvB6Z6Oe6EVuiwozdCT3AMSzJUwVUdIQhy
-         8cWOJBbLA39KDVtHIsG3+qZMhJhyb9kog4nFloPxH2bHay6RFe+kXfay91unDwMSREy8
-         +iVCoE5OVl2sL2C1qQkARG7oUGFFCxOvvEJs2eecjsCEe/WDhHNd+cVWnBhxAK5NDZys
-         xV3xctRF0oyVEV0BdayfJFbcWVxgm4gtd1tIsfIvv2x8Sn10gS1pI4MAOJGGZU8Qa7vM
-         ve1A==
-X-Gm-Message-State: AOAM531B5+Dmg0uTszK++1qnYNvKRSTzFoY3Dydqt70qBmCyy00z323k
-        ZJHXzxMg2XxTgbQQKsMq0yPVcSAdH24zOD/VZ7c=
-X-Google-Smtp-Source: ABdhPJy5W731sVV4snseBAn7sm/qlTKUmccVX9foPKqzkg5KhPuLRv3wuoPasE0u54uwQI2Tp+N6Og==
-X-Received: by 2002:ac2:4ad0:: with SMTP id m16mr5203104lfp.53.1612620866630;
-        Sat, 06 Feb 2021 06:14:26 -0800 (PST)
-Received: from localhost.localdomain (dy57dxw0xwqyrd19ksxjt-4.rev.dnainternet.fi. [2001:14bb:676:39cb:d393:40e1:d7a8:7ccf])
-        by smtp.gmail.com with ESMTPSA id w15sm161137lfp.171.2021.02.06.06.14.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Feb 2021 06:14:25 -0800 (PST)
-From:   Matias Karhumaa <matias.karhumaa@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Subject: [PATCH 1/1] Bluetooth: Fix Just-Works re-pairing
-Date:   Sat,  6 Feb 2021 16:14:23 +0200
-Message-Id: <20210206141423.13593-2-matias.karhumaa@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210206141423.13593-1-matias.karhumaa@gmail.com>
-References: <20210206141423.13593-1-matias.karhumaa@gmail.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=sY4fgq/DSyThalwU7QX+pWYKs/8sGH7ZznMUn5qQ1EY=;
+        b=pJH6OQU2+iMIo9V1b6DA21WRfKoZ4pZcKZhhZXZSfqpO7wTDdcxl4g2m0Wz99M02U/
+         MSIcyRCLBnv7Xr1SFBQnE2dnxI8bJwWyADvffJ8JaeybC4d7OwZFOUciX22+Snhx+Y/A
+         ch1/CYGJrGSZzQ2YuQFJXSt7qupCKtP0MVG0EVkHchI7HqCkdqCbphHUCD6a8Fn3y8IH
+         mnJCyOFGnHPqppjeSO1UuV5ZpBF7peYpLctAY8XlMf81qyv3jkWYEL6hyGrKuJUa/8UT
+         /jM/GadbI6DQdjgH5kJKJxqmzfyoSIbE1zjXycR36p0cNS5n2bh+KmteO99u8kpf011h
+         uQ6w==
+X-Gm-Message-State: AOAM531qztaNs0myBhHsEx1ZBteJYWbCPKj5zfL9it0wJI+JYMXwg9yy
+        1WIZIYzSWlo7vWtuXYLVEfLHL/aKjHTcaaWLAwY=
+X-Google-Smtp-Source: ABdhPJxujkyBizUQVmCVgv89lmkNlSkuTtXQysnsDHARjroshtxDA6oZFsgqOQLEmbiXV8r6ueqiOHSLSk4inP2SvlQ=
+X-Received: by 2002:a9d:69cf:: with SMTP id v15mr7280942oto.122.1612622336217;
+ Sat, 06 Feb 2021 06:38:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a9d:3e4c:0:0:0:0:0 with HTTP; Sat, 6 Feb 2021 06:38:55 -0800 (PST)
+Reply-To: lawyer.nba@gmail.com
+From:   Barrister Daven Bango <stephennbada@gmail.com>
+Date:   Sat, 6 Feb 2021 15:38:55 +0100
+Message-ID: <CAO_fDi9Jx9EktP86dhoSSz4QsuyBMn1eU+h16-bM0MfQeye8cA@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Fix Just-Works pairing responder role in case where LTK already exists.
-Currently when trying to initiate re-pairing from another device
-against Linux using Just-Works, pairing fails due to DHKey check failure
-on Linux side. This happens because mackey calculation is skipped
-totally if LTK already exists due to logic flaw in
-smp_cmd_pairing_random() function.
+--=20
+Korisnik fonda =C4=8Destitanja, Va=C5=A1a sredstva za naknadu od 850.000,00
+ameri=C4=8Dkih dolara odobrila je Me=C4=91unarodna monetarna organizacija (=
+MMF)
+u suradnji s (FBI) nakon mnogo istraga. =C4=8Cekamo da se obratimo za
+dodatne informacije
 
-With this fix mackey is calculated right before requesting confirmation
-for Just-Works pairing from userspace which in turn fixes the DHKey
-calculation.
-
-Fixes: eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
-Signed-off-by: Matias Karhumaa <matias.karhumaa@gmail.com>
----
- net/bluetooth/smp.c | 37 +++++++++----------------------------
- 1 file changed, 9 insertions(+), 28 deletions(-)
-
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index b0c1ee110eff..c3ea50fcac6d 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -2122,7 +2122,7 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 	struct smp_chan *smp = chan->data;
- 	struct hci_conn *hcon = conn->hcon;
- 	u8 *pkax, *pkbx, *na, *nb, confirm_hint;
--	u32 passkey;
-+	u32 passkey = 0;
- 	int err;
- 
- 	BT_DBG("conn %p", conn);
-@@ -2174,24 +2174,6 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 		smp_send_cmd(conn, SMP_CMD_PAIRING_RANDOM, sizeof(smp->prnd),
- 			     smp->prnd);
- 		SMP_ALLOW_CMD(smp, SMP_CMD_DHKEY_CHECK);
--
--		/* Only Just-Works pairing requires extra checks */
--		if (smp->method != JUST_WORKS)
--			goto mackey_and_ltk;
--
--		/* If there already exists long term key in local host, leave
--		 * the decision to user space since the remote device could
--		 * be legitimate or malicious.
--		 */
--		if (hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type,
--				 hcon->role)) {
--			/* Set passkey to 0. The value can be any number since
--			 * it'll be ignored anyway.
--			 */
--			passkey = 0;
--			confirm_hint = 1;
--			goto confirm;
--		}
- 	}
- 
- mackey_and_ltk:
-@@ -2206,17 +2188,16 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 			SMP_ALLOW_CMD(smp, SMP_CMD_DHKEY_CHECK);
- 		}
- 		return 0;
--	}
--
--	err = smp_g2(smp->tfm_cmac, pkax, pkbx, na, nb, &passkey);
--	if (err)
--		return SMP_UNSPECIFIED;
--
--	confirm_hint = 0;
-+	} else if (smp->method != JUST_WORKS) {
-+		err = smp_g2(smp->tfm_cmac, pkax, pkbx, na, nb, &passkey);
-+		if (err)
-+			return SMP_UNSPECIFIED;
- 
--confirm:
--	if (smp->method == JUST_WORKS)
-+		confirm_hint = 0;
-+	} else {
-+		/* Just-Works needs hint for userspace */
- 		confirm_hint = 1;
-+	}
- 
- 	err = mgmt_user_confirm_request(hcon->hdev, &hcon->dst, hcon->type,
- 					hcon->dst_type, passkey, confirm_hint);
--- 
-2.25.1
-
+Advokat: Daven Bango
+Telefon: +22891667276
+(URED MMF-a LOME TOGO)
