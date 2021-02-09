@@ -2,101 +2,104 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB0C8315073
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Feb 2021 14:40:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E21263150A3
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Feb 2021 14:45:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231474AbhBINiu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 9 Feb 2021 08:38:50 -0500
-Received: from youngberry.canonical.com ([91.189.89.112]:34052 "EHLO
-        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230108AbhBINiM (ORCPT
+        id S231792AbhBINpK convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 9 Feb 2021 08:45:10 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:40556 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231781AbhBINnC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 9 Feb 2021 08:38:12 -0500
-Received: from [123.112.66.2] (helo=localhost.localdomain)
-        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.86_2)
-        (envelope-from <hui.wang@canonical.com>)
-        id 1l9TCq-00050T-IL; Tue, 09 Feb 2021 13:37:30 +0000
-From:   Hui Wang <hui.wang@canonical.com>
-To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        johan.hedberg@intel.com, luiz.dentz@gmail.com
-Subject: [Bluez][PATCH] btmgmt: add a new command reset_hci via experimental feature
-Date:   Tue,  9 Feb 2021 21:36:29 +0800
-Message-Id: <20210209133629.12784-5-hui.wang@canonical.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210209133629.12784-1-hui.wang@canonical.com>
-References: <20210209133629.12784-1-hui.wang@canonical.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Tue, 9 Feb 2021 08:43:02 -0500
+Received: from marcel-macbook.holtmann.net (p4ff9f72d.dip0.t-ipconnect.de [79.249.247.45])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 5253BCED1F;
+        Tue,  9 Feb 2021 14:49:39 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [PATCH] Bluetooth: btusb: Fallback to 16 bit ROM version lookup
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20210209114024.2910-2-falbrechtskirchinger@gmail.com>
+Date:   Tue, 9 Feb 2021 14:42:10 +0100
+Cc:     linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <94DD2143-175D-4FAC-B001-D4F362DC604C@holtmann.org>
+References: <20210209114024.2910-1-falbrechtskirchinger@gmail.com>
+ <20210209114024.2910-2-falbrechtskirchinger@gmail.com>
+To:     Florian Albrechtskirchinger <falbrechtskirchinger@gmail.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Users could reset the hci through this command, and the hci will
-reset to bootloader mode if it supports, then the driver will load the
-firmware in the driver's probe().
----
- tools/btmgmt.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+Hi Florian,
 
-diff --git a/tools/btmgmt.c b/tools/btmgmt.c
-index f4eb541fa..613a1118e 100644
---- a/tools/btmgmt.c
-+++ b/tools/btmgmt.c
-@@ -1728,6 +1728,18 @@ static void exp_debug_rsp(uint8_t status, uint16_t len, const void *param,
- 	bt_shell_noninteractive_quit(EXIT_SUCCESS);
- }
- 
-+static void exp_reset_hci_rsp(uint8_t status, uint16_t len, const void *param,
-+			      void *user_data)
-+{
-+	if (status != 0)
-+		error("Set reset hci feature failed with status 0x%02x (%s)",
-+						status, mgmt_errstr(status));
-+	else
-+		print("Reset hci feature successfully set");
-+
-+	bt_shell_noninteractive_quit(EXIT_SUCCESS);
-+}
-+
- static void cmd_exp_debug(int argc, char **argv)
- {
- 	/* d4992530-b9ec-469f-ab01-6c481c47da1c */
-@@ -1752,6 +1764,25 @@ static void cmd_exp_debug(int argc, char **argv)
- 	}
- }
- 
-+static void cmd_exp_reset_hci(int argc, char **argv)
-+{
-+	/* 3f06cef5-2b4f-4c22-b1f4-64bb4733e637 */
-+	const uint8_t uuid[16] = {
-+		0x37, 0xe6, 0x33, 0x47, 0xbb, 0x64, 0xf4, 0xb1,
-+		0x22, 0x4c, 0x4f, 0x2b, 0xf5, 0xce, 0x06, 0x3f,
-+	};
-+	struct mgmt_cp_set_exp_feature cp;
-+
-+	memset(&cp, 0, sizeof(cp));
-+	memcpy(cp.uuid, uuid, 16);
-+
-+	if (mgmt_send(mgmt, MGMT_OP_SET_EXP_FEATURE, mgmt_index,
-+			sizeof(cp), &cp, exp_reset_hci_rsp, NULL, NULL) == 0) {
-+		error("Unable to send reset hci feature cmd");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+}
-+
- static void print_mgmt_tlv(void *data, void *user_data)
- {
- 	const struct mgmt_tlv *entry = data;
-@@ -5303,6 +5334,8 @@ static const struct bt_shell_menu main_menu = {
- 		cmd_expinfo,		"Show experimental features"	},
- 	{ "exp-debug",		"<on/off>",
- 		cmd_exp_debug,		"Set debug feature"		},
-+	{ "exp-reset-hci",	NULL,
-+		cmd_exp_reset_hci,	"Reset hci"	},
- 	{ "read-sysconfig",	NULL,
- 		cmd_read_sysconfig,	"Read System Configuration"	},
- 	{ "set-sysconfig",	"<-v|-h> [options...]",
--- 
-2.25.1
+> Commit b40f58b97386 ("Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855
+> support") changes ROM version lookup from 16 bit to 32 bit. Previously, the
+> upper 16 bit of the version number were ignored. This breaks setups, where the
+> upper 16 bits are non-zero, but are now assumed to be zero.
+> 
+> An example of such a device would be
+> 0cf3:3008 Qualcomm Atheros Communications Bluetooth (AR3011)
+> with ROM version 0x1020200 and this corresponding entry in the device table:
+> { 0x00000200, 28, 4, 16 }, /* Rome 2.0 */
+> 
+> This patch adds a potential second round of lookups that mimics the old
+> behavior, should no version have been matched by comparing the full 32 bits.
+> During this second round only the lower 16 bits are compared, but only where
+> the upper 16 bits are defined zero in the lookup table.
+> 
+> Fixes: b40f58b97386 ("Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855
+> support")
+> 
+> Signed-off-by: Florian Albrechtskirchinger <falbrechtskirchinger@gmail.com>
+> ---
+> drivers/bluetooth/btusb.c | 17 ++++++++++++++++-
+> 1 file changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 03b83aa91277..d8c4c6474f14 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -4054,6 +4054,7 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+> 	const struct qca_device_info *info = NULL;
+> 	struct qca_version ver;
+> 	u32 ver_rom;
+> +	u16 ver_rom_low;
+> 	u8 status;
+> 	int i, err;
+> 
+> @@ -4065,8 +4066,22 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+> 	ver_rom = le32_to_cpu(ver.rom_version);
+> 
+> 	for (i = 0; i < ARRAY_SIZE(qca_devices_table); i++) {
+> -		if (ver_rom == qca_devices_table[i].rom_version)
+> +		if (ver_rom == qca_devices_table[i].rom_version) {
+> 			info = &qca_devices_table[i];
+> +			break;
+> +		}
+> +	}
+> +	if (!info) {
+> +		// If we don't find an exact version match, try with
+> +		// the lower half, but only where the upper half is 0
+
+please use correct comment style.
+
+> +		ver_rom_low = ver_rom & 0xffff;
+> +		for (i = 0; i < ARRAY_SIZE(qca_devices_table); i++) {
+> +			if (!(qca_devices_table[i].rom_version & 0xffff0000) &&
+> +			    ver_rom_low == qca_devices_table[i].rom_version) {
+> +				info = &qca_devices_table[i];
+> +				break;
+> +			}
+> +		}
+> 	}
+> 	if (!info) {
+> 		bt_dev_err(hdev, "don't support firmware rome 0x%x", ver_rom);
+
+Regards
+
+Marcel
 
