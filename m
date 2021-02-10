@@ -2,203 +2,185 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 825B131641A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Feb 2021 11:44:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 644A2316A01
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Feb 2021 16:21:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231253AbhBJKoA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 10 Feb 2021 05:44:00 -0500
-Received: from mga01.intel.com ([192.55.52.88]:28920 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231390AbhBJKly (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 10 Feb 2021 05:41:54 -0500
-IronPort-SDR: 59HOV1B3RiRF7svuZGTVo+6bcRnkc+7qFcCw8IPz4Eg1KHvUUuqKZcCWFC7mKIEaTVbNaZmSWI
- /gi597G3xdBQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9890"; a="201152472"
-X-IronPort-AV: E=Sophos;i="5.81,168,1610438400"; 
-   d="scan'208";a="201152472"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2021 02:39:44 -0800
-IronPort-SDR: UvUS9xRWcZBkryWQLTlQ4UUzLMkm5hP02JTxmgdRkbsyQcHfyyy4zApNqpjomZHqGUPloEcEjY
- rndnkJgG2Adg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,168,1610438400"; 
-   d="scan'208";a="421003207"
-Received: from lkp-server02.sh.intel.com (HELO cd560a204411) ([10.239.97.151])
-  by fmsmga002.fm.intel.com with ESMTP; 10 Feb 2021 02:39:42 -0800
-Received: from kbuild by cd560a204411 with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1l9muM-0002uV-7x; Wed, 10 Feb 2021 10:39:42 +0000
-Date:   Wed, 10 Feb 2021 18:39:39 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Marcel Holtmann <marcel@holtmann.org>
+        id S231744AbhBJPVO convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 10 Feb 2021 10:21:14 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:35062 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232049AbhBJPVL (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 10 Feb 2021 10:21:11 -0500
+Received: from mac-pro.holtmann.net (p5b3d2ec1.dip0.t-ipconnect.de [91.61.46.193])
+        by mail.holtmann.org (Postfix) with ESMTPSA id C432DCECDF;
+        Wed, 10 Feb 2021 16:27:55 +0100 (CET)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [PATCH v3 2/6] Bluetooth: btintel: Move operational checks after
+ version check
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20210209233404.2121960-2-luiz.dentz@gmail.com>
+Date:   Wed, 10 Feb 2021 16:20:26 +0100
 Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- 55c0bd77479b60ea29fd390faf4545cfb3a1d79e
-Message-ID: <6023b7eb.Yj8DGKSGH163KpLv%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8BIT
+Message-Id: <305CB64A-661D-4C6A-BC0A-ADCF162A940A@holtmann.org>
+References: <20210209233404.2121960-1-luiz.dentz@gmail.com>
+ <20210209233404.2121960-2-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: 55c0bd77479b60ea29fd390faf4545cfb3a1d79e  Bluetooth: hci_qca: Fixed issue during suspend
+Hi Luiz,
 
-elapsed time: 750m
+> In order to allow new firmware to be loaded it first needs to check if
+> the firmware version on file matches the one loaded if it doesn't then
+> it needs to revert to boorloader mode in order to load the new firmware.
+> 
+> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> ---
+> drivers/bluetooth/btintel.c | 22 +++++++++++
+> drivers/bluetooth/btusb.c   | 74 +++++++++++++++----------------------
+> 2 files changed, 52 insertions(+), 44 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+> index 153989bd8d5f..ccab05f67df9 100644
+> --- a/drivers/bluetooth/btintel.c
+> +++ b/drivers/bluetooth/btintel.c
+> @@ -948,6 +948,17 @@ int btintel_download_firmware(struct hci_dev *hdev,
+> 		return -EALREADY;
+> 	}
+> 
+> +	/* The firmware variant determines if the device is in bootloader
+> +	 * mode or is running operational firmware. The value 0x06 identifies
+> +	 * the bootloader and the value 0x23 identifies the operational
+> +	 * firmware.
+> +	 *
+> +	 * If the firmware version has changed that means it needs to be reset
+> +	 * to bootloader when operational so the new firmware can be loaded.
+> +	 */
+> +	if (ver->fw_variant == 0x23)
+> +		return -EINVAL;
+> +
+> 	err = btintel_sfi_rsa_header_secure_send(hdev, fw);
+> 	if (err)
+> 		return err;
+> @@ -974,6 +985,17 @@ int btintel_download_firmware_newgen(struct hci_dev *hdev,
+> 		return -EALREADY;
+> 	}
+> 
+> +	/* The firmware variant determines if the device is in bootloader
+> +	 * mode or is running operational firmware. The value 0x03 identifies
+> +	 * the bootloader and the value 0x23 identifies the operational
+> +	 * firmware.
+> +	 *
+> +	 * If the firmware version has changed that means it needs to be reset
+> +	 * to bootloader when operational so the new firmware can be loaded.
+> +	 */
+> +	if (ver->img_type == 0x03)
+> +		return -EINVAL;
+> +
+> 	/* iBT hardware variants 0x0b, 0x0c, 0x11, 0x12, 0x13, 0x14 support
+> 	 * only RSA secure boot engine. Hence, the corresponding sfi file will
+> 	 * have RSA header of 644 bytes followed by Command Buffer.
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index e896c6702d60..113ff780232f 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -2469,14 +2469,30 @@ static int btusb_send_frame_intel(struct hci_dev *hdev, struct sk_buff *skb)
+> 	return -EILSEQ;
+> }
+> 
+> -static bool btusb_setup_intel_new_get_fw_name(struct intel_version *ver,
+> +static int btusb_setup_intel_new_get_fw_name(struct intel_version *ver,
+> 					     struct intel_boot_params *params,
+> 					     char *fw_name, size_t len,
+> 					     const char *suffix)
+> {
+> +	/* The hardware platform number has a fixed value of 0x37 and
+> +	 * for now only accept this single value.
+> +	 */
+> +	if (ver->hw_platform != 0x37)
+> +		return -EINVAL;
+> +
+> 	switch (ver->hw_variant) {
+> 	case 0x0b:	/* SfP */
+> 	case 0x0c:	/* WsP */
+> +		/* The firmware variant determines if the device is in
+> +		 * bootloader mode or is running operational firmware.
+> +		 *
+> +		 * Version checking cannot be performed in these models since
+> +		 * the firmware versioning depends on the firmware being in
+> +		 * bootloader mode.
+> +		 */
+> +		if (ver->fw_variant == 0x23)
+> +			return -EALREADY;
+> +
+> 		snprintf(fw_name, len, "intel/ibt-%u-%u.%s",
+> 			le16_to_cpu(ver->hw_variant),
+> 			le16_to_cpu(params->dev_revid),
+> @@ -2493,9 +2509,10 @@ static bool btusb_setup_intel_new_get_fw_name(struct intel_version *ver,
+> 			suffix);
+> 		break;
+> 	default:
+> -		return false;
+> +		return -EINVAL;
+> 	}
+> -	return true;
+> +
+> +	return 0;
+> }
+> 
+> static void btusb_setup_intel_newgen_get_fw_name(const struct intel_version_tlv *ver_tlv,
+> @@ -2550,7 +2567,6 @@ static int btusb_intel_download_firmware_newgen(struct hci_dev *hdev,
+> 	if (ver->img_type == 0x03) {
+> 		clear_bit(BTUSB_BOOTLOADER, &data->flags);
+> 		btintel_check_bdaddr(hdev);
+> -		return 0;
+> 	}
+> 
+> 	/* Check for supported iBT hardware variants of this firmware
+> @@ -2693,35 +2709,6 @@ static int btusb_intel_download_firmware(struct hci_dev *hdev,
+> 	if (!ver || !params)
+> 		return -EINVAL;
+> 
+> -	/* The hardware platform number has a fixed value of 0x37 and
+> -	 * for now only accept this single value.
+> -	 */
+> -	if (ver->hw_platform != 0x37) {
+> -		bt_dev_err(hdev, "Unsupported Intel hardware platform (%u)",
+> -			   ver->hw_platform);
+> -		return -EINVAL;
+> -	}
+> -
+> -	/* Check for supported iBT hardware variants of this firmware
+> -	 * loading method.
+> -	 *
+> -	 * This check has been put in place to ensure correct forward
+> -	 * compatibility options when newer hardware variants come along.
+> -	 */
+> -	switch (ver->hw_variant) {
+> -	case 0x0b:	/* SfP */
+> -	case 0x0c:	/* WsP */
+> -	case 0x11:	/* JfP */
+> -	case 0x12:	/* ThP */
+> -	case 0x13:	/* HrP */
+> -	case 0x14:	/* CcP */
+> -		break;
+> -	default:
+> -		bt_dev_err(hdev, "Unsupported Intel hardware variant (%u)",
+> -			   ver->hw_variant);
+> -		return -EINVAL;
+> -	}
+> -
 
-configs tested: 141
-configs skipped: 2
+why are you removing this? I put this in so that really only supported platforms are tried. We want to fail if you run on hardware that isn’t officially tested with this driver.
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Regards
 
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-arm                     davinci_all_defconfig
-s390                          debug_defconfig
-arm                         hackkit_defconfig
-powerpc                    socrates_defconfig
-sh                           se7721_defconfig
-sh                          r7785rp_defconfig
-sparc64                             defconfig
-arm                     am200epdkit_defconfig
-sh                            shmin_defconfig
-powerpc                     tqm8540_defconfig
-mips                           ci20_defconfig
-m68k                       m5249evb_defconfig
-sh                   sh7770_generic_defconfig
-c6x                        evmc6472_defconfig
-mips                         cobalt_defconfig
-arc                        nsimosci_defconfig
-sh                      rts7751r2d1_defconfig
-powerpc                    klondike_defconfig
-arm                           sunxi_defconfig
-nios2                         3c120_defconfig
-arc                        vdk_hs38_defconfig
-arm                         s3c6400_defconfig
-arm                         vf610m4_defconfig
-arc                              alldefconfig
-c6x                        evmc6474_defconfig
-s390                       zfcpdump_defconfig
-powerpc                 mpc836x_rdk_defconfig
-arm                  colibri_pxa270_defconfig
-sh                            migor_defconfig
-riscv                    nommu_k210_defconfig
-xtensa                         virt_defconfig
-sh                 kfr2r09-romimage_defconfig
-powerpc                 mpc8560_ads_defconfig
-mips                           rs90_defconfig
-arm                         s5pv210_defconfig
-mips                     cu1000-neo_defconfig
-um                             i386_defconfig
-sh                        sh7757lcr_defconfig
-arm                           sama5_defconfig
-sh                        sh7763rdp_defconfig
-mips                        bcm47xx_defconfig
-openrisc                    or1ksim_defconfig
-sh                           se7751_defconfig
-mips                     decstation_defconfig
-arm                        magician_defconfig
-m68k                        m5272c3_defconfig
-xtensa                  audio_kc705_defconfig
-sh                               allmodconfig
-powerpc                     sequoia_defconfig
-powerpc                     taishan_defconfig
-alpha                               defconfig
-mips                      maltaaprp_defconfig
-arc                              allyesconfig
-m68k                       m5475evb_defconfig
-arm                           stm32_defconfig
-mips                          malta_defconfig
-m68k                        mvme147_defconfig
-arm                       cns3420vb_defconfig
-alpha                            allyesconfig
-sh                             shx3_defconfig
-arm                          ixp4xx_defconfig
-xtensa                  nommu_kc705_defconfig
-sh                          rsk7201_defconfig
-m68k                             allyesconfig
-arm                       imx_v4_v5_defconfig
-powerpc                        cell_defconfig
-microblaze                      mmu_defconfig
-sh                  sh7785lcr_32bit_defconfig
-powerpc                     powernv_defconfig
-sh                     sh7710voipgw_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-nios2                               defconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                               tinyconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-x86_64               randconfig-a006-20210209
-x86_64               randconfig-a001-20210209
-x86_64               randconfig-a005-20210209
-x86_64               randconfig-a004-20210209
-x86_64               randconfig-a002-20210209
-x86_64               randconfig-a003-20210209
-i386                 randconfig-a001-20210209
-i386                 randconfig-a005-20210209
-i386                 randconfig-a003-20210209
-i386                 randconfig-a002-20210209
-i386                 randconfig-a006-20210209
-i386                 randconfig-a004-20210209
-i386                 randconfig-a016-20210209
-i386                 randconfig-a013-20210209
-i386                 randconfig-a012-20210209
-i386                 randconfig-a014-20210209
-i386                 randconfig-a011-20210209
-i386                 randconfig-a015-20210209
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                                   rhel
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
+Marcel
 
-clang tested configs:
-x86_64               randconfig-a013-20210209
-x86_64               randconfig-a014-20210209
-x86_64               randconfig-a015-20210209
-x86_64               randconfig-a012-20210209
-x86_64               randconfig-a016-20210209
-x86_64               randconfig-a011-20210209
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
