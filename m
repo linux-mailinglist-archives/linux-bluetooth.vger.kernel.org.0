@@ -2,88 +2,108 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A9C9319827
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Feb 2021 03:01:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48734319CE0
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Feb 2021 11:55:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229701AbhBLB73 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 11 Feb 2021 20:59:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46994 "EHLO
+        id S229906AbhBLKyz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 12 Feb 2021 05:54:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbhBLB72 (ORCPT
+        with ESMTP id S229674AbhBLKyy (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 11 Feb 2021 20:59:28 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4096FC061786
-        for <linux-bluetooth@vger.kernel.org>; Thu, 11 Feb 2021 17:58:48 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id v206so7436297qkb.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 11 Feb 2021 17:58:48 -0800 (PST)
+        Fri, 12 Feb 2021 05:54:54 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C47EC0613D6
+        for <linux-bluetooth@vger.kernel.org>; Fri, 12 Feb 2021 02:54:14 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id e17so11023776ljl.8
+        for <linux-bluetooth@vger.kernel.org>; Fri, 12 Feb 2021 02:54:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=KmprqgpOaPZLbKB4m0rpLNh66zdB/Bt9XjLh6q3SnNA=;
-        b=ophpLNyevCwDTAhpY9sK4P1DadQxcBRZYKU7fiIPGzZtj3yf/K6nIOB+us3A2dzviA
-         ceXvYkmVnsQyL2mEPhL7v+nl/+FP1x6RoIod183ztbeUqOH0QVQd9G1azzvUaqyC2qCe
-         be65caexcuWcM99cDnbKZPTmOQYcRyNbKRpXZhj0tKC1xUpzvWqglotISpdWY6p5axVM
-         agN0MNgUdOXCmv645VoJyrdbtfNvR+TCtBkRlcAFuFqkMsG/CFnaglEJgiXtnB1Q9Xnx
-         c6+911RXtV+1JWJxWq8l49YvnKvhn6n+u2+qjdLEYPPNaHnqL9R+NUCbXgjIhmAyrfg0
-         Y1mw==
+        d=silvair-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=YHhSSO7Bfold1AOekyzb2HoIQujwCnUvaWEZgybZO4w=;
+        b=EPFxRloiAe+Uwh+Mo7qwVn4hMr/YJg/ULEdfaQMl/edQ6H8UDhZnPXRht82PfOhuvC
+         x8g9Q2I+KOuc/1f6Xt5dy9m1UiL6XcFWo7qobZZ9vcUp4uGMJ1obApm8/v2zuzwRSPzn
+         YjEhNTSD5V9NbpNGDF7KdKtIFAhRBCuhrDflujnRqGgTEcwesnpnrMYzlcuHGxXDzcQK
+         0drl1DUWZgsceQKhQzbpcpBBe46FcsjdAJpsrtO0nQlp6nl6WgzsJjGd/n38kP8MdBr8
+         WOV7mq18ewMzSq2sRn0o+Mb6L6Fpo9Z7NUjjEMUFgNvsBHk+gySgdhlP7WrWUgrrdK4V
+         laOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=KmprqgpOaPZLbKB4m0rpLNh66zdB/Bt9XjLh6q3SnNA=;
-        b=a3148kibWDuPW3zI2b+dFO/TX16OR9z4SGbtzc+gN0dn62STC1L3oeAyZF8Rye6CRM
-         s6oUwRxy7p2KISkGo+Tf2qNqvsDrc87fHXPH8UpPCXWR3lsqpjv/bZBsnjRNZi4151WA
-         vgeJJrd2ScmMGTUyqdVelQoQjKNW8Hz4KJNo7GC/4FNHm6BZoTVfSkQ2ZwPHNnr5VT8f
-         6/XRyVfDZcWOdooKN27Y7h7nqTFPyFmmjErSQqpKLJFGmCFepkWfP/cPmP78jbmuAd8H
-         U5y1tWeainvLD43Hzr3MrCWZsDndllOFzwMsyzY7f/KcBEuU4DY0PBL2HYGBXYoQpIfq
-         Y9Ew==
-X-Gm-Message-State: AOAM531cBiZI7m7w5sujA13RLpo2J3pQvVzQyLBeGGRP3ifc55rBoMtE
-        mmXvC2IX8STbfDqZZgkJmcALaS4JYeZR7Q==
-X-Google-Smtp-Source: ABdhPJzr4C/Js48s5Ue4NYyYixR9r1flg4M19VKHosMuNFRSDhQRjrts8JxgSCpsR1kcM2gTTn4DSA==
-X-Received: by 2002:a37:48cd:: with SMTP id v196mr742898qka.406.1613095126947;
-        Thu, 11 Feb 2021 17:58:46 -0800 (PST)
-Received: from [172.17.0.2] ([40.79.255.182])
-        by smtp.gmail.com with ESMTPSA id p68sm4297981qkb.69.2021.02.11.17.58.46
+        h=x-gm-message-state:from:date:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=YHhSSO7Bfold1AOekyzb2HoIQujwCnUvaWEZgybZO4w=;
+        b=G0OZZp5K8edaLnwpO+0cAxR53PVqi3149C3T9o5cIzxriDSx8slYH0/XEIDggii+GZ
+         PKKE4L+7O6pZAtajs1oEmk3YB20VyGZiAMGExH57CykxYyFNAG8X5uLT9cf0fPloEqkY
+         Fj3F7aJghIZImpz4zDfXkYWCklMVUG3E+ecag0Dxcyh/93h7KkJV4dp8C+E5TgHiI7dB
+         MKkP2lz1r+MTFY5uE9WmDRxzt3ge/cCdIa+B2l1jtLmnasYaMdVWj8SFtDFwg8Z7ZdO7
+         Bd6kW7Bm63Xf6jlom2uT74Dg426kVPjpb0M1puUVQFfq5a5EN3c9Q21dISetADn8k3Ft
+         VU0A==
+X-Gm-Message-State: AOAM530FaOx271TwNsUFbXj19AaJssc+2PGIg+IK36siwrljlX2yu1lK
+        Uh6FBUAN6DMWPsvngMDv+UelYg==
+X-Google-Smtp-Source: ABdhPJwpJVtPVED4aICVVwHtQANi0bJIK/KypWCX0gcGLX/IjGi5p9chaw3GugdcHiIIvb/aJGSn6Q==
+X-Received: by 2002:a2e:2c09:: with SMTP id s9mr1342785ljs.136.1613127252738;
+        Fri, 12 Feb 2021 02:54:12 -0800 (PST)
+Received: from kynes (ip-222-98.ists.pl. [87.239.222.98])
+        by smtp.gmail.com with ESMTPSA id v24sm1298085ljg.27.2021.02.12.02.54.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 17:58:46 -0800 (PST)
-Message-ID: <6025e0d6.1c69fb81.47d5f.c03c@mx.google.com>
-Date:   Thu, 11 Feb 2021 17:58:46 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============6462740565561794114=="
+        Fri, 12 Feb 2021 02:54:12 -0800 (PST)
+From:   "=?utf-8?Q?Micha=C5=82?= Lowas-Rzechonek" 
+        <michal.lowas-rzechonek@silvair.com>
+X-Google-Original-From: =?utf-8?Q?Micha=C5=82?= Lowas-Rzechonek <khorne@kynes>
+Date:   Fri, 12 Feb 2021 11:54:10 +0100
+To:     Inga Stotland <inga.stotland@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org, brian.gix@intel.com
+Subject: Re: [PATCH BlueZ 3/4] test/test-mesh: Generate correct value for
+ Device UUID
+Message-ID: <20210212105410.rj4ctsih6blopw4d@kynes>
+Mail-Followup-To: Inga Stotland <inga.stotland@intel.com>,
+        linux-bluetooth@vger.kernel.org, brian.gix@intel.com
+References: <20210211222143.39986-1-inga.stotland@intel.com>
+ <20210211222143.39986-4-inga.stotland@intel.com>
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, mcchou@chromium.org
-Subject: RE: [BlueZ,v1] adapter: Add adapter cleanup watchdog
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20210211172813.BlueZ.v1.1.I0b1ea92cf6c47ac45a2b3b9264b6b64fb8437442@changeid>
-References: <20210211172813.BlueZ.v1.1.I0b1ea92cf6c47ac45a2b3b9264b6b64fb8437442@changeid>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210211222143.39986-4-inga.stotland@intel.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============6462740565561794114==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: base64
+On 02/11, Inga Stotland wrote:
+> This ensures that the value of Device UUID when invoking
+> Join method is compliant with RFC 4122.
+> ---
+>  test/test-mesh | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/test/test-mesh b/test/test-mesh
+> index 9e4783734..a478843a3 100755
+> --- a/test/test-mesh
+> +++ b/test/test-mesh
+> @@ -889,6 +889,11 @@ class MainMenu(Menu):
+>  
+>  		uuid = bytearray.fromhex("0a0102030405060708090A0B0C0D0E0F")
+>  		random.shuffle(uuid)
+> +		uuid[6] &= 0x0f;
+> +		uuid[6] |= 4 << 4;
+> +		uuid[8] &= 0x3f;
+> +		uuid[8] |= 0x80;
+> +
 
-VGhpcyBpcyBhdXRvbWF0ZWQgZW1haWwgYW5kIHBsZWFzZSBkbyBub3QgcmVwbHkgdG8gdGhpcyBl
-bWFpbCEKCkRlYXIgc3VibWl0dGVyLAoKVGhhbmsgeW91IGZvciBzdWJtaXR0aW5nIHRoZSBwYXRj
-aGVzIHRvIHRoZSBsaW51eCBibHVldG9vdGggbWFpbGluZyBsaXN0LgpUaGlzIGlzIGEgQ0kgdGVz
-dCByZXN1bHRzIHdpdGggeW91ciBwYXRjaCBzZXJpZXM6ClBXIExpbms6aHR0cHM6Ly9wYXRjaHdv
-cmsua2VybmVsLm9yZy9wcm9qZWN0L2JsdWV0b290aC9saXN0Lz9zZXJpZXM9NDMyNTA5CgotLS1U
-ZXN0IHJlc3VsdC0tLQoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IENoZWNr
-UGF0Y2ggLSBQQVNTCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogQ2hlY2tH
-aXRMaW50IC0gUEFTUwoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IENoZWNr
-QnVpbGQgLSBGQUlMCk91dHB1dDoKc3JjL2FkYXB0ZXIuYzogSW4gZnVuY3Rpb24g4oCYZXhwaXJl
-X2NsZWFudXBfd2F0Y2hkb2figJk6CnNyYy9hZGFwdGVyLmM6NTM4Mjo5OiBlcnJvcjogc3VnZ2Vz
-dCBwYXJlbnRoZXNlcyBhcm91bmQgYXNzaWdubWVudCB1c2VkIGFzIHRydXRoIHZhbHVlIFstV2Vy
-cm9yPXBhcmVudGhlc2VzXQogNTM4MiB8ICB3aGlsZSAod2F0Y2hkb2cgPSBxdWV1ZV9wZWVrX2hl
-YWQoY2xlYW51cF93YXRjaGRvZ3MpKSB7CiAgICAgIHwgICAgICAgICBefn5+fn5+fgpjYzE6IGFs
-bCB3YXJuaW5ncyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycwptYWtlWzFdOiAqKiogW01ha2VmaWxl
-OjkxNjQ6IHNyYy9ibHVldG9vdGhkLWFkYXB0ZXIub10gRXJyb3IgMQptYWtlOiAqKiogW01ha2Vm
-aWxlOjQwMTk6IGFsbF0gRXJyb3IgMgoKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwpU
-ZXN0OiBNYWtlQ2hlY2sgLSBTS0lQUEVECk91dHB1dDoKY2hlY2tidWlsZCBub3Qgc3VjY2VzcwoK
-CgotLS0KUmVnYXJkcywKTGludXggQmx1ZXRvb3RoCgo=
+https://docs.python.org/3/library/uuid.html
 
---===============6462740565561794114==--
+
+>  		uuid_str = array_to_string(uuid)
+>  
+>  		print(set_yellow('Joining with UUID ') + set_green(uuid_str))
+> -- 
+> 2.26.2
+> 
+
+-- 
+Michał Lowas-Rzechonek <michal.lowas-rzechonek@silvair.com>
+Silvair http://silvair.com
+Jasnogórska 44, 31-358 Krakow, POLAND
