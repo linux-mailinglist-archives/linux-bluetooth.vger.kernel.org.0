@@ -2,125 +2,188 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C403B31E152
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Feb 2021 22:26:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 27D3E31E190
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Feb 2021 22:42:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233496AbhBQVZq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 Feb 2021 16:25:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53018 "EHLO
+        id S230315AbhBQVmN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Feb 2021 16:42:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233203AbhBQVZ1 (ORCPT
+        with ESMTP id S229459AbhBQVmH (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 17 Feb 2021 16:25:27 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92851C0613D6
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Feb 2021 13:24:47 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id q186so12585753oig.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Feb 2021 13:24:47 -0800 (PST)
+        Wed, 17 Feb 2021 16:42:07 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F90C061574
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Feb 2021 13:41:26 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id q14so18509819ljp.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Feb 2021 13:41:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=XW7qrpQt3tZUf6DP9I2wYh4qbJ91/Aancx/GwfDDVvw=;
-        b=jAPaFtP6hICRzV++qFbgZVf3aOwESv+AQ6DJ7/bS4AGHsWCKsPZSvFXCCLARx3hISC
-         Z2GVJv+FnLF9driuSKVWGBI4NJIdmoRPIHk9P7JoivEarHJ8qQSdDZvPpveZ7ScsEeva
-         mAEXsq+Ta3AvFEqC2iGaVrCQ7BA64cg4yIEnvgK2njI3wRluqvhLVbkG5wCvVOqxeP5i
-         CAQCLwaLmSmJf8reXLy7ocC7BSyUCFaLFxb5dGuwNNACPPy/b7qBwrxTM+nvXjOpCAiv
-         0yWIXihKirIhWcUm0uTcYC5LiVwXuYnsS1m+WIz6eGEVH/EuAL0uF7nX3YuzjSEhQvVD
-         yHyw==
+        bh=Q5EIqDspHpKc0Grft5WXUPedK9nLk5HcPfnwQuOpgv0=;
+        b=foXsuMbsQEoONk7wvQSgCxtDQh6SEGHYKS26nFCrP3pKrZJzvocGkJz8jzlmEalhG+
+         hyQVLDcos3cEq6tDa/9gpl+XxseOWv9fFUqLLRBCvaQNQnyQivsaSsJ9pPS3vndjaHkL
+         qvv1yu2Fv4wkEaM1ztxYTEmwqjC+6J6ppQxVk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=XW7qrpQt3tZUf6DP9I2wYh4qbJ91/Aancx/GwfDDVvw=;
-        b=nBtDI8hMRygMSzvQdRikAeaK1oAomVwlKj5jvmRVw6F8d4wXpLEu0/PG+vqSKPfi3f
-         QeBZ5ZkYqH+iu/xSnyoy1kH0nWNKRSx3+rwOcScv0uw4kqt6sFqLREeMF93dQa1FU1IF
-         rFPDOuiVG8ciqOAPAQPjPF4LksZ72/FmnITJbN7OTPImxWcctcDPsF48xJfD/E8snasC
-         UlhkDmtEngKjB8V2/Siwy+0P5SLvwYQADVgCBbNKYJzshy4nCrirsEfo/iJ9Q4SR+Ced
-         E/dRBnYby9LFOCt/UeET6kg7ZxLOkvWrWmLCfX6rRfXOMTJFf3qh7UHqoj3iNRYTPgki
-         po9Q==
-X-Gm-Message-State: AOAM531NBbv47OMHAEcCTpHKRLL6iGjhzeH340Wbz1+3KIEmNoWoYHFA
-        vkRC+Vbt+ssvYMf7SkEmWyHU6sh+Xbcg+eQ0K2t2avAK9Dg=
-X-Google-Smtp-Source: ABdhPJxQdHdv2ITf1t4Z41ogU14kLjC72wh7Ie42bRMLOeGAF12y2KB8PRFhAkjM5XU1FLhuqUaXQj24np+vhtzWa7M=
-X-Received: by 2002:a05:6808:1290:: with SMTP id a16mr531657oiw.161.1613597086996;
- Wed, 17 Feb 2021 13:24:46 -0800 (PST)
+        bh=Q5EIqDspHpKc0Grft5WXUPedK9nLk5HcPfnwQuOpgv0=;
+        b=o4cdITx9Vxn/Bo2toz7dud/o3ar0DEBhVy0qRXVGNmnXae8CT64VVUAWPaQw8Id6bI
+         pkZAofCjvdLBKRBp9f5ToqVSahyggkVZ0gW681gnLlz8EK5JaRV4as8aldpp2nrCo+NO
+         Nte0QSyS5ij+i9bTCiaxt7DoBrTusA0x3sHJFSfbOd0UVS4vZi58EjazexPhIL/E8QK/
+         tzGgVpnsKfagivxcan3ME1Rllba+MtnNQCypw70jOgFB/Joa16+t3Vl/bQ7tFcXF2h3P
+         AKj3YzUwaIFaze8jmZnxdiDinuHPsUvrveWPqUafPAm/kSeRH1hpu92+I5XhAqj0ePwc
+         YvPA==
+X-Gm-Message-State: AOAM533LtTH/1zuMkE387If6FX/ybBQoJfAR2GZoRzC2I3D1ZWgAw8gt
+        Jth2EmdmKn7swLzf88dha9rPIqO2XLX6m3jYVoH2/Q==
+X-Google-Smtp-Source: ABdhPJz4jbmrZf440FW2r/FVYVqSv+qUC+0+eeu4f5mauIuGtmEMTHm1TuzAms0LB3yEY+aMxe/W8T7vPFeJ/i5Gwj8=
+X-Received: by 2002:a05:651c:552:: with SMTP id q18mr737848ljp.278.1613598085353;
+ Wed, 17 Feb 2021 13:41:25 -0800 (PST)
 MIME-Version: 1.0
-References: <20210216233337.859955-1-luiz.dentz@gmail.com> <602c5bd2.1c69fb81.cf0ee.0856@mx.google.com>
- <CABBYNZKnft35iJNnKRQp1N=X319m1VY7Ne2SJ9pGKWOGbbpXvg@mail.gmail.com> <CABmPvSHz8bG9X0zUt3DNo2m+6Pn+wHo182EnYsh8mAm+LvHeAw@mail.gmail.com>
-In-Reply-To: <CABmPvSHz8bG9X0zUt3DNo2m+6Pn+wHo182EnYsh8mAm+LvHeAw@mail.gmail.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 17 Feb 2021 13:24:36 -0800
-Message-ID: <CABBYNZKBW+Faraq_Ljj7_WT9HdEZgL19g2-r59T66wxmPt8kEA@mail.gmail.com>
-Subject: Re: [BlueZ,1/3] avdtp: Fix setting disconnect timer when there is no
- local endpoints
-To:     Miao-chen Chou <mcchou@chromium.org>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+References: <20210216233337.859955-1-luiz.dentz@gmail.com> <20210216233337.859955-3-luiz.dentz@gmail.com>
+ <CABmPvSHG9M9f6kVb9+DzF0MsyUA56R0LJsd+KuZtPxZSccrKsA@mail.gmail.com> <CABBYNZK+Qm456J0Qeh-BHki_CuLfVewHnVDWHmSq6FYex0P8kg@mail.gmail.com>
+In-Reply-To: <CABBYNZK+Qm456J0Qeh-BHki_CuLfVewHnVDWHmSq6FYex0P8kg@mail.gmail.com>
+From:   Miao-chen Chou <mcchou@chromium.org>
+Date:   Wed, 17 Feb 2021 13:41:13 -0800
+Message-ID: <CABmPvSGvNDaUq-PTrZOP5f0tjJUEfUqamCN2y2U3shAE+4muzw@mail.gmail.com>
+Subject: Re: [PATCH BlueZ 3/3] avdtp: Remove use of G_PRIORITY_LOW
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Miao,
+Hi Luiz,
 
-On Wed, Feb 17, 2021 at 12:37 PM Miao-chen Chou <mcchou@chromium.org> wrote:
+On Wed, Feb 17, 2021 at 1:21 PM Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
 >
-> Hi Luiz,
+> Hi Miao,
 >
-> I was testing before seeing your email. Please take a look at my
-> comment on the last commit of the series.
-> Although this commit doesn't affect the symptom we observed (it was
-> IDLE state which triggers the disconnection of IO), the change makes
-> sense.
-
-Yep, this doesn't actually make any difference on the matter of
-freeing avdtp session when the adapter is removed but as you said it
-makes sense on it own given that local endpoints can be unregistered.
-
-> On Wed, Feb 17, 2021 at 11:45 AM Luiz Augusto von Dentz
-> <luiz.dentz@gmail.com> wrote:
+> On Wed, Feb 17, 2021 at 12:24 PM Miao-chen Chou <mcchou@chromium.org> wrote:
 > >
-> > Hi Miao,
+> > Hi Luiz,
 > >
-> > On Tue, Feb 16, 2021 at 3:57 PM <bluez.test.bot@gmail.com> wrote:
+> > Thanks for reforming the fix. I tested the series on my DUT and it
+> > works as expected where the paired device persists throughout the
+> > suspend and resume. However I observed the following sequence in the
+> > logs.
+> > Given that this series raises the priority of avdtp's IO, session_cb()
+> > got poked immediately after the index was removed, and that triggers
+> > avdtp_free() early. About ~100ms later, avdtp_unregister_sep was
+> > called with a non-NULL pointer to the sep with A2DP. However, that sep
+> > is no longer valid since avdtp_free() freed all the seps. I wonder if
+> > this can be a potential issue?
+>
+> Are you referring to the local sep or the remote ones? avdtp_free
+> should not have free any local ones as it just has a reference to the
+> queue and that afaik was never meant to be free by avdtp_free.
+That actually answers my question. There might not be concern then,
+since avdtp_free() frees the remote one but not the local one while
+avdtp_unregister_sep() frees the local one.
+All is good. Thanks for the fix.
+>
+> > = Close Index: 5C:3A:45:9C:CF:8A
+> >                             [hci0] 2021-02-17 11:52:02.607860
+> > @ MGMT Event: Index Removed (0x0005) plen 0
+> >                    {0x0003} [hci0] 2021-02-17 11:52:02.607866
+> > ...
+> > = Delete Index: 5C:3A:45:9C:CF:8A
+> >                             [hci0] 2021-02-17 11:52:02.607876
+> > = bluetoothd: Unable to get io data for Hands-Free Voice gateway:
+> > getpeername: Transport endpoint is...   2021-02-17 11:52:02.618425
+> > = bluetoothd: src/service.c:change_state() 0x56093254dff0: device
+> > 28:11:A5:E1:4F:67 profile Hands-Fre..   2021-02-17 11:52:02.618480
+> > = bluetoothd: src/service.c:btd_service_unref() 0x56093254dff0: ref=2
+> >                                    2021-02-17 11:52:02.618486
+> > = bluetoothd: profiles/audio/avdtp.c:session_cb()
+> >                                    2021-02-17 11:52:02.618497
+> > = bluetoothd: profiles/audio/avdtp.c:avdtp_ref() 0x560932556830: ref=2
+> >                                    2021-02-17 11:52:02.618585
+> > = bluetoothd: profiles/audio/avdtp.c:connection_lost() Disconnected
+> > from 28:11:A5:E1:4F:67                2021-02-17 11:52:02.618594
+> > = bluetoothd: profiles/audio/a2dp.c:abort_cfm() Source 0x5609324c36b0:
+> > Abort_Cfm                          2021-02-17 11:52:02.618600
+> > = bluetoothd: profiles/audio/avdtp.c:avdtp_sep_set_state() stream
+> > state changed: OPEN -> IDLE             2021-02-17 11:52:02.618605
+> > = bluetoothd: src/service.c:change_state() 0x560932552490: device
+> > 28:11:A5:E1:4F:67 profile a2dp-sink..   2021-02-17 11:52:02.621466
+> > = bluetoothd: profiles/audio/avdtp.c:avdtp_unref() 0x560932556830:
+> > ref=1                                  2021-02-17 11:52:02.621492
+> > = bluetoothd: profiles/audio/sink.c:sink_set_state() State changed
+> > /org/bluez/hci0/dev_28_11_A5_E1_4F..   2021-02-17 11:52:02.621500
+> > = bluetoothd: profiles/audio/a2dp.c:channel_remove() chan
+> > 0x5609324a7930                                  2021-02-17
+> > 11:52:02.621539
+> > = bluetoothd: profiles/audio/avdtp.c:avdtp_unref() 0x560932556830:
+> > ref=0                                  2021-02-17 11:52:02.621546
+> > = New Index: 00:00:00:00:00:00 (Primary,USB,hci0)
+> >                             [hci0] 2021-02-17 11:52:02.619195
+> > = bluetoothd: profiles/audio/avdtp.c:avdtp_free() 0x560932556830
+> >                                    2021-02-17 11:52:02.621615
+> > = bluetoothd: Endpoint unregistered: sender=:1.50
+> > path=/org/chromium/Cras/Bluetooth/A2DPSource            2021-02-17
+> > 11:52:02.764766
+> > = bluetoothd: profiles/audio/media.c:media_endpoint_destroy()
+> > sender=:1.50 path=/org/chromium/Cras/Bl..   2021-02-17 11:52:02.764792
+> > = bluetoothd: profiles/audio/avdtp.c:avdtp_unregister_sep() SEP
+> > 0x5609324c36b0 unregistered: type:0 c..   2021-02-17 11:52:02.764797
+> > = bluetoothd: profiles/audio/media.c:media_player_destroy()
+> > sender=:1.50 path=/org/chromium/Cras/Blue..   2021-02-17
+> > 11:52:02.771347
+> >
+> > On Tue, Feb 16, 2021 at 3:35 PM Luiz Augusto von Dentz
+> > <luiz.dentz@gmail.com> wrote:
 > > >
-> > > This is automated email and please do not reply to this email!
+> > > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > > >
-> > > Dear submitter,
-> > >
-> > > Thank you for submitting the patches to the linux bluetooth mailing list.
-> > > This is a CI test results with your patch series:
-> > > PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=434305
-> > >
-> > > ---Test result---
-> > >
-> > > ##############################
-> > > Test: CheckPatch - PASS
-> > >
-> > > ##############################
-> > > Test: CheckGitLint - PASS
-> > >
-> > > ##############################
-> > > Test: CheckBuild - PASS
-> > >
-> > > ##############################
-> > > Test: MakeCheck - PASS
-> > >
-> > >
-> > >
+> > > G_PRIORITY_LOW was used in order to prioritize the AVDTP media transport
+> > > channel over the signalling channel but this has the side effect of
+> > > delaying the dispatching of other conditions such as HUP/NVAL, so now
+> > > that BtIO use G_PRIORITY_HIGH for its watches we no longer need to
+> > > deprioritize session_cb.
 > > > ---
-> > > Regards,
-> > > Linux Bluetooth
-> >
-> > Can you give this set a try with the use case you had? I tested with
-> > unplugged use case and it now seems to trigger session_cb immediately
-> > so it should work for your case as well.
-> >
-> > --
-> > Luiz Augusto von Dentz
-> Thanks,
-> Miao
-
-
-
--- 
-Luiz Augusto von Dentz
+> > >  profiles/audio/avdtp.c | 13 ++-----------
+> > >  1 file changed, 2 insertions(+), 11 deletions(-)
+> > >
+> > > diff --git a/profiles/audio/avdtp.c b/profiles/audio/avdtp.c
+> > > index 9ddcd6464..088ca58b3 100644
+> > > --- a/profiles/audio/avdtp.c
+> > > +++ b/profiles/audio/avdtp.c
+> > > @@ -2378,19 +2378,10 @@ static void avdtp_connect_cb(GIOChannel *chan, GError *err, gpointer user_data)
+> > >                 if (session->io_id)
+> > >                         g_source_remove(session->io_id);
+> > >
+> > > -               /* This watch should be low priority since otherwise the
+> > > -                * connect callback might be dispatched before the session
+> > > -                * callback if the kernel wakes us up at the same time for
+> > > -                * them. This could happen if a headset is very quick in
+> > > -                * sending the Start command after connecting the stream
+> > > -                * transport channel.
+> > > -                */
+> > > -               session->io_id = g_io_add_watch_full(chan,
+> > > -                                               G_PRIORITY_LOW,
+> > > +               session->io_id = g_io_add_watch(chan,
+> > >                                                 G_IO_IN | G_IO_ERR | G_IO_HUP
+> > >                                                 | G_IO_NVAL,
+> > > -                                               (GIOFunc) session_cb, session,
+> > > -                                               NULL);
+> > > +                                               (GIOFunc) session_cb, session);
+> > >
+> > >                 if (session->stream_setup)
+> > >                         set_disconnect_timer(session);
+> > > --
+> > > 2.29.2
+> > >
+> > Regards,
+> > Miao
+>
+>
+>
+> --
+> Luiz Augusto von Dentz
+Regards,
+Miao
