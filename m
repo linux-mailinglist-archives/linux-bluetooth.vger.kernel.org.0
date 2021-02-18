@@ -2,80 +2,90 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B2BB831ED41
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Feb 2021 18:27:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EEE831ED47
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Feb 2021 18:30:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234238AbhBRRYu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 18 Feb 2021 12:24:50 -0500
-Received: from mail.kernel.org ([198.145.29.99]:33056 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233128AbhBROGB (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 18 Feb 2021 09:06:01 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id DEB5D64EAF
-        for <linux-bluetooth@vger.kernel.org>; Thu, 18 Feb 2021 13:53:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1613656423;
-        bh=ROnvhmI2YHMLSu6DQGJtJMzQpqfoIv08hM2eGJnyOgQ=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=VSFU9B1MKQps3KRgSZMoR6gx/iVdNzBskFEZFcYFG45rBmEfW0009jTMp0ye58CEu
-         i5fJ5mXP8vFaObYJx0EBjq80tYYCQ/17MkNUQRkTXjRAtVl7hOjDlzEY2aK5wabxY+
-         rxVohzUWhgtrpTGee9jBtYRi29WSewft8V69PjvsvB2e4LVb3D7RvkpkPS69tzRO1o
-         Ix4OvfkjY3xpOe/6W7ZmrQemJRzTOOstcis5amxjgo9REslkhBFhcfl5fXWlovSQzv
-         tRMf67/ormj60gQLcpJe+re/TBTpBOOzTAOi2pEH+/so5g4LiTBRKSCkcs0e0F/Wqt
-         FalcKM/lxhkSg==
-Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id D59E26531E; Thu, 18 Feb 2021 13:53:43 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 210681] kernel: Bluetooth: hci0: don't support firmware rome
- 0x31010000
-Date:   Thu, 18 Feb 2021 13:53:42 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: high
-X-Bugzilla-Who: jwrdegoede@fedoraproject.org
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-210681-62941-xGRnAmRxVw@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-210681-62941@https.bugzilla.kernel.org/>
-References: <bug-210681-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        id S232171AbhBRRZT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 18 Feb 2021 12:25:19 -0500
+Received: from youngberry.canonical.com ([91.189.89.112]:36140 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230442AbhBROhZ (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 18 Feb 2021 09:37:25 -0500
+Received: from [123.112.65.49] (helo=[192.168.2.108])
+        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <hui.wang@canonical.com>)
+        id 1lCkPu-0002mS-Db; Thu, 18 Feb 2021 14:36:30 +0000
+Subject: Re: [PATCH 5.12 regression fix] Bluetooth: btusb: Revert Fix the
+ autosuspend enable and disable
+To:     Hans de Goede <hdegoede@redhat.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
+References: <20210218123728.17067-1-hdegoede@redhat.com>
+ <20210218123728.17067-2-hdegoede@redhat.com>
+From:   Hui Wang <hui.wang@canonical.com>
+Message-ID: <90d8996d-a376-2e9c-37ce-ce50b8660fd1@canonical.com>
+Date:   Thu, 18 Feb 2021 22:36:07 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
+In-Reply-To: <20210218123728.17067-2-hdegoede@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D210681
 
---- Comment #38 from Hans de Goede (jwrdegoede@fedoraproject.org) ---
-Unfortunately it is taking quite a long time to get the fix for this into
-Linus' tree and the stable rules say that only fixes which are in Linus' tr=
-ee
-can be cherry-picked into the stable series.
+On 2/18/21 8:37 PM, Hans de Goede wrote:
+> drivers/usb/core/hub.c: usb_new_device() contains the following:
+[...]
+>   
+>   	err = hci_register_dev(hdev);
+>   	if (err < 0)
+> @@ -4688,9 +4688,6 @@ static void btusb_disconnect(struct usb_interface *intf)
+>   		gpiod_put(data->reset_gpio);
+>   
+>   	hci_free_dev(hdev);
+> -
+> -	if (!enable_autosuspend)
+> -		usb_enable_autosuspend(data->udev);
+Hi Hans,
 
-For Fedora users I've added the upstream patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.gi=
-t/commit/?id=3D234f414efd1164786269849b4fbb533d6c9cdbbf
+And Do we need to call usb_disable_autosuspend() in the disconnect()? 
+like below:
 
-Fixing this as a downstream patch for the Fedora kernels. So this should be
-fixed in the next F32 and F33 kernel builds, which will likely be the 5.10.=
-18
-builds.
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 32161dd40ed6..ef831492363c 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -4673,6 +4673,9 @@ static void btusb_disconnect(struct usb_interface 
+*intf)
 
---=20
-You may reply to this email to add a comment.
+         hci_unregister_dev(hdev);
 
-You are receiving this mail because:
-You are the assignee for the bug.=
++       if (enable_autosuspend)
++               usb_disable_autosuspend(data->udev);
++
+         if (intf == data->intf) {
+                 if (data->isoc)
+usb_driver_release_interface(&btusb_driver, data->isoc);
+
+
+Before the btusb_probe() is called, the usb device is autosuspend 
+disabled, suppose users set the btusb.enable_autosuspend=1, the driver 
+btusb will enable the autosuspend on this device. If users remove this 
+driver, the disconnect() will be called, the usb device will keep 
+autosuspend enabled. Next time if users reload this driver by 'sudo 
+modprobe  btusb enalbe_autosuspend=0',  they will find the device is 
+autosuspend enabled instead of disabled.
+
+Thanks.
+
+
+>   }
+>   
+>   #ifdef CONFIG_PM
