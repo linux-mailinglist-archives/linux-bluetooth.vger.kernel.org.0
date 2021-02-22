@@ -2,98 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9018632107C
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Feb 2021 06:36:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D1933210B6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Feb 2021 07:08:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229532AbhBVFgE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 22 Feb 2021 00:36:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57742 "EHLO
+        id S229852AbhBVGIn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 22 Feb 2021 01:08:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbhBVFgD (ORCPT
+        with ESMTP id S229748AbhBVGIm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 22 Feb 2021 00:36:03 -0500
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6B1C061574
-        for <linux-bluetooth@vger.kernel.org>; Sun, 21 Feb 2021 21:35:23 -0800 (PST)
-Received: by mail-qt1-x82e.google.com with SMTP id o21so8511860qtr.3
-        for <linux-bluetooth@vger.kernel.org>; Sun, 21 Feb 2021 21:35:23 -0800 (PST)
+        Mon, 22 Feb 2021 01:08:42 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4EE5C061574
+        for <linux-bluetooth@vger.kernel.org>; Sun, 21 Feb 2021 22:08:02 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id v126so3781629ybc.13
+        for <linux-bluetooth@vger.kernel.org>; Sun, 21 Feb 2021 22:08:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=SLlSm3c5gFSdy4dQPKpzQIpB85F/sKmdWJMUb799920=;
-        b=XX+9cIovFLpjWeWPBLuT2xYVEShnuGRwl1daun1Wqn60dcOg3REco9WxoXDGkpZuoW
-         DUNaRADVqUAh88xUKW8qwjmXrBVZ/+97nUqRMsvo9Y3ZheS/khPpJVl3dT3GiXyutt7V
-         eHzvms3dYbjRzhwC8kQk7ZEH6kaLm3MOYjVT8aR/SABhk/1g1Rd6OqHgSrF7tv04yLxv
-         HrINBqNe9eBIGk5iDimABlxSD2RPTgpMfhr3EiNHbC/M51aJB6YPaWkucDDP9AvF25gP
-         Uddefcde97CVh6rsgGhYRXwAYlIfhzR0kSWf+pwmajXggexj74eTK0nxzE0WjBdUJcxr
-         0mXg==
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=2jtGB32CbyaD+tOJ+LPftMPg0AFSsPxe9aDn1Xi0FlE=;
+        b=WPeQTm3ChJlDpEaT2XKlqM6KGk27YEVPiGWZPKGcKAjogPyz0i/JfsyTetVlRFxXkB
+         sblPOuXT1/GOJGc7rArzBqvJpGzI0ZN7Ib4zSDVvcBN62mlUbXNxi7jQQ6/OpXRMgj3h
+         BfgaOSG+IKDNt909Rm1irufO71vA2Sl9Vgt5J8io1OWEs58vhtIlyohkPd3yMGUW7M7p
+         oOnyzGcuqsz6OHA20FtT0xZhPlJmoHF7YbXc36ih+EKEdcsdQ03pwaY19ZZUjBGB5hzX
+         hB6TxNjURBhiUFFwXRoX+S2fNyMk8Qu6gdl24odCR3J4kF/d04OwaEzn+ttpq6AKDciy
+         BmcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=SLlSm3c5gFSdy4dQPKpzQIpB85F/sKmdWJMUb799920=;
-        b=FMgQQV8T3+aENMYfES3KarFyzjfZ9l/IZqqxWGbSXfjXcO07JN/D29OeT+E1J4dXLz
-         IKth9yDykCKCwdTu1pSoyQiEsMEsaSGS6O85896HS9/RHxwfKQJgsmDRL0fxYacCWwKa
-         P6zC/scs4+fpSAyJqjgGM/2RqsJvd1uIn13iE/FPSo5LmF9YwBcng/zi36/2y2kqwn07
-         kTpr9BGU8lDmi2H29auhYwDbrmzXl15TbuoKFY0dAUC8LaS56LKNepCEi3RPxfMqy/FI
-         Tndpc7RGBV5CELYwjc7ao4ApHGOt2rdVNIbPLorw4RRyABPTqA7fMIuB8MR0r4IypgNt
-         dWnQ==
-X-Gm-Message-State: AOAM530UoKpubg4MDi0HYh1ag6XuwtohLZnPAezSF1suzOM8m3XFkSD+
-        tHotAdVbFUikgew/RdXfdSAQstP7s25F6g==
-X-Google-Smtp-Source: ABdhPJx+gXpsKbdrYyfpQWwss9MaZIHPnrDff1w596pDQzIllA2S+09nAcfcEZVbPKAswF/Fshj75g==
-X-Received: by 2002:ac8:6ed9:: with SMTP id f25mr18121463qtv.352.1613972122438;
-        Sun, 21 Feb 2021 21:35:22 -0800 (PST)
-Received: from [172.17.0.2] ([52.177.59.215])
-        by smtp.gmail.com with ESMTPSA id g2sm11686869qkd.124.2021.02.21.21.35.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Feb 2021 21:35:21 -0800 (PST)
-Message-ID: <60334299.1c69fb81.5c44f.60ff@mx.google.com>
-Date:   Sun, 21 Feb 2021 21:35:21 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============5514134585123495143=="
-MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, apusaka@google.com
-Subject: RE: [Bluez] adapter: Check whether adapter is pending powered
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20210222131802.Bluez.1.Ic834b418cdbb81a6e9980632567fe9d7c23cd8d4@changeid>
-References: <20210222131802.Bluez.1.Ic834b418cdbb81a6e9980632567fe9d7c23cd8d4@changeid>
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=2jtGB32CbyaD+tOJ+LPftMPg0AFSsPxe9aDn1Xi0FlE=;
+        b=GZW7lokKg5VdXP9LL0jTl3xwcpVoyEfUi6T6xn09Lel6VT3jq+2zyvf0F2f8HfFig9
+         VDh7SzkIKGP5Da3vJA7Jy2VLIBSIDdO2kVj1fTNmSK+feXJ9XasN/uSVF4Nf/Dy6WrCJ
+         1BshONd5h1fDmSKB16rFbofisJg+cnK1lVbNTNvv+xuVaHTkhwn8nyhtS7eJtAy6d7w7
+         kY7sUujFQNNvqrNiafhXhSSUAr8q378Bodi6EFsoVlIgKcbuZn3n8oKlsPPn5t5R7A1+
+         KeH0eyREcEw3WJtI2UrUuMUHfTtDxqGdr3cta1uA1wPL4FS0vrC+J728rMiiYnpHiDch
+         4vsw==
+X-Gm-Message-State: AOAM530xY1O8rIRytqxX0gez2lRqUM8Zyh0sZyGHZtfwXS/r/oZcIgzl
+        dSZE/Q1BYlgx5g/Lqlylh1JNS1BOP7RJESUBRKDAnml4LJSDZqmoZTus35sKSsfvytCB6S/Binu
+        wwV3He1JpJnIO5du5VEClsnA1N0lA7id8VIvkr3wHRqEZ80Uen8wiYg3lNne5NRQ70WMFB3d/Nm
+        GG
+X-Google-Smtp-Source: ABdhPJxeK+qIplZVJY+EcFe3gTMjxVwpKzaCJP7+j8M9m1sDED6LkXLe5z9ttUq6AWcTgCCeV+hH8umZw0lj
+Sender: "apusaka via sendgmr" <apusaka@apusaka-p920.tpe.corp.google.com>
+X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:b:167:3326:108b:47b8])
+ (user=apusaka job=sendgmr) by 2002:a25:38d6:: with SMTP id
+ f205mr31716211yba.448.1613974081779; Sun, 21 Feb 2021 22:08:01 -0800 (PST)
+Date:   Mon, 22 Feb 2021 14:07:43 +0800
+Message-Id: <20210222140727.Bluez.1.I127ac7b2fadba6ef4cce42360efd9b8129251753@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.30.0.617.g56c4b15f3c-goog
+Subject: [Bluez PATCH] adapter: fix set_mode MGMT_OP_SET_BONDABLE
+From:   Archie Pusaka <apusaka@google.com>
+To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5514134585123495143==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Archie Pusaka <apusaka@chromium.org>
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=436321
-
----Test result---
-
-##############################
-Test: CheckPatch - PASS
-
-##############################
-Test: CheckGitLint - PASS
-
-##############################
-Test: CheckBuild - PASS
-
-##############################
-Test: MakeCheck - PASS
-
-
-
+Currently pending_settings is assigned MGMT_SETTING_DISCOVERABLE,
+but it should have been MGMT_SETTING_BONDABLE instead.
 ---
-Regards,
-Linux Bluetooth
 
+ src/adapter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---===============5514134585123495143==--
+diff --git a/src/adapter.c b/src/adapter.c
+index c1f976323e..ae1a70b5ba 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -646,7 +646,7 @@ static bool set_mode(struct btd_adapter *adapter, uint16_t opcode,
+ 		setting = MGMT_SETTING_DISCOVERABLE;
+ 		break;
+ 	case MGMT_OP_SET_BONDABLE:
+-		setting = MGMT_SETTING_DISCOVERABLE;
++		setting = MGMT_SETTING_BONDABLE;
+ 		break;
+ 	}
+ 
+-- 
+2.30.0.617.g56c4b15f3c-goog
+
