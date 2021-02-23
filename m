@@ -2,75 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DA263228AB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Feb 2021 11:14:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 168783229C1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Feb 2021 12:54:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230142AbhBWKMw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 23 Feb 2021 05:12:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58540 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232441AbhBWKLz (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 23 Feb 2021 05:11:55 -0500
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0F0FC06178B
-        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Feb 2021 02:11:14 -0800 (PST)
-Received: by mail-vs1-xe2f.google.com with SMTP id j14so2615323vsi.9
-        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Feb 2021 02:11:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=XeRGwrVDGUzWSSD6C/GZwIpZi77q3XrWcjogMf5WaAk=;
-        b=dsHeUjD1vENQMbIIAlKnIDEmav8NBtizSS27QwI4hRPgLevQdpcENE97xSQm43dAiU
-         gXnIdF0RwWBol55PP4WJsDQq6TVFe8R+qboTTwnQxNWD6AowL1DA7QV13dSH1kddh28W
-         aWJ7lN1q31/U7AJwuaGqCYHH5MsLs2pGUqouDN+7DVObv0ACxFJncJqib9qLa51rdYSe
-         1VENsxJC4458OHMGTKKI43LIjrYy+TY0+3JyDtEunqdBeJJU2s5Hb/SB1Ul3RfziictP
-         UEEKxzvxLle5wf2Jr/k/4+/XzA9udI/DU24FV2sVr1d6hFE8FvfxKtyD1gfm5eogKbfK
-         kXjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=XeRGwrVDGUzWSSD6C/GZwIpZi77q3XrWcjogMf5WaAk=;
-        b=eG/1P/tLPflRtHjESPTCEG3856Z64eTL/9+zfeDF8+ZwjRz+4O5/oGgnDYPpY2BQns
-         EY34siW3EBG1zRvaUCLhFqq8CgUSZjn6v+oCwO7gvJBL80LrWO0M16F9TAOrQNPa9TkX
-         tXaUk7AD3LLZq983QIF56DsHGRA/HYY4Nu6szun1B6ZZQ1GgDBMAlfU/SG3h4YhYWcMJ
-         uH5gTeE0dEfKAy9T0ZQn5oqb4qdAZJYc4+ne0xniuWhttDwShbrjA2Q980sbsWduoB1Y
-         3P6iDlXWQNQpKkqRmIT+KJDBHjFdjMZWdmgGGrtxFOh12DswJUsKd1ZV6Q9bAuhcM3/Y
-         uZ0w==
-X-Gm-Message-State: AOAM533RK9RkPJ1UzDVymP8oBLtk6SCGcgAXl84Yq0XbnREPCr7pD4Bc
-        4Zvw+416j5VICoSwHL4742RzPIGgiG+fTTYAESNB5QyXt+o=
-X-Google-Smtp-Source: ABdhPJwQNjQX/ewZx79ezcFAWwz0Z9KGkgrW6pmnVQZTHA+RPvkheqFjViNkVOjWkiG2xJ2L0qQereXw3trgecfw0Wk=
-X-Received: by 2002:a67:7788:: with SMTP id s130mr15589372vsc.48.1614075074067;
- Tue, 23 Feb 2021 02:11:14 -0800 (PST)
+        id S232523AbhBWLxw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 23 Feb 2021 06:53:52 -0500
+Received: from mail.jvpinto.com ([65.49.11.60]:49930 "EHLO mail.JVPinto.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232495AbhBWLxB (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 23 Feb 2021 06:53:01 -0500
+Received: from RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) by
+ RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) with Microsoft SMTP Server
+ (TLS) id 15.0.1497.2; Tue, 23 Feb 2021 03:52:13 -0800
+Received: from User (52.231.198.195) by RW-EXC1.JVPinto.com (172.32.1.13) with
+ Microsoft SMTP Server id 15.0.1497.2 via Frontend Transport; Tue, 23 Feb 2021
+ 03:51:59 -0800
+Reply-To: <ms.reem@yandex.com>
+From:   "Ms. Reem" <johnpinto@jvpinto.com>
+Subject: Hello okay
+Date:   Tue, 23 Feb 2021 11:52:12 +0000
 MIME-Version: 1.0
-References: <CALaQ_hpL36xwJ3zujD6DsRKzQw_54TucEif=icMgN1CUpk9TNA@mail.gmail.com>
-In-Reply-To: <CALaQ_hpL36xwJ3zujD6DsRKzQw_54TucEif=icMgN1CUpk9TNA@mail.gmail.com>
-From:   Nathan Royce <nroycea+kernel@gmail.com>
-Date:   Tue, 23 Feb 2021 04:11:03 -0600
-Message-ID: <CALaQ_hpGDdmLTrccsTDnquw-+5BVy2-c2nem_ncLHzF7k=ac-w@mail.gmail.com>
-Subject: Re: avdtp.c:cancel_request Times Out, Plus Other Failures
-To:     linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+Message-ID: <a979b4e3f4df4cf8baf7c5db5d0603cc@RW-EXC1.JVPinto.com>
+To:     Undisclosed recipients:;
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Just to put it out there, I switched back to my previous 5.8.7-dirty
-kernel and haven't had any issues.
-It's on the same upgraded system, but just the kernel was rolled back.
+Hello,
 
-On Mon, Feb 22, 2021 at 1:27 PM Nathan Royce <nroycea+kernel@gmail.com> wrote:
->
-> System updated 2021-02-19
-> Previous update 2020-12-18
->
-> Kernel:
->     Current: Linux computerName 5.11.0-dirty #1 SMP PREEMPT Fri Feb 19
-> 06:30:22 CST 2021 x86_64 GNU/Linux
->     Previous: 5.8.7
->
-> Bluez:
->     Current: 5.55-3
->     Previous: 5.55-1
->...
+My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
+and Petroleum" also "Minister of State for International Cooperation"
+in UAE. I write to you on behalf of my other "three (3) colleagues"
+who has approved me to solicit for your "partnership in claiming of
+{us$47=Million}" from a Financial Home in Cambodia on their behalf and
+for our "Mutual Benefits".
+
+The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
+deal with Cambodian/Vietnam Government within 2013/2014, however, we
+don't want our government to know about the fund. If this proposal
+interests you, let me know, by sending me an email and I will send to
+you detailed information on how this business would be successfully
+transacted. Be informed that nobody knows about the secret of this
+fund except us, and we know how to carry out the entire transaction.
+So I am compelled to ask, that you will stand on our behalf and
+receive this fund into any account that is solely controlled by you.
+
+We will compensate you with 15% of the total amount involved as
+gratification for being our partner in this transaction. Reply to:
+ms.reem@yandex.com
+
+Regards,
+Ms. Reem.
