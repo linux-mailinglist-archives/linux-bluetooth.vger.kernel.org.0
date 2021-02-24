@@ -2,39 +2,39 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 96B83323EE9
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Feb 2021 14:55:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA504323EEB
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Feb 2021 14:55:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235440AbhBXNyv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 24 Feb 2021 08:54:51 -0500
-Received: from mail.kernel.org ([198.145.29.99]:58406 "EHLO mail.kernel.org"
+        id S235564AbhBXNy7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 24 Feb 2021 08:54:59 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59876 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235989AbhBXNIW (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 24 Feb 2021 08:08:22 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 7445664F22;
-        Wed, 24 Feb 2021 12:54:46 +0000 (UTC)
+        id S235317AbhBXNLR (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 24 Feb 2021 08:11:17 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 98A3564FA6;
+        Wed, 24 Feb 2021 12:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614171287;
-        bh=uDZmNtOCR0af5Vih+lIIoVyn5mRJ5LleGBe+kdhXbqs=;
+        s=k20201202; t=1614171325;
+        bh=9f9+E1nDpPpKhWKIgBN6Py5wg1Vs4kD8KDFjDfwNc+Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cRs/gGr/AFDQDFWS+tOjM0O/vmvc44O+36hWW7byBorUQri1j3MXqCTuivaDuAday
-         wTwa7VOKnbGYew3M6Ophh496Lcxh2RVYY9iSZh1UDermnPbIa1g1K1LgTReTvgz+m5
-         mtIi4u/3a42pH4lPoAkJLkDvuks6sdb1EQ6CJ1IqbCTE91cWZC7prZircqPiI4etHj
-         kIr9EmsOD3D3DezfzQJVs+5ZIP235FN7bXzfdmgXa/YOZOF1TitfVnh5TcCEro5Bd1
-         lklpgq1sYVFbklBrQkGcFfvsZ0CGoptqi3s9JENJDHtTP0Jv6ImdkZP/wHTZ3m4VYY
-         OkgDjrVLSa+EQ==
+        b=QzVuRxZEVsnKjIHqj31rT0u4bg76zaGIOop697d+2ITitHjfK52VRbi6b/OmhW4Lp
+         btUTFeXviBjTuxDjpnCZD4WTjexc4U/TcagFdDzLXx3UoapV1TPKZCIX999n7URpDy
+         i4+TJrJP7aVFdAzi2s7nkKqG2m1COBKgipp01BxzukRtOt1tPL0nQNR3+07JJA5jbX
+         r9KXrqVg5i8ZEuvNxwMW6bDODWg0i5P5X40/oReV5slAqc8IMNaUn8V1iYpswdsAih
+         u3T8O/7g0e+UpjvxCHayAZYVvkGejfNA4bAqbUIYtHe9v0AULakAEbaWP0l063JcUG
+         TBIWp1pKj3vRQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Gopal Tiwari <gtiwari@redhat.com>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 09/26] Bluetooth: Fix null pointer dereference in amp_read_loc_assoc_final_data
-Date:   Wed, 24 Feb 2021 07:54:17 -0500
-Message-Id: <20210224125435.483539-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 08/16] Bluetooth: Fix null pointer dereference in amp_read_loc_assoc_final_data
+Date:   Wed, 24 Feb 2021 07:55:05 -0500
+Message-Id: <20210224125514.483935-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210224125435.483539-1-sashal@kernel.org>
-References: <20210224125435.483539-1-sashal@kernel.org>
+In-Reply-To: <20210224125514.483935-1-sashal@kernel.org>
+References: <20210224125514.483935-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -78,7 +78,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/net/bluetooth/amp.c b/net/bluetooth/amp.c
-index 78bec8df8525b..72ef967c56630 100644
+index ebcab5bbadd7e..9f645a1d0202d 100644
 --- a/net/bluetooth/amp.c
 +++ b/net/bluetooth/amp.c
 @@ -305,6 +305,9 @@ void amp_read_loc_assoc_final_data(struct hci_dev *hdev,
