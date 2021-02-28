@@ -2,60 +2,76 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8600F326F35
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 27 Feb 2021 23:34:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA01A32715B
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 28 Feb 2021 07:59:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230086AbhB0WeR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 27 Feb 2021 17:34:17 -0500
-Received: from mail.jvpinto.com ([65.49.11.60]:31864 "EHLO mail.JVPinto.com"
+        id S229941AbhB1G6y (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 28 Feb 2021 01:58:54 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53598 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230001AbhB0WeN (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 27 Feb 2021 17:34:13 -0500
-Received: from RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) by
- RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) with Microsoft SMTP Server
- (TLS) id 15.0.1497.2; Sat, 27 Feb 2021 14:33:24 -0800
-Received: from User (52.231.198.195) by RW-EXC1.JVPinto.com (172.32.1.13) with
- Microsoft SMTP Server id 15.0.1497.2 via Frontend Transport; Sat, 27 Feb 2021
- 14:33:10 -0800
-Reply-To: <ms.reem@yandex.com>
-From:   "Ms. Reem" <johnpinto@jvpinto.com>
-Subject: Hello okay
-Date:   Sat, 27 Feb 2021 22:33:24 +0000
+        id S229736AbhB1G6y (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 28 Feb 2021 01:58:54 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id DF0BC61601
+        for <linux-bluetooth@vger.kernel.org>; Sun, 28 Feb 2021 06:58:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1614495493;
+        bh=nR605XLYxmM113lkhTAmI86OhfJ2Nt3nV3Z4lTFCOPY=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=n2WbUEphf+XtFddOixnsl7sgYC7eFU9Vfo5pwmpIsz5X3cJkDmTMxgTfM4u4ZPnxP
+         ZWnM42BN9JHsCLLLYov5iR2Jb1emt+7UgWd6GV9uCaN0ogXiPzZr/X3JJ+S+YpuPD3
+         3X6zOYgQD/95pIKKKWu1JhoR9AZnkzwKlqHN5PS4ITY2YTOuAgvRccla8WEFbJjtna
+         nSik0RdzLkwtTAvniWjAg9kcZnre99UFAPliSUjTCvxR3E8FA2Tu3RK4Rd7jDi2OlX
+         6Su0dcKS8pWLe+DSluW+g8e6JBgZdI7axvVbbG2g/OgCtnLXVTP4UL5iomhzrmwsSP
+         V+2HDu4glc5/g==
+Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
+        id C679C6535C; Sun, 28 Feb 2021 06:58:13 +0000 (UTC)
+From:   bugzilla-daemon@bugzilla.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 211983] BUG: Unable to toggle bluetooth ON once switched off
+ using rfkill
+Date:   Sun, 28 Feb 2021 06:58:13 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: USB
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: high
+X-Bugzilla-Who: kunal.bhat2001@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: component
+Message-ID: <bug-211983-62941-fQwQHb8wSE@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-211983-62941@https.bugzilla.kernel.org/>
+References: <bug-211983-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Content-Type: text/plain; charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-ID: <e015761ecb9a47878030ad9f447dbf5c@RW-EXC1.JVPinto.com>
-To:     Undisclosed recipients:;
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D211983
 
-My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
-and Petroleum" also "Minister of State for International Cooperation"
-in UAE. I write to you on behalf of my other "three (3) colleagues"
-who has approved me to solicit for your "partnership in claiming of
-{us$47=Million}" from a Financial Home in Cambodia on their behalf and
-for our "Mutual Benefits".
+Kunal Bhat (kunal.bhat2001@gmail.com) changed:
 
-The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
-deal with Cambodian/Vietnam Government within 2013/2014, however, we
-don't want our government to know about the fund. If this proposal
-interests you, let me know, by sending me an email and I will send to
-you detailed information on how this business would be successfully
-transacted. Be informed that nobody knows about the secret of this
-fund except us, and we know how to carry out the entire transaction.
-So I am compelled to ask, that you will stand on our behalf and
-receive this fund into any account that is solely controlled by you.
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+          Component|Bluetooth                   |USB
 
-We will compensate you with 15% of the total amount involved as
-gratification for being our partner in this transaction. Reply to:
-ms.reem@yandex.com
+--- Comment #1 from Kunal Bhat (kunal.bhat2001@gmail.com) ---
+Changing the problematic component to USB since it seems to affect more than
+bluetooth. My USB mouse is recognised on connecting, but doesn't seem to
+function unless I boot up the system with it connected.
 
-Regards,
-Ms. Reem.
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
