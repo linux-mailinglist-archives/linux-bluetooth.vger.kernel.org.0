@@ -2,89 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D69632AE49
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Mar 2021 03:52:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94EBA32AE4B
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Mar 2021 03:52:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1575724AbhCBXB2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 2 Mar 2021 18:01:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238561AbhCBRbU (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 2 Mar 2021 12:31:20 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8388BC0611BD
-        for <linux-bluetooth@vger.kernel.org>; Tue,  2 Mar 2021 09:07:43 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id o16so3513668wmh.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 02 Mar 2021 09:07:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=7CcNTMXA/G6oxQbeohLgrlaaAzwj4u2cgd+yTSSMMvU=;
-        b=m0Wn/FUQx1Y45IaUEp8k0ILlKUKOiplrZERbdjxKU/mYZ1ULH7bkFeaTruo167Vsvw
-         LBa65WB7s4piOzIF/UygFQFoydGOuciSEyqL9wM7dnVJN8ctdZrYuOHeffiVSjedZFVD
-         tCKFbnKeWSm+Nxz3hLeW6Ag/A4U8BL6iNOtjoAL8DTwldTvHD3kHJFXvZcCJRrWtr6Ip
-         5aAD+Yb7aLhkocyG4E8lDQhEN1riegXix+jR3Q8MxECR5PyQdsPEkm/0oYAj593rvYWb
-         H83qvbZk/Hs8Xkh24q5uuZp+xCNoc4UBVSJ6flOcu7em0x+w8Am7DfXy5UZ+QBPaxOAr
-         H6pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=7CcNTMXA/G6oxQbeohLgrlaaAzwj4u2cgd+yTSSMMvU=;
-        b=eUu1KaUK0N8wtbvxQJxLAOyckr/UuWLErAp2gE5EY1ZBeUSskV5vPuDN1kLURgYLUn
-         6i0emN6fTpHOpwglZ/LVG4l5Rk3c9J3CmgAi1MGdfnUauvatp/7ahQ6qsehAE4yol8q8
-         MNw0z5+XfLukDa7RYT1MtwCKZ0HVJYS+IX/oi3ymrwrRlwQnXa05ZcNPdQq7CTBLdWeL
-         qBA9GgWIiYV6QIcXyCd/QwknZ9yXGWO8+qRmVlyujQOWqfkBBKEWHnbjeWe8XiY7ttfX
-         Zwb13goO8GrZIQq/Cd3IqfKw5OmbiEDnMttX7ef1XEmKIyiLHUukseoAkjoD90E499ZS
-         frMg==
-X-Gm-Message-State: AOAM533KOXxCfNdmvvf6gqJaW407+c9ksrKMJ8HMiG7Jc9RlYt1rteEG
-        SCHcIxUcESr07YLgP/PDHaR2tgP6kPEDuJ3sB15GPyG9yj9twWHu
-X-Google-Smtp-Source: ABdhPJxn6sdGV+qfvrmcOwtFvsAkApVCCVxuhIBLd8un2aoHWBExUIyAmbICOTlMU9CEwgay9XurPWl8kTqWMHJwVfg=
-X-Received: by 2002:a1c:2155:: with SMTP id h82mr5066607wmh.169.1614704861759;
- Tue, 02 Mar 2021 09:07:41 -0800 (PST)
-MIME-Version: 1.0
-From:   Mihai Emilian <be.mihai22@gmail.com>
-Date:   Tue, 2 Mar 2021 18:07:30 +0100
-Message-ID: <CAP_L5iPNbYrni-U_EH=Yf5Tb3b7tGN6wFKp-h+HNE8ob028k5w@mail.gmail.com>
-Subject: Autopairing
+        id S1836004AbhCBXCL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 2 Mar 2021 18:02:11 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60564 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1581198AbhCBSlV (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 2 Mar 2021 13:41:21 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 6316D64F43
+        for <linux-bluetooth@vger.kernel.org>; Tue,  2 Mar 2021 18:40:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1614710439;
+        bh=cV+sc8eVMj0pvQW7eN+KyFWwnbGMwdgSfq0CyKT31RY=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=DiGyPUvUy7zElYxzKD/EGrUzmRX7iQvrG5DSanxLDpc1qudXrM9fxpoVimyLze7Pz
+         HBrn9GJlKCGn0VMgHOX7AjZqyIk97Gm1etla6fJZ3+E9TPM1JRgyxCplZ8BKptEsmk
+         OSj2ccRvvEuVOTyhX5OLoL2SMeVoc30bpKhrAjvPbF6EMJUx7aG9Pgwo9fbvx4AjFo
+         RqiirHT0b6Fj0YVtVnQ4eATvB/QXfIFxbHf+DwLCTlhst+R5qgnUnglc2GZj25P6zW
+         PWz/jtS7Qq0dDcg1LPZ2w1WdNE2pvX2wu1EvdjLMQR0beDQVlqA9oxjKoXwNFi80bZ
+         k/IVHeFVLHUqA==
+Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
+        id 5D62F65360; Tue,  2 Mar 2021 18:40:39 +0000 (UTC)
+From:   bugzilla-daemon@bugzilla.kernel.org
 To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 210681] kernel: Bluetooth: hci0: don't support firmware rome
+ 0x31010000
+Date:   Tue, 02 Mar 2021 18:40:37 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: high
+X-Bugzilla-Who: gobinda.joy@gmail.com
+X-Bugzilla-Status: RESOLVED
+X-Bugzilla-Resolution: CODE_FIX
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-210681-62941-3ZQzIy3jet@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-210681-62941@https.bugzilla.kernel.org/>
+References: <bug-210681-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear bluetooth community,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D210681
 
-I am trying to create a pairing agent using bluez API in C.
+--- Comment #52 from Gobinda Joy (gobinda.joy@gmail.com) ---
+(In reply to Max Fedotov from comment #49)
+> Fedora 33 5.10.18-200 fixed.
 
-The problem that I am trying to solve is autopairing from a known list
-of MAC addresses (i.e auto-accept pairing for known devices in the
-list).
+Confirmed.
 
-I tried registering a bluetooth agent with NoInputNoOutput capability.
-However, when I try to access Pair, I receive Authentication Failed
-error.
+Fixed in Fedora Kernel 5.10.18-200.fc33.x86_64
 
-Another problem here is that even if I call RequestDefaultAgent after
-registration, it seems that the bluetooth settings agent (UI) is still
-called and prompts me to yes/no.
+--=20
+You may reply to this email to add a comment.
 
-I have the following questions:
-
-From the api doc:
-"Special permission might be required to become the default agent"
-
-- Is there anything else I have to do to acquire these permissions?
-- The return value from RequestDefaultAgent and RegisterAgent is void.
-How can I check whether my agent has been registered/became default?
-- I also tried trusting the discovered device after registering the
-agent and trying to make it default, which didn't make any difference
-- is this required?
-
-Here's my source code:
-https://pastebin.com/Wj3rdHy3
-
-Thank you for your time.
-
-Best regards,
-Mihai
+You are receiving this mail because:
+You are the assignee for the bug.=
