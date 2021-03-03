@@ -2,164 +2,161 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 928FA32BBEA
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Mar 2021 22:45:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40BE032BBEC
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Mar 2021 22:45:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358930AbhCCNSg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Mar 2021 08:18:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54538 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236237AbhCCAa3 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 2 Mar 2021 19:30:29 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E142C061756
-        for <linux-bluetooth@vger.kernel.org>; Tue,  2 Mar 2021 16:29:46 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id l7so10778088pfd.3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 02 Mar 2021 16:29:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=88H6v8qxsrC+P6Kl9gTr2i1+YKmnbVeTsHgCQx6QMM4=;
-        b=uOX0QV2DUB2/ttxkFKDadOWAjOMVv4nJyXFUW0UO5vk22QbbU0AZpF/ix9ajScxSg+
-         cYgi2ZuPR3yyZg9djLHFox10wHVlDqrgddOijUaayReEAfHdCpd/7yX5r9drcmdFloYK
-         t4KanHZzdRM8Gm/gyV/fkjSmKE7AO61Fp7+fTuyczwjUz7hg0XD9v71Oz9YSdHN0r5tn
-         G5p8tg0aXBqG+iJGMnSVaqazNXx7qSCfkMVsFXL5osSIJdSm4KTiQHAoODHPsSlGS51v
-         Hjycwb5JDNY/Yik4+e5z+32Gcl8ncBjNFewWGlH+CidXH1RxelX7cODAKSc51qfFVAvc
-         t8gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=88H6v8qxsrC+P6Kl9gTr2i1+YKmnbVeTsHgCQx6QMM4=;
-        b=UOSxIB0rlZ17mt5NHRZrbDMjmr5ydgzPlAkyaWJwxmM40cDRBxYo1dEEnHozDDq6S5
-         fPY0z4er8EZNJEiYkEw4tSMHiLm44MDwXoNLM0u2Y3d5M12Dz+tA6cVs5PrzATtxJwEb
-         k+Xto4O10SV0Xhyh7acO5eV7tYssJbV17RbuHT6gvjoYU02SlUiALJP1zK2f12o8+Yiz
-         CV9nG82lsdy6UurXpDFfdo1ova8x8yX2vfPcG0toIs7V/U5v7S/gtb2kUnPz1D4Kmtpu
-         R2IBqgM21Y1GRyJKEIYghPOMLcq041NpRUfyl81P0n7Bl1b9/zMoNDpX8e49J0g+e8Yy
-         TF6Q==
-X-Gm-Message-State: AOAM530fD4SwMXXv1w15Qy5TvhrelRyixYC6gxsD3vLpDzSOLzrbn6qw
-        cuAuVO+s78fQ0pf+U6jNfYeyj1s/pZN66w==
-X-Google-Smtp-Source: ABdhPJz8SBxdAWj6Me50zkJ+P1YrcFMmtLGTDeOOMuL+YtlvwPVzT/GLTqZR/juMBMCf5vndTjOBJA==
-X-Received: by 2002:a63:4662:: with SMTP id v34mr20931018pgk.197.1614731385445;
-        Tue, 02 Mar 2021 16:29:45 -0800 (PST)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id y14sm19715518pfq.218.2021.03.02.16.29.44
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Mar 2021 16:29:44 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ] shared/gatt-server: Fix not properly checking for secure flags
-Date:   Tue,  2 Mar 2021 16:29:44 -0800
-Message-Id: <20210303002944.3444644-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.29.2
+        id S1358945AbhCCNTO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 3 Mar 2021 08:19:14 -0500
+Received: from mga03.intel.com ([134.134.136.65]:15347 "EHLO mga03.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240903AbhCCDB7 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 2 Mar 2021 22:01:59 -0500
+IronPort-SDR: p9+6ncUz/4VlESM8rCFm44Iohk5sK1sV6IZV6rob2wkAgFcIqKf6ur/ZLSzdHEzo1vJV2ngkyI
+ NoYcopWRx0LA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9911"; a="187138820"
+X-IronPort-AV: E=Sophos;i="5.81,218,1610438400"; 
+   d="scan'208";a="187138820"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2021 19:00:38 -0800
+IronPort-SDR: vRABZI72dZEp/+1iJSjnYaJmI55nHkXKqLB/lAXazWQEK4tE9wOFZEbGOkaeJE1XHvmi5NjS/U
+ ZY+Zo/XeqeoA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,218,1610438400"; 
+   d="scan'208";a="518109666"
+Received: from lkp-server02.sh.intel.com (HELO 2482ff9f8ac0) ([10.239.97.151])
+  by orsmga004.jf.intel.com with ESMTP; 02 Mar 2021 19:00:36 -0800
+Received: from kbuild by 2482ff9f8ac0 with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1lHHka-0000qL-8e; Wed, 03 Mar 2021 03:00:36 +0000
+Date:   Wed, 03 Mar 2021 11:00:13 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     linux-bluetooth@vger.kernel.org
+Subject: [bluetooth-next:master] BUILD SUCCESS
+ 5cb08553f7f2536f2f5a9142a060af2a77c1d5dc
+Message-ID: <603efbbd.SZD62iB21Gs+HKFh%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
+branch HEAD: 5cb08553f7f2536f2f5a9142a060af2a77c1d5dc  Bluetooth: Notify suspend on le conn failed
 
-When passing the mask to check_permissions all valid permissions for
-the operation must be set including BT_ATT_PERM_SECURE flags.
+elapsed time: 730m
+
+configs tested: 99
+configs skipped: 2
+
+The following configs have been built successfully.
+More configs may be tested in the coming days.
+
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+arm                          ep93xx_defconfig
+arm                     am200epdkit_defconfig
+powerpc                        warp_defconfig
+m68k                        stmark2_defconfig
+riscv                    nommu_k210_defconfig
+m68k                          amiga_defconfig
+powerpc                      acadia_defconfig
+powerpc                 mpc8540_ads_defconfig
+sparc                            allyesconfig
+arm                           omap1_defconfig
+alpha                               defconfig
+arm                         orion5x_defconfig
+mips                         bigsur_defconfig
+arm                        oxnas_v6_defconfig
+xtensa                  nommu_kc705_defconfig
+s390                       zfcpdump_defconfig
+sh                      rts7751r2d1_defconfig
+sparc                               defconfig
+c6x                              alldefconfig
+sh                 kfr2r09-romimage_defconfig
+parisc                              defconfig
+arm                           h3600_defconfig
+arm                        vexpress_defconfig
+xtensa                          iss_defconfig
+arm                            zeus_defconfig
+m68k                         apollo_defconfig
+mips                     loongson1b_defconfig
+arm                         s3c2410_defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+c6x                              allyesconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+i386                               tinyconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a005-20210302
+i386                 randconfig-a003-20210302
+i386                 randconfig-a002-20210302
+i386                 randconfig-a004-20210302
+i386                 randconfig-a006-20210302
+i386                 randconfig-a001-20210302
+i386                 randconfig-a016-20210302
+i386                 randconfig-a012-20210302
+i386                 randconfig-a014-20210302
+i386                 randconfig-a013-20210302
+i386                 randconfig-a011-20210302
+i386                 randconfig-a015-20210302
+x86_64               randconfig-a006-20210302
+x86_64               randconfig-a001-20210302
+x86_64               randconfig-a004-20210302
+x86_64               randconfig-a002-20210302
+x86_64               randconfig-a005-20210302
+x86_64               randconfig-a003-20210302
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                           allyesconfig
+x86_64                    rhel-7.6-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
+
+clang tested configs:
+x86_64               randconfig-a013-20210302
+x86_64               randconfig-a016-20210302
+x86_64               randconfig-a015-20210302
+x86_64               randconfig-a014-20210302
+x86_64               randconfig-a012-20210302
+x86_64               randconfig-a011-20210302
+
 ---
- src/shared/att-types.h   |  8 ++++++++
- src/shared/gatt-server.c | 25 +++++++------------------
- 2 files changed, 15 insertions(+), 18 deletions(-)
-
-diff --git a/src/shared/att-types.h b/src/shared/att-types.h
-index 7108b4e94..3adc05d9e 100644
---- a/src/shared/att-types.h
-+++ b/src/shared/att-types.h
-@@ -129,6 +129,14 @@ struct bt_att_pdu_error_rsp {
- #define BT_ATT_PERM_WRITE_SECURE	0x0200
- #define BT_ATT_PERM_SECURE		(BT_ATT_PERM_READ_SECURE | \
- 					BT_ATT_PERM_WRITE_SECURE)
-+#define BT_ATT_PERM_READ_MASK		(BT_ATT_PERM_READ | \
-+					BT_ATT_PERM_READ_AUTHEN | \
-+					BT_ATT_PERM_READ_ENCRYPT | \
-+					BT_ATT_PERM_READ_SECURE)
-+#define BT_ATT_PERM_WRITE_MASK		(BT_ATT_PERM_WRITE | \
-+					BT_ATT_PERM_WRITE_AUTHEN | \
-+					BT_ATT_PERM_WRITE_ENCRYPT | \
-+					BT_ATT_PERM_WRITE_SECURE)
- 
- /* GATT Characteristic Properties Bitfield values */
- #define BT_GATT_CHRC_PROP_BROADCAST			0x01
-diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
-index b5f7de7dc..970c35f94 100644
---- a/src/shared/gatt-server.c
-+++ b/src/shared/gatt-server.c
-@@ -444,9 +444,7 @@ static void process_read_by_type(struct async_read_op *op)
- 		return;
- 	}
- 
--	ecode = check_permissions(server, attr, BT_ATT_PERM_READ |
--						BT_ATT_PERM_READ_AUTHEN |
--						BT_ATT_PERM_READ_ENCRYPT);
-+	ecode = check_permissions(server, attr, BT_ATT_PERM_READ_MASK);
- 	if (ecode)
- 		goto error;
- 
-@@ -811,9 +809,7 @@ static void write_cb(struct bt_att_chan *chan, uint8_t opcode, const void *pdu,
- 				(opcode == BT_ATT_OP_WRITE_REQ) ? "Req" : "Cmd",
- 				handle);
- 
--	ecode = check_permissions(server, attr, BT_ATT_PERM_WRITE |
--						BT_ATT_PERM_WRITE_AUTHEN |
--						BT_ATT_PERM_WRITE_ENCRYPT);
-+	ecode = check_permissions(server, attr, BT_ATT_PERM_WRITE_MASK);
- 	if (ecode)
- 		goto error;
- 
-@@ -913,9 +909,7 @@ static void handle_read_req(struct bt_att_chan *chan,
- 			opcode == BT_ATT_OP_READ_BLOB_REQ ? "Blob " : "",
- 			handle);
- 
--	ecode = check_permissions(server, attr, BT_ATT_PERM_READ |
--						BT_ATT_PERM_READ_AUTHEN |
--						BT_ATT_PERM_READ_ENCRYPT);
-+	ecode = check_permissions(server, attr, BT_ATT_PERM_READ_MASK);
- 	if (ecode)
- 		goto error;
- 
-@@ -1051,9 +1045,8 @@ static void read_multiple_complete_cb(struct gatt_db_attribute *attr, int err,
- 		goto error;
- 	}
- 
--	ecode = check_permissions(data->server, next_attr, BT_ATT_PERM_READ |
--						BT_ATT_PERM_READ_AUTHEN |
--						BT_ATT_PERM_READ_ENCRYPT);
-+	ecode = check_permissions(data->server, next_attr,
-+						BT_ATT_PERM_READ_MASK);
- 	if (ecode)
- 		goto error;
- 
-@@ -1129,9 +1122,7 @@ static void read_multiple_cb(struct bt_att_chan *chan, uint8_t opcode,
- 		goto error;
- 	}
- 
--	ecode = check_permissions(data->server, attr, BT_ATT_PERM_READ |
--						BT_ATT_PERM_READ_AUTHEN |
--						BT_ATT_PERM_READ_ENCRYPT);
-+	ecode = check_permissions(data->server, attr, BT_ATT_PERM_READ_MASK);
- 	if (ecode)
- 		goto error;
- 
-@@ -1308,9 +1299,7 @@ static void prep_write_cb(struct bt_att_chan *chan, uint8_t opcode,
- 	util_debug(server->debug_callback, server->debug_data,
- 				"Prep Write Req - handle: 0x%04x", handle);
- 
--	ecode = check_permissions(server, attr, BT_ATT_PERM_WRITE |
--						BT_ATT_PERM_WRITE_AUTHEN |
--						BT_ATT_PERM_WRITE_ENCRYPT);
-+	ecode = check_permissions(server, attr, BT_ATT_PERM_WRITE_MASK);
- 	if (ecode)
- 		goto error;
- 
--- 
-2.29.2
-
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
