@@ -2,60 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9161932C81B
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Mar 2021 02:14:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 784DE32C81D
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Mar 2021 02:14:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352283AbhCDAd7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Mar 2021 19:33:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40900 "EHLO
+        id S1353520AbhCDAeE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 3 Mar 2021 19:34:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244565AbhCCTV1 (ORCPT
+        with ESMTP id S244594AbhCCTV1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 3 Mar 2021 14:21:27 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5FD4C061761
-        for <linux-bluetooth@vger.kernel.org>; Wed,  3 Mar 2021 11:20:26 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id s3so4824862pjn.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Mar 2021 11:20:26 -0800 (PST)
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B304C061762
+        for <linux-bluetooth@vger.kernel.org>; Wed,  3 Mar 2021 11:20:29 -0800 (PST)
+Received: by mail-qk1-x749.google.com with SMTP id o8so20977679qkl.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Mar 2021 11:20:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=FgrjZxNne3mbySUDq5jeuKhrAxqdbLLhnEKsdJAGRVY=;
-        b=SVe1+DXfsRjqYGfHOdAtnb5xiamfY47HVQFZTuqnl3m9X9G4mFNDF1PSP8rz5c18gA
-         kH1z8ueCIoPQghxGBKiVVrYKEP51//sPnnxg7Qu4LaAFvHn+alqp5ZxPh6n2cMF2rG9m
-         KxcUYPrzSONRHJLvaoccn0e24iSMzTn8X3yAkL26Hv88yVVM2tcwCKXcRS5Hquo3RN0a
-         QJyjVKY3Q+vQFa5KOMYxndmxlIc+Emxpp6YF+1HfBpv3Y1g47KXIyzfTpH4C4ZVcoRh7
-         TcNcc/hnX1cgEnpX8p+PIjSHeBwzgbhTddqb+D5y8tHCwBvNGmo7BF93uAKPhmLLFxAg
-         aR6g==
+        bh=iOlfJEi5k3wqYXNF7r3Ckooff1wV0NURjlQcBH/Ykzw=;
+        b=J5GifKajtDsQN5Cqs499jOKp5bqzN0irXospmXUbGtI/fJzYBA8ljJfBO7JRv/uCmR
+         Sif0UYrw0UlLco/ywjKE3a4ujZxN/PeLCuCtvlMn6OcvIHj1UMiXt8nPhhQk96qctUed
+         tTx2wIWWhfcwCXT0TDZk8cw+95jXsoHrd8jvUzM+QFv6gI3CEsSH1hZoykQsPMiOxW2y
+         2HHYEV0JsslpfWivPIunCcjhR1ReciQWJVlVWBI9Sebu+GUdKVAm5YPYm7425EOfwBbX
+         svSGIkUSed7wPBkVk5obbszFyp7TpspTdCqjy+q1EBCHsgR/IzE9Zvpb0tu8vD7FGHaU
+         BKmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=FgrjZxNne3mbySUDq5jeuKhrAxqdbLLhnEKsdJAGRVY=;
-        b=YaBqIUVQGRWqeLZ0lS1JPtPbytbMEaHb0jwr4AJnrfk0UP+W1XdQ4u7TebCnYUDt7h
-         C9oSG0sSF9rbpaGmUqsQZ3oBdGNB0nLENMb1Ol/LKiRNJD9mQrBUJ5PUh6S3vPiZ+j+o
-         OYXwDAclmX9cSQmGVcRSaFF7Eu2c15holS+cfG7Exrkj443/mCKB5sDN5zcK2Ez9oeFQ
-         xZEQPKNQKGTbe2L0F3fTyzPvVEGhTpr6vR/D45+SF2/zXNxGo9kzAmPnJkOkfAJRB89x
-         daHs20++MUXtwjwzLAgCJvneCmZ//514wQ6E1xE4w12zzpAJpFRT/OYZtilNrO3hjoMb
-         UFxQ==
-X-Gm-Message-State: AOAM532HxKxAFu+7bmN3V9tbN7CZDKwZQY8n50VBmrSdAj/pIRCR8vOo
-        6nrtA546jU2VGnCu4u4f5aA6vPR5DE1HraoWwODzKMjfA54ZFBe6Is4Vb9ZGrKBXHK5r/MdpJAt
-        Kc4DD8sM7Stjr8KNhnJRRWARoqTHbNUQBQWyNp33zHW8UTxdXI2jvOgXSdNyI1HPunluNGAxGgo
-        LDdvvfUuKMz+2y8BPx
-X-Google-Smtp-Source: ABdhPJxYfClsqTpp8zoDy0vHNyTlI7KbcYtV76b1fWpNKTgzBpG16j5TEUNPP3hvI1xBun2qU03UBsh6Xek1lRziuY2Q
+        bh=iOlfJEi5k3wqYXNF7r3Ckooff1wV0NURjlQcBH/Ykzw=;
+        b=ZQLWbcs0OhaUjDsCOaPYmD5IDt15pFVIOO1XQ7E4tEBuJofRh8+SpGJhNEp53yZEuz
+         lQPc91HkJGZVRw5+ZLIcxTFDWcrg16BKoN/YWWzcfQImKt8ZGruMLUWTsnmfYqbK+S6J
+         9WT6A4Y6F6V/FHZu6uLRg8+X1nTDP8rCI8euQaBQbWEZfATxijyGPdtnP+1TKOQ+oRbf
+         4jZPM0NMXTbOGYF/lBmAQqO9FZDSa7bjFdY6hDf4L3QuaUgVpUIsSu3rabQOPozTwUDF
+         ZtCS/aKtzA0FKQVZ2erCBKNRCG7nMS01I7dZVEX+Rj43jhrrTziIu1fqRCwpkfQizkYD
+         g9Eg==
+X-Gm-Message-State: AOAM533glX8Yf/nbhRC02wCEe/aDwpYvPB+5jpZZ93A236shJ++U6E8V
+        M6Da1p0Z1lIZuLEGHfXPqYHI+UmarowBFMQ3Cx2rl6t2oHiwnYJFjDXT6yvTENL942pynzsbMcI
+        l8vpVEGHnY1BbR3wivwUu0YvMPtTKUFwXZ1mcIBvCvOlMDAjfMix4tpFEm9GyGv/Z/U6wRk/2B0
+        04Q+Afj9mpSWi153Pr
+X-Google-Smtp-Source: ABdhPJwuUiPVtWSwTXxmAFAkQ4OAD/0pt75IS9hDFxdxqJkQCBJS2ikCBW8dV5lbxfn+P+BxG5zQ40aNUYg6KSX+a0Hj
 Sender: "danielwinkler via sendgmr" 
         <danielwinkler@danielwinkler-linux.mtv.corp.google.com>
 X-Received: from danielwinkler-linux.mtv.corp.google.com ([2620:15c:202:201:45cc:69de:aba1:a948])
- (user=danielwinkler job=sendgmr) by 2002:a17:90a:4494:: with SMTP id
- t20mr619027pjg.33.1614799226233; Wed, 03 Mar 2021 11:20:26 -0800 (PST)
-Date:   Wed,  3 Mar 2021 11:20:10 -0800
+ (user=danielwinkler job=sendgmr) by 2002:a0c:e788:: with SMTP id
+ x8mr736299qvn.48.1614799228305; Wed, 03 Mar 2021 11:20:28 -0800 (PST)
+Date:   Wed,  3 Mar 2021 11:20:11 -0800
 In-Reply-To: <20210303192012.1695032-1-danielwinkler@google.com>
-Message-Id: <20210303111817.Bluez.2.I45b896f4512038309cbeab7a01f51e503141edab@changeid>
+Message-Id: <20210303111817.Bluez.3.I87c7524ba1da470e9ff6ebdf9eef9ef715a9616d@changeid>
 Mime-Version: 1.0
 References: <20210303192012.1695032-1-danielwinkler@google.com>
 X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
-Subject: [Bluez PATCH 2/3] advertising: Create and use scannable adv param flag
+Subject: [Bluez PATCH 3/3] doc/mgmt-api: Update documentation for scan_rsp
+ param flag
 From:   Daniel Winkler <danielwinkler@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
 Cc:     chromeos-bluetooth-upstreaming@chromium.org,
@@ -67,51 +68,40 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-In order for the advertising parameters hci request to indicate that an
-advertising set uses a scannable PDU, we pass a scannable flag along
-with the initial parameters MGMT request.
-
-Without this patch, a broadcast advertisement with a scan response will
-either be rejected by the controller, or will ignore the requested scan
-response. The patch is tested by performing the above and confirming
-that the scan response is retrievable from a peer as expected.
+This patch adds the new scannable flag to the Add Extended Advertising
+Parameters MGMT API documentation.
 
 Reviewed-by: Alain Michaud <alainm@chromium.org>
 Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
 
 ---
 
- lib/mgmt.h        | 1 +
- src/advertising.c | 4 ++++
- 2 files changed, 5 insertions(+)
+ doc/mgmt-api.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/lib/mgmt.h b/lib/mgmt.h
-index 76a03c9c2..7b1b9ab54 100644
---- a/lib/mgmt.h
-+++ b/lib/mgmt.h
-@@ -507,6 +507,7 @@ struct mgmt_rp_add_advertising {
- #define MGMT_ADV_PARAM_TIMEOUT		(1 << 13)
- #define MGMT_ADV_PARAM_INTERVALS	(1 << 14)
- #define MGMT_ADV_PARAM_TX_POWER		(1 << 15)
-+#define MGMT_ADV_PARAM_SCAN_RSP		(1 << 16)
+diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
+index 1736ef009..cab1fffc5 100644
+--- a/doc/mgmt-api.txt
++++ b/doc/mgmt-api.txt
+@@ -3632,6 +3632,7 @@ Add Extended Advertising Parameters Command
+ 		13	The Timeout parameter should be used
+ 		14	The Interval parameters should be used
+ 		15	The Tx Power parameter should be used
++		16	The advertisement will contain a scan response
  
- #define MGMT_OP_REMOVE_ADVERTISING	0x003F
- struct mgmt_cp_remove_advertising {
-diff --git a/src/advertising.c b/src/advertising.c
-index f3dc357a1..38cef565f 100644
---- a/src/advertising.c
-+++ b/src/advertising.c
-@@ -945,6 +945,10 @@ static int refresh_extended_adv(struct btd_adv_client *client,
- 		return -EINVAL;
- 	}
+ 	When the connectable flag is set, then the controller will use
+ 	undirected connectable advertising. The value of the connectable
+@@ -3708,6 +3709,10 @@ Add Extended Advertising Parameters Command
+ 	chosen by the controller. If the requested Tx Power is outside
+ 	the valid range, the registration will fail.
  
-+	/* Indicate that this instance will be configured as scannable */
-+	if (client->scan_rsp_len)
-+		flags |= MGMT_ADV_PARAM_SCAN_RSP;
++	When flag bit 16 is enabled, it indicates that the subsequent request
++	to set advertising data will contain a scan response, and that the
++	parameters should set a PDU type that is scannable.
 +
- 	cp.flags = htobl(flags);
- 
- 	mgmt_ret = mgmt_send(client->manager->mgmt, MGMT_OP_ADD_EXT_ADV_PARAMS,
+ 	Re-adding an already existing instance (i.e. issuing the Add Extended
+ 	Advertising Parameters command with an Instance identifier of an
+ 	existing instance) will update that instance's configuration. In this
 -- 
 2.30.1.766.gb4fecdf3b7-goog
 
