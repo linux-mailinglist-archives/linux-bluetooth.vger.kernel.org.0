@@ -2,80 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84CBA32C820
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Mar 2021 02:14:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B84F632CA8C
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Mar 2021 03:51:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355556AbhCDAeT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 3 Mar 2021 19:34:19 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:40213 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388526AbhCCVKt (ORCPT
+        id S231610AbhCDCuh convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 3 Mar 2021 21:50:37 -0500
+Received: from host.azagroup.com ([108.160.158.117]:60916 "EHLO
+        host.azagroup.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231617AbhCDCu3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 3 Mar 2021 16:10:49 -0500
-Received: from marcel-macbook.holtmann.net (p4ff9fb90.dip0.t-ipconnect.de [79.249.251.144])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 58E05CED0A;
-        Wed,  3 Mar 2021 22:17:37 +0100 (CET)
+        Wed, 3 Mar 2021 21:50:29 -0500
+X-Greylist: delayed 39237 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Mar 2021 21:50:29 EST
+Received: from [192.227.217.221] (port=53134 helo=liens-group.club)
+        by host.azagroup.com with esmtpa (Exim 4.93)
+        (envelope-from <makiyama@LIENS-GROUP.club>)
+        id 1lHTqK-0001sH-5Z
+        for linux-bluetooth@vger.kernel.org; Wed, 03 Mar 2021 20:55:23 +0500
+Reply-To: ee021967@gmail.com
+From:   Ethan Stevenson <aza@aza.com.pk>
+To:     linux-bluetooth@vger.kernel.org
+Subject: Please this very important / urgent
+Date:   3 Mar 2021 16:55:19 +0100
+Message-ID: <20210303165519.49A62BE70A863EF2@liens-group.club>
+MIME-Version: 1.0
 Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [PATCH] Bluetooth: Allow scannable adv with extended MGMT APIs
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20210303111505.1.I3108b046a478cb4f1b85aeb84edb0f127cff81a8@changeid>
-Date:   Wed, 3 Mar 2021 22:10:02 +0100
-Cc:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>,
-        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Alain Michaud <alainm@chromium.org>,
-        Sonny Sasaka <sonnysasaka@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>, netdev@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <EA8605ED-9E87-4A8F-BEE6-3B2720732278@holtmann.org>
-References: <20210303111505.1.I3108b046a478cb4f1b85aeb84edb0f127cff81a8@changeid>
-To:     Daniel Winkler <danielwinkler@google.com>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-OutGoing-Spam-Status: No, score=2.5
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - host.azagroup.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - LIENS-GROUP.club
+X-Get-Message-Sender-Via: host.azagroup.com: authenticated_id: aza@aza.com.pk
+X-Authenticated-Sender: host.azagroup.com: aza@aza.com.pk
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-From-Rewrite: rewritten was: [makiyama@liens-group.club], actual sender does not match
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Daniel,
+Good day
 
-> An issue was found, where if a bluetooth client requests a broadcast
-> advertisement with scan response data, it will not be properly
-> registered with the controller. This is because at the time that the
-> hci_cp_le_set_scan_param structure is created, the scan response will
-> not yet have been received since it comes in a second MGMT call. With
-> empty scan response, the request defaults to a non-scannable PDU type.
-> On some controllers, the subsequent scan response request will fail due
-> to incorrect PDU type, and others will succeed and not use the scan
-> response.
-> 
-> This fix allows the advertising parameters MGMT call to include a flag
-> to let the kernel know whether a scan response will be coming, so that
-> the correct PDU type is used in the first place. A bluetoothd change is
-> also incoming to take advantage of it.
-> 
-> To test this, I created a broadcast advertisement with scan response
-> data and registered it on the hatch chromebook. Without this change, the
-> request fails, and with it will succeed.
-> 
-> Reviewed-by: Alain Michaud <alainm@chromium.org>
-> Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
-> Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-> Signed-off-by: Daniel Winkler <danielwinkler@google.com>
-> ---
-> 
-> include/net/bluetooth/mgmt.h | 1 +
-> net/bluetooth/hci_request.c  | 3 ++-
-> net/bluetooth/mgmt.c         | 1 +
-> 3 files changed, 4 insertions(+), 1 deletion(-)
-
-patch has been applied to bluetooth-next tree.
-
-Regards
-
-Marcel
+Please I would like you to respond immediately to this message 
+with your private and secured email address for a very important 
+and beneficial business communication.
+I'll be waiting attentively for your response.
+Regards,
+Ethan
 
