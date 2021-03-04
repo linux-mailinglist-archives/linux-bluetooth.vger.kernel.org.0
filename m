@@ -2,58 +2,89 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6109832D9DB
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Mar 2021 20:00:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3284832D9ED
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Mar 2021 20:04:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234456AbhCDS7A (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 4 Mar 2021 13:59:00 -0500
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:54818 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235887AbhCDS6e (ORCPT
+        id S231697AbhCDTDr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 4 Mar 2021 14:03:47 -0500
+Received: from mslow2.mail.gandi.net ([217.70.178.242]:33565 "EHLO
+        mslow2.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236285AbhCDTDn (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 4 Mar 2021 13:58:34 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: rcn)
-        with ESMTPSA id 750BE1F46638
-Message-ID: <8ede2f3e7593cbbd78e5aa4d3b28257a75e17b63.camel@collabora.com>
-Subject: Re: Bug caused by moving to BlueZ 5.56 (bytes stripped from HoG
- reports)
-From:   Ricardo =?ISO-8859-1?Q?Ca=F1uelo?= <ricardo.canuelo@collabora.com>
+        Thu, 4 Mar 2021 14:03:43 -0500
+Received: from relay13.mail.gandi.net (unknown [217.70.178.233])
+        by mslow2.mail.gandi.net (Postfix) with ESMTP id 49D2B3A9A37
+        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Mar 2021 18:47:26 +0000 (UTC)
+Received: from [192.168.1.150] (unknown [78.199.60.242])
+        (Authenticated sender: hadess@hadess.net)
+        by relay13.mail.gandi.net (Postfix) with ESMTPSA id 12DC780019;
+        Thu,  4 Mar 2021 18:46:14 +0000 (UTC)
+Message-ID: <ffe1130b13ab6e8b8b35e5f8cc560bd8497faa6d.camel@hadess.net>
+Subject: Re: [PATCH 1/3] build: Add warnings for non-literal strings
+From:   Bastien Nocera <hadess@hadess.net>
 To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Date:   Thu, 04 Mar 2021 19:57:48 +0100
-In-Reply-To: <CABBYNZLp9pOopbEfONc=oOh=ODFi55YzA6BKoN4ABuSzuZdPbw@mail.gmail.com>
-References: <f6764fe94d45ff9211674c5799b193d15385a056.camel@collabora.com>
-         <CABBYNZLp9pOopbEfONc=oOh=ODFi55YzA6BKoN4ABuSzuZdPbw@mail.gmail.com>
+Date:   Thu, 04 Mar 2021 19:46:14 +0100
+In-Reply-To: <CABBYNZ+yY6=WsFhA45fy2Tr33sLq0hgw7zJ3L15o3E7SQop84A@mail.gmail.com>
+References: <20210304124851.219154-1-hadess@hadess.net>
+         <CABBYNZ+yY6=WsFhA45fy2Tr33sLq0hgw7zJ3L15o3E7SQop84A@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Luiz
+On Thu, 2021-03-04 at 10:35 -0800, Luiz Augusto von Dentz wrote:
+> Hi Bastien,
+> 
+> On Thu, Mar 4, 2021 at 9:21 AM Bastien Nocera <hadess@hadess.net>
+> wrote:
+> > 
+> > ---
+> >  acinclude.m4 | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/acinclude.m4 b/acinclude.m4
+> > index 529848357..6ae34b8ae 100644
+> > --- a/acinclude.m4
+> > +++ b/acinclude.m4
+> > @@ -21,7 +21,7 @@ AC_DEFUN([COMPILER_FLAGS], [
+> >                 with_cflags="$with_cflags -Wredundant-decls"
+> >                 with_cflags="$with_cflags -Wcast-align"
+> >                 with_cflags="$with_cflags -Wswitch-enum"
+> > -               with_cflags="$with_cflags -Wformat -Wformat-security"
+> > +               with_cflags="$with_cflags -Wformat -Wformat-security
+> > -Wformat-nonliteral"
+> 
+> Does it actually have any benefit of having the format as always
+> string literal? I'm not really a big fan of using pragmas.
 
-On Thu, 2021-03-04 at 10:44 -0800, Luiz Augusto von Dentz wrote:
-> Nope, you are the first one to report a problem with this change, so
-> chances are that what Dean stated probably still holds since the vast
-> majority of devices didn't care about the report ID. So I suppose the
-> following code shall take care of it or does it not?
+It's a security feature[1], so it's pretty important that we avoid
+using non-literals when some of the arguments are user controlled,
+especially in a networked daemon. We already enabled
+"-Wformat-security", so not that much of a difference.
+
+This warning is also enabled by default on Fedora's GCC, so I get to
+see it whether I want to or not.
+
+I'd be happy actually fixing those warnings if you don't want pragmas
+at all, it would just be more code movement. If we can get those
+patches in, I can do a follow-up.
+
+[1]: Quick search gave me this explanation:
+https://owasp.org/www-community/attacks/Format_string_attack
+
+> >                 with_cflags="$with_cflags -DG_DISABLE_DEPRECATED"
+> >                 with_cflags="$with_cflags -
+> > DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_28"
+> >                 with_cflags="$with_cflags -
+> > DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_32"
+> > --
+> > 2.29.2
+> > 
 > 
 > 
-https://github.com/fwupd/fwupd/blob/master/plugins/pixart-rf/fu-pxi-device.c#L170
-> 
 
-Yes, that's how we're dealing with it for now. It's a quick fix, a more general
-solution would be to detect the BlueZ version and parse the reports accordingly.
-By the way, is there a way to query the version of the running daemon other than
-running it with '-v' and parsing the result?
-
-I just wanted to let you know that this can actually happen so you're ready for
-it, as there might be more code like this in other projects, although I don't
-know how frequent it is for a device to use vendor-specific report IDs.
-
-Cheers,
-Ricardo
 
