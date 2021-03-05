@@ -2,60 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FC9532F6F3
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Mar 2021 00:53:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B87132F6F6
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Mar 2021 00:53:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230002AbhCEXwl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S230007AbhCEXwl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Fri, 5 Mar 2021 18:52:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42466 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbhCEXw1 (ORCPT
+        with ESMTP id S229972AbhCEXw3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Mar 2021 18:52:27 -0500
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05498C06175F
-        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Mar 2021 15:52:27 -0800 (PST)
-Received: by mail-qv1-xf49.google.com with SMTP id iy2so2732382qvb.22
-        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Mar 2021 15:52:26 -0800 (PST)
+        Fri, 5 Mar 2021 18:52:29 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA4B4C06175F
+        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Mar 2021 15:52:28 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id l10so4308454ybt.6
+        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Mar 2021 15:52:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=hUg6I8D8GZwLQDAfRhk65G9y85zlIgD8R1KBTwKyx4c=;
-        b=ALVBhPabaX2N5u0FtVXwRWphgqoaTjNt5kfBhPnXp4+dxgqPMt3JxIkQnxIiEw/Tvu
-         D8WdzG+A10+739qU9VN06uFPlnfEJTanViAxCi5Q/RR89/PSlWL7Ds/PsnnYcYr9Vpjz
-         2efuAoSsgKqm6MI8k8hd/sfLKGI0WbOuy13uH7uv1GP/N1ZNguwMVVQJhMN87cqq28gf
-         oeUdKlG3O/aTk2sACnIQqO83Vl6m/dHM2s+1fSptLTsTbpZJYzSRKWu8Yr/DuhwKnt6F
-         CaKW4OfCBnnvjlkZhSXuq+tcLPe3Yna8+AzC9tlLAbZ2rv7Yfq3sP17gyy9pVYQucryv
-         8T1Q==
+        bh=JCTB0flAHIiTjBr3HF9i0mcV0r9v1jIF+xjdrPpa554=;
+        b=F93N82ZsdvnQtbsS61zG8vWx9O9iRuTMamFMdS1E++9oy6xINuSmCrri29huTG5zkq
+         tF05ohehPyFhlqOtERFRvU6uId05RqPszA1KYbnDMKRvsiMSmAL348ZV5PHEWmk2U6l1
+         /fP0nheoDt5gCqJLnMwDBYCbZhXi4vho2Cfoe63SK+dq24HPwetZ/0el1nBoN0dpnPN0
+         bdV1Kq2gdwWQgDE9I8q6rIX1D7l1H+RrJMhESVk83fV97J83yRckSKSEVeiSmmBCF5z2
+         LhD+vlKq/kZmVpbhIa8t0IN/ydcCS74CmV7uo7NR13qv1IxNoLomjNNZ0Kmh2RVGLNnt
+         GEfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=hUg6I8D8GZwLQDAfRhk65G9y85zlIgD8R1KBTwKyx4c=;
-        b=OttS5iRSpbpysjAgwkyk9feB0E+rmg0bPKnYu5kPaNBIZ5NE/DjZFVr3ZmaczG0B1j
-         du3uNmJ4u86l54yOBDJuiKfoLaT+nQ0Sh5K1W+IkxCQDcJz9xqCKE7BBliCC0VOE8oj6
-         uJ9aJJ72GEyURKtOHUgUCSi2hZBJRtTWk7/BXbJuIoIxWV8mm8MOr6qKLvRUypMep3kl
-         yNAp/lQ1m6cxnZMsEfaFxLpl+gDH4sULlV0bNkPF7FzAVErSww6cSzhCsEQVhpdiaF/d
-         Sxz1Gsoq/iy3AWaCphP6cOYX0v3N2T3JVeq1HTi9dTE7oz4KIN9leU4GU5ZcrMUsTmAa
-         Tllg==
-X-Gm-Message-State: AOAM5334MWADf04FwCbZvZVUoDSvQQ3r3KvYmo+QkWeUs9bPlGjYTQan
-        kr3FuafkfwzIJ0dqdglvy9toSkB7d0qqJQDkXzsjgAVrOKmPbtx1ZkEIAQhUvndNqRPx79dQeM1
-        Ebt+aAv+dER0FAoXLqkuN9yppX//hiQ4iyurfil5yL2uMfYQBeRGGnCevNKWT7PN0bDegKF4aOl
-        u0AfH8lS2iqqZdfAwr
-X-Google-Smtp-Source: ABdhPJwq7U1l0XiJsOvr2j0h2enRvFhHoYGAKjh2brSSNR5I73Q8zV3cyfe6BFOVyjAc+qS/NVV0SP3sSNlodL8YA0M7
+        bh=JCTB0flAHIiTjBr3HF9i0mcV0r9v1jIF+xjdrPpa554=;
+        b=Gha1vZbcsaGLVN9SdLUb6RFZdpO6wCqD83yJKMf6tm+wEveB9lqxrCbn4QKyQ5dPSd
+         j4WA367GiXh99DWd4XjwMAPQdxgx2ZsxiDp+34f4V113YQco6OzH3Qrtu23JVlisu6X0
+         3E91SaapCgI0kslxhuypvZK613J0IUT4kzjtWygHVLtq89jLNoBVI6GFcmx9tsXHFZKj
+         zQGCJQUAhA8pT520QExOXkB0pbJsT84a/aenVX66vue4lr+Ikn6405l35mOT3kGJld4g
+         lnhxQbROvuTp2yDMCW+2z3xc2G+pSaFGzPZvZmEVdrPEC7St+46J79sZCmn/opCIVIil
+         d0Ng==
+X-Gm-Message-State: AOAM5323jKMqFslP8rEstuagXmkBRc7hyJaGgfzTqvvu6IcJ7OySUW+o
+        99j5a6TGZzKEwcEcUqCiAZIU8zous+FOqAG3MTb70++0ImfSjg9IuYiqkgNNSokHCjKKFR9g5y0
+        sKQ5ewJwiQFDydYQ+RycLA2S6LnUlGGw8sbnRfQsmsOTUml6Y1i4yGuEii8va/rbVEtTPFnLu0f
+        2o3kSomQ3netpI2VVi
+X-Google-Smtp-Source: ABdhPJxQf3TqPID8DT62iE1azdzACdSUa4z39fEx/xl4XGTgT39JZUrj7hnBwTI6pRyAge/XaSeDAZfUvWP7iFeNJxgj
 Sender: "danielwinkler via sendgmr" 
         <danielwinkler@danielwinkler-linux.mtv.corp.google.com>
 X-Received: from danielwinkler-linux.mtv.corp.google.com ([2620:15c:202:201:94dd:309a:2fcb:13a])
- (user=danielwinkler job=sendgmr) by 2002:a0c:b998:: with SMTP id
- v24mr11895944qvf.4.1614988346080; Fri, 05 Mar 2021 15:52:26 -0800 (PST)
-Date:   Fri,  5 Mar 2021 15:52:16 -0800
+ (user=danielwinkler job=sendgmr) by 2002:a25:a441:: with SMTP id
+ f59mr17873902ybi.245.1614988348010; Fri, 05 Mar 2021 15:52:28 -0800 (PST)
+Date:   Fri,  5 Mar 2021 15:52:17 -0800
 In-Reply-To: <20210305235217.2382976-1-danielwinkler@google.com>
-Message-Id: <20210305155113.Bluez.v3.2.I33cf8432f94675b635ab429b3125f54048c5b66a@changeid>
+Message-Id: <20210305155113.Bluez.v3.3.Ieb6522963e3f54b0d63dd88ed3ce24a8942ed73e@changeid>
 Mime-Version: 1.0
 References: <20210305235217.2382976-1-danielwinkler@google.com>
 X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
-Subject: [Bluez PATCH v3 2/3] client: Add adv SupportedFeatures to bluetoothctl
+Subject: [Bluez PATCH v3 3/3] doc/advertising-api: Add adv SupportedFeatures
+ to doc
 From:   Daniel Winkler <danielwinkler@google.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     chromeos-bluetooth-upstreaming@chromium.org,
@@ -66,34 +67,55 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This change adds SupportedFeatures to be shown in "show" option of
-bluetoothctl. It was tested with and without kernel support for features
-to verify that they are shown or not shown correctly.
-
-Change was tested by verifying SupportedFeatures were populated
-correctly in bluetoothctl on hatch and kukui chromebooks
+Add supported features to advertising dbus api.
 
 Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 ---
 
-Changes in v3: None
-Changes in v2: None
+Changes in v3:
+- Rebased onto master
 
- client/main.c | 1 +
- 1 file changed, 1 insertion(+)
+Changes in v2:
+- Doc: Expect empty SupportedFeatures if no support available
 
-diff --git a/client/main.c b/client/main.c
-index 79658a463..1669d2c89 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -942,6 +942,7 @@ static void cmd_show(int argc, char *argv[])
- 		print_property(adapter->ad_proxy, "SupportedIncludes");
- 		print_property(adapter->ad_proxy, "SupportedSecondaryChannels");
- 		print_property(adapter->ad_proxy, "SupportedCapabilities");
-+		print_property(adapter->ad_proxy, "SupportedFeatures");
- 	}
+ doc/advertising-api.txt | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/doc/advertising-api.txt b/doc/advertising-api.txt
+index 541c57004..ba9eacaae 100644
+--- a/doc/advertising-api.txt
++++ b/doc/advertising-api.txt
+@@ -235,6 +235,7 @@ Properties	byte ActiveInstances
+ 					 "2M"
+ 					 "Coded"
  
- 	if (adapter->adv_monitor_proxy) {
++
+ 		dict SupportedCapabilities [Experimental]
+ 
+ 			Enumerates Advertising-related controller capabilities
+@@ -257,3 +258,22 @@ Properties	byte ActiveInstances
+ 				int16 MaxTxPower
+ 
+ 					Max advertising tx power (dBm)
++
++
++		array{string} SupportedFeatures [readonly, optional]
++
++			List of supported platform features. If no features
++			are available on the platform, the SupportedFeatures
++			array will be empty.
++
++			Possible values: "CanSetTxPower"
++
++						Indicates whether platform can
++						specify tx power on each
++						advertising instance.
++
++					 "HardwareOffload"
++
++						Indicates whether multiple
++						advertising will be offloaded
++						to the controller.
 -- 
 2.30.1.766.gb4fecdf3b7-goog
 
