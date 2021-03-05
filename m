@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B7A332F5DD
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Mar 2021 23:26:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C58632F641
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Mar 2021 00:00:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229701AbhCEWZz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Mar 2021 17:25:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52138 "EHLO
+        id S230053AbhCEXAX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 Mar 2021 18:00:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbhCEWZr (ORCPT
+        with ESMTP id S230116AbhCEXAG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Mar 2021 17:25:47 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AAF3C06175F
-        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Mar 2021 14:25:47 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id g20so2143125plo.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Mar 2021 14:25:47 -0800 (PST)
+        Fri, 5 Mar 2021 18:00:06 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B7D7C06175F
+        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Mar 2021 15:00:06 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id cl21-20020a17090af695b02900c61ac0f0e9so2746261pjb.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Mar 2021 15:00:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=GLSACR2rGLj4GMP/8Poeu6HCwTLgbb1l/hD8kBqfPT0=;
-        b=g74B9Z58w/NbMw7a6gl/r2a3TdKqOT5LEvff1DF7gS8N7RVoVIImEX0IXLaEOWrfck
-         BKeVNMWVc0Ctx3JfbrzbfceVa28Zi4E0+smC5mAt22T2keemUC3Idw3cbdGe894rcU98
-         TT6Jn+ZeB6dxQUSwEspwANxoJFh+FePdsrV3m8YVTLWn2RbvE6Z4S/zeiQb6k2IGAODr
-         NzLt27y/KXX2/mwT/LqXaFIsM3yiF/7Kl49Z8ojm7F/5Qe6xq+mc5Wuy2aJFUnVYRfP4
-         OpU6J33PM/SvQdSC4b2NBfD/AMTUVRGsvQgPGgtxrtjMotsLzjbeRUf0dDu4faMOofyp
-         wwng==
+        bh=RCIARyL+yI78OnrOxU9Vg4raZwfK51cZztn+ESGZXKY=;
+        b=J4RBZP6VW9smkE9y7j0qeWgt/sbf/6ZdyW8VsfnK7u5LxQk0/OYsZ1A56/kV8RNDL5
+         uY703I+HOecWzeMx8zSzT5CktQDLsa6wUw0h1w3KBn3IEOAVnzPEEON2PHCCOJfWimJg
+         DaQD3tuVqJCP2jjAOj86XzQCigQSrn+M80z8sxZ6CZFl0yNsYa76I7eNVyi87JGCU5q2
+         A1pmvpXnzRVwqitkfybjgu9iHSYlEVrdzIbjn0t9rTNBmYaicSJzX2LGj6LfGlapJljx
+         AQMvQUWN0NGnZD8VW++8uOlQZEZBV4Kaz+AdrBW6K5BxEB5wRsQZD2tTueOUKVDX+LeT
+         7QZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=GLSACR2rGLj4GMP/8Poeu6HCwTLgbb1l/hD8kBqfPT0=;
-        b=At+4wltAGINMFpQERb/0ifY3XFeCAyGJoqDE7/KGOXdQj6rqwaJcUAuLyV1ceQHk7w
-         4eIPpZkiGmas/K0ItF0yVhE1UZN28FnlUoprInVfA+8L4PUDuHBHeYDmysvBk3EJsCr+
-         VQ95iI+F1WZmUiuPdLs1HKGJj/KI0VLtnUGJkM7ie8CKVj01yFXLk72HlnnvIrJDLbiG
-         /6CBn2WDkyxEVF7g+Qiat2U6hJao4dFglI6gZwNPOsqbR4u77fhYsOw4z7gjiRRvjdxg
-         AvrRqgYfzjxRSkYD9SuTtUrOROno17iKlj0e8VsaWTXppUgfEnWjZMPt3tX4M8MzgUuK
-         Rt9g==
-X-Gm-Message-State: AOAM53371TDmiHzjbyjEkGLqBRn7ydSwdE0VGQB2eoRb4D2z/Fpe8HEF
-        bK4Ig5jN9t2b86Rp3U/NM/Sg7KY3RtB3+g==
-X-Google-Smtp-Source: ABdhPJwNTGuKIb4cRMWnTM0/l8150TNEKWvaOcMeiXuG3Cpd4DpPTngqfOjDBEKij83vTMdlZcL3hA==
-X-Received: by 2002:a17:902:503:b029:e4:2ce1:f0c9 with SMTP id 3-20020a1709020503b02900e42ce1f0c9mr10334689plf.52.1614983146404;
-        Fri, 05 Mar 2021 14:25:46 -0800 (PST)
+        bh=RCIARyL+yI78OnrOxU9Vg4raZwfK51cZztn+ESGZXKY=;
+        b=lE9TLnDtpb0mzmrOqdDg/FQLsTSoK1lYiVRRTK/4thIEj6vMTlaKfla3hcdSV/uJsq
+         8NaXgBNQlTxnRXDMe6F+D9nNScwI1KPU12Skwbe5KLCfXwCfSW3Ll9hMSHaigmBWp0B3
+         AJpb96FAvwNkOfUH5Qi7FrEumaJGOr6SJUmoMm8vB96lftf1DYf7MYFOJVXrtIXG2FpA
+         vuGemwcJ71rq/Ao79DcPK3VrjpLtV0bHsE9hlKSTK75qkkbwmh2YSWJ47QJspSYb1Tpo
+         /tMzBpFI9C8w/iTejeBk02JOjA/2G7u8Jn8iaziYnoLj1PoAdRALd6LdAoDbp7GAWi2E
+         xl5A==
+X-Gm-Message-State: AOAM532EjOR/vHTr33/7+q0ThgNZjQgagdjbR5fKpxdB44dvdI5Ylxwf
+        K0i6Si/RQ3geNj/KDGVJ0uAYUOlyXR/SUA==
+X-Google-Smtp-Source: ABdhPJxMVwQrTy8KPzbpFAm2UOdLymWj4kYRiqBHJHisVNtqzVcEdctG2/J3+wkRZoCP2lazLE6PjQ==
+X-Received: by 2002:a17:90a:29a3:: with SMTP id h32mr12922596pjd.209.1614985205729;
+        Fri, 05 Mar 2021 15:00:05 -0800 (PST)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id gw20sm3106893pjb.3.2021.03.05.14.25.45
+        by smtp.gmail.com with ESMTPSA id e1sm3483546pfi.175.2021.03.05.15.00.05
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 14:25:46 -0800 (PST)
+        Fri, 05 Mar 2021 15:00:05 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ] gatt: Fix registering DIS without a valid source
-Date:   Fri,  5 Mar 2021 14:25:44 -0800
-Message-Id: <20210305222544.4005053-1-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 1/2] main.conf: Enable passing false to DeviceID
+Date:   Fri,  5 Mar 2021 15:00:03 -0800
+Message-Id: <20210305230004.4010887-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -63,50 +63,50 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-If source has not been set don't register DIS as it would not contain
-any useful information and by doing this it actually allows systems to
-register their own DIS instance.
+This adds support for setting DeviceID to false so plaforms can disable
+DeviceID.
 
-Fixes https://github.com/bluez/bluez/issues/101
+Fixes: https://github.com/bluez/bluez/issues/101
 ---
- src/gatt-database.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ src/main.c    | 8 +++++++-
+ src/main.conf | 2 +-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/src/gatt-database.c b/src/gatt-database.c
-index bd5864bcd..6c9e19ff3 100644
---- a/src/gatt-database.c
-+++ b/src/gatt-database.c
-@@ -1241,22 +1241,23 @@ static void device_info_read_pnp_id_cb(struct gatt_db_attribute *attrib,
- static void populate_devinfo_service(struct btd_gatt_database *database)
- {
- 	struct gatt_db_attribute *service;
-+	struct gatt_db_attribute *attrib;
- 	bt_uuid_t uuid;
+diff --git a/src/main.c b/src/main.c
+index b66e2b8cb..572dc939c 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -188,10 +188,16 @@ static void parse_did(const char *did)
+ 	int result;
+ 	uint16_t vendor, product, version , source;
  
-+	/* Only register DIS if source has been set */
-+	if (!btd_opts.did_source)
-+		return;
+-	/* version and source are optional */
++	vendor = 0x0000;
++	product = 0x0000;
+ 	version = 0x0000;
+ 	source = 0x0002;
+ 
++	if (!strcasecmp(did, "false")) {
++		source = 0x0000;
++		goto done;
++	}
 +
- 	bt_uuid16_create(&uuid, UUID_DIS);
- 	service = gatt_db_add_service(database->db, &uuid, true, 3);
+ 	result = sscanf(did, "bluetooth:%4hx:%4hx:%4hx",
+ 					&vendor, &product, &version);
+ 	if (result != EOF && result >= 2) {
+diff --git a/src/main.conf b/src/main.conf
+index ad36638b7..f47cab46d 100644
+--- a/src/main.conf
++++ b/src/main.conf
+@@ -26,7 +26,7 @@
+ # Use vendor id source (assigner), vendor, product and version information for
+ # DID profile support. The values are separated by ":" and assigner, VID, PID
+ # and version.
+-# Possible vendor id source values: bluetooth, usb (defaults to usb)
++# Possible vendor id source values: bluetooth, usb (default) or false (disabled)
+ #DeviceID = bluetooth:1234:5678:abcd
  
--	if (btd_opts.did_source > 0) {
--		struct gatt_db_attribute *attrib;
--
--		bt_uuid16_create(&uuid, GATT_CHARAC_PNP_ID);
--		attrib = gatt_db_service_add_characteristic(service, &uuid,
-+	bt_uuid16_create(&uuid, GATT_CHARAC_PNP_ID);
-+	attrib = gatt_db_service_add_characteristic(service, &uuid,
- 						BT_ATT_PERM_READ,
- 						BT_GATT_CHRC_PROP_READ,
- 						device_info_read_pnp_id_cb,
- 						NULL, database);
--		gatt_db_attribute_set_fixed_length(attrib, 7);
--	}
-+	gatt_db_attribute_set_fixed_length(attrib, 7);
- 
- 	gatt_db_service_set_active(service, true);
- 
+ # Do reverse service discovery for previously unknown devices that connect to
 -- 
 2.29.2
 
