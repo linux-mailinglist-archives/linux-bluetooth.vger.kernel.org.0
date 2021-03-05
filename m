@@ -2,122 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 000D432F640
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Mar 2021 00:00:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78A7C32F642
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Mar 2021 00:01:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230046AbhCEXAX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Mar 2021 18:00:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59488 "EHLO
+        id S230045AbhCEXAy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 Mar 2021 18:00:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230027AbhCEXAH (ORCPT
+        with ESMTP id S229992AbhCEXAk (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Mar 2021 18:00:07 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73B9DC06175F
-        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Mar 2021 15:00:07 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id m8so40176pjs.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Mar 2021 15:00:07 -0800 (PST)
+        Fri, 5 Mar 2021 18:00:40 -0500
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50860C06175F
+        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Mar 2021 15:00:40 -0800 (PST)
+Received: by mail-qv1-xf2d.google.com with SMTP id n4so1834104qvl.4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Mar 2021 15:00:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=GDtOAbNEiMQsJu7rqlIJ8wTu/VMRVhdyIetw5QxZ5Uo=;
-        b=oBtzh/4BHtrxwmtKLZ2fS8csf+arlSwc6OM7t3u8eTngBH4y1/wr7d2qtp8KvoXWix
-         N6mEKsZLLRDjRo7x9tY53JsDxKjYp2kUW/BM9HC0S4K/dWmjVGocXj4pS2RyO7QQDv2/
-         oPGc82+Cm8/faOKkYi2MZToOEm2CA4kUU7zq2dAqdyX7mzgsN9fOOvLWEM5VEV09kvXn
-         4nPjgxWQKtfFT0iG3NcLMK2IdA8H6ug+ELvZ+cpitk0B+HAlAbM4161BGM7znssyXlyz
-         HRX6eBhCRpK5kQIhc2l+nWWgsq7t6K7ouT+ESwDzlpys2sVu0LIq+zrOkSiNBJv6goOS
-         J3Ug==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=9SPdrtMRILAVL/ZyTXhBqCRzqic9XLKP4bR1wpIxC0g=;
+        b=U2GqReLpuK5D+FUvClwX9sQ7qounJzMRkPCrik28Z5OQf6W00HwZUy8qTTSNixrGrh
+         zgFLnKIB6S5SDocLclVXi2uwVN/HXDBI3C2IGr/0MueclHoLInjM9MU8VOnPfYOVik5i
+         n41lGDNVa0PSKbr8Lj7lgLLRjRyApfvm7Z+aNM/DBJbB5EQLeAcDq7fSn5a276HJyF0G
+         4YI5tUbxFsX638q60WarGpawwiQRavGPPocxkoefwZ7YrLXzMzW8pwVB4m2+gVXyS8xZ
+         HBQOv5Oz5ETlQmCA/xV4aftbAfDYS8n0XbMMvRNi0B6jRHzjMeJewdlSFOVuN9COdk5m
+         Ii9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GDtOAbNEiMQsJu7rqlIJ8wTu/VMRVhdyIetw5QxZ5Uo=;
-        b=BbGMlAIFxfsaizDvp1oXGpLu+tIqcGhHvvml5LMQ+/DPZ5Pxpig0Z05/ukX0+5EnxP
-         lNTPIn0hfvMrbwQJwMhDyCz/e1ZtdRyXvpV3ovDJlopndZVc9ubHRX72g9taryBUrvDH
-         DgiqdKhEmjJW1yLY2b6e1h/YRNCeXaJIZJFPg43n7lLmIGFu47LMsgAaIOQE010dHLlB
-         BJEhvhaR2cnNHMAidQWySTjq6M2HxC0ONox12T3VtcejgkSvtlmF73gOvkpOM/ngoEqT
-         ie5gHMu84e2egrA0UFHUhColLWo13J7X0vIFyOWn449mPB5X0O4jBLfyzh81vdFmUD3J
-         fZxA==
-X-Gm-Message-State: AOAM531iUCmve5lIjBoKlA/yD1x1+UduGRwtqdD0MJAMbwZTyvF8IXsk
-        Zalhw3XCzHL0f9pixCK/Gkt9sI5Gs0sdyA==
-X-Google-Smtp-Source: ABdhPJzMDlrCnXaUVGUEzZedynEqVOHmggldBO+NfdwZ6tvABBeH4UrHlhnAmyLIQrTxoqlxAlHI1w==
-X-Received: by 2002:a17:90a:5417:: with SMTP id z23mr12324518pjh.111.1614985206840;
-        Fri, 05 Mar 2021 15:00:06 -0800 (PST)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id e1sm3483546pfi.175.2021.03.05.15.00.05
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=9SPdrtMRILAVL/ZyTXhBqCRzqic9XLKP4bR1wpIxC0g=;
+        b=Hxz0FjvFRZDoX2yPzRGSHj12+3erU8ZJQay0+HKgsPu1/fX7bxZdLiTCjKRJY1epqH
+         GWKI4AxIOQRccbIXQ95u4X7cJwS0+JEw5YBtHiQ2mrxv0FSOn3EWP6XdDdTO9nsqztM/
+         7rV1wj2fb0e6LVjl+/+Xz8QbN0xkWQs6l3jtisQVnv/tckaTyL7Xkky0ZCB5kzh9t3IM
+         qDmhJb2Tw2tIz3q4sknc+pJ4fa6CWQmTx0M4+DWgTebRJilCsLg4JNx5HIdZe0TjDoVD
+         XE9BkhBG543PMdftBOR6ub5wBbKQgDPyQMDz5gxLYqrTdVDqtKcMKqdcd8jdihgsd/7q
+         cUhw==
+X-Gm-Message-State: AOAM530B6NLb0vrByxOp9yZp5cFKPzHpAZE8bEtOeM7ZbMm6Z4Q9M7oV
+        SA0VT5l4IIwsPsnOaLHXCQa0cc9yxWEQiQ==
+X-Google-Smtp-Source: ABdhPJyqrEgvEkoDArY0sgkAPBvQkt+1f9mAxwQdnuhIHEKrjmG/y5bWvhYysRGc9TdxMgRsopfq+g==
+X-Received: by 2002:a05:6214:10e7:: with SMTP id q7mr11127716qvt.16.1614985239451;
+        Fri, 05 Mar 2021 15:00:39 -0800 (PST)
+Received: from [172.17.0.2] ([13.77.96.135])
+        by smtp.gmail.com with ESMTPSA id o89sm3081852qte.84.2021.03.05.15.00.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 15:00:06 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] gatt: Fix registering DIS without a valid source
-Date:   Fri,  5 Mar 2021 15:00:04 -0800
-Message-Id: <20210305230004.4010887-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210305230004.4010887-1-luiz.dentz@gmail.com>
-References: <20210305230004.4010887-1-luiz.dentz@gmail.com>
+        Fri, 05 Mar 2021 15:00:39 -0800 (PST)
+Message-ID: <6042b817.1c69fb81.5ae9e.5767@mx.google.com>
+Date:   Fri, 05 Mar 2021 15:00:39 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============5085760232226278373=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [BlueZ] gatt: Fix registering DIS without a valid source
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20210305222544.4005053-1-luiz.dentz@gmail.com>
+References: <20210305222544.4005053-1-luiz.dentz@gmail.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============5085760232226278373==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-If source has not been set don't register DIS as it would not contain
-any useful information and by doing this it actually allows systems to
-register their own DIS instance.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=443009
+
+---Test result---
+
+##############################
+Test: CheckPatch - PASS
+
+##############################
+Test: CheckGitLint - PASS
+
+##############################
+Test: CheckBuild - PASS
+
+##############################
+Test: MakeCheck - PASS
+
+
+
 ---
- src/gatt-database.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/src/gatt-database.c b/src/gatt-database.c
-index bd5864bcd..be6dfb265 100644
---- a/src/gatt-database.c
-+++ b/src/gatt-database.c
-@@ -1241,22 +1241,22 @@ static void device_info_read_pnp_id_cb(struct gatt_db_attribute *attrib,
- static void populate_devinfo_service(struct btd_gatt_database *database)
- {
- 	struct gatt_db_attribute *service;
-+	struct gatt_db_attribute *attrib;
- 	bt_uuid_t uuid;
- 
-+	if (!btd_opts.did_source)
-+		return;
-+
- 	bt_uuid16_create(&uuid, UUID_DIS);
- 	service = gatt_db_add_service(database->db, &uuid, true, 3);
- 
--	if (btd_opts.did_source > 0) {
--		struct gatt_db_attribute *attrib;
--
--		bt_uuid16_create(&uuid, GATT_CHARAC_PNP_ID);
--		attrib = gatt_db_service_add_characteristic(service, &uuid,
-+	bt_uuid16_create(&uuid, GATT_CHARAC_PNP_ID);
-+	attrib = gatt_db_service_add_characteristic(service, &uuid,
- 						BT_ATT_PERM_READ,
- 						BT_GATT_CHRC_PROP_READ,
- 						device_info_read_pnp_id_cb,
- 						NULL, database);
--		gatt_db_attribute_set_fixed_length(attrib, 7);
--	}
-+	gatt_db_attribute_set_fixed_length(attrib, 7);
- 
- 	gatt_db_service_set_active(service, true);
- 
-@@ -1267,10 +1267,7 @@ static void register_core_services(struct btd_gatt_database *database)
- {
- 	populate_gap_service(database);
- 	populate_gatt_service(database);
--
--	if (btd_opts.did_source > 0)
--		populate_devinfo_service(database);
--
-+	populate_devinfo_service(database);
- }
- 
- static void conf_cb(void *user_data)
--- 
-2.29.2
 
+--===============5085760232226278373==--
