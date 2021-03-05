@@ -2,97 +2,172 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF28A32F6F5
+	by mail.lfdr.de (Postfix) with ESMTP id 8398732F6F4
 	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Mar 2021 00:53:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229976AbhCEXwk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Mar 2021 18:52:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42448 "EHLO
+        id S229992AbhCEXwl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 Mar 2021 18:52:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbhCEXwX (ORCPT
+        with ESMTP id S229768AbhCEXwZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Mar 2021 18:52:23 -0500
+        Fri, 5 Mar 2021 18:52:25 -0500
 Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E350C06175F
-        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Mar 2021 15:52:23 -0800 (PST)
-Received: by mail-yb1-xb49.google.com with SMTP id n10so4225339ybb.12
-        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Mar 2021 15:52:23 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2E1CC06175F
+        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Mar 2021 15:52:24 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id v196so4288779ybv.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Mar 2021 15:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=sender:date:message-id:mime-version:subject:from:to:cc;
-        bh=O8D9yjp5NrnAmw7mHxxnVW7HVXLeeetf18uRfkud3OI=;
-        b=ZyZrOh/J9NsRzKFUIsP2sZPIh3dFppXkeZViXNrU86cwVNGIGUk7EMVayoe11DMhfI
-         /oy0tr7AGSc+5ta76e4fbKDPWAgTEgzsP4p25+6kEGP/J0M8VsJqCrE4aH4gJv70eB3E
-         T7QmiKSTct183Ptl9Mey4aJTHt8LsfxhFicbb/NhnwGU6wxX3woK4gyN+JLrRqEgfPAz
-         EYcb80nFaoprxh40+zC5gPnGxEGRswhfg/agjwnQ465W7Tj6GGZuhiWQb7zMZKAjTWvw
-         CgnvFMnhmbrrNLhEX7dw6udDUyHm7S0Ss5oMHOPoJ6Dv9ZYW27A5clA7GhNeyb9+b2gH
-         WM9g==
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=QXCaWeacRSyK84p34eElm2tdjRHFV2ozbDFoOiTQlIM=;
+        b=QVRJwjdLKTCRFelNUHOGp2Rlne4TrfetuJp/0+RRzuX8o1aPo6RxiXUTYr7HeqU140
+         S/lcaK3e2egnY48YV88pSoENZSQhITZVfmC58h4r29Yio3QfMe7B24NvdKa5nxMcZVOy
+         dWmh3XmeeEb//SHl5Vz5+4Fm9r/BBoib9+JMif1Z/bepbBrT7tObmTbwnYuc+4u0/Tiy
+         UKK+eaSYgX5zcx9tMoAxIHKo8mitFHQ7OVeaOQrFL6h74z7KqIAXPE6NK33L3J2izBCn
+         WD5U0Val0iO19NziqkwexMkqZFxHEQUEOxjDu1uMPmr7sqPEtWyfvxrCeP6HzdXDQkwC
+         gCNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
-         :to:cc;
-        bh=O8D9yjp5NrnAmw7mHxxnVW7HVXLeeetf18uRfkud3OI=;
-        b=S9zHkR3kO/GIQXwfzvf267RhhyjVq2/sJgUVa6QWUzk/hnmS52cv5UlIB/QBSxFhcP
-         75iro2msi1COCxK5AXt1ztdcZt91i3o/tNCQyWJ+NfLXMuPjtLg0kJeajpIruCoQstbF
-         Tn8i6L7PmzMGKVoJMA+EqynHoa7dhGAJmcPHC5W2G5JCmF/QyA/YWWmNKaavBxUjJdfe
-         7QDIxMCpIBrjhQWh1nX+8+5EmNc/tgfE/2IPv7cr5hK3Lu0kR2hKYU6MOWhjtNeeh+Lp
-         w8oOn9JRyVitibsSpTVm50D0H/OIpXQWp8i4mOHSbXL5I3gX4YQSNO1OodZkz0quHZSw
-         xrow==
-X-Gm-Message-State: AOAM533hCI9fhlaQjoge7rhzkQmu9MoPtB/VfJ42l5WoCkZ0xk50VluF
-        BTCTs69nwqIE2HUZ8FwP2SJ5fuJ3QVn99dxJrjsJi+ixq8RzFdDipPUUbp87ULsg8lMwOfiNSS8
-        iIFsLqNUM7ub8p/+JtacGceQ2yMFjmV/nwRN4NSutZG7Iqf1R1+tSWelE9HhHIgbtp/WRG6ZzXP
-        DY5z/AZ8XibplDsjyo
-X-Google-Smtp-Source: ABdhPJxpiiGAPCQnseluXOA+2V7pNEMf4TwNsTN92H+a3g2p1sbLm2TW0K1LupxKvVl2TnwdL/EFJal7dXRi2I2sDOoO
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=QXCaWeacRSyK84p34eElm2tdjRHFV2ozbDFoOiTQlIM=;
+        b=L/52QaG//C/ZiteuF1pfRf4LC6UzKiqJLkOFXwr1iB30Ixeijpyjowdzteyej/2Dum
+         iatULml/x9Mrs/U5sKRCJNy3E5jqXE6XMIne481Nk+RMR0KErY18ILKb8bZTQ1jfaAbP
+         86en7gRe0mDLQuWxYQHz4j2Eq9E08ibOTc5ySRy/ObYZTEcTC8o/O8btSSSM6SGCA9xo
+         ygxpZg0P/agw2mZCYw0Z4X4A3FNMyCsH7GbOEOhEKAEthKSctZ0neugJgJA0RQb28XYH
+         EOYrr++/kM3hT+LxaNiqAMiE4Ask2TyjO9dSF1PlM7HNZHNKoglVSxWqQF5eKZdMJPxg
+         VlbQ==
+X-Gm-Message-State: AOAM530PA13b53mqB1VYaPdOarfQZLnq9pVtJGJ59ZAbOk1qgrW0NYfe
+        TPlQORKcftCoPqHK0CJkoLcfRR1kp+mP8bXaJZykeWoODkVz4IGl5ZoU9Y8dxNCm8RAdXzsFsyW
+        uAoAexq/PIz67QNtiiZPr+LHOaNyr9ZW9H6Z7mE9Dtf4dDVLRrDOel8MO5cEO6+qgEZtTZC1mOB
+        c5B1I5fqXCS4xHTD9A
+X-Google-Smtp-Source: ABdhPJy+Q+LkLu7AMPdFDbF7wU5ualDfvMQhz/WtHErI+rAyDXsE4OLwghxefghN6s4TBi95RVEmPCO+bzZNPr/S5suo
 Sender: "danielwinkler via sendgmr" 
         <danielwinkler@danielwinkler-linux.mtv.corp.google.com>
 X-Received: from danielwinkler-linux.mtv.corp.google.com ([2620:15c:202:201:94dd:309a:2fcb:13a])
- (user=danielwinkler job=sendgmr) by 2002:a25:dfcc:: with SMTP id
- w195mr17606349ybg.210.1614988342293; Fri, 05 Mar 2021 15:52:22 -0800 (PST)
-Date:   Fri,  5 Mar 2021 15:52:14 -0800
-Message-Id: <20210305235217.2382976-1-danielwinkler@google.com>
+ (user=danielwinkler job=sendgmr) by 2002:a25:d943:: with SMTP id
+ q64mr16822819ybg.508.1614988344178; Fri, 05 Mar 2021 15:52:24 -0800 (PST)
+Date:   Fri,  5 Mar 2021 15:52:15 -0800
+In-Reply-To: <20210305235217.2382976-1-danielwinkler@google.com>
+Message-Id: <20210305155113.Bluez.v3.1.Idf2f9f409a4df20b466ba723dd9b729275a5afbf@changeid>
 Mime-Version: 1.0
+References: <20210305235217.2382976-1-danielwinkler@google.com>
 X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
-Subject: [Bluez PATCH v3 0/3] Expose extended adv feature support via bluez API
+Subject: [Bluez PATCH v3 1/3] advertising: Add SupportedFeatures to LEAdvertisingManager1
 From:   Daniel Winkler <danielwinkler@google.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     chromeos-bluetooth-upstreaming@chromium.org,
-        Daniel Winkler <danielwinkler@google.com>
+        Daniel Winkler <danielwinkler@google.com>,
+        Miao-chen Chou <mcchou@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Maintainers,
+The new SupportedFeatures member tells advertising clients whether the
+platform has hardware support for advertising or capability to set tx
+power of advertisements.
 
-I believe this series fell through the cracks. It is listed on
-patchworks as "Accepted", but I have not been able to find it in the
-tree. I am re-posting it here, please advise if I am mistaken.
+Additionally, fix small typo in "secondary_exists" function name.
 
-This change adds a SupportedFeatures member to the LEAdvertisingManager
-interface, which allows us to expose support for hardware offloading and
-setting TX power on advertisements.
+Change is tested on hatch and kukui chromebooks by using dbus-send to
+verify that SupportedFeatures always exists, and is only populated when
+extended advertising is available.
 
-Best,
-Daniel
+Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+---
 
-Changes in v3:
-- Rebased onto master
-
+Changes in v3: None
 Changes in v2:
 - Expose empty SupportedFeatures if no support available
-- Doc: Expect empty SupportedFeatures if no support available
 
-Daniel Winkler (3):
-  advertising: Add SupportedFeatures to LEAdvertisingManager1
-  client: Add adv SupportedFeatures to bluetoothctl
-  doc/advertising-api: Add adv SupportedFeatures to doc
+ lib/mgmt.h        |  2 ++
+ src/advertising.c | 43 +++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 43 insertions(+), 2 deletions(-)
 
- client/main.c           |  1 +
- doc/advertising-api.txt | 20 +++++++++++++++++++
- lib/mgmt.h              |  2 ++
- src/advertising.c       | 43 +++++++++++++++++++++++++++++++++++++++--
- 4 files changed, 64 insertions(+), 2 deletions(-)
-
+diff --git a/lib/mgmt.h b/lib/mgmt.h
+index 76a03c9c2..c0021abd8 100644
+--- a/lib/mgmt.h
++++ b/lib/mgmt.h
+@@ -503,6 +503,8 @@ struct mgmt_rp_add_advertising {
+ #define MGMT_ADV_FLAG_SEC_1M		(1 << 7)
+ #define MGMT_ADV_FLAG_SEC_2M		(1 << 8)
+ #define MGMT_ADV_FLAG_SEC_CODED		(1 << 9)
++#define MGMT_ADV_FLAG_CAN_SET_TX_POWER	(1 << 10)
++#define MGMT_ADV_FLAG_HW_OFFLOAD	(1 << 11)
+ #define MGMT_ADV_PARAM_DURATION		(1 << 12)
+ #define MGMT_ADV_PARAM_TIMEOUT		(1 << 13)
+ #define MGMT_ADV_PARAM_INTERVALS	(1 << 14)
+diff --git a/src/advertising.c b/src/advertising.c
+index 15a343e52..dd6008cb9 100644
+--- a/src/advertising.c
++++ b/src/advertising.c
+@@ -1616,7 +1616,8 @@ static void append_secondary(struct btd_adv_manager *manager,
+ 	}
+ }
+ 
+-static gboolean secondary_exits(const GDBusPropertyTable *property, void *data)
++static gboolean secondary_exists(const GDBusPropertyTable *property,
++						void *data)
+ {
+ 	struct btd_adv_manager *manager = data;
+ 
+@@ -1640,6 +1641,43 @@ static gboolean get_supported_secondary(const GDBusPropertyTable *property,
+ 	return TRUE;
+ }
+ 
++static struct adv_feature {
++	int flag;
++	const char *name;
++} features[] = {
++	{ MGMT_ADV_FLAG_CAN_SET_TX_POWER, "CanSetTxPower" },
++	{ MGMT_ADV_FLAG_HW_OFFLOAD, "HardwareOffload" },
++	{ },
++};
++
++static void append_features(struct btd_adv_manager *manager,
++						DBusMessageIter *iter)
++{
++	struct adv_feature *feat;
++
++	for (feat = features; feat->name; feat++) {
++		if (manager->supported_flags & feat->flag)
++			dbus_message_iter_append_basic(iter, DBUS_TYPE_STRING,
++								&feat->name);
++	}
++}
++
++static gboolean get_supported_features(const GDBusPropertyTable *property,
++					DBusMessageIter *iter, void *data)
++{
++	struct btd_adv_manager *manager = data;
++	DBusMessageIter entry;
++
++	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
++					DBUS_TYPE_STRING_AS_STRING, &entry);
++
++	append_features(manager, &entry);
++
++	dbus_message_iter_close_container(iter, &entry);
++
++	return TRUE;
++}
++
+ static gboolean get_supported_cap(const GDBusPropertyTable *property,
+ 					DBusMessageIter *iter, void *data)
+ {
+@@ -1678,7 +1716,8 @@ static const GDBusPropertyTable properties[] = {
+ 	{ "SupportedInstances", "y", get_instances, NULL, NULL },
+ 	{ "SupportedIncludes", "as", get_supported_includes, NULL, NULL },
+ 	{ "SupportedSecondaryChannels", "as", get_supported_secondary, NULL,
+-							secondary_exits },
++							secondary_exists },
++	{ "SupportedFeatures", "as", get_supported_features, NULL, NULL },
+ 	{ "SupportedCapabilities", "a{sv}", get_supported_cap, NULL, NULL,
+ 					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL},
+ 	{ }
 -- 
 2.30.1.766.gb4fecdf3b7-goog
 
