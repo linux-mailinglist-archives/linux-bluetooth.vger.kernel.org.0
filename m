@@ -2,71 +2,72 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8694330A47
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Mar 2021 10:28:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B6F39330BFD
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Mar 2021 12:12:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230002AbhCHJ1z convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 8 Mar 2021 04:27:55 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:44411 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbhCHJ1q (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 8 Mar 2021 04:27:46 -0500
-Received: from marcel-macbook.holtmann.net (p4fefc126.dip0.t-ipconnect.de [79.239.193.38])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 3C692CED12;
-        Mon,  8 Mar 2021 10:35:20 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [PATCH 1/2 v3] Bluetooth: btbcm: Rewrite bindings in YAML and add
- reset
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20210305183736.2123083-1-linus.walleij@linaro.org>
-Date:   Mon, 8 Mar 2021 10:27:45 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <F171CD75-ACD3-44BD-AAB5-6BE89FBBEC9E@holtmann.org>
-References: <20210305183736.2123083-1-linus.walleij@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        id S231128AbhCHLLz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 8 Mar 2021 06:11:55 -0500
+Received: from mga02.intel.com ([134.134.136.20]:4527 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230039AbhCHLL2 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 8 Mar 2021 06:11:28 -0500
+IronPort-SDR: Gc8vyRZhL9nYqP3MCjj9MriY+BvjteXhnvMgXyrPmTTzLfv0q56UDv3Bd0rPkyEM7rFPGqcZws
+ Gef/jroOBTVg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9916"; a="175118695"
+X-IronPort-AV: E=Sophos;i="5.81,232,1610438400"; 
+   d="scan'208";a="175118695"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2021 03:11:28 -0800
+IronPort-SDR: qcM+zN2DMYfavb7EGRqUqFUKv28z1sB9pFSueGkuESuZz5InWOMLRNW0Gk7julcmPI6CR6g5pW
+ HrCd4d2wMbmw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,232,1610438400"; 
+   d="scan'208";a="598818517"
+Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
+  by fmsmga006.fm.intel.com with ESMTP; 08 Mar 2021 03:11:26 -0800
+From:   Kiran K <kiran.k@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     ravishankar.srivatsa@intel.com, chethan.tumkur.narayan@intel.com,
+        Kiran K <kiran.k@intel.com>
+Subject: [PATCH v1] btusb: btintel: print firmware file name on error loading firmware
+Date:   Mon,  8 Mar 2021 16:44:54 +0530
+Message-Id: <20210308111454.31765-1-kiran.k@intel.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Linus,
+print the firmware file name on error loading from fie system
 
-> This rewrites the Broadcom bluetooth bindings in YAML and
-> adds a GPIO handle for the BT_RST_N line as used on some
-> platforms.
-> 
-> The Ingenic UART binding was using this binding in its
-> example DTS fragment, however mistakenly using "vcc-supply"
-> for what is called "vbat-supply". The proper DTS files
-> and the code in the kernel all use "vbat-supply" so
-> fix up the example in this patch so we ge a clean
-> check.
-> 
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-> ---
-> ChangeLog v2->v3:
-> - Actually fold in the required fix.
-> ChangeLog v1->v2:
-> - Fix the error in the Ingenic UART binding example as
->  part of adding this patch.
-> ---
-> .../bindings/net/broadcom-bluetooth.txt       |  56 ---------
-> .../bindings/net/broadcom-bluetooth.yaml      | 117 ++++++++++++++++++
-> .../bindings/serial/ingenic,uart.yaml         |   2 +-
-> 3 files changed, 118 insertions(+), 57 deletions(-)
-> delete mode 100644 Documentation/devicetree/bindings/net/broadcom-bluetooth.txt
-> create mode 100644 Documentation/devicetree/bindings/net/broadcom-bluetooth.yaml
+Signed-off-by: Kiran K <kiran.k@intel.com>
+---
+ drivers/bluetooth/btusb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-patch has been applied to bluetooth-next tree.
-
-Regards
-
-Marcel
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 0c20226d3b63..0d355bb45e08 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2540,7 +2540,8 @@ static int btusb_intel_download_firmware_newgen(struct hci_dev *hdev,
+ 	btusb_setup_intel_newgen_get_fw_name(ver, fwname, sizeof(fwname), "sfi");
+ 	err = request_firmware(&fw, fwname, &hdev->dev);
+ 	if (err < 0) {
+-		bt_dev_err(hdev, "Failed to load Intel firmware file (%d)", err);
++		bt_dev_err(hdev, "Failed to load Intel firmware file %s (%d)",
++			   fwname, err);
+ 		return err;
+ 	}
+ 
+@@ -2734,7 +2735,8 @@ static int btusb_intel_download_firmware(struct hci_dev *hdev,
+ 
+ 	err = request_firmware(&fw, fwname, &hdev->dev);
+ 	if (err < 0) {
+-		bt_dev_err(hdev, "Failed to load Intel firmware file (%d)", err);
++		bt_dev_err(hdev, "Failed to load Intel firmware file %s (%d)",
++			   fwname, err);
+ 		return err;
+ 	}
+ 
+-- 
+2.17.1
 
