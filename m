@@ -2,48 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9BB233706F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Mar 2021 11:49:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D452D337074
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Mar 2021 11:50:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232394AbhCKKsc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 11 Mar 2021 05:48:32 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:53557 "EHLO
+        id S232360AbhCKKtg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 11 Mar 2021 05:49:36 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:45581 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232001AbhCKKsP (ORCPT
+        with ESMTP id S232326AbhCKKt3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 11 Mar 2021 05:48:15 -0500
+        Thu, 11 Mar 2021 05:49:29 -0500
 Received: from marcel-macbook.holtmann.net (p4fefc126.dip0.t-ipconnect.de [79.239.193.38])
-        by mail.holtmann.org (Postfix) with ESMTPSA id CD15FCECE2;
-        Thu, 11 Mar 2021 11:55:49 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 64EAECECE2;
+        Thu, 11 Mar 2021 11:57:03 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [PATCH v2 2/2] Bluetooth: SMP: Convert BT_ERR/BT_DBG to
- bt_dev_err/bt_dev_dbg
+Subject: Re: [RFC PATCH v2] Bluetooth: hci_qca: Add device_may_wakeup support
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20210310221309.894602-2-luiz.dentz@gmail.com>
-Date:   Thu, 11 Mar 2021 11:48:13 +0100
-Cc:     linux-bluetooth@vger.kernel.org
+In-Reply-To: <1615446220-969-1-git-send-email-gubbaven@codeaurora.org>
+Date:   Thu, 11 Mar 2021 11:49:27 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bluetooth Kernel Mailing List 
+        <linux-bluetooth@vger.kernel.org>,
+        Hemantg <hemantg@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org
 Content-Transfer-Encoding: 7bit
-Message-Id: <5976CE60-F269-49A8-B787-C5ADD6DB4CEE@holtmann.org>
-References: <20210310221309.894602-1-luiz.dentz@gmail.com>
- <20210310221309.894602-2-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Message-Id: <DF05F50F-FD69-40B1-ADEE-33D0C41C079A@holtmann.org>
+References: <1615446220-969-1-git-send-email-gubbaven@codeaurora.org>
+To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
 X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Luiz,
+Hi Venkata,
 
-> This converts instances of BT_ERR and BT_DBG to bt_dev_err and
-> bt_dev_dbg which can be enabled at runtime when BT_FEATURE_DEBUG is
-> enabled.
+> Based on device may wakeup status, Bluez stack will enable/disable
+> passive scanning with whitelist in BT controller while suspending.
+> As interrupt from BT SoC is handled by UART driver,we need to use
+> device handle of UART driver to get the status of device may wakeup
 > 
-> Note: Not all instances could be converted as some are exercised by
-> selftest.
+> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+> ---
+> drivers/bluetooth/hci_qca.c | 15 +++++++++++++++
+> 1 file changed, 15 insertions(+)
 
-so you added the note and then still converted the selftests ;)
+patch has been applied to bluetooth-next tree.
 
 Regards
 
