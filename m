@@ -2,89 +2,116 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 43B0233C2A7
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Mar 2021 17:57:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C5FB933C432
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Mar 2021 18:31:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232099AbhCOQ4f (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Mar 2021 12:56:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
+        id S235860AbhCORbP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Mar 2021 13:31:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233867AbhCOQ41 (ORCPT
+        with ESMTP id S234144AbhCORbH (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Mar 2021 12:56:27 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0786C06174A
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Mar 2021 09:56:25 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 18so57931476lff.6
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Mar 2021 09:56:25 -0700 (PDT)
+        Mon, 15 Mar 2021 13:31:07 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22C36C06174A
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Mar 2021 10:31:07 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d23so12438053plq.2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Mar 2021 10:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=nn1W9Wc+k1CJYE8WxkSJGXK0N+qf/mcCb4Whw81sCBc=;
-        b=AVa2XIefE2YYL21kVeTHcb3FQjobiotsQTLl1E6YLA/sPxmnptoKHUUFg5rKJgTkLB
-         bAsUsM0Y5Ak94ra4r1w44W0hJFIYlsShTdp5F7Z5eM5g8rQowxUKMEGekVN3xnw7G+iU
-         noqfNv5DJuUQRyHJ7z7z+L/UuDP5PsfM9+y7Ix1QD+QklM3ReeYA2OVhYXEwC22MG86e
-         chpAcWTnpMddCyuOCANGHQ0+ZhNsI148zb25ZiNbl5q/oSxdffbQOjYyUatznlNOWrYn
-         e44mvBUTgCwzH/+zCt78IUkeSrXe7GlYJwhxynn6qd2lpdL5i3Lioh/xO9UdyaEE3h10
-         MU1w==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=b2bZ+Yse0ie4H9JIUlwhRsDt1s5TrPDpc6H360k2Svw=;
+        b=ZSFPi3urfEDtvNX7z3HLxT8w3C2F8ciTm/tN/GOOXee2WjnOVQowIUZ8VVpdoC7iyu
+         pQDbGrxERay8l5QLTFAsRNIU8m1L00b+UFPUir8B8a5dHCXbmK5fXd8Trg6g8O3BJLPL
+         zJ0F1+QLYa8IW714wgxdTbUhgmt5Q3DAQTp18=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=nn1W9Wc+k1CJYE8WxkSJGXK0N+qf/mcCb4Whw81sCBc=;
-        b=g+8QujKF2BbwotNHX69+l1kFUEywpLIRlFs92eu2T/o0yV3BbvnmoxaHEl09BCnH4t
-         bWLyUMZQWGpP1pA23w7WhKn99oQCnPfTLZ9FVkRpD4rnUql5KZM00isxC5rAIXcueKYu
-         N+C9jDX8D7BBbAIvwnPAl8z7UFSq2fTFbp//QiYGb6iAGuScHnRVPMlwdi1koVwmVV4b
-         pKnnVeOVMPu145lZNrPJCL2KsjEiQNksM9IScJ68j7o//DA4MvkxzSu80bx1inwduLkk
-         HLFCUwhrs9lo+ePEAjPFKSlmMWNdzkQ4qj0W+NuMSmTyGiUznwNMjihxcZ72WPmQ479G
-         XIKA==
-X-Gm-Message-State: AOAM531oDVXZPVUyOrvGrvjtW9KWt6y77LhSNkie/ScEqiVwwA2JfM5D
-        RwFN67kalXC62ystFthg3hmw0BI1cKGSI7vhANw=
-X-Google-Smtp-Source: ABdhPJyHYVwfar24OBjivCWja6lr1jdEuNaApBmSrWhsteFBK4XVaayZqnWhr6HYgr7xgMh1yFBFq308gbQmVn7m5Q4=
-X-Received: by 2002:a19:ee0d:: with SMTP id g13mr8762732lfb.38.1615827384280;
- Mon, 15 Mar 2021 09:56:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=b2bZ+Yse0ie4H9JIUlwhRsDt1s5TrPDpc6H360k2Svw=;
+        b=taX9ASoTgxqXUOKoO55N3MbgVVIfy4Hjnp3Ay1+Zaq/K6cIhE5EPK92g37xkVA6lVG
+         eA804BRR0vZgOPvs9DkY84CkGrGr1JVzW5lRPg4iylTNtPDCIEDl/AnX+dZqqcbXcyxc
+         QUYP6UIvFZ8tixsXd0R+BhoDTl/h7dAFb9AIvzF2cjN9/L3YyupxIKNjtWaI4hp0RIqZ
+         xI3m6k8zz4VAd2A74WqvF0vYZtad/scvhuMhkmQKMM4jDZfyZ3V7qPN91k2MaRqjZKi6
+         sSxKP3249dc0tzaqRfZeWG8WaAU++J8pkN+453HrJ83iD98oCWCPcsA7NJWdgPvoIYfe
+         1ogQ==
+X-Gm-Message-State: AOAM533kI4DDJZvR+09Zu950UqWTtJHm588/YYPM/1BSXl3u+dOQic9W
+        vkrb52EoEtBgHMPFg4/Hdh6shMO24F2aKQ==
+X-Google-Smtp-Source: ABdhPJxEWwWm/LNrGTfcBdTYvMlXao8QkZXDMHA8xZvlwwsW+yf0o3X/UDCJ8jZvksjqmIuA19JWNA==
+X-Received: by 2002:a17:90a:868c:: with SMTP id p12mr179580pjn.82.1615829466073;
+        Mon, 15 Mar 2021 10:31:06 -0700 (PDT)
+Received: from sonnysasaka-chrome.mtv.corp.google.com ([2620:15c:202:201:a974:ebe2:501:4ac8])
+        by smtp.gmail.com with ESMTPSA id q5sm13687597pfk.219.2021.03.15.10.31.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Mar 2021 10:31:05 -0700 (PDT)
+From:   Sonny Sasaka <sonnysasaka@chromium.org>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Sonny Sasaka <sonnysasaka@chromium.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Subject: [PATCH v2] Bluetooth: Cancel le_scan_restart work when stopping discovery
+Date:   Mon, 15 Mar 2021 10:30:59 -0700
+Message-Id: <20210315173059.74030-1-sonnysasaka@chromium.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Received: by 2002:a05:651c:1382:0:0:0:0 with HTTP; Mon, 15 Mar 2021 09:56:23
- -0700 (PDT)
-Reply-To: ezbtg22@gmail.com
-From:   "Mrs.Glenn" <mrganuserge@gmail.com>
-Date:   Mon, 15 Mar 2021 09:56:23 -0700
-Message-ID: <CA+Wfa7YJ6_O3gxdmzSdh3QHBbKX4wr1TvkG-oZZycbAp8RppmA@mail.gmail.com>
-Subject: From Mrs.Glenn
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Not cancelling it has caused a bug where passive background scanning is
+disabled out of the blue, preventing BLE keyboards/mice to reconnect.
+Here is how it happens:
+After hci_req_stop_discovery, there is still le_scan_restart_work
+scheduled. Invocation of le_scan_restart_work causes a harmful
+le_scan_disable_work to be scheduled. This le_scan_disable_work will
+eventually disable passive scanning when the timer fires.
+
+Sample btmon trace:
+
+< HCI Command: LE Set Scan Parameters (0x08|0x000b) plen 7
+        Type: Passive (0x00)
+        Interval: 367.500 msec (0x024c)
+        Window: 37.500 msec (0x003c)
+        Own address type: Public (0x00)
+        Filter policy: Accept all advertisement (0x00)
+> HCI Event: Command Complete (0x0e) plen 4
+      LE Set Scan Parameters (0x08|0x000b) ncmd 1
+        Status: Success (0x00)
+< HCI Command: LE Set Scan Enable (0x08|0x000c) plen 2
+        Scanning: Enabled (0x01)
+        Filter duplicates: Disabled (0x00)
+> HCI Event: Command Complete (0x0e) plen 4
+      LE Set Scan Enable (0x08|0x000c) ncmd 2
+        Status: Success (0x00)
+...
+< HCI Command: LE Set Scan Enable (0x08|0x000c) plen 2
+        Scanning: Disabled (0x00)
+        Filter duplicates: Disabled (0x00)
+> HCI Event: Command Complete (0x0e) plen 4
+      LE Set Scan Enable (0x08|0x000c) ncmd 2
+        Status: Success (0x00)
+// Background scanning is not working here onwards.
+
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Signed-off-by: Sonny Sasaka <sonnysasaka@chromium.org>
+
+---
+ net/bluetooth/hci_request.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index d7ee11ef70d3e..8ace5d34b01ef 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -3252,6 +3252,7 @@ bool hci_req_stop_discovery(struct hci_request *req)
+ 
+ 		if (hci_dev_test_flag(hdev, HCI_LE_SCAN)) {
+ 			cancel_delayed_work(&hdev->le_scan_disable);
++			cancel_delayed_work(&hdev->le_scan_restart);
+ 			hci_req_add_le_scan_disable(req, false);
+ 		}
+ 
 -- 
-Dear Beloved,
+2.29.2
 
-I am Mrs Elizabet Glenn from Israel. I am a missionary but right now
-in a hospital bed in Israel. I am 59 years and childless; my husband
-is dead. I was diagnosed with terminal cancer. And my doctor just
-predicted that I have but very limited time to live due to damages in
-my system and as a result of that I decided to dispose my 10.5 million
-US dollars to a God-fearing one for the continuation of charitable
-work. This is why I located you.My guess about you may not be accurate
-because I came across your contact at the humanitarian calendar event
-of the year but I believe in God who  divinely directed me to you for
-this solemn proposal of charitable work. I wholeheartedly wish to
-bequeath my fortune to you as a God-fearing person for the
-continuation of charitable work anywhere around the world.
-
-I shall be going in for a surgery operations soonest and desire this
-money to be transferred to you as I do not wish to leave this money in
-the bank because bankers might misuse it for their own interest after
-my death. As soon as I receive your quick reply assuring me that you
-will utilize the money as I instructed you for the benefit of the less
-privilege, I shall give you more details and also instruct my bank to
-release the money to you for the charity project. I hope you receive
-this mail in good health.
-
-Because I don t know what will be my situation in next minute,
-
-I am waiting for your reply.
-
-Yours sincerely,
-Mrs Elizabet Glenn.
