@@ -2,197 +2,177 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B1EC33E77D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Mar 2021 04:14:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6773C33EA9F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Mar 2021 08:38:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229708AbhCQDNf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 16 Mar 2021 23:13:35 -0400
-Received: from mga01.intel.com ([192.55.52.88]:58934 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229673AbhCQDNV (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 16 Mar 2021 23:13:21 -0400
-IronPort-SDR: Kxvvubs0Rrvnxe3OdENGj/o+VrqXkrjtGFT4TJS8mYGRQ7+ugiN12+jTL1QgbKLv3egjtTZxVx
- FZrSNAUPS/yQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9925"; a="209335333"
-X-IronPort-AV: E=Sophos;i="5.81,254,1610438400"; 
-   d="scan'208";a="209335333"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2021 20:13:21 -0700
-IronPort-SDR: fiUzmBvHwVZhzu4QgjrxmqT4UgoXgMwdGmm8Yo3x5WV0l6oG3gp03p90AgEmO45JLEqIAfGE/v
- rolQYqFPbD0w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,254,1610438400"; 
-   d="scan'208";a="405761185"
-Received: from lkp-server02.sh.intel.com (HELO 1c294c63cb86) ([10.239.97.151])
-  by fmsmga008.fm.intel.com with ESMTP; 16 Mar 2021 20:13:20 -0700
-Received: from kbuild by 1c294c63cb86 with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1lMMcZ-0000Tg-2F; Wed, 17 Mar 2021 03:13:19 +0000
-Date:   Wed, 17 Mar 2021 11:12:53 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- 17486960d79b900c45e0bb8fbcac0262848582ba
-Message-ID: <605173b5.s2nDjE+pVPfwq1B0%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        id S230080AbhCQHhU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Mar 2021 03:37:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49292 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229707AbhCQHhC (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 17 Mar 2021 03:37:02 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F7F8C06174A
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Mar 2021 00:36:51 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id a7so39929180iok.12
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Mar 2021 00:36:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=DLYwGagxaA8XLtU1hZecPiveGLUuy3d+T9NVqP5dDYg=;
+        b=MdXvXmdIO5/tqEyZgUPmZ7yFz+NEGjims0LWbfL/lvKYOh1oDDi/btmsG1kCMHNOh+
+         n82NmSzI+hmomJpxq7NJmggrly6LYsxaa1J/IMBn17XATBSH3HBwIoBvmKDqWJe2Q94h
+         VzyqIKTdzGzt/ivE761FE4WSSM4XxutJJ+c/7hsweIo/7Lerde+Zy6z/B07WaflVv64D
+         ueBwIbF+i41FGnGyqAK1LmwyqSnTjImNnUVnbvAN3Z6B3ZwGyKRxRFv8bF+0JOJxSsdZ
+         0H9S98TEf2zzg75/CR/ZlUwc4GJyGDs9xR2vORAgx3nf1reVMXdCUJ34oPKpeFiKomas
+         M3jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=DLYwGagxaA8XLtU1hZecPiveGLUuy3d+T9NVqP5dDYg=;
+        b=hVj+zsUNYuTcT0wLsT1uSRKGpszBm239U+3njwsPxbCmx0xMxM0FlN5X0zmwEWyokB
+         iDstKPt5T/m5RcF3ll7b/gZTLg70yqtL2322Jv9gQx4g2rCwzf3RP9TAii9yXwVmQam0
+         0OOc5jEYC10wr19Pa2fbKyXewofkJTTEX3XcNIH+Tciaw914sOd2FePgKzyz9vMpOS5E
+         mTK7hs7MGdWLfN8QOKH0DGrAgZ2+Bn4QJgqgJh3Zyc4GBeMKtOStf5OpaYbks9c0KiRd
+         /stURc2Axs2szv5LR6JRypYKUcdGiFWPKcaGQS2UgpkuU6s4txdlFCfuDafdRVLX82GM
+         HRcw==
+X-Gm-Message-State: AOAM531ByVgEhuI1tKmrTc56cQnfgZdIC9zyW04uBxK0sEjCvTb1rcH5
+        WbrtQ3kMtmfZZtMZQejwZk2lvtvqBi3fVdPhjGs2yQIJi9t4
+X-Google-Smtp-Source: ABdhPJy+O4b54SzX35Ca3sdCTwSwAxZWheDpTQU3j1JjW3VYyeS7lHmB+dv3uYbFuBAkV6TKqh3h/x+mMiniQ9a5X3I=
+X-Received: by 2002:a02:a796:: with SMTP id e22mr1838837jaj.93.1615966610657;
+ Wed, 17 Mar 2021 00:36:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From:   Kenny Bian <kennybian@gmail.com>
+Date:   Wed, 17 Mar 2021 00:36:40 -0700
+Message-ID: <CAC9s0NZrReFB-6_JwHFqJtLwqSuYGzKbZMvDeKYzh+Jof9iUjg@mail.gmail.com>
+Subject: Have to delete "/var/lib/bluetooth" folder in order to get all
+ service characteristics available
+To:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: 17486960d79b900c45e0bb8fbcac0262848582ba  Bluetooth: avoid deadlock between hci_dev->lock and socket lock
+In order to keep the pairing information, we carry over the
+"/var/lib/bluetooth" folder from an older build to the new build in
+the Linux system when doing firmware upgrade. This way, our end user
+doesn't have to choose "Forget This Device" each time after the
+firmware upgrade. Otherwise, our end user has to "Forget This Device"
+and re-pair because the pairing info can't be found in the Linux
+device. We also set the GATT cache as "no" in
+"/etc/bluetooth/main.conf". Then the mobile app won't crash when there
+is any "service changed" such as adding notification to some existing
+characteristics.
 
-elapsed time: 724m
+We organize our characteristics under the services. There are 10
+services on the Linux device. Each service has 5 to 10
+characteristics. However, we found a new problem recently. The problem
+is: the first 8 services are fine. But the last one or two services
+only have the service UUID listed in nRF or our mobile app. There are
+no characteristics showing up under these one or two services. This
+caused our mobile app can't read the characteristics data under these
+problematic services. I checked the nRF. It's the same thing. nRF only
+shows the last one or two services with the service UUIDs. There are
+no characteristics listed under those 2 services.
 
-configs tested: 135
-configs skipped: 2
+In order to fix this issue, we have to do these(let's call it "The Steps"):
+- Remove the "/var/lib/bluetooth" folder from the Linux system
+- Restart our BlueZ based service in Python in the Linux system
+- Choose "Forget This Device" on the iPhone. After this operation, the
+"/var/lib/bluetooth" is generated in the Linux device.
+- Connect to the device from our mobile app or from nRF. We can see
+all of the 10 services in the list. Each characteristic under the
+service can be seen.
+- We are able to read the data by using our mobile app or by using nRF
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+I compared the files in the "/var/lib/bluetooth" folder. As we
+disabled the GATT cache, there is no "cache" folder. There are only 2
+files in the folder. Here is the folder structure:
+/var/lib/bluetooth:
+    |
+    +----00:11:22:33:44:55/
+        |
+        +----6C:92:11:87:11:25/
+            |
+            +----attributes
+            +----info
 
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-x86_64                           allyesconfig
-riscv                            allmodconfig
-i386                             allyesconfig
-riscv                            allyesconfig
-nds32                             allnoconfig
-mips                malta_qemu_32r6_defconfig
-ia64                          tiger_defconfig
-arm                         bcm2835_defconfig
-m68k                       m5475evb_defconfig
-sh                          kfr2r09_defconfig
-powerpc                      ppc64e_defconfig
-arm                       netwinder_defconfig
-mips                      maltaaprp_defconfig
-arm                         hackkit_defconfig
-arc                              allyesconfig
-arm                          gemini_defconfig
-sh                               j2_defconfig
-arm                         vf610m4_defconfig
-powerpc                      pmac32_defconfig
-s390                       zfcpdump_defconfig
-sh                           se7722_defconfig
-arm                           h3600_defconfig
-mips                          rm200_defconfig
-arm                           stm32_defconfig
-m68k                       bvme6000_defconfig
-powerpc                     akebono_defconfig
-mips                     loongson1b_defconfig
-arc                         haps_hs_defconfig
-arm                           u8500_defconfig
-nios2                         3c120_defconfig
-parisc                generic-32bit_defconfig
-powerpc                      ppc6xx_defconfig
-microblaze                      mmu_defconfig
-csky                             alldefconfig
-powerpc                  storcenter_defconfig
-powerpc                       ppc64_defconfig
-mips                           ip27_defconfig
-sh                          r7785rp_defconfig
-arm                         lubbock_defconfig
-mips                    maltaup_xpa_defconfig
-arm                       spear13xx_defconfig
-powerpc                         ps3_defconfig
-sh                           se7206_defconfig
-arm                           spitz_defconfig
-mips                        nlm_xlp_defconfig
-powerpc                   bluestone_defconfig
-mips                         tb0219_defconfig
-arm                         assabet_defconfig
-mips                      pistachio_defconfig
-mips                  decstation_64_defconfig
-h8300                     edosk2674_defconfig
-arm                       mainstone_defconfig
-arm                          badge4_defconfig
-arm                         s3c2410_defconfig
-powerpc                     tqm8560_defconfig
-mips                         bigsur_defconfig
-powerpc                     ep8248e_defconfig
-powerpc                      cm5200_defconfig
-mips                     loongson1c_defconfig
-sparc64                             defconfig
-arm                            mps2_defconfig
-powerpc                 mpc8540_ads_defconfig
-powerpc                     pseries_defconfig
-arm                        neponset_defconfig
-arm                        trizeps4_defconfig
-sh                        edosk7705_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                               tinyconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a001-20210316
-i386                 randconfig-a005-20210316
-i386                 randconfig-a002-20210316
-i386                 randconfig-a003-20210316
-i386                 randconfig-a004-20210316
-i386                 randconfig-a006-20210316
-x86_64               randconfig-a011-20210316
-x86_64               randconfig-a016-20210316
-x86_64               randconfig-a013-20210316
-x86_64               randconfig-a014-20210316
-x86_64               randconfig-a015-20210316
-x86_64               randconfig-a012-20210316
-i386                 randconfig-a013-20210316
-i386                 randconfig-a016-20210316
-i386                 randconfig-a011-20210316
-i386                 randconfig-a012-20210316
-i386                 randconfig-a015-20210316
-i386                 randconfig-a014-20210316
-riscv                    nommu_k210_defconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
+I kept one copy of the files after the firmware upgrade. I also kept a
+copy of the files after the folder was re-generated. I compared the
+file "attributes" and "info". For the attributes, they are the same.
+For the "info" file, there are only 3 differences:
+[General]
+Name=PhoneX
+. . .
 
-clang tested configs:
-x86_64               randconfig-a006-20210316
-x86_64               randconfig-a001-20210316
-x86_64               randconfig-a005-20210316
-x86_64               randconfig-a004-20210316
-x86_64               randconfig-a003-20210316
-x86_64               randconfig-a002-20210316
+[SlaveLongTermKey]
+Key=252256E19E26F3ED9FD0B99B7B5B0193
+. . .
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+[LinkKey]
+Key=1B593296571E2C48CF6952E60395E304
+. . .
+
+
+I don't think these differences could cause the issue. But the fact
+is, if I delete the "/var/lib/bluetooth" folder and go thru "The
+Steps" above, the problem will be gone. All of the services will have
+their characteristics showing up in nRF. The data can be read from the
+characteristics. This means the folder "/var/lib/bluetooth" is related
+to the issue. But I don't know why.
+
+Here is also another thing. I subscribed to the "PropertiesChanged"
+signal. In the callback function "properties_changed", I print out the
+"changed". Here is the code to subscribe the "PropertiesChanged":
+
+        bus.add_signal_receiver(
+            properties_changed,
+            dbus_interface="org.freedesktop.DBus.Properties",
+            signal_name="PropertiesChanged",
+            arg0="org.bluez.Device1",
+            path_keyword="path",
+        )
+
+If the folder "/var/lib/bluetooth" is removed and go thru "The Steps",
+I saw the log like this:
+dbus.Dictionary({dbus.String('UUIDs'):
+dbus.Array([dbus.String('00000000-deca-fade-deca-deafdecacafe'),
+dbus.String('00001000-0000-1000-8000-00805f9b34fb'),
+dbus.String('0000110a-0000-1000-8000-00805f9b34fb'),
+dbus.String('0000110c-0000-1000-8000-00805f9b34fb'),
+dbus.String('0000110e-0000-1000-8000-00805f9b34fb'),
+dbus.String('00001116-0000-1000-8000-00805f9b34fb'),
+dbus.String('0000111f-0000-1000-8000-00805f9b34fb'),
+dbus.String('0000112f-0000-1000-8000-00805f9b34fb'),
+dbus.String('00001132-0000-1000-8000-00805f9b34fb'),
+dbus.String('00001200-0000-1000-8000-00805f9b34fb'),
+dbus.String('00001800-0000-1000-8000-00805f9b34fb'),
+dbus.String('00001801-0000-1000-8000-00805f9b34fb'),
+dbus.String('00001805-0000-1000-8000-00805f9b34fb'),
+dbus.String('0000180a-0000-1000-8000-00805f9b34fb'),
+dbus.String('0000180f-0000-1000-8000-00805f9b34fb'),
+dbus.String('02030302-1d19-415f-86f2-22a2106a0a77'),
+dbus.String('7905f431-b5ce-4e99-a40f-4b1e122d00d0'),
+dbus.String('89d3502b-0f36-433a-8ef4-c502ad55f8dc'),
+dbus.String('9fa480e0-4967-4542-9390-d343dc5d04ae'),
+dbus.String('d0611e78-bbb4-4591-a5f8-487910ae4366')],
+signature=dbus.Signature('s'), variant_level=1),
+dbus.String('ServicesResolved'): dbus.Boolean(True, variant_level=1)},
+signature=dbus.Signature('sv'))
+
+If I check the log after the firmware is upgraded without deleting the
+"/var/lib/bluetooth" folder, the log looks like this:
+dbus.Dictionary({dbus.String('ServicesResolved'): dbus.Boolean(True,
+variant_level=1)}, signature=dbus.Signature('sv'))
+
+As we can see, they are different. Is it something to do with D-Bus?
+
+We understand that if we don't carry over the "/var/lib/bluetooth"
+folder, then there is no this issue. But our end user will have to
+choose "Forget This Device" each time after the firmware is upgraded.
+Otherwise, the end user can't connect to the Linux device because the
+pairing info can't be found. Is there a way to fix this issue? Namely,
+is there a way to keep the pairing info and also avoid this issue?
+
+Thanks in advance!
