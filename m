@@ -2,118 +2,104 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BF7B33FA11
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Mar 2021 21:43:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11D0333FC97
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Mar 2021 02:16:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233360AbhCQUnF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 Mar 2021 16:43:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51134 "EHLO
+        id S229769AbhCRBQN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Mar 2021 21:16:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233285AbhCQUmf (ORCPT
+        with ESMTP id S230159AbhCRBPr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 17 Mar 2021 16:42:35 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B6BC06174A
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Mar 2021 13:42:35 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id y7so319592oih.10
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Mar 2021 13:42:35 -0700 (PDT)
+        Wed, 17 Mar 2021 21:15:47 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB76AC06174A
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Mar 2021 18:15:47 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id l3so2337211pfc.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Mar 2021 18:15:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/jh6fTUc9OYBl1APlGkxGWhQ+2RX4EQosgV2lfs7Wjw=;
-        b=Hx+T6fI9yGYM7AB8DaBq0tF++m8gbAZLtt2XhMKWGN1yAhTfZF9ISb2fD7NbhKUPdi
-         FBUo0Ki+gIWMN01wpczhisWzYcqDTHl2f2rYPUenbEUrouqWDX6Txe+l6cYGZ9hsRmUR
-         cGJL9+8BTKL/jWmhPIeSA0nBaWs10XveYuXYlZdadLEjmYW/pai2qsZ28BIosePz9pCb
-         P26Oa7rb9jZr545J5HWvMlbp0kC6t8xINQDjZ5HPV9s/CCSmOtiI1DDI1mMsmnkTplF5
-         /JW1xh9iCsWlHNmF5uBrWpAbqIIorVmBBcQtLTHd+ghnSutUk/OzzUzmqL2hiVhgh7HW
-         73OQ==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vkuAZzxiloizkLfpEXJEaF+jLzg47UvQwLcjKmxkgGY=;
+        b=VmbVQgRfpgnb+U3XG6GOZMPYhbj9qJhM7AbVbSuu2SQjJTMdSbhY2m02jq3Tshe74L
+         uIKCaP3ZG74qcoE041acbs1uur+LCFZiKDMOs4w/kNJV6d2D5dHEDIvmbq77mneDuxEE
+         bv1y6y5+El9yxM6ZMmnvTs29vopnU0+WhwOlr/vy9o1wpODZojGKhsmOONPKKcY01mjW
+         96MRkHLGY6tZrTmhNl/mB545mhCgCeMABZAx9ICEkuY3IKsZuhGPNgn+YNJ8Vl+hL087
+         v7atEzF2KS1d1oWKsHirOxYhb6frtxH7S+OEpjzDa3MSAdO8rYN+BMZYb/Z0TLQz+dsD
+         b+Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/jh6fTUc9OYBl1APlGkxGWhQ+2RX4EQosgV2lfs7Wjw=;
-        b=QsFbOunCSOplcLda5ILFpNRYs/YuJUcRB/LbueuAMdWOpbtUegB4LIOawcc3EwBKCi
-         oby1p/mFgqO0tZ12+94+w9kDsk2hKdhqWK/Udue6elU1zC6nzdo4LBRqEJlOiGX1XH2J
-         3ha5Uy5CO4SNNFWezTjCFxPOh+TdRQYc9BDCxvSWy/g+Ea3ZWTTYhw1ys1IH8viZjn+Z
-         53JSo4TTXHmVFU8Gyr8BNj9bKE8Th7LVY07g1faxQF7ROHYRMipbE31QlFGjR8/p5CxI
-         zEbfTixODC4dfYBMiqd3IykCzO0E/ZQuSbXSqHCb+Nh6FBBUSxIEOGPrHIsLykvS7rJx
-         ceEA==
-X-Gm-Message-State: AOAM5316JwAsUisMls4FX8YERNeJV72zpMvDTsMxu63av5Mhu74yQXhv
-        lJyKhywHz5Stt9NP84lfpqPZU+o1/WlIgSyblznVIeIbpktsvQ==
-X-Google-Smtp-Source: ABdhPJxemlthjVncpUuB/2RVAWh8Cv7dFtZ4GvOHBiquKG8jXQNHvEEAVBSeo8kb/iBbVFLOXizxEBFBLKmWGuhA1rY=
-X-Received: by 2002:a54:468f:: with SMTP id k15mr515265oic.58.1616013754380;
- Wed, 17 Mar 2021 13:42:34 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vkuAZzxiloizkLfpEXJEaF+jLzg47UvQwLcjKmxkgGY=;
+        b=SldTjJUZc2BWgEodnIQOZ6qtw6WLKnGrNyD6nM9yswXmu/SsaLKalYLzmsQNUx4DXN
+         A2B3h/0Ad+n3fqq0nZM85LVDiBz3u7tPvz/8qE+9mKqXLzLj/Pn3wvokwZ7qBdvLxlVs
+         RdMAd2vO6hWzq7bYgW2fFVtRco9zI8L01vV+fqh8V+yUaod742wSNC8uxwqZ8llvlwom
+         nZaJtf7NkWjRfdbdl5Ra0BZMtvpVkezXLzbVkDjY3v12p/jwXldTzKt2VZuTTHmwVd55
+         w3eTBY7+vj3+KVRsQ1sZU0qhIJwvw+oVu7gSpQex56auivPqMA5Fp+Igoe7mRaIigYae
+         sQRA==
+X-Gm-Message-State: AOAM530bLUPSlVA1/QNFAJkku8nun7IWpKbrla+39OfuBp5Qn4AzEgvQ
+        tOi8yIiY2cRjnSA2Qc1l7FIfX4+xKKM=
+X-Google-Smtp-Source: ABdhPJzEu8ZVWWvD2d7lADL3jOP5cFRF+WTvbzSCnyQADkUR6PJUo9izq7G3M0toKcCE8DVBXL3cUA==
+X-Received: by 2002:a63:2214:: with SMTP id i20mr4695989pgi.189.1616030146392;
+        Wed, 17 Mar 2021 18:15:46 -0700 (PDT)
+Received: from han1-XPS-13-9350.hsd1.or.comcast.net ([2601:1c0:6a01:d830:24df:8146:1cd2:2abd])
+        by smtp.gmail.com with ESMTPSA id y2sm244028pgf.7.2021.03.17.18.15.45
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Mar 2021 18:15:45 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH] tools/mgmt-tester: Fix for scan response in read adv feature command
+Date:   Wed, 17 Mar 2021 18:15:45 -0700
+Message-Id: <20210318011545.407405-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20210316205838.2164464-1-luiz.dentz@gmail.com>
- <FD38AD5A-FADA-4EBB-AC7C-BD91F50EE248@holtmann.org> <CABBYNZ+zmuN+UKOXvSgh7EMbsoZTp=9gZ7-CCPpr0V3BT+qkbg@mail.gmail.com>
-In-Reply-To: <CABBYNZ+zmuN+UKOXvSgh7EMbsoZTp=9gZ7-CCPpr0V3BT+qkbg@mail.gmail.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 17 Mar 2021 13:42:23 -0700
-Message-ID: <CABBYNZ+-VHu-GAb7g6XF15V3fm9XzrvXV6c_V6Uj1-1SgivQ2Q@mail.gmail.com>
-Subject: Re: [PATCH BlueZ] build: Fix build with latest tree
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        Denis Kenzior <denkenz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Marcel,
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-On Wed, Mar 17, 2021 at 11:29 AM Luiz Augusto von Dentz
-<luiz.dentz@gmail.com> wrote:
->
-> Hi Marcel,
->
-> On Wed, Mar 17, 2021 at 1:38 AM Marcel Holtmann <marcel@holtmann.org> wrote:
-> >
-> > Hi Luiz,
-> >
-> > > Latest ell tree has introduced useful.h and main-private.h which are
-> > > required to build:
-> > >
-> > > ell/cert-crypto.c:35:10: fatal error: useful.h: No such file or
-> > > directory
-> > >   35 | #include "useful.h"
-> > >         |          ^~~~~~~~~~
-> > > ...
-> > > ---
-> > > Makefile.am | 4 +++-
-> > > 1 file changed, 3 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/Makefile.am b/Makefile.am
-> > > index ff0df2196..7fce2e7c0 100644
-> > > --- a/Makefile.am
-> > > +++ b/Makefile.am
-> > > @@ -135,7 +135,9 @@ ell_headers = ell/util.h \
-> > >                       ell/asn1-private.h \
-> > >                       ell/cert-private.h \
-> > >                       ell/pem-private.h \
-> > > -                     ell/uuid.h
-> > > +                     ell/uuid.h \
-> > > +                     ell/useful.h \
-> > > +                     ell/main-private.h
-> > >
-> >
-> > this is the wrong fix. It will break in the tarballs. ELL will not install ell/useful.h ever. So every tarball needs to ensure that ell/useful.h is included. Which means you need to follow the fix from iwd here.
->
-> Are you talking about this:
->
-> https://git.kernel.org/pub/scm/network/wireless/iwd.git/commit/?id=ed05585063f2e6d8f2fcd5f008b861062ac7a429
->
-> Shall we use the same mechanism to link the headers?
+This patch fixes the test failure with the read advertising feature
+API which is changed to include the scan response flag.
+---
+ tools/mgmt-tester.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-I tried with distcheck to see what would be included in the tarball,
-both useful.h and main-private.h do appear to be included, perhaps you
-are saying that when we use non-built-in/shared ell
-(--enable-external-ell) those headers are not installed, but I guess
-in that case we don't need the private header as we won't be using the
-built-in sources, or I'm missing something. That said perhaps this is
-different in case of iwd as it seems to be using useful.h directly:
-
-https://git.kernel.org/pub/scm/network/wireless/iwd.git/commit/?id=17cf4da72613e80d08d51401399d02683ba8664b
-
+diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
+index bb9fb0b9c..1835ca079 100644
+--- a/tools/mgmt-tester.c
++++ b/tools/mgmt-tester.c
+@@ -4162,7 +4162,7 @@ static const struct generic_data read_adv_features_invalid_index_test = {
+ };
+ 
+ static const uint8_t read_adv_features_rsp_1[] =  {
+-	0x7f, 0xf0, 0x00, 0x00,	/* supported flags */
++	0x7f, 0xf0, 0x01, 0x00,	/* supported flags */
+ 	0x1f,			/* max_adv_data_len */
+ 	0x1f,			/* max_scan_rsp_len */
+ 	0x05,			/* max_instances */
+@@ -4177,7 +4177,7 @@ static const struct generic_data read_adv_features_success_1 = {
+ };
+ 
+ static const uint8_t read_adv_features_rsp_2[] =  {
+-	0x7f, 0xf0, 0x00, 0x00,	/* supported flags */
++	0x7f, 0xf0, 0x01, 0x00,	/* supported flags */
+ 	0x1f,			/* max_adv_data_len */
+ 	0x1f,			/* max_scan_rsp_len */
+ 	0x05,			/* max_instances */
+@@ -7137,7 +7137,7 @@ static const struct generic_data set_appearance_success = {
+ };
+ 
+ static const uint8_t read_adv_features_rsp_3[] =  {
+-	0xff, 0xff, 0x00, 0x00,	/* supported flags */
++	0xff, 0xff, 0x01, 0x00,	/* supported flags */
+ 	0x1f,			/* max_adv_data_len */
+ 	0x1f,			/* max_scan_rsp_len */
+ 	0x01,			/* max_instances */
 -- 
-Luiz Augusto von Dentz
+2.25.1
+
