@@ -2,213 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F6333426B8
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Mar 2021 21:17:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4CFA34270D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Mar 2021 21:39:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230226AbhCSURE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 19 Mar 2021 16:17:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45754 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229912AbhCSUQa (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 19 Mar 2021 16:16:30 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F271C06175F
-        for <linux-bluetooth@vger.kernel.org>; Fri, 19 Mar 2021 13:16:30 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id s18so26870296pfe.10
-        for <linux-bluetooth@vger.kernel.org>; Fri, 19 Mar 2021 13:16:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=FUzDMOWW+Puyz+SzWC3asQVTMfryGObB0RiZstJMIBU=;
-        b=sgWArQyN8QTzOSH9Gn+mPcH7CA0wlJw0WRwg9RtaZL0CGmB6vEB9B2qBK8dOqOBLrE
-         3skODy2P8GXExoLvB11OLR8A9a9eFvmvUgfIWgqOGkbPRcOq6aSrF7bZIfbZffKqVe8X
-         MV4r8sCleN+ffkVmElatTuxHqSKkCUVAChZjtZsZZPXL3GCY9/tvXL48MpImdKC2Rr8F
-         fX7klLvLWWY2wpI6/HQj7ic0UPyHbIl3YWo9eZkxmyAdXeE9wAE8Mi2Ob/b3DF8bWm+A
-         4+ByZfFIYh5/mdGmcierXQVxk+lJB640s3qszj3uMFrNqG+5AKak7AwLddg7rIY5JaJv
-         vVFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=FUzDMOWW+Puyz+SzWC3asQVTMfryGObB0RiZstJMIBU=;
-        b=nVLczWxecUGeqgWIT0+FVrcWbmBIUxXBib4EOu8kM2vB1Yr8saOb6+9YHI9jUR3iqT
-         a88dM6Zsj/x+Id9ilK8kwZMrrvu4OM2LPHImrYe7K3ED9TwyGE3B+VEcNs1m2NMaaFAh
-         GfOTDj/Ujc3fWZz9psxgVgXIGymTO28iwrBfFkT8lkxVHVW9w6aLNisutzGaI3Nr4U1O
-         9EaBCmskjGE4BCIHHgBWVa1kj6wQhEZ2BrvC+uBC/C8weHbYWTdOgIIUtJ3WwnvT4oc6
-         edzloOeIkl8BHwYFpUxZOWP2ekxfIEN3wh1D2/OIoY9hLOPMRPUFSZi0QnF3er+6yRaJ
-         PlEQ==
-X-Gm-Message-State: AOAM533PzuRiuL4l++kACGIzUZhqN7H2216/0SYay3WqaxCbJkDcgKF1
-        kyWhprwl2xp4VFvU9mGlofDlA81exhH7Zg==
-X-Google-Smtp-Source: ABdhPJykgo0zi/4qXykDAAUNOjL3usMtXpHDx4UnroLaxR58IPx0WFL9INya2Ev6KCQndsb9j63LruS1nXJlbg==
-X-Received: from mmandlik.mtv.corp.google.com ([2620:15c:202:201:fc1f:aed6:24c0:a9b0])
- (user=mmandlik job=sendgmr) by 2002:a17:902:c589:b029:e6:3a39:d4a0 with SMTP
- id p9-20020a170902c589b02900e63a39d4a0mr16153501plx.76.1616184989509; Fri, 19
- Mar 2021 13:16:29 -0700 (PDT)
-Date:   Fri, 19 Mar 2021 13:16:05 -0700
-Message-Id: <20210319131533.v1.1.I14da3750a343d8d48921fffb7c6561337b6e6082@changeid>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-Subject: [PATCH v1] Bluetooth: Add ncmd=0 recovery handling
-From:   Manish Mandlik <mmandlik@google.com>
-To:     marcel@holtmann.org, luiz.dentz@gmail.com
-Cc:     Alain Michaud <alainm@chromium.org>,
-        chromeos-bluetooth-upstreaming@chromium.org,
-        linux-bluetooth@vger.kernel.org,
-        Manish Mandlik <mmandlik@google.com>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S230142AbhCSUix (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 19 Mar 2021 16:38:53 -0400
+Received: from mga07.intel.com ([134.134.136.100]:18065 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229956AbhCSUie (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 19 Mar 2021 16:38:34 -0400
+IronPort-SDR: 2XfK+d6EEqxVo7Dp2L/ixJKlR/8vBItG5die71pBATpY3wcM4xyEa+bLUD2i543WT+bq2lmINL
+ LsgSbiyYc4qQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9928"; a="253964217"
+X-IronPort-AV: E=Sophos;i="5.81,262,1610438400"; 
+   d="scan'208";a="253964217"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Mar 2021 13:38:34 -0700
+IronPort-SDR: v+gV8QmHqBPIAq/hygfFtmEPb4TkRMrUy1W8HF5EdTO5QwvsCOsNEucfzu4i27TMqaswyQMYjA
+ MQBEhcE6bk9g==
+X-IronPort-AV: E=Sophos;i="5.81,262,1610438400"; 
+   d="scan'208";a="406934868"
+Received: from rkuhnis-mobl.amr.corp.intel.com (HELO istotlan-desk.intel.com) ([10.212.65.199])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Mar 2021 13:38:32 -0700
+From:   Inga Stotland <inga.stotland@intel.com>
+To:     brian.gix@intel.com, linux-bluetooth@vger.kernel.org
+Cc:     Inga Stotland <inga.stotland@intel.com>
+Subject: [PATCH BlueZ v4 0/2] Framework for non-interactive mesh test
+Date:   Fri, 19 Mar 2021 13:38:23 -0700
+Message-Id: <20210319203825.459070-1-inga.stotland@intel.com>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-During command status or command complete event, the controller may set
-ncmd=3D0 indicating that it is not accepting any more commands. In such a
-case, host holds off sending any more commands to the controller. If the
-controller doesn't recover from such condition, host will wait forever.
+v4: Use tester frameworks from ELL library
 
-This patch adds a timer when controller gets into such condition and
-resets the controller if controller doesn't recover within the timeout
-period.
+**********
+v3: Fixed copyright style in mesh-io-unit.h
 
-Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Signed-off-by: Manish Mandlik <mmandlik@google.com>
----
-Hello Maintainers,
+**********
+v2: Fixed errors reported by bluez-bot.
+    Regarding the warnings for the "__attribute__((packed))":
+    keeping this style to be consistent with the rest of BLueZ codebase 
+    
+**********
+This patch set introduces a framework for non-interactive testing of
+mesh daemon functionality and consists of the three components:
 
-We noticed that during suspend, sometimes the controller firmware gets
-into a state where it is not accepting any more commands (it returns
-ncmd=3D0 in Command Status):
+1. A version of src/shared/tester that uses ELL primitives:
+   everything mesh-related uses ELL.
 
-< HCI Command: Disconnect (0x01|0x0006) plen 3 =C2=A0#398 [hci0] 83.760502
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 Handle: 1
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 Reason: Remote Device Terminated due to Power O=
-ff (0x15)
-> HCI Event: Command Status (0x0f) plen 4 =C2=A0 =C2=A0 =C2=A0 #399 [hci0] =
-83.761694
-=C2=A0 =C2=A0 =C2=A0 Disconnect (0x01|0x0006) ncmd 0
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 Status: Success (0x00)
+2. New type of mesh IO used only for testing.
 
-In such a case, the host holds off sending any more packets to the
-controller until it is ready to accept more commands.=C2=A0If the controlle=
-r
-doesn't recover from such a condition, Command Timeout does not get
-triggered as Command Timeout is queued only once the packet is sent to
-the controller; hence,=C2=A0the host will wait forever.=C2=A0
+3. The mesh-cfgtest tool that excercises a number of mesh D-Bus
+   API calls. Currently, the tool covers limited number of initial
+   test cases. The extended coverage will be provided after this
+   patch set is accepted.
 
-This patch adds a timer to recover from this condition. Since the
-suspend timeout is 2 seconds, I'm using 4 seconds timeout to recover
-from ncmd=3D0. This should give ample amount of time for recovery and
-should not create any race conditions with the suspend. Once we resume
-from the suspend normally, the timer would expire and reset the
-controller. I have verified this patch locally and able to connect to
-peer device after resume from suspend. Please let me know your thoughts
-on this.
+Brian Gix (1):
+  mesh: Add unit test IO
 
-Thanks,
-Manish.
+Inga Stotland (1):
+  tools/mesh-cfgtest: Non-iteractive test for mesh
 
- include/net/bluetooth/hci.h      |  1 +
- include/net/bluetooth/hci_core.h |  1 +
- net/bluetooth/hci_core.c         | 15 +++++++++++++++
- net/bluetooth/hci_event.c        | 10 ++++++++++
- 4 files changed, 27 insertions(+)
+ Makefile.am          |   14 +-
+ Makefile.mesh        |    2 +
+ Makefile.tools       |    6 +
+ mesh/main.c          |   51 +-
+ mesh/mesh-io-unit.c  |  533 +++++++++++++++
+ mesh/mesh-io-unit.h  |   11 +
+ mesh/mesh-io.c       |    9 +-
+ mesh/mesh-io.h       |    3 +-
+ tools/mesh-cfgtest.c | 1458 ++++++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 2065 insertions(+), 22 deletions(-)
+ create mode 100644 mesh/mesh-io-unit.c
+ create mode 100644 mesh/mesh-io-unit.h
+ create mode 100644 tools/mesh-cfgtest.c
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index ea4ae551c426..c4b0650fb9ae 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -339,6 +339,7 @@ enum {
- #define HCI_PAIRING_TIMEOUT	msecs_to_jiffies(60000)	/* 60 seconds */
- #define HCI_INIT_TIMEOUT	msecs_to_jiffies(10000)	/* 10 seconds */
- #define HCI_CMD_TIMEOUT		msecs_to_jiffies(2000)	/* 2 seconds */
-+#define HCI_NCMD_TIMEOUT	msecs_to_jiffies(4000)	/* 4 seconds */
- #define HCI_ACL_TX_TIMEOUT	msecs_to_jiffies(45000)	/* 45 seconds */
- #define HCI_AUTO_OFF_TIMEOUT	msecs_to_jiffies(2000)	/* 2 seconds */
- #define HCI_POWER_OFF_TIMEOUT	msecs_to_jiffies(5000)	/* 5 seconds */
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_c=
-ore.h
-index ebdd4afe30d2..f14692b39fd5 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -470,6 +470,7 @@ struct hci_dev {
- 	struct delayed_work	service_cache;
-=20
- 	struct delayed_work	cmd_timer;
-+	struct delayed_work	ncmd_timer;
-=20
- 	struct work_struct	rx_work;
- 	struct work_struct	cmd_work;
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index b0d9c36acc03..5ee1609456bd 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2769,6 +2769,20 @@ static void hci_cmd_timeout(struct work_struct *work=
-)
- 	queue_work(hdev->workqueue, &hdev->cmd_work);
- }
-=20
-+/* HCI ncmd timer function */
-+static void hci_ncmd_timeout(struct work_struct *work)
-+{
-+	struct hci_dev *hdev =3D container_of(work, struct hci_dev,
-+					    ncmd_timer.work);
-+
-+	bt_dev_err(hdev, "ncmd timeout");
-+
-+	if (hci_dev_do_close(hdev))
-+		return;
-+
-+	hci_dev_do_open(hdev);
-+}
-+
- struct oob_data *hci_find_remote_oob_data(struct hci_dev *hdev,
- 					  bdaddr_t *bdaddr, u8 bdaddr_type)
- {
-@@ -3831,6 +3845,7 @@ struct hci_dev *hci_alloc_dev(void)
- 	init_waitqueue_head(&hdev->suspend_wait_q);
-=20
- 	INIT_DELAYED_WORK(&hdev->cmd_timer, hci_cmd_timeout);
-+	INIT_DELAYED_WORK(&hdev->ncmd_timer, hci_ncmd_timeout);
-=20
- 	hci_request_setup(hdev);
-=20
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index cf2f4a0abdbd..114a9170d809 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3635,6 +3635,11 @@ static void hci_cmd_complete_evt(struct hci_dev *hde=
-v, struct sk_buff *skb,
- 	if (*opcode !=3D HCI_OP_NOP)
- 		cancel_delayed_work(&hdev->cmd_timer);
-=20
-+	if (!ev->ncmd && !test_bit(HCI_RESET, &hdev->flags))
-+		schedule_delayed_work(&hdev->ncmd_timer, HCI_NCMD_TIMEOUT);
-+	else
-+		cancel_delayed_work(&hdev->ncmd_timer);
-+
- 	if (ev->ncmd && !test_bit(HCI_RESET, &hdev->flags))
- 		atomic_set(&hdev->cmd_cnt, 1);
-=20
-@@ -3740,6 +3745,11 @@ static void hci_cmd_status_evt(struct hci_dev *hdev,=
- struct sk_buff *skb,
- 	if (*opcode !=3D HCI_OP_NOP)
- 		cancel_delayed_work(&hdev->cmd_timer);
-=20
-+	if (!ev->ncmd && !test_bit(HCI_RESET, &hdev->flags))
-+		schedule_delayed_work(&hdev->ncmd_timer, HCI_NCMD_TIMEOUT);
-+	else
-+		cancel_delayed_work(&hdev->ncmd_timer);
-+
- 	if (ev->ncmd && !test_bit(HCI_RESET, &hdev->flags))
- 		atomic_set(&hdev->cmd_cnt, 1);
-=20
---=20
-2.31.0.rc2.261.g7f71774620-goog
+-- 
+2.26.2
 
