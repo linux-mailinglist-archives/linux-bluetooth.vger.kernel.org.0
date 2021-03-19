@@ -2,1625 +2,273 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8890434270C
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Mar 2021 21:39:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 156A0342737
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Mar 2021 21:54:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230206AbhCSUix (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 19 Mar 2021 16:38:53 -0400
-Received: from mga05.intel.com ([192.55.52.43]:53937 "EHLO mga05.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230092AbhCSUit (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 19 Mar 2021 16:38:49 -0400
-IronPort-SDR: MdpNEJHnnwVmcC/lJroAVLi5ssjfmfFShXEV4BwGyQ7L0sq3VM223wWcnc/m12zgeinmK9BRED
- K7hPCNCk1MCQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9928"; a="275035467"
-X-IronPort-AV: E=Sophos;i="5.81,262,1610438400"; 
-   d="scan'208";a="275035467"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Mar 2021 13:38:49 -0700
-IronPort-SDR: E5OO6itO8QZ43E+ALOZkidkevNcXkp5IggB/oxndlKlxaKY+xAqBQrFfI6pGY5/8Gv+cl+0Sfc
- 1gyKsI3oqOzw==
-X-IronPort-AV: E=Sophos;i="5.81,262,1610438400"; 
-   d="scan'208";a="406934915"
-Received: from rkuhnis-mobl.amr.corp.intel.com (HELO istotlan-desk.intel.com) ([10.212.65.199])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Mar 2021 13:38:48 -0700
-From:   Inga Stotland <inga.stotland@intel.com>
-To:     brian.gix@intel.com, linux-bluetooth@vger.kernel.org
-Cc:     Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ v4 2/2] tools/mesh-cfgtest: Non-iteractive test for mesh
-Date:   Fri, 19 Mar 2021 13:38:25 -0700
-Message-Id: <20210319203825.459070-3-inga.stotland@intel.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20210319203825.459070-1-inga.stotland@intel.com>
-References: <20210319203825.459070-1-inga.stotland@intel.com>
+        id S230186AbhCSUx7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 19 Mar 2021 16:53:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53830 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230092AbhCSUxv (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 19 Mar 2021 16:53:51 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27BD4C06175F
+        for <linux-bluetooth@vger.kernel.org>; Fri, 19 Mar 2021 13:53:51 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id y18so4373940qky.11
+        for <linux-bluetooth@vger.kernel.org>; Fri, 19 Mar 2021 13:53:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=NmAbtaBbjrjzzS5ODS+34aLl1ybe7bg0dW86qpQxte8=;
+        b=K7101il1xFB3RyF14Ve/1uYPdm3gLrzMoatdvW20/s+r3drYc573jmxZsbBHtCJ4Ss
+         2Juhy557MhlO1ji+tpyeT+OAKg9/Dj6ENZtPtdg9gCjMDCfLc2ws+9Ns73sWCRkDmWKG
+         K9cNKTnPeSj+MN1c3FlHRazV3T6tBQDJNGQm8n+mLubcLKefFff+is6nSA4I9Y4Mx3LH
+         5iKzzmSIcRxtjwjjzOvuJs1GyowDKDrxRBcR/9u6mneCl19Z4kRgPYHjVxM3l92Z2mRV
+         t55BvEfw8DMsgZyPNXhYxE8Aor2XQTrKJw+dvcvBZcCFpFI1pqBShSXT6bCJzY/pPMSE
+         6UZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=NmAbtaBbjrjzzS5ODS+34aLl1ybe7bg0dW86qpQxte8=;
+        b=suFpkwr0M4KR/wtX7bDhP1HY9jpKkMmUrCTWtyXK1uzCWscIxwNmHcb9QGkOdesO3B
+         3uNx+qXCwQE+aefc+iLmvnVRuOgtuOSgY7R38+FiEwrDoqhGuQfhFtFhSUTM2L+QsAJc
+         G+iO6LTyBTIprsKfNKK7XN9pETs2XY0GQwO+uEHC1Yeq7u9eRM17Desj+T6zElvSJob8
+         RJq0h5Z39n/5TKmjsFFZ+rVeOFs1A8Bo3xBuUVFT89vEwI12Cf+l5BB7e0IYz/cwYpm1
+         ZCxBnhQ4aZXOCfkj7EWYJWIEChfQOuAMQYWh4cRXbGUqBK0qFBDdhLN9scU7t3ShseZv
+         +ySA==
+X-Gm-Message-State: AOAM532cgvopQA3m7Smqilg+VE6v4nFdOL+44tXqxqOgd6tC2xLByWN7
+        TDE7yorDPPflYdl+x1xjVI7lmzZVe7r0fg==
+X-Google-Smtp-Source: ABdhPJzZKN6jBI8JgyQpY6ktOkttfh2iSIQQDm1dHxnF2NFz8slXsCzeocNAempvcWU2mbt9TPkL1g==
+X-Received: by 2002:a05:620a:906:: with SMTP id v6mr525420qkv.28.1616187229824;
+        Fri, 19 Mar 2021 13:53:49 -0700 (PDT)
+Received: from [172.17.0.2] ([20.49.19.242])
+        by smtp.gmail.com with ESMTPSA id m17sm5525625qkh.82.2021.03.19.13.53.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Mar 2021 13:53:49 -0700 (PDT)
+Message-ID: <60550f5d.1c69fb81.e1b1a.21f0@mx.google.com>
+Date:   Fri, 19 Mar 2021 13:53:49 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2567999211574220278=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, inga.stotland@intel.com
+Subject: RE: Framework for non-interactive mesh test
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20210319203825.459070-2-inga.stotland@intel.com>
+References: <20210319203825.459070-2-inga.stotland@intel.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds a non-interactive test to excercise different datapaths in
-bluetooth-meshd. The test cases utilize D-Bus based mesh APIs, e.g.,
-to create a new network, import a node, import NetKey, import a remote
-node.
----
- Makefile.am          |   14 +-
- Makefile.tools       |    6 +
- mesh/main.c          |   10 +-
- tools/mesh-cfgtest.c | 1458 ++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 1483 insertions(+), 5 deletions(-)
- create mode 100644 tools/mesh-cfgtest.c
+--===============2567999211574220278==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
 
-diff --git a/Makefile.am b/Makefile.am
-index 7fce2e7c0..e70c61a81 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -115,6 +115,8 @@ ell_headers = ell/util.h \
- 			ell/hashmap.h \
- 			ell/random.h \
- 			ell/signal.h \
-+			ell/time.h \
-+			ell/time-private.h \
- 			ell/timeout.h \
- 			ell/cipher.h \
- 			ell/checksum.h \
-@@ -137,7 +139,8 @@ ell_headers = ell/util.h \
- 			ell/pem-private.h \
- 			ell/uuid.h \
- 			ell/useful.h \
--			ell/main-private.h
-+			ell/main-private.h \
-+			ell/tester.h
- 
- ell_sources = ell/private.h ell/missing.h \
- 			ell/util.c \
-@@ -146,6 +149,7 @@ ell_sources = ell/private.h ell/missing.h \
- 			ell/hashmap.c \
- 			ell/random.c \
- 			ell/signal.c \
-+			ell/time.c \
- 			ell/timeout.c \
- 			ell/io.c \
- 			ell/idle.c \
-@@ -173,7 +177,8 @@ ell_sources = ell/private.h ell/missing.h \
- 			ell/gvariant-util.c \
- 			ell/siphash-private.h \
- 			ell/siphash.c \
--			ell/uuid.c
-+			ell/uuid.c \
-+			ell/tester.c
- 
- ell_libell_internal_la_SOURCES = $(ell_headers) $(ell_sources)
- endif
-@@ -193,7 +198,7 @@ shared_sources = src/shared/io.h src/shared/timeout.h \
- 			src/shared/crypto.h src/shared/crypto.c \
- 			src/shared/ecc.h src/shared/ecc.c \
- 			src/shared/ringbuf.h src/shared/ringbuf.c \
--			src/shared/tester.h src/shared/tester.c \
-+			src/shared/tester.h\
- 			src/shared/hci.h src/shared/hci.c \
- 			src/shared/hci-crypto.h src/shared/hci-crypto.c \
- 			src/shared/hfp.h src/shared/hfp.c \
-@@ -220,7 +225,8 @@ src_libshared_glib_la_SOURCES = $(shared_sources) \
- 				src/shared/timeout-glib.c \
- 				src/shared/mainloop-glib.c \
- 				src/shared/mainloop-notify.h \
--				src/shared/mainloop-notify.c
-+				src/shared/mainloop-notify.c \
-+				src/shared/tester.c
- 
- src_libshared_mainloop_la_SOURCES = $(shared_sources) \
- 				src/shared/io-mainloop.c \
-diff --git a/Makefile.tools b/Makefile.tools
-index d5fdf2d89..3217ca8a6 100644
---- a/Makefile.tools
-+++ b/Makefile.tools
-@@ -335,6 +335,12 @@ tools_mesh_cfgclient_SOURCES = tools/mesh-cfgclient.c \
- 
- tools_mesh_cfgclient_LDADD = lib/libbluetooth-internal.la src/libshared-ell.la \
- 						$(ell_ldadd) -ljson-c -lreadline
-+
-+bin_PROGRAMS +=  tools/mesh-cfgtest
-+
-+tools_mesh_cfgtest_SOURCES = tools/mesh-cfgtest.c
-+tools_mesh_cfgtest_LDADD = lib/libbluetooth-internal.la src/libshared-ell.la \
-+						$(ell_ldadd)
- endif
- 
- EXTRA_DIST += tools/mesh-gatt/local_node.json tools/mesh-gatt/prov_db.json
-diff --git a/mesh/main.c b/mesh/main.c
-index 1b466598b..a13866d7e 100644
---- a/mesh/main.c
-+++ b/mesh/main.c
-@@ -17,7 +17,9 @@
- #include <stdlib.h>
- #include <unistd.h>
- #include <ctype.h>
-+#include <signal.h>
- 
-+#include <sys/prctl.h>
- #include <sys/stat.h>
- #include <ell/ell.h>
- 
-@@ -262,7 +264,13 @@ int main(int argc, char *argv[])
- 	if (!detached)
- 		umask(0077);
- 
--	dbus = l_dbus_new_default(L_DBUS_SYSTEM_BUS);
-+	if (io_type != MESH_IO_TYPE_UNIT_TEST)
-+		dbus = l_dbus_new_default(L_DBUS_SYSTEM_BUS);
-+	else {
-+		dbus = l_dbus_new_default(L_DBUS_SESSION_BUS);
-+		prctl(PR_SET_PDEATHSIG, SIGSEGV);
-+	}
-+
- 	if (!dbus) {
- 		l_error("unable to connect to D-Bus");
- 		status = EXIT_FAILURE;
-diff --git a/tools/mesh-cfgtest.c b/tools/mesh-cfgtest.c
-new file mode 100644
-index 000000000..fa0474faa
---- /dev/null
-+++ b/tools/mesh-cfgtest.c
-@@ -0,0 +1,1458 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
-+/*
-+ *
-+ *  BlueZ - Bluetooth protocol stack for Linux
-+ *
-+ *  Copyright (C) 2021  Intel Corporation. All rights reserved.
-+ *
-+ *
-+ */
-+
-+#ifdef HAVE_CONFIG_H
-+#include <config.h>
-+#endif
-+
-+#define _GNU_SOURCE
-+#include <assert.h>
-+#include <ctype.h>
-+#include <dbus/dbus.h>
-+#include <dirent.h>
-+#include <errno.h>
-+#include <ftw.h>
-+#include <getopt.h>
-+#include <libgen.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <time.h>
-+#include <unistd.h>
-+#include <sys/stat.h>
-+
-+#include <ell/ell.h>
-+
-+#include "src/shared/util.h"
-+
-+#include "mesh/mesh-defs.h"
-+#include "mesh/mesh.h"
-+
-+#define MAX_CRPL_SIZE	0x7fff
-+#define CFG_SRV_MODEL	0x0000
-+#define CFG_CLI_MODEL	0x0001
-+#define DEFAULT_IV_INDEX 0x0000
-+
-+#define IS_CONFIG_MODEL(x) ((x) == CFG_SRV_MODEL || (x) == CFG_CLI_MODEL)
-+
-+struct meshcfg_el {
-+	const char *path;
-+	uint8_t index;
-+	uint16_t mods[2];
-+	uint32_t vmods[2];
-+};
-+
-+struct meshcfg_app {
-+	const char *path;
-+	const char *agent_path;
-+	struct meshcfg_node *node;
-+	uint8_t num_ele;
-+	struct meshcfg_el ele[2];
-+	uint16_t cid;
-+	uint16_t pid;
-+	uint16_t vid;
-+	uint16_t crpl;
-+	uint8_t uuid[16];
-+};
-+
-+struct meshcfg_node {
-+	const char *path;
-+	struct l_dbus_proxy *proxy;
-+	struct l_dbus_proxy *mgmt_proxy;
-+	union {
-+		uint64_t u64;
-+		uint8_t u8[8];
-+	} token;
-+};
-+
-+struct msg_data {
-+	uint16_t len;
-+	uint8_t data[MAX_MSG_LEN];
-+};
-+
-+struct key_data {
-+	uint16_t idx;
-+	bool update;
-+};
-+
-+typedef void (*startup_func_t)(const void *data);
-+struct startup_entry {
-+	startup_func_t func;
-+	void *data;
-+};
-+
-+struct test_data {
-+	const char *ele_path;
-+	uint16_t dst;
-+	uint16_t subnet;
-+	void *req;
-+};
-+
-+static struct l_tester *tester;
-+
-+static bool option_list;
-+static const char *option_prefix;
-+static const char *option_string;
-+static char *tester_name;
-+
-+static bool init_done;
-+static bool init_failed;
-+static bool terminated;
-+
-+static struct l_queue *startup_chain;
-+
-+static struct l_dbus *dbus;
-+struct l_dbus_client *client;
-+
-+static struct l_queue *node_proxies;
-+static struct l_dbus_proxy *net_proxy;
-+static char *test_dir;
-+static char *io;
-+static char *exe;
-+
-+static uint32_t iv_index = DEFAULT_IV_INDEX;
-+
-+static const char *dbus_err_args = "org.freedesktop.DBus.Error.InvalidArgs";
-+static const char *const cli_app_path = "/mesh/cfgtest/client";
-+static const char *const cli_agent_path = "/mesh/cfgtest/client/agent";
-+static const char *const cli_ele_path_00 = "/mesh/cfgtest/client/ele0";
-+static const char *const srv_app_path = "/mesh/cfgtest/server";
-+static const char *const srv_agent_path = "/mesh/cfgtest/server/agent";
-+static const char *const srv_ele_path_00 = "/mesh/cfgtest/server/ele0";
-+static const char *const srv_ele_path_01 = "/mesh/cfgtest/server/ele1";
-+
-+static struct meshcfg_app client_app = {
-+	.path = cli_app_path,
-+	.agent_path = cli_agent_path,
-+	.cid = 0x05f1,
-+	.pid = 0x0002,
-+	.vid = 0x0001,
-+	.crpl = MAX_CRPL_SIZE,
-+	.num_ele = 1,
-+	.ele = {
-+		{
-+			.path = cli_ele_path_00,
-+			.index = PRIMARY_ELE_IDX,
-+			.mods = {CFG_SRV_MODEL, CFG_CLI_MODEL},
-+			.vmods = {0xffffffff, 0xffffffff}
-+		}
-+	}
-+};
-+
-+static struct meshcfg_app server_app = {
-+	.path = srv_app_path,
-+	.agent_path = srv_agent_path,
-+	.cid = 0x05f1,
-+	.pid = 0x0002,
-+	.vid = 0x0001,
-+	.crpl = MAX_CRPL_SIZE,
-+	.num_ele = 2,
-+	.ele = {
-+		{
-+			.path = srv_ele_path_00,
-+			.index = PRIMARY_ELE_IDX,
-+			.mods = {CFG_SRV_MODEL, 0xffff},
-+			.vmods = {0xffffffff, 0xffffffff}
-+		},
-+		{
-+			.path = srv_ele_path_01,
-+			.index = PRIMARY_ELE_IDX + 1,
-+			.mods = {0x1000, 0xffff},
-+			.vmods = {0x5F10001, 0xffffffff}
-+		}
-+	}
-+};
-+
-+static uint8_t import_devkey[16];
-+static uint8_t import_netkey[16];
-+static const uint16_t import_netkey_idx = 0x001;
-+static const uint16_t import_node_unicast = 0xbcd;
-+
-+static void create_network(const void *data);
-+static struct startup_entry init_create_client = {
-+	.func = create_network,
-+	.data = NULL,
-+};
-+
-+static void import_node(const void *data);
-+static struct startup_entry init_import_server = {
-+	.func = import_node,
-+	.data = NULL,
-+};
-+
-+static void attach_node(const void *data);
-+static struct startup_entry init_attach_client = {
-+	.func = attach_node,
-+	.data = NULL,
-+};
-+
-+static void import_subnet(const void *data);
-+static struct startup_entry init_import_subnet = {
-+	.func = import_subnet,
-+	.data = NULL,
-+};
-+
-+static void import_remote(const void *data);
-+static struct startup_entry init_import_remote = {
-+	.func = import_remote,
-+	.data = NULL,
-+};
-+
-+static struct msg_data init_add_netkey_rsp = {
-+	.len = 5,
-+	.data = {0x80, 0x44, 0x00, 0x01, 0x00}
-+};
-+
-+static struct key_data init_add_netkey_req = {
-+	.idx = import_netkey_idx,
-+	.update = false
-+};
-+
-+static struct test_data init_add_netkey_data = {
-+	.ele_path = cli_ele_path_00,
-+	.dst = 0x0001,
-+	.subnet = 0x0000,
-+	.req = &init_add_netkey_req
-+};
-+
-+static void add_netkey(const void *data);
-+static struct startup_entry init_add_netkey = {
-+	.func = add_netkey,
-+	.data = &init_add_netkey_data
-+};
-+
-+static struct msg_data init_add_appkey_rsp = {
-+	.len = 6,
-+	.data = {0x80, 0x03, 0x00, 0x01, 0x10, 0x00}
-+};
-+
-+static struct key_data init_add_appkey_req = {
-+	.idx = 0x001,
-+	.update = false
-+};
-+
-+static struct test_data init_add_appkey_data = {
-+	.ele_path = cli_ele_path_00,
-+	.dst = import_node_unicast,
-+	.subnet = import_netkey_idx,
-+	.req = &init_add_appkey_req,
-+};
-+
-+static void create_appkey(const void *data);
-+static struct startup_entry init_create_appkey = {
-+	.func = create_appkey,
-+	.data = &init_add_appkey_data
-+};
-+
-+static void add_appkey(const void *data);
-+static struct startup_entry init_add_appkey = {
-+	.func = add_appkey,
-+	.data = &init_add_appkey_data
-+};
-+
-+static struct msg_data test_add_appkey_rsp = {
-+	.len = 6,
-+	.data = {0x80, 0x03, 0x00, 0x01, 0x20, 0x00}
-+};
-+
-+static struct key_data test_add_appkey_req = {
-+	.idx = 0x002,
-+	.update = false
-+};
-+
-+static struct test_data test_add_appkey = {
-+	.ele_path = cli_ele_path_00,
-+	.dst = import_node_unicast,
-+	.subnet = import_netkey_idx,
-+	.req = &test_add_appkey_req,
-+};
-+
-+static struct test_data common_route = {
-+	.ele_path = cli_ele_path_00,
-+	.dst = import_node_unicast,
-+	.subnet = import_netkey_idx,
-+};
-+
-+static struct msg_data test_set_ttl_rsp = {
-+	.len = 3,
-+	.data = { 0x80, 0x0E, 0x7}
-+};
-+
-+static struct msg_data test_set_ttl_req = {
-+	.len = 3,
-+	.data = { 0x80, 0x0D, 0x7}
-+};
-+
-+static struct msg_data test_bind_rsp = {
-+	.len = 9,
-+	.data = { 0x80, 0x3E, 0x00, 0xCE, 0x0B, 0x01, 0x00, 0x00, 0x10},
-+};
-+
-+static struct msg_data test_bind_req = {
-+	.len = 8,
-+	.data = { 0x80, 0x3D, 0xCE, 0x0B, 0x01, 0x00, 0x00, 0x10}
-+};
-+
-+
-+static struct msg_data test_bind_inv_mod_rsp = {
-+	.len = 9,
-+	.data = { 0x80, 0x3E, 0x02, 0xCE, 0x0B, 0x01, 0x00, 0x00, 0x11},
-+};
-+
-+static struct msg_data test_bind_inv_mod_req = {
-+	.len = 8,
-+	.data = { 0x80, 0x3D, 0xCE, 0x0B, 0x01, 0x00, 0x00, 0x11}
-+};
-+
-+static struct msg_data test_dev_comp_rsp = {
-+	.len = 28,
-+	.data = { 0x02, 0x00, 0xf1, 0x05, 0x02, 0x00, 0x01, 0x00, 0xff, 0x7f,
-+			0x05, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00,
-+			0x00, 0x01, 0x01, 0x00, 0x10, 0xf1, 0x05, 0x01, 0x00}
-+};
-+
-+static struct msg_data test_dev_comp_req = {
-+	.len = 3,
-+	.data = {0x80, 0x08, 0x00}
-+};
-+
-+static void append_byte_array(struct l_dbus_message_builder *builder,
-+					unsigned char *data, unsigned int len)
-+{
-+	unsigned int i;
-+
-+	l_dbus_message_builder_enter_array(builder, "y");
-+
-+	for (i = 0; i < len; i++)
-+		l_dbus_message_builder_append_basic(builder, 'y', &(data[i]));
-+
-+	l_dbus_message_builder_leave_array(builder);
-+}
-+
-+static void append_dict_entry_basic(struct l_dbus_message_builder *builder,
-+					const char *key, const char *signature,
-+					const void *data)
-+{
-+	if (!builder)
-+		return;
-+
-+	l_dbus_message_builder_enter_dict(builder, "sv");
-+	l_dbus_message_builder_append_basic(builder, 's', key);
-+	l_dbus_message_builder_enter_variant(builder, signature);
-+	l_dbus_message_builder_append_basic(builder, signature[0], data);
-+	l_dbus_message_builder_leave_variant(builder);
-+	l_dbus_message_builder_leave_dict(builder);
-+}
-+
-+static void init_continue(void *data)
-+{
-+	struct startup_entry *next_step;
-+	enum l_tester_stage stage = l_tester_get_stage(tester);
-+
-+	if (l_queue_isempty(startup_chain) &&
-+					stage == L_TESTER_STAGE_PRE_SETUP) {
-+		l_tester_pre_setup_complete(tester);
-+		init_done = true;
-+		return;
-+	}
-+
-+	next_step = l_queue_pop_head(startup_chain);
-+
-+	next_step->func(next_step->data);
-+}
-+
-+static void test_success(void *user_data)
-+{
-+	l_tester_test_passed(tester);
-+}
-+
-+static void test_fail(void *user_data)
-+{
-+	l_tester_test_failed(tester);
-+}
-+
-+static void try_set_node_proxy(void *a, void *b)
-+{
-+	struct l_dbus_proxy *proxy = a;
-+	struct meshcfg_node *node = b;
-+	const char *interface = l_dbus_proxy_get_interface(proxy);
-+	const char *path = l_dbus_proxy_get_path(proxy);
-+
-+	if (strcmp(node->path, path))
-+		return;
-+
-+	if (!strcmp(interface, MESH_MANAGEMENT_INTERFACE))
-+		node->mgmt_proxy = proxy;
-+	else if (!strcmp(interface, MESH_NODE_INTERFACE))
-+		node->proxy = proxy;
-+}
-+
-+static void generic_reply(struct l_dbus_proxy *proxy,
-+				struct l_dbus_message *msg, void *user_data)
-+{
-+	if (l_dbus_message_is_error(msg)) {
-+		const char *name;
-+
-+		l_dbus_message_get_error(msg, &name, NULL);
-+		l_error("D-Bus call failed: %s", name);
-+		l_idle_oneshot(test_fail, NULL, NULL);
-+	}
-+}
-+
-+static void send_cfg_msg_setup(struct l_dbus_message *msg, void *user_data)
-+{
-+	struct msg_data *req = user_data;
-+	struct l_dbus_message_builder *builder;
-+	bool remote = true;
-+
-+	builder = l_dbus_message_builder_new(msg);
-+
-+	l_dbus_message_builder_append_basic(builder, 'o',
-+							common_route.ele_path);
-+	l_dbus_message_builder_append_basic(builder, 'q', &common_route.dst);
-+	l_dbus_message_builder_append_basic(builder, 'b', &remote);
-+
-+	l_dbus_message_builder_append_basic(builder, 'q', &common_route.subnet);
-+
-+	/* Options */
-+	l_dbus_message_builder_enter_array(builder, "{sv}");
-+	l_dbus_message_builder_enter_dict(builder, "sv");
-+	l_dbus_message_builder_leave_dict(builder);
-+	l_dbus_message_builder_leave_array(builder);
-+
-+	/* Data */
-+	append_byte_array(builder, req->data, req->len);
-+	l_dbus_message_builder_finalize(builder);
-+	l_dbus_message_builder_destroy(builder);
-+}
-+
-+static void send_cfg_msg(const void *data)
-+{
-+	struct meshcfg_node *node = client_app.node;
-+
-+	l_dbus_proxy_method_call(node->proxy, "DevKeySend",
-+					send_cfg_msg_setup, generic_reply,
-+							(void *) data, NULL);
-+}
-+
-+static void add_key_setup(struct l_dbus_message *msg, void *user_data)
-+{
-+	struct test_data *tst = user_data;
-+	struct key_data *req = tst->req;
-+	struct l_dbus_message_builder *builder;
-+
-+	builder = l_dbus_message_builder_new(msg);
-+
-+	l_dbus_message_builder_append_basic(builder, 'o', tst->ele_path);
-+	l_dbus_message_builder_append_basic(builder, 'q', &tst->dst);
-+	l_dbus_message_builder_append_basic(builder, 'q', &req->idx);
-+	l_dbus_message_builder_append_basic(builder, 'q', &tst->subnet);
-+	l_dbus_message_builder_append_basic(builder, 'b', &req->update);
-+	l_dbus_message_builder_finalize(builder);
-+	l_dbus_message_builder_destroy(builder);
-+}
-+
-+static void add_appkey(const void *data)
-+{
-+	struct meshcfg_node *node = client_app.node;
-+
-+	l_dbus_proxy_method_call(node->proxy, "AddAppKey", add_key_setup,
-+					generic_reply, (void *) data, NULL);
-+}
-+
-+static void add_netkey(const void *data)
-+{
-+	struct meshcfg_node *node = client_app.node;
-+
-+	l_dbus_proxy_method_call(node->proxy, "AddNetKey", add_key_setup,
-+					generic_reply, (void *) data, NULL);
-+}
-+
-+static void create_appkey_reply(struct l_dbus_proxy *proxy,
-+				struct l_dbus_message *msg, void *user_data)
-+{
-+	enum l_tester_stage stage = l_tester_get_stage(tester);
-+
-+	if (l_dbus_message_is_error(msg)) {
-+		const char *name;
-+
-+		l_dbus_message_get_error(msg, &name, NULL);
-+		l_info("Add key failed: %s", name);
-+
-+		if (stage == L_TESTER_STAGE_PRE_SETUP) {
-+			init_failed = true;
-+			l_tester_pre_setup_failed(tester);
-+		} else
-+			l_tester_setup_failed(tester);
-+	} else {
-+		if (stage == L_TESTER_STAGE_PRE_SETUP)
-+			l_idle_oneshot(init_continue, NULL, NULL);
-+		else
-+			l_tester_setup_complete(tester);
-+	}
-+}
-+
-+static void create_appkey_setup(struct l_dbus_message *msg, void *user_data)
-+{
-+	struct test_data *tst = user_data;
-+	struct key_data *req = tst->req;
-+
-+	l_dbus_message_set_arguments(msg, "qq", tst->subnet, req->idx);
-+}
-+
-+static void create_appkey(const void *data)
-+{
-+	struct meshcfg_node *node = client_app.node;
-+
-+	if (!node || !node->proxy || !node->mgmt_proxy) {
-+		l_info("Node is not attached\n");
-+		l_tester_setup_failed(tester);
-+		return;
-+	}
-+
-+	l_dbus_proxy_method_call(node->mgmt_proxy, "CreateAppKey",
-+				create_appkey_setup, create_appkey_reply,
-+							(void *) data, NULL);
-+}
-+
-+static void import_remote_reply(struct l_dbus_proxy *proxy,
-+				struct l_dbus_message *msg, void *user_data)
-+{
-+	enum l_tester_stage stage = l_tester_get_stage(tester);
-+
-+	if (l_dbus_message_is_error(msg)) {
-+		const char *name;
-+
-+		l_dbus_message_get_error(msg, &name, NULL);
-+		l_info("Import remote call failed: %s", name);
-+
-+		if (stage == L_TESTER_STAGE_PRE_SETUP) {
-+			init_failed = true;
-+			l_tester_pre_setup_failed(tester);
-+		}
-+
-+		return;
-+	}
-+
-+	if (stage == L_TESTER_STAGE_PRE_SETUP)
-+		l_idle_oneshot(init_continue, NULL, NULL);
-+	else
-+		l_tester_test_abort(tester);
-+}
-+
-+static void import_remote_setup(struct l_dbus_message *msg, void *user_data)
-+{
-+	struct l_dbus_message_builder *builder;
-+
-+	builder = l_dbus_message_builder_new(msg);
-+
-+	l_dbus_message_builder_append_basic(builder, 'q', &import_node_unicast);
-+	l_dbus_message_builder_append_basic(builder, 'y', &server_app.num_ele);
-+	append_byte_array(builder, import_devkey, 16);
-+	l_dbus_message_builder_finalize(builder);
-+	l_dbus_message_builder_destroy(builder);
-+}
-+
-+static void import_remote(const void *data)
-+{
-+	struct meshcfg_node *node = client_app.node;
-+
-+	if (!node || !node->mgmt_proxy) {
-+		l_tester_test_abort(tester);
-+		return;
-+	}
-+
-+	l_dbus_proxy_method_call(node->mgmt_proxy, "ImportRemoteNode",
-+				import_remote_setup, import_remote_reply,
-+								NULL, NULL);
-+}
-+
-+static void import_subnet_reply(struct l_dbus_proxy *proxy,
-+				struct l_dbus_message *msg, void *user_data)
-+{
-+	enum l_tester_stage stage = l_tester_get_stage(tester);
-+
-+	if (stage != L_TESTER_STAGE_PRE_SETUP)
-+		return;
-+
-+	if (l_dbus_message_is_error(msg)) {
-+		const char *name;
-+
-+		l_dbus_message_get_error(msg, &name, NULL);
-+		l_info("Import subnet failed: %s", name);
-+
-+		init_failed = true;
-+		return l_tester_pre_setup_failed(tester);
-+	}
-+
-+	l_idle_oneshot(init_continue, NULL, NULL);
-+}
-+
-+static void import_subnet_setup(struct l_dbus_message *msg, void *user_data)
-+{
-+	struct l_dbus_message_builder *builder;
-+
-+	builder = l_dbus_message_builder_new(msg);
-+
-+	l_dbus_message_builder_append_basic(builder, 'q', &import_netkey_idx);
-+	append_byte_array(builder, import_netkey, 16);
-+	l_dbus_message_builder_finalize(builder);
-+	l_dbus_message_builder_destroy(builder);
-+}
-+
-+static void import_subnet(const void *data)
-+{
-+	struct meshcfg_node *node = client_app.node;
-+
-+	if (!node || !node->mgmt_proxy) {
-+		l_tester_test_abort(tester);
-+		return;
-+	}
-+
-+	l_dbus_proxy_method_call(node->mgmt_proxy, "ImportSubnet",
-+				import_subnet_setup, import_subnet_reply,
-+								NULL, NULL);
-+}
-+
-+static void attach_node_reply(struct l_dbus_proxy *proxy,
-+				struct l_dbus_message *msg, void *user_data)
-+{
-+	struct meshcfg_app *app = user_data;
-+	struct meshcfg_node *node = app->node;
-+	struct l_dbus_message_iter iter_cfg;
-+	uint32_t ivi;
-+	enum l_tester_stage stage = l_tester_get_stage(tester);
-+
-+	if (l_dbus_message_is_error(msg)) {
-+		const char *name;
-+
-+		l_dbus_message_get_error(msg, &name, NULL);
-+		l_error("Failed to attach node: %s", name);
-+		goto fail;
-+	}
-+
-+	if (!l_dbus_message_get_arguments(msg, "oa(ya(qa{sv}))",
-+						&node->path, &iter_cfg))
-+		goto fail;
-+
-+	l_info("Attached with path %s\n", node->path);
-+
-+	/* Populate node's proxies */
-+	l_queue_foreach(node_proxies, try_set_node_proxy, node);
-+
-+	/* Remove from orphaned proxies list */
-+	if (node->proxy)
-+		l_queue_remove(node_proxies, node->proxy);
-+
-+	if (node->mgmt_proxy)
-+		l_queue_remove(node_proxies, node->mgmt_proxy);
-+
-+	if (l_dbus_proxy_get_property(node->proxy, "IvIndex", "u", &ivi) &&
-+							ivi != iv_index)
-+		iv_index = ivi;
-+
-+	if (stage == L_TESTER_STAGE_PRE_SETUP)
-+		l_idle_oneshot(init_continue, NULL, NULL);
-+
-+	return;
-+
-+fail:
-+	l_free(node);
-+	app->node = NULL;
-+
-+	if (stage == L_TESTER_STAGE_PRE_SETUP) {
-+		init_failed = true;
-+		l_tester_pre_setup_failed(tester);
-+	}
-+}
-+
-+static void attach_node_setup(struct l_dbus_message *msg, void *user_data)
-+{
-+	struct meshcfg_app *app = user_data;
-+
-+	l_dbus_message_set_arguments(msg, "ot", app->path,
-+					l_get_be64(app->node->token.u8));
-+}
-+
-+static void attach_node(const void *data)
-+{
-+	struct meshcfg_node *node = client_app.node;
-+
-+	if (!node) {
-+		l_tester_test_abort(tester);
-+		return;
-+	}
-+
-+	l_dbus_proxy_method_call(net_proxy, "Attach",
-+					attach_node_setup, attach_node_reply,
-+					&client_app, NULL);
-+}
-+
-+static struct l_dbus_message *join_complete(struct l_dbus *dbus,
-+						struct l_dbus_message *message,
-+						void *user_data)
-+{
-+	struct meshcfg_app *app = user_data;
-+	uint64_t tmp;
-+	enum l_tester_stage stage = l_tester_get_stage(tester);
-+
-+	if (!l_dbus_message_get_arguments(message, "t", &tmp)) {
-+		if (stage == L_TESTER_STAGE_PRE_SETUP) {
-+			init_failed = true;
-+			l_tester_pre_setup_failed(tester);
-+		} else
-+			l_idle_oneshot(test_fail, NULL, NULL);
-+
-+		return l_dbus_message_new_error(message, dbus_err_args, NULL);
-+	}
-+
-+	app->node = l_new(struct meshcfg_node, 1);
-+	app->node->token.u64 = l_get_be64(&tmp);
-+
-+	if (stage == L_TESTER_STAGE_PRE_SETUP)
-+		l_idle_oneshot(init_continue, NULL, NULL);
-+
-+	return l_dbus_message_new_method_return(message);
-+}
-+
-+static void create_net_reply(struct l_dbus_proxy *proxy,
-+				struct l_dbus_message *msg, void *user_data)
-+{
-+	if (l_dbus_message_is_error(msg)) {
-+		const char *name;
-+
-+		l_dbus_message_get_error(msg, &name, NULL);
-+		l_error("Failed to create network: %s", name);
-+		l_tester_setup_failed(tester);
-+	}
-+}
-+
-+static void create_net_setup(struct l_dbus_message *msg, void *user_data)
-+{
-+	struct l_dbus_message_builder *builder;
-+
-+	/* Generate random UUID */
-+	l_uuid_v4(client_app.uuid);
-+
-+	builder = l_dbus_message_builder_new(msg);
-+
-+	l_dbus_message_builder_append_basic(builder, 'o', client_app.path);
-+	append_byte_array(builder, client_app.uuid, 16);
-+	l_dbus_message_builder_finalize(builder);
-+	l_dbus_message_builder_destroy(builder);
-+}
-+
-+static void create_network(const void *data)
-+{
-+	l_dbus_proxy_method_call(net_proxy, "CreateNetwork", create_net_setup,
-+						create_net_reply, &client_app,
-+						NULL);
-+}
-+
-+static void import_node_reply(struct l_dbus_proxy *proxy,
-+				struct l_dbus_message *msg, void *user_data)
-+{
-+	if (l_dbus_message_is_error(msg)) {
-+		const char *name;
-+
-+		l_dbus_message_get_error(msg, &name, NULL);
-+		l_error("Failed to import local node: %s", name);
-+		l_idle_oneshot(test_fail, NULL, NULL);
-+		return;
-+	}
-+}
-+
-+static void import_node_setup(struct l_dbus_message *msg, void *user_data)
-+{
-+	struct l_dbus_message_builder *builder;
-+	bool iv_update = false;
-+	bool key_refresh = false;
-+
-+	/* Generate random UUID, DevKey, NetKey */
-+	l_uuid_v4(server_app.uuid);
-+	l_getrandom(import_netkey, sizeof(import_netkey));
-+	l_getrandom(import_devkey, sizeof(import_devkey));
-+
-+	builder = l_dbus_message_builder_new(msg);
-+
-+	l_dbus_message_builder_append_basic(builder, 'o', server_app.path);
-+	append_byte_array(builder, server_app.uuid, 16);
-+	append_byte_array(builder, import_devkey, 16);
-+	append_byte_array(builder, import_netkey, 16);
-+	l_dbus_message_builder_append_basic(builder, 'q', &import_netkey_idx);
-+	l_dbus_message_builder_enter_array(builder, "{sv}");
-+	append_dict_entry_basic(builder, "IvUpdate", "b", &iv_update);
-+	append_dict_entry_basic(builder, "KeyRefresh", "b", &key_refresh);
-+	l_dbus_message_builder_leave_array(builder);
-+	l_dbus_message_builder_append_basic(builder, 'u', &iv_index);
-+	l_dbus_message_builder_append_basic(builder, 'q', &import_node_unicast);
-+	l_dbus_message_builder_finalize(builder);
-+	l_dbus_message_builder_destroy(builder);
-+}
-+
-+static void import_node(const void *data)
-+{
-+	l_dbus_proxy_method_call(net_proxy, "Import", import_node_setup,
-+						import_node_reply, &server_app,
-+						NULL);
-+}
-+
-+static void proxy_added(struct l_dbus_proxy *proxy, void *user_data)
-+{
-+	const char *interface = l_dbus_proxy_get_interface(proxy);
-+	const char *path = l_dbus_proxy_get_path(proxy);
-+
-+	l_info("Proxy added: %s (%s)\n", interface, path);
-+
-+	if (!strcmp(interface, MESH_NETWORK_INTERFACE)) {
-+		net_proxy = proxy;
-+		return;
-+	}
-+
-+	if (!strcmp(interface, MESH_MANAGEMENT_INTERFACE)) {
-+		if (client_app.node && client_app.node->path) {
-+			if (!strcmp(client_app.node->path, path)) {
-+				client_app.node->mgmt_proxy = proxy;
-+				return;
-+			}
-+		}
-+
-+		if (server_app.node && server_app.node->path) {
-+			if (!strcmp(server_app.node->path, path)) {
-+				server_app.node->mgmt_proxy = proxy;
-+				return;
-+			}
-+		}
-+
-+		l_queue_push_tail(node_proxies, proxy);
-+		return;
-+	}
-+
-+	if (!strcmp(interface, MESH_NODE_INTERFACE)) {
-+
-+		if (client_app.node && client_app.node->path) {
-+			if (!strcmp(client_app.node->path, path)) {
-+				client_app.node->proxy = proxy;
-+				return;
-+			}
-+		}
-+
-+		if (server_app.node && server_app.node->path) {
-+			if (!strcmp(server_app.node->path, path)) {
-+				server_app.node->proxy = proxy;
-+				return;
-+			}
-+		}
-+
-+		l_queue_push_tail(node_proxies, proxy);
-+	}
-+}
-+
-+static void proxy_removed(struct l_dbus_proxy *proxy, void *user_data)
-+{
-+	const char *interface = l_dbus_proxy_get_interface(proxy);
-+	const char *path = l_dbus_proxy_get_path(proxy);
-+
-+	l_info("Proxy removed: %s (%s)\n", interface, path);
-+
-+	if (!strcmp(interface, MESH_NETWORK_INTERFACE)) {
-+		l_info("Mesh removed, terminating.\n");
-+		l_main_quit();
-+		return;
-+	}
-+
-+	l_queue_remove(node_proxies, proxy);
-+}
-+
-+static void build_model(struct l_dbus_message_builder *builder, uint16_t mod_id,
-+					bool pub_enable, bool sub_enable)
-+{
-+	l_dbus_message_builder_enter_struct(builder, "qa{sv}");
-+	l_dbus_message_builder_append_basic(builder, 'q', &mod_id);
-+	l_dbus_message_builder_enter_array(builder, "{sv}");
-+	append_dict_entry_basic(builder, "Subscribe", "b", &sub_enable);
-+	append_dict_entry_basic(builder, "Publish", "b", &pub_enable);
-+	l_dbus_message_builder_leave_array(builder);
-+	l_dbus_message_builder_leave_struct(builder);
-+}
-+
-+static bool mod_getter(struct l_dbus *dbus,
-+				struct l_dbus_message *message,
-+				struct l_dbus_message_builder *builder,
-+				void *user_data)
-+{
-+	struct meshcfg_el *ele = user_data;
-+	uint32_t i;
-+
-+	l_dbus_message_builder_enter_array(builder, "(qa{sv})");
-+
-+	for (i = 0; i < L_ARRAY_SIZE(ele->mods); i++) {
-+		bool is_cfg = IS_CONFIG_MODEL(ele->mods[i]);
-+
-+		if (ele->mods[i] == 0xffff)
-+			continue;
-+
-+		build_model(builder, ele->mods[i], !is_cfg, !is_cfg);
-+	}
-+
-+	l_dbus_message_builder_leave_array(builder);
-+
-+	return true;
-+}
-+
-+static void build_vmodel(struct l_dbus_message_builder *builder, uint16_t vid,
-+				uint16_t mod, bool pub_enable, bool sub_enable)
-+{
-+	l_dbus_message_builder_enter_struct(builder, "qqa{sv}");
-+	l_dbus_message_builder_append_basic(builder, 'q', &vid);
-+	l_dbus_message_builder_append_basic(builder, 'q', &mod);
-+	l_dbus_message_builder_enter_array(builder, "{sv}");
-+	append_dict_entry_basic(builder, "Subscribe", "b", &sub_enable);
-+	append_dict_entry_basic(builder, "Publish", "b", &pub_enable);
-+	l_dbus_message_builder_leave_array(builder);
-+	l_dbus_message_builder_leave_struct(builder);
-+}
-+
-+static bool vmod_getter(struct l_dbus *dbus,
-+				struct l_dbus_message *message,
-+				struct l_dbus_message_builder *builder,
-+				void *user_data)
-+{
-+	struct meshcfg_el *ele = user_data;
-+	uint32_t i;
-+
-+	l_dbus_message_builder_enter_array(builder, "(qqa{sv})");
-+
-+	for (i = 0; i < L_ARRAY_SIZE(ele->vmods); i++) {
-+		if (ele->vmods[i] == 0xffffffff)
-+			continue;
-+
-+		build_vmodel(builder, ele->vmods[i] >> 16,
-+				ele->vmods[i] & 0xffff, true, true);
-+	}
-+
-+	l_dbus_message_builder_leave_array(builder);
-+
-+	return true;
-+}
-+
-+static bool ele_idx_getter(struct l_dbus *dbus,
-+				struct l_dbus_message *message,
-+				struct l_dbus_message_builder *builder,
-+				void *user_data)
-+{
-+	struct meshcfg_el *ele = user_data;
-+
-+	l_dbus_message_builder_append_basic(builder, 'y', &ele->index);
-+
-+	return true;
-+}
-+
-+static struct l_dbus_message *dev_msg_recv_call(struct l_dbus *dbus,
-+						struct l_dbus_message *msg,
-+						void *user_data)
-+{
-+	struct msg_data *rsp;
-+	struct l_dbus_message_iter iter;
-+	uint16_t src, idx;
-+	uint8_t *data;
-+	uint32_t n;
-+	bool rmt;
-+	enum l_tester_stage stage = l_tester_get_stage(tester);
-+
-+	if (!l_dbus_message_get_arguments(msg, "qbqay", &src, &rmt, &idx,
-+								&iter)) {
-+		l_error("Cannot parse received message");
-+		return l_dbus_message_new_error(msg, dbus_err_args, NULL);
-+	}
-+
-+	if (!l_dbus_message_iter_get_fixed_array(&iter, &data, &n)) {
-+		l_error("Cannot parse received message: data");
-+		return l_dbus_message_new_error(msg, dbus_err_args, NULL);
-+	}
-+
-+	printf("Received dev key message (len %u):", n);
-+	{
-+		uint32_t i;
-+
-+		for (i = 0; i < n; i++)
-+			printf("%x ", data[i]);
-+		printf("\n");
-+	}
-+
-+	if (stage == L_TESTER_STAGE_PRE_SETUP) {
-+		if (n == init_add_netkey_rsp.len &&
-+				!memcmp(data, init_add_netkey_rsp.data, n))
-+			l_idle_oneshot(init_continue, NULL, NULL);
-+		else if (n == init_add_appkey_rsp.len &&
-+				!memcmp(data, init_add_appkey_rsp.data, n))
-+			l_idle_oneshot(init_continue, NULL, NULL);
-+		else {
-+			init_failed = true;
-+			l_tester_pre_setup_failed(tester);
-+		}
-+	} else {
-+		rsp = l_tester_get_data(tester);
-+
-+		if (rsp && rsp->len == n && !memcmp(data, rsp->data, n))
-+			l_idle_oneshot(test_success, NULL, NULL);
-+		else
-+			l_idle_oneshot(test_fail, NULL, NULL);
-+	}
-+
-+	return l_dbus_message_new_method_return(msg);
-+}
-+
-+static void setup_ele_iface(struct l_dbus_interface *iface)
-+{
-+	/* Properties */
-+	l_dbus_interface_property(iface, "Index", 0, "y", ele_idx_getter,
-+									NULL);
-+	l_dbus_interface_property(iface, "VendorModels", 0, "a(qqa{sv})",
-+							vmod_getter, NULL);
-+	l_dbus_interface_property(iface, "Models", 0, "a(qa{sv})", mod_getter,
-+									NULL);
-+
-+	/* Methods */
-+	l_dbus_interface_method(iface, "DevKeyMessageReceived", 0,
-+				dev_msg_recv_call, "", "qbqay", "source",
-+				"remote", "net_index", "data");
-+
-+	/* TODO: Other methods? */
-+}
-+
-+static bool cid_getter(struct l_dbus *dbus,
-+				struct l_dbus_message *message,
-+				struct l_dbus_message_builder *builder,
-+				void *user_data)
-+{
-+	struct meshcfg_app *app = user_data;
-+
-+	l_dbus_message_builder_append_basic(builder, 'q', &app->cid);
-+
-+	return true;
-+}
-+
-+static bool pid_getter(struct l_dbus *dbus,
-+				struct l_dbus_message *message,
-+				struct l_dbus_message_builder *builder,
-+				void *user_data)
-+{
-+	struct meshcfg_app *app = user_data;
-+
-+	l_dbus_message_builder_append_basic(builder, 'q', &app->pid);
-+
-+	return true;
-+}
-+
-+static bool vid_getter(struct l_dbus *dbus,
-+				struct l_dbus_message *message,
-+				struct l_dbus_message_builder *builder,
-+				void *user_data)
-+{
-+	struct meshcfg_app *app = user_data;
-+
-+	l_dbus_message_builder_append_basic(builder, 'q', &app->vid);
-+
-+	return true;
-+}
-+static bool crpl_getter(struct l_dbus *dbus,
-+				struct l_dbus_message *message,
-+				struct l_dbus_message_builder *builder,
-+				void *user_data)
-+{
-+	struct meshcfg_app *app = user_data;
-+
-+	l_dbus_message_builder_append_basic(builder, 'q', &app->crpl);
-+
-+	return true;
-+}
-+
-+static void property_changed(struct l_dbus_proxy *proxy, const char *name,
-+				struct l_dbus_message *msg, void *user_data)
-+{
-+	struct meshcfg_app *app = user_data;
-+	struct meshcfg_node *node = app->node;
-+	const char *interface = l_dbus_proxy_get_interface(proxy);
-+	const char *path = l_dbus_proxy_get_path(proxy);
-+
-+	if (strcmp(path, node->path))
-+		return;
-+
-+	printf("Property changed: %s %s %s\n", name, path, interface);
-+
-+	if (!strcmp(interface, "org.bluez.mesh.Node1")) {
-+
-+		if (!strcmp(name, "IvIndex")) {
-+			uint32_t ivi;
-+
-+			if (!l_dbus_message_get_arguments(msg, "u", &ivi))
-+				return;
-+
-+			printf("New IV Index: %u\n", ivi);
-+		}
-+	}
-+}
-+
-+static void setup_app_iface(struct l_dbus_interface *iface)
-+{
-+	l_dbus_interface_property(iface, "CompanyID", 0, "q", cid_getter,
-+									NULL);
-+	l_dbus_interface_property(iface, "VersionID", 0, "q", vid_getter,
-+									NULL);
-+	l_dbus_interface_property(iface, "ProductID", 0, "q", pid_getter,
-+									NULL);
-+	l_dbus_interface_property(iface, "CRPL", 0, "q", crpl_getter, NULL);
-+
-+	l_dbus_interface_method(iface, "JoinComplete", 0, join_complete,
-+							"", "t", "token");
-+
-+	/* TODO: Other methods? */
-+}
-+
-+static bool register_app_iface(void)
-+{
-+	if (!l_dbus_register_interface(dbus, MESH_APPLICATION_INTERFACE,
-+						setup_app_iface, NULL, false)) {
-+		l_error("Failed to register interface %s",
-+						MESH_APPLICATION_INTERFACE);
-+		return false;
-+	}
-+
-+	if (!l_dbus_register_interface(dbus, MESH_ELEMENT_INTERFACE,
-+						setup_ele_iface, NULL, false)) {
-+		l_error("Failed to register interface %s",
-+						MESH_ELEMENT_INTERFACE);
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
-+static bool register_app(struct meshcfg_app *app)
-+{
-+	uint32_t i;
-+
-+	if (!l_dbus_register_object(dbus, app->path, NULL, NULL,
-+					MESH_APPLICATION_INTERFACE, app,
-+									NULL)) {
-+		l_error("Failed to register object %s", app->path);
-+		return false;
-+	}
-+
-+	for (i = 0; i < L_ARRAY_SIZE(app->ele) && i < app->num_ele; i++) {
-+		if (!l_dbus_register_object(dbus, app->ele[i].path, NULL, NULL,
-+				MESH_ELEMENT_INTERFACE, &app->ele[i], NULL)) {
-+			l_error("Failed to register obj %s", app->ele[i].path);
-+			l_dbus_unregister_interface(dbus,
-+							MESH_ELEMENT_INTERFACE);
-+			return false;
-+		}
-+	}
-+
-+	if (!l_dbus_object_add_interface(dbus, app->path,
-+				L_DBUS_INTERFACE_OBJECT_MANAGER, NULL)) {
-+		l_error("Failed to add interface %s",
-+					L_DBUS_INTERFACE_OBJECT_MANAGER);
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
-+static void client_ready(struct l_dbus_client *client, void *user_data)
-+{
-+	enum l_tester_stage stage = l_tester_get_stage(tester);
-+
-+	printf("D-Bus client ready\n");
-+
-+	if (!register_app_iface() || !register_app(&client_app) ||
-+					!register_app(&server_app))
-+		return;
-+
-+	if (stage == L_TESTER_STAGE_PRE_SETUP)
-+		init_continue(NULL);
-+}
-+
-+static void client_connected(struct l_dbus *dbus, void *user_data)
-+{
-+	printf("D-Bus client connected\n");
-+}
-+
-+static void client_disconnected(struct l_dbus *dbus, void *user_data)
-+{
-+	printf("D-Bus client disconnected, exit\n");
-+	l_main_exit();
-+}
-+
-+static void ready_callback(void *user_data)
-+{
-+	printf("Connected to D-Bus\n");
-+
-+	if (l_dbus_object_manager_enable(dbus, "/"))
-+		return;
-+
-+	printf("Failed to register the ObjectManager\n");
-+	init_failed = true;
-+	l_tester_pre_setup_failed(tester);
-+}
-+
-+static void init_test(const void *data)
-+{
-+	if (init_failed) {
-+		l_tester_pre_setup_failed(tester);
-+		return;
-+	}
-+
-+	if (init_done) {
-+		l_tester_pre_setup_complete(tester);
-+		return;
-+	}
-+
-+	node_proxies = l_queue_new();
-+
-+	dbus = l_dbus_new_default(L_DBUS_SESSION_BUS);
-+
-+	l_dbus_set_ready_handler(dbus, ready_callback, NULL, NULL);
-+	client = l_dbus_client_new(dbus, BLUEZ_MESH_NAME, "/org/bluez/mesh");
-+
-+	l_dbus_client_set_connect_handler(client, client_connected, NULL, NULL);
-+	l_dbus_client_set_disconnect_handler(client, client_disconnected, NULL,
-+									NULL);
-+	l_dbus_client_set_proxy_handlers(client, proxy_added, proxy_removed,
-+						property_changed, NULL, NULL);
-+	l_dbus_client_set_ready_handler(client, client_ready, NULL, NULL);
-+
-+}
-+
-+static void init_startup_chain(void)
-+{
-+
-+	startup_chain = l_queue_new();
-+
-+	l_queue_push_tail(startup_chain, &init_create_client);
-+	l_queue_push_tail(startup_chain, &init_import_server);
-+	l_queue_push_tail(startup_chain, &init_attach_client);
-+	l_queue_push_tail(startup_chain, &init_import_subnet);
-+	l_queue_push_tail(startup_chain, &init_import_remote);
-+	l_queue_push_tail(startup_chain, &init_add_netkey);
-+	l_queue_push_tail(startup_chain, &init_create_appkey);
-+	l_queue_push_tail(startup_chain, &init_add_appkey);
-+}
-+
-+static int del_fobject(const char *fpath, const struct stat *sb, int typeflag,
-+						struct FTW *ftwbuf)
-+{
-+	switch (typeflag) {
-+	case FTW_DP:
-+		rmdir(fpath);
-+		break;
-+
-+	case FTW_SL:
-+	default:
-+		remove(fpath);
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+#define tester_add_with_response(name, test_data, test_func, rsp_data)	\
-+	l_tester_add_full(tester, name, test_data, init_test, NULL,	\
-+				test_func, NULL, NULL, 2, rsp_data, NULL)
-+
-+static void signal_callback(unsigned int signum, void *user_data)
-+{
-+	switch (signum) {
-+	case SIGINT:
-+	case SIGTERM:
-+		if (!terminated)
-+			l_main_quit();
-+
-+		terminated = true;
-+		break;
-+	}
-+}
-+
-+static void done_callback(struct l_tester *tester)
-+{
-+	if (terminated)
-+		return;
-+
-+	l_main_quit();
-+	terminated = true;
-+}
-+
-+static const struct option options[] = {
-+	{ "version",	no_argument,		NULL, 'v' },
-+	{ "list",	no_argument,		NULL, 'l' },
-+	{ "prefix",	required_argument,	NULL, 'p' },
-+	{ "string",	required_argument,	NULL, 's' },
-+	{ }
-+};
-+
-+static void usage(void)
-+{
-+	fprintf(stderr,
-+		"Usage:\n"
-+		"\%s [options]\n", tester_name);
-+	fprintf(stderr,
-+		"Options:\n"
-+		"\t-v, --version	Show version information and exit\n"
-+		"\t-l, --list	Only list the tests to be run\n"
-+		"\t-p, --prefix	Run tests matching the provided prefix\n"
-+		"\t-s, --string	Run tests matching the provided string\n");
-+}
-+
-+static void parse_options(int *argc, char ***argv)
-+{
-+	tester_name = strrchr(*argv[0], '/');
-+
-+	for (;;) {
-+		int opt;
-+
-+		opt = getopt_long(*argc, *argv, "s:p:vl", options, NULL);
-+		if (opt < 0)
-+			break;
-+
-+		switch (opt) {
-+		case 'v':
-+			printf("%s\n", VERSION);
-+			exit(EXIT_SUCCESS);
-+		case 'l':
-+			option_list = true;
-+			break;
-+		case 'p':
-+			option_prefix = optarg;
-+			break;
-+		case 's':
-+			option_string = optarg;
-+			break;
-+		default:
-+			usage();
-+			exit(0);
-+		}
-+	}
-+}
-+
-+static bool setup_test_dir(void)
-+{
-+	char *bluez_dir;
-+	char buf[PATH_MAX];
-+	ssize_t len;
-+
-+	len = readlink("/proc/self/exe", buf, sizeof(buf) - 1);
-+
-+	if (len == -1)
-+		return false;
-+
-+	buf[len] = '\0';
-+
-+	test_dir = l_strdup_printf("/tmp/mesh");
-+	nftw(test_dir, del_fobject, 5, FTW_DEPTH | FTW_PHYS);
-+
-+	if (mkdir(test_dir, 0700) != 0) {
-+		printf("Failed to create dir %s\n", test_dir);
-+		l_free(test_dir);
-+		return false;
-+	}
-+
-+	bluez_dir = dirname(dirname(buf));
-+	exe = l_strdup_printf("%s/mesh/bluetooth-meshd", bluez_dir);
-+	io = l_strdup_printf("unit:%s/%s", test_dir, "test_sk");
-+
-+	return true;
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+	int status = EXIT_SUCCESS, pid = -1;
-+
-+	if (!setup_test_dir())
-+		return EXIT_FAILURE;
-+
-+	l_log_set_stderr();
-+	l_main_init();
-+
-+	parse_options(&argc, &argv);
-+
-+	if (!option_list) {
-+
-+		pid = fork();
-+		if (pid < 0)
-+			return EXIT_FAILURE;
-+
-+		if (pid == 0) {
-+			char *const dargs[] = {
-+				exe,
-+				"--io",
-+				io,
-+				"-s",
-+				test_dir,
-+				NULL
-+			};
-+
-+			printf("spawning %s --io %s -s %s", exe, io, test_dir);
-+			execv(exe, dargs);
-+			return EXIT_SUCCESS;
-+		}
-+	}
-+
-+	tester = l_tester_new(option_prefix, option_string, option_list);
-+
-+	init_startup_chain();
-+
-+	l_tester_add_full(tester, "Config AppKey Add: Success",
-+			&test_add_appkey, init_test, create_appkey, add_appkey,
-+				NULL, NULL, 2, &test_add_appkey_rsp, NULL);
-+
-+	tester_add_with_response("Config Default TTL Set: Success",
-+					&test_set_ttl_req, send_cfg_msg,
-+							&test_set_ttl_rsp);
-+
-+	tester_add_with_response("Config Get Device Composition: Success",
-+					&test_dev_comp_req, send_cfg_msg,
-+							&test_dev_comp_rsp);
-+
-+	tester_add_with_response("Config Bind: Success",
-+					&test_bind_req, send_cfg_msg,
-+							&test_bind_rsp);
-+
-+	tester_add_with_response("Config Bind: Error Invalid Model",
-+					&test_bind_inv_mod_req, send_cfg_msg,
-+							&test_bind_inv_mod_rsp);
-+
-+	l_tester_start(tester, done_callback);
-+
-+	if (!option_list && !terminated) {
-+		l_main_run_with_signal(signal_callback, NULL);
-+
-+		if (!l_tester_summarize(tester))
-+			status = EXIT_FAILURE;
-+	}
-+
-+	l_queue_destroy(startup_chain, NULL);
-+	l_queue_destroy(node_proxies, NULL);
-+
-+	l_free(client_app.node);
-+	l_free(server_app.node);
-+	l_dbus_client_destroy(client);
-+	l_dbus_destroy(dbus);
-+
-+	l_tester_destroy(tester);
-+
-+	if (pid > 0)
-+		kill(pid, SIGTERM);
-+
-+	l_free(test_dir);
-+	l_free(io);
-+	l_free(exe);
-+
-+	return status;
-+}
--- 
-2.26.2
+VGhpcyBpcyBhdXRvbWF0ZWQgZW1haWwgYW5kIHBsZWFzZSBkbyBub3QgcmVwbHkgdG8gdGhpcyBl
+bWFpbCEKCkRlYXIgc3VibWl0dGVyLAoKVGhhbmsgeW91IGZvciBzdWJtaXR0aW5nIHRoZSBwYXRj
+aGVzIHRvIHRoZSBsaW51eCBibHVldG9vdGggbWFpbGluZyBsaXN0LgpUaGlzIGlzIGEgQ0kgdGVz
+dCByZXN1bHRzIHdpdGggeW91ciBwYXRjaCBzZXJpZXM6ClBXIExpbms6aHR0cHM6Ly9wYXRjaHdv
+cmsua2VybmVsLm9yZy9wcm9qZWN0L2JsdWV0b290aC9saXN0Lz9zZXJpZXM9NDUxODc1CgotLS1U
+ZXN0IHJlc3VsdC0tLQoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IENoZWNr
+UGF0Y2ggLSBQQVNTCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogQ2hlY2tH
+aXRMaW50IC0gUEFTUwoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IENoZWNr
+QnVpbGQgLSBGQUlMCk91dHB1dDoKdG9vbHMvbWVzaC1jZmd0ZXN0LmM6IEluIGZ1bmN0aW9uIOKA
+mGluaXRfY29udGludWXigJk6CnRvb2xzL21lc2gtY2ZndGVzdC5jOjM1Njo3OiBlcnJvcjogdmFy
+aWFibGUg4oCYc3RhZ2XigJkgaGFzIGluaXRpYWxpemVyIGJ1dCBpbmNvbXBsZXRlIHR5cGUKICAz
+NTYgfCAgZW51bSBsX3Rlc3Rlcl9zdGFnZSBzdGFnZSA9IGxfdGVzdGVyX2dldF9zdGFnZSh0ZXN0
+ZXIpOwogICAgICB8ICAgICAgIF5+fn5+fn5+fn5+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOjM1
+NjozMDogZXJyb3I6IGltcGxpY2l0IGRlY2xhcmF0aW9uIG9mIGZ1bmN0aW9uIOKAmGxfdGVzdGVy
+X2dldF9zdGFnZeKAmSBbLVdlcnJvcj1pbXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJhdGlvbl0KICAz
+NTYgfCAgZW51bSBsX3Rlc3Rlcl9zdGFnZSBzdGFnZSA9IGxfdGVzdGVyX2dldF9zdGFnZSh0ZXN0
+ZXIpOwogICAgICB8ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXn5+fn5+fn5+fn5+fn5+
+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOjM1NjoyMjogZXJyb3I6IHN0b3JhZ2Ugc2l6ZSBvZiDi
+gJhzdGFnZeKAmSBpc27igJl0IGtub3duCiAgMzU2IHwgIGVudW0gbF90ZXN0ZXJfc3RhZ2Ugc3Rh
+Z2UgPSBsX3Rlc3Rlcl9nZXRfc3RhZ2UodGVzdGVyKTsKICAgICAgfCAgICAgICAgICAgICAgICAg
+ICAgICBefn5+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzozNTk6MTU6IGVycm9yOiDigJhMX1RFU1RF
+Ul9TVEFHRV9QUkVfU0VUVVDigJkgdW5kZWNsYXJlZCAoZmlyc3QgdXNlIGluIHRoaXMgZnVuY3Rp
+b24pCiAgMzU5IHwgICAgICBzdGFnZSA9PSBMX1RFU1RFUl9TVEFHRV9QUkVfU0VUVVApIHsKICAg
+ICAgfCAgICAgICAgICAgICAgIF5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fgp0b29scy9tZXNoLWNm
+Z3Rlc3QuYzozNTk6MTU6IG5vdGU6IGVhY2ggdW5kZWNsYXJlZCBpZGVudGlmaWVyIGlzIHJlcG9y
+dGVkIG9ubHkgb25jZSBmb3IgZWFjaCBmdW5jdGlvbiBpdCBhcHBlYXJzIGluCnRvb2xzL21lc2gt
+Y2ZndGVzdC5jOjM2MDozOiBlcnJvcjogaW1wbGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24g
+4oCYbF90ZXN0ZXJfcHJlX3NldHVwX2NvbXBsZXRl4oCZIFstV2Vycm9yPWltcGxpY2l0LWZ1bmN0
+aW9uLWRlY2xhcmF0aW9uXQogIDM2MCB8ICAgbF90ZXN0ZXJfcHJlX3NldHVwX2NvbXBsZXRlKHRl
+c3Rlcik7CiAgICAgIHwgICBefn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn4KdG9vbHMvbWVzaC1j
+Zmd0ZXN0LmM6MzU2OjIyOiBlcnJvcjogdW51c2VkIHZhcmlhYmxlIOKAmHN0YWdl4oCZIFstV2Vy
+cm9yPXVudXNlZC12YXJpYWJsZV0KICAzNTYgfCAgZW51bSBsX3Rlc3Rlcl9zdGFnZSBzdGFnZSA9
+IGxfdGVzdGVyX2dldF9zdGFnZSh0ZXN0ZXIpOwogICAgICB8ICAgICAgICAgICAgICAgICAgICAg
+IF5+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOiBJbiBmdW5jdGlvbiDigJh0ZXN0X3N1Y2Nlc3Pi
+gJk6CnRvb2xzL21lc2gtY2ZndGVzdC5jOjM3MjoyOiBlcnJvcjogaW1wbGljaXQgZGVjbGFyYXRp
+b24gb2YgZnVuY3Rpb24g4oCYbF90ZXN0ZXJfdGVzdF9wYXNzZWTigJkgWy1XZXJyb3I9aW1wbGlj
+aXQtZnVuY3Rpb24tZGVjbGFyYXRpb25dCiAgMzcyIHwgIGxfdGVzdGVyX3Rlc3RfcGFzc2VkKHRl
+c3Rlcik7CiAgICAgIHwgIF5+fn5+fn5+fn5+fn5+fn5+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5j
+OiBJbiBmdW5jdGlvbiDigJh0ZXN0X2ZhaWzigJk6CnRvb2xzL21lc2gtY2ZndGVzdC5jOjM3Nzoy
+OiBlcnJvcjogaW1wbGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24g4oCYbF90ZXN0ZXJfdGVz
+dF9mYWlsZWTigJkgWy1XZXJyb3I9aW1wbGljaXQtZnVuY3Rpb24tZGVjbGFyYXRpb25dCiAgMzc3
+IHwgIGxfdGVzdGVyX3Rlc3RfZmFpbGVkKHRlc3Rlcik7CiAgICAgIHwgIF5+fn5+fn5+fn5+fn5+
+fn5+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOiBJbiBmdW5jdGlvbiDigJhjcmVhdGVfYXBwa2V5
+X3JlcGx54oCZOgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo0ODA6NzogZXJyb3I6IHZhcmlhYmxlIOKA
+mHN0YWdl4oCZIGhhcyBpbml0aWFsaXplciBidXQgaW5jb21wbGV0ZSB0eXBlCiAgNDgwIHwgIGVu
+dW0gbF90ZXN0ZXJfc3RhZ2Ugc3RhZ2UgPSBsX3Rlc3Rlcl9nZXRfc3RhZ2UodGVzdGVyKTsKICAg
+ICAgfCAgICAgICBefn5+fn5+fn5+fn5+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo0ODA6MjI6IGVy
+cm9yOiBzdG9yYWdlIHNpemUgb2Yg4oCYc3RhZ2XigJkgaXNu4oCZdCBrbm93bgogIDQ4MCB8ICBl
+bnVtIGxfdGVzdGVyX3N0YWdlIHN0YWdlID0gbF90ZXN0ZXJfZ2V0X3N0YWdlKHRlc3Rlcik7CiAg
+ICAgIHwgICAgICAgICAgICAgICAgICAgICAgXn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6NDg4
+OjE2OiBlcnJvcjog4oCYTF9URVNURVJfU1RBR0VfUFJFX1NFVFVQ4oCZIHVuZGVjbGFyZWQgKGZp
+cnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQogIDQ4OCB8ICAgaWYgKHN0YWdlID09IExfVEVTVEVS
+X1NUQUdFX1BSRV9TRVRVUCkgewogICAgICB8ICAgICAgICAgICAgICAgIF5+fn5+fn5+fn5+fn5+
+fn5+fn5+fn5+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo0OTA6NDogZXJyb3I6IGltcGxpY2l0IGRl
+Y2xhcmF0aW9uIG9mIGZ1bmN0aW9uIOKAmGxfdGVzdGVyX3ByZV9zZXR1cF9mYWlsZWTigJkgWy1X
+ZXJyb3I9aW1wbGljaXQtZnVuY3Rpb24tZGVjbGFyYXRpb25dCiAgNDkwIHwgICAgbF90ZXN0ZXJf
+cHJlX3NldHVwX2ZhaWxlZCh0ZXN0ZXIpOwogICAgICB8ICAgIF5+fn5+fn5+fn5+fn5+fn5+fn5+
+fn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6NDkyOjQ6IGVycm9yOiBpbXBsaWNpdCBkZWNsYXJh
+dGlvbiBvZiBmdW5jdGlvbiDigJhsX3Rlc3Rlcl9zZXR1cF9mYWlsZWTigJkgWy1XZXJyb3I9aW1w
+bGljaXQtZnVuY3Rpb24tZGVjbGFyYXRpb25dCiAgNDkyIHwgICAgbF90ZXN0ZXJfc2V0dXBfZmFp
+bGVkKHRlc3Rlcik7CiAgICAgIHwgICAgXn5+fn5+fn5+fn5+fn5+fn5+fn5+CnRvb2xzL21lc2gt
+Y2ZndGVzdC5jOjQ5Nzo0OiBlcnJvcjogaW1wbGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24g
+4oCYbF90ZXN0ZXJfc2V0dXBfY29tcGxldGXigJkgWy1XZXJyb3I9aW1wbGljaXQtZnVuY3Rpb24t
+ZGVjbGFyYXRpb25dCiAgNDk3IHwgICAgbF90ZXN0ZXJfc2V0dXBfY29tcGxldGUodGVzdGVyKTsK
+ICAgICAgfCAgICBefn5+fn5+fn5+fn5+fn5+fn5+fn5+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo0
+ODA6MjI6IGVycm9yOiB1bnVzZWQgdmFyaWFibGUg4oCYc3RhZ2XigJkgWy1XZXJyb3I9dW51c2Vk
+LXZhcmlhYmxlXQogIDQ4MCB8ICBlbnVtIGxfdGVzdGVyX3N0YWdlIHN0YWdlID0gbF90ZXN0ZXJf
+Z2V0X3N0YWdlKHRlc3Rlcik7CiAgICAgIHwgICAgICAgICAgICAgICAgICAgICAgXn5+fn4KdG9v
+bHMvbWVzaC1jZmd0ZXN0LmM6IEluIGZ1bmN0aW9uIOKAmGltcG9ydF9yZW1vdGVfcmVwbHnigJk6
+CnRvb2xzL21lc2gtY2ZndGVzdC5jOjUyNzo3OiBlcnJvcjogdmFyaWFibGUg4oCYc3RhZ2XigJkg
+aGFzIGluaXRpYWxpemVyIGJ1dCBpbmNvbXBsZXRlIHR5cGUKICA1MjcgfCAgZW51bSBsX3Rlc3Rl
+cl9zdGFnZSBzdGFnZSA9IGxfdGVzdGVyX2dldF9zdGFnZSh0ZXN0ZXIpOwogICAgICB8ICAgICAg
+IF5+fn5+fn5+fn5+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOjUyNzoyMjogZXJyb3I6IHN0b3Jh
+Z2Ugc2l6ZSBvZiDigJhzdGFnZeKAmSBpc27igJl0IGtub3duCiAgNTI3IHwgIGVudW0gbF90ZXN0
+ZXJfc3RhZ2Ugc3RhZ2UgPSBsX3Rlc3Rlcl9nZXRfc3RhZ2UodGVzdGVyKTsKICAgICAgfCAgICAg
+ICAgICAgICAgICAgICAgICBefn5+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo1MzU6MTY6IGVycm9y
+OiDigJhMX1RFU1RFUl9TVEFHRV9QUkVfU0VUVVDigJkgdW5kZWNsYXJlZCAoZmlyc3QgdXNlIGlu
+IHRoaXMgZnVuY3Rpb24pCiAgNTM1IHwgICBpZiAoc3RhZ2UgPT0gTF9URVNURVJfU1RBR0VfUFJF
+X1NFVFVQKSB7CiAgICAgIHwgICAgICAgICAgICAgICAgXn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
+CnRvb2xzL21lc2gtY2ZndGVzdC5jOjU0NjozOiBlcnJvcjogaW1wbGljaXQgZGVjbGFyYXRpb24g
+b2YgZnVuY3Rpb24g4oCYbF90ZXN0ZXJfdGVzdF9hYm9ydOKAmSBbLVdlcnJvcj1pbXBsaWNpdC1m
+dW5jdGlvbi1kZWNsYXJhdGlvbl0KICA1NDYgfCAgIGxfdGVzdGVyX3Rlc3RfYWJvcnQodGVzdGVy
+KTsKICAgICAgfCAgIF5+fn5+fn5+fn5+fn5+fn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6NTI3
+OjIyOiBlcnJvcjogdW51c2VkIHZhcmlhYmxlIOKAmHN0YWdl4oCZIFstV2Vycm9yPXVudXNlZC12
+YXJpYWJsZV0KICA1MjcgfCAgZW51bSBsX3Rlc3Rlcl9zdGFnZSBzdGFnZSA9IGxfdGVzdGVyX2dl
+dF9zdGFnZSh0ZXN0ZXIpOwogICAgICB8ICAgICAgICAgICAgICAgICAgICAgIF5+fn5+CnRvb2xz
+L21lc2gtY2ZndGVzdC5jOiBJbiBmdW5jdGlvbiDigJhpbXBvcnRfc3VibmV0X3JlcGx54oCZOgp0
+b29scy9tZXNoLWNmZ3Rlc3QuYzo1Nzk6NzogZXJyb3I6IHZhcmlhYmxlIOKAmHN0YWdl4oCZIGhh
+cyBpbml0aWFsaXplciBidXQgaW5jb21wbGV0ZSB0eXBlCiAgNTc5IHwgIGVudW0gbF90ZXN0ZXJf
+c3RhZ2Ugc3RhZ2UgPSBsX3Rlc3Rlcl9nZXRfc3RhZ2UodGVzdGVyKTsKICAgICAgfCAgICAgICBe
+fn5+fn5+fn5+fn5+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo1Nzk6MjI6IGVycm9yOiBzdG9yYWdl
+IHNpemUgb2Yg4oCYc3RhZ2XigJkgaXNu4oCZdCBrbm93bgogIDU3OSB8ICBlbnVtIGxfdGVzdGVy
+X3N0YWdlIHN0YWdlID0gbF90ZXN0ZXJfZ2V0X3N0YWdlKHRlc3Rlcik7CiAgICAgIHwgICAgICAg
+ICAgICAgICAgICAgICAgXn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6NTgxOjE1OiBlcnJvcjog
+4oCYTF9URVNURVJfU1RBR0VfUFJFX1NFVFVQ4oCZIHVuZGVjbGFyZWQgKGZpcnN0IHVzZSBpbiB0
+aGlzIGZ1bmN0aW9uKQogIDU4MSB8ICBpZiAoc3RhZ2UgIT0gTF9URVNURVJfU1RBR0VfUFJFX1NF
+VFVQKQogICAgICB8ICAgICAgICAgICAgICAgXn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+CnRvb2xz
+L21lc2gtY2ZndGVzdC5jOjU5MToxMDogZXJyb3I6IOKAmHJldHVybuKAmSB3aXRoIGEgdmFsdWUs
+IGluIGZ1bmN0aW9uIHJldHVybmluZyB2b2lkIFstV2Vycm9yPXJldHVybi10eXBlXQogIDU5MSB8
+ICAgcmV0dXJuIGxfdGVzdGVyX3ByZV9zZXR1cF9mYWlsZWQodGVzdGVyKTsKICAgICAgfCAgICAg
+ICAgICBefn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0
+LmM6NTc2OjEzOiBub3RlOiBkZWNsYXJlZCBoZXJlCiAgNTc2IHwgc3RhdGljIHZvaWQgaW1wb3J0
+X3N1Ym5ldF9yZXBseShzdHJ1Y3QgbF9kYnVzX3Byb3h5ICpwcm94eSwKICAgICAgfCAgICAgICAg
+ICAgICBefn5+fn5+fn5+fn5+fn5+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOjU3OToyMjogZXJy
+b3I6IHVudXNlZCB2YXJpYWJsZSDigJhzdGFnZeKAmSBbLVdlcnJvcj11bnVzZWQtdmFyaWFibGVd
+CiAgNTc5IHwgIGVudW0gbF90ZXN0ZXJfc3RhZ2Ugc3RhZ2UgPSBsX3Rlc3Rlcl9nZXRfc3RhZ2Uo
+dGVzdGVyKTsKICAgICAgfCAgICAgICAgICAgICAgICAgICAgICBefn5+fgp0b29scy9tZXNoLWNm
+Z3Rlc3QuYzogSW4gZnVuY3Rpb24g4oCYYXR0YWNoX25vZGVfcmVwbHnigJk6CnRvb2xzL21lc2gt
+Y2ZndGVzdC5jOjYzMDo3OiBlcnJvcjogdmFyaWFibGUg4oCYc3RhZ2XigJkgaGFzIGluaXRpYWxp
+emVyIGJ1dCBpbmNvbXBsZXRlIHR5cGUKICA2MzAgfCAgZW51bSBsX3Rlc3Rlcl9zdGFnZSBzdGFn
+ZSA9IGxfdGVzdGVyX2dldF9zdGFnZSh0ZXN0ZXIpOwogICAgICB8ICAgICAgIF5+fn5+fn5+fn5+
+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOjYzMDoyMjogZXJyb3I6IHN0b3JhZ2Ugc2l6ZSBvZiDi
+gJhzdGFnZeKAmSBpc27igJl0IGtub3duCiAgNjMwIHwgIGVudW0gbF90ZXN0ZXJfc3RhZ2Ugc3Rh
+Z2UgPSBsX3Rlc3Rlcl9nZXRfc3RhZ2UodGVzdGVyKTsKICAgICAgfCAgICAgICAgICAgICAgICAg
+ICAgICBefn5+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo2NjA6MTU6IGVycm9yOiDigJhMX1RFU1RF
+Ul9TVEFHRV9QUkVfU0VUVVDigJkgdW5kZWNsYXJlZCAoZmlyc3QgdXNlIGluIHRoaXMgZnVuY3Rp
+b24pCiAgNjYwIHwgIGlmIChzdGFnZSA9PSBMX1RFU1RFUl9TVEFHRV9QUkVfU0VUVVApCiAgICAg
+IHwgICAgICAgICAgICAgICBefn5+fn5+fn5+fn5+fn5+fn5+fn5+fn4KdG9vbHMvbWVzaC1jZmd0
+ZXN0LmM6NjMwOjIyOiBlcnJvcjogdW51c2VkIHZhcmlhYmxlIOKAmHN0YWdl4oCZIFstV2Vycm9y
+PXVudXNlZC12YXJpYWJsZV0KICA2MzAgfCAgZW51bSBsX3Rlc3Rlcl9zdGFnZSBzdGFnZSA9IGxf
+dGVzdGVyX2dldF9zdGFnZSh0ZXN0ZXIpOwogICAgICB8ICAgICAgICAgICAgICAgICAgICAgIF5+
+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOiBJbiBmdW5jdGlvbiDigJhqb2luX2NvbXBsZXRl4oCZ
+Ogp0b29scy9tZXNoLWNmZ3Rlc3QuYzo3MDM6NzogZXJyb3I6IHZhcmlhYmxlIOKAmHN0YWdl4oCZ
+IGhhcyBpbml0aWFsaXplciBidXQgaW5jb21wbGV0ZSB0eXBlCiAgNzAzIHwgIGVudW0gbF90ZXN0
+ZXJfc3RhZ2Ugc3RhZ2UgPSBsX3Rlc3Rlcl9nZXRfc3RhZ2UodGVzdGVyKTsKICAgICAgfCAgICAg
+ICBefn5+fn5+fn5+fn5+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo3MDM6MjI6IGVycm9yOiBzdG9y
+YWdlIHNpemUgb2Yg4oCYc3RhZ2XigJkgaXNu4oCZdCBrbm93bgogIDcwMyB8ICBlbnVtIGxfdGVz
+dGVyX3N0YWdlIHN0YWdlID0gbF90ZXN0ZXJfZ2V0X3N0YWdlKHRlc3Rlcik7CiAgICAgIHwgICAg
+ICAgICAgICAgICAgICAgICAgXn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6NzA2OjE2OiBlcnJv
+cjog4oCYTF9URVNURVJfU1RBR0VfUFJFX1NFVFVQ4oCZIHVuZGVjbGFyZWQgKGZpcnN0IHVzZSBp
+biB0aGlzIGZ1bmN0aW9uKQogIDcwNiB8ICAgaWYgKHN0YWdlID09IExfVEVTVEVSX1NUQUdFX1BS
+RV9TRVRVUCkgewogICAgICB8ICAgICAgICAgICAgICAgIF5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo3MDM6MjI6IGVycm9yOiB1bnVzZWQgdmFyaWFibGUg4oCY
+c3RhZ2XigJkgWy1XZXJyb3I9dW51c2VkLXZhcmlhYmxlXQogIDcwMyB8ICBlbnVtIGxfdGVzdGVy
+X3N0YWdlIHN0YWdlID0gbF90ZXN0ZXJfZ2V0X3N0YWdlKHRlc3Rlcik7CiAgICAgIHwgICAgICAg
+ICAgICAgICAgICAgICAgXn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6IEluIGZ1bmN0aW9uIOKA
+mGRldl9tc2dfcmVjdl9jYWxs4oCZOgp0b29scy9tZXNoLWNmZ3Rlc3QuYzo5Njc6NzogZXJyb3I6
+IHZhcmlhYmxlIOKAmHN0YWdl4oCZIGhhcyBpbml0aWFsaXplciBidXQgaW5jb21wbGV0ZSB0eXBl
+CiAgOTY3IHwgIGVudW0gbF90ZXN0ZXJfc3RhZ2Ugc3RhZ2UgPSBsX3Rlc3Rlcl9nZXRfc3RhZ2Uo
+dGVzdGVyKTsKICAgICAgfCAgICAgICBefn5+fn5+fn5+fn5+fgp0b29scy9tZXNoLWNmZ3Rlc3Qu
+Yzo5Njc6MjI6IGVycm9yOiBzdG9yYWdlIHNpemUgb2Yg4oCYc3RhZ2XigJkgaXNu4oCZdCBrbm93
+bgogIDk2NyB8ICBlbnVtIGxfdGVzdGVyX3N0YWdlIHN0YWdlID0gbF90ZXN0ZXJfZ2V0X3N0YWdl
+KHRlc3Rlcik7CiAgICAgIHwgICAgICAgICAgICAgICAgICAgICAgXn5+fn4KdG9vbHMvbWVzaC1j
+Zmd0ZXN0LmM6OTg5OjE1OiBlcnJvcjog4oCYTF9URVNURVJfU1RBR0VfUFJFX1NFVFVQ4oCZIHVu
+ZGVjbGFyZWQgKGZpcnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQogIDk4OSB8ICBpZiAoc3RhZ2Ug
+PT0gTF9URVNURVJfU1RBR0VfUFJFX1NFVFVQKSB7CiAgICAgIHwgICAgICAgICAgICAgICBefn5+
+fn5+fn5+fn5+fn5+fn5+fn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6MTAwMTo5OiBlcnJvcjog
+aW1wbGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24g4oCYbF90ZXN0ZXJfZ2V0X2RhdGHigJkg
+Wy1XZXJyb3I9aW1wbGljaXQtZnVuY3Rpb24tZGVjbGFyYXRpb25dCiAxMDAxIHwgICByc3AgPSBs
+X3Rlc3Rlcl9nZXRfZGF0YSh0ZXN0ZXIpOwogICAgICB8ICAgICAgICAgXn5+fn5+fn5+fn5+fn5+
+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6MTAwMTo3OiBlcnJvcjogYXNzaWdubWVudCB0byDigJhz
+dHJ1Y3QgbXNnX2RhdGEgKuKAmSBmcm9tIOKAmGludOKAmSBtYWtlcyBwb2ludGVyIGZyb20gaW50
+ZWdlciB3aXRob3V0IGEgY2FzdCBbLVdlcnJvcj1pbnQtY29udmVyc2lvbl0KIDEwMDEgfCAgIHJz
+cCA9IGxfdGVzdGVyX2dldF9kYXRhKHRlc3Rlcik7CiAgICAgIHwgICAgICAgXgp0b29scy9tZXNo
+LWNmZ3Rlc3QuYzo5Njc6MjI6IGVycm9yOiB1bnVzZWQgdmFyaWFibGUg4oCYc3RhZ2XigJkgWy1X
+ZXJyb3I9dW51c2VkLXZhcmlhYmxlXQogIDk2NyB8ICBlbnVtIGxfdGVzdGVyX3N0YWdlIHN0YWdl
+ID0gbF90ZXN0ZXJfZ2V0X3N0YWdlKHRlc3Rlcik7CiAgICAgIHwgICAgICAgICAgICAgICAgICAg
+ICAgXn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6IEluIGZ1bmN0aW9uIOKAmGNsaWVudF9yZWFk
+eeKAmToKdG9vbHMvbWVzaC1jZmd0ZXN0LmM6MTE3MTo3OiBlcnJvcjogdmFyaWFibGUg4oCYc3Rh
+Z2XigJkgaGFzIGluaXRpYWxpemVyIGJ1dCBpbmNvbXBsZXRlIHR5cGUKIDExNzEgfCAgZW51bSBs
+X3Rlc3Rlcl9zdGFnZSBzdGFnZSA9IGxfdGVzdGVyX2dldF9zdGFnZSh0ZXN0ZXIpOwogICAgICB8
+ICAgICAgIF5+fn5+fn5+fn5+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOjExNzE6MjI6IGVycm9y
+OiBzdG9yYWdlIHNpemUgb2Yg4oCYc3RhZ2XigJkgaXNu4oCZdCBrbm93bgogMTE3MSB8ICBlbnVt
+IGxfdGVzdGVyX3N0YWdlIHN0YWdlID0gbF90ZXN0ZXJfZ2V0X3N0YWdlKHRlc3Rlcik7CiAgICAg
+IHwgICAgICAgICAgICAgICAgICAgICAgXn5+fn4KdG9vbHMvbWVzaC1jZmd0ZXN0LmM6MTE3OTox
+NTogZXJyb3I6IOKAmExfVEVTVEVSX1NUQUdFX1BSRV9TRVRVUOKAmSB1bmRlY2xhcmVkIChmaXJz
+dCB1c2UgaW4gdGhpcyBmdW5jdGlvbikKIDExNzkgfCAgaWYgKHN0YWdlID09IExfVEVTVEVSX1NU
+QUdFX1BSRV9TRVRVUCkKICAgICAgfCAgICAgICAgICAgICAgIF5+fn5+fn5+fn5+fn5+fn5+fn5+
+fn5+fgp0b29scy9tZXNoLWNmZ3Rlc3QuYzoxMTcxOjIyOiBlcnJvcjogdW51c2VkIHZhcmlhYmxl
+IOKAmHN0YWdl4oCZIFstV2Vycm9yPXVudXNlZC12YXJpYWJsZV0KIDExNzEgfCAgZW51bSBsX3Rl
+c3Rlcl9zdGFnZSBzdGFnZSA9IGxfdGVzdGVyX2dldF9zdGFnZSh0ZXN0ZXIpOwogICAgICB8ICAg
+ICAgICAgICAgICAgICAgICAgIF5+fn5+CnRvb2xzL21lc2gtY2ZndGVzdC5jOiBJbiBmdW5jdGlv
+biDigJhtYWlu4oCZOgp0b29scy9tZXNoLWNmZ3Rlc3QuYzoxNDA3OjExOiBlcnJvcjogaW1wbGlj
+aXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24g4oCYbF90ZXN0ZXJfbmV34oCZOyBkaWQgeW91IG1l
+YW4g4oCYbF90bHNfbmV34oCZPyBbLVdlcnJvcj1pbXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJhdGlv
+bl0KIDE0MDcgfCAgdGVzdGVyID0gbF90ZXN0ZXJfbmV3KG9wdGlvbl9wcmVmaXgsIG9wdGlvbl9z
+dHJpbmcsIG9wdGlvbl9saXN0KTsKICAgICAgfCAgICAgICAgICAgXn5+fn5+fn5+fn5+CiAgICAg
+IHwgICAgICAgICAgIGxfdGxzX25ldwp0b29scy9tZXNoLWNmZ3Rlc3QuYzoxNDA3Ojk6IGVycm9y
+OiBhc3NpZ25tZW50IHRvIOKAmHN0cnVjdCBsX3Rlc3RlciAq4oCZIGZyb20g4oCYaW504oCZIG1h
+a2VzIHBvaW50ZXIgZnJvbSBpbnRlZ2VyIHdpdGhvdXQgYSBjYXN0IFstV2Vycm9yPWludC1jb252
+ZXJzaW9uXQogMTQwNyB8ICB0ZXN0ZXIgPSBsX3Rlc3Rlcl9uZXcob3B0aW9uX3ByZWZpeCwgb3B0
+aW9uX3N0cmluZywgb3B0aW9uX2xpc3QpOwogICAgICB8ICAgICAgICAgXgp0b29scy9tZXNoLWNm
+Z3Rlc3QuYzoxNDExOjI6IGVycm9yOiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiDi
+gJhsX3Rlc3Rlcl9hZGRfZnVsbOKAmSBbLVdlcnJvcj1pbXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJh
+dGlvbl0KIDE0MTEgfCAgbF90ZXN0ZXJfYWRkX2Z1bGwodGVzdGVyLCAiQ29uZmlnIEFwcEtleSBB
+ZGQ6IFN1Y2Nlc3MiLAogICAgICB8ICBefn5+fn5+fn5+fn5+fn5+fgp0b29scy9tZXNoLWNmZ3Rl
+c3QuYzoxNDMxOjI6IGVycm9yOiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiDigJhs
+X3Rlc3Rlcl9zdGFydOKAmTsgZGlkIHlvdSBtZWFuIOKAmGxfdGxzX3N0YXJ04oCZPyBbLVdlcnJv
+cj1pbXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJhdGlvbl0KIDE0MzEgfCAgbF90ZXN0ZXJfc3RhcnQo
+dGVzdGVyLCBkb25lX2NhbGxiYWNrKTsKICAgICAgfCAgXn5+fn5+fn5+fn5+fn4KICAgICAgfCAg
+bF90bHNfc3RhcnQKdG9vbHMvbWVzaC1jZmd0ZXN0LmM6MTQzNjo4OiBlcnJvcjogaW1wbGljaXQg
+ZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24g4oCYbF90ZXN0ZXJfc3VtbWFyaXpl4oCZIFstV2Vycm9y
+PWltcGxpY2l0LWZ1bmN0aW9uLWRlY2xhcmF0aW9uXQogMTQzNiB8ICAgaWYgKCFsX3Rlc3Rlcl9z
+dW1tYXJpemUodGVzdGVyKSkKICAgICAgfCAgICAgICAgXn5+fn5+fn5+fn5+fn5+fn5+CnRvb2xz
+L21lc2gtY2ZndGVzdC5jOjE0NDg6MjogZXJyb3I6IGltcGxpY2l0IGRlY2xhcmF0aW9uIG9mIGZ1
+bmN0aW9uIOKAmGxfdGVzdGVyX2Rlc3Ryb3nigJk7IGRpZCB5b3UgbWVhbiDigJhsX3F1ZXVlX2Rl
+c3Ryb3nigJk/IFstV2Vycm9yPWltcGxpY2l0LWZ1bmN0aW9uLWRlY2xhcmF0aW9uXQogMTQ0OCB8
+ICBsX3Rlc3Rlcl9kZXN0cm95KHRlc3Rlcik7CiAgICAgIHwgIF5+fn5+fn5+fn5+fn5+fn4KICAg
+ICAgfCAgbF9xdWV1ZV9kZXN0cm95CmNjMTogYWxsIHdhcm5pbmdzIGJlaW5nIHRyZWF0ZWQgYXMg
+ZXJyb3JzCm1ha2VbMV06ICoqKiBbTWFrZWZpbGU6Njg0NjogdG9vbHMvbWVzaC1jZmd0ZXN0Lm9d
+IEVycm9yIDEKbWFrZTogKioqIFtNYWtlZmlsZTo0MDU4OiBhbGxdIEVycm9yIDIKCgojIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogTWFrZUNoZWNrIC0gU0tJUFBFRApPdXRwdXQ6
+CmNoZWNrYnVpbGQgbm90IHN1Y2Nlc3MKCgoKLS0tClJlZ2FyZHMsCkxpbnV4IEJsdWV0b290aAoK
 
+--===============2567999211574220278==--
