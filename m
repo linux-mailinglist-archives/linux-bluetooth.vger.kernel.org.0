@@ -2,76 +2,149 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F128C342C47
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 20 Mar 2021 12:35:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E797342EA2
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 20 Mar 2021 18:34:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230079AbhCTLei (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 20 Mar 2021 07:34:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44234 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230040AbhCTLec (ORCPT
+        id S229865AbhCTRda convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 20 Mar 2021 13:33:30 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:35919 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229766AbhCTRd3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 20 Mar 2021 07:34:32 -0400
-Received: from mail-il1-x147.google.com (mail-il1-x147.google.com [IPv6:2607:f8b0:4864:20::147])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C1A5C0617AA
-        for <linux-bluetooth@vger.kernel.org>; Sat, 20 Mar 2021 03:38:19 -0700 (PDT)
-Received: by mail-il1-x147.google.com with SMTP id o7so36269121ilt.5
-        for <linux-bluetooth@vger.kernel.org>; Sat, 20 Mar 2021 03:38:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id:subject
-         :from:to;
-        bh=TY6eWPej2xyMujUIiW14t6MNCP0JG96Bsng7hloAJn4=;
-        b=RqAbTTbBiiAE+lbJxwM27+M0rVdbKzqQj1SBwRotVbBQHtuQ19rjbTVrsfop/s8QAR
-         Vreo37J2gghorn0Zxg5fGTBSqA3iGsR1exhHEFn2OOeW6wcLwO3Fee1NRNoMYn+Yqtv2
-         tOAsl7JdUFqvs4nIw/Ht8WRXr+0kG9r7btDEgCBZoQrOfoF9WOFrCvLV6h21ZmBNnH7Z
-         10vGrsuC7PLPujLvTfWHErDLKRwGycezGGlqDgwjkwGibhXGA24qQdQppuIHFhhvPn68
-         zlkU4vCTkxkN4yvGBkUrVylz4hHb9ddnqASSRFiz5AXkHzUU3X/ipeSSXXFHIWn6QzEC
-         shrQ==
-X-Gm-Message-State: AOAM531C8hnDHu8jGx/PEYQwlYu33UpuTDMMXfDEL0fxPuLnu/cIRIq6
-        dCXR5tAaRtHVUCpwp1FFo867JDWdk/lPvvcyOR1GM20gG6hh
-X-Google-Smtp-Source: ABdhPJzd4Hj0631V/HLa6Uj7/62+FcuBi7Qtrnplas/d5g38qhibrBz0f8jwbnFRIVPYlFVkOb2/5wjN/P0+HfQ/VrrH9dXKJCjr
-MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:2184:: with SMTP id j4mr5426084ila.308.1616228824055;
- Sat, 20 Mar 2021 01:27:04 -0700 (PDT)
-Date:   Sat, 20 Mar 2021 01:27:04 -0700
-In-Reply-To: <00000000000076ecf305b9f8efb1@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000ef073a05bdf398e0@google.com>
-Subject: Re: [syzbot] KASAN: slab-out-of-bounds Read in add_adv_patterns_monitor
-From:   syzbot <syzbot+3ed6361bf59830ca9138@syzkaller.appspotmail.com>
-To:     apusaka@chromium.org, dan.carpenter@oracle.com,
-        davem@davemloft.net, finanzas1@logisticaenlinea.net,
-        hdanton@sina.com, howardchung@google.com, johan.hedberg@gmail.com,
-        johan.hedberg@intel.com, kuba@kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        luiz.dentz@gmail.com, marcel@holtmann.org, mcchou@chromium.org,
-        mmandlik@chromium.org, netdev@vger.kernel.org, sashal@kernel.org,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+        Sat, 20 Mar 2021 13:33:29 -0400
+Received: from mac-pro.holtmann.net (p4fefce19.dip0.t-ipconnect.de [79.239.206.25])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 33FD2CECF7;
+        Sat, 20 Mar 2021 18:41:05 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [PATCH v1] Bluetooth: Add ncmd=0 recovery handling
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20210319131533.v1.1.I14da3750a343d8d48921fffb7c6561337b6e6082@changeid>
+Date:   Sat, 20 Mar 2021 18:33:26 +0100
+Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Alain Michaud <alainm@chromium.org>,
+        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Bluetooth Kernel Mailing List 
+        <linux-bluetooth@vger.kernel.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>, netdev@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <DC038B82-5539-48D5-84BE-4575F2E794AD@holtmann.org>
+References: <20210319131533.v1.1.I14da3750a343d8d48921fffb7c6561337b6e6082@changeid>
+To:     Manish Mandlik <mmandlik@google.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-syzbot suspects this issue was fixed by commit:
+Hi Manish,
 
-commit b4a221ea8a1f890b50838ef389d016c7ff280abc
-Author: Archie Pusaka <apusaka@chromium.org>
-Date:   Fri Jan 22 08:36:11 2021 +0000
+> During command status or command complete event, the controller may set
+> ncmd=0 indicating that it is not accepting any more commands. In such a
+> case, host holds off sending any more commands to the controller. If the
+> controller doesn't recover from such condition, host will wait forever.
+> 
+> This patch adds a timer when controller gets into such condition and
+> resets the controller if controller doesn't recover within the timeout
+> period.
+> 
+> Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+> Signed-off-by: Manish Mandlik <mmandlik@google.com>
+> ---
+> Hello Maintainers,
+> 
+> We noticed that during suspend, sometimes the controller firmware gets
+> into a state where it is not accepting any more commands (it returns
+> ncmd=0 in Command Status):
+> 
+> < HCI Command: Disconnect (0x01|0x0006) plen 3  #398 [hci0] 83.760502
+>         Handle: 1
+>         Reason: Remote Device Terminated due to Power Off (0x15)
+>> HCI Event: Command Status (0x0f) plen 4       #399 [hci0] 83.761694
+>       Disconnect (0x01|0x0006) ncmd 0
+>         Status: Success (0x00)
+> 
+> In such a case, the host holds off sending any more packets to the
+> controller until it is ready to accept more commands. If the controller
+> doesn't recover from such a condition, Command Timeout does not get
+> triggered as Command Timeout is queued only once the packet is sent to
+> the controller; hence, the host will wait forever. 
+> 
+> This patch adds a timer to recover from this condition. Since the
+> suspend timeout is 2 seconds, I'm using 4 seconds timeout to recover
+> from ncmd=0. This should give ample amount of time for recovery and
+> should not create any race conditions with the suspend. Once we resume
+> from the suspend normally, the timer would expire and reset the
+> controller. I have verified this patch locally and able to connect to
+> peer device after resume from suspend. Please let me know your thoughts
+> on this.
+> 
+> Thanks,
+> Manish.
+> 
+> include/net/bluetooth/hci.h      |  1 +
+> include/net/bluetooth/hci_core.h |  1 +
+> net/bluetooth/hci_core.c         | 15 +++++++++++++++
+> net/bluetooth/hci_event.c        | 10 ++++++++++
+> 4 files changed, 27 insertions(+)
+> 
+> diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+> index ea4ae551c426..c4b0650fb9ae 100644
+> --- a/include/net/bluetooth/hci.h
+> +++ b/include/net/bluetooth/hci.h
+> @@ -339,6 +339,7 @@ enum {
+> #define HCI_PAIRING_TIMEOUT	msecs_to_jiffies(60000)	/* 60 seconds */
+> #define HCI_INIT_TIMEOUT	msecs_to_jiffies(10000)	/* 10 seconds */
+> #define HCI_CMD_TIMEOUT		msecs_to_jiffies(2000)	/* 2 seconds */
+> +#define HCI_NCMD_TIMEOUT	msecs_to_jiffies(4000)	/* 4 seconds */
+> #define HCI_ACL_TX_TIMEOUT	msecs_to_jiffies(45000)	/* 45 seconds */
+> #define HCI_AUTO_OFF_TIMEOUT	msecs_to_jiffies(2000)	/* 2 seconds */
+> #define HCI_POWER_OFF_TIMEOUT	msecs_to_jiffies(5000)	/* 5 seconds */
+> diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+> index ebdd4afe30d2..f14692b39fd5 100644
+> --- a/include/net/bluetooth/hci_core.h
+> +++ b/include/net/bluetooth/hci_core.h
+> @@ -470,6 +470,7 @@ struct hci_dev {
+> 	struct delayed_work	service_cache;
+> 
+> 	struct delayed_work	cmd_timer;
+> +	struct delayed_work	ncmd_timer;
+> 
+> 	struct work_struct	rx_work;
+> 	struct work_struct	cmd_work;
+> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+> index b0d9c36acc03..5ee1609456bd 100644
+> --- a/net/bluetooth/hci_core.c
+> +++ b/net/bluetooth/hci_core.c
+> @@ -2769,6 +2769,20 @@ static void hci_cmd_timeout(struct work_struct *work)
+> 	queue_work(hdev->workqueue, &hdev->cmd_work);
+> }
+> 
+> +/* HCI ncmd timer function */
+> +static void hci_ncmd_timeout(struct work_struct *work)
+> +{
+> +	struct hci_dev *hdev = container_of(work, struct hci_dev,
+> +					    ncmd_timer.work);
+> +
+> +	bt_dev_err(hdev, "ncmd timeout");
+> +
+> +	if (hci_dev_do_close(hdev))
+> +		return;
+> +
+> +	hci_dev_do_open(hdev);
+> +}
+> +
 
-    Bluetooth: advmon offload MSFT add rssi support
+I am pretty certain this can dead-lock if ncmd=0 happens inside hci_dev_do_open,do_close itself.
 
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=14ef5ad6d00000
-start commit:   b491e6a7 net: lapb: Add locking to the lapb module
-git tree:       net
-kernel config:  https://syzkaller.appspot.com/x/.config?x=be33d8015c9de024
-dashboard link: https://syzkaller.appspot.com/bug?extid=3ed6361bf59830ca9138
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10628ae8d00000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=12964b80d00000
+The second thing is that do_close+do_open is heavy hammer you are swinging here. It will also result in mgmt powered down/up. Is this something you really want since bluetoothd will notice this and has to re-init everything.
 
-If the result looks correct, please mark the issue as fixed by replying with:
+Regards
 
-#syz fix: Bluetooth: advmon offload MSFT add rssi support
+Marcel
 
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
