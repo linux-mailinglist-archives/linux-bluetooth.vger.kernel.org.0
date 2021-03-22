@@ -2,98 +2,110 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BB94343C1C
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Mar 2021 09:53:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B39E03449D4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Mar 2021 16:53:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229872AbhCVIw5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 22 Mar 2021 04:52:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60954 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229879AbhCVIwq (ORCPT
+        id S230198AbhCVPxT convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 22 Mar 2021 11:53:19 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:41776 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230448AbhCVPxQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 22 Mar 2021 04:52:46 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D62C061574
-        for <linux-bluetooth@vger.kernel.org>; Mon, 22 Mar 2021 01:52:46 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id m7so11707524qtq.11
-        for <linux-bluetooth@vger.kernel.org>; Mon, 22 Mar 2021 01:52:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=KByjcxIqzBNWDHPuoT3XGtW3QW8KYeNleTymQKLA1/M=;
-        b=d3Cn1V05zHuo4gpkD6bYSzVMenJjIW1pCjwFO6Eh9XbwUMgCPuNNwITMutaqyIb921
-         SI2MLVSiQBDazTD15Q5bftv0/AWV6YNmXCJC/MCKWiCe9vtCN0CxqI5dPdzaSB+y5LUe
-         ZOhJWaxfPQmKNlx1lY2Nhv5GQzT4f8mlm/6mHsU3XbbgMNoEFAhgImYTWgzMtc+M2D9l
-         5TgJ9hg+Qd4ltvCbLi6gF9lsoc2OU8LHY1YkePD9jb74CunCJWemrcbopVGH5FOQi8La
-         NXyu3moc4e/cMBnmyVEsLPXYcEEBN/R8tchyW636R3ZmU62yYizF43oixN3qPJgKoiId
-         IcfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=KByjcxIqzBNWDHPuoT3XGtW3QW8KYeNleTymQKLA1/M=;
-        b=Or0VHrt9vrrJJfkEPwfz0cxhGYftneRc6Nu+rFNyDQFVaV1YgeNwNqtKZksHFrcQ5N
-         WyCKBhiO4CmSeU6Dj772PLhGXgdMUXaRDdm+6FojpFNGUQI59SFxgcoBvFYKbrEikFTz
-         nX74nfL6MYcrS8J7j/m1EeIT1H1JfmIwa6+mX9V4G8tsn5P9uCtugNRW1lY/jA2vEtJp
-         6C5iabuIRrvEYs4c9imMYnu9wr7B7owSa7EmGAItgcBTxUFeDj2ZV9aVfTf5fQbiQ4m6
-         8Lgj4AoKKnTEbWgmTO4HuEcpPbH50NIadlbAA66m/WCdOAdRIP34poabS+vtT0loHFK8
-         Gg9w==
-X-Gm-Message-State: AOAM531uTKnc182Z3lIyQY1pD3zyL+LvjKy1AiLH5w/vSzfUzdYxH7Us
-        RAthchsicqDh9adyM4cvYAh/lW+7PpTVBBso
-X-Google-Smtp-Source: ABdhPJzZmhqWVSGrS9ZUBiVkCSEpeFOztGN9eWGSfvP+jg4pNYidv8KvlRxlbRaEEVHUrDUxSS5JaA==
-X-Received: by 2002:a05:622a:1701:: with SMTP id h1mr4291091qtk.171.1616403165490;
-        Mon, 22 Mar 2021 01:52:45 -0700 (PDT)
-Received: from [172.17.0.2] ([52.152.135.123])
-        by smtp.gmail.com with ESMTPSA id p8sm8787313qtu.8.2021.03.22.01.52.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Mar 2021 01:52:45 -0700 (PDT)
-Message-ID: <60585add.1c69fb81.5baec.30f5@mx.google.com>
-Date:   Mon, 22 Mar 2021 01:52:45 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============6201683226383765165=="
-MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, apusaka@google.com
-Subject: RE: [Bluez,v4,1/2] adv_monitor: split rssi_parameters into its own struct
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20210322163554.Bluez.v4.1.I8797a75fcc7c1e997f177b08dc23a1df0272e0a5@changeid>
-References: <20210322163554.Bluez.v4.1.I8797a75fcc7c1e997f177b08dc23a1df0272e0a5@changeid>
+        Mon, 22 Mar 2021 11:53:16 -0400
+Received: from marcel-macbook.holtmann.net (p4fefce19.dip0.t-ipconnect.de [79.239.206.25])
+        by mail.holtmann.org (Postfix) with ESMTPSA id BD42DCECB0;
+        Mon, 22 Mar 2021 17:00:52 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [PATCH] Bluetooth: check for zapped sk before connecting
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20210322140046.1.I6c4306f6e8ba3ccc9106067d4eb70092f8cb2a49@changeid>
+Date:   Mon, 22 Mar 2021 16:53:08 +0100
+Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>,
+        syzbot+abfc0f5e668d4099af73@syzkaller.appspotmail.com,
+        Alain Michaud <alainm@chromium.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>, netdev@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <559FCF7C-A929-4291-956C-EF776EFAA47D@holtmann.org>
+References: <20210322140046.1.I6c4306f6e8ba3ccc9106067d4eb70092f8cb2a49@changeid>
+To:     Archie Pusaka <apusaka@google.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============6201683226383765165==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hi Archie,
 
-This is automated email and please do not reply to this email!
+> There is a possibility of receiving a zapped sock on
+> l2cap_sock_connect(). This could lead to interesting crashes, one
+> such case is tearing down an already tore l2cap_sock as is happened
+> with this call trace:
+> 
+> __dump_stack lib/dump_stack.c:15 [inline]
+> dump_stack+0xc4/0x118 lib/dump_stack.c:56
+> register_lock_class kernel/locking/lockdep.c:792 [inline]
+> register_lock_class+0x239/0x6f6 kernel/locking/lockdep.c:742
+> __lock_acquire+0x209/0x1e27 kernel/locking/lockdep.c:3105
+> lock_acquire+0x29c/0x2fb kernel/locking/lockdep.c:3599
+> __raw_spin_lock_bh include/linux/spinlock_api_smp.h:137 [inline]
+> _raw_spin_lock_bh+0x38/0x47 kernel/locking/spinlock.c:175
+> spin_lock_bh include/linux/spinlock.h:307 [inline]
+> lock_sock_nested+0x44/0xfa net/core/sock.c:2518
+> l2cap_sock_teardown_cb+0x88/0x2fb net/bluetooth/l2cap_sock.c:1345
+> l2cap_chan_del+0xa3/0x383 net/bluetooth/l2cap_core.c:598
+> l2cap_chan_close+0x537/0x5dd net/bluetooth/l2cap_core.c:756
+> l2cap_chan_timeout+0x104/0x17e net/bluetooth/l2cap_core.c:429
+> process_one_work+0x7e3/0xcb0 kernel/workqueue.c:2064
+> worker_thread+0x5a5/0x773 kernel/workqueue.c:2196
+> kthread+0x291/0x2a6 kernel/kthread.c:211
+> ret_from_fork+0x4e/0x80 arch/x86/entry/entry_64.S:604
+> 
+> Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+> Reported-by: syzbot+abfc0f5e668d4099af73@syzkaller.appspotmail.com
+> Reviewed-by: Alain Michaud <alainm@chromium.org>
+> Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+> Reviewed-by: Guenter Roeck <groeck@chromium.org>
+> ---
+> 
+> net/bluetooth/l2cap_sock.c | 7 +++++++
+> 1 file changed, 7 insertions(+)
+> 
+> diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+> index f1b1edd0b697..b86fd8cc4dc1 100644
+> --- a/net/bluetooth/l2cap_sock.c
+> +++ b/net/bluetooth/l2cap_sock.c
+> @@ -182,6 +182,13 @@ static int l2cap_sock_connect(struct socket *sock, struct sockaddr *addr,
+> 
+> 	BT_DBG("sk %p", sk);
+> 
+> +	lock_sock(sk);
+> +	if (sock_flag(sk, SOCK_ZAPPED)) {
+> +		release_sock(sk);
+> +		return -EINVAL;
+> +	}
+> +	release_sock(sk);
+> +
 
-Dear submitter,
+hmmm. I wonder if this would look better and easy to see that the locking is done correctly.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=452665
+	lock_sock(sk);
+	zapped = sock_flag(sk, SOCK_ZAPPED);
+	release_sock(sk);
 
----Test result---
+	if (zapped)
+		return -EINVAL;
 
-##############################
-Test: CheckPatch - PASS
+Regards
 
-##############################
-Test: CheckGitLint - PASS
+Marcel
 
-##############################
-Test: CheckBuild - PASS
-
-##############################
-Test: MakeCheck - PASS
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============6201683226383765165==--
