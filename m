@@ -2,126 +2,93 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D91D346AED
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Mar 2021 22:19:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45381346B72
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Mar 2021 22:57:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233461AbhCWVS7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 23 Mar 2021 17:18:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53316 "EHLO
+        id S233630AbhCWV4h (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 23 Mar 2021 17:56:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233526AbhCWVSc (ORCPT
+        with ESMTP id S233721AbhCWV4U (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 23 Mar 2021 17:18:32 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 683B4C061765
-        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Mar 2021 14:18:32 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id o16so111865pjy.9
-        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Mar 2021 14:18:32 -0700 (PDT)
+        Tue, 23 Mar 2021 17:56:20 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55266C061574
+        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Mar 2021 14:56:20 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id p133so251816qka.17
+        for <linux-bluetooth@vger.kernel.org>; Tue, 23 Mar 2021 14:56:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:message-id:mime-version:subject:from:to:cc;
-        bh=IQhrNSzzRo5IK8pWj/871CxEvc5sDb7hvYKb9bWs5PY=;
-        b=KN38NpSiyK1jTjlQ83KhVeIAFt3K80SF6VSS1g2Jd6f/kh8nPpyuIJPztBAAMETnVu
-         L1TuPqVmfYXaileuYB41opce3o14vJUEDGZFQm4mqdPltLJOh35UjMecsZT00vrZ45Z6
-         bMk6r664cLfto6awWP6eqYTsRL/seiWKh2zQiWoafJMIrHgxtgqehsGCuzcsuz8KJR/N
-         qrMlrwM9B3xSJDl67Qq2r65EjcM2nEK8GohueBoYsEWv6SXRhh5Rnmj5Pp6KbTGKyr1e
-         ohWDaFpB0qusp/s6H0LYK787EY8fWslgnUp35D6SDsQXXhOeAO00QXpFaRUJaRvhifnw
-         Gkiw==
+        bh=+Zxg5t2ZyoUUKFwFpZvi+k75qYQr9vChV+ESGln1WDA=;
+        b=eKbVZq8+jcIuedy70v7bvfwOJVhmTVUczGIZ9NUfGU2WWVS+WZAmrDhPznHp/A916u
+         Sh1mk1W3UQpKjRFwfgUenIVcMTKXkKBpFHxLkmP4srTSYrLrSu3sadIEAq0uSggid4It
+         Dy2DlSRYYM0zL6aCIn3Xc5rcaNnZxtqWVtRmce6YcT8ahtmI1L0/m8xEow1+RjvLw+Fr
+         J9V9C6RRZOldoKs4FSdDCyGU3kryjuFqQch7ijq6DknFM7PSY4fQi6ypdBj9xhG5tiOa
+         G1D7FTzLHRbBATiilWn7DBUQvNCaPLORJ6bOnTFSi/WovQKRLk1HPaEz5GuuRhUDZHfp
+         skBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=IQhrNSzzRo5IK8pWj/871CxEvc5sDb7hvYKb9bWs5PY=;
-        b=ShWELUY2LYH6neyGgJa7l9jYlkUM6lK+LW1rV7Ww3gs4YaSjBcVi14e9wk1TS4NOf2
-         5FcmSYnyS6GWVFngdKFcH2zzYhow7CrV6BpDKBN7QcXzmOzmsEBTcUoJgiZM5l/RTEJT
-         ry/spCU356gsdMqvnUuYoLVE+EcBnp1fVq0TUbgLpa44y0JjPPIkY3/PlUzjMRVgrmeY
-         0vrgKvA5YCtwPRBUnX6kju027zTxhisUvGSPMdRN6oLzSqLuKrb8bxOo8YSmwnInmqdt
-         tguGqW5bR6AWKh+anb7AnRzyzsyVuETJEoyn6435JrZ7nDoEZx1LGQWRdEeeNMPTpygZ
-         ACpg==
-X-Gm-Message-State: AOAM530/c51kxPc9mAB9HQBGtQhTZw6O1FFvbztYCSoAkyd9ECm6mghQ
-        TwyKxkytra4h8lX/pjFQ+eiyc1CnssrPcs9i4Z8z+zwr5yAmAe84Or7NBzvdjPlzqhdPDeyAPND
-        rBr1pd2LmlRqCH8MrbhE+kIvWdVJgCF1SDGkbi9WtgAsVvqCQUfV2vMQkNbKV3MH2zqtLAUfTan
-        ISwMH2eHQ6iN3v7DPP
-X-Google-Smtp-Source: ABdhPJyA9VXXmhbh2eHFc9vjsbOs7A7JCXheNnJWzX6ciTpOXFtQyV4+cNABNQ9D75XBXirz5fTuzVlC+Uxr7nOd6GNf
-X-Received: from danielwinkler-linux.mtv.corp.google.com ([2620:15c:202:201:f18d:a314:46c6:7a97])
- (user=danielwinkler job=sendgmr) by 2002:a05:6a00:2348:b029:21d:4e83:7898
- with SMTP id j8-20020a056a002348b029021d4e837898mr132848pfj.65.1616534311315;
- Tue, 23 Mar 2021 14:18:31 -0700 (PDT)
-Date:   Tue, 23 Mar 2021 14:18:21 -0700
-Message-Id: <20210323141653.1.I53e6be1f7df0be198b7e55ae9fc45c7f5760132d@changeid>
+        bh=+Zxg5t2ZyoUUKFwFpZvi+k75qYQr9vChV+ESGln1WDA=;
+        b=q8YwHwJoi9pKTi+CaZRifMX1aC8hfOA30QuOBIi74orAIeCPnfArXi9oK1FQ1/52T1
+         QcWo66bTCjqcJkaj1NbWg+BG1jNTp66A8yAexAHUnlTt8l2bN7leI2YPJr/9j+tkZd5a
+         3ELA2p7Sa4P5cccX3RjT0CiSlc0TV3K+NvYwqGv0CicIfzCYKwLS1HfAlVP3rgnZA7Gk
+         4h886lZkUO+svDf4IdoctHMEGsPQdMZ0tskNhwkpj6QqCfHKEPaBskLU4uVlL6qMbe9U
+         pDxhGR2HRWKB2AEbNo6kq/RwJ9c4oyTRdtdnw/G84fwyqCsa753CrPi2eRkfqX4KR1Kf
+         +Ekg==
+X-Gm-Message-State: AOAM533hd8t02U0kUIMeXrjrSz4/PFHcFHSTu1rQtLD1z/7Ap+oermWp
+        XeU7uumTjZGt47+qnxSxdkccQhP841B2yVBK+n/GVVb49H43MFNZDfL2suXrCO5l2Uf3k6ETGgg
+        p8FrUwzBUDYSOLv9BJc8sJlTQ9UIR/R8KuxQ1UR3IQU/7G+Re0pm7rtCs6zHRstMVu3xMSluE49
+        P+
+X-Google-Smtp-Source: ABdhPJzChviw9Bl4XI28C5rSn11QFS8IQHk+fa5X4nIx19oDPqHV4l5y9PlhiavYFJ3hpsIq4whMNIioKL94
+X-Received: from yudiliu.mtv.corp.google.com ([2620:15c:202:201:a916:b584:a08a:3fcd])
+ (user=yudiliu job=sendgmr) by 2002:a0c:908d:: with SMTP id
+ p13mr271722qvp.11.1616536579460; Tue, 23 Mar 2021 14:56:19 -0700 (PDT)
+Date:   Tue, 23 Mar 2021 14:56:15 -0700
+Message-Id: <20210323145555.RFC.v1.1.I530e1c3e621abd34c342d657df119e12e576d8a7@changeid>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.31.0.291.g576ba9dcdaf-goog
-Subject: [PATCH] Bluetooth: Always call advertising disable before setting params
-From:   Daniel Winkler <danielwinkler@google.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     chromeos-bluetooth-upstreaming@chromium.org,
-        Daniel Winkler <danielwinkler@google.com>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: [RFC PATCH v1] doc/mgmt-api - Return connection direction in Device
+ Connected Event
+From:   Yu Liu <yudiliu@google.com>
+To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
+        chromeos-bluetooth-upstreaming@chromium.org
+Cc:     Yu Liu <yudiliu@google.com>, Miao-chen Chou <mcchou@chromium.org>,
+        Alain Michaud <alainm@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-In __hci_req_enable_advertising, the HCI_LE_ADV hdev flag is temporarily
-cleared to allow the random address to be set, which exposes a race
-condition when an advertisement is configured immediately (<10ms) after
-software rotation starts to refresh an advertisement.
-
-In normal operation, the HCI_LE_ADV flag is updated as follows:
-
-1. adv_timeout_expire is called, HCI_LE_ADV gets cleared in
-   __hci_req_enable_advertising, but hci_req configures an enable
-   request
-2. hci_req is run, enable callback re-sets HCI_LE_ADV flag
-
-However, in this race condition, the following occurs:
-
-1. adv_timeout_expire is called, HCI_LE_ADV gets cleared in
-   __hci_req_enable_advertising, but hci_req configures an enable
-   request
-2. add_advertising is called, which also calls
-   __hci_req_enable_advertising. Because HCI_LE_ADV was cleared in Step
-   1, no "disable" command is queued.
-3. hci_req for adv_timeout_expire is run, which enables advertising and
-   re-sets HCI_LE_ADV
-4. hci_req for add_advertising is run, but because no "disable" command
-   was queued, we try to set advertising parameters while advertising is
-   active, causing a Command Disallowed error, failing the registration.
-
-To resolve the issue, this patch removes the check for the HCI_LE_ADV
-flag, and always queues the "disable" request, since HCI_LE_ADV could be
-very temporarily out-of-sync. According to the spec, there is no harm in
-calling "disable" when advertising is not active.
+When an MGMT_EV_DEVICE_CONNECTED event is reported back to the user
+space we will set the flags to tell if the established connection is
+outbound or not. This is useful for the user space to log better metrics
+and error messages.
 
 Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-Signed-off-by: Daniel Winkler <danielwinkler@google.com>
+Reviewed-by: Alain Michaud <alainm@chromium.org>
 ---
 
- net/bluetooth/hci_request.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Changes in v1:
+- Initial change
 
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 8ace5d34b01efe..2b4b99f4cedf21 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -1547,8 +1547,10 @@ void __hci_req_enable_advertising(struct hci_request *req)
- 	if (!is_advertising_allowed(hdev, connectable))
- 		return;
+ doc/mgmt-api.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
+index cab1fffc5..534272045 100644
+--- a/doc/mgmt-api.txt
++++ b/doc/mgmt-api.txt
+@@ -4085,7 +4085,7 @@ Device Connected Event
+ 	start using its identity.
  
--	if (hci_dev_test_flag(hdev, HCI_LE_ADV))
--		__hci_req_disable_advertising(req);
-+	/* Request that the controller stop advertising. This can be called
-+	 * whether or not there is an active advertisement.
-+	 */
-+	__hci_req_disable_advertising(req);
+ 	The following bits are defined for the Flags parameter:
+-		0	Reserved (not in use)
++		0	Outbound Connection
+ 		1	Legacy Pairing
+ 		2	Reserved (not in use)
  
- 	/* Clear the HCI_LE_ADV bit temporarily so that the
- 	 * hci_update_random_address knows that it's safe to go ahead
 -- 
 2.31.0.291.g576ba9dcdaf-goog
 
