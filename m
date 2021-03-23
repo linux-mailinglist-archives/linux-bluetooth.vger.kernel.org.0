@@ -2,92 +2,183 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A0F0345394
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Mar 2021 01:05:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B1AA34576C
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 23 Mar 2021 06:43:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231195AbhCWAEj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 22 Mar 2021 20:04:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60256 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230520AbhCWAEW (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 22 Mar 2021 20:04:22 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF80DC061574
-        for <linux-bluetooth@vger.kernel.org>; Mon, 22 Mar 2021 17:04:21 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id i9so12624794qka.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 22 Mar 2021 17:04:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=7yNLVv15MErxwM58jcW8/DSVhu/rn+WiAoPRUg+2G1E=;
-        b=USS08PnrFOsaCHDB4uQgFP6wrhJPHFy4tEypN56MY43cd18SIKSYLfz1U/1zdeZIcu
-         FDwL/8+P2ZBfOL5gs1ijY7fYUCC8cwBRwQO9Ujwgxc+G8OlpGT7bB6b5Tw28z+l0Vr0A
-         KVPnCm+fZzNs+Qbk3m2s/ILOjcUlp5bT63PB+7FcHMFFwb4GlBbMfAyRQ3ynS6SIchn0
-         sc6+HMooUnodK+M5QkZXG02V+cFmJE2Lfr8ny/5HJXSnZtYhgSZSej7Vx0xo4zURTcaE
-         5X4EQX1XS95zjPcmj8Kkru7k9fgKuWnJaUOa6KyF1bvFc9aw0UmaSr0hM2WawebuKPb7
-         4fYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=7yNLVv15MErxwM58jcW8/DSVhu/rn+WiAoPRUg+2G1E=;
-        b=XkJNFaPg4OCsu7lbhJAUwdw1tmkQ58mQ4EoZYAfcffz1ZwgSwk4+xW+04FkyJPR7EF
-         iBSxnrII1S1ZAEBs9cLxso82gAsc6PAnSkLw0/9VCVSUY2DEhbphkwDFDEm3HFUpiT3O
-         mdOnS7AWkvWSbUMfgclwQXD1LPyqFvY/Wv3azFCzE9WnNPhEjy15Ndwf1IzNrslDag90
-         3lfLhNBjCfiJ7gIIbt2PqKQeO+yRUDwmydpk3C8eCepuG09m9mR4cUfGuHBSGE+vh2dW
-         FJu8bAc9vidXbitfqvMVGZcyprN4fRuapMI6tgtJUL4ssB2l38KR8rshA6fz3pzLPb3C
-         ffqw==
-X-Gm-Message-State: AOAM532nyCXUclq/aHgg4ndJKQxOzm6iwRIsLi3ILiKObicY1pTmF7B5
-        i6/S8mVB1AouZsMzKAbv75X3zZAxOLijqkebUNI=
-X-Google-Smtp-Source: ABdhPJzbMzzRraC+cWtYRlKUKDKERRfuobI2aMgTyOeZp9IwS2NG7MGxE8GtM/6r8oGmnv5J3TOQqLrX8T+GzaicdyA=
-X-Received: by 2002:a37:9c4a:: with SMTP id f71mr2871606qke.74.1616457860940;
- Mon, 22 Mar 2021 17:04:20 -0700 (PDT)
+        id S229508AbhCWFms (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 23 Mar 2021 01:42:48 -0400
+Received: from mga09.intel.com ([134.134.136.24]:42158 "EHLO mga09.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229493AbhCWFm1 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 23 Mar 2021 01:42:27 -0400
+IronPort-SDR: 6F7cWJR7KRkjSTq3SZoKdVwBGw1VS4UGZmMIr5hslDgRexpHTi0CPfSv4+UAqApuTeGti9cB8k
+ DDmt5Io5Srlw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9931"; a="190504024"
+X-IronPort-AV: E=Sophos;i="5.81,270,1610438400"; 
+   d="scan'208";a="190504024"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 22:42:24 -0700
+IronPort-SDR: dgSubycl4vYCFDBKempjRL1924hUEeEEgcKGzcENbz5k526aH9JoI6P2D8l7I76wp53ab8qZI3
+ jq0sXu7GdqDg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,270,1610438400"; 
+   d="scan'208";a="451999555"
+Received: from lkp-server01.sh.intel.com (HELO 69d8fcc516b7) ([10.239.97.150])
+  by orsmga001.jf.intel.com with ESMTP; 22 Mar 2021 22:42:23 -0700
+Received: from kbuild by 69d8fcc516b7 with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1lOZo6-0000NI-QB; Tue, 23 Mar 2021 05:42:22 +0000
+Date:   Tue, 23 Mar 2021 13:41:43 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     linux-bluetooth@vger.kernel.org
+Subject: [bluetooth-next:master] BUILD SUCCESS
+ 8ff0278d106753a553d6cb2cf49a8888425b8187
+Message-ID: <60597f97.Z4YG7rMPTBn3xVVw%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Received: by 2002:ac8:6b4b:0:0:0:0:0 with HTTP; Mon, 22 Mar 2021 17:04:20
- -0700 (PDT)
-Reply-To: goveradamsa@gmail.com
-From:   Gover Adams <ruckymbogo11@gmail.com>
-Date:   Tue, 23 Mar 2021 01:04:20 +0100
-Message-ID: <CAHNJOFAiCpFK7nGZ3j1vco-Odb9RiBoPyow3iK_Afua+Qk-d1A@mail.gmail.com>
-Subject: Urgent and contact me !
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear friend,
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
+branch HEAD: 8ff0278d106753a553d6cb2cf49a8888425b8187  Bluetooth: fix set_ecdh_privkey() prototype
 
-I know this means of communication may not be morally right to you as
-a person. But i also have had a great thought about it and have come
-to this conclusion which i am about to share with you since is the
-only option left.
+elapsed time: 723m
 
-INTRODUCTION: I am a banker and in one way or the other was hoping you
-will cooperate with me as a partner in a project of transferring an
-abandoned fund of a late foreign customer of the bank worth of $15.5Million
-US Dollars (Fifteen Million, Five Hundred Thousand USA Dollars Only).
+configs tested: 121
+configs skipped: 3
 
-This will be disbursed or shared between the both of us in these
-Percentages ratio, 60% for me and 40% for you. Contact me immediately if
-that is alright for you so that we can enter in agreement never to
-betray each other
-before we start processing for the transfer of the funds into your own
-bank account on
-our bealf. If you are satisfied with this proposal, please provide the
-below details for the Mutual
-Confidential Agreement:
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-1. Full Name and Address
-2. Occupation and Country of Origin
-3. Telephone Number
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+riscv                            allmodconfig
+x86_64                           allyesconfig
+i386                             allyesconfig
+riscv                            allyesconfig
+m68k                       m5208evb_defconfig
+arc                         haps_hs_defconfig
+powerpc                      katmai_defconfig
+sh                   rts7751r2dplus_defconfig
+mips                           ip27_defconfig
+riscv                    nommu_virt_defconfig
+arc                              alldefconfig
+arc                          axs103_defconfig
+powerpc                   motionpro_defconfig
+powerpc                      chrp32_defconfig
+arm                          moxart_defconfig
+arm                  colibri_pxa270_defconfig
+arm                         s3c2410_defconfig
+arm                          ixp4xx_defconfig
+mips                           ip28_defconfig
+arm                             mxs_defconfig
+riscv                            alldefconfig
+sh                        edosk7705_defconfig
+sh                                  defconfig
+mips                  decstation_64_defconfig
+openrisc                 simple_smp_defconfig
+powerpc                      walnut_defconfig
+mips                      pic32mzda_defconfig
+mips                       capcella_defconfig
+arm                     am200epdkit_defconfig
+powerpc                         wii_defconfig
+powerpc                     akebono_defconfig
+powerpc                     redwood_defconfig
+arm                            lart_defconfig
+arm                         palmz72_defconfig
+arm                        mvebu_v7_defconfig
+sh                           se7780_defconfig
+powerpc                 mpc836x_rdk_defconfig
+openrisc                         alldefconfig
+m68k                       m5249evb_defconfig
+mips                        maltaup_defconfig
+arm                           omap1_defconfig
+i386                                defconfig
+arm                  colibri_pxa300_defconfig
+mips                           jazz_defconfig
+powerpc                     mpc83xx_defconfig
+powerpc                mpc7448_hpc2_defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                               tinyconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a003-20210323
+i386                 randconfig-a004-20210323
+i386                 randconfig-a001-20210323
+i386                 randconfig-a002-20210323
+i386                 randconfig-a006-20210323
+i386                 randconfig-a005-20210323
+i386                 randconfig-a004-20210322
+i386                 randconfig-a003-20210322
+i386                 randconfig-a001-20210322
+i386                 randconfig-a002-20210322
+i386                 randconfig-a006-20210322
+i386                 randconfig-a005-20210322
+x86_64               randconfig-a012-20210322
+x86_64               randconfig-a015-20210322
+x86_64               randconfig-a013-20210322
+x86_64               randconfig-a014-20210322
+x86_64               randconfig-a016-20210322
+x86_64               randconfig-a011-20210322
+i386                 randconfig-a014-20210322
+i386                 randconfig-a011-20210322
+i386                 randconfig-a015-20210322
+i386                 randconfig-a016-20210322
+i386                 randconfig-a012-20210322
+i386                 randconfig-a013-20210322
+riscv                    nommu_k210_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+x86_64                    rhel-7.6-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
 
-I wait for your response so that we can commence on this project as
-soon as possible.
+clang tested configs:
+x86_64               randconfig-a002-20210322
+x86_64               randconfig-a003-20210322
+x86_64               randconfig-a001-20210322
+x86_64               randconfig-a006-20210322
+x86_64               randconfig-a004-20210322
+x86_64               randconfig-a005-20210322
 
-Please urgently send me a message in my private email address
-(adamsgover@yahoo.com)
-Best Regards,
-Mr. Gover Adams.
-My Telephone number +226 02 58 01 01.
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
