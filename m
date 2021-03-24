@@ -2,55 +2,70 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D95EF34730F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Mar 2021 08:57:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19BDB3475A0
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Mar 2021 11:14:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236040AbhCXH5S (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 24 Mar 2021 03:57:18 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:34035 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236031AbhCXH5K (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 24 Mar 2021 03:57:10 -0400
-Received: from marcel-macbook.holtmann.net (p4fefce19.dip0.t-ipconnect.de [79.239.206.25])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 8A1B1CECF8;
-        Wed, 24 Mar 2021 09:04:47 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [PATCH v2] Bluetooth: SCO - Remove trailing semicolon in macros
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1616551405-41488-1-git-send-email-yumeng18@huawei.com>
-Date:   Wed, 24 Mar 2021 08:57:08 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        linux-kernel@vger.kernel.org
+        id S233151AbhCXKOU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 24 Mar 2021 06:14:20 -0400
+Received: from mx.flatmax.org ([13.55.16.222]:51044 "EHLO mx.flatmax.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235617AbhCXKOO (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 24 Mar 2021 06:14:14 -0400
+Received: from 41.68.233.220.static.exetel.com.au ([220.233.68.41] helo=[192.168.1.33])
+        by mx.flatmax.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.89)
+        (envelope-from <flatmax@flatmax.org>)
+        id 1lP0Wg-00069s-0P
+        for linux-bluetooth@vger.kernel.org; Wed, 24 Mar 2021 21:14:10 +1100
+From:   Matt Flax <flatmax@flatmax.org>
+Subject: PAN howto
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <2bd8e808-c9ed-cf4a-6f17-7e1e2ead4088@flatmax.org>
+Date:   Wed, 24 Mar 2021 21:14:09 +1100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <E7993DF8-F69C-45DA-8AF6-5E7017441A9F@holtmann.org>
-References: <1616551405-41488-1-git-send-email-yumeng18@huawei.com>
-To:     Meng Yu <yumeng18@huawei.com>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+Content-Language: en-US
+X-Spam-Score: -2.9 (--)
+X-Spam-Report: Spam detection software, running on the system "mx.flatmax.org",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Hi there, Can anyone point to a concise and known good PAN
+    setup HOWTO ? We have embedded devices and are aiming to enable WiFi setup
+    over PAN, as well as other PAN things. 
+ Content analysis details:   (-2.9 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+  0.0 TVD_RCVD_IP            Message was received from an IP address
+ -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+                             [score: 0.0000]
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Meng,
+Hi there,
 
-> Macros should not use a trailing semicolon.
-> 
-> Signed-off-by: Meng Yu <yumeng18@huawei.com>
-> ---
-> 
-> Changes in v2
-> -Modify comments 
-> 
-> net/bluetooth/sco.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
+Can anyone point to a concise and known good PAN setup HOWTO ?
 
-patch has been applied to bluetooth-next tree.
+We have embedded devices and are aiming to enable WiFi setup over PAN, 
+as well as other PAN things.
 
-Regards
+The target OS is buldroot and userspace config and setup is preferable. 
+We are using a kernel.fragment file to enable and disable CONFIG options 
+in the kernel.
 
-Marcel
+Buiidroot running Linux 5.8.xx
+
+Bluez-utils v5.55
+
+
+thanks
+
+Matt
+
 
