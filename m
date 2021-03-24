@@ -2,74 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A84C34730A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Mar 2021 08:56:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D95EF34730F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Mar 2021 08:57:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232741AbhCXHzg convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 24 Mar 2021 03:55:36 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:58589 "EHLO
+        id S236040AbhCXH5S (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 24 Mar 2021 03:57:18 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:34035 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230434AbhCXHzZ (ORCPT
+        with ESMTP id S236031AbhCXH5K (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 24 Mar 2021 03:55:25 -0400
-Received: from mac-pro.holtmann.net (p4fefce19.dip0.t-ipconnect.de [79.239.206.25])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 8652DCECF8;
-        Wed, 24 Mar 2021 09:03:00 +0100 (CET)
+        Wed, 24 Mar 2021 03:57:10 -0400
+Received: from marcel-macbook.holtmann.net (p4fefce19.dip0.t-ipconnect.de [79.239.206.25])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 8A1B1CECF8;
+        Wed, 24 Mar 2021 09:04:47 +0100 (CET)
 Content-Type: text/plain;
-        charset=utf-8
+        charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [RFC PATCH v1] doc/mgmt-api - Return connection direction in
- Device Connected Event
+Subject: Re: [PATCH v2] Bluetooth: SCO - Remove trailing semicolon in macros
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20210323145555.RFC.v1.1.I530e1c3e621abd34c342d657df119e12e576d8a7@changeid>
-Date:   Wed, 24 Mar 2021 08:55:21 +0100
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        Alain Michaud <alainm@chromium.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <E266F46F-8682-4D1C-A191-345715E1DE34@holtmann.org>
-References: <20210323145555.RFC.v1.1.I530e1c3e621abd34c342d657df119e12e576d8a7@changeid>
-To:     Yu Liu <yudiliu@google.com>
+In-Reply-To: <1616551405-41488-1-git-send-email-yumeng18@huawei.com>
+Date:   Wed, 24 Mar 2021 08:57:08 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <E7993DF8-F69C-45DA-8AF6-5E7017441A9F@holtmann.org>
+References: <1616551405-41488-1-git-send-email-yumeng18@huawei.com>
+To:     Meng Yu <yumeng18@huawei.com>
 X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Yu,
+Hi Meng,
 
-> When an MGMT_EV_DEVICE_CONNECTED event is reported back to the user
-> space we will set the flags to tell if the established connection is
-> outbound or not. This is useful for the user space to log better metrics
-> and error messages.
+> Macros should not use a trailing semicolon.
 > 
-> Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-> Reviewed-by: Alain Michaud <alainm@chromium.org>
+> Signed-off-by: Meng Yu <yumeng18@huawei.com>
 > ---
 > 
-> Changes in v1:
-> - Initial change
+> Changes in v2
+> -Modify comments 
 > 
-> doc/mgmt-api.txt | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
-> index cab1fffc5..534272045 100644
-> --- a/doc/mgmt-api.txt
-> +++ b/doc/mgmt-api.txt
-> @@ -4085,7 +4085,7 @@ Device Connected Event
-> 	start using its identity.
-> 
-> 	The following bits are defined for the Flags parameter:
-> -		0	Reserved (not in use)
-> +		0	Outbound Connection
-> 		1	Legacy Pairing
-> 		2	Reserved (not in use)
+> net/bluetooth/sco.c | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
 
-the reserved ones are there to keep in sync with Device Found. So please use the next free one (and reserve it for Device Found).
-
-Also I am not fully in favor of “Outbound Connection”. I rather use the term “Central” in case we are the Central / Master of a connection. Now that however gets into trouble with BR/EDR since there you can switch roles. So maybe “Initiated Connection” is an option.
+patch has been applied to bluetooth-next tree.
 
 Regards
 
