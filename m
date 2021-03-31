@@ -2,64 +2,90 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23A2434FF0F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 31 Mar 2021 13:02:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEDBA34FF92
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 31 Mar 2021 13:37:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235491AbhCaLBq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 31 Mar 2021 07:01:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57344 "EHLO
+        id S235292AbhCaLhC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 31 Mar 2021 07:37:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235412AbhCaLBT (ORCPT
+        with ESMTP id S234987AbhCaLg5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 31 Mar 2021 07:01:19 -0400
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7B03C0613D9
-        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Mar 2021 04:01:18 -0700 (PDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id g8so9683396qvx.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Mar 2021 04:01:18 -0700 (PDT)
+        Wed, 31 Mar 2021 07:36:57 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E33EC061574
+        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Mar 2021 04:36:56 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so986983wmj.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Mar 2021 04:36:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=KsAaFwq4tOBef4bjx9L7op0aIwsJwJBz8/6oLSitXK8=;
-        b=KYOjgZg0a3EK0EtFKOtzWQ6O7hWPv1awRQvc0zX1pFUzfoZx80pl7JqNehSvHtSDgV
-         ynZCOlz2qAje0gg035wCULCth9pKpSwNReQdBygBWpRFyvcjGRV2+d1J1cJPEYzcpPKr
-         rBaSqNaPRvB7wLWxbg/bZT2ynsrs7+waQkf7wvdaC+XXwLHdmWtcUG1RLyvGffBroSQP
-         Dpz4PyYHiOlJ8MkS3VwylpNS2hBpcnmsdRdyGnBQcvtBWaqYNnmO3OgGe0zv5FKpP89f
-         3t8P2QdszavVx/H5e2BOGCWj7+pnKJ/CpQKqSgeEBsBLd810SfybEIezX9Whz0XeOWAc
-         uZ6Q==
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=AOcZoBRnKJ1Sm+gu9zdQ817E3kMzHA9eGyEcNRDE+d4=;
+        b=ufMLi3gs/P2bg+onMCZid6xIH0JgjJ/aPK4949NaGrkqNZHCTHg9i1vNBNAEKn0xUS
+         NHSbjfT+ihpikeDaRSth90HWkLyxx/1kp5XyabWDclgvkJd9LI9kg7gPrQfbnVzyaBLX
+         vN4SGq2qP5lDVJqetLw6cI9+iYKmt/wjNE4PgIct2mrUFyiKaAXk2kdXXX4dQeExTS/e
+         x7z43LpbZB39EWaRUTzJ8EJVmekQ7OGO1HSS5Iu88JCTtLH1CLP7AXwctj3Xc6pqdLLN
+         2FeOwuLm9gyF4b+OsAYiZiSsZNveKGI2yGPjTkVGU1uZt/IqO/DC2y7WoipquAKsKWQ6
+         M0zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=KsAaFwq4tOBef4bjx9L7op0aIwsJwJBz8/6oLSitXK8=;
-        b=QpYIO+3ZOA7SGjorxu/uKR6U/1eJ4+EXGpoQrM97Ou4Y8onVGvhgxJtHRrua4AWsK9
-         FtKjow9ye8jeYLepsxwzGgCLm6WnQ8GYOJItKsfz5tzpvr3hlW0WWL7sVK2IMr3YTldq
-         y/m2QZn/B7RhLHPDPniYMCBkavqiLclpDWCRC2LeGO07Q0dMyT8wWg0yGDVR5psDYfXw
-         nQMbJZi8lR+0WxJHDBwLZI/ishkw82k5m/+ngWFqXwFfhYMVEE1nqjumCjXR2/cHAcid
-         CLhO0ovG6m4Xmy0ySDUdsjg+MsKpWh7ElW18YVukyrhh9aHyzmspvuTCZeH9zU3h55zi
-         4zCQ==
-X-Gm-Message-State: AOAM533D9wWrMxhaF+RJH3caxUWY/bAYG6lRF5gpBSczeirtBFjXff6m
-        3Z9CGMwmjL+Wb7iAMK2RoqbrEVsLrobq0saQtDk=
-X-Google-Smtp-Source: ABdhPJwYCiUcT6tYbbFetHQWug+sTNFMfU3duTG4iO2KLrTCB2WhVkcOimPlJS1g+clXobr6zrYQju2yf8ou+2ErmYg=
-X-Received: by 2002:a0c:a99a:: with SMTP id a26mr2423230qvb.2.1617188477775;
- Wed, 31 Mar 2021 04:01:17 -0700 (PDT)
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=AOcZoBRnKJ1Sm+gu9zdQ817E3kMzHA9eGyEcNRDE+d4=;
+        b=t50y9fWrTb7yyiD/d5Y9PwZV0yeDzmG/V2bGrRibVXzLEZ+3Im7wMvZ4AhcIghqum+
+         HzulsajwKin7ijQ/GgiEJWJNlPQxvCzrTNMPf/wvh+cECjpcXFBNU3feJsGr1oyGm2+W
+         rHmn8S9BHhO/t4tEbUrrq4yxUVmZS6pcnttbDCy45/J/jrahzX/PnUAFDXuxqNNYo578
+         BThT6LkV9wf01/wVxtssTi2MQz8BL+2hw2fbUfXo8deJReyf1kvd8Xhk8M0yhFjxdUPg
+         tB1IziEQXNtJ3l2H/zTjc5Bnwxt/q7DhO0IxbW1CfwLLm2iDNlctajpZ1UNF8pxIbxXV
+         hGkg==
+X-Gm-Message-State: AOAM532F5Xjrc7yrv5ESopXlLs/vwKhOO6LywyMz/UBI2cWptdthAHuW
+        2f88d8q2o3egEVKTIxWV/A==
+X-Google-Smtp-Source: ABdhPJz8nxIyZCfwundOYnKFlbq9TcgXwpxn+qtkq8CPhquC+Q0rO8vgbkPO9u/DUIceBSiRpF+aSQ==
+X-Received: by 2002:a1c:4b0a:: with SMTP id y10mr2701656wma.141.1617190615417;
+        Wed, 31 Mar 2021 04:36:55 -0700 (PDT)
+Received: from [192.168.1.125] (ip-37-201-4-244.hsi13.unitymediagroup.de. [37.201.4.244])
+        by smtp.gmail.com with ESMTPSA id b17sm3850725wrt.17.2021.03.31.04.36.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Mar 2021 04:36:55 -0700 (PDT)
+To:     linux-bluetooth@vger.kernel.org
+Cc:     feryllt@gmail.com
+From:   Feryllt Pryderi <feryllt@gmail.com>
+Subject: [PATCH BlueZ] audio/transport: Emit Volume changed if endpoint is
+ source
+Message-ID: <80f40fbd-c903-6f10-1d9f-e75f0f214db5@gmail.com>
+Date:   Wed, 31 Mar 2021 13:38:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Received: by 2002:a05:6214:11a7:0:0:0:0 with HTTP; Wed, 31 Mar 2021 04:01:17
- -0700 (PDT)
-Reply-To: michellegoodman035@gmail.com
-From:   Michelle Goodman <michellegoodman001@gmail.com>
-Date:   Wed, 31 Mar 2021 12:01:17 +0100
-Message-ID: <CA+jr58r6jL6t3neF=oX4N=LXpukdQX0mtaiS2m7XALL6A3BdvA@mail.gmail.com>
-Subject: From Michelle
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Caro obrigado espero que voc=C3=AA receba a minha mensagem eu preciso de
-sua resposta urgente agora.
-obrigado
-Michelle
+Change set_volume to send a Volume PropertyChanged signal also if
+transport->sink_watch is set (and not only if source_watch is set).
+
+This fixes volume changes signals not being sent for devices like speakers and
+headphone adapters with volume control (like Bose Soundlink Revolve or Fiio BTR5).
+---
+ profiles/audio/transport.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/profiles/audio/transport.c b/profiles/audio/transport.c
+index 8248014ae..26aa237a3 100644
+--- a/profiles/audio/transport.c
++++ b/profiles/audio/transport.c
+@@ -662,6 +662,7 @@ static void set_volume(const GDBusPropertyTable *property,
+     a2dp->volume = volume;
+ 
+     notify = transport->source_watch ? true : false;
++    notify = notify || (transport->sink_watch ? true : false);
+     if (notify)
+         g_dbus_emit_property_changed(btd_get_dbus_connection(),
+                         transport->path,
+-- 
+2.31.0
+
