@@ -2,127 +2,259 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B031351394
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Apr 2021 12:29:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA0D635138C
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Apr 2021 12:29:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234368AbhDAK2h (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 1 Apr 2021 06:28:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50922 "EHLO
+        id S234387AbhDAK2O (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 1 Apr 2021 06:28:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234262AbhDAK1w (ORCPT
+        with ESMTP id S234263AbhDAK1w (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Thu, 1 Apr 2021 06:27:52 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8F7BC0617A7
-        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Apr 2021 03:25:35 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id f75so5262086yba.8
-        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Apr 2021 03:25:35 -0700 (PDT)
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA9BC0617A9
+        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Apr 2021 03:25:39 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id x22so5296593ybi.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Apr 2021 03:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=pjLc0GCGeoKt3WMjr9IqnkfrKbYNQrPENY0f+UGyKOs=;
-        b=Ix55Ab0zKrENL+X7zErw7gE48EA2Za9+KC2GHXX3LqekqNR3acb3oZePJurhc/mjNk
-         68UNoPIt3rSQFq5AbZIT8IGdFIHXm854TBVyidZELm/HrAOlV1jEvROwa9XsrAbuk8GR
-         A3XR/e/lZguQBdfTrrMfxxDcRuXWIwU3fYEsNknu/8noHc5uDRYZBzhYnwPeXeOwms9i
-         kXBTF+9vizLRnvWaYwkHbXiQHcfsG/55KqE+G8GAUxNV+tILzIqbpJVfbodI3RpoTHav
-         LxSQldY58ADU3qia6OyLZ2+FlZXdtTF34dtTs1ftvAgYm5UL0S3un7H73rgl+/gyOLXp
-         u+GQ==
+        bh=mBZDJ27quEoeuB7sdi/xI42HBNcqavoUI6lrFoCV90Q=;
+        b=Xvok7x2NhSSQTfsM2UnSi/UjtUYW/0ij5xxEr4DFJBFuEcb6UU07K8dJaR36XMKq0O
+         rBPirhib3kN9mhFlHTHF9lf7ydK+8fHXRNZO4ko5EjLfatSZwrqIkwRHKE3AV+84GdmJ
+         M2W6rQ1GJwyIscic8J+K7EUgUEax+ORCIAD+hgzxsFv1FTx0wAce3K5RHl47P+UMQ0Oe
+         O5dojP8GnvAJAPKyCLjeWWTSN98AbggaUuVNzupKTQJ/HthCNAq8KiaH+txYdt1ARBwo
+         QiwyzYpgrj7j+Mq747QXG7t1XkNB1WL/kIMkwLDQRtfG7rfJTdVmj23/yUMEqyEoNPqB
+         Lmtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=pjLc0GCGeoKt3WMjr9IqnkfrKbYNQrPENY0f+UGyKOs=;
-        b=aqN3v6anLrvITmAbjc1d1DzUQF/M/YcTZfMr4L5nuAIktYMdA4EcZaj4MUYOEvxBgk
-         15CkkM40JUHfu9avC8wRHAU0odxf4IdLEg+RbPfppLOa3vGGpONyF9OSkKssoE+FcRgu
-         ZA/tXx244rBCWKTih096k02NJ8hOAppyhp/c8Ildh6rEVYTcxqdLIxWx8oOBQ1qOuxj4
-         mW6TjMFlAS8nEDegoj1S+B0bs6jtNTCNmRiL/SpoBhRBqTEI2EvqRywwsN9wwu+BJJ27
-         2FnlfSgDkj+jYLG6y6+NNn0sf82lc02d/ACoU7mEwZVZmon+CQTBCHhVwGbJaVQVU/ZQ
-         yG2A==
-X-Gm-Message-State: AOAM5335EHV+nG7n7BbqsjW6Ac1hwHPRu8cpL7UF2keFfMS2v8Iyzu1j
-        AjdjiZiJ98LX3fY3GInezzVZ3RMbKj8hUy8EKxZZ4jFj9UC/bn8SeOvv4T3OFV/PZoLtAEl2TPC
-        VUhqNsYrnlztprnX+5s+QMKUE6b7ULZRApGqByaaMTw5KLaV/k9Cx9BmTsp937cDBnFcBRAd/gg
-        RvfVbeYLAWU9w=
-X-Google-Smtp-Source: ABdhPJzbCjkeGeJiJN7Ji4I7RFmD046LopJXicTfSSBqwjLOb3vgD3tUfoE0g6891FnPeHmEi7zOFZZmMC0Pw2jLwQ==
+        bh=mBZDJ27quEoeuB7sdi/xI42HBNcqavoUI6lrFoCV90Q=;
+        b=IQ/Zm7JWyYBL+bdHCdC3PbN7jIo01D5bgK3reXtqH2F+AIdz+Ji2rAjSe0I21XBfFW
+         6uvOtdNlmkIdyvfQnoJXViXGeo28haKFS3Ytv4jzISYm9wHefHrZ4jGsl+LrvWOqkeFz
+         hlScfDZmImXaFFH9KFe0TaxzoF10FfZrD2wZfk+NiMtOE8ycWsNZ95+FPfIgDKcFEKjh
+         50mVEpj5Hf0Ams7BUyEO73SQ+jPiZYK1jsoqxh5xMHC8oZ5S5nyKECgsYO561vVBkTor
+         3VMSNDdNmv/C6ZT605k1nF8db9ElK7VtpxRo9ePx5t923ZvV84WfbjypDI6ia1g2wWWR
+         GFrg==
+X-Gm-Message-State: AOAM533YW0NnmqA1W/GjbtuDNjsXyiy+h/DtLdxn4W3Tx3Wy0HLB/z88
+        HaUD90xxuBQtTp25RGvIYBUZxBHaYjSRXb34s50Toonn45spFqtYHwW2zdKzq03aeAcxaYNM2Mn
+        c3WFWfA5G+uoqEMWEfTA9z4vHf95TopEUi4vOfk/PoK1i5BfcdD1cwVe0ZGVUGEthb0mNNi88M0
+        puAYBGmMTqbY4=
+X-Google-Smtp-Source: ABdhPJxfROASGnlhutlwbs4+mjPH8PscHzx6A2UE4skzvq3vbLBsC4FKkvDH6hFfG6QHA+51p+tc/FC7glw4o4S7+g==
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:ad88:abe:9fd5:a5fc])
- (user=howardchung job=sendgmr) by 2002:a25:cf90:: with SMTP id
- f138mr10630786ybg.421.1617272735031; Thu, 01 Apr 2021 03:25:35 -0700 (PDT)
-Date:   Thu,  1 Apr 2021 18:24:44 +0800
+ (user=howardchung job=sendgmr) by 2002:a5b:448:: with SMTP id
+ s8mr10084433ybp.363.1617272739152; Thu, 01 Apr 2021 03:25:39 -0700 (PDT)
+Date:   Thu,  1 Apr 2021 18:24:45 +0800
 In-Reply-To: <20210401102447.3958224-1-howardchung@google.com>
-Message-Id: <20210401182328.Bluez.5.Ie6faf8aa794d1df17758bd5bd693d13fed68e85d@changeid>
+Message-Id: <20210401182328.Bluez.6.I85fe2263b7747372e2c01bd8dc73271dd24ad6cf@changeid>
 Mime-Version: 1.0
 References: <20210401102447.3958224-1-howardchung@google.com>
 X-Mailer: git-send-email 2.31.0.291.g576ba9dcdaf-goog
-Subject: [Bluez PATCH 5/8] audio: Remove Media1 interface when a2dp source disallowed
+Subject: [Bluez PATCH 6/8] core: add properties IsBlockedByPolicy and ServiceAllowList
 From:   Howard Chung <howardchung@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
 Cc:     Howard Chung <howardchung@google.com>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        Sonny Sasaka <sonnysasaka@chromium.org>
+        Miao-chen Chou <mcchou@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When A2DP source profile is not allowed by policy, we remove the
-a2dp_server and everything inside the object, which also release all
-MediaEndpoints and MediaPlayer. When admin re-allowed A2DP source
-profile, although we recreate the a2dp_server, clients are not able to
-know they can register their endpoint and player now.
+This adds IsBlockedByPolicy to indicate if the remote device is
+currently blocked by policy.
 
-This patch handle this case by unregistering Media1 interface
-when we remove a2dp_server, and register it back when a2dp_source is
-allowed.
+ServiceAllowlist is also introduced to indicate the current service
+allowlist.
 
 Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
 ---
 
- profiles/audio/a2dp.c  | 2 ++
- profiles/audio/avrcp.c | 3 +++
- 2 files changed, 5 insertions(+)
+ src/admin_policy.c | 57 +++++++++++++++++++++++++++++++++++++++++++---
+ src/device.c       | 32 ++++++++++++++++++++++++--
+ src/device.h       |  1 +
+ 3 files changed, 85 insertions(+), 5 deletions(-)
 
-diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
-index d31ed845cbe7..26d4f365207e 100644
---- a/profiles/audio/a2dp.c
-+++ b/profiles/audio/a2dp.c
-@@ -3275,6 +3275,7 @@ static int a2dp_source_server_probe(struct btd_profile *p,
- {
- 	struct a2dp_server *server;
+diff --git a/src/admin_policy.c b/src/admin_policy.c
+index eeae2722cc0a..6498dcf05319 100644
+--- a/src/admin_policy.c
++++ b/src/admin_policy.c
+@@ -118,8 +118,13 @@ void btd_admin_policy_allowlist_set(struct btd_admin_policy *admin_policy,
+ 	 */
+ 	btd_profile_policy_update(admin_policy->adapter);
  
-+	media_register(adapter);
- 	DBG("path %s", adapter_get_path(adapter));
- 
- 	server = find_server(servers, adapter);
-@@ -3315,6 +3316,7 @@ static void a2dp_source_server_remove(struct btd_profile *p,
- 		return;
- 
- 	a2dp_server_unregister(server);
-+	media_unregister(adapter);
- }
- 
- static int a2dp_sink_server_probe(struct btd_profile *p,
-diff --git a/profiles/audio/avrcp.c b/profiles/audio/avrcp.c
-index 05dd791ded7c..c25495f19492 100644
---- a/profiles/audio/avrcp.c
-+++ b/profiles/audio/avrcp.c
-@@ -4735,6 +4735,8 @@ static void avrcp_controller_server_remove(struct btd_profile *p,
- 
- 	if (server->tg_record_id == 0)
- 		avrcp_server_unregister(server);
+-	/* Update auto-connect status to all devices */
++	/* Update auto-connect and IsBlockedByPolicy status to all devices */
+ 	btd_adapter_refresh_is_blocked_by_policy(admin_policy->adapter);
 +
-+	media_unregister(adapter);
++	g_dbus_emit_property_changed(btd_get_dbus_connection(),
++					adapter_get_path(admin_policy->adapter),
++					ADMIN_POLICY_INTERFACE,
++					"ServiceAllowList");
  }
  
- static int avrcp_controller_server_probe(struct btd_profile *p,
-@@ -4745,6 +4747,7 @@ static int avrcp_controller_server_probe(struct btd_profile *p,
+ static DBusMessage *set_service_allowlist(DBusConnection *conn,
+@@ -201,6 +206,51 @@ static struct btd_admin_policy *admin_policy_new(struct btd_adapter *adapter)
+ 	return admin_policy;
+ }
  
- 	DBG("path %s", adapter_get_path(adapter));
++static void append_uuid_set(gpointer key, gpointer value, gpointer user_data)
++{
++	const bt_uuid_t *uuid = key;
++	DBusMessageIter *entry = user_data;
++	char uuid_str[MAX_LEN_UUID_STR];
++	const char *uuid_str_ptr = uuid_str;
++
++	bt_uuid_to_string(uuid, uuid_str, MAX_LEN_UUID_STR);
++	dbus_message_iter_append_basic(entry, DBUS_TYPE_STRING, &uuid_str_ptr);
++}
++
++static gboolean
++property_get_service_allowlist(const GDBusPropertyTable *property,
++					DBusMessageIter *iter, void *user_data)
++{
++	struct btd_admin_policy *admin_policy = user_data;
++	DBusMessageIter entry;
++
++	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
++					DBUS_TYPE_STRING_AS_STRING, &entry);
++
++	g_hash_table_foreach(admin_policy->allowed_uuid_set, append_uuid_set,
++									&entry);
++
++	dbus_message_iter_close_container(iter, &entry);
++
++	return TRUE;
++}
++
++static gboolean
++property_exists_service_allowlist(const GDBusPropertyTable *property,
++							void *user_data)
++{
++	struct btd_admin_policy *admin_policy = user_data;
++
++	return admin_policy->allowed_uuid_set != NULL ? TRUE : FALSE;
++}
++
++static const GDBusPropertyTable admin_policy_properties[] = {
++	{"ServiceAllowList", "as", property_get_service_allowlist, NULL,
++					property_exists_service_allowlist,
++					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL},
++	{ }
++};
++
+ struct btd_admin_policy *btd_admin_policy_create(struct btd_adapter *adapter)
+ {
+ 	struct btd_admin_policy *admin_policy;
+@@ -212,8 +262,9 @@ struct btd_admin_policy *btd_admin_policy_create(struct btd_adapter *adapter)
+ 	if (!g_dbus_register_interface(btd_get_dbus_connection(),
+ 					adapter_get_path(admin_policy->adapter),
+ 					ADMIN_POLICY_INTERFACE,
+-					admin_policy_methods, NULL, NULL,
+-					admin_policy, NULL)) {
++					admin_policy_methods, NULL,
++					admin_policy_properties, admin_policy,
++					NULL)) {
+ 		btd_error(admin_policy->adapter_id,
+ 				"Failed to register "
+ 				ADMIN_POLICY_INTERFACE);
+diff --git a/src/device.c b/src/device.c
+index 2192346d5f8d..aa54f00441c1 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -265,6 +265,7 @@ struct btd_device {
+ 	gboolean	auto_connect;
+ 	gboolean	disable_auto_connect;
+ 	gboolean	general_connect;
++	gboolean	is_blocked_by_policy;
  
-+	media_register(adapter);
- 	server = find_server(servers, adapter);
- 	if (server != NULL)
- 		goto done;
+ 	bool		legacy;
+ 	int8_t		rssi;
+@@ -1470,6 +1471,18 @@ static gboolean dev_property_wake_allowed_exist(
+ 	return device_get_wake_support(device);
+ }
+ 
++static gboolean
++dev_property_get_is_blocked_by_policy(const GDBusPropertyTable *property,
++					DBusMessageIter *iter, void *data)
++{
++	struct btd_device *device = data;
++	dbus_bool_t is_blocked = device->is_blocked_by_policy;
++
++	dbus_message_iter_append_basic(iter, DBUS_TYPE_BOOLEAN, &is_blocked);
++
++	return TRUE;
++}
++
+ static bool disconnect_all(gpointer user_data)
+ {
+ 	struct btd_device *device = user_data;
+@@ -1929,6 +1942,16 @@ static int service_prio_cmp(gconstpointer a, gconstpointer b)
+ 	return p2->priority - p1->priority;
+ }
+ 
++static void refresh_is_blocked_by_policy(struct btd_device *dev, bool value)
++{
++	if (value == dev->is_blocked_by_policy)
++		return;
++
++	dev->is_blocked_by_policy = value;
++	g_dbus_emit_property_changed(dbus_conn, dev->path,
++					DEVICE_INTERFACE, "IsBlockedByPolicy");
++}
++
+ void btd_device_update_is_blocked_by_policy(struct btd_device *dev)
+ {
+ 	struct btd_adapter *adapter = dev->adapter;
+@@ -1936,6 +1959,7 @@ void btd_device_update_is_blocked_by_policy(struct btd_device *dev)
+ 	struct btd_profile *profile;
+ 	GSList *l;
+ 	bool auto_connect = false;
++	bool is_blocked = false;
+ 
+ 	/* If service discover is ongoing, let the service discover complete
+ 	 * callback call this function.
+@@ -1950,13 +1974,16 @@ void btd_device_update_is_blocked_by_policy(struct btd_device *dev)
+ 		if (!profile->auto_connect)
+ 			continue;
+ 
+-		if (profile->accept &&
+-			!btd_service_is_blocked_by_policy(service))
++		if (btd_service_is_blocked_by_policy(service))
++			is_blocked = true;
++		else if (profile->accept)
+ 			auto_connect = true;
+ 	}
+ 
+ 	if (!dev->disable_auto_connect)
+ 		device_set_auto_connect(dev, auto_connect);
++
++	refresh_is_blocked_by_policy(dev, is_blocked);
+ }
+ 
+ static GSList *create_pending_list(struct btd_device *dev, const char *uuid)
+@@ -2994,6 +3021,7 @@ static const GDBusPropertyTable device_properties[] = {
+ 	{ "WakeAllowed", "b", dev_property_get_wake_allowed,
+ 				dev_property_set_wake_allowed,
+ 				dev_property_wake_allowed_exist },
++	{ "IsBlockedByPolicy", "b", dev_property_get_is_blocked_by_policy},
+ 	{ }
+ };
+ 
+diff --git a/src/device.h b/src/device.h
+index 3ca4f2c56566..a24ae088b68e 100644
+--- a/src/device.h
++++ b/src/device.h
+@@ -74,6 +74,7 @@ void device_set_service_data(struct btd_device *dev, GSList *list,
+ 							bool duplicate);
+ void device_set_data(struct btd_device *dev, GSList *list,
+ 							bool duplicate);
++void btd_device_update_is_blocked_by_policy(struct btd_device *dev);
+ void device_probe_profile(gpointer a, gpointer b);
+ void device_remove_profile(gpointer a, gpointer b);
+ struct btd_adapter *device_get_adapter(struct btd_device *device);
 -- 
 2.31.0.291.g576ba9dcdaf-goog
 
