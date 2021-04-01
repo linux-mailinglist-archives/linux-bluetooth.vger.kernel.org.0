@@ -2,58 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0CD5351384
+	by mail.lfdr.de (Postfix) with ESMTP id ECE79351385
 	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Apr 2021 12:29:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234355AbhDAK2L (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 1 Apr 2021 06:28:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50578 "EHLO
+        id S234362AbhDAK2M (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 1 Apr 2021 06:28:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234236AbhDAK1u (ORCPT
+        with ESMTP id S234238AbhDAK1u (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Thu, 1 Apr 2021 06:27:50 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F6B4C06178C
-        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Apr 2021 03:25:20 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id lj2so3359004pjb.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Apr 2021 03:25:20 -0700 (PDT)
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FFC5C061793
+        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Apr 2021 03:25:24 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id y19so2804379pll.8
+        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Apr 2021 03:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=juhixWLyicFTt7f+uaGnUssgbkazntw8va11il35Aco=;
-        b=d+mdMLYXGpUiXb/0heJwjiqdBqBIYR/EzMM88l1RFE+HvpLDBVfGAV0+YK43YSZmD/
-         3Lo80wJZC5VoxCqZO/ylthV3MMWPiXJdzLmvUe4a2NRpsceSOGzPSn50LbBBVd4Bo98l
-         gdjRHB9Lf450d5fhMvpjVn+AJsVWZaINpbpaAfju3BlJSxeXO5jQtEKD2taf/wa6mcp/
-         RfAUA/WGkJstxuspWc7EyDEt+wg44Puaw6PwyQqyXr2InBIHyWq4rSHbnsluA8CDfzKU
-         mV2QFEk8WWEuNyxgASfKWZfmays9qE8MihZe3m0IPWBLYzOSHh4EOUfkAc3sWblkhLwN
-         Bajg==
+        bh=cO4AVl4n279ebsWSUVFtNX9Qx+EUeBMaQw67JXUvSvY=;
+        b=OCei/5zVNsnGKUZw/jxr29YLvkaNFnXaGn9oEn8VZeExRh/oEitNruJq0TT/H6TMVP
+         CSdFhCApRUSTeUeRho4mWiRZnS4LNz8Fa/XrU3K0tLtPl8PC+9KVyBm/al/LpK2mBkiM
+         ipleuFc1WT4I2xh23BNAfXrYLgRUpsx4ntoRuppC4UjuhJzKEgKprH0Pl1bbh1g2mLKV
+         7PMM8KIRLXFAZx77k/zYWGGfqKW/BA7vqexli+EWxvHTS2LRExUarCWsK5jsjjgleRpt
+         Q4g5EtoUf7DpgfEr5GZ/Qr2wphwSA8gmae+Tb/aP2f5iRCljdPXjVAteFAPHGiJNqZqB
+         LeeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=juhixWLyicFTt7f+uaGnUssgbkazntw8va11il35Aco=;
-        b=PNm5Ohqfz39s+CxFPlJTVqMcRhn2qGpS3UiLkOyUU8cvBYg7H6xlYxKS/jN8f1teQv
-         x2mBZtrELh7IhfCOyY5WApHufrhBVx5MTq396GbDahodMouKjDmYAP82UWwdmlzFR7hU
-         BUGyTs8T5aHo3SPdON1HdFMJMaYeT1NggoCS56OPyZ2Nx/S6LVpiGn/jhE6G7fvAspJi
-         SzU5i2UlGxCOIzfdi8J3CpiqdFNZpN6sQxFxjo/gVnUucdbaZgKxLARo3QEXo7IZG9FD
-         WgKlL0t7vytnso8kXerz7AWZNIWtKBrRJMrPIkwQhwbYpNRKhNO+sD7yzDZHHI9YCsZW
-         hEZA==
-X-Gm-Message-State: AOAM530ci80+hGNdx3rW4wBxqvWP+55EBgVSnunSdoURhpPZtF+5dBNh
-        LREwnEfJocouvQX+5+ymkLI5g1tjmg4NXUkCixBXSgKMpMPh6U2AT2LOpBkYtCRQeAzNuuE8T1l
-        662KKiRUm8yWta+BVpKeXqT7s+WOlKQFw/aKd1sO5cWuD/LiE/9tDcgm8EccZEpPxXJI9yGYOgy
-        Az/y5fD1kNSLk=
-X-Google-Smtp-Source: ABdhPJzo0ZYKEVOCzxXvIZrrcuL7G04/JHRV4Q21VBDd8gldtomSkgysGgqCgOyxB3qRaJmFOX+ig8gN6EogSpnOqw==
+        bh=cO4AVl4n279ebsWSUVFtNX9Qx+EUeBMaQw67JXUvSvY=;
+        b=FAXaMYoY7kRqKC891n1W7r+HoB3wzN+r/V/++867GndhefHMiR8eQ9qycjtO+dZ27n
+         8epB0D0zfdtHlYULDscpho4zECeTBwKq6lXiOF/f/l2QGuqUcGUUi1NHfkPN7Cmsj5kr
+         Y5bC/ns2z4EULaSYjXh2gNsm4tu7I4W8Vn7WTv7oKlMK7v0mNxYr21XsAtNrcJl6RqPD
+         ZNWxFkov3x/lBoJwFlqg+t0gzbiKAa2przNnJG9C1pLe3NGCCASgGlIrF46PJmRLv91w
+         vl2aF+CInUSNCtNVJsspVgKwECewLPZS+T4VXQS93qTh7ymlY4Bkz8ACfwbmHhf1Tq/E
+         8W2A==
+X-Gm-Message-State: AOAM5303C0tMxFXM13L6GlONTHfFQFnhD6QpY0ebp6SwgXryhwVs9fcE
+        nbYt1G/Rn5Tjv2lItzuKbP2eSw6ueYzq9Ne4iGwCjB8bxoia4we9HrwglSB6fTPPQxuGKKsa/Z0
+        NGl7w4TDV6EURQlu7yxl4fbv2rriq/Y6Z0HJOCb8WV5mAQ6ZtpSd9nyWQVIc9kdR1jER9cxD63W
+        D2jwV7B09/SEk=
+X-Google-Smtp-Source: ABdhPJxrmGyVPY6/ctS/LJ6ng7gEpEp623G11Mme8vTJgQ0RZE2FGlUu712qVrpFjYoqZww06MHPtbL2CInCxTRwtQ==
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:ad88:abe:9fd5:a5fc])
- (user=howardchung job=sendgmr) by 2002:a17:90a:8b97:: with SMTP id
- z23mr309500pjn.1.1617272719582; Thu, 01 Apr 2021 03:25:19 -0700 (PDT)
-Date:   Thu,  1 Apr 2021 18:24:40 +0800
+ (user=howardchung job=sendgmr) by 2002:a62:7f86:0:b029:20a:a195:bb36 with
+ SMTP id a128-20020a627f860000b029020aa195bb36mr6976280pfd.4.1617272723719;
+ Thu, 01 Apr 2021 03:25:23 -0700 (PDT)
+Date:   Thu,  1 Apr 2021 18:24:41 +0800
 In-Reply-To: <20210401102447.3958224-1-howardchung@google.com>
-Message-Id: <20210401182328.Bluez.1.I42e9182418d46012ec4b01562f2e0f18840e90d5@changeid>
+Message-Id: <20210401182328.Bluez.2.I2d1b00997951634dac9ea09da39fc9340ba7256b@changeid>
 Mime-Version: 1.0
 References: <20210401102447.3958224-1-howardchung@google.com>
 X-Mailer: git-send-email 2.31.0.291.g576ba9dcdaf-goog
-Subject: [Bluez PATCH 1/8] doc: add description of SetServiceAllowList
+Subject: [Bluez PATCH 2/8] lib: add hash functions for bt_uuid_t
 From:   Howard Chung <howardchung@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
 Cc:     Howard Chung <howardchung@google.com>,
@@ -63,71 +64,77 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds description of SetServiceAllowList.
+This adds function GHashFunc and GEqualFunc for bt_uuid_t.
+With these functions, we can add uuids into a GHashTable with bt_uuid_t
+format.
 
 Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 ---
 
- doc/admin_policy-api.txt | 34 ++++++++++++++++++++++++++++++++++
- doc/device-api.txt       |  7 +++++++
- 2 files changed, 41 insertions(+)
- create mode 100644 doc/admin_policy-api.txt
+ lib/uuid.c | 21 +++++++++++++++++++++
+ lib/uuid.h |  3 +++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/doc/admin_policy-api.txt b/doc/admin_policy-api.txt
-new file mode 100644
-index 000000000000..dd957351506a
---- /dev/null
-+++ b/doc/admin_policy-api.txt
-@@ -0,0 +1,34 @@
-+BlueZ D-Bus Adapter API description
-+***********************************
+diff --git a/lib/uuid.c b/lib/uuid.c
+index a09321dc6ed1..0b0ddb3fc9d2 100644
+--- a/lib/uuid.c
++++ b/lib/uuid.c
+@@ -16,6 +16,7 @@
+ #include <string.h>
+ #include <stdlib.h>
+ #include <errno.h>
++#include <glib.h>
+ 
+ #include "lib/bluetooth.h"
+ #include "uuid.h"
+@@ -120,6 +121,26 @@ int bt_uuid_cmp(const bt_uuid_t *uuid1, const bt_uuid_t *uuid2)
+ 	return bt_uuid128_cmp(&u1, &u2);
+ }
+ 
++guint bt_uuid_hash(gconstpointer key)
++{
++	const bt_uuid_t *uuid = key;
++	bt_uuid_t uuid_128;
++	uint64_t *val;
 +
++	bt_uuid_to_uuid128(uuid, &uuid_128);
++	val = (uint64_t *)&uuid_128.value.u128;
 +
-+Adapter hierarchy
-+=================
++	return g_int64_hash(val) ^ g_int64_hash(val+1);
++}
 +
-+Service		org.bluez
-+Interface	org.bluez.AdminPolicy1
-+Object path	[variable prefix]/{hci0,hci1,...}
++gboolean bt_uuid_equal(gconstpointer v1, gconstpointer v2)
++{
++	const bt_uuid_t *uuid1 = v1;
++	const bt_uuid_t *uuid2 = v2;
 +
-+Methods		void SetServiceAllowList(array{string} UUIDs) [experimental]
++	return bt_uuid_cmp(uuid1, uuid2) == 0;
++}
 +
-+			This method sets the service allowlist by specifying
-+			service UUIDs.
-+
-+			When SetServiceAllowList is called, bluez will first
-+			disconnect all the pending/existing connections and
-+			block future incoming and outgoing connections to
-+			the service in UUIDs for all of the clients once it
-+			finished.
-+
-+			Any subsequent calls to this method will supersede any
-+			previously set allowlist values.  Calling this method
-+			with an empty array will allow any service UUIDs to be
-+			used.
-+
-+			Possible errors: org.bluez.Error.InvalidArguments
-+					 org.bluez.Error.Failed
-+
-+
-+Properties	array{string} ServiceAllowList [readonly, experimental]
-+
-+			Current value of service allow list.
-diff --git a/doc/device-api.txt b/doc/device-api.txt
-index 4e824d2dec17..774ee046cc92 100644
---- a/doc/device-api.txt
-+++ b/doc/device-api.txt
-@@ -272,3 +272,10 @@ Properties	string Address [readonly]
- 			Example:
- 				<Transport Discovery> <Organization Flags...>
- 				0x26                   0x01         0x01...
-+
-+		bool IsBlockedByPolicy [readonly, experimental]
-+
-+			Indicate whether or not this device is blocked by admin
-+			policy. This would be true if any of its auto-connect
-+			service does not exist in the ServiceAllowList under
-+			org.bluez.AdminPolicy1.
+ /*
+  * convert the UUID to string, copying a maximum of n characters.
+  */
+diff --git a/lib/uuid.h b/lib/uuid.h
+index 1a4029b68730..e47ccccb9fd2 100644
+--- a/lib/uuid.h
++++ b/lib/uuid.h
+@@ -17,6 +17,7 @@ extern "C" {
+ #endif
+ 
+ #include <stdint.h>
++#include <glib.h>
+ 
+ #define GENERIC_AUDIO_UUID	"00001203-0000-1000-8000-00805f9b34fb"
+ 
+@@ -167,6 +168,8 @@ int bt_uuid128_create(bt_uuid_t *btuuid, uint128_t value);
+ 
+ int bt_uuid_cmp(const bt_uuid_t *uuid1, const bt_uuid_t *uuid2);
+ void bt_uuid_to_uuid128(const bt_uuid_t *src, bt_uuid_t *dst);
++guint bt_uuid_hash(gconstpointer key);
++gboolean bt_uuid_equal(gconstpointer v1, gconstpointer v2);
+ 
+ #define MAX_LEN_UUID_STR 37
+ 
 -- 
 2.31.0.291.g576ba9dcdaf-goog
 
