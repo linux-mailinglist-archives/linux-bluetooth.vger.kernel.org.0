@@ -2,105 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 063853547A1
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Apr 2021 22:39:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E64683547B1
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Apr 2021 22:42:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236640AbhDEUju (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 5 Apr 2021 16:39:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:32983 "EHLO
+        id S237209AbhDEUmP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 5 Apr 2021 16:42:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:41035 "EHLO
         us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236543AbhDEUjt (ORCPT
+        by vger.kernel.org with ESMTP id S237190AbhDEUmN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 5 Apr 2021 16:39:49 -0400
+        Mon, 5 Apr 2021 16:42:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1617655183;
+        s=mimecast20190719; t=1617655326;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=T9pT04HFS6m2DAVcuINr+EcsKi1hIY98jB9f+EJVDaQ=;
-        b=gB9n+d4JIlrxDocBFrQvoK5sSNGvwQu9c3U3G4ZZzSKI5SWRQ7G8Ml9CcAMp96WCn2XY72
-        M8HBnCeHBIY+XUVWMlsGtFlsYJDQsWMaRwhx+tV8WeUJwgK2mPMltUWodiEdKPByF47106
-        Od2/gxrllQCkxBry5bLTys+z3JkQGFs=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-533-hKNKnrT3Nd2mWRrtJM56VA-1; Mon, 05 Apr 2021 16:39:41 -0400
-X-MC-Unique: hKNKnrT3Nd2mWRrtJM56VA-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com [10.5.11.13])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 173CA1853025;
-        Mon,  5 Apr 2021 20:39:40 +0000 (UTC)
-Received: from x1.localdomain (ovpn-112-31.ams2.redhat.com [10.36.112.31])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 44B6860861;
-        Mon,  5 Apr 2021 20:39:38 +0000 (UTC)
-From:   Hans de Goede <hdegoede@redhat.com>
+        bh=/J24YxSoEEoDm85XB+ubxbNmHGb18U3JcHHVQEjHvk0=;
+        b=BiI0StaFxKM2fW9qqPt3ks+trHzbsxHxSArbJFCDBVK9WcF+zTCFG41rMkxdUYD9n6tldN
+        ZltlMQyobYZNIb5LQcmG/5tLnXRXQy3pRC9qxSR4gvmCyAflZYKPx2uhvsx7IIHNAgXlYe
+        wVqzKEH9faplPRL/Et/VomvUs1JY0i0=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-559-tuonnd8tMsOzPFLpPLWyhw-1; Mon, 05 Apr 2021 16:42:05 -0400
+X-MC-Unique: tuonnd8tMsOzPFLpPLWyhw-1
+Received: by mail-ej1-f72.google.com with SMTP id bn26so4655143ejb.20
+        for <linux-bluetooth@vger.kernel.org>; Mon, 05 Apr 2021 13:42:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/J24YxSoEEoDm85XB+ubxbNmHGb18U3JcHHVQEjHvk0=;
+        b=J/DtF2TZJalLviD809d0geccgrZDMbOgbJOoDp7kjb1N2j9rWaIjlfch2wsEXJHYZY
+         61RIoilZZHEy1QDMNzVATnTSFfFCH0t1MlhvYNV+/xBtZ1sT1cKFpfXptZ4ZljScg9+x
+         Vp2q3OIYfZNIzz2OGJpmO7oTYxFc5KDdX8IJZBzrzaJv+ppFlM7gG/dY1SYoyR4lyO3y
+         LUMa05fUBQrh3Zm2Y/UFlpWIZ9gQ4mAEIx91YFts/UEJDGw0qVQlH+HSjK1tTHAdUBat
+         45FjFNgd2tAPGRtU1FWQZSfoyHiZmZ99gkSJqdnoeEMOKDnyfbag+Pu1LWCCvIUcdC7r
+         N7Ag==
+X-Gm-Message-State: AOAM5301VbJgGzRGEfM/+QnFyB/LjF5WXUjuYVqe7EGqFBlXv1ODcOg7
+        qxiUKb+HB+N4DnUizMsTMl4/4EI4DjVbWzni+XVdUBLrqmns/Yj5L+9sh8WHimPgfTUGlDhrZAZ
+        KzufzgPJ9j/HqdXK4/r+PrHCmWzLCUomkIPEwWmCuYeaA0KIRej7wmhy8wP1ShnP4P7MUJY/z+A
+        Im1HAz
+X-Received: by 2002:a17:906:f9cc:: with SMTP id lj12mr29668099ejb.544.1617655323007;
+        Mon, 05 Apr 2021 13:42:03 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwm8nf1tqMzBZssk/U1kHFDLgecgilMGv1OH8SumtY+G1JuPzfClltzHuftsHABmo5YUFt1ow==
+X-Received: by 2002:a17:906:f9cc:: with SMTP id lj12mr29668087ejb.544.1617655322836;
+        Mon, 05 Apr 2021 13:42:02 -0700 (PDT)
+Received: from x1.localdomain (2001-1c00-0c1e-bf00-1054-9d19-e0f0-8214.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:1054:9d19:e0f0:8214])
+        by smtp.gmail.com with ESMTPSA id i2sm12171726edy.72.2021.04.05.13.42.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Apr 2021 13:42:02 -0700 (PDT)
+Subject: Re: [PATCH v2 resend 0/2] iio: documentation: Document
+ proximity/accel sensor label use
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     Hans de Goede <hdegoede@redhat.com>,
-        linux-bluetooth@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Mark Pearson <mpearson@lenovo.com>,
-        Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH v2 resend 2/2] iio: documentation: Document accelerometer label use
-Date:   Mon,  5 Apr 2021 22:39:33 +0200
-Message-Id: <20210405203933.17282-3-hdegoede@redhat.com>
-In-Reply-To: <20210405203933.17282-1-hdegoede@redhat.com>
+Cc:     linux-bluetooth@vger.kernel.org
 References: <20210405203933.17282-1-hdegoede@redhat.com>
+From:   Hans de Goede <hdegoede@redhat.com>
+Message-ID: <de5cc2d9-9914-7d6d-f96c-e7d00758eb12@redhat.com>
+Date:   Mon, 5 Apr 2021 22:42:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+In-Reply-To: <20210405203933.17282-1-hdegoede@redhat.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Some 2-in-1 laptops / convertibles with 360° (yoga-style) hinges,
-have 2 accelerometers, 1 in their base and 1 in their display.
+Hi,
 
-In many cases the kernel can detect the location of each accelerometer
-based on e.g. information from the ACPI tables.
+Ugh, I messed up the "To:" list for this resend, sorry, please ignore.
 
-It is important for userspace to know the location of the 2 accelerometers.
-Rather then adding a new sysfs-attribute for this we can relay this
-information to userspace by using standardized label strings for this.
-This mirrors how this is done for proximity sensors.
+Regards,
 
-This commit documents 2 new standardized label strings for this purpose:
-"accel-base"
-"accel-display"
+Hans
 
-Note the "base" and "display" suffixes were chosen to match the values
-used for the systemd/udev hwdb.d/60-sensor.hwdb file's ACCEL_LOCATION
-property.
 
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Mark Pearson <mpearson@lenovo.com>
-Cc: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
----
- Documentation/ABI/testing/sysfs-bus-iio | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-iio b/Documentation/ABI/testing/sysfs-bus-iio
-index 7379e40d862d..b7529bca83f5 100644
---- a/Documentation/ABI/testing/sysfs-bus-iio
-+++ b/Documentation/ABI/testing/sysfs-bus-iio
-@@ -72,6 +72,13 @@ Description:
- 		calculated by firmware from other sensor readings, rather then
- 		being a raw sensor reading.
- 
-+		For accelerometers used in 2-in-1s with 360° (yoga-style) hinges,
-+		which have an accelerometer in both their base and their display,
-+		the following standardized labels are used:
-+
-+		* "accel-base"
-+		* "accel-display"
-+
- What:		/sys/bus/iio/devices/iio:deviceX/current_timestamp_clock
- KernelVersion:	4.5
- Contact:	linux-iio@vger.kernel.org
--- 
-2.30.2
+On 4/5/21 10:39 PM, Hans de Goede wrote:
+> Hi Jonathan,
+> 
+> AFAICT the v2 of this series is ready for merging, but I'm not seeing it here:
+> https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git/log/?h=testing
+> 
+> Hence this resend.
+> 
+> Regards,
+> 
+> Hans
+> 
+> 
+> 
+> Hans de Goede (2):
+>   iio: documentation: Document proximity sensor label use
+>   iio: documentation: Document accelerometer label use
+> 
+>  Documentation/ABI/testing/sysfs-bus-iio | 46 +++++++++++++++++++++++++
+>  1 file changed, 46 insertions(+)
+> 
 
