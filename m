@@ -2,74 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D27735378C
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  4 Apr 2021 10:55:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6E783542B5
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Apr 2021 16:22:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229568AbhDDIz0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 4 Apr 2021 04:55:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54886 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbhDDIzZ (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 4 Apr 2021 04:55:25 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D598C061756
-        for <linux-bluetooth@vger.kernel.org>; Sun,  4 Apr 2021 01:55:21 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id i26so13365083lfl.1
-        for <linux-bluetooth@vger.kernel.org>; Sun, 04 Apr 2021 01:55:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=BFLDDqIDtTy1MW0AH9KVGpcnggGqFUKDfEwqze88908=;
-        b=DDWIcF99DIIwDTHMg42cb2Zt3Xws/vKCXxxGpXqLGON8DLDIMdk2Bg5kpPTUUSzDpA
-         nqR7RtdX5sb+bwxU7/C7VVV0hP36DmKTNfVB2ZoPmo5oNq6eWoO5wMhyamBj4v3Kh1DP
-         coryKLFif2m+TXf1x9nU1qEVxm3ZSZiTJ+EUSTw5bwiZMFAfbbjWX6+gVREo+iSsjslP
-         agIlWO94/ZfE4g7WATArU9NrvsDTT3yMunuRA1WiQUFyBIZrdmju77rxulL0Xl9jKOXh
-         CnDyTaBv3nZO47h5yrIyqs7y47kap7htrsnusII+x4+qCC0hkwEYOycBISd0nwZ3hJ1B
-         +Clg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=BFLDDqIDtTy1MW0AH9KVGpcnggGqFUKDfEwqze88908=;
-        b=l12OGJY2DAYBlpTKsIYthIYmdOoHGr7FuipOYdJ0h8cxZ+1tsixS9fDq32d0pBrGPd
-         vx9XiE9kIGkHbT3OVlzfGjYonqUhjnTwJyOjanQxXbZfgGWzGvc9oXaa5SRhqsJE1jVl
-         vA+81gIWHlZrU2KB76HFWwdXxGcXNpk4aS3FbBQ2GDUXuObbKRYZOFM+eUQ0Y878zFNY
-         3wD6TouCPBxleEOVFOADqhTyGeXPUCR29Wd7ao/Qyga3Jf3ScN8cyQNG92ozLslwzPlx
-         swcES/o0g8Z1r7z09453FON8VUs14FscJ7/SQBkaCh7N5DYwwA5CmRc+T+pTuzBjZ6Bn
-         dl8A==
-X-Gm-Message-State: AOAM533XmOKyDrNr7qd30X+uaSKBR6y8jb8dGCCvn3hTDwJBo2CywXLS
-        GdHOKmr2FVFcsIPmjrpjUi0+IFPgNYEeMNeMNTY=
-X-Google-Smtp-Source: ABdhPJx+pkzjqB0azrmPOAryIdsESXNVr9iIV3Ga6PxBj0P0IMHvPvq3NfNLIpWPU3t0DzHGOBAAQTnEzkBQiI4nU4I=
-X-Received: by 2002:a05:6512:1102:: with SMTP id l2mr14022619lfg.501.1617526519891;
- Sun, 04 Apr 2021 01:55:19 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ac2:44d7:0:0:0:0:0 with HTTP; Sun, 4 Apr 2021 01:55:19 -0700 (PDT)
-Reply-To: magidiyusuf11@gmail.com
-From:   magid yusuf <magidiyusuf9@gmail.com>
-Date:   Sun, 4 Apr 2021 10:55:19 +0200
-Message-ID: <CA+o5LPJYPJ+f5nUB1_fAA5yggSu0oHyTDX3Lt+dX09X0dQWsrg@mail.gmail.com>
-Subject: INVESTMENT REPRESENTATIVE
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+        id S237627AbhDEOWB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 5 Apr 2021 10:22:01 -0400
+Received: from mga02.intel.com ([134.134.136.20]:23691 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237153AbhDEOWA (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 5 Apr 2021 10:22:00 -0400
+IronPort-SDR: BfAqDGYBsQxa7rNSZMgg9iu1eWfJRlrQxj8J4u060RHncUhx7lny0qE4Jjz2OLk4cjug1HOneh
+ VYmDqUXDieuA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9945"; a="179989776"
+X-IronPort-AV: E=Sophos;i="5.81,306,1610438400"; 
+   d="scan'208";a="179989776"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2021 07:21:54 -0700
+IronPort-SDR: /bl9dBuDc+bvrd8vrfJ1PS7nZwl6rvmQCLq0LBDFOk1/eINN4G6D4nn/FlJybnh9Ojx1olW7gi
+ exMKxdTrRQcw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,306,1610438400"; 
+   d="scan'208";a="448065409"
+Received: from nsathish-latitude-7480.iind.intel.com ([10.224.186.105])
+  by fmsmga002.fm.intel.com with ESMTP; 05 Apr 2021 07:21:52 -0700
+From:   Sathish Narasimman <sathish.narasimman@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     chethan.tumkur.narayan@intel.com, ravishankar.srivatsa@intel.com,
+        Sathish Narasimman <sathish.narasimman@intel.com>
+Subject: [PATCH 1/2] Bluetooth: FIX: Own address type change with HCI_ENABLE_LL_PRIVACY
+Date:   Mon,  5 Apr 2021 20:00:23 +0530
+Message-Id: <20210405143023.16120-1-sathish.narasimman@intel.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-My Dear Friend,
+own_address_type has to changed to 0x02 and 0x03 only when
+HCI_ENABLE_LL_PRIVACY flag is set.
 
-I am glad to contact you, and hope everything is going fine with you
-and your family.
+Signed-off-by: Sathish Narasimman <sathish.narasimman@intel.com>
+---
+ net/bluetooth/hci_request.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-My email correspondence is to seek your assistance as overseas
-representative for an investment involving large volume of funds.
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index 5b4eb87b19f0..0d78122342d5 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -2043,7 +2043,8 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
+ 		/* If Controller supports LL Privacy use own address type is
+ 		 * 0x03
+ 		 */
+-		if (use_ll_privacy(hdev))
++		if (use_ll_privacy(hdev) &&
++		    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY))
+ 			*own_addr_type = ADDR_LE_DEV_RANDOM_RESOLVED;
+ 		else
+ 			*own_addr_type = ADDR_LE_DEV_RANDOM;
+@@ -2517,7 +2518,8 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
+ 		/* If Controller supports LL Privacy use own address type is
+ 		 * 0x03
+ 		 */
+-		if (use_ll_privacy(hdev))
++		if (use_ll_privacy(hdev) &&
++		    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY))
+ 			*own_addr_type = ADDR_LE_DEV_RANDOM_RESOLVED;
+ 		else
+ 			*own_addr_type = ADDR_LE_DEV_RANDOM;
+-- 
+2.17.1
 
-Please, I will provide more details about the transaction if you are
-willing to handle such project and also let you know your entitlement
-for the solicited role.
-
-I shall be expecting your quick reply.
-
-Best Regards,
-
-Magid Yusuf
