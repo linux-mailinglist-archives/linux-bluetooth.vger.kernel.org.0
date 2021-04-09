@@ -2,281 +2,195 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7653135A4CC
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  9 Apr 2021 19:40:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C4EB35A891
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 10 Apr 2021 00:04:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234333AbhDIRkm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 9 Apr 2021 13:40:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42156 "EHLO
+        id S234915AbhDIWEZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 9 Apr 2021 18:04:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234049AbhDIRkm (ORCPT
+        with ESMTP id S234900AbhDIWEY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 9 Apr 2021 13:40:42 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BC9AC061761
-        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Apr 2021 10:40:29 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id l12-20020a9d6a8c0000b0290238e0f9f0d8so6424796otq.8
-        for <linux-bluetooth@vger.kernel.org>; Fri, 09 Apr 2021 10:40:29 -0700 (PDT)
+        Fri, 9 Apr 2021 18:04:24 -0400
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75ECEC061764
+        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Apr 2021 15:04:11 -0700 (PDT)
+Received: by mail-qk1-x74a.google.com with SMTP id k68so4219324qke.2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 09 Apr 2021 15:04:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ThZUPnON2QavqY+ACh0OHXoH/B18LX5W4PgoLlXpIKw=;
-        b=f6Oh6qpPAxl0TRVBYAo/UYespgUDSjlWxXKV9ZDhVR4CYYI3ZSsQBO6iwGJhW6dgTL
-         Z85BqSAbGCLtpJINV0V2PLU8uEZnXm1hkn6fSmljZF08wC3WDvg+vf7LAciMlJUQc/nd
-         vTYfNRVOi5VEy33BWyvgs4bdp4HiinJyC6uypYGKVSrY3nSnfCDB0qLSoctw/2LuiCcX
-         o+rGaSbmsiyyFjtUYP7v8JVdTtD3RwM1BXnF7dnSEy65Jeeu8c5TusDemYxj3hylYuYL
-         P0k2aQ0sTIqpvDlioW6vdnoEZGKW1nKb9rEZ3FICCDNUQwENXyoOJB1Ej1rMNZ5bzAUr
-         8EEQ==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=fQE9PWS5vv/FTKpRLev+pHKn5IJsSHazWeniE3U08BM=;
+        b=qTykMhwSGh7Sgg9lCvvpa4skHVXY2XMmc+6hEaMAPb6weE+iiSX4uLz31Y3sNWUEbo
+         NyS4D9/GuCngK2YBTmvOaillXi/3YXjvv5oPsjvWiSNgPNUxRDfFVnLjA+Qf3ur1yPMV
+         avM30Zq5iWJFNg/qay3yn6XNyBTMT9Jq/8B5LZx6LSxLklc4ZEGMN3icEhYZoyEq7uB0
+         Seh1p/eSHmcS5iA9ad4EkZg5OqDceM+fn+FcKPBorfNGsOCimBOKCsY9DMG+wKyboEWH
+         QHEBcoCgB6JnoMK8cU4Exv9LojNGijJCO5rhqoP5yQHwySm7l4/gFZJDBIdSqAdCiJQt
+         P3xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ThZUPnON2QavqY+ACh0OHXoH/B18LX5W4PgoLlXpIKw=;
-        b=STexdgd42PbTAxz9Y5BEPOJ+MI6fk0pe9OH+jbmuJBMEqRIUckiMlLVqEkZTdRZ9BI
-         PwnnbF+/MjkbvzLa9N3yx0/+ebaRmAuoI1CH9rR1o3XC8AoWaWYGnmzWy05wZLG8ChaZ
-         u7ekswEyPncxcp6OKddqsRnABevR4K9VzJgQYGKz2OAxryHwzi/oxP7+cy+tbzlRm1KN
-         ypXS8l46ackHIvv5eYE/Wn+wapTWZUKDYiA3egKeQIUknddtT0Ao/aiscR4Nq+qZvBve
-         c2+8QZbWVWM2e09032OoPBan1rB8he2JhrQuM73xprnH86XmJWAa/hg8lvwayJSGe8BB
-         AlBQ==
-X-Gm-Message-State: AOAM531livZMqJ1WTOILGQhTGD9X+rnHi1lSDyf6azVfmgdfRePoa3F/
-        tmiliIHyFJncj0NevbYjF2WSfjDut2JzyB/vAhFUuICmKLdJNQ==
-X-Google-Smtp-Source: ABdhPJx3JI/fEP2mqIFDG77BCsm1etzoITEpBAiZs/3kPHPMY9py1tpQuT3qbHBvfD5ppjkMfHYzI893SpcNpAHYfqk=
-X-Received: by 2002:a05:6830:619:: with SMTP id w25mr13183516oti.371.1617990028259;
- Fri, 09 Apr 2021 10:40:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210409122405.29850-1-kiran.k@intel.com> <20210409122405.29850-4-kiran.k@intel.com>
-In-Reply-To: <20210409122405.29850-4-kiran.k@intel.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Fri, 9 Apr 2021 10:40:17 -0700
-Message-ID: <CABBYNZLwHn3JX0yKFup6QN-=tEjKt2iaaxZpgy+DdH-Vr3oeAA@mail.gmail.com>
-Subject: Re: [PATCH v1 3/3] Bluetooth: cache local supported codec capabilities
-To:     Kiran K <kiran.k@intel.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "Srivatsa, Ravishankar" <ravishankar.srivatsa@intel.com>,
-        Chethan T N <chethan.tumkur.narayan@intel.com>,
-        Luiz Augusto Von Dentz <luiz.von.dentz@intel.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=fQE9PWS5vv/FTKpRLev+pHKn5IJsSHazWeniE3U08BM=;
+        b=kmAMzdCrpZoLIiDtrPmLtefqTurr/9y3whk90Wpt1LwPeHl74ozznOrekQHjqWzhGG
+         Bm1tkc6xaZgrKKzdUZyZjMmiljSwQr7VtgQ51eTlGsd4+LArwW1zDBTLRShjQhjJXktl
+         sQ1Tp1vKCsAoxm/Q2uI0jiDSuZCPEWAo+vj51bHIJGlgF1TcphMbddS+eFXMpXh7Ej+I
+         tindnb//rA/clqt7NGflyqeD1GeLEv+QlzypIu2I2w9eF/2WL9tBOzNi61rY3y58DUy5
+         djzHcautXAVLmdeY0obd4C3hcfmJ5c5Txvc3wur7KgOjNBJHGeUOn50qYD9KsPAUluOO
+         AXmQ==
+X-Gm-Message-State: AOAM532uEO9DpTsbKXHdNjhUaJoOkuIOTW/3AfvsxRGQCx4zoRFluADx
+        jJG9umoF5YBAdkO71iMS7nsz13rq+ppTBDYYWRTfiCnZnSO/FoNWMlXzI3DXhEi/bf6zhkwcquV
+        //XMYoXaTIOokLYie7DmdLEuiFWMyOZBAAogpYqyfuwHcg7Ss153SUJxG3mUngJc0IBxzgxKJ7J
+        y/
+X-Google-Smtp-Source: ABdhPJwCK1Br/M9Rz5es79YqJJFGH7lvo8L4Z55POq0K9L7+Y25hlXweuY049BJ+XskGjOR54tUirubn6dXR
+X-Received: from yudiliu.mtv.corp.google.com ([2620:15c:202:201:bce3:ed34:c9ac:28c1])
+ (user=yudiliu job=sendgmr) by 2002:ad4:4f07:: with SMTP id
+ fb7mr13699212qvb.30.1618005850489; Fri, 09 Apr 2021 15:04:10 -0700 (PDT)
+Date:   Fri,  9 Apr 2021 15:04:06 -0700
+Message-Id: <20210409150356.v2.1.Id5ee0a2edda8f0902498aaeb1b6c78d062579b75@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.31.1.295.g9ea45b61b8-goog
+Subject: [PATCH v2] Bluetooth: Return whether a connection is outbound
+From:   Yu Liu <yudiliu@google.com>
+To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
+        chromeos-bluetooth-upstreaming@chromium.org
+Cc:     Yu Liu <yudiliu@google.com>, Miao-chen Chou <mcchou@chromium.org>,
+        Alain Michaud <alainm@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Kiran,
+When an MGMT_EV_DEVICE_CONNECTED event is reported back to the user
+space we will set the flags to tell if the established connection is
+outbound or not. This is useful for the user space to log better metrics
+and error messages.
 
-On Fri, Apr 9, 2021 at 5:21 AM Kiran K <kiran.k@intel.com> wrote:
->
-> Cache the codec information in the driver and this data can
-> be exposed to user space audio modules via getsockopt
->
-> Signed-off-by: Kiran K <kiran.k@intel.com>
-> Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
-> Signed-off-by: Srivatsa Ravishankar <ravishankar.srivatsa@intel.com>
-> ---
->  include/net/bluetooth/hci.h      | 11 +++++++++++
->  include/net/bluetooth/hci_core.h | 13 +++++++++++++
->  net/bluetooth/hci_core.c         | 31 +++++++++++++++++++++++++++++++
->  net/bluetooth/hci_event.c        | 31 +++++++++++++++++++++++++++++++
->  4 files changed, 86 insertions(+)
->
-> diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-> index 34eb9f4b027f..6b4344639ff7 100644
-> --- a/include/net/bluetooth/hci.h
-> +++ b/include/net/bluetooth/hci.h
-> @@ -1323,6 +1323,17 @@ struct hci_op_read_local_codec_caps {
->         __u8    direction;
->  } __packed;
->
-> +struct hci_codec_caps {
-> +       __u8    len;
-> +       __u8    caps[];
-> +} __packed;
-> +
-> +struct hci_rp_read_local_codec_caps {
-> +       __u8    status;
-> +       __u8    num_caps;
-> +       struct hci_codec_caps caps[];
-> +} __packed;
-> +
->  #define HCI_OP_READ_PAGE_SCAN_ACTIVITY 0x0c1b
->  struct hci_rp_read_page_scan_activity {
->         __u8     status;
-> diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-> index fa0c68fd3306..974372644990 100644
-> --- a/include/net/bluetooth/hci_core.h
-> +++ b/include/net/bluetooth/hci_core.h
-> @@ -131,6 +131,14 @@ struct bdaddr_list {
->         u8 bdaddr_type;
->  };
->
-> +struct codec_list {
-> +       struct list_head list;
-> +       u8      transport;
-> +       u8      codec_id[5];
-> +       u8      num_caps;
-> +       struct hci_codec_caps caps[];
-> +};
-> +
->  struct bdaddr_list_with_irk {
->         struct list_head list;
->         bdaddr_t bdaddr;
-> @@ -534,6 +542,7 @@ struct hci_dev {
->         struct list_head        pend_le_conns;
->         struct list_head        pend_le_reports;
->         struct list_head        blocked_keys;
-> +       struct list_head        local_codecs;
->
->         struct hci_dev_stats    stat;
->
-> @@ -1843,6 +1852,10 @@ void hci_le_start_enc(struct hci_conn *conn, __le16 ediv, __le64 rand,
->
->  void hci_copy_identity_address(struct hci_dev *hdev, bdaddr_t *bdaddr,
->                                u8 *bdaddr_type);
-> +int hci_codec_list_add(struct list_head *list, struct hci_rp_read_local_codec_caps *rp,
-> +                      __u32 len,
-> +                      struct hci_op_read_local_codec_caps *sent);
-> +void hci_codec_list_clear(struct list_head *codec_list);
->
->  #define SCO_AIRMODE_MASK       0x0003
->  #define SCO_AIRMODE_CVSD       0x0000
-> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-> index 230aeedd6d00..578f417d1904 100644
-> --- a/net/bluetooth/hci_core.c
-> +++ b/net/bluetooth/hci_core.c
-> @@ -3561,6 +3561,35 @@ void hci_conn_params_clear_disabled(struct hci_dev *hdev)
->         BT_DBG("All LE disabled connection parameters were removed");
->  }
->
-> +int hci_codec_list_add(struct list_head *list, struct hci_rp_read_local_codec_caps *rp,
-> +                      __u32 len,
-> +                      struct hci_op_read_local_codec_caps *sent)
-> +{
-> +       struct codec_list *entry;
-> +
-> +       entry = kzalloc(sizeof(*entry) + len, GFP_KERNEL);
-> +       if (!entry)
-> +               return -ENOMEM;
-> +
-> +       memcpy(entry->codec_id, sent->codec_id, 5);
-> +       entry->transport = sent->transport;
-> +       entry->num_caps = rp->num_caps;
-> +       if (rp->num_caps)
-> +               memcpy(entry->caps, rp->caps, len);
-> +       list_add(&entry->list, list);
-> +
-> +       return 0;
-> +}
-> +
-> +void hci_codec_list_clear(struct list_head *codec_list)
-> +{
-> +       struct codec_list *c, *n;
-> +
-> +       list_for_each_entry_safe(c, n, codec_list, list) {
-> +               list_del(&c->list);
-> +               kfree(c);
-> +       }
-> +}
->  /* This function requires the caller holds hdev->lock */
->  static void hci_conn_params_clear_all(struct hci_dev *hdev)
->  {
-> @@ -3820,6 +3849,7 @@ struct hci_dev *hci_alloc_dev(void)
->         INIT_LIST_HEAD(&hdev->conn_hash.list);
->         INIT_LIST_HEAD(&hdev->adv_instances);
->         INIT_LIST_HEAD(&hdev->blocked_keys);
-> +       INIT_LIST_HEAD(&hdev->local_codecs);
->
->         INIT_WORK(&hdev->rx_work, hci_rx_work);
->         INIT_WORK(&hdev->cmd_work, hci_cmd_work);
-> @@ -4038,6 +4068,7 @@ void hci_unregister_dev(struct hci_dev *hdev)
->         hci_conn_params_clear_all(hdev);
->         hci_discovery_filter_clear(hdev);
->         hci_blocked_keys_clear(hdev);
-> +       hci_codec_list_clear(&hdev->local_codecs);
->         hci_dev_unlock(hdev);
->
->         hci_dev_put(hdev);
-> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-> index a16723c89dc6..f57ee199f0f3 100644
-> --- a/net/bluetooth/hci_event.c
-> +++ b/net/bluetooth/hci_event.c
-> @@ -1033,6 +1033,33 @@ static void hci_cc_read_local_codecs_v2(struct hci_dev *hdev,
->         }
->  }
->
-> +static void hci_cc_read_local_codec_caps(struct hci_dev *hdev,
-> +                                        struct sk_buff *skb)
-> +{
-> +       struct hci_op_read_local_codec_caps *sent;
-> +       struct hci_rp_read_local_codec_caps *rp;
-> +
-> +       rp = (void *)skb->data;
+Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+Reviewed-by: Alain Michaud <alainm@chromium.org>
+Signed-off-by: Yu Liu <yudiliu@google.com>
+---
 
-We should attempt to always use construct like the following when
-checking the remaining/received bytes of packet:
+Changes in v2:
+- Defined the bit as MGMT_DEV_FOUND_INITIATED_CONN
 
- if (skb->len < sizeof(*rp))
-    bt_dev_err
+Changes in v1:
+- Initial change
 
-skb_pull(skb, sizeof(*rp));
+ include/net/bluetooth/hci_core.h | 2 +-
+ include/net/bluetooth/mgmt.h     | 1 +
+ net/bluetooth/hci_event.c        | 8 ++++----
+ net/bluetooth/l2cap_core.c       | 2 +-
+ net/bluetooth/mgmt.c             | 6 +++++-
+ 5 files changed, 12 insertions(+), 7 deletions(-)
 
-Or perhaps introduce something like:
-
-void *bt_skb_pull_mem(skb, len)
-{
-    void *data = skb->data;
-
-    if (skb->len < len) {
-        return NULL;
-    }
-
-    skb_pull(skb, len);
-
-    return data;
-}
-
-That way we can use it like:
-
-rp = bt_skb_pull_mem(skb, sizeof(*rp));
-if (!rp)
-     bt_dev_err
-
-> +
-> +       bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
-> +
-> +       if (rp->status)
-> +               return;
-> +
-> +       sent = hci_sent_cmd_data(hdev, HCI_OP_READ_LOCAL_CODEC_CAPS);
-> +
-> +       if (!sent)
-> +               return;
-> +
-> +       hci_dev_lock(hdev);
-> +
-> +       bt_dev_info(hdev, "Adding Codec. No of caps: %u", rp->num_caps);
-
-> +       hci_codec_list_add(&hdev->local_codecs, rp, skb->len - 2, sent);
-> +
-> +       hci_dev_unlock(hdev);
-> +}
-> +
->  static void hci_cc_read_clock(struct hci_dev *hdev, struct sk_buff *skb)
->  {
->         struct hci_rp_read_clock *rp = (void *) skb->data;
-> @@ -3591,6 +3618,10 @@ static void hci_cmd_complete_evt(struct hci_dev *hdev, struct sk_buff *skb,
->                 hci_cc_read_local_codecs_v2(hdev, skb);
->                 break;
->
-> +       case HCI_OP_READ_LOCAL_CODEC_CAPS:
-> +               hci_cc_read_local_codec_caps(hdev, skb);
-> +               break;
-> +
->         case HCI_OP_READ_FLOW_CONTROL_MODE:
->                 hci_cc_read_flow_control_mode(hdev, skb);
->                 break;
-> --
-> 2.17.1
->
-
-
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index ca4ac6603b9a..d2876b758770 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1756,7 +1756,7 @@ void __mgmt_power_off(struct hci_dev *hdev);
+ void mgmt_new_link_key(struct hci_dev *hdev, struct link_key *key,
+ 		       bool persistent);
+ void mgmt_device_connected(struct hci_dev *hdev, struct hci_conn *conn,
+-			   u32 flags, u8 *name, u8 name_len);
++			   u8 *name, u8 name_len);
+ void mgmt_device_disconnected(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 			      u8 link_type, u8 addr_type, u8 reason,
+ 			      bool mgmt_connected);
+diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
+index a7cffb069565..a03c62b1dc2f 100644
+--- a/include/net/bluetooth/mgmt.h
++++ b/include/net/bluetooth/mgmt.h
+@@ -939,6 +939,7 @@ struct mgmt_ev_auth_failed {
+ #define MGMT_DEV_FOUND_CONFIRM_NAME    0x01
+ #define MGMT_DEV_FOUND_LEGACY_PAIRING  0x02
+ #define MGMT_DEV_FOUND_NOT_CONNECTABLE 0x04
++#define MGMT_DEV_FOUND_INITIATED_CONN  0x08
+ 
+ #define MGMT_EV_DEVICE_FOUND		0x0012
+ struct mgmt_ev_device_found {
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 593eafa282e3..35b1adb2287c 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2071,7 +2071,7 @@ static void hci_check_pending_name(struct hci_dev *hdev, struct hci_conn *conn,
+ 	if (conn &&
+ 	    (conn->state == BT_CONFIG || conn->state == BT_CONNECTED) &&
+ 	    !test_and_set_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags))
+-		mgmt_device_connected(hdev, conn, 0, name, name_len);
++		mgmt_device_connected(hdev, conn, name, name_len);
+ 
+ 	if (discov->state == DISCOVERY_STOPPED)
+ 		return;
+@@ -3258,7 +3258,7 @@ static void hci_remote_features_evt(struct hci_dev *hdev,
+ 		cp.pscan_rep_mode = 0x02;
+ 		hci_send_cmd(hdev, HCI_OP_REMOTE_NAME_REQ, sizeof(cp), &cp);
+ 	} else if (!test_and_set_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags))
+-		mgmt_device_connected(hdev, conn, 0, NULL, 0);
++		mgmt_device_connected(hdev, conn, NULL, 0);
+ 
+ 	if (!hci_outgoing_auth_needed(hdev, conn)) {
+ 		conn->state = BT_CONNECTED;
+@@ -4332,7 +4332,7 @@ static void hci_remote_ext_features_evt(struct hci_dev *hdev,
+ 		cp.pscan_rep_mode = 0x02;
+ 		hci_send_cmd(hdev, HCI_OP_REMOTE_NAME_REQ, sizeof(cp), &cp);
+ 	} else if (!test_and_set_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags))
+-		mgmt_device_connected(hdev, conn, 0, NULL, 0);
++		mgmt_device_connected(hdev, conn, NULL, 0);
+ 
+ 	if (!hci_outgoing_auth_needed(hdev, conn)) {
+ 		conn->state = BT_CONNECTED;
+@@ -5206,7 +5206,7 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
+ 	}
+ 
+ 	if (!test_and_set_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags))
+-		mgmt_device_connected(hdev, conn, 0, NULL, 0);
++		mgmt_device_connected(hdev, conn, NULL, 0);
+ 
+ 	conn->sec_level = BT_SECURITY_LOW;
+ 	conn->handle = handle;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 140669456b6f..821d46ba6e74 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4237,7 +4237,7 @@ static int l2cap_connect_req(struct l2cap_conn *conn,
+ 	hci_dev_lock(hdev);
+ 	if (hci_dev_test_flag(hdev, HCI_MGMT) &&
+ 	    !test_and_set_bit(HCI_CONN_MGMT_CONNECTED, &hcon->flags))
+-		mgmt_device_connected(hdev, hcon, 0, NULL, 0);
++		mgmt_device_connected(hdev, hcon, NULL, 0);
+ 	hci_dev_unlock(hdev);
+ 
+ 	l2cap_connect(conn, cmd, data, L2CAP_CONN_RSP, 0);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 09e099c419f2..c594e0c2dd23 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -8765,15 +8765,19 @@ void mgmt_new_conn_param(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ }
+ 
+ void mgmt_device_connected(struct hci_dev *hdev, struct hci_conn *conn,
+-			   u32 flags, u8 *name, u8 name_len)
++			   u8 *name, u8 name_len)
+ {
+ 	char buf[512];
+ 	struct mgmt_ev_device_connected *ev = (void *) buf;
+ 	u16 eir_len = 0;
++	u32 flags = 0;
+ 
+ 	bacpy(&ev->addr.bdaddr, &conn->dst);
+ 	ev->addr.type = link_to_bdaddr(conn->type, conn->dst_type);
+ 
++	if (conn->out)
++		flags |= MGMT_DEV_FOUND_INITIATED_CONN;
++
+ 	ev->flags = __cpu_to_le32(flags);
+ 
+ 	/* We must ensure that the EIR Data fields are ordered and
 -- 
-Luiz Augusto von Dentz
+2.31.1.295.g9ea45b61b8-goog
+
