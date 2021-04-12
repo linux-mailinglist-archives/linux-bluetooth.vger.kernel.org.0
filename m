@@ -2,215 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47DDC35C4BE
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Apr 2021 13:11:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE02035C998
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Apr 2021 17:19:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240072AbhDLLLe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 12 Apr 2021 07:11:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39304 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240110AbhDLLLd (ORCPT
+        id S241136AbhDLPUA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 12 Apr 2021 11:20:00 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:58633 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239004AbhDLPUA (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 12 Apr 2021 07:11:33 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51304C06174A
-        for <linux-bluetooth@vger.kernel.org>; Mon, 12 Apr 2021 04:11:15 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id p67so4035277pfp.10
-        for <linux-bluetooth@vger.kernel.org>; Mon, 12 Apr 2021 04:11:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Dg2t1ki1bgCDFzjcn3yeSPIwbfbguhdHY3io0gHmf0k=;
-        b=Eqfa6Tyr7QlbJQCRkWB5k0hMrNX3Zz0sIhiXIg7ktYknO3SKS9KWKnCqtoTrMHblj1
-         CYa5HRs3JqlDwDvUcEW9AG8x1/nG+695WZUGuvRXQJWke+4PAu7otOBvnA/wkYg0iM78
-         rxDbGKu3ODFc7ZjEe53vfvcGJdLKgpbFXBosQmHDagEkhWXCC8FfFEdFdHFQMlzC/eRl
-         u02RPJWzkgibUDBhAWF2dSlSiD9DBjcj/MrAphjCZ3MQ68TvycZPQjO0i/IYu+QhgIa7
-         qJ/7HdsLjQ1ftpGJbPqhYq4i0eIcw/MntJO7y4dcxgbwE4KPE93xQxIIvjrK4Zoqmrse
-         ZIlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Dg2t1ki1bgCDFzjcn3yeSPIwbfbguhdHY3io0gHmf0k=;
-        b=TIEdDSLqe7Ckwrcpjl8oQzRusVY4Rtt4fut++KTiv1LgpjlP3S43HHtYqzM4y9V2w2
-         UZXNnl/EiB0vSw9bY28ZUhkU5h2Z8pcKtqoijExbGNauiOPZftqChyCbllRJRCTsoPZC
-         WklHzVMP0IycB9PzJwIIE3jzeclhpAIUKoBmbGeEt6ucO8IeAsalMGc6YbX5/vMtBMyy
-         /gOU/L0XQfo57F0cptaTK9SWHfLjBrFwmDMj/qp6N25/SCPqoYCAA1t+shetwBdQPjT6
-         Yk8ke11MCZG4wrUOwvWVwx5tCWJYl0uH7jy7/oouYv1w4HHLZQnAmItkv4/Gt6fPUDFs
-         1csA==
-X-Gm-Message-State: AOAM533tClry/BuW7T71xqPyUVNhB8jncgaJHKXoGi3pU9WimYIOBBVf
-        UFEjzb9QmENNRrsfvBj/4HB4prhVQwOF3sV6Bct8kLydKW4lWA==
-X-Google-Smtp-Source: ABdhPJx9wFxBd0fcAxNr2qaVtdnB9lyD4A4PG0KNGl4jimCNCGomx139GroXJRY6lM3Ikm7exha0q9jsLweZRypImHQ=
-X-Received: by 2002:a65:47ca:: with SMTP id f10mr26625505pgs.206.1618225874507;
- Mon, 12 Apr 2021 04:11:14 -0700 (PDT)
-MIME-Version: 1.0
-From:   nagesh shamnur <nagesh.shamnur@gmail.com>
-Date:   Mon, 12 Apr 2021 16:41:03 +0530
-Message-ID: <CAA_JV5Mz=xFthCPpLKZtYj8hwvrei9pg3HZo8SLJgU1xc8N0DQ@mail.gmail.com>
-Subject: Issue connecting laptop and RPi via 6LoWPAN over BLE
-To:     linux-bluetooth@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000006aac2505bfc492a0"
+        Mon, 12 Apr 2021 11:20:00 -0400
+Received: from marcel-macbook.holtmann.net (p5b3d235a.dip0.t-ipconnect.de [91.61.35.90])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 8F143CED17;
+        Mon, 12 Apr 2021 17:27:23 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [PATCH 1/2] Bluetooth: btusb: Fixed too many in-token issue for
+ Mediatek Chip.
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20210412150627.31913-1-mark-yw.chen@mediatek.com>
+Date:   Mon, 12 Apr 2021 17:19:38 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>, chris.lu@mediatek.com,
+        will-cy.lee@mediatek.com, Sean Wang <sean.wang@mediatek.com>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
+        rex-bc.chen@mediatek.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <B118C57F-5A40-4D50-A74D-B81AA8C270BD@holtmann.org>
+References: <20210412150627.31913-1-mark-yw.chen@mediatek.com>
+To:     Mark-YW.Chen@mediatek.com
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---0000000000006aac2505bfc492a0
-Content-Type: text/plain; charset="UTF-8"
+Hi Mark,
 
-Hi Group,
-     I am trying to establish a 6LowPAN over BLE connection between my
-Ubuntu Laptop and Raspberry Pi 4B. Laptop is running Ubuntu
-5.8.0-48-generic #54~20.04.1-Ubuntu and my RPi is running custom
-yocto-based Linux distro with kernel version 5.4.x version.
+> This patch reduce in-token during download patch procedure.
+> Don't submit urb for polling event before sending hci command.
+> 
+> Signed-off-by: mark-yw.chen <mark-yw.chen@mediatek.com>
+> ---
+> drivers/bluetooth/btusb.c | 10 +++++-----
+> 1 file changed, 5 insertions(+), 5 deletions(-)
 
-I am facing an error of 0x12 when trying to establish to Rpi from the
-laptop as below:
+patch has been applied to bluetooth-next tree.
 
-root@root1-Nitro-AN515-55:/home/root1# lsmod | grep 6low
-bluetooth_6lowpan      28672  0
-6lowpan                40960  8
-nhc_fragment,nhc_dest,nhc_ipv6,bluetooth_6lowpan,nhc_hop,nhc_udp,nhc_mobility,nhc_routing
-bluetooth             581632  31
-btrtl,bluetooth_6lowpan,btintel,btbcm,bnep,btusb
-root@root1-Nitro-AN515-55:/home/root1# echo 1 >
-/sys/kernel/debug/bluetooth/6lowpan_enable
-root@root1-Nitro-AN515-55:/home/root1# dmesg
-root@root1-Nitro-AN515-55:/home/root1# echo "connect DC:A6:32:F2:CB:46
-1" > /sys/kernel/debug/bluetooth/6lowpan_control runn
-root@root1-Nitro-AN515-55:/home/root1# dmesg
-[239155.542994] Bluetooth: hci0: request failed to create LE
-connection: status 0x12
+Regards
 
-Running btmon in another shell resulted in the following log as attached.
+Marcel
 
-Additional Info: using bluetoothctl between my Laptop and RPi s
-successful but 6LowPAN is unable to go through.
-
-Any missing from my end?
-
-Thanks,
-Nagesh.
-
---0000000000006aac2505bfc492a0
-Content-Type: application/octet-stream; name=btmon_log
-Content-Disposition: attachment; filename=btmon_log
-Content-Transfer-Encoding: base64
-Content-ID: <f_knehw7760>
-X-Attachment-Id: f_knehw7760
-
-cm9vdDFAcm9vdDEtTml0cm8tQU41MTUtNTU6fiQgc3VkbyBidG1vbgpbc3Vkb10gcGFzc3dvcmQg
-Zm9yIHJvb3QxOiAKQmx1ZXRvb3RoIG1vbml0b3IgdmVyIDUuNDEKPSBOb3RlOiBMaW51eCB2ZXJz
-aW9uIDUuOC4wLTQ4LWdlbmVyaWMgKHg4Nl82NCkgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAwLjQwOTUwMwo9IE5vdGU6IEJsdWV0b290aCBzdWJzeXN0ZW0gdmVyc2lvbiAyLjIyICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuNDA5NTA4Cj0gTmV3IEluZGV4
-OiA2Qzo2QTo3Nzo0ODo0MDowOCAoUHJpbWFyeSxVU0IsaGNpMCkgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBbaGNpMF0gMC40MDk1MTAKPSBPcGVuIEluZGV4OiA2Qzo2QTo3Nzo0ODo0MDowOCAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFtoY2kwXSAwLjQwOTUxMQo9IElu
-ZGV4IEluZm86IDZDOjZBOjc3OjQ4OjQwOjA4IChJbnRlbCBDb3JwLikgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgW2hjaTBdIDAuNDA5NTEyCiogVW5rbm93biBwYWNrZXQgKGNvZGUgMTQgbGVu
-IDMwKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC40MDk1
-MTMKICAgICAgICAwMSAwMCAwMCAwMCAwMiAwMCAwMSAxMSAwMCAwMSAwMCAwMCAwMCAxMCA2MiA2
-YyAgLi4uLi4uLi4uLi4uLi5ibAogICAgICAgIDc1IDY1IDc0IDZmIDZmIDc0IDY4IDY0IDAwIDAw
-IDAwIDAwIDAwIDAwICAgICAgICB1ZXRvb3RoZC4uLi4uLiAgCiogVW5rbm93biBwYWNrZXQgKGNv
-ZGUgMTQgbGVuIDMwKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgMC40MDk1NDQKICAgICAgICAwMiAwMCAwMCAwMCAwMiAwMCAwMSAxMSAwMCAwMSAwMCAwMCAw
-MCAxMCA2MiA3NCAgLi4uLi4uLi4uLi4uLi5idAogICAgICAgIDZkIDZmIDZlIDAwIDAwIDAwIDAw
-IDAwIDAwIDAwIDAwIDAwIDAwIDAwICAgICAgICBtb24uLi4uLi4uLi4uLiAgCjwgSENJIENvbW1h
-bmQ6IFVua25vd24gKDB4MDh8MHgwMDM5KSBwbGVuIDIgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBbaGNpMF0gNy4yNjYyMDUKICAgICAgICAwMCAwMCAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgLi4gICAgICAgICAgICAgIAo+IEhDSSBFdmVudDogQ29tbWFu
-ZCBDb21wbGV0ZSAoMHgwZSkgcGxlbiA0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgW2hj
-aTBdIDcuMzgxNzU3CiAgICAgIFVua25vd24gKDB4MDh8MHgwMDM5KSBuY21kIDIKICAgICAgICBT
-dGF0dXM6IFN1Y2Nlc3MgKDB4MDApCjwgSENJIENvbW1hbmQ6IFVua25vd24gKDB4MDh8MHgwMDNj
-KSBwbGVuIDEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBbaGNpMF0gNy4zODE4MjIKICAg
-ICAgICAwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLiAg
-ICAgICAgICAgICAgIAo+IEhDSSBFdmVudDogQ29tbWFuZCBDb21wbGV0ZSAoMHgwZSkgcGxlbiA0
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgW2hjaTBdIDcuMzgyNzU3CiAgICAgIFVua25v
-d24gKDB4MDh8MHgwMDNjKSBuY21kIDEKICAgICAgICBTdGF0dXM6IFN1Y2Nlc3MgKDB4MDApCjwg
-SENJIENvbW1hbmQ6IFVua25vd24gKDB4MDh8MHgwMDM2KSBwbGVuIDI1ICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBbaGNpMF0gNy4zODI4NDIKICAgICAgICAwMCAxNSAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwNyAwMCAwMSA0NiBjYiBmMiAzMiAgLi4uLi4uLi4uLi4uRi4uMgogICAgICAgIGE2
-IGRjIDAwIDdmIDAxIDAwIDAxIDAwIDAwICAgICAgICAgICAgICAgICAgICAgICAuLi4uLi4uLi4g
-ICAgICAgCj4gSENJIEV2ZW50OiBDb21tYW5kIENvbXBsZXRlICgweDBlKSBwbGVuIDUgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICBbaGNpMF0gNy4zODM3NTcKICAgICAgVW5rbm93biAoMHgw
-OHwweDAwMzYpIG5jbWQgMQogICAgICAgIFN0YXR1czogSW52YWxpZCBIQ0kgQ29tbWFuZCBQYXJh
-bWV0ZXJzICgweDEyKQogICAgICAgIDAxICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAuICAgICAgICAgICAgICAgCiogVW5rbm93biBwYWNrZXQgKGNvZGUgMTcg
-bGVuIDE0KSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBbaGNpMF0gNy4z
-ODM4NDkKICAgICAgICAwMiAwMCAwMCAwMCAwZCAwMCA0NiBjYiBmMiAzMiBhNiBkYyAwMiAwZCAg
-ICAgICAgLi4uLi4uRi4uMi4uLi4gIAoqIFVua25vd24gcGFja2V0IChjb2RlIDE3IGxlbiAxNCkg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgW2hjaTBdIDcuMzgzODQ5CiAg
-ICAgICAgMDEgMDAgMDAgMDAgMGQgMDAgNDYgY2IgZjIgMzIgYTYgZGMgMDIgMGQgICAgICAgIC4u
-Li4uLkYuLjIuLi4uICAKQCBDb25uZWN0IEZhaWxlZDogREM6QTY6MzI6RjI6Q0I6NDYgKDIpIHN0
-YXR1cyAweDBkCjwgSENJIENvbW1hbmQ6IFVua25vd24gKDB4MDh8MHgwMDM2KSBwbGVuIDI1ICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICBbaGNpMF0gNy40MTY2MDQKICAgICAgICAwMCAxMiAw
-MCAwMCAwOCAwMCAwMCAwOCAwMCAwNyAwMSAwMCAwMCAwMCAwMCAwMCAgLi4uLi4uLi4uLi4uLi4u
-LgogICAgICAgIDAwIDAwIDAwIDdmIDAxIDAwIDAxIDAwIDAwICAgICAgICAgICAgICAgICAgICAg
-ICAuLi4uLi4uLi4gICAgICAgCj4gSENJIEV2ZW50OiBDb21tYW5kIENvbXBsZXRlICgweDBlKSBw
-bGVuIDUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBbaGNpMF0gNy40MTc4MDQKICAgICAg
-VW5rbm93biAoMHgwOHwweDAwMzYpIG5jbWQgMQogICAgICAgIFN0YXR1czogU3VjY2VzcyAoMHgw
-MCkKICAgICAgICAwNyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgLiAgICAgICAgICAgICAgIAo8IEhDSSBDb21tYW5kOiBVbmtub3duICgweDA4fDB4MDAzNSkg
-cGxlbiA3ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgW2hjaTBdIDcuNDE3OTAyCiAgICAg
-ICAgMDAgMDkgMGIgZWIgNDAgNzUgM2UgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC4uLi5A
-dT4gICAgICAgICAKPiBIQ0kgRXZlbnQ6IENvbW1hbmQgQ29tcGxldGUgKDB4MGUpIHBsZW4gNCAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIFtoY2kwXSA3LjQxODgwNgogICAgICBVbmtub3du
-ICgweDA4fDB4MDAzNSkgbmNtZCAxCiAgICAgICAgU3RhdHVzOiBTdWNjZXNzICgweDAwKQo8IEhD
-SSBDb21tYW5kOiBVbmtub3duICgweDA4fDB4MDAzOSkgcGxlbiA2ICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgW2hjaTBdIDcuNDE4OTA0CiAgICAgICAgMDEgMDEgMDAgMDAgMDAgMDAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIC4uLi4uLiAgICAgICAgICAKPiBIQ0kgRXZlbnQ6
-IENvbW1hbmQgQ29tcGxldGUgKDB4MGUpIHBsZW4gNCAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIFtoY2kwXSA3LjQxOTcyNwogICAgICBVbmtub3duICgweDA4fDB4MDAzOSkgbmNtZCAyCiAg
-ICAgICAgU3RhdHVzOiBTdWNjZXNzICgweDAwKQo8IEhDSSBDb21tYW5kOiBVbmtub3duICgweDA4
-fDB4MDA0MikgcGxlbiA2ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgW2hjaTBdIDcuNDE5
-ODA0CiAgICAgICAgMDAgMDAgMDAgMDAgMDAgMDAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIC4uLi4uLiAgICAgICAgICAKPiBIQ0kgRXZlbnQ6IENvbW1hbmQgQ29tcGxldGUgKDB4MGUp
-IHBsZW4gNCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFtoY2kwXSA3LjQyMjgwNAogICAg
-ICBVbmtub3duICgweDA4fDB4MDA0MikgbmNtZCAyCiAgICAgICAgU3RhdHVzOiBTdWNjZXNzICgw
-eDAwKQo=
---0000000000006aac2505bfc492a0--
