@@ -2,50 +2,102 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 016503602AC
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Apr 2021 08:51:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55A0D3604D7
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Apr 2021 10:49:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230426AbhDOGwD convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 15 Apr 2021 02:52:03 -0400
-Received: from vsrv57620.customer.xenway.de ([95.129.54.190]:46286 "EHLO
-        vsrv57620.customer.xenway.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230090AbhDOGwD (ORCPT
+        id S231749AbhDOIuC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 15 Apr 2021 04:50:02 -0400
+Received: from out30-56.freemail.mail.aliyun.com ([115.124.30.56]:53137 "EHLO
+        out30-56.freemail.mail.aliyun.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231512AbhDOIuB (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 15 Apr 2021 02:52:03 -0400
-X-Greylist: delayed 1236 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Apr 2021 02:51:58 EDT
-Received: from [193.56.28.106] (unknown [193.56.28.106])
-        by vsrv57620.customer.xenway.de (Postfix) with ESMTPA id 613C83097B5;
-        Thu, 15 Apr 2021 08:23:44 +0200 (CEST)
-Date:   Wed, 14 Apr 2021 23:24:19 -0700
-Mime-version: 1.0
-Subject: Compliments
-From:   Christopher Quinlan QC <cqukesq@gmail.com>
-To:     Undisclosed-Recipients:;
-Message-Id: <20210414232419.UVUVQACXIIXYKI@gmail.com>
-Reply-To: cqukesq@gmail.com
-Content-type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-transfer-encoding: 8BIT
+        Thu, 15 Apr 2021 04:50:01 -0400
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R441e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=alimailimapcm10staff010182156082;MF=jiapeng.chong@linux.alibaba.com;NM=1;PH=DS;RN=9;SR=0;TI=SMTPD_---0UVdfbcR_1618476570;
+Received: from j63c13417.sqa.eu95.tbsite.net(mailfrom:jiapeng.chong@linux.alibaba.com fp:SMTPD_---0UVdfbcR_1618476570)
+          by smtp.aliyun-inc.com(127.0.0.1);
+          Thu, 15 Apr 2021 16:49:37 +0800
+From:   Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+To:     marcel@holtmann.org
+Cc:     johan.hedberg@gmail.com, luiz.dentz@gmail.com, davem@davemloft.net,
+        kuba@kernel.org, linux-bluetooth@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Subject: [PATCH] Bluetooth: 6lowpan: remove unused function
+Date:   Thu, 15 Apr 2021 16:49:28 +0800
+Message-Id: <1618476568-117243-1-git-send-email-jiapeng.chong@linux.alibaba.com>
+X-Mailer: git-send-email 1.8.3.1
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-My name is Christopher Quinlan QC I am a solicitor at law / investment adviser to your late relative. Your late relative left behind Cash deposit in capital and investment security account along with properties, I will like to discuss with you regarding making this claim since he is related to you going by the lineage, surname and country of origin.
+Fix the following clang warning:
 
-Please get back to me on my private email cqukesq6@gmail.com for further details.
+net/bluetooth/6lowpan.c:913:20: warning: unused function 'bdaddr_type'
+[-Wunused-function].
 
-To facilitate the process of this transaction, urgently forward to me
-Your full names,
-Telephone and fax numbers,
-Address,
-Age,
-Marital status,
-Occupation
+net/bluetooth/6lowpan.c:106:35: warning: unused function
+'peer_lookup_ba' [-Wunused-function].
 
-I will be expecting to hear from you.
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+---
+ net/bluetooth/6lowpan.c | 36 ------------------------------------
+ 1 file changed, 36 deletions(-)
 
-Regards
-
-Christopher Quinlan QC
-Private email cqukesq6@gmail.com
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index cff4944..49c2612 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -103,34 +103,6 @@ static inline bool peer_del(struct lowpan_btle_dev *dev,
+ 	return false;
+ }
+ 
+-static inline struct lowpan_peer *peer_lookup_ba(struct lowpan_btle_dev *dev,
+-						 bdaddr_t *ba, __u8 type)
+-{
+-	struct lowpan_peer *peer;
+-
+-	BT_DBG("peers %d addr %pMR type %d", atomic_read(&dev->peer_count),
+-	       ba, type);
+-
+-	rcu_read_lock();
+-
+-	list_for_each_entry_rcu(peer, &dev->peers, list) {
+-		BT_DBG("dst addr %pMR dst type %d",
+-		       &peer->chan->dst, peer->chan->dst_type);
+-
+-		if (bacmp(&peer->chan->dst, ba))
+-			continue;
+-
+-		if (type == peer->chan->dst_type) {
+-			rcu_read_unlock();
+-			return peer;
+-		}
+-	}
+-
+-	rcu_read_unlock();
+-
+-	return NULL;
+-}
+-
+ static inline struct lowpan_peer *
+ __peer_lookup_chan(struct lowpan_btle_dev *dev, struct l2cap_chan *chan)
+ {
+@@ -910,14 +882,6 @@ static long chan_get_sndtimeo_cb(struct l2cap_chan *chan)
+ 	.set_shutdown		= l2cap_chan_no_set_shutdown,
+ };
+ 
+-static inline __u8 bdaddr_type(__u8 type)
+-{
+-	if (type == ADDR_LE_DEV_PUBLIC)
+-		return BDADDR_LE_PUBLIC;
+-	else
+-		return BDADDR_LE_RANDOM;
+-}
+-
+ static int bt_6lowpan_connect(bdaddr_t *addr, u8 dst_type)
+ {
+ 	struct l2cap_chan *chan;
+-- 
+1.8.3.1
 
