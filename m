@@ -2,133 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC612361E86
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Apr 2021 13:21:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 015363628C4
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Apr 2021 21:40:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240407AbhDPLWR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 16 Apr 2021 07:22:17 -0400
-Received: from relay8-d.mail.gandi.net ([217.70.183.201]:33909 "EHLO
-        relay8-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240464AbhDPLWP (ORCPT
+        id S243897AbhDPTlF convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 16 Apr 2021 15:41:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56782 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236021AbhDPTlE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 16 Apr 2021 07:22:15 -0400
-X-Originating-IP: 78.199.60.242
-Received: from [192.168.1.150] (unknown [78.199.60.242])
-        (Authenticated sender: hadess@hadess.net)
-        by relay8-d.mail.gandi.net (Postfix) with ESMTPSA id 410F51BF203;
-        Fri, 16 Apr 2021 11:21:48 +0000 (UTC)
-Message-ID: <b679332b2dcba0bca2a645946ca0edc387fbda25.camel@hadess.net>
-Subject: Re: [PATCH v2 resend 2/2] iio: documentation: Document
- accelerometer label use
-From:   Bastien Nocera <hadess@hadess.net>
-To:     Hans de Goede <hdegoede@redhat.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Mark Pearson <mpearson@lenovo.com>
-Date:   Fri, 16 Apr 2021 13:21:47 +0200
-In-Reply-To: <871895f8-b85e-e8b0-83f1-de91636ce572@redhat.com>
-References: <20210405203933.17282-1-hdegoede@redhat.com>
-         <20210405203933.17282-3-hdegoede@redhat.com>
-         <dcd78309d7bbbdad511e10a63eb0e73f01934e8b.camel@hadess.net>
-         <871895f8-b85e-e8b0-83f1-de91636ce572@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.0 (3.40.0-1.fc34) 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Fri, 16 Apr 2021 15:41:04 -0400
+X-Greylist: delayed 10585 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 16 Apr 2021 12:40:38 PDT
+Received: from server.anaxus.com.au (unknown [IPv6:2a01:4f8:10b:4585::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D017DC061756;
+        Fri, 16 Apr 2021 12:40:38 -0700 (PDT)
+Received: from [193.56.28.106] (unknown [193.56.28.106])
+        by server.anaxus.com.au (Postfix) with ESMTPA id 8C9BC6EA668E;
+        Sat, 17 Apr 2021 01:46:30 +1000 (AEST)
+Authentication-Results: server.anaxus.com.au;
+        spf=pass (sender IP is 193.56.28.106) smtp.mailfrom=cqukesq6@gmail.com smtp.helo=[193.56.28.106]
+Received-SPF: pass (server.anaxus.com.au: connection is authenticated)
+Date:   Fri, 16 Apr 2021 08:46:59 -0700
+Mime-version: 1.0
+Subject: Compliments
+From:   Christopher Quinlan QC <cqukesq6@gmail.com>
+To:     Undisclosed-Recipients:;
+Message-Id: <20210416084659.LDAOMSGFVRINMN@gmail.com>
+Reply-To: cqukesq6@gmail.com
+Content-type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-transfer-encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Fri, 2021-04-16 at 13:05 +0200, Hans de Goede wrote:
-> Hi,
-> 
-> On 4/16/21 12:56 PM, Bastien Nocera wrote:
-> > On Mon, 2021-04-05 at 22:39 +0200, Hans de Goede wrote:
-> > > Some 2-in-1 laptops / convertibles with 360° (yoga-style) hinges,
-> > > have 2 accelerometers, 1 in their base and 1 in their display.
-> > > 
-> > > In many cases the kernel can detect the location of each
-> > > accelerometer
-> > > based on e.g. information from the ACPI tables.
-> > > 
-> > > It is important for userspace to know the location of the 2
-> > > accelerometers.
-> > > Rather then adding a new sysfs-attribute for this we can relay
-> > > this
-> > > information to userspace by using standardized label strings for
-> > > this.
-> > > This mirrors how this is done for proximity sensors.
-> > > 
-> > > This commit documents 2 new standardized label strings for this
-> > > purpose:
-> > > "accel-base"
-> > > "accel-display"
-> > 
-> > If we have a combined proximity and accelerometer sensor (which
-> > wouldn't be unheard off with sensor hubs being used), how are
-> > multiple
-> > labels, say "proximity-wifi" and "accel-base" documented?
-> 
-> Sensor hubs typically use one iio device per sensor, see e.g.
-> how HID-sensors work. And if a device which does not use separate
-> iio-devices per sensor shows up then the plan is to use per
-> channel-labels which are already supported by iio.
+My name is Christopher Quinlan QC I am a solicitor at law / investment adviser to your late relative. Your late relative left behind Cash deposit in capital and investment security account along with properties, I will like to discuss with you regarding making this claim since he is related to you going by the lineage, surname and country of origin.
 
-OK.
+Please get back to me on my private email cqukesq6@gmail.com for further details.
 
-> 
-> Regards,
-> 
-> Hans
-> 
-> 
-> 
-> > > Note the "base" and "display" suffixes were chosen to match the
-> > > values
-> > > used for the systemd/udev hwdb.d/60-sensor.hwdb file's
-> > > ACCEL_LOCATION
-> > > property.
-> > > 
-> > > Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> > > Cc: Mark Pearson <mpearson@lenovo.com>
-> > > Cc: Bastien Nocera <hadess@hadess.net>
-> > > Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-> > > ---
-> > >  Documentation/ABI/testing/sysfs-bus-iio | 7 +++++++
-> > >  1 file changed, 7 insertions(+)
-> > > 
-> > > diff --git a/Documentation/ABI/testing/sysfs-bus-iio
-> > > b/Documentation/ABI/testing/sysfs-bus-iio
-> > > index 7379e40d862d..b7529bca83f5 100644
-> > > --- a/Documentation/ABI/testing/sysfs-bus-iio
-> > > +++ b/Documentation/ABI/testing/sysfs-bus-iio
-> > > @@ -72,6 +72,13 @@ Description:
-> > >                 calculated by firmware from other sensor
-> > > readings,
-> > > rather then
-> > >                 being a raw sensor reading.
-> > >  
-> > > +               For accelerometers used in 2-in-1s with 360°
-> > > (yoga-
-> > > style) hinges,
-> > > +               which have an accelerometer in both their base
-> > > and
-> > > their display,
-> > > +               the following standardized labels are used:
-> > > +
-> > > +               * "accel-base"
-> > > +               * "accel-display"
-> > > +
-> > >  What:          /sys/bus/iio/devices/iio:deviceX/current_timestam
-> > > p_cl
-> > > ock
-> > >  KernelVersion: 4.5
-> > >  Contact:       linux-iio@vger.kernel.org
-> > 
-> > 
-> 
+To facilitate the process of this transaction, urgently forward to me
+Your full names,
+Telephone and fax numbers,
+Address,
+Age,
+Marital status,
+Occupation
 
+I will be expecting to hear from you.
+
+Regards
+
+Christopher Quinlan QC
+Private email cqukesq6@gmail.com
 
