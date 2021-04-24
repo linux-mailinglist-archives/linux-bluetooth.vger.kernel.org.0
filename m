@@ -2,115 +2,149 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EEED369D9A
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 24 Apr 2021 01:54:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D14F4369E64
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 24 Apr 2021 03:33:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235437AbhDWXyh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 23 Apr 2021 19:54:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53504 "EHLO
+        id S232106AbhDXBdq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 23 Apr 2021 21:33:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232750AbhDWXyd (ORCPT
+        with ESMTP id S229957AbhDXBdo (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 23 Apr 2021 19:54:33 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891DBC061756
-        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Apr 2021 16:53:55 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id o16so12378860plg.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Apr 2021 16:53:55 -0700 (PDT)
+        Fri, 23 Apr 2021 21:33:44 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4E0FC061574
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Apr 2021 18:33:06 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id u11so20330954pjr.0
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Apr 2021 18:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=J2DionFKjNT4fgCFR+e8Yg0yjQp4gZ2+ESUpauw3qM4=;
-        b=cEJxPb0m2qZe63meono/O8VVRuFncz5XkxBs1XyT5GYLIBBhDYqwRFXsxOYFWbQvh9
-         o9nkEqv2UD5XRl3xNuwpn9AlQ0iIhlxEuyYFxB3aI4EM6oW8g+PGmRq0FKEY+huTmogI
-         tZejxn75z2RUQwuJ7+cNnoAJR1uZN6zULILO6hvSl4alJiqwXdJnx3h4OUi5a6YlL3/U
-         yqJosiUm6XQOEnFND//9E0snC2Sh30D7UXSq6DkKZjqAcdOUjK6OtwC4ISx6//R0tP+Y
-         ecgWxZNs34Id+aGGVgA0WDODnjBcR5BakZaIbRBu1CRsldioaDmxnCrhfbf+v7cZOAi/
-         50LA==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=Ah5L09Q4gO1MG89th7cxRY2x0piaPlXiQDtc5df/+20=;
+        b=kguaC2eQOkCea/jHePmf/Crn9h8Vx4i3vzYcnKBpKUdtkMrHnhwCSOKIsfoTItn0fb
+         H6bjo8ScDHMsDKQm5twQ18z68cghHlBFZNqEDbR64+flKhi8eutRHvvDlKVNUB6Hjw8H
+         aWpymObV72uF3zb7PxJVokaU5dVejWdRSkwUao242//JmpFnQp1QeZFNcj5DlHn20D24
+         i85Q4/D2ZezZV5Q3isdU2BETJpvd3ZwlVuA+k+whkRu0Iw645d8YMCyClSMJ/ZX/rFrV
+         YccAm5ek5mD+i2gAzniwqaTKoWprAYCMivQe2NKyl4gp/xXEjuwkinX7byg+FLHdC8O3
+         n8LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=J2DionFKjNT4fgCFR+e8Yg0yjQp4gZ2+ESUpauw3qM4=;
-        b=nD5o8OAjc39LZxFKng3oyUNsuvbZ8fS4+RpGp5/Ryuqgzh48iTvU8ffrQ6Mu8CBRl4
-         VnlWQ3m6FBtIo+27jPOQ5+DaPTUdWdLIl2G1icfCZJlqfWkVF5tgrBTc1L9Yfo+zhzXN
-         vucHIKpb8vydfrvibFbFPx/hqdU/udPa4a//JtIYSojtt1runCZeGOhwCJvSwftFKC7A
-         iS1RXTtolerp3yCab5tJhvuu6mAQEMpjV4oplnLNYBCW3vBCT3gqjlDg9aPUmX0/xs+0
-         P+NQ2g5T8qip+76+RozRvFPGKOAY65imEf/6lyWQI7kwe9TiBThQTnUQJACeojNN4/hK
-         JkCw==
-X-Gm-Message-State: AOAM532rgs/Nrbg3dPTP/4DLRljK01YmUIQruN1tWz+1arSqTQezurnG
-        7jNaoMY38uwQknKQ9jRaUifLxnjMj5c=
-X-Google-Smtp-Source: ABdhPJzGRNAcYK+Gh5mr3GPauw9L49Kek9pTspKzUBg7dUTnH2KYCQUv4vKu79afSCROXYHCT7nDiw==
-X-Received: by 2002:a17:90b:1d88:: with SMTP id pf8mr8418011pjb.114.1619222034991;
-        Fri, 23 Apr 2021 16:53:54 -0700 (PDT)
-Received: from han1-XPS-13-9350.hsd1.or.comcast.net ([2601:1c0:6a01:d830:3e1c:a9e3:7268:3bbf])
-        by smtp.gmail.com with ESMTPSA id v64sm5792318pfc.117.2021.04.23.16.53.54
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=Ah5L09Q4gO1MG89th7cxRY2x0piaPlXiQDtc5df/+20=;
+        b=agx5dGrsiEMEUbcGe74XP3tvQMSP66Z+BYcf7bTJhmSLllkt09DvsnoBDoT32nfiy5
+         FkCmEysSjisTIXF3x35jNkHbRDciXbNcxWfspktocxX0wwiTXtgkn0PJrbWmUESQ/3S1
+         Y0Mx4Gr3Y+P/xsAE5mE6H9HfjE5u4ELRI6vkzPciMCm0vhlm8UVmrM3KkHE68RUkMVrD
+         tDWL2Ix8YETq5HAIirfGl+WrfRQ7emrIPNL3U7xy78GRChRDe2aobHAutJzbKAp7a8H4
+         upCmYKuc3ndoBfOVAncOco9EaiT0033KkV4jHwqTtlusk+EFVlvcwi6+C49v1h6htFkt
+         hPeQ==
+X-Gm-Message-State: AOAM530kubf8uT0EqwsilJfs2IPV3McFYeLH2rYYsAo8SWJIecRK6esi
+        9kRLlEWl+RaomjyPLTJ7kjcVCVWSdsE=
+X-Google-Smtp-Source: ABdhPJzlVZmJwI7ekveVaK0UyIS6vDTqUTDAEuP/qAVDdk7Z1jSJmOGMVSnuUUj1GXNbcYnlptqNJQ==
+X-Received: by 2002:a17:902:ff09:b029:eb:3d5a:1332 with SMTP id f9-20020a170902ff09b02900eb3d5a1332mr6814177plj.24.1619227986051;
+        Fri, 23 Apr 2021 18:33:06 -0700 (PDT)
+Received: from [172.17.0.2] ([52.151.51.113])
+        by smtp.gmail.com with ESMTPSA id z1sm5838012pgz.94.2021.04.23.18.33.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 16:53:54 -0700 (PDT)
-From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [BlueZ PATCH 3/3] tools/mgmt-tester: Fix to support emulator spec 5.2
-Date:   Fri, 23 Apr 2021 16:53:52 -0700
-Message-Id: <20210423235352.33965-3-hj.tedd.an@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Fri, 23 Apr 2021 18:33:05 -0700 (PDT)
+Message-ID: <60837551.1c69fb81.fa8bb.23d7@mx.google.com>
+Date:   Fri, 23 Apr 2021 18:33:05 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============5218753894364825439=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, hj.tedd.an@gmail.com
+Subject: RE: [BlueZ,1/3] emulator/btdev: Add missing commands
+Reply-To: linux-bluetooth@vger.kernel.org
 In-Reply-To: <20210423235352.33965-1-hj.tedd.an@gmail.com>
 References: <20210423235352.33965-1-hj.tedd.an@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tedd Ho-Jeong An <tedd.an@intel.com>
+--===============5218753894364825439==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This patch updates the check for supported spec by the BT emulator to
-support HCI spec 5.2
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=472555
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.85 seconds
+GitLint                       PASS      0.34 seconds
+Prep - Setup ELL              PASS      47.31 seconds
+Build - Prep                  PASS      0.14 seconds
+Build - Configure             PASS      8.24 seconds
+Build - Make                  PASS      201.85 seconds
+Make Check                    PASS      8.79 seconds
+Make Dist                     PASS      11.57 seconds
+Make Dist - Configure         PASS      5.02 seconds
+Make Dist - Make              PASS      82.43 seconds
+Build w/ext ELL - Configure   PASS      8.09 seconds
+Build w/ext ELL - Make        PASS      188.41 seconds
+
+Details
+##############################
+Test: CheckPatch - PASS
+Desc: Run checkpatch.pl script with rule in .checkpatch.conf
+
+##############################
+Test: GitLint - PASS
+Desc: Run gitlint with rule in .gitlint
+
+##############################
+Test: Prep - Setup ELL - PASS
+Desc: Clone, build, and install ELL
+
+##############################
+Test: Build - Prep - PASS
+Desc: Prepare environment for build
+
+##############################
+Test: Build - Configure - PASS
+Desc: Configure the BlueZ source tree
+
+##############################
+Test: Build - Make - PASS
+Desc: Build the BlueZ source tree
+
+##############################
+Test: Make Check - PASS
+Desc: Run 'make check'
+
+##############################
+Test: Make Dist - PASS
+Desc: Run 'make dist' and build the distribution tarball
+
+##############################
+Test: Make Dist - Configure - PASS
+Desc: Configure the source from distribution tarball
+
+##############################
+Test: Make Dist - Make - PASS
+Desc: Build the source from distribution tarball
+
+##############################
+Test: Build w/ext ELL - Configure - PASS
+Desc: Configure BlueZ source with '--enable-external-ell' configuration
+
+##############################
+Test: Build w/ext ELL - Make - PASS
+Desc: Build BlueZ source with '--enable-external-ell' configuration
+
+
+
 ---
- tools/mgmt-tester.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
-index b05ae4f27..de35008ad 100644
---- a/tools/mgmt-tester.c
-+++ b/tools/mgmt-tester.c
-@@ -5552,7 +5552,7 @@ static void setup_bthost(void)
- 
- 	if (data->hciemu_type == HCIEMU_TYPE_LE ||
- 		test->client_enable_adv) {
--		if (data->hciemu_type == HCIEMU_TYPE_BREDRLE50)
-+		if (data->hciemu_type >= HCIEMU_TYPE_BREDRLE50)
- 			bthost_set_ext_adv_enable(bthost, 0x01);
- 		else
- 			bthost_set_adv_enable(bthost, 0x01);
-@@ -8887,7 +8887,7 @@ static void trigger_device_found(void *user_data)
- 							test->adv_data_len);
- 
- 		bthost_set_adv_enable(bthost, 0x01);
--	} else if (data->hciemu_type == HCIEMU_TYPE_BREDRLE50) {
-+	} else if (data->hciemu_type >= HCIEMU_TYPE_BREDRLE50) {
- 		if (test->set_adv)
- 			bthost_set_ext_adv_data(bthost, test->adv_data,
- 							test->adv_data_len);
-@@ -9054,7 +9054,7 @@ static void le_connected_event(uint16_t index, uint16_t length,
- 
- 	test_add_condition(data);
- 
--	if (data->hciemu_type == HCIEMU_TYPE_BREDRLE50)
-+	if (data->hciemu_type >= HCIEMU_TYPE_BREDRLE50)
- 		hciemu_add_hook(data->hciemu, HCIEMU_HOOK_POST_CMD,
- 					BT_HCI_CMD_LE_SET_EXT_ADV_ENABLE,
- 					test_adv_enable_hook, data);
-@@ -9101,7 +9101,7 @@ static void add_device_callback(uint8_t status, uint16_t len, const void *param,
- 	}
- 
- 	bthost = hciemu_client_get_host(data->hciemu);
--	if (data->hciemu_type == HCIEMU_TYPE_BREDRLE50)
-+	if (data->hciemu_type >= HCIEMU_TYPE_BREDRLE50)
- 		bthost_hci_ext_connect(bthost, master_bdaddr, BDADDR_LE_PUBLIC);
- 	else
- 		bthost_hci_connect(bthost, master_bdaddr, BDADDR_LE_PUBLIC);
--- 
-2.25.1
 
+--===============5218753894364825439==--
