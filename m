@@ -2,118 +2,105 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BABF1370523
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 May 2021 05:22:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30F353707A1
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 May 2021 17:05:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231493AbhEADXY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 30 Apr 2021 23:23:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47270 "EHLO
+        id S231656AbhEAPFs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 1 May 2021 11:05:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231415AbhEADXY (ORCPT
+        with ESMTP id S230450AbhEAPFr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 30 Apr 2021 23:23:24 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0085C06174A
-        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Apr 2021 20:22:32 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id t22so15424021pgu.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Apr 2021 20:22:32 -0700 (PDT)
+        Sat, 1 May 2021 11:05:47 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBC0CC06174A;
+        Sat,  1 May 2021 08:04:57 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id l22so1610147ljc.9;
+        Sat, 01 May 2021 08:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=rM10aFpE/1ge7sndkWqbRhH3zQ7107GojcG00vkfB6I=;
-        b=uCNlwdBiloiDyKVLlt98YMOUZRpM2rMGZAvaYaXwa4/lqGGlsF5KkxTp3xo9XSEu65
-         lQFW1JrTogbdttwGJYAiY8UndC3DSVziaf3vb/Bz7m9Y3w9chQUS6emptDvDrriyb6pv
-         uRHPP5qFtUpoZ3ai55bSptXihDgFXaSzYP+gI2ntoXm2i4gwK3+TVrShqAh918Y0k84/
-         pw77HRhw/ShsF3V2D770vx9VKHJEUdvXWdDnzNM3Y6xNjKAs8NXZTG9fLwMX351qtc0P
-         BJYb6ug0K8RPmJZa/t1VXUgbH2X9QWJSY4hBPhDywAwJ5KSyyvNU5qFRMUR4Sx7P0+A5
-         fA+A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mf/H2xj+zflf+YaL54FKklUQahHRX1dyDemWMHhs3v4=;
+        b=vM9gpUh1nSEnhQ+KSB+C96fyyyKdfnosujRityuYC0foXKl1UEDHZZ35nKY8MHfZDJ
+         TkJu+2dDjyPFvqWkl8AXpBuAwoHsVLL4FPdCf+VWsxGdEiNxzSMsMtr7agGYWaBifH5T
+         sM5O1rRksM8+O9WliOObH8oQz3DlvxuJolS4XGTXC9n25uNwvkC7atQ4g5OZ6jtfNQY4
+         gp+hSxxXumDiCkOeZ9HfmkXehh/II9/Gui+Xv8xQTm2QgANR1OW72FsV88RtxGhu7qyR
+         7UsL7E/srW8Y0/6rtWWSJOo2KepDkvCpmZ1CEirtH02F00KPKkE2ZXDkGt/MHjYdjx5p
+         iqlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=rM10aFpE/1ge7sndkWqbRhH3zQ7107GojcG00vkfB6I=;
-        b=kEkuoL1Xcgat/e7zdcTPWKd8jOTq6FS/dqBs9hpu/Mpjnrdy4DF57VyYz1oHi0lCH1
-         pS9HotF7OQdYc2e4b6QvckBXxUACjwnwgEetpGMCc2xHcCrRmWMThgDezqZ2ZqKbM964
-         cZ7aTmHEeINzsFoJOFTU7ZIHCodfhVaJxpxjkhxuLi5fBc3ihZCnHquBEnkWqYAH0AaA
-         Z3NWPr527JRfAHuxO2Jvch45pN8m9sBKBZdZ3I7MuojMgTe7I0VsCpM+06M/cyfmWMzQ
-         +U7e4+JamIRxTEgf+7F5mwwuP2kEVZqFjzrGA9zZKaiRdiCHw50NOE6uXJo/16Tl48mG
-         DmKA==
-X-Gm-Message-State: AOAM5314ChbMbN80jG1+VQJKvcTwXwPjKtdgUg/v6Yg3jWtR+gnCx2Ti
-        veO7SurMT9wG3SC/7A2M3So=
-X-Google-Smtp-Source: ABdhPJxCQMhw3dNRVzioHUt5kfe2IeEPr/e6cI5txTnabhZGhG4KbnNdLg0rEaFBKiD5ZGiKSIv3TA==
-X-Received: by 2002:a63:5322:: with SMTP id h34mr7798247pgb.182.1619839352277;
-        Fri, 30 Apr 2021 20:22:32 -0700 (PDT)
-Received: from han1-mobl3 ([2601:1c0:6a01:d830::512a])
-        by smtp.gmail.com with ESMTPSA id n8sm3231856pfu.111.2021.04.30.20.22.31
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mf/H2xj+zflf+YaL54FKklUQahHRX1dyDemWMHhs3v4=;
+        b=pHqb1vym+u+v8gcYB4XyHnZCJsy7MtQ9JFXeCMkMNJyJh5YrpQs7uJuwPzrT8wgY0z
+         PZIUkd1Ja/W0n59fV3aUKrm9UybK+sjcN0VGIzaNOTnInmkb4DXeS4io4Kb4pn8/I4BV
+         wTHw840+g2ToqO+PZs4fiF2FJ0JBmyx1LQNPj2eDoHnaqWSfQ7LdZsI9xeWqKPmVxqSN
+         UM49v31ww9D0NQ/ilz3elIampY+6F32381ihAB7v+a3vcWqTvEArlTBpLFaleaCBqsRG
+         tF/YGPnvvUJTYGZeMZ4QRVEp9IIGuKOJ9Vf2ptqhsm0o4vwNNEgNajXD8tuQtMCsoXix
+         MXjg==
+X-Gm-Message-State: AOAM532iquLRgv5KoVz+ASy4hCLRWM4TVrWAaXlpT8J2a/A9OIpclUTA
+        wq8ZYg/9E055C+Etve6rFXU2r/erF8i4Kg==
+X-Google-Smtp-Source: ABdhPJypu1oYdCdyikUBFguR96Xj4xOO23e8b8lIjgTX0Revw1tCAulGcBqvGrynXoK13NrsqjvJpg==
+X-Received: by 2002:a2e:9f07:: with SMTP id u7mr7295566ljk.423.1619881496223;
+        Sat, 01 May 2021 08:04:56 -0700 (PDT)
+Received: from localhost.localdomain ([94.103.226.84])
+        by smtp.gmail.com with ESMTPSA id j10sm592999lfb.176.2021.05.01.08.04.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Apr 2021 20:22:31 -0700 (PDT)
-Message-ID: <4b0030d99fd6698fd8d5a4e17b0df658a02e6788.camel@gmail.com>
-Subject: Re: [BlueZ v2] monitor: Update manpage
-From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Date:   Fri, 30 Apr 2021 20:22:30 -0700
-In-Reply-To: <BA960BC0-D602-4B59-BFF4-6ADF1B487081@holtmann.org>
-References: <20210428062214.335567-1-hj.tedd.an@gmail.com>
-         <CABBYNZJJHLZdhOFHrTHV7XN7++t4XKq3yHxS2wsi2bJ2AkRnVw@mail.gmail.com>
-         <87c5b74558d3062f301dbfa28b93cdbfbe310dd2.camel@gmail.com>
-         <CABBYNZKYDBQFqf8uVeXZNg-OVBks96fqRMk+8S+029Y26dSiow@mail.gmail.com>
-         <BA960BC0-D602-4B59-BFF4-6ADF1B487081@holtmann.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5 (3.36.5-2.fc32) 
+        Sat, 01 May 2021 08:04:55 -0700 (PDT)
+From:   Pavel Skripkin <paskripkin@gmail.com>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     luiz.dentz@gmail.com, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Pavel Skripkin <paskripkin@gmail.com>
+Subject: [PATCH] bluetooth: fix potential gfp
+Date:   Sat,  1 May 2021 18:04:45 +0300
+Message-Id: <20210501150445.4055-1-paskripkin@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Marcel,
+In qca_power_shutdown() qcadev local variable is
+initialized by hu->serdev.dev private data, but
+hu->serdev can be NULL and there is a check for it.
 
-On Sat, 2021-05-01 at 03:59 +0200, Marcel Holtmann wrote:
-> Hi Luiz,
-> 
-> > > > > From: Tedd Ho-Jeong An <tedd.an@intel.com>
-> > > > > 
-> > > > > This patch updates the manpage for btmon written in rst format.
-> > > > > ---
-> > > > > Makefile.am       |  26 ++++---
-> > > > > Makefile.tools    |   4 ++
-> > > > > configure.ac      |   4 ++
-> > > > > doc/btmon.txt     |  35 ----------
-> > > > > monitor/btmon.rst | 172 ++++++++++++++++++++++++++++++++++++++++++++++
-> > > > 
-> > > > I do wonder why you change the location from doc to monitor, I think
-> > > > we actually should keep all the documentation under doc and perhaps
-> > > > even have a dedicated make target for those since we would likely want
-> > > > to generate all the manpages from rst which may be time consuming so
-> > > > people not interested on it can just skip it.
-> > > 
-> > > I converted all manpages in the tree to .rst and ready to submit.
-> > > Can I combine all in this series or wait for this to merge first?
-> > 
-> > Have you added a make target for those? I really don't mind having the
-> > manpages generated within the same location of the binary, although I
-> > think it would be more organized to have it in one place, but a make
-> > target would probably be a good practice.
-> 
-> the way how this works is that in a git tree they are always generated unless disabled or rst2man is not available. And in a tarball, the generated manual pages are shipped, which means they are not
-> needed to be generated. So no specific make target required. Lets just copy what iwd repository doing since that is working fine.
-> 
-To align with iwd way, I suggest to make some changes in Makefile as well.
-For example, disabling manpages are not working because the manpages are
-added to dist_man_MANS without checking MANPAGES flags.
+Since, qcadev is not used before
 
-I converted all existing manpages to .rst format and ready to submit.
-I will add them in this patch set.
+	if (!hu->serdev)
+		return;
 
-> Regards
-> 
-> Marcel
-> 
+we can move its initialization after this "if" to
+prevent gfp.
 
-Regards,
+Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
+---
+ drivers/bluetooth/hci_qca.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Tedd
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index de36af63e182..9589ef6c0c26 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1820,8 +1820,6 @@ static void qca_power_shutdown(struct hci_uart *hu)
+ 	unsigned long flags;
+ 	enum qca_btsoc_type soc_type = qca_soc_type(hu);
+ 
+-	qcadev = serdev_device_get_drvdata(hu->serdev);
+-
+ 	/* From this point we go into power off state. But serial port is
+ 	 * still open, stop queueing the IBS data and flush all the buffered
+ 	 * data in skb's.
+@@ -1837,6 +1835,8 @@ static void qca_power_shutdown(struct hci_uart *hu)
+ 	if (!hu->serdev)
+ 		return;
+ 
++	qcadev = serdev_device_get_drvdata(hu->serdev);
++
+ 	if (qca_is_wcn399x(soc_type)) {
+ 		host_set_baudrate(hu, 2400);
+ 		qca_send_power_pulse(hu, false);
+-- 
+2.31.1
 
