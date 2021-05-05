@@ -2,37 +2,40 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A4C7374223
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 May 2021 18:47:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D7F837421D
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 May 2021 18:46:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236056AbhEEQpf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 May 2021 12:45:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39078 "EHLO mail.kernel.org"
+        id S234448AbhEEQp3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 May 2021 12:45:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39198 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235487AbhEEQl7 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 May 2021 12:41:59 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 607DC6186A;
-        Wed,  5 May 2021 16:34:48 +0000 (UTC)
+        id S235511AbhEEQmG (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 5 May 2021 12:42:06 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9063061627;
+        Wed,  5 May 2021 16:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620232489;
-        bh=nlRjb1u7hSZ9ilo4vAun6ueLqcGnriYGmhd3kAeYos4=;
+        s=k20201202; t=1620232493;
+        bh=1Tj8L1ZaYES/mLH5ILY14A6ccbafPhdoBV0lV+yee9w=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZabK5x5EAiHoKxcM/YPU98UunKB5UFm9DK7izbl5o9fYsvAjB7ViYAYqO+Z8PNl4O
-         hU6vAJz4jrqwQcnP2asNZ/d7OzAH5B3pDyRpBt4O4A4vXH11O1FA1f+GL/I9txANMx
-         iomD+2KlK1MWO8sSsxNp/X2cnhjgHQgqNG+WcSG2uFk9GIvrn6xixnL1NFJVY2L+en
-         OKwJskXqyIMi5CAcTDY2h5FLKV2OstiWoj1CmxDRYJQb9zMdzQdKSroNoAzlEJGrsV
-         YoecCSxYFS4lEfwZLcHFZ9nrY8AujyA2OgUnFDF17JPGtq61CkMAzV11kx3JlYpOBp
-         k8Hy2BH5txD6w==
+        b=Civs3S6ozlZwbd7eJ5q0tm4gUAJ/QtaPv/VSMWw7wfI5c3qXHBsK2gSAvRxSDWQ9y
+         PowPXPNJ8AyaSz1VVSFXL0WCbDeAyUY0//AN61CR+aCg/Y+J1AelFkrqnCpIafSSsG
+         MY0Ex53eRgeqTyraJgDq2RPOVj4Jo38GaI/S2epcuGDtcyIGfpPqiRB5xiYcjfmFBh
+         kakwZLR+ny+gMOo/vQtTdxxWAXX9lM60OJfhx0p8+i9sLFl5oBisKxYek7hyT4BLc8
+         tYgkY74pLPD1yrraYWUFYUzwu71lZ91+ZxVnZE1UJpFy38eS4/rITg7SmCJrrEkY2j
+         c2e3o3DUteQ7w==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-        syzbot <syzbot+fadfba6a911f6bf71842@syzkaller.appspotmail.com>,
+Cc:     Archie Pusaka <apusaka@chromium.org>,
+        syzbot+abfc0f5e668d4099af73@syzkaller.appspotmail.com,
+        Alain Michaud <alainm@chromium.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.11 025/104] Bluetooth: initialize skb_queue_head at l2cap_chan_create()
-Date:   Wed,  5 May 2021 12:32:54 -0400
-Message-Id: <20210505163413.3461611-25-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.11 028/104] Bluetooth: check for zapped sk before connecting
+Date:   Wed,  5 May 2021 12:32:57 -0400
+Message-Id: <20210505163413.3461611-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210505163413.3461611-1-sashal@kernel.org>
 References: <20210505163413.3461611-1-sashal@kernel.org>
@@ -44,41 +47,67 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Archie Pusaka <apusaka@chromium.org>
 
-[ Upstream commit be8597239379f0f53c9710dd6ab551bbf535bec6 ]
+[ Upstream commit 3af70b39fa2d415dc86c370e5b24ddb9fdacbd6f ]
 
-syzbot is hitting "INFO: trying to register non-static key." message [1],
-for "struct l2cap_chan"->tx_q.lock spinlock is not yet initialized when
-l2cap_chan_del() is called due to e.g. timeout.
+There is a possibility of receiving a zapped sock on
+l2cap_sock_connect(). This could lead to interesting crashes, one
+such case is tearing down an already tore l2cap_sock as is happened
+with this call trace:
 
-Since "struct l2cap_chan"->lock mutex is initialized at l2cap_chan_create()
-immediately after "struct l2cap_chan" is allocated using kzalloc(), let's
-as well initialize "struct l2cap_chan"->{tx_q,srej_q}.lock spinlocks there.
+__dump_stack lib/dump_stack.c:15 [inline]
+dump_stack+0xc4/0x118 lib/dump_stack.c:56
+register_lock_class kernel/locking/lockdep.c:792 [inline]
+register_lock_class+0x239/0x6f6 kernel/locking/lockdep.c:742
+__lock_acquire+0x209/0x1e27 kernel/locking/lockdep.c:3105
+lock_acquire+0x29c/0x2fb kernel/locking/lockdep.c:3599
+__raw_spin_lock_bh include/linux/spinlock_api_smp.h:137 [inline]
+_raw_spin_lock_bh+0x38/0x47 kernel/locking/spinlock.c:175
+spin_lock_bh include/linux/spinlock.h:307 [inline]
+lock_sock_nested+0x44/0xfa net/core/sock.c:2518
+l2cap_sock_teardown_cb+0x88/0x2fb net/bluetooth/l2cap_sock.c:1345
+l2cap_chan_del+0xa3/0x383 net/bluetooth/l2cap_core.c:598
+l2cap_chan_close+0x537/0x5dd net/bluetooth/l2cap_core.c:756
+l2cap_chan_timeout+0x104/0x17e net/bluetooth/l2cap_core.c:429
+process_one_work+0x7e3/0xcb0 kernel/workqueue.c:2064
+worker_thread+0x5a5/0x773 kernel/workqueue.c:2196
+kthread+0x291/0x2a6 kernel/kthread.c:211
+ret_from_fork+0x4e/0x80 arch/x86/entry/entry_64.S:604
 
-[1] https://syzkaller.appspot.com/bug?extid=fadfba6a911f6bf71842
-
-Reported-and-tested-by: syzbot <syzbot+fadfba6a911f6bf71842@syzkaller.appspotmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+Reported-by: syzbot+abfc0f5e668d4099af73@syzkaller.appspotmail.com
+Reviewed-by: Alain Michaud <alainm@chromium.org>
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/l2cap_sock.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 46da4c1d0177..78776d0782c5 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -451,6 +451,8 @@ struct l2cap_chan *l2cap_chan_create(void)
- 	if (!chan)
- 		return NULL;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index f1b1edd0b697..c99d65ef13b1 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -179,9 +179,17 @@ static int l2cap_sock_connect(struct socket *sock, struct sockaddr *addr,
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
+ 	struct sockaddr_l2 la;
+ 	int len, err = 0;
++	bool zapped;
  
-+	skb_queue_head_init(&chan->tx_q);
-+	skb_queue_head_init(&chan->srej_q);
- 	mutex_init(&chan->lock);
+ 	BT_DBG("sk %p", sk);
  
- 	/* Set default lock nesting level */
++	lock_sock(sk);
++	zapped = sock_flag(sk, SOCK_ZAPPED);
++	release_sock(sk);
++
++	if (zapped)
++		return -EINVAL;
++
+ 	if (!addr || alen < offsetofend(struct sockaddr, sa_family) ||
+ 	    addr->sa_family != AF_BLUETOOTH)
+ 		return -EINVAL;
 -- 
 2.30.2
 
