@@ -2,83 +2,147 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 152F53746C4
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 May 2021 19:53:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20C70374824
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 May 2021 20:44:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237373AbhEER14 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 May 2021 13:27:56 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60302 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238146AbhEEREt (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 May 2021 13:04:49 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E27F161C1F;
-        Wed,  5 May 2021 16:42:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620232935;
-        bh=kMl8Qpmc7YJ9wZdy6ELP5ecGOAusWj7dIVbisJZ9KMg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MCwX5nRLp9AW5WuwKZ1idLM4jiDbmOmbMvAB18P/694rgZckeYB0OyL0yvmLsGSmJ
-         Wkdequ/64sqkNa0da1g0qO0177I/n+Sd5pvEjpyN0M/IyfXRjq08FcJbr4CsOdmLdn
-         4mWk1n8mrMlKe1OvO1RYY+ERlbWfr9uOXMCslkd4J89nI9V8piDCAn29JfCeQzO/R6
-         9J/x4eHAcCTFnerXMzCqM+x4fE6mcVNE3Iz9eGpS5kLg660uqa8YVUW/uuZgcEGpIe
-         63115GivyzvnsPsBNIWyLuDIa2rzXeO59MCj4UkMgpTN6YkJka0P9u5JuZ0XadChE4
-         w1u0edv6Yl2cQ==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-        syzbot <syzbot+fadfba6a911f6bf71842@syzkaller.appspotmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 09/19] Bluetooth: initialize skb_queue_head at l2cap_chan_create()
-Date:   Wed,  5 May 2021 12:41:52 -0400
-Message-Id: <20210505164203.3464510-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210505164203.3464510-1-sashal@kernel.org>
-References: <20210505164203.3464510-1-sashal@kernel.org>
+        id S234475AbhEESpE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 May 2021 14:45:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38946 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229810AbhEESpD (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 5 May 2021 14:45:03 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4226CC061574
+        for <linux-bluetooth@vger.kernel.org>; Wed,  5 May 2021 11:44:07 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id k19so2670871pfu.5
+        for <linux-bluetooth@vger.kernel.org>; Wed, 05 May 2021 11:44:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IldoP9ZdzuRpoaqQQEjWc1taE7gjMYerrGgSFZuozmA=;
+        b=q0kmTD1LVffNhwTF0+lQjLj8ZrZ16cg3b0LNECMuXs6Q0co7ChbTl+Y/A6V+RL2fn+
+         y+nLBF3Dt52QvCO9Oix5Y9jVTbsDhuaisCNvJQbkaG5v4+MDpZE6eM3cIzvhn1UnOlBE
+         qAlUQxfV+PGMjb9NoOyPwqcJB8cg2FSVW5gNe7UqN9Z4Xu8wY0/+mNy6PXnWySya1ZCe
+         O9i5MrOTqNMuMOtUO0tVxoQyiWGjxCw53p5YvydcCIK48Pso03bz9FTNjr3vHMgRiL7H
+         IIsLBv7kPCpCJXhVi2U7ZmARGmjOrvpxQrdQKbnwLBUVMsut8CIm44AXQF0EZHLYLVR9
+         spBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IldoP9ZdzuRpoaqQQEjWc1taE7gjMYerrGgSFZuozmA=;
+        b=QAuYgpwX8dDmA30Kv87ZIjmwbxAPX0IgFuFi3dUhU9KXqhWMY2TZkgr5VMh5vzp1jU
+         DaCLAyi52iii87xxelziSx+yBW+njALRu8fG1XQzwlSqz2dofLBzSakn6gdwWHzuK9zz
+         yVG5SgkE2ivi1RyEtjxtLXNhmgqktI+aOA6lrwCFbo3QMfgYOOMvMHijnONEd1f+GsV9
+         TBggdFd0T5pWlyp8ULHsaTA0BZHb41n9d4JnrTY6iX3H+pZP6pPyGnH2h51HiFzcQaZ7
+         Wby/iec9jfV3oBHvdb+B6XqHuskmHUuCJA8CFdq5U8+XEaaN4xuLgnsqz8MqIUXS2FFg
+         sZAA==
+X-Gm-Message-State: AOAM532YCi71IWH7tdhRQkCsulZtOTk8fMsuK5csgwZet3T9Yjg94gBu
+        GcEvk77P9HN1xSWTiNVD8kyaeAprD6n1TA==
+X-Google-Smtp-Source: ABdhPJxyTGRxo53AJOu4UgLPeWpcEVmS2/CEDAQ98Qnt0P8uGOVfYkk6dVgLD4SBFfOO8fbu5b8kHQ==
+X-Received: by 2002:a63:150c:: with SMTP id v12mr328523pgl.344.1620240246682;
+        Wed, 05 May 2021 11:44:06 -0700 (PDT)
+Received: from han1-mobl3.hsd1.or.comcast.net ([2601:1c0:6a01:d830::f7ee])
+        by smtp.gmail.com with ESMTPSA id z16sm7855584pjq.42.2021.05.05.11.44.06
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 May 2021 11:44:06 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [BlueZ PATCH 1/2] gitignore: Add generated files to the ignore list
+Date:   Wed,  5 May 2021 11:44:04 -0700
+Message-Id: <20210505184405.1077111-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-[ Upstream commit be8597239379f0f53c9710dd6ab551bbf535bec6 ]
-
-syzbot is hitting "INFO: trying to register non-static key." message [1],
-for "struct l2cap_chan"->tx_q.lock spinlock is not yet initialized when
-l2cap_chan_del() is called due to e.g. timeout.
-
-Since "struct l2cap_chan"->lock mutex is initialized at l2cap_chan_create()
-immediately after "struct l2cap_chan" is allocated using kzalloc(), let's
-as well initialize "struct l2cap_chan"->{tx_q,srej_q}.lock spinlocks there.
-
-[1] https://syzkaller.appspot.com/bug?extid=fadfba6a911f6bf71842
-
-Reported-and-tested-by: syzbot <syzbot+fadfba6a911f6bf71842@syzkaller.appspotmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch adds generated files like manpages and binaries to the
+ignore list so it won't show with 'git status'.
 ---
- net/bluetooth/l2cap_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .gitignore | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 515f3e52f70a..0de77e741a78 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -434,6 +434,8 @@ struct l2cap_chan *l2cap_chan_create(void)
- 	if (!chan)
- 		return NULL;
+diff --git a/.gitignore b/.gitignore
+index f4fb5db28..9c8393a81 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -47,23 +47,33 @@ tools/avinfo
+ tools/bccmd
+ tools/hwdb
+ tools/ciptool
++tools/ciptool.1
+ tools/hciattach
++tools/hciattach.1
+ tools/hciconfig
++tools/hciconfig.1
+ tools/hcieventmask
+ tools/hcisecfilter
+ tools/hcitool
++tools/hcitool.1
+ tools/hcidump
++tools/hcidump.1
+ tools/hid2hci
++tools/hid2hci.1
+ tools/rfcomm
++tools/rfcomm.1
+ tools/l2ping
++tools/l2ping.1
+ tools/l2test
+ tools/cltest
+ tools/rctest
++tools/rctest.1
+ tools/scotest
+ tools/amptest
+ tools/oobtest
+ tools/advtest
+ tools/sdptool
++tools/sdptool.1
+ tools/avtest
+ tools/bdaddr
+ tools/bluemoon
+@@ -116,6 +126,7 @@ tools/rfcomm-tester
+ tools/bnep-tester
+ tools/userchan-tester
+ tools/btattach
++tools/btattach.1
+ tools/btconfig
+ tools/btmgmt
+ tools/btsnoop
+@@ -125,15 +136,18 @@ tools/btmon-logger
+ tools/bluetooth-logger.service
+ peripheral/btsensor
+ monitor/btmon
++monitor/btmon.1
+ emulator/btvirt
+ emulator/b1ee
+ emulator/hfp
+ client/bluetoothctl
+ tools/meshctl
+ tools/mesh-cfgclient
++tools/mesh-cfgtest
+ mesh/bluetooth-meshd
  
-+	skb_queue_head_init(&chan->tx_q);
-+	skb_queue_head_init(&chan->srej_q);
- 	mutex_init(&chan->lock);
+ src/bluetoothd.8
++src/bluetoothd.rst
+ src/bluetooth.service
+ mesh/bluetooth-mesh.service
  
- 	/* Set default lock nesting level */
+@@ -157,8 +171,6 @@ unit/test-mesh-crypto
+ unit/test-*.log
+ unit/test-*.trs
+ 
+-doc/btmon.1
+-
+ android/system-emulator
+ android/bluetoothd
+ android/avdtptest
 -- 
-2.30.2
+2.26.3
 
