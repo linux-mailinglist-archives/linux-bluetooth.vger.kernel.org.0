@@ -2,34 +2,34 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 25D223750FD
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 May 2021 10:38:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3AB73754F4
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 May 2021 15:40:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233745AbhEFIju (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 May 2021 04:39:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33004 "EHLO mail.kernel.org"
+        id S234072AbhEFNlu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 May 2021 09:41:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48104 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233734AbhEFIju (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 May 2021 04:39:50 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 41E5C613E4
-        for <linux-bluetooth@vger.kernel.org>; Thu,  6 May 2021 08:38:52 +0000 (UTC)
+        id S233853AbhEFNls (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 6 May 2021 09:41:48 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 93DAD61426
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 May 2021 13:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620290332;
-        bh=Z3Vwo/YJBcQ+rjoT1chi49AnjnbeTthHr9hHzmZMLx0=;
+        s=k20201202; t=1620308450;
+        bh=lf/2PnGwQsJY8yRyWUM3dSPX06MYM8DU6OC+l3rJRIo=;
         h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=msWWP5mhCVo5IK/B/ZW8yyqukkdusw4nqu1DBklrDuuAXtolaSVP6Ss0051M5RCkU
-         M05saKsUC76Wj1ibrWU03SG4RwlYoRpWo3dN33Zfd4e6gjhoNTeCQ2x33FG49m5JlA
-         tRqpo1eSgIohPfCQmlViHtxOFEKm5tW9izlJjT7QmJ97L4XCBjylhJzkslheh+y5zG
-         Dv6CiwkUN/acfrqeAbdwRbMACjh/2Ti0AQ+Wk6BZ/bEE2msw3pOYPvJ4aoFf+2O0mS
-         HAJS0rIbxIdUlJCKSy4WcuVaWrA/KJDP65t04e9LwcEckBN8c+fSe94ft3W+Az22P8
-         Bv80cmbwN5kew==
+        b=Fce8KBWxLYBNvjEe4Tqn5BsVHd0asEPj98lyhiYqESe6FbYfADm+saFOr+TLEOACT
+         Jwlq/7f2VXECx7dQB0NfUkstazAWopT7KLD7ZXvlGxf+CoSmbVzFa1coQluVQJgZC8
+         eQ+tVWGDZAWwYmATedL2M6dB77HyASd3AY/JOxS+xQm3lyKpaOrY3hKSSV04NxFZ7T
+         yYqSxi9/ER5f53M1EDV67yNlCDdUayAp0pktKMVR87UsptiPrFBmi5aKncvmAsUdQl
+         5guurmtvGGD6hleEM/oRi9ee9hHaF7aVZ26o5Ukv0abWRr7IpS0LlSA81SEe0dYvJD
+         N8om8aEYIdzAA==
 Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id 3E55B6129F; Thu,  6 May 2021 08:38:52 +0000 (UTC)
+        id 90BB76127C; Thu,  6 May 2021 13:40:50 +0000 (UTC)
 From:   bugzilla-daemon@bugzilla.kernel.org
 To:     linux-bluetooth@vger.kernel.org
 Subject: [Bug 60824] [PATCH][regression] Cambridge Silicon Radio, Ltd
  Bluetooth Dongle unusable
-Date:   Thu, 06 May 2021 08:38:48 +0000
+Date:   Thu, 06 May 2021 13:40:47 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -38,14 +38,14 @@ X-Bugzilla-Component: Bluetooth
 X-Bugzilla-Version: 2.5
 X-Bugzilla-Keywords: 
 X-Bugzilla-Severity: normal
-X-Bugzilla-Who: steeve.mccauley@gmail.com
+X-Bugzilla-Who: diegosiao@gmail.com
 X-Bugzilla-Status: REOPENED
 X-Bugzilla-Resolution: 
 X-Bugzilla-Priority: P1
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
 X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-60824-62941-akNtgpS5hD@https.bugzilla.kernel.org/>
+Message-ID: <bug-60824-62941-VLzJCod1HJ@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-60824-62941@https.bugzilla.kernel.org/>
 References: <bug-60824-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -59,29 +59,43 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D60824
 
---- Comment #175 from Steeve McCauley (steeve.mccauley@gmail.com) ---
-(In reply to Diego Morais from comment #174)
-> I have a CSR Dongle with the exact same problem on Debian 10. I am a new
-> linux user, so my question is how to apply the patch suggested this comme=
-nt
-> (In reply to Gustavo Padovan from comment #6)
-> > Created attachment 107379 [details]
-> > mark Delete Stored Keys as non-critical failure
+--- Comment #176 from Diego Morais (diegosiao@gmail.com) ---
+(In reply to Steeve McCauley from comment #175)
+> (In reply to Diego Morais from comment #174)
+> > I have a CSR Dongle with the exact same problem on Debian 10. I am a new
+> > linux user, so my question is how to apply the patch suggested this com=
+ment
+> > (In reply to Gustavo Padovan from comment #6)
+> > > Created attachment 107379 [details]
+> > > mark Delete Stored Keys as non-critical failure
+> > >=20
+> > > Please apply this patch and check if it works. Also capture logs and =
+send
+> > > them here.
+> > >=20
+> > > This is a modified version of a patch Johan Hedberg did some time ago.
 > >=20
-> > Please apply this patch and check if it works. Also capture logs and se=
-nd
-> > them here.
 > >=20
-> > This is a modified version of a patch Johan Hedberg did some time ago.
+> >=20
+> > Thanks
 >=20
+> Probably best to ask for debian advice in a debian forum.  I'm not a debi=
+an
+> user but I'd try updating the kernel, found this on google,
 >=20
->=20
-> Thanks
+> https://www.osradar.com/how-to-install-linux-kernel-5-10-debian-10/
 
-Probably best to ask for debian advice in a debian forum.  I'm not a debian
-user but I'd try updating the kernel, found this on google,
+Thanks for your response.
 
-https://www.osradar.com/how-to-install-linux-kernel-5-10-debian-10/
+Installed the kernel mentioned with no success.
+
+uname -r
+5.10.0-0.bpo.4-amd64
+
+I would like to try applying the patch mentioned in my last post, is it
+complicated?
+
+Thanks again!
 
 --=20
 You may reply to this email to add a comment.
