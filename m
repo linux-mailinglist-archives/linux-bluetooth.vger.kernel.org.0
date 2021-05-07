@@ -2,82 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01B88376C9A
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  8 May 2021 00:24:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24B66376C51
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  8 May 2021 00:13:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229974AbhEGWZs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 7 May 2021 18:25:48 -0400
-Received: from bosmailout03.eigbox.net ([66.96.186.3]:45669 "EHLO
-        bosmailout03.eigbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbhEGWZo (ORCPT
+        id S229542AbhEGWOq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 May 2021 18:14:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46182 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229898AbhEGWOi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 7 May 2021 18:25:44 -0400
-X-Greylist: delayed 1816 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 May 2021 18:25:34 EDT
-Received: from bosmailscan08.eigbox.net ([10.20.15.8])
-        by bosmailout03.eigbox.net with esmtp (Exim)
-        id 1lf8QM-0003Fa-7M; Fri, 07 May 2021 17:54:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=godsofu4.com; s=dkim; h=Sender:Content-Transfer-Encoding:Content-Type:
-        Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=aM9bUFGSTpfnep8zAVAJMnojqhcwpuHDFPgQnPqW4M4=; b=I+6Bb1DJY/YYTRas0wZTN+AC1D
-        vtIg40M7SDAM/b29+/wY3GjGjzug9/OzX2aPoevJgNlEKSTs0SrEPfP3WhSQM0PCLHlkQfkyX8QT9
-        UZ7TTwAz03WtyNGtE+DdqqC0pYUcPkHvqE4MDSKlo5Vm1z1vJqGpkJRtWe2MFWIr6++JBuHOfV7Fd
-        34Die1lJ1lpPfDh70Zq++IiTaMjdlcGGo7pbn4hVn1WweIC9h772TR5+6npXCISSeeyCgPsBbikdE
-        ZWIrJkpukBwvBgblKKCxDugovauKoCEDbS56mNadJP+sg7ztteNlHrnEQFJYYsCNrcdD1v8ilxnSi
-        f8nqykSw==;
-Received: from [10.115.3.32] (helo=bosimpout12)
-        by bosmailscan08.eigbox.net with esmtp (Exim)
-        id 1lf8QK-0002fP-Rn; Fri, 07 May 2021 17:54:16 -0400
-Received: from boswebmail06.eigbox.net ([10.20.16.6])
-        by bosimpout12 with 
-        id 1xuC2500D07qujN01xuFUj; Fri, 07 May 2021 17:54:16 -0400
-X-EN-SP-DIR: OUT
-X-EN-SP-SQ: 1
-Received: from [127.0.0.1] (helo=homestead)
-        by boswebmail06.eigbox.net with esmtp (Exim)
-        id 1lf8PX-0006IT-Ae; Fri, 07 May 2021 17:53:27 -0400
-Received: from [197.239.81.229]
- by emailmg.homestead.com
- with HTTP (HTTP/1.1 POST); Fri, 07 May 2021 17:53:27 -0400
+        Fri, 7 May 2021 18:14:38 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C66CC061761
+        for <linux-bluetooth@vger.kernel.org>; Fri,  7 May 2021 15:13:37 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id 82so13811951yby.7
+        for <linux-bluetooth@vger.kernel.org>; Fri, 07 May 2021 15:13:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5tP4rHvlfZR23oajz8appJQEH+NFAy+ACcrtoRe4S2U=;
+        b=bWS2QVLiR0KSr72jnPbdFB8YiuGSLg0Qk9xryx89uPd/Qgt4Yhife/5fWx82SdpayK
+         VE4VpVnns4plj1FnfCFSwmKSAO8p7687i6MqglBdZTKYYYVriLX031djL6U8VQSf+YBc
+         sexRrH8H80eBVWm66nsoiaNn8vFHuuBjmLAgwV8azkHakwwYiR5VFUroD7IV7YMJhIkw
+         r6YlTRt+oBNW42x51SVfcW5lfu3olrw/GT3VSQVN+XWk3ncXJXkzS1SgBXsvWup6CZXL
+         FP+zJmkKDT2+gqtVXgvoVB9QbtoEzq9vIpb9OX2vjB4dHFJi0+u79lEJgCAaLJ9Atl82
+         HxSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5tP4rHvlfZR23oajz8appJQEH+NFAy+ACcrtoRe4S2U=;
+        b=GGUpdpRSxy3EI4u2gzTBOVhAnpkodFjM+zMw2Yz0kv8jQqo1RsfKRiXz3iGsEFNIx+
+         taNbqqRYRT7Xhlq0lnVCC4M6Ck4x4fF+LJejCf1Gl1zSQE/CZY5n6RUoQXy0d0WnmTDZ
+         qat/u1wGXNnzDGz19aRj+L5Wf7GnIAgQdjoD61DIU57mCt5iLV+/mz+FulcN0rS4r2RW
+         RhLyTAiY4TtN5oLg3TRI6BEErXAc9XmX6d0oOTUYncf962dXzgmJrdKUfL1KBBfttUEH
+         daKyMXnjbMFJZoVddwY1vOb2aGAf0t9GkVMxpY7rdQMmRYWdM9g486FPZQaA/xHJtdM6
+         VKjA==
+X-Gm-Message-State: AOAM530FIcQ2jJc8CSo6QFsIOkRDfIHi5TDEFsWsW0QQ1YDlXhiWt/nD
+        nLYY2wT9HPK+h+nt/zw4Rm51Kf7mHnymlABqiCY=
+X-Google-Smtp-Source: ABdhPJzcfY2hvejFTadJ7Zm+Iv3T2OAHYPwor0spKwCxVB7KE7OLLczTg9YMU9po/Bq0EKLQd9EPmy5roOpgaB8Qr1M=
+X-Received: by 2002:a25:9a04:: with SMTP id x4mr580800ybn.440.1620425616752;
+ Fri, 07 May 2021 15:13:36 -0700 (PDT)
 MIME-Version: 1.0
-Date:   Fri, 07 May 2021 21:53:27 +0000
-From:   Mrs Suzara Maling Wan <fast65@godsofu4.com>
-To:     undisclosed-recipients:;
-Subject: URGENT REPLY NEEDED
-Reply-To: suzara2017malingwan@gmail.com
-Mail-Reply-To: suzara2017malingwan@gmail.com
-Message-ID: <4c6a48748f6731dac9b66cce1916443b@godsofu4.com>
-X-Sender: fast65@godsofu4.com
-User-Agent: Roundcube Webmail/1.3.14
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-EN-AuthUser: fast65@godsofu4.com
-Sender:  Mrs Suzara Maling Wan <fast65@godsofu4.com>
+References: <20210504111454.29697-1-sathish.narasimman@intel.com>
+ <CABBYNZJX+YrpFyDotc5uZUQLc5P6LiR_F-7AmOa3bPq1m97L=w@mail.gmail.com> <CE33C971-7C6F-4D1E-9031-77FE07200038@holtmann.org>
+In-Reply-To: <CE33C971-7C6F-4D1E-9031-77FE07200038@holtmann.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 7 May 2021 15:13:25 -0700
+Message-ID: <CABBYNZ+kQn-H7QSEieWdP=oTjb+m4NBP03i2VoUy5pcfx0UD8A@mail.gmail.com>
+Subject: Re: [Bluez PATCH v2] btmgmt: Fix enable adding irk when turining
+ privacy on
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Sathish Narasimman <sathish.narasimman@intel.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        Chethan T N <chethan.tumkur.narayan@intel.com>,
+        "Srivatsa, Ravishankar" <ravishankar.srivatsa@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Hi Marcel,
+
+On Fri, May 7, 2021 at 1:26 AM Marcel Holtmann <marcel@holtmann.org> wrote:
+>
+> Hi Luiz,
+>
+> >> Unable to add the IRK in btmgmt when need to be updated. The option is
+> >> enabled now.
+> >>
+> >> Signed-off-by: Sathish Narasimman <sathish.narasimman@intel.com>
+> >> ---
+> >> tools/btmgmt.c | 2 +-
+> >> 1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/tools/btmgmt.c b/tools/btmgmt.c
+> >> index 02fec1dca184..bf3b460d0f04 100644
+> >> --- a/tools/btmgmt.c
+> >> +++ b/tools/btmgmt.c
+> >> @@ -5277,7 +5277,7 @@ static const struct bt_shell_menu main_menu = {
+> >>        cmd_advertising,                "Toggle LE advertising",        },
+> >>        { "bredr",              "<on/off>",
+> >>                cmd_bredr,              "Toggle BR/EDR support",        },
+> >> -       { "privacy",            "<on/off>",
+> >> +       { "privacy",            "<on/off> [irk]",
+> >>                cmd_privacy,            "Toggle privacy support"        },
+> >
+> > I wonder why you didn't incorporate in the first parameter though
+> > given that things like privacy off [irk] makes no send, or perhaps
+> > have a dedicated command for setting the irk so it would persist
+> > between privacy on/off.
+>
+> that is not how the kernel API works. If you want to enable Privacy, you need to also provide the IRK. We just simplified the tool to use /dev/urandom in case it is not provided.
+
+Just to be clear I was suggesting to use a dedicated command for setting an irk:
+
+> irk <value>
+
+That way it is persisted, that way the tool remembers what was the
+last set irk in case privacy needs to be toggled for some reason.
 
 
-My names are Mrs Suzara Maling Wan, I am a Nationality of the Republic
-of the Philippine presently base in West Africa B/F, dealing with
-exportation of Gold, I was diagnose of blood Causal decease, and my
-doctor have announce to me that I have few days to leave due to the
-condition of my sickness.
-
-I have a desire to build an orphanage home in your country of which i
-cannot execute the project myself due to my present health condition,
-I am willing to hand over the project under your care for you to help
-me fulfill my dreams and desire of building an orphanage home in your
-country.
-
-Reply in you are will to help so that I can direct you to my bank for
-the urgent transfer of the fund/money require for the project to your
-account as I have already made the fund/money available.
-
-With kind regards
-Mrs Suzara Maling Wan
+-- 
+Luiz Augusto von Dentz
