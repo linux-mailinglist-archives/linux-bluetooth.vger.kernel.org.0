@@ -2,85 +2,82 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD087376AA1
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 May 2021 21:22:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01B88376C9A
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  8 May 2021 00:24:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229798AbhEGTXL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 7 May 2021 15:23:11 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:50911 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229748AbhEGTXL (ORCPT
+        id S229974AbhEGWZs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 May 2021 18:25:48 -0400
+Received: from bosmailout03.eigbox.net ([66.96.186.3]:45669 "EHLO
+        bosmailout03.eigbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229470AbhEGWZo (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 7 May 2021 15:23:11 -0400
-Received: from smtpclient.apple (p4fefc624.dip0.t-ipconnect.de [79.239.198.36])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 7E6F4CECE9;
-        Fri,  7 May 2021 21:30:00 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.80.0.2.43\))
-Subject: Re: [PATCH] bluetooth: fix potential gfp
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <YJVnxe2s5LWhGS6t@hovoldconsulting.com>
-Date:   Fri, 7 May 2021 21:22:09 +0200
-Cc:     Pavel Skripkin <paskripkin@gmail.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Bluetooth Kernel Mailing List 
-        <linux-bluetooth@vger.kernel.org>, linux-kernel@vger.kernel.org
+        Fri, 7 May 2021 18:25:44 -0400
+X-Greylist: delayed 1816 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 May 2021 18:25:34 EDT
+Received: from bosmailscan08.eigbox.net ([10.20.15.8])
+        by bosmailout03.eigbox.net with esmtp (Exim)
+        id 1lf8QM-0003Fa-7M; Fri, 07 May 2021 17:54:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=godsofu4.com; s=dkim; h=Sender:Content-Transfer-Encoding:Content-Type:
+        Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=aM9bUFGSTpfnep8zAVAJMnojqhcwpuHDFPgQnPqW4M4=; b=I+6Bb1DJY/YYTRas0wZTN+AC1D
+        vtIg40M7SDAM/b29+/wY3GjGjzug9/OzX2aPoevJgNlEKSTs0SrEPfP3WhSQM0PCLHlkQfkyX8QT9
+        UZ7TTwAz03WtyNGtE+DdqqC0pYUcPkHvqE4MDSKlo5Vm1z1vJqGpkJRtWe2MFWIr6++JBuHOfV7Fd
+        34Die1lJ1lpPfDh70Zq++IiTaMjdlcGGo7pbn4hVn1WweIC9h772TR5+6npXCISSeeyCgPsBbikdE
+        ZWIrJkpukBwvBgblKKCxDugovauKoCEDbS56mNadJP+sg7ztteNlHrnEQFJYYsCNrcdD1v8ilxnSi
+        f8nqykSw==;
+Received: from [10.115.3.32] (helo=bosimpout12)
+        by bosmailscan08.eigbox.net with esmtp (Exim)
+        id 1lf8QK-0002fP-Rn; Fri, 07 May 2021 17:54:16 -0400
+Received: from boswebmail06.eigbox.net ([10.20.16.6])
+        by bosimpout12 with 
+        id 1xuC2500D07qujN01xuFUj; Fri, 07 May 2021 17:54:16 -0400
+X-EN-SP-DIR: OUT
+X-EN-SP-SQ: 1
+Received: from [127.0.0.1] (helo=homestead)
+        by boswebmail06.eigbox.net with esmtp (Exim)
+        id 1lf8PX-0006IT-Ae; Fri, 07 May 2021 17:53:27 -0400
+Received: from [197.239.81.229]
+ by emailmg.homestead.com
+ with HTTP (HTTP/1.1 POST); Fri, 07 May 2021 17:53:27 -0400
+MIME-Version: 1.0
+Date:   Fri, 07 May 2021 21:53:27 +0000
+From:   Mrs Suzara Maling Wan <fast65@godsofu4.com>
+To:     undisclosed-recipients:;
+Subject: URGENT REPLY NEEDED
+Reply-To: suzara2017malingwan@gmail.com
+Mail-Reply-To: suzara2017malingwan@gmail.com
+Message-ID: <4c6a48748f6731dac9b66cce1916443b@godsofu4.com>
+X-Sender: fast65@godsofu4.com
+User-Agent: Roundcube Webmail/1.3.14
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <C8DBF891-99FF-4B21-A7EA-57C07DCF1DFF@holtmann.org>
-References: <20210501150445.4055-1-paskripkin@gmail.com>
- <9A08CBDA-3501-48F6-9F7A-60958C5CF888@holtmann.org>
- <YJU8iP+O9aSYwYp/@hovoldconsulting.com>
- <CDE30B55-E91B-4513-80E4-2198F8A32217@holtmann.org>
- <YJVdJEMKz6YcnwOW@hovoldconsulting.com>
- <BFCF660F-B919-47EB-874D-5568E41927C6@holtmann.org>
- <YJVnxe2s5LWhGS6t@hovoldconsulting.com>
-To:     Johan Hovold <johan@kernel.org>
-X-Mailer: Apple Mail (2.3654.80.0.2.43)
+X-EN-AuthUser: fast65@godsofu4.com
+Sender:  Mrs Suzara Maling Wan <fast65@godsofu4.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Johan,
 
->>>>>>> In qca_power_shutdown() qcadev local variable is
->>>>>>> initialized by hu->serdev.dev private data, but
->>>>>>> hu->serdev can be NULL and there is a check for it.
->>>>>>> 
->>>>>>> Since, qcadev is not used before
->>>>>>> 
->>>>>>> 	if (!hu->serdev)
->>>>>>> 		return;
->>>>>>> 
->>>>>>> we can move its initialization after this "if" to
->>>>>>> prevent gfp.
->>>>>>> 
->>>>>>> Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
->>>>>>> ---
->>>>>>> drivers/bluetooth/hci_qca.c | 4 ++--
->>>>>>> 1 file changed, 2 insertions(+), 2 deletions(-)
->>>>>> 
->>>>>> patch has been applied to bluetooth-next tree.
->>>>> 
->>>>> Why did you pick the v1 when it is clear from thread that a v2 has been
->>>>> posted?
->>>> 
->>>> because I only saw that email after I applied the patch and the v2 is
->>>> nowhere in sight as it seems. If it shows up, I replace this one then.
->>> 
->>> Here it is
->>> 
->>> 	https://lore.kernel.org/lkml/20210503100605.5223-1-paskripkin@gmail.com/
->> 
->> seems to have missed my inbox. Fixed now.
-> 
-> Would you mind adding my Reviewed-by tag from the reply to that patch as
-> well?
 
-sure thing.
+My names are Mrs Suzara Maling Wan, I am a Nationality of the Republic
+of the Philippine presently base in West Africa B/F, dealing with
+exportation of Gold, I was diagnose of blood Causal decease, and my
+doctor have announce to me that I have few days to leave due to the
+condition of my sickness.
 
-Regards
+I have a desire to build an orphanage home in your country of which i
+cannot execute the project myself due to my present health condition,
+I am willing to hand over the project under your care for you to help
+me fulfill my dreams and desire of building an orphanage home in your
+country.
 
-Marcel
+Reply in you are will to help so that I can direct you to my bank for
+the urgent transfer of the fund/money require for the project to your
+account as I have already made the fund/money available.
 
+With kind regards
+Mrs Suzara Maling Wan
