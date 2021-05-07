@@ -2,163 +2,371 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97EA5376424
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 May 2021 12:59:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DCA637648C
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 May 2021 13:38:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235578AbhEGLAl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 7 May 2021 07:00:41 -0400
-Received: from mga04.intel.com ([192.55.52.120]:17577 "EHLO mga04.intel.com"
+        id S234661AbhEGLjl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 May 2021 07:39:41 -0400
+Received: from mga04.intel.com ([192.55.52.120]:19990 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230311AbhEGLAl (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 7 May 2021 07:00:41 -0400
-IronPort-SDR: Q+Q0t3BrgdDvz/eQLohX4hBH0N/KfxJsInxNEmD5z4RN+zTNHBVE915VIp8ZEuSLoCuAc/kZ6c
- Nkr0Syy/t8Sw==
-X-IronPort-AV: E=McAfee;i="6200,9189,9976"; a="196687016"
+        id S234181AbhEGLjj (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 7 May 2021 07:39:39 -0400
+IronPort-SDR: KvSrOFWZj1TRTgTzwEo2jfLky2hA3tyOscGySx1t8opjRw9h9aulcXqUtL2/92XXQsemD85xdg
+ cmrZV2Tlg+5A==
+X-IronPort-AV: E=McAfee;i="6200,9189,9976"; a="196693072"
 X-IronPort-AV: E=Sophos;i="5.82,280,1613462400"; 
-   d="scan'208";a="196687016"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2021 03:59:39 -0700
-IronPort-SDR: e4QkbdzvynIxrcEwOBgrKtG/K8sOhz2T76WX7Ibw9DXn2JIh/Lm2cGytffKSlOLcLqspVFc7dq
- BcfoBJOoaptQ==
+   d="scan'208";a="196693072"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2021 04:38:38 -0700
+IronPort-SDR: BUaO+38j/V924ZY07SptmjIwK4UVAShQwrLhCvjVU2LPNU2fdvSzOxfolMdoQVl+rYCcXmtCh1
+ +4o8al6VT1gg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.82,280,1613462400"; 
-   d="scan'208";a="389994119"
-Received: from orsmsx604.amr.corp.intel.com ([10.22.229.17])
-  by orsmga003.jf.intel.com with ESMTP; 07 May 2021 03:59:39 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX604.amr.corp.intel.com (10.22.229.17) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Fri, 7 May 2021 03:59:38 -0700
-Received: from orsmsx604.amr.corp.intel.com (10.22.229.17) by
- ORSMSX610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Fri, 7 May 2021 03:59:38 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx604.amr.corp.intel.com (10.22.229.17) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
- via Frontend Transport; Fri, 7 May 2021 03:59:38 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.102)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2106.2; Fri, 7 May 2021 03:59:38 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=P30uU0vbmmNalajE/Ri3Url3OLGvJWIEdbij/49l2HRri8zAEMeswM1tgPyhjum9emXzxKiXhXY+CKE8qq2ZrjGnjIboLJPdWCaPKGCZiuVlx7aRaL5RTw8CloyolVn3vpl3+/SkC/ZRLt4lV85h5xqvC5hUu6Qu2ONVZ6aSnWlNVyVYV4RXhOkoFZff1A1huZphuMFeni+dhdnq+Z9nME5cPani2NYAP1DEGU0oyVnrTP2EfmYVXHJOdofhodnVvPEFtqV/ks95rgyIE7Cx5kd+VkFEvR1i09bEnB3iw5ygb5LxsWuBG9a1EPoDC1paNE0sdklb23CPXu+2QiBRjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E/EewB8OfKARN+gIro9zqmEXVHElwyTfHAGV70CBpoM=;
- b=nLEgs9hzCrHHrLrpsmS/jkPlBUOQ+dj9UkwTL2GStmTCdbh6D17FygosXU1TG5j5DLnZ457iOmn+8bLLtjoOXK0xW0erBlDtdBF8Jn49fIattJFQAKhxEtm4LpA1+Sym6DRafi2t+MQwyY2zXvTvSkP4RYEGi6pLsaNaVI8oFsSspnrFbAyuygbBbZ6Lak0cga9kapvzoWyxU0F3IeGOjq0tJyd+Rfiri+499GqNEu6Dvcw1LNJpzKZlSq21lnHGxhSjfvkvLMdJCAvmenjmlnY85G6MVdNAFgoeDDN+Pb7ZUYyM3GGfrftpYS1+bMC0ypsJ9x4oS61TY8Lof3nBcw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E/EewB8OfKARN+gIro9zqmEXVHElwyTfHAGV70CBpoM=;
- b=xWx35yUeW4QxWdKVzrtR5fPwUG0BONFGUlTyJywE3FGuABtcsjCMecSyvZY7wcPQ8m04/LV+IzTEZeF1opWyhmbylzuDp74jNMBo66y0/8i59sqkreB73ueoUkjJIxoSrPBTHP/cEgPCV0ysBuo5I3kQAARFq4bH8XYW3QT3qZc=
-Received: from DM8PR11MB5573.namprd11.prod.outlook.com (2603:10b6:8:3b::7) by
- DM8PR11MB5655.namprd11.prod.outlook.com (2603:10b6:8:28::10) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4108.25; Fri, 7 May 2021 10:59:37 +0000
-Received: from DM8PR11MB5573.namprd11.prod.outlook.com
- ([fe80::38f3:7a5:2cec:8ff7]) by DM8PR11MB5573.namprd11.prod.outlook.com
- ([fe80::38f3:7a5:2cec:8ff7%5]) with mapi id 15.20.4108.029; Fri, 7 May 2021
- 10:59:37 +0000
-From:   "K, Kiran" <kiran.k@intel.com>
-To:     Marcel Holtmann <marcel@holtmann.org>
-CC:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "Tumkur Narayan, Chethan" <chethan.tumkur.narayan@intel.com>,
-        "Srivatsa, Ravishankar" <ravishankar.srivatsa@intel.com>
-Subject: RE: [PATCH v6 2/2] Bluetooth: Add support for Read Local Supported
- Codecs V2
-Thread-Topic: [PATCH v6 2/2] Bluetooth: Add support for Read Local Supported
- Codecs V2
-Thread-Index: AQHXP076uCYeIj+T+0ycBheb+jxI1KrXureAgAAmMIA=
-Date:   Fri, 7 May 2021 10:59:36 +0000
-Message-ID: <DM8PR11MB5573B86EFD008E257C7ABCC9F5579@DM8PR11MB5573.namprd11.prod.outlook.com>
-References: <20210502123442.19483-1-kiran.k@intel.com>
- <20210502123442.19483-2-kiran.k@intel.com>
- <D241B632-E9EC-4D75-B7D4-48A710D8772E@holtmann.org>
-In-Reply-To: <D241B632-E9EC-4D75-B7D4-48A710D8772E@holtmann.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-reaction: no-action
-dlp-version: 11.5.1.3
-dlp-product: dlpe-windows
-authentication-results: holtmann.org; dkim=none (message not signed)
- header.d=none;holtmann.org; dmarc=none action=none header.from=intel.com;
-x-originating-ip: [2405:201:d012:c812:d91c:4ca7:faa4:ba4b]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: f3be03ae-941b-4c46-358a-08d911473479
-x-ms-traffictypediagnostic: DM8PR11MB5655:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM8PR11MB5655013BE1FA8DA9131B1F1BF5579@DM8PR11MB5655.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: EcLen0bSFILK4jtjQ3GXSx3kgt7wk+7YGpv38pIhu+fUd9KWPAK+S1qR6RqXOG/Jn6ykBs+oRDQSmQSy7vRefBzqjy7hhwv76CCnPEkJ/ReFrbhS/pmKwpvJMiwE9B+uH6oSvzXVMtI/JiE6VAdNhJd2L9bI3lpHPmGsfNzU6Nprm62gM1G7ZslZgyoqyvnfnRMeq+FUFT4RyUgz9Od1ap/wNlgEV/aRkpTulbesLMzvyppKs7ald23yX25w0Mk9NScx9v0XfHUeSDaOwCQ/rG92vM9lzgy3JrbxulI/ehYt1LLyffrnxIZ8ODKdmZfg5S8fzmMfvDsSXZDDd1wBelC09E1hm+ShSghDPzD7/SUZJhegIWPsuOsZg+RJG9S4GS1b2mnZijv3SoF8JFCsTc4OnESi7AIM3de5DPZ+du0NKyONjAqqRUK/+cTOMkoqv7uIhYfjTGOZ/rkZKjJDTbzwAj1Eu5Kkke322hS8zCHPI1DiBz8+jvCp6SMTrDwePUfA14vxuBfTO6XTFI+h7IopEr9Q6arhoH2oFNfC5D0sgdqUq8FLW6CoArMzDXX/kU1se31iM0ft9X16Cm33eQuMzDiaYoIE99BMuLURBK4=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR11MB5573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(346002)(396003)(39860400002)(376002)(366004)(136003)(66446008)(122000001)(64756008)(38100700002)(8676002)(5660300002)(55016002)(4744005)(76116006)(6916009)(54906003)(186003)(6506007)(8936002)(86362001)(66946007)(66476007)(4326008)(478600001)(33656002)(66556008)(52536014)(71200400001)(7696005)(9686003)(2906002)(83380400001)(316002)(107886003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?utf-8?B?TnJtT3RUMUo1UHNXZHJiRG1LWitSaVdEd3dWN2NvYWpVMU5WMTVGY1VUc2Jw?=
- =?utf-8?B?L1dLemt1WjVybzU3aUZZcmZINWllVWEvbVZTMzYydzd2TUg3S0xGakRwL2x3?=
- =?utf-8?B?Tm5rOWRwSis1dWFlS25GblpTdFUzM2ZYRHpmUko4bW9aSDh4NWpyQ2RrUkQ3?=
- =?utf-8?B?b0xSeVJNOGN4a3VHZmhpeW0zNW5tc1R3ZnU2L1BZZXV3aTZVT2tld3RZUFVE?=
- =?utf-8?B?UWErRmo5STJvdllIR2VPK0VjaVdrQnljd3dSa09mU3ZKWERXMHEySEgzRm9J?=
- =?utf-8?B?MGcrNFB3YmdVdTFTUUo0S0RMUlVZODA5QlBXQ3N3cUtDMSthaldwdGVIV0NT?=
- =?utf-8?B?c0lBcUt0aXNJMmxnUmFsc2RheWdTS2FwUDRVWGZpL25MT3Axek03WkxvZkFZ?=
- =?utf-8?B?Wmd1M05qMVkrbzh0Z1pmQ3ZTMHhsRDRQSEkzVWNpQzNUZXFzTW1WL1BtaFJ4?=
- =?utf-8?B?R1VHdHAwNGt6SExKL0tQY0p1ejdES0J5UVZtU2FTeERuZVJJVzkvK2V4SENl?=
- =?utf-8?B?TXhmQlRaNGxkZnZFL3dWOTJnWVVJdHdDR2k4bWd5VVVlU1dnY2NyRXFXQkor?=
- =?utf-8?B?WG1hRldpMTFRcTFEcjRVNHJKb2ZiOThKMXdmT2JSdEN6eFNWclVZTys4Q3o5?=
- =?utf-8?B?bHp2MGxRQStVb0VtYm5TaTlUVkFEK1VWc09wT1REalRDdTduWlZZSk5yRmtM?=
- =?utf-8?B?bFJhSGhmaWZybXNreUc4a2JPWHg3MFRkT2I2MG9OY2YyN09mejlNemRsZnVL?=
- =?utf-8?B?YTJlTTFTQWppSUZscXZtTUtqYjRjSGlDREIwQVpIMGlFVisrNzA4blI0bzcw?=
- =?utf-8?B?UlhteEptVzdiUlBrMDAzV3lIK2diU1J5TmhEaERVOVR1alVrSGVFSjdTMlBl?=
- =?utf-8?B?bnZ2ZW05TlhPNXlFOGpBL2hjaHh0WWw1NDFDSHVma3lhQ1JyckdQeExDa2E1?=
- =?utf-8?B?byt2Z21WRVYzcjlRTzJLaTF3ZFZLSEdyNTR3eFNXTFUrM2RjNElJWXdLRGo3?=
- =?utf-8?B?YWF6REdHMVNYZzBCc0R5V25tTnBJdjZMbE5HR1IxS0FVYkpMNWJvZmRBS2RP?=
- =?utf-8?B?anZ1WFFjaGdrYTBWVW84YmxQQzJFRkhvSEJOeWhUbFRpNFk5bDNyK2ZneGJT?=
- =?utf-8?B?eEw0SmFXMEFzWnB4cUVXQnZKbTh6VFc5VVFiQ2lXREZ6MitXMjBjZzBjQk9p?=
- =?utf-8?B?TzY1Mkxmd3U5S21ZZXJuMTJVRG5kT3lTMGJvVmNMMEx2NTlRNVBrejh3bmtP?=
- =?utf-8?B?N21iR2l6ZW8xQ0xZRnZpN2ZLclJRRXJuN3lRMlVzVExoRk1tdmlnSmlEWUtM?=
- =?utf-8?B?dmlOOVFHeHJJYmtTZDc2aS9NekREVExtWGpUdUNKVmtQeFpLMHo0NGp2MmpR?=
- =?utf-8?B?ck00TGNmSDZSdzYwQXh0RFlWcGVmZElLanREOS9qaldCSU5lYitGaTVITjgv?=
- =?utf-8?B?bUdBQnRzUUh5K1dzR2RhUWRKME1uMlh1bFQ4aFpJT0pyVXBDVVUveUVKaG9t?=
- =?utf-8?B?UWJmRlBYNmxUWDh1OW55bEJtQkpHWmYzVTRaWVQyUEo1QWZ5TE9ZQ3BPS2h2?=
- =?utf-8?B?cEpnOXNMZFhTc0E3RmZodzVjM0tFMDl3bnczZEZHQURSMmdqTjNlZ1M0ekNz?=
- =?utf-8?B?Q0NEdDY2ZGlBMkw1em5GREt2c0FGK3A3NVFidzkwRTcybUNSZWtDYytVelFM?=
- =?utf-8?B?UFBsdUs3LzNEUEJqTmJkZkpGemNhbkMzRVFmbGtVR1RNMmJsaDVHdFN2MVpW?=
- =?utf-8?B?Q3VzTERoT24vdDFWWW8yQWZFR2VTSVR0dEkrajd1bWlqemJ1Tm1selFuL1lh?=
- =?utf-8?B?UDVrWU1sa281cXZPbjk1ckRkMjRTcWZVZHdPR0pQOCtQbDVvTVYzQnFVTEFk?=
- =?utf-8?Q?wYgw+6o+58/AV?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR11MB5573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f3be03ae-941b-4c46-358a-08d911473479
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2021 10:59:36.8463
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CfpJcOGyinlHvCyqXF5fbqpwKgT7IdxusP3behWH8oCWHXOyd/GVpWbpiD8IJValZHliFksdY7JuUFBJb3OxMA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR11MB5655
-X-OriginatorOrg: intel.com
+   d="scan'208";a="407405303"
+Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
+  by orsmga002.jf.intel.com with ESMTP; 07 May 2021 04:38:36 -0700
+From:   Kiran K <kiran.k@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Kiran K <kiran.k@intel.com>,
+        Chethan T N <chethan.tumkur.narayan@intel.com>,
+        Srivatsa Ravishankar <ravishankar.srivatsa@intel.com>
+Subject: [PATCH v7 1/2] Bluetooth: enumerate local supported codec and cache details
+Date:   Fri,  7 May 2021 17:12:29 +0530
+Message-Id: <20210507114230.22919-1-kiran.k@intel.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-SGkgTWFyY2VsLA0KDQo+ID4gKw0KPiA+IHN0YXRpYyB2b2lkIGhjaV9pbml0NV9yZXEoc3RydWN0
-IGhjaV9kZXYgKmhkZXYpIHsNCj4gPiAJLyogUmVhZCBsb2NhbCBjb2RlYyBsaXN0IGlmIHRoZSBI
-Q0kgY29tbWFuZCBpcyBzdXBwb3J0ZWQgKi8NCj4gPiAtCWlmIChoZGV2LT5jb21tYW5kc1syOV0g
-JiAweDIwKQ0KPiA+ICsJaWYgKGhkZXYtPmNvbW1hbmRzWzQ1XSAmIDB4MDQpDQo+ID4gKwkJaGNp
-X3JlYWRfc3VwcG9ydGVkX2NvZGVjc192MihoZGV2KTsNCj4gPiArCWVsc2UgaWYgKGhkZXYtPmNv
-bW1hbmRzWzI5XSAmIDB4MjApDQo+ID4gCQloY2lfcmVhZF9zdXBwb3J0ZWRfY29kZWNzKGhkZXYp
-Ow0KPiA+IH0NCj4gDQo+IG5vdyBJIHNlZSB3aGF0IHlvdSBhcmUgZG9pbmcgaGVyZS4gRG9u4oCZ
-dCB1c2UgdGhlIG5hbWUgaGNpX2luaXQ1X3JlcSBzaW5jZQ0KPiB0aGF0IGlzIG1pc2xlYWRpbmcu
-IEp1c3QgcHV0IHRoaXMgcmlnaHQgaW50byBpbml0IG1haW4gZnVuY3Rpb24uIE5vIG5lZWQgdG8N
-Cj4gb2JzdHJ1Y3QgaXQuDQoNCkkgd2lsbCBmaXggIGFuZCBzZW5kIHVwZGF0ZWQgdmVyc2lvbi4g
-VGhhbmtzLg0KPiANCj4gUmVnYXJkcw0KPiANCj4gTWFyY2VsDQoNClJlZ2FyZHMsDQpLaXJhbg0K
-DQoNCg==
+Move reading of supported local codecs into a separate init function,
+query codecs capabilities and cache the data
+
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
+Signed-off-by: Srivatsa Ravishankar <ravishankar.srivatsa@intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+---
+* changes in v7:
+  - keep codec enumeration call in hci_init instead of having a separate
+    function
+  - Remove unused bitmasks defined for LE transports
+
+* changes  in v6:
+  - fix compiler warning reported for ARCH=arc
+
+* changes in v5:
+  - fix review comments
+  - move code used to read standard/vendor codecs caps into single function
+
+* changes in v4:
+  - convert  reading of codecs and codecs caps calls from async to sync
+
+* changes in v3
+  move codec enumeration into a new init function
+
+* changes in v2
+  add skb length check before accessing data
+
+ include/net/bluetooth/hci.h      |  38 +++++++
+ include/net/bluetooth/hci_core.h |  14 +++
+ net/bluetooth/hci_core.c         | 163 ++++++++++++++++++++++++++++++-
+ 3 files changed, 211 insertions(+), 4 deletions(-)
+
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index c4b0650fb9ae..901603e8b4ed 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -1307,6 +1307,26 @@ struct hci_rp_read_data_block_size {
+ } __packed;
+ 
+ #define HCI_OP_READ_LOCAL_CODECS	0x100b
++struct hci_standard_codecs {
++	__u8	num;
++	__u8	codec[];
++} __packed;
++
++struct hci_vendor_codec {
++	__le16	company_id;
++	__le16	codec_id;
++} __packed;
++
++struct hci_vendor_codecs {
++	__u8	num;
++	struct hci_vendor_codec codec[];
++} __packed;
++
++struct hci_rp_read_local_supported_codecs {
++	__u8	status;
++	struct hci_standard_codecs std_codecs;
++	struct hci_vendor_codecs vendor_codecs;
++} __packed;
+ 
+ #define HCI_OP_READ_LOCAL_PAIRING_OPTS	0x100c
+ struct hci_rp_read_local_pairing_opts {
+@@ -1315,6 +1335,24 @@ struct hci_rp_read_local_pairing_opts {
+ 	__u8     max_key_size;
+ } __packed;
+ 
++#define HCI_OP_READ_LOCAL_CODEC_CAPS	0x100e
++struct hci_op_read_local_codec_caps {
++	__u8	codec_id[5];
++	__u8	transport;
++	__u8	direction;
++} __packed;
++
++struct hci_codec_caps {
++	__u8	len;
++	__u8	caps[];
++} __packed;
++
++struct hci_rp_read_local_codec_caps {
++	__u8	status;
++	__u8	num_caps;
++	struct hci_codec_caps caps[];
++} __packed;
++
+ #define HCI_OP_READ_PAGE_SCAN_ACTIVITY	0x0c1b
+ struct hci_rp_read_page_scan_activity {
+ 	__u8     status;
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 43b08bebae74..d6d0a535a82a 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -131,6 +131,14 @@ struct bdaddr_list {
+ 	u8 bdaddr_type;
+ };
+ 
++struct codec_list {
++	struct list_head list;
++	u8	transport;
++	u8	codec_id[5];
++	u8	num_caps;
++	struct hci_codec_caps caps[];
++};
++
+ struct bdaddr_list_with_irk {
+ 	struct list_head list;
+ 	bdaddr_t bdaddr;
+@@ -535,6 +543,7 @@ struct hci_dev {
+ 	struct list_head	pend_le_conns;
+ 	struct list_head	pend_le_reports;
+ 	struct list_head	blocked_keys;
++	struct list_head	local_codecs;
+ 
+ 	struct hci_dev_stats	stat;
+ 
+@@ -1849,4 +1858,9 @@ void hci_copy_identity_address(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ #define SCO_AIRMODE_CVSD       0x0000
+ #define SCO_AIRMODE_TRANSP     0x0003
+ 
++#define LOCAL_CODEC_ACL_MASK	BIT(0)
++#define LOCAL_CODEC_SCO_MASK	BIT(1)
++
++#define TRANSPORT_TYPE_MAX	0x04
++
+ #endif /* __HCI_CORE_H */
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 7baf93eda936..50947a1ed6a9 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -838,10 +838,6 @@ static int hci_init4_req(struct hci_request *req, unsigned long opt)
+ 	if (hdev->commands[22] & 0x04)
+ 		hci_set_event_mask_page_2(req);
+ 
+-	/* Read local codec list if the HCI command is supported */
+-	if (hdev->commands[29] & 0x20)
+-		hci_req_add(req, HCI_OP_READ_LOCAL_CODECS, 0, NULL);
+-
+ 	/* Read local pairing options if the HCI command is supported */
+ 	if (hdev->commands[41] & 0x08)
+ 		hci_req_add(req, HCI_OP_READ_LOCAL_PAIRING_OPTS, 0, NULL);
+@@ -907,6 +903,159 @@ static int hci_init4_req(struct hci_request *req, unsigned long opt)
+ 	return 0;
+ }
+ 
++static int hci_codec_list_add(struct list_head *list,
++			      struct hci_rp_read_local_codec_caps *rp,
++			      __u32 len,
++			      struct hci_op_read_local_codec_caps *sent)
++{
++	struct codec_list *entry;
++
++	entry = kzalloc(sizeof(*entry) + len, GFP_KERNEL);
++	if (!entry)
++		return -ENOMEM;
++
++	memcpy(entry->codec_id, sent->codec_id, 5);
++	entry->transport = sent->transport;
++	entry->num_caps = rp->num_caps;
++	if (rp->num_caps)
++		memcpy(entry->caps, rp->caps, len);
++	list_add(&entry->list, list);
++
++	return 0;
++}
++
++static void hci_codec_list_clear(struct list_head *codec_list)
++{
++	struct codec_list *c, *n;
++
++	list_for_each_entry_safe(c, n, codec_list, list) {
++		list_del(&c->list);
++		kfree(c);
++	}
++}
++
++static void hci_read_codec_capabilities(struct hci_dev *hdev, void *codec_id,
++					__u8 transport, bool is_vendor_codec)
++{
++	struct hci_op_read_local_codec_caps caps;
++	__u8 i;
++
++	memset(&caps, 0, sizeof(caps));
++
++	if (is_vendor_codec) {
++		caps.codec_id[0] = 0xFF;
++		memcpy(&caps.codec_id[1], codec_id, 4);
++	} else {
++		memcpy(caps.codec_id, codec_id, 1);
++	}
++
++	caps.direction = 0x00;
++
++	for (i = 0; i < TRANSPORT_TYPE_MAX; i++) {
++		if (transport & BIT(i)) {
++			struct hci_rp_read_local_codec_caps *rp;
++			struct sk_buff *skb;
++
++			caps.transport = i;
++			skb = __hci_cmd_sync(hdev, HCI_OP_READ_LOCAL_CODEC_CAPS,
++					     sizeof(caps), &caps,
++					     HCI_CMD_TIMEOUT);
++			if (IS_ERR(skb)) {
++				bt_dev_err(hdev, "Failed to read codec capabilities (%ld)",
++					   PTR_ERR(skb));
++				continue;
++			}
++
++			if (skb->len < sizeof(*rp))
++				goto error;
++
++			rp = (void *)skb->data;
++
++			if (rp->status)
++				goto error;
++
++			hci_dev_lock(hdev);
++			hci_codec_list_add(&hdev->local_codecs, rp, skb->len - 2,
++					   &caps);
++			hci_dev_unlock(hdev);
++error:
++			kfree_skb(skb);
++		}
++	}
++}
++
++static void hci_codec_list_parse(struct hci_dev *hdev, __u8 num_codecs,
++				 void *codec_list, bool is_vendor_codec)
++{
++	__u8 i;
++
++	for (i = 0; i < num_codecs; i++) {
++		if (!is_vendor_codec) {
++			struct hci_standard_codecs *codecs = codec_list;
++
++			hci_read_codec_capabilities(hdev, &codecs->codec[i],
++						    LOCAL_CODEC_ACL_MASK,
++						    is_vendor_codec);
++		} else {
++			struct hci_vendor_codecs *codecs = codec_list;
++
++			hci_read_codec_capabilities(hdev, &codecs->codec[i],
++						    LOCAL_CODEC_ACL_MASK,
++						    is_vendor_codec);
++		}
++	}
++}
++
++static void hci_read_supported_codecs(struct hci_dev *hdev)
++{
++	struct sk_buff *skb;
++	struct hci_rp_read_local_supported_codecs *rp;
++	struct hci_standard_codecs *std_codecs;
++	struct hci_vendor_codecs *vendor_codecs;
++
++	skb = __hci_cmd_sync(hdev, HCI_OP_READ_LOCAL_CODECS, 0, NULL,
++			     HCI_CMD_TIMEOUT);
++
++	if (IS_ERR(skb)) {
++		bt_dev_err(hdev, "Failed to read local supported codecs (%ld)",
++			   PTR_ERR(skb));
++		return;
++	}
++
++	if (skb->len < sizeof(*rp))
++		goto error;
++
++	rp = (void *)skb->data;
++
++	if (rp->status)
++		goto error;
++
++	skb_pull(skb, sizeof(rp->status));
++
++	std_codecs = (void *)skb->data;
++
++	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num)
++	    + sizeof(std_codecs->num))
++		goto error;
++
++	hci_codec_list_parse(hdev, std_codecs->num, std_codecs, false);
++
++	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num)
++		 + sizeof(std_codecs->num));
++
++	vendor_codecs = (void *)skb->data;
++
++	if (skb->len <
++	    flex_array_size(vendor_codecs, codec, vendor_codecs->num)
++	    + sizeof(vendor_codecs->num))
++		goto error;
++
++	hci_codec_list_parse(hdev, vendor_codecs->num, vendor_codecs, true);
++
++error:
++	kfree_skb(skb);
++}
++
+ static int __hci_init(struct hci_dev *hdev)
+ {
+ 	int err;
+@@ -937,6 +1086,10 @@ static int __hci_init(struct hci_dev *hdev)
+ 	if (err < 0)
+ 		return err;
+ 
++	/* Read local codec list if the HCI command is supported */
++	if (hdev->commands[29] & 0x20)
++		hci_read_supported_codecs(hdev);
++
+ 	/* This function is only called when the controller is actually in
+ 	 * configured state. When the controller is marked as unconfigured,
+ 	 * this initialization procedure is not run.
+@@ -1836,6 +1989,7 @@ int hci_dev_do_close(struct hci_dev *hdev)
+ 	memset(hdev->eir, 0, sizeof(hdev->eir));
+ 	memset(hdev->dev_class, 0, sizeof(hdev->dev_class));
+ 	bacpy(&hdev->random_addr, BDADDR_ANY);
++	hci_codec_list_clear(&hdev->local_codecs);
+ 
+ 	hci_req_sync_unlock(hdev);
+ 
+@@ -3837,6 +3991,7 @@ struct hci_dev *hci_alloc_dev(void)
+ 	INIT_LIST_HEAD(&hdev->conn_hash.list);
+ 	INIT_LIST_HEAD(&hdev->adv_instances);
+ 	INIT_LIST_HEAD(&hdev->blocked_keys);
++	INIT_LIST_HEAD(&hdev->local_codecs);
+ 
+ 	INIT_WORK(&hdev->rx_work, hci_rx_work);
+ 	INIT_WORK(&hdev->cmd_work, hci_cmd_work);
+-- 
+2.17.1
+
