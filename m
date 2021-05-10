@@ -2,60 +2,111 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D43F379322
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 May 2021 17:53:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A47F9379518
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 May 2021 19:10:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231767AbhEJPyU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 10 May 2021 11:54:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54230 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231752AbhEJPyS (ORCPT
+        id S232417AbhEJRLm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 10 May 2021 13:11:42 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:63378 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232269AbhEJRLi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 10 May 2021 11:54:18 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E0ABC061574
-        for <linux-bluetooth@vger.kernel.org>; Mon, 10 May 2021 08:53:12 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id m190so13650016pga.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 10 May 2021 08:53:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=NLbq5sm7qnQbZPjjI4rxXzEPDhmzU/W/bodPkyrwn+E=;
-        b=MscRC9A/Y9JcFh24ai2z1RoyQ3isg18sgBv+XHuCMIBFZblKvADcVJjKWMO1SE0G/t
-         /WyR2AnSYEbvfmCxSvv5zY2eRqF9wu3oLHfwx4dMjxiYnePU5f3P4x/vgHi3hOM7FHvQ
-         YoABRMotX3BobMyt4ql3lYx6+D6QM91SflfZQAaaCD2bWYM/WjDr4bMqbdZfshpI6Hhn
-         /ql+vPPNbh3Erk8YtFglvpw8aKgoDzUUKY9hC4H7aqu+krbPon2ZvDRF9FHXQntWZLB3
-         uIUkd5QobcQDcZMTVmZBiLvbQJ9iTCU/HjiKkM0rDZpIrbBqKOQWM3mvpv9E0+9y6oer
-         gwyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=NLbq5sm7qnQbZPjjI4rxXzEPDhmzU/W/bodPkyrwn+E=;
-        b=AXfIxDC7zdeeCYomL+1WslqHnkuXJ24XnK4yFRldhW1jp6Z/cRz/xx9vZQAxFxjMAa
-         TnS/KA4yz0bfMCr55BIlmBGCZyh3bgaGEmfq4mQ1zuq4atNJNcTHi1eZowJYUzGGUyUK
-         svZj1duBqBtQskgDgxNOcFuG/IIYnHbomJKxA4q76IyJCznZfYVyu61Lt7AvWkMypft8
-         WCRMeH7dwYY47QRtmgJdKnjlmLh6HMRlXb1VDBqqpBb0A2LYiKBwWygLlx9eIb0frjK4
-         KMuZ0juFt7Cgx8QFSNsB4iDzceTY8xxKLDutwoI/XoC6S/fWeXsHvsuloiwuKpFOMSUC
-         s7ng==
-X-Gm-Message-State: AOAM531jKqsy6Fi3Phq5HfHdsIV/cdWaXImFjFsH4d3jWynK7xQ6602s
-        zGtMl4lnYKchT6b6tD0/1noYKNhxT1ExbVM8AMI=
-X-Google-Smtp-Source: ABdhPJzJtZBgyI83IAAB7mAIIZC6DkFd4WBNeNVsysbKUu96zP5KUqytlzsDgAl47qt7llAWQ8Q7uV3od0+Bp7+s7zo=
-X-Received: by 2002:a63:6f81:: with SMTP id k123mr25585284pgc.230.1620661991819;
- Mon, 10 May 2021 08:53:11 -0700 (PDT)
+        Mon, 10 May 2021 13:11:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620666633; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=yFWWK3TE0vWmOc5WunVL+VHFoaHbjzJfXbG1CeyzwUU=;
+ b=DQjVhjbVxbR+b17fVzHUBPfNbJGMNFqZlTxwbQonFWf5OuGQ6PbN/1OlY01vlcNVAuv74gid
+ YocYVliaKIZjUF9UyTclK7tNl3Zv5lAdaI+YnMQgIy95n5kumhEsMzYOVUDwY7YmKDuyYR5y
+ n9EQtB7IMfMPzTGmOAT2TjfyQHw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI2MTA3ZSIsICJsaW51eC1ibHVldG9vdGhAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 609968dc87ce1fbb567ec480 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 10 May 2021 17:09:48
+ GMT
+Sender: gubbaven=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EDEB5C43143; Mon, 10 May 2021 17:09:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: gubbaven)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3594C433D3;
+        Mon, 10 May 2021 17:09:42 +0000 (UTC)
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:eb83:0:0:0:0 with HTTP; Mon, 10 May 2021 08:53:11
- -0700 (PDT)
-Reply-To: info.cherrykona@gmail.com
-From:   Cherry Kona <angelacoulibaly5@gmail.com>
-Date:   Mon, 10 May 2021 15:53:11 +0000
-Message-ID: <CAHipQu5JR5o7L5wjF1JoTUEt326o2a92cR0K=AWCtCCP60Z14w@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 10 May 2021 22:39:42 +0530
+From:   gubbaven@codeaurora.org
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        devicetree@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Bluetooth Kernel Mailing List 
+        <linux-bluetooth@vger.kernel.org>,
+        Hemantg <hemantg@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org
+Subject: Re: [PATCH v3 3/5] Bluetooth: btqca: Moved extracting rom version
+ info to common place
+In-Reply-To: <A9592AB3-EE71-4A1A-8CE4-AC209A98BDE5@holtmann.org>
+References: <1620322392-27148-1-git-send-email-gubbaven@codeaurora.org>
+ <1620322392-27148-4-git-send-email-gubbaven@codeaurora.org>
+ <A9592AB3-EE71-4A1A-8CE4-AC209A98BDE5@holtmann.org>
+Message-ID: <297a32b472d314e07b4f1a99784c5a9e@codeaurora.org>
+X-Sender: gubbaven@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-Hello did you see my message?
+Hi Marcel,
+On 2021-05-07 13:23, Marcel Holtmann wrote:
+> Hi Venkata,
+> 
+>> Moved extracting rom version info to common place as this code is
+>> common in all if else ladder in qca_uart_setup.
+>> 
+>> Signed-off-by: Venkata Lakshmi Narayana Gubba 
+>> <gubbaven@codeaurora.org>
+>> ---
+>> drivers/bluetooth/btqca.c | 15 ++++++---------
+>> 1 file changed, 6 insertions(+), 9 deletions(-)
+>> 
+>> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+>> index 320c555..658fd8e4 100644
+>> --- a/drivers/bluetooth/btqca.c
+>> +++ b/drivers/bluetooth/btqca.c
+>> @@ -533,24 +533,21 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t 
+>> baudrate,
+>> 
+>> 	config.user_baud_rate = baudrate;
+>> 
+>> +	/* Firmware files to download are based on ROM version.
+>> +	 * ROM version is derived from last two bytes of soc_ver.
+>> +	 */
+>> +	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) |
+>> +		    (soc_ver & 0x0000000f);
+>> +
+> 
+> please try to align this properly.
+> 
+[Venkata]:
+Sure, I will update in next patchset.
+> Regards
+> 
+> Marcel
+
+Regards,
+Lakshmi Narayana.
