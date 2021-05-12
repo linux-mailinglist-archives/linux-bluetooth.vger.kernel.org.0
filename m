@@ -2,111 +2,120 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 509B537ED32
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 May 2021 00:38:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDB6E37ED33
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 May 2021 00:38:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241218AbhELUNu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 12 May 2021 16:13:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53940 "EHLO
+        id S241586AbhELUN6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 12 May 2021 16:13:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350993AbhELSKi (ORCPT
+        with ESMTP id S1354023AbhELSQQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 12 May 2021 14:10:38 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C4D6C061761
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 May 2021 11:09:29 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id g38so31822897ybi.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 May 2021 11:09:29 -0700 (PDT)
+        Wed, 12 May 2021 14:16:16 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B828C061349;
+        Wed, 12 May 2021 11:13:31 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 82so31836622yby.7;
+        Wed, 12 May 2021 11:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=S7O27ZRXoWUgUUwYIdC4/h4PFgCKQfrQValYMPqWjhY=;
-        b=g3CzqtPDAst47QszWheMpjATlH5P6VSgkOoRUrDpd32feIfnMHnWDTC79yM81wtb5u
-         zVnOAQV7Iiyw7IqPFzVfvtcRWUSRKNWaYjz1x8IoVuCMfjFXYtzFpdnzxhrs+NtIP3df
-         G2F+qIfepKUMc66iVEIXKz2w9uqYszYwRrm9FnHUbEaLXkdnyvQxTcFdPQW/94BCZw8k
-         NW1apGYm927Vy9llkcRMZDZxUMOEWKUswTDuNyuoN/RmHaR5gaORUOp5ZgSIACeXhirL
-         buXW/BHz14JQdBI9BOdA0dCPYFdEHDMaKnlagoU6rXew9vsHygtmx9PIkr7R9xQ7nOCv
-         qaJg==
+        bh=A0THslFn0Kgu1sWjV5jie9dbcrzud4y09B5VHnV/OvU=;
+        b=h4G79n5j2Q9e7O4qyc9sCxuAqxg6oZDNwMRBD3YMzPGfOfL4TrCzbmi3KH9dx8Ykom
+         o/Pt46mKPb43l6HMaeofOZRMmgOMrQas8OqcGBQcPBIMwoas46b0iL2IJ8mX8EnGC0CR
+         G6XLTEpCjujxGJiKOX0E2tgtush+4/TxKjmrfP5eGM0qQs5Ndq220Oo4VYbUuDepsHYp
+         wpwhpn1EcYkqAhq8H0Y4MYylRcWF4zPnjsYwZZ4vzMecmknR9xse61peQ066iRj6TjrD
+         OUtu7Bn537FO7nz7E6LwGgJx0QpGUe734RHb7rvvbxTo9s7LwppQmfj9VxSNGOV39nw1
+         o80Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=S7O27ZRXoWUgUUwYIdC4/h4PFgCKQfrQValYMPqWjhY=;
-        b=gXB0wJYl14dA2iYjG7/g8m3EZw5O25NEI/9uO2jj76RYrGv4rOkYSUoSOhRxHLkkot
-         SIn7ybFPB/LwyixLC+onWzYGRlF6IbykpagYzM0teMnM5L4wCiOjmaNR1/L58moj/ctl
-         DwLOg2issFI4d6ommi7iIiM6Bf0XfYpd1DZygeWTQAa5W4H4GMzZecBxr5VdWXC6H9Q8
-         pNmXYtLsIpoN7vWDGhqshqlK9XVgxPxhHnBKIMh6+UeEKZMB2vkvz/QBN4U2oeuT/7vl
-         aaMO3jt9ypmfPWtXfQM5AlkcpgJC/tpgr/yV9ATj42kFq2a3DUstg26Vhg4e+2H4SCY3
-         R7Qw==
-X-Gm-Message-State: AOAM531v06lsQdIe+6WrHhcTDK4MJPeOtSgLEzDqJCO1qlyKHSS9I316
-        kMGujdQikfLPnmgmHVt1MIwczDyp6FUK4NbE7Dk=
-X-Google-Smtp-Source: ABdhPJzxscfVg2UWDRZvGEJPuaQ7DNiTluGHkqURpr+VjhmqnvvhaeheFlePoV6qUOJGUG2s4LgqipbX8nGsPVvOQlM=
-X-Received: by 2002:a25:a466:: with SMTP id f93mr50561965ybi.264.1620842968876;
- Wed, 12 May 2021 11:09:28 -0700 (PDT)
+        bh=A0THslFn0Kgu1sWjV5jie9dbcrzud4y09B5VHnV/OvU=;
+        b=KHuRhPJWO9lNosgawmjF+MCqCWHXPZCArefoO6gJTTZJ5tBJ32QK87KWtzvke9Ayj0
+         YCEn7A9Url6dEhOEQk8k0HgbTAr3qQo7Fx578/EZ/v1lOAqCnqzCSmIpTpb/Szj3iH9k
+         5GaCSZ9Qcmz3JXZheQqdKrMQNgG9ARejDclTkINaAa4QUA9QwQSGyyhEZvTPmbwJF5Ss
+         EmEtJVzayb1kt49b2zFcv+a462kTEZW6exMruvWFwDNd7V3Dumyxf8Ci/srkC7Repd49
+         LpZ8lqPNpn/5vTanTVyKp4PYIF6tNZXdkzuqCl80MD4JaSM0y73C/pKQJBbmk+g4Dc7q
+         wiuA==
+X-Gm-Message-State: AOAM5330AmsZHB0suHaAf22uE3OeVFBexY9aWdpajq7pAaHcH65UMRqz
+        hQkdYU02ZPGh1gRrcC7jgjQZ9xJC0mWbcMG0PDJ6rt6A
+X-Google-Smtp-Source: ABdhPJwodnVxq21dO5kaDNX8tBwkSXdpZBp9QurgW1NTiDItPl7d8pOO+UpBPW4T1G3YHHkEtiu4F0xVyB6xh9ImYgg=
+X-Received: by 2002:a25:d0cb:: with SMTP id h194mr37698941ybg.408.1620843210333;
+ Wed, 12 May 2021 11:13:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAA_JV5OCS78ZoG6MtAdQCp39oQemzUvQk1DwduGy_LhDuNv9DA@mail.gmail.com>
- <CABBYNZKtAf=i=au+pF4Kkf_X3oAm_WZBXCwQWchUVSoTdUCU=g@mail.gmail.com> <CAA_JV5NH2z6ywTHi15rrasdgORiarniUqZX3UBzbSGfHc=eVsQ@mail.gmail.com>
-In-Reply-To: <CAA_JV5NH2z6ywTHi15rrasdgORiarniUqZX3UBzbSGfHc=eVsQ@mail.gmail.com>
+References: <20210512133407.52330-1-szymon.janc@codecoup.pl> <CAC2ZOYvax0WGO7wMzbPXQMGb2NDouAF6XRgd5TH+h-f6uWvhtg@mail.gmail.com>
+In-Reply-To: <CAC2ZOYvax0WGO7wMzbPXQMGb2NDouAF6XRgd5TH+h-f6uWvhtg@mail.gmail.com>
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 12 May 2021 11:09:18 -0700
-Message-ID: <CABBYNZKFbdk1QHQ4JsEXSbXfOATZt9-dO3MRmYq_nCHViZB_5w@mail.gmail.com>
-Subject: Re: Unable to establish ble connection between Raspberrypi4B and Laptop
-To:     nagesh shamnur <nagesh.shamnur@gmail.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Date:   Wed, 12 May 2021 11:13:19 -0700
+Message-ID: <CABBYNZKBW1wtTbkmcQbAybGm7zdcur16935yGNwid9oiGOxNFQ@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: Remove spurious error message
+To:     Kai Krakow <kai@kaishome.de>
+Cc:     Szymon Janc <szymon.janc@codecoup.pl>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Nagesh,
+Hi Kai,
 
-On Wed, May 12, 2021 at 11:03 AM nagesh shamnur
-<nagesh.shamnur@gmail.com> wrote:
+On Wed, May 12, 2021 at 11:06 AM Kai Krakow <kai@kaishome.de> wrote:
 >
-> Thanks for the reply. Is there any way i can avoid this problem and make the connection successful?
-
-
-Yes you can register a profile, what were you planning on doing with
-the connection? Even a serial port profiles would do but one of the
-side would have to register it.
-
+> Hi Szymon!
 >
-> On Wed, 12 May 2021 at 23:31, Luiz Augusto von Dentz <luiz.dentz@gmail.com> wrote:
->>
->> Hi Nagesh,
->>
->> On Wed, May 12, 2021 at 6:46 AM nagesh shamnur <nagesh.shamnur@gmail.com> wrote:
->> >
->> > Hi All,
->> >  I am unable to establish a ble connection between my Raspberrypi4B
->> > and Laptop. Configuration is as below:
->> >
->> > Laptop: Ubuntu-20.04.2 LTS, bluez version: 5.53 Raspberrypi4B:
->> > Ubuntu-21.04 bluez version: 5.56
->> >
->> > Bluetoothctl logs @Raspberrypi4B: as attached
->> >
->> > btmon logs @Raspberrypi4B: as attached
->> >
->> > I see in the btmon output, always connection is terminated but no
->> > reason is present which specifies the cause for it.
->> >
->> > Initially I was using Ubuntu 20.04.2 LTS on my Raspberrypi4b which I
->> > later upgraded to 21.04 but still no luck. Couple of posts pointed to
->> > bug in bluez which was pretty old and i am assuming would have already
->> > fixed in the bluez 5.56 version.
->> >
->> > Can someone help me in resolving this issue?
->>
->> There doesn't seem to be any L2CAP channels left which means no
->> profile was able to connect which causes the ACL Link to drop since
->> there is no use for it.
->>
->>
->> --
->> Luiz Augusto von Dentz
+> Am Mi., 12. Mai 2021 um 15:34 Uhr schrieb Szymon Janc <szymon.janc@codecoup.pl>:
+> >
+> > Even with rate limited reporting this is very spammy and since
+> > it is remote device that is providing bogus data there is no
+> > need to report this as error.
+> >
+> [...]
+> > [72464.546319] Bluetooth: hci0: advertising data len corrected
+> > [72464.857318] Bluetooth: hci0: advertising data len corrected
+> > [72465.163332] Bluetooth: hci0: advertising data len corrected
+> > [72465.278331] Bluetooth: hci0: advertising data len corrected
+> > [72465.432323] Bluetooth: hci0: advertising data len corrected
+> > [72465.891334] Bluetooth: hci0: advertising data len corrected
+> > [72466.045334] Bluetooth: hci0: advertising data len corrected
+> > [72466.197321] Bluetooth: hci0: advertising data len corrected
+> > [72466.340318] Bluetooth: hci0: advertising data len corrected
+> > [72466.498335] Bluetooth: hci0: advertising data len corrected
+> > [72469.803299] bt_err_ratelimited: 10 callbacks suppressed
+> >
+> > Signed-off-by: Szymon Janc <szymon.janc@codecoup.pl>
+> > Fixes: https://bugzilla.kernel.org/show_bug.cgi?id=203753
+> > Cc: stable@vger.kernel.org
+> > ---
+> >  net/bluetooth/hci_event.c | 2 --
+> >  1 file changed, 2 deletions(-)
+> >
+> > diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+> > index 5e99968939ce..abdc44dc0b2f 100644
+> > --- a/net/bluetooth/hci_event.c
+> > +++ b/net/bluetooth/hci_event.c
+> > @@ -5476,8 +5476,6 @@ static void process_adv_report(struct hci_dev *hdev, u8 type, bdaddr_t *bdaddr,
+> >
+> >         /* Adjust for actual length */
+> >         if (len != real_len) {
+> > -               bt_dev_err_ratelimited(hdev, "advertising data len corrected %u -> %u",
+> > -                                      len, real_len);
+> >                 len = real_len;
+> >         }
+>
+> This renders the "if" quite useless since it now always ensures len =
+> real_len and nothing else. At this point, the "if" can be removed, and
+> len can be set unconditionally. Depending on the further context of
+> the patch, destinction between real_len and len may not be needed at
+> all and real_len could be renamed to len, ditching the unused original
+> which is potentially bogus data anyways according to your commit
+> description.
 
+That was introduced to truncate the len, the patch just removes the
+logging but it does keep this logic, if you want to understand the
+reason for it just use git blame and look at the history.
 
 
 -- 
