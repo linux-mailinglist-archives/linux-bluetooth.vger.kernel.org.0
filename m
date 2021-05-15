@@ -2,69 +2,115 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1AEC381768
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 15 May 2021 11:59:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7860F381922
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 15 May 2021 15:42:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231432AbhEOKAN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 15 May 2021 06:00:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55562 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbhEOKAM (ORCPT
+        id S231173AbhEONn5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 15 May 2021 09:43:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:31088 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229571AbhEONnz (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 15 May 2021 06:00:12 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2CC5C061573
-        for <linux-bluetooth@vger.kernel.org>; Sat, 15 May 2021 02:58:58 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id m11so1846459lfg.3
-        for <linux-bluetooth@vger.kernel.org>; Sat, 15 May 2021 02:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=7k9ifgcO7Q8dqVTvg0VazCKJonuq9nUGEz5dY61X/V8=;
-        b=JvH57FCDrvEP/17/WR+54B+U1prSrUhEK/hDyYeafVAHJ3Ma8LY6KMj/Hq+f0KymEu
-         Q0SyPSBeTQGFaNPMVud+AR26KxOLFQaZhhieuF9crGCEjKuubwFhCieJU5DP9VcaSqfx
-         hMHEstHu1R2GDQCKaePZa6drsLAsFHra+M/hd3lNHK41JCXWB1YYcwatkom1UaE26SyI
-         SWUZvMAST2jSRM4xjnq0+9XWBF2aIVA9FC8rqEQeInxe3Kaz04vrujl8mfJHR0o27edN
-         Y8Jv8YhgNwI39WlnXGQHt+ugnU7AFJeM9Pa5JC2UB/jtDFLMkWeoVbyuT8sG/YOVdCk6
-         XIew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=7k9ifgcO7Q8dqVTvg0VazCKJonuq9nUGEz5dY61X/V8=;
-        b=q2eBDs8dEbJy41F42TwZ9bMnacF82tw1oBHRf/e+jda8Do+J69fR32LZ/N2U6j4j/v
-         mm7hqNsoY8zfSVT1LrZHcN40iVghMVtI+3x/51fkbGLoEUg6O/xTFMO2dimbh9cjU3HY
-         gA0KI6xtbiVLqzKqHzy8LAeS9fb8vv7VnaITFM/nur6dq/tQjhPmS5zKssyfi+g2yNcT
-         FSxMZk4Gocbn8WbmztoiruF5jSLxPNTWOQAPi1sX4DMG3SY9hZox5WC70wYLRt/tNa1r
-         pwg4vwL8fjxV7I1qWQBeVFI/YecWiMgzVlx0bFrC2c0CZ+cNdEn0Q+vE7d+vdEinZEVn
-         ffyQ==
-X-Gm-Message-State: AOAM532dWzxlRO2WGRH/0wtlR2LdorIZY91Htf0DYwwh+L7UDNYpWy5q
-        RG74azoJczahJN5M9f2ElRF8cgFllL+S0A3kzjY=
-X-Google-Smtp-Source: ABdhPJw9Cwm/U5hm4AXSirypgLaUIa+5IkHAHtL+2OXlhxcd7yJgnFh9lyKl+kDyUf6fPKGdmWcfnqGgiqFUUhYgkIE=
-X-Received: by 2002:a05:6512:1388:: with SMTP id p8mr36668323lfa.269.1621072737284;
- Sat, 15 May 2021 02:58:57 -0700 (PDT)
+        Sat, 15 May 2021 09:43:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1621086161;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=SCz5cT/3OoA51qVoQ5z/oOi9+A1LDFcml98z2VPSUyE=;
+        b=U/QcfAJdc3u/NBhaTxKcpeaQbDRN2YfMNREbNViU99ylKEEBtnZN0lsQ9T/HzCYj2gTnLW
+        Z+PP/WnZbXXjX410uRoGoVp4zooMXQyIoJFEQIYxAv1JOMN57dpkcF6DlU32tPlieNSrPw
+        tp4W+DV/T1+IhRXRAwudABj96q99uAU=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-581-FP2HWLogO0iTDTj_ZnGk3w-1; Sat, 15 May 2021 09:42:39 -0400
+X-MC-Unique: FP2HWLogO0iTDTj_ZnGk3w-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id C7F401854E21
+        for <linux-bluetooth@vger.kernel.org>; Sat, 15 May 2021 13:42:38 +0000 (UTC)
+Received: from ivy-bridge (ovpn-112-84.rdu2.redhat.com [10.10.112.84])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 7B0661007611
+        for <linux-bluetooth@vger.kernel.org>; Sat, 15 May 2021 13:42:38 +0000 (UTC)
+Date:   Sat, 15 May 2021 09:43:07 -0400
+From:   Steve Grubb <sgrubb@redhat.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bluez PATCH ] Fix memory leaks in obex
+Message-ID: <20210515094307.16fb1572@ivy-bridge>
+Organization: Red Hat
 MIME-Version: 1.0
-Received: by 2002:a05:6504:1687:0:0:0:0 with HTTP; Sat, 15 May 2021 02:58:56
- -0700 (PDT)
-Reply-To: Salemchantal2@mail.com
-From:   MRS Salem Chantal Lawrence <favourlaboso@gmail.com>
-Date:   Sat, 15 May 2021 09:58:56 +0000
-Message-ID: <CACrC5j0qHJaUpqztqPiSPFBqcTz2rCpDxzke0U1Urz3Bit+xGQ@mail.gmail.com>
-Subject: ATM VISA DAPARTCARD
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Attention
+This patch fixes a couple memory leaks.
 
+In filesystem, g_file_get_contents allocates fresh memory to buf.
+It needs to be freed after conversion to a GString object.
 
-You have been compensated with the sum of 4.6 million dollars in this
-United Nation the payment will be issue into Atm Visa Card,
+Destination was missed on an error path as is mld.
 
-and send to you from the santander bank of spain we need your
-Address,Passport and your Whatsapp Number.
+---
+ obexd/plugins/filesystem.c     | 2 +-
+ obexd/plugins/ftp.c            | 8 ++++++--
+ obexd/plugins/messages-dummy.c | 1 +
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
-THANKS
-MRS Salem Chantal Lawrence
+diff --git a/obexd/plugins/filesystem.c b/obexd/plugins/filesystem.c
+index 09bff8ad0..44e3cf3d2 100644
+--- a/obexd/plugins/filesystem.c
++++ b/obexd/plugins/filesystem.c@@ -416,6 +416,7 @@ static void *capability_open(const char *name, int oflag, mode_t mode,
+ 		}
+ 
+ 		object->buffer = g_string_new(buf);
++		g_free(buf);
+ 
+ 		if (size)
+ 			*size = object->buffer->len;
+diff --git a/obexd/plugins/ftp.c b/obexd/plugins/ftp.c
+index 259bfcae2..4b04bab06 100644
+--- a/obexd/plugins/ftp.c
++++ b/obexd/plugins/ftp.c
+@@ -386,8 +386,10 @@ static int ftp_copy(struct ftp_session *ftp, const char *name,
+ 	ret = verify_path(destdir);
+ 	g_free(destdir);
+ 
+-	if (ret < 0)
++	if (ret < 0) {
++		g_free(destination);
+ 		return ret;
++	}
+ 
+ 	source = g_build_filename(ftp->folder, name, NULL);
+ 
+@@ -424,8 +426,10 @@ static int ftp_move(struct ftp_session *ftp, const char *name,
+ 	ret = verify_path(destdir);
+ 	g_free(destdir);
+ 
+-	if (ret < 0)
++	if (ret < 0) {
++		g_free(destination);
+ 		return ret;
++	}
+ 
+ 	source = g_build_filename(ftp->folder, name, NULL);
+ 
+diff --git a/obexd/plugins/messages-dummy.c b/obexd/plugins/messages-dummy.c
+index 34199fa05..e37b52df6 100644
+--- a/obexd/plugins/messages-dummy.c
++++ b/obexd/plugins/messages-dummy.c
+@@ -488,6 +488,7 @@ int messages_get_messages_listing(void *session, const char *name,
+ 			int err = -errno;
+ 			DBG("fopen(): %d, %s", -err, strerror(-err));
+ 			g_free(path);
++			g_free(mld);
+ 			return -EBADR;
+ 		}
+ 	}
+-- 
+2.31.1
+
