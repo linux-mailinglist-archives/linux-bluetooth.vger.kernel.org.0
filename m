@@ -2,159 +2,120 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 58B3D387DBE
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 May 2021 18:35:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55F54387E5A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 May 2021 19:26:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350855AbhERQgv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 May 2021 12:36:51 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:37559 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350815AbhERQgo (ORCPT
+        id S1351113AbhERR1W (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 May 2021 13:27:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39152 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1351108AbhERR1W (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 May 2021 12:36:44 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 18 May 2021 09:35:26 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 18 May 2021 09:35:25 -0700
-X-QCInternal: smtphost
-Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 18 May 2021 22:04:50 +0530
-Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id A7F762217F; Tue, 18 May 2021 22:04:48 +0530 (IST)
-From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        devicetree@vger.kernel.org
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [PATCH v4 5/5] dt-bindings: net: bluetooth: Add device tree bindings for QTI chip wcn6750
-Date:   Tue, 18 May 2021 22:04:46 +0530
-Message-Id: <1621355686-29550-6-git-send-email-gubbaven@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1621355686-29550-1-git-send-email-gubbaven@codeaurora.org>
-References: <1621355686-29550-1-git-send-email-gubbaven@codeaurora.org>
+        Tue, 18 May 2021 13:27:22 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 245ACC061573
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 May 2021 10:26:03 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id v13so5476891ple.9
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 May 2021 10:26:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=e4o4lEPMWrXe8mP8JVjlTIaYpq8ZazkvErRgclKN0s8=;
+        b=cYsMIvANsOEZTRh9a75ENLkF89i5uU7+zhhNNJ9+PMjurICkXpCoy5RfYLSmlCuYA7
+         s2/QgNN1hQKdN+BRGKvLr6e93OUP6csID5z6vJuJwmw2rJ5+SVPP7fCWQd8bhQdcDt3m
+         XvsNQTXEFc8UL7eXCGnRwALlrm2u9Z6UO74KAbiarnNOls9Jj6IPTFT4QEeeq2ZpDucY
+         gOVYNfLyTRzX3GKhIrccB+tsbe5+NM/2DfiiJNFjnmHie//bFyVa7K7GGXiv20RqRujw
+         QN2fdjtAOGt0YfKFIyj6lcMsXkmCdtkwMXlOv+7BJfoiuaD0QGHL32lNgr5kd4KuRkDM
+         tTmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=e4o4lEPMWrXe8mP8JVjlTIaYpq8ZazkvErRgclKN0s8=;
+        b=UPqpeNWGG5CIx+qz3jQoIo6w0TL4ND4W+WSwqfMXUR4aji/qsH1qUppSpMgVmt9sw3
+         ZHK/ibu78Og+Qf9a7q88vIVMr7lHngz1AQtO2JDoBrwL7O4CRTYUyIWkOXmTPZHlQNWY
+         ViM9Lh+M9GOydr5Bu/EDllX7HVHsQw3AUQ/rcMokdGcUWRRyl3H9pk7lPEu2MVctwKaL
+         ywnqRlf0kuZGJ3bH0kGF1QcT5QkHf+h0KF36fKUKxxAwVQv8BkQeiNL4ltqpGQ00z4yC
+         sHFxhJ5CE+Z99IBeTK6jqZi5Rd9Tvh070ySlPPZ0+J7/zGRsYJdqnkBJESYw7Y0BUMEo
+         iRZw==
+X-Gm-Message-State: AOAM531Vg4ivsMm7zmfZ740q4Q/mXfc0QR+QRlCDBi/W4+zv0hOLT8mp
+        Pj2KzuWOlqTp45o3dF8hpTxunfBvBwfYSZZa
+X-Google-Smtp-Source: ABdhPJxoWbqrOyS12tFexQmYxBiRa/CVCDseU55hclEQSyryki5ddcqETLmdpvZ7t7lbiKNEu/w2cg==
+X-Received: by 2002:a17:902:c789:b029:f4:33e3:dad9 with SMTP id w9-20020a170902c789b02900f433e3dad9mr39320pla.84.1621358762179;
+        Tue, 18 May 2021 10:26:02 -0700 (PDT)
+Received: from u0b6eedb2c9435b.ant.amazon.com ([73.96.106.178])
+        by smtp.gmail.com with ESMTPSA id s12sm2413747pji.5.2021.05.18.10.26.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 May 2021 10:26:01 -0700 (PDT)
+From:   Daniel Lenski <dlenski@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Daniel Lenski <dlenski@gmail.com>
+Subject: [PATCH] Bluetooth: Add a new QCA_ROME device (0cf3:e500)
+Date:   Tue, 18 May 2021 10:25:46 -0700
+Message-Id: <20210518172546.304882-1-dlenski@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch enables regulators and gpios for the Qualcomm Bluetooth wcn6750
-controller.
+This patch adds the 0cf3:e500 Bluetooth device (from a QCA9377 board) as a
+QCA_ROME device.  It appears to be functionally identical to another device
+ID, also from a QCA9377 board, which was previously marked as QCA_ROME in
+0a03f98b98c201191e3ba15a0e33f46d8660e1fd
+("Bluetooth: Add a new 04ca:3015 QCA_ROME device").
 
-Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Without this patch, the WiFi side of the QCA9377 board is slow or unusable
+when the Bluetooth side is in use.
+
+See https://askubuntu.com/a/1137852 for another report of QCA_ROME fixing
+this issue for this device ID.
+
+/sys/kernel/debug/usb/devices:
+
+T:  Bus=05 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 2.01 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0cf3 ProdID=e500 Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Signed-off-by: Daniel Lenski <dlenski@gmail.com>
 ---
- .../bindings/net/qualcomm-bluetooth.yaml           | 71 ++++++++++++++++++++++
- 1 file changed, 71 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-index 772689b..f93c6e7 100644
---- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-+++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-@@ -22,11 +22,17 @@ properties:
-       - qcom,wcn3991-bt
-       - qcom,wcn3998-bt
-       - qcom,qca6390-bt
-+      - qcom,wcn6750-bt
- 
-   enable-gpios:
-     maxItems: 1
-     description: gpio specifier used to enable chip
- 
-+  swctrl-gpios:
-+    maxItems: 1
-+    description: gpio specifier is used to find status
-+                 of clock supply to SoC
-+
-   clocks:
-     maxItems: 1
-     description: clock provided to the controller (SUSCLK_32KHZ)
-@@ -43,6 +49,30 @@ properties:
-   vddch0-supply:
-     description: VDD_CH0 supply regulator handle
- 
-+  vddaon-supply:
-+    description: VDD_AON supply regulator handle
-+
-+  vddbtcxmx-supply:
-+    description: VDD_BT_CXMX supply regulator handle
-+
-+  vddrfacmn-supply:
-+    description: VDD_RFA_CMN supply regulator handle
-+
-+  vddrfa0p8-supply:
-+    description: VDD_RFA_0P8 suppply regulator handle
-+
-+  vddrfa1p7-supply:
-+    description: VDD_RFA_1P7 supply regulator handle
-+
-+  vddrfa1p2-supply:
-+    description: VDD_RFA_1P2 supply regulator handle
-+
-+  vddrfa2p2-supply:
-+    description: VDD_RFA_2P2 supply regulator handle
-+
-+  vddasd-supply:
-+    description: VDD_ASD supply regulator handle
-+
-   max-speed:
-     description: see Documentation/devicetree/bindings/serial/serial.yaml
- 
-@@ -85,6 +115,25 @@ allOf:
-         - vddrf-supply
-         - vddch0-supply
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,wcn6750-bt
-+    then:
-+      required:
-+        - enable-gpios
-+        - swctrl-gpios
-+        - vddio-supply
-+        - vddaon-supply
-+        - vddbtcxmx-supply
-+        - vddrfacmn-supply
-+        - vddrfa0p8-supply
-+        - vddrfa1p7-supply
-+        - vddrfa1p2-supply
-+        - vddasd-supply
-+
- examples:
-   - |
-     #include <dt-bindings/gpio/gpio.h>
-@@ -110,3 +159,25 @@ examples:
-             firmware-name = "crnv21.bin";
-         };
-     };
-+  - |
-+    serial {
-+
-+        bluetooth {
-+            compatible = "qcom,wcn6750-bt";
-+            pinctrl-names = "default";
-+            pinctrl-0 = <&bt_en_default>;
-+            enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-+            swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
-+            vddio-supply = <&vreg_l19b_1p8>;
-+            vddaon-supply = <&vreg_s7b_0p9>;
-+            vddbtcxmx-supply = <&vreg_s7b_0p9>;
-+            vddrfacmn-supply = <&vreg_s7b_0p9>;
-+            vddrfa0p8-supply = <&vreg_s7b_0p9>;
-+            vddrfa1p7-supply = <&vreg_s1b_1p8>;
-+            vddrfa1p2-supply = <&vreg_s8b_1p2>;
-+            vddrfa2p2-supply = <&vreg_s1c_2p2>;
-+            vddasd-supply = <&vreg_l11c_2p8>;
-+            max-speed = <3200000>;
-+            firmware-name = "msnv11.bin";
-+        };
-+    };
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 5d603ef39..ba339e074 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -270,6 +270,8 @@ static const struct usb_device_id blacklist_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0cf3, 0xe360), .driver_info = BTUSB_QCA_ROME |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0cf3, 0xe500), .driver_info = BTUSB_QCA_ROME |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe092), .driver_info = BTUSB_QCA_ROME |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe09f), .driver_info = BTUSB_QCA_ROME |
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+2.17.1
 
