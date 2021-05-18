@@ -2,59 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8956F387FBC
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 May 2021 20:39:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0704387FBE
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 May 2021 20:39:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344691AbhERSlC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 May 2021 14:41:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55866 "EHLO
+        id S1351610AbhERSlE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 May 2021 14:41:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343747AbhERSlB (ORCPT
+        with ESMTP id S1343747AbhERSlC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 May 2021 14:41:01 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AED8C061573
+        Tue, 18 May 2021 14:41:02 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78D00C06175F
         for <linux-bluetooth@vger.kernel.org>; Tue, 18 May 2021 11:39:42 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id 22so7683690pfv.11
+Received: by mail-pl1-x636.google.com with SMTP id n8so379484plf.7
         for <linux-bluetooth@vger.kernel.org>; Tue, 18 May 2021 11:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=Ot0DntzaYSgGQ31gvBNcBTx9/HZZ2Rd8zN+tqeN2Iog=;
-        b=vbPmK5cDMIp93aeZEvkUJ7Agd0tUGp8tb1CdglL7JOjGLJzcewLxRPIohquU0CF0lC
-         bny9ooRjQjqF9dL24dkULDQyerAW19QYG6SQboiZ4wt6nUSpI0MsfZXAUeZyNYbZ/4Eh
-         KCb64mGh0dRCLlEhs37/EHLZPW+AXFO9tGeKCAJwLKOBJaxy2hV+0WruzCjrAiqWW04G
-         m2g0IEqNJSyTDmt/ryaYHHo+9K9waGiUofurmKoCPn0rOCFxRdkjQ8qO5fuVY9ZVKbaf
-         5xHGu+1Vh+8PzpG0HshDOP2/pHd4HwZ1sgon1qBaz/faQq/zN/C61RzqwUIJt9tsDKiL
-         fNoQ==
+        bh=sJMfQ7nQR3Pl+bsEnR4ULgp373XRVEfzHapTKV5IzLo=;
+        b=HpJioW51Ka8qDHrvTOtCMASmG+HPmw6LXUeez4jkU+8YLNqTv7kexDfZS1CB3n1+gA
+         XUeLuQ9ktpztecgbeBjJgKIu2mGAEi3fce3TTdBAEV8ubVbYJ0jUu+K9WGCb3arCvbwb
+         RerBHfy7clsgZvRdeNlcCqyrNP66+4v9Nkg/UqnsSDwOszrMv/gzs4czx/FSsfrZ6wRC
+         6wtK2ydOIZre4VYSlXLI8OFhmayTZWinMgi9gEJqxOaokEqBg1TYGdJmge736aiOaYdM
+         ejuzU6j/M6vQtiruw2nSteYLO5QSW9EfA92YsOaW4cGNhg2+raepragLslBE/6LwIzRs
+         k3XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Ot0DntzaYSgGQ31gvBNcBTx9/HZZ2Rd8zN+tqeN2Iog=;
-        b=p+Z8dFGuzUJLyeoPpibjyf6qLadUp4wNHFYRsv1bEMZc8z/AK2u7ReHMY7VFjwKU6j
-         FxIrw7vNkWU7Bbsh7fGs9pb2ShWPAgQZ9F1mC5X7Gsg2hPk3dhOCGTKqcaqgUFXuNTrg
-         OLrAmkIDhUwb6bwB/j1lbbZpoP6K9C7E8szBUaHazOZqIySE9gpEp9BAM1f8O+i4s59w
-         gMi+SMkGkP/mr62I/FiwF1NBIsL3MDsam73E/G2nhPUUpebS2ApC2R1LOZqi8xFDtEJO
-         +Wxvku7QBU0fMUNjX4dbohbwlIUMS+Yhm51JDPHsOF0x+gzkJMMIxdlmtoLzaP+P4kIo
-         D0TQ==
-X-Gm-Message-State: AOAM5330lr1tJjzKGxABaaQNK27plXQiMazQn614gzO+Y8z49jVnmN3G
-        8z1u6eeljhNMQUGvv5sJOnsx4WkX3Yg=
-X-Google-Smtp-Source: ABdhPJywqU0NOufHecBIAh6wI3JKTpxg+jP5qacci1JO0pZkCMLKChMJSj5G/dLzWGV7iNt8yTSRrQ==
-X-Received: by 2002:a62:ac1a:0:b029:2db:7c55:7f4 with SMTP id v26-20020a62ac1a0000b02902db7c5507f4mr6462000pfe.26.1621363180840;
-        Tue, 18 May 2021 11:39:40 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=sJMfQ7nQR3Pl+bsEnR4ULgp373XRVEfzHapTKV5IzLo=;
+        b=mK+jrDlXW2DCc5z7ZAtPyIISV4I0E2SqhUQhnze6pRI+jdGnsGgWSU5kMJ84+0tFlH
+         hh1Fs+46JbFwDm3Nvwaz2CQysFBxchPKXgS77Pg/P+O3imzjkqH8r7qaQC+XzjaHlgao
+         Hd6xTrgkHvPN5qRvMQxSzFO8hXV9ex0q8qtwprrFzyWuZ5quqntSQoNsoB6mklDx6r7x
+         K8C/7w3ZURpBfbCiGRQVF2NTlfbQxNr23XlT8tvx4nhxFA5wd/KnrZt/c+X1QiE0PnZg
+         l9IA/64Tqc2IYOXr8d/sW9Tw9Yoto6cRgussD4ZLuWfdbg2sYo4JLUO/sSBh5bSZ8tdt
+         lheA==
+X-Gm-Message-State: AOAM531ktDg9zanJgmTNQDDVaZqfjqVmqmYWD6JW1CutH0UAszHped8q
+        pyDlxqQ8RAy6TfS2mQIatWvNuD1XqYU=
+X-Google-Smtp-Source: ABdhPJybbPtHqLRnEAXOGf+kxkikUjQtp1HrdtJ/nQOdrW4LzyKpAR8+9qTVPyTdMkgCQuKKSuBhSw==
+X-Received: by 2002:a17:902:8211:b029:ef:64c8:5bb2 with SMTP id x17-20020a1709028211b02900ef64c85bb2mr6184844pln.64.1621363181694;
+        Tue, 18 May 2021 11:39:41 -0700 (PDT)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
         by smtp.gmail.com with ESMTPSA id r22sm13157121pgr.1.2021.05.18.11.39.40
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 11:39:40 -0700 (PDT)
+        Tue, 18 May 2021 11:39:41 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 1/3] shared/util: Add bt_uuid128_to_str
-Date:   Tue, 18 May 2021 11:39:35 -0700
-Message-Id: <20210518183937.786605-1-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 2/3] shared/util: Decode BlueZ experimental UUIDs
+Date:   Tue, 18 May 2021 11:39:36 -0700
+Message-Id: <20210518183937.786605-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210518183937.786605-1-luiz.dentz@gmail.com>
+References: <20210518183937.786605-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -63,47 +65,28 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds bt_uuid128_to_str which can be used to convert UUID 128 bit
-binary format into string.
+This adds BlueZ experimental UUIDs to uuid128_table so they are
+decoded by the likes of btmon.
 ---
- src/shared/util.c | 12 ++++++++++++
- src/shared/util.h |  1 +
- 2 files changed, 13 insertions(+)
+ src/shared/util.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/src/shared/util.c b/src/shared/util.c
-index 9c2054211..7fb1c01dc 100644
+index 7fb1c01dc..8c216f936 100644
 --- a/src/shared/util.c
 +++ b/src/shared/util.c
-@@ -1042,6 +1042,18 @@ const char *bt_uuid32_to_str(uint32_t uuid)
- 	return "Unknown";
- }
- 
-+const char *bt_uuid128_to_str(const uint8_t uuid[16])
-+{
-+	char uuidstr[37];
-+
-+	sprintf(uuidstr, "%8.8x-%4.4x-%4.4x-%4.4x-%8.8x%4.4x",
-+				get_le32(&uuid[12]), get_le16(&uuid[10]),
-+				get_le16(&uuid[8]), get_le16(&uuid[6]),
-+				get_le32(&uuid[2]), get_le16(&uuid[0]));
-+
-+	return bt_uuidstr_to_str(uuidstr);
-+}
-+
- const char *bt_uuidstr_to_str(const char *uuid)
- {
- 	uint32_t val;
-diff --git a/src/shared/util.h b/src/shared/util.h
-index d6de55885..9920b7f76 100644
---- a/src/shared/util.h
-+++ b/src/shared/util.h
-@@ -107,6 +107,7 @@ void util_clear_uid(unsigned int *bitmap, uint8_t id);
- 
- const char *bt_uuid16_to_str(uint16_t uuid);
- const char *bt_uuid32_to_str(uint32_t uuid);
-+const char *bt_uuid128_to_str(const uint8_t uuid[16]);
- const char *bt_uuidstr_to_str(const char *uuid);
- const char *bt_appear_to_str(uint16_t appearance);
+@@ -1019,6 +1019,12 @@ static const struct {
+ 	{ "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "Nordic UART Service" },
+ 	{ "6e400002-b5a3-f393-e0a9-e50e24dcca9e", "Nordic UART TX"	},
+ 	{ "6e400003-b5a3-f393-e0a9-e50e24dcca9e", "Nordic UART RX"	},
++	/* BlueZ Experimental Features */
++	{ "d4992530-b9ec-469f-ab01-6c481c47da1c", "BlueZ Experimental Debug" },
++	{ "671b10b5-42c0-4696-9227-eb28d1b049d6",
++		"BlueZ Experimental Simultaneous Central and Peripheral" },
++	{ "15c0a148-c273-11ea-b3de-0242ac130004",
++		"BlueZ Experimental LL privacy" },
+ 	{ }
+ };
  
 -- 
 2.30.2
