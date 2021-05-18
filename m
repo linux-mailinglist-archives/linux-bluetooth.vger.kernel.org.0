@@ -2,161 +2,119 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A3F3387FBD
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 May 2021 20:39:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ED3338803D
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 May 2021 21:00:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345973AbhERSlD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 May 2021 14:41:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55870 "EHLO
+        id S244207AbhERTBW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 May 2021 15:01:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344369AbhERSlB (ORCPT
+        with ESMTP id S1351807AbhERTBO (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 May 2021 14:41:01 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CBA1C061760
-        for <linux-bluetooth@vger.kernel.org>; Tue, 18 May 2021 11:39:43 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id s20so5593999plr.13
-        for <linux-bluetooth@vger.kernel.org>; Tue, 18 May 2021 11:39:43 -0700 (PDT)
+        Tue, 18 May 2021 15:01:14 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46058C06175F
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 May 2021 11:59:48 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id t11so6044626pjm.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 May 2021 11:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=2XkMpWYGmA/c07E68wL6jGMt77CGRNTBe4b0pnu8Xrg=;
-        b=S7kI2lmna8bgL9OKTGauAfqdfdAkF/KSgV5bj+rB9XVETUzXz/DUNt1C/erRH8iq5M
-         URgRsA5dPqdBh7EsX6su1QjUw8gLdMzsrIxO4hL0myHhFxNPGV3ZSBnGs4gO/nSeZqwg
-         7t1rZ85pdfIYdBfAq0Et7bKGzWGO+PQ9TLrcgrP0Lu7kYv4bP5lRKb8Beh8QrI9DINDM
-         78DTtGDP3lwLbwaWJQjGjK0dyayA8ABFqXaPuqayCqZVjSahGFgcDUzBwI2l+lGicEji
-         g9WdFbWd4upbD30DMh1tFbNMwkdA4hg84gOfOi49lc9enKwDn3kg4EnuXeEkaxChogyy
-         ZG8w==
+        h=from:to:cc:subject:date:message-id;
+        bh=sSW+RyQ8Xex5bb4BksaMTfUcNVjBzcIKNLpeNMKZk5I=;
+        b=FmFHMURZYcBaFjvK21PMWN2TS4tjNR3gv5fYg+Y/7A+fY49DBApbc4l45d8mb1+HvD
+         HfFK/xCGvGvS4XRUDK07V61tBrJzh+WIXEzTO7pqUpI0jdq4areWxAz7YX1rhzIn4bhd
+         4muZlWgnvHA46i3J88WoLXH5S5cneiiAZ8/Bd35WIUABXsbiet6+1yUZol8wYB20RDZp
+         6HvwV72FpxLdoIHSw7Tg4kVSfsyL5Mxt9J/k2BiG2udjMBbTx1+3SyKufsBZWmQi0qNz
+         CirMwpu5W/gLSbFg/aULcuydaDUMaJSMzqtBY0Gh4vFlRf4SL3OD44yeDlnj+Mpv57+p
+         tYOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2XkMpWYGmA/c07E68wL6jGMt77CGRNTBe4b0pnu8Xrg=;
-        b=J2yri6MwWQ7yGylP48Irc50EwgvmNZRNekIVdC/O6Y7j6R2QiFUU4QmjtY/8B4isBd
-         M7k7vrEbFQ42hkmTkW+GT7Brl0p/8npI3MNsKYAgSgLjzrajKE138VXk3D3zgeKLGPNR
-         ncnH3q0pdJda73/aVnYihHsLd9JRdGIGblzY21vtAQSJTUNCmZONmcgm1TA8QVO/PbTK
-         gJaRIt/NAPGslXv52/zlcM7MNZWEIHyXue5u9kcZ6kHGhCDbTIm5h4muTV2oj2XcZ3EF
-         noF8J9mn5YyMKs8D7sREHPK4HVbJJ7YxlU3wV04vA61CB9x6RANWrbEtXwWtlNpH5/6E
-         ul8Q==
-X-Gm-Message-State: AOAM5300jYMxwvgOaEuDU4ONVCsKouGymm5mP12ItdFt+vgjHoENIGcH
-        JXpV51ppUvh82RMzWrDb/4Qxg8s8aww=
-X-Google-Smtp-Source: ABdhPJwpatjuV1Vd+K9VRXOU9TKS9A+YsmRlSjvKxjHJ7yYNMPnT27QRoj2nRKUC3qQjEl/SEe5YyA==
-X-Received: by 2002:a17:902:854a:b029:ef:3f99:91a7 with SMTP id d10-20020a170902854ab02900ef3f9991a7mr6180139plo.74.1621363182501;
-        Tue, 18 May 2021 11:39:42 -0700 (PDT)
-Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id r22sm13157121pgr.1.2021.05.18.11.39.41
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=sSW+RyQ8Xex5bb4BksaMTfUcNVjBzcIKNLpeNMKZk5I=;
+        b=pAmQfrb2YVSFlic9IMyZIr1CXeBGE56AoNzM+6Yvtsofp4e7JocLm4+snablSncUd0
+         HRy5HZoPmvJ9P114+w5tEBm7Q6EmLedUBbTPERMLyIBxYopKK59QkFGw6zuxKJKIJnqi
+         /tEM7XW8hAuIbnjrAqkRgow6wLOk3uASX6yq/SMahsbpFzdJ51Bhp8cPYpo6KP1o2OTO
+         A/D3fLUTuylApiMLuFG5n6BS9O4dMEFwN9qwykWewxSntvt/MUGOQJitv+yE+cyGW3Uw
+         h+6K9h5x+SHD8C7DYQjNYYyhjLE0lr2FAfZZBXV3SgtVkEQYWpbnrFT+Y994yGlfcVPa
+         NUhA==
+X-Gm-Message-State: AOAM5329IAHSc7xR/Y4y+WL0RoF68Zcaa0thnICx5t/ja+6zpmcUDH5+
+        DVjUyidE+HreWkqIrvMJWlqijvFVZ0ZC4Dzm
+X-Google-Smtp-Source: ABdhPJxVcS6QNpnegrFtZrmMr54BgP9pF6CgzMLbt3X0dAvtDtoenRUdR1oqtIS6yHxc2hVxRn0E9A==
+X-Received: by 2002:a17:90b:703:: with SMTP id s3mr7180527pjz.69.1621364387426;
+        Tue, 18 May 2021 11:59:47 -0700 (PDT)
+Received: from u0b6eedb2c9435b.ant.amazon.com ([73.96.106.178])
+        by smtp.gmail.com with ESMTPSA id q18sm13111201pfj.131.2021.05.18.11.59.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 11:39:42 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+        Tue, 18 May 2021 11:59:46 -0700 (PDT)
+From:   Daniel Lenski <dlenski@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 3/3] btmon: Use bt_uuid128_to_str when printing UUIDs of 128 bits
-Date:   Tue, 18 May 2021 11:39:37 -0700
-Message-Id: <20210518183937.786605-3-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210518183937.786605-1-luiz.dentz@gmail.com>
-References: <20210518183937.786605-1-luiz.dentz@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Cc:     Daniel Lenski <dlenski@gmail.com>
+Subject: [PATCH] Bluetooth: Add a new QCA_ROME device (0cf3:e500)
+Date:   Tue, 18 May 2021 11:59:38 -0700
+Message-Id: <20210518185938.322908-1-dlenski@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This patch adds the 0cf3:e500 Bluetooth device (from a QCA9377 board) as a
+QCA_ROME device. It appears to be functionally identical to another device
+ID, also from a QCA9377 board, which was previously marked as QCA_ROME in
+commit 0a03f98b98c2 ("Bluetooth: Add a new 04ca:3015 QCA_ROME device").
 
-This ensures that know UUIDs names are printed including those used by
-experimental features.
+Without this patch, the WiFi side of the QCA9377 board is slow or unusable
+when the Bluetooth side is in use.
+
+See https://askubuntu.com/a/1137852 for another report of QCA_ROME fixing
+this issue for this device ID.
+
+/sys/kernel/debug/usb/devices:
+
+T:  Bus=05 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 2.01 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0cf3 ProdID=e500 Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Signed-off-by: Daniel Lenski <dlenski@gmail.com>
 ---
- monitor/packet.c | 27 ++++++---------------------
- 1 file changed, 6 insertions(+), 21 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/monitor/packet.c b/monitor/packet.c
-index d729a01cc..82513a63c 100644
---- a/monitor/packet.c
-+++ b/monitor/packet.c
-@@ -3282,18 +3282,13 @@ static void print_uuid128_list(const char *label, const void *data,
- {
- 	uint8_t count = data_len / 16;
- 	unsigned int i;
--	char uuidstr[MAX_LEN_UUID_STR];
- 
- 	print_field("%s: %u entr%s", label, count, count == 1 ? "y" : "ies");
- 
- 	for (i = 0; i < count; i++) {
- 		const uint8_t *uuid = data + (i * 16);
- 
--		sprintf(uuidstr, "%8.8x-%4.4x-%4.4x-%4.4x-%8.8x%4.4x",
--				get_le32(&uuid[12]), get_le16(&uuid[10]),
--				get_le16(&uuid[8]), get_le16(&uuid[6]),
--				get_le32(&uuid[2]), get_le16(&uuid[0]));
--		print_field("  %s (%s)", bt_uuidstr_to_str(uuidstr), uuidstr);
-+		print_field("  %s", bt_uuid128_to_str(uuid));
- 	}
- }
- 
-@@ -12006,16 +12001,6 @@ static void mgmt_print_name(const void *data)
- 	print_field("Short name: %s", (char *) (data + 249));
- }
- 
--static void mgmt_print_uuid(const void *data)
--{
--	const uint8_t *uuid = data;
--
--	print_field("UUID: %8.8x-%4.4x-%4.4x-%4.4x-%8.8x%4.4x",
--				get_le32(&uuid[12]), get_le16(&uuid[10]),
--				get_le16(&uuid[8]), get_le16(&uuid[6]),
--				get_le32(&uuid[2]), get_le16(&uuid[0]));
--}
--
- static void mgmt_print_io_capability(uint8_t capability)
- {
- 	const char *str;
-@@ -12261,7 +12246,7 @@ static void mgmt_print_exp_feature(const void *data)
- 	uint32_t flags = get_le32(data + 16);
- 	uint32_t mask;
- 
--	mgmt_print_uuid(data);
-+	print_field("UUID: %s", bt_uuid128_to_str(data));
- 	print_field("Flags: 0x%8.8x", flags);
- 
- 	mask = print_bitfield(2, flags, mgmt_exp_feature_flags_table);
-@@ -12457,7 +12442,7 @@ static void mgmt_add_uuid_cmd(const void *data, uint16_t size)
- {
- 	uint8_t service_class = get_u8(data + 16);
- 
--	mgmt_print_uuid(data);
-+	print_field("UUID: %s", bt_uuid128_to_str(data));
- 	print_field("Service class: 0x%2.2x", service_class);
- }
- 
-@@ -12468,7 +12453,7 @@ static void mgmt_add_uuid_rsp(const void *data, uint16_t size)
- 
- static void mgmt_remove_uuid_cmd(const void *data, uint16_t size)
- {
--	mgmt_print_uuid(data);
-+	print_field("UUID: %s", bt_uuid128_to_str(data));
- }
- 
- static void mgmt_remove_uuid_rsp(const void *data, uint16_t size)
-@@ -13092,7 +13077,7 @@ static void mgmt_start_service_discovery_cmd(const void *data, uint16_t size)
- 	}
- 
- 	for (i = 0; i < num_uuids; i++)
--		mgmt_print_uuid(data + 4 + (i * 16));
-+		print_field("UUID: %s", bt_uuid128_to_str(data + 4 + (i * 16)));
- }
- 
- static void mgmt_start_service_discovery_rsp(const void *data, uint16_t size)
-@@ -13352,7 +13337,7 @@ static void mgmt_set_exp_feature_cmd(const void *data, uint16_t size)
- {
- 	uint8_t enable = get_u8(data + 16);
- 
--	mgmt_print_uuid(data);
-+	print_field("UUID: %s", bt_uuid128_to_str(data));
- 	print_enable("Action", enable);
- }
- 
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 5d603ef39..ba339e074 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -270,6 +270,8 @@ static const struct usb_device_id blacklist_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0cf3, 0xe360), .driver_info = BTUSB_QCA_ROME |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0cf3, 0xe500), .driver_info = BTUSB_QCA_ROME |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe092), .driver_info = BTUSB_QCA_ROME |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe09f), .driver_info = BTUSB_QCA_ROME |
 -- 
-2.30.2
+2.17.1
 
