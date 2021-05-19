@@ -2,103 +2,126 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D590238839C
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 May 2021 02:10:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E7AA38839A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 May 2021 02:10:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234288AbhESAL7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 May 2021 20:11:59 -0400
-Received: from mga09.intel.com ([134.134.136.24]:41857 "EHLO mga09.intel.com"
+        id S233695AbhESALz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 May 2021 20:11:55 -0400
+Received: from mga18.intel.com ([134.134.136.126]:12937 "EHLO mga18.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233582AbhESAL7 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 May 2021 20:11:59 -0400
-IronPort-SDR: N/iz48kWDa8+O1LC7ARLftXZc7ZOf0eAFZHenQnJKj+s5nvXtwTc5GJ3LmlT4U1mkQfPvhehe7
- x+7rnDGpFwYw==
-X-IronPort-AV: E=McAfee;i="6200,9189,9988"; a="200900090"
+        id S231947AbhESALz (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 18 May 2021 20:11:55 -0400
+IronPort-SDR: WAd+CI4Y159IvF5OLDpZ0+imCFtYqZBIjEH2YdrvcV6qHxd3Kv1irxoLSE8qg86OO15ZZvTcDQ
+ HUPRQrH8tRiA==
+X-IronPort-AV: E=McAfee;i="6200,9189,9988"; a="188263489"
 X-IronPort-AV: E=Sophos;i="5.82,310,1613462400"; 
-   d="scan'208";a="200900090"
+   d="scan'208";a="188263489"
 Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2021 17:10:36 -0700
-IronPort-SDR: v1XDgDXXgjrmfhBxQjqao+1kDJMwHQhTJjfLEgMbRa3vKpG2LJBOjdAUMj5mbJmyMlJXj+A/Rq
- a7lmcZLZsVHw==
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2021 17:10:36 -0700
+IronPort-SDR: eWtAkOFJROeYMkHvA0TMkJ4MnSSlKF3Y5F/qWcJwYE8KVaz2X8CfTyzKOkei3C0CjKnZFJ4s8D
+ ZxV/CYb23dUw==
 X-IronPort-AV: E=Sophos;i="5.82,310,1613462400"; 
-   d="scan'208";a="439707711"
+   d="scan'208";a="439707715"
 Received: from bgi1-mobl2.amr.corp.intel.com ([10.209.0.202])
   by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2021 17:10:34 -0700
 From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     inga.stotland@intel.com, brian.gix@intel.com
-Subject: [PATCH BlueZ 2/4] nesh: Normalize endian of public/private ECC keys
-Date:   Tue, 18 May 2021 17:10:25 -0700
-Message-Id: <20210519001027.1540720-3-brian.gix@intel.com>
+Subject: [PATCH BlueZ 3/4] tools/mesh: Add all supported OOB methods to cfgclient
+Date:   Tue, 18 May 2021 17:10:26 -0700
+Message-Id: <20210519001027.1540720-4-brian.gix@intel.com>
 X-Mailer: git-send-email 2.25.4
 In-Reply-To: <20210519001027.1540720-1-brian.gix@intel.com>
 References: <20210519001027.1540720-1-brian.gix@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The Mesh profile specification defines a Mesh byte order of Big Endian
-for Public keys used to calculate shared secrets. Further the
-specification sample data also show this same byte order for Private
-keys.  However, our internal ECDH shared secret calculation requires
-Little Endian byte ordering. This fixes our DBus interface, and
-debugging output to use Mesh Byte Ordering (Big Endian) for all human
-readable input/output.
+To support the widest range of mesh devices, we need to support any
+possible capability combinations that a remote device may request.
 ---
- mesh/prov-acceptor.c  | 8 +++++++-
- mesh/prov-initiator.c | 3 +++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ tools/mesh-cfgclient.c | 32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
 
-diff --git a/mesh/prov-acceptor.c b/mesh/prov-acceptor.c
-index e806b12ef..8df9eee9f 100644
---- a/mesh/prov-acceptor.c
-+++ b/mesh/prov-acceptor.c
-@@ -223,7 +223,11 @@ static bool acp_credentials(struct mesh_prov_acceptor =
-*prov)
-=20
- 	print_packet("PublicKeyProv", prov->conf_inputs.prv_pub_key, 64);
- 	print_packet("PublicKeyDev", prov->conf_inputs.dev_pub_key, 64);
+diff --git a/tools/mesh-cfgclient.c b/tools/mesh-cfgclient.c
+index 49069674f..fd859a606 100644
+--- a/tools/mesh-cfgclient.c
++++ b/tools/mesh-cfgclient.c
+@@ -104,7 +104,17 @@ static struct model_info *cfgcli;
+ static struct l_queue *devices;
+ 
+ static bool prov_in_progress;
+-static const char *caps[] = {"static-oob", "out-numeric", "in-numeric"};
++static const char *caps[] = {"static-oob",
++				"push",
++				"twist",
++				"blink",
++				"beep",
++				"vibrate",
++				"public-oob",
++				"out-alpha",
++				"in-alpha",
++				"out-numeric",
++				"in-numeric"};
+ 
+ static bool have_config;
+ 
+@@ -419,7 +429,7 @@ static void agent_input_done(oob_type_t type, void *buf, uint16_t len,
+ 	struct l_dbus_message *reply = NULL;
+ 	struct l_dbus_message_builder *builder;
+ 	uint32_t val_u32;
+-	uint8_t oob_data[16];
++	uint8_t oob_data[64];
+ 
+ 	switch (type) {
+ 	case NONE:
+@@ -435,15 +445,15 @@ static void agent_input_done(oob_type_t type, void *buf, uint16_t len,
+ 		/* Fall Through */
+ 
+ 	case HEXADECIMAL:
+-		if (len > 16) {
++		if (len > sizeof(oob_data)) {
+ 			bt_shell_printf("Bad input length\n");
+ 			break;
+ 		}
+-		memset(oob_data, 0, 16);
++		memset(oob_data, 0, sizeof(oob_data));
+ 		memcpy(oob_data, buf, len);
+ 		reply = l_dbus_message_new_method_return(msg);
+ 		builder = l_dbus_message_builder_new(reply);
+-		append_byte_array(builder, oob_data, 16);
++		append_byte_array(builder, oob_data, len);
+ 		l_dbus_message_builder_finalize(builder);
+ 		l_dbus_message_builder_destroy(builder);
+ 		break;
+@@ -580,6 +590,16 @@ static struct l_dbus_message *prompt_numeric_call(struct l_dbus *dbus,
+ 	return NULL;
+ }
+ 
++static struct l_dbus_message *prompt_public_call(struct l_dbus *dbus,
++                                               struct l_dbus_message *msg,
++                                               void *user_data)
++{
++       l_dbus_message_ref(msg);
++       agent_input_request(HEXADECIMAL, 64, "Enter 512 bit Public Key",
++                                                       agent_input_done, msg);
++       return NULL;
++}
 +
-+	/* Normaize for debug out -- No longer needed for calculations */=0D
-+	swap_u256_bytes(prov->private_key);
- 	print_packet("PrivateKeyLocal", prov->private_key, 32);
-+
- 	print_packet("ConfirmationInputs", &prov->conf_inputs,
- 						sizeof(prov->conf_inputs));
- 	print_packet("ECDHSecret", prov->secret, 32);
-@@ -307,11 +311,13 @@ static void priv_key_cb(void *user_data, int err, uin=
-t8_t *key, uint32_t len)
- 		return;
- 	}
-=20
-+	/* API delivers Mesh byte order, switch to little endian */
-+	swap_u256_bytes(key);
- 	memcpy(prov->private_key, key, 32);
- 	ecc_make_public_key(prov->private_key,
- 			prov->conf_inputs.dev_pub_key);
-=20
--	/* Convert to Mesh byte order */
-+	/* Convert Public key to Mesh byte order */
- 	swap_u256_bytes(prov->conf_inputs.dev_pub_key);
- 	swap_u256_bytes(prov->conf_inputs.dev_pub_key + 32);
-=20
-diff --git a/mesh/prov-initiator.c b/mesh/prov-initiator.c
-index ae9c646de..c62577523 100644
---- a/mesh/prov-initiator.c
-+++ b/mesh/prov-initiator.c
-@@ -222,6 +222,9 @@ static bool int_credentials(struct mesh_prov_initiator =
-*prov)
-=20
- 	print_packet("PublicKeyProv", prov->conf_inputs.prv_pub_key, 64);
- 	print_packet("PublicKeyDev", prov->conf_inputs.dev_pub_key, 64);
-+
-+	/* Print DBG out in Mesh order */
-+	swap_u256_bytes(prov->private_key);
- 	print_packet("PrivateKeyLocal", prov->private_key, 32);
- 	print_packet("ConfirmationInputs", &prov->conf_inputs,
- 						sizeof(prov->conf_inputs));
---=20
+ static struct l_dbus_message *prompt_static_call(struct l_dbus *dbus,
+ 						struct l_dbus_message *msg,
+ 						void *user_data)
+@@ -618,6 +638,8 @@ static void setup_agent_iface(struct l_dbus_interface *iface)
+ 						"u", "s", "number", "type");
+ 	l_dbus_interface_method(iface, "PromptStatic", 0, prompt_static_call,
+ 						"ay", "s", "data", "type");
++       l_dbus_interface_method(iface, "PublicKey", 0, prompt_public_call,
++                                               "ay", "", "data");
+ }
+ 
+ static bool register_agent(void)
+-- 
 2.25.4
 
