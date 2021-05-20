@@ -2,45 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35A3538B318
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 May 2021 17:23:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B98638B320
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 May 2021 17:24:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232377AbhETPYr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 20 May 2021 11:24:47 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:44605 "EHLO
+        id S232372AbhETPZy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 20 May 2021 11:25:54 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:36588 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243866AbhETPYC (ORCPT
+        with ESMTP id S232062AbhETPZF (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 20 May 2021 11:24:02 -0400
+        Thu, 20 May 2021 11:25:05 -0400
 Received: from smtpclient.apple (p4fefc9d6.dip0.t-ipconnect.de [79.239.201.214])
-        by mail.holtmann.org (Postfix) with ESMTPSA id AC48ACECEB;
-        Thu, 20 May 2021 17:30:31 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 153D6CECEB;
+        Thu, 20 May 2021 17:31:36 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.80.0.2.43\))
-Subject: Re: [PATCH] Bluetooth: btusb: Use firmware_request_nowarn
+Subject: Re: [PATCH v2] Bluetooth: btusb: Add support USB ALT 3 for WBS
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20210513230422.2991704-1-luiz.dentz@gmail.com>
-Date:   Thu, 20 May 2021 17:22:37 +0200
-Cc:     linux-bluetooth@vger.kernel.org
+In-Reply-To: <20210514031901.2276-1-hildawu@realtek.com>
+Date:   Thu, 20 May 2021 17:23:41 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "open list:BLUETOOTH SUBSYSTEM" <linux-bluetooth@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Max Chou <max.chou@realtek.com>,
+        Alex Lu <alex_lu@realsil.com.cn>, kidman@realtek.com
 Content-Transfer-Encoding: 7bit
-Message-Id: <61B7DDCB-5A1C-4F85-BB46-91BD93E7C4FE@holtmann.org>
-References: <20210513230422.2991704-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Message-Id: <E9F68188-F920-4CBA-95D4-4270472D63D6@holtmann.org>
+References: <20210514031901.2276-1-hildawu@realtek.com>
+To:     Hilda Wu <hildawu@realtek.com>
 X-Mailer: Apple Mail (2.3654.80.0.2.43)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Luiz,
+Hi Hilda,
 
-> This replaces the use of request_firmware to firmware_request_nowarn
-> when firmware is optional (firmware is already operational).
+> Because mSBC frames do not need to be aligned to the SCO packet
+> boundary. Using USB ALT 3 let HCI payload >= 60 bytes, let mSBC
+> data satisfy 60 Bytes avoid payload unaligned situation and fixed
+> some headset no voise issue.
 > 
-> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> USB Alt 3 supported also need HFP support transparent MTU in 72 Bytes.
+> 
+> Signed-off-by: Hilda Wu <hildawu@realtek.com>
 > ---
-> drivers/bluetooth/btusb.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
+> Changes in v2:
+> - Updated signed off name.
+> - Adjusted coding style.
+> ---
+> ---
+> drivers/bluetooth/btusb.c | 7 +++++++
+> 1 file changed, 7 insertions(+)
 
 patch has been applied to bluetooth-next tree.
 
