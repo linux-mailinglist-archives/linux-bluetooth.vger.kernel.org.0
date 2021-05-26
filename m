@@ -2,176 +2,294 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BACF390F9F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 May 2021 06:32:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6A45390FEC
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 May 2021 07:13:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230007AbhEZEeD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 26 May 2021 00:34:03 -0400
-Received: from mga17.intel.com ([192.55.52.151]:41173 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232206AbhEZEeC (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 26 May 2021 00:34:02 -0400
-IronPort-SDR: Ny97DbRQ64N1JKPwGXUt9d8zqifj5KC7mVp0XjCNhk6eXWcb76QvZPrmBeoxwOtbvIUevlRrX0
- mCTlH4VJ/gMg==
-X-IronPort-AV: E=McAfee;i="6200,9189,9995"; a="182701508"
-X-IronPort-AV: E=Sophos;i="5.82,330,1613462400"; 
-   d="scan'208";a="182701508"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2021 21:32:31 -0700
-IronPort-SDR: qDMgEbzCst2qvCXCE1Tywd0ewtE9d978dSVnSmGHpqD//EQY9oKHK0GFNoikh3BCYKN1nk7ud0
- 6qpoxoEDbfUQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,330,1613462400"; 
-   d="scan'208";a="397672728"
-Received: from orsmsx606.amr.corp.intel.com ([10.22.229.19])
-  by orsmga006.jf.intel.com with ESMTP; 25 May 2021 21:32:31 -0700
-Received: from orsmsx607.amr.corp.intel.com (10.22.229.20) by
- ORSMSX606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.4; Tue, 25 May 2021 21:32:30 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx607.amr.corp.intel.com (10.22.229.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4
- via Frontend Transport; Tue, 25 May 2021 21:32:30 -0700
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.170)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2242.4; Tue, 25 May 2021 21:32:29 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Snl6ARpCHO/qZgpE2x66txL12evBJakNQ98jgSrkyEOWDu/eLWzp2ZA/51Oek3nApkGiRsGC/hxCJStjB33aWBa4p1797FRE+vB2/Kb1Kp0fga1wAIOyTEdo7UAUnC2cnWUE9nVHv6/sZ2n1z1b6Xmyxo9/d7fTieFMJOcpUto+5unGjdNAa0Fj94vlXuBeJ3XzLvTWVZh5Cqu0owx7QF1FdBuLLBqZzHNxGQvDvSAYHPWoqwR1RRzmjef65CmdSrryra/HV50ebfYAn7iwQmF6YCgqF9R27IXyF/eoJwX0hUwRhiIvHxMdZvyxt0svCmsVyAOzQH7Ks3JQhs7KnOQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DKgefleMYBAH5KvtjKrKHK7umXObxC9N5IoQN6boOEM=;
- b=EWcAkk8uASI9NnxW0ZBTqLwdGbItx84I6rTtK7zQvUtDRVzZLvjjDA0ipcFpQFWSNJ0pi7pMJdTB9sZWjwvKFcKE/+gO8spgvZBKdYG/zlhLvQdfd1O5otdgbuu1QGfDStGsPUdWWpr3CWwrYtUTNeLGJp5FWOA4OGjj3J7YzWvaLT74DIFkLmFAqra7c+VX9/S+Q2l7/NMrzR96rr+VIGvFuoU0lUsqS+CYrxmkXCsBKzqV0R3bC8ygiXvWTMY6ciq4v9Jm9KfRZmqkLJDP9P6A6uDGbWcRZFsZTSTeW031JT5m7zA47BGexHDHAkY+3YzgBJh1rTw20tQA8/q8mw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DKgefleMYBAH5KvtjKrKHK7umXObxC9N5IoQN6boOEM=;
- b=ltsJdKdFdyFN3a9Z4kH/31QhMonxxFqExQOgKdbODIbcUoKui9TEh3fkx8kfmg1yjTrKefELiByHUMeI4GP4BxjbKxPfaGtAPfMTEDe0KID/C5c8dLTaig8Ul/MNvUojgilznfOSXmIlYiVMBhwHFKoOiNNNVpPmn2OlTBkl+yE=
-Received: from DM8PR11MB5573.namprd11.prod.outlook.com (2603:10b6:8:3b::7) by
- DM8PR11MB5670.namprd11.prod.outlook.com (2603:10b6:8:37::12) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4150.23; Wed, 26 May 2021 04:32:26 +0000
-Received: from DM8PR11MB5573.namprd11.prod.outlook.com
- ([fe80::38f3:7a5:2cec:8ff7]) by DM8PR11MB5573.namprd11.prod.outlook.com
- ([fe80::38f3:7a5:2cec:8ff7%5]) with mapi id 15.20.4173.020; Wed, 26 May 2021
- 04:32:26 +0000
-From:   "K, Kiran" <kiran.k@intel.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Chris Clayton <chris2553@googlemail.com>
-CC:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "Von Dentz, Luiz" <luiz.von.dentz@intel.com>,
-        "Srivatsa, Ravishankar" <ravishankar.srivatsa@intel.com>,
-        "Tumkur Narayan, Chethan" <chethan.tumkur.narayan@intel.com>,
-        Marcel Holtmann <marcel@holtmann.org>
-Subject: RE: BT Intel: Regression loading firmware in linux-5.13-rc3
-Thread-Topic: BT Intel: Regression loading firmware in linux-5.13-rc3
-Thread-Index: AQHXUUyEbJf5P+ag+UOtEiqZABIrNarz+lcggAAG9oCAAH5+gIAAFEYAgAAMXYCAAIugMA==
-Date:   Wed, 26 May 2021 04:32:26 +0000
-Message-ID: <DM8PR11MB5573BDF3973186620DC818D3F5249@DM8PR11MB5573.namprd11.prod.outlook.com>
-References: <81eddb07-f346-c12a-345b-d929fd2edb10@googlemail.com>
- <DM8PR11MB5573280FAB275DCEE789D389F5259@DM8PR11MB5573.namprd11.prod.outlook.com>
- <52914cbc-4004-8389-fa7b-6b42cf8f85e1@googlemail.com>
- <CABBYNZKtApu7Q4kU+msfLco-ihDrx5kWiugDRT0ic3_Tb1YSGg@mail.gmail.com>
- <d97da5b6-a337-3550-ace3-e6789fd9165f@googlemail.com>
- <CABBYNZLYsM_LgKU8r0BRGp3hAk8m2OQWxnwtGz8VwidGCHRB-A@mail.gmail.com>
-In-Reply-To: <CABBYNZLYsM_LgKU8r0BRGp3hAk8m2OQWxnwtGz8VwidGCHRB-A@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-reaction: no-action
-dlp-version: 11.5.1.3
-dlp-product: dlpe-windows
-authentication-results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=intel.com;
-x-originating-ip: [2405:201:d012:c862:d15d:a933:aca5:149c]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 8d416550-a46b-44ec-b675-08d91fff43b7
-x-ms-traffictypediagnostic: DM8PR11MB5670:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM8PR11MB567088F0BC8D8462FC13530BF5249@DM8PR11MB5670.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:3826;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: XMO4IwD0ARtOS3YS86/Mc6PoioP34MU/IRtwKJZJkCUoX+PkuB06+c59+3X4GEaDqWX+a/crtIrqMAeWKHXcr6OUiDaqvaqmSzXXSmlgz7hXhUhcKCKtJn17zPK7oquwuKQPA4ElKLmOpS3Q9grvzpRkh3Qvtg9rlVwVpoKnwhpkqnbL2TMh3LG9r4MJwyRRCrXPiYnMLya2kGw2rnVv4wTXh9FpEZdcgKoQm69agSZaN3j9o3hbaPDcEzF+TuVYIm4LOStS3ODXrb0snCARfblzN5yGnWY284I5tm2aZIJ5Lw+3TSJQK7TUIucu0S8CXnXFo1UbzgWs5XpO/zBv2Yk1GaBqLmZitanrlGZQP2vZSEFxwvDFSLHs30zvi+5iaGSi70adrMe8KXUoMiA2Dn8616HjWHuZPOZSONZTKnnGq7rMNFyzCcATXHalFAWSsZu5s9np8+Z5+JFapDulrYdjMk+MHh967Tti91mZOejfLjW/NVz72mshRxm/uv2TmP1N3SMoCWnfEGCqW13+8qbz6nmu83tBFW3bVM9skrMiDMAopabZh+KtLDHy/7BLHi1Y1rAY/hcdlO49dWKmeV8FXAcEwt18TmpnWxrcbRzV+p8uAUONzTcCQdj3RrsxYctw/czIOPJJ/LKf88r9Fz+e7+pLJDkEUyjBqgskVC6XjC3+LN8B0fh/wWbvj70RdUq0dDZ37bjsfb6hvN8p75FVDkKBd5tRRlDIlrXRYE0=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR11MB5573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(39860400002)(396003)(376002)(136003)(346002)(9686003)(83380400001)(6506007)(33656002)(4326008)(55016002)(8676002)(86362001)(54906003)(53546011)(38100700002)(110136005)(122000001)(66556008)(66476007)(52536014)(8936002)(478600001)(71200400001)(2906002)(186003)(7696005)(64756008)(66446008)(76116006)(316002)(5660300002)(66946007)(966005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?utf-8?B?SnhzZWtxU1FZTkx6NGJQRkJTVHloZE1BVlB4KzRMR3FQRWRCTmo3K2piVkxF?=
- =?utf-8?B?eGw1bkptZEFOdHlJSWZkOE1yVE5EeWVUMEx3ak1LVzJsZm0xczRwMVI4TjRl?=
- =?utf-8?B?NGErYTI1LzQvd0dneFJkN0YyWHZ2dWpFL2dRQkIwd1ByeHpabGQ0eXkyR3Qv?=
- =?utf-8?B?ZDk5RWwvSGJZSmF2QkZzTWFwcEkxU0RVRlpxV3kwS2luV1YzNDFHSENVait2?=
- =?utf-8?B?WGE3ZkY3c1dtRlpwZkord00wME1idmN5S2FnaFZ1N2dCdWYySlRsYzQzVzVx?=
- =?utf-8?B?SkN4M2Jmc1BZMGpZVEJnN004dC9LcUxSZ0VENG1yTlUyTi90bDNpSkYvUjRh?=
- =?utf-8?B?OHlVL3A1S09SbXpKdHRWZm9GdC9YY3IraHZldHJ1c0YwVTNSYnBjdEJtZjVO?=
- =?utf-8?B?OUZDRzBuSzdjd0lZdHBUN3hIZG43RWNBa0JuSEt6ZjEvRzg0aW04MGY4WFI3?=
- =?utf-8?B?OWVYR2pDOUZtZ2s1VjJxTW4vTktuYjhwOG9qZERNV1Nua1phL0NVdUx4d3J5?=
- =?utf-8?B?Z0ttYm9wU0FKU1Z4dVBybUpmdVgvd1hvOFUzVEloeUVJenFaRGpSWG1udllw?=
- =?utf-8?B?elNLWExtZVZGbGkyZndScUszbXBSeGFsYXpZRytqa3F0NFRQbEV3VkYyWUZy?=
- =?utf-8?B?bkdLNXRreTZESXFmSnExZGQxRzNUMXduNG9SRDdvU3ByMDdFc3M2TEtkYk1O?=
- =?utf-8?B?MnZhbGNhV3d2ZzBtemdia1ZjVjYvMHcxNEczM2FXM2VIZ2xzQmFEZFFNbktN?=
- =?utf-8?B?RXEwRUcxUnkzelVMVENrV2cxSitycVBCV2F2MWFPM3U4QlZVTjBuQnJDUWww?=
- =?utf-8?B?RVY0VWlya3MzeU1kcWZIY25SNWtqNmJvdXpVemUzUnhJMkJ3bDRjMSs4TDMz?=
- =?utf-8?B?RWh1KzJkUk8rQlhaLzdGVDY0Ym9DQjNkN1N1Vkg0SEwzQ0xNQUl4VSt1UEZw?=
- =?utf-8?B?eUkvZ2FGb0lTNmhDczlrU3ZZZk93T0xabkdGdk9OaTZuYnZjemV4bVduQUsv?=
- =?utf-8?B?OFRQdjdkQnZxVzhSdVNwMG9zUDVsTXZNMlh2NU9jSHpqUEdrTEpja2JTMHAy?=
- =?utf-8?B?RW0vYmlkaGFDM2lscGpaU0xrNlphMU1GU0tueEVyOUtOcDlXZlB5ZWxCd09W?=
- =?utf-8?B?SUlXU1pXOThvaVZPOU1UMjRxZXdqdnB4YzRqMVE2U2JrL2dLaFNuTDU1dlps?=
- =?utf-8?B?SnVLWHZiV0hrN1hkcWZQdzBHYVIvbTJ6dzZZVGJydlJUdEo3OUR0VkF1aTFQ?=
- =?utf-8?B?SnVrTWhrMVNKMHJ0MldDTUVoRUNoTmhmcG1iOEp4NXVRRG1XRWl4WmRSK0xy?=
- =?utf-8?B?Rm8wUEFRYTVrYjdVTEpyTEphMW9nWTZnUmxVQXZpdHVYQUI1WDdwdW5nWU1K?=
- =?utf-8?B?dGhhb1hFcm9UN1hsM0xJUU9SbXdHeDZsVGtQQjhGOGRzeWVhVk1yak1wNFhO?=
- =?utf-8?B?UHNGM2QrK0tVOCs1TWlDeGY1MlR6dVk4L0pjRzBJSHZFWXFVQmVNcFFNb3ZI?=
- =?utf-8?B?NEgxSmdtQTZ4Mm1PZllIOE16WU9rMGNXVlJHaXh2Q3dockRVaVU1UTBtTGxu?=
- =?utf-8?B?K0JqOUZoSjFYL0Q3S3NxTE9yWEY1MWNXbU1kcXcrVkFUYU9vNHhMaEt4bEI0?=
- =?utf-8?B?OTFtWEVxVmh5V29QMXV1bFNnY29Gemc2M2VDL2J6amFvclhzSU9lQitVRTdk?=
- =?utf-8?B?T043eEZrSGZrUVpscjg0UURQK2h6OEhLeW1JQW5GeU1UM2JEODRhZzhLbUhP?=
- =?utf-8?B?Z2NFZm9CLzRUUnlKcVp5emlzcVh0dHNGMWxmaEx1dXVYQVN5SVpVYnV3ZDFx?=
- =?utf-8?B?cXBOZC9JRi95Z0xUb09PdjMwUHl3RTlKN3lGYWdoVlptVzFNWVZXeGMwVFRv?=
- =?utf-8?Q?qIdbn7aa1kMxV?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S230384AbhEZFOq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 26 May 2021 01:14:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47594 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230291AbhEZFOp (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 26 May 2021 01:14:45 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863E5C061574
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 May 2021 22:13:13 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id i5so24604923pgm.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 May 2021 22:13:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=S5qSqx3TwuZ8VsmUQSyplqhBBlTtHbqLkNIGiOXodxw=;
+        b=fTP39yXqqzvXM0GK4pQGyOpTF+SJJzxNyTuplT5txEw8iUhh+aPIDYj+/mH1cautGK
+         tE+2Hxd8YysEEMD30tioOc610IIP0UPTmSqhH9AmBMCSQ0SEI+x0SOpjFQcQlnW0JL3m
+         6RaJGBcIlOSEWyBA/rpul/33jQ0nuCUR0ixG1BBcDQ+mTTvt41MAtWZJ/lNrn5M37RCq
+         UKefwwVpexaimJ1KJts68IqHYU5ezWIkMAayFA6F4WFZVse5Eo1xuarOq78dh8FjGvdp
+         Z9h4b5RrCp8Un+mt2Y+pDzHE5Wa93DzpYB21/tw8h/YGG091KejS3nutgnduvihv+w8C
+         ME2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=S5qSqx3TwuZ8VsmUQSyplqhBBlTtHbqLkNIGiOXodxw=;
+        b=WWXTiAoKcCKYbgTdNyyPC8hJCTj6e/Yhpu4Np8zGOkVdDk1HMjWmVKRzAyv76kaNkC
+         Mkfx9BGz+67YeaHcBuNz0+OVwgzoCkAP52D/LJjnjTa6G+y+xo7WQqm73FMbCSiDNsgr
+         JzTnymF9hiwP3g4hhuF8VgWqBVdRDWCe+PjiK2dx9D1QixZj4fIqzILQU3paafP4O3oc
+         cHXqKY1CY2/7c0jFA7AQelA06wE7Ez5tEAGYQxQ+x1x+K3Gs3km+voRoT4JRZd7weLs1
+         vSNRrws08Bml0vdbFTfyF3bItezznxPTQZSWKb5VSqmXbqfFstrQ3TgxOybklJfnN7ii
+         70FQ==
+X-Gm-Message-State: AOAM533D6+obiShVJ64mxYWikSmdjSn8yNMcdXhlpd/sndcJ8EX2KDqw
+        vTNXJmLpKRLndfA1DtoFPp9NjheZIwb9FA==
+X-Google-Smtp-Source: ABdhPJwllc2xGqHVnSqwPoD57B4NCA8ecPHSS/gaQ5P5qsJuLQKm5/ZLTdFGUqxdh8U/m2WczUKm/Q==
+X-Received: by 2002:a63:b545:: with SMTP id u5mr22822391pgo.261.1622005992600;
+        Tue, 25 May 2021 22:13:12 -0700 (PDT)
+Received: from han1-mobl3.intel.com ([2601:1c0:6a01:d830::e853])
+        by smtp.gmail.com with ESMTPSA id h8sm13865944pfv.60.2021.05.25.22.13.11
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 May 2021 22:13:11 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH V2 1/4] tools/btmgmt: Add device flags commands
+Date:   Tue, 25 May 2021 22:13:07 -0700
+Message-Id: <20210526051310.423630-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR11MB5573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8d416550-a46b-44ec-b675-08d91fff43b7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 May 2021 04:32:26.2532
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kj1dgTkGBMgxSbliI6x0Dp2Q6i4XOtRA8bS6xtnna3k9ULltDwPyk4AnUfa5V/Owvb8Ds/H7GAPNXp6IN1x/MQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR11MB5670
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-SGkgQ2hyaXMsDQoNCj4gPiA+PiBEb2VzIHRoZSBwaHJhc2UgIm5leHQgcmVsZWFzZSIgbWVhbiBs
-aW51eC01LjEzLXJjNCBvciB0aGUgbmV4dA0KPiA+ID4+IHJlbGVhc2Ugb2YgbGludXgtZmlybXdh
-cmU/ICBJIGp1c3Qgd2FudCB0byBrbm93IHdoYXQgdG8gbG9vayBvdXQgZm9yLg0KDQpJIGRpZCBj
-aGVjayBpbnRlcm5hbGx5IHdpdGggdGhlIHRlYW0gYW5kIGZpeCB3aWxsIGJlIHBhcnQgb2YgdGhl
-IHJlbGVhc2UoMjIuODApICBwbGFubmVkIHRvd2FyZHMgZW5kIG9mIEF1Zy8yMS4NCg0KPiA+ID4+
-DQo+ID4gPj4gVGhhbmtzDQo+ID4gPj4NCj4gPiA+PiBDaHJpcw0KPiA+ID4+DQo+ID4gPj4NCj4g
-PiA+PiBPbiAyNS8wNS8yMDIxIDExOjE0LCBLLCBLaXJhbiB3cm90ZToNCj4gPiA+Pj4gSGkgQ2hy
-aXMsDQo+ID4gPj4+DQo+ID4gPj4+IFRoaXMgaXMgYSBrbm93biBpc3N1ZSByZWxhdGVkIHRvIGZp
-cm13YXJlIGFuZCBpcyBleHBlY3RlZCB0byBiZSBmaXhlZCBpbg0KPiBuZXh0IHJlbGVhc2UuDQo+
-ID4gPj4+DQo+ID4gPj4+IFRoYW5rcywNCj4gPiA+Pj4gS2lyYW4NCj4gPiA+Pj4NCj4gPiA+Pj4N
-Cj4gPiA8c25pcD4NCj4gPiA+DQo+ID4gPiBodHRwczovL2dpdC5rZXJuZWwub3JnL3B1Yi9zY20v
-bGludXgva2VybmVsL2dpdC9ibHVldG9vdGgvYmx1ZXRvb3RoLQ0KPiA+ID4NCj4gbmV4dC5naXQv
-Y29tbWl0L2RyaXZlcnMvYmx1ZXRvb3RoL2J0dXNiLmM/aWQ9MTgzZGNlNWE3ZmQzMDQwY2VkNmEy
-MjANCj4gPiA+IGIwYWE1MzZjOTI2ZjEwY2Q5DQo+ID4gPg0KPiA+ID4gVGhhdCBzYWlkIHdlIHNo
-YWxsIHByb2JhYmx5IG1lcmdlIGl0IHRvIDUuMTMgYmVmb3JlIGl0IGlzIHJlbGVhc2VkLg0KPiA+
-ID4gSSB0aGluayB5b3Ugc2hvdWxkLCBvdGhlcndpc2UsIHdpdGhvdXQgcGF0Y2hpbmcsIDUuMTMu
-MCB3aWxsIGJlIGJyb2tlbiBmb3INCj4gbWFueSBibHVldG9vdGggdXNlcnMuDQo+ID4NCj4gPiBJ
-J3ZlIGFwcGxpZWQgeW91ciBwYXRjaCB5b3VyIHBhdGNoIHRvIExpbnVzJyBsYXRlc3QgYW5kIGdy
-ZWF0ZXN0IChieQ0KPiA+IGhhbmQgLSBpdCBkb2Vzbid0IGFwcGx5IGNsZWFubHkgdG8gdGhlIGN1
-cnJlbnQgNS4xMyB0cmVlKS4gVGhlIGVycm9yIG1lc3NhZ2VzDQo+IGFyZSBubyBsb25nZXIgcHJv
-ZHVjZWQgYW5kIGJsdWV0b290aCBpcyB3b3JraW5nIGZpbmUsIHNvLi4uDQo+ID4NCj4gPiBUZXN0
-ZWQtYnk6IENocmlzIENsYXl0b24gPGNocmlzMjU1M0Bnb29nbGVtYWlsLmNvbT4NCj4gDQo+IFNo
-YWxsIEkgaGF2ZSBhbm90aGVyIHB1bGwgcmVxdWVzdCwgb3IgZG8gd2UgbmVlZCB0byBzZW5kIHRo
-aXMgZGlyZWN0bHkgdG8gTGludXMNCj4gc29tZWhvdz8NCj4gDQo+IC0tDQo+IEx1aXogQXVndXN0
-byB2b24gRGVudHoNCg0KVGhhbmtzLA0KS2lyYW4NCg0K
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
+
+This patch adds commands for get/set device flags mgmt ops.
+
+Usage:
+
+get-flags [-t type] <address>
+        -t type    Address Type
+                      0 BR/EDR
+                      1 LE Public
+                      2 LE Random
+
+set-flags [-f flags] [-t type] <address>
+        -t type    Address Type
+                      0 BR/EDR
+                      1 LE Public
+                      2 LE Random
+        -f flags   Device flag.
+                      1 Remote Wake Enable
+---
+ tools/btmgmt.c | 174 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 174 insertions(+)
+
+diff --git a/tools/btmgmt.c b/tools/btmgmt.c
+index bf3b460d0..a6ac026dc 100644
+--- a/tools/btmgmt.c
++++ b/tools/btmgmt.c
+@@ -1000,6 +1000,24 @@ static void advertising_removed(uint16_t index, uint16_t len,
+ 	print("hci%u advertising_removed: instance %u", index, ev->instance);
+ }
+ 
++static void flags_changed(uint16_t index, uint16_t len, const void *param,
++							void *user_data)
++{
++	const struct mgmt_ev_device_flags_changed *ev = param;
++	char addr[18];
++
++	if (len < sizeof(*ev)) {
++		error("Too small (%u bytes) %s event", len, __func__);
++		return;
++	}
++
++	ba2str(&ev->addr.bdaddr, addr);
++	print("hci%u device_flags_changed: %s (%s)", index, addr,
++							typestr(ev->addr.type));
++	print("     supp: 0x%08x  curr: 0x%08x",
++					ev->supported_flags, ev->current_flags);
++}
++
+ static void advmon_added(uint16_t index, uint16_t len, const void *param,
+ 							void *user_data)
+ {
+@@ -2110,6 +2128,156 @@ static void cmd_auto_power(int argc, char **argv)
+ 	}
+ }
+ 
++static void get_flags_rsp(uint8_t status, uint16_t len, const void *param,
++							void *user_data)
++{
++	const struct mgmt_rp_get_device_flags *rp = param;
++
++	if (status != 0) {
++		error("Get device flags failed with status 0x%02x (%s)",
++						status, mgmt_errstr(status));
++		bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	print("Supported Flags: 0x%08x", rp->supported_flags);
++	print("Current Flags:   0x%08x", rp->current_flags);
++	bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
++static struct option get_flags_options[] = {
++	{ "help",	0, 0, 'h' },
++	{ "type",	1, 0, 't' },
++	{ 0, 0, 0, 0 }
++};
++
++static void cmd_get_flags(int argc, char **argv)
++{
++	struct mgmt_cp_get_device_flags cp;
++	uint8_t type = BDADDR_BREDR;
++	char addr[18];
++	int opt;
++	uint16_t index;
++
++	while ((opt = getopt_long(argc, argv, "+t:h", get_flags_options,
++								NULL)) != -1) {
++		switch (opt) {
++		case 't':
++			type = strtol(optarg, NULL, 0);
++			break;
++		case 'h':
++			bt_shell_usage();
++			optind = 0;
++			return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++		default:
++			bt_shell_usage();
++			optind = 0;
++			return bt_shell_noninteractive_quit(EXIT_FAILURE);
++		}
++	}
++
++	argc -= optind;
++	argv += optind;
++	optind = 0;
++
++	if (argc < 1) {
++		bt_shell_usage();
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	index = mgmt_index;
++	if (index == MGMT_INDEX_NONE)
++		index = 0;
++
++	memset(&cp, 0, sizeof(cp));
++	str2ba(argv[0], &cp.addr.bdaddr);
++	cp.addr.type = type;
++
++	ba2str(&cp.addr.bdaddr, addr);
++	print("Get device flag of %s (%s)", addr, typestr(cp.addr.type));
++
++	if (mgmt_send(mgmt, MGMT_OP_GET_DEVICE_FLAGS, index, sizeof(cp), &cp,
++					get_flags_rsp, NULL, NULL) == 0) {
++		error("Unable to send Get Device Flags command");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++}
++
++static void set_flags_rsp(uint8_t status, uint16_t len, const void *param,
++							void *user_data)
++{
++	if (status != 0) {
++		error("Set device flags failed with status 0x%02x (%s)",
++						status, mgmt_errstr(status));
++		bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++	bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
++static struct option set_flags_options[] = {
++	{ "help",	0, 0, 'h' },
++	{ "type",	1, 0, 't' },
++	{ "flags",	1, 0, 'f' },
++	{ 0, 0, 0, 0 }
++};
++
++static void cmd_set_flags(int argc, char **argv)
++{
++	struct mgmt_cp_set_device_flags cp;
++	uint8_t type = BDADDR_BREDR;
++	uint32_t flags = 0;
++	char addr[18];
++	int opt;
++	uint16_t index;
++
++	while ((opt = getopt_long(argc, argv, "+f:t:h", set_flags_options,
++								NULL)) != -1) {
++		switch (opt) {
++		case 'f':
++			flags = strtol(optarg, NULL, 0);
++			break;
++		case 't':
++			type = strtol(optarg, NULL, 0);
++			break;
++		case 'h':
++			bt_shell_usage();
++			optind = 0;
++			return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++		default:
++			bt_shell_usage();
++			optind = 0;
++			return bt_shell_noninteractive_quit(EXIT_FAILURE);
++		}
++	}
++
++	argc -= optind;
++	argv += optind;
++	optind = 0;
++
++	if (argc < 1) {
++		bt_shell_usage();
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	index = mgmt_index;
++	if (index == MGMT_INDEX_NONE)
++		index = 0;
++
++	memset(&cp, 0, sizeof(cp));
++	str2ba(argv[0], &cp.addr.bdaddr);
++	cp.addr.type = type;
++	cp.current_flags = flags;
++
++	ba2str(&cp.addr.bdaddr, addr);
++	print("Set device flag of %s (%s)", addr, typestr(cp.addr.type));
++
++	if (mgmt_send(mgmt, MGMT_OP_SET_DEVICE_FLAGS, index, sizeof(cp), &cp,
++					set_flags_rsp, NULL, NULL) == 0) {
++		error("Unable to send Set Device Flags command");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++}
++
+ /* Wrapper to get the index and opcode to the response callback */
+ struct command_data {
+ 	uint16_t id;
+@@ -5197,6 +5365,8 @@ static void register_mgmt_callbacks(struct mgmt *mgmt, uint16_t index)
+ 						advertising_added, NULL, NULL);
+ 	mgmt_register(mgmt, MGMT_EV_ADVERTISING_REMOVED, index,
+ 					advertising_removed, NULL, NULL);
++	mgmt_register(mgmt, MGMT_EV_DEVICE_FLAGS_CHANGED, index,
++					flags_changed, NULL, NULL);
+ 	mgmt_register(mgmt, MGMT_EV_ADV_MONITOR_ADDED, index, advmon_added,
+ 								NULL, NULL);
+ 	mgmt_register(mgmt, MGMT_EV_ADV_MONITOR_REMOVED, index, advmon_removed,
+@@ -5381,6 +5551,10 @@ static const struct bt_shell_menu main_menu = {
+ 		cmd_read_sysconfig,	"Read System Configuration"	},
+ 	{ "set-sysconfig",	"<-v|-h> [options...]",
+ 		cmd_set_sysconfig,	"Set System Configuration"	},
++	{ "get-flags",		"[-t type] <address>",
++		cmd_get_flags,		"Get device flags"		},
++	{ "set-flags",		"[-f flags] [-t type] <address>",
++		cmd_set_flags,		"Set device flags"		},
+ 	{} },
+ };
+ 
+-- 
+2.26.3
+
