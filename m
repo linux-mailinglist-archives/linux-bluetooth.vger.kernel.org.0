@@ -2,137 +2,84 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FF4C397B67
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jun 2021 22:48:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5E11397B6F
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jun 2021 22:49:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234795AbhFAUu0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 1 Jun 2021 16:50:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55780 "EHLO
+        id S234880AbhFAUvE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 1 Jun 2021 16:51:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234698AbhFAUuZ (ORCPT
+        with ESMTP id S234756AbhFAUvD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 1 Jun 2021 16:50:25 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E15AFC061574;
-        Tue,  1 Jun 2021 13:48:42 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id x6so610875ybl.9;
-        Tue, 01 Jun 2021 13:48:42 -0700 (PDT)
+        Tue, 1 Jun 2021 16:51:03 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1797FC061574
+        for <linux-bluetooth@vger.kernel.org>; Tue,  1 Jun 2021 13:49:21 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id f22so500489pfn.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 01 Jun 2021 13:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EsStg/j3/ZepGYdqJeIoOSE6ElsprIKmavPM+bVhMzM=;
-        b=Gq5zLe0yyjx63gMZMx0hNhym1dNMS0ddT/QiE94twT45iMkF/oMOmIHZS1z/iXA80R
-         +x4xe/lg08CH6l+e64SC9fxe7TkrUHTs6ekghcahn6jnOFD83PeE969v0tN1ZbSoQ3aj
-         dGV2pjPrg5seB0qCKp0upX5CNqJuFcRhv3VkH8ACo9WqQraRClPp9bYrNiK38Hw85BjG
-         CZj2JAjjyfunjX4ea2m2d//rTit4s4WgCzwkyLk0ShTUNigOoz5sqZUhlc6BEhj6tSxa
-         BhLYVqeHfaGyHXKcsaKImy+FWK27opIPGWDlvJ/znJrJaiQf9Q3NWjsAd7OVBzF/Iu7x
-         YmTg==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CdJNU0zP86fQfsZY8fo8y9YbQomtTm+qfzfDCYZeLvc=;
+        b=ufn8noxdawMKqHal66p+ZcdLa4+RQQ6yIxc+YL1YBJE0t9/4zg+G2GUlkwQwoFXrtR
+         OZwOWuTjPBY3xyev7hOhAOflidF/5YPYF8qosWbCwGF+meIxZlSWxqEDdiCVL208IrGB
+         lGEh2e04VyjzvJiRxMnv2II79yR2eAHGo5vUYZwL2RObAdcJRy4k/VGP8lV9/cgbZ/Vl
+         1UKGrZiEuGUkOokIyJiWDnejb1lR7/AtgMGQZKBKxNnreTuZ14OhIxl+vXq+/cT8AB0p
+         D+EV+UX5Lv4Lo0ieX2UiF8GekHiX1FgEl8HI4Fdtr/l2osTVw6xXiHj1Xoe6vxBsNz7R
+         O7IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EsStg/j3/ZepGYdqJeIoOSE6ElsprIKmavPM+bVhMzM=;
-        b=ORFIPBSPB/eDtI0aXI+DHRns0MujI255ml7/cCHpCZglMQLA5ifDmzmD3O8h1JYSaJ
-         dUkCaolO+Ti3fKohD18jbPLVJ4CH/K2LnGXjhrUjfnfHastggm3d6lhx72XVDB7fG+G5
-         YCDScsZwNvXfQaKsaT3pRJ6qzP+WuainopjkjBEgyHNIKTtMmGcGezTLIkkjk78PB7vT
-         ewGKSi58Zqb2uHXXEYxUd/X5QkxfX7mk20wLui4JIwfNDtU8Rip70YQ8oY4+EotI3vgN
-         cv84mLh6GMFy9pYEt6MmjDj6309j4L00jcu6eNZF99A0d3ZYxRkazAxEp04GCHqMkT3w
-         grgA==
-X-Gm-Message-State: AOAM531SZro4Er+pOk6BGVe2oiXQbA98QE0xsDW0baHzqe4+BGYcJ3MU
-        J2L2rXW9jZpJB8dTgPjYsi9lpl8/hRi0+Zf3Yhw=
-X-Google-Smtp-Source: ABdhPJxlOGGTd1dhABxbeDRhpSoNL5oGnWE+6Yw7haD1bBh5wpE16xgZl+yf3znamXPZNcvebFDRDbaNi47N3liD0vM=
-X-Received: by 2002:a25:4048:: with SMTP id n69mr37703343yba.91.1622580522014;
- Tue, 01 Jun 2021 13:48:42 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CdJNU0zP86fQfsZY8fo8y9YbQomtTm+qfzfDCYZeLvc=;
+        b=MzkiYybrrb/HenKAMhjR0b5pdJJwF3A8+4IkYk6oO78mvqWWNi97/sbQyDQGFPuYwl
+         DfZllCQnnnzrvS/SWePpSbUWM15saZFxte+RCxzxdG7fyr9P18w3c8TcYdLcoSjt4ab6
+         bRxXHP5jYvwvzQ4qicSpguJomkooaqFDlLfVEkEtdtvEp18cz1rwPPMCao8oaRNyTo43
+         J//0H1rBEXh9isFVIxf0+011CgfumnWCQkiTbSfEiEvqIsmTOLepKso8MOT0ULC11sjz
+         tpyTbJ9cL45YBdBMUmMQ2n6xwNscXZUDz6xWXg62L12D2rgNKOJbriG0r0NRO3eLdUP7
+         Kc5Q==
+X-Gm-Message-State: AOAM530nrBjwhB3c9PygPzQkVbYWEakOkYyqWES0Xy1ys4bSfghfInNG
+        OB46YSCjNLO3+HY4R8wH0lQZZEMovdo=
+X-Google-Smtp-Source: ABdhPJz3dorF4i6yy58FC3kiQXYfoSCBVKAYBfuvNnXH4msvLUgZ+9v/djsOIxDxYpUP5dOzWJBxXQ==
+X-Received: by 2002:a63:ae01:: with SMTP id q1mr29229956pgf.216.1622580560462;
+        Tue, 01 Jun 2021 13:49:20 -0700 (PDT)
+Received: from han1-mobl3.intel.com ([2601:1c0:6a01:d830::512a])
+        by smtp.gmail.com with ESMTPSA id t20sm11435396pjs.11.2021.06.01.13.49.19
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jun 2021 13:49:20 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [BlueZ PATCH V2 1/3] emulator/btdev: Enable LE Privacy feature
+Date:   Tue,  1 Jun 2021 13:49:16 -0700
+Message-Id: <20210601204918.903327-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
-References: <0000000000001d4a3005c39b0b40@google.com> <20210531090414.2558-1-hdanton@sina.com>
- <CABBYNZLwdYRMeXFpLqHiyU2Xi3Q1gjygjF_DoMAZR4rp1E+vQA@mail.gmail.com> <20210601075417.2763-1-hdanton@sina.com>
-In-Reply-To: <20210601075417.2763-1-hdanton@sina.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Tue, 1 Jun 2021 13:48:30 -0700
-Message-ID: <CABBYNZJGs0OQd3s0r7BWcY8pXm90E+HB6FG5CDf4DdL7i9T4qg@mail.gmail.com>
-Subject: Re: [syzbot] general protection fault in l2cap_chan_timeout (2)
-To:     Hillf Danton <hdanton@sina.com>
-Cc:     syzbot <syzbot+008cdbf7a9044c2c2f99@syzkaller.appspotmail.com>,
-        David Miller <davem@davemloft.net>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-On Tue, Jun 1, 2021 at 12:54 AM Hillf Danton <hdanton@sina.com> wrote:
->
-> On Mon, 31 May 2021 19:11:08 -0700 Luiz Augusto von Dentz wrote:
-> >
-> >Shouldn't we actually cancel the timeout work if the connection is
-> >freed here? At least I don't see a valid reason to have a l2cap_chan
-> >without l2cap_conn.
->
-> A far neater approach at the cost of making l2cap_conn_put() blocking and
-> nobody currently seems to care about it.
+This patch enables LE Privacy to support LL Privacy feature.
+---
+ emulator/btdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-I wonder what is going on here, there doesn't seem to be any code path
-where the chan_timer is not cleared since the code path should be:
-
-l2cap_conn_del -> l2cap_chan_del -> __clear_chan_timer -> cancel_delayed_work
-                                                             chan->conn = NULL
-
-Perhaps the problem is that cancel_delayed_work does not actually
-prevent l2cap_chan_timeout to run if that is already pending, so maybe
-something like this would work:
-
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 9ebb85df4db4..f6e423111dfc 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -414,17 +414,23 @@ static void l2cap_chan_timeout(struct work_struct *work)
- {
-        struct l2cap_chan *chan = container_of(work, struct l2cap_chan,
-                                               chan_timer.work);
--       struct l2cap_conn *conn = chan->conn;
-+       struct l2cap_conn *conn;
-        int reason;
-
-        BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
-
--       mutex_lock(&conn->chan_lock);
-        /* __set_chan_timer() calls l2cap_chan_hold(chan) while scheduling
-         * this work. No need to call l2cap_chan_hold(chan) here again.
-         */
-        l2cap_chan_lock(chan);
-
-+       conn = chan->conn;
-+       if (!conn)
-+               /* l2cap_conn_del might have run */
-+               goto unlock;
-+
-+       mutex_lock(&conn->chan_lock);
-+
-        if (chan->state == BT_CONNECTED || chan->state == BT_CONFIG)
-                reason = ECONNREFUSED;
-        else if (chan->state == BT_CONNECT &&
-@@ -437,10 +443,11 @@ static void l2cap_chan_timeout(struct work_struct *work)
-
-        chan->ops->close(chan);
-
-+       mutex_unlock(&conn->chan_lock);
-+
-+unlock:
-        l2cap_chan_unlock(chan);
-        l2cap_chan_put(chan);
--
--       mutex_unlock(&conn->chan_lock);
- }
-
-
+diff --git a/emulator/btdev.c b/emulator/btdev.c
+index 692fabd71..13abad577 100644
+--- a/emulator/btdev.c
++++ b/emulator/btdev.c
+@@ -5415,6 +5415,7 @@ static void set_bredrle_features(struct btdev *btdev)
+ 		btdev->features[4] |= 0x80;	/* 3 slot EDR ACL packets */
+ 		btdev->features[5] |= 0x01;	/* 5 slot EDR ACL packets */
+ 
++		btdev->le_features[0] |= 0x40;	/* LE PRIVACY */
+ 		btdev->le_features[1] |= 0x01;	/* LE 2M PHY */
+ 		btdev->le_features[1] |= 0x08;	/* LE Coded PHY */
+ 		btdev->le_features[1] |= 0x10;  /* LE EXT ADV */
 -- 
-Luiz Augusto von Dentz
+2.26.3
+
