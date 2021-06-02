@@ -2,55 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1781E39961B
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jun 2021 00:55:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35ECA399618
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jun 2021 00:54:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229801AbhFBW4x (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 2 Jun 2021 18:56:53 -0400
-Received: from mail-pj1-f46.google.com ([209.85.216.46]:38698 "EHLO
-        mail-pj1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbhFBW4x (ORCPT
+        id S229761AbhFBW4H (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 2 Jun 2021 18:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38156 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229626AbhFBW4F (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 2 Jun 2021 18:56:53 -0400
-Received: by mail-pj1-f46.google.com with SMTP id m13-20020a17090b068db02901656cc93a75so4325969pjz.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Jun 2021 15:55:09 -0700 (PDT)
+        Wed, 2 Jun 2021 18:56:05 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A51EAC06174A
+        for <linux-bluetooth@vger.kernel.org>; Wed,  2 Jun 2021 15:54:10 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id e22so3534552pgv.10
+        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Jun 2021 15:54:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=hcwK7JTqLziWN/ikTC9hUfGUvdrzItaNHW017iEX3Vk=;
-        b=en/k/erXdKyMa1d2cuSoM2qbOcPQpRCNYmASEmnnR4wpPzDcSi+O9S70oUmfMhpzCb
-         hmz7DbvCcac+D9En6bXaMTclfkD6APXXvXouJQFlxFQtt6IEZQIKqyIu7DXfygH+lTvt
-         3NVH0g2qIWllcwKGo4kFLezm/uuGgwvSm0Og55Huc1Q05jz7hbC6kgwZAYVI4xC+qXOn
-         bb0JMe/Esnwraj6pzXC4OH+VSRpBMBeivORHNTA1mxpnVr/3RGtJkPq4vxfNeoY8L81e
-         d3mcJEFnVSPpdw+pB3mG/o002xa1EtY0wAtsxZzPWPCCwa38skLQEivJTqHTPnzycP7a
-         PwZA==
+        bh=/ToTqVDmOvX7XXoBAlalYgzdXNvRIhWNnB5k5J+NA+s=;
+        b=iFcEq0cRfSc19LxRS0OKRUgkYYekqJ5uwel/061BzHw7lckkg3rCNTtWIEhGGY7+/H
+         cKFtySorPxH37LGa0MY8Xe5vi2Uk32OQOvubE037F8+BEwSiZWJU7fhid4QOmdOAm/YP
+         nr44wHt8C6KMzitT56ahZPKtygkjU1oOyNYKP9w1/rNjQ31G7yduCvNQdFg+kkZA1Mun
+         OvhOmxeSz+IyvjRMyF0+PMs6U32NbUK7vK0EfewjZwqanFzlnULdCTha7zWBIGnzKqnh
+         wH6gfr11a54lGugjmOobntvKZ5hSKZEOkqcL8qWN/A84K2YWKBaVbkWxg8lp9/jqu2SJ
+         MFyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hcwK7JTqLziWN/ikTC9hUfGUvdrzItaNHW017iEX3Vk=;
-        b=TxHplIXSQ77SQ3j9YnJxe24Ec22zg3Q9doKzPhiy2UKEMPxBI9bPNU4iN7+VaYm6hk
-         IX4i8nOBVPRNEPwrs8hR2M7ucdmvcUetg34GyT9dujaPi0WLp4w4Qp2qQKwpu7IpuFB9
-         wbI+SRPfC2qe6G6hvt3x/XJypgfyrYg81vimMJzL6bGqkMYBZCxAUkhkM9Joy3VOOla/
-         0/PkHpKsbThOwJvJFLVoxzfw7mpn5sR1eJGrlbLaFW+1W6s1hDCcFuOEBOaH4/MiYYxF
-         Ab1Q6cIedGbAQxHRyH2XBuInDDhwkeHXI+SI9iUNvzF2XuRTxkxNtDTQ2fyIY/mRom/w
-         dUMQ==
-X-Gm-Message-State: AOAM5324/8jC0Wo7uU9unY1hoM9QX9/ufc71geMuXLgpwYAh9rdiqDeP
-        qcVV22HIui4wb4V658WvHW5R45WesJ0=
-X-Google-Smtp-Source: ABdhPJzyMpR55KiMsONA3lxYKzywU1oJQbFma3MsDraD3VG++nTeY9J4qwgmciKQc9Msi5Zv4lfHzg==
-X-Received: by 2002:a17:90a:c204:: with SMTP id e4mr5114354pjt.90.1622674448988;
-        Wed, 02 Jun 2021 15:54:08 -0700 (PDT)
+        bh=/ToTqVDmOvX7XXoBAlalYgzdXNvRIhWNnB5k5J+NA+s=;
+        b=B3U/EK7uaMN4hEayte7aV1j15mXYjj5T1icW2bOXr/qSEQXVVSuVQ2mro/3hNR6Z16
+         9d62ctxbUIobE9qrsY+R2G8BTJ5s7uVaACXbn4H2BFiH2Rz/oITAjn0z9CqD3NaG2KYN
+         x0DwJb6jxuqr5sRePRB0OIBNbYErGMRYxRhe6KMc/hLpWVjD8VDAImaYRTMhG10uRM3x
+         m44JRyFtJ3z4BEasHNo+bdAkaVEvSjafSVw/eTl2R2y2NUtw8bV+1y+zb+0h1RbRIcp7
+         Oe3kEA1U1zG5DjdFs4Z+OuXzWSKfa/Zbe6+pomlgpUD9HPnmNkevEG5tf0MbM9mBcsPr
+         /xlg==
+X-Gm-Message-State: AOAM5332fY1u3xSGP/QFYNkYvSajkEpZEyWYKhw7xiR65VpH+FQTGpMn
+        T7XSqP+oNEAO5msBjftZOFfqdj4PdM4=
+X-Google-Smtp-Source: ABdhPJzW2H2LXaVDSENTQPPJ1j9p987QzeN98BotaCX9E7cZt9bTkeSBUWCpVGH6gSZ73K5MdRGc4Q==
+X-Received: by 2002:a63:f954:: with SMTP id q20mr3872511pgk.451.1622674449634;
+        Wed, 02 Jun 2021 15:54:09 -0700 (PDT)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id s3sm678578pgs.62.2021.06.02.15.54.08
+        by smtp.gmail.com with ESMTPSA id s3sm678578pgs.62.2021.06.02.15.54.09
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 15:54:08 -0700 (PDT)
+        Wed, 02 Jun 2021 15:54:09 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 2/5] Bluetooth: eir: Move EIR/Adv Data functions to its own file
-Date:   Wed,  2 Jun 2021 15:54:01 -0700
-Message-Id: <20210602225404.744891-2-luiz.dentz@gmail.com>
+Subject: [PATCH v2 3/5] Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 1
+Date:   Wed,  2 Jun 2021 15:54:02 -0700
+Message-Id: <20210602225404.744891-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210602225404.744891-1-luiz.dentz@gmail.com>
 References: <20210602225404.744891-1-luiz.dentz@gmail.com>
@@ -62,100 +65,233 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This moves functions manipulating EIR/Adv Data to its own file so it
-can be reused by other files.
+This make use of hci_cmd_sync_queue for the following MGMT commands:
+
+Set Device Class
+Set Device ID
+Add UUID
+Remove UUID
+
+tools/mgmt-tester -s "Set Device Class"
+
+Test Summary
+------------
+Set Device Class - Success 1                         Passed       0.024 seconds
+Set Device Class - Success 2                         Passed       0.019 seconds
+Set Device Class - Invalid parameters 1              Passed       0.014 seconds
+Total: 3, Passed: 3 (100.0%), Failed: 0, Not Run: 0
+Overall execution time: 0.0599 seconds
+
+tools/mgmt-tester -s "Set Device ID"
+
+Test Summary
+------------
+Set Device ID - Success 1                            Passed       0.019 seconds
+Set Device ID - Success 2                            Passed       0.016 seconds
+Set Device ID - Disable                              Passed       0.014 seconds
+Set Device ID - Power off and Power on               Passed       0.019 seconds
+Set Device ID - SSP off and Power on                 Passed       0.017 seconds
+Set Device ID - Invalid Parameter                    Passed       0.015 seconds
+Total: 6, Passed: 6 (100.0%), Failed: 0, Not Run: 0
+Overall execution time: 0.107 seconds
+
+tools/mgmt-tester -s "Add UUID"
+
+Test Summary
+------------
+Add UUID - UUID-16 1                                 Passed       0.023 seconds
+Add UUID - UUID-16 multiple 1                        Passed       0.018 seconds
+Add UUID - UUID-16 partial 1                         Passed       0.024 seconds
+Add UUID - UUID-32 1                                 Passed       0.015 seconds
+Add UUID - UUID-32 multiple 1                        Passed       0.017 seconds
+Add UUID - UUID-32 partial 1                         Passed       0.020 seconds
+Add UUID - UUID-128 1                                Passed       0.016 seconds
+Add UUID - UUID-128 multiple 1                       Passed       0.017 seconds
+Add UUID - UUID-128 partial 1                        Passed       0.018 seconds
+Add UUID - UUID mix                                  Passed       0.017 seconds
+Total: 10, Passed: 10 (100.0%), Failed: 0, Not Run: 0
+Overall execution time: 0.198 seconds
+
+tools/mgmt-tester -s "Remove UUID"
+
+Test Summary
+------------
+Remove UUID - Success 1                              Passed       0.022 seconds
+Remove UUID - All UUID - Success 2                   Passed       0.017 seconds
+Remove UUID - Power Off - Success 3                  Passed       0.015 seconds
+Remove UUID - Power Off and On - Success 4           Passed       0.017 seconds
+Remove UUID - Not Exist - Invalid Params 1           Passed       0.015 seconds
+Total: 5, Passed: 5 (100.0%), Failed: 0, Not Run: 0
+Overall execution time: 0.0908 seconds
 
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- include/net/bluetooth/hci_core.h |  39 +--
+ include/net/bluetooth/hci_core.h |   2 +
  net/bluetooth/Makefile           |   2 +-
- net/bluetooth/eir.c              | 335 +++++++++++++++++++++++++
- net/bluetooth/eir.h              |  72 ++++++
- net/bluetooth/hci_core.c         |  54 ++++
- net/bluetooth/hci_event.c        |   1 +
- net/bluetooth/hci_request.c      | 416 ++-----------------------------
- net/bluetooth/hci_request.h      |  23 --
- net/bluetooth/mgmt.c             |   3 +-
- 9 files changed, 482 insertions(+), 463 deletions(-)
- create mode 100644 net/bluetooth/eir.c
- create mode 100644 net/bluetooth/eir.h
+ net/bluetooth/hci_request.c      |  72 +-----------
+ net/bluetooth/hci_request.h      |   6 +
+ net/bluetooth/hci_sync.c         | 171 +++++++++++++++++++++++++++
+ net/bluetooth/hci_sync.h         |   9 ++
+ net/bluetooth/mgmt.c             | 193 +++++++++++++++----------------
+ net/bluetooth/mgmt_util.c        |  15 ++-
+ net/bluetooth/mgmt_util.h        |   3 +
+ 9 files changed, 302 insertions(+), 171 deletions(-)
+ create mode 100644 net/bluetooth/hci_sync.c
+ create mode 100644 net/bluetooth/hci_sync.h
 
 diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index de95c47aaf77..28f70dca80c9 100644
+index 28f70dca80c9..8fec41f1034f 100644
 --- a/include/net/bluetooth/hci_core.h
 +++ b/include/net/bluetooth/hci_core.h
-@@ -1360,6 +1360,8 @@ int hci_set_adv_instance_data(struct hci_dev *hdev, u8 instance,
- 			 u16 scan_rsp_len, u8 *scan_rsp_data);
- int hci_remove_adv_instance(struct hci_dev *hdev, u8 instance);
- void hci_adv_instances_set_rpa_expired(struct hci_dev *hdev, bool rpa_expired);
-+u32 hci_adv_instance_flags(struct hci_dev *hdev, u8 instance);
-+bool hci_adv_instance_is_scannable(struct hci_dev *hdev, u8 instance);
+@@ -1667,6 +1667,8 @@ struct sk_buff *__hci_cmd_sync(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 			       const void *param, u32 timeout);
+ struct sk_buff *__hci_cmd_sync_ev(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 				  const void *param, u8 event, u32 timeout);
++int __hci_cmd_sync_status(struct hci_dev *hdev, u16 opcode, u32 plen,
++			  const void *param, u32 timeout);
+ int __hci_cmd_send(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 		   const void *param);
  
- void hci_adv_monitors_clear(struct hci_dev *hdev);
- void hci_free_adv_monitor(struct hci_dev *hdev, struct adv_monitor *monitor);
-@@ -1605,43 +1607,6 @@ static inline void hci_role_switch_cfm(struct hci_conn *conn, __u8 status,
- 	mutex_unlock(&hci_cb_list_lock);
- }
- 
--static inline void *eir_get_data(u8 *eir, size_t eir_len, u8 type,
--				 size_t *data_len)
--{
--	size_t parsed = 0;
--
--	if (eir_len < 2)
--		return NULL;
--
--	while (parsed < eir_len - 1) {
--		u8 field_len = eir[0];
--
--		if (field_len == 0)
--			break;
--
--		parsed += field_len + 1;
--
--		if (parsed > eir_len)
--			break;
--
--		if (eir[1] != type) {
--			eir += field_len + 1;
--			continue;
--		}
--
--		/* Zero length data */
--		if (field_len == 1)
--			return NULL;
--
--		if (data_len)
--			*data_len = field_len - 1;
--
--		return &eir[2];
--	}
--
--	return NULL;
--}
--
- static inline bool hci_bdaddr_is_rpa(bdaddr_t *bdaddr, u8 addr_type)
- {
- 	if (addr_type != ADDR_LE_DEV_RANDOM)
 diff --git a/net/bluetooth/Makefile b/net/bluetooth/Makefile
-index cc0995301f93..0276e7d5d7ad 100644
+index 0276e7d5d7ad..de4e79060851 100644
 --- a/net/bluetooth/Makefile
 +++ b/net/bluetooth/Makefile
 @@ -14,7 +14,7 @@ bluetooth_6lowpan-y := 6lowpan.o
  
  bluetooth-y := af_bluetooth.o hci_core.o hci_conn.o hci_event.o mgmt.o \
  	hci_sock.o hci_sysfs.o l2cap_core.o l2cap_sock.o smp.o lib.o \
--	ecdh_helper.o hci_request.o mgmt_util.o mgmt_config.o
-+	ecdh_helper.o eir.o hci_request.o mgmt_util.o mgmt_config.o
+-	ecdh_helper.o eir.o hci_request.o mgmt_util.o mgmt_config.o
++	ecdh_helper.o eir.o hci_request.o hci_sync.o mgmt_util.o mgmt_config.o
  
  bluetooth-$(CONFIG_BT_BREDR) += sco.o
  bluetooth-$(CONFIG_BT_HS) += a2mp.o amp.o
-diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index 7e86637a9933..8bacc8993e32 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -32,10 +32,6 @@
+ #include "msft.h"
+ #include "eir.h"
+ 
+-#define HCI_REQ_DONE	  0
+-#define HCI_REQ_PEND	  1
+-#define HCI_REQ_CANCELED  2
+-
+ void hci_req_init(struct hci_request *req, struct hci_dev *hdev)
+ {
+ 	skb_queue_head_init(&req->cmd_q);
+@@ -101,8 +97,8 @@ int hci_req_run_skb(struct hci_request *req, hci_req_complete_skb_t complete)
+ 	return req_run(req, NULL, complete);
+ }
+ 
+-static void hci_req_sync_complete(struct hci_dev *hdev, u8 result, u16 opcode,
+-				  struct sk_buff *skb)
++void hci_req_sync_complete(struct hci_dev *hdev, u8 result, u16 opcode,
++			   struct sk_buff *skb)
+ {
+ 	bt_dev_dbg(hdev, "result 0x%2.2x", result);
+ 
+@@ -126,70 +122,6 @@ void hci_req_sync_cancel(struct hci_dev *hdev, int err)
+ 	}
+ }
+ 
+-struct sk_buff *__hci_cmd_sync_ev(struct hci_dev *hdev, u16 opcode, u32 plen,
+-				  const void *param, u8 event, u32 timeout)
+-{
+-	struct hci_request req;
+-	struct sk_buff *skb;
+-	int err = 0;
+-
+-	bt_dev_dbg(hdev, "");
+-
+-	hci_req_init(&req, hdev);
+-
+-	hci_req_add_ev(&req, opcode, plen, param, event);
+-
+-	hdev->req_status = HCI_REQ_PEND;
+-
+-	err = hci_req_run_skb(&req, hci_req_sync_complete);
+-	if (err < 0)
+-		return ERR_PTR(err);
+-
+-	err = wait_event_interruptible_timeout(hdev->req_wait_q,
+-			hdev->req_status != HCI_REQ_PEND, timeout);
+-
+-	if (err == -ERESTARTSYS)
+-		return ERR_PTR(-EINTR);
+-
+-	switch (hdev->req_status) {
+-	case HCI_REQ_DONE:
+-		err = -bt_to_errno(hdev->req_result);
+-		break;
+-
+-	case HCI_REQ_CANCELED:
+-		err = -hdev->req_result;
+-		break;
+-
+-	default:
+-		err = -ETIMEDOUT;
+-		break;
+-	}
+-
+-	hdev->req_status = hdev->req_result = 0;
+-	skb = hdev->req_skb;
+-	hdev->req_skb = NULL;
+-
+-	bt_dev_dbg(hdev, "end: err %d", err);
+-
+-	if (err < 0) {
+-		kfree_skb(skb);
+-		return ERR_PTR(err);
+-	}
+-
+-	if (!skb)
+-		return ERR_PTR(-ENODATA);
+-
+-	return skb;
+-}
+-EXPORT_SYMBOL(__hci_cmd_sync_ev);
+-
+-struct sk_buff *__hci_cmd_sync(struct hci_dev *hdev, u16 opcode, u32 plen,
+-			       const void *param, u32 timeout)
+-{
+-	return __hci_cmd_sync_ev(hdev, opcode, plen, param, 0, timeout);
+-}
+-EXPORT_SYMBOL(__hci_cmd_sync);
+-
+ /* Execute request and wait for completion. */
+ int __hci_req_sync(struct hci_dev *hdev, int (*func)(struct hci_request *req,
+ 						     unsigned long opt),
+diff --git a/net/bluetooth/hci_request.h b/net/bluetooth/hci_request.h
+index 4824be833169..3234ed99c133 100644
+--- a/net/bluetooth/hci_request.h
++++ b/net/bluetooth/hci_request.h
+@@ -22,6 +22,10 @@
+ 
+ #include <asm/unaligned.h>
+ 
++#define HCI_REQ_DONE	  0
++#define HCI_REQ_PEND	  1
++#define HCI_REQ_CANCELED  2
++
+ #define hci_req_sync_lock(hdev)   mutex_lock(&hdev->req_lock)
+ #define hci_req_sync_unlock(hdev) mutex_unlock(&hdev->req_lock)
+ 
+@@ -40,6 +44,8 @@ void hci_req_purge(struct hci_request *req);
+ bool hci_req_status_pend(struct hci_dev *hdev);
+ int hci_req_run(struct hci_request *req, hci_req_complete_t complete);
+ int hci_req_run_skb(struct hci_request *req, hci_req_complete_skb_t complete);
++void hci_req_sync_complete(struct hci_dev *hdev, u8 result, u16 opcode,
++			   struct sk_buff *skb);
+ void hci_req_add(struct hci_request *req, u16 opcode, u32 plen,
+ 		 const void *param);
+ void hci_req_add_ev(struct hci_request *req, u16 opcode, u32 plen,
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
 new file mode 100644
-index 000000000000..7e930f77ecab
+index 000000000000..e2ddfdf7c515
 --- /dev/null
-+++ b/net/bluetooth/eir.c
-@@ -0,0 +1,335 @@
++++ b/net/bluetooth/hci_sync.c
+@@ -0,0 +1,171 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * BlueZ - Bluetooth protocol stack for Linux
@@ -165,338 +301,174 @@ index 000000000000..7e930f77ecab
 +
 +#include <net/bluetooth/bluetooth.h>
 +#include <net/bluetooth/hci_core.h>
-+#include <net/bluetooth/mgmt.h>
 +
++#include "hci_request.h"
++#include "hci_sync.h"
 +#include "eir.h"
 +
-+#define PNP_INFO_SVCLASS_ID		0x1200
-+
-+u8 eir_append_local_name(struct hci_dev *hdev, u8 *ptr, u8 ad_len)
++struct sk_buff *__hci_cmd_sync_ev(struct hci_dev *hdev, u16 opcode, u32 plen,
++				  const void *param, u8 event, u32 timeout)
 +{
-+	size_t short_len;
-+	size_t complete_len;
++	struct hci_request req;
++	struct sk_buff *skb;
++	int err = 0;
 +
-+	/* no space left for name (+ NULL + type + len) */
-+	if ((HCI_MAX_AD_LENGTH - ad_len) < HCI_MAX_SHORT_NAME_LENGTH + 3)
-+		return ad_len;
++	bt_dev_dbg(hdev, "");
 +
-+	/* use complete name if present and fits */
-+	complete_len = strlen(hdev->dev_name);
-+	if (complete_len && complete_len <= HCI_MAX_SHORT_NAME_LENGTH)
-+		return eir_append_data(ptr, ad_len, EIR_NAME_COMPLETE,
-+				       hdev->dev_name, complete_len + 1);
++	hci_req_init(&req, hdev);
 +
-+	/* use short name if present */
-+	short_len = strlen(hdev->short_name);
-+	if (short_len)
-+		return eir_append_data(ptr, ad_len, EIR_NAME_SHORT,
-+				       hdev->short_name, short_len + 1);
++	hci_req_add_ev(&req, opcode, plen, param, event);
 +
-+	/* use shortened full name if present, we already know that name
-+	 * is longer then HCI_MAX_SHORT_NAME_LENGTH
-+	 */
-+	if (complete_len) {
-+		u8 name[HCI_MAX_SHORT_NAME_LENGTH + 1];
++	hdev->req_status = HCI_REQ_PEND;
 +
-+		memcpy(name, hdev->dev_name, HCI_MAX_SHORT_NAME_LENGTH);
-+		name[HCI_MAX_SHORT_NAME_LENGTH] = '\0';
++	err = hci_req_run_skb(&req, hci_req_sync_complete);
++	if (err < 0)
++		return ERR_PTR(err);
 +
-+		return eir_append_data(ptr, ad_len, EIR_NAME_SHORT, name,
-+				       sizeof(name));
++	err = wait_event_interruptible_timeout(hdev->req_wait_q,
++					       hdev->req_status != HCI_REQ_PEND,
++					       timeout);
++
++	if (err == -ERESTARTSYS)
++		return ERR_PTR(-EINTR);
++
++	switch (hdev->req_status) {
++	case HCI_REQ_DONE:
++		err = -bt_to_errno(hdev->req_result);
++		break;
++
++	case HCI_REQ_CANCELED:
++		err = -hdev->req_result;
++		break;
++
++	default:
++		err = -ETIMEDOUT;
++		break;
 +	}
 +
-+	return ad_len;
++	hdev->req_status = 0;
++	hdev->req_result = 0;
++	skb = hdev->req_skb;
++	hdev->req_skb = NULL;
++
++	bt_dev_dbg(hdev, "end: err %d", err);
++
++	if (err < 0) {
++		kfree_skb(skb);
++		return ERR_PTR(err);
++	}
++
++	if (!skb)
++		return ERR_PTR(-ENODATA);
++
++	return skb;
 +}
++EXPORT_SYMBOL(__hci_cmd_sync_ev);
 +
-+u8 eir_append_appearance(struct hci_dev *hdev, u8 *ptr, u8 ad_len)
++struct sk_buff *__hci_cmd_sync(struct hci_dev *hdev, u16 opcode, u32 plen,
++			       const void *param, u32 timeout)
 +{
-+	return eir_append_le16(ptr, ad_len, EIR_APPEARANCE, hdev->appearance);
++	return __hci_cmd_sync_ev(hdev, opcode, plen, param, 0, timeout);
 +}
++EXPORT_SYMBOL(__hci_cmd_sync);
 +
-+static u8 *create_uuid16_list(struct hci_dev *hdev, u8 *data, ptrdiff_t len)
++int __hci_cmd_sync_status(struct hci_dev *hdev, u16 opcode, u32 plen,
++			  const void *param, u32 timeout)
 +{
-+	u8 *ptr = data, *uuids_start = NULL;
-+	struct bt_uuid *uuid;
++	struct sk_buff *skb;
++	u8 status;
 +
-+	if (len < 4)
-+		return ptr;
-+
-+	list_for_each_entry(uuid, &hdev->uuids, list) {
-+		u16 uuid16;
-+
-+		if (uuid->size != 16)
-+			continue;
-+
-+		uuid16 = get_unaligned_le16(&uuid->uuid[12]);
-+		if (uuid16 < 0x1100)
-+			continue;
-+
-+		if (uuid16 == PNP_INFO_SVCLASS_ID)
-+			continue;
-+
-+		if (!uuids_start) {
-+			uuids_start = ptr;
-+			uuids_start[0] = 1;
-+			uuids_start[1] = EIR_UUID16_ALL;
-+			ptr += 2;
-+		}
-+
-+		/* Stop if not enough space to put next UUID */
-+		if ((ptr - data) + sizeof(u16) > len) {
-+			uuids_start[1] = EIR_UUID16_SOME;
-+			break;
-+		}
-+
-+		*ptr++ = (uuid16 & 0x00ff);
-+		*ptr++ = (uuid16 & 0xff00) >> 8;
-+		uuids_start[0] += sizeof(uuid16);
++	skb = __hci_cmd_sync(hdev, opcode, plen, param, timeout);
++	if (IS_ERR_OR_NULL(skb)) {
++		bt_dev_err(hdev, "Opcode 0x%4x failed: %ld", opcode,
++			   PTR_ERR(skb));
++		return PTR_ERR(skb);
 +	}
 +
-+	return ptr;
++	status = skb->data[0];
++
++	kfree_skb(skb);
++
++	return status;
 +}
++EXPORT_SYMBOL(__hci_cmd_sync_status);
 +
-+static u8 *create_uuid32_list(struct hci_dev *hdev, u8 *data, ptrdiff_t len)
++int hci_update_eir_sync(struct hci_dev *hdev)
 +{
-+	u8 *ptr = data, *uuids_start = NULL;
-+	struct bt_uuid *uuid;
++	struct hci_cp_write_eir cp;
 +
-+	if (len < 6)
-+		return ptr;
++	bt_dev_dbg(hdev, "");
 +
-+	list_for_each_entry(uuid, &hdev->uuids, list) {
-+		if (uuid->size != 32)
-+			continue;
-+
-+		if (!uuids_start) {
-+			uuids_start = ptr;
-+			uuids_start[0] = 1;
-+			uuids_start[1] = EIR_UUID32_ALL;
-+			ptr += 2;
-+		}
-+
-+		/* Stop if not enough space to put next UUID */
-+		if ((ptr - data) + sizeof(u32) > len) {
-+			uuids_start[1] = EIR_UUID32_SOME;
-+			break;
-+		}
-+
-+		memcpy(ptr, &uuid->uuid[12], sizeof(u32));
-+		ptr += sizeof(u32);
-+		uuids_start[0] += sizeof(u32);
-+	}
-+
-+	return ptr;
-+}
-+
-+static u8 *create_uuid128_list(struct hci_dev *hdev, u8 *data, ptrdiff_t len)
-+{
-+	u8 *ptr = data, *uuids_start = NULL;
-+	struct bt_uuid *uuid;
-+
-+	if (len < 18)
-+		return ptr;
-+
-+	list_for_each_entry(uuid, &hdev->uuids, list) {
-+		if (uuid->size != 128)
-+			continue;
-+
-+		if (!uuids_start) {
-+			uuids_start = ptr;
-+			uuids_start[0] = 1;
-+			uuids_start[1] = EIR_UUID128_ALL;
-+			ptr += 2;
-+		}
-+
-+		/* Stop if not enough space to put next UUID */
-+		if ((ptr - data) + 16 > len) {
-+			uuids_start[1] = EIR_UUID128_SOME;
-+			break;
-+		}
-+
-+		memcpy(ptr, uuid->uuid, 16);
-+		ptr += 16;
-+		uuids_start[0] += 16;
-+	}
-+
-+	return ptr;
-+}
-+
-+void eir_create(struct hci_dev *hdev, u8 *data)
-+{
-+	u8 *ptr = data;
-+	size_t name_len;
-+
-+	name_len = strlen(hdev->dev_name);
-+
-+	if (name_len > 0) {
-+		/* EIR Data type */
-+		if (name_len > 48) {
-+			name_len = 48;
-+			ptr[1] = EIR_NAME_SHORT;
-+		} else {
-+			ptr[1] = EIR_NAME_COMPLETE;
-+		}
-+
-+		/* EIR Data length */
-+		ptr[0] = name_len + 1;
-+
-+		memcpy(ptr + 2, hdev->dev_name, name_len);
-+
-+		ptr += (name_len + 2);
-+	}
-+
-+	if (hdev->inq_tx_power != HCI_TX_POWER_INVALID) {
-+		ptr[0] = 2;
-+		ptr[1] = EIR_TX_POWER;
-+		ptr[2] = (u8)hdev->inq_tx_power;
-+
-+		ptr += 3;
-+	}
-+
-+	if (hdev->devid_source > 0) {
-+		ptr[0] = 9;
-+		ptr[1] = EIR_DEVICE_ID;
-+
-+		put_unaligned_le16(hdev->devid_source, ptr + 2);
-+		put_unaligned_le16(hdev->devid_vendor, ptr + 4);
-+		put_unaligned_le16(hdev->devid_product, ptr + 6);
-+		put_unaligned_le16(hdev->devid_version, ptr + 8);
-+
-+		ptr += 10;
-+	}
-+
-+	ptr = create_uuid16_list(hdev, ptr, HCI_MAX_EIR_LENGTH - (ptr - data));
-+	ptr = create_uuid32_list(hdev, ptr, HCI_MAX_EIR_LENGTH - (ptr - data));
-+	ptr = create_uuid128_list(hdev, ptr, HCI_MAX_EIR_LENGTH - (ptr - data));
-+}
-+
-+u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
-+{
-+	struct adv_info *adv = NULL;
-+	u8 ad_len = 0, flags = 0;
-+	u32 instance_flags;
-+
-+	/* Return 0 when the current instance identifier is invalid. */
-+	if (instance) {
-+		adv = hci_find_adv_instance(hdev, instance);
-+		if (!adv)
-+			return 0;
-+	}
-+
-+	instance_flags = hci_adv_instance_flags(hdev, instance);
-+
-+	/* If instance already has the flags set skip adding it once
-+	 * again.
-+	 */
-+	if (adv && eir_get_data(adv->adv_data, adv->adv_data_len, EIR_FLAGS,
-+				NULL))
-+		goto skip_flags;
-+
-+	/* The Add Advertising command allows userspace to set both the general
-+	 * and limited discoverable flags.
-+	 */
-+	if (instance_flags & MGMT_ADV_FLAG_DISCOV)
-+		flags |= LE_AD_GENERAL;
-+
-+	if (instance_flags & MGMT_ADV_FLAG_LIMITED_DISCOV)
-+		flags |= LE_AD_LIMITED;
-+
-+	if (!hci_dev_test_flag(hdev, HCI_BREDR_ENABLED))
-+		flags |= LE_AD_NO_BREDR;
-+
-+	if (flags || (instance_flags & MGMT_ADV_FLAG_MANAGED_FLAGS)) {
-+		/* If a discovery flag wasn't provided, simply use the global
-+		 * settings.
-+		 */
-+		if (!flags)
-+			flags |= mgmt_get_adv_discov_flags(hdev);
-+
-+		/* If flags would still be empty, then there is no need to
-+		 * include the "Flags" AD field".
-+		 */
-+		if (flags) {
-+			ptr[0] = 0x02;
-+			ptr[1] = EIR_FLAGS;
-+			ptr[2] = flags;
-+
-+			ad_len += 3;
-+			ptr += 3;
-+		}
-+	}
-+
-+skip_flags:
-+	if (adv) {
-+		memcpy(ptr, adv->adv_data, adv->adv_data_len);
-+		ad_len += adv->adv_data_len;
-+		ptr += adv->adv_data_len;
-+	}
-+
-+	if (instance_flags & MGMT_ADV_FLAG_TX_POWER) {
-+		s8 adv_tx_power;
-+
-+		if (ext_adv_capable(hdev)) {
-+			if (adv)
-+				adv_tx_power = adv->tx_power;
-+			else
-+				adv_tx_power = hdev->adv_tx_power;
-+		} else {
-+			adv_tx_power = hdev->adv_tx_power;
-+		}
-+
-+		/* Provide Tx Power only if we can provide a valid value for it */
-+		if (adv_tx_power != HCI_TX_POWER_INVALID) {
-+			ptr[0] = 0x02;
-+			ptr[1] = EIR_TX_POWER;
-+			ptr[2] = (u8)adv_tx_power;
-+
-+			ad_len += 3;
-+			ptr += 3;
-+		}
-+	}
-+
-+	return ad_len;
-+}
-+
-+static u8 create_default_scan_rsp(struct hci_dev *hdev, u8 *ptr)
-+{
-+	u8 scan_rsp_len = 0;
-+
-+	if (hdev->appearance)
-+		scan_rsp_len = eir_append_appearance(hdev, ptr, scan_rsp_len);
-+
-+	return eir_append_local_name(hdev, ptr, scan_rsp_len);
-+}
-+
-+u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr)
-+{
-+	struct adv_info *adv;
-+	u8 scan_rsp_len = 0;
-+
-+	if (!instance)
-+		return create_default_scan_rsp(hdev, ptr);
-+
-+	adv = hci_find_adv_instance(hdev, instance);
-+	if (!adv)
++	if (!hdev_is_powered(hdev))
 +		return 0;
 +
-+	if ((adv->flags & MGMT_ADV_FLAG_APPEARANCE) && hdev->appearance)
-+		scan_rsp_len = eir_append_appearance(hdev, ptr, scan_rsp_len);
++	if (!lmp_ext_inq_capable(hdev))
++		return 0;
 +
-+	memcpy(&ptr[scan_rsp_len], adv->scan_rsp_data, adv->scan_rsp_len);
++	if (!hci_dev_test_flag(hdev, HCI_SSP_ENABLED))
++		return 0;
 +
-+	scan_rsp_len += adv->scan_rsp_len;
++	if (hci_dev_test_flag(hdev, HCI_SERVICE_CACHE))
++		return 0;
 +
-+	if (adv->flags & MGMT_ADV_FLAG_LOCAL_NAME)
-+		scan_rsp_len = eir_append_local_name(hdev, ptr, scan_rsp_len);
++	memset(&cp, 0, sizeof(cp));
 +
-+	return scan_rsp_len;
++	eir_create(hdev, cp.data);
++
++	if (memcmp(cp.data, hdev->eir, sizeof(cp.data)) == 0)
++		return 0;
++
++	memcpy(hdev->eir, cp.data, sizeof(cp.data));
++
++	return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_EIR, sizeof(cp), &cp,
++				     HCI_CMD_TIMEOUT);
 +}
-diff --git a/net/bluetooth/eir.h b/net/bluetooth/eir.h
++
++static u8 get_service_classes(struct hci_dev *hdev)
++{
++	struct bt_uuid *uuid;
++	u8 val = 0;
++
++	list_for_each_entry(uuid, &hdev->uuids, list)
++		val |= uuid->svc_hint;
++
++	return val;
++}
++
++int hci_update_class_sync(struct hci_dev *hdev)
++{
++	u8 cod[3];
++
++	bt_dev_dbg(hdev, "");
++
++	if (!hdev_is_powered(hdev))
++		return 0;
++
++	if (!hci_dev_test_flag(hdev, HCI_BREDR_ENABLED))
++		return 0;
++
++	if (hci_dev_test_flag(hdev, HCI_SERVICE_CACHE))
++		return 0;
++
++	cod[0] = hdev->minor_class;
++	cod[1] = hdev->major_class;
++	cod[2] = get_service_classes(hdev);
++
++	if (hci_dev_test_flag(hdev, HCI_LIMITED_DISCOVERABLE))
++		cod[1] |= 0x20;
++
++	if (memcmp(cod, hdev->dev_class, 3) == 0)
++		return 0;
++
++	return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_CLASS_OF_DEV,
++				     sizeof(cod), cod, HCI_CMD_TIMEOUT);
++}
+diff --git a/net/bluetooth/hci_sync.h b/net/bluetooth/hci_sync.h
 new file mode 100644
-index 000000000000..724662f8f8b1
+index 000000000000..e3437150031c
 --- /dev/null
-+++ b/net/bluetooth/eir.h
-@@ -0,0 +1,72 @@
++++ b/net/bluetooth/hci_sync.h
+@@ -0,0 +1,9 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * BlueZ - Bluetooth protocol stack for Linux
@@ -504,738 +476,388 @@ index 000000000000..724662f8f8b1
 + * Copyright (C) 2021 Intel Corporation
 + */
 +
-+void eir_create(struct hci_dev *hdev, u8 *data);
-+
-+u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr);
-+u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr);
-+
-+u8 eir_append_local_name(struct hci_dev *hdev, u8 *eir, u8 ad_len);
-+u8 eir_append_appearance(struct hci_dev *hdev, u8 *ptr, u8 ad_len);
-+
-+static inline u16 eir_append_data(u8 *eir, u16 eir_len, u8 type,
-+				  u8 *data, u8 data_len)
-+{
-+	eir[eir_len++] = sizeof(type) + data_len;
-+	eir[eir_len++] = type;
-+	memcpy(&eir[eir_len], data, data_len);
-+	eir_len += data_len;
-+
-+	return eir_len;
-+}
-+
-+static inline u16 eir_append_le16(u8 *eir, u16 eir_len, u8 type, u16 data)
-+{
-+	eir[eir_len++] = sizeof(type) + sizeof(data);
-+	eir[eir_len++] = type;
-+	put_unaligned_le16(data, &eir[eir_len]);
-+	eir_len += sizeof(data);
-+
-+	return eir_len;
-+}
-+
-+static inline void *eir_get_data(u8 *eir, size_t eir_len, u8 type,
-+				 size_t *data_len)
-+{
-+	size_t parsed = 0;
-+
-+	if (eir_len < 2)
-+		return NULL;
-+
-+	while (parsed < eir_len - 1) {
-+		u8 field_len = eir[0];
-+
-+		if (field_len == 0)
-+			break;
-+
-+		parsed += field_len + 1;
-+
-+		if (parsed > eir_len)
-+			break;
-+
-+		if (eir[1] != type) {
-+			eir += field_len + 1;
-+			continue;
-+		}
-+
-+		/* Zero length data */
-+		if (field_len == 1)
-+			return NULL;
-+
-+		if (data_len)
-+			*data_len = field_len - 1;
-+
-+		return &eir[2];
-+	}
-+
-+	return NULL;
-+}
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index ba407976066b..bb10087f77cb 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3143,6 +3143,60 @@ int hci_set_adv_instance_data(struct hci_dev *hdev, u8 instance,
- 	return 0;
- }
- 
-+/* This function requires the caller holds hdev->lock */
-+u32 hci_adv_instance_flags(struct hci_dev *hdev, u8 instance)
-+{
-+	u32 flags;
-+	struct adv_info *adv;
-+
-+	if (instance == 0x00) {
-+		/* Instance 0 always manages the "Tx Power" and "Flags"
-+		 * fields
-+		 */
-+		flags = MGMT_ADV_FLAG_TX_POWER | MGMT_ADV_FLAG_MANAGED_FLAGS;
-+
-+		/* For instance 0, the HCI_ADVERTISING_CONNECTABLE setting
-+		 * corresponds to the "connectable" instance flag.
-+		 */
-+		if (hci_dev_test_flag(hdev, HCI_ADVERTISING_CONNECTABLE))
-+			flags |= MGMT_ADV_FLAG_CONNECTABLE;
-+
-+		if (hci_dev_test_flag(hdev, HCI_LIMITED_DISCOVERABLE))
-+			flags |= MGMT_ADV_FLAG_LIMITED_DISCOV;
-+		else if (hci_dev_test_flag(hdev, HCI_DISCOVERABLE))
-+			flags |= MGMT_ADV_FLAG_DISCOV;
-+
-+		return flags;
-+	}
-+
-+	adv = hci_find_adv_instance(hdev, instance);
-+
-+	/* Return 0 when we got an invalid instance identifier. */
-+	if (!adv)
-+		return 0;
-+
-+	return adv->flags;
-+}
-+
-+bool hci_adv_instance_is_scannable(struct hci_dev *hdev, u8 instance)
-+{
-+	struct adv_info *adv;
-+
-+	/* Instance 0x00 always set local name */
-+	if (instance == 0x00)
-+		return true;
-+
-+	adv = hci_find_adv_instance(hdev, instance);
-+	if (!adv)
-+		return false;
-+
-+	if (adv->flags & MGMT_ADV_FLAG_APPEARANCE ||
-+	    adv->flags & MGMT_ADV_FLAG_LOCAL_NAME)
-+		return true;
-+
-+	return adv->scan_rsp_len ? true : false;
-+}
-+
- /* This function requires the caller holds hdev->lock */
- void hci_adv_monitors_clear(struct hci_dev *hdev)
- {
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index cde6a43cc61d..3106ee9d2c04 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -36,6 +36,7 @@
- #include "amp.h"
- #include "smp.h"
- #include "msft.h"
-+#include "eir.h"
- 
- #define ZERO_KEY "\x00\x00\x00\x00\x00\x00\x00\x00" \
- 		 "\x00\x00\x00\x00\x00\x00\x00\x00"
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 3465862429fb..7e86637a9933 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -30,6 +30,7 @@
- #include "smp.h"
- #include "hci_request.h"
- #include "msft.h"
-+#include "eir.h"
- 
- #define HCI_REQ_DONE	  0
- #define HCI_REQ_PEND	  1
-@@ -521,164 +522,6 @@ void __hci_req_update_name(struct hci_request *req)
- 	hci_req_add(req, HCI_OP_WRITE_LOCAL_NAME, sizeof(cp), &cp);
- }
- 
--#define PNP_INFO_SVCLASS_ID		0x1200
--
--static u8 *create_uuid16_list(struct hci_dev *hdev, u8 *data, ptrdiff_t len)
--{
--	u8 *ptr = data, *uuids_start = NULL;
--	struct bt_uuid *uuid;
--
--	if (len < 4)
--		return ptr;
--
--	list_for_each_entry(uuid, &hdev->uuids, list) {
--		u16 uuid16;
--
--		if (uuid->size != 16)
--			continue;
--
--		uuid16 = get_unaligned_le16(&uuid->uuid[12]);
--		if (uuid16 < 0x1100)
--			continue;
--
--		if (uuid16 == PNP_INFO_SVCLASS_ID)
--			continue;
--
--		if (!uuids_start) {
--			uuids_start = ptr;
--			uuids_start[0] = 1;
--			uuids_start[1] = EIR_UUID16_ALL;
--			ptr += 2;
--		}
--
--		/* Stop if not enough space to put next UUID */
--		if ((ptr - data) + sizeof(u16) > len) {
--			uuids_start[1] = EIR_UUID16_SOME;
--			break;
--		}
--
--		*ptr++ = (uuid16 & 0x00ff);
--		*ptr++ = (uuid16 & 0xff00) >> 8;
--		uuids_start[0] += sizeof(uuid16);
--	}
--
--	return ptr;
--}
--
--static u8 *create_uuid32_list(struct hci_dev *hdev, u8 *data, ptrdiff_t len)
--{
--	u8 *ptr = data, *uuids_start = NULL;
--	struct bt_uuid *uuid;
--
--	if (len < 6)
--		return ptr;
--
--	list_for_each_entry(uuid, &hdev->uuids, list) {
--		if (uuid->size != 32)
--			continue;
--
--		if (!uuids_start) {
--			uuids_start = ptr;
--			uuids_start[0] = 1;
--			uuids_start[1] = EIR_UUID32_ALL;
--			ptr += 2;
--		}
--
--		/* Stop if not enough space to put next UUID */
--		if ((ptr - data) + sizeof(u32) > len) {
--			uuids_start[1] = EIR_UUID32_SOME;
--			break;
--		}
--
--		memcpy(ptr, &uuid->uuid[12], sizeof(u32));
--		ptr += sizeof(u32);
--		uuids_start[0] += sizeof(u32);
--	}
--
--	return ptr;
--}
--
--static u8 *create_uuid128_list(struct hci_dev *hdev, u8 *data, ptrdiff_t len)
--{
--	u8 *ptr = data, *uuids_start = NULL;
--	struct bt_uuid *uuid;
--
--	if (len < 18)
--		return ptr;
--
--	list_for_each_entry(uuid, &hdev->uuids, list) {
--		if (uuid->size != 128)
--			continue;
--
--		if (!uuids_start) {
--			uuids_start = ptr;
--			uuids_start[0] = 1;
--			uuids_start[1] = EIR_UUID128_ALL;
--			ptr += 2;
--		}
--
--		/* Stop if not enough space to put next UUID */
--		if ((ptr - data) + 16 > len) {
--			uuids_start[1] = EIR_UUID128_SOME;
--			break;
--		}
--
--		memcpy(ptr, uuid->uuid, 16);
--		ptr += 16;
--		uuids_start[0] += 16;
--	}
--
--	return ptr;
--}
--
--static void create_eir(struct hci_dev *hdev, u8 *data)
--{
--	u8 *ptr = data;
--	size_t name_len;
--
--	name_len = strlen(hdev->dev_name);
--
--	if (name_len > 0) {
--		/* EIR Data type */
--		if (name_len > 48) {
--			name_len = 48;
--			ptr[1] = EIR_NAME_SHORT;
--		} else
--			ptr[1] = EIR_NAME_COMPLETE;
--
--		/* EIR Data length */
--		ptr[0] = name_len + 1;
--
--		memcpy(ptr + 2, hdev->dev_name, name_len);
--
--		ptr += (name_len + 2);
--	}
--
--	if (hdev->inq_tx_power != HCI_TX_POWER_INVALID) {
--		ptr[0] = 2;
--		ptr[1] = EIR_TX_POWER;
--		ptr[2] = (u8) hdev->inq_tx_power;
--
--		ptr += 3;
--	}
--
--	if (hdev->devid_source > 0) {
--		ptr[0] = 9;
--		ptr[1] = EIR_DEVICE_ID;
--
--		put_unaligned_le16(hdev->devid_source, ptr + 2);
--		put_unaligned_le16(hdev->devid_vendor, ptr + 4);
--		put_unaligned_le16(hdev->devid_product, ptr + 6);
--		put_unaligned_le16(hdev->devid_version, ptr + 8);
--
--		ptr += 10;
--	}
--
--	ptr = create_uuid16_list(hdev, ptr, HCI_MAX_EIR_LENGTH - (ptr - data));
--	ptr = create_uuid32_list(hdev, ptr, HCI_MAX_EIR_LENGTH - (ptr - data));
--	ptr = create_uuid128_list(hdev, ptr, HCI_MAX_EIR_LENGTH - (ptr - data));
--}
--
- void __hci_req_update_eir(struct hci_request *req)
- {
- 	struct hci_dev *hdev = req->hdev;
-@@ -698,7 +541,7 @@ void __hci_req_update_eir(struct hci_request *req)
- 
- 	memset(&cp, 0, sizeof(cp));
- 
--	create_eir(hdev, cp.data);
-+	eir_create(hdev, cp.data);
- 
- 	if (memcmp(cp.data, hdev->eir, sizeof(cp.data)) == 0)
- 		return;
-@@ -1133,25 +976,6 @@ void hci_req_add_le_passive_scan(struct hci_request *req)
- 			   addr_resolv);
- }
- 
--static bool adv_instance_is_scannable(struct hci_dev *hdev, u8 instance)
--{
--	struct adv_info *adv_instance;
--
--	/* Instance 0x00 always set local name */
--	if (instance == 0x00)
--		return true;
--
--	adv_instance = hci_find_adv_instance(hdev, instance);
--	if (!adv_instance)
--		return false;
--
--	if (adv_instance->flags & MGMT_ADV_FLAG_APPEARANCE ||
--	    adv_instance->flags & MGMT_ADV_FLAG_LOCAL_NAME)
--		return true;
--
--	return adv_instance->scan_rsp_len ? true : false;
--}
--
- static void hci_req_clear_event_filter(struct hci_request *req)
- {
- 	struct hci_cp_set_event_filter f;
-@@ -1441,7 +1265,7 @@ void hci_req_prepare_suspend(struct hci_dev *hdev, enum suspended_state next)
- 
- static bool adv_cur_instance_is_scannable(struct hci_dev *hdev)
- {
--	return adv_instance_is_scannable(hdev, hdev->cur_adv_instance);
-+	return hci_adv_instance_is_scannable(hdev, hdev->cur_adv_instance);
- }
- 
- void __hci_req_disable_advertising(struct hci_request *req)
-@@ -1456,40 +1280,6 @@ void __hci_req_disable_advertising(struct hci_request *req)
- 	}
- }
- 
--static u32 get_adv_instance_flags(struct hci_dev *hdev, u8 instance)
--{
--	u32 flags;
--	struct adv_info *adv_instance;
--
--	if (instance == 0x00) {
--		/* Instance 0 always manages the "Tx Power" and "Flags"
--		 * fields
--		 */
--		flags = MGMT_ADV_FLAG_TX_POWER | MGMT_ADV_FLAG_MANAGED_FLAGS;
--
--		/* For instance 0, the HCI_ADVERTISING_CONNECTABLE setting
--		 * corresponds to the "connectable" instance flag.
--		 */
--		if (hci_dev_test_flag(hdev, HCI_ADVERTISING_CONNECTABLE))
--			flags |= MGMT_ADV_FLAG_CONNECTABLE;
--
--		if (hci_dev_test_flag(hdev, HCI_LIMITED_DISCOVERABLE))
--			flags |= MGMT_ADV_FLAG_LIMITED_DISCOV;
--		else if (hci_dev_test_flag(hdev, HCI_DISCOVERABLE))
--			flags |= MGMT_ADV_FLAG_DISCOV;
--
--		return flags;
--	}
--
--	adv_instance = hci_find_adv_instance(hdev, instance);
--
--	/* Return 0 when we got an invalid instance identifier. */
--	if (!adv_instance)
--		return 0;
--
--	return adv_instance->flags;
--}
--
- static bool adv_use_rpa(struct hci_dev *hdev, uint32_t flags)
- {
- 	/* If privacy is not enabled don't use RPA */
-@@ -1553,15 +1343,15 @@ static bool is_advertising_allowed(struct hci_dev *hdev, bool connectable)
- void __hci_req_enable_advertising(struct hci_request *req)
- {
- 	struct hci_dev *hdev = req->hdev;
--	struct adv_info *adv_instance;
-+	struct adv_info *adv;
- 	struct hci_cp_le_set_adv_param cp;
- 	u8 own_addr_type, enable = 0x01;
- 	bool connectable;
- 	u16 adv_min_interval, adv_max_interval;
- 	u32 flags;
- 
--	flags = get_adv_instance_flags(hdev, hdev->cur_adv_instance);
--	adv_instance = hci_find_adv_instance(hdev, hdev->cur_adv_instance);
-+	flags = hci_adv_instance_flags(hdev, hdev->cur_adv_instance);
-+	adv = hci_find_adv_instance(hdev, hdev->cur_adv_instance);
- 
- 	/* If the "connectable" instance flag was not set, then choose between
- 	 * ADV_IND and ADV_NONCONN_IND based on the global connectable setting.
-@@ -1593,9 +1383,9 @@ void __hci_req_enable_advertising(struct hci_request *req)
- 
- 	memset(&cp, 0, sizeof(cp));
- 
--	if (adv_instance) {
--		adv_min_interval = adv_instance->min_interval;
--		adv_max_interval = adv_instance->max_interval;
-+	if (adv) {
-+		adv_min_interval = adv->min_interval;
-+		adv_max_interval = adv->max_interval;
- 	} else {
- 		adv_min_interval = hdev->le_adv_min_interval;
- 		adv_max_interval = hdev->le_adv_max_interval;
-@@ -1626,85 +1416,6 @@ void __hci_req_enable_advertising(struct hci_request *req)
- 	hci_req_add(req, HCI_OP_LE_SET_ADV_ENABLE, sizeof(enable), &enable);
- }
- 
--u8 append_local_name(struct hci_dev *hdev, u8 *ptr, u8 ad_len)
--{
--	size_t short_len;
--	size_t complete_len;
--
--	/* no space left for name (+ NULL + type + len) */
--	if ((HCI_MAX_AD_LENGTH - ad_len) < HCI_MAX_SHORT_NAME_LENGTH + 3)
--		return ad_len;
--
--	/* use complete name if present and fits */
--	complete_len = strlen(hdev->dev_name);
--	if (complete_len && complete_len <= HCI_MAX_SHORT_NAME_LENGTH)
--		return eir_append_data(ptr, ad_len, EIR_NAME_COMPLETE,
--				       hdev->dev_name, complete_len + 1);
--
--	/* use short name if present */
--	short_len = strlen(hdev->short_name);
--	if (short_len)
--		return eir_append_data(ptr, ad_len, EIR_NAME_SHORT,
--				       hdev->short_name, short_len + 1);
--
--	/* use shortened full name if present, we already know that name
--	 * is longer then HCI_MAX_SHORT_NAME_LENGTH
--	 */
--	if (complete_len) {
--		u8 name[HCI_MAX_SHORT_NAME_LENGTH + 1];
--
--		memcpy(name, hdev->dev_name, HCI_MAX_SHORT_NAME_LENGTH);
--		name[HCI_MAX_SHORT_NAME_LENGTH] = '\0';
--
--		return eir_append_data(ptr, ad_len, EIR_NAME_SHORT, name,
--				       sizeof(name));
--	}
--
--	return ad_len;
--}
--
--static u8 append_appearance(struct hci_dev *hdev, u8 *ptr, u8 ad_len)
--{
--	return eir_append_le16(ptr, ad_len, EIR_APPEARANCE, hdev->appearance);
--}
--
--static u8 create_default_scan_rsp_data(struct hci_dev *hdev, u8 *ptr)
--{
--	u8 scan_rsp_len = 0;
--
--	if (hdev->appearance)
--		scan_rsp_len = append_appearance(hdev, ptr, scan_rsp_len);
--
--	return append_local_name(hdev, ptr, scan_rsp_len);
--}
--
--static u8 create_instance_scan_rsp_data(struct hci_dev *hdev, u8 instance,
--					u8 *ptr)
--{
--	struct adv_info *adv_instance;
--	u32 instance_flags;
--	u8 scan_rsp_len = 0;
--
--	adv_instance = hci_find_adv_instance(hdev, instance);
--	if (!adv_instance)
--		return 0;
--
--	instance_flags = adv_instance->flags;
--
--	if ((instance_flags & MGMT_ADV_FLAG_APPEARANCE) && hdev->appearance)
--		scan_rsp_len = append_appearance(hdev, ptr, scan_rsp_len);
--
--	memcpy(&ptr[scan_rsp_len], adv_instance->scan_rsp_data,
--	       adv_instance->scan_rsp_len);
--
--	scan_rsp_len += adv_instance->scan_rsp_len;
--
--	if (instance_flags & MGMT_ADV_FLAG_LOCAL_NAME)
--		scan_rsp_len = append_local_name(hdev, ptr, scan_rsp_len);
--
--	return scan_rsp_len;
--}
--
- void __hci_req_update_scan_rsp_data(struct hci_request *req, u8 instance)
- {
- 	struct hci_dev *hdev = req->hdev;
-@@ -1718,11 +1429,7 @@ void __hci_req_update_scan_rsp_data(struct hci_request *req, u8 instance)
- 
- 		memset(&cp, 0, sizeof(cp));
- 
--		if (instance)
--			len = create_instance_scan_rsp_data(hdev, instance,
--							    cp.data);
--		else
--			len = create_default_scan_rsp_data(hdev, cp.data);
-+		len = eir_create_scan_rsp(hdev, instance, cp.data);
- 
- 		if (hdev->scan_rsp_data_len == len &&
- 		    !memcmp(cp.data, hdev->scan_rsp_data, len))
-@@ -1743,11 +1450,7 @@ void __hci_req_update_scan_rsp_data(struct hci_request *req, u8 instance)
- 
- 		memset(&cp, 0, sizeof(cp));
- 
--		if (instance)
--			len = create_instance_scan_rsp_data(hdev, instance,
--							    cp.data);
--		else
--			len = create_default_scan_rsp_data(hdev, cp.data);
-+		len = eir_create_scan_rsp(hdev, instance, cp.data);
- 
- 		if (hdev->scan_rsp_data_len == len &&
- 		    !memcmp(cp.data, hdev->scan_rsp_data, len))
-@@ -1762,95 +1465,6 @@ void __hci_req_update_scan_rsp_data(struct hci_request *req, u8 instance)
- 	}
- }
- 
--static u8 create_instance_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
--{
--	struct adv_info *adv_instance = NULL;
--	u8 ad_len = 0, flags = 0;
--	u32 instance_flags;
--
--	/* Return 0 when the current instance identifier is invalid. */
--	if (instance) {
--		adv_instance = hci_find_adv_instance(hdev, instance);
--		if (!adv_instance)
--			return 0;
--	}
--
--	instance_flags = get_adv_instance_flags(hdev, instance);
--
--	/* If instance already has the flags set skip adding it once
--	 * again.
--	 */
--	if (adv_instance && eir_get_data(adv_instance->adv_data,
--					 adv_instance->adv_data_len, EIR_FLAGS,
--					 NULL))
--		goto skip_flags;
--
--	/* The Add Advertising command allows userspace to set both the general
--	 * and limited discoverable flags.
--	 */
--	if (instance_flags & MGMT_ADV_FLAG_DISCOV)
--		flags |= LE_AD_GENERAL;
--
--	if (instance_flags & MGMT_ADV_FLAG_LIMITED_DISCOV)
--		flags |= LE_AD_LIMITED;
--
--	if (!hci_dev_test_flag(hdev, HCI_BREDR_ENABLED))
--		flags |= LE_AD_NO_BREDR;
--
--	if (flags || (instance_flags & MGMT_ADV_FLAG_MANAGED_FLAGS)) {
--		/* If a discovery flag wasn't provided, simply use the global
--		 * settings.
--		 */
--		if (!flags)
--			flags |= mgmt_get_adv_discov_flags(hdev);
--
--		/* If flags would still be empty, then there is no need to
--		 * include the "Flags" AD field".
--		 */
--		if (flags) {
--			ptr[0] = 0x02;
--			ptr[1] = EIR_FLAGS;
--			ptr[2] = flags;
--
--			ad_len += 3;
--			ptr += 3;
--		}
--	}
--
--skip_flags:
--	if (adv_instance) {
--		memcpy(ptr, adv_instance->adv_data,
--		       adv_instance->adv_data_len);
--		ad_len += adv_instance->adv_data_len;
--		ptr += adv_instance->adv_data_len;
--	}
--
--	if (instance_flags & MGMT_ADV_FLAG_TX_POWER) {
--		s8 adv_tx_power;
--
--		if (ext_adv_capable(hdev)) {
--			if (adv_instance)
--				adv_tx_power = adv_instance->tx_power;
--			else
--				adv_tx_power = hdev->adv_tx_power;
--		} else {
--			adv_tx_power = hdev->adv_tx_power;
--		}
--
--		/* Provide Tx Power only if we can provide a valid value for it */
--		if (adv_tx_power != HCI_TX_POWER_INVALID) {
--			ptr[0] = 0x02;
--			ptr[1] = EIR_TX_POWER;
--			ptr[2] = (u8)adv_tx_power;
--
--			ad_len += 3;
--			ptr += 3;
--		}
--	}
--
--	return ad_len;
--}
--
- void __hci_req_update_adv_data(struct hci_request *req, u8 instance)
- {
- 	struct hci_dev *hdev = req->hdev;
-@@ -1864,7 +1478,7 @@ void __hci_req_update_adv_data(struct hci_request *req, u8 instance)
- 
- 		memset(&cp, 0, sizeof(cp));
- 
--		len = create_instance_adv_data(hdev, instance, cp.data);
-+		len = eir_create_adv_data(hdev, instance, cp.data);
- 
- 		/* There's nothing to do if the data hasn't changed */
- 		if (hdev->adv_data_len == len &&
-@@ -1885,7 +1499,7 @@ void __hci_req_update_adv_data(struct hci_request *req, u8 instance)
- 
- 		memset(&cp, 0, sizeof(cp));
- 
--		len = create_instance_adv_data(hdev, instance, cp.data);
-+		len = eir_create_adv_data(hdev, instance, cp.data);
- 
- 		/* There's nothing to do if the data hasn't changed */
- 		if (hdev->adv_data_len == len &&
-@@ -2164,7 +1778,7 @@ int __hci_req_setup_ext_adv_instance(struct hci_request *req, u8 instance)
- 		adv_instance = NULL;
- 	}
- 
--	flags = get_adv_instance_flags(hdev, instance);
-+	flags = hci_adv_instance_flags(hdev, instance);
- 
- 	/* If the "connectable" instance flag was not set, then choose between
- 	 * ADV_IND and ADV_NONCONN_IND based on the global connectable setting.
-@@ -2204,7 +1818,7 @@ int __hci_req_setup_ext_adv_instance(struct hci_request *req, u8 instance)
- 			cp.evt_properties = cpu_to_le16(LE_EXT_ADV_CONN_IND);
- 		else
- 			cp.evt_properties = cpu_to_le16(LE_LEGACY_ADV_IND);
--	} else if (adv_instance_is_scannable(hdev, instance) ||
-+	} else if (hci_adv_instance_is_scannable(hdev, instance) ||
- 		   (flags & MGMT_ADV_PARAM_SCAN_RSP)) {
- 		if (secondary_adv)
- 			cp.evt_properties = cpu_to_le16(LE_EXT_ADV_SCAN_IND);
-diff --git a/net/bluetooth/hci_request.h b/net/bluetooth/hci_request.h
-index 39ee8a18087a..4824be833169 100644
---- a/net/bluetooth/hci_request.h
-+++ b/net/bluetooth/hci_request.h
-@@ -122,26 +122,3 @@ static inline void hci_update_background_scan(struct hci_dev *hdev)
- 
- void hci_request_setup(struct hci_dev *hdev);
- void hci_request_cancel_all(struct hci_dev *hdev);
--
--u8 append_local_name(struct hci_dev *hdev, u8 *ptr, u8 ad_len);
--
--static inline u16 eir_append_data(u8 *eir, u16 eir_len, u8 type,
--				  u8 *data, u8 data_len)
--{
--	eir[eir_len++] = sizeof(type) + data_len;
--	eir[eir_len++] = type;
--	memcpy(&eir[eir_len], data, data_len);
--	eir_len += data_len;
--
--	return eir_len;
--}
--
--static inline u16 eir_append_le16(u8 *eir, u16 eir_len, u8 type, u16 data)
--{
--	eir[eir_len++] = sizeof(type) + sizeof(data);
--	eir[eir_len++] = type;
--	put_unaligned_le16(data, &eir[eir_len]);
--	eir_len += sizeof(data);
--
--	return eir_len;
--}
++int hci_update_eir_sync(struct hci_dev *hdev);
++int hci_update_class_sync(struct hci_dev *hdev);
 diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 91d36c3bf23e..a376e3adda55 100644
+index a376e3adda55..b3ebdf4e85b0 100644
 --- a/net/bluetooth/mgmt.c
 +++ b/net/bluetooth/mgmt.c
-@@ -38,6 +38,7 @@
+@@ -34,6 +34,7 @@
+ #include <net/bluetooth/mgmt.h>
+ 
+ #include "hci_request.h"
++#include "hci_sync.h"
+ #include "smp.h"
  #include "mgmt_util.h"
  #include "mgmt_config.h"
- #include "msft.h"
-+#include "eir.h"
+@@ -276,10 +277,39 @@ static const u8 mgmt_status_table[] = {
+ 	MGMT_STATUS_CONNECT_FAILED,	/* MAC Connection Failed */
+ };
  
- #define MGMT_VERSION	1
- #define MGMT_REVISION	20
-@@ -7526,7 +7527,7 @@ static u8 calculate_name_len(struct hci_dev *hdev)
+-static u8 mgmt_status(u8 hci_status)
++static u8 mgmt_errno_status(int err)
  {
- 	u8 buf[HCI_MAX_SHORT_NAME_LENGTH + 3];
+-	if (hci_status < ARRAY_SIZE(mgmt_status_table))
+-		return mgmt_status_table[hci_status];
++	switch (err) {
++	case 0:
++		return MGMT_STATUS_SUCCESS;
++	case -EPERM:
++		return MGMT_STATUS_REJECTED;
++	case -EINVAL:
++		return MGMT_STATUS_INVALID_PARAMS;
++	case -EOPNOTSUPP:
++		return MGMT_STATUS_NOT_SUPPORTED;
++	case -EBUSY:
++		return MGMT_STATUS_BUSY;
++	case -ETIMEDOUT:
++		return MGMT_STATUS_AUTH_FAILED;
++	case -ENOMEM:
++		return MGMT_STATUS_NO_RESOURCES;
++	case -EISCONN:
++		return MGMT_STATUS_ALREADY_CONNECTED;
++	case -ENOTCONN:
++		return MGMT_STATUS_DISCONNECTED;
++	}
++
++	return MGMT_STATUS_FAILED;
++}
++
++static u8 mgmt_status(int err)
++{
++	if (err < 0)
++		return mgmt_errno_status(err);
++
++	if (err < ARRAY_SIZE(mgmt_status_table))
++		return mgmt_status_table[err];
  
--	return append_local_name(hdev, buf, 0);
-+	return eir_append_local_name(hdev, buf, 0);
+ 	return MGMT_STATUS_FAILED;
+ }
+@@ -951,25 +981,23 @@ bool mgmt_get_connectable(struct hci_dev *hdev)
+ 	return hci_dev_test_flag(hdev, HCI_CONNECTABLE);
  }
  
- static u8 tlv_data_max_len(struct hci_dev *hdev, u32 adv_flags,
++static int service_cache_sync(struct hci_dev *hdev, void *data)
++{
++	hci_update_eir_sync(hdev);
++	hci_update_class_sync(hdev);
++
++	return 0;
++}
++
+ static void service_cache_off(struct work_struct *work)
+ {
+ 	struct hci_dev *hdev = container_of(work, struct hci_dev,
+ 					    service_cache.work);
+-	struct hci_request req;
+ 
+ 	if (!hci_dev_test_and_clear_flag(hdev, HCI_SERVICE_CACHE))
+ 		return;
+ 
+-	hci_req_init(&req, hdev);
+-
+-	hci_dev_lock(hdev);
+-
+-	__hci_req_update_eir(&req);
+-	__hci_req_update_class(&req);
+-
+-	hci_dev_unlock(hdev);
+-
+-	hci_req_run(&req, NULL);
++	hci_cmd_sync_queue(hdev, service_cache_sync, NULL, NULL);
+ }
+ 
+ static void rpa_expired(struct work_struct *work)
+@@ -2075,37 +2103,33 @@ static u8 get_uuid_size(const u8 *uuid)
+ 	return 16;
+ }
+ 
+-static void mgmt_class_complete(struct hci_dev *hdev, u16 mgmt_op, u8 status)
++static void mgmt_class_complete(struct hci_dev *hdev, void *data, int err)
+ {
+-	struct mgmt_pending_cmd *cmd;
+-
+-	hci_dev_lock(hdev);
++	struct mgmt_pending_cmd *cmd = data;
+ 
+-	cmd = pending_find(mgmt_op, hdev);
+-	if (!cmd)
+-		goto unlock;
++	bt_dev_dbg(hdev, "err %d", err);
+ 
+ 	mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode,
+-			  mgmt_status(status), hdev->dev_class, 3);
++			  mgmt_status(err), hdev->dev_class, 3);
+ 
+-	mgmt_pending_remove(cmd);
+-
+-unlock:
+-	hci_dev_unlock(hdev);
++	mgmt_pending_free(cmd);
+ }
+ 
+-static void add_uuid_complete(struct hci_dev *hdev, u8 status, u16 opcode)
++static int add_uuid_sync(struct hci_dev *hdev, void *data)
+ {
+-	bt_dev_dbg(hdev, "status 0x%02x", status);
++	int err;
+ 
+-	mgmt_class_complete(hdev, MGMT_OP_ADD_UUID, status);
++	err = hci_update_class_sync(hdev);
++	if (err)
++		return err;
++
++	return hci_update_eir_sync(hdev);
+ }
+ 
+ static int add_uuid(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
+ {
+ 	struct mgmt_cp_add_uuid *cp = data;
+ 	struct mgmt_pending_cmd *cmd;
+-	struct hci_request req;
+ 	struct bt_uuid *uuid;
+ 	int err;
+ 
+@@ -2131,28 +2155,17 @@ static int add_uuid(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
+ 
+ 	list_add_tail(&uuid->list, &hdev->uuids);
+ 
+-	hci_req_init(&req, hdev);
+-
+-	__hci_req_update_class(&req);
+-	__hci_req_update_eir(&req);
+-
+-	err = hci_req_run(&req, add_uuid_complete);
+-	if (err < 0) {
+-		if (err != -ENODATA)
+-			goto failed;
+-
+-		err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_ADD_UUID, 0,
+-					hdev->dev_class, 3);
+-		goto failed;
+-	}
+-
+-	cmd = mgmt_pending_add(sk, MGMT_OP_ADD_UUID, hdev, data, len);
++	cmd = mgmt_pending_new(sk, MGMT_OP_ADD_UUID, hdev, data, len);
+ 	if (!cmd) {
+ 		err = -ENOMEM;
+ 		goto failed;
+ 	}
+ 
+-	err = 0;
++	err = hci_cmd_sync_queue(hdev, add_uuid_sync, cmd, mgmt_class_complete);
++	if (err < 0) {
++		mgmt_pending_free(cmd);
++		goto failed;
++	}
+ 
+ failed:
+ 	hci_dev_unlock(hdev);
+@@ -2173,11 +2186,15 @@ static bool enable_service_cache(struct hci_dev *hdev)
+ 	return false;
+ }
+ 
+-static void remove_uuid_complete(struct hci_dev *hdev, u8 status, u16 opcode)
++static int remove_uuid_sync(struct hci_dev *hdev, void *data)
+ {
+-	bt_dev_dbg(hdev, "status 0x%02x", status);
++	int err;
+ 
+-	mgmt_class_complete(hdev, MGMT_OP_REMOVE_UUID, status);
++	err = hci_update_class_sync(hdev);
++	if (err)
++		return err;
++
++	return hci_update_eir_sync(hdev);
+ }
+ 
+ static int remove_uuid(struct sock *sk, struct hci_dev *hdev, void *data,
+@@ -2187,7 +2204,6 @@ static int remove_uuid(struct sock *sk, struct hci_dev *hdev, void *data,
+ 	struct mgmt_pending_cmd *cmd;
+ 	struct bt_uuid *match, *tmp;
+ 	u8 bt_uuid_any[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+-	struct hci_request req;
+ 	int err, found;
+ 
+ 	bt_dev_dbg(hdev, "sock %p", sk);
+@@ -2231,39 +2247,35 @@ static int remove_uuid(struct sock *sk, struct hci_dev *hdev, void *data,
+ 	}
+ 
+ update_class:
+-	hci_req_init(&req, hdev);
+-
+-	__hci_req_update_class(&req);
+-	__hci_req_update_eir(&req);
+-
+-	err = hci_req_run(&req, remove_uuid_complete);
+-	if (err < 0) {
+-		if (err != -ENODATA)
+-			goto unlock;
+-
+-		err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_REMOVE_UUID, 0,
+-					hdev->dev_class, 3);
+-		goto unlock;
+-	}
+-
+-	cmd = mgmt_pending_add(sk, MGMT_OP_REMOVE_UUID, hdev, data, len);
++	cmd = mgmt_pending_new(sk, MGMT_OP_REMOVE_UUID, hdev, data, len);
+ 	if (!cmd) {
+ 		err = -ENOMEM;
+ 		goto unlock;
+ 	}
+ 
+-	err = 0;
++	err = hci_cmd_sync_queue(hdev, remove_uuid_sync, cmd,
++				 mgmt_class_complete);
++	if (err < 0)
++		mgmt_pending_free(cmd);
+ 
+ unlock:
+ 	hci_dev_unlock(hdev);
+ 	return err;
+ }
+ 
+-static void set_class_complete(struct hci_dev *hdev, u8 status, u16 opcode)
++static int set_class_sync(struct hci_dev *hdev, void *data)
+ {
+-	bt_dev_dbg(hdev, "status 0x%02x", status);
++	int err = 0;
++
++	if (hci_dev_test_and_clear_flag(hdev, HCI_SERVICE_CACHE)) {
++		cancel_delayed_work_sync(&hdev->service_cache);
++		err = hci_update_eir_sync(hdev);
++	}
++
++	if (err)
++		return err;
+ 
+-	mgmt_class_complete(hdev, MGMT_OP_SET_DEV_CLASS, status);
++	return hci_update_class_sync(hdev);
+ }
+ 
+ static int set_dev_class(struct sock *sk, struct hci_dev *hdev, void *data,
+@@ -2271,7 +2283,6 @@ static int set_dev_class(struct sock *sk, struct hci_dev *hdev, void *data,
+ {
+ 	struct mgmt_cp_set_dev_class *cp = data;
+ 	struct mgmt_pending_cmd *cmd;
+-	struct hci_request req;
+ 	int err;
+ 
+ 	bt_dev_dbg(hdev, "sock %p", sk);
+@@ -2303,34 +2314,16 @@ static int set_dev_class(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		goto unlock;
+ 	}
+ 
+-	hci_req_init(&req, hdev);
+-
+-	if (hci_dev_test_and_clear_flag(hdev, HCI_SERVICE_CACHE)) {
+-		hci_dev_unlock(hdev);
+-		cancel_delayed_work_sync(&hdev->service_cache);
+-		hci_dev_lock(hdev);
+-		__hci_req_update_eir(&req);
+-	}
+-
+-	__hci_req_update_class(&req);
+-
+-	err = hci_req_run(&req, set_class_complete);
+-	if (err < 0) {
+-		if (err != -ENODATA)
+-			goto unlock;
+-
+-		err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_SET_DEV_CLASS, 0,
+-					hdev->dev_class, 3);
+-		goto unlock;
+-	}
+-
+-	cmd = mgmt_pending_add(sk, MGMT_OP_SET_DEV_CLASS, hdev, data, len);
++	cmd = mgmt_pending_new(sk, MGMT_OP_SET_DEV_CLASS, hdev, data, len);
+ 	if (!cmd) {
+ 		err = -ENOMEM;
+ 		goto unlock;
+ 	}
+ 
+-	err = 0;
++	err = hci_cmd_sync_queue(hdev, set_class_sync, cmd,
++				 mgmt_class_complete);
++	if (err < 0)
++		mgmt_pending_free(cmd);
+ 
+ unlock:
+ 	hci_dev_unlock(hdev);
+@@ -5266,11 +5259,15 @@ static int unblock_device(struct sock *sk, struct hci_dev *hdev, void *data,
+ 	return err;
+ }
+ 
++static int set_device_id_sync(struct hci_dev *hdev, void *data)
++{
++	return hci_update_eir_sync(hdev);
++}
++
+ static int set_device_id(struct sock *sk, struct hci_dev *hdev, void *data,
+ 			 u16 len)
+ {
+ 	struct mgmt_cp_set_device_id *cp = data;
+-	struct hci_request req;
+ 	int err;
+ 	__u16 source;
+ 
+@@ -5292,9 +5289,7 @@ static int set_device_id(struct sock *sk, struct hci_dev *hdev, void *data,
+ 	err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_SET_DEVICE_ID, 0,
+ 				NULL, 0);
+ 
+-	hci_req_init(&req, hdev);
+-	__hci_req_update_eir(&req);
+-	hci_req_run(&req, NULL);
++	hci_cmd_sync_queue(hdev, set_device_id_sync, NULL, NULL);
+ 
+ 	hci_dev_unlock(hdev);
+ 
+diff --git a/net/bluetooth/mgmt_util.c b/net/bluetooth/mgmt_util.c
+index 0d0a6d77b9e8..83875f2a0604 100644
+--- a/net/bluetooth/mgmt_util.c
++++ b/net/bluetooth/mgmt_util.c
+@@ -227,7 +227,7 @@ void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
+ 	}
+ }
+ 
+-struct mgmt_pending_cmd *mgmt_pending_add(struct sock *sk, u16 opcode,
++struct mgmt_pending_cmd *mgmt_pending_new(struct sock *sk, u16 opcode,
+ 					  struct hci_dev *hdev,
+ 					  void *data, u16 len)
+ {
+@@ -251,6 +251,19 @@ struct mgmt_pending_cmd *mgmt_pending_add(struct sock *sk, u16 opcode,
+ 	cmd->sk = sk;
+ 	sock_hold(sk);
+ 
++	return cmd;
++}
++
++struct mgmt_pending_cmd *mgmt_pending_add(struct sock *sk, u16 opcode,
++					  struct hci_dev *hdev,
++					  void *data, u16 len)
++{
++	struct mgmt_pending_cmd *cmd;
++
++	cmd = mgmt_pending_new(sk, opcode, hdev, data, len);
++	if (!cmd)
++		return NULL;
++
+ 	list_add(&cmd->list, &hdev->mgmt_pending);
+ 
+ 	return cmd;
+diff --git a/net/bluetooth/mgmt_util.h b/net/bluetooth/mgmt_util.h
+index 6559f189213c..9dc24ba0d51a 100644
+--- a/net/bluetooth/mgmt_util.h
++++ b/net/bluetooth/mgmt_util.h
+@@ -49,5 +49,8 @@ void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
+ struct mgmt_pending_cmd *mgmt_pending_add(struct sock *sk, u16 opcode,
+ 					  struct hci_dev *hdev,
+ 					  void *data, u16 len);
++struct mgmt_pending_cmd *mgmt_pending_new(struct sock *sk, u16 opcode,
++					  struct hci_dev *hdev,
++					  void *data, u16 len);
+ void mgmt_pending_free(struct mgmt_pending_cmd *cmd);
+ void mgmt_pending_remove(struct mgmt_pending_cmd *cmd);
 -- 
 2.31.1
 
