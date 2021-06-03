@@ -2,77 +2,93 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6D02399881
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jun 2021 05:20:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73850399BCB
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jun 2021 09:44:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbhFCDVw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 2 Jun 2021 23:21:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38998 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbhFCDVv (ORCPT
+        id S230004AbhFCHqG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 3 Jun 2021 03:46:06 -0400
+Received: from szxga01-in.huawei.com ([45.249.212.187]:3044 "EHLO
+        szxga01-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229941AbhFCHqG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 2 Jun 2021 23:21:51 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D93BC06174A
-        for <linux-bluetooth@vger.kernel.org>; Wed,  2 Jun 2021 20:20:04 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id i4so6859672ybe.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Jun 2021 20:20:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qtJBBfd5RP7iP2oPG4uMPhDWXo0c0Rcr1wHYucdT8uE=;
-        b=NOUhxWdeVO0vZqValuRKPuUxoJeKrB/wSjNMxMQ63MOQogB8rHREd7E2rY6is1S4+H
-         OzMjpqwehtqAYWu06C/0nMiFQmfMB7hihCjaQsPXdtMiq6WZZCbbG+IDXnssnJS5KQOh
-         sjbG/8YEsk4P5ov/8CVdpUx5r0r0X3AZj377pDUvZubkUl59+21lQYiaLbDHbl+6ZhsD
-         Kh9DwUdWuynobe0SAR8c6QT8YGvYLKm/mLkmuy8RDgK/EVNJcjwaZ7qNcfEIaGLj6D+A
-         G4zmn2UxjMDAKguJqaHlhRUiH5zRiXlf1IKWBxxYQ+2KVZte11Agrv+UkcbJPbmrxi8k
-         7jmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qtJBBfd5RP7iP2oPG4uMPhDWXo0c0Rcr1wHYucdT8uE=;
-        b=FC/WhC7fFYqu/QFRS4/fZp7Ds4z7a+ESOmMrnNcleIum3aYkCiXoudPi6qMha7PItB
-         tqBQ0sa5QwCqDmK1HQ5enoCLh92sIB6hT4hRGIqYDl2IZDEzazO4CD5sSMTZ4bQ/4cqA
-         8xofS/vwQXrplA51gETOTNWyb+nE9OC4b8T92j7MHFT459pnSK/ZwBv6/KQ4MJxVIBnL
-         t99rFwBqMPb0c09fmBggt0pVN11PMzeCGbhrTPqQBQPTcXMNPpJLiDPXu2yc+pQ90/nl
-         V4EsyhWdcJVuJnGroQQDLeMQCYig0b8osDHuHwLpy2VK8Maoawzt1FjJudYFh0o7H0I8
-         t9JA==
-X-Gm-Message-State: AOAM531JTnpWjQu3J9zK8g5fR6li4YfMmfwiwag/+OZmMJie5PkLfmsF
-        Fd/vU4RAgxfPLPJOk7QqyL/qKeQ9fD/TZLAg9E4=
-X-Google-Smtp-Source: ABdhPJyY3VkEGEgsGxMDplKW3GB9Tiw0xN/DXfapVV5wIs9uflMcG0LXp3Ye6rENH/KlxJ+OhgLQFmvWc6RKJ9+mfUE=
-X-Received: by 2002:a25:3406:: with SMTP id b6mr51682164yba.318.1622690403942;
- Wed, 02 Jun 2021 20:20:03 -0700 (PDT)
+        Thu, 3 Jun 2021 03:46:06 -0400
+Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.57])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Fwd875cpbzWr89;
+        Thu,  3 Jun 2021 15:39:35 +0800 (CST)
+Received: from dggpeml500012.china.huawei.com (7.185.36.15) by
+ dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Thu, 3 Jun 2021 15:44:13 +0800
+Received: from huawei.com (10.67.165.24) by dggpeml500012.china.huawei.com
+ (7.185.36.15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Thu, 3 Jun 2021
+ 15:44:13 +0800
+From:   Kai Ye <yekai13@huawei.com>
+To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
+        <luiz.dentz@gmail.com>, <davem@davemloft.net>, <kuba@kernel.org>,
+        <netdev@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <yekai13@huawei.com>
+Subject: [PATCH v3 00/12] Bluetooth: correct the use of print format
+Date:   Thu, 3 Jun 2021 15:40:53 +0800
+Message-ID: <1622706065-45409-1-git-send-email-yekai13@huawei.com>
+X-Mailer: git-send-email 2.8.1
 MIME-Version: 1.0
-References: <CAJjojJvVPwssDxY-GcQcw0TXMzhEX4RgiNeGWowKo6mKTw13=g@mail.gmail.com>
- <CABBYNZJm+ScxVjVBcxRpUuu+9J8sgyEmrnFaVpVii0FCg3EMxw@mail.gmail.com>
-In-Reply-To: <CABBYNZJm+ScxVjVBcxRpUuu+9J8sgyEmrnFaVpVii0FCg3EMxw@mail.gmail.com>
-From:   Lin Horse <kylin.formalin@gmail.com>
-Date:   Thu, 3 Jun 2021 11:19:52 +0800
-Message-ID: <CAJjojJvtSVqw2BcWoDULEF3AqLJN6pguuJUN65PxAL70-rbATg@mail.gmail.com>
-Subject: Re: BUG: KASAN: use-after-free in l2cap_send_cmd from l2cap_chan_timeout
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.67.165.24]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ dggpeml500012.china.huawei.com (7.185.36.15)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-> Try with the following patch:
-> https://patchwork.kernel.org/project/bluetooth/patch/20210602232348.766496-1-luiz.dentz@gmail.com/
+According to Documentation/core-api/printk-formats.rst,
+Use the correct print format. 
+1. Printing an unsigned int value should use %u instead of %d.
+2. Printing an unsigned long value should use %lu instead of %ld.
+Otherwise printk() might end up displaying negative numbers.
 
-Yeah, I send this email because I have seen this wonderful patch.
-However, the crash site is not exactly the same as this UAF is about
-the hdev object while the discussed patch is about the l2cap_conn
-object.
-I will try to reproduce this one to test if it can work.
+changes v1 -> v2:
+	fix some style problems
+changes v2 -> v3
+	fix some commit message style
 
-> If that doesn't work we may need to use cancel_delayed_work_sync but
-> I'm not sure if that is safe to use since that blocks the context.
+Kai Ye (12):
+  Bluetooth: bnep: Use the correct print format
+  Bluetooth: cmtp: Use the correct print format
+  Bluetooth: hidp: Use the correct print format
+  Bluetooth: rfcomm: Use the correct print format
+  Bluetooth: 6lowpan: Use the correct print format
+  Bluetooth: a2mp: Use the correct print format
+  Bluetooth: amp: Use the correct print format
+  Bluetooth: hci: Use the correct print format
+  Bluetooth: mgmt: Use the correct print format
+  Bluetooth: msft: Use the correct print format
+  Bluetooth: sco: Use the correct print format
+  Bluetooth: smp: Use the correct print format
 
-Agree :)
+ net/bluetooth/6lowpan.c     | 16 +++++------
+ net/bluetooth/a2mp.c        | 24 ++++++++--------
+ net/bluetooth/amp.c         |  6 ++--
+ net/bluetooth/bnep/core.c   |  8 +++---
+ net/bluetooth/cmtp/capi.c   | 22 +++++++--------
+ net/bluetooth/hci_conn.c    |  8 +++---
+ net/bluetooth/hci_core.c    | 48 ++++++++++++++++----------------
+ net/bluetooth/hci_event.c   | 24 ++++++++--------
+ net/bluetooth/hci_request.c |  8 +++---
+ net/bluetooth/hci_sock.c    |  6 ++--
+ net/bluetooth/hci_sysfs.c   |  2 +-
+ net/bluetooth/hidp/core.c   |  6 ++--
+ net/bluetooth/mgmt.c        | 16 +++++------
+ net/bluetooth/mgmt_config.c |  4 +--
+ net/bluetooth/msft.c        |  2 +-
+ net/bluetooth/rfcomm/core.c | 68 ++++++++++++++++++++++-----------------------
+ net/bluetooth/rfcomm/sock.c |  8 +++---
+ net/bluetooth/rfcomm/tty.c  | 10 +++----
+ net/bluetooth/sco.c         |  8 +++---
+ net/bluetooth/smp.c         |  6 ++--
+ 20 files changed, 150 insertions(+), 150 deletions(-)
 
-Thanks
-Lin Ma
+-- 
+2.8.1
+
