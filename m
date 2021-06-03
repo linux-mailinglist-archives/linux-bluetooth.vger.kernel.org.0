@@ -2,86 +2,76 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11A0A39AD7C
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  4 Jun 2021 00:13:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B80F039AE63
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  4 Jun 2021 00:51:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230121AbhFCWPW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 3 Jun 2021 18:15:22 -0400
-Received: from llmi632.servidoresdns.net ([82.223.214.122]:57622 "EHLO
-        llmi632.servidoresdns.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbhFCWPV (ORCPT
+        id S229656AbhFCWwq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 3 Jun 2021 18:52:46 -0400
+Received: from mail-pg1-f174.google.com ([209.85.215.174]:42688 "EHLO
+        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhFCWwp (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 3 Jun 2021 18:15:21 -0400
-X-Greylist: delayed 865 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Jun 2021 18:15:21 EDT
-Received: from llmi632.servidoresdns.net (localhost [127.0.0.1])
-        by llmi632.servidoresdns.net (Postfix) with ESMTPA id 58C966215D;
-        Thu,  3 Jun 2021 23:59:16 +0200 (CEST)
+        Thu, 3 Jun 2021 18:52:45 -0400
+Received: by mail-pg1-f174.google.com with SMTP id t8so6269898pgb.9
+        for <linux-bluetooth@vger.kernel.org>; Thu, 03 Jun 2021 15:51:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=yjwLN4ukVonteSx9IEhmKfR/n502+IK8rv/TYdDoDHc=;
+        b=iiapdCXPzgk3myKADX0Po72qOMymjiJrrwXoxLlm0ya7K9lEADsWkTHRtfMmElDnLn
+         TnScbFGDpezKoWJjt0rETHFEyx8yOkFoRzUoXs48RSvOziIh5V8ZEONekeGOkahP3nt0
+         JUMk+rKYoiFuHAtH4Keb/jD0TTzUTJ3VZA7QJD8DotrIuSkAPanKDWyXlblq6EjbMFFW
+         SaiZ3/lKlkzz4DXJB+lz2J2EA76Fkf+OtZBb190l1HJcrSd+MZq/CO9eRsI2hh7cFLVV
+         HrOYEIxSStmNtCWMvGmb3vBiK0mUq6w/Lpkf7bKc3qqgHPS1Ike7riuTBW6Jw2B+R0QC
+         DXtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=yjwLN4ukVonteSx9IEhmKfR/n502+IK8rv/TYdDoDHc=;
+        b=X9ljS7MwZyivLRGXyvMOFoiSWgGUJA/Ot0HOTC7Z2HOG5N5tJmuhc1eB8WNPZtwhfP
+         vWtvuq9jgISRGHkDhr5LUaN4SBfqEjwd6arC3AzXWydHmwF/XwDuUmjgdsOX8EnZTYMZ
+         nspLhlhpxWogzlFy0qlmgt3FFSD2BkS8FTRzXm+vc+mR3wz84sciWeYXcDfmOTlYv57p
+         s+X/mD6wf9b9lniOcaOksXuKTJesLT3WoRMQt6IE4seDKxiIfNrLhWIVNeOjzgvWOjrv
+         MsPM13nCbtEC5d7E59vuMZGp7bRizERz3IPYHPyHdYFHt6wmmVVV2/2+60BXXHmhb3wJ
+         T0hA==
+X-Gm-Message-State: AOAM531kj+yn/PyKLxum4rA7pSXiouOw9kg6jahHRJ3/3t1MKgInzfQm
+        FPgoDHrh39Fr83IifmzRIGCTha6bog==
+X-Google-Smtp-Source: ABdhPJx3RtTjYQ86uQon9pRduf5tMlWnJsK6k8CWsjX5gTui9aiIQbFB1Sc3QM6Abl9i2eAjhdUGPw==
+X-Received: by 2002:a63:1d61:: with SMTP id d33mr1675007pgm.331.1622760599957;
+        Thu, 03 Jun 2021 15:49:59 -0700 (PDT)
+Received: from [10.0.0.24] (c-73-15-154-65.hsd1.ca.comcast.net. [73.15.154.65])
+        by smtp.gmail.com with ESMTPSA id f7sm86318pfk.191.2021.06.03.15.49.58
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jun 2021 15:49:58 -0700 (PDT)
+To:     linux-bluetooth@vger.kernel.org
+From:   Cinaed Simson <cinaed.simson@gmail.com>
+Subject: bluetooth mesh
+Message-ID: <16f88f89-d3ad-350c-0a7c-e3da3ea202fd@gmail.com>
+Date:   Thu, 3 Jun 2021 15:49:58 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Thu, 03 Jun 2021 14:59:16 -0700
-From:   Patricia Gunnarsson <infomed@infomed.es>
-To:     undisclosed-recipients:;
-Subject: =?UTF-8?Q?perint=C3=B6?=
-Reply-To: patriciagnsson@gmail.com
-User-Agent: Roundcube Webmail/1.4.11
-Message-ID: <6ca7ee626053ce0ad1a64ba9d18ed79b@infomed.es>
-X-Sender: infomed@infomed.es
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Terveisiä rakas ystävä
+Hi - what are minum requirements for using mesh?
 
-Olen Gunnarsson Patricia ja Irlannin kansalainen, naimisissa Late Engr 
-George Gunnarssonin kanssa, joka työskenteli monikansallisessa öljy- ja 
-kaasututkimusyhtiössä Tullow Oil plc Lontoossa noin 19 vuotta ennen kuin 
-hän kuoli 25. elokuuta 2013.
+I'm in the process of installing the latest git version of bluez on 2 
+single board computer ARM 64 odroid running stretch.
 
-Minä ja myöhäinen mieheni olivat naimisissa lähes 24 vuotta ilman lasta. 
-Mieheni kuoli lyhyen neljän päivän sairauden jälkeen. Kun kuollut 
-mieheni oli elossa, talletimme itse asiassa 3 200 000 dollarin summan 
-offshore-tilillään Cahoot Bankilla Lontoossa, Yhdistyneessä 
-kuningaskunnassa, ja tämä rahasto on edelleen myöhäisen mieheni 
-pankkitilillä Cahoot-pankin kanssa.
+Both have 4.x kernels but I doubt if they have the crypotgraich kernel 
+modules.
 
-Jo ennen mieheni kuolemaa,
-Minulla on keuhkosyöpätauti
-Äskettäin lääkärini kertoi minulle, että en eläisi yli 2 kuukautta 
-keuhkosyöpäongelmani takia, ja mikä häiritsee minua eniten, on 
-äskettäinen aivohalvaukseni.
-Nyt kun en aio elää enää seuraavien kahden kuukauden jälkeen, kuten 
-lääkäri on ilmoittanut, olen päättänyt käyttää tätä rahastoa Jumalan 
-työn tekemiseen auttamalla
-äitittömät lapset, tukevat kristillisiä kirkkoja ja auttavat leskiä.
+I'm doing this to learn about bluetooth mesh so I don't care about 
+performance.
 
-Otin sinuun yhteyttä, koska haluan seurakunnan tai henkilön, joka voi 
-käyttää tätä rahaa, työskennellä Jumalan hyväksi ja varmistaa, että 
-Jumalan talo säilyy. Tein tämän päätöksen, koska minulla ei ole lasta 
-kirjoittaa pankkiin lunastamaan tätä rahaa. En voi enää luottaa 
-perheeseeni ja lähisukulaisiini, koska he eivät voi koskaan käyttää tätä 
-rahaa Jumalan työhön,
-he voivat käyttää sitä vain henkilökohtaisiin ja itsekkäisiin etuihinsa, 
-enkä halua, että näin tapahtuu.
+-- Cinaed
 
-Koska en ole varma eloonjäämisestä tässä sairaudessa, kuten lääkäri on 
-sanonut, pyydän teitä vilpittömästi auttamaan minua saavuttamaan tämän 
-humanitaarisen työn Kaikkivaltiaan Jumalalle. Haluan, että myöhäinen 
-mieheni pankki siirtää tämän $ 3200000 henkilökohtaiselle 
-pankkitilillesi ja kun saat rahat, sinun on käytettävä 60% rahastosta 
-Jumalan työn tekemiseen auttamalla Äitiettömät lapset, 2. tukevat 
-kristillisiä kirkkoja 3. auttavat leskiä.
 
-Ja sitten käytä loput 40% rahastosta sinulle ja perheellesi.
-
-Jos olet kiinnostunut saamaan nämä rahat kuolleen aviomieheni pankista 
-ja auttamaan minua tekemään tätä humanitaarista työtä Kaikkivaltiaan 
-Jumalan hyväksi, haluaisin sinun vastaavan minulle, jotta voin antaa 
-sinulle kaikki tiedot pankista ja kuinka rahat siirretään pankkitilisi 
-yllä mainittua tarkoitusta varten.
-
-Jos tarvitset lisätietoja, haluaisin, että otat minuun yhteyttä 
-yksityisen sähköpostiosoitteeni kautta: patriciagnirish@gmail.com
-
-Rouva Patricia
