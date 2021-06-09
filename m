@@ -2,243 +2,232 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDECE3A1FF2
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Jun 2021 00:21:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BB773A1FEF
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Jun 2021 00:20:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229925AbhFIWXs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Jun 2021 18:23:48 -0400
-Received: from mail-pg1-f175.google.com ([209.85.215.175]:37788 "EHLO
-        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbhFIWXr (ORCPT
+        id S229845AbhFIWWs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Jun 2021 18:22:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58478 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229542AbhFIWWs (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 9 Jun 2021 18:23:47 -0400
-Received: by mail-pg1-f175.google.com with SMTP id t9so20915183pgn.4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Jun 2021 15:21:38 -0700 (PDT)
+        Wed, 9 Jun 2021 18:22:48 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D1CC061574
+        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Jun 2021 15:20:39 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id h12so16894858pfe.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Jun 2021 15:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=29CZpLoK6nPZvYor9his0scdmxoyTQJ8HNnJMA8OXho=;
-        b=McuxapKvnCnVJ3//av7pSmtN4/KJ9uBhFfQjI1mgkLQoHwCrpFc6OrqYEdCBf8oQVk
-         e/1vFKYoVhxj99y4QpmBbaKW8FUSHGatwOynU4qWf6XSUC+wi/WyjACLLFzRFbVGE12v
-         CSdjD3E5S+fQtLQAvaau7h+wC+Ug1xTVATmRdNwVpptdoVdb7IWLw9AUzn2nVvj2LWnY
-         YbequcSAy7VlylDtkcF/4fXYzZAb1WX5KKqzjvcGb/uK9YAQO2yJCwLKRczrwT3DqaTL
-         Zgys2jL5HzhntzSeTZFf1EKZyUs8YmOaIvRwanZ3a+svRC29+SMOc5+A25T3/EXFIX9C
-         2vRw==
+        bh=XejPS2SxgaSma7UYPFxMSGQDLe3SrSlRCe8g7Osky3I=;
+        b=TlGAGC0h5hkvE5CdZFNiteGBKw8g0aR+bHvRX/SPGme2uJbB69qy2UM4MIYHGYqnqO
+         lmV+Y07vZCOfCqx8PcnL74JXYwilhDyWWRHByu2+nA7mGJFdvePZawTGRTkno6kCdEKY
+         530Y1LM1uRy/MUVSGIBNwdk7zpzFN2EAPWmHdxKKA9Kj+oZhQCDSc/eiacfnmLdZVgmh
+         9hnEubHH43OofoyUJvMxvGuFWPtwFUGSsv3iJzugt5zysRpTILfuX59F7n8VxbkisLTP
+         3DwZsyI4XRNdEYiYZKNLEp8I2a/f7cqrZU22naUGzijW8vHenK9F+fZJoZ3E2N0LMj3O
+         SwQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=29CZpLoK6nPZvYor9his0scdmxoyTQJ8HNnJMA8OXho=;
-        b=Pjj6q6hRPw7JtvmUEdOyL0mGzxfgDkhtFif0K+jsbyYgW9upPb7Ev+Kr59xOLADiZx
-         +RSvO0/IQ+bn1CQTEITjtAZRTID6tGakNhL9ccsF8b3q48GgBT7XUPa/mcDQu39fd/fk
-         +JTGtEj22EPI3V1eiLIYVCrgiuyPaCQImZVoJYSuB9OIcbUgts6yv9nfmjEMAktIUGL6
-         9hLlU1nAD/M7mw8RyrMYs4DvyzF9TPTMeolxGkJLAk6K+EFg98R4ONq1Da4mkqx488kp
-         sLhCpygBpUDRxhVmsGTWslBUT1RK5CJqSw/ANkWU/0QiSHg+u3EkGzafWdCaPXHi3/bN
-         rDng==
-X-Gm-Message-State: AOAM531kdj6B823J/JGqSkLVYeO1iAXG0UZn24xjAFfU3IpH9/s3EJAK
-        R7xb0UCsi6MCSjmN2i2OnDC/w9zd5sY=
-X-Google-Smtp-Source: ABdhPJzvfpwEtpvEOsW0GY623vSR1XpFWDnq8IP0XmZETn/RcppQEcRlq7Pma69ik59Ug2WdvY51mw==
-X-Received: by 2002:a63:d08:: with SMTP id c8mr1890211pgl.248.1623277238189;
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XejPS2SxgaSma7UYPFxMSGQDLe3SrSlRCe8g7Osky3I=;
+        b=goOCBbfD0LqrOFZ6gRcG+4+kQ+khMCJ2d/c7vxge3Od0LdIRG1QL03ERgepkzIZWF9
+         7SasErfcn5GdviILAPoGgGspeS47yklE4erk4FNAISEBsDcH6Bfbz6dPMMeFh55gkcn2
+         ZzFSKZrl2N3jVVfVOYB2dG/40zfSHNNByaVdpOZ1eph+Wgi6BVUkLPYzo4aAq5bAVO+8
+         z7sKUA/Ab6E1qPv7qzVblJLe7f9RIeeSpszLf8xB3h3WD03ZFskzT4jb+4dXOAoyBVU6
+         Al/YXczJB98Hu3bb6TAxXMXFaUDuPlGi2wQ+KOcb+mRG0mDgqooU+QbJHKqERmOjufYW
+         FCOw==
+X-Gm-Message-State: AOAM533/cwNNLf9G1v05qQUYwwFOMRrjcJHrgYCihsTD22fLgXtS+dGq
+        bpp+5AwunZ9qrl2EaKNla3S0FZ7IirE=
+X-Google-Smtp-Source: ABdhPJxnS233DHXEVgO9HKfm5iG6Kq45elPk9eFR8S1ya93Wjsk/DQ8CwZLWD+qAft4nPsaLIJWxPQ==
+X-Received: by 2002:a63:1041:: with SMTP id 1mr1831346pgq.258.1623277238744;
         Wed, 09 Jun 2021 15:20:38 -0700 (PDT)
 Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id n9sm460352pfu.121.2021.06.09.15.20.37
+        by smtp.gmail.com with ESMTPSA id n9sm460352pfu.121.2021.06.09.15.20.38
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jun 2021 15:20:37 -0700 (PDT)
+        Wed, 09 Jun 2021 15:20:38 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v3 1/6] Bluetooth: Add helper for serialized HCI command execution
-Date:   Wed,  9 Jun 2021 15:20:29 -0700
-Message-Id: <20210609222035.297833-1-luiz.dentz@gmail.com>
+Subject: [PATCH v2] Bluetooth: HCI: Fix Set Extended (Scan Response) Data
+Date:   Wed,  9 Jun 2021 15:20:30 -0700
+Message-Id: <20210609222035.297833-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210609222035.297833-1-luiz.dentz@gmail.com>
+References: <20210609222035.297833-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Marcel Holtmann <marcel@holtmann.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-The usage of __hci_cmd_sync() within the hdev->setup() callback allows for
-a nice and simple serialized execution of HCI commands. More importantly
-it allows for result processing before issueing the next command.
+These command do have variable length and the length can go up to 251,
+so this changes the struct to not use a fixed size and then when
+creating the PDU only the actual length of the data send to the
+controller.
 
-With the current usage of hci_req_run() it is possible to batch up
-commands and execute them, but it is impossible to react to their
-results or errors.
-
-This is an attempt to generalize the hdev->setup() handling and provide
-a simple way of running multiple HCI commands from a single function
-context.
-
-There are multiple struct work that are decdicated to certain tasks
-already used right now. It is add a lot of bloat to hci_dev struct and
-extra handling code. So it might be possible to put all of these behind
-a common HCI command infrastructure and just execute the HCI commands
-from the same work context in a serialized fashion.
-
-For example updating the white list and resolving list can be done now
-without having to know the list size ahead of time. Also preparing for
-suspend or resume shouldn't require a state machine anymore. There are
-other tasks that should be simplified as well.
-
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Fixes: a0fb3726ba551 ("Bluetooth: Use Set ext adv/scan rsp data if
+controller supports")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- include/net/bluetooth/hci_core.h | 17 +++++++
- net/bluetooth/hci_core.c         | 82 ++++++++++++++++++++++++++++++++
- 2 files changed, 99 insertions(+)
+ include/net/bluetooth/hci.h      |  6 ++--
+ include/net/bluetooth/hci_core.h |  8 ++---
+ net/bluetooth/hci_request.c      | 51 ++++++++++++++++++--------------
+ 3 files changed, 37 insertions(+), 28 deletions(-)
 
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 479adbde6db4..cfd4e40594d1 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -1775,13 +1775,15 @@ struct hci_cp_ext_adv_set {
+ 	__u8  max_events;
+ } __packed;
+ 
++#define HCI_MAX_EXT_AD_LENGTH	251
++
+ #define HCI_OP_LE_SET_EXT_ADV_DATA		0x2037
+ struct hci_cp_le_set_ext_adv_data {
+ 	__u8  handle;
+ 	__u8  operation;
+ 	__u8  frag_pref;
+ 	__u8  length;
+-	__u8  data[HCI_MAX_AD_LENGTH];
++	__u8  data[];
+ } __packed;
+ 
+ #define HCI_OP_LE_SET_EXT_SCAN_RSP_DATA		0x2038
+@@ -1790,7 +1792,7 @@ struct hci_cp_le_set_ext_scan_rsp_data {
+ 	__u8  operation;
+ 	__u8  frag_pref;
+ 	__u8  length;
+-	__u8  data[HCI_MAX_AD_LENGTH];
++	__u8  data[];
+ } __packed;
+ 
+ #define LE_SET_ADV_DATA_OP_COMPLETE	0x03
 diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index a53e94459ecd..7b8dac2131e7 100644
+index 212f46806ce7..a53e94459ecd 100644
 --- a/include/net/bluetooth/hci_core.h
 +++ b/include/net/bluetooth/hci_core.h
-@@ -302,6 +302,17 @@ struct amp_assoc {
+@@ -228,9 +228,9 @@ struct adv_info {
+ 	__u16	remaining_time;
+ 	__u16	duration;
+ 	__u16	adv_data_len;
+-	__u8	adv_data[HCI_MAX_AD_LENGTH];
++	__u8	adv_data[HCI_MAX_EXT_AD_LENGTH];
+ 	__u16	scan_rsp_len;
+-	__u8	scan_rsp_data[HCI_MAX_AD_LENGTH];
++	__u8	scan_rsp_data[HCI_MAX_EXT_AD_LENGTH];
+ 	__s8	tx_power;
+ 	__u32   min_interval;
+ 	__u32   max_interval;
+@@ -551,9 +551,9 @@ struct hci_dev {
+ 	DECLARE_BITMAP(dev_flags, __HCI_NUM_FLAGS);
  
- #define HCI_MAX_PAGES	3
+ 	__s8			adv_tx_power;
+-	__u8			adv_data[HCI_MAX_AD_LENGTH];
++	__u8			adv_data[HCI_MAX_EXT_AD_LENGTH];
+ 	__u8			adv_data_len;
+-	__u8			scan_rsp_data[HCI_MAX_AD_LENGTH];
++	__u8			scan_rsp_data[HCI_MAX_EXT_AD_LENGTH];
+ 	__u8			scan_rsp_data_len;
  
-+typedef int (*cmd_sync_work_func_t)(struct hci_dev *hdev, void *data);
-+typedef void (*cmd_sync_work_destroy_t)(struct hci_dev *hdev, void *data,
-+					int err);
-+
-+struct cmd_sync_work_entry {
-+	struct list_head list;
-+	cmd_sync_work_func_t func;
-+	void *data;
-+	cmd_sync_work_destroy_t destroy;
-+};
-+
- struct hci_dev {
- 	struct list_head list;
- 	struct mutex	lock;
-@@ -463,6 +474,9 @@ struct hci_dev {
- 	struct work_struct	power_on;
- 	struct delayed_work	power_off;
- 	struct work_struct	error_reset;
-+	struct work_struct	cmd_sync_work;
-+	struct list_head	cmd_sync_work_list;
-+	struct mutex		cmd_sync_work_lock;
+ 	struct list_head	adv_instances;
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index f7a9d97f3e84..1d14adc023e9 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -1716,30 +1716,33 @@ void __hci_req_update_scan_rsp_data(struct hci_request *req, u8 instance)
+ 		return;
  
- 	__u16			discov_timeout;
- 	struct delayed_work	discov_off;
-@@ -1701,6 +1715,9 @@ void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
- struct sk_buff *hci_cmd_sync(struct hci_dev *hdev, u16 opcode, u32 plen,
- 			     const void *param, u32 timeout);
+ 	if (ext_adv_capable(hdev)) {
+-		struct hci_cp_le_set_ext_scan_rsp_data cp;
++		struct {
++			struct hci_cp_le_set_ext_scan_rsp_data cp;
++			u8 data[HCI_MAX_EXT_AD_LENGTH];
++		} pdu;
  
-+int hci_cmd_sync_queue(struct hci_dev *hdev, cmd_sync_work_func_t func,
-+		       void *data, cmd_sync_work_destroy_t destroy);
-+
- u32 hci_conn_get_phy(struct hci_conn *conn);
+-		memset(&cp, 0, sizeof(cp));
++		memset(&pdu, 0, sizeof(pdu));
  
- /* ----- HCI Sockets ----- */
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 1eb7ffd0dd29..8100a3a1ae13 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2329,6 +2329,81 @@ static void hci_error_reset(struct work_struct *work)
- 	hci_dev_do_open(hdev);
- }
+ 		if (instance)
+ 			len = create_instance_scan_rsp_data(hdev, instance,
+-							    cp.data);
++							    pdu.data);
+ 		else
+-			len = create_default_scan_rsp_data(hdev, cp.data);
++			len = create_default_scan_rsp_data(hdev, pdu.data);
  
-+static void hci_cmd_sync_work(struct work_struct *work)
-+{
-+	struct hci_dev *hdev = container_of(work, struct hci_dev, cmd_sync_work);
-+	struct cmd_sync_work_entry *entry;
-+	cmd_sync_work_func_t func;
-+	cmd_sync_work_destroy_t destroy;
-+	void *data;
-+
-+	bt_dev_dbg(hdev, "");
-+
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+	entry = list_first_entry(&hdev->cmd_sync_work_list,
-+				 struct cmd_sync_work_entry, list);
-+	if (entry) {
-+		list_del(&entry->list);
-+		func = entry->func;
-+		data = entry->data;
-+		destroy = entry->destroy;
-+		kfree(entry);
-+	} else {
-+		func = NULL;
-+		data = NULL;
-+		destroy = NULL;
-+	}
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+
-+	if (func) {
-+		int err;
-+
-+		hci_req_sync_lock(hdev);
-+
-+		err = func(hdev, data);
-+
-+		if (destroy)
-+			destroy(hdev, data, err);
-+
-+		hci_req_sync_unlock(hdev);
-+	}
-+}
-+
-+int hci_cmd_sync_queue(struct hci_dev *hdev, cmd_sync_work_func_t func,
-+		       void *data, cmd_sync_work_destroy_t destroy)
-+{
-+	struct cmd_sync_work_entry *entry;
-+
-+	entry = kmalloc(sizeof(*entry), GFP_KERNEL);
-+	if (!entry)
-+		return -ENOMEM;
-+
-+	entry->func = func;
-+	entry->data = data;
-+	entry->destroy = destroy;
-+
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+	list_add_tail(&entry->list, &hdev->cmd_sync_work_list);
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+
-+	queue_work(hdev->req_workqueue, &hdev->cmd_sync_work);
-+
-+	return 0;
-+}
-+
-+static void hci_cmd_sync_clear(struct hci_dev *hdev)
-+{
-+	struct cmd_sync_work_entry *entry, *tmp;
-+
-+	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list) {
-+		if (entry->destroy)
-+			entry->destroy(hdev, entry->data, -ECANCELED);
-+
-+		list_del(&entry->list);
-+		kfree(entry);
-+	}
-+}
-+
- void hci_uuids_clear(struct hci_dev *hdev)
- {
- 	struct bt_uuid *uuid, *tmp;
-@@ -3845,6 +3920,10 @@ struct hci_dev *hci_alloc_dev(void)
- 	INIT_WORK(&hdev->error_reset, hci_error_reset);
- 	INIT_WORK(&hdev->suspend_prepare, hci_prepare_suspend);
+ 		if (hdev->scan_rsp_data_len == len &&
+-		    !memcmp(cp.data, hdev->scan_rsp_data, len))
++		    !memcmp(pdu.data, hdev->scan_rsp_data, len))
+ 			return;
  
-+	INIT_WORK(&hdev->cmd_sync_work, hci_cmd_sync_work);
-+	INIT_LIST_HEAD(&hdev->cmd_sync_work_list);
-+	mutex_init(&hdev->cmd_sync_work_lock);
-+
- 	INIT_DELAYED_WORK(&hdev->power_off, hci_power_off);
+-		memcpy(hdev->scan_rsp_data, cp.data, sizeof(cp.data));
++		memcpy(hdev->scan_rsp_data, pdu.data, len);
+ 		hdev->scan_rsp_data_len = len;
  
- 	skb_queue_head_init(&hdev->rx_q);
-@@ -4005,6 +4084,9 @@ void hci_unregister_dev(struct hci_dev *hdev)
+-		cp.handle = instance;
+-		cp.length = len;
+-		cp.operation = LE_SET_ADV_DATA_OP_COMPLETE;
+-		cp.frag_pref = LE_SET_ADV_DATA_NO_FRAG;
++		pdu.cp.handle = instance;
++		pdu.cp.length = len;
++		pdu.cp.operation = LE_SET_ADV_DATA_OP_COMPLETE;
++		pdu.cp.frag_pref = LE_SET_ADV_DATA_NO_FRAG;
  
- 	cancel_work_sync(&hdev->power_on);
+-		hci_req_add(req, HCI_OP_LE_SET_EXT_SCAN_RSP_DATA, sizeof(cp),
+-			    &cp);
++		hci_req_add(req, HCI_OP_LE_SET_EXT_SCAN_RSP_DATA,
++			    sizeof(pdu.cp) + len, &pdu.cp);
+ 	} else {
+ 		struct hci_cp_le_set_scan_rsp_data cp;
  
-+	cancel_work_sync(&hdev->cmd_sync_work);
-+	hci_cmd_sync_clear(hdev);
-+
- 	if (!test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
- 		hci_suspend_clear_tasks(hdev);
- 		unregister_pm_notifier(&hdev->suspend_notifier);
+@@ -1862,26 +1865,30 @@ void __hci_req_update_adv_data(struct hci_request *req, u8 instance)
+ 		return;
+ 
+ 	if (ext_adv_capable(hdev)) {
+-		struct hci_cp_le_set_ext_adv_data cp;
++		struct {
++			struct hci_cp_le_set_ext_adv_data cp;
++			u8 data[HCI_MAX_EXT_AD_LENGTH];
++		} pdu;
+ 
+-		memset(&cp, 0, sizeof(cp));
++		memset(&pdu, 0, sizeof(pdu));
+ 
+-		len = create_instance_adv_data(hdev, instance, cp.data);
++		len = create_instance_adv_data(hdev, instance, pdu.data);
+ 
+ 		/* There's nothing to do if the data hasn't changed */
+ 		if (hdev->adv_data_len == len &&
+-		    memcmp(cp.data, hdev->adv_data, len) == 0)
++		    memcmp(pdu.data, hdev->adv_data, len) == 0)
+ 			return;
+ 
+-		memcpy(hdev->adv_data, cp.data, sizeof(cp.data));
++		memcpy(hdev->adv_data, pdu.data, len);
+ 		hdev->adv_data_len = len;
+ 
+-		cp.length = len;
+-		cp.handle = instance;
+-		cp.operation = LE_SET_ADV_DATA_OP_COMPLETE;
+-		cp.frag_pref = LE_SET_ADV_DATA_NO_FRAG;
++		pdu.cp.length = len;
++		pdu.cp.handle = instance;
++		pdu.cp.operation = LE_SET_ADV_DATA_OP_COMPLETE;
++		pdu.cp.frag_pref = LE_SET_ADV_DATA_NO_FRAG;
+ 
+-		hci_req_add(req, HCI_OP_LE_SET_EXT_ADV_DATA, sizeof(cp), &cp);
++		hci_req_add(req, HCI_OP_LE_SET_EXT_ADV_DATA,
++			    sizeof(pdu.cp) + len, &pdu.cp);
+ 	} else {
+ 		struct hci_cp_le_set_adv_data cp;
+ 
 -- 
 2.31.1
 
