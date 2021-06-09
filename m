@@ -2,135 +2,243 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 528423A1FEC
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Jun 2021 00:19:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDECE3A1FF2
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Jun 2021 00:21:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229986AbhFIWVf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Jun 2021 18:21:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58210 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbhFIWVe (ORCPT
+        id S229925AbhFIWXs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Jun 2021 18:23:48 -0400
+Received: from mail-pg1-f175.google.com ([209.85.215.175]:37788 "EHLO
+        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229542AbhFIWXr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 9 Jun 2021 18:21:34 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01649C061574
-        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Jun 2021 15:19:25 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id g142so18387201ybf.9
-        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Jun 2021 15:19:24 -0700 (PDT)
+        Wed, 9 Jun 2021 18:23:47 -0400
+Received: by mail-pg1-f175.google.com with SMTP id t9so20915183pgn.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Jun 2021 15:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=UHNRyuoUDlo8+u4eTSmc2c0bkzGdrMljaWklg3zocgM=;
-        b=AQxJb/W7MjEKjq0qt7/4zSVCFkYEz4QFr2LsOADpD7qzoYRYu7OkIvdPtvkB7pLYFz
-         wZTmoxMhP4dJXN3+hR1m0zxP6loPlvvLiEAyPmpekR8fiSBYyg4JRtDCB5Xh7gv1hvZI
-         rkVk/DWFcXmvtIAxOdmHfAElPLPSS1drz+ZOzUUzEXAJEgLWgsTWKY5YioujYgN4iw1e
-         UDcIMb9LAjF9IXJd6CPAFJSCD1+RtdSZrednmIk5PakGPJXzTE9PruK0CW9RaX/vGuMy
-         N0YsUPgtnEHR7lEdgcsuzY2cy7M9A4/QpkDA96fQqahbO9klpNm24ae1egaR6XQRWH4I
-         oc7Q==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=29CZpLoK6nPZvYor9his0scdmxoyTQJ8HNnJMA8OXho=;
+        b=McuxapKvnCnVJ3//av7pSmtN4/KJ9uBhFfQjI1mgkLQoHwCrpFc6OrqYEdCBf8oQVk
+         e/1vFKYoVhxj99y4QpmBbaKW8FUSHGatwOynU4qWf6XSUC+wi/WyjACLLFzRFbVGE12v
+         CSdjD3E5S+fQtLQAvaau7h+wC+Ug1xTVATmRdNwVpptdoVdb7IWLw9AUzn2nVvj2LWnY
+         YbequcSAy7VlylDtkcF/4fXYzZAb1WX5KKqzjvcGb/uK9YAQO2yJCwLKRczrwT3DqaTL
+         Zgys2jL5HzhntzSeTZFf1EKZyUs8YmOaIvRwanZ3a+svRC29+SMOc5+A25T3/EXFIX9C
+         2vRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=UHNRyuoUDlo8+u4eTSmc2c0bkzGdrMljaWklg3zocgM=;
-        b=KFFvCmKqrqgcm+Ass6EsTVKsfLOc5xMwt5aC/UZ6gk6Kj2Qdzc8SujSg4pUeQoLTa+
-         MBPRq8MQzPlzVnN7XeUtmIb2WTp2OB8F6S+b9Itvk+4CX6NZzprxkAYxLljuEOx3Ey80
-         kgmZAB35D4JeYc1JbmTqzrqhs+OPKlX4tAt4BJq0KPKe2WFbrT9QIZxVPF1GGobwKJy0
-         5I65PpQmMbd8JbnTClMeNelrK1Xnt0pX+DDBgPY9obRm13J/4oxCy0UGBO5pC9ecor/8
-         3ocLuvaIuNh49ezf2Bm0Tc42DMcI7XwNiYpUFO5aw2im+TOz2RUNeOXCIHmi1511gW9P
-         LAew==
-X-Gm-Message-State: AOAM531eltaoYhyuY/b0xFMbPPYBdHvNIYvmvCWfY85o6DFrfKsyZ98N
-        zMLJjiAHksD4k3Z9sKssg7zv0/g96FvVXOYlUCq/C6lK
-X-Google-Smtp-Source: ABdhPJxfExjAxCQhjvAnYy/oiNa9QT6+3AR8CJjvdxSbiW77mt4XR4vEzp2C9xJmveCy7+t33nBMOEJ6tfvqOveKIrA=
-X-Received: by 2002:a25:4048:: with SMTP id n69mr3176062yba.91.1623277164002;
- Wed, 09 Jun 2021 15:19:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210609212411.288330-1-luiz.dentz@gmail.com> <60c13b1c.1c69fb81.d4b97.87f3@mx.google.com>
-In-Reply-To: <60c13b1c.1c69fb81.d4b97.87f3@mx.google.com>
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=29CZpLoK6nPZvYor9his0scdmxoyTQJ8HNnJMA8OXho=;
+        b=Pjj6q6hRPw7JtvmUEdOyL0mGzxfgDkhtFif0K+jsbyYgW9upPb7Ev+Kr59xOLADiZx
+         +RSvO0/IQ+bn1CQTEITjtAZRTID6tGakNhL9ccsF8b3q48GgBT7XUPa/mcDQu39fd/fk
+         +JTGtEj22EPI3V1eiLIYVCrgiuyPaCQImZVoJYSuB9OIcbUgts6yv9nfmjEMAktIUGL6
+         9hLlU1nAD/M7mw8RyrMYs4DvyzF9TPTMeolxGkJLAk6K+EFg98R4ONq1Da4mkqx488kp
+         sLhCpygBpUDRxhVmsGTWslBUT1RK5CJqSw/ANkWU/0QiSHg+u3EkGzafWdCaPXHi3/bN
+         rDng==
+X-Gm-Message-State: AOAM531kdj6B823J/JGqSkLVYeO1iAXG0UZn24xjAFfU3IpH9/s3EJAK
+        R7xb0UCsi6MCSjmN2i2OnDC/w9zd5sY=
+X-Google-Smtp-Source: ABdhPJzvfpwEtpvEOsW0GY623vSR1XpFWDnq8IP0XmZETn/RcppQEcRlq7Pma69ik59Ug2WdvY51mw==
+X-Received: by 2002:a63:d08:: with SMTP id c8mr1890211pgl.248.1623277238189;
+        Wed, 09 Jun 2021 15:20:38 -0700 (PDT)
+Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id n9sm460352pfu.121.2021.06.09.15.20.37
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Jun 2021 15:20:37 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 9 Jun 2021 15:19:13 -0700
-Message-ID: <CABBYNZ+UuwGnQkfwANu5gGFTsg-oFwFO3CpOMbwijFRiTfYriQ@mail.gmail.com>
-Subject: Re: [BlueZ] mgmt-tester: Fix adding padding for Ext Adv (Scan
- Response) Data
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH v3 1/6] Bluetooth: Add helper for serialized HCI command execution
+Date:   Wed,  9 Jun 2021 15:20:29 -0700
+Message-Id: <20210609222035.297833-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+From: Marcel Holtmann <marcel@holtmann.org>
 
-On Wed, Jun 9, 2021 at 3:05 PM <bluez.test.bot@gmail.com> wrote:
->
-> This is automated email and please do not reply to this email!
->
-> Dear submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> This is a CI test results with your patch series:
-> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=497549
->
-> ---Test result---
->
-> Test Summary:
-> CheckPatch                    PASS      0.81 seconds
-> GitLint                       PASS      0.12 seconds
-> Prep - Setup ELL              PASS      48.50 seconds
-> Build - Prep                  PASS      0.16 seconds
-> Build - Configure             PASS      8.46 seconds
-> Build - Make                  PASS      210.61 seconds
-> Make Check                    PASS      9.60 seconds
-> Make Distcheck                PASS      245.58 seconds
-> Build w/ext ELL - Configure   PASS      8.34 seconds
-> Build w/ext ELL - Make        PASS      198.66 seconds
->
-> Details
-> ##############################
-> Test: CheckPatch - PASS
-> Desc: Run checkpatch.pl script with rule in .checkpatch.conf
->
-> ##############################
-> Test: GitLint - PASS
-> Desc: Run gitlint with rule in .gitlint
->
-> ##############################
-> Test: Prep - Setup ELL - PASS
-> Desc: Clone, build, and install ELL
->
-> ##############################
-> Test: Build - Prep - PASS
-> Desc: Prepare environment for build
->
-> ##############################
-> Test: Build - Configure - PASS
-> Desc: Configure the BlueZ source tree
->
-> ##############################
-> Test: Build - Make - PASS
-> Desc: Build the BlueZ source tree
->
-> ##############################
-> Test: Make Check - PASS
-> Desc: Run 'make check'
->
-> ##############################
-> Test: Make Distcheck - PASS
-> Desc: Run distcheck to check the distribution
->
-> ##############################
-> Test: Build w/ext ELL - Configure - PASS
-> Desc: Configure BlueZ source with '--enable-external-ell' configuration
->
-> ##############################
-> Test: Build w/ext ELL - Make - PASS
-> Desc: Build BlueZ source with '--enable-external-ell' configuration
->
->
->
-> ---
-> Regards,
-> Linux Bluetooth
+The usage of __hci_cmd_sync() within the hdev->setup() callback allows for
+a nice and simple serialized execution of HCI commands. More importantly
+it allows for result processing before issueing the next command.
 
-Pushed.
+With the current usage of hci_req_run() it is possible to batch up
+commands and execute them, but it is impossible to react to their
+results or errors.
 
+This is an attempt to generalize the hdev->setup() handling and provide
+a simple way of running multiple HCI commands from a single function
+context.
+
+There are multiple struct work that are decdicated to certain tasks
+already used right now. It is add a lot of bloat to hci_dev struct and
+extra handling code. So it might be possible to put all of these behind
+a common HCI command infrastructure and just execute the HCI commands
+from the same work context in a serialized fashion.
+
+For example updating the white list and resolving list can be done now
+without having to know the list size ahead of time. Also preparing for
+suspend or resume shouldn't require a state machine anymore. There are
+other tasks that should be simplified as well.
+
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ include/net/bluetooth/hci_core.h | 17 +++++++
+ net/bluetooth/hci_core.c         | 82 ++++++++++++++++++++++++++++++++
+ 2 files changed, 99 insertions(+)
+
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index a53e94459ecd..7b8dac2131e7 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -302,6 +302,17 @@ struct amp_assoc {
+ 
+ #define HCI_MAX_PAGES	3
+ 
++typedef int (*cmd_sync_work_func_t)(struct hci_dev *hdev, void *data);
++typedef void (*cmd_sync_work_destroy_t)(struct hci_dev *hdev, void *data,
++					int err);
++
++struct cmd_sync_work_entry {
++	struct list_head list;
++	cmd_sync_work_func_t func;
++	void *data;
++	cmd_sync_work_destroy_t destroy;
++};
++
+ struct hci_dev {
+ 	struct list_head list;
+ 	struct mutex	lock;
+@@ -463,6 +474,9 @@ struct hci_dev {
+ 	struct work_struct	power_on;
+ 	struct delayed_work	power_off;
+ 	struct work_struct	error_reset;
++	struct work_struct	cmd_sync_work;
++	struct list_head	cmd_sync_work_list;
++	struct mutex		cmd_sync_work_lock;
+ 
+ 	__u16			discov_timeout;
+ 	struct delayed_work	discov_off;
+@@ -1701,6 +1715,9 @@ void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
+ struct sk_buff *hci_cmd_sync(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 			     const void *param, u32 timeout);
+ 
++int hci_cmd_sync_queue(struct hci_dev *hdev, cmd_sync_work_func_t func,
++		       void *data, cmd_sync_work_destroy_t destroy);
++
+ u32 hci_conn_get_phy(struct hci_conn *conn);
+ 
+ /* ----- HCI Sockets ----- */
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 1eb7ffd0dd29..8100a3a1ae13 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2329,6 +2329,81 @@ static void hci_error_reset(struct work_struct *work)
+ 	hci_dev_do_open(hdev);
+ }
+ 
++static void hci_cmd_sync_work(struct work_struct *work)
++{
++	struct hci_dev *hdev = container_of(work, struct hci_dev, cmd_sync_work);
++	struct cmd_sync_work_entry *entry;
++	cmd_sync_work_func_t func;
++	cmd_sync_work_destroy_t destroy;
++	void *data;
++
++	bt_dev_dbg(hdev, "");
++
++	mutex_lock(&hdev->cmd_sync_work_lock);
++	entry = list_first_entry(&hdev->cmd_sync_work_list,
++				 struct cmd_sync_work_entry, list);
++	if (entry) {
++		list_del(&entry->list);
++		func = entry->func;
++		data = entry->data;
++		destroy = entry->destroy;
++		kfree(entry);
++	} else {
++		func = NULL;
++		data = NULL;
++		destroy = NULL;
++	}
++	mutex_unlock(&hdev->cmd_sync_work_lock);
++
++	if (func) {
++		int err;
++
++		hci_req_sync_lock(hdev);
++
++		err = func(hdev, data);
++
++		if (destroy)
++			destroy(hdev, data, err);
++
++		hci_req_sync_unlock(hdev);
++	}
++}
++
++int hci_cmd_sync_queue(struct hci_dev *hdev, cmd_sync_work_func_t func,
++		       void *data, cmd_sync_work_destroy_t destroy)
++{
++	struct cmd_sync_work_entry *entry;
++
++	entry = kmalloc(sizeof(*entry), GFP_KERNEL);
++	if (!entry)
++		return -ENOMEM;
++
++	entry->func = func;
++	entry->data = data;
++	entry->destroy = destroy;
++
++	mutex_lock(&hdev->cmd_sync_work_lock);
++	list_add_tail(&entry->list, &hdev->cmd_sync_work_list);
++	mutex_unlock(&hdev->cmd_sync_work_lock);
++
++	queue_work(hdev->req_workqueue, &hdev->cmd_sync_work);
++
++	return 0;
++}
++
++static void hci_cmd_sync_clear(struct hci_dev *hdev)
++{
++	struct cmd_sync_work_entry *entry, *tmp;
++
++	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list) {
++		if (entry->destroy)
++			entry->destroy(hdev, entry->data, -ECANCELED);
++
++		list_del(&entry->list);
++		kfree(entry);
++	}
++}
++
+ void hci_uuids_clear(struct hci_dev *hdev)
+ {
+ 	struct bt_uuid *uuid, *tmp;
+@@ -3845,6 +3920,10 @@ struct hci_dev *hci_alloc_dev(void)
+ 	INIT_WORK(&hdev->error_reset, hci_error_reset);
+ 	INIT_WORK(&hdev->suspend_prepare, hci_prepare_suspend);
+ 
++	INIT_WORK(&hdev->cmd_sync_work, hci_cmd_sync_work);
++	INIT_LIST_HEAD(&hdev->cmd_sync_work_list);
++	mutex_init(&hdev->cmd_sync_work_lock);
++
+ 	INIT_DELAYED_WORK(&hdev->power_off, hci_power_off);
+ 
+ 	skb_queue_head_init(&hdev->rx_q);
+@@ -4005,6 +4084,9 @@ void hci_unregister_dev(struct hci_dev *hdev)
+ 
+ 	cancel_work_sync(&hdev->power_on);
+ 
++	cancel_work_sync(&hdev->cmd_sync_work);
++	hci_cmd_sync_clear(hdev);
++
+ 	if (!test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
+ 		hci_suspend_clear_tasks(hdev);
+ 		unregister_pm_notifier(&hdev->suspend_notifier);
 -- 
-Luiz Augusto von Dentz
+2.31.1
+
