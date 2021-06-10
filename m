@@ -2,73 +2,94 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1167B3A2BF9
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Jun 2021 14:51:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C98E3A32E6
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Jun 2021 20:18:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230212AbhFJMxs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 10 Jun 2021 08:53:48 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:42339 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230136AbhFJMxr (ORCPT
+        id S230084AbhFJSUD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 10 Jun 2021 14:20:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40436 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229963AbhFJSUB (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 10 Jun 2021 08:53:47 -0400
-Received: (Authenticated sender: hadess@hadess.net)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 1A948E0018;
-        Thu, 10 Jun 2021 12:51:49 +0000 (UTC)
-Message-ID: <e2e0ef088416fdc37d240c2b7b3e348d8179db86.camel@hadess.net>
-Subject: Re: [PATCH] rfkill: Fix reading from rfkill socket
-From:   Bastien Nocera <hadess@hadess.net>
-To:     Benjamin Berg <benjamin@sipsolutions.net>,
-        linux-bluetooth@vger.kernel.org
-Cc:     Benjamin Berg <bberg@redhat.com>
-Date:   Thu, 10 Jun 2021 14:51:49 +0200
-In-Reply-To: <fe5e3c7519a52aa59e33939c64e9aa4b7c5e30c3.camel@hadess.net>
-References: <20210503131210.90066-1-benjamin@sipsolutions.net>
-         <fe5e3c7519a52aa59e33939c64e9aa4b7c5e30c3.camel@hadess.net>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.1 (3.40.1-1.fc34) 
+        Thu, 10 Jun 2021 14:20:01 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 461C1C061760
+        for <linux-bluetooth@vger.kernel.org>; Thu, 10 Jun 2021 11:18:05 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id pi6-20020a17090b1e46b029015cec51d7cdso4358037pjb.5
+        for <linux-bluetooth@vger.kernel.org>; Thu, 10 Jun 2021 11:18:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gZVZzLDh5iZyA6/thJaaOvhV/DsBOubkxHItoDjTK4o=;
+        b=HfSyWM1XHJa7MPkysmpKm1mEQ2mrGAkMXX4boU2ZeCGFLFJbiF8XtRBaX+bM/SKHiV
+         zB/0XNNa9z43E3z2V8btrwfUp3Rrb2SG4yxBd+RTm+/ZPGMHTf0i7GjggFQ3KzHYm+yg
+         nVcrnD4xiNu2Z7y46f/ru7NaRhHz19GURDrcI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gZVZzLDh5iZyA6/thJaaOvhV/DsBOubkxHItoDjTK4o=;
+        b=aYQjKgwRVQ26mob2x3tGdBmEpG7bKREvP0lEXgpNKCPzD+j0qJR99Yj5PKcUVSdAeR
+         UXBt3+7IHMW822kmufigd+jt8lmKcBAnPLfGhXIyVUdN/qaPqrykUT/2riJpOpMFfFQC
+         sJGGfGkNbMNWjz6CKd9d7/Jhu0HwU5n8ABJ9oxBo9+cfVwtiwaNyWxQ/rUX1wXxD7HjB
+         jCBaGfcolqzCbe5f9RqFTvWM9Sy4h7XwkVdXJg6cJFcENArzEiPeLEczJVeCBKDdkWZM
+         o9qBu7f6IeSRhhEWKJ/vstC/Du7ebnHZxh9eymC6dKngMxBDSMIO9hWhFac3YqpeYslx
+         +4lw==
+X-Gm-Message-State: AOAM532CYheo/OuWenkBJmeOb4OI8l174qInsXRZKc7WtkTxV2gxDc9P
+        V++ZfO94z2lWnrot9Ryk4kIJ/YHBD4tjAg==
+X-Google-Smtp-Source: ABdhPJy++cnmiUoyRs+8rEaZKe65kVT/NfglL7cEi7OsFyT6ZXj2J6UOzV8DQHE0frh4DIE7gqw3Dg==
+X-Received: by 2002:a17:902:8645:b029:fd:25ef:3df7 with SMTP id y5-20020a1709028645b02900fd25ef3df7mr19868plt.48.1623349084541;
+        Thu, 10 Jun 2021 11:18:04 -0700 (PDT)
+Received: from sonnysasaka-chrome.mtv.corp.google.com ([2620:15c:202:201:f41d:dcc:661a:484d])
+        by smtp.gmail.com with ESMTPSA id 4sm8526794pji.14.2021.06.10.11.18.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Jun 2021 11:18:03 -0700 (PDT)
+From:   Sonny Sasaka <sonnysasaka@chromium.org>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Sonny Sasaka <sonnysasaka@chromium.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Subject: [PATCH BlueZ] Check whether device is connected before attaching EATT
+Date:   Thu, 10 Jun 2021 11:17:56 -0700
+Message-Id: <20210610181756.430-1-sonnysasaka@chromium.org>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Thu, 2021-06-10 at 14:45 +0200, Bastien Nocera wrote:
-> On Mon, 2021-05-03 at 15:12 +0200, Benjamin Berg wrote:
-> > From: Benjamin Berg <bberg@redhat.com>
-> > 
-> > The kernel will always send exactly one event, but the size of the
-> > passed struct will depend on the length of the submitted read() and
-> > the
-> > kernel version. i.e. the interface can be extended and we need to
-> > expect
-> > for a read to be longer than expected if we ask for it.
-> > 
-> > Fix this by only requesting the needed length and explicitly check
-> > the
-> > length against the V1 version of the structure to make the code a bit
-> > more future proof in case the internal copy of the struct is updated
-> > to
-> > contain new fields.
-> 
-> This fixes a bug in GNOME where to enable Bluetooth, we removed a soft
-> rfkill block on the Bluetooth interface.
-> 
-> Without this, the bluetooth rfkill gets unblocked, but bluetoothd
-> doesn't see it as unblocked so never powers it on, causing the UI to
-> appear broken, as we expect Bluetooth devices to be either blocked
-> through rfkill, or powered on.
-> 
-> The equivalent gnome-settings-daemon fix (which deals with rfkill) was
-> reviewed by Hans de Goede:
-> https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/234
-> 
-> Benjamin, it might be worth resending this with a better commit message
-> explaining exactly what it fixes and referencing the gnome-bluetooth
-> bug:
-> https://gitlab.gnome.org/GNOME/gnome-bluetooth/-/issues/38
+Due to a race condition, device_attach_att() may be reached when the
+dev is actually already disconnected but dev->att is not yet cleaned up
+by att_disconnect_cb(). Therefore we should check whether the dev is
+connected before attaching EATT.
 
-> 
-It's also been pushed to Fedora rawhide and Fedora 34:
-https://bodhi.fedoraproject.org/updates/FEDORA-2021-2cd83da751
+The race condition is discovered at rare cases when there is a very
+quick reconnection after disconnection so that device_attach_att() is
+called even before att_disconnect_cb(). This case is more probable to
+happen when the host goes to suspend right before dev_disconnected() is
+invoked and when the host is woken up by a reconnection the reconnection
+is processed earlier than the cleanup in att_disconnect_cb().
+
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+
+---
+ src/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/device.c b/src/device.c
+index 65838f59f..319a929ee 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -5306,7 +5306,7 @@ bool device_attach_att(struct btd_device *dev, GIOChannel *io)
+ 		return false;
+ 	}
+ 
+-	if (dev->att) {
++	if (btd_device_is_connected(dev) && dev->att) {
+ 		if (btd_opts.gatt_channels == bt_att_get_channels(dev->att)) {
+ 			DBG("EATT channel limit reached");
+ 			return false;
+-- 
+2.31.0
 
