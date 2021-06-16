@@ -2,68 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC8F93AA13B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Jun 2021 18:27:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48BB93AA0D8
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Jun 2021 18:06:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232234AbhFPQ3M (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Jun 2021 12:29:12 -0400
-Received: from m12-12.163.com ([220.181.12.12]:40136 "EHLO m12-12.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233563AbhFPQ3L (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Jun 2021 12:29:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=Tr1BB
-        GQIeuuHKxbyn8Yph9G7uKAkr8UoYHsUcGkvYAA=; b=YfjwpY6WHHk0h5cX3EkGk
-        2wT74mHF2SsrpFqKq41nQBDaPF23HGrZ1cfun6ud8Is67UyXrqvXrUP92T5YBOY1
-        tt1v4rfAm/5xDoJsSGnsP3CQQceCCduwkL6+R8jzVPjuLyOHSshqs0dEWW98+IGz
-        IWzTvWlYlEb57ALaQzACAc=
-Received: from ubuntu.localdomain (unknown [112.37.241.255])
-        by smtp8 (Coremail) with SMTP id DMCowAD3grh3tclgNnb_KA--.3520S2;
-        Wed, 16 Jun 2021 16:25:28 +0800 (CST)
-From:   13145886936@163.com
-To:     davem@davemloft.net, kuba@kernel.org
-Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, gushengxian <gushengxian@yulong.com>
-Subject: [PATCH] Bluetooth: fix a grammar mistake
-Date:   Wed, 16 Jun 2021 16:25:24 +0800
-Message-Id: <20210616082524.10754-1-13145886936@163.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: DMCowAD3grh3tclgNnb_KA--.3520S2
-X-Coremail-Antispam: 1Uf129KBjvdXoWrKFyxZw1fWFWUuw4UXryDAwb_yoW3WFb_X3
-        s3ua97urWUGa45XayjyrsIvw1xJw4rur1IqFnxWFWUC3s8Cw4DKwsagw4DWr13W3y3Arya
-        kFn5GFWDZr1IqjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUnZjjDUUUUU==
-X-Originating-IP: [112.37.241.255]
-X-CM-SenderInfo: 5zrdx5xxdq6xppld0qqrwthudrp/xtbBdhizg1UMRSAMvQAAsT
+        id S234017AbhFPQI6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 16 Jun 2021 12:08:58 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:59058 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229642AbhFPQI6 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 16 Jun 2021 12:08:58 -0400
+Received: from smtpclient.apple (p4fefc9d6.dip0.t-ipconnect.de [79.239.201.214])
+        by mail.holtmann.org (Postfix) with ESMTPSA id B0BC4CED0B;
+        Wed, 16 Jun 2021 18:14:50 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: [PATCH] Bluetooth: btmrvl: remove redundant continue statement
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20210616130757.10084-1-colin.king@canonical.com>
+Date:   Wed, 16 Jun 2021 18:06:48 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        kernel-janitors@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <0D69851D-A632-4AED-8DB2-86EC0EC4D621@holtmann.org>
+References: <20210616130757.10084-1-colin.king@canonical.com>
+To:     Colin King <colin.king@canonical.com>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: gushengxian <gushengxian@yulong.com>
+Hi Colin,
 
-Fix a grammar mistake.
+> The continue statement in the for-loop has no effect,
+> remove it.
+> 
+> Addresses-Coverity: ("Continue has no effect")
+> Signed-off-by: Colin Ian King <colin.king@canonical.com>
+> ---
+> drivers/bluetooth/btmrvl_sdio.c | 4 +---
+> 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Signed-off-by: gushengxian <gushengxian@yulong.com>
----
- net/bluetooth/hci_event.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+patch has been applied to bluetooth-next tree.
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 98ec486743ba..a33838a72f19 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5780,7 +5780,7 @@ static void hci_le_remote_feat_complete_evt(struct hci_dev *hdev,
- 			 * for unsupported remote feature gets returned.
- 			 *
- 			 * In this specific case, allow the connection to
--			 * transition into connected state and mark it as
-+			 * transit into connected state and mark it as
- 			 * successful.
- 			 */
- 			if (!conn->out && ev->status == 0x1a &&
--- 
-2.25.1
+Regards
 
+Marcel
 
