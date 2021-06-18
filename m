@@ -2,323 +2,137 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A13633AC5A0
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Jun 2021 10:02:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0235A3AC644
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Jun 2021 10:36:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232724AbhFRIDb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 18 Jun 2021 04:03:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42252 "EHLO
+        id S231547AbhFRIip (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 18 Jun 2021 04:38:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232046AbhFRIDM (ORCPT
+        with ESMTP id S229466AbhFRIip (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 18 Jun 2021 04:03:12 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 802A2C0617AE
-        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Jun 2021 01:00:53 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id k6so7061443pfk.12
-        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Jun 2021 01:00:53 -0700 (PDT)
+        Fri, 18 Jun 2021 04:38:45 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36954C061574
+        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Jun 2021 01:36:36 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id t9so6951734qtw.7
+        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Jun 2021 01:36:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5HAONQPZe7/SR1yiilCYPmjw7Y/Yqrfapy71bu7s5Gk=;
-        b=gqBgo5FtV2BrQiAKmxq8eBZbSZ9cprcFx89DZxsGsOJD4ELAzDm7qRpr4ccqXh3jw7
-         HbDBJvC2/d5WNSDLwo6W+RmvoB6VIWXI1LZD0MQqF2fntWXhuLXOnp2V4S4BrglM7XLu
-         FX3PQo/RCBbBE3OxM5Ma/hupXfQMjDwOMsJNs=
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=J2WHx5SlLk7cgxlq8pxgmPLJ0hsKGXBiFMhCK7zyWv0=;
+        b=XsB7DtlfEIoigNKyPNNkL0lmtG1DXeh3FhkRjYeUtDqa55SrQ1p9IVkWbtHmMPoTsx
+         WCY6jnxQQiR1vJAgGs+RxtQaevPqXzXrMNzY7nriTU+bXtlYdA9qvBiQ2BVpfqx4eEUS
+         9h5oByllrodaqMwjur9O69nXvn/UOlNGVgS6L0WMzRdxmABWss/kQgCpda6MOGBV/vUT
+         TYUxnvH6Sgata/cm8afzfXwk/GVU2SZhR1Zfi8WYvI2JaRu3zioD9Hgf9OV2kAao0S6d
+         S7RoM+R64WY8HRsh1WJuYAt3KGsfvfUyO6lrej92aOj57xPsuJ11uGfUoZBmt9sBGFXD
+         8AIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5HAONQPZe7/SR1yiilCYPmjw7Y/Yqrfapy71bu7s5Gk=;
-        b=jOUSw7B3Q4bTDXHnt5WVfuhbFPgyq9rmSIDdOtSVRmF3CJIKyDA4IssQxfpsI/UnHX
-         vjZ9Toi+zM43fSwWzKbp5QdRRWnXC2QJEjKyfTBlkZ9n7U3S0Wa3A6dujVw9xsWc4jvD
-         ZYhkPqVYv+ND9Cs9cEBjs1FA7qSJIdFMT2IT51m97Z9OxNd6hK5gfYhHsi2FsHiMa/le
-         opgnk47jzMfY5ubrwl9fB5LyYrZtJmIYaukYwB2L6EqETGA16+KefTK/74+Gw17pzTjS
-         8Ui3DRLO2jtwplOEa18M7MSyJa/iMDmfu6/ILlTUHvOPtqxzEIXK1hTnbRU8r5yI9nWm
-         ZNSw==
-X-Gm-Message-State: AOAM530ArN5OPkSFybhLzIuQty42kqm2z1M6VCDWjpiGPMj+vM6siC4E
-        HBm/ymbCxxGd3/F24gV1Sl4XEGqP/JUIbA==
-X-Google-Smtp-Source: ABdhPJw7xUC/J4bt0UufwKr0rt03Po2lflZ68+7D2LCtbrD07yOb2doD5xUbq2bbliHgYytmbCtCNw==
-X-Received: by 2002:aa7:8bd6:0:b029:2ec:7dc9:77e3 with SMTP id s22-20020aa78bd60000b02902ec7dc977e3mr3937801pfd.62.1624003252595;
-        Fri, 18 Jun 2021 01:00:52 -0700 (PDT)
-Received: from josephsih-z840.tpe.corp.google.com ([2401:fa00:1:10:6cbb:95eb:e2ae:8479])
-        by smtp.gmail.com with ESMTPSA id v21sm7341671pfu.77.2021.06.18.01.00.50
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=J2WHx5SlLk7cgxlq8pxgmPLJ0hsKGXBiFMhCK7zyWv0=;
+        b=ggSFBSMk6pCTbkmUblwzlz2paIIXS0rAzyV5hzIy6fg2hSKQ1sUqI7RxvSxLk77OWH
+         2BHZlcLPvPhi0hCEba9MLaJ/1ROzr71Qejk41wBQc+TsxBuUaegEw5RTfrxDjXrt0uZB
+         U8I8/KTzwAdAAELqjEV2pM38VK5YHRMLkY8zgoJjbUuAA82FoHq+JU8yeoXy7CW04O5s
+         SsZhqprNOjMl+C7CtO0wbEsrT8ahan2/qRMQOmfu/+GPv0csLi0ABg9Gifv7dTUrbzkL
+         ru+GnNJNrBPDCbVCnYaPeB8MozPwtZPRurm0wPFfGzFB8CM/Jmz4u6vjdTmFHtWMU8KU
+         H/ZQ==
+X-Gm-Message-State: AOAM533qB4aaRRz3D5BOAap4hfK9FzikBI5Vz3fbwEWXiaJawWg9o6rG
+        M3nCqk22UHMCmUXHAQmd3+KyPgJCqsTRIQ==
+X-Google-Smtp-Source: ABdhPJwcLmasdQ1Bidn/IhOllPK1/S5QTQzPaqngCUVIjzs4joq9rQ0/kRi7u0UBAG2pxMegZi1tew==
+X-Received: by 2002:ac8:4f15:: with SMTP id b21mr9322929qte.222.1624005395111;
+        Fri, 18 Jun 2021 01:36:35 -0700 (PDT)
+Received: from [172.17.0.2] ([52.225.249.48])
+        by smtp.gmail.com with ESMTPSA id q184sm2739498qkd.35.2021.06.18.01.36.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 01:00:52 -0700 (PDT)
-From:   Joseph Hwang <josephsih@chromium.org>
-To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        luiz.dentz@gmail.com, pali@kernel.org
-Cc:     josephsih@google.com, chromeos-bluetooth-upstreaming@chromium.org,
-        Joseph Hwang <josephsih@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH v4 4/4] Bluetooth: Support the quality report events
-Date:   Fri, 18 Jun 2021 16:00:39 +0800
-Message-Id: <20210618160016.v4.4.I20c79eef4f36c4a3802e1068e59ec4a9f4ded940@changeid>
-X-Mailer: git-send-email 2.32.0.288.g62a8d224e6-goog
-In-Reply-To: <20210618160016.v4.1.I41aec59e65ffd3226d368dabeb084af13cc133c8@changeid>
-References: <20210618160016.v4.1.I41aec59e65ffd3226d368dabeb084af13cc133c8@changeid>
+        Fri, 18 Jun 2021 01:36:34 -0700 (PDT)
+Message-ID: <60cc5b12.1c69fb81.5cb52.297a@mx.google.com>
+Date:   Fri, 18 Jun 2021 01:36:34 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2002411796658292592=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, josephsih@chromium.org
+Subject: RE: [v1,1/3] monitor: add new Intel extended telemetry events
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20210618155610.v1.1.I832f2d744fe2cff0d9749e24c9ec27071fa0b4ed@changeid>
+References: <20210618155610.v1.1.I832f2d744fe2cff0d9749e24c9ec27071fa0b4ed@changeid>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch allows a user space process to enable/disable the quality
-report events dynamically through the set experimental feature mgmt
-interface if CONFIG_BT_FEATURE_QUALITY_REPORT is enabled.
+--===============2002411796658292592==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
 
-Since the quality report feature needs to invoke the callback function
-provided by the driver, i.e., hdev->set_quality_report, a valid
-controller index is required.
+VGhpcyBpcyBhdXRvbWF0ZWQgZW1haWwgYW5kIHBsZWFzZSBkbyBub3QgcmVwbHkgdG8gdGhpcyBl
+bWFpbCEKCkRlYXIgc3VibWl0dGVyLAoKVGhhbmsgeW91IGZvciBzdWJtaXR0aW5nIHRoZSBwYXRj
+aGVzIHRvIHRoZSBsaW51eCBibHVldG9vdGggbWFpbGluZyBsaXN0LgpUaGlzIGlzIGEgQ0kgdGVz
+dCByZXN1bHRzIHdpdGggeW91ciBwYXRjaCBzZXJpZXM6ClBXIExpbms6aHR0cHM6Ly9wYXRjaHdv
+cmsua2VybmVsLm9yZy9wcm9qZWN0L2JsdWV0b290aC9saXN0Lz9zZXJpZXM9NTAzMDQ5CgotLS1U
+ZXN0IHJlc3VsdC0tLQoKVGVzdCBTdW1tYXJ5OgpDaGVja1BhdGNoICAgICAgICAgICAgICAgICAg
+ICBQQVNTICAgICAgMS4zOSBzZWNvbmRzCkdpdExpbnQgICAgICAgICAgICAgICAgICAgICAgIFBB
+U1MgICAgICAwLjM3IHNlY29uZHMKUHJlcCAtIFNldHVwIEVMTCAgICAgICAgICAgICAgUEFTUyAg
+ICAgIDQ2LjM2IHNlY29uZHMKQnVpbGQgLSBQcmVwICAgICAgICAgICAgICAgICAgUEFTUyAgICAg
+IDAuMTAgc2Vjb25kcwpCdWlsZCAtIENvbmZpZ3VyZSAgICAgICAgICAgICBQQVNTICAgICAgOC4x
+MyBzZWNvbmRzCkJ1aWxkIC0gTWFrZSAgICAgICAgICAgICAgICAgIEZBSUwgICAgICAyNS43MyBz
+ZWNvbmRzCk1ha2UgQ2hlY2sgICAgICAgICAgICAgICAgICAgIEZBSUwgICAgICAwLjY1IHNlY29u
+ZHMKTWFrZSBEaXN0Y2hlY2sgICAgICAgICAgICAgICAgUEFTUyAgICAgIDIzNC44NiBzZWNvbmRz
+CkJ1aWxkIHcvZXh0IEVMTCAtIENvbmZpZ3VyZSAgIFBBU1MgICAgICA3Ljk0IHNlY29uZHMKQnVp
+bGQgdy9leHQgRUxMIC0gTWFrZSAgICAgICAgRkFJTCAgICAgIDI0LjkwIHNlY29uZHMKCkRldGFp
+bHMKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IENoZWNrUGF0Y2ggLSBQQVNT
+CkRlc2M6IFJ1biBjaGVja3BhdGNoLnBsIHNjcmlwdCB3aXRoIHJ1bGUgaW4gLmNoZWNrcGF0Y2gu
+Y29uZgoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IEdpdExpbnQgLSBQQVNT
+CkRlc2M6IFJ1biBnaXRsaW50IHdpdGggcnVsZSBpbiAuZ2l0bGludAoKIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjClRlc3Q6IFByZXAgLSBTZXR1cCBFTEwgLSBQQVNTCkRlc2M6IENsb25l
+LCBidWlsZCwgYW5kIGluc3RhbGwgRUxMCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMK
+VGVzdDogQnVpbGQgLSBQcmVwIC0gUEFTUwpEZXNjOiBQcmVwYXJlIGVudmlyb25tZW50IGZvciBi
+dWlsZAoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IEJ1aWxkIC0gQ29uZmln
+dXJlIC0gUEFTUwpEZXNjOiBDb25maWd1cmUgdGhlIEJsdWVaIHNvdXJjZSB0cmVlCgojIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogQnVpbGQgLSBNYWtlIC0gRkFJTApEZXNjOiBC
+dWlsZCB0aGUgQmx1ZVogc291cmNlIHRyZWUKT3V0cHV0Ogptb25pdG9yL2ludGVsLmM6MTM4Njo4
+OiBlcnJvcjogdHlwZSBxdWFsaWZpZXJzIGlnbm9yZWQgb24gZnVuY3Rpb24gcmV0dXJuIHR5cGUg
+Wy1XZXJyb3I9aWdub3JlZC1xdWFsaWZpZXJzXQogMTM4NiB8IHN0YXRpYyBjb25zdCB1aW50OF90
+IHByb2Nlc3NfZXh0X3N1YmV2ZW50KGNvbnN0IHVpbnQ4X3QgKmRhdGEpCiAgICAgIHwgICAgICAg
+IF5+fn5+Cm1vbml0b3IvaW50ZWwuYzogSW4gZnVuY3Rpb24g4oCYaW50ZWxfdmVuZG9yX2V4dF9l
+dnTigJk6Cm1vbml0b3IvaW50ZWwuYzoxNDI2OjE3OiBlcnJvcjogaW5pdGlhbGl6YXRpb24gZGlz
+Y2FyZHMg4oCYY29uc3TigJkgcXVhbGlmaWVyIGZyb20gcG9pbnRlciB0YXJnZXQgdHlwZSBbLVdl
+cnJvcj1kaXNjYXJkZWQtcXVhbGlmaWVyc10KIDE0MjYgfCAgdWludDhfdCAqdGx2ID0gKGNvbnN0
+IHVpbnQ4X3QgKikgZGF0YTsKICAgICAgfCAgICAgICAgICAgICAgICAgXgpjYzE6IGFsbCB3YXJu
+aW5ncyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycwptYWtlWzFdOiAqKiogW01ha2VmaWxlOjY5Mzk6
+IG1vbml0b3IvaW50ZWwub10gRXJyb3IgMQptYWtlOiAqKiogW01ha2VmaWxlOjQxMzQ6IGFsbF0g
+RXJyb3IgMgoKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwpUZXN0OiBNYWtlIENoZWNr
+IC0gRkFJTApEZXNjOiBSdW4gJ21ha2UgY2hlY2snCk91dHB1dDoKbW9uaXRvci9pbnRlbC5jOjEz
+ODY6ODogZXJyb3I6IHR5cGUgcXVhbGlmaWVycyBpZ25vcmVkIG9uIGZ1bmN0aW9uIHJldHVybiB0
+eXBlIFstV2Vycm9yPWlnbm9yZWQtcXVhbGlmaWVyc10KIDEzODYgfCBzdGF0aWMgY29uc3QgdWlu
+dDhfdCBwcm9jZXNzX2V4dF9zdWJldmVudChjb25zdCB1aW50OF90ICpkYXRhKQogICAgICB8ICAg
+ICAgICBefn5+fgptb25pdG9yL2ludGVsLmM6IEluIGZ1bmN0aW9uIOKAmGludGVsX3ZlbmRvcl9l
+eHRfZXZ04oCZOgptb25pdG9yL2ludGVsLmM6MTQyNjoxNzogZXJyb3I6IGluaXRpYWxpemF0aW9u
+IGRpc2NhcmRzIOKAmGNvbnN04oCZIHF1YWxpZmllciBmcm9tIHBvaW50ZXIgdGFyZ2V0IHR5cGUg
+Wy1XZXJyb3I9ZGlzY2FyZGVkLXF1YWxpZmllcnNdCiAxNDI2IHwgIHVpbnQ4X3QgKnRsdiA9IChj
+b25zdCB1aW50OF90ICopIGRhdGE7CiAgICAgIHwgICAgICAgICAgICAgICAgIF4KY2MxOiBhbGwg
+d2FybmluZ3MgYmVpbmcgdHJlYXRlZCBhcyBlcnJvcnMKbWFrZVsxXTogKioqIFtNYWtlZmlsZTo2
+OTM5OiBtb25pdG9yL2ludGVsLm9dIEVycm9yIDEKbWFrZTogKioqIFtNYWtlZmlsZToxMDQwNjog
+Y2hlY2tdIEVycm9yIDIKCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogTWFr
+ZSBEaXN0Y2hlY2sgLSBQQVNTCkRlc2M6IFJ1biBkaXN0Y2hlY2sgdG8gY2hlY2sgdGhlIGRpc3Ry
+aWJ1dGlvbgoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IEJ1aWxkIHcvZXh0
+IEVMTCAtIENvbmZpZ3VyZSAtIFBBU1MKRGVzYzogQ29uZmlndXJlIEJsdWVaIHNvdXJjZSB3aXRo
+ICctLWVuYWJsZS1leHRlcm5hbC1lbGwnIGNvbmZpZ3VyYXRpb24KCiMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIwpUZXN0OiBCdWlsZCB3L2V4dCBFTEwgLSBNYWtlIC0gRkFJTApEZXNjOiBC
+dWlsZCBCbHVlWiBzb3VyY2Ugd2l0aCAnLS1lbmFibGUtZXh0ZXJuYWwtZWxsJyBjb25maWd1cmF0
+aW9uCk91dHB1dDoKbW9uaXRvci9pbnRlbC5jOjEzODY6ODogZXJyb3I6IHR5cGUgcXVhbGlmaWVy
+cyBpZ25vcmVkIG9uIGZ1bmN0aW9uIHJldHVybiB0eXBlIFstV2Vycm9yPWlnbm9yZWQtcXVhbGlm
+aWVyc10KIDEzODYgfCBzdGF0aWMgY29uc3QgdWludDhfdCBwcm9jZXNzX2V4dF9zdWJldmVudChj
+b25zdCB1aW50OF90ICpkYXRhKQogICAgICB8ICAgICAgICBefn5+fgptb25pdG9yL2ludGVsLmM6
+IEluIGZ1bmN0aW9uIOKAmGludGVsX3ZlbmRvcl9leHRfZXZ04oCZOgptb25pdG9yL2ludGVsLmM6
+MTQyNjoxNzogZXJyb3I6IGluaXRpYWxpemF0aW9uIGRpc2NhcmRzIOKAmGNvbnN04oCZIHF1YWxp
+ZmllciBmcm9tIHBvaW50ZXIgdGFyZ2V0IHR5cGUgWy1XZXJyb3I9ZGlzY2FyZGVkLXF1YWxpZmll
+cnNdCiAxNDI2IHwgIHVpbnQ4X3QgKnRsdiA9IChjb25zdCB1aW50OF90ICopIGRhdGE7CiAgICAg
+IHwgICAgICAgICAgICAgICAgIF4KY2MxOiBhbGwgd2FybmluZ3MgYmVpbmcgdHJlYXRlZCBhcyBl
+cnJvcnMKbWFrZVsxXTogKioqIFtNYWtlZmlsZTo2OTM5OiBtb25pdG9yL2ludGVsLm9dIEVycm9y
+IDEKbWFrZTogKioqIFtNYWtlZmlsZTo0MTM0OiBhbGxdIEVycm9yIDIKCgoKCi0tLQpSZWdhcmRz
+LApMaW51eCBCbHVldG9vdGgKCg==
 
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-Signed-off-by: Joseph Hwang <josephsih@chromium.org>
----
-
-(no changes since v1)
-
- include/net/bluetooth/hci.h      |   4 ++
- include/net/bluetooth/hci_core.h |  22 ++++--
- net/bluetooth/Kconfig            |  11 +++
- net/bluetooth/mgmt.c             | 118 ++++++++++++++++++++++++++++++-
- 4 files changed, 148 insertions(+), 7 deletions(-)
-
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index b80415011dcd..2811b60e1acc 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -331,6 +331,10 @@ enum {
- 	HCI_CMD_PENDING,
- 	HCI_FORCE_NO_MITM,
- 
-+#ifdef CONFIG_BT_FEATURE_QUALITY_REPORT
-+	HCI_QUALITY_REPORT,
-+#endif
-+
- 	__HCI_NUM_FLAGS,
- };
- 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index a53e94459ecd..c25de25a7036 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -605,6 +605,9 @@ struct hci_dev {
- 	int (*set_bdaddr)(struct hci_dev *hdev, const bdaddr_t *bdaddr);
- 	void (*cmd_timeout)(struct hci_dev *hdev);
- 	bool (*prevent_wake)(struct hci_dev *hdev);
-+#ifdef CONFIG_BT_FEATURE_QUALITY_REPORT
-+	int (*set_quality_report)(struct hci_dev *hdev, bool enable);
-+#endif
- };
- 
- #define HCI_PHY_HANDLE(handle)	(handle & 0xff)
-@@ -752,12 +755,19 @@ extern struct mutex hci_cb_list_lock;
- #define hci_dev_test_and_clear_flag(hdev, nr)  test_and_clear_bit((nr), (hdev)->dev_flags)
- #define hci_dev_test_and_change_flag(hdev, nr) test_and_change_bit((nr), (hdev)->dev_flags)
- 
--#define hci_dev_clear_volatile_flags(hdev)			\
--	do {							\
--		hci_dev_clear_flag(hdev, HCI_LE_SCAN);		\
--		hci_dev_clear_flag(hdev, HCI_LE_ADV);		\
--		hci_dev_clear_flag(hdev, HCI_LL_RPA_RESOLUTION);\
--		hci_dev_clear_flag(hdev, HCI_PERIODIC_INQ);	\
-+#ifdef CONFIG_BT_FEATURE_QUALITY_REPORT
-+#define hci_dev_clear_flag_quality_report(x) { hci_dev_clear_flag(hdev, x); }
-+#else
-+#define hci_dev_clear_flag_quality_report(x) {}
-+#endif
-+
-+#define hci_dev_clear_volatile_flags(hdev)				\
-+	do {								\
-+		hci_dev_clear_flag(hdev, HCI_LE_SCAN);			\
-+		hci_dev_clear_flag(hdev, HCI_LE_ADV);			\
-+		hci_dev_clear_flag(hdev, HCI_LL_RPA_RESOLUTION);	\
-+		hci_dev_clear_flag(hdev, HCI_PERIODIC_INQ);		\
-+		hci_dev_clear_flag_quality_report(HCI_QUALITY_REPORT)	\
- 	} while (0)
- 
- /* ----- HCI interface to upper protocols ----- */
-diff --git a/net/bluetooth/Kconfig b/net/bluetooth/Kconfig
-index e0ab4cd7afc3..d63c3cdf2d6f 100644
---- a/net/bluetooth/Kconfig
-+++ b/net/bluetooth/Kconfig
-@@ -148,4 +148,15 @@ config BT_FEATURE_DEBUG
- 	  This provides an option to enable/disable debugging statements
- 	  at runtime via the experimental features interface.
- 
-+config BT_FEATURE_QUALITY_REPORT
-+	bool "Runtime option for logging controller quality report events"
-+	depends on BT
-+	default n
-+	help
-+	  This provides an option to enable/disable controller quality report
-+	  events logging at runtime via the experimental features interface.
-+	  The quality report events may include the categories of system
-+	  exceptions, connections/disconnection, the link quality statistics,
-+	  etc.
-+
- source "drivers/bluetooth/Kconfig"
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index d1bf5a55ff85..0de089524d74 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -3791,6 +3791,14 @@ static const u8 debug_uuid[16] = {
- };
- #endif
- 
-+#ifdef CONFIG_BT_FEATURE_QUALITY_REPORT
-+/* 330859bc-7506-492d-9370-9a6f0614037f */
-+static const u8 quality_report_uuid[16] = {
-+	0x7f, 0x03, 0x14, 0x06, 0x6f, 0x9a, 0x70, 0x93,
-+	0x2d, 0x49, 0x06, 0x75, 0xbc, 0x59, 0x08, 0x33,
-+};
-+#endif
-+
- /* 671b10b5-42c0-4696-9227-eb28d1b049d6 */
- static const u8 simult_central_periph_uuid[16] = {
- 	0xd6, 0x49, 0xb0, 0xd1, 0x28, 0xeb, 0x27, 0x92,
-@@ -3806,7 +3814,7 @@ static const u8 rpa_resolution_uuid[16] = {
- static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
- 				  void *data, u16 data_len)
- {
--	char buf[62];	/* Enough space for 3 features */
-+	char buf[82];   /* Enough space for 4 features: 2 + 20 * 4 */
- 	struct mgmt_rp_read_exp_features_info *rp = (void *)buf;
- 	u16 idx = 0;
- 	u32 flags;
-@@ -3850,6 +3858,26 @@ static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
- 		idx++;
- 	}
- 
-+#ifdef CONFIG_BT_FEATURE_QUALITY_REPORT
-+	if (hdev) {
-+		if (hdev->set_quality_report) {
-+			/* BIT(0): indicating if set_quality_report is
-+			 * supported by controller.
-+			 */
-+			flags = BIT(0);
-+
-+			/* BIT(1): indicating if the feature is enabled. */
-+			if (hci_dev_test_flag(hdev, HCI_QUALITY_REPORT))
-+				flags |= BIT(1);
-+		} else {
-+			flags = 0;
-+		}
-+		memcpy(rp->features[idx].uuid, quality_report_uuid, 16);
-+		rp->features[idx].flags = cpu_to_le32(flags);
-+		idx++;
-+	}
-+#endif
-+
- 	rp->feature_count = cpu_to_le16(idx);
- 
- 	/* After reading the experimental features information, enable
-@@ -3892,6 +3920,23 @@ static int exp_debug_feature_changed(bool enabled, struct sock *skip)
- }
- #endif
- 
-+#ifdef CONFIG_BT_FEATURE_QUALITY_REPORT
-+static int exp_quality_report_feature_changed(bool enabled, struct sock *skip)
-+{
-+	struct mgmt_ev_exp_feature_changed ev;
-+
-+	BT_INFO("enabled %d", enabled);
-+
-+	memset(&ev, 0, sizeof(ev));
-+	memcpy(ev.uuid, quality_report_uuid, 16);
-+	ev.flags = cpu_to_le32(enabled ? BIT(0) : 0);
-+
-+	return mgmt_limited_event(MGMT_EV_EXP_FEATURE_CHANGED, NULL,
-+				  &ev, sizeof(ev),
-+				  HCI_MGMT_EXP_FEATURE_EVENTS, skip);
-+}
-+#endif
-+
- static int set_exp_feature(struct sock *sk, struct hci_dev *hdev,
- 			   void *data, u16 data_len)
- {
-@@ -4038,6 +4083,77 @@ static int set_exp_feature(struct sock *sk, struct hci_dev *hdev,
- 		return err;
- 	}
- 
-+#ifdef CONFIG_BT_FEATURE_QUALITY_REPORT
-+	if (!memcmp(cp->uuid, quality_report_uuid, 16)) {
-+		bool val, changed;
-+		int err;
-+
-+		/* Command requires to use a valid controller index */
-+		if (!hdev)
-+			return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
-+					       MGMT_OP_SET_EXP_FEATURE,
-+					       MGMT_STATUS_INVALID_INDEX);
-+
-+		/* Parameters are limited to a single octet */
-+		if (data_len != MGMT_SET_EXP_FEATURE_SIZE + 1)
-+			return mgmt_cmd_status(sk, hdev->id,
-+					       MGMT_OP_SET_EXP_FEATURE,
-+					       MGMT_STATUS_INVALID_PARAMS);
-+
-+		/* Only boolean on/off is supported */
-+		if (cp->param[0] != 0x00 && cp->param[0] != 0x01)
-+			return mgmt_cmd_status(sk, hdev->id,
-+					       MGMT_OP_SET_EXP_FEATURE,
-+					       MGMT_STATUS_INVALID_PARAMS);
-+
-+		hci_req_sync_lock(hdev);
-+
-+		val = !!cp->param[0];
-+		changed = (val != hci_dev_test_flag(hdev, HCI_QUALITY_REPORT));
-+
-+		if (!hdev->set_quality_report) {
-+			BT_INFO("quality report not supported");
-+			err = mgmt_cmd_status(sk, hdev->id,
-+					      MGMT_OP_SET_EXP_FEATURE,
-+					      MGMT_STATUS_NOT_SUPPORTED);
-+			goto unlock_quality_report;
-+		}
-+
-+		if (changed) {
-+			err = hdev->set_quality_report(hdev, val);
-+			if (err) {
-+				BT_ERR("set_quality_report value %d err %d",
-+				       val, err);
-+				err = mgmt_cmd_status(sk, hdev->id,
-+						      MGMT_OP_SET_EXP_FEATURE,
-+						      MGMT_STATUS_FAILED);
-+				goto unlock_quality_report;
-+			}
-+			if (val)
-+				hci_dev_set_flag(hdev, HCI_QUALITY_REPORT);
-+			else
-+				hci_dev_clear_flag(hdev, HCI_QUALITY_REPORT);
-+		}
-+
-+		BT_INFO("quality report enable %d changed %d",
-+			val, changed);
-+
-+		memcpy(rp.uuid, quality_report_uuid, 16);
-+		rp.flags = cpu_to_le32(val ? BIT(0) : 0);
-+		hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
-+		err = mgmt_cmd_complete(sk, hdev->id,
-+					MGMT_OP_SET_EXP_FEATURE, 0,
-+					&rp, sizeof(rp));
-+
-+		if (changed)
-+			exp_quality_report_feature_changed(val, sk);
-+
-+unlock_quality_report:
-+		hci_req_sync_unlock(hdev);
-+		return err;
-+	}
-+#endif
-+
- 	return mgmt_cmd_status(sk, hdev ? hdev->id : MGMT_INDEX_NONE,
- 			       MGMT_OP_SET_EXP_FEATURE,
- 			       MGMT_STATUS_NOT_SUPPORTED);
--- 
-2.32.0.288.g62a8d224e6-goog
-
+--===============2002411796658292592==--
