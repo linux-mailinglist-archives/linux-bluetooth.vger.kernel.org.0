@@ -2,134 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F02C93AD559
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 19 Jun 2021 00:44:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 863CB3AD809
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 19 Jun 2021 08:03:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233160AbhFRWrF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 18 Jun 2021 18:47:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44704 "EHLO
+        id S233787AbhFSGFU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 19 Jun 2021 02:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230151AbhFRWrF (ORCPT
+        with ESMTP id S233794AbhFSGFT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 18 Jun 2021 18:47:05 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99147C061574
-        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Jun 2021 15:44:54 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id c138so14753521qkg.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Jun 2021 15:44:54 -0700 (PDT)
+        Sat, 19 Jun 2021 02:05:19 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D0C8C061768
+        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Jun 2021 23:03:08 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id q190so13804753qkd.2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Jun 2021 23:03:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=USPzt0jsG/Gh6eBN4Fz8UXWDiF6LUmsdn/nkD7D2M0c=;
-        b=UzxeZ8ZcC4KaFM4EYE7K3W1ZbUvwMcD/CKCXOWaVBHvGDzmoi/SMZ6PpZykNzhx7EG
-         eoXMNzWdaossrI6iSGkslUxHdFpaKOY5/At3Cg5Ei8dYJpp9WkGgBhcrRxdzvtO81GqJ
-         y758hZS4fVzh3ApK4o4stcfxNdNSWJi5Dc4JXkiU8iWcwknlcKSsFNMplb7db9cEV+1b
-         +A38dr8bA4TTakaQunKH27vgxPFTpsfRnLy8mr6IqNbi2YzVup96jhAT69eOegnJmg+Y
-         Jw1jmqZjfJtcBfkhkxiI4ZVPcCpgEUpLkLnFKdExL8P7eA1/ikQGXgEqHeXnoAsuPV/I
-         iR9Q==
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=wAVqLsnfNHPtzpij5O3nzBsHWWTKNNltQQPvyugJZcM=;
+        b=h3+EnlepC8d2dDo2Md1KnOy2ztgoCfBhFfXTzNnaptNTP/FPz7mKYBiDeLU7m4HLxK
+         l71kkGPhzcf8agUvnNgb2uWf/TG+fr87vbCG23WvqlW4i1pcTdptNKblju6VXmF2r/x1
+         EbNIDkuA9YSgclaEqsRmkldmpsyzM928zb4JI3x9USiA0ntI+WLRgohVzC3Lg7eGtX19
+         dJv6FMUsXJ3fazUDteAgPXPyTf4AKHRyLXnP80hGt8dPZoTrKqFUUWVEQXiO7G9/9xOl
+         j8BpoMcg8bwW65Ob8TuChi4RxUV4PAufzYBo+CVlCq4ApaNrBb/P7LWVJlU9QtJmzPG8
+         I5tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=USPzt0jsG/Gh6eBN4Fz8UXWDiF6LUmsdn/nkD7D2M0c=;
-        b=fOGDzzf7sRADQj+9oESCLM9Y4FuDMTvFaxLLnKYi4L7/q+nYNznKJHYszUOgnB+iiT
-         ejlBArQO8T0PCPfvaiLQB4wWwjvYKPjiTBx0aSo2J16jH7AXXdA2yDDtDPc12psElcwY
-         7JZe1MHpA52BwQaGsA5Dpaek2gP39FZK6BTaeyT6wfcr/arptjorbWiF1HKfrE/cVATD
-         n/vPMpnOjm5dmhCDaAF2INCKNcv8c8Ts9jVun0CL6uW++BuyPQO8g+JqoyF388lemfJC
-         jI0vHx39F5euzMEfZuKei774xzKVpmgJ70+Ci9z2Lr5jxtOzRN8lzv5SvYnxRMg+9Wrz
-         7sWw==
-X-Gm-Message-State: AOAM532XEcq7ZHylhpQ/SEiKpyhaHVZ3e+/hEbKzcd4kd4jm/FTLP067
-        Ai6QXLXP/nnD5wtfn7+vszb3rDAWJSe3PTuDlx99ao9dAc8=
-X-Google-Smtp-Source: ABdhPJwoM3QL3m9o4S7Cq8Kbel5OYTXSxKZ7/aFKCuSCzkUtCMOR3kiRfrOO7Z2Je9liF8L/GSqgJ3Zmi75SPKX9qoA=
-X-Received: by 2002:a05:6902:102d:: with SMTP id x13mr17910882ybt.408.1624056293305;
- Fri, 18 Jun 2021 15:44:53 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=wAVqLsnfNHPtzpij5O3nzBsHWWTKNNltQQPvyugJZcM=;
+        b=m/pvMjIQ+SXIy5APNFHnOuD00zUPxgnVb0J55Xbp2wPF23Nq1gz8zEcXUpM4MRgZ7y
+         Psx23Z6JtPGSVC/xH9sRrYcEpSzcZr1g+1qSBHkPPYHNO8G8UPA2nMXAxcj/75bsM3rS
+         JN54pUTIeTsNdZcJEwpAPdaTpuWXQ6dPVeDibva9DL/Ofq+4suKffdTg4tVqI9/N4byo
+         wbbW9zuP1vL9/dhETvw7U+kbGnfw3EhOWwiqm7d0OeV/DHue83yOTCPeuntLhUgG8hNc
+         YSs9WJaa4GCea8UFMCe9iOCKJ7N1HmFIBBJ4BynTqxohwZTGwMFTwGkWELKXM+ifE+xy
+         KZ/A==
+X-Gm-Message-State: AOAM532bpILxKhRdQN+jxl6AhvuAHVazvMHuY1JyNk0kUlIdGULQl8rm
+        D55/dR/S+Q9PHNalNGqzsecIwxerKWgzhhZnmso=
+X-Google-Smtp-Source: ABdhPJw9zhQJIlxTWY2bkpmzGPveYHO9AIh+9MZ3tflgiZlmOCpcea2iv2CeqrsVhKG97R4uOWvRol+hdNhgfSjDpCs=
+X-Received: by 2002:ae9:e407:: with SMTP id q7mr13070933qkc.410.1624082587183;
+ Fri, 18 Jun 2021 23:03:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210618171301.2285511-1-luiz.dentz@gmail.com> <60ccdd47.1c69fb81.5cb52.96dd@mx.google.com>
-In-Reply-To: <60ccdd47.1c69fb81.5cb52.96dd@mx.google.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Fri, 18 Jun 2021 15:44:42 -0700
-Message-ID: <CABBYNZJJ=j22Qwxx9Lkz5sQfT3nRPrYpXu6yRtfR05q=tgE8wA@mail.gmail.com>
-Subject: Re: [BlueZ] device: Fix enabling temporary timer when TemporaryTimeout=0
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Received: by 2002:a05:6214:852:0:0:0:0 with HTTP; Fri, 18 Jun 2021 23:03:06
+ -0700 (PDT)
+Reply-To: rita44303@yahoo.co.jp
+From:   rita williams <rita67will@gmail.com>
+Date:   Sat, 19 Jun 2021 07:03:06 +0100
+Message-ID: <CAL+t9WDEOFNLCc2Py7DbUEqHzOE2JmceDHxSPhFZ5rc-RXNNyw@mail.gmail.com>
+Subject: Od pani Rity Williams
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+Najdro=C5=BCszy w Chrystusie,
 
-On Fri, Jun 18, 2021 at 10:52 AM <bluez.test.bot@gmail.com> wrote:
->
-> This is automated email and please do not reply to this email!
->
-> Dear submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> This is a CI test results with your patch series:
-> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=503457
->
-> ---Test result---
->
-> Test Summary:
-> CheckPatch                    PASS      0.37 seconds
-> GitLint                       PASS      0.15 seconds
-> Prep - Setup ELL              PASS      50.72 seconds
-> Build - Prep                  PASS      0.11 seconds
-> Build - Configure             PASS      8.80 seconds
-> Build - Make                  PASS      219.47 seconds
-> Make Check                    PASS      9.61 seconds
-> Make Distcheck                PASS      263.52 seconds
-> Build w/ext ELL - Configure   PASS      8.77 seconds
-> Build w/ext ELL - Make        PASS      204.11 seconds
->
-> Details
-> ##############################
-> Test: CheckPatch - PASS
-> Desc: Run checkpatch.pl script with rule in .checkpatch.conf
->
-> ##############################
-> Test: GitLint - PASS
-> Desc: Run gitlint with rule in .gitlint
->
-> ##############################
-> Test: Prep - Setup ELL - PASS
-> Desc: Clone, build, and install ELL
->
-> ##############################
-> Test: Build - Prep - PASS
-> Desc: Prepare environment for build
->
-> ##############################
-> Test: Build - Configure - PASS
-> Desc: Configure the BlueZ source tree
->
-> ##############################
-> Test: Build - Make - PASS
-> Desc: Build the BlueZ source tree
->
-> ##############################
-> Test: Make Check - PASS
-> Desc: Run 'make check'
->
-> ##############################
-> Test: Make Distcheck - PASS
-> Desc: Run distcheck to check the distribution
->
-> ##############################
-> Test: Build w/ext ELL - Configure - PASS
-> Desc: Configure BlueZ source with '--enable-external-ell' configuration
->
-> ##############################
-> Test: Build w/ext ELL - Make - PASS
-> Desc: Build BlueZ source with '--enable-external-ell' configuration
->
->
->
-> ---
-> Regards,
-> Linux Bluetooth
+Jestem pani=C4=85 Rita Williams, =C5=BCon=C4=99 Mr.David Williamsa, przez 1=
+9 lat bez
+dziecka, a m=C3=B3j m=C4=85=C5=BC zmar=C5=82 w 2007 roku Od mojego zmar=C5=
+=82ego m=C4=99=C5=BCa do
+mi=C5=82o=C5=9Bci, obecnie fundusz jest nadal w banku. Ostatnio m=C3=B3j le=
+karz
+powiedzia=C5=82 mi, =C5=BCe mam powa=C5=BCn=C4=85 chorob=C4=99, kt=C3=B3ra =
+jest problemem raka i nie
+trwam przez nast=C4=99pne 2 miesi=C4=85ce.
+Chc=C4=99 osob=C4=99, kt=C3=B3ra wykorzysta ten fundusz dla sieroci=C5=84c=
+=C3=B3w, szk=C3=B3=C5=82,
+ko=C5=9Bcio=C5=82=C3=B3w, wd=C3=B3w, propaguj=C4=85cych S=C5=82owo Bo=C5=BC=
+e w swoim kraju.
+Odpowiedz mi, aby uzyska=C4=87 wi=C4=99cej informacji, a tak=C5=BCe wy=C5=
+=9Blij mi
+nast=C4=99puj=C4=85ce informacje, jak poni=C5=BCej.
+Twoje pe=C5=82ne imi=C4=99 ..........
+Adres ...........
+Zdj=C4=99cie ...............
+Pozosta=C4=87 b=C5=82ogos=C5=82awiony
+Twoja siostra w Chrystusie
 
-Pushed.
-
--- 
-Luiz Augusto von Dentz
+Pani Rita Williams.
