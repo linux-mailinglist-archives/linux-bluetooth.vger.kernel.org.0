@@ -2,67 +2,40 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 25E973B1DE8
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Jun 2021 17:54:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E832A3B1E76
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Jun 2021 18:17:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231416AbhFWP40 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 23 Jun 2021 11:56:26 -0400
-Received: from [183.90.58.236] ([183.90.58.236]:51548 "EHLO ns1.zackeruz.tk"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S231394AbhFWP40 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 23 Jun 2021 11:56:26 -0400
-Received: from johnlewis.com (unknown [192.168.20.1])
-        by ns1.zackeruz.tk (Postfix) with ESMTPSA id 12BA08462CD
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Jun 2021 23:54:06 +0800 (+08)
-Reply-To: robert_turner@johnlewis-trading.com,
-          pippawicks.sales@johnlewis-trading.com
-From:   John Lewis & Partnersip <robert.turner107@johnlewis.com>
+        id S229660AbhFWQTn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 23 Jun 2021 12:19:43 -0400
+Received: from relay8-d.mail.gandi.net ([217.70.183.201]:33085 "EHLO
+        relay8-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229913AbhFWQTm (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 23 Jun 2021 12:19:42 -0400
+Received: (Authenticated sender: hadess@hadess.net)
+        by relay8-d.mail.gandi.net (Postfix) with ESMTPSA id B922D1BF208
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Jun 2021 16:17:23 +0000 (UTC)
+Message-ID: <803e67877866eab5ac0a1944b7e6f4c1ac90635d.camel@hadess.net>
+Subject: security@ email not working?
+From:   Bastien Nocera <hadess@hadess.net>
 To:     linux-bluetooth@vger.kernel.org
-Subject: 6/23/2021 Product Inquiry 
-Date:   23 Jun 2021 15:54:06 +0000
-Message-ID: <20210623094114.4AB56BBF2E6EE3FB@johnlewis.com>
+Date:   Wed, 23 Jun 2021 18:17:23 +0200
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.2 (3.40.2-1.fc34) 
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear linux-bluetooth
+Hello,
 
-The famous brand John Lewis Partnership, is UK's largest multi-
-channel retailer with over 126 shops and multiple expansion in 
-Africa furnished by European/Asian/American products. We are 
-sourcing new products to attract new customers and also retain 
-our existing ones, create new partnerships with companies dealing 
-with different kinds of goods globally.
+I sent a mail to the security list on Friday, and got a "not delivered"
+message today. Can somebody check whether it works, and let me know
+where I can send my mail? Urgently...
 
-Your company's products are of interest to our market as we have 
-an amazing market for your products.
+<security@bluez.org>: host mail.bluez.org[212.227.132.17] said: 454 4.7.1
+    <security@bluez.org>: Relay access denied (in reply to RCPT TO command)
 
-Provide us your current catalog through email to review more. We 
-hope to be able to order with you and start a long-term friendly,
-respectable and solid business partnership. Please we would 
-appreciate it if you could send us your stock availability via 
-email if any.
+Cheers
 
-Our payment terms are 15 days net in Europe, 30 days Net in UK 
-and 30 days net in Asia/USA as we operate with over 5297 
-suppliers around the globe for the past 50 years now. For 
-immediate response Send your reply to robert_turner@johnlewis-
-trading.com for us to be able to 
-treat with care and urgency.
-
-
-Best Regards
-
-Rob Turner
-Head Of Procurement Operations
-John Lewis & Partners.
-robert_turner@johnlewis-trading.com
-Tel: +44-7451-274090
-WhatsApp: +447497483925
-www.johnlewis.com
-REGISTERED OFFICE: 171 VICTORIA STREET, LONDON SW1E 5NN 
