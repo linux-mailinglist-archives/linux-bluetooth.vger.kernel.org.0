@@ -2,63 +2,86 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C74943B3460
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Jun 2021 19:09:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 094033B3552
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Jun 2021 20:10:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232273AbhFXRLw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 24 Jun 2021 13:11:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52716 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232260AbhFXRLo (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 24 Jun 2021 13:11:44 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C050C0613A2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Jun 2021 10:09:22 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id h3so7060292ilc.9
-        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Jun 2021 10:09:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to;
-        bh=ANhbTggsY3NFhRZExKMwUmb3VzJqye8XLvWVXSvNBkQ=;
-        b=p95plxgcKdT8+TUJCmcKdAyJL6L8C+j3muAeTI6tbvEOMwKUFZvBH22Z3GEGxdnUZH
-         d9XkDasjcz/bUj2n1PkWxPPQL/Sxtf1a7ckN43IkWwU4a9v6DYeOi9Tg8DPYHl700hH/
-         xlmv54Ir2NUVB8zwaX1UsxTzP5GUW3mdywmszCeflzWKbXzDgkMNhx+qVsi3FklHnD5x
-         fSDWvxz3POXOJ/0yZM+F2G99rPMTFJK+bPA5TWYu0VJpvpEjmQwRSgXLB6dx+kXpC0Uz
-         JX+JhI0lSB7VkwJTdkbApCrUx6TGzp99N5mAm/d0lil4hmexz93RFAPSpMzmwkjNchKB
-         rXTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to;
-        bh=ANhbTggsY3NFhRZExKMwUmb3VzJqye8XLvWVXSvNBkQ=;
-        b=cslaG/dlcE4LidqqZCOhu0+nga0vC7i0xl9WoyluLMeVwdgAwoR6cGkDpVjH8M/bYk
-         uLY4RC84g8SP6bmSmmTUq4hWcMvh5F4RSBxHrooTBmUeIPr2msu6cTVyMbtKJ+X5gXFa
-         xdGR+rNX0QDNSbjY+GbIzZaQauIkVKjK/7jvZyrN6LKFqLQnRtnImSLJpRksKQPAgm0k
-         2zuuTdS0vjMxoaTRPgl+n1WqczCD2VcQ+eU2QD/hvP5ep33Gx3pv/WAxyqRl51kmAjjT
-         jjiaDG29gj9jrNo66miCeGJlih7OfwvfXHyNAwUHVhn8TDA1z/mm1gQPk6FIVz6+ELMX
-         +WPw==
-X-Gm-Message-State: AOAM530C65Fe3q+UEmQ2CX4xU/0FICTulyE+T7+5fILkvMT+QCvUgfYx
-        eAEPPYlvqJ0HqdLbZRfyvzgSWloEll4MKYisVQE=
-X-Google-Smtp-Source: ABdhPJzkYUuO368jts0QgMQyJe9SHzg0U698qd8KdfojEfYsXnHtwMfPGxVHmw7fwQ64+IhHRhAEJH5nusdeW4BWzcA=
-X-Received: by 2002:a05:6e02:524:: with SMTP id h4mr4098121ils.255.1624554560853;
- Thu, 24 Jun 2021 10:09:20 -0700 (PDT)
+        id S232178AbhFXSNL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 24 Jun 2021 14:13:11 -0400
+Received: from vern.gendns.com ([98.142.107.122]:40536 "EHLO vern.gendns.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231878AbhFXSNK (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 24 Jun 2021 14:13:10 -0400
+X-Greylist: delayed 1567 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jun 2021 14:13:10 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=lechnology.com; s=default; h=Content-Transfer-Encoding:MIME-Version:
+        Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=IR47SNYHakzv32LA5oS9u/LB8Qu1MH5I/N1xky/09Ok=; b=FFaZrG4fKa8673WstwLOOzzTJi
+        2XSutVqaVtIWwWiKYVP6/XDNZmeiAqbW2QyXfJSog8xuvz+inJkn+iA24eYFDsZ6h9f/6DMpNgpcd
+        PBLNAkZoB1vFIUb4QC4zsx2T31gYQGtSCJXsscPrjwvp/KD3J5yC/hU8oX5AkGJ6atWnGEOcWJxEJ
+        wefHuq9ZhfSaefT4wQGtiMu/kcvzNgKGwq+1XTtdCH2iqcGtE6jTk9XwEUOHlAicW3cUcuZVmWzLh
+        rf81bbEEbjcDw6uHDq0IFXkyyjp+h6I9lEzjAq3ryBZ0qiZ60u2BuuWuQWaCQa35cOxOPFztu7ouQ
+        Mgtxdm5w==;
+Received: from 108-198-5-147.lightspeed.okcbok.sbcglobal.net ([108.198.5.147]:37642 helo=freyr.lechnology.com)
+        by vern.gendns.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <david@lechnology.com>)
+        id 1lwTOx-0005Tl-8r; Thu, 24 Jun 2021 13:44:42 -0400
+From:   David Lechner <david@lechnology.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     David Lechner <david@lechnology.com>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>,
+        Manish Mandlik <mmandlik@google.com>
+Subject: [RESEND PATCH BlueZ] doc/advmon-api: Clarify Patterns property
+Date:   Thu, 24 Jun 2021 12:44:01 -0500
+Message-Id: <20210624174401.1881338-1-david@lechnology.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Received: by 2002:a05:6638:3aa:0:0:0:0 with HTTP; Thu, 24 Jun 2021 10:09:20
- -0700 (PDT)
-Reply-To: tutywoolgar021@gmail.com
-In-Reply-To: <CADB47+4Wa3T59Vq_==GTXEfHrX5x-2vQFxaTBO0dTdyAweCVpw@mail.gmail.com>
-References: <CADB47+4Wa3T59Vq_==GTXEfHrX5x-2vQFxaTBO0dTdyAweCVpw@mail.gmail.com>
-From:   tuty woolgar <faridaamadoubas@gmail.com>
-Date:   Thu, 24 Jun 2021 17:09:20 +0000
-Message-ID: <CADB47+607zNBfYFb4bj0nUhuuYgAdwT=G_wJ9-EeV0ESHe56Jg@mail.gmail.com>
-Subject: greetings,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - vern.gendns.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - lechnology.com
+X-Get-Message-Sender-Via: vern.gendns.com: authenticated_id: davidmain+lechnology.com/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: vern.gendns.com: davidmain@lechnology.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-My greetings to you my friend i hope you are fine and good please respond
-back to me thanks,
+The Patterns property description was not as clear as it could be. This
+expands the text a bit, replaces the C enum value 0x01 with the D-Bus
+property string value "or_patterns" and improves the grammar in a few
+places.
+---
+ doc/advertisement-monitor-api.txt | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/doc/advertisement-monitor-api.txt b/doc/advertisement-monitor-api.txt
+index 8100717c0..9189f2cce 100644
+--- a/doc/advertisement-monitor-api.txt
++++ b/doc/advertisement-monitor-api.txt
+@@ -105,10 +105,11 @@ Properties	string Type [read-only]
+ 
+ 		array{(uint8, uint8, array{byte})} Patterns [read-only, optional]
+ 
+-			If Type is set to 0x01, this must exist and has at least
+-			one entry in the array.
++			If the Type property is set to "or_patterns", then this
++			property must exist and have at least one entry in the
++			array.
+ 
+-			The structure of a pattern contains the following.
++			The structure of a pattern contains the following:
+ 			uint8 start_position
+ 				The index in an AD data field where the search
+ 				should start. The beginning of an AD data field
+-- 
+2.25.1
+
