@@ -2,144 +2,124 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 463D73B5A68
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 28 Jun 2021 10:22:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B98A23B5A88
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 28 Jun 2021 10:33:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232376AbhF1IYd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 28 Jun 2021 04:24:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38738 "EHLO
+        id S232346AbhF1Ifz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 28 Jun 2021 04:35:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232346AbhF1IYb (ORCPT
+        with ESMTP id S231698AbhF1Ify (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 28 Jun 2021 04:24:31 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6B50C061574
-        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Jun 2021 01:22:06 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id ce18-20020a17090aff12b0290170a3e3eb07so258067pjb.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Jun 2021 01:22:06 -0700 (PDT)
+        Mon, 28 Jun 2021 04:35:54 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B34FBC061574
+        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Jun 2021 01:33:28 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id f13so6852870qtb.6
+        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Jun 2021 01:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+Pol7EU6cLeB9bzs3xLMxd7uFMdBT25dp4ht2BBEEjg=;
-        b=CePD/aQ44iKLoZD6Sgr4f6wOk5sdH3IVihHU9FfUg7WfBXZeG8IEseazRTXzC+aQTf
-         gCjl6BAZAGNLRcN330eba2/GZgb9L2Xvl9evl1fD//S3/5z6kfSWeXeR6f7H/UrRSDPJ
-         WjY9WQGKGidxvf7hxbd2KzXrYXr6W4ACL8c4o=
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=IK51j2ZZQrCLBe99YOJPT6h32otlJOpnXYAnNOhUWJc=;
+        b=UdKBaEr+wqoOfeh2hCHdTlHWz6gXf+FSk6KHyWNknSAcB/9H71vEI/zjEDkn3UTaW9
+         S/8wZzlPC21RKagA8yOzTKqWE+g/ekBHwUP8nccmPXzeFLwNx/xHqXA7TMn8v1qNlJ5Z
+         yDf4+a7T6mtIOouciIatErcR5FIOgfddR6JPB5fRHrWCNb1DeSD83VW9c8YNI91kFBdc
+         O3aVNbuK4nKzT4GD++e0JxrKvw0o0NhfVphqxHRmdT5L8IAbi5dq/CUCO8/v/QzfJeoY
+         PjQfOiIdXF8jd6hS7gZZCTyVyj9Y3wI1yv9LV2OpHV+qHAwIcQEKT0tPGqJyPehHgdh/
+         wPWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+Pol7EU6cLeB9bzs3xLMxd7uFMdBT25dp4ht2BBEEjg=;
-        b=MxpjEdFb/6zIfMyJ8RZN7cKoRTI4RYoqD9lJR/4vXBU4jqt3WloVmjeOsrDS5W5iiF
-         oxuJw/nLqcpflS4rjr1h47yujdqsW4TH0DAQGQ5fI+1mS6FAzayiboD7ogUvXvJ003TX
-         bkw2nNVy5/LztDu3WxCbHzc25LMVC8RySRZYBcDnqLYIUTir3Y4JL3Cy70i5pTAlykro
-         PSjF5Sgrg/I5JtjH2POiPozPuB7Kw7dZJGl+sn9LKtOalb7GNPnx0as5YIMhw5nVj8bM
-         ZwUkM9O6WTy3sD1igRyukkJAzifkuqSzdvwGoPWXRDv5bfVMDOzwH4HO8AzD1O5EQmzS
-         XLUA==
-X-Gm-Message-State: AOAM531cJPOnTrpJLnq7EzVTzRrk3ms3LN/pjaojhxfGAcu+2oCz2Yk/
-        DnUmoAeVzIDSuGIDqsyM9TXba0UdlOh5eQ==
-X-Google-Smtp-Source: ABdhPJwQm9vlruG4PCeRq1YdAbLNaMAVBw0CukbbMmaM5OWYKi2AnmbXqYkySdde7jNtALlO4xVnMg==
-X-Received: by 2002:a17:902:be0d:b029:f9:c913:821f with SMTP id r13-20020a170902be0db02900f9c913821fmr21785788pls.2.1624868526177;
-        Mon, 28 Jun 2021 01:22:06 -0700 (PDT)
-Received: from josephsih-z840.tpe.corp.google.com ([2401:fa00:1:10:d73e:91da:d7c7:57a])
-        by smtp.gmail.com with ESMTPSA id b22sm5381125pfp.20.2021.06.28.01.22.04
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=IK51j2ZZQrCLBe99YOJPT6h32otlJOpnXYAnNOhUWJc=;
+        b=UjFsHlubTaWk8IAXAjzKRlmlXNZCH3ClfZDOhDrkTnj8UzCoNy5wIekZ7OubKQ6A5+
+         tcs2oUEGw0/44Zzj/p9C4jJxa5aemP/GGyiTHDPl0Yupw7R66SBT71QIVsERRyb1nVnE
+         FA6GxrQbdZ1uUtA4zVx8PJ3XZ2yGf6Z21AlaZIjYBEjeXSkHHDtlrjLoEE7MYP1Q01Bc
+         7EiC3LMU+QedfzXKt49r24wCrRF1hmUqW6YLKhHzoaU0DdNGjm3jvdgb40FsU0B8ouG3
+         60ogidwyExA3sdT9tPoR/jiqGOX+khwgs+bridZmQCvDae9RHJf52lBR0Q8h3PuFAePV
+         TzCA==
+X-Gm-Message-State: AOAM532tkm0cYp1Ov5p2ZRchNb2RT5HZROKO2uZSfrmSbvHrGoGDWvZ4
+        fb+Jfyn5diK/frMKQ4ig22MrTM6ly4yECA==
+X-Google-Smtp-Source: ABdhPJzFAwIJLL7vjqUbOAK7lwZB+JDA5+ZmSsmOUKHT2YzBKjCvjCD29LyOAOJkDsTpHJqy7bs/Zg==
+X-Received: by 2002:ac8:5dd1:: with SMTP id e17mr20911537qtx.252.1624869207555;
+        Mon, 28 Jun 2021 01:33:27 -0700 (PDT)
+Received: from [172.17.0.2] ([52.242.78.206])
+        by smtp.gmail.com with ESMTPSA id 198sm10404176qkn.29.2021.06.28.01.33.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jun 2021 01:22:05 -0700 (PDT)
-From:   Joseph Hwang <josephsih@chromium.org>
-To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        luiz.dentz@gmail.com, pali@kernel.org
-Cc:     chromeos-bluetooth-upstreaming@chromium.org, josephsih@google.com,
-        Joseph Hwang <josephsih@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>
-Subject: [BlueZ PATCH v3 3/3] adapter: set quality report feature
-Date:   Mon, 28 Jun 2021 16:21:50 +0800
-Message-Id: <20210628162107.BlueZ.v3.3.I5b72c623fb8b002a5e1f000149b362af3c01ab98@changeid>
-X-Mailer: git-send-email 2.32.0.93.g670b81a890-goog
+        Mon, 28 Jun 2021 01:33:27 -0700 (PDT)
+Message-ID: <60d98957.1c69fb81.d8c53.cd37@mx.google.com>
+Date:   Mon, 28 Jun 2021 01:33:27 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============6594575804401014271=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, josephsih@chromium.org
+Subject: RE: [BlueZ,v3,1/3] monitor: add new Intel extended telemetry events
+Reply-To: linux-bluetooth@vger.kernel.org
 In-Reply-To: <20210628162107.BlueZ.v3.1.I832f2d744fe2cff0d9749e24c9ec27071fa0b4ed@changeid>
 References: <20210628162107.BlueZ.v3.1.I832f2d744fe2cff0d9749e24c9ec27071fa0b4ed@changeid>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch adds the function to enable/disable the quality report
-experimental feature in the controller through MGMT_OP_SET_EXP_FEATURE.
+--===============6594575804401014271==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
 
-A user space process can enable/disable the quality report feature
-by sending a property changed signal to the bluetoothd. The bluetoothd
-can set up the signal handlers to handle the signal in a file under
-plugins/ to call this function.
+VGhpcyBpcyBhdXRvbWF0ZWQgZW1haWwgYW5kIHBsZWFzZSBkbyBub3QgcmVwbHkgdG8gdGhpcyBl
+bWFpbCEKCkRlYXIgc3VibWl0dGVyLAoKVGhhbmsgeW91IGZvciBzdWJtaXR0aW5nIHRoZSBwYXRj
+aGVzIHRvIHRoZSBsaW51eCBibHVldG9vdGggbWFpbGluZyBsaXN0LgpUaGlzIGlzIGEgQ0kgdGVz
+dCByZXN1bHRzIHdpdGggeW91ciBwYXRjaCBzZXJpZXM6ClBXIExpbms6aHR0cHM6Ly9wYXRjaHdv
+cmsua2VybmVsLm9yZy9wcm9qZWN0L2JsdWV0b290aC9saXN0Lz9zZXJpZXM9NTA3ODQ1CgotLS1U
+ZXN0IHJlc3VsdC0tLQoKVGVzdCBTdW1tYXJ5OgpDaGVja1BhdGNoICAgICAgICAgICAgICAgICAg
+ICBQQVNTICAgICAgMS4zNCBzZWNvbmRzCkdpdExpbnQgICAgICAgICAgICAgICAgICAgICAgIFBB
+U1MgICAgICAwLjM0IHNlY29uZHMKUHJlcCAtIFNldHVwIEVMTCAgICAgICAgICAgICAgUEFTUyAg
+ICAgIDQxLjk3IHNlY29uZHMKQnVpbGQgLSBQcmVwICAgICAgICAgICAgICAgICAgUEFTUyAgICAg
+IDAuMTAgc2Vjb25kcwpCdWlsZCAtIENvbmZpZ3VyZSAgICAgICAgICAgICBQQVNTICAgICAgNy4y
+OSBzZWNvbmRzCkJ1aWxkIC0gTWFrZSAgICAgICAgICAgICAgICAgIEZBSUwgICAgICAxNi45NiBz
+ZWNvbmRzCk1ha2UgQ2hlY2sgICAgICAgICAgICAgICAgICAgIEZBSUwgICAgICA1LjA0IHNlY29u
+ZHMKTWFrZSBEaXN0Y2hlY2sgICAgICAgICAgICAgICAgUEFTUyAgICAgIDIxNS4zNiBzZWNvbmRz
+CkJ1aWxkIHcvZXh0IEVMTCAtIENvbmZpZ3VyZSAgIFBBU1MgICAgICA3LjMyIHNlY29uZHMKQnVp
+bGQgdy9leHQgRUxMIC0gTWFrZSAgICAgICAgRkFJTCAgICAgIDE2LjgyIHNlY29uZHMKCkRldGFp
+bHMKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IENoZWNrUGF0Y2ggLSBQQVNT
+CkRlc2M6IFJ1biBjaGVja3BhdGNoLnBsIHNjcmlwdCB3aXRoIHJ1bGUgaW4gLmNoZWNrcGF0Y2gu
+Y29uZgoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IEdpdExpbnQgLSBQQVNT
+CkRlc2M6IFJ1biBnaXRsaW50IHdpdGggcnVsZSBpbiAuZ2l0bGludAoKIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjClRlc3Q6IFByZXAgLSBTZXR1cCBFTEwgLSBQQVNTCkRlc2M6IENsb25l
+LCBidWlsZCwgYW5kIGluc3RhbGwgRUxMCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMK
+VGVzdDogQnVpbGQgLSBQcmVwIC0gUEFTUwpEZXNjOiBQcmVwYXJlIGVudmlyb25tZW50IGZvciBi
+dWlsZAoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IEJ1aWxkIC0gQ29uZmln
+dXJlIC0gUEFTUwpEZXNjOiBDb25maWd1cmUgdGhlIEJsdWVaIHNvdXJjZSB0cmVlCgojIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogQnVpbGQgLSBNYWtlIC0gRkFJTApEZXNjOiBC
+dWlsZCB0aGUgQmx1ZVogc291cmNlIHRyZWUKT3V0cHV0Ogptb25pdG9yL3BhY2tldC5jOiBJbiBm
+dW5jdGlvbiDigJhjdXJyZW50X3ZlbmRvcl9ldnTigJk6Cm1vbml0b3IvcGFja2V0LmM6OTM3OToy
+NzogZXJyb3I6IHVudXNlZCB2YXJpYWJsZSDigJh2bmTigJkgWy1XZXJyb3I9dW51c2VkLXZhcmlh
+YmxlXQogOTM3OSB8ICBjb25zdCBzdHJ1Y3QgdmVuZG9yX2V2dCAqdm5kOwogICAgICB8ICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgXn5+CmNjMTogYWxsIHdhcm5pbmdzIGJlaW5nIHRyZWF0ZWQg
+YXMgZXJyb3JzCm1ha2VbMV06ICoqKiBbTWFrZWZpbGU6NjkzOTogbW9uaXRvci9wYWNrZXQub10g
+RXJyb3IgMQptYWtlOiAqKiogW01ha2VmaWxlOjQxMzQ6IGFsbF0gRXJyb3IgMgoKCiMjIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIwpUZXN0OiBNYWtlIENoZWNrIC0gRkFJTApEZXNjOiBSdW4g
+J21ha2UgY2hlY2snCk91dHB1dDoKbW9uaXRvci9wYWNrZXQuYzogSW4gZnVuY3Rpb24g4oCYY3Vy
+cmVudF92ZW5kb3JfZXZ04oCZOgptb25pdG9yL3BhY2tldC5jOjkzNzk6Mjc6IGVycm9yOiB1bnVz
+ZWQgdmFyaWFibGUg4oCYdm5k4oCZIFstV2Vycm9yPXVudXNlZC12YXJpYWJsZV0KIDkzNzkgfCAg
+Y29uc3Qgc3RydWN0IHZlbmRvcl9ldnQgKnZuZDsKICAgICAgfCAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIF5+fgpjYzE6IGFsbCB3YXJuaW5ncyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycwptYWtl
+WzFdOiAqKiogW01ha2VmaWxlOjY5Mzk6IG1vbml0b3IvcGFja2V0Lm9dIEVycm9yIDEKbWFrZTog
+KioqIFtNYWtlZmlsZToxMDQwNjogY2hlY2tdIEVycm9yIDIKCgojIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMKVGVzdDogTWFrZSBEaXN0Y2hlY2sgLSBQQVNTCkRlc2M6IFJ1biBkaXN0Y2hl
+Y2sgdG8gY2hlY2sgdGhlIGRpc3RyaWJ1dGlvbgoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjClRlc3Q6IEJ1aWxkIHcvZXh0IEVMTCAtIENvbmZpZ3VyZSAtIFBBU1MKRGVzYzogQ29uZmln
+dXJlIEJsdWVaIHNvdXJjZSB3aXRoICctLWVuYWJsZS1leHRlcm5hbC1lbGwnIGNvbmZpZ3VyYXRp
+b24KCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwpUZXN0OiBCdWlsZCB3L2V4dCBFTEwg
+LSBNYWtlIC0gRkFJTApEZXNjOiBCdWlsZCBCbHVlWiBzb3VyY2Ugd2l0aCAnLS1lbmFibGUtZXh0
+ZXJuYWwtZWxsJyBjb25maWd1cmF0aW9uCk91dHB1dDoKbW9uaXRvci9wYWNrZXQuYzogSW4gZnVu
+Y3Rpb24g4oCYY3VycmVudF92ZW5kb3JfZXZ04oCZOgptb25pdG9yL3BhY2tldC5jOjkzNzk6Mjc6
+IGVycm9yOiB1bnVzZWQgdmFyaWFibGUg4oCYdm5k4oCZIFstV2Vycm9yPXVudXNlZC12YXJpYWJs
+ZV0KIDkzNzkgfCAgY29uc3Qgc3RydWN0IHZlbmRvcl9ldnQgKnZuZDsKICAgICAgfCAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIF5+fgpjYzE6IGFsbCB3YXJuaW5ncyBiZWluZyB0cmVhdGVkIGFz
+IGVycm9ycwptYWtlWzFdOiAqKiogW01ha2VmaWxlOjY5Mzk6IG1vbml0b3IvcGFja2V0Lm9dIEVy
+cm9yIDEKbWFrZTogKioqIFtNYWtlZmlsZTo0MTM0OiBhbGxdIEVycm9yIDIKCgoKCi0tLQpSZWdh
+cmRzLApMaW51eCBCbHVldG9vdGgKCg==
 
-Note that the bluetoothd calls the experimental feature only when
-the quality_report_supported flag is true.
-
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
----
-
-(no changes since v1)
-
- src/adapter.c | 36 ++++++++++++++++++++++++++++++++++++
- src/adapter.h |  2 ++
- 2 files changed, 38 insertions(+)
-
-diff --git a/src/adapter.c b/src/adapter.c
-index e2873de46..829d9806b 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -9332,6 +9332,42 @@ static const struct exp_feat {
- 	EXP_FEAT(rpa_resolution_uuid, rpa_resolution_func),
- };
- 
-+/* A user space process can enable/disable the quality report feature
-+ * by sending a property changed signal to the bluetoothd. The bluetoothd
-+ * can set up the signal handlers in a file under plugins/ to call
-+ * this function.
-+ */
-+void btd_adapter_update_kernel_quality_report(uint8_t action)
-+{
-+	struct mgmt_cp_set_exp_feature cp;
-+	struct btd_adapter *adapter;
-+
-+	adapter = btd_adapter_get_default();
-+	if (!adapter) {
-+		info("No default adapter. Skip enabling quality report.");
-+		return;
-+	}
-+
-+	if (!adapter->quality_report_supported) {
-+		info("quality report feature not supported.");
-+		return;
-+	}
-+
-+	memset(&cp, 0, sizeof(cp));
-+	memcpy(cp.uuid, quality_report_uuid, 16);
-+
-+	cp.action = action;
-+	if (cp.action > 1) {
-+		error("Unexpected quality report action %u", cp.action);
-+		return;
-+	}
-+
-+	mgmt_send(adapter->mgmt, MGMT_OP_SET_EXP_FEATURE, adapter->dev_id,
-+			sizeof(cp), &cp, NULL, NULL, NULL);
-+	info("update kernel quality report default adapter %d enable %d",
-+		adapter->dev_id, cp.action);
-+}
-+
- static void read_exp_features_complete(uint8_t status, uint16_t length,
- 					const void *param, void *user_data)
- {
-diff --git a/src/adapter.h b/src/adapter.h
-index 60b5e3bcc..001f784e4 100644
---- a/src/adapter.h
-+++ b/src/adapter.h
-@@ -240,3 +240,5 @@ enum kernel_features {
- };
- 
- bool btd_has_kernel_features(uint32_t feature);
-+
-+void btd_adapter_update_kernel_quality_report(uint8_t action);
--- 
-2.32.0.93.g670b81a890-goog
-
+--===============6594575804401014271==--
