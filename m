@@ -2,43 +2,44 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC79D3BAE17
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  4 Jul 2021 19:33:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED52F3BAE7A
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  4 Jul 2021 21:02:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbhGDRft convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 4 Jul 2021 13:35:49 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:56605 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbhGDRft (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 4 Jul 2021 13:35:49 -0400
-Received: from smtpclient.apple (p5b3d2eb8.dip0.t-ipconnect.de [91.61.46.184])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 81438CECCC;
-        Sun,  4 Jul 2021 19:33:11 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: [PATCH] bluetooth/virtio_bt: Fix dereference null return value
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20210704145504.24756-1-john.wood@gmx.com>
-Date:   Sun, 4 Jul 2021 19:33:10 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        stable <stable@vger.kernel.org>,
-        Bluetooth Kernel Mailing List 
-        <linux-bluetooth@vger.kernel.org>, linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <EE77EBBE-EB8A-475D-A1DA-BC35DD14B3E0@holtmann.org>
-References: <20210704145504.24756-1-john.wood@gmx.com>
+        id S229817AbhGDTFE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 4 Jul 2021 15:05:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45232 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229724AbhGDTFE (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 4 Jul 2021 15:05:04 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4CEE6613E2;
+        Sun,  4 Jul 2021 19:02:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1625425347;
+        bh=C1S3o3r6K16gvr7br8hFJWysya72Q68pIr48FMzjAWc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PRh+Mq0I2VF/0nNEoKBVMJ/BUU7x1RvdNnhdSz5PfWstKP85q7Rp/wu2TJ6q2Cy/o
+         8LCQTJo6YichiCmsS+An8TCxoK7mXWz7VJusw/gL/sIdqUmA8Iep5LBI+m6tt8tCox
+         TrNbT7cSwygQ9fEllp2vcMeXxGERkPwblrp+ECxI=
+Date:   Sun, 4 Jul 2021 21:02:25 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
 To:     John Wood <john.wood@gmx.com>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        stable@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bluetooth/virtio_bt: Fix dereference null return value
+Message-ID: <YOIFwdlqdEldzg6B@kroah.com>
+References: <20210704145504.24756-1-john.wood@gmx.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210704145504.24756-1-john.wood@gmx.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi John,
-
+On Sun, Jul 04, 2021 at 04:55:04PM +0200, John Wood wrote:
 > The alloc_skb function returns NULL on error. So, test this case and
 > avoid a NULL dereference (skb->data).
 > 
@@ -46,37 +47,15 @@ Hi John,
 > Fixes: afd2daa26c7ab ("Bluetooth: Add support for virtio transport driver")
 > Signed-off-by: John Wood <john.wood@gmx.com>
 > ---
-> drivers/bluetooth/virtio_bt.c | 2 ++
-> 1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
-> index c804db7e90f8..5f82574236c0 100644
-> --- a/drivers/bluetooth/virtio_bt.c
-> +++ b/drivers/bluetooth/virtio_bt.c
-> @@ -34,6 +34,8 @@ static int virtbt_add_inbuf(struct virtio_bluetooth *vbt)
-> 	int err;
-> 
-> 	skb = alloc_skb(1000, GFP_KERNEL);
-> +	if (!skb)
-> +		return -ENOMEM;
-> 	sg_init_one(sg, skb->data, 1000);
+>  drivers/bluetooth/virtio_bt.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-this is already fixed.
 
-Author: Colin Ian King <colin.king@canonical.com>
-Date:   Fri Apr 9 17:53:14 2021 +0100
+<formletter>
 
-    Bluetooth: virtio_bt: add missing null pointer check on alloc_skb call return
-    
-    The call to alloc_skb with the GFP_KERNEL flag can return a null sk_buff
-    pointer, so add a null check to avoid any null pointer deference issues.
-    
-    Addresses-Coverity: ("Dereference null return value")
-    Fixes: afd2daa26c7a ("Bluetooth: Add support for virtio transport driver")
-    Signed-off-by: Colin Ian King <colin.king@canonical.com>
-    Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+This is not the correct way to submit patches for inclusion in the
+stable kernel tree.  Please read:
+    https://www.kernel.org/doc/html/latest/process/stable-kernel-rules.html
+for how to do this properly.
 
-Regards
-
-Marcel
-
+</formletter>
