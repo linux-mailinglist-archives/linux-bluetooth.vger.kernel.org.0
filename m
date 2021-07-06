@@ -2,53 +2,122 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 771BC3BB7C3
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Jul 2021 09:24:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D6C33BC581
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 06:32:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230053AbhGEH1H convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 5 Jul 2021 03:27:07 -0400
-Received: from mail.dominica.gov.dm ([199.127.198.52]:53270 "EHLO
-        dominica.gov.dm" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S230036AbhGEH1H (ORCPT
+        id S229931AbhGFEes (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 6 Jul 2021 00:34:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38624 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229730AbhGFEer (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 5 Jul 2021 03:27:07 -0400
-X-Greylist: delayed 17103 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Jul 2021 03:27:07 EDT
-Received: from [37.49.225.131] (37.49.225.131) by mail.dominica.gov.dm
- (172.24.100.18) with Microsoft SMTP Server (TLS) id 14.3.123.3; Sun, 4 Jul
- 2021 22:39:26 -0400
-Content-Type: text/plain; charset="iso-8859-1"
+        Tue, 6 Jul 2021 00:34:47 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04EA1C061574
+        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Jul 2021 21:32:08 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id 62so12149013pgf.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 05 Jul 2021 21:32:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ib/d+Tt+cpVasBtedh93d/vVgOfg80bhX5NQ+5O6kmc=;
+        b=HGG6zbJpqANTNm6+D5wK0gmxOEQACUgF+ajwAadjXWKUeQMi1Pabkx1V2sgDgRCYCP
+         cQaAD2XxlrglJONGKyKOeifMoguRZ7Tq6TDCyLJxW/k6LfFi6subqeLDv6iJHpfiwDg1
+         wSGdYXTwHSdgtSXV1c/1DCo1WX44LuMmis/oxxLhR4jMYmL6Hsfz0XQhbHVPuqGzME2q
+         t7drI6GM08AdGH0R3A541aZUiw9FtcFeu8iNKVt9GwQywMBJTAgVqF2hrK8q3xDbcsO6
+         3MVWNSQ1P47/sGK/rJQpVSG0HpG945xL4E1/IIWtmxaEcwrPJgIEbkNxy5jQ53m9q97f
+         Voxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ib/d+Tt+cpVasBtedh93d/vVgOfg80bhX5NQ+5O6kmc=;
+        b=tUeRWagtKmRpScx0V0uUqxxk3C4Xa/e5ytIy+/cKifoXJS9AwHnZrLn+tmcqv4U3aD
+         gNmsJPOGVQ87/2BePKxEWLmBk+6GzPZqIuhC9shBoex/fwhICDUYdS1fOAkNZeQGmE6n
+         GHk5Zxf/wtysa5JZt3M2hLVJFAn9qeZwHQIUvfDWXhpxF3ur1D3UrM6VAqtg+9abp0RN
+         bXyZxA/5KIb9fAz1quse19xr0fxRm1XBWJbHGF6KAzuFhVxQ6EJ1NEtecamKDc1+Y+1K
+         kY3eE8mLPZoFgeK8UozB+xoP9axRZyM6wdLcAT2jTH/ahm/hFhpzohGWtmUHxLDqK/r7
+         KjUQ==
+X-Gm-Message-State: AOAM5332Q8MmvOJNqFSnbvCbhNKD5TN4U9W1vfMb/x62jFSdnEu+b9v2
+        jZB78swqN7+2D8cuHKzd2kyrGXiTJ4rpdQ==
+X-Google-Smtp-Source: ABdhPJx7I0AV5kMpCAZG/njUXiatOzBqq8e6OA7hXMVxsinHqVaaQ4Oon31p7riUFf/OrPIx7zTYpw==
+X-Received: by 2002:a05:6a00:a1e:b029:303:56b5:414b with SMTP id p30-20020a056a000a1eb029030356b5414bmr18380651pfh.48.1625545928034;
+        Mon, 05 Jul 2021 21:32:08 -0700 (PDT)
+Received: from localhost.localdomain (c-76-115-118-196.hsd1.or.comcast.net. [76.115.118.196])
+        by smtp.gmail.com with ESMTPSA id i18sm7233454pgb.83.2021.07.05.21.32.06
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Jul 2021 21:32:07 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [RFC BlueZ PATCH v5 1/2] emulator/btdev: Update the white list and resolving list size
+Date:   Mon,  5 Jul 2021 21:32:04 -0700
+Message-Id: <20210706043205.171122-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Please take note..
-To:     <linux-bluetooth@vger.kernel.org>
-From:   "Mr. Abel Taka" <burnettec@dominica.gov.dm>
-Date:   Mon, 5 Jul 2021 04:39:17 +0200
-Reply-To: <abeltaka54@hotmail.com>
-Message-ID: <e55713fe-4e68-429f-a817-86e48e6c3954@EXCSVRTHR.gocd.mofpdomgov.gov>
-X-Originating-IP: [37.49.225.131]
-X-EsetResult: clean, is OK
-X-EsetId: 37303A293608D86E657767
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Email: abeltaka54@hotmail.com
-Telephone: +27837279295
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-Hello,
-My Name is Mr Abel Taka the Chief Operating Officer of Standard Bank of South Africa and i am in need of a reliable foreigner to carry out a $12.2 million deal.
-If interested, reply to me for more detailed information.
+This patch updates the white list and resolving list size to small
+number.
+Also, it update the size of white list and resolving list to 1 more than
+actual size when it is read via HCI read size commands. This is used to
+simulate the case when the list is out of space.
 
-Thanks.
+Note that the read list size may not represent the current actual list
+size depends on the device vendor.
+---
+ emulator/btdev.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-Abel Taka.
+diff --git a/emulator/btdev.c b/emulator/btdev.c
+index a7fda2c89..75cca7549 100644
+--- a/emulator/btdev.c
++++ b/emulator/btdev.c
+@@ -33,8 +33,8 @@
+ #include "monitor/bt.h"
+ #include "btdev.h"
+ 
+-#define WL_SIZE			16
+-#define RL_SIZE			16
++#define WL_SIZE			3
++#define RL_SIZE			3
+ #define CIS_SIZE		3
+ 
+ #define has_bredr(btdev)	(!((btdev)->features[4] & 0x20))
+@@ -3404,7 +3404,12 @@ static int cmd_read_wl_size(struct btdev *dev, const void *data, uint8_t len)
+ 	struct bt_hci_rsp_le_read_white_list_size rsp;
+ 
+ 	rsp.status = BT_HCI_ERR_SUCCESS;
+-	rsp.size = WL_SIZE;
++	/* The size is not fixed and the actual list size can be different from
++	 * the returned size here.
++	 * In order to test such cases, return more than allocated size, and
++	 * HCI Add device cmd will return the Memory Capacity Exceeded(0x07)
++	 */
++	rsp.size = WL_SIZE + 1;
+ 	cmd_complete(dev, BT_HCI_CMD_LE_READ_WHITE_LIST_SIZE, &rsp,
+ 						sizeof(rsp));
+ 
+@@ -3689,7 +3694,12 @@ static int cmd_read_rl_size(struct btdev *dev, const void *data, uint8_t len)
+ 	struct bt_hci_rsp_le_read_resolv_list_size rsp;
+ 
+ 	rsp.status = BT_HCI_ERR_SUCCESS;
+-	rsp.size = RL_SIZE;
++	/* The size is not fixed and the actual list size can be different from
++	 * the returned size here.
++	 * In order to test such cases, return more than allocated size, and
++	 * HCI Add device cmd will return the Memory Capacity Exceeded(0x07)
++	 */
++	rsp.size = RL_SIZE + 1;
+ 
+ 	cmd_complete(dev, BT_HCI_CMD_LE_READ_RESOLV_LIST_SIZE,
+ 							&rsp, sizeof(rsp));
+-- 
+2.26.3
 
-
-
-
-________________________________
-*********************ATTENTION*********************
-
-This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you are not the named addressee you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately via e-mail if you have received this e-mail by mistake and delete this e-mail from your system. If you are not the intended recipient you are notified that disclosing, copying, distributing or taking any action in reliance on the contents of this information is strictly prohibited.
