@@ -2,39 +2,41 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BFFF23BD334
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 13:48:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FC6B3BD337
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 13:48:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238955AbhGFLtW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 6 Jul 2021 07:49:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47606 "EHLO mail.kernel.org"
+        id S239088AbhGFLtZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 6 Jul 2021 07:49:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47596 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236950AbhGFLfs (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 6 Jul 2021 07:35:48 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CBBFA61C47;
-        Tue,  6 Jul 2021 11:24:49 +0000 (UTC)
+        id S237253AbhGFLgD (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 6 Jul 2021 07:36:03 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 700F861ED3;
+        Tue,  6 Jul 2021 11:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625570690;
-        bh=j7iSZBJwnTLRtWg2AvHVb299IpnfQTPkBQMjzpSfV5g=;
+        s=k20201202; t=1625570788;
+        bh=YKDKaRGl7fO7ELmzr9hBkOFhBeqnWCkO4x0aW4zfCPE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=supC/HVUAQ4pdpzVnr7s6tc2jbpuuJISALAJk0npnBnXIXajBiCYKrAQY1BsOWr5v
-         X7nZv2qKCT+EAX/a1YAAQrN7KVTrtRX1PoxpZWmJTVcaEi8Sw/q7wqW1HQwtjmiuyU
-         lVTics+Z8rOukFuvNulsry3kMpdnsDJ4ZI4QonEiCTw3TvUPV38kZpUw1ZVuHQmMm+
-         tZpg37QU8GOJgvGuLUIAjNAMzcYsq5xas7IDIRvFK3EMeNeFArn0oL0aqOsNCRVgVE
-         h930310bIctDocZ3xfxk/NW4d8bqpXMzGZij7yPYYd3NUX6jwZm1H0npzhG5qbvDwN
-         wTQ03iqfdt0Jg==
+        b=LV5S6k/nPF7tUbmUa1I+tjokFUrBsh9V/vgIDhZ/o/hF5Iw35csRC6Y4HUanRDH7L
+         M9Dr9DXL/f5S+gGjO3LcwUPdDTBEFnSXYdayJODuFzFa2qfcGUgUtj3A4tM8S+YhZS
+         tJIRebgctlR+T0AyrHxhxVDjNsMhtt3labW8nAoVCMR9vYINSDQxNBhz0a7voolQRi
+         9EwAyqU9/3V/4+ksZd9Lh9oX0NsgNxCoMpK/1PORj5JIp7EUw+oRsgn/s2SYzhMO1m
+         VHGxCke2/N/0EHKj3vZnOHOS60wnscEXpXOw47pHcRM/2DgQh/IQ3mHLiiWxbtWVc4
+         1JvdOpLfy9iFQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>,
+Cc:     "mark-yw.chen" <mark-yw.chen@mediatek.com>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 129/137] Bluetooth: mgmt: Fix the command returns garbage parameter value
-Date:   Tue,  6 Jul 2021 07:21:55 -0400
-Message-Id: <20210706112203.2062605-129-sashal@kernel.org>
+        linux-bluetooth@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.4 67/74] Bluetooth: btusb: Fixed too many in-token issue for Mediatek Chip.
+Date:   Tue,  6 Jul 2021 07:24:55 -0400
+Message-Id: <20210706112502.2064236-67-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210706112203.2062605-1-sashal@kernel.org>
-References: <20210706112203.2062605-1-sashal@kernel.org>
+In-Reply-To: <20210706112502.2064236-1-sashal@kernel.org>
+References: <20210706112502.2064236-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -43,35 +45,48 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tedd Ho-Jeong An <tedd.an@intel.com>
+From: "mark-yw.chen" <mark-yw.chen@mediatek.com>
 
-[ Upstream commit 02ce2c2c24024aade65a8d91d6a596651eaf2d0a ]
+[ Upstream commit 8454ed9ff9647e31e061fb5eb2e39ce79bc5e960 ]
 
-When the Get Device Flags command fails, it returns the error status
-with the parameters filled with the garbage values. Although the
-parameters are not used, it is better to fill with zero than the random
-values.
+This patch reduce in-token during download patch procedure.
+Don't submit urb for polling event before sending hci command.
 
-Signed-off-by: Tedd Ho-Jeong An <tedd.an@intel.com>
+Signed-off-by: mark-yw.chen <mark-yw.chen@mediatek.com>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btusb.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index b20944e6d274..8c55254558b8 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -4038,6 +4038,8 @@ static int get_device_flags(struct sock *sk, struct hci_dev *hdev, void *data,
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index b467fd05c5e8..27ff7a6e2fc9 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2700,11 +2700,6 @@ static int btusb_mtk_hci_wmt_sync(struct hci_dev *hdev,
+ 	struct btmtk_wmt_hdr *hdr;
+ 	int err;
  
- 	hci_dev_lock(hdev);
+-	/* Submit control IN URB on demand to process the WMT event */
+-	err = btusb_mtk_submit_wmt_recv_urb(hdev);
+-	if (err < 0)
+-		return err;
+-
+ 	/* Send the WMT command and wait until the WMT event returns */
+ 	hlen = sizeof(*hdr) + wmt_params->dlen;
+ 	if (hlen > 255)
+@@ -2726,6 +2721,11 @@ static int btusb_mtk_hci_wmt_sync(struct hci_dev *hdev,
+ 		return err;
+ 	}
  
-+	memset(&rp, 0, sizeof(rp));
++	/* Submit control IN URB on demand to process the WMT event */
++	err = btusb_mtk_submit_wmt_recv_urb(hdev);
++	if (err < 0)
++		return err;
 +
- 	if (cp->addr.type == BDADDR_BREDR) {
- 		br_params = hci_bdaddr_list_lookup_with_flags(&hdev->whitelist,
- 							      &cp->addr.bdaddr,
+ 	/* The vendor specific WMT commands are all answered by a vendor
+ 	 * specific event and will have the Command Status or Command
+ 	 * Complete as with usual HCI command flow control.
 -- 
 2.30.2
 
