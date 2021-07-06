@@ -2,39 +2,39 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A3EA33BD430
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 14:04:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 446A93BD429
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 14:04:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240628AbhGFMFY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 6 Jul 2021 08:05:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47556 "EHLO mail.kernel.org"
+        id S240239AbhGFMFR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 6 Jul 2021 08:05:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47624 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235260AbhGFLgd (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 6 Jul 2021 07:36:33 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 342E561F29;
-        Tue,  6 Jul 2021 11:29:29 +0000 (UTC)
+        id S238098AbhGFLiv (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 6 Jul 2021 07:38:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5617161F99;
+        Tue,  6 Jul 2021 11:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625570969;
-        bh=grkEjosmlW7zlW8HPokuK+9bc9XrMK0ts/pfTBaXc38=;
+        s=k20201202; t=1625571006;
+        bh=GezdSB+vhv6+73BBnXMo04oga3ezmusXwbjqm0pi+vw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UyDgi2PEEG1dCGLX+LB3uTnYJKUN7qSc/BsowVgcd3OxoTa1wcIpZoi5CmJ+az1in
-         wSlGvdZJ9xsNm3A/KXZbc+pp7zuE/CkGYj30PRCH3waKXfLWusbL/8ao8lsiOWW4Bg
-         3ePsUzXjoaFJ4XAO5c80h3+dodherlmEYjoORVb4X0tH7nOtaiBuKP5yk6HRjFiVXs
-         0tKrJR1mHlFbHgVGu8GhpcQX2y80t4rvscMOshTiDC1Jdyro5W8paHRYjEut+o1iMp
-         oJv6r6hOt6AJQf0Z1SqIVCaEWV5Qn9kJAgZGdbs7XeJyp+CHZ7lztqskcRZTS+IF25
-         FCEYTk7s1rwIg==
+        b=miXf9f+bocDPTixIzZs9yxNKxqwiBuVH9yHgbYCXWuP1DKO30BEJ7CRhLw/A6Zivt
+         GIilx2PJOobw1xwOrtM3wDkvqUjKeJA2Irsa83RWyE6xTy3XMJFwQpzDfSz3sbUPpe
+         xUIFJcyvOC7G+eh0lQzGo5eCQL/8fO0i1H0gv0NBTGZOruHEZUZsQXl4hZioR7W113
+         nYqD9tPnhwnlp8jzAZVLqsHQtCfZlf/CYe3QRYJDlMg4AnoYx0xrnnAFG4iOKBpEYh
+         mQ0OOpHJyJzw7hc/4KK9JZUKL1lBGg29oWyB6h0DZwhtvdlvVPIgk3aIAWbtqNXdMT
+         eS9CiSYzmrDDw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Tim Jiang <tjiang@codeaurora.org>,
+Cc:     Yu Liu <yudiliu@google.com>, Miao-chen Chou <mcchou@chromium.org>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 34/35] Bluetooth: btusb: fix bt fiwmare downloading failure issue for qca btsoc.
-Date:   Tue,  6 Jul 2021 07:28:46 -0400
-Message-Id: <20210706112848.2066036-34-sashal@kernel.org>
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.4 28/31] Bluetooth: Fix the HCI to MGMT status conversion table
+Date:   Tue,  6 Jul 2021 07:29:28 -0400
+Message-Id: <20210706112931.2066397-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210706112848.2066036-1-sashal@kernel.org>
-References: <20210706112848.2066036-1-sashal@kernel.org>
+In-Reply-To: <20210706112931.2066397-1-sashal@kernel.org>
+References: <20210706112931.2066397-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -43,37 +43,42 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tim Jiang <tjiang@codeaurora.org>
+From: Yu Liu <yudiliu@google.com>
 
-[ Upstream commit 4f00bfb372674d586c4a261bfc595cbce101fbb6 ]
+[ Upstream commit 4ef36a52b0e47c80bbfd69c0cce61c7ae9f541ed ]
 
-This is btsoc timing issue, after host start to downloading bt firmware,
-ep2 need time to switch from function acl to function dfu, so host add
-20ms delay as workaround.
+0x2B, 0x31 and 0x33 are reserved for future use but were not present in
+the HCI to MGMT conversion table, this caused the conversion to be
+incorrect for the HCI status code greater than 0x2A.
 
-Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+Signed-off-by: Yu Liu <yudiliu@google.com>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/bluetooth/mgmt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 4e3b24a0511f..30c09b9ddbf0 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2508,6 +2508,11 @@ static int btusb_setup_qca_download_fw(struct hci_dev *hdev,
- 	sent += size;
- 	count -= size;
- 
-+	/* ep2 need time to switch from function acl to function dfu,
-+	 * so we add 20ms delay here.
-+	 */
-+	msleep(20);
-+
- 	while (count) {
- 		size = min_t(size_t, count, QCA_DFU_PACKET_LEN);
- 
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index ee761fb09559..4a95c89d8506 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -212,12 +212,15 @@ static u8 mgmt_status_table[] = {
+ 	MGMT_STATUS_TIMEOUT,		/* Instant Passed */
+ 	MGMT_STATUS_NOT_SUPPORTED,	/* Pairing Not Supported */
+ 	MGMT_STATUS_FAILED,		/* Transaction Collision */
++	MGMT_STATUS_FAILED,		/* Reserved for future use */
+ 	MGMT_STATUS_INVALID_PARAMS,	/* Unacceptable Parameter */
+ 	MGMT_STATUS_REJECTED,		/* QoS Rejected */
+ 	MGMT_STATUS_NOT_SUPPORTED,	/* Classification Not Supported */
+ 	MGMT_STATUS_REJECTED,		/* Insufficient Security */
+ 	MGMT_STATUS_INVALID_PARAMS,	/* Parameter Out Of Range */
++	MGMT_STATUS_FAILED,		/* Reserved for future use */
+ 	MGMT_STATUS_BUSY,		/* Role Switch Pending */
++	MGMT_STATUS_FAILED,		/* Reserved for future use */
+ 	MGMT_STATUS_FAILED,		/* Slot Violation */
+ 	MGMT_STATUS_FAILED,		/* Role Switch Failed */
+ 	MGMT_STATUS_INVALID_PARAMS,	/* EIR Too Large */
 -- 
 2.30.2
 
