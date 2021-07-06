@@ -2,39 +2,41 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 644503BD345
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 13:48:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D02E3BD42E
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 14:04:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241021AbhGFLts (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 6 Jul 2021 07:49:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47608 "EHLO mail.kernel.org"
+        id S240625AbhGFMFX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 6 Jul 2021 08:05:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47560 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237614AbhGFLgT (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 6 Jul 2021 07:36:19 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2F1F461F50;
-        Tue,  6 Jul 2021 11:28:43 +0000 (UTC)
+        id S236904AbhGFLfq (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 6 Jul 2021 07:35:46 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 84D8361C31;
+        Tue,  6 Jul 2021 11:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625570923;
-        bh=flRU1/nWCDRQ6R0bshuPatNPWKM0h0EUK/k/aA8oMCQ=;
+        s=k20201202; t=1625570680;
+        bh=1gVbLL1kI2FGGL9Jt893bMZph5qvrOclaJZR6CxvTRM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=a9YVj14tZ60OPO0qN2cgr3yzVJKu6W01MZsDLetMjvU98IrWJ/K6LycT7Ypy7B/x4
-         nBXHa1Ys4L1M1A9sxhoARZh67d5YyQRpSVebGtoipHaCN4QuSBZt0k/tHQsaouftq3
-         Wru3zy+2tXu0htq20DrKxatJn56T4WY2sc+1kigVBv3ytNlZ/rLLgZfsGtP9sxodoc
-         cHEfdxhh0MkNIucCG0cvGpKBLQfhO4V9FdUJaDntYdNwX0iD81bpTSJ9RKAgYabmzY
-         lBHZWk0gKaNiwJVaG6xUzqqb6Wj0cD46Mt2+aUJrhRYky9lWMWb1DRRsxGLuPqkNdl
-         1vh7X2NxLx7dg==
+        b=q4fehHX1kQ1ps447hEqoc2FllCoEa7EJvTWz5HYhlSkbvCsLGdrkkBqtjXexffPNs
+         2OE2nJPBQJtwqWy4UwJhQlsgyfhIM2+WN309aRsrc52qIbuXDkdxvkO3BKPGTDrMgU
+         sWV4+zoZ8EbIvLdQ9u90sRgn00TxsAT0Ye2QZS2GtPGF5+LU6l0qOo9xsODxDO/B3d
+         5gD6VS1UzYmOS2sGVVI2eFS7OevHNo14OnA+tox/tFhdTseHS1hpxbFCp5cbmQP0XZ
+         wo94gqqlvqI7Ydg9W5zzzlZfhSi7zGl/2mbwvyn16h8iEgwxPv0cR3NWQhtgHhAcH+
+         fi7D59X2xfl9Q==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Tim Jiang <tjiang@codeaurora.org>,
+Cc:     "mark-yw.chen" <mark-yw.chen@mediatek.com>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 43/45] Bluetooth: btusb: fix bt fiwmare downloading failure issue for qca btsoc.
-Date:   Tue,  6 Jul 2021 07:27:47 -0400
-Message-Id: <20210706112749.2065541-43-sashal@kernel.org>
+        linux-bluetooth@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.10 121/137] Bluetooth: btusb: Fixed too many in-token issue for Mediatek Chip.
+Date:   Tue,  6 Jul 2021 07:21:47 -0400
+Message-Id: <20210706112203.2062605-121-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210706112749.2065541-1-sashal@kernel.org>
-References: <20210706112749.2065541-1-sashal@kernel.org>
+In-Reply-To: <20210706112203.2062605-1-sashal@kernel.org>
+References: <20210706112203.2062605-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -43,37 +45,48 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tim Jiang <tjiang@codeaurora.org>
+From: "mark-yw.chen" <mark-yw.chen@mediatek.com>
 
-[ Upstream commit 4f00bfb372674d586c4a261bfc595cbce101fbb6 ]
+[ Upstream commit 8454ed9ff9647e31e061fb5eb2e39ce79bc5e960 ]
 
-This is btsoc timing issue, after host start to downloading bt firmware,
-ep2 need time to switch from function acl to function dfu, so host add
-20ms delay as workaround.
+This patch reduce in-token during download patch procedure.
+Don't submit urb for polling event before sending hci command.
 
-Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+Signed-off-by: mark-yw.chen <mark-yw.chen@mediatek.com>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/bluetooth/btusb.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 424f399cc79b..f2e84e09c970 100644
+index b1f0b13cc8bc..8195333e5665 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -2614,6 +2614,11 @@ static int btusb_setup_qca_download_fw(struct hci_dev *hdev,
- 	sent += size;
- 	count -= size;
+@@ -2963,11 +2963,6 @@ static int btusb_mtk_hci_wmt_sync(struct hci_dev *hdev,
+ 	struct btmtk_wmt_hdr *hdr;
+ 	int err;
  
-+	/* ep2 need time to switch from function acl to function dfu,
-+	 * so we add 20ms delay here.
-+	 */
-+	msleep(20);
+-	/* Submit control IN URB on demand to process the WMT event */
+-	err = btusb_mtk_submit_wmt_recv_urb(hdev);
+-	if (err < 0)
+-		return err;
+-
+ 	/* Send the WMT command and wait until the WMT event returns */
+ 	hlen = sizeof(*hdr) + wmt_params->dlen;
+ 	if (hlen > 255)
+@@ -2989,6 +2984,11 @@ static int btusb_mtk_hci_wmt_sync(struct hci_dev *hdev,
+ 		return err;
+ 	}
+ 
++	/* Submit control IN URB on demand to process the WMT event */
++	err = btusb_mtk_submit_wmt_recv_urb(hdev);
++	if (err < 0)
++		return err;
 +
- 	while (count) {
- 		size = min_t(size_t, count, QCA_DFU_PACKET_LEN);
- 
+ 	/* The vendor specific WMT commands are all answered by a vendor
+ 	 * specific event and will have the Command Status or Command
+ 	 * Complete as with usual HCI command flow control.
 -- 
 2.30.2
 
