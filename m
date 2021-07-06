@@ -2,78 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68DDD3BD42A
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 14:04:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 394DE3BD42D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 14:04:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240283AbhGFMFU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 6 Jul 2021 08:05:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47578 "EHLO mail.kernel.org"
+        id S240617AbhGFMFX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 6 Jul 2021 08:05:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33316 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235825AbhGFLi5 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 6 Jul 2021 07:38:57 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E75C461F9E;
-        Tue,  6 Jul 2021 11:30:07 +0000 (UTC)
+        id S237525AbhGFL63 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 6 Jul 2021 07:58:29 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B6F8861179;
+        Tue,  6 Jul 2021 11:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625571008;
-        bh=1sBETN6rIbaTwHUtC11AQYjCwr1sxghOp+CJdkx7l4I=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Lb63hGEAA/1fILhbOpP8m4IYz68j+mm8jAe5s9Ns5ZgJRbO2e0VRN9T6a5HdT+J77
-         wMejnBrBtf8D3puNKomO3gW5DxWE7WsLcSUHdhUA8HbSAKDonlOnkj0xtsk+NyoZtZ
-         bqAjxAiu2Lk8dh+CT7kI2AoZzuVpDR9ZxFnzqWuznwsNIUSZidDezUelSuKOSMnWLE
-         KNgeJABVC74GrlL80ijOzPAq2z4yPFDEdVLgURYFyna2JpyUvQq++uaIzNWNlsAu7W
-         dMliXDQiXVkuydHGSMhEUJtSDqMuvTk0OOor3+8q6xk7/28o15DK8m++Qq6vQ9zMAG
-         WBeACu6APw6ag==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Tim Jiang <tjiang@codeaurora.org>,
+        s=k20201202; t=1625572549;
+        bh=JXmBsXYXG9KG7U5AjlAUHgTa15XndAwh6xpRx35ssAo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=JbOfwmVF4OkhS5vWEeG1/y6EzbbSwmaGz+O2PUgdxW8i2J5XsnE7M6+ypvPxZiLBM
+         3klouA+VESkfgGkHYyVBVx5HAXAMNeDdkwIVUlkmZB4SfoyyvNJwuuVLQZl1sl9nsf
+         0qQ7VeJLZSks0CiTqNdrnJgOXjaWxCHUW29odk/ZYWRSc+mczvm80gi1qDhbm2bNPq
+         XWfnvdeAJB7ZdvMhgvuqLB+U0egmAIOso0LHfx4nboab6JTrLN15TfrTVD7LgBqzzZ
+         nemt4h8ofc9CIUk76G2oifZwmbZ+SizUH2SPthodth6U5RWSM+ykcrqZnKpIuDWzz+
+         uyTdLgzFUAD1w==
+Date:   Tue, 6 Jul 2021 12:55:17 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Peter Chen <peter.chen@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Marcel Holtmann <marcel@holtmann.org>,
-        Sasha Levin <sashal@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 30/31] Bluetooth: btusb: fix bt fiwmare downloading failure issue for qca btsoc.
-Date:   Tue,  6 Jul 2021 07:29:30 -0400
-Message-Id: <20210706112931.2066397-30-sashal@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210706112931.2066397-1-sashal@kernel.org>
-References: <20210706112931.2066397-1-sashal@kernel.org>
+Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
+ powerup sequence
+Message-ID: <20210706115517.GB4529@sirena.org.uk>
+References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org>
+ <20210621223141.1638189-3-dmitry.baryshkov@linaro.org>
+ <CAPDyKFo6dmjw0TnaK7=35dq5Si_6YYpeeSa=gU++1od7WkQZ7A@mail.gmail.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="24zk1gE8NUlDmwG9"
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFo6dmjw0TnaK7=35dq5Si_6YYpeeSa=gU++1od7WkQZ7A@mail.gmail.com>
+X-Cookie: Some restrictions may apply.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tim Jiang <tjiang@codeaurora.org>
 
-[ Upstream commit 4f00bfb372674d586c4a261bfc595cbce101fbb6 ]
+--24zk1gE8NUlDmwG9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This is btsoc timing issue, after host start to downloading bt firmware,
-ep2 need time to switch from function acl to function dfu, so host add
-20ms delay as workaround.
+On Tue, Jul 06, 2021 at 09:54:03AM +0200, Ulf Hansson wrote:
+> On Tue, 22 Jun 2021 at 00:32, Dmitry Baryshkov
 
-Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/bluetooth/btusb.c | 5 +++++
- 1 file changed, 5 insertions(+)
+> > Qualcomm QCA6390/1 is a family of WiFi + Bluetooth SoCs, with BT part
+> > being controlled through the UART and WiFi being present on PCIe
+> > bus. Both blocks share common power sources. Add device driver handling
+> > power sequencing of QCA6390/1.
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 7039a58a6a4e..3d62f17111cb 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2555,6 +2555,11 @@ static int btusb_setup_qca_download_fw(struct hci_dev *hdev,
- 	sent += size;
- 	count -= size;
- 
-+	/* ep2 need time to switch from function acl to function dfu,
-+	 * so we add 20ms delay here.
-+	 */
-+	msleep(20);
-+
- 	while (count) {
- 		size = min_t(size_t, count, QCA_DFU_PACKET_LEN);
- 
--- 
-2.30.2
+> Power sequencing of discoverable buses have been discussed several
+> times before at LKML. The last attempt [1] I am aware of, was in 2017
+> from Peter Chen. I don't think there is a common solution, yet.
 
+This feels a bit different to the power sequencing problem - it's not
+exposing the individual inputs to the device but rather is a block that
+manages everything but needs a bit of a kick to get things going (I'd
+guess that with ACPI it'd be triggered via AML).  It's in the same space
+but it's not quite the same issue I think, something that can handle
+control of the individual resources might still struggle with this.
+
+--24zk1gE8NUlDmwG9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmDkRKQACgkQJNaLcl1U
+h9A9oAf/QENRZjXRFVPDjWc5SZZ1jRLz0JmogYRWNMICgbOtz1VBdXoNW/Lww3pt
+dke5UKjZ+XQkNR3aavlJL+PatLcw5KcLLIM7q6seqDtyV3oesMqPe4eHpf7E8niH
+RlrkwxoSHb3r7/tYFr2TNDxL1ZuQKEOT1Bn1tcNP4krJ4sa2M4sYmM7XV4VdFlkE
+/ymTDt9FrU/lQZHkT414lAI615+uJqFaRn17h6TnrC0MhELJ/BoLo62tBWaO0gtv
+sey70r+PcIRzS6p/iA8i+HHNTfR5EiVnBF3tVidPeOwt8Haj8TfhdDGbvzeAuaDc
+sia1bg8tC8v+IFLkdkwWFG7TzvN8ZQ==
+=L8x2
+-----END PGP SIGNATURE-----
+
+--24zk1gE8NUlDmwG9--
