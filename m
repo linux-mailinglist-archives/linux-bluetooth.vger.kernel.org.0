@@ -2,98 +2,125 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 394DE3BD42D
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Jul 2021 14:04:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5507D3BE5C9
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Jul 2021 11:43:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240617AbhGFMFX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 6 Jul 2021 08:05:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33316 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237525AbhGFL63 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 6 Jul 2021 07:58:29 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B6F8861179;
-        Tue,  6 Jul 2021 11:55:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625572549;
-        bh=JXmBsXYXG9KG7U5AjlAUHgTa15XndAwh6xpRx35ssAo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JbOfwmVF4OkhS5vWEeG1/y6EzbbSwmaGz+O2PUgdxW8i2J5XsnE7M6+ypvPxZiLBM
-         3klouA+VESkfgGkHYyVBVx5HAXAMNeDdkwIVUlkmZB4SfoyyvNJwuuVLQZl1sl9nsf
-         0qQ7VeJLZSks0CiTqNdrnJgOXjaWxCHUW29odk/ZYWRSc+mczvm80gi1qDhbm2bNPq
-         XWfnvdeAJB7ZdvMhgvuqLB+U0egmAIOso0LHfx4nboab6JTrLN15TfrTVD7LgBqzzZ
-         nemt4h8ofc9CIUk76G2oifZwmbZ+SizUH2SPthodth6U5RWSM+ykcrqZnKpIuDWzz+
-         uyTdLgzFUAD1w==
-Date:   Tue, 6 Jul 2021 12:55:17 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Peter Chen <peter.chen@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
+        id S230460AbhGGJqe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 7 Jul 2021 05:46:34 -0400
+Received: from www262.sakura.ne.jp ([202.181.97.72]:55757 "EHLO
+        www262.sakura.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230498AbhGGJqd (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 7 Jul 2021 05:46:33 -0400
+Received: from fsav411.sakura.ne.jp (fsav411.sakura.ne.jp [133.242.250.110])
+        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTP id 1679hawo045341;
+        Wed, 7 Jul 2021 18:43:36 +0900 (JST)
+        (envelope-from penguin-kernel@i-love.sakura.ne.jp)
+Received: from www262.sakura.ne.jp (202.181.97.72)
+ by fsav411.sakura.ne.jp (F-Secure/fsigk_smtp/550/fsav411.sakura.ne.jp);
+ Wed, 07 Jul 2021 18:43:36 +0900 (JST)
+X-Virus-Status: clean(F-Secure/fsigk_smtp/550/fsav411.sakura.ne.jp)
+Received: from [192.168.1.9] (M106072142033.v4.enabler.ne.jp [106.72.142.33])
+        (authenticated bits=0)
+        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTPSA id 1679haQ0045338
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 7 Jul 2021 18:43:36 +0900 (JST)
+        (envelope-from penguin-kernel@i-love.sakura.ne.jp)
+Subject: [PATCH v2] Bluetooth: call lock_sock() outside of spinlock section
+To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-bluetooth@vger.kernel.org
-Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
- powerup sequence
-Message-ID: <20210706115517.GB4529@sirena.org.uk>
-References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org>
- <20210621223141.1638189-3-dmitry.baryshkov@linaro.org>
- <CAPDyKFo6dmjw0TnaK7=35dq5Si_6YYpeeSa=gU++1od7WkQZ7A@mail.gmail.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, Lin Ma <linma@zju.edu.cn>,
+        netdev@vger.kernel.org
+References: <20210627131134.5434-1-penguin-kernel@I-love.SAKURA.ne.jp>
+From:   Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Message-ID: <9deece33-5d7f-9dcb-9aaa-94c60d28fc9a@i-love.sakura.ne.jp>
+Date:   Wed, 7 Jul 2021 18:43:36 +0900
+User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="24zk1gE8NUlDmwG9"
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFo6dmjw0TnaK7=35dq5Si_6YYpeeSa=gU++1od7WkQZ7A@mail.gmail.com>
-X-Cookie: Some restrictions may apply.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20210627131134.5434-1-penguin-kernel@I-love.SAKURA.ne.jp>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+syzbot is hitting might_sleep() warning at hci_sock_dev_event() due to
+calling lock_sock() with rw spinlock held [1]. Defer calling lock_sock()
+via sock_hold().
 
---24zk1gE8NUlDmwG9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Link: https://syzkaller.appspot.com/bug?extid=a5df189917e79d5e59c9 [1]
+Reported-by: syzbot <syzbot+a5df189917e79d5e59c9@syzkaller.appspotmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: syzbot <syzbot+a5df189917e79d5e59c9@syzkaller.appspotmail.com>
+Fixes: e305509e678b3a4a ("Bluetooth: use correct lock to prevent UAF of hdev object")
+---
+Changes in v2:
+  Take hci_sk_list.lock for write in case bt_sock_unlink() is called after
+  sk_hashed(sk) test, and defer hci_dev_put(hdev) till schedulable context.
 
-On Tue, Jul 06, 2021 at 09:54:03AM +0200, Ulf Hansson wrote:
-> On Tue, 22 Jun 2021 at 00:32, Dmitry Baryshkov
+ net/bluetooth/hci_sock.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-> > Qualcomm QCA6390/1 is a family of WiFi + Bluetooth SoCs, with BT part
-> > being controlled through the UART and WiFi being present on PCIe
-> > bus. Both blocks share common power sources. Add device driver handling
-> > power sequencing of QCA6390/1.
+diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
+index b04a5a02ecf3..d8e1ac1ae10d 100644
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -758,20 +758,46 @@ void hci_sock_dev_event(struct hci_dev *hdev, int event)
+ 
+ 	if (event == HCI_DEV_UNREG) {
+ 		struct sock *sk;
++		bool put_dev;
+ 
++restart:
++		put_dev = false;
+ 		/* Detach sockets from device */
+ 		read_lock(&hci_sk_list.lock);
+ 		sk_for_each(sk, &hci_sk_list.head) {
++			/* hci_sk_list.lock is preventing hci_sock_release()
++			 * from calling bt_sock_unlink().
++			 */
++			if (hci_pi(sk)->hdev != hdev || sk_unhashed(sk))
++				continue;
++			/* Take a ref because we can't call lock_sock() with
++			 * hci_sk_list.lock held.
++			 */
++			sock_hold(sk);
++			read_unlock(&hci_sk_list.lock);
+ 			lock_sock(sk);
+-			if (hci_pi(sk)->hdev == hdev) {
++			/* Since hci_sock_release() might have already called
++			 * bt_sock_unlink() while waiting for lock_sock(),
++			 * use sk_hashed(sk) for checking that bt_sock_unlink()
++			 * is not yet called.
++			 */
++			write_lock(&hci_sk_list.lock);
++			if (sk_hashed(sk) && hci_pi(sk)->hdev == hdev) {
+ 				hci_pi(sk)->hdev = NULL;
+ 				sk->sk_err = EPIPE;
+ 				sk->sk_state = BT_OPEN;
+ 				sk->sk_state_change(sk);
+-
+-				hci_dev_put(hdev);
++				put_dev = true;
+ 			}
++			write_unlock(&hci_sk_list.lock);
+ 			release_sock(sk);
++			sock_put(sk);
++			if (put_dev)
++				hci_dev_put(hdev);
++			/* Restarting is safe, for hci_pi(sk)->hdev != hdev if
++			 * condition met and sk_unhashed(sk) == true otherwise.
++			 */
++			goto restart;
+ 		}
+ 		read_unlock(&hci_sk_list.lock);
+ 	}
+-- 
+2.18.4
 
-> Power sequencing of discoverable buses have been discussed several
-> times before at LKML. The last attempt [1] I am aware of, was in 2017
-> from Peter Chen. I don't think there is a common solution, yet.
 
-This feels a bit different to the power sequencing problem - it's not
-exposing the individual inputs to the device but rather is a block that
-manages everything but needs a bit of a kick to get things going (I'd
-guess that with ACPI it'd be triggered via AML).  It's in the same space
-but it's not quite the same issue I think, something that can handle
-control of the individual resources might still struggle with this.
-
---24zk1gE8NUlDmwG9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmDkRKQACgkQJNaLcl1U
-h9A9oAf/QENRZjXRFVPDjWc5SZZ1jRLz0JmogYRWNMICgbOtz1VBdXoNW/Lww3pt
-dke5UKjZ+XQkNR3aavlJL+PatLcw5KcLLIM7q6seqDtyV3oesMqPe4eHpf7E8niH
-RlrkwxoSHb3r7/tYFr2TNDxL1ZuQKEOT1Bn1tcNP4krJ4sa2M4sYmM7XV4VdFlkE
-/ymTDt9FrU/lQZHkT414lAI615+uJqFaRn17h6TnrC0MhELJ/BoLo62tBWaO0gtv
-sey70r+PcIRzS6p/iA8i+HHNTfR5EiVnBF3tVidPeOwt8Haj8TfhdDGbvzeAuaDc
-sia1bg8tC8v+IFLkdkwWFG7TzvN8ZQ==
-=L8x2
------END PGP SIGNATURE-----
-
---24zk1gE8NUlDmwG9--
