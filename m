@@ -2,154 +2,115 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A1793C2BBB
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 10 Jul 2021 01:42:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C229A3C2C1E
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 10 Jul 2021 02:38:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230429AbhGIXpc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 9 Jul 2021 19:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43442 "EHLO
+        id S231609AbhGJAku (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 9 Jul 2021 20:40:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230130AbhGIXpc (ORCPT
+        with ESMTP id S230428AbhGJAkt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 9 Jul 2021 19:45:32 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A6FAC0613DD
-        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Jul 2021 16:42:47 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id oj10-20020a17090b4d8ab0290172f77377ebso6968830pjb.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 09 Jul 2021 16:42:47 -0700 (PDT)
+        Fri, 9 Jul 2021 20:40:49 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4022C0613DD
+        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Jul 2021 17:38:04 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id j9so4604966pfc.5
+        for <linux-bluetooth@vger.kernel.org>; Fri, 09 Jul 2021 17:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=5GcsXNey5JPTZzzwym+kQ939mpw9C0mM8fDY+uip8xg=;
-        b=bwB9EqypKX/0W6yj9guvkRc0Dodx3Z+ibz7DlwH+bp0gR1yn2utF/PJNUS/ki34P7G
-         CJYYeLjJxo6FprXxE4uSIIAbmGhzuSGcrWIZQfWg/1ZxTjD7JNYBRzXtJoXwCcVRXQCm
-         QKexo4nCQzlTel0FiXMokc7TJpn7uqEOO1TAnL4QhTIkp4D7dbQxbnfSnEuvmYCq4KgJ
-         Drzz3HL/987R8TUn+e+PPe/FcEsgy3vYNeDqIc58BoD21YXKgxb5B4Zd7Jy7hK8PfA3B
-         Xz2nd07YAgm42hMRoQkFitAxc3V0qE06NWl7RiNLP+cM3zKL4rQiP+SjzSF09A2q6Hsd
-         FhaA==
+        bh=XN5MUhZT1XhXTFqsPEQj8kO+1UMDEkMXUWwcUFVE5pE=;
+        b=OmU4gmxILDbNrZzhVQihYD3ZGGjGgoNCpx+37rFAGuxlNIIFslhr5rUD6R65uXSi3+
+         t3rkF2ZsPgixdQSLhBGJxpHueQpYQn8zqxJf9WA89jAR/jXYZC8XbRaqCJTaETj64gLU
+         tEtYMxW8IRTQrsETWtPGHplvZ68fI9OMDFG5CdXa0A1vEtN7kou3uD2nVVd1Og/uK/aK
+         pAAV5OborAiCKqa9s5bh621oihpViVLuT6w7zNlQa94Ln446W5Rbobz983UXy8FdlON0
+         2WbGiGKE3AUQgdE0jfCq+A9xS77eeOLXyJO4IK1UcQbZpZTdnXcV+lgZV6Ek1xe2YHef
+         YUDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=5GcsXNey5JPTZzzwym+kQ939mpw9C0mM8fDY+uip8xg=;
-        b=QHLIzjRvqyqECQpnghm/eE2RPE6Lxv64f8HvadQ13gMYDB63GJvA0rN11LXEBf0D1r
-         lus99FqnDftHobrsX/CcDFgfps+w4rDyKsCHoeEjWaxTo3kehWJ5MDWj3riFbUDF6Jfp
-         EPyKASBTFNCIdbuaXKiOhTb9qUvBQADERrSY+jClk3/ZycLVBlm17z3FY85a4nUkOaaG
-         UzB5AZQf9rNBLXjorDgZVYKADDZlVA2Kwp8vmJ32Y2E/A0coIdp/J5/EcehnoAa342lA
-         zKre6lzeMUSWQtXvy8NECZtIYlTpiTukL4xY//f4anFB2x+k4GUMqhGVyTPbvFPSPeDP
-         iaGQ==
-X-Gm-Message-State: AOAM533CM+/yltbvcQS5kd93QOzyZrtIEXqUbUqIrNE406Oo9AONV68G
-        5M0eycP61FrZFriXpfonXr69P8/wcdS+FQ==
-X-Google-Smtp-Source: ABdhPJynC6IFlOsPI0lrc8x382vhIExy214gXnoEhuoag3YV1epol5VCaiXkU91q2QW9ti98bmuHQA==
-X-Received: by 2002:a17:903:4049:b029:129:dda6:cbf3 with SMTP id n9-20020a1709034049b0290129dda6cbf3mr9181881pla.6.1625874166513;
-        Fri, 09 Jul 2021 16:42:46 -0700 (PDT)
-Received: from localhost.localdomain (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id f18sm13519974pjq.48.2021.07.09.16.42.45
+        bh=XN5MUhZT1XhXTFqsPEQj8kO+1UMDEkMXUWwcUFVE5pE=;
+        b=XQI/Tk0Vmwy90TelT7cQs+hZ+Pk5ARo5cThp+VkbL9YXltoFJo5cr8nyBjZnYQsd6s
+         Fodg2AAPh+7jq1SsTUKvRd9me/sm5xRIQdUeeDfL2iUZtENTxDI6SQQ+wvtRIhKOL/Xv
+         rZlLVs8uYYwH00OSdS6As8bNvwoZ1FCI2jLh6CB8LCyMeXuSAx2HJnpePpfDZkozIJVv
+         VC4z4v2M2gf5ic0cvfUkV5w4Gs5IkUQldcURjGvlu7EyD9BUDvhQODry1IcaS/M22s9q
+         Ru7MCS7c9LWuY5UPD5Ksp4W/RrLceyU8k+uMoy8X4vLIdFr6LDIcNnrLCRWeYCj84NLg
+         OmnA==
+X-Gm-Message-State: AOAM530onPSc50HuGOTnyfLbZRBb9UCocqbyar8k7rqPKJSl0rA6phSY
+        oDIaDoXtw0hzXi69qRLiqo45EQfn7dY=
+X-Google-Smtp-Source: ABdhPJzRl76NZkTX3kLDzYQP/G1Kc1HrDzsE90F3gTfnXX7xETXjXSOzRlljNWMEbciwrKjHilxa/Q==
+X-Received: by 2002:a62:30c5:0:b029:31e:fa6d:1738 with SMTP id w188-20020a6230c50000b029031efa6d1738mr30715643pfw.55.1625877484095;
+        Fri, 09 Jul 2021 17:38:04 -0700 (PDT)
+Received: from han1-mobl3.intel.com ([2601:1c0:6a01:d830::512a])
+        by smtp.gmail.com with ESMTPSA id u13sm7278219pfi.54.2021.07.09.17.38.03
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jul 2021 16:42:45 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+        Fri, 09 Jul 2021 17:38:03 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ] btdev: Add proper checks for own_addr_type for extended advertising
-Date:   Fri,  9 Jul 2021 16:42:42 -0700
-Message-Id: <20210709234242.1646501-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.31.1
+Subject: [BlueZ PATCH 1/2] emulator/btdev: Add support HCI_READ_CLOCK command
+Date:   Fri,  9 Jul 2021 17:38:00 -0700
+Message-Id: <20210710003801.941787-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-own_addr_type 0x01 and 0x03 shall check that a random address has
-properly been set and in case of 0x03 the resolving list actually
-contains the irk of the identity address:
-
-BLUETOOTH CORE SPECIFICATION Version 5.2 | Vol 4, Part E
-page 2596
-
-  'If the advertising set's Own_Address_Type parameter is set to 0x01
-  and the random address for the advertising set has not been
-  initialized, the Controller shall return the error code Invalid HCI
-  Command Parameters (0x12).'
-
-BLUETOOTH CORE SPECIFICATION Version 5.2 | Vol 4, Part E
-page 2597
-
-  'If the advertising set's Own_Address_Type parameter is set to 0x03,
-  the controller's resolving list did not contain a matching entry, and
-  the random address for the advertising set has not been initialized,
-  the Controller shall return the error code Invalid HCI Command
-  Parameters (0x12).'
+This patch adds support HCI_READ_CLOCK command in btdev.
 ---
- emulator/btdev.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ emulator/btdev.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
 diff --git a/emulator/btdev.c b/emulator/btdev.c
-index 1567713d2..f1c3a0a84 100644
+index a7fda2c89..a863a0799 100644
 --- a/emulator/btdev.c
 +++ b/emulator/btdev.c
-@@ -4538,6 +4538,20 @@ static bool ext_adv_timeout(void *user_data)
- 	return false;
+@@ -2296,6 +2296,22 @@ static int cmd_read_rssi(struct btdev *dev, const void *data,
+ 	return 0;
  }
  
-+static struct btdev_rl *rl_find(struct btdev *dev, uint8_t type, uint8_t *addr)
++static int cmd_read_clock(struct btdev *dev, const void *data,
++							uint8_t len)
 +{
-+	unsigned int i;
++	const struct bt_hci_cmd_read_clock *cmd = data;
++	struct bt_hci_rsp_read_clock rsp;
 +
-+	for (i = 0; i < ARRAY_SIZE(dev->le_rl); i++) {
-+		struct btdev_rl *rl = &dev->le_rl[i];
++	memset(&rsp, 0, sizeof(rsp));
++	rsp.status = BT_HCI_ERR_SUCCESS;
++	rsp.handle = le16_to_cpu(cmd->handle);
++	rsp.clock = 0x11223344;
++	rsp.accuracy = 0x5566;
++	cmd_complete(dev, BT_HCI_CMD_READ_CLOCK, &rsp, sizeof(rsp));
 +
-+		if (RL_ADDR_EQUAL(rl, type, addr))
-+			return rl;
-+	}
-+
-+	return NULL;
++	return 0;
 +}
 +
- static int cmd_set_ext_adv_enable(struct btdev *dev, const void *data,
+ static int cmd_enable_dut_mode(struct btdev *dev, const void *data,
  							uint8_t len)
  {
-@@ -4576,6 +4590,37 @@ static int cmd_set_ext_adv_enable(struct btdev *dev, const void *data,
- 			goto exit_complete;
- 		}
+@@ -2389,6 +2405,7 @@ static int cmd_enable_dut_mode(struct btdev *dev, const void *data,
+ 					NULL), \
+ 	CMD(BT_HCI_CMD_READ_COUNTRY_CODE, cmd_read_country_code, NULL), \
+ 	CMD(BT_HCI_CMD_READ_RSSI, cmd_read_rssi, NULL), \
++	CMD(BT_HCI_CMD_READ_CLOCK, cmd_read_clock, NULL), \
+ 	CMD(BT_HCI_CMD_ENABLE_DUT_MODE, cmd_enable_dut_mode, NULL)
  
-+		if ((ext_adv->own_addr_type == 0x01 ||
-+				ext_adv->own_addr_type == 0x03)) {
-+			uint8_t none[6];
-+
-+			memset(none, 0, sizeof(none));
-+
-+			/* If the advertising set's Own_Address_Type parameter
-+			 * is set to 0x01 (or 0x03) and the random address for
-+			 * the advertising set has not been initialized, the
-+			 * Controller shall return the error code Invalid HCI
-+			 * Command Parameters (0x12).
-+			 */
-+			if (!memcmp(ext_adv->random_addr, none, sizeof(none))) {
-+				status = BT_HCI_ERR_INVALID_PARAMETERS;
-+				goto exit_complete;
-+			}
-+
-+			/* If the advertising set's Own_Address_Type parameter
-+			 * is set to 0x03, the controller's resolving list did
-+			 * not contain a matching entry, the Controller shall
-+			 * return the error code Invalid HCI Command
-+			 * Parameters (0x12).
-+			 */
-+			if (ext_adv->own_addr_type == 0x03 &&
-+					!rl_find(dev, ext_adv->direct_addr_type,
-+							ext_adv->direct_addr)) {
-+				status = BT_HCI_ERR_INVALID_PARAMETERS;
-+				goto exit_complete;
-+			}
-+		}
-+
- 		ext_adv->enable = cmd->enable;
+ static void set_common_commands_bredr20(struct btdev *btdev)
+@@ -2448,6 +2465,7 @@ static void set_common_commands_bredr20(struct btdev *btdev)
+ 	btdev->commands[14] |= 0x40;	/* Read Local Extended Features */
+ 	btdev->commands[15] |= 0x01;	/* Read Country Code */
+ 	btdev->commands[15] |= 0x20;	/* Read RSSI */
++	btdev->commands[15] |= 0x80;	/* Read Clock */
+ 	btdev->commands[16] |= 0x04;	/* Enable Device Under Test Mode */
+ }
  
- 		if (!cmd->enable)
 -- 
-2.31.1
+2.26.3
 
