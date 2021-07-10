@@ -2,177 +2,139 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7FD43C2C1D
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 10 Jul 2021 02:38:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B97973C2C5B
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 10 Jul 2021 03:21:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231602AbhGJAku (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 9 Jul 2021 20:40:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55582 "EHLO
+        id S230457AbhGJBYR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 9 Jul 2021 21:24:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231547AbhGJAkt (ORCPT
+        with ESMTP id S229703AbhGJBYR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 9 Jul 2021 20:40:49 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C69C4C0613E5
-        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Jul 2021 17:38:05 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id p36so545489pfw.11
-        for <linux-bluetooth@vger.kernel.org>; Fri, 09 Jul 2021 17:38:05 -0700 (PDT)
+        Fri, 9 Jul 2021 21:24:17 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC799C0613DD
+        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Jul 2021 18:21:32 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id p36so608632pfw.11
+        for <linux-bluetooth@vger.kernel.org>; Fri, 09 Jul 2021 18:21:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=Zxz84MZik6tQH6NSkK9edzfoiXIstAHSh7FRcIqU+Dg=;
-        b=C9lRDLfW8kVjyVwNPWUnKfQTzN9h1T6x3K4WkfZ4t4W6+CZlzeHPCmcSuqgoGgpLlD
-         DpbqYuEz/2EU1zIzqOaXsptpr73d3P5y8X8B2woEqQDhWz5/vbwPcObxNf4o047jLrN3
-         +0gov/+vaIaa26EGMLTqSiPoKJ+ujs5XP4vRJadljYjz3qnqBLjZGHIG/QJ1xyMPD0ff
-         bkSvhczvY9d8aEnr4rTlmoBwKGLKsz4u5+exIE20kyoy/BO/wImOSSsGNOgRff3oZBxW
-         Vn9AW9tHaRPigZQFrmTIm/43kWyikZOwoka4n5ahPY2mXyDEv4L6c49/sXrjG18785HC
-         /rZw==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=PQjCTSTmi7DGP1fJgEtXbmc5F1oK8We6ZgtbLIwaFSQ=;
+        b=M7ARXOJExG90Y2kFXhpMyhvGQ0iUYFhN0gA+jF4NCtFgLjnkptWJdngH34mgmomOpj
+         xj/ZVLjyTzerW93rMabM8J083o7CL39uFcmUE7BQj9RwAmhXsfAGCp3NrOZGTqWcG7aZ
+         p/kmrbn13fZ0iI4NzsMgZ95claPcudN49sw+fUl3vBXRetAfOYufwzKi33zAc+z55fWE
+         vNVmpgCH1QIvzwzwq1MDvQoaEZh26ndfrFF9MM8BUQSb0Z+Eq/jut+EGgfBY0QTugjNx
+         97BjSFjeQbJjMMwcGeyn5SQn1lIjACcMyS8Nx7yb0mBMVpXS2XrZtKWgMOQ7mzbnWlTO
+         0TUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Zxz84MZik6tQH6NSkK9edzfoiXIstAHSh7FRcIqU+Dg=;
-        b=M+ivnxpM6gjj03PkKSCjp1udAnuWAseqr0dDaHc0yDIBaJTyJdHow941zJem5CkiD2
-         Yeh9lTf+Jt2nbr5MGjaYST5DZkOj9Wv7RLpowkwjv6FbnanRWRAY6YJA6uk41Tq4eM1E
-         SYNDm+g4NKYFrfguVa6EoqSEi6Kauw3oa0noYq98t33LdkLermM/PC01lXRVwEKI+j7A
-         6tj3SRYn9h9yHOYWkHy6ptdGGmgENvq9KSRQMPy1jjKVkTb5GtPqx3w9+aJOh3HYyaYQ
-         snrddcERzysHOPYT3qVp+6L4vMsFJWqxdTwKaC+hbpjUYG8CKvNzycH4J2elnCeQ/Opt
-         W1xQ==
-X-Gm-Message-State: AOAM531dEOUD8mf4ClQLWvW7GU3oAqnNlfl0E7injH2JE+EBoHc3jhdt
-        KgCBBKXoZ6tFlhsGflUJYyKBR+PXjl8=
-X-Google-Smtp-Source: ABdhPJxD6g655z+ZLvLNUC+JIhKTcFfEe7XA8fSugErbMQg69uOTzT9O73+JZpan95wAEhFx9nl04g==
-X-Received: by 2002:a62:1782:0:b029:2f7:dcbe:c292 with SMTP id 124-20020a6217820000b02902f7dcbec292mr40796949pfx.63.1625877485174;
-        Fri, 09 Jul 2021 17:38:05 -0700 (PDT)
-Received: from han1-mobl3.intel.com ([2601:1c0:6a01:d830::512a])
-        by smtp.gmail.com with ESMTPSA id u13sm7278219pfi.54.2021.07.09.17.38.04
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=PQjCTSTmi7DGP1fJgEtXbmc5F1oK8We6ZgtbLIwaFSQ=;
+        b=oc4yE1qt+DJezO55GHJl0KFzJiZOlUTdqJnvgGVXs5N2i1TU+scDSCCxbrQKVAxsxU
+         4mBUHM4XFj4SJj8zTzD681gKq4d0Z30Hadv17hTD5qL+lsagXWgbk7wIOY7QLjkkVEqD
+         DkBOGU121jQoR+L7qVzPdttB/eDo2gywwzeDvofTnqg+S2zLHo7xQcL0u5l/v3atBZtD
+         mW5PsY52PXnt7fCvKEpuupEN8P4sSWTiWwWzZ2N0Y9yjEnJkrmxvvklenBl4faKUkSgP
+         GkpkYjonTNCmyhO9JNZIvwhgn8XB/ox1/6IhYCC50B2kTAKLeRllwPlSXlDBuWWjQbbe
+         NZiA==
+X-Gm-Message-State: AOAM533VNePMBYBlq5sTUVmoRsettnM72nh5aQI3Fe9mHMn+CUWh4W7P
+        Sfzu1wEc1IDwWytBpSKX85NevLDZ949PxA==
+X-Google-Smtp-Source: ABdhPJy/Ro9SW2FvFdUATvcXN7vJXUSpFiCxL/yKygJj/3NEDVRIJqwgXemLNYHcppm2BqiBL4rJKQ==
+X-Received: by 2002:a62:bd15:0:b029:31c:a584:5f97 with SMTP id a21-20020a62bd150000b029031ca5845f97mr33956851pff.33.1625880092111;
+        Fri, 09 Jul 2021 18:21:32 -0700 (PDT)
+Received: from [172.17.0.2] ([20.94.228.10])
+        by smtp.gmail.com with ESMTPSA id g10sm13504193pji.10.2021.07.09.18.21.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jul 2021 17:38:04 -0700 (PDT)
-From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [BlueZ PATCH 2/2] tool/mgmt-tester: Add test cases for Read Clock Information API
-Date:   Fri,  9 Jul 2021 17:38:01 -0700
-Message-Id: <20210710003801.941787-2-hj.tedd.an@gmail.com>
-X-Mailer: git-send-email 2.26.3
-In-Reply-To: <20210710003801.941787-1-hj.tedd.an@gmail.com>
-References: <20210710003801.941787-1-hj.tedd.an@gmail.com>
+        Fri, 09 Jul 2021 18:21:31 -0700 (PDT)
+Message-ID: <60e8f61b.1c69fb81.30e64.a5e9@mx.google.com>
+Date:   Fri, 09 Jul 2021 18:21:31 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2722998509727800615=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [BlueZ] btdev: Add proper checks for own_addr_type for extended advertising
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20210709234242.1646501-1-luiz.dentz@gmail.com>
+References: <20210709234242.1646501-1-luiz.dentz@gmail.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Brian Gix <brian.gix@intel.com>
+--===============2722998509727800615==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This patch adds test cases for Read Clock Information management API.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=513329
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.40 seconds
+GitLint                       PASS      0.11 seconds
+Prep - Setup ELL              PASS      39.78 seconds
+Build - Prep                  PASS      0.12 seconds
+Build - Configure             PASS      7.10 seconds
+Build - Make                  PASS      173.15 seconds
+Make Check                    PASS      8.93 seconds
+Make Distcheck                PASS      204.79 seconds
+Build w/ext ELL - Configure   PASS      6.93 seconds
+Build w/ext ELL - Make        PASS      165.87 seconds
+
+Details
+##############################
+Test: CheckPatch - PASS
+Desc: Run checkpatch.pl script with rule in .checkpatch.conf
+
+##############################
+Test: GitLint - PASS
+Desc: Run gitlint with rule in .gitlint
+
+##############################
+Test: Prep - Setup ELL - PASS
+Desc: Clone, build, and install ELL
+
+##############################
+Test: Build - Prep - PASS
+Desc: Prepare environment for build
+
+##############################
+Test: Build - Configure - PASS
+Desc: Configure the BlueZ source tree
+
+##############################
+Test: Build - Make - PASS
+Desc: Build the BlueZ source tree
+
+##############################
+Test: Make Check - PASS
+Desc: Run 'make check'
+
+##############################
+Test: Make Distcheck - PASS
+Desc: Run distcheck to check the distribution
+
+##############################
+Test: Build w/ext ELL - Configure - PASS
+Desc: Configure BlueZ source with '--enable-external-ell' configuration
+
+##############################
+Test: Build w/ext ELL - Make - PASS
+Desc: Build BlueZ source with '--enable-external-ell' configuration
+
+
+
 ---
- tools/mgmt-tester.c | 71 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 70 insertions(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
-index d2ded574e..5def0d83c 100644
---- a/tools/mgmt-tester.c
-+++ b/tools/mgmt-tester.c
-@@ -3917,6 +3917,53 @@ static const struct generic_data set_privacy_nval_param_test = {
- 	.expect_status = MGMT_STATUS_INVALID_PARAMS,
- };
- 
-+static const void *get_clock_info_send_param_func(uint16_t *len)
-+{
-+	struct test_data *data = tester_get_data();
-+	static uint8_t param[7];
-+
-+	memcpy(param, hciemu_get_client_bdaddr(data->hciemu), 6);
-+	param[6] = 0x00; /* Address type */
-+
-+	*len = sizeof(param);
-+
-+	return param;
-+}
-+
-+static const void *get_clock_info_expect_param_func(uint16_t *len)
-+{
-+	struct test_data *data = tester_get_data();
-+	static uint8_t param[17];
-+	struct mgmt_rp_get_clock_info *rp;
-+
-+	rp = (struct mgmt_rp_get_clock_info *)param;
-+	memset(param, 0, sizeof(param));
-+	memcpy(param, hciemu_get_client_bdaddr(data->hciemu), 6);
-+	param[6] = 0x00; /* Address type */
-+
-+	rp->local_clock = 0x11223344;
-+	rp->piconet_clock = 0x11223344;
-+	rp->accuracy = 0x5566;
-+
-+	*len = sizeof(param);
-+
-+	return param;
-+}
-+
-+static const void *get_clock_info_expect_param_not_powered_func(uint16_t *len)
-+{
-+	struct test_data *data = tester_get_data();
-+	static uint8_t param[17];
-+
-+	memset(param, 0, sizeof(param));
-+	memcpy(param, hciemu_get_client_bdaddr(data->hciemu), 6);
-+	param[6] = 0x00; /* Address type */
-+
-+	*len = sizeof(param);
-+
-+	return param;
-+}
-+
- static const void *get_conn_info_send_param_func(uint16_t *len)
- {
- 	struct test_data *data = tester_get_data();
-@@ -3962,6 +4009,21 @@ static const void *get_conn_info_error_expect_param_func(uint16_t *len)
- 	return param;
- }
- 
-+static const struct generic_data get_clock_info_succes1_test = {
-+	.setup_settings = settings_powered_connectable_bondable_ssp,
-+	.send_opcode = MGMT_OP_GET_CLOCK_INFO,
-+	.send_func = get_clock_info_send_param_func,
-+	.expect_status = MGMT_STATUS_SUCCESS,
-+	.expect_func = get_clock_info_expect_param_func,
-+};
-+
-+static const struct generic_data get_clock_info_fail1_test = {
-+	.send_opcode = MGMT_OP_GET_CLOCK_INFO,
-+	.send_func = get_clock_info_send_param_func,
-+	.expect_status = MGMT_STATUS_NOT_POWERED,
-+	.expect_func = get_clock_info_expect_param_not_powered_func,
-+};
-+
- static const struct generic_data get_conn_info_succes1_test = {
- 	.setup_settings = settings_powered_connectable_bondable_ssp,
- 	.send_opcode = MGMT_OP_GET_CONN_INFO,
-@@ -9780,7 +9842,7 @@ static void test_command_generic_connect(const void *test_data)
- 
- 	addr_type = data->hciemu_type == HCIEMU_TYPE_BREDRLE ? BDADDR_BREDR :
- 							BDADDR_LE_PUBLIC;
--
-+	tester_print("ADDR TYPE: %d", addr_type);
- 	bthost = hciemu_client_get_host(data->hciemu);
- 	bthost_hci_connect(bthost, master_bdaddr, addr_type);
- }
-@@ -10755,6 +10817,13 @@ int main(int argc, char *argv[])
- 				&set_privacy_nval_param_test,
- 				NULL, test_command_generic);
- 
-+	test_bredr("Get Clock Info - Success",
-+				&get_clock_info_succes1_test, NULL,
-+				test_command_generic_connect);
-+	test_bredrle("Get Clock Info - Fail (Power Off)",
-+				&get_clock_info_fail1_test, NULL,
-+				test_command_generic);
-+
- 	test_bredrle("Get Conn Info - Success",
- 				&get_conn_info_succes1_test, NULL,
- 				test_command_generic_connect);
--- 
-2.26.3
 
+--===============2722998509727800615==--
