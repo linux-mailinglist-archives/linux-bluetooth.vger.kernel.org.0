@@ -2,110 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63A1D3C34BA
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 10 Jul 2021 15:34:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D7A63C3D97
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 11 Jul 2021 17:20:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230423AbhGJNhi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 10 Jul 2021 09:37:38 -0400
-Received: from www262.sakura.ne.jp ([202.181.97.72]:60250 "EHLO
-        www262.sakura.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbhGJNhi (ORCPT
+        id S235322AbhGKPWt convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 11 Jul 2021 11:22:49 -0400
+Received: from mail.07d05.mspz7.gob.ec ([186.46.59.139]:54604 "EHLO
+        mail.07d05.mspz7.gob.ec" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235313AbhGKPWt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 10 Jul 2021 09:37:38 -0400
-Received: from fsav313.sakura.ne.jp (fsav313.sakura.ne.jp [153.120.85.144])
-        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTP id 16ADYYdV027508;
-        Sat, 10 Jul 2021 22:34:34 +0900 (JST)
-        (envelope-from penguin-kernel@i-love.sakura.ne.jp)
-Received: from www262.sakura.ne.jp (202.181.97.72)
- by fsav313.sakura.ne.jp (F-Secure/fsigk_smtp/550/fsav313.sakura.ne.jp);
- Sat, 10 Jul 2021 22:34:34 +0900 (JST)
-X-Virus-Status: clean(F-Secure/fsigk_smtp/550/fsav313.sakura.ne.jp)
-Received: from [192.168.1.9] (M106072142033.v4.enabler.ne.jp [106.72.142.33])
-        (authenticated bits=0)
-        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTPSA id 16ADYXGa027505
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 10 Jul 2021 22:34:34 +0900 (JST)
-        (envelope-from penguin-kernel@i-love.sakura.ne.jp)
-Subject: Re: [PATCH v2] Bluetooth: call lock_sock() outside of spinlock
- section
-From:   Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Lin Ma <linma@zju.edu.cn>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
-References: <20210627131134.5434-1-penguin-kernel@I-love.SAKURA.ne.jp>
- <9deece33-5d7f-9dcb-9aaa-94c60d28fc9a@i-love.sakura.ne.jp>
- <CABBYNZ+Vpzy2+u=xYR-7Kxx5M6pAQFQ8TJHYV1-Jr-FvqZ8=OQ@mail.gmail.com>
- <79694c01-b69e-a039-6860-d7e612fbc008@i-love.sakura.ne.jp>
-Message-ID: <9771b40f-b544-a2a7-04e1-eddb38a4aae7@i-love.sakura.ne.jp>
-Date:   Sat, 10 Jul 2021 22:34:29 +0900
-User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Sun, 11 Jul 2021 11:22:49 -0400
+X-Greylist: delayed 3057 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Jul 2021 11:22:49 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by mail.07d05.mspz7.gob.ec (Postfix) with ESMTP id 2401418463BE;
+        Sun, 11 Jul 2021 09:06:35 -0500 (-05)
+Received: from mail.07d05.mspz7.gob.ec ([127.0.0.1])
+        by localhost (mail.07d05.mspz7.gob.ec [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 7rx1P-R3nw1M; Sun, 11 Jul 2021 09:06:35 -0500 (-05)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.07d05.mspz7.gob.ec (Postfix) with ESMTP id E2E7218463C8;
+        Sun, 11 Jul 2021 09:06:34 -0500 (-05)
+X-Virus-Scanned: amavisd-new at 07d05.mspz7.gob.ec
+Received: from mail.07d05.mspz7.gob.ec ([127.0.0.1])
+        by localhost (mail.07d05.mspz7.gob.ec [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id lJqR6vS8hoVX; Sun, 11 Jul 2021 09:06:34 -0500 (-05)
+Received: from cris-PC.wifi (unknown [105.9.79.139])
+        by mail.07d05.mspz7.gob.ec (Postfix) with ESMTPSA id 0EF5318463BE;
+        Sun, 11 Jul 2021 09:06:26 -0500 (-05)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-In-Reply-To: <79694c01-b69e-a039-6860-d7e612fbc008@i-love.sakura.ne.jp>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: spende von 2,000,000 euro
+To:     Recipients <maria.coronel@07d05.mspz7.gob.ec>
+From:   ''Tayeb souami'' <maria.coronel@07d05.mspz7.gob.ec>
+Date:   Sun, 11 Jul 2021 16:06:17 +0200
+Reply-To: Tayebsouam.spende@gmail.com
+Message-Id: <20210711140627.0EF5318463BE@mail.07d05.mspz7.gob.ec>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On 2021/07/08 8:33, Tetsuo Handa wrote:
->>              we could perhaps don't release the reference to hdev
->> either and leave hci_sock_release to deal with it and then perhaps we
->> can take away the backward goto, actually why are you restarting to
->> begin with?
-> 
-> Do you mean something like
-> 
-> diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
-> index b04a5a02ecf3..0525883f4639 100644
-> --- a/net/bluetooth/hci_sock.c
-> +++ b/net/bluetooth/hci_sock.c
-> @@ -759,19 +759,14 @@ void hci_sock_dev_event(struct hci_dev *hdev, int event)
->  	if (event == HCI_DEV_UNREG) {
->  		struct sock *sk;
->  
-> -		/* Detach sockets from device */
-> +		/* Change socket state and notify */
->  		read_lock(&hci_sk_list.lock);
->  		sk_for_each(sk, &hci_sk_list.head) {
-> -			lock_sock(sk);
->  			if (hci_pi(sk)->hdev == hdev) {
-> -				hci_pi(sk)->hdev = NULL;
->  				sk->sk_err = EPIPE;
->  				sk->sk_state = BT_OPEN;
->  				sk->sk_state_change(sk);
-> -
-> -				hci_dev_put(hdev);
->  			}
-> -			release_sock(sk);
->  		}
->  		read_unlock(&hci_sk_list.lock);
->  	}
-> 
-> ? I can't judge because I don't know how this works. I worry that
-> without lock_sock()/release_sock(), this races with e.g. hci_sock_bind().
-> 
+Hallo mein lieber Freund
+Mein Name ist Tayeb Souami aus New Jersey in Amerika und ich habe den America Lottery Jackpot von 315 Millionen Euro gewonnen. Ich habe mich entschlossen, die Summe von 2.000.000 Euro an fünf glückliche Personen zu spenden, und Sie wurden als einer der Begünstigten ausgewählt. Bitte klicken Sie auf diesen Link, um mehr über meinen Gewinn zu erfahren.
 
-I examined hci_unregister_dev() and concluded that this can't work.
 
-hci_sock_dev_event(hdev, HCI_DEV_UNREG) can't defer dropping the reference to
-this hdev till hci_sock_release(), for hci_unregister_dev() cleans up everything
-related to this hdev and calls hci_dev_put(hdev) and then vhci_release() calls
-hci_free_dev(hdev).
+UHR MICH HIER: https://www.youtube.com/watch?v=Z6ui8ZDQ6Ks
 
-That's the reason hci_sock_dev_event() has to use lock_sock() in order not to
-miss some hci_dev_put(hdev) calls.
+Bitte kontaktieren Sie mich über diese E-Mail:Tayebsouam.spende@gmail.com
 
->> This sounds a little too complicated, afaik backward goto is not even
->> consider a good practice either, since it appears we don't unlink the
->> sockets here
 
-Despite your comment, I'd like to go with choice (3) for now. After lock_sock() became
-free from delay caused by pagefault handling, we could consider updating to choice (1).
+Ich hoffe, Sie und Ihre Familie glücklich zu machen.
 
+Grüße
+Herr Tayeb Souami
