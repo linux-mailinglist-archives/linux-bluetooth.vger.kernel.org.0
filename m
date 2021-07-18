@@ -2,81 +2,103 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 574793CC72C
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 18 Jul 2021 03:46:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68CD53CC73B
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 18 Jul 2021 04:22:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231351AbhGRBtH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 17 Jul 2021 21:49:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55470 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232658AbhGRBtG (ORCPT
+        id S231351AbhGRCZL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 17 Jul 2021 22:25:11 -0400
+Received: from www262.sakura.ne.jp ([202.181.97.72]:50479 "EHLO
+        www262.sakura.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230102AbhGRCZL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 17 Jul 2021 21:49:06 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41668C061764
-        for <linux-bluetooth@vger.kernel.org>; Sat, 17 Jul 2021 18:46:09 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id qb4so21570338ejc.11
-        for <linux-bluetooth@vger.kernel.org>; Sat, 17 Jul 2021 18:46:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=zhc4sNO4YwZX3YH/Z2Pm1GDok8umxrWhReSIgmRsWUw=;
-        b=kvQrbRItYsv8h3rZ9kcy04lU9XZCNO5LzH+hrLe7Qdbm340DhSng2QGoo2PE55xYh1
-         pRx5mIl7KGEgioO356zgGjcmzGXzbyZWacbUusr1q0sr2PlNq0JmHioYYiRMESMR2L9g
-         ZUPKAHAj3/uPavVYxudomRNmTdrNotOmuRugvauKJshYZRxffSV7hR3zuWeJ5zLMs8wJ
-         J+A7PDb5IkejDZgeeEWRsTyNjY3YG7PEA4to+3wmZmOU2IVQDTvPQsivmJNDg/0dvlvW
-         SilscyWon8E4gGWxc0o6zV8O5divFP/oplqsUnfwEd4h5Hf8Tt6axRcx2nEb2daedvQg
-         Rnxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=zhc4sNO4YwZX3YH/Z2Pm1GDok8umxrWhReSIgmRsWUw=;
-        b=Z5yxmc64N+pigCH8P6xDpElnYImSy4g0P3CqdUl9F2AZG+glZG4OPx7rzew+q9huiB
-         nLfAc+Sib1l2y5Fc8mOWZIVhUnLU4UT5i8yvXFFfbUQUBHfGiTJK+s2fBNQmuGqL5UYv
-         WTKJPop4aiKBUazNxtruVb1DBv2kUMxT08n/1HURjERi6bxzMmS+TkHT1PvqlpJcVd+J
-         NXeQUcGWV7TLrSn8lAiM7TuqzOBK4GpIoWWmHbR9yQaqkO4XkOM25svTllECfZueXw8v
-         F4btqejlphM9/1psFY45z9DQDfnmIR9icUs6MpxByCMsbaQ3rd1yTz3Cv0yxrzy2U3qd
-         UPAw==
-X-Gm-Message-State: AOAM533D5qCfBPe3x/lSrL6AZQIPH/ZexW1zoxGIExZIxkvPqKxrmgrB
-        EdmT5Vf6Ub2tNzCOoYFkolzemo4XwYuyIHHu8Ns=
-X-Google-Smtp-Source: ABdhPJyhEgZsYm/iTwWfvq+lyuX7Xb54AugLZLXJ0g/NfjDjSDBTPQ2Qci3k+t5OtAcydudtPcgQu1tt3L+pzCn/Igw=
-X-Received: by 2002:a17:906:a2c4:: with SMTP id by4mr1389343ejb.521.1626572767738;
- Sat, 17 Jul 2021 18:46:07 -0700 (PDT)
+        Sat, 17 Jul 2021 22:25:11 -0400
+Received: from fsav411.sakura.ne.jp (fsav411.sakura.ne.jp [133.242.250.110])
+        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTP id 16I2MAcJ001983;
+        Sun, 18 Jul 2021 11:22:10 +0900 (JST)
+        (envelope-from penguin-kernel@i-love.sakura.ne.jp)
+Received: from www262.sakura.ne.jp (202.181.97.72)
+ by fsav411.sakura.ne.jp (F-Secure/fsigk_smtp/550/fsav411.sakura.ne.jp);
+ Sun, 18 Jul 2021 11:22:10 +0900 (JST)
+X-Virus-Status: clean(F-Secure/fsigk_smtp/550/fsav411.sakura.ne.jp)
+Received: from [192.168.1.9] (M106072142033.v4.enabler.ne.jp [106.72.142.33])
+        (authenticated bits=0)
+        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTPSA id 16I2MADx001978
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 18 Jul 2021 11:22:10 +0900 (JST)
+        (envelope-from penguin-kernel@i-love.sakura.ne.jp)
+In-Reply-To: <20210717000731.3836303-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org, LinMa <linma@zju.edu.cn>
+From:   Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Subject: RE: [RFC] Bluetooth: hci_sock: Fix calling lock_sock when handling
+ HCI_DEV_UNREG
+Message-ID: <7a0405c7-63ba-3e5c-7b22-503d7b326a11@i-love.sakura.ne.jp>
+Date:   Sun, 18 Jul 2021 11:22:09 +0900
+User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Sender: sdavid46620@gmail.com
-Received: by 2002:a17:907:76b7:0:0:0:0 with HTTP; Sat, 17 Jul 2021 18:46:07
- -0700 (PDT)
-From:   "Mr. Mustafa Ali." <mustafaliali85@gmail.com>
-Date:   Sun, 18 Jul 2021 02:46:07 +0100
-X-Google-Sender-Auth: fe82BAxaDwNkqwDYRdTYY6Q_wtQ
-Message-ID: <CAE1Pi3oejOdZR0Kfpm9boZhnskMUu8fNF6kFDs2odOkbmvJKGA@mail.gmail.com>
-Subject: Greetings Dear Friend.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello Friend,
+Luiz Augusto von Dentz wrote:
+> This removes the reference of hci_dev to hci_pinfo since the reference
+> cannot prevent hdev to be freed hci_pinfo only keeps the index so in
+> case the device is unregistered and freed hci_dev_get will return NULL
+> thus prevent UAF.
 
-This message might meet you in utmost surprise. However, It's just my
-urgent needed for a foreign partner that made me contact you for this
-transaction. I assured you of honesty and reliability to champion this
-business opportunity. I am a banker by profession in Turkey, and
-currently holding the post of Auditor in Standard Chartered Bank.
+I'm not convinced that this change is safe.
 
+vhci_release() (which will call hci_unregister_dev(hdev)) is called when
+refcount to /dev/vchi dropped to 0. That is, vhci_release() might be called
+while e.g. hci_sock_bound_ioctl() is in progress.
 
-I have the opportunity of transferring the leftover funds ($15 Million
-Dollars) of one of my clients who died along with his entire family in
-crisis in Myanmar Asia. I am inviting you for a business deal where
-this money can be shared between us if you agree to my business
-proposal.
+Since hci_unregister_dev(hdev) calls list_del(&hdev->list) with hci_dev_list_lock
+held for write, hci_dev_get(hci_pi(sk)->dev) which scans hci_dev_list with
+hci_dev_list_lock held for read will start returning NULL. But I think that
+this change introduces two race windows.
 
+Since hci_unregister_dev(hdev) then calls hci_sock_dev_event(hdev, HCI_DEV_UNREG)
+and finally calls ida_simple_remove(&hci_index_ida, id), subsequent
+hci_register_dev(struct hci_dev *hdev) call can re-assign the id which
+hci_pi(sk)->dev is tracking, by calling ida_simple_get() and finally calling
+list_add(&hdev->list, &hci_dev_list) with hci_dev_list_lock held for write.
 
-Further details of the transfer will be forwarded to you immediately
-after I receive your return letter.
+Therefore, I think that first race window is that
 
++	/* Commands may use copy_from_user which is unsafe while holding hdev as
++	 * it could be unregistered in the meantime.
++	 */
++	hci_dev_put(hdev);
++	hdev = NULL;
 
-Best Regards,
-Mr. Mustafa Ali.
+causes hci_sock_bound_ioctl() to check flags on an intended hdev and
+e.g. hci_sock_reject_list_add() to operate on an unintended hdev.
+
+Also, even if hci_sock_bound_ioctl() and hci_sock_reject_list_add() reached
+the same hdev, I think that there still is second race window that
+
+  hci_unregister_dev() {                       hci_sock_reject_list_add() {
+                                                 hdev = hci_dev_get(hci_pi(sk)->dev);
+    write_lock(&hci_dev_list_lock);
+    list_del(&hdev->list);
+    write_unlock(&hci_dev_list_lock);
+    
+    hci_sock_dev_event(hdev, HCI_DEV_UNREG);
+    
+    hci_dev_lock(hdev);
+    hci_bdaddr_list_clear(&hdev->reject_list);
+    hci_dev_unlock(hdev);
+                                                 hci_dev_lock(hdev);
+                                                 err = hci_bdaddr_list_add(&hdev->reject_list, &bdaddr, BDADDR_BREDR); // <= Adding after clear all; at least memory leak.
+                                                 hci_dev_unlock(hdev);
+                                                 hci_dev_put(hdev);
+  }
+
+. That is, an attempt to replace pointer reference with index number is racy.
+
+After all, hci_sock_dev_event(hdev, HCI_DEV_UNREG) is responsible for
+waiting for already started e.g. hci_sock_reject_list_add().
