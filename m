@@ -2,139 +2,93 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7D6E3D0142
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jul 2021 20:10:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5C7D3D0389
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jul 2021 23:03:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231480AbhGTR1k (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 20 Jul 2021 13:27:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36016 "EHLO
+        id S235718AbhGTUVZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 20 Jul 2021 16:21:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232373AbhGTR0z (ORCPT
+        with ESMTP id S233467AbhGTUHz (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 20 Jul 2021 13:26:55 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C331C061766
-        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jul 2021 11:07:11 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id i18so33848743yba.13
-        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jul 2021 11:07:11 -0700 (PDT)
+        Tue, 20 Jul 2021 16:07:55 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A15FFC061574
+        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jul 2021 13:48:31 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id h1so12024628plf.6
+        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jul 2021 13:48:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PcS2BEnW5N0lDEtELKWSuDiHGs/BzEBvD1gxBG3kjoY=;
-        b=aDzYQMLd0KjXITQVAb8q55ZixlzT3974/plH1gWGdNBYvJ1FD3ElH6MdX2umYXAqfi
-         RHYKuLmf79oeRgP7Z4oLLiKMJHlIoUMVtlt5c2Ep2YM3KHvE+ECoBwjOZZK6ZK3y4csL
-         icC9aZfjirxC5z681jm0e8OTj37Oxpj9NuMy2jcB+hdS+5rUjoC1IgLhi3i6SHiSL62P
-         0s+g98yVtYPHnxlYJzFzLbo+K/INOQuaTqryeRU0FbqBwiKvXctt0afUxUObBApkcWwp
-         7NXtS29jDqTiKlcj+u9LeupAWcMROs0zeHPWocjr1l8JcV8RDKU0NwMXUoKCVqTyr7qN
-         UOmA==
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=rYtnTxENdjJ34SFCoxNsoQB+p0RYlNrtOnkgj7JIs94=;
+        b=vDPgpGjEo+y8pFMXrfOQKK4qW83SKL3WQZ/93bmI4HZZy9tmXHCKKnvhYlCYSEs8Hl
+         orHA8CyHlPa/reKKulnulXMsgNjqZuKbRd9owGuIdtxAKX5I2ZYnYMOd+uQlXrjp7gwy
+         1dbc6KUKNwsVE0I2RYVRmHj5MHOW043sb1Ru0CPRU2jZisIWtxudu2maUcMvDzF1nabQ
+         FtbT1hWXRIardD23jDXBhW5H78SYgwjsL+GmE3CpjI5zMWoV5PPfNwo1udPWIi5SgHpy
+         EFpicr7n6KYVy4fNiVc4GGQcV1qO6eaAaMd2XV6xqwB+HxR5QV78DNk0pSS1oRory6tk
+         Eymg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PcS2BEnW5N0lDEtELKWSuDiHGs/BzEBvD1gxBG3kjoY=;
-        b=mRsFA4SVZ5EidhcQdKGaXGN0FXvg0zoXf1xnC7ArQup0n+mM/LJCnzl5YpFqNTQm7L
-         0rp2xtNATkaUIWZJvOZalVrhCw2hGIHq6tQ3xJWMUJR/miUbmmxMufEpXvGxYod0SUSq
-         E0AvNUnReOZLnBMZN7iIWs6nPqHqZJVOYc7FKrWpPTJK3YN1vZklvZ0QNyUJrqxByw86
-         OO3GKAppWbFZZ9lbLRO+G9N4s0BVqmPYNU1kNoDgy3YRY+OONA/GWhbIbINHKSqBsuXv
-         x9W2Z1SBEotL9/8kVvdKy/5eWYB4+SfAJnRYtEMoYNucj8xW4JGCyYwiPLAWuJy3N2e1
-         oEWQ==
-X-Gm-Message-State: AOAM531ozcuvbaF8vKXBfCXAItXn9T+i7h/cGTsMCiQAXqpknGSAOFMY
-        AKW89w1qrBCZS8m2JC8La4xIswxX35GPvorKxWP9GlJP
-X-Google-Smtp-Source: ABdhPJy+kNNQFd0l5RgerSfm+CGKdWsee+xuubRjj8G8+5KPoo6oPzuSOtva0Zz2ptpn4EnbRv5ze1OQz/IKGbUpgUk=
-X-Received: by 2002:a25:9b03:: with SMTP id y3mr24241574ybn.264.1626804430514;
- Tue, 20 Jul 2021 11:07:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=rYtnTxENdjJ34SFCoxNsoQB+p0RYlNrtOnkgj7JIs94=;
+        b=khu6Yl8wB8D8ZBHfdC8YhsW+LpbnvV5wKF3LDlh4wVLWxDQseL9i83jG2jt2USdrjx
+         02v8D0GSFCbCEHJq/6K3LN+b+STKVLevkcDaLsvwbPtxmtMMywrUgPwTt5aUoyp6ow5K
+         IdppBZt9OVScllYhRj1zglMt6Gb03Zg3kAs/IsoAuQS2BB/6fXm0xi+Nwjz68/K1VUE0
+         7Tvn7wR3pBVvVE0Swvcf0wL/6GnZP35exAgpjpQ0zyhwsZGthRc3QSefisjQXpvoAyNp
+         e7EwyxCguOODm4qt1VjQmRMk2BpL91xgb//EDtdbkTeHCsPZSuGyiCQ6UIg+8XOdZvOd
+         7nMQ==
+X-Gm-Message-State: AOAM5310dmbNgBsUmMX6pYdkxFBSdrG1xtk2R2LJOV1js4ji6ZrvVdew
+        3r38LXUvUmcSwl19af1MBO1U26aemfFISA==
+X-Google-Smtp-Source: ABdhPJyA1cx1cgXL8hfwVfk6b89Sz2uQjRJnm0HKzpx1fj6B7xOFtQ2EcCGyrV+WVh/H/Npw+3qgRg==
+X-Received: by 2002:a17:902:c443:b029:12b:a0a5:78d3 with SMTP id m3-20020a170902c443b029012ba0a578d3mr2148042plm.18.1626814110836;
+        Tue, 20 Jul 2021 13:48:30 -0700 (PDT)
+Received: from zen.local (97-126-22-202.tukw.qwest.net. [97.126.22.202])
+        by smtp.gmail.com with ESMTPSA id bf18sm20251614pjb.46.2021.07.20.13.48.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jul 2021 13:48:30 -0700 (PDT)
+From:   Trent Piepho <tpiepho@gmail.com>
+To:     linux-bluetooth@vger.kernel.org, Pauli Virtanen <pav@iki.fi>,
+        hildawu@realtek.com, marcel@holtmann.org
+Subject: Re: [PATCH v2] Bluetooth: btusb: Add support USB ALT 3 for WBS
+Date:   Tue, 20 Jul 2021 13:48:29 -0700
+Message-ID: <4778293.GXAFRqVoOG@zen.local>
+In-Reply-To: <ca3adcf5fd1e7afa923f445d391aaa00f335c470.camel@iki.fi>
+References: <20210514031901.2276-1-hildawu@realtek.com> <ca3adcf5fd1e7afa923f445d391aaa00f335c470.camel@iki.fi>
 MIME-Version: 1.0
-References: <20210715174945.BlueZ.v6.1.I832f2d744fe2cff0d9749e24c9ec27071fa0b4ed@changeid>
- <60f010bf.1c69fb81.6775f.4720@mx.google.com>
-In-Reply-To: <60f010bf.1c69fb81.6775f.4720@mx.google.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Tue, 20 Jul 2021 11:06:59 -0700
-Message-ID: <CABBYNZL+gxxHVUGK_74Gh56Z=RK68r=L2ZRF=1w2+0ROwi52dQ@mail.gmail.com>
-Subject: Re: [BlueZ,v6,1/3] monitor: add new Intel extended telemetry events
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Cc:     Shyh-In Hwang <josephsih@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Joseph,
+On Sunday, July 11, 2021 8:33:57 AM PDT Pauli Virtanen wrote:
+> pe, 2021-05-14 kello 11:19 +0800, hildawu@realtek.com kirjoitti:
+> > Because mSBC frames do not need to be aligned to the SCO packet
+> > boundary. Using USB ALT 3 let HCI payload >= 60 bytes, let mSBC
+> > data satisfy 60 Bytes avoid payload unaligned situation and fixed
+> > some headset no voise issue.
+> > 
+> > USB Alt 3 supported also need HFP support transparent MTU in 72
+> > Bytes.
 
-On Thu, Jul 15, 2021 at 5:07 AM <bluez.test.bot@gmail.com> wrote:
->
-> This is automated email and please do not reply to this email!
->
-> Dear submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> This is a CI test results with your patch series:
-> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=516039
->
-> ---Test result---
->
-> Test Summary:
-> CheckPatch                    PASS      1.31 seconds
-> GitLint                       PASS      0.37 seconds
-> Prep - Setup ELL              PASS      47.86 seconds
-> Build - Prep                  PASS      0.14 seconds
-> Build - Configure             PASS      8.22 seconds
-> Build - Make                  PASS      211.38 seconds
-> Make Check                    PASS      9.48 seconds
-> Make Distcheck                PASS      249.82 seconds
-> Build w/ext ELL - Configure   PASS      8.57 seconds
-> Build w/ext ELL - Make        PASS      206.23 seconds
->
-> Details
-> ##############################
-> Test: CheckPatch - PASS
-> Desc: Run checkpatch.pl script with rule in .checkpatch.conf
->
-> ##############################
-> Test: GitLint - PASS
-> Desc: Run gitlint with rule in .gitlint
->
-> ##############################
-> Test: Prep - Setup ELL - PASS
-> Desc: Clone, build, and install ELL
->
-> ##############################
-> Test: Build - Prep - PASS
-> Desc: Prepare environment for build
->
-> ##############################
-> Test: Build - Configure - PASS
-> Desc: Configure the BlueZ source tree
->
-> ##############################
-> Test: Build - Make - PASS
-> Desc: Build the BlueZ source tree
->
-> ##############################
-> Test: Make Check - PASS
-> Desc: Run 'make check'
->
-> ##############################
-> Test: Make Distcheck - PASS
-> Desc: Run distcheck to check the distribution
->
-> ##############################
-> Test: Build w/ext ELL - Configure - PASS
-> Desc: Configure BlueZ source with '--enable-external-ell' configuration
->
-> ##############################
-> Test: Build w/ext ELL - Make - PASS
-> Desc: Build BlueZ source with '--enable-external-ell' configuration
->
->
->
-> ---
-> Regards,
-> Linux Bluetooth
+> 
+> This change seemed to break msbc audio on some non-realtek adapters I
+> have. Tested Pipewire on BCM20702A1 (0b05:17cb), CSR8510A10 (0a12:0001)
+> -> no sound output and input appears garbled. Reverting this patch
+> makes it work again. Indeed these adapters report SCO mtu=64 which is
+> less than 72. On the other hand, with RTL8761BU (0bda:8771) msbc audio
+> works fine with this patch out of the box, indeed reading/writing 72
+> byte packets to/from the sco socket
 
-Applied, thanks. Note that I did change the command name for exp-bqr
-to exp-quality to make it more clear what is doing from the command
-name itself.
+When I fixed WBS when previous patches from Intel and Realtek broke it for 
+most adapters, I also tested alt 3.  I also found it didn't work for many 
+adapters.
 
--- 
-Luiz Augusto von Dentz
+It is annoying that a chipset vendor can not be bothered to do the basic 
+testing I am able to do by buying random bt adapters from amazon.  Nor 
+respond when their patches, once accepted, cause problems.
+
+
+
