@@ -2,126 +2,129 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B57723D12AB
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jul 2021 17:40:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 061493D14C7
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jul 2021 19:03:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239962AbhGUO77 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 21 Jul 2021 10:59:59 -0400
-Received: from meesny.iki.fi ([195.140.195.201]:34222 "EHLO meesny.iki.fi"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239922AbhGUO76 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 21 Jul 2021 10:59:58 -0400
-Received: from [192.168.1.195] (91-152-122-41.elisa-laajakaista.fi [91.152.122.41])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: pav@iki.fi)
-        by meesny.iki.fi (Postfix) with ESMTPSA id F3D10200C0;
-        Wed, 21 Jul 2021 18:40:29 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-        t=1626882030;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=BDs0jgCsvkGgpLEtAiAdZHaBtwOuxFbMU8eWvONBzbI=;
-        b=amRFucxKAkPyzJ5T62eymWGG4wURVFjDT6v4A9/a8PVM3upjYf4IdOy0Dbdttj0DD+b+pJ
-        cRw29c7X0iq1LvdscclveHtzwfuV2DMdgmSPdj/8FUsZmRoE0I7BA0n8kzx5qZj2ekIE6T
-        NC7L40HTBuaiuc6mxIGC+dDKGYt4Ga4=
-Message-ID: <f0a3fae602bb54313d078563d971827c88315b43.camel@iki.fi>
-Subject: Re: [PATCH] Bluetooth: btusb: check SCO MTU before enabling USB ALT
- 3 for WBS
-From:   Pauli Virtanen <pav@iki.fi>
-To:     Joseph Hwang <josephsih@google.com>
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Hilda Wu <hildawu@realtek.com>
-Date:   Wed, 21 Jul 2021 18:40:29 +0300
-In-Reply-To: <CAHFy41_-EYBNnKyLPof40r6jhtBW=mSHjOX6O=+hzLCbf7_ELQ@mail.gmail.com>
-References: <d43dffdc43a40782ec6d5d6c24b1638005992a8f.camel@iki.fi>
-         <CAHFy41_-EYBNnKyLPof40r6jhtBW=mSHjOX6O=+hzLCbf7_ELQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.3 (3.40.3-1.fc34) 
+        id S236425AbhGUQWf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 21 Jul 2021 12:22:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35732 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234061AbhGUQWe (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 21 Jul 2021 12:22:34 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2B93C061575
+        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Jul 2021 10:03:09 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id r135so1177845ybc.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Jul 2021 10:03:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=XlZdtU+nvlMAAp5qHOT9VWsJ+J7fUvqXuNoKxMEFEcA=;
+        b=CaU9WaKmqxzW2pzuQWQiXcetOD3sYkroe/Jr2si6RdqFS9F+HMhndALYfDsyUKGw3B
+         ZcbLJnHGNbMrYfxaMeBVTqF/izAF5GByUHanCJoQWBgdxQrSp/TmhvIwjLYnEu4TT9hK
+         rPleXlF4xpIoI6lcLE8LmrrpJpR6i3Y3I4lf53EhhdwQEc7Xocjbcwb1pCgkz0jKzCWR
+         44mSJyVk5AlWIKfPiXL4wCP2X9NglzN9OsaRGi4cb5rqDyaIi6YJyyKkm0oH1VDsfSeh
+         SnIiyT5Fiqc4okJwE5myfiTzrg7Hb9pXaggX4tyEmsw5ycKWomECSlbbliDR9+JqDwhA
+         gIIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=XlZdtU+nvlMAAp5qHOT9VWsJ+J7fUvqXuNoKxMEFEcA=;
+        b=NfYEQHNwVkJw47y89tHi1RVGjMCdP7TtnqKzYrn+b0CKUpuM/FqhPg74S+mExPmTlm
+         Uitnieba7dNwuEMjuQfO2guP9AgnQAkMM3smee/ekWeiUAjZ36OSFNPN8YiDM9voli2O
+         m7dBOudw8ccQRnOZfhks83lfufd0XI6pwgIzjGibehmPCDCcI3IMNlP2XOpDoEmB2HQ2
+         HPhOhg0372s0aN38xqgfKTUy4Zxb0adjyyWwRZZePH1CQlXqF9sJd+yuCvzP2O0YSI3G
+         qHe+tIXTHb7bNFajynih9U5zmhhq67XLML+aCDzDUluxUZUy4HRjv/3KFE3vGlmaF7Aw
+         FbWg==
+X-Gm-Message-State: AOAM533+Eu2h/72RyDRgCu7PewxPyR/1RlEWjcHrxh8KNCVg5fqwviNm
+        jaaXSPtHhse+cVNJg08WCOhKFOmX/QlfZ4IDNPU=
+X-Google-Smtp-Source: ABdhPJwUzCB5iZ7rU24c0qus4VJPvG0NW2/sm86qecpC9kYHodi5uW2wSUT57gBKy3jJLPRSX+dxIKNbHGmGyMJFlSE=
+X-Received: by 2002:a25:b741:: with SMTP id e1mr47644650ybm.347.1626886989071;
+ Wed, 21 Jul 2021 10:03:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-        s=meesny; t=1626882030;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=BDs0jgCsvkGgpLEtAiAdZHaBtwOuxFbMU8eWvONBzbI=;
-        b=TUy+ec8f0U9cCx1OS0njytayPjaGNlT/VzTi80KZkMtOUaIugBMQ2V8AsPXipU8VPqMREJ
-        AtEsVc5oc+2JOFt3glg7fM3uNppFwPS+O1XrWQzVxM/4cquxqorE9OaEbaKfj+LN8LR2AO
-        mgL27u4Drf5xGHkfk7ZMHhqTmlYQoVI=
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1626882030; a=rsa-sha256; cv=none;
-        b=k09AeowBoJHDyQKU+BsEBenqHUV+VdCD/qfAgcwdr81DQRcXL6NuDqnH+fOdZOuE3B8wjQ
-        Ns7iLXudLB1WS9MF7d/eNztwrNm8Cvm/CyYrc33SP0HihhTCEoTddjMTdBBNSgBUk1c0Wz
-        pdO6ZksaJ+gjaoRMq7B6hy625fv+vB8=
-ARC-Authentication-Results: i=1;
-        ORIGINATING;
-        auth=pass smtp.auth=pav@iki.fi smtp.mailfrom=pav@iki.fi
+References: <20210721091727.177872-1-sviande@gmail.com>
+In-Reply-To: <20210721091727.177872-1-sviande@gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 21 Jul 2021 10:02:58 -0700
+Message-ID: <CABBYNZL8Zy0UFUYvftzePuMCt_hQ4s9c=HLZVE1EwOKcSv+Hdw@mail.gmail.com>
+Subject: Re: [PATCH BlueZ] [BlueZ] audio/a2dp: refcount
+To:     =?UTF-8?Q?S=C3=A9bastien_Viande?= <sviande@gmail.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+Hi S=C3=A9bastien,
 
-la, 2021-07-17 kello 21:34 +0800, Joseph Hwang kirjoitti:
-> It looks reasonable to check sco_mtu. My suggestion is to use
-> hci_packet_size_usb_alt[3] instead of the magic number 72.
+On Wed, Jul 21, 2021 at 2:29 AM S=C3=A9bastien Viande <sviande@gmail.com> w=
+rote:
+>
+> Fix a2dp setup.
+>
+> I'm not the initial author of the code you can find the source on
+> https://patches.linaro.org/patch/285268/
 
-Thanks for looking at it. IIUC, hci_packet_size_usb_alt only appears in
-previous discussions on this list, which did not seem to reach a
-conclusion if this should be computed from wMaxPacketSize. I can do
-less magical v2 and add the table.
+If you read the comments we actually made some different changes to
+address that, are you still having similar issues even with those
+changes? It maybe some configuration not working, so perhaps you can
+describe the problem or better yet create a github issue with the
+logs.
 
-Different solution would be to make the altsetting choice
-manufacturer/device specific flag, as I'm not sure on what hardware
-e848dbd364ac was tested on, so maybe it is intended Realtek specific.
+> This patch fix my problem the a2dp source not available there was only
+> HSP/HFP.
+> ---
+>  profiles/audio/a2dp.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
+> index 86bc02994..be707edda 100644
+> --- a/profiles/audio/a2dp.c
+> +++ b/profiles/audio/a2dp.c
+> @@ -1568,6 +1568,8 @@ static void channel_free(void *data)
+>         }
+>
+>         avdtp_remove_state_cb(chan->state_id);
+> +       if (chan->session)
+> +               avdtp_unref(chan->session);
+>
+>         queue_destroy(chan->seps, remove_remote_sep);
+>         free(chan->last_used);
+> @@ -2149,7 +2151,7 @@ static void avdtp_state_cb(struct btd_device *dev, =
+struct avdtp *session,
+>                 break;
+>         case AVDTP_SESSION_STATE_CONNECTED:
+>                 if (!chan->session)
+> -                       chan->session =3D session;
+> +                       chan->session =3D avdtp_ref(session);
+>                 load_remote_seps(chan);
+>                 break;
+>         }
+> @@ -2229,6 +2231,7 @@ found:
+>                 channel_remove(chan);
+>                 return NULL;
+>         }
+> +       avdtp_ref(chan->session);
+>
+>         return avdtp_ref(chan->session);
+>  }
+> @@ -2249,6 +2252,7 @@ static void connect_cb(GIOChannel *io, GError *err,=
+ gpointer user_data)
+>                         error("Unable to create AVDTP session");
+>                         goto fail;
+>                 }
+> +               avdtp_ref(chan->session);
+>         }
+>
+>         g_io_channel_unref(chan->io);
+> --
+> 2.32.0
+>
 
-Best,
-Pauli
 
-
-> On Sat, Jul 17, 2021 at 1:58 AM Pauli Virtanen <pav@iki.fi> wrote:
-> > 
-> > Some USB BT adapters don't satisfy the MTU requirement mentioned in
-> > commit e848dbd364ac ("Bluetooth: btusb: Add support USB ALT 3 for WBS")
-> > and have ALT 3 setting that produces no/garbled audio. Check that the MTU
-> > condition is satisfied, and fall back to ALT 1 if not.
-> > 
-> > Tested with USB adapters (mtu<72, produce sound only with ALT1)
-> > BCM20702A1 0b05:17cb, CSR8510A10 0a12:0001, and (mtu>=72, ALT3)
-> > RTL8761BU 0bda:8771, Intel AX200 8087:0029 (after disabling ALT6).
-> > 
-> > Signed-off-by: Pauli Virtanen <pav@iki.fi>
-> > ---
-> >  drivers/bluetooth/btusb.c | 6 ++++--
-> >  1 file changed, 4 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> > index a9855a2dd561..3ee66e415c4d 100644
-> > --- a/drivers/bluetooth/btusb.c
-> > +++ b/drivers/bluetooth/btusb.c
-> > @@ -1763,9 +1763,11 @@ static void btusb_work(struct work_struct *work)
-> >                         /* Because mSBC frames do not need to be aligned to the
-> >                          * SCO packet boundary. If support the Alt 3, use the
-> >                          * Alt 3 for HCI payload >= 60 Bytes let air packet
-> > -                        * data satisfy 60 bytes.
-> > +                        * data satisfy 60 bytes. USB Alt 3 support also needs
-> > +                        * HFP transparent MTU >= 72 Bytes.
-> >                          */
-> > -                       if (new_alts == 1 && btusb_find_altsetting(data, 3))
-> > +                       if (new_alts == 1 && hdev->sco_mtu >= 72 &&
-> > +                           btusb_find_altsetting(data, 3))
-> >                                 new_alts = 3;
-> >                 }
-> > 
-> > --
-> > 2.31.1
-> > 
-> > 
-> 
-> 
-
-
+--=20
+Luiz Augusto von Dentz
