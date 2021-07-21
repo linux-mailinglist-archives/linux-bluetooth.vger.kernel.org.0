@@ -2,112 +2,139 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42CC43D0C1D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jul 2021 12:13:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35D3E3D0C24
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jul 2021 12:13:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236340AbhGUJQe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 21 Jul 2021 05:16:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46434 "EHLO
+        id S237096AbhGUJSz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 21 Jul 2021 05:18:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237675AbhGUI6i (ORCPT
+        with ESMTP id S237657AbhGUJRq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 21 Jul 2021 04:58:38 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E2FDC061574;
-        Wed, 21 Jul 2021 02:39:13 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id o201so1822482pfd.1;
-        Wed, 21 Jul 2021 02:39:13 -0700 (PDT)
+        Wed, 21 Jul 2021 05:17:46 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DDB4C061574
+        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Jul 2021 02:58:22 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id o31so651870qvo.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Jul 2021 02:58:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PjuFR6HuAqzaOBzOINC7ROg0fkvdUGdT6kDWetuSLNA=;
-        b=SSCMiLxpMlxDqbev6KyNKRINcMP3ATB1bD6BU81Vvu2ZLhmmYWvvW7tLTpTRsZwiok
-         X/zYaEqz1uBEy4/emehHUpmEcxqHijdIe8NcOQW0Z6Zs7uDseVws5e11QoXA27pSP9Um
-         QApdrIp4/agvt8Kapy9jJd0pSsQFh83oL+uBU02Y7gfv2KWuG398YZ7CpCO/TxfBrrhL
-         bR6qKXCIc5MiM3fOWgCmmi88NuFSUv46ylmwA7Ozn8qBpzvK9FJ/u1zFsuS+HXJeGGGr
-         mu5mj32xp/g019exxf4psjgpRD3lq8noTrPiyVCMZbhdF7nDJPIrIOWiZFgZlCnAsO1B
-         BPZQ==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=rf9T2wOzMQhSt1GenDDzU3ca+gt4PKmO0ehlE83thmI=;
+        b=WL+swGDnH9r9IuNfoThv/5f22pdaUOSt4jZh0wXGm4KiatCpBH9k+qwdIPTBRYQhjf
+         qnZFo4a8ASCPMed2tpJi1ux4BuvRSJro68c6ba8h4fGYBE0raisTVvn1x9o5x1jOwahQ
+         sCyyX3fnq/Hr7jYj41qpVPzeJGi8RPgDaKuU83xLsDT84gRJUAJX6LcCTqVHxYuDAgWl
+         sNKKdcxtFyqC42Z+d8uiJiwJC+9p4DRBPpsbGAmBbJ43SS9N6CzXKneDtYmyXlpm0c4j
+         Qcce2Kg4J/snEbB7IMJlcMXL6i0nUg6jCjmN18G8LDU7RquXQfUK1heZHwO5WiT6st5R
+         02Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PjuFR6HuAqzaOBzOINC7ROg0fkvdUGdT6kDWetuSLNA=;
-        b=DY1jtTyM6JcojqYKo0k7cP+YhwedjIxFGM8kIgYL5HmFuQfE977rkVG0sxA1oC/81S
-         OHw3VQALOYATL+pXIxRm9WDjbSG6fL7f6JKKthgZqbC3L1KGNOv3sCTD2wVxnVaoTZCK
-         8pyVdXGIly/YovOkdIcF0B0z73Y12SGipGwdZI37m6AjQeJVtutLG1th6lfR3hsm47vW
-         pU4AF/1TFDHQPLzwi1gFELiX7JBYzgSvOzf4SBNNrL+fhR32MczxMaApK/jdQEVt5dma
-         X1eZEdZGLIwCEbGpm53rSftpjqGlJNxdK3m/5QFwIoxsX35Dvj0YR5snRLsuLHA+LbFa
-         qDSQ==
-X-Gm-Message-State: AOAM531X9CspJC1m3G1biwbnv8s7PYdOjVizqj5xIFUQF5G3y0sjqI6r
-        InbNbmMd6PFd8t3rR31Ngu4=
-X-Google-Smtp-Source: ABdhPJyLWYQsZQ+eLcP51gJqr+yNhWz6CITIUAHfjWRVt8BqikE1aEmB7DhdUoi1JBVeW317BZfy/A==
-X-Received: by 2002:a63:e643:: with SMTP id p3mr34526522pgj.213.1626860353146;
-        Wed, 21 Jul 2021 02:39:13 -0700 (PDT)
-Received: from localhost.localdomain ([118.200.190.93])
-        by smtp.gmail.com with ESMTPSA id j129sm27311956pfb.132.2021.07.21.02.39.09
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=rf9T2wOzMQhSt1GenDDzU3ca+gt4PKmO0ehlE83thmI=;
+        b=YZr1LG2v5xSgVp0Sc9XK9/N7rFqoPpighFD7isI1QlUbSjHnIugdljm7E5uGvlv4i7
+         /l/VcwW9uIAlzh2vvc5CjFLERaZTLA5/5RvWjZtYzy8KvXY5sKn3nFJJNLaoaTMWyGR1
+         Qlc2zQfLKcZcrHu0oPWjIybWXvHZdatATc+U+qyhW+I4PQlpp7rh/G9Kqdsoz75fwcn6
+         Kba5A855P/BnhhLK2BweJAVdTJH+qtXL8zVQY7JAXincuR96MxCiFyZ9ndwkOEQeggqU
+         jtm/0EKOKU8zdVDs7O26LwnufIERbpxmVJJdiB+/Pmb4M0h/6GruKZY/p1tzdQGt4zy4
+         OY8w==
+X-Gm-Message-State: AOAM533jL/mxq1Ls4PNOkP6s6ra6+SGj/bsBEpKn9/DjRRvWT/8i40hK
+        W01Y3POeQLJH3DNts7y0nZ6ZmSa0zXgllg==
+X-Google-Smtp-Source: ABdhPJw+r6axp2bFiPuNNJwMqvLkZFFf1GWtnyjAS6wDFeDd30l5SPLGHrsZY7AjbSZeomVP0ZfVGg==
+X-Received: by 2002:ad4:5cef:: with SMTP id iv15mr34974826qvb.14.1626861501124;
+        Wed, 21 Jul 2021 02:58:21 -0700 (PDT)
+Received: from [172.17.0.2] ([52.147.174.17])
+        by smtp.gmail.com with ESMTPSA id w5sm1646729qtv.3.2021.07.21.02.58.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 02:39:12 -0700 (PDT)
-From:   Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        davem@davemloft.net, kuba@kernel.org, matthieu.baerts@tessares.net,
-        stefan@datenfreihafen.org
-Cc:     Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, skhan@linuxfoundation.org,
-        gregkh@linuxfoundation.org,
-        linux-kernel-mentees@lists.linuxfoundation.org
-Subject: [PATCH v3 2/2] Bluetooth: fix inconsistent lock state in rfcomm_connect_ind
-Date:   Wed, 21 Jul 2021 17:38:32 +0800
-Message-Id: <20210721093832.78081-3-desmondcheongzx@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210721093832.78081-1-desmondcheongzx@gmail.com>
-References: <20210721093832.78081-1-desmondcheongzx@gmail.com>
+        Wed, 21 Jul 2021 02:58:20 -0700 (PDT)
+Message-ID: <60f7efbc.1c69fb81.7f03e.94fd@mx.google.com>
+Date:   Wed, 21 Jul 2021 02:58:20 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============4418879542612561996=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, sviande@gmail.com
+Subject: RE: [BlueZ,BlueZ] audio/a2dp: refcount
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20210721091727.177872-1-sviande@gmail.com>
+References: <20210721091727.177872-1-sviande@gmail.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Commit fad003b6c8e3d ("Bluetooth: Fix inconsistent lock state with
-RFCOMM") fixed a lockdep warning due to sk->sk_lock.slock being
-acquired without disabling softirq while the lock is also used in
-softirq context. This was done by disabling interrupts before calling
-bh_lock_sock in rfcomm_sk_state_change.
+--===============4418879542612561996==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Later, this was changed in commit e6da0edc24ee ("Bluetooth: Acquire
-sk_lock.slock without disabling interrupts") to disable softirqs
-only.
+This is automated email and please do not reply to this email!
 
-However, there is another instance of sk->sk_lock.slock being acquired
-without disabling softirq in rfcomm_connect_ind. This patch fixes this
-by disabling local bh before the call to bh_lock_sock.
+Dear submitter,
 
-Signed-off-by: Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=518787
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.29 seconds
+GitLint                       PASS      0.11 seconds
+Prep - Setup ELL              PASS      40.69 seconds
+Build - Prep                  PASS      0.09 seconds
+Build - Configure             PASS      7.11 seconds
+Build - Make                  PASS      176.72 seconds
+Make Check                    PASS      9.05 seconds
+Make Distcheck                PASS      209.85 seconds
+Build w/ext ELL - Configure   PASS      7.21 seconds
+Build w/ext ELL - Make        PASS      166.28 seconds
+
+Details
+##############################
+Test: CheckPatch - PASS
+Desc: Run checkpatch.pl script with rule in .checkpatch.conf
+
+##############################
+Test: GitLint - PASS
+Desc: Run gitlint with rule in .gitlint
+
+##############################
+Test: Prep - Setup ELL - PASS
+Desc: Clone, build, and install ELL
+
+##############################
+Test: Build - Prep - PASS
+Desc: Prepare environment for build
+
+##############################
+Test: Build - Configure - PASS
+Desc: Configure the BlueZ source tree
+
+##############################
+Test: Build - Make - PASS
+Desc: Build the BlueZ source tree
+
+##############################
+Test: Make Check - PASS
+Desc: Run 'make check'
+
+##############################
+Test: Make Distcheck - PASS
+Desc: Run distcheck to check the distribution
+
+##############################
+Test: Build w/ext ELL - Configure - PASS
+Desc: Configure BlueZ source with '--enable-external-ell' configuration
+
+##############################
+Test: Build w/ext ELL - Make - PASS
+Desc: Build BlueZ source with '--enable-external-ell' configuration
+
+
+
 ---
- net/bluetooth/rfcomm/sock.c | 2 ++
- 1 file changed, 2 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index ae6f80730561..d8734abb2df4 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -974,6 +974,7 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
- 	if (!parent)
- 		return 0;
- 
-+	local_bh_disable();
- 	bh_lock_sock(parent);
- 
- 	/* Check for backlog size */
-@@ -1002,6 +1003,7 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
- 
- done:
- 	bh_unlock_sock(parent);
-+	local_bh_enable();
- 
- 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags))
- 		parent->sk_state_change(parent);
--- 
-2.25.1
 
+--===============4418879542612561996==--
