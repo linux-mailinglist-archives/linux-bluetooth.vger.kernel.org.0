@@ -2,59 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DAA293D1EF2
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jul 2021 09:24:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C11CB3D1EF5
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jul 2021 09:24:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231156AbhGVGn6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 22 Jul 2021 02:43:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32772 "EHLO
+        id S230343AbhGVGoA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 22 Jul 2021 02:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230438AbhGVGnx (ORCPT
+        with ESMTP id S230501AbhGVGny (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 22 Jul 2021 02:43:53 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD5CC06179F
-        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:24:02 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id o11-20020a17090ad24bb02901760a3c63a2so3602791pjw.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:24:02 -0700 (PDT)
+        Thu, 22 Jul 2021 02:43:54 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D8CC0617A0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:24:06 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id y5-20020a37af050000b02903a9c3f8b89fso3532882qke.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=YqqvcKvjKRDjV+myUI56V8EaBEFO8mDpVdLV0MfyQso=;
-        b=HfIO3WSIx+EaW4e+rtrkZIRwcise1UBZA72KB80MGRv4SzmbLYFnc6ZRJV6gEDyJkL
-         fNJbeIRdC0CkvZWhReNpAwetzik+YaCYHYsh+lni7IzGaIaRZlza3U0oh10Wo8lGGej6
-         nfXKixlujoxB3+woMtDaumi/4IsiaJHGXKRE9H4x8a+yM9r09Fb0ieAhzctjpGX8toyX
-         5FDwgp0czAW0Q6E1wWwgfJcOtNSlfG7lQNMNdewX6/P50q/m/2Je0G30/z1R1CPFQUjX
-         JdeHYd38nVximE3W1RBn7AXOGGTcJdz+vvIT0bgke7SU5uxhM28YBZIDwxVY+YV1guoi
-         M5DQ==
+        bh=NwhbRd6Nda2nJmrC1VjdWIQ0w2RnDxD9VGxxWica+fA=;
+        b=tW0sibNufkvI6BamDgrPIBrtPLeDsXTICTcA5r8dLpuIBjINjYNEQDK6Ksvg55pUQw
+         MKM4+9c4NR3p5iXL4AMb2zKmq9vKzRXGIoe3y1zsKfbRO0eIIfKGWLproFwfV5gaM4k7
+         36docd2sbCrb6YIGGgVLL+k7bP+4eNux5TNgLDUJHzER8FtWbPI7vP07a/rfSkdTXZCr
+         2+ZVazXrqpJ15AWfbp2sUxriQi1GKClPO4R0z4dvuduGrJP71KB+gYaKaqjtCdcdbK9u
+         MZxKudABBKFDv1sW+2ckqhnMhniN81Pozdf+QL3Difq0p7FdOfIhJe0K3xLyGI+UpRDj
+         AGNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=YqqvcKvjKRDjV+myUI56V8EaBEFO8mDpVdLV0MfyQso=;
-        b=Py2MAT8XVknOxqMFvMtWrdS8GF3wRuL52q3FJYYkdoiwj80u4AW/P9xTDXQtqPzWs6
-         WKBvbZaqg4codIwaAjwFCjkBowhbseXSIMl0WXduRWBeSM3XOLhfT1bjGe5FmCv10n7b
-         R1DdFpCMVNVWIg+uKHNR/Svw+cnlzrwbWOeIGhjpsuJT6TMvMUiS+9ZUqYOUm3GljTy7
-         bQLXerHLxVwMvipspmKhZn97WquHO9iWYIsps9VzWTS8kuJSL5D5tJIdESdXLNIgzObD
-         jxk22hJjowfI9ygqhkWYqhCRfxbDGgfQiOZc6/4SsxWqftKhnvBO2LGT89YEoV8ccKbU
-         7w5g==
-X-Gm-Message-State: AOAM5318R8IMR97CoTWdYlcq5RzkoheuRkVPs48kHD7TTMCDcNANbIfh
-        kQcQ0OCG/Qay0NNMh+zqAhbuXcI9lUoz4vzZc2blWLXS/XdBFkosQDjvjJeYBEV7MnZCOmrc87c
-        MTAos4TZz72MeohZ1Cr/olGrvjqnuQ7m+tPXtPrQQwHvC9E/UIZAvGMW0GnII/5kXGSZF0oLxQg
-        GokeF6ERZvINs=
-X-Google-Smtp-Source: ABdhPJzGsHR0TK+23onShcUmyQ6LNDz9L15QXBOGuyPWo5lsCrU0pjxIwbJNZwf2vqkJhdm92RzWVkNoQzJ8pKcTqw==
+        bh=NwhbRd6Nda2nJmrC1VjdWIQ0w2RnDxD9VGxxWica+fA=;
+        b=uhIAGwaBundzaD6Cu2qkfnyFLGD9DH99NNZuBWiBhEOBaSTFaMXo5BNZQU8+Ox6gxq
+         mlF9BpzWxM79KePWBslVi09Ax8uhoHOWYp6Xn9VYTz9XTrrffWx2xFzHNa1GaEKP7nex
+         vAmI8oxjrDRDhlJ2xNaOx/S8PDVdiEh+EWoJYk5SyWJNu4Wq6ACJVK5//abEP6BAIxRA
+         nQh+h62nFmFkeFy9H8tZrEdD9XfptrX/d2kOrTv4Z5rFDJpSUU0SS78UAWo3jnrkVZ2W
+         PZUwuuxSu5qmLStxcTpc06DWlrR/d3S9i7DnG78lw+aV/bkuu8RllbuMaZw+l/jBgoCd
+         OivA==
+X-Gm-Message-State: AOAM531mHPwNUkYNkEPLpFxfFO4d6s24mjPolbw8xZZTAjR3XOLlPcx4
+        ReJl4S0oeUjXaGfbkSXHG53Yq2rtQ30OFgcakS24GIf50yMpYem7aPp8HnjBAPZI01alAHN06DY
+        XktQZYMSFJ2i2rFNqcsglDvJusaKoF0xpzHdkAmEHZxGjnoNL8/NgaaT7+Zy7LG1Uu6sm0JX1Fv
+        DPnXNY3OSyTsQ=
+X-Google-Smtp-Source: ABdhPJzmSvxaH++Chu+mvdDv/eEMk44UnLEwaXz48FKYP2dS7r24twbza6YhQpqYTnHKyDflSwxpqBHss/OlTb0CUg==
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:69a3:595f:8267:f7e0])
- (user=howardchung job=sendgmr) by 2002:a17:903:189:b029:12b:3fd7:d95d with
- SMTP id z9-20020a1709030189b029012b3fd7d95dmr30633812plg.24.1626938642393;
- Thu, 22 Jul 2021 00:24:02 -0700 (PDT)
-Date:   Thu, 22 Jul 2021 15:23:20 +0800
+ (user=howardchung job=sendgmr) by 2002:a0c:ec02:: with SMTP id
+ y2mr39785420qvo.61.1626938645644; Thu, 22 Jul 2021 00:24:05 -0700 (PDT)
+Date:   Thu, 22 Jul 2021 15:23:21 +0800
 In-Reply-To: <20210722072321.1225119-1-howardchung@google.com>
-Message-Id: <20210722152159.Bluez.v2.10.Ib26c0abdbd417673a8b5788c175c06110726a68c@changeid>
+Message-Id: <20210722152159.Bluez.v2.11.I433ab6a7ac1d4f8f8dea496ac14bdbf3597015d3@changeid>
 Mime-Version: 1.0
 References: <20210722072321.1225119-1-howardchung@google.com>
 X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
-Subject: [Bluez PATCH v2 10/11] plugins/admin_policy: persist policy settings
+Subject: [Bluez PATCH v2 11/11] doc: add description of admin policy
 From:   Howard Chung <howardchung@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
 Cc:     Yun-Hao Chung <howardchung@chromium.org>,
@@ -66,240 +65,88 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Yun-Hao Chung <howardchung@chromium.org>
 
-This adds code to store the ServiceAllowlist to file
-/var/lib/bluetooth/{MAC_ADDR}/admin_policy
-The stored settings will be loaded upon admin_policy initialized.
+This adds admin-pocliy-api.txt.
 
 Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 ---
-The following test steps were performed:
-1. Set ServiceAllowlist to ["1124","180A","180F","1812", "1801"]
-2. restart bluetoothd
-3. Verify ServiceAllowlist is ["1124","180A","180F","1812","1801"] in
-   UUID-128 form
-4. Set ServiceAllowlist to []
-5. restart bluetoothd
-6. Verify ServiceAllowlist is []
 
 (no changes since v1)
 
- plugins/admin_policy.c | 163 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 162 insertions(+), 1 deletion(-)
+ doc/admin-policy-api.txt | 65 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
+ create mode 100644 doc/admin-policy-api.txt
 
-diff --git a/plugins/admin_policy.c b/plugins/admin_policy.c
-index 3ce72b56b529..3a55d97b3b4d 100644
---- a/plugins/admin_policy.c
-+++ b/plugins/admin_policy.c
-@@ -14,6 +14,8 @@
- 
- #include <dbus/dbus.h>
- #include <gdbus/gdbus.h>
-+#include <sys/file.h>
-+#include <sys/stat.h>
- 
- #include "lib/bluetooth.h"
- #include "lib/uuid.h"
-@@ -24,11 +26,13 @@
- #include "src/error.h"
- #include "src/log.h"
- #include "src/plugin.h"
-+#include "src/textfile.h"
- 
- #include "src/shared/queue.h"
- 
- #define ADMIN_POLICY_SET_INTERFACE	"org.bluez.AdminPolicySet1"
- #define ADMIN_POLICY_STATUS_INTERFACE	"org.bluez.AdminPolicyStatus1"
-+#define ADMIN_POLICY_STORAGE		STORAGEDIR "/admin_policy_settings"
- 
- #define DBUS_BLUEZ_SERVICE		"org.bluez"
- #define BTD_DEVICE_INTERFACE		"org.bluez.Device1"
-@@ -162,6 +166,8 @@ static void update_device_affected(void *data, void *user_data)
- 			ADMIN_POLICY_STATUS_INTERFACE, "AffectedByPolicy");
- }
- 
-+static void store_policy_settings(struct btd_admin_policy *admin_policy);
+diff --git a/doc/admin-policy-api.txt b/doc/admin-policy-api.txt
+new file mode 100644
+index 000000000000..3f116901dbd7
+--- /dev/null
++++ b/doc/admin-policy-api.txt
+@@ -0,0 +1,65 @@
++BlueZ D-Bus Admin Policy API description
++***********************************
 +
- static DBusMessage *set_service_allowlist(DBusConnection *conn,
- 					DBusMessage *msg, void *user_data)
- {
-@@ -180,7 +186,9 @@ static DBusMessage *set_service_allowlist(DBusConnection *conn,
- 		return btd_error_invalid_args(msg);
- 	}
- 
--	if (!service_allowlist_set(admin_policy, uuid_list)) {
-+	if (service_allowlist_set(admin_policy, uuid_list)) {
-+		store_policy_settings(admin_policy);
-+	} else {
- 		free_service_allowlist(uuid_list);
- 		return btd_error_failed(msg, "service_allowlist_set failed");
- 	}
-@@ -238,6 +246,158 @@ static const GDBusPropertyTable admin_policy_adapter_properties[] = {
- 	{ }
- };
- 
-+static void free_uuid_strings(char **uuid_strs, int num)
-+{
-+	gsize i;
++This API provides methods to control the behavior of bluez as an administrator.
 +
-+	for (i = 0; i < num; i++)
-+		g_free(uuid_strs[i]);
-+	g_free(uuid_strs);
-+}
++Interface AdminPolicySet1 provides methods to set policies. Once the policy is
++set successfully, it will affect all clients and stay persistently even after
++restarting Bluetooth Daemon. The only way to clear it is to overwrite the
++policy with the same method.
 +
-+static char **new_uuid_strings(struct queue *allowlist, gsize *num)
-+{
-+	const struct queue_entry *entry = NULL;
-+	bt_uuid_t *uuid = NULL;
-+	char **uuid_strs = NULL;
-+	gsize i = 0, allowlist_num;
++Interface AdminPolicyStatus1 provides readonly properties to indicate the
++current values of admin policy.
 +
-+	allowlist_num = queue_length(allowlist);
-+	uuid_strs = g_try_malloc_n(allowlist_num, sizeof(char *));
-+	if (!uuid_strs)
-+		return NULL;
 +
-+	for (entry = queue_get_entries(allowlist); entry != NULL;
-+							entry = entry->next) {
-+		uuid = entry->data;
-+		uuid_strs[i] = g_try_malloc0(MAX_LEN_UUID_STR * sizeof(char));
++Admin Policy Set hierarchy
++=================
 +
-+		if (!uuid_strs[i])
-+			goto failed;
++Service		org.bluez
++Interface	org.bluez.AdminPolicySet1
++Object path	[variable prefix]/{hci0,hci1,...}
 +
-+		bt_uuid_to_string(uuid, uuid_strs[i], MAX_LEN_UUID_STR);
-+		i++;
-+	}
++Methods		void SetServiceAllowList(array{string} UUIDs)
 +
-+	*num = allowlist_num;
-+	return uuid_strs;
++			This method sets the service allowlist by specifying
++			service UUIDs.
 +
-+failed:
-+	free_uuid_strings(uuid_strs, i);
++			When SetServiceAllowList is called, bluez will block
++			incoming and outgoing connections to the service not in
++			UUIDs for all of the clients.
 +
-+	return NULL;
-+}
++			Any subsequent calls to this method will supersede any
++			previously set allowlist values.  Calling this method
++			with an empty array will allow any service UUIDs to be
++			used.
 +
-+static void store_policy_settings(struct btd_admin_policy *admin_policy)
-+{
-+	GKeyFile *key_file = NULL;
-+	char *filename = ADMIN_POLICY_STORAGE;
-+	char *key_file_data = NULL;
-+	char **uuid_strs = NULL;
-+	gsize length, num_uuids;
++			The default value is an empty array.
 +
-+	key_file = g_key_file_new();
++			Possible errors: org.bluez.Error.InvalidArguments
++					 org.bluez.Error.Failed
 +
-+	if (num_uuids) {
-+		uuid_strs = new_uuid_strings(admin_policy->service_allowlist,
-+								&num_uuids);
-+	}
 +
-+	if (!uuid_strs && num_uuids) {
-+		btd_error(admin_policy->adapter_id,
-+					"Failed to allocate uuid strings");
-+		goto failed;
-+	}
++Admin Policy Status hierarchy
++=================
 +
-+	g_key_file_set_string_list(key_file, "General", "ServiceAllowlist",
-+					(const gchar * const *)uuid_strs,
-+					num_uuids);
++Service		org.bluez
++Interface	org.bluez.AdminPolicyStatus1
++Object path	[variable prefix]/{hci0,hci1,...}
 +
-+	if (create_file(ADMIN_POLICY_STORAGE, 0600) < 0) {
-+		btd_error(admin_policy->adapter_id, "create %s failed, %s",
-+						filename, strerror(errno));
-+		goto failed;
-+	}
++Properties	array{string} ServiceAllowList [readonly]
 +
-+	key_file_data = g_key_file_to_data(key_file, &length, NULL);
-+	g_file_set_contents(ADMIN_POLICY_STORAGE, key_file_data, length, NULL);
++			Current value of service allow list.
 +
-+	g_free(key_file_data);
-+	free_uuid_strings(uuid_strs, num_uuids);
 +
-+failed:
-+	g_key_file_free(key_file);
-+}
 +
-+static void key_file_load_service_allowlist(GKeyFile *key_file,
-+					struct btd_admin_policy *admin_policy)
-+{
-+	GError *gerr = NULL;
-+	struct queue *uuid_list = NULL;
-+	gchar **uuids = NULL;
-+	gsize num, i;
++Admin Policy Status hierarchy
++=================
 +
-+	uuids = g_key_file_get_string_list(key_file, "General",
-+					"ServiceAllowlist", &num, &gerr);
++Service		org.bluez
++Interface	org.bluez.AdminPolicyStatus1
++Object path	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
 +
-+	if (gerr) {
-+		btd_error(admin_policy->adapter_id,
-+					"Failed to load ServiceAllowlist");
-+		g_error_free(gerr);
-+		return;
-+	}
++Properties	bool IsAffectedByPolicy [readonly]
 +
-+	uuid_list = queue_new();
-+	for (i = 0; i < num; i++) {
-+		bt_uuid_t *uuid = g_try_malloc(sizeof(*uuid));
-+
-+		if (!uuid)
-+			goto failed;
-+
-+		if (bt_string_to_uuid(uuid, *uuids)) {
-+
-+			btd_error(admin_policy->adapter_id,
-+					"Failed to convert '%s' to uuid struct",
-+					*uuids);
-+
-+			g_free(uuid);
-+			goto failed;
-+		}
-+
-+		queue_push_tail(uuid_list, uuid);
-+		uuids++;
-+	}
-+
-+	if (!service_allowlist_set(admin_policy, uuid_list))
-+		goto failed;
-+
-+	return;
-+failed:
-+	free_service_allowlist(uuid_list);
-+}
-+
-+static void load_policy_settings(struct btd_admin_policy *admin_policy)
-+{
-+	GKeyFile *key_file;
-+	char *filename = ADMIN_POLICY_STORAGE;
-+	struct stat st;
-+
-+	if (stat(filename, &st) < 0) {
-+		btd_error(admin_policy->adapter_id,
-+				"Failed to get file %s information",
-+				filename);
-+		return;
-+	}
-+
-+	key_file = g_key_file_new();
-+
-+	g_key_file_load_from_file(key_file, filename, 0, NULL);
-+
-+	key_file_load_service_allowlist(key_file, admin_policy);
-+
-+	g_key_file_free(key_file);
-+}
-+
- static bool device_data_match(const void *a, const void *b)
- {
- 	const struct device_data *data = a;
-@@ -410,6 +570,7 @@ static int admin_policy_adapter_probe(struct btd_adapter *adapter)
- 	if (!policy_data)
- 		return -ENOMEM;
- 
-+	load_policy_settings(policy_data);
- 	adapter_path = adapter_get_path(adapter);
- 
- 	if (!g_dbus_register_interface(dbus_conn, adapter_path,
++			Indicate if there is any auto-connect profile in this
++			device is not allowed by admin policy.
 -- 
 2.32.0.402.g57bb445576-goog
 
