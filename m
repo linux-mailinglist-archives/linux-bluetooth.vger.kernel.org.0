@@ -2,58 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DC073D1EEC
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jul 2021 09:24:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7827F3D1EF4
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jul 2021 09:24:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230479AbhGVGnx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 22 Jul 2021 02:43:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60840 "EHLO
+        id S231186AbhGVGn7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 22 Jul 2021 02:43:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230401AbhGVGnq (ORCPT
+        with ESMTP id S230100AbhGVGnv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 22 Jul 2021 02:43:46 -0400
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71AA7C0613C1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:23:48 -0700 (PDT)
-Received: by mail-qk1-x74a.google.com with SMTP id b127-20020a3799850000b02903b960837cbfso3497681qke.10
-        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:23:48 -0700 (PDT)
+        Thu, 22 Jul 2021 02:43:51 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC426C061798
+        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:23:51 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id p10-20020a17090a428ab0290175556801d5so3814021pjg.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=3RzARyeA9VtTGtAa3E7y9kePca8BVndJk3b2KzsXxHU=;
-        b=AbWcmIR150vCA4URhfHrLZLe6XJMrU4Bowi8ru7HnYiaG6n+8pHLe7IlX9gvOHJHUe
-         ouoksfx/z/fjYV2akaIQ6QOoPL9deAYh5O3Jb1dDqZWNCdzpA5YMdUb+NVdjNal8WOAx
-         PN12E8w2VSQaaKO7HDyVYBGY4IF0W8oAgQgsQH3RpBtpRSQJS1llYEcDQviYwUxBtseh
-         gNKFWpcomTSt2ektsz7GJsMEZtw7x3IFhWtIhY5HgRluNDooCingeKAnBCRki2ZSwaBc
-         yMSlnG6VpXYXBa/Vti4JSnOR6SiYQanRs2gPpwqtXnzPOAgipsR3rxF9s6JnThigm5WY
-         mR0Q==
+        bh=H7qAJRqdqyfxprqmam5PyjQtsjrQGuynANBGFDFSws0=;
+        b=hySnIV0nCtrp0H8HJ1UhmP+xVCooWVARg8fXjU4WQLg4nKIpAPLmk5AgVe3XmAuWVB
+         6oQEVw4z+TpJYzIXP1vhGQsgEEuZmkXo+8A/boFJrOFLAvttUaNS0tmZluoojOk4aSkm
+         9L57dnxQb0KRipZJfVcQErtdROCjRM5EkMfVRwi/swpdYVfyt/EF7Yyx2DnGfeSt4Vtd
+         O1Sxi1YRV5kQGmHhp05mYcHBCeDwMFy+eNoc30tWsgWjq+vKMFcGELBD4KW6/AReamYx
+         vTWZd8H4fLrU7Ne+13FvPn0u+1jIfLpEFFwKTECJQcvvsukIIG0JcjCV2Ab1DoUgheVF
+         UrWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=3RzARyeA9VtTGtAa3E7y9kePca8BVndJk3b2KzsXxHU=;
-        b=n11TNtEaGGJU0zlvy1FgP6hTMxFnPMQhHdYETBQjt4cTcVmuC/m7kNjvQsA4gZ2PUP
-         IYrvRmrU5WZXZcmZlKAE2zyNA4mNbeJAQkMJ/CRjfh1Mkt1kNC+kF/9wfdOhzSd9SV6J
-         9Cx2sCnnIdQSqaWoQDxl2psOAgYjh7jDKOyBDcMM2CUZukJmnjrp8X6d/A1Ur5dBG+Xh
-         fy6qu9NJe8HdxFveugkx0hA00SnWEBRMe9qYUD+2JkL+s3Dtlz83WOBqB6x2wm9WEupE
-         vj5eHarixAQIaLQ++XCpnxcOr/rsLoXgZM2j/Mphyh1xMiZzIbidLXP996xaOwK499tY
-         qffQ==
-X-Gm-Message-State: AOAM532ddL/aaSsDeBuWxqF3SP0lfREobKpceRdgwBtsQI6p1eTul++h
-        32uCWQym07/RfCG+WNc42DQeuvxf853O1dbYzBq5miQFO6/ecgK7dCXgeUanj1h2rBsu66sMXJX
-        npbo2Qr7PwUaA4CgvKPnBmEGl/20+wDB54ltT9uwqovbhVigeVtkKgb4oOQd+1Vyz4/1XNJsZtZ
-        pfrqU+x6m1nas=
-X-Google-Smtp-Source: ABdhPJwCtyp9wbGzsFt4v8gKUVSjn6TPUk2vsCNbijzr3/OhBisN2tKb4EIlLwRb9+muzolyhKxd0ueK3+e5ZV9g+w==
+        bh=H7qAJRqdqyfxprqmam5PyjQtsjrQGuynANBGFDFSws0=;
+        b=WCzU37VdDjcUzHhSjbqSQ3zj5G1nk/+0jEf9yY0HToiWyX0qvYOJiOePj682rn30XC
+         iiQYs0vSQKOxtUNrYKHWuQy+cJV8hmHTsq0g2ZlGtQp/1wAGJ2av2MAA9cr1dJj2znB6
+         1oaoId04cw5qbBdFL5rmsmQBuMreH21k6B07Kbvl9+Gc2hvPfDe2DBU1bRhIMyFdNB+s
+         fj0Cf/jQTTPtwTcKJruNFJZa6POhelzEXIXYObf+q3EvKO3yvxmBCqM0Ml7rZe2fgn7c
+         nE/yhJjS7kP2jqiBTW9K3udFHg6TR5n4Ojj59f4MAbRJDmS+SBODLaG2RliIAoo/x5zh
+         QwCg==
+X-Gm-Message-State: AOAM531+yNkHSaj2cj4NlXqVjP1YPrFu54jYnrW0f8FfP487g8bXUFVy
+        QvpsEzxWt/W2AO5Efeimu2ZeX9uOC1z1Bw8miRV1xEOBDzbztwCiSNTrQ2PXX1+6O6mFhue+9b7
+        Aux1Bt4wpLGAhDJgPVOIQuSLO0MrSsFgW1Sh0cf0hk8JoWpYOI39eu/kiYa6bKhqRfn7JXnPVJh
+        m7Yhmdap1xp+E=
+X-Google-Smtp-Source: ABdhPJwSFz39VQ+t+5Q1HrcLWXFa7vwnrqsomIsx0HY7L4LQD0fXColD4gxOBwZIgQkG9eiX0nhn0OSTPaKn+Xtl4Q==
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:69a3:595f:8267:f7e0])
- (user=howardchung job=sendgmr) by 2002:a05:6214:27e7:: with SMTP id
- jt7mr40384914qvb.28.1626938627453; Thu, 22 Jul 2021 00:23:47 -0700 (PDT)
-Date:   Thu, 22 Jul 2021 15:23:16 +0800
+ (user=howardchung job=sendgmr) by 2002:a62:ab0a:0:b029:33b:6d08:2a45 with
+ SMTP id p10-20020a62ab0a0000b029033b6d082a45mr27788651pff.38.1626938631178;
+ Thu, 22 Jul 2021 00:23:51 -0700 (PDT)
+Date:   Thu, 22 Jul 2021 15:23:17 +0800
 In-Reply-To: <20210722072321.1225119-1-howardchung@google.com>
-Message-Id: <20210722152159.Bluez.v2.6.Ifbb69dd6e371da3a914049a94615064479b9024b@changeid>
+Message-Id: <20210722152159.Bluez.v2.7.I00fd6c348e4c93501de6de0eae0d23436fd3895b@changeid>
 Mime-Version: 1.0
 References: <20210722072321.1225119-1-howardchung@google.com>
 X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
-Subject: [Bluez PATCH v2 06/11] plugins/admin_policy: add ServiceAllowList method
+Subject: [Bluez PATCH v2 07/11] plugins/admin_policy: add ServiceAllowList property
 From:   Howard Chung <howardchung@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
 Cc:     Yun-Hao Chung <howardchung@chromium.org>,
@@ -65,225 +66,118 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Yun-Hao Chung <howardchung@chromium.org>
 
-This adds code to register interface org.bluez.AdminPolicySet1.
-The interface will provide methods to limit users to operate certain
-functions of bluez, such as allow/disallow user to taggle adapter power,
-or only allow users to connect services in the specified list, etc.
+This adds code to register interface org.bluez.AdminPolicyStatus.
+The interface will provide read-only properties to indicate the current
+settings of admin policies. We separate this from AdminPolicySet so that
+normal clients can check current policy settings while only a few
+clients can change policies.
 
-This patch also implements ServiceAllowlist in
-org.bluez.AdminPolicySet1.
+This patch also adds readonly property ServiceAllowlist to
+AdminPolicyStatus1, which indicates the current setting of service
+allowlist.
 
 Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 ---
 The following test steps were performed:
-1. Set ServiceAllowList to
-   ["1108","110A","110B","110C","110D","110E",
-   "110F","1112","111E","111F","1203"]
-   ( users are only allowed to connect headset )
-2. Turn on paired WF1000XM3, and listen music on Youtube.
-3. Turn on paired K830 (LE device), press any key on keyboard.
-4. Turn on paired Samsung Bluetooth Keyboard EE-BT550 (BREDR device),
-   press any key on keyboard.
-5. Set ServiceAllowList to
-   ["1124","180A","180F","1812"]
-   ( users are only allowed to connect HID devices )
-6. Turn on paired WF1000XM3, and listen music on Youtube.
-7. Turn on paired K830 (LE device), press any key on keyboard.
-8. Turn on paired Samsung Bluetooth Keyboard EE-BT550 (BREDR device),
-   press any key on keyboard.
-9. Set ServiceAllowList to []
-   ( users are only allowed to connect any device. )
-10. Turn on paired WF1000XM3, and listen music on Youtube.
-11. Turn on paired K830 (LE device), press any key on keyboard.
-12. Turn on paired Samsung Bluetooth Keyboard EE-BT550 (BREDR device),
-   press any key on keyboard.
-
-Expected results:
-Step 2,7,8,9,10,11 should success, and step 3,4,6 should fail.
+1. Set ServiceAllowList to ["1124","180A","180F","1812"]
+2. Verify ServiceAllowList is ["1124","180A","180F","1812"] in UUID-128
+   form
+3. Set ServiceAllowList to []
+4. Verify ServiceAllowList is []
 
 (no changes since v1)
 
- plugins/admin_policy.c | 123 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 122 insertions(+), 1 deletion(-)
+ plugins/admin_policy.c | 58 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
 diff --git a/plugins/admin_policy.c b/plugins/admin_policy.c
-index 2ece871564e6..242b8d5dacb0 100644
+index 242b8d5dacb0..270d42366cd6 100644
 --- a/plugins/admin_policy.c
 +++ b/plugins/admin_policy.c
-@@ -12,19 +12,29 @@
- #include <config.h>
- #endif
- 
-+#include <dbus/dbus.h>
-+#include <gdbus/gdbus.h>
-+
- #include "lib/bluetooth.h"
-+#include "lib/uuid.h"
- 
- #include "src/adapter.h"
-+#include "src/dbus-common.h"
- #include "src/error.h"
- #include "src/log.h"
- #include "src/plugin.h"
- 
+@@ -27,6 +27,7 @@
  #include "src/shared/queue.h"
  
-+#define ADMIN_POLICY_SET_INTERFACE	"org.bluez.AdminPolicySet1"
+ #define ADMIN_POLICY_SET_INTERFACE	"org.bluez.AdminPolicySet1"
++#define ADMIN_POLICY_STATUS_INTERFACE	"org.bluez.AdminPolicyStatus1"
+ 
+ static DBusConnection *dbus_conn;
+ 
+@@ -151,6 +152,11 @@ static DBusMessage *set_service_allowlist(DBusConnection *conn,
+ 		return btd_error_failed(msg, "service_allowlist_set failed");
+ 	}
+ 
++	g_dbus_emit_property_changed(dbus_conn,
++					adapter_get_path(policy_data->adapter),
++					ADMIN_POLICY_STATUS_INTERFACE,
++					"ServiceAllowList");
 +
-+static DBusConnection *dbus_conn;
-+
- /* |policy_data| has the same life cycle as btd_adapter */
- static struct btd_admin_policy {
- 	struct btd_adapter *adapter;
- 	uint16_t adapter_id;
-+	struct queue *service_allowlist;
- } *policy_data = NULL;
- 
- static struct btd_admin_policy *admin_policy_new(struct btd_adapter *adapter)
-@@ -40,17 +50,116 @@ static struct btd_admin_policy *admin_policy_new(struct btd_adapter *adapter)
- 
- 	admin_policy->adapter = adapter;
- 	admin_policy->adapter_id = btd_adapter_get_index(adapter);
-+	admin_policy->service_allowlist = NULL;
- 
- 	return admin_policy;
+ 	return dbus_message_new_method_return(msg);
  }
  
-+static void free_service_allowlist(struct queue *q)
-+{
-+	queue_destroy(q, g_free);
-+}
-+
- static void admin_policy_free(void *data)
- {
- 	struct btd_admin_policy *admin_policy = data;
+@@ -160,6 +166,43 @@ static const GDBusMethodTable admin_policy_adapter_methods[] = {
+ 	{ }
+ };
  
-+	free_service_allowlist(admin_policy->service_allowlist);
- 	g_free(admin_policy);
- }
- 
-+static struct queue *parse_allow_service_list(struct btd_adapter *adapter,
-+							DBusMessage *msg)
++void append_service_uuid(void *data, void *user_data)
 +{
-+	DBusMessageIter iter, arr_iter;
-+	struct queue *uuid_list = NULL;
++	bt_uuid_t *uuid = data;
++	DBusMessageIter *entry = user_data;
++	char uuid_str[MAX_LEN_UUID_STR];
++	const char *uuid_str_ptr = uuid_str;
 +
-+	dbus_message_iter_init(msg, &iter);
-+	if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_ARRAY)
-+		return NULL;
++	if (!uuid) {
++		error("Unexpected NULL uuid data in service_allowlist");
++		return;
++	}
 +
-+	uuid_list = queue_new();
-+	dbus_message_iter_recurse(&iter, &arr_iter);
-+	do {
-+		const int type = dbus_message_iter_get_arg_type(&arr_iter);
-+		char *uuid_param;
-+		bt_uuid_t *uuid;
-+
-+		if (type == DBUS_TYPE_INVALID)
-+			break;
-+
-+		if (type != DBUS_TYPE_STRING)
-+			goto failed;
-+
-+		dbus_message_iter_get_basic(&arr_iter, &uuid_param);
-+
-+		uuid = g_try_malloc(sizeof(*uuid));
-+		if (!uuid)
-+			goto failed;
-+
-+		if (bt_string_to_uuid(uuid, uuid_param)) {
-+			g_free(uuid);
-+			goto failed;
-+		}
-+
-+		queue_push_head(uuid_list, uuid);
-+
-+		dbus_message_iter_next(&arr_iter);
-+	} while (true);
-+
-+	return uuid_list;
-+
-+failed:
-+	queue_destroy(uuid_list, g_free);
-+	return NULL;
++	bt_uuid_to_string(uuid, uuid_str, MAX_LEN_UUID_STR);
++	dbus_message_iter_append_basic(entry, DBUS_TYPE_STRING, &uuid_str_ptr);
 +}
 +
-+static bool service_allowlist_set(struct btd_admin_policy *admin_policy,
-+							struct queue *uuid_list)
-+{
-+	struct btd_adapter *adapter = admin_policy->adapter;
-+
-+	if (!btd_adapter_set_allowed_uuids(adapter, uuid_list))
-+		return false;
-+
-+	free_service_allowlist(admin_policy->service_allowlist);
-+	admin_policy->service_allowlist = uuid_list;
-+
-+	return true;
-+}
-+
-+static DBusMessage *set_service_allowlist(DBusConnection *conn,
-+					DBusMessage *msg, void *user_data)
++static gboolean property_get_service_allowlist(
++					const GDBusPropertyTable *property,
++					DBusMessageIter *iter, void *user_data)
 +{
 +	struct btd_admin_policy *admin_policy = user_data;
-+	struct btd_adapter *adapter = admin_policy->adapter;
-+	struct queue *uuid_list = NULL;
-+	const char *sender = dbus_message_get_sender(msg);
++	DBusMessageIter entry;
 +
-+	DBG("sender %s", sender);
++	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
++					DBUS_TYPE_STRING_AS_STRING, &entry);
++	queue_foreach(admin_policy->service_allowlist, append_service_uuid,
++									&entry);
++	dbus_message_iter_close_container(iter, &entry);
 +
-+	/* Parse parameters */
-+	uuid_list = parse_allow_service_list(adapter, msg);
-+	if (!uuid_list) {
-+		btd_error(admin_policy->adapter_id,
-+				"Failed on parsing allowed service list");
-+		return btd_error_invalid_args(msg);
-+	}
-+
-+	if (!service_allowlist_set(admin_policy, uuid_list)) {
-+		free_service_allowlist(uuid_list);
-+		return btd_error_failed(msg, "service_allowlist_set failed");
-+	}
-+
-+	return dbus_message_new_method_return(msg);
++	return TRUE;
 +}
 +
-+static const GDBusMethodTable admin_policy_adapter_methods[] = {
-+	{ GDBUS_METHOD("SetServiceAllowList", GDBUS_ARGS({ "UUIDs", "as" }),
-+						NULL, set_service_allowlist) },
++static const GDBusPropertyTable admin_policy_adapter_properties[] = {
++	{ "ServiceAllowList", "as", property_get_service_allowlist },
 +	{ }
 +};
 +
  static int admin_policy_adapter_probe(struct btd_adapter *adapter)
  {
  	if (policy_data) {
-@@ -64,8 +173,18 @@ static int admin_policy_adapter_probe(struct btd_adapter *adapter)
- 	if (!policy_data)
- 		return -ENOMEM;
+@@ -185,6 +228,21 @@ static int admin_policy_adapter_probe(struct btd_adapter *adapter)
  
--	btd_info(policy_data->adapter_id, "Admin Policy has been enabled");
+ 	btd_info(policy_data->adapter_id,
+ 				"Admin Policy Set interface registered");
++
 +	if (!g_dbus_register_interface(dbus_conn, adapter_get_path(adapter),
-+					ADMIN_POLICY_SET_INTERFACE,
-+					admin_policy_adapter_methods, NULL,
-+					NULL, policy_data, admin_policy_free)) {
++					ADMIN_POLICY_STATUS_INTERFACE,
++					NULL, NULL,
++					admin_policy_adapter_properties,
++					policy_data, admin_policy_free)) {
 +		btd_error(policy_data->adapter_id,
-+			"Admin Policy Set interface init failed on path %s",
++			"Admin Policy Status interface init failed on path %s",
 +						adapter_get_path(adapter));
 +		return -EINVAL;
 +	}
- 
-+	btd_info(policy_data->adapter_id,
-+				"Admin Policy Set interface registered");
- 	return 0;
- }
- 
-@@ -79,6 +198,8 @@ static int admin_policy_init(void)
- {
- 	DBG("");
- 
-+	dbus_conn = btd_get_dbus_connection();
 +
- 	return btd_register_adapter_driver(&admin_policy_driver);
++	btd_info(policy_data->adapter_id,
++				"Admin Policy Status interface registered");
++
+ 	return 0;
  }
  
 -- 
