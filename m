@@ -2,151 +2,189 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C11CB3D1EF5
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jul 2021 09:24:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCE803D1F2B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jul 2021 09:43:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230343AbhGVGoA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 22 Jul 2021 02:44:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32774 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230501AbhGVGny (ORCPT
+        id S230100AbhGVHC3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 22 Jul 2021 03:02:29 -0400
+Received: from www262.sakura.ne.jp ([202.181.97.72]:54745 "EHLO
+        www262.sakura.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229547AbhGVHC2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 22 Jul 2021 02:43:54 -0400
-Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D8CC0617A0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:24:06 -0700 (PDT)
-Received: by mail-qk1-x749.google.com with SMTP id y5-20020a37af050000b02903a9c3f8b89fso3532882qke.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:24:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=NwhbRd6Nda2nJmrC1VjdWIQ0w2RnDxD9VGxxWica+fA=;
-        b=tW0sibNufkvI6BamDgrPIBrtPLeDsXTICTcA5r8dLpuIBjINjYNEQDK6Ksvg55pUQw
-         MKM4+9c4NR3p5iXL4AMb2zKmq9vKzRXGIoe3y1zsKfbRO0eIIfKGWLproFwfV5gaM4k7
-         36docd2sbCrb6YIGGgVLL+k7bP+4eNux5TNgLDUJHzER8FtWbPI7vP07a/rfSkdTXZCr
-         2+ZVazXrqpJ15AWfbp2sUxriQi1GKClPO4R0z4dvuduGrJP71KB+gYaKaqjtCdcdbK9u
-         MZxKudABBKFDv1sW+2ckqhnMhniN81Pozdf+QL3Difq0p7FdOfIhJe0K3xLyGI+UpRDj
-         AGNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=NwhbRd6Nda2nJmrC1VjdWIQ0w2RnDxD9VGxxWica+fA=;
-        b=uhIAGwaBundzaD6Cu2qkfnyFLGD9DH99NNZuBWiBhEOBaSTFaMXo5BNZQU8+Ox6gxq
-         mlF9BpzWxM79KePWBslVi09Ax8uhoHOWYp6Xn9VYTz9XTrrffWx2xFzHNa1GaEKP7nex
-         vAmI8oxjrDRDhlJ2xNaOx/S8PDVdiEh+EWoJYk5SyWJNu4Wq6ACJVK5//abEP6BAIxRA
-         nQh+h62nFmFkeFy9H8tZrEdD9XfptrX/d2kOrTv4Z5rFDJpSUU0SS78UAWo3jnrkVZ2W
-         PZUwuuxSu5qmLStxcTpc06DWlrR/d3S9i7DnG78lw+aV/bkuu8RllbuMaZw+l/jBgoCd
-         OivA==
-X-Gm-Message-State: AOAM531mHPwNUkYNkEPLpFxfFO4d6s24mjPolbw8xZZTAjR3XOLlPcx4
-        ReJl4S0oeUjXaGfbkSXHG53Yq2rtQ30OFgcakS24GIf50yMpYem7aPp8HnjBAPZI01alAHN06DY
-        XktQZYMSFJ2i2rFNqcsglDvJusaKoF0xpzHdkAmEHZxGjnoNL8/NgaaT7+Zy7LG1Uu6sm0JX1Fv
-        DPnXNY3OSyTsQ=
-X-Google-Smtp-Source: ABdhPJzmSvxaH++Chu+mvdDv/eEMk44UnLEwaXz48FKYP2dS7r24twbza6YhQpqYTnHKyDflSwxpqBHss/OlTb0CUg==
-X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:69a3:595f:8267:f7e0])
- (user=howardchung job=sendgmr) by 2002:a0c:ec02:: with SMTP id
- y2mr39785420qvo.61.1626938645644; Thu, 22 Jul 2021 00:24:05 -0700 (PDT)
-Date:   Thu, 22 Jul 2021 15:23:21 +0800
-In-Reply-To: <20210722072321.1225119-1-howardchung@google.com>
-Message-Id: <20210722152159.Bluez.v2.11.I433ab6a7ac1d4f8f8dea496ac14bdbf3597015d3@changeid>
-Mime-Version: 1.0
-References: <20210722072321.1225119-1-howardchung@google.com>
-X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
-Subject: [Bluez PATCH v2 11/11] doc: add description of admin policy
-From:   Howard Chung <howardchung@google.com>
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Cc:     Yun-Hao Chung <howardchung@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 22 Jul 2021 03:02:28 -0400
+Received: from fsav315.sakura.ne.jp (fsav315.sakura.ne.jp [153.120.85.146])
+        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTP id 16M7gdCQ049608;
+        Thu, 22 Jul 2021 16:42:39 +0900 (JST)
+        (envelope-from penguin-kernel@I-love.SAKURA.ne.jp)
+Received: from www262.sakura.ne.jp (202.181.97.72)
+ by fsav315.sakura.ne.jp (F-Secure/fsigk_smtp/550/fsav315.sakura.ne.jp);
+ Thu, 22 Jul 2021 16:42:39 +0900 (JST)
+X-Virus-Status: clean(F-Secure/fsigk_smtp/550/fsav315.sakura.ne.jp)
+Received: from localhost.localdomain (M106072142033.v4.enabler.ne.jp [106.72.142.33])
+        (authenticated bits=0)
+        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTPSA id 16M7gXwu049549
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 22 Jul 2021 16:42:39 +0900 (JST)
+        (envelope-from penguin-kernel@I-love.SAKURA.ne.jp)
+From:   Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org, LinMa <linma@zju.edu.cn>,
+        Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Subject: [PATCH] Bluetooth: reorganize functions from hci_sock_sendmsg()
+Date:   Thu, 22 Jul 2021 16:42:08 +0900
+Message-Id: <20210722074208.8040-1-penguin-kernel@I-love.SAKURA.ne.jp>
+X-Mailer: git-send-email 2.18.4
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Yun-Hao Chung <howardchung@chromium.org>
+Since userfaultfd mechanism allows sleeping with kernel lock held,
+avoiding page fault with kernel lock held where possible will make
+the module more robust. This patch just brings memcpy_from_msg() calls
+to out of sock lock.
 
-This adds admin-pocliy-api.txt.
-
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 ---
+ net/bluetooth/hci_sock.c | 50 +++++++++++++++++-----------------------
+ 1 file changed, 21 insertions(+), 29 deletions(-)
 
-(no changes since v1)
-
- doc/admin-policy-api.txt | 65 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
- create mode 100644 doc/admin-policy-api.txt
-
-diff --git a/doc/admin-policy-api.txt b/doc/admin-policy-api.txt
-new file mode 100644
-index 000000000000..3f116901dbd7
---- /dev/null
-+++ b/doc/admin-policy-api.txt
-@@ -0,0 +1,65 @@
-+BlueZ D-Bus Admin Policy API description
-+***********************************
+diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
+index ef7fc3e9d471..7fac44fb771f 100644
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -1535,10 +1535,8 @@ static int hci_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	return err ? : copied;
+ }
+ 
+-static int hci_mgmt_cmd(struct hci_mgmt_chan *chan, struct sock *sk,
+-			struct msghdr *msg, size_t msglen)
++static int hci_mgmt_cmd(struct hci_mgmt_chan *chan, struct sock *sk, void *buf, size_t msglen)
+ {
+-	void *buf;
+ 	u8 *cp;
+ 	struct mgmt_hdr *hdr;
+ 	u16 opcode, index, len;
+@@ -1552,15 +1550,6 @@ static int hci_mgmt_cmd(struct hci_mgmt_chan *chan, struct sock *sk,
+ 	if (msglen < sizeof(*hdr))
+ 		return -EINVAL;
+ 
+-	buf = kmalloc(msglen, GFP_KERNEL);
+-	if (!buf)
+-		return -ENOMEM;
+-
+-	if (memcpy_from_msg(buf, msg, msglen)) {
+-		err = -EFAULT;
+-		goto done;
+-	}
+-
+ 	hdr = buf;
+ 	opcode = __le16_to_cpu(hdr->opcode);
+ 	index = __le16_to_cpu(hdr->index);
+@@ -1657,11 +1646,10 @@ static int hci_mgmt_cmd(struct hci_mgmt_chan *chan, struct sock *sk,
+ 	if (hdev)
+ 		hci_dev_put(hdev);
+ 
+-	kfree(buf);
+ 	return err;
+ }
+ 
+-static int hci_logging_frame(struct sock *sk, struct msghdr *msg, int len)
++static int hci_logging_frame(struct sock *sk, void *buf, int len, unsigned int flags)
+ {
+ 	struct hci_mon_hdr *hdr;
+ 	struct sk_buff *skb;
+@@ -1676,14 +1664,11 @@ static int hci_logging_frame(struct sock *sk, struct msghdr *msg, int len)
+ 	if (len < sizeof(*hdr) + 3)
+ 		return -EINVAL;
+ 
+-	skb = bt_skb_send_alloc(sk, len, msg->msg_flags & MSG_DONTWAIT, &err);
++	skb = bt_skb_send_alloc(sk, len, flags & MSG_DONTWAIT, &err);
+ 	if (!skb)
+ 		return err;
+ 
+-	if (memcpy_from_msg(skb_put(skb, len), msg, len)) {
+-		err = -EFAULT;
+-		goto drop;
+-	}
++	memcpy(skb_put(skb, len), buf, len);
+ 
+ 	hdr = (void *)skb->data;
+ 
+@@ -1753,19 +1738,28 @@ static int hci_sock_sendmsg(struct socket *sock, struct msghdr *msg,
+ 	struct hci_dev *hdev;
+ 	struct sk_buff *skb;
+ 	int err;
++	void *buf;
++	const unsigned int flags = msg->msg_flags;
+ 
+ 	BT_DBG("sock %p sk %p", sock, sk);
+ 
+-	if (msg->msg_flags & MSG_OOB)
++	if (flags & MSG_OOB)
+ 		return -EOPNOTSUPP;
+ 
+-	if (msg->msg_flags & ~(MSG_DONTWAIT|MSG_NOSIGNAL|MSG_ERRQUEUE|
+-			       MSG_CMSG_COMPAT))
++	if (flags & ~(MSG_DONTWAIT | MSG_NOSIGNAL | MSG_ERRQUEUE | MSG_CMSG_COMPAT))
+ 		return -EINVAL;
+ 
+ 	if (len < 4 || len > HCI_MAX_FRAME_SIZE)
+ 		return -EINVAL;
+ 
++	buf = kmalloc(len, GFP_KERNEL);
++	if (!buf)
++		return -ENOMEM;
++	if (memcpy_from_msg(buf, msg, len)) {
++		kfree(buf);
++		return -EFAULT;
++	}
 +
-+This API provides methods to control the behavior of bluez as an administrator.
-+
-+Interface AdminPolicySet1 provides methods to set policies. Once the policy is
-+set successfully, it will affect all clients and stay persistently even after
-+restarting Bluetooth Daemon. The only way to clear it is to overwrite the
-+policy with the same method.
-+
-+Interface AdminPolicyStatus1 provides readonly properties to indicate the
-+current values of admin policy.
-+
-+
-+Admin Policy Set hierarchy
-+=================
-+
-+Service		org.bluez
-+Interface	org.bluez.AdminPolicySet1
-+Object path	[variable prefix]/{hci0,hci1,...}
-+
-+Methods		void SetServiceAllowList(array{string} UUIDs)
-+
-+			This method sets the service allowlist by specifying
-+			service UUIDs.
-+
-+			When SetServiceAllowList is called, bluez will block
-+			incoming and outgoing connections to the service not in
-+			UUIDs for all of the clients.
-+
-+			Any subsequent calls to this method will supersede any
-+			previously set allowlist values.  Calling this method
-+			with an empty array will allow any service UUIDs to be
-+			used.
-+
-+			The default value is an empty array.
-+
-+			Possible errors: org.bluez.Error.InvalidArguments
-+					 org.bluez.Error.Failed
-+
-+
-+Admin Policy Status hierarchy
-+=================
-+
-+Service		org.bluez
-+Interface	org.bluez.AdminPolicyStatus1
-+Object path	[variable prefix]/{hci0,hci1,...}
-+
-+Properties	array{string} ServiceAllowList [readonly]
-+
-+			Current value of service allow list.
-+
-+
-+
-+Admin Policy Status hierarchy
-+=================
-+
-+Service		org.bluez
-+Interface	org.bluez.AdminPolicyStatus1
-+Object path	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
-+
-+Properties	bool IsAffectedByPolicy [readonly]
-+
-+			Indicate if there is any auto-connect profile in this
-+			device is not allowed by admin policy.
+ 	lock_sock(sk);
+ 
+ 	switch (hci_pi(sk)->channel) {
+@@ -1776,13 +1770,13 @@ static int hci_sock_sendmsg(struct socket *sock, struct msghdr *msg,
+ 		err = -EOPNOTSUPP;
+ 		goto done;
+ 	case HCI_CHANNEL_LOGGING:
+-		err = hci_logging_frame(sk, msg, len);
++		err = hci_logging_frame(sk, buf, len, flags);
+ 		goto done;
+ 	default:
+ 		mutex_lock(&mgmt_chan_list_lock);
+ 		chan = __hci_mgmt_chan_find(hci_pi(sk)->channel);
+ 		if (chan)
+-			err = hci_mgmt_cmd(chan, sk, msg, len);
++			err = hci_mgmt_cmd(chan, sk, buf, len);
+ 		else
+ 			err = -EINVAL;
+ 
+@@ -1801,14 +1795,11 @@ static int hci_sock_sendmsg(struct socket *sock, struct msghdr *msg,
+ 		goto done;
+ 	}
+ 
+-	skb = bt_skb_send_alloc(sk, len, msg->msg_flags & MSG_DONTWAIT, &err);
++	skb = bt_skb_send_alloc(sk, len, flags & MSG_DONTWAIT, &err);
+ 	if (!skb)
+ 		goto done;
+ 
+-	if (memcpy_from_msg(skb_put(skb, len), msg, len)) {
+-		err = -EFAULT;
+-		goto drop;
+-	}
++	memcpy(skb_put(skb, len), buf, len);
+ 
+ 	hci_skb_pkt_type(skb) = skb->data[0];
+ 	skb_pull(skb, 1);
+@@ -1880,6 +1871,7 @@ static int hci_sock_sendmsg(struct socket *sock, struct msghdr *msg,
+ 
+ done:
+ 	release_sock(sk);
++	kfree(buf);
+ 	return err;
+ 
+ drop:
 -- 
-2.32.0.402.g57bb445576-goog
+2.18.4
 
