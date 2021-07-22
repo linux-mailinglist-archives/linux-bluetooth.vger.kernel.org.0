@@ -2,59 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7827F3D1EF4
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jul 2021 09:24:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48D293D1EF0
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jul 2021 09:24:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231186AbhGVGn7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 22 Jul 2021 02:43:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60986 "EHLO
+        id S231124AbhGVGn5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 22 Jul 2021 02:43:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230100AbhGVGnv (ORCPT
+        with ESMTP id S230407AbhGVGnv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Thu, 22 Jul 2021 02:43:51 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC426C061798
-        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:23:51 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id p10-20020a17090a428ab0290175556801d5so3814021pjg.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:23:51 -0700 (PDT)
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A27BFC06179C
+        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:23:55 -0700 (PDT)
+Received: by mail-qv1-xf49.google.com with SMTP id eo14-20020ad4594e0000b02902fc3fd31414so3174573qvb.16
+        for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jul 2021 00:23:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=H7qAJRqdqyfxprqmam5PyjQtsjrQGuynANBGFDFSws0=;
-        b=hySnIV0nCtrp0H8HJ1UhmP+xVCooWVARg8fXjU4WQLg4nKIpAPLmk5AgVe3XmAuWVB
-         6oQEVw4z+TpJYzIXP1vhGQsgEEuZmkXo+8A/boFJrOFLAvttUaNS0tmZluoojOk4aSkm
-         9L57dnxQb0KRipZJfVcQErtdROCjRM5EkMfVRwi/swpdYVfyt/EF7Yyx2DnGfeSt4Vtd
-         O1Sxi1YRV5kQGmHhp05mYcHBCeDwMFy+eNoc30tWsgWjq+vKMFcGELBD4KW6/AReamYx
-         vTWZd8H4fLrU7Ne+13FvPn0u+1jIfLpEFFwKTECJQcvvsukIIG0JcjCV2Ab1DoUgheVF
-         UrWw==
+        bh=Nr7d5kbdJgplVMKnxiv3ENfoURCVEJT+N1sNUQI5FVE=;
+        b=CqR6KTfvGq5czm54ovQsXwtakNlwTB5Wi5bVSaZz5x1YqomXRl7YtQCV7w8m4RRoeg
+         9WZTZDqydjNJF7EUeGLLMLENGMptE6efyu1tWvmPZGtQAzU4Pg/XBkFB70qQTHKZcaNk
+         YOVBZ6Vpnt7OoqnHhrw+xu8Z3mmCjQ8DymvyLRnwitgWKrLKvPIPT1nxcQdHe41lgm2k
+         tLSjDWLA3GFMwfgC6vAwKGkMOFI7WXC1Jz8R8c6oijc5yLniWHQDj7q0RAl3L9hrOlfr
+         uwxpWDUFjOsQO9Nl8EN235a0cxWhHxp8D7c9/DtnbL+fk8gfRSFOnvSN5yi0OEHKw4Yj
+         is+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=H7qAJRqdqyfxprqmam5PyjQtsjrQGuynANBGFDFSws0=;
-        b=WCzU37VdDjcUzHhSjbqSQ3zj5G1nk/+0jEf9yY0HToiWyX0qvYOJiOePj682rn30XC
-         iiQYs0vSQKOxtUNrYKHWuQy+cJV8hmHTsq0g2ZlGtQp/1wAGJ2av2MAA9cr1dJj2znB6
-         1oaoId04cw5qbBdFL5rmsmQBuMreH21k6B07Kbvl9+Gc2hvPfDe2DBU1bRhIMyFdNB+s
-         fj0Cf/jQTTPtwTcKJruNFJZa6POhelzEXIXYObf+q3EvKO3yvxmBCqM0Ml7rZe2fgn7c
-         nE/yhJjS7kP2jqiBTW9K3udFHg6TR5n4Ojj59f4MAbRJDmS+SBODLaG2RliIAoo/x5zh
-         QwCg==
-X-Gm-Message-State: AOAM531+yNkHSaj2cj4NlXqVjP1YPrFu54jYnrW0f8FfP487g8bXUFVy
-        QvpsEzxWt/W2AO5Efeimu2ZeX9uOC1z1Bw8miRV1xEOBDzbztwCiSNTrQ2PXX1+6O6mFhue+9b7
-        Aux1Bt4wpLGAhDJgPVOIQuSLO0MrSsFgW1Sh0cf0hk8JoWpYOI39eu/kiYa6bKhqRfn7JXnPVJh
-        m7Yhmdap1xp+E=
-X-Google-Smtp-Source: ABdhPJwSFz39VQ+t+5Q1HrcLWXFa7vwnrqsomIsx0HY7L4LQD0fXColD4gxOBwZIgQkG9eiX0nhn0OSTPaKn+Xtl4Q==
+        bh=Nr7d5kbdJgplVMKnxiv3ENfoURCVEJT+N1sNUQI5FVE=;
+        b=quBKoqH/hGJ1OS+cNJ39sbq6u1w+2GsOK+R6IOhk9K2VHTqYo3Uag/DAmigIeT8AIS
+         dFcNtDJus3vSGxKPvoqPidGZwLN5VvRY2uKLbmxlJrFRWpucbYVJOAuf1Tp8dwiJzLvU
+         EnAP8vHa0ZhRL3BcjPKRf2dnYt54dbehlT5sawc8rnGowyr2v2xNJSgWaPIL8kWPVMgg
+         I6j48E+c12feS+QTMAZGml2mJgWe+WzBjQh0/aaoasPgRcV6HMWrsQ9cWDgTvtQ8vw+L
+         ap4yVKL79EVUtqZjVrZDgkun72oYHbAY5yT+B7gTULVYLN+nQClAyj4IFzNvqWF5zNmM
+         X0rA==
+X-Gm-Message-State: AOAM532emDExsW9dWbYTM9G99VSwRIjS3uFgWGLNwSZwwEe+nROoM7li
+        fddvlfVnYaqpUNsC4MnXBmTbFSh2wc7vqElH/MAqdItgkrU1T1dPtXFKJZMWCDyGVaw7JC3tcYH
+        qujHEPW57USic0W858MIO4pKwgCPSiUrVAM98ivrnCFbUZ5aZUODaTBxMWHTiUXX5TmluxQD1tj
+        Pb4SNQZgds1xs=
+X-Google-Smtp-Source: ABdhPJzBzG7MKa2SFYt+maT59CwMSgbzi44V/S3TiQUd6BY3gcatg5ZU4nJUbEqYaXAdp7Q/Mfbnzny0mmOR0QxM8Q==
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:69a3:595f:8267:f7e0])
- (user=howardchung job=sendgmr) by 2002:a62:ab0a:0:b029:33b:6d08:2a45 with
- SMTP id p10-20020a62ab0a0000b029033b6d082a45mr27788651pff.38.1626938631178;
- Thu, 22 Jul 2021 00:23:51 -0700 (PDT)
-Date:   Thu, 22 Jul 2021 15:23:17 +0800
+ (user=howardchung job=sendgmr) by 2002:a0c:f850:: with SMTP id
+ g16mr39589670qvo.5.1626938634690; Thu, 22 Jul 2021 00:23:54 -0700 (PDT)
+Date:   Thu, 22 Jul 2021 15:23:18 +0800
 In-Reply-To: <20210722072321.1225119-1-howardchung@google.com>
-Message-Id: <20210722152159.Bluez.v2.7.I00fd6c348e4c93501de6de0eae0d23436fd3895b@changeid>
+Message-Id: <20210722152159.Bluez.v2.8.I517e5199ac8019b770c7ee8c92a294ec1c752748@changeid>
 Mime-Version: 1.0
 References: <20210722072321.1225119-1-howardchung@google.com>
 X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
-Subject: [Bluez PATCH v2 07/11] plugins/admin_policy: add ServiceAllowList property
+Subject: [Bluez PATCH v2 08/11] plugins/admin_policy: listen for device add
+ and remove
 From:   Howard Chung <howardchung@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
 Cc:     Yun-Hao Chung <howardchung@chromium.org>,
@@ -66,120 +66,261 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Yun-Hao Chung <howardchung@chromium.org>
 
-This adds code to register interface org.bluez.AdminPolicyStatus.
-The interface will provide read-only properties to indicate the current
-settings of admin policies. We separate this from AdminPolicySet so that
-normal clients can check current policy settings while only a few
-clients can change policies.
-
-This patch also adds readonly property ServiceAllowlist to
-AdminPolicyStatus1, which indicates the current setting of service
-allowlist.
+This adds an D-BUS client to listen for DeviceAdd and DeviceRemove. It
+is necessary for implementation of "AffectedByPolicy" property since it
+needs to register an interface for each device object and unregister it
+once the device gets removed.
 
 Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 ---
 The following test steps were performed:
-1. Set ServiceAllowList to ["1124","180A","180F","1812"]
-2. Verify ServiceAllowList is ["1124","180A","180F","1812"] in UUID-128
-   form
-3. Set ServiceAllowList to []
-4. Verify ServiceAllowList is []
+1. start discovery using UI
+2. verify device_data were added by checking system log
+3. stop discovery
+4. verify device_data were removed after a few seconds by checking
+system log
 
 (no changes since v1)
 
- plugins/admin_policy.c | 58 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ plugins/admin_policy.c | 154 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 150 insertions(+), 4 deletions(-)
 
 diff --git a/plugins/admin_policy.c b/plugins/admin_policy.c
-index 242b8d5dacb0..270d42366cd6 100644
+index 270d42366cd6..73d695ef976b 100644
 --- a/plugins/admin_policy.c
 +++ b/plugins/admin_policy.c
-@@ -27,6 +27,7 @@
- #include "src/shared/queue.h"
+@@ -20,6 +20,7 @@
  
+ #include "src/adapter.h"
+ #include "src/dbus-common.h"
++#include "src/device.h"
+ #include "src/error.h"
+ #include "src/log.h"
+ #include "src/plugin.h"
+@@ -29,7 +30,12 @@
  #define ADMIN_POLICY_SET_INTERFACE	"org.bluez.AdminPolicySet1"
-+#define ADMIN_POLICY_STATUS_INTERFACE	"org.bluez.AdminPolicyStatus1"
+ #define ADMIN_POLICY_STATUS_INTERFACE	"org.bluez.AdminPolicyStatus1"
  
- static DBusConnection *dbus_conn;
- 
-@@ -151,6 +152,11 @@ static DBusMessage *set_service_allowlist(DBusConnection *conn,
- 		return btd_error_failed(msg, "service_allowlist_set failed");
- 	}
- 
-+	g_dbus_emit_property_changed(dbus_conn,
-+					adapter_get_path(policy_data->adapter),
-+					ADMIN_POLICY_STATUS_INTERFACE,
-+					"ServiceAllowList");
++#define DBUS_BLUEZ_SERVICE		"org.bluez"
++#define BTD_DEVICE_INTERFACE		"org.bluez.Device1"
 +
- 	return dbus_message_new_method_return(msg);
- }
+ static DBusConnection *dbus_conn;
++static GDBusClient *dbus_client;
++static struct queue *devices; /* List of struct device_data objects */
  
-@@ -160,6 +166,43 @@ static const GDBusMethodTable admin_policy_adapter_methods[] = {
+ /* |policy_data| has the same life cycle as btd_adapter */
+ static struct btd_admin_policy {
+@@ -38,6 +44,11 @@ static struct btd_admin_policy {
+ 	struct queue *service_allowlist;
+ } *policy_data = NULL;
+ 
++struct device_data {
++	struct btd_device *device;
++	char *path;
++};
++
+ static struct btd_admin_policy *admin_policy_new(struct btd_adapter *adapter)
+ {
+ 	struct btd_admin_policy *admin_policy = NULL;
+@@ -203,8 +214,122 @@ static const GDBusPropertyTable admin_policy_adapter_properties[] = {
  	{ }
  };
  
-+void append_service_uuid(void *data, void *user_data)
++static bool device_data_match(const void *a, const void *b)
 +{
-+	bt_uuid_t *uuid = data;
-+	DBusMessageIter *entry = user_data;
-+	char uuid_str[MAX_LEN_UUID_STR];
-+	const char *uuid_str_ptr = uuid_str;
++	const struct device_data *data = a;
++	const struct btd_device *dev = b;
 +
-+	if (!uuid) {
-+		error("Unexpected NULL uuid data in service_allowlist");
++	if (!data) {
++		error("Unexpected NULL device_data");
++		return false;
++	}
++
++	return data->device == dev;
++}
++
++static bool device_data_match_by_path(const void *a, const void *b)
++{
++	const struct device_data *data = a;
++	const char *path = b;
++
++	if (!data) {
++		error("Unexpected NULL device_data");
++		return false;
++	}
++
++	return strcmp(data->path, b) == 0;
++}
++
++static void free_device_data(void *data)
++{
++	struct device_data *device_data = data;
++
++	g_free(device_data->path);
++	g_free(device_data);
++}
++
++static void remove_device_data(void *data)
++{
++	struct device_data *device_data = data;
++
++	DBG("device_data for %s removing", device_data->path);
++
++	queue_remove(devices, device_data);
++	free_device_data(device_data);
++}
++
++static void add_device_data(struct btd_device *device)
++{
++	struct btd_adapter *adapter = device_get_adapter(device);
++	struct device_data *data;
++
++	if (queue_find(devices, device_data_match, device))
++		return;
++
++	data = g_new0(struct device_data, 1);
++	if (!data) {
++		btd_error(btd_adapter_get_index(adapter),
++				"Failed to allocate memory for device_data");
 +		return;
 +	}
 +
-+	bt_uuid_to_string(uuid, uuid_str, MAX_LEN_UUID_STR);
-+	dbus_message_iter_append_basic(entry, DBUS_TYPE_STRING, &uuid_str_ptr);
++	data->device = device;
++	data->path = g_strdup(device_get_path(device));
++	queue_push_tail(devices, data);
++
++	DBG("device_data for %s added", data->path);
 +}
 +
-+static gboolean property_get_service_allowlist(
-+					const GDBusPropertyTable *property,
-+					DBusMessageIter *iter, void *user_data)
++static struct btd_device *find_device_by_proxy(GDBusProxy *proxy)
 +{
-+	struct btd_admin_policy *admin_policy = user_data;
-+	DBusMessageIter entry;
++	const char *path = g_dbus_proxy_get_path(proxy);
++	const char *iface = g_dbus_proxy_get_interface(proxy);
++	struct btd_device *device;
 +
-+	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
-+					DBUS_TYPE_STRING_AS_STRING, &entry);
-+	queue_foreach(admin_policy->service_allowlist, append_service_uuid,
-+									&entry);
-+	dbus_message_iter_close_container(iter, &entry);
++	if (strcmp(iface, BTD_DEVICE_INTERFACE) != 0)
++		return NULL;
 +
-+	return TRUE;
++	device = btd_adapter_find_device_by_path(policy_data->adapter, path);
++
++	if (!device) {
++		btd_warn(adapter_get_path(policy_data->adapter),
++					"Device path %s is not found", path);
++	}
++
++	return device;
 +}
 +
-+static const GDBusPropertyTable admin_policy_adapter_properties[] = {
-+	{ "ServiceAllowList", "as", property_get_service_allowlist },
-+	{ }
-+};
++static void object_added_cb(GDBusProxy *proxy, void *user_data)
++{
++	struct btd_device *device;
++
++	device = find_device_by_proxy(proxy);
++
++	if (!device)
++		return;
++
++	add_device_data(device);
++}
++
++static void object_removed_cb(GDBusProxy *proxy, void *user_data)
++{
++	const char *path = g_dbus_proxy_get_path(proxy);
++	const char *iface = g_dbus_proxy_get_interface(proxy);
++	struct device_data *data;
++
++	if (strcmp(iface, BTD_DEVICE_INTERFACE) != 0)
++		return;
++
++	data = queue_find(devices, device_data_match_by_path, path);
++
++	if (data)
++		remove_device_data(data);
++}
 +
  static int admin_policy_adapter_probe(struct btd_adapter *adapter)
  {
++	const char *adapter_path;
++
  	if (policy_data) {
-@@ -185,6 +228,21 @@ static int admin_policy_adapter_probe(struct btd_adapter *adapter)
+ 		btd_warn(policy_data->adapter_id,
+ 						"Policy data already exists");
+@@ -216,33 +341,43 @@ static int admin_policy_adapter_probe(struct btd_adapter *adapter)
+ 	if (!policy_data)
+ 		return -ENOMEM;
+ 
+-	if (!g_dbus_register_interface(dbus_conn, adapter_get_path(adapter),
++	adapter_path = adapter_get_path(adapter);
++
++	if (!g_dbus_register_interface(dbus_conn, adapter_path,
+ 					ADMIN_POLICY_SET_INTERFACE,
+ 					admin_policy_adapter_methods, NULL,
+ 					NULL, policy_data, admin_policy_free)) {
+ 		btd_error(policy_data->adapter_id,
+ 			"Admin Policy Set interface init failed on path %s",
+-						adapter_get_path(adapter));
++								adapter_path);
+ 		return -EINVAL;
+ 	}
  
  	btd_info(policy_data->adapter_id,
  				"Admin Policy Set interface registered");
+ 
+-	if (!g_dbus_register_interface(dbus_conn, adapter_get_path(adapter),
++	if (!g_dbus_register_interface(dbus_conn, adapter_path,
+ 					ADMIN_POLICY_STATUS_INTERFACE,
+ 					NULL, NULL,
+ 					admin_policy_adapter_properties,
+ 					policy_data, admin_policy_free)) {
+ 		btd_error(policy_data->adapter_id,
+ 			"Admin Policy Status interface init failed on path %s",
+-						adapter_get_path(adapter));
++								adapter_path);
+ 		return -EINVAL;
+ 	}
+ 
+ 	btd_info(policy_data->adapter_id,
+ 				"Admin Policy Status interface registered");
+ 
++	dbus_client = g_dbus_client_new(dbus_conn, DBUS_BLUEZ_SERVICE,
++								adapter_path);
 +
-+	if (!g_dbus_register_interface(dbus_conn, adapter_get_path(adapter),
-+					ADMIN_POLICY_STATUS_INTERFACE,
-+					NULL, NULL,
-+					admin_policy_adapter_properties,
-+					policy_data, admin_policy_free)) {
-+		btd_error(policy_data->adapter_id,
-+			"Admin Policy Status interface init failed on path %s",
-+						adapter_get_path(adapter));
-+		return -EINVAL;
-+	}
++	g_dbus_client_set_proxy_handlers(dbus_client, object_added_cb,
++						object_removed_cb, NULL, NULL);
 +
-+	btd_info(policy_data->adapter_id,
-+				"Admin Policy Status interface registered");
++	g_dbus_client_set_ready_watch(dbus_client, NULL, NULL);
 +
  	return 0;
  }
  
+@@ -257,6 +392,7 @@ static int admin_policy_init(void)
+ 	DBG("");
+ 
+ 	dbus_conn = btd_get_dbus_connection();
++	devices = queue_new();
+ 
+ 	return btd_register_adapter_driver(&admin_policy_driver);
+ }
+@@ -266,9 +402,19 @@ static void admin_policy_exit(void)
+ 	DBG("");
+ 
+ 	btd_unregister_adapter_driver(&admin_policy_driver);
++	queue_destroy(devices, free_device_data);
+ 
+ 	if (policy_data)
+ 		admin_policy_free(policy_data);
++
++	if (dbus_client) {
++		g_dbus_client_set_disconnect_watch(dbus_client, NULL, NULL);
++		g_dbus_client_set_proxy_handlers(dbus_client, NULL, NULL, NULL,
++									NULL);
++		g_dbus_client_set_ready_watch(dbus_client, NULL, NULL);
++		g_dbus_client_unref(dbus_client);
++		dbus_client = NULL;
++	}
+ }
+ 
+ BLUETOOTH_PLUGIN_DEFINE(admin_policy, VERSION,
 -- 
 2.32.0.402.g57bb445576-goog
 
