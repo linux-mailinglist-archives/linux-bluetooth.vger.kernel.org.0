@@ -2,139 +2,138 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AB923D3BCF
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Jul 2021 16:32:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 343A53D4230
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Jul 2021 23:28:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235284AbhGWNv5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 23 Jul 2021 09:51:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35846 "EHLO
+        id S231922AbhGWUrl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 23 Jul 2021 16:47:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233665AbhGWNv4 (ORCPT
+        with ESMTP id S231823AbhGWUrk (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 23 Jul 2021 09:51:56 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B7A7C061575
-        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Jul 2021 07:32:30 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id x3so1528592qkl.6
-        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Jul 2021 07:32:30 -0700 (PDT)
+        Fri, 23 Jul 2021 16:47:40 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8278C061575
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Jul 2021 14:28:12 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id l145so4375249ybf.7
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Jul 2021 14:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=+tWp1No06cfIZ716aVrqwQ6dOB/pfn8Q+DdUtmqaDi0=;
-        b=QWKhJbRI5FuVDstialQ9Sqw8edy80V9Fwor2i1effgRSRa1cnuxalGC72p06FwrYg/
-         0aoLKpl0SMh5SnzP6buGXohhhWPIwwPQVPcACKATctC9Lq9mbfkq1UojzfNnp8pyk5XN
-         4BuR1kIAWStuDmIEJEBD7JPtY9PTZCOjfOshvApae1TLEBz2Lhid7zCB38LqM2XA7rTW
-         5/gL46qAhlE3PD+Pljjf1afR5lkTyhfSEo2UT/GagVHZbGuU/dwcw+nKwVOSucrnsRK+
-         BtRGLuV6hCF/r/xnrdHXqPwCNVvPUGW8Fi7My2nkzqJ/Gg8jJw6D33M1aUicWLn3cA4T
-         6fVw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6r/PHGYRNP2mxnIgqTH0kSr0nPAoZpxcd2UrQwVikBA=;
+        b=kyk1G0qASouU7iwkvdWROfbLddyhibLxS2wJzEJ9wpMGBl0tmNzxzwzA7m63Gi8fEN
+         aIOqn08pCW2S/bI5nphKOzHltWLKQ5gpOOLSNeRJstngAC2bgkcmZb7Z6NVlYNOSb+Ao
+         O0HJ0DuW8H1NhF6QDAe21xJZqOPhjLcufInUoU0EI/b2IlDCMTKi+zE9gTB4ci8hP3xz
+         nQMKGIC6cCdb14/wCEpk56r+fXbG1qRn8VCEyHz6+cGLeecCM12M/T2oEO+13pj302yA
+         LJmjr6eA1iSZpLUi9C5DTWVzdwsY665iGC+OuGn9YmILH4oAoKSnzStGbVr1ZWtNEk+R
+         dZhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=+tWp1No06cfIZ716aVrqwQ6dOB/pfn8Q+DdUtmqaDi0=;
-        b=tnKLUq9CuAqY+kp7auZHC8ud7WxIxNtGeGcBV9fPXwOT3qqr2G5aTw4jyu0+AOJlGT
-         XXuQpaW/6qAjQqjJN/Tx6k66mUai1OfpBwsFo7jdFd8IuogUSK8KzMI4H625gqCD8B2V
-         tlxVhsq1tH0pkQGNLElc4MS5fJ5HEbRas11spuyR6wLyeYviNK95q1uJZwP7P9V89/rR
-         OR8/Cn64AzUFISFzMN/A3vH7Bf0s9Vgw8HDxmknEK0+T7a0J1QWggBurMFzkuTmvpew9
-         0chejd93Pxc6jDTq3PY1HZEPwiwrHvRZKq6DAUMgQ3EVJG0e2sb8ckQA1XBRqQv5qNo1
-         wasg==
-X-Gm-Message-State: AOAM5331fR7D4Y7q6hoiyqP+0F2J7sYz9IQMj6KdguAZbRtXFQXLxtvZ
-        R07aALZU1HybwDn6v0oVbjCVC6k9lrmLTg==
-X-Google-Smtp-Source: ABdhPJwDn+0Ocun33D3/Er/2JBo+LFT3/jEP+YbZYEHFQYXdNJYREjQ/pnIdUZa9JIARqfOHXADz+Q==
-X-Received: by 2002:a37:4652:: with SMTP id t79mr4816189qka.93.1627050749326;
-        Fri, 23 Jul 2021 07:32:29 -0700 (PDT)
-Received: from [172.17.0.2] ([52.177.71.48])
-        by smtp.gmail.com with ESMTPSA id t30sm14098109qkm.11.2021.07.23.07.32.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 07:32:28 -0700 (PDT)
-Message-ID: <60fad2fc.1c69fb81.4c2fc.785c@mx.google.com>
-Date:   Fri, 23 Jul 2021 07:32:28 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============2675257332697632981=="
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6r/PHGYRNP2mxnIgqTH0kSr0nPAoZpxcd2UrQwVikBA=;
+        b=SKwkjxWqiE25me4dgUOLX3eOBDEZSPYr23A9His316Jz5X+rrwVUCgoKwAHRtHyEsA
+         nbmN4tB6gWlvaq2XJF8cvVg9FKnFQt6uyIaxjw2sb7j3GMIzgieflKuv4joFOukK9mRA
+         lYJkgGvZ8yKr5G/40QOYVsqAR3KeX8UARhYDbUgIkhJ745VsgP79f/N8eJLzuyw0SvFn
+         yUaECH7Or9RUbW4ck5UADmAWumzE223ZCaUBPCSw/2Qq8g4B9kCX48CAJLLVe2eAUo+q
+         WusPWxkRoUEzF/edOH20CSi1UelIPitnQcITPkXpjUjDdxgH1NAxD8YO/QBxRlHMZ3uJ
+         togQ==
+X-Gm-Message-State: AOAM5303A+rvpwwJxmveL+yIm4oCihHS6lYXpAnaUzrc5IUfhZKrrrkV
+        GINFvLHXoV4VLd/F/tGQQUJC9QcG+pwVJKr0ZmQ=
+X-Google-Smtp-Source: ABdhPJw/M4uiYGFGHhlugdhOU1CGKdivssEah+utJuWEPFHTA5j3QhApDLGEOkOUKojYhU4KzScmljzuYUHDe5QzpZI=
+X-Received: by 2002:a25:7e86:: with SMTP id z128mr8992443ybc.222.1627075692045;
+ Fri, 23 Jul 2021 14:28:12 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, me@dylanvanassche.be
-Subject: RE: obexd: phonebook-ebook: modernize
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20210723135824.8032-2-me@dylanvanassche.be>
-References: <20210723135824.8032-2-me@dylanvanassche.be>
+References: <20210720104905.6870-1-penguin-kernel@I-love.SAKURA.ne.jp>
+ <CABBYNZLt=fJTtdj9qvC22GkF_uYFe59D2bS3u61K14=Gq43Qbw@mail.gmail.com> <bb9ceb4d-9e5c-1487-233b-426bc58e9a91@i-love.sakura.ne.jp>
+In-Reply-To: <bb9ceb4d-9e5c-1487-233b-426bc58e9a91@i-love.sakura.ne.jp>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 23 Jul 2021 14:28:01 -0700
+Message-ID: <CABBYNZJnC-b0s5LW=zTLh4_bV44Uv2-6LXXy+vRAgQmxk=defg@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: reorganize ioctls from hci_sock_bound_ioctl()
+To:     Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        LinMa <linma@zju.edu.cn>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============2675257332697632981==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hi Tetsuo,
 
-This is automated email and please do not reply to this email!
+On Wed, Jul 21, 2021 at 4:42 PM Tetsuo Handa
+<penguin-kernel@i-love.sakura.ne.jp> wrote:
+>
+> On 2021/07/22 3:17, Luiz Augusto von Dentz wrote:
+> > I think it would have been cleaner if we have dedicated functions for
+> > each command like I did in my patch:
+> >
+> > https://patchwork.kernel.org/project/bluetooth/patch/20210717000731.3836303-1-luiz.dentz@gmail.com/
+>
+> But your patch was proven to be unsafe. There is a use-after-unregister
+> race window which would require at least 1000 lines of modification and
+> a lot of careful review if we try to manage without my patch.
+> Such all-in-one-step change is too much for "sleep in atomic context"
+> regression fix which is preventing syzbot from testing Bluetooth module
+> and is preventing Linux distributors from fixing CVE-2021-3573.
 
-Dear submitter,
+Im not saying you should adopt my solution, the locking etc stay the
+same as in this set but each command should have a helper function to
+make it clearer that way we don't have to re-evaluate the command over
+and over.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=520361
+> As far as I can see, it is lock_sock() (not bh_lock_sock_nested() in your
+> patch) that is needed for protecting
+>
+>         sk->sk_err = EPIPE;
+>         sk->sk_state = BT_OPEN;
+>         sk->sk_state_change(sk);
+>
+> in hci_sock_dev_event(HCI_DEV_UNREG) from concurrent modification
+>
+>         lock_sock(sk);
+>
+>         if (sk->sk_state == BT_BOUND) {
+>                 err = -EALREADY;
+>                 goto done;
+>         }
+>
+>         (...snipped...)
+>
+> -               hci_pi(sk)->hdev = hdev;
+> +               if (hdev) {
+> +                       hci_pi(sk)->dev = hdev->id;
+> +                       hci_dev_put(hdev);
+> +               }
+>
+>         (...snipped...)
+>         /* Race window is here. */
+>         (...snipped...)
+>
+>         sk->sk_state = BT_BOUND;
+> done:
+>         release_sock(sk);
+>
+> in hci_sock_bind().
+>
+> >
+> > That way it is simpler to protect the likes of
+> > copy_from_user/copy_to_user, etc, even if we have to some checks
+> > duplicated on each function we can have a helper function to checks
+> > the flags, etc.
+>
+> My patch calls copy_from_user()/copy_to_user() without lock_sock()
+> which works nicely with "[PATCH v3] Bluetooth: call lock_sock() outside
+> of spinlock section". I'd like to backport "[PATCH v2] Bluetooth:
+> reorganize ioctls from hci_sock_bound_ioctl()" together.
 
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.25 seconds
-GitLint                       PASS      0.38 seconds
-Prep - Setup ELL              PASS      36.63 seconds
-Build - Prep                  PASS      0.11 seconds
-Build - Configure             PASS      6.37 seconds
-Build - Make                  PASS      159.94 seconds
-Make Check                    PASS      9.12 seconds
-Make Distcheck                PASS      195.35 seconds
-Build w/ext ELL - Configure   PASS      6.54 seconds
-Build w/ext ELL - Make        PASS      150.40 seconds
-
-Details
-##############################
-Test: CheckPatch - PASS
-Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-
-##############################
-Test: GitLint - PASS
-Desc: Run gitlint with rule in .gitlint
-
-##############################
-Test: Prep - Setup ELL - PASS
-Desc: Clone, build, and install ELL
-
-##############################
-Test: Build - Prep - PASS
-Desc: Prepare environment for build
-
-##############################
-Test: Build - Configure - PASS
-Desc: Configure the BlueZ source tree
-
-##############################
-Test: Build - Make - PASS
-Desc: Build the BlueZ source tree
-
-##############################
-Test: Make Check - PASS
-Desc: Run 'make check'
-
-##############################
-Test: Make Distcheck - PASS
-Desc: Run distcheck to check the distribution
-
-##############################
-Test: Build w/ext ELL - Configure - PASS
-Desc: Configure BlueZ source with '--enable-external-ell' configuration
-
-##############################
-Test: Build w/ext ELL - Make - PASS
-Desc: Build BlueZ source with '--enable-external-ell' configuration
-
-
-
----
-Regards,
-Linux Bluetooth
+Yep, Im not asking you to change any of that.
 
 
---===============2675257332697632981==--
+-- 
+Luiz Augusto von Dentz
