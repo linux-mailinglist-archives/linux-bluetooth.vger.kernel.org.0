@@ -2,96 +2,109 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D893D3B89
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Jul 2021 15:58:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17D4D3D3B8C
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Jul 2021 15:59:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235288AbhGWNSY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 23 Jul 2021 09:18:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56580 "EHLO
+        id S235318AbhGWNSZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 23 Jul 2021 09:18:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235094AbhGWNSX (ORCPT
+        with ESMTP id S235126AbhGWNSX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 23 Jul 2021 09:18:23 -0400
-Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [IPv6:2001:67c:2050::465:202])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40129C061757
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [IPv6:2001:67c:2050::465:102])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3F4C06175F
         for <linux-bluetooth@vger.kernel.org>; Fri, 23 Jul 2021 06:58:57 -0700 (PDT)
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:105:465:1:1:0])
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4GWWBl3F5TzQk8x;
+        by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4GWWBl6l9zzQkBs;
         Fri, 23 Jul 2021 15:58:55 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at heinlein-support.de
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
-        s=MBO0001; t=1627048733;
+        s=MBO0001; t=1627048734;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=ItoljjU9olhXYnPeHhYDqZkjzBSH2FEO3akZAxBYXT0=;
-        b=CESz7/DwYkMxcDh5JB08LyLMBxOtQIDUNngPu6+XyXcBsvAH+3H5/lUIFvZGhvAOa21hv/
-        RyuEcWxtsdq/xT6C4/RSCgavInRJc0frnK8sabSGFflRcH76wgrThT0pLtpbDa0+WBDnq2
-        /LmFDpg3oWELTKa8reLaN+J0a+hQikL1gqDqK3EWz6i8Y4H4orzoSMPMg6SLHFWsJz14z5
-        yHNhwNBP8X+g8Pyah0j+dIpGhjRe3EYwYB2c6EG0PxcdZRxU4Ux5P3Rl3LwLY1jjdXdp7j
-        gtTLgjVgyDgE3nNoMMMseRFIkPbPD6vEnPhuhJ1eLsna0BWpWVcMYQWaqmDlug==
+        bh=c0GPxelqby7YufxBOEsKvHYMlKRcOobr61YmT/rUX2E=;
+        b=nQbtfs5gmgTRlNhkjdAxXwlGJGmo45HZNgY9w8H/rs9WGYVwjDRbkFfiA2NT1hCrqctB1F
+        f8VOKdK9M4cpYmFRXRuCoLQN122lOuOdm0XufUY0ciuM6Ym21sBWgq0u/VuM5l895t7Pd3
+        /VmCcUy54k7J3z3MBCgtREZRQcdKWsg6rszH+MIWjj7Qpb3Y8Vn5HAH0fdwBw2g2AuHxEz
+        tGuPuwKMa++jwfXl+HE5yQZYqxSc269BbfRQtUUB+Mo7BGzpZh05OHq/4KBchnoY005rmf
+        cubjvqj2TJY8TD6cAjJ2A7TXsyk4Jw8sxTjKo8lIou2o7r2b1CxQB9KCIPxwXQ==
 Received: from smtp1.mailbox.org ([80.241.60.240])
-        by gerste.heinlein-support.de (gerste.heinlein-support.de [91.198.250.173]) (amavisd-new, port 10030)
-        with ESMTP id vWRYvLLj_AJi; Fri, 23 Jul 2021 15:58:52 +0200 (CEST)
+        by spamfilter02.heinlein-hosting.de (spamfilter02.heinlein-hosting.de [80.241.56.116]) (amavisd-new, port 10030)
+        with ESMTP id 31EJClwTXw0c; Fri, 23 Jul 2021 15:58:53 +0200 (CEST)
 From:   Dylan Van Assche <me@dylanvanassche.be>
 To:     linux-bluetooth@vger.kernel.org
-Cc:     Juho Hamalainen <juho.hamalainen@jolla.com>
-Subject: [PATCH BlueZ 2/4] configure.ac: specify phonebook plugin at build time
-Date:   Fri, 23 Jul 2021 15:58:22 +0200
-Message-Id: <20210723135824.8032-3-me@dylanvanassche.be>
+Cc:     Dylan Van Assche <me@dylanvanassche.be>
+Subject: [PATCH BlueZ 3/4] configure.ac: add libebook dependency
+Date:   Fri, 23 Jul 2021 15:58:23 +0200
+Message-Id: <20210723135824.8032-4-me@dylanvanassche.be>
 In-Reply-To: <20210723135824.8032-1-me@dylanvanassche.be>
 References: <20210723135824.8032-1-me@dylanvanassche.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 77DEB18CA
-X-Rspamd-UID: ac0dc6
+X-Rspamd-Queue-Id: 2955918B5
+X-Rspamd-UID: d946f0
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Juho Hamalainen <juho.hamalainen@jolla.com>
-
-Various phonebook plugins are available, by default
-phonebook-dummy is always built. Allow to specify
-which plugin to use at build time.
+Require libebook when phonebook-ebook plugin is built.
 ---
+ Makefile.am    | 2 +-
  Makefile.obexd | 2 +-
- configure.ac   | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ configure.ac   | 9 +++++++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
+diff --git a/Makefile.am b/Makefile.am
+index 497f05f06..0fd405e8c 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -24,7 +24,7 @@ pkgincludedir = $(includedir)/bluetooth
+ 
+ pkginclude_HEADERS =
+ 
+-AM_CFLAGS = $(WARNING_CFLAGS) $(MISC_CFLAGS) $(UDEV_CFLAGS) $(ell_cflags)
++AM_CFLAGS = $(WARNING_CFLAGS) $(MISC_CFLAGS) $(UDEV_CFLAGS) $(LIBEBOOK_CFLAGS) $(LIBEDATASERVER_CFLAGS) $(ell_cflags)
+ AM_LDFLAGS = $(MISC_LDFLAGS)
+ 
+ if DATAFILES
 diff --git a/Makefile.obexd b/Makefile.obexd
-index 6f5dc04c0..285a56197 100644
+index 285a56197..2c0d19518 100644
 --- a/Makefile.obexd
 +++ b/Makefile.obexd
-@@ -41,7 +41,7 @@ obexd_builtin_modules += pbap
- obexd_builtin_sources += obexd/plugins/pbap.c \
- 				obexd/plugins/vcard.h obexd/plugins/vcard.c \
- 				obexd/plugins/phonebook.h \
--				obexd/plugins/phonebook-dummy.c
-+				obexd/plugins/phonebook-@PLUGIN_PHONEBOOK@.c
+@@ -80,7 +80,7 @@ obexd_src_obexd_SOURCES = $(btio_sources) $(gobex_sources) \
+ 			obexd/src/map_ap.h
+ obexd_src_obexd_LDADD = lib/libbluetooth-internal.la \
+ 			gdbus/libgdbus-internal.la \
+-			$(ICAL_LIBS) $(DBUS_LIBS) $(GLIB_LIBS) -ldl
++			$(ICAL_LIBS) $(DBUS_LIBS) $(LIBEBOOK_LIBS) $(LIBEDATASERVER_LIBS) $(GLIB_LIBS) -ldl
  
- obexd_builtin_modules += mas
- obexd_builtin_sources += obexd/plugins/mas.c obexd/src/map_ap.h \
+ obexd_src_obexd_LDFLAGS = $(AM_LDFLAGS) -Wl,--export-dynamic
+ 
 diff --git a/configure.ac b/configure.ac
-index be32782a6..113ab0e0f 100644
+index 113ab0e0f..a5afaea6c 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -416,4 +416,12 @@ fi
- AC_DEFINE_UNQUOTED(ANDROID_STORAGEDIR, "${storagedir}/android",
- 			[Directory for the Android daemon storage files])
- 
-+AC_ARG_WITH([phonebook], AC_HELP_STRING([--with-phonebook=PLUGIN],
-+				[obexd phonebook plugin (default=dummy)]),
-+					[plugin_phonebook=${withval}])
-+if (test -z "${plugin_phonebook}"); then
-+	plugin_phonebook=dummy
-+fi
-+AC_SUBST(PLUGIN_PHONEBOOK, [${plugin_phonebook}])
+@@ -422,6 +422,15 @@ AC_ARG_WITH([phonebook], AC_HELP_STRING([--with-phonebook=PLUGIN],
+ if (test -z "${plugin_phonebook}"); then
+ 	plugin_phonebook=dummy
+ fi
 +
++if (test "${plugin_phonebook}" = "ebook"); then
++	PKG_CHECK_MODULES(LIBEBOOK, [libebook-1.2 >= 3.3], dummy=yes, AC_MSG_ERROR(libebook >= 3.3 is required))
++	AC_SUBST(LIBEBOOK_CFLAGS)
++	AC_SUBST(LIBEBOOK_LIBS)
++	PKG_CHECK_MODULES(LIBEDATESERVER, [libedataserver-1.2 >= 3.3], dummy=yes, AC_MSG_ERROR(libedataserver >= 3.3 is required))
++	AC_SUBST(LIBEDATESERVER_CFLAGS)
++	AC_SUBST(LIBEDATESERVER_LIBS)
++fi
+ AC_SUBST(PLUGIN_PHONEBOOK, [${plugin_phonebook}])
+ 
  AC_OUTPUT(Makefile src/bluetoothd.rst lib/bluez.pc mesh/bluetooth-meshd.rst)
 -- 
 2.32.0
