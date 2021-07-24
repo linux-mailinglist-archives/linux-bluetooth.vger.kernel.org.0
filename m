@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 67C9F3D45DD
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 24 Jul 2021 09:30:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CBE13D45DA
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 24 Jul 2021 09:30:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234426AbhGXGtw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 24 Jul 2021 02:49:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37024 "EHLO
+        id S234419AbhGXGtu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 24 Jul 2021 02:49:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234397AbhGXGtl (ORCPT
+        with ESMTP id S234403AbhGXGtm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 24 Jul 2021 02:49:41 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1DB5C061757
-        for <linux-bluetooth@vger.kernel.org>; Sat, 24 Jul 2021 00:30:13 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id m10-20020a17090a34cab0290176b52c60ddso759391pjf.4
-        for <linux-bluetooth@vger.kernel.org>; Sat, 24 Jul 2021 00:30:13 -0700 (PDT)
+        Sat, 24 Jul 2021 02:49:42 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94BC7C061575
+        for <linux-bluetooth@vger.kernel.org>; Sat, 24 Jul 2021 00:30:14 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id m10-20020a17090a34cab0290176b52c60ddso759426pjf.4
+        for <linux-bluetooth@vger.kernel.org>; Sat, 24 Jul 2021 00:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VbbmPw8vR3BBd6gB/L4mpzhjv7254V/N45lgT3oRR6s=;
-        b=LmgDDHqwnATAXd70bTpDcwsTGEs/RYibRKlj+o7WF7vL3ENfdvK+357E/XUu/xfvp8
-         zjPf2pXLQvpbDVvfLxsxJ+VSRBSHaET3qgZgzNeGDJxHmTqWiUVpRa8mQ34gkpYHlvfQ
-         5+LlmXXZNXaxyVvMz8KCZfjgHeLMcVK9pfT0cixX4ncCJAJOTJ2O6hYxliu6gzJxKiwJ
-         CE2oYL6vcYUU9iiA3hgCaH/ci7O6kXOkmlMgs64rqqwRiYPs3nnY95Nv3iTogn0Ya3CN
-         MF1SATgNuSYaxvtArKcHHlaxEIm2o0T47ig+/0WaDq3aF96Zh812gvOxzWM5r52/bkg8
-         R6Xw==
+        bh=CCrpRmJT/KyYZHmTmn5ywUeXiLYiINnwUWDpxsHKBfc=;
+        b=aszbt8K+3MuC1I2RgpRl8qBdK3BS9f+ZfHHDOLD/9Dyqwio56VNT5V1AB2p598zO/9
+         auHv4SFILH5JZXoC3PWT1ONyOhRmb7xaYwPHlyuZpLdRj7kcrqNzfxygZ6/XIgvTc1Jw
+         ZaSb9Zhw04/VYZkvf5Eo+ETyHFxMpnRRR9xozhG/gP1eOIV77NTLq/1Z15UjEXspdq7r
+         X8tJQxNrFqNE0derSBQ47xdvCLPP8UvPahRyDPAcPQ6T3tYiJqNS5un/qPjElsfTl6bw
+         fs+0nGg5jrXwjtf61kOPB23cElbS2dO6/b4Jy61ooFQjVUrgYRptzzIsAMyLXSHpFEIV
+         tP1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VbbmPw8vR3BBd6gB/L4mpzhjv7254V/N45lgT3oRR6s=;
-        b=SUQsMQTxfwrRRp0PJmz0kvuatKN3ZeGjVpgHZbbRTPpMkFE+I4QHKW2aOeLLFAtItl
-         mm1F9yJJzhfIobstz6FFRCDRIBMRN1LDzEe5vzT+dRwSmjUGmsaBhEhYfzItnSLgL6Yk
-         RVOSAOA1bTC7v7YMEAuGZNzGOhC1UZIs7zt2X2wYz+tIxAnv5TpwVV91jOTxmWSFyXcL
-         woLFm//8UMtPwRcDWfokeIsSGw1NLEpyLBZ6XVZbdtaRWdZ3wcwC1mRXpZ3dwJL0zlSF
-         9ItHXvrBoVyDO+TvmOH2jJ7QKyy7WR08JFhwd7LIK9ddYqu5XoKI/p8iNApwT1YHb+KB
-         jrPQ==
-X-Gm-Message-State: AOAM5336iU8TjYobPU1Q8S1MgvdvEzr8NndZDMRs9DC32KnCFrkFXsCU
-        wpyiERw7ox09wJ4pL++4n0s5RMPr32Y=
-X-Google-Smtp-Source: ABdhPJwau0KKxlcDbMZjUJvSjB6ID2QQhy3MY7B7KJGQQRXTVd2UgYM0w3Zg8xplveaDJ+hLz1FjhA==
-X-Received: by 2002:a17:902:aa08:b029:12b:888b:1d7f with SMTP id be8-20020a170902aa08b029012b888b1d7fmr6637925plb.55.1627111813123;
+        bh=CCrpRmJT/KyYZHmTmn5ywUeXiLYiINnwUWDpxsHKBfc=;
+        b=Edv1Ct98OIpPHCdNZZDhE2fb6ckv8wGX6D5Jp33egnB+cbYOaYMiuAo2hNxiXCX4D4
+         1UCY5+rFXqXbaW6PSJXvuLawCSg6ZacE9jlBqtPBgZ3cKT0NhZcHHXh7Zwst3vzIR0Jb
+         3PonSBZFL9/EmcdZm0iypaR0Q5OGsvn7JZSlvpJQU41BjRTNAnJCSubkeno5EzwZhVJo
+         86EXUvxjfCAwCl4IoxIPDMYcroBysM/IlgiowY6mVX0twpaWQ4it6ou457m+clkaIW1e
+         mqDivRbzETMyuVFME8ornv4Erm2Em9yqcE1JH9iLlpfKqgH6m1PvY7qqQyisy11gLlQ1
+         X+0A==
+X-Gm-Message-State: AOAM5328vg2arM6bEAklJd+WkCwp6SJnVZ3x7kPQi97so4qUR1+XaaFA
+        q3nytMMocUNBlewb53x26vrtEl5jZf8=
+X-Google-Smtp-Source: ABdhPJxdquViqcb8MlZ7NnR2AFFyvjB7pVBwbnfBYHYvaGbDz6GoUCZFhFRRlHfCO8uqMtz8TxDTKg==
+X-Received: by 2002:a17:902:9688:b029:129:183a:2a61 with SMTP id n8-20020a1709029688b0290129183a2a61mr6606050plp.27.1627111813965;
         Sat, 24 Jul 2021 00:30:13 -0700 (PDT)
 Received: from localhost.localdomain ([2601:1c0:6a01:d830::1291])
-        by smtp.gmail.com with ESMTPSA id u24sm38510919pfm.141.2021.07.24.00.30.12
+        by smtp.gmail.com with ESMTPSA id u24sm38510919pfm.141.2021.07.24.00.30.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jul 2021 00:30:12 -0700 (PDT)
+        Sat, 24 Jul 2021 00:30:13 -0700 (PDT)
 From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
-Subject: [RFC PATCH v3 4/9] Bluetooth: btintel: Add btintel data struct
-Date:   Sat, 24 Jul 2021 00:30:00 -0700
-Message-Id: <20210724073005.714003-5-hj.tedd.an@gmail.com>
+Subject: [RFC PATCH v3 5/9] Bluetooth: btintel: Fix the first HCI command not work with ROM device.
+Date:   Sat, 24 Jul 2021 00:30:01 -0700
+Message-Id: <20210724073005.714003-6-hj.tedd.an@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <20210724073005.714003-1-hj.tedd.an@gmail.com>
 References: <20210724073005.714003-1-hj.tedd.an@gmail.com>
@@ -65,106 +65,122 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-This patch adds a data structure for btintel for btintel object, and the
-definition of bootloder states.
+The some legacy ROM controllers have a bug with the first HCI command
+sent to it returning number of completed commands as zero, which would
+stall the command processing in the Bluetooth core.
+
+As a workaround, send HCI Rest command first which will reset the
+controller to fix the issue.
 
 Signed-off-by: Tedd Ho-Jeong An <tedd.an@intel.com>
 ---
- drivers/bluetooth/btintel.c |  8 ++++++++
- drivers/bluetooth/btintel.h | 15 +++++++++++++++
- drivers/bluetooth/btusb.c   |  6 ++++--
- 3 files changed, 27 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btintel.c | 21 +++++++++++++++++++++
+ drivers/bluetooth/btintel.h |  1 +
+ drivers/bluetooth/btusb.c   | 16 ++++++++++++++--
+ 3 files changed, 36 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index cfef6d9879fe..5ad005dd6775 100644
+index 5ad005dd6775..dd319306ebb0 100644
 --- a/drivers/bluetooth/btintel.c
 +++ b/drivers/bluetooth/btintel.c
-@@ -1767,6 +1767,14 @@ int btintel_shutdown_combined(struct hci_dev *hdev)
- }
- EXPORT_SYMBOL_GPL(btintel_shutdown_combined);
+@@ -1659,6 +1659,7 @@ static int btintel_legacy_rom_setup(struct hci_dev *hdev,
  
-+void btintel_set_flags(struct hci_dev *hdev, unsigned int flag)
-+{
+ int btintel_setup_combined(struct hci_dev *hdev)
+ {
 +	struct btintel_data *intel = hci_get_priv(hdev);
+ 	const u8 param[1] = { 0xFF };
+ 	struct intel_version ver;
+ 	struct intel_version_tlv ver_tlv;
+@@ -1667,6 +1668,26 @@ int btintel_setup_combined(struct hci_dev *hdev)
+ 
+ 	BT_DBG("%s", hdev->name);
+ 
++	/* The some controllers have a bug with the first HCI command sent to it
++	 * returning number of completed commands as zero. This would stall the
++	 * command processing in the Bluetooth core.
++	 *
++	 * As a workaround, send HCI Reset command first which will reset the
++	 * number of completed commands and allow normal command processing
++	 * from now on.
++	 */
++	if (test_bit(INTEL_BROKEN_READ_VERSION, &intel->flags)) {
++		skb = __hci_cmd_sync(hdev, HCI_OP_RESET, 0, NULL,
++				     HCI_INIT_TIMEOUT);
++		if (IS_ERR(skb)) {
++			bt_dev_err(hdev,
++				   "sending initial HCI reset failed (%ld)",
++				   PTR_ERR(skb));
++			return PTR_ERR(skb);
++		}
++		kfree_skb(skb);
++	}
 +
-+	set_bit(flag, &intel->flags);
-+}
-+EXPORT_SYMBOL_GPL(btintel_set_flags);
-+
- MODULE_AUTHOR("Marcel Holtmann <marcel@holtmann.org>");
- MODULE_DESCRIPTION("Bluetooth support for Intel devices ver " VERSION);
- MODULE_VERSION(VERSION);
+ 	/* Starting from TyP device, the command parameter and response are
+ 	 * changed even though the OCF for HCI_Intel_Read_Version command
+ 	 * remains same. The legacy devices can handle even if the
 diff --git a/drivers/bluetooth/btintel.h b/drivers/bluetooth/btintel.h
-index 68ffa84fa87a..df7aa30142b4 100644
+index df7aa30142b4..29b678364a79 100644
 --- a/drivers/bluetooth/btintel.h
 +++ b/drivers/bluetooth/btintel.h
-@@ -138,6 +138,16 @@ struct intel_debug_features {
- #define INTEL_CNVX_TOP_STEP(cnvx_top)	(((cnvx_top) & 0x0f000000) >> 24)
- #define INTEL_CNVX_TOP_PACK_SWAB(t, s)	__swab16(((__u16)(((t) << 4) | (s))))
+@@ -143,6 +143,7 @@ struct intel_debug_features {
+ #define INTEL_FIRMWARE_LOADED		2
+ #define INTEL_FIRMWARE_FAILED		3
+ #define INTEL_BOOTING			4
++#define INTEL_BROKEN_READ_VERSION	5
  
-+#define INTEL_BOOTLOADER		0
-+#define INTEL_DOWNLOADING		1
-+#define INTEL_FIRMWARE_LOADED		2
-+#define INTEL_FIRMWARE_FAILED		3
-+#define INTEL_BOOTING			4
-+
-+struct btintel_data {
-+	unsigned long flags;
-+};
-+
- #if IS_ENABLED(CONFIG_BT_INTEL)
- 
- int btintel_check_bdaddr(struct hci_dev *hdev);
-@@ -167,6 +177,7 @@ int btintel_download_firmware(struct hci_dev *dev, struct intel_version *ver,
- 			      const struct firmware *fw, u32 *boot_param);
- int btintel_setup_combined(struct hci_dev *hdev);
- int btintel_shutdown_combined(struct hci_dev *hdev);
-+void btintel_set_flags(struct hci_dev *hdev, unsigned int flag);
- int btintel_download_firmware_newgen(struct hci_dev *hdev,
- 				     struct intel_version_tlv *ver,
- 				     const struct firmware *fw,
-@@ -295,6 +306,10 @@ static inline int btintel_shutdown_combined(struct hci_dev *hdev)
- 	return -EOPNOTSUPP;
- }
- 
-+static inline void btintel_set_flags(struct hci_dev *hdev, unsigned int flag)
-+{
-+}
-+
- static inline int btintel_download_firmware_newgen(struct hci_dev *hdev,
- 						   const struct firmware *fw,
- 						   u32 *boot_param,
+ struct btintel_data {
+ 	unsigned long flags;
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index f19d438affcb..1ad066ef06f7 100644
+index 1ad066ef06f7..53bfe831b7bc 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -4118,7 +4118,7 @@ static int btusb_probe(struct usb_interface *intf,
- 	struct btusb_data *data;
- 	struct hci_dev *hdev;
- 	unsigned ifnum_base;
--	int i, err;
-+	int i, err, priv_size;
+@@ -62,6 +62,7 @@ static struct usb_driver btusb_driver;
+ #define BTUSB_QCA_WCN6855	0x1000000
+ #define BTUSB_INTEL_NEWGEN	0x2000000
+ #define BTUSB_INTEL_COMBINED	0x4000000
++#define BTUSB_INTEL_BROKEN_READ_VERSION 0x8000000
  
- 	BT_DBG("intf %p id %p", intf, id);
+ static const struct usb_device_id btusb_table[] = {
+ 	/* Generic Bluetooth USB device */
+@@ -374,11 +375,14 @@ static const struct usb_device_id blacklist_table[] = {
+ 	{ USB_DEVICE(0x8087, 0x0033), .driver_info = BTUSB_INTEL_NEWGEN |
+ 						     BTUSB_WIDEBAND_SPEECH},
+ 	{ USB_DEVICE(0x8087, 0x07da), .driver_info = BTUSB_CSR },
+-	{ USB_DEVICE(0x8087, 0x07dc), .driver_info = BTUSB_INTEL_COMBINED },
+-	{ USB_DEVICE(0x8087, 0x0a2a), .driver_info = BTUSB_INTEL_COMBINED },
++	{ USB_DEVICE(0x8087, 0x07dc), .driver_info = BTUSB_INTEL_COMBINED |
++						     BTUSB_INTEL_BROKEN_READ_VERSION },
++	{ USB_DEVICE(0x8087, 0x0a2a), .driver_info = BTUSB_INTEL_COMBINED |
++						     BTUSB_INTEL_BROKEN_READ_VERSION },
+ 	{ USB_DEVICE(0x8087, 0x0a2b), .driver_info = BTUSB_INTEL_NEW |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x8087, 0x0aa7), .driver_info = BTUSB_INTEL_COMBINED |
++						     BTUSB_INTEL_BROKEN_READ_VERSION |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x8087, 0x0aaa), .driver_info = BTUSB_INTEL_NEW |
+ 						     BTUSB_WIDEBAND_SPEECH |
+@@ -4206,6 +4210,11 @@ static int btusb_probe(struct usb_interface *intf,
  
-@@ -4204,6 +4204,8 @@ static int btusb_probe(struct usb_interface *intf,
- 	init_usb_anchor(&data->ctrl_anchor);
- 	spin_lock_init(&data->rxlock);
+ 	priv_size = 0;
  
-+	priv_size = 0;
++	if (id->driver_info & BTUSB_INTEL_COMBINED) {
++		/* Allocate extra space for Intel device */
++		priv_size += sizeof(struct btintel_data);
++	}
 +
  	if (id->driver_info & BTUSB_INTEL_NEW) {
  		data->recv_event = btusb_recv_event_intel;
  		data->recv_bulk = btusb_recv_bulk_intel;
-@@ -4213,7 +4215,7 @@ static int btusb_probe(struct usb_interface *intf,
- 		data->recv_bulk = btusb_recv_bulk;
+@@ -4300,6 +4309,9 @@ static int btusb_probe(struct usb_interface *intf,
+ 		set_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks);
+ 		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+ 		set_bit(HCI_QUIRK_NON_PERSISTENT_DIAG, &hdev->quirks);
++
++		if (id->driver_info & BTUSB_INTEL_BROKEN_READ_VERSION)
++			btintel_set_flags(hdev, INTEL_BROKEN_READ_VERSION);
  	}
  
--	hdev = hci_alloc_dev(0);
-+	hdev = hci_alloc_dev(priv_size);
- 	if (!hdev)
- 		return -ENOMEM;
- 
+ 	if (id->driver_info & BTUSB_INTEL_NEW) {
 -- 
 2.26.3
 
