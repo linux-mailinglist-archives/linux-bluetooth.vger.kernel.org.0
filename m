@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C554A3D45D8
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 24 Jul 2021 09:30:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A61213D45DB
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 24 Jul 2021 09:30:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234389AbhGXGtr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 24 Jul 2021 02:49:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37006 "EHLO
+        id S234427AbhGXGtv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 24 Jul 2021 02:49:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234393AbhGXGtk (ORCPT
+        with ESMTP id S234398AbhGXGtl (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 24 Jul 2021 02:49:40 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB0C2C061575
-        for <linux-bluetooth@vger.kernel.org>; Sat, 24 Jul 2021 00:30:10 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id p5-20020a17090a8685b029015d1a9a6f1aso8147189pjn.1
-        for <linux-bluetooth@vger.kernel.org>; Sat, 24 Jul 2021 00:30:10 -0700 (PDT)
+        Sat, 24 Jul 2021 02:49:41 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F203C061760
+        for <linux-bluetooth@vger.kernel.org>; Sat, 24 Jul 2021 00:30:11 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id g23-20020a17090a5797b02901765d605e14so6763150pji.5
+        for <linux-bluetooth@vger.kernel.org>; Sat, 24 Jul 2021 00:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TgkdDMM3q147x2DO66poDEhjv+kw2aSJ9uTtRb1vkAI=;
-        b=WdD0rPpcd64qv8zUaMt1qD9fxuNNma9t/Fmni/AuULjksuvOQRfz1X05GrkZRIBz7F
-         d1/AegbQhNKBZHUhpTR05TvU4dkDFG21zFlz6yhoEvwoB6uL0Nd+2VcpvmDK/q0NpVz1
-         B9lbuDDWkD5afs6h6YAHrzl48H0ErHLi9QE5QKa1oZgJXj3ZCZcCVUs0VjTnvVINCKTV
-         FfbdDlp3XHUhTfIlRb3gZBqe4Yvs5UHdCe9xharJDlPTwFfo6xl5LPO2q0FUSdQgHWFZ
-         096FuTN/GutlAP1djRjKuCZp9Aw1+hqgwAabj96ygt/zpncwvoP4qxh8qEY8ezJP0YXQ
-         Nhyg==
+        bh=4SluDkb1L3oRtZRJNuNua2R43YLcKawqwrHQeKH0Vzc=;
+        b=aGE6UwxT8cCJD+AUXa8fx2YPC2IwavkoR2ZQadzFkeatPX84WGPh7d56RolgBLfQOT
+         E3KC0Fs6Isbg92mKhO0JchjQv6kQyTQPjbvA0Ev4Ip68eHz3GRr4ZQqN+m57EHaFsGek
+         5PaEZJj0tPJ1T4wlYngTm00VpXiRaBlUHeOReqVNdEHEODFNfmTX99BINgp2NQMtJYeg
+         DfTwXi7rhvcAoRC2HQN5WH6HkIcQ9G7fOwgdOkbdMOfaw7tlDontS1TiBdzUAcajObZb
+         exgLVjFrXEnGK5SgtyXbaUcRePBP32cu3zpMWmdfkVQwSILT/mfF3f5oRR9gq3ltQnxB
+         DDzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TgkdDMM3q147x2DO66poDEhjv+kw2aSJ9uTtRb1vkAI=;
-        b=Kns2DLqJqBgoDbQFTs3FL+r+aPFu6QoTWa40ccKqn0Wuf2AfUnKr/PSpEjFp/3OtFH
-         cu5oFB5hCpt9lS2Q686REYLIfywtzcxTXxZj1LrHzT2JsqDM+VuivFQ7vnCNg+Lz8EeL
-         St+UFRPOukK3f4HG08i5QI3EvxG1CmcjBHHjF/KpXJ91p17Q7oeT85k326cD47Pi6cOZ
-         U3XomA3vBst/T6keEHlKwt3RN2UCeER5gjyP3+gfcKMkoEpr6gMECFE22G8fTojVA2dr
-         IPOnG4POZXz/H/uqVZoADOkHlqgJUl78NCPEV3VbfwmsYvjoFT3/VqQPur6XTPNFtN9U
-         M7gQ==
-X-Gm-Message-State: AOAM5302lbtngljK7CU7UkONaWT5NNsMPbyzF0FM/sYgsDrnbIEXhn4W
-        6BjYBwg4MrpjfM4PALTgtbji0BnhDhU=
-X-Google-Smtp-Source: ABdhPJxnoyuhah26GJ71kNvP0MCz7TNOheB/dd1FDHYFs+6BarTKwIY+eYLTVHzpSXD5RML5v+cZEQ==
-X-Received: by 2002:a17:902:fe11:b029:12b:9108:c068 with SMTP id g17-20020a170902fe11b029012b9108c068mr6746033plj.36.1627111810141;
+        bh=4SluDkb1L3oRtZRJNuNua2R43YLcKawqwrHQeKH0Vzc=;
+        b=b6rHSxOrFj3yUM8lO0ETni85xTE9cHR56hG+Gf1F3qFIHBSPHqZib4FveFSrqgfh/0
+         L7yUtszqq2lJLpHC83o3PukYkmzJFQ98acYj4I9rZkYilsprK27iVo2pt+/XZ71IVvAt
+         0cQQNp2lhRVM1skX6jBWiP6SuXidxGJgjs2+wcTXYsrZ2gf/ZiwpzYWCDLh5/bMgZP+f
+         iQFyPyCx1cebYSqCtPqoAU+uQgV+yxYWadaVdXKc/7GvAqwo0B3tsB1csiYxJuw/+u6Z
+         k9HYa/mxXCgUYBIIICytLtvbJL3jpx/y6EFrdCfRn0WhGwvLdo5QBucS4CfRN7gWXIru
+         U6vA==
+X-Gm-Message-State: AOAM532KiILuj4/R5pA7fGEReUnL0GqWB+B8y5sNbdWXVXJv18sLICSu
+        k5Rmbz3Itup3MtPinJIT5SLH8GApMgw=
+X-Google-Smtp-Source: ABdhPJyhmkgsF1bgefKrwPxmWzbOZbTkiLb9RvRoepplJD8Fe6pS/Bcm0Xo+GrJtmeXlj1IKP0AA3w==
+X-Received: by 2002:a17:903:1243:b029:ed:8298:7628 with SMTP id u3-20020a1709031243b02900ed82987628mr6614285plh.11.1627111810864;
         Sat, 24 Jul 2021 00:30:10 -0700 (PDT)
 Received: from localhost.localdomain ([2601:1c0:6a01:d830::1291])
-        by smtp.gmail.com with ESMTPSA id u24sm38510919pfm.141.2021.07.24.00.30.09
+        by smtp.gmail.com with ESMTPSA id u24sm38510919pfm.141.2021.07.24.00.30.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jul 2021 00:30:09 -0700 (PDT)
+        Sat, 24 Jul 2021 00:30:10 -0700 (PDT)
 From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
-Subject: [RFC PATCH v3 1/9] Bluetooth: Add support hdev to allocate private data
-Date:   Sat, 24 Jul 2021 00:29:57 -0700
-Message-Id: <20210724073005.714003-2-hj.tedd.an@gmail.com>
+Subject: [RFC PATCH v3 2/9] Bluetooth: btintel: Add combined setup and shutdown functions
+Date:   Sat, 24 Jul 2021 00:29:58 -0700
+Message-Id: <20210724073005.714003-3-hj.tedd.an@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <20210724073005.714003-1-hj.tedd.an@gmail.com>
 References: <20210724073005.714003-1-hj.tedd.an@gmail.com>
@@ -65,286 +65,301 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-This patch adds support hdev to allocate extra size for private data.
-The size of private data is specified in the hdev_alloc_size(priv_size)
-and the allocated buffer can be accessed with hci_get_priv(hdev).
+There are multiple setup and shutdown functions for Intel device and the
+setup function to use is depends on the USB PID/VID, which makes
+difficult to maintain the code and increases the code size.
+
+This patch adds combined setup and shutdown functions to provide a
+single entry point for all Intel devices and choose the setup functions
+based on the information read with HCI_Intel_Read_Version command.
+
+Starting from TyP device, for HCI_Intel_Read_Version command, the
+command parameter and response are changed even though OCF remains
+same. Luckly the legacy devices still can handle the command without
+error even if it has a extra parameter, so it uses the new command
+format to support both legacy and new (tlv based) format.
 
 Signed-off-by: Tedd Ho-Jeong An <tedd.an@intel.com>
 ---
- drivers/bluetooth/bfusb.c        |  2 +-
- drivers/bluetooth/bluecard_cs.c  |  2 +-
- drivers/bluetooth/bpa10x.c       |  2 +-
- drivers/bluetooth/bt3c_cs.c      |  2 +-
- drivers/bluetooth/btmrvl_main.c  |  2 +-
- drivers/bluetooth/btmtksdio.c    |  2 +-
- drivers/bluetooth/btmtkuart.c    |  2 +-
- drivers/bluetooth/btqcomsmd.c    |  2 +-
- drivers/bluetooth/btrsi.c        |  2 +-
- drivers/bluetooth/btsdio.c       |  2 +-
- drivers/bluetooth/btusb.c        |  2 +-
- drivers/bluetooth/dtl1_cs.c      |  2 +-
- drivers/bluetooth/hci_ldisc.c    |  2 +-
- drivers/bluetooth/hci_serdev.c   |  2 +-
- drivers/bluetooth/hci_vhci.c     |  2 +-
- drivers/bluetooth/virtio_bt.c    |  2 +-
- include/net/bluetooth/hci_core.h |  7 ++++++-
- net/bluetooth/hci_core.c         | 11 +++++++++--
- 18 files changed, 31 insertions(+), 19 deletions(-)
+ drivers/bluetooth/btintel.c | 210 ++++++++++++++++++++++++++++++++++++
+ drivers/bluetooth/btintel.h |  12 +++
+ 2 files changed, 222 insertions(+)
 
-diff --git a/drivers/bluetooth/bfusb.c b/drivers/bluetooth/bfusb.c
-index 5a321b4076aa..430e230999fa 100644
---- a/drivers/bluetooth/bfusb.c
-+++ b/drivers/bluetooth/bfusb.c
-@@ -651,7 +651,7 @@ static int bfusb_probe(struct usb_interface *intf, const struct usb_device_id *i
- 	release_firmware(firmware);
- 
- 	/* Initialize and register HCI device */
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		BT_ERR("Can't allocate HCI device");
- 		goto done;
-diff --git a/drivers/bluetooth/bluecard_cs.c b/drivers/bluetooth/bluecard_cs.c
-index 36eabf61717f..d62b878aff7e 100644
---- a/drivers/bluetooth/bluecard_cs.c
-+++ b/drivers/bluetooth/bluecard_cs.c
-@@ -694,7 +694,7 @@ static int bluecard_open(struct bluecard_info *info)
- 	info->rx_skb = NULL;
- 
- 	/* Initialize HCI device */
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		BT_ERR("Can't allocate HCI device");
- 		return -ENOMEM;
-diff --git a/drivers/bluetooth/bpa10x.c b/drivers/bluetooth/bpa10x.c
-index 1fa58c059cbf..bd670352a336 100644
---- a/drivers/bluetooth/bpa10x.c
-+++ b/drivers/bluetooth/bpa10x.c
-@@ -380,7 +380,7 @@ static int bpa10x_probe(struct usb_interface *intf,
- 	init_usb_anchor(&data->tx_anchor);
- 	init_usb_anchor(&data->rx_anchor);
- 
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev)
- 		return -ENOMEM;
- 
-diff --git a/drivers/bluetooth/bt3c_cs.c b/drivers/bluetooth/bt3c_cs.c
-index 54713833951a..cd135a736688 100644
---- a/drivers/bluetooth/bt3c_cs.c
-+++ b/drivers/bluetooth/bt3c_cs.c
-@@ -550,7 +550,7 @@ static int bt3c_open(struct bt3c_info *info)
- 	info->rx_skb = NULL;
- 
- 	/* Initialize HCI device */
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		BT_ERR("Can't allocate HCI device");
- 		return -ENOMEM;
-diff --git a/drivers/bluetooth/btmrvl_main.c b/drivers/bluetooth/btmrvl_main.c
-index 8b9d78ce6bb2..0157fa4ce528 100644
---- a/drivers/bluetooth/btmrvl_main.c
-+++ b/drivers/bluetooth/btmrvl_main.c
-@@ -680,7 +680,7 @@ int btmrvl_register_hdev(struct btmrvl_private *priv)
- 	struct btmrvl_sdio_card *card = priv->btmrvl_dev.card;
- 	int ret;
- 
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		BT_ERR("Can not allocate HCI device");
- 		goto err_hdev;
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index 9872ef18f9fe..b48aec25c09d 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -959,7 +959,7 @@ static int btmtksdio_probe(struct sdio_func *func,
- 	skb_queue_head_init(&bdev->txq);
- 
- 	/* Initialize and register HCI device */
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		dev_err(&func->dev, "Can't allocate HCI device\n");
- 		return -ENOMEM;
-diff --git a/drivers/bluetooth/btmtkuart.c b/drivers/bluetooth/btmtkuart.c
-index e9d91d7c0db4..96ee364507c5 100644
---- a/drivers/bluetooth/btmtkuart.c
-+++ b/drivers/bluetooth/btmtkuart.c
-@@ -987,7 +987,7 @@ static int btmtkuart_probe(struct serdev_device *serdev)
- 	skb_queue_head_init(&bdev->txq);
- 
- 	/* Initialize and register HCI device */
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		dev_err(&serdev->dev, "Can't allocate HCI device\n");
- 		return -ENOMEM;
-diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
-index 2acb719e596f..47aaffceb8c1 100644
---- a/drivers/bluetooth/btqcomsmd.c
-+++ b/drivers/bluetooth/btqcomsmd.c
-@@ -147,7 +147,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
- 		goto destroy_acl_channel;
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index e44b6993cf91..5513a2ba2504 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -236,6 +236,8 @@ int btintel_version_info(struct hci_dev *hdev, struct intel_version *ver)
+ 	 * compatibility options when newer hardware variants come along.
+ 	 */
+ 	switch (ver->hw_variant) {
++	case 0x07:	/* WP - Legacy ROM */
++	case 0x08:	/* StP - Legacy ROM */
+ 	case 0x0b:      /* SfP */
+ 	case 0x0c:      /* WsP */
+ 	case 0x11:      /* JfP */
+@@ -250,9 +252,15 @@ int btintel_version_info(struct hci_dev *hdev, struct intel_version *ver)
  	}
  
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		ret = -ENOMEM;
- 		goto destroy_cmd_channel;
-diff --git a/drivers/bluetooth/btrsi.c b/drivers/bluetooth/btrsi.c
-index bea1595f6432..90e398c42a41 100644
---- a/drivers/bluetooth/btrsi.c
-+++ b/drivers/bluetooth/btrsi.c
-@@ -121,7 +121,7 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
- 	ops->set_bt_context(priv, h_adapter);
- 	h_adapter->proto_ops = ops;
- 
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		BT_ERR("Failed to alloc HCI device");
- 		goto err;
-diff --git a/drivers/bluetooth/btsdio.c b/drivers/bluetooth/btsdio.c
-index 199e8f7d426d..69d2a26ed5db 100644
---- a/drivers/bluetooth/btsdio.c
-+++ b/drivers/bluetooth/btsdio.c
-@@ -310,7 +310,7 @@ static int btsdio_probe(struct sdio_func *func,
- 
- 	skb_queue_head_init(&data->txq);
- 
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev)
- 		return -ENOMEM;
- 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index a9855a2dd561..66936a1862e3 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4560,7 +4560,7 @@ static int btusb_probe(struct usb_interface *intf,
- 		data->recv_bulk = btusb_recv_bulk;
- 	}
- 
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev)
- 		return -ENOMEM;
- 
-diff --git a/drivers/bluetooth/dtl1_cs.c b/drivers/bluetooth/dtl1_cs.c
-index 2adfe4fade76..f06c8151f0ea 100644
---- a/drivers/bluetooth/dtl1_cs.c
-+++ b/drivers/bluetooth/dtl1_cs.c
-@@ -449,7 +449,7 @@ static int dtl1_open(struct dtl1_info *info)
- 	set_bit(XMIT_WAITING, &(info->tx_state));
- 
- 	/* Initialize HCI device */
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		BT_ERR("Can't allocate HCI device");
- 		return -ENOMEM;
-diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
-index 71a4ca505e09..7ad61bdb2023 100644
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -627,7 +627,7 @@ static int hci_uart_register_dev(struct hci_uart *hu)
- 	BT_DBG("");
- 
- 	/* Initialize and register HCI device */
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		BT_ERR("Can't allocate HCI device");
- 		return -ENOMEM;
-diff --git a/drivers/bluetooth/hci_serdev.c b/drivers/bluetooth/hci_serdev.c
-index 3b00d82d36cf..327fa2ecc5e7 100644
---- a/drivers/bluetooth/hci_serdev.c
-+++ b/drivers/bluetooth/hci_serdev.c
-@@ -313,7 +313,7 @@ int hci_uart_register_device(struct hci_uart *hu,
- 	set_bit(HCI_UART_PROTO_READY, &hu->flags);
- 
- 	/* Initialize and register HCI device */
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		BT_ERR("Can't allocate HCI device");
- 		err = -ENOMEM;
-diff --git a/drivers/bluetooth/hci_vhci.c b/drivers/bluetooth/hci_vhci.c
-index 8ab26dec5f6e..5486aa3945da 100644
---- a/drivers/bluetooth/hci_vhci.c
-+++ b/drivers/bluetooth/hci_vhci.c
-@@ -96,7 +96,7 @@ static int __vhci_create_device(struct vhci_data *data, __u8 opcode)
- 	if (!skb)
- 		return -ENOMEM;
- 
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		kfree_skb(skb);
- 		return -ENOMEM;
-diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
-index 57908ce4fae8..28576ec4860e 100644
---- a/drivers/bluetooth/virtio_bt.c
-+++ b/drivers/bluetooth/virtio_bt.c
-@@ -283,7 +283,7 @@ static int virtbt_probe(struct virtio_device *vdev)
- 	if (err)
- 		return err;
- 
--	hdev = hci_alloc_dev();
-+	hdev = hci_alloc_dev(0);
- 	if (!hdev) {
- 		err = -ENOMEM;
- 		goto failed;
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index a53e94459ecd..5c689c5dc089 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1223,10 +1223,15 @@ static inline void hci_set_drvdata(struct hci_dev *hdev, void *data)
- 	dev_set_drvdata(&hdev->dev, data);
+ 	switch (ver->fw_variant) {
++	case 0x01:
++		variant = "Legacy ROM 2.5";
++		break;
+ 	case 0x06:
+ 		variant = "Bootloader";
+ 		break;
++	case 0x22:
++		variant = "Legacy ROM 2.x";
++		break;
+ 	case 0x23:
+ 		variant = "Firmware";
+ 		break;
+@@ -483,6 +491,98 @@ int btintel_version_info_tlv(struct hci_dev *hdev, struct intel_version_tlv *ver
  }
+ EXPORT_SYMBOL_GPL(btintel_version_info_tlv);
  
-+static inline void *hci_get_priv(struct hci_dev *hdev)
++static int btintel_parse_version_tlv(struct hci_dev *hdev,
++				     struct intel_version_tlv *version,
++				     struct sk_buff *skb)
 +{
-+	return (char *)hdev + sizeof(*hdev);
-+}
++	/* Consume Command Complete Status field */
++	skb_pull(skb, 1);
 +
- struct hci_dev *hci_dev_get(int index);
- struct hci_dev *hci_get_route(bdaddr_t *dst, bdaddr_t *src, u8 src_type);
- 
--struct hci_dev *hci_alloc_dev(void);
-+struct hci_dev *hci_alloc_dev(int sizeof_priv);
- void hci_free_dev(struct hci_dev *hdev);
- int hci_register_dev(struct hci_dev *hdev);
- void hci_unregister_dev(struct hci_dev *hdev);
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 2560ed2f144d..66b72c7efa3d 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3751,11 +3751,18 @@ static int hci_suspend_notifier(struct notifier_block *nb, unsigned long action,
- }
- 
- /* Alloc HCI device */
--struct hci_dev *hci_alloc_dev(void)
-+struct hci_dev *hci_alloc_dev(int sizeof_priv)
- {
- 	struct hci_dev *hdev;
-+	unsigned int alloc_size;
- 
--	hdev = kzalloc(sizeof(*hdev), GFP_KERNEL);
-+	alloc_size = sizeof(*hdev);
-+	if (sizeof_priv) {
-+		/* Fixme: May need ALIGN-ment? */
-+		alloc_size += sizeof_priv;
++	/* Event parameters contatin multiple TLVs. Read each of them
++	 * and only keep the required data. Also, it use existing legacy
++	 * version field like hw_platform, hw_variant, and fw_variant
++	 * to keep the existing setup flow
++	 */
++	while (skb->len) {
++		struct intel_tlv *tlv;
++
++		tlv = (struct intel_tlv *)skb->data;
++		switch (tlv->type) {
++		case INTEL_TLV_CNVI_TOP:
++			version->cnvi_top = get_unaligned_le32(tlv->val);
++			break;
++		case INTEL_TLV_CNVR_TOP:
++			version->cnvr_top = get_unaligned_le32(tlv->val);
++			break;
++		case INTEL_TLV_CNVI_BT:
++			version->cnvi_bt = get_unaligned_le32(tlv->val);
++			break;
++		case INTEL_TLV_CNVR_BT:
++			version->cnvr_bt = get_unaligned_le32(tlv->val);
++			break;
++		case INTEL_TLV_DEV_REV_ID:
++			version->dev_rev_id = get_unaligned_le16(tlv->val);
++			break;
++		case INTEL_TLV_IMAGE_TYPE:
++			version->img_type = tlv->val[0];
++			break;
++		case INTEL_TLV_TIME_STAMP:
++			/* If image type is Operational firmware (0x03), then
++			 * running FW Calendar Week and Year information can
++			 * be extracted from Timestamp information
++			 */
++			version->min_fw_build_cw = tlv->val[0];
++			version->min_fw_build_yy = tlv->val[1];
++			version->timestamp = get_unaligned_le16(tlv->val);
++			break;
++		case INTEL_TLV_BUILD_TYPE:
++			version->build_type = tlv->val[0];
++			break;
++		case INTEL_TLV_BUILD_NUM:
++			/* If image type is Operational firmware (0x03), then
++			 * running FW build number can be extracted from the
++			 * Build information
++			 */
++			version->min_fw_build_nn = tlv->val[0];
++			version->build_num = get_unaligned_le32(tlv->val);
++			break;
++		case INTEL_TLV_SECURE_BOOT:
++			version->secure_boot = tlv->val[0];
++			break;
++		case INTEL_TLV_OTP_LOCK:
++			version->otp_lock = tlv->val[0];
++			break;
++		case INTEL_TLV_API_LOCK:
++			version->api_lock = tlv->val[0];
++			break;
++		case INTEL_TLV_DEBUG_LOCK:
++			version->debug_lock = tlv->val[0];
++			break;
++		case INTEL_TLV_MIN_FW:
++			version->min_fw_build_nn = tlv->val[0];
++			version->min_fw_build_cw = tlv->val[1];
++			version->min_fw_build_yy = tlv->val[2];
++			break;
++		case INTEL_TLV_LIMITED_CCE:
++			version->limited_cce = tlv->val[0];
++			break;
++		case INTEL_TLV_SBE_TYPE:
++			version->sbe_type = tlv->val[0];
++			break;
++		case INTEL_TLV_OTP_BDADDR:
++			memcpy(&version->otp_bd_addr, tlv->val, tlv->len);
++			break;
++		default:
++			/* Ignore rest of information */
++			break;
++		}
++		/* consume the current tlv and move to next*/
++		skb_pull(skb, tlv->len + sizeof(*tlv));
 +	}
 +
-+	hdev = kzalloc(alloc_size, GFP_KERNEL);
- 	if (!hdev)
- 		return NULL;
++	return 0;
++}
++
+ int btintel_read_version_tlv(struct hci_dev *hdev, struct intel_version_tlv *version)
+ {
+ 	struct sk_buff *skb;
+@@ -1272,6 +1372,116 @@ int btintel_set_debug_features(struct hci_dev *hdev,
+ }
+ EXPORT_SYMBOL_GPL(btintel_set_debug_features);
  
++int btintel_setup_combined(struct hci_dev *hdev)
++{
++	const u8 param[1] = { 0xFF };
++	struct intel_version ver;
++	struct intel_version_tlv ver_tlv;
++	struct sk_buff *skb;
++	int err;
++
++	BT_DBG("%s", hdev->name);
++
++	/* Starting from TyP device, the command parameter and response are
++	 * changed even though the OCF for HCI_Intel_Read_Version command
++	 * remains same. The legacy devices can handle even if the
++	 * command has a parameter and returns a correct version information.
++	 * So, it uses new format to support both legacy and new format.
++	 */
++	skb = __hci_cmd_sync(hdev, 0xfc05, 1, param, HCI_CMD_TIMEOUT);
++	if (IS_ERR(skb)) {
++		bt_dev_err(hdev, "Reading Intel version command failed (%ld)",
++			   PTR_ERR(skb));
++		return PTR_ERR(skb);
++	}
++
++	/* Check the status */
++	if (skb->data[0]) {
++		bt_dev_err(hdev, "Intel Read Version command failed (%02x)",
++			   skb->data[0]);
++		kfree_skb(skb);
++		return -EIO;
++	}
++
++	/* For Legacy device, check the HW platform value and size */
++	if (skb->data[1] == 0x37 && skb->len == sizeof(ver)) {
++		bt_dev_dbg(hdev, "Read the legacy Intel version information");
++
++		memcpy(&ver, skb->data, sizeof(ver));
++
++		/* Display version information */
++		btintel_version_info(hdev, &ver);
++
++		/* Identify the device type based on the read version */
++		switch (ver.hw_variant) {
++		case 0x07:	/* WP */
++		case 0x08:	/* StP */
++			/* Legacy ROM product */
++			/* TODO: call setup routine for legacy rom product */
++			break;
++		case 0x0b:      /* SfP */
++		case 0x0c:      /* WsP */
++		case 0x11:      /* JfP */
++		case 0x12:      /* ThP */
++		case 0x13:      /* HrP */
++		case 0x14:      /* CcP */
++			/* TODO: call setup routine for bootloader product */
++			break;
++		default:
++			bt_dev_err(hdev, "Unsupported Intel hw variant (%u)",
++				   ver.hw_variant);
++			return -EINVAL;
++		}
++
++		return err;
++	}
++
++	/* For TLV type device, parse the tlv data */
++	btintel_parse_version_tlv(hdev, &ver_tlv, skb);
++
++	/* Display version information of TLV type */
++	btintel_version_info_tlv(hdev, &ver_tlv);
++
++	/* TODO: Need to filter the device for new generation */
++	/* TODO: call setup routine for tlv based bootloader product */
++
++	return err;
++}
++EXPORT_SYMBOL_GPL(btintel_setup_combined);
++
++int btintel_shutdown_combined(struct hci_dev *hdev)
++{
++	struct sk_buff *skb;
++
++	/* Send HCI Reset to the controller to stop any BT activity which
++	 * were triggered. This will help to save power and maintain the
++	 * sync b/w Host and controller
++	 */
++	skb = __hci_cmd_sync(hdev, HCI_OP_RESET, 0, NULL, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		bt_dev_err(hdev, "HCI reset during shutdown failed");
++		return PTR_ERR(skb);
++	}
++	kfree_skb(skb);
++
++	/* Fix me: All legacy ROM and RAM works?
++	 * This code was only for legacy ROM
++	 */
++	/* Some platforms have an issue with BT LED when the interface is
++	 * down or BT radio is turned off, which takes 5 seconds to BT LED
++	 * goes off. This command turns off the BT LED immediately.
++	 */
++	skb = __hci_cmd_sync(hdev, 0xfc3f, 0, NULL, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		bt_dev_err(hdev, "turning off Intel device LED failed");
++		return PTR_ERR(skb);
++	}
++	kfree_skb(skb);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(btintel_shutdown_combined);
++
+ MODULE_AUTHOR("Marcel Holtmann <marcel@holtmann.org>");
+ MODULE_DESCRIPTION("Bluetooth support for Intel devices ver " VERSION);
+ MODULE_VERSION(VERSION);
+diff --git a/drivers/bluetooth/btintel.h b/drivers/bluetooth/btintel.h
+index d184064a5e7c..68ffa84fa87a 100644
+--- a/drivers/bluetooth/btintel.h
++++ b/drivers/bluetooth/btintel.h
+@@ -165,6 +165,8 @@ int btintel_read_boot_params(struct hci_dev *hdev,
+ 			     struct intel_boot_params *params);
+ int btintel_download_firmware(struct hci_dev *dev, struct intel_version *ver,
+ 			      const struct firmware *fw, u32 *boot_param);
++int btintel_setup_combined(struct hci_dev *hdev);
++int btintel_shutdown_combined(struct hci_dev *hdev);
+ int btintel_download_firmware_newgen(struct hci_dev *hdev,
+ 				     struct intel_version_tlv *ver,
+ 				     const struct firmware *fw,
+@@ -283,6 +285,16 @@ static inline int btintel_download_firmware(struct hci_dev *dev,
+ 	return -EOPNOTSUPP;
+ }
+ 
++static inline int btintel_setup_combined(struct hci_dev *hdev)
++{
++	return -EOPNOTSUPP;
++}
++
++static inline int btintel_shutdown_combined(struct hci_dev *hdev)
++{
++	return -EOPNOTSUPP;
++}
++
+ static inline int btintel_download_firmware_newgen(struct hci_dev *hdev,
+ 						   const struct firmware *fw,
+ 						   u32 *boot_param,
 -- 
 2.26.3
 
