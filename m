@@ -2,62 +2,62 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0BA63D8EBF
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jul 2021 15:16:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01C0D3D8EC1
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jul 2021 15:16:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236254AbhG1NQI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Jul 2021 09:16:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50022 "EHLO
+        id S236292AbhG1NQO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Jul 2021 09:16:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233315AbhG1NQH (ORCPT
+        with ESMTP id S236289AbhG1NQM (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Jul 2021 09:16:07 -0400
+        Wed, 28 Jul 2021 09:16:12 -0400
 Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 048F0C061757
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jul 2021 06:16:05 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id p71-20020a25424a0000b029056092741626so2741442yba.19
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jul 2021 06:16:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 041BCC061765
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jul 2021 06:16:11 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id d69-20020a25e6480000b02904f4a117bd74so2764351ybh.17
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jul 2021 06:16:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=YNwxtFl+Q5xNneMOHue6J/67p8nZOPpKbvtqaiUgyEs=;
-        b=kvICbf05hP2Nhr9lA9T5YPAcSMxDW27m5xiVdSeZOuvHheu4iHz5BqxBjOETVeYONW
-         V81aXzaHFVDwdDiSHI2jfg7CgxTxzuv2zt7D6t0+ZeJD+ym/H2lKT4O1YU1o0+Y7GIpM
-         CZiptpTTkhngk/o1tQ5WMILmdS5RNRIUhYHpQbB0kK6U0b4aN6+5R7yq76uNDjdQAUim
-         V6oOZU+sS9armeuVxwQo/GtBdngSXQZOhPt7d6Q/85MWPlrQvrNL7Zr8NiFb6RVrAAUy
-         4bsHLz8yPEhhSZ6bMJZGbU/XlPxNmzPYdIArVyxru3Y7qHHehbi3DWk659l5ky9vkW3q
-         kvNA==
+        bh=sSwyhyBbbT8FDD76nL3HeaEtb8Ol8lNd71HJ8NDZ5UI=;
+        b=iYNlkWgUbVDMvemLAN8D/WiY7VusExFjMjlsCqF5UJtAyB3HpKWGTl+G5Hu8xdcBEy
+         7S2I8Fyy5FEumkLrMC8ouFMa4NADLtqwoSfCpnSRJ2zTb5x0GOA0efCCuKlfimanWnHc
+         ADzLc2VsOIDnqvQ9OxS6w8j6wteXxl9W6ohyzUFyj4aF64zq0rWhhkYapDVJujwOek2m
+         pcDZv1YZp6l77SHg7RQxY9b/x2ZGwr726pTgVelB4ULVRLOHwkr45aK4a8AYWwF7H3hl
+         kwvwGDtemS9039/2/2vqRaHhnftxp34kxqybqIfvfs1IreGNi5WCWRhA7y5Hu8DwZKmH
+         mQhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=YNwxtFl+Q5xNneMOHue6J/67p8nZOPpKbvtqaiUgyEs=;
-        b=NA17u7DomgF/BmSgaLbVoQNYLRsu5Y1cduRI51ui3x0ECbRaca28OGc41+VWGj2QJA
-         61UhSMkoFtjeEWIE/P+3WBFNdCUHiL8/KrYRVAHtCC6hnL4dcMsUnoAYSQIjvOVgdS+/
-         YZ/eFcCdRlWcSuz5xkcbWxPKEIRJBNqK02ZSlAFzGrkCYdPyqlYTWzvmEZOss6L+aIkB
-         OmboJzHgFAp7jcaVdNWU2nsGj05IpIb1CnzOiryAXg8co6v1Fq2sI79v/HGNcvLhdKCF
-         peJBjNibb3JOTuP/j4SYR885qdwlqXke6eRp55Yxi6ovw1uTzfv5uAuU4J5RlH2hMxbt
-         yBcg==
-X-Gm-Message-State: AOAM532jPG7hx3U9swLHVfI98YbxMTo1ejNgxVFTfVGG3ahJGDYmRrGd
-        wVT6Z0y/GUiGZ07OwlyRTQY2YMuv4mpbZNUbCKrQAmKhSK7EOjvY6MX0dtGdV+4vV4FQfKp5UCO
-        kymZJ7HlgzGp79+XkJt9/HGMPUHRYhMhDuB3JTjY7ZLFdqLamR64o0S1FDCG4y1w95JHidnLPsF
-        OIj2IxU8pDr7A=
-X-Google-Smtp-Source: ABdhPJx4BysB1mTistNHKJ8OuWJ5MgneKIm1XDIih8G4Blt43XsxDLvviIne9Rv83SNzmqUXwK1v7crafOm76iDhPA==
+        bh=sSwyhyBbbT8FDD76nL3HeaEtb8Ol8lNd71HJ8NDZ5UI=;
+        b=Ay2OTxsbDk0gqETP/LEUFcoCTEOoPlpsq5FG9yiNmxYLtfUQgABgKAxzv8wr5VlR/9
+         l+/30bZcdoqpwvfH1EB4fpDKmIdAlsDtq5xqYxNcoLNlAC4sCRQIEaR6D7AdUkeqJfKD
+         kwXf/rcsTC7Xt6xuQ4CXjVhQhOfMor7wUEYN6kOWDa/ULkwsHwuNox9cfvDdIFA2TYcM
+         1h5wh+naKBP1/d8xsFw8Ob/A6HeyGhLFqWYrayWpFYwxVr00095AENTUjlZu8XsjMoJg
+         B9LAng7kjeKjvMmQlCdKMxGDItkFuA2cnsIUlwnBpt0ug01/l2uxDG72cSdwyAynRmGh
+         Zo5g==
+X-Gm-Message-State: AOAM532JthJDszQkYryC8Fm9pwYOy0qO9qOSm5U8+N2GgKOM57UyHPSQ
+        WlwXJlSlHS22Ftmm2YHN0CIaiJNBnYjM29IIJVhtepriGnFdT3mk93Oxbki3yMXnRQzfNSISlHh
+        UYvdk623DOPyYGwKQpgb630OcU1QACrzuzqWnnohC9W2w01bNlwCemW6dRXdVDx91edV3jzJRsk
+        3xRGJdU0QkySU=
+X-Google-Smtp-Source: ABdhPJxjDEQfyxX1eXDM2OUB5O1Z6kIq+OSHjh0JcXwfp8mb6AZGS6ut0aJiwPfOXwm6//uoblRjeU7/Mi/f4wiX6g==
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:9b6a:9d1f:2f3e:45de])
- (user=howardchung job=sendgmr) by 2002:a5b:648:: with SMTP id
- o8mr4237312ybq.260.1627478164145; Wed, 28 Jul 2021 06:16:04 -0700 (PDT)
-Date:   Wed, 28 Jul 2021 21:15:21 +0800
+ (user=howardchung job=sendgmr) by 2002:a25:28a:: with SMTP id
+ 132mr38752095ybc.458.1627478170184; Wed, 28 Jul 2021 06:16:10 -0700 (PDT)
+Date:   Wed, 28 Jul 2021 21:15:22 +0800
 In-Reply-To: <20210728131529.3310558-1-howardchung@google.com>
-Message-Id: <20210728211405.Bluez.v3.5.Iee308dd18bfdfd3dae9e343e78b3942ee462314f@changeid>
+Message-Id: <20210728211405.Bluez.v3.6.Id0842634d98a21fbdfa5cc72c76a462a98bf6f40@changeid>
 Mime-Version: 1.0
 References: <20210728131529.3310558-1-howardchung@google.com>
 X-Mailer: git-send-email 2.32.0.432.gabb21c7263-goog
-Subject: [Bluez PATCH v3 05/13] core: add device_added and device_removed to
- adapter driver
+Subject: [Bluez PATCH v3 06/13] plugins: new plugin
 From:   Howard Chung <howardchung@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Cc:     Yun-Hao Chung <howardchung@chromium.org>
+Cc:     Yun-Hao Chung <howardchung@chromium.org>,
+        Miao-chen Chou <mcchou@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
@@ -65,144 +65,135 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Yun-Hao Chung <howardchung@chromium.org>
 
-This adds device_added and device_removed to btd_adapter_driver so that
-a driver can get notification when device is added or removed.
+This adds an initial code for a new plugin admin_policy.
+
+Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 ---
 
 (no changes since v1)
 
- src/adapter.c | 59 ++++++++++++++++++++++++++++++++++++++++++++++-----
- src/adapter.h |  4 ++++
- 2 files changed, 58 insertions(+), 5 deletions(-)
+ Makefile.plugins       |  5 +++++
+ bootstrap-configure    |  1 +
+ configure.ac           |  4 ++++
+ plugins/admin.c        | 30 ++++++++++++++++++++++++++++++
+ plugins/admin_policy.c | 30 ++++++++++++++++++++++++++++++
+ 5 files changed, 70 insertions(+)
+ create mode 100644 plugins/admin.c
+ create mode 100644 plugins/admin_policy.c
 
-diff --git a/src/adapter.c b/src/adapter.c
-index 6c8096147..5c556b569 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -1218,6 +1218,9 @@ void adapter_service_remove(struct btd_adapter *adapter, uint32_t handle)
- 	remove_record_from_server(rec->handle);
- }
+diff --git a/Makefile.plugins b/Makefile.plugins
+index 4e6a72b0b..69fb01001 100644
+--- a/Makefile.plugins
++++ b/Makefile.plugins
+@@ -11,6 +11,11 @@ builtin_sources += plugins/autopair.c
+ builtin_modules += policy
+ builtin_sources += plugins/policy.c
  
-+static void adapter_add_device(struct btd_adapter *adapter,
-+						struct btd_device *device);
++if ADMIN
++builtin_modules += admin
++builtin_sources += plugins/admin.c
++endif
 +
- static struct btd_device *adapter_create_device(struct btd_adapter *adapter,
- 						const bdaddr_t *bdaddr,
- 						uint8_t bdaddr_type)
-@@ -1228,8 +1231,7 @@ static struct btd_device *adapter_create_device(struct btd_adapter *adapter,
- 	if (!device)
- 		return NULL;
+ if NFC
+ builtin_modules += neard
+ builtin_sources += plugins/neard.c
+diff --git a/bootstrap-configure b/bootstrap-configure
+index 0efd83abc..a34be8320 100755
+--- a/bootstrap-configure
++++ b/bootstrap-configure
+@@ -30,4 +30,5 @@ fi
+ 		--enable-pie \
+ 		--enable-cups \
+ 		--enable-library \
++		--enable-admin \
+ 		--disable-datafiles $*
+diff --git a/configure.ac b/configure.ac
+index a5afaea6c..0744860b8 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -364,6 +364,10 @@ AC_ARG_ENABLE(logger, AC_HELP_STRING([--enable-logger],
+ 		[enable HCI logger service]), [enable_logger=${enableval}])
+ AM_CONDITIONAL(LOGGER, test "${enable_logger}" = "yes")
  
--	adapter->devices = g_slist_append(adapter->devices, device);
--
-+	adapter_add_device(adapter, device);
- 	return device;
- }
- 
-@@ -1256,6 +1258,9 @@ static void service_auth_cancel(struct service_auth *auth)
- 	g_free(auth);
- }
- 
-+static void adapter_remove_device(struct btd_adapter *adapter,
-+						struct btd_device *device);
++AC_ARG_ENABLE(admin, AC_HELP_STRING([--enable-admin],
++		[enable admin policy plugin]), [enable_admin=${enableval}])
++AM_CONDITIONAL(ADMIN, test "${enable_admin}" = "yes")
 +
- void btd_adapter_remove_device(struct btd_adapter *adapter,
- 				struct btd_device *dev)
- {
-@@ -1263,7 +1268,7 @@ void btd_adapter_remove_device(struct btd_adapter *adapter,
- 
- 	adapter->connect_list = g_slist_remove(adapter->connect_list, dev);
- 
--	adapter->devices = g_slist_remove(adapter->devices, dev);
-+	adapter_remove_device(adapter, dev);
- 	btd_adv_monitor_device_remove(adapter->adv_monitor_manager, dev);
- 
- 	adapter->discovery_found = g_slist_remove(adapter->discovery_found,
-@@ -4665,7 +4670,7 @@ static void load_devices(struct btd_adapter *adapter)
- 			goto free;
- 
- 		btd_device_set_temporary(device, false);
--		adapter->devices = g_slist_append(adapter->devices, device);
-+		adapter_add_device(adapter, device);
- 
- 		/* TODO: register services from pre-loaded list of primaries */
- 
-@@ -4827,6 +4832,48 @@ void adapter_remove_profile(struct btd_adapter *adapter, gpointer p)
- 		profile->adapter_remove(profile, adapter);
- }
- 
-+static void device_added_drivers(struct btd_adapter *adapter,
-+						struct btd_device *device)
+ if (test "${prefix}" = "NONE"); then
+ 	dnl no prefix and no localstatedir, so default to /var
+ 	if (test "$localstatedir" = '${prefix}/var'); then
+diff --git a/plugins/admin.c b/plugins/admin.c
+new file mode 100644
+index 000000000..42866bcf7
+--- /dev/null
++++ b/plugins/admin.c
+@@ -0,0 +1,30 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2021 Google LLC
++ *
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include <config.h>
++#endif
++
++#include "src/log.h"
++#include "src/plugin.h"
++
++static int admin_init(void)
 +{
-+	struct btd_adapter_driver *driver;
-+	GSList *l;
-+
-+	for (l = adapter_drivers; l; l = l->next) {
-+		driver = l->data;
-+
-+		if (driver->device_added)
-+			driver->device_added(adapter, device);
-+	}
++	DBG("");
 +}
 +
-+static void device_removed_drivers(struct btd_adapter *adapter,
-+						struct btd_device *device)
++static void admin_exit(void)
 +{
-+	struct btd_adapter_driver *driver;
-+	GSList *l;
-+
-+	for (l = adapter_drivers; l; l = l->next) {
-+		driver = l->data;
-+
-+		if (driver->device_removed)
-+			driver->device_removed(adapter, device);
-+	}
++	DBG("");
 +}
 +
-+static void adapter_add_device(struct btd_adapter *adapter,
-+						struct btd_device *device)
++BLUETOOTH_PLUGIN_DEFINE(admin, VERSION,
++			BLUETOOTH_PLUGIN_PRIORITY_DEFAULT,
++			admin_init, admin_exit)
+diff --git a/plugins/admin_policy.c b/plugins/admin_policy.c
+new file mode 100644
+index 000000000..dd8d89736
+--- /dev/null
++++ b/plugins/admin_policy.c
+@@ -0,0 +1,30 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2021 Google LLC
++ *
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include <config.h>
++#endif
++
++#include "src/log.h"
++#include "src/plugin.h"
++
++static int admin_policy_init(void)
 +{
-+	adapter->devices = g_slist_append(adapter->devices, device);
-+	device_added_drivers(adapter, device);
++	DBG("");
 +}
 +
-+static void adapter_remove_device(struct btd_adapter *adapter,
-+						struct btd_device *device)
++static void admin_policy_exit(void)
 +{
-+	adapter->devices = g_slist_remove(adapter->devices, device);
-+	device_removed_drivers(adapter, device);
++	DBG("");
 +}
 +
- static void adapter_add_connection(struct btd_adapter *adapter,
- 						struct btd_device *device,
- 						uint8_t bdaddr_type)
-@@ -6445,8 +6492,10 @@ static void adapter_remove(struct btd_adapter *adapter)
- 	g_slist_free(adapter->connect_list);
- 	adapter->connect_list = NULL;
- 
--	for (l = adapter->devices; l; l = l->next)
-+	for (l = adapter->devices; l; l = l->next) {
-+		device_removed_drivers(adapter, l->data);
- 		device_remove(l->data, FALSE);
-+	}
- 
- 	g_slist_free(adapter->devices);
- 	adapter->devices = NULL;
-diff --git a/src/adapter.h b/src/adapter.h
-index 7cac51451..a2567330d 100644
---- a/src/adapter.h
-+++ b/src/adapter.h
-@@ -111,6 +111,10 @@ struct btd_adapter_driver {
- 	int (*probe) (struct btd_adapter *adapter);
- 	void (*remove) (struct btd_adapter *adapter);
- 	void (*resume) (struct btd_adapter *adapter);
-+	void (*device_added) (struct btd_adapter *adapter,
-+						struct btd_device *device);
-+	void (*device_removed) (struct btd_adapter *adapter,
-+						struct btd_device *device);
- };
- 
- typedef void (*service_auth_cb) (DBusError *derr, void *user_data);
++BLUETOOTH_PLUGIN_DEFINE(admin_policy, VERSION,
++			BLUETOOTH_PLUGIN_PRIORITY_DEFAULT,
++			admin_policy_init, admin_policy_exit)
 -- 
 2.32.0.432.gabb21c7263-goog
 
