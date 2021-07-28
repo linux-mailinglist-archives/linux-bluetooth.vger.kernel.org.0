@@ -2,63 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 959E63D8EC8
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jul 2021 15:16:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67D513D8EE8
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jul 2021 15:23:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236279AbhG1NQt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Jul 2021 09:16:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50222 "EHLO
+        id S235290AbhG1NXN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Jul 2021 09:23:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236209AbhG1NQs (ORCPT
+        with ESMTP id S235227AbhG1NXN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Jul 2021 09:16:48 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 836BCC061757
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jul 2021 06:16:47 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id w19-20020a170902d113b029012c1505a89fso1957172plw.13
-        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jul 2021 06:16:47 -0700 (PDT)
+        Wed, 28 Jul 2021 09:23:13 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3CD2C061764
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jul 2021 06:23:11 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id y3-20020ae9f4030000b02903b916ae903fso492553qkl.6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jul 2021 06:23:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=NokkcDvovb9Lu8+jkbGkT+S9xqf5OeaAMMgso8G3IEE=;
-        b=f8KOfVGu/IebllCksFxsfOIAhfTgY/TA/KIHbrUh07XrfGps6ZTbbNalYbBrJp+IQX
-         K38t//ywPn+RFVsyG1gRHLRLXOHcgp2+rg5zExtGiHLx/S6IuDuq0Npwhd9sZSxoV3h8
-         lgt42Q5xLhcuKo4J1Y3LrQnZUlPuadEV5rt8nnHaSbZvJciX++b4bSSy8PaHdwb/L0W9
-         dFw+8ToAHfKoJGFO+371l+0CacrgIwFYiilD6Ertth4R973cRJDGhRjKLWNv1JsFmDWQ
-         6QRLhFBuAXA84RoAnFqLAXzkIU63Z2BPHx3QcoIfqwpxy1XEjlpGh/X2shqJnWsqOdYI
-         /Mlw==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=qOenT5vGuREZjOeQZhrIQYj+foyedhyCo05+xZGFt9s=;
+        b=UijolomkkedgNmlaU6ROawvJg+WEhF5ulxYY0FNlATcoJxhMn+z2e1hqM/8/iIEbsW
+         ZHGs/gsr87saOhSj2bbdYHtCkNr85gwJYt2VyX17WxyPJuT2LZBlZlTeAn4y163tPDHS
+         6qGWKpqpbo3Fm+fsxHLwOXFOVj5IhLh+xc1MIRXi7jlybtNuvbGsZqkRglzDfUxZuHFQ
+         G7Fea9XwxABScrEI3NZbAgFVH6nGP1mTG4RVGrHH06hrvCvIrXxZ6qFDmJjmjjgAYulT
+         ASVFM6NCb6oNEiOCtSl+Li5A03ZqlyRP+BfFC7R/ujaAs3GB75gwcGeclt9gqBruRDD1
+         k7Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=NokkcDvovb9Lu8+jkbGkT+S9xqf5OeaAMMgso8G3IEE=;
-        b=UfFUe60u2uW2dR7hXG6IBfVjzkLNVTFRWJsKB6pTos7Aw/Jp6PIK1UT/sUQcBRBz+R
-         Pb8NALB/GYV+dvodpVLL7dBObqQUul3h0pmcx4qlyvHG92I+Lt3MFyIiBYL+VqwgJeMk
-         sqHBCjeiv+wJ2CKoQBOlyMNXsLuDzySXcs4jZg69C3TcXSXJ2xOE09UnvHaJWuu1Fnfq
-         73RFNN30YKJAyQhYpEYFiUDsa4QQVL5QhUk8hS/aoQTi0S4MRr4oHoNPmUqGoQVOGSZZ
-         RztbQ/5w4tASr5O4SQK2McJ4MkARadPpSZKDWTmLuyGfzvd5Y8rH1APofoNwW7F0hfB8
-         FFSA==
-X-Gm-Message-State: AOAM532jtRf12/sNpPJ9SOjBwws8YIVqK0zP4vHbLr6U7jeWS4VEDpNr
-        7djT4PPxI6zSBuJDS4sySRJlysTGIEizhW8sHdGPaSF3+ncxaQ3+h/AWBwq2K0QjjrTXtcTKzor
-        F8MHjEwU/KLXCF/OcqeXB2AZYho9UbvD/JqEWMhaBaNvyDwLtlAzvSIreEmiL6+ctEoceLRyYzT
-        noyJmD0ReEhLI=
-X-Google-Smtp-Source: ABdhPJzYeMsPcVkyPJmIS1rex449Jy0KmUcbyxlSvmlxIlwMeSu2LeS0+Ki0axWezkH5TYuf9yjCBRsdyQdWAGZmug==
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=qOenT5vGuREZjOeQZhrIQYj+foyedhyCo05+xZGFt9s=;
+        b=I2Zlu7NvdvCnCYUCSvEuNvYQxqrxU7Kxw1mzGQCf4QCdSl1hO+xH36m9vDI21w/kKA
+         aFcWVkBKAIbogNtvDta7f+tjcuD8KNtsE0/WL1ccnQ359E5jQxP8cEZKAh0nPsws3U9n
+         jBFZveOlLcndAWLqZASc0soYU0YZV0yliNU85vqySrERuF4DJlEGJdfHlsCmo+L95frU
+         ebVQmSDa73GKXSCDyRoL5Tvt1BcbYHNrelfFfg6cMCBuopnae9wK1/Pm3+EZAYaLp4T9
+         Sdm8sCKy9AnSr337vrr/Sj3Nii/9gT9tLXIeaILr9ktJcpKPNNyQ2xAzLcjqyHSXHw6/
+         2A+w==
+X-Gm-Message-State: AOAM530zKeoxRhgifCQeB614zsIFEXpUhCqlLz8cNIA15NMPaTL9Uhhg
+        kuUGu159rXu/dJVk0Qr5rGSofPWuMCHtOOPa1VDZ14guR/9U+VarI3dndjIUdba03xity2SoJis
+        g/VVstAs0cE3ZwBrXHFzbM4yF3kjXc7xMgWwhq4j8/50IYvbcFYEIgcbAso8H9PcZABXNUbtevT
+        jLUUhDD4ExM/o=
+X-Google-Smtp-Source: ABdhPJxLOGuc/api9URMBq6dZp7WGD0d1rf17GNwcktWnvVjNPum1Fqezni2TLEUDi8RFCZfQLFbt9c1wvvKhDAcNQ==
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:9b6a:9d1f:2f3e:45de])
- (user=howardchung job=sendgmr) by 2002:aa7:85da:0:b029:329:aacc:333e with
- SMTP id z26-20020aa785da0000b0290329aacc333emr28163383pfn.60.1627478206780;
- Wed, 28 Jul 2021 06:16:46 -0700 (PDT)
-Date:   Wed, 28 Jul 2021 21:15:29 +0800
-In-Reply-To: <20210728131529.3310558-1-howardchung@google.com>
-Message-Id: <20210728211405.Bluez.v3.13.I433ab6a7ac1d4f8f8dea496ac14bdbf3597015d3@changeid>
+ (user=howardchung job=sendgmr) by 2002:a05:6214:e4c:: with SMTP id
+ o12mr28154271qvc.18.1627478590670; Wed, 28 Jul 2021 06:23:10 -0700 (PDT)
+Date:   Wed, 28 Jul 2021 21:23:04 +0800
+Message-Id: <20210728212259.Bluez.v2.1.I20397b8350f98567b8d52b895442c768250a6ab3@changeid>
 Mime-Version: 1.0
-References: <20210728131529.3310558-1-howardchung@google.com>
 X-Mailer: git-send-email 2.32.0.432.gabb21c7263-goog
-Subject: [Bluez PATCH v3 13/13] doc: add description of admin policy
+Subject: [Bluez PATCH v2] gatt-db: fix service in range check
 From:   Howard Chung <howardchung@google.com>
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+To:     linux-bluetooth@vger.kernel.org
 Cc:     Yun-Hao Chung <howardchung@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>
+        Archie Pusaka <apusaka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
@@ -66,88 +61,36 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Yun-Hao Chung <howardchung@chromium.org>
 
-This adds admin-pocliy-api.txt.
+The previous check already makes sure the service range overlaps with
+the search range. There is no need to add another check.
 
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+Reviewed-by: Archie Pusaka <apusaka@chromium.org>
 ---
 
-(no changes since v1)
+Changes in v2:
+- remove the entire check
 
- doc/admin-policy-api.txt | 65 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
- create mode 100644 doc/admin-policy-api.txt
+ src/shared/gatt-db.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/doc/admin-policy-api.txt b/doc/admin-policy-api.txt
-new file mode 100644
-index 000000000..3f116901d
---- /dev/null
-+++ b/doc/admin-policy-api.txt
-@@ -0,0 +1,65 @@
-+BlueZ D-Bus Admin Policy API description
-+***********************************
-+
-+This API provides methods to control the behavior of bluez as an administrator.
-+
-+Interface AdminPolicySet1 provides methods to set policies. Once the policy is
-+set successfully, it will affect all clients and stay persistently even after
-+restarting Bluetooth Daemon. The only way to clear it is to overwrite the
-+policy with the same method.
-+
-+Interface AdminPolicyStatus1 provides readonly properties to indicate the
-+current values of admin policy.
-+
-+
-+Admin Policy Set hierarchy
-+=================
-+
-+Service		org.bluez
-+Interface	org.bluez.AdminPolicySet1
-+Object path	[variable prefix]/{hci0,hci1,...}
-+
-+Methods		void SetServiceAllowList(array{string} UUIDs)
-+
-+			This method sets the service allowlist by specifying
-+			service UUIDs.
-+
-+			When SetServiceAllowList is called, bluez will block
-+			incoming and outgoing connections to the service not in
-+			UUIDs for all of the clients.
-+
-+			Any subsequent calls to this method will supersede any
-+			previously set allowlist values.  Calling this method
-+			with an empty array will allow any service UUIDs to be
-+			used.
-+
-+			The default value is an empty array.
-+
-+			Possible errors: org.bluez.Error.InvalidArguments
-+					 org.bluez.Error.Failed
-+
-+
-+Admin Policy Status hierarchy
-+=================
-+
-+Service		org.bluez
-+Interface	org.bluez.AdminPolicyStatus1
-+Object path	[variable prefix]/{hci0,hci1,...}
-+
-+Properties	array{string} ServiceAllowList [readonly]
-+
-+			Current value of service allow list.
-+
-+
-+
-+Admin Policy Status hierarchy
-+=================
-+
-+Service		org.bluez
-+Interface	org.bluez.AdminPolicyStatus1
-+Object path	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
-+
-+Properties	bool IsAffectedByPolicy [readonly]
-+
-+			Indicate if there is any auto-connect profile in this
-+			device is not allowed by admin policy.
+diff --git a/src/shared/gatt-db.c b/src/shared/gatt-db.c
+index 8bff4d37aaa2..658f82812cf6 100644
+--- a/src/shared/gatt-db.c
++++ b/src/shared/gatt-db.c
+@@ -1347,12 +1347,8 @@ static void foreach_in_range(void *data, void *user_data)
+ 	if (svc_start > foreach_data->end || svc_end < foreach_data->start)
+ 		return;
+ 
+-	if (!foreach_data->attr) {
+-		if (svc_start < foreach_data->start ||
+-					svc_start > foreach_data->end)
+-			return;
++	if (!foreach_data->attr)
+ 		return foreach_service_in_range(data, user_data);
+-	}
+ 
+ 	for (i = 0; i < service->num_handles; i++) {
+ 		struct gatt_db_attribute *attribute = service->attributes[i];
 -- 
 2.32.0.432.gabb21c7263-goog
 
