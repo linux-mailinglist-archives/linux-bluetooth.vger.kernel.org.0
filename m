@@ -2,70 +2,86 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FFCE3DCAD5
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  1 Aug 2021 10:54:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F24423DCD09
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  1 Aug 2021 20:01:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231425AbhHAIyr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 1 Aug 2021 04:54:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229885AbhHAIyr (ORCPT
+        id S230100AbhHASBQ convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 1 Aug 2021 14:01:16 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:38047 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229851AbhHASBQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 1 Aug 2021 04:54:47 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD8A7C06175F
-        for <linux-bluetooth@vger.kernel.org>; Sun,  1 Aug 2021 01:54:38 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id l19so21400601pjz.0
-        for <linux-bluetooth@vger.kernel.org>; Sun, 01 Aug 2021 01:54:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=8OJUQINl7UgWXdbnxp3od2KyBKmzZJubgZ8n5hg9xkk=;
-        b=S3zoYP1mOZfajsoWOygEEkqgVS2cwNFocKyI2l/PV5QY0oMY6fkGqdl6+y6NeqRkTB
-         1M2lt8LUqKw2ZJK2OXBvQmdnSiaqTFagv4e+QjqCkBk/5a8an8EyPknjYZB7NkY1tH9e
-         zl4+7qlXbdiCr9l+nX0iCSym0ai3CtgEXkbX8aiXe3jtJAJQnPembv3Y7mKHk9QJAMnx
-         FOatUAMo/n0dCKfvN0LYbWCrx0LrlUM+WGZkzGBb6542y/21okSHsPFD6nbDbUdYz5C6
-         9DkTxiAZbgQgPeJ32zp/QaxkbbQyozbtFuqdGB4XA+9i2eru31ARMd2z2ZuPEYBqTIGY
-         /ABw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=8OJUQINl7UgWXdbnxp3od2KyBKmzZJubgZ8n5hg9xkk=;
-        b=Y2RJppebmR+oxd+SUy2TmJdiFGzMUvMmNedXcwwvpeFarp0fu7NaQaIanXcdB9S3En
-         dgXge+p6lYqyHw6Ewz5hY10MBzxKrAhPWOy25VtIdt4qUoBTHNqInitvWo0N/9X0G4gN
-         o4/X5K01IiT4BKAUG43dRh8A22t7Qx+j9W0y5KPtXcKvQSRvqz7DuWo0Nn3xc0sF61oG
-         iqbzvMEaGUvcByVzpL4pHyqU3u6xQo80Go8MGUkezpiLz1G5sU/wcY2kSH/m57j8zwzy
-         y+R+wnoBzBJZIGmV/aM8Bhbj9DERpM6ITKAzFESdrVh8h1depFfpEr/0r3QKEtEUsKCi
-         yYgQ==
-X-Gm-Message-State: AOAM530V72h4mkJpKnxJ5ZUb1bM/cLWbjFoBMUJSI0AIXkZ+kSsVaw+L
-        K6LkeOfv48O17T4sI+XfRBSdYP+9PxrpSvGuxrA=
-X-Google-Smtp-Source: ABdhPJxSTIlxkp+Gi7PGLGNaBpMFxn8G6XKT1JtspOe5CAfk30T674H1QdCd8iXMFkFfnOHIJPn3chyq4haS/D9vZf8=
-X-Received: by 2002:aa7:99c1:0:b029:39a:56d1:6d43 with SMTP id
- v1-20020aa799c10000b029039a56d16d43mr11159111pfi.58.1627808078228; Sun, 01
- Aug 2021 01:54:38 -0700 (PDT)
-MIME-Version: 1.0
-From:   nil Yi <teroincn@gmail.com>
-Date:   Sun, 1 Aug 2021 16:54:28 +0800
-Message-ID: <CANTwqXBc9d4v=uPdFYc-yrgDKk219+SWri3+b84ZU14zH=1Nvw@mail.gmail.com>
-Subject: [BUG] drivers: bluetooth: bcm203x.c:dangling pointer in function bcm203x_probe
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Sun, 1 Aug 2021 14:01:16 -0400
+Received: from smtpclient.apple (p5b3d23f8.dip0.t-ipconnect.de [91.61.35.248])
+        by mail.holtmann.org (Postfix) with ESMTPSA id B636ECECDF;
+        Sun,  1 Aug 2021 20:01:06 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: [PATCH v2] bluetooth: bcm203x: update the reference count of udev
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20210731154102.GA908767@pc>
+Date:   Sun, 1 Aug 2021 20:01:06 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        BlueZ <linux-bluetooth@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Oliver Neukum <oliver@neukum.org>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <9B2209B6-D371-432B-A3F5-F1CD7C7967A3@holtmann.org>
+References: <20210731154102.GA908767@pc>
+To:     Salah Triki <salah.triki@gmail.com>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi, there is a dangling pointer in data->urb  in function
-bcm203x_probe in v5.14-rc3 in function bcm203x_probe :
-187: data->urb = usb_alloc_urb(0, GFP_KERNEL);
-...
-205:  usb_free_urb(data->urb);
-206:  return -ENOMEM;
-leave a dangling pointer here,  I'm not sure whether it  can be
-triggered somewhere.
+Hi Salah,
 
-Any feedback would be appreciated, thanks :)
+> Use usb_get_dev() to increment the reference count of the usb device
+> structure in order to avoid releasing the structure while it is still in
+> use. And use usb_put_dev() to decrement the reference count and thus,
+> when it will be equal to 0 the structure will be released.
+> 
+> Signed-off-by: Salah Triki <salah.triki@gmail.com>
+> ---
+> Change since v1:
+> 	Modification of the description
+> 
+> drivers/bluetooth/bcm203x.c | 4 +++-
+> 1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bluetooth/bcm203x.c b/drivers/bluetooth/bcm203x.c
+> index e667933c3d70..547d35425d70 100644
+> --- a/drivers/bluetooth/bcm203x.c
+> +++ b/drivers/bluetooth/bcm203x.c
+> @@ -166,7 +166,7 @@ static int bcm203x_probe(struct usb_interface *intf, const struct usb_device_id
+> 	if (!data)
+> 		return -ENOMEM;
+> 
+> -	data->udev  = udev;
+> +	data->udev  = usb_get_dev(udev);
+> 	data->state = BCM203X_LOAD_MINIDRV;
+> 
+> 	data->urb = usb_alloc_urb(0, GFP_KERNEL);
+> @@ -244,6 +244,8 @@ static void bcm203x_disconnect(struct usb_interface *intf)
+> 
+> 	usb_set_intfdata(intf, NULL);
+> 
+> +	usb_put_dev(data->udev);
+> +
+> 	usb_free_urb(data->urb);
+> 	kfree(data->fw_data);
+> 	kfree(data->buffer);
 
+I do not understand this. If this is something broken, then it is broken in
+btusb.c as well and that driver is heavily used by all sorts of devices. So
+we should have seen bug reports about this.
 
-Best wishes,
-Nil Yi
+Regards
+
+Marcel
+
