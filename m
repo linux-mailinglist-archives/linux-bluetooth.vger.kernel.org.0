@@ -2,93 +2,151 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03B653DE250
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Aug 2021 00:14:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BE9E3DE349
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Aug 2021 01:56:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232759AbhHBWOs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 2 Aug 2021 18:14:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52188 "EHLO
+        id S232540AbhHBX4e (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 2 Aug 2021 19:56:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231907AbhHBWOp (ORCPT
+        with ESMTP id S232530AbhHBX4d (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 2 Aug 2021 18:14:45 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B60DC06175F;
-        Mon,  2 Aug 2021 15:14:34 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id i10-20020a05600c354ab029025a0f317abfso422327wmq.3;
-        Mon, 02 Aug 2021 15:14:34 -0700 (PDT)
+        Mon, 2 Aug 2021 19:56:33 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40987C06175F
+        for <linux-bluetooth@vger.kernel.org>; Mon,  2 Aug 2021 16:56:21 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id j1so27388424pjv.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 02 Aug 2021 16:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=DehFgworsYY8Z4elnk8GHXrsWT2MFnGFLCsMTbpqwMY=;
-        b=Cs9ZUq9iAzEM/26fGnMSLab0UWRgKRLovKtO5XkgucS2o8tFPcYBFJy6WIdrovg+D7
-         owKfatd8z3HEVFuWfbYbcbWkBgndpI+ui2NomqrRLE8RzxVkVXnIVE0qi2vIuTxG9UKY
-         pj+IbPl9Kryo+JOCuvZGEdZ7nn4m+p4DJCoYOHT2AnvEhc3onmG25/DZPGzTLgcbgf0a
-         75twUEuJn0m/2+uKRvCApfTQ0UofN8aDuxX4Mv9w6Iv0e96VS4bkWNFTOPS8NqYJoAZJ
-         U6kHQmXEDebCetZxyApBmXXvJD70wKoWvWgqjJpVijYSJCzbXT9vyoddasmr0A4MjTVB
-         A+dg==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EIV/jOLZXW3e+AoNpqxHs2tTs2yzMdGcFlZnIDBtNQw=;
+        b=vSA/B2QN6nBW6/xtYXQtDmMPUcRtVyCyJQ+6Epi0163jobw/N/wMdyh2ITnripIkDz
+         9bVWWHFJ0q8Hy+gSH8BaMRqR6Hjd2cmj/Fwg1+J0OY1v6lZdVEli8WIrvQEdGjxtq0Tc
+         NHLdAaqRaFuaZhRLgI+r4vhwPKIbe5GFL1KXnQejcvLM78650YPCOsGRlDlauJKPQK/f
+         lgCoqWiD+NAGCvoLbrp9W1YYvg8XEp0TJt9VuXLDJDn90a7QDM20nHOeH07OJLIog7Xx
+         QQxZ3vZ18WO4Rzwjm/unBaDYOm4TNy9tdEnaf3FBOzxKdqyBSfJjr+jiqTFRKmEkG2VG
+         3xyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=DehFgworsYY8Z4elnk8GHXrsWT2MFnGFLCsMTbpqwMY=;
-        b=KL4YF0+4/JBDxU9SjjdSgYXz8HLfrZC6k/MpsobC2WMevwFF8lppHGOTwhmkuubTwk
-         ZzNUegtdC3x5TdIOdV/BItDc994ydcTfAWkTSyy1l50bJHauXdQ2yR0rnp05DGdYMQMD
-         0yoUdKYC57Big4B1VxQX45yDmsSxu7Px1Z95FzydsbC08IpC0HWMQasIlWHiJTlGqTjv
-         xNqNyF6zDEfVmGUxqCInZGP6R2WTEZ8FD+gFQ/aV4Iuq6M6G/dRT/iqOxHlUiuhKkO/N
-         Kb2mDfp5gwQTAY9qCL/zvMFQ2d/XcGduJDDk2VLP8vOY7Nf/LUBegg+7ZxuXcJe8mYs3
-         d7JQ==
-X-Gm-Message-State: AOAM531aZM2JfniWM9e+NZtVS6Mv5F22Fj+WQlaGk9V9n+hrmTX5/Wlf
-        ADRZ6MLptN6MeBmVGLzGf5OCmAoands=
-X-Google-Smtp-Source: ABdhPJxdqbvX+Xt65IZsQvVoFBhPh/KuCcy5g9a07XxcqhHa5ZcbFB0aPAUoQ3a/zn8JrqPlKLPm3w==
-X-Received: by 2002:a05:600c:2909:: with SMTP id i9mr1025024wmd.74.1627942472985;
-        Mon, 02 Aug 2021 15:14:32 -0700 (PDT)
-Received: from pc ([196.235.140.151])
-        by smtp.gmail.com with ESMTPSA id t23sm600719wmi.32.2021.08.02.15.14.31
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EIV/jOLZXW3e+AoNpqxHs2tTs2yzMdGcFlZnIDBtNQw=;
+        b=E+hPWdwEDrG+y/dXxZSbGqtqHu81qHig/Wpco+/2Ww5xnIKSwt8UfnezQq/vmpEIX5
+         x5B637olYcY+wKfE1HZnIHt7KvyzY39fkawBjfOa2S7vnbVaBp0RVIv91iwEa+sJdX40
+         81vBKeqotEpPZ2n1Q8pQcG81xSP7MtFuVUivNylZl215Kt32RBo4L8bn+9awg9+VPmoA
+         K/t4DeVw8kuT971cJDbqfrJrKHbpeOEfB4qvM3ZE0J1rGjKnoyN34T41nPWDvR1r8oaN
+         kA6tCLcgJnpyP75yxFaZ/7BouEqwph42qVRIAcCfeRRocOMHD72EbNG0Mt5RNgYiok6V
+         vQeA==
+X-Gm-Message-State: AOAM530AKWDkwHpsnj0jE4mCqQDzwnO914qpZeHFXadmxYzMUNvr2j44
+        EBMk41hEv7msS4ewgK/oDM3tOu3lXGE=
+X-Google-Smtp-Source: ABdhPJxJNNWLeURGmLfDszdnMxva69lAI8JWFWDKOgIVBdPhqFxE9Wv/8t5OHHe2nVGakdBFhWpWhQ==
+X-Received: by 2002:a17:90a:c713:: with SMTP id o19mr1322777pjt.23.1627948580570;
+        Mon, 02 Aug 2021 16:56:20 -0700 (PDT)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id y24sm12358676pfp.191.2021.08.02.16.56.19
+        for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 15:14:32 -0700 (PDT)
-Date:   Mon, 2 Aug 2021 23:14:29 +0100
-From:   Salah Triki <salah.triki@gmail.com>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        gregkh@linuxfoundation.org
-Cc:     linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] usb: bluetooth: get lock before calling
- usb_[disable|enable]_autosuspend()
-Message-ID: <20210802221429.GA1370657@pc>
+        Mon, 02 Aug 2021 16:56:20 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [RESEND 1/2] Bluetooth: HCI: Add proper tracking for enable status of adv instances
+Date:   Mon,  2 Aug 2021 16:56:18 -0700
+Message-Id: <20210802235619.238065-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Based on the documentation of usb_[disable|enable]_autosuspend(), the
-caller must hold udev's device lock.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
+This adds a field to track if advertising instances are enabled or not
+and only clear HCI_LE_ADV flag if there is no instance left advertising.
+
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- drivers/bluetooth/btusb.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/net/bluetooth/hci_core.h |  1 +
+ net/bluetooth/hci_event.c        | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index a9855a2dd561..2ceb48164b6d 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -1939,8 +1939,11 @@ static int btusb_setup_csr(struct hci_dev *hdev)
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 4abe3c494002..b79b31359bf8 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -221,6 +221,7 @@ struct oob_data {
  
- 			device_set_wakeup_capable(&data->udev->dev, false);
- 			/* Re-enable autosuspend if this was requested */
--			if (enable_autosuspend)
-+			if (enable_autosuspend) {
-+				usb_lock_device(data->udev);
- 				usb_enable_autosuspend(data->udev);
-+				usb_unlock_device(data->udev);
+ struct adv_info {
+ 	struct list_head list;
++	bool enabled;
+ 	bool pending;
+ 	__u8	instance;
+ 	__u32	flags;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index ea7fc09478be..35c5cc9f91b0 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -1277,7 +1277,9 @@ static void hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev,
+ 					 struct sk_buff *skb)
+ {
+ 	struct hci_cp_le_set_ext_adv_enable *cp;
++	struct hci_cp_ext_adv_set *set;
+ 	__u8 status = *((__u8 *) skb->data);
++	struct adv_info *adv = NULL, *n;
+ 
+ 	BT_DBG("%s status 0x%2.2x", hdev->name, status);
+ 
+@@ -1288,22 +1290,48 @@ static void hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev,
+ 	if (!cp)
+ 		return;
+ 
++	set = (void *)cp->data;
++
+ 	hci_dev_lock(hdev);
+ 
++	if (cp->num_of_sets)
++		adv = hci_find_adv_instance(hdev, set->handle);
++
+ 	if (cp->enable) {
+ 		struct hci_conn *conn;
+ 
+ 		hci_dev_set_flag(hdev, HCI_LE_ADV);
+ 
++		if (adv)
++			adv->enabled = true;
++
+ 		conn = hci_lookup_le_connect(hdev);
+ 		if (conn)
+ 			queue_delayed_work(hdev->workqueue,
+ 					   &conn->le_conn_timeout,
+ 					   conn->conn_timeout);
+ 	} else {
++		if (adv) {
++			adv->enabled = false;
++			/* If just one instance was disabled check if there are
++			 * any other instance enabled before clearing HCI_LE_ADV
++			 */
++			list_for_each_entry_safe(adv, n, &hdev->adv_instances,
++						 list) {
++				if (adv->enabled)
++					goto unlock;
 +			}
- 		}
++		} else {
++			/* All instances shall be considered disabled */
++			list_for_each_entry_safe(adv, n, &hdev->adv_instances,
++						 list)
++				adv->enabled = false;
++		}
++
+ 		hci_dev_clear_flag(hdev, HCI_LE_ADV);
  	}
  
++unlock:
+ 	hci_dev_unlock(hdev);
+ }
+ 
 -- 
-2.25.1
+2.31.1
 
