@@ -2,75 +2,151 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 745403DCF3D
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  2 Aug 2021 06:24:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B7903DD053
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  2 Aug 2021 08:12:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229917AbhHBEYM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 2 Aug 2021 00:24:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43598 "EHLO
+        id S231958AbhHBGNF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 2 Aug 2021 02:13:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbhHBEYL (ORCPT
+        with ESMTP id S229792AbhHBGNF (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 2 Aug 2021 00:24:11 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 837E0C06179A
-        for <linux-bluetooth@vger.kernel.org>; Sun,  1 Aug 2021 21:23:58 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id g21so3404300edb.4
-        for <linux-bluetooth@vger.kernel.org>; Sun, 01 Aug 2021 21:23:58 -0700 (PDT)
+        Mon, 2 Aug 2021 02:13:05 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A62DC06175F
+        for <linux-bluetooth@vger.kernel.org>; Sun,  1 Aug 2021 23:12:56 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id w26-20020a05620a129ab02903b9eeb8b45dso8103469qki.8
+        for <linux-bluetooth@vger.kernel.org>; Sun, 01 Aug 2021 23:12:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=JbMtpdZj7sghISs4e5T5yryQDvERMuYalazmdQP0RcA=;
-        b=czeOQMYeZau4ejaBbgDdCuklRCyHoHRlo6xUfJcAj3bciaGtFBitiUib5a5MwOumE9
-         w7/Jn7bBNsLcP1+CHZ7cIXH8h+QOe2ioJtROZD2bqhS/lqEvaNcrldVE+LZBhK9CNKw9
-         GasUZeZx/Kcocc9jX4O3VqyeOrpbJXFle0t9OXPFTLvjA0ffc0WpqgkYu8CQSXrFRLzD
-         Yc8UR7mKpLCqpwn4ZFojN5x09EwrnOTDpyVyuL9REZStwkguR4uL/4srDE+vjWW4JCu8
-         Sy5z9ei3l3c7g9TC5s6E8Wj1tuL0hGAP5lkkVvlHQCNnMoccEAC8Z+koQ2tbRnEruEUY
-         O8Aw==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=iZF+42747nTECmbQEpmwvPedWXQvvIZLebZREQolKd8=;
+        b=RL1j9U2rF1GX9FKLq9Ffrw/6hA5vleXf4t2k/q5LQZzQZCg5xHPW/xIJFs3jp5wFJm
+         yv1jNMi8STK8Kzc3CqPHc/Gpv2w+GCzYvKmQ/N6GKcc3sT8k6cuR+Q5f65l5f2EcTo0s
+         qYrLoCjpJfp8ZHzeZXwswJe3li7UnHm6XcX2HLLOmfEg85+8HOeBOYURKWM2Hhg5f96E
+         HqG3Cm+GtkAItYBYorm0nli5KochRe4a7WsGmJJ4iw4lADDDZuu1P2icAWta6l1OX+LR
+         mr5xhwH6rD3Q+p1sv56G+yLYvGJ8c9CndfiUBgwV02b+8bU5+8hrgyP3qfh8eDvQT2kq
+         YCTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=JbMtpdZj7sghISs4e5T5yryQDvERMuYalazmdQP0RcA=;
-        b=mUCUbEN8b3nBrVjb/7Hg//VwrHjgCxxBEXS+XiO94dB/7IAtP05gqLzYj32ZKdSA33
-         VyP+iL3alUkb4fFMqAG91o6r1tU8+pSsAQdiQlrttKBogmeg4AqPMPihyzNEC3xa9DvU
-         AkbsS2kIM6wtBBIV9/LzrkCQ3a3Ws0dIogkK761LiZRgDjTZfsNbJZ0Lw+3EdfBtdX0j
-         j0TE6BAOKHfwBjqsudCegxcLWGc2gn/FsaFSFju9LYBkx0jPyaWTF77JE8RMIWjWHyvj
-         SS9/6zNiKC/D8CTwoOxCqDq3boE2oD5jNko7SoyI5TQnC4SFg8w7nqK2QqZnRNNBx+S5
-         ZMug==
-X-Gm-Message-State: AOAM530NhEI93E1t9iFKs9TzfUAOUDUMk//ru8y36hLLEtTa+oYM4Diq
-        S3H5qvjm8akuNy3Oo3Een8tT6NzR8VjESXheoEE=
-X-Google-Smtp-Source: ABdhPJxItSnYdNOJr/eCcDJG9Ed81FEJCtux30e3VMRN30hf/TzQyuXNRWDf+H2IgaMscJY+xnmH/x8e0HLuRnwx6WI=
-X-Received: by 2002:a50:d70a:: with SMTP id t10mr16749153edi.253.1627878237019;
- Sun, 01 Aug 2021 21:23:57 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a17:907:d0b:0:0:0:0 with HTTP; Sun, 1 Aug 2021 21:23:56
- -0700 (PDT)
-Reply-To: ablahikazabl67@gmail.com
-From:   Abdoulahi Kazim <drwilliamcuthbert@gmail.com>
-Date:   Mon, 2 Aug 2021 05:23:56 +0100
-Message-ID: <CAKwBCXvLzgfEHCKMKUxki4k1yYap9oH1ox=muoK9koBZXish5g@mail.gmail.com>
-Subject: More Authentic Information
-To:     undisclosed-recipients:;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=iZF+42747nTECmbQEpmwvPedWXQvvIZLebZREQolKd8=;
+        b=dokgCugWgiRZsFgx1Q0ZsVc1nT7J5ncW/kfBlEtuLIG/w13QzunBNRKDeTccMlHKYN
+         xtBWRyi+VkzFl42QzxWX3n4RdYuLbB91UBeyhRGSGY6XOZVp2200i3iG1IMnpfDuXp83
+         ZV69YJqVHYbHcwuCdIvn+HPDx7LT5sKTu1KHPWDSbFqyeddEJPhdHTwOcZo7vWEI82Q/
+         22ZZ573yW1xvrc6SleD7YMJvE9Y4AOg/Lb2+82Kkz2Wkf/M0oxdutQWtZmTHN4+ZH2Ln
+         q+9Qs1wLsuaXIHzXgvxr0M4UrzqmmvUD9hTXnToZxzz9bAg87ioaVBvRjFBps9VXE9XP
+         Vrpw==
+X-Gm-Message-State: AOAM53370dg2pH3JfN2QAoKRIaG0G66RA3pK7EPPDRuRFJ7nQxtVrShc
+        MBpv234Pyey8ubUEDw2/59Pt6/aCbAUrLiwQOA2nvPm34g0wqYXQmtiANqQ9zpNwIVoFrtNIdKM
+        S0mXYHYO85mjKPM2T2kvuENK3xOd0KlPojufrUM+v1BlhfJGwusCVBsY+uoSsXkTDiZPISddCRu
+        gCzZiTUbL+p/M=
+X-Google-Smtp-Source: ABdhPJxUq/LZgY94Cvbg5tdySA2KUKKNyZGJ6Wsie0Wm9jHam7X4CSGhu0ibeqzb7hiO/etXbI84Oo6eLwNx8oZxRA==
+X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:9f82:5515:89:f2cb])
+ (user=howardchung job=sendgmr) by 2002:a05:6214:d1:: with SMTP id
+ f17mr15008533qvs.12.1627884775474; Sun, 01 Aug 2021 23:12:55 -0700 (PDT)
+Date:   Mon,  2 Aug 2021 14:12:37 +0800
+Message-Id: <20210802061250.170975-1-howardchung@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
+Subject: [Bluez PATCH v7 00/13] Admin policy series
+From:   Howard Chung <howardchung@google.com>
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Cc:     Yun-Hao Chung <howardchung@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+From: Yun-Hao Chung <howardchung@chromium.org>
+
+
+Hi manintainers,
+
+This series is to
+1. Implement a few methods in core so that a plugin can have control of
+   allowing / disallowing certain service connections.
+2. Implement the AdminPolicy plugin. The plugin provides interfaces
+   AdminPolicySet and AdminPolicyStatus. For each policy, users should
+   set the value thorugh AdminPolicySet and query the current setting
+   through AdminPolicyStatus. We separeted these two interfaces so that
+   developers can assign different groups of users to these interfaces.
+   Currently the only policy is ServiceAllowList, which make bluez only
+   allow a list of service by specified their UUIDs, but the plugin is
+   also expected to provide more controls over other bluez behaviors.
+Since the second part is a plugin, it might not be necessary to land in
+upstream tree.
+
+Thanks.
+
+Changes in v7:
+- Fix compiler errors in profiles/hdp.c
+
+Changes in v6:
+- include <errno.h> instead of <error.h> in plugins/admin.c
+
+Changes in v5:
+- Fix compiler errors in plugins/admin.c
+
+Changes in v4:
+- Update commit message (admin_policy -> admin)
+- remove old plugins/admin_policy.c
+
+Changes in v3:
+- Rename plugins/admin_policy.c -> plugins/admin.c
+- Use device_added callback in btd_adapter_driver instead of listen for
+  dbus
+- Add authorization method in profiles/health/mcap.c and block incoming
+  connections in adapter authorization function.
+
+Changes in v2:
+- Move bt_uuid_hash and bt_uuid_equal functions to adapter.c.
+- Modify the criteria to say a device is `Affected` from any-of-uuid
+  to any-of-auto-connect-profile.
+- Remove the code to remove/reprobe disallowed/allowed profiles,
+  instead, check if the service is allowed in bt_io_accept connect_cb.
+- Fix a typo in emit_property_change in
+  plugin/admin_policy.c:set_service_allowlist
+- Instead of using device_state_cb, utilize D-BUS client to watch device
+  added/removed.
+- Add a document in doc/
+
+Yun-Hao Chung (13):
+  core: add is_allowed property in btd_service
+  core: add adapter and device allowed_uuid functions
+  mcap: add adapter authorization
+  core: block not allowed UUID connect in auth
+  core: add device_added and device_removed to adapter driver
+  plugins: new plugin
+  plugins/admin: add admin_policy adapter driver
+  plugins/admin: add ServiceAllowList method
+  plugins/admin: add ServiceAllowList property
+  plugins/admin: add device callbacks
+  plugins/admin: add AffectedByPolicy property
+  plugins/admin: persist policy settings
+  doc: add description of admin policy
+
+ Makefile.plugins         |   5 +
+ android/health.c         |   2 +-
+ bootstrap-configure      |   1 +
+ configure.ac             |   4 +
+ doc/admin-policy-api.txt |  65 +++++
+ plugins/admin.c          | 592 +++++++++++++++++++++++++++++++++++++++
+ profiles/health/hdp.c    |   1 +
+ profiles/health/mcap.c   |  38 ++-
+ profiles/health/mcap.h   |   9 +
+ src/adapter.c            | 154 +++++++++-
+ src/adapter.h            |  12 +
+ src/device.c             |  64 ++++-
+ src/device.h             |   2 +
+ src/profile.c            |  11 +
+ src/service.c            |  39 +++
+ src/service.h            |   2 +
+ tools/mcaptest.c         |   2 +-
+ 17 files changed, 993 insertions(+), 10 deletions(-)
+ create mode 100644 doc/admin-policy-api.txt
+ create mode 100644 plugins/admin.c
+
 -- 
-Dear Partner,
+2.32.0.554.ge1b32706d8-goog
 
-I am soliciting your partnership to relocate $12.5 Million to your
-country for investment on my behalf and you will be entitled to 30% of
-the sum once the transaction is successful made.
-
-Please indicate your genuine interest if you are capable so that i
-will send you the authentic details and documents of the transaction
-in awareness with some of my fellow Directors in the bank.
-
-If you are interested, here is my private Email address:
-(ablahikazabl67@gmail.com)
-For more authentic and legit information.
-
-
-Regards :  Abdoulahi Kazim
