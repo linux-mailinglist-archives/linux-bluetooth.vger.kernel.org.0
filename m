@@ -2,122 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8A113DECA6
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Aug 2021 13:44:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A6973DEDC8
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Aug 2021 14:20:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236319AbhHCLox (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 3 Aug 2021 07:44:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45624 "EHLO
+        id S235731AbhHCMU7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 3 Aug 2021 08:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236151AbhHCLoZ (ORCPT
+        with ESMTP id S235573AbhHCMU6 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 3 Aug 2021 07:44:25 -0400
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C23A5C061757
-        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Aug 2021 04:44:13 -0700 (PDT)
-Received: by mail-qk1-x74a.google.com with SMTP id h5-20020a05620a0525b02903b861bec838so16357369qkh.7
-        for <linux-bluetooth@vger.kernel.org>; Tue, 03 Aug 2021 04:44:13 -0700 (PDT)
+        Tue, 3 Aug 2021 08:20:58 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAD3EC06175F
+        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Aug 2021 05:20:46 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id nh14so17661414pjb.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 03 Aug 2021 05:20:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=BgXc2kiWvh+2MYy3WKOMfVJuAoB8PiBWseCwaLJ30Ac=;
-        b=an90IaburIFSquqHgA8wIoA2feBnMT/COU6ZvWjf2uatCngTBWRtEX+3AfhZ7ajroT
-         H4uN1/A6zxR42QtedP0RPjXZBfYNHqRdVfsAmI1CJacNTzFhDwc4Aviv2qXIKD8G7y2w
-         NiMOJLR0LhYqVn6Ctfp8iD/bfjv9E1PDwKMVgYRn4/8vp0TVub+6QoQ87ekNdZJlBQVi
-         jhkSBCTkBnPVnCDQ92a6JLwRZJ6cKQ3DKlMBar6i8VkT+KjpoI9qDatUGjvYJNZ0ThsB
-         7jyW1QycVs+/cFNQXH8yqqMBEeti2ZEPFOfMvfV8xIxnpxl5EGVIGiYqzBk4OTY8NMHD
-         Ei9Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=S0uekF9h3D7pZJovoHrYAJpvb9GPM07lWTxjMvDOXE0=;
+        b=NnblM+ASL0gl/2pGjWtm6iUMl3VCwmCCUUGY7qg6uaS8VqeBfocXig10nDzou0q6/H
+         sYM1uZ3KH0EU0j4L9BJxN7ml/1aLZE7sVR+rx6Ie01BmhD1lr1jyEHmZPIT+vfBHLQbo
+         mYUagNkElTDpB/yAk5kUkrJByd8H6x9SDHD9hla7+C5+rgeGzENPEiXuio+Pov0S7Cs+
+         yYNbshBELZdf9ULpfUmHkbUov5RzG0GjNDdU7rOyeTzrQ5gboOwDMpMTiSEP0ADHmqYf
+         djQCpyrOs4Xh4GOpdxHhl4oKajwlLYAsDIR7a1/DeqmJ2j7Z/43GgLbO32hbgMEWN+GC
+         ldaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=BgXc2kiWvh+2MYy3WKOMfVJuAoB8PiBWseCwaLJ30Ac=;
-        b=dpFGd2SnGU/VwyytVUC3KFFfVEHt8k2tFfQg32v2oibkpv3DLurNkNuu2e+H8fF/T0
-         Jdu6F6RTpg9a466fLxXQkzNV1lm6pbfHvFjZoLV8IKVd2rTTOA9ttcZbGIuMFXSQ4WMo
-         fr3vuomAQe3C8xJxwsxFi0MOiGjyl8p/5esLEzBTnvUBvn0+0Di/AMI2DUnG4ENg/NvN
-         +WJ2JWB2ZB8xpjcwQD9echqyU8hLnE1WpizIfUIgx7bnps8L8GZrTeY1LiUPdmPZygN4
-         mHTfCx4VCNy5MBh3X/E4kIp0065kjxHjuhG1HyikWRWHsfYWCi9Q5X863uYYo7EJW1Xu
-         7K6g==
-X-Gm-Message-State: AOAM53399RmS9I5YNV06e6DZrIL3qUvL94jvij3ZohR+HQMXC5396sV9
-        H2RIMPsMdwhWpzVmV5ng3w2Rfe83JfCUTeXLusWY5mBklbfmAX589qy0+Y+euRuOpQI5eHIldRH
-        9v2H91hyhUyqJm/YokDAoSMGyfCZph6TGwHXiJKqjrZughOjFB6IC6YjoVW2Qr0ejEvrlB3ckq2
-        1UeAVeFBuMkEU=
-X-Google-Smtp-Source: ABdhPJwQfO+ETJr8jBGHxEHdjjoMWkuKtZo7o9cYDY+mK/XlKup0+2KhInfcdmlVSTGUeM1UTSf3vB3vE/cER2QnmA==
-X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:ef55:8161:c77b:7a8d])
- (user=howardchung job=sendgmr) by 2002:a05:6214:e62:: with SMTP id
- jz2mr20972479qvb.21.1627991052895; Tue, 03 Aug 2021 04:44:12 -0700 (PDT)
-Date:   Tue,  3 Aug 2021 19:43:17 +0800
-In-Reply-To: <20210803114317.801840-1-howardchung@google.com>
-Message-Id: <20210803194127.Bluez.v9.13.Ide727bc4654c80ce67a268b624a6c5a0f79a11e1@changeid>
-Mime-Version: 1.0
-References: <20210803114317.801840-1-howardchung@google.com>
-X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
-Subject: [Bluez PATCH v9 13/13] doc: add admin policy file storage description
-From:   Howard Chung <howardchung@google.com>
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Cc:     Yun-Hao Chung <howardchung@chromium.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=S0uekF9h3D7pZJovoHrYAJpvb9GPM07lWTxjMvDOXE0=;
+        b=ggjipgInRr2KUo5S09/LCZnSq4YkzahszC12cDAab8Xtji8MgUpUziR3ekuBvtRrjU
+         +IMtgNVtSXMrNHEIlwyOUd9a6X3UGEBjYfAjDQeFi8o2aLPYlMnOpDPqcjW9/XWb2+ng
+         Dp9c+9XV8IRAYVwjZVQWKEGBgQmGPfav5XlyDH4U+R1DJ+gLI5T9/bBlLubDIo4Du9TF
+         HySLtErQ0bl+A1/Ij3z9d+R48mBqhDcEJKfb49w2eVjpsEX4jsQIN3xGd3eDzINazI5l
+         mfac0Mz+jMTDXGATlMRcntzBxSopOLLa0UHMYFs96/y2IFTDFmEWBg5otvBIFA+30kkC
+         mQLw==
+X-Gm-Message-State: AOAM533nRJ5ZJfw1g7ecYYNJfpI9t5vMkpX5Ble0tuHpHt5VUmqG1SJk
+        uB5NggXMjSgY9Raw5b/iP6Rb9PTGtrId3jjI7WA=
+X-Google-Smtp-Source: ABdhPJxEDQ8xUEJRDGo1BKlhkhaHG6o4sJ1gbhlKxpfNwysAztls1h9q9DPzepBrcubhRQi8L+dfw67ylwuzFDFA0FU=
+X-Received: by 2002:a05:6a00:1a09:b029:32c:7b3a:837 with SMTP id
+ g9-20020a056a001a09b029032c7b3a0837mr21267743pfv.36.1627993246101; Tue, 03
+ Aug 2021 05:20:46 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a05:6a10:712:0:0:0:0 with HTTP; Tue, 3 Aug 2021 05:20:45
+ -0700 (PDT)
+Reply-To: abdoulayehissenee1@gmail.com
+From:   ABDOULAYE HISSENE <sandrineeed14@gmail.com>
+Date:   Tue, 3 Aug 2021 05:20:45 -0700
+Message-ID: <CABCcUmBno+WLiDiV8izOOy_eL=m22KoQn-YFAfBCR2o6+iJ8Jw@mail.gmail.com>
+Subject: Re:bonjour
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Yun-Hao Chung <howardchung@chromium.org>
-
-This adds storage description of admin policy file in
-doc/settings-storage.txt
----
-
-(no changes since v1)
-
- doc/settings-storage.txt | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
-
-diff --git a/doc/settings-storage.txt b/doc/settings-storage.txt
-index d21150f09ecb..1d96cd66d94f 100644
---- a/doc/settings-storage.txt
-+++ b/doc/settings-storage.txt
-@@ -36,6 +36,7 @@ root, named based on the address, which contains:
- 
-  - a settings file for the local adapter
-  - an attributes file containing attributes of supported LE services
-+ - an admin policy file containing current values of admin policies
-  - a cache directory containing:
-     - one file per device, named by remote device address, which contains
-     device name
-@@ -50,6 +51,7 @@ So the directory structure is:
-     /var/lib/bluetooth/<adapter address>/
-         ./settings
-         ./attributes
-+	./admin_policy_settings
-         ./cache/
-             ./<remote device address>
-             ./<remote device address>
-@@ -140,6 +142,24 @@ Sample:
-   Value=4578616D706C6520446576696365
- 
- 
-+Admin Policy file format
-+======================
-+
-+The admin policy file stores the current value of each admin policy.
-+
-+[General] group contains:
-+
-+  ServiceAllowlist	List of		List of service UUID allowed by
-+			strings		adapter in 128-bits format, separated
-+					by ','. Default is empty.
-+
-+Sample:
-+  [General]
-+  ServiceAllowlist=
-+
-+
-+
-+
- CCC file format
- ======================
- 
--- 
-2.32.0.554.ge1b32706d8-goog
-
+Qm9uam91ciwNCkplwqBtJ2FwcGVsbGXCoEFiZG91bGF5ZcKgSGlzc2VuZcKgZXjCoE1pbmlzdHJl
+wqBkZcKgbGHCoEpldW5lc3NlwqBldMKgZGVzDQpTcG9ydHPCoGVuwqBSw6lwdWJsaXF1ZQ0KwqBD
+ZW50cmFmcmljYWluZcKgcMOocmXCoGRlwqAzwqBlbmZhbnRzwqBkb25jwqAywqBnYXLDp29uc8Kg
+dW5lwqBmaWxsZcKgdG91c8KgZXhpbMOpcy4NCkplwqBkaXNwb3NlwqBkJ3VuwqB0csOoc8KgYm9u
+wqBjYXBpdGFswqBhZmluwqBkJ2ludmVzdGlywqBkYW5zwqBwbHVzaWV1cnMNCmRvbWFpbmVzwqBy
+ZW50YWJsZXPCoGV0wqBzdWlzwqDDoMKgbGENCsKgcmVjaGVyY2hlwqBkJ3VuwqBib27CoHBhcnRl
+bmFpcmXCoGNlwqBxdWnCoG1lwqBwZXJtZXR0cmHCoGRlwqBtZcKgbGFuY2VywqBkYW5zDQpwbHVz
+aWV1cnPCoGludmVzdGlzc2VtZW50cy4NClNlcmllei12b3VzwqBvdXZlcnTCoMOgwqB1bsKgw6lj
+aGFuZ2XCoHTDqWzDqXBob25pcXVlwqBwb3VywqBtaWV1eMKgdm91c8KgcHLDqXNlbnRlcg0KbWHC
+oHByb3Bvc2l0aW9uwqA/DQpTacKgdm91c8Kgw6p0ZXPCoGludMOpcmVzc8OpwqBkb25uZXotbW9p
+wqB2b3PCoGNvb3Jkb25uw6llc8KgcXVpwqBzb250wqBsZXPCoHN1aXZhbnRzOg0KMcKgL8KgVm90
+cmXCoG51bcOpcm/CoGRlwqB0w6lsw6lwaG9uZcKgcG9ydGFibGUNCjLCoC/CoFZvdHJlwqBub23C
+oGV0wqBwcsOpbm9tDQpBdcKgcGxhaXNpcsKgZGXCoHZvdXPCoGxpcmUNCkNvcmRpYWxlbWVudA0K
+TXLCoEFiZG91bGF5ZcKgSGlzc2VuZQ0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fDQoNCkhlbGxvLA0KTXnCoG5hbWXCoGlzwqBNcsKgQWJkb3VsYXll
+wqBIaXNzZW5lwqBleMKgTWluaXN0ZXLCoG9mwqBZb3V0aMKgYW5kwqBTcG9ydHPCoGluwqB0aGUN
+CkNlbnRyYWzCoEFmcmljYW7CoFJlcHVibGljwqBmYXRoZXLCoMKgb2bCoDPCoGNoaWxkcmVuwqBz
+b8KgMsKgYm95c8KgYcKgZ2lybMKgYWxsDQpleGlsZWQuScKgaGF2ZcKgYcKgdmVyecKgZ29vZMKg
+Y2FwaXRhbMKgZmluYWxsecKgdG/CoGludmVzdMKgaW7CoHNldmVyYWwNCnByb2ZpdGFibGXCoGFy
+ZWFzwqBhbmTCoGFtwqBsb29raW5nwqBmb3LCoGHCoGdvb2TCoHBhcnRuZXLCoHdoaWNowqB3aWxs
+wqBhbGxvd8KgbWUNCnRvwqBlbWJhcmvCoG9uwqBzZXZlcmFswqBpbnZlc3RtZW50cy4NCldvdWxk
+wqB5b3XCoGJlwqBvcGVuwqB0b8KgYcKgdGVsZXBob25lwqBleGNoYW5nZcKgdG/CoGJldHRlcsKg
+cHJlc2VudMKgbXnCoHByb3Bvc2FswqB0b8KgeW91Pw0KSWbCoHlvdcKgYXJlwqBpbnRlcmVzdGVk
+wqBnaXZlwqBtZcKgeW91csKgY29udGFjdMKgZGV0YWlsc8Kgd2hpY2jCoGFyZcKgYXPCoGZvbGxv
+d3M6DQoxwqAvwqBZb3VywqBtb2JpbGXCoHBob25lwqBudW1iZXINCjLCoC/CoFlvdXLCoGZpcnN0
+wqBhbmTCoGxhc3TCoG5hbWUNCkxvb2tpbmfCoGZvcndhcmTCoHRvwqByZWFkaW5nwqB5b3UNCmNv
+cmRpYWxseQ0KTXLCoEFiZG91bGF5ZcKgSGlzc2VuZQ0K
