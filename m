@@ -2,62 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CE6D3DE845
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Aug 2021 10:23:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A2E43DE846
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Aug 2021 10:23:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234551AbhHCIXS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 3 Aug 2021 04:23:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51864 "EHLO
+        id S234573AbhHCIXX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 3 Aug 2021 04:23:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234440AbhHCIXR (ORCPT
+        with ESMTP id S234431AbhHCIXV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 3 Aug 2021 04:23:17 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E35CC06175F
-        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Aug 2021 01:23:07 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id v71-20020a252f4a0000b029055b51419c7dso22025506ybv.23
-        for <linux-bluetooth@vger.kernel.org>; Tue, 03 Aug 2021 01:23:07 -0700 (PDT)
+        Tue, 3 Aug 2021 04:23:21 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB45EC06175F
+        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Aug 2021 01:23:10 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id o3-20020a2541030000b0290557cf3415f8so22375317yba.1
+        for <linux-bluetooth@vger.kernel.org>; Tue, 03 Aug 2021 01:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=QmVlcdOw8a6YgvvWT/ZlzFfrtL+D2xy3XVjOy/2Tpl4=;
-        b=mFTl+IXac+Ow+APOOQu0eP+vOE1cKDRLu7Hdsc6gEmSHirGkcpjC5XeAvMVzKnDOHT
-         SbrA10nG07AxpCvKndcxFW+gBmtoxdfSFpvyqB4LvUBMpygcs0ipp1o3lb9Xt+0v6+l3
-         7aZvjln6r5H0MNWXjHoW3vURJ0ZsMLcE0bjrDolhjhtVJgLaWV4mOrjPHsjrFv2wXUyB
-         bOUTMneRt8GEFzv3Jhcd3E4eeMVdWVW/QpWZgvLFOXGmIozzccsd2/A1nsjL7xcZdwXO
-         HfD2Lj+BkiFZUZZUupgAqg3cWdMQLO2zNfO5/yAHknOQQngJII4+thqfI2aOwFGv76+w
-         hStg==
+        bh=XHXE8tST2KAQQjyYal7fEzKR0v9qY2Nnj5RhbnRLk/k=;
+        b=ioIbwvPxhquZhzFC9X74wAjE/5+jUpuXnrcwWBrGmqRQmO4Sjoqp+vwrRPssHcG/Te
+         KyZI2uZX5tbEYHf2bAzaIPKpMTMWVzqt+1SvLDCV52oh8MJcf+vOkRGq0l/6k4Rhv6Xb
+         jy2I3tbRmxdPYOx3iGJz8eXLfa4LLK1LBOJebLf17ZkjDBuxJPlHCDHb2HT5fffBjcx8
+         1ZY1+YLQWzgIPIGjTXiWvOUNCyHp879LcQYMbXfsnO4Zmyc62go5xI8tG8Hu9aK/pGVl
+         TzxJ43zeU4La3JxcK/3AYLb5r/vt+Ha6WdoLNXaJ6/TXH1ZoMytRtqoDWJd4mhCfZF3P
+         sTfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=QmVlcdOw8a6YgvvWT/ZlzFfrtL+D2xy3XVjOy/2Tpl4=;
-        b=ON29ziKMPB0KFKD9G5t+A3kfiMA2Ks9Qq5IX/IfWTLGgIgtucrP5gcELYWPhqHVHwy
-         bfkKKu0T7RfmC0cpNd22qINPGh2mZ4f5TbsNfQIjT5S+ZwwtvFZ7iQl7EWbpROJzI3xX
-         qp3rLtppbnxNO/WmMLoR9PzeYAWW1WHbq0acFBORuaNcowCcewft9cyNFl2rqZGUqYlC
-         ZH8jtuNhHTh6I9frDpTuakIfCwm8aHP4H5TouYulrtJGqL++CJ7xmcRd41U1B2g5HwqC
-         JJU1g5MrL/nZPVc25LTQsT0zziifWUykij5ePfp1DAd+xHXUbr452269ZncfzW1C24FU
-         xohg==
-X-Gm-Message-State: AOAM531AsxqjMUs079+fomSyTKIQeWeFZAehqsqabunKzBdgn4wdyRtO
-        7LCaTGTuO7aEoeR9DNC1qbwVISzdwPXqjWBjBxdJMc8uFH/8DqQ1pxxhb+eW+YUYThY9no3O4ae
-        sd2Z05AKq+Gt/rc+XoI7sFqdOcDQ+VEpeGycv39RGe7QLLMBlw2p92qb+ef/IA7KmnavNHtSWiJ
-        WJbu0kcPOFqqI=
-X-Google-Smtp-Source: ABdhPJxoZysNgWIK5Tw0yYk/AVVwin+6agGEfXckC7IRQ4fqn8xKnG+zGN16UB+qAW6LbxLjf+b0kDDfPL8SlLYfaw==
+        bh=XHXE8tST2KAQQjyYal7fEzKR0v9qY2Nnj5RhbnRLk/k=;
+        b=dbiUQSFWnS3PnX/q3BuUUmLkk+gc4fZ8tN0hQIdUNgJaiHBQHNJX14hW6qkIpZ2ltt
+         FEX7cPdezB8EQQwjqQjJIO20Fy1OodsdPdZtmuKlWgsxBda+xSynfx9DUeQKTX9uDbJW
+         YkOzlhats3zy0wYppe2C9lVv8xFUvKFmsYs+TGv+8JUcU93gfFnyOPe4tKUKKiRzQlxD
+         6zq0hB9pBdGa9/uQVq882ZnT86MbbZKXldpuLiIO1Pllt1HRt3McL5Rr9McLkt293M6K
+         aFqSRrkXrzaynjacdubw2xO2vX8ZDhj4OVluOZOYbeNFxP3eRKePwyDmvuw6UBS7hzrC
+         zxIw==
+X-Gm-Message-State: AOAM531wSGrI3yW8chW2PxozrODuLxBRsdkUHniYvFr9J7O9NLsn2OXx
+        RXZdDphrIqGhc6coS9gSFNKjgi56FIEY3fx89tFdRzhBjaABg7eaPJPpSVUVFk+vVN/X2iBVEt1
+        C8rxWue5Tq17eTlyTY4wRHrHNI1QM8PpvbIjw/2zSQYrmOpkbU2xVnQK1IMj65FDrTpxIRDndyd
+        BF98fgQJSWO5k=
+X-Google-Smtp-Source: ABdhPJw/J6SWbt/L+OexIXfWJf0mPsl/PNkiOaGGM6+0tZvUaX151iFTr4Jy2b1PTnUyjrRXdRS5KwFgpWqwsep7EQ==
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:ef55:8161:c77b:7a8d])
- (user=howardchung job=sendgmr) by 2002:a25:d642:: with SMTP id
- n63mr27799516ybg.165.1627978986205; Tue, 03 Aug 2021 01:23:06 -0700 (PDT)
-Date:   Tue,  3 Aug 2021 16:22:25 +0800
+ (user=howardchung job=sendgmr) by 2002:a25:ba83:: with SMTP id
+ s3mr25579456ybg.450.1627978990189; Tue, 03 Aug 2021 01:23:10 -0700 (PDT)
+Date:   Tue,  3 Aug 2021 16:22:26 +0800
 In-Reply-To: <20210803082237.723766-1-howardchung@google.com>
-Message-Id: <20210803161319.Bluez.v8.1.Ic71b1ed97538a06d02425ba502690bdab1c5d836@changeid>
+Message-Id: <20210803161319.Bluez.v8.2.Iee308dd18bfdfd3dae9e343e78b3942ee462314f@changeid>
 Mime-Version: 1.0
 References: <20210803082237.723766-1-howardchung@google.com>
 X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
-Subject: [Bluez PATCH v8 01/13] core: add is_allowed property in btd_service
+Subject: [Bluez PATCH v8 02/13] core: add device callbacks to adapter driver
 From:   Howard Chung <howardchung@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Cc:     Yun-Hao Chung <howardchung@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>
+Cc:     Yun-Hao Chung <howardchung@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
@@ -65,137 +64,198 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Yun-Hao Chung <howardchung@chromium.org>
 
-This adds is_allowed property in btd_service. When is_allowed is set to
-false, calling btd_service_connect and service_accept will fail and the
-existing service connection gets disconnected.
+This adds the following callbacks to btd_adapter_driver.
 
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+device_added:	 called when a device is added to the adapter
+device_removed:	 called when a device is removed from the adapter
+device_resolved: called when all services of the device have been
+				 resolved.
 ---
 
 Changes in v8:
-- Remove changes in profiles/health/
+- Add device_resolved.
+- Remove space before function pointer arguments.
 
-Changes in v7:
-- Fix compiler errors in profiles/hdp.c
+ src/adapter.c | 74 +++++++++++++++++++++++++++++++++++++++++++++++----
+ src/adapter.h | 14 +++++++---
+ src/device.c  |  2 ++
+ 3 files changed, 82 insertions(+), 8 deletions(-)
 
-Changes in v6:
-- include <errno.h> instead of <error.h> in plugins/admin.c
-
-Changes in v5:
-- Fix compiler errors in plugins/admin.c
-
-Changes in v4:
-- Update commit message (admin_policy -> admin)
-- remove old plugins/admin_policy.c
-
-Changes in v3:
-- Rename plugins/admin_policy.c -> plugins/admin.c
-- Use device_added callback in btd_adapter_driver instead of listen for
-  dbus
-- Add authorization method in profiles/health/mcap.c and block incoming
-  connections in adapter authorization function.
-
-Changes in v2:
-- Move bt_uuid_hash and bt_uuid_equal functions to adapter.c.
-- Modify the criteria to say a device is `Affected` from any-of-uuid
-  to any-of-auto-connect-profile.
-- Remove the code to remove/reprobe disallowed/allowed profiles,
-  instead, check if the service is allowed in bt_io_accept connect_cb.
-- Fix a typo in emit_property_change in
-  plugin/admin_policy.c:set_service_allowlist
-- Instead of using device_state_cb, utilize D-BUS client to watch device
-  added/removed.
-- Add a document in doc/
-
- src/service.c | 33 +++++++++++++++++++++++++++++++++
- src/service.h |  2 ++
- 2 files changed, 35 insertions(+)
-
-diff --git a/src/service.c b/src/service.c
-index 21a52762e637..84fbb208a7e9 100644
---- a/src/service.c
-+++ b/src/service.c
-@@ -41,6 +41,7 @@ struct btd_service {
- 	void			*user_data;
- 	btd_service_state_t	state;
- 	int			err;
-+	bool			is_allowed;
+diff --git a/src/adapter.c b/src/adapter.c
+index 663b778e4a5d..5a20f4c6239e 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -1216,6 +1216,9 @@ void adapter_service_remove(struct btd_adapter *adapter, uint32_t handle)
+ 	remove_record_from_server(rec->handle);
+ }
+ 
++static void adapter_add_device(struct btd_adapter *adapter,
++						struct btd_device *device);
++
+ static struct btd_device *adapter_create_device(struct btd_adapter *adapter,
+ 						const bdaddr_t *bdaddr,
+ 						uint8_t bdaddr_type)
+@@ -1226,8 +1229,7 @@ static struct btd_device *adapter_create_device(struct btd_adapter *adapter,
+ 	if (!device)
+ 		return NULL;
+ 
+-	adapter->devices = g_slist_append(adapter->devices, device);
+-
++	adapter_add_device(adapter, device);
+ 	return device;
+ }
+ 
+@@ -1254,6 +1256,9 @@ static void service_auth_cancel(struct service_auth *auth)
+ 	g_free(auth);
+ }
+ 
++static void adapter_remove_device(struct btd_adapter *adapter,
++						struct btd_device *device);
++
+ void btd_adapter_remove_device(struct btd_adapter *adapter,
+ 				struct btd_device *dev)
+ {
+@@ -1261,7 +1266,7 @@ void btd_adapter_remove_device(struct btd_adapter *adapter,
+ 
+ 	adapter->connect_list = g_slist_remove(adapter->connect_list, dev);
+ 
+-	adapter->devices = g_slist_remove(adapter->devices, dev);
++	adapter_remove_device(adapter, dev);
+ 	btd_adv_monitor_device_remove(adapter->adv_monitor_manager, dev);
+ 
+ 	adapter->discovery_found = g_slist_remove(adapter->discovery_found,
+@@ -4222,6 +4227,7 @@ static void probe_devices(void *user_data)
+ 	struct btd_device *device = user_data;
+ 
+ 	device_probe_profiles(device, btd_device_get_uuids(device));
++	device_resolved_drivers(device_get_adapter(device), device);
+ }
+ 
+ static bool load_bredr_defaults(struct btd_adapter *adapter,
+@@ -4576,7 +4582,7 @@ static void load_devices(struct btd_adapter *adapter)
+ 			goto free;
+ 
+ 		btd_device_set_temporary(device, false);
+-		adapter->devices = g_slist_append(adapter->devices, device);
++		adapter_add_device(adapter, device);
+ 
+ 		/* TODO: register services from pre-loaded list of primaries */
+ 
+@@ -4738,6 +4744,62 @@ void adapter_remove_profile(struct btd_adapter *adapter, gpointer p)
+ 		profile->adapter_remove(profile, adapter);
+ }
+ 
++static void device_added_drivers(struct btd_adapter *adapter,
++						struct btd_device *device)
++{
++	struct btd_adapter_driver *driver;
++	GSList *l;
++
++	for (l = adapter_drivers; l; l = l->next) {
++		driver = l->data;
++
++		if (driver->device_added)
++			driver->device_added(adapter, device);
++	}
++}
++
++static void device_removed_drivers(struct btd_adapter *adapter,
++						struct btd_device *device)
++{
++	struct btd_adapter_driver *driver;
++	GSList *l;
++
++	for (l = adapter_drivers; l; l = l->next) {
++		driver = l->data;
++
++		if (driver->device_removed)
++			driver->device_removed(adapter, device);
++	}
++}
++
++void device_resolved_drivers(struct btd_adapter *adapter,
++						struct btd_device *device)
++{
++	struct btd_adapter_driver *driver;
++	GSList *l;
++
++	for (l = adapter_drivers; l; l = l->next) {
++		driver = l->data;
++
++		if (driver->device_resolved)
++			driver->device_resolved(adapter, device);
++	}
++}
++
++static void adapter_add_device(struct btd_adapter *adapter,
++						struct btd_device *device)
++{
++	adapter->devices = g_slist_append(adapter->devices, device);
++	device_added_drivers(adapter, device);
++}
++
++static void adapter_remove_device(struct btd_adapter *adapter,
++						struct btd_device *device)
++{
++	adapter->devices = g_slist_remove(adapter->devices, device);
++	device_removed_drivers(adapter, device);
++}
++
+ static void adapter_add_connection(struct btd_adapter *adapter,
+ 						struct btd_device *device,
+ 						uint8_t bdaddr_type)
+@@ -6355,8 +6417,10 @@ static void adapter_remove(struct btd_adapter *adapter)
+ 	g_slist_free(adapter->connect_list);
+ 	adapter->connect_list = NULL;
+ 
+-	for (l = adapter->devices; l; l = l->next)
++	for (l = adapter->devices; l; l = l->next) {
++		device_removed_drivers(adapter, l->data);
+ 		device_remove(l->data, FALSE);
++	}
+ 
+ 	g_slist_free(adapter->devices);
+ 	adapter->devices = NULL;
+diff --git a/src/adapter.h b/src/adapter.h
+index 60b5e3bcca34..3d69aeda14fb 100644
+--- a/src/adapter.h
++++ b/src/adapter.h
+@@ -105,11 +105,19 @@ void btd_adapter_set_class(struct btd_adapter *adapter, uint8_t major,
+ 
+ struct btd_adapter_driver {
+ 	const char *name;
+-	int (*probe) (struct btd_adapter *adapter);
+-	void (*remove) (struct btd_adapter *adapter);
+-	void (*resume) (struct btd_adapter *adapter);
++	int (*probe)(struct btd_adapter *adapter);
++	void (*remove)(struct btd_adapter *adapter);
++	void (*resume)(struct btd_adapter *adapter);
++	void (*device_added)(struct btd_adapter *adapter,
++						struct btd_device *device);
++	void (*device_removed)(struct btd_adapter *adapter,
++						struct btd_device *device);
++	void (*device_resolved)(struct btd_adapter *adapter,
++						struct btd_device *device);
  };
  
- struct service_state_callback {
-@@ -133,6 +134,7 @@ struct btd_service *service_create(struct btd_device *device,
- 	service->device = device; /* Weak ref */
- 	service->profile = profile;
- 	service->state = BTD_SERVICE_STATE_UNAVAILABLE;
-+	service->is_allowed = true;
++void device_resolved_drivers(struct btd_adapter *adapter,
++						struct btd_device *device);
+ typedef void (*service_auth_cb) (DBusError *derr, void *user_data);
  
- 	return service;
- }
-@@ -186,6 +188,12 @@ int service_accept(struct btd_service *service)
- 	if (!service->profile->accept)
- 		return -ENOSYS;
- 
-+	if (!service->is_allowed) {
-+		info("service %s is not allowed",
-+						service->profile->remote_uuid);
-+		return -ECONNABORTED;
-+	}
-+
- 	err = service->profile->accept(service);
- 	if (!err)
- 		goto done;
-@@ -245,6 +253,12 @@ int btd_service_connect(struct btd_service *service)
- 		return -EBUSY;
+ void adapter_add_profile(struct btd_adapter *adapter, gpointer p);
+diff --git a/src/device.c b/src/device.c
+index b29aa195d19b..49dd57166532 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -2633,6 +2633,8 @@ static void device_svc_resolved(struct btd_device *dev, uint8_t browse_type,
+ 							dev->svc_callbacks);
+ 		g_free(cb);
  	}
- 
-+	if (!service->is_allowed) {
-+		info("service %s is not allowed",
-+						service->profile->remote_uuid);
-+		return -ECONNABORTED;
-+	}
 +
- 	err = profile->connect(service);
- 	if (err == 0) {
- 		change_state(service, BTD_SERVICE_STATE_CONNECTING, 0);
-@@ -361,6 +375,25 @@ bool btd_service_remove_state_cb(unsigned int id)
- 	return false;
++	device_resolved_drivers(dev->adapter, dev);
  }
  
-+void btd_service_set_allowed(struct btd_service *service, bool allowed)
-+{
-+	if (allowed == service->is_allowed)
-+		return;
-+
-+	service->is_allowed = allowed;
-+
-+	if (!allowed && (service->state == BTD_SERVICE_STATE_CONNECTING ||
-+			service->state == BTD_SERVICE_STATE_CONNECTED)) {
-+		btd_service_disconnect(service);
-+		return;
-+	}
-+}
-+
-+bool btd_service_is_allowed(struct btd_service *service)
-+{
-+	return service->is_allowed;
-+}
-+
- void btd_service_connecting_complete(struct btd_service *service, int err)
- {
- 	if (service->state != BTD_SERVICE_STATE_DISCONNECTED &&
-diff --git a/src/service.h b/src/service.h
-index 88530cc17d53..5a2a02447b24 100644
---- a/src/service.h
-+++ b/src/service.h
-@@ -51,6 +51,8 @@ int btd_service_get_error(const struct btd_service *service);
- unsigned int btd_service_add_state_cb(btd_service_state_cb cb,
- 							void *user_data);
- bool btd_service_remove_state_cb(unsigned int id);
-+void btd_service_set_allowed(struct btd_service *service, bool allowed);
-+bool btd_service_is_allowed(struct btd_service *service);
- 
- /* Functions used by profile implementation */
- void btd_service_connecting_complete(struct btd_service *service, int err);
+ static struct bonding_req *bonding_request_new(DBusMessage *msg,
 -- 
 2.32.0.554.ge1b32706d8-goog
 
