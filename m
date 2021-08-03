@@ -2,200 +2,154 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1F6A3DE899
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Aug 2021 10:42:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21D643DEC7E
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Aug 2021 13:43:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234356AbhHCImx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 3 Aug 2021 04:42:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56658 "EHLO
+        id S235615AbhHCLnk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 3 Aug 2021 07:43:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234412AbhHCImx (ORCPT
+        with ESMTP id S234171AbhHCLnj (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 3 Aug 2021 04:42:53 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8EDDC06175F
-        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Aug 2021 01:42:42 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id z24so19167288qkz.7
-        for <linux-bluetooth@vger.kernel.org>; Tue, 03 Aug 2021 01:42:42 -0700 (PDT)
+        Tue, 3 Aug 2021 07:43:39 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A24C061757
+        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Aug 2021 04:43:27 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id a6-20020a25ae060000b0290551bbd99700so22643816ybj.6
+        for <linux-bluetooth@vger.kernel.org>; Tue, 03 Aug 2021 04:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=acfCnHOPQA6HAQ3Nr29t3pXYywRMcfHQQp7kPxml568=;
-        b=gWeTtCgv/I0KdaVBn4xVoCvVAnp5+Ul/uwy5OgBv/pUCdggyiZ+4QIsiOuL4exmY/0
-         soxFTypiVtCrCW/hAQIjKgPc75avu/KjwdgGxIDRTh5wNHpCbUzn7DEt3dw/hIhuoHNB
-         WCj4leAphrOf+DUITlx5bMO5dyNSoSFvG35sFmSKswDsmO1tCKLiJqa6imGqhoztE2BD
-         +BYHqZzZdSaxpNMWEv7GoJ7ZUVGN0ZS3y8mQ8+on5Teg3I/GzDlqc94NNcDUM3eLXp8s
-         ekalu4PDkK8wr6y74g8QrDaewoREcHm4fPq9G4sSOBIThivhZEHfMnyCrESWR7D6LFOa
-         30Nw==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=dnzKJiMv0Udzq9gGlj67AB4Clpgus0ypSbnBf8N7YG8=;
+        b=bcWj2THFpBmlv3V0g1yjkFeJUyH5MQPtzJYrcrCmDmY5Sw6xtZmCLMkG9bZDjRQjXb
+         0GK/ybt4DMGVq4ZPxoqcRy3DbIQVWJ/wgNBuAD1CU8mpLdM4VfzxMGWqjqpAmcOXJb59
+         id4hToPwq71muyFhOIYeOoQJAhH8a6YgyH9jL3hcWze1XkzBvIiSp+o21T3qqabCl5XN
+         2IjVABmlLVKnfzLW1+jM7wIyTuquzshPv3infr1KY4hzB5c23R0Gmvx7W+rTpVaAy8V+
+         MUjUw6uQgXOp3pgcvnzO00DYP1Z0rda2jFZ10wtRXTCsRNTiA81kCZsf3jKWitOWBUbE
+         gOlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=acfCnHOPQA6HAQ3Nr29t3pXYywRMcfHQQp7kPxml568=;
-        b=QGgfsl8Z4zk54cMGIVjhCEdgW7qOpK8uFbCQybPEwJAfrNe3o52Pa4lhH20Lklp24k
-         1OuBMJK3ovtEjC65fMo6tGGwNv3+MzCb8tzpDUN0+LvFLYX3EbEFWH6TPEHM9hUG5EzI
-         a/H+bFEOFCq8DFSbLblkgLzE60LCCYcFRPCiJr3Ja0hmvGJU2RT34RSu8nKDWjHzG0u+
-         DFmxS0+SufgxnV6oZ5xj0gf/0oXFyxJy1gTBYXZQkX7+bQTwHYP0L0BONRoggYnUQ297
-         T3af2BatHA8n+Ucqape9rjBuKf5/ifyM8jr0wdWEdi7+0GnCUHReDw2A/wkMqjSLbE8a
-         GgYw==
-X-Gm-Message-State: AOAM5324uYEvsTMiZuF7BIs+6G54z9AJ+hRWblvL29I1HDs6LhBB5MBk
-        pLx8Y0ig2lz6h2ng8cOnxuvgSEf4ylXKHg==
-X-Google-Smtp-Source: ABdhPJyBBjYL6ZX+Jzu6czfBVxv8Im1xR4GIyZRwpLtgZVsz2EIOiu8nCvO0ogulyKPxlpmZ/9LmKA==
-X-Received: by 2002:a37:ccb:: with SMTP id 194mr19877711qkm.369.1627980161689;
-        Tue, 03 Aug 2021 01:42:41 -0700 (PDT)
-Received: from [172.17.0.2] ([52.242.81.63])
-        by smtp.gmail.com with ESMTPSA id 18sm7684157qkv.118.2021.08.03.01.42.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 01:42:41 -0700 (PDT)
-Message-ID: <61090181.1c69fb81.44f92.d1a0@mx.google.com>
-Date:   Tue, 03 Aug 2021 01:42:41 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============5875222100720029800=="
-MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, howardchung@google.com
-Subject: RE: Admin policy series
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20210803161319.Bluez.v8.1.Ic71b1ed97538a06d02425ba502690bdab1c5d836@changeid>
-References: <20210803161319.Bluez.v8.1.Ic71b1ed97538a06d02425ba502690bdab1c5d836@changeid>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=dnzKJiMv0Udzq9gGlj67AB4Clpgus0ypSbnBf8N7YG8=;
+        b=q8/a6ao2r9pkf9SDkRKVv/841+1sQ89Pra9rn7h3TXpbJd6CK3HdeFwQbomxCPvST0
+         OjsN1jQ6axQWegc7KRMr2UTRLQHhm9UQjsLYUIToKpbE5Y7VN8DwYaapVXlj4JM73/yJ
+         A0OIlKiXyed0rfFjxZ+HGVhsrVGpA+G/AAwSMgvTOoB2LLl7oE/ZaxTEKRY4zsID5w0x
+         lZN39+AWq3hAG1lqa4jzNTE72GS4Keib+btbOXs4qpTLIo/ulVLKWS9G/AeXCXEe3PG1
+         /MyLSTnsrsL9X1G1W2gHCgsc5hsXdKsDYOoJgs79dE7uxCK+6lp/AUc1/30XCm09klwq
+         xHlg==
+X-Gm-Message-State: AOAM530hIiyA2iykjo3DLVx1DqzjJ/X5muIKWiqwdQNMmFmxBdAak3uN
+        +/JoAsOhs85nm8JQIWUZCI2kw0ObCv5JYEet2IQSWOyrwlqXjYT/UHdg7SoYoA9zKiARBLhiMVR
+        U6O3VUgRR81bheJsWTd0i0DpjsLb7GcvQGblLRTnTz9MU82qi9KxOZYiUrzxiCMhf/O2MdBeW9M
+        Nc4whcIZzM+sE=
+X-Google-Smtp-Source: ABdhPJzZ3DFu/517puK2AYHhqyjDduqDL8XON9NQSvMJMs1/JhP+U4JHU8xnlUCJIWqZV1lwM1m+NoUAzVnS1ezD4g==
+X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:ef55:8161:c77b:7a8d])
+ (user=howardchung job=sendgmr) by 2002:a25:186:: with SMTP id
+ 128mr27432012ybb.434.1627991006327; Tue, 03 Aug 2021 04:43:26 -0700 (PDT)
+Date:   Tue,  3 Aug 2021 19:43:04 +0800
+Message-Id: <20210803114317.801840-1-howardchung@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
+Subject: [Bluez PATCH v9 00/13] Admin policy series
+From:   Howard Chung <howardchung@google.com>
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Cc:     Yun-Hao Chung <howardchung@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5875222100720029800==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=525459
-
----Test result---
-
-Test Summary:
-CheckPatch                    FAIL      3.11 seconds
-GitLint                       FAIL      1.28 seconds
-Prep - Setup ELL              PASS      38.33 seconds
-Build - Prep                  PASS      0.10 seconds
-Build - Configure             PASS      6.68 seconds
-Build - Make                  PASS      163.49 seconds
-Make Check                    PASS      8.11 seconds
-Make Distcheck                PASS      201.69 seconds
-Build w/ext ELL - Configure   PASS      6.74 seconds
-Build w/ext ELL - Make        PASS      153.94 seconds
-
-Details
-##############################
-Test: CheckPatch - FAIL
-Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-Output:
-plugins/admin: add ServiceAllowList property
-ERROR:SPACING: need consistent spacing around '*' (ctx:WxV)
-#63: FILE: plugins/admin.c:186:
-+					const GDBusPropertyTable *property,
- 					                         ^
-
-- total: 1 errors, 0 warnings, 82 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-"[PATCH] plugins/admin: add ServiceAllowList property" has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-plugins/admin: add AffectedByPolicy property
-ERROR:SPACING: need consistent spacing around '*' (ctx:WxV)
-#65: FILE: plugins/admin.c:254:
-+					const GDBusPropertyTable *property,
- 					                         ^
-
-- total: 1 errors, 0 warnings, 120 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-"[PATCH] plugins/admin: add AffectedByPolicy property" has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-plugins/admin: persist policy settings
-WARNING:LINE_SPACING: Missing a blank line after declarations
-#135: FILE: plugins/admin.c:260:
-+	struct queue *uuid_list = NULL;
-+	gchar **uuids = NULL;
-
-- total: 0 errors, 1 warnings, 208 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-"[PATCH] plugins/admin: persist policy settings" has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+From: Yun-Hao Chung <howardchung@chromium.org>
 
 
-##############################
-Test: GitLint - FAIL
-Desc: Run gitlint with rule in .gitlint
-Output:
-core: add device callbacks to adapter driver
-5: B3 Line contains hard tab characters (\t): "device_added:	 called when a device is added to the adapter"
-6: B3 Line contains hard tab characters (\t): "device_removed:	 called when a device is removed from the adapter"
-8: B3 Line contains hard tab characters (\t): "				 resolved."
+Hi manintainers,
 
+This series is to
+1. Implement a few methods in core so that a plugin can have control of
+   allowing / disallowing certain service connections.
+2. Implement the AdminPolicy plugin. The plugin provides interfaces
+   AdminPolicySet and AdminPolicyStatus. For each policy, users should
+   set the value thorugh AdminPolicySet and query the current setting
+   through AdminPolicyStatus. We separeted these two interfaces so that
+   developers can assign different groups of users to these interfaces.
+   Currently the only policy is ServiceAllowList, which make bluez only
+   allow a list of service by specified their UUIDs, but the plugin is
+   also expected to provide more controls over other bluez behaviors.
+Since the second part is a plugin, it might not be necessary to land in
+upstream tree.
 
-##############################
-Test: Prep - Setup ELL - PASS
-Desc: Clone, build, and install ELL
+Thanks.
 
-##############################
-Test: Build - Prep - PASS
-Desc: Prepare environment for build
+Changes in v9:
+- Fix gitlint error in patch 'core: add device callbacks to adapter
+  driver'
 
-##############################
-Test: Build - Configure - PASS
-Desc: Configure the BlueZ source tree
+Changes in v8:
+- Remove changes in profiles/health/
 
-##############################
-Test: Build - Make - PASS
-Desc: Build the BlueZ source tree
+Changes in v7:
+- Fix compiler errors in profiles/hdp.c
 
-##############################
-Test: Make Check - PASS
-Desc: Run 'make check'
+Changes in v6:
+- include <errno.h> instead of <error.h> in plugins/admin.c
 
-##############################
-Test: Make Distcheck - PASS
-Desc: Run distcheck to check the distribution
+Changes in v5:
+- Fix compiler errors in plugins/admin.c
 
-##############################
-Test: Build w/ext ELL - Configure - PASS
-Desc: Configure BlueZ source with '--enable-external-ell' configuration
+Changes in v4:
+- Update commit message (admin_policy -> admin)
+- remove old plugins/admin_policy.c
 
-##############################
-Test: Build w/ext ELL - Make - PASS
-Desc: Build BlueZ source with '--enable-external-ell' configuration
+Changes in v3:
+- Rename plugins/admin_policy.c -> plugins/admin.c
+- Use device_added callback in btd_adapter_driver instead of listen for
+  dbus
+- Add authorization method in profiles/health/mcap.c and block incoming
+  connections in adapter authorization function.
 
+Changes in v2:
+- Move bt_uuid_hash and bt_uuid_equal functions to adapter.c.
+- Modify the criteria to say a device is `Affected` from any-of-uuid
+  to any-of-auto-connect-profile.
+- Remove the code to remove/reprobe disallowed/allowed profiles,
+  instead, check if the service is allowed in bt_io_accept connect_cb.
+- Fix a typo in emit_property_change in
+  plugin/admin_policy.c:set_service_allowlist
+- Instead of using device_state_cb, utilize D-BUS client to watch device
+  added/removed.
+- Add a document in doc/
 
+Yun-Hao Chung (13):
+  core: add is_allowed property in btd_service
+  core: add device callbacks to adapter driver
+  core: add adapter and device allowed_uuid functions
+  core: block not allowed UUID connect in auth
+  plugins: new plugin
+  plugins/admin: add admin_policy adapter driver
+  plugins/admin: add ServiceAllowList method
+  plugins/admin: add ServiceAllowList property
+  plugins/admin: add device callbacks
+  plugins/admin: add AffectedByPolicy property
+  plugins/admin: persist policy settings
+  doc: add description of admin policy
+  doc: add admin policy file storage description
 
----
-Regards,
-Linux Bluetooth
+ Makefile.plugins         |   5 +
+ bootstrap-configure      |   1 +
+ configure.ac             |   4 +
+ doc/admin-policy-api.txt |  65 +++++
+ doc/settings-storage.txt |  20 ++
+ plugins/admin.c          | 590 +++++++++++++++++++++++++++++++++++++++
+ src/adapter.c            | 169 ++++++++++-
+ src/adapter.h            |  22 +-
+ src/device.c             |  65 ++++-
+ src/device.h             |   2 +
+ src/profile.c            |  11 +
+ src/service.c            |  33 +++
+ src/service.h            |   2 +
+ 13 files changed, 980 insertions(+), 9 deletions(-)
+ create mode 100644 doc/admin-policy-api.txt
+ create mode 100644 plugins/admin.c
 
+-- 
+2.32.0.554.ge1b32706d8-goog
 
---===============5875222100720029800==--
