@@ -2,88 +2,82 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C0893E03D5
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Aug 2021 17:01:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DD5E3E03E8
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Aug 2021 17:09:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238946AbhHDPB5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 Aug 2021 11:01:57 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:33340 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238936AbhHDPB4 (ORCPT
+        id S238654AbhHDPKG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 4 Aug 2021 11:10:06 -0400
+Received: from smtp-relay-canonical-0.canonical.com ([185.125.188.120]:34162
+        "EHLO smtp-relay-canonical-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S237114AbhHDPKF (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Aug 2021 11:01:56 -0400
-Received: from smtpclient.apple (p5b3d23f8.dip0.t-ipconnect.de [91.61.35.248])
-        by mail.holtmann.org (Postfix) with ESMTPSA id E4A9ECECD5;
-        Wed,  4 Aug 2021 17:01:42 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: [PATCH v2] bluetooth: Add additional Bluetooth part for Realtek
- 8852AE
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20210804145033.4340-1-Larry.Finger@lwfinger.net>
-Date:   Wed, 4 Aug 2021 17:01:42 +0200
-Cc:     "Gustavo F. Padovan" <gustavo@padovan.org>,
+        Wed, 4 Aug 2021 11:10:05 -0400
+Received: from localhost (1.general.cking.uk.vpn [10.172.193.212])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id 57B383F04E;
+        Wed,  4 Aug 2021 15:09:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1628089791;
+        bh=jOI1MaghgNGcJtSRSTB8GoNttvxl2jIpyug9Cz3oOHk=;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type;
+        b=OW2kjVqQSto9Eac4j2zLDVIwwEpXPBKYDJSMWMQnZsOuUGaBNVLmswCLD+TtIBPRv
+         Blq5wbKCOfQxL3C/hNcXCRs/6Xc41PCoihgbypXZorXxpoNrxzXxi48LEGcAfa6V5w
+         Qs7+jFds+9sp3HTrJODcrYqvcjo56xAd1e+AJzmRWpajhi7O0A+FWRVDZ0QSlcnNcD
+         EOPQbbvUXMSo0zNCOQNT6p03383iNgkfl+yohdzEgP4kX7dSyhtNOrBlHh7pcahCbP
+         sMPhNzKrkjpHjCnEGvw8GWjWBTZtoGlz2pkSKxB78QTkTMZh2bI3NqpwfZGT79U0MM
+         NH0v38Ywy3DFQ==
+From:   Colin King <colin.king@canonical.com>
+To:     Karsten Keil <isdn@linux-pingi.de>,
+        Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
-        BlueZ <linux-bluetooth@vger.kernel.org>,
-        Hilda Wu <hildawu@realtek.com>, Stable <stable@vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <00BFDF42-63A6-48A2-8BD0-B70629ADD07B@holtmann.org>
-References: <20210804145033.4340-1-Larry.Finger@lwfinger.net>
-To:     Larry Finger <Larry.Finger@lwfinger.net>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S . Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Andrei Emeltchenko <andrei.emeltchenko@intel.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.co.uk>,
+        netdev@vger.kernel.org, linux-bluetooth@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] Bluetooth: increase BTNAMSIZ to 21 chars to fix potential buffer overflow
+Date:   Wed,  4 Aug 2021 16:09:51 +0100
+Message-Id: <20210804150951.116814-1-colin.king@canonical.com>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Larry,
+From: Colin Ian King <colin.king@canonical.com>
 
-> This Realtek device has both wifi and BT components. The latter reports
-> a USB ID of 04ca:4006, which is not in the table.
-> 
-> The portion of /sys/kernel/debug/usb/devices pertaining to this device is
-> 
-> T:  Bus=02 Lev=01 Prnt=01 Port=12 Cnt=04 Dev#=  4 Spd=12   MxCh= 0
-> D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-> P:  Vendor=04ca ProdID=4006 Rev= 0.00
-> S:  Manufacturer=Realtek
-> S:  Product=Bluetooth Radio
-> S:  SerialNumber=00e04c000001
-> C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-> E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> 
-> Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
-> Cc: Stable <stable@vger.kernel.org>
-> ---
-> v2 - add /sys/kernel/debug/usb/devices output
-> ---
-> drivers/bluetooth/btusb.c | 4 ++++
-> 1 file changed, 4 insertions(+)
+An earlier commit replaced using batostr to using %pMR sprintf for the
+construction of session->name. Static analysis detected that this new
+method can use a total of 21 characters (including the trailing '\0')
+so we need to increase the BTNAMSIZ from 18 to 21 to fix potential
+buffer overflows.
 
-patch has been applied to bluetooth-next tree.
+Addresses-Coverity: ("Out-of-bounds write")
+Fixes: fcb73338ed53 ("Bluetooth: Use %pMR in sprintf/seq_printf instead of batostr")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+---
+ net/bluetooth/cmtp/cmtp.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Regards
-
-Marcel
+diff --git a/net/bluetooth/cmtp/cmtp.h b/net/bluetooth/cmtp/cmtp.h
+index c32638dddbf9..f6b9dc4e408f 100644
+--- a/net/bluetooth/cmtp/cmtp.h
++++ b/net/bluetooth/cmtp/cmtp.h
+@@ -26,7 +26,7 @@
+ #include <linux/types.h>
+ #include <net/bluetooth/bluetooth.h>
+ 
+-#define BTNAMSIZ 18
++#define BTNAMSIZ 21
+ 
+ /* CMTP ioctl defines */
+ #define CMTPCONNADD	_IOW('C', 200, int)
+-- 
+2.31.1
 
