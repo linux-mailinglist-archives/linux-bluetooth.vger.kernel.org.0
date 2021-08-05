@@ -2,150 +2,139 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A3E733E0B41
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Aug 2021 02:32:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BB323E0C11
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Aug 2021 03:24:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236280AbhHEAcv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 Aug 2021 20:32:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50836 "EHLO
+        id S237140AbhHEBY6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 4 Aug 2021 21:24:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236273AbhHEAcr (ORCPT
+        with ESMTP id S231143AbhHEBY5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 Aug 2021 20:32:47 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60CE2C0613D5
-        for <linux-bluetooth@vger.kernel.org>; Wed,  4 Aug 2021 17:32:33 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id pj14-20020a17090b4f4eb029017786cf98f9so6084824pjb.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Aug 2021 17:32:33 -0700 (PDT)
+        Wed, 4 Aug 2021 21:24:57 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3486C061765
+        for <linux-bluetooth@vger.kernel.org>; Wed,  4 Aug 2021 18:24:42 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id s11so2129431qvz.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Aug 2021 18:24:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QXGfzjHBAiiw8W9hKA1qQJuiDfomAnsOYfqk32XU04U=;
-        b=sutC7bmG4B+WHsO/KBS+NVAeibVe3iVwmt1t7vuacE6bhyqaQsfZlNQyvxWFGqO9en
-         VxdJGB4zUtv3FvdgRaufIM1AlFv7tj72zLD751dFhfjunCFZ6BVi0rQKcautjNdP1muV
-         +j4i4ZVu0sEdkpsLnE4RcxShCebfhilA0oclznSJF9KeH+lzp93rsCVl+6g2e7DlJrdK
-         uxzFEM0d8dur8kZXBiZvvKPtnO7xwesUvbX8FID2fxdt66gVpOkGr+1BjqKoOY7RnA5X
-         6kNxZ4GcPp30iO5EvMF7G3nhRWct5vl7E4sHBlL48i/1sCfnlKjwzODp/iJNvZFqb8RF
-         DlPA==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=iT75VrIN4bcJK4TfH0h/eQO0G/P9qILcb/Akds+ssIY=;
+        b=JBnDEhV1VXl5JYK0Nb64xrMb2SWXAanoQzRWc4oDojU+cED/QYFhbfwD9N7NzCn9zT
+         I0NHSkH96tDepiVXLQ0GAOxOTsJwiaSkR2D0gDqAZIIdfmSeQVDslBs7JGGR+yv8aq08
+         19PZKw9bXwidDUhvJ6bF46Qjha+dcbGYfZb74RI67ybGg0luF7Z1bWNb3mv3YXZ5cBqa
+         LWpj4i0ll/UiYGniVIaq/OWUWbtu1qUnRDKv2zxPTWpxNo0rjSUetgqvO2KDjxboc/VH
+         tvSne88ejSTJitBNft/Tvbwf4hLKZVa2ZEpUhkLd/jatYWgzMEsNRnpIuGtYH+J4yNNV
+         Pc4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QXGfzjHBAiiw8W9hKA1qQJuiDfomAnsOYfqk32XU04U=;
-        b=TeirQsxdGFjPiBL7tAjJd67/R/NIaqh5c2D94FhNfB5jViknFfUIKMGfFFhPP4E7VC
-         mFOJzKzYQRFBn3S6YwaM22ZRIS4qT0u/ArnPE2o4DOwoFF5cjKoH4XYBFN8T+OKt50F2
-         uz4nlftlI97Q0PufcoJD1wSbFo/Jk9c+JMIiCLweuvFaF6YdqDJGyrPyIxD78ve/6Cc7
-         s07ZOczuqFfg5Hal2xAxqQ+1jR1BQRnEdNUmMVfSgjOxYgeBO5DBsfNEEryIyYSGSVrU
-         Ec1BHR+xNLfZ4Jx45XheaOte+4yhMIqPHEx5eRSzbccBXa/oJlYGHHiPNjRYeAb8nH5e
-         ANVg==
-X-Gm-Message-State: AOAM5327a/h27qHwcoaoV6NEUhkMqsYzIBqCFN7N+iDTY/vyLKg3EINb
-        amiQ5Ovs2+uhTv1EyEW8UmeXIjPS8bE=
-X-Google-Smtp-Source: ABdhPJwiHNC1UIJCZ7zuF/tG/w+lTpuWn9XGO2sTTbQqCwXer63JhEZ1H4qC+WQSyMykHJPPGU6ugA==
-X-Received: by 2002:a17:90a:7884:: with SMTP id x4mr12778217pjk.53.1628123552840;
-        Wed, 04 Aug 2021 17:32:32 -0700 (PDT)
-Received: from localhost.localdomain ([2601:1c0:6a01:d830:e0b8:5332:84:7056])
-        by smtp.gmail.com with ESMTPSA id q4sm4761787pgv.16.2021.08.04.17.32.32
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=iT75VrIN4bcJK4TfH0h/eQO0G/P9qILcb/Akds+ssIY=;
+        b=n0WgDoprPkc0N9YsnkUQkxLBaF/jnuClM2PUzJoza4g284vN1IsmkBKs7czewTa10W
+         WSojNifgqJ8rpTLDazZXmwurRqvTdKWfuzvOCVgA06t4h+9bFayRIRWo8rQU1htFQOSl
+         6l19stc+DkEZ6mjcjhtft6BtdyZxBa4uY3UNpiguC2stjpeAGEKOHwzf4yMZ0MtBefTr
+         vMekxu249Cw9XwPYzbZmcX3gEN9yGhPmJDiZCIpwFogBkAyLowZpFRf7//XhXhcgTiMe
+         Y/r3AlW0evxq0pddZdBX2OnNLkJeECeHfeccB2FN4M3fnzMRVd0qpcDyQ/mqI3dWrGia
+         Vc+g==
+X-Gm-Message-State: AOAM531gZ9rZL/PXBuwhyL9RqXvddUZegkrJYEYAIimbNbSbtpqOT3NH
+        ZfTwfxc7ubHr6nF7IQq7e4QKh5tyEmI=
+X-Google-Smtp-Source: ABdhPJzZ+SY0jTZPY+b8nSX8GnvLSvZE0NkhZJT0aapC6lJaXi96SjHmBaub8f1P7qygpfFtgxG/oQ==
+X-Received: by 2002:ad4:5f09:: with SMTP id fo9mr2540600qvb.35.1628126681685;
+        Wed, 04 Aug 2021 18:24:41 -0700 (PDT)
+Received: from [172.17.0.2] ([52.232.162.145])
+        by smtp.gmail.com with ESMTPSA id c16sm1654327qtv.32.2021.08.04.18.24.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 17:32:32 -0700 (PDT)
-From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
-Subject: [PATCH v7 12/12] Bluetooth: btintel: Combine setting up MSFT extension
-Date:   Wed,  4 Aug 2021 17:32:19 -0700
-Message-Id: <20210805003219.23221-13-hj.tedd.an@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210805003219.23221-1-hj.tedd.an@gmail.com>
-References: <20210805003219.23221-1-hj.tedd.an@gmail.com>
+        Wed, 04 Aug 2021 18:24:41 -0700 (PDT)
+Message-ID: <610b3dd9.1c69fb81.d8c60.a8ce@mx.google.com>
+Date:   Wed, 04 Aug 2021 18:24:41 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2854994150693389569=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, hj.tedd.an@gmail.com
+Subject: RE: [BlueZ] doc: Add a doc for Intel hardware variants
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20210805002123.22339-1-hj.tedd.an@gmail.com>
+References: <20210805002123.22339-1-hj.tedd.an@gmail.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tedd Ho-Jeong An <tedd.an@intel.com>
+--===============2854994150693389569==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This patch combines the setting up MSFT extension for the legacy and TLV
-based bootloader into the common function based on hw_variant.
+This is automated email and please do not reply to this email!
 
-Signed-off-by: Tedd Ho-Jeong An <tedd.an@intel.com>
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=526619
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.25 seconds
+GitLint                       PASS      0.10 seconds
+Prep - Setup ELL              PASS      40.04 seconds
+Build - Prep                  PASS      0.10 seconds
+Build - Configure             PASS      6.99 seconds
+Build - Make                  PASS      173.77 seconds
+Make Check                    PASS      9.04 seconds
+Make Distcheck                PASS      204.70 seconds
+Build w/ext ELL - Configure   PASS      7.09 seconds
+Build w/ext ELL - Make        PASS      165.18 seconds
+
+Details
+##############################
+Test: CheckPatch - PASS
+Desc: Run checkpatch.pl script with rule in .checkpatch.conf
+
+##############################
+Test: GitLint - PASS
+Desc: Run gitlint with rule in .gitlint
+
+##############################
+Test: Prep - Setup ELL - PASS
+Desc: Clone, build, and install ELL
+
+##############################
+Test: Build - Prep - PASS
+Desc: Prepare environment for build
+
+##############################
+Test: Build - Configure - PASS
+Desc: Configure the BlueZ source tree
+
+##############################
+Test: Build - Make - PASS
+Desc: Build the BlueZ source tree
+
+##############################
+Test: Make Check - PASS
+Desc: Run 'make check'
+
+##############################
+Test: Make Distcheck - PASS
+Desc: Run distcheck to check the distribution
+
+##############################
+Test: Build w/ext ELL - Configure - PASS
+Desc: Configure BlueZ source with '--enable-external-ell' configuration
+
+##############################
+Test: Build w/ext ELL - Make - PASS
+Desc: Build BlueZ source with '--enable-external-ell' configuration
+
+
+
 ---
- drivers/bluetooth/btintel.c | 41 ++++++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 2941d33d0bc2..f1705b46fc88 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -1951,18 +1951,6 @@ static int btintel_bootloader_setup(struct hci_dev *hdev,
- 	btintel_version_info(hdev, &new_ver);
- 
- finish:
--	/* All Intel controllers that support the Microsoft vendor
--	 * extension are using 0xFC1E for VsMsftOpCode.
--	 */
--	switch (ver->hw_variant) {
--	case 0x11:	/* JfP */
--	case 0x12:	/* ThP */
--	case 0x13:	/* HrP */
--	case 0x14:	/* CcP */
--		hci_set_msft_opcode(hdev, 0xFC1E);
--		break;
--	}
--
- 	/* Set the event mask for Intel specific vendor events. This enables
- 	 * a few extra events that are useful during general operation. It
- 	 * does not enable any debugging related events.
-@@ -2166,6 +2154,28 @@ static int btintel_bootloader_setup_tlv(struct hci_dev *hdev,
- 	return 0;
- }
- 
-+static void btintel_set_msft_opcode(struct hci_dev *hdev, u8 hw_variant)
-+{
-+	switch (hw_variant) {
-+	/* Legacy bootloader devices that supports MSFT Extension */
-+	case 0x11:	/* JfP */
-+	case 0x12:	/* ThP */
-+	case 0x13:	/* HrP */
-+	case 0x14:	/* CcP */
-+	/* All Intel new genration controllers support the Microsoft vendor
-+	 * extension are using 0xFC1E for VsMsftOpCode.
-+	 */
-+	case 0x17:
-+	case 0x18:
-+	case 0x19:
-+		hci_set_msft_opcode(hdev, 0xFC1E);
-+		break;
-+	default:
-+		/* Not supported */
-+		break;
-+	}
-+}
-+
- static int btintel_setup_combined(struct hci_dev *hdev)
- {
- 	const u8 param[1] = { 0xFF };
-@@ -2279,6 +2289,9 @@ static int btintel_setup_combined(struct hci_dev *hdev)
- 				set_bit(HCI_QUIRK_VALID_LE_STATES,
- 					&hdev->quirks);
- 
-+			/* Setup MSFT Extension support */
-+			btintel_set_msft_opcode(hdev, ver.hw_variant);
-+
- 			err = btintel_bootloader_setup(hdev, &ver);
- 			break;
- 		default:
-@@ -2349,6 +2362,10 @@ static int btintel_setup_combined(struct hci_dev *hdev)
- 		if (INTEL_HW_VARIANT(ver_tlv.cnvi_bt) == 0x18)
- 			set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
- 
-+		/* Setup MSFT Extension support */
-+		btintel_set_msft_opcode(hdev,
-+					INTEL_HW_VARIANT(ver_tlv.cnvi_bt));
-+
- 		err = btintel_bootloader_setup_tlv(hdev, &ver_tlv);
- 		break;
- 	default:
--- 
-2.25.1
 
+--===============2854994150693389569==--
