@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8F0D3E312F
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Aug 2021 23:36:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62DC43E3130
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Aug 2021 23:36:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245262AbhHFVgS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S245266AbhHFVgS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Fri, 6 Aug 2021 17:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41386 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245255AbhHFVgR (ORCPT
+        with ESMTP id S245263AbhHFVgS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 6 Aug 2021 17:36:17 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F568C0613CF
+        Fri, 6 Aug 2021 17:36:18 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003F4C0613CF
         for <linux-bluetooth@vger.kernel.org>; Fri,  6 Aug 2021 14:36:01 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id t3so8805372plg.9
+Received: by mail-pl1-x629.google.com with SMTP id u16so8850104ple.2
         for <linux-bluetooth@vger.kernel.org>; Fri, 06 Aug 2021 14:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=P3IDmVuKO7O3HkuAlMjxQDVH5awewBmJogAj+DT7iIw=;
-        b=n4DVEB5DM+jTjoLxjxzatuaGuEw/LBB7DNQSbGX0hJVhKo6+Fw/0zMG3RbXq1BYY/g
-         OQYGBH/I5nrqtYU2Jfw4X7F0dhwXUb4vnO+1yl0bT0xAg7/00drMAVrunX1KB3wOgMzP
-         Vi91RWspgbygSyekn6beYtBYL3bsfn/iIerD3RaBEyzIv/0/XqhLJD69C39/b+Cd1DYX
-         BmkmA3fpPaRI4MAWjfRfIQxUVNz3Y+WiiMIohI5uUTgaY5pZaqYqKeziKjnxpb7RVifM
-         HqjbvzudV22tNAEiPrtHkDr/wjxxO2OAxXmNRDa6qNAntl6v8o9Xz/V7TwKNZJs1XVUA
-         +iJQ==
+        bh=gdVERoANZ0tlHyrIe2eSl8nR3RSsn9oSS1Ntfv4qMVw=;
+        b=so1EHZgEx0oSyQgH+cot1Yt2+IBCcAz6z5m2lZ0zSDqToDzrNBjAipX2OS9IFPCvAY
+         bPCpKD0siETzvBdeTJCSMDhM4igPnkufWjXaRqEqy+jzeI4NBSBGfXuNr3hExU1vBkQ1
+         WKJY65zHbA0gXhbYMJpgwWp01g64N8kVEqu7NWaQyfCLHfsKTnoodTF0i+QscXOXzk13
+         9+gpbmq2vx25T545kvgOwKt6XLHrgYdrkcVP7FHlI/flykvzna4911qjkDgZG5ohUDAR
+         qKkWsWkkoOdpSUqWI8knqu7rYsuFNztCMh/c1IHm4WANMVlsUHzWelAh9iv6dS/MPwd8
+         H6Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=P3IDmVuKO7O3HkuAlMjxQDVH5awewBmJogAj+DT7iIw=;
-        b=mpj8NOQUWujpQbtdyGegrujsQl4tedDhsTe3Wpy1WTQp75cz+4LfLc330PzED6XS7B
-         iSeJUlbBrwI8nS41D9q0+l3jbKUBeDWE2fH0Q4pqrFuvEgWpsu3WSCqkiqJo/W5LQPhB
-         RmJyow8NBATsS5FuqIvehdAUDxYnD53ukoHOTgMdDOoPwNNCG4lqhG4YxEsOs0Att1fC
-         +ZLYhIqZAzT0VvxJGoFZshMsnHre0tqZFdOH+p9zUzNf5a3qU0asuwzeNkd+IJj0tSnD
-         jN/nrXsmGhnIUewXkr4tPGwC2v32KwAShxgjO6vyKuDRznkrR5dzPi9bqFEuTtt46iTT
-         wqaA==
-X-Gm-Message-State: AOAM532EkmCaKOuqbhUEwGETcGg8h5PBx4GWOEi0PNZ3a9o4qwM6f/Ya
-        1pMmedTVON89o9JKXRlZdRCxlCuPNRw=
-X-Google-Smtp-Source: ABdhPJxyJnYnY/u4MzpzvgMWIjq4IQFjEsd82NgqqmtgEuIbrIXE5tL8eaBpvQkJWJC/ekdIYwo40w==
-X-Received: by 2002:a05:6a00:150d:b029:3c8:e86e:79ec with SMTP id q13-20020a056a00150db02903c8e86e79ecmr2161359pfu.62.1628285760688;
-        Fri, 06 Aug 2021 14:36:00 -0700 (PDT)
+        bh=gdVERoANZ0tlHyrIe2eSl8nR3RSsn9oSS1Ntfv4qMVw=;
+        b=dyri1L3jP7jzED38nhi+5K/yF2kuexxJcQ6EEpCNVUc7pmNau0TZCnns30f+aug2D2
+         tjddOQ55xBhaRQQhsy5oMXnWGwr7kKHV+TlmNgE0ebj5YPFM0kVMl1kL4V/18aASc3qS
+         e5uK5GM3gpB82SFUR9dhzS4gzA7dFOxfXPs6ka7TUKqjopYTHbTf4wKBYUQ6QIYDbpQ0
+         F8Sg+WKuhSF1ybsKLGK9Ciywbe1PLqo0dcIcRN/2a6+Px0FBkhmuZ96Depdyat9Sw3z0
+         XFMQLg/PlqSSLihwuGIyk90w/22B2uy0xrC3tRFoc/aMsnVTj3C0NDIt4gmgY7VPAO8e
+         pWHQ==
+X-Gm-Message-State: AOAM531hESelFJ2KRdm+iorPsiO751ObqfAOV0a7aymz3VTcgCScAZgr
+        4jAR88vdZGAbX/O9bT8sPqLreGZLZjo=
+X-Google-Smtp-Source: ABdhPJx5szF57bJCDJYRlJ+hL9KjnsdNi6a97QmHHccpXga3Ih8rjwYAcyJU/P19DKHE1yuSoGTEuQ==
+X-Received: by 2002:a17:90a:e2c8:: with SMTP id fr8mr11921745pjb.131.1628285761361;
+        Fri, 06 Aug 2021 14:36:01 -0700 (PDT)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
         by smtp.gmail.com with ESMTPSA id h20sm11765201pfn.173.2021.08.06.14.36.00
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Aug 2021 14:36:00 -0700 (PDT)
+        Fri, 06 Aug 2021 14:36:01 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/4] monitor: Fix minimun packet latency
-Date:   Fri,  6 Aug 2021 14:35:56 -0700
-Message-Id: <20210806213558.16442-2-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 3/4] monitor: Fix not accouting for multiple outstanding packets
+Date:   Fri,  6 Aug 2021 14:35:57 -0700
+Message-Id: <20210806213558.16442-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210806213558.16442-1-luiz.dentz@gmail.com>
 References: <20210806213558.16442-1-luiz.dentz@gmail.com>
@@ -65,38 +65,89 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-It seems timer_sub can produce negative values leading to median packet
-latency to be negative e.g conn->last_tx_compl is ahead of
-conn->last_tx, in which case it should be discarded.
+Analyze code was not accounting for the fact that multiple outstanding
+packets could be pending which will cause the last_tx to be overwritten
+but its latency would be calculated against the very first packet
+complete.
 ---
- monitor/analyze.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ monitor/analyze.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
 diff --git a/monitor/analyze.c b/monitor/analyze.c
-index 5e0957ad1..d504c8d84 100644
+index d504c8d84..aae153f94 100644
 --- a/monitor/analyze.c
 +++ b/monitor/analyze.c
-@@ -386,8 +386,9 @@ static void evt_num_completed_packets(struct hci_dev *dev, struct timeval *tv,
- 		if (timerisset(&conn->last_tx)) {
- 			timersub(&conn->last_tx_comp, &conn->last_tx, &res);
+@@ -62,8 +62,7 @@ struct hci_conn {
+ 	unsigned long tx_num;
+ 	unsigned long tx_num_comp;
+ 	size_t tx_bytes;
+-	struct timeval last_tx;
+-	struct timeval last_tx_comp;
++	struct queue *tx_queue;
+ 	struct timeval tx_lat_min;
+ 	struct timeval tx_lat_max;
+ 	struct timeval tx_lat_med;
+@@ -121,6 +120,7 @@ static void conn_destroy(void *data)
+ 	printf("    %u octets TX max packet size\n", conn->tx_pkt_max);
+ 	printf("    %u octets TX median packet size\n", conn->tx_pkt_med);
  
--			if (!timerisset(&conn->tx_lat_min) ||
--					timercmp(&res, &conn->tx_lat_min, <))
-+			if ((!timerisset(&conn->tx_lat_min) ||
-+					timercmp(&res, &conn->tx_lat_min, <)) &&
-+					res.tv_sec >= 0 && res.tv_usec >= 0)
- 				conn->tx_lat_min = res;
++	queue_destroy(conn->tx_queue, free);
+ 	free(conn);
+ }
  
- 			if (!timerisset(&conn->tx_lat_max) ||
-@@ -408,6 +409,8 @@ static void evt_num_completed_packets(struct hci_dev *dev, struct timeval *tv,
- 						tmp.tv_usec -= 1000000;
- 					}
- 				}
-+
-+				conn->tx_lat_med = tmp;
+@@ -133,6 +133,7 @@ static struct hci_conn *conn_alloc(struct hci_dev *dev, uint16_t handle,
+ 
+ 	conn->handle = handle;
+ 	conn->type = type;
++	conn->tx_queue = queue_new();
+ 
+ 	return conn;
+ }
+@@ -372,6 +373,7 @@ static void evt_num_completed_packets(struct hci_dev *dev, struct timeval *tv,
+ 		uint16_t count = get_le16(data + 2);
+ 		struct hci_conn *conn;
+ 		struct timeval res;
++		struct timeval *last_tx;
+ 
+ 		data += 4;
+ 		size -= 4;
+@@ -381,10 +383,10 @@ static void evt_num_completed_packets(struct hci_dev *dev, struct timeval *tv,
+ 			continue;
+ 
+ 		conn->tx_num_comp += count;
+-		conn->last_tx_comp = *tv;
+ 
+-		if (timerisset(&conn->last_tx)) {
+-			timersub(&conn->last_tx_comp, &conn->last_tx, &res);
++		last_tx = queue_pop_head(conn->tx_queue);
++		if (last_tx) {
++			timersub(tv, last_tx, &res);
+ 
+ 			if ((!timerisset(&conn->tx_lat_min) ||
+ 					timercmp(&res, &conn->tx_lat_min, <)) &&
+@@ -414,7 +416,7 @@ static void evt_num_completed_packets(struct hci_dev *dev, struct timeval *tv,
  			} else
  				conn->tx_lat_med = res;
  
+-			timerclear(&conn->last_tx);
++			free(last_tx);
+ 		}
+ 	}
+ }
+@@ -489,8 +491,12 @@ static void acl_pkt(struct timeval *tv, uint16_t index, bool out,
+ 		return;
+ 
+ 	if (out) {
++		struct timeval *last_tx;
++
+ 		conn->tx_num++;
+-		conn->last_tx = *tv;
++		last_tx = new0(struct timeval, 1);
++		memcpy(last_tx, tv, sizeof(*tv));
++		queue_push_tail(conn->tx_queue, last_tx);
+ 		conn->tx_bytes += size;
+ 
+ 		if (!conn->tx_pkt_min || size < conn->tx_pkt_min)
 -- 
 2.31.1
 
