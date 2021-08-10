@@ -2,70 +2,175 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55AC43E7EC6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Aug 2021 19:35:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 191DB3E82C6
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Aug 2021 20:17:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233383AbhHJRfO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 Aug 2021 13:35:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50558 "EHLO
+        id S237457AbhHJSRo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 Aug 2021 14:17:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232418AbhHJRed (ORCPT
+        with ESMTP id S240154AbhHJSPh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Aug 2021 13:34:33 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5A1C0619C2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Aug 2021 10:33:15 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id l4so15645984ljq.4
-        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Aug 2021 10:33:14 -0700 (PDT)
+        Tue, 10 Aug 2021 14:15:37 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F305C04A4D8
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Aug 2021 10:52:07 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id p4so6172728yba.3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Aug 2021 10:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=y3BZ+wT7TMDVjM2/WQcyPOhYkG/NWjvDbJIsMqFI2RA=;
-        b=RsiBBdA9QKOcTCF5lGXKVsjmClQ3sMV8nYRHi5UzQ6RFRdaZ6t981j56diJ7q3WLiT
-         dSrogDmRt6kwHS+J+pcIdphvlu5Vk62bOJudqb0dzEOf5Tr6sAVMWTY2NbEn++ZnSdaf
-         F4yj6h4F7VBk6uVCXN4p2StSiBpSckLhr0NJoCtUTvVh+gCrpSdvA2dss+nT8Q4XWg+b
-         4x9fMuBGMminOSzPCK8njOsWexpWsfb2omBFXa3GLhHqzUauC1r8oyB3fDvFuiS7qNjT
-         fDqijYMWxjmP3EeBvtWaIUY7Z5YEma/9OhqmI5Ya7ZKqW/5hzlkm8xAdNsqyzESz/5Xj
-         5sZQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9Rj40gEjIcjiaRY6qNmQv/7Ri+d/48/sCbtqVru+j/w=;
+        b=QD5D56CDX/i7bHc6y64sG6i6hnzD4PIvbo9u5pvU1ef4HaDtF0JaUpnf92gQskRZwP
+         e6dRGchOEK2tSu/IdfDg21B7FGHzGOWCVPgBcjmZ3tHlpULfMFkwucKlim7nzzH6V3PX
+         JYoJCG3Nl6ErNyWoXoH7N52oe20oNfqgPW9GUAMjFpdceUAWbuDdy60z9Gcw4cdeGrYj
+         ahbS3M37mNXmppnyRnJGDgil7aeRbeKDDNHnxqAw477nD9GkwJAmAc9snr9oWZk4XWkg
+         Cyvyn48XMP5po2Zzh68nUxv1ZlJB2WXFmyRjNFZNTLjfZxTV6DXmLr14vVpQtcRSxgMk
+         IIBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=y3BZ+wT7TMDVjM2/WQcyPOhYkG/NWjvDbJIsMqFI2RA=;
-        b=iA2tMwf89REkm+7QKTRRmSpIk6jHuUMFdMowPjrvHLUOC13RyTSnMFcT7h87h4b3Mi
-         VFRd2OIyrMd0NJ3JeiZ9/6gW+08en1YaKMx7A16Cp8h0ogUHFRUhVU6wnaT8obi39VkN
-         fU6SNKtMgTR7tVGDwl5EuhDBOMxgQ84LqUj8B3HmMaHnMCgBoycKF/TIP9P8ra/GLmAP
-         yZcJaSky032BeNAFYYi0kaCCUrHSdEhuuoHwGSF5LWchqx4TF5f06GVqcwIru4QynQhZ
-         LasOWUaXJclT4eAxcMZk2L5TVzXjHfwu0GVD1tiAu9QwBZaSDHbD0gPGdpC1x9hwF9+M
-         YAeg==
-X-Gm-Message-State: AOAM530TbnSgAPO0s73uheF66I9bjnnUxL09mkyl9TGkzbV6KrDEanr1
-        XENoBuQXn+gi2GnK5KEPfz8mSa7x7XBj3m4QVhA=
-X-Google-Smtp-Source: ABdhPJw+sC+pBQw0G+0ULVvin/r/jCVVb1V7XUqN67UCoWrnBzyIXnaSzK5br1SZrCupI/L0LIZWgMfi7vhpZK+Wcm0=
-X-Received: by 2002:a05:651c:32c:: with SMTP id b12mr1745558ljp.198.1628616792032;
- Tue, 10 Aug 2021 10:33:12 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9Rj40gEjIcjiaRY6qNmQv/7Ri+d/48/sCbtqVru+j/w=;
+        b=tYTL7iylRnd4mO/Y4DICpTHP3yKnt5P7MaIkITwtXGhn0GLPn5EoYE3IWXaW8Zbb6k
+         UCBBokLJ2KzKoWxS+7ZrhVP1479va+a/BwRybgJpccCKIm9BQt2suMYzNofItVj1UyzC
+         J8dvLRbzO9ZHYLwMX9CfVOqoTq38AhbY6lcusGflowl7KO0HYn7O2PnjkPotCIXnhO34
+         XWh5QkkRD29yUHyKA6jN/1uWZNzyjcZ3uoYZX9hR8LEWwmNaHA/+C/HKRVT5fEbWYODi
+         MRUAE23R+Ltnq/YZl6oxYIsyfma66ZHA8vgTa4kaoYNxIbr7TJx41AQ0k4M0huTj8G/t
+         On4A==
+X-Gm-Message-State: AOAM533xVCzkYwyTUdvJqamd/beo3hofZEYOzjjwTz9OkvLF3uEBXj6v
+        LjHFKOPQNR9COHQJ0P1MnMKL8Bj90A0hrwOnPF1Gp9g5
+X-Google-Smtp-Source: ABdhPJyK3fe84ApuBnS5zpgSS8YvBg7Q0smi1e/YoDdWn+q/ply/vsUByY41UBCHuAkMTn2ggoUze/gnZvZVmiR4+K4=
+X-Received: by 2002:a25:d6c6:: with SMTP id n189mr41121395ybg.432.1628617926155;
+ Tue, 10 Aug 2021 10:52:06 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ac2:5d2e:0:0:0:0:0 with HTTP; Tue, 10 Aug 2021 10:33:10
- -0700 (PDT)
-Reply-To: majidmuzaffar8@gmail.com
-From:   Majid Muzaffar <ing.abdullabin.rishid.me@gmail.com>
-Date:   Tue, 10 Aug 2021 20:33:10 +0300
-Message-ID: <CAFsu49XXzY7ugKhGzJm5OPKe2LG1R35c-Dkp83VgS3+u27y=sQ@mail.gmail.com>
-Subject: Proposal
-To:     undisclosed-recipients:;
+References: <20210810041410.142035-2-desmondcheongzx@gmail.com> <61120b20.1c69fb81.2d117.2206@mx.google.com>
+In-Reply-To: <61120b20.1c69fb81.2d117.2206@mx.google.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Tue, 10 Aug 2021 10:51:55 -0700
+Message-ID: <CABBYNZLrwegQ1mX5WDZAZoUrE1iYJLb-y2qFfrhj4Fpao0b5fQ@mail.gmail.com>
+Subject: Re: Bluetooth: fix locking and socket killing in SCO and RFCOMM
+To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Cc:     Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Salam alaikum,
+Hi Desmond,
 
-I am the investment officer of UAE based investment company who are
-ready to fund projects outside UAE, in the form of debt finance. We
-grant loan to both Corporate and private entities at a low interest
-rate of 3% ROI per annum. The terms are very flexible and interesting.
-Kindly revert back if you have projects that needs funding for further
-discussion and negotiation.
+On Tue, Aug 10, 2021 at 1:52 AM <bluez.test.bot@gmail.com> wrote:
+>
+> This is automated email and please do not reply to this email!
+>
+> Dear submitter,
+>
+> Thank you for submitting the patches to the linux bluetooth mailing list.
+> This is a CI test results with your patch series:
+> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=528879
+>
+> ---Test result---
+>
+> Test Summary:
+> CheckPatch                    FAIL      2.07 seconds
+> GitLint                       FAIL      0.10 seconds
+> BuildKernel                   PASS      508.13 seconds
+> TestRunner: Setup             PASS      334.98 seconds
+> TestRunner: l2cap-tester      PASS      2.57 seconds
+> TestRunner: bnep-tester       PASS      1.92 seconds
+> TestRunner: mgmt-tester       PASS      30.57 seconds
+> TestRunner: rfcomm-tester     PASS      2.06 seconds
+> TestRunner: sco-tester        PASS      2.01 seconds
+> TestRunner: smp-tester        FAIL      2.06 seconds
+> TestRunner: userchan-tester   PASS      1.91 seconds
+>
+> Details
+> ##############################
+> Test: CheckPatch - FAIL - 2.07 seconds
+> Run checkpatch.pl script with rule in .checkpatch.conf
+> Bluetooth: fix repeated calls to sco_sock_kill
+> WARNING: Unknown commit id '4e1a720d0312', maybe rebased or not pulled?
+> #6:
+> In commit 4e1a720d0312 ("Bluetooth: avoid killing an already killed
+>
+> WARNING: Unknown commit id '4e1a720d0312', maybe rebased or not pulled?
+> #34:
+> Fixes: 4e1a720d0312 ("Bluetooth: avoid killing an already killed socket")
+>
+> total: 0 errors, 2 warnings, 0 checks, 31 lines checked
+>
+> NOTE: For some of the reported defects, checkpatch may be able to
+>       mechanically convert to the typical style using --fix or --fix-inplace.
+>
+> "[PATCH] Bluetooth: fix repeated calls to sco_sock_kill" has style problems, please review.
+>
+> NOTE: If any of the errors are false positives, please report
+>       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+>
+>
+> ##############################
+> Test: GitLint - FAIL - 0.10 seconds
+> Run gitlint with rule in .gitlint
+> Bluetooth: schedule SCO timeouts with delayed_work
+> 42: B1 Line exceeds max length (87>80): "Link: https://syzkaller.appspot.com/bug?id=9089d89de0502e120f234ca0fc8a703f7368b31e [1]"
+>
+>
+> ##############################
+> Test: BuildKernel - PASS - 508.13 seconds
+> Build Kernel with minimal configuration supports Bluetooth
+>
+>
+> ##############################
+> Test: TestRunner: Setup - PASS - 334.98 seconds
+> Setup environment for running Test Runner
+>
+>
+> ##############################
+> Test: TestRunner: l2cap-tester - PASS - 2.57 seconds
+> Run test-runner with l2cap-tester
+> Total: 40, Passed: 40 (100.0%), Failed: 0, Not Run: 0
+>
+> ##############################
+> Test: TestRunner: bnep-tester - PASS - 1.92 seconds
+> Run test-runner with bnep-tester
+> Total: 1, Passed: 1 (100.0%), Failed: 0, Not Run: 0
+>
+> ##############################
+> Test: TestRunner: mgmt-tester - PASS - 30.57 seconds
+> Run test-runner with mgmt-tester
+> Total: 448, Passed: 445 (99.3%), Failed: 0, Not Run: 3
+>
+> ##############################
+> Test: TestRunner: rfcomm-tester - PASS - 2.06 seconds
+> Run test-runner with rfcomm-tester
+> Total: 9, Passed: 9 (100.0%), Failed: 0, Not Run: 0
+>
+> ##############################
+> Test: TestRunner: sco-tester - PASS - 2.01 seconds
+> Run test-runner with sco-tester
+> Total: 8, Passed: 8 (100.0%), Failed: 0, Not Run: 0
+>
+> ##############################
+> Test: TestRunner: smp-tester - FAIL - 2.06 seconds
+> Run test-runner with smp-tester
+> Total: 8, Passed: 7 (87.5%), Failed: 1, Not Run: 0
+>
+> Failed Test Cases
+> SMP Client - SC Request 2                            Failed       0.020 seconds
+>
+> ##############################
+> Test: TestRunner: userchan-tester - PASS - 1.91 seconds
+> Run test-runner with userchan-tester
+> Total: 3, Passed: 3 (100.0%), Failed: 0, Not Run: 0
+>
+>
+>
+> ---
+> Regards,
+> Linux Bluetooth
 
-Thanks
+Applied, thanks.
 
-investment officer
+-- 
+Luiz Augusto von Dentz
