@@ -2,153 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F0133E8BC0
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Aug 2021 10:25:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 572AA3E9173
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Aug 2021 14:33:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236119AbhHKIZr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 11 Aug 2021 04:25:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55482 "EHLO
+        id S230486AbhHKMdC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 11 Aug 2021 08:33:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236083AbhHKIZn (ORCPT
+        with ESMTP id S230209AbhHKMc5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 11 Aug 2021 04:25:43 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE074C061765
-        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Aug 2021 01:25:19 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id x12so1838883wrr.11
-        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Aug 2021 01:25:19 -0700 (PDT)
+        Wed, 11 Aug 2021 08:32:57 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63BFAC08EACA
+        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Aug 2021 05:31:07 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id be20so4278848oib.8
+        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Aug 2021 05:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=JopxvpFcF/xGESdrh4YQ6rS5KF8DueMkBM15FR5p2zI=;
-        b=n3GjMA9nWMZfHn1qsTgkJAuyGzL7OvGstvZa+uwtSC2+i980Z9CA2iu8oOVRxObgnI
-         Aezd0jo4cnZVKdtebsXlMzqO10Q6xB2O8BzwtbmHl24c9jv5M6oyfUUaAH7bxs6uIenr
-         PbJclzvvkgFR4FwGJ5ueJGIurDvI092GZu3MAvZr5zYCIO2ndBJd/aCoHNOSOV9kEBUB
-         eqE78uIrrVM4Xd9n3xrmpsEfjY6oPgBlmdOGzcG9w5XyTZ9PTG19MMPUmjpRJPEqTrNQ
-         gRe7+3ARCXmXuoIe8vsh5v4FslmItbLzrM3ZumlK2nit9Fm5W2D2ovf5PV++CBuAfL+1
-         pmYA==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=77BwqRII9XCweQU8IJul6unijI/BEL+vUJmVmCRLxH4=;
+        b=V2WNyYdLJoP6K8E9RJHda7LwABozwr3cIVvw6Vvde1lUvj7nEn1kwTUjYENmT632Mo
+         WIvrh1+vLbSYzoPuX6Jvs3ShmY85CXNRULiOryYERC5VxiduWi1eHXykl4rZM4plaPY9
+         v0bjHvKbPX4Dmx5VGMryZtevBJBtYqlBmyCVADyoJGpXTeFxDC0rBPdZ27wWjxlPHWYz
+         44e14rCDZLm5cj050Iix5aVHNgFsagqH3cnFq7JAXcrKgC2Fka4hZJKUHzp5yDGNsN2N
+         es2oehf9N517PT8Y97WToSGj6n+Bj5wnkCVHjnDVkM+in2erAaksScM3DAQFVo4RjSvJ
+         Sh7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
-         :message-id:mime-version;
-        bh=JopxvpFcF/xGESdrh4YQ6rS5KF8DueMkBM15FR5p2zI=;
-        b=GXdm2SmWIwf3YtdOGMluBttPP2Ayaa+NINQRyFXzpJ0RtsF9BU0LFZYRsP9fjmJg2k
-         /T8089d7FF1Pg8sTJK/mMqkQQEiYrydZtwWGsI4Ra0o5LYRjEvwqXyrSDxQftARbBOLW
-         +4RpcsBBDF+0eoWmk2+dH3PDlG2kA583WA4v72LOFjQVkt5nn0deOE4m/Z63NXEAeVrm
-         Ql0TnJJpmQgrtcYiOh98bHH/mR88XjMW4pVf5/8EoKpPyS7NeNx0w8TZq3WGD9eRP2It
-         iLHVLzcXuOnux468cMVfrWeU/XuuRWcyAzWj5GZaCIBwLA4u0tQ67p6O5979nEgfK7qZ
-         VlPg==
-X-Gm-Message-State: AOAM5315jM4LMor47qZEDlJ/FMOH5s6J28gN2BiwDGdnDDnSwvDGmRZ4
-        EKmC47AIN6J+G6tHkg4AS0ZRpQ==
-X-Google-Smtp-Source: ABdhPJzo1gv8/4u+SF3MPLGpjMOnRJmhlmd5mciRp3hwMU3HZV8PLwwodWiHGXiQrJKVriPPdr7lIg==
-X-Received: by 2002:a05:6000:120d:: with SMTP id e13mr11205849wrx.6.1628670318484;
-        Wed, 11 Aug 2021 01:25:18 -0700 (PDT)
-Received: from localhost ([2a01:cb19:826e:8e00:7c84:47f9:c111:a679])
-        by smtp.gmail.com with ESMTPSA id n8sm25498969wrx.46.2021.08.11.01.25.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 01:25:18 -0700 (PDT)
-From:   Mattijs Korpershoek <mkorpershoek@baylibre.com>
-To:     Kai-Heng Feng <kai.heng.feng@canonical.com>, marcel@holtmann.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     Kai-Heng Feng <kai.heng.feng@canonical.com>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "open list:BLUETOOTH SUBSYSTEM" <linux-bluetooth@vger.kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] Bluetooth: Move shutdown callback before flushing tx
- and rx queue
-In-Reply-To: <20210810045315.184383-1-kai.heng.feng@canonical.com>
-References: <20210810045315.184383-1-kai.heng.feng@canonical.com>
-Date:   Wed, 11 Aug 2021 10:25:09 +0200
-Message-ID: <87pmuk75i2.fsf@baylibre.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=77BwqRII9XCweQU8IJul6unijI/BEL+vUJmVmCRLxH4=;
+        b=G7XmhayLNoc2s6mH8/QAnhHKlGhp+hLWyIoQzzsm1ZuzILJ1unhSMW/MmuEKgrl02W
+         xNdIYOjV1GyCFTRsl5MfFwKytneMEGLUZDfBNUjrTNoqAEX68bfdWjaYhiBrLbx9txQh
+         pTKW9hCG2Upwy+5BtBqZffs68TAPHJDoj5snZGEs1i2gYzwIs70jhfk4rjSJWbPEaW7X
+         7TU4VBr51ISWKCyDQP3fOns/sAoEOf8gIpYO5jep5jWZ+LSYL2r9jpnmDOXHuo7+lUq3
+         kM5kgsBhLYWtwoXckJiLzs6yD5H5q5lCWDhSFrE5K8TURWYa5lWKWp2H3f9DiB+8L0TK
+         SCfw==
+X-Gm-Message-State: AOAM532tg48PQEelrV9E70dYy1U3d3SNkEpvvbfeAMq+S1xJPOu25CCT
+        bddILZiT7YCPV7ztknraBV1gs+3SxXK9IBfe+bY=
+X-Google-Smtp-Source: ABdhPJzKX4bddhdfg8RiiyHYBr+yLXTM9M8N23Wzjnw2ULmtvMc+zP5mUiQ+LhDoka/W+ZMFsKP6zQ+h+O0KVwFq6y0=
+X-Received: by 2002:a05:6808:1924:: with SMTP id bf36mr24193426oib.106.1628685066760;
+ Wed, 11 Aug 2021 05:31:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a05:6830:23a5:0:0:0:0 with HTTP; Wed, 11 Aug 2021 05:31:06
+ -0700 (PDT)
+Reply-To: rihabmanyang07@yahoo.com
+From:   Rihab Manyang <ndourandiogou1@gmail.com>
+Date:   Wed, 11 Aug 2021 13:31:06 +0100
+Message-ID: <CAP5_mB5hsG9XL1on3vsap=m7kWJuxk1JNYnqREpDhZc=rXpfpQ@mail.gmail.com>
+Subject: hi
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Kai-Heng,
-
-Thank you for your patch.
-
-Kai-Heng Feng <kai.heng.feng@canonical.com> writes:
-
-> Commit 0ea9fd001a14 ("Bluetooth: Shutdown controller after workqueues
-> are flushed or cancelled") introduced a regression that makes mtkbtsdio
-> driver stops working:
-> [   36.593956] Bluetooth: hci0: Firmware already downloaded
-> [   46.814613] Bluetooth: hci0: Execution of wmt command timed out
-> [   46.814619] Bluetooth: hci0: Failed to send wmt func ctrl (-110)
->
-> The shutdown callback depends on the result of hdev->rx_work, so we
-> should call it before flushing rx_work:
-> -> btmtksdio_shutdown()
->  -> mtk_hci_wmt_sync()
->   -> __hci_cmd_send()
->    -> wait for BTMTKSDIO_TX_WAIT_VND_EVT gets cleared
->
-> -> btmtksdio_recv_event()
->  -> hci_recv_frame()
->   -> queue_work(hdev->workqueue, &hdev->rx_work)
->    -> clears BTMTKSDIO_TX_WAIT_VND_EVT
->
-> So move the shutdown callback before flushing TX/RX queue to resolve the
-> issue.
->
-> Reported-and-tested-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-> Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
-> Cc: Guenter Roeck <linux@roeck-us.net>
-> Fixes: 0ea9fd001a14 ("Bluetooth: Shutdown controller after workqueues are flushed or cancelled")
-> Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-> ---
-> v2: 
->  Move the shutdown callback before clearing HCI_UP, otherwise 1)
->  shutdown callback won't be called and 2) other routines that depend on
->  HCI_UP won't work.
->
->  net/bluetooth/hci_core.c | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-> index cb2e9e513907..8622da2d9395 100644
-> --- a/net/bluetooth/hci_core.c
-> +++ b/net/bluetooth/hci_core.c
-> @@ -1727,6 +1727,14 @@ int hci_dev_do_close(struct hci_dev *hdev)
->  	hci_request_cancel_all(hdev);
->  	hci_req_sync_lock(hdev);
->  
-> +	if (!hci_dev_test_flag(hdev, HCI_UNREGISTER) &&
-> +	    !hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
-> +	    test_bit(HCI_UP, &hdev->flags)) {
-> +		/* Execute vendor specific shutdown routine */
-> +		if (hdev->shutdown)
-> +			hdev->shutdown(hdev);
-> +	}
-> +
->  	if (!test_and_clear_bit(HCI_UP, &hdev->flags)) {
->  		cancel_delayed_work_sync(&hdev->cmd_timer);
->  		hci_req_sync_unlock(hdev);
-> @@ -1798,14 +1806,6 @@ int hci_dev_do_close(struct hci_dev *hdev)
->  		clear_bit(HCI_INIT, &hdev->flags);
->  	}
->  
-> -	if (!hci_dev_test_flag(hdev, HCI_UNREGISTER) &&
-> -	    !hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
-> -	    test_bit(HCI_UP, &hdev->flags)) {
-> -		/* Execute vendor specific shutdown routine */
-> -		if (hdev->shutdown)
-> -			hdev->shutdown(hdev);
-> -	}
-> -
->  	/* flush cmd  work */
->  	flush_work(&hdev->cmd_work);
-I confirm this works fine on mt8183-pumpkin using the btmtksdio driver.
-
-Tested-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
->  
-> -- 
-> 2.31.1
+-- 
+How are you?I am miss.Rihab Manyang i will like to be your friend
+please write me back on my email for more details, Thanks.
