@@ -2,58 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E65F93E8AC8
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Aug 2021 09:09:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E1A33E8AEF
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Aug 2021 09:18:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235076AbhHKHJd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 11 Aug 2021 03:09:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37946 "EHLO
+        id S235439AbhHKHTF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 11 Aug 2021 03:19:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234855AbhHKHJd (ORCPT
+        with ESMTP id S235135AbhHKHTE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 11 Aug 2021 03:09:33 -0400
-Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40B66C061765
-        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Aug 2021 00:09:10 -0700 (PDT)
-Received: by mail-qk1-x749.google.com with SMTP id c196-20020ae9edcd0000b02903c9e325c3b2so815707qkg.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Aug 2021 00:09:10 -0700 (PDT)
+        Wed, 11 Aug 2021 03:19:04 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1274C061765
+        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Aug 2021 00:18:41 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id h4-20020a2597440000b0290593ddcb3a3aso1440038ybo.5
+        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Aug 2021 00:18:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=3Zxj33TTjkKhOKutgoM7B02duZHtVt6F+j0ORgUTiLQ=;
-        b=HmkirzI418P3VU5vFedRa4npsvpcxumSuDAX5Sr3B24qfp0hp9Ujfc8zaED3uNy5Pv
-         bNkAag411bSQ7K9M0NKjBzH52MvYsThdVu4WistHD3uvcUsRlsA/fTMjD50AAls9gwuC
-         7Tqnx+xQ8k2Vey3vJq6NOyw71+H/PEpk8PI0FXAoWXksS54Zh2iXi7o4U3E6Fu2G0vyU
-         bkl7w/fxHKOon8FBxRrv/jv4Ko4VwUpAZDhJQ6lrj6/Y8fVa3Ptz2TxKZ6oITnu9/Pt3
-         qHlSdwszpXsjWEyVmXakJNjq84Hui4E+dIrBOlMXYNawkZ/azqfuh7bAs/3fOFWoU3xn
-         SjAA==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=V0F2q6DWz68y9EMObI0aq5egV2DxRbNMTPAOBAB1rDo=;
+        b=hUpx6WAStVkEDkhWBZxUet5OoZ0b0C1e7Fzu7vKARtVcjnlOC+EOyV0Cbht2VpTOmG
+         OA1Y9TK9m0HWSlXaAsCMVOFpjAuzDIf7MWLjDmit44qKLw+TJ+JYnS5Yp/9d3uY6MTwM
+         g1XHhltWlu8ZYbo88NYJsL/0Ofbt+OqdeLn8lvW4LbxHr4ZGhg6GWgLua3sUs+RlXjoi
+         KIvpFVfUOZVGj5SKVhDUKqqGX2fACX3/ABTBoLDdcdhZRg0PhyzKVAhNbOwdtYl56xqw
+         z2SWExG1BSwIU02YoyziN59z4dhtgoYL+ZCzoep3UiDzGlaTxU7ieZUASB4YGPRyLoO6
+         bfkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=3Zxj33TTjkKhOKutgoM7B02duZHtVt6F+j0ORgUTiLQ=;
-        b=aYdfgCagsxZf9Vwrw05Rn87+hmeAsIFtbQyST/HQClGUPpgqBtdHnRsAsELxVRWlp5
-         oLUfA6TxBP3Wy5LZxHYAnWEtG+KFazLiOnTovghDyQVR4TF/umDLPTvHtw4U1ddwdGL6
-         am2XlgvOB7qg6AePa7UnX2oj53hcnMajtOxJafVN9X32XejrwjyWMHJTklgljFzqIzw4
-         s9emcx1l0fhlEZ9LMp1szAaOfFFcXroUdsE417kUB9679Eprtz1pe011elo+8PzHEVSo
-         d9qCy4beEIjCcyU/ydu2WoY0qryUPGtWJTfm5SGn4nhtVvRulccSCxfEtXtExHL5G1Dt
-         uR7g==
-X-Gm-Message-State: AOAM532Twqn0dkpgZaGbtNzjrX740A9szhzJ+Yn7XSmy2/w+k0RY5Ocp
-        MJ1sr1Oia3DstsMEZrMSbYgep+Ct6QRxRWxMX8PEpcaihmOlvkd72na+7TZX9o+Tf8eSIEiXxFR
-        0so2UNRvK9sLz42yotOFt+u+yJreH7QnSLXyFGYCj3lVfZjIrm1K9aD9TybgNQIwSOQmhrIFzMm
-        nVqGhV5wIdhlU=
-X-Google-Smtp-Source: ABdhPJxA3rr5mxO5fHnJApypJpyG/hcTKpnOpdkVP3RxqDtwIo7dB4fbMLZ+rzZ6fzJ2UsT2ubeKzA22vrSx4kEMsg==
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=V0F2q6DWz68y9EMObI0aq5egV2DxRbNMTPAOBAB1rDo=;
+        b=Rk9XuXoqKDs1VpV+kFNzUHy4tESWpfWADWOE+TtqOabKNLkhFKTcZFGy/aQZLCUdWN
+         YxORHIyrhSJSs9CpNDcCLcvzdY84FEk5wb5FhWn1BKEr7Wz+DyNj3T08nhsXkEYgKMKp
+         8Nje6CTDrHgHHi4/SqyqmDObleYxWL7bf14dOXzzCmfrruIDZ0hWDCgFYb/bHtJMvSKA
+         cFO0inB/k5Pg51r1027TIt6zkUMl0nPK7IMDcOkACtHz9WYtR7irSns9thZb2H+Xu1JN
+         Lt9VbLTcsD5m7RxYqHg54KN3MTxKSPHo1NfBsrwYuRAX3eSYFRA6G7KF/3ao18GIaHRO
+         6dYQ==
+X-Gm-Message-State: AOAM532jbIlAaj68Du8m5PYKsHfohrXEMKPinS4EdksTrv6mIBePjUUl
+        abgsqih7PZ0gi6jqYtMHaoUjXtcrexGz6hudbrtwf+z3f5LqMkrdZX9+yr5DrXzSRNy8Jr3JwY3
+        qINItqFewrA4II967Jxm0BeZD3wtxpCY3ytAVXJL0bra/4PAuG7NwsX4dJWUCub6eGUOlP523Yj
+        G2v4fn+4fgMSk=
+X-Google-Smtp-Source: ABdhPJws0kCCcrQhwUpsCaEPmoE5NddZGiLCY9RgLrlu9C2DK6oNar+CTcQ2ZNPjo8vOfz+mDHnIny5pYpkE/StJtQ==
 X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:10:42fe:de1a:97f8:9006])
- (user=howardchung job=sendgmr) by 2002:a05:6214:240a:: with SMTP id
- fv10mr21897457qvb.11.1628665749451; Wed, 11 Aug 2021 00:09:09 -0700 (PDT)
-Date:   Wed, 11 Aug 2021 15:08:57 +0800
-In-Reply-To: <20210811150752.v3.1.Ie7d876ad0b7defabfa86beb64e83f655f12be7ab@changeid>
-Message-Id: <20210811150752.v3.3.I4f0ce40e36938756509ebe62a97929957936e648@changeid>
+ (user=howardchung job=sendgmr) by 2002:a25:2496:: with SMTP id
+ k144mr12045177ybk.366.1628666320938; Wed, 11 Aug 2021 00:18:40 -0700 (PDT)
+Date:   Wed, 11 Aug 2021 15:17:57 +0800
+Message-Id: <20210811151742.Bluez.v1.1.I3c1703ddae63da383b15e001bc965dadb4bd00b8@changeid>
 Mime-Version: 1.0
-References: <20210811150752.v3.1.Ie7d876ad0b7defabfa86beb64e83f655f12be7ab@changeid>
 X-Mailer: git-send-email 2.32.0.605.g8dce9f2422-goog
-Subject: [PATCH v3 3/3] client: add AffectedByPolicy property
+Subject: [Bluez PATCH v1] plugins/admin: add uuid duplicate check
 From:   Howard Chung <howardchung@google.com>
 To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
 Cc:     Yun-Hao Chung <howardchung@chromium.org>,
@@ -65,99 +61,53 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Yun-Hao Chung <howardchung@chromium.org>
 
-This prints property AffectedByPolicy in device info if
-org.bluez.AdminPolicyStatus1 exists.
-
-This also rename find_battery_by_path to find_proxies_by_path to reuse
-the function.
+SetServiceAllowlist should ignore those duplicated UUIDs.
 
 Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 ---
-The following test steps were performed:
-1. [bluetooth] menu admin
-2. [bluetooth] allow 1124 180A 180F 1812 1801
-3. Verify only HID devices are not `Affected by Policy`
-4. [bluetooth] allow 1108 110A 110B 110C 110D 110E 110F
-1112 111E 111F 1203
-5. Verify only audio devices are not `Affected by Policy`
-devices are expected.
+Test steps:
+1. set service allow list to ["1800", "1800", "180A"] via D-Bus
+2. check service allow list is ["1800", "180A"]
 
-(no changes since v1)
+ plugins/admin.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
- client/main.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
-
-diff --git a/client/main.c b/client/main.c
-index a983066eda34..506602bbdb6d 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -56,6 +56,7 @@ static GDBusProxy *default_dev;
- static GDBusProxy *default_attr;
- static GList *ctrl_list;
- static GList *battery_proxies;
-+static GList *admin_devices_proxies;
- 
- static const char *agent_arguments[] = {
- 	"on",
-@@ -542,8 +543,11 @@ static void admin_policy_status_added(GDBusProxy *proxy)
- 
- 	adapter = find_ctrl(ctrl_list, g_dbus_proxy_get_path(proxy));
- 
--	if (!adapter)
-+	if (!adapter) {
-+		admin_devices_proxies = g_list_append(admin_devices_proxies,
-+									proxy);
- 		return;
-+	}
- 
- 	admin_policy_set_status_proxy(proxy);
- }
-@@ -654,8 +658,11 @@ static void admin_policy_status_removed(GDBusProxy *proxy)
- 
- 	adapter = find_ctrl(ctrl_list, g_dbus_proxy_get_path(proxy));
- 
--	if (!adapter)
-+	if (!adapter) {
-+		admin_devices_proxies = g_list_remove(admin_devices_proxies,
-+									proxy);
- 		return;
-+	}
- 
- 	admin_policy_set_status_proxy(NULL);
- }
-@@ -837,7 +844,7 @@ static struct adapter *find_ctrl_by_address(GList *source, const char *address)
- 	return NULL;
+diff --git a/plugins/admin.c b/plugins/admin.c
+index 428a5528cc88..aea33cb71ac2 100644
+--- a/plugins/admin.c
++++ b/plugins/admin.c
+@@ -85,6 +85,14 @@ static void admin_policy_free(void *data)
+ 	g_free(admin_policy);
  }
  
--static GDBusProxy *find_battery_by_path(GList *source, const char *path)
-+static GDBusProxy *find_proxies_by_path(GList *source, const char *path)
++static bool uuid_match(const void *data, const void *match_data)
++{
++	const bt_uuid_t *uuid = data;
++	const bt_uuid_t *match_uuid = match_data;
++
++	return bt_uuid_cmp(uuid, match_uuid) == 0;
++}
++
+ static struct queue *parse_allow_service_list(struct btd_adapter *adapter,
+ 							DBusMessage *msg)
  {
- 	GList *list;
+@@ -119,9 +127,15 @@ static struct queue *parse_allow_service_list(struct btd_adapter *adapter,
+ 			goto failed;
+ 		}
  
-@@ -1704,6 +1711,7 @@ static struct GDBusProxy *find_device(int argc, char *argv[])
- static void cmd_info(int argc, char *argv[])
- {
- 	GDBusProxy *proxy;
-+	GDBusProxy *admin_proxy;
- 	GDBusProxy *battery_proxy;
- 	DBusMessageIter iter;
- 	const char *address;
-@@ -1747,10 +1755,14 @@ static void cmd_info(int argc, char *argv[])
- 	print_property(proxy, "AdvertisingFlags");
- 	print_property(proxy, "AdvertisingData");
++		dbus_message_iter_next(&arr_iter);
++
++		if (queue_find(uuid_list, uuid_match, uuid)) {
++			g_free(uuid);
++			continue;
++		}
++
+ 		queue_push_head(uuid_list, uuid);
  
--	battery_proxy = find_battery_by_path(battery_proxies,
-+	battery_proxy = find_proxies_by_path(battery_proxies,
-+					g_dbus_proxy_get_path(proxy));
-+	admin_proxy = find_proxies_by_path(admin_devices_proxies,
- 					g_dbus_proxy_get_path(proxy));
- 	print_property_with_label(battery_proxy, "Percentage",
- 					"Battery Percentage");
-+	print_property_with_label(admin_proxy, "AffectedByPolicy",
-+					"Affected by Policy");
+-		dbus_message_iter_next(&arr_iter);
+ 	} while (true);
  
- 	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
- }
+ 	return uuid_list;
 -- 
 2.32.0.605.g8dce9f2422-goog
 
