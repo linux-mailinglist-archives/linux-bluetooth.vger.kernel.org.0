@@ -2,62 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 786593EBA6A
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Aug 2021 18:52:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28D223EBA6D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Aug 2021 18:52:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237587AbhHMQwi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 13 Aug 2021 12:52:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42252 "EHLO
+        id S237424AbhHMQwv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 13 Aug 2021 12:52:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236589AbhHMQw0 (ORCPT
+        with ESMTP id S237413AbhHMQw2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 13 Aug 2021 12:52:26 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3076CC0617AD
-        for <linux-bluetooth@vger.kernel.org>; Fri, 13 Aug 2021 09:51:58 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id hv22-20020a17090ae416b0290178c579e424so16814959pjb.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 13 Aug 2021 09:51:58 -0700 (PDT)
+        Fri, 13 Aug 2021 12:52:28 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F44C0613A3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 13 Aug 2021 09:52:00 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id u13-20020a17090abb0db0290177e1d9b3f7so21517869pjr.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 13 Aug 2021 09:52:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eFA69i6hcXDHmIcHg92qE1Me9tWDfkAMJZYxzK2xT7U=;
-        b=TpUTdVOIxxBS5XmDY4DUA0cn8A8aMa07BozY2b7t3/yGqObHPKbn8+gm3m1gVFVA2G
-         xE3NPnB7OQVXXdZ7eXWQhDzZ1aZ5i7oeuszKvvNK8rySlKies3w9FRDsHiYn7ypudYxU
-         skPgbZgLyWlrhfEPFtMWeHlYINFQrlx63t+Us=
+        bh=LkBqhPYKF4IrcGjJi8/l5drU8dbI+zT/Lqp79I46kx8=;
+        b=npwlEJFKPOqclNCInH8A646c+VISLbhAlRJVKy4wjoOK8F9i0H7o6zIp5lhOoh48Of
+         +RFY6gwpkU/293kuAP/cQOvYvTBeVeq6mwwIqR9itkuSHjLCC/V+MQtmU627ZqHyWJnK
+         JGkw51EQOtTlm7mE2nIEYm9NjMGksyUTNp7No=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eFA69i6hcXDHmIcHg92qE1Me9tWDfkAMJZYxzK2xT7U=;
-        b=j/AJJTGXHCEmL1TeEXvTVhvPg0s93+QgORJY6T5uXJnd8+FuSgJqtencibDv7y5XlK
-         iyLzle9ZySXfl7+GTwG0OgF6mDxSQiVwPx2Ff+myE/K6wonbTXnl8AQmOfQG4ZKg7I82
-         1swg8Fb4vEiKo84KzwOP9GfWbnuLa7o4W5LTo+czz3sH5Z7rS3BxzmyL6fTqkDrBmWRK
-         EzYtAWjnl4Avyri1Wl+MIYfRlkqtmqpfjO7ldeM/HW/JIsFngTLztFhKBA5lPh8tGWwE
-         WiEwtwEbY+Ze/fppTPPIAm5dlDAvKm37Z2ehjJ1RNXXbOVjxzHSrrOB0w/m67Of7OK0s
-         ChsA==
-X-Gm-Message-State: AOAM530j180TrjeWs0ufxqs1bx5yCl2Q0BQMmVspR857KmCzsnTxDzO+
-        LCbF22pPNjioHxV+c2zdG1IQ25vI1eGBLg==
-X-Google-Smtp-Source: ABdhPJyzpsSp56wh1Z/mvYZpCbXFVN98KOQk5meAGM3c0erEge7pod4tzz0VC2Q6osb2nxuPNF4WIw==
-X-Received: by 2002:a17:90a:d181:: with SMTP id fu1mr3429050pjb.137.1628873517273;
-        Fri, 13 Aug 2021 09:51:57 -0700 (PDT)
+        bh=LkBqhPYKF4IrcGjJi8/l5drU8dbI+zT/Lqp79I46kx8=;
+        b=g81tn0izXoHhK8N1YjY4Pt8RBaRHH4XxoY4oonyTVvhGH2HR07eDC5ECVafe6w94+m
+         TIWnNinOdjgZZJMJFm6NyXM+y4z/ZIHWV113bfrZJvJZeDh1KQb1b8gv43cjJKA4YHmN
+         BBh/WuAvoriD+L/8My9V7qLnJByleYgnzsCpz2lRK5goC+avLk1IHINOBNohpzYK9mnx
+         eGXnwr50DyEsdhUCW8w5XcdLPTgUrmstfL8jFXt5FVi0HnseRCcYxticVYQcPqS8tCfS
+         fTm0mSdYmvIsiMOx6ShaAaGi64nHo/TJ2/8Y4xC89pChYHNGU4HJoClJWqDude8v/jgK
+         cs8g==
+X-Gm-Message-State: AOAM5329Pm6ItmeTd+63eJHbTE6BnUQ+g9Hr5cpYH6xrjmXIrLatNZBi
+        5ygjB9EamPBy2xCS2X20fje80erxl005pQ==
+X-Google-Smtp-Source: ABdhPJxl5WsATksAAGyWNUqC1ngjXvIATDXUDX9bRcQ8bWTaSfHx3+gYcDhgayfBRD3E3NDpJNoiqA==
+X-Received: by 2002:a63:f241:: with SMTP id d1mr3096903pgk.424.1628873519791;
+        Fri, 13 Aug 2021 09:51:59 -0700 (PDT)
 Received: from josephsih-z840.tpe.corp.google.com ([2401:fa00:1:10:755d:cdee:3203:71c5])
-        by smtp.gmail.com with ESMTPSA id w3sm2907407pfn.96.2021.08.13.09.51.55
+        by smtp.gmail.com with ESMTPSA id w3sm2907407pfn.96.2021.08.13.09.51.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Aug 2021 09:51:56 -0700 (PDT)
+        Fri, 13 Aug 2021 09:51:59 -0700 (PDT)
 From:   Joseph Hwang <josephsih@chromium.org>
 To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
         luiz.dentz@gmail.com, pali@kernel.org
 Cc:     chromeos-bluetooth-upstreaming@chromium.org, josephsih@google.com,
-        Chethan T N <chethan.tumkur.narayan@intel.com>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        Kiran K <kiran.k@intel.com>,
         Joseph Hwang <josephsih@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v8 2/5] Bluetooth: btintel: support link statistics telemetry events
-Date:   Sat, 14 Aug 2021 00:51:45 +0800
-Message-Id: <20210814005024.v8.2.Ifb35feb49ec588106b256c508259500583582125@changeid>
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH v8 3/5] Bluetooth: refactor set_exp_feature with a feature table
+Date:   Sat, 14 Aug 2021 00:51:46 +0800
+Message-Id: <20210814005024.v8.3.Ibd93c7f71f8819d2efdfa3ee2f096319e3c44ea4@changeid>
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
 In-Reply-To: <20210814005024.v8.1.I41aec59e65ffd3226d368dabeb084af13cc133c8@changeid>
 References: <20210814005024.v8.1.I41aec59e65ffd3226d368dabeb084af13cc133c8@changeid>
@@ -67,67 +66,326 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Chethan T N <chethan.tumkur.narayan@intel.com>
+This patch refactors the set_exp_feature with a feature table
+consisting of UUIDs and the corresponding callback functions.
+In this way, a new experimental feature setting function can be
+simply added with its UUID and callback function.
 
-This patch supports the link statistics telemetry events for
-intel controllers
-
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
-Signed-off-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Joseph Hwang <josephsih@chromium.org>
 ---
 
-(no changes since v7)
+Changes in v8:
+- Refactor the set_exp_feature function with a feature table.
+- This is a new patch added in v8.
 
-Changes in v7:
-- Rebase on Tedd's patches that moved functionality from btusb to
-  btintel.
+ net/bluetooth/mgmt.c | 248 +++++++++++++++++++++++++------------------
+ 1 file changed, 142 insertions(+), 106 deletions(-)
 
- drivers/bluetooth/btintel.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 0fe093fa5158..643e2194ca01 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -1285,8 +1285,10 @@ static int btintel_read_debug_features(struct hci_dev *hdev,
- static int btintel_set_debug_features(struct hci_dev *hdev,
- 			       const struct intel_debug_features *features)
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 1e21e014efd2..ffd526b2beab 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -3806,7 +3806,7 @@ static const u8 rpa_resolution_uuid[16] = {
+ static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
+ 				  void *data, u16 data_len)
  {
--	u8 mask[11] = { 0x0a, 0x92, 0x02, 0x07, 0x00, 0x00, 0x00, 0x00,
-+	u8 mask[11] = { 0x0a, 0x92, 0x02, 0x7f, 0x00, 0x00, 0x00, 0x00,
- 			0x00, 0x00, 0x00 };
-+	u8 period[5] = { 0x04, 0x91, 0x02, 0x05, 0x00 };
-+	u8 trace_enable = 0x02;
- 	struct sk_buff *skb;
- 
- 	if (!features)
-@@ -1303,8 +1305,24 @@ static int btintel_set_debug_features(struct hci_dev *hdev,
- 			   PTR_ERR(skb));
- 		return PTR_ERR(skb);
- 	}
-+	kfree_skb(skb);
-+
-+	skb = __hci_cmd_sync(hdev, 0xfc8b, 5, period, HCI_INIT_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		bt_dev_err(hdev, "Setting periodicity for link statistics traces failed (%ld)",
-+			   PTR_ERR(skb));
-+		return PTR_ERR(skb);
-+	}
-+	kfree_skb(skb);
- 
-+	skb = __hci_cmd_sync(hdev, 0xfca1, 1, &trace_enable, HCI_INIT_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		bt_dev_err(hdev, "Enable tracing of link statistics events failed (%ld)",
-+			   PTR_ERR(skb));
-+		return PTR_ERR(skb);
-+	}
- 	kfree_skb(skb);
-+
- 	return 0;
+-	char buf[62];	/* Enough space for 3 features */
++	char buf[62];   /* Enough space for 3 features */
+ 	struct mgmt_rp_read_exp_features_info *rp = (void *)buf;
+ 	u16 idx = 0;
+ 	u32 flags;
+@@ -3892,150 +3892,186 @@ static int exp_debug_feature_changed(bool enabled, struct sock *skip)
  }
+ #endif
  
+-static int set_exp_feature(struct sock *sk, struct hci_dev *hdev,
+-			   void *data, u16 data_len)
++#define EXP_FEAT(_uuid, _set_func)	\
++{					\
++	.uuid = _uuid,			\
++	.set_func = _set_func,		\
++}
++
++/* The zero key uuid is special. Multiple exp features are set through it. */
++static int set_zero_key_func(struct sock *sk, struct hci_dev *hdev,
++			     struct mgmt_cp_set_exp_feature *cp, u16 data_len)
+ {
+-	struct mgmt_cp_set_exp_feature *cp = data;
+ 	struct mgmt_rp_set_exp_feature rp;
+ 
+-	bt_dev_dbg(hdev, "sock %p", sk);
+-
+-	if (!memcmp(cp->uuid, ZERO_KEY, 16)) {
+-		memset(rp.uuid, 0, 16);
+-		rp.flags = cpu_to_le32(0);
++	memset(rp.uuid, 0, 16);
++	rp.flags = cpu_to_le32(0);
+ 
+ #ifdef CONFIG_BT_FEATURE_DEBUG
+-		if (!hdev) {
+-			bool changed = bt_dbg_get();
++	if (!hdev) {
++		bool changed = bt_dbg_get();
+ 
+-			bt_dbg_set(false);
++		bt_dbg_set(false);
+ 
+-			if (changed)
+-				exp_debug_feature_changed(false, sk);
+-		}
++		if (changed)
++			exp_debug_feature_changed(false, sk);
++	}
+ #endif
+ 
+-		if (hdev && use_ll_privacy(hdev) && !hdev_is_powered(hdev)) {
+-			bool changed = hci_dev_test_flag(hdev,
+-							 HCI_ENABLE_LL_PRIVACY);
++	if (hdev && use_ll_privacy(hdev) && !hdev_is_powered(hdev)) {
++		bool changed = hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY);
+ 
+-			hci_dev_clear_flag(hdev, HCI_ENABLE_LL_PRIVACY);
++		hci_dev_clear_flag(hdev, HCI_ENABLE_LL_PRIVACY);
+ 
+-			if (changed)
+-				exp_ll_privacy_feature_changed(false, hdev, sk);
+-		}
++		if (changed)
++			exp_ll_privacy_feature_changed(false, hdev, sk);
++	}
+ 
+-		hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
++	hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
+ 
+-		return mgmt_cmd_complete(sk, hdev ? hdev->id : MGMT_INDEX_NONE,
+-					 MGMT_OP_SET_EXP_FEATURE, 0,
+-					 &rp, sizeof(rp));
+-	}
++	return mgmt_cmd_complete(sk, hdev ? hdev->id : MGMT_INDEX_NONE,
++				 MGMT_OP_SET_EXP_FEATURE, 0,
++				 &rp, sizeof(rp));
++}
+ 
+ #ifdef CONFIG_BT_FEATURE_DEBUG
+-	if (!memcmp(cp->uuid, debug_uuid, 16)) {
+-		bool val, changed;
+-		int err;
++static int set_debug_func(struct sock *sk, struct hci_dev *hdev,
++			  struct mgmt_cp_set_exp_feature *cp, u16 data_len)
++{
++	struct mgmt_rp_set_exp_feature rp;
+ 
+-		/* Command requires to use the non-controller index */
+-		if (hdev)
+-			return mgmt_cmd_status(sk, hdev->id,
+-					       MGMT_OP_SET_EXP_FEATURE,
+-					       MGMT_STATUS_INVALID_INDEX);
++	bool val, changed;
++	int err;
+ 
+-		/* Parameters are limited to a single octet */
+-		if (data_len != MGMT_SET_EXP_FEATURE_SIZE + 1)
+-			return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
+-					       MGMT_OP_SET_EXP_FEATURE,
+-					       MGMT_STATUS_INVALID_PARAMS);
++	/* Command requires to use the non-controller index */
++	if (hdev)
++		return mgmt_cmd_status(sk, hdev->id,
++				       MGMT_OP_SET_EXP_FEATURE,
++				       MGMT_STATUS_INVALID_INDEX);
+ 
+-		/* Only boolean on/off is supported */
+-		if (cp->param[0] != 0x00 && cp->param[0] != 0x01)
+-			return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
+-					       MGMT_OP_SET_EXP_FEATURE,
+-					       MGMT_STATUS_INVALID_PARAMS);
++	/* Parameters are limited to a single octet */
++	if (data_len != MGMT_SET_EXP_FEATURE_SIZE + 1)
++		return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
++				       MGMT_OP_SET_EXP_FEATURE,
++				       MGMT_STATUS_INVALID_PARAMS);
+ 
+-		val = !!cp->param[0];
+-		changed = val ? !bt_dbg_get() : bt_dbg_get();
+-		bt_dbg_set(val);
++	/* Only boolean on/off is supported */
++	if (cp->param[0] != 0x00 && cp->param[0] != 0x01)
++		return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
++				       MGMT_OP_SET_EXP_FEATURE,
++				       MGMT_STATUS_INVALID_PARAMS);
+ 
+-		memcpy(rp.uuid, debug_uuid, 16);
+-		rp.flags = cpu_to_le32(val ? BIT(0) : 0);
++	val = !!cp->param[0];
++	changed = val ? !bt_dbg_get() : bt_dbg_get();
++	bt_dbg_set(val);
+ 
+-		hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
++	memcpy(rp.uuid, debug_uuid, 16);
++	rp.flags = cpu_to_le32(val ? BIT(0) : 0);
+ 
+-		err = mgmt_cmd_complete(sk, MGMT_INDEX_NONE,
+-					MGMT_OP_SET_EXP_FEATURE, 0,
+-					&rp, sizeof(rp));
++	hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
+ 
+-		if (changed)
+-			exp_debug_feature_changed(val, sk);
++	err = mgmt_cmd_complete(sk, MGMT_INDEX_NONE,
++				MGMT_OP_SET_EXP_FEATURE, 0,
++				&rp, sizeof(rp));
+ 
+-		return err;
+-	}
++	if (changed)
++		exp_debug_feature_changed(val, sk);
++
++	return err;
++}
+ #endif
+ 
+-	if (!memcmp(cp->uuid, rpa_resolution_uuid, 16)) {
+-		bool val, changed;
+-		int err;
+-		u32 flags;
++static int set_rpa_resolution_func(struct sock *sk, struct hci_dev *hdev,
++				   struct mgmt_cp_set_exp_feature *cp,
++				   u16 data_len)
++{
++	struct mgmt_rp_set_exp_feature rp;
++	bool val, changed;
++	int err;
++	u32 flags;
++
++	/* Command requires to use the controller index */
++	if (!hdev)
++		return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
++				       MGMT_OP_SET_EXP_FEATURE,
++				       MGMT_STATUS_INVALID_INDEX);
+ 
+-		/* Command requires to use the controller index */
+-		if (!hdev)
+-			return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
+-					       MGMT_OP_SET_EXP_FEATURE,
+-					       MGMT_STATUS_INVALID_INDEX);
++	/* Changes can only be made when controller is powered down */
++	if (hdev_is_powered(hdev))
++		return mgmt_cmd_status(sk, hdev->id,
++				       MGMT_OP_SET_EXP_FEATURE,
++				       MGMT_STATUS_REJECTED);
+ 
+-		/* Changes can only be made when controller is powered down */
+-		if (hdev_is_powered(hdev))
+-			return mgmt_cmd_status(sk, hdev->id,
+-					       MGMT_OP_SET_EXP_FEATURE,
+-					       MGMT_STATUS_REJECTED);
++	/* Parameters are limited to a single octet */
++	if (data_len != MGMT_SET_EXP_FEATURE_SIZE + 1)
++		return mgmt_cmd_status(sk, hdev->id,
++				       MGMT_OP_SET_EXP_FEATURE,
++				       MGMT_STATUS_INVALID_PARAMS);
+ 
+-		/* Parameters are limited to a single octet */
+-		if (data_len != MGMT_SET_EXP_FEATURE_SIZE + 1)
+-			return mgmt_cmd_status(sk, hdev->id,
+-					       MGMT_OP_SET_EXP_FEATURE,
+-					       MGMT_STATUS_INVALID_PARAMS);
++	/* Only boolean on/off is supported */
++	if (cp->param[0] != 0x00 && cp->param[0] != 0x01)
++		return mgmt_cmd_status(sk, hdev->id,
++				       MGMT_OP_SET_EXP_FEATURE,
++				       MGMT_STATUS_INVALID_PARAMS);
+ 
+-		/* Only boolean on/off is supported */
+-		if (cp->param[0] != 0x00 && cp->param[0] != 0x01)
+-			return mgmt_cmd_status(sk, hdev->id,
+-					       MGMT_OP_SET_EXP_FEATURE,
+-					       MGMT_STATUS_INVALID_PARAMS);
++	val = !!cp->param[0];
+ 
+-		val = !!cp->param[0];
++	if (val) {
++		changed = !hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY);
++		hci_dev_set_flag(hdev, HCI_ENABLE_LL_PRIVACY);
++		hci_dev_clear_flag(hdev, HCI_ADVERTISING);
+ 
+-		if (val) {
+-			changed = !hci_dev_test_flag(hdev,
+-						     HCI_ENABLE_LL_PRIVACY);
+-			hci_dev_set_flag(hdev, HCI_ENABLE_LL_PRIVACY);
+-			hci_dev_clear_flag(hdev, HCI_ADVERTISING);
++		/* Enable LL privacy + supported settings changed */
++		flags = BIT(0) | BIT(1);
++	} else {
++		changed = hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY);
++		hci_dev_clear_flag(hdev, HCI_ENABLE_LL_PRIVACY);
+ 
+-			/* Enable LL privacy + supported settings changed */
+-			flags = BIT(0) | BIT(1);
+-		} else {
+-			changed = hci_dev_test_flag(hdev,
+-						    HCI_ENABLE_LL_PRIVACY);
+-			hci_dev_clear_flag(hdev, HCI_ENABLE_LL_PRIVACY);
++		/* Disable LL privacy + supported settings changed */
++		flags = BIT(1);
++	}
+ 
+-			/* Disable LL privacy + supported settings changed */
+-			flags = BIT(1);
+-		}
++	memcpy(rp.uuid, rpa_resolution_uuid, 16);
++	rp.flags = cpu_to_le32(flags);
+ 
+-		memcpy(rp.uuid, rpa_resolution_uuid, 16);
+-		rp.flags = cpu_to_le32(flags);
++	hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
+ 
+-		hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
++	err = mgmt_cmd_complete(sk, hdev->id,
++				MGMT_OP_SET_EXP_FEATURE, 0,
++				&rp, sizeof(rp));
+ 
+-		err = mgmt_cmd_complete(sk, hdev->id,
+-					MGMT_OP_SET_EXP_FEATURE, 0,
+-					&rp, sizeof(rp));
++	if (changed)
++		exp_ll_privacy_feature_changed(val, hdev, sk);
+ 
+-		if (changed)
+-			exp_ll_privacy_feature_changed(val, hdev, sk);
++	return err;
++}
+ 
+-		return err;
++static const struct mgmt_exp_feature {
++	const u8 *uuid;
++	int (*set_func)(struct sock *sk, struct hci_dev *hdev,
++			struct mgmt_cp_set_exp_feature *cp, u16 data_len);
++} exp_features[] = {
++	EXP_FEAT(ZERO_KEY, set_zero_key_func),
++#ifdef CONFIG_BT_FEATURE_DEBUG
++	EXP_FEAT(debug_uuid, set_debug_func),
++#endif
++	EXP_FEAT(rpa_resolution_uuid, set_rpa_resolution_func),
++
++	/* end with a null feature */
++	EXP_FEAT(NULL, NULL)
++};
++
++static int set_exp_feature(struct sock *sk, struct hci_dev *hdev,
++			   void *data, u16 data_len)
++{
++	struct mgmt_cp_set_exp_feature *cp = data;
++	size_t i = 0;
++
++	bt_dev_dbg(hdev, "sock %p", sk);
++
++	for (i = 0; exp_features[i].uuid; i++) {
++		if (!memcmp(cp->uuid, exp_features[i].uuid, 16)) {
++			return exp_features[i].set_func(sk, hdev, cp, data_len);
+ 	}
+ 
+ 	return mgmt_cmd_status(sk, hdev ? hdev->id : MGMT_INDEX_NONE,
 -- 
 2.33.0.rc1.237.g0d66db33f3-goog
 
