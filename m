@@ -2,192 +2,207 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A57733EC122
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 14 Aug 2021 09:22:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A95153EC1AD
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 14 Aug 2021 11:27:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237324AbhHNHWx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 14 Aug 2021 03:22:53 -0400
-Received: from mga04.intel.com ([192.55.52.120]:42835 "EHLO mga04.intel.com"
+        id S237127AbhHNJ1f (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 14 Aug 2021 05:27:35 -0400
+Received: from mga12.intel.com ([192.55.52.136]:32119 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237258AbhHNHWt (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 14 Aug 2021 03:22:49 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10075"; a="213817677"
+        id S235202AbhHNJ1e (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 14 Aug 2021 05:27:34 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10075"; a="195258537"
 X-IronPort-AV: E=Sophos;i="5.84,321,1620716400"; 
-   d="scan'208";a="213817677"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2021 00:22:21 -0700
+   d="scan'208";a="195258537"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2021 02:27:06 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.84,321,1620716400"; 
-   d="scan'208";a="640022061"
-Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
-  by orsmga005.jf.intel.com with ESMTP; 14 Aug 2021 00:22:20 -0700
-From:   Kiran K <kiran.k@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Kiran K <kiran.k@intel.com>
-Subject: [PATCH v12 10/10] Bluetooth: Add offload feature under experimental flag
-Date:   Sat, 14 Aug 2021 12:56:29 +0530
-Message-Id: <20210814072629.11748-10-kiran.k@intel.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210814072629.11748-1-kiran.k@intel.com>
-References: <20210814072629.11748-1-kiran.k@intel.com>
+   d="scan'208";a="591694850"
+Received: from lkp-server01.sh.intel.com (HELO d053b881505b) ([10.239.97.150])
+  by fmsmga001.fm.intel.com with ESMTP; 14 Aug 2021 02:27:05 -0700
+Received: from kbuild by d053b881505b with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1mEpwW-000Ogl-KA; Sat, 14 Aug 2021 09:27:04 +0000
+Date:   Sat, 14 Aug 2021 17:26:54 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org
+Subject: [bluetooth-next:master] BUILD SUCCESS
+ 55981d3541812234e687062926ff199c83f79a39
+Message-ID: <61178c5e.xR7eqsjbytj73vLK%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Allow user level process to enable / disable codec offload
-feature through mgmt interface. By default offload codec feature
-is disabled.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
+branch HEAD: 55981d3541812234e687062926ff199c83f79a39  Bluetooth: btusb: check conditions before enabling USB ALT 3 for WBS
 
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Reviewed-by: Chethan T N <chethan.tumkur.narayan@intel.com>
-Reviewed-by: Srivatsa Ravishankar <ravishankar.srivatsa@intel.com>
+elapsed time: 5129m
+
+configs tested: 149
+configs skipped: 3
+
+The following configs have been built successfully.
+More configs may be tested in the coming days.
+
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+i386                 randconfig-c001-20210812
+i386                 randconfig-c001-20210810
+parisc                           alldefconfig
+sh                ecovec24-romimage_defconfig
+powerpc                     mpc512x_defconfig
+openrisc                 simple_smp_defconfig
+arm                       omap2plus_defconfig
+arm                         at91_dt_defconfig
+arm                           omap1_defconfig
+arm                           viper_defconfig
+powerpc                    ge_imp3a_defconfig
+arm                        spear6xx_defconfig
+mips                            ar7_defconfig
+arm                         palmz72_defconfig
+xtensa                              defconfig
+mips                     decstation_defconfig
+mips                malta_qemu_32r6_defconfig
+sh                          sdk7786_defconfig
+powerpc                          g5_defconfig
+riscv                             allnoconfig
+powerpc                     stx_gp3_defconfig
+powerpc                    adder875_defconfig
+powerpc                     asp8347_defconfig
+arm                            hisi_defconfig
+arm                         s3c2410_defconfig
+arm                       spear13xx_defconfig
+s390                          debug_defconfig
+powerpc                 mpc834x_itx_defconfig
+nds32                               defconfig
+mips                           jazz_defconfig
+mips                           rs90_defconfig
+powerpc                           allnoconfig
+m68k                       m5208evb_defconfig
+powerpc                     tqm5200_defconfig
+powerpc                   lite5200b_defconfig
+arm                   milbeaut_m10v_defconfig
+mips                         cobalt_defconfig
+xtensa                    xip_kc705_defconfig
+arc                      axs103_smp_defconfig
+arm                            lart_defconfig
+alpha                            allyesconfig
+mips                      maltasmvp_defconfig
+xtensa                  cadence_csp_defconfig
+arc                    vdk_hs38_smp_defconfig
+sparc64                             defconfig
+x86_64                            allnoconfig
+powerpc                   currituck_defconfig
+sh                           se7724_defconfig
+arm64                            alldefconfig
+powerpc                        cell_defconfig
+xtensa                  nommu_kc705_defconfig
+powerpc                      pcm030_defconfig
+arm                         s5pv210_defconfig
+powerpc                     ppa8548_defconfig
+powerpc                        icon_defconfig
+arc                        vdk_hs38_defconfig
+sh                   sh7724_generic_defconfig
+arm                      pxa255-idp_defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+x86_64               randconfig-a004-20210810
+x86_64               randconfig-a006-20210810
+x86_64               randconfig-a003-20210810
+x86_64               randconfig-a005-20210810
+x86_64               randconfig-a002-20210810
+x86_64               randconfig-a001-20210810
+i386                 randconfig-a004-20210810
+i386                 randconfig-a002-20210810
+i386                 randconfig-a001-20210810
+i386                 randconfig-a003-20210810
+i386                 randconfig-a006-20210810
+i386                 randconfig-a005-20210810
+i386                 randconfig-a004-20210811
+i386                 randconfig-a001-20210811
+i386                 randconfig-a002-20210811
+i386                 randconfig-a003-20210811
+i386                 randconfig-a006-20210811
+i386                 randconfig-a005-20210811
+i386                 randconfig-a011-20210810
+i386                 randconfig-a015-20210810
+i386                 randconfig-a013-20210810
+i386                 randconfig-a014-20210810
+i386                 randconfig-a016-20210810
+i386                 randconfig-a012-20210810
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                    rhel-8.3-kselftests
+um                           x86_64_defconfig
+um                             i386_defconfig
+x86_64                           allyesconfig
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                                  kexec
+
+clang tested configs:
+x86_64               randconfig-c001-20210810
+x86_64               randconfig-c001-20210811
+x86_64               randconfig-a013-20210810
+x86_64               randconfig-a011-20210810
+x86_64               randconfig-a012-20210810
+x86_64               randconfig-a016-20210810
+x86_64               randconfig-a014-20210810
+x86_64               randconfig-a015-20210810
+x86_64               randconfig-a016-20210809
+x86_64               randconfig-a012-20210809
+x86_64               randconfig-a013-20210809
+x86_64               randconfig-a011-20210809
+x86_64               randconfig-a014-20210809
+x86_64               randconfig-a015-20210809
+x86_64               randconfig-a004-20210811
+x86_64               randconfig-a006-20210811
+x86_64               randconfig-a003-20210811
+x86_64               randconfig-a002-20210811
+x86_64               randconfig-a005-20210811
+x86_64               randconfig-a001-20210811
+
 ---
-changes in v12:
-- Move definiton of mgmt flag to control hfp offload to patch 04/10
-
-changes in v11:
-- Remove Kconfig
-
- net/bluetooth/mgmt.c | 98 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 97 insertions(+), 1 deletion(-)
-
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 1e21e014efd2..083365d89946 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -3791,6 +3791,12 @@ static const u8 debug_uuid[16] = {
- };
- #endif
- 
-+/* a6695ace-ee7f-4fb9-881a-5fac66c629af */
-+static const u8 offload_codecs_uuid[16] = {
-+	0xaf, 0x29, 0xc6, 0x66, 0xac, 0x5f, 0x1a, 0x88,
-+	0xb9, 0x4f, 0x7f, 0xee, 0xce, 0x5a, 0x69, 0xa6,
-+};
-+
- /* 671b10b5-42c0-4696-9227-eb28d1b049d6 */
- static const u8 simult_central_periph_uuid[16] = {
- 	0xd6, 0x49, 0xb0, 0xd1, 0x28, 0xeb, 0x27, 0x92,
-@@ -3806,7 +3812,7 @@ static const u8 rpa_resolution_uuid[16] = {
- static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
- 				  void *data, u16 data_len)
- {
--	char buf[62];	/* Enough space for 3 features */
-+	char buf[82];   /* Enough space for 4 features: 2 + 20 * 4 */
- 	struct mgmt_rp_read_exp_features_info *rp = (void *)buf;
- 	u16 idx = 0;
- 	u32 flags;
-@@ -3850,6 +3856,26 @@ static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
- 		idx++;
- 	}
- 
-+	if (hdev) {
-+		if (hdev->get_data_path_id) {
-+			/* BIT(0): indicating if offload codecs are
-+			 * supported by controller.
-+			 */
-+			flags = BIT(0);
-+
-+			/* BIT(1): indicating if codec offload feature
-+			 * is enabled.
-+			 */
-+			if (hci_dev_test_flag(hdev, HCI_OFFLOAD_CODECS_ENABLED))
-+				flags |= BIT(1);
-+		} else {
-+			flags = 0;
-+		}
-+		memcpy(rp->features[idx].uuid, offload_codecs_uuid, 16);
-+		rp->features[idx].flags = cpu_to_le32(flags);
-+		idx++;
-+	}
-+
- 	rp->feature_count = cpu_to_le16(idx);
- 
- 	/* After reading the experimental features information, enable
-@@ -3892,6 +3918,21 @@ static int exp_debug_feature_changed(bool enabled, struct sock *skip)
- }
- #endif
- 
-+static int exp_offload_codec_feature_changed(bool enabled, struct sock *skip)
-+{
-+	struct mgmt_ev_exp_feature_changed ev;
-+
-+	BT_INFO("enabled %d", enabled);
-+
-+	memset(&ev, 0, sizeof(ev));
-+	memcpy(ev.uuid, offload_codecs_uuid, 16);
-+	ev.flags = cpu_to_le32(enabled ? BIT(0) : 0);
-+
-+	return mgmt_limited_event(MGMT_EV_EXP_FEATURE_CHANGED, NULL,
-+				  &ev, sizeof(ev),
-+				  HCI_MGMT_EXP_FEATURE_EVENTS, skip);
-+}
-+
- static int set_exp_feature(struct sock *sk, struct hci_dev *hdev,
- 			   void *data, u16 data_len)
- {
-@@ -4038,6 +4079,61 @@ static int set_exp_feature(struct sock *sk, struct hci_dev *hdev,
- 		return err;
- 	}
- 
-+	if (!memcmp(cp->uuid, offload_codecs_uuid, 16)) {
-+		bool val, changed;
-+		int err;
-+
-+		/* Command requires to use a valid controller index */
-+		if (!hdev)
-+			return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
-+					       MGMT_OP_SET_EXP_FEATURE,
-+					       MGMT_STATUS_INVALID_INDEX);
-+
-+		/* Parameters are limited to a single octet */
-+		if (data_len != MGMT_SET_EXP_FEATURE_SIZE + 1)
-+			return mgmt_cmd_status(sk, hdev->id,
-+					       MGMT_OP_SET_EXP_FEATURE,
-+					       MGMT_STATUS_INVALID_PARAMS);
-+
-+		/* Only boolean on/off is supported */
-+		if (cp->param[0] != 0x00 && cp->param[0] != 0x01)
-+			return mgmt_cmd_status(sk, hdev->id,
-+					       MGMT_OP_SET_EXP_FEATURE,
-+					       MGMT_STATUS_INVALID_PARAMS);
-+
-+		val = !!cp->param[0];
-+		changed = (val != hci_dev_test_flag(hdev, HCI_OFFLOAD_CODECS_ENABLED));
-+
-+		if (!hdev->get_data_path_id) {
-+			bt_dev_info(hdev, "offload codecs not supported");
-+			return mgmt_cmd_status(sk, hdev->id,
-+					       MGMT_OP_SET_EXP_FEATURE,
-+					       MGMT_STATUS_NOT_SUPPORTED);
-+		}
-+
-+		if (changed) {
-+			if (val)
-+				hci_dev_set_flag(hdev, HCI_OFFLOAD_CODECS_ENABLED);
-+			else
-+				hci_dev_clear_flag(hdev, HCI_OFFLOAD_CODECS_ENABLED);
-+		}
-+
-+		bt_dev_info(hdev, "offload codecs enable %d changed %d",
-+			    val, changed);
-+
-+		memcpy(rp.uuid, offload_codecs_uuid, 16);
-+		rp.flags = cpu_to_le32(val ? BIT(0) : 0);
-+		hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
-+		err = mgmt_cmd_complete(sk, hdev->id,
-+					MGMT_OP_SET_EXP_FEATURE, 0,
-+					&rp, sizeof(rp));
-+
-+		if (changed)
-+			exp_offload_codec_feature_changed(val, sk);
-+
-+		return err;
-+	}
-+
- 	return mgmt_cmd_status(sk, hdev ? hdev->id : MGMT_INDEX_NONE,
- 			       MGMT_OP_SET_EXP_FEATURE,
- 			       MGMT_STATUS_NOT_SUPPORTED);
--- 
-2.17.1
-
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
