@@ -2,197 +2,174 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 495253EE0B6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Aug 2021 02:13:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 661DA3EE1D8
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Aug 2021 02:56:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232929AbhHQAO0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 16 Aug 2021 20:14:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58884 "EHLO
+        id S235564AbhHQAzt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 16 Aug 2021 20:55:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232903AbhHQAOY (ORCPT
+        with ESMTP id S235108AbhHQAzr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 16 Aug 2021 20:14:24 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24BD8C061764
-        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Aug 2021 17:13:52 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id om1-20020a17090b3a8100b0017941c44ce4so1781128pjb.3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Aug 2021 17:13:52 -0700 (PDT)
+        Mon, 16 Aug 2021 20:55:47 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C750C0613CF
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Aug 2021 17:55:15 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id y7so30167032ljp.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Aug 2021 17:55:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=allthenticate.net; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=MGZuWOUTDLvIDDXJRmZjkgiJBDbA7j6D4um1/jBiMVM=;
-        b=gwNcL68rpfKn1GSQbAnUHZqxUe3Sh8Dho+ZAlbfblGOQV4cUFfn9y0rUPNax2LkkyK
-         7dr/3zWFFNzBkl9WCLIGvYgZie9CKDLmZ/qktkT2EJ75OCONjYdkdEBDrvptzgPTPEob
-         f/XpFw/YfwGvyJUv0Y0bCWQKx7Acgt+3j+53WK75p9IvpRbNViOrMv0S/bhB6pQQ2hx2
-         r8Hyo15GZQ9ws8lQgeP2CSaGEOVGOnmfTulDQ2zMCDN4l0fSapdB7U98CHfh21oBwPji
-         AgjnHTtGarJdlWnhF+NTHzCYxMxltWVyjVvkxrcNBhEXr2usPtWg4ifrQMihAFPkdZ7F
-         RFxQ==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C/jXyVM8A6IIIf73CUW3opic/WD75vfkmRvuKQWW4Jo=;
+        b=Ilqv4TYrhWro5ne/pyK8Z8uNieTgQV6uYOzuf7BRghGmB8vnlhfGvOr/0/e/S1IwQs
+         7hQf66rKkZbN2FzNg/lAkY8kGf8968Opho/WF3Oda7z3Bq5zGkHWUDeKdTIMK9vnpdcr
+         Q21Q+ebQypHAX5SMsmdNk0shvXZpPmldQV8JkAnN+rTBj1EPUQqbI161vTAsodd2SjvZ
+         MCqb1O1Ze+1fb4BtL/U3gENTSpiIzkKkc+t3xLBPezJesXnuxw+T6kn1KhGum0t21LcO
+         jMIXT/hfLcwRdk65I9OuXZg0sgiZ+Ph1sisDURKJYN/RBaSvnazEEt1aLfLUFDVTen6Z
+         an+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=MGZuWOUTDLvIDDXJRmZjkgiJBDbA7j6D4um1/jBiMVM=;
-        b=fQPQWt8hNENMa58hW3RlFxV8Vn5kcBd3IZMM5BRjKnjN5tDvrR7wGc0W64ufyxSsRW
-         AoyHt7SDZMcaWaTrmOyrkKNYt8fUhSi1GtPXTDpwXIz4bPkCTV5OLd2nEMpf6/5bPs6e
-         DrqXbaS1UBHyLUPYNQHYJg7IMhWhndGSyIkYcUVONQO/5c45ZOSFLKWmsow98nFWSewM
-         gT403LrUreoAW/76WFjxxHyXPcou1EHKEzsuUtHdXkbMF98R87ySOqHktDnH8FHZbNDe
-         P7kG+5VgVfAg85Vt3xXKW9y/iJjp1j89NbCJ/+AMMEqCnu4nVcSi8VZoTbiJPqMjSGsc
-         g8PQ==
-X-Gm-Message-State: AOAM5339X4mHWFzqXH8/NE/HHo+vtTVU9xKYykaCJ56Hb98nNBsVIJrx
-        MqET14CJuyyRxIfd9itbrZQ+HCWSDoOK8pRm
-X-Google-Smtp-Source: ABdhPJxZPGQjxPHTq0jRVyn0MXZA8h8aZtzQifPBqgJ12wRA18OHp00KR5KPT+GJT1pCo6QeWXC4sQ==
-X-Received: by 2002:a63:100e:: with SMTP id f14mr681860pgl.188.1629159231407;
-        Mon, 16 Aug 2021 17:13:51 -0700 (PDT)
-Received: from BernieDesktop.lan (wsip-72-222-70-2.sb.sd.cox.net. [72.222.70.2])
-        by smtp.gmail.com with ESMTPSA id e4sm336977pgt.22.2021.08.16.17.13.50
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C/jXyVM8A6IIIf73CUW3opic/WD75vfkmRvuKQWW4Jo=;
+        b=m9R0Mvg0c41brYUv0i8XXczgOi70ZcBDjMsxbPgitE8DTifTvDNE8nwPnin1/yJr1S
+         G2ksqf+SDZMEnosQMDyvAjr+78dsPELUAPAQfnxVPoKDhC2KSn306m0Gz2sAsjWygcwR
+         nFN4HHl09ugBX6AE8E79U3HuQ6ymWjwNHcX72FfHXeqSWd0/Ukpn4CveJxm3Lp5wE6Yp
+         QX2qrOAL3IOEHqP68ny9jooPWXkbjxFUsTUCqKPWRBV0FZkM+N3CSXtgrQvhWwm+tUJo
+         i9qsyhzlq56RguSh0ihky7d/IRPuxc5Woh1MVhWGeCUnmdyq7LuITvqVUOTwohbb08AG
+         2mpA==
+X-Gm-Message-State: AOAM533bH7oL7g4cXWYjuN7WOLs+2+5oHH5LZ4fCuWh2FOSSZ5fMySos
+        tLwtmwhIuWgSRUZ0cwskDomYHA==
+X-Google-Smtp-Source: ABdhPJxgPqsyxqeCXBI3IsVJLkcFyXipmzYz3hTJEmurF1pvQfTvThKjXBvusty3YDmk6qnRjBkDxQ==
+X-Received: by 2002:a05:651c:118f:: with SMTP id w15mr779302ljo.47.1629161713357;
+        Mon, 16 Aug 2021 17:55:13 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id z6sm40719lfb.251.2021.08.16.17.55.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Aug 2021 17:13:51 -0700 (PDT)
-From:   Bernie Conrad <bernie@allthenticate.net>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Bernie Conrad <bernie@allthenticate.net>
-Subject: [PATCH BlueZ] Added GDBusMethod to notify one device of characteristic change
-Date:   Mon, 16 Aug 2021 17:13:41 -0700
-Message-Id: <20210817001341.10780-1-bernie@allthenticate.net>
-X-Mailer: git-send-email 2.17.1
+        Mon, 16 Aug 2021 17:55:12 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: [RFC PATCH 00/15] create power sequencing subsystem
+Date:   Tue, 17 Aug 2021 03:54:52 +0300
+Message-Id: <20210817005507.1507580-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello maintainers,
+This is an RFC of the proposed power sequencer subsystem. This is a
+generification of the MMC pwrseq code. The subsystem tries to abstract
+the idea of complex power-up/power-down/reset of the devices.
 
-This patch adds a method to be called over DBus to be able to send a
-notification or indication to only one device rather than all connected
-devices as a peripheral.
+The primary set of devices that promted me to create this patchset is
+the Qualcomm BT+WiFi family of chips. They reside on serial+platform
+interfaces (older generations) or on serial+PCIe (newer generations).
+They require a set of external voltage regulators to be powered on and
+(some of them) have separate WiFi and Bluetooth enable GPIOs.
 
-This is motivated by similar functionality in the corebluetooth API with
-CBPeripheralManager's updateValue() method as well as the Android API's
-notifyCharacteristicChanged() method.
+This patchset being an RFC tries to demonstrate the approach, design and
+usage of the pwrseq subsystem. Following issues are present in the RFC
+at this moment but will be fixed later if the overall approach would be
+viewed as acceptable:
 
-I implemented the method in the gatt database file as that was where the
-send_notification_to_devices method was implemented which has
-similar functionality. The params for the method were picked to be able
-to get the data needed to populate the notify struct and fetch the
-device state from the gatt database in order to call
-send_notification_to_device.
+ - No documentation
+   While the code tries to be self-documenting proper documentation
+   would be required.
 
----
- src/gatt-database.c | 97 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+ - Minimal device tree bindings changes
+   There are no proper updates for the DT bindings (thus neither Rob
+   Herring nor devicetree are included in the To/Cc lists). The dt
+   schema changes would be a part of v1.
 
-diff --git a/src/gatt-database.c b/src/gatt-database.c
-index 99c95f2d6..08609d3a4 100644
---- a/src/gatt-database.c
-+++ b/src/gatt-database.c
-@@ -3615,6 +3615,97 @@ static DBusMessage *manager_unregister_app(DBusConnection *conn,
- 	return dbus_message_new_method_return(msg);
- }
- 
-+static DBusMessage *notify_characteristic_changed(DBusConnection *conn,
-+                                                  DBusMessage *msg, void *user_data)
-+{
-+    struct btd_gatt_database *database = user_data;
-+    uint8_t *value = NULL;
-+    int value_len = 0;
-+    DBusMessageIter args;
-+    DBusMessageIter array;
-+    DBusMessage *reply;
-+    bdaddr_t device_bdaddr;
-+    const char *characteristic_path;
-+    const char *client_path;
-+    const char *application_path;
-+    struct svc_match_data match_data;
-+    const char *sender = dbus_message_get_sender(msg);
-+    struct gatt_app *app;
-+    struct external_service *service;
-+    struct external_chrc *chrc;
-+    struct notify notify;
-+    struct device_state *client_state;
-+    struct btd_device *client_device;
-+
-+    if (!dbus_message_iter_init(msg, &args)) {
-+        return btd_error_invalid_args(msg);
-+    }
-+
-+    if (dbus_message_iter_get_arg_type(&args) != DBUS_TYPE_OBJECT_PATH) {
-+        return btd_error_invalid_args(msg);
-+    }
-+    dbus_message_iter_get_basic(&args, &application_path);
-+
-+    dbus_message_iter_next(&args);
-+    if (dbus_message_iter_get_arg_type(&args) != DBUS_TYPE_OBJECT_PATH) {
-+        return btd_error_invalid_args(msg);
-+    }
-+    dbus_message_iter_get_basic(&args, &client_path);
-+
-+    dbus_message_iter_next(&args);
-+    if (dbus_message_iter_get_arg_type(&args) != DBUS_TYPE_OBJECT_PATH) {
-+        return btd_error_invalid_args(msg);
-+    }
-+    dbus_message_iter_get_basic(&args, &characteristic_path);
-+
-+    dbus_message_iter_next(&args);
-+    if (dbus_message_iter_get_arg_type(&args) != DBUS_TYPE_ARRAY) {
-+        return btd_error_invalid_args(msg);
-+    }
-+
-+    dbus_message_iter_recurse(&args, &array);
-+    dbus_message_iter_get_fixed_array(&array, &value, &value_len);
-+
-+    match_data.path = application_path;
-+    match_data.sender = sender;
-+    app = queue_find(database->apps, match_app, &match_data);
-+    if (!app) {
-+        return btd_error_does_not_exist(msg);
-+    }
-+
-+    service = queue_find(app->services, match_service_by_chrc, characteristic_path);
-+    if(!service) {
-+        return btd_error_does_not_exist(msg);
-+    }
-+
-+    chrc = queue_find(service->chrcs, match_chrc, characteristic_path);
-+    if(!chrc) {
-+        return btd_error_agent_not_available(msg);
-+    }
-+
-+    client_device = btd_adapter_find_device_by_path(database->adapter, client_path);
-+    if (!client_device){
-+        return btd_error_does_not_exist(msg);
-+    }
-+    client_state = find_device_state(database,
-+                                     device_get_address(client_device),
-+                                     btd_device_get_bdaddr_type(client_device));
-+    if (!client_state) {
-+        return btd_error_does_not_exist(msg);
-+    }
-+
-+    notify.handle = gatt_db_attribute_get_handle(chrc->attrib);
-+    notify.ccc_handle = gatt_db_attribute_get_handle(chrc->ccc);
-+    notify.database = database;
-+    notify.value = value;
-+    notify.len = value_len;
-+    notify.conf = conf_cb;
-+
-+    send_notification_to_device(client_state, &notify);
-+    DBG("Notification/Indication sent to %s.", client_path);
-+    return dbus_message_new_method_return(msg);
-+}
-+
- static const GDBusMethodTable manager_methods[] = {
- 	{ GDBUS_ASYNC_METHOD("RegisterApplication",
- 					GDBUS_ARGS({ "application", "o" },
-@@ -3623,6 +3714,12 @@ static const GDBusMethodTable manager_methods[] = {
- 	{ GDBUS_ASYNC_METHOD("UnregisterApplication",
- 					GDBUS_ARGS({ "application", "o" }),
- 					NULL, manager_unregister_app) },
-+	{ GDBUS_ASYNC_METHOD("NotifyCharacteristicChanged",
-+                    GDBUS_ARGS( {"application", "o" },
-+                    { "device", "o" },
-+                    { "characteristic_path", "o"},
-+                    { "value", "ay"}),
-+                    NULL, notify_characteristic_changed) },
- 	{ }
- };
- 
--- 
-2.17.1
+ - Lack of proper PCIe integration
+   At this moment support for PCIe is hacked up to be able to test the
+   PCIe part of qca6390. Proper PCIe support would require automatically
+   powering up the devices before the scan basing on the proper device
+   structure in the device tree.
+
+----------------------------------------------------------------
+Dmitry Baryshkov (15):
+      power: add power sequencer subsystem
+      pwrseq: port MMC's pwrseq drivers to new pwrseq subsystem
+      mmc: core: switch to new pwrseq subsystem
+      ath10k: add support for pwrseq sequencing
+      Bluetooth: hci_qca: merge qca_power into qca_serdev
+      Bluetooth: hci_qca: merge init paths
+      Bluetooth: hci_qca: merge qca_power_on with qca_regulators_init
+      Bluetooth: hci_qca: futher rework of power on/off handling
+      Bluetooth: hci_qca: add support for pwrseq
+      pwrseq: add support for QCA BT+WiFi power sequencer
+      arm64: dts: qcom: sdm845-db845c: switch bt+wifi to qca power sequencer
+      arm64: dts: qcom: qrb5165-rb5: add bluetooth support
+      arm64: dts: qcom: sdm845-db845c: add second channel support to qca power sequencer
+      WIP: PCI: qcom: use pwrseq to power up bus devices
+      WIP: arm64: dts: qcom: qrb5165-rb5: add bus-pwrseq property to pcie0
+
+ .../{mmc => power/pwrseq}/mmc-pwrseq-emmc.yaml     |   0
+ .../{mmc => power/pwrseq}/mmc-pwrseq-sd8787.yaml   |   0
+ .../{mmc => power/pwrseq}/mmc-pwrseq-simple.yaml   |   0
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts           |  51 +++
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts         |  28 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |   6 +
+ drivers/bluetooth/hci_qca.c                        | 286 +++++++-------
+ drivers/mmc/core/Kconfig                           |  32 --
+ drivers/mmc/core/Makefile                          |   4 -
+ drivers/mmc/core/core.c                            |   9 +-
+ drivers/mmc/core/host.c                            |   8 +-
+ drivers/mmc/core/mmc.c                             |   3 +-
+ drivers/mmc/core/pwrseq.c                          | 117 ------
+ drivers/mmc/core/pwrseq.h                          |  58 ---
+ drivers/mmc/core/pwrseq_emmc.c                     | 120 ------
+ drivers/mmc/core/pwrseq_sd8787.c                   | 107 ------
+ drivers/mmc/core/pwrseq_simple.c                   | 164 --------
+ drivers/net/wireless/ath/ath10k/snoc.c             |  63 +++-
+ drivers/net/wireless/ath/ath10k/snoc.h             |   2 +
+ drivers/pci/controller/dwc/pcie-qcom.c             |  13 +
+ drivers/power/Kconfig                              |   1 +
+ drivers/power/Makefile                             |   1 +
+ drivers/power/pwrseq/Kconfig                       |  57 +++
+ drivers/power/pwrseq/Makefile                      |  11 +
+ drivers/power/pwrseq/core.c                        | 411 +++++++++++++++++++++
+ drivers/power/pwrseq/pwrseq_emmc.c                 | 118 ++++++
+ drivers/power/pwrseq/pwrseq_qca.c                  | 291 +++++++++++++++
+ drivers/power/pwrseq/pwrseq_sd8787.c               |  97 +++++
+ drivers/power/pwrseq/pwrseq_simple.c               | 160 ++++++++
+ include/linux/mmc/host.h                           |   4 +-
+ include/linux/pwrseq/consumer.h                    |  88 +++++
+ include/linux/pwrseq/driver.h                      |  71 ++++
+ 32 files changed, 1592 insertions(+), 789 deletions(-)
+ rename Documentation/devicetree/bindings/{mmc => power/pwrseq}/mmc-pwrseq-emmc.yaml (100%)
+ rename Documentation/devicetree/bindings/{mmc => power/pwrseq}/mmc-pwrseq-sd8787.yaml (100%)
+ rename Documentation/devicetree/bindings/{mmc => power/pwrseq}/mmc-pwrseq-simple.yaml (100%)
+ delete mode 100644 drivers/mmc/core/pwrseq.c
+ delete mode 100644 drivers/mmc/core/pwrseq.h
+ delete mode 100644 drivers/mmc/core/pwrseq_emmc.c
+ delete mode 100644 drivers/mmc/core/pwrseq_sd8787.c
+ delete mode 100644 drivers/mmc/core/pwrseq_simple.c
+ create mode 100644 drivers/power/pwrseq/Kconfig
+ create mode 100644 drivers/power/pwrseq/Makefile
+ create mode 100644 drivers/power/pwrseq/core.c
+ create mode 100644 drivers/power/pwrseq/pwrseq_emmc.c
+ create mode 100644 drivers/power/pwrseq/pwrseq_qca.c
+ create mode 100644 drivers/power/pwrseq/pwrseq_sd8787.c
+ create mode 100644 drivers/power/pwrseq/pwrseq_simple.c
+ create mode 100644 include/linux/pwrseq/consumer.h
+ create mode 100644 include/linux/pwrseq/driver.h
+
 
