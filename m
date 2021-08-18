@@ -2,88 +2,182 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 148A73EFD6F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Aug 2021 09:10:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93F303EFDD6
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Aug 2021 09:38:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238745AbhHRHLY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 18 Aug 2021 03:11:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59294 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238501AbhHRHLX (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 18 Aug 2021 03:11:23 -0400
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C000FC061764
-        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Aug 2021 00:10:49 -0700 (PDT)
-Received: by mail-io1-xd44.google.com with SMTP id n24so1426459ion.10
-        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Aug 2021 00:10:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
-        bh=l8/06Pt7vp+QnEaozw4jU2IiSWTeFeipDK9alaB1bSQ=;
-        b=TnstI/xd2mx8a1Ix5OQFgM+ygnnp93IG7qZX5aGAeJwHopMXoSNftb8uIC9iwUUDz7
-         mXJE49tIzxADIwjPxloVp8/ghONt1MVKPqC5IaUNiBahQTFe5QadFHIM+2+Wb9ss4YHz
-         W66FjB3/gb/TIe4X+TkK812EwCExiMdpvzp+3CTBX+8jhmlt7ut+IGH+bKxeS4J9ey6w
-         If3incrAFRWQpdzlTV//fYXVRao5DcdlxTHZAKu/wdwAgfNniphH2u6JJ9lakSfBaAkQ
-         G0QYbtzSpO/jIHVipf6LRX0xrCwQiIDQCpO1dlhx4gCYk3qur1pXLh18ttnAh7R0rqjb
-         +gNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to;
-        bh=l8/06Pt7vp+QnEaozw4jU2IiSWTeFeipDK9alaB1bSQ=;
-        b=Z3h882KHXDlkq0X/Xr1BWpYry+O6cnEYkBb/7YJZ05N2+to0PMrTN8LhW/35pAiDtB
-         n0FyBNQDbA/kBwMf2vlH2EGMEi5++Y2gITE74eH9Z/fxSPp1c5bcCPrz7cbekTYv13QV
-         IQKuXOqP23C00zYBFCcSZLpylfPVe/VlFD/e8CHQS9Y+XZkFDoV2o7CVnXOX7f2aOSgG
-         vEi0FNWC/JG7vd1973Kb1XgoLQZxWDojl6epgjwVzBug5nt88oUzvF7OvlEFu0gAoKgN
-         xIVByf7T0rPbgiY3RrHpjpra0UmppxsUqBFvSyRQyABhVZHLO62TQpouLC6VpUX621K2
-         3i2A==
-X-Gm-Message-State: AOAM531UvQ3hm0YWrxRqCbyDHm/fhbviFw9NjeA17qowiGsf2dpr+dVf
-        9mmK2OwgNeLJcPK+RCCCDd7F3lDXqqrngFt0jXY=
-X-Google-Smtp-Source: ABdhPJyV7zbLXLR+cz/dwO5539A2AMdbP7BFIUXFx9P7wFRESfV+uDr78FMbWSM0efX1qHFw0qchpmuMDLEA74H9TX4=
-X-Received: by 2002:a05:6638:4121:: with SMTP id ay33mr6475119jab.137.1629270649061;
- Wed, 18 Aug 2021 00:10:49 -0700 (PDT)
+        id S238928AbhHRHim (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 18 Aug 2021 03:38:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:63214 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238482AbhHRHil (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 18 Aug 2021 03:38:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629272287; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=d0yXr/T2VW4S7hBEk5V/ACcxbZ3MzyH062yZu9AHnlE=;
+ b=awdU0otB2G0MzS3EnLykMR0rmvG5M6UNuZo97mJaKsb2RTiJ5db2wm2mZyNEZL7mvLYsZ0+U
+ c/uyfEXibWRFHgor/NBGatfSuLEAXegUqKzwzCy82s53/E2uEagSTkwmvfUnp0PDWFiXUkNv
+ 3oNP6KlEwl2tf2KVxlRj329Os8s=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI2MTA3ZSIsICJsaW51eC1ibHVldG9vdGhAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 611cb8d2454b7a558fc7fa5c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 18 Aug 2021 07:37:54
+ GMT
+Sender: tjiang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D9588C43616; Wed, 18 Aug 2021 07:37:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: tjiang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A7317C43460;
+        Wed, 18 Aug 2021 07:37:51 +0000 (UTC)
 MIME-Version: 1.0
-Reply-To: godwinppter@gmail.com
-Sender: bandafrancisca915@gmail.com
-Received: by 2002:a6b:b854:0:0:0:0:0 with HTTP; Wed, 18 Aug 2021 00:10:48
- -0700 (PDT)
-From:   Godwin Pete <godwinnpeter@gmail.com>
-Date:   Wed, 18 Aug 2021 09:10:48 +0200
-X-Google-Sender-Auth: nSJBh77Iy7YetS3GDMqAHHSapPk
-Message-ID: <CAFC7EqvhR3-8mary75Ah0D-8eVZuCLpreD8SKAYOZJnGOL7CoQ@mail.gmail.com>
-Subject: For your information
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 18 Aug 2021 15:37:51 +0800
+From:   tjiang@codeaurora.org
+To:     Zijun Hu <zijuhu@codeaurora.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org
+Subject: Re: [PATCH v3] Bluetooth: btusb: Add support different nvm to
+ distinguish different factory for WCN6855 controller
+In-Reply-To: <1628758216-3201-1-git-send-email-zijuhu@codeaurora.org>
+References: <1628758216-3201-1-git-send-email-zijuhu@codeaurora.org>
+Message-ID: <fcd7e83c3cd39ea89c94345ec00b5c6c@codeaurora.org>
+X-Sender: tjiang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
 
-I just want to use this little opportunity to inform you about my
-success towards the transfer. I'm currently in India for an investment
-with part of my share, after completing the transfer with an Indian
-business man. But i will visit your country, next year. After the
-completion of my project here in India. Please, contact my secretary
-to send you the (ATM) card which I've already credited with the sum of
-($500,000.00). Just contact her to help you in receiving the (ATM)
-card. I've explained everything to her before my trip to India. This
-is what I can do for you because, you couldn't help in the transfer,
-but for the fact that you're the person whom I've contacted initially,
-for the transfer. I decided to give this ($500,000.00) as a
-compensation for being contacted initially for the transfer. I always
-try to make the difference, in dealing with people any time I come in
-contact with them. I'm also trying to show that I'm quite a different
-person from others whose may have a different purpose within them. I
-believe that you will render some help to me when I, will visit your
-country, for another investment there. So contact my secretary for the
-card, Her contact are as follows,
+marcel:
+   could you help review this patch ? thank you.
+tjiang
 
-Full name: Mrs, Jovita Dumuije,
-Country: Burkina Faso
-Email: jovitadumuije@gmail.com
-
-Thanks, and hope for a good corporation with you in future.
-
-Godwin Peter,
+On 2021-08-12 16:50, Zijun Hu wrote:
+> From: Tim Jiang <tjiang@codeaurora.org>
+> 
+> we have different factory to produce wcn6855 soc chip, so we should
+> use different nvm file with suffix to distinguish them.
+> 
+> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+> ---
+>  drivers/bluetooth/btusb.c | 60 
+> ++++++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 51 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index b1a05bb9f4bf..d7b4e0f1c3e3 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -4013,6 +4013,9 @@ static int btusb_set_bdaddr_wcn6855(struct 
+> hci_dev *hdev,
+>  #define QCA_DFU_TIMEOUT		3000
+>  #define QCA_FLAG_MULTI_NVM      0x80
+> 
+> +#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
+> +#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
+> +
+>  struct qca_version {
+>  	__le32	rom_version;
+>  	__le32	patch_version;
+> @@ -4044,6 +4047,7 @@ static const struct qca_device_info
+> qca_devices_table[] = {
+>  	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
+>  	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+>  	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
+> +	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
+>  };
+> 
+>  static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 
+> request,
+> @@ -4198,6 +4202,39 @@ static int btusb_setup_qca_load_rampatch(struct
+> hci_dev *hdev,
+>  	return err;
+>  }
+> 
+> +static int btusb_setup_qca_form_nvm_name(char **fwname,
+> +					int max_size,
+> +					struct qca_version *ver,
+> +					char *factory)
+> +{
+> +	/* if boardid equal 0, use default nvm without suffix */
+> +	switch (le16_to_cpu(ver->board_id)) {
+> +	case 0x0:
+> +		/* we add suffix factory to distinguish with different factory. */
+> +		if (factory != NULL) {
+> +			snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%s.bin",
+> +				 le32_to_cpu(ver->rom_version),
+> +				 factory);
+> +		} else {
+> +			snprintf(*fwname, max_size, "qca/nvm_usb_%08x.bin",
+> +				 le32_to_cpu(ver->rom_version));
+> +		}
+> +		break;
+> +	default:
+> +		if (factory != NULL) {
+> +			snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%s_%04x.bin",
+> +				le32_to_cpu(ver->rom_version),
+> +				factory,
+> +				le16_to_cpu(ver->board_id));
+> +		} else {
+> +			snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%04x.bin",
+> +				le32_to_cpu(ver->rom_version),
+> +				le16_to_cpu(ver->board_id));
+> +		}
+> +		break;
+> +	}
+> +}
+> +
+>  static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+>  				    struct qca_version *ver,
+>  				    const struct qca_device_info *info)
+> @@ -4206,19 +4243,24 @@ static int btusb_setup_qca_load_nvm(struct
+> hci_dev *hdev,
+>  	char fwname[64];
+>  	int err;
+> 
+> -	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+> -		/* if boardid equal 0, use default nvm without surfix */
+> -		if (le16_to_cpu(ver->board_id) == 0x0) {
+> +	switch (ver->ram_version) {
+> +	case WCN6855_2_0_RAM_VERSION_GF:
+> +	case WCN6855_2_1_RAM_VERSION_GF:
+> +		if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+> +			btusb_setup_qca_form_nvm_name(&fwname, sizeof(fwname), ver, "gf");
+> +		} else {
+>  			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+>  				 le32_to_cpu(ver->rom_version));
+> +		}
+> +		break;
+> +	default:
+> +		if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+> +			btusb_setup_qca_form_nvm_name(&fwname, sizeof(fwname), ver, NULL);
+>  		} else {
+> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
+> -				le32_to_cpu(ver->rom_version),
+> -				le16_to_cpu(ver->board_id));
+> +			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+> +				 le32_to_cpu(ver->rom_version));
+>  		}
+> -	} else {
+> -		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+> -			 le32_to_cpu(ver->rom_version));
+> +		break;
+>  	}
+> 
+>  	err = request_firmware(&fw, fwname, &hdev->dev);
