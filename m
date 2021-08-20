@@ -2,141 +2,89 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FF993F32C5
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Aug 2021 20:07:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BDD13F371F
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 21 Aug 2021 01:00:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235519AbhHTSHp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 20 Aug 2021 14:07:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57968 "EHLO
+        id S235729AbhHTXAi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 20 Aug 2021 19:00:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235154AbhHTSHo (ORCPT
+        with ESMTP id S230303AbhHTXAh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 20 Aug 2021 14:07:44 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C60AC06175F
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Aug 2021 11:07:05 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id e14so11735172qkg.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Aug 2021 11:07:05 -0700 (PDT)
+        Fri, 20 Aug 2021 19:00:37 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C010C061575;
+        Fri, 20 Aug 2021 15:59:59 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id g26so21652421ybe.0;
+        Fri, 20 Aug 2021 15:59:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2P/6ZDosW5/PVcVOFh8CyCIBugd9jmsRIXNI9frVp7k=;
-        b=eKlYoSg3dyAbESo+fqg+WE15YLNT8pnJoLbLlt4p3gPHdJcPfp3zxOG3s4YPxNRYRA
-         wA/+17Kcf4OTu6WSv5rvKqFSNJjVgyZil/Aa+dRjpq1fyJs7xT7HCyWE5Lez19Fctvpn
-         fnt8zYEUB6XDJTwGrbo+cxtaQ8xBfy2lhSw/pUcTUjHq3SYmL42O7NATxxGUxx/p6PSR
-         X9CvVNLLR5FUVuHZUm2uMHxa9qn0/npIpTtFzrf84CoEsU3pVNpAkQHFSKrI4BjqhFYk
-         jKjg6TogdUzt0VlXmNMV8Hk+zLDxDpdka2jmr+B9Uk7If6pBiWAdgmz88s0DbRPoFKJU
-         sMnQ==
+        bh=5N+b3wOihMALaJmPpP13xN80cULdgks84ZuFcJ4Lqvk=;
+        b=e4AsedA7BbI048hd6BciCpkwEXxr12d8azmp/cis/ZRj1t77xjjRRxYp8hOiPOdyBV
+         l5VtXir0kobg1g6K44KlcTXjbyFNBBBXmv/F2raLLVx3RC3rlcYXrCvhy2FUXdA/DKmS
+         BYdX9t/VSwBxxbAWeckNBXMmjN+rXFCW/yPSX/4ytsGAnOd12R/vBVn8Xu5UIUJPPQLY
+         sdorUeG6gXvBvw2pQK93shF4JWCtk0pLgTgUNm9I+m/EVFJFMjh2+KvD11CRStjigL63
+         +CRrRSm7LptGr7coosujWHqPXmSPFImamlQU4Djr+X69hr9JpzG3Yu9zBWgwJctw59rH
+         Q2sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2P/6ZDosW5/PVcVOFh8CyCIBugd9jmsRIXNI9frVp7k=;
-        b=cSElwADq/VmSimueiUKSEbSxoBvk1IocMMEhTEPyIJUy/r8RDtTgC5hLmL7t3WwkqO
-         4uNhSJKWt5t5TsElvI298bGEqCJCdpnHoMwNOrWt7Mh7yypYA6wX3uta4a9x4MoWnE9Z
-         PD447TLRCknl0sf62Gi4EfE5ZdxQAKVdb0JjP7QNtpvTaPijq7U2Vj7IcjpkiwfoMkqX
-         uDxAvW94tUAXvvCJZm4JJJ5/H90rt3s31J6GGRRG6yavmdpexHHcc8BO7pfh5dDXFJtg
-         xnmzFAw4AhbVDU1Bpx9U/RvHf5N/Kb8HyIGG5+OumQnmWg+PHXCwnnSWl1RJGYXmiTQA
-         3zXg==
-X-Gm-Message-State: AOAM533b2YAvr5A8EJ6lK4QJ259jnJizb294y0chLODmew724GXA130U
-        VJ25z+hccCgtAggcQUxNRgqtJPgdh7EI9znHP2QRQg==
-X-Google-Smtp-Source: ABdhPJy0huyrDFkZklcWqufreDpJu2i+J+NGLsKEiT3nXZbNTjdURslsF8xR7EyStcydsSHXMEetryziZu3Y6KGLCVk=
-X-Received: by 2002:a37:7801:: with SMTP id t1mr10378336qkc.162.1629482824676;
- Fri, 20 Aug 2021 11:07:04 -0700 (PDT)
+        bh=5N+b3wOihMALaJmPpP13xN80cULdgks84ZuFcJ4Lqvk=;
+        b=lRUsgZ/jZIZBZr2mgI/tmlN9zO2k4kQPqUsnBEVcn6hf4ICxRX3jUg+ALFqOaxBR+u
+         N0b7Zu0PikqihiCMc+1CQOao7kix/iTue0MMJSQOgxWSUJNu/HH9JcNIaJkagthaqIWc
+         QCjaBynZHeaEaxBtDq9dcbUlRSO/XFQ/D4MkPBRYGqPWH9OifwpNdmdQsq19x8cOvAen
+         FM1s055BgYGmUL7vOCdf2CjF49hVjixJugkKzVvCPEZrPcx8sNqA0TkKQzZ0aX9uFWcy
+         2c0fFvnbJCPwEtEb7s6StjI+xF93lEtOSfyju61p+9XpwhXlgPprVvDfDH9rb2GZUGC2
+         EEkw==
+X-Gm-Message-State: AOAM531emPlPJ0CNpU0b1ronOdPD1Y/QZGtg/4nhOjcskkOaxCuTlbQo
+        t/hIL4in19cKsL3rl8pm0oyy8wkRO4if5TF8fiITGrOp
+X-Google-Smtp-Source: ABdhPJyjslmcvtoD5j26IAscy7jdLMc0UG9s5eocFS7q6/noc0zqsi3zPOdZBLQnzrol0w5lMDAWmYTRy2pPDAp2mlM=
+X-Received: by 2002:a05:6902:114c:: with SMTP id p12mr30417216ybu.282.1629500398491;
+ Fri, 20 Aug 2021 15:59:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210817005507.1507580-1-dmitry.baryshkov@linaro.org>
- <1CA665D1-86F0-45A1-862D-17DAB3ABA974@holtmann.org> <CAA8EJpoOxerwmwQozL3gp1nX-+oxLMFUFjVPvRy-MoVfPuvqrw@mail.gmail.com>
- <YR/gQ0K9MjddBVwY@ripper>
-In-Reply-To: <YR/gQ0K9MjddBVwY@ripper>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 20 Aug 2021 21:06:53 +0300
-Message-ID: <CAA8EJpo7R4azxybBmKC4uzAm_dvP4tpm4g9VoDMTdw6XZCxzTg@mail.gmail.com>
-Subject: Re: [RFC PATCH 00/15] create power sequencing subsystem
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Andy Gross <agross@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-mmc@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:BLUETOOTH SUBSYSTEM" <linux-bluetooth@vger.kernel.org>,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org
+References: <20210819222307.242695-1-luiz.dentz@gmail.com> <20210820.124629.2213659775230733647.davem@davemloft.net>
+In-Reply-To: <20210820.124629.2213659775230733647.davem@davemloft.net>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 20 Aug 2021 15:59:47 -0700
+Message-ID: <CABBYNZ+N0d96GieMggHx+x2075cK5aswJpBua-wX2LA87LkgkQ@mail.gmail.com>
+Subject: Re: pull request: bluetooth 2021-08-19
+To:     David Miller <davem@davemloft.net>
+Cc:     Jakub Kicinski <kuba@kernel.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Fri, 20 Aug 2021 at 20:01, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Fri 20 Aug 06:08 PDT 2021, Dmitry Baryshkov wrote:
->
-> > Hi,
-> >
-> > On Thu, 19 Aug 2021 at 18:23, Marcel Holtmann <marcel@holtmann.org> wrote:
-> > > > This is an RFC of the proposed power sequencer subsystem. This is a
-> > > > generification of the MMC pwrseq code. The subsystem tries to abstract
-> > > > the idea of complex power-up/power-down/reset of the devices.
-> > > >
-> > > > The primary set of devices that promted me to create this patchset is
-> > > > the Qualcomm BT+WiFi family of chips. They reside on serial+platform
-> > > > interfaces (older generations) or on serial+PCIe (newer generations).
-> > > > They require a set of external voltage regulators to be powered on and
-> > > > (some of them) have separate WiFi and Bluetooth enable GPIOs.
-> > > >
-> > > > This patchset being an RFC tries to demonstrate the approach, design and
-> > > > usage of the pwrseq subsystem. Following issues are present in the RFC
-> > > > at this moment but will be fixed later if the overall approach would be
-> > > > viewed as acceptable:
-> > > >
-> > > > - No documentation
-> > > >   While the code tries to be self-documenting proper documentation
-> > > >   would be required.
-> > > >
-> > > > - Minimal device tree bindings changes
-> > > >   There are no proper updates for the DT bindings (thus neither Rob
-> > > >   Herring nor devicetree are included in the To/Cc lists). The dt
-> > > >   schema changes would be a part of v1.
-> > > >
-> > > > - Lack of proper PCIe integration
-> > > >   At this moment support for PCIe is hacked up to be able to test the
-> > > >   PCIe part of qca6390. Proper PCIe support would require automatically
-> > > >   powering up the devices before the scan basing on the proper device
-> > > >   structure in the device tree.
-> > > >
-> > > > ----------------------------------------------------------------
-> > > > Dmitry Baryshkov (15):
-> > > >      power: add power sequencer subsystem
-> > > >      pwrseq: port MMC's pwrseq drivers to new pwrseq subsystem
-> > > >      mmc: core: switch to new pwrseq subsystem
-> > > >      ath10k: add support for pwrseq sequencing
-> > > >      Bluetooth: hci_qca: merge qca_power into qca_serdev
-> > > >      Bluetooth: hci_qca: merge init paths
-> > > >      Bluetooth: hci_qca: merge qca_power_on with qca_regulators_init
-> > > >      Bluetooth: hci_qca: futher rework of power on/off handling
-> > > >      Bluetooth: hci_qca: add support for pwrseq
-> > >
-> > > any chance you can try to abandon patching hci_qca. The serdev support in hci_uart is rather hacking into old line discipline code and it is not aging well. It is really becoming a mess.
-> >
-> > I wanted to stay away from rewriting the BT code. But... New driver
-> > would have a bonus point that I don't have to be compatible with old
-> > bindings.
->
-> It would be preferable if this was a implementation-only change and that
-> we kept the existing binding and existing dtb continued to work.
+Hi David,
 
-This would require setting up the pwrseq from within the bt driver. I
-did not have that in mind. However that'd ease the bt code, since we
-won't have to handle the fallback/back-compatibility. Let me think
-about it.
+On Fri, Aug 20, 2021 at 4:46 AM David Miller <davem@davemloft.net> wrote:
+>
+> From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+> Date: Thu, 19 Aug 2021 15:23:07 -0700
+>
+> > The following changes since commit 4431531c482a2c05126caaa9fcc5053a4a5c495b:
+> >
+> >   nfp: fix return statement in nfp_net_parse_meta() (2021-07-22 05:46:03 -0700)
+> >
+> > are available in the Git repository at:
+> >
+> >   git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git tags/for-net-next-2021-08-19
+> >
+>
+> There was a major merge conflict with the deferred hci cleanup fix that came in via
+> 'net'.  Please double check my conflict resolution.
+
+My bad, I thought I had rebased it on top of net-next but perhaps I
+didn't do it correctly, anyway the correct version would be the one
+Linus had pushed to his tree so you could have just skipped the one we
+had in bluetooth-next which was an early attempt to fix the same
+issue.
+
 
 -- 
-With best wishes
-Dmitry
+Luiz Augusto von Dentz
