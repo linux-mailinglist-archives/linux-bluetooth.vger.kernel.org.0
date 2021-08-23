@@ -2,89 +2,91 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EAD03F5284
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Aug 2021 22:58:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8307D3F528B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Aug 2021 23:04:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232719AbhHWU6q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 23 Aug 2021 16:58:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35628 "EHLO
+        id S232633AbhHWVEy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 23 Aug 2021 17:04:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232682AbhHWU6q (ORCPT
+        with ESMTP id S232503AbhHWVEv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 23 Aug 2021 16:58:46 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2043CC061575
-        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Aug 2021 13:58:03 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id e186so23535563iof.12
-        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Aug 2021 13:58:03 -0700 (PDT)
+        Mon, 23 Aug 2021 17:04:51 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08276C061575
+        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Aug 2021 14:04:08 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id j13so15567042ybj.9
+        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Aug 2021 14:04:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=M46nZc2nL9RSonYgcNxpcgN50d8y5o3zTcXKhUU97To=;
-        b=ajlP/xgZXVlGPFhxMPZ0XfDUgZp9hUfvKxOvnIKdIh1H+qc/CM1ZD3VeyZ23QzCCrj
-         4BBl9ZI27oRzFkhz7o6HNu6dJeFU2tQYFJk+3fDgV2MBwxseJrgDMX5KCPaPS3mmq5c+
-         l2ZaUgo9YgMn9luBafedhTkWuSAPj3uwQblS1T65xlBEaJnyhA5Ij/dTqPHAdMecpwez
-         wDaS1Sb/wAwSqnT6eeNCFjzmW3O0k+a0xh6pGBuSZq4OwB/fMFIzNedpUnT9AU9Twsh9
-         mMC8RmgfWIvuoTiYq9HhyYYvWjcazwfJ9KycJYuzr44Cb2eWPA0E2ATjIJSuS0id9JCq
-         SeBw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=voXXeLKlFlOLRsbMe7Mju4M35OwX86Fuz1jihyhQPTM=;
+        b=Q1+kGAQjivkE1KBQILIxb9/bjS6+eVeU0OyD05rp9KgSX6M4W0aMBnD6QnTY97njIp
+         hcsuA4JA0LmqeBWTQUCOShqnkcWnq9DDUs+LK1evZxeM5S730s9E1Hqm4Dn5IIMB4m79
+         xLNuwQmdd9S0LpYpxUnLrMRBUOGbSyfSQrMMn4juDKEwZdEgyId/492vRsyuXNieQd26
+         ZyqaI1dVvMH/gx61vwnuTi4kfXpXY4lxCK9BnYMVixwtuNjPwbtEBsnaxKlpmySPV4wT
+         iPAJ2qhYqMcOrMd9Pbyh65Q8FFET6xRFtIk9CR9I3jrW3u73RHn7USXHYz1Tpnfbyz56
+         fQEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=M46nZc2nL9RSonYgcNxpcgN50d8y5o3zTcXKhUU97To=;
-        b=eClfbGwQTvmSHPC7PS/vsodRx3+6OYWpcJfe42mo3Y38VS5yHvhiYxIZRNlyo+h/d3
-         vPdPvB+A6dOmWdDgbTlYfpsy/1Lr7rZeHQ+6tBj+NUM8rLroWqxTNosj71DrftBgROD8
-         pcTamfYcPjy85Ls+9XYVxrCVfeoQwFTqMrD8xJq6DOrnmhc59cTXllr4gFfVbnf1as89
-         wDrwQ9rco3LX2k4iYcHwkJFiwLGBfVDe0RXyaLM3kOl3Qwx+BUxZkhqaGK++IKztX6fo
-         RrJDI8vAs6Sj5NuZSp2uHWSgs+9eTavu5hWCS8vMNcfBKOi/M19FYps3UFPdY/1bMKM1
-         7pRA==
-X-Gm-Message-State: AOAM532wL0gYpmCaBWSzlz/eSCOe0+MBV71VVbyQbW5VTqB2D2Go8IQU
-        LLBVGapCuwGgnKKwHy4h2n2b6x8c8kNosXwSnm4=
-X-Google-Smtp-Source: ABdhPJzULyBI+c+RCPaBTcb97r2IhGhxvUwiQTfMe25JpvfjB8xBBm6/gBfi4iv4grFDKmu+g1o/DBUqf8oYAQ9G0U0=
-X-Received: by 2002:a6b:e70f:: with SMTP id b15mr13155976ioh.140.1629752282438;
- Mon, 23 Aug 2021 13:58:02 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=voXXeLKlFlOLRsbMe7Mju4M35OwX86Fuz1jihyhQPTM=;
+        b=fVPKVTbqOHJSn4JvkWXmszxBoUAYDiBDMGrZMJcJbd+mFIIbM5uc077dJKHLcRiEVr
+         q3j5/XYLvRZX0MkeYNHG9oZfeqQquG48vfsZwPLpOkfxHZcpAUNrCzxXWs1Q8181/xej
+         bYBqiwjBkf5T181C5FzRcEicyyflzl1FQY8kRUlWHVSk130OX4q1U/XULeQk8qHjQGqX
+         4eZSgDZni1GmqxMLwlMaABUaCsY670XjMbZySvPdjWMWvD7+5KY7lTOSqa5rIgK5Ie+H
+         sUec12nJfZPY3bDdNtsjpCSGnaPl7GBf7nDb+0k1KEG3pj7nmsDXB2sgisohOonv7w2w
+         oqpA==
+X-Gm-Message-State: AOAM530JDDHYHTXnERo0N7ncGVTPIxHdzRHUuD8Ke128mjYtrahzJbyl
+        KGJwwAR77ytI53r2mM9faCDW9qLnpLN+6cgtgdBcQ9cN
+X-Google-Smtp-Source: ABdhPJy5ebuj+Iv3A8flhJ4PgIgE5mv34I0v52ROjTTJfB0evQOCKhyGTfl9jap2fNj5z0CehvYRyilK+fMf8YRats4=
+X-Received: by 2002:a25:be02:: with SMTP id h2mr47571008ybk.91.1629752647157;
+ Mon, 23 Aug 2021 14:04:07 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a05:6e04:1412:0:0:0:0 with HTTP; Mon, 23 Aug 2021 13:58:01
- -0700 (PDT)
-Reply-To: info.dynamicfinc@gmail.com
-From:   Dynamic Funds Inc <sharonwilliams.investments@gmail.com>
-Date:   Mon, 23 Aug 2021 21:58:01 +0100
-Message-ID: <CAGFd6Bi6S5UU8JOAndF+pm0FoU7RkJ=5HriJq0DZp4np-YxeJw@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
+References: <20210722074208.8040-1-penguin-kernel@I-love.SAKURA.ne.jp>
+ <CABBYNZKmF7vODFxkDyRwFsTd933mNNB3vwVOCcxsgof_St=ORw@mail.gmail.com> <246902bb-aafa-43bf-bf7c-ff26bfed5be1@i-love.sakura.ne.jp>
+In-Reply-To: <246902bb-aafa-43bf-bf7c-ff26bfed5be1@i-love.sakura.ne.jp>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Mon, 23 Aug 2021 14:03:56 -0700
+Message-ID: <CABBYNZKcFsk1SroWcP=SVMwFAJongtVG=gc9DK=SoRLvTCOwCQ@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: reorganize functions from hci_sock_sendmsg()
+To:     Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        LinMa <linma@zju.edu.cn>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---=20
-Sch=C3=B6ne Gr=C3=BC=C3=9Fe.
+Hi Tetsuo,
 
-Ich bin Noah Blackstein, Kreditvermittler bei Dynamic Funds Inc, einem
-eingetragenen Finanzunternehmen. Wir vergeben Kredite in H=C3=B6he von 3%
-im Bereich von 5.000 bis 15 Millionen Dollar, Pfund und Euro. (Keine
-Sozialversicherung und keine Bonit=C3=A4tspr=C3=BCfung, 100% garantiert!) I=
-ch
-freue mich darauf, mit Ihnen Gesch=C3=A4fte zu machen.
+On Sun, Aug 22, 2021 at 8:42 AM Tetsuo Handa
+<penguin-kernel@i-love.sakura.ne.jp> wrote:
+>
+> On 2021/07/24 6:44, Luiz Augusto von Dentz wrote:
+> > Hi Tetsuo,
+> >
+> > On Thu, Jul 22, 2021 at 12:42 AM Tetsuo Handa
+> > <penguin-kernel@i-love.sakura.ne.jp> wrote:
+> >>
+> >> Since userfaultfd mechanism allows sleeping with kernel lock held,
+> >> avoiding page fault with kernel lock held where possible will make
+> >> the module more robust. This patch just brings memcpy_from_msg() calls
+> >> to out of sock lock.
+> >>
+> >> Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+> >
+> > Reviewed-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> >
+>
+> Can this patch go to v5.15 ?
 
-Erbrachte Dienstleistungen umfassen; Pers=C3=B6nliche Darlehen,
-Refinanzierung, Heimwerker, Investitionsdarlehen, Autokredit,
-Studentendarlehen, Schuldenkonsolidierung, Kreditlinie, zweite
-Hypothek, Gesch=C3=A4ftsdarlehen. Bei Interesse kontaktieren Sie uns bitte
-mit den folgenden Informationen.
+Applied, thanks. I will be sending another pull-request by the end of
+this week which shall include it.
 
-BORROWERS DATEN FORMULAR, F=C3=9CLLEN UND R=C3=9CCKGABE
-Vollst=C3=A4ndiger Name :.
-Kontakt Adresse:.
-Telefon :.
-Land :.
-Erforderlicher Betrag als Darlehen :.
-Leihdauer :.
-Zweck des Darlehens :.
-Geschlecht :.
-
-Gr=C3=BC=C3=9Fe,
-Dynamic Funds Inc.
-info.dynamicfinc@gmail.com
+-- 
+Luiz Augusto von Dentz
