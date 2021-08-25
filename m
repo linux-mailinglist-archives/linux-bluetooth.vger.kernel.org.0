@@ -2,48 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DCFA3F7D86
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Aug 2021 23:14:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92E0D3F7D88
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Aug 2021 23:14:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231173AbhHYVPH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 25 Aug 2021 17:15:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50030 "EHLO
+        id S231597AbhHYVPJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 25 Aug 2021 17:15:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229840AbhHYVPE (ORCPT
+        with ESMTP id S229923AbhHYVPE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 25 Aug 2021 17:15:04 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBEC1C061757
-        for <linux-bluetooth@vger.kernel.org>; Wed, 25 Aug 2021 14:14:17 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id v123so755516pfb.11
-        for <linux-bluetooth@vger.kernel.org>; Wed, 25 Aug 2021 14:14:17 -0700 (PDT)
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EFEDC0613C1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 25 Aug 2021 14:14:18 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id y11so745899pfl.13
+        for <linux-bluetooth@vger.kernel.org>; Wed, 25 Aug 2021 14:14:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=mirO0AklfbG5OtoYKr/6Rz/8d6LNFSXQdJz3U0lCAEA=;
-        b=UNdXi5/nMm0pUqAjctxe55Hxh+iN2Z7kx2/5axa2pZmxy8bxSPjDPcStKyhm6xHRd2
-         GKsXSInQf+aGIBcMQwj9HqkTSWXZE14LGEUOFosBfnM+K8yLWKuJva5HaQUaEVlHSNv2
-         iazftRG07YCIsqXzttRfzKR3XNXxRfMgZxAjBxlfGET6BGoV2ZJqDUm+5sqfo5IV4ZQj
-         8LCYHnRBn2SlQxiweSmtRC3lfKVMz6MszmlaXIavXAsf3Q89GKYmDlj2vyEOwWBJO+ko
-         fd3613VGy0FaSPGZxx+7EDl0uSO6HGkaq+D7h8Z8pBBU8nlIx4KQviD/HQ9h6F6fu5m1
-         g1QQ==
+        bh=W/kkIUSlU8ACnmI49nXQ5yMykI7bB2fuFZ10QPX9yFM=;
+        b=s2NykH3d/h4Jn07ofcTeVPBxgfM5aWrndG72HnhkOdrnsxzrGvODikQGlm2Ul0OxwF
+         th3+sHpfUPfkijepiP1hubJ12LQ5Kd1sP7yf3XysXgPZlmFJltDpDKber7yJ5SefkmxS
+         UFZNcYKl6bogINRJ/na2xdKLYAuBh+11jY3yua0Tu3wnou1OQrXjCq7NpcTCC0gWP6xg
+         JIp+RJlPypmKv+4x76jqzqR4ij72Mi6/anK0Cy4oTYtxVpZaWWKTHGw5FXIxILS4Ge9Q
+         0FAXOzUYcgTxdEaBS+u2Ni3iWSU31L0KbkDrLKvxjt1e4vpHnsU8dZ/wWzobkX6PdbHy
+         LyXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mirO0AklfbG5OtoYKr/6Rz/8d6LNFSXQdJz3U0lCAEA=;
-        b=H1bhXg40qPeH1cy/gf/WvoQmqajFhfeZAmeaCz/aHM63g8azSFxPnrlZCNDiEcmz70
-         sBy2tAky5z0YXdu2s73zEqRn6nAfEEpmXzy30+JRBjKvCZhwyHCJ5aplPcYW5qyrNZA9
-         ETh16v6OHpnjsk9P0Jjc6X5xfOKxON3bhwaamaIJguFD+6m4dF6Gc5gdDpqySQUuJMQc
-         dGVWbu0jLbNGJeLTb+i5j4/7TRdxVB4OoEmf1572CIE8ATnRlwOhvA74vQcHT3Ud+6nB
-         fGhw02vGuthVIUeHSgnkZMhR9hmdfbXU/NpggvkO57BA9bBi+QlIsQJOTSY4V4AHqPzm
-         dKkw==
-X-Gm-Message-State: AOAM532HFG8PEmkxm9r/y31tngIfqMHepBPBShTKZ5MM1HhTKYfA6B7E
-        Pb+9Zl15scrb3FPQNjuiyoVv/ztf8H0=
-X-Google-Smtp-Source: ABdhPJwZ+bxhOIkKbUteID5k7lsV2uuCjHGEYObohCt89cd5VgPHjJrGxco/cHHojJDEzOU3AVzItA==
-X-Received: by 2002:a63:e74b:: with SMTP id j11mr173551pgk.322.1629926056687;
-        Wed, 25 Aug 2021 14:14:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=W/kkIUSlU8ACnmI49nXQ5yMykI7bB2fuFZ10QPX9yFM=;
+        b=PQNZ6d0TRBOmfN6xCOvC1LOvtiLvs3ZZYpkyVbb6cmM1a5HtI21z6ERUiW58Y0EkwA
+         V+AZbml5Vm8inSx36XtWqen3HKV69UL/oGCeiv/6y1FTag3ttkyHLFdugCkOV+GuOjD4
+         xFQyq8RSvuccMEWglHOCqWt3ySr9Pbu0N6CwgvczMLkjLDbWQV5NMHY0IHPq9uVL2Y0P
+         3280u1XT9ExtUNAyOZRZWhfyKwcYfB9X3jcrwWaFZZMaMjLBLhFXnt7lce9ggbl+meHU
+         z3qsADMIQLZ+t7QsqoUSWmEc9ZFQevJm6OfB5TUvaJUJX3AXtvqgTaCmgxK8eRzjOUZy
+         tv6w==
+X-Gm-Message-State: AOAM531wEhNXpIIea0mjT1gN/zCn/FmgWs7CPMclHv5u+tcZc7rHq/Du
+        ONlPoo90trU2fGmVVsQpPWaATRNG1Bw=
+X-Google-Smtp-Source: ABdhPJzg2E6PJa4H1OM862oKM6sqMHqedfi2QjCyfZjHkcqh7RR5XynhiYjGgmoD0827KtNUoEwcIg==
+X-Received: by 2002:aa7:956d:0:b0:3ef:2ed2:ab28 with SMTP id x13-20020aa7956d000000b003ef2ed2ab28mr414003pfq.34.1629926057304;
+        Wed, 25 Aug 2021 14:14:17 -0700 (PDT)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
         by smtp.gmail.com with ESMTPSA id o15sm921812pgr.64.2021.08.25.14.14.16
         for <linux-bluetooth@vger.kernel.org>
@@ -51,10 +51,12 @@ Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71
         Wed, 25 Aug 2021 14:14:16 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 1/3] shared/att: Fix accepting Exchange MTU on EATT bearer
-Date:   Wed, 25 Aug 2021 14:14:13 -0700
-Message-Id: <20210825211415.1057804-1-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 2/3] shared/att: Fix attempting to send Exchange MTU on EATT bearer
+Date:   Wed, 25 Aug 2021 14:14:14 -0700
+Message-Id: <20210825211415.1057804-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210825211415.1057804-1-luiz.dentz@gmail.com>
+References: <20210825211415.1057804-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -63,26 +65,35 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-If remote send Exchange MTU it shall fail as the MTU negotiation shall
-happen over L2CAP signalling not ATT for those channels.
+EATT bearer shall use the L2CAP signalling for negotiating the MTU
+size.
 ---
- src/shared/att.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ src/shared/att.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/src/shared/att.c b/src/shared/att.c
-index ccc753c4e..665d7f4b8 100644
+index 665d7f4b8..329497728 100644
 --- a/src/shared/att.c
 +++ b/src/shared/att.c
-@@ -962,7 +962,8 @@ static void handle_notify(struct bt_att_chan *chan, uint8_t *pdu,
- 		 * link since the MTU size is negotiated using L2CAP channel
- 		 * configuration procedures.
- 		 */
--		if (bt_att_get_link_type(att) == BT_ATT_BREDR) {
-+		if (bt_att_get_link_type(att) == BT_ATT_BREDR ||
-+				chan->type == BT_ATT_EATT) {
- 			switch (opcode) {
- 			case BT_ATT_OP_MTU_REQ:
- 				goto not_supported;
+@@ -411,10 +411,17 @@ static struct att_send_op *pick_next_send_op(struct bt_att_chan *chan)
+ 	 */
+ 	if (!chan->pending_req) {
+ 		op = queue_peek_head(att->req_queue);
+-		if (op && op->len <= chan->mtu)
++		if (op && op->len <= chan->mtu) {
++			/* Don't send Exchange MTU over EATT */
++			if (op->opcode == BT_ATT_OP_MTU_REQ &&
++					chan->type == BT_ATT_EATT)
++				goto indicate;
++
+ 			return queue_pop_head(att->req_queue);
++		}
+ 	}
+ 
++indicate:
+ 	/* There is either a request pending or no requests queued. If there is
+ 	 * no pending indication, pick an operation from the indication queue.
+ 	 */
 -- 
 2.31.1
 
