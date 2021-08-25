@@ -2,73 +2,151 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19EA93F6F24
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Aug 2021 08:06:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F2E73F706A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Aug 2021 09:31:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237421AbhHYGH0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 25 Aug 2021 02:07:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36680 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232442AbhHYGH0 (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 25 Aug 2021 02:07:26 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0095BC061757
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Aug 2021 23:06:40 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id fz10so4422628pjb.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Aug 2021 23:06:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
-        bh=Aauu7gYvMaBruI9Zt1CgTlkxSZ8evQwPBhKOMH6jf8s=;
-        b=fNEkBMJdGk6WegJ2H8ZnqsAKbhojzNizaTg7Ptah6VacqxVUuLlaQoyef0sdSZIiFr
-         ORyyd+WRVkLf7kv+GW6WyhIIsIIbT/1fNecCborO8moXwdt6EeiSCZpTX/j6HIBT9oBI
-         Ua0aFN+mu9FdTVA3HR1gV+LMgrFhE3jliwm7T/L+SDYG1VntHHf+aokyPzFT5J3hYS1K
-         QOOCyXf8mE2SA5K8+BAW124POrv+Fh9it5yI7vbIJ5G3pWEYEQhgV1kjbyyZvQ/ZgD/R
-         bhPuy6d/3q7DZnlAyzQr54YGQZ53d6wMj6BoCCJxok0pYaQ3QAFkH3k8+h+Bb+bZPEEb
-         D0LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to;
-        bh=Aauu7gYvMaBruI9Zt1CgTlkxSZ8evQwPBhKOMH6jf8s=;
-        b=ogkQ+s5FqsrJ0YMg7OMqLV9rJm7REkjzJRabrVSE5SKImvoqdXrWc63QykdXhSM1n/
-         ZQ21VrCwGRROvNuSVXVlA70RuAMwAzFw4m66wnmr8QlMAYlDxH7QRxqZ0azSv2MZcIwf
-         u/GpsuC5akcpRUXjLmY0GLOMnCnM6jtYJnJ5ZGh8r6GNRSzO2Byd495T11KW8NqCgk2E
-         OOlBR3fKuUfJUXTFEh0p0AKvn+Ox66sviEriN8+U6PwLa46ooIqQN1Y+dYHTe0mjhm/k
-         +ML+AQW9gA7GX+E74estWevZHekiIGz+NQ5OnvDLPacpjtrUpwACCV5IJ74wvKEtnBKi
-         CUVQ==
-X-Gm-Message-State: AOAM5311c2vbxKs8YCFUWgs1VXIqCvsk1ys7gJGWcttJUmNY3ds3i6fC
-        OctYqdCqh5n1hSx6obYlzcsK0DriD0SOp8fzs/w=
-X-Google-Smtp-Source: ABdhPJzOFKE5k7Ma0ddMwQZJBLlLG7I5gsbZ/DuxY8YugPmZNc3YmhKyZ69rc8eZKvFocHBALMqB0NAR5PZoEI2Hz90=
-X-Received: by 2002:a17:902:fe81:b0:133:851e:5923 with SMTP id
- x1-20020a170902fe8100b00133851e5923mr14949329plm.25.1629871600243; Tue, 24
- Aug 2021 23:06:40 -0700 (PDT)
-MIME-Version: 1.0
-Reply-To: godwinppter@gmail.com
-Sender: dr.nikitarehan@gmail.com
-Received: by 2002:a05:6a10:f491:0:0:0:0 with HTTP; Tue, 24 Aug 2021 23:06:39
- -0700 (PDT)
-From:   Godwin Pete <godwinnpeter@gmail.com>
-Date:   Wed, 25 Aug 2021 08:06:39 +0200
-X-Google-Sender-Auth: USPF40UlyrQWZ8G5FuOMOZbMCoQ
-Message-ID: <CALd83H0eCnteBmGtqVsOhQARJ8G-2_iipG02z16-riQc3XG--A@mail.gmail.com>
-Subject: Important message to you
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+        id S238728AbhHYHca (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 25 Aug 2021 03:32:30 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:54107 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238536AbhHYHca (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 25 Aug 2021 03:32:30 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629876705; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=muFnC5CB8vQwdeeZe3GavEP9rdRjg8DHJtit/NuRghU=; b=YpwAZwdupbEp5Q9ZChwYRAnXUhLmFZH/47D2v60TB+OU/jjv0EDHkGrkN3VpHRytAd3yTxFW
+ Le6tDX2Xu2ltXyuj7MosCnjsnb7x0+1mY9j2Ijk5+NxyacH7cCVsuxuckLwONUNouAeIng42
+ hltntvRvPcZ1H7csJhWipXDdkVA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI2MTA3ZSIsICJsaW51eC1ibHVldG9vdGhAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 6125f1e0c603a0154f37fe5b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 25 Aug 2021 07:31:44
+ GMT
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 60E12C4338F; Wed, 25 Aug 2021 07:31:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8885AC4338F;
+        Wed, 25 Aug 2021 07:31:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 8885AC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
+Subject: [PATCH v6] Bluetooth: btusb: Add support using different nvm for variant WCN6855 controller
+Date:   Wed, 25 Aug 2021 15:31:34 +0800
+Message-Id: <1629876694-8303-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-My good friend,
+From: Tim Jiang <tjiang@codeaurora.org>
 
-I just want to know if you, can help me to transfer the amount of
-($6Million). After the transfer we have to share it, 50% for me, and
-50% for you. Please let me know if you can help me for more
-information in regards with the transfer. I hope you can work with me
-honestly?
+the RF perfermence of wcn6855 soc chip from different foundries will be
+difference, so we should use different nvm to configure them.
 
+Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+---
+ drivers/bluetooth/btusb.c | 48 +++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 36 insertions(+), 12 deletions(-)
 
-Thanks.
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 60d2fce59a71..ed01b966ccd4 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3141,6 +3141,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+ #define QCA_DFU_TIMEOUT		3000
+ #define QCA_FLAG_MULTI_NVM      0x80
+ 
++#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
++#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
++
+ struct qca_version {
+ 	__le32	rom_version;
+ 	__le32	patch_version;
+@@ -3172,6 +3175,7 @@ static const struct qca_device_info qca_devices_table[] = {
+ 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
+ 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+ 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
++	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
+ };
+ 
+ static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+@@ -3326,27 +3330,47 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+ 	return err;
+ }
+ 
+-static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+-				    struct qca_version *ver,
+-				    const struct qca_device_info *info)
++static void btusb_generate_qca_nvm_name(char **fwname,
++					int max_size,
++					struct qca_version *ver,
++					char *foundry)
+ {
+-	const struct firmware *fw;
+-	char fwname[64];
+-	int err;
++	char *separator = (foundry == NULL) ? "" : "_";
++	u16 board_id = le16_to_cpu(ver->board_id);
++	u32 rom_version = le32_to_cpu(ver->rom_version);
+ 
+ 	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+ 		/* if boardid equal 0, use default nvm without surfix */
+ 		if (le16_to_cpu(ver->board_id) == 0x0) {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-				 le32_to_cpu(ver->rom_version));
++			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x%s%s.bin",
++				 rom_version, separator, foundry);
+ 		} else {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
+-				le32_to_cpu(ver->rom_version),
+-				le16_to_cpu(ver->board_id));
++			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x%s%s%04x.bin",
++				rom_version, separator,	foundry, board_id);
+ 		}
+ 	} else {
+ 		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-			 le32_to_cpu(ver->rom_version));
++			 rom_version);
++	}
++
++}
++
++static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
++				    struct qca_version *ver,
++				    const struct qca_device_info *info)
++{
++	const struct firmware *fw;
++	char fwname[64];
++	int err;
++
++	switch (ver->ram_version) {
++	case WCN6855_2_0_RAM_VERSION_GF:
++	case WCN6855_2_1_RAM_VERSION_GF:
++			btusb_generate_qca_nvm_name(&fwname, sizeof(fwname), ver, "gf");
++		break;
++	default:
++			btusb_generate_qca_nvm_name(&fwname, sizeof(fwname), ver, NULL);
++		break;
+ 	}
+ 
+ 	err = request_firmware(&fw, fwname, &hdev->dev);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
-Godwin Peter,
