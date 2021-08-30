@@ -2,72 +2,116 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BC623FBCF4
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Aug 2021 21:34:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A0E83FBCFB
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Aug 2021 21:37:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234040AbhH3Tfb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Aug 2021 15:35:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35556 "EHLO
+        id S232493AbhH3Th4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Aug 2021 15:37:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233936AbhH3Tf3 (ORCPT
+        with ESMTP id S230471AbhH3Th4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Aug 2021 15:35:29 -0400
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D06FC061764
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Aug 2021 12:34:35 -0700 (PDT)
-Received: by mail-ed1-x543.google.com with SMTP id r7so7266191edd.6
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Aug 2021 12:34:35 -0700 (PDT)
+        Mon, 30 Aug 2021 15:37:56 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43F6EC061575
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Aug 2021 12:37:02 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id s16so17345145ilo.9
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Aug 2021 12:37:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=SaQJaLQJV1tXeTErb3iEo2Jt85n+Ln12ULE3k7m2zSU=;
-        b=WDtEyS2wvh99Wx+Q21ww0DSSgBLyCbnnSQNweNJpRFey81KMh6Bpztk03Z3J87+reP
-         cCJnjxiJ9OX0fNWhY06vydcfEGuJRha220GR7cKRZ+7m3J2d5fp1XKsnvtTP/84/lqL6
-         bgAGqYQtD5qNtdzCFhIFlYKp9RRFW5h6pwJ11Zval7cpkEamElPvOCIndvSIvUOTY3IR
-         13SqL5XKLgKjJN3qifk0qgbGr3qqKalsxdUoMQQOt4FoQi3sdulFCaheecaa+9iCFIjW
-         CVlx9IbpEcmKJnGCMyLmHF0diyKFMvClhURhF60OTHIdzJTfMyuuOc2MXaHJmoTCEL+f
-         BS+w==
+        d=googlemail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sef1AzHM+Rn2npDzc9uQlukq/aaMLJPU2TC+pPhlNNc=;
+        b=CSPX4NrBRdjsHKfX1QZ1Kw+kCtrOKOnqxVED/917/UPzXEsoPmPIrRDPrmb52PRxRp
+         q5eV37YsYGNl/yMr2ND0Gta3WdGh6VcAr209xByIJ64Dg8GYmqfFWNjY+XholzUhvN2P
+         W8YmlbUXGSF2MbmrIrlf0QAmNwOproV05mQaELTCSeyxv4j2ba7t7lQ5OJ3ODX8nG3Px
+         VXmGFzvCtSOrz+HneeksiA6noPdcngyQhaRes8qj2+jSbO6Hjt41lQ0S2se40N6M0kQU
+         JzbD1z0h3ibXcp+aAJjQsMgSh+2IxZyTi9agh4/hzNEOJILGXBpi0QBvXC496tGSFbC4
+         emLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=SaQJaLQJV1tXeTErb3iEo2Jt85n+Ln12ULE3k7m2zSU=;
-        b=p5GddG8jLZa8RyYf6Th6U0oQ6RD1ENKTCmexCtE/pxWl4f6klAGTAmn2cfVj/rBBUP
-         ojtAhlRm1o3dvkZ0r6UW+2MZP8B8BuuhNpiEd2BZxxPY2pgoJUQiV8XQmbq7y4rOTxSR
-         57ywO84VwP6U6tg9TBMP8Gz3mtOwbrYgwxfu+KemBKdjLlFULkOQLLrWX4PIouMiRxxM
-         sCLcMY1r6z7i1tCiMVberT3Kcr0R7weubyAy1koRn1hQJeZeQMUxPrIs5zfHcsPDh1ub
-         hM2q0PGVYgl67Pqhr6cLFi7YB6Upwbt+v9GoldWRXY6tn89tLAdLaQw4YBqDXgV06QWN
-         Ywpg==
-X-Gm-Message-State: AOAM530fKggMNbPdgNRK/iuq9djb0OkPFTWrxKyDHDlfBLWm3OuGThz8
-        TJRWEhwy1jb7OHxljFdnqbgBFDDpP05pmeK3QC8=
-X-Google-Smtp-Source: ABdhPJxJF19FK5F/woLmwx+qHR8HyLASRpqAlqfwaa/oFHxH20WRXtknUAIpZgrD8uhFYodYUQoEBVdBP3Czz/aDiY4=
-X-Received: by 2002:a05:6402:c9:: with SMTP id i9mr25108272edu.76.1630352074023;
- Mon, 30 Aug 2021 12:34:34 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sef1AzHM+Rn2npDzc9uQlukq/aaMLJPU2TC+pPhlNNc=;
+        b=kthV6W88aQs1z6LC7MhKzzElJV1Loh3u1vHu0UoO2ye3Ijky3x4eKlRdRxF2ofkkbz
+         qjILuGhmkWqLZ7/uOCuywb0cZWzvAoGa9Kbw/C6fVepdhKHgYyimLEQQkJsa4nGbhCtV
+         SHMZsjvBgJ9HbO9c92YofW0GRBW88Jfb3Hj59jiVzAuMCGgrGQFc8/UA/vph0NJZ55zY
+         cwYuF0Y3BwR4Eq9NVl1xwc4DMcXjueICDoRdsAMgzhtrCIOdFJkNQahHbQtPqej8bFk1
+         39RYkDSH1w5hux8v/A3REFrQkbyzvTvdCXnP8Z6H0FJnE74JnOMOh6b7FpRahDQ5TlEY
+         m5uw==
+X-Gm-Message-State: AOAM530Cz7g/YCZsOxiN//95/BlLdczHVArzW3m2Xckrj9XduytsKBr/
+        wNJJbQd6/nnwW6L9vp3fg89InWdLtjY=
+X-Google-Smtp-Source: ABdhPJwuCJy8tWuF+ovbvDh4yfFCRLVQfBwR47YOyYZz/BIPzS/GvcoBIe2t7jL4fNxUscOsYwql9w==
+X-Received: by 2002:a05:6e02:b43:: with SMTP id f3mr4984915ilu.260.1630352221579;
+        Mon, 30 Aug 2021 12:37:01 -0700 (PDT)
+Received: from rechenknecht2k11 (200116b8450b3000528fd077fba667fc.dip.versatel-1u1.de. [2001:16b8:450b:3000:528f:d077:fba6:67fc])
+        by smtp.googlemail.com with ESMTPSA id u15sm8657303ion.34.2021.08.30.12.37.00
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 12:37:01 -0700 (PDT)
+Date:   Mon, 30 Aug 2021 21:36:55 +0200
+From:   Benjamin Valentin <benpicco@googlemail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH] sixaxis: Fall back to matching VID/PID for unknown devices
+Message-ID: <20210830213655.16e6c37a@rechenknecht2k11>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Received: by 2002:a54:2dcc:0:0:0:0:0 with HTTP; Mon, 30 Aug 2021 12:34:33
- -0700 (PDT)
-Reply-To: mrschantelhermans@gmail.com
-From:   Mrs Chantel Hermans <bellomhd922@gmail.com>
-Date:   Mon, 30 Aug 2021 12:34:33 -0700
-Message-ID: <CAB4DdoqHS0TExutFSvtWcu9zuDzHhV7yFW+mxpsbnqCErVzvTQ@mail.gmail.com>
-Subject: ATTENTION
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Commit 61745d2bb made device matching stricter.
+Before, a third party device would be matched according to it's
+vendor / device ID only.
+
+Now we require it's name to be in the list of known devices too,
+so the name is retained later on.
+
+This regresses unknown third-party devices that are not in the list
+(as reported by [0]).
+
+We can try to keep up by expanding the list, but let's also gracefully
+fall back to vid/pid matching if there is a device that we don't know.
+
+[0] https://www.reddit.com/r/archlinux/comments/pdvdfd/a_dirty_fix_for_ps3_controller_bluetooth/
+
+Signed-off-by: Benjamin Valentin <benpicco@googlemail.com>
+---
+ profiles/input/sixaxis.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/profiles/input/sixaxis.h b/profiles/input/sixaxis.h
+index ab8831995..db518997a 100644
+--- a/profiles/input/sixaxis.h
++++ b/profiles/input/sixaxis.h
+@@ -74,6 +74,7 @@ get_pairing(uint16_t vid, uint16_t pid, const char *name)
+ 		},
+ 	};
+ 	guint i;
++	const struct cable_pairing *best_match = NULL;
+ 
+ 	for (i = 0; i < G_N_ELEMENTS(devices); i++) {
+ 		if (devices[i].vid != vid)
+@@ -81,13 +82,16 @@ get_pairing(uint16_t vid, uint16_t pid, const char *name)
+ 		if (devices[i].pid != pid)
+ 			continue;
+ 
+-		if (name && strcmp(name, devices[i].name))
++		/* if the device is unknown, use the next best match */
++		if (name && strcmp(name, devices[i].name)) {
++			best_match = &devices[i];
+ 			continue;
++		}
+ 
+ 		return &devices[i];
+ 	}
+ 
+-	return NULL;
++	return best_match;
+ }
+ 
+ #endif /* _SIXAXIS_H_ */
 -- 
-ATTENTION
-
-
-You have been compensated with the sum of 6.9 million dollars in this
-United Nation the payment will be issue into ATM Visa Card,
-
-
-and send to you from the Santander Bank of Spain we need your
-Address,Passport and your whatsapp number.
-
-
-THANKS
-Mrs Chantel Hermans
+2.30.2
