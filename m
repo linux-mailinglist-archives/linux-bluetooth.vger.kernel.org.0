@@ -2,58 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 032FF3FE848
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Sep 2021 06:08:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E84C3FE849
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Sep 2021 06:08:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231735AbhIBEJZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Sep 2021 00:09:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48286 "EHLO
+        id S232627AbhIBEJ0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 2 Sep 2021 00:09:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238450AbhIBEJR (ORCPT
+        with ESMTP id S242235AbhIBEJV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 2 Sep 2021 00:09:17 -0400
-Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1B33C061575
-        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Sep 2021 21:08:19 -0700 (PDT)
-Received: by mail-qt1-x849.google.com with SMTP id o22-20020ac872d60000b029029817302575so442768qtp.10
-        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Sep 2021 21:08:19 -0700 (PDT)
+        Thu, 2 Sep 2021 00:09:21 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5841BC061575
+        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Sep 2021 21:08:23 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id y1-20020a17090a154100b00196156bbc18so368263pja.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Sep 2021 21:08:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=+chwaZbbMAUDVjk5/HeDGz0egFmhkV86cNDd2nRvrXU=;
-        b=Iw4+t7dyWc1w83HaO0bNT5ojih9jfEtlNn3w88/4LXml0vFEZbJQ9ew1bKM1Io4PZa
-         2eTagJjM9VUrWIhFEfNM/+jrc3n7UuQB8XZ7OtTxC24tcLqKzqP2qzwXnrNb9BsaFuqS
-         7zUMKq/y7GR+W2n1Be2nFpRkOu0xQ8WYsxqk05AQGQl6ejNK7XVt/I7rl8gDvywyP8xS
-         od1md86/mam6aTU4GmEHHKe1QcDWYv0pteEO1Cc9Kw4i5dOgI+JvBMFdPbODx2U3pj3c
-         upSphe75qWbSx3+Bh2KMo1QuehzJq9qjDe4KbHczWvYoXAPeCOiGKODDbCFHYXzOAkkC
-         V5Aw==
+        bh=wQW5sRYp/dvG+wXe86fcE1hrtE67nnkl7q2mYx1x44c=;
+        b=FK71F/GgFtxrxniBXkbEfROuWokzdKpC+Wap3U733iBGMkEhlErvi2MBnaMuNA8YVw
+         ErvlIR5qBwwy/6vj717b8iuPmksq/iIfIIMOK/vhE+bWJgBG9/2I9HSZb30WGMtMf0D1
+         yUKVD3CZ8gFzlnGx5HKhWNr0v0l2OeHsbt3cWy3hOKNBLF3P9j6c1dcsvt0lfmWofSXh
+         0bN3M68IBYmM9jyoTNhGh2KHvxWK6f55JL/0nvScusXzDpuOkLkYUinKf5I1B0z5O9/n
+         FbgnSUheDc4PFi2/KY0YONtrKwAlW83/alyASnIlEkuIJxdjkY0bJylHO2N0VPoiqYn/
+         IgAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=+chwaZbbMAUDVjk5/HeDGz0egFmhkV86cNDd2nRvrXU=;
-        b=Lx+DtfYU3YVo30nZXDECRfZfesvbpo7PegVGIXInAIwcxo5ajEbADmZbDdcZD3nP02
-         uGHsKBOM/M6nzByuvfYuvwAEK/GOygAML4m9Jl7epAoFqvwHZ2m9ZKKTwMOEc+F8ADdZ
-         pw3ydIu02/ypdaTo51RQG/GLX97eSfkE1000P9Y2g5ouzICuNnvtgFvgn91ywyEeT7OZ
-         yWgHzZZB1EP8XWMAre05IRyU7y3hLFhjE1XheaVMc9UFxxgJdzziTjOL0gc7ECIeSkUH
-         vdN7qds1+zXHy4d7rwfMtHEmzKRIpeeoSglLFfeQKPG43MhNMKnOgRi490a75P6y2vMq
-         P9WQ==
-X-Gm-Message-State: AOAM531w28YaDwPLj09ZV9FU3NP9adkOxI3W47PSDf2u0+h7v6xYE3zu
-        74fVcVjkNZDDKsZOj9jn4Dq9wLZe1Mi1GyCfO1GUVSeW/A/RdCQ6IPrULJmmw4ngq6E4xF3bL9O
-        p2Kp+x2J86OFx6aintsonpeEQtc/7T/eqcBYF8Ns/0Vk8LZz+hgQXQEb+Yd6SzqJCCWsqzCgsxo
-        q7
-X-Google-Smtp-Source: ABdhPJxDMAMNZ0+LTKVAzz9btGsCRC1iWkWLe6QbaTHqfbt+Jis7KXG/eiU9a0V3Av0kJ8vW7C8+m0oP/Rut
+        bh=wQW5sRYp/dvG+wXe86fcE1hrtE67nnkl7q2mYx1x44c=;
+        b=hnHZQWNuBdnVfyl9BLbqMJsO5VRDtp+q97IptWmdNKIBPjj1GtbJC67AXzXizT0cZr
+         j1d6aHRPIAqADflXxVEhD0mCyAtaJD/BEZF/qEpCIHiBkifT8CPYhBGTl8rxXaBLlJku
+         bbvNxh9wksufVXVFejCIU+mPO8atYfnRvWzx18lGm9eurNULjuPbZCdAhctXBuInkb1v
+         ne4qSd4PwnN9eIdTBN8M5JvDzxHiskb0nMgoSMKsDnHHq1+yVskOh5KtfDzDr8TyHj7K
+         jsa3TSFtlFndjwgQaWAr+gqpdu3OkwR6y1zrd6xnpatU574tGZHXBb6GiDl76jYMEtpu
+         y6hQ==
+X-Gm-Message-State: AOAM5331Rq5kMdl/R69w7OpaA5pWEMErDt2v7qY3h4+cMkP4Z6Ph5RV4
+        2il9ZQkFfCl3X/K/Zdr+lF+Qd2pR+tD1g/qDyfZGOqs/kqnXMM1ogb9lydMa8lK4Y1MIM/h17SA
+        TZdr/vr6XExd0+XYoLOBOrKQMEnIAT01DfV+37bGhBdPyGra7ItUMWEfk5mdJgbqysuVGGxAhI0
+        WC
+X-Google-Smtp-Source: ABdhPJz7o70cRN7NP5rWGpFnrqBSz2Xiiyw6j9Ds7FhGhzGfs311ZGjOInxm013Vxq9KLlDhABSuvAllQvBs
 X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:10:5249:e81c:3ce6:f50c])
- (user=apusaka job=sendgmr) by 2002:a05:6214:21cc:: with SMTP id
- d12mr1071781qvh.22.1630555698852; Wed, 01 Sep 2021 21:08:18 -0700 (PDT)
-Date:   Thu,  2 Sep 2021 12:07:09 +0800
+ (user=apusaka job=sendgmr) by 2002:a17:902:ff02:b0:138:b944:e0f0 with SMTP id
+ f2-20020a170902ff0200b00138b944e0f0mr1077314plj.34.1630555702780; Wed, 01 Sep
+ 2021 21:08:22 -0700 (PDT)
+Date:   Thu,  2 Sep 2021 12:07:10 +0800
 In-Reply-To: <20210902040711.665952-1-apusaka@google.com>
-Message-Id: <20210902120509.Bluez.v2.11.I864344f9ee91b9c051ae4212c9f5a236bdd49632@changeid>
+Message-Id: <20210902120509.Bluez.v2.12.I4df08516dd5129d4e9d2cf963121074f500201d9@changeid>
 Mime-Version: 1.0
 References: <20210902040711.665952-1-apusaka@google.com>
 X-Mailer: git-send-email 2.33.0.259.gc128427fd7-goog
-Subject: [Bluez PATCH v2 11/13] unit/mesh: Inclusive language changes
+Subject: [Bluez PATCH v2 12/13] doc: Inclusive language update
 From:   Archie Pusaka <apusaka@google.com>
 To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>
@@ -66,38 +67,61 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Archie Pusaka <apusaka@chromium.org>
 
-According to
-https://specificationrefs.bluetooth.com/language-mapping/Appropriate_Language_Mapping_Table.pdf
-"flooding" is the preferred term.
+Update the docs to reflect the changes for the other inclusive
+language updates.
 ---
 
-(no changes since v1)
+Changes in v2:
+* Merging several patches from the same directory into one
 
- unit/test-mesh-crypto.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ doc/mesh-api.txt | 2 +-
+ doc/mgmt-api.txt | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/unit/test-mesh-crypto.c b/unit/test-mesh-crypto.c
-index 12709dace0..f9b7d81da7 100644
---- a/unit/test-mesh-crypto.c
-+++ b/unit/test-mesh-crypto.c
-@@ -111,7 +111,7 @@ static const struct mesh_crypto_test s8_1_2 = {
- };
+diff --git a/doc/mesh-api.txt b/doc/mesh-api.txt
+index f2c6b9e5c2..ce651c8017 100644
+--- a/doc/mesh-api.txt
++++ b/doc/mesh-api.txt
+@@ -585,7 +585,7 @@ Methods:
+ 			org.bluez.mesh.Error.InvalidArguments
  
- static const struct mesh_crypto_test s8_1_3 = {
--	.name		= "8.1.3 k2 function (master)",
-+	.name		= "8.1.3 k2 function (flooding)",
- 	.net_key	= "f7a2a44f8e8a8029064f173ddc1e2b00",
- 	.p		= "00",
- 	.nid		= "7f",
-@@ -159,7 +159,7 @@ static const struct mesh_crypto_test s8_2_1 = {
- };
+ 	void SetKeyPhase(uint16 net_index, uint8 phase)
+-		This method is used to set the master key update phase of the
++		This method is used to set the flooding key update phase of the
+ 		given subnet. When finalizing the procedure, it is important
+ 		to CompleteAppKeyUpdate() on all app keys that have been
+ 		updated during the procedure prior to setting phase 3.
+diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
+index 5355fedb00..97d33e30a1 100644
+--- a/doc/mgmt-api.txt
++++ b/doc/mgmt-api.txt
+@@ -855,7 +855,7 @@ Load Long Term Keys Command
+ 					Address (6 Octets)
+ 					Address_Type (1 Octet)
+ 					Key_Type (1 Octet)
+-					Master (1 Octet)
++					Central (1 Octet)
+ 					Encryption_Size (1 Octet)
+ 					Encryption_Diversifier (2 Octets)
+ 					Random_Number (8 Octets)
+@@ -4019,7 +4019,7 @@ New Long Term Key Event
+ 					Address (6 Octets)
+ 					Address_Type (1 Octet)
+ 					Key_Type (1 Octet)
+-					Master (1 Octet)
++					Central (1 Octet)
+ 					Encryption Size (1 Octet)
+ 					Enc. Diversifier (2 Octets)
+ 					Random Number (8 Octets)
+@@ -4459,7 +4459,7 @@ New Signature Resolving Key Event
+ 				}
  
- static const struct mesh_crypto_test s8_2_2 = {
--	.name		= "8.2.2 Encryption and privacy keys (Master)",
-+	.name		= "8.2.2 Encryption and privacy keys (flooding)",
- 	.net_key	= "7dd7364cd842ad18c17c2b820c84c3d6",
- 	.p		= "00",
- 	.nid		= "68",
+ 	This event indicates that a new signature resolving key has been
+-	generated for either the master or slave device.
++	generated for either the central or peripheral device.
+ 
+ 	The Store_Hint parameter indicates whether the host is expected
+ 	to store the key persistently or not.
 -- 
 2.33.0.259.gc128427fd7-goog
 
