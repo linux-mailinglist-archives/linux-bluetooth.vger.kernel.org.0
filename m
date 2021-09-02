@@ -2,98 +2,105 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32DA13FEDD3
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Sep 2021 14:33:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 379813FEF03
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Sep 2021 15:56:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344530AbhIBMer (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Sep 2021 08:34:47 -0400
-Received: from mail.zju.edu.cn ([61.164.42.155]:50870 "EHLO zju.edu.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1344521AbhIBMer (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 2 Sep 2021 08:34:47 -0400
-Received: by ajax-webmail-mail-app2 (Coremail) ; Thu, 2 Sep 2021 20:33:43
- +0800 (GMT+08:00)
-X-Originating-IP: [10.192.42.255]
-Date:   Thu, 2 Sep 2021 20:33:43 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From:   LinMa <linma@zju.edu.cn>
-To:     penguin-kernel@i-love.sakura.ne.jp, linux-bluetooth@vger.kernel.org
-Subject: Help needed in patching CVE-2021-3640
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
- Copyright (c) 2002-2021 www.mailtech.cn zju.edu.cn
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        id S239869AbhIBN5M (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 2 Sep 2021 09:57:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36026 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234331AbhIBN5M (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 2 Sep 2021 09:57:12 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 3C981610CC
+        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Sep 2021 13:56:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1630590974;
+        bh=RNmLfk2X5uP4bEN75RC4NTisRB4/pJwy0kptaYLQhps=;
+        h=From:To:Subject:Date:From;
+        b=jfQLb6F4pkfbpWxZHqPLxcF/HW10KdbTpAIV8qCRUPN7ouxmJqgv1hk5JSUG0LNgK
+         83/lCEJVB6jzpcR8T6nAR3TFMbwKQW/Ltdq4VwkwlkZkl5CaI6+ps2sf+lzNZZFDDe
+         Q7jnnL7ZfElZAd5Jrp7CnameeVqMZDJGTLFcKO4UQcRcu2IbAbIWD9DyA2O5cB7vx4
+         hpwUpOUlgBALF38lnFK2coauk79RV6yXGGrlGKX9xNwr6FHBQq9NbEhGwY7KeCBRO9
+         AT7B26nfOMCJ8UnbSSweS6js5Qv7QyMSIkZivgS3S4KTh7X+ex7Ve5KPDWiJLBc9It
+         WRITWLZnaAy0Q==
+Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
+        id 3888B610E8; Thu,  2 Sep 2021 13:56:14 +0000 (UTC)
+From:   bugzilla-daemon@bugzilla.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 214287] New: Bluetooth firmware rtl8671bu_fw.bin fails to load
+Date:   Thu, 02 Sep 2021 13:56:14 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: new
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: blocking
+X-Bugzilla-Who: tadej.obrstar@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: bug_id short_desc product version
+ cf_kernel_version rep_platform op_sys cf_tree bug_status bug_severity
+ priority component assigned_to reporter cf_regression
+Message-ID: <bug-214287-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Message-ID: <15f5a46.b79d9.17ba6802ccd.Coremail.linma@zju.edu.cn>
-X-Coremail-Locale: en_US
-X-CM-TRANSID: by_KCgC3aBWnxDBh_iIuBQ--.24726W
-X-CM-SenderInfo: qtrwiiyqvtljo62m3hxhgxhubq/1tbiAwQQElNG3D5NRwABs5
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-        CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-        daVFxhVjvjDU=
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-SGVsbG8gdGhlcmUsCgpUaGVyZSBpcyBvbmUgYnVnIChDVkUtMjAyMS0zNjQwOiBodHRwczovL3d3
-dy5vcGVud2FsbC5jb20vbGlzdHMvb3NzLXNlY3VyaXR5LzIwMjEvMDcvMjIvMSkgdGhhdCBpcyBz
-aW1pbGFyIHRvIHRoZSByZWNlbnRseSBmaXhlZCBDVkUtMjAyMS0zNTczLgoKVGhlIGtleSBwb2lu
-dCBoZXJlIGlzIHRoYXQgdGhlIHNjb19jb25uX2RlbCgpIGZ1bmN0aW9uIGNhbiBiZSBjYWxsZWQg
-d2hlbiBzeXNjYWxscyBsaWtlIHNjb19zZW5kbXNnKCkgaXMgdW5kZXJnb2luZy4KSSB0aGluayB0
-aGUgZWFzaWVzdCBmaXggaXMgdG8gaGFuZyB0aGUgc2NvX2Nvbm5fZGVsKCkgdXNpbmcgbG9ja19z
-b2NrKCkgbGlrZSBiZWxvdy4KCmRpZmYgLS1naXQgYS9uZXQvYmx1ZXRvb3RoL3Njby5jIGIvbmV0
-L2JsdWV0b290aC9zY28uYwppbmRleCBkOWE0ZTg4ZGFjYmIuLjNkYTFhZDQ0MTQ2MyAxMDA2NDQK
-LS0tIGEvbmV0L2JsdWV0b290aC9zY28uYworKysgYi9uZXQvYmx1ZXRvb3RoL3Njby5jCkBAIC0x
-NzMsMTAgKzE3MywxMCBAQCBzdGF0aWMgdm9pZCBzY29fY29ubl9kZWwoc3RydWN0IGhjaV9jb25u
-ICpoY29uLCBpbnQgZXJyKQoKICAgICAgICBpZiAoc2spIHsKICAgICAgICAgICAgICAgIHNvY2tf
-aG9sZChzayk7Ci0gICAgICAgICAgICAgICBiaF9sb2NrX3NvY2soc2spOworICAgICAgICAgICAg
-ICAgbG9ja19zb2NrKHNrKTsKICAgICAgICAgICAgICAgIHNjb19zb2NrX2NsZWFyX3RpbWVyKHNr
-KTsKICAgICAgICAgICAgICAgIHNjb19jaGFuX2RlbChzaywgZXJyKTsKLSAgICAgICAgICAgICAg
-IGJoX3VubG9ja19zb2NrKHNrKTsKKyAgICAgICAgICAgICAgIHJlbGVhc2Vfc29jayhzayk7CiAg
-ICAgICAgICAgICAgICBzY29fc29ja19raWxsKHNrKTsKICAgICAgICAgICAgICAgIHNvY2tfcHV0
-KHNrKTsKICAgICAgICB9CgpUaGlzIGNhbiBtYWtlIHN1cmUgdGhlIGtmcmVlKCkgd2lsbCB3YWl0
-IGZvciB0aGUgc29jayBoZWxkIGJ5IHRoZSBzY29fc2VuZG1zZygpIGZ1bmN0aW9uLiBIb3dldmVy
-LCB0aGlzIHBhdGNoIGNhbiBpbmN1ciBXQVJOSU5HIHJlcG9ydCBsaWtlIGJlbG93LiAoSSBkb24n
-dCByZWFsbHkga25vdyBpZiB0aGlzIHJlcG9ydCBpcyBjb3JyZWN0KS4KClsgICA3NS4xNDc1MTVd
-ID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQpb
-ICAgNzUuMTQ5OTU1XSBXQVJOSU5HOiBwb3NzaWJsZSBjaXJjdWxhciBsb2NraW5nIGRlcGVuZGVu
-Y3kgZGV0ZWN0ZWQKWyAgIDc1LjE1MDU0Nl0gNS4xMS4xMSsgIzU4IE5vdCB0YWludGVkClsgICA3
-NS4xNTA4OTVdIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLQpbICAgNzUuMTUxNDg1XSBwb2Muc2NvLzEyNyBpcyB0cnlpbmcgdG8gYWNxdWlyZSBs
-b2NrOgpbICAgNzUuMTUxOTQ3XSBmZmZmODg4MDEyMjEyMTIwIChza19sb2NrLUFGX0JMVUVUT09U
-SC1CVFBST1RPX1NDTyl7Ky4rLn0tezA6MH0sIGF0OiBzY29fY29ubl9kZWwrMHhmNi8weDAKWyAg
-IDc1LjE1Mjg2M10KWyAgIDc1LjE1Mjg2M10gYnV0IHRhc2sgaXMgYWxyZWFkeSBob2xkaW5nIGxv
-Y2s6ClsgICA3NS4xNTM0MjBdIGZmZmZmZmZmODViNDM5NDggKGhjaV9jYl9saXN0X2xvY2speysu
-Ky59LXszOjN9LCBhdDogaGNpX2Nvbm5faGFzaF9mbHVzaCsweGIzLzB4MWYwClsgICA3NS4xNTQy
-NTZdClsgICA3NS4xNTQyNTZdIHdoaWNoIGxvY2sgYWxyZWFkeSBkZXBlbmRzIG9uIHRoZSBuZXcg
-bG9jay4KClAuUy4gZmluZCB0aGUgUE9DIGNvZGUgaW4gb3BlbndhbGwgcmVwb3J0CgpXaXRoIHRo
-ZSBsZXNzb24gSSBsZWFybnQgaW4gbGFzdCBiYWQgcGF0Y2ggZTMwNTUwOWU2NzhiICgiQmx1ZXRv
-b3RoOiB1c2UgY29ycmVjdCBsb2NrIHRvIHByZXZlbnQgVUFGIG9mIGhkZXYgb2JqZWN0IikuIEkg
-ZG9uJ3QgcmVhbGx5IGV4cGVjdCB0aGlzIGFzIHRoZSBmaW5hbCBjb3JyZWN0IHBhdGNoLiAKCkkg
-dGhlbiB0cnkgdG8gdXNlIHRoZSB0ZWNobmlxdWUgaW4gZTA0NDgwOTIwZDFlICgiQmx1ZXRvb3Ro
-OiBkZWZlciBjbGVhbnVwIG9mIHJlc291cmNlcyBpbiBoY2lfdW5yZWdpc3Rlcl9kZXYoKSIpLiBJ
-IG1lYW4sIEkgd2FudCB0byBkZWZlciB0aGUga2ZyZWUgb2Ygc2NvX2Nvbm4gb2JqZWN0LiBIb3dl
-dmVyLCB0aGUgc2NvIGNvbm5lY3Rpb24vZGlzY29ubmVjdGlvbiBtZWNoYW5pc20gaXMgc29tZXdo
-YXQgd2VpcmQgYW5kIEkgZGlkbid0IHJlYWxseSB1bmRlcnN0YW5kIGl0IGJ5IG5vdy4KCkxldCdz
-IHNlZSB0aGlzIF9fc2NvX3NvY2tfY2xvc2UoKSBmdW5jdGlvbiwgd2hpY2ggd2lsbCBiZSBjYWxs
-ZWQgZnJvbSBzY29fc29ja19yZWxlYXNlKCkuCgpzdGF0aWMgdm9pZCBfX3Njb19zb2NrX2Nsb3Nl
-KHN0cnVjdCBzb2NrICpzaykKewoJQlRfREJHKCJzayAlcCBzdGF0ZSAlZCBzb2NrZXQgJXAiLCBz
-aywgc2stPnNrX3N0YXRlLCBzay0+c2tfc29ja2V0KTsKCglzd2l0Y2ggKHNrLT5za19zdGF0ZSkg
-ewoJY2FzZSBCVF9MSVNURU46CgkJc2NvX3NvY2tfY2xlYW51cF9saXN0ZW4oc2spOwoJCWJyZWFr
-OwoKCWNhc2UgQlRfQ09OTkVDVEVEOgoJY2FzZSBCVF9DT05GSUc6CgkJaWYgKHNjb19waShzaykt
-PmNvbm4tPmhjb24pIHsKCQkJc2stPnNrX3N0YXRlID0gQlRfRElTQ09OTjsKCQkJc2NvX3NvY2tf
-c2V0X3RpbWVyKHNrLCBTQ09fRElTQ09OTl9USU1FT1VUKTsKCQkJc2NvX2Nvbm5fbG9jayhzY29f
-cGkoc2spLT5jb25uKTsKCQkJaGNpX2Nvbm5fZHJvcChzY29fcGkoc2spLT5jb25uLT5oY29uKTsK
-CQkJc2NvX3BpKHNrKS0+Y29ubi0+aGNvbiA9IE5VTEw7CgkJCXNjb19jb25uX3VubG9jayhzY29f
-cGkoc2spLT5jb25uKTsKCQl9IGVsc2UKCQkJc2NvX2NoYW5fZGVsKHNrLCBFQ09OTlJFU0VUKTsK
-CQlicmVhazsKCgljYXNlIEJUX0NPTk5FQ1QyOgoJY2FzZSBCVF9DT05ORUNUOgoJY2FzZSBCVF9E
-SVNDT05OOgoJCXNjb19jaGFuX2RlbChzaywgRUNPTk5SRVNFVCk7CgkJYnJlYWs7CgoJZGVmYXVs
-dDoKCQlzb2NrX3NldF9mbGFnKHNrLCBTT0NLX1pBUFBFRCk7CgkJYnJlYWs7Cgl9Cn0KCkFzIHlv
-dSBjYW4gc2VlLCB0aG91Z2ggb25lIHNvY2tldCBpcyBpbiBCVF9DT05ORUNURUQgc3RhdGUsIHRo
-aXMgZnVuY3Rpb24gd2lsbCBqdXN0IGRyb3AgdGhlIGtyZWYgb2Ygc2NvX3BpKHNrKS0+Y29ubi0+
-aGNvbiBidXQgZG8gbm90aGluZyB3aXRoIHNjb19waShzayktPmNvbm4gb2JqZWN0LiBUaGVuIGhv
-dyB0aGlzIGNvbm4gb2JqZWN0IGlzIHJlbGVhc2VkPyBXaGVyZSBzaG91bGQgSSBkZWZlciB0aGUg
-ZGVhbGxvY2F0aW9uIGZ1bmN0aW9uIHRvPwoKSSB0aGluayBJIG5lZWQgaGVscCBhbmQgZGlzY3Vz
-c2lvbiB0byBzZXR0bGUgZG93biB0aGUgc29sdXRpb24gZm9yIHRoaXMuIFRfVAoKQmVzdCBXaXNo
-ZXMKTGluIE1h
+https://bugzilla.kernel.org/show_bug.cgi?id=3D214287
+
+            Bug ID: 214287
+           Summary: Bluetooth firmware rtl8671bu_fw.bin fails to load
+           Product: Drivers
+           Version: 2.5
+    Kernel Version: 5.14
+          Hardware: All
+                OS: Linux
+              Tree: Mainline
+            Status: NEW
+          Severity: blocking
+          Priority: P1
+         Component: Bluetooth
+          Assignee: linux-bluetooth@vger.kernel.org
+          Reporter: tadej.obrstar@gmail.com
+        Regression: No
+
+After upgrading to newest kernel, firmware for the usb bluetooth fails to l=
+oad.
+
+dmesg:
+[    3.457128] usb 1-5.4: Product: Bluetooth Radio
+[    3.467018] Bluetooth: hci0: RTL: examining hci_ver=3D0a hci_rev=3D000b
+lmp_ver=3D0a lmp_subver=3D8761
+[    3.467995] Bluetooth: hci0: RTL: rom_version status=3D0 version=3D1
+[    3.467997] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761bu_fw.bin
+[    3.468355] bluetooth hci0: Direct firmware load for rtl_bt/rtl8761bu_fw=
+.bin
+failed with error -2
+[    3.468356] Bluetooth: hci0: RTL: firmware file rtl_bt/rtl8761bu_fw.bin =
+not
+found
+
+lsusb:
+Bus 001 Device 009: ID 0bda:2550 Realtek Semiconductor Corp. Bluetooth Radi=
+o.
+
+The firmware is built into the kernel (with a few others). It loaded
+successfuly in kernel 5.13. The other firmware files (intel microcode, amd
+poalris) still loads fine. Config file and firmware path hasn't changed from
+previous version.
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
