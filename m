@@ -2,99 +2,139 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3747C4000E7
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Sep 2021 16:01:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7302340014D
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Sep 2021 16:33:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235681AbhICOCg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 3 Sep 2021 10:02:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60204 "EHLO
+        id S245253AbhICOeT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 3 Sep 2021 10:34:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229818AbhICOCc (ORCPT
+        with ESMTP id S235393AbhICOeS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 3 Sep 2021 10:02:32 -0400
-Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E53F9C061575
-        for <linux-bluetooth@vger.kernel.org>; Fri,  3 Sep 2021 07:01:30 -0700 (PDT)
-Received: by mail-vs1-xe30.google.com with SMTP id a21so4422957vsp.12
-        for <linux-bluetooth@vger.kernel.org>; Fri, 03 Sep 2021 07:01:30 -0700 (PDT)
+        Fri, 3 Sep 2021 10:34:18 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5473DC061575
+        for <linux-bluetooth@vger.kernel.org>; Fri,  3 Sep 2021 07:33:18 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id w78so5953826qkb.4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 03 Sep 2021 07:33:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jLr4l/e2yUPIFPLD6Z6dbCgxggzYg1YohgRbf0t5c1Q=;
-        b=FPCXac0G4iMq3UvtOJtr60EL6ra8Ez/piRMpGFVdtBwB6RIXJ3rPYO7II1jfEg/s1y
-         oZMWXV1e4X0uSdad349v2QNi+SeROGLZ62uPQa3XgZfVdfYOwdbCHbTAa5PSbVafdp7l
-         0X2T+1YlifXHVTJftjsvPM3qclhT2mZOqmPnw=
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=+0VJLUeRL0/FD3GOW3WU5XZKTqgE1eRXP5N9E1JZBIY=;
+        b=kLH5cHfIMrhxrPc8rEPb6d7qA7gRCHQVZvoexG9EM5E7nu3Ycsx69rXr+HEwMBPuXb
+         Incxdib+r0Jj7zOwwfNcGWkcZqojhISN5BfPtd2zCZ5QfWglfsuC5wNxJs62jUq395Yx
+         UZYcPkyuw8YQNDyni0mdX/dQOPgvj+0nP1Cg2TjWogQtQ73oM0nSy522jXrPoheXBS8n
+         BxbW30O0IgcGWqWolT+YW+inU6mfETDFignbl87VuJOp5ITR8V1JfdJSZ43+mkyojHzr
+         5hO8+t6ZqpTZw9jefb0JBHeqwPXsxGeMXpF+WF8Gpn4hw+vh8Jx8bz84l3OqKEXhMHHx
+         88Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jLr4l/e2yUPIFPLD6Z6dbCgxggzYg1YohgRbf0t5c1Q=;
-        b=Q00oIWtectFLHGFIDL+WagjwCvrZ5H3IwHIh8czIr1S9OTp+K29Ng09pfK2+b5Uzn/
-         uOwXCGl9eClr7SE1myZ+2hMCdWInZLo9NfeXC2DEHmrWpMM/PtArUEY/fTPxyxLKi9Lo
-         jTS9m0+pYouIzdGvBF5VrqWeZDYWssMrKvFWityy+FnQ7KfumADoPw80Wj/lixb33hmI
-         hVfQfD0eL8CbZv8jexXvsmxIros4H6hBAn6Wl5FL1KpoqZH7yuF1G+CKM09U0CERDQJD
-         a+TanwSD8yphtkVoSV6SUQRjq8ugO7GDvvKYz5OK9Merzw4TJlGfspxj0bXa4tlChf4Z
-         4hLg==
-X-Gm-Message-State: AOAM530TBFiX9VBQiaF+lzNmfZdMu/9oWkr+rt8pD17tTPICeE/oDFbU
-        cGmJHG1+SnzsgXWFOz/ozQTRMI5T4V6Ysj5H
-X-Google-Smtp-Source: ABdhPJxt6K5pxfZWm5C2+/aIr8A2KIaAVRAZAZ4zdJbK/3+X9gFROuA8LzNRjeixP16McXKMAcWX+g==
-X-Received: by 2002:a67:24c6:: with SMTP id k189mr2695299vsk.3.1630677689781;
-        Fri, 03 Sep 2021 07:01:29 -0700 (PDT)
-Received: from alain.c.googlers.com.com (39.119.74.34.bc.googleusercontent.com. [34.74.119.39])
-        by smtp.gmail.com with ESMTPSA id s46sm506583uad.20.2021.09.03.07.01.28
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=+0VJLUeRL0/FD3GOW3WU5XZKTqgE1eRXP5N9E1JZBIY=;
+        b=LIAZTMRF1sveerGnvPxSuCralVl0T4+oQk4yivwD+M+Xk+c5pF10UZjTO5iGfTBHGx
+         AoFJOsZGHj95qtt2yHhAvupRAaQupmwA4+K4a9SKmOiAkhe2lO41ozcNU3Cao3dK+t2G
+         X8/13Ywe/Thr4x5BVhRL2UI3SAsFl611ufURFb753CCLfg76AixQqPortBukaqcWK28x
+         b9SHdwztrBvnYC+QYo3mpO3fnNiFtyQHmxn4toBjaRM8IEEUQ0sTa/XLx83ioehAjKRC
+         eF13jzlBEGTOXqOIcWBFVIh71FTXtLULGGN3dLgGaQCSOzjLs9OL5JUpkt1vYkjls86i
+         Oypw==
+X-Gm-Message-State: AOAM533gSsiaPkKMdw3RSd1x7Ynu6sbKJ5pwKGStDp3FFudhV4i9K98e
+        iOTfuLf7kSNW1ckNVdiowANZfLvK//QSUg==
+X-Google-Smtp-Source: ABdhPJzzX56T+jhe7/A3b/ONlN++orMP+XZeDg0Ji5NTLZQ4UhlCP0eB9G/4jbPsVL/71Naw5llz+Q==
+X-Received: by 2002:a05:620a:2408:: with SMTP id d8mr3604576qkn.148.1630679597258;
+        Fri, 03 Sep 2021 07:33:17 -0700 (PDT)
+Received: from [172.17.0.2] ([52.177.14.156])
+        by smtp.gmail.com with ESMTPSA id c23sm3797080qkk.50.2021.09.03.07.33.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Sep 2021 07:01:29 -0700 (PDT)
-From:   Alain Michaud <alainm@chromium.org>
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Cc:     Alain Michaud <alainm@chromium.org>
-Subject: [Bluez PATCH] shared/shell: don't allow completion fallback
-Date:   Fri,  3 Sep 2021 14:01:18 +0000
-Message-Id: <20210903140118.3469656-1-alainm@chromium.org>
-X-Mailer: git-send-email 2.33.0.153.gba50c8fa24-goog
+        Fri, 03 Sep 2021 07:33:16 -0700 (PDT)
+Message-ID: <6132322c.1c69fb81.451d0.b741@mx.google.com>
+Date:   Fri, 03 Sep 2021 07:33:16 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============5856723213431456484=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, alainm@chromium.org
+Subject: RE: [Bluez] shared/shell: don't allow completion fallback
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20210903140118.3469656-1-alainm@chromium.org>
+References: <20210903140118.3469656-1-alainm@chromium.org>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When using bluetoothctl, if the user enters a quotation mark before
-pressing tab, the completion handler falls back to the shell's handler
-which ends up printing the current folder's file content.  This behavior
-is never desired in bt_shell's menu.
+--===============5856723213431456484==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This was verified by typing " then tab-tab before and after the change as
-been made to confirm the desired behavior and verified that all other
-argument completions (such as address completion) continues to function.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=541783
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.27 seconds
+GitLint                       PASS      0.12 seconds
+Prep - Setup ELL              PASS      40.85 seconds
+Build - Prep                  PASS      0.10 seconds
+Build - Configure             PASS      7.13 seconds
+Build - Make                  PASS      177.53 seconds
+Make Check                    PASS      8.82 seconds
+Make Distcheck                PASS      211.31 seconds
+Build w/ext ELL - Configure   PASS      7.27 seconds
+Build w/ext ELL - Make        PASS      169.16 seconds
+
+Details
+##############################
+Test: CheckPatch - PASS
+Desc: Run checkpatch.pl script with rule in .checkpatch.conf
+
+##############################
+Test: GitLint - PASS
+Desc: Run gitlint with rule in .gitlint
+
+##############################
+Test: Prep - Setup ELL - PASS
+Desc: Clone, build, and install ELL
+
+##############################
+Test: Build - Prep - PASS
+Desc: Prepare environment for build
+
+##############################
+Test: Build - Configure - PASS
+Desc: Configure the BlueZ source tree
+
+##############################
+Test: Build - Make - PASS
+Desc: Build the BlueZ source tree
+
+##############################
+Test: Make Check - PASS
+Desc: Run 'make check'
+
+##############################
+Test: Make Distcheck - PASS
+Desc: Run distcheck to check the distribution
+
+##############################
+Test: Build w/ext ELL - Configure - PASS
+Desc: Configure BlueZ source with '--enable-external-ell' configuration
+
+##############################
+Test: Build w/ext ELL - Make - PASS
+Desc: Build BlueZ source with '--enable-external-ell' configuration
+
+
 
 ---
+Regards,
+Linux Bluetooth
 
- src/shared/shell.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/src/shared/shell.c b/src/shared/shell.c
-index 21e8b50cd..cbb9b8b88 100644
---- a/src/shared/shell.c
-+++ b/src/shared/shell.c
-@@ -903,6 +903,8 @@ static char **shell_completion(const char *text, int start, int end)
- {
- 	char **matches = NULL;
- 
-+	rl_attempted_completion_over = 1;
-+
- 	if (!data.menu)
- 		return NULL;
- 
-@@ -925,9 +927,6 @@ static char **shell_completion(const char *text, int start, int end)
- 		matches = rl_completion_matches(text, cmd_generator);
- 	}
- 
--	if (!matches)
--		rl_attempted_completion_over = 1;
--
- 	return matches;
- }
- 
--- 
-2.33.0.153.gba50c8fa24-goog
-
+--===============5856723213431456484==--
