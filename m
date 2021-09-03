@@ -2,129 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CFED3FF8EA
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Sep 2021 04:45:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 339533FF915
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Sep 2021 05:23:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345668AbhICCpo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Sep 2021 22:45:44 -0400
-Received: from www262.sakura.ne.jp ([202.181.97.72]:63755 "EHLO
-        www262.sakura.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232101AbhICCpn (ORCPT
+        id S1345842AbhICDY3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 2 Sep 2021 23:24:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56690 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242941AbhICDY1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 2 Sep 2021 22:45:43 -0400
-Received: from fsav415.sakura.ne.jp (fsav415.sakura.ne.jp [133.242.250.114])
-        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTP id 1832iWme057819;
-        Fri, 3 Sep 2021 11:44:33 +0900 (JST)
-        (envelope-from penguin-kernel@i-love.sakura.ne.jp)
-Received: from www262.sakura.ne.jp (202.181.97.72)
- by fsav415.sakura.ne.jp (F-Secure/fsigk_smtp/550/fsav415.sakura.ne.jp);
- Fri, 03 Sep 2021 11:44:32 +0900 (JST)
-X-Virus-Status: clean(F-Secure/fsigk_smtp/550/fsav415.sakura.ne.jp)
-Received: from [192.168.1.9] (M106072142033.v4.enabler.ne.jp [106.72.142.33])
-        (authenticated bits=0)
-        by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTPSA id 1832iWRB057815
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 3 Sep 2021 11:44:32 +0900 (JST)
-        (envelope-from penguin-kernel@i-love.sakura.ne.jp)
-Subject: [PATCH] Bluetooth: avoid page fault from sco_send_frame()
-From:   Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
-To:     LinMa <linma@zju.edu.cn>, linux-bluetooth@vger.kernel.org,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-References: <15f5a46.b79d9.17ba6802ccd.Coremail.linma@zju.edu.cn>
- <c998d16d-f45a-8be4-2898-9e94509cb2ea@i-love.sakura.ne.jp>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>
-Message-ID: <60f604f8-2a89-fd3f-996f-9d9e4a229427@i-love.sakura.ne.jp>
-Date:   Fri, 3 Sep 2021 11:44:33 +0900
-User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Thu, 2 Sep 2021 23:24:27 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81BF9C061575;
+        Thu,  2 Sep 2021 20:23:28 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id p4so4541578qki.3;
+        Thu, 02 Sep 2021 20:23:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kmMaDf5XzzZWoGrkUvrMT55kPyBx22fLqCQ3l5BOly4=;
+        b=Gbry68x/s33GK0bheQ4NqIwVQxwD6g9YurY5CIGkicUcwOs2K8iMjfBV78fnJbKI2b
+         G4b5VNP1omLmgOqA2TwWQZIJ5BsNmjO8RgBd5/Qn7mZ88IRHxFpeQDBDq2j2dD1q2HQo
+         86/kDI5TCnVMiiDWTrXsgHQLfU9aIucV4hL5iAf6pzbB2DD03iXIKicNVYCFxXSQvr+V
+         bsgIBIVAXFY8aNmzDEGVPJsyFx30+wTNlaKiwA7CFxVbMR3WL6ENYlJyzbTZ9d8BgJEH
+         BAaFTtk/2/ZC1ZBnNe+pG2S2vH80378SMZjn3kSbPXEaO2ducbIr0XSFokzHcmGVFI3X
+         xFuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kmMaDf5XzzZWoGrkUvrMT55kPyBx22fLqCQ3l5BOly4=;
+        b=lSyAKt3dSwf3jX5H3m/IPbR1c+AIob5FhHxYznIcscxK617U3/+RS5OSRzZwYD+i8l
+         EQJ60KXVIxup0SBNq3X2Fu9jf12oXH17eZpduqKSvpZP2Bxcn0LQ5aDCZXpX0gPIWrA1
+         YMj2dJcQlt6Y5NbtcuQd885jRCUhcQ+B8uvOtyLhMDL1wYu/UkHTn/GSbCPeBY1IWnNn
+         Y0sxrK2DyBkO4R5LO0qevK3M6UnbwNaPRhhPNevp24lf4BhhbdEJ1AHpZjLbx4SHwX8T
+         OCgpXSCTEY9wF4WktkJCYxVJ+1geHnERYNOb45gy4/JXryEpMH3eBxAN+1G3cYJklBjL
+         j0Lg==
+X-Gm-Message-State: AOAM531IooyWgmFMlYz0rpzl0vPur0fFvs7y70emb5Jwh5EwyUzcp7eF
+        XhxCmKB9CJisG+OC7eQu698=
+X-Google-Smtp-Source: ABdhPJy5VR1jyOkWg+muVI8YHbH8vEGlrb1vrWc9VtYCwC/VHZSuc/dYGFUB5q/XvUhbCCDsF4fEEg==
+X-Received: by 2002:ae9:edd2:: with SMTP id c201mr1424754qkg.495.1630639407731;
+        Thu, 02 Sep 2021 20:23:27 -0700 (PDT)
+Received: from localhost.localdomain (pool-72-82-21-11.prvdri.fios.verizon.net. [72.82.21.11])
+        by smtp.gmail.com with ESMTPSA id v5sm2984729qkh.39.2021.09.02.20.23.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Sep 2021 20:23:27 -0700 (PDT)
+From:   Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        davem@davemloft.net, kuba@kernel.org
+Cc:     Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, eric.dumazet@gmail.com
+Subject: [PATCH 0/2] Bluetooth: various SCO fixes
+Date:   Thu,  2 Sep 2021 23:13:04 -0400
+Message-Id: <20210903031306.78292-1-desmondcheongzx@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <c998d16d-f45a-8be4-2898-9e94509cb2ea@i-love.sakura.ne.jp>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Since userfaultfd mechanism allows sleeping with kernel lock held,
-avoiding page fault with kernel lock held where possible will make
-the module more robust. This patch just brings memcpy_from_msg() calls
-to out of sock lock.
 
-This patch is an instant mitigation for CVE-2021-3640. To fully close
-the race window for this use-after-free problem, we need more changes.
+Hi,
 
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
----
- net/bluetooth/sco.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+This patch set contains some of the fixes for SCO following our
+discussion on commit ba316be1b6a0 ("Bluetooth: schedule SCO timeouts
+with delayed_work") [1].
 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index d9a4e88dacbb..e4b079b31ce9 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -273,7 +273,7 @@ static int sco_connect(struct sock *sk)
- 	return err;
- }
- 
--static int sco_send_frame(struct sock *sk, struct msghdr *msg, int len)
-+static int sco_send_frame(struct sock *sk, const void *buf, int len, int flags)
- {
- 	struct sco_conn *conn = sco_pi(sk)->conn;
- 	struct sk_buff *skb;
-@@ -285,14 +285,11 @@ static int sco_send_frame(struct sock *sk, struct msghdr *msg, int len)
- 
- 	BT_DBG("sk %p len %d", sk, len);
- 
--	skb = bt_skb_send_alloc(sk, len, msg->msg_flags & MSG_DONTWAIT, &err);
-+	skb = bt_skb_send_alloc(sk, len, flags & MSG_DONTWAIT, &err);
- 	if (!skb)
- 		return err;
- 
--	if (memcpy_from_msg(skb_put(skb, len), msg, len)) {
--		kfree_skb(skb);
--		return -EFAULT;
--	}
-+	memcpy(skb_put(skb, len), buf, len);
- 
- 	hci_send_sco(conn->hcon, skb);
- 
-@@ -714,6 +711,7 @@ static int sco_sock_sendmsg(struct socket *sock, struct msghdr *msg,
- 			    size_t len)
- {
- 	struct sock *sk = sock->sk;
-+	void *buf;
- 	int err;
- 
- 	BT_DBG("sock %p, sk %p", sock, sk);
-@@ -725,14 +723,23 @@ static int sco_sock_sendmsg(struct socket *sock, struct msghdr *msg,
- 	if (msg->msg_flags & MSG_OOB)
- 		return -EOPNOTSUPP;
- 
-+	buf = kmalloc(len, GFP_KERNEL | __GFP_NOWARN);
-+	if (!buf)
-+		return -ENOMEM;
-+	if (memcpy_from_msg(buf, msg, len)) {
-+		kfree(buf);
-+		return -EFAULT;
-+	}
-+
- 	lock_sock(sk);
- 
- 	if (sk->sk_state == BT_CONNECTED)
--		err = sco_send_frame(sk, msg, len);
-+		err = sco_send_frame(sk, buf, len, msg->msg_flags);
- 	else
- 		err = -ENOTCONN;
- 
- 	release_sock(sk);
-+	kfree(buf);
- 	return err;
- }
- 
+I believe these patches should go in together with [2] to address the
+UAF errors that have been reported by Syzbot following
+commit ba316be1b6a0.
+
+Link: https://lore.kernel.org/lkml/20210810041410.142035-2-desmondcheongzx@gmail.com/ [1]
+Link: https://lore.kernel.org/lkml/20210831065601.101185-1-desmondcheongzx@gmail.com/ [2]
+
+Best wishes,
+Desmond
+
+Desmond Cheong Zhi Xi (2):
+  Bluetooth: call sock_hold earlier in sco_conn_del
+  Bluetooth: fix init and cleanup of sco_conn.timeout_work
+
+ net/bluetooth/sco.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
 -- 
-2.30.2
-
+2.25.1
 
