@@ -2,201 +2,204 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55E9A400B50
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  4 Sep 2021 14:16:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBCD44010A0
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  5 Sep 2021 17:44:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236418AbhIDMRG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 4 Sep 2021 08:17:06 -0400
-Received: from mga05.intel.com ([192.55.52.43]:44170 "EHLO mga05.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236349AbhIDMRF (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 4 Sep 2021 08:17:05 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10096"; a="305193339"
-X-IronPort-AV: E=Sophos;i="5.85,268,1624345200"; 
-   d="scan'208";a="305193339"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2021 05:16:03 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.85,268,1624345200"; 
-   d="scan'208";a="692829539"
-Received: from lkp-server01.sh.intel.com (HELO 2115029a3e5c) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 04 Sep 2021 05:16:01 -0700
-Received: from kbuild by 2115029a3e5c with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1mMUaX-0001UN-8b; Sat, 04 Sep 2021 12:16:01 +0000
-Date:   Sat, 04 Sep 2021 20:15:43 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- 49d8a5606428ca0962d09050a5af81461ff90fbb
-Message-ID: <6133636f.i1HJf5hYN9V3YWer%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        id S234859AbhIEPpS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 5 Sep 2021 11:45:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38446 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229566AbhIEPpS (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 5 Sep 2021 11:45:18 -0400
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02822C061757
+        for <linux-bluetooth@vger.kernel.org>; Sun,  5 Sep 2021 08:44:14 -0700 (PDT)
+Received: from amulet.. (85-76-48-33-nat.elisa-mobile.fi [85.76.48.33])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: pav)
+        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id A42371B001E8;
+        Sun,  5 Sep 2021 18:44:09 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+        t=1630856649;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=IF18CdOHKgmPrX0PbOR4R7mArRM1jLM58+L4+88ZDJ4=;
+        b=EpdA2vv+ps0L4E2VwlKgsL6+wP+vr9bv7Gam3zhCmAPraj3CSPkxhuulLRbMSQJqPZhwKw
+        090EuADxvl5SYveYmVCZaW+0jBsufWWHlf61366lbayZge0QOVUB3Rxn4m2HdFlAnhK4W6
+        FdAYL32ycxy+vlo3UNlZxkN2gp6SVUmCQYFZvHd00shslPSYxcOWy07pPvhaoH/XBMXetm
+        NadKXesCxKZMW84039lb/ZsaMif8KxIr1Wnu3BF1H5vIXKCFvf4olNJMImClNUais/H6W1
+        feU6F+EAIm8u8mmTDm3e8IY+2DT84TSC2mW6WLZu0rsXijGeBtJ18j6QxJrs0g==
+From:   Pauli Virtanen <pav@iki.fi>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ v2 1/2] shared/util: use 64-bit bitmap in util_get/clear_uid
+Date:   Sun,  5 Sep 2021 18:43:55 +0300
+Message-Id: <20210905154356.8296-1-pav@iki.fi>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210829155012.164880-1-pav@iki.fi>
+References: <20210829155012.164880-1-pav@iki.fi>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1630856649; a=rsa-sha256;
+        cv=none;
+        b=QeqQGb7ktJVx2SKaV3+lF2Bw+tOHkNhXXLv9X1PwXABdBbaRnl1JFLwJ3r1A2bQ71tC1j0
+        rX9kP3BQNliXia9w7zPn5wsGx4RNAY3x4LJXKvRmjnbki0ywpYqGZipyzu8RQugeiLLRep
+        Om1ZEidHKIsJZ0GJJulNPO4N0z0NyPOdTdu4vl7qmqQWrwUvBoK+LnAfP4Z4xLUF0HaNZ8
+        VkgD2tDTGXSu2nuZeRCPTfhAXqaHep1aUdXKAXSBWZFkCRl/zhJEHzsq+THGH7URw3ydb8
+        jnpo2xWk74kOkTukUE9es03BcDBxx6iBUl/0G4EotuoPHYj0NLe3Ljnv1TlzZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+        s=lahtoruutu; t=1630856649;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=IF18CdOHKgmPrX0PbOR4R7mArRM1jLM58+L4+88ZDJ4=;
+        b=vRe0dN8v1S7p7I6+0vXPZL0tgdAZwGkX6Ps7cBNH1JzrZZTN/vKJ2m+KMeKcnQkm6Jczd/
+        ZagVdewBMd2dIzjrzZfblqQBWtLTq3Nf31LXTBg54VlNP4exoCZEBt1EFRC1Y28TMc2ru8
+        46OOzd6sGqOyNBu4mbzriDeqxp65oXyeOTmrrRD++BjTDXWXpOHzSSaxnw+sbsl6Zi/7rR
+        P7b9ceG6kHHjpFdNGnY9vGSerDlIQh4oQ2rdfPXKv7vGFb74wjkxUYqribFpMKZvO6NEN7
+        SNpgVGK8vlsjZxLh2MnsdisgawUFT+lguVO7H6MIwPmBAW4v6bYU2uNP0ofWow==
+ARC-Authentication-Results: i=1;
+        ORIGINATING;
+        auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: 49d8a5606428ca0962d09050a5af81461ff90fbb  Bluetooth: fix init and cleanup of sco_conn.timeout_work
+The util_get/clear_uid functions use int type for bitmap, and are used
+e.g. for SEID allocation. However, valid SEIDs are in range 1 to 0x3E
+(AVDTP spec v1.3, 8.20.1), and 8*sizeof(int) is often smaller than 0x3E.
 
-elapsed time: 727m
+The function is also used in src/advertising.c, but an explicit maximum
+value is always provided, so growing the bitmap size is safe there.
 
-configs tested: 141
-configs skipped: 4
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-i386                 randconfig-c001-20210904
-um                               alldefconfig
-powerpc                     kilauea_defconfig
-sh                           se7343_defconfig
-mips                        workpad_defconfig
-powerpc                      pasemi_defconfig
-sh                   sh7770_generic_defconfig
-powerpc                mpc7448_hpc2_defconfig
-arm                         socfpga_defconfig
-arm                        spear6xx_defconfig
-powerpc                 mpc8560_ads_defconfig
-m68k                         amcore_defconfig
-sparc                       sparc64_defconfig
-sh                           se7206_defconfig
-mips                       capcella_defconfig
-microblaze                      mmu_defconfig
-arm                          collie_defconfig
-powerpc                 mpc836x_mds_defconfig
-arc                     haps_hs_smp_defconfig
-powerpc                    klondike_defconfig
-powerpc                     tqm8548_defconfig
-powerpc                        cell_defconfig
-h8300                     edosk2674_defconfig
-s390                             allmodconfig
-powerpc                     mpc83xx_defconfig
-mips                           gcw0_defconfig
-riscv                               defconfig
-xtensa                       common_defconfig
-powerpc                     tqm8540_defconfig
-sh                          urquell_defconfig
-xtensa                  nommu_kc705_defconfig
-mips                         rt305x_defconfig
-mips                        maltaup_defconfig
-arm                         s5pv210_defconfig
-arm                           viper_defconfig
-powerpc                  mpc866_ads_defconfig
-powerpc                 mpc8313_rdb_defconfig
-arm                      pxa255-idp_defconfig
-ia64                         bigsur_defconfig
-nds32                            alldefconfig
-powerpc                          g5_defconfig
-arm                         lubbock_defconfig
-h8300                    h8300h-sim_defconfig
-openrisc                 simple_smp_defconfig
-arm                    vt8500_v6_v7_defconfig
-arm                            lart_defconfig
-sh                         ecovec24_defconfig
-sh                   rts7751r2dplus_defconfig
-powerpc                      makalu_defconfig
-powerpc                     akebono_defconfig
-sh                         microdev_defconfig
-mips                      maltaaprp_defconfig
-powerpc                 mpc85xx_cds_defconfig
-sh                          rsk7264_defconfig
-powerpc                     tqm5200_defconfig
-mips                    maltaup_xpa_defconfig
-arm                  randconfig-c002-20210904
-x86_64                            allnoconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-x86_64               randconfig-a006-20210904
-x86_64               randconfig-a004-20210904
-x86_64               randconfig-a003-20210904
-x86_64               randconfig-a005-20210904
-x86_64               randconfig-a001-20210904
-x86_64               randconfig-a002-20210904
-i386                 randconfig-a005-20210904
-i386                 randconfig-a004-20210904
-i386                 randconfig-a006-20210904
-i386                 randconfig-a002-20210904
-i386                 randconfig-a003-20210904
-i386                 randconfig-a001-20210904
-arc                  randconfig-r043-20210904
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                    rhel-8.3-kselftests
-um                           x86_64_defconfig
-um                             i386_defconfig
-x86_64                           allyesconfig
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                                  kexec
-
-clang tested configs:
-s390                 randconfig-c005-20210904
-mips                 randconfig-c004-20210904
-powerpc              randconfig-c003-20210904
-x86_64               randconfig-c007-20210904
-i386                 randconfig-c001-20210904
-arm                  randconfig-c002-20210904
-riscv                randconfig-c006-20210904
-x86_64               randconfig-a011-20210904
-x86_64               randconfig-a016-20210904
-x86_64               randconfig-a012-20210904
-x86_64               randconfig-a015-20210904
-x86_64               randconfig-a014-20210904
-x86_64               randconfig-a013-20210904
-i386                 randconfig-a012-20210904
-i386                 randconfig-a015-20210904
-i386                 randconfig-a011-20210904
-i386                 randconfig-a013-20210904
-i386                 randconfig-a014-20210904
-i386                 randconfig-a016-20210904
-riscv                randconfig-r042-20210904
-hexagon              randconfig-r045-20210904
-s390                 randconfig-r044-20210904
-hexagon              randconfig-r041-20210904
-
+Use 64-bit bitmap instead, to be able to cover the valid range.
 ---
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Changes in v2:
+* Use ffsll
+
+ android/avdtp.c        |  2 +-
+ profiles/audio/avdtp.c |  2 +-
+ src/advertising.c      |  2 +-
+ src/shared/util.c      | 16 +++++++---------
+ src/shared/util.h      |  4 ++--
+ unit/test-avdtp.c      |  2 +-
+ 6 files changed, 13 insertions(+), 15 deletions(-)
+
+diff --git a/android/avdtp.c b/android/avdtp.c
+index 8c2930ec1..a261a8e5f 100644
+--- a/android/avdtp.c
++++ b/android/avdtp.c
+@@ -34,7 +34,7 @@
+ #include "../profiles/audio/a2dp-codecs.h"
+ 
+ #define MAX_SEID 0x3E
+-static unsigned int seids;
++static uint64_t seids;
+ 
+ #ifndef MAX
+ # define MAX(x, y) ((x) > (y) ? (x) : (y))
+diff --git a/profiles/audio/avdtp.c b/profiles/audio/avdtp.c
+index 946231b71..25520ceec 100644
+--- a/profiles/audio/avdtp.c
++++ b/profiles/audio/avdtp.c
+@@ -44,7 +44,7 @@
+ #define AVDTP_PSM 25
+ 
+ #define MAX_SEID 0x3E
+-static unsigned int seids;
++static uint64_t seids;
+ 
+ #ifndef MAX
+ # define MAX(x, y) ((x) > (y) ? (x) : (y))
+diff --git a/src/advertising.c b/src/advertising.c
+index bd79454d5..41b818650 100644
+--- a/src/advertising.c
++++ b/src/advertising.c
+@@ -48,7 +48,7 @@ struct btd_adv_manager {
+ 	uint8_t max_scan_rsp_len;
+ 	uint8_t max_ads;
+ 	uint32_t supported_flags;
+-	unsigned int instance_bitmap;
++	uint64_t instance_bitmap;
+ 	bool extended_add_cmds;
+ 	int8_t min_tx_power;
+ 	int8_t max_tx_power;
+diff --git a/src/shared/util.c b/src/shared/util.c
+index 244756456..2887a3efa 100644
+--- a/src/shared/util.c
++++ b/src/shared/util.c
+@@ -124,30 +124,28 @@ unsigned char util_get_dt(const char *parent, const char *name)
+ 
+ /* Helpers for bitfield operations */
+ 
+-/* Find unique id in range from 1 to max but no bigger then
+- * sizeof(int) * 8. ffs() is used since it is POSIX standard
+- */
+-uint8_t util_get_uid(unsigned int *bitmap, uint8_t max)
++/* Find unique id in range from 1 to max but no bigger than 64. */
++uint8_t util_get_uid(uint64_t *bitmap, uint8_t max)
+ {
+ 	uint8_t id;
+ 
+-	id = ffs(~*bitmap);
++	id = ffsll(~*bitmap);
+ 
+ 	if (!id || id > max)
+ 		return 0;
+ 
+-	*bitmap |= 1u << (id - 1);
++	*bitmap |= ((uint64_t)1) << (id - 1);
+ 
+ 	return id;
+ }
+ 
+ /* Clear id bit in bitmap */
+-void util_clear_uid(unsigned int *bitmap, uint8_t id)
++void util_clear_uid(uint64_t *bitmap, uint8_t id)
+ {
+-	if (!id)
++	if (!id || id > 64)
+ 		return;
+ 
+-	*bitmap &= ~(1u << (id - 1));
++	*bitmap &= ~(((uint64_t)1) << (id - 1));
+ }
+ 
+ static const struct {
+diff --git a/src/shared/util.h b/src/shared/util.h
+index 9920b7f76..60908371d 100644
+--- a/src/shared/util.h
++++ b/src/shared/util.h
+@@ -102,8 +102,8 @@ void util_hexdump(const char dir, const unsigned char *buf, size_t len,
+ 
+ unsigned char util_get_dt(const char *parent, const char *name);
+ 
+-uint8_t util_get_uid(unsigned int *bitmap, uint8_t max);
+-void util_clear_uid(unsigned int *bitmap, uint8_t id);
++uint8_t util_get_uid(uint64_t *bitmap, uint8_t max);
++void util_clear_uid(uint64_t *bitmap, uint8_t id);
+ 
+ const char *bt_uuid16_to_str(uint16_t uuid);
+ const char *bt_uuid32_to_str(uint32_t uuid);
+diff --git a/unit/test-avdtp.c b/unit/test-avdtp.c
+index f5340d6f3..4e8a68c6b 100644
+--- a/unit/test-avdtp.c
++++ b/unit/test-avdtp.c
+@@ -550,7 +550,7 @@ static void test_server_seid(gconstpointer data)
+ 	struct avdtp_local_sep *sep;
+ 	unsigned int i;
+ 
+-	for (i = 0; i < sizeof(int) * 8; i++) {
++	for (i = 0; i < MAX_SEID; i++) {
+ 		sep = avdtp_register_sep(context->lseps, AVDTP_SEP_TYPE_SINK,
+ 						AVDTP_MEDIA_TYPE_AUDIO,
+ 						0x00, TRUE, &sep_ind, NULL,
+-- 
+2.31.1
+
