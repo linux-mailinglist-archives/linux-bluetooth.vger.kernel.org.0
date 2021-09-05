@@ -2,227 +2,139 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE7EF4010A1
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  5 Sep 2021 17:44:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 259A24010EC
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  5 Sep 2021 18:49:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235064AbhIEPpT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 5 Sep 2021 11:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38448 "EHLO
+        id S233892AbhIEQuR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 5 Sep 2021 12:50:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231657AbhIEPpS (ORCPT
+        with ESMTP id S231804AbhIEQuQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 5 Sep 2021 11:45:18 -0400
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1AE0C061575
-        for <linux-bluetooth@vger.kernel.org>; Sun,  5 Sep 2021 08:44:14 -0700 (PDT)
-Received: from amulet.. (85-76-48-33-nat.elisa-mobile.fi [85.76.48.33])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: pav)
-        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id AA7B61B002E4;
-        Sun,  5 Sep 2021 18:44:11 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-        t=1630856651;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=2M6wwxIVZ5ubC40QsywibUyVO4pKPeeX+ZUxk5lnwfs=;
-        b=eM3zatbO2GDqVPUrawdo+jIIxLzYa6h7OQWAwXCeZnqrPXf2b49qlMn8GnfDl3hlNkVe+N
-        iv0hqxRn8U/Lk2a8a151hSG6ECXhCHpIgw5tEXgeaKoPxWzJOYzbSdm1QX2zFvlUXiD+Ea
-        8RImPFGtyfkvs9nmwnUa53AMhwB72Lli3K0HBklZTmqQVRurDqVGBmd3Kk6tur6TVOSP37
-        dmz9ZXGB4N6wsVTIJE7s/viQIJCBPjE6VRzN3hA362bs3H9wHbRwWW9eZzuqujw4ccq1K1
-        4y5DBDIpmfiFIPp2bzWlFy6klm+AmiRLXdiDfx/gAqk1i+BUn5f+UQs7MVTBgw==
-From:   Pauli Virtanen <pav@iki.fi>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v2 2/2] avdtp: use separate local SEID pool for each adapter
-Date:   Sun,  5 Sep 2021 18:43:56 +0300
-Message-Id: <20210905154356.8296-2-pav@iki.fi>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210829155012.164880-1-pav@iki.fi>
-References: <20210829155012.164880-1-pav@iki.fi>
+        Sun, 5 Sep 2021 12:50:16 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CA8EC061575
+        for <linux-bluetooth@vger.kernel.org>; Sun,  5 Sep 2021 09:49:13 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id ay33so4496676qkb.10
+        for <linux-bluetooth@vger.kernel.org>; Sun, 05 Sep 2021 09:49:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=xH6bQm9fhrUKROdjrDllUbWCnFoa898EolPd/+IXI3M=;
+        b=Ua4YgBZtkOWWqyLZo9Aof5JCPg9sVJnSAoeLgcYduIBbB6CHtIVv6GxyM7HldDtnKF
+         uuVSivvFAVkvsWPOQki92CVhUPcGgFlu7IEMlW0GZ3PtkOhNSdqfb0hMsHMHP29cY9Nf
+         w3TPcAV2iv613lILZyA/ELREQkQVzQ//xe5eH4nhuSKAxonz+ZlXwJqqZ/9hjY2sCHyN
+         /Fe6scOrBlDCG2jaaaZmL0v4YvqPegE2siYQRmTx0TUpwqayhKrez5YyksxuBsDOdiD4
+         jGk39fXYq97T0F+InmpU/wtzdD0RZ+5O43D25SlEsPSweDj33qySmgYkrTJ87nhUqJU5
+         IMMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=xH6bQm9fhrUKROdjrDllUbWCnFoa898EolPd/+IXI3M=;
+        b=suBzT7U8ywIieflHALsK9P7E5FRraF9FvLsoJ5IjSitOJBeM+P9zLTi/66u6/CRJXP
+         9IPbO9HFHLeaKoyNymmKzXVevDNyiUftsruCwH2EyJMXva3AdiQV307HiYbh5Uh1oWro
+         s+hXFFtRwJTn9vcK4LT/eKnTAvTk8LR4N/3T3TJ0e3vlLGW7n8Qq5Hw6y2hhu+0wc/Kz
+         bLF7fmZlnHjyU3TzKCLTNl4AYfoWnJo2VhZRJndOQWoCjYxsUTkp1ep/K4tPQlYhFkjw
+         tRm3aDXy6cgTDhsNktY54cUuh6Big1h9ea+LWFT5FbNtrIfNqfKzbVi/Sj293kzfgKTo
+         AqXA==
+X-Gm-Message-State: AOAM5320JDUCeG2VrF55GHqZxK3xeKz7KZTTsIYQdV5z6Z+Fk0wEZKXE
+        gqUg0MKVXEwBEIaaJ+VL0hLtS/A5K2dvJA==
+X-Google-Smtp-Source: ABdhPJyskfzTtbuaMHJn5jUGVzJITODfYnCWOZtrPGmU6gX2wW1EvPazPg4mquo8MGe0bw2eYqrqaQ==
+X-Received: by 2002:a37:9401:: with SMTP id w1mr7489255qkd.166.1630860552236;
+        Sun, 05 Sep 2021 09:49:12 -0700 (PDT)
+Received: from [172.17.0.2] ([52.168.139.179])
+        by smtp.gmail.com with ESMTPSA id m68sm4523720qkb.105.2021.09.05.09.49.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Sep 2021 09:49:11 -0700 (PDT)
+Message-ID: <6134f507.1c69fb81.343cf.76d5@mx.google.com>
+Date:   Sun, 05 Sep 2021 09:49:11 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============6319380565393356855=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1630856651; a=rsa-sha256;
-        cv=none;
-        b=SEsUA1UADzSTgwPhxzqCnlC6RIDbL4AY/PfmY+DJUJUilE7IYEaogbueSAX4l7aD+0Kl2X
-        WXL50O567fUYzSgG7DZwldjGEzWTQIfFxFoXFwIyvig/KTHqARurVF0KJMuKYFc3OAGaGC
-        /1p65AJr+HpJhESZOFUi07Fav822E2EgjVRQV0fG6409zMAJELSv2nuvaIEb1Jrir02jKR
-        R7r7Hsgk4X0X/ZXeiEGzWrOAxHVpLaBu6cocabZao7hLYGJCB5C3sp1w8iXnphoScl3EvC
-        FdT4Zfly5gtUyhDS0oPN0nPpckqZxA0XndZjeDpsR3KrAqE3k8grUNpEJKwNOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-        s=lahtoruutu; t=1630856651;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=2M6wwxIVZ5ubC40QsywibUyVO4pKPeeX+ZUxk5lnwfs=;
-        b=rd46SBEPahfKXmfSfAHSG3eui7Li6HNTANqCjmKKdU6EFjmegKtlyIn48D3hv91CR0RyxG
-        4LSXjf1MYUShauq4R4TDOBgiqhlzm3ZTMHZtwxJJ39HSlUO9AaubME8aV+sF5MMCjwIm1/
-        3ZQFTET7HKmevMyNQeFz1n/g75Gycsp9pbbQkQKkwY2VOGfytvQOfyi8j9fVDg4FtLEDKn
-        PR48+XDRFyUmTvtuT2xIDeESDRtY3FlHoYbW0VP9tibFKSIWkbCM+FU1rN7roKyP3jWuXo
-        PVoS9RNN4d1Qjq/eCmp+cnrngFtG77uiyCHhTOt8gDFHhMgzpYdMbQLnZ5qH7A==
-ARC-Authentication-Results: i=1;
-        ORIGINATING;
-        auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, pav@iki.fi
+Subject: RE: [BlueZ,v2,1/2] shared/util: use 64-bit bitmap in util_get/clear_uid
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20210905154356.8296-1-pav@iki.fi>
+References: <20210905154356.8296-1-pav@iki.fi>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Local SEIDs are currently allocated from a pool that is common for all
-adapters. However, AVDTP spec v1.3, sec 4.10 states "To prevent
-conflicts, the scope of the SEID shall be both device-local and
-connection-local. The application is responsible for assigning a SEID,
-which is not in use on the connection to the same peer device." In
-practice, registering the same media application for multiple adapters
-can result to running out of SEIDs, even though the spec does not
-require SEIDs to be unique across adapters.
+--===============6319380565393356855==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-To fix this, have a2dp_server own the SEID pool and pass it to avdtp
-functions. Currently, a2dp_server is the only one that registers local
-SEPs, and its correspondence to adapters is unique, so it can own the
-pool.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=542233
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.30 seconds
+GitLint                       PASS      0.11 seconds
+Prep - Setup ELL              PASS      44.86 seconds
+Build - Prep                  PASS      0.10 seconds
+Build - Configure             PASS      7.75 seconds
+Build - Make                  PASS      192.81 seconds
+Make Check                    PASS      9.37 seconds
+Make Distcheck                PASS      229.33 seconds
+Build w/ext ELL - Configure   PASS      8.02 seconds
+Build w/ext ELL - Make        PASS      181.60 seconds
+
+Details
+##############################
+Test: CheckPatch - PASS
+Desc: Run checkpatch.pl script with rule in .checkpatch.conf
+
+##############################
+Test: GitLint - PASS
+Desc: Run gitlint with rule in .gitlint
+
+##############################
+Test: Prep - Setup ELL - PASS
+Desc: Clone, build, and install ELL
+
+##############################
+Test: Build - Prep - PASS
+Desc: Prepare environment for build
+
+##############################
+Test: Build - Configure - PASS
+Desc: Configure the BlueZ source tree
+
+##############################
+Test: Build - Make - PASS
+Desc: Build the BlueZ source tree
+
+##############################
+Test: Make Check - PASS
+Desc: Run 'make check'
+
+##############################
+Test: Make Distcheck - PASS
+Desc: Run distcheck to check the distribution
+
+##############################
+Test: Build w/ext ELL - Configure - PASS
+Desc: Configure BlueZ source with '--enable-external-ell' configuration
+
+##############################
+Test: Build w/ext ELL - Make - PASS
+Desc: Build BlueZ source with '--enable-external-ell' configuration
+
+
+
 ---
-Changes in v2:
-* Store SEID pool in a2dp_server, passed to avdtp functions.
-  Otherwise SEID pool handling is done in avdtp.c, keeping it
-  similar to what is done with lseps, and not requiring
-  caller to know MAX_SEID.
+Regards,
+Linux Bluetooth
 
- profiles/audio/a2dp.c  |  5 +++--
- profiles/audio/avdtp.c | 23 ++++++++++++++---------
- profiles/audio/avdtp.h |  7 +++++--
- 3 files changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
-index 02caa83e1..9d3aaa136 100644
---- a/profiles/audio/a2dp.c
-+++ b/profiles/audio/a2dp.c
-@@ -118,6 +118,7 @@ struct a2dp_server {
- 	uint32_t sink_record_id;
- 	gboolean sink_enabled;
- 	gboolean source_enabled;
-+	uint64_t seid_pool;
- 	GIOChannel *io;
- 	struct queue *seps;
- 	struct queue *channels;
-@@ -2553,7 +2554,7 @@ static void a2dp_unregister_sep(struct a2dp_sep *sep)
- 		sep->endpoint = NULL;
- 	}
- 
--	avdtp_unregister_sep(server->seps, sep->lsep);
-+	avdtp_unregister_sep(server->seps, &server->seid_pool, sep->lsep);
- 
- 	g_free(sep);
- 
-@@ -2615,7 +2616,7 @@ struct a2dp_sep *a2dp_add_sep(struct btd_adapter *adapter, uint8_t type,
- 
- 	sep = g_new0(struct a2dp_sep, 1);
- 
--	sep->lsep = avdtp_register_sep(server->seps, type,
-+	sep->lsep = avdtp_register_sep(server->seps, &server->seid_pool, type,
- 					AVDTP_MEDIA_TYPE_AUDIO, codec,
- 					delay_reporting, &endpoint_ind,
- 					&cfm, sep);
-diff --git a/profiles/audio/avdtp.c b/profiles/audio/avdtp.c
-index 25520ceec..d3dfbf96d 100644
---- a/profiles/audio/avdtp.c
-+++ b/profiles/audio/avdtp.c
-@@ -44,7 +44,6 @@
- #define AVDTP_PSM 25
- 
- #define MAX_SEID 0x3E
--static uint64_t seids;
- 
- #ifndef MAX
- # define MAX(x, y) ((x) > (y) ? (x) : (y))
-@@ -3768,7 +3767,9 @@ int avdtp_delay_report(struct avdtp *session, struct avdtp_stream *stream,
- 							&req, sizeof(req));
- }
- 
--struct avdtp_local_sep *avdtp_register_sep(struct queue *lseps, uint8_t type,
-+struct avdtp_local_sep *avdtp_register_sep(struct queue *lseps,
-+						uint64_t *seid_pool,
-+						uint8_t type,
- 						uint8_t media_type,
- 						uint8_t codec_type,
- 						gboolean delay_reporting,
-@@ -3777,7 +3778,7 @@ struct avdtp_local_sep *avdtp_register_sep(struct queue *lseps, uint8_t type,
- 						void *user_data)
- {
- 	struct avdtp_local_sep *sep;
--	uint8_t seid = util_get_uid(&seids, MAX_SEID);
-+	uint8_t seid = util_get_uid(seid_pool, MAX_SEID);
- 
- 	if (!seid)
- 		return NULL;
-@@ -3794,18 +3795,21 @@ struct avdtp_local_sep *avdtp_register_sep(struct queue *lseps, uint8_t type,
- 	sep->user_data = user_data;
- 	sep->delay_reporting = delay_reporting;
- 
--	DBG("SEP %p registered: type:%d codec:%d seid:%d", sep,
--			sep->info.type, sep->codec, sep->info.seid);
-+	DBG("SEP %p registered: type:%d codec:%d seid_pool:%p seid:%d", sep,
-+			sep->info.type, sep->codec, seid_pool,
-+			sep->info.seid);
- 
- 	if (!queue_push_tail(lseps, sep)) {
- 		g_free(sep);
-+		util_clear_uid(seid_pool, seid);
- 		return NULL;
- 	}
- 
- 	return sep;
- }
- 
--int avdtp_unregister_sep(struct queue *lseps, struct avdtp_local_sep *sep)
-+int avdtp_unregister_sep(struct queue *lseps, uint64_t *seid_pool,
-+						struct avdtp_local_sep *sep)
- {
- 	if (!sep)
- 		return -EINVAL;
-@@ -3813,10 +3817,11 @@ int avdtp_unregister_sep(struct queue *lseps, struct avdtp_local_sep *sep)
- 	if (sep->stream)
- 		release_stream(sep->stream, sep->stream->session);
- 
--	DBG("SEP %p unregistered: type:%d codec:%d seid:%d", sep,
--			sep->info.type, sep->codec, sep->info.seid);
-+	DBG("SEP %p unregistered: type:%d codec:%d seid_pool:%p seid:%d", sep,
-+			sep->info.type, sep->codec, seid_pool,
-+			sep->info.seid);
- 
--	util_clear_uid(&seids, sep->info.seid);
-+	util_clear_uid(seid_pool, sep->info.seid);
- 	queue_remove(lseps, sep);
- 	g_free(sep);
- 
-diff --git a/profiles/audio/avdtp.h b/profiles/audio/avdtp.h
-index b02534cd5..102a2603e 100644
---- a/profiles/audio/avdtp.h
-+++ b/profiles/audio/avdtp.h
-@@ -278,7 +278,9 @@ int avdtp_abort(struct avdtp *session, struct avdtp_stream *stream);
- int avdtp_delay_report(struct avdtp *session, struct avdtp_stream *stream,
- 							uint16_t delay);
- 
--struct avdtp_local_sep *avdtp_register_sep(struct queue *lseps, uint8_t type,
-+struct avdtp_local_sep *avdtp_register_sep(struct queue *lseps,
-+						uint64_t *seid_pool,
-+						uint8_t type,
- 						uint8_t media_type,
- 						uint8_t codec_type,
- 						gboolean delay_reporting,
-@@ -290,7 +292,8 @@ struct avdtp_local_sep *avdtp_register_sep(struct queue *lseps, uint8_t type,
- struct avdtp_remote_sep *avdtp_find_remote_sep(struct avdtp *session,
- 						struct avdtp_local_sep *lsep);
- 
--int avdtp_unregister_sep(struct queue *lseps, struct avdtp_local_sep *sep);
-+int avdtp_unregister_sep(struct queue *lseps, uint64_t *seid_pool,
-+						struct avdtp_local_sep *sep);
- 
- avdtp_state_t avdtp_sep_get_state(struct avdtp_local_sep *sep);
- uint8_t avdtp_sep_get_seid(struct avdtp_local_sep *sep);
--- 
-2.31.1
-
+--===============6319380565393356855==--
