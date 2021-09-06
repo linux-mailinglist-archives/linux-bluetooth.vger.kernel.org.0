@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AAF6401786
+	by mail.lfdr.de (Postfix) with ESMTP id 782BF401787
 	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 Sep 2021 10:05:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240630AbhIFIG0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 6 Sep 2021 04:06:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58076 "EHLO
+        id S240631AbhIFIG3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 6 Sep 2021 04:06:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240622AbhIFIGZ (ORCPT
+        with ESMTP id S240622AbhIFIG3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 6 Sep 2021 04:06:25 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76746C061575
-        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Sep 2021 01:05:21 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id f64-20020a2538430000b0290593bfc4b046so7517043yba.9
-        for <linux-bluetooth@vger.kernel.org>; Mon, 06 Sep 2021 01:05:21 -0700 (PDT)
+        Mon, 6 Sep 2021 04:06:29 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F100C061575
+        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Sep 2021 01:05:25 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id k9-20020a05620a138900b003d59b580010so9925626qki.18
+        for <linux-bluetooth@vger.kernel.org>; Mon, 06 Sep 2021 01:05:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=nCiATbOwTZU7cpvcAmN6qMTCtvrdP/lnLGl+wNXlnz0=;
-        b=dWgPXrm7EeMWNmC2JaBlBkIcCoh8yIuogHd+P82ljnmBwFTrn3xR0Jfg6KAaDU5HDV
-         Ka+5jMkr6XygKlmHUBiGo3SgWXjnjh+6QPoTE+zgjH2jljA7Ks52ggKXo4HoJ0/jMC4B
-         /kXDvSGdUbrsy8VYJysCRKa3dTDnwZU1By6LhYifHXo1buqerIxnMR08feVQer1EfDWO
-         JSwNMdJgBEV7Shoxs0gsskcfXNZ65r/3ojLZrpA+tzwFjbdvDXoKgoTJrOpN7w9I+1Aa
-         IqFhMzlSPhrEQopPb5il0wMAFs1pvmLc0QgAhWEdFn+mTDo+rZsTGcJuOi+wRqNti9tc
-         NVZw==
+        bh=1X27jyJEhy/2kFxjNizJsG/qiS0KQzcaw5NG9pZxT9A=;
+        b=AU18YjwCiudh6EgvRocUBxXHIwrL7/ppuV1xBLBm2j/QKuD4chXbLa6vyJKH2SLFVv
+         PNxePBlIOkyFCb+qvXnH0iZXfnfHXAQEk+aNbgo3MCabyj8UK43xTRKf62VV2Ag6eZVt
+         z8mRdimjS1EgNq+Zh3NbCQ9FE7w1r9wcObKpsDcFLmsc28lsYXwPQeItfHuEaC/Vrf0f
+         jUhoSQcp5VAoMvsoHV6mKF+uI7vtXbV5CBuUufdf14bAwvWrZ5tu4lxmGQ3ekiZK1q/c
+         K5x8g6+CwXiWlvfOxeNNiLu9PappeEswlwkfEwa7eX3n+FHq77x1Ih4qxHCXAYmYGd8m
+         zJtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=nCiATbOwTZU7cpvcAmN6qMTCtvrdP/lnLGl+wNXlnz0=;
-        b=Qd6XouMvv6zjgRR0oR+YS1ktEKpcRH/FQRFMOS6Zu+rV/QfIArWgHX4g5Kao2PR4mi
-         t+n39npRFgte1djH5HH+yZEISYxI0Q8/dKgo8e6hGi1Mir35LebN6MPuNUTzGNW7rnhb
-         6sPldRIX0o1+ZTAZxuiJx8QEM8wySyPhEuJCywDqG/GHT9QcxoIkFOR3ektn2YL8DfGa
-         o2Cut2AJLX3hvJwUqOJXFQy52vZ1oUJkOTWL8hyvHWzoBt39uWR/2Qnv/SzMRJ91DeJP
-         GDmTP12OZKeqDs5IJNRJRp7TtG21lznY1B4bcNruH7UtTTwA7IcDSavICqj8std9vrSp
-         BcSA==
-X-Gm-Message-State: AOAM533yspjX2IYWiaGUxeuuclfyrUoiAwf9RnY3+iseVX6vl4P8F1XK
-        lhBWkZP4H3MjtNx5wAbCfqz17XJnJvxAsa2URW5oHL4Ld8+8jcmcW4ZWz3xxkbBP222ZoMlFF5G
-        br/f06CtGRx6YbDRxTzAdHnJk0l7LVggoah/yacC/lB8JTiDKXyaV0DhFLO5EgXSfvMEVTYvA0U
-        Tn
-X-Google-Smtp-Source: ABdhPJxU7X+4KbQ08dBlJXUeu8qYO9y21jPoRPkxgQCVlPUkKpYj4FiG8sM/zadbA2AUukZvV8NIwr8MLnc+
+        bh=1X27jyJEhy/2kFxjNizJsG/qiS0KQzcaw5NG9pZxT9A=;
+        b=FDqy6eFEm4py3+l2fnDDi8snt6ICV3f2c3/lJSYu6lYzfscRa1Z4fP9zhWFNIlT8Nq
+         4M4aU9fvkxRRxSnauIS5NFVsFvHHBFdFPOU5HeuNhrFH+ZkZJwcq8/k0mUw5HgC8c6th
+         UsAzrBm1yO9Srbn3pDhskxkaFHgQgEMLUDGeXacH0M0a71YJGRFaginMoFZqLeBTiVw1
+         3CM0UxCMyh6RMOJgsU0h0XA0mJQnzMqd1aWpBwMWFhiptfkfN10uNOn0UvAkQ5aC9JNS
+         ccE4vckGjDSBEUZjDYTG1niB8DtcLE2Bywvbgeg0AmB3maAxAX004pyuIaMiBCTYnFEb
+         6Wjw==
+X-Gm-Message-State: AOAM533h5azIpdY/f313IT449HR+WJApZjVQfW/vP+lf0soMIf6raCJd
+        NYgCTWukQXfDkC5nCUb51h4vfyKZCDcdMn4h5r9A0wfnAEfcQ00kyhJfqQb6tp9RqOvSG7+bRxI
+        rirBY5ptINx9ZgH8DWu07MAoIJmjPe1uGYrpvvwCjPfT/19trN7WLjAvt86JGftc5cKIAIJz8Gb
+        LI
+X-Google-Smtp-Source: ABdhPJx7ZyMbc35Td6tMEYAkzV47OC9yLvcbYlLF5XquSyYqUFmNTjw750A33vEVZQ10TRSuvIGGuGhxU7ke
 X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:10:3b13:95ba:12e5:7134])
- (user=apusaka job=sendgmr) by 2002:a05:6902:513:: with SMTP id
- x19mr14908700ybs.90.1630915520668; Mon, 06 Sep 2021 01:05:20 -0700 (PDT)
-Date:   Mon,  6 Sep 2021 16:04:44 +0800
+ (user=apusaka job=sendgmr) by 2002:a0c:e04a:: with SMTP id
+ y10mr10591124qvk.14.1630915524274; Mon, 06 Sep 2021 01:05:24 -0700 (PDT)
+Date:   Mon,  6 Sep 2021 16:04:45 +0800
 In-Reply-To: <20210906080450.1771211-1-apusaka@google.com>
-Message-Id: <20210906160340.Bluez.v4.6.I0e4236b0928a4359e2f43d0a2ae62e2f20bb3ff4@changeid>
+Message-Id: <20210906160340.Bluez.v4.7.I50be9be1265bc743325cfdb9fa0bdbce9671a304@changeid>
 Mime-Version: 1.0
 References: <20210906080450.1771211-1-apusaka@google.com>
 X-Mailer: git-send-email 2.33.0.153.gba50c8fa24-goog
-Subject: [Bluez PATCH v4 06/12] plugins/sixaxis: Inclusive language changes
+Subject: [Bluez PATCH v4 07/12] profiles: Inclusive language changes
 From:   Archie Pusaka <apusaka@google.com>
 To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>
@@ -67,156 +67,132 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 From: Archie Pusaka <apusaka@chromium.org>
 
 BT core spec 5.3 promotes the usage of inclusive languages.
-This CL uses "central" as it is deemed to be more appropriate.
+This CL replaces some terms with the more appropriate counterparts,
+such as "central" and "peripheral".
 ---
 
-(no changes since v1)
+Changes in v4:
+* Fix line over 80 columns
 
- plugins/sixaxis.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+Changes in v2:
+* Merging several patches from the same directory into one
 
-diff --git a/plugins/sixaxis.c b/plugins/sixaxis.c
-index 517cecc476..ddecbcccb3 100644
---- a/plugins/sixaxis.c
-+++ b/plugins/sixaxis.c
-@@ -139,7 +139,7 @@ static int get_device_bdaddr(int fd, bdaddr_t *bdaddr, CablePairingType type)
- 	return -1;
+ profiles/audio/avctp.c | 10 +++++-----
+ profiles/audio/avctp.h |  2 +-
+ profiles/health/mcap.c | 20 ++++++++++----------
+ profiles/health/mcap.h |  2 +-
+ 4 files changed, 17 insertions(+), 17 deletions(-)
+
+diff --git a/profiles/audio/avctp.c b/profiles/audio/avctp.c
+index 9f717f35bb..702ded1366 100644
+--- a/profiles/audio/avctp.c
++++ b/profiles/audio/avctp.c
+@@ -1614,7 +1614,7 @@ static void avctp_confirm_cb(GIOChannel *chan, gpointer data)
+ 	return;
  }
  
--static int sixaxis_get_master_bdaddr(int fd, bdaddr_t *bdaddr)
-+static int sixaxis_get_central_bdaddr(int fd, bdaddr_t *bdaddr)
+-static GIOChannel *avctp_server_socket(const bdaddr_t *src, gboolean master,
++static GIOChannel *avctp_server_socket(const bdaddr_t *src, gboolean central,
+ 						uint8_t mode, uint16_t psm)
  {
- 	uint8_t buf[8];
- 	int ret;
-@@ -150,7 +150,7 @@ static int sixaxis_get_master_bdaddr(int fd, bdaddr_t *bdaddr)
+ 	GError *err = NULL;
+@@ -1625,7 +1625,7 @@ static GIOChannel *avctp_server_socket(const bdaddr_t *src, gboolean master,
+ 				BT_IO_OPT_SOURCE_BDADDR, src,
+ 				BT_IO_OPT_PSM, psm,
+ 				BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_MEDIUM,
+-				BT_IO_OPT_CENTRAL, master,
++				BT_IO_OPT_CENTRAL, central,
+ 				BT_IO_OPT_MODE, mode,
+ 				BT_IO_OPT_INVALID);
+ 	if (!io) {
+@@ -1636,20 +1636,20 @@ static GIOChannel *avctp_server_socket(const bdaddr_t *src, gboolean master,
+ 	return io;
+ }
  
- 	ret = ioctl(fd, HIDIOCGFEATURE(sizeof(buf)), buf);
- 	if (ret < 0) {
--		error("sixaxis: failed to read master address (%s)",
-+		error("sixaxis: failed to read central address (%s)",
- 							strerror(errno));
- 		return ret;
+-int avctp_register(struct btd_adapter *adapter, gboolean master)
++int avctp_register(struct btd_adapter *adapter, gboolean central)
+ {
+ 	struct avctp_server *server;
+ 	const bdaddr_t *src = btd_adapter_get_address(adapter);
+ 
+ 	server = g_new0(struct avctp_server, 1);
+ 
+-	server->control_io = avctp_server_socket(src, master, BT_IO_MODE_BASIC,
++	server->control_io = avctp_server_socket(src, central, BT_IO_MODE_BASIC,
+ 							AVCTP_CONTROL_PSM);
+ 	if (!server->control_io) {
+ 		g_free(server);
+ 		return -1;
  	}
-@@ -160,7 +160,7 @@ static int sixaxis_get_master_bdaddr(int fd, bdaddr_t *bdaddr)
- 	return 0;
- }
+-	server->browsing_io = avctp_server_socket(src, master, BT_IO_MODE_ERTM,
++	server->browsing_io = avctp_server_socket(src, central, BT_IO_MODE_ERTM,
+ 							AVCTP_BROWSING_PSM);
+ 	if (!server->browsing_io) {
+ 		if (server->control_io) {
+diff --git a/profiles/audio/avctp.h b/profiles/audio/avctp.h
+index 23e3732cde..ca5ff9126d 100644
+--- a/profiles/audio/avctp.h
++++ b/profiles/audio/avctp.h
+@@ -145,7 +145,7 @@ unsigned int avctp_add_state_cb(struct btd_device *dev, avctp_state_cb cb,
+ 							void *user_data);
+ gboolean avctp_remove_state_cb(unsigned int id);
  
--static int ds4_get_master_bdaddr(int fd, bdaddr_t *bdaddr)
-+static int ds4_get_central_bdaddr(int fd, bdaddr_t *bdaddr)
- {
- 	uint8_t buf[16];
- 	int ret;
-@@ -171,7 +171,7 @@ static int ds4_get_master_bdaddr(int fd, bdaddr_t *bdaddr)
+-int avctp_register(struct btd_adapter *adapter, gboolean master);
++int avctp_register(struct btd_adapter *adapter, gboolean central);
+ void avctp_unregister(struct btd_adapter *adapter);
  
- 	ret = ioctl(fd, HIDIOCGFEATURE(sizeof(buf)), buf);
- 	if (ret < 0) {
--		error("sixaxis: failed to read DS4 master address (%s)",
-+		error("sixaxis: failed to read DS4 central address (%s)",
- 		      strerror(errno));
- 		return ret;
- 	}
-@@ -182,16 +182,16 @@ static int ds4_get_master_bdaddr(int fd, bdaddr_t *bdaddr)
- 	return 0;
- }
+ struct avctp *avctp_connect(struct btd_device *device);
+diff --git a/profiles/health/mcap.c b/profiles/health/mcap.c
+index be13af37a0..5161ef77c8 100644
+--- a/profiles/health/mcap.c
++++ b/profiles/health/mcap.c
+@@ -52,15 +52,15 @@
+ struct mcap_csp {
+ 	uint64_t	base_tmstamp;	/* CSP base timestamp */
+ 	struct timespec	base_time;	/* CSP base time when timestamp set */
+-	guint		local_caps;	/* CSP-Master: have got remote caps */
+-	guint		remote_caps;	/* CSP-Slave: remote master got caps */
+-	guint		rem_req_acc;	/* CSP-Slave: accuracy required by master */
+-	guint		ind_expected;	/* CSP-Master: indication expected */
+-	uint8_t		csp_req;	/* CSP-Master: Request control flag */
+-	guint		ind_timer;	/* CSP-Slave: indication timer */
+-	guint		set_timer;	/* CSP-Slave: delayed set timer */
+-	void		*set_data;	/* CSP-Slave: delayed set data */
+-	void		*csp_priv_data;	/* CSP-Master: In-flight request data */
++	guint		local_caps;	/* CSP-Cent.: have got remote caps */
++	guint		remote_caps;	/* CSP-Perip: remote central got caps */
++	guint		rem_req_acc;	/* CSP-Perip: accuracy req by central */
++	guint		ind_expected;	/* CSP-Cent.: indication expected */
++	uint8_t		csp_req;	/* CSP-Cent.: Request control flag */
++	guint		ind_timer;	/* CSP-Perip: indication timer */
++	guint		set_timer;	/* CSP-Perip: delayed set timer */
++	void		*set_data;	/* CSP-Perip: delayed set data */
++	void		*csp_priv_data;	/* CSP-Cent.: In-flight request data */
+ };
  
--static int get_master_bdaddr(int fd, bdaddr_t *bdaddr, CablePairingType type)
-+static int get_central_bdaddr(int fd, bdaddr_t *bdaddr, CablePairingType type)
- {
- 	if (type == CABLE_PAIRING_SIXAXIS)
--		return sixaxis_get_master_bdaddr(fd, bdaddr);
-+		return sixaxis_get_central_bdaddr(fd, bdaddr);
- 	else if (type == CABLE_PAIRING_DS4)
--		return ds4_get_master_bdaddr(fd, bdaddr);
-+		return ds4_get_central_bdaddr(fd, bdaddr);
- 	return -1;
- }
- 
--static int sixaxis_set_master_bdaddr(int fd, const bdaddr_t *bdaddr)
-+static int sixaxis_set_central_bdaddr(int fd, const bdaddr_t *bdaddr)
- {
- 	uint8_t buf[8];
- 	int ret;
-@@ -203,13 +203,13 @@ static int sixaxis_set_master_bdaddr(int fd, const bdaddr_t *bdaddr)
- 
- 	ret = ioctl(fd, HIDIOCSFEATURE(sizeof(buf)), buf);
- 	if (ret < 0)
--		error("sixaxis: failed to write master address (%s)",
-+		error("sixaxis: failed to write central address (%s)",
- 							strerror(errno));
- 
- 	return ret;
- }
- 
--static int ds4_set_master_bdaddr(int fd, const bdaddr_t *bdaddr)
-+static int ds4_set_central_bdaddr(int fd, const bdaddr_t *bdaddr)
- {
- 	uint8_t buf[23];
- 	int ret;
-@@ -223,19 +223,19 @@ static int ds4_set_master_bdaddr(int fd, const bdaddr_t *bdaddr)
- 
- 	ret = ioctl(fd, HIDIOCSFEATURE(sizeof(buf)), buf);
- 	if (ret < 0)
--		error("sixaxis: failed to write DS4 master address (%s)",
-+		error("sixaxis: failed to write DS4 central address (%s)",
- 		      strerror(errno));
- 
- 	return ret;
- }
- 
--static int set_master_bdaddr(int fd, const bdaddr_t *bdaddr,
-+static int set_central_bdaddr(int fd, const bdaddr_t *bdaddr,
- 					CablePairingType type)
- {
- 	if (type == CABLE_PAIRING_SIXAXIS)
--		return sixaxis_set_master_bdaddr(fd, bdaddr);
-+		return sixaxis_set_central_bdaddr(fd, bdaddr);
- 	else if (type == CABLE_PAIRING_DS4)
--		return ds4_set_master_bdaddr(fd, bdaddr);
-+		return ds4_set_central_bdaddr(fd, bdaddr);
- 	return -1;
- }
- 
-@@ -267,8 +267,8 @@ static void agent_auth_cb(DBusError *derr, void *user_data)
- {
- 	struct authentication_closure *closure = user_data;
- 	struct authentication_destroy_closure *destroy;
--	char master_addr[18], adapter_addr[18], device_addr[18];
--	bdaddr_t master_bdaddr;
-+	char central_addr[18], adapter_addr[18], device_addr[18];
-+	bdaddr_t central_bdaddr;
- 	const bdaddr_t *adapter_bdaddr;
- 	bool remove_device = true;
- 
-@@ -283,12 +283,12 @@ static void agent_auth_cb(DBusError *derr, void *user_data)
- 		goto out;
+ struct mcap_sync_cap_cbdata {
+@@ -3139,7 +3139,7 @@ void mcap_sync_set_req(struct mcap_mcl *mcl, uint8_t update, uint32_t btclock,
+ 		g_set_error(err,
+ 			MCAP_CSP_ERROR,
+ 			MCAP_ERROR_RESOURCE_UNAVAILABLE,
+-			"Did not get CSP caps from slave yet");
++			"Did not get CSP caps from peripheral yet");
+ 		return;
  	}
  
--	if (get_master_bdaddr(closure->fd, &master_bdaddr, closure->type) < 0)
-+	if (get_central_bdaddr(closure->fd, &central_bdaddr, closure->type) < 0)
- 		goto out;
+diff --git a/profiles/health/mcap.h b/profiles/health/mcap.h
+index 5a94c8b63b..00f3fa8510 100644
+--- a/profiles/health/mcap.h
++++ b/profiles/health/mcap.h
+@@ -270,7 +270,7 @@ struct mcap_instance {
+ 	mcap_mcl_event_cb	mcl_reconnected_cb;	/* Old MCL has been reconnected */
+ 	mcap_mcl_event_cb	mcl_disconnected_cb;	/* MCL disconnected */
+ 	mcap_mcl_event_cb	mcl_uncached_cb;	/* MCL has been removed from MCAP cache */
+-	mcap_info_ind_event_cb	mcl_sync_infoind_cb;	/* (CSP Master) Received info indication */
++	mcap_info_ind_event_cb	mcl_sync_infoind_cb;	/* (CSP Central) Received info indication */
+ 	gpointer		user_data;		/* Data to be provided in callbacks */
+ 	int			ref;			/* Reference counter */
  
- 	adapter_bdaddr = btd_adapter_get_address(closure->adapter);
--	if (bacmp(adapter_bdaddr, &master_bdaddr)) {
--		if (set_master_bdaddr(closure->fd, adapter_bdaddr,
-+	if (bacmp(adapter_bdaddr, &central_bdaddr)) {
-+		if (set_central_bdaddr(closure->fd, adapter_bdaddr,
- 							closure->type) < 0)
- 			goto out;
- 	}
-@@ -302,10 +302,10 @@ static void agent_auth_cb(DBusError *derr, void *user_data)
- 						 SIXAXIS_HID_SDP_RECORD);
- 
- 	ba2str(&closure->bdaddr, device_addr);
--	ba2str(&master_bdaddr, master_addr);
-+	ba2str(&central_bdaddr, central_addr);
- 	ba2str(adapter_bdaddr, adapter_addr);
--	DBG("remote %s old_master %s new_master %s",
--				device_addr, master_addr, adapter_addr);
-+	DBG("remote %s old_central %s new_central %s",
-+				device_addr, central_addr, adapter_addr);
- 
- out:
- 	g_hash_table_steal(pending_auths, closure->sysfs_path);
 -- 
 2.33.0.153.gba50c8fa24-goog
 
