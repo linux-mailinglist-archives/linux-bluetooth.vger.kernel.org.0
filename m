@@ -2,161 +2,147 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9489A402814
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Sep 2021 13:53:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52EFA402E9E
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Sep 2021 20:59:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244308AbhIGLzC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Sep 2021 07:55:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35256 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233977AbhIGLzB (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Sep 2021 07:55:01 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8361C061575
-        for <linux-bluetooth@vger.kernel.org>; Tue,  7 Sep 2021 04:53:55 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id gf5so5580429qvb.9
-        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Sep 2021 04:53:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=ENrJT8I7zKWKz2n+Cy4xuDlxucVI3SgIMNvo8fP6ikE=;
-        b=bJnIqxfbXzBWFpiOxBze8BtzKAlLhS8v+jEtuoWBleHXYbwaV82WHuBuejLuLH/0xj
-         XPR/gYz6x/QJ27sjTM+VQdFJxPDzm3b2D/35maJZdoVG5l2EF/o6xB/wsVxavidOpTCv
-         Au88wPqnd49a/Fbe/ohn1s/e2Zs5XaC6gsnsb4heHID7FFzt1Gejx9+XFvkfQTgyX834
-         zQtaF2ljV3OURo5cHnn8Xz+B3YRMGpMwvBtCsnJlPkdhjNn2vyaPnxNsG2QVXEn5rtX9
-         2R4TIJnj0VpBi13QWyKm/wz1LP/RHRRW9W57w+0yDm30piX5NMHL8U3uzGre0zO8m9Vl
-         BnDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=ENrJT8I7zKWKz2n+Cy4xuDlxucVI3SgIMNvo8fP6ikE=;
-        b=Z6mVIW9AfFz7BYpZA4x9LphfajIQW9OJpI9S9tewsvli/TZwjjJ0BLW6DNi9RPXvud
-         rf4MV+htQOI/0uVQD3I6Ae328oyKc3xyek310GqI/yAdNQ5ROeJs3IDeWObmOfBLBOqF
-         PnHZxsag89m9CINzQowR2pU6XYtTxY6ZBd7y2lbydDoOChMKPMzMctPPtlt+8FVDwhqh
-         LDJa7FOtyXzSJOCMwTjDXxbEkbTu2NUHjXIVvbzPSY1ZxOdhiCXE9yJgizDmOoaMy496
-         IajceZg9smCHyAwna1FpKCSSRd/cfKKUMZkzP7EBfUmQ5+N8GdoU3hrIMolaB3RsQLUy
-         ogGg==
-X-Gm-Message-State: AOAM5306lQT2cI1R56fuOrsHQzioy0p6pviMNabS7QPStgFGZOejGVVX
-        u+0LUxW6R4ga+EUKphq10rIKmO7jtPrNKg==
-X-Google-Smtp-Source: ABdhPJznZiPPJhpceGsvWsrkQlp1uELmLJnN/AJtH4t7Hievx3eqxd5gFXcq/cb7HHCg/ik18qb2pA==
-X-Received: by 2002:a0c:df04:: with SMTP id g4mr16784910qvl.10.1631015634672;
-        Tue, 07 Sep 2021 04:53:54 -0700 (PDT)
-Received: from [172.17.0.2] ([20.109.118.5])
-        by smtp.gmail.com with ESMTPSA id s6sm8799058qkf.80.2021.09.07.04.53.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 04:53:54 -0700 (PDT)
-Message-ID: <613752d2.1c69fb81.c33e2.0212@mx.google.com>
-Date:   Tue, 07 Sep 2021 04:53:54 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============6344276262720414420=="
+        id S1344274AbhIGTA1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Sep 2021 15:00:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49854 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237636AbhIGTA1 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 7 Sep 2021 15:00:27 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id E0D9B61101
+        for <linux-bluetooth@vger.kernel.org>; Tue,  7 Sep 2021 18:59:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1631041160;
+        bh=OapY5dBAVnZfE9gTTi5Y4YvKGLp8PuEnAJh+OMu9KN8=;
+        h=From:To:Subject:Date:From;
+        b=G9qSToJ6A8o+7+8/odC3XgnCJYUypEMcuFUZiNriEKiIDaaSEEFXqek1PM9PMRx/C
+         F0WC5hO52Qd3vDHD79DNrh5musV+1vhQwWDXh0Dm4Zb5U2XVNhBbVH6PieAtG1fPgU
+         KdQDJx9yWCQ2oTUmjNn4Hot34S4Fetpzevs/XKDfU6mzt3qwkBZozPwc59MbPUZ1j9
+         z4aNxSbAzBgfGu1F4N+le79UpyvweGTlt0dmm9l4eo4z0jAjMi2uNUL/dEWqJJKZQo
+         gyV60Y4114Kb9vKM6P48dopyOFES8D6dWdj+IEI7vTTDWtQlZmldb0r9V/3CI3d8Ju
+         G7hfnaf7CgNIg==
+Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
+        id CC0A360FC3; Tue,  7 Sep 2021 18:59:20 +0000 (UTC)
+From:   bugzilla-daemon@bugzilla.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 214345] New: Bluetooth does not work, which worked earlier
+Date:   Tue, 07 Sep 2021 18:59:20 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: new
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: high
+X-Bugzilla-Who: kiran.telukunta@indiayouth.info
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: bug_id short_desc product version
+ cf_kernel_version rep_platform op_sys cf_tree bug_status bug_severity
+ priority component assigned_to reporter cf_regression
+Message-ID: <bug-214345-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, kiran.k@intel.com
-Subject: RE: [v2,1/3] tools/sco-tester: add test cases to get offload codecs
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20210907112556.11848-1-kiran.k@intel.com>
-References: <20210907112556.11848-1-kiran.k@intel.com>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============6344276262720414420==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+https://bugzilla.kernel.org/show_bug.cgi?id=3D214345
 
-This is automated email and please do not reply to this email!
+            Bug ID: 214345
+           Summary: Bluetooth does not work, which worked earlier
+           Product: Drivers
+           Version: 2.5
+    Kernel Version: 5.13.9-100.fc33.x86_64, 5.13.10-100.fc33.x86_64,
+                    5.13.12-100.fc33.x86_64
+          Hardware: x86-64
+                OS: Linux
+              Tree: Mainline
+            Status: NEW
+          Severity: high
+          Priority: P1
+         Component: Bluetooth
+          Assignee: linux-bluetooth@vger.kernel.org
+          Reporter: kiran.telukunta@indiayouth.info
+        Regression: No
 
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=543085
-
----Test result---
-
-Test Summary:
-CheckPatch                    FAIL      0.72 seconds
-GitLint                       PASS      0.31 seconds
-Prep - Setup ELL              PASS      41.19 seconds
-Build - Prep                  PASS      0.09 seconds
-Build - Configure             PASS      7.12 seconds
-Build - Make                  PASS      178.50 seconds
-Make Check                    PASS      8.98 seconds
-Make Distcheck                PASS      219.84 seconds
-Build w/ext ELL - Configure   PASS      7.29 seconds
-Build w/ext ELL - Make        PASS      166.16 seconds
-
-Details
-##############################
-Test: CheckPatch - FAIL
-Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-Output:
-tools/sco-tester: add test cases to get offload codecs
-WARNING:PREFER_DEFINED_ATTRIBUTE_MACRO: Prefer __packed over __attribute__((packed))
-#27: FILE: lib/bluetooth.h:154:
-+} __attribute__((packed));
-
-WARNING:PREFER_DEFINED_ATTRIBUTE_MACRO: Prefer __packed over __attribute__((packed))
-#32: FILE: lib/bluetooth.h:159:
-+} __attribute__((packed));
-
-- total: 0 errors, 2 warnings, 149 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-"[PATCH] tools/sco-tester: add test cases to get offload codecs" has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+I have following model of bluetooth dongle:
 
 
-##############################
-Test: GitLint - PASS
-Desc: Run gitlint with rule in .gitlint
+Bus 005 Device 004: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Don=
+gle
+(HCI mode)
 
-##############################
-Test: Prep - Setup ELL - PASS
-Desc: Clone, build, and install ELL
+and produces following failed mode status:
 
-##############################
-Test: Build - Prep - PASS
-Desc: Prepare environment for build
+sudo systemctl status bluetooth
+=E2=97=8F bluetooth.service - Bluetooth service
+     Loaded: loaded (/usr/lib/systemd/system/bluetooth.service; enabled; ve=
+ndor
+preset: enabled)
+     Active: active (running) since Tue 2021-09-07 20:34:23 CEST; 16min ago
+       Docs: man:bluetoothd(8)
+   Main PID: 1023 (bluetoothd)
+     Status: "Running"
+      Tasks: 1 (limit: 38343)
+     Memory: 2.2M
+        CPU: 27ms
+     CGroup: /system.slice/bluetooth.service
+             =E2=94=94=E2=94=801023 /usr/libexec/bluetooth/bluetoothd
 
-##############################
-Test: Build - Configure - PASS
-Desc: Configure the BlueZ source tree
-
-##############################
-Test: Build - Make - PASS
-Desc: Build the BlueZ source tree
-
-##############################
-Test: Make Check - PASS
-Desc: Run 'make check'
-
-##############################
-Test: Make Distcheck - PASS
-Desc: Run distcheck to check the distribution
-
-##############################
-Test: Build w/ext ELL - Configure - PASS
-Desc: Configure BlueZ source with '--enable-external-ell' configuration
-
-##############################
-Test: Build w/ext ELL - Make - PASS
-Desc: Build BlueZ source with '--enable-external-ell' configuration
+Sep 07 20:34:23 saraswathi bluetoothd[1023]: Failed to set mode: Blocked
+through rfkill (0x12) <<<<<<<<<<<<<<-----------------------
+Sep 07 20:34:48 saraswathi bluetoothd[1023]: Endpoint registered: sender=3D=
+:1.214
+path=3D/MediaEndpoint/A2DPSource/VENDOR/LDAC
+Sep 07 20:34:48 saraswathi bluetoothd[1023]: Endpoint registered: sender=3D=
+:1.214
+path=3D/MediaEndpoint/A2DPSource/VENDOR/APTXHD
+Sep 07 20:34:48 saraswathi bluetoothd[1023]: Endpoint registered: sender=3D=
+:1.214
+path=3D/MediaEndpoint/A2DPSource/VENDOR/APTX
+Sep 07 20:34:48 saraswathi bluetoothd[1023]: Endpoint registered: sender=3D=
+:1.214
+path=3D/MediaEndpoint/A2DPSource/AAC
+Sep 07 20:34:48 saraswathi bluetoothd[1023]: Endpoint registered: sender=3D=
+:1.214
+path=3D/MediaEndpoint/A2DPSource/SBC
+Sep 07 20:34:48 saraswathi bluetoothd[1023]: Endpoint registered: sender=3D=
+:1.214
+path=3D/MediaEndpoint/A2DPSink/VENDOR/APTXHD
+Sep 07 20:34:48 saraswathi bluetoothd[1023]: Endpoint registered: sender=3D=
+:1.214
+path=3D/MediaEndpoint/A2DPSink/VENDOR/APTX
+Sep 07 20:34:48 saraswathi bluetoothd[1023]: Endpoint registered: sender=3D=
+:1.214
+path=3D/MediaEndpoint/A2DPSink/AAC
+Sep 07 20:34:48 saraswathi bluetoothd[1023]: Endpoint registered: sender=3D=
+:1.214
+path=3D/MediaEndpoint/A2DPSink/SBC
 
 
 
----
-Regards,
-Linux Bluetooth
+The dongle is not getting connected in the following kernel versions:
+5.13.9-100.fc33.x86_64
+5.13.10-100.fc33.x86_64
+5.13.12-100.fc33.x86_64
 
+It worked couple of months before so it should be working in the kernel
+kernel-5.13.6-0.=20
 
---===============6344276262720414420==--
+Let me know if you need any other information.
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
