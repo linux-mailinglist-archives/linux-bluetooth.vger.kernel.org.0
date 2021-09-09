@@ -2,36 +2,37 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACAE2404AF9
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  9 Sep 2021 13:49:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9C49404BD9
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  9 Sep 2021 13:54:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240158AbhIILuP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 9 Sep 2021 07:50:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47266 "EHLO mail.kernel.org"
+        id S242190AbhIILxe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 9 Sep 2021 07:53:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53540 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240419AbhIILrv (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 9 Sep 2021 07:47:51 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 39E826121D;
-        Thu,  9 Sep 2021 11:43:18 +0000 (UTC)
+        id S240916AbhIILv3 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 9 Sep 2021 07:51:29 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DCCA061368;
+        Thu,  9 Sep 2021 11:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631187799;
-        bh=UkmetQFb8WOvVhip1IW5gDZASBQJkf52lUb32ZARoPM=;
+        s=k20201202; t=1631187848;
+        bh=TGqWxd14X3p0oJq2tANO4HcYnmB6hrSR8/yzysSvGXo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Vyzov8eBv9jGq4zkVEDm5dSZF9wrb769MUNTSwQOzAyuzwqKjLUfnSTrnPhhTQMYM
-         IStqvGssIQqM0JM2r9qPka2O9aLXztdy8yCKTnBQmPdMpXzo8st3VhZqaGLttXUqBW
-         vwJgdkF5dLjwcrfqUJKzCe3t6u4MyRIgulIS1MV98F67+Jez59SCpsKN7F5d8Ki2PM
-         TIDo5PlylcJFqCxr0nzHYCBIQYbY61EGTDyywPDGjMk+ybirfe4wp8b6zO8r5txlUL
-         I1/yl/j8x+UDrT0Z00Na6je+hb6Yh+niL/3H4xKN0nkKvLMqRujuMkGVdRLW101bTn
-         enkvZXjchiF2A==
+        b=oBIubsEOrhexJW+8iI4KtO9hrBBJawiB40Beo+l0cN8OqeDR6bOtdUKBEgFrcUHZ8
+         vyaqYZs1oAPdhbQB6zYOrILii7fPduIKvryjg3b/5aXlHhsKBYBwQD1ZnOj/7tF1AC
+         3xiHSZ8JXs65+i00szq+H/75UHhSswb6aDP8ktieTGAQV/U54shejIZoBiBFxmvgTa
+         3uJHDczcrPFZHg/NFn7HS/7O9inZ70Iu/OWBsbTK8Kn7hahj+ykpIUoi/5kQMU6tZT
+         lGHWQp3pvZdLzby2yS9Y1zjFFxY0jjMFxSg1GkIkpk5Ap4mZk0UvGnzRY88YIXz0k4
+         BEaHhcOME6FRg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
+Cc:     Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>,
+        syzbot+2f6d7c28bb4bf7e82060@syzkaller.appspotmail.com,
+        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
         Sasha Levin <sashal@kernel.org>,
         linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.14 103/252] Bluetooth: Fix not generating RPA when required
-Date:   Thu,  9 Sep 2021 07:38:37 -0400
-Message-Id: <20210909114106.141462-103-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.14 140/252] Bluetooth: schedule SCO timeouts with delayed_work
+Date:   Thu,  9 Sep 2021 07:39:14 -0400
+Message-Id: <20210909114106.141462-140-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210909114106.141462-1-sashal@kernel.org>
 References: <20210909114106.141462-1-sashal@kernel.org>
@@ -43,261 +44,147 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
 
-[ Upstream commit c45074d68a9b1e893d86520af71fab37693c3d7e ]
+[ Upstream commit ba316be1b6a00db7126ed9a39f9bee434a508043 ]
 
-Code was checking if random_addr and hdev->rpa match without first
-checking if the RPA has not been set (BDADDR_ANY), furthermore it was
-clearing HCI_RPA_EXPIRED before the command completes and the RPA is
-actually programmed which in case of failure would leave the expired
-RPA still set.
+struct sock.sk_timer should be used as a sock cleanup timer. However,
+SCO uses it to implement sock timeouts.
 
-Since advertising instance have a similar problem the clearing of
-HCI_RPA_EXPIRED has been moved to hci_event.c after checking the random
-address is in fact the hdev->rap and then proceed to set the expire
-timeout.
+This causes issues because struct sock.sk_timer's callback is run in
+an IRQ context, and the timer callback function sco_sock_timeout takes
+a spin lock on the socket. However, other functions such as
+sco_conn_del and sco_conn_ready take the spin lock with interrupts
+enabled.
 
+This inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} lock usage could
+lead to deadlocks as reported by Syzbot [1]:
+       CPU0
+       ----
+  lock(slock-AF_BLUETOOTH-BTPROTO_SCO);
+  <Interrupt>
+    lock(slock-AF_BLUETOOTH-BTPROTO_SCO);
+
+To fix this, we use delayed work to implement SCO sock timouts
+instead. This allows us to avoid taking the spin lock on the socket in
+an IRQ context, and corrects the misuse of struct sock.sk_timer.
+
+As a note, cancel_delayed_work is used instead of
+cancel_delayed_work_sync in sco_sock_set_timer and
+sco_sock_clear_timer to avoid a deadlock. In the future, the call to
+bh_lock_sock inside sco_sock_timeout should be changed to lock_sock to
+synchronize with other functions using lock_sock. However, since
+sco_sock_set_timer and sco_sock_clear_timer are sometimes called under
+the locked socket (in sco_connect and __sco_sock_close),
+cancel_delayed_work_sync might cause them to sleep until an
+sco_sock_timeout that has started finishes running. But
+sco_sock_timeout would also sleep until it can grab the lock_sock.
+
+Using cancel_delayed_work is fine because sco_sock_timeout does not
+change from run to run, hence there is no functional difference
+between:
+1. waiting for a timeout to finish running before scheduling another
+timeout
+2. scheduling another timeout while a timeout is running.
+
+Link: https://syzkaller.appspot.com/bug?id=9089d89de0502e120f234ca0fc8a703f7368b31e [1]
+Reported-by: syzbot+2f6d7c28bb4bf7e82060@syzkaller.appspotmail.com
+Tested-by: syzbot+2f6d7c28bb4bf7e82060@syzkaller.appspotmail.com
+Signed-off-by: Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  4 ++
- net/bluetooth/hci_event.c        | 32 +++++++++----
- net/bluetooth/hci_request.c      | 81 ++++++++++++++------------------
- 3 files changed, 61 insertions(+), 56 deletions(-)
+ net/bluetooth/sco.c | 35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index db4312e44d47..c17e5557a007 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1412,6 +1412,10 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
- 				!hci_dev_test_flag(dev, HCI_AUTO_OFF))
- #define bredr_sc_enabled(dev)  (lmp_sc_capable(dev) && \
- 				hci_dev_test_flag(dev, HCI_SC_ENABLED))
-+#define rpa_valid(dev)         (bacmp(&dev->rpa, BDADDR_ANY) && \
-+				!hci_dev_test_flag(dev, HCI_RPA_EXPIRED))
-+#define adv_rpa_valid(adv)     (bacmp(&adv->random_addr, BDADDR_ANY) && \
-+				!adv->rpa_expired)
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index d9a4e88dacbb..706254af952e 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -48,6 +48,8 @@ struct sco_conn {
+ 	spinlock_t	lock;
+ 	struct sock	*sk;
  
- #define scan_1m(dev) (((dev)->le_tx_def_phys & HCI_LE_SET_PHY_1M) || \
- 		      ((dev)->le_rx_def_phys & HCI_LE_SET_PHY_1M))
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index ea7fc09478be..78032f1d8838 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -40,6 +40,8 @@
- #define ZERO_KEY "\x00\x00\x00\x00\x00\x00\x00\x00" \
- 		 "\x00\x00\x00\x00\x00\x00\x00\x00"
- 
-+#define secs_to_jiffies(_secs) msecs_to_jiffies((_secs) * 1000)
++	struct delayed_work	timeout_work;
 +
- /* Handle HCI Event packets */
+ 	unsigned int    mtu;
+ };
  
- static void hci_cc_inquiry_cancel(struct hci_dev *hdev, struct sk_buff *skb,
-@@ -1171,6 +1173,12 @@ static void hci_cc_le_set_random_addr(struct hci_dev *hdev, struct sk_buff *skb)
+@@ -74,9 +76,20 @@ struct sco_pinfo {
+ #define SCO_CONN_TIMEOUT	(HZ * 40)
+ #define SCO_DISCONN_TIMEOUT	(HZ * 2)
  
- 	bacpy(&hdev->random_addr, sent);
- 
-+	if (!bacmp(&hdev->rpa, sent)) {
-+		hci_dev_clear_flag(hdev, HCI_RPA_EXPIRED);
-+		queue_delayed_work(hdev->workqueue, &hdev->rpa_expired,
-+				   secs_to_jiffies(hdev->rpa_timeout));
-+	}
-+
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -1201,24 +1209,30 @@ static void hci_cc_le_set_adv_set_random_addr(struct hci_dev *hdev,
+-static void sco_sock_timeout(struct timer_list *t)
++static void sco_sock_timeout(struct work_struct *work)
  {
- 	__u8 status = *((__u8 *) skb->data);
- 	struct hci_cp_le_set_adv_set_rand_addr *cp;
--	struct adv_info *adv_instance;
-+	struct adv_info *adv;
- 
- 	if (status)
- 		return;
- 
- 	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_ADV_SET_RAND_ADDR);
--	if (!cp)
-+	/* Update only in case the adv instance since handle 0x00 shall be using
-+	 * HCI_OP_LE_SET_RANDOM_ADDR since that allows both extended and
-+	 * non-extended adverting.
-+	 */
-+	if (!cp || !cp->handle)
- 		return;
- 
- 	hci_dev_lock(hdev);
- 
--	if (!cp->handle) {
--		/* Store in hdev for instance 0 (Set adv and Directed advs) */
--		bacpy(&hdev->random_addr, &cp->bdaddr);
--	} else {
--		adv_instance = hci_find_adv_instance(hdev, cp->handle);
--		if (adv_instance)
--			bacpy(&adv_instance->random_addr, &cp->bdaddr);
-+	adv = hci_find_adv_instance(hdev, cp->handle);
-+	if (adv) {
-+		bacpy(&adv->random_addr, &cp->bdaddr);
-+		if (!bacmp(&hdev->rpa, &cp->bdaddr)) {
-+			adv->rpa_expired = false;
-+			queue_delayed_work(hdev->workqueue,
-+					   &adv->rpa_expired_cb,
-+					   secs_to_jiffies(hdev->rpa_timeout));
-+		}
- 	}
- 
- 	hci_dev_unlock(hdev);
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 1d14adc023e9..f15626607b2d 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -2072,8 +2072,6 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
- 	 * current RPA has expired then generate a new one.
- 	 */
- 	if (use_rpa) {
--		int to;
--
- 		/* If Controller supports LL Privacy use own address type is
- 		 * 0x03
- 		 */
-@@ -2084,14 +2082,10 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
- 			*own_addr_type = ADDR_LE_DEV_RANDOM;
- 
- 		if (adv_instance) {
--			if (!adv_instance->rpa_expired &&
--			    !bacmp(&adv_instance->random_addr, &hdev->rpa))
-+			if (adv_rpa_valid(adv_instance))
- 				return 0;
--
--			adv_instance->rpa_expired = false;
- 		} else {
--			if (!hci_dev_test_and_clear_flag(hdev, HCI_RPA_EXPIRED) &&
--			    !bacmp(&hdev->random_addr, &hdev->rpa))
-+			if (rpa_valid(hdev))
- 				return 0;
- 		}
- 
-@@ -2103,14 +2097,6 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
- 
- 		bacpy(rand_addr, &hdev->rpa);
- 
--		to = msecs_to_jiffies(hdev->rpa_timeout * 1000);
--		if (adv_instance)
--			queue_delayed_work(hdev->workqueue,
--					   &adv_instance->rpa_expired_cb, to);
--		else
--			queue_delayed_work(hdev->workqueue,
--					   &hdev->rpa_expired, to);
--
- 		return 0;
- 	}
- 
-@@ -2153,6 +2139,30 @@ void __hci_req_clear_ext_adv_sets(struct hci_request *req)
- 	hci_req_add(req, HCI_OP_LE_CLEAR_ADV_SETS, 0, NULL);
- }
- 
-+static void set_random_addr(struct hci_request *req, bdaddr_t *rpa)
-+{
-+	struct hci_dev *hdev = req->hdev;
+-	struct sock *sk = from_timer(sk, t, sk_timer);
++	struct sco_conn *conn = container_of(work, struct sco_conn,
++					     timeout_work.work);
++	struct sock *sk;
 +
-+	/* If we're advertising or initiating an LE connection we can't
-+	 * go ahead and change the random address at this time. This is
-+	 * because the eventual initiator address used for the
-+	 * subsequently created connection will be undefined (some
-+	 * controllers use the new address and others the one we had
-+	 * when the operation started).
-+	 *
-+	 * In this kind of scenario skip the update and let the random
-+	 * address be updated at the next cycle.
-+	 */
-+	if (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
-+	    hci_lookup_le_connect(hdev)) {
-+		bt_dev_dbg(hdev, "Deferring random address update");
-+		hci_dev_set_flag(hdev, HCI_RPA_EXPIRED);
++	sco_conn_lock(conn);
++	sk = conn->sk;
++	if (sk)
++		sock_hold(sk);
++	sco_conn_unlock(conn);
++
++	if (!sk)
 +		return;
-+	}
-+
-+	hci_req_add(req, HCI_OP_LE_SET_RANDOM_ADDR, 6, rpa);
-+}
-+
- int __hci_req_setup_ext_adv_instance(struct hci_request *req, u8 instance)
- {
- 	struct hci_cp_le_set_ext_adv_params cp;
-@@ -2255,6 +2265,13 @@ int __hci_req_setup_ext_adv_instance(struct hci_request *req, u8 instance)
- 		} else {
- 			if (!bacmp(&random_addr, &hdev->random_addr))
- 				return 0;
-+			/* Instance 0x00 doesn't have an adv_info, instead it
-+			 * uses hdev->random_addr to track its address so
-+			 * whenever it needs to be updated this also set the
-+			 * random address since hdev->random_addr is shared with
-+			 * scan state machine.
-+			 */
-+			set_random_addr(req, &random_addr);
- 		}
  
- 		memset(&cp, 0, sizeof(cp));
-@@ -2512,30 +2529,6 @@ void hci_req_clear_adv_instance(struct hci_dev *hdev, struct sock *sk,
- 						false);
+ 	BT_DBG("sock %p state %d", sk, sk->sk_state);
+ 
+@@ -91,14 +104,21 @@ static void sco_sock_timeout(struct timer_list *t)
+ 
+ static void sco_sock_set_timer(struct sock *sk, long timeout)
+ {
++	if (!sco_pi(sk)->conn)
++		return;
++
+ 	BT_DBG("sock %p state %d timeout %ld", sk, sk->sk_state, timeout);
+-	sk_reset_timer(sk, &sk->sk_timer, jiffies + timeout);
++	cancel_delayed_work(&sco_pi(sk)->conn->timeout_work);
++	schedule_delayed_work(&sco_pi(sk)->conn->timeout_work, timeout);
  }
  
--static void set_random_addr(struct hci_request *req, bdaddr_t *rpa)
--{
--	struct hci_dev *hdev = req->hdev;
--
--	/* If we're advertising or initiating an LE connection we can't
--	 * go ahead and change the random address at this time. This is
--	 * because the eventual initiator address used for the
--	 * subsequently created connection will be undefined (some
--	 * controllers use the new address and others the one we had
--	 * when the operation started).
--	 *
--	 * In this kind of scenario skip the update and let the random
--	 * address be updated at the next cycle.
--	 */
--	if (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
--	    hci_lookup_le_connect(hdev)) {
--		bt_dev_dbg(hdev, "Deferring random address update");
--		hci_dev_set_flag(hdev, HCI_RPA_EXPIRED);
--		return;
--	}
--
--	hci_req_add(req, HCI_OP_LE_SET_RANDOM_ADDR, 6, rpa);
--}
--
- int hci_update_random_address(struct hci_request *req, bool require_privacy,
- 			      bool use_rpa, u8 *own_addr_type)
+ static void sco_sock_clear_timer(struct sock *sk)
  {
-@@ -2547,8 +2540,6 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
- 	 * the current RPA in use, then generate a new one.
- 	 */
- 	if (use_rpa) {
--		int to;
--
- 		/* If Controller supports LL Privacy use own address type is
- 		 * 0x03
- 		 */
-@@ -2558,8 +2549,7 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
- 		else
- 			*own_addr_type = ADDR_LE_DEV_RANDOM;
++	if (!sco_pi(sk)->conn)
++		return;
++
+ 	BT_DBG("sock %p state %d", sk, sk->sk_state);
+-	sk_stop_timer(sk, &sk->sk_timer);
++	cancel_delayed_work(&sco_pi(sk)->conn->timeout_work);
+ }
  
--		if (!hci_dev_test_and_clear_flag(hdev, HCI_RPA_EXPIRED) &&
--		    !bacmp(&hdev->random_addr, &hdev->rpa))
-+		if (rpa_valid(hdev))
- 			return 0;
- 
- 		err = smp_generate_rpa(hdev, hdev->irk, &hdev->rpa);
-@@ -2570,9 +2560,6 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
- 
- 		set_random_addr(req, &hdev->rpa);
- 
--		to = msecs_to_jiffies(hdev->rpa_timeout * 1000);
--		queue_delayed_work(hdev->workqueue, &hdev->rpa_expired, to);
--
- 		return 0;
+ /* ---- SCO connections ---- */
+@@ -179,6 +199,9 @@ static void sco_conn_del(struct hci_conn *hcon, int err)
+ 		bh_unlock_sock(sk);
+ 		sco_sock_kill(sk);
+ 		sock_put(sk);
++
++		/* Ensure no more work items will run before freeing conn. */
++		cancel_delayed_work_sync(&conn->timeout_work);
  	}
  
+ 	hcon->sco_data = NULL;
+@@ -193,6 +216,8 @@ static void __sco_chan_add(struct sco_conn *conn, struct sock *sk,
+ 	sco_pi(sk)->conn = conn;
+ 	conn->sk = sk;
+ 
++	INIT_DELAYED_WORK(&conn->timeout_work, sco_sock_timeout);
++
+ 	if (parent)
+ 		bt_accept_enqueue(parent, sk, true);
+ }
+@@ -500,8 +525,6 @@ static struct sock *sco_sock_alloc(struct net *net, struct socket *sock,
+ 
+ 	sco_pi(sk)->setting = BT_VOICE_CVSD_16BIT;
+ 
+-	timer_setup(&sk->sk_timer, sco_sock_timeout, 0);
+-
+ 	bt_sock_link(&sco_sk_list, sk);
+ 	return sk;
+ }
 -- 
 2.30.2
 
