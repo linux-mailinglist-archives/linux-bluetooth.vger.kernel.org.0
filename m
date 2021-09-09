@@ -2,99 +2,78 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5259A405626
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  9 Sep 2021 15:36:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5BB74052D4
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  9 Sep 2021 14:50:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358467AbhIINSN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 9 Sep 2021 09:18:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38872 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1354939AbhIINNS (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 9 Sep 2021 09:13:18 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 49EBF632CE;
-        Thu,  9 Sep 2021 12:01:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631188903;
-        bh=P1VZTvoePBSG6pc+gLrIfstQ0Cg98NTAGUfibfgaOLI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=fglcE7QxLVsp1dE9/H11BrwTjtVEZJmDRSMwlidW/6D0OStBPRl3WMvqOeLCzScIm
-         oeAh025mqkSJNv4AapD3cFYglxyPAqZ58ovsawo8Lfe4Gh90YwycYexppokqx8RYdq
-         yKeBVFrRrcDU1sv95OgWymxDfb8tqp0SP774SqEpIwqCYoYm1vbI2i24LJSxOWmzf2
-         mETNkwkRFRtwBB/B+azcMC4Ixvrm+1VHEAhKO/WNKMXcAOx3nHtc2J1K/Oy4CT4H6G
-         EdR1S7FqgU1rtZ9zZsDHOgSTTn4dhxDlVNPEeBrajmE3Z3Bv/sTrBCDXa1FoWfrWsF
-         b7Yy28qVzqnPg==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>,
-        syzbot+66264bf2fd0476be7e6c@syzkaller.appspotmail.com,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Sasha Levin <sashal@kernel.org>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 21/35] Bluetooth: skip invalid hci_sync_conn_complete_evt
-Date:   Thu,  9 Sep 2021 08:01:02 -0400
-Message-Id: <20210909120116.150912-21-sashal@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210909120116.150912-1-sashal@kernel.org>
-References: <20210909120116.150912-1-sashal@kernel.org>
+        id S1354570AbhIIMrc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 9 Sep 2021 08:47:32 -0400
+Received: from smtp-relay-canonical-0.canonical.com ([185.125.188.120]:55346
+        "EHLO smtp-relay-canonical-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1354087AbhIIMgx (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 9 Sep 2021 08:36:53 -0400
+Received: from localhost (1.general.cking.uk.vpn [10.172.193.212])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id DD42D3F236;
+        Thu,  9 Sep 2021 12:35:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1631190942;
+        bh=FqEPgbVip3uJ9vLzL9gy1Fy4mq+BOs8Bf6pvkaNj/h0=;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type;
+        b=S9bSkDgZD/m1C2u56+xlFAItzob/UkO3PvI2JbDZ+QNu719DriTryZlE3sXgFmjwT
+         fBWE2jiTGWPcO8W/Z/ai8NCga9Ewiv5hL9mZMOfUnpJjuMqxnEj+2r8e1YK70ll2J9
+         0KA7d900zxtaUlE1CNnfAskmAZdh/c1UZXrr2gjli4+Yuma+fXnL+wlK0C4pOIFZUl
+         Tsm82TKqFhF0uPsnlL+xLgenq6PIiNr8OEsoTxKLFz1XiIFDt2St61gVXnrtWpEarB
+         N5S1sRTzJ/CYOZoiYnh8d8sgRw1M/DRc3C35+IrppqX8KWM4HSRXmCRHhkXEID9XzT
+         EviXagULtL5ig==
+From:   Colin King <colin.king@canonical.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Chethan T N <chethan.tumkur.narayan@intel.com>,
+        Kiran K <kiran.k@intel.com>,
+        Srivatsa Ravishankar <ravishankar.srivatsa@intel.com>,
+        linux-bluetooth@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] Bluetooth: btintel: Fix incorrect out of memory check
+Date:   Thu,  9 Sep 2021 13:35:41 +0100
+Message-Id: <20210909123541.34779-1-colin.king@canonical.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
+From: Colin Ian King <colin.king@canonical.com>
 
-[ Upstream commit 92fe24a7db751b80925214ede43f8d2be792ea7b ]
+Currently *ven_data is being assigned the return from a kmalloc call but
+the out-of-memory check is checking ven_data and not *ven_data. Fix this
+by adding the missing dereference * operator,
 
-Syzbot reported a corrupted list in kobject_add_internal [1]. This
-happens when multiple HCI_EV_SYNC_CONN_COMPLETE event packets with
-status 0 are sent for the same HCI connection. This causes us to
-register the device more than once which corrupts the kset list.
-
-As this is forbidden behavior, we add a check for whether we're
-trying to process the same HCI_EV_SYNC_CONN_COMPLETE event multiple
-times for one connection. If that's the case, the event is invalid, so
-we report an error that the device is misbehaving, and ignore the
-packet.
-
-Link: https://syzkaller.appspot.com/bug?extid=66264bf2fd0476be7e6c [1]
-Reported-by: syzbot+66264bf2fd0476be7e6c@syzkaller.appspotmail.com
-Tested-by: syzbot+66264bf2fd0476be7e6c@syzkaller.appspotmail.com
-Signed-off-by: Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Addresses-Coverity: ("Dereference null return")
+Fixes: 70dd978952bc ("Bluetooth: btintel: Define a callback to fetch codec config data")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
 ---
- net/bluetooth/hci_event.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/bluetooth/btintel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 7ed3c7df271a..6528ecc3a3bc 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3747,6 +3747,21 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev,
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 115bb2d07a8d..9359bff47296 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -2176,7 +2176,7 @@ static int btintel_get_codec_config_data(struct hci_dev *hdev,
+ 	}
  
- 	switch (ev->status) {
- 	case 0x00:
-+		/* The synchronous connection complete event should only be
-+		 * sent once per new connection. Receiving a successful
-+		 * complete event when the connection status is already
-+		 * BT_CONNECTED means that the device is misbehaving and sent
-+		 * multiple complete event packets for the same new connection.
-+		 *
-+		 * Registering the device more than once can corrupt kernel
-+		 * memory, hence upon detecting this invalid event, we report
-+		 * an error and ignore the packet.
-+		 */
-+		if (conn->state == BT_CONNECTED) {
-+			bt_dev_err(hdev, "Ignoring connect complete event for existing connection");
-+			goto unlock;
-+		}
-+
- 		conn->handle = __le16_to_cpu(ev->handle);
- 		conn->state  = BT_CONNECTED;
- 		conn->type   = ev->link_type;
+ 	*ven_data = kmalloc(sizeof(__u8), GFP_KERNEL);
+-	if (!ven_data) {
++	if (!*ven_data) {
+ 		err = -ENOMEM;
+ 		goto error;
+ 	}
 -- 
-2.30.2
+2.32.0
 
