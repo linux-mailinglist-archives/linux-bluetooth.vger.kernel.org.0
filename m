@@ -2,74 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 614DE4067CA
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Sep 2021 09:37:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC75B4067D6
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Sep 2021 09:39:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231489AbhIJHi3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Sep 2021 03:38:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33666 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231290AbhIJHi3 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Sep 2021 03:38:29 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 7016A61221
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Sep 2021 07:37:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631259438;
-        bh=d8JvH2ZnHSTHpRwTSnD0IAWwbmnlu9LWGyyu8z5ET24=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=sFViFBeHpWO99HUN8SK1cGZXurkHlwEK4nOLigIVgWOW+qfEQR6ka8yn3LNSOu3Jo
-         9xDfICdEwVkd+xYnQIlCpH4uccYYg6bTAhFbdT+9Uh0UyknxfISH5ds5M5bOPvfPn3
-         Nt/5Y0c27ymBXd6Ch3AosD37WNeD9pWjFe7jJKNwMlmB2fHX7iR/2Q1VJlGVEpFZTK
-         xFC4eYJB+b946T9dpayQeqbMcbSdfKT82XzXBgDi1/qP9XELCqXliygmKR9aO/VACr
-         fFZ7sRiUo9drqDKXngT8RJpXwIahQg3WsOullcadJtoa1NZ+Ds8VxGFHojTiZ43Wry
-         r5SClbXnoCq6w==
-Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id 6C81F610E7; Fri, 10 Sep 2021 07:37:18 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 60824] [PATCH][regression] Cambridge Silicon Radio, Ltd
- Bluetooth Dongle unusable
-Date:   Fri, 10 Sep 2021 07:37:14 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: swyterzone@gmail.com
-X-Bugzilla-Status: REOPENED
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-60824-62941-TnujWDvzXu@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-60824-62941@https.bugzilla.kernel.org/>
-References: <bug-60824-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
-MIME-Version: 1.0
+        id S231603AbhIJHk3 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Sep 2021 03:40:29 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:60054 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231587AbhIJHk1 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 10 Sep 2021 03:40:27 -0400
+Received: from smtpclient.apple (p5b3d2185.dip0.t-ipconnect.de [91.61.33.133])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 0A876CED3D;
+        Fri, 10 Sep 2021 09:39:15 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH] Bluetooth: hci: fix GPF in h5_recv
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20210902202756.25378-1-paskripkin@gmail.com>
+Date:   Fri, 10 Sep 2021 09:39:14 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        apusaka@chromium.org, abhishekpandit@chromium.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        syzbot+7d41312fe3f123a6f605@syzkaller.appspotmail.com
+Content-Transfer-Encoding: 8BIT
+Message-Id: <EF01F61D-7765-49C1-A813-55EB130FCCE1@holtmann.org>
+References: <20210902202756.25378-1-paskripkin@gmail.com>
+To:     Pavel Skripkin <paskripkin@gmail.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D60824
+Hi Pavel,
 
---- Comment #201 from Swyter (swyterzone@gmail.com) ---
-Quick update: I have received two e-mails from gregkh saying that he has ad=
-ded
-my "Bluetooth: btusb: Make the CSR clone chip force-suspend workaround more
-generic" patch to the 5.14-stable and 5.13-stable trees. So, hopefully, if =
-I'm
-not wrong, this means that it will get a lot more use and feedback in the
-following months. Neat. =C2=AF\_(=E3=83=84)_/=C2=AF
+> Syzbot hit general protection fault in h5_recv(). The problem was in
+> missing NULL check.
+> 
+> hu->serdev can be NULL and we cannot blindly pass &serdev->dev
+> somewhere, since it can cause GPF.
+> 
+> Fixes: d9dd833cf6d2 ("Bluetooth: hci_h5: Add runtime suspend")
+> Reported-and-tested-by: syzbot+7d41312fe3f123a6f605@syzkaller.appspotmail.com
+> Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
+> ---
+> drivers/bluetooth/hci_h5.c | 8 +++++---
+> 1 file changed, 5 insertions(+), 3 deletions(-)
 
---=20
-You may reply to this email to add a comment.
+patch has been applied to bluetooth-next tree.
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+Regards
+
+Marcel
+
