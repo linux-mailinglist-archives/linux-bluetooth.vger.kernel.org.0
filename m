@@ -2,75 +2,77 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6165640668B
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Sep 2021 06:41:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AECD406797
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Sep 2021 09:25:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230164AbhIJEmx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Sep 2021 00:42:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58364 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229676AbhIJEmw (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Sep 2021 00:42:52 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 55D576113A
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Sep 2021 04:41:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631248902;
-        bh=1+FI6K7EuCTIxPsAUjjGM6OA2eabX15STnA70KOxNek=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=HQIukAGJ/ZzX+mTlDyNj8/SVXtGhMxgbg+gHvIOVVciWaR8TO/clYwDaph13OVodK
-         4emdZFKaxY2ywsrNdW+MNMuNG7ih+Y4AyTnuaiQqqsb4dlWczSAS+x3x6dV781SiBt
-         GtgSdfeT8Ibc3lDWGTseb0OJzVzfmWjWpOgucOwyaETGfNzwzF1KnjMtPu14bUAQMa
-         RZEyXu383uRiEj2XB309Wf5lk1TzA+UXE6UiyaH/XAsBoaxawhAURIHssKn5ugAS5h
-         yM9+15PMU5g+4bozc4TsXwlmyLSgTvaai4+BqGTARSfv3IIWgJisqrFlb3DsLn9CJ6
-         xZ745vyb2PBSg==
-Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id 432D3610F7; Fri, 10 Sep 2021 04:41:42 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 213829] Intel AX210 Bluetooth controller doesn't start from
- warm boot
-Date:   Fri, 10 Sep 2021 04:41:42 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: ron@cloudswarm.net
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-213829-62941-xFtvYYu7vR@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-213829-62941@https.bugzilla.kernel.org/>
-References: <bug-213829-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
-MIME-Version: 1.0
+        id S231350AbhIJH0y convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Sep 2021 03:26:54 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:60033 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231290AbhIJH0x (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 10 Sep 2021 03:26:53 -0400
+Received: from smtpclient.apple (p5b3d2185.dip0.t-ipconnect.de [91.61.33.133])
+        by mail.holtmann.org (Postfix) with ESMTPSA id CCC41CED3D;
+        Fri, 10 Sep 2021 09:25:41 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [RFC BlueZ] mgmt-api: Introduce Test command
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20210909214750.2683251-1-luiz.dentz@gmail.com>
+Date:   Fri, 10 Sep 2021 09:25:41 +0200
+Cc:     linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <68367042-2A8F-41AA-B9E0-CB422B8AC3DC@holtmann.org>
+References: <20210909214750.2683251-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D213829
+Hi Luiz,
 
-Ron M (ron@cloudswarm.net) changed:
+> This introduces Test command which can be use to further extend the
+> subcommands which are intented to test the behavior of the kernel
+> outside the normal scope of Bluetooth subsystem (e.g. suspend, resume,
+> etc).
+> ---
+> doc/mgmt-api.txt | 27 +++++++++++++++++++++++++++
+> 1 file changed, 27 insertions(+)
+> 
+> diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
+> index 5355fedb0..164a0514d 100644
+> --- a/doc/mgmt-api.txt
+> +++ b/doc/mgmt-api.txt
+> @@ -3856,6 +3856,33 @@ Add Advertisement Patterns Monitor With RSSI Threshold Command
+> 				No Resources
+> 				Invalid Parameters
+> 
+> +Test Command
+> +============
+> +	Command Code:		0xffff
+> +	Controller Index:	<controller id>
+> +	Command Parameters:	Subcommand code (1 Octet)
+> +				Subcommand length (2 Octects)
+> +	Return Parameters:      subcommand return (variable)
+> +
+> +	This command is meant for testing only, it shall not be used in
+> +	production.
+> +
+> +	Possible subcommands:
+> +
+> +	Suspend
+> +	-------
+> +	Subcommand Code:	0x0001
+> +	Subcommand Parameters:
+> +	Subcommand Return Parameters:
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |ron@cloudswarm.net
+I rather do this via debugfs.
 
---- Comment #4 from Ron M (ron@cloudswarm.net) ---
-I have verified this issue is still present in 5.14.0 (and not present in
-5.12.19)
+Regards
 
---=20
-You may reply to this email to add a comment.
+Marcel
 
-You are receiving this mail because:
-You are the assignee for the bug.=
