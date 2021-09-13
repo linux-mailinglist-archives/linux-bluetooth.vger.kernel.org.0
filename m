@@ -2,123 +2,143 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 28E994096BC
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Sep 2021 17:06:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31F3940947D
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Sep 2021 16:32:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345957AbhIMPHy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Sep 2021 11:07:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53546 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345135AbhIMPHv (ORCPT
+        id S1345094AbhIMObb convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Sep 2021 10:31:31 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:43419 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243853AbhIMO2o (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Sep 2021 11:07:51 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B574CC008769
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Sep 2021 06:43:09 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id s10so21210503lfr.11
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Sep 2021 06:43:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tQAMjy8VRvJI6lW4tYB0PDHpx0tw8jGULSmN/FaNG+g=;
-        b=Bbb/S9bUWOBSsQ3pUMTVPvPM3mELyvG1d1Lp39NxhVgmVk+79l6sqgb6LzWCOb4L0G
-         4xOUKFakiyAC6nrltsn+MB6bUBos4WlUB0nm7FHkp2RF21NdRLUEm4sunjTSdshoRv4K
-         eNLAmdHSnHkdwraYqYyvKCPiIaApFzA0oCxB65b4ONd9T/nu22W+N71E6gYzBiva34CW
-         IgswZYwE132B2XWdZPaLFJFxywQZsw2cZ4gmU7fM6bSCADjsWz2QqrQNXrytfyNxu0Ed
-         QWM6q7ZowPchznXUFAyvgGnmTOZr9Qu57dB5+Rp0N50r+t46TxzQtEkrBzX3RfDkuaUN
-         gsXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tQAMjy8VRvJI6lW4tYB0PDHpx0tw8jGULSmN/FaNG+g=;
-        b=hJsb6Q1L9Qx73qN0LobA+NMJr6TERiln99YLz9qjlYZ6OnUwserkwHKRARBHPpaDuP
-         2pKuku1N/96NfYQ+l7aIb3ipNRUPk8UgVDwvRmIRN5eAk7SqoZj63n91TY/gpbQYHy7S
-         zWzvwFLf5WLv+pLn7MZtSayeG3cWDNuajRpo8ny88EOp/jsXyaKV79wZJkTMTu7mtHm+
-         tatmyiC31OI8CjuCvZ61hAVqPndYYtZDbfSPq8n081r8f3aGuNeGVG0DTalI3Vv+9BHT
-         lVBzeoHVtznhgtFaWo+pdWpTv6fih86PFYgmWQHd89GomtEgrhhjDuVZ2/W3eq0JE5P/
-         9wFQ==
-X-Gm-Message-State: AOAM530ZpbkFUEx/OM9X0dDHSe4zOF2cQm7LMWZiKm2duWHzvQAMoV9L
-        9EW8TgfoImWk5QtNb8DSFYxxuFy3AdH5peEm7T/vAg==
-X-Google-Smtp-Source: ABdhPJy07GBvfOdosgOPOaGQzsGX2CjzdZ3iQjt2WHHbgd+CW+rDXGN21SD5O2GYnEG/e8C/opszahQX3cMDMdCSpjk=
-X-Received: by 2002:a05:6512:6cd:: with SMTP id u13mr8847405lff.184.1631540588087;
- Mon, 13 Sep 2021 06:43:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210829131305.534417-1-dmitry.baryshkov@linaro.org>
- <20210829131305.534417-2-dmitry.baryshkov@linaro.org> <CAPDyKFp9CM+x505URK=hcO0QFqcZrpqzQ6uJQ=ZLR6uq-_d5Ew@mail.gmail.com>
- <a0f8766a-7810-0ca5-229a-a40f73041dd9@linaro.org>
-In-Reply-To: <a0f8766a-7810-0ca5-229a-a40f73041dd9@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 13 Sep 2021 15:42:31 +0200
-Message-ID: <CAPDyKFrfEQr0czXeNeJbKSfP0toKuowwOX7yb89c723BORRqCA@mail.gmail.com>
-Subject: Re: [RFC v2 01/13] power: add power sequencer subsystem
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
+        Mon, 13 Sep 2021 10:28:44 -0400
+Received: from smtpclient.apple (p5b3d2185.dip0.t-ipconnect.de [91.61.33.133])
+        by mail.holtmann.org (Postfix) with ESMTPSA id BB12ACED1E;
+        Mon, 13 Sep 2021 16:27:22 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH v9] Bluetooth: btusb: Add support using different nvm for
+ variant WCN6855 controller
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1631513399-22826-1-git-send-email-zijuhu@codeaurora.org>
+Date:   Mon, 13 Sep 2021 16:27:22 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth@vger.kernel.org, ath10k@lists.infradead.org,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rocky Liao <rjliao@codeaurora.org>, tjiang@codeaurora.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <2A714E81-3DF7-44D9-87B4-1D915CB3155D@holtmann.org>
+References: <1631513399-22826-1-git-send-email-zijuhu@codeaurora.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-[...]
+Hi Zijun,
 
-> >> +
-> >> +struct pwrseq *of_pwrseq_xlate_onecell(void *data, struct of_phandle_args *args)
-> >> +{
-> >> +       struct pwrseq_onecell_data *pwrseq_data = data;
-> >> +       unsigned int idx;
-> >> +
-> >> +       if (args->args_count != 1)
-> >> +               return ERR_PTR(-EINVAL);
-> >> +
-> >> +       idx = args->args[0];
-> >> +       if (idx >= pwrseq_data->num) {
-> >> +               pr_err("%s: invalid index %u\n", __func__, idx);
-> >> +               return ERR_PTR(-EINVAL);
-> >> +       }
-> >
-> > In many cases it's reasonable to leave room for future extensions, so
-> > that a provider could serve with more than one power-sequencer. I
-> > guess that is what you intend to do here, right?
-> >
-> > In my opinion, I don't think what would happen, especially since a
-> > power-sequence is something that should be specific to one particular
-> > device (a Qcom WiFi/Blutooth chip, for example).
-> >
-> > That said, I suggest limiting this to a 1:1 mapping between the device
-> > node and power-sequencer. I think that should simplify the code a bit.
->
-> In fact the WiFi/BT example itself provides a non 1:1 mapping. In my
-> current design the power sequencer provides two instances (one for WiFi,
-> one for BT). This allows us to move the knowledge about "enable" pins to
-> the pwrseq. Once the QCA BT driver acquires and powers up the pwrseq,
-> the BT part is ready. No need to toggle any additional pins. Once the
-> WiFi pwrseq is powered up, the WiFi part is present on the bus and
-> ready, without any additional pin toggling.
+> the RF performance of wcn6855 soc chip from different foundries will be
+> difference, so we should use different nvm to configure them.
+> 
+> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+> ---
+> drivers/bluetooth/btusb.c | 51 +++++++++++++++++++++++++++++++++++------------
+> 1 file changed, 38 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 928cbfa4c42d..7b23cfd131f6 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -3161,6 +3161,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+> #define QCA_DFU_TIMEOUT		3000
+> #define QCA_FLAG_MULTI_NVM      0x80
+> 
+> +#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
+> +#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
+> +
+> struct qca_version {
+> 	__le32	rom_version;
+> 	__le32	patch_version;
+> @@ -3192,6 +3195,7 @@ static const struct qca_device_info qca_devices_table[] = {
+> 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
+> 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+> 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
+> +	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
+> };
+> 
+> static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+> @@ -3346,6 +3350,31 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+> 	return err;
+> }
+> 
+> +static void btusb_generate_qca_nvm_name(char *fwname,
+> +					size_t max_size,
+> +					struct qca_version *ver,
+> +					char *variant)
+> +{
+> +	char *sep = (strlen(variant) == 0) ? "" : "_";
+> +	u16 board_id = le16_to_cpu(ver->board_id);
+> +	u32 rom_version = le32_to_cpu(ver->rom_version);
+> +
+> +	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+> +		/* if boardid equal 0, use default nvm without suffix */
+> +		if (board_id == 0x0) {
+> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s.bin",
+> +				rom_version, sep, variant);
+> +		} else {
+> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s_%04x.bin",
+> +				rom_version, sep, variant, board_id);
+> +		}
+> +	} else {
+> +		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
+> +			rom_version);
+> +	}
+> +
+> +}
+> +
 
-Aha, that seems reasonable.
+you have not addressed a single comment from Matthias.
 
->
-> I can move onecell support to the separate patch if you think this might
-> simplify the code review.
+> static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+> 				    struct qca_version *ver,
+> 				    const struct qca_device_info *info)
+> @@ -3354,19 +3383,15 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+> 	char fwname[64];
+> 	int err;
+> 
+> -	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+> -		/* if boardid equal 0, use default nvm without surfix */
+> -		if (le16_to_cpu(ver->board_id) == 0x0) {
+> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+> -				 le32_to_cpu(ver->rom_version));
+> -		} else {
+> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
+> -				le32_to_cpu(ver->rom_version),
+> -				le16_to_cpu(ver->board_id));
+> -		}
+> -	} else {
+> -		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+> -			 le32_to_cpu(ver->rom_version));
+> +	switch (ver->ram_version) {
+> +	case WCN6855_2_0_RAM_VERSION_GF:
+> +	case WCN6855_2_1_RAM_VERSION_GF:
+> +			btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "gf");
+> +		break;
+> +
+> +	default:
+> +			btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "");
+> +		break;
 
-It doesn't matter, both options work for me.
+And this indentation is still wrong. I have lost track how many times I mentioned it. I am not going to mention it anymore and I will not review this patch until review comments are actually addressed. It is a blind disrespect towards the maintainers and reviewers.
 
-[...]
+Regards
 
-Kind regards
-Uffe
+Marcel
+
