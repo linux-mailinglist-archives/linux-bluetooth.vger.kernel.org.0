@@ -2,84 +2,116 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA3844094EC
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Sep 2021 16:35:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EC07409BB4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Sep 2021 20:05:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345856AbhIMOgb convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Sep 2021 10:36:31 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:42773 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344589AbhIMOeE (ORCPT
+        id S235862AbhIMSHK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Sep 2021 14:07:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39884 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229522AbhIMSHJ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Sep 2021 10:34:04 -0400
-Received: from smtpclient.apple (p5b3d2185.dip0.t-ipconnect.de [91.61.33.133])
-        by mail.holtmann.org (Postfix) with ESMTPSA id AFFE3CED1E;
-        Mon, 13 Sep 2021 16:32:45 +0200 (CEST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: [PATCH v3 1/3] Bluetooth: btandroid: Support Android Bluetooth
- Quality Report
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20210913152801.v3.1.I17f57656757b83a1c0fb4b78525d8aca581725db@changeid>
-Date:   Mon, 13 Sep 2021 16:32:45 +0200
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        =?utf-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
-        Joseph Hwang <josephsih@google.com>,
-        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        kernel test robot <lkp@intel.com>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <D38B22EC-EFC8-44A0-84BE-F3710380C022@holtmann.org>
-References: <20210913152801.v3.1.I17f57656757b83a1c0fb4b78525d8aca581725db@changeid>
-To:     Joseph Hwang <josephsih@chromium.org>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+        Mon, 13 Sep 2021 14:07:09 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 001EFC061574
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Sep 2021 11:05:53 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id k23-20020a17090a591700b001976d2db364so649367pji.2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Sep 2021 11:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A76cooCpSZl8MrGzyyuDAXU2K6jHx/FCZWRJCRunqAM=;
+        b=EXn9ekIVTtju0Z6YCVLhJhgc2je6Dkrg5HPkjAVjNtniU+PrxQGirqksnxP/0dRce8
+         SFQKF8KUZ0VlW03JD2kezgWNK1fuxp9grIZfGAf9MsDS/VghCP5jMUv3BDM/9RWTG+Lj
+         OuqD0U+Uj2SD5pjJJufUAaQGCIR8uMNAjPsExy4ERvCS8cgF91VGTMDOqKbEUtV16CXK
+         9APXmkq6oUVtNeez0dutbu6ozSlqLdH/tOj0Hd62hFlEmmMJfUtc7lPo8fJXbhpC1HlH
+         pvwQEt+f4U+kgXNkVDBCiaIrSvdN7D+APFacyDRkk1nF5VJ//BhS8lWy8ZqDwfW+u1yU
+         RifA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A76cooCpSZl8MrGzyyuDAXU2K6jHx/FCZWRJCRunqAM=;
+        b=Ljunnfaz30P3Foi0Md2l0Q34So/Fk+pROl+KV2sf7pOBi6SnxPnIbPe+f6uf24Eg7u
+         CHyhGKcpRenKKJI9RP0t39FRxKEEDrWIt5AH9HhpVl4Bfbkjxrv/8VfrSxl5Y0lVklOI
+         O3mfyGMcJFgxJnKoXpdEyhltxoUXfdg+rKFbWlJceP3c99zezf3O528o7s7g4OLH+xhG
+         h+9/4o4X9IUKGYk6uBD93fx0g1IGog4BF2LclpX2qx47SWLJyCXFmysb2OM98tSOB81V
+         qFoY3O8odvRWcDWDm0xq/3Q47oJKhTp4U3R4qFeIAzR3a+4xvX/207nE4JgJvL2XxRkD
+         +LZQ==
+X-Gm-Message-State: AOAM533FAjSjWNGwA6KHrZrHbK8q54MeGS6dSdskD4EgI3GfS48+vM0s
+        jbFc3pgVgS8elHW8QmHeTDgXaE74A+M=
+X-Google-Smtp-Source: ABdhPJx9qo4+1wIkwEY0VwpLh6LW2Kl1eIqJAxW8sDLU5pok6SAc6pZGXkRUZzZKq1SIvCisy5x0ZQ==
+X-Received: by 2002:a17:902:6e02:b0:13a:41f5:1666 with SMTP id u2-20020a1709026e0200b0013a41f51666mr11564683plk.39.1631556353116;
+        Mon, 13 Sep 2021 11:05:53 -0700 (PDT)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id u24sm8303812pfm.27.2021.09.13.11.05.52
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Sep 2021 11:05:52 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/2] shared/util: Add convertion function for 24 bits
+Date:   Mon, 13 Sep 2021 11:05:51 -0700
+Message-Id: <20210913180552.3468107-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Joseph,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-> Add the btandroid.c file to support Android BQR commands.
-> 
-> This module may be referenced by btusb, btrtl, and hci_qca when a
-> Bluetooth controller supports the Android Bluetooth Quality Report.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-> Signed-off-by: Joseph Hwang <josephsih@chromium.org>
-> ---
-> 
-> Changes in v3:
-> - Fix the auto build test ERROR
->  "undefined symbol: btandroid_set_quality_report" that occurred
->  with some kernel configs.
-> - Note that the mgmt-tester "Read Exp Feature - Success" failed.
->  But on my test device, the same test passed. Please kindly let me
->  know what may be going wrong. These patches do not actually
->  modify read/set experimental features.
-> - As to CheckPatch failed. No need to modify the MAINTAINERS file.
->  Thanks.
-> 
-> Changes in v2:
-> - Fix the titles of patches 2/3 and 3/3 and reduce their lengths.
-> 
-> drivers/bluetooth/Kconfig     |   5 ++
-> drivers/bluetooth/Makefile    |   1 +
-> drivers/bluetooth/btandroid.c | 106 ++++++++++++++++++++++++++++++++++
-> drivers/bluetooth/btandroid.h |  10 ++++
-> 4 files changed, 122 insertions(+)
-> create mode 100644 drivers/bluetooth/btandroid.c
-> create mode 100644 drivers/bluetooth/btandroid.h
+This adds get/put 24 bits variants.
+---
+ src/shared/util.h | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-I am confused now. Did you read my review comments? I do _not_ want it this way; so please read my previous response and don’t send the exact same patch again.
-
-Regards
-
-Marcel
+diff --git a/src/shared/util.h b/src/shared/util.h
+index 60908371d..ac70117ca 100644
+--- a/src/shared/util.h
++++ b/src/shared/util.h
+@@ -131,6 +131,20 @@ static inline uint16_t get_be16(const void *ptr)
+ 	return be16_to_cpu(get_unaligned((const uint16_t *) ptr));
+ }
+ 
++static inline uint32_t get_le24(const void *ptr)
++{
++	const uint8_t *src = ptr;
++
++	return ((uint32_t)src[2] << 16) | get_le16(ptr);
++}
++
++static inline uint32_t get_be24(const void *ptr)
++{
++	const uint8_t *src = ptr;
++
++	return ((uint32_t)src[0] << 16) | get_be16(&src[1]);
++}
++
+ static inline uint32_t get_le32(const void *ptr)
+ {
+ 	return le32_to_cpu(get_unaligned((const uint32_t *) ptr));
+@@ -161,6 +175,18 @@ static inline void put_be16(uint16_t val, const void *ptr)
+ 	put_unaligned(cpu_to_be16(val), (uint16_t *) ptr);
+ }
+ 
++static inline void put_le24(uint32_t val, void *ptr)
++{
++	put_le16(val, ptr);
++	put_unaligned(val >> 16, (uint8_t *) ptr + 2);
++}
++
++static inline void put_be24(uint32_t val, void *ptr)
++{
++	put_unaligned(val >> 16, (uint8_t *) ptr + 2);
++	put_be16(val, ptr + 1);
++}
++
+ static inline void put_le32(uint32_t val, void *dst)
+ {
+ 	put_unaligned(cpu_to_le32(val), (uint32_t *) dst);
+-- 
+2.31.1
 
