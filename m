@@ -2,167 +2,99 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BB4440C54A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Sep 2021 14:32:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1185040CBEC
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Sep 2021 19:48:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236721AbhIOMdc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 15 Sep 2021 08:33:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60426 "EHLO
+        id S230356AbhIORty (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 15 Sep 2021 13:49:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233011AbhIOMdc (ORCPT
+        with ESMTP id S230474AbhIORtx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 15 Sep 2021 08:33:32 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D2E1C061574
-        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Sep 2021 05:32:13 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id t6so4064828edi.9
-        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Sep 2021 05:32:13 -0700 (PDT)
+        Wed, 15 Sep 2021 13:49:53 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09FEDC061764
+        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Sep 2021 10:48:34 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 140so2886694wma.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Sep 2021 10:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=33PPC8xkm+O/MyNjoyxtrTXfbmhW4Bexavtc9ICG6TE=;
-        b=Lts/lmZP53mWOHWvKxdoquU0WuezKgd5MRebEQZPdXWkaTDAh56y2Ql4YYYq7CcSQk
-         s0W8thR50boDCYiEjm25inSfSGujui7fFZxcOtw1s9bbtplZs8a/f3iZHKsgK1lCXiDm
-         06w1+pizrnD0OTgHUl/dvQuG4X/BXx6vSBgTFEwSgpqhl8w+D/oYrHvDe3EgykZLMbqu
-         DtqNxnHgJ62iFf5NNqLnjzyiITsmPCsoV5bPDwFLo7gOVo1GFbHBRTcwdtw394PxjyKk
-         Mm+0czW5odcQ7u1PobnxZXklLYPoeNzZp81ONhHVfqfPX+vEOFEx/itTIg9cl0GeFYJB
-         OmMQ==
+        d=gmail.com; s=20210112;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=2cyKAotCn/0kxWMWgbHuH36DM6cXIpw5VE9D8kzuJIU=;
+        b=VA45/aislW3lZdQEsCZ2+URfrpaUWrvj56UCambWUPUr/PHqjXPPrwLcjSNGRNOJqI
+         JIO72QAz9XGH4B2+QLa+pZkxP43eKQ83TTFc2zEL0VZcyz5KNJZcaVv7kVDsoIxgIbO9
+         8ldnHjEoBEvDyVtDkL49aXMqtub/3L9zaEpa7UAqhiaA9PWzi/3kcGsHNEup51krLhIT
+         fSYKdv1kxSXqUrVodWvFWM1uwN17UzcOggIAY+/EtQLUDVuQRU9oBLu5JNPuiCF87nO9
+         77fo/vaPytno3aaU4ErCbZlVSJeQ+hRmyGO3DU3n+FxulkaQ8MSl0we3GPJesRp3+V4w
+         EvgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=33PPC8xkm+O/MyNjoyxtrTXfbmhW4Bexavtc9ICG6TE=;
-        b=xZ/vtH15s+Be1QehBwsn6V0jE1GrEy9osnxE8uWA2fV6dLYgivBgvtDpYephPmAMOj
-         P434mZG6HAPQrJENPcXX4PZcZ9ZM6v1WB0o4owMF47PdwQoLVnmloaFtrQm0AP4GeX4v
-         MWP+J/LS9UUFiwIaqNJyqZlBuwQHaZaqhpYyG8sgwSLf0426Vukb3M32lkht3bw22NIr
-         0qUV4HbCiqiV+b8MxNkZwVBTJgpv1Af6K0etnC4Aed7rffHwsgZj19bjHeLma4b6YH61
-         9reESOg3rh1slz1H+FRYaV9p/5tN1r6pj/Mc2N2hlOhFdxEqSkKXxsWgMUIirhhmPh8p
-         53AQ==
-X-Gm-Message-State: AOAM531+5bJqMXxDkwH9dkuo47fLyW/qMCGKxGwE0rjbjwRX3jqWaefY
-        AJHNvILj+XhkTyvSbZgEVtSvUfSv7pIgLCtrPnIkD4z+m1E=
-X-Google-Smtp-Source: ABdhPJwACWUhclbeGwEm64RzwpiUi2X9ATYN6YUspEJASXdtye6zhf6dqDNffR1DeqCbl+hWKcmw14dMPsH8o07sgNQ=
-X-Received: by 2002:a05:6402:694:: with SMTP id f20mr16919917edy.100.1631709131581;
- Wed, 15 Sep 2021 05:32:11 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=2cyKAotCn/0kxWMWgbHuH36DM6cXIpw5VE9D8kzuJIU=;
+        b=XxfSE/Yo2iO23eouYMWUZ6ei3mK2G5hbPFQWiZzznNgCNQw4UNFyW8jOhH+ESG4lGT
+         ABYMwWfootl7vuNgxrkI7/Z3XMV9Btgf23IAT6L/v/3O0zwbeaSKoVtlnI21JlTrcN4M
+         Fqrui9/uSSGTtEJLb61bFLc0oarQ7RNS8zCp6bm9sbjkwwO1BkaaQ/We/rK2N6KGVrmj
+         l9HNySvcguAfHecR4jqbf6ydkBckZWC0pSNkZ/qRYGkeU2zItryNniL3wyulVDIltMKZ
+         XNrhR9nUYI7QEsXjrXHUkoeEJ+w22jIO3Ve+dzWK455tSsGEvMfRvbRKIJjb+ldCwHVy
+         77zg==
+X-Gm-Message-State: AOAM5317fFKVCNuuE1Ib//Lte+rb+5A+bI6plbN3jH6yDezscHRxCe87
+        mmA1hA5//Ec2H2E3gkAFwwgu4L07sOMB
+X-Google-Smtp-Source: ABdhPJzVs40uBWGAYPHFDxSz5+qEWaM3wVIjc8A50PsbJZN7IbpR+tjgrWbEHIboe9CopULZFhf64w==
+X-Received: by 2002:a05:600c:3ba4:: with SMTP id n36mr5708172wms.35.1631728112111;
+        Wed, 15 Sep 2021 10:48:32 -0700 (PDT)
+Received: from [172.16.55.219] ([185.17.231.94])
+        by smtp.gmail.com with ESMTPSA id b16sm648635wrp.82.2021.09.15.10.48.31
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Sep 2021 10:48:31 -0700 (PDT)
+To:     linux-bluetooth@vger.kernel.org
+From:   Miguel Horta <mmiguelhorta@gmail.com>
+Subject: PAN - Migrate client from pand to bluez5
+Message-ID: <7c398c7b-6688-9a27-e8e8-cec4fb148c89@gmail.com>
+Date:   Wed, 15 Sep 2021 18:48:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <20210906140250.Bluez.v2.1.Id597e5ae87e680e6a744a8ed08d5000aacfce867@changeid>
-In-Reply-To: <20210906140250.Bluez.v2.1.Id597e5ae87e680e6a744a8ed08d5000aacfce867@changeid>
-From:   Yun-hao Chung <howardchung@google.com>
-Date:   Wed, 15 Sep 2021 20:32:00 +0800
-Message-ID: <CAPHZWUf91fsLi+fz8q3ocrgTfiq=+VFez75RbNQ4ckNL1jOeKw@mail.gmail.com>
-Subject: Re: [Bluez PATCH v2 1/2] plugins/admin: add adapter_remove handler
-To:     Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Gentle ping. Thanks.
+Hi all,
+currently I have a Bluetooth PAN working where both the master and 
+clients run on outdated software, i.e. it uses bluez3/4 tools (hcitool, 
+hciconfig, pand, etc).
 
+I'm attempting to gradually migrate (unfortunately I can't touch the 
+server for the time being) this setup by replacing some of clients with 
+new hardware that runs Ubuntu 20.04 (bluez 5.53). I've been attempting 
+to establish a connection with the master (pand 4.59, GN role) following 
+a guide that I think describes the most up-to-date methodology, 
+http://blog.fraggod.net/2015/03/28/bluetooth-pan-network-setup-with-bluez-5x.html. 
+  Unfortunately, I can't even get past the pairing step, it ask for a 
+PIN that was never needed before, and it gets canceled right after:
 
-On Mon, Sep 6, 2021 at 2:03 PM Howard Chung <howardchung@google.com> wrote:
->
-> From: Yun-Hao Chung <howardchung@chromium.org>
->
-> Currently admin doesn't handle adapter removed callbacks, which causes
-> interfaces AdminPolicySet1 and AdminPolicyStatus1 not being
-> unregistered, which in turns causes these interfaces can not be
-> re-registered once adapter is back.
->
-> This adds handler for adapter_remove.
->
-> Reviewed-by: Shyh-In Hwang <josephsih@chromium.org>
-> Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-> ---
-> tested with following steps
-> 1. rmmod btusb
-> 2. modprobe btusb
-> 3. read allowlist via bluetoothctl
->
-> Changes in v2:
-> 1. Fix make errors
->
->  plugins/admin.c | 35 ++++++++++++++++++++++++++++-------
->  1 file changed, 28 insertions(+), 7 deletions(-)
->
-> diff --git a/plugins/admin.c b/plugins/admin.c
-> index 02fec04568ba..82c00cabdb6b 100644
-> --- a/plugins/admin.c
-> +++ b/plugins/admin.c
-> @@ -85,6 +85,17 @@ static void admin_policy_free(void *data)
->         g_free(admin_policy);
->  }
->
-> +static void admin_policy_destroy(struct btd_admin_policy *admin_policy)
-> +{
-> +       const char *path = adapter_get_path(admin_policy->adapter);
-> +
-> +       g_dbus_unregister_interface(dbus_conn, path,
-> +                                               ADMIN_POLICY_SET_INTERFACE);
-> +       g_dbus_unregister_interface(dbus_conn, path,
-> +                                               ADMIN_POLICY_STATUS_INTERFACE);
-> +       admin_policy_free(admin_policy);
-> +}
-> +
->  static bool uuid_match(const void *data, const void *match_data)
->  {
->         const bt_uuid_t *uuid = data;
-> @@ -492,7 +503,7 @@ static int admin_policy_adapter_probe(struct btd_adapter *adapter)
->         if (!g_dbus_register_interface(dbus_conn, adapter_path,
->                                         ADMIN_POLICY_SET_INTERFACE,
->                                         admin_policy_adapter_methods, NULL,
-> -                                       NULL, policy_data, admin_policy_free)) {
-> +                                       NULL, policy_data, NULL)) {
->                 btd_error(policy_data->adapter_id,
->                         "Admin Policy Set interface init failed on path %s",
->                                                                 adapter_path);
-> @@ -506,7 +517,7 @@ static int admin_policy_adapter_probe(struct btd_adapter *adapter)
->                                         ADMIN_POLICY_STATUS_INTERFACE,
->                                         NULL, NULL,
->                                         admin_policy_adapter_properties,
-> -                                       policy_data, admin_policy_free)) {
-> +                                       policy_data, NULL)) {
->                 btd_error(policy_data->adapter_id,
->                         "Admin Policy Status interface init failed on path %s",
->                                                                 adapter_path);
-> @@ -574,10 +585,24 @@ static void admin_policy_device_removed(struct btd_adapter *adapter,
->                 unregister_device_data(data, NULL);
->  }
->
-> +static void admin_policy_remove(struct btd_adapter *adapter)
-> +{
-> +       DBG("");
-> +
-> +       queue_foreach(devices, unregister_device_data, NULL);
-> +       queue_destroy(devices, g_free);
-> +
-> +       if (policy_data) {
-> +               admin_policy_destroy(policy_data);
-> +               policy_data = NULL;
-> +       }
-> +}
-> +
->  static struct btd_adapter_driver admin_policy_driver = {
->         .name   = "admin_policy",
->         .probe  = admin_policy_adapter_probe,
->         .resume = NULL,
-> +       .remove = admin_policy_remove,
->         .device_resolved = admin_policy_device_added,
->         .device_removed = admin_policy_device_removed
->  };
-> @@ -597,11 +622,7 @@ static void admin_exit(void)
->         DBG("");
->
->         btd_unregister_adapter_driver(&admin_policy_driver);
-> -       queue_foreach(devices, unregister_device_data, NULL);
-> -       queue_destroy(devices, g_free);
-> -
-> -       if (policy_data)
-> -               admin_policy_free(policy_data);
-> +       admin_policy_remove(NULL);
->  }
->
->  BLUETOOTH_PLUGIN_DEFINE(admin, VERSION,
-> --
-> 2.33.0.153.gba50c8fa24-goog
->
+[bluetooth]# agent on
+[bluetooth]# power on
+[bluetooth]# scan on
+[bluetooth]# pair XX:XX:XX:XX:XX:XX
+Attempting to pair with XX:XX:XX:XX:XX:XX
+[CHG] Device XX:XX:XX:XX:XX:XX Connected: yes
+Request PIN code
+[agent] Enter PIN code: Request canceled
+Failed to pair: org.bluez.Error.AuthenticationCanceled
+[CHG] Device XX:XX:XX:XX:XX:XX Connected: no
+
+With the old setup no PIN was needed. I've searching if it is possible 
+to pair without PIN, or what indicates that a PIN is necessary but with 
+no avail.  I've tried to use another agent like "DisplayOnly" or 
+"NoInputNoOutput", but the PIN is always requested.
+
+Why is a PIN now needed? What am I missing?
+
+Any help is appreciated. Thanks.
+
