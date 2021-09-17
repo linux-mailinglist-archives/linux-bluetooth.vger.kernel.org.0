@@ -2,110 +2,153 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB7E740FEFD
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Sep 2021 20:07:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52D3241001B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Sep 2021 21:56:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236644AbhIQSIs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Sep 2021 14:08:48 -0400
-Received: from mail-il1-f200.google.com ([209.85.166.200]:53925 "EHLO
-        mail-il1-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233148AbhIQSIr (ORCPT
+        id S231697AbhIQT6F (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Sep 2021 15:58:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55192 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229488AbhIQT6D (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Sep 2021 14:08:47 -0400
-Received: by mail-il1-f200.google.com with SMTP id t10-20020a056e02160a00b0022c6a64f952so22717377ilu.20
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Sep 2021 11:07:25 -0700 (PDT)
+        Fri, 17 Sep 2021 15:58:03 -0400
+Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62398C061574
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Sep 2021 12:56:41 -0700 (PDT)
+Received: by mail-ua1-x935.google.com with SMTP id v9so6796571uak.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Sep 2021 12:56:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JuqyQxvKLXvItamRaNmZW+CCpwuCp0uNC4Ly+uIlvdQ=;
+        b=ik6QA5uZ2u3kBc9l6AkEIGPKjYWNMeCntkxioG/aVehz8CbGJCLgeLtj/ZSRoI6JsV
+         3y29Kx2O9Xz3HQCVffx2GwurQEMmECee6xqVGBLgh35Hk/nRcF3nkYXcEYHPms/1zJ00
+         pcvQjsfkizwR62HOB5bwa0fbda/sJSM2QC5xeEayGt5ZyGqfQIkY35xg9VOnG+YfXYwy
+         vQbiG8Z5xXbRmxi3JaCOdNmjJelx0mmD2DANm6SmfpnnHuv+lw/QjHm4Aoo7w74VDdlk
+         9NqgxBOnCJARXLb6p50W7ER5Pas+1GreoVjaNDYQpxVL8dr5jFw6fPVbecBkwrxFxjn+
+         vTKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=veJzQ72AWxxL+dvzV9cICjYgzqmC1otqE4lYiPabm08=;
-        b=4RhRGIWyY9d1dwPRdT/Va7fUohI7WejDO4sahFGK/eHwLnx8LzmX/AJFU6EmzVvIT/
-         pudJ6AnXeWdUEkmyVQ5epR0/BobBL8o+Q+K0+5G/opXRucgHTkyAIcf+qF/k9pgDlMMm
-         3/d/ZoQsCHbRERL/+1Rp7JcTcJfy+jhFdnqkejU16iwA2U5YsLvGluC8RMjVunFGMI6s
-         1jcr2t4RPRmpm0L1oT2le3bXJ6fzZrAoW9hl9TCx7+WfhcyuCTga9fm/u1kXf7ejvM5Z
-         hafFo+cUEIs/G1Mdi3Zfl7Ow9z3mIn5pyxRmEpb5KhDvzXGEBBL+1Ff/FmKKgIbErPWr
-         perA==
-X-Gm-Message-State: AOAM531JZkZgQhWvOedQCztJbyAyh1itjhJbHk4Im/vcxcwRWslHd8Cq
-        WvfyggEvFM/Vz941HV7G2Q0UmqOSDkIseNjg6A9o/l4ABZZC
-X-Google-Smtp-Source: ABdhPJwZhNXAwwnK0Qh+clUHQDE/55QI/OcFJuZV51dTTflISlGp0fb9zKMHsL6rVoYkIjo93SoshYAbL7qWZ+uU6YCGz6apkw8K
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JuqyQxvKLXvItamRaNmZW+CCpwuCp0uNC4Ly+uIlvdQ=;
+        b=anYcwvXhmxzo2Jb6Gty+0ZwkwfMB7VactwQl9mMHS7SW4yGDit+8nUGVIRvLIUMRZR
+         1CHe6IZZixxR2LFNQnT2JwDWYW07mgl7BpPiUxzYbausH9Mk+tbytiu/3s+AJBfq1DL4
+         8k7znJROPQUBFItEEb3NuWcaoCkanefkgOpuHuFvwyCgpwfuAOyzv/zF0uWuRhStLqH/
+         px+rO76f4AZXHZebFcp79XqAr1snB47Q3RHpJeIFSfbtNkRPEQ01noc5yWBXtQRWvECQ
+         3lyHWv8ETj8oXgfBLyyU9BHVZ0T3Q1IGLyqn5Du46jCqln3pfQaij7ghhtri1H0DXh4x
+         rCWQ==
+X-Gm-Message-State: AOAM5329iscjKfGcTm7tZv88pkWbyeeu4tztIRgMKzyHiIKpgM6ONhfj
+        Mc+fOqsR7sWpRCbwmL7pze/LJhCgv4cCt9QmKOg=
+X-Google-Smtp-Source: ABdhPJwkPA+hf/hNkkLbh5FFbbCy3FBm7BXrPPGMlXCWXNmhPZd9Enh6SZKsWgqFDVjHPv3KmFYbvRUKDpstYyfPqKE=
+X-Received: by 2002:ab0:3766:: with SMTP id o6mr6245020uat.102.1631908600270;
+ Fri, 17 Sep 2021 12:56:40 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a5d:9c53:: with SMTP id 19mr9335696iof.192.1631902045394;
- Fri, 17 Sep 2021 11:07:25 -0700 (PDT)
-Date:   Fri, 17 Sep 2021 11:07:25 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000b9605b05cc34cd28@google.com>
-Subject: [syzbot] WARNING: locking bug in sco_sock_timeout
-From:   syzbot <syzbot+91ba852bd0ad0581a0e3@syzkaller.appspotmail.com>
-To:     davem@davemloft.net, johan.hedberg@gmail.com, kuba@kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        luiz.dentz@gmail.com, marcel@holtmann.org, netdev@vger.kernel.org,
-        syzkaller-bugs@googlegroups.com
+References: <20210831162546.3643599-1-pab@pabigot.com>
+In-Reply-To: <20210831162546.3643599-1-pab@pabigot.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 17 Sep 2021 12:56:29 -0700
+Message-ID: <CABBYNZJqA8=b_SaDAR+ivePdUeyUrv8=ZukB1QDNEDmCY41FpA@mail.gmail.com>
+Subject: Re: [PATCH] lib: fix variable-length array declarations in hci structures
+To:     "Peter A. Bigot" <pab@pabigot.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+Hi Peter,
 
-syzbot found the following issue on:
+On Tue, Aug 31, 2021 at 9:30 AM Peter A. Bigot <pab@pabigot.com> wrote:
+>
+> Use of zero as the size for arrays as the last element of a structure
+> is a GNU C extension, which as of GCC 10 produces diagnostics when
+> values in the extended array are referenced.  Switch to the C99
+> standard idiom for flexible array members, already in use in a few
+> other headers.
+>
+> Signed-off-by: Peter A. Bigot <pab@pabigot.com>
+> ---
+>  lib/hci.h | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/lib/hci.h b/lib/hci.h
+> index 3382b87bf..a61568bce 100644
+> --- a/lib/hci.h
+> +++ b/lib/hci.h
+> @@ -729,7 +729,7 @@ typedef struct {
+>  typedef struct {
+>         uint8_t         flt_type;
+>         uint8_t         cond_type;
+> -       uint8_t         condition[0];
+> +       uint8_t         condition[];
+>  } __attribute__ ((packed)) set_event_flt_cp;
+>  #define SET_EVENT_FLT_CP_SIZE 2
+>
+> @@ -2135,7 +2135,7 @@ typedef struct {
+>  #define EVT_LE_META_EVENT      0x3E
+>  typedef struct {
+>         uint8_t         subevent;
+> -       uint8_t         data[0];
+> +       uint8_t         data[];
+>  } __attribute__ ((packed)) evt_le_meta_event;
+>  #define EVT_LE_META_EVENT_SIZE 1
+>
+> @@ -2159,7 +2159,7 @@ typedef struct {
+>         uint8_t         bdaddr_type;
+>         bdaddr_t        bdaddr;
+>         uint8_t         length;
+> -       uint8_t         data[0];
+> +       uint8_t         data[];
+>  } __attribute__ ((packed)) le_advertising_info;
+>  #define LE_ADVERTISING_INFO_SIZE 9
+>
+> @@ -2246,7 +2246,7 @@ typedef struct {
+>  typedef struct {
+>         uint16_t                total_num_blocks;
+>         uint8_t                 num_handles;
+> -       cmplt_handle            handles[0];
+> +       cmplt_handle            handles[];
+>  }  __attribute__ ((packed)) evt_num_completed_blocks;
+>
+>  #define EVT_AMP_STATUS_CHANGE                  0x4D
+> @@ -2264,7 +2264,7 @@ typedef struct {
+>  #define EVT_STACK_INTERNAL             0xFD
+>  typedef struct {
+>         uint16_t        type;
+> -       uint8_t         data[0];
+> +       uint8_t         data[];
+>  } __attribute__ ((packed)) evt_stack_internal;
+>  #define EVT_STACK_INTERNAL_SIZE 2
+>
+> @@ -2407,19 +2407,19 @@ struct hci_dev_req {
+>
+>  struct hci_dev_list_req {
+>         uint16_t dev_num;
+> -       struct hci_dev_req dev_req[0];  /* hci_dev_req structures */
+> +       struct hci_dev_req dev_req[];   /* hci_dev_req structures */
+>  };
+>
+>  struct hci_conn_list_req {
+>         uint16_t dev_id;
+>         uint16_t conn_num;
+> -       struct hci_conn_info conn_info[0];
+> +       struct hci_conn_info conn_info[];
+>  };
+>
+>  struct hci_conn_info_req {
+>         bdaddr_t bdaddr;
+>         uint8_t  type;
+> -       struct hci_conn_info conn_info[0];
+> +       struct hci_conn_info conn_info[];
+>  };
+>
+>  struct hci_auth_info_req {
+> --
+> 2.25.1
 
-HEAD commit:    f11ee2ad25b2 net: mana: Prefer struct_size over open coded..
-git tree:       net
-console output: https://syzkaller.appspot.com/x/log.txt?x=14a96963300000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=16e23f04679ec35e
-dashboard link: https://syzkaller.appspot.com/bug?extid=91ba852bd0ad0581a0e3
-compiler:       gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.1
+Applied, thanks.
 
-Unfortunately, I don't have any reproducer for this issue yet.
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+91ba852bd0ad0581a0e3@syzkaller.appspotmail.com
-
-------------[ cut here ]------------
-DEBUG_LOCKS_WARN_ON(1)
-WARNING: CPU: 1 PID: 32344 at kernel/locking/lockdep.c:203 hlock_class kernel/locking/lockdep.c:203 [inline]
-WARNING: CPU: 1 PID: 32344 at kernel/locking/lockdep.c:203 hlock_class kernel/locking/lockdep.c:192 [inline]
-WARNING: CPU: 1 PID: 32344 at kernel/locking/lockdep.c:203 check_wait_context kernel/locking/lockdep.c:4688 [inline]
-WARNING: CPU: 1 PID: 32344 at kernel/locking/lockdep.c:203 __lock_acquire+0x1344/0x54a0 kernel/locking/lockdep.c:4965
-Modules linked in:
-CPU: 1 PID: 32344 Comm: kworker/1:0 Not tainted 5.14.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: events sco_sock_timeout
-RIP: 0010:hlock_class kernel/locking/lockdep.c:203 [inline]
-RIP: 0010:hlock_class kernel/locking/lockdep.c:192 [inline]
-RIP: 0010:check_wait_context kernel/locking/lockdep.c:4688 [inline]
-RIP: 0010:__lock_acquire+0x1344/0x54a0 kernel/locking/lockdep.c:4965
-Code: 08 84 d2 0f 85 f1 3d 00 00 8b 05 df 9a 13 0c 85 c0 0f 85 f4 fd ff ff 48 c7 c6 60 03 8c 89 48 c7 c7 20 f7 8b 89 e8 79 ff 96 07 <0f> 0b 31 ed e9 b7 f0 ff ff e8 de 49 7b 02 85 c0 0f 84 12 fe ff ff
-RSP: 0018:ffffc900161efa88 EFLAGS: 00010082
-RAX: 0000000000000000 RBX: ffff88801ec820a0 RCX: 0000000000000000
-RDX: ffff8880247b9c80 RSI: ffffffff815dbd58 RDI: fffff52002c3df43
-RBP: 0000000000000b04 R08: 0000000000000000 R09: 0000000000000000
-R10: ffffffff815d5afe R11: 0000000000000000 R12: ffff8880247ba6c8
-R13: ffff8880247b9c80 R14: 0000000000040000 R15: 0000000000040b04
-FS:  0000000000000000(0000) GS:ffff8880b9d00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fc98ea0b718 CR3: 000000001cc2b000 CR4: 00000000001506e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- lock_acquire kernel/locking/lockdep.c:5625 [inline]
- lock_acquire+0x1ab/0x510 kernel/locking/lockdep.c:5590
- __raw_spin_lock_bh include/linux/spinlock_api_smp.h:135 [inline]
- _raw_spin_lock_bh+0x2f/0x40 kernel/locking/spinlock.c:178
- spin_lock_bh include/linux/spinlock.h:368 [inline]
- lock_sock_nested+0x40/0x120 net/core/sock.c:3183
- lock_sock include/net/sock.h:1612 [inline]
- sco_sock_timeout+0xd2/0x290 net/bluetooth/sco.c:96
- process_one_work+0x9bf/0x16b0 kernel/workqueue.c:2297
- worker_thread+0x658/0x11f0 kernel/workqueue.c:2444
- kthread+0x3e5/0x4d0 kernel/kthread.c:319
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
-
-
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+-- 
+Luiz Augusto von Dentz
