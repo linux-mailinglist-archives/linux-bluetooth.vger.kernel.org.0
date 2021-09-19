@@ -2,98 +2,132 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81F70410305
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 18 Sep 2021 04:33:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F01C410BCA
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 Sep 2021 15:45:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240289AbhIRCeW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Sep 2021 22:34:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57846 "EHLO
+        id S231294AbhISNq7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 19 Sep 2021 09:46:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236906AbhIRCeO (ORCPT
+        with ESMTP id S230520AbhISNq6 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Sep 2021 22:34:14 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1400C061574
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Sep 2021 19:32:50 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id b64so23503166qkg.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Sep 2021 19:32:50 -0700 (PDT)
+        Sun, 19 Sep 2021 09:46:58 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F4DFC061574
+        for <linux-bluetooth@vger.kernel.org>; Sun, 19 Sep 2021 06:45:33 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id eg28so27007028edb.1
+        for <linux-bluetooth@vger.kernel.org>; Sun, 19 Sep 2021 06:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=30uzhm6cUYIWTFlcNOtf1uXImSSDb4Ibvn1qdpDJN38=;
-        b=MGoEC9KH/dp6gk+N4bYSV1g6Cj3f013ZZd28RD29T6w4/XRl1K826H17Kj9/4bC+lp
-         6meEkBaLAzLK0Z5oE1qUzWYDXE8ZRrM0bZyln7/oYBCf6dC47yCl7Lku+XLOwhwcGt7q
-         JQIbdArFo/qmWZw+XIggPk7WgfZu4OfzeMDA5L71m4zg4ygfJVA86JVa5Pl/3wVSgJam
-         5xp9shjwU8/tNjAnnA6BRmKdGKO17KkXDgY5Dww//+Q6k9EL3KoAE1Fr5gT3k7uE9cra
-         QOfx4gb72Ev6Jvs+ZnK5Yzte2gZx76llqrNA1/cbS5/PmepyUiKUv90YJKtCHxcjiUPk
-         34gw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6exTQj2H8K+ahbQLkHM9yRcZGgvoa3LOgXfJ3HggxwQ=;
+        b=U48E6hmW45ep5MWXSmELGCeEnx1aJV0XG2i7asG9sJ41X3A4wef5PFhqqvTnwc02a3
+         nh8InO3tqg8ilbWomLwYnIuiiti6zegkiSscx4z2jappgilFMK0Tu3W/1L3WBd/A+909
+         5ChMXiYXw6Ww8N3iNKUzbr+QMRHikMhDLR7dUANph8dMHb3ssd85UTkb05g7H/PuZO4Q
+         8bjQGTgAjafrq++J96Afs7REKKbG+2p4Qny/BWjYXYStvFFLiw19Mbpg9ufOoxiftIto
+         Mo2Y8RP3HS3pM737FuIV6tOByyQwaeKuWZzkh9kt8TWHtRgMT4XY9a6gtAqJhEJY92Yr
+         i7Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=30uzhm6cUYIWTFlcNOtf1uXImSSDb4Ibvn1qdpDJN38=;
-        b=cgynS3v+xLKAk/KUUSBM0cR31qeimwXGHnuT8aNNqDXqySL8os4RbSXHx8W9JnUY51
-         OSLTpUKXOEu/MlcPVHu6BsXO/og4ctrRHc32niT1qpoKfNCfUlFT23rqiL3uSDnFaLq/
-         EBe2q4oL2rewJS9jtEp4L7nNrQ9ZODeFlB+fyGVnVP3YJKinrv4Hil0mQ7b4XAw2cHll
-         MlfZCHLhUb1Z0qzb28/EFRsDsQ2S+b3NQGduI2PoClBcq2+xb0DYz4ZuBmkbTHGnRrhm
-         Z0TnS9eLJ6WuA/lLjVyQOStBWeQUSme65lMfklen8gr2sg6P1xyu3OmIcv1y0fyfua/r
-         IPuQ==
-X-Gm-Message-State: AOAM533fOZj9j9vgWHx9ctiODpGy57agifXmXtGrPe+/AY5FVdR6hYNp
-        ETARE15UimAtRCu5dg+r79ros1alSBd8sQ==
-X-Google-Smtp-Source: ABdhPJwroTaJANxrSwrRpRB3/ywiNrmtsn9PR6NUan9o/vsvPkn9yaHEXjC7nw3F1pRL7h1y0waCAg==
-X-Received: by 2002:a37:9d96:: with SMTP id g144mr354780qke.23.1631932369998;
-        Fri, 17 Sep 2021 19:32:49 -0700 (PDT)
-Received: from [172.17.0.2] ([137.116.86.114])
-        by smtp.gmail.com with ESMTPSA id t194sm6552585qka.72.2021.09.17.19.32.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Sep 2021 19:32:49 -0700 (PDT)
-Message-ID: <61454fd1.1c69fb81.70bdc.51b3@mx.google.com>
-Date:   Fri, 17 Sep 2021 19:32:49 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============5513002194769504307=="
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6exTQj2H8K+ahbQLkHM9yRcZGgvoa3LOgXfJ3HggxwQ=;
+        b=02j50CFF2vTA9RH2M6UUuNNH2Sb0uzzmbqTwKZPjPJQ6pnpRSubM0CMNNYKfEmfQqH
+         2rYCJnxj4/esBR6skT1SXbXbq6BugDQ0eGMCxe58wGr+0937byS4+DHzHQBdeykI7d5a
+         ftYf1nVgHK1rV3u4vCteibH05VJBxV1/ppLoC3u4MsC9QuZ37jNaT1ZTcapxXnJw9YLJ
+         a9c9mw5BTRr76shKfjTb2sN6eUA8zfD+OTSNiooqIm74O1mYuYkZ4W+4mb5RTpNJoNif
+         ZNC7mGjl/aHFDVyM9IjDcGCO46hWJF68oOwTcBkYJxyFtZS/XIPSw/Znw5X30IdEeAq1
+         HJ9A==
+X-Gm-Message-State: AOAM530exgt0zDBMcq/MF0pR7w8Uuz5XOjbnS4WsG++NAZ0IzdbJ5dGH
+        p39qSM1KhULtmZahQYTZ04ItRRQwKKF+XNQmm1ERb1TmsXs=
+X-Google-Smtp-Source: ABdhPJzpqLyz9hjGxcmkqe6bgDb5bQjZkDJ/ACZAOt6JLPZ0Vv3xvPaGa+iupinoTXNbY8MMYasXGuVC9mQ3U5f2e5o=
+X-Received: by 2002:a50:fa89:: with SMTP id w9mr24432490edr.113.1632059131507;
+ Sun, 19 Sep 2021 06:45:31 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, hj.tedd.an@gmail.com
-Subject: RE: [DNM,v2] Build: Test patch - Do Not Merge
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20210915183136.384103-1-hj.tedd.an@gmail.com>
-References: <20210915183136.384103-1-hj.tedd.an@gmail.com>
+References: <CAAu3APZAJD-uPUO1d4g=7smD34LUzkn87MkQKfdEcTC41FM5Vg@mail.gmail.com>
+ <20210917080436.hjs3fsezznlqcxay@SoMainline.org>
+In-Reply-To: <20210917080436.hjs3fsezznlqcxay@SoMainline.org>
+From:   Barry Byford <31baz66@gmail.com>
+Date:   Sun, 19 Sep 2021 14:45:20 +0100
+Message-ID: <CAAu3APb=YP_C8zB2YXiw9oa9h5CScXqmufSREWWvSO2J5td8Rg@mail.gmail.com>
+Subject: Re: Deprecated Python Libraries
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        Sanchayan Maity <maitysanchayan@gmail.com>,
+        Sanchayan Maity <sanchayan@asymptotic.io>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5513002194769504307==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello Marijn,
 
-This is automated email and please do not reply to this email!
+On Fri, 17 Sept 2021 at 09:04, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> Hi Barry,
+>
+> On 2021-09-17 08:03:36, Barry Byford wrote:
+> > The Python examples in the test directory have some dependencies that
+> > have issues:
+> > [..]
+> > Would there be any interest in getting patches to change to these
+> > different libraries?
+> > Are these test scripts used in any of the automated tests?
+> > Can I submit a PR via https://github.com/bluez/bluez/pulls?
+>
+> Perhaps of relevance: Sanchayan (cc'd) imporved some scripts for Python
+> 3 compatibility (Python 2 is already deprecated for the better part of
+> 1.5 years) and proper formatting [1] while working on BT LDAC [2], some
+> patches made it to the list [3] but were ultimately never merged.
+> Sanchayan, would you be willing to resubmit these?  Alternatively Barry
+> can pick them up as part of their quest to improve the scripts for
+> longevity?
+>
+> Disclaimer: I'm not a maintainer, merely a passer-by so don't take my
+> comment as an acknowledgement to go ahead with the changes.  But if you
+> do I think everyone appreciates improved shebangs and PEP8 style
+> formatting (I find `black` to perform formatting nicely) along the way
+> just like Sanchayan's patches.
+>
+> [1]: https://gitlab.freedesktop.org/SanchayanMaity/bluez/-/commits/python3/
+> [2]: https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/1621
+> [3]: https://lore.kernel.org/linux-bluetooth/?q=sanchayan
+>
 
-Dear submitter,
+Thanks for the feedback and references.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=547527
+I'm not quite sure of the purpose of the the Python scripts in the
+test directory.
+Do they serve the automated tests? In which case any changes need to
+be carefully considered.
+Or are they a base for people to interactively test BlueZ and see how
+to do an implementation with the D-Bus API.
+The use of bluezutils.py file seems to be inconsistent so I'm not sure
+if it is preferred or not.
+I regularly refer people to the Python scripts as an example of using
+the BlueZ D-Bus APi and that is my motivation for wanting to see them
+be improved.
 
----Test result---
+I've taken a look at moving the test-adapter script across to the Gio
+bindings and argparse.
+This meant updating the bluezutils.py also. Once I started
+restructuring things I may have got slightly carried away. I've also
+added some functionality such as being able to Introspect the
+interface.
 
-Test Summary:
-CheckPatch                    PASS      1.30 seconds
-GitLint                       PASS      0.90 seconds
-Prep - Setup ELL              PASS      47.06 seconds
-Build - Prep                  PASS      0.51 seconds
-Build - Configure             PASS      8.79 seconds
-Build - Make                  PASS      200.32 seconds
-Make Check                    PASS      9.11 seconds
-Make Distcheck                PASS      243.11 seconds
-Build w/ext ELL - Configure   PASS      9.18 seconds
-Build w/ext ELL - Make        PASS      192.74 seconds
+Anyway, the result of my experiment is at:
+https://github.com/ukBaz/bluez/commit/44f9c205f798232f9417879401b2baefa1ef01ac
 
+Any guidance from the maintainers as to what is required of the Python
+scripts in the test directory would be appreciated. Are there any
+scripts in the directory that you think are good examples of what you
+are looking for?
 
-
----
 Regards,
-Linux Bluetooth
+Barry
 
 
---===============5513002194769504307==--
+> Thanks!
+> - Marijn
