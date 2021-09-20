@@ -2,76 +2,126 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D715411352
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 Sep 2021 13:06:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E12441151A
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 Sep 2021 14:57:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236430AbhITLHm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 20 Sep 2021 07:07:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232424AbhITLHm (ORCPT
+        id S236309AbhITM7P (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 20 Sep 2021 08:59:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:60054 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229719AbhITM7N (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 20 Sep 2021 07:07:42 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0C9BC061574
-        for <linux-bluetooth@vger.kernel.org>; Mon, 20 Sep 2021 04:06:15 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id co2so13252507edb.8
-        for <linux-bluetooth@vger.kernel.org>; Mon, 20 Sep 2021 04:06:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=HHUGimGRoXVTpwWdapdC31JXGy0yoSxL/swzNbqSIyw=;
-        b=ANovZiaUOUNeoUWygBp19p2Rk5RWliPwHnf2Yge1B6MtFMY+bbwaLNrEP7hoFCjcc+
-         0QLVlotZeeSr6SUQ7AmVbvIQFSGHaWwZIM2ngNAiw5lu2tHxp8rF2IMS6MidQZ+KFJt2
-         WkD4sG1cADmGpmyTwuOf7HVyoWpZEC02tRgMc41dwEsY0LWF7jiC1PPcz9MK7Ls1AoId
-         6IfoAdXOERQtrPSIUrAJE0emiUTfpS51wP6Qki/Fe4R0tNNOV2/MqPfp/Du5pwkjTb04
-         spH9pf+TAc90Nxr/S1xcym8lN8ngOMAJO2mS8QHC2fdXWoDeLWQtOos4aeHid6OCZ1Ow
-         bLkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=HHUGimGRoXVTpwWdapdC31JXGy0yoSxL/swzNbqSIyw=;
-        b=N3mNyhQS0pIXhjd4GBN32Q7gNgHfZWSM1Q/E/KIezSjRbsz//gUBgtQRPG34VTSMja
-         9kltFKW7q7iO5M4KXkbw9hL6OW5RVZHE7hP3abveJMToQKOZZK3o3ye4GLYzbNKZnWIp
-         YrpFtmOeNubAB0BV6inxJTq4GHvvLOhcwzsv9gLxCkGx0c9mffzB9s8wWL3+3F2EV2Iv
-         Lkmk7hbhBDzV+8bY/9sWKYWRpzbcBYoLGMyqQ4ZINX4B97P3Cx7lDYBtNdLNCBsauI/o
-         752ug8f+PCYNL3d3hoLuS7IqcFJkVDoZtsrhk+BykRa/w7k4Jrhr7vhwJy1keAPjwJEN
-         CC/w==
-X-Gm-Message-State: AOAM533mwOWzFwUonQmK12MTUNGDLER14DWt2+sgpxx7b0OlQJKSEpt5
-        Enmgyk7/DqHgCkiO9Vvqw0cq2Xzl1yZA7LXauiU=
-X-Google-Smtp-Source: ABdhPJy5bnjeaJF7Xs8/7fU5XAaOOeEMJAQC/frXa51hqE2v5POMNkzoaszJFbKUF0COjJKMsLQkD5kHpcRblwYdYCU=
-X-Received: by 2002:a50:cf89:: with SMTP id h9mr27769588edk.75.1632135973767;
- Mon, 20 Sep 2021 04:06:13 -0700 (PDT)
+        Mon, 20 Sep 2021 08:59:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1632142666;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=rVUOOaCgoBsCCyZfatRP3uiZYtMxgn7N6vs6RYEfHX0=;
+        b=eH8clCrh6KgKe8jn6Hl7ZYBT5Mkodop+8b8qSUU15k1jtpzesU7C4HDOb0ThIEgUNwU3TC
+        7z6XIYh+WQYsUo3a+aET+34UB8CkDBuC+EXKXX0Me763Nn0nvqN4avGJrOgv0hI9hI/UhC
+        3ubT9LYG6oD+kQ/WsAgXQJIAqKKkarQ=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-179-4eHCm5D0PYmIqvRAOlWE0w-1; Mon, 20 Sep 2021 08:57:43 -0400
+X-MC-Unique: 4eHCm5D0PYmIqvRAOlWE0w-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com [10.5.11.13])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 2A99F10168C8;
+        Mon, 20 Sep 2021 12:57:42 +0000 (UTC)
+Received: from x1.localdomain.com (unknown [10.39.194.118])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id A38A377BF5;
+        Mon, 20 Sep 2021 12:57:40 +0000 (UTC)
+From:   Hans de Goede <hdegoede@redhat.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     Hans de Goede <hdegoede@redhat.com>,
+        linux-bluetooth@vger.kernel.org,
+        Archie Pusaka <apusaka@chromium.org>
+Subject: [PATCH 5.15 regression fix] Bluetooth: hci_h5: Fix (runtime)suspend issues on RTL8723BS HCIs
+Date:   Mon, 20 Sep 2021 14:57:39 +0200
+Message-Id: <20210920125739.111846-1-hdegoede@redhat.com>
 MIME-Version: 1.0
-Sender: reineyawoah@gmail.com
-Received: by 2002:a05:6400:1108:0:0:0:0 with HTTP; Mon, 20 Sep 2021 04:06:13
- -0700 (PDT)
-From:   Lila Lucas <lila.luca112@gmail.com>
-Date:   Mon, 20 Sep 2021 13:06:13 +0200
-X-Google-Sender-Auth: XVOds9qcpvkVAStAMK4UUeVJWFk
-Message-ID: <CAO0UoeMYp87WF4FNBP=Hqoxk1wTqE-GNbzYFp6m1bYCXH+HeGg@mail.gmail.com>
-Subject: HELLO
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello ,
+The recently added H5_WAKEUP_DISABLE h5->flags flag gets checked in
+h5_btrtl_open(), but it gets set in h5_serdev_probe() *after*
+calling  hci_uart_register_device() and thus after h5_btrtl_open()
+is called, set this flag earlier.
 
-It is my pleasure to communicate with you, I know that this message
-will be a surprise to you my name is Mrs. Lila Lucas, I am diagnosed
-with ovarian cancer which my doctor have confirmed that I have only
-some weeks to live so I have decided you handover the sum of($
-11,000,000.00, Eleven Million Dollars) through I decided handover the
-money in my account to you for help of the orphanage homes and the
-needy once
+Also on devices where suspend/resume involves fully re-probing the HCI,
+runtime-pm suspend should not be used, make the runtime-pm setup
+conditional on the H5_WAKEUP_DISABLE flag too.
 
-Please   kindly reply me here as soon as possible to enable me give
-you more information but before handing over my details to you please
-assure me that you will only take 30%  of the money and share the rest
-to the poor orphanage home and the needy once, thank you am waiting to
-hear from you
+This fixes the HCI being removed and then re-added every 10 seconds
+because it was being reprobed as soon as it was runtime-suspended.
 
-Mrs Lila Lucas.
+Cc: Archie Pusaka <apusaka@chromium.org>
+Fixes: 66f077dde749 ("Bluetooth: hci_h5: add WAKEUP_DISABLE flag")
+Fixes: d9dd833cf6d2 ("Bluetooth: hci_h5: Add runtime suspend")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+---
+ drivers/bluetooth/hci_h5.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
+index 0c0dedece59c..59b712742d33 100644
+--- a/drivers/bluetooth/hci_h5.c
++++ b/drivers/bluetooth/hci_h5.c
+@@ -846,6 +846,8 @@ static int h5_serdev_probe(struct serdev_device *serdev)
+ 		h5->vnd = data->vnd;
+ 	}
+ 
++	if (data->driver_info & H5_INFO_WAKEUP_DISABLE)
++		set_bit(H5_WAKEUP_DISABLE, &h5->flags);
+ 
+ 	h5->enable_gpio = devm_gpiod_get_optional(dev, "enable", GPIOD_OUT_LOW);
+ 	if (IS_ERR(h5->enable_gpio))
+@@ -860,9 +862,6 @@ static int h5_serdev_probe(struct serdev_device *serdev)
+ 	if (err)
+ 		return err;
+ 
+-	if (data->driver_info & H5_INFO_WAKEUP_DISABLE)
+-		set_bit(H5_WAKEUP_DISABLE, &h5->flags);
+-
+ 	return 0;
+ }
+ 
+@@ -962,11 +961,13 @@ static void h5_btrtl_open(struct h5 *h5)
+ 	serdev_device_set_parity(h5->hu->serdev, SERDEV_PARITY_EVEN);
+ 	serdev_device_set_baudrate(h5->hu->serdev, 115200);
+ 
+-	pm_runtime_set_active(&h5->hu->serdev->dev);
+-	pm_runtime_use_autosuspend(&h5->hu->serdev->dev);
+-	pm_runtime_set_autosuspend_delay(&h5->hu->serdev->dev,
+-					 SUSPEND_TIMEOUT_MS);
+-	pm_runtime_enable(&h5->hu->serdev->dev);
++	if (!test_bit(H5_WAKEUP_DISABLE, &h5->flags)) {
++		pm_runtime_set_active(&h5->hu->serdev->dev);
++		pm_runtime_use_autosuspend(&h5->hu->serdev->dev);
++		pm_runtime_set_autosuspend_delay(&h5->hu->serdev->dev,
++						 SUSPEND_TIMEOUT_MS);
++		pm_runtime_enable(&h5->hu->serdev->dev);
++	}
+ 
+ 	/* The controller needs up to 500ms to wakeup */
+ 	gpiod_set_value_cansleep(h5->enable_gpio, 1);
+@@ -976,7 +977,8 @@ static void h5_btrtl_open(struct h5 *h5)
+ 
+ static void h5_btrtl_close(struct h5 *h5)
+ {
+-	pm_runtime_disable(&h5->hu->serdev->dev);
++	if (!test_bit(H5_WAKEUP_DISABLE, &h5->flags))
++		pm_runtime_disable(&h5->hu->serdev->dev);
+ 
+ 	gpiod_set_value_cansleep(h5->device_wake_gpio, 0);
+ 	gpiod_set_value_cansleep(h5->enable_gpio, 0);
+-- 
+2.31.1
+
