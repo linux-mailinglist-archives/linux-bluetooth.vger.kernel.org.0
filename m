@@ -2,132 +2,76 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F01C410BCA
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 Sep 2021 15:45:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D715411352
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 Sep 2021 13:06:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231294AbhISNq7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 19 Sep 2021 09:46:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35090 "EHLO
+        id S236430AbhITLHm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 20 Sep 2021 07:07:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230520AbhISNq6 (ORCPT
+        with ESMTP id S232424AbhITLHm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 19 Sep 2021 09:46:58 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F4DFC061574
-        for <linux-bluetooth@vger.kernel.org>; Sun, 19 Sep 2021 06:45:33 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id eg28so27007028edb.1
-        for <linux-bluetooth@vger.kernel.org>; Sun, 19 Sep 2021 06:45:33 -0700 (PDT)
+        Mon, 20 Sep 2021 07:07:42 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0C9BC061574
+        for <linux-bluetooth@vger.kernel.org>; Mon, 20 Sep 2021 04:06:15 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id co2so13252507edb.8
+        for <linux-bluetooth@vger.kernel.org>; Mon, 20 Sep 2021 04:06:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6exTQj2H8K+ahbQLkHM9yRcZGgvoa3LOgXfJ3HggxwQ=;
-        b=U48E6hmW45ep5MWXSmELGCeEnx1aJV0XG2i7asG9sJ41X3A4wef5PFhqqvTnwc02a3
-         nh8InO3tqg8ilbWomLwYnIuiiti6zegkiSscx4z2jappgilFMK0Tu3W/1L3WBd/A+909
-         5ChMXiYXw6Ww8N3iNKUzbr+QMRHikMhDLR7dUANph8dMHb3ssd85UTkb05g7H/PuZO4Q
-         8bjQGTgAjafrq++J96Afs7REKKbG+2p4Qny/BWjYXYStvFFLiw19Mbpg9ufOoxiftIto
-         Mo2Y8RP3HS3pM737FuIV6tOByyQwaeKuWZzkh9kt8TWHtRgMT4XY9a6gtAqJhEJY92Yr
-         i7Jw==
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=HHUGimGRoXVTpwWdapdC31JXGy0yoSxL/swzNbqSIyw=;
+        b=ANovZiaUOUNeoUWygBp19p2Rk5RWliPwHnf2Yge1B6MtFMY+bbwaLNrEP7hoFCjcc+
+         0QLVlotZeeSr6SUQ7AmVbvIQFSGHaWwZIM2ngNAiw5lu2tHxp8rF2IMS6MidQZ+KFJt2
+         WkD4sG1cADmGpmyTwuOf7HVyoWpZEC02tRgMc41dwEsY0LWF7jiC1PPcz9MK7Ls1AoId
+         6IfoAdXOERQtrPSIUrAJE0emiUTfpS51wP6Qki/Fe4R0tNNOV2/MqPfp/Du5pwkjTb04
+         spH9pf+TAc90Nxr/S1xcym8lN8ngOMAJO2mS8QHC2fdXWoDeLWQtOos4aeHid6OCZ1Ow
+         bLkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6exTQj2H8K+ahbQLkHM9yRcZGgvoa3LOgXfJ3HggxwQ=;
-        b=02j50CFF2vTA9RH2M6UUuNNH2Sb0uzzmbqTwKZPjPJQ6pnpRSubM0CMNNYKfEmfQqH
-         2rYCJnxj4/esBR6skT1SXbXbq6BugDQ0eGMCxe58wGr+0937byS4+DHzHQBdeykI7d5a
-         ftYf1nVgHK1rV3u4vCteibH05VJBxV1/ppLoC3u4MsC9QuZ37jNaT1ZTcapxXnJw9YLJ
-         a9c9mw5BTRr76shKfjTb2sN6eUA8zfD+OTSNiooqIm74O1mYuYkZ4W+4mb5RTpNJoNif
-         ZNC7mGjl/aHFDVyM9IjDcGCO46hWJF68oOwTcBkYJxyFtZS/XIPSw/Znw5X30IdEeAq1
-         HJ9A==
-X-Gm-Message-State: AOAM530exgt0zDBMcq/MF0pR7w8Uuz5XOjbnS4WsG++NAZ0IzdbJ5dGH
-        p39qSM1KhULtmZahQYTZ04ItRRQwKKF+XNQmm1ERb1TmsXs=
-X-Google-Smtp-Source: ABdhPJzpqLyz9hjGxcmkqe6bgDb5bQjZkDJ/ACZAOt6JLPZ0Vv3xvPaGa+iupinoTXNbY8MMYasXGuVC9mQ3U5f2e5o=
-X-Received: by 2002:a50:fa89:: with SMTP id w9mr24432490edr.113.1632059131507;
- Sun, 19 Sep 2021 06:45:31 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=HHUGimGRoXVTpwWdapdC31JXGy0yoSxL/swzNbqSIyw=;
+        b=N3mNyhQS0pIXhjd4GBN32Q7gNgHfZWSM1Q/E/KIezSjRbsz//gUBgtQRPG34VTSMja
+         9kltFKW7q7iO5M4KXkbw9hL6OW5RVZHE7hP3abveJMToQKOZZK3o3ye4GLYzbNKZnWIp
+         YrpFtmOeNubAB0BV6inxJTq4GHvvLOhcwzsv9gLxCkGx0c9mffzB9s8wWL3+3F2EV2Iv
+         Lkmk7hbhBDzV+8bY/9sWKYWRpzbcBYoLGMyqQ4ZINX4B97P3Cx7lDYBtNdLNCBsauI/o
+         752ug8f+PCYNL3d3hoLuS7IqcFJkVDoZtsrhk+BykRa/w7k4Jrhr7vhwJy1keAPjwJEN
+         CC/w==
+X-Gm-Message-State: AOAM533mwOWzFwUonQmK12MTUNGDLER14DWt2+sgpxx7b0OlQJKSEpt5
+        Enmgyk7/DqHgCkiO9Vvqw0cq2Xzl1yZA7LXauiU=
+X-Google-Smtp-Source: ABdhPJy5bnjeaJF7Xs8/7fU5XAaOOeEMJAQC/frXa51hqE2v5POMNkzoaszJFbKUF0COjJKMsLQkD5kHpcRblwYdYCU=
+X-Received: by 2002:a50:cf89:: with SMTP id h9mr27769588edk.75.1632135973767;
+ Mon, 20 Sep 2021 04:06:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAAu3APZAJD-uPUO1d4g=7smD34LUzkn87MkQKfdEcTC41FM5Vg@mail.gmail.com>
- <20210917080436.hjs3fsezznlqcxay@SoMainline.org>
-In-Reply-To: <20210917080436.hjs3fsezznlqcxay@SoMainline.org>
-From:   Barry Byford <31baz66@gmail.com>
-Date:   Sun, 19 Sep 2021 14:45:20 +0100
-Message-ID: <CAAu3APb=YP_C8zB2YXiw9oa9h5CScXqmufSREWWvSO2J5td8Rg@mail.gmail.com>
-Subject: Re: Deprecated Python Libraries
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        Sanchayan Maity <maitysanchayan@gmail.com>,
-        Sanchayan Maity <sanchayan@asymptotic.io>
+Sender: reineyawoah@gmail.com
+Received: by 2002:a05:6400:1108:0:0:0:0 with HTTP; Mon, 20 Sep 2021 04:06:13
+ -0700 (PDT)
+From:   Lila Lucas <lila.luca112@gmail.com>
+Date:   Mon, 20 Sep 2021 13:06:13 +0200
+X-Google-Sender-Auth: XVOds9qcpvkVAStAMK4UUeVJWFk
+Message-ID: <CAO0UoeMYp87WF4FNBP=Hqoxk1wTqE-GNbzYFp6m1bYCXH+HeGg@mail.gmail.com>
+Subject: HELLO
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello Marijn,
+Hello ,
 
-On Fri, 17 Sept 2021 at 09:04, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> Hi Barry,
->
-> On 2021-09-17 08:03:36, Barry Byford wrote:
-> > The Python examples in the test directory have some dependencies that
-> > have issues:
-> > [..]
-> > Would there be any interest in getting patches to change to these
-> > different libraries?
-> > Are these test scripts used in any of the automated tests?
-> > Can I submit a PR via https://github.com/bluez/bluez/pulls?
->
-> Perhaps of relevance: Sanchayan (cc'd) imporved some scripts for Python
-> 3 compatibility (Python 2 is already deprecated for the better part of
-> 1.5 years) and proper formatting [1] while working on BT LDAC [2], some
-> patches made it to the list [3] but were ultimately never merged.
-> Sanchayan, would you be willing to resubmit these?  Alternatively Barry
-> can pick them up as part of their quest to improve the scripts for
-> longevity?
->
-> Disclaimer: I'm not a maintainer, merely a passer-by so don't take my
-> comment as an acknowledgement to go ahead with the changes.  But if you
-> do I think everyone appreciates improved shebangs and PEP8 style
-> formatting (I find `black` to perform formatting nicely) along the way
-> just like Sanchayan's patches.
->
-> [1]: https://gitlab.freedesktop.org/SanchayanMaity/bluez/-/commits/python3/
-> [2]: https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/1621
-> [3]: https://lore.kernel.org/linux-bluetooth/?q=sanchayan
->
+It is my pleasure to communicate with you, I know that this message
+will be a surprise to you my name is Mrs. Lila Lucas, I am diagnosed
+with ovarian cancer which my doctor have confirmed that I have only
+some weeks to live so I have decided you handover the sum of($
+11,000,000.00, Eleven Million Dollars) through I decided handover the
+money in my account to you for help of the orphanage homes and the
+needy once
 
-Thanks for the feedback and references.
+Please   kindly reply me here as soon as possible to enable me give
+you more information but before handing over my details to you please
+assure me that you will only take 30%  of the money and share the rest
+to the poor orphanage home and the needy once, thank you am waiting to
+hear from you
 
-I'm not quite sure of the purpose of the the Python scripts in the
-test directory.
-Do they serve the automated tests? In which case any changes need to
-be carefully considered.
-Or are they a base for people to interactively test BlueZ and see how
-to do an implementation with the D-Bus API.
-The use of bluezutils.py file seems to be inconsistent so I'm not sure
-if it is preferred or not.
-I regularly refer people to the Python scripts as an example of using
-the BlueZ D-Bus APi and that is my motivation for wanting to see them
-be improved.
-
-I've taken a look at moving the test-adapter script across to the Gio
-bindings and argparse.
-This meant updating the bluezutils.py also. Once I started
-restructuring things I may have got slightly carried away. I've also
-added some functionality such as being able to Introspect the
-interface.
-
-Anyway, the result of my experiment is at:
-https://github.com/ukBaz/bluez/commit/44f9c205f798232f9417879401b2baefa1ef01ac
-
-Any guidance from the maintainers as to what is required of the Python
-scripts in the test directory would be appreciated. Are there any
-scripts in the directory that you think are good examples of what you
-are looking for?
-
-Regards,
-Barry
-
-
-> Thanks!
-> - Marijn
+Mrs Lila Lucas.
