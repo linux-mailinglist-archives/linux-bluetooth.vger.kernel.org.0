@@ -2,107 +2,94 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30CBC413F70
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Sep 2021 04:29:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9FD841450F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Sep 2021 11:26:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbhIVCat (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Sep 2021 22:30:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60278 "EHLO
+        id S234256AbhIVJ14 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Sep 2021 05:27:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbhIVCas (ORCPT
+        with ESMTP id S233969AbhIVJ1z (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Sep 2021 22:30:48 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F363C061574
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Sep 2021 19:29:19 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id d8so1350136qtd.5
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Sep 2021 19:29:19 -0700 (PDT)
+        Wed, 22 Sep 2021 05:27:55 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E752C061574
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Sep 2021 02:26:26 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id t18so4995963wrb.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Sep 2021 02:26:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=920MyeQisbvfrHog9QQQJfSkpFAD9YDWaOvLAfWOHII=;
-        b=hs1+GHhDvTvMnmPO1GkCn9e6AjVF2q2StvYOt1K3GwYGsyAyCXLgIwFYygHyJsfs34
-         XayQ2s0PIhA/P2QUU1x/L53PM0P+fvgXqkrUOFFmLurH1o9pKq3V5UmaPSnkln87btSk
-         3O+CIw3Zd2C15qEvqv1HJF2kpN+vqO/FlSbA2ZSeLbtx+oDRdeKBL53GKE7ZHQhOEFSe
-         8BL0czbj1PZ2zm0u/h+/LiZZRlK6h+0f9tPT9QI8XKW+RIOGfjGDNw+Vr8nE1Mi79+5b
-         FhnXujF1j9t8v0/Vv9VDY8OoarkbzWSyEGxpJQQ28fmaLjdrhMOjimLtRYoKGpMhhMfy
-         DXyA==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=ZaGE2PQFVXQKSlLPDbCOkQEYOynTY9vnso2DHjrmPwM=;
+        b=GT5MEhK9ESY9lSaEIhKE3AD4ysMFEdvnnEc2DTba06Lsp1Irw9/egOnuo111EN2MkM
+         7OZ3qjryJpRifuDaqPpoRTDgshhebFRLmLnp2CU8RFoPK8jSGeMOD0FDPS4//BjmQm5v
+         Sdi+bHLvHCbqKRsTRxUag4DnpcWI1esSlb8wQ/QMA9qtGSQPAI8HdHxslqMlD8aApcRL
+         YbPZafq9NI0oF68ULOBYi/as/JQBnPlvIiYWwsVe52IVE1p+6XCjPaIG4KOeuMcME2X6
+         PQUCnpIyUXDkttipHgi1NZYQtz3Gst/xY7f42grvV2vTaagDryrIy7/eSWYiXpSZU7PC
+         DaAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=920MyeQisbvfrHog9QQQJfSkpFAD9YDWaOvLAfWOHII=;
-        b=u8bXQngmaVuErKOxO3vNJshv1rBx/aRRV0x94CANBz2Pfj55lCVA9ZqVMTScf++zv1
-         cxdNPTaKPlz8HYbw6XwZrGc95rd3WMtnBM+rTv9Yb+yop/0P4a5hqqaLNfGnn8Wk6CdB
-         rYNz88rSJDBPgr9qGtsb1qNgF6eH+vmQaiUsiKWUs+9uEiP7UcMexnq+sFYKdl4Trg3h
-         aJ+LNEJz4CSfD6khQirJZMKF/dBEnmdluZhJ4MtLncKthdMpIrIJJSwxtKm09rwnWNL4
-         WvqF+I5bHiUqsgxDQKT5djIdHBSOeW8+3/9bAH5MytDx6DKt0N/posYGSu8kOU2r0BK8
-         xBvA==
-X-Gm-Message-State: AOAM531omQD/1xoZ8bnzmMTEPCfk8s0VWQUGzrYIA/SzVpUt6Ys+FD/E
-        jRTtG+9S3mksZVnXhk6/aL0waTxcaYwj/g==
-X-Google-Smtp-Source: ABdhPJyC/KQ40/V4NYuBq+2DOVc4VdQaJ/iB7x0bGQkfcs/ofM/faKHsx8JLk4rn6YDzoQXKhlZsDw==
-X-Received: by 2002:a05:622a:190a:: with SMTP id w10mr22907322qtc.300.1632277758513;
-        Tue, 21 Sep 2021 19:29:18 -0700 (PDT)
-Received: from [172.17.0.2] ([20.110.7.206])
-        by smtp.gmail.com with ESMTPSA id v3sm712926qkf.131.2021.09.21.19.29.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 19:29:17 -0700 (PDT)
-Message-ID: <614a94fd.1c69fb81.e92c5.5267@mx.google.com>
-Date:   Tue, 21 Sep 2021 19:29:17 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============0253364985496911846=="
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=ZaGE2PQFVXQKSlLPDbCOkQEYOynTY9vnso2DHjrmPwM=;
+        b=CWFKFQoXS/K23Mj0lgwC7sai6aqgh+JEdAnFef7sw5lmU8qCw6+aMe6l5Onxn+mrI3
+         edXWsqI3ryBdywpkjfy2pK2LkqwYMmSIKJxaJaIwLzMq5Drtt2uKmVPtng/qYk4V3OIf
+         yF+CfzcjESu5ZKs4k5tii30KPI8HPTDgpXY10TecbfTmALWDXPcgAlsAas5S/KgMAGUI
+         fgBmCvOdWKcc/r6MlClL55X6cEcU6n6btX+V4HPZQx15QTEDxOkd9eCrI2/wn1qSJgWH
+         4Q/oxrJ8y+bbAJBnKB1ad7d2fD3QXQjPojR2MjRa5h7WRM7pLR2OlEJ59fGsWxtAeeM0
+         DbIw==
+X-Gm-Message-State: AOAM532Hiy180RLCWQS6GE7wascj1SWOFd+odlBYC5SgCP9KJZFdEov8
+        sHTwS4WrzkOo0Bnlvc/s/2UGZ7AhY1CVora0ys4=
+X-Google-Smtp-Source: ABdhPJxDmvwFcHeLlrnexZ9X27XAt2gDO6tCqkay+0SfMR1FCnyDR40ePhZRXCjl//tQ7OkB9JHd1BzSkD80dRof1Io=
+X-Received: by 2002:a05:6000:11d1:: with SMTP id i17mr40853198wrx.424.1632302784445;
+ Wed, 22 Sep 2021 02:26:24 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, mmandlik@google.com
-Subject: RE: [BlueZ,v1] adv_monitor: Mark the device as lost on device_lost_timeout
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20210921181243.BlueZ.v1.1.I261f9c1ee78b90f81a6c323c23065615be917c33@changeid>
-References: <20210921181243.BlueZ.v1.1.I261f9c1ee78b90f81a6c323c23065615be917c33@changeid>
+Received: by 2002:a05:6000:1ac7:0:0:0:0 with HTTP; Wed, 22 Sep 2021 02:26:24
+ -0700 (PDT)
+Reply-To: ahmadmustafa.7800@gmail.com
+From:   Ahmad Mustafa <braydensean25@gmail.com>
+Date:   Wed, 22 Sep 2021 10:26:24 +0100
+Message-ID: <CAK8bkr9EySMn=E4WW_N7ejo2HmBvzsko0bEa=wZX+KJFaHFs_A@mail.gmail.com>
+Subject: LOANS AND INVESTMENT
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0253364985496911846==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Dear Sir,
 
-This is automated email and please do not reply to this email!
+Aseel Islamic finance PJSC is private joint stock company that was
+established in 2006 and has built a leading market position for itself
+in the UAE's Islamic finance market which specializes in loan finance
+and investment activities in real estate, hospitality, industrial &
+sustainable technologies, strategic financial investments, specialized
+education, healthcare services, agriculture, manufacturing,
+mining,energy and additional environmentally sustainable projects.
 
-Dear submitter,
+Do you have projects that require funding? We have finance available
+for your projects with over $2 trillion private and corporate
+investment portfolios.  Aseel Islamic finance PJSC is looking for
+equity partners, entrepreneur, fund raisers and portfolio managers who
+will pay up to 4.5% interest and/or part equity position with a 5 to
+10 year hold. In 2030, we plan on acquiring up to $2 trillion in
+high-quality, low risk assets and investments to capitalize on the
+current market cycle.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=550651
+Aseel Islamic finance PJSC is acting as a lender and the fund will be
+disbursed on a clear interest rate of 3.5% annually to the equity
+partners and entrepreneurs for their investment projects. We also give
+a 2% commission to brokers, who bring project owners for finance or
+other opportunities.
 
----Test result---
+For further details, kindly send us your business plans or project summary.
 
-Test Summary:
-CheckPatch                    PASS      1.37 seconds
-GitLint                       FAIL      0.91 seconds
-Prep - Setup ELL              PASS      42.64 seconds
-Build - Prep                  PASS      0.53 seconds
-Build - Configure             PASS      7.76 seconds
-Build - Make                  PASS      190.42 seconds
-Make Check                    PASS      9.55 seconds
-Make Distcheck                PASS      218.16 seconds
-Build w/ext ELL - Configure   PASS      7.83 seconds
-Build w/ext ELL - Make        PASS      174.00 seconds
-
-Details
-##############################
-Test: GitLint - FAIL
-Desc: Run gitlint with rule in .gitlint
-Output:
-[BlueZ,v1] adv_monitor: Mark the device as lost on device_lost_timeout
-2: B4 Second line is not empty: "again next time."
-
-
-
-
----
 Regards,
-Linux Bluetooth
 
 
---===============0253364985496911846==--
+Mr.Ibn Ahmad Mustafa
+International Business Coordinator
+Aseel Islamic Finance PJSC
+Al Mankhool, Dubai C2 Tower,
+Ground floor,P.O 94669 Dubai, UAE
+Abu Dhabi - United Arab Emirates
