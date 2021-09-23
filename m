@@ -2,30 +2,30 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F6D14155F2
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Sep 2021 05:27:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 649284155F5
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Sep 2021 05:27:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239080AbhIWD2t (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 Sep 2021 23:28:49 -0400
-Received: from mga11.intel.com ([192.55.52.93]:16381 "EHLO mga11.intel.com"
+        id S239069AbhIWD2w (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Sep 2021 23:28:52 -0400
+Received: from mga11.intel.com ([192.55.52.93]:16377 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239048AbhIWD2o (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        id S239057AbhIWD2o (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 22 Sep 2021 23:28:44 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10115"; a="220555916"
+X-IronPort-AV: E=McAfee;i="6200,9189,10115"; a="220555919"
 X-IronPort-AV: E=Sophos;i="5.85,315,1624345200"; 
-   d="scan'208";a="220555916"
+   d="scan'208";a="220555919"
 Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2021 20:26:56 -0700
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2021 20:26:57 -0700
 X-IronPort-AV: E=Sophos;i="5.85,315,1624345200"; 
-   d="scan'208";a="534072360"
+   d="scan'208";a="534072365"
 Received: from jdudwadk-mobl.amr.corp.intel.com (HELO istotlan-desk.intel.com) ([10.212.205.211])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2021 20:26:56 -0700
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2021 20:26:57 -0700
 From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ 09/20] tools/mesh-cfgclient: Disallow model commands w/o composition
-Date:   Wed, 22 Sep 2021 20:25:52 -0700
-Message-Id: <20210923032603.50536-10-inga.stotland@intel.com>
+Subject: [PATCH BlueZ 10/20] tools/mesh-cfgclient: Store remote's model publication info
+Date:   Wed, 22 Sep 2021 20:25:53 -0700
+Message-Id: <20210923032603.50536-11-inga.stotland@intel.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210923032603.50536-1-inga.stotland@intel.com>
 References: <20210923032603.50536-1-inga.stotland@intel.com>
@@ -35,159 +35,238 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-If remote node's composition hasn't been acquired, disallow commands
-that change model state (that is, bindings, subscriptions, publications).
-Prompt to run "get-composition" command first.
+Update remote node's model publication after a successful completion
+of "pub-set" or "pub-get" commands.
 ---
- tools/mesh/cfgcli.c  | 26 ++++++++++++++++++++++++++
- tools/mesh/mesh-db.c | 10 ++++++++--
- tools/mesh/remote.c  | 23 +++++++++++++++++++++++
- tools/mesh/remote.h  |  2 ++
- 4 files changed, 59 insertions(+), 2 deletions(-)
+ tools/mesh/cfgcli.c  | 42 +++++++++++++++++------
+ tools/mesh/mesh-db.c | 81 ++++++++++++++++++++++++++++++++++++++++++++
+ tools/mesh/mesh-db.h |  4 +++
+ tools/mesh/model.h   | 13 ++++---
+ 4 files changed, 124 insertions(+), 16 deletions(-)
 
 diff --git a/tools/mesh/cfgcli.c b/tools/mesh/cfgcli.c
-index 71bf2e706..19a42947e 100644
+index 19a42947e..2766d47ca 100644
 --- a/tools/mesh/cfgcli.c
 +++ b/tools/mesh/cfgcli.c
-@@ -434,6 +434,9 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+@@ -334,7 +334,7 @@ static void print_pub(uint16_t ele_addr, uint32_t mod_id,
+ 						struct model_pub *pub)
+ {
+ 	bt_shell_printf("\tElement: %4.4x\n", ele_addr);
+-	bt_shell_printf("\tPub Addr: %4.4x\n", pub->u.addr16);
++	bt_shell_printf("\tPub Addr: %4.4x\n", pub->u.addr);
  
- 		if (!mesh_db_node_set_composition(src, data, len))
- 			bt_shell_printf("Failed to save node composition!\n");
-+		else
-+			remote_set_composition(src, true);
+ 	if (mod_id < VENDOR_ID_MASK)
+ 		bt_shell_printf("\tModel: %8.8x\n", mod_id);
+@@ -634,31 +634,51 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 
+ 		mod_id = print_mod_id(data + 10, len == 14, "");
+ 
+-		pub.u.addr16 = get_le16(data + 3);
++		pub.u.addr = get_le16(data + 3);
 +
- 		break;
- 
- 	case OP_APPKEY_STATUS:
-@@ -1233,6 +1236,12 @@ static void cmd_bind(uint32_t opcode, int argc, char *argv[])
- 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
- 	}
- 
-+	if (!remote_has_composition(target)) {
-+		bt_shell_printf("Node composition is unknown\n");
-+		bt_shell_printf("Call \"get-composition\" first\n");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
+ 		pub.app_idx = get_le16(data + 5);
++		pub.cred = ((pub.app_idx & 0x1000) != 0);
++		pub.app_idx &= 0x3ff;
 +
- 	n = mesh_opcode_set(opcode, msg);
+ 		pub.ttl = data[7];
+-		pub.period = data[8];
+-		n = (data[8] & 0x3f);
++		pub.prd_steps = (data[8] & 0x3f);
  
- 	put_le16(parms[0], msg + n);
-@@ -1429,6 +1438,12 @@ static void cmd_pub_set(int argc, char *argv[])
- 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
- 	}
+ 		print_pub(ele_addr, mod_id, &pub);
  
-+	if (!remote_has_composition(target)) {
-+		bt_shell_printf("Node composition is unknown\n");
-+		bt_shell_printf("Call \"get-composition\" first\n");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
- 	pub_addr = parms[1];
- 
- 	grp = l_queue_find(groups, match_group_addr, L_UINT_TO_PTR(pub_addr));
-@@ -1523,6 +1538,12 @@ static void subscription_cmd(int argc, char *argv[], uint32_t opcode)
- 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
- 	}
- 
-+	if (!remote_has_composition(target)) {
-+		bt_shell_printf("Node composition is unknown\n");
-+		bt_shell_printf("Call \"get-composition\" first\n");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
- 	sub_addr = parms[1];
- 
- 	grp = l_queue_find(groups, match_group_addr, L_UINT_TO_PTR(sub_addr));
-@@ -1722,6 +1743,11 @@ static void cmd_hb_sub_set(int argc, char *argv[])
- 	uint8_t msg[32];
- 	uint32_t parm_cnt;
- 
-+	if (IS_UNASSIGNED(target)) {
-+		bt_shell_printf("Destination not set\n");
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
- 	n = mesh_opcode_set(OP_CONFIG_HEARTBEAT_SUB_SET, msg);
- 
- 	parm_cnt = read_input_parameters(argc, argv);
-diff --git a/tools/mesh/mesh-db.c b/tools/mesh/mesh-db.c
-index 1b03e2d90..8445d33f4 100644
---- a/tools/mesh/mesh-db.c
-+++ b/tools/mesh/mesh-db.c
-@@ -574,11 +574,17 @@ static void load_remotes(json_object *jcfg)
- 			remote_update_app_key(unicast, key_idx, updated, false);
+ 		switch (data[8] >> 6) {
+ 		case 0:
+-			bt_shell_printf("Period\t\t%d ms\n", n * 100);
++			pub.prd_res = 100;
+ 			break;
+ 		case 2:
+-			n *= 10;
+-			/* fall through */
++			pub.prd_res = 10;
++			break;
+ 		case 1:
+-			bt_shell_printf("Period\t\t%d sec\n", n);
++			pub.prd_res = 10000;
+ 			break;
+ 		case 3:
+-			bt_shell_printf("Period\t\t%d min\n", n * 10);
++			pub.prd_res = 600000;
+ 			break;
  		}
  
--		load_composition(jnode, unicast);
-+		if (!load_composition(jnode, unicast))
-+			continue;
- 
--		node_count++;
-+		/* If "crpl" is present, composition's is available */
-+		jval = NULL;
-+		if (json_object_object_get_ex(jnode, "crpl", &jval) && jval)
-+			remote_set_composition(unicast, true);
- 
- 		/* TODO: Add the rest of the configuration */
+-		bt_shell_printf("Rexmit count\t%d\n", data[9] & 0x7);
+-		bt_shell_printf("Rexmit steps\t%d\n", data[9] >> 3);
++		bt_shell_printf("Period\t\t%d ms\n", pub.period);
 +
-+		node_count++;
- 	}
++		pub.rtx_cnt = data[9] & 0x7;
++		pub.rtx_interval = ((data[9] >> 3) + 1) * 50;
++		bt_shell_printf("Rexmit count\t%d\n", pub.rtx_cnt);
++		bt_shell_printf("Rexmit steps\t%d\n", pub.rtx_interval);
++
++		if (IS_VIRTUAL(pub.u.addr)) {
++			grp = l_queue_find(groups, match_group_addr,
++						L_UINT_TO_PTR(pub.u.addr));
++			if (!grp)
++				return true;
++
++			memcpy(pub.u.label, grp->label, sizeof(pub.u.label));
++
++		}
++
++		mesh_db_node_model_set_pub(src, ele_addr, len == 14, mod_id,
++						&pub, IS_VIRTUAL(pub.u.addr));
  
- 	if (node_count != sz)
-diff --git a/tools/mesh/remote.c b/tools/mesh/remote.c
-index 5f598cb8b..2f8493f8a 100644
---- a/tools/mesh/remote.c
-+++ b/tools/mesh/remote.c
-@@ -35,6 +35,7 @@ struct remote_node {
- 	struct l_queue *net_keys;
- 	struct l_queue *app_keys;
- 	struct l_queue **els;
-+	bool comp;
- 	uint8_t uuid[16];
- 	uint8_t num_ele;
- };
-@@ -192,6 +193,28 @@ bool remote_set_model(uint16_t unicast, uint8_t ele_idx, uint32_t mod_id,
- 	return true;
+ 		break;
+ 
+diff --git a/tools/mesh/mesh-db.c b/tools/mesh/mesh-db.c
+index 8445d33f4..f63edd5ae 100644
+--- a/tools/mesh/mesh-db.c
++++ b/tools/mesh/mesh-db.c
+@@ -32,6 +32,7 @@
+ #include "tools/mesh/keys.h"
+ #include "tools/mesh/remote.h"
+ #include "tools/mesh/cfgcli.h"
++#include "tools/mesh/model.h"
+ #include "tools/mesh/mesh-db.h"
+ 
+ #define KEY_IDX_INVALID NET_IDX_INVALID
+@@ -992,6 +993,86 @@ bool mesh_db_node_model_overwrt_sub_virt(uint16_t unicast, uint16_t ele,
+ 	return sub_overwrite(unicast, ele, vendor, mod_id, buf);
  }
  
-+void remote_set_composition(uint16_t addr, bool comp)
++static bool add_transmit_info(json_object *jobj, int cnt, int interval,
++							const char *desc)
 +{
-+	struct remote_node *rmt;
++	json_object *jtxmt;
 +
-+	rmt = l_queue_find(nodes, match_node_addr, L_UINT_TO_PTR(addr));
-+	if (!rmt)
-+		return;
++	jtxmt = json_object_new_object();
 +
-+	rmt->comp = comp;
-+}
-+
-+bool remote_has_composition(uint16_t addr)
-+{
-+	struct remote_node *rmt;
-+
-+	rmt = l_queue_find(nodes, match_node_addr, L_UINT_TO_PTR(addr));
-+	if (!rmt)
++	if (!write_int(jtxmt, "count", cnt))
 +		return false;
 +
-+	return rmt->comp;
++	if (!write_int(jtxmt, "interval", interval))
++		return false;
++
++	json_object_object_add(jobj, desc, jtxmt);
++	return true;
 +}
 +
- bool remote_add_net_key(uint16_t addr, uint16_t net_idx, bool save)
++bool mesh_db_node_model_set_pub(uint16_t unicast, uint16_t ele_addr,
++					bool vendor, uint32_t mod_id,
++					struct model_pub *pub, bool virt)
++{
++	json_object *jmod, *jpub, *jobj = NULL;
++
++	if (!cfg || !cfg->jcfg)
++		return false;
++
++	jmod = get_model(unicast, ele_addr, mod_id, vendor);
++	if (!jmod)
++		return false;
++
++	jpub = json_object_new_object();
++
++	if (!virt && !write_uint16_hex(jpub, "address", pub->u.addr))
++		goto fail;
++
++	if (virt) {
++		char buf[33];
++
++		hex2str(pub->u.label, 16, buf, sizeof(buf));
++
++		if (!add_string(jpub, "address", buf))
++			goto fail;
++	}
++
++	if (!write_int(jpub, "index", pub->app_idx))
++		goto fail;
++
++	if (!write_int(jpub, "ttl", pub->ttl))
++		goto fail;
++
++	if (!write_int(jpub, "credentials", pub->cred ? 1 : 0))
++		goto fail;
++
++	if (!add_transmit_info(jpub, pub->rtx_cnt, pub->rtx_interval,
++							"retransmit"))
++		goto fail;
++
++	jobj = json_object_new_object();
++
++	if (!write_int(jobj, "numberOfSteps", pub->prd_steps))
++		goto fail;
++
++	if (!write_int(jobj, "resolution", pub->prd_res))
++		goto fail;
++
++	json_object_object_add(jpub, "period", jobj);
++
++	json_object_object_del(jmod, "publish");
++	json_object_object_add(jmod, "publish", jpub);
++
++	return save_config();
++
++fail:
++	if (jobj)
++		json_object_put(jobj);
++
++	json_object_put(jpub);
++	return false;
++}
++
+ static void jarray_key_del(json_object *jarray, int16_t idx)
  {
- 	struct remote_node *rmt;
-diff --git a/tools/mesh/remote.h b/tools/mesh/remote.h
-index 74747689a..2fb0d83ce 100644
---- a/tools/mesh/remote.h
-+++ b/tools/mesh/remote.h
-@@ -25,6 +25,8 @@ bool remote_del_app_key(uint16_t addr, uint16_t app_idx);
- bool remote_update_app_key(uint16_t addr, uint16_t app_idx, bool update,
- 								bool save);
- void remote_finish_key_refresh(uint16_t addr, uint16_t net_idx);
-+void remote_set_composition(uint16_t addr, bool comp);
-+bool remote_has_composition(uint16_t addr);
- uint16_t remote_get_subnet_idx(uint16_t addr);
- void remote_print_node(uint16_t addr);
- void remote_print_all(void);
+ 	int i, sz = json_object_array_length(jarray);
+diff --git a/tools/mesh/mesh-db.h b/tools/mesh/mesh-db.h
+index 384376cbd..885dabe90 100644
+--- a/tools/mesh/mesh-db.h
++++ b/tools/mesh/mesh-db.h
+@@ -11,6 +11,7 @@
+ #include "mesh/mesh-config.h"
+ 
+ struct mesh_group;
++struct model_pub;
+ 
+ bool mesh_db_create(const char *fname, const uint8_t token[8],
+ 							const char *name);
+@@ -65,6 +66,9 @@ bool mesh_db_node_model_overwrt_sub_virt(uint16_t unicast, uint16_t ele,
+ 								uint8_t *label);
+ bool mesh_db_node_model_del_sub_all(uint16_t unicast, uint16_t ele, bool vendor,
+ 							uint32_t mod_id);
++bool mesh_db_node_model_set_pub(uint16_t unicast, uint16_t ele_addr,
++					bool vendor, uint32_t mod_id,
++					struct model_pub *pub, bool virt);
+ struct l_queue *mesh_db_load_groups(void);
+ bool mesh_db_add_group(struct mesh_group *grp);
+ bool mesh_db_add_rejected_addr(uint16_t unicast, uint32_t iv_index);
+diff --git a/tools/mesh/model.h b/tools/mesh/model.h
+index 7359ea7df..5e20719b2 100644
+--- a/tools/mesh/model.h
++++ b/tools/mesh/model.h
+@@ -25,14 +25,17 @@ typedef int (*model_bind_func_t)(uint16_t app_idx, int action);
+ 
+ struct model_pub {
+ 	uint16_t app_idx;
++	uint16_t period;
+ 	union {
+-		uint16_t addr16;
+-		uint8_t va_128[16];
++		uint16_t addr;
++		uint8_t label[16];
+ 	} u;
++	bool cred;
++	uint32_t prd_res;
++	uint16_t rtx_interval;
++	uint8_t prd_steps;
++	uint8_t rtx_cnt;
+ 	uint8_t ttl;
+-	uint8_t credential;
+-	uint8_t period;
+-	uint8_t retransmit;
+ };
+ 
+ typedef int (*model_pub_func_t)(struct model_pub *pub);
 -- 
 2.31.1
 
