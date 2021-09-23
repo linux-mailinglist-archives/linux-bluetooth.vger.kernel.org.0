@@ -2,30 +2,30 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 649284155F5
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Sep 2021 05:27:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69F784155F3
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Sep 2021 05:27:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239069AbhIWD2w (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 Sep 2021 23:28:52 -0400
-Received: from mga11.intel.com ([192.55.52.93]:16377 "EHLO mga11.intel.com"
+        id S239088AbhIWD2u (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Sep 2021 23:28:50 -0400
+Received: from mga11.intel.com ([192.55.52.93]:16373 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239057AbhIWD2o (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        id S239058AbhIWD2o (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 22 Sep 2021 23:28:44 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10115"; a="220555919"
+X-IronPort-AV: E=McAfee;i="6200,9189,10115"; a="220555921"
 X-IronPort-AV: E=Sophos;i="5.85,315,1624345200"; 
-   d="scan'208";a="220555919"
+   d="scan'208";a="220555921"
 Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2021 20:26:57 -0700
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2021 20:26:58 -0700
 X-IronPort-AV: E=Sophos;i="5.85,315,1624345200"; 
-   d="scan'208";a="534072365"
+   d="scan'208";a="534072372"
 Received: from jdudwadk-mobl.amr.corp.intel.com (HELO istotlan-desk.intel.com) ([10.212.205.211])
   by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2021 20:26:57 -0700
 From:   Inga Stotland <inga.stotland@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     brian.gix@intel.com, Inga Stotland <inga.stotland@intel.com>
-Subject: [PATCH BlueZ 10/20] tools/mesh-cfgclient: Store remote's model publication info
-Date:   Wed, 22 Sep 2021 20:25:53 -0700
-Message-Id: <20210923032603.50536-11-inga.stotland@intel.com>
+Subject: [PATCH BlueZ 11/20] tools/mesh-cfgclient: Check the result of config save
+Date:   Wed, 22 Sep 2021 20:25:54 -0700
+Message-Id: <20210923032603.50536-12-inga.stotland@intel.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210923032603.50536-1-inga.stotland@intel.com>
 References: <20210923032603.50536-1-inga.stotland@intel.com>
@@ -35,238 +35,385 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Update remote node's model publication after a successful completion
-of "pub-set" or "pub-get" commands.
+After successful completion of configuration commands that change
+configuration state of network, the updates are expected to be
+recorded in configuration file. If for the results are not saved,
+print a warning message.
 ---
- tools/mesh/cfgcli.c  | 42 +++++++++++++++++------
- tools/mesh/mesh-db.c | 81 ++++++++++++++++++++++++++++++++++++++++++++
- tools/mesh/mesh-db.h |  4 +++
- tools/mesh/model.h   | 13 ++++---
- 4 files changed, 124 insertions(+), 16 deletions(-)
+ tools/mesh/cfgcli.c | 119 +++++++++++++++++++++++---------------------
+ tools/mesh/remote.c |  10 ++--
+ tools/mesh/remote.h |   2 +-
+ 3 files changed, 70 insertions(+), 61 deletions(-)
 
 diff --git a/tools/mesh/cfgcli.c b/tools/mesh/cfgcli.c
-index 19a42947e..2766d47ca 100644
+index 2766d47ca..9399228c8 100644
 --- a/tools/mesh/cfgcli.c
 +++ b/tools/mesh/cfgcli.c
-@@ -334,7 +334,7 @@ static void print_pub(uint16_t ele_addr, uint32_t mod_id,
- 						struct model_pub *pub)
- {
- 	bt_shell_printf("\tElement: %4.4x\n", ele_addr);
--	bt_shell_printf("\tPub Addr: %4.4x\n", pub->u.addr16);
-+	bt_shell_printf("\tPub Addr: %4.4x\n", pub->u.addr);
+@@ -405,6 +405,7 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 	struct model_pub pub;
+ 	int n;
+ 	struct pending_req *req;
++	bool saved = false;
  
- 	if (mod_id < VENDOR_ID_MASK)
- 		bt_shell_printf("\tModel: %8.8x\n", mod_id);
-@@ -634,31 +634,51 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 	if (mesh_opcode_get(data, len, &opcode, &n)) {
+ 		len -= n;
+@@ -428,20 +429,19 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
  
- 		mod_id = print_mod_id(data + 10, len == 14, "");
+ 	case OP_DEV_COMP_STATUS:
+ 		if (len < MIN_COMPOSITION_LEN)
+-			break;
++			return true;
  
--		pub.u.addr16 = get_le16(data + 3);
-+		pub.u.addr = get_le16(data + 3);
-+
- 		pub.app_idx = get_le16(data + 5);
-+		pub.cred = ((pub.app_idx & 0x1000) != 0);
-+		pub.app_idx &= 0x3ff;
-+
- 		pub.ttl = data[7];
--		pub.period = data[8];
--		n = (data[8] & 0x3f);
-+		pub.prd_steps = (data[8] & 0x3f);
+ 		print_composition(data, len);
  
- 		print_pub(ele_addr, mod_id, &pub);
- 
- 		switch (data[8] >> 6) {
- 		case 0:
--			bt_shell_printf("Period\t\t%d ms\n", n * 100);
-+			pub.prd_res = 100;
- 			break;
- 		case 2:
--			n *= 10;
--			/* fall through */
-+			pub.prd_res = 10;
-+			break;
- 		case 1:
--			bt_shell_printf("Period\t\t%d sec\n", n);
-+			pub.prd_res = 10000;
- 			break;
- 		case 3:
--			bt_shell_printf("Period\t\t%d min\n", n * 10);
-+			pub.prd_res = 600000;
- 			break;
- 		}
- 
--		bt_shell_printf("Rexmit count\t%d\n", data[9] & 0x7);
--		bt_shell_printf("Rexmit steps\t%d\n", data[9] >> 3);
-+		bt_shell_printf("Period\t\t%d ms\n", pub.period);
-+
-+		pub.rtx_cnt = data[9] & 0x7;
-+		pub.rtx_interval = ((data[9] >> 3) + 1) * 50;
-+		bt_shell_printf("Rexmit count\t%d\n", pub.rtx_cnt);
-+		bt_shell_printf("Rexmit steps\t%d\n", pub.rtx_interval);
-+
-+		if (IS_VIRTUAL(pub.u.addr)) {
-+			grp = l_queue_find(groups, match_group_addr,
-+						L_UINT_TO_PTR(pub.u.addr));
-+			if (!grp)
-+				return true;
-+
-+			memcpy(pub.u.label, grp->label, sizeof(pub.u.label));
-+
-+		}
-+
-+		mesh_db_node_model_set_pub(src, ele_addr, len == 14, mod_id,
-+						&pub, IS_VIRTUAL(pub.u.addr));
+-		if (!mesh_db_node_set_composition(src, data, len))
+-			bt_shell_printf("Failed to save node composition!\n");
+-		else
++		saved = mesh_db_node_set_composition(src, data, len);
++		if (saved)
+ 			remote_set_composition(src, true);
  
  		break;
  
-diff --git a/tools/mesh/mesh-db.c b/tools/mesh/mesh-db.c
-index 8445d33f4..f63edd5ae 100644
---- a/tools/mesh/mesh-db.c
-+++ b/tools/mesh/mesh-db.c
-@@ -32,6 +32,7 @@
- #include "tools/mesh/keys.h"
- #include "tools/mesh/remote.h"
- #include "tools/mesh/cfgcli.h"
-+#include "tools/mesh/model.h"
- #include "tools/mesh/mesh-db.h"
+ 	case OP_APPKEY_STATUS:
+ 		if (len != 4)
+-			break;
++			return true;
  
- #define KEY_IDX_INVALID NET_IDX_INVALID
-@@ -992,6 +993,86 @@ bool mesh_db_node_model_overwrt_sub_virt(uint16_t unicast, uint16_t ele,
- 	return sub_overwrite(unicast, ele, vendor, mod_id, buf);
+ 		bt_shell_printf("Node %4.4x AppKey status %s\n", src,
+ 						mesh_status_str(data[0]));
+@@ -452,23 +452,22 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		bt_shell_printf("AppKey\t%u (0x%3.3x)\n", app_idx, app_idx);
+ 
+ 		if (data[0] != MESH_STATUS_SUCCESS)
+-			break;
++			return true;
+ 
+ 		if (!cmd)
+-			break;
++			return true;
+ 
+ 		if (cmd->opcode == OP_APPKEY_ADD)
+-			remote_add_app_key(src, app_idx, true);
++			saved = remote_add_app_key(src, app_idx, true);
+ 		else if (cmd->opcode == OP_APPKEY_DELETE)
+-			remote_del_app_key(src, app_idx);
++			saved = remote_del_app_key(src, app_idx);
+ 		else if (cmd->opcode == OP_APPKEY_UPDATE)
+-			remote_update_app_key(src, app_idx, true, true);
+-
++			saved = remote_update_app_key(src, app_idx, true, true);
+ 		break;
+ 
+ 	case OP_APPKEY_LIST:
+ 		if (len < 3)
+-			break;
++			return true;
+ 
+ 		bt_shell_printf("AppKey List (node %4.4x) Status %s\n",
+ 						src, mesh_status_str(data[0]));
+@@ -478,16 +477,16 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		len -= 3;
+ 
+ 		if (data[0] != MESH_STATUS_SUCCESS)
+-			break;
++			return true;
+ 
+ 		data += 3;
+ 		print_appkey_list(len, data);
+ 
+-		break;
++		return true;
+ 
+ 	case OP_NETKEY_STATUS:
+ 		if (len != 3)
+-			break;
++			return true;
+ 
+ 		bt_shell_printf("Node %4.4x NetKey status %s\n", src,
+ 						mesh_status_str(data[0]));
+@@ -496,23 +495,23 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		bt_shell_printf("\tNetKey %u (0x%3.3x)\n", net_idx, net_idx);
+ 
+ 		if (data[0] != MESH_STATUS_SUCCESS)
+-			break;
++			return true;
+ 
+ 		if (!cmd)
+-			break;
++			return true;
+ 
+ 		if (cmd->opcode == OP_NETKEY_ADD)
+-			remote_add_net_key(src, net_idx, true);
++			saved = remote_add_net_key(src, net_idx, true);
+ 		else if (cmd->opcode == OP_NETKEY_DELETE)
+-			remote_del_net_key(src, net_idx);
++			saved = remote_del_net_key(src, net_idx);
+ 		else if (cmd->opcode == OP_NETKEY_UPDATE)
+-			remote_update_net_key(src, net_idx, true, true);
++			saved = remote_update_net_key(src, net_idx, true, true);
+ 
+ 		break;
+ 
+ 	case OP_NETKEY_LIST:
+ 		if (len < 2)
+-			break;
++			return true;
+ 
+ 		bt_shell_printf("NetKey List (node %4.4x):\n", src);
+ 
+@@ -530,11 +529,11 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 			bt_shell_printf("\t %u (0x%3.3x)\n", net_idx, net_idx);
+ 		}
+ 
+-		break;
++		return true;
+ 
+ 	case OP_CONFIG_KEY_REFRESH_PHASE_STATUS:
+ 		if (len != 4)
+-			break;
++			return true;
+ 
+ 		bt_shell_printf("Node %4.4x Key Refresh Phase status %s\n", src,
+ 						mesh_status_str(data[0]));
+@@ -546,14 +545,16 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		if (data[0] != MESH_STATUS_SUCCESS)
+ 			return true;
+ 
+-		if (data[3] == KEY_REFRESH_PHASE_NONE)
+-			remote_finish_key_refresh(src, net_idx);
++		if (data[3] != KEY_REFRESH_PHASE_NONE)
++			return true;
++
++		saved = remote_finish_key_refresh(src, net_idx);
+ 
+ 		break;
+ 
+ 	case OP_MODEL_APP_STATUS:
+ 		if (len != 7 && len != 9)
+-			break;
++			return true;
+ 
+ 		bt_shell_printf("Node %4.4x: Model App status %s\n", src,
+ 						mesh_status_str(data[0]));
+@@ -567,14 +568,14 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		bt_shell_printf("AppIdx\t\t%u (0x%3.3x)\n ", app_idx, app_idx);
+ 
+ 		if (data[0] != MESH_STATUS_SUCCESS || !cmd)
+-			break;
++			return true;
+ 
+ 		if (cmd->opcode == OP_MODEL_APP_BIND)
+-			mesh_db_node_model_bind(src, addr, len == 9, mod_id,
+-								app_idx);
++			saved = mesh_db_node_model_bind(src, addr, len == 9,
++							mod_id, app_idx);
+ 		else
+-			mesh_db_node_model_unbind(src, addr, len == 9, mod_id,
+-								app_idx);
++			saved = mesh_db_node_model_unbind(src, addr, len == 9,
++							mod_id, app_idx);
+ 
+ 		break;
+ 
+@@ -585,7 +586,7 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		bt_shell_printf("NetIdx %4.4x, NodeIdState 0x%02x, status %s\n",
+ 				get_le16(data + 1), data[3],
+ 				mesh_status_str(data[0]));
+-		break;
++		return true;
+ 
+ 	case OP_CONFIG_BEACON_STATUS:
+ 		if (len != 1)
+@@ -616,7 +617,7 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 			return true;
+ 
+ 		bt_shell_printf("Node %4.4x Default TTL %d\n", src, data[0]);
+-		mesh_db_node_ttl_set(src, data[0]);
++		saved = mesh_db_node_ttl_set(src, data[0]);
+ 
+ 		break;
+ 
+@@ -670,15 +671,18 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		if (IS_VIRTUAL(pub.u.addr)) {
+ 			grp = l_queue_find(groups, match_group_addr,
+ 						L_UINT_TO_PTR(pub.u.addr));
+-			if (!grp)
++			if (!grp) {
++				bt_shell_printf("Unknown virtual group\n");
+ 				return true;
++			}
+ 
+ 			memcpy(pub.u.label, grp->label, sizeof(pub.u.label));
+ 
+ 		}
+ 
+-		mesh_db_node_model_set_pub(src, ele_addr, len == 14, mod_id,
+-						&pub, IS_VIRTUAL(pub.u.addr));
++		saved = mesh_db_node_model_set_pub(src, ele_addr, len == 14,
++							mod_id, &pub,
++							IS_VIRTUAL(pub.u.addr));
+ 
+ 		break;
+ 
+@@ -708,34 +712,36 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		default:
+ 			return true;
+ 		case OP_CONFIG_MODEL_SUB_ADD:
+-			mesh_db_node_model_add_sub(src, ele_addr, len == 9,
+-								mod_id, addr);
++			saved = mesh_db_node_model_add_sub(src, ele_addr,
++							len == 9, mod_id, addr);
+ 			break;
+ 		case OP_CONFIG_MODEL_SUB_DELETE:
+-			mesh_db_node_model_del_sub(src, ele_addr, len == 9,
+-								mod_id, addr);
++			saved = mesh_db_node_model_del_sub(src, ele_addr,
++							len == 9, mod_id, addr);
+ 			break;
+ 		case OP_CONFIG_MODEL_SUB_OVERWRITE:
+-			mesh_db_node_model_overwrt_sub(src, ele_addr, len == 9,
+-								mod_id, addr);
++			saved = mesh_db_node_model_overwrt_sub(src, ele_addr,
++							len == 9, mod_id, addr);
+ 			break;
+ 		case OP_CONFIG_MODEL_SUB_DELETE_ALL:
+-			mesh_db_node_model_del_sub_all(src, ele_addr, len == 9,
+-									mod_id);
++			saved = mesh_db_node_model_del_sub_all(src, ele_addr,
++							len == 9, mod_id);
+ 			break;
+ 		case OP_CONFIG_MODEL_SUB_VIRT_ADD:
+ 			if (grp)
+-				mesh_db_node_model_add_sub_virt(src, ele_addr,
+-						len == 9, mod_id, grp->label);
++				saved = mesh_db_node_model_add_sub_virt(src,
++							ele_addr, len == 9,
++							mod_id, grp->label);
+ 			break;
+ 		case OP_CONFIG_MODEL_SUB_VIRT_DELETE:
+ 			if (grp)
+-				mesh_db_node_model_del_sub_virt(src, ele_addr,
+-						len == 9, mod_id, grp->label);
++				saved = mesh_db_node_model_del_sub_virt(src,
++							ele_addr, len == 9,
++							mod_id, grp->label);
+ 			break;
+ 		case OP_CONFIG_MODEL_SUB_VIRT_OVERWRITE:
+ 			if (grp)
+-				mesh_db_node_model_overwrt_sub_virt(src,
++				saved = mesh_db_node_model_overwrt_sub_virt(src,
+ 							ele_addr, len == 9,
+ 							mod_id, grp->label);
+ 			break;
+@@ -749,14 +755,14 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 			return true;
+ 
+ 		print_sub_list(src, false, data, len);
+-		break;
++		return true;
+ 
+ 	case OP_CONFIG_VEND_MODEL_SUB_LIST:
+ 		if (len < 7)
+ 			return true;
+ 
+ 		print_sub_list(src, true, data, len);
+-		break;
++		return true;
+ 
+ 	/* Per Mesh Profile 4.3.2.50 */
+ 	case OP_MODEL_APP_LIST:
+@@ -772,8 +778,7 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		data += 5;
+ 		len -= 5;
+ 		print_appkey_list(len, data);
+-
+-		break;
++		return true;
+ 
+ 	case OP_VEND_MODEL_APP_LIST:
+ 		if (len < 7)
+@@ -791,8 +796,7 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		data += 7;
+ 		len -= 7;
+ 		print_appkey_list(len, data);
+-
+-		break;
++		return true;
+ 
+ 	/* Per Mesh Profile 4.3.2.63 */
+ 	case OP_CONFIG_HEARTBEAT_PUB_STATUS:
+@@ -842,7 +846,7 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		bt_shell_printf("Node %4.4x is reset\n", src);
+ 		reset_remote_node(src);
+ 
+-		break;
++		return true;
+ 
+ 	/* Per Mesh Profile 4.3.2.57 */
+ 	case OP_CONFIG_FRIEND_STATUS:
+@@ -854,6 +858,9 @@ static bool msg_recvd(uint16_t src, uint16_t idx, uint8_t *data,
+ 		break;
+ 	}
+ 
++	if (!saved)
++		bt_shell_printf("Warning: Configuration not updated\n");
++
+ 	return true;
  }
  
-+static bool add_transmit_info(json_object *jobj, int cnt, int interval,
-+							const char *desc)
-+{
-+	json_object *jtxmt;
-+
-+	jtxmt = json_object_new_object();
-+
-+	if (!write_int(jtxmt, "count", cnt))
-+		return false;
-+
-+	if (!write_int(jtxmt, "interval", interval))
-+		return false;
-+
-+	json_object_object_add(jobj, desc, jtxmt);
-+	return true;
-+}
-+
-+bool mesh_db_node_model_set_pub(uint16_t unicast, uint16_t ele_addr,
-+					bool vendor, uint32_t mod_id,
-+					struct model_pub *pub, bool virt)
-+{
-+	json_object *jmod, *jpub, *jobj = NULL;
-+
-+	if (!cfg || !cfg->jcfg)
-+		return false;
-+
-+	jmod = get_model(unicast, ele_addr, mod_id, vendor);
-+	if (!jmod)
-+		return false;
-+
-+	jpub = json_object_new_object();
-+
-+	if (!virt && !write_uint16_hex(jpub, "address", pub->u.addr))
-+		goto fail;
-+
-+	if (virt) {
-+		char buf[33];
-+
-+		hex2str(pub->u.label, 16, buf, sizeof(buf));
-+
-+		if (!add_string(jpub, "address", buf))
-+			goto fail;
-+	}
-+
-+	if (!write_int(jpub, "index", pub->app_idx))
-+		goto fail;
-+
-+	if (!write_int(jpub, "ttl", pub->ttl))
-+		goto fail;
-+
-+	if (!write_int(jpub, "credentials", pub->cred ? 1 : 0))
-+		goto fail;
-+
-+	if (!add_transmit_info(jpub, pub->rtx_cnt, pub->rtx_interval,
-+							"retransmit"))
-+		goto fail;
-+
-+	jobj = json_object_new_object();
-+
-+	if (!write_int(jobj, "numberOfSteps", pub->prd_steps))
-+		goto fail;
-+
-+	if (!write_int(jobj, "resolution", pub->prd_res))
-+		goto fail;
-+
-+	json_object_object_add(jpub, "period", jobj);
-+
-+	json_object_object_del(jmod, "publish");
-+	json_object_object_add(jmod, "publish", jpub);
-+
-+	return save_config();
-+
-+fail:
-+	if (jobj)
-+		json_object_put(jobj);
-+
-+	json_object_put(jpub);
-+	return false;
-+}
-+
- static void jarray_key_del(json_object *jarray, int16_t idx)
+diff --git a/tools/mesh/remote.c b/tools/mesh/remote.c
+index 2f8493f8a..dd294fe4d 100644
+--- a/tools/mesh/remote.c
++++ b/tools/mesh/remote.c
+@@ -351,18 +351,19 @@ bool remote_update_app_key(uint16_t addr, uint16_t app_idx, bool update,
+ 		return true;
+ }
+ 
+-void remote_finish_key_refresh(uint16_t addr, uint16_t net_idx)
++bool remote_finish_key_refresh(uint16_t addr, uint16_t net_idx)
  {
- 	int i, sz = json_object_array_length(jarray);
-diff --git a/tools/mesh/mesh-db.h b/tools/mesh/mesh-db.h
-index 384376cbd..885dabe90 100644
---- a/tools/mesh/mesh-db.h
-+++ b/tools/mesh/mesh-db.h
-@@ -11,6 +11,7 @@
- #include "mesh/mesh-config.h"
+ 	struct remote_node *rmt;
+ 	struct remote_key *key;
+ 	const struct l_queue_entry *l;
++	bool res = true;
  
- struct mesh_group;
-+struct model_pub;
+ 	rmt = l_queue_find(nodes, match_node_addr, L_UINT_TO_PTR(addr));
+ 	if (!rmt)
+-		return;
++		return false;
  
- bool mesh_db_create(const char *fname, const uint8_t token[8],
- 							const char *name);
-@@ -65,6 +66,9 @@ bool mesh_db_node_model_overwrt_sub_virt(uint16_t unicast, uint16_t ele,
- 								uint8_t *label);
- bool mesh_db_node_model_del_sub_all(uint16_t unicast, uint16_t ele, bool vendor,
- 							uint32_t mod_id);
-+bool mesh_db_node_model_set_pub(uint16_t unicast, uint16_t ele_addr,
-+					bool vendor, uint32_t mod_id,
-+					struct model_pub *pub, bool virt);
- struct l_queue *mesh_db_load_groups(void);
- bool mesh_db_add_group(struct mesh_group *grp);
- bool mesh_db_add_rejected_addr(uint16_t unicast, uint32_t iv_index);
-diff --git a/tools/mesh/model.h b/tools/mesh/model.h
-index 7359ea7df..5e20719b2 100644
---- a/tools/mesh/model.h
-+++ b/tools/mesh/model.h
-@@ -25,14 +25,17 @@ typedef int (*model_bind_func_t)(uint16_t app_idx, int action);
+ 	if (!remote_update_net_key(addr, net_idx, false, true))
+-		return;
++		return false;
  
- struct model_pub {
- 	uint16_t app_idx;
-+	uint16_t period;
- 	union {
--		uint16_t addr16;
--		uint8_t va_128[16];
-+		uint16_t addr;
-+		uint8_t label[16];
- 	} u;
-+	bool cred;
-+	uint32_t prd_res;
-+	uint16_t rtx_interval;
-+	uint8_t prd_steps;
-+	uint8_t rtx_cnt;
- 	uint8_t ttl;
--	uint8_t credential;
--	uint8_t period;
--	uint8_t retransmit;
- };
+ 	l = l_queue_get_entries(rmt->app_keys);
  
- typedef int (*model_pub_func_t)(struct model_pub *pub);
+@@ -374,9 +375,10 @@ void remote_finish_key_refresh(uint16_t addr, uint16_t net_idx)
+ 
+ 		key->updated = false;
+ 
+-		mesh_db_node_app_key_update(addr, key->idx, false);
++		res &= mesh_db_node_app_key_update(addr, key->idx, false);
+ 	}
+ 
++	return res;
+ }
+ 
+ uint16_t remote_get_subnet_idx(uint16_t addr)
+diff --git a/tools/mesh/remote.h b/tools/mesh/remote.h
+index 2fb0d83ce..66457237e 100644
+--- a/tools/mesh/remote.h
++++ b/tools/mesh/remote.h
+@@ -24,7 +24,7 @@ bool remote_add_app_key(uint16_t addr, uint16_t app_idx, bool save);
+ bool remote_del_app_key(uint16_t addr, uint16_t app_idx);
+ bool remote_update_app_key(uint16_t addr, uint16_t app_idx, bool update,
+ 								bool save);
+-void remote_finish_key_refresh(uint16_t addr, uint16_t net_idx);
++bool remote_finish_key_refresh(uint16_t addr, uint16_t net_idx);
+ void remote_set_composition(uint16_t addr, bool comp);
+ bool remote_has_composition(uint16_t addr);
+ uint16_t remote_get_subnet_idx(uint16_t addr);
 -- 
 2.31.1
 
