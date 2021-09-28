@@ -2,35 +2,31 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0791A41B7D6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Sep 2021 21:57:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F24F41B7DF
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Sep 2021 22:00:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242579AbhI1T7I convert rfc822-to-8bit (ORCPT
+        id S242608AbhI1UCE convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 28 Sep 2021 15:59:08 -0400
-Received: from mail.shanghaitech.edu.cn ([119.78.254.11]:11895 "EHLO
-        mail.shanghaitech.edu.cn" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242525AbhI1T7H (ORCPT
+        Tue, 28 Sep 2021 16:02:04 -0400
+Received: from mail1.shanghaitech.edu.cn ([119.78.254.90]:44433 "EHLO
+        mail.shanghaitech.edu.cn" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S242604AbhI1UCD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 28 Sep 2021 15:59:07 -0400
-X-Greylist: delayed 567 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Sep 2021 15:59:07 EDT
-Received: from [10.15.44.215] by mail.shanghaitech.edu.cn with MESSAGESEC ESMTP id 480409496331105;
-        Wed, 29 Sep 2021 03:57:08 +0800 (CST)
+        Tue, 28 Sep 2021 16:02:03 -0400
+Received: from [10.15.44.215] by mail.shanghaitech.edu.cn with MESSAGESEC ESMTP id 456895203431526;
+        Wed, 29 Sep 2021 04:00:16 +0800 (CST)
 Received: from DESKTOP-FOJ6ELG.localdomain (10.15.44.220) by
  smtp.shanghaitech.edu.cn (10.15.44.215) with Microsoft SMTP Server (TLS) id
- 14.3.399.0; Wed, 29 Sep 2021 03:57:08 +0800
+ 14.3.399.0; Wed, 29 Sep 2021 04:00:16 +0800
 From:   Mianhan Liu <liumh1@shanghaitech.edu.cn>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
+To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
+CC:     <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         Mianhan Liu <liumh1@shanghaitech.edu.cn>
-Subject: [PATCH] ./drivers/bluetooth/btqcomsmd.c: remove superfluous header files from btqcomsmd.c
-Date:   Wed, 29 Sep 2021 03:56:59 +0800
-Message-ID: <20210928195659.18645-1-liumh1@shanghaitech.edu.cn>
+Subject: [PATCH -next] ./drivers/bluetooth/btrsi.c: remove superfluous header files from btrsi.c
+Date:   Wed, 29 Sep 2021 03:59:54 +0800
+Message-ID: <20210928195954.19629-1-liumh1@shanghaitech.edu.cn>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8BIT
@@ -40,36 +36,28 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-btqcomsmd.c hasn't use any macro or function declared in btqca.h,
-linux/of.h and linux/slab.h.
-Thus, these files can be removed from btqcomsmd.c safely without
+btrsi.c hasn't use any macro or function declared in net/genetlink.h.
+Thus, these files can be removed from btrsi.c safely without
 affecting the compilation of the ./drivers/bluetooth module
----
- drivers/bluetooth/btqcomsmd.c | 3 ---
- 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
-index 2acb719e5..0fcb423c4 100644
---- a/drivers/bluetooth/btqcomsmd.c
-+++ b/drivers/bluetooth/btqcomsmd.c
-@@ -5,9 +5,7 @@
-  */
- 
- #include <linux/module.h>
--#include <linux/slab.h>
- #include <linux/rpmsg.h>
--#include <linux/of.h>
- 
- #include <linux/soc/qcom/wcnss_ctrl.h>
- #include <linux/platform_device.h>
-@@ -15,7 +13,6 @@
- #include <net/bluetooth/bluetooth.h>
+Signed-off-by: Mianhan Liu <liumh1@shanghaitech.edu.cn>
+
+---
+ drivers/bluetooth/btrsi.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/bluetooth/btrsi.c b/drivers/bluetooth/btrsi.c
+index 8646b6dd1..634cf8f5e 100644
+--- a/drivers/bluetooth/btrsi.c
++++ b/drivers/bluetooth/btrsi.c
+@@ -19,7 +19,6 @@
  #include <net/bluetooth/hci_core.h>
+ #include <asm/unaligned.h>
+ #include <net/rsi_91x.h>
+-#include <net/genetlink.h>
  
--#include "btqca.h"
- 
- struct btqcomsmd {
- 	struct hci_dev *hdev;
+ #define RSI_DMA_ALIGN	8
+ #define RSI_FRAME_DESC_SIZE	16
 -- 
 2.25.1
 
