@@ -2,101 +2,96 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D02E41C49E
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Sep 2021 14:24:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 316C441C586
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Sep 2021 15:26:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343632AbhI2MZR convert rfc822-to-8bit (ORCPT
+        id S1344201AbhI2N2V convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 29 Sep 2021 08:25:17 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:40492 "EHLO
+        Wed, 29 Sep 2021 09:28:21 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:40033 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245563AbhI2MZQ (ORCPT
+        with ESMTP id S242801AbhI2N2P (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 29 Sep 2021 08:25:16 -0400
+        Wed, 29 Sep 2021 09:28:15 -0400
 Received: from smtpclient.apple (p5b3d2185.dip0.t-ipconnect.de [91.61.33.133])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 09636CECF8;
-        Wed, 29 Sep 2021 14:23:34 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 6AFEECECF9;
+        Wed, 29 Sep 2021 15:26:33 +0200 (CEST)
 Content-Type: text/plain;
-        charset=us-ascii
+        charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: [PATCH v1] Bluetooth: btusb: Add the new support IDs for WCN6855
+Subject: Re: [BlueZ PATCH v1 1/3] doc: Add Advertisement Monitor Device
+ Tracking event
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <d7b3f7d75e58b81081b11e8f3ac7e536@codeaurora.org>
-Date:   Wed, 29 Sep 2021 14:23:33 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+In-Reply-To: <CAGPPCLB9j4Bgb=rraxdOBK+iACVO7+jJAHsPRn7B4JpTr3v-cQ@mail.gmail.com>
+Date:   Wed, 29 Sep 2021 15:26:32 +0200
+Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
         linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rocky Liao <rjliao@codeaurora.org>, zijuhu@codeaurora.org
+        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Miao-chen Chou <mcchou@google.com>,
+        Yun-Hao Chung <howardchung@google.com>,
+        Alain Michaud <alainmichaud@google.com>
 Content-Transfer-Encoding: 8BIT
-Message-Id: <95D9737D-62AD-486C-A30B-D49CD1101300@holtmann.org>
-References: <d7b3f7d75e58b81081b11e8f3ac7e536@codeaurora.org>
-To:     tjiang@codeaurora.org
+Message-Id: <C5279A3F-990B-4554-9236-CBE60E4E1181@holtmann.org>
+References: <20210927201657.593569-1-mmandlik@google.com>
+ <20210927131456.BlueZ.v1.1.I7f6bdb9282c1e12ffc6c662674678f2b1cb69182@changeid>
+ <AB183B14-B822-4A1D-BC13-B997C0A2F7F5@holtmann.org>
+ <CAGPPCLB9j4Bgb=rraxdOBK+iACVO7+jJAHsPRn7B4JpTr3v-cQ@mail.gmail.com>
+To:     Manish Mandlik <mmandlik@google.com>
 X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Tim,
+Hi Manish,
 
-> Add some new support IDs to usb_device_id table for WCN6855.
-> 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
-> ---
-> drivers/bluetooth/btusb.c | 37 +++++++++++++++++++++++++++++++++++++
-> 1 file changed, 37 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 34363d3c85e5..346cb1ea93a6 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -295,6 +295,43 @@ static const struct usb_device_id blacklist_table[] = {
-> 	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
-> 						     BTUSB_WIDEBAND_SPEECH |
-> 						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0cc), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0c9), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0d6), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0e3), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0d0), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0df), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0e1), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x04ca, 0x3025), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x10ab, 0x9608), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x10ab, 0x9609), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x10ab, 0x9308), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x10ab, 0x9309), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +
+can we please stop top-posting and follow the general rules of this mailing list.
 
-nobody is sending patches like this. Everybody includes /sys/kernel/debug/usb/devices portion and describes the devices.
+> The controller sends advertising reports in addition to this event. This event is reported only when there are active and matched advertisement monitors. 
+> 
+> Whenever an advertisement matches a Monitor, the controller sends this event with Monitor_state set to 1, indicating that it has started monitoring that particular device. After that it may send one or more advertising reports based on the configured Sampling_period for that Monitor. Once the controller stops monitoring that device, it sends the same event again with Monitor_state set to 0 to notify the host that it has stopped monitoring that particular device.
+> 
+> Since this event is sent only twice (at start and end of monitoring) per monitoring period [1], combining this with the Sampling_period - 0xFF (send only one advertisement report per monitoring period) [2], we can drastically reduce the number of events generated by the controller during background scanning but still have the DeviceFound/DeviceLost functionality in bluetoothd.
+> 
+> So, it will be better to keep this event separate than the Device Found event as it is triggered only during monitoring. Please let me know what you think about this.
+> [1]: https://docs.microsoft.com/en-us/windows-hardware/drivers/bluetooth/microsoft-defined-bluetooth-hci-commands-and-events#hci_vs_msft_le_monitor_device_event
+> [2]: https://docs.microsoft.com/en-us/windows-hardware/drivers/bluetooth/microsoft-defined-bluetooth-hci-commands-and-events#hci_vs_msft_le_monitor_advertisement
+
+This is what I was thinking:
+
+diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
+index 97d33e30a15d..fa9121c3bc87 100644
+--- a/doc/mgmt-api.txt
++++ b/doc/mgmt-api.txt
+@@ -4263,6 +4263,7 @@ Device Found Event
+                1       Legacy Pairing
+                2       Not Connectable
+                3       Reserved (not in use)
++               4       Device Tracked
+ 
+        For the RSSI field a value of 127 indicates that the RSSI is
+        not available. That can happen with Bluetooth 1.1 and earlier
+@@ -4910,3 +4911,19 @@ Controller Resume Event
+        Address_Type. Otherwise, Address and Address_Type will both be zero.
+ 
+        This event will be sent to all management sockets.
++
++Device Lost Event
++=================
++
++       Event Code:             0x002f
++       Controller Index:       <controller id>
++       Event Parameters:       Address (6 Octets)
++                               Address_Type (1 Octet)
++
++       This event indicates that a tracked device was no longer found
++       during monitoring.
++
++       Possible values for the Address_Type parameter:
++               0       BR/EDR
++               1       LE Public
++               2       LE Random
+
+I really don’t get why we would make it more complicated for mgmt-api and thus bluetoothd.
 
 Regards
 
