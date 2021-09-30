@@ -2,111 +2,77 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EAC641E410
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Oct 2021 00:40:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AFCE41E45D
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Oct 2021 00:58:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347011AbhI3WmD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Sep 2021 18:42:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36662 "EHLO
+        id S1349103AbhI3XAG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 30 Sep 2021 19:00:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344223AbhI3WmC (ORCPT
+        with ESMTP id S1349277AbhI3XAD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 Sep 2021 18:42:02 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38404C06176A
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Sep 2021 15:40:19 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id d13-20020a17090ad3cd00b0019e746f7bd4so7879997pjw.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Sep 2021 15:40:19 -0700 (PDT)
+        Thu, 30 Sep 2021 19:00:03 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 980D1C06176D
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Sep 2021 15:58:20 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id i4so31952621lfv.4
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Sep 2021 15:58:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rjn9c0A5xnGmuwQVHBsbF23LWzIh1tZ303XgwzxsFVo=;
-        b=k6dI6bo1ZhPKLy3t7nJcqP/fPMjhac+aeEcFAw1zIcuXvPrjqfv3pJKXDMXvuzzN5b
-         o8GvaaEalL2RHMrjlYZ+DLTjmwFNUhRxscy5GHv+tQVYhYzUnLfriy9BfN1QZruS1kfA
-         1YFarVxEIAPmxujSmoe6WLbPlT8GnJ0i/vZrs=
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=AnIUtRQtDgk3YDJAatwz+LXUKRWPbctJNdAprjwvZ5o=;
+        b=R1PvQpCeIannjSb6Yh+ydpk75/C6o8mEtPAzmgaEHIE8+GwbHjyaz9wpB+8x12xrLC
+         5QzliCelgl2NI0J6eAvviXY6NAb0fddKOwm8F0zluWIgQVcCljaROD5vrmiDeSlDLGsK
+         xJB49pSfVQy8S3Pu4kCVcQeq6ZMoa/xhFaIxFdweO35gr4XDAjaXA+zoW+1iWxDz8mxI
+         TYIETMUD6inxlylZ2+5HXNoU+Ej3Yy1phQDEHgefTc6SLcco5OC3x4iNwsBqiDMPoP+P
+         pOk7Fq1FEKBsQAGNBYAce970oQL9Ja1ScWCdUauoISN5YYshWUwov1jp5zGqcxSOFPv4
+         8viw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rjn9c0A5xnGmuwQVHBsbF23LWzIh1tZ303XgwzxsFVo=;
-        b=6ecXmO0Nu2VmekMaFHxyvB90/Pe7ojjb9VKhYZrzX8fI8hWGdg6q014M0bCUdEdkNa
-         aS3QVRAW1xyD6FrnqsxNcrWe7T6EvArZKgvyTIPyDPOEpHi4ThwvtwLA79eq1bUNdbsU
-         7oFaT22slE/Gu2y4JwCX7fKF0DF63f18q6zRZjELhdo+RxAdIbit260MPQ341HZ998G3
-         WTp6dHov2qPE3L1mQdHe5tS3ar3XbFxnqWjcp5a5pNJ7L2G0QE6uAZ6areMS2/RtYt+S
-         9ICBi/1WVGcMyYZxIr9FdJ/3fVYshFS3ar6Awebkql6mwwQReNprp6MQnFAiI5JbHYhR
-         uBtg==
-X-Gm-Message-State: AOAM533JoS8AVbuJfXat1I5ThlmbSfPueMlbqS/Y+sLf2cCRrzHCIB93
-        5LbkqTj4tzfpkweSRIvmlc2nQIjyeKb7Ag==
-X-Google-Smtp-Source: ABdhPJxwyO/aDLcO8Ucea5buNmsf2ADivgQQ3SHwdbGFFRYsUSE9X8CUFskUk6bZev065O6Xp1ltrQ==
-X-Received: by 2002:a17:90a:de83:: with SMTP id n3mr12361821pjv.29.1633041618438;
-        Thu, 30 Sep 2021 15:40:18 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:eb71:bb5c:56a6:693f])
-        by smtp.gmail.com with UTF8SMTPSA id 26sm4541206pgx.72.2021.09.30.15.40.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Sep 2021 15:40:17 -0700 (PDT)
-From:   Miao-chen Chou <mcchou@chromium.org>
-To:     Bluetooth Kernel Mailing List <linux-bluetooth@vger.kernel.org>
-Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Howard Chung <howardchung@google.com>,
-        Alain Michaud <alainm@chromium.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Miao-chen Chou <mcchou@chromium.org>
-Subject: [BlueZ PATCH v7 4/4] client: Print error code for connect methods
-Date:   Thu, 30 Sep 2021 15:37:30 -0700
-Message-Id: <20210930153703.BlueZ.v7.4.I226fdcdd12b13e4875c8cd03b42fc52283920cc4@changeid>
-X-Mailer: git-send-email 2.33.0.800.g4c38ced690-goog
-In-Reply-To: <20210930223726.2886139-1-mcchou@chromium.org>
-References: <20210930223726.2886139-1-mcchou@chromium.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=AnIUtRQtDgk3YDJAatwz+LXUKRWPbctJNdAprjwvZ5o=;
+        b=PhDqdSneYIEO3GBTRpGV0m9P5Spu/4DueAknztNhyWiN+0EAFQhepIMRstkGBYrqHG
+         HvJwiCFJ+KQfUlSMDDFkEJMYcca6QXd1AuOeIMnkoIQ65y5YgPlWSAEoEGXrI4hCJeKS
+         aQc46dcxlFYffTlSCb29Nvn7soIsaZ0Xse3UqyiSXcIS++G+zVT6mR6n/uZmpjuKXcDD
+         xFl/QACId6dh8L42kF5M00ZPfxdMbt9H7QFIrHF/NDk58ameCX9YZpyOs1q0R1xl+Jam
+         DFTtZo4q3BNxq2874TYBrDf0DLugXCIgMcH1HvN3Xa6VXWAzBFnDn+ciROTSLrlbiRDW
+         qYsA==
+X-Gm-Message-State: AOAM531ZbvhG8VPeyoEml+cumbF/JtPSuIP+/mXiWWLiEqRYsQLXZnqo
+        qAro6oH/QptpxHXPfTVz8jYqzNnwXU2bvIm2JqU=
+X-Google-Smtp-Source: ABdhPJyp0GckkyoQimIbcF3/K7wY5JuxQheNi1bdL6NpxgoMO9RxiMuiJeEbVByK85pFkO1bkngH1qS9zgmfyJF8Wlc=
+X-Received: by 2002:ac2:4d91:: with SMTP id g17mr1289553lfe.597.1633042698767;
+ Thu, 30 Sep 2021 15:58:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a05:6512:5d8:0:0:0:0 with HTTP; Thu, 30 Sep 2021 15:58:17
+ -0700 (PDT)
+Reply-To: southwestloanco59@gmail.com
+From:   SOUTHWESTLOANCO <saniabdullahinng2020@gmail.com>
+Date:   Thu, 30 Sep 2021 15:58:17 -0700
+Message-ID: <CA+3X9TxOgUnr17iBEDQumHTT-4sD=94e7Kczm3G2MdEDopz6kQ@mail.gmail.com>
+Subject: Dear owner,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The following steps were performed.
-- Issuing repeated commands to connect the same BLE device.
-- Verifying the print in bluetoothctl console
-
-Reviewed-by: Alain Michaud <alainm@chromium.org>
-Reviewed-by: Howard Chung <howardchung@google.com>
----
-
-Changes in v7:
-- Fix nits
-
-Changes in v6:
-- Rephrase error string
-
-Changes in v5:
-- Replace error code with error string
-
-Changes in v4:
-- Address make errors.
-
-Changes in v3:
-- Correct error-codes.txt.
-
-Changes in v2:
-- Add documentation for error codes
-
- client/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/client/main.c b/client/main.c
-index c1a62edb7..61650c289 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -1966,7 +1966,8 @@ static void connect_reply(DBusMessage *message, void *user_data)
- 	dbus_error_init(&error);
- 
- 	if (dbus_set_error_from_message(&error, message) == TRUE) {
--		bt_shell_printf("Failed to connect: %s\n", error.name);
-+		bt_shell_printf("Failed to connect: %s %s\n", error.name,
-+				error.message);
- 		dbus_error_free(&error);
- 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
- 	}
 -- 
-2.33.0.800.g4c38ced690-goog
+Good day,
+          Do you need a loan ? We offer any kind of loan to repay in
+6months with just 2% interest
 
+Kindly Reply with below information
+
+NAME...............
+ADDRESS..........
+OCCUPATION....
+AGE...................
+PHONE..............
+AMOUNT NEEDED......
+
+Regards
+
+Contact  Mr Gary Edward +13182955380
+
+Remittance Department southwestloanco59@gmail.com
