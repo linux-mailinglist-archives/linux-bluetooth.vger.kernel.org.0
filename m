@@ -2,111 +2,100 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB77D41DC13
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Sep 2021 16:14:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E7E641DCFF
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Sep 2021 17:08:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351800AbhI3OPs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Sep 2021 10:15:48 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:46414 "EHLO
-        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240149AbhI3OPq (ORCPT
+        id S244724AbhI3PKg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 30 Sep 2021 11:10:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45298 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239388AbhI3PKX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 Sep 2021 10:15:46 -0400
-Date:   Thu, 30 Sep 2021 14:13:53 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1633011240;
-        bh=SKiqC0vYIWy4echhG6w2Xl9hrL12Zgq/Z/lU6fDKHW4=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=aru8gaDrHxFdIk3jKlURKD4jTHxAOo3vsGPtXj71HwDKUNVAtiiksjbfkfrETokVz
-         hRmLMcFwTxOlCLlg52Rq/bl1bfwYTnvJD7ILcJvqsd6dhH7Deq5Oh6nVxdsAFSqrGZ
-         oFKihfmNYbZlcNGYL5r4gl1EgGJtLLneCiomS3EY=
-To:     redecorating@protonmail.com
-From:   Orlando Chamberlain <redecorating@protonmail.com>
-Cc:     danielwinkler@google.com, johan.hedberg@intel.com,
-        linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        regressions@lists.linux.dev, sonnysasaka@chromium.org,
-        linux-kernel@vger.kernel.org
-Reply-To: Orlando Chamberlain <redecorating@protonmail.com>
-Subject: [PATCH] Bluetooth: add quirk disabling query LE tx power
-Message-ID: <20210930141256.19943-1-redecorating@protonmail.com>
-In-Reply-To: <20210930063106.19881-1-redecorating@protonmail.com>
-References: <4970a940-211b-25d6-edab-21a815313954@protonmail.com> <20210930063106.19881-1-redecorating@protonmail.com>
+        Thu, 30 Sep 2021 11:10:23 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0052C06176A
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Sep 2021 08:08:34 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id m26so5983139qtn.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Sep 2021 08:08:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=starry.com; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RIhQ6uh2LQ0nck1gqy4vQfAyci3k4/52EoefsnVDAjM=;
+        b=pMBmQ5rYmq0hwbbOowCVAmjuqjutt9bYxqLJwaW/XeUMEM5XEke8JiT5NOeHhTCXqi
+         LrPOmdB289oRpj2aYgbGAJUQZfulLWA8ca2kTfP/bKNt8CIeIBJfgaFGmUfkIuZ7J+Gk
+         ZEYfCs5D1EczLTMh4816XHJ4wxF8EZ+0kWPm4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RIhQ6uh2LQ0nck1gqy4vQfAyci3k4/52EoefsnVDAjM=;
+        b=fIWF1KQpMOzw0OSKuDfTe5gsDo/eT/uVel9vlmbheJLBPnoSsylDdo+S/Dyia11V2H
+         bkl3Qa8V2YtLCoG4Hi8Iye6hxxBq4ySIIGlfZlvezYGmWADE1vuH6pyBfuANdiFS8WnS
+         cc9CsoUad5EH0u4j3twPlUvzdV/RUyENkEJBRQEcMM7eE7j5wZY+MQP5ipy0rTt2600U
+         TngPxLa1aRaK4ozUy3p+MXpQRsdHeMt384oVI6m0E1eGaeZap/oJrDOcvbQdLCBBmyV1
+         YRtjdp/v5ldDpgacHkJP46WsZ/FWSmd20Q5PY92hzK7MhFmQop72VIlOgS2VtW0B2nk7
+         iu3A==
+X-Gm-Message-State: AOAM531tRryj+Inu4MzamVkXva+4Y0YQJpKzUghLyN817CndbjcqhwyR
+        OGZuChc25ZVzckry9+7yQq4LexUP9gJl3bUN
+X-Google-Smtp-Source: ABdhPJxDe8Su7TR/GAP5Nw33V+MrhxK4q2rpg8h+v4imYi6G3pVOCSySMTG8/X17BLIneO9GRScN4w==
+X-Received: by 2002:ac8:560b:: with SMTP id 11mr7239429qtr.319.1633014513983;
+        Thu, 30 Sep 2021 08:08:33 -0700 (PDT)
+Received: from MrComputer.nevonetnext (205-201-16-55.starry-inc.net. [205.201.16.55])
+        by smtp.gmail.com with ESMTPSA id w17sm1573741qkf.97.2021.09.30.08.08.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Sep 2021 08:08:33 -0700 (PDT)
+From:   Dagan Martinez <dmartinez@starry.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Dagan Martinez <dmartinez@starry.com>
+Subject: [PATCH BlueZ v3 0/2] Optionally require security for notify/indicate
+Date:   Thu, 30 Sep 2021 11:08:17 -0400
+Message-Id: <20210930150819.34270-1-dmartinez@starry.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Querying LE tx power on startup broke Bluetooth on some Broadcom chips
-in Apple computers (at least MacBookPro16,1 and iMac20,1). Added a quirk
-disabling this query for affected devices, based off their common chip
-id 150. Affected devices will not be able to query LE tx power, however
-they were not doing this before.
+In some cases, it is desirable to require encryption and/or
+authentication for server-initiated updates, as they may contain
+sensitive data.
 
-Fixes: 7c395ea521e6m ("Bluetooth: Query LE tx power on startup")
-Signed-off-by: Orlando Chamberlain <redecorating@protonmail.com>
+Currently, there is no way to do this with BlueZ.
+
+Here is a query about this feature from 2019:
+https://stackoverflow.com/questions/55884233
+
+This patch implements this feature by introducing new `x-notify` and
+`x-indicate` flags that allow a user to restrict access to a
+characteristic's CCCD (as well as documentation for those flags).
+
+Note that `x-notify` and `x-indicate` each enforce security for ALL
+server-initiated updates. That is, you cannot require one level of
+security for notifications and another security level for indications on
+the same CCCD. I could not think of a reason why somebody would want
+that feature, and did not think the accuracy of terms would be worth the
+introduced complexity, so I didn't implement it.
+
 ---
- drivers/bluetooth/btbcm.c   | 4 ++++
- include/net/bluetooth/hci.h | 8 ++++++++
- net/bluetooth/hci_core.c    | 3 ++-
- 3 files changed, 14 insertions(+), 1 deletion(-)
+Changes in v3:
+- Split the `x-asynchronous` flags into `x-notify` and `x-indicate`
+- Fix a mixed code and declaration error
 
-diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
-index e4182acee488..4ecc50d93107 100644
---- a/drivers/bluetooth/btbcm.c
-+++ b/drivers/bluetooth/btbcm.c
-@@ -353,6 +353,10 @@ static int btbcm_read_info(struct hci_dev *hdev)
- =09=09return PTR_ERR(skb);
-=20
- =09bt_dev_info(hdev, "BCM: chip id %u", skb->data[1]);
-+
-+=09if (skb->data[1] =3D=3D 150)
-+=09=09set_bit(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER, &hdev->quirks);
-+
- =09kfree_skb(skb);
-=20
- =09/* Read Controller Features */
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index b80415011dcd..5e0dd0c39ade 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -246,6 +246,14 @@ enum {
- =09 * HCI after resume.
- =09 */
- =09HCI_QUIRK_NO_SUSPEND_NOTIFIER,
-+
-+=09/*
-+=09 * When this quirk is set, LE tx power is not queried on startup.
-+=09 *
-+=09 * This quirk can be set before hci_register_dev is called or
-+=09 * during the hdev->setup vendor callback.
-+=09 */
-+=09HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER,
- };
-=20
- /* HCI device flags */
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 8a47a3017d61..16e39739c662 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -742,7 +742,8 @@ static int hci_init3_req(struct hci_request *req, unsig=
-ned long opt)
- =09=09=09hci_req_add(req, HCI_OP_LE_READ_ADV_TX_POWER, 0, NULL);
- =09=09}
-=20
--=09=09if (hdev->commands[38] & 0x80) {
-+=09=09if (hdev->commands[38] & 0x80 &&
-+=09=09=09!test_bit(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER, &hdev->quirks)) {
- =09=09=09/* Read LE Min/Max Tx Power*/
- =09=09=09hci_req_add(req, HCI_OP_LE_READ_TRANSMIT_POWER,
- =09=09=09=09    0, NULL);
---=20
-2.33.0
+Changes in v2:
+- Fix line-width issues brought up by CI
 
+
+Dagan Martinez (2):
+  gatt: Allow GATT server to dicate CCC permissions
+  doc/gatt-api: Add 'X-notify`/`X-indicate`
+
+ doc/gatt-api.txt       | 15 ++++++++++++++-
+ src/gatt-database.c    | 42 ++++++++++++++++++++++++++++++++++++++----
+ src/shared/att-types.h |  4 ++++
+ 3 files changed, 56 insertions(+), 5 deletions(-)
+
+-- 
+2.31.1
 
