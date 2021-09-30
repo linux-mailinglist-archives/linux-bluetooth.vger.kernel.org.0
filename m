@@ -2,151 +2,81 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 969C341DF80
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Sep 2021 18:44:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D76F41E04E
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Sep 2021 19:43:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352284AbhI3Qq1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Sep 2021 12:46:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40326 "EHLO
+        id S1352812AbhI3Rpj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 30 Sep 2021 13:45:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352255AbhI3Qq0 (ORCPT
+        with ESMTP id S1352732AbhI3Rpj (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 Sep 2021 12:46:26 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC95C06176E
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Sep 2021 09:44:43 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id az15so8104405vsb.8
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Sep 2021 09:44:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=/T9drlD1s9vO6lHEMs4LJzmDo2MKXEHBXvFYaWoQWpk=;
-        b=EsLCv7AEd7vtbqyV/OiUSUuCbkOKxmlcfZM1v1wgFSApl/4nFI7f+BaRJqzpjvS04i
-         mkJwSn/ZQh2bsgii5Ix6poB70AoKA1WfkEmVTXepxtjw+4MAdVQi40dW8n8xqi3+fa18
-         1bPvA0COueaQweCG/fSWdCKbFfcyPjU0tuD/1kxPcqCM83/fRieSFmtWek5kCC27Ltv5
-         FXBVCy4Xp8cGUooofUei2DqQ8e/TTQGra89GktRgQmEwRcT33O0i/FN6XSfXt/bUe67O
-         hwX4JiWBc99uGtYXWeQwuT4NavTVleIfUaM50KdusSBzoZh0cSXqtW5FNJ3rhx7Ff1vg
-         QA5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=/T9drlD1s9vO6lHEMs4LJzmDo2MKXEHBXvFYaWoQWpk=;
-        b=xYmYrs89rG+DDKd5RF4Z1p+14FZaJyOidkyikj4DD1dd1vuUrfaBSL8EX8WcHUFIMB
-         ++KwfHIMqZvpoASNWUJ7r46hbhieY1E+dD8sCPNtGtvzgEI5q5NoCXlW466EJAO8ydMI
-         15x63bdTqzmjKJvCQo7fwouokicVGZ6KEWsFgvGjooPsGd8pU0ruatjFRdKk9/DgSrev
-         wqWfrPK1WU8JVhjtrL62KwGXXashA5WeWLuiNX2iLdQDqtHvNyKjUFuYf3oqncdpCx5q
-         cmg8xIccC2/BjZiOa+cX9iZJuF22rHEpsWZwy8QZDMQ623JotxiJpJ8Ki/fbdUfR3HV6
-         xpKg==
-X-Gm-Message-State: AOAM532PWAMazayqDJq2SEyGJ+Ku7QyAGIFqnvPXWjZ2+VfVoLRfuhHn
-        ul1Jx9HW/aIphRYEanAxoWFNXUNnB0wYuNtUAZ0=
-X-Google-Smtp-Source: ABdhPJxA0rYZ0PQcttzpvJKBp9a+xMfb3oj8O6Y0ef0aGkhzOFSDtO3LPmiDKlOqxB5q8N0nggNMP3QDg2AuPOK1PCw=
-X-Received: by 2002:a05:6102:6ce:: with SMTP id m14mr287143vsg.42.1633020282955;
- Thu, 30 Sep 2021 09:44:42 -0700 (PDT)
+        Thu, 30 Sep 2021 13:45:39 -0400
+X-Greylist: delayed 2413 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 30 Sep 2021 10:43:55 PDT
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:8234::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C004EC06176A;
+        Thu, 30 Sep 2021 10:43:55 -0700 (PDT)
+Received: from ip4d14bdef.dynamic.kabel-deutschland.de ([77.20.189.239] helo=[192.168.66.200]); authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1mVzT7-0000ha-IF; Thu, 30 Sep 2021 19:03:37 +0200
+Message-ID: <43fb97ad-69eb-95ad-d50a-b8f1113dbee6@leemhuis.info>
+Date:   Thu, 30 Sep 2021 19:03:36 +0200
 MIME-Version: 1.0
-Received: by 2002:a59:ab2e:0:b0:22d:7f44:603a with HTTP; Thu, 30 Sep 2021
- 09:44:42 -0700 (PDT)
-Reply-To: irenezakari24@gmail.com
-From:   Irene zakari <irenezakari88@gmail.com>
-Date:   Thu, 30 Sep 2021 09:44:42 -0700
-Message-ID: <CAFT8PFHbHST3JQr361Sw8wG0QMhXaM=P1Ekf5_Z8foTHwFdjow@mail.gmail.com>
-Subject: PLEASE I NEED YOUR HELP
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.0
+Content-Language: en-BS
+To:     Orlando Chamberlain <redecorating@protonmail.com>
+Cc:     danielwinkler@google.com, johan.hedberg@intel.com,
+        linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
+        regressions@lists.linux.dev, sonnysasaka@chromium.org,
+        linux-kernel@vger.kernel.org
+References: <4970a940-211b-25d6-edab-21a815313954@protonmail.com>
+ <20210930063106.19881-1-redecorating@protonmail.com>
+ <20210930141256.19943-1-redecorating@protonmail.com>
+From:   Thorsten Leemhuis <linux@leemhuis.info>
+Subject: Re: [PATCH] Bluetooth: add quirk disabling query LE tx power
+In-Reply-To: <20210930141256.19943-1-redecorating@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1633023836;f21159eb;
+X-HE-SMSGID: 1mVzT7-0000ha-IF
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello   ..
+On 30.09.21 16:13, Orlando Chamberlain wrote:
+> Querying LE tx power on startup broke Bluetooth on some Broadcom chips
+> in Apple computers (at least MacBookPro16,1 and iMac20,1). Added a quirk
+> disabling this query for affected devices, based off their common chip
+> id 150. Affected devices will not be able to query LE tx power, however
+> they were not doing this before.
+> 
+> Fixes: 7c395ea521e6m ("Bluetooth: Query LE tx power on startup")
+> Signed-off-by: Orlando Chamberlain <redecorating@protonmail.com>
 
-How do you do over there? I hope you are doing well?
+FWIW, if you need to respin this for some reason, could you do me a
+favour and add the following after the "Fixes" line please:
 
-My name is Irene. (24 years), i am single, from Gambia, the only child
-of late Eng. Bernard Bakary Zakaria. the Director of Bajam Enterprise
-(Building Construction Company in The Gambia) also the CEO of Bernard
-Import and Export (GAMBIA).
+Link:
+https://lore.kernel.org/r/4970a940-211b-25d6-edab-21a815313954@protonmail.com
 
-As a matter of fact my mother died when i was barely 4 years old
-according to my late father and because of the type of love he had for
-my mother made him to remain UN-married till he left the ghost..
+That makes is easier to find related discussions and rationale behind a
+certain change, as explained here:
+https://www.kernel.org/doc/html/latest/maintainer/configure-git.html
 
-So after the death of my father as a result of assassinate, his brother (My
-Uncle) who is the purchasing and marketing sale manager of my late
-fathers company named (Mr. James Tokunbo Oriade Zakaria) wanted to
-convert all the properties and resources of my late father into his
-which i quarreled with him and it made him to lay his anger on me to
-the extent of hiring an assassins to kill me but to God be the glory i
-succeeded by making a way to Burkina faso for my dear life.
-Honestly i do live a fearful life even here in Burkina faso because of
-those Assassins coming after me .
+This line is not crucial, but it makes my life easier as well, as I
+slowly start to track regressions again. And this time I'm doing it with
+the help of a software I wrote just for this purpose. I used your report
+as one of the first few to give this "regzbot" a test, hence the issue
+can now be seen in the webinterface (which is still a bit ugly, but it
+does the job):
 
-I would want to live and study in your country for my better future.
-because my father same blood brother wanted to force me into undecided
-marriage, just for me to leave my father home and went and live with
-another man I never know as he want to occupied all my father home
-and maybe to sold it as my father no longer alive, I'm the only child
-daughter my father born, '' but he don't know that i am not
-interesting in any of my father properties or early marriage for now,
-because i still have future to think about and to focus on my studies
-first as i was doing my first year in the University before the death
-of my father.
+https://linux-regtracking.leemhuis.info/regzbot/mainline.html
 
-Actually what I want to discuss with you is about my personal issue
-concern funds my late father deposited in a bank outside my country,
-worth $4.5 million united state dollars. i need your assistance to
-receive and invest this funds in your country.
+And the thing is: when regzbot sees a patch with above Link:-tag hit
+mainline it will automatically mark the issue as resolved, saving me
+some work.
 
-Please help me, I am sincere to you and I want to be member of your
-family as well if you wouldn't mind to accept me and lead me to better
-future in your country.
+Thx!
 
-All the documents the bank issue to my father during time of deposit
-is with me now.
-I already notify the bank on phone about the death of my father and
-they are surprise for the news and accept that my father is their good
-customer.
-I will be happy if this money can be invested in any business of your
-choice and it will be under your control till i finished my education,
-also I'm assuring you good relationship and I am ready to discuss the
-amount of money to give you from this money for your help.
-
-Therefore, I shall give you the bank contact and other necessary
-information in my next email if you will only promise me that you will
-not/never betray and disclosed this matter to anybody, because, this
-money is the only hope i have for survival on earth since I have lost
-my parents.
-
-Moreover I have the FUND PLACEMENT CERTIFICATE and the DEATH
-CERTIFICATE here with me, but before I give you further information, i
-will like to know your full data
-
-1. Full Name: ........................
-2. Address: ..................
-3. Nationality: ........... Sex................
-4. Age:........... Date of Birth:................
-5. Occupation:...................
-.....
-6. Phone: ........... Fax:.........................
-7. State of Origin: .......Country:..............
-8. Occupation:...................
-................
-9. Marital status........... E-mail address's: ............
-10. Scan copy of your ID card or Driving License/Photo:............
-DECLARATION:
-
-so that i will be fully sure that i am not trusting the wrong person.
-and it will also give me the mind to send you the bank contact for you
-to communicate with them for more verification about this money. and
-to know you more better.
-
-Meanwhile, you can reach me through my pastor,his name is Pastor Paul
-any time you call, tell him that you want to speak with me because
-right now i am living in the church here in Burkina faso and i don't
-want to stay here any longer,
-send for me to speak with you his phone number is this(+226 75213646)
-
-I will stop here and i will be waiting for your reply and feel free
-ask any thing you want to know about me.
-Please help me, I would be highly appreciated
-Have nice day.
-From Irene
+Ciao, Thorsten
