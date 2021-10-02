@@ -2,84 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 560DE41FB86
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Oct 2021 14:04:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23FDD41FDAA
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Oct 2021 20:21:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233009AbhJBMGL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 2 Oct 2021 08:06:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32856 "EHLO
+        id S233831AbhJBSXA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 2 Oct 2021 14:23:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232993AbhJBMGL (ORCPT
+        with ESMTP id S233829AbhJBSW7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 2 Oct 2021 08:06:11 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62073C0613EF
-        for <linux-bluetooth@vger.kernel.org>; Sat,  2 Oct 2021 05:04:25 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id t15so10893531ilj.1
-        for <linux-bluetooth@vger.kernel.org>; Sat, 02 Oct 2021 05:04:25 -0700 (PDT)
+        Sat, 2 Oct 2021 14:22:59 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49EBBC0613EC
+        for <linux-bluetooth@vger.kernel.org>; Sat,  2 Oct 2021 11:21:13 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id s11so12544421pgr.11
+        for <linux-bluetooth@vger.kernel.org>; Sat, 02 Oct 2021 11:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=nsZbpm1YBoHMpWTnzHLuE/zYZ0yg4jBiKD5Q7oCTPBE=;
-        b=g1nkHJ2C1U9iaJbo/dNO1dGDLtY73N5sW2xEGc0LQ5UrffNT06YrcV2zzpkARzHsh9
-         0jWNuCMu6OOjTfQpD7isWueanZ0rR0aAI4yRnCXPsAkn0LA4O0RbuL0mo3y5tFAXStZB
-         7RnG7ingAJTYWCs2smaduJRisVQxZrS+/zvEtluSqg3b/5Ur+Dd4deqkG/KO+Kr58qOC
-         Tve8jWP7bj3gBT9Hwljz8nTByt8p1/c/NrYVZ8XmrbAybAoGefxnkH5atVh/+i5stZP0
-         Egi0ddFJaRMz9I6RyD60H9pCDN4xcXQnRb9Va6mxNduBnJTKyTh+arrzOlS/lJ76QwBI
-         mR0g==
+        bh=OwfU8G1eWOBNe2IU07+aDJQeaSkXzgUNEJDD2xJmHbc=;
+        b=hou3IGwG1Br2brIjtRi8V3Auuq/KrXcI3F0UOSkqJ8rgWILuP+071XtS+aCY9jLrfc
+         fuSMjVmNrKK+cTXwRvqSUpDlLjySoy323myo4/QT6lu4geKD4qMnCFI7rNz/cWuiFBhd
+         6aAI+SUA1nMISonbYsdiATzva84qHiirfzFTdBZJGibIyg2uIEGyLHeezd1HAxd/1Tjq
+         PVEy0Lmhz3JJHkPDMXmSH1rD9tY0250McqPqX2fAEQ4O8afxIAIn6kNb5gqwkQbEelPe
+         sCzQvMuRPSVMC4eCin1++LXFDmawzyM6TGLfpE6uA3FHm6mlhoBHv5ma4LAMdtWNptsN
+         gYWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=nsZbpm1YBoHMpWTnzHLuE/zYZ0yg4jBiKD5Q7oCTPBE=;
-        b=siZyKgdYBtC3nbkzC1zjyfZ2+Cdgtr2lxo6uKMsillWHWh+c7UsT3gxpmwCxIWo97k
-         EWD60GWo2SKSIFjqkBZELLDgpEh1VqjYmzWserY4o1UM8qgf3U02vCV7A4d98yq1bEtE
-         LiHCD+brE4/YR1okF5ArMSm1xbtb4yF9dYvgBuQZaA0YoB380VwKgGbAjDXCAY2ORfes
-         rqKKvP8RmXIeL5PyvndqBDae7vIJsutcySg+dOoOR6tndkX4a6+QRLLe52Sx3otFVFXa
-         22ZkBgyO3ykwr3NgelheSfPR8ipT31g3aecnDssGgYtLwjqd2F8F8RHTyNmcYETQ0eAg
-         khHQ==
-X-Gm-Message-State: AOAM530rOxNx0S3OOcxSblKPxIDuTdFM5YHc7ef+VS6hZPPJZuKoSWrx
-        D93LmTrm7SNL/oX8E/k5oAsERp8qxCjsFW0vYb8=
-X-Google-Smtp-Source: ABdhPJxreYdJpf4R8h3YUS2wiMFtXutaKmS2J29IBP9O04HdiBTvCMXAr8LuhqUjbeUuLHYFa/HBjUNtvw26amfzNos=
-X-Received: by 2002:a05:6e02:1524:: with SMTP id i4mr2338681ilu.252.1633176264863;
- Sat, 02 Oct 2021 05:04:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OwfU8G1eWOBNe2IU07+aDJQeaSkXzgUNEJDD2xJmHbc=;
+        b=Vq9FIsCTkCK4LCw1BCnz+hLvFfKhV4+fiuaoUloL9MVulaxFia9vNgDN1D2dQUH/3B
+         +xGazaOAIGcYgMyY1k0c6K1A/4W2+ZVNUDpUerjwBnYhN3HF9gbFFxZyBt9p4j6r2FwI
+         TRZqFeoASu3FOjrcLeB8F6uuH0zPUQttu8Es+Neze2wRPHKG6Xp15EnYpC8uxUu89xqO
+         m1ATX591pJ8T9nWfVJvW5aNJfU12RCWYqSwc+Xmsrc2dSpZsHcq0+SYv3dp+PyetN8Lj
+         USJooHK8BkHrOZzl+ipE9LuhA83MpnLL6BQj7Uf4jhV3pF+IHtYwbdTzBy0ABhW8aJS7
+         xygw==
+X-Gm-Message-State: AOAM5307VDPGcORNjIdfzFfuJkLDhh5s2fSUJPRxQmVEhLrfXSj8Xsxt
+        Hf5aUsjOEfRJjA16i8YGZNtHDLssTCw=
+X-Google-Smtp-Source: ABdhPJxsYomXansHnjVNWDU4DgPcbiPsPpN/wwbKEjrRTjMijRPhUhGgT4c79ItL9hZ0khZfjnS6yg==
+X-Received: by 2002:a62:51c6:0:b0:43d:e849:c69d with SMTP id f189-20020a6251c6000000b0043de849c69dmr16405983pfb.31.1633198872487;
+        Sat, 02 Oct 2021 11:21:12 -0700 (PDT)
+Received: from han1-NUC8i7BEH.hsd1.or.comcast.net ([2601:1c0:6a01:d830:eb97:ba9a:7c99:dd3e])
+        by smtp.gmail.com with ESMTPSA id u6sm9180174pgr.3.2021.10.02.11.21.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Oct 2021 11:21:11 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Tedd Ho-Jeong An <tedd.an@intel.com>
+Subject: [RFC PATCH] Bluetooth: hci_vhci: Fix to set force_wakeup value
+Date:   Sat,  2 Oct 2021 11:21:09 -0700
+Message-Id: <20211002182109.165456-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Received: by 2002:a4f:f90d:0:0:0:0:0 with HTTP; Sat, 2 Oct 2021 05:04:24 -0700 (PDT)
-Reply-To: unitednnation0@gmail.com
-From:   "U.n" <wadebaye33@gmail.com>
-Date:   Sat, 2 Oct 2021 00:04:24 -1200
-Message-ID: <CACE0T5U3t85OVPH3TJr9Ffj6ubjmkcQbhnpgo5YVQWHoPWK4xg@mail.gmail.com>
-Subject: Attention
-To:     unitednnation0@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---=20
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
+This patch sets the wakeup value in the vhci driver data after reading
+the value.
 
-Attention Sir/Madam
-This is the United Nation (UN). We the United Nations (UN) Globally
-has approved (US$2.500,000)( two Million Five hundred thousand
-dollars) compensation as part of our responsibilities for humanitarian
-Aid for fighting against CoronaVirus and you are among the lucky ones.
+Signed-off-by: Tedd Ho-Jeong An <tedd.an@intel.com>
+---
+ drivers/bluetooth/hci_vhci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/drivers/bluetooth/hci_vhci.c b/drivers/bluetooth/hci_vhci.c
+index b45db0db347c..5fd91106e853 100644
+--- a/drivers/bluetooth/hci_vhci.c
++++ b/drivers/bluetooth/hci_vhci.c
+@@ -176,6 +176,8 @@ static ssize_t force_wakeup_write(struct file *file,
+ 	if (data->wakeup == enable)
+ 		return -EALREADY;
+ 
++	data->wakeup = enable;
++
+ 	return count;
+ }
+ 
+-- 
+2.25.1
 
-This compensation is for the most affected countries, communities and
-families across the global. Your funds were deposited with Bank in USA
-to transfer your funds to you via Internet Banking. You have to send
-your full details as state below:with this email Address
-  ( unitednnation0@gmail.com )
-Your full names:
-Address:
-Telephone:
-Occupation:
-
-
-
-Yours Sincerely
-Mr. Ant=C3=B3nio Guterres
-United Nations (UN).
