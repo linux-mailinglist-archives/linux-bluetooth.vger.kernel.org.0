@@ -2,75 +2,83 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF2FD422244
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Oct 2021 11:26:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C040F422C1D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Oct 2021 17:14:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232773AbhJEJ2C (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 5 Oct 2021 05:28:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39610 "EHLO mail.kernel.org"
+        id S235714AbhJEPQV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 5 Oct 2021 11:16:21 -0400
+Received: from mga11.intel.com ([192.55.52.93]:63735 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232658AbhJEJ2B (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 5 Oct 2021 05:28:01 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 974406154B
-        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Oct 2021 09:26:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633425971;
-        bh=aMsoJ0evHhv5g7JksyHmLLRdPwJSQL70mYF3jC1w8Uk=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=VGsc3oVaEIX/DaADMBjdx2qg5RP0N5UOxraH2DCXZIwZvy6qpdqZBULglRTWv+wh7
-         SOUPR2hmZ1Z4QanXDFagVp/j1z0ap5XXOMqfTDuwZEhkhHR/2QtcMGrUXdjsDlcut+
-         1jcsJtPTzo+ID6ejg7T4YvV42SBfov2VyznsuZ1cZ6m7E8GvKUTpa/Rka53WnC1i5X
-         vOlBz24mYVvXtT/iPjSI56rIKdPIFx2OtTqfRe4ubMqPmScWOlYO21+rm1iSlD6p06
-         ufOuzVYXgk+6x/Vx7IWnj4OhjXPOwDWKmEsSm2n4PWqDrgFwNbarQ2Nub5FeDfSQkK
-         kzSWGVDKAGuWg==
-Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id 8DF3A60F49; Tue,  5 Oct 2021 09:26:11 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
+        id S229936AbhJEPQU (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 5 Oct 2021 11:16:20 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10128"; a="223172076"
+X-IronPort-AV: E=Sophos;i="5.85,349,1624345200"; 
+   d="scan'208";a="223172076"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2021 07:40:29 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.85,349,1624345200"; 
+   d="scan'208";a="712587455"
+Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
+  by fmsmga006.fm.intel.com with ESMTP; 05 Oct 2021 07:40:27 -0700
+From:   Kiran K <kiran.k@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 198451] Error message: Bluetooth: hci0 killing stalled
- connection
-Date:   Tue, 05 Oct 2021 09:26:11 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: f.de.kruijf@beelaertsict.nl
-X-Bugzilla-Status: RESOLVED
-X-Bugzilla-Resolution: OBSOLETE
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: bug_status resolution
-Message-ID: <bug-198451-62941-4cSe6DBPw6@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-198451-62941@https.bugzilla.kernel.org/>
-References: <bug-198451-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
-MIME-Version: 1.0
+Cc:     ravishankar.srivatsa@intel.com, chethan.tumkur.narayan@intel.com,
+        Kiran K <kiran.k@intel.com>
+Subject: [PATCH v1] Bluetooth: Read codec capabilities only if supported
+Date:   Tue,  5 Oct 2021 20:15:56 +0530
+Message-Id: <20211005144556.22074-1-kiran.k@intel.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D198451
+Read codec capabilities only if HCI_READ_LOCAL_CODEC_CAPABILITIES
+command is supported. If capablities are not supported, then
+cache codec data without caps.
 
-Freek de Kruijf (f.de.kruijf@beelaertsict.nl) changed:
+Signed-off-by: Kiran K <kiran.k@intel.com>
+---
+ net/bluetooth/hci_codec.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-             Status|NEW                         |RESOLVED
-         Resolution|---                         |OBSOLETE
+diff --git a/net/bluetooth/hci_codec.c b/net/bluetooth/hci_codec.c
+index f0421d0edaa3..38201532f58e 100644
+--- a/net/bluetooth/hci_codec.c
++++ b/net/bluetooth/hci_codec.c
+@@ -25,9 +25,11 @@ static int hci_codec_list_add(struct list_head *list,
+ 	}
+ 	entry->transport = sent->transport;
+ 	entry->len = len;
+-	entry->num_caps = rp->num_caps;
+-	if (rp->num_caps)
++	entry->num_caps = 0;
++	if (rp) {
++		entry->num_caps = rp->num_caps;
+ 		memcpy(entry->caps, caps, len);
++	}
+ 	list_add(&entry->list, list);
+ 
+ 	return 0;
+@@ -58,6 +60,18 @@ static void hci_read_codec_capabilities(struct hci_dev *hdev, __u8 transport,
+ 			__u32 len;
+ 
+ 			cmd->transport = i;
++
++			/* If Read_Codec_Capabilities command is not supported
++			 * then just add codec to the list without caps
++			 */
++			if (!(hdev->commands[45] & 0x08)) {
++				hci_dev_lock(hdev);
++				hci_codec_list_add(&hdev->local_codecs, cmd,
++						   NULL, NULL, 0);
++				hci_dev_unlock(hdev);
++				continue;
++			}
++
+ 			skb = __hci_cmd_sync(hdev, HCI_OP_READ_LOCAL_CODEC_CAPS,
+ 					     sizeof(*cmd), cmd,
+ 					     HCI_CMD_TIMEOUT);
+-- 
+2.17.1
 
---- Comment #1 from Freek de Kruijf (f.de.kruijf@beelaertsict.nl) ---
-Apparently this bug does not appear anymore.
-
---=20
-You may reply to this email to add a comment.
-
-You are receiving this mail because:
-You are the assignee for the bug.=
