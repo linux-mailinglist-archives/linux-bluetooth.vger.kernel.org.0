@@ -2,81 +2,130 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0765426599
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Oct 2021 10:05:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82E95426766
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Oct 2021 12:08:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233427AbhJHIH3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 8 Oct 2021 04:07:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43508 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229868AbhJHIH2 (ORCPT
+        id S239274AbhJHKKP convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 8 Oct 2021 06:10:15 -0400
+Received: from rtits2.realtek.com ([211.75.126.72]:38817 "EHLO
+        rtits2.realtek.com.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229989AbhJHKKM (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 8 Oct 2021 04:07:28 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BAD3C061570
-        for <linux-bluetooth@vger.kernel.org>; Fri,  8 Oct 2021 01:05:33 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id b6so9169898ilv.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 08 Oct 2021 01:05:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=VgU824LnCnk8yFCIIS37yOqluq9II3chUVJdiKl3u88=;
-        b=lfa/9Bx59aJUU55kWijGuMI39cn5Wmqud8lNPYaiarIF5XmzmKN8LTnOVPKFi1frCn
-         tDe39V5vRl1mxdI6fAYHHpY25HPxiiQUWPcXpJLdIFCyx3JZL8hp64zvmzKTyIyjQi8z
-         XT3MJKVFqWqBDg5v+/h2igafR4bc2N/CM595Dhf7l/4XkuKzd4fAQwjZYK4IT48ksNwT
-         KaeH6hoV4/Xgq/5sLpIDsJ+NTpwTE8J+0bXHx+bGxy2l92RCagFnQpZ7v1yIyhiL/hzp
-         ZYFd64OK1Adi+pbuV6Oxhmp920H2eeL83DFGI2byx1giEbZfNDprB8TEnkUydH1LJNps
-         EHdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=VgU824LnCnk8yFCIIS37yOqluq9II3chUVJdiKl3u88=;
-        b=V++jAyChVTG9X7ckuCjqtMK8xOiUPlsOSptrkgqwaedJ9YJmByhs4YP5uncnxnLzhn
-         RITtJ+rSQrawil1tTZOGbCbY7W2EmJFqKXoSon7UxShMh80VSr5mSBqhuqixoYusYl8C
-         m9XMeb362BecJT4q/6cKMGLbm+DFpWmcR/0OT4gPiSaXj+KWESL+tMXZpF8TYiIm5zPh
-         oD4XWsmzZzkiUaLj1XsqWlCYGF8UDxqj8YIPaIBO/0YsJxPZjpccisXbdwRybslJ3S4n
-         geNTOgYl2Lpyf00R8xwx2LyxlJMQ74lFkYEg0Ycse+D+4bu3c0nmP5KCa1aaFzJ5LTwj
-         DatQ==
-X-Gm-Message-State: AOAM53372OcWvE/pHIahyODnMlrMAcE7BQOj2lQcZnODNALbpgjM/XYt
-        L4ek+mVUP1ealOdD7VMEhkZrxbx5qgoo5UPWDaE=
-X-Google-Smtp-Source: ABdhPJzir36YfYiVeIZcEsQZWzioIn7YmBJxDsyCKJV1t8jkCpUYBj5IRvUPkJjU5+r/gtuqWhDi972NbdhVMmKj/s4=
-X-Received: by 2002:a92:bd04:: with SMTP id c4mr6886965ile.217.1633680332992;
- Fri, 08 Oct 2021 01:05:32 -0700 (PDT)
+        Fri, 8 Oct 2021 06:10:12 -0400
+Authenticated-By: 
+X-SpamFilter-By: ArmorX SpamTrap 5.73 with qID 198A83Go8013446, This message is accepted by code: ctloc85258
+Received: from mail.realtek.com (rtexh36503.realtek.com.tw[172.21.6.25])
+        by rtits2.realtek.com.tw (8.15.2/2.71/5.88) with ESMTPS id 198A83Go8013446
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+        Fri, 8 Oct 2021 18:08:03 +0800
+Received: from RTEXMBS05.realtek.com.tw (172.21.6.98) by
+ RTEXH36503.realtek.com.tw (172.21.6.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.14; Fri, 8 Oct 2021 18:08:02 +0800
+Received: from RTEXMBS04.realtek.com.tw (172.21.6.97) by
+ RTEXMBS05.realtek.com.tw (172.21.6.98) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Fri, 8 Oct 2021 18:08:01 +0800
+Received: from RTEXMBS04.realtek.com.tw ([fe80::cdd5:82a3:e854:7098]) by
+ RTEXMBS04.realtek.com.tw ([fe80::cdd5:82a3:e854:7098%5]) with mapi id
+ 15.01.2106.013; Fri, 8 Oct 2021 18:08:01 +0800
+From:   Hilda Wu <hildawu@realtek.com>
+To:     Marcel Holtmann <marcel@holtmann.org>
+CC:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "kai.heng.feng@canonical.com" <kai.heng.feng@canonical.com>,
+        "apusaka@chromium.org" <apusaka@chromium.org>,
+        Max Chou <max.chou@realtek.com>,
+        "alex_lu@realsil.com.cn" <alex_lu@realsil.com.cn>,
+        KidmanLee <kidman@realtek.com>
+Subject: RE: [PATCH] Bluetooth: btrtl: Ask ic_info to drop firmware
+Thread-Topic: [PATCH] Bluetooth: btrtl: Ask ic_info to drop firmware
+Thread-Index: AQHXtecNs2ZfObp2A0STG/YXQiKUp6u9X0sAgACLa3CACUs1gIABnF5w
+Date:   Fri, 8 Oct 2021 10:08:01 +0000
+Message-ID: <8fc481a872474919b2a53fc2c7072166@realtek.com>
+References: <20210930103634.1710-1-hildawu@realtek.com>
+ <D5B18E08-AE60-4B8B-960B-694D62E067B5@holtmann.org>
+ <912f4b6441b54a1d89df6ffe4a0511ab@realtek.com>
+ <065AC802-1C20-42F0-9B2F-24F2B2698B90@holtmann.org>
+In-Reply-To: <065AC802-1C20-42F0-9B2F-24F2B2698B90@holtmann.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.21.132.191]
+x-kse-serverinfo: RTEXMBS05.realtek.com.tw, 9
+x-kse-attachmentfiltering-interceptor-info: no applicable attachment filtering
+ rules found
+x-kse-antivirus-interceptor-info: scan successful
+x-kse-antivirus-info: =?us-ascii?Q?Clean,_bases:_2021/10/8_=3F=3F_09:12:00?=
+x-kse-bulkmessagesfiltering-scan-result: protection disabled
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Received: by 2002:a92:d409:0:0:0:0:0 with HTTP; Fri, 8 Oct 2021 01:05:32 -0700 (PDT)
-Reply-To: mrsjessica.becker01@gmail.com
-From:   Mrs Jessica Becker <onnabadenge@gmail.com>
-Date:   Fri, 8 Oct 2021 08:05:32 +0000
-Message-ID: <CANge9K8ke2hkDqxpS-rXQO7yCE1aX3FmBzqanMc-ojuX7ETPTA@mail.gmail.com>
-Subject: Greetings
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+X-KSE-ServerInfo: RTEXH36503.realtek.com.tw, 9
+X-KSE-Attachment-Filter-Triggered-Rules: Clean
+X-KSE-Attachment-Filter-Triggered-Filters: Clean
+X-KSE-BulkMessagesFiltering-Scan-Result: protection disabled
+X-KSE-AntiSpam-Outbound-Interceptor-Info: scan successful
+X-KSE-AntiSpam-Version: 5.9.20, Database issued on: 10/08/2021 09:46:24
+X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
+X-KSE-AntiSpam-Method: none
+X-KSE-AntiSpam-Rate: 0
+X-KSE-AntiSpam-Info: Lua profiles 166594 [Oct 08 2021]
+X-KSE-AntiSpam-Info: Version: 5.9.20.0
+X-KSE-AntiSpam-Info: Envelope from: hildawu@realtek.com
+X-KSE-AntiSpam-Info: LuaCore: 463 463 5854868460de3f0d8e8c0a4df98aeb05fb764a09
+X-KSE-AntiSpam-Info: {Tracking_uf_ne_domains}
+X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
+X-KSE-AntiSpam-Info: source.android.com:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2;realtek.com:7.1.1;docs.microsoft.com:7.1.1
+X-KSE-AntiSpam-Info: Rate: 0
+X-KSE-AntiSpam-Info: Status: not_detected
+X-KSE-AntiSpam-Info: Method: none
+X-KSE-AntiSpam-Info: Auth:dkim=none
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-ScanningType: Heuristic
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 10/08/2021 09:50:00
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Greetings
-My dear friend,
+Hi Marcel,
 
-I know that this mail will surprise you but I implore you to take a
-little of your time to go through it for the decision you take will go
-a long way in determining my future. I am Mrs. Jessica Becker, from
-Indonesia. I was married to the former British ambassador to Burkina
-Faso for nine years before he died in 2004. We had one child who died
-earlier before his late father.
+I'm a little confused about this.
+Did you mean that if use existing MSFT/AOSP extensions vendor cmd/event to check device has this feature.
+This way is not meeting your conception, a simple way to tell which RTL device supports the MSFT or AOSP extensions?
 
-My late husband deposited the sum of $5.5MUSD Five million five
-hundred thousand dollars in a bank when he was alive. Recently, my
-doctor told me that my days are numbered and I would not last 4 months
-due to Breast cancer and kidney failure problems. Having known my
-condition I decided to donate this fund to you for charity. I want you
-to use this fund for orphanages, widows and the needy in the society.
+Thanks.
 
-I am not afraid of death because I lived a fulfilled life. I do not
-need any telephone communication in this regard because of my health.
-Hope to receive your response contact me with this email for more
-detail: mrsjessica.becker01@gmail.com
+Regards,
+Hilda
 
-Thanks
-Mrs Jessica Becker
+-----Original Message-----
+From: Marcel Holtmann <marcel@holtmann.org> 
+Sent: Thursday, October 7, 2021 11:57 PM
+To: Hilda Wu <hildawu@realtek.com>
+Cc: Johan Hedberg <johan.hedberg@gmail.com>; Luiz Augusto von Dentz <luiz.dentz@gmail.com>; linux-bluetooth@vger.kernel.org; linux-kernel@vger.kernel.org; kai.heng.feng@canonical.com; apusaka@chromium.org; Max Chou <max.chou@realtek.com>; alex_lu@realsil.com.cn; KidmanLee <kidman@realtek.com>
+Subject: Re: [PATCH] Bluetooth: btrtl: Ask ic_info to drop firmware
+
+Hi Hilda,
+
+> The MSFT extension has a HCI_VS_MSFT_Read_Supported_Features command. The AOSP extension has a read capability cmd too.
+> https://docs.microsoft.com/en-us/windows-hardware/drivers/bluetooth/mi
+> crosoft-defined-bluetooth-hci-commands-and-events#hci_vs_msft_read_sup
+> ported_features 
+> https://source.android.com/devices/bluetooth/hci_requirements#vendor-s
+> pecific-capabilities If commands did not support, the controller 
+> should feedback event status as Unknown HCI Command (0x01).
+> We can go on this way.
+
+I am not doing trial-and-error programming here. I rather better disable any extensions for Realtek devices altogether.
+
+Regards
+
+Marcel
+
+------Please consider the environment before printing this e-mail.
