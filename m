@@ -2,130 +2,284 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82E95426766
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Oct 2021 12:08:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05E19426C04
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Oct 2021 15:53:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239274AbhJHKKP convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 8 Oct 2021 06:10:15 -0400
-Received: from rtits2.realtek.com ([211.75.126.72]:38817 "EHLO
-        rtits2.realtek.com.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbhJHKKM (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 8 Oct 2021 06:10:12 -0400
-Authenticated-By: 
-X-SpamFilter-By: ArmorX SpamTrap 5.73 with qID 198A83Go8013446, This message is accepted by code: ctloc85258
-Received: from mail.realtek.com (rtexh36503.realtek.com.tw[172.21.6.25])
-        by rtits2.realtek.com.tw (8.15.2/2.71/5.88) with ESMTPS id 198A83Go8013446
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-        Fri, 8 Oct 2021 18:08:03 +0800
-Received: from RTEXMBS05.realtek.com.tw (172.21.6.98) by
- RTEXH36503.realtek.com.tw (172.21.6.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.14; Fri, 8 Oct 2021 18:08:02 +0800
-Received: from RTEXMBS04.realtek.com.tw (172.21.6.97) by
- RTEXMBS05.realtek.com.tw (172.21.6.98) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Fri, 8 Oct 2021 18:08:01 +0800
-Received: from RTEXMBS04.realtek.com.tw ([fe80::cdd5:82a3:e854:7098]) by
- RTEXMBS04.realtek.com.tw ([fe80::cdd5:82a3:e854:7098%5]) with mapi id
- 15.01.2106.013; Fri, 8 Oct 2021 18:08:01 +0800
-From:   Hilda Wu <hildawu@realtek.com>
-To:     Marcel Holtmann <marcel@holtmann.org>
-CC:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "kai.heng.feng@canonical.com" <kai.heng.feng@canonical.com>,
-        "apusaka@chromium.org" <apusaka@chromium.org>,
-        Max Chou <max.chou@realtek.com>,
-        "alex_lu@realsil.com.cn" <alex_lu@realsil.com.cn>,
-        KidmanLee <kidman@realtek.com>
-Subject: RE: [PATCH] Bluetooth: btrtl: Ask ic_info to drop firmware
-Thread-Topic: [PATCH] Bluetooth: btrtl: Ask ic_info to drop firmware
-Thread-Index: AQHXtecNs2ZfObp2A0STG/YXQiKUp6u9X0sAgACLa3CACUs1gIABnF5w
-Date:   Fri, 8 Oct 2021 10:08:01 +0000
-Message-ID: <8fc481a872474919b2a53fc2c7072166@realtek.com>
-References: <20210930103634.1710-1-hildawu@realtek.com>
- <D5B18E08-AE60-4B8B-960B-694D62E067B5@holtmann.org>
- <912f4b6441b54a1d89df6ffe4a0511ab@realtek.com>
- <065AC802-1C20-42F0-9B2F-24F2B2698B90@holtmann.org>
-In-Reply-To: <065AC802-1C20-42F0-9B2F-24F2B2698B90@holtmann.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.21.132.191]
-x-kse-serverinfo: RTEXMBS05.realtek.com.tw, 9
-x-kse-attachmentfiltering-interceptor-info: no applicable attachment filtering
- rules found
-x-kse-antivirus-interceptor-info: scan successful
-x-kse-antivirus-info: =?us-ascii?Q?Clean,_bases:_2021/10/8_=3F=3F_09:12:00?=
-x-kse-bulkmessagesfiltering-scan-result: protection disabled
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-MIME-Version: 1.0
-X-KSE-ServerInfo: RTEXH36503.realtek.com.tw, 9
-X-KSE-Attachment-Filter-Triggered-Rules: Clean
-X-KSE-Attachment-Filter-Triggered-Filters: Clean
-X-KSE-BulkMessagesFiltering-Scan-Result: protection disabled
-X-KSE-AntiSpam-Outbound-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 5.9.20, Database issued on: 10/08/2021 09:46:24
-X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
-X-KSE-AntiSpam-Method: none
-X-KSE-AntiSpam-Rate: 0
-X-KSE-AntiSpam-Info: Lua profiles 166594 [Oct 08 2021]
-X-KSE-AntiSpam-Info: Version: 5.9.20.0
-X-KSE-AntiSpam-Info: Envelope from: hildawu@realtek.com
-X-KSE-AntiSpam-Info: LuaCore: 463 463 5854868460de3f0d8e8c0a4df98aeb05fb764a09
-X-KSE-AntiSpam-Info: {Tracking_uf_ne_domains}
-X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
-X-KSE-AntiSpam-Info: source.android.com:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2;realtek.com:7.1.1;docs.microsoft.com:7.1.1
-X-KSE-AntiSpam-Info: Rate: 0
-X-KSE-AntiSpam-Info: Status: not_detected
-X-KSE-AntiSpam-Info: Method: none
-X-KSE-AntiSpam-Info: Auth:dkim=none
-X-KSE-Antiphishing-Info: Clean
-X-KSE-Antiphishing-ScanningType: Heuristic
-X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 10/08/2021 09:50:00
+        id S233133AbhJHNzT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 8 Oct 2021 09:55:19 -0400
+Received: from mga18.intel.com ([134.134.136.126]:60420 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232599AbhJHNzT (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 8 Oct 2021 09:55:19 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10130"; a="213457756"
+X-IronPort-AV: E=Sophos;i="5.85,357,1624345200"; 
+   d="scan'208";a="213457756"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2021 06:53:23 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.85,357,1624345200"; 
+   d="scan'208";a="624744938"
+Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
+  by fmsmga001.fm.intel.com with ESMTP; 08 Oct 2021 06:53:21 -0700
+From:   Kiran K <kiran.k@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     ravishankar.srivatsa@intel.com, chethan.tumkur.narayan@intel.com,
+        luiz.von.dentz@intel.com, Kiran K <kiran.k@intel.com>
+Subject: [PATCH v1 1/7] Bluetooth: Refactor code to read supported codecs in getsockopt
+Date:   Fri,  8 Oct 2021 19:28:47 +0530
+Message-Id: <20211008135853.8604-1-kiran.k@intel.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Marcel,
+This patch moves reading of supported codecs from cache to a new
+function to reuse over L2CAP sockets to be used in a2dp offload
+use case.
 
-I'm a little confused about this.
-Did you mean that if use existing MSFT/AOSP extensions vendor cmd/event to check device has this feature.
-This way is not meeting your conception, a simple way to tell which RTL device supports the MSFT or AOSP extensions?
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Change-Id: I080ed7ca8abd824d3af10859afd808bad28ee86d
+---
+ net/bluetooth/hci_codec.c | 88 +++++++++++++++++++++++++++++++++++
+ net/bluetooth/hci_codec.h |  2 +
+ net/bluetooth/sco.c       | 98 +++------------------------------------
+ 3 files changed, 96 insertions(+), 92 deletions(-)
 
-Thanks.
+diff --git a/net/bluetooth/hci_codec.c b/net/bluetooth/hci_codec.c
+index 38201532f58e..f4d8d3a253d8 100644
+--- a/net/bluetooth/hci_codec.c
++++ b/net/bluetooth/hci_codec.c
+@@ -250,3 +250,91 @@ void hci_read_supported_codecs_v2(struct hci_dev *hdev)
+ error:
+ 	kfree_skb(skb);
+ }
++
++int hci_get_supported_codecs(struct hci_dev *hdev, u8 type, char __user *optval,
++			     int __user *optlen, int len)
++{
++	int n = 0, buf_len = 0, err = 0;
++	struct hci_codec_caps *caps;
++	struct bt_codec codec;
++	u8 num_codecs = 0, i, __user *ptr;
++	struct codec_list *c;
++
++	if (!hci_dev_test_flag(hdev, HCI_OFFLOAD_CODECS_ENABLED)) {
++		err = -EOPNOTSUPP;
++		goto error;
++	}
++
++	if (!hdev->get_data_path_id) {
++		err = -EOPNOTSUPP;
++		goto error;
++	}
++
++	/* find total buffer size required to copy codec + capabilities */
++	hci_dev_lock(hdev);
++	list_for_each_entry(c, &hdev->local_codecs, list) {
++		if (c->transport != type)
++			continue;
++		num_codecs++;
++		for (i = 0, caps = c->caps; i < c->num_caps; i++) {
++			buf_len += 1 + caps->len;
++			caps = (void *)&caps->data[caps->len];
++		}
++		buf_len += sizeof(struct bt_codec);
++	}
++	hci_dev_unlock(hdev);
++
++	buf_len += sizeof(struct bt_codecs);
++	if (buf_len > len) {
++		err = -ENOBUFS;
++		goto error;
++	}
++	ptr = optval;
++
++	if (put_user(num_codecs, ptr)) {
++		err = -EFAULT;
++		goto error;
++	}
++	ptr += sizeof(num_codecs);
++
++	/* Iterate over all the codecs on required transport */
++	hci_dev_lock(hdev);
++	list_for_each_entry(c, &hdev->local_codecs, list) {
++		if (c->transport != type)
++			continue;
++
++		codec.id = c->id;
++		codec.cid = c->cid;
++		codec.vid = c->vid;
++		err = hdev->get_data_path_id(hdev, &codec.data_path);
++		if (err < 0)
++			break;
++		codec.num_caps = c->num_caps;
++		if (copy_to_user(ptr, &codec, sizeof(codec))) {
++			err = -EFAULT;
++			break;
++		}
++		ptr += sizeof(codec);
++
++		/* find codec capabilities data length */
++		n = 0;
++		for (i = 0, caps = c->caps; i < c->num_caps; i++) {
++			n += 1 + caps->len;
++			caps = (void *)&caps->data[caps->len];
++		}
++
++		/* copy codec capabilities data */
++		if (n && copy_to_user(ptr, c->caps, n)) {
++			err = -EFAULT;
++			break;
++		}
++		ptr += n;
++	}
++	hci_dev_unlock(hdev);
++
++	if (!err && put_user(buf_len, optlen))
++		err = -EFAULT;
++
++error:
++	return err;
++}
+diff --git a/net/bluetooth/hci_codec.h b/net/bluetooth/hci_codec.h
+index a2751930f123..6e849c7d75b9 100644
+--- a/net/bluetooth/hci_codec.h
++++ b/net/bluetooth/hci_codec.h
+@@ -5,3 +5,5 @@
+ void hci_read_supported_codecs(struct hci_dev *hdev);
+ void hci_read_supported_codecs_v2(struct hci_dev *hdev);
+ void hci_codec_list_clear(struct list_head *codec_list);
++int hci_get_supported_codecs(struct hci_dev *hdev, u8 type, char __user *optval,
++			     int __user *optlen, int len);
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 8eabf41b2993..0af814c13b5f 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -33,6 +33,8 @@
+ #include <net/bluetooth/hci_core.h>
+ #include <net/bluetooth/sco.h>
+ 
++#include "hci_codec.h"
++
+ static bool disable_esco;
+ 
+ static const struct proto_ops sco_sock_ops;
+@@ -1032,12 +1034,7 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
+ 	struct bt_voice voice;
+ 	u32 phys;
+ 	int pkt_status;
+-	int buf_len;
+-	struct codec_list *c;
+-	u8 num_codecs, i, __user *ptr;
+ 	struct hci_dev *hdev;
+-	struct hci_codec_caps *caps;
+-	struct bt_codec codec;
+ 
+ 	BT_DBG("sk %p", sk);
+ 
+@@ -1103,98 +1100,15 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_CODEC:
+-		num_codecs = 0;
+-		buf_len = 0;
+-
+-		hdev = hci_get_route(&sco_pi(sk)->dst, &sco_pi(sk)->src, BDADDR_BREDR);
++		hdev = hci_get_route(&sco_pi(sk)->dst, &sco_pi(sk)->src,
++				     BDADDR_BREDR);
+ 		if (!hdev) {
+ 			err = -EBADFD;
+ 			break;
+ 		}
+-
+-		if (!hci_dev_test_flag(hdev, HCI_OFFLOAD_CODECS_ENABLED)) {
+-			hci_dev_put(hdev);
+-			err = -EOPNOTSUPP;
+-			break;
+-		}
+-
+-		if (!hdev->get_data_path_id) {
+-			hci_dev_put(hdev);
+-			err = -EOPNOTSUPP;
+-			break;
+-		}
+-
+-		/* find total buffer size required to copy codec + caps */
+-		hci_dev_lock(hdev);
+-		list_for_each_entry(c, &hdev->local_codecs, list) {
+-			if (c->transport != HCI_TRANSPORT_SCO_ESCO)
+-				continue;
+-			num_codecs++;
+-			for (i = 0, caps = c->caps; i < c->num_caps; i++) {
+-				buf_len += 1 + caps->len;
+-				caps = (void *)&caps->data[caps->len];
+-			}
+-			buf_len += sizeof(struct bt_codec);
+-		}
+-		hci_dev_unlock(hdev);
+-
+-		buf_len += sizeof(struct bt_codecs);
+-		if (buf_len > len) {
+-			hci_dev_put(hdev);
+-			err = -ENOBUFS;
+-			break;
+-		}
+-		ptr = optval;
+-
+-		if (put_user(num_codecs, ptr)) {
+-			hci_dev_put(hdev);
+-			err = -EFAULT;
+-			break;
+-		}
+-		ptr += sizeof(num_codecs);
+-
+-		/* Iterate all the codecs supported over SCO and populate
+-		 * codec data
+-		 */
+-		hci_dev_lock(hdev);
+-		list_for_each_entry(c, &hdev->local_codecs, list) {
+-			if (c->transport != HCI_TRANSPORT_SCO_ESCO)
+-				continue;
+-
+-			codec.id = c->id;
+-			codec.cid = c->cid;
+-			codec.vid = c->vid;
+-			err = hdev->get_data_path_id(hdev, &codec.data_path);
+-			if (err < 0)
+-				break;
+-			codec.num_caps = c->num_caps;
+-			if (copy_to_user(ptr, &codec, sizeof(codec))) {
+-				err = -EFAULT;
+-				break;
+-			}
+-			ptr += sizeof(codec);
+-
+-			/* find codec capabilities data length */
+-			len = 0;
+-			for (i = 0, caps = c->caps; i < c->num_caps; i++) {
+-				len += 1 + caps->len;
+-				caps = (void *)&caps->data[caps->len];
+-			}
+-
+-			/* copy codec capabilities data */
+-			if (len && copy_to_user(ptr, c->caps, len)) {
+-				err = -EFAULT;
+-				break;
+-			}
+-			ptr += len;
+-		}
+-
+-		if (!err && put_user(buf_len, optlen))
+-			err = -EFAULT;
+-
+-		hci_dev_unlock(hdev);
++		err = hci_get_supported_codecs(hdev, HCI_TRANSPORT_SCO_ESCO,
++					       optval, optlen, len);
+ 		hci_dev_put(hdev);
+-
+ 		break;
+ 
+ 	default:
+-- 
+2.17.1
 
-Regards,
-Hilda
-
------Original Message-----
-From: Marcel Holtmann <marcel@holtmann.org> 
-Sent: Thursday, October 7, 2021 11:57 PM
-To: Hilda Wu <hildawu@realtek.com>
-Cc: Johan Hedberg <johan.hedberg@gmail.com>; Luiz Augusto von Dentz <luiz.dentz@gmail.com>; linux-bluetooth@vger.kernel.org; linux-kernel@vger.kernel.org; kai.heng.feng@canonical.com; apusaka@chromium.org; Max Chou <max.chou@realtek.com>; alex_lu@realsil.com.cn; KidmanLee <kidman@realtek.com>
-Subject: Re: [PATCH] Bluetooth: btrtl: Ask ic_info to drop firmware
-
-Hi Hilda,
-
-> The MSFT extension has a HCI_VS_MSFT_Read_Supported_Features command. The AOSP extension has a read capability cmd too.
-> https://docs.microsoft.com/en-us/windows-hardware/drivers/bluetooth/mi
-> crosoft-defined-bluetooth-hci-commands-and-events#hci_vs_msft_read_sup
-> ported_features 
-> https://source.android.com/devices/bluetooth/hci_requirements#vendor-s
-> pecific-capabilities If commands did not support, the controller 
-> should feedback event status as Unknown HCI Command (0x01).
-> We can go on this way.
-
-I am not doing trial-and-error programming here. I rather better disable any extensions for Realtek devices altogether.
-
-Regards
-
-Marcel
-
-------Please consider the environment before printing this e-mail.
