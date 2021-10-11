@@ -2,81 +2,125 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6A73428B5F
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Oct 2021 12:56:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBFE44298AD
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Oct 2021 23:11:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236083AbhJKK6G (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 11 Oct 2021 06:58:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51484 "EHLO
+        id S234073AbhJKVNu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 11 Oct 2021 17:13:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236081AbhJKK6C (ORCPT
+        with ESMTP id S231994AbhJKVNu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 11 Oct 2021 06:58:02 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CE1DC06176F
-        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Oct 2021 03:56:02 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id r10so54858764wra.12
-        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Oct 2021 03:56:02 -0700 (PDT)
+        Mon, 11 Oct 2021 17:13:50 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EA9AC061570
+        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Oct 2021 14:11:49 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id 21so5936309plo.13
+        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Oct 2021 14:11:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=DOxN63QWnl4dBNWQl+LufsBrewR+8VuPJnGph7ijSeE=;
-        b=km/+rwE10MGCG3K0BNjxD+A2l394aMlSCDFqBEiDyrs45mObKwVEkOccUp5BPFftJU
-         5cB06txNzUPVxcrxQnkqMq9zaxAqQeR9eoa3+7DqnAg3rX7wMze/dloERdrhczopiGET
-         PvxtLks7kWCMKTs5Q8Mmq12LwUKUT5cPH1x1mszpEwl0kuXWAYNTl0kX4+cL3oWAj8+a
-         6an2wLimFEmscCT9jtQf7FGYav0q/UTa6GRCeFihab7mYp8KZTVzyAi9ONxHllw1wfay
-         OSS3CoE7RnQ2PFKTnc/5Yya8gHnSshWvMzermo1msudbBS7MTk09iY8fA6ci8A/KmFSk
-         +E4A==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ngp3++O79al+cad27OV1IHGZYfV5z88NY3J14fxoyMU=;
+        b=PB6J5o8RXCljvFIS41ziad6LdnDpovGBwtgeXpvsgSxvvjYJGv3MPf3amnsUrvOBq5
+         2uVkFUlyW+KbBsiUcyGn3uQU43HWcy7j+/nvH7D75u2lOBkv6tbOuxvhygkwOBnNWS19
+         WmlC4QmNaV9yXRf6PcsJ8Wsbgwwh6BHYf4daVVI+pGPDJlQjkJUJdE41EP0FoxacCtel
+         N/A0yMFy1qCuS+n2EvRiRcyeO10BMeUCWp2xYk3Y39IrxwpGz1XSwrvSRCDL/YSAEpiB
+         15UaZz6eU+WhBi3czNSg2YrJz2ItxurQKftgsdw8KU1IVh6AJqR72xD1u9Malpj/JE0Y
+         tX7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=DOxN63QWnl4dBNWQl+LufsBrewR+8VuPJnGph7ijSeE=;
-        b=7Q/o7StRfXU+AMHSABuB94i20pkNgUziXBqWdAUDo+VZ5CBgDQrUWxVa9EwFqS72IU
-         Zn90awmQE4YEIz8ajUAkzG07LBMAQXOXr66tfvwn3vIdHFQjpYIACwiX1e9isX01izoy
-         xc73UJhB7lgow86F0INPCBNCESAeEQB8qti9py4JRvww+Wt3gronLtvaNUoz1gK48qHx
-         F3f+Gnx4ZsMQuuITs6PLf2Fcu66J3TTWV8d7U8GY2K8m2LhUVd9kQznh3tBcnyQ/oKo+
-         w82rhFoSFgDzeXbE7INMmwKNcPpUFf2rByDVYloVGi5gRz1eiNHgSYXN3kzguenfONja
-         3fjQ==
-X-Gm-Message-State: AOAM533Lvgx+L5yg5zvL9/QWdsx6g5yP/t6XHxhIJwCQ6Rtuwt5F1xfQ
-        HFeoVkT/LM68HXa2u9iwbTVC5H9794h/y0xHkgo=
-X-Google-Smtp-Source: ABdhPJxWYMUVxuj7Tly9azrkWxEMXzTPZAklmoVIH4V2ykknMMiBN9imOFz2zTqxux/zk/7pzvFSRlX+C6mfjc7ADy4=
-X-Received: by 2002:adf:8b9a:: with SMTP id o26mr24377548wra.109.1633949760323;
- Mon, 11 Oct 2021 03:56:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ngp3++O79al+cad27OV1IHGZYfV5z88NY3J14fxoyMU=;
+        b=Ut2IFfFhBM1ioAN6GTn1ijmMkga9lPWrTXnYbAflkD16mJi30r1lM3LsPCYcALWt99
+         hhv0/0QGBMUbD9RJO/JdgL/ifoCuuUqVb3kKSyV93xfTRo8mVqHvuWcfOwiyb0WWqMoJ
+         P3KBM0RYDfX9iV+TM+5JA8zpRNe97gfoadxkpt0lsv5zpZu6E/LH4oVbpEVZRg++94A2
+         TwYWwm4nTLP8aOaCLC1xFrOz/HXs//FhlDEYywvY59cpxk2FAG5ZVxMYvI0IA7nWbrqr
+         z6el0ASjOx8++6lPtcpiqs7ZLasV8jzxSo9vTrmzhxTjvMvkgAdMBmSptZo2CHO4Kz2d
+         6HyQ==
+X-Gm-Message-State: AOAM532iSNN4UuOa78XdbUlx09DDTKbfsnbBsJZDtMaVri1P35p9zWzj
+        8hVEpMF2b0uqfhw77OQ3YKKQq98XI5U=
+X-Google-Smtp-Source: ABdhPJwquvsGYKIa29hKZPrbSQVppTasznAjPR4CHVm3KDq5A2h1yip/1HJGBSiOW9tb8EA1oK3GuA==
+X-Received: by 2002:a17:90a:4814:: with SMTP id a20mr1471834pjh.154.1633986708866;
+        Mon, 11 Oct 2021 14:11:48 -0700 (PDT)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id e1sm9335145pgi.43.2021.10.11.14.11.48
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Oct 2021 14:11:48 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [RFC] Bluetooth: vhci: Add support for setting msft_opcode
+Date:   Mon, 11 Oct 2021 14:11:47 -0700
+Message-Id: <20211011211147.2379624-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Received: by 2002:adf:dd8c:0:0:0:0:0 with HTTP; Mon, 11 Oct 2021 03:55:59
- -0700 (PDT)
-Reply-To: ramcharan9910@outlook.com
-From:   "Cr.David Ramcharan" <convy0101@gmail.com>
-Date:   Mon, 11 Oct 2021 03:55:59 -0700
-Message-ID: <CADDRs95718H=K3tUjphEHH_C96xYhoJw7jeCMpt_FfZZjhEXrA@mail.gmail.com>
-Subject: Thank You
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Please I am writing to notify you again on my intention to list your
-name as a beneficiary to the total sum of GBP6.350 million (Six
-million, Three hundred and fifty thousand British Pounds Sterlings) in
-the intent of the deceased (name now withheld since this is my second
-letter to you).
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-I contacted you because you bear the surname identity and therefore
-can present you as the beneficiary to inherit the account proceeds of
-the deceased since there is no written "WILL" or trace to the deceased
-family relatives. My aim is to present you to my Bank Authorities as
-the Next of Kin to our deceased client. I will guide you all through
-the Claim procedure by providing all relevant Information and guiding
-you in your decisions and response to the Bank Management. All the
-papers will be processed after your acceptance.
+This adds a debugfs entry to set msft_opcode enabling vhci to emulate
+controllers with MSFT extention support.
 
-In your acceptance of this deal, I request that you kindly forward to
-me your letter of acceptance; your current telephone and fax numbers
-,age, occupational status and a forwarding address to enable me submit
-to the Bank Management the details as the Next of Kin to their
-deceased customer. Reply strictly through: ramcharancrdavid@gmail.com
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ drivers/bluetooth/hci_vhci.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-Yours faithfully,
-Cr.David Ramcharan
+diff --git a/drivers/bluetooth/hci_vhci.c b/drivers/bluetooth/hci_vhci.c
+index 56c6b22be10b..ac122299bacc 100644
+--- a/drivers/bluetooth/hci_vhci.c
++++ b/drivers/bluetooth/hci_vhci.c
+@@ -194,6 +194,34 @@ static const struct file_operations force_wakeup_fops = {
+ 	.llseek		= default_llseek,
+ };
+ 
++
++static int msft_opcode_set(void *data, u64 val)
++{
++	struct vhci_data *vhci = data;
++	uint16_t ogf = (val & 0xffff >> 10);
++
++	if (val > 0xffff || ogf != 0x3f)
++		return -EINVAL;
++
++	hci_set_msft_opcode(vhci->hdev, val);
++
++	return 0;
++}
++
++static int msft_opcode_get(void *data, u64 *val)
++{
++	struct vhci_data *vhci = data;
++
++	hci_dev_lock(vhci->hdev);
++	*val = vhci->hdev->msft_opcode;
++	hci_dev_unlock(vhci->hdev);
++
++	return 0;
++}
++
++DEFINE_DEBUGFS_ATTRIBUTE(msft_opcode_fops, msft_opcode_get, msft_opcode_set,
++			 "%llu\n");
++
+ static int __vhci_create_device(struct vhci_data *data, __u8 opcode)
+ {
+ 	struct hci_dev *hdev;
+@@ -259,6 +287,10 @@ static int __vhci_create_device(struct vhci_data *data, __u8 opcode)
+ 	debugfs_create_file("force_wakeup", 0644, hdev->debugfs, data,
+ 			    &force_wakeup_fops);
+ 
++	if (IS_ENABLED(CONFIG_BT_MSFTEXT))
++		debugfs_create_file("msft_opcode", 0644, hdev->debugfs, data,
++				    &msft_opcode_fops);
++
+ 	hci_skb_pkt_type(skb) = HCI_VENDOR_PKT;
+ 
+ 	skb_put_u8(skb, 0xff);
+-- 
+2.31.1
+
