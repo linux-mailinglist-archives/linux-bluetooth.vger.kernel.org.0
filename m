@@ -2,96 +2,167 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C51EA429ED0
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Oct 2021 09:42:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88B1C42A16D
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Oct 2021 11:55:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234123AbhJLHo5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 12 Oct 2021 03:44:57 -0400
-Received: from szxga08-in.huawei.com ([45.249.212.255]:25124 "EHLO
-        szxga08-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234105AbhJLHo5 (ORCPT
+        id S230389AbhJLJ5e (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 12 Oct 2021 05:57:34 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:30143 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235263AbhJLJ5e (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 12 Oct 2021 03:44:57 -0400
-Received: from dggeml709-chm.china.huawei.com (unknown [172.30.72.56])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4HT6zf1xftz1DHYX;
-        Tue, 12 Oct 2021 15:41:18 +0800 (CST)
-Received: from localhost.localdomain.localdomain (10.175.113.25) by
- dggeml709-chm.china.huawei.com (10.3.17.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2308.8; Tue, 12 Oct 2021 15:42:53 +0800
-From:   Wei Yongjun <weiyongjun1@huawei.com>
-To:     <linux-bluetooth@vger.kernel.org>
-CC:     Wei Yongjun <weiyongjun1@huawei.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Subject: [PATCH] Bluetooth: Fix memory leak of hci device
-Date:   Tue, 12 Oct 2021 15:56:34 +0800
-Message-ID: <20211012075634.8041-1-weiyongjun1@huawei.com>
-X-Mailer: git-send-email 2.20.1
+        Tue, 12 Oct 2021 05:57:34 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1634032533; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=5qSQYtrGHjpBWl/ojCdJhEuYiM0d4NPaFPe3p9m6H/w=;
+ b=Aqf/9lFmnt1sIUODnSWdosourSez/yRXRhla9PscFzwkyEYLiqVZl56rWHY52IR8qnXYTs/m
+ L6vcIs9WxXzJvVmZmNOnT7ZsaEzj35njiwH8fMt1K7orQEFI3aysbB83ymbo/aRAvXf1teVV
+ tKwD7iH6Fzt7tMhyHIsNfDUHHE4=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI2MTA3ZSIsICJsaW51eC1ibHVldG9vdGhAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 61655b8103355859c84bb50d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 12 Oct 2021 09:55:13
+ GMT
+Sender: bgodavar=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F012AC4360C; Tue, 12 Oct 2021 09:55:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bgodavar)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 45EAEC4338F;
+        Tue, 12 Oct 2021 09:55:11 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.113.25]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- dggeml709-chm.china.huawei.com (10.3.17.139)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 12 Oct 2021 15:25:11 +0530
+From:   bgodavar@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     marcel@holtmann.org, bjorn.andersson@linaro.org,
+        johan.hedberg@gmail.com, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, rjliao@codeaurora.org,
+        pharish@codeaurora.org, abhishekpandit@chromium.org
+Subject: Re: [PATCH v1 1/2] arm64: dts: qcom: sc7280: Add bluetooth node on
+ SC7280 IDP board
+In-Reply-To: <YV3cVzI4aVeCjMt2@google.com>
+References: <1633523403-32264-1-git-send-email-bgodavar@codeaurora.org>
+ <YV3cVzI4aVeCjMt2@google.com>
+Message-ID: <bac51fc71002bdd9c20b92571d3e1c7e@codeaurora.org>
+X-Sender: bgodavar@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Fault injection test reported memory leak of hci device as follows:
+Hi Matthias,
 
-unreferenced object 0xffff88800b858000 (size 8192):
-  comm "kworker/0:2", pid 167, jiffies 4294955747 (age 557.148s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 ad 4e ad de  .............N..
-  backtrace:
-    [<0000000070eb1059>] kmem_cache_alloc_trace mm/slub.c:3208
-    [<00000000015eb521>] hci_alloc_dev_priv include/linux/slab.h:591
-    [<00000000dcfc1e21>] bpa10x_probe include/net/bluetooth/hci_core.h:1240
-    [<000000005d3028c7>] usb_probe_interface drivers/usb/core/driver.c:397
-    [<00000000cbac9243>] really_probe drivers/base/dd.c:517
-    [<0000000024cab3f0>] __driver_probe_device drivers/base/dd.c:751
-    [<00000000202135cb>] driver_probe_device drivers/base/dd.c:782
-    [<000000000761f2bc>] __device_attach_driver drivers/base/dd.c:899
-    [<00000000f7d63134>] bus_for_each_drv drivers/base/bus.c:427
-    [<00000000c9551f0b>] __device_attach drivers/base/dd.c:971
-    [<000000007f79bd16>] bus_probe_device drivers/base/bus.c:487
-    [<000000007bb8b95a>] device_add drivers/base/core.c:3364
-    [<000000009564d9ea>] usb_set_configuration drivers/usb/core/message.c:2171
-    [<00000000e4657087>] usb_generic_driver_probe drivers/usb/core/generic.c:239
-    [<0000000071ede518>] usb_probe_device drivers/usb/core/driver.c:294
-    [<00000000cbac9243>] really_probe drivers/base/dd.c:517
+On 2021-10-06 22:56, Matthias Kaehlcke wrote:
+> On Wed, Oct 06, 2021 at 06:00:02PM +0530, Balakrishna Godavarthi wrote:
+>> Add bluetooth SoC WCN6750 node for SC7280 IDP board.
+>> 
+>> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7280-idp.dts  |  2 ++
+>>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 31 
+>> +++++++++++++++++++++++++++++++
+>>  2 files changed, 33 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts 
+>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> index 64fc22a..d3f5393 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> @@ -17,6 +17,8 @@
+>> 
+>>  	aliases {
+>>  		serial0 = &uart5;
+>> +		bluetooth0 = &bluetooth;
+>> +		hsuart0 = &uart7;
+> 
+> Sort aliases alphabetically.
+> 
+> Also 'hsuart' should not be used, as Dmitry already pointed out on
+> patch 2/2. I suppose it should be 'serial1', as in 'second serial
+> port of the board'.
+> 
+[Bala]: will update it.
+>>  	};
+>> 
+>>  	chosen {
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index 272d5ca..05aa729 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -393,6 +393,24 @@
+>>  				<&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
+>>  	pinctrl-names = "default", "sleep";
+>>  	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>, 
+>> <&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
+>> +
+>> +	bluetooth: wcn6750-bt {
+>> +		compatible = "qcom,wcn6750-bt";
+>> +		pinctrl-names = "default";
+>> +		pinctrl-0 = <&bt_en_default>;
+> 
+> Do we also need a pinctrl entry for 'swctrl' ?
+[Bala]: It is in input to APPS and op of BT SoC.
+I don't think to set any configuration as BT SOC will take care of it.
 
-hci_alloc_dev() do not init the device's flag. And hci_free_dev()
-using put_device() to free the memory allocated for this device,
-but it calls just kfree(dev) only in case of HCI_UNREGISTER flag
-is set. So any error handing before hci_register_dev() success
-will cause memory leak.
+> 
+>> +		enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>; /* BT_EN */
+>> +		swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>; /* SW_CTRL */
+> 
+> The comments aren't useful, the property names say the same.
+> 
+[Bala]: will remove them
 
-To avoid this behaviour we need to set hdev HCI_UNREGISTER flag
-in hci_alloc_dev_priv().
+>> +		vddio-supply = <&vreg_l19b_1p8>;
+>> +		vddaon-supply = <&vreg_s7b_0p9>;
+>> +		vddbtcxmx-supply = <&vreg_s7b_0p9>;
+>> +		vddrfacmn-supply = <&vreg_s7b_0p9>;
+>> +		vddrfa0p8-supply = <&vreg_s7b_0p9>;
+>> +		vddrfa1p7-supply = <&vreg_s1b_1p8>;
+>> +		vddrfa1p2-supply = <&vreg_s8b_1p2>;
+>> +		vddrfa2p2-supply = <&vreg_s1c_2p2>;
+>> +		vddasd-supply = <&vreg_l11c_2p8>;
+>> +		max-speed = <3200000>;
+>> +	};
+>>  };
+>> 
+>>  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+>> @@ -504,6 +522,19 @@
+>>  		 */
+>>  		bias-pull-up;
+>>  	};
+>> +
+>> +	bt_en_default: bt_en_default {
+> 
+> 	bt_en: bt-en {
+> 
+>> +		pinmux {
+>> +			pins = "gpio85";
+>> +			function = "gpio";
+>> +		};
+>> +		pinconf {
+>> +			pins = "gpio85";
+>> +			drive-strength = <2>;
+>> +			output-low;
+>> +			bias-pull-down;
+>> +		};
+> 
+> No pinmux & pinconf nodes, see configuration for other pins.
+[Bala]: Thanks for pointing will update in next version
 
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 8a47a3017d61..42410f568e90 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3876,6 +3876,11 @@ struct hci_dev *hci_alloc_dev_priv(int sizeof_priv)
- 	INIT_DELAYED_WORK(&hdev->cmd_timer, hci_cmd_timeout);
- 	INIT_DELAYED_WORK(&hdev->ncmd_timer, hci_ncmd_timeout);
- 
-+	/* We need to set HCI_UNREGISTER flag to correctly release
-+	 * the device in hci_free_dev()
-+	 */
-+	hci_dev_set_flag(hdev, HCI_UNREGISTER);
-+
- 	hci_request_setup(hdev);
- 
- 	hci_init_sysfs(hdev);
--- 
-2.25.1
 
