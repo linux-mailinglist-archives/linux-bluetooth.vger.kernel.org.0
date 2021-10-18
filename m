@@ -2,316 +2,270 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04A63432922
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 Oct 2021 23:37:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AB10432A01
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 19 Oct 2021 01:08:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232790AbhJRVjs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 18 Oct 2021 17:39:48 -0400
-Received: from mailgw02.mediatek.com ([216.200.240.185]:28513 "EHLO
-        mailgw02.mediatek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232292AbhJRVjr (ORCPT
+        id S229821AbhJRXLI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 18 Oct 2021 19:11:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54550 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229524AbhJRXLI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 18 Oct 2021 17:39:47 -0400
-X-UUID: 642754f1d0f04919831fc3fc92f4bcce-20211018
-X-UUID: 642754f1d0f04919831fc3fc92f4bcce-20211018
-Received: from mtkcas66.mediatek.inc [(172.29.193.44)] by mailgw02.mediatek.com
-        (envelope-from <sean.wang@mediatek.com>)
-        (musrelay.mediatek.com ESMTP with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
-        with ESMTP id 1042325873; Mon, 18 Oct 2021 14:37:31 -0700
-Received: from mtkcas11.mediatek.inc (172.21.101.40) by
- MTKMBS62N1.mediatek.inc (172.29.193.41) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Mon, 18 Oct 2021 14:30:56 -0700
-Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas11.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Tue, 19 Oct 2021 05:30:55 +0800
-From:   <sean.wang@mediatek.com>
-To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>
-CC:     <Mark-YW.Chen@mediatek.com>, <sean.wang@mediatek.com>,
-        <Soul.Huang@mediatek.com>, <YN.Chen@mediatek.com>,
-        <Leon.Yen@mediatek.com>, <Eric-SY.Chang@mediatek.com>,
-        <Deren.Wu@mediatek.com>, <km.lin@mediatek.com>,
-        <robin.chiu@mediatek.com>, <Eddie.Chen@mediatek.com>,
-        <ch.yeh@mediatek.com>, <posh.sun@mediatek.com>,
-        <ted.huang@mediatek.com>, <Eric.Liang@mediatek.com>,
-        <Stella.Chang@mediatek.com>, <Tom.Chou@mediatek.com>,
-        <steve.lee@mediatek.com>, <jsiuda@google.com>,
-        <frankgor@google.com>, <jemele@google.com>,
-        <abhishekpandit@google.com>, <michaelfsun@google.com>,
-        <mcchou@chromium.org>, <shawnku@google.com>,
-        <linux-bluetooth@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Mark-yw Chen <mark-yw.chen@mediatek.com>
-Subject: [PATCH v2 10/10] Bluetooth: btmtksdio: add MT7921s Bluetooth support
-Date:   Tue, 19 Oct 2021 05:30:21 +0800
-Message-ID: <4dd1fc16a9dbcb981ac4c0af538991d9ea42c969.1634592181.git.objelf@gmail.com>
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <cover.1634592181.git.objelf@gmail.com>
-References: <cover.1634592181.git.objelf@gmail.com>
+        Mon, 18 Oct 2021 19:11:08 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58F4FC06161C
+        for <linux-bluetooth@vger.kernel.org>; Mon, 18 Oct 2021 16:08:56 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id pf6-20020a17090b1d8600b0019fa884ab85so554171pjb.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 18 Oct 2021 16:08:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+HVrtpGhtDU4jb4AP5mkfcwHZNRHWdP4BGOrKQYxClQ=;
+        b=iIEQRaCPfrentvvvnJ8ayiRtVGf69ZLQbbaUz3PWDPETWQkjGYkJmt4wf2iDf0PCdE
+         ZxY7U28r4yU1VnY9WB946uNqg71Ed5i6BRxM7sRvRmWfBttXHCx/zbTF3h6aQSCfoTBj
+         hNgUux3MixfKmNv9XN8AyJDYqyBzfhi2YF37Z5n+juH1fXvNg73IUtm7NDodxUXep5p9
+         qk+Mm1isDSVj1I7O2NW/Gm2s6cK8lPANMgMMIiUeLieBjDTVjB3mLzGqTuIhkx02P5o5
+         tBHJjYzrj/Zbl1w3f8k2fLwco1ShO1nkVNWRMcy9tZGQuXJtHwgjIi7lY1NZhY57Mh2j
+         21HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+HVrtpGhtDU4jb4AP5mkfcwHZNRHWdP4BGOrKQYxClQ=;
+        b=kMyq4RKgw1ES1rcHTqVcN0Tty1E5ovgWcKav8MBvq0yXNefdLlXFaQTyHOyEJthRXx
+         7/HvQZCiJDJ7vpGhBY9YXaqpPzK/K5Aeq9Jc498ukejmft9gGzdTver/WKhM71hxfKNa
+         7wVS6jfBdoRHtXVy2qIbixFADxHaTrd+Ox64O+RVDKfAknjon0eLXWUUs6AH7NtZ+Fjf
+         Lv2i4p+qggF8nYHmyv3eWefDXX+y6BH5rUDIn2U+pdsNv6gST4mXl9DGhs75azV1mvSa
+         6rM/UmOwjKy/kqnur+EmrXJogOqtqqyqiI5vKkAA1Z4gZbKJfk1gNjhG3XBMJq9GP4q3
+         SgSw==
+X-Gm-Message-State: AOAM53382ask2YrTTWgfA5lEy6pZgSYZ1pmFQLR0FYaZBJa4WW/3cIxx
+        iMVqBRACDr3eqSBJMPNC+ovb+7FrkOwBkw==
+X-Google-Smtp-Source: ABdhPJyOXn5MdBuQvTVI+Eyssi0agyLjS+DnOVKA0tEuLvSN2/Ah8fKpOnUbqojCMrwFVy5jHt/9vA==
+X-Received: by 2002:a17:90a:ba09:: with SMTP id s9mr2216744pjr.42.1634598535313;
+        Mon, 18 Oct 2021 16:08:55 -0700 (PDT)
+Received: from han1-NUC8i7BEH.hsd1.or.comcast.net ([2601:1c0:6a01:d830:1898:ddd4:7bc6:9e0d])
+        by smtp.gmail.com with ESMTPSA id s30sm13469456pgn.38.2021.10.18.16.08.54
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Oct 2021 16:08:54 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [RFC BlueZ PATCH v12 1/4] emulator: Add support to config the accept and resolve list
+Date:   Mon, 18 Oct 2021 16:08:50 -0700
+Message-Id: <20211018230853.134320-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MTK:  N
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Sean Wang <sean.wang@mediatek.com>
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-add MT7921s Bluetooth support
-
-Co-developed-by: Mark-yw Chen <mark-yw.chen@mediatek.com>
-Signed-off-by: Mark-yw Chen <mark-yw.chen@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+This patch adds interfaces to config the accept list and resolve list in
+the btdev.
 ---
- drivers/bluetooth/btmtk.h     |  11 +++
- drivers/bluetooth/btmtksdio.c | 141 ++++++++++++++++++++++++++++++++--
- 2 files changed, 144 insertions(+), 8 deletions(-)
+ emulator/btdev.c  | 37 +++++++++++++++++++++++++++++--------
+ emulator/btdev.h  |  4 ++++
+ emulator/hciemu.c | 28 ++++++++++++++++++++++++++++
+ emulator/hciemu.h |  4 ++++
+ 4 files changed, 65 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
-index 18f43c641b3b..6e7b0c7567c0 100644
---- a/drivers/bluetooth/btmtk.h
-+++ b/drivers/bluetooth/btmtk.h
-@@ -7,6 +7,8 @@
+diff --git a/emulator/btdev.c b/emulator/btdev.c
+index f28187362..bf6a03e59 100644
+--- a/emulator/btdev.c
++++ b/emulator/btdev.c
+@@ -196,6 +196,10 @@ struct btdev {
+ 	} __attribute__ ((packed)) le_cig;
+ 	uint8_t  le_iso_path[2];
  
- #define HCI_WMT_MAX_EVENT_SIZE		64
- 
-+#define BTMTK_WMT_REG_READ 0x2
-+
- enum {
- 	BTMTK_WMT_PATCH_DWNLD = 0x1,
- 	BTMTK_WMT_TEST = 0x2,
-@@ -14,6 +16,7 @@ enum {
- 	BTMTK_WMT_HIF = 0x4,
- 	BTMTK_WMT_FUNC_CTRL = 0x6,
- 	BTMTK_WMT_RST = 0x7,
-+	BTMTK_WMT_REGISTER = 0x8,
- 	BTMTK_WMT_SEMAPHORE = 0x17,
- };
- 
-@@ -49,6 +52,14 @@ struct btmtk_hci_wmt_evt_funcc {
- 	__be16 status;
- } __packed;
- 
-+struct btmtk_hci_wmt_evt_reg {
-+	struct btmtk_hci_wmt_evt hwhdr;
-+	u8 rsv[2];
-+	u8 num;
-+	__le32 addr;
-+	__le32 val;
-+} __packed;
-+
- struct btmtk_tci_sleep {
- 	u8 mode;
- 	__le16 duration;
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index 3266c5d83cae..ce6a6c00ff98 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -37,14 +37,22 @@ static bool enable_autosuspend;
- 
- struct btmtksdio_data {
- 	const char *fwname;
-+	u16 chipid;
- };
- 
- static const struct btmtksdio_data mt7663_data = {
- 	.fwname = FIRMWARE_MT7663,
-+	.chipid = 0x7663,
- };
- 
- static const struct btmtksdio_data mt7668_data = {
- 	.fwname = FIRMWARE_MT7668,
-+	.chipid = 0x7668,
-+};
-+
-+static const struct btmtksdio_data mt7921_data = {
-+	.fwname = FIRMWARE_MT7961,
-+	.chipid = 0x7921,
- };
- 
- static const struct sdio_device_id btmtksdio_table[] = {
-@@ -52,6 +60,8 @@ static const struct sdio_device_id btmtksdio_table[] = {
- 	 .driver_data = (kernel_ulong_t)&mt7663_data },
- 	{SDIO_DEVICE(SDIO_VENDOR_ID_MEDIATEK, SDIO_DEVICE_ID_MEDIATEK_MT7668),
- 	 .driver_data = (kernel_ulong_t)&mt7668_data },
-+	{SDIO_DEVICE(SDIO_VENDOR_ID_MEDIATEK, SDIO_DEVICE_ID_MEDIATEK_MT7961),
-+	 .driver_data = (kernel_ulong_t)&mt7921_data },
- 	{ }	/* Terminating entry */
- };
- MODULE_DEVICE_TABLE(sdio, btmtksdio_table);
-@@ -115,6 +125,7 @@ static int mtk_hci_wmt_sync(struct hci_dev *hdev,
- {
- 	struct btmtksdio_dev *bdev = hci_get_drvdata(hdev);
- 	struct btmtk_hci_wmt_evt_funcc *wmt_evt_funcc;
-+	struct btmtk_hci_wmt_evt_reg *wmt_evt_reg;
- 	u32 hlen, status = BTMTK_WMT_INVALID;
- 	struct btmtk_hci_wmt_evt *wmt_evt;
- 	struct btmtk_hci_wmt_cmd *wc;
-@@ -194,6 +205,19 @@ static int mtk_hci_wmt_sync(struct hci_dev *hdev,
- 		else
- 			status = BTMTK_WMT_ON_UNDONE;
- 		break;
-+	case BTMTK_WMT_PATCH_DWNLD:
-+		if (wmt_evt->whdr.flag == 2)
-+			status = BTMTK_WMT_PATCH_DONE;
-+		else if (wmt_evt->whdr.flag == 1)
-+			status = BTMTK_WMT_PATCH_PROGRESS;
-+		else
-+			status = BTMTK_WMT_PATCH_UNDONE;
-+		break;
-+	case BTMTK_WMT_REGISTER:
-+		wmt_evt_reg = (struct btmtk_hci_wmt_evt_reg *)wmt_evt;
-+		if (le16_to_cpu(wmt_evt->whdr.dlen) == 12)
-+			status = le32_to_cpu(wmt_evt_reg->val);
-+		break;
- 	}
- 
- 	if (wmt_params->status)
-@@ -634,20 +658,14 @@ static int btmtksdio_func_query(struct hci_dev *hdev)
- 	return status;
++	/* Real time length of AL array */
++	uint8_t le_al_len;
++	/* Real time length of RL array */
++	uint8_t le_rl_len;
+ 	struct btdev_al le_al[AL_SIZE];
+ 	struct btdev_rl le_rl[RL_SIZE];
+ 	uint8_t  le_rl_enable;
+@@ -480,6 +484,18 @@ static void rl_clear(struct btdev *dev)
+ 		rl_reset(&dev->le_rl[i]);
  }
  
--static int btmtksdio_setup(struct hci_dev *hdev)
-+static int mt76xx_setup(struct hci_dev *hdev, const char *fwname)
++/* Set the real time length of AL array */
++void btdev_set_al_len(struct btdev *btdev, uint8_t len)
++{
++	btdev->le_al_len = len;
++}
++
++/* Set the real time length of RL array */
++void btdev_set_rl_len(struct btdev *btdev, uint8_t len)
++{
++	btdev->le_rl_len = len;
++}
++
+ static void btdev_reset(struct btdev *btdev)
  {
--	struct btmtksdio_dev *bdev = hci_get_drvdata(hdev);
- 	struct btmtk_hci_wmt_params wmt_params;
--	ktime_t calltime, delta, rettime;
- 	struct btmtk_tci_sleep tci_sleep;
--	unsigned long long duration;
- 	struct sk_buff *skb;
- 	int err, status;
- 	u8 param = 0x1;
+ 	/* FIXME: include here clearing of all states that should be
+@@ -491,6 +507,9 @@ static void btdev_reset(struct btdev *btdev)
  
--	calltime = ktime_get();
--	bdev->hw_tx_ready = true;
--
- 	/* Query whether the firmware is already download */
- 	wmt_params.op = BTMTK_WMT_SEMAPHORE;
- 	wmt_params.flag = 1;
-@@ -667,7 +685,7 @@ static int btmtksdio_setup(struct hci_dev *hdev)
+ 	al_clear(btdev);
+ 	rl_clear(btdev);
++
++	btdev->le_al_len = AL_SIZE;
++	btdev->le_rl_len = RL_SIZE;
+ }
+ 
+ static int cmd_reset(struct btdev *dev, const void *data, uint8_t len)
+@@ -3576,7 +3595,7 @@ static int cmd_read_al_size(struct btdev *dev, const void *data, uint8_t len)
+ 	struct bt_hci_rsp_le_read_accept_list_size rsp;
+ 
+ 	rsp.status = BT_HCI_ERR_SUCCESS;
+-	rsp.size = AL_SIZE;
++	rsp.size = dev->le_al_len;
+ 	cmd_complete(dev, BT_HCI_CMD_LE_READ_ACCEPT_LIST_SIZE, &rsp,
+ 						sizeof(rsp));
+ 
+@@ -3663,7 +3682,7 @@ static int cmd_add_al(struct btdev *dev, const void *data, uint8_t len)
+ 	if (cmd->addr_type > 0x01)
+ 		return -EINVAL;
+ 
+-	for (i = 0; i < AL_SIZE; i++) {
++	for (i = 0; i < dev->le_al_len; i++) {
+ 		struct btdev_al *al = &dev->le_al[i];
+ 
+ 		if (AL_ADDR_EQUAL(al, cmd->addr_type, &cmd->addr)) {
+@@ -3714,7 +3733,7 @@ static int cmd_remove_al(struct btdev *dev, const void *data, uint8_t len)
+ 	if (cmd->addr_type > 0x01)
+ 		return -EINVAL;
+ 
+-	for (i = 0; i < AL_SIZE; i++) {
++	for (i = 0; i < dev->le_al_len; i++) {
+ 		struct btdev_al *al = &dev->le_al[i];
+ 
+ 		ba2str(&al->addr, addr);
+@@ -3729,7 +3748,7 @@ static int cmd_remove_al(struct btdev *dev, const void *data, uint8_t len)
+ 		}
  	}
  
- 	/* Setup a firmware which the device definitely requires */
--	err = btmtk_setup_firmware(hdev, bdev->data->fwname, mtk_hci_wmt_sync);
-+	err = btmtk_setup_firmware(hdev, fwname, mtk_hci_wmt_sync);
- 	if (err < 0)
- 		return err;
+-	if (i == AL_SIZE)
++	if (i == dev->le_al_len)
+ 		return -EINVAL;
  
-@@ -719,6 +737,113 @@ static int btmtksdio_setup(struct hci_dev *hdev)
+ 	status = BT_HCI_ERR_SUCCESS;
+@@ -3760,7 +3779,7 @@ static int cmd_add_rl(struct btdev *dev, const void *data, uint8_t len)
+ 	if (cmd->addr_type > 0x01)
+ 		return -EINVAL;
+ 
+-	for (i = 0; i < RL_SIZE; i++) {
++	for (i = 0; i < dev->le_rl_len; i++) {
+ 		struct btdev_rl *rl = &dev->le_rl[i];
+ 
+ 		if (RL_ADDR_EQUAL(rl, cmd->addr_type, &cmd->addr)) {
+@@ -3811,7 +3830,7 @@ static int cmd_remove_rl(struct btdev *dev, const void *data, uint8_t len)
+ 	if (cmd->addr_type > 0x01)
+ 		return -EINVAL;
+ 
+-	for (i = 0; i < RL_SIZE; i++) {
++	for (i = 0; i < dev->le_rl_len; i++) {
+ 		struct btdev_rl *rl = &dev->le_rl[i];
+ 
+ 		if (RL_ADDR_EQUAL(rl, cmd->addr_type, &cmd->addr)) {
+@@ -3820,7 +3839,7 @@ static int cmd_remove_rl(struct btdev *dev, const void *data, uint8_t len)
+ 		}
  	}
- 	kfree_skb(skb);
  
-+	return 0;
+-	if (i == RL_SIZE)
++	if (i == dev->le_rl_len)
+ 		return -EINVAL;
+ 
+ 	status = BT_HCI_ERR_SUCCESS;
+@@ -3858,7 +3877,7 @@ static int cmd_read_rl_size(struct btdev *dev, const void *data, uint8_t len)
+ 	struct bt_hci_rsp_le_read_resolv_list_size rsp;
+ 
+ 	rsp.status = BT_HCI_ERR_SUCCESS;
+-	rsp.size = RL_SIZE;
++	rsp.size = dev->le_rl_len;
+ 
+ 	cmd_complete(dev, BT_HCI_CMD_LE_READ_RESOLV_LIST_SIZE,
+ 							&rsp, sizeof(rsp));
+@@ -6299,6 +6318,8 @@ struct btdev *btdev_create(enum btdev_type type, uint16_t id)
+ 	btdev->conns = queue_new();
+ 	btdev->le_ext_adv = queue_new();
+ 
++	btdev->le_al_len = AL_SIZE;
++	btdev->le_rl_len = RL_SIZE;
+ 	return btdev;
+ }
+ 
+diff --git a/emulator/btdev.h b/emulator/btdev.h
+index 412bfd158..b5f9979a8 100644
+--- a/emulator/btdev.h
++++ b/emulator/btdev.h
+@@ -80,6 +80,10 @@ uint8_t btdev_get_le_scan_enable(struct btdev *btdev);
+ 
+ void btdev_set_le_states(struct btdev *btdev, const uint8_t *le_states);
+ 
++void btdev_set_al_len(struct btdev *btdev, uint8_t len);
++
++void btdev_set_rl_len(struct btdev *btdev, uint8_t len);
++
+ void btdev_set_command_handler(struct btdev *btdev, btdev_command_func handler,
+ 							void *user_data);
+ 
+diff --git a/emulator/hciemu.c b/emulator/hciemu.c
+index 4752c8a4d..1f7af3b93 100644
+--- a/emulator/hciemu.c
++++ b/emulator/hciemu.c
+@@ -601,6 +601,34 @@ void hciemu_set_central_le_states(struct hciemu *hciemu,
+ 	btdev_set_le_states(dev, le_states);
+ }
+ 
++void hciemu_set_central_le_al_len(struct hciemu *hciemu, uint8_t len)
++{
++	struct btdev *dev;
++
++	if (!hciemu || !hciemu->vhci)
++		return;
++
++	dev = vhci_get_btdev(hciemu->vhci);
++	if (!dev)
++		return;
++
++	btdev_set_al_len(dev, len);
 +}
 +
-+static int mt79xx_setup(struct hci_dev *hdev, const char *fwname)
++void hciemu_set_central_le_rl_len(struct hciemu *hciemu, uint8_t len)
 +{
-+	struct btmtk_hci_wmt_params wmt_params;
-+	u8 param = 0x1;
-+	int err;
++	struct btdev *dev;
 +
-+	err = btmtk_setup_firmware_79xx(hdev, fwname, mtk_hci_wmt_sync);
-+	if (err < 0) {
-+		bt_dev_err(hdev, "Failed to setup 79xx firmware (%d)", err);
-+		return err;
-+	}
++	if (!hciemu || !hciemu->vhci)
++		return;
 +
-+	/* Enable Bluetooth protocol */
-+	wmt_params.op = BTMTK_WMT_FUNC_CTRL;
-+	wmt_params.flag = 0;
-+	wmt_params.dlen = sizeof(param);
-+	wmt_params.data = &param;
-+	wmt_params.status = NULL;
++	dev = vhci_get_btdev(hciemu->vhci);
++	if (!dev)
++		return;
 +
-+	err = mtk_hci_wmt_sync(hdev, &wmt_params);
-+	if (err < 0) {
-+		bt_dev_err(hdev, "Failed to send wmt func ctrl (%d)", err);
-+		return err;
-+	}
-+
-+	return err;
++	btdev_set_rl_len(dev, len);
 +}
 +
-+static int btsdio_mtk_reg_read(struct hci_dev *hdev, u32 reg, u32 *val)
-+{
-+	struct btmtk_hci_wmt_params wmt_params;
-+	struct reg_read_cmd {
-+		u8 type;
-+		u8 rsv;
-+		u8 num;
-+		__le32 addr;
-+	} __packed reg_read = {
-+		.type = 1,
-+		.num = 1,
-+	};
-+	u32 status;
-+	int err;
+ bool hciemu_add_central_post_command_hook(struct hciemu *hciemu,
+ 			hciemu_command_func_t function, void *user_data)
+ {
+diff --git a/emulator/hciemu.h b/emulator/hciemu.h
+index 338fa844d..2a49d8bad 100644
+--- a/emulator/hciemu.h
++++ b/emulator/hciemu.h
+@@ -61,6 +61,10 @@ uint8_t hciemu_get_central_le_scan_enable(struct hciemu *hciemu);
+ void hciemu_set_central_le_states(struct hciemu *hciemu,
+ 						const uint8_t *le_states);
+ 
++void hciemu_set_central_le_al_len(struct hciemu *hciemu, uint8_t len);
 +
-+	reg_read.addr = cpu_to_le32(reg);
-+	wmt_params.op = BTMTK_WMT_REGISTER;
-+	wmt_params.flag = BTMTK_WMT_REG_READ;
-+	wmt_params.dlen = sizeof(reg_read);
-+	wmt_params.data = &reg_read;
-+	wmt_params.status = &status;
++void hciemu_set_central_le_rl_len(struct hciemu *hciemu, uint8_t len);
 +
-+	err = mtk_hci_wmt_sync(hdev, &wmt_params);
-+	if (err < 0) {
-+		bt_dev_err(hdev, "Failed to read reg(%d)", err);
-+		return err;
-+	}
-+
-+	*val = status;
-+
-+	return err;
-+}
-+
-+static int btmtksdio_setup(struct hci_dev *hdev)
-+{
-+	struct btmtksdio_dev *bdev = hci_get_drvdata(hdev);
-+	ktime_t calltime, delta, rettime;
-+	unsigned long long duration;
-+	char fwname[64];
-+	int err, dev_id;
-+	u32 fw_version = 0;
-+
-+	calltime = ktime_get();
-+	bdev->hw_tx_ready = true;
-+
-+	switch (bdev->data->chipid) {
-+	case 0x7921:
-+		err = btsdio_mtk_reg_read(hdev, 0x70010200, &dev_id);
-+		if (err < 0) {
-+			bt_dev_err(hdev, "Failed to get device id (%d)", err);
-+			return err;
-+		}
-+
-+		err = btsdio_mtk_reg_read(hdev, 0x80021004, &fw_version);
-+		if (err < 0) {
-+			bt_dev_err(hdev, "Failed to get fw version (%d)", err);
-+			return err;
-+		}
-+
-+		snprintf(fwname, sizeof(fwname),
-+			 "mediatek/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
-+			 dev_id & 0xffff, (fw_version & 0xff) + 1);
-+		err = mt79xx_setup(hdev, fwname);
-+		if (err < 0)
-+			return err;
-+		break;
-+	case 0x7663:
-+	case 0x7668:
-+		err = mt76xx_setup(hdev, bdev->data->fwname);
-+		if (err < 0)
-+			return err;
-+		break;
-+	default:
-+		return -ENODEV;
-+	}
-+
- 	rettime = ktime_get();
- 	delta = ktime_sub(rettime, calltime);
- 	duration = (unsigned long long)ktime_to_ns(delta) >> 10;
+ typedef void (*hciemu_command_func_t)(uint16_t opcode, const void *data,
+ 						uint8_t len, void *user_data);
+ 
 -- 
 2.25.1
 
