@@ -2,109 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FF55439520
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Oct 2021 13:44:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7971439700
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Oct 2021 15:03:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233225AbhJYLrC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 25 Oct 2021 07:47:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58326 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233019AbhJYLq7 (ORCPT
+        id S233181AbhJYNF1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 25 Oct 2021 09:05:27 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:59972 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233119AbhJYNF1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 25 Oct 2021 07:46:59 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 179BCC061243
-        for <linux-bluetooth@vger.kernel.org>; Mon, 25 Oct 2021 04:44:37 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 301AD3F35A;
-        Mon, 25 Oct 2021 13:44:33 +0200 (CEST)
-Date:   Mon, 25 Oct 2021 13:44:31 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: Re: [BlueZ PATCH] src/device: Fix glib assertion
-Message-ID: <20211025114431.zohrqmktwsqajgbd@SoMainline.org>
-References: <20211022031456.373471-1-hj.tedd.an@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211022031456.373471-1-hj.tedd.an@gmail.com>
+        Mon, 25 Oct 2021 09:05:27 -0400
+Received: from smtpclient.apple (p4ff9f2d2.dip0.t-ipconnect.de [79.249.242.210])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 12726CED17;
+        Mon, 25 Oct 2021 15:03:03 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH v2] Bluetooth: cmtp: fix possible panic when
+ cmtp_init_sockets() fails
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20211025131012.2771062-1-wanghai38@huawei.com>
+Date:   Mon, 25 Oct 2021 15:03:02 +0200
+Cc:     Karsten Keil <isdn@linux-pingi.de>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>, kuba@kernel.org,
+        cascardo@canonical.com, netdev@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <0A1C459E-C477-431B-8338-3F281BBED207@holtmann.org>
+References: <20211025131012.2771062-1-wanghai38@huawei.com>
+To:     Wang Hai <wanghai38@huawei.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Tedd,
+Hi Wang,
 
-On 2021-10-21 20:14:56, Tedd Ho-Jeong An wrote:
-> From: Tedd Ho-Jeong An <tedd.an@intel.com>
+> I got a kernel BUG report when doing fault injection test:
 > 
-> This patch fixes the assertion by resetting the GError variable to NULL.
+> ------------[ cut here ]------------
+> kernel BUG at lib/list_debug.c:45!
+> ...
+> RIP: 0010:__list_del_entry_valid.cold+0x12/0x4d
+> ...
+> Call Trace:
+> proto_unregister+0x83/0x220
+> cmtp_cleanup_sockets+0x37/0x40 [cmtp]
+> cmtp_exit+0xe/0x1f [cmtp]
+> do_syscall_64+0x35/0xb0
+> entry_SYSCALL_64_after_hwframe+0x44/0xae
 > 
-> bluetoothd[370193]: GLib: g_file_set_contents: assertion 'error == NULL || *error == NULL' failed
-> bluetoothd[370193]: ++++++++ backtrace ++++++++
-> bluetoothd[370193]: #1  g_logv+0x21c (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f314559455c]
-> bluetoothd[370193]: #2  g_log+0x93 (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f3145594743]
-> bluetoothd[370193]: #3  g_file_set_contents+0x68 (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f3145577a68]
-> bluetoothd[370193]: #4  store_device_info_cb+0x3b6 (src/device.c:475) [0x55be0a3591e6]
-> bluetoothd[370193]: #5  g_main_context_dispatch+0x14e (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f314558d04e]
-> bluetoothd[370193]: #6  ?? (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f314558d400]
-> bluetoothd[370193]: #7  g_main_loop_run+0x83 (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f314558d6f3]
-> bluetoothd[370193]: #8  mainloop_run+0x19 (src/shared/mainloop-glib.c:68) [0x55be0a394149]
-> bluetoothd[370193]: #9  mainloop_run_with_signal+0xf0 (src/shared/mainloop-notify.c:190) [0x55be0a3945b0]
-> bluetoothd[370193]: #10 main+0xabc (src/main.c:1212) [0x55be0a2d9d9c]
-> bluetoothd[370193]: #11 __libc_start_main+0xf3 (../csu/libc-start.c:342) [0x7f314521e0b3]
-> bluetoothd[370193]: #12 _start+0x2e (/home/han1/work/dev/bluez/src/bluetoothd) [0x55be0a2dac7e]
-> bluetoothd[370193]: +++++++++++++++++++++++++++
-
-Is it desired to have a `Fixes: 6a154cd08 ("device: Fix unchecked return
-value")` annotation for BlueZ patches, just like is done for the kernel?
-
+> If cmtp_init_sockets() in cmtp_init() fails, cmtp_init() still returns
+> success. This will cause a kernel bug when accessing uncreated ctmp
+> related data when the module exits.
+> 
+> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Wang Hai <wanghai38@huawei.com>
 > ---
->  src/device.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/src/device.c b/src/device.c
-> index d5aae9576..f3cd69003 100644
-> --- a/src/device.c
-> +++ b/src/device.c
-> @@ -399,6 +399,7 @@ static gboolean store_device_info_cb(gpointer user_data)
->  		error("Unable to load key file from %s: (%s)", filename,
->  								gerr->message);
->  		g_error_free(gerr);
-> +		gerr = NULL;
+> v1->v2: remove the temporary variable "err"
+> net/bluetooth/cmtp/core.c | 4 +---
+> 1 file changed, 1 insertion(+), 3 deletions(-)
 
-You should also correct all the other g_error_free paths that were
-introduced recently, whenever this gerr pointer is reused.  I'm running
-into this assertion in quite a few places such as update_bredr_services.
+patch has been applied to bluetooth-next tree.
 
-Note that Luiz fixed this in a different way for store_device_info_cb in
-8b6b9b775 ("adapter: Fix storing IRK causing invalid read") by actually
-bailing on error, instead of merely printing it and continuing.  When
-those "Fix unchecked return value" patches were made, was every
-call-site evaluated to need a return instead of continuing?  That's the
-intended action of those coverity warnings, not just printing them for
-the sake of it.
+Regards
 
-I would have sent patches to correct this, but as shown in Luiz' patch
-linked above the desired error-handling behaviour will differ per
-calling-site.  As far as I'm aware some of these errors such as the key
-file not yet existing are normal, but invalid file contents are not
-(hence why a create_file seems to be performed instead of allowing all
-errors through).  This also seems to be the desired solution for
-update_bredr_services.
+Marcel
 
-Who's responsible for going through all the `Fix unchecked return value`
-patches and cleaning up their error-handling properly akin to 8b6b9b775?
-
->  	}
->  
->  	g_key_file_set_string(key_file, "General", "Name", device->name);
-> -- 
-> 2.25.1
-> 
-
-- Marijn
