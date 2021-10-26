@@ -2,73 +2,125 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AF4943B057
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Oct 2021 12:41:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7781343B2B9
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Oct 2021 14:53:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234647AbhJZKoQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 26 Oct 2021 06:44:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59960 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234043AbhJZKoP (ORCPT
+        id S236074AbhJZM4B (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 26 Oct 2021 08:56:01 -0400
+Received: from mail-oi1-f178.google.com ([209.85.167.178]:35449 "EHLO
+        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233805AbhJZMz7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 26 Oct 2021 06:44:15 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71138C061348
-        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Oct 2021 03:41:51 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id s1so11857836edd.3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Oct 2021 03:41:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=uV8asY+Ph+MBhl2vvI4Ge86HdE2PCNBFEbAqnFPyrck=;
-        b=RTmJXVT98V9OOMk7oD40uSNXPqkBoituOLx+hhP2tvNUoTSlat5elNKupYGsv7BT5j
-         6RPLlMoCWfIOXl1VSkE18WILSy9dBuYHIoj8pGBOqPUgn95LP8pFq1hSFA22MB2PlnKA
-         A5OH2jAIgxZgyPJS/h7gUmX6CBmYMyv0lMugHQfIiN9+0K6J67aNv15pBvuFDz9KAw+0
-         TrXOW8cpBjhIwQTft/CuTLqg5K+/mrEHUI02v4xieW/KTB2ZUrvjyg9vmNdacVuCrSfg
-         wF0lz0H8+hOylNoE4q1AgeJTejZbASbstaEg7FqphxZOU2JCTFTONtiL3jq+7HX4VPKX
-         cQrw==
+        Tue, 26 Oct 2021 08:55:59 -0400
+Received: by mail-oi1-f178.google.com with SMTP id r6so20419687oiw.2;
+        Tue, 26 Oct 2021 05:53:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=uV8asY+Ph+MBhl2vvI4Ge86HdE2PCNBFEbAqnFPyrck=;
-        b=xTUVKzNdKE6WSWFaaSuCr7JOTxCgnso8X+et8dtmhIfdyqHH6+r00sEN7Catxm048M
-         8dx147sMVtwhb+cAKsjE4sE9jrNbigLSx5nzMg42V/CVtaeDEZHjGsQNibadLfGvST+F
-         pc7e1WkIEJD0gY2go9NfBkx/g4PEZ1WYrVP11Cur0ugj9pSTm10Ly/800YZF2qv4bcVV
-         FYED1hKoh6JiyFW5yZin3Jez63z8BnguJN2Ql7XaoW3lDKrc1Iins82NuiY+x/N2JYmC
-         jnmtWSLBZINRX1mmyQYuNMG0rb+weeXyHac3zec9cvOib3OdsYeESQmwAh/V1lvqBhoz
-         THew==
-X-Gm-Message-State: AOAM531vjqpQmF1hTpnqa1iqEwoHHP0NX33sYssVrPnLc7T28a3MEJtT
-        9XF/AiGqG3Ezng2sdzdWSyu1rBHN+G8Nr5gCenY=
-X-Google-Smtp-Source: ABdhPJxLM+qSARy26PXFIMOxBe7XmbLuE0KjJA1PZTzMym3WuAksP64itaFoVrGKXXNkEeloGnKfHhdxFz5ethe+z/M=
-X-Received: by 2002:a05:6402:152:: with SMTP id s18mr35466410edu.356.1635244909921;
- Tue, 26 Oct 2021 03:41:49 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=o0sKLuOigkZzRb9mIiQk8+FcI77ASATTLv5/Ga7FhFA=;
+        b=LiN5b/hUlWdKTy22hfFNhcVPgP2d9oZTpnTBCB4F+ceWJ7c0gDrb88A18gFTBSItm+
+         ciwbn06AoG+RBwZ0QvaH7xW+TvWFIZJQMhatFiXk6Oye8CM7d3bAzLoe41hR4vyfYq2U
+         Q4ysH9xFsXdUZvVwM9ANoZYj0sNxG/BNciH8Na13e9xtiGUpTmv0HxCY9xH7HJk9r3h4
+         4UkXOT7YcXDuzW1zLyT4G+aqmufgi5UFL3Kd8NZZpZ6d/u2++EN6rcs2Bh9aI7hRw9hC
+         6ZUh5iPpekGPMqhCOYxs47WR6Q5nysQ8qzoe5x00qvRqlKXrcgwljnukCV0gT0ZNkM2O
+         4Z/Q==
+X-Gm-Message-State: AOAM533lbAtFgm9jDD7jbjpLAl/m87n4NQd3HTBAKzwYa2dydELKxDy/
+        4PZLZ8yGLGe0q7vNnmHVag==
+X-Google-Smtp-Source: ABdhPJwP8phGmuV03HOFOfdE+cAf7lJnT51ZIqVF78khc0VQIqXv3RKQK4+vTgDjB/WIq+QnAMnzvA==
+X-Received: by 2002:a05:6808:144d:: with SMTP id x13mr17653853oiv.132.1635252815289;
+        Tue, 26 Oct 2021 05:53:35 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id j6sm3760099oot.18.2021.10.26.05.53.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Oct 2021 05:53:34 -0700 (PDT)
+Received: (nullmailer pid 2444200 invoked by uid 1000);
+        Tue, 26 Oct 2021 12:53:33 -0000
+Date:   Tue, 26 Oct 2021 07:53:33 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: Re: [PATCH v1 01/15] dt-bindings: add pwrseq device tree bindings
+Message-ID: <YXf6TbV2IpPbB/0Y@robh.at.kernel.org>
+References: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
+ <20211006035407.1147909-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Reply-To: zahirikeen@gmail.com
-Sender: www.ups.usa01@gmail.com
-Received: by 2002:a17:906:9749:0:0:0:0 with HTTP; Tue, 26 Oct 2021 03:41:49
- -0700 (PDT)
-From:   Zahiri Keen <zahirikeen2@gmail.com>
-Date:   Tue, 26 Oct 2021 12:41:49 +0200
-X-Google-Sender-Auth: vkGkQPXsYwXbj7d_nN2WyyG80-Y
-Message-ID: <CABpS9gad-YkyM=U8cZMO22ssy_pnEPFiKi1jtJvKZ3=yF2jgyQ@mail.gmail.com>
-Subject: Good Day,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211006035407.1147909-2-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Good Day,
+On Wed, Oct 06, 2021 at 06:53:53AM +0300, Dmitry Baryshkov wrote:
+> Add device tree bindings for the new power sequencer subsystem.
+> Consumers would reference pwrseq nodes using "foo-pwrseq" properties.
+> Providers would use '#pwrseq-cells' property to declare the amount of
+> cells in the pwrseq specifier.
 
-I know this email might come to you as a surprise because is coming
-from someone you haven=E2=80=99t met with before.
+Please use get_maintainers.pl.
 
-I am Mr. Zahiri Keen, the bank manager with BOA bank i contact you for
-a deal relating to the funds which are in my position I shall furnish
-you with more detail once your response.
+This is not a pattern I want to encourage, so NAK on a common binding.
 
-Regards,
-Mr. Zahiri
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/power/pwrseq/pwrseq.yaml         | 32 +++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml b/Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml
+> new file mode 100644
+> index 000000000000..4a8f6c0218bf
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml
+> @@ -0,0 +1,32 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/power/pwrseq/pwrseq.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Power Sequencer devices
+> +
+> +maintainers:
+> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +
+> +properties:
+> +  "#powerseq-cells":
+> +    description:
+> +      Number of cells in a pwrseq specifier.
+> +
+> +patternProperties:
+> +  ".*-pwrseq$":
+> +    description: Power sequencer supply phandle(s) for this node
+> +
+> +additionalProperties: true
+> +
+> +examples:
+> +  - |
+> +    qca_pwrseq: qca-pwrseq {
+> +      #pwrseq-cells = <1>;
+> +    };
+> +
+> +    bluetooth {
+> +      bt-pwrseq = <&qca_pwrseq 1>;
+> +    };
+> +...
+> -- 
+> 2.33.0
+> 
+> 
