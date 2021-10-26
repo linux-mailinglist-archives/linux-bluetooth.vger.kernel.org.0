@@ -2,93 +2,70 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C1CA43AE25
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Oct 2021 10:34:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9772043AE6D
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Oct 2021 10:56:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233224AbhJZIgU convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 26 Oct 2021 04:36:20 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:56624 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234242AbhJZIgT (ORCPT
+        id S234516AbhJZI6u (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 26 Oct 2021 04:58:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35810 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229863AbhJZI6u (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 26 Oct 2021 04:36:19 -0400
-Received: from smtpclient.apple (p5b3d2be1.dip0.t-ipconnect.de [91.61.43.225])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 497D7CED2C;
-        Tue, 26 Oct 2021 10:33:54 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
-Subject: Re: [BlueZ PATCH v4 1/3] doc: Introduce the Adv Monitor Device
- Found/Lost events
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <CAGPPCLBNN+Eg92=GnmbMBfngLEb=BL6sSkx7O19rYOydAkO8HA@mail.gmail.com>
-Date:   Tue, 26 Oct 2021 10:33:53 +0200
-Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        chromeos-bluetooth-upstreaming@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <BACB0D21-AB8E-47F2-8CAC-B5E574B8A85C@holtmann.org>
-References: <20211025191811.3575708-1-mmandlik@google.com>
- <20211025121343.BlueZ.v4.1.I7f6bdb9282c1e12ffc6c662674678f2b1cb69182@changeid>
- <577458A3-49B9-416B-A35B-58F174CC88F8@holtmann.org>
- <CAGPPCLBNN+Eg92=GnmbMBfngLEb=BL6sSkx7O19rYOydAkO8HA@mail.gmail.com>
-To:     Manish Mandlik <mmandlik@google.com>
-X-Mailer: Apple Mail (2.3693.20.0.1.32)
+        Tue, 26 Oct 2021 04:58:50 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CF85C061745
+        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Oct 2021 01:56:26 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id f11so13642132pfc.12
+        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Oct 2021 01:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=5jYcx5J9jKFRaHGj5jlcVs3PVut85JmiEowTJxo0Xak=;
+        b=A9DLHXK9o1rm7gnaW56gubsq8ywFLCjuDViW/aZ94ouQySYJdCTyO0MxwtQkjReZLE
+         qP/IYBFcasjasqX3uScttJygDebDUvTYU9/TZXTQcWsxkJg6FYiLRw6CmIStUUqCVQpN
+         iGpeV7XXTPeVABwtLrB4NGqz7EYeuXtfw0Obcm1rA45NFawzfuqgvAqKiElXXlvdEwMM
+         5wWvmVHkPcn02jiuUuz8TWdU6kX0Fev5pNUVHgiPjV1FAQllFw6qE76+mxfoGCFXeKbg
+         XTaYuO0gT9pnY3UXrWYqjuwxwZyzxOHxdjyJsyV+IhW6keA9IJ8B7ze6AlNZk0uH3N/H
+         +m8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=5jYcx5J9jKFRaHGj5jlcVs3PVut85JmiEowTJxo0Xak=;
+        b=Ne8BkAPz6WBKFa5wIUG7H8Zmw9FRMoxeU28FocH0mS9AWM1FbVywurtCUhz4KC92D6
+         X7vA3i3yYHwGy+h/ho4VsF0dxg5+9TbJB5Job+Onz40UftCJf9iIEEpOJkx/tg4uJS4S
+         wd4a0RmReEngrx9mMSuwfQeEJf18q8GkLfE/BHGkWksipCgMpxAAnPd1tGCmq1s60Yno
+         lq5bvkc1EAMmCN8tAc7r6tkcooDmlkHbsNgPvIFX3gr8oL9ad11cXYeK/COk+G/wEr+W
+         XrhqWpUqfV5kUrUaOrxCMqquq4HmA+2MsE5jWKXHTwSi+BOQSmfHS8ZV/vTmE06tOBjs
+         c+SQ==
+X-Gm-Message-State: AOAM533lsl0WcA2z2rEKfuvuxt2Iou30+ikppqozIJuR9Cimjtj14qny
+        GB6RAuvjCSeVShCKIfzYXtPWweOzVdCZEAkIdhI=
+X-Google-Smtp-Source: ABdhPJxM8kd/S67eWW+IcY6w2C7EDRq4004ecjRJ3vkBQ3hLMhruOfYDHfuwYQ+6V6hVHCGrYjeGcsMGURNKTUSk630=
+X-Received: by 2002:aa7:8b0d:0:b0:44c:89ca:7844 with SMTP id
+ f13-20020aa78b0d000000b0044c89ca7844mr24487169pfd.19.1635238586228; Tue, 26
+ Oct 2021 01:56:26 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a17:90b:388b:0:0:0:0 with HTTP; Tue, 26 Oct 2021 01:56:25
+ -0700 (PDT)
+Reply-To: maryamc860@gmail.com
+From:   =?UTF-8?Q?Maryam_Ch=C3=A9ng?= <adelalnezi511@gmail.com>
+Date:   Tue, 26 Oct 2021 11:56:25 +0300
+Message-ID: <CAEqeqmZotww1bSM-XD5+eHDXthW8=WpfLRi4WsUC4-3iwbop1Q@mail.gmail.com>
+Subject: =?UTF-8?Q?Kann_ich_Ihnen_=242=2C600=2C000=2E00_USD_Millionen_=C3=9Cberweis?=
+        =?UTF-8?Q?ung_anvertrauen=3F?=
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Manish,
-
-> > 
-> > Example
-> > @@ -4910,3 +4911,50 @@ Controller Resume Event
-> >       Address_Type. Otherwise, Address and Address_Type will both be zero.
-> > 
-> >       This event will be sent to all management sockets.
-> > +
-> > +
-> > +Advertisement Monitor Device Found Event
-> > +========================================
-> > +
-> > +     Event code:             0x002f
-> > +     Controller Index:       <controller_id>
-> > +     Event Parameters:       Monitor_Handle (2 Octets)
-> > +                             Address (6 Octets)
-> > +                             Address_Type (1 Octet)
-> > +
-> > +     This event indicates that the controller has started tracking a device
-> > +     matching an Advertisement Monitor with handle Monitor_Handle.
-> > +
-> > +     The address of the device being tracked will be shared in Address and
-> > +     Address_Type.
-> > +
-> > +     Possible values for the Address_Type parameter:
-> > +             0       Reserved (not in use)
-> > +             1       LE Public
-> > +             2       LE Random
-> > +
-> > +     This event will be sent to all management sockets.
-> 
-> My initial thought was actually to include all the fields from Device Found Event here as well. So that in case we are using advertising monitor, we just need to worry about this event only. Thoughts?
-> The controller sends advertising reports in addition to the MSFT_Monitor_Device event. This event is reported only twice per bt-device (at start and at end of the monitoring); and it includes only the device addr and addr type [1]. To include other fields from the Device Found event, we need to buffer MSFT_Monitor_Device in the kernel and wait for the subsequent advertising report before we can send it to the bluetoothd. I feel this will unnecessarily complicate the logic in the kernel.
-> 
-> This event will be used to invoke DeviceFound/Lost on the interface only when we are completely offloading monitoring to the controller (i.e. when the Sampling_Period is set to 0xFF). When the Sampling_Period is set to 0xFF, the controller sends only one advertisement report per monitoring period [2]. So, we need to rely on the MSFT_Monitor_Device controller event for RSSI and timeouts tracking. In other cases, as the bluetoothd receives more than one advertisement report, it can perform RSSI and timeouts tracking.
-> 
-> So, I think it is better to pass on this event as it is to the bluetoothd and let the advertisement monitoring in the bluetoothd handle it. Let me know what you think about this?
-
-the kernel has to buffer events related to advertising reports and inquiry results already anyway. That is just the cost of business and it is the job of the kernel to do exactly that.
-
-I do not want to dumb down the kernel into a vendor extension passthrough since that is always going to come back and bite you. My current thinking is actually that unless Start Discovery triggers a discovery procedure, device that are monitored, should get its own report out path via mgmt.
-
-So the kernel would send Advertising Monitor Device Found Event (most likely with a flag for tracking started) and subsequence events of the same type whenever it gets updated. I mean, the kernel should track the state when a device is tracked anyway. It has to keep track of these things. In case of power down or reset or anything, the kernel needs to generate the Device Lost event to keeps this all in sync. Otherwise userspace is left to figure out what happens. We can not have that. This is similar to when a process dies, the kernel cleans up all open file descriptors. That is the basic paradigm that we have enforced with mgmt. If bluetoothd dies or restarts, we can get back to a state where we now all the details without having to hard reset hardware.
-
-One way to lock at this is always from the point of something that is not bluetoothd. Any other user of mgmt API needs to be sound and have a good API contract as well. Kernel APIs that are only designed with one daemon in mind are awful and cause major problems along the road.
-
-That all said, we can do this as above, but I would explore the option of doing it with my proposal and really focus on completely offload of the monitoring the controller.
-
-Regards
-
-Marcel
-
+--=20
+Hallo, ich bin Frau Mayam Cheng, eine Finanzierin bei der Hang Seng
+Bank. Ich habe einen Gesch=C3=A4ftsvorschlag, der uns beiden zugute kommt.
+Ich suche einen seri=C3=B6sen Partner, um eine Transaktion in H=C3=B6he von
+$2,600,000.00 USD Millionen anzuvertrauen. Kann ich mich auf Sie
+verlassen Bitte kontaktieren Sie mich f=C3=BCr weitere Informationen =C3=BC=
+ber
+meine pers=C3=B6nliche E-Mail Adresse: maryamc860@gmail.com
