@@ -2,90 +2,108 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B86943DF4F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Oct 2021 12:52:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BC7543DFDE
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Oct 2021 13:17:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbhJ1Kyn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 28 Oct 2021 06:54:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37480 "EHLO
+        id S230250AbhJ1LT6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 28 Oct 2021 07:19:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230155AbhJ1Kyj (ORCPT
+        with ESMTP id S230177AbhJ1LT5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 28 Oct 2021 06:54:39 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 759C5C06122B
-        for <linux-bluetooth@vger.kernel.org>; Thu, 28 Oct 2021 03:52:12 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id e2so9875299ljg.13
-        for <linux-bluetooth@vger.kernel.org>; Thu, 28 Oct 2021 03:52:12 -0700 (PDT)
+        Thu, 28 Oct 2021 07:19:57 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAE83C061745
+        for <linux-bluetooth@vger.kernel.org>; Thu, 28 Oct 2021 04:17:30 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id i1-20020a17090a4b8100b001a40857e556so2130213pjh.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 28 Oct 2021 04:17:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=vprh3gRT3Cegcj0K7Fy7tqOfLGKK384XjLMkCZvF/BY=;
-        b=MqgQiMnth4O6zLvpsYbAhVLW1BorpgoCleWwfkY0/i+i6OSDuXRZO1jIKzpTTrmehO
-         XtsLWdXiTcL+XCe4naFtf2tTUJnbwwmDpuUkpvRhLd+LEnuxY7nNr11hmTRUVX1WOHsO
-         bN0u1arCg4gm9LHdXRMZFcXOD22U5gDGuBOuhPo6qvWbt6nA2j/p/5IZ88XFHrEsiSW3
-         12hentYJMlWeUfa2lUQkLm+5/fvMSizrI7wGoF2taOa3dgGUV5HKZWb0yAAH7nAXVevJ
-         tDC/xbHNLzSn310XeD3Gkoobjl6MPBQzT5DSLzerNBdTKOdmyp3xvfvOyo80qVUTZIED
-         gaRg==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=GLQ+L+UcYTSp2/Y+0P8XzAsQnHNY9bHOBMNnmhNwbDQ=;
+        b=d3NIcIwokIWonEmbf7MookaznzBcbbR/xPmbVwrpZ6ARy7MF/d2Cq7YDB37xDmq7GG
+         QL8l7FWYMHnfPHZsKHYBX3bpVUXUn57ihZLs2kPlkv/uMVBplpS+T2YC2unVWRalQnOn
+         JgugvJoAURa8Qt9vvQqvXurReq0r5yZybIbrvMOsiZZLimJgc07FE11UwNRe8qBqj+q4
+         sQKoznSpZ/FWXU0bCBzRG4y2/f89a2Sl3E/Letp2Oj7bZ72+1wwIv1tAYeRBRxB3QLFB
+         4XDu9RGA49JXcsxzZNm8RmXGHoCdTcY3SaXfASICvJ5hmNuvuB5vsn5zMpeja6pQKKMd
+         ffaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=vprh3gRT3Cegcj0K7Fy7tqOfLGKK384XjLMkCZvF/BY=;
-        b=bIAyU8yWwHDNK0DP3SX7dRp0EIe61e4aEvZgwkKDQkBciUAQUWHjKSW3rfjcJPIF6E
-         yQOk1HRtQesFPY7OEOdD9C3jAk8cc0IdVjfh2iSgmDZ8Pd9RO5W1QDsrDos46qyV5HIt
-         cvHyt3rxlrJ2oSxXG1zRhDGImCNCJNUwnwEZfPR1iyyNCL85pfANSWD+jQl1NnWTNh75
-         r/z/zwMZ/C4eEhpIPFMdG4raqIbJMQJnmVyrIMcmqpJEx+4n45uDckLzLJHHWNVphZRd
-         i2b5NhmaP/ufL4L/eQAgGvLnlpaP7IlmtaRQBvbUD70uN0hAb9tlzaQk1nE7y2B156dR
-         Y8xg==
-X-Gm-Message-State: AOAM533WLhtQlJqYpJiSdaf0AEfMJy/EwK1gFRNu5cOHPk3yXx5gL2Fe
-        iA06xGh8EOJ84PbwzicBkmxlYLraQPblraODeRU=
-X-Google-Smtp-Source: ABdhPJw39EF9dJlXS9lAFrZ3adXxB8DVzXcygVzA3uRLiZxWlggxaB9ElCxkEB0P82xisoA6G442GD5iqMe2hCgLIt8=
-X-Received: by 2002:a2e:9a83:: with SMTP id p3mr3750290lji.145.1635418330269;
- Thu, 28 Oct 2021 03:52:10 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ab3:6f89:0:0:0:0:0 with HTTP; Thu, 28 Oct 2021 03:52:09
- -0700 (PDT)
-Reply-To: aabdulwalialhashmi@gmail.com
-From:   Abdulwali Alhashmi <husamalsayed.hs@gmail.com>
-Date:   Thu, 28 Oct 2021 03:52:09 -0700
-Message-ID: <CAF6yYCeS=rm8=_71-kMjVo4oaVK57w9X52R_yv1HDrBe7vh-sA@mail.gmail.com>
-Subject: PLEASE GET BACK TO ME IF I CAN I TRUST YOU
-To:     undisclosed-recipients:;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=GLQ+L+UcYTSp2/Y+0P8XzAsQnHNY9bHOBMNnmhNwbDQ=;
+        b=BeS0poyUeb6ANS88TPipIgQEMdy5K2VQoo8K6enIjyUFtGDiWCJZPjStjQ8fuA/QZW
+         XYeyFJFKkAbGvVFcf5Oj5U1aUmUUJjbn78rio2H01bfPQ6FeSAXKJx9fDeGGXigp5m+f
+         nQs3v9bWlhS6BSvFOuuaZtn+KyS6AzxW54RiT7NK0WhnsYf7G0UGJ0dfHmlg8hWddPyz
+         CvBkIB9BQiT4n9RqCt1SASiMjdW4MvB50aFF7IOhnEA7MveeMreVaj9DzBjzQMy5pdWz
+         3N95F6yQFClU9Q8AdJefE69ATopFwNFFHg2p2xh3/oXIQskIVo1mrRiVYr0s3wnU9DYy
+         761w==
+X-Gm-Message-State: AOAM533M6lN7DQDv2iKets8XaLgoF0VpjcL11ztB3Y6WqXJdfJ2Ii5q7
+        ddmjuwXLhlw+ujFNiPXTd8nuEN6v6pevXdfFFfsEp/fRtmSM7IHMQTR69pzUNaPay9voapta9wA
+        4eF5z5WoisroV1qPaXSMRBhs5DD6kFCviJTU7qF1I+LqocOWPKMv9YJm0iXSWX1zPYBPrjeUhFN
+        bB
+X-Google-Smtp-Source: ABdhPJzEqxn6IlTlcgdVmZzZkIoBUXuXH7A8M3mYc2iyg5hmt+gKEEUQiKxEpUouvDg+fQsOv6AiTHJj1x0U
+X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:10:a9d:c667:f9ff:b40e])
+ (user=apusaka job=sendgmr) by 2002:a17:902:7608:b0:141:9a53:ceff with SMTP id
+ k8-20020a170902760800b001419a53ceffmr779355pll.78.1635419850277; Thu, 28 Oct
+ 2021 04:17:30 -0700 (PDT)
+Date:   Thu, 28 Oct 2021 19:17:25 +0800
+Message-Id: <20211028191723.1.I94a358fc5abdb596412a2e22dd2b73b71f56fa82@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
+Subject: [PATCH] Bluetooth: Fix removing adv when processing cmd complete
+From:   Archie Pusaka <apusaka@google.com>
+To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>
+Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>,
+        Sonny Sasaka <sonnysasaka@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+From: Archie Pusaka <apusaka@chromium.org>
+
+If we remove one instance of adv using Set Extended Adv Enable, there
+is a possibility of issue occurs when processing the Command Complete
+event. Especially, the adv_info might not be found since we already
+remove it in hci_req_clear_adv_instance() -> hci_remove_adv_instance().
+If that's the case, we will mistakenly proceed to remove all adv
+instances instead of just one single instance.
+
+This patch fixes the issue by checking the content of the HCI command
+instead of checking whether the adv_info is found.
+
+Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
+
+---
+
+ net/bluetooth/hci_event.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 3cba2bbefcd6..894670419a27 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -1326,8 +1326,10 @@ static void hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev,
+ 					   &conn->le_conn_timeout,
+ 					   conn->conn_timeout);
+ 	} else {
+-		if (adv) {
+-			adv->enabled = false;
++		if (cp->num_of_sets) {
++			if (adv)
++				adv->enabled = false;
++
+ 			/* If just one instance was disabled check if there are
+ 			 * any other instance enabled before clearing HCI_LE_ADV
+ 			 */
 -- 
-Greetings,
+2.33.0.1079.g6e70778dc9-goog
 
-Firstly, I apologize for encroaching into your privacy in this manner
-as it may seem unethical though it is a matter of great importance.
-
-I am Abdulwali Alhashmi, I work with Cayman National Bank (Cayman Islands).
-
-I am contacting you because my status would not permit me to do this
-alone as it is concerning our customer and an investment placed under
-our bank's management over 5 years ago.
-
-I have a proposal I would love to discuss with you which will be very
-beneficial to both of us. It's regarding my late client who has a huge
-deposit with my bank.
-
-He is from your country and shares the same last name with you.
-
-I want to seek your consent to present you as the next of kin to my
-late client who died and left a huge deposit with my bank.
-
-I would respectfully request that you keep the contents of this mail
-confidential and respect the integrity of the information you come by
-as a result of this mail.
-
-Please kindly get back to me for more details if I can TRUST YOU.{
-aabdulwalialhashmi@gmail.com }
-
-Regards
-Abdulwali Alhashmi
-Treasury and Deposit Management,
-Cayman National Bank Cayman Islands
