@@ -2,283 +2,90 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BD5343DCBC
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Oct 2021 10:12:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B86943DF4F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Oct 2021 12:52:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbhJ1IOk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 28 Oct 2021 04:14:40 -0400
-Received: from vps.xff.cz ([195.181.215.36]:41332 "EHLO vps.xff.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229626AbhJ1IOk (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 28 Oct 2021 04:14:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xff.cz; s=mail;
-        t=1635408732; bh=2LgnHICk1t4WEfAbEZ1eGdS28PBfhtqMRTeXwypmDbw=;
-        h=Date:From:To:Cc:Subject:X-My-GPG-KeyId:References:From;
-        b=GiXkEsP8dIaBOY5U9y8oUmCTP7hUnfE6NhC9wRcqsJMBBF1x+eR9Jusgyhum78FUS
-         ZYQJE70Sme9FrDKeCd7sV/YD4plipZKF7We910IPvMIUH7SU2fyWpC+aBuT9AruSBb
-         r25wY03goz4ewqzrS4+3YBHJZxFNpSS1U5/bXbP8=
-Date:   Thu, 28 Oct 2021 10:12:12 +0200
-From:   =?utf-8?Q?Ond=C5=99ej?= Jirman <megi@xff.cz>
-To:     Archie Pusaka <apusaka@google.com>
-Cc:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Hilda Wu <hildawu@realtek.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] Bluetooth: hci_h5: Add runtime suspend
-Message-ID: <20211028081212.puugl7keomly56ll@core>
-Mail-Followup-To: =?utf-8?Q?Ond=C5=99ej?= Jirman <megi@xff.cz>,
-        Archie Pusaka <apusaka@google.com>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Hilda Wu <hildawu@realtek.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-kernel@vger.kernel.org
-X-My-GPG-KeyId: EBFBDDE11FB918D44D1F56C1F9F0A873BE9777ED
- <https://xff.cz/key.txt>
-References: <20210723193137.v3.1.I68649745bd11a83265f1e816bf34ecc82775e95a@changeid>
- <20210723193137.v3.3.I4b323d2adf1dca62777c41de344a7d2f79b7f908@changeid>
- <20211027222326.e55g26ezaxpk7kkm@core>
- <20211027234722.2rjmxhivrkae2fai@core>
- <CAJQfnxFt5OVs1Tw9q6JVkQeKpEFfjyX6MM4qLkDLf02rRL7gew@mail.gmail.com>
+        id S230126AbhJ1Kyn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 28 Oct 2021 06:54:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37480 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230155AbhJ1Kyj (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 28 Oct 2021 06:54:39 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 759C5C06122B
+        for <linux-bluetooth@vger.kernel.org>; Thu, 28 Oct 2021 03:52:12 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id e2so9875299ljg.13
+        for <linux-bluetooth@vger.kernel.org>; Thu, 28 Oct 2021 03:52:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=vprh3gRT3Cegcj0K7Fy7tqOfLGKK384XjLMkCZvF/BY=;
+        b=MqgQiMnth4O6zLvpsYbAhVLW1BorpgoCleWwfkY0/i+i6OSDuXRZO1jIKzpTTrmehO
+         XtsLWdXiTcL+XCe4naFtf2tTUJnbwwmDpuUkpvRhLd+LEnuxY7nNr11hmTRUVX1WOHsO
+         bN0u1arCg4gm9LHdXRMZFcXOD22U5gDGuBOuhPo6qvWbt6nA2j/p/5IZ88XFHrEsiSW3
+         12hentYJMlWeUfa2lUQkLm+5/fvMSizrI7wGoF2taOa3dgGUV5HKZWb0yAAH7nAXVevJ
+         tDC/xbHNLzSn310XeD3Gkoobjl6MPBQzT5DSLzerNBdTKOdmyp3xvfvOyo80qVUTZIED
+         gaRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=vprh3gRT3Cegcj0K7Fy7tqOfLGKK384XjLMkCZvF/BY=;
+        b=bIAyU8yWwHDNK0DP3SX7dRp0EIe61e4aEvZgwkKDQkBciUAQUWHjKSW3rfjcJPIF6E
+         yQOk1HRtQesFPY7OEOdD9C3jAk8cc0IdVjfh2iSgmDZ8Pd9RO5W1QDsrDos46qyV5HIt
+         cvHyt3rxlrJ2oSxXG1zRhDGImCNCJNUwnwEZfPR1iyyNCL85pfANSWD+jQl1NnWTNh75
+         r/z/zwMZ/C4eEhpIPFMdG4raqIbJMQJnmVyrIMcmqpJEx+4n45uDckLzLJHHWNVphZRd
+         i2b5NhmaP/ufL4L/eQAgGvLnlpaP7IlmtaRQBvbUD70uN0hAb9tlzaQk1nE7y2B156dR
+         Y8xg==
+X-Gm-Message-State: AOAM533WLhtQlJqYpJiSdaf0AEfMJy/EwK1gFRNu5cOHPk3yXx5gL2Fe
+        iA06xGh8EOJ84PbwzicBkmxlYLraQPblraODeRU=
+X-Google-Smtp-Source: ABdhPJw39EF9dJlXS9lAFrZ3adXxB8DVzXcygVzA3uRLiZxWlggxaB9ElCxkEB0P82xisoA6G442GD5iqMe2hCgLIt8=
+X-Received: by 2002:a2e:9a83:: with SMTP id p3mr3750290lji.145.1635418330269;
+ Thu, 28 Oct 2021 03:52:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJQfnxFt5OVs1Tw9q6JVkQeKpEFfjyX6MM4qLkDLf02rRL7gew@mail.gmail.com>
+Received: by 2002:ab3:6f89:0:0:0:0:0 with HTTP; Thu, 28 Oct 2021 03:52:09
+ -0700 (PDT)
+Reply-To: aabdulwalialhashmi@gmail.com
+From:   Abdulwali Alhashmi <husamalsayed.hs@gmail.com>
+Date:   Thu, 28 Oct 2021 03:52:09 -0700
+Message-ID: <CAF6yYCeS=rm8=_71-kMjVo4oaVK57w9X52R_yv1HDrBe7vh-sA@mail.gmail.com>
+Subject: PLEASE GET BACK TO ME IF I CAN I TRUST YOU
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hell Archie,
+-- 
+Greetings,
 
-On Thu, Oct 28, 2021 at 10:06:58AM +0800, Archie Pusaka wrote:
-> Hi Ondrej,
-> 
-> There's a mistake on my side with the WAKEUP_DISABLE flag, but it's
-> fixed by Hans in this patch.
-> https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/commit/drivers/bluetooth/hci_h5.c?id=9a9023f314873241a43b5a2b96e9c0caaa958433
-> Could you try and see whether that fixes your issue?
+Firstly, I apologize for encroaching into your privacy in this manner
+as it may seem unethical though it is a matter of great importance.
 
-Yes, that fixes the issue. Thanks. :)
+I am Abdulwali Alhashmi, I work with Cayman National Bank (Cayman Islands).
 
-kind regards,
-	o.
+I am contacting you because my status would not permit me to do this
+alone as it is concerning our customer and an investment placed under
+our bank's management over 5 years ago.
 
-> Thanks,
-> Archie
-> 
-> 
-> On Thu, 28 Oct 2021 at 07:47, Ondřej Jirman <megi@xff.cz> wrote:
-> >
-> > On Thu, Oct 28, 2021 at 12:23:26AM +0200, megi xff wrote:
-> > > Hello Archie,
-> > >
-> > > On Fri, Jul 23, 2021 at 07:31:57PM +0800, Archie Pusaka wrote:
-> > > > From: Archie Pusaka <apusaka@chromium.org>
-> > > >
-> > > > This patch allows the controller to suspend after a short period of
-> > > > inactivity.
-> > >
-> > > I see this pattern in dmesg after this patch: (I've added printks
-> > > to many hci_h5 functions to see what's going on)
-> > >
-> > > [  493.150325] h5_dequeue
-> > > [  493.150332] h5_dequeue
-> > > [  493.150336] h5_dequeue
-> > > [  493.150340] h5_dequeue
-> > > [  493.150370] h5_dequeue
-> > > [  493.150547] h5_recv
-> > > [  493.150863] h5_recv
-> > > [  493.150878] h5_dequeue
-> > > [  493.150885] h5_dequeue
-> > > [  493.150888] h5_dequeue
-> > > [  493.151315] h5_enqueue
-> > > [  493.151328] h5_dequeue
-> > > [  493.151350] h5_dequeue
-> > > [  493.151447] h5_dequeue
-> > > [  493.151612] h5_recv
-> > > [  493.151945] h5_recv
-> > > [  493.151961] h5_dequeue
-> > > [  493.151967] h5_dequeue
-> > > [  493.151970] h5_dequeue
-> > > [  495.171812] h5_flush
-> > > [  495.171845] h5_flush
-> > > [  499.267473] h5_serdev_suspend
-> > > [  499.267490] h5_btrtl_suspend
-> > > [  499.273784] h5_recv
-> > > [  499.273828] h5_serdev_resume
-> > > [  499.273833] h5_btrtl_resume
-> > > [  499.273837] h5_btrtl_resume / reprobe
-> > > [  499.273855] h5_btrtl_reprobe_worker
-> > > [  499.273913] h5_serdev_remove
-> > > [  499.274997] h5_close
-> > > [  499.275010] h5_btrtl_close
-> > > [  499.275624] h5_serdev_probe
-> > > [  499.276126] h5_open
-> > > [  499.276132] h5_btrtl_open
-> > > [  499.915820] h5_dequeue
-> > > [  499.915857] h5_dequeue
-> > > [  499.915863] h5_dequeue
-> > > [  499.916212] h5_dequeue
-> > > [  499.919643] h5_recv
-> > > [  499.919675] h5_dequeue
-> > > [  499.919682] h5_dequeue
-> > > [  499.919687] h5_dequeue
-> > > [  499.919692] h5_dequeue
-> > >
-> > > repeating ad nauseam every 6s.
-> > >
-> > > Basically bluetooth device reprobes every 6s. Looks like h5_recv call
-> > > after h5_btrtl_suspend wakes the device immediately after suspend.
-> > >
-> > > (there are no users of bluetooth in my userspace) I'd expect the
-> > > device to stay suspended after suspend.
-> > >
-> > > I have some extra patches to support 8723cs but nothing that
-> > > would affect this codepath. https://megous.com/git/linux/log/?h=bt-5.15
-> > >
-> > > I assume it will have the same behavior with 8723bs which is already
-> > > mainline. I guess this issue is specific to devices with H5_INFO_WAKEUP_DISABLE
-> > > flag set.
-> > >
-> > > Do you have any ideas?
-> >
-> > I've added dump_stack() to first h5_recv call after suspend (the one
-> > that's causing the immediate wakeup after runtime PM suspend), and it returns:
-> >
-> > [    5.938258] recv
-> > [   13.377775] suspend
-> > [   13.384106] recv
-> > [   13.384120] CPU: 1 PID: 83 Comm: kworker/u8:1 Tainted: G         C        5.15.0-rc7-00002-g64f2c49e8400 #23
-> > [   13.384141] Hardware name: Pine64 PinePhone (1.2) (DT)
-> > [   13.384151] Workqueue: events_unbound flush_to_ldisc
-> > [   13.384196] Call trace:
-> > [   13.384199]  dump_backtrace+0x0/0x15c
-> > [   13.384224]  show_stack+0x14/0x20
-> > [   13.384232]  dump_stack_lvl+0x64/0x7c
-> > [   13.384250]  dump_stack+0x14/0x2c
-> > [   13.384258]  h5_recv+0x44/0xdbc [hci_uart]
-> > [   13.384288]  hci_uart_receive_buf+0x6c/0x94 [hci_uart]
-> > [   13.384298]  ttyport_receive_buf+0x60/0xf4
-> > [   13.384318]  flush_to_ldisc+0xb0/0x160
-> > [   13.384324]  process_one_work+0x1d8/0x380
-> > [   13.384339]  worker_thread+0x178/0x4e0
-> > [   13.384348]  kthread+0x11c/0x130
-> > [   13.384359]  ret_from_fork+0x10/0x20
-> >
-> > It's comming from here https://elixir.bootlin.com/linux/latest/source/drivers/tty/tty_buffer.c#L510
-> >
-> > Which can be scheduled from these places:
-> >
-> > - https://elixir.bootlin.com/linux/latest/source/drivers/tty/tty_buffer.c#L65
-> > - https://elixir.bootlin.com/linux/latest/source/drivers/tty/tty_buffer.c#L413
-> >
-> > And that's where I lose a thread of what can be happening. :)
-> >
-> > Maybe h5_recv is not a good function to mark activity on the device,
-> > due to tty_buffer code just calling it to check if some data are
-> > available, even if none are? Even if nothing uses bluetooth from
-> > userspace...
-> >
-> > kind regards,
-> >         o.
-> >
-> > > kind regards,
-> > >       o.
-> > >
-> > >
-> > > > Signed-off-by: Archie Pusaka <apusaka@chromium.org>
-> > > > Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> > > > Reviewed-by: Hilda Wu <hildawu@realtek.com>
-> > > >
-> > > > ---
-> > > >
-> > > > Changes in v3:
-> > > > * Reordering #include
-> > > >
-> > > >  drivers/bluetooth/hci_h5.c | 20 ++++++++++++++++++++
-> > > >  1 file changed, 20 insertions(+)
-> > > >
-> > > > diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
-> > > > index cbc63b057f33..0c0dedece59c 100644
-> > > > --- a/drivers/bluetooth/hci_h5.c
-> > > > +++ b/drivers/bluetooth/hci_h5.c
-> > > > @@ -12,6 +12,7 @@
-> > > >  #include <linux/kernel.h>
-> > > >  #include <linux/mod_devicetable.h>
-> > > >  #include <linux/of_device.h>
-> > > > +#include <linux/pm_runtime.h>
-> > > >  #include <linux/serdev.h>
-> > > >  #include <linux/skbuff.h>
-> > > >
-> > > > @@ -21,6 +22,8 @@
-> > > >  #include "btrtl.h"
-> > > >  #include "hci_uart.h"
-> > > >
-> > > > +#define SUSPEND_TIMEOUT_MS 6000
-> > > > +
-> > > >  #define HCI_3WIRE_ACK_PKT  0
-> > > >  #define HCI_3WIRE_LINK_PKT 15
-> > > >
-> > > > @@ -584,6 +587,10 @@ static int h5_recv(struct hci_uart *hu, const void *data, int count)
-> > > >             count -= processed;
-> > > >     }
-> > > >
-> > > > +   pm_runtime_get(&hu->serdev->dev);
-> > > > +   pm_runtime_mark_last_busy(&hu->serdev->dev);
-> > > > +   pm_runtime_put_autosuspend(&hu->serdev->dev);
-> > > > +
-> > > >     return 0;
-> > > >  }
-> > > >
-> > > > @@ -620,6 +627,10 @@ static int h5_enqueue(struct hci_uart *hu, struct sk_buff *skb)
-> > > >             break;
-> > > >     }
-> > > >
-> > > > +   pm_runtime_get_sync(&hu->serdev->dev);
-> > > > +   pm_runtime_mark_last_busy(&hu->serdev->dev);
-> > > > +   pm_runtime_put_autosuspend(&hu->serdev->dev);
-> > > > +
-> > > >     return 0;
-> > > >  }
-> > > >
-> > > > @@ -951,6 +962,12 @@ static void h5_btrtl_open(struct h5 *h5)
-> > > >     serdev_device_set_parity(h5->hu->serdev, SERDEV_PARITY_EVEN);
-> > > >     serdev_device_set_baudrate(h5->hu->serdev, 115200);
-> > > >
-> > > > +   pm_runtime_set_active(&h5->hu->serdev->dev);
-> > > > +   pm_runtime_use_autosuspend(&h5->hu->serdev->dev);
-> > > > +   pm_runtime_set_autosuspend_delay(&h5->hu->serdev->dev,
-> > > > +                                    SUSPEND_TIMEOUT_MS);
-> > > > +   pm_runtime_enable(&h5->hu->serdev->dev);
-> > > > +
-> > > >     /* The controller needs up to 500ms to wakeup */
-> > > >     gpiod_set_value_cansleep(h5->enable_gpio, 1);
-> > > >     gpiod_set_value_cansleep(h5->device_wake_gpio, 1);
-> > > > @@ -959,6 +976,8 @@ static void h5_btrtl_open(struct h5 *h5)
-> > > >
-> > > >  static void h5_btrtl_close(struct h5 *h5)
-> > > >  {
-> > > > +   pm_runtime_disable(&h5->hu->serdev->dev);
-> > > > +
-> > > >     gpiod_set_value_cansleep(h5->device_wake_gpio, 0);
-> > > >     gpiod_set_value_cansleep(h5->enable_gpio, 0);
-> > > >  }
-> > > > @@ -1066,6 +1085,7 @@ MODULE_DEVICE_TABLE(acpi, h5_acpi_match);
-> > > >
-> > > >  static const struct dev_pm_ops h5_serdev_pm_ops = {
-> > > >     SET_SYSTEM_SLEEP_PM_OPS(h5_serdev_suspend, h5_serdev_resume)
-> > > > +   SET_RUNTIME_PM_OPS(h5_serdev_suspend, h5_serdev_resume, NULL)
-> > > >  };
-> > > >
-> > > >  static const struct of_device_id rtl_bluetooth_of_match[] = {
-> > > > --
-> > > > 2.32.0.432.gabb21c7263-goog
-> > > >
+I have a proposal I would love to discuss with you which will be very
+beneficial to both of us. It's regarding my late client who has a huge
+deposit with my bank.
+
+He is from your country and shares the same last name with you.
+
+I want to seek your consent to present you as the next of kin to my
+late client who died and left a huge deposit with my bank.
+
+I would respectfully request that you keep the contents of this mail
+confidential and respect the integrity of the information you come by
+as a result of this mail.
+
+Please kindly get back to me for more details if I can TRUST YOU.{
+aabdulwalialhashmi@gmail.com }
+
+Regards
+Abdulwali Alhashmi
+Treasury and Deposit Management,
+Cayman National Bank Cayman Islands
