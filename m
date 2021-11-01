@@ -2,128 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 290A0441398
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Nov 2021 07:07:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6259C4413CE
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Nov 2021 07:41:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230451AbhKAGKG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 1 Nov 2021 02:10:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55338 "EHLO
+        id S230097AbhKAGo3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 1 Nov 2021 02:44:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbhKAGKB (ORCPT
+        with ESMTP id S229938AbhKAGo2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 1 Nov 2021 02:10:01 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A34BAC079781
-        for <linux-bluetooth@vger.kernel.org>; Sun, 31 Oct 2021 23:06:49 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id v133-20020a25c58b000000b005c20153475dso13729587ybe.17
-        for <linux-bluetooth@vger.kernel.org>; Sun, 31 Oct 2021 23:06:49 -0700 (PDT)
+        Mon, 1 Nov 2021 02:44:28 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 190BAC061714
+        for <linux-bluetooth@vger.kernel.org>; Sun, 31 Oct 2021 23:41:56 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id bp7so10425773qkb.10
+        for <linux-bluetooth@vger.kernel.org>; Sun, 31 Oct 2021 23:41:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=v0aCId91YUIOcgru+L1HRukGZnNCqeqwEdd8IkAfGUw=;
-        b=qjY14zW0WJR//wl9IPRAJzMc6CYtSdTqhE2PFiDodr5iuk8E6PGbPAdejPN9qUrYAk
-         78POFcJjeHQjpvrF/zNmZ+PkDwamlYKRPJXFhedN+k3ve/h1Ybc4PIDllekcwItB5AYl
-         6jBNRs01Pso3Vr65PoANwa4Kod5yMwFgK2Z/K/W+LTxOVqfF9Dqw2rZjjAG7WGijv2Qq
-         NERvT/dqIn9j/d56yT2TXgOxVomvknbGNNh+7eyowTyR2KftZccYTnnvDsMJHoBMUR6r
-         kkNsAcMNyXUKPPhJ+/ZrPiPAdNa9QHAf/f5nwG6I0V+LaZnacLuNoMcZXCRixEhqOuFf
-         olQQ==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=BO2v0JTeBweGhuVnoy0dTehpO7VcFlDSNN5SwWPLKgU=;
+        b=WlWGE4WiQk128RUAT1OL9NdGPiiSBbKZcLOzRi2ulS03u2SF/jEryU3sm561o1iS2v
+         ep6UNKiDnbcystuELgzf96Za3xVJEQcCn6VW/4ZfSIVzDaMBDhC7SZ9+1KLEBU3Rbrpz
+         yaDgS1VbpG0RcBbjK6NfHJpLshLC2PwDDGSglzNpVAEzouRWdXHWrD4NOBLSoV97dCJf
+         HOoqfx9ZgysOXvypEXfJaIHPLZzittKHVqdYFcbqf9HPG1WFO2s+c1jKseu5dAgLAr4N
+         SdUMOhsbWUFNv1ayXGwZnlaCWK0QEZNqt24uYMhsZprVtaPdQ17LFHuwNGocsMFGJaX6
+         VrYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=v0aCId91YUIOcgru+L1HRukGZnNCqeqwEdd8IkAfGUw=;
-        b=OfTwaAeSeGFCZB1yeGy+RgQeKiqOZHNSg1QWvHTEmLAHwn/qGb01GYhYiqmsvb9EyR
-         pOwMqDFo94xoOjQ2VshtgDniuayhZwbmBpDDkMFbrng/4V4Wwh4ag5LDLOqAX0YRJ6s6
-         P/zuNnvr53FQUvxNQpUwdlxHEix24rp2eFtkvL4Dk46kgtXpWX049qtjwgM1FIvJQaok
-         qpk7gSVvHni+EhOGPCF6CABy+HjaGQuzCGqB4DPClOy2wrjzgqRapYF/REPxa5rKnJYB
-         IQsKAiUTFMVBVoBrgAdsJBZvHK+V/sTlZ3pJAJg+FR/nroQPuBwJKsFwkpCrJtIwzHYn
-         HoJw==
-X-Gm-Message-State: AOAM530u1JbXidhcFfkOku9YgXG2jaN80EUs9UBzyFUz2n8kAAuWFZCW
-        kBLuDexJTDJTmMXkX3i4tFQojenj02r9X1Mw+DWxTlIPFw4jnUu6DeB/zf3pmu8YleHULsIbYSu
-        6QgWRFnRhOQ3BXWPRZOqo8rRB96pC5kX4faXXbqPLPnQPDZDO+cWfi2bKm6Tkf85E0DKJK46G9Z
-        41
-X-Google-Smtp-Source: ABdhPJy7+aVgAAt82mmjlLV1jmpSysO3aBiBjBwkDw5EAZqidd/2pPel7WARLLiE+2WRB6XMxf/+79ULEHYe
-X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:10:93ab:332e:48e3:1733])
- (user=apusaka job=sendgmr) by 2002:a25:328b:: with SMTP id
- y133mr16589670yby.233.1635746808821; Sun, 31 Oct 2021 23:06:48 -0700 (PDT)
-Date:   Mon,  1 Nov 2021 14:06:26 +0800
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=BO2v0JTeBweGhuVnoy0dTehpO7VcFlDSNN5SwWPLKgU=;
+        b=F5B+jvoOitE8mTmqQghYCGKB1Ko2RnE4GK0MOnIMPOM2dapY7Ent/FQ7dIHty4xlaB
+         CM4dNydi6K8rwp1Za1g/0NMjaCY0xRNkm8VdwPEG4W+jonYQ2AjKrNf4PW4Zuv359PB/
+         bCi68QLb7MTuH/dA74Ugo8nqxiySxOznHjFluhUUpnQChQJByYcgWYjyUqocsgQ7h/XC
+         +66QpujsbpDeBums0WGNy+FLdjwdQanc/pO7a3uqxqKg4vSAZNdhKJsyO9cGf0T6wPmK
+         wPpfwDQoh6CspAs/yJJheVI47vp/sdPJDVfi2zMVHG8hZXQld4/2ZVtxP/EFNNnqJ57z
+         k5nQ==
+X-Gm-Message-State: AOAM531YIUGdODS6gNBSbQfs7GHCdcglO87nfi8H8mEs7SfqIOEW+DVb
+        x40fl9toynAajWBz5BOP1WoYhU5y8bD3dA==
+X-Google-Smtp-Source: ABdhPJxJqb5SLezOfsnmrN1rYdpCUtx8TC6hZCIT5xcKKTiTuq4QOHE6AtDSIBD8W3ZseTIhxOyS1g==
+X-Received: by 2002:a05:620a:16d6:: with SMTP id a22mr6966022qkn.261.1635748915158;
+        Sun, 31 Oct 2021 23:41:55 -0700 (PDT)
+Received: from [172.17.0.2] ([20.110.190.121])
+        by smtp.gmail.com with ESMTPSA id v15sm10258026qkl.91.2021.10.31.23.41.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 31 Oct 2021 23:41:54 -0700 (PDT)
+Message-ID: <617f8c32.1c69fb81.8d919.e570@mx.google.com>
+Date:   Sun, 31 Oct 2021 23:41:54 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2386146915397749538=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, apusaka@google.com
+Subject: RE: [Bluez,1/3] adapter: Use PeripheralLongTermKey to store LTK
+Reply-To: linux-bluetooth@vger.kernel.org
 In-Reply-To: <20211101140544.Bluez.1.I515833d2764b8ec2ac2bb1f87313de80ebb497cd@changeid>
-Message-Id: <20211101140544.Bluez.3.Idb95ae18113225915b97a4f06983e1e41a7f7a2e@changeid>
-Mime-Version: 1.0
 References: <20211101140544.Bluez.1.I515833d2764b8ec2ac2bb1f87313de80ebb497cd@changeid>
-X-Mailer: git-send-email 2.33.1.1089.g2158813163f-goog
-Subject: [Bluez PATCH 3/3] adapter: Remove "Master" entry from LTK storage
-From:   Archie Pusaka <apusaka@google.com>
-To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>
-Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Archie Pusaka <apusaka@chromium.org>
+--===============2386146915397749538==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-The entry has been deprecated since 2014 and it's time to remove them
-altogether.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=573377
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      4.10 seconds
+GitLint                       PASS      2.80 seconds
+Prep - Setup ELL              PASS      42.57 seconds
+Build - Prep                  PASS      0.50 seconds
+Build - Configure             PASS      7.91 seconds
+Build - Make                  PASS      182.22 seconds
+Make Check                    PASS      9.23 seconds
+Make Distcheck                PASS      218.49 seconds
+Build w/ext ELL - Configure   PASS      8.01 seconds
+Build w/ext ELL - Make        PASS      173.06 seconds
+
+
+
 ---
-Hi maintainers,
-While cleaning this entry, I found that this entry is involved in some
-kind of storage file conversion, probably when upgrading BlueZ 4 to 5.
-Should we also remove the file conversion too, since it's dated to
-2014 as well?
+Regards,
+Linux Bluetooth
 
 
- src/adapter.c | 12 ------------
- 1 file changed, 12 deletions(-)
-
-diff --git a/src/adapter.c b/src/adapter.c
-index 6b12c9e793..3a3c957a6c 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -3779,8 +3779,6 @@ static struct smp_ltk_info *get_ltk(GKeyFile *key_file, const char *peer,
- 					uint8_t peer_type, const char *group)
- {
- 	struct smp_ltk_info *ltk = NULL;
--	GError *gerr = NULL;
--	bool central;
- 	char *key;
- 	char *rand = NULL;
- 
-@@ -3836,12 +3834,6 @@ static struct smp_ltk_info *get_ltk(GKeyFile *key_file, const char *peer,
- 									NULL);
- 	ltk->ediv = g_key_file_get_integer(key_file, group, "EDiv", NULL);
- 
--	central = g_key_file_get_boolean(key_file, group, "Master", &gerr);
--	if (gerr)
--		g_error_free(gerr);
--	else
--		ltk->central = central;
--
- 	ltk->is_blocked = is_blocked_key(HCI_BLOCKED_KEY_TYPE_LTK,
- 								ltk->val);
- 
-@@ -5904,7 +5896,6 @@ static void convert_ltk_entry(GKeyFile *key_file, void *value)
- 	g_free(str);
- 
- 	g_key_file_set_integer(key_file, "LongTermKey", "Authenticated", auth);
--	g_key_file_set_integer(key_file, "LongTermKey", "Master", central);
- 	g_key_file_set_integer(key_file, "LongTermKey", "EncSize", enc_size);
- 	g_key_file_set_integer(key_file, "LongTermKey", "EDiv", ediv);
- 
-@@ -8445,9 +8436,6 @@ static void store_ltk_group(struct btd_adapter *adapter, const bdaddr_t *peer,
- 		g_error_free(gerr);
- 	}
- 
--	/* Old files may contain this so remove it in case it exists */
--	g_key_file_remove_key(key_file, "LongTermKey", "Master", NULL);
--
- 	for (i = 0; i < 16; i++)
- 		sprintf(key_str + (i * 2), "%2.2X", key[i]);
- 
--- 
-2.33.1.1089.g2158813163f-goog
-
+--===============2386146915397749538==--
