@@ -2,75 +2,81 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26252441489
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Nov 2021 08:59:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 820DD4414AC
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Nov 2021 09:03:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231133AbhKAIBi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 1 Nov 2021 04:01:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41868 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229933AbhKAIBh (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 1 Nov 2021 04:01:37 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 4069C60F56;
-        Mon,  1 Nov 2021 07:59:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1635753544;
-        bh=hp2luMpeIUeaO2bLE5QCgM1ttGKCyStAm0Cx5a4oosY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Q87/8yosEOBECSjbEUMCLoQVtRgJp+UZytezIO+6WHcaSDVZlxyR+QXtEpFCNDHvf
-         BXu2TxfFrd56yu2/PKs1qsV1DwD2Tg8CgjvHp/0oojGJekp+Idta76HsERkzdGNOv2
-         eJeGpZh68wQEArTRBNP5Ip0J3YbVygOHKL+AtfCY=
-Date:   Mon, 1 Nov 2021 08:59:02 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-Cc:     robh@kernel.org, jirislaby@kernel.org,
-        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: Re: [PATCH v1] serdev: Add interface serdev_device_ioctl
-Message-ID: <YX+eRgCrUs2Y5iaX@kroah.com>
-References: <1635753048-5289-1-git-send-email-zijuhu@codeaurora.org>
+        id S231499AbhKAIFp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 1 Nov 2021 04:05:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53336 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231472AbhKAIFn (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 1 Nov 2021 04:05:43 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAF2DC06120E
+        for <linux-bluetooth@vger.kernel.org>; Mon,  1 Nov 2021 01:03:09 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id j2so34773290lfg.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 01 Nov 2021 01:03:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=kTlPYaJ3qmdiuwil3bN4/5BGELxQxYaH2mDV2D/+NOc=;
+        b=noIunhl9PvoPcUkMO1aIA1oVXnNEN4KUMnLzX81u41bUYmm654/d+8Zmtlo6rVUfiP
+         URKnr6K8ehg0Wh7FRqSI9k6fPv2DsXoeQF5RyVvvBWL5iE17ii0Hwy7DEGCxBrabSyNn
+         EOknVx9TADL+GR6CwdZv5iwiQkA+SgU+2TIIuYRY7UtEIvS3tf+3AOfWSGAHDegfCUDW
+         KFTXPeEWCeZvS9OsO77XW5FzLhbHNg24miTgIfpxgxdtWSxpsMgcVp1ovVt1nV8bPABY
+         Nt9t0GENejSl8bnKdYk9qzpsZJoEh4QUKHq3To1LyThtQ/UNoUZiShWGV9dnp4emntud
+         6TAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=kTlPYaJ3qmdiuwil3bN4/5BGELxQxYaH2mDV2D/+NOc=;
+        b=Jqs1xmuGkGO95r1IaPbO1eTFh2r+FTyVzUkDZ3Dg0Ta3hgG1X8cz6jLbYbYmE6xdeo
+         QLJakY70y89jyrS4MIYGzit3zA+FJ1XGN18+gn8NE2FIGlt3LTi3EcTZpmL2WZE4swAB
+         sFwKxNTJMbS0NrZeLqKJ50gXcgn+n9nju/0kNBj9ME2HjUdpYdY1EbUxvFmQ9sW0CNzz
+         DNALMP51ZJrH++HPOHjphlXZKp46zvG2BYah3Gc9biFVzI4WbHVC0Fbv8YBTynQ4jLoF
+         yqvWM2MIchyJ6obvp4plZ2hzO+Tc+bOqIiusdzFbQQZGYKc5px/skNG3V+pZB6GRvPNg
+         FKBg==
+X-Gm-Message-State: AOAM530CHZPUl+cppAF5fA9R6l6wRz0wBomvQvx1NIX5L35snbZxfAN5
+        6KQHZd7h5C/bKT8HIAw2eXjlg1Mexngb3vZZSTk=
+X-Google-Smtp-Source: ABdhPJxXtE0G1whIGXe2hxI/YsBwuQCFdtv4O25KgKEw0cNYTytiUo7Vy8b5pLqj8uf6S/Zvq7lb35uF1vpbXYsY0v0=
+X-Received: by 2002:a05:6512:a8e:: with SMTP id m14mr26458494lfu.575.1635753787779;
+ Mon, 01 Nov 2021 01:03:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1635753048-5289-1-git-send-email-zijuhu@codeaurora.org>
+Received: by 2002:a05:6512:304b:0:0:0:0 with HTTP; Mon, 1 Nov 2021 01:03:07
+ -0700 (PDT)
+Reply-To: aisha.7d@yahoo.com
+From:   Aisha AG <rbx17058@gmail.com>
+Date:   Mon, 1 Nov 2021 00:03:07 -0800
+Message-ID: <CA+KbyyeEn+hP9T75RRy6+snGWxpAx+xn43MKdB30KYFYZNAV2Q@mail.gmail.com>
+Subject: Hello Dear,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Mon, Nov 01, 2021 at 03:50:48PM +0800, Zijun Hu wrote:
-> From: Zijun Hu <quic_zijuhu@quicinc.com>
-> 
-> For serdev_device which is mounted at virtual tty port, tty ioctl()
-> maybe be used to make serdev_device ready to talk with tty port, so
-> add interface serdev_device_ioctl().
-> 
-> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-> ---
->  drivers/tty/serdev/core.c           | 11 +++++++++++
->  drivers/tty/serdev/serdev-ttyport.c | 12 ++++++++++++
->  include/linux/serdev.h              |  9 +++++++++
->  3 files changed, 32 insertions(+)
-> 
-> diff --git a/drivers/tty/serdev/core.c b/drivers/tty/serdev/core.c
-> index f1324fe99378..c0f6cd64716b 100644
-> --- a/drivers/tty/serdev/core.c
-> +++ b/drivers/tty/serdev/core.c
-> @@ -405,6 +405,17 @@ int serdev_device_set_tiocm(struct serdev_device *serdev, int set, int clear)
->  }
->  EXPORT_SYMBOL_GPL(serdev_device_set_tiocm);
->  
-> +int serdev_device_ioctl(struct serdev_device *serdev, unsigned int cmd, unsigned long arg)
-> +{
-> +	struct serdev_controller *ctrl = serdev->ctrl;
-> +
-> +	if (!ctrl || !ctrl->ops->ioctl)
-> +		return -EOPNOTSUPP;
+-- 
+Hello Dear,
 
-Wrong error for returning that an ioctl is not handled :(
+I came across your e-mail contact prior to a private search while in
+need of your assistance. I am Aisha Al-Qaddafi, the only biological
+Daughter of Former President of Libya Col.Muammar Al-Qaddafi.
+Am a Widow and a single Mother with three Children.
 
-Anyway, what in-tree driver needs this functionality?  Why does serdev
-need any ioctl commands?
+I have investment funds worth Twenty Seven Million Five Hundred
+Thousand United State Dollar $27.500.000.00, and i need a trusted
+investment Manager/Partner because of my current refugee status,
+however, I am interested in you for investment project assistance in
+your country, may be from there, we can build business relationship
+in the nearest future.
 
-thanks,
+I am willing to negotiate an investment/business profit sharing ratio
+with you based on the future investment earning profits.
 
-greg k-h
+If you are willing to handle this project on my behalf kindly reply
+urgently to enable me to provide you more information about the
+investment funds.
+Best Regards
+Mrs Aisha Al-Qaddafi.
