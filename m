@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F22C3446A6A
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Nov 2021 22:12:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DCEF446A6C
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Nov 2021 22:12:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233841AbhKEVPa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Nov 2021 17:15:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34148 "EHLO
+        id S233876AbhKEVPb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 Nov 2021 17:15:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229961AbhKEVPa (ORCPT
+        with ESMTP id S233869AbhKEVPb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Nov 2021 17:15:30 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C8B7C061570
-        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Nov 2021 14:12:50 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id r28so9365938pga.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Nov 2021 14:12:50 -0700 (PDT)
+        Fri, 5 Nov 2021 17:15:31 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E5D8C061570
+        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Nov 2021 14:12:51 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id w9-20020a17090a1b8900b001a6b3b7ec17so4118468pjc.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Nov 2021 14:12:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=Pfv/cnvgiSwS5FWpcgo7yOZIZbZrRdEtNYrReT3xGBE=;
-        b=U0VyrMsct2BAGkJrMN1AfXtLaqH1CSpbUiJAOwe29F8CLLNMrgjLeUn7qGXtAfXgt1
-         zZVjnoYe5tjnQ/nFpbMJAct3J5FXe/w7VWidQriHwuhivLmtrHybfALRf+1ydL3JU+eE
-         OTQQKLy4iJ8dtIshseuCBguYDRLV4FgbP/TyKjtRh/SDtDOQLriabNextpM1ty02t2LF
-         WlZGGW77887rTBZoEx5UgcHLVwk2b+4xOqBufePuhyxuahKy2lkau29qt0335hDya5lz
-         O4lTniqbLcD8rtV0jNf2/1CboF+GXh4eN3rOHnM90lZNAfkvY4+H3VeCfzslaPzL7BZe
-         CjVA==
+        bh=KPFsCeKStHLUmfZlK4Puuq02SsEfAOOKUWK1jQCadbY=;
+        b=PmYR5POEFpatu61DslOiOqLU0Xbish4JkYTfrEAf6mBZdO9fnW2RMxMUsCgW6jlVLj
+         kz1BW/JjxQqNUnrkXS6zchzc1qfCXtPa68AxCKffXI9ljLEPMEBAwwx+5ebcofuB/U73
+         lxnxjCxh+qk9DnKtND21xaAzmrpKvZKJeaSy94pd2d3Oiu6LP5WBBAY2mFJcYZB853Oi
+         Rmvb4dYAREi+wrUg3ulMKP6HChKFiahHVNkMsGJikTN5XoTUcWeXwXW5e0YvPP9hJcra
+         DG0P8GANv4YvOGK0lq5P2k2eEKbu/iJs/Sf0Xe0oz9aumqC1iKfSS9Vq8a8BR7X5BniX
+         7H+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Pfv/cnvgiSwS5FWpcgo7yOZIZbZrRdEtNYrReT3xGBE=;
-        b=5w7AV+ky98rymQ81CqbtysbjdJD/eO2JtCu0b398kvTx2ISoEYqdey7TLht/YjRYtQ
-         xnCy8ISjBSZVLxT8IkYTLTnFXFOUI8dksWzWVtUlbvoXM85K2Pby4CkHzS+ng7U92+7E
-         wer6gXU/RN5WaHZ603wsCkIX7O58lwikUGFLPERtj3AYc/Cv5HNhaQjHDlSPQMpmZcd3
-         ni5NNqDjh6Pkuu5dPTj1f5UFBV1U7q82le3cZC1SWX+oHkZznnA3LFrJz5E0UgaJTs+U
-         nr2UJq0edSUyw4caOxNeFKGZOTEjcmvG0eJjnerCly2gJRaGghfcymGu8ukW/8yzuCcV
-         YcJg==
-X-Gm-Message-State: AOAM531HKXvBHmuc62h6ucWQsnydUcoIKWFpyDVe9Nm29WVQ1rjc6TXf
-        giBW95t2U9hKlZI0hTov6i7bVIL/bbA=
-X-Google-Smtp-Source: ABdhPJzElY3ga9UtBmQNpcRBeQWZvqNq+GuCDV24Vh+X/glvTjsyldahKmNJAinamd1UrU0OtksibQ==
-X-Received: by 2002:aa7:8019:0:b0:44d:d761:6f79 with SMTP id j25-20020aa78019000000b0044dd7616f79mr62713052pfi.3.1636146769414;
-        Fri, 05 Nov 2021 14:12:49 -0700 (PDT)
+        bh=KPFsCeKStHLUmfZlK4Puuq02SsEfAOOKUWK1jQCadbY=;
+        b=0qZ3O6pNT+RCsSSiTaDuT1BDxfPKFB5Qd1sYpJVYMXgUHCUSAOvmYZPFwfozEE23ta
+         2H79OEuXDyepRWH7HlgdWWF2MpNuA1qNxpWJEL8OAgAr01nRtigyXX8BYYyH2ru53N8P
+         ppxXtgueuTbc5w15uj4BLYafGgaU+zP1GDqR8eu8qcj7GLH2Cz07O9ArLBsU86yWuiGX
+         nHnsFmfU3PWZPkbuoLu0eWOWitik4RDmJv8zKO6lzx+N4UFVIAayD7z/dAr8ny81v1bc
+         +HAnXZrZfwu6NljF9a41zkv6OXHckyKR3SMxrsQd2Y/aiy90k4dpNcFJLb0bHD7NQBrr
+         RHzQ==
+X-Gm-Message-State: AOAM532X9bMVtPWulebCcU39CgS2KrrmcqIn/le3fooFn3NZM1i30t8z
+        bzs6eUEiEDt5NPzQ9mAHGD9Qi3rjg6M=
+X-Google-Smtp-Source: ABdhPJyiX3cCrkwBU3YBv5FH9+K6WR8CwI6NwTxVtABOC8D5iOyKLZTSMt/pPbXJL0OGv71M00Uaxg==
+X-Received: by 2002:a17:90b:4f4c:: with SMTP id pj12mr32786005pjb.218.1636146770498;
+        Fri, 05 Nov 2021 14:12:50 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id om8sm2250553pjb.12.2021.11.05.14.12.48
+        by smtp.gmail.com with ESMTPSA id om8sm2250553pjb.12.2021.11.05.14.12.49
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Nov 2021 14:12:49 -0700 (PDT)
+        Fri, 05 Nov 2021 14:12:50 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 4/6] adapter: Set Device Privacy Mode
-Date:   Fri,  5 Nov 2021 14:12:43 -0700
-Message-Id: <20211105211245.424024-4-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 5/6] monitor: Add support for Device Privacy Mode flag
+Date:   Fri,  5 Nov 2021 14:12:44 -0700
+Message-Id: <20211105211245.424024-5-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211105211245.424024-1-luiz.dentz@gmail.com>
 References: <20211105211245.424024-1-luiz.dentz@gmail.com>
@@ -65,255 +65,37 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds support for setting Device Privacy flag when enabled in
-main.conf via Privacy = device,limited-device.
----
- lib/mgmt.h    |  3 +-
- src/adapter.c | 76 +++++++++++++++++++++++----------------------------
- src/adapter.h |  9 ++++--
- src/device.c  | 58 +++++++++++++++++++++++++++++----------
- src/device.h  |  1 -
- 5 files changed, 86 insertions(+), 61 deletions(-)
+This adds proper decoding for Device Privacy Mode flag:
 
-diff --git a/lib/mgmt.h b/lib/mgmt.h
-index 0d1678f01..400167e9b 100644
---- a/lib/mgmt.h
-+++ b/lib/mgmt.h
-@@ -665,7 +665,8 @@ struct mgmt_rp_get_device_flags {
- 	uint32_t current_flags;
- } __packed;
- 
--#define DEVICE_FLAG_REMOTE_WAKEUP	(1 << 0)
-+#define DEVICE_FLAG_REMOTE_WAKEUP	BIT(0)
-+#define DEVICE_FLAG_DEVICE_PRIVACY	BIT(1)
- 
- #define MGMT_OP_SET_DEVICE_FLAGS	0x0050
- #define MGMT_SET_DEVICE_FLAGS_SIZE	11
-diff --git a/src/adapter.c b/src/adapter.c
-index 508917e58..309956bbb 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -5308,6 +5308,23 @@ void adapter_accept_list_remove(struct btd_adapter *adapter,
- 				remove_accept_list_complete, adapter, NULL);
+@ MGMT Command: Set Device... (0x0050) plen 11  {0x0001}
+        LE Address: BC:9A:78:56:34:12 (OUI BC-9A-78)
+        Current Flags: 0x00000002
+          Device Privacy Mode
+@ MGMT Event: Device Flags... (0x002a) plen 15  {0x0002}
+        LE Address: BC:9A:78:56:34:12 (OUI BC-9A-78)
+        Supported Flags: 0x00000003
+          Remote Wakeup
+          Device Privacy Mode
+        Current Flags: 0x00000002
+          Device Privacy Mode
+---
+ monitor/packet.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/monitor/packet.c b/monitor/packet.c
+index 9030f2493..71f711dc5 100644
+--- a/monitor/packet.c
++++ b/monitor/packet.c
+@@ -13378,7 +13378,8 @@ static void mgmt_set_exp_feature_rsp(const void *data, uint16_t size)
  }
  
-+static void set_device_privacy_complete(uint8_t status, uint16_t length,
-+					 const void *param, void *user_data)
-+{
-+	const struct mgmt_rp_set_device_flags *rp = param;
-+
-+	if (status != MGMT_STATUS_SUCCESS) {
-+		error("Set device flags return status: %s",
-+					mgmt_errstr(status));
-+		return;
-+	}
-+
-+	if (length < sizeof(*rp)) {
-+		error("Too small Set Device Flags complete event: %d", length);
-+		return;
-+	}
-+}
-+
- static void add_device_complete(uint8_t status, uint16_t length,
- 					const void *param, void *user_data)
- {
-@@ -5342,6 +5359,18 @@ static void add_device_complete(uint8_t status, uint16_t length,
- 	}
+ static const struct bitfield_data mgmt_added_device_flags_table[] = {
+-	{ 0, "Remote Wakeup"	},
++	{ 0, "Remote Wakeup"		},
++	{ 1, "Device Privacy Mode"	},
+ 	{ }
+ };
  
- 	DBG("%s (%u) added to kernel connect list", addr, rp->addr.type);
-+
-+	if (btd_opts.device_privacy) {
-+		uint32_t flags = btd_device_get_current_flags(dev);
-+
-+		/* Set Device Privacy Mode has not set the flag yet. */
-+		if (!(flags & DEVICE_FLAG_DEVICE_PRIVACY)) {
-+			adapter_set_device_flags(adapter, dev, flags |
-+						DEVICE_FLAG_DEVICE_PRIVACY,
-+						set_device_privacy_complete,
-+						NULL);
-+		}
-+	}
- }
- 
- void adapter_auto_connect_add(struct btd_adapter *adapter,
-@@ -5383,42 +5412,9 @@ void adapter_auto_connect_add(struct btd_adapter *adapter,
- 	adapter->connect_list = g_slist_append(adapter->connect_list, device);
- }
- 
--static void set_device_wakeable_complete(uint8_t status, uint16_t length,
--					 const void *param, void *user_data)
--{
--	const struct mgmt_rp_set_device_flags *rp = param;
--	struct btd_adapter *adapter = user_data;
--	struct btd_device *dev;
--	char addr[18];
--
--	if (status != MGMT_STATUS_SUCCESS) {
--		btd_error(adapter->dev_id, "Set device flags return status: %s",
--			  mgmt_errstr(status));
--		return;
--	}
--
--	if (length < sizeof(*rp)) {
--		btd_error(adapter->dev_id,
--			  "Too small Set Device Flags complete event: %d",
--			  length);
--		return;
--	}
--
--	ba2str(&rp->addr.bdaddr, addr);
--
--	dev = btd_adapter_find_device(adapter, &rp->addr.bdaddr, rp->addr.type);
--	if (!dev) {
--		btd_error(adapter->dev_id,
--			  "Set Device Flags complete for unknown device %s",
--			  addr);
--		return;
--	}
--
--	device_set_wake_allowed_complete(dev);
--}
--
--void adapter_set_device_wakeable(struct btd_adapter *adapter,
--				 struct btd_device *device, bool wakeable)
-+void adapter_set_device_flags(struct btd_adapter *adapter,
-+				struct btd_device *device, uint32_t flags,
-+				mgmt_request_func_t func, void *user_data)
- {
- 	struct mgmt_cp_set_device_flags cp;
- 	const bdaddr_t *bdaddr;
-@@ -5433,14 +5429,10 @@ void adapter_set_device_wakeable(struct btd_adapter *adapter,
- 	memset(&cp, 0, sizeof(cp));
- 	bacpy(&cp.addr.bdaddr, bdaddr);
- 	cp.addr.type = bdaddr_type;
--	cp.current_flags = btd_device_get_current_flags(device);
--	if (wakeable)
--		cp.current_flags |= DEVICE_FLAG_REMOTE_WAKEUP;
--	else
--		cp.current_flags &= ~DEVICE_FLAG_REMOTE_WAKEUP;
-+	cp.current_flags = cpu_to_le32(flags);
- 
- 	mgmt_send(adapter->mgmt, MGMT_OP_SET_DEVICE_FLAGS, adapter->dev_id,
--		  sizeof(cp), &cp, set_device_wakeable_complete, adapter, NULL);
-+		  sizeof(cp), &cp, func, user_data, NULL);
- }
- 
- static void device_flags_changed_callback(uint16_t index, uint16_t length,
-diff --git a/src/adapter.h b/src/adapter.h
-index db3c17f23..d191daf5d 100644
---- a/src/adapter.h
-+++ b/src/adapter.h
-@@ -219,8 +219,13 @@ int adapter_connect_list_add(struct btd_adapter *adapter,
- 					struct btd_device *device);
- void adapter_connect_list_remove(struct btd_adapter *adapter,
- 						struct btd_device *device);
--void adapter_set_device_wakeable(struct btd_adapter *adapter,
--				 struct btd_device *dev, bool wakeable);
-+typedef void (*adapter_set_device_flags_func_t)(uint8_t status, uint16_t length,
-+						const void *param,
-+						void *user_data);
-+void adapter_set_device_flags(struct btd_adapter *adapter,
-+				struct btd_device *device, uint32_t flags,
-+				adapter_set_device_flags_func_t func,
-+				void *user_data);
- void adapter_auto_connect_add(struct btd_adapter *adapter,
- 					struct btd_device *device);
- void adapter_auto_connect_remove(struct btd_adapter *adapter,
-diff --git a/src/device.c b/src/device.c
-index 1b4dae685..6b398bd39 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -1403,9 +1403,45 @@ void device_set_wake_override(struct btd_device *device, bool wake_override)
- 	}
- }
- 
-+static void device_set_wake_allowed_complete(struct btd_device *device)
-+{
-+	if (device->wake_id != -1U) {
-+		g_dbus_pending_property_success(device->wake_id);
-+		device->wake_id = -1U;
-+	}
-+
-+	device->wake_allowed = device->pending_wake_allowed;
-+	g_dbus_emit_property_changed(dbus_conn, device->path,
-+					DEVICE_INTERFACE, "WakeAllowed");
-+
-+	store_device_info(device);
-+}
-+
-+static void set_wake_allowed_complete(uint8_t status, uint16_t length,
-+					 const void *param, void *user_data)
-+{
-+	const struct mgmt_rp_set_device_flags *rp = param;
-+	struct btd_device *dev = user_data;
-+
-+	if (status != MGMT_STATUS_SUCCESS) {
-+		error("Set device flags return status: %s",
-+					mgmt_errstr(status));
-+		return;
-+	}
-+
-+	if (length < sizeof(*rp)) {
-+		error("Too small Set Device Flags complete event: %d", length);
-+		return;
-+	}
-+
-+	device_set_wake_allowed_complete(dev);
-+}
-+
- void device_set_wake_allowed(struct btd_device *device, bool wake_allowed,
- 			     GDBusPendingPropertySet id)
- {
-+	uint32_t flags;
-+
- 	/* Pending and current value are the same unless there is a change in
- 	 * progress. Only update wake allowed if pending value doesn't match the
- 	 * new value.
-@@ -1415,25 +1451,17 @@ void device_set_wake_allowed(struct btd_device *device, bool wake_allowed,
- 
- 	device->wake_id = id;
- 	device->pending_wake_allowed = wake_allowed;
--	adapter_set_device_wakeable(device_get_adapter(device), device,
--				    wake_allowed);
--}
- 
--void device_set_wake_allowed_complete(struct btd_device *device)
--{
--	if (device->wake_id != -1U) {
--		g_dbus_pending_property_success(device->wake_id);
--		device->wake_id = -1U;
--	}
--
--	device->wake_allowed = device->pending_wake_allowed;
--	g_dbus_emit_property_changed(dbus_conn, device->path,
--					DEVICE_INTERFACE, "WakeAllowed");
-+	flags = device->current_flags;
-+	if (wake_allowed)
-+		flags |= DEVICE_FLAG_REMOTE_WAKEUP;
-+	else
-+		flags &= ~DEVICE_FLAG_REMOTE_WAKEUP;
- 
--	store_device_info(device);
-+	adapter_set_device_flags(device->adapter, device, flags,
-+					set_wake_allowed_complete, device);
- }
- 
--
- static gboolean
- dev_property_get_wake_allowed(const GDBusPropertyTable *property,
- 			     DBusMessageIter *iter, void *data)
-diff --git a/src/device.h b/src/device.h
-index 5f615cb4b..b37a0a3d2 100644
---- a/src/device.h
-+++ b/src/device.h
-@@ -132,7 +132,6 @@ void device_set_wake_support(struct btd_device *device, bool wake_support);
- void device_set_wake_override(struct btd_device *device, bool wake_override);
- void device_set_wake_allowed(struct btd_device *device, bool wake_allowed,
- 			     guint32 id);
--void device_set_wake_allowed_complete(struct btd_device *device);
- void device_set_refresh_discovery(struct btd_device *dev, bool refresh);
- 
- typedef void (*disconnect_watch) (struct btd_device *device, gboolean removal,
 -- 
 2.31.1
 
