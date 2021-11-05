@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41190446A69
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Nov 2021 22:12:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AF1A446A6B
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Nov 2021 22:12:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232798AbhKEVP3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Nov 2021 17:15:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34136 "EHLO
+        id S233875AbhKEVPb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 Nov 2021 17:15:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229961AbhKEVP2 (ORCPT
+        with ESMTP id S232995AbhKEVPa (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 Nov 2021 17:15:28 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F4B1C061570
-        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Nov 2021 14:12:48 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id gx15-20020a17090b124f00b001a695f3734aso4236185pjb.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Nov 2021 14:12:48 -0700 (PDT)
+        Fri, 5 Nov 2021 17:15:30 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E3DDC061714
+        for <linux-bluetooth@vger.kernel.org>; Fri,  5 Nov 2021 14:12:49 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id y1so11804759plk.10
+        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Nov 2021 14:12:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=FmAlti555ldAvkBkqitSOTT11RXzmUOqFhA3gOPv/ps=;
-        b=X8wL54kvrjl9V9KnXZ0ZDPWGNV34EePJm3N5Smo42t5enDxz/TvIrixkxKyxz8faxI
-         ESbNPgdbkkX3NMaownFfMPP36ZhlCcef4fDHjlIIhnOOOKwExZAOlkdXG+VHJi/V8lAL
-         h6J+WBrCRRfKPeOdZbI6NXGjoyG3aPqC8sdefDUL+Vbt5nTnBImT0ehZdQEsBdMpi1uF
-         sctXTtYJCNB3nCOeARTRiljw4TrZSkc6Rwq270wsJJvMNSPtDDwj+al2j/eLBUQ9VQgv
-         V2zTBgF7jKjbyZUoz396BY8IT3dZxk6tLn/t1ys8SuRiFYejMXHlQy376HP8LRtmyW8W
-         ehGg==
+        bh=pUF8cFIXRCrIuKF6pXVJj4xsEb6l2WKd0y6NYJG0m9c=;
+        b=n92Gy3rhly0VtRP73BDTa0zq27mMxGMdR2kIJbGBTIKyi9ihVqpjnBiq8Wd9ChG1BA
+         N3+uB5HGhT2T/htIyp9CCqO0LgGrF5CEJkarDdm7J25Cyn8ttSZGLe2xsX8tHGhGMv5f
+         Cq1vl63x2L1PgXF9SdvoxOGDFN11lvv3Qb+VEjTjmPM6t8+o//ZWx7/XAIykXg17KmGe
+         26+loFxwssJMk/ZUaH5fpQueUFvZKhNyGwa9gJNw87+jn9ZBgFnh9gZPH2YchAoL5pzA
+         pGnkJmsD25OzjpYtnaMUbRVc+Y1UX1es88tAND4VHj52IzfmuaCPd/uDbMhmJwoWC9hy
+         qU0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FmAlti555ldAvkBkqitSOTT11RXzmUOqFhA3gOPv/ps=;
-        b=nfUD/0Gtju/VtrIWrdIVNmkmthRHRLJ1i11XowLNHm/bWwHlIdbrbfyXYtZuYtltzf
-         KDANaaLx8WLkpJaHviVxw6Xfi04+bbgcUy3pQPKcN90Z3YmVZHIvzdFCjh135Tq888Mc
-         TtMSthUSdL4w+eSfJJaJaMUwnSphTIxsn83+Tg1ugzVgwDYCdL2AicSEvRY5QO+GuHBT
-         3lZaofawUo0opyVSkNyhdWnPQ9aIH1HeybD3nelR+IonxIcUjiBNNyUK+NwIPPeW4ijF
-         7RWs5TZMMOeSEDsBRq/qRo2vrnmOhbe1IOPn/V5AG+6Gqa/jTtmZwCBaA4kRsi3Ya2MM
-         hkBA==
-X-Gm-Message-State: AOAM532Hp7Tk46DQkBjZayNGFsiPHsfHo/0OMr4Rr6AtSBwLNgsLorJt
-        ZA35HaYs0+yYF1oOpnTS+jAcGLFq9gc=
-X-Google-Smtp-Source: ABdhPJxNA44GWdLZPSbsxoioMCmfGwizKeQ2CHA/1A21+7Ta2BwzkBIlYpHsJAuxB3I5RIKvzFahig==
-X-Received: by 2002:a17:90b:224f:: with SMTP id hk15mr14089886pjb.173.1636146767825;
-        Fri, 05 Nov 2021 14:12:47 -0700 (PDT)
+        bh=pUF8cFIXRCrIuKF6pXVJj4xsEb6l2WKd0y6NYJG0m9c=;
+        b=nhb5FUtSXK68EZcQpPP7uBoAu3mvw+LhePztLHFdArF3QMFysJjPtffN+rtzXQIZ2d
+         kHx5wyzWI4bU2VY6MQzCyDeKqF0RjSb8PEZ14ZRMqlDu1WqLAcnH2S/AipygyxttM0zj
+         CKQv8U5AdssS0Zm9qn+2+LV0Ry2GA0VntuM9EL+4CpZRWkd+DHZqwmeSuWO8UqB//uqY
+         s29FmN9xUDUbQbi0l0hmTa8ABkCKUenfI/VUftzz1orDCRJJB4S/w/ge3ud9PqzAJ/qu
+         HP+AFJUcfgo4bl3PTUKvwonlDi1zM0EGIzD0tvYhHKjvhTcvDDJtWn7TuKXEPNU0Lusy
+         4amg==
+X-Gm-Message-State: AOAM530NLfd5MSU68JY0I34S1qmWmRz/da0CwOjVpcUjhvOZQDJQUyp+
+        q1L1KZaKRQ7JSUkpeIyNIxAoDCXFi+0=
+X-Google-Smtp-Source: ABdhPJzUZqfr/q1FDnNVEjPsY4WzLm8ixLlNTC/yiJ2jEmKmNgsEmCuTqmFhQm+CCvQOc9BFjZuO+A==
+X-Received: by 2002:a17:90b:105:: with SMTP id p5mr32804988pjz.60.1636146768609;
+        Fri, 05 Nov 2021 14:12:48 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id om8sm2250553pjb.12.2021.11.05.14.12.46
+        by smtp.gmail.com with ESMTPSA id om8sm2250553pjb.12.2021.11.05.14.12.48
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Nov 2021 14:12:47 -0700 (PDT)
+        Fri, 05 Nov 2021 14:12:48 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/6] mgmt-api: Add new Device Flag to use Device Privacy Mode
-Date:   Fri,  5 Nov 2021 14:12:41 -0700
-Message-Id: <20211105211245.424024-2-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 3/6] main.conf: Rework privacy options
+Date:   Fri,  5 Nov 2021 14:12:42 -0700
+Message-Id: <20211105211245.424024-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211105211245.424024-1-luiz.dentz@gmail.com>
 References: <20211105211245.424024-1-luiz.dentz@gmail.com>
@@ -65,25 +65,101 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds a new flag to Get/Set Device Flag commands so it is possible
-to set the Device Privacy Mode which allows to connect when the
-remote device uses either identity or random address.
+This reworks privacy options so the limited discoverable is only
+available when controller mode is set to dual.
 ---
- doc/mgmt-api.txt | 1 +
- 1 file changed, 1 insertion(+)
+ src/btd.h     |  1 +
+ src/main.c    | 22 ++++++++++++++++++----
+ src/main.conf | 25 ++++++++++++++++++++-----
+ 3 files changed, 39 insertions(+), 9 deletions(-)
 
-diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
-index 97d33e30a..b7a152c14 100644
---- a/doc/mgmt-api.txt
-+++ b/doc/mgmt-api.txt
-@@ -3421,6 +3421,7 @@ Get Device Flags Command
- 	available bits:
+diff --git a/src/btd.h b/src/btd.h
+index f83591f8f..ff9f082f1 100644
+--- a/src/btd.h
++++ b/src/btd.h
+@@ -103,6 +103,7 @@ struct btd_opts {
+ 	uint32_t	discovto;
+ 	uint32_t	tmpto;
+ 	uint8_t		privacy;
++	bool		device_privacy;
  
- 		0	Remote Wakeup enabled
-+		1	Device Privacy Mode enabled
+ 	struct btd_defaults defaults;
  
- 	This command generates a Command Complete event on success
- 	or a Command Status event on failure.
+diff --git a/src/main.c b/src/main.c
+index 2835c81b2..dd954e1ab 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -666,13 +666,27 @@ static void parse_config(GKeyFile *config)
+ 	} else {
+ 		DBG("privacy=%s", str);
+ 
+-		if (!strcmp(str, "network") || !strcmp(str, "on"))
++		if (!strcmp(str, "network") || !strcmp(str, "on")) {
+ 			btd_opts.privacy = 0x01;
+-		if (!strcmp(str, "device") || !strcmp(str, "limited"))
++		} else if (!strcmp(str, "device")) {
++			btd_opts.privacy = 0x01;
++			btd_opts.device_privacy = true;
++		} else if (!strcmp(str, "limited-network")) {
++			if (btd_opts.mode != BT_MODE_DUAL) {
++				DBG("Invalid privacy option: %s", str);
++				btd_opts.privacy = 0x00;
++			}
++			btd_opts.privacy = 0x01;
++		} else if (!strcmp(str, "limited-device")) {
++			if (btd_opts.mode != BT_MODE_DUAL) {
++				DBG("Invalid privacy option: %s", str);
++				btd_opts.privacy = 0x00;
++			}
+ 			btd_opts.privacy = 0x02;
+-		else if (!strcmp(str, "off"))
++			btd_opts.device_privacy = true;
++		} else if (!strcmp(str, "off")) {
+ 			btd_opts.privacy = 0x00;
+-		else {
++		} else {
+ 			DBG("Invalid privacy option: %s", str);
+ 			btd_opts.privacy = 0x00;
+ 		}
+diff --git a/src/main.conf b/src/main.conf
+index 4019ea903..c82d7e648 100644
+--- a/src/main.conf
++++ b/src/main.conf
+@@ -67,14 +67,29 @@
+ 
+ # Default privacy setting.
+ # Enables use of private address.
+-# Possible values: "off", "network/on", "device/limited"
+-# "network/on": a device will only accept advertising packets from peer devices
+-# that contain private addresses. It may not be compatible with some legacy
+-# devices since it requires the use of RPA(s) all the time.
+-# "device/limited": A device in device privacy mode is only concerned about the
++# Possible values for LE mode: "off", "network/on", "device"
++# Possible values for Dual mode: "off", "network/on", "device",
++# "limited-network", "limited-device"
++#
++# - off: Local privacy disabled.
++#
++# - network/on: A device will only accept advertising packets from peer
++# devices that contain private addresses. It may not be compatible with some
++# legacy devices since it requires the use of RPA(s) all the time.
++#
++# - device: A device in device privacy mode is only concerned about the
+ # privacy of the device and will accept advertising packets from peer devices
+ # that contain their Identity Address as well as ones that contain a private
+ # address, even if the peer device has distributed its IRK in the past.
++
++# - limited-network: Apply Limited Discoverable Mode to advertising, which
++# follows the same policy as to BR/EDR that publishes the identity address when
++# discoverable, and Network Privacy Mode for scanning.
++#
++# - limited-device: Apply Limited Discoverable Mode to advertising, which
++# follows the same policy as to BR/EDR that publishes the identity address when
++# discoverable, and Device Privacy Mode for scanning.
++#
+ # Defaults to "off"
+ #Privacy = off
+ 
 -- 
 2.31.1
 
