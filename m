@@ -2,154 +2,128 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C61E1446DB6
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Nov 2021 12:49:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36408446E3E
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Nov 2021 15:01:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234076AbhKFLwb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 6 Nov 2021 07:52:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37108 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229968AbhKFLwb (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 6 Nov 2021 07:52:31 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id AD8CF60E05;
-        Sat,  6 Nov 2021 11:49:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1636199390;
-        bh=cdpSPlGsEnb/lcSvrJVtwq6HXa4Y0hRruNA1ZcaG6l4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AcQuTszFmER9joRbKeCxXpKF80wWwSxUOsWVvybGHalmz8PwcC3BSt6XRpzYM5pdl
-         Lvk1qkRFbhFJd796pyJL5OdZpZiRIR793YQ8siSeN8w63U9WKKBbHuiKh7iTRHVgfH
-         VCoj4YmmFplgFEP2ecCr4WEMBB+NRwy16FpI81Jc=
-Date:   Sat, 6 Nov 2021 12:49:43 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Aditya Garg <gargaditya08@live.com>
-Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Orlando Chamberlain <redecorating@protonmail.com>,
-        Daniel Winkler <danielwinkler@google.com>,
-        Johan Hedberg <johan.hedberg@intel.com>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        "regressions@lists.linux.dev" <regressions@lists.linux.dev>,
-        Sonny Sasaka <sonnysasaka@chromium.org>
-Subject: Re: [PATCHv2] Bluetooth: quirk disabling LE Read Transmit Power
-Message-ID: <YYZr14zwHnd52rQ7@kroah.com>
-References: <4970a940-211b-25d6-edab-21a815313954@protonmail.com>
- <20210930063106.19881-1-redecorating@protonmail.com>
- <20210930141256.19943-1-redecorating@protonmail.com>
- <FA02CDD7-CFEC-4481-9940-BA95D81FD3F3@holtmann.org>
- <275acce4-9eab-9cba-7145-5a75a69ca530@protonmail.com>
- <20211001083412.3078-1-redecorating@protonmail.com>
- <CABBYNZLjSfcG_KqTEbL6NOSvHhA5-b1t_S=3FQP4=GwW21kuzg@mail.gmail.com>
- <972034A8-4B22-4FEE-9B37-C0A7C7ADD60C@live.com>
+        id S233389AbhKFODw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 6 Nov 2021 10:03:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54926 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229932AbhKFODv (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sat, 6 Nov 2021 10:03:51 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8011C061570
+        for <linux-bluetooth@vger.kernel.org>; Sat,  6 Nov 2021 07:01:10 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id v7so30474681ybq.0
+        for <linux-bluetooth@vger.kernel.org>; Sat, 06 Nov 2021 07:01:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=b4rYg5SOz5rOM5p5ctP9uplrloJl2DRm6ET8X/kYdOk=;
+        b=T05L/QHq6PQcygwtmBLKNwn+8ghm0qHSi/vsw0NYskd4qR2J04/5+n9w26l62fyYow
+         7uI/9qd9I5vP8zCB4+ctzGXQ3o6isgG04KqxceHcmsPrtrKAwY9f0RjQwJjYgzHFgRoX
+         az46CnN4XqjunNZotAkNWYuyntXrX8yX5MDjLcWfiaSvpOM0IJMwVjxMtk78OJbozkTv
+         6JcHWn4qnC0PV1+tcUrhQx5hfsSYbZMES115mGqWYAG2+KGpZsrz77476Grp18FCJl/j
+         KOwAVfvw0AZoWMTIUWviDibsf8w/FfyzOzwJZ/aGcHwsJpfoMaVsHkC+2DplRSUFtjjw
+         Zqsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=b4rYg5SOz5rOM5p5ctP9uplrloJl2DRm6ET8X/kYdOk=;
+        b=7NwtZeCuAAHqCDTznpxxJVSYFDvacKBE6bQdM/izRuN2hU1bPtcW3AOIo69K6MUXf4
+         jTbCjD50fqTSfpLyA4LJ15V+PgzvvhGo/pMlppR27MLh+E6cCenuzj+cCqDnyiYSLvWA
+         ByJ+cvbyqoKXOBYEGHqZw41M2yhvAy9CnfjInViYXbn9836LJ3LSgVPMo2hXOwnuikH1
+         bPammhhnWN7+jRG7Y8qFvAd1o0jQgV3aGriFXwA/6BO3w/kJHIUsnkvYVHvB4oGAAeTh
+         jKQBWf/bum+h+Gm80+kgqk9kw4NDt4W3oMX+piWwQm9cjq8mKXZEKOi8PyP855cBPxjq
+         2mow==
+X-Gm-Message-State: AOAM5322ODtw3NK1g76X5OWAKUofTwWmlifC0hVfa+Yr5KPacyJsSioA
+        1lnOrAG9V2OIGFVObmziKbvZHDEKyyEAoG3FNyA=
+X-Google-Smtp-Source: ABdhPJwj3kPU6lWkPcYHZWZThqt7ZpxdikqyQ03KG0SwdD4IkMwlqxVL1lRoheEHiCZVsJmmVYhxumHK0MiKCz6ZSVA=
+X-Received: by 2002:a25:2fd1:: with SMTP id v200mr64087618ybv.78.1636207269789;
+ Sat, 06 Nov 2021 07:01:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <972034A8-4B22-4FEE-9B37-C0A7C7ADD60C@live.com>
+Received: by 2002:a05:7108:4346:0:0:0:0 with HTTP; Sat, 6 Nov 2021 07:01:09
+ -0700 (PDT)
+Reply-To: msbelinaya892@gmail.com
+From:   msbelinaya <raymondmicheal55@gmail.com>
+Date:   Sat, 6 Nov 2021 14:01:09 +0000
+Message-ID: <CAJSg6-Fym1uqpos2q0JGy6kUO4CXv-4mEfDGJZg89ahPTmJttQ@mail.gmail.com>
+Subject: =?UTF-8?Q?T=C3=BCrkei?=
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Sat, Nov 06, 2021 at 09:41:28AM +0000, Aditya Garg wrote:
-> 
-> 
-> > On 06-Nov-2021, at 3:17 AM, Luiz Augusto von Dentz <luiz.dentz@gmail.com> wrote:
-> > 
-> > Hi Orlando,
-> > 
-> > On Fri, Oct 1, 2021 at 1:56 AM Orlando Chamberlain
-> > <redecorating@protonmail.com> wrote:
-> >> 
-> >> The LE Read Transmit Power command is Advertised on some Broadcom
-> >> controlers, but not supported. Using this command breaks Bluetooth
-> >> on the MacBookPro16,1 and iMac20,1. Added a quirk disabling LE Read
-> >> Transmit Power for these devices, based off their common chip id 150.
-> >> 
-> >> Link: https://lore.kernel.org/r/4970a940-211b-25d6-edab-21a815313954@protonmail.com
-> >> Signed-off-by: Orlando Chamberlain <redecorating@protonmail.com>
-> >> ---
-> >> v1->v2: Clarified quirk description
-> >> 
-> >> drivers/bluetooth/btbcm.c   |  4 ++++
-> >> include/net/bluetooth/hci.h | 11 +++++++++++
-> >> net/bluetooth/hci_core.c    |  3 ++-
-> >> 3 files changed, 17 insertions(+), 1 deletion(-)
-> >> 
-> >> diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
-> >> index e4182acee488..4ecc50d93107 100644
-> >> --- a/drivers/bluetooth/btbcm.c
-> >> +++ b/drivers/bluetooth/btbcm.c
-> >> @@ -353,6 +353,10 @@ static int btbcm_read_info(struct hci_dev *hdev)
-> >>                return PTR_ERR(skb);
-> >> 
-> >>        bt_dev_info(hdev, "BCM: chip id %u", skb->data[1]);
-> >> +
-> >> +       if (skb->data[1] == 150)
-> >> +               set_bit(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER, &hdev->quirks);
-> >> +
-> >>        kfree_skb(skb);
-> >> 
-> >>        /* Read Controller Features */
-> >> diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-> >> index b80415011dcd..6da9bd6b7259 100644
-> >> --- a/include/net/bluetooth/hci.h
-> >> +++ b/include/net/bluetooth/hci.h
-> >> @@ -246,6 +246,17 @@ enum {
-> >>         * HCI after resume.
-> >>         */
-> >>        HCI_QUIRK_NO_SUSPEND_NOTIFIER,
-> >> +
-> >> +       /* When this quirk is set, LE Read Transmit Power is disabled.
-> >> +        * This is mainly due to the fact that the HCI LE Read Transmit
-> >> +        * Power command is advertised, but not supported; these
-> >> +        * controllers often reply with unknown command and need a hard
-> >> +        * reset.
-> >> +        *
-> >> +        * This quirk can be set before hci_register_dev is called or
-> >> +        * during the hdev->setup vendor callback.
-> >> +        */
-> >> +       HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER,
-> >> };
-> >> 
-> >> /* HCI device flags */
-> >> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-> >> index 8a47a3017d61..9a23fe7c8d67 100644
-> >> --- a/net/bluetooth/hci_core.c
-> >> +++ b/net/bluetooth/hci_core.c
-> >> @@ -742,7 +742,8 @@ static int hci_init3_req(struct hci_request *req, unsigned long opt)
-> >>                        hci_req_add(req, HCI_OP_LE_READ_ADV_TX_POWER, 0, NULL);
-> >>                }
-> >> 
-> >> -               if (hdev->commands[38] & 0x80) {
-> >> +               if (hdev->commands[38] & 0x80 &&
-> >> +                       !test_bit(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER, &hdev->quirks)) {
-> >>                        /* Read LE Min/Max Tx Power*/
-> >>                        hci_req_add(req, HCI_OP_LE_READ_TRANSMIT_POWER,
-> >>                                    0, NULL);
-> >> --
-> >> 2.33.0
-> > 
-> > Nowadays it is possible to treat errors such like this on a per
-> > command basis (assuming it is not essential for the init sequence):
-> > 
-> > diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-> > index 979da5179ff4..f244f42cc609 100644
-> > --- a/include/net/bluetooth/hci.h
-> > +++ b/include/net/bluetooth/hci.h
-> > @@ -551,6 +551,7 @@ enum {
-> > #define HCI_LK_AUTH_COMBINATION_P256   0x08
-> > 
-> > /* ---- HCI Error Codes ---- */
-> > +#define HCI_ERROR_UNKNOWN_CMD          0x01
-> > #define HCI_ERROR_UNKNOWN_CONN_ID      0x02
-> > #define HCI_ERROR_AUTH_FAILURE         0x05
-> > #define HCI_ERROR_PIN_OR_KEY_MISSING   0x06
-> > diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-> This diff cannot be applied to stable 5.15. Could you provide a patch capable of being applied to stable.
+Ich biete meine Freundschaft an und glaube, dass Sie mich mit gutem
+Herzen akzeptieren werden. Ich wurde gedr=C3=A4ngt, Sie zu kontaktieren und
+zu sehen, wie wir einander am besten unterst=C3=BCtzen k=C3=B6nnen. Ich bin=
+ Frau
+Kodjovi Hegbor aus der T=C3=BCrkei und arbeite als Divisionsleiterin f=C3=
+=BCr
+Operationen bei der StandardBNP bank limited Turkey . Ich glaube, es
+ist der Wille Gottes, dass ich Ihnen jetzt begegnen werde. Ich habe
+ein wichtiges gesch=C3=A4ftliches Gespr=C3=A4ch, das ich mit Ihnen teilen
+m=C3=B6chte, von dem ich glaube, dass es Sie interessiert, da es mit Ihrem
+Nachnamen in Verbindung steht und Sie davon profitieren werden.
 
-That is not needed until a patch is in Linus's tree.  Why do you need it
-earlier?
+ Im Jahr 2006 hat ein B=C3=BCrger Ihres Landes bei meiner Bank ein
+Nicht-Residentenkonto f=C3=BCr 36 Monate des Kalenders im Wert von
+=C2=A38.400.000,00 eingerichtet. Das Ablaufdatum f=C3=BCr diesen Depotvertr=
+ag
+war der 16. Januar 2009. Leider starb er w=C3=A4hrend einer Gesch=C3=A4ftsr=
+eise
+bei einem t=C3=B6dlichen Erdbeben am 12. Mai 2008 in Sichuan, China, bei
+dem mindestens 68.000 Menschen ums Leben kamen.
 
-thanks,
+Das Management meiner Bank hat noch nichts von seinem Tod erfahren,
+ich wusste davon, weil er mein Freund war und ich sein Kontof=C3=BChrer
+war, als das Konto vor meiner Bef=C3=B6rderung er=C3=B6ffnet wurde. Jedoch =
+Herr
+ erw=C3=A4hnte bei der Kontoer=C3=B6ffnung keine n=C3=A4chsten Verwandten/E=
+rben, und
+er war nicht verheiratet und hatte keine Kinder. Letzte Woche hat
+meine Bankdirektion mich gebeten, Anweisungen zu geben, was mit seinen
+Geldern zu tun ist, wenn der Vertrag verl=C3=A4ngert werden soll.
 
-greg k-h
+Ich wei=C3=9F, dass dies passieren wird, und deshalb habe ich nach einem
+Mittel gesucht, um mit der Situation umzugehen, denn wenn meine
+Bankdirektoren wissen, dass sie tot sind und keinen Erben haben,
+werden sie das Geld f=C3=BCr ihren pers=C3=B6nlichen Gebrauch nehmen, also =
+Ich
+m=C3=B6chte nicht, dass so etwas passiert. Als ich Ihren Nachnamen sah, war
+ich gl=C3=BCcklich und suche jetzt Ihre Mitarbeit, um Sie als Next of
+Kin/Erbe des Kontos zu pr=C3=A4sentieren, da Sie den gleichen Nachnamen wie
+er haben und meine Bankzentrale das Konto freigeben wird f=C3=BCr dich. Es
+besteht kein Risiko; die Transaktion wird im Rahmen einer legitimen
+Vereinbarung ausgef=C3=BChrt, die Sie vor Rechtsverletzungen sch=C3=BCtzt.
+
+Es ist besser, dass wir das Geld beanspruchen, als es den
+Bankdirektoren zu erlauben, es zu nehmen, sie sind bereits reich. Ich
+bin kein gieriger Mensch, daher schlage ich vor, dass wir das Geld zu
+gleichen Teilen teilen, 50/50% auf beide Parteien. Mein Anteil wird
+mir helfen, mein eigenes Unternehmen zu gr=C3=BCnden und den Erl=C3=B6s f=
+=C3=BCr
+wohlt=C3=A4tige Zwecke zu verwenden, was mein Traum war.
+
+Teilen Sie mir Ihre Meinung zu meinem Vorschlag mit, bitte, ich
+brauche wirklich Ihre Hilfe bei dieser Transaktion. Ich habe Sie
+ausgew=C3=A4hlt, um mir zu helfen, nicht durch mein eigenes Tun, mein
+Lieber, sondern bei Gott wollte ich, dass Sie wissen, dass ich mir
+Zeit zum Beten genommen habe =C3=BCber diese Mitteilung, bevor ich Sie
+jemals kontaktiert habe, teilen Sie mir Ihre Meinung dazu mit und
+behandeln Sie diese Informationen bitte als STRENG GEHEIM. Nach Erhalt
+Ihrer Antwort, ausschlie=C3=9Flich =C3=BCber meine pers=C3=B6nliche E-Mail-=
+Adresse,
+msbelinaya892@gmail.com
+gibt Ihnen Details zur Transaktion. Und eine Kopie der
+Einlagenbescheinigung des Fonds sowie die Gr=C3=BCndungsurkunde der
+Gesellschaft, die den Fonds erstellt hat.
+Gott segne, in Erwartung Ihrer dringenden Antwort
+Mit freundlichen Gr=C3=BC=C3=9Fen
+Frau Kodjovi Hegbor
+msbelinaya892@gmail.com
