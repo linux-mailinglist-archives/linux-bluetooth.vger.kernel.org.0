@@ -2,83 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A662144AAA8
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Nov 2021 10:37:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 633D044B14C
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Nov 2021 17:33:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244925AbhKIJkT convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 9 Nov 2021 04:40:19 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:50659 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241297AbhKIJkS (ORCPT
+        id S236373AbhKIQg1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 9 Nov 2021 11:36:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57336 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235345AbhKIQg0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 9 Nov 2021 04:40:18 -0500
-Received: from smtpclient.apple (p4fefc15c.dip0.t-ipconnect.de [79.239.193.92])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 7280ECED1E;
-        Tue,  9 Nov 2021 10:37:31 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
-Subject: Re: [PATCH v3] Bluetooth: btusb: re-definition for board_id in struct
-  qca_version
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <305e41a55a4c117da86f786c374a57dc@codeaurora.org>
-Date:   Tue, 9 Nov 2021 10:37:31 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rocky Liao <rjliao@codeaurora.org>, zijuhu@codeaurora.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <8E687716-E810-4A46-B010-A08BB261D2FF@holtmann.org>
-References: <305e41a55a4c117da86f786c374a57dc@codeaurora.org>
-To:     tjiang@codeaurora.org
-X-Mailer: Apple Mail (2.3693.20.0.1.32)
+        Tue, 9 Nov 2021 11:36:26 -0500
+Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 532E9C061766
+        for <linux-bluetooth@vger.kernel.org>; Tue,  9 Nov 2021 08:33:40 -0800 (PST)
+Received: by mail-ua1-x92f.google.com with SMTP id p2so678850uad.11
+        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Nov 2021 08:33:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=/1Kp2WPJKK5zDIiVHFBMJDxTusj9lTuiNwPf/YrQxIs=;
+        b=krKTySUR9kJeLlqI+ufZ+UQgu06o2J71xODBJ1tzzSXkD9z0jNPiwoyQHU0YT97Hgm
+         dfRQ4gojBHxowS3AdRwrf6cGCLfUNwF/xIyDDBHRTZfS1Ltt22l0g96htMiNn+0WeZFv
+         xUEXolAAt4ufCo7OQgBuvAgucVx8mj2D6iGlXHZD9qh+o7QB5NOsosTu+2Tu2xm/zKJS
+         wcjqGygpRb/mCguZPA9Qksp0V7NVi0LlkixzBrRSMVN8a34CVUg+KJ/3St7G8XnPZzC3
+         Oiz2kVE2DMAXKDmHDFGbhkqFqQRVi7sMwxDbH4woX27YguUWK/4Pac1fT1nJlqzzE0TM
+         Ul9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=/1Kp2WPJKK5zDIiVHFBMJDxTusj9lTuiNwPf/YrQxIs=;
+        b=oS9xoDPaNKuqTmCcLNRXCtpj21Giq71VwzI1yejqkRl0r7dfZOib8YB2x6rvahJbsc
+         9aeByR7VpL1I+ZYiE3Fv6/K8VU1xFg2+RRJ6BYqqLzRqIk8CjK7Av4aAuwWfqyIAwd2K
+         Os97jcMbB5dOFA0iFtbw3DMd/93CsJ6HOfz+Sqw3GmaJMDBcJ/e59btFt3tqxeqVN56q
+         xcH7A3zYO1AWtrJWGC6I1MuBajbFidIem0jcbTHHOO442Mbq6wFNeeAk9vBk5CE6Io5y
+         l+7L3w/Obai1UrJCpJ7kog3VuLFRPwEaTb53ab9jMWcewPvb1el5bmx4KFT2OHwA9SAr
+         hjcQ==
+X-Gm-Message-State: AOAM533kNUbZ1gn9pQLwVJrfhxIPBxIjT20M2qJI+GP2qQYWkfk9NJbO
+        F5iM86mdiwT56/+eRe55pbwowPk9P7GCEhOfu9c=
+X-Google-Smtp-Source: ABdhPJyYcAleTa0725gfzSmM2neAWoCfHXy0Zgkbe5Ian9w9ozDZG0w4PmG1svuS9SBGG9zfMSrz1skTGWWo4Ibye+I=
+X-Received: by 2002:a05:6102:41a4:: with SMTP id cd36mr14114257vsb.23.1636475618915;
+ Tue, 09 Nov 2021 08:33:38 -0800 (PST)
+MIME-Version: 1.0
+Sender: westernunionheadofficebfk@gmail.com
+Received: by 2002:a59:c766:0:b0:239:2ec4:c46b with HTTP; Tue, 9 Nov 2021
+ 08:33:38 -0800 (PST)
+From:   Dr Martin Belem <drbelemmartint@gmail.com>
+Date:   Tue, 9 Nov 2021 08:33:38 -0800
+X-Google-Sender-Auth: veDuxbYDvLIO3S-xF2TOpwKWWG8
+Message-ID: <CAG5o=DAfrMnFKukTV6EjSzqopo+-HgReV1bAu9j3J1_pwTftWQ@mail.gmail.com>
+Subject: From Dr Teju Martin
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Tim,
+Hello friend I am a banker in ADB BANK. I want to transfer an abandoned
+$18.5Million to your Bank account. 40/percent will be your share.
+No risk involved but keep it as secret. Contact me for more details.
 
-> As qc btsoc will using big-endian for boardID, so align host with it.
-> 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
-> ---
-> drivers/bluetooth/btusb.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 46d892bbde62..a51b1d641043 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -2883,7 +2883,7 @@ struct qca_version {
-> 	__le32	rom_version;
-> 	__le32	patch_version;
-> 	__le32	ram_version;
-> -	__le16	board_id;
-> +	__u8	board_id[2];
-> 	__le16	flag;
-> 	__u8	reserved[4];
-> } __packed;
-> @@ -3072,7 +3072,7 @@ static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
-> 	u16 flag = le16_to_cpu(ver->flag);
-> 
-> 	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> -		u16 board_id = le16_to_cpu(ver->board_id);
-> +		u16 board_id = (ver->board_id[0] << 8) + ver->board_id[1];
-> 		const char *variant;
-> 
-> 		switch (le32_to_cpu(ver->ram_version)) {
+And also acknowledge receipt of this message in acceptance of my mutual
+business endeavor by furnishing me with the following:
 
-explain to me why I would merge this. The commit message is sparse even after I asked to explain things.
+1. Your Full Names and Address.
 
-I am also not merging this handwaving endian handling. Define it is be16 or le16 and clearly state what it is. If Qualcomm screwed up the memory layout of their NVM, then say that.
+2. Direct Telephone and Fax numbers Of
 
-Regards
+Yours
 
-Marcel
-
+Dr Belem Martin Teju.
