@@ -2,73 +2,79 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 633D044B14C
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Nov 2021 17:33:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA9B544B15E
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Nov 2021 17:41:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236373AbhKIQg1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 9 Nov 2021 11:36:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57336 "EHLO
+        id S239986AbhKIQo1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 9 Nov 2021 11:44:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235345AbhKIQg0 (ORCPT
+        with ESMTP id S238286AbhKIQoX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 9 Nov 2021 11:36:26 -0500
-Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 532E9C061766
-        for <linux-bluetooth@vger.kernel.org>; Tue,  9 Nov 2021 08:33:40 -0800 (PST)
-Received: by mail-ua1-x92f.google.com with SMTP id p2so678850uad.11
-        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Nov 2021 08:33:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=/1Kp2WPJKK5zDIiVHFBMJDxTusj9lTuiNwPf/YrQxIs=;
-        b=krKTySUR9kJeLlqI+ufZ+UQgu06o2J71xODBJ1tzzSXkD9z0jNPiwoyQHU0YT97Hgm
-         dfRQ4gojBHxowS3AdRwrf6cGCLfUNwF/xIyDDBHRTZfS1Ltt22l0g96htMiNn+0WeZFv
-         xUEXolAAt4ufCo7OQgBuvAgucVx8mj2D6iGlXHZD9qh+o7QB5NOsosTu+2Tu2xm/zKJS
-         wcjqGygpRb/mCguZPA9Qksp0V7NVi0LlkixzBrRSMVN8a34CVUg+KJ/3St7G8XnPZzC3
-         Oiz2kVE2DMAXKDmHDFGbhkqFqQRVi7sMwxDbH4woX27YguUWK/4Pac1fT1nJlqzzE0TM
-         Ul9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=/1Kp2WPJKK5zDIiVHFBMJDxTusj9lTuiNwPf/YrQxIs=;
-        b=oS9xoDPaNKuqTmCcLNRXCtpj21Giq71VwzI1yejqkRl0r7dfZOib8YB2x6rvahJbsc
-         9aeByR7VpL1I+ZYiE3Fv6/K8VU1xFg2+RRJ6BYqqLzRqIk8CjK7Av4aAuwWfqyIAwd2K
-         Os97jcMbB5dOFA0iFtbw3DMd/93CsJ6HOfz+Sqw3GmaJMDBcJ/e59btFt3tqxeqVN56q
-         xcH7A3zYO1AWtrJWGC6I1MuBajbFidIem0jcbTHHOO442Mbq6wFNeeAk9vBk5CE6Io5y
-         l+7L3w/Obai1UrJCpJ7kog3VuLFRPwEaTb53ab9jMWcewPvb1el5bmx4KFT2OHwA9SAr
-         hjcQ==
-X-Gm-Message-State: AOAM533kNUbZ1gn9pQLwVJrfhxIPBxIjT20M2qJI+GP2qQYWkfk9NJbO
-        F5iM86mdiwT56/+eRe55pbwowPk9P7GCEhOfu9c=
-X-Google-Smtp-Source: ABdhPJyYcAleTa0725gfzSmM2neAWoCfHXy0Zgkbe5Ian9w9ozDZG0w4PmG1svuS9SBGG9zfMSrz1skTGWWo4Ibye+I=
-X-Received: by 2002:a05:6102:41a4:: with SMTP id cd36mr14114257vsb.23.1636475618915;
- Tue, 09 Nov 2021 08:33:38 -0800 (PST)
+        Tue, 9 Nov 2021 11:44:23 -0500
+Received: from sipsolutions.net (unknown [IPv6:2a01:4f8:191:4433::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B47BFC0613B9
+        for <linux-bluetooth@vger.kernel.org>; Tue,  9 Nov 2021 08:41:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
+        Message-Id:Date:Subject:Cc:To:From:Content-Type:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+        Resent-Message-ID:In-Reply-To:References;
+        bh=lSfcP7eOVSw4c5jDibayrhPioukG4Weehmto05Q+vKQ=; t=1636476097; x=1637685697; 
+        b=oaVasdPKLZ/aOQ0xuzYKSyHY4p5SB0TQnfOwAMvJB2r8qBeLb6uGIsL4A14w7wW9eXAT3bMp/pW
+        4C6rWLjBHe2Vk/dgsTtLM1S5Qy/E4R2wernUksiurZCuFHgyAj4kZh4kdzWVFu5kcCGZzUz51Nt9H
+        AGJCVj+4CK3Otdo3YtDuGikHwqWEAQqLORYmduNMKEHMRvAezq7sVXBgQHpJLB4mcTPh7HoKJz3Y4
+        bCX5Qp43HUAQsMQdZ7TjcKGwtiC9SkWFmTvnPeTMjI6MQlh3s0oWMLt+3oZhrtb1F2uoJQlfVWOIp
+        Kzh2U+6DY45i92clfOaNNQ2LhLjZiSJgWPzw==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+        (Exim 4.95)
+        (envelope-from <benjamin@sipsolutions.net>)
+        id 1mkUBh-00D1dY-4o;
+        Tue, 09 Nov 2021 17:41:33 +0100
+From:   Benjamin Berg <benjamin@sipsolutions.net>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Benjamin Berg <benjamin@sipsolutions.net>
+Subject: [PATCH 0/4] Cancel sync commands if a TX failure occurs
+Date:   Tue,  9 Nov 2021 17:41:09 +0100
+Message-Id: <20211109164113.65981-1-benjamin@sipsolutions.net>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Sender: westernunionheadofficebfk@gmail.com
-Received: by 2002:a59:c766:0:b0:239:2ec4:c46b with HTTP; Tue, 9 Nov 2021
- 08:33:38 -0800 (PST)
-From:   Dr Martin Belem <drbelemmartint@gmail.com>
-Date:   Tue, 9 Nov 2021 08:33:38 -0800
-X-Google-Sender-Auth: veDuxbYDvLIO3S-xF2TOpwKWWG8
-Message-ID: <CAG5o=DAfrMnFKukTV6EjSzqopo+-HgReV1bAu9j3J1_pwTftWQ@mail.gmail.com>
-Subject: From Dr Teju Martin
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello friend I am a banker in ADB BANK. I want to transfer an abandoned
-$18.5Million to your Bank account. 40/percent will be your share.
-No risk involved but keep it as secret. Contact me for more details.
+It was reported that userspace could hang for 10s after resuming due to
+btusb hitting the internal timeout when sending the firmware.
 
-And also acknowledge receipt of this message in acceptance of my mutual
-business endeavor by furnishing me with the following:
+In this case, the bluetooth dongle disappeared right after resume due to
+the thinkpad_acpi rfkill being blocked. This causes the USB device to
+disappear, however the bluetooth stack does not handle the
+corresponding ENODEV errors and instead waits for a timeout to happen.
 
-1. Your Full Names and Address.
+To avoid blocking everything for such a long time, the synchronous
+command has to finish immediately after an ENODEV error occurs. This
+requires further error handling, which this patchset adds by building
+on top of the existing cancellation infrastructure for synchronous
+commands.
 
-2. Direct Telephone and Fax numbers Of
+Note that this just adds basic error handling in order to quickly abort
+the initialization routine in case the device disappears at that time.
+Additional error handling such as calling hci_reset_dev might be
+sensible in some cases.
 
-Yours
+Benjamin Berg (4):
+  Bluetooth: Reset more state when cancelling a sync command
+  Bluetooth: Add new hci_tx_error function
+  Bluetooth: hci_core: Signal TX failure if sending a frame failed
+  Bluetooth: btusb: Signal URB errors as TX failure
 
-Dr Belem Martin Teju.
+ drivers/bluetooth/btusb.c        | 16 ++++++++++++----
+ include/net/bluetooth/hci_core.h |  1 +
+ net/bluetooth/hci_core.c         |  9 +++++++++
+ net/bluetooth/hci_request.c      |  5 +++++
+ 4 files changed, 27 insertions(+), 4 deletions(-)
+
+-- 
+2.31.1
+
