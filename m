@@ -2,40 +2,40 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3565A44B157
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Nov 2021 17:41:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 91B2B44B15D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Nov 2021 17:41:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238641AbhKIQoY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 9 Nov 2021 11:44:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59132 "EHLO
+        id S239801AbhKIQo0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 9 Nov 2021 11:44:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238261AbhKIQoX (ORCPT
+        with ESMTP id S238282AbhKIQoX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Tue, 9 Nov 2021 11:44:23 -0500
 Received: from sipsolutions.net (unknown [IPv6:2a01:4f8:191:4433::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9633C061767
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFA91C0613F5
         for <linux-bluetooth@vger.kernel.org>; Tue,  9 Nov 2021 08:41:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
         References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Content-Type:Sender
         :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-        Resent-Cc:Resent-Message-ID; bh=r+PBFOa68zz/WZyxgEbpEZiQ9ozgU21z6q9dCnIR5GA=;
-        t=1636476097; x=1637685697; b=PZkQflSJYQlZe4BGNZ1zoGi91mzfvvZROFnAhmT9Q4/kjWd
-        VIamlgndTo22C2vG6pbDOEOJET/hvJANf8wMNdn3Wknpa5nDAeLHGrrW0CtjbQE+VuRpzPJQq1trr
-        dMuggc7MLtEiS7Wn/jGE7A2bKO0jPw/nnnnr5obFP5BwbR5vrMnqSu5wk4aW1ZPQU4IiLrz93mis+
-        CGgB6fY+y3Tyg7/zIFMjcW5lJ5rgc/JP5Is3FG8eVbZ7bfhS7/GTvJWe1kq9sqT3rFql+p47WW+KE
-        zK3dGp7d2x2c1Ga61Q7q8gmIjIgeOq+msU0dcbREV8c3Wb1Jt3+xWyR6qpoc13HA==;
+        Resent-Cc:Resent-Message-ID; bh=LwunBjJvTdtZ2UAAi5IgCtwbKk9GqSuN6FAjZ1zyjS4=;
+        t=1636476097; x=1637685697; b=aUO4cDYXCfprtIsuGrPD6g3TTtfM5OIS92nt4gmFtPkLCd2
+        1lTV5XHttQxWM6hnI4Gpn8BfvAlJAzYjKv02GiOEeCqmYpjB4rfhSn0LTT3Q/b88feXk+spxJFac8
+        7uRbX9D33ArCBBoOWEfoKoaO9QsfceGhTyGeqDuccyvNaX7qbHRVuaPjHOCmlL7Ao/SGeHNmqrddp
+        w6vGopO7pSkcLPKEqLiXyR/eNOAKtHHJGYxLgK3fXmTsNzbttKXrER0aVCNjOdAo2mtu81hBCyrvj
+        lsFarZIU52CZXziLyFTAJNGit/dU7S7BYb73jxTQrSdYmyQQD13YN1+u1qKiXDBg==;
 Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
         (Exim 4.95)
         (envelope-from <benjamin@sipsolutions.net>)
-        id 1mkUBh-00D1dY-RV;
+        id 1mkUBi-00D1dY-Bf;
         Tue, 09 Nov 2021 17:41:34 +0100
 From:   Benjamin Berg <benjamin@sipsolutions.net>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Benjamin Berg <bberg@redhat.com>
-Subject: [PATCH 3/4] Bluetooth: hci_core: Signal TX failure if sending a frame failed
-Date:   Tue,  9 Nov 2021 17:41:12 +0100
-Message-Id: <20211109164113.65981-4-benjamin@sipsolutions.net>
+Subject: [PATCH 4/4] Bluetooth: btusb: Signal URB errors as TX failure
+Date:   Tue,  9 Nov 2021 17:41:13 +0100
+Message-Id: <20211109164113.65981-5-benjamin@sipsolutions.net>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211109164113.65981-1-benjamin@sipsolutions.net>
 References: <20211109164113.65981-1-benjamin@sipsolutions.net>
@@ -47,26 +47,71 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Benjamin Berg <bberg@redhat.com>
 
-Call the hci_tx_error handler in case a frame cannot be send.
+Call the TX failure handler when transmission of URBs fail. This is done
+both for failures to send an URB and also when the interrupt URB used to
+retrieve a response fails.
+
+This approach is sufficient to quickly deal with certain errors such as
+a device being disconnected while synchronous commands are done during
+initialization.
 
 Signed-off-by: Benjamin Berg <bberg@redhat.com>
 ---
- net/bluetooth/hci_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btusb.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index bbb35188e41f..8664c2fbacdb 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4200,6 +4200,8 @@ static void hci_send_frame(struct hci_dev *hdev, struct sk_buff *skb)
- 	if (err < 0) {
- 		bt_dev_err(hdev, "sending frame failed (%d)", err);
- 		kfree_skb(skb);
-+
-+		hci_tx_error(hdev, -err);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 75c83768c257..0c4fe89c6573 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -924,6 +924,8 @@ static void btusb_intr_complete(struct urb *urb)
+ 		if (err != -EPERM && err != -ENODEV)
+ 			bt_dev_err(hdev, "urb %p failed to resubmit (%d)",
+ 				   urb, -err);
++		if (err != -EPERM)
++			hci_tx_error(hdev, -err);
+ 		usb_unanchor_urb(urb);
  	}
  }
+@@ -967,6 +969,8 @@ static int btusb_submit_intr_urb(struct hci_dev *hdev, gfp_t mem_flags)
+ 		if (err != -EPERM && err != -ENODEV)
+ 			bt_dev_err(hdev, "urb %p submission failed (%d)",
+ 				   urb, -err);
++		if (err != -EPERM)
++			hci_tx_error(hdev, -err);
+ 		usb_unanchor_urb(urb);
+ 	}
  
+@@ -1322,10 +1326,12 @@ static void btusb_tx_complete(struct urb *urb)
+ 	if (!test_bit(HCI_RUNNING, &hdev->flags))
+ 		goto done;
+ 
+-	if (!urb->status)
++	if (!urb->status) {
+ 		hdev->stat.byte_tx += urb->transfer_buffer_length;
+-	else
++	} else {
++		hci_tx_error(hdev, -urb->status);
+ 		hdev->stat.err_tx++;
++	}
+ 
+ done:
+ 	spin_lock_irqsave(&data->txlock, flags);
+@@ -1348,10 +1354,12 @@ static void btusb_isoc_tx_complete(struct urb *urb)
+ 	if (!test_bit(HCI_RUNNING, &hdev->flags))
+ 		goto done;
+ 
+-	if (!urb->status)
++	if (!urb->status) {
+ 		hdev->stat.byte_tx += urb->transfer_buffer_length;
+-	else
++	} else {
++		hci_tx_error(hdev, -urb->status);
+ 		hdev->stat.err_tx++;
++	}
+ 
+ done:
+ 	kfree(urb->setup_packet);
 -- 
 2.31.1
 
