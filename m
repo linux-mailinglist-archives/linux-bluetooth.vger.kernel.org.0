@@ -2,133 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDC1D451D27
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Nov 2021 01:22:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC577451C8F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Nov 2021 01:17:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349983AbhKPAZ1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Nov 2021 19:25:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50072 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350241AbhKOUWr (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Nov 2021 15:22:47 -0500
-Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C4BFC0D90F4
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 12:05:14 -0800 (PST)
-Received: by mail-ua1-x931.google.com with SMTP id p37so35768060uae.8
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 12:05:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=TQxdEaRJ4xGjBSCAtc5aUG/uHepU0WDC3Z8MEQU+iQU=;
-        b=nDmMNqr9bV4rkgW9l4ndDTJ9dTfmta+n2eJexjuGXYWN6SJrGmVqDokLm/5D0RDg3I
-         rvOCIm1eBGhE5b+Tm/7oCGqPtvqes51uPnjsMFWhJPUlq/D5AKd7JNIKzHcx/qYOjUN4
-         5hTwtIlYntixrnbMjL0XyklXUPyUz7lshPkU4vKDUfO0k+Ub44b/L0RqdfmPDYGKD3JJ
-         pbalhmWXgsQvTySCpCo7EBWtcCN5WNu7sbKikbLlQgzbdaCLq47wBsUgaEw9FhvNWKkW
-         npCqTo0TsoQrUefGBUDqU8w6iVRdZ8POVllB3Ccxl64fFoY3bEsBNiU6UT9fhYhknT1W
-         pRQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=TQxdEaRJ4xGjBSCAtc5aUG/uHepU0WDC3Z8MEQU+iQU=;
-        b=XOb88nObSeFnpJyLgTbONNULNLCv2ZlaEeZMn2t7i604/agzvxE4RSfX2D5u4OHfAT
-         2g0kh5Gj80RVISEDZ4dbmMUs9TkAo6Asi2k9rKNOTIA6KIocit5bSv+IJAc+HBNI/RDo
-         x1uayfIpZCt1DkQFRxNzsmcLjJLrl+tZQSTWE+vTWj/61TtSXBcGI3srzOfUeFwSxxTG
-         DkcpzPmmoHyIzd69dYn034HfEi72Dbb8giu+Dii6aNiPy4/doduFAfKoluJ8/yAzk610
-         lCybYeakDE8PNKc6lerRGBoT4USaSzSFo//cJ4GirxJmRSM7PS79UMLq6EyzGyKeEhJK
-         blxQ==
-X-Gm-Message-State: AOAM533KvyANzeiJbDhAOua9qG1SkJm05Uzeh33RSONwoQBwFYKUDItl
-        0H7APs58lTbncdJkM5CUsS2ftxor8L2lAR1nnLZ0YFHA
-X-Google-Smtp-Source: ABdhPJzuL+XqpHcU6JWZUGXtvWUDfi7SlG+U8FqaCQPOXfTBbfItHXOiqbM+Txpy7bvvflEDpvWMmVULoy6d9DPirhs=
-X-Received: by 2002:a67:fd90:: with SMTP id k16mr46374821vsq.39.1637006713329;
- Mon, 15 Nov 2021 12:05:13 -0800 (PST)
+        id S1351087AbhKPAU1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Nov 2021 19:20:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56864 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1347416AbhKOVMg (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 15 Nov 2021 16:12:36 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A6BDA61B4B;
+        Mon, 15 Nov 2021 21:09:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637010579;
+        bh=om6FJZiL4uGOCVc3SoVSzocZS9dT+KxiCifRHEJEPTM=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=bgVNozWD99+bIi8/alyDJ5eLhftjUfKPjoKoBrawkB+MjDjOOeoM9SOmw+pSfTaoT
+         P43bALStKm3iHQ7NSA66v4Glug2+uLbax5zN+SzWjrM1LuYmFJUNGxxZbxSuSJ2p5S
+         Wy7Q9zsw+yhDvN01GaYbYwAz/EgPOf2NOqvNErnfjQnyfMO6GJqyCZW3SlhmkVM8Hi
+         DZzeoL3dxTrA13+oUSs8DzZcZNXk+lorBgWv8P1XcCPjlvB5UG6l8hu0y9+vVvb/dr
+         7KbmozRpN6oVvTnY16rZdmUdwnprOt53KuzawkVVB/YYqck3PRc63cEJES2/87JqXi
+         cLBBpTDiV5a+w==
+Date:   Mon, 15 Nov 2021 13:09:38 -0800
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     David Miller <davem@davemloft.net>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
+Subject: Re: pull request: bluetooth 2021-11-02
+Message-ID: <20211115130938.49b97c8f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <CABBYNZJPanQzSx=Nf9mgORvqixbgwd6ypx=irGiQ3CEr6xUT1A@mail.gmail.com>
+References: <20211102213321.18680-1-luiz.dentz@gmail.com>
+        <CABBYNZ+i4aR5OjMppG+3+EkaOyFh06p18u6FNr6pZA8wws-hpg@mail.gmail.com>
+        <CABBYNZJPanQzSx=Nf9mgORvqixbgwd6ypx=irGiQ3CEr6xUT1A@mail.gmail.com>
 MIME-Version: 1.0
-References: <20211112220538.310085-1-luiz.dentz@gmail.com> <618eecdf.1c69fb81.dd4d3.7201@mx.google.com>
-In-Reply-To: <618eecdf.1c69fb81.dd4d3.7201@mx.google.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Mon, 15 Nov 2021 12:05:02 -0800
-Message-ID: <CABBYNZJZ6Kuzj6Z9oM9REbRSRK0EdOB6avDY_WYzkdpYAtz6NQ@mail.gmail.com>
-Subject: Re: [BlueZ,1/2] sdpd: Fix leaking buffers stored in cstates cache
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+On Mon, 15 Nov 2021 11:53:15 -0800 Luiz Augusto von Dentz wrote:
+> > Any chance to get these changes in before the merge window closes?  
+> 
+> I guess these won't be able to be merged after all, is there a define
+> process on how/when pull-request shall be sent to net-next, Ive assume
+> next-next is freezed now the documentation says the the merge window
+> lasts for approximately two weeks but I guess that is for the Linus
+> tree not net-next?
 
-On Fri, Nov 12, 2021 at 2:38 PM <bluez.test.bot@gmail.com> wrote:
->
-> This is automated email and please do not reply to this email!
->
-> Dear submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> This is a CI test results with your patch series:
-> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=579439
->
-> ---Test result---
->
-> Test Summary:
-> CheckPatch                    FAIL      1.25 seconds
-> GitLint                       PASS      0.64 seconds
-> Prep - Setup ELL              PASS      51.41 seconds
-> Build - Prep                  PASS      0.24 seconds
-> Build - Configure             PASS      9.30 seconds
-> Build - Make                  PASS      218.48 seconds
-> Make Check                    PASS      9.70 seconds
-> Make Distcheck                PASS      262.91 seconds
-> Build w/ext ELL - Configure   PASS      9.61 seconds
-> Build w/ext ELL - Make        PASS      209.93 seconds
->
-> Details
-> ##############################
-> Test: CheckPatch - FAIL
-> Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-> Output:
-> [BlueZ,1/2] sdpd: Fix leaking buffers stored in cstates cache
-> WARNING:NEW_TYPEDEFS: do not add new typedefs
-> #110: FILE: src/sdpd-request.c:45:
-> +typedef struct sdp_cont_info sdp_cont_info_t;
->
-> /github/workspace/src/12617365.patch total: 0 errors, 1 warnings, 393 lines checked
->
-> NOTE: For some of the reported defects, checkpatch may be able to
->       mechanically convert to the typical style using --fix or --fix-inplace.
->
-> /github/workspace/src/12617365.patch has style problems, please review.
->
-> NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
->
-> NOTE: If any of the errors are false positives, please report
->       them to the maintainer, see CHECKPATCH in MAINTAINERS.
->
-> [BlueZ,2/2] shared/gatt-server: Fix heap overflow when appending prepare writes
-> WARNING:COMMIT_LOG_LONG_LINE: Possible unwrapped commit description (prefer a maximum 75 chars per line)
-> #89:
-> Fixes https://github.com/bluez/bluez/security/advisories/GHSA-479m-xcq5-9g2q
->
-> /github/workspace/src/12617367.patch total: 0 errors, 1 warnings, 40 lines checked
->
-> NOTE: For some of the reported defects, checkpatch may be able to
->       mechanically convert to the typical style using --fix or --fix-inplace.
->
-> /github/workspace/src/12617367.patch has style problems, please review.
->
-> NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
->
-> NOTE: If any of the errors are false positives, please report
->       them to the maintainer, see CHECKPATCH in MAINTAINERS.
->
->
->
->
-> ---
-> Regards,
-> Linux Bluetooth
+I'm not sure what the exact rules are for net-next.
 
-Pushed.
+We had some glitches this time around, IMHO. Here is what I have in
+mind for the next merge window but note that I haven't had a chance 
+to discuss it with Dave yet, so it's more of me blabbering at this
+point than a plan:
+ - net-next would not apply patches posted after Linus cuts final;
+ - make sure all trees feeding net-next submit their changes around
+   rc6 time so that we don't get a large code dump right as the merge
+   window opens;
+ - any last minute net-next PRs should be ready by Monday night PST;
+ - we'd give the tree one day to settle, have build issues reported etc
+   and submit PR on Wednesday.
 
--- 
-Luiz Augusto von Dentz
+If we go with a more structured timeline along these lines I'll try 
+to send reminders.
