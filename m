@@ -2,116 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F380450161
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Nov 2021 10:28:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2651A45018C
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Nov 2021 10:38:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237006AbhKOJbY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Nov 2021 04:31:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42894 "EHLO
+        id S230280AbhKOJlV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Nov 2021 04:41:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237352AbhKOJbF (ORCPT
+        with ESMTP id S230162AbhKOJlT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Nov 2021 04:31:05 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80C67C061208
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 01:28:03 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id w132-20020a25c78a000000b005c27f083240so25632746ybe.16
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 01:28:03 -0800 (PST)
+        Mon, 15 Nov 2021 04:41:19 -0500
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10A27C061746
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 01:38:24 -0800 (PST)
+Received: by mail-pg1-x535.google.com with SMTP id s138so6054376pgs.4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 01:38:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=WOluhswfgIpnIOxltiea7SEHIW1MQWv5mZlgiYCI4Ys=;
-        b=EeGuN2kvK66to4+SBcRBRlKz56ZzgbGlE6cRLRFBFj/kxj1bLKXCJ4KCIOeWaNRNyX
-         JnKucOtvkDOrDHiIIa7FLScX+yxG/ifRSKiJWd8enuWu5OkrpGfHtiC2WaJdNXN4GICo
-         5YjJ7NpZ04T8XsgZfvNtrr85NS4Da+Yu11Y/oYh28Oar8yY8RDryOrwds8IgaTvMirno
-         mDKy5TanrzruvFLZTTIiFmV6rGwp7oynn/hglNxFXtBv18KsAISO/pZyiiwmu5JK7TPy
-         7L6WOBnEuYxX1I4tgZlF2ca0YBkkHxbQqqcpKJx1EizAvIvXL8j72yRaEQKyiuQIegq+
-         ujpA==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=AIw/tWWxC8cxGfKyyTn5tvFuYLLN0mKW4frLA56c86s=;
+        b=ljcdf2Zs/GlnHx6tUgck4R7JzfYOmMtIG0iTswQ2/2iOOK3VoZfWbi3353YXJNFtEq
+         1fG5NZhqVR1pIcsVPwROOsunLbKJj59IMzv26ZuwCZtix0CDSIFA7ILjFkAZ7R15m1RX
+         en8Tck5WQezHi9Kqt/gn8EdLRhVYacsPNhTJDpMhyoqNYDc9WSHwEbuX1ItMxasK3zZA
+         hFugr8EF+JoqkofDZ4z15DfKRsmXYg+lnnoofpk765TIQS2rcT47pv1oOm2K1mBQkm7K
+         WSS+0PSulnb4z6sTKamZHZyt1lAVGOKw/966EIv6wGDyub+cUiKrVo8wXcUel/3dgUq3
+         WV1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=WOluhswfgIpnIOxltiea7SEHIW1MQWv5mZlgiYCI4Ys=;
-        b=tXecBvBPYIcbM7ldSzLAy8pdcmiFHiqVE68BlMQl+t5/Z9iTF57ma4x2KPH/0HBZCk
-         MbLpbp2R8oRtn4QYaFr4UIoPmjl1XHxeP0UvIhFT+5x3GOSv0EcvRHQD/9999dJvup0/
-         u4g71s6lQ/Swo4j7AdPRdR0zxaa/UJluyC6Ni1cdARgC4S5henWOS3c2vXZTYi6F5okl
-         dATsEamBdbMgBFgS5PdWfNxBDX73EeFSUEL0icgk4+oJ1Sq00nP6O9WiRJbhTUvVjXso
-         YQkIqUgry97COHblZzrgRYflXcuzaR2QmrQJci4wTJROLvtEqEo9+j7IP6OdX0X9EYYd
-         h7Pg==
-X-Gm-Message-State: AOAM531EWsKc6Q6gq1Kkinlp9j/rbVeYW8Czzz0He+901MJMyhPlimTL
-        GMec9OgzTAMcwQcDPzwqySdqd3KGQcUFSFFCq4bfvn0DBauBCLmzjE9rbZIxOX152Aqskgb1vS4
-        9LbWWOVCK2BpB3boOIMmTaUuPSiL9Fqxk3dZYZ2ughjObENyJYXYWwy26y22MVRBqj/H7i7ZRIv
-        z9
-X-Google-Smtp-Source: ABdhPJwpC2fcLjmWCaQOmrIYG/A+cuRUwlf58jvIh69cme43l1eS62XOy+EJUjD+W3Z1nHKAaYvwaBB2Laa/
-X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:10:5c8f:7191:e5ca:14fb])
- (user=apusaka job=sendgmr) by 2002:a25:acd4:: with SMTP id
- x20mr41251167ybd.416.1636968482765; Mon, 15 Nov 2021 01:28:02 -0800 (PST)
-Date:   Mon, 15 Nov 2021 17:27:45 +0800
-In-Reply-To: <20211115172714.Bluez.v3.1.I9fc087b25433a9347b2d8c8ff7a25fadf448ef49@changeid>
-Message-Id: <20211115172714.Bluez.v3.3.I29367ca288fc8f4fcc3b4063425b791501c6534c@changeid>
-Mime-Version: 1.0
-References: <20211115172714.Bluez.v3.1.I9fc087b25433a9347b2d8c8ff7a25fadf448ef49@changeid>
-X-Mailer: git-send-email 2.34.0.rc1.387.gb447b232ab-goog
-Subject: [Bluez PATCH v3 3/3] doc: Add Name Request Fail flag in device found event
-From:   Archie Pusaka <apusaka@google.com>
-To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>
-Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=AIw/tWWxC8cxGfKyyTn5tvFuYLLN0mKW4frLA56c86s=;
+        b=dh/k6gNIYxCR3HrEcHu66pZzw/xtgEFyIBfESI4IAsmr6Vv4dh4lBQd2Z5iE0mmzS5
+         wbCVp1a+fV2/ny1Y90A7wA/bbVjm6NJD4wjrgOSKCaOKs2zdHhLvi9YxXofKZYWpVlt4
+         1Kq/8dCrnrmLlLNbakdsqzfBeJI6OYMcDZkbQc5qtRPtgUKAYzxfS2szMVQh1GPfP3iF
+         4asXhZqxrewFC+v3w0cCHvn3mOqBFGuppmJ2CA0/WQy8U+q4l8DlRtAN/mirpiqnOW6c
+         mffRq+bV8V9QLbN/hTnWbc6yDBKmy3GSlpV6nS6lLVciB+7I+AJpBu4W/E4DWOwzoUry
+         Hh/Q==
+X-Gm-Message-State: AOAM532BY8IyyKtF19S6ubM3smsQ4756H5ezCLwXR/qFrjzfIIhKc8Ec
+        MvP11mkEaj37B5bt6txSDN4m9Tu6tSE=
+X-Google-Smtp-Source: ABdhPJxsyxtRi07a34PT8GLZdDpVc7YYrrlAlLa9LKNxw3oveVaqhoFMqmGqc3Mm2W29IHLc0e3WPw==
+X-Received: by 2002:a05:6a00:14ce:b0:49f:dc1c:a0fb with SMTP id w14-20020a056a0014ce00b0049fdc1ca0fbmr32133782pfu.56.1636969103394;
+        Mon, 15 Nov 2021 01:38:23 -0800 (PST)
+Received: from [172.17.0.2] ([52.175.243.222])
+        by smtp.gmail.com with ESMTPSA id 17sm11264045pgw.1.2021.11.15.01.38.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Nov 2021 01:38:22 -0800 (PST)
+Message-ID: <61922a8e.1c69fb81.359b4.111f@mx.google.com>
+Date:   Mon, 15 Nov 2021 01:38:22 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============6815937742663868083=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, apusaka@google.com
+Subject: RE: [Bluez,v2,1/3] Listen and process remote name resolving failure
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20211115170538.Bluez.v2.1.I9fc087b25433a9347b2d8c8ff7a25fadf448ef49@changeid>
+References: <20211115170538.Bluez.v2.1.I9fc087b25433a9347b2d8c8ff7a25fadf448ef49@changeid>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Archie Pusaka <apusaka@chromium.org>
+--===============6815937742663868083==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Userspace should use this new flag to decide whether to do the remote
-name resolving or not.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=579995
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.58 seconds
+GitLint                       FAIL      0.86 seconds
+Prep - Setup ELL              PASS      46.44 seconds
+Build - Prep                  PASS      0.25 seconds
+Build - Configure             PASS      8.36 seconds
+Build - Make                  PASS      205.20 seconds
+Make Check                    PASS      8.69 seconds
+Make Distcheck                PASS      244.13 seconds
+Build w/ext ELL - Configure   PASS      8.57 seconds
+Build w/ext ELL - Make        PASS      191.15 seconds
+
+Details
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint with rule in .gitlint
+Output:
+[Bluez,v2,1/3] Listen and process remote name resolving failure
+12: B1 Line exceeds max length (121>80): "https://patchwork.kernel.org/project/bluetooth/patch/20211028191805.1.I35b7f3a496f834de6b43a32f94b6160cb1467c94@changeid/"
+
+
+
+
 ---
+Regards,
+Linux Bluetooth
 
-Changes in v3:
-* Update the flag name to be more inlined with the spec.
 
-Changes in v2:
-* Update docs to reflect not sending DONT_CARE flag behavior.
-
- doc/mgmt-api.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
-index 97d33e30a1..845031b017 100644
---- a/doc/mgmt-api.txt
-+++ b/doc/mgmt-api.txt
-@@ -4089,6 +4089,7 @@ Device Connected Event
- 		1	Legacy Pairing
- 		2	Reserved (not in use)
- 		3	Initiated Connection
-+		4	Reserved (not in use)
- 
- 
- Device Disconnected Event
-@@ -4263,6 +4264,7 @@ Device Found Event
- 		1	Legacy Pairing
- 		2	Not Connectable
- 		3	Reserved (not in use)
-+		4	Name Request Failed
- 
- 	For the RSSI field a value of 127 indicates that the RSSI is
- 	not available. That can happen with Bluetooth 1.1 and earlier
-@@ -4285,6 +4287,11 @@ Device Found Event
- 	accept any connections. This can be indicated by Low Energy
- 	devices that are in broadcaster role.
- 
-+	The Name Request Failed flag indicates that name resolving
-+	procedure has ended with failure for this device. The user space
-+	should use this information to determine when is a good time to
-+	retry the name resolving procedure.
-+
- 
- Discovering Event
- =================
--- 
-2.34.0.rc1.387.gb447b232ab-goog
-
+--===============6815937742663868083==--
