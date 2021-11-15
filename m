@@ -2,69 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 52C36450108
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Nov 2021 10:19:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E78B5450162
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Nov 2021 10:28:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236127AbhKOJWO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Nov 2021 04:22:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40600 "EHLO
+        id S237215AbhKOJbZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Nov 2021 04:31:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230316AbhKOJV1 (ORCPT
+        with ESMTP id S237664AbhKOJas (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Nov 2021 04:21:27 -0500
+        Mon, 15 Nov 2021 04:30:48 -0500
 Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DD70C061767
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 01:18:29 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id w132-20020a25c78a000000b005c27f083240so25605727ybe.16
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 01:18:29 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACE65C061200
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 01:27:52 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id y125-20020a25dc83000000b005c2326bf744so25665416ybe.21
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 01:27:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=DDF7rvzqvHmq625R5p02Vn6Now2KuXQQZ3he1Jdx/98=;
-        b=gvItqONCSe9Lgo0mVcfxcD8u0ADitEl1DmjGuV057JIir+gsRFGNefA+DeS86rjXgB
-         9+TPeytX80zHkBMkpbCS8jsY7kilYBfniHGbcingyrkN4p4ACNYz6oYzgWZHTIxXIDjD
-         QgrbfTTwgOvF0a3FeFSoiQqrGpqr/c6K6Jgo2yAYEv6T9AstCy4Lfac2VeCyzAP69wtr
-         npZcw1CpiWiztpvE27CkVhH0PA4FAfG9ITRw3Lpjfo41QrncpFn5h8S/MXN8q6Vayerw
-         TiDQUkRybXtYl/ZL5vpf04wnKJKVUnBeAFjFmKWgZtxpg+/jQfrqXs3BXtwdTEnP83uI
-         R/lA==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=91ciOFySGyuDGp8+cPG7rlk0H4CMpJHZ5FAL6tr2C1s=;
+        b=Y35CzcjzdMgeCNFg4DGIZNjJMbr7YERqHFdAiW7+6y4VUVeDRYH64l/A2w2cpb09Uc
+         C0VcUuzlNokXBOq/rz5vvVqfW/MD+ShqfTZNx9viVFgZj296MyDQfT4epKIbnoaBCeOI
+         kIv9L00hQcQFcZ30CkwiTkDLdXAIaD3XX1bYJdI5g3M8C10PIE2sMOONfcWyqawn6Wx6
+         o6wQ1iulShJbCa94/jYp4qb9HstGIZS38/mMVMincqCC61mT3exhIcgJG65ki35bYot0
+         pb0QQzeBHSm/MhTMxJVzDxX7olto1tJs9jQmMWLL0qVzGnG0XH6GY6fPbDvOM68PyLxT
+         h3tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=DDF7rvzqvHmq625R5p02Vn6Now2KuXQQZ3he1Jdx/98=;
-        b=6SzVtUpY+2FxDx84v0CV70G1Ake3ETR70EKjsq1tGr2TUXtQqDPV2GgUHWxhIK9jze
-         VlbsxIbVabKNaLZSogg1aSyttA3OtQwB7SYyk9FYe6pirefU0+K6N2TfHRG6wgCAWldd
-         7Ef9+1jZubT+Eme6fvkijAx+WigF43wE103CZ2eHDN8E4umUy21omU7MI/23a3K7ZvjA
-         msgYEczkk9J3lF2JomAdnMfesPsZzGG74RSA+qJQ6fwXtB4IAvqh4ThDk/ncDgvpct7G
-         jMGdICWfVjjPv1+jgfXGZwXF49bS6CX0Kj+PvArozCUFDhwMZ/Vjo6yJBQY3/0yDBsMi
-         zJEA==
-X-Gm-Message-State: AOAM532h3XbP5TVI6FNGTUS0yy7skXApJ676vZzlHtou6f57P3R3QBD/
-        SYNmG+im0wPe8b7hfYabue1kwL4hDHhPTrfIENTxrg38y/f9OJgRJqP6vWb/OE8iYNNu7XwPkQo
-        rC2fPY12b9E+2taixNxpZJd9cq3JdffDjl9OPIS/bMSAAJShr82EZICetiPRWWXlmCYcnGINXJq
-        L/
-X-Google-Smtp-Source: ABdhPJwgMN9sgvk0dg1l0x1FK4aZj77ai6ObMDU8GM0xv7Bs8/XrJHodlMYejoqmmXXHWMa2aJBmvYbbtzxC
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=91ciOFySGyuDGp8+cPG7rlk0H4CMpJHZ5FAL6tr2C1s=;
+        b=vtWI9SShJKIiDewdoimSno9NMv6VMAzgz7cbCPS0MqsHiXduyt/8rLIWnXsq2Lyr7M
+         ejgPXwTNZWd8scCxgB/D52576tjPbq9SHNFJ1qqf7OUZIdJ4PqsZz09dsJClLLu5PWw8
+         NuRRDVSuk2bFCf6xBEFsx824y0UcKIXwxC43RwsqoLLmnfCQjjluYka8L9UteaQN1jXi
+         5k5MrDvGc0r2LIBRsDG9I8e2ACiOxjFDubKna+/+fUgLBbW85sRrU1IXMmk905y23+G2
+         U2EYCwBZkrj9jac59fkf+zO2tCn04ukzMRWhooGO6PZqTpCToUBsBd3Lzt4ZifcFTJwF
+         86mQ==
+X-Gm-Message-State: AOAM530ojmfpQ+IBNmRRGa1DkF7an6abNaoxQu5Kp2xbGJ0yhdRkEjy5
+        njjA0ntqzN/uzWk5CuZrAGtYKjRYg/TvrpbmoJKMueu70WQlNqA7iFfzzx1sMAEqFrTkzF1DJre
+        SyniGUcKY+LVv28Mzrwx7S2A15PjfD5/AoTHdz+YzeQDdRKWte9pU3uXZ52dGaGm5ZgO//BX9D8
+        /7
+X-Google-Smtp-Source: ABdhPJwzfweH5+ht2lUZJdIirIF9gXts1R1zy9+rO72d9XSCrCQEuIbTG+vOzZcS16RSk6lDNjC0JVdb0+ES
 X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:10:5c8f:7191:e5ca:14fb])
- (user=apusaka job=sendgmr) by 2002:a25:8408:: with SMTP id
- u8mr41624153ybk.258.1636967908407; Mon, 15 Nov 2021 01:18:28 -0800 (PST)
-Date:   Mon, 15 Nov 2021 17:17:50 +0800
-In-Reply-To: <20211115171726.v2.1.Id7366eb14b6f48173fcbf17846ace59479179c7c@changeid>
-Message-Id: <20211115171726.v2.2.I35b7f3a496f834de6b43a32f94b6160cb1467c94@changeid>
+ (user=apusaka job=sendgmr) by 2002:a25:ac0b:: with SMTP id
+ w11mr39004308ybi.163.1636968471932; Mon, 15 Nov 2021 01:27:51 -0800 (PST)
+Date:   Mon, 15 Nov 2021 17:27:43 +0800
+Message-Id: <20211115172714.Bluez.v3.1.I9fc087b25433a9347b2d8c8ff7a25fadf448ef49@changeid>
 Mime-Version: 1.0
-References: <20211115171726.v2.1.Id7366eb14b6f48173fcbf17846ace59479179c7c@changeid>
 X-Mailer: git-send-email 2.34.0.rc1.387.gb447b232ab-goog
-Subject: [PATCH v2 2/2] Bluetooth: Limit duration of Remote Name Resolve
+Subject: [Bluez PATCH v3 1/3] Listen and process remote name resolving failure
 From:   Archie Pusaka <apusaka@google.com>
 To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
         Marcel Holtmann <marcel@holtmann.org>
 Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+        Archie Pusaka <apusaka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
@@ -72,73 +63,158 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Archie Pusaka <apusaka@chromium.org>
 
-When doing remote name request, we cannot scan. In the normal case it's
-OK since we can expect it to finish within a short amount of time.
-However, there is a possibility to scan lots of devices that
-(1) requires Remote Name Resolve
-(2) is unresponsive to Remote Name Resolve
-When this happens, we are stuck to do Remote Name Resolve until all is
-done before continue scanning.
-
-This patch adds a time limit to stop us spending too long on remote
-name request.
-
-Signed-off-by: Archie Pusaka <apusaka@chromium.org>
-Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+When Remote Name Resolve ends with failure, record this occurrence and
+prevent remote name resolving for the same device for some time.
+Increase the time duration for subsequent failures.
 ---
+Hi maintainers,
 
-(no changes since v1)
+This is the patch series for remote name request as was discussed here.
+https://patchwork.kernel.org/project/bluetooth/patch/20211028191805.1.I35b7f3a496f834de6b43a32f94b6160cb1467c94@changeid/
+Please also review the corresponding kernel space change.
 
- include/net/bluetooth/hci_core.h | 3 +++
- net/bluetooth/hci_event.c        | 7 +++++++
- 2 files changed, 10 insertions(+)
+Changes in v3:
+* Rename MGMT const to align with the doc
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index b5f061882c10..4112907bb49d 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -88,6 +88,7 @@ struct discovery_state {
- 	u8			(*uuids)[16];
- 	unsigned long		scan_start;
- 	unsigned long		scan_duration;
-+	unsigned long		name_resolve_timeout;
+Changes in v2:
+* Stay silent instead of sending MGMT_OP_CONFIRM_NAME with DONT_CARE flag.
+
+ lib/mgmt.h    |  1 +
+ src/adapter.c | 15 +++++++++++++--
+ src/device.c  | 23 +++++++++++++++++++++++
+ src/device.h  |  2 ++
+ 4 files changed, 39 insertions(+), 2 deletions(-)
+
+diff --git a/lib/mgmt.h b/lib/mgmt.h
+index 0d1678f01d..d860b27401 100644
+--- a/lib/mgmt.h
++++ b/lib/mgmt.h
+@@ -856,6 +856,7 @@ struct mgmt_ev_auth_failed {
+ #define MGMT_DEV_FOUND_CONFIRM_NAME	0x01
+ #define MGMT_DEV_FOUND_LEGACY_PAIRING	0x02
+ #define MGMT_DEV_FOUND_NOT_CONNECTABLE	0x04
++#define MGMT_DEV_FOUND_NAME_REQUEST_FAILED 0x10
+ 
+ #define MGMT_EV_DEVICE_FOUND		0x0012
+ struct mgmt_ev_device_found {
+diff --git a/src/adapter.c b/src/adapter.c
+index d0d38621b8..6100448b5f 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -6989,6 +6989,7 @@ static void update_found_devices(struct btd_adapter *adapter,
+ 					uint8_t bdaddr_type, int8_t rssi,
+ 					bool confirm, bool legacy,
+ 					bool not_connectable,
++					bool name_resolve_failed,
+ 					const uint8_t *data, uint8_t data_len)
+ {
+ 	struct btd_device *dev;
+@@ -7081,6 +7082,9 @@ static void update_found_devices(struct btd_adapter *adapter,
+ 
+ 	device_set_legacy(dev, legacy);
+ 
++	if (name_resolve_failed)
++		device_name_resolve_fail(dev);
++
+ 	if (adapter->filtered_discovery)
+ 		device_set_rssi_with_delta(dev, rssi, 0);
+ 	else
+@@ -7151,7 +7155,10 @@ static void update_found_devices(struct btd_adapter *adapter,
+ 	if (g_slist_find(adapter->discovery_found, dev))
+ 		return;
+ 
+-	if (confirm)
++	/* If name is unknown but it's not allowed to resolve, don't send
++	 * MGMT_OP_CONFIRM_NAME.
++	 */
++	if (confirm && (name_known || device_name_resolve_allowed(dev)))
+ 		confirm_name(adapter, bdaddr, bdaddr_type, name_known);
+ 
+ 	adapter->discovery_found = g_slist_prepend(adapter->discovery_found,
+@@ -7201,6 +7208,8 @@ static void device_found_callback(uint16_t index, uint16_t length,
+ 	uint32_t flags;
+ 	bool confirm_name;
+ 	bool legacy;
++	bool not_connectable;
++	bool name_resolve_failed;
+ 	char addr[18];
+ 
+ 	if (length < sizeof(*ev)) {
+@@ -7230,10 +7239,12 @@ static void device_found_callback(uint16_t index, uint16_t length,
+ 
+ 	confirm_name = (flags & MGMT_DEV_FOUND_CONFIRM_NAME);
+ 	legacy = (flags & MGMT_DEV_FOUND_LEGACY_PAIRING);
++	not_connectable = (flags & MGMT_DEV_FOUND_NOT_CONNECTABLE);
++	name_resolve_failed = (flags & MGMT_DEV_FOUND_NAME_REQUEST_FAILED);
+ 
+ 	update_found_devices(adapter, &ev->addr.bdaddr, ev->addr.type,
+ 					ev->rssi, confirm_name, legacy,
+-					flags & MGMT_DEV_FOUND_NOT_CONNECTABLE,
++					not_connectable, name_resolve_failed,
+ 					eir, eir_len);
+ }
+ 
+diff --git a/src/device.c b/src/device.c
+index fdc2d50a47..699faeba3b 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -79,6 +79,8 @@
+ #define GATT_INCLUDE_UUID_STR "2802"
+ #define GATT_CHARAC_UUID_STR "2803"
+ 
++#define NAME_RESOLVE_RETRY_DELAY	120 /* seconds */
++
+ static DBusConnection *dbus_conn = NULL;
+ static unsigned service_state_cb_id;
+ 
+@@ -272,6 +274,9 @@ struct btd_device {
+ 
+ 	GIOChannel	*att_io;
+ 	guint		store_id;
++
++	time_t		name_resolve_earliest_allow_time;
++	uint8_t		name_resolve_fail_count;
  };
  
- #define SUSPEND_NOTIFIER_TIMEOUT	msecs_to_jiffies(2000) /* 2 seconds */
-@@ -1762,6 +1763,8 @@ void hci_mgmt_chan_unregister(struct hci_mgmt_chan *c);
- #define DISCOV_LE_FAST_ADV_INT_MIN	0x00A0	/* 100 msec */
- #define DISCOV_LE_FAST_ADV_INT_MAX	0x00F0	/* 150 msec */
+ static const uint16_t uuid_list[] = {
+@@ -4361,6 +4366,24 @@ bool device_name_known(struct btd_device *device)
+ 	return device->name[0] != '\0';
+ }
  
-+#define NAME_RESOLVE_DURATION		msecs_to_jiffies(10240)	/* msec */
++bool device_name_resolve_allowed(struct btd_device *device)
++{
++	return time(NULL) >= device->name_resolve_earliest_allow_time;
++}
 +
- void mgmt_fill_version_info(void *ver);
- int mgmt_new_settings(struct hci_dev *hdev);
- void mgmt_index_added(struct hci_dev *hdev);
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 2de3080659f9..6180ab0e8b8d 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2129,6 +2129,12 @@ static bool hci_resolve_next_name(struct hci_dev *hdev)
- 	if (list_empty(&discov->resolve))
- 		return false;
- 
-+	/* We should stop if we already spent too much time resolving names. */
-+	if (time_after(jiffies, discov->name_resolve_timeout)) {
-+		bt_dev_dbg(hdev, "Name resolve takes too long, stopping.");
-+		return false;
-+	}
++void device_name_resolve_fail(struct btd_device *device)
++{
++	if (!device)
++		return;
 +
- 	e = hci_inquiry_cache_lookup_resolve(hdev, BDADDR_ANY, NAME_NEEDED);
- 	if (!e)
- 		return false;
-@@ -2716,6 +2722,7 @@ static void hci_inquiry_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
- 	if (e && hci_resolve_name(hdev, e) == 0) {
- 		e->name_state = NAME_PENDING;
- 		hci_discovery_set_state(hdev, DISCOVERY_RESOLVING);
-+		discov->name_resolve_timeout = jiffies + NAME_RESOLVE_DURATION;
- 	} else {
- 		/* When BR/EDR inquiry is active and no LE scanning is in
- 		 * progress, then change discovery state to indicate completion.
++	/* Punish this device by not allowing name resolve for some time.
++	 * increase punishment time for subsequent failures.
++	 */
++	device->name_resolve_fail_count++;
++	device->name_resolve_earliest_allow_time = time(NULL) +
++		NAME_RESOLVE_RETRY_DELAY * device->name_resolve_fail_count;
++}
++
+ void device_set_class(struct btd_device *device, uint32_t class)
+ {
+ 	if (device->class == class)
+diff --git a/src/device.h b/src/device.h
+index 5f615cb4b6..76d79855f8 100644
+--- a/src/device.h
++++ b/src/device.h
+@@ -25,6 +25,8 @@ void btd_device_device_set_name(struct btd_device *device, const char *name);
+ void device_store_cached_name(struct btd_device *dev, const char *name);
+ void device_get_name(struct btd_device *device, char *name, size_t len);
+ bool device_name_known(struct btd_device *device);
++bool device_name_resolve_allowed(struct btd_device *device);
++void device_name_resolve_fail(struct btd_device *device);
+ void device_set_class(struct btd_device *device, uint32_t class);
+ void device_update_addr(struct btd_device *device, const bdaddr_t *bdaddr,
+ 							uint8_t bdaddr_type);
 -- 
 2.34.0.rc1.387.gb447b232ab-goog
 
