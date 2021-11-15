@@ -2,130 +2,137 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3032451838
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Nov 2021 23:53:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16E4B451D25
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Nov 2021 01:22:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233559AbhKOWzo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Nov 2021 17:55:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53714 "EHLO
+        id S1349888AbhKPAZV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Nov 2021 19:25:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347878AbhKOWse (ORCPT
+        with ESMTP id S1344917AbhKOUIR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Nov 2021 17:48:34 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2149C07978E
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 14:01:02 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id i9so18232569ilu.8
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 14:01:02 -0800 (PST)
+        Mon, 15 Nov 2021 15:08:17 -0500
+Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F79C06120E
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 11:45:01 -0800 (PST)
+Received: by mail-ua1-x92a.google.com with SMTP id az37so37286215uab.13
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Nov 2021 11:45:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QzueYWxy8dLImh7cCYYdS3GsWWCRwq/RzqiWPZWYfQc=;
-        b=DpUkAzJjsCVWwr6xiKlHOJbMkFdZMrMTQLr/TUMHFRGtfKJCKafbykmPsMMARFhtg5
-         G6K1QOh2Ymly7eeYK52rvkI4+m8NhdXn/8QwaPFP6/ZPvgJ3DjmrU4HZSmAqmTkvuGnh
-         nD/BtiEmbVW2rYwNzw/adflbl91XBT913bFoY=
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2VP7K0FOCCEGRDmmlmRYrm9gBTsQN9Gd9wxcVinZL3Q=;
+        b=A/ikYXa/lKmhKpAiffSruj+0LBEr88VEgMtbUqoj/3GaPwVvxFd+vZfab5G41Oh5u3
+         xNd5SGtcr1jE7LQcq7DK1ITmn1mXjCG5H8hoB6yef5Qd+o+HQ2oKJsIRDtw+Y2zLRJoN
+         VqyPFn7j//Qve1aUOnx4rjHtxXROaMdhqfc3Fb8ipKTkS1p2AGzPsn4qV0Zixq1xuoAw
+         GjtJaxlsh5C1qU9AZkNBS/gSn8HWmet+ekgrbRyO6my0CDO5L1J5gQ7tY20rSgjTt9Eu
+         AECcFyZg4xlJMFHesOa/BmQJN/y06qJ/Qdt5ZnvSqBNSJJdXQOhxo3WzMHDeWRLJBcbI
+         YOlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QzueYWxy8dLImh7cCYYdS3GsWWCRwq/RzqiWPZWYfQc=;
-        b=oSspqN7GHqxSrq3O8yfiRdA4WR+ayN6QOUFurzNOEDyIEsK4517DbhCGkzUt64HX98
-         KvePFCxH9+PvHEu6pHkvkBMNOfXfE6ZZcVaWtQj+3sCzvLTYlrjmNDWJfSgmrQPTUhML
-         1+CmceeNZiIMd4yQEvJjbPmKYFRTYLaG8jjrRb+AcQj/TQEb7frCtOcRUbEq2JdqkBc6
-         35PYChSXb6rI9ZJpiQmwEk8Ryic1N1wtGAM9FpLP1jbwDqtBPFrPFiXHK3eni619ipgG
-         H7n9IPiUz1dJlz95teuikx/VvzQvi2kg09iB28naT0kiMM4W/GYyZ5v5h0KldCDeWVAl
-         eAdw==
-X-Gm-Message-State: AOAM532DJ+9OI/G4ZKQFLcU8fbHiGWIivSj0y9VlTgYqosULh3xpLIPk
-        lUzXJzWGMDovFjeqhxEOD3Sj70H3wlOM7w==
-X-Google-Smtp-Source: ABdhPJyA3i8n7ZKbPb+ib9Zyp+wG/d9GT1lDpobG+WuC9dDKipMtVqcOfUikuUdQ6OJ+Y7rRMz8vPg==
-X-Received: by 2002:a05:6e02:1ba4:: with SMTP id n4mr1333561ili.305.1637013662089;
-        Mon, 15 Nov 2021 14:01:02 -0800 (PST)
-Received: from melhuishj.c.googlers.com.com (161.74.123.34.bc.googleusercontent.com. [34.123.74.161])
-        by smtp.gmail.com with ESMTPSA id i7sm10855048ilu.24.2021.11.15.14.01.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 14:01:01 -0800 (PST)
-From:   Jesse Melhuish <melhuishj@chromium.org>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Jesse Melhuish <melhuishj@chromium.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Sonny Sasaka <sonnysasaka@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH v3] Bluetooth: Don't initialize msft/aosp when using user channel
-Date:   Mon, 15 Nov 2021 22:00:52 +0000
-Message-Id: <20211115220021.v3.1.I2a8b2f2e52d05ae9ead3f3dcc1dd90ef47a7acd7@changeid>
-X-Mailer: git-send-email 2.31.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2VP7K0FOCCEGRDmmlmRYrm9gBTsQN9Gd9wxcVinZL3Q=;
+        b=UujJ6vUgErkFUfhvcqxSmayk8domERGNlqfM57Ys7MPqQB1h5cFID0Ma4gZYd1WIaH
+         t1A73sAemk1n2ViB3gpVI1ixX4XhC5lZsXa4NEFYopyGJnDGaTx2nxE2DND5E9MqtbLp
+         pXbhv4Zj0PdzyV7p9qZTXypKVk2sNYrPTq3jzayyqLvqBnIfR5pe2tJpNczPeoqU+6aI
+         yx5/5xSefUU8B3aGU8qFHQRLhD560e3azji+TP//piRFkLb+qv3OEOrDza/jvLEW58Hh
+         RIto4n4OynDoxi8yG4zs7PWDJHQxAyhzXEP9hhyGgX5allHpJnNHeqRNfdwlJb9vkuuJ
+         ekrA==
+X-Gm-Message-State: AOAM532Mf5y6GRwVR3G4JcLvr2FM8G3ekh86+J+vxngpaKoi4t3lGFxI
+        m6SNMVyz/APsLggkWQ6saT24g87yKuCVhjAL2dI=
+X-Google-Smtp-Source: ABdhPJxk0jLiKev8DcBlIwm/XC6oIJHZbssnSW5AWXO8gjfraH/+zetR3fqkEeDtGnks64h3QHht0HJkzg+gtqmXvWI=
+X-Received: by 2002:ab0:4465:: with SMTP id m92mr1963090uam.47.1637005500300;
+ Mon, 15 Nov 2021 11:45:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20211115094108.24331-1-kiran.k@intel.com> <CABBYNZ+rFbfe1joiLmJBGB_twX4_kNu3Nsr=TSs1SyfMvAes8Q@mail.gmail.com>
+In-Reply-To: <CABBYNZ+rFbfe1joiLmJBGB_twX4_kNu3Nsr=TSs1SyfMvAes8Q@mail.gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Mon, 15 Nov 2021 11:44:49 -0800
+Message-ID: <CABBYNZJRm8Ej7FfW7bnA8ZdZFmHbsOnVfXavM0hFdSFd2ib1Gg@mail.gmail.com>
+Subject: Re: [PATCH v1 1/5] avdtp: Add a flag in struct avdtp to control a2dp offload
+To:     Kiran K <kiran.k@intel.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "Srivatsa, Ravishankar" <ravishankar.srivatsa@intel.com>,
+        Chethan T N <chethan.tumkur.narayan@intel.com>,
+        Luiz Augusto Von Dentz <luiz.von.dentz@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-A race condition is triggered when usermode control is given to
-userspace before the kernel's MSFT query responds, resulting in an
-unexpected response to userspace's reset command.
+Hi Kiran,
 
-Issue can be observed in btmon:
-< HCI Command: Vendor (0x3f|0x001e) plen 2                    #3 [hci0]
-        05 01                                            ..
-@ USER Open: bt_stack_manage (privileged) version 2.22  {0x0002} [hci0]
-< HCI Command: Reset (0x03|0x0003) plen 0                     #4 [hci0]
-> HCI Event: Command Complete (0x0e) plen 5                   #5 [hci0]
-      Vendor (0x3f|0x001e) ncmd 1
-	Status: Command Disallowed (0x0c)
-	05                                               .
-> HCI Event: Command Complete (0x0e) plen 4                   #6 [hci0]
-      Reset (0x03|0x0003) ncmd 2
-	Status: Success (0x00)
-Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
-Signed-off-by: Jesse Melhuish <melhuishj@chromium.org>
----
+On Mon, Nov 15, 2021 at 11:42 AM Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
+>
+> Hi Kiran,
+>
+> On Mon, Nov 15, 2021 at 1:36 AM Kiran K <kiran.k@intel.com> wrote:
+> >
+> > Define a flag in struct avdtp and set it based on
+> > the definition of env variable USE_OFFLOAD
+> > ---
+> >  profiles/audio/avdtp.c | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/profiles/audio/avdtp.c b/profiles/audio/avdtp.c
+> > index d3dfbf96dda3..b6feac0ba4d5 100644
+> > --- a/profiles/audio/avdtp.c
+> > +++ b/profiles/audio/avdtp.c
+> > @@ -409,6 +409,9 @@ struct avdtp {
+> >
+> >         /* Attempt stream setup instead of disconnecting */
+> >         gboolean stream_setup;
+> > +
+> > +       /* use offload for transport */
+> > +       gboolean use_offload;
+> >  };
+> >
+> >  static GSList *state_callbacks = NULL;
+> > @@ -2425,6 +2428,7 @@ struct avdtp *avdtp_new(GIOChannel *chan, struct btd_device *device,
+> >                                                         struct queue *lseps)
+> >  {
+> >         struct avdtp *session;
+> > +       char *use_offload;
+> >
+> >         session = g_new0(struct avdtp, 1);
+> >
+> > @@ -2436,6 +2440,10 @@ struct avdtp *avdtp_new(GIOChannel *chan, struct btd_device *device,
+> >
+> >         session->version = get_version(session);
+> >
+> > +       use_offload = getenv("USE_OFFLOAD");
+> > +       if (use_offload && !strncmp(use_offload, "1", 1))
+> > +               session->use_offload = TRUE;
+> > +
+>
+> We already have a configuration for experimental flags:
+>
+> https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/src/main.conf#n118
 
-Changes in v3:
-- Added guard around *_close calls as well.
+Correction, we may need to introduce yet another experimental UUID
+given the UUID above is just about codec offload not MSFT A2DP offload
+which may require a completely different set of commands.
 
-Changes in v2:
-- Moved guard to the new home for this code.
+> So you just have to check if experimental is enabled, or the offload
+> UUID, in adapter.c, also perhaps we should have something like
+> btd_adapter_experimental_is_enabled(adapter, uuid) so it would take
+> care of doing all the checking if that had been enabled in the kernel
+> or not.
+>
+> >         if (!chan)
+> >                 return session;
+> >
+> > --
+> > 2.17.1
+> >
+>
+>
+> --
+> Luiz Augusto von Dentz
 
- net/bluetooth/hci_sync.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index b794605dc882..06d08dc6ad22 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3887,8 +3887,10 @@ int hci_dev_open_sync(struct hci_dev *hdev)
- 	    hci_dev_test_flag(hdev, HCI_VENDOR_DIAG) && hdev->set_diag)
- 		ret = hdev->set_diag(hdev, true);
- 
--	msft_do_open(hdev);
--	aosp_do_open(hdev);
-+	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
-+		msft_do_open(hdev);
-+		aosp_do_open(hdev);
-+	}
- 
- 	clear_bit(HCI_INIT, &hdev->flags);
- 
-@@ -4031,8 +4033,10 @@ int hci_dev_close_sync(struct hci_dev *hdev)
- 
- 	hci_sock_dev_event(hdev, HCI_DEV_DOWN);
- 
--	aosp_do_close(hdev);
--	msft_do_close(hdev);
-+	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
-+		aosp_do_close(hdev);
-+		msft_do_close(hdev);
-+	}
- 
- 	if (hdev->flush)
- 		hdev->flush(hdev);
+
 -- 
-2.31.0
-
+Luiz Augusto von Dentz
