@@ -2,68 +2,128 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC577451C8F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Nov 2021 01:17:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14833452059
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Nov 2021 01:49:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351087AbhKPAU1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 15 Nov 2021 19:20:27 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56864 "EHLO mail.kernel.org"
+        id S1356721AbhKPAw2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 15 Nov 2021 19:52:28 -0500
+Received: from out2.migadu.com ([188.165.223.204]:48528 "EHLO out2.migadu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1347416AbhKOVMg (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 15 Nov 2021 16:12:36 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A6BDA61B4B;
-        Mon, 15 Nov 2021 21:09:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637010579;
-        bh=om6FJZiL4uGOCVc3SoVSzocZS9dT+KxiCifRHEJEPTM=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=bgVNozWD99+bIi8/alyDJ5eLhftjUfKPjoKoBrawkB+MjDjOOeoM9SOmw+pSfTaoT
-         P43bALStKm3iHQ7NSA66v4Glug2+uLbax5zN+SzWjrM1LuYmFJUNGxxZbxSuSJ2p5S
-         Wy7Q9zsw+yhDvN01GaYbYwAz/EgPOf2NOqvNErnfjQnyfMO6GJqyCZW3SlhmkVM8Hi
-         DZzeoL3dxTrA13+oUSs8DzZcZNXk+lorBgWv8P1XcCPjlvB5UG6l8hu0y9+vVvb/dr
-         7KbmozRpN6oVvTnY16rZdmUdwnprOt53KuzawkVVB/YYqck3PRc63cEJES2/87JqXi
-         cLBBpTDiV5a+w==
-Date:   Mon, 15 Nov 2021 13:09:38 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     David Miller <davem@davemloft.net>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
-Subject: Re: pull request: bluetooth 2021-11-02
-Message-ID: <20211115130938.49b97c8f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <CABBYNZJPanQzSx=Nf9mgORvqixbgwd6ypx=irGiQ3CEr6xUT1A@mail.gmail.com>
-References: <20211102213321.18680-1-luiz.dentz@gmail.com>
-        <CABBYNZ+i4aR5OjMppG+3+EkaOyFh06p18u6FNr6pZA8wws-hpg@mail.gmail.com>
-        <CABBYNZJPanQzSx=Nf9mgORvqixbgwd6ypx=irGiQ3CEr6xUT1A@mail.gmail.com>
+        id S1350501AbhKPAuC (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Mon, 15 Nov 2021 19:50:02 -0500
+Subject: Re: [PATCH] bluetooth: fix uninitialized variables notify_evt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+        t=1637023624;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=SCice28xuZZAc41fE60nr3s0IgXGGl/rTAATNISezms=;
+        b=DIIVhgdFFfEYFNLUC+GikeCQY2YRK8ieNu0bzrwwwFHhvsvpseaXmKcDdgMKIJn9JBAjRr
+        sM8GvXwF1KxYzoxJUnbiVsRVDHyA5hCy7BfkMCD9fR69M3Nc4/XhM7uMlDTXXA8q4/+e0g
+        9fVcXxophtkH+U9duWzTbqhgxlv9Hoc=
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     "Tumkur Narayan, Chethan" <chethan.tumkur.narayan@intel.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-bluetooth@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org
+References: <20211115085613.1924762-1-liu.yun@linux.dev>
+ <73AF4476-F5B2-4E83-9F43-72D98B4615FF@holtmann.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   Jackie Liu <liu.yun@linux.dev>
+Message-ID: <e2d72c6c-3bf0-0d88-8033-af885259223c@linux.dev>
+Date:   Tue, 16 Nov 2021 08:46:55 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <73AF4476-F5B2-4E83-9F43-72D98B4615FF@holtmann.org>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: liu.yun@linux.dev
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Mon, 15 Nov 2021 11:53:15 -0800 Luiz Augusto von Dentz wrote:
-> > Any chance to get these changes in before the merge window closes?  
+Hi, Marcel.
+
+ÔÚ 2021/11/16 ÉÏÎç1:27, Marcel Holtmann Ð´µÀ:
+> Hi Jackie,
 > 
-> I guess these won't be able to be merged after all, is there a define
-> process on how/when pull-request shall be sent to net-next, Ive assume
-> next-next is freezed now the documentation says the the merge window
-> lasts for approximately two weeks but I guess that is for the Linus
-> tree not net-next?
+>> Coverity Scan report:
+>>
+>> [...]
+>> *** CID 1493985:  Uninitialized variables  (UNINIT)
+>> /net/bluetooth/hci_event.c: 4535 in hci_sync_conn_complete_evt()
+>> 4529
+>> 4530     	/* Notify only in case of SCO over HCI transport data path which
+>> 4531     	 * is zero and non-zero value shall be non-HCI transport data path
+>> 4532     	 */
+>> 4533     	if (conn->codec.data_path == 0) {
+>> 4534     		if (hdev->notify)
+>>>>>     CID 1493985:  Uninitialized variables  (UNINIT)
+>>>>>     Using uninitialized value "notify_evt" when calling "*hdev->notify".
+>> 4535     			hdev->notify(hdev, notify_evt);
+>> 4536     	}
+>> 4537
+>> 4538     	hci_connect_cfm(conn, ev->status);
+>> 4539     	if (ev->status)
+>> 4540     		hci_conn_del(conn);
+>> [...]
+>>
+>> Although only btusb uses air_mode, and he only handles HCI_NOTIFY_ENABLE_SCO_CVSD
+>> and HCI_NOTIFY_ENABLE_SCO_TRANSP, there is still a very small chance that
+>> ev->air_mode is not equal to 0x2 and 0x3, but notify_evt is initialized to
+>> HCI_NOTIFY_ENABLE_SCO_CVSD or HCI_NOTIFY_ENABLE_SCO_TRANSP. the context is
+>> maybe not correct.
+>>
+>> In order to ensure 100% correctness, we directly give him a default value 0.
+>>
+>> Addresses-Coverity: ("Uninitialized variables")
+>> Fixes: f4f9fa0c07bb ("Bluetooth: Allow usb to auto-suspend when SCO use	non-HCI transport")
+>> Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
+>> ---
+>> net/bluetooth/hci_event.c | 2 +-
+>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+>> index 7d0db1ca1248..f898fa42a183 100644
+>> --- a/net/bluetooth/hci_event.c
+>> +++ b/net/bluetooth/hci_event.c
+>> @@ -4445,7 +4445,7 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev,
+>> {
+>> 	struct hci_ev_sync_conn_complete *ev = (void *) skb->data;
+>> 	struct hci_conn *conn;
+>> -	unsigned int notify_evt;
+>> +	unsigned int notify_evt = 0;
+>>
+>> 	BT_DBG("%s status 0x%2.2x", hdev->name, ev->status);
+> 
+> lets modify the switch statement and add a default case. And then lets add a check to notify_evt != 0.
+> 
+> With that in mind, I wonder if this is not better
+> 
+>          /* Notify only in case of SCO over HCI transport data path which
+>           * is zero and non-zero value shall be non-HCI transport data path
+>           */
+> 	if (conn->codec.data_path == 0 && hdev->notify) {
+> 		switch (ev->air_mode) {
+> 		case 0x02:
+> 			hdev->notify(hdev, HCI_NOTIFY_ENABLE_SCO_CVSD);
+> 			break;
+> 		case 0x03:
+> 			hdev->notify(hdev, HCI_NOTIFY_ENABLE_SCO_TRANSP);
+> 			break;
+> 		}
+> 	}
 
-I'm not sure what the exact rules are for net-next.
+I prefer this, because it is a restoration of earlier logic, rather than
+changing his logic. I will resend a patch, thank you.
 
-We had some glitches this time around, IMHO. Here is what I have in
-mind for the next merge window but note that I haven't had a chance 
-to discuss it with Dave yet, so it's more of me blabbering at this
-point than a plan:
- - net-next would not apply patches posted after Linus cuts final;
- - make sure all trees feeding net-next submit their changes around
-   rc6 time so that we don't get a large code dump right as the merge
-   window opens;
- - any last minute net-next PRs should be ready by Monday night PST;
- - we'd give the tree one day to settle, have build issues reported etc
-   and submit PR on Wednesday.
+--
+Jackie Liu
 
-If we go with a more structured timeline along these lines I'll try 
-to send reminders.
+> 
+> Regards
+> 
+> Marcel
+> 
