@@ -2,69 +2,79 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94E72454122
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Nov 2021 07:46:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B6DD4541AF
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Nov 2021 08:17:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233857AbhKQGtP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 Nov 2021 01:49:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233832AbhKQGtO (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 17 Nov 2021 01:49:14 -0500
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C217C061570
-        for <linux-bluetooth@vger.kernel.org>; Tue, 16 Nov 2021 22:46:16 -0800 (PST)
-Received: by mail-yb1-xb2d.google.com with SMTP id q74so4330320ybq.11
-        for <linux-bluetooth@vger.kernel.org>; Tue, 16 Nov 2021 22:46:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
-        bh=2n3BlVmpdISgHp3bd4387myS6HR03KK4OPI5brBY/Dk=;
-        b=foAgjECHpHMGvYln4r3dhgBB4tsxRwFvz4XEkycRbMH5INy2rSDVEulVXDc2D6IfQM
-         gJM34K492bNLUM6OwfNRXn6iR8Gs/FsqepiVIkQIWKC2l2/kqRAvCyvUKMJqpLARprPD
-         nbN/FJzNIfYt1qTYf21SRY7e9xTmbxGo+XbBCruLq9C0bX4WKm2AdXeUdiNTTpzOG+X0
-         GmyW6in0ozYmuUWzFp+WoT43gU7iTVHoyZVXq3JXOjwmL9AYj6tkYuO2J8wy0WykKL7/
-         s/E0eSlQj53tncHxSBda0QOm6QWGfS6madJsSTOb2U85l2J7Ibv+8C4FsBv0bvcwRut2
-         Awsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to;
-        bh=2n3BlVmpdISgHp3bd4387myS6HR03KK4OPI5brBY/Dk=;
-        b=cL8qaXYvEW5+DIYAJv0DQP6O4cKyStujk6GM9WTlgtfokdWOs8ceg/eEO9LEXSFKa8
-         6hVVVHAqg+ifylgHcGmhgLUxNhMlWDZi/UNAhmenaNOAO6llRf4mC77Ozeqhb3C00/u8
-         +P6nJwAYblysG3t1d+TwVyu000X9ykezC6PagdG7d/72KcWRx8NEiz1vhUGsCCEq9O2p
-         a9chu1ZJdX4Uf87BIjHWUZ726GW7+tDdG4UboMeDo2qLO/99hflE811tqxx2QaTZ4pkY
-         XCgjJp+IhmH4cn3l4V3bZH8UQgZ5xInGpCtydrwhaEXp7W6+5pr6uG9B+PbmFr7MleKM
-         yO6Q==
-X-Gm-Message-State: AOAM531lOy/YJddz/6U9xCzVV6/etGiT8anH/+SbUXTxzCt2bAKqkqKU
-        wZizPOaJZDTG9QhZPIfLBu7JtEuCplHz1igcGWE=
-X-Google-Smtp-Source: ABdhPJx5ZFNSorU7qbljlmI/LAiHF5BtetK73FnXUUGqjy3dy/9TQmIevkUJ0vpO8hGIQM8vatmUCuXNVP6NYQNZqXQ=
-X-Received: by 2002:a5b:345:: with SMTP id q5mr15894115ybp.481.1637131575601;
- Tue, 16 Nov 2021 22:46:15 -0800 (PST)
-MIME-Version: 1.0
-Reply-To: lw46655@yahoo.com
-Sender: hamedbilly3@gmail.com
-Received: by 2002:a05:7000:b682:0:0:0:0 with HTTP; Tue, 16 Nov 2021 22:46:15
- -0800 (PST)
-From:   Lisa <ml771500@gmail.com>
-Date:   Tue, 16 Nov 2021 22:46:15 -0800
-X-Google-Sender-Auth: LqoHwkrtybmsTtzZQ-ylM4ICe6k
-Message-ID: <CAGNSLD6HiBpC1Ec5Uk5ufJwWsR0j+198=c4RHKVrE=DryoXb8w@mail.gmail.com>
-Subject: Hi Dear!
-To:     undisclosed-recipients:;
+        id S233260AbhKQHUU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Nov 2021 02:20:20 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57566 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229973AbhKQHUT (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 17 Nov 2021 02:20:19 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 047F561BF8
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Nov 2021 07:17:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637133441;
+        bh=EO7qyOev9DbdkJ2e96cJcRtI5CAXNKItwnlMdQSR5+E=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=L8eX/8Kdhu8L47DJFT1Ghnaybsvf5eT98v3g+82Whk+Ab6DhKCUisjVfewxFaZLAg
+         1oKoEF8OLvAG2IpgGQQilkyqV5LDmWNBqEG8kZwoFY1fKVzkuYxjxQ52YxURIRp0Fu
+         BbtC+3jB+sEvHU4beHWkpGhE37u+SD7PqqjKtdvLXPs3AcULOTeFQ+Iwj/B0h8+KYq
+         UyRoQXddMnctmS2qHIKAXr4u86xhEwemi0mTSKvctA0WF+YpTTQGKiqWywwNdzpR7o
+         UmOvIqZr/LKhXeHTYVDfUQbxctYF8HeFbjmyYJwzqNYjl5qgca/EEZM8lXrJJ9ecTQ
+         1iLaGEHNf78BQ==
+Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
+        id F244B60F23; Wed, 17 Nov 2021 07:17:20 +0000 (UTC)
+From:   bugzilla-daemon@bugzilla.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 214273] AX201 Bluetooth unusable after: Shutdown controller
+ after workqueues are flushed or cancelled
+Date:   Wed, 17 Nov 2021 07:17:20 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: mavckhunterk@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-214273-62941-q85fvdp0Mn@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-214273-62941@https.bugzilla.kernel.org/>
+References: <bug-214273-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Dear!  Please Contact me here; ( lw46655@yahoo.com )
+https://bugzilla.kernel.org/show_bug.cgi?id=3D214273
 
-My name is Lisa  Williams, I am from the United States of America, Its
-my pleasure to contact you for new and special friendship  I will be
-glad to see your reply for us to know each other better and exchange
-pictures.
+M (mavckhunterk@gmail.com) changed:
 
-Yours
-Lisa
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |mavckhunterk@gmail.com
+
+--- Comment #2 from M (mavckhunterk@gmail.com) ---
+In my case it just does not work at all. Using Debian and a Lenovo Yoga.
+This worked fine for me until Kernel 5.11 (Ubuntu) and also works well stil=
+l on
+Debian 11 with Kernel 5.10.
+
+The problem also persist in the new 5.15 kernel.
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
