@@ -2,69 +2,198 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E6E59457DFA
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 20 Nov 2021 13:32:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4399E457EF6
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 20 Nov 2021 16:29:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237512AbhKTMfi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 20 Nov 2021 07:35:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42174 "EHLO
+        id S231390AbhKTPc6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 20 Nov 2021 10:32:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237523AbhKTMfh (ORCPT
+        with ESMTP id S230038AbhKTPc6 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 20 Nov 2021 07:35:37 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F1DC061757
-        for <linux-bluetooth@vger.kernel.org>; Sat, 20 Nov 2021 04:32:34 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id r8so23021950wra.7
-        for <linux-bluetooth@vger.kernel.org>; Sat, 20 Nov 2021 04:32:34 -0800 (PST)
+        Sat, 20 Nov 2021 10:32:58 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB890C061574
+        for <linux-bluetooth@vger.kernel.org>; Sat, 20 Nov 2021 07:29:54 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id lj10-20020a17090b344a00b001a653d07ad8so8559332pjb.3
+        for <linux-bluetooth@vger.kernel.org>; Sat, 20 Nov 2021 07:29:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=w2dLnl5hsLVKZTBAdcVFnDnMtM7+guW1LU+8LG4nir0=;
-        b=cQ4sa0RLmxPwPFn1iQHtDPNnu3wxt85tlCuJmDnpCjgmGMxx8i/oateruVYQAvti5I
-         A5qE92dvGm+x1YP+CbK5Tq5OhtXE6vNimcHv6le77OfesyWmtCYZNXHE5+IG0f8L2bT0
-         Lci51QRfH33/4FHSDCeiE4klj7YMLnup6Z9AxKwmd8q2vBCk3OtwmaYj1bSnn6G8m6GQ
-         mxOZ3RS8pA3iEAA55aU8/EBq9h3Po0DLytgYovDVsFfbT36OHdQaUGwPLJ3lG01hFOha
-         WpkBpT9gzq2iO8UbGhiS6xFhyGI26B7QXEWnQJX1hxeVH8W2rTVUYcpRy/W1U7h8dL8Y
-         peJw==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=CYpmfPbN3C/XAnsKeNyp26vn7Ku9902if6kiPcHTnMA=;
+        b=laFLdRc24VNgngtSgCx1BZGvpOkmcudjOBDl4DMu2aTmKNYpl706EjrvwP0fFOTH/8
+         23YgPRyg0WTF8SApYM5Nl/HuQHguqBnBzftDU/g/wJnr3f0hZ16mpVXk32k8eMlcVY7K
+         xY59qDTS3blyo6EqB1pVapuVftZQ9ZT4IEFC/3l+iKtWSnlf7q510Bb9q8Tunh2exoCW
+         Z6YebxUYubiRp39HFQwt5HJhbpf6g4y3/nrkGPT0K3xu5O378imcY3C/5aTw33fISKuO
+         zQ5jFB8RunucWao3TLNPK+VLeK4ScVUqMRZJyCSLlGioRV6zVwsiIwIA+MwAgxsZb4A4
+         xqXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=w2dLnl5hsLVKZTBAdcVFnDnMtM7+guW1LU+8LG4nir0=;
-        b=PonxSPI7ni0yQVbUbG9DM/W6tkDUd5HlvTt0hOJE5llJgUUjz1P5XBuiHPHJksqzTX
-         iscb+pQHEsifJWgvmUlMqjBgclzX5+3PU6NHBISdEZ3yd9L/J6UvkVEXo+mmRUkmN0Sl
-         W525+AeHOCJotJyjG5OYIbo52ZxCDDcChowCfEW/xS44DKnlJPMrwEveslUKuMdSX69/
-         NjJmMOLuZ0V9JKpASmB/65Z3sly2977y/oyD3obQKEXTbBS0E/j7556DScm23FKvdgQx
-         nX6mxVTHRvr3jkujUAp9tTmwIb78ryiAPa75GxeOqJbnru+jRrq/wSC/hJKZI0iY97Bx
-         iiAg==
-X-Gm-Message-State: AOAM530sV4ZD70AdXuIu/uiBZgmOHfenRxw2GOhbURfUqzNLoniNcS/b
-        F5nGgA8bYp3zQZi3A1RV2q5QU3xJxzTGoESqhVg=
-X-Google-Smtp-Source: ABdhPJx6LRHkcC/2nzZUXHHyWAv8qwOLcVanyMaZO5SAGCaEWZSePdj6KgMnXbsAIfz8H/8CWMAmDV2d6TwcaPqmMOI=
-X-Received: by 2002:a05:6000:144a:: with SMTP id v10mr18155356wrx.315.1637411552709;
- Sat, 20 Nov 2021 04:32:32 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:adf:f989:0:0:0:0:0 with HTTP; Sat, 20 Nov 2021 04:32:32
- -0800 (PST)
-Reply-To: mitchellvivian01@gamil.com
-From:   Mitchell Vivian <duplanmartine36@gmail.com>
-Date:   Sat, 20 Nov 2021 12:32:32 +0000
-Message-ID: <CAO-XXH5BAMnqsibuyWBB1vSqWFvEU_Fm4N1zBDf2pLptoHQP0A@mail.gmail.com>
-Subject: Hello
-To:     undisclosed-recipients:;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=CYpmfPbN3C/XAnsKeNyp26vn7Ku9902if6kiPcHTnMA=;
+        b=ogOQKHtBO81S4eFiBBrcjKjNRmfb8FTxtrjlzfW6szKoBYT1WC8tu26vcbt/NLz4IS
+         5LqHYCEH2juYF6NZr0+JDK4fVkQx8Lf4llooAKiPvUlfqogy6+dJi/Ivz0qtThhjAjxt
+         V+IN3TGop96D/d6QBzEomLc6VUHPfytFmzLBi8FxucOZKD3m58/dow9jpEAx1Xv97hZQ
+         z7jEpTgk2Vbak/RqdBq0yTUiCYwpcp5biNUUlgKd2OWMjym7VmQf7y3T7u4uch300VHS
+         /ZBZ6pUpGpa0R5shtF+yL6+5QQ/rFG6c5z4Tm0X1lrhXnf6rSb3pe5Fo7USUX/ZxMaQi
+         hBnQ==
+X-Gm-Message-State: AOAM530hPIrQ1Q05MkDuwN5ViHffQNyg1FP4uyY5H9FvvQSWDXNDs01C
+        enWCGa083YRlek5F2yjuY1JQD7djG+reOA==
+X-Google-Smtp-Source: ABdhPJwUY0pSz5rpdjZoj8hR7cz/xueqe/jDsfk8JbhAUoBBzgeRP5+A7/qOT8DrDWRaljAZn5MPF3q47sqUCw==
+X-Received: from mmandlik.mtv.corp.google.com ([2620:15c:202:201:8437:70f3:c03b:1c71])
+ (user=mmandlik job=sendgmr) by 2002:a65:50c6:: with SMTP id
+ s6mr23074422pgp.352.1637422194400; Sat, 20 Nov 2021 07:29:54 -0800 (PST)
+Date:   Sat, 20 Nov 2021 07:29:36 -0800
+Message-Id: <20211120072449.BlueZ.v6.1.I7f6bdb9282c1e12ffc6c662674678f2b1cb69182@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
+Subject: [BlueZ PATCH v6 1/6] doc: Introduce the Adv Monitor Device Found/Lost events
+From:   Manish Mandlik <mmandlik@google.com>
+To:     marcel@holtmann.org, luiz.dentz@gmail.com
+Cc:     linux-bluetooth@vger.kernel.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        Manish Mandlik <mmandlik@google.com>,
+        Miao-chen Chou <mcchou@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello
+This patch introduces two new MGMT events
+MGMT_EV_ADV_MONITOR_DEVICE_FOUND and MGMT_EV_ADV_MONITOR_DEVICE_LOST to
+indicate that the controller has started/stopped tracking a particular
+device matching one of the already added Advertisement Monitor.
 
-My name is Miss Vivian Mitchell. I want to donate my fund $ 4.5
-million USD to you on a charity name to help the poor People.
+If the controller offloading support is not available,
+MGMT_EV_ADV_MONITOR_DEVICE_FOUND event is also used to report all
+advertisements to perform software based filtering whenever we are not
+active scanning.
 
-As soon as I read from you I will give you more details on how to
-achieve this goal and get this fund transferred into your bank
-account.
+Reviewed-by: Miao-chen Chou <mcchou@google.com>
+---
+Hello Bt-Maintainers,
 
-Thanks have a nice day,
-Miss.vivian
+Bluetooth Advertisement Monitor API was introduced to support background
+scanning and proximity detection based on the application specified RSSI
+thresholds and content filters on LE advertisement packets.
+
+To optimize the power consumption, the API offloads the content
+filtering and RSSI tracking to the controller if the controller
+offloading support is available. However, this monitoring is not
+completely offloaded as the bluetoothd also handles RSSI thresholds and
+timeouts in order to fulfill high/low thresholds/timeouts filtering with
+D-bus clients.
+
+There is further room to achieve better power optimization by supporting
+the controller event HCI_VS_MSFT_LE_Monitor_Device_Event to fulfill true
+monitor offloading. This is currently not supported as it was originally
+desired to minimize the changes to the MGMT interface and reuse the
+existing MGMT_EV_DEVICE_FOUND event to pass advertisements to the
+bluetoothd and let bluetoothd handle the RSSI thresholds and timeouts in
+order to fulfill the D-bus API requirements for the client.
+
+This patch series introduces MGMT events MGMT_EV_ADV_MONITOR_DEVICE_FOUND
+and MGMT_EV_ADV_MONITOR_DEVICE_LOST to indicate that the controller has
+started/stopped monitoring a particular device.
+
+Please let me know what you think about this or if you have any further
+questions.
+
+Thanks,
+Manish.
+
+(no changes since v5)
+
+Changes in v5:
+- Update the Adv Monitor Device Found event to include fields from the
+  existing Device Found event.
+
+Changes in v4:
+- Add Advertisement Monitor Device Found event, make Address_Type 0 as
+  reserved.
+
+Changes in v3:
+- Discard changes to the Device Found event and notify bluetoothd only
+  when the controller stops monitoring the device via new Device Lost
+  event.
+
+Changes in v2:
+- Instead of creating a new 'Device Tracking' event, add a flag 'Device
+  Tracked' in the existing 'Device Found' event and add a new 'Device
+  Lost' event to indicate that the controller has stopped tracking that
+  device.
+
+ doc/mgmt-api.txt | 60 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
+
+diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
+index 97d33e30a..8e7b5ef70 100644
+--- a/doc/mgmt-api.txt
++++ b/doc/mgmt-api.txt
+@@ -4910,3 +4910,63 @@ Controller Resume Event
+ 	Address_Type. Otherwise, Address and Address_Type will both be zero.
+ 
+ 	This event will be sent to all management sockets.
++
++
++Advertisement Monitor Device Found Event
++========================================
++
++	Event code:		0x002f
++	Controller Index:	<controller_id>
++	Event Parameters:	Monitor_Handle (2 Octets)
++				Address (6 Octets)
++				Address_Type (1 Octet)
++				RSSI (1 Octet)
++				Flags (4 Octets)
++				AD_Data_Length (2 Octets)
++				AD_Data (0-65535 Octets)
++
++	This event indicates that the controller has started tracking a device
++	matching an Advertisement Monitor with handle Monitor_Handle.
++
++	Monitor_Handle 0 indicates that we are not active scanning and this
++	is a subsequent advertisement report for already matched Advertisement
++	Monitor or the controller offloading support is not available so need
++	to report all advertisements for software based filtering.
++
++	The address of the device being tracked will be shared in Address and
++	Address_Type.
++
++	Possible values for the Address_Type parameter:
++		0	Reserved (not in use)
++		1	LE Public
++		2	LE Random
++
++	For the RSSI field a value of 127 indicates that the RSSI is
++	not available. That can happen with Bluetooth 1.1 and earlier
++	controllers or with bad radio conditions.
++
++	This event will be sent to all management sockets.
++
++
++Advertisement Monitor Device Lost Event
++=======================================
++
++	Event code:		0x0030
++	Controller Index:	<controller_id>
++	Event Parameters:	Monitor_Handle (2 Octets)
++				Address (6 Octets)
++				Address_Type (1 Octet)
++
++	This event indicates that the controller has stopped tracking a device
++	that was being tracked by an Advertisement Monitor with the handle
++	Monitor_Handle.
++
++	The address of the device being tracked will be shared in Address and
++	Address_Type.
++
++	Possible values for the Address_Type parameter:
++		0	Reserved (not in use)
++		1	LE Public
++		2	LE Random
++
++	This event will be sent to all management sockets.
+-- 
+2.34.0.rc2.393.gf8c9666880-goog
+
