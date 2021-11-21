@@ -2,33 +2,33 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11B44458695
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Nov 2021 22:22:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA24F458696
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Nov 2021 22:22:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233370AbhKUVZN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 21 Nov 2021 16:25:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60330 "EHLO mail.kernel.org"
+        id S230342AbhKUVZ1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 21 Nov 2021 16:25:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60678 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230418AbhKUVZK (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 21 Nov 2021 16:25:10 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id AE00E60F4F
-        for <linux-bluetooth@vger.kernel.org>; Sun, 21 Nov 2021 21:21:58 +0000 (UTC)
+        id S229735AbhKUVZ0 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 21 Nov 2021 16:25:26 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 4CE7E6069B
+        for <linux-bluetooth@vger.kernel.org>; Sun, 21 Nov 2021 21:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637529718;
-        bh=ekCJjQhX5cFC/JZPk/2RZ4HTqdhbZOo6V4TW08CYR5Q=;
+        s=k20201202; t=1637529741;
+        bh=1PNfoi+IFnOxP3cipVS5XzG6AIJU716cvYtXqdt6Scs=;
         h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=rEx6FnGrCdRzmtHIbf9RspsFinmTcW8uu97mH270zCAPVA3KPQS/oOLSiSyp75Jz+
-         9CUBYa1D/MEUip1eEgHhfjVcpctTdbetCPMez1m10WtHB6fUZDjto1MCEnBXQL+XUH
-         muI5vPFmhQUgo/ltjLgHSU1LDbVt7ykKaRTqL1EW8MwItSjktXxZFC8O9iT7qHBfhO
-         djOYyMzqxT0VcsEtv+/JZ9q5hXUD+svGleZRm8vGLQ7VIhSGUOkpCc5n5LjN4D9mbi
-         19NQe+BsdfRDhbFogaJK5f3QkUSYw9aJp0SPhRqaNhCRtAT4YpzVXQEx9b9vNfHI8w
-         CZYe+fZ6ARj4g==
+        b=KzVoQb8dtVu+SGvvj23NUSYnYLf8hq5BWCyfncskY1T6AZHFBeCsdP3POwcz89EWg
+         bR0V8CzdnpGQVb/ULQkPtrkN5mP2nOdl1yDfckysEet1kish3Sf2rVhg2mlPupAQU7
+         Lez3thZ2wtOyMoQ0Nnpqna31mgVFd6P5nQAss0CwqfrbqeHrr0w35HiYenYS4zmuAu
+         k4jPZSR0zTseqTsuW+EMqCW/TfaRAzDB4zctfuMaUmRVk6Ap1lZ3snc4+TqKutBTS+
+         +qCBXzYKHwQvhU3turBxgyQnm7J9yAdNtDrFIrM8Yddgsl+WTO09WoWFsvAI6FSQIT
+         HIa/OeZTCvHWg==
 Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id 9A1F860EBD; Sun, 21 Nov 2021 21:21:58 +0000 (UTC)
+        id 3C07F60EBD; Sun, 21 Nov 2021 21:22:21 +0000 (UTC)
 From:   bugzilla-daemon@bugzilla.kernel.org
 To:     linux-bluetooth@vger.kernel.org
 Subject: [Bug 215015] rtl8723bs restarting loop
-Date:   Sun, 21 Nov 2021 21:21:58 +0000
+Date:   Sun, 21 Nov 2021 21:22:21 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -43,8 +43,8 @@ X-Bugzilla-Resolution: PATCH_ALREADY_AVAILABLE
 X-Bugzilla-Priority: P1
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: bug_status resolution
-Message-ID: <bug-215015-62941-Eyh8LtVrKR@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-215015-62941-d1ylzPplis@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-215015-62941@https.bugzilla.kernel.org/>
 References: <bug-215015-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -58,12 +58,8 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D215015
 
-Serg Podtynnyi (serg@podtynnyi.com) changed:
-
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-             Status|NEW                         |RESOLVED
-         Resolution|---                         |PATCH_ALREADY_AVAILABLE
+--- Comment #1 from Serg Podtynnyi (serg@podtynnyi.com) ---
+Fixed in 5.15.3
 
 --=20
 You may reply to this email to add a comment.
