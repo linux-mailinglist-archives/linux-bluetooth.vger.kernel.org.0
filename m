@@ -2,99 +2,352 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EB34458530
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Nov 2021 17:59:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09A1F458615
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Nov 2021 20:12:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237755AbhKURCF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 21 Nov 2021 12:02:05 -0500
-Received: from p-impout008aa.msg.pkvw.co.charter.net ([47.43.26.139]:57928
-        "EHLO p-impout008.msg.pkvw.co.charter.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S237885AbhKURCF (ORCPT
+        id S238787AbhKUTPd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 21 Nov 2021 14:15:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44614 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238645AbhKUTPa (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 21 Nov 2021 12:02:05 -0500
-X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Nov 2021 12:02:05 EST
-Received: from localhost.localdomain ([24.31.246.181])
-        by cmsmtp with ESMTP
-        id oq4EmHvDbbK8ooq4EmOejG; Sun, 21 Nov 2021 16:51:52 +0000
-X-Authority-Analysis: v=2.4 cv=PveA0iA3 c=1 sm=1 tr=0 ts=619a7928
- a=cAe/7qmlxnd6JlJqP68I9A==:117 a=cAe/7qmlxnd6JlJqP68I9A==:17 a=yQdBAQUQAAAA:8
- a=VwQbUJbxAAAA:8 a=-WocqkAZUEuR14uManwA:9 a=SzazLyfi1tnkUD6oumHU:22
- a=AjGcO6oz07-iQ99wixmX:22
-From:   Larry Finger <Larry.Finger@lwfinger.net>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Gustavo Padovan <gustavo@padovan.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org, Hilda Wu <hildawu@realtek.com>,
-        Larry Finger <Larry.Finger@lwfinger.net>,
-        Stable <stable@vger.kernel.org>
-Subject: [PATCH] Bluetooth: btusb: Add one more Bluetooth part for the Realtek RTL8852AE
-Date:   Sun, 21 Nov 2021 10:51:48 -0600
-Message-Id: <20211121165148.25355-1-Larry.Finger@lwfinger.net>
-X-Mailer: git-send-email 2.33.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfKV9saZ9q6SP6pynCnWQatQXwwBaW9VLMEHB1IFT4Gdq8xd+uoSYMvKC5kbDPWhv0BYFqTAJeu6HedbGHRpGUdL8H9WsvkEzJTWr+AX8MvApyH0tC+Nl
- 78ADisXTrPfIu59KPXbj6i72frHFApSSBqW+bToBmUnuj+1Iesgj1t0OJjLubXEoeN175OROU3rvXnCVnGvUTVbWoDW9eoqVWb01zt9keKm6dIEMAtEVbhWf
- XUlcQPf7CGdwWJQCuQDhvXArhd1GzWg4mKmvT5Ailr/OXlS2A7NuzYMA9sJWvfYQv8XnxZ9s8ZJn9mCB+9wdQQNXAnW0BDrsmMqDv6AV7iTJqU+aba7SPzTo
- tAijt97t4hHD7UpSOJ5xosWggEG4RoTUj0DUTykZGO8hQaYs2pS9Fey2E8DZn6+SncSYE16R
+        Sun, 21 Nov 2021 14:15:30 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7F8FC06173E
+        for <linux-bluetooth@vger.kernel.org>; Sun, 21 Nov 2021 11:12:24 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id y17-20020a2586d1000000b005f6596e8760so6245632ybm.17
+        for <linux-bluetooth@vger.kernel.org>; Sun, 21 Nov 2021 11:12:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=zXuNZPgHww6ClyLM/SyDdg6ExQAderRWoAeWScbILpY=;
+        b=OL9xIcTf2C82fesxbYBkLm6EF0F3PRsfkzC4r/czsIHs46ZwbxXsbOZvq2FrHCxHpb
+         oKH7ivH0hnyZJMkXAbYk1rx8MjbKbSzquJZpnqPdL1VMVKqgzFi4054Vk6PEy09gPZDR
+         byn3taGQRZIkUNmjFcTUhMxsNKKz9D8jGi+4CRXHjM41xjz7Hi3DBzefwZDCpYZTbIhP
+         RywAOLotgKPUDNz8SAMVMxVf3wM6kR5XImGyKErmt6exH1ScXOzEVolBTQX2k9MgLLaD
+         jpdJsb/amKHs+bdtbVqV9QeoHhW36y+yfsY2St6liKL9OOz0MemYLP5JwIc2oIUBzEsu
+         SVAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=zXuNZPgHww6ClyLM/SyDdg6ExQAderRWoAeWScbILpY=;
+        b=Psuprol/mfqQrEO5wUlkMf+GTmIFLZeCwX4Zf7hx7ZMXmZaipkN5l2BYukUSIK4jI1
+         eWuC3fAFecyCQ2slai5M3RBzCYN7PdrUvtFoppBSwSgT7xAkfKn7nIet4N/M6iVbSYyR
+         IzqzeEEiKjWQbaKTkWp5m/BLJ64WYyFLN2qTPito/JD25XuEK2rtrKyIileJOs+prqVi
+         tOlPuw3VsOF9Lg/BW5y8qiR0Nr9c+3mMcZUyTg6HIM62z6Fnk8TujeP9vMXuJhsXPRmA
+         57iUbAB8rv5+Ot18jq8D+AcHZbagyBIdFCVow0GnYE4Bgqjj237kJnxzE0SFWDHsUbsb
+         2C0w==
+X-Gm-Message-State: AOAM5300TLNR+sDsU2SJQyEukdbfvnIqg8PBwckZcZNI/PTbnxtMRuII
+        qDFAo5MbsOMx7wiT4SAsuB7lKjAc+9Qy5w==
+X-Google-Smtp-Source: ABdhPJyDzbIpL0uo1ZqdBGFWVO0Tg/8j8JIR0IMtn9zJAqjcZDs8h7lDGj+vXU5wM1kBfjJEt9RGRf8fusHj1w==
+X-Received: from mmandlik.mtv.corp.google.com ([2620:15c:202:201:6b32:e5fa:422f:7e99])
+ (user=mmandlik job=sendgmr) by 2002:a25:848d:: with SMTP id
+ v13mr10662117ybk.178.1637521942489; Sun, 21 Nov 2021 11:12:22 -0800 (PST)
+Date:   Sun, 21 Nov 2021 11:12:17 -0800
+Message-Id: <20211121110853.v6.1.Ic0a40b84dee3825302890aaea690e73165c71820@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
+Subject: [PATCH v6 1/2] bluetooth: Handle MSFT Monitor Device Event
+From:   Manish Mandlik <mmandlik@google.com>
+To:     marcel@holtmann.org, luiz.dentz@gmail.com
+Cc:     linux-bluetooth@vger.kernel.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        Manish Mandlik <mmandlik@google.com>,
+        Miao-chen Chou <mcchou@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The Realtek RTL8852AE has both wifi and BT components. The latter reports
-a USB ID of 0bda:385a, which is not in the table.
+Whenever the controller starts/stops monitoring a bt device, it sends
+MSFT Monitor Device event. Add handler to read this vendor event.
 
-The portion of /sys/kernel/debug/usb/devices pertaining to this device is
+Test performed:
+- Verified by logs that the MSFT Monitor Device event is received from
+  the controller whenever it starts/stops monitoring a device.
 
-T:  Bus=01 Lev=01 Prnt=01 Port=03 Cnt=02 Dev#=  3 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0bda ProdID=385a Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-
-Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
-Cc: Stable <stable@vger.kernel.org>
+Signed-off-by: Manish Mandlik <mmandlik@google.com>
+Reviewed-by: Miao-chen Chou <mcchou@google.com>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+Hello Bt-Maintainers,
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 75c83768c257..274fb857e98e 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -384,6 +384,8 @@ static const struct usb_device_id blacklist_table[] = {
- 	/* Realtek 8852AE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0xc852), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0bda, 0x385a), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0bda, 0x4852), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04c5, 0x165c), .driver_info = BTUSB_REALTEK |
+As mentioned in the bluez patch series [1], we need to capture the 'MSFT
+Monitor Device' event from the controller and pass on the necessary
+information to the bluetoothd.
+
+This is required to further optimize the power consumption by avoiding
+handling of RSSI thresholds and timeouts in the user space and let the
+controller do the RSSI tracking.
+
+This patch series adds support to read the MSFT vendor event
+HCI_VS_MSFT_LE_Monitor_Device_Event and introduces new MGMT events
+MGMT_EV_ADV_MONITOR_DEVICE_FOUND and MGMT_EV_ADV_MONITOR_DEVICE_LOST to
+indicate that the controller has started/stopped tracking a particular
+device.
+
+Please let me know what you think about this or if you have any further
+questions.
+
+[1] https://patchwork.kernel.org/project/bluetooth/list/?series=583423
+
+Thanks,
+Manish.
+
+Changes in v6:
+- Fix compiler warning bt_dev_err() missing argument.
+
+Changes in v5:
+- Split v4 into two patches.
+- Buffer controller Device Found event and maintain the device tracking
+  state in the kernel.
+
+Changes in v4:
+- Add Advertisement Monitor Device Found event and update addr type.
+
+Changes in v3:
+- Discard changes to the Device Found event and notify bluetoothd only
+  when the controller stops monitoring the device via new Device Lost
+  event.
+
+Changes in v2:
+- Instead of creating a new 'Device Tracking' event, add a flag 'Device
+  Tracked' in the existing 'Device Found' event and add a new 'Device
+  Lost' event to indicate that the controller has stopped tracking that
+  device.
+
+ include/net/bluetooth/hci_core.h |  11 +++
+ net/bluetooth/hci_core.c         |   1 +
+ net/bluetooth/msft.c             | 127 ++++++++++++++++++++++++++++++-
+ 3 files changed, 138 insertions(+), 1 deletion(-)
+
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 2560cfe80db8..6734b394c6e7 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -257,6 +257,15 @@ struct adv_info {
+ 
+ #define HCI_ADV_TX_POWER_NO_PREFERENCE 0x7F
+ 
++struct monitored_device {
++	struct list_head list;
++
++	bdaddr_t bdaddr;
++	__u8     addr_type;
++	__u16    handle;
++	bool     notified;
++};
++
+ struct adv_pattern {
+ 	struct list_head list;
+ 	__u8 ad_type;
+@@ -588,6 +597,8 @@ struct hci_dev {
+ 
+ 	struct delayed_work	interleave_scan;
+ 
++	struct list_head	monitored_devices;
++
+ #if IS_ENABLED(CONFIG_BT_LEDS)
+ 	struct led_trigger	*power_led;
+ #endif
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index fdc0dcf8ee36..d4bcd511530a 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2503,6 +2503,7 @@ struct hci_dev *hci_alloc_dev_priv(int sizeof_priv)
+ 	INIT_LIST_HEAD(&hdev->conn_hash.list);
+ 	INIT_LIST_HEAD(&hdev->adv_instances);
+ 	INIT_LIST_HEAD(&hdev->blocked_keys);
++	INIT_LIST_HEAD(&hdev->monitored_devices);
+ 
+ 	INIT_LIST_HEAD(&hdev->local_codecs);
+ 	INIT_WORK(&hdev->rx_work, hci_rx_work);
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index 1122097e1e49..aadabe78baf6 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -80,6 +80,14 @@ struct msft_rp_le_set_advertisement_filter_enable {
+ 	__u8 sub_opcode;
+ } __packed;
+ 
++#define MSFT_EV_LE_MONITOR_DEVICE	0x02
++struct msft_ev_le_monitor_device {
++	__u8     addr_type;
++	bdaddr_t bdaddr;
++	__u8     monitor_handle;
++	__u8     monitor_state;
++} __packed;
++
+ struct msft_monitor_advertisement_handle_data {
+ 	__u8  msft_handle;
+ 	__u16 mgmt_handle;
+@@ -266,6 +274,7 @@ static void msft_le_cancel_monitor_advertisement_cb(struct hci_dev *hdev,
+ 	struct msft_data *msft = hdev->msft_data;
+ 	int err;
+ 	bool pending;
++	struct monitored_device *dev, *tmp;
+ 
+ 	if (status)
+ 		goto done;
+@@ -296,6 +305,15 @@ static void msft_le_cancel_monitor_advertisement_cb(struct hci_dev *hdev,
+ 
+ 		list_del(&handle_data->list);
+ 		kfree(handle_data);
++
++		/* Clear any monitored devices by this Adv Monitor */
++		list_for_each_entry_safe(dev, tmp, &hdev->monitored_devices,
++					 list) {
++			if (dev->handle == handle_data->mgmt_handle) {
++				list_del(&dev->list);
++				kfree(dev);
++			}
++		}
+ 	}
+ 
+ 	/* If remove all monitors is required, we need to continue the process
+@@ -538,6 +556,7 @@ void msft_do_close(struct hci_dev *hdev)
+ 	struct msft_data *msft = hdev->msft_data;
+ 	struct msft_monitor_advertisement_handle_data *handle_data, *tmp;
+ 	struct adv_monitor *monitor;
++	struct monitored_device *dev, *tmp_dev;
+ 
+ 	if (!msft)
+ 		return;
+@@ -557,6 +576,16 @@ void msft_do_close(struct hci_dev *hdev)
+ 		list_del(&handle_data->list);
+ 		kfree(handle_data);
+ 	}
++
++	hci_dev_lock(hdev);
++
++	/* Clear any devices that are being monitored */
++	list_for_each_entry_safe(dev, tmp_dev, &hdev->monitored_devices, list) {
++		list_del(&dev->list);
++		kfree(dev);
++	}
++
++	hci_dev_unlock(hdev);
+ }
+ 
+ void msft_register(struct hci_dev *hdev)
+@@ -590,6 +619,90 @@ void msft_unregister(struct hci_dev *hdev)
+ 	kfree(msft);
+ }
+ 
++/* This function requires the caller holds hdev->lock */
++static void msft_device_found(struct hci_dev *hdev, bdaddr_t *bdaddr,
++			      __u8 addr_type, __u16 mgmt_handle)
++{
++	struct monitored_device *dev;
++
++	dev = kmalloc(sizeof(*dev), GFP_KERNEL);
++	if (!dev) {
++		bt_dev_err(hdev, "MSFT vendor event %u: no memory",
++			   MSFT_EV_LE_MONITOR_DEVICE);
++		return;
++	}
++
++	bacpy(&dev->bdaddr, bdaddr);
++	dev->addr_type = addr_type;
++	dev->handle = mgmt_handle;
++	dev->notified = false;
++
++	INIT_LIST_HEAD(&dev->list);
++	list_add(&dev->list, &hdev->monitored_devices);
++}
++
++/* This function requires the caller holds hdev->lock */
++static void msft_device_lost(struct hci_dev *hdev, bdaddr_t *bdaddr,
++			     __u8 addr_type, __u16 mgmt_handle)
++{
++	struct monitored_device *dev, *tmp;
++
++	list_for_each_entry_safe(dev, tmp, &hdev->monitored_devices, list) {
++		if (dev->handle == mgmt_handle) {
++			list_del(&dev->list);
++			kfree(dev);
++
++			break;
++		}
++	}
++}
++
++/* This function requires the caller holds hdev->lock */
++static void msft_monitor_device_evt(struct hci_dev *hdev, struct sk_buff *skb)
++{
++	struct msft_ev_le_monitor_device *ev = (void *)skb->data;
++	struct msft_monitor_advertisement_handle_data *handle_data;
++	u8 addr_type;
++
++	if (skb->len < sizeof(*ev)) {
++		bt_dev_err(hdev,
++			   "MSFT vendor event %u: insufficient data (len: %u)",
++			   MSFT_EV_LE_MONITOR_DEVICE, skb->len);
++		return;
++	}
++	skb_pull(skb, sizeof(*ev));
++
++	bt_dev_dbg(hdev,
++		   "MSFT vendor event %u: handle 0x%04x state %d addr %pMR",
++		   MSFT_EV_LE_MONITOR_DEVICE, ev->monitor_handle,
++		   ev->monitor_state, &ev->bdaddr);
++
++	handle_data = msft_find_handle_data(hdev, ev->monitor_handle, false);
++
++	switch (ev->addr_type) {
++	case ADDR_LE_DEV_PUBLIC:
++		addr_type = BDADDR_LE_PUBLIC;
++		break;
++
++	case ADDR_LE_DEV_RANDOM:
++		addr_type = BDADDR_LE_RANDOM;
++		break;
++
++	default:
++		bt_dev_err(hdev,
++			   "MSFT vendor event %u: unknown addr type 0x%02x",
++			   MSFT_EV_LE_MONITOR_DEVICE, ev->addr_type);
++		return;
++	}
++
++	if (ev->monitor_state)
++		msft_device_found(hdev, &ev->bdaddr, addr_type,
++				  handle_data->mgmt_handle);
++	else
++		msft_device_lost(hdev, &ev->bdaddr, addr_type,
++				 handle_data->mgmt_handle);
++}
++
+ void msft_vendor_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+ 	struct msft_data *msft = hdev->msft_data;
+@@ -617,10 +730,22 @@ void msft_vendor_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 	if (skb->len < 1)
+ 		return;
+ 
++	hci_dev_lock(hdev);
++
+ 	event = *skb->data;
+ 	skb_pull(skb, 1);
+ 
+-	bt_dev_dbg(hdev, "MSFT vendor event %u", event);
++	switch (event) {
++	case MSFT_EV_LE_MONITOR_DEVICE:
++		msft_monitor_device_evt(hdev, skb);
++		break;
++
++	default:
++		bt_dev_dbg(hdev, "MSFT vendor event %u", event);
++		break;
++	}
++
++	hci_dev_unlock(hdev);
+ }
+ 
+ __u64 msft_get_features(struct hci_dev *hdev)
 -- 
-2.33.1
+2.34.0.rc2.393.gf8c9666880-goog
 
