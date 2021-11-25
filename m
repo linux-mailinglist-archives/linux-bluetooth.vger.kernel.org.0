@@ -2,96 +2,177 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 74D8645D186
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Nov 2021 01:16:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A134845D513
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Nov 2021 08:06:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346417AbhKYAT1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 24 Nov 2021 19:19:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41648 "EHLO
+        id S1348845AbhKYHJ5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 25 Nov 2021 02:09:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346127AbhKYAT0 (ORCPT
+        with ESMTP id S1349224AbhKYHH5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 24 Nov 2021 19:19:26 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0FF2C06173E
-        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Nov 2021 16:16:15 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id np6-20020a17090b4c4600b001a90b011e06so4181970pjb.5
-        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Nov 2021 16:16:15 -0800 (PST)
+        Thu, 25 Nov 2021 02:07:57 -0500
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AC3BC061746
+        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Nov 2021 23:04:46 -0800 (PST)
+Received: by mail-qv1-xf4a.google.com with SMTP id fw10-20020a056214238a00b003c05d328ad2so5385149qvb.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Nov 2021 23:04:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=QRLf7evpC+z3sWVkPSyEejHGVJ4DfUjo0lTCHwGZp78=;
-        b=qS8zsFs7cgoLhGj5DRd1Hkog0hH0S5OVQy7d8z8CBJ/nzc2OxEI/sCjzjM5AaJVGNx
-         Z6qAui8chFfoi2TjIfBy8YAZMQYh3LF6clx7o5feZWm+hnxZd+U6HuE1N4QoKqn6w3EO
-         ahrznWArFvUNyrFMG7MZ306F+ZQryBAoNlpyKjUOJ1y7P1PTe+M4d4FlpngAdUcX3kYP
-         /17UThZqiqQPIaAaooAy2aPnpQyXSrOX6IQ06RlMCqH5ZwodaZ3ur6T8eYXnjvX7+EkF
-         +gq3IkmZGOmwZO9WSX3ORyZW6yi0IljCAhdUhVpQAbJzdVxHQNMOK4jKjbMKqLhBqYYC
-         n1OQ==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=qnF9S/WVbJtB6SNaZPimqTxpLICpyTdyDhWxnzxObkI=;
+        b=H7XfQ5p8QSHMsVXHAKeX16az9dOndxxkoU5ZzJ2p2klQeg7xAEQgTFUGORuO2HogYU
+         jemG1W+jiUpODS2niZA4RFQ1UsGkjdugydko8s0eSNqXCZvWYqig69W1bRaR0KfCYxiJ
+         nKdK0cB7DX/SucIn9ux7aiwHpFQpPDR+QEGrvDaXNPCIiUmQNYMRJfJBDlxXA1VS1Pye
+         Lhf5fmI7QZOL2CEgS70PmR47fj4hAEUYFX/EU1/Qej+bqNzxV0oPWkXOOrTTkrRouhfC
+         UqqGF63/5KsU/3H7Gi6iYXAHf6oJpvs3UCZlOPqZnsW6YnLBEK7SaMwweCTko38pVfIv
+         chCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QRLf7evpC+z3sWVkPSyEejHGVJ4DfUjo0lTCHwGZp78=;
-        b=bra9p/s4qhaCkbTaLIAv7CD36707uOIyQOhScQcrRyIFU0F2WFGWm0+/tcToqIJ9s2
-         Oum+EsyGU3gQT0kK+lxaZh7X/lBqx5IDoS2ZjTEFULOdYi6b/Yx8RldOfE1Y0phsc79L
-         lIQhr6K81zvVPEjOd9ox4yl5oGEhd2T8OFOK/ULarldCOxmQJZrEVY3fXKwuvFL2o2eS
-         8oCU2Dxvxs/0LaUeZEwuu5lwb1leJ7So4enk8CNz+aEAytQqe3mKaqM5h+IkEnW7wU8E
-         RPuZdChMSsmfFN5geYdMMGNxssBFgreBIOvIDW2Vv+3rYZEUeI8nSbyYg63FU/4BYO7y
-         qpIw==
-X-Gm-Message-State: AOAM532JOVbRmOMweaDaVYevnCt+PPh1pzET+jK+0FHnetBHHIaEuYgc
-        7qBiih6PNgBxk2WNKght+QUKzP4BRZ4=
-X-Google-Smtp-Source: ABdhPJyqbbPty79389kVlnkVMCqypQe5RVQo8N1ve0TxfCnbsvSgvwihGH3lAGTfMqwrFE04MEijNQ==
-X-Received: by 2002:a17:90a:ab17:: with SMTP id m23mr1574681pjq.194.1637799374982;
-        Wed, 24 Nov 2021 16:16:14 -0800 (PST)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id z4sm861751pfg.101.2021.11.24.16.16.14
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Nov 2021 16:16:14 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 2/2] Bluetooth: HCI: Fix definition of hci_rp_delete_stored_link_key
-Date:   Wed, 24 Nov 2021 16:16:13 -0800
-Message-Id: <20211125001613.3274241-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211125001613.3274241-1-luiz.dentz@gmail.com>
-References: <20211125001613.3274241-1-luiz.dentz@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=qnF9S/WVbJtB6SNaZPimqTxpLICpyTdyDhWxnzxObkI=;
+        b=BSsOVJCuzOUvm4uNrJahLurvSjhy/KrHfKnpwgva6huuK3xH62hunD2Ww00gHjLr02
+         twAGm1ceDsmpYNApgOQbr0y4RySGHhnODz38j83auSn/ZitXtMS5rCDBHFPehESGanru
+         Z01/RomZb6yW4JRQJeDpbgk7UGva2MJOTDhEO+hMgJwXE0DGax5nfs5k2ogm3ueMI0gK
+         YAn5CaHeIxzHktGzLZpIM4pX23yMGiFFySpvnSuww5dIinOYFLF9IrnRkWgHHPqJIYlF
+         +RqHm2ZSIVHVbOL5XBb8Bvy1jV+G1sW1az2DFQZqclJcyP3zKVLxjldVBktn+npBcc9L
+         DAmA==
+X-Gm-Message-State: AOAM532tij4ModU3aJSwnAInce+lXvEWjCQG0menyuVdx0+shAcdalz8
+        lYQB7nIaFV2jP9mOkGjKLxgL+GQ55S4diAKLOdMbPSXGWUCJrkwvX7DYdFgHsbW0/7pSi59SvMZ
+        KPLlhNPGdh68HPKVum5MA7XBsriVETgko5AMevsL4IsJNwoA4QNTpsYx7jJ6Z/DRvaJjU66LR48
+        ap
+X-Google-Smtp-Source: ABdhPJwzOa27lBS1LUYCnerWVnbBZmstJ9dgvqaSWe7ZDudiw7jY4/u+e5S7uELuO2QQ+eInTOdEXEKnmhvY
+X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:10:a5d9:6769:9abb:6b2])
+ (user=apusaka job=sendgmr) by 2002:a25:1186:: with SMTP id
+ 128mr3963705ybr.547.1637823885246; Wed, 24 Nov 2021 23:04:45 -0800 (PST)
+Date:   Thu, 25 Nov 2021 15:04:36 +0800
+Message-Id: <20211125150430.v3.1.Id7366eb14b6f48173fcbf17846ace59479179c7c@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
+Subject: [PATCH v3 1/2] Bluetooth: Send device found event on name resolve failure
+From:   Archie Pusaka <apusaka@google.com>
+To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>
+Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Archie Pusaka <apusaka@chromium.org>
 
-num_keys is actually 2 octects not 1:
+Introducing NAME_REQUEST_FAILED flag that will be sent together with
+device found event on name resolve failure. This will provide the
+userspace with an information so it can decide not to resolve the
+name for these devices in the future.
 
-BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 4, Part E
-page 1989:
+Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
 
-  Num_Keys_Deleted:
-  Size: 2 octets
-  0xXXXX	Number of Link Keys Deleted
-
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- include/net/bluetooth/hci.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi maintainers,
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 3c5211c3a790..b557d86396d5 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -1058,7 +1058,7 @@ struct hci_cp_delete_stored_link_key {
- } __packed;
- struct hci_rp_delete_stored_link_key {
- 	__u8     status;
--	__u8     num_keys;
-+	__le16   num_keys;
+This is the patch series for remote name request as was discussed here.
+https://patchwork.kernel.org/project/bluetooth/patch/20211028191805.1.I35b7f3a496f834de6b43a32f94b6160cb1467c94@changeid/
+Please also review the corresponding userspace change.
+
+Thanks,
+Archie
+
+Changes in v3:
+* Reindent defines
+* Assign variables inside if block instead of initializing
+
+Changes in v2:
+* Remove the part which accepts DONT_CARE flag in MGMT_OP_CONFIRM_NAME
+* Rename MGMT constant to conform with the docs
+
+ include/net/bluetooth/mgmt.h |  9 +++++----
+ net/bluetooth/hci_event.c    | 11 ++++-------
+ net/bluetooth/mgmt.c         | 12 ++++++++++--
+ 3 files changed, 19 insertions(+), 13 deletions(-)
+
+diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
+index 23a0524061b7..107b25deae68 100644
+--- a/include/net/bluetooth/mgmt.h
++++ b/include/net/bluetooth/mgmt.h
+@@ -936,10 +936,11 @@ struct mgmt_ev_auth_failed {
+ 	__u8	status;
  } __packed;
  
- #define HCI_MAX_NAME_LENGTH		248
+-#define MGMT_DEV_FOUND_CONFIRM_NAME    0x01
+-#define MGMT_DEV_FOUND_LEGACY_PAIRING  0x02
+-#define MGMT_DEV_FOUND_NOT_CONNECTABLE 0x04
+-#define MGMT_DEV_FOUND_INITIATED_CONN  0x08
++#define MGMT_DEV_FOUND_CONFIRM_NAME		0x01
++#define MGMT_DEV_FOUND_LEGACY_PAIRING		0x02
++#define MGMT_DEV_FOUND_NOT_CONNECTABLE		0x04
++#define MGMT_DEV_FOUND_INITIATED_CONN		0x08
++#define MGMT_DEV_FOUND_NAME_REQUEST_FAILED	0x10
+ 
+ #define MGMT_EV_DEVICE_FOUND		0x0012
+ struct mgmt_ev_device_found {
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index dee4ef22fc88..bb4c04aecccf 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2175,13 +2175,10 @@ static void hci_check_pending_name(struct hci_dev *hdev, struct hci_conn *conn,
+ 		return;
+ 
+ 	list_del(&e->list);
+-	if (name) {
+-		e->name_state = NAME_KNOWN;
+-		mgmt_remote_name(hdev, bdaddr, ACL_LINK, 0x00,
+-				 e->data.rssi, name, name_len);
+-	} else {
+-		e->name_state = NAME_NOT_KNOWN;
+-	}
++
++	e->name_state = name ? NAME_KNOWN : NAME_NOT_KNOWN;
++	mgmt_remote_name(hdev, bdaddr, ACL_LINK, 0x00, e->data.rssi,
++			 name, name_len);
+ 
+ 	if (hci_resolve_next_name(hdev))
+ 		return;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index f8f74d344297..bf989ae03f9f 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -9615,6 +9615,7 @@ void mgmt_remote_name(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 link_type,
+ 	struct mgmt_ev_device_found *ev;
+ 	char buf[sizeof(*ev) + HCI_MAX_NAME_LENGTH + 2];
+ 	u16 eir_len;
++	u32 flags;
+ 
+ 	ev = (struct mgmt_ev_device_found *) buf;
+ 
+@@ -9624,10 +9625,17 @@ void mgmt_remote_name(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 link_type,
+ 	ev->addr.type = link_to_bdaddr(link_type, addr_type);
+ 	ev->rssi = rssi;
+ 
+-	eir_len = eir_append_data(ev->eir, 0, EIR_NAME_COMPLETE, name,
+-				  name_len);
++	if (name) {
++		eir_len = eir_append_data(ev->eir, 0, EIR_NAME_COMPLETE, name,
++					  name_len);
++		flags = 0;
++	} else {
++		eir_len = 0;
++		flags = MGMT_DEV_FOUND_NAME_REQUEST_FAILED;
++	}
+ 
+ 	ev->eir_len = cpu_to_le16(eir_len);
++	ev->flags = cpu_to_le32(flags);
+ 
+ 	mgmt_event(MGMT_EV_DEVICE_FOUND, hdev, ev, sizeof(*ev) + eir_len, NULL);
+ }
 -- 
-2.33.1
+2.34.0.rc2.393.gf8c9666880-goog
 
