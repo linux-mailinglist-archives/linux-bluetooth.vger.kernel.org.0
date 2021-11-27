@@ -2,91 +2,65 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 28C6A45F6C3
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Nov 2021 23:12:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DCCF745FBE7
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 27 Nov 2021 03:16:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243492AbhKZWQB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 26 Nov 2021 17:16:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51890 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244713AbhKZWOA (ORCPT
+        id S1352162AbhK0CTS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 26 Nov 2021 21:19:18 -0500
+Received: from sv12385.xserver.jp ([202.233.66.66]:37206 "EHLO
+        sv12385.xserver.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241554AbhK0CRR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 26 Nov 2021 17:14:00 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 250A7C061758
-        for <linux-bluetooth@vger.kernel.org>; Fri, 26 Nov 2021 14:10:47 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id b1so27207592lfs.13
-        for <linux-bluetooth@vger.kernel.org>; Fri, 26 Nov 2021 14:10:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=semihalf-com.20210112.gappssmtp.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PLqwQJWDE8a7depWBYd+hrLoF+ltNYrjhfboFky++nY=;
-        b=mTLeW6i2Pc2IHaCs3TE7GvqJgqE2uvXUCFN2uC4Dn6FlMnJWeIHbWIoePYw8FQaaQr
-         1OvH/TNlTP2JdW8hF6VKSXH1uIIYlLIFxidY7r7VUoMq+MG6TWJbf6qDakWVYVOUZEiE
-         msrohFyeCBfbd43Hi8GVgfoQY6vhbxbLiz7wN117qb+mW7IlgUNeMChBC66Y/LtccFNq
-         YazePZ/h5rCiipByN5BmE2WYpwkqLbzfeJREiLLKZzaurtTIwl+pU5yMeWxJE3C5iH5S
-         0ooefuikUXMjXkNdb5XUq45XmYRt3Cy0y7HrbO1yjdqdZFKzMRjvieGJoV8q5jP4JhS8
-         ig0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PLqwQJWDE8a7depWBYd+hrLoF+ltNYrjhfboFky++nY=;
-        b=6MofOlKQuJTKU4UeOiKs5mJfnxR8TEiKoFi9jPnxMAu6PN/D7IJKFn1/DbLBAc3wsF
-         cXZPs2ruPALh6inS8MLFr1deqCMGQjwvB5vBCfw+Gofc3ejCMuNaLwX6fB6cVhdQvuiO
-         YiB7Ug5SJX5M1yxPOYwz1PrldIp7TW+8z2/t4qaekP3TUYWqHAweNwLhbeXVbflJTi+c
-         NoqVJkMnJ5MKX8MHebEhtXmvn/ILS+uZvIajxutAjThiNOJqAmcw1fWp1XQLM0aWf35B
-         DJhLcl1DDGmedn3/wpVspdw4Vsz268lw/BGX0zPDM+i8g4i8h6w3JwRF9wo7TIgvM9hb
-         azUA==
-X-Gm-Message-State: AOAM532gkMV3fyvU/puksoHgnSo//MNW/O5XcvdHQtWPFoP07J9QPD22
-        nunhGFBYpUnuy6nPjWWBgmIO
-X-Google-Smtp-Source: ABdhPJwJVSEi5ztbn19HvdKZVk+FNVzfL9I8bOkzkF2joIq/JBel9xgsTB/DxSDpnZ74ss3C2bZC1A==
-X-Received: by 2002:ac2:5dc2:: with SMTP id x2mr32280022lfq.228.1637964645418;
-        Fri, 26 Nov 2021 14:10:45 -0800 (PST)
-Received: from localhost.localdomain (public-gprs370674.centertel.pl. [37.47.79.51])
-        by smtp.gmail.com with ESMTPSA id x15sm608256ljc.124.2021.11.26.14.10.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Nov 2021 14:10:45 -0800 (PST)
-From:   Lukasz Bartosik <lb@semihalf.com>
-X-Google-Original-From: Lukasz Bartosik <lukasz.bartosik@semihalf.com>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org,
-        Sean Wang <sean.wang@mediatek.com>, upstream@semihalf.com
-Subject: [PATCH v1] Bluetooth: btmtksdio: enable msft opcode
-Date:   Fri, 26 Nov 2021 23:10:34 +0100
-Message-Id: <20211126221034.21331-1-lukasz.bartosik@semihalf.com>
-X-Mailer: git-send-email 2.17.1
+        Fri, 26 Nov 2021 21:17:17 -0500
+X-Greylist: delayed 433 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Nov 2021 21:17:17 EST
+Received: from virusgw12001.xserver.jp (virusgw12001.xserver.jp [103.3.3.10])
+        by sv12385.xserver.jp (Postfix) with ESMTP id C5E869006D4325
+        for <linux-bluetooth@vger.kernel.org>; Sat, 27 Nov 2021 11:06:48 +0900 (JST)
+Received: from sv12385.xserver.jp (202.233.66.66)
+ by virusgw12001.xserver.jp (F-Secure/fsigk_smtp/521/virusgw12001.xserver.jp);
+ Sat, 27 Nov 2021 11:06:48 +0900 (JST)
+X-Virus-Status: clean(F-Secure/fsigk_smtp/521/virusgw12001.xserver.jp)
+Received: by sv12385.xserver.jp (Postfix, from userid 20016)
+        id C26E09006D4301; Sat, 27 Nov 2021 11:06:48 +0900 (JST)
+To:     linux-bluetooth@vger.kernel.org
+Subject: =?ISO-2022-JP?B?GyRCJCpMZCQkOWckbyQ7PHUbKEI=?=
+ =?ISO-2022-JP?B?GyRCSVUkTiQqQ04kaSQ7GyhC?=
+From:   =?UTF-8?B?5L+h5bee5ZaE5YWJ5a+6IOiWrOeOi+mZoiB8IOOBr+OBmOOBvuOCiuOBrg==?=
+         =?UTF-8?B?5a6/5Z2K?= <info@yakuoin.jp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+Message-Id: <20211127020648.C26E09006D4301@sv12385.xserver.jp>
+Date:   Sat, 27 Nov 2021 11:06:48 +0900 (JST)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Łukasz Bartosik <lb@semihalf.com>
 
-Enable msft opcode for btmtksdio driver.
+?? Alice sent you a hot video! Watch Here: https://bit.ly/3113Lyn?7kdv ?? $BMM(B 
 
-Signed-off-by: Łukasz Bartosik <lb@semihalf.com>
----
- drivers/bluetooth/btmtksdio.c | 1 +
- 1 file changed, 1 insertion(+)
+$B?.=#A18w;{(B $BLt2&1!(B | $B$O$8$^$j$N=IK7(B $B$X$*Ld$$9g$o$;$$$?$@$-!"@?$K$"$j$,$H$&$4$6$$$^$9!#(B
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index d9cf0c492e29..2a7a615663b9 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -887,6 +887,7 @@ static int btmtksdio_setup(struct hci_dev *hdev)
- 	if (enable_autosuspend)
- 		pm_runtime_allow(bdev->dev);
- 
-+	hci_set_msft_opcode(hdev, 0xFD30);
- 	bt_dev_info(hdev, "Device setup in %llu usecs", duration);
- 
- 	return 0;
--- 
-2.34.0.rc2.393.gf8c9666880-goog
+$B2~$a$FC4Ev<T$h$j$4O"MmCW$7$^$9$N$G!":#$7$P$i$/$*BT$A$/$@$5$$!#(B 
+
+
+
+-------------------------------------------------
+
+$B"#$*L>A0(B:
+?? Alice sent you a hot video! Watch Here: https://bit.ly/3113Lyn?7kdv ?? 
+
+
+$B"#%a!<%k%"%I%l%9(B:
+linux-bluetooth@vger.kernel.org 
+
+
+$B"#$*EEOCHV9f(B:
+fo2voa 
+
+
+$B"#$*Ld$$9g$o$;FbMF(B:
+k839r3gs 
+
+-------------------------------------------------
 
