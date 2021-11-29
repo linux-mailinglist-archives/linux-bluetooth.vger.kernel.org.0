@@ -2,142 +2,76 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9687B4626BE
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Nov 2021 23:53:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B1774623DF
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Nov 2021 23:02:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235331AbhK2W5C (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 29 Nov 2021 17:57:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37688 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235589AbhK2W4d (ORCPT
+        id S230466AbhK2WF1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 29 Nov 2021 17:05:27 -0500
+Received: from mailgw01.mediatek.com ([60.244.123.138]:41852 "EHLO
+        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S230516AbhK2WDZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 29 Nov 2021 17:56:33 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 640D1C061A16
-        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Nov 2021 13:58:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id B014ECE13DF
-        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Nov 2021 21:58:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DB752C53FD0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Nov 2021 21:58:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638223124;
-        bh=+rK3fWveB9nVpZbuXZ4/Nu0EE9OPbGe1SFH70HVVkJ0=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=qUpLdxyhEYq9OWf8G21WVgEaq1OqlcpTbHHdam3j1wT4QhL/nxsRQ6QWYKyvI5bMv
-         uanxkE8Do0pOFVWK+L72kI9j5ENnfKRaW6nQkvzh9eDuEU2zY6E9kz0+TbPMBdHpZl
-         6jCK5CfEyMq0B2pUDuSxAkjWOcua4+s+Ruq7uCRAwh0Kkb8ukAMoxfsQuC9OFUuevP
-         azorzEIlQf57vWARpNwcgTriF1d16goBfT+fbUrdlnXO8dX1wuk0Kaqhr5B2u2PjUj
-         SyiHK4hfPnHefp4vKkJDIBqZMZzDXINOfvCE440o7B/76+c4xso8BytyLGJ2jxSEkt
-         kyJe3D414kXiw==
-Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id C724160F26; Mon, 29 Nov 2021 21:58:44 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 215167] Bluetooth: hci0: command 0xfc05 tx timeout
-Date:   Mon, 29 Nov 2021 21:58:44 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: tech@reachthetribes.org
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-215167-62941-uzq2HwvBiQ@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-215167-62941@https.bugzilla.kernel.org/>
-References: <bug-215167-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Mon, 29 Nov 2021 17:03:25 -0500
+X-UUID: 76bd48bca8b544ec8ef351fa17929f4e-20211130
+X-UUID: 76bd48bca8b544ec8ef351fa17929f4e-20211130
+Received: from mtkexhb02.mediatek.inc [(172.21.101.103)] by mailgw01.mediatek.com
+        (envelope-from <sean.wang@mediatek.com>)
+        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+        with ESMTP id 1236191533; Tue, 30 Nov 2021 06:00:02 +0800
+Received: from mtkcas10.mediatek.inc (172.21.101.39) by
+ mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.792.3;
+ Tue, 30 Nov 2021 06:00:01 +0800
+Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas10.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Tue, 30 Nov 2021 06:00:01 +0800
+From:   <sean.wang@mediatek.com>
+To:     <lb@semihalf.com>
+CC:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
+        <luiz.dentz@gmail.com>, <upstream@semihalf.com>,
+        <linux-bluetooth@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        "Sean Wang" <sean.wang@mediatek.com>
+Subject: =?UTF-8?q?Re=3A?=
+Date:   Tue, 30 Nov 2021 05:59:58 +0800
+Message-ID: <1638223198-31652-1-git-send-email-sean.wang@mediatek.com>
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <20211126221034.21331-1-lukasz.bartosik@semihalf.com--annotate>
+References: <20211126221034.21331-1-lukasz.bartosik@semihalf.com--annotate>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-MTK:  N
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D215167
+From: Sean Wang <sean.wang@mediatek.com>
 
---- Comment #8 from George Olson (tech@reachthetribes.org) ---
-when I boot with 5.15.3 kernel, btusb is not loaded onto the kernel.
+>Enable msft opcode for btmtksdio driver.
+>
+>Signed-off-by: Łukasz Bartosik <lb@semihalf.com>
+>---
+> drivers/bluetooth/btmtksdio.c | 1 +
+> 1 file changed, 1 insertion(+)
+>
+>diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c index d9cf0c492e29..2a7a615663b9 100644
+>--- a/drivers/bluetooth/btmtksdio.c
+>+++ b/drivers/bluetooth/btmtksdio.c
+>@@ -887,6 +887,7 @@ static int btmtksdio_setup(struct hci_dev *hdev)
+>	if (enable_autosuspend)
+>		pm_runtime_allow(bdev->dev);
+>
+>+	hci_set_msft_opcode(hdev, 0xFD30);
 
-Results after modprobe btusb:
-> lsmod | grep bt
-btusb                  65536  0
-btrtl                  28672  1 btusb
-btbcm                  20480  1 btusb
-btintel                45056  1 btusb
-bluetooth             729088  4 btrtl,btintel,btbcm,btusb
-usbcore               372736  6 xhci_hcd,usbhid,typec,uvcvideo,btusb,xhci_p=
-ci
+Hi Łukasz,
 
-> journalctl -b | egrep -i hci
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:0d.0: xHCI Host
-Controller
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:0d.0: new USB bus
-registered, assigned bus number 1
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:0d.0: hcc params
-0x20007fc1 hci version 0x120 quirks 0x0000000200009810
-Nov 29 15:37:25 asustribetrek kernel: usb usb1: Product: xHCI Host Controll=
-er
-Nov 29 15:37:25 asustribetrek kernel: usb usb1: Manufacturer: Linux
-5.15.3-1-default xhci-hcd
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:0d.0: xHCI Host
-Controller
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:0d.0: new USB bus
-registered, assigned bus number 2
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:0d.0: Host supports =
-USB
-3.1 Enhanced SuperSpeed
-Nov 29 15:37:25 asustribetrek kernel: usb usb2: Product: xHCI Host Controll=
-er
-Nov 29 15:37:25 asustribetrek kernel: usb usb2: Manufacturer: Linux
-5.15.3-1-default xhci-hcd
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:14.0: xHCI Host
-Controller
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:14.0: new USB bus
-registered, assigned bus number 3
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:14.0: hcc params
-0x20007fc1 hci version 0x120 quirks 0x0000000000009810
-Nov 29 15:37:25 asustribetrek kernel: usb usb3: Product: xHCI Host Controll=
-er
-Nov 29 15:37:25 asustribetrek kernel: usb usb3: Manufacturer: Linux
-5.15.3-1-default xhci-hcd
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:14.0: xHCI Host
-Controller
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:14.0: new USB bus
-registered, assigned bus number 4
-Nov 29 15:37:25 asustribetrek kernel: xhci_hcd 0000:00:14.0: Host supports =
-USB
-3.1 Enhanced SuperSpeed
-Nov 29 15:37:25 asustribetrek kernel: usb usb4: Product: xHCI Host Controll=
-er
-Nov 29 15:37:25 asustribetrek kernel: usb usb4: Manufacturer: Linux
-5.15.3-1-default xhci-hcd
-Nov 29 15:37:26 asustribetrek kernel: usb 3-1: new full-speed USB device nu=
-mber
-2 using xhci_hcd
-Nov 29 15:37:26 asustribetrek kernel: usb 3-5: new high-speed USB device nu=
-mber
-3 using xhci_hcd
-Nov 29 15:37:34 asustribetrek sddm-helper[1600]: Adding cookie to
-"/run/user/1000/xauth_HCineT"
-Nov 29 15:56:37 asustribetrek kernel: Bluetooth: HCI device and connection
-manager initialized
-Nov 29 15:56:37 asustribetrek kernel: Bluetooth: HCI socket layer initializ=
-ed
+msft feature is supposed only supported on mt7921. Could you help rework the patch to enalbe msft opocde only for mt7921?
 
---=20
-You may reply to this email to add a comment.
+	Sean
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+>	bt_dev_info(hdev, "Device setup in %llu usecs", duration);
+>
+>	return 0;
+>
