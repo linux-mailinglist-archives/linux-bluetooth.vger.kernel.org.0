@@ -2,75 +2,108 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6C0E461D5A
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Nov 2021 19:09:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 207CF462661
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Nov 2021 23:48:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349752AbhK2SMz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 29 Nov 2021 13:12:55 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:43734 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245084AbhK2SKu (ORCPT
+        id S236286AbhK2WvY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 29 Nov 2021 17:51:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36242 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235169AbhK2Wtv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 29 Nov 2021 13:10:50 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 974D0CE13AB
-        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Nov 2021 18:07:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C9CF6C53FAD
-        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Nov 2021 18:07:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638209249;
-        bh=R77FXYYkynNb5EKyAYLiuojtoay0OOlB7jMxzy9W8Tk=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=fL3BoIy2JOn4HcPsL/Hf2wp2PWGxIuH6pDpjjzddW5S0zsijPYRIc+3MW3WLKVGr4
-         E1dr76htgZOMnx6SbjmcAdYg6KI/+J+GTbIki89xrQJwT8bdHZfGoKgmef6ZCyn5SU
-         LImmqAXkTytymxefS342yKhllGjI2WYiGt3EPoEHJOnRmW6t7s1QGl6M3W5a5ph4FB
-         UABrI7KtLpxZ7QoCZ6/Y/nNiD0Xq1lxYWfJVMLbCaE6vFEDWXb9Uh1OhZN6dLMAPHg
-         Q5NHoCvSwMvv0Nsya+8Nr49r8MOICvulh/TukCYnOfwQgqSEUqgZrux1YFzmNRBMvh
-         C7puZaZ5F5gJA==
-Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id 996CB60E91; Mon, 29 Nov 2021 18:07:29 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 215167] Bluetooth: hci0: command 0xfc05 tx timeout
-Date:   Mon, 29 Nov 2021 18:07:29 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: harmie@opensuse.fi
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: attachments.created
-Message-ID: <bug-215167-62941-76fswzHBWb@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-215167-62941@https.bugzilla.kernel.org/>
-References: <bug-215167-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Mon, 29 Nov 2021 17:49:51 -0500
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4439BC0C2375
+        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Nov 2021 09:49:49 -0800 (PST)
+Received: by mail-ua1-x936.google.com with SMTP id n6so35866402uak.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Nov 2021 09:49:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yiVmZCcDTNnFIMU1Bi+h3fHzZePmaOFaXE/NfzpQOWg=;
+        b=cSCLOJnPB98eAaYA5lwT+lxK4lqGmlS7q9XRTqAAXqgL1Bv5D5Jo+uti0CGDg5b2/h
+         t5nFwQto5R6s4HjBgb/rn+t8ZNBZuNubz+k564GVi9uA4ch9IM87AT+r1pE9cQW+QMrM
+         3qNCwLYKjcbztmV82A/8qRh9OGh2kMEAghLG9rMo7+L5M/bMk4FK07zlRXeVQFdBBv67
+         6HwCcTFF2AJ1untQVsRWXK71D2FiQ0t1bFuubrOfHYHOEXIkce918RAapAg6tZZ8Tv76
+         2TvJ6509C6BkFkW9Io87j9VA3e1QFQbtSOomWAYyPT0hpWTXEMtEhRN/LicRjs+0sRFT
+         JkTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yiVmZCcDTNnFIMU1Bi+h3fHzZePmaOFaXE/NfzpQOWg=;
+        b=5KxbzuDPKDMwKbOQ8FQ5mY3UNOMGuqZfPBfYf/2IHQk+sWJZRjG6saoSjF7B/vwTQL
+         BMxChPLDIRU2uPyjEDJiSQptrc0Yz0g8BqqElLhRKjn0UEMz7Yi/69AyDLinHtKiYSxw
+         E3gVNFPYD3Nws1giB5MenC9c43jF1gx3n1P2yVsNJEtip1/wG6ZQEozJ5v5KqZkmR9rz
+         +Uo1Rr/bILx3RD3/8qLrE6eg28pS0HxOqxJmWEeWKX/3gFsjer4WvQLGv4su0GLtlQTY
+         mmX0bkVGkrZ8wqErpGGPW1vERAs4VxB3wp/MS3fWH/5X5zUb2meigNKYBBpKrLoRCCeD
+         svDQ==
+X-Gm-Message-State: AOAM531xmOO7maiUgVu1/7MRY8xqNUl7imd86GGxKz9xMxjRWPc2xFmK
+        gKkUoRfO4w818xZDqMyquugtX+qLJhR9cxy1PlIkr9Or
+X-Google-Smtp-Source: ABdhPJyWd65e877nflF91Wp/yKIa1yWnkNWtkaqmPmFLcC4Q99IPK1SAsrCjO8uhZNQbVMMzVOygUW/Jeq4PBd8rn50=
+X-Received: by 2002:a67:b103:: with SMTP id w3mr34167524vsl.84.1638208188173;
+ Mon, 29 Nov 2021 09:49:48 -0800 (PST)
 MIME-Version: 1.0
+References: <20211125150558.Bluez.v4.1.I78857808e0b20c6e4dd934b174d3f1106fe3402d@changeid>
+ <619f3d27.1c69fb81.eee49.61de@mx.google.com>
+In-Reply-To: <619f3d27.1c69fb81.eee49.61de@mx.google.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Mon, 29 Nov 2021 09:49:37 -0800
+Message-ID: <CABBYNZJfG_xy8p3djbq=QRx9u_arxf7yovyM7PQRjXwAQG_+Ag@mail.gmail.com>
+Subject: Re: [Bluez,v4,1/5] mgmt: Add NAME_REQUEST_FAILED flag for
+ device_found event
+To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Cc:     Archie Pusaka <apusaka@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D215167
+Hi Archie,
 
---- Comment #1 from Harri Miettinen (harmie@opensuse.fi) ---
-Created attachment 299771
-  --> https://bugzilla.kernel.org/attachment.cgi?id=3D299771&action=3Dedit
-dmesg with 5.15.5 kernel
+On Fri, Nov 26, 2021 at 4:10 AM <bluez.test.bot@gmail.com> wrote:
+>
+> This is automated email and please do not reply to this email!
+>
+> Dear submitter,
+>
+> Thank you for submitting the patches to the linux bluetooth mailing list.
+> This is a CI test results with your patch series:
+> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=585657
+>
+> ---Test result---
+>
+> Test Summary:
+> CheckPatch                    PASS      6.86 seconds
+> GitLint                       FAIL      4.42 seconds
+> Prep - Setup ELL              PASS      48.93 seconds
+> Build - Prep                  PASS      0.49 seconds
+> Build - Configure             PASS      9.03 seconds
+> Build - Make                  PASS      215.85 seconds
+> Make Check                    PASS      10.07 seconds
+> Make Distcheck                PASS      264.17 seconds
+> Build w/ext ELL - Configure   PASS      9.51 seconds
+> Build w/ext ELL - Make        PASS      203.22 seconds
+>
+> Details
+> ##############################
+> Test: GitLint - FAIL
+> Desc: Run gitlint with rule in .gitlint
+> Output:
+> [Bluez,v4,1/5] mgmt: Add NAME_REQUEST_FAILED flag for device_found event
+> 14: B1 Line exceeds max length (121>80): "https://patchwork.kernel.org/project/bluetooth/patch/20211028191805.1.I35b7f3a496f834de6b43a32f94b6160cb1467c94@changeid/"
+>
+>
+>
+>
+> ---
+> Regards,
+> Linux Bluetooth
 
---=20
-You may reply to this email to add a comment.
+Applied, thanks.
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+
+
+--
+Luiz Augusto von Dentz
