@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D3914655E6
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Dec 2021 19:55:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A9274655E2
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Dec 2021 19:55:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351455AbhLAS6o (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 1 Dec 2021 13:58:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51486 "EHLO
+        id S1352437AbhLAS6m (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 1 Dec 2021 13:58:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244895AbhLAS6d (ORCPT
+        with ESMTP id S1351455AbhLAS6e (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 1 Dec 2021 13:58:33 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8507DC061757
-        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Dec 2021 10:55:11 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id b11so18406393pld.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Dec 2021 10:55:11 -0800 (PST)
+        Wed, 1 Dec 2021 13:58:34 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75634C061574
+        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Dec 2021 10:55:12 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id u11so18436889plf.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Dec 2021 10:55:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=j5ekZ4KztehWagyD6KmPICwo6+51UABy5q3ntCm5U44=;
-        b=WXtvRgS+r8eXu9DPhGsVhIyG0lO8Pgj8Gwt1GtqciLTbzLpnx3uWHXI0zKfyNZo7/z
-         UmUdKOPdqg0EwjK0Sg/i9TG2dj3Ib5z34fKfHeYHOj1NZ/b2hYhhMGdxm2xfBkpKWIwN
-         57oeb25nqCtLa3woPHikBIl9EpfaizYVrwoxuULQAkClNPW1s7Av8frpOB1CL+uroyqz
-         RuwDTl7DUZMSSsg1xXGRX/GXuwVQdSI4QoLb1QhkquYjDnIgiwzZi39tK3zs4XF4L+LL
-         vG+nG3q0bZcT/OMUwsw0C4hyLvnE8rV/JXZKQXamkfzF0/RzH3qmUV1wamOtKK0gkazy
-         vAVA==
+        bh=5vQn+Qe0kMnjkKX/1BwjLPY1a1irRV2Zdg3iTMrOkRw=;
+        b=Uw0do0AEK3vwIK8hy/S7z6/I7RZaCfMut7GlLpZQlCuPRVy90PAxDf4XSYxvW84uXg
+         BPwpJO6ccUyuDpE7/sed+EOVO/3PN8mVeSdUDAzJpN7siW/FmhShJ4ULPSsK+ETIOjYM
+         KPmcHQpLJCWV0mbABWxV+E42xQcfaI81oKHW0NzKWyGP+B23toHNM0HKEfobe4dzKliv
+         8Dp3n+Mcfd/wlONshldpiLPCddEp+XeUUlYB7pqZldg0iSESoY2WgDEuASb3so0OXS4C
+         KNrSE9qMUSGdUSIKaUP7PjZdQX4mbH8ORG6aQJHaCO+Vd8Z1DLBD1v6hd8nz0kkwTLng
+         yi7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=j5ekZ4KztehWagyD6KmPICwo6+51UABy5q3ntCm5U44=;
-        b=CVUd8P+sTAaxwtbOT0coHdM0DAHGjw5lKISHI29Khd7hbJDutirztphotvrFU8hoBR
-         +T8OjrqpFSk/Olq6UA8vZP5WefzLOjvtzqdJqdNJTYod5gD3BrRu651I5YsSmi4Y9WFD
-         4cJNPLoZO4J7WJfoCdeVCIAHfA7UGULl+N3RJIc88lI5Si+lPYgOX6OmEE0g5FqdzoUd
-         Tu8ahHeIsvxBsf6LNCknWe/iZxmPFmNnwIDcj98zIJnEOA9gioeqqaS2m4LjYYgHiEoW
-         w81LAdHwXA7xZxrdoHuZcSxkRzArM582X5PP5gQmkytfe2s3syzen10yoIUVxhZokg90
-         G2bQ==
-X-Gm-Message-State: AOAM532Jj9V5GkQNNkZtk1HYyonaY9VvS/MZPAfgfRoa0na8x7dLe8IJ
-        d6GfyGvxazxvziub8nnKcajyvVZXlMc=
-X-Google-Smtp-Source: ABdhPJzAEdBcWJC4hBbYeLVrgTiSQMELRGEMvMPs5jLAXJ+b1dkzbXdyMVepGV9bINGNEdU0GP/xNQ==
-X-Received: by 2002:a17:90a:4414:: with SMTP id s20mr66184pjg.132.1638384910786;
-        Wed, 01 Dec 2021 10:55:10 -0800 (PST)
+        bh=5vQn+Qe0kMnjkKX/1BwjLPY1a1irRV2Zdg3iTMrOkRw=;
+        b=whn3cTvt1F1GyUjcHaN2JKFtCOS6l4+pWmegWPTbpr00go2g8nDHulBgbWWorzg03+
+         1LlDJ2gLzPBPYlO1w/0DCHxGfd7muRX3X5Xu1if6ZKJHbgEeoQxnnq8ENGjPe3ozDZF5
+         hfV0FITqybm8vDQ5EqcXT3WhCVKJzl7Kr0aqE7nxwnOi3XItZRRiGpqHemQA+Bx+W0kW
+         VkZqecpolZQSM/AClWU8oxZT5YHgycEZJ+3RG8bcXr7Q7FTcskXoUJ7qEVOzFzUWpzVE
+         mZy0dD/PEF9MwiutwGAhAQapgDVTvfUn1dsSoPhfHGd/09PtLuy8lF4M0zL+85x+9z+V
+         6N/Q==
+X-Gm-Message-State: AOAM532kv2VL4qCl/12S5pV2s0q4Buqf1UqpxMVIin5iaOjEBGhIBCNe
+        PI77xpmbznAJiyttae9MQDfm7Tgq8YY=
+X-Google-Smtp-Source: ABdhPJyxOMguDL+6r4jwTDwxTdzTNNvgDsT0pbi+ZLgFWXsQu08EerkaRu1q1Osc/EY57wylZ+h0Tw==
+X-Received: by 2002:a17:90b:1e0c:: with SMTP id pg12mr11304pjb.135.1638384911820;
+        Wed, 01 Dec 2021 10:55:11 -0800 (PST)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
         by smtp.gmail.com with ESMTPSA id e19sm359391pgt.49.2021.12.01.10.55.10
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Dec 2021 10:55:10 -0800 (PST)
+        Wed, 01 Dec 2021 10:55:11 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 04/15] Bluetooth: HCI: Use skb_pull_data to parse Number of Complete Packets event
-Date:   Wed,  1 Dec 2021 10:54:55 -0800
-Message-Id: <20211201185506.1421186-5-luiz.dentz@gmail.com>
+Subject: [PATCH v2 05/15] Bluetooth: HCI: Use skb_pull_data to parse Inquiry Result event
+Date:   Wed,  1 Dec 2021 10:54:56 -0800
+Message-Id: <20211201185506.1421186-6-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211201185506.1421186-1-luiz.dentz@gmail.com>
 References: <20211201185506.1421186-1-luiz.dentz@gmail.com>
@@ -65,67 +65,71 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This uses skb_pull_data to check the Number of Complete Packets events
-received have the minimum required length.
+This uses skb_pull_data to check the Inquiry Result events received
+have the minimum required length.
 
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- include/net/bluetooth/hci.h |  2 +-
- net/bluetooth/hci_event.c   | 20 +++++++++++---------
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ include/net/bluetooth/hci.h |  5 +++++
+ net/bluetooth/hci_event.c   | 19 ++++++++++++++-----
+ 2 files changed, 19 insertions(+), 5 deletions(-)
 
 diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index ba89b078ceb5..3f57fd677b67 100644
+index 3f57fd677b67..55466bfb972a 100644
 --- a/include/net/bluetooth/hci.h
 +++ b/include/net/bluetooth/hci.h
-@@ -2139,7 +2139,7 @@ struct hci_comp_pkts_info {
+@@ -2028,6 +2028,11 @@ struct inquiry_info {
+ 	__le16   clock_offset;
  } __packed;
  
- struct hci_ev_num_comp_pkts {
--	__u8     num_hndl;
-+	__u8     num;
- 	struct hci_comp_pkts_info handles[];
- } __packed;
- 
++struct hci_ev_inquiry_result {
++	__u8    num;
++	struct inquiry_info info[];
++};
++
+ #define HCI_EV_CONN_COMPLETE		0x03
+ struct hci_ev_conn_complete {
+ 	__u8     status;
 diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 09d7d997c4b1..b27a4ad647ca 100644
+index b27a4ad647ca..0bf062f6f262 100644
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -4465,23 +4465,25 @@ static void hci_role_change_evt(struct hci_dev *hdev, struct sk_buff *skb)
+@@ -3180,13 +3180,21 @@ static void hci_inquiry_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
  
- static void hci_num_comp_pkts_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ static void hci_inquiry_result_evt(struct hci_dev *hdev, struct sk_buff *skb)
  {
--	struct hci_ev_num_comp_pkts *ev = (void *) skb->data;
-+	struct hci_ev_num_comp_pkts *ev;
- 	int i;
++	struct hci_ev_inquiry_result *ev;
+ 	struct inquiry_data data;
+-	struct inquiry_info *info = (void *) (skb->data + 1);
+-	int num_rsp = *((__u8 *) skb->data);
++	int i;
  
--	if (hdev->flow_ctl_mode != HCI_FLOW_CTL_MODE_PACKET_BASED) {
--		bt_dev_err(hdev, "wrong event for mode %d", hdev->flow_ctl_mode);
-+	ev = hci_ev_skb_pull(hdev, skb, HCI_EV_NUM_COMP_PKTS, sizeof(*ev));
+-	BT_DBG("%s num_rsp %d", hdev->name, num_rsp);
++	ev = hci_ev_skb_pull(hdev, skb, HCI_EV_INQUIRY_RESULT, sizeof(*ev));
 +	if (!ev)
- 		return;
--	}
++		return;
  
--	if (skb->len < sizeof(*ev) ||
--	    skb->len < struct_size(ev, handles, ev->num_hndl)) {
--		BT_DBG("%s bad parameters", hdev->name);
-+	if (!hci_ev_skb_pull(hdev, skb, HCI_EV_NUM_COMP_PKTS,
-+			     flex_array_size(ev, handles, ev->num)))
+-	if (!num_rsp || skb->len < num_rsp * sizeof(*info) + 1)
++	if (!hci_ev_skb_pull(hdev, skb, HCI_EV_INQUIRY_RESULT,
++			     flex_array_size(ev, info, ev->num)))
 +		return;
 +
-+	if (hdev->flow_ctl_mode != HCI_FLOW_CTL_MODE_PACKET_BASED) {
-+		bt_dev_err(hdev, "wrong event for mode %d", hdev->flow_ctl_mode);
- 		return;
- 	}
- 
--	BT_DBG("%s num_hndl %d", hdev->name, ev->num_hndl);
 +	BT_DBG("%s num %d", hdev->name, ev->num);
++
++	if (!ev->num)
+ 		return;
  
--	for (i = 0; i < ev->num_hndl; i++) {
+ 	if (hci_dev_test_flag(hdev, HCI_PERIODIC_INQ))
+@@ -3194,7 +3202,8 @@ static void hci_inquiry_result_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 
+ 	hci_dev_lock(hdev);
+ 
+-	for (; num_rsp; num_rsp--, info++) {
 +	for (i = 0; i < ev->num; i++) {
- 		struct hci_comp_pkts_info *info = &ev->handles[i];
- 		struct hci_conn *conn;
- 		__u16  handle, count;
++		struct inquiry_info *info = &ev->info[i];
+ 		u32 flags;
+ 
+ 		bacpy(&data.bdaddr, &info->bdaddr);
 -- 
 2.33.1
 
