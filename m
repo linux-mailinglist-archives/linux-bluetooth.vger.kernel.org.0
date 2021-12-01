@@ -2,109 +2,78 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A53E3464C56
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Dec 2021 12:06:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55123464CE8
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Dec 2021 12:34:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348855AbhLALKC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 1 Dec 2021 06:10:02 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:55050 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbhLALKC (ORCPT
+        id S1348926AbhLALhq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 1 Dec 2021 06:37:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33574 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348994AbhLALhi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 1 Dec 2021 06:10:02 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D563DB81E06
-        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Dec 2021 11:06:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7AB4EC53FCE
-        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Dec 2021 11:06:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638356799;
-        bh=MlqPTFNXFqWAX+a958JbMIYAE64eUZnc9Z0RneHCe38=;
-        h=From:To:Subject:Date:From;
-        b=kCJvAI5ZQvLUgQio1q1LS3mOEPTuSXfSdtDT7BqTQXTNvrZMn62OoFPkl4zlMsUWD
-         N1FcsyOsoNRioSfF/9oKrmRvxen7/OEOk5HlQC88ZnX3NB3JzTkaDXuzu7AUZ9sDfP
-         gMwNDwji0K4e4P/C328LKjcEXGMtmAUkVrLwv5w6ch1ltQJztX39z9DoNPnj/KQwMA
-         uhJllxojJOllzvsCZ0jXPGoiX79+79yM9HBTwNBHaWAbjzAfQGlf1Xbj3GMf8JJ8TP
-         1AbNd38i2MIZcyZpVBP+V3IgWzJBbDz9k7Bh5tt3U3i3o+LdU6skwjqZ4r+NiYUmmc
-         JCO0oU3nVJpKw==
-Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id 58EC760F00; Wed,  1 Dec 2021 11:06:39 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 215187] New: btintel: AX201: missing firmware ibt-19-16-0.sfi
-Date:   Wed, 01 Dec 2021 11:06:39 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: new
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: nozzy123nozzy@gmail.com
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: bug_id short_desc product version
- cf_kernel_version rep_platform op_sys cf_tree bug_status bug_severity
- priority component assigned_to reporter cf_regression
-Message-ID: <bug-215187-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Wed, 1 Dec 2021 06:37:38 -0500
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C731C0617A2
+        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Dec 2021 03:34:11 -0800 (PST)
+Received: by mail-qv1-xf2a.google.com with SMTP id kl8so21286921qvb.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Dec 2021 03:34:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=l4J9Z+m4hmgZbWtQHlC70w1zjUmiI7wjClCwm6dHAnY=;
+        b=nKE9e+4jEQRb21OhoYPSbxPLfJ2IuSmNXU0U6wmcP4ykCacrWpdbtE0jjuz/hSLLGi
+         3CHjeG+lFmWzoULwCsmlhVFgDEk5dLFaYb51pw7bXGjZ9H8t0j91dP9aL17MRQYkMPZK
+         Snvty/Yp8/ZrWZr2EuFXHqBxUdbU8X39ik45viERJ1Dn7qW8BPCFp2vlafV2okU0kn5j
+         QPTIDY8QJSy8zAVbK10d6+AY0lky+mrQRAAg0uS1DacQStzD/dQtt/uBz/RlGIdZCai/
+         BHep24kmiLdl1nvBvHYMFonu8NoJvJlErv7lbZlg2+2c277BpkzmDA4WwPZoxzlIf0Mh
+         Af5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=l4J9Z+m4hmgZbWtQHlC70w1zjUmiI7wjClCwm6dHAnY=;
+        b=3iiQ2+HJyXrU1A4jEnJ5YYk+hicrp5h5Xtylh5TJM03TZStMkZLnSO4mw5ajLtJVuN
+         emtzbcLT4ytzORLb7mE7NFYdBCd6S9Y50fVLJ2jGGwudFV9FoqDq12HiCRHFT2Led5O/
+         ZWxGr7PByrklK6SbgFAfwhaZXjJGF7wQpeUokIeNe7ZM7l0sOHxwvBAaTTKJuxq7oi0Q
+         n/4lLX/9jcnwMB6BUDhBDq9v3kVuKrIblpT/bNGl4Uq85PrYWu+jG9buothBVbII0ztX
+         C4gY5Ggdg8BGV15ZsqofjA5Nw89HQU9ljp9IUPMGLsx9GuFNQaVMqOirR4T4dZYl5zN9
+         ZKMg==
+X-Gm-Message-State: AOAM531R5lTJtlu3cBkbMvwX+E+QU7oDm6v5oTFUYx1z/0NAMmiWlLpp
+        KqgAUfolxlPtHPVK3lVctBL1cOCUaX/uswNkCvWcwIu+izQ=
+X-Google-Smtp-Source: ABdhPJwK+H50pzFgfv5CJPfAwBzUdMqIKHh+Ckkuju2lG2knVlJrzqINPiiwPjc/Uz6xuSJez7Fkn5YZPcfa5CPpvro=
+X-Received: by 2002:a67:ef4d:: with SMTP id k13mr6266305vsr.4.1638358439020;
+ Wed, 01 Dec 2021 03:33:59 -0800 (PST)
 MIME-Version: 1.0
+Sender: unitednationawardwinner@gmail.com
+Received: by 2002:ab0:6c55:0:0:0:0:0 with HTTP; Wed, 1 Dec 2021 03:33:58 -0800 (PST)
+From:   "Mrs. Orgil Baatar" <mrs.orgilbaatar21@gmail.com>
+Date:   Wed, 1 Dec 2021 03:33:58 -0800
+X-Google-Sender-Auth: uTQ_nfkzXaWGWaTWp1BSFqK3Ucs
+Message-ID: <CAJ4dHaSrD-X=xpfKNZV-hXSiMV6mNYrgy5vWCNkKm6iu5RQStg@mail.gmail.com>
+Subject: Your long awaited part payment of $2.5.000.00Usd
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D215187
+Attention: Beneficiary, Your long awaited part payment of
+$2.5.000.00Usd (TWO MILLION FIVE Hundred Thousand United State
+Dollars) is ready for immediate release to you, and it was
+electronically credited into an ATM Visa Card for easy delivery.
 
-            Bug ID: 215187
-           Summary: btintel: AX201: missing firmware ibt-19-16-0.sfi
-           Product: Drivers
-           Version: 2.5
-    Kernel Version: 5.16-rc3
-          Hardware: x86-64
-                OS: Linux
-              Tree: Mainline
-            Status: NEW
-          Severity: normal
-          Priority: P1
-         Component: Bluetooth
-          Assignee: linux-bluetooth@vger.kernel.org
-          Reporter: nozzy123nozzy@gmail.com
-        Regression: No
+Your new Payment Reference No.- 6363836,
+Pin Code No: 1787
+Your Certificate of Merit Payment No: 05872,
 
-I was testing Linux-5.16-rc3 on my laptop with "Intel Corp AX201 Bluetooth".
-After boot, I found the strange error message shown below.
----------------here----------
-kernel: Bluetooth hci0: firmware: failed to load intel/ibt-19-16-0.sfi (-2)
----------------here----------
- After I checked
-git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git, I found
-the "ibt-19-16-0.sfi" was missing. Strangely the Bluetooth service of this
-kernel appeared to work fine, at least against my bt headphone, without this
-firmware.
+Your Names: |
+Address: |
 
- When I booted Linux-5.15.5 on the same laptop, I found the "ibt-19-0-4.sfi"
-was loaded.=20
+Person to Contact:MR KELLY HALL the Director of the International
+Audit unit ATM Payment Center,
 
- This strange message is similar to the report
-https://lore.kernel.org/linux-bluetooth/81eddb07-f346-c12a-345b-d929fd2edb1=
-0@googlemail.com/
-but the linux/drivers/Bluetooth/btintel.c of 5.16-rc3 has already implement=
-ed
-the checker by "btintel_test_flag(hdev, INTEL_BOOTLOADER)".=20
+Email: uba-bf@e-ubabf.com
+TELEPHONE: +226 64865611 You can whatsApp the bank
 
-Does it show some bug? I would be grateful if someone could answer.
-
---=20
-You may reply to this email to add a comment.
-
-You are receiving this mail because:
-You are the assignee for the bug.=
+Regards.
+Mrs ORGIL BAATAR
