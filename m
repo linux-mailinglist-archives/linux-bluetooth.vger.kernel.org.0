@@ -2,41 +2,41 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 351D84679D8
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Dec 2021 15:59:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 731184679DA
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Dec 2021 15:59:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381630AbhLCPCg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 3 Dec 2021 10:02:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60358 "EHLO
+        id S1381636AbhLCPCi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 3 Dec 2021 10:02:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381627AbhLCPCf (ORCPT
+        with ESMTP id S1381628AbhLCPCf (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 3 Dec 2021 10:02:35 -0500
 Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37557C061359
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C717C0611F7
         for <linux-bluetooth@vger.kernel.org>; Fri,  3 Dec 2021 06:59:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
         References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Content-Type:Sender
         :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-        Resent-Cc:Resent-Message-ID; bh=vDsOiCXIJOBMs2DG8p+Cbmag+JNpQHQD0sNjbqaOyGU=;
-        t=1638543551; x=1639753151; b=JqW8zOAqHbhmNfJYrWW7QjVV2eFt+mcllf6AHpEM8hcGof2
-        ++yyYBzXk1sR46cJusWaVOWp+EHIFqGmmgckUd3f7XBnsy6ksVCeVIYlkb0iDESb7Kvq7v9IVI6E5
-        zcIp6RngFN/6Y8TpIPp8EqZuS4bTzp4DqDX2/rlDl4rjP8dTkjy4F67ne9nrTmPZwTEbcm8oxNnfH
-        IOYE9fMTb2EEdn/D+pVfgqR08yKkRf4RtfU5KyVxRKvUJLVjwM8iFTMQuvNXy4Qfv4WVZjz59mZLT
-        5rOvLrRBqsx/0vZ3BkAvfakIJ5osA7tdcqJFKinEtfFocFHiJFRBuSwoIomjulOg==;
+        Resent-Cc:Resent-Message-ID; bh=fS2yL2UnMGjTsNu363MYFfJS182LjOB/Q7ttvexi/FQ=;
+        t=1638543551; x=1639753151; b=IFGY1UnpMmBxM+mD9tL0eyZiUyGLmffSjX1gMlK8YGrHCnR
+        ckh6kDy9waBuYu6oQ543o13EJ/5XEPxBH6JCuSLdspwa8VvGyQqslI5KVeLteoP+eoeWNkmITLel9
+        K/c5dcV2crFtSRrT04cv5PHMUn4mwGmafqgszAr+zcieW4m0dOjX8CQ/HHtGz/pz5LK63YOJtD31n
+        ZkJhy9HPsk4ngyl5asa9oFhp91FqLNbfdMpqE/2X1XhgF7YyYHba2JpAWafJ9Y9Wxx2T9kqGO9TQO
+        zSknGgjDtNN5VjYw6ZiNV22cbfDb1U+2GXuSkoY2y7mpvfM7Gheh+cA6aIG+JCEQ==;
 Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
         (Exim 4.95)
         (envelope-from <benjamin@sipsolutions.net>)
-        id 1mtA1l-006QDV-Ew;
-        Fri, 03 Dec 2021 15:59:09 +0100
+        id 1mtA1l-006QDV-PM;
+        Fri, 03 Dec 2021 15:59:10 +0100
 From:   Benjamin Berg <benjamin@sipsolutions.net>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
         Benjamin Berg <bberg@redhat.com>
-Subject: [PATCH v2 3/4] Bluetooth: hci_core: Cancel sync command if sending a frame failed
-Date:   Fri,  3 Dec 2021 15:59:01 +0100
-Message-Id: <20211203145902.3223861-4-benjamin@sipsolutions.net>
+Subject: [PATCH v2 4/4] Bluetooth: btusb: Cancel sync commands for certain URB errors
+Date:   Fri,  3 Dec 2021 15:59:02 +0100
+Message-Id: <20211203145902.3223861-5-benjamin@sipsolutions.net>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211203145902.3223861-1-benjamin@sipsolutions.net>
 References: <20211203145902.3223861-1-benjamin@sipsolutions.net>
@@ -48,69 +48,63 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Benjamin Berg <bberg@redhat.com>
 
-If sending a frame failed any sync command associated with it will never
-be completed. As such, cancel any such command immediately to avoid
-timing out.
+Cancel sync commands when transmission of URBs fail. This is done for
+both failures to send a command URB and also when the interrupt URB used
+to retrieve a response fails.
+
+This approach is sufficient to quickly deal with certain errors such as
+a device being disconnected while synchronous commands are done during
+initialization.
 
 Signed-off-by: Benjamin Berg <bberg@redhat.com>
 
 ---
 
 v2:
- * Pass error up and cancel sync command from hci_cmd_work
+ * Do not call handler in btusb_isoc_tx_complete.
+ * Only call handler for command SKBs in btusb_tx_complete
 ---
- net/bluetooth/hci_core.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btusb.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index fdc0dcf8ee36..5cadecd31f66 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2906,7 +2906,7 @@ int hci_unregister_cb(struct hci_cb *cb)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index ab169fc673ea..d9067a8fad60 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -933,6 +933,8 @@ static void btusb_intr_complete(struct urb *urb)
+ 		if (err != -EPERM && err != -ENODEV)
+ 			bt_dev_err(hdev, "urb %p failed to resubmit (%d)",
+ 				   urb, -err);
++		if (err != -EPERM)
++			hci_cmd_sync_cancel(hdev, -err);
+ 		usb_unanchor_urb(urb);
+ 	}
  }
- EXPORT_SYMBOL(hci_unregister_cb);
- 
--static void hci_send_frame(struct hci_dev *hdev, struct sk_buff *skb)
-+static int hci_send_frame(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	int err;
- 
-@@ -2929,14 +2929,17 @@ static void hci_send_frame(struct hci_dev *hdev, struct sk_buff *skb)
- 
- 	if (!test_bit(HCI_RUNNING, &hdev->flags)) {
- 		kfree_skb(skb);
--		return;
-+		return -EINVAL;
+@@ -976,6 +978,8 @@ static int btusb_submit_intr_urb(struct hci_dev *hdev, gfp_t mem_flags)
+ 		if (err != -EPERM && err != -ENODEV)
+ 			bt_dev_err(hdev, "urb %p submission failed (%d)",
+ 				   urb, -err);
++		if (err != -EPERM)
++			hci_cmd_sync_cancel(hdev, -err);
+ 		usb_unanchor_urb(urb);
  	}
  
- 	err = hdev->send(hdev, skb);
- 	if (err < 0) {
- 		bt_dev_err(hdev, "sending frame failed (%d)", err);
- 		kfree_skb(skb);
-+		return err;
- 	}
-+
-+	return 0;
- }
+@@ -1331,10 +1335,13 @@ static void btusb_tx_complete(struct urb *urb)
+ 	if (!test_bit(HCI_RUNNING, &hdev->flags))
+ 		goto done;
  
- /* Send HCI command */
-@@ -3843,10 +3846,15 @@ static void hci_cmd_work(struct work_struct *work)
+-	if (!urb->status)
++	if (!urb->status) {
+ 		hdev->stat.byte_tx += urb->transfer_buffer_length;
+-	else
++	} else {
++		if (hci_skb_pkt_type(skb) == HCI_COMMAND_PKT)
++			hci_cmd_sync_cancel(hdev, -urb->status);
+ 		hdev->stat.err_tx++;
++	}
  
- 		hdev->sent_cmd = skb_clone(skb, GFP_KERNEL);
- 		if (hdev->sent_cmd) {
-+			int res;
- 			if (hci_req_status_pend(hdev))
- 				hci_dev_set_flag(hdev, HCI_CMD_PENDING);
- 			atomic_dec(&hdev->cmd_cnt);
--			hci_send_frame(hdev, skb);
-+
-+			res = hci_send_frame(hdev, skb);
-+			if (res < 0)
-+				hci_cmd_sync_cancel(hdev, -res);
-+
- 			if (test_bit(HCI_RESET, &hdev->flags))
- 				cancel_delayed_work(&hdev->cmd_timer);
- 			else
+ done:
+ 	spin_lock_irqsave(&data->txlock, flags);
 -- 
 2.33.1
 
