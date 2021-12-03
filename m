@@ -2,103 +2,142 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DC98467AF0
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Dec 2021 17:09:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3250F467AF3
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Dec 2021 17:09:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382046AbhLCQMl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 3 Dec 2021 11:12:41 -0500
-Received: from smtp202-pc.aruba.it ([62.149.157.202]:36567 "EHLO
+        id S1382058AbhLCQMm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 3 Dec 2021 11:12:42 -0500
+Received: from smtp202-pc.aruba.it ([62.149.157.202]:36198 "EHLO
         smtp200-pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1382066AbhLCQMj (ORCPT
+        with ESMTP id S1382077AbhLCQMj (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 3 Dec 2021 11:12:39 -0500
 Received: from danbia2MBL ([188.217.48.39])
         by Aruba Outgoing Smtp  with ESMTPSA
-        id tB0imxNzZrBxFtB0lmsYJL; Fri, 03 Dec 2021 17:02:11 +0100
+        id tB0imxNzZrBxFtB0omsYKy; Fri, 03 Dec 2021 17:02:14 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aruba.it; s=a1;
-        t=1638547331; bh=inxXi/2Ljmo41vlZVsG5c/isk9xC8rGDJWxaFKcyY6g=;
+        t=1638547334; bh=0N9A8HEtNgE0tJ8W97u9axtv58jzcGRcijZ/Nfpgj5s=;
         h=From:To:Subject:Date:MIME-Version:Content-Type;
-        b=E7GPCRD8SDUbSWwu7vrShuhDu0O5P0zMQUXr8jAnEHVsPmgNVDrZuHZQ2VEwryE6f
-         8ZT/cNTGraMuWkGTYhSu0WKp7hajpy+VSqkqtVgiusgFW2fy29dIin8pB1YbIIhFEx
-         rh6bWgWh4VAYVvW87EMuCqRCavBh+0aGtI4letwGxtlokr4eyKBS4yJ9iqVkNwFWGn
-         ZUbUDXbwPZeShFaDR+S+Sx/jZNQV3RMDkKNyFRic/6it3E4GoyHP3Ebu/4IZxryKyG
-         Ji7JGtDJm5XdlOwj1jmPtdL48MvEVrWUBmPbjl//lEKvlEBI5vGeQD0jIlF3UyciMB
-         073K93bv72A7w==
+        b=mk4D91qYla52PNwQcOZtkuEMHj4aKDNpA7/PVtPyP7SPn0p6wh8TR5dJwioTiG9Cf
+         C1BvN6KOQFoxxYiWfx/9Ow3iWCuKOkEn1rPZpfTFw1Mf5BwyjaWAXR8RXC/OkPS0x3
+         aiW8fafnWxVRZ5RA1zwXzjC5fLSBD4x0obeXMXzzNBt07+d1gvFf5hZe1HxfXiaRGD
+         SdqLCK3dTwcdcW+cB+KOv8qkVQd52YtIP5G3yYn12WLVhjjo9epp549NbuNQunhzvo
+         RVA/6Ze0wxKEjTxRHSYN5eHGruvY+nB0JqZPdKx0/0T1hWMF7GsFMpEkmEj/eSy4R1
+         rQKtV7apMUx3w==
 From:   <daniele.biagetti@cblelectronics.com>
 To:     <linux-bluetooth@vger.kernel.org>
-Subject: [PATCH 1/6] tools/mesh-gatt: Add onoff set unack message to onoff client model
-Date:   Fri, 3 Dec 2021 17:02:10 +0100
-Message-ID: <000501d7e85f$2105e2d0$6311a870$@cblelectronics.com>
+Subject: [PATCH 2/6] tools/mesh-gatt: Fix status messages processing
+Date:   Fri, 3 Dec 2021 17:02:12 +0100
+Message-ID: <000601d7e85f$228e7ea0$67ab7be0$@cblelectronics.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
         charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdfoXvYc6r6XD9G+SoyL3P0w05mzBQ==
+Thread-Index: AdfoXhoSvPDwxinGTn6eFFOONeASOg==
 Content-Language: it
-X-CMAE-Envelope: MS4xfF3cbRY1IExUTsa8XkcX1hn3XGTVIs94MpoLCroyiDhFw2UDoZAuhsZ/Wr93fkd/0PeIrcts8IjLGtDpYRFJN77hngk2usYjLLYNgc7p8QKumH3IIncF
- moCB8Utrfqz26pZTsM1bkDen0scUWELtuAk+j2FtXFSv/8EdUGiwfBQJ8xh8ORvBybw1E20/2wZrGM0stN0gXnkBVNrmHbWZpmx+RZC54NQkJnwU8BULiDPV
+X-CMAE-Envelope: MS4xfLi5yG4h1Fim+3qL6+VNFCkA3JR8q2JA/Jsb3z7QXxSPx50jOIAa1exTloc0QGftqINohpjvCX7UEzXArHWA4EY7XLQiAsEvlAC7sM+HmAigKEkdrv9a
+ uI8YjSNtE+lCzeGNilIjIUxxGUfu2uR/xwmBktda4S6XJfaCy+kCO9QNBMMc/GWuUtFKL39FZExIt4Q5NJ64djnYJgwYjzhgZmWMSNi8/9Y7xpoDEwaMYG7u
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+The status messages was processed and displayed even if they do
+not belong to the present model. This fix ensure that the status
+messages are processed only if they have the correct opcode.
 ---
- tools/mesh-gatt/onoff-model.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ tools/mesh-gatt/node.c        | 11 +++++++++++
+ tools/mesh-gatt/onoff-model.c | 23 ++++++++++++-----------
+ 2 files changed, 23 insertions(+), 11 deletions(-)
 
-diff --git a/tools/mesh-gatt/onoff-model.c b/tools/mesh-gatt/onoff-model.c
-index 9dfedd85a..13ff4bbe3 100644
---- a/tools/mesh-gatt/onoff-model.c
-+++ b/tools/mesh-gatt/onoff-model.c
-@@ -226,6 +226,8 @@ static void cmd_set(int argc, char *argv[])
- 	uint16_t n;
- 	uint8_t msg[32];
- 	struct mesh_node *node;
-+	int np;
+diff --git a/tools/mesh-gatt/node.c b/tools/mesh-gatt/node.c
+index 356e1cd1a..4d0cc21e9 100644
+--- a/tools/mesh-gatt/node.c
++++ b/tools/mesh-gatt/node.c
+@@ -470,6 +470,8 @@ static bool deliver_model_data(struct mesh_element*
+element, uint16_t src,
+ 				uint16_t app_idx, uint8_t *data, uint16_t
+len)
+ {
+ 	GList *l;
 +	uint32_t opcode;
++	int n;
  
- 	if (IS_UNASSIGNED(target)) {
- 		bt_shell_printf("Destination not set\n");
-@@ -237,13 +239,22 @@ static void cmd_set(int argc, char *argv[])
- 	if (!node)
- 		return;
- 
--	if ((read_input_parameters(argc, argv) != 1) &&
--					parms[0] != 0 && parms[0] != 1) {
--		bt_shell_printf("Bad arguments: Expecting \"0\" or
-\"1\"\n");
--		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	np = read_input_parameters(argc, argv);
-+	if ((np != 1) && (np != 2) &&
-+		parms[0] != 0 && parms[0] != 1 &&
-+		parms[1] != 0 && parms[1] != 1) {
-+	bt_shell_printf("Bad arguments: Expecting \"0\" or \"1\" "
-+		"and an optional \"0\" or \"1\" as unack\n");
-+	return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	if( (np==2) && parms[1] ){
-+		opcode = OP_GENERIC_ONOFF_SET_UNACK;
-+	}else{
-+		opcode = OP_GENERIC_ONOFF_SET;
+ 	for(l = element->models; l; l = l->next) {
+ 		struct mesh_model *model = l->data;
+@@ -482,6 +484,15 @@ static bool deliver_model_data(struct mesh_element*
+element, uint16_t src,
+ 			return true;
  	}
  
--	n = mesh_opcode_set(OP_GENERIC_ONOFF_SET, msg);
-+	n = mesh_opcode_set(opcode, msg);
- 	msg[n++] = parms[0];
- 	msg[n++] = trans_id++;
++	if (mesh_opcode_get(data, len, &opcode, &n)) {
++		len -= n;
++		data += n;
++	} else
++		return false;
++	bt_shell_printf("Unknown Model Message received (%d) opcode %x\n",
++						len, opcode);
++	print_byte_array("\t",data, len);
++
+ 	return false;
+ }
  
-@@ -263,7 +274,7 @@ static const struct bt_shell_menu onoff_menu = {
- 						"Set node to configure"},
- 	{"get",			NULL,
-cmd_get_status,
- 						"Get ON/OFF status"},
--	{"onoff",		"<0/1>",			cmd_set,
-+	{"onoff",		"<0/1> [unack]",		cmd_set,
- 						"Send \"SET ON/OFF\"
-command"},
- 	{} },
- };
+diff --git a/tools/mesh-gatt/onoff-model.c b/tools/mesh-gatt/onoff-model.c
+index 13ff4bbe3..1c9676e03 100644
+--- a/tools/mesh-gatt/onoff-model.c
++++ b/tools/mesh-gatt/onoff-model.c
+@@ -99,6 +99,7 @@ static bool client_msg_recvd(uint16_t src, uint8_t *data,
+ {
+ 	uint32_t opcode;
+ 	int n;
++	char s[128];
+ 
+ 	if (mesh_opcode_get(data, len, &opcode, &n)) {
+ 		len -= n;
+@@ -106,27 +107,27 @@ static bool client_msg_recvd(uint16_t src, uint8_t
+*data,
+ 	} else
+ 		return false;
+ 
+-	bt_shell_printf("On Off Model Message received (%d) opcode %x\n",
+-								len,
+opcode);
+-	print_byte_array("\t",data, len);
+-
+ 	switch (opcode) {
+ 	default:
+ 		return false;
+ 
+ 	case OP_GENERIC_ONOFF_STATUS:
++		bt_shell_printf("On Off Model Message received (%d) opcode
+%x\n",
++			len, opcode);
++		print_byte_array("\t",data, len);
+ 		if (len != 1 && len != 3)
+ 			break;
+ 
+-		bt_shell_printf("Node %4.4x: Off Status present = %s",
+-						src, data[0] ? "ON" :
+"OFF");
+-
++		snprintf(s, sizeof(s), "Node %4.4x: On Off Status present =
+%s",
++			src, data[0] ? "ON" : "OFF");
+ 		if (len == 3) {
+-			bt_shell_printf(", target = %s",
+-					data[1] ? "ON" : "OFF");
++			snprintf(s + strlen(s), sizeof(s), ", target = %s",
++				data[1] ? "ON" : "OFF");
++			bt_shell_printf("%s\n", s);
+ 			print_remaining_time(data[2]);
+-		} else
+-			bt_shell_printf("\n");
++		}else
++			bt_shell_printf("%s\n", s);
++
+ 		break;
+ 	}
+ 
 -- 
 2.25.1
 
