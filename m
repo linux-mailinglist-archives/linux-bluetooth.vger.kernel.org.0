@@ -2,109 +2,104 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 731184679DA
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Dec 2021 15:59:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DC98467AF0
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Dec 2021 17:09:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381636AbhLCPCi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 3 Dec 2021 10:02:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60360 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381628AbhLCPCf (ORCPT
+        id S1382046AbhLCQMl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 3 Dec 2021 11:12:41 -0500
+Received: from smtp202-pc.aruba.it ([62.149.157.202]:36567 "EHLO
+        smtp200-pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1382066AbhLCQMj (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 3 Dec 2021 10:02:35 -0500
-Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C717C0611F7
-        for <linux-bluetooth@vger.kernel.org>; Fri,  3 Dec 2021 06:59:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
-        References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Content-Type:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-        Resent-Cc:Resent-Message-ID; bh=fS2yL2UnMGjTsNu363MYFfJS182LjOB/Q7ttvexi/FQ=;
-        t=1638543551; x=1639753151; b=IFGY1UnpMmBxM+mD9tL0eyZiUyGLmffSjX1gMlK8YGrHCnR
-        ckh6kDy9waBuYu6oQ543o13EJ/5XEPxBH6JCuSLdspwa8VvGyQqslI5KVeLteoP+eoeWNkmITLel9
-        K/c5dcV2crFtSRrT04cv5PHMUn4mwGmafqgszAr+zcieW4m0dOjX8CQ/HHtGz/pz5LK63YOJtD31n
-        ZkJhy9HPsk4ngyl5asa9oFhp91FqLNbfdMpqE/2X1XhgF7YyYHba2JpAWafJ9Y9Wxx2T9kqGO9TQO
-        zSknGgjDtNN5VjYw6ZiNV22cbfDb1U+2GXuSkoY2y7mpvfM7Gheh+cA6aIG+JCEQ==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-        (Exim 4.95)
-        (envelope-from <benjamin@sipsolutions.net>)
-        id 1mtA1l-006QDV-PM;
-        Fri, 03 Dec 2021 15:59:10 +0100
-From:   Benjamin Berg <benjamin@sipsolutions.net>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Benjamin Berg <bberg@redhat.com>
-Subject: [PATCH v2 4/4] Bluetooth: btusb: Cancel sync commands for certain URB errors
-Date:   Fri,  3 Dec 2021 15:59:02 +0100
-Message-Id: <20211203145902.3223861-5-benjamin@sipsolutions.net>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211203145902.3223861-1-benjamin@sipsolutions.net>
-References: <20211203145902.3223861-1-benjamin@sipsolutions.net>
+        Fri, 3 Dec 2021 11:12:39 -0500
+Received: from danbia2MBL ([188.217.48.39])
+        by Aruba Outgoing Smtp  with ESMTPSA
+        id tB0imxNzZrBxFtB0lmsYJL; Fri, 03 Dec 2021 17:02:11 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aruba.it; s=a1;
+        t=1638547331; bh=inxXi/2Ljmo41vlZVsG5c/isk9xC8rGDJWxaFKcyY6g=;
+        h=From:To:Subject:Date:MIME-Version:Content-Type;
+        b=E7GPCRD8SDUbSWwu7vrShuhDu0O5P0zMQUXr8jAnEHVsPmgNVDrZuHZQ2VEwryE6f
+         8ZT/cNTGraMuWkGTYhSu0WKp7hajpy+VSqkqtVgiusgFW2fy29dIin8pB1YbIIhFEx
+         rh6bWgWh4VAYVvW87EMuCqRCavBh+0aGtI4letwGxtlokr4eyKBS4yJ9iqVkNwFWGn
+         ZUbUDXbwPZeShFaDR+S+Sx/jZNQV3RMDkKNyFRic/6it3E4GoyHP3Ebu/4IZxryKyG
+         Ji7JGtDJm5XdlOwj1jmPtdL48MvEVrWUBmPbjl//lEKvlEBI5vGeQD0jIlF3UyciMB
+         073K93bv72A7w==
+From:   <daniele.biagetti@cblelectronics.com>
+To:     <linux-bluetooth@vger.kernel.org>
+Subject: [PATCH 1/6] tools/mesh-gatt: Add onoff set unack message to onoff client model
+Date:   Fri, 3 Dec 2021 17:02:10 +0100
+Message-ID: <000501d7e85f$2105e2d0$6311a870$@cblelectronics.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdfoXvYc6r6XD9G+SoyL3P0w05mzBQ==
+Content-Language: it
+X-CMAE-Envelope: MS4xfF3cbRY1IExUTsa8XkcX1hn3XGTVIs94MpoLCroyiDhFw2UDoZAuhsZ/Wr93fkd/0PeIrcts8IjLGtDpYRFJN77hngk2usYjLLYNgc7p8QKumH3IIncF
+ moCB8Utrfqz26pZTsM1bkDen0scUWELtuAk+j2FtXFSv/8EdUGiwfBQJ8xh8ORvBybw1E20/2wZrGM0stN0gXnkBVNrmHbWZpmx+RZC54NQkJnwU8BULiDPV
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Benjamin Berg <bberg@redhat.com>
-
-Cancel sync commands when transmission of URBs fail. This is done for
-both failures to send a command URB and also when the interrupt URB used
-to retrieve a response fails.
-
-This approach is sufficient to quickly deal with certain errors such as
-a device being disconnected while synchronous commands are done during
-initialization.
-
-Signed-off-by: Benjamin Berg <bberg@redhat.com>
-
 ---
+ tools/mesh-gatt/onoff-model.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-v2:
- * Do not call handler in btusb_isoc_tx_complete.
- * Only call handler for command SKBs in btusb_tx_complete
----
- drivers/bluetooth/btusb.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index ab169fc673ea..d9067a8fad60 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -933,6 +933,8 @@ static void btusb_intr_complete(struct urb *urb)
- 		if (err != -EPERM && err != -ENODEV)
- 			bt_dev_err(hdev, "urb %p failed to resubmit (%d)",
- 				   urb, -err);
-+		if (err != -EPERM)
-+			hci_cmd_sync_cancel(hdev, -err);
- 		usb_unanchor_urb(urb);
- 	}
- }
-@@ -976,6 +978,8 @@ static int btusb_submit_intr_urb(struct hci_dev *hdev, gfp_t mem_flags)
- 		if (err != -EPERM && err != -ENODEV)
- 			bt_dev_err(hdev, "urb %p submission failed (%d)",
- 				   urb, -err);
-+		if (err != -EPERM)
-+			hci_cmd_sync_cancel(hdev, -err);
- 		usb_unanchor_urb(urb);
- 	}
+diff --git a/tools/mesh-gatt/onoff-model.c b/tools/mesh-gatt/onoff-model.c
+index 9dfedd85a..13ff4bbe3 100644
+--- a/tools/mesh-gatt/onoff-model.c
++++ b/tools/mesh-gatt/onoff-model.c
+@@ -226,6 +226,8 @@ static void cmd_set(int argc, char *argv[])
+ 	uint16_t n;
+ 	uint8_t msg[32];
+ 	struct mesh_node *node;
++	int np;
++	uint32_t opcode;
  
-@@ -1331,10 +1335,13 @@ static void btusb_tx_complete(struct urb *urb)
- 	if (!test_bit(HCI_RUNNING, &hdev->flags))
- 		goto done;
+ 	if (IS_UNASSIGNED(target)) {
+ 		bt_shell_printf("Destination not set\n");
+@@ -237,13 +239,22 @@ static void cmd_set(int argc, char *argv[])
+ 	if (!node)
+ 		return;
  
--	if (!urb->status)
-+	if (!urb->status) {
- 		hdev->stat.byte_tx += urb->transfer_buffer_length;
--	else
-+	} else {
-+		if (hci_skb_pkt_type(skb) == HCI_COMMAND_PKT)
-+			hci_cmd_sync_cancel(hdev, -urb->status);
- 		hdev->stat.err_tx++;
+-	if ((read_input_parameters(argc, argv) != 1) &&
+-					parms[0] != 0 && parms[0] != 1) {
+-		bt_shell_printf("Bad arguments: Expecting \"0\" or
+\"1\"\n");
+-		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	np = read_input_parameters(argc, argv);
++	if ((np != 1) && (np != 2) &&
++		parms[0] != 0 && parms[0] != 1 &&
++		parms[1] != 0 && parms[1] != 1) {
++	bt_shell_printf("Bad arguments: Expecting \"0\" or \"1\" "
++		"and an optional \"0\" or \"1\" as unack\n");
++	return bt_shell_noninteractive_quit(EXIT_FAILURE);
 +	}
++
++	if( (np==2) && parms[1] ){
++		opcode = OP_GENERIC_ONOFF_SET_UNACK;
++	}else{
++		opcode = OP_GENERIC_ONOFF_SET;
+ 	}
  
- done:
- 	spin_lock_irqsave(&data->txlock, flags);
+-	n = mesh_opcode_set(OP_GENERIC_ONOFF_SET, msg);
++	n = mesh_opcode_set(opcode, msg);
+ 	msg[n++] = parms[0];
+ 	msg[n++] = trans_id++;
+ 
+@@ -263,7 +274,7 @@ static const struct bt_shell_menu onoff_menu = {
+ 						"Set node to configure"},
+ 	{"get",			NULL,
+cmd_get_status,
+ 						"Get ON/OFF status"},
+-	{"onoff",		"<0/1>",			cmd_set,
++	{"onoff",		"<0/1> [unack]",		cmd_set,
+ 						"Send \"SET ON/OFF\"
+command"},
+ 	{} },
+ };
 -- 
-2.33.1
+2.25.1
+
 
