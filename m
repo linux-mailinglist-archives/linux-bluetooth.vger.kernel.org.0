@@ -2,117 +2,82 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33015467475
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Dec 2021 11:01:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 066D24679D9
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Dec 2021 15:59:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351071AbhLCKFL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 3 Dec 2021 05:05:11 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:28088 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1379717AbhLCKFK (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 3 Dec 2021 05:05:10 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1638525707; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Poi3Lwtka2EuPzEFZWmwCPLGlrT4nP9Y1F6XL+xb49g=; b=Vq9olqc8PkQ8eJyVNzeINbustxbS29LUQX5Z3/znk4vDXSA3TScU1cXOlAvbQJLiK/mOZmUg
- rur/X56E4E6ppcrbJ6DLLWvzX3i4rjjlU3SBrGddGWJYHXALfw0sshJsvkZ33dIlFxnALrx1
- dsKi9sRvInxDbnVvsB+4QWKBWAk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI2MTA3ZSIsICJsaW51eC1ibHVldG9vdGhAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 61a9eb09135a8a9d0e08cf5d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 03 Dec 2021 10:01:45
- GMT
-Sender: zijuhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E9D37C43616; Fri,  3 Dec 2021 10:01:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9E861C4338F;
-        Fri,  3 Dec 2021 10:01:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9E861C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
-        hemantg@codeaurora.org, rjliao@codeaurora.org,
-        zijuhu@codeaurora.org, tjiang@codeaurora.org,
-        Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH v3] Bluetooth: btusb: Add one more Bluetooth part for WCN6855
-Date:   Fri,  3 Dec 2021 18:01:37 +0800
-Message-Id: <1638525697-12436-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1381632AbhLCPCh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 3 Dec 2021 10:02:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60356 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1381624AbhLCPCf (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Fri, 3 Dec 2021 10:02:35 -0500
+Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30261C061354
+        for <linux-bluetooth@vger.kernel.org>; Fri,  3 Dec 2021 06:59:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
+        Message-Id:Date:Subject:Cc:To:From:Content-Type:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+        Resent-Message-ID:In-Reply-To:References;
+        bh=fr6ADaLeJISaS6F3g3sSOP8RSmzKp56ndBiROZj1gdo=; t=1638543551; x=1639753151; 
+        b=Mn0buEtMwtgqZW9FVh2NlyEoxwlURtObPJRfwmfQi4pLb5gfKtJtTje35OQ89WDpadD2Ouxv3xZ
+        k4PfvuPU18/Qa602bGEY4npvHItkDLUbRD82PJea7b3ybVoJ9XweKXrpksojxf2EhwMkbDvKT8Qn5
+        xH7L/uRgnoKdox9jToH6nwubqqdoCrKB7qnkF/9bmHVhqIhXt1bcrNDJ7ZVrXYzqaoKBOqTM3xQpm
+        +XfgGTJtSj2R9xIw/EF7Oc/xaIIHS32Qj5n+FDuq2i7qAHvTfhLygor3OfzM+yE8x8qgdaxG05eJL
+        aci2lc5PgNKu5hIgFmvPLgTU/IBbtA/6hKGA==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+        (Exim 4.95)
+        (envelope-from <benjamin@sipsolutions.net>)
+        id 1mtA1k-006QDV-96;
+        Fri, 03 Dec 2021 15:59:08 +0100
+From:   Benjamin Berg <benjamin@sipsolutions.net>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Benjamin Berg <benjamin@sipsolutions.net>
+Subject: [PATCH v2 0/4] Cancel sync commands if a TX failure occurs
+Date:   Fri,  3 Dec 2021 15:58:58 +0100
+Message-Id: <20211203145902.3223861-1-benjamin@sipsolutions.net>
+X-Mailer: git-send-email 2.33.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+It was reported that userspace could hang for 10s after resuming due to
+btusb hitting the internal timeout when sending the firmware.
 
-Add a USB ID 0489:e0e3 of HP to usb_device_id table for WCN6855.
+In this case, the bluetooth dongle disappeared right after resume due to
+the thinkpad_acpi rfkill being blocked. This causes the USB device to
+disappear, however the bluetooth stack does not handle the
+corresponding ENODEV errors and instead waits for a timeout to happen.
 
--Device(0489:e0e3) from /sys/kernel/debug/usb/devices
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e0e3 Rev= 0.01
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+To avoid blocking everything for such a long time, the synchronous
+command has to finish immediately after an ENODEV error occurs. This
+requires further error handling, which this patchset adds by building
+on top of the existing cancellation infrastructure for synchronous
+commands.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
----
- drivers/bluetooth/btusb.c | 3 +++
- 1 file changed, 3 insertions(+)
+Note that this just adds basic error handling in order to quickly abort
+the initialization routine in case the device disappears at that time.
+Additional error handling such as calling hci_reset_dev might be
+sensible in some cases.
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index ab169fc673ea..c0037932ecee 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -302,6 +302,9 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x0489, 0xe0d6), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0e3), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
- 
- 	/* Broadcom BCM2035 */
- 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+Benjamin Berg (4):
+  Bluetooth: Reset more state when cancelling a sync command
+  Bluetooth: Add hci_cmd_sync_cancel to public API
+  Bluetooth: hci_core: Cancel sync command if sending a frame failed
+  Bluetooth: btusb: Cancel sync commands for certain URB errors
+
+ drivers/bluetooth/btusb.c        | 11 +++++++++--
+ include/net/bluetooth/hci_sync.h |  1 +
+ net/bluetooth/hci_core.c         | 14 +++++++++++---
+ net/bluetooth/hci_request.c      | 13 +------------
+ net/bluetooth/hci_request.h      |  1 -
+ net/bluetooth/hci_sync.c         | 17 +++++++++++++++++
+ 6 files changed, 39 insertions(+), 18 deletions(-)
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+2.33.1
 
