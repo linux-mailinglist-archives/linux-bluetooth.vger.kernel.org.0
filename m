@@ -2,70 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B04F468C52
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  5 Dec 2021 18:09:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16DA94690BE
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 Dec 2021 08:20:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236445AbhLERMe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 5 Dec 2021 12:12:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42172 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236233AbhLERMd (ORCPT
+        id S238438AbhLFHXa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 6 Dec 2021 02:23:30 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:47962 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238367AbhLFHX3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 5 Dec 2021 12:12:33 -0500
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A785EC061714
-        for <linux-bluetooth@vger.kernel.org>; Sun,  5 Dec 2021 09:09:06 -0800 (PST)
-Received: by mail-oo1-xc2c.google.com with SMTP id a11-20020a4ad1cb000000b002c2657270a0so3682035oos.8
-        for <linux-bluetooth@vger.kernel.org>; Sun, 05 Dec 2021 09:09:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=do0Xbn6HilLuW8HOVUEAMlULKqOM9wL8+/0bws2l460=;
-        b=Co5h5pKj7H08GoOmo/sCLUVXld+T6kamjj6fIIfXnRdALHN1A+dZUOx9r9P5kSd63b
-         j/2ezMfh4Wlg5rwZ5m7gcIw0Zip+Lfcn6sP2SrCC9lsDGtwLA1T1WZJjX+m+jST2JIVa
-         3OFl7V4XwkJO70IiFK/DFSTHV2TRPNC1v22/U8gEXe32XRg8+viCDN8BfPX2PUzXYQtV
-         D2Nj9yUlTE32S68BAl7hoXjGh7YaQVHXksY/G9vSbQwxSnZsLfB3wRRfa2MdtJEa8qBj
-         CbrLGTSk1Wt88WZcl+JgAKOkx5hBFxVL7bjdLKrCFq03EAWf2blRWOT4MozIirrERa4d
-         0I6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=do0Xbn6HilLuW8HOVUEAMlULKqOM9wL8+/0bws2l460=;
-        b=IODkrN3ulTpQzU50xNsQe5Q27ZUvN5TwBhJ1ACY4GMY7sJte3qOhBmHa1Uc/HyX36H
-         qW24awp2DivYtwXq1fYMFffROOnQ25cVnrhfQqbyDZqym+ScbIBtDgL0rMLFZwxor6ds
-         VRfnwRu0GW84B670flFlfaPzDkMDn7v7uKaD1aO8qXBe6rCbFnxqO7i9UP7yQs+eCGig
-         58xcOklVUVKyPyy/FEr73bJVvFTkmQVBHFD60kMVVRZoOQFzwn8ju/65uAy7zrBZUJZu
-         SAcPwxGNYKfygBAU4UlIxFT/ZS+bwoJkOCjPbw8wjtktUvpYc3tMFwNdbHN5qhBGT+/V
-         nYaQ==
-X-Gm-Message-State: AOAM533Q8O0Ofz0grYJqkJ7E6RzZ8IrF337hqwiHEiIyF1cAbmEXZF4f
-        EbiNFBTfEHgNqUFgk+9hRRiVNJiiPfZpUHIXLWFQSC91AOKgcK6iskNnFA==
-X-Google-Smtp-Source: ABdhPJysoyEZ/8xvcSWB2gHuV0Zc1JxYDVpeG0gVcmEqngnzqaX8simsuMxGCo9YT9jaS+rbyl6hfdBxKeuaMZJgwbo=
-X-Received: by 2002:a05:6830:314b:: with SMTP id c11mr25567053ots.178.1638724134927;
- Sun, 05 Dec 2021 09:08:54 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:a4a:7a49:0:0:0:0:0 with HTTP; Sun, 5 Dec 2021 09:08:54 -0800 (PST)
-Reply-To: justinseydou@gmail.com
-From:   Justin Seydou <hamidfaith031@gmail.com>
-Date:   Sun, 5 Dec 2021 17:08:54 +0000
-Message-ID: <CAFepVPqkkw6ogtRrjfR7MYUFvMAP27rtnBua0bH0aM9fb8AO9w@mail.gmail.com>
-Subject: PROPOSAL
-To:     undisclosed-recipients:;
+        Mon, 6 Dec 2021 02:23:29 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0B9FB61174
+        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Dec 2021 07:20:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5D81EC341C1
+        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Dec 2021 07:20:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638775200;
+        bh=myvxbjdrQ5XC6gIlAW09lyDy+Kekom/CgPKZFD55xjM=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=sf8/M5Xj24Qq0sDQOI0CP3VGCYEiXA73pP7zqRhsIGrFk/mKllaImv/GnLqfXa2tw
+         2+tFy+KFq6QLbj4mwfJys018mrBYUiwuThj37Abc+IGh5tEA6FScjHRFPA3Gql7ezn
+         FwIsQCrJEBKPA+GAUDEHw79n6NnWhV8qPwbvR5b/A1/jzDQ3ZVeiZ8RtWcLuz05Uz5
+         gV3dhV0cLIjNLFPBM/azMbHD0T2OYpz6xKXdjjHN+LRJ1bz7iLED59QdGFwYkoGGPY
+         tC3dYS9tVW75ATdaVm9P3XirA3Z6LxjlRsjNd+VRaISKq+LVSWUTEVRg9/sSQwHbDy
+         7BZxMCaPoBJLw==
+Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
+        id 31A4661158; Mon,  6 Dec 2021 07:20:00 +0000 (UTC)
+From:   bugzilla-daemon@bugzilla.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 215187] btintel: AX201: missing firmware ibt-19-16-0.sfi
+Date:   Mon, 06 Dec 2021 07:19:59 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: kiran.k@intel.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-215187-62941-GYKYU5bhBa@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-215187-62941@https.bugzilla.kernel.org/>
+References: <bug-215187-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear friend,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D215187
 
-With much sincerity of heart I write to inform you about a business
-proposal I have which I would like to handle with you.
+Kiran (kiran.k@intel.com) changed:
 
-Kindly indicate your interest so as to enable
-me give you more details of the proposal.
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |kiran.k@intel.com
 
-Waiting for your response.
+--- Comment #2 from Kiran (kiran.k@intel.com) ---
+Hi Takahide Nojima,
 
-Yours faithfully,
+Could you please check with 22.80 version of firmware for AX201 ? One issue
+related to firmware version got fixed in below release
 
-Mr.Justin Seydou.
+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git=
+/commit/?id=3D142174abc58e4529d5c4ec410a955bf0885dbe6f
+
+Thanks,
+Kiran
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
