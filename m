@@ -2,35 +2,35 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20EF846CD82
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Dec 2021 07:12:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5E3646CDCE
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Dec 2021 07:33:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233087AbhLHGQB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 8 Dec 2021 01:16:01 -0500
-Received: from mga03.intel.com ([134.134.136.65]:53571 "EHLO mga03.intel.com"
+        id S240264AbhLHGhD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 8 Dec 2021 01:37:03 -0500
+Received: from mga14.intel.com ([192.55.52.115]:51906 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230139AbhLHGQB (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 8 Dec 2021 01:16:01 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10191"; a="237705859"
+        id S235346AbhLHGhC (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 8 Dec 2021 01:37:02 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10191"; a="237994724"
 X-IronPort-AV: E=Sophos;i="5.87,296,1631602800"; 
-   d="scan'208";a="237705859"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2021 22:12:29 -0800
+   d="scan'208";a="237994724"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2021 22:33:31 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.87,296,1631602800"; 
-   d="scan'208";a="679771996"
+   d="scan'208";a="462649131"
 Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
-  by orsmga005.jf.intel.com with ESMTP; 07 Dec 2021 22:12:28 -0800
+  by orsmga006.jf.intel.com with ESMTP; 07 Dec 2021 22:33:28 -0800
 Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
         (envelope-from <lkp@intel.com>)
-        id 1muqBn-00009B-J5; Wed, 08 Dec 2021 06:12:27 +0000
-Date:   Wed, 8 Dec 2021 14:12:20 +0800
+        id 1muqW8-0000AR-22; Wed, 08 Dec 2021 06:33:28 +0000
+Date:   Wed, 8 Dec 2021 14:32:53 +0800
 From:   kernel test robot <lkp@intel.com>
 To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
         linux-bluetooth@vger.kernel.org
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org
+Cc:     kbuild-all@lists.01.org
 Subject: Re: [PATCH] Bluetooth: hci_sync: Add hci_le_create_conn_sync
-Message-ID: <202112081400.zv8bsipk-lkp@intel.com>
+Message-ID: <202112081458.7Shk6qTD-lkp@intel.com>
 References: <20211208020553.219387-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -54,8 +54,8 @@ https://git-scm.com/docs/git-format-patch]
 
 url:    https://github.com/0day-ci/linux/commits/Luiz-Augusto-von-Dentz/Bluetooth-hci_sync-Add-hci_le_create_conn_sync/20211208-100714
 base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-config: hexagon-randconfig-r041-20211207 (https://download.01.org/0day-ci/archive/20211208/202112081400.zv8bsipk-lkp@intel.com/config)
-compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project 097a1cb1d5ebb3a0ec4bcaed8ba3ff6a8e33c00a)
+config: arc-buildonly-randconfig-r002-20211207 (https://download.01.org/0day-ci/archive/20211208/202112081458.7Shk6qTD-lkp@intel.com/config)
+compiler: arceb-elf-gcc (GCC) 11.2.0
 reproduce (this is a W=1 build):
         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
         chmod +x ~/bin/make.cross
@@ -65,21 +65,16 @@ reproduce (this is a W=1 build):
         git checkout edb4c612dda2cb67f35cfe5a1c3bd0b38918aa80
         # save the config file to linux build tree
         mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash net/bluetooth/
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arc SHELL=/bin/bash net/bluetooth/
 
 If you fix the issue, kindly add following tag as appropriate
 Reported-by: kernel test robot <lkp@intel.com>
 
 All warnings (new ones prefixed by >>):
 
->> net/bluetooth/hci_sync.c:5120:5: warning: no previous prototype for function 'hci_le_ext_create_conn_sync' [-Wmissing-prototypes]
-   int hci_le_ext_create_conn_sync(struct hci_dev *hdev, struct hci_conn *conn,
-       ^
-   net/bluetooth/hci_sync.c:5120:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-   int hci_le_ext_create_conn_sync(struct hci_dev *hdev, struct hci_conn *conn,
-   ^
-   static 
-   1 warning generated.
+>> net/bluetooth/hci_sync.c:5120:5: warning: no previous prototype for 'hci_le_ext_create_conn_sync' [-Wmissing-prototypes]
+    5120 | int hci_le_ext_create_conn_sync(struct hci_dev *hdev, struct hci_conn *conn,
+         |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 vim +/hci_le_ext_create_conn_sync +5120 net/bluetooth/hci_sync.c
