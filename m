@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 49ECF46F81A
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Dec 2021 01:31:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC31946F81B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Dec 2021 01:32:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234840AbhLJAfZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 9 Dec 2021 19:35:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35262 "EHLO
+        id S234928AbhLJAfi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 9 Dec 2021 19:35:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231372AbhLJAfY (ORCPT
+        with ESMTP id S234874AbhLJAfi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 9 Dec 2021 19:35:24 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04456C061746
-        for <linux-bluetooth@vger.kernel.org>; Thu,  9 Dec 2021 16:31:50 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id b11so5136750pld.12
-        for <linux-bluetooth@vger.kernel.org>; Thu, 09 Dec 2021 16:31:49 -0800 (PST)
+        Thu, 9 Dec 2021 19:35:38 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF77DC061746
+        for <linux-bluetooth@vger.kernel.org>; Thu,  9 Dec 2021 16:32:03 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id k4so5151320plx.8
+        for <linux-bluetooth@vger.kernel.org>; Thu, 09 Dec 2021 16:32:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=iQSCdedttnCtfMlEeeIaWEO+bF4vrDbQyWbNbl8vRmg=;
-        b=jWJAPmlpVXLeF9uqQYOz9zzOzB2UowFebcjKjnAnsO5UFMnJ9TvW3PhKnS3lrVp9WL
-         8Uy8C4jYlWaVZzZv3ndnejc6G+Lq+VWB6iDiu5xg25T+SBkvNeye/tQDAdrteQ+fEfne
-         gnEzXYBwQQHmmc2jKeULJ7jFZDtu98gcXeJ65YJZ7vwnVq2fI6cNzEZY2Cf1FuHl2jsQ
-         7mYHuMmb61D7vw9ZzLRXMEl9SbisXIclXccBBuNtbU+TYtq4RzB5yEU+NMlM4hBOtuBC
-         QZ8EhOI7RRgXKfwEof42aPLj8bORyR2XWYWdNNT1uTHXwXNkf7EXNB7q9yqHydb3w7Ff
-         wROQ==
+        b=JtFFrOWBEnq1LAkZ1gwSOoRvsO6M+wONkoUYw+0gQF3ARL6UMbXSVYWzkTTql5EOdT
+         ENP15tG5C1WERJPrRduTxtTNz4KtNh1NhZsjwIfRMJC6CMNMP0HVBKUgkbSxmMYqyIy1
+         ZaTWYvkhFmRKO2yjme3GtlCyGam5GEHfIojO7bb3tALBJ4gIx/U6ymn7ExvKw80NuG0e
+         NkTmO16tsI+6SBTcLEqOc2NjPBw/aYhGeyz9qHqAPrXM+6XySVvTFsmEZujWUU2Z8UJO
+         yKymjJxJAqJumGhzEZbqUkCtT2wjIv36hmNeh9GzRJxG6PS7UuDNBjK2BWT9R6etZ6k8
+         BabA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=iQSCdedttnCtfMlEeeIaWEO+bF4vrDbQyWbNbl8vRmg=;
-        b=D9j7FMCLwRoemF/lkUiHVZq4JGkk1CLK/8hfXtVCoqB1AQXnuT/C2G+hV3Tl5X2KBL
-         g9YnMG65WECj87EdJZhlYOaR6jHfBRTNkP5TkdHgO567rW0zPGcGb2F+zwSaeIXOuLnW
-         3Mi05KMlUGybvtYJIhvmOixg3kVCgJHrYNQuCU8tNeg3jUBKmkaI32f1xSRK4jFs9N7d
-         ILmgg55udi5dsk4rZRQCuwhHp1ADYCDWKpnXvJF8YWx0M9M/uAcnAoKlgwd7+ONb1eFZ
-         Eskrz7znAFS1XbU8vQjn16cryLVcs0EMVkV+JLouqeotGCqPW+Go9pM4PxdpOkmVSYV+
-         piIg==
-X-Gm-Message-State: AOAM530oGNtWOv7UUx2Mh+hwO73dd2l7lyf88BsMAupSA9/Zfl1LqcmU
-        QMpWKiE5m7E+ctepACZVKCosDVCI6tI=
-X-Google-Smtp-Source: ABdhPJyjFjOFVyjgD12zm+QmPz6WQZ9E1QCm4fBhJiMsLI+L1KHs1soZtbBVY8QIdRZmgpKEfxWftg==
-X-Received: by 2002:a17:902:c404:b0:142:4c7e:ab8b with SMTP id k4-20020a170902c40400b001424c7eab8bmr71999698plk.10.1639096308723;
-        Thu, 09 Dec 2021 16:31:48 -0800 (PST)
+        b=7uLccwPfLXx5/K+Oe7K5NKTeuS4oYpIaTXYyHtPWKfQeh4HjU523/fsp12cQP1+sud
+         0Ye2VYeh23wnSAP+EcHkIWcDN2y4eNLvY03tNJnEnOEuiN8L448Btlp+gSTOj9fNQyuG
+         aH02yx0RQeqx2RJeS/cfbMY467M6nNKauzN8SGXlaJPTDu44AajTsB8XB2ScYDKVp+yI
+         jBgeCZxB2FVnlZIaUb4TpGeL21pxRB7W7KJMaEsxNbYHiYno56XIZxdSn0jbo6B34tRd
+         g02dR6/f26p4sYWqI6p0Dq3Q0egAhzAxThoffEj+O5LhpgBQBX36p+KChKH0uJ8u2UIV
+         DQuA==
+X-Gm-Message-State: AOAM531ixnpOwR7T23wJwu5P1VRIwRqcna0kgxH2jgljUfxXbaHcRzzO
+        9oU1X2uIxiBcpxl1UmrRqnINVGnDMI4=
+X-Google-Smtp-Source: ABdhPJz+wUreLDRz77uNIsXZERe/yxQ4qKh8UDlbwGtFsEcrc4emw5F4mJaXvc8dG0AShGktFIBtAw==
+X-Received: by 2002:a17:902:aa43:b0:142:6919:73da with SMTP id c3-20020a170902aa4300b00142691973damr71197601plr.39.1639096322728;
+        Thu, 09 Dec 2021 16:32:02 -0800 (PST)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id u11sm850720pfg.120.2021.12.09.16.31.47
+        by smtp.gmail.com with ESMTPSA id t130sm745502pgc.9.2021.12.09.16.32.02
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 16:31:47 -0800 (PST)
+        Thu, 09 Dec 2021 16:32:02 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
 Subject: [PATCH 1/3] Bluetooth: hci_sync: Add hci_le_create_conn_sync
-Date:   Thu,  9 Dec 2021 16:31:43 -0800
-Message-Id: <20211210003147.836584-1-luiz.dentz@gmail.com>
+Date:   Thu,  9 Dec 2021 16:31:59 -0800
+Message-Id: <20211210003201.836706-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
