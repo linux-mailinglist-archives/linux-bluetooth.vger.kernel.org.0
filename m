@@ -2,126 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A1D046FD87
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Dec 2021 10:16:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9724346FEF7
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Dec 2021 11:48:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234225AbhLJJU2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Dec 2021 04:20:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39298 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbhLJJU2 (ORCPT
+        id S238854AbhLJKvf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Dec 2021 05:51:35 -0500
+Received: from ent002.phy.lolipop.jp ([163.44.185.54]:37474 "EHLO
+        ent002.phy.lolipop.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233090AbhLJKve (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Dec 2021 04:20:28 -0500
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:8234::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 986F8C061746;
-        Fri, 10 Dec 2021 01:16:53 -0800 (PST)
-Received: from ip4d173d4a.dynamic.kabel-deutschland.de ([77.23.61.74] helo=[192.168.66.200]); authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1mvc1K-0001df-T4; Fri, 10 Dec 2021 10:16:50 +0100
-Message-ID: <e3e7147e-dd4c-59a9-5dba-5ddcd2e3130f@leemhuis.info>
-Date:   Fri, 10 Dec 2021 10:16:50 +0100
+        Fri, 10 Dec 2021 05:51:34 -0500
+X-Greylist: delayed 416 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Dec 2021 05:51:34 EST
+Received: by ent002.phy.lolipop.jp (Postfix, from userid 995)
+        id 96B41140002AB; Fri, 10 Dec 2021 19:41:02 +0900 (JST)
+To:     linux-bluetooth@vger.kernel.org
+Subject: =?UTF-8?B?QUxMIENSQUZU77yI44Kq44O844Or44Kv44Op44OV44OI77yJfA==?=  =?UTF-8?B?IOagquW8j+S8muekvuOCq+ODoOODu+ODjeODg+ODhOW7uuijhemDqCDjgYo=?=  =?UTF-8?B?5ZWP44GE5ZCI44KP44Gb44OV44Kp44O844Og?=
+X-PHP-Originating-Script: 1392516:class-phpmailer.php
+Date:   Fri, 10 Dec 2021 10:41:02 +0000
+From:   =?UTF-8?B?QUxMIENSQUZU77yI44Kq44O844Or44Kv44Op44OV44OI77yJfCA=?=
+         =?UTF-8?B?5qCq5byP5Lya56S+44Kr44Og44O744ON44OD44OE5bu66KOF6YOo?= 
+        <wordpress@kensho415.net>
+Message-ID: <cbcb4d91fc1a65b282fd3b435ef9a754@kensho415.net>
+X-Mailer: PHPMailer 5.2.27 (https://github.com/PHPMailer/PHPMailer)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Content-Language: en-BS
-To:     "An, Tedd" <tedd.an@intel.com>,
-        "kai.heng.feng@canonical.com" <kai.heng.feng@canonical.com>,
-        "andypalmadi@gmail.com" <andypalmadi@gmail.com>,
-        "marcel@holtmann.org" <marcel@holtmann.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "regressions@lists.linux.dev" <regressions@lists.linux.dev>
-References: <CAJvGw+AJ5dHSb50RtJHnjbhMVQa+rJgYznFV4t-iaO0qx+W-jw@mail.gmail.com>
- <fbc36e8ebdd9222f84322d54d9114f58c225547e.camel@intel.com>
-From:   Thorsten Leemhuis <regressions@leemhuis.info>
-Subject: Re: [REGRESSION] Bluetooth not working on 5.15+ since "Bluetooth:
- Move shutdown callback before flushing tx and rx queue"
-In-Reply-To: <fbc36e8ebdd9222f84322d54d9114f58c225547e.camel@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1639127813;281fdd00;
-X-HE-SMSGID: 1mvc1K-0001df-T4
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi, this is your Linux kernel regression tracker speaking.
+linux-bluetooth@vger.kernel.org様
 
-On 10.12.21 02:10, An, Tedd wrote:
-> On Fri, 2021-12-10 at 01:36 +0200, coldolt wrote:
->> After a restart, bluetooth doesn't work since commit 0ea53674d07f
->> "Bluetooth: Move shutdown callback before flushing tx and rx queue"
->>
->> bluetoothctl doesn't list any controllers and I get the following in
->> dmesg | grep -i bluetooth
->>
->> [    2.634812] Bluetooth: Core ver 2.22
->> [    2.634843] NET: Registered PF_BLUETOOTH protocol family
->> [    2.634845] Bluetooth: HCI device and connection manager initialized
->> [    2.634850] Bluetooth: HCI socket layer initialized
->> [    2.634853] Bluetooth: L2CAP socket layer initialized
->> [    2.634858] Bluetooth: SCO socket layer initialized
->> [    4.077788] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
->> [    4.077794] Bluetooth: BNEP filters: protocol multicast
->> [    4.077799] Bluetooth: BNEP socket layer initialized
->> [    4.078219] random: bluetoothd: uninitialized urandom read (4 bytes read)
->> [    4.852835] Bluetooth: hci0: Reading Intel version command failed (-110)
->> [    4.852838] Bluetooth: hci0: command 0xfc05 tx timeout
->>
->> However, it works after a cold start or after putting the computer to sleep.
->>
->> Before 83f2dafe2a62 "Bluetooth: btintel: Refactoring setup routine for
->> legacy ROM sku", it always works after a restart, but from that commit
->> up until before 0ea53674d07f it either works or doesn't work after a
->> restart depending on if before restart it was working or not, meaning
->> it stays working or stays not working.
->>
->> Also on the first restart from before 83f2dafe2a62 into 0ea53674d07f
->> or later it works, but then restarting again into 0ea53674d07f or
->> later it no longer works. So it seems that 0ea53674d07f and later puts
->> the bluetooth in a nonworking state if you restart from it, but before
->> 83f2dafe2a62 it puts it back into a working state at startup, and in
->> between it doesn't do either, i.e. it stays the way it was.
->>
->> I have a Dell Latitude E5550 laptop with an Intel 7265 wifi/bluetooth
->> card REV=0x210 firmware version 29.4063824552.0 7265D-29. I'm on Arch
->> Linux, the problem is still there on 5.16-rc4.
->>
->> Here is a thread on the Arch Linux forums with several people with the
->> same problem, for some of them it got fixed with a kernel update or by
->> reloading modules, but not for everybody, including me
->> https://bbs.archlinux.org/viewtopic.php?id=271459
->>
->> #regzbot introduced 0ea53674d07f
+この度はAll Craft カム・ネッツ建装部にお問い合わせいただき、誠にありがとうございます。
+フォーム内容の確認後、担当者よりご連絡致しますので、よろしくお願い致します。
 
-Many thx for directly getting regzbot involved! :-D
+入力いただきました、フォーム内容は以下になります。
 
-> This issue is under investigation to find the root cause and proper solution.
+ご依頼者様：その他
 
-Only internally? Or are there any other related public discussions that
-are relevant to this and thus good to be aware of?
+会社名：❤️ Ane want to meet you! Click Here: http://bit.do/fSP8o?3h1 ❤️
 
-> The downloaded firmware breaks the behavior though, we need to investigate
-> further to see if it can be fixed in firmware or fix in the driver.
+お名前：05l02eol
 
-The answer from my point is simple: it needs to be fixed in the kernel,
-not just in the firmware, otherwise people that update the kernel
-without updating the firmware at the same time will run into a
-regression -- and that is not acceptable by kernel development standards.
+フリガナ：y9j45n
 
-Ciao, Thorsten
+電話番号：049285496619
 
-P.S.: As a Linux kernel regression tracker I'm getting a lot of reports
-on my table. I can only look briefly into most of them. Unfortunately
-therefore I sometimes will get things wrong or miss something important.
-I hope that's not the case here; if you think it is, don't hesitate to
-tell me about it in a public reply. That's in everyone's interest, as
-what I wrote above might be misleading to everyone reading this; any
-suggestion I gave they thus might sent someone reading this down the
-wrong rabbit hole, which none of us wants.
+メールアドレス：linux-bluetooth@vger.kernel.org
 
-BTW, I have no personal interest in this issue, which is tracked using
-regzbot, my Linux kernel regression tracking bot
-(https://linux-regtracking.leemhuis.info/regzbot/). I'm only posting
-this mail to get things rolling again and hence don't need to be CC on
-all further activities wrt to this regression.
+住所：〒63825-63825
+95yiz2alo4lwm962dxyk5
+
+ご希望のご連絡方法:FAX
+
+お問い合わせ種別:トータルリフォーム
+
+お問い合わせ内容：0pjdut
+
+-- 
+このメールは ALL CRAFT（オールクラフト）| 株式会社カム・ネッツ建装部 (https://kensho415.net) のお問い合わせフォームから送信されました
+
