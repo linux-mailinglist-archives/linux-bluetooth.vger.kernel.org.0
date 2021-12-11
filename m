@@ -2,105 +2,79 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD2CD4713CF
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Dec 2021 13:39:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B28E34716F1
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Dec 2021 22:58:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbhLKMjS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 11 Dec 2021 07:39:18 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:57116 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229668AbhLKMjS (ORCPT
+        id S231605AbhLKV6V (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 11 Dec 2021 16:58:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54056 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231602AbhLKV6T (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 11 Dec 2021 07:39:18 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 56C23B80108
-        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Dec 2021 12:39:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 11764C341CC
-        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Dec 2021 12:39:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639226356;
-        bh=gB1RTof0RmpyxOK2cfNUdcPbqe4/Ya0DGT4kjBtxZDs=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=S4yLPfPf4uncRisLxtdzxAH+nDMY5Y+oQIM01tpHcRyX55xtth8OvAnUoQ8oeqgHe
-         O7+6tpG+HHjI1B6rsnIGKJODp3o2nSBuj58OLNZFCN/biwKWKzkGSjavyG9oWI6tVM
-         VZuo1YtHw7HqffeiWrMU8MJtvDC12THhLuqHSgZeahM+got5YkTKFraOCPTJ0gezv8
-         yAG8+jb8zUeAcHV7NNlpSCXlluW++lvTkO8MB56j14dYF8lkiwdMr0NejcYJTcaY4q
-         lQubdDn3hbHaEpfMM2XVgS7jT9O2IMODIPmd4hquRoBXwTBOWEnyTqGCQTLvkjgDeJ
-         TN31rpcPG+g8w==
-Received: by pdx-korg-bugzilla-2.web.codeaurora.org (Postfix, from userid 48)
-        id EE10861101; Sat, 11 Dec 2021 12:39:15 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 215167] Bluetooth: hci0: command 0xfc05 tx timeout
-Date:   Sat, 11 Dec 2021 12:39:15 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: erik@rigtorp.se
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-215167-62941-RE2gKJRQQl@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-215167-62941@https.bugzilla.kernel.org/>
-References: <bug-215167-62941@https.bugzilla.kernel.org/>
+        Sat, 11 Dec 2021 16:58:19 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DF66C061A32
+        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Dec 2021 13:58:19 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id l25so40943784eda.11
+        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Dec 2021 13:58:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=hD0jfu1MWy/UXBkBYsVvOAZPApZLyir6gKavdc4BceI=;
+        b=SOBkDHN1upt351fJGA10IENq8Lskn6OtfiA/mtFXWwbxNo6rK0VqMIikUbNdR10QL9
+         NEz57nH7+DwD4ui2QjR5G0PDUg/x30DeYlpAViKmfLpj6c8owgTXHIRe2HlXrWJIYspc
+         p1qexb7VgQzyxOs2U317jKWC2PVt5FsJQNP/qzuU8HlodfKZxoIrg2Y5u0+UlgiuF7n+
+         KF6xHlFhNhhV0WZH+n1XpQNFkro1//sIniT/eC7+Qq7omDixZHJ42uWefxucVRQsgqoP
+         MP9jAyQEdDJw2KiXunMshfyB4wcDGfWvxehuLHSr6op0i/Er4qRI4zT2OKxsbV2QjSnP
+         PYpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=hD0jfu1MWy/UXBkBYsVvOAZPApZLyir6gKavdc4BceI=;
+        b=CVM9b8FVrx+Bur/hMNDjAmunTJF82jdNAPrrSOhIUpZbM2qxvWe8EwQM2h8s+oPvHW
+         R6AoheO1OwFqLLY033ULbeyg7VuWe/xbO6Qh+/wSBq5OfGvOmVewbucEpkIk8eIUxk5q
+         XzOd8dXPwpxkT91vRlIgYdcmaTkip6TnvzD8vl2uvNmjQf8Ntmj+cbi+gBNgGDp1c1Nb
+         iLiw/mSHXOjegwfwouxLCOTLYy/hC1btPhfLaHnYW+BVVQb/v0RAbHOvlGddSGwtasEC
+         rQcWLtyu+MYJlyMGmI2wUNBiKVANYXc/ndkj3fW7EsaWThePvAfHOIoYIB0+34p0jm6y
+         Pm2A==
+X-Gm-Message-State: AOAM532rDz2tdxnHolnXnzvFN4THYC2JqSJQlZUOKtSASgY7p1o23hi4
+        b9fI9O1qQptstM7Mh98LvDztMhQbkET24Uy9W4s=
+X-Google-Smtp-Source: ABdhPJxTVLquc00JfCv8xmVg6F+Df36Ax6F8m8eI1vWHtjjPBaUzu2dvtxl/29t2QJINStCFpJhLct20UqzajIEroTA=
+X-Received: by 2002:a17:907:6da2:: with SMTP id sb34mr33325880ejc.509.1639259897490;
+ Sat, 11 Dec 2021 13:58:17 -0800 (PST)
+MIME-Version: 1.0
+Reply-To: martinafrancis022@gmail.com
+Sender: rebeccaalhajidangombe@gmail.com
+Received: by 2002:a17:907:94d3:0:0:0:0 with HTTP; Sat, 11 Dec 2021 13:58:16
+ -0800 (PST)
+From:   Martina Francis <martinafrancis61@gmail.com>
+Date:   Sat, 11 Dec 2021 13:58:16 -0800
+X-Google-Sender-Auth: QI6h_ccu4Os7HpLN5lf7FmNkMqQ
+Message-ID: <CANadOMYJBdKak2aObykULF4gdU88=OTR03g+XDqpCofMfFracg@mail.gmail.com>
+Subject: Bom Dia meu querido
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
-MIME-Version: 1.0
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D215167
-
---- Comment #17 from Erik Rigtorp (erik@rigtorp.se) ---
-(In reply to Takashi Iwai from comment #16)
-> When you add the BTUSB_INTEL_BROKEN_INITIAL_NCMD flag for your device
-> (8087:0aa7) in the blacklist_table[] in btusb.c as in comment 13, does it
-> fix the problem?
-
-Yes, running 5.15.16 tag from linux stable repo with this patch on top fixes
-the issue:
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 79d0db542da3..0ed04061823b 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -368,7 +368,8 @@ static const struct usb_device_id blacklist_table[] =3D=
- {
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20
-BTUSB_INTEL_BROKEN_INITIAL_NCMD },
-        { USB_DEVICE(0x8087, 0x0a2a), .driver_info =3D BTUSB_INTEL_COMBINED=
- },
-        { USB_DEVICE(0x8087, 0x0a2b), .driver_info =3D BTUSB_INTEL_COMBINED=
- },
--       { USB_DEVICE(0x8087, 0x0aa7), .driver_info =3D BTUSB_INTEL_COMBINED=
- },
-+       { USB_DEVICE(0x8087, 0x0aa7), .driver_info =3D BTUSB_INTEL_COMBINED=
- |
-+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20
-BTUSB_INTEL_BROKEN_INITIAL_NCMD},
-        { USB_DEVICE(0x8087, 0x0aaa), .driver_info =3D BTUSB_INTEL_COMBINED=
- },
-
-        /* Other Intel Bluetooth devices */
-
 --=20
-You may reply to this email to add a comment.
+Bom Dia meu querido,
+Como vai voc=C3=AA hoje, meu nome =C3=A9 Dona Martina Francis, uma vi=C3=BA=
+va doente.
+Eu tenho um fundo de doa=C3=A7=C3=A3o de ($ 2.700.000,00 USD) MILH=C3=95ES =
+que quero
+doar atrav=C3=A9s de voc=C3=AA para ajudar os =C3=B3rf=C3=A3os, vi=C3=BAvas=
+, deficientes
+f=C3=ADsicos e casas de caridade.
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+Por favor, volte para mim imediatamente ap=C3=B3s ler esta mensagem para
+obter mais detalhes sobre esta agenda humanit=C3=A1ria.
+
+Deus te aben=C3=A7oe enquanto espero sua resposta.
+Sua irm=C3=A3.
+
+Sra. Martina Francis.
