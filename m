@@ -2,79 +2,75 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B28E34716F1
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Dec 2021 22:58:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4305471896
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Dec 2021 06:41:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231605AbhLKV6V (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 11 Dec 2021 16:58:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54056 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231602AbhLKV6T (ORCPT
+        id S229629AbhLLFlB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 12 Dec 2021 00:41:01 -0500
+Received: from relay.wiredblade.com ([168.235.105.136]:54289 "EHLO
+        relay.wiredblade.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229511AbhLLFlA (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 11 Dec 2021 16:58:19 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DF66C061A32
-        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Dec 2021 13:58:19 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id l25so40943784eda.11
-        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Dec 2021 13:58:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=hD0jfu1MWy/UXBkBYsVvOAZPApZLyir6gKavdc4BceI=;
-        b=SOBkDHN1upt351fJGA10IENq8Lskn6OtfiA/mtFXWwbxNo6rK0VqMIikUbNdR10QL9
-         NEz57nH7+DwD4ui2QjR5G0PDUg/x30DeYlpAViKmfLpj6c8owgTXHIRe2HlXrWJIYspc
-         p1qexb7VgQzyxOs2U317jKWC2PVt5FsJQNP/qzuU8HlodfKZxoIrg2Y5u0+UlgiuF7n+
-         KF6xHlFhNhhV0WZH+n1XpQNFkro1//sIniT/eC7+Qq7omDixZHJ42uWefxucVRQsgqoP
-         MP9jAyQEdDJw2KiXunMshfyB4wcDGfWvxehuLHSr6op0i/Er4qRI4zT2OKxsbV2QjSnP
-         PYpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=hD0jfu1MWy/UXBkBYsVvOAZPApZLyir6gKavdc4BceI=;
-        b=CVM9b8FVrx+Bur/hMNDjAmunTJF82jdNAPrrSOhIUpZbM2qxvWe8EwQM2h8s+oPvHW
-         R6AoheO1OwFqLLY033ULbeyg7VuWe/xbO6Qh+/wSBq5OfGvOmVewbucEpkIk8eIUxk5q
-         XzOd8dXPwpxkT91vRlIgYdcmaTkip6TnvzD8vl2uvNmjQf8Ntmj+cbi+gBNgGDp1c1Nb
-         iLiw/mSHXOjegwfwouxLCOTLYy/hC1btPhfLaHnYW+BVVQb/v0RAbHOvlGddSGwtasEC
-         rQcWLtyu+MYJlyMGmI2wUNBiKVANYXc/ndkj3fW7EsaWThePvAfHOIoYIB0+34p0jm6y
-         Pm2A==
-X-Gm-Message-State: AOAM532rDz2tdxnHolnXnzvFN4THYC2JqSJQlZUOKtSASgY7p1o23hi4
-        b9fI9O1qQptstM7Mh98LvDztMhQbkET24Uy9W4s=
-X-Google-Smtp-Source: ABdhPJxTVLquc00JfCv8xmVg6F+Df36Ax6F8m8eI1vWHtjjPBaUzu2dvtxl/29t2QJINStCFpJhLct20UqzajIEroTA=
-X-Received: by 2002:a17:907:6da2:: with SMTP id sb34mr33325880ejc.509.1639259897490;
- Sat, 11 Dec 2021 13:58:17 -0800 (PST)
-MIME-Version: 1.0
-Reply-To: martinafrancis022@gmail.com
-Sender: rebeccaalhajidangombe@gmail.com
-Received: by 2002:a17:907:94d3:0:0:0:0 with HTTP; Sat, 11 Dec 2021 13:58:16
- -0800 (PST)
-From:   Martina Francis <martinafrancis61@gmail.com>
-Date:   Sat, 11 Dec 2021 13:58:16 -0800
-X-Google-Sender-Auth: QI6h_ccu4Os7HpLN5lf7FmNkMqQ
-Message-ID: <CANadOMYJBdKak2aObykULF4gdU88=OTR03g+XDqpCofMfFracg@mail.gmail.com>
-Subject: Bom Dia meu querido
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Sun, 12 Dec 2021 00:41:00 -0500
+dkim-signature: v=1; a=rsa-sha256; d=relay.compata.com; s=mail;
+        c=relaxed/relaxed; q=dns/txt; h=From:Reply-To:Subject:Date:Message-ID:To:MIME-Version:Content-Type;
+        bh=eZSJd1eJPcNUK8fAKQGnrXr73p9G43NdcKGG6LJz2mQ=;
+        b=q1kWGE7fpm2pDsFiwQMRkXFx7AatFLSbC0JOrMIOh8xxlGhgZ2Ubu2+EaXO+UuUz4QoXXD0448NtlWRck2EBd/J6Ga66sIzwy5qC5aKxCxbZ1+Rpa52K0zmK+Ai/fLH0OfcafQOvpGfqfmI3t0HK96o+jbs3ByTYaIYqZscn2q1n30TPwgIdXknjfSPLYHL7YPxlnVlyDMJUjLN1aoGNrY9ZCegf35XtFAGmJiRoAk/HVcfHutRkCkB/Kz
+        SmGrB3TAt8GzO+HQQHsxYHjGF5J40zeNwqnlUKF9rsSYjV10Is8uQXzUqIQvqiXgcGCGPW2e+LbL9x5QPH08Yy/cuHtA==
+Received: from compata.com (ip68-5-142-19.oc.oc.cox.net [68.5.142.19]) by relay.wiredblade.com
+ with ESMTPSA (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256)
+ ; Sun, 12 Dec 2021 05:40:58 +0000
+Received: from d7010.compata.com ([192.168.44.19]) by compata.com (8.16.1/8.16.1) with
+ ESMTP id 1BC5evbU710558 for <linux-bluetooth@vger.kernel.org>; Sat, 11 Dec
+ 2021 21:40:58 -0800
+Received: from d7010 (localhost [127.0.0.1]) by d7010.compata.com (8.16.1/8.15.2) with
+ ESMTP id 1BC5evj82621220 for <linux-bluetooth@vger.kernel.org>; Sat, 11
+ Dec 2021 21:40:57 -0800
+Message-Id: <202112120540.1BC5evj82621220@d7010.compata.com>
+X-Mailer: exmh version 2.9.0 11/07/2018 with nmh-1.7.1
+To:     linux-bluetooth@vger.kernel.org
+reply-To: linux-bluetooth@vger.kernel.org
+Subject: Reconciling hcidump output with btmon
+From:   Dave Close <dave@compata.com>
+X-Face: $?&5f7w4GjUJOb-[FmngebA}V`5Dv)QEdHg|d%mytVRm]'o}*{J6:PP%(LfN
+ LmOcb#>"^wDF*|ZzuS??S*vLH[.miV(<v!QArMJG;~Mx<jl!LQ3)Gy9xw7w!EBQx9H~*[
+ *XF#\wyQK,dciSN=F_gd#{`rb43?hn5C9I&@Q2C+epIAS
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Date:   Sat, 11 Dec 2021 21:40:57 -0800
+X-Scanned-By: MIMEDefang 2.85 on 192.168.44.23
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---=20
-Bom Dia meu querido,
-Como vai voc=C3=AA hoje, meu nome =C3=A9 Dona Martina Francis, uma vi=C3=BA=
-va doente.
-Eu tenho um fundo de doa=C3=A7=C3=A3o de ($ 2.700.000,00 USD) MILH=C3=95ES =
-que quero
-doar atrav=C3=A9s de voc=C3=AA para ajudar os =C3=B3rf=C3=A3os, vi=C3=BAvas=
-, deficientes
-f=C3=ADsicos e casas de caridade.
+When I run "hcidump -R", I see (among other output) lines like these,
 
-Por favor, volte para mim imediatamente ap=C3=B3s ler esta mensagem para
-obter mais detalhes sobre esta agenda humanit=C3=A1ria.
+  > 04 3E 26 02 01 03 01 69 57 93 F1 99 F8 1A 02 01 04 09 09 39
+    36 37 35 39 39 38 46 07 16 09 18 EB 03 00 FE 04 16 0F 18 3E
+    A5
 
-Deus te aben=C3=A7oe enquanto espero sua resposta.
-Sua irm=C3=A3.
+But trying every available option for "btmon", I can't find anything
+remotely similar. How can I get this information using "btmon"? Or can
+I -- does "btmon" show this type of information? Is there some other
+command that would be more appropriate?
 
-Sra. Martina Francis.
+I understand that "hcidump" has been deprecated for several years. Yet
+the output of "btmon" seems to imply that it is calling "hcidump". That
+doesn't make sense to me. For example,
+
+  @ RAW Open: hcidump (privileged) version 2.22 {0x0002} [hci0] 1.894682
+  @ RAW Open: hcidump (privileged) version 2.22 {0x0003} 1.894702
+  @ RAW Close: hcidump                          {0x0003} 1.894708
+  @ RAW Close: hcidump                          {0x0002} [hci0] 1.894718
+
+My system is running Fedora 34 with these packages:
+
+  bluez-5.62-2.fc34.x86_64 (includes /usr/bin/btmon)
+  bluez-deprecated-5.62-2.fc34.x86_64 (includes /usr/bin/hcidump)
+  bluez-hcidump-2.5-18.fc34.x86_64 (includes /usr/sbin/hcidump)
+-- 
+Dave Close, Compata, Irvine CA      "Curiosity is insubordination
+dave@compata.com, +1 714 434 7359    in its purest form."
+dhclose@alumni.caltech.edu             -- Vladimir Nabokov
+
+
