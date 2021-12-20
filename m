@@ -2,154 +2,180 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 012B247A2E4
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 Dec 2021 23:42:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6413647ACC6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 Dec 2021 15:47:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230301AbhLSWmC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 19 Dec 2021 17:42:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45212 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbhLSWmC (ORCPT
+        id S236388AbhLTOqo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 20 Dec 2021 09:46:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:48492 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236151AbhLTOoE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 19 Dec 2021 17:42:02 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D293DC061574
-        for <linux-bluetooth@vger.kernel.org>; Sun, 19 Dec 2021 14:42:01 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id z5so31046110edd.3
-        for <linux-bluetooth@vger.kernel.org>; Sun, 19 Dec 2021 14:42:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=rdm+XPWdUTW9XBuM/z4dDE5n/0HU9NRKXZpF1Mk1bGE=;
-        b=EIlZwhqlE9pjvD9ZRB/vzd85xKLNjQV679gj3BONRdQy8qPmAFkLc4lW/zuXYzy3B1
-         MRa7vydgms50QkrwM7eqCG3psMZlkHI6Pg3Xf63bYBbzVSyO3HqwlPRCW+lraW6Sf+mT
-         jTkum1EETs9engj0e6OK8P8MuDXKsl+bPFVOTiTLJO8e1j7GRGBwEYG9ACYpbU02X1Sv
-         LSHJzGqBvP3ioEw6CXaTsxkWsdTmxO3OgBp5++H/P7X4uiUzDIk/bNQp+gOJza5T66Jl
-         Y2P5HT030imJRgV2Dp6pSg/bgsZdrQfRRsKGOTgyvq3GQXLGqhzsgKItMewWhMuazptM
-         G9Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=rdm+XPWdUTW9XBuM/z4dDE5n/0HU9NRKXZpF1Mk1bGE=;
-        b=BLeg+/sla8YH33R4b7ZjvZI9cSGohn1yqBTKp1MVAxQllV9gxbScj/DzR6EfTPrclI
-         8ZC7KK7dTJYzZx9rwMQzGQ0NioW31e1u7FcsVvIpf9XP1TZcrlpAGXRKsiltWkvvVAD0
-         aV4NyxMW43b+mU/mf8W4Oq0S/NZnXmw9nXCPS9cLTGtkilljew8wobbpU/3ShWoEHzyM
-         kfErn4F4Krt1LyexRECQgaqrCJGNmw5vPKJebswr6oXXtbvDeXlLzhUB9TTWpeAS7zRo
-         +WMC7gegd4aB92QLweet4Rrv4Niq45x5tBXa5/L+TM+LzoE0VLup0+NKsYfEgo4CWMZs
-         LfIg==
-X-Gm-Message-State: AOAM530YmhL2bwiWlw4A+5Acfw/csK+66E/qR5+jhVgSmABPy+aDY5qP
-        UmUUXEd5stAIkty4RcAdZ5G84gIKP2XnLXS/WrPe5m3WMaU=
-X-Google-Smtp-Source: ABdhPJwMX+EaewouXJYkDzNtzU3aG7/JRoAbZJKcR+wj198Psw4sZ46/s7xuR6cEFRlXSIjuWYnWtto4zP60Y90ULOE=
-X-Received: by 2002:aa7:cd9a:: with SMTP id x26mr13213999edv.159.1639953720122;
- Sun, 19 Dec 2021 14:42:00 -0800 (PST)
+        Mon, 20 Dec 2021 09:44:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1640011443;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=s0C57x6fIFfjJWlVsoP1UxrAFAXigs4tTiwIaISXgCg=;
+        b=MqXcax1ed8rYMxrUGpTmCY7jFCF8c7eKlV6YIhCKxCEClxEaPyMDDqQMehtNTezrs5cXmN
+        8xH/W25vQCpBDNdwWOTEaVJZfMmjB81N/hj40bf6nj/K08nMMJvcqUGMw5rClCRLMBBUAZ
+        CChITZ9c0mhmjMHutkH+ACpcXvr1CEE=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-450-rXVsBq1nMvyn6aBoFzzdrg-1; Mon, 20 Dec 2021 09:44:01 -0500
+X-MC-Unique: rXVsBq1nMvyn6aBoFzzdrg-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 744E0100CCC1;
+        Mon, 20 Dec 2021 14:43:59 +0000 (UTC)
+Received: from [10.39.192.160] (unknown [10.39.192.160])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 81CBA70D56;
+        Mon, 20 Dec 2021 14:43:58 +0000 (UTC)
+Message-ID: <7d5f55c6-d3e3-9cb9-2d33-de410efce88d@redhat.com>
+Date:   Mon, 20 Dec 2021 15:43:57 +0100
 MIME-Version: 1.0
-From:   Jeremy Slemp <slempjeremy68@gmail.com>
-Date:   Sun, 19 Dec 2021 14:41:49 -0800
-Message-ID: <CAHtsx2rK9SE5fn=1hnEZ_GZV6EPVvFLM-O+0HPAk+h+LvsxL2w@mail.gmail.com>
-Subject: Trouble parsing HID reports from PDP PS4 remote
-To:     linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: Trouble parsing HID reports from PDP PS4 remote
+Content-Language: en-US
+To:     Jeremy Slemp <slempjeremy68@gmail.com>,
+        linux-bluetooth@vger.kernel.org,
+        "open list:HID CORE LAYER" <linux-input@vger.kernel.org>
+References: <CAHtsx2rK9SE5fn=1hnEZ_GZV6EPVvFLM-O+0HPAk+h+LvsxL2w@mail.gmail.com>
+From:   Benjamin Tissoires <benjamin.tissoires@redhat.com>
+In-Reply-To: <CAHtsx2rK9SE5fn=1hnEZ_GZV6EPVvFLM-O+0HPAk+h+LvsxL2w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-I bought a PDP Bluetooth PS4 remote[0] in the hopes of using it to
-send keypress events to my Python script via evdev[1].  I found that
-some of the buttons on the remote generate HID events that are seen by
-evdev, but others do not.  So I'd like to figure out the best way to
-receive events from the currently-unsupported buttons.
+Hi Jeremy,
 
-bluetoothctl describes the device as:
+On 12/19/21 23:41, Jeremy Slemp wrote:
+> I bought a PDP Bluetooth PS4 remote[0] in the hopes of using it to
+> send keypress events to my Python script via evdev[1].  I found that
+> some of the buttons on the remote generate HID events that are seen by
+> evdev, but others do not.  So I'd like to figure out the best way to
+> receive events from the currently-unsupported buttons.
 
-Device 3E:09:EC:xx:xx:xx (public)
-Name: PDP Media Remote
-Alias: PDP Media Remote
-Class: 0x0000250c
-Paired: yes
-Trusted: yes
-Blocked: no
-Connected: yes
-LegacyPairing: no
-UUID: Human Interface Device... (00001124-0000-1000-8000-00805f9b34fb)
-UUID: PnP Information           (00001200-0000-1000-8000-00805f9b34fb)
+If evdev shows some events, this is not related to bluetooth but the HID 
+stack in the kernel (I cc-ed linux-input@)
 
-The main module inside the device is an BTM0612C2P[2].
+Basically, we might need to add support for this remote in the hid-sony 
+driver.
 
+Can you attach the full output of hid-recorder (from the hid-tools[3] 
+repository) when you press all of these buttons?
 
-The "good" buttons flip a bit in a mask in bytes 2-5:
+This should give us enough information to reply the event sequence 
+locally and fix the drivers if we need.
 
-SHARE button, press/release:
+Cheers,
+Benjamin
 
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2232 [hci0] 4474.225390
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 10 00 09 00 16 73 47 06                 ........sG.
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2233 [hci0] 4474.355396
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 09 00 89 24 5e 56                 ........$^V
+[3] https://gitlab.freedesktop.org/libevdev/hid-tools
 
-UP ARROW, press/release:
+> 
+> bluetoothctl describes the device as:
+> 
+> Device 3E:09:EC:xx:xx:xx (public)
+> Name: PDP Media Remote
+> Alias: PDP Media Remote
+> Class: 0x0000250c
+> Paired: yes
+> Trusted: yes
+> Blocked: no
+> Connected: yes
+> LegacyPairing: no
+> UUID: Human Interface Device... (00001124-0000-1000-8000-00805f9b34fb)
+> UUID: PnP Information           (00001200-0000-1000-8000-00805f9b34fb)
+> 
+> The main module inside the device is an BTM0612C2P[2].
+> 
+> 
+> The "good" buttons flip a bit in a mask in bytes 2-5:
+> 
+> SHARE button, press/release:
+> 
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2232 [hci0] 4474.225390
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 10 00 09 00 16 73 47 06                 ........sG.
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2233 [hci0] 4474.355396
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 09 00 89 24 5e 56                 ........$^V
+> 
+> UP ARROW, press/release:
+> 
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2240 [hci0] 4536.493867
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 00 00 00 0a 00 8b 3c 03 4d                 ........<.M
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2241 [hci0] 4536.727587
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
+> 
+> PINK SQUARE, press/release:
+> 
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2259 [hci0] 4676.429686
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 18 00 00 0a 00 c8 e0 93 1d                 ...........
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2260 [hci0] 4676.639687
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
+> 
+> 
+> The "bad" buttons seem to transmit a constant in byte 6 instead of a
+> bitmask in bytes 2-5:
+> 
+> REWIND, press/release:
+> 
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2261 [hci0] 4696.955007
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 17 8d f2 a0 fe                 ...........
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2262 [hci0] 4697.163765
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
+> 
+> PLAY, press/release:
+> 
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2264 [hci0] 4710.348944
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 16 1b c2 a7 89                 ...........
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2265 [hci0] 4710.531446
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
+> 
+> PAUSE, press/release:
+> 
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2266 [hci0] 4717.501552
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 1a 30 8e 11 80                 .......0...
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2267 [hci0] 4717.685317
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
+> 
+> ENTER, press/release:
+> 
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2293 [hci0] 4844.683443
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 0d f7 0b c2 03                 ...........
+>> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2294 [hci0] 4844.867210
+>        Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
+>          a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
+> 
+> I tried to decode these reports according to the USB HID spec but they
+> didn't make much sense to me beyond the "collection (application)"
+> part.  Can anyone help understand what this remote is doing?
+> 
+> 
+> [0] https://www.amazon.com/dp/B072C7YZFC
+> [1] https://python-evdev.readthedocs.io/en/latest/
+> [2] https://www.oemblue.com/download/BTM0612C2P%20Hardware%20Datasheet.pdf
+> 
+> 
 
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2240 [hci0] 4536.493867
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 00 00 00 0a 00 8b 3c 03 4d                 ........<.M
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2241 [hci0] 4536.727587
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
-
-PINK SQUARE, press/release:
-
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2259 [hci0] 4676.429686
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 18 00 00 0a 00 c8 e0 93 1d                 ...........
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2260 [hci0] 4676.639687
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
-
-
-The "bad" buttons seem to transmit a constant in byte 6 instead of a
-bitmask in bytes 2-5:
-
-REWIND, press/release:
-
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2261 [hci0] 4696.955007
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 17 8d f2 a0 fe                 ...........
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2262 [hci0] 4697.163765
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
-
-PLAY, press/release:
-
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2264 [hci0] 4710.348944
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 16 1b c2 a7 89                 ...........
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2265 [hci0] 4710.531446
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
-
-PAUSE, press/release:
-
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2266 [hci0] 4717.501552
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 1a 30 8e 11 80                 .......0...
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2267 [hci0] 4717.685317
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
-
-ENTER, press/release:
-
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2293 [hci0] 4844.683443
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 0d f7 0b c2 03                 ...........
-> ACL Data RX: Handle 11 flags 0x02 dlen 15                           #2294 [hci0] 4844.867210
-      Channel: 65 len 11 [PSM 19 mode 0] {chan 1}
-        a1 01 08 00 00 0a 00 4a 77 73 7d                 .......Jws}
-
-I tried to decode these reports according to the USB HID spec but they
-didn't make much sense to me beyond the "collection (application)"
-part.  Can anyone help understand what this remote is doing?
-
-
-[0] https://www.amazon.com/dp/B072C7YZFC
-[1] https://python-evdev.readthedocs.io/en/latest/
-[2] https://www.oemblue.com/download/BTM0612C2P%20Hardware%20Datasheet.pdf
