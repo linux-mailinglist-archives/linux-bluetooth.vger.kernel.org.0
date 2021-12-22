@@ -2,76 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B86E447D445
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Dec 2021 16:33:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C19BE47D4E9
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Dec 2021 17:13:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343713AbhLVPd2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 Dec 2021 10:33:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48508 "EHLO
+        id S237358AbhLVQNy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Dec 2021 11:13:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237263AbhLVPd2 (ORCPT
+        with ESMTP id S237382AbhLVQNx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 22 Dec 2021 10:33:28 -0500
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5956C06173F
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Dec 2021 07:33:27 -0800 (PST)
-Received: by mail-yb1-xb2c.google.com with SMTP id x32so7696343ybi.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Dec 2021 07:33:27 -0800 (PST)
+        Wed, 22 Dec 2021 11:13:53 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5753C061401
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Dec 2021 08:13:53 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id v16so2716756pjn.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Dec 2021 08:13:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=hQ5DbP4MITHgtHViXOya0lanhcMqZ8b4WidUu29kIn4=;
-        b=ncjzj9RiUZpCIoC2a2VzvFA9cwMZVl00CzKdmoXMOa7+eBlS9eafPqqUH5B2gYvRvD
-         7Rw/vNWY+BwQxSR8dPqpdV0wPF4+y0gdzwmVuLqrN+5WJBBR7FjUL9v1iOQa7QJZHjDk
-         lEnVGRxKHnqgFbxIpsJT4KBawX3uAHNSjjPBz8cP2nYJGGN2xpdybiKYiKzpSGTM26rC
-         zMxgsf15kFVZ+NOcVx49u59IQ1LUYAFkMxvi7OLtnoiLitd7IyrmPkeymRTZ5f85pdG9
-         cJ9Q2ItW0O1DEbuLNvd8J5eNtZbV2rqMNow8IuhN3JBZHSWiVZ4/+rgG3HFWcdrFU/tx
-         yhZQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BFGk+wXY2WG7afvEROgA8Vzr9P5EaP9/8caVFzhLkSA=;
+        b=KPIAxvXG/nK7mtoxHKJtmhxYY1JxI8FZfbXBE5JDarjZjntn99MFPIUMIePJ5fM9l4
+         BIvHhJc+zR1Gmecdm/xoWo2Cj3K5rtCy53e3LQwCw9OGrjfhem3rW0ulCgdb2lPXIk4m
+         57l2A92N59ge18B950cG7ZpU7IGcQZvBoVlQU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=hQ5DbP4MITHgtHViXOya0lanhcMqZ8b4WidUu29kIn4=;
-        b=G//toxak6x79UozaOXwrH3L7zg5wVe6pDjtTXA2NBAPZ+Xs56fa6ufG0LVtHZjGQCX
-         mRUArzdy1aMe+irg1zp5Ox1D8Y1aq1fqn3e7szd3f7pwoupKyBUEJTWiRJlpsyU0g3qa
-         hCZjqJLoh2rjtOW9wT5lBgbqaEG4SwGZZJl64h01wHj/cqp0Std4IOZXEhYH04e3EADO
-         NTLWndmyxYKSwv8YbeSz5gHDAh8MJaK8chNrso1X9DlEH6MHFD0uTHxeSXIlSkaDia7f
-         dDNQ3gDOBYd2XctGYq+CjyZhAil5Ch71n9/Q6lXhKvjsnBEhJ0VMxkldYHYIG4bwvB+a
-         BiDQ==
-X-Gm-Message-State: AOAM5301rzn4qy8gg1Va0EJ48fxqj0sGceMYdC1tNrRaz7OoYmg8SjNP
-        kDjN3/tTA10HebzSwFsXH0b1R2Pvv/35hf+ldnQ=
-X-Google-Smtp-Source: ABdhPJzByBtW8lbt0QP0ejZPHsSeI+Qub7+VDaq+wUv4cCbYKX2dr5uWl353xvH5+Dwoe7IrOhLsNqqNhQdusDdeL5U=
-X-Received: by 2002:a25:20a:: with SMTP id 10mr5273655ybc.221.1640187207038;
- Wed, 22 Dec 2021 07:33:27 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BFGk+wXY2WG7afvEROgA8Vzr9P5EaP9/8caVFzhLkSA=;
+        b=Cv/AUy0fE4Ex9ZxrbH3VOoK9D0kvWJXl8KxRslQsflF/3FJKqunYNStE8KqGJZbYW6
+         JJjLexMS+3Pnv3DSEboPJ/gB0tzhNNF6ZVwzz698dbi3ep1J4pzSr2QLUYQ/wrglNKSA
+         0ahddgWC3r3D8DTu8DpE3oVScORX/jMhsrrUm9Leq7e6e9sEwhvOaigjDijuyPpHM7WP
+         UxFE32P6g87F9A+FIBrrd9HdOwmd1Hi0nQfaJl4ndJyW6a0nlBwUetybVEm+u8A9f9V3
+         gb4jmPDXuk8XIOxD8TwGB6CeXzLUc8PBtdm3s5As0tiPIWZgkcGOFqn9+ksrsCMVLz2o
+         sPsw==
+X-Gm-Message-State: AOAM530W1lRVZFvVWFyqFUCVGqOFssvAGQosSmMb9YPuwTidXYz5SVUi
+        e3YC3ZYIayPFiX+z1YR7cDl/pA==
+X-Google-Smtp-Source: ABdhPJzJthtDcM8o6fnNwW70a8dUfaT9zNNY93DBwhkMDoA9DeR6kxYIymeQ/Nwv6x/WCNqCtRB2CQ==
+X-Received: by 2002:a17:902:aa8a:b0:148:a2e7:fb62 with SMTP id d10-20020a170902aa8a00b00148a2e7fb62mr3371252plr.163.1640189633147;
+        Wed, 22 Dec 2021 08:13:53 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:474e:891f:9d18:9114])
+        by smtp.gmail.com with UTF8SMTPSA id f124sm2529843pgc.32.2021.12.22.08.13.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Dec 2021 08:13:52 -0800 (PST)
+Date:   Wed, 22 Dec 2021 08:13:50 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Hemantg <hemantg@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        mcchou@chromium.org, saluvala@codeaurora.org
+Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Add bluetooth node on
+ SC7280 IDP boards
+Message-ID: <YcNOvlVQaT80qPsx@google.com>
+References: <1639587963-22503-1-git-send-email-bgodavar@codeaurora.org>
+ <580E8974-EB7F-4493-BECC-4B09765A954D@holtmann.org>
 MIME-Version: 1.0
-Received: by 2002:a05:7110:5282:b0:11b:1d37:210e with HTTP; Wed, 22 Dec 2021
- 07:33:26 -0800 (PST)
-Reply-To: mrsaishag45@gmail.com
-From:   Mrs Aisha Al-Qaddafi <whitemrshannah@gmail.com>
-Date:   Wed, 22 Dec 2021 07:33:26 -0800
-Message-ID: <CAPOLZixyz+paQ0DfZKObqmRvtHm4Ua0NBh1D-hbM7Td1Gi0b8g@mail.gmail.com>
-Subject: Dear Friend,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <580E8974-EB7F-4493-BECC-4B09765A954D@holtmann.org>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Friend,
+On Wed, Dec 22, 2021 at 08:54:56AM +0100, Marcel Holtmann wrote:
+> Hi Balakrishna,
+> 
+> > Add bluetooth SoC WCN6750 node for SC7280 IDP boards.
+> > 
+> > Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+> > ---
+> > v4:
+> >  * updated commit subject
+> >  * Removed drive strength for bt_en
+> >  * updated swctrl_gpio name to sw_ctrl
+> > 
+> > v3:
+> >  * Addressed reviewers comments
+> >  * Added pin config for sw_ctrl line.
+> > v2:
+> >  * merged two patches into one
+> >  * Removed unused comments
+> >  * Removed pinmux & pin conf.
+> >  * Addressed reviewers comments
+> > 
+> > v1: initial patch
+> > ---
+> > arch/arm64/boot/dts/qcom/sc7280-idp.dts  |  4 ++++
+> > arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 36 ++++++++++++++++++++++++++++++++
+> > arch/arm64/boot/dts/qcom/sc7280-idp2.dts |  4 ++++
+> > 3 files changed, 44 insertions(+)
+> 
+> patch has been applied to bluetooth-next tree.
 
-I came across your e-mail contact prior a private search while in need
-of your assistance. My name is Aisha Gaddafi a single Mother and a
-Widow with three Children. I am the only biological Daughter of late
-Libyan President (Late Colonel Muammar Gaddafi).
+Thanks!
 
-I have investment funds worth Twenty Seven Million Five Hundred
-Thousand United State Dollar ($27.500.000.00 ) and i need a trusted
-investment Manager/Partner because of my current refugee status,
-however, I am interested in you for investment project assistance in
-your country, may be from there, we can build business relationship in
-the nearest future.
-
-I am willing to negotiate investment/business profit sharing ratio
-with you base on the future investment earning profits.
-Best Regards
-Mrs Aisha Gaddafi
+I would have expected though that a device tree change goes through
+the qcom tree. Maybe Bjorn should pick it too to avoid possible
+conflicts?
