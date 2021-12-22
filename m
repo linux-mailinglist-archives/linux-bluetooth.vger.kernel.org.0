@@ -2,107 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86C6647CB89
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Dec 2021 04:12:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF61347CD8B
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Dec 2021 08:29:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242059AbhLVDL7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Dec 2021 22:11:59 -0500
-Received: from mailgw01.mediatek.com ([60.244.123.138]:44294 "EHLO
-        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S229741AbhLVDL6 (ORCPT
+        id S242995AbhLVH3r (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Dec 2021 02:29:47 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:5768 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231422AbhLVH3r (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Dec 2021 22:11:58 -0500
-X-UUID: ba85df28f99f46a3807ac67445f3f174-20211222
-X-UUID: ba85df28f99f46a3807ac67445f3f174-20211222
-Received: from mtkcas10.mediatek.inc [(172.21.101.39)] by mailgw01.mediatek.com
-        (envelope-from <sean.wang@mediatek.com>)
-        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
-        with ESMTP id 1891291641; Wed, 22 Dec 2021 11:11:54 +0800
-Received: from mtkcas11.mediatek.inc (172.21.101.40) by
- mtkmbs10n1.mediatek.inc (172.21.101.34) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.2.792.15; Wed, 22 Dec 2021 11:11:53 +0800
-Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas11.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Wed, 22 Dec 2021 11:11:53 +0800
-From:   <sean.wang@mediatek.com>
-To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>
-CC:     <Mark-YW.Chen@mediatek.com>, <sean.wang@mediatek.com>,
-        <Soul.Huang@mediatek.com>, <YN.Chen@mediatek.com>,
-        <Leon.Yen@mediatek.com>, <Eric-SY.Chang@mediatek.com>,
-        <Deren.Wu@mediatek.com>, <km.lin@mediatek.com>,
-        <robin.chiu@mediatek.com>, <Eddie.Chen@mediatek.com>,
-        <ch.yeh@mediatek.com>, <posh.sun@mediatek.com>,
-        <ted.huang@mediatek.com>, <Eric.Liang@mediatek.com>,
-        <Stella.Chang@mediatek.com>, <Tom.Chou@mediatek.com>,
-        <steve.lee@mediatek.com>, <jsiuda@google.com>,
-        <frankgor@google.com>, <jemele@google.com>,
-        <abhishekpandit@google.com>, <michaelfsun@google.com>,
-        <mcchou@chromium.org>, <shawnku@google.com>,
-        <linux-bluetooth@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 3/3] Bluetooth: btmtksdio: move struct reg_read_cmd to common file
-Date:   Wed, 22 Dec 2021 11:11:47 +0800
-Message-ID: <7fea13fab5a203ed4f373ec250fd4426cb8afff1.1640141813.git.objelf@gmail.com>
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <ef0603f2553d09fb84043704e4726d0ab98aa63b.1640141813.git.objelf@gmail.com>
-References: <ef0603f2553d09fb84043704e4726d0ab98aa63b.1640141813.git.objelf@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-MTK:  N
+        Wed, 22 Dec 2021 02:29:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1640158187; x=1671694187;
+  h=from:to:cc:subject:date:message-id;
+  bh=0ejRRfqIpyGBT+yHRzGWEvQYeapOKIN/RtCAbWM4Mb0=;
+  b=KItuY1bXLSXt/1Lj6auD+AFHqeHU5PK8xZzU9IsAyMbamQ/CxV8lMa1j
+   uPlkUQHDvumwUhkyKoBp8MJNABVW44e+LI1ea6ebo3Gy3S9LE1t7gYZk+
+   UNCJAg9g8w1UZin86kCcSPSD6OUCtPe347z6AuZ2IizaYEr5N7MNMIZ1r
+   U=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 21 Dec 2021 23:29:46 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Dec 2021 23:29:44 -0800
+X-QCInternal: smtphost
+Received: from hyd-lablnx229.qualcomm.com ([10.204.179.152])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 22 Dec 2021 12:59:27 +0530
+Received: by hyd-lablnx229.qualcomm.com (Postfix, from userid 2390365)
+        id 25F4C215DB; Wed, 22 Dec 2021 12:59:26 +0530 (IST)
+From:   Panicker Harish <quic_pharish@quicinc.com>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
+        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org, mcchou@chromium.org,
+        quic_saluvala@quicinc.com,
+        Panicker Harish <quic_pharish@quicinc.com>
+Subject: [PATCH v4] Bluetooth: hci_qca: Stop IBS timer during BT OFF
+Date:   Wed, 22 Dec 2021 12:59:05 +0530
+Message-Id: <1640158145-24569-1-git-send-email-quic_pharish@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Sean Wang <sean.wang@mediatek.com>
+The IBS timers are not stopped properly once BT OFF is triggered.
+we could see IBS commands being sent along with version command,
+so stopped IBS timers while Bluetooth is off.
 
-move struct reg_read_cmd to btmtk.h to allow other mtk drivers refer to.
+Fixes: 3e4be65eb82c ("Bluetooth: hci_qca: Add poweroff support during hci down for wcn3990")
 
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Panicker Harish <quic_pharish@quicinc.com>
+----
+v4:
+  * Used del_timer_sync() instead of mod_timer() to stop the timer and
+    to make sure the handler has finished executing on other CPUs.
+
+v3:
+  *Addressed reviewers comments
+  *updated commit message
+
+v2:
+  * Addressed the username
+  * The full implementation of IBS is based on timers
+    to that reason we have used timers.
+
+v1: initial patch
 ---
-v2: no change
----
- drivers/bluetooth/btmtk.h     | 7 +++++++
- drivers/bluetooth/btmtksdio.c | 7 +------
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/bluetooth/hci_qca.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
-index fc57ef09d132..fb76d9765ce0 100644
---- a/drivers/bluetooth/btmtk.h
-+++ b/drivers/bluetooth/btmtk.h
-@@ -87,6 +87,13 @@ struct btmtk_sco {
- 	u8 channel_select_config;
- } __packed;
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index dd768a8..9e99311 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1928,6 +1928,9 @@ static int qca_power_off(struct hci_dev *hdev)
+ 	hu->hdev->hw_error = NULL;
+ 	hu->hdev->cmd_timeout = NULL;
  
-+struct reg_read_cmd {
-+	u8 type;
-+	u8 rsv;
-+	u8 num;
-+	__le32 addr;
-+} __packed;
++	del_timer_sync(&qca->wake_retrans_timer);
++	del_timer_sync(&qca->tx_idle_timer);
 +
- struct reg_write_cmd {
- 	u8 type;
- 	u8 rsv;
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index c9120bd755d3..3f6b3f84077a 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -800,12 +800,7 @@ static int mt79xx_setup(struct hci_dev *hdev, const char *fwname)
- static int btsdio_mtk_reg_read(struct hci_dev *hdev, u32 reg, u32 *val)
- {
- 	struct btmtk_hci_wmt_params wmt_params;
--	struct reg_read_cmd {
--		u8 type;
--		u8 rsv;
--		u8 num;
--		__le32 addr;
--	} __packed reg_read = {
-+	struct reg_read_cmd reg_read = {
- 		.type = 1,
- 		.num = 1,
- 	};
+ 	/* Stop sending shutdown command if soc crashes. */
+ 	if (soc_type != QCA_ROME
+ 		&& qca->memdump_state == QCA_MEMDUMP_IDLE) {
 -- 
-2.25.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
 
