@@ -2,59 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C58347E87F
+	by mail.lfdr.de (Postfix) with ESMTP id 5BCAF47E880
 	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Dec 2021 20:50:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350168AbhLWTuG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S1350169AbhLWTuG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Thu, 23 Dec 2021 14:50:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33552 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244778AbhLWTuF (ORCPT
+        with ESMTP id S1350165AbhLWTuG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 Dec 2021 14:50:05 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2E1CC061401
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Dec 2021 11:50:05 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id z9-20020a17090a7b8900b001b13558eadaso9623476pjc.4
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Dec 2021 11:50:05 -0800 (PST)
+        Thu, 23 Dec 2021 14:50:06 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55481C061401
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Dec 2021 11:50:06 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id y16-20020a17090a6c9000b001b13ffaa625so9641440pjj.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Dec 2021 11:50:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=rF5TA28ck5w3dk8M5Y58w8qVzCZxMdP79icwEG2FO2w=;
-        b=JSP+HE05UA37RkCZjfxk3zf+9G6K1M7xmfNLsvi54txAcWGEzkqPk8W+1WWob33Jpt
-         V+yfieJ0Nz6Neg/V9AhgQuhJvAGJPYsSLqb9MWSDaiRSD62NoaiEZMDF3UHZGF7Mq3ll
-         xQuhI4/t6BwCtGOhSPt0lGYy8OLrTQynGYwK7Za0/B5MTCMRIV1i4MDalW1LOZLE/ycl
-         jVvE3W9TV04O6vcGz0wTsABe8wERSzZNMQYk2O7uj/1qDe8CC0zMMpw+Vl2GUwHOrcIw
-         3aDIqtFai57tKxka+k56rLkBQJs0Zhywpgwuv28X4h9d+h9vL/3kaea+75+Lj2Zc16yE
-         ymkg==
+        bh=gEEKJ+AwmI9ikcjPBu/gOgRvNQQVYakBGVrX14t7xyw=;
+        b=afQlDyXRPmffBSkTKypQaUEcgLfEvJhVF03+MCVXNug7ju0FaLw8ZRHXCfGGgwHBud
+         HhlKqMvLoNMkjkW/i0we5Vlr8II9hT7zYXJtILwAZ7fLwR4dEmzTkoaWTuHO39DbXY0R
+         kc4pMfwQ6uiHd88tNWPPhgvZ5C7opx6d0w3wO45/b8N9l/PxJ8zjfGoG15m2lvPUDAbT
+         JQIFfiuCnJka8/hu2kS17+VzMn3oWoWrZiLLj7IXueji/ntzZsNKxi7l0m8ej6PlPtYC
+         oynTUUG5M8UREFd+9VePILd6mK9gPveK9M2ePaWfHn7vFjPaS+cPl4p10ppiSoKaFAJB
+         LdtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rF5TA28ck5w3dk8M5Y58w8qVzCZxMdP79icwEG2FO2w=;
-        b=fgHcBd0x0iesy682qqJ+0lsWvogcNjbGf2aKAFHk9F1Aj+F+q96tx5dttn6bQidJXP
-         Qi4F2AhRuJZMMpFe7nruLn3VPlS7xCUpPtMVD+VeKWhd092TMJzS0hd5EgswxK0os3dq
-         vlQ7b4tx4lobHpQpIMkXHPgj1Rj1pSdM2rnbzHX7UyddRkSwjmI3PXV5Mn5JGfNHQkGu
-         Eha+Wjz4LmWREdz/ZNtOFgumas+9/+CpRLDkTGYmBd8+rxKUVdj4w/ry7M/BKaI7aOFW
-         VXnLUQZXdHZxNuNFj+phTredp2y89MIf4OvI7RMsnMJw2OfFIGBggT7rJq7CuEnCbrkZ
-         b1cw==
-X-Gm-Message-State: AOAM530hOst1RIlAQuCl67IhWF2Z/w20J88m66LJNThX2tsupKVsNXsM
-        3jkCfeXxjeNPOd7tGWAegRpZIw6ITFM=
-X-Google-Smtp-Source: ABdhPJzslqNI975n9R8UuxQZ3rzZWApmeCmkd4s+X65aayFU7F1MQtDiNZhb9w1s+q03AB5xpATj3Q==
-X-Received: by 2002:a17:90a:d155:: with SMTP id t21mr4274232pjw.29.1640289004979;
-        Thu, 23 Dec 2021 11:50:04 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=gEEKJ+AwmI9ikcjPBu/gOgRvNQQVYakBGVrX14t7xyw=;
+        b=KZi6b8FsWHVoZnbqK49lQ+lgubHnvitXvCxzmskPBR6nB6OqMNEcSUpNxAXKVuMuiV
+         QtOk3+wXm/l9R3gJkS2RbI+MPAD5q5UUGMCfD1MOaDpk/BwcYel0mhxBxdLgvbaJtU4K
+         aPhOwD+2rQilqiB6HahMxA9Go5Y0C0PCUc665Jaea5B8r5zyyXE8/60zE14NJnR1IWGW
+         N3d/QTyQMQdcMv5E4t0TaIZNcxen7S7kDX8Xme+KmaTd92NNX8uXPUGGyQtOeoNVXg8C
+         zLVRWEC/+T5kp25WBH/uc/hMILV3npF6dm00W24uJEOaWTI/YrlH/qk0sIyqZ5gOT5Xy
+         Y2qw==
+X-Gm-Message-State: AOAM530lYBmvJpX4Ng/I/Ph5T3Fv9jNPw9+NKbWYycRXQPDzJ9y1EYGO
+        thWohvUefZ59OWyOB9UTqJeEm5uYLu0=
+X-Google-Smtp-Source: ABdhPJxHw8qZJ6AwJf9PIcJZi8nMp0egZcEIIttI5pQlfiDUtP1ApEuLxJsQymiL6za9R6fQbN2oBw==
+X-Received: by 2002:a17:902:b210:b0:143:789a:7418 with SMTP id t16-20020a170902b21000b00143789a7418mr3641855plr.38.1640289005490;
+        Thu, 23 Dec 2021 11:50:05 -0800 (PST)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id mu2sm6631894pjb.43.2021.12.23.11.50.04
+        by smtp.gmail.com with ESMTPSA id mu2sm6631894pjb.43.2021.12.23.11.50.05
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Dec 2021 11:50:04 -0800 (PST)
+        Thu, 23 Dec 2021 11:50:05 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v4 1/4] build: Add sanitizer options
-Date:   Thu, 23 Dec 2021 11:50:00 -0800
-Message-Id: <20211223195003.1647434-1-luiz.dentz@gmail.com>
+Subject: [PATCH v4 2/4] build: Fix build when sanitizer are enabled
+Date:   Thu, 23 Dec 2021 11:50:01 -0800
+Message-Id: <20211223195003.1647434-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211223195003.1647434-1-luiz.dentz@gmail.com>
+References: <20211223195003.1647434-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -63,192 +65,146 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Build using Address Sanitizer (asan), Leak Sanitizer (lsan), or
-Undefined Behavior Sanitizer (ubsan) by using one of these options for
-the configure script:
-
-  --enable-asan
-  --enable-lsan
-  --enable-ubsan
-
-For each of these to work, the compiler must support the requested
-sanitizer and the requisite libraries must be installed (libasan,
-liblsan, libubsan).
+This fixes various issues found when sanitizers are enabled.
 ---
-v2: Attempt to fix CI findings
-v3: Yet again attempt to fix CI findings, disable running tests with
-valgrind if either asan or lsan are enabled are they are likely going
-to conflict.
-v4: Yet another attempt to fix CI findings.
+ monitor/packet.c         |  3 ++-
+ peripheral/main.c        |  2 +-
+ profiles/audio/a2dp.c    |  5 ++++-
+ profiles/audio/avctp.c   |  2 +-
+ profiles/network/bnep.c  |  4 ++--
+ src/shared/gatt-server.c |  2 --
+ tools/mesh-gatt/util.c   | 11 ++++++++---
+ tools/test-runner.c      |  2 +-
+ 8 files changed, 19 insertions(+), 12 deletions(-)
 
- Makefile.am  |  8 +++++-
- acinclude.m4 | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- configure.ac |  7 ++++-
- 3 files changed, 90 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile.am b/Makefile.am
-index 993168f00..308f13c50 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -24,7 +24,7 @@ pkgincludedir = $(includedir)/bluetooth
+diff --git a/monitor/packet.c b/monitor/packet.c
+index 71f711dc5..397000644 100644
+--- a/monitor/packet.c
++++ b/monitor/packet.c
+@@ -330,7 +330,8 @@ static void print_packet(struct timeval *tv, struct ucred *cred, char ident,
+ 	if ((filter_mask & PACKET_FILTER_SHOW_INDEX) &&
+ 					index != HCI_DEV_NONE) {
+ 		if (use_color()) {
+-			n = sprintf(ts_str + ts_pos, "%s", COLOR_INDEX_LABEL);
++			n = snprintf(ts_str + ts_pos, sizeof(ts_str) - ts_pos,
++				     "%s", COLOR_INDEX_LABEL);
+ 			if (n > 0)
+ 				ts_pos += n;
+ 		}
+diff --git a/peripheral/main.c b/peripheral/main.c
+index 0f5210403..91adb45fc 100644
+--- a/peripheral/main.c
++++ b/peripheral/main.c
+@@ -73,7 +73,7 @@ static void prepare_filesystem(void)
+ 	if (!is_init)
+ 		return;
  
- pkginclude_HEADERS =
+-	for (i = 0; mount_table[i].fstype; i++) {
++	for (i = 0; mount_table[i].fstype && mount_table[i].target; i++) {
+ 		struct stat st;
  
--AM_CFLAGS = $(WARNING_CFLAGS) $(MISC_CFLAGS) $(UDEV_CFLAGS) $(LIBEBOOK_CFLAGS) \
-+AM_CFLAGS = $(MISC_CFLAGS) $(WARNING_CFLAGS) $(UDEV_CFLAGS) $(LIBEBOOK_CFLAGS) \
- 				$(LIBEDATASERVER_CFLAGS) $(ell_cflags)
- AM_LDFLAGS = $(MISC_LDFLAGS)
+ 		if (lstat(mount_table[i].target, &st) < 0) {
+diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
+index eba2f9822..d0808c77a 100644
+--- a/profiles/audio/a2dp.c
++++ b/profiles/audio/a2dp.c
+@@ -1338,9 +1338,12 @@ static gboolean a2dp_reconfigure(gpointer data)
+ 	if (setup->rsep) {
+ 		cap = avdtp_get_codec(setup->rsep->sep);
+ 		rsep_codec = (struct avdtp_media_codec_capability *) cap->data;
++		/* Check that codec really match after closing */
++		if (sep->codec != rsep_codec->media_codec_type)
++			setup->rsep = NULL;
+ 	}
  
-@@ -243,6 +243,8 @@ src_libshared_glib_la_SOURCES = $(shared_sources) \
- 				src/shared/mainloop-notify.h \
- 				src/shared/mainloop-notify.c \
- 				src/shared/tester.c
-+src_libshared_glib_la_LDFLAGS = $(AM_LDFLAGS)
-+src_libshared_glib_la_CFLAGS = $(AM_CFLAGS)
+-	if (!setup->rsep || sep->codec != rsep_codec->media_codec_type)
++	if (!setup->rsep)
+ 		setup->rsep = find_remote_sep(setup->chan, sep);
  
- src_libshared_mainloop_la_SOURCES = $(shared_sources) \
- 				src/shared/io-mainloop.c \
-@@ -250,6 +252,8 @@ src_libshared_mainloop_la_SOURCES = $(shared_sources) \
- 				src/shared/mainloop.h src/shared/mainloop.c \
- 				src/shared/mainloop-notify.h \
- 				src/shared/mainloop-notify.c
-+src_libshared_mainloop_la_LDFLAGS = $(AM_LDFLAGS)
-+src_libshared_mainloop_la_CFLAGS = $(AM_CFLAGS)
+ 	if (!setup->rsep) {
+diff --git a/profiles/audio/avctp.c b/profiles/audio/avctp.c
+index 9113b5ddc..64d1a8504 100644
+--- a/profiles/audio/avctp.c
++++ b/profiles/audio/avctp.c
+@@ -1177,7 +1177,7 @@ static int uinput_create(struct btd_device *device, const char *name,
+ 	memset(&dev, 0, sizeof(dev));
  
- if LIBSHARED_ELL
- src_libshared_ell_la_SOURCES = $(shared_sources) \
-@@ -257,6 +261,8 @@ src_libshared_ell_la_SOURCES = $(shared_sources) \
- 				src/shared/timeout-ell.c \
- 				src/shared/mainloop.h \
- 				src/shared/mainloop-ell.c
-+src_libshared_ell_la_LDFLAGS = $(AM_LDFLAGS)
-+src_libshared_ell_la_CFLAGS = $(AM_CFLAGS)
- endif
+ 	if (name) {
+-		strncpy(dev.name, name, UINPUT_MAX_NAME_SIZE);
++		strncpy(dev.name, name, UINPUT_MAX_NAME_SIZE - 1);
+ 		dev.name[UINPUT_MAX_NAME_SIZE - 1] = '\0';
+ 	}
  
- attrib_sources = attrib/att.h attrib/att-database.h attrib/att.c \
-diff --git a/acinclude.m4 b/acinclude.m4
-index 529848357..b388dfc11 100644
---- a/acinclude.m4
-+++ b/acinclude.m4
-@@ -10,6 +10,45 @@ AC_DEFUN([AC_PROG_CC_PIE], [
- 	])
- ])
+diff --git a/profiles/network/bnep.c b/profiles/network/bnep.c
+index f94f1da8a..54b950058 100644
+--- a/profiles/network/bnep.c
++++ b/profiles/network/bnep.c
+@@ -108,7 +108,7 @@ static int bnep_connadd(int sk, uint16_t role, char *dev)
+ 	struct bnep_connadd_req req;
  
-+AC_DEFUN([AC_PROG_CC_ASAN], [
-+	AC_CACHE_CHECK([whether ${CC-cc} accepts -fsanitize=address],
-+						ac_cv_prog_cc_asan, [
-+		echo 'void f(){}' > asan.c
-+		if test -z "`${CC-cc} -fsanitize=address -c asan.c 2>&1`"; then
-+			ac_cv_prog_cc_asan=yes
-+		else
-+			ac_cv_prog_cc_asan=no
-+		fi
-+		rm -rf asan*
-+       ])
-+])
-+
-+AC_DEFUN([AC_PROG_CC_LSAN], [
-+	AC_CACHE_CHECK([whether ${CC-cc} accepts -fsanitize=leak],
-+						ac_cv_prog_cc_lsan, [
-+		echo 'void f(){}' > lsan.c
-+		if test -z "`${CC-cc} -fsanitize=leak -c lsan.c 2>&1`"; then
-+			ac_cv_prog_cc_lsan=yes
-+		else
-+			ac_cv_prog_cc_lsan=no
-+		fi
-+		rm -rf lsan*
-+	])
-+])
-+
-+AC_DEFUN([AC_PROG_CC_UBSAN], [
-+	AC_CACHE_CHECK([whether ${CC-cc} accepts -fsanitize=undefined],
-+						ac_cv_prog_cc_ubsan, [
-+		echo 'void f(){}' > ubsan.c
-+		if test -z "`${CC-cc} -fsanitize=undefined -c ubsan.c 2>&1`"; then
-+			ac_cv_prog_cc_ubsan=yes
-+		else
-+			ac_cv_prog_cc_ubsan=no
-+		fi
-+		rm -rf ubsan*
-+	])
-+])
-+
- AC_DEFUN([COMPILER_FLAGS], [
- 	with_cflags=""
- 	if (test "$USE_MAINTAINER_MODE" = "yes"); then
-@@ -38,6 +77,44 @@ AC_DEFUN([MISC_FLAGS], [
- 			misc_cflags="$misc_cflags -O0"
- 		fi
- 	])
-+	AC_ARG_ENABLE(asan, AC_HELP_STRING([--enable-asan],
-+			[enable linking with address sanitizer]), [
-+		save_LIBS=$LIBS
-+		AC_CHECK_LIB(asan, _init)
-+		LIBS=$save_LIBS
-+		if (test "${enableval}" = "yes" &&
-+				test "${ac_cv_lib_asan__init}" = "yes" &&
-+				test "${ac_cv_prog_cc_asan}" = "yes"); then
-+			misc_cflags="$misc_cflags -fsanitize=address";
-+			misc_ldflags="$misc_ldflags -fsanitize=address"
-+			AC_SUBST([ASAN_LIB], ${ac_cv_lib_asan__init})
-+		fi
-+	])
-+	AC_ARG_ENABLE(lsan, AC_HELP_STRING([--enable-lsan],
-+			[enable linking with address sanitizer]), [
-+		save_LIBS=$LIBS
-+		AC_CHECK_LIB(lsan, _init)
-+		LIBS=$save_LIBS
-+		if (test "${enableval}" = "yes" &&
-+				test "${ac_cv_lib_lsan__init}" = "yes" &&
-+				test "${ac_cv_prog_cc_lsan}" = "yes"); then
-+			misc_cflags="$misc_cflags -fsanitize=leak";
-+			misc_ldflags="$misc_ldflags -fsanitize=leak"
-+			AC_SUBST([ASAN_LIB], ${ac_cv_lib_lsan__init})
-+		fi
-+	])
-+	AC_ARG_ENABLE(ubsan, AC_HELP_STRING([--enable-ubsan],
-+			[enable linking with address sanitizer]), [
-+		save_LIBS=$LIBS
-+		AC_CHECK_LIB(ubsan, _init)
-+		LIBS=$save_LIBS
-+		if (test "${enableval}" = "yes" &&
-+				test "${ac_cv_lib_ubsan__init}" = "yes" &&
-+				test "${ac_cv_prog_cc_ubsan}" = "yes"); then
-+			misc_cflags="$misc_cflags -fsanitize=undefined";
-+			misc_ldflags="$misc_ldflags -fsanitize=undefined";
-+		fi
-+	])
- 	AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],
- 			[enable compiling with debugging information]), [
- 		if (test "${enableval}" = "yes" &&
-diff --git a/configure.ac b/configure.ac
-index 2674e30d3..849e1db46 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -23,6 +23,9 @@ AC_C_RESTRICT
- AC_PROG_CC
- AM_PROG_CC_C_O
- AC_PROG_CC_PIE
-+AC_PROG_CC_ASAN
-+AC_PROG_CC_LSAN
-+AC_PROG_CC_UBSAN
- AC_PROG_INSTALL
- AC_PROG_MKDIR_P
+ 	memset(&req, 0, sizeof(req));
+-	strncpy(req.device, dev, 16);
++	strncpy(req.device, dev, 15);
+ 	req.device[15] = '\0';
  
-@@ -40,10 +43,12 @@ if (test "$USE_MAINTAINER_MODE" = "yes"); then
- fi
- AM_CONDITIONAL(COVERAGE, test "${enable_coverage}" = "yes")
- AM_CONDITIONAL(DBUS_RUN_SESSION, test "${enable_dbus_run_session}" = "yes")
--AM_CONDITIONAL(VALGRIND, test "${enable_valgrind}" = "yes")
+ 	req.sock = sk;
+@@ -345,7 +345,7 @@ struct bnep *bnep_new(int sk, uint16_t local_role, uint16_t remote_role,
+ 	session->io = g_io_channel_unix_new(dup_fd);
+ 	session->src = local_role;
+ 	session->dst = remote_role;
+-	strncpy(session->iface, iface, 16);
++	strncpy(session->iface, iface, 15);
+ 	session->iface[15] = '\0';
  
- MISC_FLAGS
+ 	g_io_channel_set_close_on_unref(session->io, TRUE);
+diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
+index 9beec44be..776e5ce2b 100644
+--- a/src/shared/gatt-server.c
++++ b/src/shared/gatt-server.c
+@@ -1119,8 +1119,6 @@ static void read_multiple_cb(struct bt_att_chan *chan, uint8_t opcode,
+ 	}
  
-+AM_CONDITIONAL(VALGRIND, test "${enable_valgrind}" = "yes" &&
-+		test "$ASAN_LIB" != "yes" && test "LSAN_LIB" != "yes")
-+
- AC_ARG_ENABLE(threads, AC_HELP_STRING([--enable-threads],
- 		[enable threading support]), [enable_threads=${enableval}])
+ 	data = read_mult_data_new(server, chan, opcode, length / 2);
+-	if (!data)
+-		goto error;
  
+ 	for (i = 0; i < data->num_handles; i++)
+ 		data->handles[i] = get_le16(pdu + i * 2);
+diff --git a/tools/mesh-gatt/util.c b/tools/mesh-gatt/util.c
+index e845c4112..eb8b8eb29 100644
+--- a/tools/mesh-gatt/util.c
++++ b/tools/mesh-gatt/util.c
+@@ -41,9 +41,14 @@ void print_byte_array(const char *prefix, const void *ptr, int len)
+ 	char *line, *bytes;
+ 	int i;
+ 
+-	line = g_malloc(strlen(prefix) + (16 * 3) + 2);
+-	sprintf(line, "%s ", prefix);
+-	bytes = line + strlen(prefix) + 1;
++	if (prefix) {
++		line = g_malloc(strlen(prefix) + (16 * 3) + 2);
++		sprintf(line, "%s ", prefix);
++		bytes = line + strlen(prefix) + 1;
++	} else {
++		line = g_malloc((16 * 3) + 2);
++		bytes = line + 1;
++	}
+ 
+ 	for (i = 0; i < len; ++i) {
+ 		sprintf(bytes, "%2.2x ", data[i]);
+diff --git a/tools/test-runner.c b/tools/test-runner.c
+index eac120f4a..71cc0d2df 100644
+--- a/tools/test-runner.c
++++ b/tools/test-runner.c
+@@ -136,7 +136,7 @@ static void prepare_sandbox(void)
+ {
+ 	int i;
+ 
+-	for (i = 0; mount_table[i].fstype; i++) {
++	for (i = 0; mount_table[i].fstype && mount_table[i].target; i++) {
+ 		struct stat st;
+ 
+ 		if (lstat(mount_table[i].target, &st) < 0) {
 -- 
 2.33.1
 
