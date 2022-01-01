@@ -2,48 +2,118 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 54B3E4825E7
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 31 Dec 2021 22:21:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BB9B482761
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 Jan 2022 12:03:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231809AbhLaVVs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 31 Dec 2021 16:21:48 -0500
-Received: from mail.osorio.rs.gov.br ([177.73.0.123]:34358 "EHLO
-        mail.osorio.rs.gov.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230313AbhLaVVr (ORCPT
+        id S232291AbiAALDG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 1 Jan 2022 06:03:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52346 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232270AbiAALDG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 31 Dec 2021 16:21:47 -0500
-Received: by mail.osorio.rs.gov.br (Postfix, from userid 999)
-        id 5300548792B0; Fri, 31 Dec 2021 16:05:53 -0200 (BRST)
-Received: from localhost (nac.osorio.rs.gov.br [127.0.0.1])
-        by nac (Postfix) with SMTP id 2D78B4878AFD;
-        Fri, 31 Dec 2021 15:26:19 -0200 (BRST)
-Received: from User (unknown [84.38.132.16])
-        by mail.osorio.rs.gov.br (Postfix) with ESMTP id B0C8048A8BD3;
-        Fri, 31 Dec 2021 13:16:00 -0200 (BRST)
-Reply-To: <andbaill228@mail2world.com>
-From:   "Ads" <projetos@gov.br>
-Subject: Very Importante Notice
-Date:   Fri, 31 Dec 2021 16:31:23 +0200
+        Sat, 1 Jan 2022 06:03:06 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BADA8C061574;
+        Sat,  1 Jan 2022 03:03:05 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id o30so16063785wms.4;
+        Sat, 01 Jan 2022 03:03:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Z/+9nvmLB5oEXe4I6O3MJpdQ4O59Sk/tOuc5Q78ycSI=;
+        b=iqfHPGieEbjoGyxVq0oJI2zlJ10bouhezyn4iemfIsQWm++l/17j4YBGg06GEoljEZ
+         NM//csCTnqTgEdKVv773vuU5U1Q2N4ypQh9jbgjW2Fik8VBpLdAafYwWaIoHP8EREl83
+         3Ewt1ykGKwT+1ECcKdY9fEKz6jmY0GflbOjTpUaUPeen0qlxtoVczESw5OU+Eb8wl8xA
+         3yFTXtyUoU2HZETNCLrkO7jQAnggox5Z5Vm5mhfc6sqy/F+EsVQnJJFjkrGiMk+sGbwi
+         mHGzOVb4+XAiUhZDIGJhdtVVxyG4yFwEa2IiSFD2TGnL6vwpJKF+lh/CtzCMhgOVfjNJ
+         aMyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Z/+9nvmLB5oEXe4I6O3MJpdQ4O59Sk/tOuc5Q78ycSI=;
+        b=5DEQYJQgtBOwllD/AhD2RYxD75V0DCRzdJ20FwsBp7fTyb9iCqR2u70cUvIGH0bzJL
+         wI1ZSNxYXLbcqekic5+FtDAwMMLj6oSeOIgw9A4DkHtfBEaZDQqPJC2zz/HUdXtpZdRo
+         kh8QudjG+cCu1r0VE63ByotSxH1JJcDk8Gr3sXA6GEOYGK9AuhwmmQQ0W81W+EVTg2sy
+         nyT+g9X50gQXX2skVi5LbpxI+tpvNeytBpsn2WoVJtarlptmblJXu3iwaxdPaFRvgJDB
+         8K92qBGfD5CVPFlck++TVDjgtUJBNgMuhGJU3xczTiz2N1mi0+ghH0n3A8420cuw5vR4
+         +uJg==
+X-Gm-Message-State: AOAM533d0XuHgjSge2rSvN0BEyj2sU1s6IQHbwlsD/rgT6i3Q6y3LSbG
+        jZGZraLST4N8TUIa5GFj9i4=
+X-Google-Smtp-Source: ABdhPJz6q4+H7oaIwJTrdJubrwrWCH5bAR5Qx9uj3aTmlp5kCZMGazsTdNS8SFUNzc0gwtQipe1oFg==
+X-Received: by 2002:a05:600c:4ed1:: with SMTP id g17mr23871140wmq.112.1641034984247;
+        Sat, 01 Jan 2022 03:03:04 -0800 (PST)
+Received: from [192.168.1.10] (4e691f2a.skybroadband.com. [78.105.31.42])
+        by smtp.googlemail.com with ESMTPSA id h3sm29559366wrt.94.2022.01.01.03.03.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 01 Jan 2022 03:03:03 -0800 (PST)
+Message-ID: <b4175a8e-a9a4-29e8-b433-6c0dd99c9673@googlemail.com>
+Date:   Sat, 1 Jan 2022 11:03:02 +0000
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1251"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: 5.16.0-rc7+ Bluetooth error
+Content-Language: en-GB
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        Kiran K <kiran.k@intel.com>
+References: <02077a37-46d6-c94f-fa08-9da7ee99e42c@googlemail.com>
+ <50ea1b0e-28d7-6d04-9c03-4becc4db143b@googlemail.com>
+ <CABBYNZLc9Pj=LYhL5MUUVkhenHb_xfT59aDDkdk14k7+ojeUzw@mail.gmail.com>
+From:   Chris Clayton <chris2553@googlemail.com>
+In-Reply-To: <CABBYNZLc9Pj=LYhL5MUUVkhenHb_xfT59aDDkdk14k7+ojeUzw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-Id: <20211231151600.B0C8048A8BD3@mail.osorio.rs.gov.br>
-To:     undisclosed-recipients:;
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Sir/Madam,
 
-Good day to you.
 
-I am Dr.Gertjan Vlieghe personal Secretary to Andrew Bailey who double as the Governor, Bank of England (https://en.wikipedia.org/wiki/Andrew_Bailey_%28banker%29). We have an inheritance of a deceased client, who bear the same name  with your surname. kindly contact Andrew Bailey through his personal email (andbaill228@mail2world.com) with your details for more information.
+On 31/12/2021 19:53, Luiz Augusto von Dentz wrote:
+> Hi Chris,
+> 
+> On Fri, Dec 31, 2021 at 2:35 AM Chris Clayton <chris2553@googlemail.com> wrote:
+>>
+>> On 30/12/2021 09:21, Chris Clayton wrote:
+>>> Hi,
+>>>
+>>> I pulled the latest changes into my clone of Linus' tree and built and installed the kernel. (git describe gives
+>>> v5.16-rc7-9-ge7c124bd0463). I'm seeing errors reported by the bluetooth subsystem that i don't see in 5.15.12 or 5.10.89
+>>>
+>>> The problem seems to occur twice during system startup and on each occasion I see a batch of identical error messages:
+>>>
+>>> [    3.980822] Bluetooth: hci0: Failed to read codec capabilities (-56)
+>>> [    3.982812] Bluetooth: hci0: Failed to read codec capabilities (-56)
+>>> [    3.984812] Bluetooth: hci0: Failed to read codec capabilities (-56)
+>>> [    3.986608] Bluetooth: hci0: Failed to read codec capabilities (-56)
+>>> [    3.987621] Bluetooth: hci0: Failed to read codec capabilities (-56)
+>>> [    3.988606] Bluetooth: hci0: Failed to read codec capabilities (-56)
+>>> [    3.989650] Bluetooth: hci0: Failed to read codec capabilities (-56)
+>>>
+>>
+>> Sorry, I should have said that despite the above errors, my bluetooth devices still work fine.
+> 
+> Would be great to have the HCI trace (btmon).
+> 
 
-Thank you.
+How would I go about capturing that, please? This all happens during boot, so I don't have access to the system to set
+up a trace.
 
-Dr.Gertjan Vlieghe
+
+> @Kiran K Is this to be expected?
+> 
+>>
+>>> A full dmesg log is attached. I've also attached Two files containing the output from "lsusb -v" run on 5.10.89 and
+>>> 5.16-rc7.
+>>>
+>>> Please let me know if I can provide any other diagnostic information or test any patches. You'll need to cc me on
+>>> replies because I'm not subscribed to LKML or linux-bluetooth.
+>>>
+>>> Thanks
+> 
+> 
+> 
