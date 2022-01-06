@@ -2,80 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D44994866AB
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jan 2022 16:22:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0DCF4867F1
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jan 2022 17:55:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240448AbiAFPWj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Jan 2022 10:22:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40680 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240393AbiAFPWf (ORCPT
+        id S241457AbiAFQzM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 Jan 2022 11:55:12 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:53012 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241433AbiAFQzL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Jan 2022 10:22:35 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82EA6C061245
-        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Jan 2022 07:22:35 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id o12so5727885lfk.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Jan 2022 07:22:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
-        bh=GYoLWRT7KY1yIQ70M5/rU/e/rL+YUWJ+qY/E7MGDX6U=;
-        b=BahNJ4wLd3Fkjs94JYBPlwGkhGnkIIWBAGVvZY4wBQZ2z4laYlgUA5RnRaUIQ43bwP
-         VX0Hga1qkwKEuXU4v/icEB8hWfFS4+aZUZSzlrLC+xFgPFJsyXibiuKT//8bkGbmwvz7
-         lo4UXBvBt32YcFOsUnvlU056Zlf7/zB0SfpB0X8oun5L6aKtCQhpUtTeVC4ZdXMDiTiM
-         DjCcIKJpS9Z88HF6Za4sGCaP6rmDC8oxQSznj0365Gjko7IyXEXpWHdHoVYEw+qe3k5D
-         JIvGoYbzcz99/JcJsybb6cHtoAdAaj9l0rtuGAyaGWBS1Yqo7BqXwq1L1Z3UGnJ/9LCm
-         lNtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to;
-        bh=GYoLWRT7KY1yIQ70M5/rU/e/rL+YUWJ+qY/E7MGDX6U=;
-        b=O3O3AcFwIZLEAPSTPzKhxLij/GFyfzJVPeZjcjJ94wmUW1Gk3htAs+XSGd+hMc457H
-         XnuXVDRnUx0ekrovTrZmIM6/h/ufOtZ38pdWIVwXEX7F4wTqLKnySVtuClXPPMLZ/TnV
-         QttheGS/0SATXLQFxgZXig/V1jgVmOPge0ieTQ/fbYyf0dUE46YMK+Kq3ges3DbWsBz/
-         aPK9eUFLLp1oXAL7Tp8Fq4doJR6r4mCWdk0QWuF7Wr0LLlgu/l9xujUHAr/bbDNfIh5B
-         vrduAl3FXk+f44eZxStK9kMvFqq0olBqbTsMhHgMlQHGQykPCmSOQVa2q8efjvB4lO9v
-         tRTw==
-X-Gm-Message-State: AOAM532virG6iNKK+am9LSpKGjPlOQqjE8Ww2dKcZzDojsgkVZGnTRe4
-        fVVSkkSi9q1ieyZivxiU901WMQ40dJg8GjdHwBA=
-X-Google-Smtp-Source: ABdhPJxlXb488vEVtXQbcRYj/9CYTkzZtRl5YVVzOi/W6cdvK6RYUhP3HXgviQ571Glmqevvn7eSJkxWxX39D5gUdeI=
-X-Received: by 2002:ac2:5ca4:: with SMTP id e4mr54601873lfq.263.1641482553688;
- Thu, 06 Jan 2022 07:22:33 -0800 (PST)
-MIME-Version: 1.0
-Reply-To: josephmarks20201@gmail.com
-Sender: imfcustomersserviceuk@gmail.com
-Received: by 2002:a05:6504:1499:0:0:0:0 with HTTP; Thu, 6 Jan 2022 07:22:32
- -0800 (PST)
-From:   "Dr. Joseph Mark" <josephmark00011@gmail.com>
-Date:   Thu, 6 Jan 2022 15:22:32 +0000
-X-Google-Sender-Auth: ZgcKptUa5DkKTy4BgBN8gk8qMZ0
-Message-ID: <CACYqjZTvuY8RY5sJBet_nuVQb7GRm44v3t=2DJYi97vUBhzq5w@mail.gmail.com>
-Subject: Dear Friend
-To:     undisclosed-recipients:;
+        Thu, 6 Jan 2022 11:55:11 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 62F2561D40
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Jan 2022 16:55:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CBEB8C36AEB
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Jan 2022 16:55:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1641488110;
+        bh=/cR39u3FNnN7DaecSYQnRj6TPtcTylA/QsSopmuRjus=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=oNTn1/EdGVfBCh52Z4Xmv3VI1AJD18A2hpaT0+fx+c7oFBaPvasU5HOvXrgec8+Te
+         A6UBY/NDZOdMnkWDMv3oZqsB+tzTBxzeEHMF4XrW6A40FKKbYWAUOEiVX9JlVfHZP6
+         +fy9Zi64+gRTkZDbfC1Ew8ZDFig4yK1HhgV0WvIgo7hHT4We0I9j/pZCTpBA73PRht
+         nF4ez/hJHA/zdOjIktJE9EjONgn6JZaU/fpU+/99mZnpLwrOkHtlrZzYq4lXi4FyQQ
+         Rg7dM5Jmjaxry7oijjWbSxdAWrkPeCIxMPWeTsWVYief7NHkgewG4dkpIne48PjbTy
+         o7KGBlgainEOg==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id BBFABC05FF8; Thu,  6 Jan 2022 16:55:10 +0000 (UTC)
+From:   bugzilla-daemon@bugzilla.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 60824] [PATCH][regression] Cambridge Silicon Radio, Ltd
+ Bluetooth Dongle unusable
+Date:   Thu, 06 Jan 2022 16:55:07 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: recovieira@hotmail.com
+X-Bugzilla-Status: REOPENED
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-60824-62941-gA5iFtVTh8@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-60824-62941@https.bugzilla.kernel.org/>
+References: <bug-60824-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-Dear Friend,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D60824
 
-I am Dr. Joseph Mark Work in bank. I Discovered the sum of seven
-million, two hundred thousand dollars (usd7.2) belonging to a deceased
-customer of this bank the fund has been lying in a suspense account
-without anybody coming to put claim over the money since the account
-late owner from Lebanese involved in car crash.
+--- Comment #217 from Reginaldo Coimbra Vieira (recovieira@hotmail.com) ---
+Perfect, Swyter (comment #215)! That patch is great!
 
-Therefore, I am soliciting for your assistance to come forward as the
-next of kin. I have agreed that 40% of this money will be for you as
-the beneficiary respect of the provision of your account and service
-rendered, 60% will be for me. Then immediately the money transferred
-to your account from this bank, I will proceed to your country for the
-sharing of the fund.  If you think you are capable and will be
-committed to making this deal successes send me an email as soon as
-possible to confirm your interest.
+Before that, I was using my suggestion in the comment #207 to use the dongl=
+e.
+It was working great too. The only drawback that I found was patching the f=
+ile
+"net/bluetooth/hci_core.c" in every kernel update.
 
-Yours faithful,
-Dr. Joseph Mark
+I have just tested your patch too with the kernel 5.15.12 and it has been
+working great! As I commented before (comment #207), the proposal of adding=
+ a
+"quirk" declaration in the file include/net/bluetooth/hci.h and to do the
+proper change in the other ones is a much better solution.
+
+Congratulations!
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
