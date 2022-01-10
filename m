@@ -2,149 +2,140 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A8CA4896C9
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Jan 2022 11:55:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B2B8489957
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Jan 2022 14:11:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244298AbiAJKzH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 10 Jan 2022 05:55:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40894 "EHLO
+        id S230333AbiAJNLi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 10 Jan 2022 08:11:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244285AbiAJKzG (ORCPT
+        with ESMTP id S230152AbiAJNLh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 10 Jan 2022 05:55:06 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB86C06173F
-        for <linux-bluetooth@vger.kernel.org>; Mon, 10 Jan 2022 02:55:06 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6CA1CB815C5
-        for <linux-bluetooth@vger.kernel.org>; Mon, 10 Jan 2022 10:55:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 296D0C36AE5
-        for <linux-bluetooth@vger.kernel.org>; Mon, 10 Jan 2022 10:55:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1641812103;
-        bh=32MMOCY5mOC8zxmil/9MKrwh7bxb1iyXuSHfUdoI1do=;
-        h=From:To:Subject:Date:From;
-        b=ic4KuuwAYeYgS/HNlTckcq1d4Ns9DLgyJykpAFpuBlauFY4ui/V7vFzWPfzfbxTm2
-         Tqoq0baodzkYst6BPcLdUr1Jz9IkS2acH0nDJOodhmvKw4JEG4R2dRHVxT/BfxHSg6
-         IV1aaYpjieuTuv2jyOojmyh8v9PLXVoKd1Dpor7NDajwjNrT9Mhj/tYbg2bRdtDouZ
-         +sCdtl4laU+K/hET+pkwlxDYwTMFAqnjCc15r2Kj9pMDuoNi8y8uGs+w+EF78Q/HJB
-         C2/lLL0h2/4GoRm2WFXUpWB3jAj8aDJT1sdUNJHoEcQLosaUuk7LHH2begOKPvnIMU
-         hgTloV3CQzl4Q==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id 0DB4FC05FD7; Mon, 10 Jan 2022 10:55:03 +0000 (UTC)
-From:   bugzilla-daemon@bugzilla.kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 215474] New: Bluetooth fails randomly.
-Date:   Mon, 10 Jan 2022 10:55:02 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: new
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: barz621@gmail.com
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: bug_id short_desc product version
- cf_kernel_version rep_platform op_sys cf_tree bug_status bug_severity
- priority component assigned_to reporter cf_regression
-Message-ID: <bug-215474-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Mon, 10 Jan 2022 08:11:37 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A26C0611FF
+        for <linux-bluetooth@vger.kernel.org>; Mon, 10 Jan 2022 05:11:36 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id g26so44139253lfv.11
+        for <linux-bluetooth@vger.kernel.org>; Mon, 10 Jan 2022 05:11:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=STst/NZz7XpLuhkw/fjT1YooCLQUEgoChj9j28RAYfs=;
+        b=Bgie3w5lZXcUpEJsNUNnYT9D80sz6831OKMgWSWMpAMR4c04HQM1hwHkoZ1AqHgJ5M
+         pQJfhFBsNTGc+jfMsWTuSDXhNBe5XPwJ8/UQZKbYcWTDQ68Eu4MBBVsHf0V3Baa+27Pp
+         IUJW/950IUGNsTto2NnsTW49/Cy4Vf+KfgzDT0+KZ2gcb/QkEKg3LEIj8qPJpiII0Qbk
+         buE3CbPl0T8T6omQLXT3KYJBxN98pPIrfxDam1Qs0diPFN43pWVugWbd8LU8WaIGviK3
+         O/t/NLMKhR03EdE8rMi5c8T5epCw09Yzc4YmAU5QrO9ZaREbayNwAtpm1SWYSR1IiBuY
+         5w9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=STst/NZz7XpLuhkw/fjT1YooCLQUEgoChj9j28RAYfs=;
+        b=4kTKBSyj/s7CKk3mIrdpCm6Av+QNgKnXvCQSW781mmr5/E1rZNff8FmqTAAlkHnHdb
+         DHwakQgmHa8STXCUY/IkoyukNOWRj0Em1c7X+CPJHeM/ZZVJvF8TA9Vp5dtxzunlagV/
+         Yxnn0faH+0t1fqHA05MU8V2Mlf+qBRftmI4AvkUN8dUgFwJ0lOw5/7TO/djNGeINsVCb
+         vN2qg32NKT3fTpX4WYrvlvoTuNnblbKFAkV5wa3RkYRGcGTpjqweQ7ymMy5Acr97yXF5
+         ZIpapC7In4YrZJNcyhdnN50xTQ/7uWPzzcXQyZyIFCXXXiigE4c8liQIH/+rQQfUoa2r
+         mplw==
+X-Gm-Message-State: AOAM530hIJLfL/jFWOKcMrWQOBjESbSIfPtloHp6qZohVwV8TB/85ilf
+        6bnvCeyVGdurdaahZgIAbUZzoVSRDg7tLFjRf54=
+X-Google-Smtp-Source: ABdhPJyUuzfRq9+VAp3YIslVsNF7E8r6u+SDvjtiaFw6sfTA9uOxrmlrl9JDay/jDh10uqplhgk07a+YHTpM3Ge0znw=
+X-Received: by 2002:ac2:4c51:: with SMTP id o17mr60639917lfk.558.1641820293776;
+ Mon, 10 Jan 2022 05:11:33 -0800 (PST)
 MIME-Version: 1.0
+Received: by 2002:a05:6504:15d1:0:0:0:0 with HTTP; Mon, 10 Jan 2022 05:11:32
+ -0800 (PST)
+Reply-To: gtbank107@yahoo.com
+From:   Barr Robert Richter <westernunion.benin982@gmail.com>
+Date:   Mon, 10 Jan 2022 14:11:32 +0100
+Message-ID: <CAP=nHBK9zHzp_=-EVswWQiLxEoc+HV4oqddgtnEqf-9qYab_4Q@mail.gmail.com>
+Subject: Contact GT Bank-Benin to receive your transfer amount of $18.5m US Dollars.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D215474
+Attn,Dear
+I need you to know that the fear of the LORD is
+the beginning of wisdom, and knowledge of the Holy One is
+understanding. As power of God Most High. And This is the confidence
+we have in approaching God, that if we ask anything according to his
+will, he hears us. I will make you know that Slow and steady wins the race.
+It is your turn to receive your overdue compensation funds total
+amount $18.5Milion  USD.
+I actualized that you will receive your transfer today without any more delay
+No More fee OK, Believe me , I am your Attorney standing here on your favor.
+I just concluded conversation with the Gt Bank Director, Mrs Mary Gate
+And She told me that your transfer is ready today
 
-            Bug ID: 215474
-           Summary: Bluetooth fails randomly.
-           Product: Drivers
-           Version: 2.5
-    Kernel Version: 5.15.13
-          Hardware: All
-                OS: Linux
-              Tree: Mainline
-            Status: NEW
-          Severity: normal
-          Priority: P1
-         Component: Bluetooth
-          Assignee: linux-bluetooth@vger.kernel.org
-          Reporter: barz621@gmail.com
-        Regression: No
+So the Bank Asked you to contact them immediately by re-confirming
+your Bank details asap.
+Because this is the Only thing holding this transfer
+If you did not trust me and Mrs Mary Gate,Who Else will you Trust?
+For we are the ones trying to protect your funds here
+and make sure that your funds is secure.
+So Promisingly, I am here to assure you, that Grate Miracle is coming on
+your way, and this funds total amount of $18.500,000 is your
+compensation, entitlement inheritance overdue funds on your name.
+Which you cannot let anything delay you from receiving your funds now,
 
-Hello. I have an intel i5-1135G7 based laptop and i have a problem with
-bluetooth. It disconnects at random once a day or so. The vendor is intel a=
-nd
-is connected via USB.
+Finally i advised you to try your possible best and contact Gt Bank Benin
+once you get this message to receive your transfer $18.5 USD today.
+I know that a journey of thousand miles begins with a single step.
+Always put your best foot forward
+Try as hard as you can, God give you best.
+take my advice and follow the due process of your payment, the
+transfer will be released to
+you smoothly without any hitches or hindrance.
 
-*-usb:3
-                   description: Bluetooth wireless interface
-                   vendor: Intel Corp.
-                   physical id: a
-                   bus info: usb@3:a
-                   version: 0.00
-                   capabilities: bluetooth usb-2.01
-                   configuration: driver=3Dbtusb maxpower=3D100mA speed=3D1=
-2Mbit/s
+Contact DR.MRS MARY GATE, Director Gt bank-Benin to receive your
+transfer amount of $18.5m US Dollars
+It was deposited and registered to your name this morning.
+Contact the Bank now to know when they will transfer to your
+country today
 
-When it fails the message i get is:
+Email id: gtbank107@yahoo.com
+Tel/mobile, +229 99069872
+Contact person, Mrs Mary Gate,Director Gt bank-Benin.
+Among the blind the one-eyed man is king
 
-=CE=99=CE=B1=CE=BD 10 11:41:29 mainland kernel: usb 3-10: Failed to suspend=
- device, error -110
-=CE=99=CE=B1=CE=BD 10 11:42:00 mainland bluetoothd[412]:
-src/adv_monitor.c:btd_adv_monitor_power_down() Unexpected NULL
-btd_adv_monitor_manager object upon power down
-=CE=99=CE=B1=CE=BD 10 11:42:02 mainland kernel: Bluetooth: hci0: command 0x=
-0c1a tx timeout
-=CE=99=CE=B1=CE=BD 10 11:42:04 mainland kernel: Bluetooth: hci0: command 0x=
-0406 tx timeout
-=CE=99=CE=B1=CE=BD 10 11:42:07 mainland kernel: Bluetooth: hci0: command 0x=
-0c03 tx timeout
-=CE=99=CE=B1=CE=BD 10 11:42:13 mainland rfkill[7516]: unblock set for id 0
-=CE=99=CE=B1=CE=BD 10 11:42:14 mainland kernel: usb 3-10: Failed to suspend=
- device, error -110
-=CE=99=CE=B1=CE=BD 10 11:42:15 mainland kernel: Bluetooth: hci0: HCI reset =
-during shutdown
-failed
-=CE=99=CE=B1=CE=BD 10 11:42:22 mainland rfkill[7520]: unblock set for id 0
-=CE=99=CE=B1=CE=BD 10 11:42:28 mainland kernel: Bluetooth: hci0: Failed to =
-read MSFT supported
-features (-110)
-=CE=99=CE=B1=CE=BD 10 11:42:28 mainland kernel: usb 3-10: Failed to suspend=
- device, error -110
-=CE=99=CE=B1=CE=BD 10 11:42:28 mainland bluetoothd[412]: Failed to set mode=
-: Failed (0x03)
-=CE=99=CE=B1=CE=BD 10 11:42:40 mainland kernel: usb 3-10: reset full-speed =
-USB device number 5
-using xhci_hcd
-=CE=99=CE=B1=CE=BD 10 11:42:55 mainland kernel: usb 3-10: device descriptor=
- read/64, error
--110
-=CE=99=CE=B1=CE=BD 10 11:43:11 mainland kernel: usb 3-10: device descriptor=
- read/64, error
--110
-=CE=99=CE=B1=CE=BD 10 11:43:11 mainland kernel: usb 3-10: reset full-speed =
-USB device number 5
-using xhci_hcd
+As you sow, so you shall reap, i want you to receive your funds
+Best things in life are free
+Send to her your Bank Details as i listed here.
 
-Sometimes a reboot doesn't fix it and needs a shutdown and turn on again to
-work properly.
+Your account name-------------
+Your Bank Name----------------
+Account Number----------
+your Bank address----------
+Country-----------
+Your private phone number---------
+Routing Numbers-------------
+Swift Code-----------
 
-Thanks in advance.
+Note, Your funds is %100 Percent ready for
+transfer.
+Everything you do remember that Good things come to those who wait.
+I have done this work for you with my personally effort, Honesty is
+the best policy.
+now your transfer is currently deposited with paying bank this morning.
+It is by the grace of God that I received Christ, having known the truth.
+I had no choice than to do what is lawful and justice in the
+sight of God for eternal life and in the sight of man for witness of
+God & His Mercies and glory upon my life.
 
---=20
-You may reply to this email to add a comment.
+send this needed bank details to the bank today, so that you receive
+your transfer today as
+it is available for your confirmation today.
+Please do your best as a serious person and send the fee urgent, Note
+that this transfer of $18.500.000 M USD is a Gift from God to Bless
+you.
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+If you did not contact the bank urgent, finally the Bank will release
+your transfer of $18.500.000M USD to  Mr. David Bollen as your
+representative.
+So not allow another to claim your Money.
+Thanks For your Understanding.
+
+Barr Robert Richter, UN Attorney At Law Court-Benin
