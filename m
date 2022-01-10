@@ -2,87 +2,86 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 43110488F1A
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Jan 2022 04:57:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C3D1488F1F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Jan 2022 05:00:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233071AbiAJD5e (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 9 Jan 2022 22:57:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58940 "EHLO
+        id S238430AbiAJEAn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 9 Jan 2022 23:00:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232926AbiAJD5d (ORCPT
+        with ESMTP id S232926AbiAJEAm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 9 Jan 2022 22:57:33 -0500
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978D3C06173F;
-        Sun,  9 Jan 2022 19:57:33 -0800 (PST)
-Received: by mail-yb1-xb35.google.com with SMTP id e198so11919264ybf.7;
-        Sun, 09 Jan 2022 19:57:33 -0800 (PST)
+        Sun, 9 Jan 2022 23:00:42 -0500
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5353C06173F
+        for <linux-bluetooth@vger.kernel.org>; Sun,  9 Jan 2022 20:00:42 -0800 (PST)
+Received: by mail-oo1-xc36.google.com with SMTP id b15-20020a4a9bcf000000b002dc83a61053so1211304ook.1
+        for <linux-bluetooth@vger.kernel.org>; Sun, 09 Jan 2022 20:00:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gKx+R06dgFeuVR7iJXoCkBPxrF2Apl09qUxtv6PLYN0=;
-        b=JjDq71ibn5FynQdndgTl2I2VuEtzjI/3odcIwxX3kmKNI8EzqWvZQmlIx6vOqChYcu
-         22KtrGRjsozpl8SMvC9FEgbYMbhil5pBdVDac0DjNThmcaFdsgHFkexTJ1cNktw9LVdY
-         z4I1XhOFs7eCdpvqG1ouJD1Zo6vD0IDqCTWU1PFfgrA6n9g5w8A/XTNVmE7VeZTJPsAi
-         E7GbW+9ne5xQ4KW+8q9yhK5Fww+VyCW9Amjhw6lfsABQ/8/sjV793fJErtY048GHhZ2x
-         Of2aE0wcQk9rcLpa8X+k4ukofbxYiPl4bs8t5WRFuuGap6Y1Qrs+jbMR8uCGj5x0WhIY
-         zL5Q==
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
+        bh=dKFXRxFFjh9xw1vPCYWrhibJscdy5DYIaUyqlpaPFVc=;
+        b=UGjAN0mYxpJTFw8BhXSQFiyFqHGSTBXDZ2uWsWa/6KX6mYVFHmNtNdjAo/A11/YxnL
+         vHrk+ei8OvvRih+QDqqhTpKmY6L5irQkld/WUsi3JRoNU6tb/S8Mgvh+vveMqx0gpun3
+         XgODVuJy0wZ42CB8GSl0Jkei7iTxPlv6HruWwgMJEVsjt0iESJaWY6iXcpOeVELePybN
+         lep3ZPXWO3PniX+ZJT7SJJmbzXnYfOl5fy5jYizRrpRrCxdqQwpqCx995IRBrLPztPT8
+         FObR2uSO6RG8CU3vrgu179qdGBP3fUgeNaNy1pMVH+Xd9lAriMgqmwbKM3SSHHEP5D0t
+         DRFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gKx+R06dgFeuVR7iJXoCkBPxrF2Apl09qUxtv6PLYN0=;
-        b=Gqc15IPKehPxqixCrQ+nw/Kee8Msfyql8p+NS+3aPn0MzJpLmXbw0ALV8RJ/LuozSB
-         /wk3BrhlI71TYvU+Uml4eZKQpil9Ps1VP7eFJdM6mc7H7uOd2WMAOdN5yvU4mXj88yA1
-         gyt8mEgFLJnei6O0YscmosVgBzt5phzvPNnJyuep5ncmjNZMA0ZOQFa8K68SLZ+frkb6
-         rjuWqS1YISxb6YZ9pApDQnyrfU8SjLNIlqfZDLLZD3X9QnyJEAwGm6IcfP/7GDMX2Pi2
-         DAWd2BQ15V/OIYGADDtJ3DLNaeco4Tj08PG70uh+lwFlkfsR7ptLw6iL7JNHKZ1eqsEM
-         ijYw==
-X-Gm-Message-State: AOAM531PC/LG3IVg+6DU5iCUnkENJejBKCnHUeuTxYFRYe+axdswPOWU
-        3wBnvi6YKQVwK7vzNNhJHIFcqXTCIxFemRPqwNMV+smT
-X-Google-Smtp-Source: ABdhPJzTrETyuDmbXvR9z7gKCTEi3XRBUYW5RWIvBDdJ1o1QYQdlEAhxaqVSAAgeeilDeW2FdqR525K64kZ3HQA7h4U=
-X-Received: by 2002:a25:c41:: with SMTP id 62mr22130417ybm.284.1641787052533;
- Sun, 09 Jan 2022 19:57:32 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to;
+        bh=dKFXRxFFjh9xw1vPCYWrhibJscdy5DYIaUyqlpaPFVc=;
+        b=dzyiAFZqioNfBO81AS2WHaNHZkQf/80FeHmaR7Jnd+IA/15SGivR9KWkKL9J84Bn3u
+         +LI/21uoIowuR55YlwtUxoWdJ4ZVDgy9kdlnHzDsblh7DxtbqlW0x5urkMASQKYJj2zT
+         wRiHIQuFcwggBN8+aLd9my6aWvo/3eJ44R6mGuRc3IdGirR/SLGHfowhWXp/7mBAUx+r
+         o4/vyQeyXhxMjCMdoEhKm2Yjhv8fFDaRzTX6FsM/ZRC0ivOTwPEXTjZSUliuSV1K/bM9
+         eEAuwSkWco8jp3norFsGQsk+WYvuIagYxFbwGH8Jonp5Z9QKs352xhA9VG4L/AB2xIMO
+         DWfg==
+X-Gm-Message-State: AOAM532Ed5JqVb6NVmRvEfma43Wf6TpoCKek/3TwxW1UDe9Si9L2YK+x
+        OUU3mgZHOg8gfT7TN7a671ze0jGnZxd6HJy6EGE=
+X-Google-Smtp-Source: ABdhPJxrtdwJzVtg+gZKwXqdSzOaFmFAKaZYOOLNaABYkoFuUCxeFLeYGVeTHNoNAKBKWWkSlCyJmAAbdt75x4fC3JI=
+X-Received: by 2002:a4a:9568:: with SMTP id n37mr46262791ooi.73.1641787240696;
+ Sun, 09 Jan 2022 20:00:40 -0800 (PST)
 MIME-Version: 1.0
-References: <20220107210942.3750887-1-luiz.dentz@gmail.com>
- <20220107182712.7549a8eb@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <6FFD2498-E81C-49DA-9B3E-4833241382EE@holtmann.org> <20220109141853.75c14667@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
- <CABBYNZJ3LRwt=CmnR4U1Kqk5Ggr8snN_2X_uTex+YUX9GJCkuw@mail.gmail.com> <20220109185654.69cbca57@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-In-Reply-To: <20220109185654.69cbca57@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Sun, 9 Jan 2022 19:57:20 -0800
-Message-ID: <CABBYNZKpYuW6+iZJomaykGLT6gF2NBjTxjw-27vBZRY89P3xgw@mail.gmail.com>
-Subject: Re: pull request: bluetooth 2022-01-07
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>,
-        Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+Reply-To: godwinppter@gmail.com
+Sender: godwinpeter219@gmail.com
+Received: by 2002:ac9:1329:0:0:0:0:0 with HTTP; Sun, 9 Jan 2022 20:00:40 -0800 (PST)
+From:   Godwin Pete <godwinnpeter@gmail.com>
+Date:   Mon, 10 Jan 2022 05:00:40 +0100
+X-Google-Sender-Auth: aEw5M8YnzKzsBXcwH-P_ApsJeq4
+Message-ID: <CA+8O8-ek9BBRYNTDeuJbx5th-v7nxospFMmnYdbqT7h8DmPEaQ@mail.gmail.com>
+Subject: This is for you
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Jakub,
+Hi,
 
-On Sun, Jan 9, 2022 at 6:56 PM Jakub Kicinski <kuba@kernel.org> wrote:
->
-> On Sun, 9 Jan 2022 18:46:05 -0800 Luiz Augusto von Dentz wrote:
-> > > You're right. I think our patchwork build bot got confused about the
-> > > direction of the merge and displayed old warnings :S You know what..
-> > > let me just pull this as is and we can take the fixes in the next PR,
-> > > then. Apologies for the extra work!
-> >
-> > Im planning to send a new pull request later today, that should
-> > address the warning and also takes cares of sort hash since that has
-> > been fixup in place.
->
-> But I already pulled..
+How are you doing? I am very happy to inform you about my success. I'm
+currently out of the country for an investment with part of my share,
+after completing the transfer with an Indian business man. But i will
+visit your country, next year, after the completion of my project.
+Please, contact my secretary to send you the (ATM) card which I've
+already credited with the sum of ($300,000.00). Just contact her to
+help you in receiving the (ATM) card. I've explained everything to her
+before my trip. This is what I can do for you because, you couldn't
+help in the transfer, but for the fact that you're the person whom
+I've contacted initially, for the transfer. I decided to give this
+($300,000.00) as a compensation for being contacted initially for the
+transfer. I always try to make the difference, in dealing with people
+any time I come in contact with them. I'm also trying to show that I'm
+quite a different person from others whose may have a different
+purpose within them. I believe that you will render some help to me
+when I, will visit your country, for another investment there. So
+contact my secretary for the card, Her contact are as follows,
 
-Nevermind then, shall I send the warning fix directly to net-next
-then? Or you actually pulled the head of bluetooth-next not tag?
+Full name: Mrs, Victoria Nyemuya,
+Country: Burkina Faso
+Email: victorynyemuya@gmail.com
 
--- 
-Luiz Augusto von Dentz
+Thanks, and hope for a good corporation with you in future.
+
+Godwin Peter,
