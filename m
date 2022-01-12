@@ -2,135 +2,76 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E8D448C21A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Jan 2022 11:17:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A74DD48C43E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Jan 2022 13:55:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352438AbiALKRh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 12 Jan 2022 05:17:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46344 "EHLO
+        id S1353296AbiALMzL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 12 Jan 2022 07:55:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346594AbiALKRh (ORCPT
+        with ESMTP id S1353294AbiALMzK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 12 Jan 2022 05:17:37 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC09DC06173F
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jan 2022 02:17:36 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id l8so3481187plt.6
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jan 2022 02:17:36 -0800 (PST)
+        Wed, 12 Jan 2022 07:55:10 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 502CEC06173F
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jan 2022 04:55:10 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id k21so7967896lfu.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jan 2022 04:55:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thegavinli.com; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6P5X/xnkvM4++eid9TJLUIH5bXFuSLtccoKg9xRS+kg=;
-        b=KjDXPJJEV8Cw7bI9QvSQDoFyYOSJneiXIzSF1fL6+tMipXXOJWbScPOTdpm70W9xSN
-         c31IysSdeWkNmczV+ClMNDjNXAYPnSijQLP5MGxrcoei64lD9SojyMPzaYs6j+vRpRN3
-         86SLnvE1sc/I4Pu1es/1HYyWrsGiuzsUdpwcQ=
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=CMzdAZWvSREUxL9gyi7ZDNRKXhnPhof45SdOgpKoP4Q=;
+        b=Oz4elds2mD2GPvP1MrH0xFKH9E73s26SM10W/+R93H8TVqTR6IHxfXwToy8fH+9iRx
+         o0bh0/T+RY73OAxXvlxFf9gc5bFJfMCkl2WuCmqqO6z/Mn0zryxxVxNbwYT7PP2RQ//x
+         8y9YtOIlAzli5Ww3TXeuZZa+bma6/AQIHZsnP6VmIE8MX9KFDDGE1Ssl7GFlu8Y2rmD9
+         Tt7MepBmQG0lQ+UprvMNcLOm6jNV7A9cH1Vef+3k/0iBnCCaqmDAald0eRLx89/CP+4u
+         Ho74RDDJ4ug8NPAvaqoippyJyjif3VBvdmnI4TudF7ur6IC1T946ZGy018CMLP75biba
+         ORfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6P5X/xnkvM4++eid9TJLUIH5bXFuSLtccoKg9xRS+kg=;
-        b=CA5LSHvtJv6tWhex9GHk24pOwt+Ia/2HskfSZOaGtOuq2hGyQs6DXbskJQnwTH9QrO
-         xbnvt/CuWIXruqeTxTrmYM9ZMQyrNi8I86efl1+9dQrQbTFm9TlA7adfaQmfMyG+FqKE
-         eDEK8zbXIBtyVw+6q4MetUZkp4Eeizpg/cSoUUa1Z5FOahqIrXlzrbpNPEQs92LfOVtR
-         B/lIhPhvyNNh4P/qu6LP9F7m+JtvwBk8WoAFjVNKf9qdWzZs3j+KH/fyb9TShHI3h9Bm
-         KPhPe/+vK6XtrhEwto7QjtRz3wxv2dRgIZLvx4QCILjDdbvBdgSe4A8CWlJ1H3iu/rMb
-         /5QQ==
-X-Gm-Message-State: AOAM531JjvRYLmfhnUom/H+te7Ox8/ixe1+PfaTjQH2uyhysEFPqOz73
-        n8JQZVimr/MLiR/mSa9+5QcAi85bCrMTFHKN
-X-Google-Smtp-Source: ABdhPJyATo0F72bZqjd2v1MDJCGMrbrcl7PmYpqMWDmGLBckc7vcM+BRqCFBYzhR5cbiRU8AsD5Qiw==
-X-Received: by 2002:aa7:91c3:0:b0:4b0:eebe:49c0 with SMTP id z3-20020aa791c3000000b004b0eebe49c0mr8771250pfa.6.1641982656459;
-        Wed, 12 Jan 2022 02:17:36 -0800 (PST)
-Received: from craggy.lan ([2600:1700:42f0:8090::34])
-        by smtp.gmail.com with ESMTPSA id l9sm1997421pgc.20.2022.01.12.02.17.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jan 2022 02:17:36 -0800 (PST)
-From:   gav@thegavinli.com
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org, Gavin Li <git@thegavinli.com>
-Subject: [PATCH] Bluetooth: ensure valid channel mode when creating l2cap conn on LE
-Date:   Wed, 12 Jan 2022 02:17:31 -0800
-Message-Id: <20220112101731.77010-1-gav@thegavinli.com>
-X-Mailer: git-send-email 2.34.1
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=CMzdAZWvSREUxL9gyi7ZDNRKXhnPhof45SdOgpKoP4Q=;
+        b=kly4Alc5VUziGCoYlPXhYNLsuSxwL6JBB2S+udV3qUaf70voVQvOtm0Rc7vBQeGJvq
+         akuDUWhmlfcL0jWmC1w1rEKPfcD50s+aMzxXTvgNmTu3xMkfWFmYejdraW40GpzeBU1m
+         jUE3CbH+4JE3gFXvSkq2YXZTcjmkqbgdneNMusGxnONPm3cDP0llmJ1wLHSuayr1Hnvl
+         BmNtsXgIa8s5LkoMUgZ0U/PTERUqhxVy3TCShgOuAi5KJ/v1F8Y1kti3pH2AM4RC6HfY
+         rWZnPR2hxHSQ7Y2AhlnW7qgJ+4KAVD4FbzxmlcM16vaHpQWBMV3cLETrGUdmAld5M9aZ
+         qK0A==
+X-Gm-Message-State: AOAM532cDjMBxtkBczZtJRRY9Yb17uT23n+368pS3bzquRKGDbAxblIL
+        51SSnGXz+aXiw4/pKOaMPAE2oqzU3T1llYyFtwc=
+X-Google-Smtp-Source: ABdhPJwDGn64u6G2tHjhFF6O2H3gn7ak234X+ePQonkCR6x2UXgNTqMtsWus+0BgT3fuGdV0kdXV+ZhRbVsn6uy91CU=
+X-Received: by 2002:a05:651c:1546:: with SMTP id y6mr6288383ljp.344.1641992108680;
+ Wed, 12 Jan 2022 04:55:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a19:ad4c:0:0:0:0:0 with HTTP; Wed, 12 Jan 2022 04:55:08
+ -0800 (PST)
+Reply-To: lisahugh159@gmail.com
+From:   Ms Lisa Hugh <lisahugh531@gmail.com>
+Date:   Wed, 12 Jan 2022 04:55:08 -0800
+Message-ID: <CAFnQ+S5hjGnqwjekBkBbM48Z72hK8thGu98wdPx9u__EvGUfGQ@mail.gmail.com>
+Subject: REPLY TO HAVE THE FULL DETAILS >>MS LISA HUGH.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Gavin Li <git@thegavinli.com>
+Dear Friend,
 
-After creating a socket(AF_INET, SOCK_STREAM, BTPROTO_L2CAP) socket and
-connect()'ing to a LE device with default settings (no setsockopt), upon
-the first sendmsg, the following BUG occurs because chan->mode==L2CAP_MODE_ERTM,
-causing l2cap_ertm_send() -> __set_retrans_timer() -> schedule_delayed_work()
-on l2cap_chan.retrans_timer, which was never initialized because
-l2cap_ertm_init() was never called to initialize it.
+I am Ms Lisa Hugh accountant and files keeping by profession with the bank.
 
-  Call Trace:
-   queue_delayed_work_on+0x36/0x40
-   l2cap_ertm_send.isra.0+0x14d/0x2d0 [bluetooth]
-   l2cap_tx+0x361/0x510 [bluetooth]
-   l2cap_chan_send+0xb26/0xb50 [bluetooth]
-   l2cap_sock_sendmsg+0xc9/0x100 [bluetooth]
-   sock_sendmsg+0x5e/0x60
-   sock_write_iter+0x97/0x100
-   new_sync_write+0x1d3/0x1f0
-   vfs_write+0x1b4/0x270
-   ksys_write+0xaf/0xe0
-   do_syscall_64+0x33/0x40
-   entry_SYSCALL_64_after_hwframe+0x44/0xa9
+I need your co-operation for the  transferring of
+($4,500,000,00,U.S.DOLLARS)to your bank account for both of us
+benefit.
 
-This patch ensures that when connecting to a LE device, chan->mode will
-always be corrected to L2CAP_MODE_LE_FLOWCTL if it is invalid for LE.
+Please send the follow below,
 
-Signed-off-by: Gavin Li <git@thegavinli.com>
----
- net/bluetooth/l2cap_sock.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+1)AGE....
+2)TELEPHONE NUMBER,,,,,...
+3)COUNTRY.....
+4)OCCUPATION..
+....
+Thanks.
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 160c016a5dfb9..58c06ef32656c 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -78,6 +78,17 @@ static int l2cap_validate_le_psm(u16 psm)
- 	return 0;
- }
- 
-+static bool l2cap_mode_supports_le(u8 mode)
-+{
-+	switch (mode) {
-+		case L2CAP_MODE_LE_FLOWCTL:
-+		case L2CAP_MODE_EXT_FLOWCTL:
-+			return true;
-+		default:
-+			return false;
-+	}
-+}
-+
- static int l2cap_sock_bind(struct socket *sock, struct sockaddr *addr, int alen)
- {
- 	struct sock *sk = sock->sk;
-@@ -161,7 +172,7 @@ static int l2cap_sock_bind(struct socket *sock, struct sockaddr *addr, int alen)
- 		break;
- 	}
- 
--	if (chan->psm && bdaddr_type_is_le(chan->src_type))
-+	if (chan->psm && bdaddr_type_is_le(la.l2_bdaddr_type) && !l2cap_mode_supports_le(chan->mode))
- 		chan->mode = L2CAP_MODE_LE_FLOWCTL;
- 
- 	chan->state = BT_BOUND;
-@@ -240,7 +251,7 @@ static int l2cap_sock_connect(struct socket *sock, struct sockaddr *addr,
- 			return -EINVAL;
- 	}
- 
--	if (chan->psm && bdaddr_type_is_le(chan->src_type) && !chan->mode)
-+	if (chan->psm && bdaddr_type_is_le(la.l2_bdaddr_type) && !l2cap_mode_supports_le(chan->mode))
- 		chan->mode = L2CAP_MODE_LE_FLOWCTL;
- 
- 	err = l2cap_chan_connect(chan, la.l2_psm, __le16_to_cpu(la.l2_cid),
--- 
-2.34.1
-
+Ms Lisa Hugh
