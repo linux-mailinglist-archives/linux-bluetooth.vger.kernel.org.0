@@ -2,150 +2,100 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F99648CE85
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Jan 2022 23:48:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21B9348D10B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jan 2022 04:46:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234586AbiALWsq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 12 Jan 2022 17:48:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49940 "EHLO
+        id S232282AbiAMDpf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 12 Jan 2022 22:45:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234580AbiALWsp (ORCPT
+        with ESMTP id S232272AbiAMDpc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 12 Jan 2022 17:48:45 -0500
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E54BC061748
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jan 2022 14:48:45 -0800 (PST)
-Received: by mail-io1-xd2f.google.com with SMTP id w9so5773076iol.13
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jan 2022 14:48:45 -0800 (PST)
+        Wed, 12 Jan 2022 22:45:32 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4166FC06173F
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jan 2022 19:45:32 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id z3so7605091plg.8
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jan 2022 19:45:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=p/5eE7orLsIcNXsuvHQEKwUG1gSvQ6fLVrrHDFuDJRc=;
-        b=pUnh/uIuQb7hoUHUwbPDOISHNdMp5hmM4h63sXSLLVcCq5HW29BsZFmYdkyqC4gnxY
-         xZrF26s88VI+w717YdOCGiIZpnDHPAquMweP5EKu503gQHpD5KfZ5T8YZ3yNIFXe2TCf
-         BlB4aDKecCRXSKAMF7oDmlv4TkKJ+2a9B05ufvX8ppaBAd/sdceZpOYMbmryxysmTNQs
-         HGrCCW8q40f4WKFENMOYK0+O8oTy5Y3xFK+hABcpvnFnZndrXNFUxLhteV3c0ott74jz
-         KapTREUX0+ErZU0J87K9hgIiO/r4WmIhio/SsyEXwXd4ffpHG6STSVuIrGCQl3+XG7P/
-         xSQQ==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=oUasARq/o6zJ/b7T6dTjM5I67oslL75a2DxvM9fVQpM=;
+        b=AHohIMUwWSsDaoQwjOPLpvz5/Jw029phM/2VEQ6481c1u13lktJXaUtUUW6CQ/1xdF
+         jOXB3x3NipnyaZygblNmyS8Zde75jMVd5Ba3VZnhPUYQPsNiRR5mg/ZRF0hLUDEc03jN
+         bMAIKNLy+SWj3I52ikeLYYkUiFw7edhvEpvGAdplbioVA/7a6Xt4aOgSeTib8Bgtn03r
+         vWKGtJ6P8+DeqSYl5HaQc0wRO4kw1uHWjHAgx76UatLSX0kzGW2P+Cd43Zk87Y+cXNHu
+         3FrBTBVyFiRgKNO584Z83nN0TalUKUY7kdFZRmskt4YVNgFgXkgUCCZRjpezcTd4pk5J
+         Cc2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=p/5eE7orLsIcNXsuvHQEKwUG1gSvQ6fLVrrHDFuDJRc=;
-        b=pt3cc8nbdQ6xfz3B/buX2SeMV+LZcBmR9dcmWoFwQNIaqNXkDp9lwCLaIqz4swhRPk
-         yXpBS1cmErYJf1wMZRudXrK9k/5PakgKZWBxoNeOjl8oTJxjUOqNWvaOj0ex2KM4SteQ
-         x7IT6nMM76zb7YkFZZqxjB0XG0nmD/0KPeYAvILG3ymo+QJUyOD8tAGAZgMpRNDqBiW9
-         LX4VyXMgVnMXkH83fwEKX3Yr1w1KsxErY95S2dB0gF+VltsWqYi94BNNagwhXggS9hj5
-         fadyowX3VrncajjJGUsLW/iCS1Xl4651aTvTFLsqyOufxcG9psPgzcGi9O1FkHuBvwhO
-         3pfQ==
-X-Gm-Message-State: AOAM5316sZvOf6eEcApvuOkFJX1HDqxitZMnJQTrYw2+d69mijXBVKd3
-        /qrWnC8Uu1fsadYy956HpfUksH5oq2s=
-X-Google-Smtp-Source: ABdhPJzqeM9n66xkW9bVopwupHfyrkBTWau+UsYb4N4msog2w2CpNDqx/ZLO5EwZuTHEUbRjweUhBg==
-X-Received: by 2002:a05:6602:ca:: with SMTP id z10mr863949ioe.117.1642027724236;
-        Wed, 12 Jan 2022 14:48:44 -0800 (PST)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id o12sm777209ilu.86.2022.01.12.14.48.43
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=oUasARq/o6zJ/b7T6dTjM5I67oslL75a2DxvM9fVQpM=;
+        b=swc17134elC+tE6Q+/Zkh9Yso9D8X2OOEGhM+WSaN3gW5w0ftKPFyEZN3DA7epOIMA
+         jL+KypAxJPcbJfavEIhvF3SGeuSWCN4lDYPbWRf950KzF3jWcHOk6om5Q7fNCm6+LwoE
+         TTHqN19hqqyS9iBXVs2BFb3ms37cG+MYuuvp0Rt3WMPf1JzJUnbuTN44nKjQ8GUkM+/d
+         XA7TL57e9+FBBWhWjxaj1r6Ho/MvUDs5PjCS4EpInzywgnk5cEqa75q6tr5vLZgYP7vH
+         JZ0MbQ3AE8QxJ6ezPbZtKbYB77ltPA58xCEauPu+wru7W6eSknIZ4dRs19LMX2fd5eKQ
+         4FlA==
+X-Gm-Message-State: AOAM530csaBeA3StQ9a/pO0723ZiSfAq1ruJTmTpdPhev+avZIhKKPnn
+        dqiBZtYVRwpbDTkW3AnQjNNvl+fsjkI=
+X-Google-Smtp-Source: ABdhPJyET9kWwyvA3dKJUXNz5ojKQduqStFTnIQhYJ99s2uXzDm7OjC9MroqzVFI5fTIlR2skxNylA==
+X-Received: by 2002:a17:902:7105:b0:149:e08a:b31b with SMTP id a5-20020a170902710500b00149e08ab31bmr2508742pll.171.1642045531452;
+        Wed, 12 Jan 2022 19:45:31 -0800 (PST)
+Received: from [172.17.0.2] ([13.66.249.173])
+        by smtp.gmail.com with ESMTPSA id q19sm891031pgb.77.2022.01.12.19.45.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jan 2022 14:48:44 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 2/2] hog: Add input queue while uhid device has not been created
-Date:   Wed, 12 Jan 2022 14:48:42 -0800
-Message-Id: <20220112224842.519814-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.33.1
+        Wed, 12 Jan 2022 19:45:31 -0800 (PST)
+Message-ID: <61dfa05b.1c69fb81.f4256.34dd@mx.google.com>
+Date:   Wed, 12 Jan 2022 19:45:31 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============3989213398665739500=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [v2,1/2] hog: Fix read order of attributes
+Reply-To: linux-bluetooth@vger.kernel.org
 In-Reply-To: <20220112224842.519814-1-luiz.dentz@gmail.com>
 References: <20220112224842.519814-1-luiz.dentz@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============3989213398665739500==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Since report map is only read after all reports it is possible to start
-receiving notifications before uhid has been created, so this adds a
-queue to store the events while the report map is pending and once uhid
-has been created dequeue the events.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=605008
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.65 seconds
+GitLint                       PASS      0.74 seconds
+Prep - Setup ELL              PASS      50.27 seconds
+Build - Prep                  PASS      0.56 seconds
+Build - Configure             PASS      10.06 seconds
+Build - Make                  PASS      1882.33 seconds
+Make Check                    PASS      13.16 seconds
+Make Check w/Valgrind         PASS      563.83 seconds
+Make Distcheck                PASS      292.14 seconds
+Build w/ext ELL - Configure   PASS      10.16 seconds
+Build w/ext ELL - Make        PASS      1806.94 seconds
+Incremental Build with patchesPASS      3736.08 seconds
+
+
+
 ---
- profiles/input/hog-lib.c | 32 +++++++++++++++++++++++++++++---
- 1 file changed, 29 insertions(+), 3 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/profiles/input/hog-lib.c b/profiles/input/hog-lib.c
-index beb19af70..0b375feb8 100644
---- a/profiles/input/hog-lib.c
-+++ b/profiles/input/hog-lib.c
-@@ -98,6 +98,7 @@ struct bt_hog {
- 	struct queue		*gatt_op;
- 	struct gatt_db		*gatt_db;
- 	struct gatt_db_attribute	*report_map_attr;
-+	struct queue		*input;
- };
- 
- struct report_map {
-@@ -355,11 +356,18 @@ static void report_value_cb(const guint8 *pdu, guint16 len, gpointer user_data)
- 		ev.u.input.size = len;
- 	}
- 
--	err = bt_uhid_send(hog->uhid, &ev);
--	if (err < 0) {
--		error("bt_uhid_send: %s (%d)", strerror(-err), -err);
-+	/* If uhid had not been created yet queue up the input */
-+	if (!hog->uhid_created) {
-+		if (!hog->input)
-+			hog->input = queue_new();
-+
-+		queue_push_tail(hog->input, util_memdup(&ev, sizeof(ev)));
- 		return;
- 	}
-+
-+	err = bt_uhid_send(hog->uhid, &ev);
-+	if (err < 0)
-+		error("bt_uhid_send: %s (%d)", strerror(-err), -err);
- }
- 
- static void report_ccc_written_cb(guint8 status, const guint8 *pdu,
-@@ -993,6 +1001,21 @@ static char *item2string(char *str, uint8_t *buf, uint8_t len)
- 	return str;
- }
- 
-+static bool input_dequeue(const void *data, const void *match_data)
-+{
-+	const struct uhid_event *ev = data;
-+	const struct bt_hog *hog = match_data;
-+	int err;
-+
-+	err = bt_uhid_send(hog->uhid, ev);
-+	if (err < 0) {
-+		error("bt_uhid_send: %s (%d)", strerror(-err), -err);
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
- static void uhid_create(struct bt_hog *hog, uint8_t *report_map,
- 							ssize_t report_map_len)
- {
-@@ -1072,6 +1095,8 @@ static void uhid_create(struct bt_hog *hog, uint8_t *report_map,
- 	hog->uhid_created = true;
- 
- 	DBG("HoG created uHID device");
-+
-+	queue_remove_all(hog->input, input_dequeue, hog, free);
- }
- 
- static void db_report_map_write_value_cb(struct gatt_db_attribute *attr,
-@@ -1284,6 +1309,7 @@ static void hog_free(void *data)
- 
- 	bt_hog_detach(hog);
- 
-+	queue_destroy(hog->input, free);
- 	queue_destroy(hog->bas, (void *) bt_bas_unref);
- 	g_slist_free_full(hog->instances, hog_free);
- 
--- 
-2.33.1
 
+--===============3989213398665739500==--
