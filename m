@@ -2,83 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2352B48E075
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jan 2022 23:39:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 504D648E156
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Jan 2022 00:59:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238020AbiAMWjx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 13 Jan 2022 17:39:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34570 "EHLO
+        id S238332AbiAMX7W (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 13 Jan 2022 18:59:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235281AbiAMWjv (ORCPT
+        with ESMTP id S238329AbiAMX7V (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 13 Jan 2022 17:39:51 -0500
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D398C061574
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jan 2022 14:39:51 -0800 (PST)
-Received: by mail-pj1-x1043.google.com with SMTP id l16-20020a17090a409000b001b2e9628c9cso12419064pjg.4
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jan 2022 14:39:51 -0800 (PST)
+        Thu, 13 Jan 2022 18:59:21 -0500
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B403C061574
+        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jan 2022 15:59:21 -0800 (PST)
+Received: by mail-io1-xd31.google.com with SMTP id v6so10549503iom.6
+        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jan 2022 15:59:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=YbEI3Q/NEjCtDTVCV1jkA7nYNYBH/Wfa2wk3IkVyJko=;
-        b=fp+3NMsXHR7mkUPMv9Oq5QJTga7zxBy7HwgOkWsi+HVJ4o7jOOleg00j30S+o8p9ZX
-         EAJbUkR+vuQPdilpYm3udesLTQb3UN5F8R3M8lxeETl+86pn91433+negjNBeOtoKT1a
-         3LE8yt4p++wcIfIKnzG6dhJi8ZwubgTPCCNU8W4fTz3mO9fbs65RqsTBxUrfsEahPPY7
-         7CFNMNXhiHHUZnXgny5qZMO3kpdve9LMfBWZrx1fdGDeTjHr3StmZoyMJbpH5scyOEUU
-         riGJg2Voi3URrIHFOcBZhLS7QeqDsDtaER6qT1b0d/pUOSreYXt0mzdD8MSWsXGD+eDw
-         +xOA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=swIc/YWTqbGW2vcyyUIZkfdZFHgU9akpO8dYNy7F6xA=;
+        b=EjkzCDcgo7ZyV4PO+uVAMn4JDhGaueEGmMc0OYkIWH9ILkxltTpF196jvdmKTwXb23
+         zPjjQSH4wOpZI+g7y9bFKClM7qYSMvCWUjTpWBvOQC1nL1yR3g/W4TE6JfpBNqjHilgH
+         /X/v4HdHgMmjH310RdfzAadJNFuKbntDv2xP8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=YbEI3Q/NEjCtDTVCV1jkA7nYNYBH/Wfa2wk3IkVyJko=;
-        b=AcGgx9QIZJz0SPj8xFCwrXOM/okP/Y+ZW9sxAKaoy2UrUq9C8qTFOqkdg+YzA/d0yA
-         kfP/kJwVuanlx2Fb2gv/PIZK76yC8kAJUuej+smmB8eLPT5KIwgWpmwz9GI+eKP3aL8y
-         Cf9EiDumQ26gBbL7FO84Yz6uAVrjxk+Kvh1aeTA0NJY2YaGTl62SK236BTzOO3PNSZBp
-         WDVgg5Z6hn1ivr5SvbNWV+8dpeMi8n5TPZfOV3gRRb4XJ37GBH1m4NXnPyNZrBx4f0R4
-         BohPunR2kBhKyO0mQi34/oj6/AWZiyJrH69HDjQxWsoEGLPrnniymNOmODr5ZoGnstMV
-         ODyA==
-X-Gm-Message-State: AOAM532SmOZ4w4Kc8FKUQ5wVFAncto6sVzk+IGnKP3KmfUBpOpFdd1g+
-        ljrol1nvRYR6zcXherWkGMsO9wGZxcabcG6kuLs=
-X-Google-Smtp-Source: ABdhPJxK739at2BMpLC/r6WrtqAYj/WJWzPBM/WVQa0qXFMTP70LZye9o/B0R8xHpiyG5lYj6P7RVn1D/YSSUOvYWEY=
-X-Received: by 2002:a17:90b:4c89:: with SMTP id my9mr7502494pjb.152.1642113590715;
- Thu, 13 Jan 2022 14:39:50 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=swIc/YWTqbGW2vcyyUIZkfdZFHgU9akpO8dYNy7F6xA=;
+        b=iVxPfgEgkVFMdyPqzf2QYIaWLwMpzHtGCR+RL8nIKrXBcw3G6RDXCQqp9siziv2FZb
+         f9QcXMh2Ju/+f9b0BvHysXaRzkrGvABWEBXXYvqCdmnus7ek5KIeQawWKqHVp/Ez3oYo
+         BseptfPhBDnTJn87PpSk7F+Xkr7nu5LaSNrTz+NGXhCVmiXz0natDtk88Xav80EGBgOj
+         ehX9ho5iXL0w7ug9QHo0Uhp19Q/2xbRUbY7QVnp4R2lGcZvW9xjzUyXlzkUjYUIDQz+y
+         1u58FSXHu3jZdLUhPJKHJjBNWEKoKJjymoJc8ASnvW0rREGHqQ7bRuyv4PxHjvOMCeEy
+         yBHA==
+X-Gm-Message-State: AOAM531RgEPBnDx2KgErKW8/97ZyUdOQ/2HzMWRJd4pAnJL8dPA1ZigY
+        6zKSOz+9SDDwG+NzZRHZ1E4WlYF+gglKeA==
+X-Google-Smtp-Source: ABdhPJxk46gU438gm5dulri8TJYMYsX6ji8krWJvAJfqc4OHKx6fCbFT0foOSjSaa6zU33i+IfOAJQ==
+X-Received: by 2002:a05:6638:2204:: with SMTP id l4mr2716134jas.142.1642118360327;
+        Thu, 13 Jan 2022 15:59:20 -0800 (PST)
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
+        by smtp.gmail.com with ESMTPSA id j3sm3662023ilu.64.2022.01.13.15.59.17
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Jan 2022 15:59:18 -0800 (PST)
+Received: by mail-il1-f172.google.com with SMTP id a2so1196414ilr.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jan 2022 15:59:17 -0800 (PST)
+X-Received: by 2002:a92:c202:: with SMTP id j2mr3338009ilo.165.1642118357532;
+ Thu, 13 Jan 2022 15:59:17 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:f38c:0:0:0:0 with HTTP; Thu, 13 Jan 2022 14:39:50
- -0800 (PST)
-Reply-To: mchristophdaniel@gmail.com
-From:   Marcus Galois <marcus.galois@gmail.com>
-Date:   Thu, 13 Jan 2022 23:39:50 +0100
-Message-ID: <CANqBaXVyJMpGTC-Zyw6_L71P46EwyvSVt8jgPwF7rEtmRUZ_ZA@mail.gmail.com>
-Subject: Good News Finally.
-To:     undisclosed-recipients:;
+References: <1639587963-22503-1-git-send-email-bgodavar@codeaurora.org> <164036941060.3935440.13095761506560620701.b4-ty@linaro.org>
+In-Reply-To: <164036941060.3935440.13095761506560620701.b4-ty@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 13 Jan 2022 15:59:05 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Vdjw-6GytO=Rpt==OYbnrNon3pYQnrZtUT4vX11S6ykw@mail.gmail.com>
+Message-ID: <CAD=FV=Vdjw-6GytO=Rpt==OYbnrNon3pYQnrZtUT4vX11S6ykw@mail.gmail.com>
+Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280
+ IDP boards
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>, rjliao@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        saluvala@codeaurora.org, LKML <linux-kernel@vger.kernel.org>,
+        hbandi@codeaurora.org, BlueZ <linux-bluetooth@vger.kernel.org>,
+        mcchou@chromium.org, hemantg@codeaurora.org,
+        Matthias Kaehlcke <mka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello friend.
+Hi,
 
-You might find it so difficult to remember me, though it is indeed a
-very long time, I am much delighted to contact you again after a long
-period of time, I remember you despite circumstances that made things
-not worked out as we projected then. I want to inform you that the
-transaction we're doing together then finally worked out and I decided
-to contact you and to let you know because of your tremendous effort
-to make things work out then.
+On Fri, Dec 24, 2021 at 10:10 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Wed, 15 Dec 2021 22:36:03 +0530, Balakrishna Godavarthi wrote:
+> > Add bluetooth SoC WCN6750 node for SC7280 IDP boards.
+> >
+> >
+>
+> Applied, thanks!
+>
+> [1/1] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280 IDP boards
+>       commit: 3a89ff3087c03c2295250c07234efa75873c7b51
 
-Meanwhile I must inform you that I'm presently in Caribbean Island for
-numerous business negotiation with some partners. with my sincere
-heart i have decided to compensate you with USD$900,000 for your
-dedication then on our transaction, you tried so much that period and
-I appreciated your effort. I wrote a cheque/check on your name, as
-soon as you receive it, you let me know.
+Just to confirm, this later got dropped, right? I don't see it in the
+Qualcomm git tree, so presumably it'll land once the merge window
+closes.
 
-Contact my secretary now on his email: mchristophdaniel@gmail.com
-Name: Mr. Christoph Daniel
-
-You are to forward to him your Name........ Address.......,Phone
-number......for shipment/dispatch of the cheque/Check to you
-
-Regards,
-Mr. Marcus Galois
+-Doug
