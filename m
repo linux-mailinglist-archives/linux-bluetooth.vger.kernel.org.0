@@ -2,44 +2,78 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B9A248FA8A
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 16 Jan 2022 04:48:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3589148FB29
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 16 Jan 2022 07:08:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234181AbiAPDsU convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 15 Jan 2022 22:48:20 -0500
-Received: from ec2-13-115-114-132.ap-northeast-1.compute.amazonaws.com ([13.115.114.132]:44102
-        "EHLO mail.gunma-suigai-risk.jp" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231501AbiAPDsT (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 15 Jan 2022 22:48:19 -0500
-Received: from Unknown (unknown [177.91.130.66])
-        by mail.gunma-suigai-risk.jp (Postfix) with ESMTPA id E7B4325628B0;
-        Sat, 15 Jan 2022 23:05:13 +0000 (UTC)
-Message-ID: <383D8BD8D30729EA36337AC6C2655B4A@itwhhv>
-Reply-To: "Fredrik Elvebakk" <fcresswell9@gmail.com>
-From:   "Fredrik Elvebakk" <investment@dnb.no>
-Subject: Re:
-Date:   Sat, 15 Jan 2022 15:05:07 -0800
+        id S231646AbiAPGH4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 16 Jan 2022 01:07:56 -0500
+Received: from mx3.molgen.mpg.de ([141.14.17.11]:51757 "EHLO mx1.molgen.mpg.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S231607AbiAPGH4 (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Sun, 16 Jan 2022 01:07:56 -0500
+Received: from [192.168.0.4] (ip5f5aeaa0.dynamic.kabel-deutschland.de [95.90.234.160])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: pmenzel)
+        by mx.molgen.mpg.de (Postfix) with ESMTPSA id 7ABD361EA1BE4;
+        Sun, 16 Jan 2022 07:07:54 +0100 (CET)
+Message-ID: <d2b50954-5303-a547-3be8-35e6c3208a1d@molgen.mpg.de>
+Date:   Sun, 16 Jan 2022 07:07:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="windows-1251";
-        reply-type=original
-Content-Transfer-Encoding: 8BIT
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-To:     unlisted-recipients:; (no To-header on input)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH] bluetooth: Add support for EP-B3536 USB Bluetooth adapter
+Content-Language: en-US
+To:     Jack Murray <kernel@c0rporation.com>
+References: <a96af59d-089f-1018-74fc-355e96fcf0c3@c0rporation.com>
+Cc:     linux-bluetooth@vger.kernel.org
+From:   Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <a96af59d-089f-1018-74fc-355e96fcf0c3@c0rporation.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello
+Dear Jack,
 
-Kindly get back to me for an important 
-discussion
 
-Best regards
-Fredrik Elvebakk
+Am 15.01.22 um 22:30 schrieb Jack Murray:
+> From: Jack Murray <kernel@c0rporation.com>
+> 
+> This patch adds support for the EP-B3536 USB bluetooth 5.1 adapter based
+
+Who manufactures that device? Is it Teledyne? 0x2550 is 9552 (decimal), 
+and according to [1] that is Teledyne. Maybe, add that to the commit 
+message.
+
+> on the 8761B chipset. The existing driver and firmware work fine for this
+> device from what I can tell, so this patch just adds the vendor/product IDs
+> for it to the supported device list.
+> 
+> Signed-off-by: Jack Murray <kernel@c0rporation.com>
+> ---
+>   drivers/bluetooth/btusb.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 60d2fce59a71..207c8289c5c2 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -436,6 +436,8 @@ static const struct usb_device_id blacklist_table[] = {
+>          /* Additional Realtek 8761BU Bluetooth devices */
+>          { USB_DEVICE(0x0b05, 0x190e), .driver_info = BTUSB_REALTEK |
+> BTUSB_WIDEBAND_SPEECH },
+> +       { USB_DEVICE(0x2550, 0x8761), .driver_info = BTUSB_REALTEK |
+> + BTUSB_WIDEBAND_SPEECH }, >
+>          /* Additional Realtek 8821AE Bluetooth devices */
+>          { USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+
+
+Kind regards,
+
+Paul
+
+
+[1]: https://www.usb.org/sites/default/files/vendor_ids082119_0.pdf
