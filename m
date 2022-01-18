@@ -2,100 +2,77 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B469A4920DE
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Jan 2022 09:04:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FE074921F0
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Jan 2022 10:04:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343875AbiARIE0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 Jan 2022 03:04:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52134 "EHLO
+        id S240342AbiARJER (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 Jan 2022 04:04:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343877AbiARIEW (ORCPT
+        with ESMTP id S1345158AbiARJED (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 Jan 2022 03:04:22 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6843EC061574
-        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Jan 2022 00:04:22 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id m4so75728043edb.10
-        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Jan 2022 00:04:22 -0800 (PST)
+        Tue, 18 Jan 2022 04:04:03 -0500
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC7E6C061759
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Jan 2022 01:03:59 -0800 (PST)
+Received: by mail-yb1-xb35.google.com with SMTP id e195so23599690ybb.7
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Jan 2022 01:03:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:from:subject:to:cc
-         :content-language:content-transfer-encoding;
-        bh=iqqdhh1gYn9Fxt/E/d+XprT1SgaF3NS0ZB1U+banoZE=;
-        b=U59WiC4rEDCwvb09jikJ8zEA+ae6mAIf6UcCS6DcQv/KPqbep1OjF+8nkAxTETualj
-         wYOZtPmsb0mDZkOIiRp2wyNlAE/sah28nxBP/DDZvw7ofJfpglTZGLB0QXFQFj/RRDvs
-         P9dFbSqNMrN7QQvA+NFFwd90K7JPIfLzmaY9TkHiDJDYTTthDW0XYO5/+l+LUzcY3XeL
-         uBHg6W/2h7+/i4MnPlWLXiXgtY7OvsoIUGykBX+zzbLw/FvAT9zQG/bU+9Z80g7AKJPo
-         606I2ogNCOBCqO3i8aYhEgQVRyl37JFo51UKf7TREiWy5nFyp5pPesgyJ/pKanFPZa9D
-         nE4A==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=IAamEH5Xu1dJ3X0trVcFTPIrL7aTtcDGn5mUS4vw1a8=;
+        b=NHprezroMsvNvJXQj44poYAHm3bYOXBJZX5Wg8cW9F++sdGchhDxOadiHN0N74BqVo
+         LLsuxLOWO8eNb9Df+WO3omzRkxx9CES4mNA3Io5+oAgtUVpSbYHogg87+gCtw68c4I2t
+         jU5NFjjkmYDNDUVEzOuCjT2//b/zcZNUhM8rDEil4EjAKikZAouVCPfFT1ek6iBkNaWB
+         bcv0AUKVrFCVpxHEBYPBv8KSS3FHlu8eykSeEYJmKwrS5qbSbzeHmao2+zqXdm7uNchU
+         Rqamo/TlsQaFmHXGfCx8STX0aSjqEkHcratuhlypnT20IcvCVcqt6eV72JWjrAN3qvU0
+         7wEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:from
-         :subject:to:cc:content-language:content-transfer-encoding;
-        bh=iqqdhh1gYn9Fxt/E/d+XprT1SgaF3NS0ZB1U+banoZE=;
-        b=Nu1QJho5YdE/pDeFCmH8r1S0wmCjI7puzugZlumlRYIjDU63nrj+7L8MVZtMZIpeOS
-         XQ6vVRQYVq7r7m5de7WyoJ6twf2KZPI9Y00+0NzAqhix3uIrNrZrsIa9sOEQJNI2CbKw
-         s3Pw4DBAoL3Tak6GTJAFTGF8TD7CR7A/P6xbBsKyFbtQWJhYcU3RgukjRn1jOPB3FoQa
-         sVNl4V9nRoPlbNS6yzhcZNudTQJq3IycltAsomIfDWLvGKFPLVnr64P9BI8wz6YvtoFA
-         ZG4Hk93/1+TTttkFrq7HO5ZvMGSHNpvsRQ3/GLkb8VD8VD6ttUl07UXNOpQjCWPjiF8s
-         +7fg==
-X-Gm-Message-State: AOAM530gPq12Rurad01yWzA+kSgYcSli71iebThbqJVMXx8SzQ+pRDD7
-        RDb9L5BKM0riY1P2kvudOAY=
-X-Google-Smtp-Source: ABdhPJwdUx/FCppy9w8asQB1opGFys5+A/kOy3IIk8tU3CTGolF0KBfHY4iEWruEXa9V2t3r55XxKw==
-X-Received: by 2002:a17:906:5d12:: with SMTP id g18mr19612804ejt.524.1642493061044;
-        Tue, 18 Jan 2022 00:04:21 -0800 (PST)
-Received: from 168.52.45.77 (201.ip-51-68-45.eu. [51.68.45.201])
-        by smtp.gmail.com with ESMTPSA id t8sm6744603edr.90.2022.01.18.00.04.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jan 2022 00:04:20 -0800 (PST)
-Message-ID: <80bf8cf6-eacc-4d1f-d004-9574d02a9d21@gmail.com>
-Date:   Tue, 18 Jan 2022 09:04:19 +0100
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=IAamEH5Xu1dJ3X0trVcFTPIrL7aTtcDGn5mUS4vw1a8=;
+        b=gRHx1yM8p3mimXlP/BXonOI7joBxBRZ/Y1H7woa+cKD3S2ciahWtxViLncvK2q0fVQ
+         Lrw9BxfCkrtpe3Y1/U0ApGO4iFLbOMjE2zSnqItmWs92g1Y0L3IIZsj0A0JCcdw9JiBX
+         sGAP9PPXaL1hGHmKuo/jc7m2IuQKOmPMt5znHUbogrV7JecvlYexifjaOxiF7pvR90Gr
+         leQK++gP3UtRInDbF/r8khz/yNrBmX92EvnciEQBCxz+KQdtEJOAEYhGMYe8lZV38PUr
+         UPNOHC2FI/XDYPWEEhFae9yibTUJIuAwFXnts2x9Z0jlZ6+xBLXqj7Z75JE6TgG2/RL9
+         dQlQ==
+X-Gm-Message-State: AOAM531zQYSS1ZSybqasxhUuaFFv2PbE7fzLUHBSqu1T3uNS8j80TpZt
+        pNblgpzba3E9AvSbiJ36rJES6Kha1RqEK4hx7BU=
+X-Google-Smtp-Source: ABdhPJykqN6yybQfaT0kT/1JcofcZUp4wlVhtJ/gATn7SS5XA0pfx+GW8LgTxWINZerrn1yMSBF81skqvw8cEBrK9Sg=
+X-Received: by 2002:a25:e549:: with SMTP id c70mr10839900ybh.339.1642496638937;
+ Tue, 18 Jan 2022 01:03:58 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: nano 6.4
-From:   Ismael Ferreras Morezuelas <swyterzone@gmail.com>
-Subject: [PATCH v2] Bluetooth: btusb: Whitespace fixes for btusb_setup_csr()
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        BlueZ <linux-bluetooth@vger.kernel.org>, swyterzone@gmail.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a05:7108:3655:0:0:0:0 with HTTP; Tue, 18 Jan 2022 01:03:58
+ -0800 (PST)
+Reply-To: asil.ajwad@gmail.com
+From:   Asil Ajwad <graceyaogokamboule@gmail.com>
+Date:   Mon, 17 Jan 2022 21:03:58 -1200
+Message-ID: <CA+Yy_gCoV9jOYW1qG-5psBKMTZyzWOj2x6Pu5iusfy4TEMaBwQ@mail.gmail.com>
+Subject: Greetings,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Properly align the list items of the quirk for readability.
-No functional changes intended. Trivial stuff.
-
-Fixes: 0671c0662383e ("Bluetooth: btusb: Add workaround for remote-wakeup issues with Barrot 8041a02 fake CSR controllers")
-
-Signed-off-by: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
----
-
-Split off from the HCI_FLT_CLEAR_ALL patch, as requested by Marcel.
-
- drivers/bluetooth/btusb.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 75c83768c..b494b81f8 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -1948,10 +1948,10 @@ static int btusb_setup_csr(struct hci_dev *hdev)
- 		 * These controllers are really messed-up.
- 		 *
- 		 * 1. Their bulk RX endpoint will never report any data unless
--		 * the device was suspended at least once (yes, really).
-+		 *    the device was suspended at least once (yes, really).
- 		 * 2. They will not wakeup when autosuspended and receiving data
--		 * on their bulk RX endpoint from e.g. a keyboard or mouse
--		 * (IOW remote-wakeup support is broken for the bulk endpoint).
-+		 *    on their bulk RX endpoint from e.g. a keyboard or mouse
-+		 *    (IOW remote-wakeup support is broken for the bulk endpoint).
- 		 *
- 		 * To fix 1. enable runtime-suspend, force-suspend the
- 		 * HCI and then wake-it up by disabling runtime-suspend.
 -- 
-2.34.1
+Greetings,
 
+I am Mr.Asil Ajwad, I work with United Bank of Africa, can you use
+an ATM Visa Card to withdraw money at, ATM Cash Machine in your
+country, if yes I want to transfer abounded fund the sum of $10.5million
+US-Dollars, to you from my country, this is part of the money that was
+abounded by our late old client a politician who unfortunately lost
+his life and was forced out of power Du to greedy act, the bank will
+
+change the account details to your name, and apply for a Visa Card
+with your details, the Visa Card will be send to you, and you can be
+withdrawing money with it always, whatever any amount you withdraw
+daily, you will send 60% to me and you will take 40%, the Visa Card
+and the bank account will be on your name, I will be waiting for your
+response for more details, thanks to you a lot for giving me your time.
+
+regards,
+Mr.Asil Ajwad.
