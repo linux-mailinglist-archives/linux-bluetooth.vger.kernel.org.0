@@ -2,48 +2,45 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 308AF491A00
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Jan 2022 03:57:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7839E4919FE
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Jan 2022 03:57:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350706AbiARC5s (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 17 Jan 2022 21:57:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34796 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345969AbiARCq6 (ORCPT
+        id S1350339AbiARC5l (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 17 Jan 2022 21:57:41 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:50482 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344839AbiARCnn (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 17 Jan 2022 21:46:58 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8819CC06127D;
-        Mon, 17 Jan 2022 18:38:44 -0800 (PST)
+        Mon, 17 Jan 2022 21:43:43 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 69E596093C;
-        Tue, 18 Jan 2022 02:38:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E35C36AEF;
-        Tue, 18 Jan 2022 02:38:42 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0AE0DB8124B;
+        Tue, 18 Jan 2022 02:43:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A25C36AE3;
+        Tue, 18 Jan 2022 02:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1642473523;
+        s=k20201202; t=1642473820;
         bh=gDmFszm+/TUhgaalM12dREB18MEqRLtv9uD+Yy9sdoY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=n/DUMsdM66JPfi1PfoxsXBRz2DhVjJXgIgSS3cojT0QFOntQcuWNsnsCA4VA4WezZ
-         8nP3NG4U42GoCqVU7aQekF7vGYPTOjb3tjQsdVNrwZY8P4P8lD0MCO+TglbslPiiTG
-         isWf4187Fu1Bm1jlbXgjK8r4OUlUfI4N3ghTjii2hcyXOw14ZYSplUqU6o9MBolHr8
-         +RL4Hxx3Spf++XtWa9gqCjLTytbKYgt7ukA4GckiRsK5bG3PoRqkC9UrsMU6wpgOC/
-         F7ZSekuoiEyFtz+TMdXjrxR8Tl4wczxJxBPa/N15vzLAqAsDuwCaD3Kk4EdPhODV3q
-         yHxvhbm6D2Emg==
+        b=NjIWQlq6uQ1P2UUASeoMZwiFNiKYLkfR63VHQY/HGh51DQGXETVJrkcGLZYpEzYCd
+         HrNNgEcyDdu2OYgzOH74Xzyk+ZF+Brgzi8nmfKKI1pMHeN0hEcJBekdsTPWwVAQ96T
+         4WCHrc9hOuIp5iVBguPoB4D7hHaVtxdbXcU3ZMf3slkGFMnDtPODygDyn2oSzQWom7
+         OYt0t1DRSp0JlIBao1M2va+Mouc8IhSVebrm6Y6YTjNyVcncIOqP9wBqEbqbs6uGYY
+         cNIeM8te1XdmgWlEuAWArvIOJ0t7NIqvJyMkTicdtxyswUvab5IjVl+e1TMLvTqKXg
+         VLGCZtkVAY6Jg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>, johan.hedberg@gmail.com,
         luiz.dentz@gmail.com, linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 148/188] Bluetooth: vhci: Set HCI_QUIRK_VALID_LE_STATES
-Date:   Mon, 17 Jan 2022 21:31:12 -0500
-Message-Id: <20220118023152.1948105-148-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 086/116] Bluetooth: vhci: Set HCI_QUIRK_VALID_LE_STATES
+Date:   Mon, 17 Jan 2022 21:39:37 -0500
+Message-Id: <20220118024007.1950576-86-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220118023152.1948105-1-sashal@kernel.org>
-References: <20220118023152.1948105-1-sashal@kernel.org>
+In-Reply-To: <20220118024007.1950576-1-sashal@kernel.org>
+References: <20220118024007.1950576-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
