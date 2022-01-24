@@ -2,71 +2,75 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBE0D49918F
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 24 Jan 2022 21:13:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E945C499D18
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 24 Jan 2022 23:16:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379599AbiAXULy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 24 Jan 2022 15:11:54 -0500
-Received: from mailbackend.panix.com ([166.84.1.89]:39867 "EHLO
-        mailbackend.panix.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359386AbiAXT7k (ORCPT
+        id S1380308AbiAXWOZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 24 Jan 2022 17:14:25 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:59688 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1355239AbiAXV6M (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 24 Jan 2022 14:59:40 -0500
-Received: from xps-7390.local (ip98-164-213-246.oc.oc.cox.net [98.164.213.246])
-        by mailbackend.panix.com (Postfix) with ESMTPSA id 4JjLRZ3Vh8z3l7M;
-        Mon, 24 Jan 2022 14:59:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=panix.com; s=panix;
-        t=1643054379; bh=ZFwyVBxFNWzqkyy+Kt9VvR1ApRt4kZ9zmG7uWNPaBmM=;
-        h=Date:From:Reply-To:To:cc:Subject:In-Reply-To:References;
-        b=EixlpbFfS6UbZZZaHTXXteKPcscjywPCTGjco8DDpVSOqXOsFpj0bT42MT8dfhwOa
-         cVG1NhKi7cN+cyHznBN881XzLj1T4QoPyFwpQNGl8DmF0FXA1FeNF3PBMZ8cq3jpBu
-         qb1qpe8rJ1JiKGnjVT6gzXTFVXDvQ/h8nT9c2QQs=
-Date:   Mon, 24 Jan 2022 11:59:37 -0800 (PST)
-From:   "Kenneth R. Crudup" <kenny@panix.com>
-Reply-To: "Kenneth R. Crudup" <kenny@panix.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-cc:     Luiz Augusto Von Dentz <luiz.von.dentz@intel.com>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "Kenneth R. Crudup" <kenny@panix.com>
-Subject: Re: Commit ad383c2c6 ("Bluetooth: hci_sync: Enable advertising when
- LL privacy is enabled") breaks my MS ArcTouch mouse
-In-Reply-To: <CABBYNZLt3GmBTmAADa+FF2bdEfzMg_9Horxk2pT85BC+LFgrMQ@mail.gmail.com>
-Message-ID: <91c1e9ef-4786-b9f5-8bb8-b93c84c0874b@panix.com>
-References: <4124ccb8-11f-21e9-982e-7fb07f23225@panix.com> <CABBYNZLt3GmBTmAADa+FF2bdEfzMg_9Horxk2pT85BC+LFgrMQ@mail.gmail.com>
+        Mon, 24 Jan 2022 16:58:12 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 65A63B8123D
+        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Jan 2022 21:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1CC38C340E7
+        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Jan 2022 21:58:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1643061489;
+        bh=WVGzOxNyjqcoV8ADh5sGbOQb+FjN2W4GSTXgyd0Iau0=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=EQx7TyPzMFHs+UF7ivYHsfbHGAsj/ou2I2JuI/JziN/QB1hqDDnVUYvSBRGH7NY8G
+         SVuX8hV/anWcPM/m+/+5lNyrffeTtSMur7Cz9gUJK+dm4030E5iLbGXgXBqmOZrf4K
+         LOExmNRVeUhfNI8NO8kpT2JyhT9ULQYs8CwPhts01om8VrTWiwdBcIqPAUJBzYzbzo
+         rHb2ZJKFXuhPKhTDYGcLAZQYJcZiREZF9Tj2xnyWefSUf5ahFM067i9xhLdQF9lF2u
+         1R0aqZ9mym5jSkp7AqOvgWbrsYFI7rujL5i9pAmDEhbxFeGsUYBZW+Ixyt4XFibK8v
+         Dz3TT6yG2FHWw==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 0471ACC13B0; Mon, 24 Jan 2022 21:58:09 +0000 (UTC)
+From:   bugzilla-daemon@bugzilla.kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 215528] Excessive logging from Intel Bluetooth "Bluetooth:
+ hci0: sending frame failed" "hci0: urb 00000000xxxxxxxx submission failed
+ (90)"
+Date:   Mon, 24 Jan 2022 21:58:08 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: high
+X-Bugzilla-Who: aros@gmx.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-215528-62941-i4HvzyT730@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-215528-62941@https.bugzilla.kernel.org/>
+References: <bug-215528-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+https://bugzilla.kernel.org/show_bug.cgi?id=3D215528
 
-On Mon, 24 Jan 2022, Luiz Augusto von Dentz wrote:
+--- Comment #1 from Artem S. Tashkinov (aros@gmx.com) ---
+Would be great if the CC'ed people addressed this bug.
 
-> > I'm running Linus' master (as of today, 1c52283265a462a100). With this commit in
-> > place I get no bluetooth ("hcitool dev" shows no adapters) and/or I can't see my
-> > MS ArcTouch mouse.
+--=20
+You may reply to this email to add a comment.
 
-> It would be great to have some logs, btmon, dmesg, etc.
-
-That's just it- nothing shows up in any log/dmesg; unlike when a non-MS mouse is
-detected and I get the notification from the HID layer.
-
-I even did an s/{bt}_debug/{bt}_info/g over all the files in the commit, and when
-that mouse is power-cycled it doesn't even make a peep in the logs- it's like it's
-not even being seen (vs. several lines when I use my ordinary mouse).
-
-What params should I use for "btmon" so I can send you the output?
-
-> If the adapter doesn't work this might be related to firmware loading
-
-Turns out this was a red herring; I always have the adapter.
-
-> anymore the LL privacy feature is not
-> enabled by default so I wonder if you had it enabled in userspace?
-
-Where would I go to check that?
-
-	-Kenny
-
--- 
-Kenneth R. Crudup / Sr. SW Engineer, Scott County Consulting, Orange County CA
+You are receiving this mail because:
+You are the assignee for the bug.=
