@@ -2,75 +2,123 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 532B249C345
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jan 2022 06:31:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DA2D49C365
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jan 2022 06:55:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233427AbiAZFbU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 26 Jan 2022 00:31:20 -0500
-Received: from mx.msync.work ([95.217.65.204]:48834 "EHLO mx.msync.work"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233071AbiAZFbT (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 26 Jan 2022 00:31:19 -0500
-X-Greylist: delayed 47802 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Jan 2022 00:31:19 EST
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id D1171282C37;
-        Wed, 26 Jan 2022 05:31:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lexina.in; s=dkim;
-        t=1643175075; h=from:subject:date:message-id:to:cc:mime-version:
-         content-transfer-encoding:in-reply-to:references;
-        bh=43g7eQfNihO4PvfDCp/q0KW8Ai3xysLurmj0NB1X6JI=;
-        b=VCRhhIFdjeNKSoofU6YOSCS+vKVgFmgWOdy4dfk2phMG7BiPvu5yIiEk0bRLtadwzZrGKB
-        sZ8RMmMC7O/rPSq+BCegZ1CLVYNuf3BddjnixVjidxmtOdawNYXZtuPUOmBDMov9ivSsq2
-        VP4fvjXz/dkCG2M/Q6vbmOMItp0/M6nHwjO1dQNZdCc2u9m0FACD9PFfQD1nlWrbyglxjn
-        yjFCBHa6/hNJD02A3aFeeGTilkyTppNqXgfBXPPg5ouvc7F0gxanxih9a5g0PWUxKIms2r
-        1jS+hqL+rECjxNgdcOTyWB9IShnJHEGPmMHHuW2flMc7V+3D8V+bQuPOtkVTnQ==
-From:   Vyacheslav Bocharov <adeep@lexina.in>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Rudi Heitbaum <rudi@heitbaum.com>
-Subject: [PATCH v6 2/2] Bluetooth: hci_h5: Add power reset via gpio in h5_btrtl_open
-Date:   Wed, 26 Jan 2022 08:31:03 +0300
-Message-Id: <20220126053103.3261693-3-adeep@lexina.in>
-In-Reply-To: <20220126053103.3261693-1-adeep@lexina.in>
-References: <20220126053103.3261693-1-adeep@lexina.in>
+        id S233524AbiAZFz6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 26 Jan 2022 00:55:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51692 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230122AbiAZFz6 (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 26 Jan 2022 00:55:58 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDD1EC06161C
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Jan 2022 21:55:57 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id 71so11331424qkf.4
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Jan 2022 21:55:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=sRIxSsI96CxxtLvKPzhMBsuM1+28myrOZuA+jtBIwFM=;
+        b=hgXYXHpiv7RkOQ+H9FsQ0TfzXVg850EpR4QWg8XSzcybeUTnrZrr3HyuV9cydK5Z0w
+         cjmMQOtjvyCyY88mxaIkT8REcF73qTne30M2BmRITZ4YarvIOXsV4mNYV6e6KmAyR1Si
+         kUMRqh19hBBbPN/d6X0OSkzg4cVtBkkg7OeZLMmET8b7rGNfFT3VJ/mZIBBU8FwhVm77
+         gkpIsnouJCKR/aQGyz5DnXAp+ZA2sH82U+Bp1+A6q3DEYQIE+GvNh4gST7FJ5jTf1qFo
+         QkA/QCg2m7IUogDjHqhh3nDBCO6Sp3yY4vJj9wcBODMDr72jn3DrOn2M4UaQIpQGNs+j
+         YQnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=sRIxSsI96CxxtLvKPzhMBsuM1+28myrOZuA+jtBIwFM=;
+        b=GH+GMlPlQmflj5b2L/g3rxEKICCGC8+s9H09exXfWgjikewz5DGwW+s2W1THMtkJ/G
+         UAWG4w2xKCZakBbor3J148hurRolaPuQftZCgO6jfuBrSN/cz5cZbcstOersOQtDTXxE
+         g+/TgELfpn5olTO/zm24LQmH34+wmFCf9T4jWzFOENB0LrxK8+f//EH1+D3ZZiQ5yjmI
+         tPTglalJDcHCc7OkhqaqQOiHj63qxhF4JvWofveilo44mS547wwEKZpIBVo0XTln1C3b
+         g2GZXrJH8qbUdAsxmImgmtMXGz7s6+IC8arTtIFdGqmH8rYJf8RLFwe8j+Zu7JTByLkc
+         Q6BA==
+X-Gm-Message-State: AOAM532y5ufj+5kdYL0svy0Mmh0Ezy2wxScYrr85/fVSqDWtJYV8xqib
+        k7ZdfGcz1QujbyHihx7RhTNnQkXnjXU=
+X-Google-Smtp-Source: ABdhPJzBrie6CxYMWcwaKpTvRLRj+Im5SQqUTUj5srpraOd64s8GsMWD/GVqBC5Kt0IgchWGVroKVQ==
+X-Received: by 2002:a05:620a:2a08:: with SMTP id o8mr17363608qkp.643.1643176556827;
+        Tue, 25 Jan 2022 21:55:56 -0800 (PST)
+Received: from [172.17.0.2] ([52.254.81.248])
+        by smtp.gmail.com with ESMTPSA id g11sm9836521qtg.83.2022.01.25.21.55.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jan 2022 21:55:56 -0800 (PST)
+Message-ID: <61f0e26c.1c69fb81.245e2.9779@mx.google.com>
+Date:   Tue, 25 Jan 2022 21:55:56 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============5195000948122105466=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, adeep@lexina.in
+Subject: RE: Bluetooth: hci_h5: btrtl: Add support for RTL8822CS hci_ver 0x08
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220126053103.3261693-2-adeep@lexina.in>
+References: <20220126053103.3261693-2-adeep@lexina.in>
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add power reset for bluetooth via enable-gpios in h5_btrtl_open function.
+--===============5195000948122105466==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-While testing the RTL8822CS SDIO WiFi/BT adapter, it was found that in some
-cases the kernel could not initialize BT firmware. However, manually
-resetting the adapter via gpio (off/on sequence) allows it to start
-correctly.
-Apparently, when the system starts, the adapter is in an undefined state
-(including unknown gpio state after starting uboot). A forced reset helps
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=608534
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      3.28 seconds
+GitLint                       PASS      1.98 seconds
+SubjectPrefix                 PASS      1.74 seconds
+BuildKernel                   PASS      29.19 seconds
+BuildKernel32                 PASS      26.18 seconds
+Incremental Build with patchesPASS      41.66 seconds
+TestRunner: Setup             PASS      461.68 seconds
+TestRunner: l2cap-tester      PASS      13.20 seconds
+TestRunner: bnep-tester       PASS      6.01 seconds
+TestRunner: mgmt-tester       PASS      103.37 seconds
+TestRunner: rfcomm-tester     PASS      7.32 seconds
+TestRunner: sco-tester        PASS      7.60 seconds
+TestRunner: smp-tester        PASS      7.54 seconds
+TestRunner: userchan-tester   PASS      6.27 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL - 3.28 seconds
+Run checkpatch.pl script with rule in .checkpatch.conf
+[v6,2/2] Bluetooth: hci_h5: Add power reset via gpio in h5_btrtl_open\WARNING:COMMIT_LOG_LONG_LINE: Possible unwrapped commit description (prefer a maximum 75 chars per line)
+#60: 
 to initialize the adapter in most cases. It has been found experimentally that
-100 ms is sufficient for a reset.
 
-Signed-off-by: Vyacheslav Bocharov <adeep@lexina.in>
+total: 0 errors, 1 warnings, 11 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/12724610.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+
+
 ---
- drivers/bluetooth/hci_h5.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
-index 34286ffe0568..fdf504b0d265 100644
---- a/drivers/bluetooth/hci_h5.c
-+++ b/drivers/bluetooth/hci_h5.c
-@@ -966,6 +966,11 @@ static void h5_btrtl_open(struct h5 *h5)
- 		pm_runtime_enable(&h5->hu->serdev->dev);
- 	}
- 
-+	/* The controller needs reset to startup */
-+	gpiod_set_value_cansleep(h5->enable_gpio, 0);
-+	gpiod_set_value_cansleep(h5->device_wake_gpio, 0);
-+	msleep(100);
-+
- 	/* The controller needs up to 500ms to wakeup */
- 	gpiod_set_value_cansleep(h5->enable_gpio, 1);
- 	gpiod_set_value_cansleep(h5->device_wake_gpio, 1);
--- 
-2.30.2
 
+--===============5195000948122105466==--
