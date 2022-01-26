@@ -2,62 +2,66 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DFA849C8C3
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jan 2022 12:36:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45F5849C8C6
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jan 2022 12:36:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233806AbiAZLgz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 26 Jan 2022 06:36:55 -0500
-Received: from relay8-d.mail.gandi.net ([217.70.183.201]:41603 "EHLO
+        id S240808AbiAZLg4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 26 Jan 2022 06:36:56 -0500
+Received: from relay8-d.mail.gandi.net ([217.70.183.201]:33919 "EHLO
         relay8-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233725AbiAZLgo (ORCPT
+        with ESMTP id S240851AbiAZLgo (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 26 Jan 2022 06:36:44 -0500
 Received: (Authenticated sender: hadess@hadess.net)
-        by mail.gandi.net (Postfix) with ESMTPSA id C54A31BF203
-        for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jan 2022 11:36:39 +0000 (UTC)
+        by mail.gandi.net (Postfix) with ESMTPSA id 1E6AF1BF207;
+        Wed, 26 Jan 2022 11:36:39 +0000 (UTC)
 From:   Bastien Nocera <hadess@hadess.net>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 1/4] build: Always define confdir and statedir
-Date:   Wed, 26 Jan 2022 12:36:35 +0100
-Message-Id: <20220126113638.1706785-1-hadess@hadess.net>
+Cc:     Craig Andrews <candrews@integralblue.com>
+Subject: [PATCH 2/4] systemd: Add PrivateTmp and NoNewPrivileges options
+Date:   Wed, 26 Jan 2022 12:36:36 +0100
+Message-Id: <20220126113638.1706785-2-hadess@hadess.net>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220126113638.1706785-1-hadess@hadess.net>
+References: <20220126113638.1706785-1-hadess@hadess.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Flag: yes
-X-Spam-Level: ********************
-X-GND-Spam-Score: 300
-X-GND-Status: SPAM
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-As we will need those paths to lock down on them.
----
- Makefile.am | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+From: Craig Andrews <candrews@integralblue.com>
 
-diff --git a/Makefile.am b/Makefile.am
-index e391d7ae8..2ba25e687 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -28,14 +28,14 @@ AM_CFLAGS = $(MISC_CFLAGS) $(WARNING_CFLAGS) $(UDEV_CFLAGS) $(LIBEBOOK_CFLAGS) \
- 				$(LIBEDATASERVER_CFLAGS) $(ell_cflags)
- AM_LDFLAGS = $(MISC_LDFLAGS)
- 
-+confdir = $(sysconfdir)/bluetooth
-+statedir = $(localstatedir)/lib/bluetooth
+PrivateTmp makes bluetoothd's /tmp and /var/tmp be inside a different
+namespace. This is useful to secure access to temporary files of the
+process.
+
+NoNewPrivileges ensures that service process and all its children
+can never gain new privileges through execve(), lowering the risk of
+possible privilege escalations.
+---
+ src/bluetooth.service.in | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/bluetooth.service.in b/src/bluetooth.service.in
+index f9faaa452..7c2f60bb4 100644
+--- a/src/bluetooth.service.in
++++ b/src/bluetooth.service.in
+@@ -12,8 +12,14 @@ NotifyAccess=main
+ #Restart=on-failure
+ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+ LimitNPROC=1
 +
- if DATAFILES
- dbusdir = $(DBUS_CONFDIR)/dbus-1/system.d
- dbus_DATA = src/bluetooth.conf
++# Filesystem lockdown
+ ProtectHome=true
+ ProtectSystem=full
++PrivateTmp=true
++
++# Privilege escalation
++NoNewPrivileges=true
  
--confdir = $(sysconfdir)/bluetooth
- conf_DATA =
--
--statedir = $(localstatedir)/lib/bluetooth
- state_DATA =
- endif
- 
+ [Install]
+ WantedBy=bluetooth.target
 -- 
 2.34.1
 
