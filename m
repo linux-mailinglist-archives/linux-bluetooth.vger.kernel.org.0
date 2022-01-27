@@ -2,62 +2,114 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B10C149D625
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jan 2022 00:29:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F8E649D71B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jan 2022 02:03:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233609AbiAZX3q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 26 Jan 2022 18:29:46 -0500
-Received: from users004.phy.heteml.jp ([157.7.44.142]:58018 "EHLO
-        users004.phy.heteml.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbiAZX3q (ORCPT
+        id S234193AbiA0BDb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 26 Jan 2022 20:03:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36528 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234153AbiA0BDa (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 26 Jan 2022 18:29:46 -0500
-X-Greylist: delayed 567 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Jan 2022 18:29:46 EST
-Received: by users004.phy.heteml.jp (Postfix, from userid 492)
-        id 0331C1160816; Thu, 27 Jan 2022 08:20:18 +0900 (JST)
+        Wed, 26 Jan 2022 20:03:30 -0500
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FEA4C06161C
+        for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jan 2022 17:03:30 -0800 (PST)
+Received: by mail-io1-xd29.google.com with SMTP id s18so1685512ioa.12
+        for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jan 2022 17:03:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=w13OtZuLnufOL+Nooi/s7gbqMgCLp+sd7S9aWsXUu5s=;
+        b=RRtOvc/xS77xciQKzto1hRB+LH3DeFPGImQ+jFR2EJ7cxj4Rf/Qvf4bvo5mX2EL0Pj
+         VC8Z6BXBPsedu7oiEPciGJr0JaUhG1tW4VVLaFppqPiwYattnd2aJP+e2eXSXpkvZCHm
+         CvEqk5uHzb8V41rt8Fbl5/vCYVN5xnLKqkpw0Nq2D9S1RxO4ZgVUfyTD/ecXByzYhwm6
+         dh+UWE7UKm4cM1ZSCqHrpax3cGz+X77d5E0+QSQ1NBJ/LJuPp6UIdyNOhQ7aFehS0Lyg
+         cSzReID/XTiyzNcYmybcCRi/7InrZu4gLIVzyFu6fWaLCQum+tvYBh3ZpcNuR8jK3b+J
+         4tHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=w13OtZuLnufOL+Nooi/s7gbqMgCLp+sd7S9aWsXUu5s=;
+        b=3YPgseTfemrTH2NKbcpzr1mNMFJC0+FUXE8uYyyNTsS6UlqSklCgdUszRDyhE/EvLt
+         G+VEqrnoeg1IZJFVfxYmAlX08vXB0xtI+TuFYEI+2bcleRUWNMn70+6DbSm1/L2KzLcf
+         FUtvKvR31EuFQUjje5/nfCyZXbCAFVCPczkVoTJYXNPIoLd9eKXjVMWwY9MRVh7ilTzS
+         /kkPNDlGkPINFvXBzLU/Z6pSdBG1jM/ZG4lX3Gn68rYXx2iI/EoHu6+7IYUgoi1xcAR9
+         r1VX0BWE5cNRzwb/leXYZ0H1f8k7FfjUnhyuA6waZkuMIklViVePhRt03vjHEc+SyQcZ
+         u4aw==
+X-Gm-Message-State: AOAM533+DaMmBasWts49a6LVWvspqexy98hXB4Zv78Y5EO7OiA40cj/q
+        3HOl3o4gj5x+2eFFF80eIB4AEUWORZ4YOQ==
+X-Google-Smtp-Source: ABdhPJx/QAyp65GTe9rGRfzc/dskUdTHQvCFZB0vjVYZ6L/y0XC1IQ80mrHvZx9+LnRHN/fDHyqm4Q==
+X-Received: by 2002:a02:7f53:: with SMTP id r80mr662733jac.295.1643245409268;
+        Wed, 26 Jan 2022 17:03:29 -0800 (PST)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id g8sm11346666ilc.10.2022.01.26.17.03.28
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jan 2022 17:03:28 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: =?ISO-2022-JP?B?GyRCIVokKkxkJCQ5ZyRvJDskcj41JGokXiQ3JD8hWxsoQg==?=
-X-PHP-Originating-Script: 5583:class-phpmailer.php
-Date:   Wed, 26 Jan 2022 23:20:17 +0000
-From:   WordPress <sh@hashimoku.com>
-Message-ID: <ca6fb9c80db309501dc132411c641515@hashimoku.com>
-X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
+Subject: [PATCH BlueZ] btdev: Add implementation for BT_HCI_CMD_LE_TERM_BIG
+Date:   Wed, 26 Jan 2022 17:03:27 -0800
+Message-Id: <20220127010327.3087364-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-この度は、橋口木工所へのお問い合わせを頂きまして誠にありがとうございます。
-お問合せフォームにて下記の内容にて送信致しました。
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-■お名前
-?? Adrienne is interested in your profile! Click Here: http://inx.lv/Di7E?hm50m ??
+This adds handler for BT_HCI_CMD_LE_TERM_BIG and generate
+BT_HCI_EVT_LE_BIG_TERMINATE to indicate to the host stack that the
+BIG has been terminated.
+---
+ emulator/btdev.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-■ふりがな
-qsnxbz8e
-
-■メールアドレス
-linux-bluetooth@vger.kernel.org
-
-■電話番号
-679640553876
-
-■お問い合わせ内容
-ppa4yo50
-
-
-追って担当者よりご連絡をさせて頂きますので、しばらくお待ちくださいませ。
-
-
-゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。
-
-　橋口木工所
-
-　〒849-0402     佐賀県杵島郡白石町大字福富下分2827-6
-　TEL: 0952-87-2062 FAX: 0952-87-2098
-　Email: sh@hashimoku.com
-　URL: http://hashimoku.com/
-
-゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。゜。
+diff --git a/emulator/btdev.c b/emulator/btdev.c
+index 002ebf3e7..0ef840a95 100644
+--- a/emulator/btdev.c
++++ b/emulator/btdev.c
+@@ -5733,8 +5733,24 @@ static int cmd_create_big_test(struct btdev *dev, const void *data, uint8_t len)
+ 
+ static int cmd_term_big(struct btdev *dev, const void *data, uint8_t len)
+ {
+-	/* TODO */
+-	return -ENOTSUP;
++	cmd_status(dev, BT_HCI_ERR_SUCCESS, BT_HCI_CMD_DISCONNECT);
++
++	return 0;
++}
++
++static int cmd_term_big_complete(struct btdev *dev, const void *data,
++							uint8_t len)
++{
++	const struct bt_hci_cmd_le_term_big *cmd = data;
++	struct bt_hci_evt_le_big_terminate rsp;
++
++	memset(&rsp, 0, sizeof(rsp));
++	rsp.reason = cmd->reason;
++	rsp.handle = cmd->handle;
++
++	le_meta_event(dev, BT_HCI_EVT_LE_BIG_TERMINATE, &rsp, sizeof(rsp));
++
++	return 0;
+ }
+ 
+ static int cmd_big_create_sync(struct btdev *dev, const void *data, uint8_t len)
+@@ -5953,7 +5969,7 @@ static int cmd_config_data_path(struct btdev *dev, const void *data,
+ 	CMD(BT_HCI_CMD_LE_CREATE_BIG, cmd_create_big, \
+ 			cmd_create_big_complete), \
+ 	CMD(BT_HCI_CMD_LE_CREATE_BIG_TEST, cmd_create_big_test, NULL), \
+-	CMD(BT_HCI_CMD_LE_TERM_BIG, cmd_term_big, NULL), \
++	CMD(BT_HCI_CMD_LE_TERM_BIG, cmd_term_big, cmd_term_big_complete), \
+ 	CMD(BT_HCI_CMD_LE_BIG_CREATE_SYNC, cmd_big_create_sync, NULL), \
+ 	CMD(BT_HCI_CMD_LE_BIG_TERM_SYNC, cmd_big_term_sync, NULL), \
+ 	CMD(BT_HCI_CMD_LE_REQ_PEER_SCA, cmd_req_peer_sca, NULL), \
+-- 
+2.34.1
 
