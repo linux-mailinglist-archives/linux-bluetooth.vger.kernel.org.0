@@ -2,80 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E69E4A4111
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jan 2022 12:02:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B5384A49C4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jan 2022 15:59:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358889AbiAaLB6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 31 Jan 2022 06:01:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43100 "EHLO
+        id S1349217AbiAaO7g (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 31 Jan 2022 09:59:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358677AbiAaLBA (ORCPT
+        with ESMTP id S232149AbiAaO7d (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 31 Jan 2022 06:01:00 -0500
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A51AC061793
-        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 02:59:47 -0800 (PST)
-Received: by mail-io1-xd43.google.com with SMTP id r144so16302860iod.9
-        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 02:59:47 -0800 (PST)
+        Mon, 31 Jan 2022 09:59:33 -0500
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F397C061714
+        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 06:59:33 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id e17so19794368ljk.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 06:59:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=FANIUiWvB3mdY3zLX2DODg2pUIL5eGT5wlydl6jYk40=;
-        b=OjUeAkMVzEddLMMo5PnTCjKyhCs1ageGmC5+cFdXpsSEtg6JbUDTvXCRmwfTUCSofJ
-         slj36zZmhn3J4uwPw0DJBjnv3hUS5m+nEauuYDUNcCWjc1f+d0I+yOjKIUc0Pgz+j5Ue
-         rRdRGfWkjcSXGfwT+M+UDneKFOQe0c6aLr+5TauC2FupNgb1qyGc5yiIkJ8k0NAmHZhf
-         anrjd59/OgrastnWs4ZkrvFaIDjw5pd3eh107tNZ/TuMjnW3micCxNZKM2MDkg13GKwm
-         O5Q6tfm8j18o2CLpoCl1kG865M+uxrSOQqgPJI+OJu79ECke4sTf94bEwDsB5fZLVwuG
-         tdrw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=4oxw2yftup4zTZyREEGsuh0pigZ/icP5H9RySVtwFBQ=;
+        b=MdSN9xIu71W+qfVC9ewzYL0Ehd62NlL4wfjD50+UWbfcB7SFiXmySFUCP1WH5cG/Q/
+         WDmYVFxuyLAmCF2ksIzuDx38E/9JXUeNaQWZqaG+WHwAb0rVRGzHUvDqP8EonOYTyE+c
+         3dakU7AhBd3V4F+nXfh1eP15F1KkVXRY2rsiGt1Jx4rCd2Zq4jL8fFLDPRZ41+qBmRj4
+         wZDItaERYk9xxYafA7eLEtA0DJRIQj19zCh6EIruDpDffPmTLdkxNyUskgyBARd14a5Q
+         AYTPFvSgCB+6tmz5uF5A+KEFwvpGD7w/V+uH/GdQjxEaoqlfWPGyvIaQd3r77M/ZXBLL
+         4Z7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=FANIUiWvB3mdY3zLX2DODg2pUIL5eGT5wlydl6jYk40=;
-        b=NVz/W3qcZcfg2+IoQi6u6mcd4cuv/iMyxXUurGRwHgKzdaedJwqqqr/OdLi7R1htdH
-         ysQFUuI8VGtzyceMQDG9CgITHil+xTUdAm5Sra3YPrrtKrcXM1TChg0p6PjJ9NTwavie
-         F7ZiZBPH01ZCjPmRDNW63BXZJKc6oZIt1H7H1BHcRydWu0n6mKcUhGKpcJWnkBcuWC/a
-         YDYgY3x3FJFb1I8Xx2gynTtJg3rRaY/FNQaRDDagD5AGgB8QDxbAho5f8aV99CNzih3M
-         /DsI2dOoo/gPYrRtt8OpxoyIw5bcCJTEXIlVt5bwd7b8FSg4Kxr5GgWNM5dEqkONEseb
-         Ca9A==
-X-Gm-Message-State: AOAM532QALCk+lTuvj3li9o/Zd2DPRo7/0ZbW2XQU7tkCRg4D9enkAB9
-        Jy6OoZmiD7cuUQPqvjYop66xZjl5Bn4jF2Q8sHE=
-X-Google-Smtp-Source: ABdhPJx07OLMUPeEc0ImjaiJBKF2Mcc3ZmsWTIoSvX2FNfz03c1HE0RFqesREnjvPqYHKyL/ALkhu5ugV57XI3T5t/k=
-X-Received: by 2002:a6b:441a:: with SMTP id r26mr10856124ioa.211.1643626786286;
- Mon, 31 Jan 2022 02:59:46 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=4oxw2yftup4zTZyREEGsuh0pigZ/icP5H9RySVtwFBQ=;
+        b=6uAw0Vl2t5jjrU4m6f69vMY9a1eg/BPbhwHD+j/1/r7CHskc5f/lDbOyMld2XrC53m
+         Ab6zzjh7FDbHB6KSpw/bKbYeRuHPWVuQ7VKkgmuJApGRavbgD9k91f6KsxOnwUnC1Qva
+         SfE8xsFiTntqDszUEETp9Gooh6re8tZ0gLuQPv4L0dsh0Zi+eKWggRcf3KsLvYvdCAFd
+         ZjB2Gg1mng3ai8oWkaK34/J4iYSAOM/wo9h2D/t2FSwIEN8bPtG3Po84xz+GyF639UJS
+         /8SYN3udWbA3SoFSinjYMAPYdMtBn7imiwUfV+mEgpjCxFA8PvW2YUIatL4JNPejHsoS
+         8JRg==
+X-Gm-Message-State: AOAM531TvTieNXmnCwBW6V4dyJqMD5mqDjWNLTr5G9J9M2qA4gp9Nvht
+        qIky4M7OfulKdvWJ5JW1biTUXzyJXUCityky
+X-Google-Smtp-Source: ABdhPJz7Bwr8mWNMds0MsdqjK3kbd2owfecuEXeolrd0kWbSL4s6SSTcy5KLHGPhqboHZJy0lmPGsw==
+X-Received: by 2002:a05:651c:1287:: with SMTP id 7mr13144673ljc.143.1643641171509;
+        Mon, 31 Jan 2022 06:59:31 -0800 (PST)
+Received: from [192.168.1.11] ([94.103.224.201])
+        by smtp.gmail.com with ESMTPSA id u12sm3146643lfl.188.2022.01.31.06.59.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Jan 2022 06:59:31 -0800 (PST)
+Message-ID: <ec9ac627-e49b-f668-a434-c1a5173c04db@gmail.com>
+Date:   Mon, 31 Jan 2022 17:59:30 +0300
 MIME-Version: 1.0
-Reply-To: daniellakyle60@gmail.com
-Sender: drdanielmorris11111@gmail.com
-Received: by 2002:a05:6638:1248:0:0:0:0 with HTTP; Mon, 31 Jan 2022 02:59:45
- -0800 (PST)
-From:   Mrs daniell akyle <daniellakyle60@gmail.com>
-Date:   Mon, 31 Jan 2022 11:59:45 +0100
-X-Google-Sender-Auth: xE_x512-NJSetLeK1z_d90RC9Q0
-Message-ID: <CAKFcj-P8h0HeDMtZZnog7Sh8cFMKV7095BN2fQnUMpCGPgmhFg@mail.gmail.com>
-Subject: Ahoj
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: kernel 5.15.17: Spamming dmesg with "Malicious advertising data"
+Content-Language: en-US
+To:     Kai Krakow <kai@kaishome.de>, linux-bluetooth@vger.kernel.org
+References: <CAC2ZOYu4zy0CPTW40qy3vJJDFuWEUvqqPJdMgtKL9=7Xh-YVEA@mail.gmail.com>
+From:   Pavel Skripkin <paskripkin@gmail.com>
+In-Reply-To: <CAC2ZOYu4zy0CPTW40qy3vJJDFuWEUvqqPJdMgtKL9=7Xh-YVEA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Pozdravy
-Jmenuji se pan=C3=AD Daniella Kyleov=C3=A1, je mi 58 let
-Filip=C3=ADny. V sou=C4=8Dasn=C3=A9 dob=C4=9B jsem hospitalizov=C3=A1n na F=
-ilip=C3=ADn=C3=A1ch, kde jsem
-podstupuje l=C3=A9=C4=8Dbu akutn=C3=ADho karcinomu j=C3=ADcnu. jsem um=C3=
-=ADraj=C3=ADc=C3=AD,
-vdova, kter=C3=A1 se rozhodla darovat =C4=8D=C3=A1st sv=C3=A9ho majetku spo=
-lehliv=C3=A9 osob=C4=9B
-kter=C3=A1 tyto pen=C3=ADze pou=C5=BEije na pomoc chud=C3=BDm a m=C3=A9n=C4=
-=9B privilegovan=C3=BDm. Chci
-poskytnout dar ve v=C3=BD=C5=A1i 3 700 000 =C2=A3 na sirotky nebo charitati=
-vn=C3=AD organizace
-ve va=C5=A1=C3=AD oblasti. Zvl=C3=A1dne=C5=A1 to? Pokud jste ochotni tuto n=
-ab=C3=ADdku p=C5=99ijmout
-a ud=C4=9Blejte p=C5=99esn=C4=9B tak, jak v=C3=A1m =C5=99=C3=ADk=C3=A1m, pa=
-k se mi vra=C5=A5te pro dal=C5=A1=C3=AD vysv=C4=9Btlen=C3=AD.
-pozdravy
-Pan=C3=AD Daniella Kyleov=C3=A1
+Hi Kai,
+
+On 1/30/22 18:02, Kai Krakow wrote:
+> Hello!
+> 
+> Since kernel 5.15.17, dmesg is spammed with the following log,
+> sometimes multiple times per second:
+> 
+>> Bluetooth: hci0: Malicious advertising data. Stopping processing
+
+Thanks for the report.
+
+It's caused by one of my patches. Can you, please, try [1] and see if it 
+works for you. It looks like we just need to backport that patch to fix 
+the problem in stable kernels.
+
+
+I am sorry for these false-positive messages :(
+
+
+[1] 
+https://lore.kernel.org/linux-bluetooth/20211124201628.405647-1-brian.gix@intel.com/ 
+
+
+
+
+With regards,
+Pavel Skripkin
