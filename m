@@ -2,92 +2,91 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0F004A5171
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jan 2022 22:28:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72AE34A518B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jan 2022 22:37:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381041AbiAaV2H (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 31 Jan 2022 16:28:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49246 "EHLO
+        id S1381117AbiAaVg7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 31 Jan 2022 16:36:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240178AbiAaV2G (ORCPT
+        with ESMTP id S1380436AbiAaVg5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 31 Jan 2022 16:28:06 -0500
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E59C2C061714
-        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 13:28:05 -0800 (PST)
-Received: by mail-yb1-xb36.google.com with SMTP id c6so44712615ybk.3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 13:28:05 -0800 (PST)
+        Mon, 31 Jan 2022 16:36:57 -0500
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3137C061744
+        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 13:36:56 -0800 (PST)
+Received: by mail-oi1-x244.google.com with SMTP id s185so29412899oie.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 13:36:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaishome.de; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=injGKBnT7tO8fADGfs4rEBmFAbO+OqDdJAgAndDkFN4=;
-        b=GRzs0rC5mSHsooh9FvY7eG2YuUwLoz8ckvayrEMd1CkIZ5n9Bf85YsQoBWrDRfYCtT
-         SlfHZ/2n5eZDBHms7AKp+heR8ketvKUE6XbzVBLBE0p7FCCGLsyHlP5ML31gDkPuYDN5
-         vCgciboBT5wyAHs1uWefTng6nx63fb3O45e3E=
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=RcCyF58LaRxi/j1nHAT0ApLeXmQ9s66f3iMVqhPacvY=;
+        b=h0/ZbeSbhpQI9P1vadFWIIwaFx6Wg7DqXMk6y/6+HmqNlUgv3SlNpJw4qpKTo06mte
+         9c8XYB94UqfO8qOJWjzFkjv5zc9WvJZZl3Js9F72ABObxzvVfflP7X59ytjFJOxjOG2l
+         LO3Y+aza5Rf6VWZX6T/nuKCfE48EtABITU6cGLgH5Lgy6DZ7btNOQ2K6FCDw4SVAmVb+
+         bozVeCVEuRNzl4R/3iiKyQWEN4FwtOoBFNE1mvxGgM+MeOAXwYWRhKwNuVBkTmZ3ljfc
+         /CIpJAIw2H+Xim8Oyn6ivr2wbXYsB8V9T2ZN0w8wKdgaTu/QkrQmZRS8vp1zfQE1kyl/
+         bECA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=injGKBnT7tO8fADGfs4rEBmFAbO+OqDdJAgAndDkFN4=;
-        b=Ykz4VdK4mlDJePOILqWrGTF+9hsqef1MoYMf0LTnVqFbc07RGBrqOhE6ovKTtGrhDN
-         Psww4qHlAY6GkSN94ykJ7HwvtdHMY7EEHAfbsmlrDK30Lcxp6lEmV0ThrkZ6sMu48pRw
-         zFOLeqBAl7bF+eBFBKXd/u8KYhOmCqI3cs6bsgkSZQYO6tXhXAbc8uVU38iVOG5sxMTE
-         8H4Oy8lThkFTcU9EsVAK4KWwv9cE4n00Qy2LYZ2vLGmXvM3qXprTTxkHTOBVRRwI45Ru
-         bYWCdz3WLOy/TIh067XcfIBiU7KYNGmIjU0RBB6Qys/1thHsGDBq/MOgYQtGM1jFuCSk
-         kd3A==
-X-Gm-Message-State: AOAM531cFzsp+k5wic7p5XzZFJDUBNWu8SASHALyLuFJsNBruK7G9rVn
-        lCRwgIvditUJ/Qh8H11hyAttrnclwvDFH/2Bfvvd/1EHSO0=
-X-Google-Smtp-Source: ABdhPJxglNpt2A5cis0fLayN6xyXuTK7yClzkHs+DapD0wAD0nTkbahjHJUiY3KLNVYQIWdf7Y5quklHg2bCxskAGHs=
-X-Received: by 2002:a25:7454:: with SMTP id p81mr30254071ybc.725.1643664485171;
- Mon, 31 Jan 2022 13:28:05 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=RcCyF58LaRxi/j1nHAT0ApLeXmQ9s66f3iMVqhPacvY=;
+        b=7+d0KSguyoGbKMxb7r1/2qZhZHErcjOOpIKD3eOBE2DVs2pXnJCRYkUWKppq6fTiH5
+         fPQwiyKeBysvuwL7GSXqxxFSQwl1fXK3JuDkddhqtNCW0T9yeuZkprvIfWI4y00AQmu7
+         JLuo11LVH2aHagJa7tDGLZQ0FL911G1bBuUyOvouw5T6GxcLiFzIMQ/dRdt0ue2AVuzr
+         pwlJwXk5Je9HwZqiEjIzNEkx6zFDwRm3IORRBlfG/7DKAPniXDae7qpNeSk5wLDfiEma
+         t0AvFB68FwjIUepiQRs4t59yUCwS6qS+BdfjjI2BW3wLFIDyv6Sz8RseqBNE3eGaMxpf
+         FELg==
+X-Gm-Message-State: AOAM533ylma2fOep2AMCF2zMcfvf6F1YlPnRBlUgboJf+x43qkM6pJZR
+        aDzS2jLKdZLT8x0MTqZKwl1iQjhoqeUFKGmeOy0=
+X-Google-Smtp-Source: ABdhPJwOKKiu9r5CLPBfR9xT27fzBbARJMbuDEn6UccpYrL5eWNExCgl2kvk+baqoa5SwK6UrZG3WcDm232+Riit43k=
+X-Received: by 2002:a54:4490:: with SMTP id v16mr14816050oiv.157.1643665016077;
+ Mon, 31 Jan 2022 13:36:56 -0800 (PST)
 MIME-Version: 1.0
-References: <CAC2ZOYu4zy0CPTW40qy3vJJDFuWEUvqqPJdMgtKL9=7Xh-YVEA@mail.gmail.com>
- <ec9ac627-e49b-f668-a434-c1a5173c04db@gmail.com>
-In-Reply-To: <ec9ac627-e49b-f668-a434-c1a5173c04db@gmail.com>
-From:   Kai Krakow <kai@kaishome.de>
-Date:   Mon, 31 Jan 2022 22:27:54 +0100
-Message-ID: <CAC2ZOYuXg4btk9PaE3whmP7JnntsixEvDuBNvv7GL1pvU1nepQ@mail.gmail.com>
-Subject: Re: kernel 5.15.17: Spamming dmesg with "Malicious advertising data"
-To:     Pavel Skripkin <paskripkin@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
+Received: by 2002:a4a:c30d:0:0:0:0:0 with HTTP; Mon, 31 Jan 2022 13:36:55
+ -0800 (PST)
+Reply-To: westerunion909@gmail.com
+From:   "Antonia Lloyd." <anthonylloydatmxxx04@gmail.com>
+Date:   Mon, 31 Jan 2022 13:36:55 -0800
+Message-ID: <CAExPwBBtJH3GcqF-weqUuAur7b38Y2T1d6e9FzvuN_q1Nhi-zw@mail.gmail.com>
+Subject: Dear Email ID Owner.(USD$4000 IMF COMPENSATION FUND TO PICK UP TODAY).
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hey Pavel!
+Dear Email ID Owner.
 
-Am Mo., 31. Jan. 2022 um 15:59 Uhr schrieb Pavel Skripkin
-<paskripkin@gmail.com>:
->
-> Hi Kai,
->
-> On 1/30/22 18:02, Kai Krakow wrote:
-> > Hello!
-> >
-> > Since kernel 5.15.17, dmesg is spammed with the following log,
-> > sometimes multiple times per second:
-> >
-> >> Bluetooth: hci0: Malicious advertising data. Stopping processing
->
-> Thanks for the report.
->
-> It's caused by one of my patches. Can you, please, try [1] and see if it
-> works for you. It looks like we just need to backport that patch to fix
-> the problem in stable kernels.
+The IMF is compensating all the email address that was funds as one of
+the ward win Victims and your email address and your name is among the
+listed one of approved to pay the sum of $3.6 million U.S Dollars. We
+have concluded to effect your own payment through Western Union Money
+Transfer for easy pick-up of those funds in good condition,$4000 twice
+daily,till the $3.6 million is completely transferred to you.We now
+need your information where we will be sending the funds,such
+as;Receiver name(Your full Name)address and phone number.Contact
+Western Union agent with this Email: ( westerunion995@gmail.com  ) for
+your payment fund.
 
-I can confirm it's fixing the issue for 5.15.18, thanks. You can add
-my Tested-by.
+Ms.Maria Zatto
+E-mail:westerunion995@gmail.com
+Telephone: +229 682 97 169
 
+Contact Ms.Maria,immediately you get this mail through western union
+email address above to enable her speed-up.your payment and release
+the $4000 dollars MTCN today for you to pick up the payment OK.
 
-> I am sorry for these false-positive messages :(
+You are expected to provide us with the details as prescribed below to
+enable safe and easy release of your funds today.
 
-NP
+(1)Your Full name:
+(2)Your Phone number:
+(3)Your Country:
+(4)Your Age:
 
-
-> [1]
-> https://lore.kernel.org/linux-bluetooth/20211124201628.405647-1-brian.gix@intel.com/
-
-Regards,
-Kai
+Thank you,
+Dr.Antonia Lloyd.
+Contact Dir.Western Union Money Transfer,
+Cotonou-Benin Republic.
