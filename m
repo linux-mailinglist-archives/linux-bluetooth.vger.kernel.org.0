@@ -2,127 +2,80 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B3844A3726
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 30 Jan 2022 16:02:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E69E4A4111
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jan 2022 12:02:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355376AbiA3PCz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 30 Jan 2022 10:02:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34734 "EHLO
+        id S1358889AbiAaLB6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 31 Jan 2022 06:01:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355374AbiA3PCz (ORCPT
+        with ESMTP id S1358677AbiAaLBA (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 30 Jan 2022 10:02:55 -0500
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B367C061714
-        for <linux-bluetooth@vger.kernel.org>; Sun, 30 Jan 2022 07:02:54 -0800 (PST)
-Received: by mail-yb1-xb2e.google.com with SMTP id j2so19731002ybu.0
-        for <linux-bluetooth@vger.kernel.org>; Sun, 30 Jan 2022 07:02:54 -0800 (PST)
+        Mon, 31 Jan 2022 06:01:00 -0500
+Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A51AC061793
+        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 02:59:47 -0800 (PST)
+Received: by mail-io1-xd43.google.com with SMTP id r144so16302860iod.9
+        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jan 2022 02:59:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaishome.de; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=A9rXa8MOMOqUl59jZILcjrVHPpj0gaywXdH3Ebep4zI=;
-        b=fcpnd6x/yCzjJpJ4UJVM3bR8MB9UNlFJokooCvtABL/RkxtFAvFTxMcPq5wZMqdXJ/
-         tqL4U7B9L5FJ1uDLG3STX6aIPtaPz/76vniurYz/RolRiOUoVf9/eeHzROb3KbBXH/4j
-         Xk8upP54EUwR95zRtYjOrYCJAJBUU0uZxgolE=
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=FANIUiWvB3mdY3zLX2DODg2pUIL5eGT5wlydl6jYk40=;
+        b=OjUeAkMVzEddLMMo5PnTCjKyhCs1ageGmC5+cFdXpsSEtg6JbUDTvXCRmwfTUCSofJ
+         slj36zZmhn3J4uwPw0DJBjnv3hUS5m+nEauuYDUNcCWjc1f+d0I+yOjKIUc0Pgz+j5Ue
+         rRdRGfWkjcSXGfwT+M+UDneKFOQe0c6aLr+5TauC2FupNgb1qyGc5yiIkJ8k0NAmHZhf
+         anrjd59/OgrastnWs4ZkrvFaIDjw5pd3eh107tNZ/TuMjnW3micCxNZKM2MDkg13GKwm
+         O5Q6tfm8j18o2CLpoCl1kG865M+uxrSOQqgPJI+OJu79ECke4sTf94bEwDsB5fZLVwuG
+         tdrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=A9rXa8MOMOqUl59jZILcjrVHPpj0gaywXdH3Ebep4zI=;
-        b=pN1cmkVoiuf0Yz5pQLo9mX6973KueKYlPB39p7dFeqCcVNXUSIBVAVw/8hhneUO1DB
-         5CxrtPBMNd5CIUvrPTic0Nb5X4BqadHsZZHFfuJBqvZCJBP+xuJbPTo7HMzMlTrHvJDm
-         yyryu8Hh5bjKc8r0qXUpWeJqt8b/4tVtTwLM9kPrtpSpkkvIH1uQmtA3Ts/IbiMF5HPf
-         ZpbNKfSTt/CvQP7q3015jIr4De4IRNcP7zFEHQsANNMEL7W7/V+XR8sAOECkGFsIhPph
-         ST9b7udAAls7dNYSZwvVGezFnm50UYJ0zP68tsu2ELYOv5tCtH8GV0lO88v2N0jw4wiD
-         spLQ==
-X-Gm-Message-State: AOAM5335PLH1ghIyQUsBAiy3tqds+AexHNZ41CDyN4rEe4oSBPQDrBfF
-        TBa/Wpb823xKTmv6N7H/9HYUR0gU+bsoQVArrxWL09r1LXUd5w==
-X-Google-Smtp-Source: ABdhPJy/WGDDxbPKC2HIp7fXUegT+1wuCSlr5P16Jw6nm8KsVFBFBDkL/3X1D0H4uFJHAHcFfhD2yd69XdAmPiwwxa8=
-X-Received: by 2002:a25:42c5:: with SMTP id p188mr24595258yba.154.1643554973588;
- Sun, 30 Jan 2022 07:02:53 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=FANIUiWvB3mdY3zLX2DODg2pUIL5eGT5wlydl6jYk40=;
+        b=NVz/W3qcZcfg2+IoQi6u6mcd4cuv/iMyxXUurGRwHgKzdaedJwqqqr/OdLi7R1htdH
+         ysQFUuI8VGtzyceMQDG9CgITHil+xTUdAm5Sra3YPrrtKrcXM1TChg0p6PjJ9NTwavie
+         F7ZiZBPH01ZCjPmRDNW63BXZJKc6oZIt1H7H1BHcRydWu0n6mKcUhGKpcJWnkBcuWC/a
+         YDYgY3x3FJFb1I8Xx2gynTtJg3rRaY/FNQaRDDagD5AGgB8QDxbAho5f8aV99CNzih3M
+         /DsI2dOoo/gPYrRtt8OpxoyIw5bcCJTEXIlVt5bwd7b8FSg4Kxr5GgWNM5dEqkONEseb
+         Ca9A==
+X-Gm-Message-State: AOAM532QALCk+lTuvj3li9o/Zd2DPRo7/0ZbW2XQU7tkCRg4D9enkAB9
+        Jy6OoZmiD7cuUQPqvjYop66xZjl5Bn4jF2Q8sHE=
+X-Google-Smtp-Source: ABdhPJx07OLMUPeEc0ImjaiJBKF2Mcc3ZmsWTIoSvX2FNfz03c1HE0RFqesREnjvPqYHKyL/ALkhu5ugV57XI3T5t/k=
+X-Received: by 2002:a6b:441a:: with SMTP id r26mr10856124ioa.211.1643626786286;
+ Mon, 31 Jan 2022 02:59:46 -0800 (PST)
 MIME-Version: 1.0
-From:   Kai Krakow <kai@kaishome.de>
-Date:   Sun, 30 Jan 2022 16:02:43 +0100
-Message-ID: <CAC2ZOYu4zy0CPTW40qy3vJJDFuWEUvqqPJdMgtKL9=7Xh-YVEA@mail.gmail.com>
-Subject: kernel 5.15.17: Spamming dmesg with "Malicious advertising data"
-To:     linux-bluetooth@vger.kernel.org
+Reply-To: daniellakyle60@gmail.com
+Sender: drdanielmorris11111@gmail.com
+Received: by 2002:a05:6638:1248:0:0:0:0 with HTTP; Mon, 31 Jan 2022 02:59:45
+ -0800 (PST)
+From:   Mrs daniell akyle <daniellakyle60@gmail.com>
+Date:   Mon, 31 Jan 2022 11:59:45 +0100
+X-Google-Sender-Auth: xE_x512-NJSetLeK1z_d90RC9Q0
+Message-ID: <CAKFcj-P8h0HeDMtZZnog7Sh8cFMKV7095BN2fQnUMpCGPgmhFg@mail.gmail.com>
+Subject: Ahoj
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello!
-
-Since kernel 5.15.17, dmesg is spammed with the following log,
-sometimes multiple times per second:
-
-> Bluetooth: hci0: Malicious advertising data. Stopping processing
-
-This was probably introduced by commit 2de0e6a71ceb056e17e4684dce8b7640367996f9.
-
-I'm not sure which device causes it, and it seems quite useless to
-repeat this message without any rate limiting, especially when no
-source of the incident is indicated.
-
-I'm suspecting that something is messed up here, and there's not
-really any malicious advertising going on. At least, there's a lot of
-LE advertising going on but that looks sane:
-
-```
-> HCI Event: LE Meta Event (0x3e) plen 40                                                                                                                                                                                                  #63 [hci0] 3.466120
-     LE Advertising Report (0x02)
-       Num reports: 1
-       Event type: Non connectable undirected - ADV_NONCONN_IND (0x03)
-       Address type: Public (0x00)
-       Address: F8:04:2E:8A:20:C1 (SAMSUNG ELECTRO-MECHANICS(THAILAND))
-       Data length: 28
-       Company: Samsung Electronics Co. Ltd. (117)
-         Data: 42040180aef8042e8a20c1fa042e8a20c001000000000000
-       RSSI: -68 dBm (0xbc)
-> HCI Event: LE Meta Event (0x3e) plen 40                                                                                                                                                                                                  #64 [hci0] 3.469127
-     LE Advertising Report (0x02)
-       Num reports: 1
-       Event type: Connectable undirected - ADV_IND (0x00)
-       Address type: Public (0x00)
-       Address: 74:AC:B9:41:D2:23 (Ubiquiti Networks Inc.)
-       Data length: 28
-       128-bit Service UUIDs (partial): 1 entry
-         Vendor specific
-       Service Data (UUID 0x252a): 74acb941d21c
-       RSSI: -37 dBm (0xdb)
-> HCI Event: LE Meta Event (0x3e) plen 40                                                                                                                                                                                                  #65 [hci0] 3.540118
-     LE Advertising Report (0x02)
-       Num reports: 1
-       Event type: Scannable undirected - ADV_SCAN_IND (0x02)
-       Address type: Random (0x01)
-       Address: 53:F3:43:9B:9D:13 (Resolvable)
-       Data length: 28
-       16-bit Service UUIDs (complete): 1 entry
-         Google (0xfe9f)
-       Service Data (UUID 0xfe9f): 0000000000000000000000000000000000000000
-       RSSI: -70 dBm (0xba)
-> HCI Event: LE Meta Event (0x3e) plen 40                                                                                                                                                                                                  #66 [hci0] 3.596124
-     LE Advertising Report (0x02)
-       Num reports: 1
-       Event type: Non connectable undirected - ADV_NONCONN_IND (0x03)
-       Address type: Public (0x00)
-       Address: 68:72:C3:A0:AA:75 (Samsung Electronics Co.,Ltd)
-       Data length: 28
-       Company: Samsung Electronics Co. Ltd. (117)
-         Data: 420401806e6872c3a0aa756a72c3a0aa7401000000000000
-       RSSI: -55 dBm (0xc9)
-```
-
-System info:
-
-> Linux jupiter 5.15.17-gentoo #1 SMP PREEMPT Sat Jan 29 07:32:24 CET 2022 x86_64 12th Gen Intel(R) Core(TM) i7-12700K GenuineIntel GNU/Linux
-> Bluetooth monitor ver 5.63
-> = Note: Linux version 5.15.17-gentoo (x86_64)                          0.256208
-> = Note: Bluetooth subsystem version 2.22                               0.256210
-> = New Index: 00:1A:7D:DA:71:15 (Primary,USB,hci0)               [hci0] 0.256211
-> = Open Index: 00:1A:7D:DA:71:15                                 [hci0] 0.256212
-> = Index Info: 00:1A:7D:DA:71:15 (Cambridge Silicon Radio)       [hci0] 0.256212
-> @ MGMT Open: bluetoothd (privileged) version 1.21             {0x0001} 0.256213
-
-
-Regards,
-Kai
+Pozdravy
+Jmenuji se pan=C3=AD Daniella Kyleov=C3=A1, je mi 58 let
+Filip=C3=ADny. V sou=C4=8Dasn=C3=A9 dob=C4=9B jsem hospitalizov=C3=A1n na F=
+ilip=C3=ADn=C3=A1ch, kde jsem
+podstupuje l=C3=A9=C4=8Dbu akutn=C3=ADho karcinomu j=C3=ADcnu. jsem um=C3=
+=ADraj=C3=ADc=C3=AD,
+vdova, kter=C3=A1 se rozhodla darovat =C4=8D=C3=A1st sv=C3=A9ho majetku spo=
+lehliv=C3=A9 osob=C4=9B
+kter=C3=A1 tyto pen=C3=ADze pou=C5=BEije na pomoc chud=C3=BDm a m=C3=A9n=C4=
+=9B privilegovan=C3=BDm. Chci
+poskytnout dar ve v=C3=BD=C5=A1i 3 700 000 =C2=A3 na sirotky nebo charitati=
+vn=C3=AD organizace
+ve va=C5=A1=C3=AD oblasti. Zvl=C3=A1dne=C5=A1 to? Pokud jste ochotni tuto n=
+ab=C3=ADdku p=C5=99ijmout
+a ud=C4=9Blejte p=C5=99esn=C4=9B tak, jak v=C3=A1m =C5=99=C3=ADk=C3=A1m, pa=
+k se mi vra=C5=A5te pro dal=C5=A1=C3=AD vysv=C4=9Btlen=C3=AD.
+pozdravy
+Pan=C3=AD Daniella Kyleov=C3=A1
