@@ -2,50 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C45CE4AC453
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Feb 2022 16:51:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 352324AC4BC
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Feb 2022 17:01:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236920AbiBGPtz convert rfc822-to-8bit (ORCPT
+        id S231263AbiBGQBC convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 7 Feb 2022 10:49:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60318 "EHLO
+        Mon, 7 Feb 2022 11:01:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236905AbiBGPsN (ORCPT
+        with ESMTP id S1384949AbiBGPxe (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 7 Feb 2022 10:48:13 -0500
+        Mon, 7 Feb 2022 10:53:34 -0500
 Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9D8CBC0401CC;
-        Mon,  7 Feb 2022 07:48:11 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9BECAC0401CC
+        for <linux-bluetooth@vger.kernel.org>; Mon,  7 Feb 2022 07:53:33 -0800 (PST)
 Received: from smtpclient.apple (p4ff9f3e5.dip0.t-ipconnect.de [79.249.243.229])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 2285ECECF1;
-        Mon,  7 Feb 2022 16:48:10 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id CC43ECECF1;
+        Mon,  7 Feb 2022 16:53:32 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
-Subject: Re: [PATCH 2/2] Bluetooth: mediatek: fix the conflict between mtk and
- msft vendor event
+Subject: Re: [RFC] Bluetooth: hci_core: Introduce hci_recv_event_data
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <2eed797ac2605bd068a025486fc0c09c2687e50c.1643435854.git.objelf@gmail.com>
-Date:   Mon, 7 Feb 2022 16:48:09 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        =?utf-8?B?Ik1hcmstWVcgQ2hlbiAo6Zmz5o+a5paHKSI=?= 
-        <Mark-YW.Chen@mediatek.com>, Soul.Huang@mediatek.com,
-        YN.Chen@mediatek.com, Leon.Yen@mediatek.com,
-        Eric-SY.Chang@mediatek.com, Deren.Wu@mediatek.com,
-        km.lin@mediatek.com, robin.chiu@mediatek.com,
-        Eddie.Chen@mediatek.com, ch.yeh@mediatek.com,
-        posh.sun@mediatek.com, ted.huang@mediatek.com,
-        Eric.Liang@mediatek.com, Stella.Chang@mediatek.com,
-        Tom.Chou@mediatek.com, steve.lee@mediatek.com, jsiuda@google.com,
-        frankgor@google.com, jemele@google.com, abhishekpandit@google.com,
-        michaelfsun@google.com, mcchou@chromium.org, shawnku@google.com,
-        linux-bluetooth@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20220204211236.2690926-2-luiz.dentz@gmail.com>
+Date:   Mon, 7 Feb 2022 16:53:32 +0100
+Cc:     linux-bluetooth@vger.kernel.org
 Content-Transfer-Encoding: 8BIT
-Message-Id: <1CE2BE2F-A47D-4EEF-809A-035775125D83@holtmann.org>
-References: <52ae30c33f2994efcdff180764801141d59e6e0c.1643435854.git.objelf@gmail.com>
- <2eed797ac2605bd068a025486fc0c09c2687e50c.1643435854.git.objelf@gmail.com>
-To:     Sean Wang <sean.wang@mediatek.com>
+Message-Id: <97AF1D34-8429-42C7-AC13-A7247234EC3F@holtmann.org>
+References: <20220204211236.2690926-1-luiz.dentz@gmail.com>
+ <20220204211236.2690926-2-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 X-Mailer: Apple Mail (2.3693.60.0.1.1)
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
@@ -56,84 +42,102 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Sean,
+Hi Luiz,
 
-> There is a conflict between MediaTek wmt event and msft vendor extension
-> logic in the core layer since 145373cb1b1f ("Bluetooth: Add framework for
-> Microsoft vendor extension") was introduced because we changed the type of
-> mediatek wmt event to the type of msft vendor event in the driver.
+> This introduces hci_recv_event_data to make it simpler to access the
+> contents of last received event rather than having to pass its contents
+> to the likes of *_ind/*_cfm callbacks.
 > 
-> But the purpose we reported mediatek event to the core layer is for the
-> diagnostic purpose with that we are able to see the full packet trace via
-> monitoring socket with btmon. Thus, it is harmless we keep the original
-> type of mediatek vendor event here to avoid breaking the msft extension
-> function especially they can be supported by Mediatek chipset like MT7921
-> , MT7922 devices and future devices.
-> 
-> Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > ---
-> drivers/bluetooth/btmtk.h     | 1 +
-> drivers/bluetooth/btmtksdio.c | 9 +--------
-> drivers/bluetooth/btusb.c     | 5 -----
-> 3 files changed, 2 insertions(+), 13 deletions(-)
+> include/net/bluetooth/hci_core.h |  2 ++
+> net/bluetooth/hci_core.c         | 32 ++++++++++++++++++++++++++++++++
+> net/bluetooth/hci_event.c        |  3 +++
+> 3 files changed, 37 insertions(+)
 > 
-> diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
-> index 8960a5f89d48..013850fd2055 100644
-> --- a/drivers/bluetooth/btmtk.h
-> +++ b/drivers/bluetooth/btmtk.h
-> @@ -5,6 +5,7 @@
-> #define FIRMWARE_MT7668		"mediatek/mt7668pr2h.bin"
-> #define FIRMWARE_MT7961		"mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin"
+> diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+> index f5caff1ddb29..c454913794bf 100644
+> --- a/include/net/bluetooth/hci_core.h
+> +++ b/include/net/bluetooth/hci_core.h
+> @@ -516,6 +516,7 @@ struct hci_dev {
+> 	struct sk_buff_head	cmd_q;
 > 
-> +#define HCI_EV_WMT 0xe4
-> #define HCI_WMT_MAX_EVENT_SIZE		64
+> 	struct sk_buff		*sent_cmd;
+> +	struct sk_buff		*recv_event;
 > 
-> #define BTMTK_WMT_REG_WRITE 0x1
-> diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-> index 8e200e80d2f6..cbb09e1b823d 100644
-> --- a/drivers/bluetooth/btmtksdio.c
-> +++ b/drivers/bluetooth/btmtksdio.c
-> @@ -381,13 +381,6 @@ static int btmtksdio_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
-> 	struct hci_event_hdr *hdr = (void *)skb->data;
-> 	int err;
+> 	struct mutex		req_lock;
+> 	wait_queue_head_t	req_wait_q;
+> @@ -1727,6 +1728,7 @@ void hci_send_acl(struct hci_chan *chan, struct sk_buff *skb, __u16 flags);
+> void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb);
 > 
-> -	/* Fix up the vendor event id with 0xff for vendor specific instead
-> -	 * of 0xe4 so that event send via monitoring socket can be parsed
-> -	 * properly.
-> -	 */
-> -	if (hdr->evt == 0xe4)
-> -		hdr->evt = HCI_EV_VENDOR;
-> -
-> 	/* When someone waits for the WMT event, the skb is being cloned
-> 	 * and being processed the events from there then.
-> 	 */
-> @@ -403,7 +396,7 @@ static int btmtksdio_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
-> 	if (err < 0)
-> 		goto err_free_skb;
+> void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
+> +void *hci_recv_event_data(struct hci_dev *hdev, __u8 event);
 > 
-> -	if (hdr->evt == HCI_EV_VENDOR) {
-> +	if (hdr->evt == HCI_EV_WMT) {
-> 		if (test_and_clear_bit(BTMTKSDIO_TX_WAIT_VND_EVT,
-> 				       &bdev->tx_state)) {
-> 			/* Barrier to sync with other CPUs */
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index aefa0ee293f3..55ebab019d29 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -2271,11 +2271,6 @@ static void btusb_mtk_wmt_recv(struct urb *urb)
-> 		skb_put_data(skb, urb->transfer_buffer, urb->actual_length);
+> u32 hci_conn_get_phy(struct hci_conn *conn);
 > 
-> 		hdr = (void *)skb->data;
-> -		/* Fix up the vendor event id with 0xff for vendor specific
-> -		 * instead of 0xe4 so that event send via monitoring socket can
-> -		 * be parsed properly.
-> -		 */
-> -		hdr->evt = 0xff;
+> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+> index b4782a6c1025..5d1167b67a47 100644
+> --- a/net/bluetooth/hci_core.c
+> +++ b/net/bluetooth/hci_core.c
+> @@ -2740,6 +2740,7 @@ void hci_release_dev(struct hci_dev *hdev)
 > 
-> 		/* When someone waits for the WMT event, the skb is being cloned
-> 		 * and being processed the events from there then.
+> 	ida_simple_remove(&hci_index_ida, hdev->id);
+> 	kfree_skb(hdev->sent_cmd);
+> +	kfree_skb(hdev->recv_event);
+> 	kfree(hdev);
+> }
+> EXPORT_SYMBOL(hci_release_dev);
+> @@ -3024,6 +3025,37 @@ void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
+> 	return hdev->sent_cmd->data + HCI_COMMAND_HDR_SIZE;
+> }
+> 
+> +/* Get data from last received event */
+> +void *hci_recv_event_data(struct hci_dev *hdev, __u8 event)
+> +{
+> +	struct hci_event_hdr *hdr;
+> +	int offset;
+> +
+> +	if (!hdev->recv_event)
+> +		return NULL;
+> +
+> +	hdr = (void *) hdev->recv_event->data;
+> +	offset = sizeof(hdr);
+> +
+> +	if (hdr->evt != event) {
+> +		/* In case of LE metaevent check the subevent match */
+> +		if (hdr->evt == HCI_EV_LE_META) {
+> +			struct hci_ev_le_meta *ev;
+> +
+> +			ev = (void *) hdev->recv_event->data + offset;
+> +			offset += sizeof(*ev);
+> +			if (ev->subevent == event)
+> +				goto found;
+> +		}
+> +		return NULL;
+> +	}
+> +
+> +found:
+> +	bt_dev_dbg(hdev, "event 0x%2.2x", event);
+> +
+> +	return hdev->recv_event->data + offset;
+> +}
+> +
+> /* Send ACL data */
+> static void hci_add_acl_hdr(struct sk_buff *skb, __u16 handle, __u16 flags)
+> {
+> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+> index 63b925921c87..613050bd80cc 100644
+> --- a/net/bluetooth/hci_event.c
+> +++ b/net/bluetooth/hci_event.c
+> @@ -6898,6 +6898,9 @@ void hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
+> 		goto done;
+> 	}
+> 
+> +	kfree_skb(hdev->recv_event);
+> +	hdev->recv_event = skb_clone(skb, GFP_KERNEL);
+> +
 
-please fix the reported issue by kernel test robot.
+fill me into why this a good idea. We end up creating clones of an SKB. Is this a good idea?
 
 Regards
 
