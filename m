@@ -2,61 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D63E44AE352
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Feb 2022 23:21:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A5D44AE356
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Feb 2022 23:21:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1387146AbiBHWVs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 8 Feb 2022 17:21:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34522 "EHLO
+        id S1387206AbiBHWVw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 8 Feb 2022 17:21:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386663AbiBHVFp (ORCPT
+        with ESMTP id S1386798AbiBHVOD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 8 Feb 2022 16:05:45 -0500
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D77FAC0612B8
-        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Feb 2022 13:05:43 -0800 (PST)
-Received: by mail-io1-xd30.google.com with SMTP id m185so643177iof.10
-        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Feb 2022 13:05:43 -0800 (PST)
+        Tue, 8 Feb 2022 16:14:03 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04617C0612B8
+        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Feb 2022 13:14:02 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id c6so390830ybk.3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Feb 2022 13:14:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GJVZMi3Gsv5BJ0mNMhcI2PHhUdygyrhJZtXHgoad0bw=;
-        b=gUcr/O+Ky+nxn31adgrSFJw/U0UFYXoKhNuDDJKFDgPIKlrY4fz89zyVAbTREpunEf
-         XvgIWqNV/6XBvWEezPPbCKloHLY9JZgxNVXxYjRill95P6EgJI8nZqBnh60ee+cMSR4C
-         Vrr6fBjjGrMxD+NCynxRm3qR+N9rjqGVssv9rWeJCtMuk1SzxDzmFTX8yV+UjVtmUaCf
-         fgdYAwzpB4I0gJqZeaHU/SOTFRwBRhCVTM7hCBQJFARM55c8wJNmBhZVETO2iif80+/e
-         I60SOZ0aaBj4ASLMZCgptZ9XLS7a6DkBJdc2vfzUM7N5u2vMniMufeG2zY5FebvByOBF
-         BWyg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EfhQVP4OmmgPYo7hoJcK+/enNvSS3MtX1yOJquPjA/c=;
+        b=FEBI0rX/F5aGY7qQRHHlEL9mjXUCrLd2e3Yrq11s/kXQXcaZhZYwIz0vg5AdNgeO8W
+         Es3i0QyedTdz32ziMvvP5kUpWmDsRih0OQdp+OEgKvq/TBMVWHvhG89VON5ovxDCvDDd
+         GO2zoXHgh+Q+cX+WNIBKgSTS5vjedqpxtFutuIn1B+toMPhKSOx8XCjvcDgHC6mvEJaQ
+         r2OQZb19+o8xe+6jGfEEKdzlU0IDIpAv20u6astTmYPhmevQT5s7UCjQaBp24rgo6Qvs
+         SoMm2aAYsfI2Jzic+S88m7bPGlnyHLH6nYySN/wjn/aU2nv6H9bGantEzIS44vSqQBXK
+         ugig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GJVZMi3Gsv5BJ0mNMhcI2PHhUdygyrhJZtXHgoad0bw=;
-        b=Bhi9bRNm8EevVboub12jtv1SzoBTN7ZFNJlkUxGVqhc/o8Zzdu1+IYe9KkKweJnOrO
-         PYAK9aYzEmEWIC1rRvm9gWj8FR+ESG25KV4wyOHMFPINKMBNc5wzGx5AcvWXgqorK29n
-         Cy37oU/Lwj0zUT1i4FVrKSm6RjiInhyZ7eFdHacb2jw+D4Mb7NKjc9KTzgeJbproiSNC
-         yC7Be0k6IlfYB6MsjSDU3qWdmRQ2W5s2RtRnU3PdVSFArUeImIziTG5j0sz22aIG2TPY
-         pSARFMagYZbzp7pMbmm3di9EhKhFOYT1c/JFO1sXFST85ep53QNjoPb7w06YDDjwmzaz
-         f4iA==
-X-Gm-Message-State: AOAM5325P7qLTkn8cABkA0jAjTnA8afbDM9vvEMGvqqqgdQPhv2pVDtA
-        m9NBdZ0rNhgFQurc86by9dycXFcRJYZ9rQ==
-X-Google-Smtp-Source: ABdhPJzT2zgr7TzjvTaz6vMRlWRgzQvfptMbLDWNPJwxKYpzIewfCQXsZz3XHLpX36ntQ56aTnmX/w==
-X-Received: by 2002:a02:63ce:: with SMTP id j197mr2721651jac.134.1644354342956;
-        Tue, 08 Feb 2022 13:05:42 -0800 (PST)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id q9sm8376405iop.30.2022.02.08.13.05.42
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 13:05:42 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ] adv_monitor: Fix spamming errors
-Date:   Tue,  8 Feb 2022 13:05:41 -0800
-Message-Id: <20220208210541.3883437-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EfhQVP4OmmgPYo7hoJcK+/enNvSS3MtX1yOJquPjA/c=;
+        b=tQRVRX5Xnp1ELSqN7K2hcW5c3L806XQGOqsSf58PspV6QtxqMaj4uhUpyvHDfgFaCR
+         Du88OSCszekoIgFls7LQjw1Uf9oFKqcyIIYNQaYrzQK8OtxS1DXeFKHmYPGc4G3jsWZm
+         w33LsX1MW4aBBg+aeBcv99WHCOwxYz/ZtZtfb69K+0ZM2LZQmDotdcvFyyfKioSvmEuN
+         an4J//RQYHH8BH3U6v4Cjb2BEuK9HTaCisp5pDSOzHK8Uhk2sJWEf2JNZTKLMsnyXhno
+         7CkeFPgtDEV+UeWkUb0EnUYzKRzpU3pjdiLQN70tGXdLv4ZgBL2jLv0uEYypbHmENxPS
+         z6XA==
+X-Gm-Message-State: AOAM530t3d4n++GC+klUrSo4kjMwbDIs+mHbW/Kualfn0SH0N+dPr1qj
+        ojnG4Bm6n1Lxgyr4LxgfaG/0QAht8H542Xje5c1Rqb+TG4U=
+X-Google-Smtp-Source: ABdhPJylkgDfnDZKVMphD8mWEYJ5UTNNO02lgT1JAqVveREUbyTT4XrgTuGlJnkzXI5nWQwWbtCBeF5yfIU6Y3kr6Xg=
+X-Received: by 2002:a81:c40c:: with SMTP id j12mr6892531ywi.37.1644354841006;
+ Tue, 08 Feb 2022 13:14:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220208210541.3883437-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220208210541.3883437-1-luiz.dentz@gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Tue, 8 Feb 2022 13:13:50 -0800
+Message-ID: <CABBYNZLLm=H5ejxPOLmNsG5jRj5jnUMTys-i9Y+Zs3HgBd6yoQ@mail.gmail.com>
+Subject: Re: [PATCH BlueZ] adv_monitor: Fix spamming errors
+To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Cc:     Manish Mandlik <mmandlik@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -67,66 +64,79 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hi Manish,
 
-If advertising manager is not enabled don't log any error on
-btd_adapter_update_found_device, also change
-btd_adv_monitor_offload_supported to btd_adv_monitor_offload_enabled
-since that is checking if the features has been enabled rather than it
-is just supported.
+On Tue, Feb 8, 2022 at 1:05 PM Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
+>
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+>
+> If advertising manager is not enabled don't log any error on
+> btd_adapter_update_found_device, also change
+> btd_adv_monitor_offload_supported to btd_adv_monitor_offload_enabled
+> since that is checking if the features has been enabled rather than it
+> is just supported.
+>
+> Fixes: https://github.com/bluez/bluez/issues/286
+> ---
+>  src/adapter.c     | 2 +-
+>  src/adv_monitor.c | 6 ++----
+>  src/adv_monitor.h | 2 +-
+>  3 files changed, 4 insertions(+), 6 deletions(-)
+>
+> diff --git a/src/adapter.c b/src/adapter.c
+> index e59b16328..b15b5021f 100644
+> --- a/src/adapter.c
+> +++ b/src/adapter.c
+> @@ -6899,7 +6899,7 @@ void btd_adapter_update_found_device(struct btd_adapter *adapter,
+>         bool duplicate = false;
+>         struct queue *matched_monitors = NULL;
+>
+> -       if (!btd_adv_monitor_offload_supported(adapter->adv_monitor_manager)) {
+> +       if (!btd_adv_monitor_offload_enabled(adapter->adv_monitor_manager)) {
 
-Fixes: https://github.com/bluez/bluez/issues/286
----
- src/adapter.c     | 2 +-
- src/adv_monitor.c | 6 ++----
- src/adv_monitor.h | 2 +-
- 3 files changed, 4 insertions(+), 6 deletions(-)
+Could you please confirm this is actually correct, I have the filling
+there shouldn't be ! in the above statement.
 
-diff --git a/src/adapter.c b/src/adapter.c
-index e59b16328..b15b5021f 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -6899,7 +6899,7 @@ void btd_adapter_update_found_device(struct btd_adapter *adapter,
- 	bool duplicate = false;
- 	struct queue *matched_monitors = NULL;
- 
--	if (!btd_adv_monitor_offload_supported(adapter->adv_monitor_manager)) {
-+	if (!btd_adv_monitor_offload_enabled(adapter->adv_monitor_manager)) {
- 		if (bdaddr_type != BDADDR_BREDR)
- 			ad = bt_ad_new_with_data(data_len, data);
- 
-diff --git a/src/adv_monitor.c b/src/adv_monitor.c
-index 602830e30..33f4d9619 100644
---- a/src/adv_monitor.c
-+++ b/src/adv_monitor.c
-@@ -1844,12 +1844,10 @@ void btd_adv_monitor_manager_destroy(struct btd_adv_monitor_manager *manager)
- 	manager_destroy(manager);
- }
- 
--bool btd_adv_monitor_offload_supported(struct btd_adv_monitor_manager *manager)
-+bool btd_adv_monitor_offload_enabled(struct btd_adv_monitor_manager *manager)
- {
--	if (!manager) {
--		error("Manager is NULL, get offload support failed");
-+	if (!manager)
- 		return false;
--	}
- 
- 	return !!(manager->enabled_features &
- 				MGMT_ADV_MONITOR_FEATURE_MASK_OR_PATTERNS);
-diff --git a/src/adv_monitor.h b/src/adv_monitor.h
-index bed6572d0..c6bb8a68a 100644
---- a/src/adv_monitor.h
-+++ b/src/adv_monitor.h
-@@ -27,7 +27,7 @@ struct btd_adv_monitor_manager *btd_adv_monitor_manager_create(
- 						struct mgmt *mgmt);
- void btd_adv_monitor_manager_destroy(struct btd_adv_monitor_manager *manager);
- 
--bool btd_adv_monitor_offload_supported(struct btd_adv_monitor_manager *manager);
-+bool btd_adv_monitor_offload_enabled(struct btd_adv_monitor_manager *manager);
- 
- struct queue *btd_adv_monitor_content_filter(
- 				struct btd_adv_monitor_manager *manager,
+>                 if (bdaddr_type != BDADDR_BREDR)
+>                         ad = bt_ad_new_with_data(data_len, data);
+>
+> diff --git a/src/adv_monitor.c b/src/adv_monitor.c
+> index 602830e30..33f4d9619 100644
+> --- a/src/adv_monitor.c
+> +++ b/src/adv_monitor.c
+> @@ -1844,12 +1844,10 @@ void btd_adv_monitor_manager_destroy(struct btd_adv_monitor_manager *manager)
+>         manager_destroy(manager);
+>  }
+>
+> -bool btd_adv_monitor_offload_supported(struct btd_adv_monitor_manager *manager)
+> +bool btd_adv_monitor_offload_enabled(struct btd_adv_monitor_manager *manager)
+>  {
+> -       if (!manager) {
+> -               error("Manager is NULL, get offload support failed");
+> +       if (!manager)
+>                 return false;
+> -       }
+>
+>         return !!(manager->enabled_features &
+>                                 MGMT_ADV_MONITOR_FEATURE_MASK_OR_PATTERNS);
+> diff --git a/src/adv_monitor.h b/src/adv_monitor.h
+> index bed6572d0..c6bb8a68a 100644
+> --- a/src/adv_monitor.h
+> +++ b/src/adv_monitor.h
+> @@ -27,7 +27,7 @@ struct btd_adv_monitor_manager *btd_adv_monitor_manager_create(
+>                                                 struct mgmt *mgmt);
+>  void btd_adv_monitor_manager_destroy(struct btd_adv_monitor_manager *manager);
+>
+> -bool btd_adv_monitor_offload_supported(struct btd_adv_monitor_manager *manager);
+> +bool btd_adv_monitor_offload_enabled(struct btd_adv_monitor_manager *manager);
+>
+>  struct queue *btd_adv_monitor_content_filter(
+>                                 struct btd_adv_monitor_manager *manager,
+> --
+> 2.34.1
+>
+
+
 -- 
-2.34.1
-
+Luiz Augusto von Dentz
