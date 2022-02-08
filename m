@@ -2,109 +2,131 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C0CC4AE35C
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Feb 2022 23:22:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D63E44AE352
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Feb 2022 23:21:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1387294AbiBHWVy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 8 Feb 2022 17:21:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43302 "EHLO
+        id S1387146AbiBHWVs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 8 Feb 2022 17:21:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386208AbiBHTnt (ORCPT
+        with ESMTP id S1386663AbiBHVFp (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 8 Feb 2022 14:43:49 -0500
-X-Greylist: delayed 499 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 08 Feb 2022 11:43:48 PST
-Received: from newmail.c0rporation.com (newmail.c0rporation.com [82.165.56.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A9FC0612C0
-        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Feb 2022 11:43:48 -0800 (PST)
-Received: from authenticated-user (newmail.c0rporation.com [82.165.56.171])
-        by newmail.c0rporation.com (Postfix) with ESMTPA id CDF2446FF0;
-        Tue,  8 Feb 2022 19:35:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=c0rporation.com;
-        s=dkim; t=1644348928;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=hVY9IGO7ISDGEFbcKCbFa2YRuFMmQqPIokzLf8BkOv0=;
-        b=b/02mNvOERHeI9ANJWrkcWVlI+dNe1kvNN03lIFSDZCvF4rrI1avz/1tOok00ZsGoNGy3+
-        7mGj4nrspUf896gI6eqhnUBfkscBapOBWziNMbNJPpgtHJlBfgWBucbBf27ZigDkzNbnxM
-        0ds6snjfP/7Lw5wz4t80s12mi+q75SIzdnFZwGV912XN2boMvr/gyZncqo1YxlkhGvyM+R
-        BXqimczJaLy12Jh/Av+MvQ4b4Rd4aJEY9ZWUtu9zvqQ2IdSdfccxFacMibSvWGnmmcWIJw
-        pUNOZEZQPok2W1Gx043f3xlB5un5DgN6FEpeJ/o18Lob3e1alK+g4Ph4WJCbyg==
-Message-ID: <b9f59454-caac-3b48-62a7-ee094aca7571@c0rporation.com>
-Date:   Tue, 8 Feb 2022 19:35:27 +0000
+        Tue, 8 Feb 2022 16:05:45 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D77FAC0612B8
+        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Feb 2022 13:05:43 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id m185so643177iof.10
+        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Feb 2022 13:05:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GJVZMi3Gsv5BJ0mNMhcI2PHhUdygyrhJZtXHgoad0bw=;
+        b=gUcr/O+Ky+nxn31adgrSFJw/U0UFYXoKhNuDDJKFDgPIKlrY4fz89zyVAbTREpunEf
+         XvgIWqNV/6XBvWEezPPbCKloHLY9JZgxNVXxYjRill95P6EgJI8nZqBnh60ee+cMSR4C
+         Vrr6fBjjGrMxD+NCynxRm3qR+N9rjqGVssv9rWeJCtMuk1SzxDzmFTX8yV+UjVtmUaCf
+         fgdYAwzpB4I0gJqZeaHU/SOTFRwBRhCVTM7hCBQJFARM55c8wJNmBhZVETO2iif80+/e
+         I60SOZ0aaBj4ASLMZCgptZ9XLS7a6DkBJdc2vfzUM7N5u2vMniMufeG2zY5FebvByOBF
+         BWyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GJVZMi3Gsv5BJ0mNMhcI2PHhUdygyrhJZtXHgoad0bw=;
+        b=Bhi9bRNm8EevVboub12jtv1SzoBTN7ZFNJlkUxGVqhc/o8Zzdu1+IYe9KkKweJnOrO
+         PYAK9aYzEmEWIC1rRvm9gWj8FR+ESG25KV4wyOHMFPINKMBNc5wzGx5AcvWXgqorK29n
+         Cy37oU/Lwj0zUT1i4FVrKSm6RjiInhyZ7eFdHacb2jw+D4Mb7NKjc9KTzgeJbproiSNC
+         yC7Be0k6IlfYB6MsjSDU3qWdmRQ2W5s2RtRnU3PdVSFArUeImIziTG5j0sz22aIG2TPY
+         pSARFMagYZbzp7pMbmm3di9EhKhFOYT1c/JFO1sXFST85ep53QNjoPb7w06YDDjwmzaz
+         f4iA==
+X-Gm-Message-State: AOAM5325P7qLTkn8cABkA0jAjTnA8afbDM9vvEMGvqqqgdQPhv2pVDtA
+        m9NBdZ0rNhgFQurc86by9dycXFcRJYZ9rQ==
+X-Google-Smtp-Source: ABdhPJzT2zgr7TzjvTaz6vMRlWRgzQvfptMbLDWNPJwxKYpzIewfCQXsZz3XHLpX36ntQ56aTnmX/w==
+X-Received: by 2002:a02:63ce:: with SMTP id j197mr2721651jac.134.1644354342956;
+        Tue, 08 Feb 2022 13:05:42 -0800 (PST)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id q9sm8376405iop.30.2022.02.08.13.05.42
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Feb 2022 13:05:42 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ] adv_monitor: Fix spamming errors
+Date:   Tue,  8 Feb 2022 13:05:41 -0800
+Message-Id: <20220208210541.3883437-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Language: en-GB
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     linux-bluetooth@vger.kernel.org
-References: <a96af59d-089f-1018-74fc-355e96fcf0c3@c0rporation.com>
- <850EDEB4-7C93-4F8E-AC41-701766BBE801@holtmann.org>
-From:   Jack Murray <kernel@c0rporation.com>
-Subject: Re: [PATCH] bluetooth: Add support for EP-B3536 USB Bluetooth adapter
-In-Reply-To: <850EDEB4-7C93-4F8E-AC41-701766BBE801@holtmann.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: /
-Authentication-Results: newmail.c0rporation.com;
-        auth=pass smtp.auth=jack@c0rporation.com smtp.mailfrom=kernel@c0rporation.com
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Sorry I'd forgotten all about this as I actually ended up returning the 
-device since it didn't have sufficient range for what I wanted it for 
-anyway, so I can't include the /sys/kernel/debug/usb/devices output. 
-Here's an updated commit though if it's ok to merge without that.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
+If advertising manager is not enabled don't log any error on
+btd_adapter_update_found_device, also change
+btd_adv_monitor_offload_supported to btd_adv_monitor_offload_enabled
+since that is checking if the features has been enabled rather than it
+is just supported.
 
-From: Jack Murray <kernel@c0rporation.com>
-
-This patch adds support for the EDUP EP-B3536 USB bluetooth 5.1 adapter 
-based
-on the Realtek 8761B chipset. The existing driver and firmware work fine 
-for this
-device from what I can tell, so this patch just adds the vendor/product IDs
-for it to the supported device list.
-
-
-Signed-off-by: Jack Murray <kernel@c0rporation.com>
+Fixes: https://github.com/bluez/bluez/issues/286
 ---
-   drivers/bluetooth/btusb.c | 2 ++
-   1 file changed, 2 insertions(+)
+ src/adapter.c     | 2 +-
+ src/adv_monitor.c | 6 ++----
+ src/adv_monitor.h | 2 +-
+ 3 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 60d2fce59a71..207c8289c5c2 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -436,6 +436,8 @@ static const struct usb_device_id blacklist_table[] = {
-          /* Additional Realtek 8761BU Bluetooth devices */
-          { USB_DEVICE(0x0b05, 0x190e), .driver_info = BTUSB_REALTEK |
-BTUSB_WIDEBAND_SPEECH },
-+       { USB_DEVICE(0x2550, 0x8761), .driver_info = BTUSB_REALTEK |
-+ BTUSB_WIDEBAND_SPEECH }, >
-          /* Additional Realtek 8821AE Bluetooth devices */
-          { USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+diff --git a/src/adapter.c b/src/adapter.c
+index e59b16328..b15b5021f 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -6899,7 +6899,7 @@ void btd_adapter_update_found_device(struct btd_adapter *adapter,
+ 	bool duplicate = false;
+ 	struct queue *matched_monitors = NULL;
+ 
+-	if (!btd_adv_monitor_offload_supported(adapter->adv_monitor_manager)) {
++	if (!btd_adv_monitor_offload_enabled(adapter->adv_monitor_manager)) {
+ 		if (bdaddr_type != BDADDR_BREDR)
+ 			ad = bt_ad_new_with_data(data_len, data);
+ 
+diff --git a/src/adv_monitor.c b/src/adv_monitor.c
+index 602830e30..33f4d9619 100644
+--- a/src/adv_monitor.c
++++ b/src/adv_monitor.c
+@@ -1844,12 +1844,10 @@ void btd_adv_monitor_manager_destroy(struct btd_adv_monitor_manager *manager)
+ 	manager_destroy(manager);
+ }
+ 
+-bool btd_adv_monitor_offload_supported(struct btd_adv_monitor_manager *manager)
++bool btd_adv_monitor_offload_enabled(struct btd_adv_monitor_manager *manager)
+ {
+-	if (!manager) {
+-		error("Manager is NULL, get offload support failed");
++	if (!manager)
+ 		return false;
+-	}
+ 
+ 	return !!(manager->enabled_features &
+ 				MGMT_ADV_MONITOR_FEATURE_MASK_OR_PATTERNS);
+diff --git a/src/adv_monitor.h b/src/adv_monitor.h
+index bed6572d0..c6bb8a68a 100644
+--- a/src/adv_monitor.h
++++ b/src/adv_monitor.h
+@@ -27,7 +27,7 @@ struct btd_adv_monitor_manager *btd_adv_monitor_manager_create(
+ 						struct mgmt *mgmt);
+ void btd_adv_monitor_manager_destroy(struct btd_adv_monitor_manager *manager);
+ 
+-bool btd_adv_monitor_offload_supported(struct btd_adv_monitor_manager *manager);
++bool btd_adv_monitor_offload_enabled(struct btd_adv_monitor_manager *manager);
+ 
+ struct queue *btd_adv_monitor_content_filter(
+ 				struct btd_adv_monitor_manager *manager,
+-- 
+2.34.1
 
-On 07/02/2022 15:40, Marcel Holtmann wrote:
-> Hi Jack,
->
->> This patch adds support for the EP-B3536 USB bluetooth 5.1 adapter based
->> on the 8761B chipset. The existing driver and firmware work fine for this
->> device from what I can tell, so this patch just adds the vendor/product IDs
->> for it to the supported device list.
->>
->> Signed-off-by: Jack Murray <kernel@c0rporation.com>
->> ---
->>   drivers/bluetooth/btusb.c | 2 ++
->>   1 file changed, 2 insertions(+)
-> please send an updated version addressing the comments and include /sys/kernel/debug/usb/devices.
->
-> Regards
->
-> Marcel
->
