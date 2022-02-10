@@ -2,59 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 427274B0314
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Feb 2022 03:09:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5740D4B02BC
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Feb 2022 03:01:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231765AbiBJCJ3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Feb 2022 21:09:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41878 "EHLO
+        id S233344AbiBJB66 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Feb 2022 20:58:58 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:33092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231888AbiBJCHN (ORCPT
+        with ESMTP id S233784AbiBJB55 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 9 Feb 2022 21:07:13 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 656181121
-        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Feb 2022 18:02:23 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id d9-20020a17090a498900b001b8bb1d00e7so4101151pjh.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Feb 2022 18:02:23 -0800 (PST)
+        Wed, 9 Feb 2022 20:57:57 -0500
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EE5D2BB1A
+        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Feb 2022 17:51:12 -0800 (PST)
+Received: by mail-io1-xd2a.google.com with SMTP id i62so5606951ioa.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Feb 2022 17:51:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=T+oU1Sm20gn7Wyg52bLkHqmX9h0voV8s3X026nJn6Ic=;
-        b=PZBXQ7lb2sLTdpELOM3+N/MmepyLkXiUFr4CUBFwglPfQ4EsA37gLpN+8/Xq5v3B92
-         Kr9nwZRR2X5hlcb1ZugJvqPir5cOvoBA+0lSLhRi5E02hwwHJC/PJ6UjyJOohoZhf6YU
-         ABIUXQqp7my/nUGdfFz7PTfgsFoXtPkmO9v9WwkqRK2xLBN+fa7zIJNCpE44nZxpu4ct
-         aEEsp0tVISvCiKLP/QQj9CRsfxK5NvrjkO5O485fRNVTaxzLrCSJ0EiMfTwNVjfNpyjT
-         SwLtsPoPKTETCDO76S8bH+mNzOtL+h3umurj7qumwNONWcbcjU5o0MZulxzXDzHwG9wp
-         WuZA==
+        bh=df435ELITloi7LgF9lW6gYzHw/chX3XoFGS3/P4NXiM=;
+        b=fUNddVWBkIHZiMt3LUAtrBkUf0Ab5MclP+GBD19zlIavdpSIoz2LgRuoOqgDX7dbMG
+         TDgd49JcKONiTGV0rEbJkBbKDL+HjttVU2mZoMESj0k0ejkRC9r8TtuYx59a1xJJg0yd
+         W7UJxOVqC/h66zX4MKmjTU1fyISBeMMa7ica+egdbpbhruXzi7DvT4knieFeHF+bQq/G
+         MHIjkJna+68Pw7AWJ6sHhEqZ1sw2JGPH4hDUsM1cBixG+1x+7CgnN9ZoR295Fogs09cl
+         ViaL79OHnHSfgvJC7H7kx42VFhf3RhUutLWfZAypJ7KEYEqQN70YgNsbMu31WYjpko7X
+         kjTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=T+oU1Sm20gn7Wyg52bLkHqmX9h0voV8s3X026nJn6Ic=;
-        b=2Ky7BEZolH2BrrPm2tUlw6aoICclAI/SornMV+0h9Yto8sUvM20eXL0ah2koXrX1nq
-         kNESQ6W4/+ptMof4f/pc7rutTBtLYMwCtfmKQj/+NNezAXnq7+o5ltv5oIUmfctwMJ0q
-         5f1LnvbpRvwSiI2heXo5BxCNGfw5SfnrVC7AO/BcF3FvwSdORFXKzHKwNIVTFK0Vs91P
-         ueqT5XMqweHLwvYMoi/tTHWIW36j00UP2GxmVs47BDTbSa5KibyULvIqiQ8t0P5JFQaE
-         58skr7BPC2gXJAp+Bs0RClo22VisAsZHV9RleGXmRoYkOAnpxdBrc6ZsBttWKgel549U
-         FCBw==
-X-Gm-Message-State: AOAM5317yUK7KvVB8K5UQkBYoPFcIyF9l4hjISzDpMF9Dr17sFyQqNrV
-        ZSLcaXIPh88SiVOlKXu/+oi1GwkAKCiEVw==
-X-Google-Smtp-Source: ABdhPJxVS0IAw+VXfU0s+Kx3NP439K9qJSguiS664m7AIkpRcELHNCxILFJU1Lu1KEd293TJYmdWdA==
-X-Received: by 2002:a62:b605:: with SMTP id j5mr4925313pff.25.1644451744871;
-        Wed, 09 Feb 2022 16:09:04 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=df435ELITloi7LgF9lW6gYzHw/chX3XoFGS3/P4NXiM=;
+        b=PyEUGro87Fj6o2+1wI0vOzUkI8ToOhn6U2RbpFkhyt9TUAgdPHaovhTlRdbBcXEhs/
+         LMgETWPFfwHA0DeNvzPYRYtEYJ7JpDJM8/eZE3e/27ZYs5UJWGBl7mFtW0b2jFkjguWk
+         RQ1DoGGOgkyjRkyYm2OYi8SqAeRGy4o4RZMXrgvs7fk7G8lhMEPtv5Ve8p0bm6zCCswH
+         SUee3oKdlMY3hshpgmgyPM/1OlL/kjXVzfg0TTjRaINnNun37o/Dhsx2rMsZAHsAOT26
+         vS2qXhmLo/OVeZZELYNexlRrOkZEM9UPc92n84dL1/3N9FAyBz9uE3D20Ve0nShKLnr/
+         f3cg==
+X-Gm-Message-State: AOAM531zZFGh5V3CPlryAjJ4P1JvLdI7qbfdlXhIFjQp9tK34Ar1xn8b
+        FDK2yYZuaZ8AFdH9HgXi7b5L0qHoe4uxYg==
+X-Google-Smtp-Source: ABdhPJyr0Hl/rXSQRljBjJUu/yK8mPFu6rqej2mY95jJwVBw99vFB8bT7KuIzjB9nWMJ/pOWFcvKvw==
+X-Received: by 2002:a63:c156:: with SMTP id p22mr3920640pgi.215.1644451745600;
+        Wed, 09 Feb 2022 16:09:05 -0800 (PST)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id 13sm20484555pfm.161.2022.02.09.16.09.04
+        by smtp.gmail.com with ESMTPSA id 13sm20484555pfm.161.2022.02.09.16.09.05
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Feb 2022 16:09:04 -0800 (PST)
+        Wed, 09 Feb 2022 16:09:05 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 1/2] adapter: Fix crash when storing link key
-Date:   Wed,  9 Feb 2022 16:09:02 -0800
-Message-Id: <20220210000903.162318-1-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 2/2] uuid: Fix crashing if a NULL string is passed to bt_string_to_uuid
+Date:   Wed,  9 Feb 2022 16:09:03 -0800
+Message-Id: <20220210000903.162318-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220210000903.162318-1-luiz.dentz@gmail.com>
+References: <20220210000903.162318-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -69,62 +71,26 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-The following trace can be observed sometimes when pairing 2 emulator
-instances:
-
- src/adapter.c:store_link_key() Unable to load key file from
- /var/lib/bluetooth/9C:DA:3E:F2:8E:46/9C:B6:D0:8A:A0:0C/info: (No
-such file or directory)
- GLib: g_file_set_contents: assertion 'error == NULL ||
-*error == NULL' failed
- ++++++++ backtrace ++++++++
- #1  btd_backtrace+0x28a (src/backtrace.c:59) [0x7f65bb5ab53a]
- #2  g_logv+0x21c (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6)
- [0x7f65ba3f955c]
- #3  g_log+0x93 (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6)
- [0x7f65ba3f9743]
- #4  g_file_set_contents+0x68
-(/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f65ba3dca68]
- #5  store_link_key+0x30a (src/adapter.c:8235) [0x7f65bb61839a]
- #6  new_link_key_callback+0x474 (src/adapter.c:8285) [0x7f65bb62c904]
- #7  queue_foreach+0x164 (src/shared/queue.c:203) [0x7f65bb722e34]
- #8  can_read_data+0x59f (src/shared/mgmt.c:343) [0x7f65bb72e09f]
- #9  watch_callback+0x112 (src/shared/io-glib.c:162) [0x7f65bb78acb2]
- #10 g_main_context_dispatch+0x14e
-(/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f65ba3f204e]
+bt_string_to_uuid shall chack if the string is valid before attempting
+to access its contents.
 ---
- src/adapter.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ lib/uuid.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/src/adapter.c b/src/adapter.c
-index a6dcc76de..3ee98431d 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -8214,11 +8214,15 @@ static void store_link_key(struct btd_adapter *adapter,
+diff --git a/lib/uuid.c b/lib/uuid.c
+index 3d97dc835..1d2e1f732 100644
+--- a/lib/uuid.c
++++ b/lib/uuid.c
+@@ -251,6 +251,9 @@ static int bt_string_to_uuid128(bt_uuid_t *uuid, const char *string)
  
- 	snprintf(filename, PATH_MAX, STORAGEDIR "/%s/%s/info",
- 			btd_adapter_get_storage_dir(adapter), device_addr);
-+	create_file(filename, 0600);
+ int bt_string_to_uuid(bt_uuid_t *uuid, const char *string)
+ {
++	if (!string)
++		return -EINVAL;
 +
- 	key_file = g_key_file_new();
- 	if (!g_key_file_load_from_file(key_file, filename, 0, &gerr)) {
- 		error("Unable to load key file from %s: (%s)", filename,
- 								gerr->message);
- 		g_error_free(gerr);
-+		g_key_file_free(key_file);
-+		return;
- 	}
- 
- 	for (i = 0; i < 16; i++)
-@@ -8229,8 +8233,6 @@ static void store_link_key(struct btd_adapter *adapter,
- 	g_key_file_set_integer(key_file, "LinkKey", "Type", type);
- 	g_key_file_set_integer(key_file, "LinkKey", "PINLength", pin_length);
- 
--	create_file(filename, 0600);
--
- 	str = g_key_file_to_data(key_file, &length, NULL);
- 	if (!g_file_set_contents(filename, str, length, &gerr)) {
- 		error("Unable set contents for %s: (%s)", filename,
+ 	if (is_base_uuid128(string))
+ 		return bt_string_to_uuid16(uuid, string + 4);
+ 	else if (is_uuid128(string))
 -- 
 2.34.1
 
