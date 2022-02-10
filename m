@@ -2,124 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 653C14B1831
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Feb 2022 23:31:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA5AA4B18C9
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Feb 2022 23:49:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344900AbiBJWb0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 10 Feb 2022 17:31:26 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54278 "EHLO
+        id S1345227AbiBJWrd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 10 Feb 2022 17:47:33 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242808AbiBJWbZ (ORCPT
+        with ESMTP id S1345226AbiBJWrc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 10 Feb 2022 17:31:25 -0500
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58DBDBD9
-        for <linux-bluetooth@vger.kernel.org>; Thu, 10 Feb 2022 14:31:26 -0800 (PST)
-Received: by mail-yb1-xb33.google.com with SMTP id p19so19711603ybc.6
-        for <linux-bluetooth@vger.kernel.org>; Thu, 10 Feb 2022 14:31:26 -0800 (PST)
+        Thu, 10 Feb 2022 17:47:32 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB7075F4E
+        for <linux-bluetooth@vger.kernel.org>; Thu, 10 Feb 2022 14:47:32 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id y6so19835059ybc.5
+        for <linux-bluetooth@vger.kernel.org>; Thu, 10 Feb 2022 14:47:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=RNn7QyJNwPWtNHEsCf+g5tcWQcO8Jm7SKb4RKTSdyyg=;
-        b=jbsALpRCG+gOj233isJv1SwkmVHoLfnXHc79cPLasOYEaNpSQErbVr4upAkecDpZ0p
-         v8spm1PDLDoa5Mfr1hI6ReeRhuKuGJSv0pRdNuCO0d0yoTW1bLhoQaJdC+Lo+AgUn6E7
-         ivh2bgKvDMvYTxr9wy4ysFxqRNw2s4OOhSILrQQ2H2XhzMnHd349E9PwZ+uFIM/u3ADS
-         oR/TlXSgHoed7SnLW2DkR4bpWKV/ZK/i4Vmxyl3+uxAKAWQBObEnjKsJFM9ePvqePGqt
-         Jrcj5Gr9SOMgml5EmKsftduvSF6efO842MMJgqAYtWnVSiqlTNDBupAgphP+/vXmZfPw
-         I4+g==
+        d=colorremedies-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=HMa7oS0CmDrrKygTGF/ZlkmorzP0NmH2st8gqoaLAIo=;
+        b=y9fMhd+hExxwY9rSbEJIzoHprfOkn7D2W5Tb24AFrQ9S73kTAmD51s24DbgxY1e5CZ
+         Wmb0xGhpUzl85xJH9A3vQ0NGc/iG9229idgYBMYlQj324+nuiUlrevMGUqObG99iWb5q
+         D08bT2m+Lx6FZ5q3NYcRmSgPBoT8pOqBtV2Q1KGpy5vZEA3KSM5SmZR60ZYfmvWo4u6R
+         TlVB5EnBVCspA50WoSCwcUdbCUIOMTGD/fRZUiqUemrDVOWu1D6raMVPIoob8m6aMaeL
+         ZpDWjLtlUPs2NQbVrVfK3MmbhHK2xC4/J+13l93m/EeIUMqbiqT/LCTL+N8vEORCJ3WC
+         D/CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=RNn7QyJNwPWtNHEsCf+g5tcWQcO8Jm7SKb4RKTSdyyg=;
-        b=zTDgSCyr0yYRlE84YIzF38nFuphEDr3bux+U/kDoasrcrJD+IxK7ZpVlbtsipvPTBI
-         pOi4qP8d0n9qmuYbVCeMdBhyhffpvJDiBHC7wvR8JB7Ad+xP2Kp/0rau+RF+y2QlabNx
-         IyZhJ5NidnJZWrwKHexoknMkfTq14PyUjDnZMwABheMM2/X1/KGXOULf0Zz4qbLRLjmI
-         MFcTI+yJRH+fdIu7a0PCFFiissdCcY54XjKPf8g4n2vgWnnzQCZQk9JuO03c+0ewtjTs
-         Z7D0ecGqP1uuGTwOsHWj7JJiqIw/0H9SqiU7OjrrPJGab7fvF/MUsOL7yBXtOOkPPZn3
-         XJHQ==
-X-Gm-Message-State: AOAM533pokOpF2hAavjju+Y5JkYTsDTQraHUo07rKbP0d5YRdeV20kX/
-        r7yDrBgTJPDxJhwYcYeDGw+ih2b7MFNvukcYKd+WgKAgOyk=
-X-Google-Smtp-Source: ABdhPJzeW6eXq85YL3Z6RQy+gaxdKAWvfILFBvMm+F1dPc8avCcCEy+E4qKbEf27qI3iJpFYUEa5vtXHvR1yFnMOh/M=
-X-Received: by 2002:a25:3857:: with SMTP id f84mr8943030yba.733.1644532285415;
- Thu, 10 Feb 2022 14:31:25 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=HMa7oS0CmDrrKygTGF/ZlkmorzP0NmH2st8gqoaLAIo=;
+        b=f9UIvgp2ww91RDNgOvu0ZFMDSWaugeeI9u4lHZTv2Eh/YMZvSOHyLu7zJ/V6/A5J54
+         S2of05pAvCC/k4Cb2cC5QgmvWDL8Ix191p6znZc57ZBSZT2FznokFmIfSsM3NxQm3tkI
+         XajV9eQvHdH97jmGaq+UdIHfTRzc7s4rOp2rH2Gkdrmfq98wULCfEvRdK+bQoWc5lRju
+         xAuc7jiiguNZsRBkGKIBjuTKL5ftV7qFtJNOik+q+PXt9qCiIAib+x/g+DlraytS/zpO
+         8gQNMdJulOz9pQ5Y9apqkB42CzGOSuf27CvD78lVULFPZ6VWaOYA5FiNbkbRIBjIWxBn
+         2j6g==
+X-Gm-Message-State: AOAM531rQvcVH3hkadoX+pzdUYC/XW8DGHXXKu8M7guVLxZzG33NcruC
+        IOIAoDe0sE0DvtoqVmr+u8byzqTJWqjAOVLYOCl72s9pzN1Ezw==
+X-Google-Smtp-Source: ABdhPJwp8a/R6+ydzzSD314lSaSN3cy4wiVUnSoy9XD1HFrGJIQyXJQP6dmziI02hbQWkC07x1miEnLJUOJ1Vw7ytCg=
+X-Received: by 2002:a25:b706:: with SMTP id t6mr8812466ybj.695.1644533252125;
+ Thu, 10 Feb 2022 14:47:32 -0800 (PST)
 MIME-Version: 1.0
-References: <20220209235553.150294-1-luiz.dentz@gmail.com> <6204a403.1c69fb81.eb5b9.84b7@mx.google.com>
-In-Reply-To: <6204a403.1c69fb81.eb5b9.84b7@mx.google.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Thu, 10 Feb 2022 14:31:14 -0800
-Message-ID: <CABBYNZLuy8vG8M1CtUDwFV81qj_cJqENa-2zZxR6XwsM3x2Mzw@mail.gmail.com>
-Subject: Re: [BlueZ,1/4] bthost: Fix not handling ACL fragmentation
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+From:   Chris Murphy <lists@colorremedies.com>
+Date:   Thu, 10 Feb 2022 15:47:16 -0700
+Message-ID: <CAJCQCtR9Ynhtvs6jvq-6sHNuaOr48cG3j2YNyw2dNq=AXcwa+Q@mail.gmail.com>
+Subject: 
+To:     Bluetooth <linux-bluetooth@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,TVD_SPACE_RATIO,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
-
-On Wed, Feb 9, 2022 at 9:35 PM <bluez.test.bot@gmail.com> wrote:
->
-> This is automated email and please do not reply to this email!
->
-> Dear submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> This is a CI test results with your patch series:
-> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=612835
->
-> ---Test result---
->
-> Test Summary:
-> CheckPatch                    FAIL      6.03 seconds
-> GitLint                       PASS      3.97 seconds
-> Prep - Setup ELL              PASS      52.60 seconds
-> Build - Prep                  PASS      0.90 seconds
-> Build - Configure             PASS      10.70 seconds
-> Build - Make                  PASS      1847.93 seconds
-> Make Check                    PASS      13.01 seconds
-> Make Check w/Valgrind         PASS      549.65 seconds
-> Make Distcheck                PASS      294.08 seconds
-> Build w/ext ELL - Configure   PASS      10.33 seconds
-> Build w/ext ELL - Make        PASS      1833.60 seconds
-> Incremental Build with patchesPASS      7382.33 seconds
->
-> Details
-> ##############################
-> Test: CheckPatch - FAIL
-> Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-> Output:
-> [BlueZ,1/4] bthost: Fix not handling ACL fragmentation
-> WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
-> #257: FILE: emulator/bthost.c:2560:
-> +               /* fall through */
->
-> /github/workspace/src/12741130.patch total: 0 errors, 1 warnings, 192 lines checked
->
-> NOTE: For some of the reported defects, checkpatch may be able to
->       mechanically convert to the typical style using --fix or --fix-inplace.
->
-> /github/workspace/src/12741130.patch has style problems, please review.
->
-> NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
->
-> NOTE: If any of the errors are false positives, please report
->       them to the maintainer, see CHECKPATCH in MAINTAINERS.
->
->
->
->
-> ---
-> Regards,
-> Linux Bluetooth
-
-Pushed.
-
--- 
-Luiz Augusto von Dentz
+subscribe linux-bluetooth
