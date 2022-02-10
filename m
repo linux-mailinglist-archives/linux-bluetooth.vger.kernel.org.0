@@ -2,63 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5740D4B02BC
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Feb 2022 03:01:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08A064B030B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Feb 2022 03:09:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233344AbiBJB66 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Feb 2022 20:58:58 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:33092 "EHLO
+        id S230073AbiBJCIr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Feb 2022 21:08:47 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233784AbiBJB55 (ORCPT
+        with ESMTP id S235104AbiBJCIU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 9 Feb 2022 20:57:57 -0500
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EE5D2BB1A
-        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Feb 2022 17:51:12 -0800 (PST)
-Received: by mail-io1-xd2a.google.com with SMTP id i62so5606951ioa.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Feb 2022 17:51:12 -0800 (PST)
+        Wed, 9 Feb 2022 21:08:20 -0500
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 769C910E1
+        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Feb 2022 18:06:58 -0800 (PST)
+Received: by mail-yb1-xb2e.google.com with SMTP id o19so11173740ybc.12
+        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Feb 2022 18:06:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=df435ELITloi7LgF9lW6gYzHw/chX3XoFGS3/P4NXiM=;
-        b=fUNddVWBkIHZiMt3LUAtrBkUf0Ab5MclP+GBD19zlIavdpSIoz2LgRuoOqgDX7dbMG
-         TDgd49JcKONiTGV0rEbJkBbKDL+HjttVU2mZoMESj0k0ejkRC9r8TtuYx59a1xJJg0yd
-         W7UJxOVqC/h66zX4MKmjTU1fyISBeMMa7ica+egdbpbhruXzi7DvT4knieFeHF+bQq/G
-         MHIjkJna+68Pw7AWJ6sHhEqZ1sw2JGPH4hDUsM1cBixG+1x+7CgnN9ZoR295Fogs09cl
-         ViaL79OHnHSfgvJC7H7kx42VFhf3RhUutLWfZAypJ7KEYEqQN70YgNsbMu31WYjpko7X
-         kjTQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=NDvs5bGzkppQbiqg0+oQpSG/hspy5IETOTrNFPWggfk=;
+        b=K+xuQ4/Cbx/Ip0vimoQjRYjCOqDnoJpBDcm1EzxUiC6peWML+nyqZibFjlvpDqCAcX
+         GfmhDNxK6Dp39OmZqLWlV+2RpIVCDfUmuSO5+MJuMVtAP/386R+4ope80/U6bgeTeXMr
+         PKyBaFwt6i7i/oHjj+7oiS2vXqGrNTIzVN4+U3OqO21NPp1ClDreEDbmLAN4JdxCAH5e
+         fAfZVYqwwPtMR0SbS93R/uhn/NTc7uLP8zHVXcm6eZch2b5mJ8v6Ty2X6HIKy3C+3P6h
+         oy36xyEPMdUWOeac66ecYAf6Nqfvi7tq6PcpzaWNITjrhrHFIrSn8KfjgpGkC/pO2vKW
+         x4dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=df435ELITloi7LgF9lW6gYzHw/chX3XoFGS3/P4NXiM=;
-        b=PyEUGro87Fj6o2+1wI0vOzUkI8ToOhn6U2RbpFkhyt9TUAgdPHaovhTlRdbBcXEhs/
-         LMgETWPFfwHA0DeNvzPYRYtEYJ7JpDJM8/eZE3e/27ZYs5UJWGBl7mFtW0b2jFkjguWk
-         RQ1DoGGOgkyjRkyYm2OYi8SqAeRGy4o4RZMXrgvs7fk7G8lhMEPtv5Ve8p0bm6zCCswH
-         SUee3oKdlMY3hshpgmgyPM/1OlL/kjXVzfg0TTjRaINnNun37o/Dhsx2rMsZAHsAOT26
-         vS2qXhmLo/OVeZZELYNexlRrOkZEM9UPc92n84dL1/3N9FAyBz9uE3D20Ve0nShKLnr/
-         f3cg==
-X-Gm-Message-State: AOAM531zZFGh5V3CPlryAjJ4P1JvLdI7qbfdlXhIFjQp9tK34Ar1xn8b
-        FDK2yYZuaZ8AFdH9HgXi7b5L0qHoe4uxYg==
-X-Google-Smtp-Source: ABdhPJyr0Hl/rXSQRljBjJUu/yK8mPFu6rqej2mY95jJwVBw99vFB8bT7KuIzjB9nWMJ/pOWFcvKvw==
-X-Received: by 2002:a63:c156:: with SMTP id p22mr3920640pgi.215.1644451745600;
-        Wed, 09 Feb 2022 16:09:05 -0800 (PST)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id 13sm20484555pfm.161.2022.02.09.16.09.05
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Feb 2022 16:09:05 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] uuid: Fix crashing if a NULL string is passed to bt_string_to_uuid
-Date:   Wed,  9 Feb 2022 16:09:03 -0800
-Message-Id: <20220210000903.162318-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220210000903.162318-1-luiz.dentz@gmail.com>
-References: <20220210000903.162318-1-luiz.dentz@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=NDvs5bGzkppQbiqg0+oQpSG/hspy5IETOTrNFPWggfk=;
+        b=ryzt9V0l/ZTljQzwN1Byym0cvh+TQqJ1uDfIDjxRetn1Hu8djlJp0uzjWvISZBR/3S
+         rkxTbeGOtV41usJfi1uZQ6JgW33qxkc3etQa1gqbLvwUTIreKW45u87l2vZpxcSkJEyZ
+         NiBYcSlre47vchBskNSSExhI1oP1Ct6wFfcMuflcxbWkUEJLGEMzhYJwVYLsD3dSFdLa
+         V0hTFCpGpEgAX6KFzuCk23zrNqs6Bdz6g+1SmRZM6syO0eOzkhaXNUfd3IrVbBaeM9Ws
+         kLBlyaXMjopY/Bb3lynoivHOy3XlmJ11g0EZmwdyenDvohnqxo5QVtW0OERjwM3XG64a
+         0V2g==
+X-Gm-Message-State: AOAM533KS8qHGZA+UvIdlmjYTLJuHncNkZu9JCJBEfZcn9tZzrMhvReY
+        3wUVW7w/BLDJ674+d2tLfec4rdQwwnnx+wUiZUhkvov3MfE=
+X-Google-Smtp-Source: ABdhPJyr/9hB4i1+ENczWOp4XNIZZQgGr08KwkW+qXxpNiWafY82nVtN6Eiy+U48gWVw0hh9cMbmIt9qj4DzpOL33mY=
+X-Received: by 2002:a25:3f87:: with SMTP id m129mr4776969yba.188.1644451856753;
+ Wed, 09 Feb 2022 16:10:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220208210541.3883437-1-luiz.dentz@gmail.com> <6203001a.1c69fb81.8c8ae.c2cb@mx.google.com>
+In-Reply-To: <6203001a.1c69fb81.8c8ae.c2cb@mx.google.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 9 Feb 2022 16:10:46 -0800
+Message-ID: <CABBYNZ+rqWTNfLvbVXt33xGEhMtp7Bc-q8cpR39F4hr+_Tx4vg@mail.gmail.com>
+Subject: Re: [BlueZ] adv_monitor: Fix spamming errors
+To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -69,28 +62,41 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hi,
 
-bt_string_to_uuid shall chack if the string is valid before attempting
-to access its contents.
----
- lib/uuid.c | 3 +++
- 1 file changed, 3 insertions(+)
+On Tue, Feb 8, 2022 at 3:43 PM <bluez.test.bot@gmail.com> wrote:
+>
+> This is automated email and please do not reply to this email!
+>
+> Dear submitter,
+>
+> Thank you for submitting the patches to the linux bluetooth mailing list.
+> This is a CI test results with your patch series:
+> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=612350
+>
+> ---Test result---
+>
+> Test Summary:
+> CheckPatch                    PASS      1.47 seconds
+> GitLint                       PASS      1.02 seconds
+> Prep - Setup ELL              PASS      49.50 seconds
+> Build - Prep                  PASS      0.73 seconds
+> Build - Configure             PASS      9.70 seconds
+> Build - Make                  PASS      1398.39 seconds
+> Make Check                    PASS      12.21 seconds
+> Make Check w/Valgrind         PASS      513.32 seconds
+> Make Distcheck                PASS      258.23 seconds
+> Build w/ext ELL - Configure   PASS      9.62 seconds
+> Build w/ext ELL - Make        PASS      1372.14 seconds
+> Incremental Build with patchesPASS      0.00 seconds
+>
+>
+>
+> ---
+> Regards,
+> Linux Bluetooth
 
-diff --git a/lib/uuid.c b/lib/uuid.c
-index 3d97dc835..1d2e1f732 100644
---- a/lib/uuid.c
-+++ b/lib/uuid.c
-@@ -251,6 +251,9 @@ static int bt_string_to_uuid128(bt_uuid_t *uuid, const char *string)
- 
- int bt_string_to_uuid(bt_uuid_t *uuid, const char *string)
- {
-+	if (!string)
-+		return -EINVAL;
-+
- 	if (is_base_uuid128(string))
- 		return bt_string_to_uuid16(uuid, string + 4);
- 	else if (is_uuid128(string))
+Pushed.
+
 -- 
-2.34.1
-
+Luiz Augusto von Dentz
