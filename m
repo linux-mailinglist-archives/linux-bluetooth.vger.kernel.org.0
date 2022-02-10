@@ -2,61 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F36E44B023F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Feb 2022 02:30:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 427274B0314
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 10 Feb 2022 03:09:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232439AbiBJB2r (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Feb 2022 20:28:47 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:56782 "EHLO
+        id S231765AbiBJCJ3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Feb 2022 21:09:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232357AbiBJB2i (ORCPT
+        with ESMTP id S231888AbiBJCHN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 9 Feb 2022 20:28:38 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5119420F7C
-        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Feb 2022 17:28:40 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id y8so4756575pfa.11
-        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Feb 2022 17:28:40 -0800 (PST)
+        Wed, 9 Feb 2022 21:07:13 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 656181121
+        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Feb 2022 18:02:23 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id d9-20020a17090a498900b001b8bb1d00e7so4101151pjh.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Feb 2022 18:02:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=128JU9ZRRKnPuOh1w064by2lJFlQlZWtP6zeO7W2M20=;
-        b=YxyHGW3cijYGiVelG0kk5Rirc+2Ql5aHyRwJTENB1M8ffWLL2124U9jfJMLdAUB1hL
-         cbKymfFtvkHWr9Bq/Rw5elxUg3c7gPcR2X4FTlIuERWQW5Tx+MWQVJwSIOD1/+uAKcVp
-         o47cf8bIUr+htME+yhxtKF5DGtRNJxE+z3d7I7K/4MkuQp75XyRMGJaOmLe6PNuheO10
-         AqNwrklTLuzUKVldlOQ8jNcb87Ge52A3vsKQ6ZzEqkunNTJkAFcamFcWMc6gYLCTli2J
-         H91snKOrpDBIKb4t2BFRTqiQzFHcKfwoh1vzd+BqzX7ocOq853CiHcmAvrQvT/LOTeXK
-         cnTQ==
+        bh=T+oU1Sm20gn7Wyg52bLkHqmX9h0voV8s3X026nJn6Ic=;
+        b=PZBXQ7lb2sLTdpELOM3+N/MmepyLkXiUFr4CUBFwglPfQ4EsA37gLpN+8/Xq5v3B92
+         Kr9nwZRR2X5hlcb1ZugJvqPir5cOvoBA+0lSLhRi5E02hwwHJC/PJ6UjyJOohoZhf6YU
+         ABIUXQqp7my/nUGdfFz7PTfgsFoXtPkmO9v9WwkqRK2xLBN+fa7zIJNCpE44nZxpu4ct
+         aEEsp0tVISvCiKLP/QQj9CRsfxK5NvrjkO5O485fRNVTaxzLrCSJ0EiMfTwNVjfNpyjT
+         SwLtsPoPKTETCDO76S8bH+mNzOtL+h3umurj7qumwNONWcbcjU5o0MZulxzXDzHwG9wp
+         WuZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=128JU9ZRRKnPuOh1w064by2lJFlQlZWtP6zeO7W2M20=;
-        b=xT20TN2S9pSm9z28pTyYhhIDjoUDLgRtUluuT9OigKHDs5nqh2vGxBiFNy7aakpEzk
-         7AcuoPi0YKO0hZ10fGlx0sZhgn2JoZOXft9F4J9EoHNFnmLSoAdey00na6UpwRsFWIDt
-         rRSNwr3tstQ/Amcn6wN4hWVd1hBkUl4ZCzt/xabDrUC/pYNTeZfj8jBmbhk5mw9YlBK+
-         oASx4W38Fgn9L3Nm5522pi+pAm01wCZi81RHNmmOgiH2iForMcUhcR2+X6QgZRqhBuFH
-         UX4jBrogjGbUPfOkXo0BUSL1X2KuuF0CIpCXJK/JY10JCgQwiPqCOOhsXx1pJ4tVyRY9
-         Uv3g==
-X-Gm-Message-State: AOAM533XUG/xRxUltS2SvALdCeQpu+VW2JNgnWB3fUVyNKQUMtlefZIg
-        yCERAznoUCWvW0/3q6IBUL9/RKRA5RgklA==
-X-Google-Smtp-Source: ABdhPJybaFb4Eb8AzmsyZ1m5I6l9bqn/p3+yuKJ7d+vHnnwtnN/JADScnkI9eL/bT7S7VwD5HPaDGQ==
-X-Received: by 2002:a17:903:230c:: with SMTP id d12mr4685510plh.74.1644450956731;
-        Wed, 09 Feb 2022 15:55:56 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=T+oU1Sm20gn7Wyg52bLkHqmX9h0voV8s3X026nJn6Ic=;
+        b=2Ky7BEZolH2BrrPm2tUlw6aoICclAI/SornMV+0h9Yto8sUvM20eXL0ah2koXrX1nq
+         kNESQ6W4/+ptMof4f/pc7rutTBtLYMwCtfmKQj/+NNezAXnq7+o5ltv5oIUmfctwMJ0q
+         5f1LnvbpRvwSiI2heXo5BxCNGfw5SfnrVC7AO/BcF3FvwSdORFXKzHKwNIVTFK0Vs91P
+         ueqT5XMqweHLwvYMoi/tTHWIW36j00UP2GxmVs47BDTbSa5KibyULvIqiQ8t0P5JFQaE
+         58skr7BPC2gXJAp+Bs0RClo22VisAsZHV9RleGXmRoYkOAnpxdBrc6ZsBttWKgel549U
+         FCBw==
+X-Gm-Message-State: AOAM5317yUK7KvVB8K5UQkBYoPFcIyF9l4hjISzDpMF9Dr17sFyQqNrV
+        ZSLcaXIPh88SiVOlKXu/+oi1GwkAKCiEVw==
+X-Google-Smtp-Source: ABdhPJxVS0IAw+VXfU0s+Kx3NP439K9qJSguiS664m7AIkpRcELHNCxILFJU1Lu1KEd293TJYmdWdA==
+X-Received: by 2002:a62:b605:: with SMTP id j5mr4925313pff.25.1644451744871;
+        Wed, 09 Feb 2022 16:09:04 -0800 (PST)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id g7sm3240799pfi.7.2022.02.09.15.55.56
+        by smtp.gmail.com with ESMTPSA id 13sm20484555pfm.161.2022.02.09.16.09.04
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Feb 2022 15:55:56 -0800 (PST)
+        Wed, 09 Feb 2022 16:09:04 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 4/4] rfcomm-tester: Add test to write big chunks of data
-Date:   Wed,  9 Feb 2022 15:55:53 -0800
-Message-Id: <20220209235553.150294-4-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 1/2] adapter: Fix crash when storing link key
+Date:   Wed,  9 Feb 2022 16:09:02 -0800
+Message-Id: <20220210000903.162318-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220209235553.150294-1-luiz.dentz@gmail.com>
-References: <20220209235553.150294-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -71,102 +69,62 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This attempts to test traffic similar to OBEX using big chunk of data.
----
- tools/rfcomm-tester.c | 47 ++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 40 insertions(+), 7 deletions(-)
+The following trace can be observed sometimes when pairing 2 emulator
+instances:
 
-diff --git a/tools/rfcomm-tester.c b/tools/rfcomm-tester.c
-index ef47904de..650d33cb6 100644
---- a/tools/rfcomm-tester.c
-+++ b/tools/rfcomm-tester.c
-@@ -39,6 +39,7 @@ struct test_data {
- 	const void *test_data;
- 	unsigned int io_id;
- 	uint16_t conn_handle;
-+	uint16_t recv_len;
- };
+ src/adapter.c:store_link_key() Unable to load key file from
+ /var/lib/bluetooth/9C:DA:3E:F2:8E:46/9C:B6:D0:8A:A0:0C/info: (No
+such file or directory)
+ GLib: g_file_set_contents: assertion 'error == NULL ||
+*error == NULL' failed
+ ++++++++ backtrace ++++++++
+ #1  btd_backtrace+0x28a (src/backtrace.c:59) [0x7f65bb5ab53a]
+ #2  g_logv+0x21c (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6)
+ [0x7f65ba3f955c]
+ #3  g_log+0x93 (/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6)
+ [0x7f65ba3f9743]
+ #4  g_file_set_contents+0x68
+(/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f65ba3dca68]
+ #5  store_link_key+0x30a (src/adapter.c:8235) [0x7f65bb61839a]
+ #6  new_link_key_callback+0x474 (src/adapter.c:8285) [0x7f65bb62c904]
+ #7  queue_foreach+0x164 (src/shared/queue.c:203) [0x7f65bb722e34]
+ #8  can_read_data+0x59f (src/shared/mgmt.c:343) [0x7f65bb72e09f]
+ #9  watch_callback+0x112 (src/shared/io-glib.c:162) [0x7f65bb78acb2]
+ #10 g_main_context_dispatch+0x14e
+(/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.6400.6) [0x7f65ba3f204e]
+---
+ src/adapter.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/adapter.c b/src/adapter.c
+index a6dcc76de..3ee98431d 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -8214,11 +8214,15 @@ static void store_link_key(struct btd_adapter *adapter,
  
- struct rfcomm_client_data {
-@@ -297,7 +298,24 @@ const struct rfcomm_client_data connect_send_success = {
- 	.server_channel = 0x0c,
- 	.client_channel = 0x0c,
- 	.data_len = sizeof(data),
--	.send_data = data
-+	.send_data = data,
-+};
+ 	snprintf(filename, PATH_MAX, STORAGEDIR "/%s/%s/info",
+ 			btd_adapter_get_storage_dir(adapter), device_addr);
++	create_file(filename, 0600);
 +
-+const uint8_t data_8k[8192] = { [0 ... 1023] =  0x00,
-+				[1024 ... 2047] =  0x01,
-+				[2048 ... 3071] =  0x02,
-+				[3072 ... 4095] =  0x03,
-+				[4096 ... 5119] =  0x04,
-+				[5120 ... 6143] =  0x05,
-+				[6144 ... 7167] =  0x06,
-+				[7168 ... 8191] =  0x07,
-+};
-+
-+const struct rfcomm_client_data connect_send_8k_success = {
-+	.server_channel = 0x0c,
-+	.client_channel = 0x0c,
-+	.data_len = sizeof(data_8k),
-+	.send_data = data_8k,
- };
- 
- const struct rfcomm_client_data connect_read_success = {
-@@ -448,7 +466,6 @@ static gboolean rc_connect_cb(GIOChannel *io, GIOCondition cond,
- 		ssize_t ret;
- 
- 		tester_print("Writing %u bytes of data", cli->data_len);
--
- 		ret = write(sk, cli->send_data, cli->data_len);
- 		if (cli->data_len != ret) {
- 			tester_warn("Failed to write %u bytes: %s (%d)",
-@@ -483,16 +500,29 @@ static void client_hook_func(const void *data, uint16_t len,
- 
- 	tester_print("bthost received %u bytes of data", len);
- 
--	if (cli->data_len != len) {
-+	if (test_data->recv_len + len > cli->data_len) {
-+		tester_print("received more data than expected");
- 		tester_test_failed();
- 		return;
+ 	key_file = g_key_file_new();
+ 	if (!g_key_file_load_from_file(key_file, filename, 0, &gerr)) {
+ 		error("Unable to load key file from %s: (%s)", filename,
+ 								gerr->message);
+ 		g_error_free(gerr);
++		g_key_file_free(key_file);
++		return;
  	}
  
--	ret = memcmp(cli->send_data, data, len);
--	if (ret)
-+	ret = memcmp(cli->send_data + test_data->recv_len, data, len);
-+	if (ret) {
- 		tester_test_failed();
--	else
--		tester_test_passed();
-+		return;
-+	}
-+
-+	test_data->recv_len += len;
-+
-+	tester_print("bthost received progress %u/%u", test_data->recv_len,
-+							cli->data_len);
-+
-+	if (cli->data_len != test_data->recv_len)
-+		return;
-+
-+	test_data->recv_len = 0;
-+
-+	tester_test_passed();
- }
+ 	for (i = 0; i < 16; i++)
+@@ -8229,8 +8233,6 @@ static void store_link_key(struct btd_adapter *adapter,
+ 	g_key_file_set_integer(key_file, "LinkKey", "Type", type);
+ 	g_key_file_set_integer(key_file, "LinkKey", "PINLength", pin_length);
  
- static void server_hook_func(const void *data, uint16_t len,
-@@ -735,6 +765,9 @@ int main(int argc, char *argv[])
- 	test_rfcomm("Basic RFCOMM Socket Client - Write Success",
- 				&connect_send_success, setup_powered_client,
- 				test_connect);
-+	test_rfcomm("Basic RFCOMM Socket Client - Write 8k Success",
-+				&connect_send_8k_success, setup_powered_client,
-+				test_connect);
- 	test_rfcomm("Basic RFCOMM Socket Client - Read Success",
- 				&connect_read_success, setup_powered_client,
- 				test_connect);
+-	create_file(filename, 0600);
+-
+ 	str = g_key_file_to_data(key_file, &length, NULL);
+ 	if (!g_file_set_contents(filename, str, length, &gerr)) {
+ 		error("Unable set contents for %s: (%s)", filename,
 -- 
 2.34.1
 
