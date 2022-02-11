@@ -2,98 +2,165 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41AD14B22BF
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Feb 2022 11:06:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C2DC4B2435
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Feb 2022 12:23:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235417AbiBKKGI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 11 Feb 2022 05:06:08 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42930 "EHLO
+        id S242364AbiBKLXj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 11 Feb 2022 06:23:39 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232868AbiBKKGI (ORCPT
+        with ESMTP id S229584AbiBKLXi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 11 Feb 2022 05:06:08 -0500
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD1EE7E
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Feb 2022 02:06:06 -0800 (PST)
-Received: by mail-yb1-xb29.google.com with SMTP id p5so23105531ybd.13
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Feb 2022 02:06:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=RUm+BHjHjBqeaGuCk1BVfImjY9k8WWn0rEUOHAWVbOo=;
-        b=iCj4u7nWOF2IVYuWGnWmFWikNCppbFZlA8dUhWW5yssY0JjQSrPUwIrC+DAHK/Jnx9
-         Vt48RquJpRGXBQp86j9NI+sibTviMD/jNenpIUub2vgHg9DaBJflChgd0AA5NyxSNRBN
-         UeFVbvA/hYsWtw4TrmHE1fBLq3O+BY47/HvtjlBJSl7xtW3XzOOFmcjDo/K9zXVkxUMz
-         zBGoZsn7wNzjuWfqvKifayTZ60dDhjIzBEh6p1FnjQnatItZddzv8skCCUVziqjSku1q
-         7Ww0oVIfVSvp+W1DsthaVy8233YKFuUa+JO/AUTxM3vP+nk0nauWUBptGc+r1q0XW0Rs
-         WlQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=RUm+BHjHjBqeaGuCk1BVfImjY9k8WWn0rEUOHAWVbOo=;
-        b=u5F6jT+ciQLEbUs6CFI7DUHwRV/R69y+oAyyfkz7SyNxU6BNq2i4td4AyihrQwsUI6
-         wNmtEuRhc/u9891EQFe/9h6KMMolu9mS929usa4Tbp8cuKDW6gkwTyTRXNKT/vF3h+ZA
-         F4lbRvIdyi8CEw+HSu+E/Dy0JDz7Z1IK4bTTOzBy02Wc9UGgdy4jP+oEy+B/xX5dsDPI
-         3i3OyoAFug9HN4MRcJAJ6gOnqwYL9o46dQSZaBmXxfmxqMM8J238mjSmTtKXVMGXjQkr
-         lvoeQLll3MiyPykkoQIqYsatkzQaXMorPzT61sjbukzwD4jF8GGSggqsrp7h67/EhiTd
-         aEsg==
-X-Gm-Message-State: AOAM530M+Gj2gzcJF8jSpmziGjglhkgwMqdwP7GHWZ6doHgRqE9ZVA2v
-        2gfrtUMMt8Dagn2TPF42n7TDEdY4doeOp+Dqm38=
-X-Google-Smtp-Source: ABdhPJwFpDrI1FpFvprlkTGIkKQd2/rtRkp78GLJf2ON/+z0gs7Dg2drVSIzQP2Aeg9F3GgWHyJVQ5EDhO3YBvD8Vjw=
-X-Received: by 2002:a81:ed10:: with SMTP id k16mr913897ywm.166.1644573965923;
- Fri, 11 Feb 2022 02:06:05 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:a05:7000:1fa9:0:0:0:0 with HTTP; Fri, 11 Feb 2022 02:06:05
- -0800 (PST)
-Reply-To: michellegoodman035@gmail.com
-From:   Shayma <shaymamarwan08@gmail.com>
-Date:   Fri, 11 Feb 2022 10:06:05 +0000
-Message-ID: <CA+HOoT3dJD=-Kjf45MXx_U2uhw2bgJRGf5GBUt0SH8_8Fm1kaw@mail.gmail.com>
-Subject: Halllo
-To:     undisclosed-recipients:;
+        Fri, 11 Feb 2022 06:23:38 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71AFEE75
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Feb 2022 03:23:37 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E551EB82960
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Feb 2022 11:23:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 49CC5C340E9
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Feb 2022 11:23:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644578612;
+        bh=Tc8Jan29jsBm4tV05JUUF0becU95Mau9cuCZYGsPZQ0=;
+        h=From:To:Subject:Date:From;
+        b=OjEib6quNeW2Df1RYMCkrf214NGVx7tw2BLikU4XYLNWTCGRjl4oJxGH4L77AXJiv
+         Z8q8hHkLlzcka2i04F66rmtPQS765r29gzVV5horLtUSoLbv1DtyPsmc1s6dzWwXFE
+         /QSBjS2enlNm112eL9RK6ZHx9fZkLeddYqGkFnrSLuItQRi+V7L/TfNVN4tRzHYOvz
+         wu8mjdsoN0Jb0IEBrbT98TtGcVwinGTy6o3o2pTjwOk2uOy68cPNFL4KbvAdSn1tzD
+         PCf+kGD3Tz4uGep+g3RovUpqTUAaAkiAjO6D4I8cHW+nnrjK/HDHRVODxjrBhEVYPK
+         YC5DEoR+GngYg==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 2D0B9C05FD0; Fri, 11 Feb 2022 11:23:32 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 215589] New: Random bluetooth dropout after sleep.
+Date:   Fri, 11 Feb 2022 11:23:31 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: new
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: rodomar705@protonmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: bug_id short_desc product version
+ cf_kernel_version rep_platform op_sys cf_tree bug_status bug_severity
+ priority component assigned_to reporter cf_regression attachments.created
+Message-ID: <bug-215589-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:b29 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [shaymamarwan08[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [shaymamarwan08[at]gmail.com]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [michellegoodman035[at]gmail.com]
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.4 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hallo, ich hoffe du hast meine Nachricht erhalten.
-Ich brauche schnelle Antworten
-Danke.
-Michelle
+https://bugzilla.kernel.org/show_bug.cgi?id=3D215589
+
+            Bug ID: 215589
+           Summary: Random bluetooth dropout after sleep.
+           Product: Drivers
+           Version: 2.5
+    Kernel Version: 5.16.8-zen1-1-zen
+          Hardware: All
+                OS: Linux
+              Tree: Mainline
+            Status: NEW
+          Severity: normal
+          Priority: P1
+         Component: Bluetooth
+          Assignee: linux-bluetooth@vger.kernel.org
+          Reporter: rodomar705@protonmail.com
+        Regression: No
+
+Created attachment 300430
+  --> https://bugzilla.kernel.org/attachment.cgi?id=3D300430&action=3Dedit
+ATA SCSI trace failing randomly
+
+After the previous issue of AX210 bluetooth issues after warm reboots I got
+another problem; after the system sleep and get woken up from it, the bluet=
+ooth
+adapter stop completely to respond to the host, other times it will connect=
+ to
+my bluetooth mouse for a few seconds and then the bluetooth subsystem locks=
+ up
+randomly. Sometimes when it works and then stop working I see this message =
+in
+the dmesg log:
+
+[ 9248.324043] hid-generic 0005:0A5C:4503.0009: input,hidraw1: BLUETOOTH HID
+v1.29 Mouse [TeckNet BM308] on xx:xx:xx:xx:xx:xx
+[ 9259.970320] pcieport 0000:00:08.1: PME: Spurious native interrupt!
+[ 9276.881203] pcieport 0000:00:08.1: PME: Spurious native interrupt!
+[ 9277.137263] usb 3-4: reset full-speed USB device number 2 using xhci_hcd
+...
+[ 9997.610527] Bluetooth: hci0: command 0x0405 tx timeout
+[10041.455285] Bluetooth: hci0: command 0x0408 tx timeout
+[10082.421187] Bluetooth: hci0: command 0x0408 tx timeout
+[10127.484049] Bluetooth: hci0: command 0x0408 tx timeout
+...
+[10143.614676] Bluetooth: hci0: command 0x0c1a tx timeout
+[10143.614686] Bluetooth: hci0: Timed out waiting for suspend events
+[10143.614693] Bluetooth: hci0: No way to reset. Ignoring and continuing
+[10143.614697] Bluetooth: hci0: Suspend timeout bit: 4
+[10143.614700] Bluetooth: hci0: Suspend timeout bit: 6
+[10143.614703] Bluetooth: hci0: Suspend timeout bit: 9
+[10143.614730] Bluetooth: hci0: Suspend notifier action (3) failed: -110
+
+To fix this problem I usually put the laptop to sleep and wake it up again
+Today however I was greeted with this error multiple times:
+
+see ata_scsi_trace.txt
+
+This laptop doesn't have a SATA port, but I guess the error comes from the
+probing of the chipset non connected port? Why it crashes though?
+
+Then this error is printed:
+
+[10151.146976] ata2: failed stop FIS RX (-16)
+[10151.148212] ata1: failed stop FIS RX (-16)
+
+And then multiple new errors coming from a function called list (but it see=
+ms
+that the caller is the bluetooth subsystem):
+
+see list_stack_trace.txt
+
+Then the bluetooth subsystem 4 times:
+
+see bluetooth_stack_trace.txt
+
+Finally after a sleep wake cycle again this was printed again:
+
+see double_stack_trace.txt.
+
+In this last case, however, the bluetooth works perfectly fine, after 3 cyc=
+les.
+
+I don't really get what's happening here, frankly.
+
+If you need more information on this, just ask.
+
+Marco.
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
