@@ -2,34 +2,30 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B8C54B2032
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Feb 2022 09:30:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24A1A4B20D6
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Feb 2022 10:00:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348041AbiBKI3p (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 11 Feb 2022 03:29:45 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57706 "EHLO
+        id S244544AbiBKJAB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 11 Feb 2022 04:00:01 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230344AbiBKI3o (ORCPT
+        with ESMTP id S234134AbiBKJAA (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 11 Feb 2022 03:29:44 -0500
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37385CF;
-        Fri, 11 Feb 2022 00:29:43 -0800 (PST)
-Received: from [192.168.0.2] (ip5f5aebe1.dynamic.kabel-deutschland.de [95.90.235.225])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        (Authenticated sender: pmenzel)
-        by mx.molgen.mpg.de (Postfix) with ESMTPSA id A9EC261EA1926;
-        Fri, 11 Feb 2022 09:29:41 +0100 (CET)
-Message-ID: <1c1e4143-0750-3dc5-eb63-2e8f52699e7c@molgen.mpg.de>
-Date:   Fri, 11 Feb 2022 09:29:41 +0100
+        Fri, 11 Feb 2022 04:00:00 -0500
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:8234::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9E62218;
+        Fri, 11 Feb 2022 00:59:59 -0800 (PST)
+Received: from ip4d144895.dynamic.kabel-deutschland.de ([77.20.72.149] helo=[192.168.66.200]); authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1nIRmX-00009c-Ch; Fri, 11 Feb 2022 09:59:57 +0100
+Message-ID: <def03073-3fab-3b34-6ffc-702bb1b3758f@leemhuis.info>
+Date:   Fri, 11 Feb 2022 09:59:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
+ Thunderbird/91.5.0
 Subject: Re: Unable to transfer big files to Nokia N9
-Content-Language: en-US
-To:     Thorsten Leemhuis <regressions@leemhuis.info>
+Content-Language: en-BS
+To:     Paul Menzel <pmenzel@molgen.mpg.de>
 Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
         Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
@@ -45,46 +41,50 @@ References: <eb6d86eb-d156-d7ac-0965-181719023d51@molgen.mpg.de>
  <d41d8b41-c347-47e7-e52b-39d7211c8952@molgen.mpg.de>
  <aa3ee7ac-6c52-3861-1798-3cc1a37f6ebf@molgen.mpg.de>
  <9cb4b1ae-760f-f8ec-b3fe-a5d0be0dba25@leemhuis.info>
-From:   Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <9cb4b1ae-760f-f8ec-b3fe-a5d0be0dba25@leemhuis.info>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <1c1e4143-0750-3dc5-eb63-2e8f52699e7c@molgen.mpg.de>
+From:   Thorsten Leemhuis <regressions@leemhuis.info>
+In-Reply-To: <1c1e4143-0750-3dc5-eb63-2e8f52699e7c@molgen.mpg.de>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1644569999;2afef0c4;
+X-HE-SMSGID: 1nIRmX-00009c-Ch
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Thorsten,
-
-
-Am 10.02.22 um 11:36 schrieb Thorsten Leemhuis:
-> Hi, this is your Linux kernel regression tracker speaking. Top-posting
-> for once, to make this easy accessible to everyone.
+On 11.02.22 09:29, Paul Menzel wrote:
+> Am 10.02.22 um 11:36 schrieb Thorsten Leemhuis:
+>> Hi, this is your Linux kernel regression tracker speaking. Top-posting
+>> for once, to make this easy accessible to everyone.
+>>
+>> Hey bluetooth-maintainers, what's the status here? I already asked for a
+>> status update more that a week ago and didn't get a reply. Paul also
+>> confirmed recently the issue is still present and no reply either. IOW:
+>> this is talking way to long for a issue that was bisected?
+>>
+>> Could you please comment on this? What can be done to get this rolling?
+>> Or do I have to ask upstream maintainers to revert the culprit?
 > 
-> Hey bluetooth-maintainers, what's the status here? I already asked for a
-> status update more that a week ago and didn't get a reply. Paul also
-> confirmed recently the issue is still present and no reply either. IOW:
-> this is talking way to long for a issue that was bisected?
+> I sent two reverts [1], and probably forgot to add a tag to reference
+> this discussion.
 > 
-> Could you please comment on this? What can be done to get this rolling?
-> Or do I have to ask upstream maintainers to revert the culprit?
+> Luiz asked me two provide more logs. Hopefully, I am going to come
+> around to that today, but maybe it’s better to revert so that Linux 5.16
+> can also be fixed.
 
-I sent two reverts [1], and probably forgot to add a tag to reference 
-this discussion.
+Ahh, thx, great to see this finally got things running.
 
-Luiz asked me two provide more logs. Hopefully, I am going to come 
-around to that today, but maybe it’s better to revert so that Linux 5.16 
-can also be fixed.
+This will let regzbot know about it:
 
+#regzbot monitor:
+https://lore.kernel.org/linux-bluetooth/20220208221911.57058-1-pmenzel@molgen.mpg.de/
 
-Kind regards,
+With a proper "Link:" tag this would have happened automatically, but no
+worries, a lot of people forget to set it. :-D
 
-Paul
-
-
-[1]: 
-https://lore.kernel.org/linux-bluetooth/20220208221911.57058-1-pmenzel@molgen.mpg.de/T/
+Ciao, Thorsten
