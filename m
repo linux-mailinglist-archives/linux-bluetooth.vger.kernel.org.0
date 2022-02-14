@@ -2,35 +2,41 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15A924B52ED
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Feb 2022 15:14:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 531424B5303
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Feb 2022 15:18:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231236AbiBNOOx convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 14 Feb 2022 09:14:53 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51060 "EHLO
+        id S234138AbiBNOQa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 14 Feb 2022 09:16:30 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355001AbiBNOOw (ORCPT
+        with ESMTP id S233575AbiBNOQ3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 14 Feb 2022 09:14:52 -0500
+        Mon, 14 Feb 2022 09:16:29 -0500
 Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B745ACF2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 14 Feb 2022 06:14:40 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E87DDC3A;
+        Mon, 14 Feb 2022 06:16:19 -0800 (PST)
 Received: from smtpclient.apple (p4fefcd07.dip0.t-ipconnect.de [79.239.205.7])
-        by mail.holtmann.org (Postfix) with ESMTPSA id B1B8ACED30;
-        Mon, 14 Feb 2022 15:14:39 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 13AE3CED30;
+        Mon, 14 Feb 2022 15:16:19 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
-Subject: Re: [PATCH BlueZ] fix build with glibc < 2.25
+Subject: Re: [PATCH v4] Bluetooth: btusb: Improve stability for QCA devices
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20220214131451.2397549-1-fontaine.fabrice@gmail.com>
-Date:   Mon, 14 Feb 2022 15:14:39 +0100
-Cc:     linux-bluetooth@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <562900D8-1A46-46E4-B31E-FD3FBE9BE2D8@holtmann.org>
-References: <20220214131451.2397549-1-fontaine.fabrice@gmail.com>
-To:     Fabrice Fontaine <fontaine.fabrice@gmail.com>
+In-Reply-To: <1644835419-23943-1-git-send-email-zijuhu@codeaurora.org>
+Date:   Mon, 14 Feb 2022 15:16:18 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        BlueZ <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, c-hbandi@codeaurora.org,
+        Hemantg <hemantg@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>, tjiang@codeaurora.org,
+        Zijun Hu <quic_zijuhu@quicinc.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20772D11-FD65-4123-A538-3230278A506F@holtmann.org>
+References: <1644835419-23943-1-git-send-email-zijuhu@codeaurora.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
 X-Mailer: Apple Mail (2.3693.60.0.1.1)
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
@@ -41,75 +47,17 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Fabrice,
+Hi Zijun,
 
-> getrandom and sys/random.h are only available since glibc 2.25:
-> https://www.gnu.org/software/gnulib/manual/html_node/sys_002frandom_002eh.html
-> resulting in the following build failures since version 5.63 and
-> https://git.kernel.org/pub/scm/bluetooth/bluez.git/log/?qt=grep&q=getrandom
-> so put back rand() as a fallback:
+> WCN6855 2.1 will reset to apply firmware downloaded, so wait
+> a moment for reset done then go ahead to improve stability.
 > 
-> plugins/autopair.c:20:24: fatal error: sys/random.h: No such file or directory
-> #include <sys/random.h>
->                        ^
-> 
-> Fixes:
-> - http://autobuild.buildroot.org/results/6b8870d12e0804d6154230a7322c49416c1dc0e2
-> 
-> Signed-off-by: Fabrice Fontaine <fontaine.fabrice@gmail.com>
+> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
 > ---
-> configure.ac           |  2 ++
-> emulator/le.c          |  7 +++++++
-> emulator/phy.c         |  7 +++++++
-> peripheral/main.c      | 10 ++++++++++
-> plugins/autopair.c     |  6 ++++++
-> profiles/health/hdp.c  | 11 +++++++++++
-> profiles/health/mcap.c | 10 ++++++++++
-> tools/btgatt-server.c  |  6 ++++++
-> 8 files changed, 59 insertions(+)
-> 
-> diff --git a/configure.ac b/configure.ac
-> index 07d068a4d..cdd693da3 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -54,6 +54,8 @@ AC_ARG_ENABLE(threads, AS_HELP_STRING([--enable-threads],
-> 
-> AC_CHECK_FUNCS(explicit_bzero)
-> 
-> +AC_CHECK_FUNCS(getrandom)
-> +
-> AC_CHECK_FUNCS(rawmemchr)
-> 
-> AC_CHECK_FUNC(signalfd, dummy=yes,
-> diff --git a/emulator/le.c b/emulator/le.c
-> index f8f313f2c..9ef0636d0 100644
-> --- a/emulator/le.c
-> +++ b/emulator/le.c
-> @@ -20,7 +20,9 @@
-> #include <sys/socket.h>
-> #include <sys/un.h>
-> #include <sys/uio.h>
-> +#ifdef HAVE_GETRANDOM
-> #include <sys/random.h>
-> +#endif
-> #include <time.h>
-> 
-> #include "lib/bluetooth.h"
-> @@ -509,10 +511,15 @@ static unsigned int get_adv_delay(void)
-> 	/* The advertising delay is a pseudo-random value with a range
-> 	 * of 0 ms to 10 ms generated for each advertising event.
-> 	 */
-> +#ifdef HAVE_GETRANDOM
-> 	if (getrandom(&val, sizeof(val), 0) < 0) {
-> 		/* If it fails to get the random number, use a static value */
-> 		val = 5;
-> 	}
-> +#else
-> +	srand(time(NULL));
-> +	val = rand();
-> +#endif
+> drivers/bluetooth/btusb.c | 8 ++++++++
+> 1 file changed, 8 insertions(+)
 
-you need to introduce a src/missing.h and provide a getrandom fallback. I am not allowing to spread #ifdef around the code for some old glibc compatibility.
+patch has been applied to bluetooth-next tree.
 
 Regards
 
