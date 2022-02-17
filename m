@@ -2,115 +2,155 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AD584BAD44
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Feb 2022 00:43:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B92964BAD5F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Feb 2022 00:49:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbiBQXmd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 17 Feb 2022 18:42:33 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:53116 "EHLO
+        id S229628AbiBQXrc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Feb 2022 18:47:32 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:55994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbiBQXmc (ORCPT
+        with ESMTP id S229597AbiBQXrb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 17 Feb 2022 18:42:32 -0500
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB8EE3CFD0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Feb 2022 15:41:21 -0800 (PST)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-2d625082ae2so49227277b3.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Feb 2022 15:41:21 -0800 (PST)
+        Thu, 17 Feb 2022 18:47:31 -0500
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B29A378F76
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Feb 2022 15:47:06 -0800 (PST)
+Received: by mail-pj1-f50.google.com with SMTP id qe15so7061661pjb.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Feb 2022 15:47:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=colorremedies-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OH4xdKwbHT+W6V7lIuAFQEx4jlgcFZTl/QovXWm+Qnk=;
-        b=VNaGGbiwE6LJcuG9GBl8WJ+o024TKcJ6VfIfuMgT0K8LhKj4Z5XlRbyml48jlejmxd
-         GhvWOI1RlpE08mE2TRLLj3wwH9woG9Zq1uxp/HTIBzpu7v/LQdWG2q/RxgkCdyzz5VO4
-         kdIuW+K8321R8K6Pq/a5hofVdgu8byXfR/bSJO4kIIBS1Aj3QMZ0ak9GUYD+STMeccta
-         DJcH2GR4zcSm/yhh0M2gaHiMvJBghJTwj1fTcUhs+J5EgdzFhcawEXe76GGrsBEPRECs
-         Hvt/27p4OAPQDLzk3DmlUxsWkK6LK1iutovNRWERjuYzsiEmdSLkrqUOS4/46Ad88apu
-         cexQ==
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SF3Rz9iAegGfFyo/QFSu8zphh0k7BTH08lz7l9LmvHs=;
+        b=QFnucT4jVLpbz8QSa7F3vDOzGYsgA+TxYW/4VRwi4xSxIO8dcJATUMVYpNKTmNebuc
+         z4Omv5ANDtEQ4EE+oYjxTcaxJr8zBdTjWqWTdV2IzyMzZCfCfATNgxZ6Ofd8UjZ8XBCT
+         Ag1e3UeGZt7ykc8Zkii7CLZlehDXVjKrO/LBSljq3yqTNRCiOSBnHbSBKxpObm34Qfv9
+         6TBP0PbWhTai9I6SCIcg/bRieS0kHJXiRO7aOpsqGx1U6U2VSnU4ON8hFqoelITqqqYh
+         hz3D19y/vsxjRpmTAxIRjlJ6E+vGPB5NaootausgYK9soJ6IxBKfxuAzxaxyZstvQico
+         s9+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OH4xdKwbHT+W6V7lIuAFQEx4jlgcFZTl/QovXWm+Qnk=;
-        b=ky8mXiyZvCbA1RrrUx7/81BPMOmOHTrd1Qjzr25/22N92SjnNvuqKxE3aOdyGKu4cl
-         4wcYhXiXoRxHqDYpPMdfgVRg9lKUxYBs4O+UVJSEamt39SOV2zTzciICCmdQQcou+Ju0
-         bInbKwe8sBlRqpIxMehF44akZE+e+J+SBdo9vmcZJMKCoo8lDe1OROoS0l/zgT+IBCr3
-         pwxj7Kuhe6sSn6QprveTtdKc6mkmkZu+SSxk2YuoZUxbp6mzuBfbsrK6e0xElVSJyujG
-         TUB2bAINqIUiTEQAY8shmzGvaihqQwSUOqsAejYPSTs4Zag9LKk5QXBlFg6FT0zGFnWJ
-         D5Lg==
-X-Gm-Message-State: AOAM533xlJuL4a3aKLVyx2g8naD8XJMVsxauo3FRyYy5ch/Sw5/dV0VA
-        R+MZj05ZvJIcGlDrHMXs580/agY6pDmyW1mrqgAoob1l5lDAlis6
-X-Google-Smtp-Source: ABdhPJx39G8VjmklCPpAGAYWtCDsqec/7fknsG9tSgoYkET6uY8iCgcuKghvugx1o4vH8f5+JuSuhjybhmSZAwaXUfQ=
-X-Received: by 2002:a81:4b8c:0:b0:2d0:a754:3fe0 with SMTP id
- y134-20020a814b8c000000b002d0a7543fe0mr5131501ywa.369.1645140977247; Thu, 17
- Feb 2022 15:36:17 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SF3Rz9iAegGfFyo/QFSu8zphh0k7BTH08lz7l9LmvHs=;
+        b=x8F3KBO4lA3xjW1gIhX+C8pQc2NY+Pl1B0FAzFwz7F7enhP3+QD+MaflXssigx2Wyo
+         o5pswNqPmU/yJJhKybJai/KOI9+ow4Pwoc/KAbSVqMmgdo/W/zyEHizIm6kgLVQKxnse
+         GRr/1/b/mYkWR72ojVmDwcOI4f50rxKiK+4q5R8bO+TSPZKV7PV0lUggFddJ2j919/7z
+         VkB3MSJeQkcX92NonaCanW1O0saegbRodx/PgzDc/TRAFNFlwEhP7blIc6uLrCFfJpX/
+         75AJ2fYBRwF+wkfCo+Z7jxkRnWwe136boF3YASYSZujBIeCxXz/80lU1FOMNDVPBmkgb
+         QAiQ==
+X-Gm-Message-State: AOAM5318cCuEYC0jxVgsu+TiMNSUTFsyW6ynvf83Ps0lt8Ef07U9fS7I
+        TGM05115iKpU/SFgROJUXgJacWVwRYMCCw==
+X-Google-Smtp-Source: ABdhPJw5nOJA2N37OdDgTTIk7YyFOI5aTILnQ/DdOehOR/sZsaWZuUB8EkFR0ECQnWcKE0BcvB+ZeA==
+X-Received: by 2002:a17:902:da88:b0:14a:26ae:4e86 with SMTP id j8-20020a170902da8800b0014a26ae4e86mr5164971plx.59.1645141143093;
+        Thu, 17 Feb 2022 15:39:03 -0800 (PST)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id lb18sm2840780pjb.42.2022.02.17.15.39.02
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Feb 2022 15:39:02 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/2] main.conf: Introduce MaxControllers
+Date:   Thu, 17 Feb 2022 15:39:01 -0800
+Message-Id: <20220217233902.3093404-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <CAJCQCtSeUtHCgsHXLGrSTWKmyjaQDbDNpP4rb0i+RE+L2FTXSA@mail.gmail.com>
- <CAJCQCtTdiPNkV1_b478_LkG11TMOPEdDGHTjf5LfZJpwWrK+bg@mail.gmail.com>
- <CAJCQCtTNk25u6sm_Xqt8qzf7mM5kmOrnXyD6pT1GKJ5z5-Kqbw@mail.gmail.com>
- <CAJCQCtRYKbTQ16eUq2qODZ=dE=HB6pZpLNswdqMbiWw+DBE9KQ@mail.gmail.com>
- <CABBYNZKfy-ntFhbx0TStNwFiwxCF4sPVaHS4wDbef0shb=pawg@mail.gmail.com> <CAJCQCtRiTQ1BTEHugxhS-zmXFG4qi4WLxsRyZsG9-_Q0isM+7Q@mail.gmail.com>
-In-Reply-To: <CAJCQCtRiTQ1BTEHugxhS-zmXFG4qi4WLxsRyZsG9-_Q0isM+7Q@mail.gmail.com>
-From:   Chris Murphy <lists@colorremedies.com>
-Date:   Thu, 17 Feb 2022 16:36:01 -0700
-Message-ID: <CAJCQCtS35JeABLDBaNpfgxjq+ZJ9rZgwtRnSYLNm8tMwtdYGMw@mail.gmail.com>
-Subject: Re: bug kernel 5.17, qualcom and intel adapters, unable to reliably
- connect to bluetooth devices
-To:     Bluetooth <linux-bluetooth@vger.kernel.org>
-Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-OK I started over, and for now keeping the reporting constrained to
-the hardware I personally have on hand.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Hardware:
-Lenovo Thinkpad X1 Carbon Gen 7
-Bus 001 Device 004: ID 8087:0aaa Intel Corp. Bluetooth 9460/9560
-Jefferson Peak (JfP)
-Sony 1000XM3 headset
-bluez-5.63-3.fc36.x86_64
+This introduces MaxControllers which can be used to limit the number of
+adapters exposed in the system.
+---
+ src/adapter.c | 7 +++++++
+ src/btd.h     | 1 +
+ src/main.c    | 9 +++++++++
+ src/main.conf | 4 ++++
+ 4 files changed, 21 insertions(+)
 
-kernel 5.17.0-rc4
-* remove the paired headset with bluetoothctl
-* reset the headset so it's not longer paired either
-* put the headset in pairing mode
-* GNOME Settings Bluetooth panel sees -> LE_WH-1000XM3, Not Setup
-* click on Not Setup and nothing happens
+diff --git a/src/adapter.c b/src/adapter.c
+index 2071cf8db..1551011a8 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -10078,6 +10078,13 @@ static void index_added(uint16_t index, uint16_t length, const void *param,
+ 		return;
+ 	}
+ 
++	/* Check if at maximum adapters allowed in the system then ignore the
++	 * adapter.
++	 */
++	if (btd_opts.max_adapters &&
++			btd_opts.max_adapters == g_slist_length(adapters))
++		return;
++
+ 	reset_adv_monitors(index);
+ 
+ 	adapter = btd_adapter_new(index);
+diff --git a/src/btd.h b/src/btd.h
+index a805a40d7..d13646889 100644
+--- a/src/btd.h
++++ b/src/btd.h
+@@ -121,6 +121,7 @@ struct btd_opts {
+ 	uint16_t	did_version;
+ 
+ 	bt_mode_t	mode;
++	uint16_t	max_adapters;
+ 	bt_gatt_cache_t gatt_cache;
+ 	uint16_t	gatt_mtu;
+ 	uint8_t		gatt_channels;
+diff --git a/src/main.c b/src/main.c
+index 8cc2dfca6..bf9d398e4 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -77,6 +77,7 @@ static const char *supported_options[] = {
+ 	"NameResolving",
+ 	"DebugKeys",
+ 	"ControllerMode",
++	"MaxControllers"
+ 	"MultiProfile",
+ 	"FastConnectable",
+ 	"Privacy",
+@@ -779,6 +780,14 @@ static void parse_config(GKeyFile *config)
+ 		g_free(str);
+ 	}
+ 
++	val = g_key_file_get_integer(config, "General", "MaxControllers", &err);
++	if (err) {
++		g_clear_error(&err);
++	} else {
++		DBG("MaxControllers=%d", val);
++		btd_opts.max_adapters = val;
++	}
++
+ 	str = g_key_file_get_string(config, "General", "MultiProfile", &err);
+ 	if (err) {
+ 		g_clear_error(&err);
+diff --git a/src/main.conf b/src/main.conf
+index 49b9e6755..401796235 100644
+--- a/src/main.conf
++++ b/src/main.conf
+@@ -51,6 +51,10 @@
+ # Possible values: "dual", "bredr", "le"
+ #ControllerMode = dual
+ 
++# Maximum number of controllers allowed to be exposed to the system.
++# Default=0 (unlimited)
++#MaxControllers=0
++
+ # Enables Multi Profile Specification support. This allows to specify if
+ # system supports only Multiple Profiles Single Device (MPSD) configuration
+ # or both Multiple Profiles Single Device (MPSD) and Multiple Profiles Multiple
+-- 
+2.35.1
 
-The above activity is recorded with 'btmon -w btmon-w-headsetpair.txt'
-and i get both termin output and a binary file
-
-terminal output
-https://drive.google.com/file/d/1fFbyRm32Lf0yzrHhE1vEE0ztnSeoe7VB/view?usp=sharing
-
-binary output
-https://drive.google.com/file/d/1BmnO-utOooMWgcEHTuoz13Ndd5hGuqe_/view?usp=sharing
-
-kernel 5.16.9
-* bluetooth panel says it's connected to LE_WH-1000XM3, as if the
-previous pairing attempt above worked
-* bluetooth panel name for the device flips between LE_WH-1000XM3 and WH-1000XM3
-* headset is still in pairing mode from when i was trying to pair with
-5.17.0 (flashing blue lights), it eventually powers off so as far as
-it's concern pairing didn't succeed
-* again remove the headset with bluetoothctl
-* put the headset back into pairing mode, click on LE_WH-1000XM3 in
-the list, "Not Setup" flips to "Connected" in the GNOME bluetooth
-panel, and the headset reports pairing is successful
-this is what bluetoothd is reporting during the name flipping
-https://drive.google.com/file/d/1qjAlkODkjJzR33WpHD2Sxze8zq4t1UhS/view?usp=sharing
-
-Definitely seems kernel related.
-
-
---
-Chris Murphy
