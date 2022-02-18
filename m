@@ -2,103 +2,129 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C5D74BAD4A
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Feb 2022 00:49:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BE3F4BAE3A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Feb 2022 01:17:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbiBQXpR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 17 Feb 2022 18:45:17 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:40648 "EHLO
+        id S229933AbiBRAQO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Feb 2022 19:16:14 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:43326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbiBQXpQ (ORCPT
+        with ESMTP id S229893AbiBRAQN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 17 Feb 2022 18:45:16 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60515367002
-        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Feb 2022 15:44:03 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id m7so7115190pjk.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Feb 2022 15:44:03 -0800 (PST)
+        Thu, 17 Feb 2022 19:16:13 -0500
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10DB3381B6
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Feb 2022 16:15:56 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-2d66f95f1d1so49889617b3.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Feb 2022 16:15:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=IbGAC1h6wZ2Rtb7hj4bLmC7vwrTbHvpT1XKOfFl5ukY=;
-        b=NT4FT0fwWdl0X3xCe39jhBdaVQqfEDgC3M9V8G+EgP1QRemWXA6X920CDLnviXHqCm
-         DxpBvL0xydWQPq9LpTsTEbcau0AO2CAEWltyVCt7aE+xOJYp+aTcL+cXv/KjfKmqvrk/
-         uM+SzbZZBUpfJMdPg97k47kgb23DMyHW7oMgzjRk/HAShGBkuBCke3ikjdYXIsDHWCW7
-         /4k8k6BruxK6Ls4DCtIQOFgvWdnAa2Uk9vV0WelCicN+RgfXv3THRDusdYynyw5ddbqL
-         ahloVcONsOkY3TTDhiKdseE/cFIKRnX36nswN54fdU47ikUZwcyUlhFgFsYpDHuODdEJ
-         6rRA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AFCLr9hmq6/j4HWE6M1b+ecTVGjzCMlG/ePLwm+vbJA=;
+        b=QcMCFMV7bXcVgsRVkG01bM4LbE08gyzj5QfVC6b9YheVznqCBwxWgt7hIW2+sPqx2t
+         x4fhA+FitADOp23vpv1wZwAFw0hVk8sOoPk0YNEFv2JuEvE8edo0DMudf3Sp6PU75goL
+         BTN6IK844QmPEGEPAzYm7PP/nfWwRkw60CW/Wh2YdtGgLembJ9+gk+/zYKCRDzaU7epK
+         WIA53dJ4GwiT5AF3DX3gL0TwVTSLDVNQjIciJXyMfDRAce3/IEIn7jPZ0TdKD/Dsz0gO
+         beFUuPjVhf/HOceNSoO8oTsApsyHV+jLsH6d04StlBcE8aY0aGZhjrSX0WNA62zlC4wI
+         ZFlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IbGAC1h6wZ2Rtb7hj4bLmC7vwrTbHvpT1XKOfFl5ukY=;
-        b=lOD9S6DeW0I6stk/98P2KCj5MQd+dGMVUz8URLo1a/E1OM/RE2dymaTCeHBOsOidlt
-         A79p4oZT5EKFONd9O2wFqjZ0/RGFNu0H8tqG1IR0RMe2wz1E6W61dlgXL28fqbFncYgm
-         6i711hoqYQXC9YmS6SmdaMEndjt11bJ3EiP2w9zvkv73TF28MzQ2x3cJ/uhUcdnjZaMQ
-         AIyENJaistqQ4RAMBqSol+8GFd6KhpYCrVBD5RzxrWfBWx8aXzCEQSwLGNjesKv4PiPT
-         QeYwGA4bmgScVa/kZt5ygJkm6N54bzxkw0yFYY8h/aV0JNkNlOnv6lQZf2EY57Rwumc5
-         499w==
-X-Gm-Message-State: AOAM530w9VYdlhqIO1HWPHvq0aL9ddIGAtOTKRDvi9DrXmKMFIB+eTBs
-        mrwqzTs3AnCo4IVkLFwikJZekG7Qg6lBRA==
-X-Google-Smtp-Source: ABdhPJwElr+MlMtYoJhNQniM1MZCQlRXKMts6cDn4yr8bv6kWafSJvQ2YnQp93O5PnB7HOoVyofIVQ==
-X-Received: by 2002:a17:90a:6e47:b0:1b9:1154:6635 with SMTP id s7-20020a17090a6e4700b001b911546635mr9742306pjm.118.1645141143834;
-        Thu, 17 Feb 2022 15:39:03 -0800 (PST)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id lb18sm2840780pjb.42.2022.02.17.15.39.03
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Feb 2022 15:39:03 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] adapter: Fix allowing multiple adapters with the same address
-Date:   Thu, 17 Feb 2022 15:39:02 -0800
-Message-Id: <20220217233902.3093404-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220217233902.3093404-1-luiz.dentz@gmail.com>
-References: <20220217233902.3093404-1-luiz.dentz@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AFCLr9hmq6/j4HWE6M1b+ecTVGjzCMlG/ePLwm+vbJA=;
+        b=yIMVRYJSGw24pZ4x2r7mypt0OHn9KhhHRT+eKFPOdN6ho/31gujwkgHK4pUWml9uRc
+         kNFGlROExoEnucy9dGIu0Jw1+70I0jzdTh6jGhFIIXt9O7MyN0Ffmed3Sr5qCjZFrJBA
+         ZRwMYwYDimNfmTDOTl5pqoM/uhtW3hrtjK3x9niwqktTdJcKiDt3/Ey2sau1J4m29BfF
+         qJBIbfkV5nQ6irBN81r6fk+qyB37UZ2TtHrcGKltPkveLpYCXsU6+4DO+nHV05VdxXQW
+         izTjcUN4kT37Yis6H+yMcnArz1u7t1WHZ2t3Vz1gc4VwjzbjB2ULRCwlkkhesFnVkajd
+         271w==
+X-Gm-Message-State: AOAM532oSBEdKCZR0v477ddsaosOzrdje4o2drKJfBvFGSPUGpFSLCOx
+        RfM0PPJXbqRuAtHi+d5qrzQOvir2m7Hq7h6R4a713q8b
+X-Google-Smtp-Source: ABdhPJwOuG0nIZksmoXA1ZvMMawAbtDyqdOj/WHiSYVROrqUYNTGDQDdWFHp4oEAXJDt1bIWBlwT0ABpn5K/AIp3djA=
+X-Received: by 2002:a0d:c781:0:b0:2d2:d059:19c1 with SMTP id
+ j123-20020a0dc781000000b002d2d05919c1mr5338256ywd.376.1645143355168; Thu, 17
+ Feb 2022 16:15:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAJCQCtSeUtHCgsHXLGrSTWKmyjaQDbDNpP4rb0i+RE+L2FTXSA@mail.gmail.com>
+ <CAJCQCtTdiPNkV1_b478_LkG11TMOPEdDGHTjf5LfZJpwWrK+bg@mail.gmail.com>
+ <CAJCQCtTNk25u6sm_Xqt8qzf7mM5kmOrnXyD6pT1GKJ5z5-Kqbw@mail.gmail.com>
+ <CAJCQCtRYKbTQ16eUq2qODZ=dE=HB6pZpLNswdqMbiWw+DBE9KQ@mail.gmail.com>
+ <CABBYNZKfy-ntFhbx0TStNwFiwxCF4sPVaHS4wDbef0shb=pawg@mail.gmail.com>
+ <CAJCQCtRiTQ1BTEHugxhS-zmXFG4qi4WLxsRyZsG9-_Q0isM+7Q@mail.gmail.com> <CAJCQCtS35JeABLDBaNpfgxjq+ZJ9rZgwtRnSYLNm8tMwtdYGMw@mail.gmail.com>
+In-Reply-To: <CAJCQCtS35JeABLDBaNpfgxjq+ZJ9rZgwtRnSYLNm8tMwtdYGMw@mail.gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Thu, 17 Feb 2022 16:15:44 -0800
+Message-ID: <CABBYNZKTSe83iP4tm36we4cpAbeGUbEw9frZD1wCM9yo1zry5w@mail.gmail.com>
+Subject: Re: bug kernel 5.17, qualcom and intel adapters, unable to reliably
+ connect to bluetooth devices
+To:     Chris Murphy <lists@colorremedies.com>
+Cc:     Bluetooth <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hi Chris,
 
-The bdaddr of an adapter is used for its unique storage path so having
-multiple adapters with the same address would likely cause problems
-with its storage as they would be shared.
----
- src/adapter.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+On Thu, Feb 17, 2022 at 3:36 PM Chris Murphy <lists@colorremedies.com> wrote:
+>
+> OK I started over, and for now keeping the reporting constrained to
+> the hardware I personally have on hand.
+>
+> Hardware:
+> Lenovo Thinkpad X1 Carbon Gen 7
+> Bus 001 Device 004: ID 8087:0aaa Intel Corp. Bluetooth 9460/9560
+> Jefferson Peak (JfP)
+> Sony 1000XM3 headset
+> bluez-5.63-3.fc36.x86_64
+>
+> kernel 5.17.0-rc4
+> * remove the paired headset with bluetoothctl
+> * reset the headset so it's not longer paired either
+> * put the headset in pairing mode
+> * GNOME Settings Bluetooth panel sees -> LE_WH-1000XM3, Not Setup
+> * click on Not Setup and nothing happens
 
-diff --git a/src/adapter.c b/src/adapter.c
-index 1551011a8..97ce26f8e 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -9807,6 +9807,16 @@ static void read_info_complete(uint8_t status, uint16_t length,
- 			goto failed;
- 		}
- 	} else {
-+		struct btd_adapter *tmp;
-+
-+		tmp = adapter_find(&rp->bdaddr);
-+		if (tmp) {
-+			btd_error(adapter->dev_id,
-+				"Bluetooth address for index %u match index %u",
-+				adapter->dev_id, tmp->dev_id);
-+			goto failed;
-+		}
-+
- 		bacpy(&adapter->bdaddr, &rp->bdaddr);
- 		if (!(adapter->supported_settings & MGMT_SETTING_LE))
- 			adapter->bdaddr_type = BDADDR_BREDR;
+Well from the logs it doesn't seem the GNOME Setting is trying to do
+anything, have you tried bluetoothctl> connect <address>
+
+> The above activity is recorded with 'btmon -w btmon-w-headsetpair.txt'
+> and i get both termin output and a binary file
+>
+> terminal output
+> https://drive.google.com/file/d/1fFbyRm32Lf0yzrHhE1vEE0ztnSeoe7VB/view?usp=sharing
+>
+> binary output
+> https://drive.google.com/file/d/1BmnO-utOooMWgcEHTuoz13Ndd5hGuqe_/view?usp=sharing
+>
+> kernel 5.16.9
+> * bluetooth panel says it's connected to LE_WH-1000XM3, as if the
+> previous pairing attempt above worked
+> * bluetooth panel name for the device flips between LE_WH-1000XM3 and WH-1000XM3
+> * headset is still in pairing mode from when i was trying to pair with
+> 5.17.0 (flashing blue lights), it eventually powers off so as far as
+> it's concern pairing didn't succeed
+> * again remove the headset with bluetoothctl
+> * put the headset back into pairing mode, click on LE_WH-1000XM3 in
+> the list, "Not Setup" flips to "Connected" in the GNOME bluetooth
+> panel, and the headset reports pairing is successful
+> this is what bluetoothd is reporting during the name flipping
+> https://drive.google.com/file/d/1qjAlkODkjJzR33WpHD2Sxze8zq4t1UhS/view?usp=sharing
+>
+> Definitely seems kernel related.
+>
+>
+> --
+> Chris Murphy
+
+
+
 -- 
-2.35.1
-
+Luiz Augusto von Dentz
