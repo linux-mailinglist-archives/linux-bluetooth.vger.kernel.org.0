@@ -2,99 +2,121 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D3C84BB8BD
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Feb 2022 12:55:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 936B44BB998
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Feb 2022 13:58:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234719AbiBRLzS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 18 Feb 2022 06:55:18 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41740 "EHLO
+        id S235691AbiBRM5d (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 18 Feb 2022 07:57:33 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234690AbiBRLzR (ORCPT
+        with ESMTP id S235627AbiBRM5L (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 18 Feb 2022 06:55:17 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23509253BD7
-        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Feb 2022 03:55:01 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id bn33so3925501ljb.6
-        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Feb 2022 03:55:01 -0800 (PST)
+        Fri, 18 Feb 2022 07:57:11 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82F97286D4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Feb 2022 04:56:38 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id z22so15347353edd.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Feb 2022 04:56:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:to:cc
-         :references:from:subject:in-reply-to:content-transfer-encoding;
-        bh=LpTSlOI5yVEKnbppnJaKaIMeR05a7qhhYy/oeJHL2FQ=;
-        b=BK94jbNHfsjH/XHtcQPW/2qpNWomTnUcAIRy3out6Dm99dC5IDcVoEQowbosnkJurh
-         Ix8StOCyFqwaKraQfhM0N2W7mc7bKplN9vwPDJJStEoe019SYJpBK7aVC2rK1TbeP4jH
-         /oSXRbwQyNL+YvrTv3WdjAlauESCKBqwov82eqC4npEc+udoikvoHAluPsh3sEbhhVqD
-         KINnoIlVdvhwXkw4Rdzi5nXFXITNQ3fNKpr+ItwtpqZG2GqVRKXGhdB8fyqIzVQf856Q
-         Mzddazsvsfuz0waFtsAcMHHTBfkmuE4xNMU9tBUOC6W7Kecmbe9qOKrd2M+VtkDyx7Ei
-         nM/w==
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=JQAvlLJWgldHDOHcIcacjIOpg5TUZmVngZ2Pms5NG7Q=;
+        b=OZEbl6KFipfUGSY3KFbkW5bY3S675hY6/6OQBZOkiQDH6GySEY4TVOEFN7FJqiqPJO
+         agFru8efuG36LReL5w2nHtLPmYtalsoT1wnvZtm5B66UR3WpHZe7YTWBnI+8hwcg+B9b
+         6VTqOjeC2sjnoEVsct21NLGE+w42y7sE+dK+Kvyf2ZNQWqLNSVCxvg8SrSQ4nfcquitG
+         gNzOCZpbJ3cIiSkDeprGVHuEDLqS0lNFTsmcAJrL1QvP69xRb+k98zeCzu96aeF/5vna
+         AQQtm0c00Xr1SD+EXnd+BcRUJLCn+nrZnVcDaQjb8hG/lck3U1O70LYNSK/UVt5iDZ4s
+         w/aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:to:cc:references:from:subject:in-reply-to
-         :content-transfer-encoding;
-        bh=LpTSlOI5yVEKnbppnJaKaIMeR05a7qhhYy/oeJHL2FQ=;
-        b=oKtJhXlts1UYOveJGsDzxD97ihNQCLxgPcsLdeHvZ1Pu8Yv4KinIjy5ve3wZo7CLAS
-         p/4wmaZkEIGubSP4hgXJCMq26PpUSs8md3b73cCai5td2SK7xmdRUQ488LxDOQflRzAk
-         gDP4oeehRirPmJfRBkI/M6iE3ZUzjAbhdCfkb+Ny9T+Q2oBx9nLAZhSsBwCuv1aleuPs
-         rktxxp7NQjqxrLPNqsBPqujvkcknBVIV/gCc/OgZLuigCYcFjKewOryrCumtdEXAghUK
-         vAP7WvXacp7te7BZN79dj5GBdXeRZA+ykFURhYjsEC58Z1+JYQtSWGOr0KeTpgYC/Wqx
-         lFtg==
-X-Gm-Message-State: AOAM531ryJZAbClJtSMCYGldfqKTjgqDcLfzDS7QNVLfQvnbp3+6Mu5P
-        RWwGwEA9NKndcpTWioM/XSD2Iy4gxTY=
-X-Google-Smtp-Source: ABdhPJxgXte6Rv5Qxs3q4rwNkjRU4GkxGVh+SNkoA+ybU/TCeVWMqSEdwDil7yRbCmiL1PGjtIF/tg==
-X-Received: by 2002:a05:651c:a09:b0:239:8f43:ad53 with SMTP id k9-20020a05651c0a0900b002398f43ad53mr5568944ljq.458.1645185299355;
-        Fri, 18 Feb 2022 03:54:59 -0800 (PST)
-Received: from ?IPV6:2a02:2168:8737:3600:cd2a:e1fa:1ed7:c576? ([2a02:2168:8737:3600:cd2a:e1fa:1ed7:c576])
-        by smtp.gmail.com with ESMTPSA id bt24sm232105lfb.246.2022.02.18.03.54.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Feb 2022 03:54:58 -0800 (PST)
-Message-ID: <72b3b0ee-cca0-3804-ce78-1345c4590963@gmail.com>
-Date:   Fri, 18 Feb 2022 14:54:58 +0300
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=JQAvlLJWgldHDOHcIcacjIOpg5TUZmVngZ2Pms5NG7Q=;
+        b=rcW7SvB2P4TrXbbLgSwnnSVnD+yitKtSrceuWtBnhf/WwwzfgT5d398QCfKaCCSjet
+         Q7Mo7ClvIOW2Zit2PRVlx6mSdXDJWBc9RcvqNVWEcHl4iabrEh+aa39O6u5WTxPcPv5c
+         JSLJpCAAozM+tFBzCpu2nZJA+8yj07gzCgvAG7ehWANyTfPpD7mq8ZZtahstzyLSb9hP
+         01qNm9NsggvrOvwCf/1rP+A4rSLSsQho1QCSYQj3MDoJ//muul0W6gHZZM63rrbT56at
+         gvgl/sxlnuOonzybCe47qFTBAUUCkKDKIUHs6AOUdfB4WCgE3s1konSDZ4YMsANOPBFw
+         ImAw==
+X-Gm-Message-State: AOAM532ZIMTd0iEiaG/4vmdUBnwj27tstgn3qb5/B9r6Yvw+mN7wUvab
+        toKe/4wTe2RWid9A42WlmWgjluY1LRP1pa7debs=
+X-Google-Smtp-Source: ABdhPJyy4wsNexIMJl8t/qFduIub1BwgK6qhMR7/odqNLNSPL6c7sGIHAwwI3wMCua1JSW86yo5J9Zuy9ZUHmEauhdw=
+X-Received: by 2002:a05:6402:2801:b0:410:a592:a5d0 with SMTP id
+ h1-20020a056402280100b00410a592a5d0mr8026964ede.253.1645188996769; Fri, 18
+ Feb 2022 04:56:36 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Content-Language: en-US
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-References: <f610b069-07ab-1004-e8f1-b84533593c92@gmail.com>
- <CABBYNZLA6bRCxd=Tse_XbUT8ReBo4QjvstSassfQAcTX+Fk9_g@mail.gmail.com>
- <b50b9b75-96ea-0d93-3687-3a79cdec5419@gmail.com>
- <CABBYNZKAUMOZ8vhk2ATPOaVHbcqCTg-DMD2vypkx_CTOjeVg2g@mail.gmail.com>
- <6bec2be7-a411-c5bf-6e5d-b3efee33b834@gmail.com>
- <CABBYNZLAZGoB1JKW63SNJuFB-4raDvHjjEk4w8y0K1MLwe4b7A@mail.gmail.com>
- <b7a2b073-fd69-36a4-6ce0-cb1b942ccde6@gmail.com>
- <CABBYNZKjUYAqctfpap2f36TcBuJFk0wX5P8jkUjpw1qqupeb0A@mail.gmail.com>
-From:   Andrey Butirsky <butirsky@gmail.com>
-Subject: Re: Lenovo Legion M600 wireless bluetooth mouse connected and paired
- yet not working
-In-Reply-To: <CABBYNZKjUYAqctfpap2f36TcBuJFk0wX5P8jkUjpw1qqupeb0A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Sender: brianphilippe60@gmail.com
+Received: by 2002:a17:906:d04b:0:0:0:0 with HTTP; Fri, 18 Feb 2022 04:56:36
+ -0800 (PST)
+From:   Aisha Al-Qaddafi <aishagaddafi1894@gmail.com>
+Date:   Fri, 18 Feb 2022 12:56:36 +0000
+X-Google-Sender-Auth: zimhkdm4D_7Zb9el7ImS1HVoEM8
+Message-ID: <CAG_+5rzYP5EJeFoJ8ag25DHdaJAYO-mwwPF+ctcuT0zqZyKjHw@mail.gmail.com>
+Subject: Investment proposal,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=7.3 required=5.0 tests=ADVANCE_FEE_5_NEW_MONEY,
+        BAYES_50,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,LOTS_OF_MONEY,MILLION_HUNDRED,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_MONEY,URG_BIZ autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:535 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5003]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [aishagaddafi1894[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [brianphilippe60[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 MILLION_HUNDRED BODY: Million "One to Nine" Hundred
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  0.6 URG_BIZ Contains urgent matter
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  3.0 ADVANCE_FEE_5_NEW_MONEY Advance Fee fraud and lots of money
+        *  2.9 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On 17.02.2022 02:10, Luiz Augusto von Dentz wrote:
-> Hi Andrey,
->
-> On Wed, Feb 16, 2022 at 2:36 PM Andrey Butirsky <butirsky@gmail.com> wrote:
->> Tried BlueZ 5.63 on my Fedora installation, no luck. Will try to build
->> head if no better idea..
-> If that doesn't work I'm afraid you will need a dedicated kernel
-> driver in order to deal with its HID reports since BlueZ just forwards
-> the reports to the kernel.
+Hello Dear Friend,
 
-Important addition: the mouse does work on Android 8.10.
+With due respect to your person and much sincerity of purpose I wish
+to write to you today for our mutual benefit in this investment
+transaction.
+I'm Mrs. Aisha Al-Gaddafi, presently residing herein Oman the
+Southeastern coast of the Arabian Peninsula in Western Asia, I'm a
+single Mother and a widow with three Children. I am the only
+biological Daughter of the late Libyan President (Late Colonel.
+Muammar Gaddafi). I have an investment funds worth Twenty Seven
+Million Five Hundred Thousand United State Dollars ($27.500.000.00 )
+and i need an investment Manager/Partner and because of my Asylum
+Status I will authorize you the ownership of the investment funds,
+However, I am interested in you for investment project assistance in
+your country, may be from there,. we can build a business relationship
+in the nearest future.
 
-Does it mean Android has that special HID driver that missed on Linux? 
-8.10 came out long before the mouse even existed..
+I am willing to negotiate an investment/business profit sharing ratio
+with you based on the future investment earning profits. If you are
+willing to handle this project kindly reply urgently to enable me to
+provide you more information about the investment funds.
 
-Do you have explanation?
-
+Your urgent reply will be appreciated if only you are interested in
+this investment project..
+Best Regards
+Mrs. Aisha Al-Gaddafi.
