@@ -2,119 +2,102 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3809E4C05A4
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Feb 2022 00:56:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BA584C0766
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Feb 2022 02:50:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236313AbiBVX4l (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 22 Feb 2022 18:56:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49702 "EHLO
+        id S235111AbiBWBvR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 22 Feb 2022 20:51:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236303AbiBVX4k (ORCPT
+        with ESMTP id S233342AbiBWBvQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 22 Feb 2022 18:56:40 -0500
-Received: from mailgw01.mediatek.com (unknown [60.244.123.138])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC79E6252;
-        Tue, 22 Feb 2022 15:56:09 -0800 (PST)
-X-UUID: 75955e18b78b4233b713773810e60346-20220223
-X-UUID: 75955e18b78b4233b713773810e60346-20220223
-Received: from mtkexhb01.mediatek.inc [(172.21.101.102)] by mailgw01.mediatek.com
-        (envelope-from <sean.wang@mediatek.com>)
-        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
-        with ESMTP id 958287712; Wed, 23 Feb 2022 07:56:05 +0800
-Received: from mtkcas10.mediatek.inc (172.21.101.39) by
- mtkmbs10n1.mediatek.inc (172.21.101.34) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.2.792.15; Wed, 23 Feb 2022 07:56:03 +0800
-Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas10.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Wed, 23 Feb 2022 07:56:03 +0800
-From:   <sean.wang@mediatek.com>
-To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>
-CC:     <Mark-YW.Chen@mediatek.com>, <sean.wang@mediatek.com>,
-        <Soul.Huang@mediatek.com>, <YN.Chen@mediatek.com>,
-        <Leon.Yen@mediatek.com>, <Eric-SY.Chang@mediatek.com>,
-        <Deren.Wu@mediatek.com>, <km.lin@mediatek.com>,
-        <robin.chiu@mediatek.com>, <Eddie.Chen@mediatek.com>,
-        <ch.yeh@mediatek.com>, <posh.sun@mediatek.com>,
-        <ted.huang@mediatek.com>, <Eric.Liang@mediatek.com>,
-        <Stella.Chang@mediatek.com>, <Tom.Chou@mediatek.com>,
-        <steve.lee@mediatek.com>, <jsiuda@google.com>,
-        <frankgor@google.com>, <jemele@google.com>,
-        <abhishekpandit@google.com>, <michaelfsun@google.com>,
-        <mcchou@chromium.org>, <shawnku@google.com>,
-        <linux-bluetooth@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, Yake Yang <yake.yang@mediatek.com>
-Subject: [PATCH 2/2] Bluetooth: btmtksdio: Fix kernel oops when sdio suspend.
-Date:   Wed, 23 Feb 2022 07:56:00 +0800
-Message-ID: <939606fc0825aa17729ab9a1400f3993043fa2d3.1645573830.git.objelf@gmail.com>
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <dba1c05e4bfdf53e631ff134eaa9449e2ad5deef.1645573830.git.objelf@gmail.com>
-References: <dba1c05e4bfdf53e631ff134eaa9449e2ad5deef.1645573830.git.objelf@gmail.com>
+        Tue, 22 Feb 2022 20:51:16 -0500
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18BF654181
+        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Feb 2022 17:50:50 -0800 (PST)
+Received: by mail-yb1-xb2a.google.com with SMTP id p19so44944580ybc.6
+        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Feb 2022 17:50:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=vAFnf59NUMGbnfylN1Si4hCPWuQpFgXI4MnZW1deHnA=;
+        b=m5nHAVdFDXBRxATpYLo+dBpa5Pb/AnTC+IQ8WMfeAv9feUnHk4MEKzTvvfrDjQSiF8
+         3E6c3JtirZN6+FVP/XdTEJHEQFD5G3tpnwNq9jnPtat5rmi7dp7Dyd16mZtmX7bqmBnG
+         hKbVE/Qbekj6Z+/5WFdf4Z/DA33NiEhs471YJzYgLDiiC7EUbWIxrIjgCXAPBRptzUXq
+         go7ilooGYHnfcYLxWJuuJTuL0uznJlb0vBotHHEeo0SDzzrF2OyWE/0H1qrKGJsw5+aT
+         QBvvWCUrR5tUmwiSl6NQk9EJoSomIh7FokWN05zRmrF5r1Ei/qTpHOH5qAsgk9OUNxti
+         Q/tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=vAFnf59NUMGbnfylN1Si4hCPWuQpFgXI4MnZW1deHnA=;
+        b=pzTP/z9N+30rjgPNSKJTWJp5KwpZEanSHF70yyIoJq2MeIY0hxlHwVyv5G6VWprg17
+         nHCQ3ZrIW2NXZsDhb1iVYtQs10lGtkwiAv7AXJcE9nttAqg7PmEnbT3oOl+Ov8kaK8R1
+         yU0zBhiYcX2bXWG4hd9lNW73a3P439hK8B6+/kSfg6swQHSitCXY19OSGbkh26yPPiD4
+         YgCfBuRB2eypc48FERywo86naKazG7tFe68p/SCt1Re2ZXgZMXqcCRpLMcwwenjA97w6
+         6dfi0sqzrJQvVmayZakWlTEmPl9EaIWGp63Hb5ZJB/mab8R/YPRqr/g4qpn/qKnd3PKq
+         Y6kQ==
+X-Gm-Message-State: AOAM5302ALvtl5Z7n1404lI3zb1EMN8HxNqRZhgJqIlb0oBEB7UVZ0Rk
+        ZnDt+gFg6rUjJXXBIzl8A/1QiAYl+yl/vTIBeoFhbJti
+X-Google-Smtp-Source: ABdhPJyd5rznwlEoyfGjWLYne4+xVVKZUNAweSKkTOh7sv4Rb9b75GNF5BLOijZUlxFNx5OJgOGZToirSB7IOxDcIxQ=
+X-Received: by 2002:a25:55:0:b0:61a:4d80:55ce with SMTP id 82-20020a250055000000b0061a4d8055cemr25728599yba.41.1645581049060;
+ Tue, 22 Feb 2022 17:50:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MTK:  N
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        T_SCC_BODY_TEXT_LINE,T_SPF_TEMPERROR,UNPARSEABLE_RELAY autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20220222193855.301757-1-luiz.dentz@gmail.com> <621557f3.1c69fb81.41410.1fff@mx.google.com>
+In-Reply-To: <621557f3.1c69fb81.41410.1fff@mx.google.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Tue, 22 Feb 2022 17:50:37 -0800
+Message-ID: <CABBYNZ+SKrmPusXfOkhVL1d+1pVGdxfZfE4OtVoz4Js1-pycnQ@mail.gmail.com>
+Subject: Re: [v4,BlueZ] player: Fix Track being emitted with empty metadata
+To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Yake Yang <yake.yang@mediatek.com>
+Hi,
 
-Do not kfree the skb when the skb failed to send with __hci_cmd_sync
+On Tue, Feb 22, 2022 at 1:39 PM <bluez.test.bot@gmail.com> wrote:
+>
+> This is automated email and please do not reply to this email!
+>
+> Dear submitter,
+>
+> Thank you for submitting the patches to the linux bluetooth mailing list.
+> This is a CI test results with your patch series:
+> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=616863
+>
+> ---Test result---
+>
+> Test Summary:
+> CheckPatch                    PASS      0.70 seconds
+> GitLint                       PASS      0.38 seconds
+> Prep - Setup ELL              PASS      50.46 seconds
+> Build - Prep                  PASS      0.61 seconds
+> Build - Configure             PASS      9.83 seconds
+> Build - Make                  PASS      1752.78 seconds
+> Make Check                    PASS      12.36 seconds
+> Make Check w/Valgrind         PASS      533.80 seconds
+> Make Distcheck                PASS      276.34 seconds
+> Build w/ext ELL - Configure   PASS      10.04 seconds
+> Build w/ext ELL - Make        PASS      1725.46 seconds
+> Incremental Build with patchesPASS      0.00 seconds
+>
+>
+>
+> ---
+> Regards,
+> Linux Bluetooth
+>
 
-2435.241210] Call trace:
-[ 2435.241224]  kfree_skb+0x20/0x140
-[ 2435.241240]  btmtksdio_sdio_wakeup+0x8c/0xcc
-[ 2435.241360]  hci_suspend_notifier+0x108/0x184
-[ 2435.241377]  notifier_call_chain_robust+0x58/0xd8
-[ 2435.241390]  blocking_notifier_call_chain_robust+0x54/0x84
-[ 2435.241402]  pm_notifier_call_chain_robust+0x2c/0x4c
-[ 2435.241414]  suspend_prepare+0x40/0x238
-[ 2435.241425]  enter_state+0xec/0x3a8
-[ 2435.241436]  pm_suspend+0x60/0xcc
-[ 2435.241446]  state_store+0xb8/0x114
-[ 2435.241460]  kobj_attr_store+0x18/0x2c
-[ 2435.241473]  sysfs_kf_write+0x44/0x58
-[ 2435.241486]  kernfs_fop_write_iter+0xf4/0x190
-[ 2435.241500]  vfs_write+0x2b0/0x2e4
-[ 2435.241511]  ksys_write+0x80/0xec
-[ 2435.241523]  __arm64_sys_write+0x24/0x30
-[ 2435.241538]  el0_svc_common+0xf0/0x1d8
-[ 2435.241550]  do_el0_svc_compat+0x28/0x54
-[ 2435.241564]  el0_svc_compat+0x10/0x1c
-[ 2435.241574]  el0_sync_compat_handler+0xa8/0xcc
-[ 2435.241586]  el0_sync_compat+0x188/0x1c0
-[ 2435.241606] Code: a9014ff4 910003fd b40002c0 aa0003f3 (b84d4c08)
-[ 2435.241619] ---[ end trace d496539b850baf14 ]---
+Pushed.
 
-Fixes: ce64b3e94919  ("Bluetooth: mt7921s: Support wake on bluetooth")
-Co-developed-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Yake Yang <yake.yang@mediatek.com>
----
- drivers/bluetooth/btmtksdio.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index cbb09e1b823d..df3f9d090529 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -1226,8 +1226,8 @@ static bool btmtksdio_sdio_wakeup(struct hci_dev *hdev)
- 				      &bt_awake, HCI_CMD_TIMEOUT);
- 		if (IS_ERR(skb))
- 			may_wakeup = false;
--
--		kfree_skb(skb);
-+		else
-+			kfree_skb(skb);
- 	}
- 
- 	return may_wakeup;
 -- 
-2.25.1
-
+Luiz Augusto von Dentz
