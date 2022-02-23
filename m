@@ -2,69 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BB8C4C0EB8
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Feb 2022 10:01:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A5D9E4C1033
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Feb 2022 11:21:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239141AbiBWJBf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 23 Feb 2022 04:01:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42070 "EHLO
+        id S233798AbiBWKVr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 23 Feb 2022 05:21:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237086AbiBWJBf (ORCPT
+        with ESMTP id S231368AbiBWKVr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 23 Feb 2022 04:01:35 -0500
-Received: from relay12.mail.gandi.net (relay12.mail.gandi.net [IPv6:2001:4b98:dc4:8::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 845757CDF2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 01:01:04 -0800 (PST)
-Received: (Authenticated sender: hadess@hadess.net)
-        by mail.gandi.net (Postfix) with ESMTPSA id E5691200014
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 09:00:59 +0000 (UTC)
-From:   Bastien Nocera <hadess@hadess.net>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH] adapter-api: Document per-client discovery sessions
-Date:   Wed, 23 Feb 2022 10:00:59 +0100
-Message-Id: <20220223090059.310361-1-hadess@hadess.net>
-X-Mailer: git-send-email 2.35.1
+        Wed, 23 Feb 2022 05:21:47 -0500
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2A0C8BF34
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 02:21:19 -0800 (PST)
+Received: by mail-qv1-xf2f.google.com with SMTP id fc19so7357370qvb.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 02:21:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=SjLCEpvzSUyQo3FkpAbVzo/guk9ohrm5QXp4r2U+/qE=;
+        b=EJRHXGWEV9gLHJLUFMSUx1fx/EWVj/J1T+vY5TdxBr59NzwGEGzuF+ixoSZBeNRnMR
+         jo0kZ5FKbvJPJQfmbQlK0QmFutu88tg0UCWv1h4alcr2CKI3GAZh1PO8EMCzmPOCemZd
+         42ERWtHzj1Em4bYRKIup+q5Xj/jcA8g/zyozSRgDn1wnSjxinQoBu16+Ei35e3x5EnvU
+         Me/Sl/ky7TLxudozpiqhYw5WlDSkiGHBVOkP2xDQKnHrJ/HSXNs6t2e4yhCiU0Beevhg
+         B8wbXK5E6OG/pUqFXlcz1d87ShDrgSUayCl/A7vK9tf7Lq7/GMH4L7Xd6kvfJZv3kReT
+         7P6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=SjLCEpvzSUyQo3FkpAbVzo/guk9ohrm5QXp4r2U+/qE=;
+        b=KB6t2cugdRex8GN3du1UlBl3qb71vQGnSJybP6JpLvabGGoBCrArisqZZhrAoKHAcy
+         MQjFSoiSVdXKnyjNaXCP+IwX72AJ7SeGvBREf9ULmfIOlfHpol3inTVpkhEjX+CdauNs
+         +aYn4/yYZXvR7iJg37Sa9v3ZrQlPKoMYM4tXE2NzpvkEnQ5hPEnqoEPqugApTTKqSr2o
+         HlpVVyEohFptRz5N0mwTYFMlXqHc13HAe5oTmv+IVvNnh7NNAyiWD6PvTKXsU9nBOcFf
+         CDn8ZMDTh+YGTBV6wnQdO2jbJlHIm73JDm++qORA6pbS8UQz39iuWCNd7CIe7LFksmNt
+         d9ww==
+X-Gm-Message-State: AOAM533yD6Lqjq96CpSzmb88U3vii/Cnq8KesMJmGcsdJu/YE0bD8zz2
+        Ui0zWYsmSKmL+z81Yc1+WwDe/K72V47oZg==
+X-Google-Smtp-Source: ABdhPJx1imajeBMxVYvjond1fLoMEhNKUaXc+ntkFRqdje2X9Sawi7bOK19RKeYsZHvWG7TaQbyxZQ==
+X-Received: by 2002:a05:6214:5003:b0:42f:bc42:6ce4 with SMTP id jo3-20020a056214500300b0042fbc426ce4mr22496196qvb.63.1645611678934;
+        Wed, 23 Feb 2022 02:21:18 -0800 (PST)
+Received: from [172.17.0.2] ([40.70.3.137])
+        by smtp.gmail.com with ESMTPSA id h190sm1506853qkf.70.2022.02.23.02.21.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Feb 2022 02:21:18 -0800 (PST)
+Message-ID: <62160a9e.1c69fb81.4d09f.86f9@mx.google.com>
+Date:   Wed, 23 Feb 2022 02:21:18 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============1486129743558863676=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, hadess@hadess.net
+Subject: RE: adapter-api: Document per-client discovery sessions
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220223090059.310361-1-hadess@hadess.net>
+References: <20220223090059.310361-1-hadess@hadess.net>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The fact that each client can start its own discovery wasn't clear from
-the documentation and only becomes obvious when reading the sources.
+--===============1486129743558863676==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=617064
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.47 seconds
+GitLint                       PASS      1.01 seconds
+Prep - Setup ELL              PASS      42.66 seconds
+Build - Prep                  PASS      0.72 seconds
+Build - Configure             PASS      8.65 seconds
+Build - Make                  PASS      1406.67 seconds
+Make Check                    PASS      11.89 seconds
+Make Check w/Valgrind         PASS      444.90 seconds
+Make Distcheck                PASS      231.57 seconds
+Build w/ext ELL - Configure   PASS      8.72 seconds
+Build w/ext ELL - Make        PASS      1416.29 seconds
+Incremental Build with patchesPASS      0.00 seconds
+
+
+
 ---
- doc/adapter-api.txt | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/doc/adapter-api.txt b/doc/adapter-api.txt
-index 490608e8d..48466ab75 100644
---- a/doc/adapter-api.txt
-+++ b/doc/adapter-api.txt
-@@ -21,6 +21,9 @@ Methods		void StartDiscovery()
- 
- 			During discovery RSSI delta-threshold is imposed.
- 
-+			Each client can request a single device discovery session
-+			per adapter.
-+
- 			Possible errors: org.bluez.Error.NotReady
- 					 org.bluez.Error.Failed
- 					 org.bluez.Error.InProgress
-@@ -32,7 +35,8 @@ Methods		void StartDiscovery()
- 
- 			Note that a discovery procedure is shared between all
- 			discovery sessions thus calling StopDiscovery will only
--			release a single session.
-+			release a single session and discovery will stop when
-+			all sessions from all clients have finished.
- 
- 			Possible errors: org.bluez.Error.NotReady
- 					 org.bluez.Error.Failed
--- 
-2.35.1
 
+--===============1486129743558863676==--
