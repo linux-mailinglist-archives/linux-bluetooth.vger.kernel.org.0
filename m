@@ -2,137 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 244094C1FB2
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Feb 2022 00:31:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92C5B4C2036
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Feb 2022 00:46:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242135AbiBWXcM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 23 Feb 2022 18:32:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53316 "EHLO
+        id S238635AbiBWXpu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 23 Feb 2022 18:45:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238302AbiBWXcL (ORCPT
+        with ESMTP id S245071AbiBWXps (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 23 Feb 2022 18:32:11 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26F331CFC3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 15:31:42 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id d84so435720qke.8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 15:31:42 -0800 (PST)
+        Wed, 23 Feb 2022 18:45:48 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 441F55C64D
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 15:45:20 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id vz16so805240ejb.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 15:45:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=p076cskAqtHBWdRrP+TmuvfKj9tMfEyIGIG+ivYMbXc=;
-        b=T5iSkzZyv/h1Ns9/8GsPvilUbuVnFUMMQmC7sZlctP2CZMp4QX5jPF7bKRHyNOPAe5
-         cg5WK2I1sPGiCZb9XN4I38FYXT8xSvbrfkCFzt76cbSaP8e/5EgP4GrPJY3s6+UkcA7o
-         zAksW5GTB5NPrdsI/bDDDVzUrpzoZIuKIlzP2g19/TcZyGJdZT1V+wZgKB/aC/5x5Eow
-         30UXi93+p3Fa93jXdh8Ghe/MzvmA43ZAaG7F0fefmcup6ynz2m4NLiPFch1zJWI5nn8l
-         rKVB/7IQ5E/UeaZENNh+NWIe8Rmy5twTrY/YaNLR2ar2DvLxxFSDM/nFSp5LrN1w/zcl
-         d7yA==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=zI3YMoABJRyR+odt0AbJrQOCfTLDDuwNt2ksIU5nkFY=;
+        b=JJCvVvmZddjxXHlZ2aM9A9nLqvQrKtA/AUHWVQo/dfZ9hFB9q3KrKZeFgFN601sLzL
+         kK8i1m/qgCl8A7C3zPBCmA6xOkShzep0vW5uajL+/fvr9+/5IaLXEPxQ4F87aUZ+zAgX
+         741xXNPC2s2vvJbBh9SLasdtnXLSwrvppqgd3XRcj3TwRGK+xENcEjFYTWvlchum8ccF
+         jmUwa5vGMmX9WIGRkincOmT8kvkEU+OkaKwomg0Eb7nAcZN/IXd++J0p/i13jcU5OUQE
+         2q9lyHUpx13wanoaINjc7ZL5v6l80HTPlsusA3KkHoUOoCTJ45mdQtzsJOStsEM0unLX
+         O9HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=p076cskAqtHBWdRrP+TmuvfKj9tMfEyIGIG+ivYMbXc=;
-        b=iOq/H2Uq1sp0cTr7lwux92jfidoBrDOdhS97Fmp+uSjkuJGzmlgL8WwPQTBlPQd6+o
-         87KiaOWlP64j8whbHpNV3tyawVc82C0FtVcMHqzt8JJVIV18wI4Dj5zfcx0bBA2mirQa
-         gGrF7uXsAfremXdRnC+PDmcLn57I5sczII11k6CL0+RjTYWBE251cJqfKOmtbYaxsCu/
-         ZdWOOCJ1z/VkDV+Gg9PfKJI17+k4BNvJ6uOccfeYED4m1k9gVph7BDPyJG1cpau4dM9S
-         bq9beZEEQLPiHK3h7wnjN/XguuwMmN59EQRJAEoFCznT6B7HLBNiHi4oQTiolilFmfCj
-         CF/Q==
-X-Gm-Message-State: AOAM5305dfvyreNY2/qUTNSiomUsIqGkJXRkvaGsC5rH1DYLhnpDhDXW
-        /c/Dl5EZ889BblAQh+MecIm/qtF49wuixg==
-X-Google-Smtp-Source: ABdhPJwONtELcA9/nbuB3hldOvMNo7NI4gofTHBWFI55TTKO1CekyJQjdiKEOkiSN63ee8BHjBOOZA==
-X-Received: by 2002:a05:620a:2183:b0:648:cd3f:b255 with SMTP id g3-20020a05620a218300b00648cd3fb255mr103234qka.86.1645659100936;
-        Wed, 23 Feb 2022 15:31:40 -0800 (PST)
-Received: from [172.17.0.2] ([20.185.194.123])
-        by smtp.gmail.com with ESMTPSA id d65sm518853qkg.104.2022.02.23.15.31.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 15:31:40 -0800 (PST)
-Message-ID: <6216c3dc.1c69fb81.30b93.4760@mx.google.com>
-Date:   Wed, 23 Feb 2022 15:31:40 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============6083741473541087012=="
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=zI3YMoABJRyR+odt0AbJrQOCfTLDDuwNt2ksIU5nkFY=;
+        b=OijKpJvFXZzz/iZc66DiB50BiaKcZlGcrByw99RjkHUCS2gWT+FisOTAo9j6lREqrD
+         EvDbf/yHO1MxcezMDX/JPHjoMXCG8zNDdzAaxYmLntfjaFtWm4lS6JcSfrQxS9Kw3Jgk
+         SDxYlBHCdmIBvD9vapGjiqIcD3YEu6HROLN/VMI1hqUe+QkEPmesYx45vGRDavk84MCj
+         5ikgJeLOx2BzR8o7dxaDKKhkopfQLcrM0puo2U2STW8Q+YbpSYlMKQLrksZOkVYIpHKl
+         mg4Jwndv7A5GoAKuwcZ3TH3Vln/ghvSfrOJeheM3Dz8VULZ2XzyD/W31wtlGeWtNbbs5
+         Gilg==
+X-Gm-Message-State: AOAM530JP8pQ0i8WoTrCTbOSso9SVe6TZuA37W9E1DYIIsEbBxu7ymUf
+        MIW6hrJXXPjRI100228ZTlNGjBNF8Kaphh2cKDoY8F1Hv44=
+X-Google-Smtp-Source: ABdhPJw6gCeAEQjtdGajxeh1VEbU8JfbJREyrXd88EMr6zeV4gR7rXiCRWlr4RxD8jl0RdXxNLM6cvUFxP9xhPfZvsQ=
+X-Received: by 2002:a17:906:c314:b0:6ce:6f9:dd9c with SMTP id
+ s20-20020a170906c31400b006ce06f9dd9cmr64977ejz.311.1645659918599; Wed, 23 Feb
+ 2022 15:45:18 -0800 (PST)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, nicolas.fella@gmx.de
-Subject: RE: [BlueZ] neard: Fix reading State message
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20220223215618.335489-1-nicolas.fella@gmx.de>
-References: <20220223215618.335489-1-nicolas.fella@gmx.de>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a17:906:141a:0:0:0:0 with HTTP; Wed, 23 Feb 2022 15:45:18
+ -0800 (PST)
+Reply-To: fionahill.usa@outlook.com
+From:   Fiona Hill <drivanrobert81@gmail.com>
+Date:   Wed, 23 Feb 2022 15:45:18 -0800
+Message-ID: <CAJp5pinGhtn15csQmPDaE-4X8UxuVQNB+39P9CwnL1zaTR-1wg@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============6083741473541087012==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=617325
-
----Test result---
-
-Test Summary:
-CheckPatch                    FAIL      1.51 seconds
-GitLint                       FAIL      1.03 seconds
-Prep - Setup ELL              PASS      53.57 seconds
-Build - Prep                  PASS      0.79 seconds
-Build - Configure             PASS      10.69 seconds
-Build - Make                  PASS      1531.03 seconds
-Make Check                    PASS      12.69 seconds
-Make Check w/Valgrind         PASS      536.98 seconds
-Make Distcheck                PASS      285.06 seconds
-Build w/ext ELL - Configure   PASS      10.59 seconds
-Build w/ext ELL - Make        PASS      1478.81 seconds
-Incremental Build with patchesPASS      0.00 seconds
-
-Details
-##############################
-Test: CheckPatch - FAIL
-Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-Output:
-[BlueZ] neard: Fix reading State message
-WARNING:COMMIT_LOG_LONG_LINE: Possible unwrapped commit description (prefer a maximum 75 chars per line)
-#71: 
-dbus_message_iter_recurse only makese sense for container types, this is a string.
-
-/github/workspace/src/12757527.patch total: 0 errors, 1 warnings, 14 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/12757527.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-##############################
-Test: GitLint - FAIL
-Desc: Run gitlint with rule in .gitlint
-Output:
-[BlueZ] neard: Fix reading State message
-3: B1 Line exceeds max length (82>80): "dbus_message_iter_recurse only makese sense for container types, this is a string."
-
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============6083741473541087012==--
+-- 
+Please with honesty did you receive my message i sent to you?
