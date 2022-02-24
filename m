@@ -2,117 +2,94 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19DCA4C20A6
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Feb 2022 01:30:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BF174C218F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Feb 2022 03:10:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230462AbiBXAbN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 23 Feb 2022 19:31:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42432 "EHLO
+        id S229930AbiBXCHD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 23 Feb 2022 21:07:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbiBXAbK (ORCPT
+        with ESMTP id S229901AbiBXCHD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 23 Feb 2022 19:31:10 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B94A6D976
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 16:30:41 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id c9so315372pll.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 16:30:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=bN72KDA/URR+CXci2mzM3peVK0aNrF9ntA5ysSCg1Jg=;
-        b=Hwxy+h1WWPv68+GPj0AtbKcUXuQnflS7s6LgL6+tsHspp9oHVSqhE9iMlypigCeQ6K
-         GhiUB5ZOy0GKKNG/DGNZkUSj2bXO2aSTOi1i5uD4QzBLgQ8jiEqV/78VB5TAs3gf20Lu
-         4vT6+eVjbZnDAx22qRStGu7H1KkWjCW+ene5OcstU9RcKVncVgwwgikwNj3mbev6oFrc
-         WtWmG3PDkfxRf33k77xINGLSeg+JRv/2n+rQ7B7fPyNDmXbd5JUBQccGrgm2T/f79xen
-         x6RJKOLEhVJl6ZSmka9EhBmm+VA8Jf9oVQiHWVkMMpztqq/Xh8Ir2Zok61QgcMi7mc8X
-         /Liw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bN72KDA/URR+CXci2mzM3peVK0aNrF9ntA5ysSCg1Jg=;
-        b=tMMtTPNhkSTgR6wADWiXeJbpxYc/RcPtQqcqPmvk84cdCxfZXcj7nHgcVsEPxudf5M
-         0MK3F7DMUq0tSR/BUqNU5X2ZNz7H9p5QxJDPw0cSNVLYOarXwhpCnxZCOidppo001a5O
-         02C8hqPYaf2dl3ooNL38Tv4xpI8tofPCwbmQ1rb4ROEy9gl5VZUvQg4mxkLL4J3+lSNO
-         QF0cebA0PyYOOdn9fiFK1oq5Y3RCK0NjmEOiHcus4wbQJsRk4aHELjqG555fgLLBt5sW
-         NC76Gjx9axkC1vjZBkpLLSgH7F8Aklfn32D9hwkamKARZalr64gnNtUpg08pU7dG4kCd
-         3q3A==
-X-Gm-Message-State: AOAM532i2EuM3Mtk0ElOCmyOw9UgMgQQ/hdpmUNhKZHupgbt3R9nfXm4
-        i+mOw73CgvTp+U0WUqEjywSCtZHepNM=
-X-Google-Smtp-Source: ABdhPJykEpmkbq/AzIlYijgxwg6pKxIxIilYogiMkBcymdIRkR3smmXfNntSA/in2BCrgytGgDqjKA==
-X-Received: by 2002:a17:90a:ca8d:b0:1bc:649c:6dd1 with SMTP id y13-20020a17090aca8d00b001bc649c6dd1mr121268pjt.165.1645662640253;
-        Wed, 23 Feb 2022 16:30:40 -0800 (PST)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id t19sm574570pjs.54.2022.02.23.16.30.39
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 16:30:39 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+        Wed, 23 Feb 2022 21:07:03 -0500
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 036876258
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 18:06:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1645668393; x=1677204393;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=UZlEcpXqCyRdEhR3ljGXnm7515gYqE5BYc93WP/lZXE=;
+  b=aDUmwaKUCGmq0fExSLFGZEANc3GfDM2f/hTH2WxQ+Go9gva0F0WS38BG
+   1Mi8QR6T6rKJpdVzKwsreXUqa9BupGPr9Rp3VtnEwY+EhTpaezURvfjRd
+   E6WBQdZXLrlKx9SKvEP/cTfTpfStbm3YKUg9iHjuL4GS7c5SSV/tomDnY
+   bB19TeSHiHMJTMhLsu+U7HOOVI33qb58K3r2hnWBcQt1Zf1ztp7ia/FO+
+   frkPusK8qkWNXxbTcis4WxGsKWP4Re3SOdXWqGXO/dhGPmSrWOVvLQxfP
+   5QIuHwLL44EyY6Ho+rv4caEUPI4zTjIGpZl9JGX+28uuOuRooUvCAcCyc
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10267"; a="239524994"
+X-IronPort-AV: E=Sophos;i="5.88,392,1635231600"; 
+   d="scan'208";a="239524994"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2022 18:06:33 -0800
+X-IronPort-AV: E=Sophos;i="5.88,392,1635231600"; 
+   d="scan'208";a="607268555"
+Received: from tjsmith-mobl1.amr.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.209.34.213])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2022 18:06:33 -0800
+From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 11/11] bthost: Add support for Create BIG
-Date:   Wed, 23 Feb 2022 16:30:29 -0800
-Message-Id: <20220224003029.706163-12-luiz.dentz@gmail.com>
+Cc:     brian.gix@intel.com, inga.stotland@intel.com
+Subject: [PATCH 0/7] Kernel based mesh functionality
+Date:   Wed, 23 Feb 2022 18:06:17 -0800
+Message-Id: <20220224020624.159247-1-brian.gix@intel.com>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220224003029.706163-1-luiz.dentz@gmail.com>
-References: <20220224003029.706163-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This patch set makes the bluetooth-meshd daemon use the Kernel based
+mesh support *if available*. It defines and calls the MGMT commands
+and events needed so that a controller can be used without making
+it unavailable to the bluetoothd daemon.
 
-This adds bthost_create_big
----
- emulator/bthost.c | 13 +++++++++++++
- emulator/bthost.h |  1 +
- 2 files changed, 14 insertions(+)
+Brian Gix (7):
+  mgmt: Add support for Mesh in the kernel
+  mgmt: Mesh specific structures and defines
+  mesh: Add common MGMT command accessors
+  mesh: rework Mesh-IO for multiple transports
+  mesh: Added default "auto" to command line parsing
+  mesh: Add new MGMT based IO transport
+  mesh: Make Provisioning requests more IO compatible
 
-diff --git a/emulator/bthost.c b/emulator/bthost.c
-index fef542236..43434387c 100644
---- a/emulator/bthost.c
-+++ b/emulator/bthost.c
-@@ -2820,6 +2820,19 @@ void bthost_set_pa_enable(struct bthost *bthost, uint8_t enable)
- 	send_command(bthost, BT_HCI_CMD_LE_SET_PA_ENABLE, &cp, sizeof(cp));
- }
- 
-+void bthost_create_big(struct bthost *bthost, uint8_t num_bis)
-+{
-+	struct bt_hci_cmd_le_create_big cp;
-+
-+	memset(&cp, 0, sizeof(cp));
-+	cp.handle = 0x01;
-+	cp.adv_handle = 0x01;
-+	cp.num_bis = num_bis;
-+	cp.bis.sdu = 40;
-+	cp.bis.phy = 0x01;
-+	send_command(bthost, BT_HCI_CMD_LE_CREATE_BIG, &cp, sizeof(cp));
-+}
-+
- bool bthost_search_ext_adv_addr(struct bthost *bthost, const uint8_t *addr)
- {
- 	const struct queue_entry *entry;
-diff --git a/emulator/bthost.h b/emulator/bthost.h
-index 55a7adf26..18e7b98e3 100644
---- a/emulator/bthost.h
-+++ b/emulator/bthost.h
-@@ -86,6 +86,7 @@ void bthost_set_ext_adv_params(struct bthost *bthost);
- void bthost_set_ext_adv_enable(struct bthost *bthost, uint8_t enable);
- void bthost_set_pa_params(struct bthost *bthost);
- void bthost_set_pa_enable(struct bthost *bthost, uint8_t enable);
-+void bthost_create_big(struct bthost *bthost, uint8_t num_bis);
- bool bthost_search_ext_adv_addr(struct bthost *bthost, const uint8_t *addr);
- 
- void bthost_set_scan_params(struct bthost *bthost, uint8_t scan_type,
+ Makefile.mesh          |   9 +-
+ doc/mgmt-api.txt       | 180 ++++++++++
+ lib/mgmt.h             |  54 +++
+ mesh/main.c            |  39 +-
+ mesh/mesh-io-api.h     |  11 +-
+ mesh/mesh-io-generic.c |  47 +--
+ mesh/mesh-io-mgmt.c    | 787 +++++++++++++++++++++++++++++++++++++++++
+ mesh/mesh-io-mgmt.h    |  11 +
+ mesh/mesh-io-unit.c    |  13 +-
+ mesh/mesh-io.c         | 191 +++++++---
+ mesh/mesh-io.h         |   4 +-
+ mesh/mesh-mgmt.c       | 149 ++++++--
+ mesh/mesh-mgmt.h       |  12 +-
+ mesh/mesh.c            |   6 +-
+ mesh/mesh.h            |   2 +-
+ mesh/pb-adv.c          |   9 +-
+ 16 files changed, 1379 insertions(+), 145 deletions(-)
+ create mode 100644 mesh/mesh-io-mgmt.c
+ create mode 100644 mesh/mesh-io-mgmt.h
+
 -- 
 2.35.1
 
