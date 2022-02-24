@@ -2,69 +2,103 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92C5B4C2036
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Feb 2022 00:46:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E7904C209B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Feb 2022 01:30:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238635AbiBWXpu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 23 Feb 2022 18:45:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39438 "EHLO
+        id S229710AbiBXAbB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 23 Feb 2022 19:31:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245071AbiBWXps (ORCPT
+        with ESMTP id S229509AbiBXAbA (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 23 Feb 2022 18:45:48 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 441F55C64D
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 15:45:20 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id vz16so805240ejb.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 15:45:20 -0800 (PST)
+        Wed, 23 Feb 2022 19:31:00 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 712B76D95D
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 16:30:31 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id l19so422410pfu.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Feb 2022 16:30:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=zI3YMoABJRyR+odt0AbJrQOCfTLDDuwNt2ksIU5nkFY=;
-        b=JJCvVvmZddjxXHlZ2aM9A9nLqvQrKtA/AUHWVQo/dfZ9hFB9q3KrKZeFgFN601sLzL
-         kK8i1m/qgCl8A7C3zPBCmA6xOkShzep0vW5uajL+/fvr9+/5IaLXEPxQ4F87aUZ+zAgX
-         741xXNPC2s2vvJbBh9SLasdtnXLSwrvppqgd3XRcj3TwRGK+xENcEjFYTWvlchum8ccF
-         jmUwa5vGMmX9WIGRkincOmT8kvkEU+OkaKwomg0Eb7nAcZN/IXd++J0p/i13jcU5OUQE
-         2q9lyHUpx13wanoaINjc7ZL5v6l80HTPlsusA3KkHoUOoCTJ45mdQtzsJOStsEM0unLX
-         O9HQ==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M4n2dfSgOn7fSyz3kM2OSr+Y1CQv2yBSdZHlI0VaKvQ=;
+        b=cefSseh6MZUtK72XOBvTUcXvKWCQxK5CGDuRYbhBF5kGZVXsfx3NTT20jlYfrRRe6b
+         4WNqpW0pgpzp5rCzNcTZlLNjMoM08TUk1dTJFMLN6D9BxlrGY2O2OitpqaKWx3Lneyae
+         OUWGXiIgsCXg3+sR3d9jTEdvX0tTo5+9w1PXnWPqzgmJVqBRDpLLLmvxuw/UgEVVi12E
+         PyhXwGC5K7DqI+lPTbTq4TYts8XFT5SyvsPy6eRzs8xFXzqok9atUbJUMXL+8NQCF2S2
+         sJYHqI0yuRvPkQIS69U6SpLU9WeNEn8IZiOUMx37Odehovk4krYUYyvovZpgjUB1fzPR
+         RPBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=zI3YMoABJRyR+odt0AbJrQOCfTLDDuwNt2ksIU5nkFY=;
-        b=OijKpJvFXZzz/iZc66DiB50BiaKcZlGcrByw99RjkHUCS2gWT+FisOTAo9j6lREqrD
-         EvDbf/yHO1MxcezMDX/JPHjoMXCG8zNDdzAaxYmLntfjaFtWm4lS6JcSfrQxS9Kw3Jgk
-         SDxYlBHCdmIBvD9vapGjiqIcD3YEu6HROLN/VMI1hqUe+QkEPmesYx45vGRDavk84MCj
-         5ikgJeLOx2BzR8o7dxaDKKhkopfQLcrM0puo2U2STW8Q+YbpSYlMKQLrksZOkVYIpHKl
-         mg4Jwndv7A5GoAKuwcZ3TH3Vln/ghvSfrOJeheM3Dz8VULZ2XzyD/W31wtlGeWtNbbs5
-         Gilg==
-X-Gm-Message-State: AOAM530JP8pQ0i8WoTrCTbOSso9SVe6TZuA37W9E1DYIIsEbBxu7ymUf
-        MIW6hrJXXPjRI100228ZTlNGjBNF8Kaphh2cKDoY8F1Hv44=
-X-Google-Smtp-Source: ABdhPJw6gCeAEQjtdGajxeh1VEbU8JfbJREyrXd88EMr6zeV4gR7rXiCRWlr4RxD8jl0RdXxNLM6cvUFxP9xhPfZvsQ=
-X-Received: by 2002:a17:906:c314:b0:6ce:6f9:dd9c with SMTP id
- s20-20020a170906c31400b006ce06f9dd9cmr64977ejz.311.1645659918599; Wed, 23 Feb
- 2022 15:45:18 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M4n2dfSgOn7fSyz3kM2OSr+Y1CQv2yBSdZHlI0VaKvQ=;
+        b=1ZD50oittvGc4NAZhRUQkP+Kw6Nf40axXzKBV5hX/pY24+J4ZNKJy0QXc6RXPWWcgK
+         ydz1xtZmYKVdASVhWlmI+Yu6kMk46h725xOYBPFxv/1Z/JTPY7BrC2STXvcELAogDyJn
+         kN7g70b+c//fh0PVcdwi02quKg25kIVGlpV0SsURBqQbLecG492zuR32bTrnampiGq+b
+         BvjZrN4RC9wEiYMvZE01pvyyZEmTEoU+TDgcytbBF2/grOUt1faDLBC8Sj6E3KettSER
+         E9HgmQ+DeXCzvclEzmQGzeZ1cirJIVgXWH3BRw0CYdIhbZ6ybqi+SdueQ5H+EJ96xwbG
+         g9Ng==
+X-Gm-Message-State: AOAM530blKRsMB48QRZTy8AN/1a7FmwDZ/iDqcab4i0Q86o5b0gXH+9K
+        YIK+vImAADI1NJFomjOsE/ASDC7ybwU=
+X-Google-Smtp-Source: ABdhPJxHDfCajx43Yc6J1RGjHMBvYO4yoVhSKmMs4yuldITHjzHxZ846LRLn/V4m1IW6bzhGOHHLBQ==
+X-Received: by 2002:a05:6a00:a92:b0:4e0:57a7:2d5d with SMTP id b18-20020a056a000a9200b004e057a72d5dmr177885pfl.81.1645662630734;
+        Wed, 23 Feb 2022 16:30:30 -0800 (PST)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id t19sm574570pjs.54.2022.02.23.16.30.30
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Feb 2022 16:30:30 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 00/11] emulator: Initial Broacast Receiver
+Date:   Wed, 23 Feb 2022 16:30:18 -0800
+Message-Id: <20220224003029.706163-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Received: by 2002:a17:906:141a:0:0:0:0 with HTTP; Wed, 23 Feb 2022 15:45:18
- -0800 (PST)
-Reply-To: fionahill.usa@outlook.com
-From:   Fiona Hill <drivanrobert81@gmail.com>
-Date:   Wed, 23 Feb 2022 15:45:18 -0800
-Message-ID: <CAJp5pinGhtn15csQmPDaE-4X8UxuVQNB+39P9CwnL1zaTR-1wg@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: **
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+
+This implements the necessary commands to be able to emulate a Broadcast
+Receiver:
+
+BT_HCI_CMD_LE_PERIODIC_ADV_CREATE_SYNC
+BT_HCI_CMD_LE_PERIODIC_ADV_CREATE_SYNC_CANCEL
+BT_HCI_CMD_LE_PERIODIC_ADV_TERM_SYNC
+BT_HCI_EVT_LE_PER_SYNC_ESTABLISHED
+BT_HCI_CMD_LE_BIG_CREATE_SYNC
+BT_HCI_CMD_LE_BIG_TERM_SYNC
+
+Luiz Augusto von Dentz (11):
+  monitor: Fix Create BIG PDU
+  btdev: Implement BT_HCI_CMD_LE_PERIODIC_ADV_CREATE_SYNC
+  btdev: Implement BT_HCI_CMD_LE_PERIODIC_ADV_CREATE_SYNC_CANCEL
+  btdev: Implement BT_HCI_CMD_LE_PERIODIC_ADV_TERM_SYNC
+  btdev: Send BT_HCI_EVT_LE_PER_SYNC_ESTABLISHED when scan is initiated
+  btdev: Send BT_HCI_EVT_LE_PER_SYNC_ESTABLISHED if remote start pa
+  monitor: Rename Periodic Advertising terms to PA/pa
+  btdev: Implements BT_HCI_CMD_LE_BIG_CREATE_SYNC
+  btdev: Implements BT_HCI_CMD_LE_BIG_TERM_SYNC
+  bthost: Add support for Periodic Advertising
+  bthost: Add support for Create BIG
+
+ emulator/btdev.c  | 455 +++++++++++++++++++++++++++++++++++++++-------
+ emulator/bthost.c |  32 ++++
+ emulator/bthost.h |   3 +
+ monitor/bt.h      |  91 +++++-----
+ monitor/packet.c  | 113 ++++++------
+ 5 files changed, 530 insertions(+), 164 deletions(-)
+
 -- 
-Please with honesty did you receive my message i sent to you?
+2.35.1
+
