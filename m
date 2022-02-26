@@ -2,90 +2,103 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0D6D4C568C
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Feb 2022 16:04:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17B1A4C569E
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Feb 2022 16:32:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232143AbiBZPEf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 26 Feb 2022 10:04:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55956 "EHLO
+        id S232216AbiBZPdO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 26 Feb 2022 10:33:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232137AbiBZPEe (ORCPT
+        with ESMTP id S231875AbiBZPdO (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 26 Feb 2022 10:04:34 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3A1B1B1DCE
-        for <linux-bluetooth@vger.kernel.org>; Sat, 26 Feb 2022 07:03:59 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 40FF1B80813
-        for <linux-bluetooth@vger.kernel.org>; Sat, 26 Feb 2022 15:03:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E72EFC340F3
-        for <linux-bluetooth@vger.kernel.org>; Sat, 26 Feb 2022 15:03:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645887836;
-        bh=kmjWDnhCIpJ0aUlyQOTzQXCl9euDr8bUKDcJ2MwqhKk=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=AtQTY7PQRlMMNZjp2iI/2seG9QabY5b3006h2sWWo8WH4zN4a39G9RYHQrY6pr5l0
-         zTizwFnh+JGytj88TGAkUwiBnnQVpWGey7BTlaiIPOPuI4p731LmPQpgOXkL+/0mZP
-         0B6KhX42ceTJJ1QL5b9ET9hun7snPouPQmfLuYGuufFrhZz2FboI70fMmG6fAvdPfK
-         kCLKP0CuHnOsgXEnsiexhPwiB6euTJJUc+C/TBZXqwBbB2jljeYl34icZELm9pqM9g
-         0pnqv0Vr/Y8ejIRhHTHunz41P5+D5U+c3uBc5rbpw1LZCtmJA039l2uU67vb8AHPh/
-         2QSl1t1SRrxLg==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id C97E6CC13AD; Sat, 26 Feb 2022 15:03:56 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
+        Sat, 26 Feb 2022 10:33:14 -0500
+X-Greylist: delayed 564 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 26 Feb 2022 07:32:38 PST
+Received: from isilmar-4.linta.de (isilmar-4.linta.de [136.243.71.142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECC3982D34;
+        Sat, 26 Feb 2022 07:32:38 -0800 (PST)
+Received: from isilmar-4.linta.de (isilmar.linta [10.0.0.1])
+        by isilmar-4.linta.de (Postfix) with ESMTP id 9CF592000AF;
+        Sat, 26 Feb 2022 15:23:11 +0000 (UTC)
+Date:   Sat, 26 Feb 2022 16:22:56 +0100
+From:   Helmut Grohne <helmut@subdivi.de>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 215576] HSP/HFP mSBC profile broken with QCA6174
-Date:   Sat, 26 Feb 2022 15:03:56 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: wavexx@thregr.org
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-215576-62941-K8cd5JMx9E@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-215576-62941@https.bugzilla.kernel.org/>
-References: <bug-215576-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] Bluetooth: btusb: Add another Realtek 8761BU
+Message-ID: <YhpF0JdpCmRXZtrG@alf.mars>
+Mail-Followup-To: Helmut Grohne <helmut@subdivi.de>,
+        linux-bluetooth@vger.kernel.org,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-kernel@vger.kernel.org
 MIME-Version: 1.0
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D215576
 
---- Comment #5 from wavexx@thregr.org ---
-I tried applying this patch, even though removing the error checking didn't
-look right to me. Indeed, after, when trying this, it results in BUG: kernel
-NULL pointer dereference, with the stack directly located here:
+This device is sometimes wrapped with a label "EDUP".
 
-Feb 26 15:21:16 kernel:  sco_sock_setsockopt+0x110/0x530 [bluetooth]
+T:  Bus=01 Lev=02 Prnt=02 Port=02 Cnt=03 Dev#=107 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2550 ProdID=8761 Rev= 2.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00E04C239987
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-Changing just codec.id =3D BT_CODEC_MSBC doesn't work either (results in a =
-brief
-noise on the headset).
+Signed-off-by: Helmut Grohne <helmut@subdivi.de>
+Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1955351
+---
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---=20
-You may reply to this email to add a comment.
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index c30d131da784..5b82fcba7269 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -482,6 +482,8 @@ static const struct usb_device_id blacklist_table[] = {
+ 	/* Additional Realtek 8761BU Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x190e), .driver_info = BTUSB_REALTEK |
+ 	  					     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x2550, 0x8761), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 
+ 	/* Additional Realtek 8821AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+-- 
+2.33.1
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+
