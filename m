@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07A134CB2F2
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Mar 2022 00:51:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1101D4CB3C0
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Mar 2022 01:35:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229677AbiCBXsV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 2 Mar 2022 18:48:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34942 "EHLO
+        id S229761AbiCBX4G (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 2 Mar 2022 18:56:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiCBXsS (ORCPT
+        with ESMTP id S229781AbiCBX4C (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 2 Mar 2022 18:48:18 -0500
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D4D17186D
-        for <linux-bluetooth@vger.kernel.org>; Wed,  2 Mar 2022 15:47:11 -0800 (PST)
-Received: by mail-yb1-xb2a.google.com with SMTP id f38so6778295ybi.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Mar 2022 15:47:11 -0800 (PST)
+        Wed, 2 Mar 2022 18:56:02 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 433AF1680A6
+        for <linux-bluetooth@vger.kernel.org>; Wed,  2 Mar 2022 15:55:17 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id l25-20020a9d7a99000000b005af173a2875so3134352otn.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Mar 2022 15:55:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=FJZkRFzKGAl/Ew42Wnb+N+61YLUPXkuLZU6C/6TlhOo=;
-        b=eYFNQxZ1HpiK++8Nw1rEL1K1K8nmWXyPxu3UzoJTx5X9SNRuDPtV76h1BCGeVX9pJ3
-         BkY1DsXGQxrovpO8334AQu9v+gKLWzMGkMj2QuqXWHvvyyERT+3qohiu+13K2vxrBK3/
-         GL0uaKRZeByvjYJJy/Emv28IsmV4JGrbbX69lrhr+cC+iGacxMKMMjhytd7MVTyZpLpF
-         X+BJlZBU3e9HpNcDly26gD1o5LGi6MG4Q13o2IzWkbXL5iviWXeB0R7gxZo4bKTQPyJS
-         vk66skSXJr7pql3zXRWV0aZtCF7hYwcewdKEwR6My+hmmosjtjo3Qg+caOyfOmEqBs+G
-         WT5w==
+        bh=c3/Uh5oMDF5135HoHCo87pTQpDIemur6Q6HFvcHOy1U=;
+        b=lhwqje9+bAJPqc/Sq4CTO2qX+Nm6Uzl6/ZPq3WVN3Scjmn3H8wTFjq2FvMpjSARzqf
+         6tgQQbv7rScQ22oBCmskiNONp2ULUaMjRXCdT4Fs0E0ltjflpYuY5gjytmV8k9YAltc5
+         GjUI30kGWdqGxz798T/uviowTPFzAiu8kdHfyov30dM9yHXjipIynxOluSXLo00oALBS
+         NzFq8ATN92NeZGDO3oLbRzjGPa03JrowycTJlM7QR5DRfRyEIh5SnmZ0jqzF62PGtuDZ
+         6YdHYxqWu6qNNQxEnXqggi3HG2U2KxSGreSKjZmXBtiEWgg62rvXMv40cshE29P3uP7Y
+         ebgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to;
-        bh=FJZkRFzKGAl/Ew42Wnb+N+61YLUPXkuLZU6C/6TlhOo=;
-        b=OEIz6hrKvdn92jJEvE9gtUJTn9du0BcUpkvxf3iPKtgcZTNqgZNpOEgqhkfALE7KNO
-         8Y3Op3S/AEDUttwAWVjnHr3X2ILVspjnxtCkDJHOna6JrOtrE2NTUSsUQPNd/62DIXJy
-         ofrN+Xdh6d6W55hVUE510NGK/Jfe8T9ZHoB6o7H8yzTJwZg9LFkUti4PtbshiFpjVZWk
-         3SjkoTiIM8V2f95t0yNsjhXEuYMWle+m74j237GZrFPjFIsPoev4R7jO0y/up/m2rVL7
-         /SxZshx91nYa0zy/qK7GQAzZEMLGRnoO+nqFzXhZhIcinE6frwzE/lLLQXtw/r+TSxRU
-         cy/w==
-X-Gm-Message-State: AOAM533wFsPdVOtt/Kk024kKVgXvEUPnkyFSiTuPHwdQl0Oflr2ts49Y
-        xp02dnV1w/JdNn+1DW22EeknXK7c0ba5cZi6BhWttC8E
-X-Google-Smtp-Source: ABdhPJxcxPGNcZ3/utqyGKZLXtInfPND7+fMXQMcHshzHbnYUp7Ju/X0kqVd8serLjp1SKQjMbdYZ/9oLYN690wb9Qo=
-X-Received: by 2002:a25:19d7:0:b0:624:7b8b:1bd3 with SMTP id
- 206-20020a2519d7000000b006247b8b1bd3mr30268228ybz.401.1646263353568; Wed, 02
- Mar 2022 15:22:33 -0800 (PST)
+        bh=c3/Uh5oMDF5135HoHCo87pTQpDIemur6Q6HFvcHOy1U=;
+        b=vEWs3UgAlxXiuxYDNSeLyd2nh1H3UGO8DIjCRSkjwYmtSy6vhbS5rXrW/CBr2nqpF8
+         WKBkliHTOC4EIaRB2VLuzTXmupz82bOv6HvsaqIvrtpC7rMD5wllz6lBHrDu0thDIs7+
+         zcmMwb4cMSAW5WuWsY3KzBMB+tBdO6xGBj7USvp0ZCGZ9yZ9qTFEGKgZklGGJZhQKVUE
+         b3n5YvuTQp2LGhaFkQL9sG4rL9e+XCzrd6aWE/A226sYfdO22q2Uf8RJWiKaGregUiIg
+         cN15dDEen64Tu8UvpKR7Hs8umVuneTHGDr1HJ09sNEBPe4u1LBuXzorzHCewRY0f9b9D
+         eK0w==
+X-Gm-Message-State: AOAM532iZp6iOCJrRf9vkION0KvLjggjDTUFtGTKSC7c5br20UQSQdGV
+        9Uu/Fube3yQlWPXMGl18cbsRO9dsbj1W+mXmvKGMePiV
+X-Google-Smtp-Source: ABdhPJxYTBFVRtFYbEJWjG90jP4uKZ2h3R7gz7cL845JcUx4fTE8kYmrJ7s0ejLvZq4S9SLxxRHI06qkIcblv6XrfLQ=
+X-Received: by 2002:a81:f0c:0:b0:2d6:83ab:7605 with SMTP id
+ 12-20020a810f0c000000b002d683ab7605mr32487006ywp.150.1646263370144; Wed, 02
+ Mar 2022 15:22:50 -0800 (PST)
 MIME-Version: 1.0
-References: <20220228232720.1614099-1-luiz.dentz@gmail.com> <621d6a3a.1c69fb81.cfda5.a0ab@mx.google.com>
-In-Reply-To: <621d6a3a.1c69fb81.cfda5.a0ab@mx.google.com>
+References: <20220301233053.109920-1-luiz.dentz@gmail.com> <621ebcd4.1c69fb81.e52ea.fd21@mx.google.com>
+In-Reply-To: <621ebcd4.1c69fb81.e52ea.fd21@mx.google.com>
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 2 Mar 2022 15:22:22 -0800
-Message-ID: <CABBYNZLBZQSaV1ckEzYXTjyqwpEFLLXdPUSiy73V_J05z0qmBw@mail.gmail.com>
-Subject: Re: [BlueZ] test-runner: Add option to start emulator
+Date:   Wed, 2 Mar 2022 15:22:39 -0800
+Message-ID: <CABBYNZ+9ba9_4xQDgjBbCpcaVWcKO_KWx_JNrLGH_iBWoWWjeA@mail.gmail.com>
+Subject: Re: [BlueZ] test-runner: Fix parsing of command line
 To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -65,7 +65,7 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hi,
 
-On Mon, Feb 28, 2022 at 4:35 PM <bluez.test.bot@gmail.com> wrote:
+On Tue, Mar 1, 2022 at 4:39 PM <bluez.test.bot@gmail.com> wrote:
 >
 > This is automated email and please do not reply to this email!
 >
@@ -73,50 +73,23 @@ On Mon, Feb 28, 2022 at 4:35 PM <bluez.test.bot@gmail.com> wrote:
 >
 > Thank you for submitting the patches to the linux bluetooth mailing list.
 > This is a CI test results with your patch series:
-> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=618913
+> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=619350
 >
 > ---Test result---
 >
 > Test Summary:
-> CheckPatch                    FAIL      1.54 seconds
-> GitLint                       PASS      1.05 seconds
-> Prep - Setup ELL              PASS      43.02 seconds
-> Build - Prep                  PASS      0.74 seconds
-> Build - Configure             PASS      8.82 seconds
-> Build - Make                  PASS      1440.03 seconds
-> Make Check                    PASS      11.46 seconds
-> Make Check w/Valgrind         PASS      446.11 seconds
-> Make Distcheck                PASS      231.77 seconds
-> Build w/ext ELL - Configure   PASS      8.81 seconds
-> Build w/ext ELL - Make        PASS      1433.12 seconds
+> CheckPatch                    PASS      1.54 seconds
+> GitLint                       PASS      1.02 seconds
+> Prep - Setup ELL              PASS      48.50 seconds
+> Build - Prep                  PASS      0.79 seconds
+> Build - Configure             PASS      9.42 seconds
+> Build - Make                  PASS      1383.88 seconds
+> Make Check                    PASS      12.20 seconds
+> Make Check w/Valgrind         PASS      499.39 seconds
+> Make Distcheck                PASS      262.03 seconds
+> Build w/ext ELL - Configure   PASS      10.36 seconds
+> Build w/ext ELL - Make        PASS      1368.58 seconds
 > Incremental Build with patchesPASS      0.00 seconds
->
-> Details
-> ##############################
-> Test: CheckPatch - FAIL
-> Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-> Output:
-> [BlueZ] test-runner: Add option to start emulator
-> ERROR:INITIALISED_STATIC: do not initialise statics to false
-> #98: FILE: tools/test-runner.c:50:
-> +static bool start_emulator = false;
->
-> WARNING:STATIC_CONST_CHAR_ARRAY: static const char * array should probably be static const char * const
-> #119: FILE: tools/test-runner.c:605:
-> +static const char *btvirt_table[] = {
->
-> /github/workspace/src/12763863.patch total: 1 errors, 1 warnings, 152 lines checked
->
-> NOTE: For some of the reported defects, checkpatch may be able to
->       mechanically convert to the typical style using --fix or --fix-inplace.
->
-> /github/workspace/src/12763863.patch has style problems, please review.
->
-> NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
->
-> NOTE: If any of the errors are false positives, please report
->       them to the maintainer, see CHECKPATCH in MAINTAINERS.
->
 >
 >
 >
