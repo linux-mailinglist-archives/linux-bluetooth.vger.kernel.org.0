@@ -2,57 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1101D4CB3C0
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Mar 2022 01:35:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E01314CB3C6
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Mar 2022 01:35:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbiCBX4G (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 2 Mar 2022 18:56:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33876 "EHLO
+        id S230381AbiCCAcX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 2 Mar 2022 19:32:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbiCBX4C (ORCPT
+        with ESMTP id S230368AbiCCAcW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 2 Mar 2022 18:56:02 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 433AF1680A6
-        for <linux-bluetooth@vger.kernel.org>; Wed,  2 Mar 2022 15:55:17 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id l25-20020a9d7a99000000b005af173a2875so3134352otn.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Mar 2022 15:55:17 -0800 (PST)
+        Wed, 2 Mar 2022 19:32:22 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1A601EC5E
+        for <linux-bluetooth@vger.kernel.org>; Wed,  2 Mar 2022 16:31:38 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id w37so3070612pga.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Mar 2022 16:31:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=c3/Uh5oMDF5135HoHCo87pTQpDIemur6Q6HFvcHOy1U=;
-        b=lhwqje9+bAJPqc/Sq4CTO2qX+Nm6Uzl6/ZPq3WVN3Scjmn3H8wTFjq2FvMpjSARzqf
-         6tgQQbv7rScQ22oBCmskiNONp2ULUaMjRXCdT4Fs0E0ltjflpYuY5gjytmV8k9YAltc5
-         GjUI30kGWdqGxz798T/uviowTPFzAiu8kdHfyov30dM9yHXjipIynxOluSXLo00oALBS
-         NzFq8ATN92NeZGDO3oLbRzjGPa03JrowycTJlM7QR5DRfRyEIh5SnmZ0jqzF62PGtuDZ
-         6YdHYxqWu6qNNQxEnXqggi3HG2U2KxSGreSKjZmXBtiEWgg62rvXMv40cshE29P3uP7Y
-         ebgw==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=69NrXL/f97Lbx7xvFjPeoQIHtRoBoSQCFCoJcL7jwqE=;
+        b=ASPa+E0AIgbSOcJbXmMuO72CCd5cQWWZpIwLXO7YTqIUP5f9dCeTfaBwZwyjz0Bs17
+         RwDyazl5h3LNVyQN4M2kYz5+x4Aj2QsYNps399JNw8jnHA14BehXNdES/hCM02ZuFxiW
+         0o15vflsEQp/c1+k0JiMBtegN8RAFIsGOap6QJioa9/Y31jbx9CinKHUFaVSGEAp+TY4
+         QEyoWs3WvDXsF4ltcwVbLhIdZHPg/s9jZdBu+Ir2Lyt6lm0qEkBAzgrzcZsNz/kvHz3I
+         mCMeZ7VeRk+7dW0dpV6UK6d/xDeIUjliFw5DQdfO0+7/d5zefRQZ6eU+rXRzQj/pDvI9
+         FLIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=c3/Uh5oMDF5135HoHCo87pTQpDIemur6Q6HFvcHOy1U=;
-        b=vEWs3UgAlxXiuxYDNSeLyd2nh1H3UGO8DIjCRSkjwYmtSy6vhbS5rXrW/CBr2nqpF8
-         WKBkliHTOC4EIaRB2VLuzTXmupz82bOv6HvsaqIvrtpC7rMD5wllz6lBHrDu0thDIs7+
-         zcmMwb4cMSAW5WuWsY3KzBMB+tBdO6xGBj7USvp0ZCGZ9yZ9qTFEGKgZklGGJZhQKVUE
-         b3n5YvuTQp2LGhaFkQL9sG4rL9e+XCzrd6aWE/A226sYfdO22q2Uf8RJWiKaGregUiIg
-         cN15dDEen64Tu8UvpKR7Hs8umVuneTHGDr1HJ09sNEBPe4u1LBuXzorzHCewRY0f9b9D
-         eK0w==
-X-Gm-Message-State: AOAM532iZp6iOCJrRf9vkION0KvLjggjDTUFtGTKSC7c5br20UQSQdGV
-        9Uu/Fube3yQlWPXMGl18cbsRO9dsbj1W+mXmvKGMePiV
-X-Google-Smtp-Source: ABdhPJxYTBFVRtFYbEJWjG90jP4uKZ2h3R7gz7cL845JcUx4fTE8kYmrJ7s0ejLvZq4S9SLxxRHI06qkIcblv6XrfLQ=
-X-Received: by 2002:a81:f0c:0:b0:2d6:83ab:7605 with SMTP id
- 12-20020a810f0c000000b002d683ab7605mr32487006ywp.150.1646263370144; Wed, 02
- Mar 2022 15:22:50 -0800 (PST)
-MIME-Version: 1.0
-References: <20220301233053.109920-1-luiz.dentz@gmail.com> <621ebcd4.1c69fb81.e52ea.fd21@mx.google.com>
-In-Reply-To: <621ebcd4.1c69fb81.e52ea.fd21@mx.google.com>
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=69NrXL/f97Lbx7xvFjPeoQIHtRoBoSQCFCoJcL7jwqE=;
+        b=ViruSTV4KTfd52xaBQYqLKDWaTr3cmcFFqXF8c2xNUKiWF0vwtNeEtDNTgF6AktGnk
+         r0o26f9IIBpPbicB0YX0JuRbjth8NRFRY8b4lLEK/fCfvCVoDyxs7dWbVK5NZ5KwgXC5
+         R1Ja7GOWKb6w3+zYNgl5w/UCHkdtyJ3d90b7bVOZVTMHFss2fJNxn9YlHZqQaT5Wvcqa
+         c/cXa1y+yHWS97U5KTw/BmszMgYuqccEFjyuvn7N3CveNkjhMRvmVpxaYPpF670iMNTk
+         tQXopc7byGerzei9pqrFdmD5UAsUf7IRvi/ttss5R0QgwwD6FtEjjrcOU8Ag2LOsf8J9
+         QY1Q==
+X-Gm-Message-State: AOAM533RxM7hcE3NBov2o59puAAezi9wNVn7mMbZuVboqb7sgAb3MG7c
+        vIi03h3SnYVNhQRR93GVV5PKkQ4JQDQ=
+X-Google-Smtp-Source: ABdhPJw/Cnr8VVj4aS9Y1No8KM48NHDQv46zrlM2aVwShJXOvjksY+9vYO25Z+uK8zu1mVh7BsjynQ==
+X-Received: by 2002:a63:9845:0:b0:375:5cc8:7d34 with SMTP id l5-20020a639845000000b003755cc87d34mr28340685pgo.124.1646267498222;
+        Wed, 02 Mar 2022 16:31:38 -0800 (PST)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id k20-20020a056a00135400b004ecc81067b8sm356283pfu.144.2022.03.02.16.31.37
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Mar 2022 16:31:37 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 2 Mar 2022 15:22:39 -0800
-Message-ID: <CABBYNZ+9ba9_4xQDgjBbCpcaVWcKO_KWx_JNrLGH_iBWoWWjeA@mail.gmail.com>
-Subject: Re: [BlueZ] test-runner: Fix parsing of command line
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ] client: Add support for scan <le/bredr>
+Date:   Wed,  2 Mar 2022 16:31:36 -0800
+Message-Id: <20220303003136.4882-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -63,41 +67,83 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-On Tue, Mar 1, 2022 at 4:39 PM <bluez.test.bot@gmail.com> wrote:
->
-> This is automated email and please do not reply to this email!
->
-> Dear submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> This is a CI test results with your patch series:
-> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=619350
->
-> ---Test result---
->
-> Test Summary:
-> CheckPatch                    PASS      1.54 seconds
-> GitLint                       PASS      1.02 seconds
-> Prep - Setup ELL              PASS      48.50 seconds
-> Build - Prep                  PASS      0.79 seconds
-> Build - Configure             PASS      9.42 seconds
-> Build - Make                  PASS      1383.88 seconds
-> Make Check                    PASS      12.20 seconds
-> Make Check w/Valgrind         PASS      499.39 seconds
-> Make Distcheck                PASS      262.03 seconds
-> Build w/ext ELL - Configure   PASS      10.36 seconds
-> Build w/ext ELL - Make        PASS      1368.58 seconds
-> Incremental Build with patchesPASS      0.00 seconds
->
->
->
-> ---
-> Regards,
-> Linux Bluetooth
->
-Pushed.
+This adds support for entering the transport directly as an scan
+argument rather than having to first set it scan.transport.
+---
+ client/main.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
+diff --git a/client/main.c b/client/main.c
+index 719cbefe0..6bb11b1ad 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -1294,6 +1294,7 @@ static struct set_discovery_filter_args {
+ 	dbus_bool_t discoverable;
+ 	bool set;
+ 	bool active;
++	unsigned int timeout;
+ } filter = {
+ 	.rssi = DISTANCE_VAL_INVALID,
+ 	.pathloss = DISTANCE_VAL_INVALID,
+@@ -1415,18 +1416,33 @@ static void set_discovery_filter(bool cleared)
+ 	filter.set = true;
+ }
+ 
++static const char *scan_arguments[] = {
++	"on",
++	"off",
++	"bredr",
++	"le",
++	NULL
++};
++
+ static void cmd_scan(int argc, char *argv[])
+ {
+ 	dbus_bool_t enable;
+ 	const char *method;
++	const char *mode;
+ 
+-	if (!parse_argument(argc, argv, NULL, NULL, &enable, NULL))
++	if (!parse_argument(argc, argv, scan_arguments, "Mode", &enable,
++								&mode))
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+ 
+ 	if (check_default_ctrl() == FALSE)
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+ 
+ 	if (enable == TRUE) {
++		if (strcmp(mode, "")) {
++			g_free(filter.transport);
++			filter.transport = g_strdup(mode);
++		}
++
+ 		set_discovery_filter(false);
+ 		method = "StartDiscovery";
+ 	} else
+@@ -2514,6 +2530,11 @@ static char *capability_generator(const char *text, int state)
+ 	return argument_generator(text, state, agent_arguments);
+ }
+ 
++static char *scan_generator(const char *text, int state)
++{
++	return argument_generator(text, state, scan_arguments);
++}
++
+ static void cmd_advertise(int argc, char *argv[])
+ {
+ 	dbus_bool_t enable;
+@@ -3117,7 +3138,8 @@ static const struct bt_shell_menu main_menu = {
+ 				"Enable/disable advertising with given type",
+ 							ad_generator},
+ 	{ "set-alias",    "<alias>",  cmd_set_alias, "Set device alias" },
+-	{ "scan",         "<on/off>", cmd_scan, "Scan for devices", NULL },
++	{ "scan",         "<on/off/bredr/le>", cmd_scan,
++				"Scan for devices", scan_generator },
+ 	{ "info",         "[dev]",    cmd_info, "Device information",
+ 							dev_generator },
+ 	{ "pair",         "[dev]",    cmd_pair, "Pair with device",
 -- 
-Luiz Augusto von Dentz
+2.35.1
+
