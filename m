@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98E3F4CE1DC
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Mar 2022 02:22:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DA374CE1DE
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Mar 2022 02:22:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230383AbiCEBX2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 4 Mar 2022 20:23:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58058 "EHLO
+        id S230394AbiCEBXb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 4 Mar 2022 20:23:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230374AbiCEBXZ (ORCPT
+        with ESMTP id S230369AbiCEBXZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 4 Mar 2022 20:23:25 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4227656A
-        for <linux-bluetooth@vger.kernel.org>; Fri,  4 Mar 2022 17:22:35 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id c16-20020a17090aa61000b001befad2bfaaso8954026pjq.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 04 Mar 2022 17:22:35 -0800 (PST)
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C0D52A273
+        for <linux-bluetooth@vger.kernel.org>; Fri,  4 Mar 2022 17:22:36 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id v4so8687191pjh.2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 04 Mar 2022 17:22:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=CB84GU+65qC35bo/M0ozl8Z6qSqDAdXZpXKDOuBUTfg=;
-        b=kr14BqESTdxZ43FFq/qYirg/s7flosm5xqG/R1cSVQhCE/stYxyMKBNrfogWVNsxBR
-         vNxSFCxO+uEzgOqSQkA3kUJzo7edlnELd2eE18BN3ukvOCP670kYU1fVvvlcIvNgLevo
-         uSADkLlnscChJdhQlMU6X3URjbloVPfcmYzOpCuc1mLopkcIx8kCIs19TSh70PELriTO
-         25uu3q7cGY+vK4HQYuchZZgIyH6iZxyNKudkHe9CdwnOHMYTikOwgjUS+IEjNs5x7VB3
-         XShRen55Z6+XTc3HraAIOjmb83/v7ZQa7Ap6D6eyDjKmbygAJptS/YVv7NCMatmfIh30
-         slzw==
+        bh=9UiSChX/MlhykLBJGD3Js3tynaUAJ9b+hYqI4IfTwkA=;
+        b=AOTR/MBsuA96MJhVpb/pyOKZ2uVBH8KCtENrFIc7kw/AeUM3ekEB7xP77+1wyiS1Eo
+         0qYASJCiEmBMDqsIULkD/YJcp2BK/qjFT8UsDvBe8vQAw6N1OVg1Uylnjhnmi+7fPqFR
+         LVtHMSnKPlIGmAOpFk47LEQaOpgpMRWG6TmY4J0XfEGlpC/lAe4F1YwwBQEAIc8aOjdN
+         mMoSFWlickz830S4hPmJYNZArVmlZJvHvjBEnhlDeR+PlzDU1kFVAaTNtOgVdcWwwdiN
+         /4fnftHBOS97PhgUAYqQEqoWvvs3SuP6oAjWXoKfQJrJ7eqFluHwwptRcpo7kv6dt+R7
+         9c4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CB84GU+65qC35bo/M0ozl8Z6qSqDAdXZpXKDOuBUTfg=;
-        b=S0MqDpnAzlrH94Z3tyHgI2ExMXjAagYLDpVJij2yynM/F23vSas04nFw/OkfyCK1jU
-         RTo5QwtzemkCYJvW5Df9FWlyj7Cw/fMia74pkmJNaBWYhAMF/I3+c3+CRezylFSB7qqc
-         ZBM+aVrEClcg8oxSvDDNfGE08P7uLtt07cuLhVv0jgqZe7vRvjoZGUQg5of5hGKlt8aW
-         2rPRWjN3fa7+y8YEsvyxc0ZBMnzkJLiJaw/2r3Sl0o5WMnZ+3zBEzrQWuZ5sINfIHwPk
-         dUKaTCe1fM3gwkyEMPaj2jejfKMF+VJ5OHXamiWqz37oCUYtsxEYNxfvMOWp2f1tdmmB
-         ifiw==
-X-Gm-Message-State: AOAM532/Cw7OHNqkoas9i5XRJh4iWytkJeSLO32iEgNlbEZkzHjdE7zl
-        jbdwDV1YZKhST04vFbah2xqTY0a4Cxo=
-X-Google-Smtp-Source: ABdhPJyUU0PnHc8u+NJfdiv+o21Tbt2FeEcpfQ53qA+hD7BnzcQY9iZQaCGU8D4cb2fgwSJTcvr0sg==
-X-Received: by 2002:a17:90b:2486:b0:1bc:9d6a:f22 with SMTP id nt6-20020a17090b248600b001bc9d6a0f22mr13557401pjb.211.1646443354929;
-        Fri, 04 Mar 2022 17:22:34 -0800 (PST)
+        bh=9UiSChX/MlhykLBJGD3Js3tynaUAJ9b+hYqI4IfTwkA=;
+        b=O60aDIiKscr01OXGIPJKXfR8C9EtHc9wwuZu6Sfzd94mb2WP/6gt/+9NSrEiUTkYtv
+         dDBP1BMXKKTI0u3Yc1QqQQu6dNVgtLARAld4lYXrWsffFXpNKk/tzZCoHtXisswWcx4B
+         48r064+gPC6EcC65VMtt7H3Zi4GB9N+Sf/dEBxQYCRyo99HDE1kYxhe6J9CZkaA7xsQw
+         yTIhUI5JCJU0aGJv7w0O6PsQD8q/tGevyIwcAkWB+KcdjhiKHvM4jh8Vc6kpfjJfhUZS
+         TK/tfdBkeFYuWwYXRoRrZbv7FiGULCZWo2Rd0vFrVAu3iNJpd6fisQZ2rZOnmCQYxjzA
+         YESA==
+X-Gm-Message-State: AOAM532IjoRjTkh9bNTFyYUvk1V+x/RVlz5NfQhCr99XZz3Ev2v1Du/m
+        RyRZpRMyNY1ZxpwtZZ/7FWM4epleafs=
+X-Google-Smtp-Source: ABdhPJxNUOEboAy1mBNmpa0VHt4W+pry3pkzfEobFfAro4eJN9xJ0CFKTr0FenIHz4wjI4Pyk3ZH2w==
+X-Received: by 2002:a17:902:d2cd:b0:14f:c169:dc6f with SMTP id n13-20020a170902d2cd00b0014fc169dc6fmr1114099plc.170.1646443355779;
+        Fri, 04 Mar 2022 17:22:35 -0800 (PST)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id m16-20020a638c10000000b0037c4cf366c0sm5363932pgd.61.2022.03.04.17.22.34
+        by smtp.gmail.com with ESMTPSA id m16-20020a638c10000000b0037c4cf366c0sm5363932pgd.61.2022.03.04.17.22.35
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 17:22:34 -0800 (PST)
+        Fri, 04 Mar 2022 17:22:35 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [BlueZ PATCH v2 05/12] btdev: Send BT_HCI_EVT_LE_PER_SYNC_ESTABLISHED when scan is initiated
-Date:   Fri,  4 Mar 2022 17:22:22 -0800
-Message-Id: <20220305012229.853784-6-luiz.dentz@gmail.com>
+Subject: [BlueZ PATCH v2 06/12] btdev: Send BT_HCI_EVT_LE_PER_SYNC_ESTABLISHED if remote start pa
+Date:   Fri,  4 Mar 2022 17:22:23 -0800
+Message-Id: <20220305012229.853784-7-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220305012229.853784-1-luiz.dentz@gmail.com>
 References: <20220305012229.853784-1-luiz.dentz@gmail.com>
@@ -71,26 +71,19 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This sends BT_HCI_EVT_LE_PER_SYNC_ESTABLISHED if scan is initiated
-while BT_HCI_CMD_LE_PERIODIC_ADV_CREATE_SYNC is pending.
+This sends BT_HCI_EVT_LE_PER_SYNC_ESTABLISHED if remote device start
+to periodic advertise when BT_HCI_CMD_LE_PERIODIC_ADV_CREATE_SYNC is
+pending.
 ---
- emulator/btdev.c | 152 +++++++++++++++++++++++++++--------------------
- 1 file changed, 86 insertions(+), 66 deletions(-)
+ emulator/btdev.c | 144 +++++++++++++++++++++++++----------------------
+ 1 file changed, 78 insertions(+), 66 deletions(-)
 
 diff --git a/emulator/btdev.c b/emulator/btdev.c
-index 15689137c..59014b535 100644
+index 59014b535..e79b0dc67 100644
 --- a/emulator/btdev.c
 +++ b/emulator/btdev.c
-@@ -197,6 +197,7 @@ struct btdev {
- 	uint16_t le_periodic_max_interval;
- 	uint8_t  le_periodic_data_len;
- 	uint8_t  le_periodic_data[31];
-+	struct bt_hci_cmd_le_periodic_adv_create_sync pa_sync_cmd;
- 	uint16_t le_periodic_sync_handle;
- 	uint8_t  le_ltk[16];
- 	struct {
-@@ -5160,6 +5161,85 @@ static void scan_ext_adv(struct btdev *dev, struct btdev *remote)
- 	}
+@@ -5044,11 +5044,77 @@ static int cmd_set_per_adv_data(struct btdev *dev, const void *data,
+ 	return 0;
  }
  
 +static void send_per_adv(struct btdev *dev, const struct btdev *remote,
@@ -158,44 +151,36 @@ index 15689137c..59014b535 100644
 +	send_per_adv(dev, remote, 0);
 +}
 +
-+static void scan_per_adv(struct btdev *dev, struct btdev *remote)
-+{
-+	if (dev->le_periodic_sync_handle != INV_HANDLE ||
-+				!remote->le_periodic_adv_enable)
-+		return;
-+
-+
-+	if (remote != find_btdev_by_bdaddr_type(dev->pa_sync_cmd.addr,
-+						dev->pa_sync_cmd.addr_type))
-+		return;
-+
-+	le_per_adv_sync_estabilished(dev, remote, BT_HCI_ERR_SUCCESS);
-+}
-+
- static int cmd_set_ext_scan_enable_complete(struct btdev *dev, const void *data,
+ static int cmd_set_per_adv_enable(struct btdev *dev, const void *data,
  							uint8_t len)
  {
-@@ -5174,6 +5254,7 @@ static int cmd_set_ext_scan_enable_complete(struct btdev *dev, const void *data,
- 			continue;
+ 	const struct bt_hci_cmd_le_set_periodic_adv_enable *cmd = data;
+ 	uint8_t status;
++	int i;
  
- 		scan_ext_adv(dev, btdev_list[i]);
-+		scan_per_adv(dev, btdev_list[i]);
- 	}
+ 	if (dev->le_periodic_adv_enable == cmd->enable) {
+ 		status = BT_HCI_ERR_COMMAND_DISALLOWED;
+@@ -5060,6 +5126,18 @@ static int cmd_set_per_adv_enable(struct btdev *dev, const void *data,
+ 	cmd_complete(dev, BT_HCI_CMD_LE_SET_PERIODIC_ADV_ENABLE, &status,
+ 							sizeof(status));
  
- 	return 0;
-@@ -5301,76 +5382,16 @@ static int cmd_per_adv_create_sync(struct btdev *dev, const void *data,
- 
- 	if (dev->le_periodic_sync_handle)
- 		status = BT_HCI_ERR_MEM_CAPACITY_EXCEEDED;
--	else
-+	else {
- 		dev->le_periodic_sync_handle = INV_HANDLE;
-+		memcpy(&dev->pa_sync_cmd, data, len);
++	for (i = 0; i < MAX_BTDEV_ENTRIES; i++) {
++		struct btdev *remote = btdev_list[i];
++
++		if (!remote || remote == dev)
++			continue;
++
++		if (remote->le_scan_enable &&
++			remote->le_periodic_sync_handle == INV_HANDLE)
++			le_per_adv_sync_estabilished(remote, dev,
++							BT_HCI_ERR_SUCCESS);
 +	}
- 
- 	cmd_status(dev, status, BT_HCI_CMD_LE_PERIODIC_ADV_CREATE_SYNC);
- 
++
  	return 0;
+ }
+ 
+@@ -5161,78 +5239,12 @@ static void scan_ext_adv(struct btdev *dev, struct btdev *remote)
+ 	}
  }
  
 -static void send_per_adv(struct btdev *dev, const struct btdev *remote,
@@ -232,15 +217,16 @@ index 15689137c..59014b535 100644
 -}
 -
 -static void le_per_adv_sync_estabilished(struct btdev *dev,
--		const struct bt_hci_cmd_le_periodic_adv_create_sync *cmd,
--		struct btdev *remote, uint8_t status)
+-					struct btdev *remote, uint8_t status)
 -{
 -	struct bt_hci_evt_le_per_sync_established ev;
+-	struct bt_hci_cmd_le_periodic_adv_create_sync *cmd = &dev->pa_sync_cmd;
 -
 -	memset(&ev, 0, sizeof(ev));
 -	ev.status = status;
 -
 -	if (status) {
+-		memset(&dev->pa_sync_cmd, 0, sizeof(dev->pa_sync_cmd));
 -		dev->le_periodic_sync_handle = 0x0000;
 -		le_meta_event(dev, BT_HCI_EVT_LE_PER_SYNC_ESTABLISHED, &ev,
 -							sizeof(ev));
@@ -256,32 +242,22 @@ index 15689137c..59014b535 100644
 -	ev.interval = remote->le_periodic_min_interval;
 -	ev.clock_accuracy = 0x07;
 -
+-	memset(&dev->pa_sync_cmd, 0, sizeof(dev->pa_sync_cmd));
+-
 -	le_meta_event(dev, BT_HCI_EVT_LE_PER_SYNC_ESTABLISHED, &ev, sizeof(ev));
 -	send_per_adv(dev, remote, 0);
 -}
 -
- static int cmd_per_adv_create_sync_complete(struct btdev *dev, const void *data,
- 							uint8_t len)
+ static void scan_per_adv(struct btdev *dev, struct btdev *remote)
  {
-@@ -5390,7 +5411,7 @@ static int cmd_per_adv_create_sync_complete(struct btdev *dev, const void *data,
- 	if (!remote || !remote->le_periodic_adv_enable)
- 		return 0;
+ 	if (dev->le_periodic_sync_handle != INV_HANDLE ||
+ 				!remote->le_periodic_adv_enable)
+ 		return;
  
--	le_per_adv_sync_estabilished(dev, cmd, remote, BT_HCI_ERR_SUCCESS);
-+	le_per_adv_sync_estabilished(dev, remote, BT_HCI_ERR_SUCCESS);
- 
- 	return 0;
- }
-@@ -5416,8 +5437,7 @@ static int cmd_per_adv_create_sync_cancel(struct btdev *dev, const void *data,
- 	 * the error code Operation Cancelled by Host (0x44).
- 	 */
- 	if (!status)
--		le_per_adv_sync_estabilished(dev, NULL, NULL,
--							BT_HCI_ERR_CANCELLED);
-+		le_per_adv_sync_estabilished(dev, NULL, BT_HCI_ERR_CANCELLED);
- 
- 	return 0;
- }
+-
+ 	if (remote != find_btdev_by_bdaddr_type(dev->pa_sync_cmd.addr,
+ 						dev->pa_sync_cmd.addr_type))
+ 		return;
 -- 
 2.35.1
 
