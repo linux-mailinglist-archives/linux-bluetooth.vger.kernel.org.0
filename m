@@ -2,72 +2,46 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6A9C4D247E
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Mar 2022 23:51:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A11A4D25DA
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Mar 2022 02:14:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350829AbiCHWwI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 8 Mar 2022 17:52:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46870 "EHLO
+        id S229775AbiCIBDf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 8 Mar 2022 20:03:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235509AbiCHWwH (ORCPT
+        with ESMTP id S229587AbiCIBCy (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 8 Mar 2022 17:52:07 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C454EF4A
-        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Mar 2022 14:51:09 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id x5so598030edd.11
-        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Mar 2022 14:51:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GNyxxtXcnyfmNNBli9SgJPfg/+KszGAsz9fS3NorGIg=;
-        b=PnxAQB5mg7PZ8UGtkbZ1UIXLxmuEZkxURrHl7X35BCyIjZbw/9FMzwIGmuxidUWqBV
-         1XhVUkSVmREfytJ4rUEGANtRJViTBNnNCeZSwLNtV9CzVyCnQidRghFDVelxbbB6j1d7
-         XkcjEhAf7/6UiGCiOPy1mluFiAEfv1T3D9qG4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GNyxxtXcnyfmNNBli9SgJPfg/+KszGAsz9fS3NorGIg=;
-        b=OxwBZg2hzPUcAg4tDNDpFkNnfGhYLCcGMTiNpdG9jxWGSXP+dWaEHF3+asC1E2umad
-         z19fIN3VGXgnRRrT1wxAyp0QZrfzLE2go7S7QAd37NRYMk2NHIkn8syiTFptzNpefYpA
-         0+YYOlCuSqsScV47yXgZgcsae6KIMNU8LT87fRJ7EnT5KSgRuPkrp2AdPJBPT8v4s9d3
-         wkB+dXIYcvh4G3A37Dvl0MrNcyfQn9/iGZ8hBSB2NBGBudiWQJEEBz0ZyW+wMmKc3qd7
-         Ju2pukMrr8HgQh5hRBI70LoLeOaLZ6L6yUTIZaiB9ujNCbpT/zrUfl2ECe8/EKdI8VTC
-         H8JQ==
-X-Gm-Message-State: AOAM533kTiOV5Hg/7S5enugkQFU43DMjvz+fn/RA9YFHR9IRsMFFy8dX
-        RbLNRlk7D93Kjwp+YN+izNKBGtxwER58YA==
-X-Google-Smtp-Source: ABdhPJzXVfKtrKFcX/hjO2FpxQwn4Dp1GWALBKXm+X81UcKYic+4Z5i90reN8sK0I+AGPONhcivF3A==
-X-Received: by 2002:a05:6402:51cb:b0:409:e99f:bc1c with SMTP id r11-20020a05640251cb00b00409e99fbc1cmr18641834edd.68.1646779868343;
-        Tue, 08 Mar 2022 14:51:08 -0800 (PST)
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com. [209.85.218.47])
-        by smtp.gmail.com with ESMTPSA id n4-20020a056402060400b00415a1f9a4dasm54352edv.91.2022.03.08.14.51.07
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Mar 2022 14:51:07 -0800 (PST)
-Received: by mail-ej1-f47.google.com with SMTP id yy13so1140848ejb.2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Mar 2022 14:51:07 -0800 (PST)
-X-Received: by 2002:a17:906:2b97:b0:6cd:6d67:ab5d with SMTP id
- m23-20020a1709062b9700b006cd6d67ab5dmr15541284ejg.723.1646779866998; Tue, 08
- Mar 2022 14:51:06 -0800 (PST)
+        Tue, 8 Mar 2022 20:02:54 -0500
+Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE1313197D;
+        Tue,  8 Mar 2022 16:40:31 -0800 (PST)
+X-UUID: 39d2e8487e9749519bf0774d7f47cc99-20220309
+X-UUID: 39d2e8487e9749519bf0774d7f47cc99-20220309
+Received: from mtkmbs10n2.mediatek.inc [(172.21.101.183)] by mailgw02.mediatek.com
+        (envelope-from <sean.wang@mediatek.com>)
+        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
+        with ESMTP id 135036769; Wed, 09 Mar 2022 08:03:56 +0800
+Received: from mtkcas10.mediatek.inc (172.21.101.39) by
+ mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.792.3;
+ Wed, 9 Mar 2022 08:03:55 +0800
+Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas10.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Wed, 9 Mar 2022 08:03:55 +0800
+From:   <sean.wang@mediatek.com>
+To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>
+CC:     <linux-bluetooth@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, Sean Wang <sean.wang@mediatek.com>
+Subject: [PATCH 1/3] Bluetooth: btmtkuart: rely on BT_MTK module
+Date:   Wed, 9 Mar 2022 08:03:52 +0800
+Message-ID: <f0167a9631fd0b392490311825ff0f826c054bc1.1646783737.git.objelf@gmail.com>
+X-Mailer: git-send-email 1.7.9.5
 MIME-Version: 1.0
-References: <CAPBVwTQrcYYauoCXBWdOsPa_vmN=cajYzVFcep_GLC-2OwOwYQ@mail.gmail.com>
- <6f8f47ceebfbcfd7fa8b04a4df807ae822e2960c.camel@hadess.net>
-In-Reply-To: <6f8f47ceebfbcfd7fa8b04a4df807ae822e2960c.camel@hadess.net>
-From:   Sonny Sasaka <sonnysasaka@chromium.org>
-Date:   Tue, 8 Mar 2022 14:50:55 -0800
-X-Gmail-Original-Message-ID: <CAO271m=hf0uB1t50t6tTXqDQREVxzX2S=R2rVCGK60xwVKgSYQ@mail.gmail.com>
-Message-ID: <CAO271m=hf0uB1t50t6tTXqDQREVxzX2S=R2rVCGK60xwVKgSYQ@mail.gmail.com>
-Subject: Re: [RFC] Bluetooth: Adding support for /etc/bluetooth/main.conf.d
-To:     Bastien Nocera <hadess@hadess.net>
-Cc:     Katherine Lai <laikatherine@chromium.org>,
-        BlueZ <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain
+X-MTK:  N
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,63 +49,386 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Bastien,
+From: Sean Wang <sean.wang@mediatek.com>
 
+Rely on btmtk module to reduce duplicated code
 
-On Tue, Mar 8, 2022 at 2:14 AM Bastien Nocera <hadess@hadess.net> wrote:
->
-> Hey Katherine,
->
-> On Mon, 2022-03-07 at 10:57 -0800, Katherine Lai wrote:
-> > Background
-> >
-> > It was found that a change to the default settings for
-> > MinConnectionInterval and MaxConnectionInterval in main.conf broke
-> > some of ChromeOS=E2=80=99s keyboard HID tests for only certain Bluetoot=
-h
-> > controllers. These keyboards aren=E2=80=99t able to connect to the devi=
-ce.
-> > Since those connection parameters improve the connection interval for
-> > most other chipsets, we want to leave the default values but have a
-> > way to have an optional override to address problematic models.
-> >
-> >
-> > Proposed Solution
-> >
-> > Adding support to bluetoothd for an additional config directory
-> > /etc/bluetooth/main.conf.d containing multiple files which will
-> > override common params. Override order will be lexically sorted
-> > filename order. This pattern is already used by Linux distros, for
-> > example there is /etc/sudoers.d which files will override common
-> > params in /etc/sudoers.
-> >
-> > Users can add override config files to /etc/bluetooth/main.conf.d
-> > rather than directly editing /etc/bluetooth/main.conf. This is more
-> > friendly to package managers since BlueZ package updates won't cause
-> > conflict to /etc/bluetooth/main.conf.
-> >
-> > In bluez=E2=80=99s main.c, merge the params for each *.conf file from
-> > /etc/bluetooth/main.conf.d with the existing /etc/bluetooth/main.conf
-> > in lexical filename order
-> >
-> > /etc/bluetooth/main.conf.d will be configurable at build time, e.g.
-> > with ./configure --main-conf-dir
->
-> This isn't quite how the pattern is usually used. With the existing
-> patterns, the OS-supplied stock configuration would be in
-> /usr/lib/bluetooth/main.conf.d (maybe with the default .conf in the
-> same directory as that subdir), with /etc/bluetooth/main.conf.d only
-> used for the user/admin override the default configuration.
-We did a bit of research and found that /etc/X and /etc/X.d is more
-common, e.g. the one described in
-https://www.redhat.com/sysadmin/etc-configuration-directories.
-If some distribution wants to organize the conf files to
-/usr/lib/bluetooth (for stock by package managers) and
-/etc/bluetooth/main.conf.d (for admin/users), I guess this is where
-having a configurable path is useful.
-What do you think?
->
-> I don't think that making it optional, or have the path changeable is
-> needed, but the rest seems good.
->
-> Cheers
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+---
+ drivers/bluetooth/Kconfig     |   1 +
+ drivers/bluetooth/btmtk.c     |   1 +
+ drivers/bluetooth/btmtk.h     |   1 +
+ drivers/bluetooth/btmtkuart.c | 184 +++++-----------------------------
+ 4 files changed, 29 insertions(+), 158 deletions(-)
+
+diff --git a/drivers/bluetooth/Kconfig b/drivers/bluetooth/Kconfig
+index 36380e618ba4..e30707405455 100644
+--- a/drivers/bluetooth/Kconfig
++++ b/drivers/bluetooth/Kconfig
+@@ -400,6 +400,7 @@ config BT_MTKSDIO
+ config BT_MTKUART
+ 	tristate "MediaTek HCI UART driver"
+ 	depends on SERIAL_DEV_BUS
++	select BT_MTK
+ 	help
+ 	  MediaTek Bluetooth HCI UART driver.
+ 	  This driver is required if you want to use MediaTek Bluetooth
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 526dfdf1fe01..809762d64fc6 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -285,6 +285,7 @@ MODULE_AUTHOR("Mark Chen <mark-yw.chen@mediatek.com>");
+ MODULE_DESCRIPTION("Bluetooth support for MediaTek devices ver " VERSION);
+ MODULE_VERSION(VERSION);
+ MODULE_LICENSE("GPL");
++MODULE_FIRMWARE(FIRMWARE_MT7622);
+ MODULE_FIRMWARE(FIRMWARE_MT7663);
+ MODULE_FIRMWARE(FIRMWARE_MT7668);
+ MODULE_FIRMWARE(FIRMWARE_MT7961);
+diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
+index 013850fd2055..2a88ea8e475e 100644
+--- a/drivers/bluetooth/btmtk.h
++++ b/drivers/bluetooth/btmtk.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: ISC */
+ /* Copyright (C) 2021 MediaTek Inc. */
+ 
++#define FIRMWARE_MT7622		"mediatek/mt7622pr2h.bin"
+ #define FIRMWARE_MT7663		"mediatek/mt7663pr2h.bin"
+ #define FIRMWARE_MT7668		"mediatek/mt7668pr2h.bin"
+ #define FIRMWARE_MT7961		"mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin"
+diff --git a/drivers/bluetooth/btmtkuart.c b/drivers/bluetooth/btmtkuart.c
+index 9ba22b13b4fa..136b901eb6f2 100644
+--- a/drivers/bluetooth/btmtkuart.c
++++ b/drivers/bluetooth/btmtkuart.c
+@@ -28,13 +28,10 @@
+ #include <net/bluetooth/hci_core.h>
+ 
+ #include "h4_recv.h"
++#include "btmtk.h"
+ 
+ #define VERSION "0.2"
+ 
+-#define FIRMWARE_MT7622		"mediatek/mt7622pr2h.bin"
+-#define FIRMWARE_MT7663		"mediatek/mt7663pr2h.bin"
+-#define FIRMWARE_MT7668		"mediatek/mt7668pr2h.bin"
+-
+ #define MTK_STP_TLR_SIZE	2
+ 
+ #define BTMTKUART_TX_STATE_ACTIVE	1
+@@ -44,25 +41,6 @@
+ 
+ #define BTMTKUART_FLAG_STANDALONE_HW	 BIT(0)
+ 
+-enum {
+-	MTK_WMT_PATCH_DWNLD = 0x1,
+-	MTK_WMT_TEST = 0x2,
+-	MTK_WMT_WAKEUP = 0x3,
+-	MTK_WMT_HIF = 0x4,
+-	MTK_WMT_FUNC_CTRL = 0x6,
+-	MTK_WMT_RST = 0x7,
+-	MTK_WMT_SEMAPHORE = 0x17,
+-};
+-
+-enum {
+-	BTMTK_WMT_INVALID,
+-	BTMTK_WMT_PATCH_UNDONE,
+-	BTMTK_WMT_PATCH_DONE,
+-	BTMTK_WMT_ON_UNDONE,
+-	BTMTK_WMT_ON_DONE,
+-	BTMTK_WMT_ON_PROGRESS,
+-};
+-
+ struct mtk_stp_hdr {
+ 	u8	prefix;
+ 	__be16	dlen;
+@@ -74,44 +52,6 @@ struct btmtkuart_data {
+ 	const char *fwname;
+ };
+ 
+-struct mtk_wmt_hdr {
+-	u8	dir;
+-	u8	op;
+-	__le16	dlen;
+-	u8	flag;
+-} __packed;
+-
+-struct mtk_hci_wmt_cmd {
+-	struct mtk_wmt_hdr hdr;
+-	u8 data[256];
+-} __packed;
+-
+-struct btmtk_hci_wmt_evt {
+-	struct hci_event_hdr hhdr;
+-	struct mtk_wmt_hdr whdr;
+-} __packed;
+-
+-struct btmtk_hci_wmt_evt_funcc {
+-	struct btmtk_hci_wmt_evt hwhdr;
+-	__be16 status;
+-} __packed;
+-
+-struct btmtk_tci_sleep {
+-	u8 mode;
+-	__le16 duration;
+-	__le16 host_duration;
+-	u8 host_wakeup_pin;
+-	u8 time_compensation;
+-} __packed;
+-
+-struct btmtk_hci_wmt_params {
+-	u8 op;
+-	u8 flag;
+-	u16 dlen;
+-	const void *data;
+-	u32 *status;
+-};
+-
+ struct btmtkuart_dev {
+ 	struct hci_dev *hdev;
+ 	struct serdev_device *serdev;
+@@ -153,29 +93,34 @@ static int mtk_hci_wmt_sync(struct hci_dev *hdev,
+ 	struct btmtk_hci_wmt_evt_funcc *wmt_evt_funcc;
+ 	u32 hlen, status = BTMTK_WMT_INVALID;
+ 	struct btmtk_hci_wmt_evt *wmt_evt;
+-	struct mtk_hci_wmt_cmd wc;
+-	struct mtk_wmt_hdr *hdr;
++	struct btmtk_hci_wmt_cmd *wc;
++	struct btmtk_wmt_hdr *hdr;
+ 	int err;
+ 
++	/* Send the WMT command and wait until the WMT event returns */
+ 	hlen = sizeof(*hdr) + wmt_params->dlen;
+ 	if (hlen > 255) {
+ 		err = -EINVAL;
+ 		goto err_free_skb;
+ 	}
+ 
+-	hdr = (struct mtk_wmt_hdr *)&wc;
++	wc = kzalloc(hlen, GFP_KERNEL);
++	if (!wc)
++		return -ENOMEM;
++
++	hdr = &wc->hdr;
+ 	hdr->dir = 1;
+ 	hdr->op = wmt_params->op;
+ 	hdr->dlen = cpu_to_le16(wmt_params->dlen + 1);
+ 	hdr->flag = wmt_params->flag;
+-	memcpy(wc.data, wmt_params->data, wmt_params->dlen);
++	memcpy(wc->data, wmt_params->data, wmt_params->dlen);
+ 
+ 	set_bit(BTMTKUART_TX_WAIT_VND_EVT, &bdev->tx_state);
+ 
+-	err = __hci_cmd_send(hdev, 0xfc6f, hlen, &wc);
++	err = __hci_cmd_send(hdev, 0xfc6f, hlen, wc);
+ 	if (err < 0) {
+ 		clear_bit(BTMTKUART_TX_WAIT_VND_EVT, &bdev->tx_state);
+-		goto err_free_skb;
++		goto err_free_wc;
+ 	}
+ 
+ 	/* The vendor specific WMT commands are all answered by a vendor
+@@ -192,14 +137,14 @@ static int mtk_hci_wmt_sync(struct hci_dev *hdev,
+ 	if (err == -EINTR) {
+ 		bt_dev_err(hdev, "Execution of wmt command interrupted");
+ 		clear_bit(BTMTKUART_TX_WAIT_VND_EVT, &bdev->tx_state);
+-		goto err_free_skb;
++		goto err_free_wc;
+ 	}
+ 
+ 	if (err) {
+ 		bt_dev_err(hdev, "Execution of wmt command timed out");
+ 		clear_bit(BTMTKUART_TX_WAIT_VND_EVT, &bdev->tx_state);
+ 		err = -ETIMEDOUT;
+-		goto err_free_skb;
++		goto err_free_wc;
+ 	}
+ 
+ 	/* Parse and handle the return WMT event */
+@@ -212,13 +157,13 @@ static int mtk_hci_wmt_sync(struct hci_dev *hdev,
+ 	}
+ 
+ 	switch (wmt_evt->whdr.op) {
+-	case MTK_WMT_SEMAPHORE:
++	case BTMTK_WMT_SEMAPHORE:
+ 		if (wmt_evt->whdr.flag == 2)
+ 			status = BTMTK_WMT_PATCH_UNDONE;
+ 		else
+ 			status = BTMTK_WMT_PATCH_DONE;
+ 		break;
+-	case MTK_WMT_FUNC_CTRL:
++	case BTMTK_WMT_FUNC_CTRL:
+ 		wmt_evt_funcc = (struct btmtk_hci_wmt_evt_funcc *)wmt_evt;
+ 		if (be16_to_cpu(wmt_evt_funcc->status) == 0x404)
+ 			status = BTMTK_WMT_ON_DONE;
+@@ -235,86 +180,12 @@ static int mtk_hci_wmt_sync(struct hci_dev *hdev,
+ err_free_skb:
+ 	kfree_skb(bdev->evt_skb);
+ 	bdev->evt_skb = NULL;
++err_free_wc:
++	kfree(wc);
+ 
+ 	return err;
+ }
+ 
+-static int mtk_setup_firmware(struct hci_dev *hdev, const char *fwname)
+-{
+-	struct btmtk_hci_wmt_params wmt_params;
+-	const struct firmware *fw;
+-	const u8 *fw_ptr;
+-	size_t fw_size;
+-	int err, dlen;
+-	u8 flag;
+-
+-	err = request_firmware(&fw, fwname, &hdev->dev);
+-	if (err < 0) {
+-		bt_dev_err(hdev, "Failed to load firmware file (%d)", err);
+-		return err;
+-	}
+-
+-	fw_ptr = fw->data;
+-	fw_size = fw->size;
+-
+-	/* The size of patch header is 30 bytes, should be skip */
+-	if (fw_size < 30) {
+-		err = -EINVAL;
+-		goto free_fw;
+-	}
+-
+-	fw_size -= 30;
+-	fw_ptr += 30;
+-	flag = 1;
+-
+-	wmt_params.op = MTK_WMT_PATCH_DWNLD;
+-	wmt_params.status = NULL;
+-
+-	while (fw_size > 0) {
+-		dlen = min_t(int, 250, fw_size);
+-
+-		/* Tell device the position in sequence */
+-		if (fw_size - dlen <= 0)
+-			flag = 3;
+-		else if (fw_size < fw->size - 30)
+-			flag = 2;
+-
+-		wmt_params.flag = flag;
+-		wmt_params.dlen = dlen;
+-		wmt_params.data = fw_ptr;
+-
+-		err = mtk_hci_wmt_sync(hdev, &wmt_params);
+-		if (err < 0) {
+-			bt_dev_err(hdev, "Failed to send wmt patch dwnld (%d)",
+-				   err);
+-			goto free_fw;
+-		}
+-
+-		fw_size -= dlen;
+-		fw_ptr += dlen;
+-	}
+-
+-	wmt_params.op = MTK_WMT_RST;
+-	wmt_params.flag = 4;
+-	wmt_params.dlen = 0;
+-	wmt_params.data = NULL;
+-	wmt_params.status = NULL;
+-
+-	/* Activate funciton the firmware providing to */
+-	err = mtk_hci_wmt_sync(hdev, &wmt_params);
+-	if (err < 0) {
+-		bt_dev_err(hdev, "Failed to send wmt rst (%d)", err);
+-		goto free_fw;
+-	}
+-
+-	/* Wait a few moments for firmware activation done */
+-	usleep_range(10000, 12000);
+-
+-free_fw:
+-	release_firmware(fw);
+-	return err;
+-}
+-
+ static int btmtkuart_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+ 	struct btmtkuart_dev *bdev = hci_get_drvdata(hdev);
+@@ -645,7 +516,7 @@ static int btmtkuart_func_query(struct hci_dev *hdev)
+ 	u8 param = 0;
+ 
+ 	/* Query whether the function is enabled */
+-	wmt_params.op = MTK_WMT_FUNC_CTRL;
++	wmt_params.op = BTMTK_WMT_FUNC_CTRL;
+ 	wmt_params.flag = 4;
+ 	wmt_params.dlen = sizeof(param);
+ 	wmt_params.data = &param;
+@@ -672,7 +543,7 @@ static int btmtkuart_change_baudrate(struct hci_dev *hdev)
+ 	 * ready to change a new baudrate.
+ 	 */
+ 	baudrate = cpu_to_le32(bdev->desired_speed);
+-	wmt_params.op = MTK_WMT_HIF;
++	wmt_params.op = BTMTK_WMT_HIF;
+ 	wmt_params.flag = 1;
+ 	wmt_params.dlen = 4;
+ 	wmt_params.data = &baudrate;
+@@ -706,7 +577,7 @@ static int btmtkuart_change_baudrate(struct hci_dev *hdev)
+ 	usleep_range(20000, 22000);
+ 
+ 	/* Test the new baudrate */
+-	wmt_params.op = MTK_WMT_TEST;
++	wmt_params.op = BTMTK_WMT_TEST;
+ 	wmt_params.flag = 7;
+ 	wmt_params.dlen = 0;
+ 	wmt_params.data = NULL;
+@@ -741,7 +612,7 @@ static int btmtkuart_setup(struct hci_dev *hdev)
+ 	 * do any setups.
+ 	 */
+ 	if (test_bit(BTMTKUART_REQUIRED_WAKEUP, &bdev->tx_state)) {
+-		wmt_params.op = MTK_WMT_WAKEUP;
++		wmt_params.op = BTMTK_WMT_WAKEUP;
+ 		wmt_params.flag = 3;
+ 		wmt_params.dlen = 0;
+ 		wmt_params.data = NULL;
+@@ -760,7 +631,7 @@ static int btmtkuart_setup(struct hci_dev *hdev)
+ 		btmtkuart_change_baudrate(hdev);
+ 
+ 	/* Query whether the firmware is already download */
+-	wmt_params.op = MTK_WMT_SEMAPHORE;
++	wmt_params.op = BTMTK_WMT_SEMAPHORE;
+ 	wmt_params.flag = 1;
+ 	wmt_params.dlen = 0;
+ 	wmt_params.data = NULL;
+@@ -778,7 +649,7 @@ static int btmtkuart_setup(struct hci_dev *hdev)
+ 	}
+ 
+ 	/* Setup a firmware which the device definitely requires */
+-	err = mtk_setup_firmware(hdev, bdev->data->fwname);
++	err = btmtk_setup_firmware(hdev, bdev->data->fwname, mtk_hci_wmt_sync);
+ 	if (err < 0)
+ 		return err;
+ 
+@@ -801,7 +672,7 @@ static int btmtkuart_setup(struct hci_dev *hdev)
+ 	}
+ 
+ 	/* Enable Bluetooth protocol */
+-	wmt_params.op = MTK_WMT_FUNC_CTRL;
++	wmt_params.op = BTMTK_WMT_FUNC_CTRL;
+ 	wmt_params.flag = 0;
+ 	wmt_params.dlen = sizeof(param);
+ 	wmt_params.data = &param;
+@@ -846,7 +717,7 @@ static int btmtkuart_shutdown(struct hci_dev *hdev)
+ 	int err;
+ 
+ 	/* Disable the device */
+-	wmt_params.op = MTK_WMT_FUNC_CTRL;
++	wmt_params.op = BTMTK_WMT_FUNC_CTRL;
+ 	wmt_params.flag = 0;
+ 	wmt_params.dlen = sizeof(param);
+ 	wmt_params.data = &param;
+@@ -1131,6 +1002,3 @@ MODULE_AUTHOR("Sean Wang <sean.wang@mediatek.com>");
+ MODULE_DESCRIPTION("MediaTek Bluetooth Serial driver ver " VERSION);
+ MODULE_VERSION(VERSION);
+ MODULE_LICENSE("GPL");
+-MODULE_FIRMWARE(FIRMWARE_MT7622);
+-MODULE_FIRMWARE(FIRMWARE_MT7663);
+-MODULE_FIRMWARE(FIRMWARE_MT7668);
+-- 
+2.25.1
+
