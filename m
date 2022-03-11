@@ -2,62 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC4344D6A1E
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 12 Mar 2022 00:26:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A98254D6A2F
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 12 Mar 2022 00:26:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229863AbiCKWxd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 11 Mar 2022 17:53:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52400 "EHLO
+        id S229780AbiCKWrx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 11 Mar 2022 17:47:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbiCKWwj (ORCPT
+        with ESMTP id S229527AbiCKWrh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 11 Mar 2022 17:52:39 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC4D1FAA28
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Mar 2022 14:30:00 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id 15-20020a17090a098f00b001bef0376d5cso9381847pjo.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Mar 2022 14:30:00 -0800 (PST)
+        Fri, 11 Mar 2022 17:47:37 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD6AF293F23
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Mar 2022 14:22:32 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id b188so10885005oia.13
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Mar 2022 14:22:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=a1kdBcW1ovP6W2aWzDgrwGNjIzPejdhY2ndu+42ImDc=;
-        b=qVQSLvlhy7lSByDxFMKc714W2DXuho1XiSwbzHO9e+QFJn05Irjs8qWrwCBI4W44nX
-         p2+/e+oJFoy9Rl/5crQoxNVtKnFY2Y0l42k4btKII21shSaRbTDgawLudD6PVzSIkkjX
-         b0LQuuTk1+bJASAjSEQZJfoYSyWT4WXbfA1tSLeR4nBD3k4mcike8UAp8jWpzjJ2dna/
-         JjzifXsZ0kUk9Veo/FUPHA46tULdqSrHXAfFu9L1UBsMPHlgbO87S1B8+1OiMzQTwRYy
-         jbOcnoOMGPkhuED7uf6b2PgDT9kvXu+au9NkS1rY/855kUeoZwq0d+nxARgLaRtpU9CT
-         r0jw==
+        bh=4rIaFsV6Lh2X97PNi4pPXTolHXU4HTyayy7UxDVjCos=;
+        b=iiQss2wzwK27nzcMyANxd0x8a8WygNEyK7xJHIrLhkx/dVgpKcBUfXYXMJx0zvNdlu
+         mogqbuof3oddBKZxKkIVQahF7oZLoCfc6DUJN7r85B3urzpiyST3vfmRc331mNxXxxJo
+         M/6HmFehbPldRTsBVcqxhFausDUk94vmdfFdUabqDmpqnzG0UIhp1Hg7xC58EywDHSdz
+         eAHIwmqFOo+nmmZgFrrUP6VzOLGGLyjcB6+Xk7Y7LwNHz74jkr3j0FF2tHKXXJ3AvGvf
+         QhTv15xoLC+x0HdxqNzIJFw/Glh6bFqqM2ZJ7tieK48ujvEDKqT4Fg57kbIEmAxZJ5Ub
+         uoCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=a1kdBcW1ovP6W2aWzDgrwGNjIzPejdhY2ndu+42ImDc=;
-        b=n2sVr+F2e8LNZTUog2mrXngFtgT9DRoNfYyboA3x/iF48S0SVHCsJNX9uEqWwzNhlv
-         wPYJ+ZeHLm0yA/rydt3lU3+jcYmXff0F7oX6hY7Ml/tjM+tPpeDH8gEGiVQPCz7PNlFa
-         sUIAf83c8k2EPW94ptTY50/Q/oqhbvHgzOxD3DhRJLhI8L7KYJL+zwWu1cGF0NQ8dJee
-         4bgqhLTdAEt+HZXF0AcOQQCBX74Gt8oo0+URExfz8inSeIQSxzy6WRCfIVv8rtkTE2Zj
-         CorpXdspzyV90/zQRP04Gs6OfjHY0GCO2sd+RC+mpUQBt0QgmfAC5kRF8dbYRXkVe1TC
-         dLTw==
-X-Gm-Message-State: AOAM532mSSuj75R+91SuWCKa6wRFlS/nRdU+d4tcOAHtqexsmsq68VSf
-        UN25TMiPP4egepc7avuHRH6q6Md830Q=
-X-Google-Smtp-Source: ABdhPJx0Bb5r4WGFe+svNOTKMcGswRACt3/bJD3jAb5Pkz8RRJj+vidNF418cAYiobmNk/RXulol4Q==
-X-Received: by 2002:a17:902:ef4d:b0:14f:e82b:25fd with SMTP id e13-20020a170902ef4d00b0014fe82b25fdmr12168985plx.80.1647033452517;
-        Fri, 11 Mar 2022 13:17:32 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4rIaFsV6Lh2X97PNi4pPXTolHXU4HTyayy7UxDVjCos=;
+        b=vhsjxl16v98g2AEGqaKlkNvBIz/CLbV7e3ItHvHB9MFvEix2GNCpi1K8ZEwgc51jXt
+         LAbn55Afvh7wGiNvcBngtAQo0Fvbs7ukIaIIU7J8aQVteoiqtCkpI/915yOO7afqDy2V
+         rhIi3G+2SEmY4bykfo0nVIQPAHY+l84jRiPfiUFkrphXy9+gpPEoqO8pY8appqwig+++
+         nM5/9m/r+71suvd6F25//2bcteq4/QcDeGZbXq6j6LqO+BcHQx0UXmX2jxO5zw3STY3L
+         V8usIoPpqTiYBRSt8MSXbP5BfpCo2b/IrpUwVEYKUXP3YbGmCn2evgUl1/zdTj5WEgmD
+         CR7Q==
+X-Gm-Message-State: AOAM532maLmdGFDoo9Ha1VXsdu0h4W1SSrKdvH42idLtscoA2GEgDifM
+        wM5QCYBOzxwNFd7WcgW/FH0apLsZw1U=
+X-Google-Smtp-Source: ABdhPJykMRJdJkHQBE+zX6NiJjzsdpyqKfPP42TP2SiJ79k31eKTD9LGHlaBl50ZLEcOPzD2eIshPg==
+X-Received: by 2002:a17:90a:600a:b0:1b9:dd79:ea77 with SMTP id y10-20020a17090a600a00b001b9dd79ea77mr12899594pji.44.1647033574201;
+        Fri, 11 Mar 2022 13:19:34 -0800 (PST)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id x3-20020a17090ad68300b001b8bcd47c35sm13927508pju.6.2022.03.11.13.17.32
+        by smtp.gmail.com with ESMTPSA id d11-20020aa7868b000000b004f768dfe93asm8110306pfo.176.2022.03.11.13.19.33
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 13:17:32 -0800 (PST)
+        Fri, 11 Mar 2022 13:19:33 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] btdev: Fix CIS Established
-Date:   Fri, 11 Mar 2022 13:17:30 -0800
-Message-Id: <20220311211730.3285028-2-luiz.dentz@gmail.com>
+Subject: [PATCH] Bluetooth: Fix use after free in hci_send_acl
+Date:   Fri, 11 Mar 2022 13:19:33 -0800
+Message-Id: <20220311211933.3285806-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220311211730.3285028-1-luiz.dentz@gmail.com>
-References: <20220311211730.3285028-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -71,31 +70,123 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-CIS Established was using the ISO latency instead of SDU interval for
-transport latency.
----
- emulator/btdev.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+This fixes the following trace caused by receiving
+HCI_EV_DISCONN_PHY_LINK_COMPLETE which does call hci_conn_del without
+first checking if conn->type is in fact AMP_LINK and in case it is
+do properly cleanup upper layers with hci_disconn_cfm:
 
-diff --git a/emulator/btdev.c b/emulator/btdev.c
-index 09eadd24f..c60ce6dbe 100644
---- a/emulator/btdev.c
-+++ b/emulator/btdev.c
-@@ -5774,10 +5774,10 @@ static void le_cis_estabilished(struct btdev *dev, struct btdev_conn *conn,
- 				sizeof(remote->le_cig.params.c_interval));
- 		memcpy(evt.cis_sync_delay, remote->le_cig.params.p_interval,
- 				sizeof(remote->le_cig.params.p_interval));
--		memcpy(evt.c_latency, &remote->le_cig.params.c_latency,
--				sizeof(remote->le_cig.params.c_latency));
--		memcpy(evt.p_latency, &remote->le_cig.params.p_latency,
--				sizeof(remote->le_cig.params.p_latency));
-+		memcpy(evt.c_latency, &remote->le_cig.params.c_interval,
-+				sizeof(remote->le_cig.params.c_interval));
-+		memcpy(evt.p_latency, &remote->le_cig.params.p_interval,
-+				sizeof(remote->le_cig.params.p_interval));
- 		evt.c_phy = remote->le_cig.cis[0].c_phy;
- 		evt.p_phy = remote->le_cig.cis[0].p_phy;
- 		evt.nse = 0x01;
+ ==================================================================
+    BUG: KASAN: use-after-free in hci_send_acl+0xaba/0xc50
+    Read of size 8 at addr ffff88800e404818 by task bluetoothd/142
+
+    CPU: 0 PID: 142 Comm: bluetoothd Not tainted
+    5.17.0-rc5-00006-gda4022eeac1a #7
+    Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+    rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x45/0x59
+     print_address_description.constprop.0+0x1f/0x150
+     kasan_report.cold+0x7f/0x11b
+     hci_send_acl+0xaba/0xc50
+     l2cap_do_send+0x23f/0x3d0
+     l2cap_chan_send+0xc06/0x2cc0
+     l2cap_sock_sendmsg+0x201/0x2b0
+     sock_sendmsg+0xdc/0x110
+     sock_write_iter+0x20f/0x370
+     do_iter_readv_writev+0x343/0x690
+     do_iter_write+0x132/0x640
+     vfs_writev+0x198/0x570
+     do_writev+0x202/0x280
+     do_syscall_64+0x38/0x90
+     entry_SYSCALL_64_after_hwframe+0x44/0xae
+    RSP: 002b:00007ffce8a099b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000014
+    Code: 0f 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3
+    0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 14 00 00 00 0f 05
+    <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
+    RDX: 0000000000000001 RSI: 00007ffce8a099e0 RDI: 0000000000000015
+    RAX: ffffffffffffffda RBX: 00007ffce8a099e0 RCX: 00007f788fc3cf77
+    R10: 00007ffce8af7080 R11: 0000000000000246 R12: 000055e4ccf75580
+    RBP: 0000000000000015 R08: 0000000000000002 R09: 0000000000000001
+    </TASK>
+    R13: 000055e4ccf754a0 R14: 000055e4ccf75cd0 R15: 000055e4ccf4a6b0
+
+    Allocated by task 45:
+        kasan_save_stack+0x1e/0x40
+        __kasan_kmalloc+0x81/0xa0
+        hci_chan_create+0x9a/0x2f0
+        l2cap_conn_add.part.0+0x1a/0xdc0
+        l2cap_connect_cfm+0x236/0x1000
+        le_conn_complete_evt+0x15a7/0x1db0
+        hci_le_conn_complete_evt+0x226/0x2c0
+        hci_le_meta_evt+0x247/0x450
+        hci_event_packet+0x61b/0xe90
+        hci_rx_work+0x4d5/0xc50
+        process_one_work+0x8fb/0x15a0
+        worker_thread+0x576/0x1240
+        kthread+0x29d/0x340
+        ret_from_fork+0x1f/0x30
+
+    Freed by task 45:
+        kasan_save_stack+0x1e/0x40
+        kasan_set_track+0x21/0x30
+        kasan_set_free_info+0x20/0x30
+        __kasan_slab_free+0xfb/0x130
+        kfree+0xac/0x350
+        hci_conn_cleanup+0x101/0x6a0
+        hci_conn_del+0x27e/0x6c0
+        hci_disconn_phylink_complete_evt+0xe0/0x120
+        hci_event_packet+0x812/0xe90
+        hci_rx_work+0x4d5/0xc50
+        process_one_work+0x8fb/0x15a0
+        worker_thread+0x576/0x1240
+        kthread+0x29d/0x340
+        ret_from_fork+0x1f/0x30
+
+    The buggy address belongs to the object at ffff88800c0f0500
+    The buggy address is located 24 bytes inside of
+    which belongs to the cache kmalloc-128 of size 128
+    The buggy address belongs to the page:
+    128-byte region [ffff88800c0f0500, ffff88800c0f0580)
+    flags: 0x100000000000200(slab|node=0|zone=1)
+    page:00000000fe45cd86 refcount:1 mapcount:0
+    mapping:0000000000000000 index:0x0 pfn:0xc0f0
+    raw: 0000000000000000 0000000080100010 00000001ffffffff
+    0000000000000000
+    raw: 0100000000000200 ffffea00003a2c80 dead000000000004
+    ffff8880078418c0
+    page dumped because: kasan: bad access detected
+    ffff88800c0f0400: 00 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc
+    Memory state around the buggy address:
+    >ffff88800c0f0500: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+    ffff88800c0f0480: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+    ffff88800c0f0580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+                                ^
+    ==================================================================
+    ffff88800c0f0600: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+
+Reported-by: Sönke Huster <soenke.huster@eknoes.de>
+Tested-by: Sönke Huster <soenke.huster@eknoes.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ net/bluetooth/hci_event.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index e56b09806f9b..6402dc00b0e1 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5772,8 +5772,9 @@ static void hci_disconn_phylink_complete_evt(struct hci_dev *hdev, void *data,
+ 	hci_dev_lock(hdev);
+ 
+ 	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (hcon) {
++	if (hcon && hcon->type == AMP_LINK) {
+ 		hcon->state = BT_CLOSED;
++		hci_disconn_cfm(hcon, ev->reason);
+ 		hci_conn_del(hcon);
+ 	}
+ 
 -- 
 2.35.1
 
