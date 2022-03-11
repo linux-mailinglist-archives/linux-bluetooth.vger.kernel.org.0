@@ -2,116 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79E354D6287
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 11 Mar 2022 14:40:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F62B4D6AE2
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 12 Mar 2022 00:27:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240735AbiCKNlO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 11 Mar 2022 08:41:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47672 "EHLO
+        id S229573AbiCKWus (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 11 Mar 2022 17:50:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231279AbiCKNlN (ORCPT
+        with ESMTP id S229909AbiCKWuj (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 11 Mar 2022 08:41:13 -0500
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FC5412A75F
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Mar 2022 05:40:10 -0800 (PST)
-Received: by mail-pg1-x52a.google.com with SMTP id o26so7485837pgb.8
-        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Mar 2022 05:40:10 -0800 (PST)
+        Fri, 11 Mar 2022 17:50:39 -0500
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 822721B371A
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Mar 2022 14:32:32 -0800 (PST)
+Received: by mail-qv1-xf30.google.com with SMTP id j5so8060876qvs.13
+        for <linux-bluetooth@vger.kernel.org>; Fri, 11 Mar 2022 14:32:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=matician-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zJPnVIMSU+IrQ9w0O2hqLwzd9dxtAvfXm0oaAs1Cu+o=;
-        b=KyHQnFWzijooxhm4+qEClaFTQnEh1kFr5/0X6dBynGp50rRU03p/aEaHySlTcLLpML
-         N0HWi23HXrJPFZNrUjwzzK3VnbpzBrSp9Shhvljosnj3JI/kxNP6wU6pjcuTuZ7dcVjx
-         liJOt/SOw8J6okyDGeurWLW49JV+Eb2j4ZbojSFQP/CyO2g7enBbQoAhFtasV6sUBBIr
-         LX/DHfsT2qlfLFhfQ79u1hsJZIAmNU6Xj1uWDTt/GN+/gw5kiLcNvGYc/DwKztEP2O3J
-         JIV4lrsGnRq2UVntgxzw18B/RVWt9dBeEFW4jeHsj2glVNDlA2kW29O/FgG5Nvpy5jtj
-         adxw==
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gb/XHSd9cfBC2AgGpJK38o7mocvWWCcj1vl5eGJQ0A8=;
+        b=XT6JnNpMAUDBR25tpVR4co96qMiwMq2KXN3Vtstze3rpNW88m/kD7RRDzdbwud5HNa
+         eZ4UYG/ntDf2E229UdtQW3R1eIxkOgJ/tmcBP1fg9awzP72y2EVQwuOCDs+pSvPXVF12
+         zsd2IIHPRyaulRFNTXzRnZvzyjajDEKNq6K99nuuueGBc1NKBMym3aqJjD+FAf5sExlt
+         75gWAAiOsaRC7rmUL1yTXhxQ+q/UzX2Ek1NEG60HYN6mvbAXOSB/kqafPWF2iWtK1jzj
+         ZRYGUHz+qXj2Y96sgdL8xM3QBN7NTeaEyp/wDAjxoSBQyn3qbPyJRSUfsHKZz1ZfGNGo
+         eJTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zJPnVIMSU+IrQ9w0O2hqLwzd9dxtAvfXm0oaAs1Cu+o=;
-        b=yomQusQ70h4tVZrN+dduG6cJv4+JYvDNluLyzsy2tAaeG4lhuDs+/N7mJu27mbBmaa
-         ZUo1aLXCO0y09E+HDHlyMHaa+wcUNRbDyp2moTqh9UoGYZSHZrf2XNWSFAtMSwn76q2C
-         fg2KDnXpeCw4rT+CbF4HirMI7/FNKV2tGhvZ+GZ5RUNUZrpdMKwh88vrSB8eP+q9GCTl
-         Xckvxeen+2V2ZyGlWImiAkOpw4dLCvyYrgYa+pc7c2jAAXeCimpgXtSIgEXBVxKtAchd
-         MCHu6ogSHUpWHRB3bwA+vQt6SsLC1dx9Cy8+Ion1D1inRQXwHNoA42MITVd5fOnwOXFf
-         agRA==
-X-Gm-Message-State: AOAM53268ItZ+AW/LS6wrKwkNvlvxzljAewNCxC9l1iPIBMphnOEdPh7
-        PZ0zWuEUpqdfCJja+5zXpRwAVzogUOO9eJkuyGtsgg==
-X-Google-Smtp-Source: ABdhPJx4GJU+1g8Uc2yFPdnKGb6haWmbhQxzW0xSrGlkccKHqf6BpPTBeJ3wRN6VG158WX8XHwf24SeVKo+jdecgXDs=
-X-Received: by 2002:a63:5c0f:0:b0:374:4a37:48f9 with SMTP id
- q15-20020a635c0f000000b003744a3748f9mr8659467pgb.470.1647006010014; Fri, 11
- Mar 2022 05:40:10 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gb/XHSd9cfBC2AgGpJK38o7mocvWWCcj1vl5eGJQ0A8=;
+        b=cn0RL9+yj60Tu3BRnY0+vE3wWAlLzLai7p4OaLiE/nsjZ4Xnl4Vfe+kg0hAIo6TIyX
+         kNsbZ/kbVA0Ih0CmEwvuHB+Rrs+DyyFsfUDrCYf+8ovTYa9w3qrRFfYsfC0fuWqT7RVq
+         tXU1hxd7WLXJZdjbsZ1YuhLABQVOCHyLoYNpnYXRqCpkXq9+2mOuyJzEWfOZlIgF87iR
+         hvPsk19ZUyyZllHTRuGF0v0xs4VbkDneu6hfQizHYdxjr59rycJPdGnFJ08Xg+HsS98Y
+         joEf2tH3MQmgbvPK+eD6xqYNtQCJBsTMWRorhHA31G5gOrUjpVP9Ef/bipgaOR0ahC40
+         ARYQ==
+X-Gm-Message-State: AOAM530DK9nOPNiZ3rgNMR3VIvw5ogFDKb3c96P8RJwbhtNpkDnTkByZ
+        KW1PxbY/KpGYe9flkONLLqCv2OvS0VY=
+X-Google-Smtp-Source: ABdhPJy2ufc7e3mWOYUXQF16Y0C/lxC8wmTGcwotDrwNdotBJ60UKX/EGR30buaEufm8U9id0W9q6A==
+X-Received: by 2002:a17:902:aa8d:b0:150:c60:29a4 with SMTP id d13-20020a170902aa8d00b001500c6029a4mr12028006plr.40.1647033451761;
+        Fri, 11 Mar 2022 13:17:31 -0800 (PST)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id x3-20020a17090ad68300b001b8bcd47c35sm13927508pju.6.2022.03.11.13.17.31
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Mar 2022 13:17:31 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/2] bthost: Fix not setting all parameters when using Create BIG cmd
+Date:   Fri, 11 Mar 2022 13:17:29 -0800
+Message-Id: <20220311211730.3285028-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <20220224100641.2449550-1-gavin@matician.com> <71D25C8F-67D1-4EC0-9160-5F61C832F0AF@holtmann.org>
- <CACB127+s8mj2-Hkt4yZXRZ_cQ9CbAK0r3y709-8Cb3awpVJm9Q@mail.gmail.com>
-In-Reply-To: <CACB127+s8mj2-Hkt4yZXRZ_cQ9CbAK0r3y709-8Cb3awpVJm9Q@mail.gmail.com>
-From:   Gavin Li <gavin@matician.com>
-Date:   Fri, 11 Mar 2022 05:39:58 -0800
-Message-ID: <CACB127+XwPBWOL_VL7Xq+FvD5zFhn0ZUDURvVvV6OdN0oYpvUQ@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: fix incorrect nonblock bitmask in bt_sock_wait_ready()
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Marcel,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Please let me know what you think with regards to the comments above.
+Create BIG shall set proper values for interval, latency, rtn and phy.
+---
+ emulator/bthost.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Best,
-Gavin
+diff --git a/emulator/bthost.c b/emulator/bthost.c
+index a7a0b8428..75fa625b1 100644
+--- a/emulator/bthost.c
++++ b/emulator/bthost.c
+@@ -3104,8 +3104,11 @@ void bthost_create_big(struct bthost *bthost, uint8_t num_bis)
+ 	cp.handle = 0x01;
+ 	cp.adv_handle = 0x01;
+ 	cp.num_bis = num_bis;
++	put_le24(10000, cp.bis.sdu_interval);
+ 	cp.bis.sdu = 40;
+-	cp.bis.phy = 0x01;
++	cp.bis.latency = cpu_to_le16(10);
++	cp.bis.rtn = 0x02;
++	cp.bis.phy = 0x02;
+ 	send_command(bthost, BT_HCI_CMD_LE_CREATE_BIG, &cp, sizeof(cp));
+ }
+ 
+-- 
+2.35.1
 
-
-On Thu, Feb 24, 2022 at 12:56 PM Gavin Li <gavin@matician.com> wrote:
->
-> Hi Marcel,
->
-> Thanks for reviewing this quickly.
->
-> > > diff --git a/net/bluetooth/af_bluetooth.c b/net/bluetooth/af_bluetooth.c
-> > > index ee319779781e6..69374321130e4 100644
-> > > --- a/net/bluetooth/af_bluetooth.c
-> > > +++ b/net/bluetooth/af_bluetooth.c
-> > > @@ -568,7 +568,7 @@ int bt_sock_wait_state(struct sock *sk, int state, unsigned long timeo)
-> > > EXPORT_SYMBOL(bt_sock_wait_state);
-> > >
-> > > /* This function expects the sk lock to be held when called */
-> > > -int bt_sock_wait_ready(struct sock *sk, unsigned long flags)
-> > > +int bt_sock_wait_ready(struct sock *sk, unsigned int flags)
-> >
-> > can we then also do s/flags/msg_flags/ then.
-> I prefer keeping it as flags because all other net code also uses
-> flags, msg_flags only appears
-> in msg->msg_flags.
->
-> > > @@ -576,7 +576,7 @@ int bt_sock_wait_ready(struct sock *sk, unsigned long flags)
-> > >
-> > >       BT_DBG("sk %p", sk);
-> > >
-> > > -     timeo = sock_sndtimeo(sk, flags & O_NONBLOCK);
-> > > +     timeo = sock_sndtimeo(sk, flags & MSG_DONTWAIT);
-> >
-> > Since sock_sndtimeo() is taking a bool. This might be better !!(flags & MSG_DONTWAIT).
-> It appears to be well-known in the net code that sock_sndtimeo takes a
-> bool, since no other
-> uses of it do the "!!" conversion.
->
-> Let me know what you think. I can make the changes if needed but I was
-> just trying my best
-> to match the currently existing convention.
->
-> Best,
-> Gavin
