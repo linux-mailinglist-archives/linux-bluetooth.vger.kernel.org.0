@@ -2,86 +2,186 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 289794DC4AE
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Mar 2022 12:20:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1B774DD1D6
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Mar 2022 01:15:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232950AbiCQLVf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 17 Mar 2022 07:21:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41412 "EHLO
+        id S229718AbiCRAQD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Mar 2022 20:16:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232960AbiCQLVf (ORCPT
+        with ESMTP id S229441AbiCRAQD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 17 Mar 2022 07:21:35 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D58C61E3E03;
-        Thu, 17 Mar 2022 04:20:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 38EB5CE22DC;
-        Thu, 17 Mar 2022 11:20:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 803F3C36AE2;
-        Thu, 17 Mar 2022 11:20:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647516014;
-        bh=nCuwQehZV3E3+yHCPJUenkVbOnNfVLacM411RXq1JBQ=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=lX9UWohllyxg/2VmSSr4NgF9UCMF0/A/Tpq7Et1aKpk87D77wei9aN4oI7mr5KWf9
-         g15UpVyqIArst4kd2Vnh22Nrt8QwnYXHJXWZ4TCxK5rQo6WywInZEVNA2f48vApRru
-         Qx78D/GS8slE1Ez465DFyfl/LucxYSqZQ+m59CS4cqFHj+HzuD5cGwDBNLpUd89ZjX
-         YR2PDXYQXNipw2uK3xN6G0MDYqplflniczsiRv5pX4GS0ek5Hi7aAEzM9p/jZwQGqQ
-         PhA/QRYb9fOBn1cePptVSZaH84wMr1hm6oonpasWLmsG9kGx8IyCm+3ekHZjkVb9De
-         lo0Rx+p8BdlfQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 663C1E8DD5B;
-        Thu, 17 Mar 2022 11:20:14 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 17 Mar 2022 20:16:03 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB3702BC1E0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Mar 2022 17:14:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1647562485; x=1679098485;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=MlumUUz8QVrRYOyMQhAeCTrHe/ywq0Qo7mYkSLluwTw=;
+  b=KmGXDWMypg+SVTe+u122qP+bfG9xCZjpGS6VBmIzmAS2Fq7bEb16nECc
+   K8tHGoUO1e5bJ341fDdf7ggpxYjyYKXGzalEsNlFFi0FbxLF+UWQ5msEP
+   XVTvOnrtF8lT63QAaSd8S+oWxMkxZiQyXfNrLjX5ho9AmadytPLbTBzAg
+   fFQP+rYYnz2xF4GbluWaFP2C+yUKKxsVqmvRNCc+sI0RJ/S7ZuWNRgHLh
+   RypJxSBm7wKomfYRfpzTXgEPuht4npPCy0FMzouy6nitqVFlJ1kul2UZi
+   BJussrdlHK7gVo5Wfo3b8DBjk1O3ovNx5AGvCYCAqE0Dhe6AbAwqE025o
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10289"; a="239175262"
+X-IronPort-AV: E=Sophos;i="5.90,190,1643702400"; 
+   d="scan'208";a="239175262"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2022 17:14:45 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,190,1643702400"; 
+   d="scan'208";a="715241883"
+Received: from lkp-server02.sh.intel.com (HELO 89b41b6ae01c) ([10.239.97.151])
+  by orsmga005.jf.intel.com with ESMTP; 17 Mar 2022 17:14:44 -0700
+Received: from kbuild by 89b41b6ae01c with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1nV0GR-000EG7-EA; Fri, 18 Mar 2022 00:14:43 +0000
+Date:   Fri, 18 Mar 2022 08:14:20 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     linux-bluetooth@vger.kernel.org
+Subject: [bluetooth-next:master] BUILD SUCCESS
+ 255a55aaccb17fee3fa947c7eadf76d0e693da79
+Message-ID: <6233cedc.I4DogiFO2ilTzfyr%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: btmtkuart: fix error handling in
- mtk_hci_wmt_sync()
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <164751601441.15552.578400949800414032.git-patchwork-notify@kernel.org>
-Date:   Thu, 17 Mar 2022 11:20:14 +0000
-References: <20220317075740.GE25237@kili>
-In-Reply-To: <20220317075740.GE25237@kili>
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     sean.wang@mediatek.com, marcel@holtmann.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        matthias.bgg@gmail.com, linux-bluetooth@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, kernel-janitors@vger.kernel.org
-X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
+branch HEAD: 255a55aaccb17fee3fa947c7eadf76d0e693da79  Bluetooth: mt7921s: Add WBS support
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Marcel Holtmann <marcel@holtmann.org>:
+elapsed time: 729m
 
-On Thu, 17 Mar 2022 10:57:40 +0300 you wrote:
-> This code has an uninitialized variable warning:
-> 
->     drivers/bluetooth/btmtkuart.c:184 mtk_hci_wmt_sync()
->     error: uninitialized symbol 'wc'.
-> 
-> But it also has error paths which have memory leaks.
-> 
-> [...]
+configs tested: 105
+configs skipped: 3
 
-Here is the summary with links:
-  - Bluetooth: btmtkuart: fix error handling in mtk_hci_wmt_sync()
-    https://git.kernel.org/bluetooth/bluetooth-next/c/65d6602f6334
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+gcc tested configs:
+arm                                 defconfig
+arm                              allmodconfig
+arm                              allyesconfig
+arm64                               defconfig
+arm64                            allyesconfig
+arm                             pxa_defconfig
+sh                   rts7751r2dplus_defconfig
+nios2                         10m50_defconfig
+sh                               alldefconfig
+powerpc                       holly_defconfig
+mips                       capcella_defconfig
+sparc                            alldefconfig
+sh                ecovec24-romimage_defconfig
+powerpc                    adder875_defconfig
+alpha                               defconfig
+m68k                            q40_defconfig
+mips                           xway_defconfig
+sh                            migor_defconfig
+mips                     decstation_defconfig
+arm                  randconfig-c002-20220317
+ia64                                defconfig
+ia64                             allmodconfig
+ia64                             allyesconfig
+m68k                                defconfig
+m68k                             allmodconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                                defconfig
+parisc64                            defconfig
+s390                             allmodconfig
+s390                             allyesconfig
+parisc                           allyesconfig
+i386                             allyesconfig
+i386                              debian-10.3
+i386                   debian-10.3-kselftests
+i386                                defconfig
+sparc                            allyesconfig
+sparc                               defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                           allnoconfig
+powerpc                          allmodconfig
+powerpc                          allyesconfig
+x86_64                        randconfig-a006
+x86_64                        randconfig-a002
+x86_64                        randconfig-a004
+i386                          randconfig-a003
+i386                          randconfig-a001
+i386                          randconfig-a005
+x86_64                        randconfig-a013
+x86_64                        randconfig-a011
+x86_64                        randconfig-a015
+i386                          randconfig-a014
+i386                          randconfig-a012
+i386                          randconfig-a016
+arc                  randconfig-r043-20220317
+riscv                randconfig-r042-20220317
+s390                 randconfig-r044-20220317
+riscv                    nommu_k210_defconfig
+riscv                    nommu_virt_defconfig
+riscv                            allyesconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+um                             i386_defconfig
+um                           x86_64_defconfig
+x86_64                              defconfig
+x86_64                           allyesconfig
+x86_64                                  kexec
+x86_64                               rhel-8.3
+x86_64                          rhel-8.3-func
+x86_64                         rhel-8.3-kunit
+x86_64                    rhel-8.3-kselftests
 
+clang tested configs:
+arm                    vt8500_v6_v7_defconfig
+mips                        qi_lb60_defconfig
+powerpc                     mpc512x_defconfig
+arm                          pxa168_defconfig
+powerpc                     tqm5200_defconfig
+arm                          ixp4xx_defconfig
+x86_64                        randconfig-a001
+x86_64                        randconfig-a003
+x86_64                        randconfig-a005
+i386                          randconfig-a002
+i386                          randconfig-a006
+i386                          randconfig-a004
+x86_64                        randconfig-a012
+x86_64                        randconfig-a016
+x86_64                        randconfig-a014
+i386                          randconfig-a011
+i386                          randconfig-a013
+i386                          randconfig-a015
+hexagon              randconfig-r041-20220317
+hexagon              randconfig-r045-20220317
 
+---
+0-DAY CI Kernel Test Service
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
