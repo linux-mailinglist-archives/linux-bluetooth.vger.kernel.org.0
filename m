@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4F5C4E59A2
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Mar 2022 21:13:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3423A4E59A6
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Mar 2022 21:13:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344551AbiCWUPT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 23 Mar 2022 16:15:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38608 "EHLO
+        id S1344566AbiCWUPW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 23 Mar 2022 16:15:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344544AbiCWUPQ (ORCPT
+        with ESMTP id S1344550AbiCWUPR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 23 Mar 2022 16:15:16 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52397635F
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 13:13:46 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id b8so2792637pjb.4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 13:13:46 -0700 (PDT)
+        Wed, 23 Mar 2022 16:15:17 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C2677655
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 13:13:47 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id mj15-20020a17090b368f00b001c637aa358eso7511961pjb.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 13:13:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=oA2b2MSFZ5xMIcZQftlPk/BJnbKEpfSvA/B3B3AZtBo=;
-        b=MXnoelzMi+QjHshprhZA/AEVSmHPqLrKX5O5YgsCVLdiMPIRrc1OpMgUeWmQOB4QTy
-         C5MEwMWOkRqpDCA0dSwBoUgSrT7ocT6UzqWRIVC6+S5CrUm9sMs25LtTkglefJdCM56w
-         KLPS5JEb1/cr1tj/xL4TslFbURXQfKjSoqpySXcMLfukndOLwCRYnhBXYZj9wmMF0ekz
-         cdMS1EOK77O2N9UKPYnAS0QUbeWA1Vie91Zv72CqqKBgRHWyoYg/h9eMU+7j3hqAJNFY
-         K2s/x9RSmfTeHBoFc9NFRZhdVlSEIGesxNG5KgJ8S8+3ZzaaT22COkQ+Yn5sLWc3tYbr
-         Jtkw==
+        bh=FMwbFQa5JHQe75eN4X8D/2kRfU5RTU2M/iRq1EKBwjk=;
+        b=Ff4+xdsSUU5j5e9I6KpRT+CncE4oZDHADK+noSSQHXVPakCeGeHVpMIqpk4h3+KwJ5
+         1vPyvxeSKMeJYtQlPzbaRqruXIaMAos3aVzefotcoCGTLPWVXvRZm9E4oJ5ma7rF3WgB
+         Bq3BQ4RoTe2+rpnN9If310ZagaoR5oHqk7fJgo/V/2JsUdFqHSwKdfK7vCsxFZdpIMkY
+         pzmlxvSXX9/2UQrxoUrE7sVsWYn5ulDbMJ/OdbhBGN4cWbzdhCs6s0USsPtMxWBjyWxi
+         iDMYlLT/JfgCxor8/uBO6O2ZEXpoCFS/sYJJcM8s7pjQ90NUJkQV0ioy+lnQ/mY+123l
+         3UIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oA2b2MSFZ5xMIcZQftlPk/BJnbKEpfSvA/B3B3AZtBo=;
-        b=Amc15l6uaDn8RNnXQZUc70gjKeFKIwGERQpiTDEMgeD/+s27/fhCH6UUSYQF2FGPad
-         hRff1g52JG1/HAmqQOypF3zzF+u67oDYrQ852Ogt85QtQIO9jOAt4Oxa7ZPBa3SBlfte
-         tzN6/jmth3iRhwmZyk28ZbRBujoP8nF9dV2rALGGXqHbrwM+z3Pymglz18dD5o2DzFVg
-         rz+18G811ed5R7/8GRNvQaq4pdad0D+4I0nvYjO8pWUwVPSVX5LDj3CxlCRXPMhzmCd+
-         b8L0FmpV/kl8hqP083a7ossc1z/mmVAYtvYDztpAJ/fsdEUaVC7u6ZIbRE4LzzAb3+F+
-         O9Gg==
-X-Gm-Message-State: AOAM532ZOfUC3YMlcwTiLTN32ieGcHxsog55FMpLHZ9w3gsDxA/xg9nL
-        FfMGwPQSUU5AS2kVrAlkCpPs0Z3XH9w=
-X-Google-Smtp-Source: ABdhPJxWlRC8E+RKRxsmOfHlKJ3LN5gEPusRI0SIwssSjLoUxiyITORe5z3vFhGCePiE/OiacJv0Pw==
-X-Received: by 2002:a17:902:ca13:b0:153:db88:92cc with SMTP id w19-20020a170902ca1300b00153db8892ccmr1841193pld.80.1648066425590;
-        Wed, 23 Mar 2022 13:13:45 -0700 (PDT)
+        bh=FMwbFQa5JHQe75eN4X8D/2kRfU5RTU2M/iRq1EKBwjk=;
+        b=MUdtfNWT52pTVz0WZHYDkMIYQK6hv9hSwkPz3xooWL+a0tzyb+WMf1+sF5QOyIcCrA
+         a8KSGhIKoz9VLGh6iEONCwLUI5JafhtJEbhTUtFk9jR/jZ7vOjcBjCdmJOJqpfqCU5do
+         PtbSFA1QQsiFfjLzpJhgGOI5A1vp4TcPhvDdud3ltIIbqISnE2prqpkLO9FjSysZi9Ey
+         p+BPEEqFKFOCurOpCLdrc5XbYCeVs1dUrll+27v4m5p8WN6K4vq5RC/7v3DPU6zYCs88
+         Mtq48fF8sjfrpkdcsvEDZ5gqYWvWi5/JW+rUGU1QGr4LN6dcQbFv+OY8s1DnpzJg7kie
+         0XUQ==
+X-Gm-Message-State: AOAM5303JFrr+236932gCqO4h7ww4NwyF0ynQIgpMD8NpZbr6ttMa6XI
+        vArxw+4FMUP4TR9xY0ZwEcsi8vZ8Q4w=
+X-Google-Smtp-Source: ABdhPJzQDSG9HrLsjhjtBEBZElLqJSS9mfDBCqrWIxoWHcjnbO3wXQZu2KwjGdQnjHZI8qQMoeuVdQ==
+X-Received: by 2002:a17:903:2288:b0:153:bfbe:7354 with SMTP id b8-20020a170903228800b00153bfbe7354mr1836904plh.112.1648066426354;
+        Wed, 23 Mar 2022 13:13:46 -0700 (PDT)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id m4-20020a17090a7f8400b001bef3fc3938sm478361pjl.49.2022.03.23.13.13.44
+        by smtp.gmail.com with ESMTPSA id m4-20020a17090a7f8400b001bef3fc3938sm478361pjl.49.2022.03.23.13.13.45
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 13:13:45 -0700 (PDT)
+        Wed, 23 Mar 2022 13:13:46 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 3/9] mgmt: Introduce mgmt_set_verbose
-Date:   Wed, 23 Mar 2022 13:13:35 -0700
-Message-Id: <20220323201341.3596128-4-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v3 4/9] adapter: Don't use DBG in mgmt_debug
+Date:   Wed, 23 Mar 2022 13:13:36 -0700
+Message-Id: <20220323201341.3596128-5-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220323201341.3596128-1-luiz.dentz@gmail.com>
 References: <20220323201341.3596128-1-luiz.dentz@gmail.com>
@@ -71,89 +71,38 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This introduces mgmt_set_verbose which can be used to enable printing
-the the likes hexdump of packets, by default it is disabled since in
-most cases the hexdump is not very useful and there are better tools
-to collect the hexdumo like btmon.
+mgmt_debug callback is used to print debug strings from mgmt instances
+which includes the file and function names so using DBG would add yet
+another set of file and function prefixes which makes the logs
+confusing.
 ---
- src/shared/mgmt.c | 24 ++++++++++++++++++++----
- src/shared/mgmt.h |  1 +
- 2 files changed, 21 insertions(+), 4 deletions(-)
+ src/adapter.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/src/shared/mgmt.c b/src/shared/mgmt.c
-index c7e6a6c1d..cf518cc2b 100644
---- a/src/shared/mgmt.c
-+++ b/src/shared/mgmt.c
-@@ -50,6 +50,7 @@ struct mgmt {
- 	mgmt_debug_func_t debug_callback;
- 	mgmt_destroy_func_t debug_destroy;
- 	void *debug_data;
-+	bool verbose;
- };
+diff --git a/src/adapter.c b/src/adapter.c
+index 97ce26f8e..9f003346d 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -10327,9 +10327,7 @@ static void read_version_complete(uint8_t status, uint16_t length,
  
- struct mgmt_request {
-@@ -192,6 +193,15 @@ static void mgmt_log(struct mgmt *mgmt, const char *format, ...)
- 	va_end(ap);
+ static void mgmt_debug(const char *str, void *user_data)
+ {
+-	const char *prefix = user_data;
+-
+-	info("%s%s", prefix, str);
++	DBG_IDX(0xffff, "%s", str);
  }
  
-+static void mgmt_hexdump(struct mgmt *mgmt, char dir, const void *data,
-+							size_t len)
-+{
-+	if (!mgmt->verbose)
-+		return;
-+
-+	util_hexdump(dir, data, len, mgmt->debug_callback, mgmt->debug_data);
-+}
-+
- static bool send_request(struct mgmt *mgmt, struct mgmt_request *request)
- {
- 	struct iovec iov;
-@@ -219,8 +229,7 @@ static bool send_request(struct mgmt *mgmt, struct mgmt_request *request)
+ int adapter_init(void)
+@@ -10342,8 +10340,7 @@ int adapter_init(void)
+ 		return -EIO;
+ 	}
  
- 	DBG(mgmt, "[0x%04x] command 0x%04x", request->index, request->opcode);
+-	if (getenv("MGMT_DEBUG"))
+-		mgmt_set_debug(mgmt_primary, mgmt_debug, "mgmt: ", NULL);
++	mgmt_set_debug(mgmt_primary, mgmt_debug, NULL, NULL);
  
--	util_hexdump('<', request->buf, ret, mgmt->debug_callback,
--							mgmt->debug_data);
-+	mgmt_hexdump(mgmt, '<', request->buf, ret);
- 
- 	queue_push_tail(mgmt->pending_list, request);
- 
-@@ -373,8 +382,7 @@ static bool can_read_data(struct io *io, void *user_data)
- 	if (bytes_read < 0)
- 		return false;
- 
--	util_hexdump('>', mgmt->buf, bytes_read,
--				mgmt->debug_callback, mgmt->debug_data);
-+	mgmt_hexdump(mgmt, '>', mgmt->buf, bytes_read);
- 
- 	if (bytes_read < MGMT_HDR_SIZE)
- 		return true;
-@@ -594,6 +602,14 @@ bool mgmt_set_debug(struct mgmt *mgmt, mgmt_debug_func_t callback,
- 	return true;
- }
- 
-+void mgmt_set_verbose(struct mgmt *mgmt, bool value)
-+{
-+	if (!mgmt)
-+		return;
-+
-+	mgmt->verbose = value;
-+}
-+
- bool mgmt_set_close_on_unref(struct mgmt *mgmt, bool do_close)
- {
- 	if (!mgmt)
-diff --git a/src/shared/mgmt.h b/src/shared/mgmt.h
-index b413cea78..0f3e54c16 100644
---- a/src/shared/mgmt.h
-+++ b/src/shared/mgmt.h
-@@ -28,6 +28,7 @@ typedef void (*mgmt_debug_func_t)(const char *str, void *user_data);
- 
- bool mgmt_set_debug(struct mgmt *mgmt, mgmt_debug_func_t callback,
- 				void *user_data, mgmt_destroy_func_t destroy);
-+void mgmt_set_verbose(struct mgmt *mgmt, bool value);
- 
- bool mgmt_set_close_on_unref(struct mgmt *mgmt, bool do_close);
+ 	DBG("sending read version command");
  
 -- 
 2.35.1
