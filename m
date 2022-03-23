@@ -2,63 +2,62 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 621CC4E49F0
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Mar 2022 01:07:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A4CA4E4B28
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Mar 2022 03:56:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240880AbiCWAIc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 22 Mar 2022 20:08:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52404 "EHLO
+        id S241403AbiCWC6R (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 22 Mar 2022 22:58:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240875AbiCWAIa (ORCPT
+        with ESMTP id S231958AbiCWC6Q (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 22 Mar 2022 20:08:30 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E63AF6F480
-        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Mar 2022 17:07:01 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id l4-20020a17090a49c400b001c6840df4a3so192207pjm.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Mar 2022 17:07:01 -0700 (PDT)
+        Tue, 22 Mar 2022 22:58:16 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A1C970864
+        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Mar 2022 19:56:48 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id a11so188173qtb.12
+        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Mar 2022 19:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=ZdXcpJ++BFmfknFeg44qJ8tEEL3KH7uJgQPggfHVUP8=;
-        b=PueIhsT8DkDqPL4PUbAHKBe+ToxqDSQ0w22yAREsuYCcmD7oocTIXQCX/JwO7Hm/el
-         mwmOp91oo48xjrd+xSrUzq8Css2I/pQnV1gzp5vlUs2RWGH9P9fmxlUUs6RtA3I57VI4
-         tzvAGG7qvLgZIuumYNMm7+DVSYwqkpWdmh/rUIe7toAJsQyC7D7XOTks0ThvfEEuJQMf
-         AMCfolSWRYt1JnjrEjREyblLRoCmtk3H8R268lOi8tWBgX7/Q9v+vlzqsUh72fPjUvXm
-         qUfs+ezPKtZMuI2gMKmA8tbo4nro9svg6ghPTBuz3qkdsGLEKbkMw8uyCQqxnsldCyAg
-         o0IQ==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=Nf1o1RCM+sqj4LVBOHn6/s7AS3F4rOIfTFO4NTzY1BA=;
+        b=IEaj4RcO79eV439z4HmC1vHBOasDo605pDm/ZQ57IHq5MQ7/BESZl1VL8h4ORjF0uW
+         sL+WW0Qm600+81h562zua+WWjmuQP/iBbG9x5TR94tJkCfPe9aMjUE8zQncS3ayomwaR
+         9tphkSssF/1THZyMrDoNUkz+gdfb2JHez5+cLHOaqVlU3bbLxV3ozI45G2hjlYhdZplk
+         CF1IYlroNxyPYCcGguDIxP5SbyfGsRXrISi7FgujqOVwjDiNul82O2t1yEvLCur0gEru
+         Z/f031wB/noTZGdx6M9ut/nl94yus9O4H06EGFyEu5ENBvpcvXMtorbVf1KTgcV8HWus
+         jzHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZdXcpJ++BFmfknFeg44qJ8tEEL3KH7uJgQPggfHVUP8=;
-        b=jOhSLE5UEczrWw2zz64zbe+lmW7wpYtmDICs62aVQ+xGvSd8DZAWpaPVEXPKBD8EiA
-         TXX8KWnbC2oTPV+wEF36N3DUVWA56m43GmWzW8qhefki1pJD34nmImgDKqB8q2xChdDu
-         Q5qLHQXklweUAsecMryiBj7RBQG2zIcfMqUhcyE7OE8uRYBcOGm19sXGqdgDIfMsL+4w
-         fl6srKvtvDhHZUSLiG2Jw80/CT61KHiP6XjYzMAxr+MDhAWYINEU5+qPoI+aPJgBjQQS
-         IajRswpNb9YxxaSNOMXaP9kxlrQTx+okl3zBrgFdHUVefCYRr0Z5L8tz7A4Gq8i1cQQS
-         w8rQ==
-X-Gm-Message-State: AOAM532qywLyAeP+wrxRX9iQwnZzZIWS/dIWv17ZwBp6xU8UNfNaXkJ5
-        5YbzHkTDGcU827IDfRapSAVPUOqJPXE=
-X-Google-Smtp-Source: ABdhPJx0uQWLnz1s/ynIcF1nc+a2OSvDy3LlgBgnSwid7jd3nZouPDUlIAbxExzI7TtCkfebFjKWcg==
-X-Received: by 2002:a17:90b:4f4e:b0:1bf:88f6:e5b5 with SMTP id pj14-20020a17090b4f4e00b001bf88f6e5b5mr8137288pjb.47.1647994021192;
-        Tue, 22 Mar 2022 17:07:01 -0700 (PDT)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id bx22-20020a056a00429600b004fa936a64b0sm10098423pfb.196.2022.03.22.17.07.00
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=Nf1o1RCM+sqj4LVBOHn6/s7AS3F4rOIfTFO4NTzY1BA=;
+        b=M4KP/eH/OvYrGC4xl7PbZjyeIO/KZjqmLi6E5KUNuZcpUMQrk/OxFpLn+Fbux1xC5G
+         62+Ake92KMByEkkgU328Qlq2Wdb/HuEuwpdIfs8/qvV6HT6aKD1KYO5QGwOzOsyz5pPQ
+         c/LHl55QX6zp1kUBaypEjdsZ4K3JMZy4azkkkXBQI0jEQxmrDB3x27GYkUWv01mK1sHy
+         SxcpGLoNw5bbNqhsPDuzL+3ICv7BEf7Eh0InLxTjVfIM+5VHxV4A8zJ/c4qdV2pIAtJ3
+         4CdwWbyldfHPtqhKquFCdY0IYTkfG5jE3N3gJNjOcG1n9aXQHW3u2MwFPGtFA04+5UsT
+         uMyg==
+X-Gm-Message-State: AOAM532wRz0avoR7YT6ZBm8h7woXf7cVstaXZNgz6nv4Kf/qfwALUDal
+        gigiARKUwWWcWqclbX3Fo2ZXWXdpw1DCpQ==
+X-Google-Smtp-Source: ABdhPJzjoyHdXsncDVtmi8Fnv3VgbS9OEVru9oRIr6LFYlD+YZMXmZCDdX5Bw3htEN02taXR36SUrw==
+X-Received: by 2002:ac8:5789:0:b0:2e1:c40e:9be3 with SMTP id v9-20020ac85789000000b002e1c40e9be3mr22334279qta.308.1648004207254;
+        Tue, 22 Mar 2022 19:56:47 -0700 (PDT)
+Received: from [172.17.0.2] ([52.179.120.165])
+        by smtp.gmail.com with ESMTPSA id a16-20020a05622a02d000b002e20e4bf4aesm8248700qtx.23.2022.03.22.19.56.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 17:07:00 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 9/9] device: Don't use DBG in gatt_debug
-Date:   Tue, 22 Mar 2022 17:06:54 -0700
-Message-Id: <20220323000654.3157833-9-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220323000654.3157833-1-luiz.dentz@gmail.com>
-References: <20220323000654.3157833-1-luiz.dentz@gmail.com>
+        Tue, 22 Mar 2022 19:56:47 -0700 (PDT)
+Message-ID: <623a8c6f.1c69fb81.641d1.95d2@mx.google.com>
+Date:   Tue, 22 Mar 2022 19:56:47 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============0879652602860224747=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [BlueZ] gatt-server: Limit the Server MTU based on the Client MTU
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220322234956.3153209-1-luiz.dentz@gmail.com>
+References: <20220322234956.3153209-1-luiz.dentz@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -69,29 +68,83 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============0879652602860224747==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-gatt_debug callback is used to print debug strings from bt_att which
-includes the file and function names so using DBG would add yet another
-set of file and function prefixes which makes the logs confusing.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=625601
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.48 seconds
+GitLint                       FAIL      0.99 seconds
+Prep - Setup ELL              PASS      50.55 seconds
+Build - Prep                  PASS      0.74 seconds
+Build - Configure             PASS      10.12 seconds
+Build - Make                  PASS      1461.63 seconds
+Make Check                    FAIL      12.98 seconds
+Make Check w/Valgrind         FAIL      511.72 seconds
+Make Distcheck                FAIL      246.21 seconds
+Build w/ext ELL - Configure   PASS      10.14 seconds
+Build w/ext ELL - Make        PASS      1435.79 seconds
+Incremental Build with patchesPASS      0.00 seconds
+
+Details
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint with rule in .gitlint
+Output:
+[BlueZ] gatt-server: Limit the Server MTU based on the Client MTU
+10: B1 Line exceeds max length (117>80): "Link: https://lore.kernel.org/linux-bluetooth/CABBYNZL-fjTd8JdmRRM5Y26d41KwDxvvuaED+j2+yPT-RBpMtw@mail.gmail.com/T/#t"
+
+
+##############################
+Test: Make Check - FAIL
+Desc: Run 'make check'
+Output:
+./test-driver: line 107: 30021 Aborted                 (core dumped) "$@" > $log_file 2>&1
+make[3]: *** [Makefile:10773: test-suite.log] Error 1
+make[2]: *** [Makefile:10881: check-TESTS] Error 2
+make[1]: *** [Makefile:11275: check-am] Error 2
+make: *** [Makefile:11277: check] Error 2
+
+
+##############################
+Test: Make Check w/Valgrind - FAIL
+Desc: Run 'make check' with Valgrind
+Output:
+./test-driver: line 107: 47441 Aborted                 (core dumped) "$@" > $log_file 2>&1
+make[3]: *** [Makefile:10773: test-suite.log] Error 1
+make[2]: *** [Makefile:10881: check-TESTS] Error 2
+make[1]: *** [Makefile:11275: check-am] Error 2
+make: *** [Makefile:11277: check] Error 2
+
+
+##############################
+Test: Make Distcheck - FAIL
+Desc: Run distcheck to check the distribution
+Output:
+../../test-driver: line 107: 67803 Aborted                 (core dumped) "$@" > $log_file 2>&1
+make[4]: *** [Makefile:10773: test-suite.log] Error 1
+make[3]: *** [Makefile:10881: check-TESTS] Error 2
+make[2]: *** [Makefile:11275: check-am] Error 2
+make[1]: *** [Makefile:11277: check] Error 2
+make: *** [Makefile:11198: distcheck] Error 1
+
+
+
+
 ---
- src/device.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/src/device.c b/src/device.c
-index 3992f9a0c..860155b6e 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -5545,7 +5545,8 @@ static void gatt_client_service_changed(uint16_t start_handle,
- 
- static void gatt_debug(const char *str, void *user_data)
- {
--	DBG("%s", str);
-+	if (DBG_IS_ENABLED())
-+		btd_debug(0xffff, "%s", str);
- }
- 
- static void gatt_client_init(struct btd_device *device)
--- 
-2.35.1
 
+--===============0879652602860224747==--
