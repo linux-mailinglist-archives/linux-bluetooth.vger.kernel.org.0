@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79C484E59A1
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Mar 2022 21:13:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B7CBB4E59A5
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 23 Mar 2022 21:13:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344549AbiCWUPR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 23 Mar 2022 16:15:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38524 "EHLO
+        id S1344552AbiCWUPU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 23 Mar 2022 16:15:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244619AbiCWUPO (ORCPT
+        with ESMTP id S239771AbiCWUPQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 23 Mar 2022 16:15:14 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A55F36450
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 13:13:44 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id o13so2049317pgc.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 13:13:44 -0700 (PDT)
+        Wed, 23 Mar 2022 16:15:16 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74B5E8933B
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 13:13:45 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id gb19so2810901pjb.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 13:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=IP07YkQg0rPEBTHMn8DcG1oqgtBsAiOLeh56Bth5JYA=;
-        b=cyESw/5IbCg0TBBMMJSmU4eDHeLpsGugfyrLP1x3XdAJPY2f5ewzEhzytb9Z3W3/n4
-         y9Dy1vLKc5Yl5wOAYqwVHJGc3B2CapvM1BSMrqsGC+BF4ZEj+KWTA2Zu9YwWMCIFB9/L
-         6/lGQCIwlIGHa8qXCPhXGLdxK2jjxnIpvz2vGwmJFldlOqBIjDuaSc5oEPzr4TxS5LSL
-         TFuAl5zUBtx3YSZTszeHMDbWSHNd3MnCC7+y10epYSLhxfsrc9y75p76NTDfm85jDzlF
-         lDq0PY9SwbXwhf66BgU1nxXKwqCXNlVdZWCPXzfDCG0i34mrUBA8i6vsVEg2qpx3htWV
-         kqYA==
+        bh=lMeVwZRc+kCFv6ywPENuuniweobbSTLYVjAmAjxzwIE=;
+        b=NfzgRo2RTkRfThXJJc2bShOzQK2488gfl7PltLMV19W3Zdu8vrsRQV3sOHTZ51OPmM
+         HG9nVDeY+Z63z+QlSBU7gte66M614sGvHOS63WnYTB6cITod5yrkkHz+Z6mi4POwHKXi
+         kyRLkbdUqP/T5Q9115/+0r2Fek3Kuo+5GkMtzxRTyhElVm9Gat3oWJGRRc18E8v/UAy7
+         iVno/m9bdzkl/H6MMaBZdrTNyEe3pSwhKsliy5pk0W1slPYDM765W4op7f+2fEYrHCuT
+         KMR8bMuYLwGHcaWxUdAmjhQp9MCj+jaQ+gM/eEuNyRC/rFkZ1gfe4LA9s1Tb0pJehzJI
+         CBmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IP07YkQg0rPEBTHMn8DcG1oqgtBsAiOLeh56Bth5JYA=;
-        b=ee25C6WRkurEYSQWTu9agZZTxuduyCVrMw7lGkXP36o9pc8T22Ddr/ZgIcl9cykjvy
-         b0m5r9SZqPSMQJt2p3MX5z59LP1d0aSWYuPlSXOamp8RoKqEi3NIBGN+sWfGhtRV14AG
-         v2KTrmHlqQnD7tVu8mzDQ/NdkkS1XN8ZD5XQka4e36Q/uFlJ0kjq5w96Oz2H6yNxN6lq
-         QJhSj7Nvuk0yt+2iF7pmJYQ9qb3ueFAkoIBVuCaAjwRsYl23Cz8tkLvOYPwTti6Oi/9W
-         LYpac82/zwLQzR9kL5ionN2mC7JRpyhpzzNgZhzAe0g4QDlPSyddEnrxk584xoNumL3D
-         s7Aw==
-X-Gm-Message-State: AOAM532CSEyundVldFvIax2vj3dzTm0X9DO9i+380lNIEw92P3s8cF3s
-        cSzGBlc0J2Lb7ifMG9LcmxG3fl7WntE=
-X-Google-Smtp-Source: ABdhPJxvHBVcLm6lYi86H3rgKrbeOYI6SiHYHEAw/u0F5ExKo7lfxMpIwuuKqU8Jg4JsZ/L2Gfk/Hw==
-X-Received: by 2002:a63:4041:0:b0:37f:8077:e0de with SMTP id n62-20020a634041000000b0037f8077e0demr1228436pga.138.1648066423866;
-        Wed, 23 Mar 2022 13:13:43 -0700 (PDT)
+        bh=lMeVwZRc+kCFv6ywPENuuniweobbSTLYVjAmAjxzwIE=;
+        b=JrSCJw5V7kVKQVIPmIJ03ugZTX1EcZYT4mz0kCLnO5dWi6sp41PvDKX6uBL5ZU/t43
+         YZ6Frjtp48jY2qX0J17nNo2zPupNy/qgrlBQqU3b+4GCp18zkQVmvVWsn9xG2DAdBzyt
+         h7w7H80W6qCa5Qaa9bRYbxFDgAPR/gtcG0x4yFwSqLGbK+aqfFUoqA3AAY/842x6jKrD
+         dRJrS0tm4wpbIT7amhtVTcCBDquS5/XbWb2Jk0YIGT4KfLBsavjI59NrDZtzDce41I5U
+         tIKfkhXjVdyDf1jpPf93T5VbVK+Iz/MEU+elxqgpuAzHTiDOGaJSaaxun5bIwoTXlpG2
+         aRXA==
+X-Gm-Message-State: AOAM531wcrciAsSkb5uLCt8nd6tSllcsFW9pEXPNhnf09DFxv2B+78yS
+        luFa2Hfn+G2ECIg5wpjY/9uydwxTy/M=
+X-Google-Smtp-Source: ABdhPJzUlH0kmoSZ2cifYJKXdWww4LHmhkh9rODjZLOgGH1oy0Z9x6f10vprzHZcg0O6vhdeb//DOA==
+X-Received: by 2002:a17:902:cec5:b0:154:6b18:6157 with SMTP id d5-20020a170902cec500b001546b186157mr1759632plg.145.1648066424610;
+        Wed, 23 Mar 2022 13:13:44 -0700 (PDT)
 Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id m4-20020a17090a7f8400b001bef3fc3938sm478361pjl.49.2022.03.23.13.13.43
+        by smtp.gmail.com with ESMTPSA id m4-20020a17090a7f8400b001bef3fc3938sm478361pjl.49.2022.03.23.13.13.44
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 13:13:43 -0700 (PDT)
+        Wed, 23 Mar 2022 13:13:44 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 1/9] log: Introduce DBG_IS_ENABLED
-Date:   Wed, 23 Mar 2022 13:13:33 -0700
-Message-Id: <20220323201341.3596128-2-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v3 2/9] mgmt: Add DBG macro
+Date:   Wed, 23 Mar 2022 13:13:34 -0700
+Message-Id: <20220323201341.3596128-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220323201341.3596128-1-luiz.dentz@gmail.com>
 References: <20220323201341.3596128-1-luiz.dentz@gmail.com>
@@ -71,72 +71,106 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This introduces DBG_IS_ENABLE macro which can be used to check if
-BTD_DEBUG_FLAG_PRINT has been enabled for the current file.
+This adds mgmt_log wrapper for util_debug and DBG so file and function
+names are printed with the logs.
 ---
- src/log.c | 12 ++++++++++++
- src/log.h | 11 +++++++++++
- 2 files changed, 23 insertions(+)
+ src/shared/mgmt.c | 36 ++++++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/src/log.c b/src/log.c
-index 0155a6bba..1157859ef 100644
---- a/src/log.c
-+++ b/src/log.c
-@@ -179,6 +179,18 @@ void __btd_log_init(const char *debug, int detach)
- 	info("Bluetooth daemon %s", VERSION);
+diff --git a/src/shared/mgmt.c b/src/shared/mgmt.c
+index 95229c248..c7e6a6c1d 100644
+--- a/src/shared/mgmt.c
++++ b/src/shared/mgmt.c
+@@ -27,6 +27,9 @@
+ #include "src/shared/mgmt.h"
+ #include "src/shared/timeout.h"
+ 
++#define DBG(_mgmt, _format, arg...) \
++	mgmt_log(_mgmt, "%s:%s() " _format, __FILE__, __func__, ## arg)
++
+ struct mgmt {
+ 	int ref_count;
+ 	int fd;
+@@ -177,6 +180,18 @@ static bool request_timeout(void *data)
+ 	return false;
  }
  
-+bool __btd_log_is_enabled(const char *file)
++static void mgmt_log(struct mgmt *mgmt, const char *format, ...)
 +{
-+	struct btd_debug_desc *desc;
++	va_list ap;
 +
-+	for (desc = __start___debug; desc < __stop___debug; desc++) {
-+		if (desc->file && g_pattern_match_simple(file, desc->file))
-+			return desc->flags & BTD_DEBUG_FLAG_PRINT;
-+	}
++	if (!mgmt || !format || !mgmt->debug_callback)
++		return;
 +
-+	return false;
++	va_start(ap, format);
++	util_debug_va(mgmt->debug_callback, mgmt->debug_data, format, ap);
++	va_end(ap);
 +}
 +
- void __btd_log_cleanup(void)
+ static bool send_request(struct mgmt *mgmt, struct mgmt_request *request)
  {
- 	closelog();
-diff --git a/src/log.h b/src/log.h
-index 74941beb2..e35238870 100644
---- a/src/log.h
-+++ b/src/log.h
-@@ -9,6 +9,7 @@
-  */
+ 	struct iovec iov;
+@@ -187,8 +202,8 @@ static bool send_request(struct mgmt *mgmt, struct mgmt_request *request)
  
- #include <stdint.h>
-+#include <stdbool.h>
- 
- void info(const char *format, ...) __attribute__((format(printf, 1, 2)));
- 
-@@ -27,6 +28,7 @@ void btd_debug(uint16_t index, const char *format, ...)
- void __btd_log_init(const char *debug, int detach);
- void __btd_log_cleanup(void);
- void __btd_toggle_debug(void);
-+bool __btd_log_is_enabled(const char *file);
- 
- struct btd_debug_desc {
- 	const char *file;
-@@ -38,6 +40,15 @@ struct btd_debug_desc {
- void __btd_enable_debug(struct btd_debug_desc *start,
- 					struct btd_debug_desc *stop);
- 
-+/* DBG_IS_ENABLED:
-+ *
-+ * Simple macro that can be used to check if debug has been enabled for the
-+ * __FILE__.
-+ * Note: This does a lookup thus why it was not used by the likes of
-+ * DBG/DBG_IDX which loads it directly from section("__debug").
-+ */
-+#define DBG_IS_ENABLED() __btd_log_is_enabled(__FILE__)
+ 	ret = io_send(mgmt->io, &iov, 1);
+ 	if (ret < 0) {
+-		util_debug(mgmt->debug_callback, mgmt->debug_data,
+-				"write failed: %s", strerror(-ret));
++		DBG(mgmt, "write failed: %s", strerror(-ret));
 +
- /**
-  * DBG:
-  * @fmt: format string
+ 		if (request->callback)
+ 			request->callback(MGMT_STATUS_FAILED, 0, NULL,
+ 							request->user_data);
+@@ -202,9 +217,7 @@ static bool send_request(struct mgmt *mgmt, struct mgmt_request *request)
+ 							request,
+ 							NULL);
+ 
+-	util_debug(mgmt->debug_callback, mgmt->debug_data,
+-				"[0x%04x] command 0x%04x",
+-				request->index, request->opcode);
++	DBG(mgmt, "[0x%04x] command 0x%04x", request->index, request->opcode);
+ 
+ 	util_hexdump('<', request->buf, ret, mgmt->debug_callback,
+ 							mgmt->debug_data);
+@@ -283,9 +296,7 @@ static void request_complete(struct mgmt *mgmt, uint8_t status,
+ 	request = queue_remove_if(mgmt->pending_list,
+ 					match_request_opcode_index, &match);
+ 	if (!request) {
+-		util_debug(mgmt->debug_callback, mgmt->debug_data,
+-				"Unable to find request for opcode 0x%04x",
+-				opcode);
++		DBG(mgmt, "Unable to find request for opcode 0x%04x", opcode);
+ 
+ 		/* Attempt to remove with no opcode */
+ 		request = queue_remove_if(mgmt->pending_list,
+@@ -383,8 +394,7 @@ static bool can_read_data(struct io *io, void *user_data)
+ 		cc = mgmt->buf + MGMT_HDR_SIZE;
+ 		opcode = btohs(cc->opcode);
+ 
+-		util_debug(mgmt->debug_callback, mgmt->debug_data,
+-				"[0x%04x] command 0x%04x complete: 0x%02x",
++		DBG(mgmt, "[0x%04x] command 0x%04x complete: 0x%02x",
+ 						index, opcode, cc->status);
+ 
+ 		request_complete(mgmt, cc->status, opcode, index, length - 3,
+@@ -394,15 +404,13 @@ static bool can_read_data(struct io *io, void *user_data)
+ 		cs = mgmt->buf + MGMT_HDR_SIZE;
+ 		opcode = btohs(cs->opcode);
+ 
+-		util_debug(mgmt->debug_callback, mgmt->debug_data,
+-				"[0x%04x] command 0x%02x status: 0x%02x",
++		DBG(mgmt, "[0x%04x] command 0x%02x status: 0x%02x",
+ 						index, opcode, cs->status);
+ 
+ 		request_complete(mgmt, cs->status, opcode, index, 0, NULL);
+ 		break;
+ 	default:
+-		util_debug(mgmt->debug_callback, mgmt->debug_data,
+-				"[0x%04x] event 0x%04x", index, event);
++		DBG(mgmt, "[0x%04x] event 0x%04x", index, event);
+ 
+ 		process_notify(mgmt, event, index, length,
+ 						mgmt->buf + MGMT_HDR_SIZE);
 -- 
 2.35.1
 
