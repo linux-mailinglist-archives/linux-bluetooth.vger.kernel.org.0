@@ -2,152 +2,100 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81CF64E5D5A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Mar 2022 03:49:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 67A1E4E6260
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Mar 2022 12:22:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242681AbiCXCu5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 23 Mar 2022 22:50:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51338 "EHLO
+        id S242740AbiCXLYO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 24 Mar 2022 07:24:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238122AbiCXCu4 (ORCPT
+        with ESMTP id S240720AbiCXLYN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 23 Mar 2022 22:50:56 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5448E12774
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 19:49:25 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id 10so2838584qtz.11
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Mar 2022 19:49:25 -0700 (PDT)
+        Thu, 24 Mar 2022 07:24:13 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 872481FCE0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Mar 2022 04:22:41 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id d10so8451769eje.10
+        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Mar 2022 04:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=kg24zO5aC7146AyTVYOLVk6FV7Oa2wUpHQtnvnBvRIk=;
-        b=NcRSc9Y3DAx0nNhkuTVDVnjBldauTfh3h5A+DsTlqjnBq7j2q2fVna6vlzSJT79VY+
-         e7qj8GzUGfI6b9M9/dWsoBp91Du1+QDeE2/sYWD1YE729k2pgpqfmTUgtZ5qsCjE6XS2
-         3S2OoM+XrbZQVTtnWhsw3HTwRkS3aHEw32piGc+4c8efqtEgqD4w6R1ebTIZ1P2xJ0ed
-         Vn1aM0rYclP7woPZivIfbPPXCcQT/hcaLWFKicZM1Vg+ivziwK0pX5kb3OG+njGkwQZs
-         u2BcjDSVqW8pg1gsshwZl1+CT1de+7XfSt5zxP05V5IQKeEInXr3TVsmT8TWKBPduGvt
-         HDKA==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=5g4e3FoDZ04w3yN9r9/DrAhXMgzBOA3m1TJsZRCqpfs=;
+        b=gvHSYklr+DS2xn22pWkiBA+/8WkOLAimT5rEUV+sUqpTfKEyhungpq8wbMCRSQl7qy
+         ar4JKQ2/93DfVByQZSDzd00yTh0ITz7Io2RBbJLNW5WojvuBwlGJR/kiqasZN8HTxTw8
+         sVcELQkiPNdzF9syaSPORvu/BiATWorLuAUVL7Z+z3ZUpsKPOyVFx0S3CMI1bBHXMEvm
+         TndN0w+tLCdIGlNeP90HhZVBXRSYlrM+IXhTXHLpQWN/7JZqTvytuowfBbgWGZ2ChTGV
+         h/D3c+gHaa3V96BL/osqDecl8tgNbppoRLYQED1npPJkNItoe62LEAYjdwz14wErcoHT
+         OasA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=kg24zO5aC7146AyTVYOLVk6FV7Oa2wUpHQtnvnBvRIk=;
-        b=fZEORghnyV6ud9glD8GBKLvTiTByUheN32BcC4lz7/CavNdHGvhSkLdg96pdHz2d8H
-         OTKj2U4Y7/N1kZ29ET7ZLzakFyyzONpv37VzPLinbGaWgbH7lJIefG+rYFhxok39aC2U
-         ULfyxN5eKi+gsy2RuGaJ9T+s5TjPE4kQRSSDd+r5D6fcmc7RnihqdUvYjuPN2pYQ+C4s
-         Ix7QTcOtFi5/DAU6N2udRHunfwCtiXr/PgaBkTGLTahiDJerhEaBUvEz9Shcw5CXqnee
-         TTKh4IXsS9WBzDq9yJ6ItzntxGAQA69iHF0JsXn6KGLVZwJwwiW97lQHLy+jUwAUB8Ao
-         lrvw==
-X-Gm-Message-State: AOAM533r9cwjjL2Otjropq7LgJpnhFU/yjZ8/qTslvwrQt6xP89sUB7A
-        R7vYinVLg6sKM+rqEGCWKqjEjNDL+JTjeQ==
-X-Google-Smtp-Source: ABdhPJxUk1yaGYFJIG5Kr81yDEbq/E0HB4VooBOHkfuptbrNxt1BAuIvca6jDK7Ti3ROtDbEG+LwNw==
-X-Received: by 2002:ac8:5b51:0:b0:2e1:e3e9:d98d with SMTP id n17-20020ac85b51000000b002e1e3e9d98dmr2584532qtw.55.1648090164364;
-        Wed, 23 Mar 2022 19:49:24 -0700 (PDT)
-Received: from [172.17.0.2] ([20.231.33.71])
-        by smtp.gmail.com with ESMTPSA id 20-20020ac84e94000000b002e1d5505fb6sm1589346qtp.63.2022.03.23.19.49.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 19:49:24 -0700 (PDT)
-Message-ID: <623bdc34.1c69fb81.f148c.b9cf@mx.google.com>
-Date:   Wed, 23 Mar 2022 19:49:24 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============2642083953858404633=="
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=5g4e3FoDZ04w3yN9r9/DrAhXMgzBOA3m1TJsZRCqpfs=;
+        b=thC9Aoa030UQqcx9BSZhi1EzJoGwcmkdeFY5oMjruh54SehcHVuQ0vsnm4cA9SIFM2
+         6YJrlV0VxTHZcEeTeogCoHW28hilVApw7efCU+JQefwKHdieCpwNfvlZ84gdSg1M9qZX
+         yW7wqU+ammM1X0iQTqYr8AM20zumA+WjnSCrohRDR0vA9kEWjAqJsqAvowmPBkSk0yhu
+         JjRclLAIj4oV+ZnRw3zOEWbFu2SEvcWocaqrJf4Ru9BwPpV7UsLucoFXGig8J9YD77N8
+         g4fqLjbsv8pWecTVhHCn4o+RhfJbm4u0RD1Up0MyeBiuM/Z9VteB22yNfnGcbvy9SdLO
+         5Dqw==
+X-Gm-Message-State: AOAM530pBMsiobHtBOE7E48xpNh6+dXyV+Bb4DpAndYseGyF0VgJ+GLC
+        BC4ez1YBBzKzHM4WkmYDqi6xsKPB+2BblqXgruQ=
+X-Google-Smtp-Source: ABdhPJxPT37mbMZXiS5EIizBqqVWuHBFjbx9CpVPTIU+RcueKs75C3adPfQWnkZvugTNLHjS7ePRIOtCHBA/a7XJXTU=
+X-Received: by 2002:a17:906:7304:b0:6e0:6918:ef6f with SMTP id
+ di4-20020a170906730400b006e06918ef6fmr5127082ejc.370.1648120960127; Thu, 24
+ Mar 2022 04:22:40 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Subject: RE: [RFC,BlueZ] adapter: Introduce BTD_ADAPTER_DBG
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20220323224003.3736525-1-luiz.dentz@gmail.com>
-References: <20220323224003.3736525-1-luiz.dentz@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a17:906:c18c:0:0:0:0 with HTTP; Thu, 24 Mar 2022 04:22:39
+ -0700 (PDT)
+Reply-To: michellegoodman45@gmail.com
+From:   Michelle Goodman <sarahtage24@gmail.com>
+Date:   Thu, 24 Mar 2022 11:22:39 +0000
+Message-ID: <CAK7Gz5wmfW=aEkFNzrWDWNPHTLRXa8py3=Yx2kYPB=W=Leukcg@mail.gmail.com>
+Subject: Danke
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:634 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.4957]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [sarahtage24[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [michellegoodman45[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [sarahtage24[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.8 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============2642083953858404633==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hallo, ich hoffe du hast meine Nachricht erhalten.
+Ich brauche schnelle Antworten
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=625872
-
----Test result---
-
-Test Summary:
-CheckPatch                    FAIL      12.99 seconds
-GitLint                       PASS      8.66 seconds
-Prep - Setup ELL              PASS      40.22 seconds
-Build - Prep                  PASS      0.68 seconds
-Build - Configure             PASS      8.17 seconds
-Build - Make                  PASS      1211.61 seconds
-Make Check                    PASS      10.97 seconds
-Make Check w/Valgrind         PASS      417.60 seconds
-Make Distcheck                PASS      222.33 seconds
-Build w/ext ELL - Configure   PASS      8.66 seconds
-Build w/ext ELL - Make        PASS      1243.22 seconds
-Incremental Build with patchesPASS      11501.91 seconds
-
-Details
-##############################
-Test: CheckPatch - FAIL
-Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-Output:
-[RFC,BlueZ] adapter: Introduce BTD_ADAPTER_DBG
-ERROR:SPACING: space prohibited before that ',' (ctx:WxW)
-#99: FILE: src/adapter.h:28:
-+							__func__ , ## arg)
- 							         ^
-
-ERROR:SPACING: space prohibited before that ',' (ctx:WxW)
-#114: FILE: src/device.h:16:
-+							__func__ , ## arg)
- 							         ^
-
-/github/workspace/src/12790172.patch total: 2 errors, 0 warnings, 20 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/12790172.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-[BlueZ,v4,3/9] mgmt: Introduce mgmt_set_verbose
-WARNING:REPEATED_WORD: Possible repeated word: 'the'
-#83: 
-the the likes hexdump of packets, by default it is disabled since in
-
-/github/workspace/src/12790175.patch total: 0 errors, 1 warnings, 61 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/12790175.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============2642083953858404633==--
+Danke.
+Michelle
