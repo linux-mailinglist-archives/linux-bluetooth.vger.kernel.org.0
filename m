@@ -2,49 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 667004E6981
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Mar 2022 20:50:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 445534E697E
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Mar 2022 20:50:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345821AbiCXTvt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 24 Mar 2022 15:51:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49040 "EHLO
+        id S1347046AbiCXTvv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 24 Mar 2022 15:51:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241865AbiCXTvs (ORCPT
+        with ESMTP id S241865AbiCXTvt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 24 Mar 2022 15:51:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DFD45576F
-        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Mar 2022 12:50:15 -0700 (PDT)
+        Thu, 24 Mar 2022 15:51:49 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29CB65577D
+        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Mar 2022 12:50:17 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E944060A5B
-        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Mar 2022 19:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 55E2EC340F3;
+        by ams.source.kernel.org (Postfix) with ESMTPS id A8CA8B825EA
+        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Mar 2022 19:50:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 43D16C340EE;
         Thu, 24 Mar 2022 19:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1648151414;
-        bh=IqqmnCKCMx9OTXvJLXzRgN0hZ+RADxdy2S04amBscTY=;
+        bh=XZqEOBJQQlq7VCGMMsJBD5p9DGGXOB6LJObQU7dI3xs=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=KwtgKkBik+4f9YdSBVO3ujgy0IkelEMTqos1EbViUQemLRqo9bsEJC4lTfIv2gTXj
-         nANakv0ptQGJYmKK6MTYucW9e9bxgWIFQ5e0Ezu5fN0rnDqFcQuBzVs6SAwXhJed/h
-         CZMz3U1wXrSUsx7hdETdSwM05IH+zBIHPKyNipck5rxv6rVK/OhuQ341134uKHHBwf
-         XR9/Qij7dhP9h7Bwww44sA8DGrOuxMm7HVxQOaGc93uscx4xWlXloyJdIN1fQ//4SK
-         bqio55gbYsUYxFvimQHznjL15bJdIiLC5MGVxmrdHr8sfSRLK9Sl4wrqp92GiKNVJm
-         cfyxoq2VNFPUQ==
+        b=WTqZY+CocvWaek26hitlgCD4Wl0YbVp8CkaeMPxAz8ZVGF9VtmRMnBB3+7DjTaAo8
+         B3RPaD9ACjRM3uHBqsEQUcHkbYmUjcqMZf+7Ax42rVJtHsFg1ISbqM5IGrBz5HhhB6
+         yPql6Yl1ePiFV9qJtZEF06BJiA51WkWrbWMWgEbVj69aWczk+1FawG0i9ajnVm4Myd
+         p5mrocGUJTy3Dkr1r/Crtf0SII6CPs5dlwD8UQnH9wAKyik6h2Bc6YYFAumTSLykkF
+         aMHE+tivcps1RSrw266u278B5hDD+eZGT8eTst0UTBHkcZmyDfdwhMW1cXkBTVV9vu
+         jpXpL+lpYGctw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2ECFBF03842;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 25FDDE6D44B;
         Thu, 24 Mar 2022 19:50:14 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v4 1/9] log: Don't log __FILE__ and __func__ with
- DBG_IDX
+Subject: Re: [RFC BlueZ] adapter: Introduce BTD_ADAPTER_DBG
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <164815141418.1997.13254505864475530061.git-patchwork-notify@kernel.org>
+Message-Id: <164815141415.1997.13571288803188237421.git-patchwork-notify@kernel.org>
 Date:   Thu, 24 Mar 2022 19:50:14 +0000
-References: <20220323224003.3736525-2-luiz.dentz@gmail.com>
-In-Reply-To: <20220323224003.3736525-2-luiz.dentz@gmail.com>
+References: <20220323224003.3736525-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220323224003.3736525-1-luiz.dentz@gmail.com>
 To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -59,21 +58,38 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 23 Mar 2022 15:39:55 -0700 you wrote:
+On Wed, 23 Mar 2022 15:39:54 -0700 you wrote:
 > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> This removes __FILE__ and __func__ from DBG_IDX since users of it may
-> already contain such information embedded in the format.
-> ---
->  src/log.h | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+> This introduces BTD_ADAPTER_DBG which includes the controller index
+> when using DBG_IDX, in addition to it also add similar macro for
+> devices in the form of BTD_DEVICE_DBG which resolves the adapter and
+> before calling BTD_ADAPTER_DBG.
+> 
+> [...]
 
 Here is the summary with links:
-  - [BlueZ,v4,1/9] log: Don't log __FILE__ and __func__ with DBG_IDX
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a3c9409035de
+  - [RFC,BlueZ] adapter: Introduce BTD_ADAPTER_DBG
+    (no matching commit)
+  - [BlueZ,v4,2/9] mgmt: Add DBG macro
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f9cb7c802f27
+  - [BlueZ,v4,3/9] mgmt: Introduce mgmt_set_verbose
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=b7c807269f1f
+  - [BlueZ,v4,4/9] adapter: Don't use DBG in mgmt_debug
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=62c6037ea02b
+  - [BlueZ,v4,5/9] att: Log file and function names
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=8039d42687fd
+  - [BlueZ,v4,6/9] gatt-client: Add DBG macro
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e0870ce5e1fe
+  - [BlueZ,v4,7/9] gatt-server: Add DBG macro
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=55c25d91e4d6
+  - [BlueZ,v4,8/9] att: Rename att_debug and att_verbose to DBG and VERBOSE
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e1b808c128fa
+  - [BlueZ,v4,9/9] device: Don't use DBG in gatt_debug
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=71cec503c8da
 
 You are awesome, thank you!
 -- 
