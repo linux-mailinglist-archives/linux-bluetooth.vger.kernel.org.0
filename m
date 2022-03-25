@@ -2,44 +2,44 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D55344E7C2E
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Mar 2022 01:21:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FEDF4E7DAD
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Mar 2022 01:23:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229810AbiCYT3A (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 25 Mar 2022 15:29:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34190 "EHLO
+        id S230481AbiCYThr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 25 Mar 2022 15:37:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229943AbiCYT2e (ORCPT
+        with ESMTP id S230052AbiCYThk (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:28:34 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51D9C2BE2D8
-        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 12:02:33 -0700 (PDT)
+        Fri, 25 Mar 2022 15:37:40 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB14C17942F
+        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 12:22:08 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7357BB829A4
-        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 18:24:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2E115C340EE
-        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 18:24:46 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6D55261B4A
+        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 18:26:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C63FEC34113
+        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 18:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648232686;
-        bh=9flt5WhvWQWUEOlEVa5+LNjvkixG3g/5q1WGyU7TncQ=;
+        s=k20201202; t=1648232796;
+        bh=RAx6FOewcKaU5ZAVz9H7p6QpEigmHpoJxw5PnIWiTOk=;
         h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=L5h4RipeDwu3ud+9QbneR18BHnBIOP4+WI0GkENoPzgLZLpkqCFmOMKcnXCvRbM/w
-         4BX9992mX1SsDxus0jNmRumrwKNsEySrBx2/50nn4Ljg/fO8z41x6wYUlZgAyaeSPi
-         wuCJ/0SJ5Nns/0dBY9lWqWpmc+JFh0AHy81s+c/AdkcVUA947Hw2EtffX+em5Bv+/6
-         VTYssMD+3osfAy76jZfOhOFTGVwfiFircs8SFuctAw2FvoSxEEXDix/X8iOQqiwDAW
-         BA28Kj6/cyxqeghpnJuS8kPec2kPga0PFv7og28unuHXXtI2xchr5YGVt7O+B30Ew7
-         tJSth1z/tubKA==
+        b=cntaN1QJj/HizxMjnAZqeof8eXKs1LKwChxx7j37NLtMmnueS8S9Cgn6It4XpR68I
+         wKaxLRunJPUiHNxlcQds8T7my4/V7YbEmKiOKCAQl82+FzxHQze4WZfTIdBlLOH0nM
+         Ba5SiK/TQUYBQoGFlOaUkkUlgP5EHS70cGPVg5sbmH4sUEyHXpQGHeFh7j1vOz+vlu
+         RkqXW8/Eg0abRg+cNxc++NSFI8FIGrFEOrz1U5TFMYOGl4/qGlMuJAcN8lyjmqX3wW
+         fSF0bn3VZZEUAlqpAxCyTNq9ykSpe2USWy/5LWfONY7DCHdM/rLed13/RvVjghuXCI
+         FNM4WFC4HeLVQ==
 Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id 1609DCAC6E2; Fri, 25 Mar 2022 18:24:46 +0000 (UTC)
+        id A90C2CAC6E2; Fri, 25 Mar 2022 18:26:36 +0000 (UTC)
 From:   bugzilla-daemon@kernel.org
 To:     linux-bluetooth@vger.kernel.org
 Subject: [Bug 215528] Excessive logging from Intel Bluetooth "Bluetooth:
  hci0: sending frame failed" "hci0: urb 00000000xxxxxxxx submission failed
  (90)"
-Date:   Fri, 25 Mar 2022 18:24:45 +0000
+Date:   Fri, 25 Mar 2022 18:26:36 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -55,7 +55,7 @@ X-Bugzilla-Priority: P1
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
 X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-215528-62941-zMpaJevDDl@https.bugzilla.kernel.org/>
+Message-ID: <bug-215528-62941-sAB5pnuGd5@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-215528-62941@https.bugzilla.kernel.org/>
 References: <bug-215528-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -75,14 +75,15 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D215528
 
---- Comment #14 from Luiz Von Dentz (luiz.dentz@gmail.com) ---
-(In reply to Artem S. Tashkinov from comment #12)
-> Thank you.
+--- Comment #15 from Luiz Von Dentz (luiz.dentz@gmail.com) ---
+(In reply to Artem S. Tashkinov from comment #13)
+> @Luiz Von Dentz
 >=20
-> I hope to see it in 5.15.
+> Why doesn't Linux 5.17 include this patch? Could you please push it to
+> stable?
 
-afaik the changes that caused this issue were introduced in 5.17 so 5.15
-shouldn't be affected.
+I thought Cc: stable@vger.kernel.org was just for severe bugs not something
+like this that has almost no effect other than spam dmesg.
 
 --=20
 You may reply to this email to add a comment.
