@@ -2,59 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A7054E7D5E
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Mar 2022 01:22:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 703094E7DC6
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Mar 2022 01:23:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231466AbiCYTpV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 25 Mar 2022 15:45:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42332 "EHLO
+        id S229506AbiCYTZ5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 25 Mar 2022 15:25:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231587AbiCYTov (ORCPT
+        with ESMTP id S229498AbiCYTZ4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:44:51 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B03E384A1F
-        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 12:16:09 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id n19-20020a9d7113000000b005cd9cff76c3so6192880otj.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 12:16:09 -0700 (PDT)
+        Fri, 25 Mar 2022 15:25:56 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 012071D3069;
+        Fri, 25 Mar 2022 11:57:45 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id d134so4759423ybc.13;
+        Fri, 25 Mar 2022 11:57:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=H5e5pvBCeVeqsUw76FxgekZHP2EUDGb9Nk57JJkFelw=;
-        b=FrOk7kmPBiTuda1APnGy4tNh8bkeTElMyJGrftazV5vNDLSfg7flW+bG5udaavBSpN
-         QT81AO0sS9DmnlVgdC2/3fPB/pGlawtqD0nebIl5LrEztH1jiIOoJ1ZFhkbNfmNxsT/p
-         ihq3lvRbY4edXGVxRLaw6BEdUJEk4WLiNgSAs2sfelhJUa7ynbzJuO4NJgq6Vd6BN+gc
-         Anh9DJicm5gFZOoGGagrUxRnms9AEFWNXKtJhlDeB/7WoN+n7968w5r2TRZhL+XzUviX
-         dOJS/n79f5dG+OEDAtMKFRwd6MdsX74v8tvgv9d6QbaaMz6sd3nBiJ79zPdeHG8RSZLP
-         PINw==
+        bh=pMUdB3zlB3HAdVOnuQq2xqrqNwClgzIqakPQ1O+ryLU=;
+        b=opPwPmQ9CLhSVpFfpRo/PnBU7bPVVHAPFJ1+x8z+qQd0hmCRkVKbvsaSiLtGvH7hri
+         KWFRk2+QKbwa5BOQlXx+GWWjBEs1LVcfK5smQaCJNcIGlwdaJYAJbEQc4O8YDF2FK8dp
+         FkmMTQxcnTuAXTULYRJT9c4v5g6IwTAoAsUpRgZCPr0gevfsCeeumVtaYvdcvYILjzc9
+         ndggUmwBaFt70j4xy/UwL3Q+87A2iGWXSQYBhYfxxDuiIjjQNmcOWvR5iMOEM5RiIttx
+         62+yd1ghBGIlWjr2ABqMozfiBbKKF4+Ro7YbzVDTcuC3Ty9FOj7vlzjp+BxfckRZTD+3
+         m7rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=H5e5pvBCeVeqsUw76FxgekZHP2EUDGb9Nk57JJkFelw=;
-        b=ztkzprutxymHMVjNoPw1/8rwksF2kjjFt0E1CAxCRZ878jQkkn18ZYrDxQtqBTPwYS
-         9CAfFWwE89IgJg54OgXssK409SaAsXQXg2vxUywX3711swcd+K3CTR23IWb4QL0Hm3+N
-         R6Zdzrugqz0GRWEuyQPXDN4AYum2Fip6PXgz/HU7mg/SrHIwOA62VwSQNmHpHcLWuLV2
-         Cj9DUEk3I7/ztgHaxOnDns3sRxd9TRbrrBoYMTSmSQH9pmGud+uvTp5GZSyLgOOp+An3
-         zJLVt3WNcOlUxtWN0ac1wJP+jBWoyB0+51aEOwp74PT0ooX1C9yTA+CajTOqy2jr7mES
-         lZKg==
-X-Gm-Message-State: AOAM530WU6TfenJXniG/kgXiokthpHbvDXAAO11R+rqu/uXXIY7TmCFr
-        x89/U3ve7D9ivwaPV5WwzRKRp7y6vWcU17vxp2MvBrWq
-X-Google-Smtp-Source: ABdhPJyPSi42kULjUP2U44DMJgUvDYNjaXWhDf6bDsxVKVBUB+IIEkmZ1wx1ZKqy1pCM6enxmXILhYP/LxFrqPcr9MQ=
-X-Received: by 2002:a25:8546:0:b0:61e:1d34:ec71 with SMTP id
- f6-20020a258546000000b0061e1d34ec71mr10866994ybn.259.1648233905989; Fri, 25
- Mar 2022 11:45:05 -0700 (PDT)
+        bh=pMUdB3zlB3HAdVOnuQq2xqrqNwClgzIqakPQ1O+ryLU=;
+        b=VsA1ytTjw03d8z+WiVrjboVkBunHQ9QhSQp8Zvxfjjfg60llg1Ftfy9XDO8X631M15
+         u7Dpvtzu/bybMv5NybIldkdSnqtedH59xaHWiQr+p2WGnFSEGrQMYBNCpHIIU9B1gT7B
+         4bA6VmP2hdIi+ulwABf0p0ek6q+ZvrR4Ur7JG9Ro5sG6c4JA7DecPJUnalKW3+iiiCGn
+         UNoTtZrAgGPu6tLIG1pvkf6UrDEuCa2vaw/g/AArfd+w4F9M7fx1TPctmv9HUE1aFpPH
+         Zu3BtWo+oMqqmFAYf71bMX1jG/5LvyNswT2xAH+nUszTZQKuDjb1Azg97b858tlxn1AV
+         gj6g==
+X-Gm-Message-State: AOAM533DvDixNK+cVIXEXOD8C5lTKDiU2ienZyGJJsH5+TjFf4q7gWxa
+        FqQKwtfd7WBUw/aLt4Fvw+kBHN1r3fchW7f69KIs/RMV
+X-Google-Smtp-Source: ABdhPJz9mZFBCIieZ8fOD5eJ9gyxfBvi/T2xMJdphBpSLz3OJ7s5HzF8ZMV1+EakSTtbiCrhnz4gCLq2e2SfDREHghk=
+X-Received: by 2002:a05:6902:1009:b0:634:674f:ef16 with SMTP id
+ w9-20020a056902100900b00634674fef16mr12320198ybt.459.1648234215466; Fri, 25
+ Mar 2022 11:50:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220325071350.26668-1-wangxinpeng@uniontech.com> <c9c39f53-86cb-c4d3-5a6b-15852a765d79@molgen.mpg.de>
-In-Reply-To: <c9c39f53-86cb-c4d3-5a6b-15852a765d79@molgen.mpg.de>
+References: <20220325033028.1.I67f8ad854ac2f48701902bfb34d6e2070011b779@changeid>
+In-Reply-To: <20220325033028.1.I67f8ad854ac2f48701902bfb34d6e2070011b779@changeid>
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Fri, 25 Mar 2022 11:44:55 -0700
-Message-ID: <CABBYNZLV0M4-zW4bgHXK7v0YuW33_ifB1SYw4=i9N6Y=r9zwHQ@mail.gmail.com>
-Subject: Re: [PATCH v2] obexd: Fix can't receive small files sent by windows
-To:     Paul Menzel <pmenzel@molgen.mpg.de>
-Cc:     Xinpeng Wang <wangxinpeng@uniontech.com>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Date:   Fri, 25 Mar 2022 11:50:04 -0700
+Message-ID: <CABBYNZKF1Ye6D130XgaFmqN6JAssf78-FaQh_AEkwigy8qaVjw@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: fix dangling sco_conn and use-after-free in sco_sock_timeout
+To:     Ying Hsu <yinghsu@chromium.org>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        ChromeOS Bluetooth Upstreaming 
+        <chromeos-bluetooth-upstreaming@chromium.org>,
+        Joseph Hwang <josephsih@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Paolo Abeni <pabeni@redhat.com>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -66,99 +75,93 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Paul, Xinpeng,
+Hi Ying,
 
-On Fri, Mar 25, 2022 at 10:28 AM Paul Menzel <pmenzel@molgen.mpg.de> wrote:
+On Thu, Mar 24, 2022 at 8:31 PM Ying Hsu <yinghsu@chromium.org> wrote:
 >
-> Dear Xinpeng,
+> Connecting the same socket twice consecutively in sco_sock_connect()
+> could lead to a race condition where two sco_conn objects are created
+> but only one is associated with the socket. If the socket is closed
+> before the SCO connection is established, the timer associated with the
+> dangling sco_conn object won't be canceled. As the sock object is being
+> freed, the use-after-free problem happens when the timer callback
+> function sco_sock_timeout() accesses the socket. Here's the call trace:
 >
+> dump_stack+0x107/0x163
+> ? refcount_inc+0x1c/
+> print_address_description.constprop.0+0x1c/0x47e
+> ? refcount_inc+0x1c/0x7b
+> kasan_report+0x13a/0x173
+> ? refcount_inc+0x1c/0x7b
+> check_memory_region+0x132/0x139
+> refcount_inc+0x1c/0x7b
+> sco_sock_timeout+0xb2/0x1ba
+> process_one_work+0x739/0xbd1
+> ? cancel_delayed_work+0x13f/0x13f
+> ? __raw_spin_lock_init+0xf0/0xf0
+> ? to_kthread+0x59/0x85
+> worker_thread+0x593/0x70e
+> kthread+0x346/0x35a
+> ? drain_workqueue+0x31a/0x31a
+> ? kthread_bind+0x4b/0x4b
+> ret_from_fork+0x1f/0x30
 >
-> Am 25.03.22 um 08:13 schrieb xinpeng wang:
-> > When obexd receives a file, it parses the filename and other parameters
-> > when processing the packet for the first time, store filename in
-> > obex_session and emit the dbus signal, The signal will be pending first.
-> > then when this file is received, transfer_complete reset obex_session
-> > is called.
-> >
-> > When using a computer with Windows 10 installed to send a file to bluez,
-> > obexd will read the data through read_stream; if it is a small file, the
-> > data processed for the first time is marked as final, and transfer_complete
-> > reset obex_session will be called when the data is processed for the first
-> > time. At this point, the dbus signal is still pending, and the dbus method
-> > that requests the file path has not been processed. This will cause the upper
-> > application to not be able to transfer files from the cache directory to the
-> > directory specified by the user.
-> >
-> > To solve this problem, emit Filename's dbus signal and force it when
-> > status=active.
+> Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+> Reviewed-by: Joseph Hwang <josephsih@chromium.org>
+> ---
+> Tested this commit using a C reproducer on qemu-x86_64 for 8 hours.
 
-It would be great to have the obexctl output with and without the
-change, also does it change anything with respect of bigger files that
-are not completed with a single packet?
+We should probably add a link or something to the reproducer then, was
+it syzbot? It does have some instructions on how to link its issues.
 
-> > Ways to reproduce the problem:
-> > 1. Use the computer with windows 10 installed to send a small file to the
-> > computer with ubuntu installed;
-> > 2. file size < 10k;
-> > 3. After sending, in most cases, the file is located in the ~/.cache/obexd/
-> > directory. Normally, the file should be located in the ~/Download directory.
-> >
-> > To fix this, after applying this commit, it also needs to be modified by
-> > the upper-level application. Modified to read Filename from dbus signal if
-> > there is Filename in dbus signal. Otherwise, use the dbus method to request
-> > Filename.
-> >
-> > Signed-off-by: xinpeng wang <wangxinpeng@uniontech.com>
+>  net/bluetooth/sco.c | 21 +++++++++++++--------
+>  1 file changed, 13 insertions(+), 8 deletions(-)
+>
+> diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+> index 8eabf41b2993..380c63194736 100644
+> --- a/net/bluetooth/sco.c
+> +++ b/net/bluetooth/sco.c
+> @@ -574,19 +574,24 @@ static int sco_sock_connect(struct socket *sock, struct sockaddr *addr, int alen
+>             addr->sa_family != AF_BLUETOOTH)
+>                 return -EINVAL;
+>
+> -       if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND)
+> -               return -EBADFD;
+> +       lock_sock(sk);
+> +       if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) {
+> +               err = -EBADFD;
+> +               goto done;
+> +       }
+>
+> -       if (sk->sk_type != SOCK_SEQPACKET)
+> -               return -EINVAL;
+> +       if (sk->sk_type != SOCK_SEQPACKET) {
+> +               err = -EINVAL;
+> +               goto done;
+> +       }
+>
+>         hdev = hci_get_route(&sa->sco_bdaddr, &sco_pi(sk)->src, BDADDR_BREDR);
+> -       if (!hdev)
+> -               return -EHOSTUNREACH;
+> +       if (!hdev) {
+> +               err = -EHOSTUNREACH;
+> +               goto done;
+> +       }
+>         hci_dev_lock(hdev);
+>
+> -       lock_sock(sk);
+> -
 
-We don't use Signed-off-by for userspace.
+Also are we sure we are not introducing a locking hierarchy problem
+here? Previously we had hci_dev_lock then sock_lock now it is the
+opposite, or perhaps we never want to have them at the same time?
 
-> > ---
-> > v2: Add the steps to reproduce the bug in the submission information.
-> >
-> >   obexd/src/manager.c | 6 +++++-
-> >   obexd/src/obex.c    | 1 +
-> >   2 files changed, 6 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/obexd/src/manager.c b/obexd/src/manager.c
-> > index 01741fe62..2c180dc44 100644
-> > --- a/obexd/src/manager.c
-> > +++ b/obexd/src/manager.c
-> > @@ -533,8 +533,12 @@ void manager_emit_transfer_property(struct obex_transfer *transfer,
-> >   void manager_emit_transfer_started(struct obex_transfer *transfer)
-> >   {
-> >       transfer->status = TRANSFER_STATUS_ACTIVE;
-> > +     if (!transfer->path)
-> > +             return;
-> >
-> > -     manager_emit_transfer_property(transfer, "Status");
-> > +     g_dbus_emit_property_changed_full(connection, transfer->path,
-> > +                                     TRANSFER_INTERFACE, "Status",
-> > +                                     G_DBUS_PROPERTY_CHANGED_FLAG_FLUSH);
-> >   }
-> >
-> >   static void emit_transfer_completed(struct obex_transfer *transfer,
-> > diff --git a/obexd/src/obex.c b/obexd/src/obex.c
-> > index 3a68fd66c..c0d9e160a 100644
-> > --- a/obexd/src/obex.c
-> > +++ b/obexd/src/obex.c
-> > @@ -720,6 +720,7 @@ int obex_put_stream_start(struct obex_session *os, const char *filename)
-> >               manager_emit_transfer_property(os->service_data, "Size");
-> >
-> >       os->path = g_strdup(filename);
-> > +     manager_emit_transfer_property(os->service_data, "Filename");
-> >
-> >       return 0;
-> >   }
+>         /* Set destination address and psm */
+>         bacpy(&sco_pi(sk)->dst, &sa->sco_bdaddr);
 >
-> Awesome. Thank you.
+> --
+> 2.35.1.1021.g381101b075-goog
 >
-> Acked-by: Paul Menzel <pmenzel@molgen.mpg.de>
->
->
-> Kind regards,
->
-> Paul
-
 
 
 -- 
