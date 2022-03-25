@@ -2,59 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E28A4E7D87
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Mar 2022 01:22:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B6A144E7BA3
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Mar 2022 01:21:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232170AbiCYU02 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 25 Mar 2022 16:26:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59938 "EHLO
+        id S233336AbiCYVOz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 25 Mar 2022 17:14:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232152AbiCYU01 (ORCPT
+        with ESMTP id S233320AbiCYVOx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 25 Mar 2022 16:26:27 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FCCD6E4EE
-        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 13:24:53 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-2e5e31c34bfso94628197b3.10
-        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 13:24:53 -0700 (PDT)
+        Fri, 25 Mar 2022 17:14:53 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C93E2E09B
+        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 14:13:16 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id b8so8600573pjb.4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 25 Mar 2022 14:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KKuY9OBajKOBUYRrR89zZjDuOWwWEuc3gAdN9zXO400=;
-        b=SaZQbwha3sFFaqpZEUGq+YpbbnOiV3Fi2Q20dI/1pOXv5nNa/LU51JhRRsQewatCzI
-         Ys9/AsznjTRB9yBHA44ksw6kSOUc0kwbsfEvVWBhsFhQULCylrnagtg4+ysVSkSiJify
-         rAhCTs+OHGk4NM8Z8fnMVDU05BMpmhIXOQeDgN2RAvxtd5rg/ex6PoteJBY1pmmlQbyF
-         LYefmehPLIRT9sLVlyTovBDkELXDl1heUNb5zhcT+d/p2VARtUfMi2Ik1e/wRFwkBScl
-         1tpIao74a/2Uo5jqzRcUXMSpJfbnOVhKgN23PKHXR8PCBlzDHrLLnIqiZIFbgSd6hDvd
-         c9GA==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MdXk1pyPsVBhnrHyt5mX9r0DgwLVIPD7/AuNwdpQKgg=;
+        b=khwhl53D7t6PjllQXRrNbDUkfAINVjf84MzGsUFRnEbxnn/Fr9ItyRXfZUuiQnuxh9
+         Je9Q3dSaeEKdpC6hOVOoEoMEYWt+BKMQETudpV//Q8GqjvMqRWwghYIe7v0Il2erdQFm
+         AEShi0sqY1Oh2fne7Q8Y7mPI2+KfUj9QwSw1UIagt5tL9FUIPhiwuGiy703BXsZtNnqT
+         zGoGMOA1Jz0rGSITm7h6t/Ec+q1ZZMl/JT1wIe7y4oY6TdIeQWRq0Sj50SGH36oAx4mi
+         RCpPTOFu7xtFGHsMg8UJldRnvY4rORGvphNlxN1FDUofmXW7DzgaUXUeyUnFoveA1wpJ
+         0nVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KKuY9OBajKOBUYRrR89zZjDuOWwWEuc3gAdN9zXO400=;
-        b=KAeZ2aQFp6+VqIWMdkThwuhgZqHFlezFDI2x/WlnyWxbduTkz290hHDVT5DfXQDdBE
-         KNe1jMQtPqOVwrs2jIMJsE+1g/mBFhwNUmZDpF7nj1X1KKMo7RyAVvhm5fpKIYRgSmfT
-         3vP5bG0UVEJ6ciPxGlsBP3Z98yklmpCXq89NHVdfpWwzm8sW1UQ0hC/sPaH6J0gH6arZ
-         Ur4kCGwdE5FiOfAcgCY9xS2i6UscOOAw5w9Ibv7wqGN+6AM5hJBkfLUgOcjC1oBUTzLQ
-         gz8pgrDiBNL8vGtFcrDAtQjNodoS09ma0z/YpSh2ReOAsvz0mqjkQIYdWhBbA1u5TKPC
-         9VAQ==
-X-Gm-Message-State: AOAM532loJ87fcdks7yucEaCi8wAqTmVhFiz+SU5vw8JZQ6cEIFOSXo8
-        KMwXQIgafFGnUGvLvAg0wqu/khOO3uwunETzsly9noVo
-X-Google-Smtp-Source: ABdhPJzCvBDxGAJUUcsB6BOl7F0W+QaLossT/014MawQ8sN0xErihpOmU0BBuM2aj/VWlXj7aY4p4YyLVihUdUp09Hk=
-X-Received: by 2002:a81:784e:0:b0:2e6:852b:c68 with SMTP id
- t75-20020a81784e000000b002e6852b0c68mr12926497ywc.317.1648239892290; Fri, 25
- Mar 2022 13:24:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220325181617.332701-1-luiz.dentz@gmail.com> <623e1b1c.1c69fb81.3c792.0ff0@mx.google.com>
-In-Reply-To: <623e1b1c.1c69fb81.3c792.0ff0@mx.google.com>
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MdXk1pyPsVBhnrHyt5mX9r0DgwLVIPD7/AuNwdpQKgg=;
+        b=c7CmoWXqmJtlmKdzQGR6sqFI4eBPGfM1UU5s9KgbGkU7gkJkDYJVSEvu0pCDKEyZGS
+         v2GEVptklwiC97rDsRn8zf3DazjRgSQgf5ZhJcL63PJ92FcGn+y0heUq9GQTPZJVFDLc
+         dNj/p/4eAlBmsRwvE7W+7dbgpQL5CfTQCDg/pgnE0fqxqYKwWWcMmCIGhPFnnmRCYa++
+         2oL+SAaKKqBL40uuFQEsjrLImVpabmXYYkuco5/byJMkHIRcmgnc5L5k4g2NN6u4whw6
+         M72UFlRiFmMBMRcrWISa2Fe0e1/M0GXeMun5NkwQ2iTRn+WBfJuqfKR+h1E6m5EGNdQD
+         p+KA==
+X-Gm-Message-State: AOAM531timUQ12OQJqJH6CgY6ad7nsqqL5lsap/WUuhAKUZDecW3j/Qn
+        qNnc2BEhpqqEl3I9BHzI1oAls+ONJ4Y=
+X-Google-Smtp-Source: ABdhPJy1vEGa1YpeSYIWHejteU7PZ+ua7MAjVsGUHVuV5+w+9dsy5tn4fe5ML5nSloqPFR5rAk5oEA==
+X-Received: by 2002:a17:90a:8e85:b0:1bc:429b:513d with SMTP id f5-20020a17090a8e8500b001bc429b513dmr26963018pjo.11.1648242795560;
+        Fri, 25 Mar 2022 14:13:15 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id j6-20020a17090a588600b001c699d77503sm6582009pji.2.2022.03.25.14.13.15
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Mar 2022 14:13:15 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Fri, 25 Mar 2022 13:24:41 -0700
-Message-ID: <CABBYNZKgQ1OcOpZ2ug1m7EPNMUShn-fntQvR=1JF_gZ6U_NE0w@mail.gmail.com>
-Subject: Re: [BlueZ] mgmt: Remove mgmt_set_verbose
-To:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Cc:     Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH 1/2] Bluetooth: HCI: Add HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN quirk
+Date:   Fri, 25 Mar 2022 14:13:13 -0700
+Message-Id: <20220325211314.425364-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -65,28 +67,87 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Tedd,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-On Fri, Mar 25, 2022 at 12:42 PM <bluez.test.bot@gmail.com> wrote:
->
-> This is an automated email and please do not reply to this email.
->
-> Dear Submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
->
-> ----- Output -----
-> error: patch failed: src/shared/mgmt.c:50
-> error: src/shared/mgmt.c: patch does not apply
-> error: patch failed: src/shared/mgmt.h:28
-> error: src/shared/mgmt.h: patch does not apply
-> hint: Use 'git am --show-current-patch' to see the failed patch
->
->
-> Please resolve the issue and submit the patches again.
+This adds HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN quirk which can be
+used to mark HCI_Enhanced_Setup_Synchronous_Connection as broken even
+if its support command bit are set since some controller report it as
+supported but the command don't work properly with some configurations
+(e.g. BT_VOICE_TRANSPARENT/mSBC).
 
-Looks like CI tree is outdated.
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ include/net/bluetooth/hci.h      | 9 +++++++++
+ include/net/bluetooth/hci_core.h | 8 ++++++--
+ net/bluetooth/hci_conn.c         | 2 +-
+ net/bluetooth/sco.c              | 2 +-
+ 4 files changed, 17 insertions(+), 4 deletions(-)
 
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 5cb095b09a94..8bb81ea4d286 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -265,6 +265,15 @@ enum {
+ 	 * runtime suspend, because event filtering takes place there.
+ 	 */
+ 	HCI_QUIRK_BROKEN_FILTER_CLEAR_ALL,
++
++	/*
++	 * When this quirk is set, disables the use of
++	 * HCI_OP_ENHANCED_SETUP_SYNC_CONN command to setup SCO connections.
++	 *
++	 * This quirk can be set before hci_register_dev is called or
++	 * during the hdev->setup vendor callback.
++	 */
++	HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN,
+ };
+ 
+ /* HCI device flags */
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index d5377740e99c..59815df1272a 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1492,8 +1492,12 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
+ #define privacy_mode_capable(dev) (use_ll_privacy(dev) && \
+ 				   (hdev->commands[39] & 0x04))
+ 
+-/* Use enhanced synchronous connection if command is supported */
+-#define enhanced_sco_capable(dev) ((dev)->commands[29] & 0x08)
++/* Use enhanced synchronous connection if command is supported and its quirk
++ * has not been set.
++ */
++#define enhanced_sync_conn_capable(dev) \
++	(((dev)->commands[29] & 0x08) && \
++	 !test_bit(HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN, &(dev)->quirks))
+ 
+ /* Use ext scanning if set ext scan param and ext scan enable is supported */
+ #define use_ext_scan(dev) (((dev)->commands[37] & 0x20) && \
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 84312c836549..cd51bf2a709b 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -481,7 +481,7 @@ static bool hci_setup_sync_conn(struct hci_conn *conn, __u16 handle)
+ 
+ bool hci_setup_sync(struct hci_conn *conn, __u16 handle)
+ {
+-	if (enhanced_sco_capable(conn->hdev))
++	if (enhanced_sync_conn_capable(conn->hdev))
+ 		return hci_enhanced_setup_sync_conn(conn, handle);
+ 
+ 	return hci_setup_sync_conn(conn, handle);
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 8eabf41b2993..2a58c7d88433 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -885,7 +885,7 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			err = -EBADFD;
+ 			break;
+ 		}
+-		if (enhanced_sco_capable(hdev) &&
++		if (enhanced_sync_conn_capable(hdev) &&
+ 		    voice.setting == BT_VOICE_TRANSPARENT)
+ 			sco_pi(sk)->codec.id = BT_CODEC_TRANSPARENT;
+ 		hci_dev_put(hdev);
 -- 
-Luiz Augusto von Dentz
+2.35.1
+
