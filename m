@@ -2,139 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AE944EB555
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 29 Mar 2022 23:32:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B2A04EB5F0
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 30 Mar 2022 00:29:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234456AbiC2Vee (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 29 Mar 2022 17:34:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54100 "EHLO
+        id S237341AbiC2Wbg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 29 Mar 2022 18:31:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234467AbiC2Ved (ORCPT
+        with ESMTP id S237306AbiC2Wbb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 29 Mar 2022 17:34:33 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6464B239320
-        for <linux-bluetooth@vger.kernel.org>; Tue, 29 Mar 2022 14:32:49 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id bx5so18754784pjb.3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 29 Mar 2022 14:32:49 -0700 (PDT)
+        Tue, 29 Mar 2022 18:31:31 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EEEF6A033;
+        Tue, 29 Mar 2022 15:29:47 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id p12-20020a05600c430c00b0038cbdf52227so2365938wme.2;
+        Tue, 29 Mar 2022 15:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=56fbgVdh1J5rDKNt0tG5KJcZBRHreXxak00Yp74aW1I=;
-        b=ilSQ+/cHwPPlNj/TePc5MDo2j/KnT225LrnwfjrNBqYAGqJ6Z3bmCatFDmFzSVHWpw
-         /e/HElBEGwvKsiECTdsI2d7jlxEtsUqhEsNO+rsxdKynKJz1orTom6FlRn0nYkFXLOKj
-         kM4oa8pGvpywps50t16GHe+lvF6/ua+OagiFvInsphng1QmgwIbYyqryb+xn5qzVXgqa
-         MUKAQn3DTQtmHQBVDRUGjN7zXITqnVqRHKnW/KZmN9VSgkf/Cpd8FI70tmdNhdp10LW0
-         Y7uc6Kr9wSauwF+n5P/k1eD3gZrFav4W2Kn/AsMoT96pST7kRwFeepaTsCbzOpGzkd07
-         aCLQ==
+        h=message-id:mime-version:content-transfer-encoding
+         :content-description:subject:to:from:date:reply-to;
+        bh=+v//v9bV1cKxYYqp6E5HrJfuFydY/JXcjMGnmfr7lM0=;
+        b=Ig8qBaP+s0wZj3Yzj/Jok4qUQy3Qe6lbCeKCwjh1Dmktwg+4b2vgKmwE40mMrSK1pl
+         BJw5HJmfGifDe6MBDwnrt8z5KFWpO3lr7HlF2R5Ej+n1AH2FwrVkKqj/ZFwx3PTdSXdQ
+         W0Cxl98ibySSZFvLakO0ll5eDx2YeXiztr9OUQ/ic87+Aps89WWzf884CObUqzgDVNA+
+         Wdh/qmswR3+MZ6brz7lQdij4Y6E69QJR5rkpgLZ8OxngLR9JASm7p6UT5AhRcq74t4Pe
+         /bUfMqvVwO/0q2q5wSZq29cgGJnxO4mIApq085bb/NnyY/1//5z8c05IA0O6RcyINN5w
+         Pg1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=56fbgVdh1J5rDKNt0tG5KJcZBRHreXxak00Yp74aW1I=;
-        b=zP8he6+BhanDW1sGr8ty+qTJnUZ8TFyODrojVDYYSi456fOBVrxJ2l7rLpE14kfJjN
-         wzBpk0rWfB8ZtKe0NCyUROfGMrV3eORRJ4AI2zmNlLJHmxk+wDd7pRPrkUlCccs2233C
-         Hsph9ekuAAX1Qnfhh/2iXeRbU4QmkNhqmhIhQiJGy5jSe9yF823xtEbBHBcc2afZDzUP
-         EIodWm30/WrX0Yynwp58CIjfMFfIXZAnr9ZsGm9Bb6mPWCg7vCi0FFAcbfuIAYOS1Sw3
-         6UuHkMUo1dSN2Ha15gbZP3mOBb6HhfEZUdlgeZ4eazyuDTwivUy9GZWIuwrKnFSF5/Qi
-         fsXw==
-X-Gm-Message-State: AOAM532FFrFwHIKbiqXvSv/p7RFNz56ewzisvDt0WS0f0XEV2nDcM8Bg
-        LwVLYaqd2bgQZfpFcm/YLzAF0Y2Ixio=
-X-Google-Smtp-Source: ABdhPJwANd4TMVFggMhc0v6IEziRWKfZmDAlgos66bIIVLlx0doWtkD8HAApi+oYE1BZ/Ft2VcF1XQ==
-X-Received: by 2002:a17:90a:7d10:b0:1c9:7939:c70 with SMTP id g16-20020a17090a7d1000b001c979390c70mr1146012pjl.203.1648589568311;
-        Tue, 29 Mar 2022 14:32:48 -0700 (PDT)
-Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id w63-20020a638242000000b0038631169c02sm15657012pgd.57.2022.03.29.14.32.47
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Mar 2022 14:32:47 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v4] a2dp: Fix crash when SEP codec has not been initialized
-Date:   Tue, 29 Mar 2022 14:32:47 -0700
-Message-Id: <20220329213247.2334757-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:content-description:subject:to:from:date
+         :reply-to;
+        bh=+v//v9bV1cKxYYqp6E5HrJfuFydY/JXcjMGnmfr7lM0=;
+        b=lKLX5u58LkA9MNtEcL8v8x/G6rQ5eB2vjvBW7Ml2AVeD+YwnU7EfSbYc6QgYhUBAn8
+         pA8KzXFJE/xwtGJ/rgEtMa8hTGkHMeowFyEpOdwCmBeRraY2JNqaPQRaWPyQG25zUKzC
+         ym6hHnZHw6CDUdvPuC4ojwY+mog56cWcbqoxygIgwn4bc+b69bI5MGAuV4bnCJTE6m58
+         2uTOyxaRUjw3KPmtBHELMjiTQSSlCeheKLv5dtd4qV4NFm4vW+ravWXwyJZ6I4ayiyhZ
+         GY12PIifZZ5M1gqqmVn/I8gQMXC5dMvfpIZPFyF3jIPqVLDP5vWjansK2O3VIEXhYx2E
+         VL1A==
+X-Gm-Message-State: AOAM531DYpdq6bmS1ypVuNTmhJI3/MVko2/w3qn4lw9vXocJpBhiwA57
+        g85q627xz/jB2bI8yM+xEpo=
+X-Google-Smtp-Source: ABdhPJxjd3go56sj6cXZylYmZZ9zN0+O8erzuqsWpdkf+xnwJ6lzfh4D7+1C5lRvgrosaNBz4tEBHQ==
+X-Received: by 2002:a1c:f607:0:b0:381:1db:d767 with SMTP id w7-20020a1cf607000000b0038101dbd767mr1501727wmc.165.1648592985783;
+        Tue, 29 Mar 2022 15:29:45 -0700 (PDT)
+Received: from [172.20.10.4] ([102.91.4.27])
+        by smtp.gmail.com with ESMTPSA id n18-20020a5d6612000000b00203fbd39059sm16004923wru.42.2022.03.29.15.29.40
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 29 Mar 2022 15:29:45 -0700 (PDT)
+Message-ID: <62438859.1c69fb81.4d4fe.f2d5@mx.google.com>
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Gefeliciteerd, er is geld aan je gedoneerd
+To:     Recipients <adeboyejofolashade55@gmail.com>
+From:   adeboyejofolashade55@gmail.com
+Date:   Tue, 29 Mar 2022 23:29:34 +0100
+Reply-To: mike.weirsky.foundation003@gmail.com
+X-Spam-Status: No, score=2.4 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,T_US_DOLLARS_3 autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Beste begunstigde,
 
-If SEP has not been properly discovered avdtp_get_codec may return NULL
-thus causing crashes such as when running AVRCP/TG/VLH/BI-01-C after
-AVRCP/TG/RCR/BV-04-C
----
-v4: remove queue_isempty check from store_remote_seps since that prevents
-cleaning up if no seps could be registered.
+ Je hebt een liefdadigheidsdonatie van ($ 10.000.000,00) van Mr. Mike Weirs=
+ky, een winnaar van een powerball-jackpotloterij van $ 273 miljoen.  Ik don=
+eer aan 5 willekeurige personen als je deze e-mail ontvangt, dan is je e-ma=
+il geselecteerd na een spin-ball. Ik heb vrijwillig besloten om het bedrag =
+van $ 10 miljoen USD aan jou te doneren als een van de geselecteerde 5, om =
+mijn winst te verifi=EBren
+ =
 
- profiles/audio/a2dp.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
-
-diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
-index c3ac432a7..5c20e5807 100644
---- a/profiles/audio/a2dp.c
-+++ b/profiles/audio/a2dp.c
-@@ -829,9 +829,6 @@ static void store_remote_seps(struct a2dp_channel *chan)
- 	char *data;
- 	gsize length = 0;
- 
--	if (queue_isempty(chan->seps))
--		return;
--
- 	ba2str(device_get_address(device), dst_addr);
- 
- 	snprintf(filename, PATH_MAX, STORAGEDIR "/%s/cache/%s",
-@@ -2074,6 +2071,11 @@ static struct a2dp_remote_sep *register_remote_sep(void *data, void *user_data)
- 	if (sep)
- 		return sep;
- 
-+	if (avdtp_get_codec(rsep)) {
-+		error("Unable to get remote sep codec");
-+		return NULL;
-+	}
-+
- 	sep = new0(struct a2dp_remote_sep, 1);
- 	sep->chan = chan;
- 	sep->sep = rsep;
-@@ -2148,6 +2150,7 @@ static void load_remote_sep(struct a2dp_channel *chan, GKeyFile *key_file,
- 	struct avdtp_remote_sep *rsep;
- 	uint8_t lseid, rseid;
- 	char *value;
-+	bool update = false;
- 
- 	if (!seids)
- 		return;
-@@ -2206,10 +2209,19 @@ static void load_remote_sep(struct a2dp_channel *chan, GKeyFile *key_file,
- 		}
- 
- 		sep = register_remote_sep(rsep, chan);
--		if (sep)
--			sep->from_cache = true;
-+		if (!sep) {
-+			avdtp_unregister_remote_sep(chan->session, rsep);
-+			update = true;
-+			continue;
-+		}
-+
-+		sep->from_cache = true;
- 	}
- 
-+	/* Update cache */
-+	if (update)
-+		store_remote_seps(chan);
-+
- 	value = g_key_file_get_string(key_file, "Endpoints", "LastUsed", NULL);
- 	if (!value)
- 		return;
--- 
-2.35.1
-
+  Vriendelijk antwoord op: mike.weirsky.foundation003@gmail.com
+ Voor uw claim.
