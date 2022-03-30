@@ -2,75 +2,176 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E221D4ECE66
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 30 Mar 2022 23:06:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20E9C4ECE6C
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 30 Mar 2022 23:06:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350915AbiC3Usn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 30 Mar 2022 16:48:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53364 "EHLO
+        id S1351173AbiC3U65 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 30 Mar 2022 16:58:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232234AbiC3Usm (ORCPT
+        with ESMTP id S1351162AbiC3U6z (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 30 Mar 2022 16:48:42 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BFB72DA9A
-        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 13:46:56 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id bg10so43925822ejb.4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 13:46:56 -0700 (PDT)
+        Wed, 30 Mar 2022 16:58:55 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4031E3F330
+        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 13:57:09 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-2db2add4516so233687207b3.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 13:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=liD2gfhyOXP3mhvUDL+XuWtoVfvWgJHIwpuC5U6JPEE=;
-        b=BijS/zP6AymqxuQoR02gV+PGo+dpWfopPRZmJwkOHduRid3mu9hR4ccm61zJS6e+0w
-         pBX6Lg4VW4dccyudcGx92+JDud0noTe+M3vSll95HuwhFPJP2QE8lYc2l4SBtqSZAen6
-         AVLoEnPXLiDkTyUe4fxK2fBXaBOoYazUIfTr5z7zgG0S6A4oUgsgTeFoPwjms/sGxDVF
-         VT9TAJB9uiwxDRh2NXQ//OsUBZcZ8Q8dw4IURN8s9oEsUaGQqNkte0BbFoPa3Hu2nJHA
-         g8LBTVLzsLRUme/7SlUa7lrTunEr22AtHV/HXjJ+Smqg6cgk2TYdjln8jlKNAGVke/9/
-         of2w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7Fx25hFD20meOXNUwIGy4GCfNiOmBSL2zXAJi1OjzMw=;
+        b=e3Nx/tiIjwe3+Ul8sSlpjuRZRrYg+2iQbEvkPI4w6TuLrORKxaNceVy8eW79TWq50e
+         I/vR7QzK9jcH7VnfO1fxn4PZNx4xeH6D9nufit+bFrJ40Y9JDeBYEdu012iJg8C86lER
+         kIH98/MvPX8OFWAcqThpMJb2cPIiLHPRO3aFLh0WtTAcsKJSEqb83URbnnvJSzYsFp5/
+         V7HVHjREHqL/vQpPMG2Ju9hJUpS9sE+HLjKnLAhutSmhqSMELeF5iZzgiS5XwZyZdf4E
+         JMsGSEAF4zI5Wr3ySNE2aw9NdQHdNK5kPcIYhMV1O2eSjai8ClDPkDBX+auSNPVBsCDV
+         UYkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=liD2gfhyOXP3mhvUDL+XuWtoVfvWgJHIwpuC5U6JPEE=;
-        b=zXHke6RAQLHOH61ly7SqSn9H/mLY4VSyldy6VyA170TUeiBx8Rw6689pUtrjCW89Qr
-         KOptScdvIJn48qT2ByuWPjc7WR3kFvzTuQ1P64ljMhNmPdp4Z/5nGOi9i2u3t75l+B6m
-         aicJJbr1o3iHqu1NGcxaVvw1VQnNkA/AbYFNbOqR6U+iP/VFXHDCpBPlbNGH5VkCndUv
-         rKGkecmcXqxVEwftk8LAKw0Yp0z26KSx3enbAJ6sLO5lCSYiZYuTyqe+PspIPdSrCLOV
-         vKNJGdRka3C755E1OaGZWLsH3S2ikDAeJnlN+xfMqNDSR5oj9iazuJL/6m2plD/fzmBp
-         0Sag==
-X-Gm-Message-State: AOAM531MhbJdSZb8VwjAJUtRZgRz4z2aywN53CzEW8zQr4t8HVZGG89J
-        rpAnq/kTp1j3LaUMxry5gbBOtfhHM4EAfm0xBXs=
-X-Google-Smtp-Source: ABdhPJy3u2LlHi1bZ3Ou44ILnnhSIDpG885SrYRzSzOGzydktQZAsSTAjuIC0bwX2KLfu4DiWlM27UnAnbmYuOpvYQA=
-X-Received: by 2002:a17:907:7ea6:b0:6db:ca53:9b0a with SMTP id
- qb38-20020a1709077ea600b006dbca539b0amr1499558ejc.763.1648673214545; Wed, 30
- Mar 2022 13:46:54 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7Fx25hFD20meOXNUwIGy4GCfNiOmBSL2zXAJi1OjzMw=;
+        b=iWhdw2WRItk1gRc+OV71lWC+QvVr+uCKQYiHphVvKpeJsnMuNLK+2Uk8hWiHWYedXn
+         HJpUc1y0ACVcLaayV1hdTQIQdyE4jS+dcT9Z7dtUOFPMPxhHfJxUichIRWCUoHNbyzMU
+         DIYtkiBApqjWwZIy6c5yFQ7DTqh+IRUTqndICjza/fwzVPxnDt14zwXtSFJ9ZfObetHn
+         lidZhYE3X8JBpRceALtavJJiga28sM0QE+jTkUug3/6JWuVyY/1YF0wO4u/3LVJs3Xoz
+         omIKp0X2VlalGz1lKej26w2JmHRKSdL3TK9AUhKetqc6sBC/OBcSVJKocVS7E0QX5XuJ
+         4N8Q==
+X-Gm-Message-State: AOAM532+GoER9Ka3OYIknn7AlYqoxJ62hqgaqw/stMy5sLqGMitcs+5h
+        SwySQHdBGNUzhHwngsipjmVT0DWiPv5z432v+uQMEjpmp2s=
+X-Google-Smtp-Source: ABdhPJwekh6cxixnHEdsA2EsDOCsuHydN31uMeo8EgBAzjhxWb3zkEoimBQ+YV/aqASayhf8SpzGhRfydLB24ShlWjs=
+X-Received: by 2002:a81:f0c:0:b0:2d6:83ab:7605 with SMTP id
+ 12-20020a810f0c000000b002d683ab7605mr1852363ywp.150.1648673828378; Wed, 30
+ Mar 2022 13:57:08 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a17:907:160e:0:0:0:0 with HTTP; Wed, 30 Mar 2022 13:46:53
- -0700 (PDT)
-Reply-To: olejniczakk031@gmail.com
-From:   Olejniczak Krzystof <amaandablessgod@gmail.com>
-Date:   Wed, 30 Mar 2022 12:46:53 -0800
-Message-ID: <CAPWLybxacdB6-UEGjzzHdNSwM+VrE-oiuqhEt+GZJY20xYpFSg@mail.gmail.com>
-Subject: Hello,
-To:     undisclosed-recipients:;
+References: <20220329052801.28748-1-wangxinpeng@uniontech.com>
+In-Reply-To: <20220329052801.28748-1-wangxinpeng@uniontech.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 30 Mar 2022 13:56:57 -0700
+Message-ID: <CABBYNZKDdRLEk7NEHoZ_uJV2cUNm9qHuWvaiqDotWpSL=LnLQg@mail.gmail.com>
+Subject: Re: [PATCH v4] obexd: Fix can't receive small files sent by windows
+To:     xinpeng wang <wangxinpeng@uniontech.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ***
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Hi,
+
+On Mon, Mar 28, 2022 at 11:02 PM xinpeng wang <wangxinpeng@uniontech.com> wrote:
+>
+> When obexd receives a file, it parses the filename and other parameters
+> when processing the packet for the first time, store filename in
+> obex_session and emit the dbus signal, The signal will be pending first.
+> then when this file is received, transfer_complete reset obex_session
+> is called.
+
+So if I understand you correctly the problem is that Status does
+transit directly to complete and end up swallowing the active state?
+That is not necessarily a bug since the file would still be saved.
+
+> When using a computer with Windows 10 installed to send a file to bluez,
+> obexd will read the data through read_stream; if it is a small file, the
+> data processed for the first time is marked as final, and
+> transfer_complete reset obex_session will be called when the data is
+> processed for the first time. At this point, the dbus signal is still
+> pending, and the dbus method that requests the file path has not been
+> processed. This will cause the upper application to not be able to
+> transfer files from the cache directory to the directory specified by
+> the user.
+
+This doesn't sound right, we have chk_put callback that calls into
+manager_request_authorization and that blocks untils the
+agent->auth_pending responds, so it sounds like the agent is not
+responding in time or windows is using ftp instead of opp? Well ftp
+doesn't even use AuthorizePush, I'm also confused about the mention of
+a cache directory and user specified directory, there are no such
+things there only the root directory option which is used as default
+location and AuthorizePush can opt to store in a different location if
+necessary, but the transfer doesn't start until the agent reply
+AuthorizePush or at least that what the code assumes with:
+
+/* Workaround: process events while agent doesn't reply */
+while (agent && agent->auth_pending)
+g_main_context_iteration(NULL, TRUE);
+
+> To solve this problem, emit Filename's dbus signal and force it when
+> status=active.
+>
+> Ways to reproduce the problem:
+> 1. Use the computer with windows 10 installed to send a small file to
+> the computer with ubuntu installed;
+> 2. file size < 10k;
+> 3. After sending, in most cases, the file is located in the
+> ~/.cache/obexd/ directory. Normally, the file should be located in the
+> ~/Download directory.
+
+Is ~/.cache/obexd its passed as -r/--root to obexd? Could it be that
+the agent doesn't respond for some reason? e.g. the transfer status is
+not active?
+
+> To fix this, after applying this commit, it also needs to be modified by
+> the upper-level application. Modified to read Filename from dbus signal
+> if there is Filename in dbus signal. Otherwise, use the dbus method to
+> request Filename.
+
+The method is used to accept the request, so something else is broken
+if the file ends up being accepted before the user is able to accept
+it, also it is probably a security breach if small files can bypass
+the user authorization.
+
+> ---
+> v4: fix COMMIT_LOG_LONG_LINE error of checkpatch
+>
+>  obexd/src/manager.c | 6 +++++-
+>  obexd/src/obex.c    | 1 +
+>  2 files changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/obexd/src/manager.c b/obexd/src/manager.c
+> index 01741fe62..2c180dc44 100644
+> --- a/obexd/src/manager.c
+> +++ b/obexd/src/manager.c
+> @@ -533,8 +533,12 @@ void manager_emit_transfer_property(struct obex_transfer *transfer,
+>  void manager_emit_transfer_started(struct obex_transfer *transfer)
+>  {
+>         transfer->status = TRANSFER_STATUS_ACTIVE;
+> +       if (!transfer->path)
+> +               return;
+>
+> -       manager_emit_transfer_property(transfer, "Status");
+> +       g_dbus_emit_property_changed_full(connection, transfer->path,
+> +                                       TRANSFER_INTERFACE, "Status",
+> +                                       G_DBUS_PROPERTY_CHANGED_FLAG_FLUSH);
+>  }
+>
+>  static void emit_transfer_completed(struct obex_transfer *transfer,
+> diff --git a/obexd/src/obex.c b/obexd/src/obex.c
+> index 3a68fd66c..c0d9e160a 100644
+> --- a/obexd/src/obex.c
+> +++ b/obexd/src/obex.c
+> @@ -720,6 +720,7 @@ int obex_put_stream_start(struct obex_session *os, const char *filename)
+>                 manager_emit_transfer_property(os->service_data, "Size");
+>
+>         os->path = g_strdup(filename);
+> +       manager_emit_transfer_property(os->service_data, "Filename");
+>
+>         return 0;
+>  }
+> --
+> 2.20.1
+>
+>
+>
+
+
 -- 
-Hello,
-
-      I have a business proposal, kindly reply back for more details.
-
-Regards
-
-Olejniczak Krzystof Marek
+Luiz Augusto von Dentz
