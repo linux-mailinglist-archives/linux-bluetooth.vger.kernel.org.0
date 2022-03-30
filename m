@@ -2,213 +2,114 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48C054ECB34
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 30 Mar 2022 20:00:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9F1E4ECBF8
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 30 Mar 2022 20:25:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349594AbiC3SCN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 30 Mar 2022 14:02:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57502 "EHLO
+        id S1350490AbiC3S02 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 30 Mar 2022 14:26:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245029AbiC3SCK (ORCPT
+        with ESMTP id S1349992AbiC3S0K (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 30 Mar 2022 14:02:10 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59F2F5597
-        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 11:00:25 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id e81so9032368ybf.13
-        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 11:00:25 -0700 (PDT)
+        Wed, 30 Mar 2022 14:26:10 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4316C45071
+        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 11:23:39 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id x2so21239344plm.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 11:23:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=eeMZmw/kqadzdyJs5nlh7eHQdmfPhh8haxuMTK6KHSU=;
-        b=VrkFiLX+YLqWOBkWoDB8TCWdc/YNwBjSHrLL6FNC6hfaLS2LnORZUOvWG+fUoSyeJ2
-         iwqyOd0hRtuP68kSyo7AMVIYh7m4SGruPGBqifd49YgjPwMYZgHIypF8Kb8hpvFjrZtY
-         92KCTu0FjaZ6FaHFe1gihyffJSz53RA/b6ttbZDTf3BAp8ykEVRc1V6/M3SMNAZzSvDx
-         YVNvj7IUxCS0eR1UPAL7dh/X8gRvxoFGnCCkxkecwmePlGqeiE8uabLlYxyDC4OCCiD8
-         VzDini5gPQWIT24yCmZISqNnFFreRxkAeOJhg6LDAey0U9QO5y38AOjI1w7IGzB8CoqI
-         MuMw==
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=6PnxJaVdYHTfEoSreao3ANO+XeqxY/p/4dxKSObIH1I=;
+        b=U1oUia1Thamt6Z7oWm6PGNKOk9RXK6Jv76DGrI1cLcYRcY5/d1Tt5qepQRdZm6lsyq
+         RBa/xpJM28ShOu5ibphzafHjPKptRC4OMeOVco0xYKihrCNFhnaGQOBDSvUdgHWgE3gf
+         cWTbx+dPO2nv/wujOZrrbxfJpePUzp7QZ1RCloUPxJhGXTvBKUziPieC1LSkK8oSaB+t
+         E85QJNBGnQK8HE8wei7Zq5jQSpeI5JY8kzofCGcJSUHLIHQXWsBy6ta+brl9WPLZzyWA
+         2jPBZlOFyxLxFI8awBJCcZtcLmSyu35IRMr8cJ72zb2pokIUUqe6EUB9pKUwVKwbq4my
+         ou5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eeMZmw/kqadzdyJs5nlh7eHQdmfPhh8haxuMTK6KHSU=;
-        b=Hsl17PtMtnSJEYG/2O7IGIsj6anEsHaSa3Y0Iomuo9xIKZQMSd7Y6655PEY+H1LdNn
-         BDXej27waaBq5Qgn/5DRuSbTl8W390tHz3dbk5BTRedCYMAWKqjtfXEUMKxrFCJ/YAya
-         zEsnmu03LK4+Cf/OBkFTsHkXq/xpujSvwkKfwKFxIh/obxXdemnm6lVEV0JZbnH+jfUa
-         4KFw9NHmxCeNXteSgavL3m7GuvmtC/maIo68h64XgUewwa3iXMGF080Ux/rUcksV/GmI
-         pbVBS+hbZbUMWAp/0u1O8PIMSKVgi9lZ3sIra+GdeQ8cSJqjAHa4dCea2B7QW7jnA2hs
-         fWPg==
-X-Gm-Message-State: AOAM533vQZlGqubgEVoWnlP++XFfI7w+3J3TlxMslVCnsuV3NWx5icMW
-        /7b4wCt39ywV9WbSiFRD6gHbMEjq8yTxQLAUS14=
-X-Google-Smtp-Source: ABdhPJxmcqenpANha42/ct3r+dM/v1iFYLA0tPl3zOcHnudZSB86Y9uCMStcDW0HMQyZ02xAZUFYiAQjbd8OkAhc8Mo=
-X-Received: by 2002:a25:9742:0:b0:61d:9526:ebc3 with SMTP id
- h2-20020a259742000000b0061d9526ebc3mr824713ybo.578.1648663224446; Wed, 30 Mar
- 2022 11:00:24 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=6PnxJaVdYHTfEoSreao3ANO+XeqxY/p/4dxKSObIH1I=;
+        b=SAbeVKg8dvh7TBXt1xjo41bRxuBF/atPVtSUIsrjy6gpzddWSsR7/rjZmExyrVECmk
+         3FuajHvJh9kYEtv+sg36PPCjc6MYOR+E5VyBDyqT/p5ISpDML7wtdx9xFgeIUgsYClAY
+         qx6Pnu/Sllq7EJRVsmsHsElJPtJvZXbn6NwiXstQ4b/YgC6TgbT9RXPnzrbBM0ZRUk51
+         MlbvTfKX3v5fBsaZASk6jD5e4c6bEbBOafLnINUnCGulhTfzezVAHHu70VYIG3zMyvKY
+         mPwn1GEUOtvm48LPtYTZfDFANWHLBw0t0UK0PvktW1Qe9BF+60WfzMagM5BvpE/MJog9
+         UoNA==
+X-Gm-Message-State: AOAM530Pud/Ft9N0sCLgEiHG7ZlUKOA/Ow5uvjPxoUGIdlRvHO40zcAA
+        iL1ikozPPJMUlPcIw/b3dMqp1wy4t9xebUTmxA==
+X-Google-Smtp-Source: ABdhPJzkTl+tJbylc9dRvis6ZhULbTl7j4ynIkLgm4b/Lu4YSrf6PCWjehKBvofPJCmWKHUKJGD0xbE01MjL0VC50Jo=
+X-Received: by 2002:a17:90b:3143:b0:1c7:5cee:3948 with SMTP id
+ ip3-20020a17090b314300b001c75cee3948mr852445pjb.140.1648664618224; Wed, 30
+ Mar 2022 11:23:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220329201646.2296314-1-luiz.dentz@gmail.com>
- <20220329201646.2296314-2-luiz.dentz@gmail.com> <e8c5b25a-6e4a-d958-c3c0-aa9dad797c8c@molgen.mpg.de>
-In-Reply-To: <e8c5b25a-6e4a-d958-c3c0-aa9dad797c8c@molgen.mpg.de>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 30 Mar 2022 11:00:13 -0700
-Message-ID: <CABBYNZKmb6Y1TSaVOoAaSuMpOK4GA9AMtBgpaZSGEXdzgDJAUQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] Bluetooth: Print broken quirks
-To:     Paul Menzel <pmenzel@molgen.mpg.de>
-Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+Reply-To: isabellasayouba0@gmail.com
+Sender: 040stherchurch@gmail.com
+Received: by 2002:a05:6a20:691d:b0:76:6cf5:d552 with HTTP; Wed, 30 Mar 2022
+ 11:23:37 -0700 (PDT)
+From:   Mrs Isabella Sayouba <isabellasayouba0@gmail.com>
+Date:   Wed, 30 Mar 2022 18:23:37 +0000
+X-Google-Sender-Auth: _Xe1kByDkvq-Dn04BagO7gok_qM
+Message-ID: <CAAzQq761QVaWKiKernxpKjqNCK+6V9mRKHBnOcqF8rXJO9Y+aA@mail.gmail.com>
+Subject: =?UTF-8?B?44GC44GE44GV44Gk44CC?=
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+Content-Transfer-Encoding: base64
+X-Spam-Status: No, score=3.8 required=5.0 tests=BAYES_99,BAYES_999,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_HK_NAME_FM_MR_MRS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Paul,
-
-On Tue, Mar 29, 2022 at 11:13 PM Paul Menzel <pmenzel@molgen.mpg.de> wrote:
->
-> Dear Luiz,
->
->
-> Thank you for your patch.
->
-> Maybe as commit message summary:
->
-> Warn about broken quirks
->
-> Am 29.03.22 um 22:16 schrieb Luiz Augusto von Dentz:
-> > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> >
-> > This prints warnings for controllers setting broken quirks to increase
-> > their visibility and warn about broken controllers firmware that
-> > probably needs updates to behave properly.
-> >
-> > Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> > ---
-> >   net/bluetooth/hci_sync.c | 66 +++++++++++++++++++++++++++++++++++++--=
--
-> >   1 file changed, 62 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-> > index 8f4c5698913d..8994ff1f94e6 100644
-> > --- a/net/bluetooth/hci_sync.c
-> > +++ b/net/bluetooth/hci_sync.c
-> > @@ -3825,6 +3825,67 @@ static int hci_init_sync(struct hci_dev *hdev)
-> >       return 0;
-> >   }
-> >
-> > +#define HCI_QUIRK_BROKEN(_quirk, _desc) \
-> > +{ \
-> > +     .quirk =3D _quirk, \
-> > +     .desc =3D _desc, \
-> > +}
-> > +
-> > +static const struct hci_quirk_broken {
-> > +     unsigned long quirk;
-> > +     const char *desc;
-> > +} hci_broken_table[] =3D {
-> > +     HCI_QUIRK_BROKEN(HCI_QUIRK_BROKEN_LOCAL_COMMANDS,
-> > +                      "HCI Read Local Supported Commands not supported=
-"),
->
-> The user wouldn=E2=80=99t know, that this is a device firmware problem. C=
-ould
-> something be added to the warning, like:
->
-> Therefore, device firmware VERSION violates the spec. Please contact the
-> manufacturer.
-
-We do print out the firmware filename when loading it so I'm not
-convinced printing it again would make any difference for the user.
-
-> > +     HCI_QUIRK_BROKEN(HCI_QUIRK_BROKEN_STORED_LINK_KEY,
-> > +                      "HCI Delete Stored Link Key command is advertise=
-d, "
-> > +                      "but not supported."),
-> > +     HCI_QUIRK_BROKEN(HCI_QUIRK_BROKEN_ERR_DATA_REPORTING,
-> > +                      "HCI Read Default Erroneous Data Reporting comma=
-nd is "
-> > +                      "advertised, but not supported."),
-> > +     HCI_QUIRK_BROKEN(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER,
-> > +                      "HCI Read Transmit Power Level command is advert=
-ised, "
-> > +                      "but not supported."),
-> > +     HCI_QUIRK_BROKEN(HCI_QUIRK_BROKEN_FILTER_CLEAR_ALL,
-> > +                      "HCI Set Event Filter command not supported."),
-> > +     HCI_QUIRK_BROKEN(HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN,
-> > +                      "HCI Enhanced Setup Synchronous Connection comma=
-nd is "
-> > +                      "advertised, but not supported.")
-> > +};
-> > +
-> > +static void hci_dev_print_broken_quirks(struct hci_dev *hdev)
-> > +{
-> > +     int i;
->
-> I=E2=80=99d use `unsigned int`, but no idea, what the subsystem does rega=
-rding
-> counting variables.
-
-I suppose size_t would be better given that sizeof is used.
-
->
-> Kind regards,
->
-> Paul
->
->
-> > +
-> > +     bt_dev_dbg(hdev, "");
-> > +
-> > +     for (i =3D 0; i < ARRAY_SIZE(hci_broken_table); i++) {
-> > +             const struct hci_quirk_broken *broken =3D &hci_broken_tab=
-le[i];
-> > +
-> > +             if (test_bit(broken->quirk, &hdev->quirks))
-> > +                     bt_dev_warn(hdev, "%s", broken->desc);
-> > +     }
-> > +}
-> > +
-> > +static int hci_dev_setup_sync(struct hci_dev *hdev)
-> > +{
-> > +     bt_dev_dbg(hdev, "");
-> > +
-> > +     hci_sock_dev_event(hdev, HCI_DEV_SETUP);
-> > +
-> > +     if (hdev->setup) {
-> > +             int ret;
-> > +
-> > +             ret =3D hdev->setup(hdev);
-> > +             if (ret)
-> > +                     return ret;
-> > +
-> > +             hci_dev_print_broken_quirks(hdev);
-> > +     }
-> > +
-> > +     return 0;
-> > +}
-> > +
-> >   int hci_dev_open_sync(struct hci_dev *hdev)
-> >   {
-> >       int ret =3D 0;
-> > @@ -3887,10 +3948,7 @@ int hci_dev_open_sync(struct hci_dev *hdev)
-> >           test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
-> >               bool invalid_bdaddr;
-> >
-> > -             hci_sock_dev_event(hdev, HCI_DEV_SETUP);
-> > -
-> > -             if (hdev->setup)
-> > -                     ret =3D hdev->setup(hdev);
-> > +             ret =3D hci_dev_setup_sync(hdev);
-> >
-> >               /* The transport driver can set the quirk to mark the
-> >                * BD_ADDR invalid before creating the HCI device or in
-
-
-
---=20
-Luiz Augusto von Dentz
+44GC44GE44GV44Gk44CCDQoNCua2meOCkua1geOBl+OBquOBjOOCieOBk+OBruODoeODvOODq+OC
+kuabuOOBhOOBpuOBhOOBvuOBmeOAguengeOBruebruOBq+OBr+Wkp+OBjeOBquaCsuOBl+OBv+OB
+jOOBguOCiuOBvuOBmeOAguengeOBruWQjeWJjeOBr+OCpOOCtuODmeODqeODu+OCteODqOOCpuOD
+kOOBleOCk+OBp+OBmeOAguODgeODpeODi+OCuOOCouWHuui6q+OBp+OAgeODluODq+OCreODiuOD
+leOCoeOCveOBrueXhemZouOBi+OCiemAo+e1oeOCkuWPluOCiuOBvuOBmeOAguengeOBr+OBguOB
+quOBn+OBq+W/g+OCkumWi+OBhOOBpuaEn+WLleOBl+OBn+OBruOBp+OAgeOBguOBquOBn+OBq+ip
+seOBmeS7peWkluOBq+mBuOaKnuiCouOBr+OBguOCiuOBvuOBm+OCk+OAguengeOBr+OAgTIwMTHl
+ubTjgavkuqHjgY/jgarjgovliY3jgavjg5bjg6vjgq3jg4rjg5XjgqHjgr3jga7jg4Hjg6Xjg4vj
+grjjgqLlpKfkvb/jgag55bm06ZaT5YON44GE44Gm44GE44GfU2F5b3ViYQ0KQnJvd27msI/jgajn
+tZDlqZrjgZfjgb7jgZfjgZ/jgILlrZDkvpvjgarjgZfjgacxMeW5tOmWk+e1kOWpmuOBl+OBn+OA
+gg0KDQrlvbzjga/jgZ/jgaPjgZ815pel6ZaT57aa44GE44Gf55+t44GE55eF5rCX44Gu5b6M44Gn
+5q2744Gr44G+44GX44Gf44CC5b2844Gu5q275b6M44CB56eB44Gv5YaN5ama44GX44Gq44GE44GT
+44Go44Gr5rG644KB44G+44GX44Gf44CC5Lqh44GP44Gq44Gj44Gf5aSr44GM55Sf44GN44Gm44GE
+44Gf44Go44GN44CB5b2844Gv57eP6aGNODUw5LiH44OJ44Or44KS6aCQ44GR44G+44GX44Gf44CC
+DQrvvIg4MDDkuIc1MDAw44OJ44Or77yJ6KW/44Ki44OV44Oq44Kr44Gu44OW44Or44Kt44OK44OV
+44Kh44K944Gu6aaW6YO944Ov44Ks44OJ44Kl44Kw44O844Gu6YqA6KGM44Gn44CC54++5Zyo44CB
+44GT44Gu44GK6YeR44Gv44G+44Gg6YqA6KGM44Gr44GC44KK44G+44GZ44CC5b2844Gv44GT44Gu
+44GK6YeR44KS44OW44Or44Kt44OK44OV44Kh44K944Gu6Ymx5qWt44GL44KJ44Gu6YeR44Gu6Ly4
+5Ye644Gr5Yip55So44Gn44GN44KL44KI44GG44Gr44GX44G+44GX44Gf44CCDQoNCuacgOi/keOA
+geengeOBruWMu+iAheOBr+engeOBjOeZjOOBqOiEs+WNkuS4reOBruWVj+mhjOOBruOBn+OCgeOB
+qzfjg7bmnIjplpPjga/ntprjgYvjgarjgYTjgaDjgo3jgYbjgajnp4HjgavoqIDjgYTjgb7jgZfj
+gZ/jgILnp4HjgpLmnIDjgoLmgqnjgb7jgZvjgabjgYTjgovjga7jga/ohLPljZLkuK3jga7nl4Xm
+sJfjgafjgZnjgILnp4Hjga7nirbmhYvjgpLnn6XjgaPjgZ/jga7jgafjgIHnp4Hjga/jgZPjga7j
+gYrph5HjgpLjgYLjgarjgZ/jgavmuKHjgZfjgabjgIHmgbXjgb7jgozjgarjgYTkurrjgIXjga7k
+uJboqbHjgpLjgZnjgovjgZPjgajjgavjgZfjgb7jgZfjgZ/jgILjgYLjgarjgZ/jga/jgZPjga7j
+gYrph5HjgpLnp4HjgYzjgZPjgZPjgafmjIfnpLrjgZnjgovmlrnms5XjgafliKnnlKjjgZnjgovj
+gafjgZfjgofjgYbjgILnp4Hjga/jgYLjgarjgZ/jgavjgYLjgarjgZ/jga7lgIvkurrnmoTjgark
+vb/nlKjjga7jgZ/jgoHjgavnt4/jgYrph5Hjga4zMOODkeODvOOCu+ODs+ODiOOCkuWPluOBo+OB
+puassuOBl+OBhOOBp+OBmeOAguOBiumHkeOBrjcw77yF44Gv56eB44Gu5ZCN5YmN44Gn5a2k5YWQ
+6Zmi44KS5bu644Gm44CB6YCa44KK44Gu6LKn44GX44GE5Lq644CF44KS5Yqp44GR44KL44Gf44KB
+44Gr5L2/44GG44Gn44GX44KH44GG44CC56eB44Gv5a2k5YWQ44Go44GX44Gm6IKy44Gh44G+44GX
+44Gf44GM44CB56We44Gu5a6244KS57at5oyB44GZ44KL44Gf44KB44Gg44GR44Gr44CB5a625peP
+44Gr44Gv6Kqw44KC44GE44G+44Gb44KT44CC44GT44Gu55eF5rCX44GM56eB44KS44Go44Gm44KC
+6Ium44GX44KB44Gf44Gu44Gn44CB56We44GM56eB44Gu572q44KS6LWm44GX44CB5qW95ZyS44Gn
+56eB44Gu6a2C44KS5Y+X44GR5YWl44KM44KL44KI44GG44Gr44GT44KM44KS44GX44Gm44GE44KL
+44Gu44Gn44GZ44CCDQoNCui/lOS/oeOCkuWPl+OBkeWPluOCiuasoeesrOOAgeODluODq+OCreOD
+iuODleOCoeOCveOBrumKgOihjOOBrumAo+e1oeWFiOOCkuOBiuefpeOCieOBm+OBl+OBvuOBmeOA
+guOBvuOBn+OAgemKgOihjOOBruePvuWcqOOBruWPl+WPluS6uuOBp+OBguOCi+OBk+OBqOOCkuio
+vOaYjuOBmeOCi+aoqemZkOabuOOCkueZuuihjOOBmeOCi+OCiOOBhumKgOihjOmVt+OBq+aMh+ek
+uuOBl+OBvuOBmeOAguengeOBjOOBk+OBk+OBp+i/sOOBueOBn+OCiOOBhuOBq+OBguOBquOBn+OB
+jOOBneOCjOOBq+W/nOOBmOOBpuihjOWLleOBmeOCi+OBk+OBqOOCkuengeOBq+S/neiovOOBl+OB
+puOBj+OBoOOBleOBhOOAgg0KDQrjgqTjgrbjg5njg6njg7vjgrXjg6jjgqbjg5DlpKvkurrjgYvj
+gonjgIINCg==
