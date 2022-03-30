@@ -2,115 +2,75 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36FC84ECDBF
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 30 Mar 2022 22:08:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E221D4ECE66
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 30 Mar 2022 23:06:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231657AbiC3UI1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 30 Mar 2022 16:08:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48158 "EHLO
+        id S1350915AbiC3Usn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 30 Mar 2022 16:48:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350979AbiC3UIY (ORCPT
+        with ESMTP id S232234AbiC3Usm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 30 Mar 2022 16:08:24 -0400
-X-Greylist: delayed 98034 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 30 Mar 2022 13:06:38 PDT
-Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 125E739830
-        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 13:06:38 -0700 (PDT)
-Received: from github.com (hubbernetes-node-ee50d5c.ash1-iad.github.net [10.56.212.80])
-        by smtp.github.com (Postfix) with ESMTPA id 5FCB99034C0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 13:06:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-        s=pf2014; t=1648670797;
-        bh=OSHL95w/1Gevs02RvUYSHMxm+C9BQryHEVb3HX0ixbI=;
-        h=Date:From:To:Subject:From;
-        b=C1tPfBKIrsepZgVseVIBKAgWp+l5F8BkAK0QNAtn6SUD2W4EY3AiR2nc/+HPbzUMp
-         olExNdwZGdmqwBpUzEolMpvRMQq881Ur67mszU/aiSsaWRsGH+G0w7cklDlMhxYbh7
-         uzXn98t9SCMAArL1j4JBYXi42feCzjDNAc5WO4nA=
-Date:   Wed, 30 Mar 2022 13:06:37 -0700
-From:   BluezTestBot <noreply@github.com>
-To:     linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/6cb6e2-4a06a3@github.com>
-Subject: [bluez/bluez] 0cc480: shell: Make bt_shell_add_submenu set main menu
- if ...
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 30 Mar 2022 16:48:42 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BFB72DA9A
+        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 13:46:56 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id bg10so43925822ejb.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Mar 2022 13:46:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=liD2gfhyOXP3mhvUDL+XuWtoVfvWgJHIwpuC5U6JPEE=;
+        b=BijS/zP6AymqxuQoR02gV+PGo+dpWfopPRZmJwkOHduRid3mu9hR4ccm61zJS6e+0w
+         pBX6Lg4VW4dccyudcGx92+JDud0noTe+M3vSll95HuwhFPJP2QE8lYc2l4SBtqSZAen6
+         AVLoEnPXLiDkTyUe4fxK2fBXaBOoYazUIfTr5z7zgG0S6A4oUgsgTeFoPwjms/sGxDVF
+         VT9TAJB9uiwxDRh2NXQ//OsUBZcZ8Q8dw4IURN8s9oEsUaGQqNkte0BbFoPa3Hu2nJHA
+         g8LBTVLzsLRUme/7SlUa7lrTunEr22AtHV/HXjJ+Smqg6cgk2TYdjln8jlKNAGVke/9/
+         of2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=liD2gfhyOXP3mhvUDL+XuWtoVfvWgJHIwpuC5U6JPEE=;
+        b=zXHke6RAQLHOH61ly7SqSn9H/mLY4VSyldy6VyA170TUeiBx8Rw6689pUtrjCW89Qr
+         KOptScdvIJn48qT2ByuWPjc7WR3kFvzTuQ1P64ljMhNmPdp4Z/5nGOi9i2u3t75l+B6m
+         aicJJbr1o3iHqu1NGcxaVvw1VQnNkA/AbYFNbOqR6U+iP/VFXHDCpBPlbNGH5VkCndUv
+         rKGkecmcXqxVEwftk8LAKw0Yp0z26KSx3enbAJ6sLO5lCSYiZYuTyqe+PspIPdSrCLOV
+         vKNJGdRka3C755E1OaGZWLsH3S2ikDAeJnlN+xfMqNDSR5oj9iazuJL/6m2plD/fzmBp
+         0Sag==
+X-Gm-Message-State: AOAM531MhbJdSZb8VwjAJUtRZgRz4z2aywN53CzEW8zQr4t8HVZGG89J
+        rpAnq/kTp1j3LaUMxry5gbBOtfhHM4EAfm0xBXs=
+X-Google-Smtp-Source: ABdhPJy3u2LlHi1bZ3Ou44ILnnhSIDpG885SrYRzSzOGzydktQZAsSTAjuIC0bwX2KLfu4DiWlM27UnAnbmYuOpvYQA=
+X-Received: by 2002:a17:907:7ea6:b0:6db:ca53:9b0a with SMTP id
+ qb38-20020a1709077ea600b006dbca539b0amr1499558ejc.763.1648673214545; Wed, 30
+ Mar 2022 13:46:54 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a17:907:160e:0:0:0:0 with HTTP; Wed, 30 Mar 2022 13:46:53
+ -0700 (PDT)
+Reply-To: olejniczakk031@gmail.com
+From:   Olejniczak Krzystof <amaandablessgod@gmail.com>
+Date:   Wed, 30 Mar 2022 12:46:53 -0800
+Message-ID: <CAPWLybxacdB6-UEGjzzHdNSwM+VrE-oiuqhEt+GZJY20xYpFSg@mail.gmail.com>
+Subject: Hello,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master=0D
-  Home:   https://github.com/bluez/bluez=0D
-  Commit: 0cc480a546e9b4740451dbdaaadc3df8ca1f8c34=0D
-      https://github.com/bluez/bluez/commit/0cc480a546e9b4740451dbdaaadc3=
-df8ca1f8c34=0D
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>=0D
-  Date:   2022-03-30 (Wed, 30 Mar 2022)=0D
-=0D
-  Changed paths:=0D
-    M src/shared/shell.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  shell: Make bt_shell_add_submenu set main menu if none has been set=0D
-=0D
-If not main menu has been set when calling bt_shell_add_submenu then=0D
-turns it on it main menu.=0D
-=0D
-=0D
-  Commit: d204e84c0694700f6cb1b8d98d26492de63d4303=0D
-      https://github.com/bluez/bluez/commit/d204e84c0694700f6cb1b8d98d264=
-92de63d4303=0D
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>=0D
-  Date:   2022-03-30 (Wed, 30 Mar 2022)=0D
-=0D
-  Changed paths:=0D
-    M Makefile.tools=0D
-    M client/main.c=0D
-    A client/player.c=0D
-    A client/player.h=0D
-    M tools/bluetooth-player.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  client: Add support for player submenu=0D
-=0D
-This moves adds the functionality of bluetooth-player into=0D
-bluetoothctl.=0D
-=0D
-=0D
-  Commit: 4a06a31be0453d7c8208108dccbb7cfacf768bc4=0D
-      https://github.com/bluez/bluez/commit/4a06a31be0453d7c8208108dccbb7=
-cfacf768bc4=0D
-  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>=0D
-  Date:   2022-03-30 (Wed, 30 Mar 2022)=0D
-=0D
-  Changed paths:=0D
-    M profiles/audio/a2dp.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  a2dp: Fix crash when SEP codec has not been initialized=0D
-=0D
-If SEP has not been properly discovered avdtp_get_codec may return NULL=0D=
+-- 
+Hello,
 
-thus causing crashes such as when running AVRCP/TG/VLH/BI-01-C after=0D
-AVRCP/TG/RCR/BV-04-C.=0D
-=0D
-Prevent remote endpoint registration if its codec is not available.=0D
-=0D
-Remove queue_isempty check from store_remote_seps since that prevents=0D
-cleaning up if no seps could be registered.=0D
-=0D
-=0D
-Compare: https://github.com/bluez/bluez/compare/6cb6e2ddf447...4a06a31be0=
-45=0D
+      I have a business proposal, kindly reply back for more details.
+
+Regards
+
+Olejniczak Krzystof Marek
