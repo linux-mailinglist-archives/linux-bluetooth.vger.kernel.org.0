@@ -2,47 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F27F34EEF9D
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 16:27:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 163A14EF101
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 16:39:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347107AbiDAO27 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Apr 2022 10:28:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37676 "EHLO
+        id S1348164AbiDAOhn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Apr 2022 10:37:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346996AbiDAO23 (ORCPT
+        with ESMTP id S1348253AbiDAOdv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Apr 2022 10:28:29 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E59AA1DF855;
-        Fri,  1 Apr 2022 07:26:39 -0700 (PDT)
+        Fri, 1 Apr 2022 10:33:51 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CBFB1EC60D;
+        Fri,  1 Apr 2022 07:31:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A110EB824FD;
-        Fri,  1 Apr 2022 14:26:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D400C34111;
-        Fri,  1 Apr 2022 14:26:36 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0FD3B61C1D;
+        Fri,  1 Apr 2022 14:31:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266DBC340EE;
+        Fri,  1 Apr 2022 14:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648823197;
-        bh=i4thxzazsMrvV6+OrMgNHpCD1BrjujPV8ivaYkSDGZE=;
+        s=k20201202; t=1648823491;
+        bh=qwb1WY2jHtNY5Hm+ktnqHKmRUzT0l4+oqODn1UVDDVM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=A2LLqRLzDHUGOAx7P4LHNH7VHYOIunJ3oBvMo7Hp0Otkp36D4kVTYEc0l54YZR9P2
-         OM0KOurmwR30K6t8v0ZJQ8WK8H3YitNHtRx7NA8wdRqa0/XlVaJvV4N6R9fmymqN0k
-         02EvMZob4DonwsB+Ie+b9wMxf6Rx4l/Pf1fQ5W4McVcFvQFlHXjwYXtOgRgUWgKeok
-         4L52tPXRxkS4SdpKcRWC5ilLfoT3/Y2ffvwUkyezHe2VpOdOYOgNOd+yf0RsUFnBLR
-         3leoOvzgPMfJzFJBI0gap3NYwiPB0HLfDQnVWIAjPn7d6TApe3jywgBOIwyPUxz8Yr
-         Qgv5e+9nAGGcQ==
+        b=avi4Sa8x0tBd9rdhYG3kwbuFxLs8fYqC3bQ7e2RYIj6PGtddKx8CewLyCS+x72Xd6
+         4WR206OXivkTZ/Z7BAxyATRBWzAmL9ChUWImdtveLAw85uNtdK/qiG4jcA2H70PJXy
+         /A5bGldjD0IDZERcWWYboZRm9YKpFHscvJVJ7Qg9nTEW4faupXSCmH989PS/yswTO/
+         tJpayP5K63nbu6yOZ4H7sVER4UdzuuQcqPIzsCe5ZiGa52EkaJyIVD6+ZH7q5SEDeB
+         WjC1ffeYAbcBj6IcKRT1BC4zTOuHC/hexqEnm77haOv9SDSZXlkK/E3uQLvsnAvSzC
+         7aUjmznOXpm+g==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc:     Sean Wang <sean.wang@mediatek.com>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>, johan.hedberg@gmail.com,
-        luiz.dentz@gmail.com, davem@davemloft.net, kuba@kernel.org,
-        pabeni@redhat.com, linux-bluetooth@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.17 018/149] Bluetooth: hci_sync: Fix queuing commands when HCI_UNREGISTER is set
-Date:   Fri,  1 Apr 2022 10:23:25 -0400
-Message-Id: <20220401142536.1948161-18-sashal@kernel.org>
+        luiz.dentz@gmail.com, matthias.bgg@gmail.com,
+        linux-bluetooth@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.17 116/149] Bluetooth: mediatek: fix the conflict between mtk and msft vendor event
+Date:   Fri,  1 Apr 2022 10:25:03 -0400
+Message-Id: <20220401142536.1948161-116-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220401142536.1948161-1-sashal@kernel.org>
 References: <20220401142536.1948161-1-sashal@kernel.org>
@@ -60,35 +61,96 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 0b94f2651f56b9e4aa5f012b0d7eb57308c773cf ]
+[ Upstream commit e4412654e260842e1a94ffe0d4026e8a6fd34246 ]
 
-hci_cmd_sync_queue shall return an error if HCI_UNREGISTER flag has
-been set as that means hci_unregister_dev has been called so it will
-likely cause a uaf after the timeout as the hdev will be freed.
+There is a conflict between MediaTek wmt event and msft vendor extension
+logic in the core layer since 145373cb1b1f ("Bluetooth: Add framework for
+Microsoft vendor extension") was introduced because we changed the type of
+mediatek wmt event to the type of msft vendor event in the driver.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+But the purpose we reported mediatek event to the core layer is for the
+diagnostic purpose with that we are able to see the full packet trace via
+monitoring socket with btmon. Thus, it is harmless we keep the original
+type of mediatek vendor event here to avoid breaking the msft extension
+function especially they can be supported by Mediatek chipset like MT7921
+, MT7922 devices and future devices.
+
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/bluetooth/btmtk.h     | 1 +
+ drivers/bluetooth/btmtksdio.c | 9 +--------
+ drivers/bluetooth/btusb.c     | 8 --------
+ 3 files changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 4426cc2aaf4a..21350dc88868 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -379,6 +379,9 @@ int hci_cmd_sync_queue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
- {
- 	struct hci_cmd_sync_work_entry *entry;
+diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
+index 6e7b0c7567c0..0defa68bc2ce 100644
+--- a/drivers/bluetooth/btmtk.h
++++ b/drivers/bluetooth/btmtk.h
+@@ -5,6 +5,7 @@
+ #define FIRMWARE_MT7668		"mediatek/mt7668pr2h.bin"
+ #define FIRMWARE_MT7961		"mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin"
  
-+	if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
-+		return -ENODEV;
-+
- 	entry = kmalloc(sizeof(*entry), GFP_KERNEL);
- 	if (!entry)
- 		return -ENOMEM;
++#define HCI_EV_WMT 0xe4
+ #define HCI_WMT_MAX_EVENT_SIZE		64
+ 
+ #define BTMTK_WMT_REG_READ 0x2
+diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
+index b5ea8d3bffaa..a295a9389892 100644
+--- a/drivers/bluetooth/btmtksdio.c
++++ b/drivers/bluetooth/btmtksdio.c
+@@ -284,13 +284,6 @@ static int btmtksdio_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
+ 	struct hci_event_hdr *hdr = (void *)skb->data;
+ 	int err;
+ 
+-	/* Fix up the vendor event id with 0xff for vendor specific instead
+-	 * of 0xe4 so that event send via monitoring socket can be parsed
+-	 * properly.
+-	 */
+-	if (hdr->evt == 0xe4)
+-		hdr->evt = HCI_EV_VENDOR;
+-
+ 	/* When someone waits for the WMT event, the skb is being cloned
+ 	 * and being processed the events from there then.
+ 	 */
+@@ -306,7 +299,7 @@ static int btmtksdio_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
+ 	if (err < 0)
+ 		goto err_free_skb;
+ 
+-	if (hdr->evt == HCI_EV_VENDOR) {
++	if (hdr->evt == HCI_EV_WMT) {
+ 		if (test_and_clear_bit(BTMTKSDIO_TX_WAIT_VND_EVT,
+ 				       &bdev->tx_state)) {
+ 			/* Barrier to sync with other CPUs */
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index c30d131da784..0959d10a6b84 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2245,7 +2245,6 @@ static void btusb_mtk_wmt_recv(struct urb *urb)
+ {
+ 	struct hci_dev *hdev = urb->context;
+ 	struct btusb_data *data = hci_get_drvdata(hdev);
+-	struct hci_event_hdr *hdr;
+ 	struct sk_buff *skb;
+ 	int err;
+ 
+@@ -2265,13 +2264,6 @@ static void btusb_mtk_wmt_recv(struct urb *urb)
+ 		hci_skb_pkt_type(skb) = HCI_EVENT_PKT;
+ 		skb_put_data(skb, urb->transfer_buffer, urb->actual_length);
+ 
+-		hdr = (void *)skb->data;
+-		/* Fix up the vendor event id with 0xff for vendor specific
+-		 * instead of 0xe4 so that event send via monitoring socket can
+-		 * be parsed properly.
+-		 */
+-		hdr->evt = 0xff;
+-
+ 		/* When someone waits for the WMT event, the skb is being cloned
+ 		 * and being processed the events from there then.
+ 		 */
 -- 
 2.34.1
 
