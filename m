@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C10F24EFD26
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Apr 2022 01:38:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64BA54EFD28
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Apr 2022 01:38:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353425AbiDAXkZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Apr 2022 19:40:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42868 "EHLO
+        id S1353427AbiDAXk2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Apr 2022 19:40:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353431AbiDAXkV (ORCPT
+        with ESMTP id S1353438AbiDAXkW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Apr 2022 19:40:21 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82E822AC4
+        Fri, 1 Apr 2022 19:40:22 -0400
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D97185FF9
         for <linux-bluetooth@vger.kernel.org>; Fri,  1 Apr 2022 16:38:30 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id x9so3044905ilc.3
+Received: by mail-il1-x12d.google.com with SMTP id j15so3002796ila.13
         for <linux-bluetooth@vger.kernel.org>; Fri, 01 Apr 2022 16:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=5h+itaPpaVusfkPsF6oYH8QwyThNAc1BGn7bHzjyg/8=;
-        b=CC5fZsAGmOciHdt+CEhL/wCHZzd28dNilLcDsanszFecm8RhUlgcY+cSh8mvF8b1tG
-         ycZR1+9nct1wRRr6cKydQ9RmR7wC+g87mK7YLEIFPkVYBAEmL4DdBrrPY6UROHzjgWFp
-         Zx4jdwb/2J7s5HIST6ymM5Tcv7F1TFNFWnwoBF/m4YQTaGrpAcwOVyJB22u1FDlBaz5W
-         SmVfsOxhJ63pQeTE1lI8p9V0zEqInjnjt+Y7x0P7RldVLNBuviIIWR72Y0ivznAtAWmW
-         34AOF121glfXXFP/JM9HNvVuWidCf7RRETE2puqZ1R+Ws6qXlHBNymM4HWohbG78YEY1
-         bHoA==
+        bh=tRi9mkD2hB3smWylSIZlbf8NOW3OIQwRaYtRTDbSDKo=;
+        b=JX6OijcR8WIImGFVrJ4ROAoFpl0K80Bhx+Ilvd6AHfcC2GH9CDE59pp/5gSTif7ocd
+         RgruJ4CJelx9p5SrebBiW+u86LPBsFOW5dnyJTELeXVu40FpEoF8PCxMVKkgefVOZPLB
+         5j9+maTEQKcX3uK31Lla1EYbshio1RRI5uoUnMBFVy52lTSDeTX0fyKmYZWBZ4twU3hq
+         UcSf6/xeG/nTtII0UcXkaBS9nuRJk2T3scdmnthGriU1rJKF/N9vny/H4fjS/zmy3/yA
+         iuI4edMJaLYeyw14CLhh4rZNkOCItxgHgc/4M1J9zSUq2TpTvjBvMVRYqqQd33yUdrtu
+         zyOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5h+itaPpaVusfkPsF6oYH8QwyThNAc1BGn7bHzjyg/8=;
-        b=MiTETrw0WrmUwDRnmj/uqmkH2Lr0ZvpVD1V3hSFfob/TteLCeLCjKgv0+P2efQui12
-         bIhnmOO7a9Yzv/YZUp0ZYJ/tQr3qA+hp8Epv4SyTwzC9QTGGBj9yMjs5q1dUI48/JnRb
-         u4p5cg21mi9FgppGMWJBu0b1Eqn5HGM1msFGCtZ12C3zoh8saZUY4pXowx33w4j2/yyt
-         xwtBGA5U7EYDHUtDsh4y8FQUEHcK1FhhTn9RAwCcMAT+uL7XwoS/vhu3qwIEQ6X4efKm
-         9S0Vb07A9oRVZ0NMZRW9bOXqpfyiRM8W8zY7XSeZdNwhnGKYJVKHZY1IDdirBCGvPi60
-         CoVg==
-X-Gm-Message-State: AOAM530VLfD3oSuUKvxgQ+rIHudFua9MtSKZDW8QjKTTq1Qh71M4Kshe
-        Mv7AEpU7hbfnFIm+w54vK6ZmrQCCSMI=
-X-Google-Smtp-Source: ABdhPJwsXWTt5af9NMwZ77CBQNMxiFCd00VnQCOTbaWzEQWYdpk6v2Le6yqw3VaEJZ6sbajkcajTdw==
-X-Received: by 2002:a05:6e02:1c8e:b0:2ca:b36:19f8 with SMTP id w14-20020a056e021c8e00b002ca0b3619f8mr907808ill.203.1648856309217;
+        bh=tRi9mkD2hB3smWylSIZlbf8NOW3OIQwRaYtRTDbSDKo=;
+        b=3eP1BjAmcoqBqFYrsAXZsy2QOYiLZ5vOZMrI0a0d4S/47q/Kjd0HSJZbVWbyMP+53M
+         ks3hGdV5jyv9FvYgNz//kiTlrRzOKBMU+9zIjxyTPoRHacDA1OZSd/ctDdKfOoct4laE
+         vAqhL31dM6XeRgi3fzOFB9i32LvJvdXFIguQKep8lg6T34Rpk5yg3fvQ/DLf4xE6qwT8
+         +3m2cV5qMsP+q3HWRG7x+jU6N++2o6z/A7bbNMW5byO8hhcnxQPLOEGWSFQ6ph/b8aq/
+         MSCE3S5xlJJxP6OAqnjjs3JsjtOiBRkz6HHRKCneeTMzmQ7X7tNtGVBsfXdKkHOvlo9K
+         JiXg==
+X-Gm-Message-State: AOAM5333bdCe/Oc5SF8VD7od8++VPciUO3Ke+0Bkft5UTQOQQEO8P3u7
+        OXIJZvg5TJ4oXGnotaX/ZHH9h9tJxp4=
+X-Google-Smtp-Source: ABdhPJwvWvVpMosNtpDd0BAJNqg1aTe/WegJcfCVC75ddGPvpMKa5o7Jw/NR7UOscrFTYoExoCR7Bg==
+X-Received: by 2002:a05:6e02:178a:b0:2ca:123a:c6eb with SMTP id y10-20020a056e02178a00b002ca123ac6ebmr952473ilu.187.1648856309872;
         Fri, 01 Apr 2022 16:38:29 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id b19-20020a5d8553000000b00649f02b1b0csm2217062ios.39.2022.04.01.16.38.28
+        by smtp.gmail.com with ESMTPSA id b19-20020a5d8553000000b00649f02b1b0csm2217062ios.39.2022.04.01.16.38.29
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Apr 2022 16:38:28 -0700 (PDT)
+        Fri, 01 Apr 2022 16:38:29 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v4 2/4] Bluetooth: Print broken quirks
-Date:   Fri,  1 Apr 2022 16:38:24 -0700
-Message-Id: <20220401233826.122544-2-luiz.dentz@gmail.com>
+Subject: [PATCH v4 3/4] Bluetooth: btusb: Set HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN for QCA
+Date:   Fri,  1 Apr 2022 16:38:25 -0700
+Message-Id: <20220401233826.122544-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220401233826.122544-1-luiz.dentz@gmail.com>
 References: <20220401233826.122544-1-luiz.dentz@gmail.com>
@@ -71,70 +71,31 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This prints warnings for controllers setting broken quirks to increase
-their visibility and warn about broken controllers firmware that
-probably needs updates to behave properly.
+This sets HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN for QCA controllers
+since SCO appear to not work when using HCI_OP_ENHANCED_SETUP_SYNC_CONN.
 
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=215576
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- net/bluetooth/hci_sync.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ drivers/bluetooth/btusb.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 8f4c5698913d..5610ec1242d6 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3825,6 +3825,30 @@ static int hci_init_sync(struct hci_dev *hdev)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 50df417207af..06a854a2507e 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3335,6 +3335,11 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+ 			msleep(QCA_BT_RESET_WAIT_MS);
+ 	}
+ 
++	/* Mark HCI_OP_ENHANCED_SETUP_SYNC_CONN as broken as it doesn't seem to
++	 * work with the likes of HSP/HFP mSBC.
++	 */
++	set_bit(HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN, &hdev->quirks);
++
  	return 0;
  }
  
-+#define HCI_QUIRK_BROKEN(_quirk, _desc) { HCI_QUIRK_BROKEN_##_quirk, _desc }
-+
-+static const struct {
-+	unsigned long quirk;
-+	const char *desc;
-+} hci_broken_table[] = {
-+	HCI_QUIRK_BROKEN(LOCAL_COMMANDS,
-+			 "HCI Read Local Supported Commands not supported"),
-+	HCI_QUIRK_BROKEN(STORED_LINK_KEY,
-+			 "HCI Delete Stored Link Key command is advertised, "
-+			 "but not supported."),
-+	HCI_QUIRK_BROKEN(ERR_DATA_REPORTING,
-+			 "HCI Read Default Erroneous Data Reporting command is "
-+			 "advertised, but not supported."),
-+	HCI_QUIRK_BROKEN(READ_TRANSMIT_POWER,
-+			 "HCI Read Transmit Power Level command is advertised, "
-+			 "but not supported."),
-+	HCI_QUIRK_BROKEN(FILTER_CLEAR_ALL,
-+			 "HCI Set Event Filter command not supported."),
-+	HCI_QUIRK_BROKEN(ENHANCED_SETUP_SYNC_CONN,
-+			 "HCI Enhanced Setup Synchronous Connection command is "
-+			 "advertised, but not supported.")
-+};
-+
- int hci_dev_open_sync(struct hci_dev *hdev)
- {
- 	int ret = 0;
-@@ -3886,12 +3910,19 @@ int hci_dev_open_sync(struct hci_dev *hdev)
- 	if (hci_dev_test_flag(hdev, HCI_SETUP) ||
- 	    test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
- 		bool invalid_bdaddr;
-+		size_t i;
- 
- 		hci_sock_dev_event(hdev, HCI_DEV_SETUP);
- 
- 		if (hdev->setup)
- 			ret = hdev->setup(hdev);
- 
-+		for (i = 0; i < ARRAY_SIZE(hci_broken_table); i++) {
-+			if (test_bit(hci_broken_table[i].quirk, &hdev->quirks))
-+				bt_dev_warn(hdev, "%s",
-+					    hci_broken_table[i].desc);
-+		}
-+
- 		/* The transport driver can set the quirk to mark the
- 		 * BD_ADDR invalid before creating the HCI device or in
- 		 * its setup callback.
 -- 
 2.35.1
 
