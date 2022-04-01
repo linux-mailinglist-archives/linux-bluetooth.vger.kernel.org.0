@@ -2,52 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 147EF4EF4BE
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 17:40:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D7854EF412
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 17:29:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351948AbiDAPHZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Apr 2022 11:07:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60610 "EHLO
+        id S1350650AbiDAPGg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Apr 2022 11:06:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352557AbiDAOu6 (ORCPT
+        with ESMTP id S1352582AbiDAOu7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Apr 2022 10:50:58 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 417322B3D55;
-        Fri,  1 Apr 2022 07:41:59 -0700 (PDT)
+        Fri, 1 Apr 2022 10:50:59 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30AB62B3D7C;
+        Fri,  1 Apr 2022 07:42:05 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 99F2BB82505;
-        Fri,  1 Apr 2022 14:41:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00517C34112;
-        Fri,  1 Apr 2022 14:40:58 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B8B1960F45;
+        Fri,  1 Apr 2022 14:41:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC01C3410F;
+        Fri,  1 Apr 2022 14:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648824060;
-        bh=/9RyJR/Q5Gaje1DvMBdIgZsbMi+DILHwOCail3i1sDM=;
+        s=k20201202; t=1648824108;
+        bh=VL3d822DGEqequwI3HIpiy07hSgiMLvhPxTVr8shTp8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=P546oGTThBy1FZT9pgM8JvIo0/kFAsrBwNaud/xATp3psqtFF3vthaysd4sHuyUxT
-         6SmT8eoh/WC6rYMLW1RFDN2jABa8obuGU8ZnIwU2heU7t6kxZkKWEgTIkESqgXKX1X
-         JDs8eTMOj0u4fIZ7FVHgn9wePM1UVkfs/9hGGUYkaI0DQGDiLnCosVvDfdmPNZntl4
-         ntlfETSrB74J+TngpVOE1LphDY3UoLzp9kTgkUwb9u/x19NSWdyicKejqtB/ogJnFc
-         wgFQoElQhkpiOwwdeXfaQeLfVo3WlcUWa/3y4j7veHHnit++jFcI4vZNuLMKLsVG0G
-         6Inss7jHeP84w==
+        b=trLrs5I7y2oNhPjCTtnSrwR4FWkqXiQWpYVlwYYdGjpIKEpFtLcmUIGRS5/+fa8xH
+         fFfYaVj12dDTAYk67Q8BXHs5BKdEnU//yDhyDSm+lvgz8USHj1yJ4jShZpm+qXZAcA
+         OUjdLBjezE5MtsMU2kKbtER7aHMzBhZv+IWnvwWbGmGP/5bvH1DoFvfwYgb7MOu96x
+         I+MMM6z2m2fGS54V9s4lGmGkPY6ZRecWMIEFd9tgzBa9bBflaTaHMoP5RFHSZVot5l
+         UrM2361vs/j4F8q86ZUw4na6o9RMbWNydxv+uLBscNEJZefUl5Ydi4eNDtKcLEgjUP
+         M3G5IYA9UvGxQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     "Minghao Chi (CGEL ZTE)" <chi.minghao@zte.com.cn>,
-        Zeal Robot <zealci@zte.com.cn>,
+Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        =?UTF-8?q?S=C3=B6nke=20Huster?= <soenke.huster@eknoes.de>,
         Marcel Holtmann <marcel@holtmann.org>,
         Sasha Levin <sashal@kernel.org>, johan.hedberg@gmail.com,
         luiz.dentz@gmail.com, davem@davemloft.net, kuba@kernel.org,
         pabeni@redhat.com, linux-bluetooth@vger.kernel.org,
         netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 71/98] Bluetooth: use memset avoid memory leaks
-Date:   Fri,  1 Apr 2022 10:37:15 -0400
-Message-Id: <20220401143742.1952163-71-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 91/98] Bluetooth: Fix use after free in hci_send_acl
+Date:   Fri,  1 Apr 2022 10:37:35 -0400
+Message-Id: <20220401143742.1952163-91-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220401143742.1952163-1-sashal@kernel.org>
 References: <20220401143742.1952163-1-sashal@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
@@ -61,33 +62,129 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: "Minghao Chi (CGEL ZTE)" <chi.minghao@zte.com.cn>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit d3715b2333e9a21692ba16ef8645eda584a9515d ]
+[ Upstream commit f63d24baff787e13b723d86fe036f84bdbc35045 ]
 
-Use memset to initialize structs to prevent memory leaks
-in l2cap_ecred_connect
+This fixes the following trace caused by receiving
+HCI_EV_DISCONN_PHY_LINK_COMPLETE which does call hci_conn_del without
+first checking if conn->type is in fact AMP_LINK and in case it is
+do properly cleanup upper layers with hci_disconn_cfm:
 
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: Minghao Chi (CGEL ZTE) <chi.minghao@zte.com.cn>
+ ==================================================================
+    BUG: KASAN: use-after-free in hci_send_acl+0xaba/0xc50
+    Read of size 8 at addr ffff88800e404818 by task bluetoothd/142
+
+    CPU: 0 PID: 142 Comm: bluetoothd Not tainted
+    5.17.0-rc5-00006-gda4022eeac1a #7
+    Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+    rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x45/0x59
+     print_address_description.constprop.0+0x1f/0x150
+     kasan_report.cold+0x7f/0x11b
+     hci_send_acl+0xaba/0xc50
+     l2cap_do_send+0x23f/0x3d0
+     l2cap_chan_send+0xc06/0x2cc0
+     l2cap_sock_sendmsg+0x201/0x2b0
+     sock_sendmsg+0xdc/0x110
+     sock_write_iter+0x20f/0x370
+     do_iter_readv_writev+0x343/0x690
+     do_iter_write+0x132/0x640
+     vfs_writev+0x198/0x570
+     do_writev+0x202/0x280
+     do_syscall_64+0x38/0x90
+     entry_SYSCALL_64_after_hwframe+0x44/0xae
+    RSP: 002b:00007ffce8a099b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000014
+    Code: 0f 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3
+    0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 14 00 00 00 0f 05
+    <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
+    RDX: 0000000000000001 RSI: 00007ffce8a099e0 RDI: 0000000000000015
+    RAX: ffffffffffffffda RBX: 00007ffce8a099e0 RCX: 00007f788fc3cf77
+    R10: 00007ffce8af7080 R11: 0000000000000246 R12: 000055e4ccf75580
+    RBP: 0000000000000015 R08: 0000000000000002 R09: 0000000000000001
+    </TASK>
+    R13: 000055e4ccf754a0 R14: 000055e4ccf75cd0 R15: 000055e4ccf4a6b0
+
+    Allocated by task 45:
+        kasan_save_stack+0x1e/0x40
+        __kasan_kmalloc+0x81/0xa0
+        hci_chan_create+0x9a/0x2f0
+        l2cap_conn_add.part.0+0x1a/0xdc0
+        l2cap_connect_cfm+0x236/0x1000
+        le_conn_complete_evt+0x15a7/0x1db0
+        hci_le_conn_complete_evt+0x226/0x2c0
+        hci_le_meta_evt+0x247/0x450
+        hci_event_packet+0x61b/0xe90
+        hci_rx_work+0x4d5/0xc50
+        process_one_work+0x8fb/0x15a0
+        worker_thread+0x576/0x1240
+        kthread+0x29d/0x340
+        ret_from_fork+0x1f/0x30
+
+    Freed by task 45:
+        kasan_save_stack+0x1e/0x40
+        kasan_set_track+0x21/0x30
+        kasan_set_free_info+0x20/0x30
+        __kasan_slab_free+0xfb/0x130
+        kfree+0xac/0x350
+        hci_conn_cleanup+0x101/0x6a0
+        hci_conn_del+0x27e/0x6c0
+        hci_disconn_phylink_complete_evt+0xe0/0x120
+        hci_event_packet+0x812/0xe90
+        hci_rx_work+0x4d5/0xc50
+        process_one_work+0x8fb/0x15a0
+        worker_thread+0x576/0x1240
+        kthread+0x29d/0x340
+        ret_from_fork+0x1f/0x30
+
+    The buggy address belongs to the object at ffff88800c0f0500
+    The buggy address is located 24 bytes inside of
+    which belongs to the cache kmalloc-128 of size 128
+    The buggy address belongs to the page:
+    128-byte region [ffff88800c0f0500, ffff88800c0f0580)
+    flags: 0x100000000000200(slab|node=0|zone=1)
+    page:00000000fe45cd86 refcount:1 mapcount:0
+    mapping:0000000000000000 index:0x0 pfn:0xc0f0
+    raw: 0000000000000000 0000000080100010 00000001ffffffff
+    0000000000000000
+    raw: 0100000000000200 ffffea00003a2c80 dead000000000004
+    ffff8880078418c0
+    page dumped because: kasan: bad access detected
+    ffff88800c0f0400: 00 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc
+    Memory state around the buggy address:
+    >ffff88800c0f0500: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+    ffff88800c0f0480: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+    ffff88800c0f0580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+                                ^
+    ==================================================================
+    ffff88800c0f0600: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+
+Reported-by: Sönke Huster <soenke.huster@eknoes.de>
+Tested-by: Sönke Huster <soenke.huster@eknoes.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_event.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 77ba68209dbd..c57a45df7a26 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1436,6 +1436,7 @@ static void l2cap_ecred_connect(struct l2cap_chan *chan)
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 868a22df3285..e984a8b4b914 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5153,8 +5153,9 @@ static void hci_disconn_phylink_complete_evt(struct hci_dev *hdev,
+ 	hci_dev_lock(hdev);
  
- 	l2cap_ecred_init(chan, 0);
+ 	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (hcon) {
++	if (hcon && hcon->type == AMP_LINK) {
+ 		hcon->state = BT_CLOSED;
++		hci_disconn_cfm(hcon, ev->reason);
+ 		hci_conn_del(hcon);
+ 	}
  
-+	memset(&data, 0, sizeof(data));
- 	data.pdu.req.psm     = chan->psm;
- 	data.pdu.req.mtu     = cpu_to_le16(chan->imtu);
- 	data.pdu.req.mps     = cpu_to_le16(chan->mps);
 -- 
 2.34.1
 
