@@ -2,30 +2,30 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A9D94EEB48
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 12:28:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EC8C4EEB4D
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 12:28:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343645AbiDAK35 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Apr 2022 06:29:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38828 "EHLO
+        id S1343655AbiDAKaB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Apr 2022 06:30:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343542AbiDAK34 (ORCPT
+        with ESMTP id S1343535AbiDAK34 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 1 Apr 2022 06:29:56 -0400
 Received: from mxout04.lancloud.ru (mxout04.lancloud.ru [45.84.86.114])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0B9C26E57B
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0BE126E57D
         for <linux-bluetooth@vger.kernel.org>; Fri,  1 Apr 2022 03:28:05 -0700 (PDT)
 Received: from LanCloud
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxout04.lancloud.ru 1779520CAB74
+DKIM-Filter: OpenDKIM Filter v2.11.0 mxout04.lancloud.ru 66F6420CAB75
 Received: from LanCloud
 Received: from LanCloud
 Received: from LanCloud
 From:   Ildar Kamaletdinov <i.kamaletdinov@omp.ru>
 To:     <linux-bluetooth@vger.kernel.org>
 CC:     Ildar Kamaletdinov <i.kamaletdinov@omp.ru>
-Subject: [PATCH BlueZ 1/7] monitor: Fix out-of-bound read in print_le_states
-Date:   Fri, 1 Apr 2022 13:27:51 +0300
-Message-ID: <20220401102757.3960551-2-i.kamaletdinov@omp.ru>
+Subject: [PATCH BlueZ 2/7] tools: Fix buffer overflow in hciattach_tialt.c
+Date:   Fri, 1 Apr 2022 13:27:52 +0300
+Message-ID: <20220401102757.3960551-3-i.kamaletdinov@omp.ru>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220401102757.3960551-1-i.kamaletdinov@omp.ru>
 References: <20220401102757.3960551-1-i.kamaletdinov@omp.ru>
@@ -44,42 +44,29 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Accessing le_states_desc_table array with value 15 can cause
-out-of-bound read because current size of array is 14.
-
-Currently this cannot lead to any problems becase we do no have such
-state in le_states_comb_table but this could be changed in future and
-raise described problem.
+Array 'c_brf_chip' of size 8 could be accessed by index > 7. We should
+limit array access like in previous check at line 221.
 
 Found by Linux Verification Center (linuxtesting.org) with the SVACE
 static analysis tool.
 ---
- monitor/packet.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/hciattach_tialt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/monitor/packet.c b/monitor/packet.c
-index b7431b57d..15d629e2d 100644
---- a/monitor/packet.c
-+++ b/monitor/packet.c
-@@ -2816,7 +2816,8 @@ static const struct {
- static void print_le_states(const uint8_t *states_array)
- {
- 	uint64_t mask, states = 0;
--	int i, n;
-+	int i = 0;
-+	size_t n = 0;
+diff --git a/tools/hciattach_tialt.c b/tools/hciattach_tialt.c
+index 520b383a1..4f7fd42a3 100644
+--- a/tools/hciattach_tialt.c
++++ b/tools/hciattach_tialt.c
+@@ -221,7 +221,8 @@ int texasalt_init(int fd, int speed, struct termios *ti)
+ 				((brf_chip > 7) ? "unknown" : c_brf_chip[brf_chip]),
+ 				brf_chip);
  
- 	for (i = 0; i < 8; i++)
- 		states |= ((uint64_t) states_array[i]) << (i * 8);
-@@ -2833,7 +2834,7 @@ static void print_le_states(const uint8_t *states_array)
- 		if (!(states & val))
- 			continue;
+-		sprintf(fw, "/etc/firmware/%s.bin", c_brf_chip[brf_chip]);
++		sprintf(fw, "/etc/firmware/%s.bin",
++			(brf_chip > 7) ? "unknown" : c_brf_chip[brf_chip]);
+ 		texas_load_firmware(fd, fw);
  
--		for (n = 0; n < 16; n++) {
-+		for (n = 0; n < ARRAY_SIZE(le_states_desc_table); n++) {
- 			if (le_states_comb_table[i].states & (1 << n))
- 				str[num++] = le_states_desc_table[n].str;
- 		}
+ 		texas_change_speed(fd, speed);
 -- 
 2.35.1
 
