@@ -2,63 +2,62 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 189774EFD27
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Apr 2022 01:38:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71ED44EFD2F
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Apr 2022 01:43:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353430AbiDAXk0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Apr 2022 19:40:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42732 "EHLO
+        id S1353460AbiDAXpT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Apr 2022 19:45:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353437AbiDAXkW (ORCPT
+        with ESMTP id S1353445AbiDAXpQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Apr 2022 19:40:22 -0400
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A3FDE37
-        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Apr 2022 16:38:31 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id z10so3087656iln.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 01 Apr 2022 16:38:31 -0700 (PDT)
+        Fri, 1 Apr 2022 19:45:16 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED5CD2ACF
+        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Apr 2022 16:43:24 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id h23-20020a17090a051700b001c9c1dd3acbso3861373pjh.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 01 Apr 2022 16:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=XeImaVfzLHou7+z6R/xeYIY1VSit5WMBxFwnBNaCYSc=;
-        b=R3wyaIkjEWpeiMOQ/HhvfISFnjB0nO44o3ug6/sK2xcTifK/1L/YZ8P1uRbfAbnB1O
-         HC83F+jCjpBWgV75sTlvs08ONGVFSxP4smvGAzrSkIeTxvLfwjYWo8Am1wwlkn5TwoM0
-         HLkvwtWt9COJW75ZqJ8dJBZaI+5K0ESKIj6qGA5eBvoYUphEY5M0r0tedVOnG64ljhSR
-         srb9UnMHIoSON2Z2EWPqG99txFrtuIWzCYGkFNnpH5r4GzBNwBNTANjIiINaLwrCULk/
-         TGYLI/fk/q6XAcfJBE9zRA9I78uUIOhB9BszZ/sPpmGNbr1TYuqk4ZXRIpBA7qOFL4XR
-         79FA==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=cT3pKg/O6TItRJrrPlcb7RV6sMnQp/iKCLaAoZMBezs=;
+        b=gwC1eMA4kyYecpKFaZlT9KtDqVabOB0Ljl2/lhidCWCmeYlzzIu5qHTCchKVoNA0DT
+         A87ht99Qeozqv6Cg07oRF5i44sOcDAJuljGCiR//8d1nU/h1sL7kBbjOxIHl+dQyMG7A
+         enxOKsCT813B6HGjW9VBjIOVDala7jFUGG+dvNTvnj5tVH/QPvO9RnAvD/g+dvtQfosc
+         elkp5ceY509jjayYBTNrAdS3LFUfDTxyuC2Ap+BLGylTlD2tkEIHuPVb44G80uxgxIjo
+         wiHEBc3nKcQMbYtDe+yYHNbqMoGfxPzPj5yvams/uwYwLH/rphLuQtZIKhxky/uAOiRA
+         qU/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=XeImaVfzLHou7+z6R/xeYIY1VSit5WMBxFwnBNaCYSc=;
-        b=tuU6ggGcDVHKMWTMwUdMc95bshpMiyHBUoOuDeBuqBdyxJcojQvmslSGqyY+oFWR4S
-         UxF/qodDNBSX/JNPhR3JyYzfl5A6/Tr+d2GTQepvathOHsXRVdHLAh9yMoH3VIPY+UxL
-         N84UkLKE7k8Wlji6uJlplQ06b72ei4PbQz9/YpRsvfgXq/8uD9aDnTSPJ5P9q6yf72VD
-         dk6UnvTnWEQZeWY9Wn5TYBMJGkFTHM/7P3y/oreCSeo91ZWBw2S8FW+D7hrn4joP2ZnT
-         PRIFzwaryhYiJYyujF9Gr6dvw+qqXNmgqEmf45DhSB5c76kwLVW8tjvfY2MYMTR141Ot
-         eVfw==
-X-Gm-Message-State: AOAM530nbPCWCSa8FMgBwvQiJ3Dp87EIKQxH8+g/Hnbbs9zGdiqcAEN1
-        HhoMDWGBR5w406o3M0UHIrL+kS0FtLg=
-X-Google-Smtp-Source: ABdhPJzhednDgspih/DM5aZnuash9hbjd9wPmzTD6/EaIJ9TQyCFvmvn0Wv2Ru2NCyaa6PkNjFGXNw==
-X-Received: by 2002:a05:6e02:216f:b0:2ca:203b:75d with SMTP id s15-20020a056e02216f00b002ca203b075dmr365224ilv.174.1648856310720;
-        Fri, 01 Apr 2022 16:38:30 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id b19-20020a5d8553000000b00649f02b1b0csm2217062ios.39.2022.04.01.16.38.30
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=cT3pKg/O6TItRJrrPlcb7RV6sMnQp/iKCLaAoZMBezs=;
+        b=h9Mh2F3ijbDPpeNKUVkOaWpJb+a5jsn32OUJHlWFuN2IYsla/DgLEc2csj2WXDWzQo
+         S7Cy8Qk6yl7me1hq4Sw8swsnZZtR5+QV+nuneyg7UeN+X0cw+6FN3CtUvKCT+oFo+1bq
+         UJLQjgqZ1gw+rkUwb4YlPywizwGSh6MsPs5d9fDnxwkGdxRjO4u7+/5cpxZDH/+z+7sR
+         0XLGCLqe4I/x2fZMf3lXWpbaSAkmjnk0rY9BkZegZ41TqGuj3bz3qj9PVrePplyZiQkL
+         rfaZozNMGlMOpum3c7/7tmQf8sU1NucSq9KD+oJctI9LME/is0bPgWrAZbhadpi0a+8l
+         DtRw==
+X-Gm-Message-State: AOAM530peMXR2jPRiASRMQbfvs91TbNAF3FS0kNs6jz75n5Ie4pdK/Dd
+        N5xRAYWXdxZm/rjLk5DKkyRq7Okc6OA=
+X-Google-Smtp-Source: ABdhPJy+AL6wGEA7o5lL7wOtA0b0zyE9ASeGkQ/gFwEHpvInlDkQ2oa8I1q2Zyfex5i/Tplyh+KNDA==
+X-Received: by 2002:a17:90b:3882:b0:1c6:7cf9:8a23 with SMTP id mu2-20020a17090b388200b001c67cf98a23mr14172890pjb.21.1648856604177;
+        Fri, 01 Apr 2022 16:43:24 -0700 (PDT)
+Received: from [172.17.0.2] ([137.135.58.35])
+        by smtp.gmail.com with ESMTPSA id e11-20020a056a001a8b00b004fab740dbddsm4351840pfv.105.2022.04.01.16.43.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Apr 2022 16:38:30 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v4 4/4] Bluetooth: hci_sync: Split hci_dev_open_sync
-Date:   Fri,  1 Apr 2022 16:38:26 -0700
-Message-Id: <20220401233826.122544-4-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220401233826.122544-1-luiz.dentz@gmail.com>
-References: <20220401233826.122544-1-luiz.dentz@gmail.com>
+        Fri, 01 Apr 2022 16:43:23 -0700 (PDT)
+Message-ID: <62478e1b.1c69fb81.500e1.cd08@mx.google.com>
+Date:   Fri, 01 Apr 2022 16:43:23 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============4828649064417609283=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [BlueZ] shared/gatt-db: Fix gatt_db_attribute_get_index
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220401213857.36738-1-luiz.dentz@gmail.com>
+References: <20220401213857.36738-1-luiz.dentz@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -69,278 +68,40 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============4828649064417609283==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This splits hci_dev_open_sync so each stage is handle by its own
-function so it is easier to identify each stage.
+This is automated email and please do not reply to this email!
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=628334
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.67 seconds
+GitLint                       PASS      0.46 seconds
+Prep - Setup ELL              PASS      51.25 seconds
+Build - Prep                  PASS      0.66 seconds
+Build - Configure             PASS      10.18 seconds
+Build - Make                  PASS      1848.64 seconds
+Make Check                    PASS      13.13 seconds
+Make Check w/Valgrind         PASS      543.05 seconds
+Make Distcheck                PASS      295.71 seconds
+Build w/ext ELL - Configure   PASS      10.95 seconds
+Build w/ext ELL - Make        PASS      1838.54 seconds
+Incremental Build with patchesPASS      0.00 seconds
+
+
+
 ---
- net/bluetooth/hci_sync.c | 225 ++++++++++++++++++++++-----------------
- 1 file changed, 126 insertions(+), 99 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 5610ec1242d6..2d3b9adbd215 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3849,90 +3849,40 @@ static const struct {
- 			 "advertised, but not supported.")
- };
- 
--int hci_dev_open_sync(struct hci_dev *hdev)
-+/* This function handles hdev setup stage:
-+ *
-+ * Calls hdev->setup
-+ * Setup address if HCI_QUIRK_USE_BDADDR_PROPERTY is set.
-+ */
-+static int hci_dev_setup_sync(struct hci_dev *hdev)
- {
- 	int ret = 0;
--
--	bt_dev_dbg(hdev, "");
--
--	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
--		ret = -ENODEV;
--		goto done;
--	}
-+	bool invalid_bdaddr;
-+	size_t i;
- 
- 	if (!hci_dev_test_flag(hdev, HCI_SETUP) &&
--	    !hci_dev_test_flag(hdev, HCI_CONFIG)) {
--		/* Check for rfkill but allow the HCI setup stage to
--		 * proceed (which in itself doesn't cause any RF activity).
--		 */
--		if (hci_dev_test_flag(hdev, HCI_RFKILLED)) {
--			ret = -ERFKILL;
--			goto done;
--		}
--
--		/* Check for valid public address or a configured static
--		 * random address, but let the HCI setup proceed to
--		 * be able to determine if there is a public address
--		 * or not.
--		 *
--		 * In case of user channel usage, it is not important
--		 * if a public address or static random address is
--		 * available.
--		 *
--		 * This check is only valid for BR/EDR controllers
--		 * since AMP controllers do not have an address.
--		 */
--		if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
--		    hdev->dev_type == HCI_PRIMARY &&
--		    !bacmp(&hdev->bdaddr, BDADDR_ANY) &&
--		    !bacmp(&hdev->static_addr, BDADDR_ANY)) {
--			ret = -EADDRNOTAVAIL;
--			goto done;
--		}
--	}
--
--	if (test_bit(HCI_UP, &hdev->flags)) {
--		ret = -EALREADY;
--		goto done;
--	}
--
--	if (hdev->open(hdev)) {
--		ret = -EIO;
--		goto done;
--	}
--
--	set_bit(HCI_RUNNING, &hdev->flags);
--	hci_sock_dev_event(hdev, HCI_DEV_OPEN);
--
--	atomic_set(&hdev->cmd_cnt, 1);
--	set_bit(HCI_INIT, &hdev->flags);
--
--	if (hci_dev_test_flag(hdev, HCI_SETUP) ||
--	    test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
--		bool invalid_bdaddr;
--		size_t i;
-+	    !test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks))
-+		return 0;
- 
--		hci_sock_dev_event(hdev, HCI_DEV_SETUP);
-+	bt_dev_dbg(hdev, "");
- 
--		if (hdev->setup)
--			ret = hdev->setup(hdev);
-+	hci_sock_dev_event(hdev, HCI_DEV_SETUP);
- 
--		for (i = 0; i < ARRAY_SIZE(hci_broken_table); i++) {
--			if (test_bit(hci_broken_table[i].quirk, &hdev->quirks))
--				bt_dev_warn(hdev, "%s",
--					    hci_broken_table[i].desc);
--		}
-+	if (hdev->setup)
-+		ret = hdev->setup(hdev);
- 
--		/* The transport driver can set the quirk to mark the
--		 * BD_ADDR invalid before creating the HCI device or in
--		 * its setup callback.
--		 */
--		invalid_bdaddr = test_bit(HCI_QUIRK_INVALID_BDADDR,
--					  &hdev->quirks);
-+	for (i = 0; i < ARRAY_SIZE(hci_broken_table); i++) {
-+		if (test_bit(hci_broken_table[i].quirk, &hdev->quirks))
-+			bt_dev_warn(hdev, "%s", hci_broken_table[i].desc);
-+	}
- 
--		if (ret)
--			goto setup_failed;
-+	/* The transport driver can set the quirk to mark the
-+	 * BD_ADDR invalid before creating the HCI device or in
-+	 * its setup callback.
-+	 */
-+	invalid_bdaddr = test_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks);
- 
-+	if (!ret) {
- 		if (test_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks)) {
- 			if (!bacmp(&hdev->public_addr, BDADDR_ANY))
- 				hci_dev_get_bd_addr_from_property(hdev);
-@@ -3951,33 +3901,51 @@ int hci_dev_open_sync(struct hci_dev *hdev)
- 					invalid_bdaddr = false;
- 			}
- 		}
-+	}
- 
--setup_failed:
--		/* The transport driver can set these quirks before
--		 * creating the HCI device or in its setup callback.
--		 *
--		 * For the invalid BD_ADDR quirk it is possible that
--		 * it becomes a valid address if the bootloader does
--		 * provide it (see above).
--		 *
--		 * In case any of them is set, the controller has to
--		 * start up as unconfigured.
--		 */
--		if (test_bit(HCI_QUIRK_EXTERNAL_CONFIG, &hdev->quirks) ||
--		    invalid_bdaddr)
--			hci_dev_set_flag(hdev, HCI_UNCONFIGURED);
-+	/* The transport driver can set these quirks before
-+	 * creating the HCI device or in its setup callback.
-+	 *
-+	 * For the invalid BD_ADDR quirk it is possible that
-+	 * it becomes a valid address if the bootloader does
-+	 * provide it (see above).
-+	 *
-+	 * In case any of them is set, the controller has to
-+	 * start up as unconfigured.
-+	 */
-+	if (test_bit(HCI_QUIRK_EXTERNAL_CONFIG, &hdev->quirks) ||
-+	    invalid_bdaddr)
-+		hci_dev_set_flag(hdev, HCI_UNCONFIGURED);
- 
--		/* For an unconfigured controller it is required to
--		 * read at least the version information provided by
--		 * the Read Local Version Information command.
--		 *
--		 * If the set_bdaddr driver callback is provided, then
--		 * also the original Bluetooth public device address
--		 * will be read using the Read BD Address command.
--		 */
--		if (hci_dev_test_flag(hdev, HCI_UNCONFIGURED))
--			ret = hci_unconf_init_sync(hdev);
--	}
-+	/* For an unconfigured controller it is required to
-+	 * read at least the version information provided by
-+	 * the Read Local Version Information command.
-+	 *
-+	 * If the set_bdaddr driver callback is provided, then
-+	 * also the original Bluetooth public device address
-+	 * will be read using the Read BD Address command.
-+	 */
-+	if (hci_dev_test_flag(hdev, HCI_UNCONFIGURED))
-+		return hci_unconf_init_sync(hdev);
-+
-+	return ret;
-+}
-+
-+/* This function handles hdev init stage:
-+ *
-+ * Calls hci_dev_setup_sync to perform setup stage
-+ * Calls hci_init_sync to perform HCI command init sequence
-+ */
-+static int hci_dev_init_sync(struct hci_dev *hdev)
-+{
-+	int ret;
-+
-+	bt_dev_dbg(hdev, "");
-+
-+	atomic_set(&hdev->cmd_cnt, 1);
-+	set_bit(HCI_INIT, &hdev->flags);
-+
-+	ret = hci_dev_setup_sync(hdev);
- 
- 	if (hci_dev_test_flag(hdev, HCI_CONFIG)) {
- 		/* If public address change is configured, ensure that
-@@ -4017,6 +3985,65 @@ int hci_dev_open_sync(struct hci_dev *hdev)
- 
- 	clear_bit(HCI_INIT, &hdev->flags);
- 
-+	return ret;
-+}
-+
-+int hci_dev_open_sync(struct hci_dev *hdev)
-+{
-+	int ret;
-+
-+	bt_dev_dbg(hdev, "");
-+
-+	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
-+		ret = -ENODEV;
-+		goto done;
-+	}
-+
-+	if (!hci_dev_test_flag(hdev, HCI_SETUP) &&
-+	    !hci_dev_test_flag(hdev, HCI_CONFIG)) {
-+		/* Check for rfkill but allow the HCI setup stage to
-+		 * proceed (which in itself doesn't cause any RF activity).
-+		 */
-+		if (hci_dev_test_flag(hdev, HCI_RFKILLED)) {
-+			ret = -ERFKILL;
-+			goto done;
-+		}
-+
-+		/* Check for valid public address or a configured static
-+		 * random address, but let the HCI setup proceed to
-+		 * be able to determine if there is a public address
-+		 * or not.
-+		 *
-+		 * In case of user channel usage, it is not important
-+		 * if a public address or static random address is
-+		 * available.
-+		 *
-+		 * This check is only valid for BR/EDR controllers
-+		 * since AMP controllers do not have an address.
-+		 */
-+		if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
-+		    hdev->dev_type == HCI_PRIMARY &&
-+		    !bacmp(&hdev->bdaddr, BDADDR_ANY) &&
-+		    !bacmp(&hdev->static_addr, BDADDR_ANY)) {
-+			ret = -EADDRNOTAVAIL;
-+			goto done;
-+		}
-+	}
-+
-+	if (test_bit(HCI_UP, &hdev->flags)) {
-+		ret = -EALREADY;
-+		goto done;
-+	}
-+
-+	if (hdev->open(hdev)) {
-+		ret = -EIO;
-+		goto done;
-+	}
-+
-+	set_bit(HCI_RUNNING, &hdev->flags);
-+	hci_sock_dev_event(hdev, HCI_DEV_OPEN);
-+
-+	ret = hci_dev_init_sync(hdev);
- 	if (!ret) {
- 		hci_dev_hold(hdev);
- 		hci_dev_set_flag(hdev, HCI_RPA_EXPIRED);
--- 
-2.35.1
 
+--===============4828649064417609283==--
