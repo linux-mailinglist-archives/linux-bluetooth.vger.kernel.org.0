@@ -2,30 +2,30 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B6994EEC16
+	by mail.lfdr.de (Postfix) with ESMTP id A764F4EEC17
 	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 13:14:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345360AbiDALQG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Apr 2022 07:16:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52450 "EHLO
+        id S1345365AbiDALQJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Apr 2022 07:16:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345279AbiDALQF (ORCPT
+        with ESMTP id S237488AbiDALQJ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Apr 2022 07:16:05 -0400
-Received: from mxout03.lancloud.ru (mxout03.lancloud.ru [45.84.86.113])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDF58121507
-        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Apr 2022 04:14:15 -0700 (PDT)
+        Fri, 1 Apr 2022 07:16:09 -0400
+Received: from mxout01.lancloud.ru (mxout01.lancloud.ru [45.84.86.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70BE6120DBC
+        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Apr 2022 04:14:16 -0700 (PDT)
 Received: from LanCloud
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxout03.lancloud.ru 5332C20E7852
+DKIM-Filter: OpenDKIM Filter v2.11.0 mxout01.lancloud.ru 9114820D48FB
 Received: from LanCloud
 Received: from LanCloud
 Received: from LanCloud
 From:   Ildar Kamaletdinov <i.kamaletdinov@omp.ru>
 To:     <linux-bluetooth@vger.kernel.org>
 CC:     Ildar Kamaletdinov <i.kamaletdinov@omp.ru>
-Subject: [PATCH BlueZ 1/7] monitor: Fix out-of-bound read in print_le_states
-Date:   Fri, 1 Apr 2022 14:14:02 +0300
-Message-ID: <20220401111408.3961844-2-i.kamaletdinov@omp.ru>
+Subject: [PATCH BlueZ 2/7] tools: Fix buffer overflow in hciattach_tialt.c
+Date:   Fri, 1 Apr 2022 14:14:03 +0300
+Message-ID: <20220401111408.3961844-3-i.kamaletdinov@omp.ru>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220401111408.3961844-1-i.kamaletdinov@omp.ru>
 References: <20220401111408.3961844-1-i.kamaletdinov@omp.ru>
@@ -44,48 +44,29 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Accessing le_states_desc_table array with value 15 can cause
-out-of-bound read because current size of array is 14.
-
-Currently this cannot lead to any problems becase we do no have such
-state in le_states_comb_table but this could be changed in future and
-raise described problem.
+Array 'c_brf_chip' of size 8 could be accessed by index > 7. We should
+limit array access like in previous check at line 221.
 
 Found by Linux Verification Center (linuxtesting.org) with the SVACE
 static analysis tool.
 ---
- monitor/packet.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/hciattach_tialt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/monitor/packet.c b/monitor/packet.c
-index b7431b57d..1f04063d3 100644
---- a/monitor/packet.c
-+++ b/monitor/packet.c
-@@ -2816,7 +2816,8 @@ static const struct {
- static void print_le_states(const uint8_t *states_array)
- {
- 	uint64_t mask, states = 0;
--	int i, n;
-+	int i = 0;
-+	size_t n = 0;
+diff --git a/tools/hciattach_tialt.c b/tools/hciattach_tialt.c
+index 520b383a1..4f7fd42a3 100644
+--- a/tools/hciattach_tialt.c
++++ b/tools/hciattach_tialt.c
+@@ -221,7 +221,8 @@ int texasalt_init(int fd, int speed, struct termios *ti)
+ 				((brf_chip > 7) ? "unknown" : c_brf_chip[brf_chip]),
+ 				brf_chip);
  
- 	for (i = 0; i < 8; i++)
- 		states |= ((uint64_t) states_array[i]) << (i * 8);
-@@ -2828,12 +2829,12 @@ static void print_le_states(const uint8_t *states_array)
- 	for (i = 0; le_states_comb_table[i].states; i++) {
- 		uint64_t val = (((uint64_t) 1) << le_states_comb_table[i].bit);
- 		const char *str[3] = { NULL, };
--		int num = 0;
-+		size_t num = 0;
+-		sprintf(fw, "/etc/firmware/%s.bin", c_brf_chip[brf_chip]);
++		sprintf(fw, "/etc/firmware/%s.bin",
++			(brf_chip > 7) ? "unknown" : c_brf_chip[brf_chip]);
+ 		texas_load_firmware(fd, fw);
  
- 		if (!(states & val))
- 			continue;
- 
--		for (n = 0; n < 16; n++) {
-+		for (n = 0; n < ARRAY_SIZE(le_states_desc_table); n++) {
- 			if (le_states_comb_table[i].states & (1 << n))
- 				str[num++] = le_states_desc_table[n].str;
- 		}
+ 		texas_change_speed(fd, speed);
 -- 
 2.35.1
 
