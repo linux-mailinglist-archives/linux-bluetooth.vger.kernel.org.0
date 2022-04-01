@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E97374EF480
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 17:31:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A7CE4EF507
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 17:41:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351475AbiDAPHI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Apr 2022 11:07:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55850 "EHLO
+        id S1352010AbiDAPHe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Apr 2022 11:07:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350507AbiDAPAG (ORCPT
+        with ESMTP id S1350648AbiDAPAX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Apr 2022 11:00:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B9815AEE2;
-        Fri,  1 Apr 2022 07:47:21 -0700 (PDT)
+        Fri, 1 Apr 2022 11:00:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AEBAEB4;
+        Fri,  1 Apr 2022 07:48:23 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D96E760AD8;
-        Fri,  1 Apr 2022 14:47:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31F4C36AE9;
-        Fri,  1 Apr 2022 14:47:18 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EA430612AC;
+        Fri,  1 Apr 2022 14:48:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B5CC36AE7;
+        Fri,  1 Apr 2022 14:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648824440;
-        bh=sxoDUY/eoTbUKzSZt603fXw3Dux/BgEpg6YUOmf/SUk=;
+        s=k20201202; t=1648824502;
+        bh=fzCen5mu+QSDPh7Xn90roUywqgLQiTQWpHOK9gH9alc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DubUD32j9C/KJE4VVyv76spmSdRgMG8Wq8E6jYCEtbvvyrn113diHRPs2ps/HlwF8
-         ADrf0Syt6owUl49VKtZBQciKSPI3g8MtOturp06sF3Y9/NiNgz35dKlHGmumgQU8Ln
-         vYPar7meC13JHhngoDojo4uKYfj2xKlg5sgr+kBDHUkpNH6/5kt/jaj1A25/ctWds6
-         vOtqEHdGOCRuAcKw1QaXJrTQHfZIe/K0+akzGSzIk/esUzyA1WtLUQsOgY2eWPvLEz
-         aFtdGrhu+s+fvrL8I6PyLCBdM9aKWtCo4/lQLM8ZPn4zl0Qu7zsKeH2PmOo80Wpkww
-         FEltb57umMOxw==
+        b=bp+oBXKPnaayYb3xWCENOhFjaf9qyUcrJoDwKJMN9GX7AHY5iWB3MWpHO0qwI2J3S
+         LAAMu7c8i5Cg9aW64VKsiv/VfsHXuSAzlwC0OrZmtoZPE/ds3dnDFIQrJgMMVWNgho
+         XitBLCGCs9+prwzog3O4Tf4Y7MK+5Qd9LHl6jWQkBfizZoGWG70vWYOd5w9audYqMv
+         UEEgCMgTWqsSLpwr+KX+AslmfEN7IjX3dDx8bHA1gTHeX8vxqa3uxbhRDMUW2X23hE
+         o7Hcx7pz9ZPtehD9VYEpNSH/4JIBnu10GtpQu6PXdT3XAUk1806V0Hdue23cdPIShx
+         1onE1sc4VnsSA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
@@ -41,12 +41,12 @@ Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
         luiz.dentz@gmail.com, davem@davemloft.net, kuba@kernel.org,
         pabeni@redhat.com, linux-bluetooth@vger.kernel.org,
         netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 27/29] Bluetooth: Fix use after free in hci_send_acl
-Date:   Fri,  1 Apr 2022 10:46:10 -0400
-Message-Id: <20220401144612.1955177-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 21/22] Bluetooth: Fix use after free in hci_send_acl
+Date:   Fri,  1 Apr 2022 10:47:28 -0400
+Message-Id: <20220401144729.1955554-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220401144612.1955177-1-sashal@kernel.org>
-References: <20220401144612.1955177-1-sashal@kernel.org>
+In-Reply-To: <20220401144729.1955554-1-sashal@kernel.org>
+References: <20220401144729.1955554-1-sashal@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 X-stable: review
@@ -171,10 +171,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 196d0d832007..dd7bf437d88e 100644
+index 39e222fb3004..4eeba9dfb38f 100644
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -4792,8 +4792,9 @@ static void hci_disconn_phylink_complete_evt(struct hci_dev *hdev,
+@@ -4470,8 +4470,9 @@ static void hci_disconn_phylink_complete_evt(struct hci_dev *hdev,
  	hci_dev_lock(hdev);
  
  	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
