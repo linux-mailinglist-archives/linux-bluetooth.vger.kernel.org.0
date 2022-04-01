@@ -2,30 +2,30 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4577E4EECFC
+	by mail.lfdr.de (Postfix) with ESMTP id 90F724EECFD
 	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Apr 2022 14:17:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344506AbiDAMSn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Apr 2022 08:18:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33920 "EHLO
+        id S1345807AbiDAMSq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Apr 2022 08:18:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231462AbiDAMSm (ORCPT
+        with ESMTP id S231462AbiDAMSn (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Apr 2022 08:18:42 -0400
+        Fri, 1 Apr 2022 08:18:43 -0400
 Received: from mxout04.lancloud.ru (mxout04.lancloud.ru [45.84.86.114])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BACC027796C
-        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Apr 2022 05:16:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 146C527796E
+        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Apr 2022 05:16:53 -0700 (PDT)
 Received: from LanCloud
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxout04.lancloud.ru 51EE420D30A9
+DKIM-Filter: OpenDKIM Filter v2.11.0 mxout04.lancloud.ru 7D18520D30AC
 Received: from LanCloud
 Received: from LanCloud
 Received: from LanCloud
 From:   Ildar Kamaletdinov <i.kamaletdinov@omp.ru>
 To:     <linux-bluetooth@vger.kernel.org>
 CC:     Ildar Kamaletdinov <i.kamaletdinov@omp.ru>
-Subject: [PATCH BlueZ 3/6] tools: Fix signed integer overflow in btsnoop.c
-Date:   Fri, 1 Apr 2022 15:16:44 +0300
-Message-ID: <20220401121647.3985682-4-i.kamaletdinov@omp.ru>
+Subject: [PATCH BlueZ 4/6] tools: Limit width of fields in sscanf
+Date:   Fri, 1 Apr 2022 15:16:45 +0300
+Message-ID: <20220401121647.3985682-5-i.kamaletdinov@omp.ru>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220401121647.3985682-1-i.kamaletdinov@omp.ru>
 References: <20220401121647.3985682-1-i.kamaletdinov@omp.ru>
@@ -44,30 +44,42 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-If malformed packet is proceed with zero 'size' field we will face with
-wrong behaviour of write() call. Value 'toread - 1' gives wrong sign
-for value 'written' (-1) in write() call. To prevent this we should
-check that 'toread' is not equal to zero.
+In tools/btmgmt.c and tools/hex2hcd.c few sscanf does not limit width
+of fields. This could lead to static overflow and stack corruption.
 
 Found by Linux Verification Center (linuxtesting.org) with the SVACE
 static analysis tool.
 ---
- tools/btsnoop.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/btmgmt.c  | 2 +-
+ tools/hex2hcd.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/btsnoop.c b/tools/btsnoop.c
-index 738027dfc..a0d6cf356 100644
---- a/tools/btsnoop.c
-+++ b/tools/btsnoop.c
-@@ -193,7 +193,7 @@ next_packet:
- 	flags = be32toh(input_pkt[select_input].flags);
+diff --git a/tools/btmgmt.c b/tools/btmgmt.c
+index 42ef9acef..8f63f12ba 100644
+--- a/tools/btmgmt.c
++++ b/tools/btmgmt.c
+@@ -5164,7 +5164,7 @@ static bool str2pattern(struct mgmt_adv_pattern *pattern, const char *str)
+ 	char pattern_str[62] = { 0 };
+ 	char tmp;
  
- 	len = read(input_fd[select_input], buf, toread);
--	if (len < 0 || len != (ssize_t) toread) {
-+	if (toread == 0 || len < 0 || len != (ssize_t) toread) {
- 		close(input_fd[select_input]);
- 		input_fd[select_input] = -1;
- 		goto next_packet;
+-	if (sscanf(str, "%2hhx%n:%2hhx%n:%s", &pattern->ad_type, &type_len,
++	if (sscanf(str, "%2hhx%n:%2hhx%n:%61s", &pattern->ad_type, &type_len,
+ 			&pattern->offset, &offset_end_pos, pattern_str) != 3)
+ 		return false;
+ 
+diff --git a/tools/hex2hcd.c b/tools/hex2hcd.c
+index 674d62744..e6dca5a81 100644
+--- a/tools/hex2hcd.c
++++ b/tools/hex2hcd.c
+@@ -248,7 +248,7 @@ static void ver_parse_file(const char *pathname)
+ 
+ 	memset(ver, 0, sizeof(*ver));
+ 
+-	if (sscanf(pathname, "%[A-Z0-9]_%3c.%3c.%3c.%4c.%4c.hex",
++	if (sscanf(pathname, "%19[A-Z0-9]_%3c.%3c.%3c.%4c.%4c.hex",
+ 					ver->name, ver->major, ver->minor,
+ 					ver->build, dummy1, dummy2) != 6) {
+ 		printf("\t/* failed to parse %s */\n", pathname);
 -- 
 2.35.1
 
