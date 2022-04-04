@@ -2,65 +2,44 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 538C44F0D92
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Apr 2022 04:40:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF6094F1CB4
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Apr 2022 23:29:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376923AbiDDCmH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 3 Apr 2022 22:42:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55464 "EHLO
+        id S1345192AbiDDV2i (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 4 Apr 2022 17:28:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356313AbiDDCmG (ORCPT
+        with ESMTP id S1379299AbiDDQ5b (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 3 Apr 2022 22:42:06 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5BA824092
-        for <linux-bluetooth@vger.kernel.org>; Sun,  3 Apr 2022 19:40:10 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id t2so6666715qtw.9
-        for <linux-bluetooth@vger.kernel.org>; Sun, 03 Apr 2022 19:40:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=TGRo0g/Rnqyo2kjT2dTHVz57BlIjFuDhvQ7vHgyGP6g=;
-        b=VqBp4NYZFDf660fM1ZBE2dIlju5qDgLcu/2KKpahgrvMPobGj3Hue+ARom2tvTCXu8
-         kMsY0RlslNDRW3B6WV0pwOObU4UWgALF+TR33rd5dzqmNmAH47Zdl6y94AfhlliS7MpQ
-         3j9EATb5HyVFjbuJr1zBwxAnTsA29ZTR7UzdY//8cDM4E1GRTupFrshsvwDASpr8ZzTF
-         9Ung2nKmVbyJgFTRE9QvQ6CtxMrDGh8LS5b4V9rVArfz7hTJnBsFf57Woh8EotKrKfTG
-         5fU+tkiSDEbYnsCnyEZXDOru71dfhg9GDFyKPcJhUfvRsEG2kjuv7YImgiLBnqR5l2T7
-         fcKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=TGRo0g/Rnqyo2kjT2dTHVz57BlIjFuDhvQ7vHgyGP6g=;
-        b=bpBQ/GrnPpy4fc9HuUN35xX2KeYVoNgpVId3FD8He8g8JTQRYzupeAbBQkmZ3tarU1
-         UbRPNJtc7NWXD+EQBLwKRycvZYzbXgz/pR/lNwxLA5BNNR1ub5KJ6hkbeTtYgenak3CB
-         ys5xJF5QPPv4W6mboevvaXqyTJjcfEA4SejMsD8Ac17njLhwWsAeukYieWVI+WvLGAwD
-         vcUJlfcHDq+tgb35zAZNl0UPSJPFJuIYLxWJrjvZmzIMFrmnrlrPN5iLQFr1GnA+BaKN
-         3U2Hnr+nfuRfNKzBXOwcm1zUSDvemSiDoa5u2pbyXqE+HQLyfHBfAznGxwZIXSDIV6AT
-         bjkg==
-X-Gm-Message-State: AOAM530MCD8bmI5e932rJWyhjUPO3nDCAT44BwyNV1eD4pqvBd60JdyY
-        EKF+O6ik1xnekX0XoWe7l3UmN/g493Q=
-X-Google-Smtp-Source: ABdhPJw+45DRkpq3sx5EsVY+iLyatuzPqmWQqUCZ21zoPHpmxDoy/GhLS29LwUHX4a/PfmlS2TlOOQ==
-X-Received: by 2002:a05:622a:1906:b0:2e0:77a7:16c4 with SMTP id w6-20020a05622a190600b002e077a716c4mr16065846qtc.119.1649040009688;
-        Sun, 03 Apr 2022 19:40:09 -0700 (PDT)
-Received: from [172.17.0.2] ([20.122.93.141])
-        by smtp.gmail.com with ESMTPSA id v5-20020a05622a144500b002e1c7d027b1sm7513044qtx.66.2022.04.03.19.40.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Apr 2022 19:40:09 -0700 (PDT)
-Message-ID: <624a5a89.1c69fb81.a00b3.1b2a@mx.google.com>
-Date:   Sun, 03 Apr 2022 19:40:09 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============4479506395778650708=="
-MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, dossche.niels@gmail.com
-Subject: RE: Bluetooth: use hdev lock for accept_list and reject_list in conn req
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20220404003403.35690-1-dossche.niels@gmail.com>
-References: <20220404003403.35690-1-dossche.niels@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        Mon, 4 Apr 2022 12:57:31 -0400
+Received: from smtp.github.com (out-17.smtp.github.com [192.30.252.200])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46DC43B3EC
+        for <linux-bluetooth@vger.kernel.org>; Mon,  4 Apr 2022 09:55:35 -0700 (PDT)
+Received: from github.com (hubbernetes-node-3db70e2.va3-iad.github.net [10.48.204.69])
+        by smtp.github.com (Postfix) with ESMTPA id 958545C105E
+        for <linux-bluetooth@vger.kernel.org>; Mon,  4 Apr 2022 09:55:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2014; t=1649091334;
+        bh=EVWIEjDCoU3BuMMCTTAYmoT+ytChG6mDO0ceio9Od3Q=;
+        h=Date:From:To:Subject:From;
+        b=KjKL5UThddTCMUzFV5XR7FAZQmzNFRm2u78wht+zA5UPikrJaY7KdBPFoQ3CimbTX
+         A51Thu/c2ww9Dpmaw3Y10mzDepqT8R0DLmHYKmPRkPgH//XmQmNJA9bCAxHxNTHOKm
+         U/Tc+V26eW1a3zp9WJkovTPcLKFWnN4LHzo9Aa9M=
+Date:   Mon, 04 Apr 2022 09:55:34 -0700
+From:   BluezTestBot <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/234d60-3627ed@github.com>
+Subject: [bluez/bluez] 0f3828: tools: Fix g_dbus_setup_private connection
+ check i...
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,42 +47,155 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============4479506395778650708==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+  Branch: refs/heads/master=0D
+  Home:   https://github.com/bluez/bluez=0D
+  Commit: 0f382885d4a304dd781aa212ca1ee7b19fd46918=0D
+      https://github.com/bluez/bluez/commit/0f382885d4a304dd781aa212ca1ee=
+7b19fd46918=0D
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>=0D
+  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
+=0D
+  Changed paths:=0D
+    M tools/mpris-proxy.c=0D
+=0D
+  Log Message:=0D
+  -----------=0D
+  tools: Fix g_dbus_setup_private connection check in mpris-proxy=0D
+=0D
+=0D
+  Commit: 7fdfb67284a2f93b13c008e69ff04f462e45c791=0D
+      https://github.com/bluez/bluez/commit/7fdfb67284a2f93b13c008e69ff04=
+f462e45c791=0D
+  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
+  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
+=0D
+  Changed paths:=0D
+    M monitor/packet.c=0D
+=0D
+  Log Message:=0D
+  -----------=0D
+  monitor: Fix out-of-bound read in print_le_states=0D
+=0D
+Accessing le_states_desc_table array with value 15 can cause=0D
+out-of-bound read because current size of array is 14.=0D
+=0D
+Currently this cannot lead to any problems becase we do no have such=0D
+state in le_states_comb_table but this could be changed in future and=0D
+raise described problem.=0D
+=0D
+Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
+static analysis tool.=0D
+=0D
+=0D
+  Commit: d328abaa1715d3d8df05b06a2e09429fcdeebe34=0D
+      https://github.com/bluez/bluez/commit/d328abaa1715d3d8df05b06a2e094=
+29fcdeebe34=0D
+  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
+  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
+=0D
+  Changed paths:=0D
+    M tools/hciattach_tialt.c=0D
+=0D
+  Log Message:=0D
+  -----------=0D
+  tools: Fix buffer overflow in hciattach_tialt.c=0D
+=0D
+Array 'c_brf_chip' of size 8 could be accessed by index > 7. We should=0D=
 
-This is automated email and please do not reply to this email!
+limit array access like in previous check at line 221.=0D
+=0D
+Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
+static analysis tool.=0D
+=0D
+=0D
+  Commit: 497a0b220dbdd9b10d0ba797645d327cd6cfb6e5=0D
+      https://github.com/bluez/bluez/commit/497a0b220dbdd9b10d0ba797645d3=
+27cd6cfb6e5=0D
+  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
+  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
+=0D
+  Changed paths:=0D
+    M tools/btsnoop.c=0D
+=0D
+  Log Message:=0D
+  -----------=0D
+  tools: Fix signed integer overflow in btsnoop.c=0D
+=0D
+If malformed packet is proceed with zero 'size' field we will face with=0D=
 
-Dear submitter,
+wrong behaviour of write() call. Value 'toread - 1' gives wrong sign=0D
+for value 'written' (-1) in write() call. To prevent this we should=0D
+check that 'toread' is not equal to zero.=0D
+=0D
+Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
+static analysis tool.=0D
+=0D
+=0D
+  Commit: 1e664b9838cd84a921360806de084c749a60304b=0D
+      https://github.com/bluez/bluez/commit/1e664b9838cd84a921360806de084=
+c749a60304b=0D
+  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
+  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
+=0D
+  Changed paths:=0D
+    M tools/btmgmt.c=0D
+    M tools/hex2hcd.c=0D
+=0D
+  Log Message:=0D
+  -----------=0D
+  tools: Limit width of fields in sscanf=0D
+=0D
+In tools/btmgmt.c and tools/hex2hcd.c few sscanf does not limit width=0D
+of fields. This could lead to static overflow and stack corruption.=0D
+=0D
+Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
+static analysis tool.=0D
+=0D
+=0D
+  Commit: 4afbef7790ce0b1b30afaade19af17903e05a801=0D
+      https://github.com/bluez/bluez/commit/4afbef7790ce0b1b30afaade19af1=
+7903e05a801=0D
+  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
+  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
+=0D
+  Changed paths:=0D
+    M src/device.c=0D
+=0D
+  Log Message:=0D
+  -----------=0D
+  device: Limit width of fields in sscanf=0D
+=0D
+In src/device.c few sscanf does not limit width of uuid field. This=0D
+could lead to static overflow and stack corruption.=0D
+=0D
+Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
+static analysis tool.=0D
+=0D
+=0D
+  Commit: 3627eddea13042ffc0848ae37356f30335ce2e4b=0D
+      https://github.com/bluez/bluez/commit/3627eddea13042ffc0848ae37356f=
+30335ce2e4b=0D
+  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
+  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
+=0D
+  Changed paths:=0D
+    M src/gatt-database.c=0D
+=0D
+  Log Message:=0D
+  -----------=0D
+  gatt: Fix double free and freed memory dereference=0D
+=0D
+If device is no longer exists or not paired when notifications send it=0D=
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=628619
+is possible to get double free and dereference of already freed memory.=0D=
 
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.54 seconds
-GitLint                       PASS      1.01 seconds
-SubjectPrefix                 PASS      0.89 seconds
-BuildKernel                   PASS      30.05 seconds
-BuildKernel32                 PASS      27.33 seconds
-Incremental Build with patchesPASS      38.38 seconds
-TestRunner: Setup             PASS      458.46 seconds
-TestRunner: l2cap-tester      PASS      15.27 seconds
-TestRunner: bnep-tester       PASS      6.04 seconds
-TestRunner: mgmt-tester       PASS      99.50 seconds
-TestRunner: rfcomm-tester     PASS      7.31 seconds
-TestRunner: sco-tester        PASS      7.24 seconds
-TestRunner: smp-tester        PASS      6.75 seconds
-TestRunner: userchan-tester   PASS      5.87 seconds
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============4479506395778650708==--
+=0D
+To avoid this we need to recheck the state of device after sending=0D
+notification.=0D
+=0D
+Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
+static analysis tool.=0D
+=0D
+=0D
+Compare: https://github.com/bluez/bluez/compare/234d60423c3b...3627eddea1=
+30=0D
