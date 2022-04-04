@@ -2,200 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF6094F1CB4
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Apr 2022 23:29:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E72D4F1CCB
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Apr 2022 23:29:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345192AbiDDV2i (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 4 Apr 2022 17:28:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54306 "EHLO
+        id S1353237AbiDDV3E (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 4 Apr 2022 17:29:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379299AbiDDQ5b (ORCPT
+        with ESMTP id S1379497AbiDDRQX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 4 Apr 2022 12:57:31 -0400
-Received: from smtp.github.com (out-17.smtp.github.com [192.30.252.200])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46DC43B3EC
-        for <linux-bluetooth@vger.kernel.org>; Mon,  4 Apr 2022 09:55:35 -0700 (PDT)
-Received: from github.com (hubbernetes-node-3db70e2.va3-iad.github.net [10.48.204.69])
-        by smtp.github.com (Postfix) with ESMTPA id 958545C105E
-        for <linux-bluetooth@vger.kernel.org>; Mon,  4 Apr 2022 09:55:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-        s=pf2014; t=1649091334;
-        bh=EVWIEjDCoU3BuMMCTTAYmoT+ytChG6mDO0ceio9Od3Q=;
-        h=Date:From:To:Subject:From;
-        b=KjKL5UThddTCMUzFV5XR7FAZQmzNFRm2u78wht+zA5UPikrJaY7KdBPFoQ3CimbTX
-         A51Thu/c2ww9Dpmaw3Y10mzDepqT8R0DLmHYKmPRkPgH//XmQmNJA9bCAxHxNTHOKm
-         U/Tc+V26eW1a3zp9WJkovTPcLKFWnN4LHzo9Aa9M=
-Date:   Mon, 04 Apr 2022 09:55:34 -0700
-From:   BluezTestBot <noreply@github.com>
-To:     linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/234d60-3627ed@github.com>
-Subject: [bluez/bluez] 0f3828: tools: Fix g_dbus_setup_private connection
- check i...
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+        Mon, 4 Apr 2022 13:16:23 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E583014019
+        for <linux-bluetooth@vger.kernel.org>; Mon,  4 Apr 2022 10:14:26 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9CC5FB818B6
+        for <linux-bluetooth@vger.kernel.org>; Mon,  4 Apr 2022 17:14:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 69423C2BBE4;
+        Mon,  4 Apr 2022 17:14:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649092464;
+        bh=J1K7zQVWebnSsp6wD5xFmA0KuvUnR7v4xxOgYYSWbNM=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=EPGDHTbleUpNM6xVsvU5glr1uuDo00MwVkr0sdbsADrsgrbEvERf6fp6q5j2M3Gyn
+         7E9+gsOhuUsDJTZH+Pw4fZir/gIBAlUHZ3APNmCcWF7WiEe/E6/QttHsFuzzF9zHFU
+         oBgP9GFPmoX14yN9pD05V4IctbiIpnvwsNM3W1ehO7F8KTTGq7J3yGmW3gVNSoksi4
+         dUDGwpqcEY738N7iWCyrLD0JdogPixzedPZZD9ecjbQmnPrFDSXqS6mmUQ1iAArZ1g
+         ACJAGNaEQb+tHXV9DWZKarD6fxUoxeEH9QdAr35GD8PGE9A5hC+RZgQx78Y0gtx5sb
+         T9p/OiZNyfjmg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 53AF7E85AE7;
+        Mon,  4 Apr 2022 17:14:24 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ 0/6] [v4] Fix bugs found by SVACE static analisys tool
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <164909246433.14329.9969531326038697330.git-patchwork-notify@kernel.org>
+Date:   Mon, 04 Apr 2022 17:14:24 +0000
+References: <20220401121647.3985682-1-i.kamaletdinov@omp.ru>
+In-Reply-To: <20220401121647.3985682-1-i.kamaletdinov@omp.ru>
+To:     Ildar Kamaletdinov <i.kamaletdinov@omp.ru>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master=0D
-  Home:   https://github.com/bluez/bluez=0D
-  Commit: 0f382885d4a304dd781aa212ca1ee7b19fd46918=0D
-      https://github.com/bluez/bluez/commit/0f382885d4a304dd781aa212ca1ee=
-7b19fd46918=0D
-  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>=0D
-  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
-=0D
-  Changed paths:=0D
-    M tools/mpris-proxy.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  tools: Fix g_dbus_setup_private connection check in mpris-proxy=0D
-=0D
-=0D
-  Commit: 7fdfb67284a2f93b13c008e69ff04f462e45c791=0D
-      https://github.com/bluez/bluez/commit/7fdfb67284a2f93b13c008e69ff04=
-f462e45c791=0D
-  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
-  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
-=0D
-  Changed paths:=0D
-    M monitor/packet.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  monitor: Fix out-of-bound read in print_le_states=0D
-=0D
-Accessing le_states_desc_table array with value 15 can cause=0D
-out-of-bound read because current size of array is 14.=0D
-=0D
-Currently this cannot lead to any problems becase we do no have such=0D
-state in le_states_comb_table but this could be changed in future and=0D
-raise described problem.=0D
-=0D
-Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
-static analysis tool.=0D
-=0D
-=0D
-  Commit: d328abaa1715d3d8df05b06a2e09429fcdeebe34=0D
-      https://github.com/bluez/bluez/commit/d328abaa1715d3d8df05b06a2e094=
-29fcdeebe34=0D
-  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
-  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
-=0D
-  Changed paths:=0D
-    M tools/hciattach_tialt.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  tools: Fix buffer overflow in hciattach_tialt.c=0D
-=0D
-Array 'c_brf_chip' of size 8 could be accessed by index > 7. We should=0D=
+Hello:
 
-limit array access like in previous check at line 221.=0D
-=0D
-Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
-static analysis tool.=0D
-=0D
-=0D
-  Commit: 497a0b220dbdd9b10d0ba797645d327cd6cfb6e5=0D
-      https://github.com/bluez/bluez/commit/497a0b220dbdd9b10d0ba797645d3=
-27cd6cfb6e5=0D
-  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
-  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
-=0D
-  Changed paths:=0D
-    M tools/btsnoop.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  tools: Fix signed integer overflow in btsnoop.c=0D
-=0D
-If malformed packet is proceed with zero 'size' field we will face with=0D=
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-wrong behaviour of write() call. Value 'toread - 1' gives wrong sign=0D
-for value 'written' (-1) in write() call. To prevent this we should=0D
-check that 'toread' is not equal to zero.=0D
-=0D
-Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
-static analysis tool.=0D
-=0D
-=0D
-  Commit: 1e664b9838cd84a921360806de084c749a60304b=0D
-      https://github.com/bluez/bluez/commit/1e664b9838cd84a921360806de084=
-c749a60304b=0D
-  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
-  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
-=0D
-  Changed paths:=0D
-    M tools/btmgmt.c=0D
-    M tools/hex2hcd.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  tools: Limit width of fields in sscanf=0D
-=0D
-In tools/btmgmt.c and tools/hex2hcd.c few sscanf does not limit width=0D
-of fields. This could lead to static overflow and stack corruption.=0D
-=0D
-Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
-static analysis tool.=0D
-=0D
-=0D
-  Commit: 4afbef7790ce0b1b30afaade19af17903e05a801=0D
-      https://github.com/bluez/bluez/commit/4afbef7790ce0b1b30afaade19af1=
-7903e05a801=0D
-  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
-  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
-=0D
-  Changed paths:=0D
-    M src/device.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  device: Limit width of fields in sscanf=0D
-=0D
-In src/device.c few sscanf does not limit width of uuid field. This=0D
-could lead to static overflow and stack corruption.=0D
-=0D
-Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
-static analysis tool.=0D
-=0D
-=0D
-  Commit: 3627eddea13042ffc0848ae37356f30335ce2e4b=0D
-      https://github.com/bluez/bluez/commit/3627eddea13042ffc0848ae37356f=
-30335ce2e4b=0D
-  Author: Ildar Kamaletdinov <i.kamaletdinov@omp.ru>=0D
-  Date:   2022-04-04 (Mon, 04 Apr 2022)=0D
-=0D
-  Changed paths:=0D
-    M src/gatt-database.c=0D
-=0D
-  Log Message:=0D
-  -----------=0D
-  gatt: Fix double free and freed memory dereference=0D
-=0D
-If device is no longer exists or not paired when notifications send it=0D=
+On Fri, 1 Apr 2022 15:16:41 +0300 you wrote:
+> This patch set includes few fixes that was found by Linux Verification Center
+> (linuxtesting.org) with the SVACE static analysis tool.
+> 
+> I have manually filtered out non-relevant and false positive problems and only
+> procedeed with bugs that currently lead to some errors/vulnerabilities or may
+> lead to them in some specific conditions.
+> 
+> [...]
 
-is possible to get double free and dereference of already freed memory.=0D=
+Here is the summary with links:
+  - [BlueZ,1/6] monitor: Fix out-of-bound read in print_le_states
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=7fdfb67284a2
+  - [BlueZ,2/6] tools: Fix buffer overflow in hciattach_tialt.c
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d328abaa1715
+  - [BlueZ,3/6] tools: Fix signed integer overflow in btsnoop.c
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=497a0b220dbd
+  - [BlueZ,4/6] tools: Limit width of fields in sscanf
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=1e664b9838cd
+  - [BlueZ,5/6] device: Limit width of fields in sscanf
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=4afbef7790ce
+  - [BlueZ,6/6] gatt: Fix double free and freed memory dereference
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=3627eddea130
 
-=0D
-To avoid this we need to recheck the state of device after sending=0D
-notification.=0D
-=0D
-Found by Linux Verification Center (linuxtesting.org) with the SVACE=0D
-static analysis tool.=0D
-=0D
-=0D
-Compare: https://github.com/bluez/bluez/compare/234d60423c3b...3627eddea1=
-30=0D
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
