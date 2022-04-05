@@ -2,40 +2,40 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 689674F4F27
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 Apr 2022 03:58:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D98F64F4F1F
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 Apr 2022 03:58:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1390547AbiDFAmK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 5 Apr 2022 20:42:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36848 "EHLO
+        id S244473AbiDFAlZ convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 5 Apr 2022 20:41:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1457466AbiDEQDQ (ORCPT
+        with ESMTP id S1572915AbiDERUK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 5 Apr 2022 12:03:16 -0400
-X-Greylist: delayed 436 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 05 Apr 2022 08:50:35 PDT
-Received: from mail.pelzflorian.de (pelzflorian.de [5.45.111.108])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFDE84F9CD
-        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Apr 2022 08:50:35 -0700 (PDT)
-Received: from pelzflorian.localdomain (unknown [5.45.111.108])
-        by mail.pelzflorian.de (Postfix) with ESMTPSA id EBD8C3606A0
-        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Apr 2022 17:43:17 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=pelzflorian.de;
-        s=mail; t=1649173398;
-        bh=ymOcM2/1rhgKmG/D7aCJ/zReR4MoKWojyWqHC+IMUkM=;
-        h=Date:From:To:Subject;
-        b=QrW/0hln9x07EyL50Un/vFtuPxiRM4Z9ijvn2/0OJkSkhST0XP2055isnP4S2PYgR
-         SDuAyQ424oZDl0L1ZC7azVlTBOFwFlIKssD0UlRFYNW1MkYIdG2eh6cDB+XWQL7e5Y
-         D+y8IxfysnYrQjWMNfCT4z8oh/BghRg5E0hNjy3Q=
-Date:   Tue, 5 Apr 2022 17:43:05 +0200
-From:   Florian Pelz <pelzflorian@pelzflorian.de>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH] main: Remove unused main.conf option NameResolving
-Message-ID: <20220405154226.nejyr5twrhsqrzim@pelzflorian.localdomain>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,DOS_RCVD_IP_TWICE_B,
+        Tue, 5 Apr 2022 13:20:10 -0400
+Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 73FA725DA
+        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Apr 2022 10:18:09 -0700 (PDT)
+Received: from smtpclient.apple (CMPC-089-239-127-162.CNet.Gawex.PL [89.239.127.162])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 6F86CCECC4;
+        Tue,  5 Apr 2022 19:18:08 +0200 (CEST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
+Subject: Re: [PATCH] Bluetooth: use hdev lock for accept_list and reject_list
+ in conn req
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20220404003403.35690-1-dossche.niels@gmail.com>
+Date:   Tue, 5 Apr 2022 19:18:07 +0200
+Cc:     linux-bluetooth@vger.kernel.org,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <2F8732A2-FED9-4649-8F9D-680536E94D34@holtmann.org>
+References: <20220404003403.35690-1-dossche.niels@gmail.com>
+To:     Niels Dossche <dossche.niels@gmail.com>
+X-Mailer: Apple Mail (2.3696.80.82.1.1)
+X-Spam-Status: No, score=1.4 required=5.0 tests=BAYES_00,RCVD_IN_SBL_CSS,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Level: *
@@ -45,69 +45,75 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Commit 826023de56896e83f35ae69a73d6a120a2f5b11e removed the last use
-of name_resolv.
----
- src/btd.h     | 1 -
- src/main.c    | 8 --------
- src/main.conf | 4 ----
- 3 files changed, 13 deletions(-)
+Hi Niels,
 
-diff --git a/src/btd.h b/src/btd.h
-index d13646889..c11076cce 100644
---- a/src/btd.h
-+++ b/src/btd.h
-@@ -109,7 +109,6 @@ struct btd_opts {
- 	struct btd_defaults defaults;
- 
- 	gboolean	reverse_discovery;
--	gboolean	name_resolv;
- 	gboolean	debug_keys;
- 	gboolean	fast_conn;
- 	gboolean	refresh_discovery;
-diff --git a/src/main.c b/src/main.c
-index a448320c1..52fa4829b 100644
---- a/src/main.c
-+++ b/src/main.c
-@@ -766,13 +766,6 @@ static void parse_config(GKeyFile *config)
- 	} else
- 		btd_opts.reverse_discovery = boolean;
- 
--	boolean = g_key_file_get_boolean(config, "General",
--						"NameResolving", &err);
--	if (err)
--		g_clear_error(&err);
--	else
--		btd_opts.name_resolv = boolean;
--
- 	boolean = g_key_file_get_boolean(config, "General",
- 						"DebugKeys", &err);
- 	if (err)
-@@ -954,7 +947,6 @@ static void init_defaults(void)
- 	btd_opts.discovto = DEFAULT_DISCOVERABLE_TIMEOUT;
- 	btd_opts.tmpto = DEFAULT_TEMPORARY_TIMEOUT;
- 	btd_opts.reverse_discovery = TRUE;
--	btd_opts.name_resolv = TRUE;
- 	btd_opts.debug_keys = FALSE;
- 	btd_opts.refresh_discovery = TRUE;
- 	btd_opts.name_request_retry_delay = DEFAULT_NAME_REQUEST_RETRY_DELAY;
-diff --git a/src/main.conf b/src/main.conf
-index 401796235..337dc77e5 100644
---- a/src/main.conf
-+++ b/src/main.conf
-@@ -37,10 +37,6 @@
- # Defaults to 'true'.
- #ReverseServiceDiscovery = true
- 
--# Enable name resolving after inquiry. Set it to 'false' if you don't need
--# remote devices name and want shorter discovery cycle. Defaults to 'true'.
--#NameResolving = true
--
- # Enable runtime persistency of debug link keys. Default is false which
- # makes debug link keys valid only for the duration of the connection
- # that they were created for.
+> All accesses (both read and modifications) to
+> hdev->{accept,reject}_list are protected by hdev lock,
+> except the ones in hci_conn_request_evt. This can cause a race condition
+> in the form of a list corruption.
+> The solution is to protect these lists in hci_conn_request_evt as well.
+> 
+> I was unable to find the exact commit that introduced the issue for the
+> reject list, I was only able to find it for the accept list.
+> 
+> Note:
+> I am currently working on a static analyser to detect missing locks
+> using type-based static analysis as my master's thesis
+> in order to obtain my master's degree.
+> If you would like to have more details, please let me know.
+> This was a reported case. I manually verified the report by looking
+> at the code, so that I do not send wrong information or patches.
+> After concluding that this seems to be a true positive, I created
+> this patch. I have both compile-tested this patch and runtime-tested
+> this patch on x86_64. The effect on a running system could be a
+> potential race condition in exceptional cases.
+> This issue was found on Linux v5.17.1.
 
-base-commit: 234d60423c3b8186a27b31028d4c0acb847eedb1
--- 
-2.34.0
+this doesn’t belong in the commit message.
+
+> 
+> Fixes: a55bd29d5227 ("Bluetooth: Add white list lookup for incoming connection requests")
+> Signed-off-by: Niels Dossche <dossche.niels@gmail.com>
+> ---
+> net/bluetooth/hci_event.c | 6 ++++--
+> 1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+> index abaabfae19cc..b9038f24f46f 100644
+> --- a/net/bluetooth/hci_event.c
+> +++ b/net/bluetooth/hci_event.c
+> @@ -3222,8 +3222,11 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+> 		return;
+> 	}
+> 
+> +	hci_dev_lock(hdev);
+> +
+> 	if (hci_bdaddr_list_lookup(&hdev->reject_list, &ev->bdaddr,
+> 				   BDADDR_BREDR)) {
+> +		hci_dev_unlock(hdev);
+> 		hci_reject_conn(hdev, &ev->bdaddr);
+> 		return;
+> 	}
+> @@ -3236,14 +3239,13 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+> 	    !hci_dev_test_flag(hdev, HCI_CONNECTABLE) &&
+> 	    !hci_bdaddr_list_lookup_with_flags(&hdev->accept_list, &ev->bdaddr,
+> 					       BDADDR_BREDR)) {
+> +		hci_dev_unlock(hdev);
+> 		hci_reject_conn(hdev, &ev->bdaddr);
+> 		return;
+> 	}
+
+Can we use an exit goto-label instead. I am not a big fan of "unbalanced” _unlock statements.
+
+> 	/* Connection accepted */
+> 
+> -	hci_dev_lock(hdev);
+> -
+> 	ie = hci_inquiry_cache_lookup(hdev, &ev->bdaddr);
+> 	if (ie)
+> 		memcpy(ie->data.dev_class, ev->dev_class, 3);
+
+Regards
+
+Marcel
 
