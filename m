@@ -2,86 +2,115 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EED4A4F6E89
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Apr 2022 01:30:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1DD44F6E92
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Apr 2022 01:35:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237697AbiDFXcO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 6 Apr 2022 19:32:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60108 "EHLO
+        id S237802AbiDFXhu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 6 Apr 2022 19:37:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229748AbiDFXcN (ORCPT
+        with ESMTP id S237792AbiDFXht (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 6 Apr 2022 19:32:13 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B737F7F72
-        for <linux-bluetooth@vger.kernel.org>; Wed,  6 Apr 2022 16:30:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C3669B825D3
-        for <linux-bluetooth@vger.kernel.org>; Wed,  6 Apr 2022 23:30:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 71FB0C385A6;
-        Wed,  6 Apr 2022 23:30:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649287813;
-        bh=T+1yX1rq3i3y5A42sag22Q8UCubFGzkZS6sCjHc7XeE=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=jnP/AGnozB/oUvzBxuYDStMP55VMeTqjkAX0qQJilKvzifJ1J1ZFKehckDjtdVHa2
-         PhLQj3Rgyaz7CZIkjfUwIb4At6UlSfI1/71mGM+0YbaFBw65EHHfW8r3kQIKy5qO7k
-         NdjEeFTMSFhyC9caFFWNI5d3AuuH3VzpPRBI7LsVo0+OJUp83IR1Jqd6xFcaMsiuPW
-         YycBVfrtBaPV6wlS3/+FyG4VMYhp5l4ez/Ld53bPaxsadQYCXp2JGxAbykFaV11S3t
-         ouGbvu9jMLssNh7r8QNvTxrMKNcYvmlf4Z9o7gra/IS9vIKPWuqswbTE2qZlHpzxHs
-         t0rFuACB8m1mg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 51D28E85BCB;
-        Wed,  6 Apr 2022 23:30:13 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 1/3] monitor: Add support for LE BIG Info Adverting
- Report
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <164928781333.14953.8804045522926383453.git-patchwork-notify@kernel.org>
-Date:   Wed, 06 Apr 2022 23:30:13 +0000
-References: <20220406213355.1918220-1-luiz.dentz@gmail.com>
-In-Reply-To: <20220406213355.1918220-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
+        Wed, 6 Apr 2022 19:37:49 -0400
+Received: from out-20.smtp.github.com (out-20.smtp.github.com [192.30.252.203])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B4D1E533D
+        for <linux-bluetooth@vger.kernel.org>; Wed,  6 Apr 2022 16:35:51 -0700 (PDT)
+Received: from github.com (hubbernetes-node-6c82970.va3-iad.github.net [10.48.200.77])
+        by smtp.github.com (Postfix) with ESMTPA id D035FE057F
+        for <linux-bluetooth@vger.kernel.org>; Wed,  6 Apr 2022 16:35:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2014; t=1649288150;
+        bh=ymg8VVfVl7+uqvGNg8Pmbua23xd76a7nZGgKKrC5jkw=;
+        h=Date:From:To:Subject:From;
+        b=opNDVEyRvwBsf0EhVtl9+tO9W0hUxoc0FEqWhjuJxfgoP1MO9ujKGG8qe1Jxa5Mbw
+         KLBHmzhws+iEwMt1bAnEgy5R/CsPBlwu68v/sQ/yldAmeepycq0wGmYGztADLRQYSe
+         qMV0/FH62BAKkRkD+h/DuM6xYRxbb0JxvweBqH/s=
+Date:   Wed, 06 Apr 2022 16:35:50 -0700
+From:   Luiz Augusto von Dentz <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/3627ed-d1871f@github.com>
+Subject: [bluez/bluez] bbeabc: gap: Don't attempt to read the appearance if
+ alrea...
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: bbeabca44a3da3e1efd8e57b0366bbb45aadbb5b
+      https://github.com/bluez/bluez/commit/bbeabca44a3da3e1efd8e57b0366bbb45aadbb5b
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-04 (Mon, 04 Apr 2022)
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M profiles/gap/gas.c
 
-On Wed,  6 Apr 2022 14:33:53 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> This adds support for LE BIG Info Advertising Report.
-> ---
->  monitor/bt.h     | 17 +++++++++++++++++
->  monitor/packet.c | 23 +++++++++++++++++++++++
->  2 files changed, 40 insertions(+)
+  Log Message:
+  -----------
+  gap: Don't attempt to read the appearance if already set
 
-Here is the summary with links:
-  - [BlueZ,1/3] monitor: Add support for LE BIG Info Adverting Report
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=0533085d22ba
-  - [BlueZ,2/3] btdev: Add support for sending LE BIG Info Adv Reports
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=10948891336d
-  - [BlueZ,3/3] btdev: Fix BIG Create Sync
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d1871fc93522
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Devices are unlikely to change appearance over time which is the reason
+why we cache then on the storage so this skips reading it on every
+reconnection.
 
 
+  Commit: 0533085d22ba0bc314378524f1cccdea901da434
+      https://github.com/bluez/bluez/commit/0533085d22ba0bc314378524f1cccdea901da434
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-06 (Wed, 06 Apr 2022)
+
+  Changed paths:
+    M monitor/bt.h
+    M monitor/packet.c
+
+  Log Message:
+  -----------
+  monitor: Add support for LE BIG Info Adverting Report
+
+This adds support for LE BIG Info Advertising Report.
+
+
+  Commit: 10948891336d8ca43055c465e3d00f428a035c4c
+      https://github.com/bluez/bluez/commit/10948891336d8ca43055c465e3d00f428a035c4c
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-06 (Wed, 06 Apr 2022)
+
+  Changed paths:
+    M emulator/btdev.c
+
+  Log Message:
+  -----------
+  btdev: Add support for sending LE BIG Info Adv Reports
+
+This adds support for sending LE BIG Info Adv Reports if LE Create BIG
+has been called.
+
+
+  Commit: d1871fc935228f034741e1f5064a0f3e2234ffcd
+      https://github.com/bluez/bluez/commit/d1871fc935228f034741e1f5064a0f3e2234ffcd
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-06 (Wed, 06 Apr 2022)
+
+  Changed paths:
+    M emulator/btdev.c
+
+  Log Message:
+  -----------
+  btdev: Fix BIG Create Sync
+
+This fixes status return to BIG Create Sync command.
+
+
+Compare: https://github.com/bluez/bluez/compare/3627eddea130...d1871fc93522
