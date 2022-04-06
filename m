@@ -2,111 +2,108 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC8204F5E78
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 Apr 2022 15:03:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F4584F6186
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  6 Apr 2022 16:18:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230148AbiDFMu0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 6 Apr 2022 08:50:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48288 "EHLO
+        id S234551AbiDFOTb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 6 Apr 2022 10:19:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232874AbiDFMmu (ORCPT
+        with ESMTP id S235527AbiDFOSw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 6 Apr 2022 08:42:50 -0400
-Received: from mail.pelzflorian.de (pelzflorian.de [5.45.111.108])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 945853EF00D
-        for <linux-bluetooth@vger.kernel.org>; Wed,  6 Apr 2022 01:44:06 -0700 (PDT)
-Received: from pelzflorian.localdomain (unknown [5.45.111.108])
-        by mail.pelzflorian.de (Postfix) with ESMTPSA id 042A7360637
-        for <linux-bluetooth@vger.kernel.org>; Wed,  6 Apr 2022 10:44:04 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=pelzflorian.de;
-        s=mail; t=1649234645;
-        bh=AVasa5UeuOhsEhjAmTJ/rjg1ZyGbQ8/okZWUXQEDn3w=;
-        h=Date:From:To:Subject;
-        b=1pJKT8+ZwAEU8BNRJ2TSF0OHsJJ0b/oSP3yDHCrBHIvl1ReW1yDTYLXGvRmV3b8fL
-         m1gfpHukTSv3wqNDzQ1pXgpWvvqE85qYCh0y4mHdV12ve+BUQlLCGyqX6qAMPt66Ny
-         WTn/VqQrriXYCdcYeSWYDccmf9eHAXJ8x136eLvE=
-Date:   Wed, 6 Apr 2022 10:43:57 +0200
-From:   Florian Pelz <pelzflorian@pelzflorian.de>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2] main: Remove unused main.conf option NameResolving
-Message-ID: <20220406084357.iai4k6jvg6gnnbyi@pelzflorian.localdomain>
+        Wed, 6 Apr 2022 10:18:52 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF8442B525C
+        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Apr 2022 19:33:16 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id f3so1258013qvz.10
+        for <linux-bluetooth@vger.kernel.org>; Tue, 05 Apr 2022 19:33:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=6TqcBjLq5PiMEQTnSLsbDDJaUEWpVZWercMg3D2aO3A=;
+        b=PkM3dSZ6YelxvIzeF3t0gqVBZbUFXiTwTNTyT3JoxamhdPjLY07zYaprPuYWIPvkqt
+         2iFwjlYGO5iYudtWmmx/7AzxydYo/D+fspy8ZCQXRtPl1bacrT55TSX8wymqRppuIs3p
+         CD7XvO77gmMIYe6Ib3G2JxNmAMvcFksOdaj69eVltvxY4aikt8FBozG8XXGSljrYSUaG
+         BzHirrQL9z6rXB6i3H+l7C1AeX/YlnsT6DfZiV7hQl9MBElZetU6kIKdn2eCbtlSkP8y
+         efPt55w/XZX7atPzOvOFh2PMHLoQnLrcY6Awq/Uk1ScAPz1t6aidHYRvNE9txtZWuYZ0
+         oZxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=6TqcBjLq5PiMEQTnSLsbDDJaUEWpVZWercMg3D2aO3A=;
+        b=VDOSvin8PkEj+69/+z4esi20XDdtT+gvqXvkpVKBg/oi1QOfpxRyt6ocGZ0u6u97aE
+         c7uKl5Nkrma6JrIAqybtuliKW+tg9PGuFk39bPgyv2bnhzCjIMG8KkrqNORdZzljCKo3
+         DfOHUyE32sem38JVoXfjyfEMEGMXJ+1Z7euA7j1nAFcALFzCz5v2RIukI+GNnJEO+p+l
+         njWheJKziO9aIB0lfXlcJhRkRg5SMRPRE3xoAn3b0ITfMIPqzMNKvqhnLmdns7uN9yZT
+         k5oD6R+Jo7nIlCHZc1gPTD6vA4awglQRW9Sgkv+s7p+dSZzkD0UCJxfRM8fgXHzIfPLd
+         GH/Q==
+X-Gm-Message-State: AOAM533shQY5LNIoGMTuaYllt9sNd6VOMcpfW4tidUZwbxZh54Y+rBQP
+        /SGoueDj+dWCXVhaoLMtfhDYN4SZFmYEWQ==
+X-Google-Smtp-Source: ABdhPJxT23QjUO3rKSVc9LcW6pjxf5hBbhkgNr4hH3pDRGEljHgfssfT0JwMn1XJJEoaneAUS9jpEw==
+X-Received: by 2002:a05:6214:f03:b0:441:27ee:ba71 with SMTP id gw3-20020a0562140f0300b0044127eeba71mr5590326qvb.88.1649212395966;
+        Tue, 05 Apr 2022 19:33:15 -0700 (PDT)
+Received: from [172.17.0.2] ([20.230.106.254])
+        by smtp.gmail.com with ESMTPSA id s5-20020a37a905000000b0067d35f2fdb1sm8892893qke.37.2022.04.05.19.33.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Apr 2022 19:33:15 -0700 (PDT)
+Message-ID: <624cfbeb.1c69fb81.f46e4.bf65@mx.google.com>
+Date:   Tue, 05 Apr 2022 19:33:15 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8846296058100996342=="
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,DOS_RCVD_IP_TWICE_B,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: *
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, dossche.niels@gmail.com
+Subject: RE: [v2] Bluetooth: use hdev lock for accept_list and reject_list in conn req
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220405173751.7269-1-dossche.niels@gmail.com>
+References: <20220405173751.7269-1-dossche.niels@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Commit 826023de5689 ("core: Create devices dynamically during
-discovery") removed the last use of name_resolv.
+--===============8846296058100996342==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=629298
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.57 seconds
+GitLint                       PASS      0.99 seconds
+SubjectPrefix                 PASS      0.85 seconds
+BuildKernel                   PASS      30.97 seconds
+BuildKernel32                 PASS      27.76 seconds
+Incremental Build with patchesPASS      38.25 seconds
+TestRunner: Setup             PASS      466.52 seconds
+TestRunner: l2cap-tester      PASS      15.59 seconds
+TestRunner: bnep-tester       PASS      6.09 seconds
+TestRunner: mgmt-tester       PASS      103.36 seconds
+TestRunner: rfcomm-tester     PASS      7.67 seconds
+TestRunner: sco-tester        PASS      7.56 seconds
+TestRunner: smp-tester        PASS      7.52 seconds
+TestRunner: userchan-tester   PASS      6.33 seconds
+
+
+
 ---
- src/btd.h     | 1 -
- src/main.c    | 8 --------
- src/main.conf | 4 ----
- 3 files changed, 13 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/src/btd.h b/src/btd.h
-index d13646889..c11076cce 100644
---- a/src/btd.h
-+++ b/src/btd.h
-@@ -109,7 +109,6 @@ struct btd_opts {
- 	struct btd_defaults defaults;
- 
- 	gboolean	reverse_discovery;
--	gboolean	name_resolv;
- 	gboolean	debug_keys;
- 	gboolean	fast_conn;
- 	gboolean	refresh_discovery;
-diff --git a/src/main.c b/src/main.c
-index a448320c1..52fa4829b 100644
---- a/src/main.c
-+++ b/src/main.c
-@@ -766,13 +766,6 @@ static void parse_config(GKeyFile *config)
- 	} else
- 		btd_opts.reverse_discovery = boolean;
- 
--	boolean = g_key_file_get_boolean(config, "General",
--						"NameResolving", &err);
--	if (err)
--		g_clear_error(&err);
--	else
--		btd_opts.name_resolv = boolean;
--
- 	boolean = g_key_file_get_boolean(config, "General",
- 						"DebugKeys", &err);
- 	if (err)
-@@ -954,7 +947,6 @@ static void init_defaults(void)
- 	btd_opts.discovto = DEFAULT_DISCOVERABLE_TIMEOUT;
- 	btd_opts.tmpto = DEFAULT_TEMPORARY_TIMEOUT;
- 	btd_opts.reverse_discovery = TRUE;
--	btd_opts.name_resolv = TRUE;
- 	btd_opts.debug_keys = FALSE;
- 	btd_opts.refresh_discovery = TRUE;
- 	btd_opts.name_request_retry_delay = DEFAULT_NAME_REQUEST_RETRY_DELAY;
-diff --git a/src/main.conf b/src/main.conf
-index 401796235..337dc77e5 100644
---- a/src/main.conf
-+++ b/src/main.conf
-@@ -37,10 +37,6 @@
- # Defaults to 'true'.
- #ReverseServiceDiscovery = true
- 
--# Enable name resolving after inquiry. Set it to 'false' if you don't need
--# remote devices name and want shorter discovery cycle. Defaults to 'true'.
--#NameResolving = true
--
- # Enable runtime persistency of debug link keys. Default is false which
- # makes debug link keys valid only for the duration of the connection
- # that they were created for.
 
-base-commit: 234d60423c3b8186a27b31028d4c0acb847eedb1
--- 
-2.34.0
-
+--===============8846296058100996342==--
