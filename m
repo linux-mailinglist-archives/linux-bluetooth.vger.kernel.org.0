@@ -2,75 +2,168 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6406F4F8AA3
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Apr 2022 02:55:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B1734F8AF4
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Apr 2022 02:56:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232361AbiDGXB0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 7 Apr 2022 19:01:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41884 "EHLO
+        id S232673AbiDHABy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 7 Apr 2022 20:01:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231496AbiDGXBZ (ORCPT
+        with ESMTP id S232626AbiDHABx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 7 Apr 2022 19:01:25 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F495CEE0B
-        for <linux-bluetooth@vger.kernel.org>; Thu,  7 Apr 2022 15:59:23 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id z33so12166058ybh.5
-        for <linux-bluetooth@vger.kernel.org>; Thu, 07 Apr 2022 15:59:23 -0700 (PDT)
+        Thu, 7 Apr 2022 20:01:53 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA70619853C
+        for <linux-bluetooth@vger.kernel.org>; Thu,  7 Apr 2022 16:59:51 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id m16so6472378plx.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 07 Apr 2022 16:59:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:sender:from:date:message-id:subject:to
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=vtl03A/ykFlMjaIpafXHrGiE/kbHFHRYgZ8Q49Zgwes=;
-        b=bfeAH6B1LbVJf0PaYH0QVxpfcP1e5zAVjTC4dnC0dMN68G2xhzmDyvfh+TOH1McHAX
-         JImxFFmzpxSwB3DIuq/LApMMhhNsBbFbMRO5AdMbwEoB2hHlin8SKisOh9LKgSxBqMw4
-         OsKn6n9zlj8N8YS6p4Dwyul9LMH8ZLgIdFgNzcrnMkSjrSgn/uomigc2f8cNgfsR+ZWQ
-         qLJW3ieVogYB4PhYxjUqGMVBy/o69QoVGEDJ+16egcRLzOM/kEW2/3UBKStsLi1VqzKU
-         Iak6EDT0VnPMwAgWtLRDHigUDiqlC8juFg4F89deMc+QRwode51pbFvq2d/XturwuHar
-         sciA==
+        bh=aUcOW+b/B0sVL/nrOuOnCZl8YB85FuSY2th6iPJ2wGo=;
+        b=CuKGtU1MeOjeUrKUd9/erYqfDFC8eyDWORurJ7yyd4oZugMT6PZItYtqswE5VptHBn
+         XLkgwzxJPraC/DmnZMpOirUzwQDlQLi9jwojSZBCyE1sHit4wFrRpWSY8ZDe3/cjfMOM
+         rcOuH7m/4cBJmo7itMZRtaJ60BcYWge+DrLJcidxu42Sf4bOLkuE6Z5w4N11zaz6GA2g
+         UiO1hejfMW5sFvjEwoC2DsewcEDbesIfrn+qao3CFMG8pJiCM+C9FTBqBRdXPmG6Zf0H
+         fbT9IDqr8PmkH5H2DMQQ7YxIGetCYdVtpzuDqI+qMhzrHopBwJVVyXNRO00jGQM1nA0t
+         gHDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to:content-transfer-encoding;
-        bh=vtl03A/ykFlMjaIpafXHrGiE/kbHFHRYgZ8Q49Zgwes=;
-        b=y3cASRqXSZ2X6Seksi7WYYANQRRUbUFeebnKqPoHyKaexQJe/rRMftH2r8uoy00APv
-         G5oNCmN1tiZzB9yqrw7jLggyeWV16RWNYOjfoS681NJsBGnyd8iViI44eS6R2/NmElSf
-         qEO5fOCI9mud8f5daDevKO6ndCEbHvdbHgvCmVJ2aKE8dQsnVuixxF5Qc1jNz4YldJOU
-         i9wO3UeJqUdF6dK9rL5pjiepsUjBnh9oaROnn+LRVkH2HHJ5J/HOCzQsf/vSwAp+Ox5e
-         ifYSOZSDLHv+ZupGTJnyVcKsMH/Jl7gb+O66JTkoTz6UEkF22EIa1EpOGGdk/ihfwrin
-         uHmg==
-X-Gm-Message-State: AOAM5301DUaq9ibRDmqByPDnN3oAY79edc5ba7DiN+MqMXeV5+k6ESxl
-        +Ip+nRgJS/3IOl+SIW1x3IZ8iJXIXkaTGGN68e0=
-X-Google-Smtp-Source: ABdhPJwtqVJ35AUrCKA34kzBQq0u9B0KP17LRmj9E08IhVouv92eqeJqKrxfasqJhmaBWaNjedGqCV3AdHKLigzrT4k=
-X-Received: by 2002:a05:6902:84:b0:63d:4a3d:eb5 with SMTP id
- h4-20020a056902008400b0063d4a3d0eb5mr11959887ybs.145.1649372362465; Thu, 07
- Apr 2022 15:59:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aUcOW+b/B0sVL/nrOuOnCZl8YB85FuSY2th6iPJ2wGo=;
+        b=iZ1qLNLwtyUHlxERB5cvVnwXm28xTgKShbTIfBqVFbClN/MSu511CaOdddTm4fPvJp
+         p3EESqxvaTXkiUjxtqfDQBFmi6W4Mu8PWJUTJBcIxIx96yJpfaYe05op746YvwmQxjuT
+         vF+EMB+puB5YYoITtf4Gro2myU9GzXN8IhJld6GiXEbrnQ51VnUKFCEDvMBoOJesUGR2
+         RuDD55t+zAAvUtPdBCOrV0Od6nfErquVUGJ9zHw72Wrwu3J/WoeRhg6qiVwKWbLtkOxz
+         GUB/Ygk9pj0jawx8gO8EbzHb8+bg5x3k0BJnHifN7u5zBbF/ausFectTa0aZgoFVs0pN
+         kwYg==
+X-Gm-Message-State: AOAM532WwC1i1b26UZCODVboxv+wbG0nwK6LSsz/t16k1YdXAUMrVHD2
+        S7bmpBVtoY9dTKplaqTFLE2Jx3oDWBE=
+X-Google-Smtp-Source: ABdhPJz8dG0Hjwlc40tgEmXpcS9sp9YNeQTlu2UjURsSxuayX07r852bLQtrzQ4AE80QMrjd+ZpGcA==
+X-Received: by 2002:a17:902:e84d:b0:156:bf35:6449 with SMTP id t13-20020a170902e84d00b00156bf356449mr16517980plg.26.1649375991064;
+        Thu, 07 Apr 2022 16:59:51 -0700 (PDT)
+Received: from lvondent-mobl4.intel.com (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id bg13-20020a17090b0d8d00b001caa8f51098sm9770532pjb.9.2022.04.07.16.59.50
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Apr 2022 16:59:50 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/2] shell: Fix not being able to auto complete submenus
+Date:   Thu,  7 Apr 2022 16:59:48 -0700
+Message-Id: <20220407235949.2428708-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Sender: hinderkaryn6@gmail.com
-Received: by 2002:a05:7010:72d4:b0:23c:4456:9324 with HTTP; Thu, 7 Apr 2022
- 15:59:22 -0700 (PDT)
-From:   EVELYN SANCHEZ <evelynchez1@gmail.com>
-Date:   Thu, 7 Apr 2022 23:59:22 +0100
-X-Google-Sender-Auth: AiNsikL8woEHlq3vdNgRkBu94gg
-Message-ID: <CAK+CA-1nzoWJgwNgAak-LrYGzwEgw9P6=gShfCJ2_-sE4uAiaQ@mail.gmail.com>
-Subject: =?UTF-8?B?7JWI64WV7ZWY7IS47JqUICwgSGVsbG8gLA==?=
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-X-Spam-Status: No, score=0.0 required=5.0 tests=BAYES_20,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-6rCA7J6lIOyCrOueke2VmOuKlCDsgqzrnowsDQrri7nsi6Dqs7wg64u57Iug7J2YIOqwgOyhseyd
-gCDsmKTripgg7Ja065a76rKMIOyngOuCtOqzoCDsnojsirXri4jquYw/IOuqqOuToCDsnbwg7J6Y
-IOuQmOq4uCDrsJTrnpg/DQrrgrTqsIAg67O064K4IOydtOuplOydvOyXkOyEnCDslrjsoJwg64u1
-7J6l7J2EIOuwm+ydhCDsiJgg7J6I7Iq164uI6rmMPw0KDQpEZWFyZXN0IG9uZSwNCkhvdyBhcmUg
-eW91IGFuZCB5b3VyIGZhbWlseSBkb2luZyB0b2RheT8gaSBob3BlIGFsbCBpcyB3ZWxsIHdpdGgg
-eW91Pw0KUGxlYXNlIHdoZW4gd2lsbCBpIGdldCB5b3VyIHJlc3BvbnNlIGZyb20gdGhlIGVtYWls
-IGkgc2VudCB0byB5b3U/DQo=
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+
+submenus should be part of the list of possible auto completes just as
+other commands.
+---
+ src/shared/shell.c | 35 ++++++++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 7 deletions(-)
+
+diff --git a/src/shared/shell.c b/src/shared/shell.c
+index 7ba264b99..72232f7c0 100644
+--- a/src/shared/shell.c
++++ b/src/shared/shell.c
+@@ -139,14 +139,22 @@ static void cmd_help(int argc, char *argv[])
+ 	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
+ }
+ 
+-static const struct bt_shell_menu *find_menu(const char *name, size_t len)
++static const struct bt_shell_menu *find_menu(const char *name, size_t len,
++							int *index)
+ {
+ 	const struct queue_entry *entry;
++	int i;
+ 
+-	for (entry = queue_get_entries(data.submenus); entry;
+-						entry = entry->next) {
++	for (i = 0, entry = queue_get_entries(data.submenus); entry;
++						entry = entry->next, i++) {
+ 		struct bt_shell_menu *menu = entry->data;
+ 
++		if (index) {
++			if (i < *index)
++				continue;
++			(*index)++;
++		}
++
+ 		if (!strncmp(menu->name, name, len))
+ 			return menu;
+ 	}
+@@ -188,7 +196,7 @@ static void cmd_menu(int argc, char *argv[])
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+ 	}
+ 
+-	menu = find_menu(argv[1], strlen(argv[1]));
++	menu = find_menu(argv[1], strlen(argv[1]), NULL);
+ 	if (!menu) {
+ 		bt_shell_printf("Unable find menu with name: %s\n", argv[1]);
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+@@ -485,7 +493,7 @@ static int submenu_exec(int argc, char *argv[])
+ 	len = name - argv[0];
+ 	name[0] = '\0';
+ 
+-	submenu = find_menu(argv[0], strlen(argv[0]));
++	submenu = find_menu(argv[0], strlen(argv[0]), NULL);
+ 	if (!submenu)
+ 		return -ENOENT;
+ 
+@@ -735,7 +743,7 @@ static char *find_cmd(const char *text,
+ static char *cmd_generator(const char *text, int state)
+ {
+ 	static int index;
+-	static bool default_menu_enabled, submenu_enabled;
++	static bool default_menu_enabled, menu_enabled, submenu_enabled;
+ 	static const struct bt_shell_menu *menu;
+ 	char *cmd;
+ 
+@@ -754,9 +762,22 @@ static char *cmd_generator(const char *text, int state)
+ 			index = 0;
+ 			menu = data.menu;
+ 			default_menu_enabled = false;
++
++			if (data.main == data.menu)
++				menu_enabled = true;
+ 		}
+ 	}
+ 
++	if (menu_enabled) {
++		menu = find_menu(text, strlen(text), &index);
++		if (menu)
++			return strdup(menu->name);
++
++		index = 0;
++		menu = data.menu;
++		menu_enabled = false;
++	}
++
+ 	if (!submenu_enabled) {
+ 		cmd = find_cmd(text, menu->entries, &index);
+ 		if (cmd || menu != data.main)
+@@ -766,7 +787,7 @@ static char *cmd_generator(const char *text, int state)
+ 		if (!cmd)
+ 			return NULL;
+ 
+-		menu = find_menu(text, cmd - text);
++		menu = find_menu(text, cmd - text, NULL);
+ 		if (!menu)
+ 			return NULL;
+ 
+-- 
+2.35.1
+
