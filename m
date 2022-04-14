@@ -2,67 +2,101 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 574C25015F7
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Apr 2022 17:46:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93ADE501DBD
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Apr 2022 23:52:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229519AbiDNOqE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 14 Apr 2022 10:46:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36768 "EHLO
+        id S236666AbiDNVzM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 14 Apr 2022 17:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242465AbiDNOGW (ORCPT
+        with ESMTP id S232417AbiDNVzL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 14 Apr 2022 10:06:22 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E0E048E4D
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Apr 2022 07:00:45 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id q14so6118787ljc.12
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Apr 2022 07:00:45 -0700 (PDT)
+        Thu, 14 Apr 2022 17:55:11 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 608E566CAB
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Apr 2022 14:52:44 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id md4so6266826pjb.4
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Apr 2022 14:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=IT3baNs1cYLv1VfMNDHtjFEZoYHbdLniO99+ccrcjHo=;
-        b=jtbSOTi+FLZRYM9u6g9elrinEQLE0TzdOu6MDDQbo1a37CGLfxHG4g4WtrFcNRSkQV
-         5bNpka6mpDtSZII5ZpzDyzhkR9fWccdt3krWDHRyyWIunEWZ6bcRNv2yH6OJDGDCy7JC
-         IkX9BFrGHCvBvfEYAAOtbWsKhss0oIFZfOzwD8baQ3BqhNbfyoVci9u3roxsDwbcCndg
-         VmkzCVBQNBXsh3FIqV3nwrrQ529aF+KdKq3hROypJy45OrA4Db8agJjVomRfVNLql2Lv
-         wBJMgTI65rOEm5VyTBk6fcSpAmuTMOUh86ZUBxbdB1tq9SW0d2NwowV/7OH+GfrH+Tfr
-         5djA==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FLEXJqoNfhDcSo/m+DEeVXkRQ2EhSwqq6M+G0z4IneI=;
+        b=p2A/9a40VntJBaV1frk5lU2xqfTT5Xm48tW/SSkMwJDxRa1ZHlhKuyXHH7ZUDdHyf2
+         Xky3xiE8N3kPkUrix/KXoPP/RSyQ/omskrs2Y8lsXIvZDx1NNW4zi9hozeQWAlkpCxnr
+         rn2/x5iqBWFEMytP+4Gc+o7OuqQkYaECJIMBJyjzawGIMdYTFT7pdrKQ5+ucON3UH4Le
+         nJZQRLNqzX8oUN7Phy4d2N8fxiQhc2B3kVvv/SZ9lF6Q/zmzhCWZzTkTaIMK5l2kv8VF
+         Uy2brXiNB8v3iSVSbmQTrepnL0Bgyb2Ron4yWm67+dcMMZbrCXO16wDM6H1Dig8E0vR4
+         m/Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=IT3baNs1cYLv1VfMNDHtjFEZoYHbdLniO99+ccrcjHo=;
-        b=jnjjgCGgmM5fJp7LNbg8cf+NPA+GRlsHy/cGAtvyv0+31S69EjJrEcJnyHp7PEy3Gw
-         vzNFerHxXSHF61Ie28U79LHJenqWrok40h4q5t6aK5R5/zwQ7B7KYfPIziU0xfc4TJh7
-         8SRhrYi5ZE6x+z48tlMwpl3avXSv53wxerGtYKqrrTlZEJOgbYtjIkNk8Hs6tT7mYn/Q
-         JuXPiXHCc6N4vLLt+xOzFT44XCoOUnEclOwyh+nri6IqrkuhMlbYQaOpOMe4e1dx2XFB
-         2ASO6Gi2S4HLeGbnuBMeM2i6HXohNBZvIhG2dz8HAuDz2+gS9T37KtRvFYVNlTPgiMoH
-         xY4g==
-X-Gm-Message-State: AOAM530UZ/ghMvtZxHjw2y8/ej6Utf528Duc9eO2lL44bLikqH+45dDe
-        BAJyU1lbziLw9hrsU7Ce051KQGsvLDppNr3xtKw=
-X-Google-Smtp-Source: ABdhPJxpItqo+37cE4AMSygohF3Nrku8cbRYiWDvjWana+xOUAbxdHv13VEfSPZVj4q7dftvyCQJY02DvdutcMoWvOk=
-X-Received: by 2002:a2e:b8c2:0:b0:24b:6b07:fafd with SMTP id
- s2-20020a2eb8c2000000b0024b6b07fafdmr1741268ljp.207.1649944843461; Thu, 14
- Apr 2022 07:00:43 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FLEXJqoNfhDcSo/m+DEeVXkRQ2EhSwqq6M+G0z4IneI=;
+        b=ztBnS96qMEFmIZvviU8sZOX2oWR6VazwT/TbGTYpP4EgmnQoal6SIHag6MPp1/t2Ee
+         8E2Qo4sDxiGawQ/Jxc6bKRtWkqhuTzLny90oO3Dqog1FfdAWLSeOZXzXD6wFteGU44J4
+         N4a4h8YsbaITD80vmBdTKVODx6Lc0s6k/LrsY6RL481Jm+4ZGpzhDW6aM1H+ntY8bkY6
+         EookofYiIcYPoYikGkWcMwasqnksECY/u1NZ10W19fBMaHClTEaon4pRKdjyxGvCWEB1
+         PGf2qR0/sfYxgkqCL6kOrii5yngjgpCUrQpSnZP9gTfDoNgOCEa3awJd3ftB/1mU3lOL
+         1fjw==
+X-Gm-Message-State: AOAM533U+72xClFcRL3d/Uu6ujfDByR5HsDtQu/ipUidYnmmtP9ikeCC
+        OfufFY5RrpjeDa0RcA+q1NDi9gtG2a8=
+X-Google-Smtp-Source: ABdhPJx6iHBveccU8KcSpWIwn9ciJmN+g7rAuqmB1myntdQHDDhdw4fGppUxkLt8GuR2w1A3F+2h6A==
+X-Received: by 2002:a17:90b:4b0e:b0:1c6:f499:1cc9 with SMTP id lx14-20020a17090b4b0e00b001c6f4991cc9mr635209pjb.133.1649973163357;
+        Thu, 14 Apr 2022 14:52:43 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id bm27-20020a656e9b000000b0039e5d327f78sm2787903pgb.44.2022.04.14.14.52.42
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Apr 2022 14:52:43 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ] build: Fix bluetooth.service
+Date:   Thu, 14 Apr 2022 14:52:42 -0700
+Message-Id: <20220414215242.554396-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Received: by 2002:a05:6504:144f:0:0:0:0 with HTTP; Thu, 14 Apr 2022 07:00:42
- -0700 (PDT)
-From:   rymond chan <graceel047@gmail.com>
-Date:   Thu, 14 Apr 2022 07:00:42 -0700
-Message-ID: <CAOTqtT5kQwjpy_+YZ5aNjwHACc02F3NHEwhPTztMODNG=4+Mqg@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=2.5 required=5.0 tests=BAYES_40,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,LOTS_OF_MONEY,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_MONEY autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: **
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+
+This fixes bluetooth.service failing to start if statedir has not been
+created yet:
+
+bluetooth.service: Failed to set up mount namespacing:
+/run/systemd/unit-root/var/lib/bluetooth: No such file or directory
+
+It also removes ReadOnlyPaths since ProtectSystem=full already mounts
+the entire filesystem as read-only.
+
+Fixes: https://github.com/bluez/bluez/issues/329
+---
+ src/bluetooth.service.in | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/bluetooth.service.in b/src/bluetooth.service.in
+index f18801866..12adad34f 100644
+--- a/src/bluetooth.service.in
++++ b/src/bluetooth.service.in
+@@ -19,8 +19,7 @@ ProtectSystem=full
+ PrivateTmp=true
+ ProtectKernelTunables=true
+ ProtectControlGroups=true
+-ReadWritePaths=@statedir@
+-ReadOnlyPaths=@confdir@
++ReadWritePaths=-@statedir@
+ 
+ # Execute Mappings
+ MemoryDenyWriteExecute=true
 -- 
-a business proposal worth $47.1M USD for you.
+2.35.1
+
