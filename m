@@ -2,91 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A728F500409
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Apr 2022 04:12:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 574C25015F7
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Apr 2022 17:46:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239600AbiDNCOw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 13 Apr 2022 22:14:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58034 "EHLO
+        id S229519AbiDNOqE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 14 Apr 2022 10:46:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229821AbiDNCOu (ORCPT
+        with ESMTP id S242465AbiDNOGW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 13 Apr 2022 22:14:50 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C54515B5
-        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Apr 2022 19:12:28 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9D84DB827DB
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Apr 2022 02:12:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0A887C385A6
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Apr 2022 02:12:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649902345;
-        bh=jo7dvZQJAclIU9n2dMBaMHWPleErI+m+wNbYXI29lCw=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=gpBUFIllMJnkM+vVJ43tGcDLZ1Yk8Ki6aYCDP8w6kGZIrCCYCHRali5p9jf1XJ4+M
-         g7mdaFICkns1lL3jsz0U/3Fb3DpVE3NRtr/W3NfCgTqS5CgLobe3jAXLHyXvl+BCJg
-         XD1KquDalnIk4UUz0R4P2t5OFsn3pF6Bi4mqJ6/kYwwXAtGCvWcCWUlGV/CP8KdIe0
-         eEUrnBDn2yFV8CRSBnk1QeuWjIPsiC01GuQZwTBt0EEgkmrZSKg1hQizH1LdvuDOx+
-         x44ZIP3BLuyjlTYgpL4srHtitsYXL/KXUr0oHxBom/Wbhv5WLA2B1iiCeQRfgpAqxw
-         yMXn/EohQOxPA==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id DB9A1C05FCE; Thu, 14 Apr 2022 02:12:24 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 214863] Intel AX200 "Bluetooth: hci0: failed to restart LE
- scan: status 31"
-Date:   Thu, 14 Apr 2022 02:12:24 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: kai.heng.feng@canonical.com
-X-Bugzilla-Status: RESOLVED
-X-Bugzilla-Resolution: WILL_NOT_FIX
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: bug_status resolution
-Message-ID: <bug-214863-62941-rJ9m2SjJDW@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-214863-62941@https.bugzilla.kernel.org/>
-References: <bug-214863-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Thu, 14 Apr 2022 10:06:22 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E0E048E4D
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Apr 2022 07:00:45 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id q14so6118787ljc.12
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Apr 2022 07:00:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=IT3baNs1cYLv1VfMNDHtjFEZoYHbdLniO99+ccrcjHo=;
+        b=jtbSOTi+FLZRYM9u6g9elrinEQLE0TzdOu6MDDQbo1a37CGLfxHG4g4WtrFcNRSkQV
+         5bNpka6mpDtSZII5ZpzDyzhkR9fWccdt3krWDHRyyWIunEWZ6bcRNv2yH6OJDGDCy7JC
+         IkX9BFrGHCvBvfEYAAOtbWsKhss0oIFZfOzwD8baQ3BqhNbfyoVci9u3roxsDwbcCndg
+         VmkzCVBQNBXsh3FIqV3nwrrQ529aF+KdKq3hROypJy45OrA4Db8agJjVomRfVNLql2Lv
+         wBJMgTI65rOEm5VyTBk6fcSpAmuTMOUh86ZUBxbdB1tq9SW0d2NwowV/7OH+GfrH+Tfr
+         5djA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=IT3baNs1cYLv1VfMNDHtjFEZoYHbdLniO99+ccrcjHo=;
+        b=jnjjgCGgmM5fJp7LNbg8cf+NPA+GRlsHy/cGAtvyv0+31S69EjJrEcJnyHp7PEy3Gw
+         vzNFerHxXSHF61Ie28U79LHJenqWrok40h4q5t6aK5R5/zwQ7B7KYfPIziU0xfc4TJh7
+         8SRhrYi5ZE6x+z48tlMwpl3avXSv53wxerGtYKqrrTlZEJOgbYtjIkNk8Hs6tT7mYn/Q
+         JuXPiXHCc6N4vLLt+xOzFT44XCoOUnEclOwyh+nri6IqrkuhMlbYQaOpOMe4e1dx2XFB
+         2ASO6Gi2S4HLeGbnuBMeM2i6HXohNBZvIhG2dz8HAuDz2+gS9T37KtRvFYVNlTPgiMoH
+         xY4g==
+X-Gm-Message-State: AOAM530UZ/ghMvtZxHjw2y8/ej6Utf528Duc9eO2lL44bLikqH+45dDe
+        BAJyU1lbziLw9hrsU7Ce051KQGsvLDppNr3xtKw=
+X-Google-Smtp-Source: ABdhPJxpItqo+37cE4AMSygohF3Nrku8cbRYiWDvjWana+xOUAbxdHv13VEfSPZVj4q7dftvyCQJY02DvdutcMoWvOk=
+X-Received: by 2002:a2e:b8c2:0:b0:24b:6b07:fafd with SMTP id
+ s2-20020a2eb8c2000000b0024b6b07fafdmr1741268ljp.207.1649944843461; Thu, 14
+ Apr 2022 07:00:43 -0700 (PDT)
 MIME-Version: 1.0
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: by 2002:a05:6504:144f:0:0:0:0 with HTTP; Thu, 14 Apr 2022 07:00:42
+ -0700 (PDT)
+From:   rymond chan <graceel047@gmail.com>
+Date:   Thu, 14 Apr 2022 07:00:42 -0700
+Message-ID: <CAOTqtT5kQwjpy_+YZ5aNjwHACc02F3NHEwhPTztMODNG=4+Mqg@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=2.5 required=5.0 tests=BAYES_40,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,LOTS_OF_MONEY,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_MONEY autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D214863
-
-Kai-Heng Feng (kai.heng.feng@canonical.com) changed:
-
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-             Status|NEW                         |RESOLVED
-         Resolution|---                         |WILL_NOT_FIX
-
---- Comment #3 from Kai-Heng Feng (kai.heng.feng@canonical.com) ---
-With latest kernel/firmware, the error still shows but Bluetooth seems to
-continue to work.
-
---=20
-You may reply to this email to add a comment.
-
-You are receiving this mail because:
-You are the assignee for the bug.=
+-- 
+a business proposal worth $47.1M USD for you.
