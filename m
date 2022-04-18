@@ -2,107 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9F215034C3
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 16 Apr 2022 09:49:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB2B3504BB0
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 18 Apr 2022 06:27:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230142AbiDPHwA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 16 Apr 2022 03:52:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43244 "EHLO
+        id S236476AbiDRE3Y (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 18 Apr 2022 00:29:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230136AbiDPHv7 (ORCPT
+        with ESMTP id S233504AbiDRE3W (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 16 Apr 2022 03:51:59 -0400
-Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927A3FFF7C
-        for <linux-bluetooth@vger.kernel.org>; Sat, 16 Apr 2022 00:49:27 -0700 (PDT)
-Received: by mail-il1-x142.google.com with SMTP id d3so5888098ilr.10
-        for <linux-bluetooth@vger.kernel.org>; Sat, 16 Apr 2022 00:49:27 -0700 (PDT)
+        Mon, 18 Apr 2022 00:29:22 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2042DF7E
+        for <linux-bluetooth@vger.kernel.org>; Sun, 17 Apr 2022 21:26:44 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id q1-20020a17090a2dc100b001cba43e127dso8358893pjm.9
+        for <linux-bluetooth@vger.kernel.org>; Sun, 17 Apr 2022 21:26:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=KeMi8W+p20zdR41YZoRj2EapY7imNsLYkAgQIQsIzqY=;
-        b=bJd2DIgtyK+bZCVQpMa9XLiI7bVnFQgVFeGzbZ6bXamjrEFIUCNaIDR9YpvR5iTRQC
-         EoRjHn2hxdGgHpTmUXoJLhLdkz8kw8CpdMkf+RjOM2yxgJf0M2w5tnzpw0NiczM9cGQm
-         aTRY2J48j2+AVBVM6ZplapTERLwB7sqpQHn0KTPy+GATyEE1HlWbU25nZewZyTln9PiO
-         eb2iuPe3VcoLkYjZ6tmC44EeIcF1BzRiek/y+/+gg720T1wEvd/5m2iOgdTIUS3isI5Z
-         q2z1OdX/gYACU6OexrbNcXzEKBC+MKUq0Bm7V68HpmeyS3D5tFhEEP1iOfnkPKJo7x6w
-         XtNg==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=jCNva7Rl42FAZBxwEKnKxvp1RzSj6SsCkhgIxDwxIzk=;
+        b=WxewwsbP3hiqEba3NsFv721LuAzKiAyvqvfQfLgkNyc+Iz3VI1c/MnXpwkjX0AVa3T
+         R04syX8CzVpdQxqU6jdQ28gjbQ1vys+o7MjnLRvoHfvMopJS/GEK411nNKhSP0qK/lZ+
+         zh9vPHorOKqQ72fgvL4hmGq94qtEFz63rJMcGXkpWw/+7nhn5mAfGjAbC1wBDPYWhQHo
+         ZRqai7UGG5tayYe8djtZmR/w2Bxdv1RtqzvmsPrDNO0o9i+oPd9HGJbXnITecA+ND4SX
+         LPJYSoV2kKochxmTpxrW0mWrH7ZO70A+3ixRJaWjoImh9pmyj0p9TPQh34FCI2wsJl2g
+         +otg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=KeMi8W+p20zdR41YZoRj2EapY7imNsLYkAgQIQsIzqY=;
-        b=mNxUxchp0tB9oIzA6cUxvHnIW0MChRLCiqO8kgOwwSOD8XBw1AuSA7jT84+H/s2Ou6
-         XfVzCr1KFK4t1ihI2bGV49D8M5g7cwoCZvloFMqE+OBEt9b7ARa5DdZuJSuSht5VBNFa
-         EroNbzBQsDxYGeCFi0B9eY6SRvGkhFEdwVSEhQAwiWk0h8qCLwUPoQ9ruA4tzb5HgxAL
-         g1soIB+cGRcxx15TGHOw5Xat/o2SoIRbiXnGdUmKTPJ99YNHoEzXu+3ccBW/vRaNns/1
-         r69QvRwM1Np9NTnaSdoh3EUHDKzeqxm3xVq305e+DxM+iYg/xmPLm1p58GKv96Q4YSO5
-         SXEA==
-X-Gm-Message-State: AOAM530blgd6qg2UXy4/BXwXQ7zPB0FWRASMFOWTs1ZnWXgpIj0FcygM
-        by+9YtPyHhYENCIgqSTyNUEO7hpRhwF30HQB88s=
-X-Google-Smtp-Source: ABdhPJzPQ782jxaaybf4v05kBQtFRTzv0MMrux20NcZ4Q10XmGrK6dnUIabFDBNBmBOv8fFyQY5zqzYAgf4Cnc3KaCc=
-X-Received: by 2002:a92:508:0:b0:2cb:ebd8:a76b with SMTP id
- q8-20020a920508000000b002cbebd8a76bmr1009500ile.156.1650095366830; Sat, 16
- Apr 2022 00:49:26 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:6638:1309:0:0:0:0 with HTTP; Sat, 16 Apr 2022 00:49:26
- -0700 (PDT)
-Reply-To: daniel.seyba@yahoo.com
-From:   Seyba Daniel <royhalton13@gmail.com>
-Date:   Sat, 16 Apr 2022 09:49:26 +0200
-Message-ID: <CALSxb2w9zQYotuLcRSCPns53ksvT9UrEMVx-1Cp1f8RE7er3cA@mail.gmail.com>
-Subject: Hello,
-To:     undisclosed-recipients:;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=jCNva7Rl42FAZBxwEKnKxvp1RzSj6SsCkhgIxDwxIzk=;
+        b=AUxn2D8k5cwC82kEy35x58FiBiWBALim2HSkHLsGfOwc+fb8hzWmz/x18I4CL3IsEB
+         U3lRcitMsl3ZSeEzDHjo5VLi8qPrwxLw4bbdaKt974g+22X0IdKEkggpvhH2lvSbRxGa
+         j+tXI7df9FiNKKc6WG4s7F+nd5JIXoKd2HJr+pYzrGOerz7n6m9KBJb4oY76s26OMcrC
+         xAHwfQg1w27CvpnRzagiVU2T8uYzAv/CmdmxtZ6s6KL5a2WvDrmRPeyvVSAvTlpobtBc
+         qEu+KmD0Kym4wbAT/0eEF5JgbBoZMzmuw8hLARYAk1A/OuNhEJkjoy2MQ5HkvccHClYH
+         qhRg==
+X-Gm-Message-State: AOAM5328iYROP4tfSW0rBI2WMC4gScImoQQFn0B7iHBZQte4gWQPsu49
+        hdEvU+fWW3R1wWsa304JWmXmVh3qE9dUWB1Aj6UUmTxObgAVRY3DSunyS1VCWV3CHwgFVPhya11
+        5z7xEK3bpLaB2gakUiM86agbz9fCr4JvfYn0wTF9PBUBHbeK/UdejRNjMuWFCofJovxVYV4uP3w
+        +p
+X-Google-Smtp-Source: ABdhPJy2LEPmlC04FzoTL4Qp//FumiHyB0b246OzZJx/ZgLmjOUAr40lXQ4Hg67GZyTiSVNpFBtEz8l2S34F
+X-Received: from jiangzp-glinux-dev.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:4c52])
+ (user=jiangzp job=sendgmr) by 2002:a17:90b:2384:b0:1cb:5223:9dc4 with SMTP id
+ mr4-20020a17090b238400b001cb52239dc4mr1128302pjb.1.1650256003648; Sun, 17 Apr
+ 2022 21:26:43 -0700 (PDT)
+Date:   Mon, 18 Apr 2022 04:26:32 +0000
+Message-Id: <20220418042635.2567170-1-jiangzp@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.36.0.rc0.470.gd361397f0d-goog
+Subject: [Bluez PATCH v1 0/2] Adding bonded flag to D-Bus property
+From:   Zhengping Jiang <jiangzp@google.com>
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Cc:     chromeos-bluetooth-upstreaming@chromium.org,
+        Zhengping Jiang <jiangzp@google.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:142 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [royhalton13[at]gmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [royhalton13[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+Currently BlueZ client can't know easily whether a device is bonded or
+not. This is causing issues for a number of applications. For example,
+in the Nearby Share case, the peer device is paired, but not bonded.
+This series will add the "Bonded" property in org.bluez.Device1 D-Bus
+interface. Changes are also made in bluetoothctl to show the status of
+the bonded flag as well as a list of bonded devices.
 
-I am so sorry contacting you in this means especially when we have never
-met before. I urgently seek your service to represent me in investing in
-your region / country and you will be rewarded for your service without
-affecting your present job with very little time invested in it.
+Changes in v1:
+- Add "Bonded" to D-Bus interface
+- Send property changed signal if the bonded flag is changed
+- Show the status of the "Bonded" flag in bluetoothctl
+- Add option to show list of bonded devices
 
-My interest is in buying real estate, private schools or companies with
-potentials for rapid growth in long terms.
+Zhengping Jiang (2):
+  device: Add "Bonded" flag to dbus property
+  client: Add bonded-devices and show Bonded flag in info
 
-So please confirm interest by responding back.
+ client/main.c      | 29 +++++++++++++++++++++++++++++
+ doc/device-api.txt |  4 ++++
+ src/device.c       | 38 +++++++++++++++++++++++++++++++++-----
+ 3 files changed, 66 insertions(+), 5 deletions(-)
 
-My dearest regards
+-- 
+2.36.0.rc0.470.gd361397f0d-goog
 
-Seyba Daniel
