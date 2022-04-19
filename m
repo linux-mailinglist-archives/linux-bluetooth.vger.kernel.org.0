@@ -2,87 +2,213 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA026506065
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 19 Apr 2022 02:00:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCB775060F1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 19 Apr 2022 02:26:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236284AbiDSADA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 18 Apr 2022 20:03:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44752 "EHLO
+        id S240647AbiDSA3G (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 18 Apr 2022 20:29:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236087AbiDSAC4 (ORCPT
+        with ESMTP id S230451AbiDSA2s (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 18 Apr 2022 20:02:56 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E4C4E0AC
-        for <linux-bluetooth@vger.kernel.org>; Mon, 18 Apr 2022 17:00:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id D2995CE126F
-        for <linux-bluetooth@vger.kernel.org>; Tue, 19 Apr 2022 00:00:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2B35BC385A8;
-        Tue, 19 Apr 2022 00:00:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650326412;
-        bh=9XeImoCq0Gf+ScolKuTu/Tz7aKA/wZabQZ0fz3YdEmk=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Nf0Tk7A9XJtOP0Gj7ZqI9SW4tHO84Y5U2O4eN4VFi0U/Je3JYYonuTb+eeU14ENQI
-         c6toLujqJI6BF/pEGL291OPDQpPxD5sf8NjMxYt07cR16TtLkOyVXkkEk0VUKoi+R6
-         /6RoBLwngJAZIjjIFF/8pWX5TFVTasrZO70kou47uuL5iG687xt2BFPwpRD4ZwYl92
-         x6MvD8wNcyRgm5GNCqX1ihVEk+7kiI2NsSyJohSt6xp5Mp7WiTvXm1aK7QBmx3+R4r
-         lLPUrU6WoYqGLbTzKaWedSpq55PIKr2LMTB0V09XyiJcZ7u3IuVgpvRcEeprjnN0tT
-         LrsUq7S01aDig==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0D8DBF0383D;
-        Tue, 19 Apr 2022 00:00:12 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 BlueZ 1/3] storage: Add support for STATE_DIRECTORY
- environment variable
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165032641205.24068.15560750776902412548.git-patchwork-notify@kernel.org>
-Date:   Tue, 19 Apr 2022 00:00:12 +0000
-References: <20220415223049.1155838-1-luiz.dentz@gmail.com>
-In-Reply-To: <20220415223049.1155838-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 18 Apr 2022 20:28:48 -0400
+Received: from out-27.smtp.github.com (out-27.smtp.github.com [192.30.252.210])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6562237DB
+        for <linux-bluetooth@vger.kernel.org>; Mon, 18 Apr 2022 17:26:04 -0700 (PDT)
+Received: from github.com (hubbernetes-node-daebbff.ash1-iad.github.net [10.56.14.93])
+        by smtp.github.com (Postfix) with ESMTPA id 00766901574
+        for <linux-bluetooth@vger.kernel.org>; Mon, 18 Apr 2022 17:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2014; t=1650327964;
+        bh=24KWCKETl264csMMBX6fZT+Q9d4SwUVNiUidXt5V6Wk=;
+        h=Date:From:To:Subject:From;
+        b=UqhixoMpjLMRUOwc4nsWMArUIu0rhXwNsOg0WwzlDVd8w8mLdniblW1/gwDSoPI7K
+         X0XiQSQlUWWdF03TIhcweee2TKzRKCjwusLkBt3ub9a8z4A+zr2IWXc8sAKViCu1qN
+         m1dY6RRzmtvNFkTvN4ylAHOWEYYKLt7pVjJ0FcbI=
+Date:   Mon, 18 Apr 2022 17:26:03 -0700
+From:   Luiz Augusto von Dentz <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/036024-b2db8f@github.com>
+Subject: [bluez/bluez] 46f171: client/player: Add endpoint menu
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 46f171a86c17d7e36ac7f334fd94fe55793def4a
+      https://github.com/bluez/bluez/commit/46f171a86c17d7e36ac7f334fd94fe55793def4a
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-14 (Thu, 14 Apr 2022)
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M client/player.c
 
-On Fri, 15 Apr 2022 15:30:47 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> When running as a systemd service the STATE_DIRECTORY environment
-> variable maybe set:
-> 
-> https://www.freedesktop.org/software/systemd/man/systemd.exec.html
-> 
-> [...]
+  Log Message:
+  -----------
+  client/player: Add endpoint menu
 
-Here is the summary with links:
-  - [v2,BlueZ,1/3] storage: Add support for STATE_DIRECTORY environment variable
-    (no matching commit)
-  - [v2,BlueZ,2/3] main: Add support for CONFIGURATION_DIRECTORY environment variable
-    (no matching commit)
-  - [v2,BlueZ,3/3] build: Make use of StateDirectory and ConfigurationDirectory
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=0905a06410d4
+This adds endpoint menu:
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+[bluetooth]# menu endpoint
+Menu endpoint:
+Available commands:
+-------------------
+list [local]                                      List available endpoints
+show <endpoint>                                   Endpoint information
+register <UUID> <codec> [capabilities...]         Register Endpoint
+unregister <UUID/object>                          Register Endpoint
+config <endpoint> <local endpoint> [preset]       Configure Endpoint
+presets <UUID> [default]                          List available presets
 
 
+  Commit: 777bc7c3f50c769ef1133e5bd598f300a060d3f5
+      https://github.com/bluez/bluez/commit/777bc7c3f50c769ef1133e5bd598f300a060d3f5
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-14 (Thu, 14 Apr 2022)
+
+  Changed paths:
+    M client/player.c
+
+  Log Message:
+  -----------
+  client/player: Add transport menu
+
+This adds transport menu:
+
+[bluetooth]# menu transport
+Menu transport:
+Available commands:
+-------------------
+list                                              List available transports
+show <transport>                                  Transport information
+acquire <transport>                               Acquire Transport
+release <transport>                               Release Transport
+send <filename>                                   Send contents of a file
+
+
+  Commit: 180cf09933b2d8eb03972c8638063429fe5fece5
+      https://github.com/bluez/bluez/commit/180cf09933b2d8eb03972c8638063429fe5fece5
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-14 (Thu, 14 Apr 2022)
+
+  Changed paths:
+    M plugins/policy.c
+    M src/main.conf
+
+  Log Message:
+  -----------
+  policy: Change AutoEnable default to true
+
+This changes the default of AutoEnable to true so controllers are power
+up by default.
+
+Fixes: https://github.com/bluez/bluez/issues/328
+
+
+  Commit: 5fb27418e7decc30000f57f2f7911dd25c24cb59
+      https://github.com/bluez/bluez/commit/5fb27418e7decc30000f57f2f7911dd25c24cb59
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-18 (Mon, 18 Apr 2022)
+
+  Changed paths:
+    M profiles/audio/a2dp.c
+    M src/adapter.c
+    M src/device.c
+    M src/storage.c
+    M src/textfile.c
+    M src/textfile.h
+
+  Log Message:
+  -----------
+  storage: Add support for STATE_DIRECTORY environment variable
+
+When running as a systemd service the STATE_DIRECTORY environment
+variable maybe set:
+
+https://www.freedesktop.org/software/systemd/man/systemd.exec.html
+
+
+  Commit: 385e8d649e062e3b265b0970fa5e15107084cd2e
+      https://github.com/bluez/bluez/commit/385e8d649e062e3b265b0970fa5e15107084cd2e
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-18 (Mon, 18 Apr 2022)
+
+  Changed paths:
+    M src/main.c
+
+  Log Message:
+  -----------
+  main: Add support for CONFIGURATION_DIRECTORY environment variable
+
+When running as a systemd service the CONFIGURATION_DIRECTORY
+environment variable maybe set:
+
+https://www.freedesktop.org/software/systemd/man/systemd.exec.html
+
+
+  Commit: 0905a06410d4a5189f0be81e25eb3c3e8a2199c5
+      https://github.com/bluez/bluez/commit/0905a06410d4a5189f0be81e25eb3c3e8a2199c5
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-18 (Mon, 18 Apr 2022)
+
+  Changed paths:
+    M src/bluetooth.service.in
+
+  Log Message:
+  -----------
+  build: Make use of StateDirectory and ConfigurationDirectory
+
+This makes use of StateDirectory[1] and ConfigurationDirectory[1] to
+inform systemd what those paths are used for instead of using
+ReadWritePaths and ReadOnlyPaths which can lead to issues.
+
+Fixes: https://github.com/bluez/bluez/issues/329
+
+[1] https://www.freedesktop.org/software/systemd/man/systemd.exec.html
+
+
+  Commit: fb4997fb09fa8fce83ba3b41c7aebec45e789b1f
+      https://github.com/bluez/bluez/commit/fb4997fb09fa8fce83ba3b41c7aebec45e789b1f
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-18 (Mon, 18 Apr 2022)
+
+  Changed paths:
+    M tools/test-runner.c
+
+  Log Message:
+  -----------
+  test-runner: Add dedicated option to start D-Bus
+
+This adds a dedicated option to start D-Bus alone which can be useful
+when testing the bluetoothd with the likes of valgrind.
+
+
+  Commit: b2db8f0e3a69872c4f10d18d70af260abaebdd57
+      https://github.com/bluez/bluez/commit/b2db8f0e3a69872c4f10d18d70af260abaebdd57
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-04-18 (Mon, 18 Apr 2022)
+
+  Changed paths:
+    M client/player.c
+
+  Log Message:
+  -----------
+  client/player: Fix use of unsupported config_qos
+
+QoS is not yet supported by bluetoothd so remove them.
+
+
+Compare: https://github.com/bluez/bluez/compare/03602479bd7b...b2db8f0e3a69
