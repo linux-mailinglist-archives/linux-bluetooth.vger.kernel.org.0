@@ -2,36 +2,38 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDB6550B2C9
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Apr 2022 10:21:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0FEB50B3F6
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Apr 2022 11:23:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1445013AbiDVIYW convert rfc822-to-8bit (ORCPT
+        id S1445908AbiDVJ0s convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 22 Apr 2022 04:24:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59190 "EHLO
+        Fri, 22 Apr 2022 05:26:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1445206AbiDVIYN (ORCPT
+        with ESMTP id S1377251AbiDVJ0q (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 22 Apr 2022 04:24:13 -0400
+        Fri, 22 Apr 2022 05:26:46 -0400
 Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 39BD052E4C
-        for <linux-bluetooth@vger.kernel.org>; Fri, 22 Apr 2022 01:21:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A7B4F27CE0;
+        Fri, 22 Apr 2022 02:23:53 -0700 (PDT)
 Received: from smtpclient.apple (p4fefc32f.dip0.t-ipconnect.de [79.239.195.47])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 614E1CECD3;
-        Fri, 22 Apr 2022 10:21:19 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id C11D8CECD2;
+        Fri, 22 Apr 2022 11:16:04 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Subject: Re: [PATCH v2 1/3] Bluetooth: hci_event: Fix checking for invalid
- handle on error status
+Subject: Re: [PATCH v2] Bluetooth: btusb: add support for Qualcomm WCN785x
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20220421214607.3326277-1-luiz.dentz@gmail.com>
-Date:   Fri, 22 Apr 2022 10:21:18 +0200
-Cc:     linux-bluetooth@vger.kernel.org
+In-Reply-To: <1650017516-28912-1-git-send-email-quic_zijuhu@quicinc.com>
+Date:   Fri, 22 Apr 2022 11:16:04 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
 Content-Transfer-Encoding: 8BIT
-Message-Id: <02890F1F-1C5A-44AF-8C0E-D7412193C642@holtmann.org>
-References: <20220421214607.3326277-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Message-Id: <7EF2E4E4-2DC5-450C-8840-314B9D210521@holtmann.org>
+References: <1650017516-28912-1-git-send-email-quic_zijuhu@quicinc.com>
+To:     Zijun Hu <quic_zijuhu@quicinc.com>
 X-Mailer: Apple Mail (2.3696.80.82.1.1)
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -41,172 +43,87 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Luiz,
+Hi Zijun,
 
-> Commit d5ebaa7c5f6f6 introduces checks for handle range
-> (e.g HCI_CONN_HANDLE_MAX) but controllers like Intel AX200 don't seem
-> to respect the valid range int case of error status:
+> Qualcomm WCN785x has PID/VID 0cf3/e700 as shown by
+> /sys/kernel/debug/usb/devices:
 > 
->> HCI Event: Connect Complete (0x03) plen 11
->        Status: Page Timeout (0x04)
->        Handle: 65535
->        Address: 94:DB:56:XX:XX:XX (Sony Home Entertainment&
-> 	Sound Products Inc)
->        Link type: ACL (0x01)
->        Encryption: Disabled (0x00)
-> [1644965.827560] Bluetooth: hci0: Ignoring HCI_Connection_Complete for
-> invalid handle
+> T:  Bus=02 Lev=02 Prnt=02 Port=01 Cnt=02 Dev#=  8 Spd=12   MxCh= 0
+> D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+> P:  Vendor=0cf3 ProdID=e700 Rev= 0.01
+> C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+> E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+> E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+> I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
 > 
-> Because of it is impossible to cleanup the connections properly since
-> the stack would attempt to cancel the connection which is no longer in
-> progress causing the following trace:
-> 
-> < HCI Command: Create Connection Cancel (0x01|0x0008) plen 6
->        Address: 94:DB:56:XX:XX:XX (Sony Home Entertainment&
-> 	Sound Products Inc)
-> = bluetoothd: src/profile.c:record_cb() Unable to get Hands-Free Voice
-> 	gateway SDP record: Connection timed out
->> HCI Event: Command Complete (0x0e) plen 10
->      Create Connection Cancel (0x01|0x0008) ncmd 1
->        Status: Unknown Connection Identifier (0x02)
->        Address: 94:DB:56:XX:XX:XX (Sony Home Entertainment&
-> 	Sound Products Inc)
-> < HCI Command: Create Connection Cancel (0x01|0x0008) plen 6
->        Address: 94:DB:56:XX:XX:XX (Sony Home Entertainment&
-> 	Sound Products Inc)
-> 
-> Fixes: d5ebaa7c5f6f6 ("Bluetooth: hci_event: Ignore multiple conn complete events")
-> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
 > ---
-> v2: Check if handle is valid just before assigning it to hci_conn object and
-> in case it is invalid reset the status to HCI_ERROR_INVALID_PARAMETERS(0x12)
-> so it can be passed to the likes of hci_connect_cfm and then is translated to
-> EINVAL by bt_to_errno.
-> v3: Rebase changes.
+> drivers/bluetooth/btusb.c | 10 ++++++++--
+> 1 file changed, 8 insertions(+), 2 deletions(-)
 > 
-> include/net/bluetooth/hci.h |  1 +
-> net/bluetooth/hci_event.c   | 45 ++++++++++++++++++++-----------------
-> 2 files changed, 26 insertions(+), 20 deletions(-)
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 06a854a2507e..67a6a84a6f61 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -317,6 +317,11 @@ static const struct usb_device_id blacklist_table[] = {
+> 						     BTUSB_WIDEBAND_SPEECH |
+> 						     BTUSB_VALID_LE_STATES },
 > 
-> diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-> index 8bb81ea4d286..62a9bb022aed 100644
-> --- a/include/net/bluetooth/hci.h
-> +++ b/include/net/bluetooth/hci.h
-> @@ -587,6 +587,7 @@ enum {
-> #define HCI_ERROR_CONNECTION_TIMEOUT	0x08
-> #define HCI_ERROR_REJ_LIMITED_RESOURCES	0x0d
-> #define HCI_ERROR_REJ_BAD_ADDR		0x0f
-> +#define HCI_ERROR_INVALID_PARAMETERS	0x12
-> #define HCI_ERROR_REMOTE_USER_TERM	0x13
-> #define HCI_ERROR_REMOTE_LOW_RESOURCES	0x14
-> #define HCI_ERROR_REMOTE_POWER_OFF	0x15
-> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-> index abaabfae19cc..9feef7dbde3d 100644
-> --- a/net/bluetooth/hci_event.c
-> +++ b/net/bluetooth/hci_event.c
-> @@ -3068,11 +3068,6 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, void *data,
-> 	struct hci_ev_conn_complete *ev = data;
-> 	struct hci_conn *conn;
-> 
-> -	if (__le16_to_cpu(ev->handle) > HCI_CONN_HANDLE_MAX) {
-> -		bt_dev_err(hdev, "Ignoring HCI_Connection_Complete for invalid handle");
-> -		return;
-> -	}
-> -
-> 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
-> 
-> 	hci_dev_lock(hdev);
-> @@ -3124,6 +3119,12 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, void *data,
-> 
-> 	if (!ev->status) {
-> 		conn->handle = __le16_to_cpu(ev->handle);
-> +		if (conn->handle > HCI_CONN_HANDLE_MAX) {
-> +			bt_dev_err(hdev, "Invalid handle: 0x%4.4x > 0x%4.4x",
-> +				   conn->handle, HCI_CONN_HANDLE_MAX);
-> +			ev->status = HCI_ERROR_INVALID_PARAMETERS;
-
-it is not a good idea to overwrite ev. We should have a separate status variable. Remember that we have ev = data and I think it is a mistake that it is not const void *data in the first place.
-
-> +			goto done;
-> +		}
-> 
-> 		if (conn->type == ACL_LINK) {
-> 			conn->state = BT_CONFIG;
-> @@ -3164,17 +3165,17 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, void *data,
-> 			hci_send_cmd(hdev, HCI_OP_CHANGE_CONN_PTYPE, sizeof(cp),
-> 				     &cp);
-> 		}
-> -	} else {
-> -		conn->state = BT_CLOSED;
-> -		if (conn->type == ACL_LINK)
-> -			mgmt_connect_failed(hdev, &conn->dst, conn->type,
-> -					    conn->dst_type, ev->status);
-> 	}
-> 
-> 	if (conn->type == ACL_LINK)
-> 		hci_sco_setup(conn, ev->status);
-> 
-> +done:
-> 	if (ev->status) {
-> +		conn->state = BT_CLOSED;
-> +		if (conn->type == ACL_LINK)
-> +			mgmt_connect_failed(hdev, &conn->dst, conn->type,
-> +					    conn->dst_type, ev->status);
-> 		hci_connect_cfm(conn, ev->status);
-> 		hci_conn_del(conn);
-> 	} else if (ev->link_type == SCO_LINK) {
-> @@ -4690,11 +4691,6 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev, void *data,
-> 		return;
-> 	}
-> 
-> -	if (__le16_to_cpu(ev->handle) > HCI_CONN_HANDLE_MAX) {
-> -		bt_dev_err(hdev, "Ignoring HCI_Sync_Conn_Complete for invalid handle");
-> -		return;
-> -	}
-> -
-> 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
-> 
-> 	hci_dev_lock(hdev);
-> @@ -4732,6 +4728,14 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev, void *data,
-> 	switch (ev->status) {
-> 	case 0x00:
-> 		conn->handle = __le16_to_cpu(ev->handle);
-> +		if (conn->handle > HCI_CONN_HANDLE_MAX) {
-> +			bt_dev_err(hdev, "Invalid handle: 0x%4.4x > 0x%4.4x",
-> +				   conn->handle, HCI_CONN_HANDLE_MAX);
-> +			ev->status = HCI_ERROR_INVALID_PARAMETERS;
-> +			conn->state = BT_CLOSED;
-> +			break;
-> +		}
+> +	/* QCA WCN785x chipset */
+> +	{ USB_DEVICE(0x0cf3, 0xe700), .driver_info = BTUSB_QCA_WCN6855 |
+> +						     BTUSB_WIDEBAND_SPEECH |
+> +						     BTUSB_VALID_LE_STATES },
 > +
-> 		conn->state  = BT_CONNECTED;
-> 		conn->type   = ev->link_type;
+> 	/* Broadcom BCM2035 */
+> 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+> 	{ USB_DEVICE(0x0a5c, 0x200a), .driver_info = BTUSB_WRONG_SCO_MTU },
+> @@ -3037,6 +3042,7 @@ static const struct qca_device_info qca_devices_table[] = {
+> 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+> 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
+> 	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
+> +	{ 0x00190200, 40, 4, 16 }, /* WCN785x 2.0 */
+> };
 > 
-> @@ -5527,11 +5531,6 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
-> 	struct smp_irk *irk;
-> 	u8 addr_type;
+> static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+> @@ -3327,11 +3333,11 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+> 		if (err < 0)
+> 			return err;
 > 
-> -	if (handle > HCI_CONN_HANDLE_MAX) {
-> -		bt_dev_err(hdev, "Ignoring HCI_LE_Connection_Complete for invalid handle");
-> -		return;
-> -	}
-> -
-> 	hci_dev_lock(hdev);
-> 
-> 	/* All controllers implicitly stop advertising in the event of a
-> @@ -5603,6 +5602,12 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
-> 
-> 	conn->dst_type = ev_bdaddr_type(hdev, conn->dst_type, NULL);
-> 
-> +	if (handle > HCI_CONN_HANDLE_MAX) {
-> +		bt_dev_err(hdev, "Invalid handle: 0x%4.4x > 0x%4.4x", handle,
-> +			   HCI_CONN_HANDLE_MAX);
-> +		status = HCI_ERROR_INVALID_PARAMETERS;
-> +	}
-> +
-> 	if (status) {
-> 		hci_le_conn_failed(conn, status);
-> 		goto unlock;
+> -		/* WCN6855 2.1 will reset to apply firmware downloaded here, so
+> +		/* WCN6855 2.1 and later will reset to apply firmware downloaded here, so
+> 		 * wait ~100ms for reset Done then go ahead, otherwise, it maybe
+> 		 * cause potential enable failure.
+> 		 */
+> -		if (info->rom_version == 0x00130201)
+> +		if ((info->rom_version == 0x00130201) || (info->rom_version == 0x00190200))
+> 			msleep(QCA_BT_RESET_WAIT_MS);
+
+I think it is better to start using a switch statement here.
 
 Regards
 
