@@ -2,104 +2,131 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBDB850CD5D
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 23 Apr 2022 22:18:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62B7A50D74B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Apr 2022 05:01:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237001AbiDWUVk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 23 Apr 2022 16:21:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44638 "EHLO
+        id S240513AbiDYDEM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 24 Apr 2022 23:04:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236995AbiDWUVj (ORCPT
+        with ESMTP id S229577AbiDYDEK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 23 Apr 2022 16:21:39 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAFF96D391
-        for <linux-bluetooth@vger.kernel.org>; Sat, 23 Apr 2022 13:18:41 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id y32so19863377lfa.6
-        for <linux-bluetooth@vger.kernel.org>; Sat, 23 Apr 2022 13:18:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=YUD4Mq/6KcXDja+MeOmBEABeXdZtqxLuJ7zwWNeU3q8=;
-        b=OnYx0hD2abzbZra039+PGd9FNrmo0b3nVLSuf73l1EwfV9kThXpg0h+qSHmSI/PGSm
-         xCsuz7hQgYA4vW48FkvSyyHN9XGkwReif0ofc8eW/9UuRB2+BkRoWjfQ1z5Qdcelbbn9
-         Effuty+XF3ZLCARdLpIo/XKn31ZqhncdaOAfXgFG5E8u3xYaluvdu5IEOdJUUBUzog5i
-         OfUptBcaYEW6ArOAhdUfCxhzJ13Vv549PNLAH+RkSYE2tApB3UJd2JECx2/2Vw0SKo1S
-         eBQgsYjTexSflRmCc9cpMTCqU8Un7HGKKKRfrIK2DIlgrmhJfDAV3tt7/exdQPUOOYkk
-         qXFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=YUD4Mq/6KcXDja+MeOmBEABeXdZtqxLuJ7zwWNeU3q8=;
-        b=TNq3F0zZkBHDJVdco/5rAZ8Wahz32cKMRq4dsMFa4qLg2Ky/JMfOc9vq48w4XX36Z0
-         MXM3qYFO50LbQLMUKB/unGNWUxBn7mb77GCbgPS8Tl0Wk9CO/X1wtPP77dVOtJnIPur+
-         okw4NUQOEE8+T7fSbaGkDhHbvnl+N3FNEwbS8Dz+ghb9Zd3kecXq+OTQNuQ4tLkexWMZ
-         FoySY3QmBuOTTM4wCR/2YE8SZoXAuCKy20l6Xd8LP/WOT/V6S6pQH+vDHkY44G6mBLiE
-         bEwnbTug8IOa4lgwBs6AJoVZq31S7A8RQJYpS2R9hiewyXwedhX9UcFYXCP50oh5FGmF
-         qbwg==
-X-Gm-Message-State: AOAM5306i4KoED4ZWjb3M6or+Ni0Gc7RUz5FScgoDwarFq9uTP7q/ojr
-        K2AM7UgZWfE9d/PMoK3k7bA5pyETK3vSrBhDyJg=
-X-Google-Smtp-Source: ABdhPJxG7ZFr2V0lZ4EROILZBbx6imB1nf/0atrEzMXJbbNsTPmYeoCTZW7TQPVmzkGmXXbowXza9neuESwZ5ux3sh4=
-X-Received: by 2002:a05:6512:214c:b0:46b:b4d6:989f with SMTP id
- s12-20020a056512214c00b0046bb4d6989fmr7658463lfr.572.1650745120154; Sat, 23
- Apr 2022 13:18:40 -0700 (PDT)
+        Sun, 24 Apr 2022 23:04:10 -0400
+Received: from bee.birch.relay.mailchannels.net (bee.birch.relay.mailchannels.net [23.83.209.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F7B61B7BD;
+        Sun, 24 Apr 2022 20:01:06 -0700 (PDT)
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+        by relay.mailchannels.net (Postfix) with ESMTP id 6E6E2C13B4;
+        Mon, 25 Apr 2022 03:01:05 +0000 (UTC)
+Received: from pdx1-sub0-mail-a217.dreamhost.com (unknown [127.0.0.6])
+        (Authenticated sender: dreamhost)
+        by relay.mailchannels.net (Postfix) with ESMTPA id 98D18C15B2;
+        Mon, 25 Apr 2022 03:01:04 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1650855664; a=rsa-sha256;
+        cv=none;
+        b=H9YMoe/idniQ4oRp9Q6cTnJUHzUf0nEAmLqRz2/zJNVBcVjQc9fxBRsxt3XyEVjIpUykph
+        Xj2yFner+wwkb+0WOAOeg7gk9L5h4VA6J5boQEulI8eu0TA7iX8KGJKVqLnzsorqNq+rug
+        rCRG9ZbQ5eG/n2DNmBnPPUXkHY/oHAhg5LawAAUg2lYfbGNgjhQ4XvDg4pUyRR4OPzYYIn
+        Crb+SuSn7dT/pvYYF9dSiaOvLcnpv3n6ZG0lQyqVolnXSKQcm+3wVbUJ1sAc0rAcmyLgA9
+        Dr75+tGuzymOuOnyU2wnUHdjNWVoqB8TEYI4akknfAMTQO2ussSSNF1OriAoAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+        s=arc-2022; t=1650855664;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:dkim-signature;
+        bh=FnZ8llSJWkl2FqoEfQdnZQWLmuu+j68/tH7/8sZn3UY=;
+        b=TGbEm/JiTeLA8E2OINRL3m+y2CBEOvCQON2tx/bLEzyDbnXed+rFINuJto6L/S1IQ6Z68w
+        ke8TbjiObgPLkx6mLshRa4O4JSlzhREvJePtRtd8A42Ii04TjDc10tMB7+T2L0KT95Xx02
+        OXALCw0CWNkSgZ3szMyf3EzXzUP2nC/qogAgsqqusDbZiG/tYqejf+YM47chcfF247N+ug
+        d1UBtB8hWGRAulLVROZkkp8VT7QOZBAZ7xgaFQu9+PH2H7fM/vPPDbNodTb0l/65x1ObMa
+        PNvrsbbxTk1zkwz67BmxCyNwF6Oeb07cP932woFb1vhDjlbKWSzLa/Hwx2oDkA==
+ARC-Authentication-Results: i=1;
+        rspamd-6dfbdcb948-4k72z;
+        auth=pass smtp.auth=dreamhost smtp.mailfrom=ian@linux.cowan.aero
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|ian@linux.cowan.aero
+X-MailChannels-Auth-Id: dreamhost
+X-Bottle-Arch: 39d2fbac15c5e251_1650855665044_2609463641
+X-MC-Loop-Signature: 1650855665043:2074948883
+X-MC-Ingress-Time: 1650855665043
+Received: from pdx1-sub0-mail-a217.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+        by 100.116.106.102 (trex/6.7.1);
+        Mon, 25 Apr 2022 03:01:05 +0000
+Received: from localhost.localdomain (unknown [69.12.38.97])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: ian@linux.cowan.aero)
+        by pdx1-sub0-mail-a217.dreamhost.com (Postfix) with ESMTPSA id 4KmqXH3M74z2n;
+        Sun, 24 Apr 2022 20:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.cowan.aero;
+        s=dreamhost; t=1650855664;
+        bh=FnZ8llSJWkl2FqoEfQdnZQWLmuu+j68/tH7/8sZn3UY=;
+        h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
+        b=siVSzLaEaaqZT/RAhNBylm4r5vV8JuOFCeG1sURL8AdbRiCzRrK+19KSq7aL2ienI
+         3a+BxU0wc2KXC6txjBN5UmMk4ot26YrxYU4EL6oytvRs1fWsMvrB171iaHD9q+aPcA
+         +Q/IdORkxLg8eufTGAuLMx/fc875DeZ+NJswTiZtbgAG+jba5bvXl6CVZgsor1QOzt
+         SPQHNV+e6q0i2gCyQi7FTnDZ5icniPzYtPMo7c15BVZMAgPTp6NhnFiocbiMPe+Sp6
+         5y63n74rjw1vH7P3Ii8W71f6xBaRXJyF17Uzi7OVKLuQHoS7FROATvetQUueOeKyAz
+         SLU7UvPGcJlVg==
+From:   Ian Cowan <ian@linux.cowan.aero>
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Ian Cowan <ian@linux.cowan.aero>
+Subject: [PATCH] drivers: net: bluetooth: centralize function exit and print error
+Date:   Sun, 24 Apr 2022 23:00:53 -0400
+Message-Id: <20220425030053.517168-1-ian@linux.cowan.aero>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Received: by 2002:a05:6512:b1c:0:0:0:0 with HTTP; Sat, 23 Apr 2022 13:18:39
- -0700 (PDT)
-Reply-To: marianadavies68@hotmail.com
-From:   Marian Davies <kl576521@gmail.com>
-Date:   Sat, 23 Apr 2022 20:18:39 +0000
-Message-ID: <CAN2bDz=Q7CV9DOLDObzqypBdvYep4X=goe0JNoGahfhxDed6pA@mail.gmail.com>
-Subject: Hi
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=5.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:12d listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4927]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [kl576521[at]gmail.com]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [marianadavies68[at]hotmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [kl576521[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        *  3.6 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---=20
-Dobr=C3=BD Den, Drah=C3=A1....Jsem Marian jm=C3=A9nem, dostal jsi mou prvn=
-=C3=AD zpr=C3=A1vu,
-opravdu m=C3=A1m n=C4=9Bco tak p=C5=99=C3=ADjemn=C3=A9ho, abych s tebou dis=
-kutoval a douf=C3=A1m, =C5=BEe
-se brzy ozve=C5=A1
+Centralize the return for this one function, and this will add the error
+being printed if it occurs earlier in the function. The same thing will
+be returned with the logic, so the only thing that will differ is an
+extra debugging output for an error.
 
-D=C4=9Bkuji
+Signed-off-by: Ian Cowan <ian@linux.cowan.aero>
+---
+ net/bluetooth/6lowpan.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 215af9b3b589..15928e9ce088 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -516,7 +516,7 @@ static netdev_tx_t bt_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 	err = setup_header(skb, netdev, &addr, &addr_type);
+ 	if (err < 0) {
+ 		kfree_skb(skb);
+-		return NET_XMIT_DROP;
++		goto output_error_ret;
+ 	}
+ 
+ 	if (err) {
+@@ -537,6 +537,7 @@ static netdev_tx_t bt_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 
+ 	dev_kfree_skb(skb);
+ 
++output_error_ret:
+ 	if (err)
+ 		BT_DBG("ERROR: xmit failed (%d)", err);
+ 
+-- 
+2.35.1
+
