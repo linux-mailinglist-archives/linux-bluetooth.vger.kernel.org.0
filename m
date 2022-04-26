@@ -2,112 +2,115 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D59C25106AB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Apr 2022 20:20:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AA2051093C
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 26 Apr 2022 21:39:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353716AbiDZSX2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 26 Apr 2022 14:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42740 "EHLO
+        id S1354000AbiDZTmv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 26 Apr 2022 15:42:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350350AbiDZSXX (ORCPT
+        with ESMTP id S1345512AbiDZTmu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 26 Apr 2022 14:23:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79F9ABC8C;
-        Tue, 26 Apr 2022 11:20:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9F4AB6187F;
-        Tue, 26 Apr 2022 18:20:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 09B6DC385A0;
-        Tue, 26 Apr 2022 18:20:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650997212;
-        bh=pUAAbRv5wP4gWM5AuRMqHaGND3XB7Ugb5gqYlrWTp/I=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=BqU+6eblqStF3Yz7DhWeuRwbOuljqcOq9vC8dFfhpJm8ypOFiS9nbJdv/yxDIu1mz
-         LYazen/u/v2XeX6GTxUfklH+uJ6nQIIl7gqC0EIotVTXFw+L88J1W2lmnQ9kejIJi0
-         q7ZQ401HJZH939rkNmTqxLB46zyqNsgiPFKn546mF1Idl5P4ji4C6rE85UgEXDwraI
-         e8RJs9oBdexeRiBypUAAfgEhMS+BMzWkmBThzdzzXLV1zhVVI3z4x2ZZNm0NpdojP3
-         y9utFypzh/Ikwy5wrpvKUvE/AbhWCUuc2wUKLuYEXFKjwm3sQSGYffFd4dmvFL0Dj7
-         xEFlO4negZr2A==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DD0B2F67CA0;
-        Tue, 26 Apr 2022 18:20:11 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 26 Apr 2022 15:42:50 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 530D61102A3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Apr 2022 12:39:41 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id bz24so13556087qtb.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 26 Apr 2022 12:39:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=jpXvVB1Sw3L3mJ9RCaMGeO+SHPqraLUQMT+a+bRvNg0=;
+        b=gc2W47C7KqdDcM53eyQsHrHq+t8bCS/iWmIpURofxmbHoeMh/a8nn5JXWpsIqjLq9Q
+         lsE6lN3//mXDMx7vyjK31d5TZHoZf1vfGne3RsvncvPik42yx7VjzhC/l0QqIE8aRjQw
+         Lt51o+WUNwh7+lAl4qAD3sVxdqoMRYDQVaAQRd8eg65ujuKX7OKsDnn25QnrjX3ssq10
+         U+ypnVoWS3niCZg4EX/1GSqq+MVTam9TofVGIr/HjXtJhpVSoGbVYm+lohK7ZO/ji5BD
+         tn62ft+JVsziMRFUKfHan2lim3mKhsO+mwBTEyFhsjIeL0yQtuM76MmlYbxCO3uI/AOA
+         uDVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=jpXvVB1Sw3L3mJ9RCaMGeO+SHPqraLUQMT+a+bRvNg0=;
+        b=6bgpwJhd38bchLnT5pp0OFaDWozaLEIFrwbAWxjLur+7KJjSxTc82wRDhGjPtL9myH
+         g6UPAufKKPv9yDA8+pL3lEv+Q5MSFvhLLoLiYgUu6Ja3RZByHI+LxkZ53lWdMt8rrb/g
+         NvZg5nSqyY93NKfVVMoeYFi6vd8gyuyeIEZyYFLAh4DJr37SmopsvJxNUSOxZN0WdOaB
+         eBuaeC7Xr1Bh5RXANNGNZ79OLny/k8jT3FDwvs2Lwx0DqTCZS0LnALFd2Syai7sUHfBd
+         7oSyvnncTNSox7WFLPaEWMg41GmlwEOttcatu3PbWCBb5h5Pq+yHdTG0aRYKTEJRky5g
+         edsw==
+X-Gm-Message-State: AOAM532/7LEmojtBzyLV8UKzX0mP52/2EQCmdBYLYwVcVWIhf52jpius
+        TNwvBq4TbPsPQimfezhqqDtzUjimtxM=
+X-Google-Smtp-Source: ABdhPJzG2lvfIrg/oYtEmBxB1W9edKOnE7RFhecQvC1MvWiVftLbdFGkfEu5fuXxa0o6ZiyOqscQhQ==
+X-Received: by 2002:ac8:5e54:0:b0:2f1:f60d:2b3c with SMTP id i20-20020ac85e54000000b002f1f60d2b3cmr16534308qtx.667.1651001980024;
+        Tue, 26 Apr 2022 12:39:40 -0700 (PDT)
+Received: from [172.17.0.2] ([40.112.49.152])
+        by smtp.gmail.com with ESMTPSA id l13-20020a05622a050d00b002f205ba53efsm8576058qtx.25.2022.04.26.12.39.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 12:39:39 -0700 (PDT)
+Message-ID: <62684a7b.1c69fb81.8dccf.209f@mx.google.com>
+Date:   Tue, 26 Apr 2022 12:39:39 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2438250801493236288=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3] Bluetooth: btusb: add support for Qualcomm WCN785x
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165099721190.28515.14695801626807676486.git-patchwork-notify@kernel.org>
-Date:   Tue, 26 Apr 2022 18:20:11 +0000
-References: <1650898889-12470-1-git-send-email-quic_zijuhu@quicinc.com>
-In-Reply-To: <1650898889-12470-1-git-send-email-quic_zijuhu@quicinc.com>
-To:     quic_zijuhu <quic_zijuhu@quicinc.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [v2,BlueZ] client/player: Add transport.receive command
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220426180401.794718-1-luiz.dentz@gmail.com>
+References: <20220426180401.794718-1-luiz.dentz@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+--===============2438250801493236288==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Marcel Holtmann <marcel@holtmann.org>:
+This is automated email and please do not reply to this email!
 
-On Mon, 25 Apr 2022 23:01:29 +0800 you wrote:
-> Qualcomm WCN785x has PID/VID 0cf3/e700 as shown by
-> /sys/kernel/debug/usb/devices:
-> 
-> T:  Bus=02 Lev=02 Prnt=02 Port=01 Cnt=02 Dev#=  8 Spd=12   MxCh= 0
-> D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-> P:  Vendor=0cf3 ProdID=e700 Rev= 0.01
-> C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-> E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
-> 
-> [...]
+Dear submitter,
 
-Here is the summary with links:
-  - [v3] Bluetooth: btusb: add support for Qualcomm WCN785x
-    https://git.kernel.org/bluetooth/bluetooth-next/c/d42038f8db90
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=635861
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.50 seconds
+GitLint                       FAIL      1.01 seconds
+Prep - Setup ELL              PASS      42.35 seconds
+Build - Prep                  PASS      0.70 seconds
+Build - Configure             PASS      8.43 seconds
+Build - Make                  PASS      1357.65 seconds
+Make Check                    PASS      11.97 seconds
+Make Check w/Valgrind         PASS      441.40 seconds
+Make Distcheck                PASS      226.99 seconds
+Build w/ext ELL - Configure   PASS      8.58 seconds
+Build w/ext ELL - Make        PASS      1358.19 seconds
+Incremental Build with patchesPASS      0.00 seconds
+
+Details
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint with rule in .gitlint
+Output:
+[v2,BlueZ] client/player: Add transport.receive command
+9: B3 Line contains hard tab characters (\t): "	 receive [filename]"
 
 
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============2438250801493236288==--
