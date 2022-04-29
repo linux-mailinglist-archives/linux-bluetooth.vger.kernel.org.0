@@ -2,90 +2,110 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01171514E71
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 Apr 2022 16:54:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E00A51586C
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 30 Apr 2022 00:31:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377990AbiD2O5s convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 29 Apr 2022 10:57:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42466 "EHLO
+        id S239832AbiD2WeO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 29 Apr 2022 18:34:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377984AbiD2O5r (ORCPT
+        with ESMTP id S236164AbiD2WeN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 29 Apr 2022 10:57:47 -0400
-X-Greylist: delayed 242 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 29 Apr 2022 07:54:27 PDT
-Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CAB0DBE9C1;
-        Fri, 29 Apr 2022 07:54:27 -0700 (PDT)
-Received: from smtpclient.apple (p5b3d2ea3.dip0.t-ipconnect.de [91.61.46.163])
-        by mail.holtmann.org (Postfix) with ESMTPSA id B4274CED22;
-        Fri, 29 Apr 2022 16:54:26 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Subject: Re: [PATCH v1 3/3] Bluetooth: hci_qca: WAR to handle WCN6750 HW issue
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1651228073-1999-4-git-send-email-quic_bgodavar@quicinc.com>
-Date:   Fri, 29 Apr 2022 16:54:25 +0200
-Cc:     Andy Gross <agross@kernel.org>, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
-        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
-        quic_saluvala@quicinc.com, quic_rjliao@quicinc.com,
-        mcchou@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <0D3D8346-0F64-4CAF-8BED-940F189A3E97@holtmann.org>
-References: <1651228073-1999-1-git-send-email-quic_bgodavar@quicinc.com>
- <1651228073-1999-4-git-send-email-quic_bgodavar@quicinc.com>
-To:     Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 29 Apr 2022 18:34:13 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA661193F3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 29 Apr 2022 15:30:52 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id w1so16377519lfa.4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 29 Apr 2022 15:30:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=Z+pyFNU6snjMjw/FLYMKI3q/g7XbJ3oZ/ZJDrSwFDYI=;
+        b=fyC4aYbhWgJs8bsQHmEuHlJJ5F5J8WuAZdshM91UGOIZHAckYqgEMWZ+h0kozCw+xZ
+         DRbwoWIn36lPPkp64JSEisW4MMZzE+M+Hka2o/qcJgObYVIXhkJOR3KIBE+0pkftzsQ3
+         bUqOVsiDDFv1LMPr43gyADQHfvvUb0sxC/jLLwjYeTWMuioZNyKXiKzZkjoinozyZ7I2
+         Q5goKtdCw+OPdZF9K88jMtQvmLtR6HBvgd5Po7EoBkyLhChdCvmzdjSr63G1DG7hGo4h
+         EkxOuF19fU1f35v3keJV2Ry75WrQXhzVijYMBzJvHg9G9wRGo8F9BM6Dmpb8lYehk/O8
+         V+iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=Z+pyFNU6snjMjw/FLYMKI3q/g7XbJ3oZ/ZJDrSwFDYI=;
+        b=n1VsUJNna6KVHB7MhzewKV5Oj/FSDFTnoW+TJT5I24zGoKRVW4HwasnO5JxFwTT7xa
+         f/5Z4Pf3GgXBOKiZ3VLoHC9x/ppHlsMOh9KTIw0DvrzRHs+ViJMC3mXDNXKupw4dubIf
+         ViJ1VaqEIYNNvfFrqMq5G5wBhjXygUbNG356uWMU3nFgj8qJTIGqfV73juGn5xThvrpf
+         DiW3rWCRwNeJ7Ww+AzlmVmJCnO+Fd5Y1zZrJmQ/CI5uj3YRMPVYOwy06+Grb8qv8izwC
+         ub61O6VutiJSxc3iZEqejpoXShy3s4o1G8Sq4NgRurJcuhg+qUN0QH3kzrCC7o73A6O8
+         2kfA==
+X-Gm-Message-State: AOAM532OBHQIPjyW6uHRis1cWZWyZ0/1Ac8ALxsu2zzsWWK4vx5NgLxN
+        dZWm31GAcsN6i2c5RJb4bB9VH9NQa+6GCXtczyQ=
+X-Google-Smtp-Source: ABdhPJw/o5NJExs75doeTHZXhpgZ/vxt8z8k/mMsYhojNmVLD7jkJLmPU1FiuA1co2tsRYWHvFt6yXLs4vsjA4jgNqw=
+X-Received: by 2002:a19:8c13:0:b0:472:1237:c04f with SMTP id
+ o19-20020a198c13000000b004721237c04fmr998246lfd.97.1651271451248; Fri, 29 Apr
+ 2022 15:30:51 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a2e:9e0c:0:0:0:0:0 with HTTP; Fri, 29 Apr 2022 15:30:50
+ -0700 (PDT)
+Reply-To: illuminatiworld152@gmail.com
+From:   illuminati <goodengineer592@gmail.com>
+Date:   Fri, 29 Apr 2022 23:30:50 +0100
+Message-ID: <CAC3UrrnihBcrvgRFRifvcOrxRsSDAB9RMk22hFxKT+CSF3bp3Q@mail.gmail.com>
+Subject: RE
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=5.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:131 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [goodengineer592[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [goodengineer592[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [illuminatiworld152[at]gmail.com]
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  3.6 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Balakrishna,
-
-> The patch is workaround for hardware issue on WCN6750.
-> On WCN6750 sometimes observed AON power source takes 100ms
-> time to fully discharge voltage during OFF. As WCN6750 is
-> combo chip for WLAN and BT. If any of the tech area ON is
-> triggered during discharge phase, it fails to turn ON.
-> To overcome this hardware issue, During BT ON, driver check
-> for WLAN_EN pin status. If it high, it will pull BT_EN to high
-> immediately else it will wait for 100ms assuming WLAN was just
-> powered OFF and then BT_EN will be pulled to high.
-> 
-> Fixes: d8f97da1b92d2 ("Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6750")
-> Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-> Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
-> Signed-off-by: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-> ---
-> drivers/bluetooth/hci_qca.c | 30 ++++++++++++++++++++++++------
-> 1 file changed, 24 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index eab34e2..c3862d1 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -219,6 +219,7 @@ struct qca_serdev {
-> 	struct hci_uart	 serdev_hu;
-> 	struct gpio_desc *bt_en;
-> 	struct gpio_desc *sw_ctrl;
-> +	struct gpio_desc *wlan_en;
-> 	struct clk	 *susclk;
-> 	enum qca_btsoc_type btsoc_type;
-> 	struct qca_power *bt_power;
-
-I am really against these intermixing of Bluetooth and WiFi details. There is work ongoing to do some sequence power procedure. Maybe that is something you should look into. This is a mess.
-
-And again, we are still hacking around hci_qca.c instead of writing a clean serdev only driver for this hardware. I have the feeling that nobody listens to review comments these days. It is just hacking patches together to get hardware enabled somehow and then disappear.
-
-Regards
-
-Marcel
-
+--=20
+Gr=C3=BC=C3=9Fe! Willkommen in der Illuminati-Welt. Die Armen, Bed=C3=BCrft=
+igen und
+Talentierten ins Rampenlicht von Ruhm und Reichtum bringen. Holen Sie
+sich Geld, Ruhm, Macht, grenzenlosen Reichtum und Sicherheit. Erhalten
+Sie Anerkennung in Wirtschaft oder Politik. Steigen Sie bei allem, was
+Sie tun, an die Spitze und seien Sie geistig und k=C3=B6rperlich gesch=C3=
+=BCtzt!
+All dies werden Sie im Handumdrehen erreichen, wenn Sie in das GREAT
+ILLUMINATI EMPIRE eingeweiht werden, werden Sie zahlreiche Vorteile
+haben.
+Wird dieses Angebot angenommen? F=C3=BCr weitere Informationen antworten
+Sie bitte auf diese E-Mail: illuminatiworld152@gmail.com oder WhatsApp
+the Grandmaster mit +13159682193
