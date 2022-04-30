@@ -2,78 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 903BD515B3B
+	by mail.lfdr.de (Postfix) with ESMTP id D77D2515B3C
 	for <lists+linux-bluetooth@lfdr.de>; Sat, 30 Apr 2022 10:01:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382346AbiD3IEP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 30 Apr 2022 04:04:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48744 "EHLO
+        id S1382292AbiD3IEK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 30 Apr 2022 04:04:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350868AbiD3IEI (ORCPT
+        with ESMTP id S1382272AbiD3IEH (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 30 Apr 2022 04:04:08 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DC7523BD6;
-        Sat, 30 Apr 2022 01:00:44 -0700 (PDT)
+        Sat, 30 Apr 2022 04:04:07 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3C522BD4
+        for <linux-bluetooth@vger.kernel.org>; Sat, 30 Apr 2022 01:00:44 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DDE52B81CEB;
-        Sat, 30 Apr 2022 08:00:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 85970C385AA;
+        by ams.source.kernel.org (Postfix) with ESMTPS id E1AF5B81CFF
+        for <linux-bluetooth@vger.kernel.org>; Sat, 30 Apr 2022 08:00:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 93F0AC385AD;
         Sat, 30 Apr 2022 08:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1651305641;
-        bh=pe08Mdjqla3FNT96mNNuQXP8ILn0+/mHR01kJNYaDic=;
+        bh=H+14wnnzAPWXdr0C/CBPTOYLpUtXuHPlotkQKTrGrh8=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=kpvXG6gAXQ7u8p7VNWhLHi8OioRjTUEMNeyaytnu64Tlm3WDc+9G65aHyH17I6Diz
-         5jBIXhCOYaE9MWPbblLVP34glVbcEXDFadZeC1m/ozWT0DtLOuk2lY2OLQTqEZxjcv
-         UF1SUB7qrKBQNqJGV7DS+LErHbW5e24ev50IE4aqZ37tG1QD6bYzt2wRvMtP19xyET
-         kb+hm3gSIlqoDwVSbGXCbAfFHb5+Fm+WKfhA6RRKW2aw3Bc5cVLkCO390GaRHqO0JS
-         QYcBYGc+38fsaLliNEJEjp8cr1wYSjcYriu5X5/AHsphXMh14EX8ojqfJUpVrlLxY1
-         S/K+3C67aDB6Q==
+        b=PSNK1SeiqWKCx8EPjFFi0UAFtId7K1fj0iS0PBwWTxPngfH4E7iL4PHkCEntuVF93
+         6ydgwEc8RGL0ip4LFo0HCfCCKyDanzs6Kkngtuzu2c2DTKZlFDGesm3EEsPhyZ57oR
+         IxcK7WIia2dLy9qHaGpqbo3GfseMPggv/Fj6sFuyS7tDEyZEBl7k1op6j+KTywAF+Y
+         vl6BvNDjtlQeszO831/vj9VrNJeLcO3CorTHYwYoI7P40wq3y2H6quFwIn6FAnNIrj
+         ZeYCSMeyqhq+wtCFfplrmDNrmfNiAKN+ApdijyvsIdppgUu0VqHVm2MD+JpYGskWZn
+         G1H8l8o2b5Whg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 5DB96E8DBDA;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 6BAB1F03841;
         Sat, 30 Apr 2022 08:00:41 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v3] net: SO_RCVMARK socket option for SO_MARK with
- recvmsg()
+Subject: Re: [PATCH v3 1/3] Bluetooth: hci_event: Fix checking for invalid handle
+ on error status
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165130564137.32506.12098247313333350008.git-patchwork-notify@kernel.org>
+Message-Id: <165130564143.32506.15386320521489025538.git-patchwork-notify@kernel.org>
 Date:   Sat, 30 Apr 2022 08:00:41 +0000
-References: <20220427200259.2564-1-lnx.erin@gmail.com>
-In-Reply-To: <20220427200259.2564-1-lnx.erin@gmail.com>
-To:     Erin MacNeil <lnx.erin@gmail.com>
-Cc:     rth@twiddle.net, ink@jurassic.park.msu.ru, mattst88@gmail.com,
-        tsbogend@alpha.franken.de, James.Bottomley@HansenPartnership.com,
-        deller@gmx.de, davem@davemloft.net, kuba@kernel.org,
-        pabeni@redhat.com, arnd@arndb.de, marcel@holtmann.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        socketcan@hartkopp.net, mkl@pengutronix.de, robin@protonic.nl,
-        linux@rempel-privat.de, kernel@pengutronix.de,
-        alex.aring@gmail.com, stefan@datenfreihafen.org,
-        yoshfuji@linux-ipv6.org, dsahern@kernel.org,
-        steffen.klassert@secunet.com, herbert@gondor.apana.org.au,
-        jk@codeconstruct.com.au, matt@codeconstruct.com.au,
-        vyasevich@gmail.com, nhorman@tuxdriver.com,
-        marcelo.leitner@gmail.com, edumazet@google.com, lmb@cloudflare.com,
-        ptikhomirov@virtuozzo.com, m@lambda.lt, hmukos@yandex-team.ru,
-        sfr@canb.auug.org.au, weiwan@google.com, yangbo.lu@nxp.com,
-        fw@strlen.de, tglx@linutronix.de, rpalethorpe@suse.com,
-        willemb@google.com, liuhangbin@gmail.com, pablo@netfilter.org,
-        rsanger@wand.net.nz, yajun.deng@linux.dev,
-        jiapeng.chong@linux.alibaba.com, linux-alpha@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-parisc@vger.kernel.org, sparclinux@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arch@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-can@vger.kernel.org,
-        linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org
+References: <20220422195818.3640058-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220422195818.3640058-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,22 +58,35 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
+This series was applied to bluetooth/bluetooth-next.git (master)
+by Marcel Holtmann <marcel@holtmann.org>:
 
-On Wed, 27 Apr 2022 16:02:37 -0400 you wrote:
-> Adding a new socket option, SO_RCVMARK, to indicate that SO_MARK
-> should be included in the ancillary data returned by recvmsg().
+On Fri, 22 Apr 2022 12:58:16 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> Renamed the sock_recv_ts_and_drops() function to sock_recv_cmsgs().
+> Commit d5ebaa7c5f6f6 introduces checks for handle range
+> (e.g HCI_CONN_HANDLE_MAX) but controllers like Intel AX200 don't seem
+> to respect the valid range int case of error status:
 > 
-> Signed-off-by: Erin MacNeil <lnx.erin@gmail.com>
+> > HCI Event: Connect Complete (0x03) plen 11
+>         Status: Page Timeout (0x04)
+>         Handle: 65535
+>         Address: 94:DB:56:XX:XX:XX (Sony Home Entertainment&
+> 	Sound Products Inc)
+>         Link type: ACL (0x01)
+>         Encryption: Disabled (0x00)
+> [1644965.827560] Bluetooth: hci0: Ignoring HCI_Connection_Complete for
+> invalid handle
 > 
 > [...]
 
 Here is the summary with links:
-  - [net-next,v3] net: SO_RCVMARK socket option for SO_MARK with recvmsg()
-    https://git.kernel.org/bluetooth/bluetooth-next/c/6fd1d51cfa25
+  - [v3,1/3] Bluetooth: hci_event: Fix checking for invalid handle on error status
+    https://git.kernel.org/bluetooth/bluetooth-next/c/c86cc5a3ec70
+  - [v3,2/3] Bluetooth: hci_event: Fix creating hci_conn object on error status
+    https://git.kernel.org/bluetooth/bluetooth-next/c/aef2aa4fa98e
+  - [v3,3/3] Bluetooth: hci_sync: Cleanup hci_conn if it cannot be aborted
+    https://git.kernel.org/bluetooth/bluetooth-next/c/9b3628d79b46
 
 You are awesome, thank you!
 -- 
