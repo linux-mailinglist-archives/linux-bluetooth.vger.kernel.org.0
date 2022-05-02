@@ -2,177 +2,193 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58780517791
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  2 May 2022 21:47:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 979F75178C6
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  2 May 2022 23:05:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1387176AbiEBTuw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 2 May 2022 15:50:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33460 "EHLO
+        id S232819AbiEBVJ1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 2 May 2022 17:09:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238542AbiEBTuv (ORCPT
+        with ESMTP id S232009AbiEBVJ0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 2 May 2022 15:50:51 -0400
-Received: from proxima.lasnet.de (proxima.lasnet.de [78.47.171.185])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF12665CE
-        for <linux-bluetooth@vger.kernel.org>; Mon,  2 May 2022 12:47:21 -0700 (PDT)
-Received: from [IPV6:2003:e9:d724:5eaf:7962:46e1:bce5:9013] (p200300e9d7245eaf796246e1bce59013.dip0.t-ipconnect.de [IPv6:2003:e9:d724:5eaf:7962:46e1:bce5:9013])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: stefan@datenfreihafen.org)
-        by proxima.lasnet.de (Postfix) with ESMTPSA id 7A01AC0F56;
-        Mon,  2 May 2022 21:37:19 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=datenfreihafen.org;
-        s=2021; t=1651520239;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=8hGpWv1RDWq7kf4AFO9qh9ojGqRMzUceRRnpQPDO0dE=;
-        b=Rks4ubu/diMPgrqGQP2T2Z0cz6Aom8UvuBG+kMA5IRi/wtwvEy4CnxzAFx7lcEn+58iLMn
-        vtb/xNxbyaZ8iCDykaBuZdR+Ra14/ELhWwC+ZKDnkChhb5KMIeIhyxDjNbDgWKJHKiQ36a
-        KEspgCNYdRfM3eXajCvu6KA3QQ2WaiZx0kC/HLXjW3Cpd/ia7B5uRu2xii6+Sj97tO1vOk
-        vnf72X7gN8lQlu7l6J0GSnChrDD9GIYWzg/1xnRvxuCSIw9NPh3o3z7qRAuuf2MvTtK+V8
-        FR0ijG6pt8tB1s9+XzKY/zXk0LspprXTa1Hl69GnGbzz/LVZ784RQA4rZDhCQQ==
-Message-ID: <6009d104-7f73-0acb-0e34-f4a90534e226@datenfreihafen.org>
-Date:   Mon, 2 May 2022 21:37:19 +0200
+        Mon, 2 May 2022 17:09:26 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3CEBBC32
+        for <linux-bluetooth@vger.kernel.org>; Mon,  2 May 2022 14:05:55 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id n8so13438815plh.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 02 May 2022 14:05:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6Pru5JZcj+cHsvQbTgyyfRtFvPSEQ+Gl4fw1M4k+drs=;
+        b=Gheg6X4esOW0qJrQa3HlAnDrRTPJFD5PAosHvyENezR/plXA1SPZt1nfIj44NwTWM4
+         ExzwLwYctMOHM76tUg/mKuwCRICtFAFfHWPNN7r0w+S7gUkw5MTme66E8QRL5/MVK01y
+         DsNCX9q37Hkl9DR2WWZ1xRXkrcKMY1IpG7J3D4qYloHqjbX555jATT21mkaam9H4Ir7k
+         zkay2740LL/tFzU493+nwYCBJ60SelW/zRFQKyncko2TZyfYPMPUq6p7gEERseJQsZRW
+         HhNkMwi++/XypAc1ze9Bf0DcO21ZN7ifEQI0RXrHNCw4Aca1SFxa+BJSy3H4c4X2voyM
+         bppQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6Pru5JZcj+cHsvQbTgyyfRtFvPSEQ+Gl4fw1M4k+drs=;
+        b=kg3q8bZsedrDOwdU1cD4valwvkYLLyoE2uBtT4ehMujk9GnyDk1k/Uw0/4arwW+OP4
+         QIRZEpwUXkIS+KtX/ASKiJAYdIxGJWo1rv68ZpO5wPXhcTHMHwKW64xmPrfnm/Cd5mJI
+         LCCc04y0Roeznq3IseXE/5mNNgVW/8aObrGRkojMjCIiFfbPRyInmisbeGEUy35uyKWc
+         sSmjBg3bbBmg5DdkaHQ7kpMYaHI5KN/BMP5ASVqJmrdJGfk+jFZnxYHZJggCHZlULjyb
+         Z3BtfK4Ou9S33eIur7Q30bHrCcywIkigZpSc9muqDGfqPq5FgqEdxj/ADRjatNj63Wkq
+         20bA==
+X-Gm-Message-State: AOAM531gtPpwTJJ2nUaVlQgiJ4nMttRUbwwN5AhDktH90wkmjtk4kAib
+        36uK9cRML9tm36LF6WU0vWXWuMvEMDA=
+X-Google-Smtp-Source: ABdhPJzj8pFz3gRjonNQY3xvTavYVbwz1cTh8eleKzHe5p/p20ZNXm6mrHTGetxoiK/hc5sdZk48Ig==
+X-Received: by 2002:a17:902:f70f:b0:153:ebfe:21b3 with SMTP id h15-20020a170902f70f00b00153ebfe21b3mr13512709plo.119.1651525554899;
+        Mon, 02 May 2022 14:05:54 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id g2-20020a170902e38200b0015e8d4eb2d8sm846255ple.290.2022.05.02.14.05.53
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 May 2022 14:05:54 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/2] btdev: Fix not removing connection and advertising set on reset
+Date:   Mon,  2 May 2022 14:05:52 -0700
+Message-Id: <20220502210553.2271064-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH bluetooth-next 3/3] net: 6lowpan: constify lowpan_nhc
- structures
-Content-Language: en-US
-To:     Alexander Aring <aahringo@redhat.com>,
-        jukka.rissanen@linux.intel.com
-Cc:     linux-bluetooth@vger.kernel.org, linux-wpan@vger.kernel.org,
-        torvalds@linuxfoundation.org
-References: <20220428030534.3220410-1-aahringo@redhat.com>
- <20220428030534.3220410-4-aahringo@redhat.com>
-From:   Stefan Schmidt <stefan@datenfreihafen.org>
-In-Reply-To: <20220428030534.3220410-4-aahringo@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Hello.
+This makes sure that all connections and advertising sets are cleanup
+on reset.
+---
+ emulator/btdev.c | 76 +++++++++++++++++++++++++-----------------------
+ 1 file changed, 40 insertions(+), 36 deletions(-)
 
-On 28.04.22 05:05, Alexander Aring wrote:
-> This patch constify the lowpan_nhc declarations. Since we drop the rb
-> node datastructure there is no need for runtime manipulation of this
-> structure.
-> 
-> Signed-off-by: Alexander Aring <aahringo@redhat.com>
-> ---
->   net/6lowpan/nhc.c | 16 ++++++++--------
->   net/6lowpan/nhc.h |  6 +++---
->   2 files changed, 11 insertions(+), 11 deletions(-)
-> 
-> diff --git a/net/6lowpan/nhc.c b/net/6lowpan/nhc.c
-> index 019f121b2449..7b374595328d 100644
-> --- a/net/6lowpan/nhc.c
-> +++ b/net/6lowpan/nhc.c
-> @@ -12,12 +12,12 @@
->   
->   #include "nhc.h"
->   
-> -static struct lowpan_nhc *lowpan_nexthdr_nhcs[NEXTHDR_MAX + 1];
-> +static const struct lowpan_nhc *lowpan_nexthdr_nhcs[NEXTHDR_MAX + 1];
->   static DEFINE_SPINLOCK(lowpan_nhc_lock);
->   
-> -static struct lowpan_nhc *lowpan_nhc_by_nhcid(struct sk_buff *skb)
-> +static const struct lowpan_nhc *lowpan_nhc_by_nhcid(struct sk_buff *skb)
->   {
-> -	struct lowpan_nhc *nhc;
-> +	const struct lowpan_nhc *nhc;
->   	int i;
->   	u8 id;
->   
-> @@ -41,7 +41,7 @@ static struct lowpan_nhc *lowpan_nhc_by_nhcid(struct sk_buff *skb)
->   int lowpan_nhc_check_compression(struct sk_buff *skb,
->   				 const struct ipv6hdr *hdr, u8 **hc_ptr)
->   {
-> -	struct lowpan_nhc *nhc;
-> +	const struct lowpan_nhc *nhc;
->   	int ret = 0;
->   
->   	spin_lock_bh(&lowpan_nhc_lock);
-> @@ -59,7 +59,7 @@ int lowpan_nhc_do_compression(struct sk_buff *skb, const struct ipv6hdr *hdr,
->   			      u8 **hc_ptr)
->   {
->   	int ret;
-> -	struct lowpan_nhc *nhc;
-> +	const struct lowpan_nhc *nhc;
->   
->   	spin_lock_bh(&lowpan_nhc_lock);
->   
-> @@ -102,7 +102,7 @@ int lowpan_nhc_do_uncompression(struct sk_buff *skb,
->   				const struct net_device *dev,
->   				struct ipv6hdr *hdr)
->   {
-> -	struct lowpan_nhc *nhc;
-> +	const struct lowpan_nhc *nhc;
->   	int ret;
->   
->   	spin_lock_bh(&lowpan_nhc_lock);
-> @@ -138,7 +138,7 @@ int lowpan_nhc_do_uncompression(struct sk_buff *skb,
->   	return 0;
->   }
->   
-> -int lowpan_nhc_add(struct lowpan_nhc *nhc)
-> +int lowpan_nhc_add(const struct lowpan_nhc *nhc)
->   {
->   	int ret = 0;
->   
-> @@ -156,7 +156,7 @@ int lowpan_nhc_add(struct lowpan_nhc *nhc)
->   }
->   EXPORT_SYMBOL(lowpan_nhc_add);
->   
-> -void lowpan_nhc_del(struct lowpan_nhc *nhc)
-> +void lowpan_nhc_del(const struct lowpan_nhc *nhc)
->   {
->   	spin_lock_bh(&lowpan_nhc_lock);
->   
-> diff --git a/net/6lowpan/nhc.h b/net/6lowpan/nhc.h
-> index 9df602a632bd..ab7b4977c32b 100644
-> --- a/net/6lowpan/nhc.h
-> +++ b/net/6lowpan/nhc.h
-> @@ -24,7 +24,7 @@
->   #define LOWPAN_NHC(__nhc, _name, _nexthdr,	\
->   		   _hdrlen, _id, _idmask,	\
->   		   _uncompress, _compress)	\
-> -static struct lowpan_nhc __nhc = {		\
-> +static const struct lowpan_nhc __nhc = {	\
->   	.name		= _name,		\
->   	.nexthdr	= _nexthdr,		\
->   	.nexthdrlen	= _hdrlen,		\
-> @@ -116,14 +116,14 @@ int lowpan_nhc_do_uncompression(struct sk_buff *skb,
->    *
->    * @nhc: nhc which should be add.
->    */
-> -int lowpan_nhc_add(struct lowpan_nhc *nhc);
-> +int lowpan_nhc_add(const struct lowpan_nhc *nhc);
->   
->   /**
->    * lowpan_nhc_del - delete a next header compression from framework
->    *
->    * @nhc: nhc which should be delete.
->    */
-> -void lowpan_nhc_del(struct lowpan_nhc *nhc);
-> +void lowpan_nhc_del(const struct lowpan_nhc *nhc);
->   
->   /**
->    * lowpan_nhc_init - adding all default nhcs
+diff --git a/emulator/btdev.c b/emulator/btdev.c
+index d3f565438..641e308b3 100644
+--- a/emulator/btdev.c
++++ b/emulator/btdev.c
+@@ -509,6 +509,42 @@ void btdev_set_rl_len(struct btdev *btdev, uint8_t len)
+ 	btdev->le_rl_len = len;
+ }
+ 
++static void conn_unlink(struct btdev_conn *conn1, struct btdev_conn *conn2)
++{
++	conn1->link = NULL;
++	conn2->link = NULL;
++}
++
++static void conn_remove(void *data)
++{
++	struct btdev_conn *conn = data;
++
++	if (conn->link) {
++		struct btdev_conn *link = conn->link;
++
++		conn_unlink(conn, conn->link);
++		conn_remove(link);
++	}
++
++	queue_remove(conn->dev->conns, conn);
++
++	free(conn->data);
++	free(conn);
++}
++
++static void le_ext_adv_free(void *data)
++{
++	struct le_ext_adv *ext_adv = data;
++
++	/* Remove to queue */
++	queue_remove(ext_adv->dev->le_ext_adv, ext_adv);
++
++	if (ext_adv->id)
++		timeout_remove(ext_adv->id);
++
++	free(ext_adv);
++}
++
+ static void btdev_reset(struct btdev *btdev)
+ {
+ 	/* FIXME: include here clearing of all states that should be
+@@ -517,12 +553,16 @@ static void btdev_reset(struct btdev *btdev)
+ 
+ 	btdev->le_scan_enable		= 0x00;
+ 	btdev->le_adv_enable		= 0x00;
++	btdev->le_pa_enable		= 0x00;
+ 
+ 	al_clear(btdev);
+ 	rl_clear(btdev);
+ 
+ 	btdev->le_al_len = AL_SIZE;
+ 	btdev->le_rl_len = RL_SIZE;
++
++	queue_remove_all(btdev->conns, NULL, NULL, conn_remove);
++	queue_remove_all(btdev->le_ext_adv, NULL, NULL, le_ext_adv_free);
+ }
+ 
+ static int cmd_reset(struct btdev *dev, const void *data, uint8_t len)
+@@ -674,29 +714,6 @@ static bool match_handle(const void *data, const void *match_data)
+ 	return conn->handle == handle;
+ }
+ 
+-static void conn_unlink(struct btdev_conn *conn1, struct btdev_conn *conn2)
+-{
+-	conn1->link = NULL;
+-	conn2->link = NULL;
+-}
+-
+-static void conn_remove(void *data)
+-{
+-	struct btdev_conn *conn = data;
+-
+-	if (conn->link) {
+-		struct btdev_conn *link = conn->link;
+-
+-		conn_unlink(conn, conn->link);
+-		conn_remove(link);
+-	}
+-
+-	queue_remove(conn->dev->conns, conn);
+-
+-	free(conn->data);
+-	free(conn);
+-}
+-
+ static void disconnect_complete(struct btdev *dev, uint16_t handle,
+ 					uint8_t status, uint8_t reason)
+ {
+@@ -4627,19 +4644,6 @@ static struct le_ext_adv *le_ext_adv_new(struct btdev *btdev, uint8_t handle)
+ 	return ext_adv;
+ }
+ 
+-static void le_ext_adv_free(void *data)
+-{
+-	struct le_ext_adv *ext_adv = data;
+-
+-	/* Remove to queue */
+-	queue_remove(ext_adv->dev->le_ext_adv, ext_adv);
+-
+-	if (ext_adv->id)
+-		timeout_remove(ext_adv->id);
+-
+-	free(ext_adv);
+-}
+-
+ static int cmd_set_adv_rand_addr(struct btdev *dev, const void *data,
+ 							uint8_t len)
+ {
+-- 
+2.35.1
 
-Reviewed-by: Stefan Schmidt <stefan@datenfreihafen.org>
-
-regards
-Stefan Schmidt
