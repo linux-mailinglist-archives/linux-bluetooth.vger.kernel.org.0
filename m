@@ -2,63 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5005D5178C5
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  2 May 2022 23:05:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69B065178DD
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  2 May 2022 23:12:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232133AbiEBVJ1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 2 May 2022 17:09:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49290 "EHLO
+        id S1387584AbiEBVPj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 2 May 2022 17:15:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232110AbiEBVJ0 (ORCPT
+        with ESMTP id S234807AbiEBVPi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 2 May 2022 17:09:26 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B2FBC36
-        for <linux-bluetooth@vger.kernel.org>; Mon,  2 May 2022 14:05:56 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id x18so2252464plg.6
-        for <linux-bluetooth@vger.kernel.org>; Mon, 02 May 2022 14:05:56 -0700 (PDT)
+        Mon, 2 May 2022 17:15:38 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CBCE1104
+        for <linux-bluetooth@vger.kernel.org>; Mon,  2 May 2022 14:12:08 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id j8-20020a17090a060800b001cd4fb60dccso418271pjj.2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 02 May 2022 14:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=mZFJU8oGnSo9NfWXq+X3qpT08JftfIhhfeGmT7oGTVo=;
-        b=kZjypGl+uT0xL9z2ytFoHLzKR+H4j2rSPPBmprQ2eDPLjjloEaOkcwQZPV3a8auGkJ
-         Jrt11QApqMQv5afw0zp3VckO8lA6iLXNdVeV9yNn5OG8beFBHYh8MimUHUT4W/D2sOXV
-         XSCGVTMBSEPaoEpJUG1LB9Hg4ju8EaZWEoYVL1BBcDg5ow3CPOXTP19q3lud1pMSleo+
-         2vGV8NFIYwpQY2QW/3ZBcg0wcc+NvjLXLZ0IY8idJGUtRFFXSSQLzbYtEoJSsDS08YKh
-         Hsju5/PzWBS85P54q66I/ZyhsB2qxst6yHlWHF+Rl6NUeCLf5glRHC62f0OTbLVhPjQ+
-         oXcQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mjEyjWzwg01OjZmfgcXhjH7l+zjibnXv5mKAEZHcc4g=;
+        b=fj7/xFtwibHaNuOW3ws2R7mf2axo0NYQ1dUKDOo4vrclFf+O4aG51SprO6BCQOUBa5
+         gWycH1dxNUhWqnFR1zYtnwCC5ftSOLRoP0RoEWOYIEZg+wvlK+L52hTBkxV+1Df/ya4U
+         fJdth8VnV4nV3HIiwcH4+GGXHh62Cv+zw9dWfy27FuofmUtNj+fwEh7GWGvjKWNPLUxK
+         grTKkO+Mo1R/NvVuOt9mNXB1pfn2ady9+L5lrPR2RwGoB7vpiA5U+8u2WR5jC5grz+T4
+         nyJvvPtTq9BoIne+mchbo62YarptvKWiQBvrraCR6AJVKdFhpkp6Y84piwxupAlQ8HmH
+         wxGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mZFJU8oGnSo9NfWXq+X3qpT08JftfIhhfeGmT7oGTVo=;
-        b=kbppU4K7BisxK5x84ptDrmbUc7oaLuTHOLQqVqyNLqQqAroN9ZnbtFjGzRRfRglOGy
-         UWkK0lozMOnPKapiXWwnePa0fOOazDNw2ykwaW/gvtdxH4dyP85TldZjJ+Xzu3DNNoP2
-         XMIhgZnKMtmzIgfP1AhG0CAWjluNTVnPjibe1yIWC1cukW665032U/tYgh14nbnWn7Z3
-         UNc8fOqnYlub21HNerbfyfeN8oA+0xHubdFEr9VsSHjEU+VTq+Q3tC9xszak5usQFujL
-         b/eO2ldnzP+ta3wLk8XahgU/SU48oUP5SIYNc0LaGDc1gu/PlL3Y/bMT/j3KrDSGSVLS
-         gt+w==
-X-Gm-Message-State: AOAM5336VdZRd6kMGYQOGvEkLee+/SXWyh46daywCoo6ic8g5K/nSMOj
-        iVFEbGmYYVADeWjAk3aDm3t70IBndLQ=
-X-Google-Smtp-Source: ABdhPJyFmgCcryvrgu9+uMuE1g/rtWpRLAMwSKdpC0N8sF8hGM9kZR/jV1FvWjhf70vj2jaw6pKj2w==
-X-Received: by 2002:a17:902:ef47:b0:156:646b:58e7 with SMTP id e7-20020a170902ef4700b00156646b58e7mr13238584plx.57.1651525555934;
-        Mon, 02 May 2022 14:05:55 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id g2-20020a170902e38200b0015e8d4eb2d8sm846255ple.290.2022.05.02.14.05.55
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 May 2022 14:05:55 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] monitor: Decode LTV fields of Basic Audio Announcements
-Date:   Mon,  2 May 2022 14:05:53 -0700
-Message-Id: <20220502210553.2271064-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220502210553.2271064-1-luiz.dentz@gmail.com>
-References: <20220502210553.2271064-1-luiz.dentz@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mjEyjWzwg01OjZmfgcXhjH7l+zjibnXv5mKAEZHcc4g=;
+        b=s0GxbiNeWcww98T5s/7Ntgpm3Sqhtv3WeK9Ftm1HSzpmq3aSPoAdo42+uG6i2egHat
+         5a5/JLBwbor44VA3wtTWS64Bn/otmPj+CDAHh1CsjSj97yWDdNtPNHl7C17OVhNIK7WY
+         cvbQaiXMCshokb6ggdKSetqrG3ClRPO7miN13iSTVygckMjfFjp4Y5jLx7xXUrD5KvwK
+         x19LxBAhdFQ+r7nU8sTX+yHT/RSJOwK8TCNbuav49dBOFvb+o2CuiXncWsQ0gOMtT4jf
+         zKRNq7kzqTvoApXC0WzwLepUd+xlqUZR8kBh1KMApDSWIsk+3/ukSi3DfhIWukbJS7+9
+         6grw==
+X-Gm-Message-State: AOAM532c8MMrmQ/X4Jipwh/eUq905bicOFg54z7PZW3a17atzN5q4a+T
+        Sk6ox1TKWygfVf1z7C+U3sU9V1FwzeTiztrhFU0=
+X-Google-Smtp-Source: ABdhPJwgZ3m8wAyFGIX+f+Wsdb84O7DoQnsQlxpRgRw5t6n4o4+4Rb6rHRb1JG2t1ax7qSGqbXJ8ep97neD+TajJQVA=
+X-Received: by 2002:a17:90a:8a92:b0:1d7:3cca:69d8 with SMTP id
+ x18-20020a17090a8a9200b001d73cca69d8mr1124169pjn.61.1651525927657; Mon, 02
+ May 2022 14:12:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220418174929.2777339-1-jiangzp@google.com> <20220418174914.Bluez.v2.1.I6ab300fa4999c9310f4cb6fc09b1290edb6b2c2b@changeid>
+ <CABBYNZL7YZFch1ExcgsFV1AJV2ZBq_dXSyQFR=Zhb9Xjyk66Jg@mail.gmail.com>
+In-Reply-To: <CABBYNZL7YZFch1ExcgsFV1AJV2ZBq_dXSyQFR=Zhb9Xjyk66Jg@mail.gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Mon, 2 May 2022 14:11:56 -0700
+Message-ID: <CABBYNZL1V6FXaUiDbh0=sbvpvw6FSU0de-BR=wXMAbtX5Ugwww@mail.gmail.com>
+Subject: Re: [Bluez PATCH v2 1/2] device: Add "Bonded" flag to dbus property
+To:     Zhengping Jiang <jiangzp@google.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        ChromeOS Bluetooth Upstreaming 
+        <chromeos-bluetooth-upstreaming@chromium.org>,
+        Sonny Sasaka <sonnysasaka@chromium.org>,
+        Yun-Hao Chung <howardchung@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -69,104 +70,138 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hi Zhengping,
 
-This decodes the LTV fields of Basic Audio Announcements:
+On Mon, Apr 18, 2022 at 3:41 PM Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
+>
+> Hi Zhengping,
+>
+> On Mon, Apr 18, 2022 at 10:49 AM Zhengping Jiang <jiangzp@google.com> wrote:
+> >
+> > Add "Bonded" to dbus device property table. When setting the "Bonded
+> > flag, check the status of the Bonded property first. If the Bonded
+> > property is changed, send property changed signal.
+> >
+> > Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
+> > Reviewed-by: Yun-Hao Chung <howardchung@chromium.org>
+> >
+> > Signed-off-by: Zhengping Jiang <jiangzp@google.com>
+> > ---
+> >
+> > Changes in v2:
+> > - Move one variable declaration to the top following C90 standard
+> >
+> > Changes in v1:
+> > - Add "Bonded" to D-Bus interface
+> > - Send property changed signal if the bonded flag is changed
+> >
+> >  doc/device-api.txt |  4 ++++
+> >  src/device.c       | 40 +++++++++++++++++++++++++++++++++++-----
+> >  2 files changed, 39 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/doc/device-api.txt b/doc/device-api.txt
+> > index 4e824d2dec17..6162755f954c 100644
+> > --- a/doc/device-api.txt
+> > +++ b/doc/device-api.txt
+> > @@ -171,6 +171,10 @@ Properties string Address [readonly]
+> >
+> >                         Indicates if the remote device is paired.
+> >
+> > +               boolean Bonded [readonly]
+> > +
+> > +                       Indicates if the remote device is bonded.
+>
+> It is probably a good idea to add a description about Bonded vs
+> Paired. Btw, API documentation should be in a separate patch.
 
-< HCI Command: LE Set Periodic Advertising Data (0x08|0x003f) plen 41
-        Handle: 0
-        Operation: Complete ext advertising data (0x03)
-        Data length: 0x26
-        Service Data: Basic Audio Announcement (0x1851)
-          Presetation Delay: 40000
-          Number of Subgroups: 1
-            Subgroup #0:
-            Number of BIS(s): 1
-            Codec: LC3 (0x06)
-            Codec Specific Configuration #0: len 0x02 type 0x01
-            Codec Specific Configuration: 03
-            Codec Specific Configuration #1: len 0x02 type 0x02
-            Codec Specific Configuration: 01
-            Codec Specific Configuration #2: len 0x05 type 0x03
-            Codec Specific Configuration: 01000000
-            Codec Specific Configuration #3: len 0x03 type 0x04
-            Codec Specific Configuration: 2800
-            Metadata #0: len 0x03 type 0x02
-            Metadata: 0200
-              BIS #0:
-              Index: 1
-              Codec Specific Configuration:
----
- monitor/packet.c | 42 ++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 40 insertions(+), 2 deletions(-)
+Will you be updating following this comments or you are waiting more
+feedback from upstream?
 
-diff --git a/monitor/packet.c b/monitor/packet.c
-index d409e4e63..99ed9c281 100644
---- a/monitor/packet.c
-+++ b/monitor/packet.c
-@@ -3318,6 +3318,44 @@ static void *iov_pull(struct iovec *iov, size_t len)
- 	return data;
- }
- 
-+static void print_ltv(const char *label, const uint8_t *data, uint8_t len)
-+{
-+	struct iovec iov;
-+	int i;
-+
-+	iov.iov_base = (void *) data;
-+	iov.iov_len = len;
-+
-+	for (i = 0; iov.iov_len; i++) {
-+		uint8_t l, t, *v;
-+
-+		l = get_u8(iov_pull(&iov, sizeof(l)));
-+		if (!l) {
-+			print_field("%s #%d: len 0x%02x", label, i, l);
-+			break;
-+		}
-+
-+		v = iov_pull(&iov, sizeof(*v));
-+		if (!v)
-+			break;
-+
-+		t = get_u8(v);
-+
-+		print_field("%s #%d: len 0x%02x type 0x%02x", label, i, l, t);
-+
-+		l -= 1;
-+
-+		v = iov_pull(&iov, l);
-+		if (!v)
-+			break;
-+
-+		print_hex_field(label , v, l);
-+	}
-+
-+	if (iov.iov_len)
-+		print_hex_field(label , iov.iov_base, iov.iov_len);
-+}
-+
- static void print_base_annoucement(const uint8_t *data, uint8_t data_len)
- {
- 	struct iovec iov;
-@@ -3368,7 +3406,7 @@ static void print_base_annoucement(const uint8_t *data, uint8_t data_len)
- 		if (!iov_pull(&iov, codec_cfg->len))
- 			goto done;
- 
--		print_hex_field("    Codec Specific Configuration",
-+		print_ltv("    Codec Specific Configuration",
- 					codec_cfg->data, codec_cfg->len);
- 
- 		metadata = iov_pull(&iov, sizeof(*metadata));
-@@ -3378,7 +3416,7 @@ static void print_base_annoucement(const uint8_t *data, uint8_t data_len)
- 		if (!iov_pull(&iov, metadata->len))
- 			goto done;
- 
--		print_hex_field("    Metadata", metadata->data, metadata->len);
-+		print_ltv("    Metadata", metadata->data, metadata->len);
- 
- 		/* Level 3 - BIS(s)*/
- 		for (j = 0; j < subgroup->num_bis; j++) {
+> > +
+> >                 boolean Connected [readonly]
+> >
+> >                         Indicates if the remote device is currently connected.
+> > diff --git a/src/device.c b/src/device.c
+> > index 8dc12d026827..868c41f025d9 100644
+> > --- a/src/device.c
+> > +++ b/src/device.c
+> > @@ -1042,6 +1042,22 @@ static gboolean dev_property_get_paired(const GDBusPropertyTable *property,
+> >         return TRUE;
+> >  }
+> >
+> > +static gboolean dev_property_get_bonded(const GDBusPropertyTable *property,
+> > +                                       DBusMessageIter *iter, void *data)
+> > +{
+> > +       struct btd_device *dev = data;
+> > +       dbus_bool_t val;
+> > +
+> > +       if (dev->bredr_state.bonded || dev->le_state.bonded)
+> > +               val = TRUE;
+> > +       else
+> > +               val = FALSE;
+> > +
+> > +       dbus_message_iter_append_basic(iter, DBUS_TYPE_BOOLEAN, &val);
+> > +
+> > +       return TRUE;
+> > +}
+> > +
+> >  static gboolean dev_property_get_legacy(const GDBusPropertyTable *property,
+> >                                         DBusMessageIter *iter, void *data)
+> >  {
+> > @@ -3120,6 +3136,7 @@ static const GDBusPropertyTable device_properties[] = {
+> >         { "Icon", "s", dev_property_get_icon, NULL,
+> >                                         dev_property_exists_icon },
+> >         { "Paired", "b", dev_property_get_paired },
+> > +       { "Bonded", "b", dev_property_get_bonded },
+> >         { "Trusted", "b", dev_property_get_trusted, dev_property_set_trusted },
+> >         { "Blocked", "b", dev_property_get_blocked, dev_property_set_blocked },
+> >         { "LegacyPairing", "b", dev_property_get_legacy },
+> > @@ -6114,17 +6131,30 @@ void btd_device_set_trusted(struct btd_device *device, gboolean trusted)
+> >
+> >  void device_set_bonded(struct btd_device *device, uint8_t bdaddr_type)
+> >  {
+> > +       struct bearer_state *state;
+> > +
+> >         if (!device)
+> >                 return;
+> >
+> > -       DBG("");
+> > +       state = get_state(device, bdaddr_type);
+> >
+> > -       if (bdaddr_type == BDADDR_BREDR)
+> > -               device->bredr_state.bonded = true;
+> > -       else
+> > -               device->le_state.bonded = true;
+> > +       if (state->bonded)
+> > +               return;
+> > +
+> > +       DBG("setting bonded for device to true");
+> > +
+> > +       state->bonded = true;
+> >
+> >         btd_device_set_temporary(device, false);
+> > +
+> > +       /* If the other bearer state was already true we don't need to
+> > +        * send any property signals.
+> > +        */
+> > +       if (device->bredr_state.bonded == device->le_state.bonded)
+> > +               return;
+> > +
+> > +       g_dbus_emit_property_changed(dbus_conn, device->path,
+> > +                                               DEVICE_INTERFACE, "Bonded");
+> >  }
+> >
+> >  void device_set_legacy(struct btd_device *device, bool legacy)
+> > --
+> > 2.36.0.rc0.470.gd361397f0d-goog
+> >
+>
+>
+> --
+> Luiz Augusto von Dentz
+
+
+
 -- 
-2.35.1
-
+Luiz Augusto von Dentz
