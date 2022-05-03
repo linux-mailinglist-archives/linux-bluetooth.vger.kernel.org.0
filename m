@@ -2,52 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79137517B00
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 May 2022 01:51:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 957BB517B9A
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 May 2022 03:17:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229884AbiEBXy3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 2 May 2022 19:54:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59322 "EHLO
+        id S229613AbiECBSW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 2 May 2022 21:18:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbiEBXxo (ORCPT
+        with ESMTP id S230197AbiECBRw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 2 May 2022 19:53:44 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43FA02F7
-        for <linux-bluetooth@vger.kernel.org>; Mon,  2 May 2022 16:50:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 07995B81B11
-        for <linux-bluetooth@vger.kernel.org>; Mon,  2 May 2022 23:50:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A4943C385AC;
-        Mon,  2 May 2022 23:50:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651535411;
-        bh=IMevT++VP/1ueUIIRIzJ0jn5qU8X3Qi+/KuSsvQcECA=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=YzIOBquaBqXcGEfYlmSoV71I/+OmQ1FFypUlhEwSaDu0nhJB969f4sAIQo8XcGk5W
-         Wabz7QGo4wSWoievJqfksWlZ6iX176Peg9f/EndGKgKwUgyuYKlHeOz2L6Xki+n2vV
-         UlnIYfw1BwLBAMnS7YTYdMAJKTHJ9gbEahofqtwrXmmMM0WcGyFAAEth/vmXbxv8Zw
-         H/ekK8jsexqKeGkPeHx0wtY+Ffh5z0lGSw8SyXmnwJv8Txzu+YxK+fqaWQNgKMuaa2
-         +1TiggkstO0tq095liNPb7q6ztMXyaIOPdc/wcFkbPEAXqeEaAScv2TfsF++rNTwsZ
-         JO28LKUEUBKyg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8AB99E6D402;
-        Mon,  2 May 2022 23:50:11 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] monitor: Fix parsing of LE Terminate BIG Complete event
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165153541156.14150.2123520639979898666.git-patchwork-notify@kernel.org>
-Date:   Mon, 02 May 2022 23:50:11 +0000
-References: <20220502214517.2363950-1-luiz.dentz@gmail.com>
-In-Reply-To: <20220502214517.2363950-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Mon, 2 May 2022 21:17:52 -0400
+Received: from o10.sgmail.github.com (o10.sgmail.github.com [167.89.101.201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67524D5F
+        for <linux-bluetooth@vger.kernel.org>; Mon,  2 May 2022 18:14:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        h=from:subject:mime-version:content-type:content-transfer-encoding:to;
+        s=smtpapi; bh=SG7tvEA6khBbiVlGaMzPBKJ3Lt2tgRdZiT/8VbqYl0w=;
+        b=zUClZhl2ipH3pZd9sKez/jWf37f7uPJUn09Zzl3CsYM2zK4kQLb724VJoybgFzs4EE5H
+        C8O02G9nb8rEK+ZYgCVy5z70T5zPr11kelVvYAP1XpMv7QlMjLY7QeIUwYdAzcfZvnkZ+o
+        wBq8fjbo6QlktGtuPxfb7mTS0FvWwb660=
+Received: by filterdrecv-644fcdb6d6-q2rrs with SMTP id filterdrecv-644fcdb6d6-q2rrs-1-627077F1-10B
+        2022-05-03 00:31:45.973278606 +0000 UTC m=+2255969.519603733
+Received: from out-24.smtp.github.com (unknown)
+        by geopod-ismtpd-5-2 (SG)
+        with ESMTP id UKtoE4l2QNCoCi-tBd9dxw
+        for <linux-bluetooth@vger.kernel.org>;
+        Tue, 03 May 2022 00:31:45.885 +0000 (UTC)
+Received: from github.com (hubbernetes-node-fbf9b16.ac4-iad.github.net [10.52.211.83])
+        by smtp.github.com (Postfix) with ESMTPA id BC9F66001BA
+        for <linux-bluetooth@vger.kernel.org>; Mon,  2 May 2022 17:31:40 -0700 (PDT)
+Date:   Tue, 03 May 2022 00:31:46 +0000 (UTC)
+From:   Luiz Augusto von Dentz <noreply@github.com>
+Message-ID: <bluez/bluez/push/refs/heads/master/fa7828-b7ca43@github.com>
+Subject: [bluez/bluez] c75ff3: btdev: Fix not removing connection and
+ advertising...
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-SG-EID: =?us-ascii?Q?NCuo=2Faci8=2Fvc654FLG8ZqCi=2Ftd5PhuN55Q9iF5tvb2ErGMYgqEnmC5+VcxN1HW?=
+ =?us-ascii?Q?HZEMO+yd+6Y5QOUrvrilW=2F0p8rOL4=2F9GtDaLwlV?=
+ =?us-ascii?Q?kQBZzDHaQOztHwuOd0UCNt1uAudw4gsyzl6b50T?=
+ =?us-ascii?Q?=2F7rQcZUmauuqyMWvn45Ad8XMH7pdYsKh8jErvVb?=
+ =?us-ascii?Q?0C0SFAggNEboLY6K8yUrDJaYGgE0vsTJv9WuAUX?=
+ =?us-ascii?Q?SeQoY6h31BBcf1IxDuB3TdPRO837nQnZ8Hmkx+j?=
+ =?us-ascii?Q?ysmPo1WkawaWih1L7M4YQ=3D=3D?=
+To:     linux-bluetooth@vger.kernel.org
+X-Entity-ID: /f+S0XqulHHajbNb6hGdxg==
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -56,27 +60,77 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: c75ff36b77f88821beffabe4d3e60317c243d9b1
+      https://github.com/bluez/bluez/commit/c75ff36b77f88821beffabe4d3e60317c243d9b1
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-05-02 (Mon, 02 May 2022)
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M emulator/btdev.c
 
-On Mon,  2 May 2022 14:45:17 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> LE Terminate BIG Complete event format Subevent_Code, BIG_Handle and
-> Reason but the last two were swapped.
-> ---
->  monitor/bt.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+  Log Message:
+  -----------
+  btdev: Fix not removing connection and advertising set on reset
 
-Here is the summary with links:
-  - [BlueZ] monitor: Fix parsing of LE Terminate BIG Complete event
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=b7ca43eedfd5
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+This makes sure that all connections and advertising sets are cleanup
+on reset.
 
 
+  Commit: 6bf9d1775cf4ccd7374a6a88f353ddefaa123d52
+      https://github.com/bluez/bluez/commit/6bf9d1775cf4ccd7374a6a88f353ddefaa123d52
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-05-02 (Mon, 02 May 2022)
+
+  Changed paths:
+    M monitor/packet.c
+
+  Log Message:
+  -----------
+  monitor: Decode LTV fields of Basic Audio Announcements
+
+This decodes the LTV fields of Basic Audio Announcements:
+
+< HCI Command: LE Set Periodic Advertising Data (0x08|0x003f) plen 41
+        Handle: 0
+        Operation: Complete ext advertising data (0x03)
+        Data length: 0x26
+        Service Data: Basic Audio Announcement (0x1851)
+          Presetation Delay: 40000
+          Number of Subgroups: 1
+            Subgroup #0:
+            Number of BIS(s): 1
+            Codec: LC3 (0x06)
+            Codec Specific Configuration #0: len 0x02 type 0x01
+            Codec Specific Configuration: 03
+            Codec Specific Configuration #1: len 0x02 type 0x02
+            Codec Specific Configuration: 01
+            Codec Specific Configuration #2: len 0x05 type 0x03
+            Codec Specific Configuration: 01000000
+            Codec Specific Configuration #3: len 0x03 type 0x04
+            Codec Specific Configuration: 2800
+            Metadata #0: len 0x03 type 0x02
+            Metadata: 0200
+              BIS #0:
+              Index: 1
+              Codec Specific Configuration:
+
+
+  Commit: b7ca43eedfd5a028909a410287ad915ec026e24d
+      https://github.com/bluez/bluez/commit/b7ca43eedfd5a028909a410287ad915ec026e24d
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-05-02 (Mon, 02 May 2022)
+
+  Changed paths:
+    M monitor/bt.h
+
+  Log Message:
+  -----------
+  monitor: Fix parsing of LE Terminate BIG Complete event
+
+LE Terminate BIG Complete event format Subevent_Code, BIG_Handle and
+Reason but the last two were swapped.
+
+
+Compare: https://github.com/bluez/bluez/compare/fa7828bddd21...b7ca43eedfd5
