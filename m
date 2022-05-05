@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F1E051CC79
+	by mail.lfdr.de (Postfix) with ESMTP id 2EC9451CC78
 	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 May 2022 01:07:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378983AbiEEXJq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 May 2022 19:09:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46466 "EHLO
+        id S1386601AbiEEXJs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 May 2022 19:09:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386589AbiEEXJn (ORCPT
+        with ESMTP id S1386594AbiEEXJo (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 5 May 2022 19:09:43 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8700E5EDC5
-        for <linux-bluetooth@vger.kernel.org>; Thu,  5 May 2022 16:06:02 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id b5so3823830ile.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 05 May 2022 16:06:02 -0700 (PDT)
+        Thu, 5 May 2022 19:09:44 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EBE55EDC4
+        for <linux-bluetooth@vger.kernel.org>; Thu,  5 May 2022 16:06:04 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id n6so1910444ili.7
+        for <linux-bluetooth@vger.kernel.org>; Thu, 05 May 2022 16:06:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=JBpgrjNMgWpTskmRnE/wkrvDdfqnLyxeNkic0pV8L7U=;
-        b=LWaSVVe7VuDdxBPER9BT4enBNwV5nzI3xLWVRvi0MBAQXwoQgCE/uAYo+DMuvLkN2c
-         F7b7Blr4mx7lisfrdrfmEHimIm9R04jIvnaN7jF1yldl/SJxOBllBZjRqNo8wvJ0Nmn1
-         EftRowGsFNgTU2M5Xf9rf1ErRijWRt3NUqqAS8NaVotVqsLvR6Q9jNKehW0hp4SoFyFg
-         DCDjm1YiWuOTFzguL8ChdQbf+xH79k6caiB7YPHgoUaWGWI/xVT6BtAMLm9Qf0VjUD5U
-         zvqtV2nILoOIqU7zkym0VPTwJd4kGWcViDVEV4YIaM+NTn8/U2JtsLJ8etbAE4ymprzV
-         EZhQ==
+        bh=aaPK0e3xWbCk/gr+fK3J7GSQyesYbC8VHkpcykGAlxI=;
+        b=Sxx11aUk8rnnaEYi40RUgePh317fWRrTKDgatwaBG4tZgaMIit0mBN/JdYbM57+tAo
+         dh9n/SnGOqcIaX0gO5W/L7joCZH0Fh37hK73f4GLP6Zm4XbR92GfqlOjEBhv3nfUxFt1
+         q5h3JTOyS6MLeyBEt7PJhUKhhx70+mXCuVIzqvX6XHP7heicN5o8qonMfMzGWqjuuvRx
+         P85F8BImTIOklaIy7BMSNC7JVqpaB/O9FcQJ61y6hm0W9d8TPrxLYvUzAdIIXf0YXg3m
+         5WQwxWIPDgy1kjtwwWLMWtHbaeNXrhlsuY6RSm73VHSizE+SAHGa6KWzWlzFf5/rFb99
+         Z5Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JBpgrjNMgWpTskmRnE/wkrvDdfqnLyxeNkic0pV8L7U=;
-        b=wbGuFuDRqCIYdnlzdL0sfZoVIU0mDD5LeuovF2cPAN043cfyJv34q2HdWhm84XQJhe
-         eGDfRaRrtBDBXlQMJaWoqXgUm6NkMojcmS1J4MiuYpuuC7B1kP0HCl2goqtcvItytcMP
-         cNDC5JCpeoqxs/09zyo0O4nbfjFN5y4UsjZh1tiO0JvedUTIdtj2y7yGad6pJqbEtIgf
-         qnE/u+oRrNgaxmr/1Gl0VNuXOsH3FJG6Tbho7LY85OPok5UfKKe+pJB7LUSSKnnyG4dl
-         KS8G4ZdKjJibZbgNZZODjKLzXEw1hwIt1VvTqyKEmS5WEyQShbamu4VlcID1l9MmlfiE
-         LsUw==
-X-Gm-Message-State: AOAM530GDzPUae2h1NbZGbKAJ5+MP5HuWM7glKd9TL+r1uIMlGJAUHVi
-        UhZDudoC3MCg6vuDkKTZdgOaY+cqpro=
-X-Google-Smtp-Source: ABdhPJx+TdASmKkq8q14NXr6M2r3jN3vR4JnLNeJMwrgjvuMRhKriVp5HhVl8tXXk1yKdSFJsnGj7g==
-X-Received: by 2002:a05:6e02:1348:b0:2ca:b398:1144 with SMTP id k8-20020a056e02134800b002cab3981144mr183486ilr.163.1651791961766;
-        Thu, 05 May 2022 16:06:01 -0700 (PDT)
+        bh=aaPK0e3xWbCk/gr+fK3J7GSQyesYbC8VHkpcykGAlxI=;
+        b=WCXuTFIlfeX1HZFypPsZEAxlfZOdzxhsQ+UGXcoH5kJWAmx9thJRvbbXS7S2c+gwO5
+         LtN18UJ2Xivz9oCld1bThCeeRXn0GPPS/NY34hJCXvxhj2suEcUlxaKpZCpnqXoMY4Ze
+         vvX4Q/cAQ6dN/mq7E7SYkkvRVqFsvnHUhFrbELIcuYmfeSrohnVVWenc1HyNb3SN2Hv2
+         UWJY21P4ZvQVtRbZjlVjLxseNuQdsep3/brcfpAcbJtf+/sMlWb0rdf+xQOkbAHn7poT
+         ns+w9AINM6wAGR6GzS2dJ8+9NaOpjm2+UY8ChRgwXqn7MpDx69ye2q9Cb8wOIP1Fei1U
+         q/ng==
+X-Gm-Message-State: AOAM5339x6w4iPgc4OiDLbacGt1OU/0U1EIxzMoTVWUeLdTHD1LrUcVM
+        1eqFvupjBd3KJTVphdMPbSvO6O1Q5jY=
+X-Google-Smtp-Source: ABdhPJzrHgUIPB3o+fX6dY7UON7m/3pznZxFVfCatL7Ue63+jGhqjW4MoL9g2TcZwiwMKPjlxxKmZA==
+X-Received: by 2002:a05:6e02:145:b0:2cd:f8ad:dde2 with SMTP id j5-20020a056e02014500b002cdf8addde2mr186764ilr.290.1651791963037;
+        Thu, 05 May 2022 16:06:03 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id l10-20020a92d8ca000000b002cde6e352bfsm780757ilo.9.2022.05.05.16.06.00
+        by smtp.gmail.com with ESMTPSA id l10-20020a92d8ca000000b002cde6e352bfsm780757ilo.9.2022.05.05.16.06.01
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 16:06:00 -0700 (PDT)
+        Thu, 05 May 2022 16:06:02 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 7/8] Bluetooth: btusb: Add support for ISO packets
-Date:   Thu,  5 May 2022 16:05:49 -0700
-Message-Id: <20220505230550.3450617-7-luiz.dentz@gmail.com>
+Subject: [PATCH 8/8] Bluetooth: btusb: Detect if an ACL packet is in fact an ISO packet
+Date:   Thu,  5 May 2022 16:05:50 -0700
+Message-Id: <20220505230550.3450617-8-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220505230550.3450617-1-luiz.dentz@gmail.com>
 References: <20220505230550.3450617-1-luiz.dentz@gmail.com>
@@ -71,45 +71,42 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This enabled btusb driver to properly transmit ISO packets.
+Fix up the packet type if ISO packets are sent over the bulk endpoint.
+
+Note: This is a stopgap since the Bluetooth specification currently
+doesn't define any endpoint to transport ISO packets.
 
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- drivers/bluetooth/btusb.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/bluetooth/btusb.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index e25fcd49db70..a1ee0b20bdf6 100644
+index a1ee0b20bdf6..0120cd7cc197 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -1762,6 +1762,13 @@ static int btusb_send_frame(struct hci_dev *hdev, struct sk_buff *skb)
+@@ -893,11 +893,21 @@ static int btusb_recv_bulk(struct btusb_data *data, void *buffer, int count)
+ 		hci_skb_expect(skb) -= len;
  
- 		hdev->stat.sco_tx++;
- 		return submit_tx_urb(hdev, urb);
-+
-+	case HCI_ISODATA_PKT:
-+		urb = alloc_bulk_urb(hdev, skb);
-+		if (IS_ERR(urb))
-+			return PTR_ERR(urb);
-+
-+		return submit_or_queue_tx_urb(hdev, urb);
- 	}
+ 		if (skb->len == HCI_ACL_HDR_SIZE) {
++			__u16 handle = __le16_to_cpu(hci_acl_hdr(skb)->handle);
+ 			__le16 dlen = hci_acl_hdr(skb)->dlen;
++			__u8 type;
  
- 	return -EILSEQ;
-@@ -2255,6 +2262,13 @@ static int btusb_send_frame_intel(struct hci_dev *hdev, struct sk_buff *skb)
+ 			/* Complete ACL header */
+ 			hci_skb_expect(skb) = __le16_to_cpu(dlen);
  
- 		hdev->stat.sco_tx++;
- 		return submit_tx_urb(hdev, urb);
++			/* Detect if ISO packet has been sent over bulk */
++			if (hci_conn_num(data->hdev, ISO_LINK)) {
++				type = hci_conn_lookup_type(data->hdev,
++							    hci_handle(handle));
++				if (type == ISO_LINK)
++					hci_skb_pkt_type(skb) = HCI_ISODATA_PKT;
++			}
 +
-+	case HCI_ISODATA_PKT:
-+		urb = alloc_bulk_urb(hdev, skb);
-+		if (IS_ERR(urb))
-+			return PTR_ERR(urb);
-+
-+		return submit_or_queue_tx_urb(hdev, urb);
- 	}
- 
- 	return -EILSEQ;
+ 			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
+ 				kfree_skb(skb);
+ 				skb = NULL;
 -- 
 2.35.1
 
