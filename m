@@ -2,61 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BEA651CC4C
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 May 2022 00:47:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B685B51CC82
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 May 2022 01:07:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386472AbiEEWvU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 May 2022 18:51:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34454 "EHLO
+        id S1386584AbiEEXJk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 May 2022 19:09:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386471AbiEEWvT (ORCPT
+        with ESMTP id S1383013AbiEEXJe (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 5 May 2022 18:51:19 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDFBF5E170
-        for <linux-bluetooth@vger.kernel.org>; Thu,  5 May 2022 15:47:36 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id q76so4687360pgq.10
-        for <linux-bluetooth@vger.kernel.org>; Thu, 05 May 2022 15:47:36 -0700 (PDT)
+        Thu, 5 May 2022 19:09:34 -0400
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 625FA5EDCB
+        for <linux-bluetooth@vger.kernel.org>; Thu,  5 May 2022 16:05:53 -0700 (PDT)
+Received: by mail-il1-x131.google.com with SMTP id b5so3823830ile.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 05 May 2022 16:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=7/LF7dRTfsvD+KyoRuEmGsimTAjE/YgKKIYLcB9lcRo=;
-        b=PjScih55zhyh8UGUEAeTIjyKUHyMPhzuZDexOONBWiJFMuQNRrWARfDCGbnxLW7Drv
-         TTGtj+mmmewr2fYPl9b5Tnla5wX6fN1AuW1JgExJmzZPCGDNVB9CwEKnTbz3lH0Tko5W
-         GKj+SmgokqGfwUvaZ+Nk4oBTb3kzDkpl6JAsPHAxytXr5Fez/LNY4hbAQMK3y8RIn8AI
-         5V09Tp6qiTyyhnXIG8iUwWDAQ7ihv041KVe5PgknOfeqdNhGaeSx5ukcWPAVOd2QS+ru
-         QFmlH0bpiks1rNRB/b1I5fjLLWMkcFVqdrl4eqSFWyME1AjhFHWPa7DfwLQRKdI10ehL
-         MWUQ==
+        bh=PHw6Ja1gV4BwAEbVqGX7HauFqMEnbEUQr0i4Ezt55rU=;
+        b=odrSEimn642lX30BhyZ/K5SUsnIf8+NckzJa1s6V6awDjknjXYHWLlcy2bX0iWmSsW
+         UbumJ3toWjpvs4MiqBNHb+k8Kr6J4TLAYK3nGY1I9aMM9dO1J789IMoqsotyFegTxMQ0
+         rAIgGVPLNxhevxdfVcxGifcK9mamVCsCzEnJTkO113XIJaD4AoyQjvAO7z+KLCMP5P9r
+         yZHPlwo4plU5+15+ADo9tDCrovS/EldwldxbuqlHGp/QaXXLrEgmk6xE3J2ABGign366
+         ZPvFtISh96yQZ3tgl4NtVBHYrSf02x4OGSzZPMca2WsWHH68UK7WiYXcR+bt/RbmVguz
+         hYZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7/LF7dRTfsvD+KyoRuEmGsimTAjE/YgKKIYLcB9lcRo=;
-        b=ye/5dkA2JT+T7TSgBKjkt52BWA4v/NE7FeDtLyrk1kioMfDT8sbWeYAJwdzeVas/6B
-         BDwYQ8W5kOI7OJ/mL+2+3qeJyzclnEKopJ3dzYi3GEBFlS2F9rfy1TdwPGys3i/7eQz3
-         yJZW6wxTxMwx5ZgyTsa2H1cRz5oJ75AABHWJUjOO1VeZK9KS0Sq19YratIWe6ZGekc63
-         a0/edb0UoeXqd/fegyf6/qh1g53Vw8CFgLiI2B2OO5wOQSpUhMbR8x34o2DHKgyhgaAl
-         qykaumlkR/aD2wIQARLmsL+MFeQsUkYbwaQsFKZ62mI9jDbmurq+ND3eSm14Wh4zo9Cv
-         u7tw==
-X-Gm-Message-State: AOAM530PArLG5i/FjbtJ7SrRQEMdOQAyVz9uOXVNB4/2Rw90Em92iK1Q
-        Uw/5+LqCheNmhk95U2XKinZUTJGAyVo=
-X-Google-Smtp-Source: ABdhPJzO4Bw1XoDbEFXvMu5WoYOHIq/lL53Kbt6Srmo2FaRkHn9QCW0Qjz9R3Ao+ReqVyZfNhoKJVQ==
-X-Received: by 2002:a05:6a00:14cc:b0:510:4b70:403e with SMTP id w12-20020a056a0014cc00b005104b70403emr613443pfu.55.1651790855818;
-        Thu, 05 May 2022 15:47:35 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PHw6Ja1gV4BwAEbVqGX7HauFqMEnbEUQr0i4Ezt55rU=;
+        b=vnhSLNKX1cqeATnqi9KIXUvvracxrG9iZ+k5eARI+vJBdh/v59y0Au3tf5dhBIwEe0
+         mJFJ0hYThqsWRxxEBqUn56W0wkNIGdGvW/pFGmufc2vxY/cHEaIp/KV/4k6O7vrpzmx8
+         9+0sqZoW3m9rLok8DsBnslRcpW8lYoCWtaTFTNOQJI/0YfJ0sMiN4BPI51iTB4O2h91v
+         Ja6VgigRSeX1H3n4Ak9GFq+/fLAbyUjRGVtTtlmJcCHlciG0E2nAk1z13DPeZPv45QSS
+         x4eomDZTq+6vY35KmXDpNrE9iXRLSZbZ+7Q2ssZpvS99PipBNexPsKQO4S0/cM1xngaG
+         zH7A==
+X-Gm-Message-State: AOAM530CB4ME/2A4lUe+zczP6obrk/r9awzBSAp4vXU4W0unjnG06j+X
+        lR4IjBUoMjapwEEcSAGM5t/cmiSF7fA=
+X-Google-Smtp-Source: ABdhPJw6Lc7UC27J5JkZW3knK8bWNSaAzmcsT0sWkR7Lh6qxn4WIIUgYSMclLq5rXvtIVpDZdDf13w==
+X-Received: by 2002:a05:6e02:2144:b0:2cf:196f:7b1c with SMTP id d4-20020a056e02214400b002cf196f7b1cmr173131ilv.231.1651791952272;
+        Thu, 05 May 2022 16:05:52 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id e21-20020a170902d39500b0015e8d4eb2aesm129651pld.248.2022.05.05.15.47.34
+        by smtp.gmail.com with ESMTPSA id l10-20020a92d8ca000000b002cde6e352bfsm780757ilo.9.2022.05.05.16.05.51
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 15:47:34 -0700 (PDT)
+        Thu, 05 May 2022 16:05:51 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 7/7] isotest: Add documentation
-Date:   Thu,  5 May 2022 15:47:27 -0700
-Message-Id: <20220505224727.3369989-7-luiz.dentz@gmail.com>
+Subject: [PATCH 1/8] Bluetooth: eir: Add helpers for managing service data
+Date:   Thu,  5 May 2022 16:05:43 -0700
+Message-Id: <20220505230550.3450617-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220505224727.3369989-1-luiz.dentz@gmail.com>
-References: <20220505224727.3369989-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -71,235 +69,93 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds isotest.rst which documents the modes and options of
-isotest(1) and is then converted isotest.1 manpage.
----
- Makefile.tools    |   2 +-
- tools/isotest.rst | 202 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 203 insertions(+), 1 deletion(-)
- create mode 100644 tools/isotest.rst
+This adds helpers for accessing and appending service data (0x16) ad
+type.
 
-diff --git a/Makefile.tools b/Makefile.tools
-index 7b0947ebb..fd4d16475 100644
---- a/Makefile.tools
-+++ b/Makefile.tools
-@@ -321,7 +321,7 @@ profiles_iap_iapd_SOURCES = profiles/iap/main.c
- profiles_iap_iapd_LDADD = gdbus/libgdbus-internal.la $(GLIB_LIBS) $(DBUS_LIBS)
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ include/net/bluetooth/hci.h |  1 +
+ net/bluetooth/eir.c         | 31 +++++++++++++++++++++++++++++++
+ net/bluetooth/eir.h         |  4 ++++
+ 3 files changed, 36 insertions(+)
+
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 62a9bb022aed..fe7935be7dc4 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -625,6 +625,7 @@ enum {
+ #define EIR_SSP_RAND_R192	0x0F /* Simple Pairing Randomizer R-192 */
+ #define EIR_DEVICE_ID		0x10 /* device ID */
+ #define EIR_APPEARANCE		0x19 /* Device appearance */
++#define EIR_SERVICE_DATA	0x16 /* Service Data */
+ #define EIR_LE_BDADDR		0x1B /* LE Bluetooth device address */
+ #define EIR_LE_ROLE		0x1C /* LE role */
+ #define EIR_SSP_HASH_C256	0x1D /* Simple Pairing Hash C-256 */
+diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
+index 7e930f77ecab..7d77fb00c2bf 100644
+--- a/net/bluetooth/eir.c
++++ b/net/bluetooth/eir.c
+@@ -55,6 +55,19 @@ u8 eir_append_appearance(struct hci_dev *hdev, u8 *ptr, u8 ad_len)
+ 	return eir_append_le16(ptr, ad_len, EIR_APPEARANCE, hdev->appearance);
+ }
  
- if MANPAGES
--man_MANS += tools/rctest.1 tools/l2ping.1 tools/btattach.1
-+man_MANS += tools/rctest.1 tools/l2ping.1 tools/btattach.1 tools/isotest.1
- endif
++u8 eir_append_service_data(u8 *eir, u16 eir_len, u16 uuid, u8 *data,
++			   u8 data_len)
++{
++	eir[eir_len++] = sizeof(u8) + sizeof(uuid) + data_len;
++	eir[eir_len++] = EIR_SERVICE_DATA;
++	put_unaligned_le16(uuid, &eir[eir_len]);
++	eir_len += sizeof(uuid);
++	memcpy(&eir[eir_len], data, data_len);
++	eir_len += data_len;
++
++	return eir_len;
++}
++
+ static u8 *create_uuid16_list(struct hci_dev *hdev, u8 *data, ptrdiff_t len)
+ {
+ 	u8 *ptr = data, *uuids_start = NULL;
+@@ -333,3 +346,21 @@ u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr)
  
- if MESH
-diff --git a/tools/isotest.rst b/tools/isotest.rst
-new file mode 100644
-index 000000000..b2f4e4b38
---- /dev/null
-+++ b/tools/isotest.rst
-@@ -0,0 +1,202 @@
-+=======
-+isotest
-+=======
-+
-+-----------
-+ISO testing
-+-----------
-+
-+:Authors: - Luiz Augusto Von Dentz <luiz.von.dentz@intel.com>
-+:Version: BlueZ
-+:Copyright: Free use of this software is granted under ther terms of the GNU
-+            Lesser General Public Licenses (LGPL).
-+:Date: May 4, 2022
-+:Manual section: 1
-+:Manual group: Linux System Administration
-+
-+SYNOPSIS
-+========
-+
-+**isotest** <*MODE*> [*OPTIONS*] [*bdaddr*] [*bdaddr1*]...
-+
-+DESCRIPTION
-+===========
-+
-+**isotest(1)** is used to test Isochronous (CIS/BIS) communications on the
-+BlueZ stack
-+
-+MODES
-+=====
-+
-+-d, --dump=[FILE]        Listen and dump incoming data
-+                         (CIS server/BIS broadcaster) and optionally save the
-+			 contents to *FILE*.
-+
-+-c, --reconnect          Reconnect (CIS client).
-+
-+-m, --multiple           Multiple connects (CIS client).
-+
-+-r, --receive=[FILE]     Receive (CIS server/BIS broadcast receiver) and
-+                         optionally save the contents to *FILE*.
-+
-+-s, --send=[FILE]        Connect and send (CIS client/BIS broadcaster), can
-+                         optionally use contents from *FILE*.
-+
-+-n, --silent             Connect and be silent (CIS client/BIS broadcaster).
-+
-+OPTIONS
-+=======
-+
-+-b, --bytes=<SIZE>      Send or Receive packet size
-+
-+-i, --index=<NUM>        Select the specified HCI device index. *hciNUM* is
-+                         also acceptable.
-+
-+-j, --jitter=<JITTER>    Socket jitter buffer.
-+
-+-h, --help
-+
-+-q, --quiet              Disables packet logging.
-+
-+-t, --timeout=<USEC>     Socket send timeout.
-+
-+-C, --continue           Continuously send packets starting over in case of a
-+                         file.
-+
-+-W, --defer=<SEC>        Enable deferred setup.
-+
-+-M, --mtu=<SDU>          Socket QoS SDU.
-+
-+-S, --sca/adv-interval=<SCA/INTERVAL>
-+                         Socket QoS CIS SCA/BIS advertising interval.
-+
-+-P, --packing=<PACKING>  Socket QoS Packing.
-+
-+.. list-table::
-+   :header-rows: 1
-+   :widths: auto
-+   :stub-columns: 1
-+   :align: left
-+
-+   * - *PACKING*
-+     - Description
-+
-+   * - **0x00**
-+     - Sequential
-+
-+   * - **0x01**
-+     - Interleaved
-+
-+-F, --framing=<FRAMING>  Socket QoS Framing.
-+
-+.. list-table::
-+   :header-rows: 1
-+   :widths: auto
-+   :stub-columns: 1
-+   :align: left
-+
-+   * - *FRAMING*
-+     - Description
-+
-+   * - **0x00**
-+     - Unframed
-+
-+   * - **0x01**
-+     - Framed
-+
-+-I, --interval=<USEC>    Socket QoS Interval.
-+
-+-L, --latency=<MSEC>     Socket QoS Latency.
-+
-+-Y, --phy=<PHY>          Socket QoS PHY.
-+
-+.. list-table::
-+   :header-rows: 1
-+   :widths: auto
-+   :stub-columns: 1
-+   :align: left
-+
-+   * - *PHY*
-+     - Description
-+
-+   * - **0x01**
-+     - LE 1M
-+
-+   * - **0x02**
-+     - LE 2M
-+
-+   * - **0x03**
-+     - LE Coded
-+
-+-R, --rtn=<NUM>          Socket QoS retransmissions.
-+
-+-B, --preset=<PRESET>    Socket QoS preset.
-+
-+-G, --CIG/BIG=<ID>       Socket QoS CIG/BIG ID.
-+
-+-T, --CIS/BIS=<ID>       Socket QoS CIS/BIS ID.
-+
-+-V, --type=<TYPE>        Socket destination address type:
-+
-+.. list-table::
-+   :header-rows: 1
-+   :widths: auto
-+   :stub-columns: 1
-+   :align: left
-+
-+   * - *TYPE*
-+     - Description
-+
-+   * - **le_public**
-+     - LE Public Address
-+
-+   * - **le_random**
-+     - LE Random Address
-+
-+EXAMPLES
-+========
-+
-+Unicast Central
-+---------------
-+
-+.. code-block::
-+
-+    $ tools/isotest -s XX:XX:XX:XX:XX:XX
-+
-+Unicast Central connecting to 2 peers using CIG 0x01
-+----------------------------------------------------
-+
-+.. code-block::
-+
-+    $ tools/isotest -G 0x01 -s XX:XX:XX:XX:XX:XX YY:YY:YY:YY:YY:YY
-+
-+Unicast Peripheral
-+------------------
-+
-+.. code-block::
-+
-+    $ tools/isotest -d
-+
-+Broadcaster
-+-----------
-+
-+.. code-block::
-+
-+    $ tools/isotest -s 00:00:00:00:00:00
-+
-+Broadcast Receiver using hci1
-+-----------------------------
-+
-+.. code-block::
-+
-+    $ tools/isotest -i hci1 -d XX:XX:XX:XX:XX:XX
-+
-+RESOURCES
-+=========
-+
-+http://www.bluez.org
-+
-+REPORTING BUGS
-+==============
-+
-+linux-bluetooth@vger.kernel.org
+ 	return scan_rsp_len;
+ }
++
++void *eir_get_service_data(u8 *eir, size_t eir_len, u16 uuid, size_t *len)
++{
++	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, len))) {
++		u16 value = get_unaligned_le16(eir);
++
++		if (uuid == value) {
++			if (len)
++				*len -= 2;
++			return &eir[2];
++		}
++
++		eir += *len;
++		eir_len -= *len;
++	}
++
++	return NULL;
++}
+diff --git a/net/bluetooth/eir.h b/net/bluetooth/eir.h
+index 43f1945bffc5..62f2374078f2 100644
+--- a/net/bluetooth/eir.h
++++ b/net/bluetooth/eir.h
+@@ -14,6 +14,8 @@ u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr);
+ 
+ u8 eir_append_local_name(struct hci_dev *hdev, u8 *eir, u8 ad_len);
+ u8 eir_append_appearance(struct hci_dev *hdev, u8 *ptr, u8 ad_len);
++u8 eir_append_service_data(u8 *eir, u16 eir_len, u16 uuid, u8 *data,
++			   u8 data_len);
+ 
+ static inline u16 eir_precalc_len(u8 data_len)
+ {
+@@ -92,3 +94,5 @@ static inline void *eir_get_data(u8 *eir, size_t eir_len, u8 type,
+ 
+ 	return NULL;
+ }
++
++void *eir_get_service_data(u8 *eir, size_t eir_len, u16 uuid, size_t *len);
 -- 
 2.35.1
 
