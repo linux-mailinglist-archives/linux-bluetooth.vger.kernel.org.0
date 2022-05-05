@@ -2,101 +2,176 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E30BE51B426
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 May 2022 02:09:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6359551B40D
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 May 2022 02:08:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347524AbiEEADm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 4 May 2022 20:03:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41568 "EHLO
+        id S229912AbiEEAKc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 4 May 2022 20:10:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356495AbiEDX5i (ORCPT
+        with ESMTP id S230357AbiEEAKV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 4 May 2022 19:57:38 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA0184ECE4
-        for <linux-bluetooth@vger.kernel.org>; Wed,  4 May 2022 16:54:00 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id s18-20020a056830149200b006063fef3e17so1928166otq.12
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 May 2022 16:54:00 -0700 (PDT)
+        Wed, 4 May 2022 20:10:21 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1366ABE3A
+        for <linux-bluetooth@vger.kernel.org>; Wed,  4 May 2022 17:06:32 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id c125so3193535iof.9
+        for <linux-bluetooth@vger.kernel.org>; Wed, 04 May 2022 17:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
-        b=Dn1MT8x7p4Rbn+pctwVkt7IgIdUxT0LRLjox/JaF9ttsZ2N8sUUglHFRxQa3sl75aK
-         h1U1JpCoOjPff8rV+LL0edQuBh+YvYlTbZ4zx127Qa80qMcS49J0d2nS2s7mVVadwp/M
-         vGp6wV8qQhR9tMRiQjyWHIJslgvG4HigF7p24aLxixJ1l99K68kLikab9Y0HgtSpkDYW
-         0+riuhXlj9dAnGs04evyYz4sFXKtm0FlJKiBI2Dtbo7ebvKr6E7XJkxgxzCXhReMwL1D
-         yv9OUeo9KjH+/RIlVXefhsYivAQRdlwo604eWoXrrvRFVxcSgXwgPis+UtVhyLpBWx3z
-         WyWg==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5E9/QWTff8XTUl3YMv8DsMWpigkqx7PC7kzC5bE9vX8=;
+        b=nioaqjqLdY/wp4Axj57RP1u4no4YkH7ktCK5JxBPAOl4FLeNaXUk+TVbVj6y6N7qtP
+         3jfVco0a4P5gn73Bt/HM/BW0WrnH0ZNfAio2G0R/gB6zyPGpZsvWnv5G5Cb/dvjqynjY
+         DuiN/86qZUxB2cqNsT+P9TxF5XKms9V25Ipv450YPEzYMLxRkNcZdXESzeWSciFcUzCs
+         hXABrOLIhT9TKQXQ7mHB0WJ8uIdZSnTmAkpixuyPoGfeFb9xWNQXN+bvb/BwsLZv1WaW
+         n6ZanavTHPfslDpsiODOP3jUfIuZtA4zbR8XEBaEnreXiChFXmzHvUcx2SDKhuvyCDQ+
+         69lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
-        b=PjUkKY+SmIpY4l/OhvQ4mBBQXbj7Ur6GLR01BUwmLPrRjCgTqdbrZ4UMFwgPmZwSC0
-         mxZva0gR+buyVtR0L8BWlBXESUe68fs0xeyNPANK8PdaDPVVfpLOZ5eG0u40q/eDpLvF
-         qtKAnJWUo9gE0Kqw1buQaHHrOkdHDu1o4MVWHMIPjuQMT5dVK+fXAf4pBC95TkspUsKF
-         mhxPEJOVKzhScY8o9baWolLU2kKkNkrQ1KRBXJ3U4rVP6ZRw1Ge8PvIIy4CSLhuL/iyn
-         2gQ8saqniqqqt8Bc2D7nmgxA0W3Nz4FU3bJCTssUS3yjjuD5LgAVYGFlWdU+zYEKFU2K
-         t38w==
-X-Gm-Message-State: AOAM5307w3//yhuDJBvOXTtgg4mhJ8Xy5foKoJNoqwYpiZx2EiHdRPGz
-        cfe+UdMQaFOAuO/w3JweraFIQkWYZj8fieNPdDA=
-X-Google-Smtp-Source: ABdhPJyXbFHNtxfp8+qt+M9kuv/iG7XfFeFFPd7I4/fmpdxuycMtmf6dIJw5ghtZAT2CwgvAVE/kUl0HxsirxLIU8v0=
-X-Received: by 2002:a9d:6b16:0:b0:605:e0eb:d3d6 with SMTP id
- g22-20020a9d6b16000000b00605e0ebd3d6mr8263208otp.213.1651708440302; Wed, 04
- May 2022 16:54:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5E9/QWTff8XTUl3YMv8DsMWpigkqx7PC7kzC5bE9vX8=;
+        b=ulH3AqiCWvHfIJ4r3Uq+5XzGSQLOlDbnMOy7idNCa3a4z3WL97McgsnY0MrUlOR4ip
+         Ye/fneBC7Qa74DsRl8zC7LjxC+ITAVPEs++tulmDfKNEQRUo++Y2W8xKRG7cmgO2nQR+
+         xEtu/ePBVODfr5FzfuEWIM9NOmrYfMg1nvbw54G6xR/SVlh2Rs/NjbDgQ2YTh3Db8wzF
+         whbjCwXnEXQqe123sEZSUfqugNZBLnbcnm6cgbNd9eJM0KCLojd/v7PWRrM+zLBhL0c9
+         mb60RsELVLcMAKPPsLLDGOw1L2v1qXEA94+tCBJXEklywfvotaxcPerAuD5XSbt4CpB8
+         UEqA==
+X-Gm-Message-State: AOAM531yatv+cJtujtM6DOX6ahPty2pC3N334aTENnOF4W/anVR1bWtY
+        fX5/3alzWyYLYvwv4siyJw7/gJKId58=
+X-Google-Smtp-Source: ABdhPJw2iLavymU1fF8D4eUHIsuFqUS0x2//J8q4OM7f8aP+2WUw0GlxHkQDHUsDumWFtFWN8u2Ccw==
+X-Received: by 2002:a05:6638:5b3:b0:323:a07d:6747 with SMTP id b19-20020a05663805b300b00323a07d6747mr9721111jar.252.1651709191154;
+        Wed, 04 May 2022 17:06:31 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id f5-20020a056e020b4500b002cde6e352d2sm57926ilu.28.2022.05.04.17.06.30
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 May 2022 17:06:30 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH 1/2] Bluetooth: Add bt_status
+Date:   Wed,  4 May 2022 17:06:27 -0700
+Message-Id: <20220505000629.2903297-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Received: by 2002:a05:6802:1a9:0:0:0:0 with HTTP; Wed, 4 May 2022 16:53:59
- -0700 (PDT)
-Reply-To: ortegainvestmmentforrealinvest@gmail.com
-From:   Info <joybhector64@gmail.com>
-Date:   Thu, 5 May 2022 05:23:59 +0530
-Message-ID: <CAP7KLYgH9LcKHS-KgR0zObHAgC6Fr3D+dOJSbDKurTc_12+iFw@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:343 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [joybhector64[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [joybhector64[at]gmail.com]
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.5 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-I am an investor. I came from the USA and I have many investments all
-over the world.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-I want you to partner with me to invest in your country I am into many
-investment such as real Estate or buying of properties i can also
-invest money in any of existing business with equity royalty or by %
-percentage so on,
-Warm regards
+This adds bt_status which can be used to convert Unix errno to
+Bluetooth status.
+
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ include/net/bluetooth/bluetooth.h |  1 +
+ net/bluetooth/lib.c               | 71 +++++++++++++++++++++++++++++++
+ 2 files changed, 72 insertions(+)
+
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index 6b48d9e2aab9..cfe6159f26bc 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -521,6 +521,7 @@ static inline struct sk_buff *bt_skb_sendmmsg(struct sock *sk,
+ }
+ 
+ int bt_to_errno(u16 code);
++__u8 bt_status(int err);
+ 
+ void hci_sock_set_flag(struct sock *sk, int nr);
+ void hci_sock_clear_flag(struct sock *sk, int nr);
+diff --git a/net/bluetooth/lib.c b/net/bluetooth/lib.c
+index 5326f41a58b7..469a0c95b6e8 100644
+--- a/net/bluetooth/lib.c
++++ b/net/bluetooth/lib.c
+@@ -135,6 +135,77 @@ int bt_to_errno(__u16 code)
+ }
+ EXPORT_SYMBOL(bt_to_errno);
+ 
++/* Unix errno to Bluetooth error codes mapping */
++__u8 bt_status(int err)
++{
++	/* Don't convert if already positive value */
++	if (err >= 0)
++		return err;
++
++	switch (err) {
++	case -EBADRQC:
++		return 0x01;
++
++	case -ENOTCONN:
++		return 0x02;
++
++	case -EIO:
++		return 0x03;
++
++	case -EHOSTDOWN:
++		return 0x04;
++
++	case -EACCES:
++		return 0x05;
++
++	case -EBADE:
++		return 0x06;
++
++	case -ENOMEM:
++		return 0x07;
++
++	case -ETIMEDOUT:
++		return 0x08;
++
++	case -EMLINK:
++		return 0x09;
++
++	case EALREADY:
++		return 0x0b;
++
++	case -EBUSY:
++		return 0x0c;
++
++	case -ECONNREFUSED:
++		return 0x0d;
++
++	case -EOPNOTSUPP:
++		return 0x11;
++
++	case -EINVAL:
++		return 0x12;
++
++	case -ECONNRESET:
++		return 0x13;
++
++	case -ECONNABORTED:
++		return 0x16;
++
++	case ELOOP:
++		return 0x17;
++
++	case -EPROTONOSUPPORT:
++		return 0x1a;
++
++	case -EPROTO:
++		return 0x19;
++
++	default:
++		return 0x1f;
++	}
++}
++EXPORT_SYMBOL(bt_status);
++
+ void bt_info(const char *format, ...)
+ {
+ 	struct va_format vaf;
+-- 
+2.35.1
+
