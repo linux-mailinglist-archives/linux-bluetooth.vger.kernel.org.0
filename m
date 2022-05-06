@@ -2,98 +2,162 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9867751E0AB
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 May 2022 23:06:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 533F051E17D
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 May 2022 23:58:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444364AbiEFVJk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 6 May 2022 17:09:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33906 "EHLO
+        id S1356960AbiEFWBd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 6 May 2022 18:01:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1444415AbiEFVJV (ORCPT
+        with ESMTP id S1444626AbiEFWBb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 6 May 2022 17:09:21 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5A071D0C1
-        for <linux-bluetooth@vger.kernel.org>; Fri,  6 May 2022 14:05:35 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id z5-20020a17090a468500b001d2bc2743c4so7885711pjf.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 06 May 2022 14:05:35 -0700 (PDT)
+        Fri, 6 May 2022 18:01:31 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C17AE3EBA3
+        for <linux-bluetooth@vger.kernel.org>; Fri,  6 May 2022 14:57:46 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id e15so9504327iob.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 06 May 2022 14:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to;
-        bh=VSSUIwdzgxQxnEkB7+u7pnweyPajIQMP3nQqWYs8VX0=;
-        b=gmmgqd2enKSblS7bCmnm2ivMD5ZTgpfnW/j/MNizwci6pH3rJEQXq3L9+ZdKL4HUTr
-         YB+Dhjpe2MkKztjhU+UDqenquKjwj+pPKOCMhVrtxmSec4u8GzSTlKnYmXQROsqwJ7YF
-         fpyt4ZWxoGKOIdNHSzn6X8527WsL9seFFIUc417Aceaz0HyqyfLzhrTyiK1hfEoe7bgf
-         O66BH+VPp/USBREXReLf48zIB9vdsgcsn+kPDpodP7afE/7TIv51GGMLWkNAhK51uLVF
-         lGR5deZqynPeLivFeL+j4lPiytJOppTfXKPKuEkvtzBoRNP5faKFInL0FLuVz9LTzW90
-         0CuA==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KCvHkTgUJPXdUl27Xc90pd5nJnvEbH2ygjEL3W2BokQ=;
+        b=mOzTYD0XlP+XyZLNWHdDbBr706vcnB7VS9Wnc8cbSK6SaGlyi1IOMxuVeSkJQoMKE/
+         PbotlYO2Z4AnaCFF1mBo3Uyzl5uKBDnDfxd9s4OP+L4ZTBcJmh8tAUNS95P8Gv6vQVjx
+         0fzHQ0XQN11p3ZqJ3jGFnRRB+UvA7PzENJZHUcXyPuUS38pnRAgCNfwpyHP7AHTN1Ahv
+         fiqKGm/+UfMNLmN0Mu9tZJ9Ijkuq+pc5zS4xbETLNjJAYRScgMYmyWpIDPjEUS5QMjcH
+         MA7kh57Tmb9vAuJM3MvJT2es4+HkrHoJd3+HcmefG+Ok89HawHVN+Lvy7YYybKNyaME1
+         jwCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to;
-        bh=VSSUIwdzgxQxnEkB7+u7pnweyPajIQMP3nQqWYs8VX0=;
-        b=OAw90abAET7YbMQ1eWBG6dSYYpjDL3TIbFDhsW0960JDxWaacEVhL8nwU2h4FqDaQw
-         7DnFuCGFAHh/kp90W5r6nKnPkPY4gEbUeDsRP+0rZo0b/nKtPlrmxEXMuqQbpiX6iX6f
-         wdA8o1WWkN3r6qk4sz8Eklg+oCWB0Tjk3/7sVvIO+IGpGvw7y6EX2i/BwPPOfU9co0FD
-         YUGMRVR7CfAtBABmXp3/8UUxNoDs48p9rQ7uFn5cpLJKHbH1DhN5MpXuhX7qYCv/8Sly
-         cnl7fLQcPqSObF48hRXKawcONRTgiK/L0+6rLVtlej8HcxWg9JCujWzfn1HTBiN6atOz
-         kmDA==
-X-Gm-Message-State: AOAM533RYKabBBg/W8wveBW0n8pqRO8DamyGz2NOs3zEXFkwRChu6CWy
-        SePBS9Q73Zd9Z2urj8zYPgApcg+Z8zENffS0WA==
-X-Google-Smtp-Source: ABdhPJyqTkc39jIaJ9/Rbqdi6sONfGmoHQRCW6ADRHNTA3OhSOJwlsoTVRnEtva6v71BUuTBbiWSrg7BAnP42QBwIqU=
-X-Received: by 2002:a17:902:a501:b0:153:f956:29f0 with SMTP id
- s1-20020a170902a50100b00153f95629f0mr5598333plq.120.1651871135500; Fri, 06
- May 2022 14:05:35 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KCvHkTgUJPXdUl27Xc90pd5nJnvEbH2ygjEL3W2BokQ=;
+        b=u8q4LjifqkmmtspZbS9xOFVWlLuA0Oc98a4HQNdGoog+5n6j7+SkL1muHWMHPV787M
+         fNjtNEWIn8fgrq7P1EBpXlCawgx7t69djGK2ka/zt+FWqwFpQy7WpnGdREH1RNwXfofm
+         fJigdgUUIpwsW/ERlPh+RuXg5e4QYn67aIwsMpYCY3x9PLYJ3/Pa8iMTLMtLSAc86seg
+         6AhXOTo16WFF3uAYquVPILBASdXJsc7eUjc+1Q5DRPo2tumoQXt+deQ5Rzzkn76WuG/O
+         VntQr8CjmX8fdXfgUsPDhoY6NM+rgE5bb3zR9Ru9JUSR2aDLsYwpi4ESJffykpqorirI
+         w9hA==
+X-Gm-Message-State: AOAM531BKaL9sa6TAV7o+iVhxnrG7rWcwU0/iT0csMVCOjMgm39YAi0R
+        CarokeGtmPSJZ7VnL9ST3VKCuPy6ye4=
+X-Google-Smtp-Source: ABdhPJyBEndyl14H+/GQJR5nnar3IiaS2qlS8wBudDGLeJJ6tpGwz09Qkg6iJIp3Ng22rTUSZvchTA==
+X-Received: by 2002:a02:8605:0:b0:32b:1dd7:fc31 with SMTP id e5-20020a028605000000b0032b1dd7fc31mr2256425jai.174.1651874265733;
+        Fri, 06 May 2022 14:57:45 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id s14-20020a5e980e000000b0065aab053448sm1572281ioj.21.2022.05.06.14.57.44
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 May 2022 14:57:44 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH v2 1/8] Bluetooth: eir: Add helpers for managing service data
+Date:   Fri,  6 May 2022 14:57:36 -0700
+Message-Id: <20220506215743.3870212-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Received: by 2002:ac4:9906:0:b0:4ba:807b:b8f3 with HTTP; Fri, 6 May 2022
- 14:05:33 -0700 (PDT)
-Reply-To: warren001buffett@gmail.com
-In-Reply-To: <CAD_xG_pvNZK6BFCW+28Xv4DE=_5rbDZXDok2BYNn9xw6Ma7iow@mail.gmail.com>
-References: <CAD_xG_pvNZK6BFCW+28Xv4DE=_5rbDZXDok2BYNn9xw6Ma7iow@mail.gmail.com>
-From:   Warren Buffett <guidayema@gmail.com>
-Date:   Fri, 6 May 2022 21:05:33 +0000
-Message-ID: <CAD_xG_o-NeOti3yu7R9R5-myJ=Pi4nnU5Tuumw-xPcT-nT8e=Q@mail.gmail.com>
-Subject: Fwd: My name is Warren Buffett, an American businessman.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.1 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:1044 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4978]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [guidayema[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.5 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-My name is Warren Buffett, an American businessman and investor I have
-something important to discuss with you.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Mr. Warren Buffett
-warren001buffett@gmail.com
-Chief Executive Officer: Berkshire Hathaway
-aphy/Warren-Edward-Buffett
+This adds helpers for accessing and appending service data (0x16) ad
+type.
+
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+v2: Fixes CI/kernel test robot findings
+
+ include/net/bluetooth/hci.h |  1 +
+ net/bluetooth/eir.c         | 31 +++++++++++++++++++++++++++++++
+ net/bluetooth/eir.h         |  4 ++++
+ 3 files changed, 36 insertions(+)
+
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 62a9bb022aed..fe7935be7dc4 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -625,6 +625,7 @@ enum {
+ #define EIR_SSP_RAND_R192	0x0F /* Simple Pairing Randomizer R-192 */
+ #define EIR_DEVICE_ID		0x10 /* device ID */
+ #define EIR_APPEARANCE		0x19 /* Device appearance */
++#define EIR_SERVICE_DATA	0x16 /* Service Data */
+ #define EIR_LE_BDADDR		0x1B /* LE Bluetooth device address */
+ #define EIR_LE_ROLE		0x1C /* LE role */
+ #define EIR_SSP_HASH_C256	0x1D /* Simple Pairing Hash C-256 */
+diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
+index 7e930f77ecab..7d77fb00c2bf 100644
+--- a/net/bluetooth/eir.c
++++ b/net/bluetooth/eir.c
+@@ -55,6 +55,19 @@ u8 eir_append_appearance(struct hci_dev *hdev, u8 *ptr, u8 ad_len)
+ 	return eir_append_le16(ptr, ad_len, EIR_APPEARANCE, hdev->appearance);
+ }
+ 
++u8 eir_append_service_data(u8 *eir, u16 eir_len, u16 uuid, u8 *data,
++			   u8 data_len)
++{
++	eir[eir_len++] = sizeof(u8) + sizeof(uuid) + data_len;
++	eir[eir_len++] = EIR_SERVICE_DATA;
++	put_unaligned_le16(uuid, &eir[eir_len]);
++	eir_len += sizeof(uuid);
++	memcpy(&eir[eir_len], data, data_len);
++	eir_len += data_len;
++
++	return eir_len;
++}
++
+ static u8 *create_uuid16_list(struct hci_dev *hdev, u8 *data, ptrdiff_t len)
+ {
+ 	u8 *ptr = data, *uuids_start = NULL;
+@@ -333,3 +346,21 @@ u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr)
+ 
+ 	return scan_rsp_len;
+ }
++
++void *eir_get_service_data(u8 *eir, size_t eir_len, u16 uuid, size_t *len)
++{
++	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, len))) {
++		u16 value = get_unaligned_le16(eir);
++
++		if (uuid == value) {
++			if (len)
++				*len -= 2;
++			return &eir[2];
++		}
++
++		eir += *len;
++		eir_len -= *len;
++	}
++
++	return NULL;
++}
+diff --git a/net/bluetooth/eir.h b/net/bluetooth/eir.h
+index 43f1945bffc5..62f2374078f2 100644
+--- a/net/bluetooth/eir.h
++++ b/net/bluetooth/eir.h
+@@ -14,6 +14,8 @@ u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr);
+ 
+ u8 eir_append_local_name(struct hci_dev *hdev, u8 *eir, u8 ad_len);
+ u8 eir_append_appearance(struct hci_dev *hdev, u8 *ptr, u8 ad_len);
++u8 eir_append_service_data(u8 *eir, u16 eir_len, u16 uuid, u8 *data,
++			   u8 data_len);
+ 
+ static inline u16 eir_precalc_len(u8 data_len)
+ {
+@@ -92,3 +94,5 @@ static inline void *eir_get_data(u8 *eir, size_t eir_len, u8 type,
+ 
+ 	return NULL;
+ }
++
++void *eir_get_service_data(u8 *eir, size_t eir_len, u16 uuid, size_t *len);
+-- 
+2.35.1
+
