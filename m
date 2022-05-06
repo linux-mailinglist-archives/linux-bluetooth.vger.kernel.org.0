@@ -2,61 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0539351E178
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 May 2022 23:58:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ECE651E283
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  7 May 2022 01:41:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444627AbiEFWBk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 6 May 2022 18:01:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49176 "EHLO
+        id S1444717AbiEFWWG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 6 May 2022 18:22:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1444634AbiEFWBi (ORCPT
+        with ESMTP id S232123AbiEFWWF (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 6 May 2022 18:01:38 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8510124F09
-        for <linux-bluetooth@vger.kernel.org>; Fri,  6 May 2022 14:57:54 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id z26so9483840iot.8
-        for <linux-bluetooth@vger.kernel.org>; Fri, 06 May 2022 14:57:54 -0700 (PDT)
+        Fri, 6 May 2022 18:22:05 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 694A0F0B
+        for <linux-bluetooth@vger.kernel.org>; Fri,  6 May 2022 15:18:21 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id f4so9530798iov.2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 06 May 2022 15:18:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=aaPK0e3xWbCk/gr+fK3J7GSQyesYbC8VHkpcykGAlxI=;
-        b=SQFKmup1GeA7LLqhPgjXFFT0fwfmV34Du0E2D2hf0G6ik0V3qPCCeithOc/ETUrFVy
-         sWihSc8wT4G19b5evlDUvqhW9epznMXe+o9yzVZlm6IYGQglnXAhDr+7G51XTjl5CS8w
-         OmGKGsGHAnEE8LXQbNClBn5UepMZlT5BANijceC8eyJ5X57o/upisD5RXkUQ5z7Q/tZV
-         uQI6/xNNqIqxsyGJ9qD3jXavrQCP8NK5sUkFGENEhUpa0pP3XdXoNCymF0aHCOjjumjr
-         UdfsoY3NUhoPPiJcP3Q5K4oyKe7k2DR4ZbvSlGWjMq8acwwsl8bRkWk33PInTWmoTrPT
-         Njew==
+        bh=MVrobd3y78wyXcuja3AMa7lET4T918D00WBUr6I99ro=;
+        b=ZI3ughf9OAinilVxl3worwcVg4OZjz2gpdBmnCcrS89TqCrDlJjQRZw3cFU3WsRjh+
+         LIJX04FPGS/GQN4/AnlmK0UVAUvEQjzsReKxnZXZHOvOBjZScRU0zEmdShDK10KGRYl/
+         7CldmSDZdBb17d8zLVs/Naa6zLA/pnY1ZO1BtlVrj26YJWQK7vCkVSWQuZs5E/+IkpLt
+         DbOifQieJH1lw2iUVCGkOumgYoATTUx1hPj0prgrgCq4A1b61IrHh3HxHDCA52/CsB/7
+         eGAzLbWETUyhb26T+bEqwa6Nac01/ujsuRTaEcmj+laY2GHEPUPqmF7Z6eMc2TyWe9VB
+         Xj8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aaPK0e3xWbCk/gr+fK3J7GSQyesYbC8VHkpcykGAlxI=;
-        b=srnJjfLHCsnvQK7Kc5fK9mB8xH5k1b4tpwPQ4/Ep5FVEubrdu31L7PFue11jRlnS+s
-         l7ltqDzEHa9Qoi+sC4ukHoQFqGzp86nl3xBcYh2Vo02G+lISw5KKvkS3HgsrN72v1OHk
-         7u8Vo3IJZi5ys1av49Mm8QQAxP8EXwU/HHcIZjnB+6s9ZgVLgPLu9lrCLf073biMISg0
-         AvakTjHuz5eaonsW289JjLsG3GidmaZDya9t2sB1qu1ddbWnWarv1m2pjBXRPnMOWeZq
-         rx8iIDd7Z+XVcWGm1vkJ88Dy1g9iH2KtdV7pysWhZoOpcj/nx8IbiwYnUCYoxTAs+RHj
-         NSRA==
-X-Gm-Message-State: AOAM532YzYNxIXtZWf5bEK2w3Hv4HBdVtWYc8UpaEXPAPcjxRSV5tXUa
-        JXD9hePJJU/qbD5cFHm3b+4UG8odNUE=
-X-Google-Smtp-Source: ABdhPJzSeMB9SDVIkom8rlE76uEhIczDPFgb11W4X/eLcfWYf/MFj/j+wQzaojZ1cK1YAj7nvmqF1Q==
-X-Received: by 2002:a02:950c:0:b0:323:918d:a98f with SMTP id y12-20020a02950c000000b00323918da98fmr2247686jah.190.1651874273690;
-        Fri, 06 May 2022 14:57:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MVrobd3y78wyXcuja3AMa7lET4T918D00WBUr6I99ro=;
+        b=Q897FldONa8m/WFFcHQ5D9+AZ5IS1OnIpSx9axPZLRKrtjOeg27+n0M54SX4fjE0az
+         KSO/RSTU00L1A8C1KMFv/Zdl3mduM1wceKNBiWu2Y7D/LoA9HUMs71QHnosGzpSDrzmu
+         gOoxgSmYf98yYCzUk4KiEU/C8ArC/MA1aTs1+WAeWR1Tdbt9wEFSr70kF45zUxzXqfTT
+         267WU3em0GVvB+b2jTzmZ4bIF21CCuqKzwr6zwtIDPcGZ87FWUYOGu2Ft73/jBMEYQtH
+         cNawCqAfrqumIJEU8raoFx1QXCwm9gn87GwL5QjAFGHiZwVZ3S1UzCqnz6nRaEHkPmQE
+         yURg==
+X-Gm-Message-State: AOAM531ep32IjHGzKzlwxjX3EEwy3k5eiMXbocWjQvH7Bu8i9wc9AeKD
+        Rm3W3xkzhOW4mB2tBSBsxtSRowxFiIk=
+X-Google-Smtp-Source: ABdhPJy6nRmWSSE7v+eEggPPlfNQPKpXQHL/ewbzIulWjxd/pITElc3EzFQ4uUTcDwYkhnf81qUbpg==
+X-Received: by 2002:a05:6638:3792:b0:32b:5cd3:50cd with SMTP id w18-20020a056638379200b0032b5cd350cdmr2292043jal.118.1651875500421;
+        Fri, 06 May 2022 15:18:20 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id s14-20020a5e980e000000b0065aab053448sm1572281ioj.21.2022.05.06.14.57.52
+        by smtp.gmail.com with ESMTPSA id g4-20020a056e02130400b002cde6e352c8sm1480822ilr.18.2022.05.06.15.18.19
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 May 2022 14:57:52 -0700 (PDT)
+        Fri, 06 May 2022 15:18:19 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 8/8] Bluetooth: btusb: Detect if an ACL packet is in fact an ISO packet
-Date:   Fri,  6 May 2022 14:57:43 -0700
-Message-Id: <20220506215743.3870212-8-luiz.dentz@gmail.com>
+Subject: [PATCH v2 BlueZ 1/7] lib: Add definitions for ISO socket
+Date:   Fri,  6 May 2022 15:18:12 -0700
+Message-Id: <20220506221818.3933843-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220506215743.3870212-1-luiz.dentz@gmail.com>
-References: <20220506215743.3870212-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -71,42 +69,146 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Fix up the packet type if ISO packets are sent over the bulk endpoint.
-
-Note: This is a stopgap since the Bluetooth specification currently
-doesn't define any endpoint to transport ISO packets.
-
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- drivers/bluetooth/btusb.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+v2: Fix CI findings.
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index a1ee0b20bdf6..0120cd7cc197 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -893,11 +893,21 @@ static int btusb_recv_bulk(struct btusb_data *data, void *buffer, int count)
- 		hci_skb_expect(skb) -= len;
+ Makefile.am     |  2 +-
+ lib/bluetooth.h | 38 +++++++++++++++++++++++++++++++++++++-
+ lib/iso.h       | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 80 insertions(+), 2 deletions(-)
+ create mode 100644 lib/iso.h
+
+diff --git a/Makefile.am b/Makefile.am
+index 82125c482..c7b369606 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -69,7 +69,7 @@ lib_headers = lib/bluetooth.h lib/hci.h lib/hci_lib.h \
+ 		lib/sco.h lib/l2cap.h lib/sdp.h lib/sdp_lib.h \
+ 		lib/rfcomm.h lib/bnep.h lib/cmtp.h lib/hidp.h
  
- 		if (skb->len == HCI_ACL_HDR_SIZE) {
-+			__u16 handle = __le16_to_cpu(hci_acl_hdr(skb)->handle);
- 			__le16 dlen = hci_acl_hdr(skb)->dlen;
-+			__u8 type;
+-extra_headers = lib/mgmt.h lib/uuid.h lib/a2mp.h lib/amp.h
++extra_headers = lib/mgmt.h lib/uuid.h lib/a2mp.h lib/amp.h lib/iso.h
+ extra_sources = lib/uuid.c
  
- 			/* Complete ACL header */
- 			hci_skb_expect(skb) = __le16_to_cpu(dlen);
+ local_headers = $(foreach file,$(lib_headers), lib/bluetooth/$(notdir $(file)))
+diff --git a/lib/bluetooth.h b/lib/bluetooth.h
+index 0fcf412c6..73297c147 100644
+--- a/lib/bluetooth.h
++++ b/lib/bluetooth.h
+@@ -37,6 +37,7 @@ extern "C" {
+ #define BTPROTO_CMTP	5
+ #define BTPROTO_HIDP	6
+ #define BTPROTO_AVDTP	7
++#define BTPROTO_ISO	8
  
-+			/* Detect if ISO packet has been sent over bulk */
-+			if (hci_conn_num(data->hdev, ISO_LINK)) {
-+				type = hci_conn_lookup_type(data->hdev,
-+							    hci_handle(handle));
-+				if (type == ISO_LINK)
-+					hci_skb_pkt_type(skb) = HCI_ISODATA_PKT;
-+			}
+ #define SOL_HCI		0
+ #define SOL_L2CAP	6
+@@ -140,7 +141,39 @@ struct bt_voice {
+ 
+ #define BT_SCM_PKT_STATUS	0x03
+ 
+-#define BT_CODEC 19
++#define BT_ISO_QOS		17
 +
- 			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
- 				kfree_skb(skb);
- 				skb = NULL;
++#define BT_ISO_QOS_CIG_UNSET	0xff
++#define BT_ISO_QOS_CIS_UNSET	0xff
++
++struct bt_iso_io_qos {
++	uint32_t interval;
++	uint16_t latency;
++	uint16_t sdu;
++	uint8_t  phy;
++	uint8_t  rtn;
++};
++
++struct bt_iso_qos {
++	union {
++		uint8_t  cig;
++		uint8_t  big;
++	};
++	union {
++		uint8_t  cis;
++		uint8_t  bis;
++	};
++	union {
++		uint8_t  sca;
++		uint8_t  sync_interval;
++	};
++	uint8_t  packing;
++	uint8_t  framing;
++	struct bt_iso_io_qos in;
++	struct bt_iso_io_qos out;
++};
++
++#define BT_CODEC		19
+ struct bt_codec {
+ 	uint8_t id;
+ 	uint16_t cid;
+@@ -158,6 +191,7 @@ struct bt_codecs {
+ 	struct bt_codec codecs[];
+ } __attribute__((packed));
+ 
++
+ /* Connection and socket states */
+ enum {
+ 	BT_CONNECTED = 1, /* Equal to TCP_ESTABLISHED to make net code happy */
+@@ -171,6 +205,8 @@ enum {
+ 	BT_CLOSED
+ };
+ 
++#define BT_ISO_BASE		20
++
+ /* Byte order conversions */
+ #if __BYTE_ORDER == __LITTLE_ENDIAN
+ #define htobs(d)  (d)
+diff --git a/lib/iso.h b/lib/iso.h
+new file mode 100644
+index 000000000..1e9f79ce5
+--- /dev/null
++++ b/lib/iso.h
+@@ -0,0 +1,42 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2022  Intel Corporation.
++ *
++ */
++
++#ifndef __ISO_H
++#define __ISO_H
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++/* ISO defaults */
++#define ISO_DEFAULT_MTU		251
++#define ISO_MAX_NUM_BIS		0x1f
++
++/* ISO socket broadcast address */
++struct sockaddr_iso_bc {
++	bdaddr_t	bc_bdaddr;
++	uint8_t		bc_bdaddr_type;
++	uint8_t		bc_sid;
++	uint8_t		bc_num_bis;
++	uint8_t		bc_bis[ISO_MAX_NUM_BIS];
++};
++
++/* ISO socket address */
++struct sockaddr_iso {
++	sa_family_t	iso_family;
++	bdaddr_t	iso_bdaddr;
++	uint8_t		iso_bdaddr_type;
++	struct sockaddr_iso_bc iso_bc[];
++};
++
++#ifdef __cplusplus
++}
++#endif
++
++#endif /* __ISO_H */
 -- 
 2.35.1
 
