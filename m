@@ -2,271 +2,166 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C62CB522673
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 May 2022 23:43:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5DC952274E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 May 2022 01:02:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232406AbiEJVnz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 May 2022 17:43:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35236 "EHLO
+        id S237605AbiEJXCC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 May 2022 19:02:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233231AbiEJVnw (ORCPT
+        with ESMTP id S231931AbiEJXCB (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 May 2022 17:43:52 -0400
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19E5D24F202
-        for <linux-bluetooth@vger.kernel.org>; Tue, 10 May 2022 14:43:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1652219030; x=1683755030;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=N4A2jyJQuR0q111QxegeVCmgKxog//XtjYRZHhFd+iA=;
-  b=ZOJk1PHWVFMPBZ7SYgMs4bdw/NpQQfui2qkRUpIITv4SXvEO1mxLKXmC
-   00Ug/laDiVHj5LSvzhmXar0VOzD1Gk3W7g8lzueFoLMq8uWak/mrpNZaZ
-   ARpz0qosXd6EfqdK1nnLyIDOVSaf51JJfKF3Vcz7wv2QTYfvbN+csyJ36
-   vUYGh84BJ4q+jti+RWYUJXIRAWQWQQyDiYIiqYkG/UOZuz8h4YuxVp6sa
-   HEj6ax2HKCMYqkiJBKkEbD+zDqd5le15yMZofstPrDkvjighy9P5f4Yu7
-   Juy8Glm2JGQElUhOuMTAYScFzAUlSbw6QMtb0Rp9tX1EeAzjfhkAvm/U3
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10343"; a="249410788"
-X-IronPort-AV: E=Sophos;i="5.91,215,1647327600"; 
-   d="scan'208";a="249410788"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 14:43:45 -0700
-X-IronPort-AV: E=Sophos;i="5.91,215,1647327600"; 
-   d="scan'208";a="520222701"
-Received: from tiyeh-mobl1.amr.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.212.70.46])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 14:43:45 -0700
-From:   Brian Gix <brian.gix@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     marcel@holtmann.org, luiz.dentz@gmail.com, brian.gix@intel.com
-Subject: [PATCH v3 2/2] Bluetooth: Add experimental wrapper for MGMT based mesh
-Date:   Tue, 10 May 2022 14:43:25 -0700
-Message-Id: <20220510214325.633935-3-brian.gix@intel.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220510214325.633935-1-brian.gix@intel.com>
-References: <20220510214325.633935-1-brian.gix@intel.com>
+        Tue, 10 May 2022 19:02:01 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3C257A83D
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 May 2022 16:01:59 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id a22so721735qkl.5
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 May 2022 16:01:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=6LL4LONsblU0dKZYs8f6uRdiY/pw0UYzyZlUT7BMAZI=;
+        b=Iem7tyuszTSRz0+/GyeWoNMZrrk9aXbCt5LDZQLp0ZLwo2ddzwCiccatz0rnEynb9C
+         zhAiQzSYKcgqQZs0J0h+aj/y6tLfZrBBmeGIRxwOI95kKOx4GbtZ2ZN9vjjvl7Mz8ojE
+         16mRcgLMts4a4a5RPNxM84Z4pqOVb+W3LE5L9wA9GD5HtSPIyRnPzqFJO9YdKQadocqN
+         25WZlImzX8/ZNnTwKZx/g14z1ijlpL5NTJJBrmKI8LZm0BiTeVuAtC/bLKL2buB2zWBQ
+         Ug9LG4ninnsV/Q9ECN61oaqgbOuTIU5p3mtde/WTcldcgqighQShG2cQ540ZcleCim2A
+         966g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=6LL4LONsblU0dKZYs8f6uRdiY/pw0UYzyZlUT7BMAZI=;
+        b=yAdmguyAPk3KxHpGgDm15rA4PiQnU8l10X1cM/HyeqLHKLLFompk1g8sZ2KE9dV4vT
+         zsEQwpDl6/VYpOor5wgyCFMTgTJTqBrhtRXzs1PG6kzjLdsjJMHDtjOh0TtmgJj3qdsC
+         ObPni5nq1wQjzlcflqPR7oERM/ALQzzDLthADpIyowg1/O5kRfQdJXKQUT/9+x932HXS
+         2VkLOvyURLD/46YNu4mJJngAb0GGnWDYAcHvbW3YLuVAaqiXWHLg4DYHOR3nZUbamRGm
+         /+G2jliv8w9FD12PQRqcsRbrELHdABOlbhwoWVuCusHSTJKzSpOptcvuuYDGgOXgGCXM
+         gZjg==
+X-Gm-Message-State: AOAM533+jGaIgYal24VFDA3EqpJmkYel71Z55aB64sWZzTTrsmKStnn/
+        9Zmib/Kz2v12RmBTFJllyjKO2wh4rz4=
+X-Google-Smtp-Source: ABdhPJwPdlKRa1INc0hgYStz147jRt7ehPYjTZCEUQpjK0AenlQKh4PjBWkF7gIeByPkswXmXI2acg==
+X-Received: by 2002:a37:9603:0:b0:67d:da02:19e8 with SMTP id y3-20020a379603000000b0067dda0219e8mr17126956qkd.242.1652223718662;
+        Tue, 10 May 2022 16:01:58 -0700 (PDT)
+Received: from [172.17.0.2] ([20.231.36.203])
+        by smtp.gmail.com with ESMTPSA id 69-20020aed304b000000b002f39b99f66dsm182348qte.7.2022.05.10.16.01.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 May 2022 16:01:58 -0700 (PDT)
+Message-ID: <627aeee6.1c69fb81.3fcea.1001@mx.google.com>
+Date:   Tue, 10 May 2022 16:01:58 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============4130800669638329333=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, brian.gix@intel.com
+Subject: RE: Add Mesh functionality to net/bluetooth
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220510214325.633935-2-brian.gix@intel.com>
+References: <20220510214325.633935-2-brian.gix@intel.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This introduces a "Mesh UUID" and an Experimental Feature bit to the
-hdev mask, and depending all underlying Mesh functionality on it.
+--===============4130800669638329333==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Signed-off-by: Brian Gix <brian.gix@intel.com>
----
- include/net/bluetooth/hci.h |   1 +
- net/bluetooth/mgmt.c        | 113 +++++++++++++++++++++++++++++++++---
- 2 files changed, 106 insertions(+), 8 deletions(-)
+This is automated email and please do not reply to this email!
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 5d70beb54cab..e18c8d104f79 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -362,6 +362,7 @@ enum {
- 	HCI_OFFLOAD_CODECS_ENABLED,
- 	HCI_LE_SIMULTANEOUS_ROLES,
- 
-+	HCI_MESH_EXPERIMENTAL,
- 	HCI_MESH,
- 	HCI_MESH_SENDING,
- 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index f2e2c02ebfd7..c6876fdc3f06 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2175,7 +2175,8 @@ static int set_mesh(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
- 
- 	bt_dev_dbg(hdev, "sock %p", sk);
- 
--	if (!lmp_le_capable(hdev))
-+	if (!lmp_le_capable(hdev) ||
-+	    !hci_dev_test_flag(hdev, HCI_MESH_EXPERIMENTAL))
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
- 				       MGMT_STATUS_NOT_SUPPORTED);
- 
-@@ -2253,7 +2254,8 @@ static int mesh_features(struct sock *sk, struct hci_dev *hdev,
- {
- 	struct mgmt_rp_mesh_read_features rp;
- 
--	if (!lmp_le_capable(hdev))
-+	if (!lmp_le_capable(hdev) ||
-+	    !hci_dev_test_flag(hdev, HCI_MESH_EXPERIMENTAL))
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_READ_FEATURES,
- 				       MGMT_STATUS_NOT_SUPPORTED);
- 
-@@ -2307,6 +2309,11 @@ static int mesh_send_cancel(struct sock *sk, struct hci_dev *hdev,
- 	struct mgmt_pending_cmd *cmd;
- 	int err;
- 
-+	if (!lmp_le_capable(hdev) ||
-+	    !hci_dev_test_flag(hdev, HCI_MESH_EXPERIMENTAL))
-+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
-+				       MGMT_STATUS_NOT_SUPPORTED);
-+
- 	if (!hci_dev_test_flag(hdev, HCI_LE_ENABLED))
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
- 				       MGMT_STATUS_REJECTED);
-@@ -2338,6 +2345,11 @@ static int mesh_send(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
- 	bool sending;
- 	int err = 0;
- 
-+	if (!lmp_le_capable(hdev) ||
-+	    !hci_dev_test_flag(hdev, HCI_MESH_EXPERIMENTAL))
-+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND,
-+				       MGMT_STATUS_NOT_SUPPORTED);
-+
- 	if (!hci_dev_test_flag(hdev, HCI_LE_ENABLED) ||
- 	    len <= MGMT_MESH_SEND_SIZE ||
- 	    len > (MGMT_MESH_SEND_SIZE + 29))
-@@ -4256,17 +4268,30 @@ static const u8 rpa_resolution_uuid[16] = {
- 	0xea, 0x11, 0x73, 0xc2, 0x48, 0xa1, 0xc0, 0x15,
- };
- 
-+/* 2ce463d7-7a03-4d8d-bf05-5f24e8f36e76 */
-+static const u8 mgmt_mesh_uuid[16] = {
-+	0x76, 0x6e, 0xf3, 0xe8, 0x24, 0x5f, 0x05, 0xbf,
-+	0x8d, 0x4d, 0x03, 0x7a, 0xd7, 0x63, 0xe4, 0x2c,
-+};
-+
- static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
- 				  void *data, u16 data_len)
- {
--	char buf[102];   /* Enough space for 5 features: 2 + 20 * 5 */
--	struct mgmt_rp_read_exp_features_info *rp = (void *)buf;
-+	struct mgmt_rp_read_exp_features_info *rp;
-+	size_t len;
- 	u16 idx = 0;
- 	u32 flags;
-+	int status;
- 
- 	bt_dev_dbg(hdev, "sock %p", sk);
- 
--	memset(&buf, 0, sizeof(buf));
-+	/* Enough space for 6 features */
-+	len = sizeof(*rp) + (sizeof(rp->features[0]) * 6);
-+	rp = kmalloc(len, GFP_KERNEL);
-+	if (!rp)
-+		return -ENOMEM;
-+
-+	memset(rp, 0, len);
- 
- #ifdef CONFIG_BT_FEATURE_DEBUG
- 	if (!hdev) {
-@@ -4323,6 +4348,17 @@ static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
- 		idx++;
- 	}
- 
-+	if (hdev && lmp_le_capable(hdev)) {
-+		if (hci_dev_test_flag(hdev, HCI_MESH_EXPERIMENTAL))
-+			flags = BIT(0);
-+		else
-+			flags = 0;
-+
-+		memcpy(rp->features[idx].uuid, mgmt_mesh_uuid, 16);
-+		rp->features[idx].flags = cpu_to_le32(flags);
-+		idx++;
-+	}
-+
- 	rp->feature_count = cpu_to_le16(idx);
- 
- 	/* After reading the experimental features information, enable
-@@ -4330,9 +4366,12 @@ static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
- 	 */
- 	hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
- 
--	return mgmt_cmd_complete(sk, hdev ? hdev->id : MGMT_INDEX_NONE,
--				 MGMT_OP_READ_EXP_FEATURES_INFO,
--				 0, rp, sizeof(*rp) + (20 * idx));
-+	status = mgmt_cmd_complete(sk, hdev ? hdev->id : MGMT_INDEX_NONE,
-+				   MGMT_OP_READ_EXP_FEATURES_INFO,
-+				   0, rp, sizeof(*rp) + (20 * idx));
-+
-+	kfree(rp);
-+	return status;
- }
- 
- static int exp_ll_privacy_feature_changed(bool enabled, struct hci_dev *hdev,
-@@ -4459,6 +4498,63 @@ static int set_debug_func(struct sock *sk, struct hci_dev *hdev,
- }
- #endif
- 
-+static int set_mgmt_mesh_func(struct sock *sk, struct hci_dev *hdev,
-+			      struct mgmt_cp_set_exp_feature *cp, u16 data_len)
-+{
-+	struct mgmt_rp_set_exp_feature rp;
-+	bool val, changed;
-+	int err;
-+
-+	/* Command requires to use the controller index */
-+	if (!hdev)
-+		return mgmt_cmd_status(sk, MGMT_INDEX_NONE,
-+				       MGMT_OP_SET_EXP_FEATURE,
-+				       MGMT_STATUS_INVALID_INDEX);
-+
-+	/* Changes can only be made when controller is powered down */
-+	if (hdev_is_powered(hdev))
-+		return mgmt_cmd_status(sk, hdev->id,
-+				       MGMT_OP_SET_EXP_FEATURE,
-+				       MGMT_STATUS_REJECTED);
-+
-+	/* Parameters are limited to a single octet */
-+	if (data_len != MGMT_SET_EXP_FEATURE_SIZE + 1)
-+		return mgmt_cmd_status(sk, hdev->id,
-+				       MGMT_OP_SET_EXP_FEATURE,
-+				       MGMT_STATUS_INVALID_PARAMS);
-+
-+	/* Only boolean on/off is supported */
-+	if (cp->param[0] != 0x00 && cp->param[0] != 0x01)
-+		return mgmt_cmd_status(sk, hdev->id,
-+				       MGMT_OP_SET_EXP_FEATURE,
-+				       MGMT_STATUS_INVALID_PARAMS);
-+
-+	val = !!cp->param[0];
-+
-+	if (val)
-+		changed = !hci_dev_test_and_set_flag(hdev,
-+						     HCI_MESH_EXPERIMENTAL);
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=640338
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      6.48 seconds
+GitLint                       PASS      2.12 seconds
+SubjectPrefix                 PASS      1.95 seconds
+BuildKernel                   PASS      32.15 seconds
+BuildKernel32                 PASS      28.72 seconds
+Incremental Build with patchesPASS      65.13 seconds
+TestRunner: Setup             PASS      468.98 seconds
+TestRunner: l2cap-tester      PASS      17.39 seconds
+TestRunner: bnep-tester       PASS      6.15 seconds
+TestRunner: mgmt-tester       FAIL      101.05 seconds
+TestRunner: rfcomm-tester     PASS      9.68 seconds
+TestRunner: sco-tester        PASS      9.57 seconds
+TestRunner: smp-tester        PASS      9.59 seconds
+TestRunner: userchan-tester   PASS      6.42 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL - 6.48 seconds
+Run checkpatch.pl script with rule in .checkpatch.conf
+[v3,1/2] Bluetooth: Implement support for Mesh\CHECK:PARENTHESIS_ALIGNMENT: Alignment should match open parenthesis
+#701: FILE: net/bluetooth/hci_request.c:2122:
++	if (!hci_dev_test_flag(hdev, HCI_LE_SCAN) ||
++			       hci_dev_test_flag(hdev, HCI_MESH))
+
+ERROR:CODE_INDENT: code indent should use tabs where possible
+#1515: FILE: net/bluetooth/mgmt.c:10062:
++^I^I              u8 addr_type, s8 rssi, u32 flags, u8 *eir,$
+
+CHECK:PARENTHESIS_ALIGNMENT: Alignment should match open parenthesis
+#1515: FILE: net/bluetooth/mgmt.c:10062:
++static void mesh_device_found(struct hci_dev *hdev, bdaddr_t *bdaddr,
++		              u8 addr_type, s8 rssi, u32 flags, u8 *eir,
+
+total: 1 errors, 0 warnings, 2 checks, 1474 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+NOTE: Whitespace errors detected.
+      You may wish to use scripts/cleanpatch or scripts/cleanfile
+
+/github/workspace/src/12845561.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+[v3,2/2] Bluetooth: Add experimental wrapper for MGMT based mesh\CHECK:BRACES: Unbalanced braces around else statement
+#244: FILE: net/bluetooth/mgmt.c:4537:
 +	else {
-+		hci_dev_clear_flag(hdev, HCI_MESH);
-+		changed = hci_dev_test_and_clear_flag(hdev,
-+						      HCI_MESH_EXPERIMENTAL);
-+	}
-+
-+	memcpy(rp.uuid, mgmt_mesh_uuid, 16);
-+	rp.flags = cpu_to_le32(val ? BIT(0) : 0);
-+
-+	hci_sock_set_flag(sk, HCI_MGMT_EXP_FEATURE_EVENTS);
-+
-+	err = mgmt_cmd_complete(sk, hdev->id,
-+				MGMT_OP_SET_EXP_FEATURE, 0,
-+				&rp, sizeof(rp));
-+
-+	if (changed)
-+		exp_feature_changed(hdev, mgmt_mesh_uuid, val, sk);
-+
-+	return err;
-+}
-+
- static int set_rpa_resolution_func(struct sock *sk, struct hci_dev *hdev,
- 				   struct mgmt_cp_set_exp_feature *cp,
- 				   u16 data_len)
-@@ -4723,6 +4819,7 @@ static const struct mgmt_exp_feature {
- #ifdef CONFIG_BT_FEATURE_DEBUG
- 	EXP_FEAT(debug_uuid, set_debug_func),
- #endif
-+	EXP_FEAT(mgmt_mesh_uuid, set_mgmt_mesh_func),
- 	EXP_FEAT(rpa_resolution_uuid, set_rpa_resolution_func),
- 	EXP_FEAT(quality_report_uuid, set_quality_report_func),
- 	EXP_FEAT(offload_codecs_uuid, set_offload_codec_func),
--- 
-2.35.1
 
+total: 0 errors, 0 warnings, 1 checks, 182 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/12845560.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: TestRunner: mgmt-tester - FAIL - 101.05 seconds
+Run test-runner with mgmt-tester
+Total: 493, Passed: 492 (99.8%), Failed: 1, Not Run: 0
+
+Failed Test Cases
+Read Exp Feature - Success                           Failed       0.094 seconds
+
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============4130800669638329333==--
