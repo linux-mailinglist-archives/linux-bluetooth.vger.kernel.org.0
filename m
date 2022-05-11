@@ -2,166 +2,105 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5DC952274E
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 May 2022 01:02:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B857522B1E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 May 2022 06:39:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237605AbiEJXCC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 May 2022 19:02:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54770 "EHLO
+        id S237663AbiEKEjZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 11 May 2022 00:39:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231931AbiEJXCB (ORCPT
+        with ESMTP id S235372AbiEKEjO (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 May 2022 19:02:01 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3C257A83D
-        for <linux-bluetooth@vger.kernel.org>; Tue, 10 May 2022 16:01:59 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id a22so721735qkl.5
-        for <linux-bluetooth@vger.kernel.org>; Tue, 10 May 2022 16:01:59 -0700 (PDT)
+        Wed, 11 May 2022 00:39:14 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A32C14B676
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 May 2022 21:39:12 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id e24so1131765pjt.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 May 2022 21:39:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=6LL4LONsblU0dKZYs8f6uRdiY/pw0UYzyZlUT7BMAZI=;
-        b=Iem7tyuszTSRz0+/GyeWoNMZrrk9aXbCt5LDZQLp0ZLwo2ddzwCiccatz0rnEynb9C
-         zhAiQzSYKcgqQZs0J0h+aj/y6tLfZrBBmeGIRxwOI95kKOx4GbtZ2ZN9vjjvl7Mz8ojE
-         16mRcgLMts4a4a5RPNxM84Z4pqOVb+W3LE5L9wA9GD5HtSPIyRnPzqFJO9YdKQadocqN
-         25WZlImzX8/ZNnTwKZx/g14z1ijlpL5NTJJBrmKI8LZm0BiTeVuAtC/bLKL2buB2zWBQ
-         Ug9LG4ninnsV/Q9ECN61oaqgbOuTIU5p3mtde/WTcldcgqighQShG2cQ540ZcleCim2A
-         966g==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=s3Cdswvtyrq8qHVwuRB9YRoTAIoD9G/2//h6WeFZHzo=;
+        b=nrkBIDyCffFbQz5WNhQU88q5l+bx8m1CoLNL/nRcxBFZRgp3B2RwRJzpJi69hjmFPQ
+         Eotn36CVTQor8sTwq84btYhQQ+OsypTpYdHIfGkC/Ekjg8a9U0HkQq0T/gbcQg5/if4Y
+         i1yzcJYhTRMm8ny1NIiOYUNRazrfloxlCC/1XVxW2+TG0ItQpx2/G3cXjgMuOALgO1Rc
+         auxKHXwS3ghK6vFFIfR8essc70JXfRi2oIpi3YT/VLqISCMTaVWCOI/Xf0rWfpfTmlnw
+         XgqCFC8jOuHD5AjsEtox3h0b9tzcHlVM0fA1RrJyDFubK9aS707t1BYf/K43qSc4slo4
+         wrQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=6LL4LONsblU0dKZYs8f6uRdiY/pw0UYzyZlUT7BMAZI=;
-        b=yAdmguyAPk3KxHpGgDm15rA4PiQnU8l10X1cM/HyeqLHKLLFompk1g8sZ2KE9dV4vT
-         zsEQwpDl6/VYpOor5wgyCFMTgTJTqBrhtRXzs1PG6kzjLdsjJMHDtjOh0TtmgJj3qdsC
-         ObPni5nq1wQjzlcflqPR7oERM/ALQzzDLthADpIyowg1/O5kRfQdJXKQUT/9+x932HXS
-         2VkLOvyURLD/46YNu4mJJngAb0GGnWDYAcHvbW3YLuVAaqiXWHLg4DYHOR3nZUbamRGm
-         /+G2jliv8w9FD12PQRqcsRbrELHdABOlbhwoWVuCusHSTJKzSpOptcvuuYDGgOXgGCXM
-         gZjg==
-X-Gm-Message-State: AOAM533+jGaIgYal24VFDA3EqpJmkYel71Z55aB64sWZzTTrsmKStnn/
-        9Zmib/Kz2v12RmBTFJllyjKO2wh4rz4=
-X-Google-Smtp-Source: ABdhPJwPdlKRa1INc0hgYStz147jRt7ehPYjTZCEUQpjK0AenlQKh4PjBWkF7gIeByPkswXmXI2acg==
-X-Received: by 2002:a37:9603:0:b0:67d:da02:19e8 with SMTP id y3-20020a379603000000b0067dda0219e8mr17126956qkd.242.1652223718662;
-        Tue, 10 May 2022 16:01:58 -0700 (PDT)
-Received: from [172.17.0.2] ([20.231.36.203])
-        by smtp.gmail.com with ESMTPSA id 69-20020aed304b000000b002f39b99f66dsm182348qte.7.2022.05.10.16.01.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 May 2022 16:01:58 -0700 (PDT)
-Message-ID: <627aeee6.1c69fb81.3fcea.1001@mx.google.com>
-Date:   Tue, 10 May 2022 16:01:58 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============4130800669638329333=="
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=s3Cdswvtyrq8qHVwuRB9YRoTAIoD9G/2//h6WeFZHzo=;
+        b=uUM+zPU7LbUKdbZSRTYwAJN9BhZU2+DaHUVT/uOwxjs9N2ZxyfrdM+M5uypMqol+fG
+         MDzKeEvb29BsFXdVhgjfcJaGLDUqp9hjEVoUbk9koSuSkQqcNWp9iTP3VWbz4m3ZctyX
+         yWAkQyhhWngiRgehnJ4D4zjDvqRnx38wDWrrABJONpYaYDWv2zt74oHb+aC1LfKLwU5t
+         3NP4egHWwxwy6MAveJobgEnfr1FmVWpA1CqaNBvK9a99xNMXyqZhDQSZM6VQwfiPVNVD
+         /L8b6gQB06X1x+hYEDLKamyouRmuBzOBJ9n3Q8jyNibVVk9RkZXrPyKtUzRuGdgow536
+         Vf8A==
+X-Gm-Message-State: AOAM530y0zg86JOrLj4U+fRxLESAGPg2Wxg7HNDdhN2Ppw88auGiId3X
+        ZMAQ1/t7dpaplrexlFdLSOW8wRcymX35EDkY00U=
+X-Google-Smtp-Source: ABdhPJwbKHmbnZDflMHBZCcp2YbZAAZvFdPcM4owWeuPIkoxodmwIZJ+Xpgi08ylB1RFXLrw63SQRxJzumbwJKMTxhs=
+X-Received: by 2002:a17:90b:1007:b0:1dc:9862:68af with SMTP id
+ gm7-20020a17090b100700b001dc986268afmr3261389pjb.205.1652243951499; Tue, 10
+ May 2022 21:39:11 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, brian.gix@intel.com
-Subject: RE: Add Mesh functionality to net/bluetooth
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20220510214325.633935-2-brian.gix@intel.com>
-References: <20220510214325.633935-2-brian.gix@intel.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:6a10:319:0:0:0:0 with HTTP; Tue, 10 May 2022 21:39:10
+ -0700 (PDT)
+From:   Private Mail <privatemail1961@gmail.com>
+Date:   Tue, 10 May 2022 21:39:10 -0700
+Message-ID: <CANjAOAiiVcSrSv31FjThCVmeppS54UVvGVj3SRSvMfxOB+T8DA@mail.gmail.com>
+Subject: Have you had this? It is for your Benefit
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.3 required=5.0 tests=ADVANCE_FEE_4_NEW_MONEY,
+        BAYES_50,DEAR_BENEFICIARY,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+        DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FREEMAIL_REPLY,
+        LOTS_OF_MONEY,MONEY_FRAUD_5,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_MONEY autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============4130800669638329333==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Our Ref: BG/WA0151/2022
 
-This is automated email and please do not reply to this email!
+Dear Beneficiary
 
-Dear submitter,
+Subject: An Estate of US$15.8 Million
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=640338
+Blount and Griffin Genealogical Investigators specializes in probate
+research to locate missing heirs and beneficiaries to estates in the
+United Kingdom and Europe.
 
----Test result---
+We can also help you find wills, obtain copies of certificates, help
+you to administer an estate, as well as calculating how an estate,
+intestacy or trust should be distributed.
 
-Test Summary:
-CheckPatch                    FAIL      6.48 seconds
-GitLint                       PASS      2.12 seconds
-SubjectPrefix                 PASS      1.95 seconds
-BuildKernel                   PASS      32.15 seconds
-BuildKernel32                 PASS      28.72 seconds
-Incremental Build with patchesPASS      65.13 seconds
-TestRunner: Setup             PASS      468.98 seconds
-TestRunner: l2cap-tester      PASS      17.39 seconds
-TestRunner: bnep-tester       PASS      6.15 seconds
-TestRunner: mgmt-tester       FAIL      101.05 seconds
-TestRunner: rfcomm-tester     PASS      9.68 seconds
-TestRunner: sco-tester        PASS      9.57 seconds
-TestRunner: smp-tester        PASS      9.59 seconds
-TestRunner: userchan-tester   PASS      6.42 seconds
+You may be entitled to a large pay out for an inheritance in Europe
+worth US$15.8 million. We have discovered an estate belonging to the
+late Depositor has remained unclaimed since he died in 2011 and we
+have strong reasons to believe you are the closest living relative to
+the deceased we can find.
 
-Details
-##############################
-Test: CheckPatch - FAIL - 6.48 seconds
-Run checkpatch.pl script with rule in .checkpatch.conf
-[v3,1/2] Bluetooth: Implement support for Mesh\CHECK:PARENTHESIS_ALIGNMENT: Alignment should match open parenthesis
-#701: FILE: net/bluetooth/hci_request.c:2122:
-+	if (!hci_dev_test_flag(hdev, HCI_LE_SCAN) ||
-+			       hci_dev_test_flag(hdev, HCI_MESH))
+You may unknowingly be the heir of this person who died without
+leaving a will (intestate). We will conduct a probate research to
+prove your entitlement, and can submit a claim on your behalf all at
+no risk to yourselves.
 
-ERROR:CODE_INDENT: code indent should use tabs where possible
-#1515: FILE: net/bluetooth/mgmt.c:10062:
-+^I^I              u8 addr_type, s8 rssi, u32 flags, u8 *eir,$
+Our service fee of 10% will be paid to us after you have received the estate.
 
-CHECK:PARENTHESIS_ALIGNMENT: Alignment should match open parenthesis
-#1515: FILE: net/bluetooth/mgmt.c:10062:
-+static void mesh_device_found(struct hci_dev *hdev, bdaddr_t *bdaddr,
-+		              u8 addr_type, s8 rssi, u32 flags, u8 *eir,
+The estate transfer process should take just a matter of days as we
+have the mechanism and expertise to get this done very quickly. This
+message may come to you as a shock, however we hope to work with you
+to transfer the estate to you as quickly as possible.
 
-total: 1 errors, 0 warnings, 2 checks, 1474 lines checked
+Feel free to email our senior case worker Mr. Malcolm Casey on email:
+malcolmcasey68@yahoo.com for further discussions.
 
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
+With warm regards,
 
-NOTE: Whitespace errors detected.
-      You may wish to use scripts/cleanpatch or scripts/cleanfile
-
-/github/workspace/src/12845561.patch has style problems, please review.
-
-NOTE: Ignored message types: UNKNOWN_COMMIT_ID
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-[v3,2/2] Bluetooth: Add experimental wrapper for MGMT based mesh\CHECK:BRACES: Unbalanced braces around else statement
-#244: FILE: net/bluetooth/mgmt.c:4537:
-+	else {
-
-total: 0 errors, 0 warnings, 1 checks, 182 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/12845560.patch has style problems, please review.
-
-NOTE: Ignored message types: UNKNOWN_COMMIT_ID
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-##############################
-Test: TestRunner: mgmt-tester - FAIL - 101.05 seconds
-Run test-runner with mgmt-tester
-Total: 493, Passed: 492 (99.8%), Failed: 1, Not Run: 0
-
-Failed Test Cases
-Read Exp Feature - Success                           Failed       0.094 seconds
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============4130800669638329333==--
+Mr. Blount W. Gort, CEO.
+Blount and Griffin Associates Inc
