@@ -2,100 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B15AE524DB8
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 May 2022 15:05:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33343525130
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 May 2022 17:23:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354102AbiELNFC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 12 May 2022 09:05:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40178 "EHLO
+        id S1344388AbiELPXh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 12 May 2022 11:23:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354092AbiELNE6 (ORCPT
+        with ESMTP id S241437AbiELPXc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 12 May 2022 09:04:58 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BE8C24EA26
-        for <linux-bluetooth@vger.kernel.org>; Thu, 12 May 2022 06:04:58 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-edeb6c3642so6541196fac.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 12 May 2022 06:04:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gY8yqmt9rxkC+ri2Ow7GDfEYtHoKglmDH8I5xpIy23Q=;
-        b=ADpqkG9doKwUsc2LA9+EP89xf5epAj1JdS+aGo5Zrx6Qjhy1+9z12j6axoi1D7N8pP
-         j5MPI8LHRl25VmP0YWDwcOvUljfz7zFN+T5KRq5k4QW1HzdbR0mn9KtRF984ON3xOCVS
-         luoUDlDMJtzpEE63WPru580akeR2pEVyyjZatWRrCeLk3MtI92o/kj+CEfIsL1TBKnhh
-         JQXeat3XGirEezl53fv73s2SaVAqndebq7SZVPIfRb2MmA8w7oHsH9aUpOgGOIk+PKVq
-         CEZZlNyibbpA7DdUhqWQzkpgXsaqtnbQV1MEeGEz9TzHf2vgldKvmavne0U/nXyBh0wX
-         blfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gY8yqmt9rxkC+ri2Ow7GDfEYtHoKglmDH8I5xpIy23Q=;
-        b=zP5iItA6UkijbgWaAyHVG6ad4ZF1VHIX7/GF46Q9TkxbMbnadOQl7/bcyJwG0y/+Zb
-         m7sQaXzA+fuDYKXHyNsATKJPageVQu5i6uAot+GDe3e+iiBq1GLryBnbKvYfaWlKpfzg
-         uBw86cnTTg5EsciCqzdtC1kLjyX+j1ps2NnJuZWLUPxxYmwAymSTGDzOXavYB4rl776e
-         hdX1aHk24hNGfmjVr3Z4+5jISg7mYlYW1YJc0KgKEH0HmkhXFtSYyxfuurLCg4b1scLZ
-         FmbOzh7vCQ7QMl09uG6Am2+EcHtRgaMER6QWDEuBCdSuUi6O10nQU1sYLXdGOYtdCBaG
-         YPFg==
-X-Gm-Message-State: AOAM533DuSazYoHPFzID9JEnaM2EWXMDMTBQAacweWTTGFCVuOYMJd7F
-        5n7j+8YzHKFbqBxCcBCezSylRhODb3sauYpNsejRVQ==
-X-Google-Smtp-Source: ABdhPJzaulsL4XHDnNpsA86HUhuwXPgr1/5bnMGQ21WysXS3sKlBemJ2mSIgjARKM8KTcg5ulG2p5CpHPxip4kjLq6g=
-X-Received: by 2002:a05:6870:b61e:b0:ec:a426:bab5 with SMTP id
- cm30-20020a056870b61e00b000eca426bab5mr5441769oab.163.1652360697130; Thu, 12
- May 2022 06:04:57 -0700 (PDT)
+        Thu, 12 May 2022 11:23:32 -0400
+Received: from mail.pekanbaru.go.id (mail.pekanbaru.go.id [103.131.245.194])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E49991FB2CC
+        for <linux-bluetooth@vger.kernel.org>; Thu, 12 May 2022 08:23:28 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.pekanbaru.go.id (Postfix) with ESMTP id 8E6C498AD80;
+        Thu, 12 May 2022 10:45:43 +0700 (WIB)
+Received: from mail.pekanbaru.go.id ([127.0.0.1])
+        by localhost (mail.pekanbaru.go.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id sh4_8rIHgK9e; Thu, 12 May 2022 10:45:43 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.pekanbaru.go.id (Postfix) with ESMTP id EDE9F93F0DC;
+        Thu, 12 May 2022 10:45:39 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.pekanbaru.go.id EDE9F93F0DC
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pekanbaru.go.id;
+        s=EA5C5C9E-4206-11EC-835B-1ADACEA726A0; t=1652327140;
+        bh=WgQd2bW8hb2KeIDNbeIeW1Bb4lp6m29iibMhAQT/egc=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=uh8HKRSDCZ+jNOm9vLBw/O0jOml2RqmGVxSgHfVchssMa/4GD+I6P3D9OJmf7wIWR
+         bXe2SROAiuk/xAQSSjD0F41CoQbobQ6iMrvzOwnkU0yR+FS8C9qfjM5h9+Jm3cblTb
+         9FLlpQo9lgqo2CTDOkbZyQeoJifw1DIRBC54Lxv4jgHykWQiCdzcs2TO17kP5i5prO
+         /0yAnytQuLzrDDBkBR3ibx46y7YAfarckYDCizqTIk7j3rOnFlBDdDgxclXtk3Un5W
+         QXGeoH6VxGxXkr2Rp350kcGl+/mNOn/f2EuO6/y07YOWz9yNyg8pQe2KUqTWXsN1ZW
+         BlxQZnXfnxg0A==
+X-Virus-Scanned: amavisd-new at mail.pekanbaru.go.id
+Received: from mail.pekanbaru.go.id ([127.0.0.1])
+        by localhost (mail.pekanbaru.go.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id qSp_2pJ2V6wJ; Thu, 12 May 2022 10:45:39 +0700 (WIB)
+Received: from [192.168.15.101] (unknown [41.79.219.176])
+        by mail.pekanbaru.go.id (Postfix) with ESMTPSA id 05E8798ADE1;
+        Thu, 12 May 2022 10:45:29 +0700 (WIB)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-References: <00000000000076ecf305b9f8efb1@google.com> <000000000000ef073a05bdf398e0@google.com>
-In-Reply-To: <000000000000ef073a05bdf398e0@google.com>
-From:   Dmitry Vyukov <dvyukov@google.com>
-Date:   Thu, 12 May 2022 15:04:46 +0200
-Message-ID: <CACT4Y+aydumbVJARxkeQuD5k8jowUwOehfQ9CEw8Uq+boOunUA@mail.gmail.com>
-Subject: Re: [syzbot] KASAN: slab-out-of-bounds Read in add_adv_patterns_monitor
-To:     syzbot <syzbot+3ed6361bf59830ca9138@syzkaller.appspotmail.com>
-Cc:     apusaka@chromium.org, dan.carpenter@oracle.com,
-        davem@davemloft.net, finanzas1@logisticaenlinea.net,
-        hdanton@sina.com, howardchung@google.com, johan.hedberg@gmail.com,
-        johan.hedberg@intel.com, kuba@kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        luiz.dentz@gmail.com, marcel@holtmann.org, mcchou@chromium.org,
-        mmandlik@chromium.org, netdev@vger.kernel.org, sashal@kernel.org,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-15.1 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SORTED_RECIPS,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Awaiting your response 
+To:     Recipients <waterproject@pekanbaru.go.id>
+From:   waterproject@pekanbaru.go.id
+Date:   Thu, 12 May 2022 04:45:21 +0100
+Reply-To: test@hostnextdoor.com
+Message-Id: <20220512034530.05E8798ADE1@mail.pekanbaru.go.id>
+X-Spam-Status: No, score=3.4 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_BL_SPAMCOP_NET,
+        RCVD_IN_SBL,RCVD_IN_VALIDITY_RPBL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Sat, 20 Mar 2021 at 09:27, syzbot
-<syzbot+3ed6361bf59830ca9138@syzkaller.appspotmail.com> wrote:
->
-> syzbot suspects this issue was fixed by commit:
->
-> commit b4a221ea8a1f890b50838ef389d016c7ff280abc
-> Author: Archie Pusaka <apusaka@chromium.org>
-> Date:   Fri Jan 22 08:36:11 2021 +0000
->
->     Bluetooth: advmon offload MSFT add rssi support
->
-> bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=14ef5ad6d00000
-> start commit:   b491e6a7 net: lapb: Add locking to the lapb module
-> git tree:       net
-> kernel config:  https://syzkaller.appspot.com/x/.config?x=be33d8015c9de024
-> dashboard link: https://syzkaller.appspot.com/bug?extid=3ed6361bf59830ca9138
-> syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10628ae8d00000
-> C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=12964b80d00000
->
-> If the result looks correct, please mark the issue as fixed by replying with:
->
-> #syz fix: Bluetooth: advmon offload MSFT add rssi support
+Hi =
 
-That commit touches the crashed function:
 
-#syz fix: Bluetooth: advmon offload MSFT add rssi support
+Did you get my previous email? I have attempted over 3 times to open up com=
+munication with you. Please acknowledge if you receive this email. =
+
+
+Regards
+Morten Friis
