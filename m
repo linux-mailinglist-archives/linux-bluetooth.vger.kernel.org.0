@@ -2,220 +2,102 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68D88527981
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 15 May 2022 21:31:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69F5B5281F1
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 May 2022 12:25:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231330AbiEOTbf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 15 May 2022 15:31:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45780 "EHLO
+        id S240501AbiEPKZN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 16 May 2022 06:25:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbiEOTbd (ORCPT
+        with ESMTP id S242795AbiEPKZE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 15 May 2022 15:31:33 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83301DE94
-        for <linux-bluetooth@vger.kernel.org>; Sun, 15 May 2022 12:31:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1652643092; x=1684179092;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=HztGZrIfh3cpz3JxZF0qkrMfbHu/usinFdRCb3IjCSk=;
-  b=PVAg9Sb4yZornJV/e48e/rMm4fPv8+T9Zv7cBgO5gcpRCY1MkE8U05j0
-   HIbgmSK8KYwVJ+shz7O7KfpbzFQDYGm1MCFd1rC50Br5AYukmwyb9nRhp
-   0NXjBMkngc7ILD6bymBeHppq/8tTaZkRsglj1jIMC956qYnRXwBgC8tOk
-   vONDevZefk+/E4Wr4TINNdZyPW7Alv+3v2YR8xdnTmTZOmN3dUWp5vWkw
-   3CB3B/ZDSZxY5NGcs5vJ5d+KCbaaXdE7Nmh1stW0/CmtshgphuZ4wvGpN
-   npPrCmIOMwAJbkUVZrOBZHYzEr4bVeMjkYB39KrY9rwxwUeI17AaJ52fa
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10348"; a="251182729"
-X-IronPort-AV: E=Sophos;i="5.91,229,1647327600"; 
-   d="scan'208";a="251182729"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2022 12:31:32 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,228,1647327600"; 
-   d="scan'208";a="604581530"
-Received: from lkp-server01.sh.intel.com (HELO d1462bc4b09b) ([10.239.97.150])
-  by orsmga001.jf.intel.com with ESMTP; 15 May 2022 12:31:29 -0700
-Received: from kbuild by d1462bc4b09b with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nqJxh-0001vu-BF;
-        Sun, 15 May 2022 19:31:29 +0000
-Date:   Mon, 16 May 2022 03:30:50 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- 3b42055388c30f2761a2d9cd9af2c99611dfe457
-Message-ID: <628154ea.cI+qL4p6GweROQlF%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        Mon, 16 May 2022 06:25:04 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B71791116D
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 May 2022 03:24:52 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id v66so18046250oib.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 May 2022 03:24:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=a2tnZgq+EVjyw+rOdY1r6GsOsQaQP/Lxu/X2gn6ZDPs=;
+        b=cb0gdPs0Aln8Y3T1wNUilKJE4d8bKpIRY+e2YmwlWPaWzOF+lZrl4YSCAngrloEohB
+         pPyfuu0FWZvggtdgFPCRTCrcvLxZ9er2dEXOl/hNdXAqOItq/U3lXg/lBB8E3/mMrqLx
+         7rYbW6fK+b8ttBWreFJWZQ5URFegtjexPT+ulYE0dBleLw6ERHb4BpEAdyFqI98+SNzu
+         pIwrgYU3iY5bkgeDdQ9dQNpkXR9MFf8SFaZtEQm4DeUSb81+vY517I9L2Psgeva/FMRj
+         XXvZj29DPjVhcdQr2JfrrpzpGgtj5e3hDLkHweo7YzNbRFehSj4z8wFktPgpKbyrCado
+         /gng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=a2tnZgq+EVjyw+rOdY1r6GsOsQaQP/Lxu/X2gn6ZDPs=;
+        b=OSSbKHcH9mjS4l0bWe0TJzBX3fYostqUDawoLccD3ph8wQGEW+MXr3vb9Pu3rP3ZnG
+         iMhMk2WUzm6e2hklI0QcfDk39anOjXw0Ccd1tLJqCJs01gltB5MRa8l7Vfod+9uLMsqR
+         hiRMIBUE8SOsChJoa0QSytzUqKOfJ3elblwWu38vgZeNgZ71kmJoEVW0YMYhN1LGLuox
+         KhtKp+A7VjDGSeIgK/2eOkS5FJAZbuIDKtEjQ6DEO/xZH2dAfPbDfJJSnrIZpfZYIB/Q
+         tk17sZzvhcMk8SC//zlokTrkkuo+zvGKXH9GCGqE1YRZMHC+dOKvNp/vifzVlRTeq7dh
+         mRKg==
+X-Gm-Message-State: AOAM533ewW55Pyk2nas1knT37s83kXP66wXV1+2pp9Ko8LzLmUfikH4j
+        2aJpTit9vbetlcPexLuwQ5p+09PFnhZWMHUWtPU=
+X-Google-Smtp-Source: ABdhPJxmBab7o3mU2rke48DYUCmw2MVRmUqNU5TkARViAjsx8KcXz006ZigHYLtEFHuBy0mbo1q6XlbnLOgKcXzbtgg=
+X-Received: by 2002:a05:6808:3091:b0:326:cd17:fed4 with SMTP id
+ bl17-20020a056808309100b00326cd17fed4mr13282306oib.51.1652696692027; Mon, 16
+ May 2022 03:24:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,HEXHASH_WORD,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:6838:6c25:0:0:0:0 with HTTP; Mon, 16 May 2022 03:24:51
+ -0700 (PDT)
+Reply-To: fundsrecoverycommittee@aol.com
+From:   Geoffrey Bristol - FUNDS RECOVERY COMMITTEE <bfranck976@gmail.com>
+Date:   Mon, 16 May 2022 03:24:51 -0700
+Message-ID: <CAOXQwByTKsqFujp8F+GmEpen2=Vk617XfGBJ6OSgn05c-i2=0Q@mail.gmail.com>
+Subject: COMPENSATION PROGRAM
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,SUBJ_ALL_CAPS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:22b listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [bfranck976[at]gmail.com]
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [bfranck976[at]gmail.com]
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.4 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: 3b42055388c30f2761a2d9cd9af2c99611dfe457  Bluetooth: hci_sync: Fix attempting to suspend with unfiltered passive scan
+Dear victim,
+										
+The United Nations in conjunction with the European
+Union,International Monetary Fund and World Bank is offering
+compensation to internet fraud/scam victims globally.
+If you are interested kindly indicate with your response.
 
-elapsed time: 3334m
-
-configs tested: 134
-configs skipped: 3
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm64                               defconfig
-arm64                            allyesconfig
-arm                              allmodconfig
-arm                                 defconfig
-arm                              allyesconfig
-i386                          randconfig-c001
-arm                           stm32_defconfig
-csky                                defconfig
-riscv             nommu_k210_sdcard_defconfig
-powerpc                     tqm8555_defconfig
-arm                          simpad_defconfig
-arm                        cerfcube_defconfig
-sh                          r7785rp_defconfig
-sh                          urquell_defconfig
-h8300                     edosk2674_defconfig
-arm                            hisi_defconfig
-mips                        bcm47xx_defconfig
-sh                              ul2_defconfig
-sh                      rts7751r2d1_defconfig
-sh                           se7712_defconfig
-mips                             allyesconfig
-mips                         tb0226_defconfig
-sh                   secureedge5410_defconfig
-ia64                          tiger_defconfig
-m68k                           sun3_defconfig
-powerpc                       eiger_defconfig
-openrisc                            defconfig
-i386                             alldefconfig
-ia64                         bigsur_defconfig
-m68k                        mvme147_defconfig
-sh                         ecovec24_defconfig
-powerpc                     taishan_defconfig
-sparc                       sparc32_defconfig
-arm                             ezx_defconfig
-sh                          lboxre2_defconfig
-sh                        sh7763rdp_defconfig
-powerpc                           allnoconfig
-powerpc                 mpc837x_mds_defconfig
-powerpc                     stx_gp3_defconfig
-xtensa                  cadence_csp_defconfig
-arm                        oxnas_v6_defconfig
-sh                          rsk7264_defconfig
-sh                           se7751_defconfig
-parisc                generic-32bit_defconfig
-sh                            hp6xx_defconfig
-x86_64                        randconfig-c001
-arm                  randconfig-c002-20220512
-ia64                                defconfig
-ia64                             allmodconfig
-ia64                             allyesconfig
-m68k                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-nios2                               defconfig
-arc                              allyesconfig
-nios2                            allyesconfig
-alpha                               defconfig
-alpha                            allyesconfig
-h8300                            allyesconfig
-xtensa                           allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-s390                                defconfig
-s390                             allmodconfig
-parisc                              defconfig
-parisc64                            defconfig
-parisc                           allyesconfig
-s390                             allyesconfig
-sparc                               defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-i386                                defconfig
-i386                   debian-10.3-kselftests
-i386                              debian-10.3
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-x86_64                        randconfig-a011
-x86_64                        randconfig-a013
-x86_64                        randconfig-a015
-i386                          randconfig-a012
-i386                          randconfig-a014
-i386                          randconfig-a016
-x86_64                        randconfig-a006
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-s390                 randconfig-r044-20220512
-riscv                randconfig-r042-20220512
-arc                  randconfig-r043-20220512
-riscv                               defconfig
-riscv                    nommu_virt_defconfig
-riscv                          rv32_defconfig
-riscv                    nommu_k210_defconfig
-riscv                             allnoconfig
-riscv                            allmodconfig
-riscv                            allyesconfig
-x86_64                    rhel-8.3-kselftests
-um                           x86_64_defconfig
-um                             i386_defconfig
-x86_64                          rhel-8.3-func
-x86_64                           rhel-8.3-syz
-x86_64                                  kexec
-x86_64                              defconfig
-x86_64                           allyesconfig
-x86_64                         rhel-8.3-kunit
-x86_64                               rhel-8.3
-
-clang tested configs:
-powerpc              randconfig-c003-20220512
-x86_64                        randconfig-c007
-riscv                randconfig-c006-20220512
-mips                 randconfig-c004-20220512
-i386                          randconfig-c001
-arm                  randconfig-c002-20220512
-arm                      pxa255-idp_defconfig
-arm                  colibri_pxa270_defconfig
-arm                        magician_defconfig
-arm                       netwinder_defconfig
-riscv                    nommu_virt_defconfig
-arm                           spitz_defconfig
-mips                  cavium_octeon_defconfig
-powerpc                     tqm8540_defconfig
-riscv                             allnoconfig
-arm                        mvebu_v5_defconfig
-powerpc                 mpc8315_rdb_defconfig
-arm                          moxart_defconfig
-powerpc                   lite5200b_defconfig
-mips                   sb1250_swarm_defconfig
-powerpc                      ppc44x_defconfig
-x86_64                        randconfig-a005
-x86_64                        randconfig-a003
-x86_64                        randconfig-a001
-i386                          randconfig-a002
-i386                          randconfig-a006
-i386                          randconfig-a004
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
-x86_64                        randconfig-a016
-hexagon              randconfig-r045-20220512
-hexagon              randconfig-r041-20220512
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Geoffrey Bristol(Chairman)
+FUNDS RECOVERY COMMITTEE.
