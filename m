@@ -2,116 +2,108 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CF0652AD87
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 May 2022 23:29:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9ADA52B189
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 May 2022 06:35:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229793AbiEQV3c (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 17 May 2022 17:29:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48300 "EHLO
+        id S229845AbiEREdV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 18 May 2022 00:33:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiEQV3a (ORCPT
+        with ESMTP id S229844AbiEREdT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 17 May 2022 17:29:30 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40A4E51E55
-        for <linux-bluetooth@vger.kernel.org>; Tue, 17 May 2022 14:29:29 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id i19so108995eja.11
-        for <linux-bluetooth@vger.kernel.org>; Tue, 17 May 2022 14:29:29 -0700 (PDT)
+        Wed, 18 May 2022 00:33:19 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A6ECDFF
+        for <linux-bluetooth@vger.kernel.org>; Tue, 17 May 2022 21:33:17 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id b11-20020a5b008b000000b00624ea481d55so889214ybp.19
+        for <linux-bluetooth@vger.kernel.org>; Tue, 17 May 2022 21:33:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8r9FLg6Ulw4ZMRwdMmm9YktNls1yBqN/+uy4HOs01Dg=;
-        b=HW37OyG9lLsh4ynJltyrU99FpZSTIPb3VtYYR14r5hlIp/Sn4fF15iumwpTddHQgEG
-         AAdN7XtzcbEkGpVIbkk/DeWdNrZMIOkOCQiIbCIvXM4Anp5fR2OQ7zjnZl/PrYWA9st8
-         BNUVGSceaVZOWZHP7dCYMB7Wdao4lFdS6eULU=
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=CePwNNmF3fIm01KymEYDMgdP6P1K9tvoxAvRjX3HK9E=;
+        b=gSVwexQQ92FjHpWBWZSFVsoBfj7Hgt/AU0Gl67bwX+TtYKOAyR18v2Z/16rA/SCeI1
+         8Lid9euQu+g/Yuf4gLvmz/G7ONtLwS+DYQXjrmLAW8Wgo3iOYbvYB6qJodijszuCyPMF
+         3XrEFNoK8k9Uf336BG/g6hVAaFz0RNGu2w79l111+96geV83IziwwN7BhUTDK5mM2lRC
+         8Cms4j81xkTAUYKXa2TYMb1QFps1vt0LWFKwgcOjCp0uyvfIwXbRG/hMiBETIhR9imRf
+         qzEM1EYBkThSapQoJeu726bz5rLr7g4T4yxO1196j358ZIrB3G4KICDOM6hjWLgABF9r
+         SJWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8r9FLg6Ulw4ZMRwdMmm9YktNls1yBqN/+uy4HOs01Dg=;
-        b=7Hd5hivP7uzl/JfJUPBqJjh9ax51yNd721W50+vdWe4n3knw6LUBCnmehXhz0/laCY
-         kqu1+hgD4/rMufQfOPALSLjyJLz5ASlM7uBKEt9ylSf1grp1+VOw7CYjWwFtRNHC/VR5
-         0ef5gsXyS+TSRQiZLcOJ3A0HQGc4F2LLhVuV9qgiDlpLjPIrRNFXgLGXbCgwbk130F2r
-         ehz6FoQ8seuNkFqDBVedaOkrwrg/uVchaGdx1y8kTz2W9aIYGucT44mc32IfcAVlUQRf
-         b3kmi74MrqJQIFjYLt2NSQtkxOLGnFUi7uUpVSXcNyuHuAkvsMJLPaiYsENWFtjeEuej
-         jqYQ==
-X-Gm-Message-State: AOAM531Qmw/WWbF8vHUFH34s85H9CKpqG8kQFF4Zu9DiNcA4y42fKSqM
-        jj5hbzcLRcAMkBca18tBfAwM+ig1G7f3ZQ==
-X-Google-Smtp-Source: ABdhPJzwmAFY3hqdDcds8zI8JAGHMjn007WLLOxkH0qz5d64GGeoiJzD+FFqwARkRx/cVol9HwTGCg==
-X-Received: by 2002:a17:907:6e88:b0:6fa:888d:74a7 with SMTP id sh8-20020a1709076e8800b006fa888d74a7mr21461920ejc.335.1652822967513;
-        Tue, 17 May 2022 14:29:27 -0700 (PDT)
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com. [209.85.218.45])
-        by smtp.gmail.com with ESMTPSA id el9-20020a170907284900b006f3ef214e55sm135851ejc.187.2022.05.17.14.29.27
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 May 2022 14:29:27 -0700 (PDT)
-Received: by mail-ej1-f45.google.com with SMTP id g6so193640ejw.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 17 May 2022 14:29:27 -0700 (PDT)
-X-Received: by 2002:a17:906:dc8d:b0:6f4:75da:2fc8 with SMTP id
- cs13-20020a170906dc8d00b006f475da2fc8mr21307709ejc.7.1652822966540; Tue, 17
- May 2022 14:29:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <f46af838-8b28-79e6-5298-4458b44664ca@mindspring.com>
- <CAO271m=RNShfq+zRQjX=yK8NkUDwknr0mekJsCg_Rny3s0gUgA@mail.gmail.com>
- <72122fe6-8c8b-d26e-9c1d-75462052b503@mindspring.com> <CAO271m=-nxu238MKCtM-Kc1T88UOO4V2qyon0zF3ifVcThBsPA@mail.gmail.com>
- <307e7ee7-b973-4d15-03fd-31cc6087163b@mindspring.com> <5a1c1826-92a9-f949-9f40-473416ab82b9@mindspring.com>
- <db5b5136-25c9-c334-e5bd-725bcbcc89a2@mindspring.com>
-In-Reply-To: <db5b5136-25c9-c334-e5bd-725bcbcc89a2@mindspring.com>
-From:   Sonny Sasaka <sonnysasaka@chromium.org>
-Date:   Tue, 17 May 2022 14:29:15 -0700
-X-Gmail-Original-Message-ID: <CAO271mn_oxDcZ_uho_3jN=Z0WZY0uQTop59KC5w-CZOC=kSM1Q@mail.gmail.com>
-Message-ID: <CAO271mn_oxDcZ_uho_3jN=Z0WZY0uQTop59KC5w-CZOC=kSM1Q@mail.gmail.com>
-Subject: Re: Battery1 vs. GATT reporting
-To:     Ed Beroset <beroset@mindspring.com>
-Cc:     BlueZ <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=CePwNNmF3fIm01KymEYDMgdP6P1K9tvoxAvRjX3HK9E=;
+        b=wiQyqT4mC1dpR0tBl2l7Mvbdxz86xwQTYXV1pkBE2ADFaZrYDP0528mGHw6mMLJ3nj
+         3x+Zq36v2jC4O7uj1PkuG1ptdlmhZVGEe4UGoILkEoXkMWvg98N4WFkilk8sT5rciPr2
+         e/AhGTszORUF3EA52zpmQY64AR17Myu4tO7WETD3c0P7z6RI4VwS+EuzQi6ujokaGJJy
+         g338jw0C0Fl9KK6084Ko0V1Mi6mmUD8t1yzChoB8qeRh2rr2Or/ZzeCaA5kk+TqDVJ+1
+         ZP+hibUonMohN0Vx2s2KJwOUIo1WlStlN2yL2DHHG1Wk1M10hEgsJi6ObdeZo3tw4v2R
+         HFjA==
+X-Gm-Message-State: AOAM531FzRdo2qwUd+gR02u+H/ZleGAFWgT3a+WfcSqgmO8bgxEIqOF6
+        d+/OtTzcZZZibXNRlju72tphLxAqCK7YYceFXQiE77jQbWFhmgABukv4r31dInSq86kD7mmBFvQ
+        obMByM0PnPPj1hjaS+w3MDjO0IRd8Pjd26gObOx1d4iEG3zRf1upFnuJkw7sWO4T53W4/Y7ssM5
+        0k
+X-Google-Smtp-Source: ABdhPJy75DtH7+JJFE0gglPSfz/u1RPei5TsxJDjFR3kpNRWBWe3Ks5DYzhtT1/1duPJ0FZBsZXdVjW/9n8v
+X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:17:c48:4501:146d:1031])
+ (user=apusaka job=sendgmr) by 2002:a25:874d:0:b0:64d:c470:c8aa with SMTP id
+ e13-20020a25874d000000b0064dc470c8aamr10931885ybn.578.1652848396465; Tue, 17
+ May 2022 21:33:16 -0700 (PDT)
+Date:   Wed, 18 May 2022 12:33:07 +0800
+Message-Id: <20220518123252.Bluez.1.Ie61d0e985d42728b2e705ca6dfd000385cf3870a@changeid>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.36.0.550.gb090851708-goog
+Subject: [Bluez PATCH] input/device: Notify failure if ctrl disconnect when
+ waiting intr
+From:   Archie Pusaka <apusaka@google.com>
+To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Archie Pusaka <apusaka@chromium.org>,
+        Sonny Sasaka <sonnysasaka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Thanks for circling back, I appreciate it!
+From: Archie Pusaka <apusaka@chromium.org>
 
+On some rare occasions, the peer HID device might disconnect the ctrl
+channel when we are trying to connect the intr channel. If this
+happens, interrupt_connect_cb() will not be called by btio, and we
+will be stuck in "connecting" state. Any future connection attempt to
+the peer device will fail because of "busy".
 
-On Tue, May 17, 2022 at 2:24 PM Ed Beroset <beroset@mindspring.com> wrote:
->
-> On 3/2/22 10:33, Ed Beroset wrote:
-> > On 3/1/22 11:01, Ed Beroset wrote:
-> >> On 3/1/22 10:43, Sonny Sasaka wrote:
-> >>> Hi Ed,
-> >>>
-> >>> What I do is call `gatt.select-attribute` on the characteristic called
-> >>> "Battery Level", but it is not shown in your case. So maybe this is
-> >>> the bug that you are encountering. What is the exact version of your
-> >>> BlueZ (commit sha if possible)? Could you also try tip of tree to see
-> >>> if this is already fixed?
-> >>
-> >> Hi Sonny,
-> >>
-> >> I'm sorry, I should have noted that this is with the tip of tree,
-> >> commit bf09e1f048.  Thanks for your help with this!
-> >
-> > I am trying this from a different computer today and I find that now the
-> > Battery Service and Battery Level characteristic are showing up, even on
-> > the same devices I was reading the other day.  Not sure what's going on,
-> > but I am investigating further.  At the moment, it seems more likely
-> > that the problem is either with my devices or with my software.  I just
-> > wanted to report back to avoid having you all waste your time.  When I
-> > figure this out, I'll send another update.  Thanks for the help so far.
->
-> OK, it's been a while, but the problem was eventually tracked not to
-> BlueZ but a Qt component I was using.  Essentially, changes in BlueZ
-> were being tracked by changes in Qt, but there was a problem with the Qt
-> implementation starting with BlueZ version 5.55.  No change required in
-> BlueZ, and already fixed in Qt, but I thought I'd circle back around and
-> let you all know the resolution.
->
-> https://bugreports.qt.io/browse/QTBUG-70222
->
-> Ed
+This patch prevents that by checking if we need to report connection
+failure when the ctrl channel is disconnected.
+
+Reviewed-by: Sonny Sasaka <sonnysasaka@chromium.org>
+---
+
+ profiles/input/device.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/profiles/input/device.c b/profiles/input/device.c
+index ff4aa771ac..e2ac6ea603 100644
+--- a/profiles/input/device.c
++++ b/profiles/input/device.c
+@@ -581,6 +581,13 @@ static gboolean ctrl_watch_cb(GIOChannel *chan, GIOCondition cond, gpointer data
+ 	if (idev->intr_io && !(cond & G_IO_NVAL))
+ 		g_io_channel_shutdown(idev->intr_io, TRUE, NULL);
+ 
++	/* It's possible this is triggered while the intr channel is not even
++	 * connected yet, therefore we are still in the connecting state.
++	 */
++	if (btd_service_get_state(idev->service) ==
++						BTD_SERVICE_STATE_CONNECTING)
++		btd_service_connecting_complete(idev->service, -EIO);
++
+ 	if (!idev->intr_io && idev->virtual_cable_unplug)
+ 		virtual_cable_unplug(idev);
+ 
+-- 
+2.36.0.550.gb090851708-goog
+
