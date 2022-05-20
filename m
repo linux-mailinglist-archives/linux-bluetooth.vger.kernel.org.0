@@ -2,63 +2,62 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5395052E389
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 May 2022 06:17:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EB7C52E73D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 May 2022 10:25:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234571AbiETERM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 20 May 2022 00:17:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38426 "EHLO
+        id S1346977AbiETIY7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 20 May 2022 04:24:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233029AbiETERK (ORCPT
+        with ESMTP id S1346965AbiETIYx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 20 May 2022 00:17:10 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED4EF6BFE4
-        for <linux-bluetooth@vger.kernel.org>; Thu, 19 May 2022 21:17:09 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id oe17-20020a17090b395100b001df77d29587so10451272pjb.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 19 May 2022 21:17:09 -0700 (PDT)
+        Fri, 20 May 2022 04:24:53 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B1D14084B
+        for <linux-bluetooth@vger.kernel.org>; Fri, 20 May 2022 01:24:51 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id y15so2180145qtx.4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 20 May 2022 01:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=Gv7CsCeeGdZZYw/wLPt9ZJW1vb4D4muTrAmmQBTZmPE=;
-        b=GM+V1Fl7VaAyCn0eJ7VUXdPR+L6xww+uJ3WNmleFrDkO8CjHOqkMTgn7EO5SucK/OR
-         iyuo+cqqMB4yenvXL0t7ivHdD0+SexX+mIQrO1CHK8r7jsPV4y5LEOMy3bZntgMcGIsL
-         cG2xyyqWKOdV+Th71x+uLEO+c/n7cgsa5/w0YdPl+8gjqmQEjY87b1CBxxRCpydJ6osf
-         tblF2dxtTCgNQtleP6iBzc1QTQMrNLiLrYLBadA6+edbf8z4ZnP7Zedg/Ua3AJRUuC1b
-         YSz1ETmGFSky7nAOKDj460rRY9HCH8uRKnXTjzhNPbRDLQVMh7Xio7+0zPjuWL6tMB+k
-         ktJg==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=/LumJPWgC6JjcVGqiDkof7XuByE8Gd+If15yk15XfjY=;
+        b=E1mQ+mbYPMZorU1FAlj5IIw9mg2rPxQdKpgRQDYIChYnhQggt7Mn5sjUc13k/9/FF4
+         oS+5OM69fq8p7D+sAtOIL1RUZFRfPE75tge6V+W7HgZrSdWfvQAZTDWDlYaVgmkKBzWP
+         4T5I1WYg7aOgah6yMOBcGI+D51oNiaJipY66iagWcORZmu+ML/g7qTRq5csnI2o11Vz5
+         2P2yHbM4vhmObf2VbP4tZ/sCzREPDQsgc5q8V6+5GU9RJ8uVyo6Gu7I4sErUZhyZY9jE
+         kj9wqhAwjPSVT1tZGL/VSGw479/RwU0vELV7Dtfw2qff98DMAge3QDfZCqSBQ23d4xPY
+         g+Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Gv7CsCeeGdZZYw/wLPt9ZJW1vb4D4muTrAmmQBTZmPE=;
-        b=wdQNHqNw0SR+3XFt16Na1tJjsZzrhBu9HfUkq68J3glaiafJVrYfBiTgFKHlBeehGd
-         DJALYJwPsW3gqXBPUbndL0C72KO7OjvL8KW2t7lIVDeZY5nQMOu2I90wQnPT6Mpg+paf
-         i0+xsnQUQCyRGY0KXEgbDtY0L6qcDP2Jw1AdcxScUAJMl8NKtKTqWODsrG3Z/q708DgG
-         hT7MrhmDiWpyVD9ST0qP90gChtP7OKiXTkjT/rvRckO6ecNxeExERFyxZ6QmBwrl2/WO
-         4BBAjZXhPClzMlSd2CvR+njUujKYUMrttU5mc1/dMZleoZBfMIMsMzCPKij8ZfysJXCt
-         taSw==
-X-Gm-Message-State: AOAM532iNlP75/+HuJ2CQ6D+1ULtQuow8ySrOsyZGuSIhS1ZH8A2u9ej
-        kEzcVqbstWGxSD++I+0FAVVR9D8zT40=
-X-Google-Smtp-Source: ABdhPJy6etU65WXPUgKWB6afrvStjIAyqBH1uBm55pmxOtw/CyW9oTTued0uGVBYOxs94MXVwZGbHg==
-X-Received: by 2002:a17:902:aa06:b0:158:f13b:4859 with SMTP id be6-20020a170902aa0600b00158f13b4859mr7874356plb.141.1653020228979;
-        Thu, 19 May 2022 21:17:08 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id u13-20020a17090a450d00b001df955c28f6sm381405pjg.37.2022.05.19.21.17.08
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=/LumJPWgC6JjcVGqiDkof7XuByE8Gd+If15yk15XfjY=;
+        b=Ox1lTsh1tkdIybUCxPm2TIntsDFJTB6E27LLlR4QBD+GJtynYmT4KM7PJiqpvJNnZy
+         1GR7J5zyKFmpM7jGyzUSRkI6qNRpD0fsPVZ1F6AD7AvkKX0eD6BuebJG/ASHnXkbqZ2v
+         ipNiPiEzqwGWosSKg5/9SKNFbtRYFRm2C2nDqYM0WafdZdEpKwMRnXslksXLphf16zpm
+         gBSWc4htFuEBjOERb6hohoiG0jMUkdZ+z6wSzKGPJU1D9YmvTz4FaFxIWNqiMoM3pnBV
+         WOdRkDFBiHeF2D/RXFWjBOdNpPg4xIg3QOImlRppPc24RwZ/1ER+6pzFZprK4/ufG3yX
+         1EXw==
+X-Gm-Message-State: AOAM5307TBb1YYopyQUIlEUSIp2z1uOsqfGg9RzEkUvBDrnep07Gd/Bo
+        NTQcvTHCq+0TogmNqzZfdTFwzpYpfTpZmQ==
+X-Google-Smtp-Source: ABdhPJyDCgIzHp+c72E6NLgO/YToU9aSpEVDUWPSvj9H3MjuYsaLHLyKu8ZrFn6IXdpPGPDzQQ5Qsg==
+X-Received: by 2002:a05:622a:1787:b0:2f3:f7cd:f59d with SMTP id s7-20020a05622a178700b002f3f7cdf59dmr6665216qtk.594.1653035090537;
+        Fri, 20 May 2022 01:24:50 -0700 (PDT)
+Received: from [172.17.0.2] ([20.246.119.162])
+        by smtp.gmail.com with ESMTPSA id a3-20020ac844a3000000b002f39b99f6b3sm2655911qto.77.2022.05.20.01.24.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 21:17:08 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 7/7] monitor/att: Add decoding support for CCC
-Date:   Thu, 19 May 2022 21:17:01 -0700
-Message-Id: <20220520041701.2572197-7-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        Fri, 20 May 2022 01:24:50 -0700 (PDT)
+Message-ID: <62875052.1c69fb81.1b833.e4e7@mx.google.com>
+Date:   Fri, 20 May 2022 01:24:50 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============6171580576428615639=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [v2,1/7] settings: Add btd_settings_gatt_db_{store,load}
+Reply-To: linux-bluetooth@vger.kernel.org
 In-Reply-To: <20220520041701.2572197-1-luiz.dentz@gmail.com>
 References: <20220520041701.2572197-1-luiz.dentz@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -69,352 +68,114 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============6171580576428615639==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This adds decoding support for CCC so its value can be decoded:
+This is automated email and please do not reply to this email!
 
-< ACL Data TX: Handle 3585 flags 0x00 dlen 7
-      ATT: Read Request (0x0a) len 2
-        Handle: 0x002c Type: Client Characteristic Configuration (0x2902)
-> ACL Data RX: Handle 3585 flags 0x02 dlen 6
-      ATT: Read Response (0x0b) len 1
-        Value: 01
-            Notification (0x01)
-< ACL Data TX: Handle 3585 flags 0x00 dlen 9
-      ATT: Write Request (0x12) len 4
-        Handle: 0x002c Type: Client Characteristic Configuration (0x2902)
-          Data: 0100
-            Notification (0x01)
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=643418
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      14.34 seconds
+GitLint                       PASS      7.50 seconds
+Prep - Setup ELL              PASS      46.58 seconds
+Build - Prep                  PASS      0.69 seconds
+Build - Configure             PASS      9.56 seconds
+Build - Make                  PASS      1349.39 seconds
+Make Check                    PASS      11.92 seconds
+Make Check w/Valgrind         PASS      475.43 seconds
+Make Distcheck                PASS      249.97 seconds
+Build w/ext ELL - Configure   PASS      9.27 seconds
+Build w/ext ELL - Make        PASS      1329.54 seconds
+Incremental Build with patchesPASS      9974.05 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script with rule in .checkpatch.conf
+Output:
+[v2,4/7] monitor: Move ATT decoding function into its own file
+WARNING:SPACING: Unnecessary space before function pointer arguments
+#618: FILE: monitor/att.c:501:
++	void (*func) (const struct l2cap_frame *frame);
+
+ERROR:SPACING: space prohibited before that ',' (ctx:WxE)
+#657: FILE: monitor/att.c:540:
++	{ 0x12, "Write Request"	,
+ 	                       	^
+
+/github/workspace/src/12856291.patch total: 1 errors, 1 warnings, 1316 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/12856291.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+[v2,5/7] monitor: Cache connection information
+WARNING:TYPO_SPELLING: 'addres' may be misspelled - perhaps 'address'?
+#83: 
+This caches connection information including the device addres so it can
+                                                        ^^^^^^
+
+WARNING:SPACING: Unnecessary space before function pointer arguments
+#3959: FILE: monitor/packet.c:8833:
++	void (*cmd_func) (uint16_t index, const void *data, uint8_t size);
+
+WARNING:SPACING: Unnecessary space before function pointer arguments
+#3963: FILE: monitor/packet.c:8836:
++	void (*rsp_func) (uint16_t index, const void *data, uint8_t size);
+
+WARNING:SPACING: Unnecessary space before function pointer arguments
+#4944: FILE: monitor/packet.c:11433:
++	void (*func) (uint16_t index, const void *data, uint8_t size);
+
+WARNING:SPACING: Unnecessary space before function pointer arguments
+#5002: FILE: monitor/packet.c:11617:
++	void (*func) (uint16_t index, const void *data, uint8_t size);
+
+WARNING:SPACING: Unnecessary space before function pointer arguments
+#5056: FILE: monitor/vendor.h:17:
++	void (*cmd_func) (uint16_t index, const void *data, uint8_t size);
+
+WARNING:SPACING: Unnecessary space before function pointer arguments
+#5060: FILE: monitor/vendor.h:20:
++	void (*rsp_func) (uint16_t index, const void *data, uint8_t size);
+
+WARNING:SPACING: Unnecessary space before function pointer arguments
+#5069: FILE: monitor/vendor.h:28:
++	void (*evt_func) (uint16_t index, const void *data, uint8_t size);
+
+/github/workspace/src/12856290.patch total: 0 errors, 8 warnings, 4552 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/12856290.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+
+
 ---
- monitor/att.c | 241 ++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 223 insertions(+), 18 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/monitor/att.c b/monitor/att.c
-index 304c37319..f1af420ba 100644
---- a/monitor/att.c
-+++ b/monitor/att.c
-@@ -215,6 +215,82 @@ static void att_error_response(const struct l2cap_frame *frame)
- 	print_field("Error: %s (0x%2.2x)", str, pdu->error);
- }
- 
-+static const struct bitfield_data ccc_value_table[] = {
-+	{  0, "Notification (0x01)"		},
-+	{  1, "Indication (0x02)"		},
-+	{ }
-+};
-+
-+static void print_ccc_value(uint8_t value)
-+{
-+	uint8_t mask = value;
-+
-+	mask = print_bitfield(4, value, ccc_value_table);
-+	if (mask)
-+		print_text(COLOR_WHITE_BG, "    Unknown fields (0x%2.2x)",
-+								mask);
-+}
-+
-+static void gatt_ccc_read(const struct l2cap_frame *frame)
-+{
-+	uint8_t value;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, &value)) {
-+		print_text(COLOR_ERROR, "invalid size");
-+		return;
-+	}
-+
-+	print_ccc_value(value);
-+}
-+
-+static void gatt_ccc_write(const struct l2cap_frame *frame)
-+{
-+	uint8_t value;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, &value)) {
-+		print_text(COLOR_ERROR, "invalid size");
-+		return;
-+	}
-+
-+	print_ccc_value(value);
-+}
-+
-+#define GATT_HANDLER(_uuid, _read, _write, _notify) \
-+{ \
-+	.uuid = { \
-+		.type = BT_UUID16, \
-+		.value.u16 = _uuid, \
-+	}, \
-+	.read = _read, \
-+	.write = _write, \
-+	.notify = _notify \
-+}
-+
-+struct gatt_handler {
-+	bt_uuid_t uuid;
-+	void (*read)(const struct l2cap_frame *frame);
-+	void (*write)(const struct l2cap_frame *frame);
-+	void (*notify)(const struct l2cap_frame *frame);
-+} gatt_handlers[] = {
-+	GATT_HANDLER(GATT_CLIENT_CHARAC_CFG_UUID, gatt_ccc_read,
-+					gatt_ccc_write, NULL)
-+};
-+
-+static struct gatt_handler *get_handler(struct gatt_db_attribute *attr)
-+{
-+	const bt_uuid_t *uuid = gatt_db_attribute_get_type(attr);
-+	size_t i;
-+
-+	for (i = 0; i < ARRAY_SIZE(gatt_handlers); i++) {
-+		struct gatt_handler *handler = &gatt_handlers[i];
-+
-+		if (!bt_uuid_cmp(&handler->uuid, uuid))
-+			return handler;
-+	}
-+
-+	return NULL;
-+}
-+
- static void att_exchange_mtu_req(const struct l2cap_frame *frame)
- {
- 	const struct bt_l2cap_att_exchange_mtu_req *pdu = frame->data;
-@@ -326,9 +402,16 @@ static void att_read_type_rsp(const struct l2cap_frame *frame)
- 					frame->data + 1, frame->size - 1);
- }
- 
-+struct att_read {
-+	struct gatt_db_attribute *attr;
-+	uint16_t cid;
-+	void (*func)(const struct l2cap_frame *frame);
-+};
-+
- struct att_conn_data {
- 	struct gatt_db *ldb;
- 	struct gatt_db *rdb;
-+	struct queue *reads;
- };
- 
- static void att_conn_data_free(void *data)
-@@ -337,6 +420,7 @@ static void att_conn_data_free(void *data)
- 
- 	gatt_db_unref(att_data->rdb);
- 	gatt_db_unref(att_data->ldb);
-+	queue_destroy(att_data->reads, free);
- 	free(att_data);
- }
- 
-@@ -441,13 +525,67 @@ done:
- static void att_read_req(const struct l2cap_frame *frame)
- {
- 	const struct bt_l2cap_att_read_req *pdu = frame->data;
-+	uint16_t handle;
-+	struct packet_conn_data *conn;
-+	struct att_conn_data *data;
-+	struct att_read *read;
-+	struct gatt_db_attribute *attr;
-+	struct gatt_handler *handler;
- 
--	print_handle(frame, le16_to_cpu(pdu->handle), false);
-+	l2cap_frame_pull((void *)frame, frame, sizeof(*pdu));
-+
-+	handle = le16_to_cpu(pdu->handle);
-+	print_handle(frame, handle, false);
-+
-+	attr = get_attribute(frame, handle, false);
-+	if (!attr)
-+		return;
-+
-+	handler = get_handler(attr);
-+	if (!handler)
-+		return;
-+
-+	conn = packet_get_conn_data(frame->handle);
-+	data = conn->data;
-+
-+	if (!data->reads)
-+		data->reads = queue_new();
-+
-+	read = new0(struct att_read, 1);
-+	read->attr = attr;
-+	read->cid = frame->cid;
-+	read->func = handler->read;
-+
-+	queue_push_tail(data->reads, read);
-+}
-+
-+static bool match_read_frame(const void *data, const void *match_data)
-+{
-+	const struct att_read *read = data;
-+	const struct l2cap_frame *frame = match_data;
-+
-+	return read->cid == frame->cid;
- }
- 
- static void att_read_rsp(const struct l2cap_frame *frame)
- {
-+	struct packet_conn_data *conn;
-+	struct att_conn_data *data;
-+	struct att_read *read;
-+
- 	print_hex_field("Value", frame->data, frame->size);
-+
-+	conn = packet_get_conn_data(frame->handle);
-+	if (!conn)
-+		return;
-+
-+	data = conn->data;
-+
-+	read = queue_find(data->reads, match_read_frame, frame);
-+	if (!read)
-+		return;
-+
-+	read->func(frame);
- }
- 
- static void att_read_blob_req(const struct l2cap_frame *frame)
-@@ -509,10 +647,41 @@ static void att_read_group_type_rsp(const struct l2cap_frame *frame)
- 					frame->data + 1, frame->size - 1);
- }
- 
-+static void print_write(const struct l2cap_frame *frame, uint16_t handle,
-+							size_t len)
-+{
-+	struct gatt_db_attribute *attr;
-+	struct gatt_handler *handler;
-+
-+	print_handle(frame, handle, false);
-+	print_hex_field("  Data", frame->data, frame->size);
-+
-+	if (len > frame->size) {
-+		print_text(COLOR_ERROR, "invalid size");
-+		return;
-+	}
-+
-+	attr = get_attribute(frame, handle, false);
-+	if (!attr)
-+		return;
-+
-+	handler = get_handler(attr);
-+	if (!handler)
-+		return;
-+
-+	handler->write(frame);
-+}
-+
- static void att_write_req(const struct l2cap_frame *frame)
- {
--	print_handle(frame, get_le16(frame->data), false);
--	print_hex_field("  Data", frame->data + 2, frame->size - 2);
-+	uint16_t handle;
-+
-+	if (!l2cap_frame_get_le16((void *)frame, &handle)) {
-+		print_text(COLOR_ERROR, "invalid size");
-+		return;
-+	}
-+
-+	print_write(frame, handle, frame->size);
- }
- 
- static void att_write_rsp(const struct l2cap_frame *frame)
-@@ -553,20 +722,49 @@ static void att_execute_write_req(const struct l2cap_frame *frame)
- 	print_field("Flags: %s (0x%02x)", flags_str, flags);
- }
- 
-+static void print_notify(const struct l2cap_frame *frame, uint16_t handle,
-+								size_t len)
-+{
-+	struct gatt_db_attribute *attr;
-+	struct gatt_handler *handler;
-+
-+	print_handle(frame, handle, true);
-+	print_hex_field("  Data", frame->data, len);
-+
-+	if (len > frame->size) {
-+		print_text(COLOR_ERROR, "invalid size");
-+		return;
-+	}
-+
-+	attr = get_attribute(frame, handle, true);
-+	if (!attr)
-+		return;
-+
-+	handler = get_handler(attr);
-+	if (!handler)
-+		return;
-+
-+	handler->notify(frame);
-+}
-+
- static void att_handle_value_notify(const struct l2cap_frame *frame)
- {
-+	uint16_t handle;
- 	const struct bt_l2cap_att_handle_value_notify *pdu = frame->data;
- 
--	print_handle(frame, le16_to_cpu(pdu->handle), true);
--	print_hex_field("  Data", frame->data + 2, frame->size - 2);
-+	l2cap_frame_pull((void *)frame, frame, sizeof(*pdu));
-+
-+	handle = le16_to_cpu(pdu->handle);
-+	print_notify(frame, handle, frame->size);
- }
- 
- static void att_handle_value_ind(const struct l2cap_frame *frame)
- {
- 	const struct bt_l2cap_att_handle_value_ind *pdu = frame->data;
- 
--	print_handle(frame, le16_to_cpu(pdu->handle), true);
--	print_hex_field("  Data", frame->data + 2, frame->size - 2);
-+	l2cap_frame_pull((void *)frame, frame, sizeof(*pdu));
-+
-+	print_notify(frame, le16_to_cpu(pdu->handle), frame->size);
- }
- 
- static void att_handle_value_conf(const struct l2cap_frame *frame)
-@@ -591,13 +789,7 @@ static void att_multiple_vl_rsp(const struct l2cap_frame *frame)
- 
- 		print_field("Length: 0x%4.4x", len);
- 
--		print_hex_field("  Data", f->data,
--				len < f->size ? len : f->size);
--
--		if (len > f->size) {
--			print_text(COLOR_ERROR, "invalid size");
--			return;
--		}
-+		print_notify(frame, handle, len);
- 
- 		l2cap_frame_pull(f, f, len);
- 	}
-@@ -605,14 +797,27 @@ static void att_multiple_vl_rsp(const struct l2cap_frame *frame)
- 
- static void att_write_command(const struct l2cap_frame *frame)
- {
--	print_handle(frame, get_le16(frame->data), false);
--	print_hex_field("  Data", frame->data + 2, frame->size - 2);
-+	uint16_t handle;
-+
-+	if (!l2cap_frame_get_le16((void *)frame, &handle)) {
-+		print_text(COLOR_ERROR, "invalid size");
-+		return;
-+	}
-+
-+	print_write(frame, handle, frame->size);
- }
- 
- static void att_signed_write_command(const struct l2cap_frame *frame)
- {
--	print_handle(frame, get_le16(frame->data), false);
--	print_hex_field("  Data", frame->data + 2, frame->size - 2 - 12);
-+	uint16_t handle;
-+
-+	if (!l2cap_frame_get_le16((void *)frame, &handle)) {
-+		print_text(COLOR_ERROR, "invalid size");
-+		return;
-+	}
-+
-+	print_write(frame, handle, frame->size - 12);
-+	print_hex_field("  Data", frame->data, frame->size - 12);
- 	print_hex_field("  Signature", frame->data + frame->size - 12, 12);
- }
- 
--- 
-2.35.1
 
+--===============6171580576428615639==--
