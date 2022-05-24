@@ -2,69 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54A995324ED
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 May 2022 10:09:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9095532A59
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 May 2022 14:31:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231178AbiEXIJL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 May 2022 04:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37208 "EHLO
+        id S237352AbiEXMa7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 May 2022 08:30:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbiEXIJL (ORCPT
+        with ESMTP id S237341AbiEXMa4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 May 2022 04:09:11 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37B7877F05
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 May 2022 01:09:10 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id q184so682929ybg.11
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 May 2022 01:09:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dkLTcxs8LVH0sqAqHX3zwE0YhNnh+xIZuZ0uAeaShmw=;
-        b=musaGlIUesSSFQdYuAzfEmgjChU/RErADTpoJGqFYDxCjSKWv4SZgrtDjy2TU2cJ7V
-         6IcuLSp4qou81OsuCdHC8fOLeimdtdOQGQnqdkPprKogeMQ33ZnzhIDjIDCzbl+BGrOT
-         9gljfGF/KKtyhiBggP6XepXiQhNVSbx7DCLzz76L8nCVN723cAbgYo8Z3pxo14FzA+Fk
-         NuX2oNJKs21TPwEJlzAbXd8x6LyzNhDDD/EwaVQF7MSHy6WTZ8mYYjGC6Timo3iszaY/
-         FDzE+T18UfrMu5qO0fIWDjDS7Vvm2GgGuGV5tOlzybHZNxMcLOYyMPWoQd8P14IX4Cmk
-         3FqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dkLTcxs8LVH0sqAqHX3zwE0YhNnh+xIZuZ0uAeaShmw=;
-        b=BXVsqoIFeCnLQ4XPem2AMvIlYgY8qEdx1sRbjbQW17HXzkj1vqX3pEPDcOY6tvpGN/
-         deq9WsEYd9iVBLfVazP2ZYhjBTLWn+igxqL9dmLTaEP+37DTHuGq268lqNZyBai6ZfZH
-         Yd9UrxMjXfFWUmOwNdP5IcRoEgHnB9G0W/qXz9kX7bQUPp4mkDfvpNyb3B2IRu+iBYY3
-         i2gkBD/si/TkuoSPOAqGRknd90/o8oyk4wbUIucssSYKFxoiHDqTqNbhEDfMXkA41SNn
-         fTA49Vut77Uk8iAY4gAt0EWORfttxKoz3n5SNoDo/48+xlRZzcH41+Np5ERleOvgap3t
-         l84g==
-X-Gm-Message-State: AOAM532UgK9j71Hh3+uUk457ExNWQFvB8nicy7YodQaVezO4Hvt+p36p
-        ubz/fT6zz4phn3FGBvb4/KOZuGmNylQqlFoYrXzQfQ==
-X-Google-Smtp-Source: ABdhPJyf5gbDLLFA40Cy6Js44+0uWmYjUNjCN43UMga6ZpyrkAqN6ZT1g0cZE+VhRqLEzvShzX0tpLzLf20WBd/xV48=
-X-Received: by 2002:a25:6cd6:0:b0:64f:c489:5382 with SMTP id
- h205-20020a256cd6000000b0064fc4895382mr10347226ybc.514.1653379749486; Tue, 24
- May 2022 01:09:09 -0700 (PDT)
+        Tue, 24 May 2022 08:30:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C66941A0;
+        Tue, 24 May 2022 05:30:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4B60161582;
+        Tue, 24 May 2022 12:30:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9BA6EC34116;
+        Tue, 24 May 2022 12:30:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653395454;
+        bh=P+eoMO2UsS3962kAnFR+mi9kku9UDPwPYOVZ/mzhIKQ=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=b4VyluahGQY5NRqrxVMqFkhuqF7XUtWE60aEsJf87oIToNUeyusfCACKFOfKbJ0RZ
+         FB60oonQ8UX+RRQkJyP1tVJ1aspMuB0LRKuvbG0CoQsKjIVfRo5YN077/J16FwQmn1
+         eyuWUYOynskudJlb1gCBH2glXGKk3YobPryzAHGAofsVdvQk6GjF1Vq4jg2/NF9Kw0
+         /sa38jERSWO3jh1KxPMZ8IJ3kgqVGStVt+0qtasgPcr2ORVci6AXmHJMYC8/JO8+v/
+         Xttk7wkqinlULuIy0/HfaNlE87oHiZLmW2tX+NsQcJM/4ww/4YpxcWdi3pGc/XxcA1
+         BuE/cw3gS3stg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 7B0D7F03942;
+        Tue, 24 May 2022 12:30:54 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20220524055642.1574769-1-a.fatoum@pengutronix.de> <20220524055642.1574769-2-a.fatoum@pengutronix.de>
-In-Reply-To: <20220524055642.1574769-2-a.fatoum@pengutronix.de>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 24 May 2022 10:08:58 +0200
-Message-ID: <CACRpkdZm0XHfPpWwBB0Nn1h=_oOgj6xKDj24iAVqFPxtextSoA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] Bluetooth: hci_bcm: Add BCM4349B1 variant
-To:     Ahmad Fatoum <a.fatoum@pengutronix.de>
-Cc:     kernel@pengutronix.de, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, devicetree@vger.kernel.org,
-        netdev@vger.kernel.org, Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+Subject: Re: pull request: bluetooth 2022-05-23
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <165339545450.7336.5284014033990163255.git-patchwork-notify@kernel.org>
+Date:   Tue, 24 May 2022 12:30:54 +0000
+References: <20220523200349.3322806-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220523200349.3322806-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     davem@davemloft.net, kuba@kernel.org,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,22 +57,29 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Tue, May 24, 2022 at 7:56 AM Ahmad Fatoum <a.fatoum@pengutronix.de> wrote:
+Hello:
 
-> The BCM4349B1, aka CYW/BCM89359, is a WiFi+BT chip and its Bluetooth
-> portion can be controlled over serial.
->
-> Two subversions are added for the chip, because ROM firmware reports
-> 002.002.013 (at least for the chips I have here), while depending on
-> patchram firmware revision, either 002.002.013 or 002.002.014 is
-> reported.
->
-> Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-> ---
-> v1 -> v2:
->   - No changes
+This pull request was applied to bluetooth/bluetooth-next.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+On Mon, 23 May 2022 13:03:49 -0700 you wrote:
+> The following changes since commit 8c3b8dc5cc9bf6d273ebe18b16e2d6882bcfb36d:
+> 
+>   net/smc: fix listen processing for SMC-Rv2 (2022-05-23 10:08:33 +0100)
+> 
+> are available in the Git repository at:
+> 
+>   git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth.git tags/for-net-2022-05-23
+> 
+> [...]
 
-Yours,
-Linus Walleij
+Here is the summary with links:
+  - pull request: bluetooth 2022-05-23
+    https://git.kernel.org/bluetooth/bluetooth-next/c/7fb0269720d7
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
