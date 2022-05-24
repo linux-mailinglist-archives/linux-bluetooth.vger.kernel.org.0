@@ -2,66 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0094532A64
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 May 2022 14:31:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41410532C89
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 May 2022 16:48:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237348AbiEXMa6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 May 2022 08:30:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44856 "EHLO
+        id S234827AbiEXOsV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 May 2022 10:48:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235079AbiEXMa4 (ORCPT
+        with ESMTP id S229967AbiEXOsU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 May 2022 08:30:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898E99419C
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 May 2022 05:30:55 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 30852614E9
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 May 2022 12:30:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 914CEC34118;
-        Tue, 24 May 2022 12:30:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653395454;
-        bh=xvoRcaAT6v+1W+G24H7HOjJK0vp967AGguBvvFhxIHA=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=inhaYTz//iun6QpCwRf6T+bUjH9+gUif5G764CCVALdKajB/yuNBVfYD7dbkQIadz
-         DUQm6iyZs5gpSJ00rXl/2OdBx1CsyN47Gug/ZCk6RufoGpJbpyDiy9i9e0Tvg1vZDK
-         HJXIylj4rTOlqLyMgVHThsGAR/ckAClk80qar30i6kdx3/NfUN3Ed9sXlk/PtoZbl2
-         q9uRpgNn1Ee3alFMljLyYjP54gLThfGJd7S9s+p/gxeeShmaAwOXtFARvo1Kujynyh
-         WkN6HVissQPjTBT0ntoVa8YSYvWgjINec8XF75VtJfAHSByDM1DY9r28VF/44p4q8E
-         AJrbh+AaY4xXA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 71FBFF03943;
-        Tue, 24 May 2022 12:30:54 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 24 May 2022 10:48:20 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51EA79B185
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 May 2022 07:48:19 -0700 (PDT)
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77] helo=[127.0.0.1])
+        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <a.fatoum@pengutronix.de>)
+        id 1ntVpY-00016O-Kq; Tue, 24 May 2022 16:48:16 +0200
+Message-ID: <148a9f76-0784-1d17-22cd-80343895aa37@pengutronix.de>
+Date:   Tue, 24 May 2022 16:48:15 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
 Subject: Re: [PATCH-stable] Bluetooth: hci_conn: Fix hci_connect_le_sync
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165339545446.7336.2419090981386078491.git-patchwork-notify@kernel.org>
-Date:   Tue, 24 May 2022 12:30:54 +0000
+Content-Language: en-US
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-bluetooth@vger.kernel.org
 References: <20220520183713.2641513-1-luiz.dentz@gmail.com>
+From:   Ahmad Fatoum <a.fatoum@pengutronix.de>
+Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>
 In-Reply-To: <20220520183713.2641513-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
+X-SA-Exim-Mail-From: a.fatoum@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
-
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
-
-On Fri, 20 May 2022 11:37:13 -0700 you wrote:
+On 20.05.22 20:37, Luiz Augusto von Dentz wrote:
 > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
 > The handling of connection failures shall be handled by the request
@@ -69,15 +55,68 @@ On Fri, 20 May 2022 11:37:13 -0700 you wrote:
 > sure to use hci_conn_failed instead of hci_le_conn_failed as the later
 > don't actually call hci_conn_del to cleanup.
 > 
-> [...]
+> Link: https://github.com/bluez/bluez/issues/340
+> Fixes: 8e8b92ee60de5 ("Bluetooth: hci_sync: Add hci_le_create_conn_sync")
+> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Here is the summary with links:
-  - [PATCH-stable] Bluetooth: hci_conn: Fix hci_connect_le_sync
-    https://git.kernel.org/bluetooth/bluetooth-next/c/c9f73a2178c1
+A bit late, as I am not subscribed to linux-bluetooth and didn't notice this
+patch, but FWIW: Tested-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-You are awesome, thank you!
+  Bluetooth: hci0: Opcode 0x200d failed: -110
+  Bluetooth: hci0: request failed to create LE connection: err -110
+
+now, whereas before it crashed the kernel.
+
+Cheers,
+Ahmad
+
+> ---
+>  net/bluetooth/hci_conn.c  | 5 +++--
+>  net/bluetooth/hci_event.c | 8 +++++---
+>  2 files changed, 8 insertions(+), 5 deletions(-)
+> 
+> diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+> index 882a7df13005..ac06c9724c7f 100644
+> --- a/net/bluetooth/hci_conn.c
+> +++ b/net/bluetooth/hci_conn.c
+> @@ -943,10 +943,11 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+>  
+>  	bt_dev_err(hdev, "request failed to create LE connection: err %d", err);
+>  
+> -	if (!conn)
+> +	/* Check if connection is still pending */
+> +	if (conn != hci_lookup_le_connect(hdev))
+>  		goto done;
+>  
+> -	hci_le_conn_failed(conn, err);
+> +	hci_conn_failed(conn, err);
+>  
+>  done:
+>  	hci_dev_unlock(hdev);
+> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+> index 0270e597c285..af17dfb20e01 100644
+> --- a/net/bluetooth/hci_event.c
+> +++ b/net/bluetooth/hci_event.c
+> @@ -5632,10 +5632,12 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
+>  		status = HCI_ERROR_INVALID_PARAMETERS;
+>  	}
+>  
+> -	if (status) {
+> -		hci_conn_failed(conn, status);
+> +	/* All connection failure handling is taken care of by the
+> +	 * hci_conn_failed function which is triggered by the HCI
+> +	 * request completion callbacks used for connecting.
+> +	 */
+> +	if (status)
+>  		goto unlock;
+> -	}
+>  
+>  	if (conn->dst_type == ADDR_LE_DEV_PUBLIC)
+>  		addr_type = BDADDR_LE_PUBLIC;
+
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Pengutronix e.K.                           |                             |
+Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
+31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
