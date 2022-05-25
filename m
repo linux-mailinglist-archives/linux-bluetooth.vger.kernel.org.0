@@ -2,57 +2,57 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5190C533AF0
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 May 2022 12:50:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6F37533AF1
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 May 2022 12:50:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233125AbiEYKut (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 25 May 2022 06:50:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56016 "EHLO
+        id S233818AbiEYKuv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 25 May 2022 06:50:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbiEYKur (ORCPT
+        with ESMTP id S231229AbiEYKut (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 25 May 2022 06:50:47 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86CE4D1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 25 May 2022 03:50:46 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id gz24so1387524pjb.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 25 May 2022 03:50:46 -0700 (PDT)
+        Wed, 25 May 2022 06:50:49 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26C101C6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 25 May 2022 03:50:49 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id n10so19353157pjh.5
+        for <linux-bluetooth@vger.kernel.org>; Wed, 25 May 2022 03:50:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=miJIvESjAK0ZOteRzXcxVnOWKJVfLsHBHQwdmkHOyoo=;
-        b=dFfY/OPLLBmvoTIVkxDFhvi00dkeD3fl2Wrwhys9icoCeeNiyqMHZIlg0wVjGuxkJY
-         9ATJX62gR9snV/hs4T3QIDfucXKnYv4csP8JSTIbOmcYhSjrtHeI6BvgIresxjFPDheq
-         qcRINzWJCRvVvYLPpz/3nORvItsuC0v3QQwRY=
+        bh=FIvnf+ov8MINP5sCQTpSgaYLBw6/bRB93NDP8cKBAHQ=;
+        b=bxcT8rV9P0szfNen8/JZzsY2GRz13YcGxDatlSkoG7nwB6QBxfKUUI0TSnPEhhI1Ms
+         MCQH1OCDcxtWCQwad35ezBWwTkADsEAn8JLhf8H7TNddUpd8KiJ8oup3k06xNFAzUP5B
+         Y6kZS3MDU219Hd1ztcTCM/iGtrqOEYk3qUPNI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=miJIvESjAK0ZOteRzXcxVnOWKJVfLsHBHQwdmkHOyoo=;
-        b=kJ6MG6CqhFGRaZFiW5ife96M7w9iFFXX40j7viLNHThT/nAzwgb9T0aesQD083K/d0
-         z5umODSnjtYjhza+OjH4TW5U2N+ZjpMaRrimnXO/OkIU4JM8uMZQS9zeWEOtcJChCTFk
-         sDkKruSWEM5wCBFrBjwf6dDjkUYb71IG9gg3EgGK6gg8dk9r6frbCC+TXYUTBL4nBp7G
-         dBIIyljtv1s0R1Cnpd3m3O3WBTnDy4CgAv2OET1MbHqbw5VSCaQmh5nh2yxoJXvo1SOW
-         ZoVNqrkaizrHHYVDSRsBpR5Uz4X/+fNk3qjyR0mweqvhtga43Pb5E3LNAeKOOLOhNLPv
-         nXYw==
-X-Gm-Message-State: AOAM533iS+XUvlkfhYy53Jx/KppRs8ogz/9ZxbLHvCIL+veVpeCGvduK
-        4WhUA99mdyS7Ou4jbxjQes1D08av3jBC4A==
-X-Google-Smtp-Source: ABdhPJz8pBiIBYx216PLdTiyBKrnqh4fz+PF8sP6eJOqHEXHVylbfCT5/PuzB80MiLHP8lZPInot9w==
-X-Received: by 2002:a17:903:181:b0:161:d2d2:751d with SMTP id z1-20020a170903018100b00161d2d2751dmr31954920plg.91.1653475845921;
-        Wed, 25 May 2022 03:50:45 -0700 (PDT)
+        bh=FIvnf+ov8MINP5sCQTpSgaYLBw6/bRB93NDP8cKBAHQ=;
+        b=8LacLHB8RxSR4IlJb3ICyOE4IjkeG8cJ44+fhGVy6GJPrY9iu2mX/2HkpQMe6bkqsX
+         I0jEeXYH0fdrDSd8GNzYmzY8Uwt2ysLjPOe7zeSeKl3e+7g8l7/r4fSwOzl9NmIhKvEL
+         OQoZCfO9UwYSne3fTpIKftKzZnUqCpQFKxVRUy+YhI+2A5jdMAsOXz0x5nQL2HCNyVXw
+         JczrZWHUyLN/+sRTQxUxZ8tj36HzGyUM4lEBWYgV74mlFQlsJ+Yj2yMLFM6qcGuodZ5n
+         OCBtoTm+rvTmnKrkvzK8r33zjQ7g8MiAYP3U8JhVDyEwXVc0zpG67Sxp7AHQypLK0oq7
+         qLBw==
+X-Gm-Message-State: AOAM532YR+MPY2TfzFX50jqBtUFPmVrFud6LQFCEh10hwGvFSmWbhzVE
+        rXscMKwXKS1o3SmKpHDTCwLON3yvzpTiTA==
+X-Google-Smtp-Source: ABdhPJwgziPS+PgkkFC/bjmFZ+VE0a90Bb9bcb1/ggDkuzCqjJIlT4glLgLQ/lobIR1btt85+xqPqA==
+X-Received: by 2002:a17:90a:1c02:b0:1e0:df7:31f2 with SMTP id s2-20020a17090a1c0200b001e00df731f2mr9964289pjs.222.1653475848502;
+        Wed, 25 May 2022 03:50:48 -0700 (PDT)
 Received: from localhost (174.71.80.34.bc.googleusercontent.com. [34.80.71.174])
-        by smtp.gmail.com with UTF8SMTPSA id k2-20020a170902c40200b0016240bbe893sm3600857plk.302.2022.05.25.03.50.44
+        by smtp.gmail.com with UTF8SMTPSA id f1-20020a170902f38100b001635dc81415sm1072132ple.289.2022.05.25.03.50.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 May 2022 03:50:45 -0700 (PDT)
+        Wed, 25 May 2022 03:50:48 -0700 (PDT)
 From:   Joseph Hwang <josephsih@chromium.org>
 To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
         luiz.dentz@gmail.com, pali@kernel.org
 Cc:     chromeos-bluetooth-upstreaming@chromium.org, josephsih@google.com,
         Joseph Hwang <josephsih@chromium.org>
-Subject: [BlueZ PATCH v5 7/8] monitor: print quality report cmd
-Date:   Wed, 25 May 2022 18:50:14 +0800
-Message-Id: <20220525105015.2315987-5-josephsih@chromium.org>
+Subject: [BlueZ PATCH v5 8/8] monitor: packet: add missing decodings of MGMT commands to todo
+Date:   Wed, 25 May 2022 18:50:15 +0800
+Message-Id: <20220525105015.2315987-6-josephsih@chromium.org>
 X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
 In-Reply-To: <20220525105015.2315987-1-josephsih@chromium.org>
 References: <20220525105015.2315987-1-josephsih@chromium.org>
@@ -68,59 +68,37 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch prints the set quality command properly.
+This patch adds the missing decodings of MGMT commands to
+btmon --todo.
 
 ---
 
 (no changes since v4)
 
 Changes in v4:
-- Use get_u8() to replace *(uint8_t *).
-- Use mgmt_new_settings_rsp as the rsp_func in mgmt_command_table
-  for Set Quality Report.
+- This is a new patch that adds the missing decodings of MGMT commands.
 
-Changes in v3:
-- This is a new patch that prints the set quality command.
-
- monitor/packet.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ monitor/packet.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/monitor/packet.c b/monitor/packet.c
-index d80735a06..33b1f2fea 100644
+index 33b1f2fea..11f7fe87f 100644
 --- a/monitor/packet.c
 +++ b/monitor/packet.c
-@@ -12216,6 +12216,7 @@ static const struct bitfield_data mgmt_settings_table[] = {
- 	{ 15, "Static Address"		},
- 	{ 16, "PHY Configuration"	},
- 	{ 17, "Wideband Speech"		},
-+	{ 18, "Quality Report"		},
- 	{ }
- };
+@@ -14901,4 +14901,13 @@ void packet_todo(void)
  
-@@ -13812,6 +13813,13 @@ static void mgmt_remove_adv_monitor_patterns_rsp(const void *data,
- 	print_field("Handle: %d", handle);
+ 		printf("\t%s\n", le_meta_event_table[i].str);
+ 	}
++
++	printf("MGMT commands with missing decodings:\n");
++
++	for (i = 0; mgmt_command_table[i].str; i++) {
++		if (mgmt_command_table[i].func)
++			continue;
++
++		printf("\t%s\n", mgmt_command_table[i].str);
++	}
  }
- 
-+static void mgmt_set_quality_report_cmd(const void *data, uint16_t size)
-+{
-+	uint8_t action = get_u8(data);
-+
-+	print_field("Set Quality Report %u", action);
-+}
-+
- struct mgmt_data {
- 	uint16_t opcode;
- 	const char *str;
-@@ -14069,6 +14077,9 @@ static const struct mgmt_data mgmt_command_table[] = {
- 				mgmt_add_adv_monitor_patterns_rssi_cmd, 8,
- 									false,
- 				mgmt_add_adv_monitor_patterns_rsp, 2, true},
-+	{ 0x0057, "Set Quality Report",
-+				mgmt_set_quality_report_cmd, 1, true,
-+				mgmt_new_settings_rsp, 4, true },
- 	{ }
- };
- 
 -- 
 2.36.1.124.g0e6072fb45-goog
 
