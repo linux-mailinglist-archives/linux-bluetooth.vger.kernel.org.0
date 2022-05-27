@@ -2,87 +2,76 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9315D535EB0
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 May 2022 12:52:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26160536374
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 May 2022 15:47:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348666AbiE0Kwy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 27 May 2022 06:52:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42354 "EHLO
+        id S1352697AbiE0NrY convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 27 May 2022 09:47:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236319AbiE0Kwx (ORCPT
+        with ESMTP id S238218AbiE0NrX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 27 May 2022 06:52:53 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36B15AF315
-        for <linux-bluetooth@vger.kernel.org>; Fri, 27 May 2022 03:52:51 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C5EDC61BCE
-        for <linux-bluetooth@vger.kernel.org>; Fri, 27 May 2022 10:52:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3388FC3411C
-        for <linux-bluetooth@vger.kernel.org>; Fri, 27 May 2022 10:52:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653648770;
-        bh=kVjI82UWLEduFHovzAv2O11gZkM2x3u8lzPsAD1vaS8=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=Klysjq3wLCR8kIFm7gcOLDydCSUExFEnRbke4mhOLANhiEKHmCVJDf2nRGyfImryW
-         00S3w4mySRK5tO8vttEA/fZTYhTYogo7a3oh0ytquF7WKyavS+Lg9xn4inyvfoX87h
-         dAOKDvQDkUVVRkgSkcTSJWfs3F9wEtwB6Q/ewV9aIYlupfMz/HTtvt90IRLSMbTg6B
-         3CvpxGparp8gXHhAgi2Z1OyeoP1IYII79hovJxd52bXgxT9ZA5XCWNZzUwvi46h7NE
-         VCFw7Wan0DVQBP9De7PtpYbxut+GhRI/SqpIcO7icFm1Int7V4G1qcfeSBvahDKvtb
-         8WHCr1FuEH80A==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id 25109C05FD5; Fri, 27 May 2022 10:52:50 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 215576] HSP/HFP mSBC profile broken with QCA6174
-Date:   Fri, 27 May 2022 10:52:49 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: wavexx@thregr.org
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-215576-62941-kahxEJmWhc@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-215576-62941@https.bugzilla.kernel.org/>
-References: <bug-215576-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Fri, 27 May 2022 09:47:23 -0400
+X-Greylist: delayed 9701 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 27 May 2022 06:47:22 PDT
+Received: from mail.composit.net (mail.composit.net [195.49.185.119])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6757818358;
+        Fri, 27 May 2022 06:47:22 -0700 (PDT)
+Received: from mail.composit.net (localhost.localdomain [127.0.0.1])
+        by mail.composit.net (Proxmox) with ESMTP id 96007382124;
+        Fri, 27 May 2022 14:02:16 +0300 (MSK)
+Received: from mail.composit.net (unknown [192.168.101.14])
+        by mail.composit.net (Proxmox) with SMTP id 54EBA394BD2;
+        Fri, 27 May 2022 14:02:16 +0300 (MSK)
+Received: from [192.168.1.105] (Unknown [197.234.219.23])
+        by mail.composit.net with ESMTPSA
+        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256)
+        ; Fri, 27 May 2022 14:02:17 +0300
+Message-ID: <0C7B4679-F615-4B2C-9AF8-93D5D9125A7C@mail.composit.net>
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Greetings From Ukraine.  
+To:     Recipients <heiss@dnet.it>
+From:   "Kostiantyn Chichkov" <heiss@dnet.it>
+Date:   Fri, 27 May 2022 11:59:24 +0100
+Reply-To: kostiantync@online.ee
+X-Spam-Status: Yes, score=5.1 required=5.0 tests=BAYES_50,
+        RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_SBL,RCVD_IN_SORBS_WEB,
+        RCVD_IN_VALIDITY_RPBL,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: *  1.3 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in
+        *      bl.spamcop.net
+        *      [Blocked - see <https://www.spamcop.net/bl.shtml?195.49.185.119>]
+        *  0.1 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
+        *      [197.234.219.23 listed in zen.spamhaus.org]
+        *  1.5 RCVD_IN_SORBS_WEB RBL: SORBS: sender is an abusable web server
+        *      [197.234.219.23 listed in dnsbl.sorbs.net]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 SPF_NONE SPF: sender does not publish an SPF Record
+        *  1.3 RCVD_IN_VALIDITY_RPBL RBL: Relay in Validity RPBL,
+        *      https://senderscore.org/blocklistlookup/
+        *      [195.49.185.119 listed in bl.score.senderscore.com]
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D215576
+Good Morning,
 
---- Comment #11 from wavexx@thregr.org ---
-So did the series got accepted/merged, and did it land in linux yet? (patch=
-work
-now shows me just an empty page..).
+We are Kostiantyn Chychkov and Maryna Chudnovska from Ukraine, we need your service, we have gone through your profile and we will like to work with you on an important service that needs urgent attention due to the ongoing war in our country. Kindly acknowledge this inquiry as soon as possible for a detailed discussion about the service.
 
-Just checking on the 5.18 trunk I don't see any change besides minor other
-fixes.
+Thank you.
 
---=20
-You may reply to this email to add a comment.
+Yours expectantly,
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+Kostiantyn Chichkov & Ms. Maryna Chudnovska,
+From Ukraine.
+
+
