@@ -2,91 +2,97 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EB4D536D95
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 May 2022 17:48:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7662F536DE6
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 May 2022 19:17:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243709AbiE1Psw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 28 May 2022 11:48:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56210 "EHLO
+        id S238962AbiE1RRR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 28 May 2022 13:17:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233172AbiE1Psv (ORCPT
+        with ESMTP id S238803AbiE1RRP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 28 May 2022 11:48:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id DBB52AD
-        for <linux-bluetooth@vger.kernel.org>; Sat, 28 May 2022 08:48:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1653752929;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=5GAhpNoL6mVubSpwZ4APr5XIqQJTwS8OwKgO1Q7qWXM=;
-        b=dZdtc9faiWDozjJPa+MUOQ8Ltp750xU6GcX/ayYXhB3tOExhpKRD7abRY3vbj02lsZD9jq
-        JVCR6ELvSvY3/4xnLu8CA4O2d7FSEhu931dye2U0mu6GZ3y2aMYdmGlGqyE0eqZJ4xifPV
-        yzBdmSOFa5JVld4xvWszgX8djRt44rE=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-120-yTebxjixOZafsppPLYhu8g-1; Sat, 28 May 2022 11:48:48 -0400
-X-MC-Unique: yTebxjixOZafsppPLYhu8g-1
-Received: by mail-qk1-f200.google.com with SMTP id bl27-20020a05620a1a9b00b0069994eeb30cso5922578qkb.11
-        for <linux-bluetooth@vger.kernel.org>; Sat, 28 May 2022 08:48:47 -0700 (PDT)
+        Sat, 28 May 2022 13:17:15 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D94B1EC
+        for <linux-bluetooth@vger.kernel.org>; Sat, 28 May 2022 10:17:14 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id h75so6772228ybg.4
+        for <linux-bluetooth@vger.kernel.org>; Sat, 28 May 2022 10:17:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=pSKuz9BJS/Qwel4yBJUKsJP++c1z8gtIosTtEbMtN5I=;
+        b=Evcz97LOKzHfSgT/AL/l+ZvMvf33Mnf2JcLi4+SabJA4RVfVM4/A46bF7LrAex2ihQ
+         DAlRR8/zXtJTnIoEfh6f7bdC2JRR+yXK1eOVqaphmBhPg+nXO/886U3X5GDEMu2yZzTG
+         2QbvLBgO/2ZnaMZ64zlK5XOVIIl1SuH3E1vYjFzTh4ifT/z4GjIOkdCqWZaLHfZRu/L9
+         XInGcHNGmawHrNpuj/q0VbBJWcYR7YDA070uYdD/UQCxkpMMrEj2bhBVT3vnoFUN6ubb
+         FY2vKq+UskzZ+khk4B7ynDvYv4mv8uOY5VIkwWrNQ13Yu6d+0uCVvcPG55NygjZC9ZzA
+         KzyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5GAhpNoL6mVubSpwZ4APr5XIqQJTwS8OwKgO1Q7qWXM=;
-        b=UruKZJoKnm3wOjd1a/AkjZL6bPJW+feCQNcX4sdueMaRMtPJVT5THmsrrMqmGqTtiW
-         p7ELMLlFUkMKVnfdTkL57Xs/O/cb74tZBH3uGPD6fcOT7UW35nM6Bm8HCdx9e0w3yGeg
-         1B3B4d774dHAvkHZDCcYlMGaqHDeHehYegd0PRV6m/RFN04q9tdc0amPNazzn1OCbqCL
-         XYgbgX6vDAzALbvYIgp84FqFYG8lDNz6N6Q4avzJ/GJ2ESYu2nSm5HmYVhg9B3f9fSnJ
-         mc7G5vX0Tj267Ytv9+JjxVB/0uMSzRHoQKSKpsb6re+XV8FEHGdipqJJQEzWsJZifuYV
-         0QZA==
-X-Gm-Message-State: AOAM533MTs+/U0Gt9UurV/fayEXOGnZy2v0f4VXLFrKgV/gsGxhmaM+O
-        j7MCrh8QpKnhUY6Pm8e4aiDebwBa7fy1og4/HNotVatZMR1AiJbTiI76j+GhP1XuZxpf36OCMwG
-        0Qzvcm3OBHZ2ZuJIahkCSMVeGVz7FEcwJZIWduEo0uvOO
-X-Received: by 2002:ac8:5750:0:b0:2f9:410b:7101 with SMTP id 16-20020ac85750000000b002f9410b7101mr19892462qtx.291.1653752927535;
-        Sat, 28 May 2022 08:48:47 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwmAsucB7ng/+qB+vvkMRhBKq3xcdUohmtwPZcqjrboA1dOIsdMeoqf6NSF/fuav7Oq7do5fGX9GQQTQ5RsLU8=
-X-Received: by 2002:ac8:5750:0:b0:2f9:410b:7101 with SMTP id
- 16-20020ac85750000000b002f9410b7101mr19892448qtx.291.1653752927345; Sat, 28
- May 2022 08:48:47 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=pSKuz9BJS/Qwel4yBJUKsJP++c1z8gtIosTtEbMtN5I=;
+        b=W9hObWZnpDEnqGKECE4GFy+jiFm3cvh+QzW+zrPsJ8fKJehyf/8tHvd5lNrVo0rG1b
+         Is32j5rv+Mj7DubfylyD3iX9geqnJSG4wrhlbZIVb12/rX/hyw+8YGNcN6OGDYwq8dGQ
+         1uvjUE/qIE/CaLO7IugfDWI1KE6y9LKUBZC2cJWPPDiFNnsqtACXsR+zqIVDA2mKqwSx
+         9jREYjAZwqekLqWjMURiky+Bvy5sWSnJ+oM3q0rrtuamDf3pFcpk6jA7LJJt/XBwB4kP
+         LRKZmWt/fG7+wTihBEjr5nY+Zo8sh/6Y8Cx0ich6MMkMAATzB66/KUTHQDUZlxDrRGWG
+         tkzg==
+X-Gm-Message-State: AOAM532uD0T1xjAFuV0XEmBE1l8PfuHJvB27rCxD1jdF1ZSgu1WAlMS2
+        zvqFskyzGR2WsQAXfdnyBCUcLmO3hSf56tMR6u0=
+X-Google-Smtp-Source: ABdhPJxPsnNngIXYUzCPybntA0BZ3Hio+So97vpfEl2GjbHePX/ZnvzzyR/z5l50rmRV1R4F3fvnNoPkkQhCO5/mYL4=
+X-Received: by 2002:a25:168b:0:b0:64a:54ba:e88e with SMTP id
+ 133-20020a25168b000000b0064a54bae88emr42052597ybw.17.1653758233195; Sat, 28
+ May 2022 10:17:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220526162806.16618-1-jukka.rissanen@linux.intel.com> <20220527075625.9693-1-jukka.rissanen@linux.intel.com>
-In-Reply-To: <20220527075625.9693-1-jukka.rissanen@linux.intel.com>
-From:   Alexander Aring <aahringo@redhat.com>
-Date:   Sat, 28 May 2022 11:48:36 -0400
-Message-ID: <CAK-6q+icAttyjPFx6LXLTUu4b6WBpj9kwKNxUS9WE=cPz6=DnA@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Remove Jukka Rissanen as 6lowpan maintainer
-To:     Jukka Rissanen <jukka.rissanen@linux.intel.com>
-Cc:     Alexander Aring <alex.aring@gmail.com>,
-        linux-bluetooth@vger.kernel.org,
-        linux-wpan - ML <linux-wpan@vger.kernel.org>,
-        pmenzel@molgen.mpg.de
+Received: by 2002:a05:7108:768b:0:0:0:0 with HTTP; Sat, 28 May 2022 10:17:12
+ -0700 (PDT)
+Reply-To: davidnelson7702626@gmail.com
+From:   Viviane Amouzou <vivianeamouzou5@gmail.com>
+Date:   Sat, 28 May 2022 18:17:12 +0100
+Message-ID: <CAHpnGrhK7NLqZF9qc8c4tF7S0W5tp9A3wdfsMR8bpNThgpvN4w@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: Yes, score=5.4 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:b29 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5055]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [vivianeamouzou5[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [vivianeamouzou5[at]gmail.com]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [davidnelson7702626[at]gmail.com]
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.3 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
-
-On Fri, May 27, 2022 at 3:58 AM Jukka Rissanen
-<jukka.rissanen@linux.intel.com> wrote:
->
-> I no longer work on this so better update the file.
->
-
-> Signed-off-by: Jukka Rissanen <jukka.rissanen@linux.intel.com>
-
-Acked-by: Alexander Aring <aahringo@redhat.com>
-
-:'-(
-
-- Alex
-
+Hello friend, I want to send money to you to enable me invest in your
+country get back to me if you are interested.
