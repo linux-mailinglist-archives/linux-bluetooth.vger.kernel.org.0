@@ -2,106 +2,149 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79E71537A22
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 May 2022 13:44:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37B10537D0F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 May 2022 15:41:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235669AbiE3LoZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 May 2022 07:44:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54518 "EHLO
+        id S237473AbiE3Nhl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 May 2022 09:37:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232587AbiE3LoX (ORCPT
+        with ESMTP id S238205AbiE3NgL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 May 2022 07:44:23 -0400
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48CA8299
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 May 2022 04:44:21 -0700 (PDT)
-Received: by mail-vs1-xe35.google.com with SMTP id b7so10590822vsq.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 May 2022 04:44:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=foxdogstudios-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=C+U803PsD05rTNoisE+ikzBWtw7fVVtUPD6fXlsX50E=;
-        b=ULb/k7BiJlfwHV9rm6q7f16Gx4e89n+FWWmSXbgHHF4samXHhsZ0+l8itSka5+pcA6
-         zwkav8dhxp4ibEcQMOj4dPEYb14cWOr7SuekeXbBee1Pmg1DsoX1ShDbFawEYYLH6Rcq
-         LOvb8zfiLY4qiih+pe2j0OfJTmT67EisvgKweQGEkqIBCnnDnKA84nWzLrtiL4juA8n0
-         OyAMk/CSMn7+OOJF68ji0rYLnecdPAUy0FHT6RFhB3oMy/RqjhqX75bGaUorPprDRWMT
-         tu0KDpowTOfRyhqcb4uLWfryMlRzxqQj+EwqBcLQXFY+fzZ58r8Cha85gkhoF0i5/IQI
-         be6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=C+U803PsD05rTNoisE+ikzBWtw7fVVtUPD6fXlsX50E=;
-        b=Aa5emCpH3YIopJu6LvGQ4Y5QoAatxM7vRjsfSkuhTDGP4SgibUVMztmU8Hv7nVdIyl
-         OiW2oeKmYT6vTPGQnfzzuYX7XPJ8xF/Gbrhnayo+UeD8xXuL4nffYDwmOwamp+eSBijJ
-         9ZfcbMwXm7R9ROsQaEQZ1gA9Ww9Kk99i2rz7yc0zt5Be1upIi00ZCuIn3zn2NZ1GTz5X
-         Sp3tDGhnw4CgR2bEUEB7k/mcTVDGKH/Zg7OD1yDhErWs9B5qXIbSyFh4vzIsEEKN5HYa
-         YkGBk01Vc4Iq3LQlxaumI1BJ8euDkM+byZltbRmyeEcf7fZwsSHhRvx5qfgmKLlkgOdO
-         PNkA==
-X-Gm-Message-State: AOAM531Qc09JwLyeojfD16ZKxdS2aPEnjTzTNWZ2mu9f4OqInVdAbNbg
-        ox66wdVCCzh/EcRo6hxQwbiBB8C6Ess8Kvxa73Cu8g==
-X-Google-Smtp-Source: ABdhPJxI7NeBWQG2QWibjO1WFAl8uZUNpYeffue0k21ew2M/elSF4LW5l9jYUSJYa+MaFMDAoDmTafmnIm1X/nx6ULw=
-X-Received: by 2002:a67:d91e:0:b0:337:935e:517a with SMTP id
- t30-20020a67d91e000000b00337935e517amr18117504vsj.19.1653911060435; Mon, 30
- May 2022 04:44:20 -0700 (PDT)
+        Mon, 30 May 2022 09:36:11 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34846986E3;
+        Mon, 30 May 2022 06:29:56 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id AC92FB80B3A;
+        Mon, 30 May 2022 13:29:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F784C3411E;
+        Mon, 30 May 2022 13:29:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653917393;
+        bh=uBf4ntkHBfzEN3956XOhHHxqoIIf5aiUP6GYJPkD3to=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=K7PddymlSaPApJdx+LnoTmw264e8dbXftO7ORmtAvQzel+KCL5mSj1+aMHBqkOQ+A
+         jTmXKILctlKfGeoxfE0gX0QwN5sokUQ/x9ewBurPVmGrCXlex3V5GGHyJhCryVcxyM
+         FAwlIiBeqtUOF5xW7Jl/HJG/xoVvvSRSkOk7ALNmCOeM+bXlUH6+/aRTSIxas2KYVx
+         0SA+asUr17yojjhq+6MQq38oP8uslZzcaPJcpTxtJCHrP3okenhpQkGC/DgKnszZ3N
+         sgCRR43Qiy2/ArjraUfqfg46ns2siP18cxiodsCjA8CgiVLVNXaw6bKWekCxGTCalC
+         u1lxfkkG8LSqg==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>, johan.hedberg@gmail.com,
+        luiz.dentz@gmail.com, davem@davemloft.net, edumazet@google.com,
+        kuba@kernel.org, pabeni@redhat.com,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.18 119/159] Bluetooth: HCI: Add HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN quirk
+Date:   Mon, 30 May 2022 09:23:44 -0400
+Message-Id: <20220530132425.1929512-119-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220530132425.1929512-1-sashal@kernel.org>
+References: <20220530132425.1929512-1-sashal@kernel.org>
 MIME-Version: 1.0
-References: <CAD+dNTsbuU4w+Y_P7o+VEN7BYCAbZuwZx2+tH+OTzCdcZF82YA@mail.gmail.com>
- <24e95c8b-dc05-0d00-50bb-58b71c5baf94@molgen.mpg.de>
-In-Reply-To: <24e95c8b-dc05-0d00-50bb-58b71c5baf94@molgen.mpg.de>
-From:   Peter Sutton <peter@foxdogstudios.com>
-Date:   Mon, 30 May 2022 12:44:09 +0100
-Message-ID: <CAD+dNTuRThoa2OSzQ27tENB29GJ4oD0j3D+P4k42HzopEeTJMw@mail.gmail.com>
-Subject: Re: [Bug] [Deadlock] Kernel thread deadlock in rfcomm socket release
- when connect interrupted
-To:     Paul Menzel <pmenzel@molgen.mpg.de>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Matthew Leach <matthew@mattleach.net>,
-        Lloyd Henning <lloyd@foxdogstudios.com>,
-        linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Commit b7ce436a5d798bc59e71797952566608a4b4626b is the probable cause.
-I compiled a custom Arch Linux kernel package [1] and the bug was
-present. Reverting the commit fixed the bug. Below is the reply I was
-writing before Matt found the suspect commit and I tested with the
-custom kernel.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-> What hardware is that?
+[ Upstream commit 05abad857277dda198063017b00ba5b9fed2c0cb ]
 
-$ dmesg | grep iwlwifi
-Me: Intel(R) Dual Band Wireless AC 8260, REV=0x204
-Matt: Intel(R) Dual Band Wireless AC 8265, REV=0x230
+This adds HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN quirk which can be
+used to mark HCI_Enhanced_Setup_Synchronous_Connection as broken even
+if its support command bit are set since some controller report it as
+supported but the command don't work properly with some configurations
+(e.g. BT_VOICE_TRANSPARENT/mSBC).
 
-We both get:
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ include/net/bluetooth/hci.h      | 9 +++++++++
+ include/net/bluetooth/hci_core.h | 8 ++++++--
+ net/bluetooth/hci_conn.c         | 2 +-
+ net/bluetooth/sco.c              | 2 +-
+ 4 files changed, 17 insertions(+), 4 deletions(-)
 
-$ lsusb | grep Bluetooth
-Me & Matt: Bus 001 Device 006: ID 8087:0a2b Intel Corp. Bluetooth
-wireless interface
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 69ef31cea582..62a9bb022aed 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -265,6 +265,15 @@ enum {
+ 	 * runtime suspend, because event filtering takes place there.
+ 	 */
+ 	HCI_QUIRK_BROKEN_FILTER_CLEAR_ALL,
++
++	/*
++	 * When this quirk is set, disables the use of
++	 * HCI_OP_ENHANCED_SETUP_SYNC_CONN command to setup SCO connections.
++	 *
++	 * This quirk can be set before hci_register_dev is called or
++	 * during the hdev->setup vendor callback.
++	 */
++	HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN,
+ };
+ 
+ /* HCI device flags */
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 62d7b81b1cb7..5a52a2018b56 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1495,8 +1495,12 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
+ #define privacy_mode_capable(dev) (use_ll_privacy(dev) && \
+ 				   (hdev->commands[39] & 0x04))
+ 
+-/* Use enhanced synchronous connection if command is supported */
+-#define enhanced_sco_capable(dev) ((dev)->commands[29] & 0x08)
++/* Use enhanced synchronous connection if command is supported and its quirk
++ * has not been set.
++ */
++#define enhanced_sync_conn_capable(dev) \
++	(((dev)->commands[29] & 0x08) && \
++	 !test_bit(HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN, &(dev)->quirks))
+ 
+ /* Use ext scanning if set ext scan param and ext scan enable is supported */
+ #define use_ext_scan(dev) (((dev)->commands[37] & 0x20) && \
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index fe803bee419a..882a7df13005 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -481,7 +481,7 @@ static bool hci_setup_sync_conn(struct hci_conn *conn, __u16 handle)
+ 
+ bool hci_setup_sync(struct hci_conn *conn, __u16 handle)
+ {
+-	if (enhanced_sco_capable(conn->hdev))
++	if (enhanced_sync_conn_capable(conn->hdev))
+ 		return hci_enhanced_setup_sync_conn(conn, handle);
+ 
+ 	return hci_setup_sync_conn(conn, handle);
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 8eabf41b2993..2a58c7d88433 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -885,7 +885,7 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			err = -EBADFD;
+ 			break;
+ 		}
+-		if (enhanced_sco_capable(hdev) &&
++		if (enhanced_sync_conn_capable(hdev) &&
+ 		    voice.setting == BT_VOICE_TRANSPARENT)
+ 			sco_pi(sk)->codec.id = BT_CODEC_TRANSPARENT;
+ 		hci_dev_put(hdev);
+-- 
+2.35.1
 
-> As a lot of patches are also applied to the stable series, do you know,
-> if this is a regression? Does it work with Linux 5.15(.0) or 5.10?
-
-Bug is present on current Arch Linux LTS kernel:
-
-$ uname -a
-Linux taffer 5.15.43-1-lts #1 SMP Wed, 25 May 2022 14:08:34 +0000
-x86_64 GNU/Linux
-
-Matt tested on 5.10.115 and the bug is not present. So I guess it's a
-regression. Anecdotally, we encountered this behaviour 1 yr ago
-(difficult to say exactly), then it went away but came back about 1 or
-2 months ago. All of this is on Arch Linux, I update about once a
-week.
-
-[1] https://wiki.archlinux.org/title/Kernel/Arch_Build_System
