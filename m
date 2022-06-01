@@ -2,66 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D68C53B048
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 00:52:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7570653AEC1
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 00:49:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231213AbiFAVQ3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 1 Jun 2022 17:16:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45988 "EHLO
+        id S231442AbiFAVW6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 1 Jun 2022 17:22:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231207AbiFAVQ2 (ORCPT
+        with ESMTP id S231435AbiFAVW5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 1 Jun 2022 17:16:28 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5169CE3B
-        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Jun 2022 14:16:27 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id y19so6256554ejq.6
-        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Jun 2022 14:16:27 -0700 (PDT)
+        Wed, 1 Jun 2022 17:22:57 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C80AD2ADB
+        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Jun 2022 14:22:56 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id u12-20020a17090a1d4c00b001df78c7c209so7504104pju.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Jun 2022 14:22:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=mZ3wqB4NmL7z6lpFr/h15h1rYqsZKafJnUpMVahbEPg=;
-        b=BmztHPEiN3O2TWICvZq9QvpxxkTkU4FlxkTrJ+7cQV/jPXLvgGVFpAZY0rJWfrRJB5
-         ffgqf/SDJRVV6XJvGVlUul4Ay/Ksg9LTROfayXfQ21DWFgf7yxNJdR1MKV1GiFd4gbBI
-         9KFJD/viA4KTzN+YILcCKUi6mY92/l8ZlAsk45dTXhzhO/zF4BuECwajrKO+8SVwcZft
-         oG1Fw3P3Btnm0ltZJQkeiY1rMot1UFuiM0YpQ2nnSNwRfVZQaigf+GqNwL4UavWpS8kw
-         H2iOhGIkkQUnfAbNAw7gfRXj5At/G3JXBiJsVcL+Ozs/SBSWkOtqNp5crheVmE1nPf3l
-         zMRg==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gES99xrNSJ18ruTbh4NezxpzBfZc63RCDVbHgxPY/eI=;
+        b=T5wjSEs+W1vAL6tHEBlcppWH9ubzGzdr+4ohGjMDWiphArP8ciNiNI6rQYNggS8hCU
+         VyJ7wFelHaC9keqJDxRMCaJRyJMhVw1kMWtD7Ajsk8xtMniJuT0IAicuMnxsauHQBpX1
+         zMh9fS/2tgFLL1dUb/4kjlKXNS9UxDZW6JO1vqNha94OtUKOOJ2fK8JvN/e8OjRVKq3w
+         sRqX+XWjHztJOFvD8WPZCHp3Idq30trFB4KbEpscZ1lNzf+N1gHO3LcvJf4fAlvsjcaW
+         BdSeUObaI23tQjUQhAAeMQ6kjfv5g/l3UbbC2bxnIfS5pYurlf3hzia+mNy3z+tewvRs
+         dy3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=mZ3wqB4NmL7z6lpFr/h15h1rYqsZKafJnUpMVahbEPg=;
-        b=ucF8p70m4zECDV9p7Lg91dx6yxqoE5idhQQVsr62Mt5JCfORrr/kcagtc7mxEi4vy8
-         C6gR5WfXpGSSitZOsn8TbnOmCz51vbUCqqa9H/WECAgHmMs/FFPvXHh53AScsccSUY4H
-         obXuUuS8MGVhTiGC3GMjG5nL2Ota9gTAu6BKtCgP7cpiAYy37jOLiO4t0abhEaAFasHU
-         stwSgreHMS2b6z2ijSn5T0whdn52btG+svEWK5I+mAbOIdSvGBO8BJoOXEVzcEUhpvkD
-         iJJQums+U/WT9ZPCIQ0On59OH66mSU9IlworYLOwGWlpeR8s1YPeKcf+ww92+o0Z+Y3v
-         y0/A==
-X-Gm-Message-State: AOAM531D/8ljigZzUxSupKaeEhL81EmOrqDZh9vtFOYJBWei+N97a8M3
-        4QXNciPrOEMVW3OT6gjkI0zDCxLB5nIoB3tknoc=
-X-Google-Smtp-Source: ABdhPJyJbHUM5lGitca6BYdqIjm00xo4XVYPC+gmuuxlB5E4q3qYFLJ16AIx6Bp84+DaqCGBsyXqvVP74HYQ8vqCELU=
-X-Received: by 2002:a17:907:1b0c:b0:6fe:25bf:b3e5 with SMTP id
- mp12-20020a1709071b0c00b006fe25bfb3e5mr1357005ejc.689.1654118185936; Wed, 01
- Jun 2022 14:16:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gES99xrNSJ18ruTbh4NezxpzBfZc63RCDVbHgxPY/eI=;
+        b=GbcFoWSkEP3Kn2Wj6znAo4PNJmzNGfMzx0xOyIspcccZNvtZM4/0tr3HoDIy0Ku9LJ
+         V0BcfbIS0EpokiRG9Vn2eq12k58UHmJW5/PfyYjK9esqjUArP/x37HtqJJ0954XCJ1Jp
+         Yg3FrEWPwq1MC0XkR+Blx1hMZI3vEcr1c1Sii/ai9tf49c/tKn8iDr3P8N55HwGuk25x
+         gdTdeF595bAw9Ptk1qGzGflEmvK3iaYKfwYxCpSHzivstZAENQ0oY44qHZ6A3xYCmjlC
+         MVTJ27wydvDOmnDvhrRAW4NyCXZeIkhbGjDxxAN0oZxsX0anWKzBlW2F85oKVMHW3Na0
+         KTRw==
+X-Gm-Message-State: AOAM530Zc+qKrZyvF/BX0m/kvxuEKOmqzY4CxN4staKbmB3fEOXLrgRn
+        EnupIfA783p1LK2QCRwTCHe3JY0IWdg=
+X-Google-Smtp-Source: ABdhPJy5jJ8fKG1SaFmovc7rcwRFf+O3K/p1cGXH5b7LKJ1A9HF/jNf8T00f1ndmndmXiBjSftaryg==
+X-Received: by 2002:a17:90a:9b08:b0:1e2:837f:bcce with SMTP id f8-20020a17090a9b0800b001e2837fbccemr1433617pjp.144.1654118575996;
+        Wed, 01 Jun 2022 14:22:55 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id o10-20020a170902d4ca00b00161fab018dfsm1951048plg.256.2022.06.01.14.22.55
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jun 2022 14:22:55 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ] test-runner: Enable BT_HCIUART and BT_HCIUART_H4
+Date:   Wed,  1 Jun 2022 14:22:55 -0700
+Message-Id: <20220601212255.1356507-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Received: by 2002:a50:2550:0:0:0:0:0 with HTTP; Wed, 1 Jun 2022 14:16:25 -0700 (PDT)
-Reply-To: tonywenn@asia.com
-From:   Tony Wen <ezhejianghuayan@gmail.com>
-Date:   Wed, 1 Jun 2022 17:16:25 -0400
-Message-ID: <CAF6pdHzpPfYCvgeW77owrr0qXy1_=Mzf+Koay4Y5R+R5zk_x_A@mail.gmail.com>
-Subject: services
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=3.7 required=5.0 tests=BAYES_40,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Can I engage your services?
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+
+These options are required when running with -u option since that uses
+H4 headers to serialize the communication of host and guest.
+---
+ doc/test-runner.txt | 2 ++
+ doc/tester.config   | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/doc/test-runner.txt b/doc/test-runner.txt
+index fe0a0d479..683c622a2 100644
+--- a/doc/test-runner.txt
++++ b/doc/test-runner.txt
+@@ -41,6 +41,8 @@ For Bluetooth functionality:
+ 	CONFIG_BT_HIDP=y
+ 	CONFIG_BT_LE=y
+ 
++	CONFIG_BT_HCIUART=y
++	CONFIG_BT_HCIUART_H4=y
+ 	CONFIG_BT_HCIVHCI=y
+ 
+ 	CONFIG_CRYPTO_CMAC=y
+diff --git a/doc/tester.config b/doc/tester.config
+index 011475661..4429a7222 100644
+--- a/doc/tester.config
++++ b/doc/tester.config
+@@ -34,6 +34,8 @@ CONFIG_BT_MSFTEXT=y
+ CONFIG_BT_AOSPEXT=y
+ CONFIG_BT_FEATURE_DEBUG=y
+ 
++CONFIG_BT_HCIUART=y
++CONFIG_BT_HCIUART_H4=y
+ CONFIG_BT_HCIVHCI=y
+ 
+ CONFIG_CRYPTO_CMAC=y
+-- 
+2.35.1
+
