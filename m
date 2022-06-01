@@ -2,100 +2,66 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAA6453AFB0
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 00:51:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D68C53B048
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 00:52:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbiFAVMe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 1 Jun 2022 17:12:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36170 "EHLO
+        id S231213AbiFAVQ3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 1 Jun 2022 17:16:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231172AbiFAVMc (ORCPT
+        with ESMTP id S231207AbiFAVQ2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 1 Jun 2022 17:12:32 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE8BE5BD23
-        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Jun 2022 14:12:31 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id u18so2879719plb.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Jun 2022 14:12:31 -0700 (PDT)
+        Wed, 1 Jun 2022 17:16:28 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5169CE3B
+        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Jun 2022 14:16:27 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id y19so6256554ejq.6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Jun 2022 14:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RIxGrmNBg/91TDmPlkpGK2bw1iCjCrFVedNSq1scBaI=;
-        b=LFXdACnqMruRzM00aJcydRM7c63GV9bT16zujKOZmXNWTtolLTkIayq9UebFPVOUTV
-         t2jU0GBoZ66k9OfwcsK9RPHjXiTeT+XlFVjArjSX6pDnRudLVJnZISOoEukRHLkK775h
-         6jP2rE+bgix2lWrP5/44plgSCgr0wURmJ41BLxas60jTEaC2zlnqhyx2vnUFQKHmdrqf
-         GAVDDPYS8CeJcIsa6P7BRu2U30f/Q6e7C3OZkqCbsO8BY70RRnrJRNMcBqh9IX0xuR0J
-         7lnI92MY0TGyzlY2Zv8wZ08PNy/BMDsRRrEvhs1n2DmKHsPzpPOT89/WMCXeFwqx50A0
-         +nug==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=mZ3wqB4NmL7z6lpFr/h15h1rYqsZKafJnUpMVahbEPg=;
+        b=BmztHPEiN3O2TWICvZq9QvpxxkTkU4FlxkTrJ+7cQV/jPXLvgGVFpAZY0rJWfrRJB5
+         ffgqf/SDJRVV6XJvGVlUul4Ay/Ksg9LTROfayXfQ21DWFgf7yxNJdR1MKV1GiFd4gbBI
+         9KFJD/viA4KTzN+YILcCKUi6mY92/l8ZlAsk45dTXhzhO/zF4BuECwajrKO+8SVwcZft
+         oG1Fw3P3Btnm0ltZJQkeiY1rMot1UFuiM0YpQ2nnSNwRfVZQaigf+GqNwL4UavWpS8kw
+         H2iOhGIkkQUnfAbNAw7gfRXj5At/G3JXBiJsVcL+Ozs/SBSWkOtqNp5crheVmE1nPf3l
+         zMRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RIxGrmNBg/91TDmPlkpGK2bw1iCjCrFVedNSq1scBaI=;
-        b=NPMBhcdiDBnUQ2RTLF2NL58Cjj1BVOWYUx5yvSiBQxCFkUyd1JHtMSy4JjjMA5N8SO
-         r7lMWi3bLkINZAQL8wn7AAY9NvNoSJbkMc731cPACocHQmDarlyh5L49FSGPFzQRLc31
-         /aD7h05ROZDSC+Je9ZmtfA3Sa9FzrIQ+Drp9TnuSGv8gyC/2BooaMb86nkDk+2Z9PnNb
-         o6i/7xBLFhFAmVucF8322347lvNWJ/pL6H6V+RreH/K4xUSncH35rEoiS4vlx7ibcj/p
-         oFeFDBD1RTekvhTyesfAwEBsM+W7rEVyEj/6mZEVarhCJv7fRsqO/zViK7n8z572yvKu
-         K5YA==
-X-Gm-Message-State: AOAM5314HYmDdrEIc0yIZWQvUsgwm+zynLKYuhb/DNG/yhakpb0Coa7V
-        het4rZRQ0na3zctksWobVeGUMgnsCVI=
-X-Google-Smtp-Source: ABdhPJzBMEOBCvK1Ys05MgsfgCJE6o2JVGNiy08AQVKuY0Io4qnEEllciw/ix1hFj50n1sNqLoHLdw==
-X-Received: by 2002:a17:903:1252:b0:154:ca85:59a0 with SMTP id u18-20020a170903125200b00154ca8559a0mr1308138plh.169.1654117951199;
-        Wed, 01 Jun 2022 14:12:31 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id iq18-20020a17090afb5200b001e31f4cc977sm1740065pjb.56.2022.06.01.14.12.30
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 14:12:30 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ] test-runner: Fix not waiting for system_bus_socket
-Date:   Wed,  1 Jun 2022 14:12:30 -0700
-Message-Id: <20220601211230.1355268-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=mZ3wqB4NmL7z6lpFr/h15h1rYqsZKafJnUpMVahbEPg=;
+        b=ucF8p70m4zECDV9p7Lg91dx6yxqoE5idhQQVsr62Mt5JCfORrr/kcagtc7mxEi4vy8
+         C6gR5WfXpGSSitZOsn8TbnOmCz51vbUCqqa9H/WECAgHmMs/FFPvXHh53AScsccSUY4H
+         obXuUuS8MGVhTiGC3GMjG5nL2Ota9gTAu6BKtCgP7cpiAYy37jOLiO4t0abhEaAFasHU
+         stwSgreHMS2b6z2ijSn5T0whdn52btG+svEWK5I+mAbOIdSvGBO8BJoOXEVzcEUhpvkD
+         iJJQums+U/WT9ZPCIQ0On59OH66mSU9IlworYLOwGWlpeR8s1YPeKcf+ww92+o0Z+Y3v
+         y0/A==
+X-Gm-Message-State: AOAM531D/8ljigZzUxSupKaeEhL81EmOrqDZh9vtFOYJBWei+N97a8M3
+        4QXNciPrOEMVW3OT6gjkI0zDCxLB5nIoB3tknoc=
+X-Google-Smtp-Source: ABdhPJyJbHUM5lGitca6BYdqIjm00xo4XVYPC+gmuuxlB5E4q3qYFLJ16AIx6Bp84+DaqCGBsyXqvVP74HYQ8vqCELU=
+X-Received: by 2002:a17:907:1b0c:b0:6fe:25bf:b3e5 with SMTP id
+ mp12-20020a1709071b0c00b006fe25bfb3e5mr1357005ejc.689.1654118185936; Wed, 01
+ Jun 2022 14:16:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a50:2550:0:0:0:0:0 with HTTP; Wed, 1 Jun 2022 14:16:25 -0700 (PDT)
+Reply-To: tonywenn@asia.com
+From:   Tony Wen <ezhejianghuayan@gmail.com>
+Date:   Wed, 1 Jun 2022 17:16:25 -0400
+Message-ID: <CAF6pdHzpPfYCvgeW77owrr0qXy1_=Mzf+Koay4Y5R+R5zk_x_A@mail.gmail.com>
+Subject: services
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=3.7 required=5.0 tests=BAYES_40,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-
-This makes test-runner wait for system_bus_socket to be available before
-continuing otherwise the likes of bluetoothd would likely fail to start.
----
- tools/test-runner.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/tools/test-runner.c b/tools/test-runner.c
-index 1f1a8c36f..945a16a77 100644
---- a/tools/test-runner.c
-+++ b/tools/test-runner.c
-@@ -452,13 +452,13 @@ static pid_t start_dbus_daemon(void)
- 
- 		if (!stat("/run/dbus/system_bus_socket", &st)) {
- 			printf("Found D-Bus daemon socket\n");
--			break;
-+			return pid;
- 		}
- 
--		usleep(25 * 1000);
-+		sleep(1);
- 	}
- 
--	return pid;
-+	return -1;
- }
- 
- static const char *daemon_table[] = {
--- 
-2.35.1
-
+Can I engage your services?
