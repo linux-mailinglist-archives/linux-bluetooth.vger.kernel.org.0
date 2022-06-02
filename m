@@ -2,89 +2,170 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3615653BBDA
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 17:50:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFC3253BC03
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 17:59:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236623AbiFBPuW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Jun 2022 11:50:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51014 "EHLO
+        id S236686AbiFBP7a convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 2 Jun 2022 11:59:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236597AbiFBPuR (ORCPT
+        with ESMTP id S230011AbiFBP73 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 2 Jun 2022 11:50:17 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E8462FFCA;
-        Thu,  2 Jun 2022 08:50:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9E740B81FBA;
-        Thu,  2 Jun 2022 15:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1DE9DC3411F;
-        Thu,  2 Jun 2022 15:50:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654185013;
-        bh=JoW0sbHj1ciDbRMzhuE6464LB6Lei99zkmzZ1sHNCVU=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=lZ4Jsdfg/f3JS6GjFMoulBTT0qAKIgUusaCMiWJoN/P6JHUOokZDoWE/4pI8kCP8w
-         5QzW3n2F0swtOyZvYoKd0ki+0TT69aTT0IOD29fqaBLRsBreVCM6WFH7fVGoN7onnQ
-         0yfrP78N5LJzxDeu3/zonQUzFHFUY6jvNKSyYZERaC5wyhuORl8zZazb8bB8tbn5ao
-         2k8Fpq/HsL/3YrqwDRlEjxrrd6lHRJcSJVOQ+T2jL4v90xcRxi/j9uHW24qfpxO2qJ
-         /+u6xA9LQ49SeTzUJl6uFKEY40VPPMKb1mPkozgnir1uwnbDADv+uISQXdGkj1PNdv
-         5WoORCx/DfLEQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0312BF03952;
-        Thu,  2 Jun 2022 15:50:13 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3] Bluetooth: clear the temporary linkkey in hci_conn_cleanup
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165418501300.10758.13864529569247406536.git-patchwork-notify@kernel.org>
-Date:   Thu, 02 Jun 2022 15:50:13 +0000
-References: <20220602152952.v3.1.I9f2f4ef058af96a5ad610a90c6938ed17a7d103f@changeid>
-In-Reply-To: <20220602152952.v3.1.I9f2f4ef058af96a5ad610a90c6938ed17a7d103f@changeid>
-To:     Alain Michaud <alainmichaud@google.com>
-Cc:     linux-bluetooth@vger.kernel.org,
-        chromeos-bluetooth-upstreaming@chromium.org, alainm@chromium.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com, marcel@holtmann.org,
-        pabeni@redhat.com, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Thu, 2 Jun 2022 11:59:29 -0400
+Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 47C17D02BB;
+        Thu,  2 Jun 2022 08:59:25 -0700 (PDT)
+Received: from smtpclient.apple (p4ff9fc30.dip0.t-ipconnect.de [79.249.252.48])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 2E1E8CED19;
+        Thu,  2 Jun 2022 17:59:24 +0200 (CEST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.100.31\))
+Subject: Re: [PATCH v6 5/5] Bluetooth: let HCI_QUALITY_REPORT persist over
+ adapter power cycle
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20220526112135.2486883-3-josephsih@chromium.org>
+Date:   Thu, 2 Jun 2022 17:59:23 +0200
+Cc:     BlueZ <linux-bluetooth@vger.kernel.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        =?utf-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
+        CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
+        Joseph Hwang <josephsih@google.com>,
+        Archie Pusaka <apusaka@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Paolo Abeni <pabeni@redhat.com>,
+        LKML <linux-kernel@vger.kernel.org>, netdev@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <0DB8D064-222A-4420-8F9F-2BEEA63DF76A@holtmann.org>
+References: <20220526112135.2486883-1-josephsih@chromium.org>
+ <20220526112135.2486883-3-josephsih@chromium.org>
+To:     Joseph Hwang <josephsih@chromium.org>
+X-Mailer: Apple Mail (2.3696.100.31)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+Hi Joseph,
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Marcel Holtmann <marcel@holtmann.org>:
-
-On Thu,  2 Jun 2022 15:30:03 +0000 you wrote:
-> From: Alain Michaud <alainm@chromium.org>
+> The quality report specifications, including AOSP Bluetooth Quality
+> Report and Intel Telemetry Event, do not define what happen when
+> the adapter is turned off and then on. To be consistent among
+> different specifications and vendors, the quality report feature is
+> turned off when the adapter is powered off and is turned on when
+> the adapter is powered on if the feature has been on before power
+> cycle.
 > 
-> If a hardware error occurs and the connections are flushed without a
-> disconnection_complete event being signaled, the temporary linkkeys are
-> not flushed.
+> Signed-off-by: Joseph Hwang <josephsih@chromium.org>
+> Reviewed-by: Archie Pusaka <apusaka@chromium.org>
+> ---
 > 
-> This change ensures that any outstanding flushable linkkeys are flushed
-> when the connection are flushed from the hash table.
+> (no changes since v5)
 > 
-> [...]
+> Changes in v5:
+> - This is a new patch in this series changes version.
+> 
+> include/net/bluetooth/hci_core.h |  1 -
+> net/bluetooth/hci_sync.c         | 35 +++++++++++++++++++++++++++++++-
+> 2 files changed, 34 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+> index 9e48d606591e..5788350efa68 100644
+> --- a/include/net/bluetooth/hci_core.h
+> +++ b/include/net/bluetooth/hci_core.h
+> @@ -807,7 +807,6 @@ extern struct mutex hci_cb_list_lock;
+> 		hci_dev_clear_flag(hdev, HCI_LE_ADV);		\
+> 		hci_dev_clear_flag(hdev, HCI_LL_RPA_RESOLUTION);\
+> 		hci_dev_clear_flag(hdev, HCI_PERIODIC_INQ);	\
+> -		hci_dev_clear_flag(hdev, HCI_QUALITY_REPORT);	\
+> 	} while (0)
 
-Here is the summary with links:
-  - [v3] Bluetooth: clear the temporary linkkey in hci_conn_cleanup
-    https://git.kernel.org/bluetooth/bluetooth-next/c/5a4e1528d840
+this really need to go into your 1/5 patch.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> 
+> #define hci_dev_le_state_simultaneous(hdev) \
+> diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+> index a6ada9dcede5..12a18d046bb6 100644
+> --- a/net/bluetooth/hci_sync.c
+> +++ b/net/bluetooth/hci_sync.c
+> @@ -3849,6 +3849,31 @@ static const struct {
+> 			 "advertised, but not supported.")
+> };
+> 
+> +static void suspend_resume_quality_report(struct hci_dev *hdev, bool enable)
+> +{
+> +	int err;
+> +
+> +	/* Suspend and resume quality report only when the feature has
+> +	 * already been enabled. The HCI_QUALITY_REPORT flag, as an indicator
+> +	 * whether to re-enable the feature after resume, is not changed by
+> +	 * suspend/resume.
+> +	 */
+> +	if (!hci_dev_test_flag(hdev, HCI_QUALITY_REPORT))
+> +		return;
+> +
+> +	if (hdev->set_quality_report)
+> +		err = hdev->set_quality_report(hdev, enable);
+> +	else
+> +		err = aosp_set_quality_report(hdev, enable);
+> +
+> +	if (err)
+> +		bt_dev_err(hdev, "%s quality report error %d",
+> +			   enable ? "resume" : "suspend", err);
+> +	else
+> +		bt_dev_info(hdev, "%s quality report",
+> +			    enable ? "resume" : "suspend");
 
+Do you really need this “debug” output?
+
+> +}
+> +
+> int hci_dev_open_sync(struct hci_dev *hdev)
+> {
+> 	int ret = 0;
+> @@ -4013,6 +4038,7 @@ int hci_dev_open_sync(struct hci_dev *hdev)
+> 	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
+> 		msft_do_open(hdev);
+> 		aosp_do_open(hdev);
+> +		suspend_resume_quality_report(hdev, true);
+> 	}
+> 
+> 	clear_bit(HCI_INIT, &hdev->flags);
+> @@ -4095,6 +4121,14 @@ int hci_dev_close_sync(struct hci_dev *hdev)
+> 
+> 	hci_request_cancel_all(hdev);
+> 
+> +	/* Disable quality report and close aosp before shutdown()
+> +	 * is called. Otherwise, some chips may panic.
+> +	 */
+> +	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
+> +		suspend_resume_quality_report(hdev, false);
+> +		aosp_do_close(hdev);
+> +	}
+> +
+
+Why move aosp_do_close here. I prefer to keep it where it was.
+
+> 	if (!hci_dev_test_flag(hdev, HCI_UNREGISTER) &&
+> 	    !hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
+> 	    test_bit(HCI_UP, &hdev->flags)) {
+> @@ -4158,7 +4192,6 @@ int hci_dev_close_sync(struct hci_dev *hdev)
+> 	hci_sock_dev_event(hdev, HCI_DEV_DOWN);
+> 
+> 	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
+> -		aosp_do_close(hdev);
+> 		msft_do_close(hdev);
+> 	}
+
+Regards
+
+Marcel
 
