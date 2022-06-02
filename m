@@ -2,52 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 788A053BBE0
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 17:50:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D39F053BBDE
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 17:50:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236618AbiFBPuV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Jun 2022 11:50:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51012 "EHLO
+        id S236631AbiFBPuY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 2 Jun 2022 11:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231797AbiFBPuR (ORCPT
+        with ESMTP id S236599AbiFBPuS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 2 Jun 2022 11:50:17 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D63F2E6B3
-        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Jun 2022 08:50:15 -0700 (PDT)
+        Thu, 2 Jun 2022 11:50:18 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D79A2ED7B;
+        Thu,  2 Jun 2022 08:50:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5C8BCB81FB6
-        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Jun 2022 15:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0A250C3411A;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6C862B81FB7;
+        Thu,  2 Jun 2022 15:50:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0F74CC34114;
         Thu,  2 Jun 2022 15:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1654185013;
-        bh=3IcmI6aTuTaZ9jT8NsJcigQPndxrKj7HswxoA95i+34=;
+        bh=Tr5NsmZ75wsMcr/rnTwmOZKbA/bD5/3grGU5g8/DvUQ=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=LodZVhqVBaO0Y9KZXYE+Gsj34bPo+ScTnpLKOMXipjuB+ygTgs0si4KFi0Yv4MHuI
-         nJj9tlHJJrakJQrL+YBnZ0gjxoUGpPKj8k50ucUK35Fyq8Qfnt/qo9SHd6B08PgUt1
-         wBdY7w+KFZzmP41m9Bt3mxr+HN7iXGHIHbdBkuUNimtAaLgGeHU9ZMNMkEMwydwa8P
-         S7Y46o6MneFOas6n5tdhTxDD/WV7xdh6EGRgdFpu8pkqu4kA4ZQXiU5AZ5hBkRYK7p
-         iGFTdXqtKeoKCufD8YyVcKa/P/LOMABnF9T3G9W3E55qtMwDrGS1ve3GOBX9VmOCol
-         6npDQBujhdEDg==
+        b=PpOfKD+19naoj8FeQ5/iScsD1rVCMffgti9q7Zl6YyJFXTIftAglva0da7tfY5vFZ
+         9byaEXld5PMtzOS4YQoTmceKRApPcnTyJuE7ZLfLymi29I0xt2SNHgQ/pMW5ppz0Nk
+         gVpiZHVLK5aJcQeLmQYulHL4RcHoEMAur4/a3B+T1PmM/6WCoUXz6Y7jziMwqIri1e
+         L8vbVeruojNVpsmZpXPqHoH+WIoAZ6Cp6wyeRimooXAkH3b72glBHwhtRdpa8WKHJd
+         RVSj7+7l1KD0zWEQxbDFNVAXo9lhTUIPNZL8lW/sB4bqMS8SSI7qY6KER6e980IM0R
+         nmqJdC/4fbiyA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DDA51F0394F;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E5421EAC09C;
         Thu,  2 Jun 2022 15:50:12 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: btusb: Add support of IMC Networks PID 0x3568
+Subject: Re: [PATCH v3 0/2] Bluetooth: hci_bcm: Autobaud mode support
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165418501290.10758.3267160679920762449.git-patchwork-notify@kernel.org>
+Message-Id: <165418501293.10758.7339216786088070363.git-patchwork-notify@kernel.org>
 Date:   Thu, 02 Jun 2022 15:50:12 +0000
-References: <20220602092822.953521-1-aaron.ma@canonical.com>
-In-Reply-To: <20220602092822.953521-1-aaron.ma@canonical.com>
-To:     Aaron Ma <aaron.ma@canonical.com>
-Cc:     linux-bluetooth@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, matthias.bgg@gmail.com,
-        luiz.dentz@gmail.com, johan.hedberg@gmail.com, marcel@holtmann.org
+References: <cover.1653916330.git.hakan.jansson@infineon.com>
+In-Reply-To: <cover.1653916330.git.hakan.jansson@infineon.com>
+To:     Hakan Jansson <hakan.jansson@infineon.com>
+Cc:     davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linus.walleij@linaro.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -60,35 +63,26 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluetooth-next.git (master)
 by Marcel Holtmann <marcel@holtmann.org>:
 
-On Thu,  2 Jun 2022 17:28:22 +0800 you wrote:
-> It is 13d3:3568 for MediaTek MT7922 USB Bluetooth chip.
+On Mon, 30 May 2022 17:02:16 +0200 you wrote:
+> Some devices (e.g. CYW5557x) require autobaud mode to enable FW loading.
+> Autobaud mode can also be required on some boards where the controller
+> device is using a non-standard baud rate when first powered on.
 > 
-> T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=480 MxCh= 0
-> D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-> P:  Vendor=13d3 ProdID=3568 Rev=01.00
-> S:  Manufacturer=MediaTek Inc.
-> S:  Product=Wireless_Device
-> S:  SerialNumber=...
-> C:  #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-> I:  If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-> E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-> I:  If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-> E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-> E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+> Only a limited subset of HCI commands are supported in autobaud mode.
+> 
+> These patches add a DT property, "brcm,requires-autobaud-mode", to control
+> autobaud mode selection.
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: btusb: Add support of IMC Networks PID 0x3568
-    https://git.kernel.org/bluetooth/bluetooth-next/c/d60ea31cb434
+  - [v3,1/2] dt-bindings: net: broadcom-bluetooth: Add property for autobaud mode
+    https://git.kernel.org/bluetooth/bluetooth-next/c/6d912cc3c21f
+  - [v3,2/2] Bluetooth: hci_bcm: Add support for FW loading in autobaud mode
+    https://git.kernel.org/bluetooth/bluetooth-next/c/3f125894bed7
 
 You are awesome, thank you!
 -- 
