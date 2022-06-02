@@ -2,38 +2,38 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F59D53BBAF
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 17:40:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD9DE53BBC3
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 17:43:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236480AbiFBPkh convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Jun 2022 11:40:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41528 "EHLO
+        id S236547AbiFBPnU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 2 Jun 2022 11:43:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232621AbiFBPkh (ORCPT
+        with ESMTP id S236543AbiFBPnP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 2 Jun 2022 11:40:37 -0400
+        Thu, 2 Jun 2022 11:43:15 -0400
 Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C0C19279E75;
-        Thu,  2 Jun 2022 08:40:35 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2A4F82A6880;
+        Thu,  2 Jun 2022 08:43:12 -0700 (PDT)
 Received: from smtpclient.apple (p4ff9fc30.dip0.t-ipconnect.de [79.249.252.48])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 0D110CED19;
-        Thu,  2 Jun 2022 17:40:35 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 969F7CED19;
+        Thu,  2 Jun 2022 17:43:10 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.100.31\))
-Subject: Re: [PATCH] iBluetooth: hci_intel: Add check for
- platform_driver_register
+Subject: Re: [PATCH] MAINTAINERS: Remove Jukka Rissanen as 6lowpan maintainer
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20220531033228.1939386-1-jiasheng@iscas.ac.cn>
-Date:   Thu, 2 Jun 2022 17:40:34 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <1230E2E8-B3F7-470F-B03F-2060173B5821@holtmann.org>
-References: <20220531033228.1939386-1-jiasheng@iscas.ac.cn>
-To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>
+In-Reply-To: <20220527075625.9693-1-jukka.rissanen@linux.intel.com>
+Date:   Thu, 2 Jun 2022 17:43:10 +0200
+Cc:     Alexander Aring <alex.aring@gmail.com>,
+        BlueZ <linux-bluetooth@vger.kernel.org>,
+        linux-wpan - ML <linux-wpan@vger.kernel.org>,
+        pmenzel@molgen.mpg.de
+Content-Transfer-Encoding: 7bit
+Message-Id: <102083F2-787F-4682-83D7-E14F2BD325E6@holtmann.org>
+References: <20220526162806.16618-1-jukka.rissanen@linux.intel.com>
+ <20220527075625.9693-1-jukka.rissanen@linux.intel.com>
+To:     Jukka Rissanen <jukka.rissanen@linux.intel.com>
 X-Mailer: Apple Mail (2.3696.100.31)
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
@@ -44,34 +44,32 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Jiasheng,
+Hi Jukka,
 
-> As platform_driver_register() could fail, it should be better
-> to deal with the return value in order to maintain the code
-> consisitency.
+> I no longer work on this so better update the file.
 > 
-> Fixes: 1ab1f239bf17 ("Bluetooth: hci_intel: Add support for platform driver")
-> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+> Signed-off-by: Jukka Rissanen <jukka.rissanen@linux.intel.com>
 > ---
-> drivers/bluetooth/hci_intel.c | 6 +++++-
-> 1 file changed, 5 insertions(+), 1 deletion(-)
+> MAINTAINERS | 1 -
+> 1 file changed, 1 deletion(-)
 > 
-> diff --git a/drivers/bluetooth/hci_intel.c b/drivers/bluetooth/hci_intel.c
-> index 7249b91d9b91..d4801b26cc8e 100644
-> --- a/drivers/bluetooth/hci_intel.c
-> +++ b/drivers/bluetooth/hci_intel.c
-> @@ -1217,7 +1217,11 @@ static struct platform_driver intel_driver = {
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 6618e9b91b6c..2e03de59d700 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -171,7 +171,6 @@ F:	drivers/scsi/53c700*
 > 
-> int __init intel_init(void)
-> {
-> -	platform_driver_register(&intel_driver);
-> +	int ret;
-> +
-> +	ret = platform_driver_register(&intel_driver);
-> +	if (ret)
-> +		return ret;
+> 6LOWPAN GENERIC (BTLE/IEEE 802.15.4)
+> M:	Alexander Aring <alex.aring@gmail.com>
+> -M:	Jukka Rissanen <jukka.rissanen@linux.intel.com>
+> L:	linux-bluetooth@vger.kernel.org
+> L:	linux-wpan@vger.kernel.org
+> S:	Maintained
+> -- 
+> 2.36.1
+> 
 
-most of the driver uses int err. So please do that as well.
+Acked-by: Marcel Holtmann <marcel@holtmann.org>
 
 Regards
 
