@@ -2,55 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB0C053BBD4
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 17:50:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 788A053BBE0
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 17:50:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236591AbiFBPuR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Jun 2022 11:50:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50810 "EHLO
+        id S236618AbiFBPuV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 2 Jun 2022 11:50:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236576AbiFBPuP (ORCPT
+        with ESMTP id S231797AbiFBPuR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 2 Jun 2022 11:50:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5A6A2E09B;
-        Thu,  2 Jun 2022 08:50:14 -0700 (PDT)
+        Thu, 2 Jun 2022 11:50:17 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D63F2E6B3
+        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Jun 2022 08:50:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BAA926124C;
-        Thu,  2 Jun 2022 15:50:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 14F9CC3411E;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5C8BCB81FB6
+        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Jun 2022 15:50:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0A250C3411A;
         Thu,  2 Jun 2022 15:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1654185013;
-        bh=wB/MEXAf/c0kGO3cPyTVqTrfCM+kgdsXTuQGvpftntI=;
+        bh=3IcmI6aTuTaZ9jT8NsJcigQPndxrKj7HswxoA95i+34=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Wc9zwc9sIm3iry68zZ2UoKsXulPDc+lwLsSzLtvmUuVn1LgEU7QuT0MDccsntEr+R
-         I+FbuGKanpMebKkSxFy4A2/l9kpGI+jh80EJjCQJBLwmnDzk7M1hc8cxPVynP+LCNJ
-         w26BsnEZYAQ4oG66tsjypzF6kUYDQJJLQAZXI4nYcm8SXoVvr35FWe6FfoBEppvXQ2
-         7WbPvgJ7DmA+LLe7AwBYnli8vH5BKrl4MCAU6eW4nHGIaEoErWI7qgpOnKfqwCWq/H
-         M+cMPO9EXQKyOAvduyqnYx7M2zHjDvp79PJ6lIi27An/ZKEXXkcA3jNDAyk7BGYJaX
-         NC0Eb+RzgwnjQ==
+        b=LodZVhqVBaO0Y9KZXYE+Gsj34bPo+ScTnpLKOMXipjuB+ygTgs0si4KFi0Yv4MHuI
+         nJj9tlHJJrakJQrL+YBnZ0gjxoUGpPKj8k50ucUK35Fyq8Qfnt/qo9SHd6B08PgUt1
+         wBdY7w+KFZzmP41m9Bt3mxr+HN7iXGHIHbdBkuUNimtAaLgGeHU9ZMNMkEMwydwa8P
+         S7Y46o6MneFOas6n5tdhTxDD/WV7xdh6EGRgdFpu8pkqu4kA4ZQXiU5AZ5hBkRYK7p
+         iGFTdXqtKeoKCufD8YyVcKa/P/LOMABnF9T3G9W3E55qtMwDrGS1ve3GOBX9VmOCol
+         6npDQBujhdEDg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id EE707F03953;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DDA51F0394F;
         Thu,  2 Jun 2022 15:50:12 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] Bluetooth: clear the temporary linkkey in hci_conn_cleanup
+Subject: Re: [PATCH] Bluetooth: btusb: Add support of IMC Networks PID 0x3568
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165418501297.10758.2881771584555714145.git-patchwork-notify@kernel.org>
+Message-Id: <165418501290.10758.3267160679920762449.git-patchwork-notify@kernel.org>
 Date:   Thu, 02 Jun 2022 15:50:12 +0000
-References: <20220602151456.v2.1.I9f2f4ef058af96a5ad610a90c6938ed17a7d103f@changeid>
-In-Reply-To: <20220602151456.v2.1.I9f2f4ef058af96a5ad610a90c6938ed17a7d103f@changeid>
-To:     Alain Michaud <alainmichaud@google.com>
+References: <20220602092822.953521-1-aaron.ma@canonical.com>
+In-Reply-To: <20220602092822.953521-1-aaron.ma@canonical.com>
+To:     Aaron Ma <aaron.ma@canonical.com>
 Cc:     linux-bluetooth@vger.kernel.org,
-        chromeos-bluetooth-upstreaming@chromium.org, alainm@chromium.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com, marcel@holtmann.org,
-        pabeni@redhat.com, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org
+        linux-mediatek@lists.infradead.org, matthias.bgg@gmail.com,
+        luiz.dentz@gmail.com, johan.hedberg@gmail.com, marcel@holtmann.org
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -66,21 +63,32 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Marcel Holtmann <marcel@holtmann.org>:
 
-On Thu,  2 Jun 2022 15:15:03 +0000 you wrote:
-> From: Alain Michaud <alainm@chromium.org>
+On Thu,  2 Jun 2022 17:28:22 +0800 you wrote:
+> It is 13d3:3568 for MediaTek MT7922 USB Bluetooth chip.
 > 
-> If a hardware error occurs and the connections are flushed without a
-> disconnection_complete event being signaled, the temporary linkkeys are
-> not flushed.
-> 
-> This change ensures that any outstanding flushable linkkeys are flushed
-> when the connection are flushed from the hash table.
+> T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=480 MxCh= 0
+> D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+> P:  Vendor=13d3 ProdID=3568 Rev=01.00
+> S:  Manufacturer=MediaTek Inc.
+> S:  Product=Wireless_Device
+> S:  SerialNumber=...
+> C:  #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+> I:  If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+> E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+> I:  If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+> E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+> E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] Bluetooth: clear the temporary linkkey in hci_conn_cleanup
-    https://git.kernel.org/bluetooth/bluetooth-next/c/5a4e1528d840
+  - Bluetooth: btusb: Add support of IMC Networks PID 0x3568
+    https://git.kernel.org/bluetooth/bluetooth-next/c/d60ea31cb434
 
 You are awesome, thank you!
 -- 
