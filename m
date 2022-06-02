@@ -2,48 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B12A153BE66
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 21:10:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBBB453BE69
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Jun 2022 21:10:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238415AbiFBTKT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Jun 2022 15:10:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55438 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238389AbiFBTKR (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
+        id S238376AbiFBTKR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Thu, 2 Jun 2022 15:10:17 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A987BB55
-        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Jun 2022 12:10:16 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54970 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238397AbiFBTKQ (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 2 Jun 2022 15:10:16 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40931C77
+        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Jun 2022 12:10:14 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 098F4CE203C
-        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Jun 2022 19:10:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 39A6DC34115;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D447E61764
+        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Jun 2022 19:10:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3C87CC3411C;
         Thu,  2 Jun 2022 19:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1654197013;
-        bh=pKkqpDel49PMigjfqB2Rpwe/SvI13HPBMHZ3qvV0N8g=;
+        bh=xnf1NQwU12L1cAlMRIrIMFeFPCdudLVuSn1U/eqjX48=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Dkn6NMxtdD0OIu3hXohWjIG7Pg1o3fgNt+SbLprtO454xljRfaZXEwVvp7Cwf5JUj
-         4ZjmTgBh2Cx6ROh+WgGA8Nfto42x/lv7xqIiyFUqw7mrKWxKyo5Um1bh/fAeQgXJdZ
-         vWjR+gF4Z171DYeFZw4OnOpCmnyx16AGTl8VF4NJp4gKgUf5kTLDFBYmm8Z9jkdayB
-         9cKZ04v57hYbyLGZFzIJm3B+qbwkqTXyYNpGWd5UM3T+iptQ1jWUBRmzlJ43XbgMMX
-         c6K45IJOe0DFYJmEpqVCssoVIswbu0Y3ilKaJf3ca+9n7ppe479DvZhwtz4LdGwxzl
-         nHuYfGWV+zhzw==
+        b=kOkwpP/eBbYs8ei6cSXFWPGl4eMLlsSAa7d7B92Ii+L2f9H3WoJlpgz9IJ18ENs4F
+         wqRa33LC6K8KRoRo2gWSKdIrXTr91pabv787Xsf6HOxUOyMGxE+iNfgG6dTJihmUbt
+         pCO+8IypWujrgmJsz+D701iaL0WnCSp3CWvdORNPB4XIdqCyAaNLloQssZmAx8RXbZ
+         WpdcDCz24Du7L3myhaX630wfW3x9npiUVY/3qwXyveFtsaUwvcmNgFI8seY/BLx+Wz
+         MlVjjV/Yn2iHsrpn4FosEV95PCz+YRM3nNNUYfeZBqRor6dVha63PcxITZfE25jsim
+         MBswtIKdBEThw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 17D61F0394E;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 20599F03945;
         Thu,  2 Jun 2022 19:10:13 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] test-runner: Enable BT_HCIUART and BT_HCIUART_H4
+Subject: Re: [PATCH BlueZ] test-runner: Fix not waiting for system_bus_socket
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165419701309.15914.6639612939399472906.git-patchwork-notify@kernel.org>
+Message-Id: <165419701312.15914.5777258811171838587.git-patchwork-notify@kernel.org>
 Date:   Thu, 02 Jun 2022 19:10:13 +0000
-References: <20220601212255.1356507-1-luiz.dentz@gmail.com>
-In-Reply-To: <20220601212255.1356507-1-luiz.dentz@gmail.com>
+References: <20220601211230.1355268-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220601211230.1355268-1-luiz.dentz@gmail.com>
 To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -61,19 +61,18 @@ Hello:
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed,  1 Jun 2022 14:22:55 -0700 you wrote:
+On Wed,  1 Jun 2022 14:12:30 -0700 you wrote:
 > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> These options are required when running with -u option since that uses
-> H4 headers to serialize the communication of host and guest.
+> This makes test-runner wait for system_bus_socket to be available before
+> continuing otherwise the likes of bluetoothd would likely fail to start.
 > ---
->  doc/test-runner.txt | 2 ++
->  doc/tester.config   | 2 ++
->  2 files changed, 4 insertions(+)
+>  tools/test-runner.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
 Here is the summary with links:
-  - [BlueZ] test-runner: Enable BT_HCIUART and BT_HCIUART_H4
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=67b325c614e5
+  - [BlueZ] test-runner: Fix not waiting for system_bus_socket
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=7bcd32e67e93
 
 You are awesome, thank you!
 -- 
