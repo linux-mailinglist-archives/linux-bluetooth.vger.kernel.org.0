@@ -2,135 +2,83 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DD475431E3
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jun 2022 15:49:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 930ED54320B
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jun 2022 15:58:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240882AbiFHNtC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 8 Jun 2022 09:49:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53634 "EHLO
+        id S240528AbiFHN6p (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 8 Jun 2022 09:58:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240565AbiFHNtA (ORCPT
+        with ESMTP id S240835AbiFHN6l (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 8 Jun 2022 09:49:00 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E12B15A5AE
-        for <linux-bluetooth@vger.kernel.org>; Wed,  8 Jun 2022 06:48:58 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id s39so9040081ybi.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 08 Jun 2022 06:48:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=o2N6n1QI6lKWmUqjcr5ruL3cH/3TRrrOQgCubIGMFxk=;
-        b=LdmQq6WuoOtydWiv8Vf5z+gAmjGuju0Z6/BE6V5H5PVHkSSB+cYyV7d1sx67KXNiih
-         jTcurnXYzKws1GghtlGuDnjeV2ZUTaMC7GpiyAqXGSqlBYfqxSu3UvfLOQ3aUihXAj8k
-         K2UvrT7cHoglbaA+RQKfPsBsJbmDx+wcozZr/r/jyNkCxNzNmFOezfTJyrxRLiwvXt7X
-         T/KJRh+/gQDT6RwZh6J8YCI7AdLOPSSW/dkLufouSRx+YGVPWPsPtVUlozMh2M8FqZWF
-         BNIU1XWLTCz9xKD03pn50+kxPe9MvBK/0+HJBoRfMmiLFUsHGRXLIyW7J04Lox/d4ily
-         mP8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to:content-transfer-encoding;
-        bh=o2N6n1QI6lKWmUqjcr5ruL3cH/3TRrrOQgCubIGMFxk=;
-        b=Up3enuQgZjSTjXjc0DWYybUbYDlhfstqU77sd0neSMGtv8GE6pNDgHpqfmBo0Hl6iQ
-         SjFYxB3kmCrWea8WOG5E/st/CFux7InW3v3WfrCLjjI5iuvkHRsvObyKaC7uEB+g8ukl
-         9jVdn+J0n+JKdTQYcdE9tOqPNy1B1W1TN1mTAUKAsRj2FOHDPz99HD6e999cSzrGvXR7
-         p76sP+D2p3Df0JALvDgPIGT9gsBMkvYWixkpnhcSMI3SlF3NUu67zu5p7CdmZxXAlsMf
-         zLFlEaLfBVoXL1s+AG92pKKhG0DEU0GXbCu1A2o6pTFBni7IoPX1OMZKgW//3HTAGdNY
-         KdAw==
-X-Gm-Message-State: AOAM530qSPrGcIiSyLPoYtALYk/CQ/tkdx5W3sIhXUjIiju4Ab+1mpP+
-        xuewxuWIUO4JUNm8G/6aJoZB7x51clpy683Owvk=
-X-Google-Smtp-Source: ABdhPJxvU+v/kZ42MYgh01P12r181bBrf6iF1nSXir/imh+e286R7ii/h2w4cnwuDQCLj2Psh+5+AYyFhZwF7ckhfx0=
-X-Received: by 2002:a25:542:0:b0:663:aa09:4525 with SMTP id
- 63-20020a250542000000b00663aa094525mr12925292ybf.591.1654696137744; Wed, 08
- Jun 2022 06:48:57 -0700 (PDT)
+        Wed, 8 Jun 2022 09:58:41 -0400
+X-Greylist: delayed 403 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 08 Jun 2022 06:58:38 PDT
+Received: from giacobini.uberspace.de (giacobini.uberspace.de [185.26.156.129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1557E10F1FD
+        for <linux-bluetooth@vger.kernel.org>; Wed,  8 Jun 2022 06:58:35 -0700 (PDT)
+Received: (qmail 27567 invoked by uid 990); 8 Jun 2022 13:51:52 -0000
+Authentication-Results: giacobini.uberspace.de;
+        auth=pass (plain)
+From:   Soenke Huster <soenke.huster@eknoes.de>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>
+Cc:     Soenke Huster <soenke.huster@eknoes.de>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] Bluetooth: RFCOMM: Use skb_trim to trim checksum
+Date:   Wed,  8 Jun 2022 15:51:06 +0200
+Message-Id: <20220608135105.146452-1-soenke.huster@eknoes.de>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Sender: samsonka22@gmail.com
-Received: by 2002:a05:7000:a50c:0:0:0:0 with HTTP; Wed, 8 Jun 2022 06:48:57
- -0700 (PDT)
-From:   MARIA ROLAND <mariaroland74@gmail.com>
-Date:   Wed, 8 Jun 2022 06:48:57 -0700
-X-Google-Sender-Auth: BOltr2-cBAdAQnjjSQY_0u_6xMc
-Message-ID: <CAKY8iZrM0=W4WViGFzgvHjv-W=+pqaB8wcZTYT8Sqbq8HKoHQw@mail.gmail.com>
-Subject: Greetings dear
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=6.6 required=5.0 tests=ADVANCE_FEE_5_NEW_MONEY,
-        BAYES_95,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,LOTS_OF_MONEY,MONEY_FRAUD_8,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_MONEY autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:b29 listed in]
-        [list.dnswl.org]
-        *  3.0 BAYES_95 BODY: Bayes spam probability is 95 to 99%
-        *      [score: 0.9879]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [samsonka22[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [mariaroland74[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  0.0 MONEY_FRAUD_8 Lots of money and very many fraud phrases
-        *  3.0 ADVANCE_FEE_5_NEW_MONEY Advance Fee fraud and lots of money
-        *  0.6 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: ******
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Bar: /
+X-Rspamd-Report: BAYES_HAM(-2.970374) R_MISSING_CHARSET(0.5) MIME_GOOD(-0.1) MID_CONTAINS_FROM(1) SUSPICIOUS_RECIPS(1.5)
+X-Rspamd-Score: -0.070374
+Received: from unknown (HELO unkown) (::1)
+        by giacobini.uberspace.de (Haraka/2.8.28) with ESMTPSA; Wed, 08 Jun 2022 15:51:52 +0200
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Greetings dear
+Use the skb helper instead of direct manipulation. This fixes the
+following page fault, when connecting my Android phone:
 
+    BUG: unable to handle page fault for address: ffffed1021de29ff
+    #PF: supervisor read access in kernel mode
+    #PF: error_code(0x0000) - not-present page
+    RIP: 0010:rfcomm_run+0x831/0x4040 (net/bluetooth/rfcomm/core.c:1751)
 
-   This letter might be a surprise to you, But I believe that you will
-be honest to fulfill my final wish. I bring peace and love to you. It
-is by the grace of god, I had no choice than to do what is lawful and
-right in the sight of God for eternal life and in the sight of man for
-witness of god=E2=80=99s mercy and glory upon my life. My dear, I sent this
-mail praying it will find you in a good condition, since I myself am
-in a very critical health condition in which I sleep every night
-without knowing if I may be alive to see the next day. I am Mrs.Maria
-Roland, a widow suffering from a long time illness. I have some
-funds I inherited from my late husband, the sum of ($11,000,000.00,)
-my Doctor told me recently that I have serious
-sickness which is a cancer problem. What disturbs me most is my stroke
-sickness. Having known my condition, I decided to donate this fund to
-a good person that will utilize it the way I am going to instruct
-herein. I need a very honest and God fearing person who can claim this
-money and use it for Charity works, for orphanages and gives justice
-and help to the poor, needy and widows says The Lord." Jeremiah
-22:15-16.=E2=80=9C and also build schools for less privilege that will be
-named after my late husband if possible and to promote the word of god
-and the effort that the house of god is maintained.
+Signed-off-by: Soenke Huster <soenke.huster@eknoes.de>
+---
+ net/bluetooth/rfcomm/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- I do not want a situation where this money will be used in an ungodly
-manner. That's why I'm taking this decision. I'm not afraid of death,
-so I know where I'm going. I accept this decision because I do not
-have any child who will inherit this money after I die. Please I want
-your sincere and urgent answer to know if you will be able to execute
-this project, and I will give you more information on how the fund
-will be transferred to your bank account. May the grace, peace, love
-and the truth in the Word of god be with you and all those that you
-love and  care for.
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 7324764384b6..7360e905d045 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1747,8 +1747,8 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
+ 	type = __get_type(hdr->ctrl);
+ 
+ 	/* Trim FCS */
+-	skb->len--; skb->tail--;
+-	fcs = *(u8 *)skb_tail_pointer(skb);
++	skb_trim(skb, skb->len - 1);
++	fcs = *(skb->data + skb->len);
+ 
+ 	if (__check_fcs(skb->data, type, fcs)) {
+ 		BT_ERR("bad checksum in packet");
+-- 
+2.36.1
 
-I am waiting for your reply.
-
-May God Bless you,
-
- Mrs. Maria Roland,
