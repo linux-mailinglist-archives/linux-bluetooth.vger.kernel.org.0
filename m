@@ -2,134 +2,72 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BD17545CFE
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Jun 2022 09:16:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3BD2545D69
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Jun 2022 09:29:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346606AbiFJHQf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Jun 2022 03:16:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44708 "EHLO
+        id S1346867AbiFJH3J (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Jun 2022 03:29:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235299AbiFJHQ3 (ORCPT
+        with ESMTP id S1346863AbiFJH3I (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Jun 2022 03:16:29 -0400
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BCF02109C1;
-        Fri, 10 Jun 2022 00:16:24 -0700 (PDT)
-Received: from [192.168.0.2] (ip5f5aeb3f.dynamic.kabel-deutschland.de [95.90.235.63])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Fri, 10 Jun 2022 03:29:08 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 434CA42A1B
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 00:29:01 -0700 (PDT)
+Received: from localhost.localdomain (67.227.121.78.rev.sfr.net [78.121.227.67])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: pmenzel)
-        by mx.molgen.mpg.de (Postfix) with ESMTPSA id D0BA161EA1923;
-        Fri, 10 Jun 2022 09:16:20 +0200 (CEST)
-Message-ID: <1472eccd-429b-0a18-565c-7de2e5ed44f2@molgen.mpg.de>
-Date:   Fri, 10 Jun 2022 09:16:20 +0200
+        (Authenticated sender: fdanis)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 2BD0A660175E
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 08:28:59 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1654846139;
+        bh=lUDdo13AJdQb6HwrkoMC0vaiDxdYp4yMgjFoTHkfYIM=;
+        h=From:To:Subject:Date:From;
+        b=Sxhu0RezzK54X4NehWoWJroofth4s02Qf1ZRCE4pAo5CNJ5SUzhbS9Qi1X0doGRNu
+         zVIud3+TfgpCxAa2m14dZ4VooxG3Bg3aeuofMjWn7wBW2QxAxpIFlvx0IShFlYD/wN
+         vCGkDdKS2nhqwrJHUFMNxlk6X69n9FLv+CFzNnBBqiarO+iN1y8oaeUI4ndcWm6GDO
+         TLtCZDSDRWz+266b/x/qTyoEQtA0CZ8tOPb4jmL5abRwZZ6gevcLWUYPK88Q/tIdON
+         CvAMXBnfpJNG8mO5yGlAsytL9sFuCsJM4ckeo0NuaKUHmWIMoxicAnc4ke67LsDeCQ
+         GyYikZTcWadrw==
+From:   =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= 
+        <frederic.danis@collabora.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v2 0/3] test-runner: Add support for audio daemons
+Date:   Fri, 10 Jun 2022 09:28:47 +0200
+Message-Id: <20220610072850.16593-1-frederic.danis@collabora.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] Bluetooth: btmtksdio: Add in-band wakeup support
-Content-Language: en-US
-To:     Sean Wang <sean.wang@mediatek.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        Soul.Huang@mediatek.com, YN.Chen@mediatek.com,
-        Leon.Yen@mediatek.com, Eric-SY.Chang@mediatek.com,
-        Deren.Wu@mediatek.com, km.lin@mediatek.com,
-        robin.chiu@mediatek.com, Eddie.Chen@mediatek.com,
-        ch.yeh@mediatek.com, posh.sun@mediatek.com, ted.huang@mediatek.com,
-        Eric.Liang@mediatek.com, Stella.Chang@mediatek.com,
-        Tom.Chou@mediatek.com, steve.lee@mediatek.com, jsiuda@google.com,
-        frankgor@google.com, abhishekpandit@google.com,
-        michaelfsun@google.com, mcchou@chromium.org, shawnku@google.com,
-        linux-bluetooth@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Yake Yang <yake.yang@mediatek.com>
-References: <742cdffcf110e1601257207fb2b0d3f426d4008c.1654819586.git.objelf@gmail.com>
-From:   Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <742cdffcf110e1601257207fb2b0d3f426d4008c.1654819586.git.objelf@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Sean,
+Those patches add DBus session and an audio card so it should be possible
+to start an audio daemon like PipeWire in the VM.
 
+Frédéric Danis (3):
+  test-runner: Add DBus session support
+  test-runner: Add audio card support
+  test-runner: Add udevd and trigger events
 
-Thank you for the patch.
+ doc/test-runner.txt |   5 ++
+ tools/test-runner.c | 197 +++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 189 insertions(+), 13 deletions(-)
 
-Am 10.06.22 um 02:17 schrieb sean.wang@mediatek.com:
-> From: Sean Wang <sean.wang@mediatek.com>
-> 
-> 'ce64b3e94919 ("Bluetooth: mt7921s: Support wake on bluetooth")'
-> have added the waken-on-bluetooth via dedicated GPIO.
+Since v1:
+- Fix checkpatch errors
 
-Maybe:
+-- 
+2.25.1
 
-Commit ce64b3e94919 ("Bluetooth: mt7921s: Support wake on bluetooth") 
-adds the wake on bluethooth via a dedicated GPIO.
-
-> The patch extends the function to the waken-on-bluetooth via SDIO DAT1 pin
-> (inband wakeup) when the SDIO host driver is able to support.
-
-Maybe:
-
-Extend the wake-on-bluetooth to use the SDIO DAT1 pin (in-band wakeup), 
-when supported by the SDIO host driver.
-
-How did you test this? In what datasheet is it documented?
-
-> Co-developed-by: Yake Yang <yake.yang@mediatek.com>
-> Signed-off-by: Yake Yang <yake.yang@mediatek.com>
-> Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-> ---
->   drivers/bluetooth/btmtksdio.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-> index d6700efcfe8c..9ed3af4ba51a 100644
-> --- a/drivers/bluetooth/btmtksdio.c
-> +++ b/drivers/bluetooth/btmtksdio.c
-> @@ -118,6 +118,7 @@ MODULE_DEVICE_TABLE(sdio, btmtksdio_table);
->   #define BTMTKSDIO_FUNC_ENABLED		3
->   #define BTMTKSDIO_PATCH_ENABLED		4
->   #define BTMTKSDIO_HW_RESET_ACTIVE	5
-> +#define BTMTKSDIO_INBAND_WAKEUP		6
->   
->   struct mtkbtsdio_hdr {
->   	__le16	len;
-> @@ -1294,6 +1295,9 @@ static bool btmtksdio_sdio_wakeup(struct hci_dev *hdev)
->   		.wakeup_delay = cpu_to_le16(0x20),
->   	};
->   
-> +	if (test_bit(BTMTKSDIO_INBAND_WAKEUP, &bdev->tx_state))
-> +		return may_wakeup;
-> +
->   	if (may_wakeup && bdev->data->chipid == 0x7921) {
->   		struct sk_buff *skb;
->   
-> @@ -1384,6 +1388,10 @@ static int btmtksdio_probe(struct sdio_func *func,
->   	 */
->   	pm_runtime_put_noidle(bdev->dev);
->   
-> +	/* Mark if the mmc host can support waken by SDIO */
-
-Maybe:
-
-Mark if MMC host supports wake on bluetooth by SDIO
-
-> +	if (device_can_wakeup(func->card->host->parent))
-> +		set_bit(BTMTKSDIO_INBAND_WAKEUP, &bdev->tx_state);
-> +
->   	err = device_init_wakeup(bdev->dev, true);
->   	if (err)
->   		bt_dev_err(hdev, "failed to initialize device wakeup");
-
-
-Kind regards,
-
-Paul
