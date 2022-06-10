@@ -2,104 +2,77 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C182C546AA9
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Jun 2022 18:41:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2809A546AA0
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Jun 2022 18:41:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348795AbiFJQhO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Jun 2022 12:37:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42710 "EHLO
+        id S1349742AbiFJQin (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Jun 2022 12:38:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345068AbiFJQhJ (ORCPT
+        with ESMTP id S1349815AbiFJQif (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Jun 2022 12:37:09 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A78957171
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 09:37:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Fri, 10 Jun 2022 12:38:35 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F3BA56F83
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 09:38:31 -0700 (PDT)
+Received: from localhost.localdomain (67.227.121.78.rev.sfr.net [78.121.227.67])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 425DFB83654
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 16:37:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id ED4BDC341C4
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 16:37:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654879026;
-        bh=SwEjhRap3x2aUWYcqtFetsNysmTePGay1THeP61hKsI=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=q9yE/uv4umlQR7+mH3brhkDmhLTyiI64y53M6bWKX5mASzm0LEAxgcrwRp6lsr55b
-         PRrDWuwUe90lzGSQyoBfc1kFJhC7O3gxxS1rp2QvS5AdEbLjQzjxPWDY7obCet5HnB
-         kMB02AyKoyZK5EuWtXXJBtbrjmH/Yy0rDRe7o0eB0kVUIouiTgE3FLBzZ9IckYZBvD
-         vJJ53mesixPIzuqJCGPhg113MFlmGgLi/MOKiCNvulM2POz6Y/BWyqKd6bZh4fRkyP
-         KOlxmLYsuN4Z28seVI8oqXlyzhzl7ruDRMrIBLBkOr+SNyqqQJDHBIAFVY8qgLRqQI
-         CJpeu+cFNbSBw==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id DA46DC05FD5; Fri, 10 Jun 2022 16:37:05 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
+        (Authenticated sender: fdanis)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id C0E8E6601721
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 17:38:29 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1654879109;
+        bh=izlEZaezL34zoWbfgV3pe1GA9MXTUm9qBX5V4+pslP4=;
+        h=From:To:Subject:Date:From;
+        b=MwlZgCXgyxtR8UfScEeE1Cq1P2Ay4WySFXE1UP66EA0uoAqcxhxwHuY+clqMTppUv
+         5VM8+xQK5iE22sQEQ8bKxVHq8eJ57tXWyvp78hCX3GOEbv2BTlUDhudmHfw+KmXH4r
+         H84/AwuQc0nzg1bVJzmcQNwX5x1yyJBYSy3A2QecvCTWCNduPUKjKdtp66QUH1ygtM
+         TsFzrOoXNBsELH1GAT61N0mQtJv1Ehqa/ql9SSjB8ZSU+QtgLHVbPBSByYlgsLUy3F
+         jxtSA5WrSuLCogIyIRxtZUL6CdhaUziizYDdFPXM1LXImlOQyJFuW+GadtEpDhUUvS
+         IemKaGvhKLrzQ==
+From:   =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= 
+        <frederic.danis@collabora.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 209745] Bluetooth connection to Logitech MX Master 2S lost
- after each reboot
-Date:   Fri, 10 Jun 2022 16:37:05 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: luiz.dentz@gmail.com
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-209745-62941-yfteIfFRoJ@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-209745-62941@https.bugzilla.kernel.org/>
-References: <bug-209745-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+Subject: [PATCH BlueZ v3 0/4] test-runner: Add support for audio daemons
+Date:   Fri, 10 Jun 2022 18:38:16 +0200
+Message-Id: <20220610163820.79105-1-frederic.danis@collabora.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D209745
+Those patches add DBus session and an audio card so it should be possible
+to start an audio daemon like PipeWire in the VM.
 
-Luiz Von Dentz (luiz.dentz@gmail.com) changed:
+Frédéric Danis (4):
+  test-runner: Add DBus session support
+  doc/test-runner: Add audio config options
+  test-runner: Add audio card support
+  test-runner: Add udevd and trigger events
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |luiz.dentz@gmail.com
+ doc/test-runner.txt |   5 ++
+ tools/test-runner.c | 197 +++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 189 insertions(+), 13 deletions(-)
 
---- Comment #23 from Luiz Von Dentz (luiz.dentz@gmail.com) ---
-(In reply to Massimo Burcheri from comment #22)
-> Somehow I got it solved without removing IdentityResolvingKey with these
-> settings in /etc/bluetooth/main.conf:
-> AutoEnable=3Dtrue
-> Experimental =3D false
-> I guess the Experimental flag is important. However after restarting the
-> machine, the pointer device was just connected and working.
+Since v2:
+- move doc/test-runner changes to its own patch
+- replace AUDIO_SUPPORT by TESTAUDIO to be consistent with the other
+  parameters
+Since v1:
+- Fix checkpatch errors
 
-It seems the problem is LL Privacy (aka. Address Resolution), when that is
-enabled certain controller seem to be unable to resolve addresses so the ho=
-st
-stack is unable to reconnect. I guess we should be splitting the kernel
-experimental features from userspace experimental features, anyway Experime=
-ntal
-is never meant to be enabled by default so if anyone is shipping with it
-enabled on main.conf please reconsider.
+-- 
+2.25.1
 
---=20
-You may reply to this email to add a comment.
-
-You are receiving this mail because:
-You are the assignee for the bug.=
