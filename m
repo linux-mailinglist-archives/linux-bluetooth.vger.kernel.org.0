@@ -2,204 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 885AE545D68
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Jun 2022 09:29:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE2915462D0
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Jun 2022 11:52:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346882AbiFJH3I (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Jun 2022 03:29:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36552 "EHLO
+        id S1344621AbiFJJvy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Jun 2022 05:51:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346811AbiFJH3G (ORCPT
+        with ESMTP id S1347667AbiFJJvw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Jun 2022 03:29:06 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AD7454026
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 00:29:01 -0700 (PDT)
-Received: from localhost.localdomain (67.227.121.78.rev.sfr.net [78.121.227.67])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: fdanis)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id E52816601761
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 08:28:59 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1654846140;
-        bh=82IgAWfLFNYPlguWJ7ZoflXqL3Yi81c7nu3MMQTh9QU=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=T4wiv/qkIAbSo9jidqS/M+cqhJB99GMlnUMhcXyoe72Qny3bQSogPKGrboju1K8gU
-         Iu4hc8jZ0fhZZyf+EXH+L4hIoZ0fsTHoa+e/nokx5CuZHT69E7TUXj2fmjcVf/xstM
-         20/WzFjq+T/qfBYbhXsZTaqMJm5OWMeK9rdFrVdlf5K96shNEnyracpdsNZJzHIX4f
-         44Qco/zb22F8UpGJ4PhJpetMffAKWfM3eR3EOsDRaZcRPZDIuTvLjBXNspfZ7tSVNt
-         fMHFShyg3fTd+JQCzoW3gsp3GvoVutahTbTJvD+dfvWdHWYqgQj7jN7WCKNGB1EgB/
-         ox5Wv58MPtIcw==
-From:   =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= 
-        <frederic.danis@collabora.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 3/3] test-runner: Add udevd and trigger events
-Date:   Fri, 10 Jun 2022 09:28:50 +0200
-Message-Id: <20220610072850.16593-4-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220610072850.16593-1-frederic.danis@collabora.com>
-References: <20220610072850.16593-1-frederic.danis@collabora.com>
+        Fri, 10 Jun 2022 05:51:52 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72003AEE19
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 02:51:50 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id c83so7073429qke.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Jun 2022 02:51:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=7SQXnbQDHxJOjL6MKpG42Fd1QEdKWPk4PJ61VQumuzc=;
+        b=AI9Wj28R61Ea2klANXjYN3GxCiMI/RXDNfQYiYkXyDrkZbF86ahWTZ5B+tZvDiL0Cv
+         aMb/ZHMaF0GiLfnFMP18/pGX82IkgZjVa9VedLVc9670b3W3Pmq9vS+6YkQjiBy6CSqa
+         HNLFnSyAwEmS76l18VTwxLVHBSbGuoL6HBwPSDou3nr9S/IDMJRyeznpPEt8V9KBGNL5
+         mMdbGMC6qG6o4ACqSGOSdlNd0C6ukNYHDYd2h6O9Z393QornAp9+3yDfPbsooYpOSzAk
+         z95okC1P9GB9r5t/EO4zJp6KbHUzrROWuyfwx22QXdijCbYZSQq8Vq9I5Ss+yH5WVwbc
+         YO5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=7SQXnbQDHxJOjL6MKpG42Fd1QEdKWPk4PJ61VQumuzc=;
+        b=X9oNKCw5X58aE9Ig1ynJY5x9TIFFkPe4e+qZRM6e9hY1cCxAVqRuYp1p2cbHnbTgcP
+         vj1kWbBsydXY5noOYDXB/pFseHVppDggrocXtM7HKjR4MYj3IefgaTndrSxUhTyDYxyR
+         byYQ/1eAHi+GAxGTkzyzsCXqEqRrxN8Wj9NbHHk9aT0/RKHRQJBjOViTTci7tIbepBzS
+         KRvfejj+51GwQDwnmSyfl6zXoQyOXeuFcPZrD945vd0hMTVu5iRlYvVCvTks/E6cMI1j
+         bVqjZerNvuVoYxsB3gDaGL7fFFBMRDO70NjZEAR0JnEKNnpyk3A0XN02CUYNCkk6Zh+4
+         rUyQ==
+X-Gm-Message-State: AOAM531i/8qXBxaKvdqI9rwFmER6LNqja6CpR6JHGDF/SCaHLcRkoJCQ
+        qym+mQOqv9f5HuV8mbaRn5pEx5z3kTg/Lw==
+X-Google-Smtp-Source: ABdhPJziKrNLGRXQxBvIZ3wvNOb2zCkQF1zCWaIx5HoVORDsvZWG65cqoolNQHz9lkV19mnsLoaqQA==
+X-Received: by 2002:a05:620a:4096:b0:6a5:cdb:f6df with SMTP id f22-20020a05620a409600b006a50cdbf6dfmr30926885qko.698.1654854709422;
+        Fri, 10 Jun 2022 02:51:49 -0700 (PDT)
+Received: from [172.17.0.2] ([104.211.24.82])
+        by smtp.gmail.com with ESMTPSA id br40-20020a05620a462800b006a6539862f8sm7170714qkb.40.2022.06.10.02.51.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jun 2022 02:51:49 -0700 (PDT)
+Message-ID: <62a31435.1c69fb81.9bc58.e16d@mx.google.com>
+Date:   Fri, 10 Jun 2022 02:51:49 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============6683452698044927298=="
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, frederic.danis@collabora.com
+Subject: RE: test-runner: Add support for audio daemons
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220610072850.16593-2-frederic.danis@collabora.com>
+References: <20220610072850.16593-2-frederic.danis@collabora.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Kernel events should have been managed so the audio card is accessible
-from PipeWire
+--===============6683452698044927298==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=649137
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      4.38 seconds
+GitLint                       PASS      2.91 seconds
+Prep - Setup ELL              PASS      41.65 seconds
+Build - Prep                  PASS      0.64 seconds
+Build - Configure             PASS      8.71 seconds
+Build - Make                  PASS      1343.82 seconds
+Make Check                    PASS      11.11 seconds
+Make Check w/Valgrind         PASS      414.74 seconds
+Make Distcheck                PASS      226.88 seconds
+Build w/ext ELL - Configure   PASS      8.37 seconds
+Build w/ext ELL - Make        PASS      1356.48 seconds
+Incremental Build with patchesPASS      4265.16 seconds
+
+
+
 ---
- tools/test-runner.c | 83 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 80 insertions(+), 3 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/test-runner.c b/tools/test-runner.c
-index bbbca5b5d..e79e3b6e9 100644
---- a/tools/test-runner.c
-+++ b/tools/test-runner.c
-@@ -251,13 +251,14 @@ static void start_qemu(void)
- 				"rootfstype=9p "
- 				"rootflags=trans=virtio,version=9p2000.L "
- 				"acpi=off pci=noacpi noapic quiet ro init=%s "
--				"bluetooth.enable_ecred=1"
-+				"bluetooth.enable_ecred=1 "
- 				"TESTHOME=%s TESTDBUS=%u TESTDAEMON=%u "
- 				"TESTDBUSSESSION=%u XDG_RUNTIME_DIR=/run/user/0 "
-+				"AUDIO_SUPPORT=%u "
- 				"TESTMONITOR=%u TESTEMULATOR=%u TESTDEVS=%d "
- 				"TESTAUTO=%u TESTARGS=\'%s\'",
- 				initcmd, cwd, start_dbus, start_daemon,
--				start_dbus_session,
-+				start_dbus_session, audio_support,
- 				start_monitor, start_emulator, num_devs,
- 				run_auto, testargs);
- 
-@@ -724,13 +725,70 @@ static pid_t start_btvirt(const char *home)
- 	return pid;
- }
- 
-+static void trigger_udev(void)
-+{
-+	char *argv[3], *envp[1];
-+	pid_t pid;
-+
-+	argv[0] = "/bin/udevadm";
-+	argv[1] = "trigger";
-+	argv[2] = NULL;
-+
-+	envp[0] = NULL;
-+
-+	printf("Triggering udev events\n");
-+
-+	pid = fork();
-+	if (pid < 0) {
-+		perror("Failed to fork new process");
-+		return;
-+	}
-+
-+	if (pid == 0) {
-+		execve(argv[0], argv, envp);
-+		exit(EXIT_SUCCESS);
-+	}
-+
-+	printf("udev trigger process %d created\n", pid);
-+}
-+
-+static pid_t start_udevd(void)
-+{
-+	char *argv[2], *envp[1];
-+	pid_t pid;
-+
-+	argv[0] = "/lib/systemd/systemd-udevd";
-+	argv[1] = NULL;
-+
-+	envp[0] = NULL;
-+
-+	printf("Starting udevd daemon\n");
-+
-+	pid = fork();
-+	if (pid < 0) {
-+		perror("Failed to fork new process");
-+		return -1;
-+	}
-+
-+	if (pid == 0) {
-+		execve(argv[0], argv, envp);
-+		exit(EXIT_SUCCESS);
-+	}
-+
-+	printf("udevd daemon process %d created\n", pid);
-+
-+	trigger_udev();
-+
-+	return pid;
-+}
-+
- static void run_command(char *cmdname, char *home)
- {
- 	char *argv[9], *envp[3];
- 	int pos = 0, idx = 0;
- 	int serial_fd;
- 	pid_t pid, dbus_pid, daemon_pid, monitor_pid, emulator_pid,
--	      dbus_session_pid;
-+	      dbus_session_pid, udevd_pid;
- 
- 	if (num_devs) {
- 		const char *node = "/dev/ttyS1";
-@@ -746,6 +804,11 @@ static void run_command(char *cmdname, char *home)
- 	} else
- 		serial_fd = -1;
- 
-+	if (audio_support)
-+		udevd_pid = start_udevd();
-+	else
-+		udevd_pid = -1;
-+
- 	if (start_dbus) {
- 		create_dbus_system_conf();
- 		dbus_pid = start_dbus_daemon(false);
-@@ -874,6 +937,11 @@ start_next:
- 			monitor_pid = -1;
- 		}
- 
-+		if (corpse == udevd_pid) {
-+			printf("udevd terminated\n");
-+			udevd_pid = -1;
-+		}
-+
- 		if (corpse == pid)
- 			break;
- 	}
-@@ -898,6 +966,9 @@ start_next:
- 	if (monitor_pid > 0)
- 		kill(monitor_pid, SIGTERM);
- 
-+	if (udevd_pid > 0)
-+		kill(udevd_pid, SIGTERM);
-+
- 	if (serial_fd >= 0) {
- 		close(serial_fd);
- 		serial_fd = -1;
-@@ -980,6 +1051,12 @@ static void run_tests(void)
- 		start_emulator = true;
- 	}
- 
-+	ptr = strstr(cmdline, "AUDIO_SUPPORT=1");
-+	if (ptr) {
-+		printf("Audio support requested\n");
-+		audio_support = true;
-+	}
-+
- 	ptr = strstr(cmdline, "TESTHOME=");
- 	if (ptr) {
- 		home = ptr + 4;
--- 
-2.25.1
 
+--===============6683452698044927298==--
