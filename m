@@ -2,43 +2,42 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DD24548D0A
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jun 2022 18:14:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 175685489A9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jun 2022 18:05:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376327AbiFMNYz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Jun 2022 09:24:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60884 "EHLO
+        id S1380558AbiFMOB0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Jun 2022 10:01:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377052AbiFMNYO (ORCPT
+        with ESMTP id S1380580AbiFMN7H (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Jun 2022 09:24:14 -0400
-Received: from smtpproxy21.qq.com (smtpbg701.qq.com [203.205.195.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF8A56B7EB
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Jun 2022 04:23:56 -0700 (PDT)
-X-QQ-mid: bizesmtp87t1655119399trh68o5p
+        Mon, 13 Jun 2022 09:59:07 -0400
+Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED1A88CB3B
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Jun 2022 04:37:48 -0700 (PDT)
+X-QQ-mid: bizesmtp71t1655120243t64ph5p5
 Received: from localhost.localdomain ( [113.57.152.160])
         by bizesmtp.qq.com (ESMTP) with 
-        id ; Mon, 13 Jun 2022 19:22:47 +0800 (CST)
-X-QQ-SSF: 00400000002000C0D000B00A0000000
-X-QQ-FEAT: 8nRPapzIrE2CE+SmV7HzIOTRIYAAjjVJutUwegxmRc2aIU9K4oPj7AhQOv5aT
-        NQDwV6RPlkHMLkJ1jJNd3T2rx67KQzAA2pXD+OCkdjQZgSgy4MFhHYTvQchvoOhxNXt8EeI
-        ChXhwOa1MeI4QjblPxdhRoyomMx+Vj+I13F+LXjajzBITBO6R9A8J9lMR1XYcpiiyX4T5FI
-        adJ30u1CI0TY3eiwe4Uuy65txBBvKJNdRwvbeHbaadf1WUpSHXXBHorsIXkKe9sKHMSl7dl
-        0a5m6MsCqhV9Cw/qT536jffoUKZ+bieGD+abOgA/14jOZSa/CTEZLhZSkbTg9YWxCAF+sQ1
-        G8SIB1K
-X-QQ-GoodBg: 2
+        id ; Mon, 13 Jun 2022 19:37:19 +0800 (CST)
+X-QQ-SSF: 01400000002000C0D000000A0000000
+X-QQ-FEAT: ZHWZeLXy+8eClACgNhm8bHQa+2IVq2ogrW+ASiRZsqDdEMufljUNbTf7czw5t
+        XmefJOiRD6P6fGL1pqQHtcwGsqELBcXaC8+YZ42lj1QCFTQnEIO6kAQ/O7tmhdy1WjlKISo
+        FeSLm9NAuHOp4tDgPnzXBdKfQDv4C3UpW4DfHS/CSFGQVpI6cQHp2Mfr02cfnrsYyMhCAOa
+        Gp3sbAz99bSa5n/8OhRmJQ15LRn4jNUdcXUnORPBTE1+9GWJeLFKbO1a8XCuGHm5SSkTTG5
+        klx7uFvNDXP+QCbiyjqln0JwV42b8BifYZ9AQiHuPUeoYnpUayaqurZakwFNmXjk54VyhTU
+        fXPJH+kjTW52nNKwkI=
+X-QQ-GoodBg: 1
 From:   wangyouwan <wangyouwan@uniontech.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     wangyouwan <wangyouwan@uniontech.com>
 Subject: [PATCH] obexd: Fix callback->func =! NULL in the xfer_complete() func
-Date:   Mon, 13 Jun 2022 19:22:42 +0800
-Message-Id: <20220613112242.9407-1-wangyouwan@uniontech.com>
+Date:   Mon, 13 Jun 2022 19:37:13 +0800
+Message-Id: <20220613113713.13681-1-wangyouwan@uniontech.com>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:uniontech.com:qybgforeign:qybgforeign4
+Feedback-ID: bizesmtp:uniontech.com:qybgforeign:qybgforeign8
 X-QQ-Bgrelay: 1
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -51,7 +50,7 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 xfer_complete (obex=0x557d242c8cf0, err=0x557d242ca470,
 user_data=0x557d242ca300) at obexd/client/transfer.c:659
-659     obexd/client/transfer.c: 没有那个文件或目录.
+659     obexd/client/transfer.c:
 (gdb) n
 661     in obexd/client/transfer.c
 (gdb) n
