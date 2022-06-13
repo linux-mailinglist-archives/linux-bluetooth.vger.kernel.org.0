@@ -2,70 +2,101 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43939549D5A
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jun 2022 21:20:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECC16549DE6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jun 2022 21:42:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244651AbiFMTUA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Jun 2022 15:20:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44914 "EHLO
+        id S242327AbiFMTmQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Jun 2022 15:42:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351275AbiFMTTc (ORCPT
+        with ESMTP id S244262AbiFMTlq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Jun 2022 15:19:32 -0400
-Received: from out-19.smtp.github.com (out-19.smtp.github.com [192.30.252.202])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B189633352
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Jun 2022 10:23:54 -0700 (PDT)
-Received: from github.com (hubbernetes-node-8161a6a.va3-iad.github.net [10.48.125.36])
-        by smtp.github.com (Postfix) with ESMTPA id F0342E0BA6
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Jun 2022 10:23:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-        s=pf2014; t=1655141034;
-        bh=JNoFgI2QF0qLWuUsMb8uD+jvUnd3+HQKx3o/o+CJoEU=;
-        h=Date:From:To:Subject:From;
-        b=EHJZaulh+ram0wEPNNoiRELQVNxlQ5/2MSm3HfOWEK0YlQoSf4kdJqlF9NKgJtx2x
-         uXvnEx45FltrunCW2/rZNovnboJZJApOVv0ZWUrd8xkMPVTTT9xQv9zPQ4eIIbNUXM
-         0hg3A+hztbjibSu2zLQp6pzpfW/ctmczZ9WVzNiU=
-Date:   Mon, 13 Jun 2022 10:23:53 -0700
-From:   Luiz Augusto von Dentz <noreply@github.com>
-To:     linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/60f18a-25dd56@github.com>
-Subject: [bluez/bluez] 25dd56: monitor: Stop spamming logs when GATT db cannot
- be...
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+        Mon, 13 Jun 2022 15:41:46 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD4A75F73
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Jun 2022 11:10:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9FE61B811EC
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Jun 2022 18:10:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6179CC385A9;
+        Mon, 13 Jun 2022 18:10:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655143815;
+        bh=PnAKmESgMAu1yEPkzM7t4IW6J34FzCNA6TjC8YgYj24=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=tV7HDMupcDarsN8zFLhxtrToCA2tRNt8MK/Kl/LW+ZiF/I032YGgBSjz834B+krg/
+         WJCpVAw/PvJszrLUTA4aVDO+jKvVU8+KcqhLZmzilUupV9vyBc33rEN9f2cMCcSi/b
+         VYR/eE5tVnbDIl4u9O20HBn6VfPr5i0AgbQk1kaxqUiXkNXP1I7PWHYX95ZxXmymDR
+         KUa3ZUlHxitRXe9vvD90uFfpxwjTWZ5iF+kD1BOsJzgugompGElJ19lKglPpwom7/I
+         gYCJQYjGaqzRLR+D9xPccj7TQJ4puEpA8/ktUcH8niwkhHdZ+v+tJzY8zbXLaFwDMs
+         u0EsyeapRst9Q==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 49703E73858;
+        Mon, 13 Jun 2022 18:10:15 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] obexd: Fix callback->func =! NULL in the xfer_complete() func
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <165514381529.24573.13806720354390874416.git-patchwork-notify@kernel.org>
+Date:   Mon, 13 Jun 2022 18:10:15 +0000
+References: <20220613113713.13681-1-wangyouwan@uniontech.com>
+In-Reply-To: <20220613113713.13681-1-wangyouwan@uniontech.com>
+To:     wangyouwan <wangyouwan@uniontech.com>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: 25dd5613d549010952550df4f6bd435e2bd5d101
-      https://github.com/bluez/bluez/commit/25dd5613d549010952550df4f6bd435e2bd5d101
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2022-06-13 (Mon, 13 Jun 2022)
+Hello:
 
-  Changed paths:
-    M monitor/att.c
-    M monitor/packet.c
-    M monitor/packet.h
+This patch was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-  Log Message:
-  -----------
-  monitor: Stop spamming logs when GATT db cannot be loaded
+On Mon, 13 Jun 2022 19:37:13 +0800 you wrote:
+> xfer_complete (obex=0x557d242c8cf0, err=0x557d242ca470,
+> user_data=0x557d242ca300) at obexd/client/transfer.c:659
+> 659     obexd/client/transfer.c:
+> (gdb) n
+> 661     in obexd/client/transfer.c
+> (gdb) n
+> 663     in obexd/client/transfer.c
+> (gdb) p callback->func
+> $1 = (transfer_callback_t) 0x0
+> (gdb) n
+> 668     in obexd/client/transfer.c
+> (gdb) n
+> 671     in obexd/client/transfer.c
+> (gdb) n
+> 672     in obexd/client/transfer.c
+> (gdb) n
+> 676     in obexd/client/transfer.c
+> (gdb) n
+> 677     in obexd/client/transfer.c
+> (gdb) n
+> 0x0000000000000000 in ?? ()
+> (gdb) s
+> Cannot find bounds of current function
+> (gdb) c
+> Continuing.
+> 
+> [...]
 
-This stops calling hci_devba everytime the GATT db needs to be loaded
-since that causes a raw socket to be open to read back the address
-pointed by the index, instead this is done only once at assign_handle
-and store in packet_conn_data.
+Here is the summary with links:
+  - obexd: Fix callback->func =! NULL in the xfer_complete() func
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c6d3bcf3d005
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
