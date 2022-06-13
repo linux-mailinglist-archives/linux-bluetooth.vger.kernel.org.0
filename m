@@ -2,101 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 175685489A9
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jun 2022 18:05:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17D1B549BF2
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Jun 2022 20:42:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380558AbiFMOB0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Jun 2022 10:01:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41566 "EHLO
+        id S1343628AbiFMSmi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Jun 2022 14:42:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380580AbiFMN7H (ORCPT
+        with ESMTP id S1343491AbiFMSmT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Jun 2022 09:59:07 -0400
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED1A88CB3B
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Jun 2022 04:37:48 -0700 (PDT)
-X-QQ-mid: bizesmtp71t1655120243t64ph5p5
-Received: from localhost.localdomain ( [113.57.152.160])
-        by bizesmtp.qq.com (ESMTP) with 
-        id ; Mon, 13 Jun 2022 19:37:19 +0800 (CST)
-X-QQ-SSF: 01400000002000C0D000000A0000000
-X-QQ-FEAT: ZHWZeLXy+8eClACgNhm8bHQa+2IVq2ogrW+ASiRZsqDdEMufljUNbTf7czw5t
-        XmefJOiRD6P6fGL1pqQHtcwGsqELBcXaC8+YZ42lj1QCFTQnEIO6kAQ/O7tmhdy1WjlKISo
-        FeSLm9NAuHOp4tDgPnzXBdKfQDv4C3UpW4DfHS/CSFGQVpI6cQHp2Mfr02cfnrsYyMhCAOa
-        Gp3sbAz99bSa5n/8OhRmJQ15LRn4jNUdcXUnORPBTE1+9GWJeLFKbO1a8XCuGHm5SSkTTG5
-        klx7uFvNDXP+QCbiyjqln0JwV42b8BifYZ9AQiHuPUeoYnpUayaqurZakwFNmXjk54VyhTU
-        fXPJH+kjTW52nNKwkI=
-X-QQ-GoodBg: 1
-From:   wangyouwan <wangyouwan@uniontech.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     wangyouwan <wangyouwan@uniontech.com>
-Subject: [PATCH] obexd: Fix callback->func =! NULL in the xfer_complete() func
-Date:   Mon, 13 Jun 2022 19:37:13 +0800
-Message-Id: <20220613113713.13681-1-wangyouwan@uniontech.com>
-X-Mailer: git-send-email 2.20.1
+        Mon, 13 Jun 2022 14:42:19 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 055BA1180C
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Jun 2022 08:01:41 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id g16-20020a17090a7d1000b001ea9f820449so4422972pjl.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Jun 2022 08:01:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=MbxCebj4QvQ/wsPQfSSWhp2gdTAHx3IHDG+PH/2j1qc=;
+        b=G9G32IzfVRKAwAHHNm73DAPRw8O5LPL+tDBVmEAyBQO0t27fmA5Trz/6h23abHezvS
+         TYOGjgQORrzNIhc4Etp65ddxWRlykv02A1BjDnG6sIpiMiE7ePXiMy8ymJeoNyUYNJzF
+         dDWGvzl3NswyDdH7r5UXW9Vi6d0kVqjdbr+z13ad7p7usbEf07ItxUaXot3PeMomY26D
+         XAVBNX+xpVyAZVUuD49avQG/kUeJv9c69iHZIvBc5P2PGUCeGZx9rClz2GudQOk8FSiU
+         NglaPDFtbiDafizRv+WXLW1RUfIo/X04IuKWhEDFkaUR8XH2OtWP38j/57fXMv4QiLvs
+         Nxmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=MbxCebj4QvQ/wsPQfSSWhp2gdTAHx3IHDG+PH/2j1qc=;
+        b=LLLjmZTaXzV4PtuS7Y/Y6cKSjidjsuw7xoeASjcZyClrsxoVdf+U2hsHy2R0o8LmAS
+         XL17xyf0TjF5tkdiLzKFVMy2Cqm3UDgrEjpKoNG/Sj2gzHs70Ox7Vai5S7uHueYcN+7h
+         I8FYys9kYVvp776R0qfYbudHwfE4U6Tu3FfhysAuPfBtX25tiOuZJ/8BtrhTxHnu4x3S
+         zNtW0fQMTPJDHATCz/ZoU32dBoKC3GyaEJyRDqisxYBobUczgGVbUaizMbxsl5A3buTS
+         I8NrSIG7bAOU259dBcSVweaT1uNLFg4zecbe7+YXmA1flZD96yGK8+HimMo24TSkE+lv
+         c5Nw==
+X-Gm-Message-State: AJIora+BHs2Ut2bfbZptiPbEv1cLZUPC5cuGnnrqSd5JHd0DDBHUNeGN
+        6kemmuwNxuar5tT4lS/H5hbf5uduA6I=
+X-Google-Smtp-Source: AGRyM1speL/Rxdw0Qw3gqTrdjdmglN5Rc0rMQeJ5akbtqXvIpVrRmPd4ccirGAkwcIt8573DSDIqDw==
+X-Received: by 2002:a17:902:bc84:b0:167:80c6:aedd with SMTP id bb4-20020a170902bc8400b0016780c6aeddmr82074plb.97.1655132500234;
+        Mon, 13 Jun 2022 08:01:40 -0700 (PDT)
+Received: from [172.17.0.2] ([20.253.186.142])
+        by smtp.gmail.com with ESMTPSA id n23-20020aa78a57000000b0051c01aa7d31sm5524289pfa.46.2022.06.13.08.01.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jun 2022 08:01:39 -0700 (PDT)
+Message-ID: <62a75153.1c69fb81.75bf2.6148@mx.google.com>
+Date:   Mon, 13 Jun 2022 08:01:39 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============1300054500486836366=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:uniontech.com:qybgforeign:qybgforeign8
-X-QQ-Bgrelay: 1
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, wangyouwan@uniontech.com
+Subject: RE: obexd: Fix callback->func =! NULL in the xfer_complete() func
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220613112242.9407-1-wangyouwan@uniontech.com>
+References: <20220613112242.9407-1-wangyouwan@uniontech.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-xfer_complete (obex=0x557d242c8cf0, err=0x557d242ca470,
-user_data=0x557d242ca300) at obexd/client/transfer.c:659
-659     obexd/client/transfer.c:
-(gdb) n
-661     in obexd/client/transfer.c
-(gdb) n
-663     in obexd/client/transfer.c
-(gdb) p callback->func
-$1 = (transfer_callback_t) 0x0
-(gdb) n
-668     in obexd/client/transfer.c
-(gdb) n
-671     in obexd/client/transfer.c
-(gdb) n
-672     in obexd/client/transfer.c
-(gdb) n
-676     in obexd/client/transfer.c
-(gdb) n
-677     in obexd/client/transfer.c
-(gdb) n
-0x0000000000000000 in ?? ()
-(gdb) s
-Cannot find bounds of current function
-(gdb) c
-Continuing.
+--===============1300054500486836366==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Program received signal SIGSEGV, Segmentation fault.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=649824
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.66 seconds
+GitLint                       PASS      0.46 seconds
+Prep - Setup ELL              PASS      54.03 seconds
+Build - Prep                  PASS      0.62 seconds
+Build - Configure             PASS      10.20 seconds
+Build - Make                  PASS      1870.58 seconds
+Make Check                    PASS      13.00 seconds
+Make Check w/Valgrind         PASS      552.84 seconds
+Make Distcheck                PASS      292.56 seconds
+Build w/ext ELL - Configure   PASS      10.64 seconds
+Build w/ext ELL - Make        PASS      1821.67 seconds
+Incremental Build with patchesPASS      0.00 seconds
+
+
+
 ---
- obexd/client/transfer.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/obexd/client/transfer.c b/obexd/client/transfer.c
-index dccce03b4..a7a85a0c0 100644
---- a/obexd/client/transfer.c
-+++ b/obexd/client/transfer.c
-@@ -666,7 +666,10 @@ static void xfer_complete(GObex *obex, GError *err, gpointer user_data)
- 	else
- 		transfer_set_status(transfer, TRANSFER_STATUS_COMPLETE);
- 
--	if (callback)
-+	if (callback == NULL)
-+		return;
-+
-+	if (callback->func)
- 		callback->func(transfer, err, callback->data);
- }
- 
--- 
-2.20.1
+Regards,
+Linux Bluetooth
 
 
-
+--===============1300054500486836366==--
