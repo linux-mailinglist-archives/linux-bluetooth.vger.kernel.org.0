@@ -2,75 +2,134 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC9D654C559
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Jun 2022 12:03:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDC4454C598
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Jun 2022 12:12:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344854AbiFOKDu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 15 Jun 2022 06:03:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48234 "EHLO
+        id S1345987AbiFOKMz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 15 Jun 2022 06:12:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343985AbiFOKDt (ORCPT
+        with ESMTP id S1345280AbiFOKMs (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 15 Jun 2022 06:03:49 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 687EF35869
-        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Jun 2022 03:03:48 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id a29so18129059lfk.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Jun 2022 03:03:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=F6Txoo1eGLlBur0lbXNXpieHqi5w3yUW1vOTMbpFB5g=;
-        b=og9LG/+pniXhQsgJ/oYmhLAjxU/HbgdTCMahNAIKYiEYT95mLwuF83DPhSz3+W2iSq
-         ecnLrxMH4Dh+8oJofwFHtctmZiVtoIe84b0rI7mQ3UFxD8xxCm64MIAFr5iucD2SeaE1
-         MoFGVWwNiyUUdrC4KXYKz7QdRlJGST2Pc/z2uWCwsChJJSfoK30X09O/4ck0MMqWjeZK
-         uW3yR3L+CvSTnX2DL+3jv4O1GkoeaF1eAv4C5/apSuyfJXI38+TYTgKHwnSDJzuDqViX
-         WK8J9AiyOxcYoCQzawtXJ28if/2AFEnINTa1djxKGVQUOWXpVmMYL7ZjcoUCVUkR9mWt
-         JUMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=F6Txoo1eGLlBur0lbXNXpieHqi5w3yUW1vOTMbpFB5g=;
-        b=Jrvr8o9oAfpdd3MzQWousIPD4qi9bvTWwW+caWubWFlmIzzUnH6dyPOs6ye50IpA0E
-         75UgSovehjiXli41Dh4LQWYWSBW+mM2fDZ8SHXxau6gDycYED6eOLF/ClZInIY+alNwI
-         4h3GskV7All1KNEo7G43BdexhhktMBQH7IvtpK5ZrHVL8DamGmqAtgunDeDHNCDU78Up
-         qmGINaBz4TbFLuXKsWv/B5aVxUhTN9xtcbkwu7x9tNfSwJ+i34f4gr8d+pwUEY5MOX39
-         hgwSoIZdduisTaF1QoAH0HQ+wPwt/CnZjFIA0wXxExsOCqEqXytTBIreNUPFqKHP9f0v
-         YMyQ==
-X-Gm-Message-State: AJIora+pnhoYVlbrRrFSstNFRSZzo6WhwjztfKllZI6P6H5EiMxk8LGK
-        V3VwJgkhWxNwzCesjr9/RyMg62vnj4NZVCfDaA4=
-X-Google-Smtp-Source: AGRyM1sjQtreltdFKA5w//he8nGcQtD3JA5opensvW9ATnCQ7qOKSZBbWHEHE8iqHCAQ7uaatF15RbF95zqLVNt+VLA=
-X-Received: by 2002:a05:6512:c07:b0:479:2e0f:9a06 with SMTP id
- z7-20020a0565120c0700b004792e0f9a06mr5618386lfu.687.1655287426593; Wed, 15
- Jun 2022 03:03:46 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ab3:5d0f:0:0:0:0:0 with HTTP; Wed, 15 Jun 2022 03:03:45
- -0700 (PDT)
-Reply-To: tescobank093.de@gmail.com
-From:   Tesco Bank <ahmadg66334@gmail.com>
-Date:   Wed, 15 Jun 2022 11:03:45 +0100
-Message-ID: <CAPg_g08ehQAhS4a=2pfQZv=0=bayeQZAoFXnxjpPD3_6CRVf5Q@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
+        Wed, 15 Jun 2022 06:12:48 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EB1C13F87
+        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Jun 2022 03:12:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D010960C6B
+        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Jun 2022 10:12:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3CE6CC36AF2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Jun 2022 10:12:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655287965;
+        bh=1QUvHdzQS7063zB4YE/tzivDmMJUdH+4X7kJ1wJFEes=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=cWQEd9+Mi5jqnl/mfrsDlajgXHcX9cT+J6tyCGquC2fqSpP1fVM6eOcZadEqvI2Jz
+         N77/mdU4iAn+6Gam2fO548KEHeFajK/162pTsObV7SHriQ0G7aWc5ZpsGsTtvN+/gB
+         nLeem3okwgn1+jtQyd/xtYX9mqKZX5Cpf9IC4jJ7N1ieYcsvNI5mKGFkBTW6bopijj
+         S3mEOKgLbE0L5sFGOI3COx1Q4r+gWC0pgq4x5cdx4umrG7frlV0MsjX6nZkkYcbL1i
+         dBVyCCNaAsWG05diBqckMa2zTlom668wuqo9C0qJs9qaIqSfJvr94NTflDveczjx61
+         zsNlA4L/AD2lQ==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 2B6F8CC13B4; Wed, 15 Jun 2022 10:12:45 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 215167] Bluetooth: hci0: command 0xfc05 tx timeout
+Date:   Wed, 15 Jun 2022 10:12:44 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: jmennius@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-215167-62941-6otTn4D8R1@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-215167-62941@https.bugzilla.kernel.org/>
+References: <bug-215167-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.1 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+https://bugzilla.kernel.org/show_bug.cgi?id=3D215167
+
+--- Comment #37 from Ievgen Popovych (jmennius@gmail.com) ---
+So I was trying to reproduce, kept the trace running for a few days or more,
+but then it never happened and I've stopped tracing.
+Now it happened again, on Fedora kernel 5.17.11, when waking up from suspen=
+d.
+As I am looking though the logs there were total of 4 occurrences of "Readi=
+ng
+Intel version command failed", but I think only today I've noticed BT not
+working and having to do the rmmod dance (few times to fix it).
+
+> Jun 15 10:19:54 ievgen-xps kernel: Bluetooth: hci0: Opcode 0x c01 failed:
+> -110
+> Jun 15 10:19:54 ievgen-xps kernel: Bluetooth: hci0: command 0x0c01 tx tim=
+eout
+> Jun 15 10:19:56 ievgen-xps systemd-sleep[311042]: System returned from sl=
+eep
+> state.
+> Jun 15 10:19:56 ievgen-xps bluetoothd[876]: Controller resume with wake e=
+vent
+> 0x0
+> Jun 15 10:19:56 ievgen-xps kernel: Bluetooth: hci0: command 0x0c1a tx tim=
+eout
+> Jun 15 10:19:56 ievgen-xps kernel: Bluetooth: hci0: Opcode 0x c1a failed:
+> -110
+> Jun 15 10:19:56 ievgen-xps kernel: PM: suspend exit
+> Jun 15 10:19:56 ievgen-xps systemd[1]: Starting systemd-rfkill.service -
+> Load/Save RF Kill Switch Status...
+> Jun 15 10:19:56 ievgen-xps systemd[1]: Stopped target bluetooth.target -
+> Bluetooth Support.
+> Jun 15 10:19:56 ievgen-xps systemd[1665]: Stopped target bluetooth.target=
+ -
+> Bluetooth.
+> Jun 15 10:19:56 ievgen-xps systemd[1]: Started systemd-rfkill.service -
+> Load/Save RF Kill Switch Status.
+> Jun 15 10:19:56 ievgen-xps kernel: usb 1-4: new full-speed USB device num=
+ber
+> 39 using xhci_hcd
+> Jun 15 10:19:56 ievgen-xps kernel: usb 1-4: New USB device found,
+> idVendor=3D8087, idProduct=3D0029, bcdDevice=3D 0.01
+> Jun 15 10:19:56 ievgen-xps kernel: usb 1-4: New USB device strings: Mfr=
+=3D0,
+> Product=3D0, SerialNumber=3D0
+> Jun 15 10:19:56 ievgen-xps upowerd[902]: treating change event as add on
+> /sys/devices/pci0000:00/0000:00:14.0/usb1/1-4
+> Jun 15 10:19:56 ievgen-xps systemd[1]: Reached target bluetooth.target -
+> Bluetooth Support.
+> Jun 15 10:19:56 ievgen-xps systemd[1665]: Reached target bluetooth.target=
+ -
+> Bluetooth.
+...
+> Jun 15 10:19:58 ievgen-xps kernel: Bluetooth: hci0: command 0xfc05 tx tim=
+eout
+> Jun 15 10:19:58 ievgen-xps kernel: Bluetooth: hci0: Reading Intel version
+> command failed (-110)
+
 --=20
-Ben=C3=B6tigen Sie heute dringend einen Kredit, um eine Investition zu
-t=C3=A4tigen? Ein neues Unternehmen gr=C3=BCnden oder Rechnungen bezahlen? =
-Und
-uns auf Wunsch in Raten zur=C3=BCckzahlen? Wir bieten Kredite zu einem sehr
-niedrigen Zinssatz von 2% an. Wie viel Kredit m=C3=B6chten Sie ???
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
