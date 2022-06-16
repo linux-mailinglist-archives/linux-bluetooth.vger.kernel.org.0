@@ -2,80 +2,132 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3397C54DEDE
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Jun 2022 12:25:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C319654DF40
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Jun 2022 12:38:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359688AbiFPKZJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 16 Jun 2022 06:25:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41530 "EHLO
+        id S1376305AbiFPKig (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 16 Jun 2022 06:38:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359671AbiFPKZI (ORCPT
+        with ESMTP id S1359853AbiFPKi1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 16 Jun 2022 06:25:08 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83DD65D66B
-        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Jun 2022 03:25:06 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id c4so1485570lfj.12
-        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Jun 2022 03:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=lLG88JCPgF7Yhflf4FNi4GQedsSNMbwmPtgneUr9Mu0=;
-        b=nwNGYHzxN/bUy/LhhY1G9hxq8XPo44RP7GtZOKHRucGu7O1UOZtoXae+ES5ie2Wv3H
-         Lo89e2SldpSTOW3ijMxaXmOS/qllUgneOZ3OQxLOVyBbmjhOQkCkTRInol4qm0zBp9u5
-         FkcMWCswycYRPifzxLy3Cn8Ki/jSQepv2sRTKZKG27vx8s0v/d7Jsus9JWyjU7qS+/hC
-         ZgYqjb3k9zyKexUHBcl6lALWGACgSWSwDIiPi7wZLS1gocZxtftXJdocUICGUIknOFpH
-         UUKTAN/rwTVZ2SM8nzHW1kfV93J7czdV9uaVcRMCOnwRC+Y63ivA+ttnNvkPk1bOWOFT
-         gebA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=lLG88JCPgF7Yhflf4FNi4GQedsSNMbwmPtgneUr9Mu0=;
-        b=EZvhy1o5n+DYo9Pyrp6S6eCKlxhtZbkLF19cBuSbAEm80RNtad34QLV6uCLiZZVo4v
-         AntEY6hjppHUzKISVVLNDyvP7G8Z+cH2l/OotOeicPIN/QWCqQ6qJu8XhZT4W7+Z9IgT
-         5orai/577BBWlXf+CypUhH+BbeI8+P4M3lAk6KXqXnfwg2elNbXBG2slSPOfOQBnLLOI
-         jeFwmsIaP0tuLner2LyO3w5W1Cwp4B7/zDm482Xwfi6gOdZwDIvAaL42mJUj8q/nMith
-         +6YsHKkghCONx6Q3K7TJIS3I7LDQM8ac6HWIlbpDos0Oq8Ay0TFKGSOmTXh5ir4U4s8F
-         lN7g==
-X-Gm-Message-State: AJIora8hF/hN+YCTUb0YU8vs0POEppKGcqQVBKhtk6N3CSDeCzyz9IUd
-        icawjLkaQrb71mYTmPyxXZTYKNboA0CdMVS/bIM=
-X-Google-Smtp-Source: AGRyM1tNW3UsYMxEBW54HEFuL2fwpT1fn01AjX8xeAkrn5nV9MFL58V4qR4BhR+zLd5S/1+uqnFaeqenB9KJKE4KBHk=
-X-Received: by 2002:a05:6512:2e7:b0:478:f55e:f490 with SMTP id
- m7-20020a05651202e700b00478f55ef490mr2215732lfq.486.1655375104853; Thu, 16
- Jun 2022 03:25:04 -0700 (PDT)
+        Thu, 16 Jun 2022 06:38:27 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A3E3193EB
+        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Jun 2022 03:38:25 -0700 (PDT)
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77] helo=[127.0.0.1])
+        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <a.fatoum@pengutronix.de>)
+        id 1o1mtL-0006Uh-On; Thu, 16 Jun 2022 12:38:23 +0200
+Message-ID: <b0cb4fb0-6b89-b9df-9ae6-421ac52b0100@pengutronix.de>
+Date:   Thu, 16 Jun 2022 12:38:21 +0200
 MIME-Version: 1.0
-Received: by 2002:a05:6520:28c2:b0:1f3:cf5:e20d with HTTP; Thu, 16 Jun 2022
- 03:25:03 -0700 (PDT)
-Reply-To: clmloans9@gmail.com
-From:   MR ANTHONY EDWARD <bashirusman02021@gmail.com>
-Date:   Thu, 16 Jun 2022 11:25:03 +0100
-Message-ID: <CAGOBX5asvO0EBOo=K4hvhUW0x8Z4mTwZNUBowaExgqNYkd0EEg@mail.gmail.com>
-Subject: DARLEHENSANGEBOT
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ****
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+From:   Ahmad Fatoum <a.fatoum@pengutronix.de>
+Subject: Re: [BUG] BLE device unpairing triggers kernel panic
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        "regressions@lists.linux.dev" <regressions@lists.linux.dev>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>
+References: <a1ce1743-e450-6cdb-dfab-56a3e3eb9aed@pengutronix.de>
+ <CABBYNZ+z8kBUKGXbZSfb0ynJaTnPQRp0wFDUb12AW1ymbNx1eg@mail.gmail.com>
+ <CABBYNZ+zsuggTpaUSPsZKeL=qqvM1=sgMWzdWEqaS_oh6dhY2g@mail.gmail.com>
+ <8d5c4724-d511-39b1-21d7-116c91cada45@pengutronix.de>
+Content-Language: en-US
+In-Reply-To: <8d5c4724-d511-39b1-21d7-116c91cada45@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
+X-SA-Exim-Mail-From: a.fatoum@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-6.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---=20
-Ben=C3=B6tigen Sie ein Gesch=C3=A4ftsdarlehen oder ein Darlehen jeglicher A=
-rt?
-Wenn ja, kontaktieren Sie uns
+Hello Luiz,
 
-*Vollst=C3=A4ndiger Name:
-* Ben=C3=B6tigte Menge:
-*Leihdauer:
-*Mobiltelefon:
-*Land:
+On 16.05.22 18:37, Ahmad Fatoum wrote:
+>>>> - Commit a56a1138cbd8 ("Bluetooth: hci_sync: Fix not using conn_timeout")
+>>>>   fixes, despite the title, what event is waited on. First Pairing works now,
+>>>>   but the second pairing times out and crashes the kernel:
+>>>>
+>>>>   [   84.191684] Bluetooth: hci0: Opcode 0x200d failed: -110
+>>>>   [   84.230478] Bluetooth: hci0: request failed to create LE connection: err -110
+>>>>   [   84.237690] Unable to handle kernel read from unreadable memory at virtual address 0000000000000ca8
+>>
+>> That said the error -110 mean -ETIMEDOUT
+> 
+> Yes, this issue remains still. I feel better about my revert
+> knowing that the crash is fixed, but I'd like this regression
+> here fixed upstream as well. I'll try to collect some more
+> information and report back.
+
+I've now found time to revisit this and sprinkle around some
+extra logging. This is the initial pairing that works:
+
+  Bluetooth: entered hci_le_create_conn_sync()
+  Bluetooth: hci0: opcode 0x200d plen 25
+  Bluetooth: hci0: event 0x0f (sent = 0x0a)
+  Bluetooth: hci0: BT: opcode 0x200d (sent: 0x0a)
+  Bluetooth: hci0: event 0x3e (sent = 0x0a)
+  Bluetooth: hci0: BT: subevent 0x0a (sent 0x0a)
+  Bluetooth: entered hci_le_meta_evt(event=0x0a) completion clause
+
+I unpaired on device side and then retried pairing:
+
+  Bluetooth: entered hci_le_create_conn_sync()
+  Bluetooth: hci0: opcode 0x200d plen 25
+  Bluetooth: hci0: event 0x0f (sent = 0x0a)
+  Bluetooth: hci0: BT: opcode 0x200d (sent: 0x0a)
+  Bluetooth: entered hci_abort_conn()
+  Bluetooth: hci0: opcode hci_req_add_ev 0x200e
+  Bluetooth: hci0: event 0x0e (sent = 0x00)
+  Bluetooth: hci0: event 0x3e (sent = 0x00)
+  Bluetooth: hci0: BT: subevent 0x0a (sent 0x00)
+  Bluetooth: __hci_cmd_sync_sk pending (event = 0x0a status=1, err=-110)
+  Bluetooth: hci0: Opcode 0x200d failed: -110
+  Bluetooth: hci0: opcode 0x2006 plen 15
+  Bluetooth: hci0: event 0x0e (sent = 0x00)
+  Bluetooth: hci0: opcode 0x200a plen 1
+  Bluetooth: hci0: event 0x0e (sent = 0x00)
+  Bluetooth: hci0: request failed to create LE connection: err -110
+
+
+But now it times out as reported. It looks like the
+intermittent hci_abort_conn() is at fault here. My theory is
+that replacing hci->sent_cmd is the problem here, as other
+events can't be matched anymore.
+
+We've been deploying the revert for a while now and I just posted
+it to the mailing list[1]. There have been other reports
+of this issue with different hardware too and fixing sent_cmd
+would likely be too complicated/time intensive for me.
+
+I am happy to test future patches that fix this properly though.
+
+[1]: https://lore.kernel.org/linux-bluetooth/20220616092418.738877-1-a.fatoum@pengutronix.de/T/#t
+
+Cheers,
+Ahmad
+
+
+
+> 
+> Cheers,
+> Ahmad
+> 
+
+
+-- 
+Pengutronix e.K.                           |                             |
+Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
+31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
