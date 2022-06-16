@@ -2,116 +2,80 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A584B54DE9F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Jun 2022 12:06:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3397C54DEDE
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Jun 2022 12:25:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359830AbiFPKGc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 16 Jun 2022 06:06:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54410 "EHLO
+        id S1359688AbiFPKZJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 16 Jun 2022 06:25:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376269AbiFPKG2 (ORCPT
+        with ESMTP id S1359671AbiFPKZI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 16 Jun 2022 06:06:28 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F4755D5F2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Jun 2022 03:06:25 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id mh16-20020a17090b4ad000b001e8313301f1so5032546pjb.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Jun 2022 03:06:25 -0700 (PDT)
+        Thu, 16 Jun 2022 06:25:08 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83DD65D66B
+        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Jun 2022 03:25:06 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id c4so1485570lfj.12
+        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Jun 2022 03:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=kTCTuScGxOSV5yar5Bw1bpdMMYcIFlh5UtR4+Q1tuvA=;
-        b=p8pYrSyIDZ4QGwbY9UKvkADM1TQI3k2XXIcgVYsq0EY2lih6FDgKzQX5AjNM4uhBAM
-         I6QwN93lenVIJermoKYVEEJYSeEo3ma7ZAyZ/vSG56x/sflq8xmcNDz5NB/oEmc0fNkv
-         YM+LvonftrxKRBemOBJYnvDLa/wDw/hIlD9Nqv6QJi2EihlAnmtrUWOHtYSBz8h1EKUG
-         wgdeb9D8jyi6bU30R5kMwDF5l4XNwzOh0ohB7eaYeWY1NhuKp0f1XSY7UKk53dg0sU/O
-         RxI3QZGIjriFv/7ljy2a7k2G+iB3zHhohJ+TYCP/tzyIu9x7tdOrChgW6TxVwxJTr3y8
-         a0qw==
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=lLG88JCPgF7Yhflf4FNi4GQedsSNMbwmPtgneUr9Mu0=;
+        b=nwNGYHzxN/bUy/LhhY1G9hxq8XPo44RP7GtZOKHRucGu7O1UOZtoXae+ES5ie2Wv3H
+         Lo89e2SldpSTOW3ijMxaXmOS/qllUgneOZ3OQxLOVyBbmjhOQkCkTRInol4qm0zBp9u5
+         FkcMWCswycYRPifzxLy3Cn8Ki/jSQepv2sRTKZKG27vx8s0v/d7Jsus9JWyjU7qS+/hC
+         ZgYqjb3k9zyKexUHBcl6lALWGACgSWSwDIiPi7wZLS1gocZxtftXJdocUICGUIknOFpH
+         UUKTAN/rwTVZ2SM8nzHW1kfV93J7czdV9uaVcRMCOnwRC+Y63ivA+ttnNvkPk1bOWOFT
+         gebA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=kTCTuScGxOSV5yar5Bw1bpdMMYcIFlh5UtR4+Q1tuvA=;
-        b=OFm9R5gn+0aXv1YaSNxbp2Ap2Lg3S5LppwaWKhrMMxjr/iDvyAYB/0C4sO5poUqcaz
-         xK7H5JaiYRfgqwlpq1jwvwKAaZeYTy8eVkZ1aNxJcf4qLiv80M+m+riW/3N6eKvE/8ZN
-         scpoBJnAerEL168VVOns9eWnBeSA3ssupQT3dvOCaava9YtCoS7xAVGjjOtBLIIBpNNC
-         DAvnqpguSLj0jAZPAAQWrqcHIE2n5Er/v4j+7CCeQcfsnmOknZLqp0jxPoAMEze0Rxt+
-         ht6nnh7kokmClHW2iMoPQ3ASbUlXhjJMvmdQiZHNanduBEE2bsyVoGmhEXUi9GkFMQ/b
-         5k9g==
-X-Gm-Message-State: AJIora/n16TLpJqQ91+A1VsEUL6dE/3QfBLyLtM9AnFpHz9WlvP5soAE
-        Y7LgRUYFahjR7xoqmqFMfN/jxTWeuKg=
-X-Google-Smtp-Source: AGRyM1smuRadPN0KwmQMk/JlLiEeS8or0MWQEpBr6IrZ8XiM9Gd+/ZGsCRhHMe1P4hBEjFMZQRGHVQ==
-X-Received: by 2002:a17:90b:4c8a:b0:1e3:60f:58c3 with SMTP id my10-20020a17090b4c8a00b001e3060f58c3mr4190604pjb.230.1655373984567;
-        Thu, 16 Jun 2022 03:06:24 -0700 (PDT)
-Received: from [172.17.0.2] ([20.245.14.152])
-        by smtp.gmail.com with ESMTPSA id c18-20020a170902b69200b0015ee24acf38sm1221855pls.212.2022.06.16.03.06.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 03:06:24 -0700 (PDT)
-Message-ID: <62ab00a0.1c69fb81.285a1.1af2@mx.google.com>
-Date:   Thu, 16 Jun 2022 03:06:24 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============0127421641728898243=="
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=lLG88JCPgF7Yhflf4FNi4GQedsSNMbwmPtgneUr9Mu0=;
+        b=EZvhy1o5n+DYo9Pyrp6S6eCKlxhtZbkLF19cBuSbAEm80RNtad34QLV6uCLiZZVo4v
+         AntEY6hjppHUzKISVVLNDyvP7G8Z+cH2l/OotOeicPIN/QWCqQ6qJu8XhZT4W7+Z9IgT
+         5orai/577BBWlXf+CypUhH+BbeI8+P4M3lAk6KXqXnfwg2elNbXBG2slSPOfOQBnLLOI
+         jeFwmsIaP0tuLner2LyO3w5W1Cwp4B7/zDm482Xwfi6gOdZwDIvAaL42mJUj8q/nMith
+         +6YsHKkghCONx6Q3K7TJIS3I7LDQM8ac6HWIlbpDos0Oq8Ay0TFKGSOmTXh5ir4U4s8F
+         lN7g==
+X-Gm-Message-State: AJIora8hF/hN+YCTUb0YU8vs0POEppKGcqQVBKhtk6N3CSDeCzyz9IUd
+        icawjLkaQrb71mYTmPyxXZTYKNboA0CdMVS/bIM=
+X-Google-Smtp-Source: AGRyM1tNW3UsYMxEBW54HEFuL2fwpT1fn01AjX8xeAkrn5nV9MFL58V4qR4BhR+zLd5S/1+uqnFaeqenB9KJKE4KBHk=
+X-Received: by 2002:a05:6512:2e7:b0:478:f55e:f490 with SMTP id
+ m7-20020a05651202e700b00478f55ef490mr2215732lfq.486.1655375104853; Thu, 16
+ Jun 2022 03:25:04 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, stephan.gerhold@kernkonzept.com
-Subject: RE: [v2] Bluetooth: btqcomsmd: Fix command timeout after setting BD address
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20220616093936.1294824-1-stephan.gerhold@kernkonzept.com>
-References: <20220616093936.1294824-1-stephan.gerhold@kernkonzept.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:6520:28c2:b0:1f3:cf5:e20d with HTTP; Thu, 16 Jun 2022
+ 03:25:03 -0700 (PDT)
+Reply-To: clmloans9@gmail.com
+From:   MR ANTHONY EDWARD <bashirusman02021@gmail.com>
+Date:   Thu, 16 Jun 2022 11:25:03 +0100
+Message-ID: <CAGOBX5asvO0EBOo=K4hvhUW0x8Z4mTwZNUBowaExgqNYkd0EEg@mail.gmail.com>
+Subject: DARLEHENSANGEBOT
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=4.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0127421641728898243==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+--=20
+Ben=C3=B6tigen Sie ein Gesch=C3=A4ftsdarlehen oder ein Darlehen jeglicher A=
+rt?
+Wenn ja, kontaktieren Sie uns
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=650946
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.90 seconds
-GitLint                       FAIL      0.47 seconds
-SubjectPrefix                 PASS      0.35 seconds
-BuildKernel                   PASS      36.72 seconds
-BuildKernel32                 PASS      33.63 seconds
-Incremental Build with patchesPASS      45.84 seconds
-TestRunner: Setup             PASS      577.07 seconds
-TestRunner: l2cap-tester      PASS      19.73 seconds
-TestRunner: bnep-tester       PASS      6.61 seconds
-TestRunner: mgmt-tester       PASS      118.63 seconds
-TestRunner: rfcomm-tester     PASS      11.13 seconds
-TestRunner: sco-tester        PASS      10.79 seconds
-TestRunner: smp-tester        PASS      10.38 seconds
-TestRunner: userchan-tester   PASS      7.18 seconds
-
-Details
-##############################
-Test: GitLint - FAIL - 0.47 seconds
-Run gitlint with rule in .gitlint
-[v2] Bluetooth: btqcomsmd: Fix command timeout after setting BD address
-32: B1 Line exceeds max length (101>80): "v1: https://lore.kernel.org/linux-bluetooth/20220613110745.3778356-1-stephan.gerhold@kernkonzept.com/"
-
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============0127421641728898243==--
+*Vollst=C3=A4ndiger Name:
+* Ben=C3=B6tigte Menge:
+*Leihdauer:
+*Mobiltelefon:
+*Land:
