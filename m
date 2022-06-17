@@ -2,95 +2,265 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96F4254FF2C
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jun 2022 23:10:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC8D254FF3F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jun 2022 23:17:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245608AbiFQVKQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Jun 2022 17:10:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43928 "EHLO
+        id S233125AbiFQVRQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Jun 2022 17:17:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235287AbiFQVKP (ORCPT
+        with ESMTP id S229512AbiFQVRP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Jun 2022 17:10:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 875D9E00F
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jun 2022 14:10:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 28305620B0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jun 2022 21:10:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8A56EC341C7;
-        Fri, 17 Jun 2022 21:10:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655500213;
-        bh=L/8C/RTxM58xtvp5tVu6aQpyy5f4+4hv/Q3KNq+1UwY=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=oYUO+SbymjB9koHrL3lbOWdnyo+1gzD+hejILFnGWKz2AGBkPQGure0Weu7fKG3JZ
-         oh6OZ9TU5BUaqS+CeToS/koD7YbQE9zVmEaozA9JIp5AqBI5dV9nBBIpj8iAq3uepf
-         iMXDXCKP2jw++1MmFDpls7mFSAyKFNdmeK8uhRCH427dsKoscZNvTNN2FX54Gr/Wty
-         /Nfq0l8uX5E7iKrL3EtY83P8Z/hgvpfl9JlauyGAstvtteiNDM7BG5BAbUiiP11lHg
-         hwn8iI+EAsKYS8WPLq6Q2LqejeaY7MzOmOUHHE+AmEB8Hu9YDMRztvmiXcthQ9h3dJ
-         V0/7p7Iwm+6eA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 707D2E7387C;
-        Fri, 17 Jun 2022 21:10:13 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 1/4] monitor/att: Print attribute information on
- ATT_REQ_RSP
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165550021345.3032.9932230059635448889.git-patchwork-notify@kernel.org>
-Date:   Fri, 17 Jun 2022 21:10:13 +0000
-References: <20220617004957.1148939-1-luiz.dentz@gmail.com>
-In-Reply-To: <20220617004957.1148939-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
+        Fri, 17 Jun 2022 17:17:15 -0400
+Received: from out-27.smtp.github.com (out-27.smtp.github.com [192.30.252.210])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0178820BDB
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jun 2022 14:17:13 -0700 (PDT)
+Received: from github.com (hubbernetes-node-0fa589c.ash1-iad.github.net [10.56.200.62])
+        by smtp.github.com (Postfix) with ESMTPA id 39B53900836
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jun 2022 14:17:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2014; t=1655500633;
+        bh=d11ims8TdRwe8sEQmQBWl0HuDUIwTkzBp2ai45syN8Y=;
+        h=Date:From:To:Subject:From;
+        b=g9qDHsL/DkZFzXgn3CrSX0iyjxfx5K/OOGdJMUMU0dmWiRThZ77J8X4CHRA1mBpvD
+         UnBMjGx6NUdcSTq5Z2gnfEIxUhO7KHrOVwu5nGvDRR9v+fdpnpS0h4WjEv0u7y/Mql
+         DvO+X2C//1gIMKL4iOMwS4kBt1OL7u9UnIwF2omQ=
+Date:   Fri, 17 Jun 2022 14:17:13 -0700
+From:   Tedd Ho-Jeong An <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/afc8c8-3075ff@github.com>
+Subject: [bluez/bluez] c53cb7: monitor/att: Print attribute information on
+ ATT_RE...
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: c53cb7be2d61e7bdf26c20f61f94d572068d5c6b
+      https://github.com/bluez/bluez/commit/c53cb7be2d61e7bdf26c20f61f94d572068d5c6b
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-06-16 (Thu, 16 Jun 2022)
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M monitor/att.c
 
-On Thu, 16 Jun 2022 17:49:54 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> This prints the attribute information on ATT_REQ_RSP to make it easier
-> to identify to which handle the response is for:
-> 
-> > ACL Data RX: Handle 42 flags 0x02 dlen 9
->       Channel: 65 len 5 sdu 3 [PSM 39 mode Enhanced Credit (0x81)] {chan 1}
->       ATT: Read Response (0x0b) len 2
->         Value: 0300
->         Handle: 0x0030 Type: Source ASE (0x2bc5)
->             ASE ID: 3
->             State: Idle (0x00)
-> 
-> [...]
+  Log Message:
+  -----------
+  monitor/att: Print attribute information on ATT_REQ_RSP
 
-Here is the summary with links:
-  - [BlueZ,1/4] monitor/att: Print attribute information on ATT_REQ_RSP
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c53cb7be2d61
-  - [BlueZ,2/4] monitor/att: Add decoding support for PAC Sink/Source Location
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=5da3c0387baf
-  - [BlueZ,3/4] monitor/att: Add decoding support for PAC Audio Context
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=2bdb79cf8173
-  - [BlueZ,4/4] monitor/att: Add LTV deconding support for PAC/ASE
-    (no matching commit)
+This prints the attribute information on ATT_REQ_RSP to make it easier
+to identify to which handle the response is for:
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> ACL Data RX: Handle 42 flags 0x02 dlen 9
+      Channel: 65 len 5 sdu 3 [PSM 39 mode Enhanced Credit (0x81)] {chan 1}
+      ATT: Read Response (0x0b) len 2
+        Value: 0300
+        Handle: 0x0030 Type: Source ASE (0x2bc5)
+            ASE ID: 3
+            State: Idle (0x00)
 
 
+  Commit: 5da3c0387baf4a6bc984263350ea53fa511f87c7
+      https://github.com/bluez/bluez/commit/5da3c0387baf4a6bc984263350ea53fa511f87c7
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-06-16 (Thu, 16 Jun 2022)
+
+  Changed paths:
+    M monitor/att.c
+
+  Log Message:
+  -----------
+  monitor/att: Add decoding support for PAC Sink/Source Location
+
+This adds decoding support for PAC Sink/Source Location attributes:
+
+> ACL Data RX: Handle 42 flags 0x02 dlen 9
+      Channel: 65 len 5 sdu 3 [PSM 39 mode Enhanced Credit (0x81)] {chan 1}
+      ATT: Read Request (0x0a) len 2
+        Handle: 0x001a Type: Sink Audio Locations (0x2bca)
+< ACL Data TX: Handle 42 flags 0x00 dlen 11
+      Channel: 64 len 7 sdu 5 [PSM 39 mode Enhanced Credit (0x81)] {chan 1}
+      ATT: Read Response (0x0b) len 4
+        Value: 03000000
+        Handle: 0x001a Type: Sink Audio Locations (0x2bca)
+           Location: 0x00000003
+              Front Left (0x00000001)
+              Front Right (0x00000002)
+
+
+  Commit: 2bdb79cf8173daa0c44d692fcbd7d7408b4fd994
+      https://github.com/bluez/bluez/commit/2bdb79cf8173daa0c44d692fcbd7d7408b4fd994
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-06-16 (Thu, 16 Jun 2022)
+
+  Changed paths:
+    M monitor/att.c
+
+  Log Message:
+  -----------
+  monitor/att: Add decoding support for PAC Audio Context
+
+This adds decoding support for PAC Audio Context attributes:
+
+> ACL Data RX: Handle 42 flags 0x02 dlen 9
+      Channel: 65 len 5 sdu 3 [PSM 39 mode Enhanced Credit (0x81)] {chan 1}
+      ATT: Read Request (0x0a) len 2
+        Handle: 0x0026 Type: Supported Audio Contexts (0x2bce)
+< ACL Data TX: Handle 42 flags 0x00 dlen 11
+      Channel: 64 len 7 sdu 5 [PSM 39 mode Enhanced Credit (0x81)] {chan 1}
+      ATT: Read Response (0x0b) len 4
+        Value: ff0f0e00
+        Handle: 0x0026 Type: Supported Audio Contexts (0x2bce)
+            Sink Context: 0x0fff
+              Unspecified (0x0001)
+              Conversational (0x0002)
+              Media (0x0004)
+              Game (0x0008)
+              Instructional (0x0010)
+              Voice Assistants (0x0020)
+              Live (0x0040)
+              Sound Effects (0x0080)
+              Notifications (0x0100)
+              Ringtone (0x0200)
+              Alerts (0x0400)
+              Emergency alarm (0x0800)
+            Source Context: 0x000e
+              Conversational (0x0002)
+              Media (0x0004)
+              Game (0x0008)
+
+
+  Commit: bf5a7c604ff7aa312c8f98c19c0cb2b00d95e482
+      https://github.com/bluez/bluez/commit/bf5a7c604ff7aa312c8f98c19c0cb2b00d95e482
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-06-16 (Thu, 16 Jun 2022)
+
+  Changed paths:
+    M monitor/att.c
+    M monitor/packet.c
+    M monitor/packet.h
+
+  Log Message:
+  -----------
+  monitor/att: Add LTV deconding support for PAC/ASE
+
+This adds decoding support for PAC/ASE attributes:
+
+> ACL Data RX: Handle 42 flags 0x02 dlen 31
+      Channel: 65 len 27 sdu 25 [PSM 39 mode Enhanced Credit (0x81)] {chan 1}
+      ATT: Read Response (0x0b) len 24
+        Value: 010600000000100301ff0002020302030305041e00f00000
+          Number of PAC(s): 1
+          PAC #0:
+            Codec: LC3 (0x06)
+            Codec Specific Capabilities #0: len 0x03 type 0x01
+              Sampling Frequencies: 0x00ff
+                8 Khz (0x0001)
+                11.25 Khz (0x0002)
+                16 Khz (0x0004)
+                22.05 Khz (0x0008)
+                24 Khz (0x0010)
+                32 Khz (0x0020)
+                44.1 Khz (0x0040)
+                48 Khz (0x0080)
+            Codec Specific Capabilities #1: len 0x02 type 0x02
+              Frame Duration: 0x0003
+                7.5 ms (0x01)
+                10 ms (0x02)
+            Codec Specific Capabilities #2: len 0x02 type 0x03
+              Audio Channel Count: 0x03
+                1 channel (0x01)
+                2 channels (0x02)
+            Codec Specific Capabilities #3: len 0x05 type 0x04
+              Frame Length: 30 (0x001e) - 240 (0x00f0)
+> ACL Data RX: Handle 42 flags 0x02 dlen 30
+      Channel: 64 len 26 sdu 24 [PSM 39 mode Enhanced Credit (0x81)] {chan 0}
+      ATT: Write Command (0x52) len 23
+        Handle: 0x0036 Type: ASE Control Point (0x2bc6)
+          Data: 010101020206000000000a02010302020103042800
+            Opcode: Codec Configuration (0x01)
+            Number of ASE(s): 1
+            ASE: #0
+            ASE ID: 0x01
+            Target Latency: Balance Latency/Reliability (0x02)
+            PHY: 0x02
+            LE 2M PHY (0x02)
+            Codec: LC3 (0x06)
+            Codec Specific Configuration #0: len 0x02 type 0x01
+            Sampling Frequency: 16 Khz (0x03)
+            Codec Specific Configuration #1: len 0x02 type 0x02
+            Frame Duration: 10 ms (0x01)
+            Codec Specific Configuration #2: len 0x03 type 0x04
+            Frame Length: 40 (0x0028)
+
+
+  Commit: 7378408ed4da2267ea7f5fbaff38de57ea75c950
+      https://github.com/bluez/bluez/commit/7378408ed4da2267ea7f5fbaff38de57ea75c950
+  Author: Tedd Ho-Jeong An <tedd.an@intel.com>
+  Date:   2022-06-17 (Fri, 17 Jun 2022)
+
+  Changed paths:
+    M doc/mgmt-api.txt
+
+  Log Message:
+  -----------
+  doc/mgmt-api: Update for Add Extended Advertisement Command
+
+This patch aligns the input parameter for Add Extended Advertisement
+command with actual data struct and add missing flag descriptions.
+
+
+  Commit: 2479a013a2028d419c713b9e41ee55e2851533f4
+      https://github.com/bluez/bluez/commit/2479a013a2028d419c713b9e41ee55e2851533f4
+  Author: Tedd Ho-Jeong An <tedd.an@intel.com>
+  Date:   2022-06-17 (Fri, 17 Jun 2022)
+
+  Changed paths:
+    M monitor/packet.c
+
+  Log Message:
+  -----------
+  monitor: Update flag information for Extended Advertismement
+
+This patch updates the missing flag details for Advertisement flags
+
+@ MGMT Event: Command Complete (0x0001) plen 11
+      Read Advertising Features (0x003d) plen 8
+        Status: Success (0x00)
+        Flags: 0x0001ffff
+	...
+          Unknown advertising flag (0x00010c00)
+	...
+
+
+  Commit: 3075ff8fffec894d0518540c9435e870f98750b7
+      https://github.com/bluez/bluez/commit/3075ff8fffec894d0518540c9435e870f98750b7
+  Author: Tedd Ho-Jeong An <tedd.an@intel.com>
+  Date:   2022-06-17 (Fri, 17 Jun 2022)
+
+  Changed paths:
+    M tools/btmgmt.c
+
+  Log Message:
+  -----------
+  tools/btmgmt: Add support Add Ext Adv command
+
+This patch adds new command to support the following MGMT API:
+ Add Extended Advertising Parameters Command
+ Add Extended Advertising Data Command
+
+
+Compare: https://github.com/bluez/bluez/compare/afc8c8f56fa2...3075ff8fffec
