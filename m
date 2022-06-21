@@ -2,84 +2,91 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE5C1552BFF
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 Jun 2022 09:29:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6E47552C3E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 Jun 2022 09:42:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347731AbiFUH25 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Jun 2022 03:28:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59482 "EHLO
+        id S1346242AbiFUHlY convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 21 Jun 2022 03:41:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347336AbiFUH2R (ORCPT
+        with ESMTP id S1347858AbiFUHlS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Jun 2022 03:28:17 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D97BB237C7
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 00:28:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9F030B8169E
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 07:28:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 37170C341CC
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 07:28:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655796492;
-        bh=T4WLaZ1hUiQAqN2NhWKM7iyaqhpxNPmFDIYhIfI1dOU=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=pyPOgZZ8/l8sAms1RlZKxRTauvfXDUZn5qferJQ00KY0wBHOAMTPp3IQUDLrvqCJF
-         mZpEX82Xt5T0RxqfHWyO/Rn3pYjxe7MlyJGg+1niO5IUD3HPmQGmWxc0MlJrx6MA0a
-         zf7jhXwBp2NvAbMJg32tjXKPdvRKNe9PvVmga6TNuG3XNgfYsUSpmhW8kWmsTJoh+H
-         zmPzBoqbKg+/ik2QTIvmvziCMkKu+b8WrBsFyoMDn+mOKFHqWWH3/rYKqbd+fXtJvF
-         /WfUMfGEfSAcflDBWmd1HS9uPGOLwR6Eq0aEugIyjKVT/taYpjsEqf7+6WBYLbxmwe
-         hSDvOvm8WSd8g==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id 265EFC05FD5; Tue, 21 Jun 2022 07:28:12 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 209745] Bluetooth connection to Logitech MX Master 2S lost
- after each reboot
-Date:   Tue, 21 Jun 2022 07:28:11 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: hyperair@ubuntu.com
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-209745-62941-gH1rukY7Cm@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-209745-62941@https.bugzilla.kernel.org/>
-References: <bug-209745-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Tue, 21 Jun 2022 03:41:18 -0400
+Received: from mail.pgj.campeche.gob.mx (unknown [187.157.28.107])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F3FB12AEA;
+        Tue, 21 Jun 2022 00:41:15 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.pgj.campeche.gob.mx (Postfix) with ESMTP id C22CD1BC158E;
+        Tue, 21 Jun 2022 02:33:08 -0500 (CDT)
+Received: from mail.pgj.campeche.gob.mx ([127.0.0.1])
+        by localhost (mail.pgj.campeche.gob.mx [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id j3HK2InJVFFc; Tue, 21 Jun 2022 02:33:07 -0500 (CDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.pgj.campeche.gob.mx (Postfix) with ESMTP id 58D771BC158B;
+        Tue, 21 Jun 2022 02:33:07 -0500 (CDT)
+X-Virus-Scanned: amavisd-new at pgj.campeche.gob.mx
+Received: from mail.pgj.campeche.gob.mx ([127.0.0.1])
+        by localhost (mail.pgj.campeche.gob.mx [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id MttZOhqFyPo1; Tue, 21 Jun 2022 02:33:06 -0500 (CDT)
+Received: from mail.pgj.campeche.gob.mx (mail.pgj.campeche.gob.mx [172.24.1.108])
+        by mail.pgj.campeche.gob.mx (Postfix) with ESMTP id 5039C1BC1589;
+        Tue, 21 Jun 2022 02:33:06 -0500 (CDT)
+Date:   Tue, 21 Jun 2022 02:33:06 -0500 (CDT)
+From:   =?utf-8?B?0YHQuNGB0YLQtdC80L3QuNC5INCw0LTQvNGW0L3RltGB0YLRgNCw0YLQvtGA?= 
+        <vfgcontrolinterno@pgj.campeche.gob.mx>
+Reply-To: sistemassadmins@mail2engineer.com
+Message-ID: <230254494.100275.1655796786304.JavaMail.zimbra@pgj.campeche.gob.mx>
+Subject: 
 MIME-Version: 1.0
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=utf-8
+X-Originating-IP: [172.24.1.254]
+X-Mailer: Zimbra 8.8.15_GA_4304 (zclient/8.8.15_GA_4304)
+Thread-Index: kTNMw9fUcxFgMECvqmoV7a08lCZlLQ==
+Thread-Topic: 
+Content-Transfer-Encoding: 8BIT
+X-Spam-Status: Yes, score=5.6 required=5.0 tests=BAYES_40,
+        FREEMAIL_FORGED_REPLYTO,KHOP_HELO_FCRDNS,MISSING_HEADERS,
+        RCVD_IN_MSPIKE_H2,RDNS_DYNAMIC,REPLYTO_WITHOUT_TO_CC,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75 autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 BAYES_40 BODY: Bayes spam probability is 20 to 40%
+        *      [score: 0.3719]
+        * -0.0 RCVD_IN_MSPIKE_H2 RBL: Average reputation (+2)
+        *      [187.157.28.107 listed in wl.mailspike.net]
+        *  0.0 SPF_NONE SPF: sender does not publish an SPF Record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  1.0 MISSING_HEADERS Missing To: header
+        *  1.6 REPLYTO_WITHOUT_TO_CC No description available.
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  0.0 UPPERCASE_50_75 message body is 50-75% uppercase
+        *  1.0 RDNS_DYNAMIC Delivered to internal network by host with
+        *      dynamic-looking rDNS
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+        *  0.0 KHOP_HELO_FCRDNS Relay HELO differs from its IP's reverse DNS
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D209745
+увага;
 
---- Comment #26 from Chow Loong Jin (hyperair@ubuntu.com) ---
-I've confirmed that removing the `-E` flag from bluetoothd makes it work on
-v5.18.1 without the patch I was using before.
+Ваша електронна пошта перевищила обмеження пам'яті, яке становить 5 ГБ, визначене адміністратором, яке в даний час працює на 10,9 ГБ. Ви не зможете надсилати або отримувати нову пошту, доки не перевірите поштову скриньку "Вхідні". Щоб відновити справність поштової скриньки, надішліть такі відомості
+нижче:
 
---=20
-You may reply to this email to add a comment.
+Ім'я:
+Ім'я користувача:
+пароль:
+Підтвердження пароля:
+Адреса електронної пошти:
+телефон:
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+Якщо не вдається повторно перевірити повідомлення, ваша поштова скринька буде
+Вимкнуто!
+
+Приносимо вибачення за незручності.
+Код підтвердження: UA:@UAWEBADMIN716539.WEB.UA
+Технічна підтримка Пошти Системний адміністратор © 2022
