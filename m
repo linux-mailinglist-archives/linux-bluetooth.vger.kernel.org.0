@@ -2,62 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0211F553ACF
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 Jun 2022 21:55:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4100553B37
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 Jun 2022 22:11:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353085AbiFUTzD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Jun 2022 15:55:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37212 "EHLO
+        id S237933AbiFUULE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 21 Jun 2022 16:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344117AbiFUTzC (ORCPT
+        with ESMTP id S1353518AbiFUULC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Jun 2022 15:55:02 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DB8328989
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 12:55:01 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id 88so18483884qva.9
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 12:55:01 -0700 (PDT)
+        Tue, 21 Jun 2022 16:11:02 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5861D2E091
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 13:10:57 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id g10-20020a17090a708a00b001ea8aadd42bso14592170pjk.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 13:10:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=wc6yqoOKy0Dihn6Mg54Z9XFwjzv/oUS0exuqYl16Rwk=;
-        b=hDZdlL+O17THoNv5MkmnklmTIKMSxAi7Us1UPrcGhPf4oLFCafEesB95mvO+3ne3Mx
-         tBthRsAYwh/UzKbs/0jUJ4O8vfudZ40itCSzeBVRbFVRqcpuvT1uccZ1T5M3zIxZ9PcL
-         Q/8KHIMwaVXkwdfB5AH9ly/bev/1mqY++hjbJKGALPlg8OpNILuRZ8I7/3Xrxr297p3+
-         /6AHcfIy/RDU8GNRUmHClomNtY+jW2lPcUvnu8fY9oQtnwm2D2G4wT74Pmevd5H3BgtX
-         5CiwiButLmkSircoIZZWbB3HnKFCB81wiuYuVX/dUio7nq/j+IgssJzdQe6XVaJYrP7l
-         1b+Q==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DZuWiFX86YG5w8CHcFMhXXjjNq24ZyEkc/G+V1bcB/k=;
+        b=DSWxLB38vnWkGUdhYocQdgqQ2YazRcPFEjKAyewGGpZ6t3xRDU+i2eEVsXGN3y599s
+         FTrUp53Oot0F4tzzcdK1aGcMRUEF0Qz7rz1XXvFYlyllkT+LSu2SbNKtfamOUlR+pqnI
+         NYV5vCDBZm+DIU53u36RzZuQom7CI04gmu3RjCzrZJWEsBV6HvRbdkzb2nqS00lRgRtN
+         BvD/n1+5JpflzverLVQn2xG4F4ylUf196elJ1MifiJgXmvjJLhS3anocCPtuc4bCUe99
+         hAtb0LLQZ+/XZgCgCWSiDxck+Nj+q+vUOambbNvsofkUcVTGX43iq+m98KaEDU+Q+5Kw
+         wUPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=wc6yqoOKy0Dihn6Mg54Z9XFwjzv/oUS0exuqYl16Rwk=;
-        b=sPHxJtCWyokrbkkjbfvI6O6KQ2rov1nhFzqQPDGuV0Fodfm9WrAnnzwMoXb6v6C76C
-         1XCKzDwE7IVxzn8DdFpQK9gcnfi7ttFv0Bsiq8VF3znWb2XDpfvTu9s7Dhcb5DLfTf1/
-         RgdW7sxGhi2OpvlF8xgEQa/meqcsk1/yPgxAJMZoYyqMj1mODL/885VG+byOUfQ2Cpil
-         gso4iZntbFt9udAIl9FqmsSjbMS84DaWOOs3XkF/ox3P3HsGD8CLPlGCO1WCKZyy/81j
-         CscyjWTBr5yobV7DTGwIfIil6IahM6P51pmv7WV1ZbPwuZA7U18e9RuEhF5niK8ZSs/5
-         v+Tw==
-X-Gm-Message-State: AJIora/h0ngXlzmWJhXK0D/4ubuQqpF9sxFfbrFwSHlGISopOejc6kKq
-        vTfuy8dFBECROHCDvX8wjVuWBHD9Jk0iPw==
-X-Google-Smtp-Source: AGRyM1sGjczYvweGuHXumlCRDu6CquZcrwhu1bp+wg6U5bK89vXHdYt517Wt7klrKdVw3fMMvO8iBQ==
-X-Received: by 2002:a0c:e2c1:0:b0:470:3d22:f9fe with SMTP id t1-20020a0ce2c1000000b004703d22f9femr12682189qvl.83.1655841300257;
-        Tue, 21 Jun 2022 12:55:00 -0700 (PDT)
-Received: from [172.17.0.2] ([20.122.146.47])
-        by smtp.gmail.com with ESMTPSA id m14-20020a05620a290e00b006a6b498e23esm15923727qkp.81.2022.06.21.12.54.59
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DZuWiFX86YG5w8CHcFMhXXjjNq24ZyEkc/G+V1bcB/k=;
+        b=ari/IWFTlvZO0Yl9BbFWiXqIIW+rOHx1TTlTrFANADnoUSqKuvXbue85ybQOibDrma
+         dNKogIAtEW+lS+hszOh0q/gcGHIVPoIjxARTiwym49mkUmUHHdqFpJT7JDZBnWccKDHy
+         D0THw0KtAIBUsQAdrLzIf0A8k7hcPmx7rfFSBFxcI0zaQn7UQ0GEZxKjx6YhB32oCqsR
+         GiwCNfIXHO9VSA82eLI3AI/G8fFf7AqgqfZytzcFAPl8Or/cjdN7GIsSibT3wUO8cxiA
+         qH3tUfL9+8L/qTW5o+Uw9SF78ijY8OHj2kuSQTCvTfrcjTSSQJfeNfEORqivV1H1GskW
+         vHQA==
+X-Gm-Message-State: AJIora/AD5pk3Sjh2oJQhJasjG16wgwNPft5jOt8hYas7viocqoIf2bq
+        RE7wnoSv1dt+WPJcu3VAGVhsGxHgLpc=
+X-Google-Smtp-Source: AGRyM1uAbAipb1iIk6aiYPih+smFFqaJrX5JKs/W8z1nsct5Mp4un6Zl/fXMMMYBMrEdwlGlvuEBRQ==
+X-Received: by 2002:a17:903:11cd:b0:167:90e6:5d83 with SMTP id q13-20020a17090311cd00b0016790e65d83mr30158519plh.136.1655842256583;
+        Tue, 21 Jun 2022 13:10:56 -0700 (PDT)
+Received: from han1-ubuntu-dev.. (c-76-115-118-196.hsd1.or.comcast.net. [76.115.118.196])
+        by smtp.gmail.com with ESMTPSA id t14-20020a63954e000000b0040c644e82efsm8307101pgn.43.2022.06.21.13.10.55
+        for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 12:55:00 -0700 (PDT)
-Message-ID: <62b22214.1c69fb81.2b247.f5e4@mx.google.com>
-Date:   Tue, 21 Jun 2022 12:55:00 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============2851366229530832743=="
+        Tue, 21 Jun 2022 13:10:56 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [BlueZ PATCH] tools/mgmt-tester: Add test case for scan response data is not updating
+Date:   Tue, 21 Jun 2022 13:10:54 -0700
+Message-Id: <20220621201054.66411-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Subject: RE: [RESEND,1/2] Bluetooth: Add bt_status
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20220621191031.2160381-1-luiz.dentz@gmail.com>
-References: <20220621191031.2160381-1-luiz.dentz@gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -68,42 +67,135 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============2851366229530832743==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-This is automated email and please do not reply to this email!
+This patch adds a test case to test if the scan response data is updated
+when the following scenarios are performed.
 
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=652486
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      3.64 seconds
-GitLint                       PASS      2.09 seconds
-SubjectPrefix                 PASS      1.70 seconds
-BuildKernel                   PASS      31.95 seconds
-BuildKernel32                 PASS      27.93 seconds
-Incremental Build with patchesPASS      43.60 seconds
-TestRunner: Setup             PASS      461.87 seconds
-TestRunner: l2cap-tester      PASS      16.88 seconds
-TestRunner: bnep-tester       PASS      5.87 seconds
-TestRunner: mgmt-tester       PASS      97.89 seconds
-TestRunner: rfcomm-tester     PASS      9.21 seconds
-TestRunner: sco-tester        PASS      9.09 seconds
-TestRunner: smp-tester        PASS      9.20 seconds
-TestRunner: userchan-tester   PASS      6.08 seconds
-
-
-
+1. Add Extended Advertising Parameters Command
+2. Add Extended Advertising Data Command w/ Scan Resp Data
+3. Remove Advertising Command
+4. Add Extended Advertising Parameters Command
+5. Add Extended Advertising Data Command w/ Scan Resp Data
+6. Host should set Scan Resp Data
 ---
-Regards,
-Linux Bluetooth
+ tools/mgmt-tester.c | 85 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 84 insertions(+), 1 deletion(-)
 
+diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
+index 2b27394a1..f45a6c015 100644
+--- a/tools/mgmt-tester.c
++++ b/tools/mgmt-tester.c
+@@ -6156,6 +6156,23 @@ static void setup_pairing_acceptor(const void *test_data)
+ 	setup_bthost();
+ }
+ 
++/* Generic callback for checking the mgmt evnet status
++ */
++static void generic_mgmt_status_callback(uint8_t status, uint16_t length,
++					const void *param, void *user_data)
++{
++	bool bthost = PTR_TO_INT(user_data);
++
++	if (status != MGMT_STATUS_SUCCESS) {
++		tester_setup_failed();
++		return;
++	}
++
++	if (bthost)
++		setup_bthost();
++}
++
++
+ static void setup_powered_callback(uint8_t status, uint16_t length,
+ 					const void *param, void *user_data)
+ {
+@@ -6990,6 +7007,66 @@ static void setup_ext_adv_params(const void *test_data)
+ 					NULL, NULL);
+ }
+ 
++static const uint8_t hci_set_ext_adv_data_name[] = {
++	0x01, /* Handle */
++	0x03, /* Operation */
++	0x01, /* Complete name */
++	0x06, 0x05, 0x08, 0x74, 0x65, 0x73, 0x74
++};
++
++static const struct generic_data add_ext_adv_scan_resp_off_on = {
++	.send_opcode = MGMT_OP_ADD_EXT_ADV_DATA,
++	.send_param = ext_adv_data_valid,
++	.send_len = sizeof(ext_adv_data_valid),
++	.expect_status = MGMT_STATUS_SUCCESS,
++	.expect_param = ext_adv_data_mgmt_rsp_valid,
++	.expect_len = sizeof(ext_adv_data_mgmt_rsp_valid),
++	.expect_hci_command = BT_HCI_CMD_LE_SET_EXT_SCAN_RSP_DATA,
++	.expect_hci_param = hci_set_ext_adv_data_name,
++	.expect_hci_len = sizeof(hci_set_ext_adv_data_name),
++};
++
++static void setup_add_ext_adv_on_off(const void *test_data)
++{
++	struct test_data *data = tester_get_data();
++	unsigned char param[] = { 0x01 };
++	int enable_bthost = 1;
++
++	mgmt_send(data->mgmt, MGMT_OP_SET_LE, data->mgmt_index,
++					sizeof(param), &param,
++					NULL, NULL, NULL);
++
++	mgmt_send(data->mgmt, MGMT_OP_SET_POWERED, data->mgmt_index,
++					sizeof(param), &param,
++					generic_mgmt_status_callback,
++					NULL, NULL);
++
++	mgmt_send(data->mgmt, MGMT_OP_ADD_EXT_ADV_PARAMS, data->mgmt_index,
++					sizeof(ext_adv_params_valid),
++					&ext_adv_params_valid,
++					generic_mgmt_status_callback,
++					NULL, NULL);
++
++	mgmt_send(data->mgmt, MGMT_OP_ADD_EXT_ADV_DATA, data->mgmt_index,
++					sizeof(ext_adv_data_valid),
++					&ext_adv_data_valid,
++					generic_mgmt_status_callback,
++					NULL, NULL);
++
++	mgmt_send(data->mgmt, MGMT_OP_REMOVE_ADVERTISING, data->mgmt_index,
++					sizeof(remove_advertising_param_1),
++					&remove_advertising_param_1,
++					generic_mgmt_status_callback,
++					NULL, NULL);
++
++	mgmt_send(data->mgmt, MGMT_OP_ADD_EXT_ADV_PARAMS, data->mgmt_index,
++					sizeof(ext_adv_params_valid),
++					&ext_adv_params_valid,
++					generic_mgmt_status_callback,
++					INT_TO_PTR(enable_bthost), NULL);
++
++}
++
+ static void pin_code_request_callback(uint16_t index, uint16_t length,
+ 					const void *param, void *user_data)
+ {
+@@ -13960,11 +14037,17 @@ int main(int argc, char *argv[])
+ 				setup_ext_adv_params,
+ 				test_command_generic);
+ 
+-	test_bredrle50("zxcv Ext Adv MGMT - AD Scan Response (5.0) Success",
++	test_bredrle50("Ext Adv MGMT - AD Scan Response (5.0) Success",
+ 				&adv_scan_rsp_success,
+ 				setup_ext_adv_params,
+ 				test_command_generic);
+ 
++	test_bredrle50("Ext Adv MGMT - AD Scan Resp - Off and On",
++				&add_ext_adv_scan_resp_off_on,
++				setup_add_ext_adv_on_off,
++				test_command_generic);
++
++
+ 	/* MGMT_OP_SET_DEVICE_ID
+ 	 * Using Bluetooth SIG for source.
+ 	 */
+-- 
+2.34.1
 
---===============2851366229530832743==--
