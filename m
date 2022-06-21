@@ -2,108 +2,99 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8685C552E9F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 Jun 2022 11:41:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23DBB552F74
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 Jun 2022 12:09:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349276AbiFUJju (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Jun 2022 05:39:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51576 "EHLO
+        id S230147AbiFUKIw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 21 Jun 2022 06:08:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349242AbiFUJjs (ORCPT
+        with ESMTP id S1347417AbiFUKIV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Jun 2022 05:39:48 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF2CA275FA
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 02:39:45 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-3176d94c236so124884887b3.3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 02:39:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=/0bRExIb6Mv4sy5raFRmeQINC+UUx7zEZcUUOWWOPJg=;
-        b=NKhg6kSkfnglJlsPDVUWhCY3Iibudx7OhZC5CePFgeNekYJKNrcmU8wB8gkktmjPqY
-         f0o4DET3nwW7oGb1WQAmWVCm6yLISrVrQXMY/9qoCppMNLX7K/jA/JZ+JMs1mNT38j+N
-         qSlM2vTiSOIkQo5cZ6oY4dkMVda7fWn0vzKRT295Q67AStI8u0BTanvw38uSxo4IMvFm
-         mtbeFJOQugEk6bmbrSLJZHxNWvSEoU0AT9TQz59V3jAGDZbWiI6U0Fx8UlroTYMr9wGQ
-         +xC78kHT5AZK7k/f6wmWhdDj3ThC5Cy20ctCKCcYvb/idPExEpgvQXB/UX/ziCu3vO07
-         Q2/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=/0bRExIb6Mv4sy5raFRmeQINC+UUx7zEZcUUOWWOPJg=;
-        b=GxdxGx/v0dL3BlvfxmOl4VkwPOQowTqt9Z5kyAYs8H4zI6DEJcbGVdy0MfAWljQexN
-         O6k67q/KwMI+Az3nVzBi/DjCIfa0qooapwGeABzPM9vyJkzNnf3BASWNZCbm6wtWAQ1r
-         Qdq+olyYIHT+Sm96/p7R8WaaMntTFgnwtjoVyRqoCzsqor6JjL3cj6Dhf6kYyYYBe2rT
-         La0wYx0CABmKdX/0sYWEttc6z4eGfY4uKd+ne29UVW+dzJg723dy1ykmx4OoZKv6CSJl
-         6qbYiSNLNh5RWkTIe+fNT30p9Scq4dRFLJEaMpf/KUyKVIa32XGtIK5kJnSqrnHwjGr3
-         IQ4A==
-X-Gm-Message-State: AJIora8TSfPkrIH4U7jTvCGob1XcjOfAcmP6NJMr+bh1EFIYpw3ct5UG
-        8xL/d999K9rQEdmz5lEUhP56uISey8Awh4zFBvo=
-X-Google-Smtp-Source: AGRyM1sTF/SvvxCyraPE52znD36ZX02jNmxmam87lP8bWzXT3yTfChS1a9JgJI9LjBXh9tpS4qLO5E/t+5efudcEruY=
-X-Received: by 2002:a0d:d7c7:0:b0:317:bfe8:4f2 with SMTP id
- z190-20020a0dd7c7000000b00317bfe804f2mr12417910ywd.276.1655804384555; Tue, 21
- Jun 2022 02:39:44 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:7010:e10a:b0:2d9:e631:94d0 with HTTP; Tue, 21 Jun 2022
- 02:39:44 -0700 (PDT)
-Reply-To: dimitryedik@gmail.com
-From:   Dimitry Edik <lsbthdwrds@gmail.com>
-Date:   Tue, 21 Jun 2022 02:39:44 -0700
-Message-ID: <CAGrL05aBO8rbFuij24J-APa+Luis69gEjhj35iv_GZfkHCVYDQ@mail.gmail.com>
-Subject: Dear Partner,
-To:     undisclosed-recipients:;
+        Tue, 21 Jun 2022 06:08:21 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53E8D5FDA
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 03:08:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0024CB816DC
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 10:08:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id BEB64C341D2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 10:08:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655806091;
+        bh=3ars+8905ySy72ttc5d2NuBNa5wtMk7teCYt+1vjNuU=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=tD+xtHUv+xtgAhs/Rd4ERNFUylr1A68fI3ixXmO/4StQsVI0eK26waI8H5jfu3tpR
+         Ljb17ERImdqlx/eEfxON0mTHx1SvTa0T8NkU4p+efcjHGdCitL84SD/K7jZLLPYCBJ
+         0Vz7g/JYR1sIfOxydjbeCUVK3v0WxxcZAUVBQT0rRFSAnONzSyTNUyIb55lkQD4Rdu
+         DM5/moX/kFxCzIlzMn7yrHF02Cj3pCaENWwDv9ENNF6tYZf1KF+npBlFb9SriEBmuO
+         jD4csHfChpb0jalDvaqrHCklhaWeJ6lkS13mo1QJf2a7CWeUaeL78oQ8saDAfCCQbf
+         PskWStk6HG4Mw==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id AD75BCC13B5; Tue, 21 Jun 2022 10:08:11 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 209745] Bluetooth connection to Logitech MX Master 2S lost
+ after each reboot
+Date:   Tue, 21 Jun 2022 10:08:11 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: Krzysztof.Krason@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-209745-62941-EtmpzAtu6w@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-209745-62941@https.bugzilla.kernel.org/>
+References: <bug-209745-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=7.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_MONEY_PERCENT,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM,
-        UNDISC_MONEY autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:1132 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [lsbthdwrds[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-        *  2.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
-        *      email?
-        *  0.0 T_MONEY_PERCENT X% of a lot of money for you
-        *  2.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: *******
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello Dear,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D209745
 
-My Name is Dimitry Edik from Russia A special assistance to my Russia
-boss who deals in oil import and export He was killed by the Ukraine
-soldiers at the border side. He supplied
-oil to the Philippines company and he was paid over 90 per cent of the
-transaction and the remaining $18.6 Million dollars have been paid into a
-Taiwan bank in the Philippines..i want a partner that will assist me
-with the claims. Is a (DEAL ) 40% for you and 60% for me
-I have all information for the claims.
-Kindly read and reply to me back is 100 per cent risk-free
+--- Comment #30 from Krzysztof.Krason@gmail.com ---
+I moved from 5.18.3.
 
-Yours Sincerely
-Dimitry Edik
+What is strange I tried to double check it, booted into 5.18.3, mouse and
+keyboard connected almost right away. Booted back to 5.18.5 and it worked a=
+lso.
+
+And then I tried suspend and this is the issue on my end. Doing suspend and
+resume causes the bluetooth devices not to reconnect (I need to connect
+manually from bluetoothctl).
+
+It is hard to tell when it stopped working because at around 5.18.x suspend
+stopped working on my laptop, so it was basically  dying each night, 5.18.5
+fixed that, but it broke bluetooth reconnect.
+
+So basically, this is a different issue, I need to find the right kernel th=
+at
+had reliable suspend (it was one earlier 5.17.x).
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
