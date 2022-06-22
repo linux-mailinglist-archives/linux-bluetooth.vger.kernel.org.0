@@ -2,91 +2,82 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98D6E5540A0
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Jun 2022 04:41:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3174C5541CC
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Jun 2022 06:37:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356045AbiFVClZ convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Jun 2022 22:41:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53278 "EHLO
+        id S1356896AbiFVEhL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Jun 2022 00:37:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232424AbiFVClZ (ORCPT
+        with ESMTP id S1356537AbiFVEhK (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Jun 2022 22:41:25 -0400
-Received: from mail.pgj.campeche.gob.mx (unknown [187.157.28.107])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFDBB2AC42;
-        Tue, 21 Jun 2022 19:41:23 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.pgj.campeche.gob.mx (Postfix) with ESMTP id 969361BC1445;
-        Tue, 21 Jun 2022 21:38:53 -0500 (CDT)
-Received: from mail.pgj.campeche.gob.mx ([127.0.0.1])
-        by localhost (mail.pgj.campeche.gob.mx [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id wk1nkd9QTlQH; Tue, 21 Jun 2022 21:38:51 -0500 (CDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.pgj.campeche.gob.mx (Postfix) with ESMTP id CDAAA1BC1323;
-        Tue, 21 Jun 2022 21:38:50 -0500 (CDT)
-X-Virus-Scanned: amavisd-new at pgj.campeche.gob.mx
-Received: from mail.pgj.campeche.gob.mx ([127.0.0.1])
-        by localhost (mail.pgj.campeche.gob.mx [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id IxECJgQAvLHM; Tue, 21 Jun 2022 21:38:49 -0500 (CDT)
-Received: from mail.pgj.campeche.gob.mx (mail.pgj.campeche.gob.mx [172.24.1.108])
-        by mail.pgj.campeche.gob.mx (Postfix) with ESMTP id 9BC2A1BC10E1;
-        Tue, 21 Jun 2022 21:38:48 -0500 (CDT)
-Date:   Tue, 21 Jun 2022 21:38:48 -0500 (CDT)
-From:   =?utf-8?B?0YHQuNGB0YLQtdC80L3QuNC5INCw0LTQvNGW0L3RltGB0YLRgNCw0YLQvtGA?= 
-        <vfgcontrolinterno@pgj.campeche.gob.mx>
-Reply-To: sistemassadmins@mail2engineer.com
-Message-ID: <1359582744.101882.1655865528552.JavaMail.zimbra@pgj.campeche.gob.mx>
-Subject: 
+        Wed, 22 Jun 2022 00:37:10 -0400
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com [209.85.166.200])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C16235842
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 21:37:09 -0700 (PDT)
+Received: by mail-il1-f200.google.com with SMTP id w7-20020a056e021c8700b002d3bc8e95cbso10433600ill.3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Jun 2022 21:37:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id:subject
+         :from:to;
+        bh=WGUUiAN9wgqgmgaLmxz5/QjWUxqb/iZbav0ddG9/qxM=;
+        b=lHKEOwMqdwQ8GmwTZ/RShDSNd1TieERlchhG/TQnPUIMKpF96ww/qbCgKbrypE04Fv
+         Bc1r1eVXyGbvsTi9uudw6cODB4gP5ErloXaj8HaGbCCWWpw1FnZhr0VQCBY/iS+sycIP
+         J192jgKt8VvJINAt8WlR07RRv9sQe796MrCy2jwEp2cNH3AzfZR2jYFXIPytIJR15tC0
+         dqbsfZ9yD+PvKrvcKEKjyuXYaEYjDubFrATg0V6udlx36NIpheXfO23Ul1REWXplODPW
+         +gse6mAybocWLj+psPluRGwh+IzwxMGVGv+BzFWBp+SkoPWAniGjetsHS2KOn4qJl/f3
+         9vjg==
+X-Gm-Message-State: AJIora9X7qXgnK9Gc9EbgTpC+uXanCZWY9xRjxAhlwhkurh9aQ+pAnw6
+        U1ykAlB1EhHrC39rT+WZTm3zBPexN7zQm3s8le/LvUQZXbSw
+X-Google-Smtp-Source: AGRyM1vc7sXZh7aauZkM8JZvEZJZDVt5NW8TEBYvuQNC9WLxqRQPwVvkC8owL79Qzjil/e5YVyFYVXe55idtE2rXbP9w6urOkpEW
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Originating-IP: [172.24.1.254]
-X-Mailer: Zimbra 8.8.15_GA_4304 (zclient/8.8.15_GA_4304)
-Thread-Index: zFDI9hPsdHGCiJnR4KW515ba2x8uKg==
-Thread-Topic: 
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: Yes, score=5.6 required=5.0 tests=BAYES_40,
-        FREEMAIL_FORGED_REPLYTO,KHOP_HELO_FCRDNS,MISSING_HEADERS,
-        RCVD_IN_MSPIKE_H2,RDNS_DYNAMIC,REPLYTO_WITHOUT_TO_CC,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75 autolearn=no
+X-Received: by 2002:a05:6638:3488:b0:332:2973:be80 with SMTP id
+ t8-20020a056638348800b003322973be80mr1048880jal.6.1655872628113; Tue, 21 Jun
+ 2022 21:37:08 -0700 (PDT)
+Date:   Tue, 21 Jun 2022 21:37:08 -0700
+In-Reply-To: <000000000000cf2ece05def394c8@google.com>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <000000000000cacae905e201e3be@google.com>
+Subject: Re: [syzbot] INFO: task hung in hci_dev_do_open (2)
+From:   syzbot <syzbot+e68a3899a8927b14f863@syzkaller.appspotmail.com>
+To:     davem@davemloft.net, edumazet@google.com, hdanton@sina.com,
+        johan.hedberg@gmail.com, kuba@kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        luiz.dentz@gmail.com, luiz.von.dentz@intel.com,
+        marcel@holtmann.org, netdev@vger.kernel.org, pabeni@redhat.com,
+        syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_00,FROM_LOCAL_HEX,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 BAYES_40 BODY: Bayes spam probability is 20 to 40%
-        *      [score: 0.3667]
-        * -0.0 RCVD_IN_MSPIKE_H2 RBL: Average reputation (+2)
-        *      [187.157.28.107 listed in wl.mailspike.net]
-        *  0.0 SPF_NONE SPF: sender does not publish an SPF Record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  1.0 MISSING_HEADERS Missing To: header
-        *  1.6 REPLYTO_WITHOUT_TO_CC No description available.
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  0.0 UPPERCASE_50_75 message body is 50-75% uppercase
-        *  1.0 RDNS_DYNAMIC Delivered to internal network by host with
-        *      dynamic-looking rDNS
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-        *  0.0 KHOP_HELO_FCRDNS Relay HELO differs from its IP's reverse DNS
-X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-увага;
+syzbot has bisected this issue to:
 
-Ваша електронна пошта перевищила обмеження пам'яті, яке становить 5 ГБ, визначене адміністратором, яке в даний час працює на 10,9 ГБ. Ви не зможете надсилати або отримувати нову пошту, доки не перевірите поштову скриньку "Вхідні". Щоб відновити справність поштової скриньки, надішліть такі відомості
-нижче:
+commit d0b137062b2de75b264b84143d21c98abc5f5ad2
+Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Date:   Wed Oct 27 23:58:59 2021 +0000
 
-Ім'я:
-Ім'я користувача:
-пароль:
-Підтвердження пароля:
-Адреса електронної пошти:
-телефон:
+    Bluetooth: hci_sync: Rework init stages
 
-Якщо не вдається повторно перевірити повідомлення, ваша поштова скринька буде
-Вимкнуто!
+bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=1376c63ff00000
+start commit:   38a288f5941e Add linux-next specific files for 20220506
+git tree:       linux-next
+final oops:     https://syzkaller.appspot.com/x/report.txt?x=10f6c63ff00000
+console output: https://syzkaller.appspot.com/x/log.txt?x=1776c63ff00000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=6f4fbf50aa82985b
+dashboard link: https://syzkaller.appspot.com/bug?extid=e68a3899a8927b14f863
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=111555fef00000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=1629b3eaf00000
 
-Приносимо вибачення за незручності.
-Код підтвердження: UA:@UAWEBADMIN716539.WEB.UA
-Технічна підтримка Пошти Системний адміністратор © 2022
+Reported-by: syzbot+e68a3899a8927b14f863@syzkaller.appspotmail.com
+Fixes: d0b137062b2d ("Bluetooth: hci_sync: Rework init stages")
+
+For information about bisection process see: https://goo.gl/tpsmEJ#bisection
