@@ -2,73 +2,114 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCE5B554E4B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Jun 2022 17:03:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C36855533F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Jun 2022 20:26:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358930AbiFVPDo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 Jun 2022 11:03:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36132 "EHLO
+        id S233117AbiFVS06 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Jun 2022 14:26:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357692AbiFVPDm (ORCPT
+        with ESMTP id S229688AbiFVS05 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 22 Jun 2022 11:03:42 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 428F51A04B
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 08:03:41 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id g8so15634237plt.8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 08:03:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=vhZEVnaGNBjosB86GDUW8b2wHjB/+QU31bPXl36TqFE=;
-        b=lmXhPRDXrnlbYClAFJkfHZYdowqXsf1nTuDLZnU/Y1W/T6TJ8ApbIv950i47frAtN/
-         OtndHJQoWJG+weygm2GuosJduERMEzUHLtTF4oGKopzqXa+c5O1ob2p5JuwuGNaCZz0D
-         0k2iO6ZG6gpeVsjTt5A+NLMvCH8qDkpG8Ex3xIMBpunG6BNJWrlCGLJYo7boJK6pvBIx
-         W4x550ST0gVpK9sdxwL58OfMVVl7H7xG/39bSvJCxipLUGbdwSBY6WRzvY6hd28wfB/N
-         vDKUfqITg8PxsgA4g6gEDGmS0K0dBg3KSntFmGDvcmLKkvSy/F4e+TYysqkO/txSQBCJ
-         afFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=vhZEVnaGNBjosB86GDUW8b2wHjB/+QU31bPXl36TqFE=;
-        b=H7Hm3Tvghf5RiOhU3V65Q+2YhHhqKpB+F4qIukg9pCNvQauRFj9svNLUDavxMWi/AT
-         BqI79s5AB2IA2HT/R2No1VeQdnxqrciJjMQKqGaQuQ1DykcA8a5z6lrbFczs2ShBfsp8
-         pth9Vt5DJeBm1KEV2H6Xrckuz0cmoIb2R+SuXxiUSMDemOLVNRJ7ag3XNWoxkTbp7Km1
-         QDHDeB1szRYMLpQQqVdrnlKUXWMWLVlts4zqTmGRJXPCxeZuinGs0bqefH8TchXhNmDS
-         uuB/dMd8MOvVnKHgwPl6tK98Tas/skaITWSroaRmTLq9mVWHKwLXWNWYUjifzqmywZV3
-         f8Lg==
-X-Gm-Message-State: AJIora/y7N/+7UGqFR3hY/uCDd9cqy7u2yraXl3qIYKB6WihXMInUZM+
-        9XO+6SJMamE10i+qhtKDOzn9Jwn+SX/cHYPF0+s=
-X-Google-Smtp-Source: AGRyM1ulxotWsDV/SS5wzW6q4zt5LXu3F658bS4StYWI/FgPuIBqBz38zqk7aydOTm9FXxU+wDfnf428k+eRTEG/aD8=
-X-Received: by 2002:a17:90b:1988:b0:1ec:f52d:90d4 with SMTP id
- mv8-20020a17090b198800b001ecf52d90d4mr1796737pjb.70.1655910220864; Wed, 22
- Jun 2022 08:03:40 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a17:903:2308:b0:16a:1b3f:f74b with HTTP; Wed, 22 Jun 2022
- 08:03:40 -0700 (PDT)
-Reply-To: sales0212@asonmedsystemsinc.com
-From:   Prasad Ronni <lerwickfinance7@gmail.com>
-Date:   Wed, 22 Jun 2022 16:03:40 +0100
-Message-ID: <CAFkto5vTxj70kORZJZdwOGowXjsZ399eo6DJj=8T==7paSuHTw@mail.gmail.com>
-Subject: Service Needed.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.0 required=5.0 tests=BAYES_40,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 22 Jun 2022 14:26:57 -0400
+Received: from smtp.github.com (out-18.smtp.github.com [192.30.252.201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E51B4403C7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 11:26:56 -0700 (PDT)
+Received: from github.com (hubbernetes-node-6dadf14.va3-iad.github.net [10.48.206.61])
+        by smtp.github.com (Postfix) with ESMTPA id 45A4D340489
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 11:26:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2014; t=1655922416;
+        bh=l9d7gy04fn7iCZI9zb3OZ2bnPkI4htlkqb9EVDFskfQ=;
+        h=Date:From:To:Subject:From;
+        b=Y04iHs5jbA/HlD7Sr6Lfd4Qj2n8atLq3hU6OUtAle4+rO1Y6Ea1NjdFy/Y1aMzrmy
+         PKFc7/nz6SowwGKFY3c2KF7UwxK5rx/cXPxgSeNsKMitLudlT23F/CRcixZuVJuTp1
+         uyf8ew5FeKQ75L/x4Nv1GN7i9YZEh+E6Sz377N/s=
+Date:   Wed, 22 Jun 2022 11:26:56 -0700
+From:   Luiz Augusto von Dentz <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/b8b327-7f92f7@github.com>
+Subject: [bluez/bluez] e4fd2d: client/player: Enable acquiring multiple
+ transports
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-Hi,
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: e4fd2dc5aa959ba430ee0038e4d135e1a7530ad4
+      https://github.com/bluez/bluez/commit/e4fd2dc5aa959ba430ee0038e4d135e1a7530ad4
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-06-22 (Wed, 22 Jun 2022)
 
-Are you currently open to work as our executive company representative
-on contractual basis working remotely? If yes, we will be happy to
-share more details. Looking forward to your response.
+  Changed paths:
+    M client/player.c
 
-Regards,
+  Log Message:
+  -----------
+  client/player: Enable acquiring multiple transports
+
+This enables acquiring multiple transports simultaneously.
+
+
+  Commit: 33c96ca658fd7a0d358dd714decf465ff17ee043
+      https://github.com/bluez/bluez/commit/33c96ca658fd7a0d358dd714decf465ff17ee043
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-06-22 (Wed, 22 Jun 2022)
+
+  Changed paths:
+    M client/player.c
+
+  Log Message:
+  -----------
+  client/player: Fixes errors found by scan-build
+
+This fixes the following errors:
+
+client/player.c:1406:44: warning: Dereference of null pointer
+[core.NullDereference]
+        reply = endpoint_select_config_reply(msg, p->data.iov_base,
+                                                  ^~~~~~~~~~~~~~~~
+client/player.c:1866:2: warning: 3rd function call argument is an
+uninitialized value [core.CallAndMessage]
+        iov_append(&cfg->caps, data, len);
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+  Commit: 7f92f75e88b66ba73db5a676c35c704e213dcd70
+      https://github.com/bluez/bluez/commit/7f92f75e88b66ba73db5a676c35c704e213dcd70
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-06-22 (Wed, 22 Jun 2022)
+
+  Changed paths:
+    M client/advertising.c
+
+  Log Message:
+  -----------
+  client/advertising: Fixes errors found by scan-build
+
+This fixes the following errors:
+
+client/advertising.c:129:4: warning: Value stored to 'n' is never read
+[deadcode.DeadStores]
+                        n = sizeof(str) - 1;
+                        ^   ~~~~~~~~~~~~~~~
+client/advertising.c:1012:25: warning: Dereference of null pointer
+(loaded from variable 'min') [core.NullDereference]
+        if (ad.min_interval != *min) {
+                               ^~~~
+
+
+Compare: https://github.com/bluez/bluez/compare/b8b3277ba387...7f92f75e88b6
