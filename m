@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3458F556E67
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Jun 2022 00:28:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1011556E6A
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Jun 2022 00:28:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358340AbiFVW2N (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 22 Jun 2022 18:28:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59838 "EHLO
+        id S1358393AbiFVW2Q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 22 Jun 2022 18:28:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358301AbiFVW2L (ORCPT
+        with ESMTP id S1358232AbiFVW2L (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 22 Jun 2022 18:28:11 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E47FC69
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 15:28:05 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 23so11205802pgc.8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 15:28:05 -0700 (PDT)
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E549C70
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 15:28:06 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id bo5so17331603pfb.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 15:28:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=BY74aJKawL8ZJHJdZMpTNWRQDCAFbo7G5NU4C+yjJ6Y=;
-        b=jfstvvb869LNps0K8YXch6lAZuaU3gYFNvdBUD1afQTPhpG9MitdoTb3CYxO8IhILY
-         yaJD4uaypCSyyq4Iw7EIUonEfLEAW09u67vDcNP1gCFFjWCjCNRXy/SouFJrITsp3cYi
-         C3ncB7Ie1h3yWJavt4UsZvRBz73c2aJMh78iJS8nyHyXcjMbw7YC5urvDNbiYXCz4V3W
-         8JkClWaJTwuV8qMy+uL3T1eWmu5kC33IhcMRRlsqAO+s7oBTv5PLXIh/U2AF5Qlt27mJ
-         fu2BHDqwOcdfPYOSOoY6qi43VBz6H5rAEI2DziYMIYbkc6FGDJlsrCr2BCNB7gi6PsK1
-         gUtA==
+        bh=EWqhkDEeWuIdX2lQ40ACatIUFzeKwauHCTCOZyB1Qqk=;
+        b=QSjaYxYdDb2/+XsSzVLed5bSSUTIhNM09UUKWT7Y5yyslIButkM46YlI/pJXTiMlPW
+         3T/j0pYcbFp/Uqw27CgsnRTNzQJbGy+QvpnkyKOPtbN4aQl7Kby/o0P5u7ZKdtwAtaSu
+         TwGSX3h9Xr9s37MyjiIIQ5WbcIPZE+c/vwrEq+67ZXGE6AwYHKPviqxU4mWTZew+dsmb
+         w5wS9KVOiJmYl7thOJzv0Fdsi5pvXs+Rz+Ff4mRApdsvwXpgf3je0sGfHefycUpfk2F1
+         9gb536xEd5p/kwV/rlEQYtXsdyh8WWfXaOm7e+K0PJu/orhn3BUUIu92LbUb/4vT+BZp
+         KNqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BY74aJKawL8ZJHJdZMpTNWRQDCAFbo7G5NU4C+yjJ6Y=;
-        b=6D+xOOzc4Ae6OjBj++Pk1KS0IU7o4nBj2N6ZE7jqv+e46Rd7NnTTXe3PHmy7JIafHQ
-         azKwnCcx0epe4NlsblVSwVbDUNYluO0JGYCBhCas2/dgLjj04Tk/XWbXYC1R8JWSDfu5
-         3TX6StVwvAEN0kmFSo6AHDD2oCDIRZOOCN3Kiwj7JrddhEx/ur8FgMqBrKrfTOJngcGK
-         49yNIL6CLQBDcJ1R2Ou6BOpMNoMDCFue2jMgyegHeGl9c04SWmBGp7gdNXE9E0sM7aFQ
-         GBBrwcsoy++Gx/fDaCryH8gZUl6wZ55uZDllxQpd6VXZyJeKRHs4FjFBsfeic7V8FlgH
-         ujGw==
-X-Gm-Message-State: AJIora8gJngRJCXkPIIWST/pxaQfN8hhBJET0RMoMbjwGdpgJS3ewpKo
-        kXv7DXgrieaZb5m0HALwzTLxsG+nMbwM0w==
-X-Google-Smtp-Source: AGRyM1sWTjM0qyRwcuSqGXEdKlJcPXaP6WNL5CdyL6kI/Df/9BAtQfHNj9vEhWWwZ/ePnDA7Cph39g==
-X-Received: by 2002:a62:3302:0:b0:524:e839:c3b8 with SMTP id z2-20020a623302000000b00524e839c3b8mr28127444pfz.76.1655936884446;
-        Wed, 22 Jun 2022 15:28:04 -0700 (PDT)
+        bh=EWqhkDEeWuIdX2lQ40ACatIUFzeKwauHCTCOZyB1Qqk=;
+        b=sPap7gx5TF1O/zSgkF2WWFJy1LVWgzPLvkyx1E45MuB9YCde79N2SdrGCbdbw1kbPi
+         BycQp2bzgaXcoxaXOE4bAjFPUOP2Oa+7zeqXNCG5cgwHUCl5QjZdkCY+rKM8VnuxY26H
+         TWqpp/QAFvg7eK8vzXPfBj18TG5hqBPSMps6UtBRKJyuByVM6AI0TxCVJzsQDjGBxb3d
+         g7eYgGuiTN3YSOB3IIh/NnHqlfLRfXEa6Ja8JSALh3vu/cXf3dXxPVeZkfNVX1jxblKP
+         G1VcSKJEltLNbfXCeIvL3Vh32WT87XV4ZtF8RxVZJSwyphrQXExkg34F6YnL5WyrGSWl
+         ZAOA==
+X-Gm-Message-State: AJIora/uyPqTRNRfzJY1XXp3Vj1DFBXmFFDZ7N1/pUs5N0rs2fEJU6op
+        rFEwHlyGk2GNoyRmNUavr4Sz6bhW0HACqw==
+X-Google-Smtp-Source: AGRyM1uwylkK1G9+0Q5gjOok9s0DpFIP9exx39HhzNBBxHXgGmE6beDBKLtlrx37u9n/5k7VcoXVZg==
+X-Received: by 2002:a05:6a02:117:b0:3fa:de2:357a with SMTP id bg23-20020a056a02011700b003fa0de2357amr4762846pgb.169.1655936885694;
+        Wed, 22 Jun 2022 15:28:05 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id x10-20020a1709028eca00b0016368840c41sm11710482plo.14.2022.06.22.15.28.03
+        by smtp.gmail.com with ESMTPSA id x10-20020a1709028eca00b0016368840c41sm11710482plo.14.2022.06.22.15.28.04
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 15:28:03 -0700 (PDT)
+        Wed, 22 Jun 2022 15:28:05 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [BlueZ PATCH v7 2/8] shared/util: Decode BlueZ Experimental ISO Socket UUID
-Date:   Wed, 22 Jun 2022 15:27:55 -0700
-Message-Id: <20220622222801.2676431-2-luiz.dentz@gmail.com>
+Subject: [BlueZ PATCH v7 3/8] mgmt-tester: Fix Read Exp Feature tests
+Date:   Wed, 22 Jun 2022 15:27:56 -0700
+Message-Id: <20220622222801.2676431-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20220622222801.2676431-1-luiz.dentz@gmail.com>
 References: <20220622222801.2676431-1-luiz.dentz@gmail.com>
@@ -71,25 +71,54 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds BlueZ experimental ISO Socket UUID to uuid128_table so it is
-decoded by the likes of btmon.
+This adds ISO Socket UUID as response to Read Exp Feature.
 ---
- src/shared/util.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/mgmt-tester.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/src/shared/util.c b/src/shared/util.c
-index 33196bf8b..b74a005ce 100644
---- a/src/shared/util.c
-+++ b/src/shared/util.c
-@@ -1149,6 +1149,8 @@ static const struct {
- 	{ "330859bc-7506-492d-9370-9a6f0614037f",
- 		"BlueZ Experimental Bluetooth Quality Report" },
- 	{ "a6695ace-ee7f-4fb9-881a-5fac66c629af", "BlueZ Offload Codecs"},
-+	{ "6fbaf188-05e0-496a-9885-d6ddfdb4e03e",
-+		"BlueZ Experimental ISO Socket"},
- 	{ }
+diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
+index f45a6c015..4191840ea 100644
+--- a/tools/mgmt-tester.c
++++ b/tools/mgmt-tester.c
+@@ -9858,7 +9858,7 @@ static const struct generic_data set_dev_flags_fail_3 = {
  };
  
+ static const uint8_t read_exp_feat_param_success[] = {
+-	0x03, 0x00,				/* Feature Count */
++	0x04, 0x00,				/* Feature Count */
+ 	0xd6, 0x49, 0xb0, 0xd1, 0x28, 0xeb,	/* UUID - Simultaneous */
+ 	0x27, 0x92, 0x96, 0x46, 0xc0, 0x42,	/* Central Peripheral */
+ 	0xb5, 0x10, 0x1b, 0x67,
+@@ -9870,7 +9870,11 @@ static const uint8_t read_exp_feat_param_success[] = {
+ 	0xaf, 0x29, 0xc6, 0x66, 0xac, 0x5f,	/* UUID - Codec Offload */
+ 	0x1a, 0x88, 0xb9, 0x4f, 0x7f, 0xee,
+ 	0xce, 0x5a, 0x69, 0xa6,
+-	0x00, 0x00, 0x00, 0x00			/* Flags */
++	0x00, 0x00, 0x00, 0x00,			/* Flags */
++	0x3e, 0xe0, 0xb4, 0xfd, 0xdd, 0xd6,	/* UUID - ISO Socket */
++	0x85, 0x98, 0x6a, 0x49, 0xe0, 0x05,
++	0x88, 0xf1, 0xba, 0x6f,
++	0x00, 0x00, 0x00, 0x00,			/* Flags */
+ };
+ 
+ static const struct generic_data read_exp_feat_success = {
+@@ -9882,11 +9886,15 @@ static const struct generic_data read_exp_feat_success = {
+ 
+ 
+ static const uint8_t read_exp_feat_param_success_index_none[] = {
+-	0x01, 0x00,				/* Feature Count */
++	0x02, 0x00,				/* Feature Count */
+ 	0x1c, 0xda, 0x47, 0x1c, 0x48, 0x6c,	/* UUID - Debug */
+ 	0x01, 0xab, 0x9f, 0x46, 0xec, 0xb9,
+ 	0x30, 0x25, 0x99, 0xd4,
+ 	0x00, 0x00, 0x00, 0x00,			/* Flags */
++	0x3e, 0xe0, 0xb4, 0xfd, 0xdd, 0xd6,	/* UUID - ISO Socket */
++	0x85, 0x98, 0x6a, 0x49, 0xe0, 0x05,
++	0x88, 0xf1, 0xba, 0x6f,
++	0x00, 0x00, 0x00, 0x00,			/* Flags */
+ };
+ 
+ static const struct generic_data read_exp_feat_success_index_none = {
 -- 
 2.35.3
 
