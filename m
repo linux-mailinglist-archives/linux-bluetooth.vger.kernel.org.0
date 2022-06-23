@@ -2,188 +2,114 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 122D5557673
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Jun 2022 11:18:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8240D5579AB
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Jun 2022 14:02:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230383AbiFWJSn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 Jun 2022 05:18:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54846 "EHLO
+        id S231820AbiFWMCA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 Jun 2022 08:02:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbiFWJSl (ORCPT
+        with ESMTP id S231687AbiFWMBh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 Jun 2022 05:18:41 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB9046CBE
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jun 2022 02:18:38 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id b7so22543947ljr.6
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jun 2022 02:18:38 -0700 (PDT)
+        Thu, 23 Jun 2022 08:01:37 -0400
+Received: from mail-oa1-x42.google.com (mail-oa1-x42.google.com [IPv6:2001:4860:4864:20::42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D11464E3B5
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jun 2022 05:00:21 -0700 (PDT)
+Received: by mail-oa1-x42.google.com with SMTP id 586e51a60fabf-101ec2d6087so15869031fac.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Jun 2022 05:00:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=XcQS1XCkl/vk/iiK9UlBRssI2Zu/U1XTYmHdI6QOmKg=;
-        b=NCukPQSVf9nm4WScxjlBsKJl1tSICpwfp1JKN9pkxN5Js4SU4FWxjMg0gKJq4i/Z3m
-         juea/x0zHxdUfCT/ONLj7NebPZEoZJQqOyHhdztWJd5fEexSPqteI81MXJCxC5gpxjwn
-         UdWSFNlaYPg6BXAtysbcR07TeooqQQPSQryAXEZvP4+kg0k+4fBeJ6fAk+GWUnxbteMk
-         TjTguyQ95dylDp9yGPe2XzK81ISIWdfO08e8MwwSvjEb7vRfPC/KRSfzQA49Ib/nxmlh
-         70eR5CzA+OqKFS/EQ/t2WDFWh9SEsUU4uWB0Mx4QH7EQY6iI5lEus1EvmxmQZBcWKTGM
-         Dy9Q==
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=SH1826VGivRTcWTFt6CirTUpizldtIW6lapFTxm7Gbo=;
+        b=dL4ZdfjGobK7bZ5zNav1+xGQiGde1Zc7ClvHsT7kk6LqobgfylVSX6CBG5RjcoVDTa
+         P464n62qmhgQVmko817GDYihyl7pvjfwkgES8JkCRGmr9xxgu3PjHmBrdfIKpKF+gxtz
+         ck0sfdPmzNP6PJDK99aoAJqvIJ6MSx5TfjB1KlqaDZn92DOWiz08x3njQYk7p7AUH10T
+         y+GlFokIsHaKh5IwUNZgaGJCE9OJ9vSfBgmQkTnZzySftM6HqqxRqpOIYwT/wd75+23E
+         P9+fpjMOoHjPoNoGgly+tjBN6a3v4kxdZSCYsYXbKgVUjjGIp5B1Lh0sXido0MvDOb61
+         P1yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=XcQS1XCkl/vk/iiK9UlBRssI2Zu/U1XTYmHdI6QOmKg=;
-        b=wjDGzjAqf0/qag5w46fIfI7lrChnNzkDR4ho2fI7aFA/SubRzDS7eKEmDzHkpnCLNO
-         5p/eCd2n41CR+l6/UyNiAnzoyTQhzJRG4bmqb5/y9TbQ821PS3FeQ1Zm0lgJ2+S1hRKK
-         88VRYQbDmgN1OjMntLRVEA8u1z8q9ybdeNSQQiMsW4l+MVwxepNbM/4Nda/M4Kyp+7c+
-         rr4+nzNS7MgTIKxMZWWXMDZ9BzV8KYDTBhux7Z5vrnXYt8dSM/YKs3jHzL+8PzhPGHZD
-         j7FUPaMI5c3sHlt00KIuILeLxdIjfablYSd2OmngdSH/J4KIUP5rvTNes2mnpZi7DVjg
-         rg8A==
-X-Gm-Message-State: AJIora8dp49GWk+HdhKZrPplA13m/USJcC3lDDIhfQNOA2c+AeJSgYAe
-        1wsqR3zUd8MPV79KOu13ILxXhiT9xK/in+l0Ekxo3w==
-X-Google-Smtp-Source: AGRyM1uZOd8+a/MGh7Ds9XxSG3qQcz0C1wEyURCRfKYw863suXgA3Ov2iAiQPtxpH7+zkOQpaRk2+sY63kjzx4nYjIU=
-X-Received: by 2002:a2e:b0fc:0:b0:255:6f92:f9d4 with SMTP id
- h28-20020a2eb0fc000000b002556f92f9d4mr4259427ljl.92.1655975917005; Thu, 23
- Jun 2022 02:18:37 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=SH1826VGivRTcWTFt6CirTUpizldtIW6lapFTxm7Gbo=;
+        b=DbWvCe1qZobPmUuDoXruCAvAlJuuKxoADYeH2kSwWq01XBi0od8noOw/hUzfO/12qb
+         cXg/TiesC9OT8vz0M/QlWrf3EE6YwWMfaOBbzXrJByiCoLuaARYRrqM2ocHc4u9nh4fs
+         O8yqlHDsEsKYyHvZhY5OyMR1b/9V7TqRVMXftaimLppQ9ZM7DCUcln7yzPI5J/yXBJ/H
+         Ux6O/bdD4Qrd4ma9P0bhGkUpGNmINcjZEBBwbaN13/b6d7fYPmApr9aOIvrr0aYD28nD
+         H5Um2bbrs0t7U1DF9WY5zh+QdmEPMfjgF2Is607n5Nte9L9D1VBgHiuVFZh81IrOQU+R
+         8CFg==
+X-Gm-Message-State: AJIora/2ckoHoMd7VtWWgryNH4900SRlLYrhjLduaYSxJnqk9rI5g1ma
+        XIrYKPJ9zZ5/ksu6DjCPUlqyQ+ILEt1SFRUe0BI=
+X-Google-Smtp-Source: AGRyM1u9XqAMSItZNhegX/ZymFvhNBQP3xenHiWf00X4SNsH0rLed72zRQSP+YVxHt9F6Yhn4fsa6RzBdFD/GHKyBzE=
+X-Received: by 2002:a05:6870:311:b0:f2:d46a:b370 with SMTP id
+ m17-20020a056870031100b000f2d46ab370mr2282258oaf.169.1655985618110; Thu, 23
+ Jun 2022 05:00:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220607104015.2126118-1-poprdi@google.com> <CAPUC6bJbVMPn1FMLYnXg2GUX4ikesMSRjj=oPOOrS5H2DOx_bA@mail.gmail.com>
- <CAPUC6b+xMnk8VDGv_7p9j4GHD75FrxG3hWKpTSF2zHj508=x9A@mail.gmail.com> <CANp29Y7gb7cop8p8k-LqR1WoLwOLxi+QGRGLEZrbYW8Tw6_i2w@mail.gmail.com>
-In-Reply-To: <CANp29Y7gb7cop8p8k-LqR1WoLwOLxi+QGRGLEZrbYW8Tw6_i2w@mail.gmail.com>
-From:   Dmitry Vyukov <dvyukov@google.com>
-Date:   Thu, 23 Jun 2022 11:18:25 +0200
-Message-ID: <CACT4Y+b3LHerJNwcPuUSxWMXRKFAunK83BHEXiwGs53Jves6QQ@mail.gmail.com>
-Subject: Re: [PATCH v2] Bluetooth: Collect kcov coverage from hci_rx_work
-To:     Aleksandr Nogikh <nogikh@google.com>
-Cc:     =?UTF-8?Q?Tam=C3=A1s_Koczka?= <poprdi@google.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Nguyen <theflow@google.com>
+Received: by 2002:a4a:e60e:0:0:0:0:0 with HTTP; Thu, 23 Jun 2022 05:00:17
+ -0700 (PDT)
+Reply-To: ibnahmadmustafa.aseelfinance@gmail.com
+From:   "Ibn Ahmad Mustafa(ASEEL Islamic Finance)" <alexaziz900@gmail.com>
+Date:   Thu, 23 Jun 2022 13:00:17 +0100
+Message-ID: <CA+ZonYFVf4r4TP5OjTABRM+sUUb77Yi8rA2ZjaW7-M57GTtrGA@mail.gmail.com>
+Subject: LOAN AND INVESTMENT-ASEEL ISLAMIC FINANCE
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: Yes, score=7.2 required=5.0 tests=BAYES_60,DEAR_SOMETHING,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
-        autolearn=ham autolearn_force=no version=3.4.6
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2001:4860:4864:20:0:0:0:42 listed in]
+        [list.dnswl.org]
+        *  1.5 BAYES_60 BODY: Bayes spam probability is 60 to 80%
+        *      [score: 0.7893]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [alexaziz900[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [alexaziz900[at]gmail.com]
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  2.0 DEAR_SOMETHING BODY: Contains 'Dear (something)'
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Wed, 22 Jun 2022 at 12:20, Aleksandr Nogikh <nogikh@google.com> wrote:
->
-> (Resending the reply I sent to the v1 of the patch. I sent it by
-> mistake with HTML content, so it did not reach lore.)
->
-> I checked out v5.18.1, applied this patch and fuzzed it with syzkaller
-> for a day. The fuzzer was indeed able to find and report more coverage
-> of the BT subsystem than without the patch.
->
-> Tested-by: Aleksandr Nogikh <nogikh@google.com>
->
->
-> On Tue, Jun 14, 2022 at 3:34 PM Tam=C3=A1s Koczka <poprdi@google.com> wro=
-te:
-> >
-> > Hello Marcel,
-> >
-> > I hope this was the change you originally requested, and I did not
-> > misunderstand anything, but if you need any additional modification to
-> > the code or the commit, please feel free to let me know!
-> >
-> > Thank you,
-> > Tamas
-> >
-> > On Tue, Jun 7, 2022 at 1:44 PM Tam=C3=A1s Koczka <poprdi@google.com> wr=
-ote:
-> > >
-> > > Hello Marcel,
-> > >
-> > > I added some comments into the code about what the kcov_remote calls =
-do and
-> > > why they were implemented and I also added some reasoning to the comm=
-it
-> > > message.
-> > >
-> > > I did not mention in the commit but these functions only run if the k=
-ernel
-> > > is compiled with CONFIG_KCOV.
-> > >
-> > > Thank you again for reviewing the patch!
-> > >
-> > > --
-> > > Tamas
-> > >
-> > > On Tue, Jun 7, 2022 at 12:40 PM Tamas Koczka <poprdi@google.com> wrot=
-e:
-> > > >
-> > > > Annotate hci_rx_work() with kcov_remote_start() and kcov_remote_sto=
-p()
-> > > > calls, so remote KCOV coverage is collected while processing the rx=
-_q
-> > > > queue which is the main incoming Bluetooth packet queue.
-> > > >
-> > > > Coverage is associated with the thread which created the packet skb=
-.
-> > > >
-> > > > The collected extra coverage helps kernel fuzzing efforts in findin=
-g
-> > > > vulnerabilities.
-> > > >
-> > > > Signed-off-by: Tamas Koczka <poprdi@google.com>
-> > > > ---
-> > > > Changelog since v1:
-> > > >  - add comment about why kcov_remote functions are called
-> > > >
-> > > > v1: https://lore.kernel.org/all/20220517094532.2729049-1-poprdi@goo=
-gle.com/
-> > > >
-> > > >  net/bluetooth/hci_core.c | 10 +++++++++-
-> > > >  1 file changed, 9 insertions(+), 1 deletion(-)
-> > > >
-> > > > diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-> > > > index 45c2dd2e1590..0af43844c55a 100644
-> > > > --- a/net/bluetooth/hci_core.c
-> > > > +++ b/net/bluetooth/hci_core.c
-> > > > @@ -29,6 +29,7 @@
-> > > >  #include <linux/rfkill.h>
-> > > >  #include <linux/debugfs.h>
-> > > >  #include <linux/crypto.h>
-> > > > +#include <linux/kcov.h>
-> > > >  #include <linux/property.h>
-> > > >  #include <linux/suspend.h>
-> > > >  #include <linux/wait.h>
-> > > > @@ -3780,7 +3781,14 @@ static void hci_rx_work(struct work_struct *=
-work)
-> > > >
-> > > >         BT_DBG("%s", hdev->name);
-> > > >
-> > > > -       while ((skb =3D skb_dequeue(&hdev->rx_q))) {
-> > > > +       /* The kcov_remote functions used for collecting packet par=
-sing
-> > > > +        * coverage information from this background thread and ass=
-ociate
-> > > > +        * the coverage with the syscall's thread which originally =
-injected
-> > > > +        * the packet. This helps fuzzing the kernel.
-> > > > +        */
-> > > > +       for (; (skb =3D skb_dequeue(&hdev->rx_q)); kcov_remote_stop=
-()) {
-> > > > +               kcov_remote_start_common(skb_get_kcov_handle(skb));
-> > > > +
-> > > >                 /* Send copy to monitor */
-> > > >                 hci_send_to_monitor(hdev, skb);
+Dear Sir/Madam
 
-Looks good to me.
-Anything else needed to merge this patch?
+I would like to introduce you to Aseel Islamic finance PJSC which is a
+private joint stock company that was
+established in 2006 and has built a leading market position for itself
+in the UAE's Islamic finance market which specializes in loan finance
+and investment activities in real estate, hospitality, industrial &
+sustainable technologies, strategic financial investments, specialized
+education, healthcare services, agriculture, manufacturing,
+mining,energy and additional environmentally sustainable projects.
 
-Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
+I would love to send you further details with your consent.
+
+Regards.
+
+Mr.Ahmad Ibn Mustafa
+International Business Coordinator
+Aseel Islamic Finance PJSC
+Telephone: 800-ASEEL(27335)
