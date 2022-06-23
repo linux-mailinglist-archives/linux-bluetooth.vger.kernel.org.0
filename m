@@ -2,62 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B88B05571AB
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Jun 2022 06:43:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C08755726B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Jun 2022 07:01:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231248AbiFWEm1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 Jun 2022 00:42:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33242 "EHLO
+        id S229710AbiFWFBA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 Jun 2022 01:01:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234594AbiFWDOY (ORCPT
+        with ESMTP id S229712AbiFWFAd (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 22 Jun 2022 23:14:24 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18FA733342
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 20:14:24 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-101d96fe0a5so15501090fac.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 20:14:24 -0700 (PDT)
+        Thu, 23 Jun 2022 01:00:33 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19435496B9
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 21:45:22 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id s185so12295696pgs.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 22 Jun 2022 21:45:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=tiKJaoIhN0p3hwg/b01JHmIFp0L41nkn18acwt2llnA=;
-        b=Adpfve2B6cRfalQiTb2movf3pmWXYTfuu5FH/VW5FLbTtYL23L8q0maqkhdZ0ydx5r
-         T7DDCeJ1Q0vrV9XTvbRD3t9KXKza6BNGMzCX4YhwSRxuptAgOAiQPwtkWpDtg0vdmlpL
-         ib50uyrmDbVDUJ2gDC1/XslA45lPvhroKqidYYuTw0b7ec2T92FUzzAfrPxPfin9vdH8
-         Pko5YGYI1b8lS/ddzxyJ2VL94eAeYDkt3xAzlm8PjcD6cq028NQli5DKEvWHMVwyjdVf
-         X1VKJ1E7cV9+IfatuA4DU9QwPGYYIIGNL9y3L2HhsyBfbcxeuybVQN9A9dqvHo84KoD2
-         ckHw==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/9qFyabmBcibChahYmaud4vPnIfjnmUdYUKhUTjcTys=;
+        b=B4iQFshue5+ocH1qvrbcRq/LTKcTziF7ORkG1R/P+gI1Vo0E43UAVQymwggvHC7ghN
+         0jwy5eSOaQUCfNM09AQQ2xjFIZ+Snh2f8XWS3VRSV3rE35QXt83ag5Vzvs/6CHcFwqv6
+         HoY1oP71HaWZCYRYl/vm1hZcowC5MBSCkrQGOYZO46CPMksKO2Lynbs9yCKcoGXLXPX7
+         9mIBUFGqYIdrswy5z0fWnvEfxL2pR6ZzsXBcQ4qObjOBpBoHDA1fZAG6qbb3zW4lgM7L
+         XqMxTpxJgqREhNH8mAOvaw6aGsXXqHVYYJc1ojq3/ocBquHmuXtscKCzNEyp8QZBqvLO
+         Is8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=tiKJaoIhN0p3hwg/b01JHmIFp0L41nkn18acwt2llnA=;
-        b=8KFVcaY8XeKDUUUUtA/Pp0axSF2Uzz3x/lJ0fEqSDT/bJgmkhZN2U0goaYTX7bH6Qi
-         12ybXp5tW4ysu8uV4r6kKiHw8TMMSHkBY33yFuKhc3e+dQllP5HU8RPvrguNIqDqPcad
-         dXoByeE/D3VaS1uONnG1f1q8mYDbMeZrwYCwc8sjd87kc0EXaJRJTzJjuukfbnwEZnT+
-         Tn5Ut8y23RBGEIGdBqBJhceCHA4LddA5ZB8rIfe9jm4cmvBTsMQ/iwCXJwatrCx+a2M8
-         K8TlcjeFBncPV671XC/TesDeX/yVTXVTORETOaYxQ0E47UX6WgeYFLGakLalf91/7Vxh
-         tDBg==
-X-Gm-Message-State: AJIora/1QcqyIH7/z5KoXkgoyqEtOx7/2Z7TYNTf3i95dg7j1I9u6OTC
-        bEHTI9lyeCH3WUr5kiAp7nvp28dGu9E=
-X-Google-Smtp-Source: AGRyM1sDmdPDAl6w5ua+ICjqIiwjbHO3ifDKpUjSWBgJGKRziMp8xppgYgQrF4k2SZ73Pd1soP/+gQ==
-X-Received: by 2002:a05:6870:14c7:b0:fe:4131:6db9 with SMTP id l7-20020a05687014c700b000fe41316db9mr1070824oab.75.1655954063239;
-        Wed, 22 Jun 2022 20:14:23 -0700 (PDT)
-Received: from [172.17.0.2] ([20.97.67.209])
-        by smtp.gmail.com with ESMTPSA id el40-20020a056870f6a800b000f32c6b6871sm12544275oab.10.2022.06.22.20.14.22
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/9qFyabmBcibChahYmaud4vPnIfjnmUdYUKhUTjcTys=;
+        b=VHIajiyO2zjELAsZWo9hAWqH6ZnDCmU7NVBr0K/onBKEDzbA6U2HNdpTyFgUU98XW6
+         J7byS2xTJg8BFp3EkCN+HvedUuq2aXiZqyLmn7tOe0pik2SNOtO2A2neXsMlMLWroji+
+         VdL4QLwU8Scoqtt1Hiovt2wX2kxpN+j9Guig/RrNS4Z8odWIrqZqH/YjiiPdldokIlgL
+         TxBAyrtApg5+0++6GXmWPU0O69ayhneZrXXsJdePPadwrSGc4NkYhEINFdTViOGGqo4g
+         WSYGtZAXUW0ZJRgnvbU91p/aaPqKRJ5eIii+tvei35rqeRs8wYWAwdp7Wm87MbAXp+cF
+         ORLA==
+X-Gm-Message-State: AJIora8m6ykDjP0Ck/QeSlMgevBN9gGYf+dY8edHpMAa1hmaINuVMyrl
+        MYtSPcA3TYE36WcyY+eqZpDTXzPrVzI=
+X-Google-Smtp-Source: AGRyM1vZjmG/kZ/frQFQ0A0N44HhdJ9EZrFHbfa8ukAnLK+kKZoaVvND+HZEr4TItivjkDUfudNQpA==
+X-Received: by 2002:a63:8c47:0:b0:40d:2d4:e3a2 with SMTP id q7-20020a638c47000000b0040d02d4e3a2mr6183819pgn.2.1655959521355;
+        Wed, 22 Jun 2022 21:45:21 -0700 (PDT)
+Received: from han1-NUC8i7BEH.hsd1.or.comcast.net ([2601:1c0:6a01:d830:29c0:aef5:a13f:9fde])
+        by smtp.gmail.com with ESMTPSA id b3-20020a170902e94300b00168adae4eb2sm13646213pll.262.2022.06.22.21.45.20
+        for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 20:14:22 -0700 (PDT)
-Message-ID: <62b3da8e.1c69fb81.d5091.c19c@mx.google.com>
-Date:   Wed, 22 Jun 2022 20:14:22 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============7676444347044109128=="
+        Wed, 22 Jun 2022 21:45:21 -0700 (PDT)
+From:   Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [BlueZ PATCH] mgmt-tester: Fix null dereference issue reported by scan-build
+Date:   Wed, 22 Jun 2022 21:45:20 -0700
+Message-Id: <20220623044520.458626-1-hj.tedd.an@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, wangyouwan@uniontech.com
-Subject: RE: device: Fix not removing connected device
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20220623014403.22360-1-wangyouwan@uniontech.com>
-References: <20220623014403.22360-1-wangyouwan@uniontech.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -68,67 +67,39 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============7676444347044109128==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Tedd Ho-Jeong An <tedd.an@intel.com>
 
-This is automated email and please do not reply to this email!
+This patch fixes the null dereference reported by the scan-build.
 
-Dear submitter,
+tools/mgmt-tester.c:12025:28: warning: Access to field 'cap_len' results
+in a dereference of a null pointer (loaded from variable 'rp')
+[core.NullDereference]
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=652986
-
----Test result---
-
-Test Summary:
-CheckPatch                    FAIL      1.08 seconds
-GitLint                       PASS      0.70 seconds
-Prep - Setup ELL              PASS      41.48 seconds
-Build - Prep                  PASS      0.56 seconds
-Build - Configure             PASS      8.20 seconds
-Build - Make                  PASS      1255.26 seconds
-Make Check                    PASS      11.29 seconds
-Make Check w/Valgrind         PASS      422.87 seconds
-Make Distcheck                PASS      222.72 seconds
-Build w/ext ELL - Configure   PASS      8.27 seconds
-Build w/ext ELL - Make        PASS      1244.67 seconds
-Incremental Build with patchesPASS      0.00 seconds
-
-Details
-##############################
-Test: CheckPatch - FAIL
-Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-Output:
-device: Fix not removing connected device
-WARNING:LONG_LINE: line length of 91 exceeds 80 columns
-#131: FILE: src/device.c:3076:
-+void device_remove_connection(struct btd_device *device, uint8_t bdaddr_type, bool *remove)
-
-WARNING:LONG_LINE: line length of 92 exceeds 80 columns
-#153: FILE: src/device.h:126:
-+void device_remove_connection(struct btd_device *device, uint8_t bdaddr_type, bool *remove);
-
-/github/workspace/src/12891622.patch total: 0 errors, 2 warnings, 53 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/12891622.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-
-
+        if (sizeof(rp->cap_len) + rp->cap_len != length) {
+                                  ^~~~~~~~~~~
 ---
-Regards,
-Linux Bluetooth
+ tools/mgmt-tester.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
+index f45a6c015..6018327f1 100644
+--- a/tools/mgmt-tester.c
++++ b/tools/mgmt-tester.c
+@@ -12020,12 +12020,14 @@ static void read_50_controller_cap_complete(uint8_t status, uint16_t length,
+ 		tester_warn("Failed to read advertising features: %s (0x%02x)",
+ 						mgmt_errstr(status), status);
+ 		tester_test_failed();
++		return;
+ 	}
+ 
+ 	if (sizeof(rp->cap_len) + rp->cap_len != length) {
+ 		tester_warn("Controller capabilities malformed, size %zu != %u",
+ 				sizeof(rp->cap_len) + rp->cap_len, length);
+ 		tester_test_failed();
++		return;
+ 	}
+ 
+ 	while (offset < rp->cap_len) {
+-- 
+2.34.1
 
---===============7676444347044109128==--
