@@ -2,68 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E01DA55DE17
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jun 2022 15:28:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7E5E55C37F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jun 2022 14:48:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345315AbiF1LHN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 28 Jun 2022 07:07:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35130 "EHLO
+        id S234605AbiF1Jie (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 28 Jun 2022 05:38:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345302AbiF1LHM (ORCPT
+        with ESMTP id S245734AbiF1Jia (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 28 Jun 2022 07:07:12 -0400
-X-Greylist: delayed 3635 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 28 Jun 2022 04:06:59 PDT
-Received: from www2055.sakura.ne.jp (www2055.sakura.ne.jp [59.106.171.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 265E831933;
-        Tue, 28 Jun 2022 04:06:58 -0700 (PDT)
-Received: from fsav315.sakura.ne.jp (fsav315.sakura.ne.jp [153.120.85.146])
-        by www2055.sakura.ne.jp (8.15.2/8.15.2) with ESMTP id 25S97Gs4026639;
-        Tue, 28 Jun 2022 18:07:16 +0900 (JST)
-        (envelope-from 1955@kkden.co.jp)
-Received: from www2055.sakura.ne.jp (59.106.171.65)
- by fsav315.sakura.ne.jp (F-Secure/fsigk_smtp/550/fsav315.sakura.ne.jp);
- Tue, 28 Jun 2022 18:07:16 +0900 (JST)
-X-Virus-Status: clean(F-Secure/fsigk_smtp/550/fsav315.sakura.ne.jp)
-Received: from www2055.sakura.ne.jp (localhost [127.0.0.1])
-        by www2055.sakura.ne.jp (8.15.2/8.15.2) with ESMTP id 25S97Dso026581;
-        Tue, 28 Jun 2022 18:07:16 +0900 (JST)
-        (envelope-from 1955@kkden.co.jp)
-Received: (from kkden@localhost)
-        by www2055.sakura.ne.jp (8.15.2/8.15.2/Submit) id 25S97DN6026577;
-        Tue, 28 Jun 2022 18:07:13 +0900 (JST)
-        (envelope-from 1955@kkden.co.jp)
-Message-Id: <202206280907.25S97DN6026577@www2055.sakura.ne.jp>
-X-Authentication-Warning: www2055.sakura.ne.jp: kkden set sender to 1955@kkden.co.jp using -f
-Subject: THIS IS VERY CONFIDENTIAL
-From:   Steve Dibenedetto <1955@kkden.co.jp>
-To:     stevedibenedetto17@gmail.com
+        Tue, 28 Jun 2022 05:38:30 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B2210BB
+        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jun 2022 02:38:22 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id o43so19173406qvo.4
+        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jun 2022 02:38:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=fIQEqArhMTa5DhDz31Bmp16FTzyQJ6gwcvcM6vxzCNg=;
+        b=gZ+xzrauKSb8GmiwH3yv/NF1dAdXa+BU6BMrVSeGlnLG3jk9SIYN2M/HZEGWOIQYIi
+         mb6Fb+5/7MHlf6vR43PLK8jiwCgwcZ1PqUOOozStlegmBLgvtTd77AwtWacrdv1kKp3h
+         HMDiZKZykiJgs1jtqOHJkqFu2inYpor5/oGspRWETrxyeeG1ZmIWOQapmBk99/N0aUAE
+         cF4NZMQXSAC6rQNNTugD3/OgUatQYkmKeuPRay6lRoH2FSE023gC0hTlllijUwHWTxJW
+         AtlnRe5lAMUFKVHs+mW/cpqzVi+hBA2Bbb03fBfw/KSt+NQoRgZhdK8tLsInCS8Fb97f
+         uu0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=fIQEqArhMTa5DhDz31Bmp16FTzyQJ6gwcvcM6vxzCNg=;
+        b=3p9J5F/nC+8TQgvSXO4LRiT29qZpjgRMnAVTWAg6kuPbGcQ3OwjOFSc9wIVOW+9xx4
+         TJS00Z1iQT/iGqy429/GshkEo9O/vm/oypg2q3WSHR6oCwWid3At518Gpnf1V8qZFXr1
+         X1m8/qUh0Bg7+ULVwcxwqAEmMkDKpSz/gtdDcdA2X0XtBLR5Z8LBDtb0q99k8sRQhmlh
+         hs/RUJkuzx/4/R74ooPe6cGVbkER/psuG4fF2xih6MJ/1ibQuy5YHVxj3qnQiX6icQmp
+         Ib0cI1HUsAuVXcmOonZhIPdJIBvp2y8ZZVm1W8OdES4cRifaBlqZM2k+N8MSPD4LqQgu
+         VHuQ==
+X-Gm-Message-State: AJIora9L7+EzWojZkMgGdMzyoKQaiCDBiv4fY+ox49PNzuaCFcvFX7CZ
+        fHcPBiwQLymKwQa15tLY2X5UuW/zsbY=
+X-Google-Smtp-Source: AGRyM1vrRR7vm0RYUigfJti8HWptCoi97JFa5SWvqgu7/TGw0SCzc3+F1fFbxRzifzMraaQpB/C1GA==
+X-Received: by 2002:a05:622a:2cc:b0:31b:f484:768 with SMTP id a12-20020a05622a02cc00b0031bf4840768mr660155qtx.304.1656409101831;
+        Tue, 28 Jun 2022 02:38:21 -0700 (PDT)
+Received: from [172.17.0.2] ([40.112.50.251])
+        by smtp.gmail.com with ESMTPSA id m187-20020a37a3c4000000b006a75a8fd54asm10364684qke.84.2022.06.28.02.38.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jun 2022 02:38:20 -0700 (PDT)
+Message-ID: <62bacc0c.1c69fb81.c9c62.3dfd@mx.google.com>
+Date:   Tue, 28 Jun 2022 02:38:20 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============5134583205466333798=="
 MIME-Version: 1.0
-Date:   Tue, 28 Jun 2022 18:07:13 +0900
-Content-Type: text/plain; charset="ISO-2022-JP"
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.3 required=5.0 tests=BAYES_50,SPF_HELO_NONE,
-        SPF_NONE,SUBJ_ALL_CAPS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: *
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, wangyouwan@uniontech.com
+Subject: RE: obexd: Fix obex pointer is not null judgment
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220628074325.17105-1-wangyouwan@uniontech.com>
+References: <20220628074325.17105-1-wangyouwan@uniontech.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+--===============5134583205466333798==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Hello,
+This is automated email and please do not reply to this email!
 
-My name is Steve Dibenedetto.
-I apologize to have contacted you this way without a direct relationship. There is an opportunity to collaborate with me in the sourcing of some materials needed by our company for production of the different medicines we are researching.
+Dear submitter,
 
-I'm aware that this might be totally outside your professional specialization, but it will be a great source for generating extra revenue. I  discovered a manufacturer who can supply us at a lower rate than our company's previous purchases.
-I will give you more specific details when/if I receive feedback from you showing interest.
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=654468
 
-Warm Regards  
-Steve Dibenedetto
-Production & Control Manager,
-Green Field Laboratories
-Gothic House, Barker Gate,
-Nottingham, NG1 1JU,
-United Kingdom.
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.47 seconds
+GitLint                       PASS      1.01 seconds
+Prep - Setup ELL              PASS      48.67 seconds
+Build - Prep                  PASS      0.69 seconds
+Build - Configure             PASS      9.53 seconds
+Build - Make                  PASS      1402.89 seconds
+Make Check                    PASS      12.73 seconds
+Make Check w/Valgrind         PASS      500.51 seconds
+Make Distcheck                PASS      264.83 seconds
+Build w/ext ELL - Configure   PASS      10.05 seconds
+Build w/ext ELL - Make        PASS      1409.61 seconds
+Incremental Build with patchesPASS      0.00 seconds
+
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============5134583205466333798==--
