@@ -2,49 +2,49 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10E03562421
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jun 2022 22:30:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90E4156246F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jun 2022 22:40:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234038AbiF3UaR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Jun 2022 16:30:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55446 "EHLO
+        id S233355AbiF3UkT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 30 Jun 2022 16:40:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232654AbiF3UaR (ORCPT
+        with ESMTP id S230148AbiF3UkR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 Jun 2022 16:30:17 -0400
+        Thu, 30 Jun 2022 16:40:17 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 489442D1EA
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jun 2022 13:30:16 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A402209
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jun 2022 13:40:16 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E9C49B82B5B
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jun 2022 20:30:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9690CC341C8;
-        Thu, 30 Jun 2022 20:30:13 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3FF65B82D01
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jun 2022 20:40:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E50DEC341CA;
+        Thu, 30 Jun 2022 20:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656621013;
-        bh=DNQk/vxcz1E2+3jXR1Zjp4OnrfZIdxD3H3FPAhCpa+A=;
+        s=k20201202; t=1656621613;
+        bh=u28jq5BCveSo0I32G6SxascJIAgLSYQvS7dndjzhwQE=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=mmMOVOV/uF10LiSlGUzQJMeeZJldWrBJ2AX1sc7LbFSujeKNzpPWFv3LEdqO3EkXW
-         OAla7dniZl0eG+/dPH2/S/xoG2L6mJXc/wvP2tFlUIe3MQog99Nz1vfL4fPKeZc1xG
-         faF/jAWSkhNFpQxvHGn3fv6XEBm6tzrI/v7CJz73JA8GhAZ1+P9bxVsQU17z4zhq3A
-         dAApc9UhwFXXpH9r/2EhzSzryk8080fUZCQ1KW8Al733ZOaBDfkwhKvkHj0GS938hM
-         dim8BXrqGYRmXtI6kP0bH6CGGrturcwkRjCElaQlPqmn3M9D72f5G65URUNbb0Hd8y
-         PnU46LQBOV2MA==
+        b=ALCzPT5bhrFWIbDog3ZA3PznBw0QogU1xQG/pL6tUp46K8ZUbT8Z6ia4BatdCGgRl
+         iNqN+Z6Gisb/nnvrkqt1xsmAwTvfB8FovnFyIMuvQlyke8s0H+8dT1kOwFpiAPsZH7
+         Ju8UHdtqF5S7hO2TLPw6BVIYc4uaNZpIeuD4l1f7jpCVKMi2iLCq0izecjY/6cN8vN
+         ezuPBH1uYnqEgUCKwfmWJtN1327OuFKsR0GQIwF0yPiVMETwEvZVcPl3X0PY1pbLfs
+         wj71Fks2jsKo4YKHyoC+AARsdYfoNBpJooH5f+wrwobUUpObEitbLesE91EaiM6Jxf
+         /3yPSyADJdjzA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 6F4C1E49BBA;
-        Thu, 30 Jun 2022 20:30:13 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C733CE49FA0;
+        Thu, 30 Jun 2022 20:40:13 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 0/1] mesh: Use correct net_id in ctl_received
+Subject: Re: [PATCH BlueZ] avdtp: fix possible minor problems
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165662101345.30460.6134404687466381568.git-patchwork-notify@kernel.org>
-Date:   Thu, 30 Jun 2022 20:30:13 +0000
-References: <VI1PR09MB42395E20CFD614E52F3BC496E3BA9@VI1PR09MB4239.eurprd09.prod.outlook.com>
-In-Reply-To: <VI1PR09MB42395E20CFD614E52F3BC496E3BA9@VI1PR09MB4239.eurprd09.prod.outlook.com>
-To:     Isak Westin <isak.westin@hotmail.com>
+Message-Id: <165662161380.2141.10688934645144865012.git-patchwork-notify@kernel.org>
+Date:   Thu, 30 Jun 2022 20:40:13 +0000
+References: <20220629124656.10174-1-lishengyu@uniontech.com>
+In-Reply-To: <20220629124656.10174-1-lishengyu@uniontech.com>
+To:     lishengyu <lishengyu@uniontech.com>
 Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
@@ -59,21 +59,18 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 Hello:
 
 This patch was applied to bluetooth/bluez.git (master)
-by Brian Gix <brian.gix@intel.com>:
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 30 Jun 2022 09:29:18 +0200 you wrote:
-> Hi,
-> 
-> I had an issue that the mesh-daemon local node never responded to friend
-> requests from a low-power node. After some debugging, I found that the
-> net_key_id passed to the ctl_received function was always uninitialized.
-> It seems like the wrong variable was passed to the function.
-> 
-> [...]
+On Wed, 29 Jun 2022 20:46:56 +0800 you wrote:
+> It should always be considered that if send_request fails, sep
+> should be removed from the list and the requested memory freed;
+> ---
+>  profiles/audio/avdtp.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 
 Here is the summary with links:
-  - [BlueZ,1/1] mesh: Use correct net_id for received CTL messages
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=be7ebf29b370
+  - [BlueZ] avdtp: fix possible minor problems
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=44658fccacda
 
 You are awesome, thank you!
 -- 
