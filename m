@@ -2,42 +2,42 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B858C562994
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Jul 2022 05:35:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EAE2562B16
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  1 Jul 2022 07:53:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234024AbiGADdd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Jun 2022 23:33:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47322 "EHLO
+        id S234022AbiGAFw5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Jul 2022 01:52:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232859AbiGADdc (ORCPT
+        with ESMTP id S234024AbiGAFwz (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 Jun 2022 23:33:32 -0400
-Received: from smtpproxy21.qq.com (smtpbg701.qq.com [203.205.195.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B3EE1836A
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jun 2022 20:33:30 -0700 (PDT)
-X-QQ-mid: bizesmtp65t1656646404trfrkf7r
+        Fri, 1 Jul 2022 01:52:55 -0400
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB3DC6B27C
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jun 2022 22:52:52 -0700 (PDT)
+X-QQ-mid: bizesmtp69t1656654766te3oumrp
 Received: from localhost.localdomain ( [113.57.152.160])
         by bizesmtp.qq.com (ESMTP) with 
-        id ; Fri, 01 Jul 2022 11:33:19 +0800 (CST)
-X-QQ-SSF: 01400000000000C0E000000A0000000
-X-QQ-FEAT: s9hFaa1TJfASRycwlmP84uXCzhmvqkeS+jny0KWFTwwU/ts3wX2yHbXMwrFO5
-        fskdMu+jWQAhe/R4spVROuPDEeL8STbFVSnyv9cnpvxgbd5qq5M2iFipQ78leXsSAvg1Dtb
-        A/bccjUByTa1q5qR3mmQ8PPgazjqfxXMoCT+wX6f5Z9XSI+DrfdLH3DmZA1l0cmhfOioNdT
-        sQwGQZpc4cvMuSleSVnwoSIRejB1lC75a2pxRwOYFuu4+OquxLXDTMydSIHt/goXdbomUoN
-        5erm0NLBrRhjUXPuHuO1+mUNmc42dH1G+z4ToJrC+Cyz4BQKzqA4e+tfQyNwslrIXKaT/sQ
-        11cmeRFCZVXEkWC+wQ=
+        id ; Fri, 01 Jul 2022 13:52:40 +0800 (CST)
+X-QQ-SSF: 01400000002000C0E000000A0000000
+X-QQ-FEAT: jfdGVjI73+Tf7pKylkarlaL6NjaDJ8XIF/2zZnsDgxXviXviZLCwot79UonKZ
+        JVYmhYJyycSSGf7ucV0bUy+XP0ocMpo56It2Fiw35W7h4MorcNLlTl/TXqYcWbNHhVWsghx
+        l3PsTpqa+b6zMK/JVVESf98WObW2vFz8LIiydgQ07T8dqo9VyNCf9khKDtmjeJ0iNjHPI91
+        QkcFi0Km3oRdnokkKfQFxlgdahCD/SD/KEij++MhADgYsDcb7g9VOV/UZ6/JSb+JLZZK8QQ
+        4FCXoBE4EVlZix/ZcTfzUNFLCmp00bXVgDZ9Am8O5g7MEQy8lrO7qnRYXzGbAR3YbxaaOiJ
+        3fMHqf9qA6J4ZjMamosVQgLMN/pNg==
 X-QQ-GoodBg: 1
 From:   Youwan Wang <wangyouwan@uniontech.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Youwan Wang <wangyouwan@uniontech.com>
 Subject: [PATCH] obexd: fix crashed after cancel the on-going transfer
-Date:   Fri,  1 Jul 2022 11:33:17 +0800
-Message-Id: <20220701033317.13013-1-wangyouwan@uniontech.com>
+Date:   Fri,  1 Jul 2022 13:52:37 +0800
+Message-Id: <20220701055237.2946-1-wangyouwan@uniontech.com>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:uniontech.com:qybgforeign:qybgforeign10
+Feedback-ID: bizesmtp:uniontech.com:qybgforeign:qybgforeign8
 X-QQ-Bgrelay: 1
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -154,7 +154,7 @@ valgrind trace:
  1 file changed, 8 insertions(+), 12 deletions(-)
 
 diff --git a/gobex/gobex-transfer.c b/gobex/gobex-transfer.c
-index c94d018b2..0868e94b0 100644
+index c94d018b2..bd820757d 100644
 --- a/gobex/gobex-transfer.c
 +++ b/gobex/gobex-transfer.c
 @@ -83,15 +83,18 @@ static struct transfer *find_transfer(guint id)
@@ -163,7 +163,7 @@ index c94d018b2..0868e94b0 100644
  {
 -	guint id = transfer->id;
 +	if (!g_slist_find(transfers, transfer))
-+	return;
++		return;
  
 -	g_obex_debug(G_OBEX_DEBUG_TRANSFER, "transfer %u", id);
 +	transfer->req_id = 0;
