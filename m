@@ -2,111 +2,168 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53CFD563CD2
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Jul 2022 01:37:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 891E3563CEE
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Jul 2022 02:06:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231320AbiGAXhM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Jul 2022 19:37:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44610 "EHLO
+        id S231163AbiGBAGm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Jul 2022 20:06:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230206AbiGAXhL (ORCPT
+        with ESMTP id S229999AbiGBAGm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Jul 2022 19:37:11 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B3DC70AC1
-        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Jul 2022 16:37:09 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id 9so2316568ill.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 01 Jul 2022 16:37:09 -0700 (PDT)
+        Fri, 1 Jul 2022 20:06:42 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A428369CB
+        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Jul 2022 17:06:38 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id i8-20020a17090aee8800b001ecc929d14dso6168358pjz.0
+        for <linux-bluetooth@vger.kernel.org>; Fri, 01 Jul 2022 17:06:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=A5LrmgTgvCmMiw2D30mRJ2rF8pm0EvvvJb9ByHe153M=;
-        b=e27CZC9CqLANx76ih7YS6rAI0H5Ni2a3UMfByqinThXvTRt0lfwlFEPW9j/OxYE5tz
-         VcpsLsqavgl5uezXIUYx4Evssogc5HiQ1O/AkWREW8rSHWODup9Zr7W/b356tnKLA1lS
-         aMULU3hPkrsOGwepaz8ToAQVsJ9A8hceODrrBOmOWZ9Bte3+cY6bsiLRBC6ccHcuY6fd
-         fIq4fSLHY8cmguRDw25p/khV2tu10yqOrG4RZ/38/avkbBGoBsSQ4PD2Nc8x3X+nCtGf
-         8+PKxYpbGUwm5mFYWJPYwahSemaBnCxPPillRDGe612DTh2A4ErkmZpurqnbzCqQPEKm
-         MlFQ==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=qWAM4+rLKCtQSsn1uBT4BU+m4NYPjqmFyr9vi3HpRBU=;
+        b=SmVAmcsW6vIjmLTBVLIBGgIBf/GP4V0U3vKVXexN8Vq98UbCEwd6AnF7QSEhOS4LGm
+         uArjlmsIWrb6oAYxhDuUZqGuYFzCHiBrofH0oitZYDXwr+vebpXJ1N70yzOYkiBWdJBT
+         V4wA3ONGnpJp+M+iLRW6XdPk9rTtTdwKnM8qrNduDlvHi/AKmYsCdKdRGVOvNu/fvaL2
+         ulhE9PEIJcQe4o+gSU9RIc9s/SLrKdoXugP4tlYAL58pX/CINRtvdi9zUg879TSlXM8v
+         znq+fdjdTx/nUh3Ma+bnn5MVXwZic0Kh4mzaiiK6InzyNO4Acu8ZVdZfe7Xee2ah131Z
+         zI6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=A5LrmgTgvCmMiw2D30mRJ2rF8pm0EvvvJb9ByHe153M=;
-        b=krbCkFAfQeBjQK4b9OztKKYV+1MS1crvvFtGotDwUX6hC5QC7vAnQoKHZW+BnHmxcK
-         fBpV2rCbqy0YtaVGWAfcDYpAvyXALTmkjPA68VuIFfdWqSzCRlkMGgJkpxE9pHPKJOqH
-         OxOCSIkkIB3RIuFaSktIGKcvUhZz23VY4+bGrgsBCpEB4a2b7XSuMqmr9ko5UH1Tb3ot
-         hNlSLjuQAhXgCDbthWcn1VdVDx0kvo92PhukAo0sYOI3KwCFxFzJNJt33+vS3XAf8Bs9
-         0cqAhGVp3dLhPC/mlc+esrRw1uPdHxx5rLOcaczQKEKGnaqsSnotLpZxR9wOwnFUVwP4
-         DETw==
-X-Gm-Message-State: AJIora8Xng4chFSgsvhWSNqblB1W8NAzXbECvtyAHxNu5mWoAPcRfvYA
-        3e6iEGAM/eWNOr0ZhOBxFx5bKZI+jnA=
-X-Google-Smtp-Source: AGRyM1sKFPF/xyouxO6PPdEjWDIJZn0ue9b57fn0oU6EkbrKrkkjy2f+claGU5tSmZRGJ3UOsWlweg==
-X-Received: by 2002:a05:6e02:144d:b0:2da:b8f7:402a with SMTP id p13-20020a056e02144d00b002dab8f7402amr9484078ilo.178.1656718627968;
-        Fri, 01 Jul 2022 16:37:07 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id p70-20020a022949000000b00339d2cd8da1sm10312154jap.152.2022.07.01.16.37.07
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=qWAM4+rLKCtQSsn1uBT4BU+m4NYPjqmFyr9vi3HpRBU=;
+        b=bihbkChx3wwN6qoXTEvx/zaiPFUIDCrhp4rrZM9loj5Brm/3JEbZtU7xA4EVzjFsw7
+         m0FvFn8fpXuww+lp0HWNyYXpA4kPB6ckOhGoZZKxz/cvtMBt7QUnKXGDHZbG0OlAxN/c
+         W4rg2pH7AuY3GR03AYm24JGNZqLRgj/lwy6IG7hTZNzkt5t8dZkbwqZZVCddKq9F9twx
+         dfzjo9DHhvC7dX3WrWQNejQtK59WS3LURJcbTAmuGJWDhlFS3zjQ5k6GnFpu1DpU66H4
+         eVWLy4TptHNptYFOsK4LfrPAQ+PW3A96bbEmAqNnQkwkoXZtHT2v51NDvxTbMg4aujy/
+         wJEQ==
+X-Gm-Message-State: AJIora8ozdFY9s7dJ+HRYuEaNeX1j6On+UWdngl5cWQR4M+RaAa9ViW3
+        G0QqwARRMGos6Ojf0vfcApusi7smoi8=
+X-Google-Smtp-Source: AGRyM1sKJOdCDy1Mvd1ZuGO0j8XbtvdwxnnSwhRocVFMrJUdX+ggr/Dexi0OYYCksJJND8ewrEzcdA==
+X-Received: by 2002:a17:90a:8b81:b0:1ef:3b32:8fa6 with SMTP id z1-20020a17090a8b8100b001ef3b328fa6mr12685571pjn.165.1656720397640;
+        Fri, 01 Jul 2022 17:06:37 -0700 (PDT)
+Received: from [172.17.0.2] ([20.253.221.156])
+        by smtp.gmail.com with ESMTPSA id v7-20020a17090a4ec700b001ecaa74f8dasm7276715pjl.11.2022.07.01.17.06.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 16:37:07 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v5 7/7] Bluetooth: btusb: Detect if an ACL packet is in fact an ISO packet
-Date:   Fri,  1 Jul 2022 16:36:58 -0700
-Message-Id: <20220701233658.966972-7-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.3
+        Fri, 01 Jul 2022 17:06:37 -0700 (PDT)
+Message-ID: <62bf8c0d.1c69fb81.76780.b4a5@mx.google.com>
+Date:   Fri, 01 Jul 2022 17:06:37 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============7779264272177947240=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [v5,1/7] Bluetooth: hci_core: Introduce hci_recv_event_data
+Reply-To: linux-bluetooth@vger.kernel.org
 In-Reply-To: <20220701233658.966972-1-luiz.dentz@gmail.com>
 References: <20220701233658.966972-1-luiz.dentz@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============7779264272177947240==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Fix up the packet type if ISO packets are sent over the bulk endpoint.
+This is automated email and please do not reply to this email!
 
-Note: This is a stopgap since the Bluetooth specification currently
-doesn't define any endpoint to transport ISO packets.
+Dear submitter,
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=655961
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      12.27 seconds
+GitLint                       PASS      3.08 seconds
+SubjectPrefix                 PASS      2.14 seconds
+BuildKernel                   PASS      38.92 seconds
+BuildKernel32                 PASS      34.65 seconds
+Incremental Build with patchesPASS      192.84 seconds
+TestRunner: Setup             PASS      566.86 seconds
+TestRunner: l2cap-tester      PASS      18.75 seconds
+TestRunner: bnep-tester       PASS      6.52 seconds
+TestRunner: mgmt-tester       FAIL      115.33 seconds
+TestRunner: rfcomm-tester     PASS      10.37 seconds
+TestRunner: sco-tester        PASS      10.34 seconds
+TestRunner: smp-tester        PASS      10.34 seconds
+TestRunner: userchan-tester   PASS      6.83 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL - 12.27 seconds
+Run checkpatch.pl script with rule in .checkpatch.conf
+[v5,3/7] Bluetooth: Add BTPROTO_ISO socket type\Traceback (most recent call last):
+  File "scripts/spdxcheck.py", line 6, in <module>
+    from ply import lex, yacc
+ModuleNotFoundError: No module named 'ply'
+Traceback (most recent call last):
+  File "scripts/spdxcheck.py", line 6, in <module>
+    from ply import lex, yacc
+ModuleNotFoundError: No module named 'ply'
+WARNING:FILE_PATH_CHANGES: added, moved or deleted file(s), does MAINTAINERS need updating?
+#176: 
+new file mode 100644
+
+total: 0 errors, 1 warnings, 0 checks, 1718 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/12903848.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+[v5,4/7] Bluetooth: Add initial implementation of BIS connections\WARNING:BLOCK_COMMENT_STYLE: Block comments use a trailing */ on a separate line
+#848: FILE: net/bluetooth/hci_conn.c:817:
++ * */
+
+WARNING:LINE_SPACING: Missing a blank line after declarations
+#1878: FILE: net/bluetooth/hci_sync.c:1031:
++		struct adv_info *adv = hci_find_adv_instance(hdev, instance);
++		if (!adv || !adv->periodic)
+
+total: 0 errors, 2 warnings, 0 checks, 1874 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/12903852.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: TestRunner: mgmt-tester - FAIL - 115.33 seconds
+Run test-runner with mgmt-tester
+Total: 494, Passed: 492 (99.6%), Failed: 2, Not Run: 0
+
+Failed Test Cases
+Read Exp Feature - Success                           Failed       0.104 seconds
+Read Exp Feature - Success (Index None)              Failed       0.118 seconds
+
+
+
 ---
- drivers/bluetooth/btusb.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 28fbc5837f79..812a046f1b5e 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -896,11 +896,21 @@ static int btusb_recv_bulk(struct btusb_data *data, void *buffer, int count)
- 		hci_skb_expect(skb) -= len;
- 
- 		if (skb->len == HCI_ACL_HDR_SIZE) {
-+			__u16 handle = __le16_to_cpu(hci_acl_hdr(skb)->handle);
- 			__le16 dlen = hci_acl_hdr(skb)->dlen;
-+			__u8 type;
- 
- 			/* Complete ACL header */
- 			hci_skb_expect(skb) = __le16_to_cpu(dlen);
- 
-+			/* Detect if ISO packet has been sent over bulk */
-+			if (hci_conn_num(data->hdev, ISO_LINK)) {
-+				type = hci_conn_lookup_type(data->hdev,
-+							    hci_handle(handle));
-+				if (type == ISO_LINK)
-+					hci_skb_pkt_type(skb) = HCI_ISODATA_PKT;
-+			}
-+
- 			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
- 				kfree_skb(skb);
- 				skb = NULL;
--- 
-2.35.3
 
+--===============7779264272177947240==--
