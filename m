@@ -2,111 +2,86 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5872563CFD
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Jul 2022 02:40:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B984563D02
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  2 Jul 2022 02:40:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231535AbiGBASB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 1 Jul 2022 20:18:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38766 "EHLO
+        id S230415AbiGBA3l (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 1 Jul 2022 20:29:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231496AbiGBASA (ORCPT
+        with ESMTP id S230294AbiGBA3k (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 1 Jul 2022 20:18:00 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A049538D87
-        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Jul 2022 17:17:59 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id w24so4066982pjg.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 01 Jul 2022 17:17:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=A5LrmgTgvCmMiw2D30mRJ2rF8pm0EvvvJb9ByHe153M=;
-        b=AbXouwiweSHpC8OUpyxHlE/mEiVWLWAUZRXehzhvqLQaq+0lWyegSpLPztukxaB0D1
-         vnyT5EgURuVKRwG2L0DkpKYdac3kQxETEtmb7MDyLTbzdEBElCaa03qAHgUQGeVvMYz0
-         xfkan0bt3s6dnqcDexkOMbv3rNqUGvnXjujpWeH6godb57yey65oxp74z3lgBulv3VSe
-         5y4aLnE7iFWe1Sno8Yguxg8zGi14xkGEWzXCHukKlqXwZfGlgh7j8lfTzBYiIYCgatix
-         GArK7yOpHX8QiT9Uego76AY6YFjh9BnnLQJFHFSUPJ+A/VXfEMeuWxbNulK238FthX5c
-         Xz+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=A5LrmgTgvCmMiw2D30mRJ2rF8pm0EvvvJb9ByHe153M=;
-        b=h9PHhjyOsRlOgvxSqy+DDgEtC1Ejme2EV6zuEvet15HLr8/hZ2S2jHjRmU1hZe1ay/
-         XT7MvwiPs9gZJFxA6ZeHx2SE7DRsSgvlbDrPK1SmKpk2Btejsu65QlOHBkS5rsanSfm4
-         PsQuguCaX5or7zYS+k5d8S82laTDyyxB5Vaz9i8PzVGlAFTkX8ThOnRViqdW5SXxVZdv
-         l6OXmoOSJywPf4OKyF0S0jaMcHPdtJ7AhMSevRrXT+oJBlY2vdhjurNpLKvsmpjPhfol
-         Oo7S4kgSd6wn/pLMPbR+jC1vqvVSDL6AU8DWYwwliFARpP9x9B8yWlmfNe5ynY7hKwkc
-         Yuug==
-X-Gm-Message-State: AJIora9jDBxytH4AgOZUXOViJeLS4ohSMuA+3dFEkdP8GIo24Egpt5Gu
-        DhB4aoq+lpr38itCL1fYy7BiMDw6LMU=
-X-Google-Smtp-Source: AGRyM1uUOd8bXTUq0JmSv4iBsVB//HcG4gxweVXUZlZJlyo1A69wMJeu6/0YNPhBrL2lL1PVaToyXQ==
-X-Received: by 2002:a17:902:cf06:b0:16b:cc33:5bce with SMTP id i6-20020a170902cf0600b0016bcc335bcemr984339plg.152.1656721078661;
-        Fri, 01 Jul 2022 17:17:58 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id s8-20020aa78d48000000b0052089e1b88esm16219667pfe.192.2022.07.01.17.17.57
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jul 2022 17:17:58 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v6 7/7] Bluetooth: btusb: Detect if an ACL packet is in fact an ISO packet
-Date:   Fri,  1 Jul 2022 17:17:48 -0700
-Message-Id: <20220702001748.1003783-7-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20220702001748.1003783-1-luiz.dentz@gmail.com>
-References: <20220702001748.1003783-1-luiz.dentz@gmail.com>
+        Fri, 1 Jul 2022 20:29:40 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC05558FD6
+        for <linux-bluetooth@vger.kernel.org>; Fri,  1 Jul 2022 17:29:39 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6D6E0B83266
+        for <linux-bluetooth@vger.kernel.org>; Sat,  2 Jul 2022 00:29:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1F911C341CB;
+        Sat,  2 Jul 2022 00:29:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1656721777;
+        bh=YP6ZQnDP/WGaxg49IcOOoTPm7tYg54Y1rnYaWV6afU0=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=H1GQvbQAyNrPQnSXmVyd0eeU8PEwR08mt2K2YU0+zcpZ5EUC1h9iRLsuSO/qaHASf
+         rHbINJV17sdCxw1iGajsXIWlE/0K/skwNe/NUZWduIBcp+NDEbMUEsBq+CLlNz8LhX
+         /4+a7SwMjLqZZnxtRCSIMTOLEiDHtYbgzYDEV7clFfiyaQRb+vK0y5k8SU9MCMilcf
+         WI9Yq0QmObsXuTjmtqJR4vmo2zMC37rE4uc/EfVyBw8M0cGCk5UlDpbvIQzvRoK9AB
+         D2EEOnFlDaugpJPHfIPopnZ2yfl9xa4QZkz5sZri1vidT/wwrjzrwlqUlbEMzn3KTJ
+         gQaLjWMWcWWCg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0CD1FE49BBF;
+        Sat,  2 Jul 2022 00:29:37 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH BlueZ 1/2] tools/btmgmt: Fix errors reported by scan-build
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <165672177704.15137.7822022272106359994.git-patchwork-notify@kernel.org>
+Date:   Sat, 02 Jul 2022 00:29:37 +0000
+References: <20220701004352.2253107-1-hj.tedd.an@gmail.com>
+In-Reply-To: <20220701004352.2253107-1-hj.tedd.an@gmail.com>
+To:     Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hello:
 
-Fix up the packet type if ISO packets are sent over the bulk endpoint.
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Note: This is a stopgap since the Bluetooth specification currently
-doesn't define any endpoint to transport ISO packets.
+On Thu, 30 Jun 2022 17:43:51 -0700 you wrote:
+> From: Tedd Ho-Jeong An <tedd.an@intel.com>
+> 
+> This patch fixes the errors reported by the scan-build.
+> 
+> tools/btmgmt.c:2699:2: warning: Value stored to 'argc' is never read
+> [deadcode.DeadStores]
+>         argc -= optind;
+>         ^       ~~~~~~
+> 
+> [...]
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
----
- drivers/bluetooth/btusb.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Here is the summary with links:
+  - [BlueZ,1/2] tools/btmgmt: Fix errors reported by scan-build
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c1f0b1a747bc
+  - [BlueZ,2/2] tools/test-runner: Fix errors reported by scan-build
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=dd12ff1ed1f0
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 28fbc5837f79..812a046f1b5e 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -896,11 +896,21 @@ static int btusb_recv_bulk(struct btusb_data *data, void *buffer, int count)
- 		hci_skb_expect(skb) -= len;
- 
- 		if (skb->len == HCI_ACL_HDR_SIZE) {
-+			__u16 handle = __le16_to_cpu(hci_acl_hdr(skb)->handle);
- 			__le16 dlen = hci_acl_hdr(skb)->dlen;
-+			__u8 type;
- 
- 			/* Complete ACL header */
- 			hci_skb_expect(skb) = __le16_to_cpu(dlen);
- 
-+			/* Detect if ISO packet has been sent over bulk */
-+			if (hci_conn_num(data->hdev, ISO_LINK)) {
-+				type = hci_conn_lookup_type(data->hdev,
-+							    hci_handle(handle));
-+				if (type == ISO_LINK)
-+					hci_skb_pkt_type(skb) = HCI_ISODATA_PKT;
-+			}
-+
- 			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
- 				kfree_skb(skb);
- 				skb = NULL;
+You are awesome, thank you!
 -- 
-2.35.3
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
