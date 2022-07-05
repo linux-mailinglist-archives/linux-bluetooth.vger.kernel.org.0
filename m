@@ -2,93 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 377AB5662DA
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Jul 2022 07:38:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79B22566363
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Jul 2022 08:49:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229739AbiGEFhA convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 5 Jul 2022 01:37:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50846 "EHLO
+        id S229521AbiGEGsh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 5 Jul 2022 02:48:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbiGEFg4 (ORCPT
+        with ESMTP id S229486AbiGEGsg (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 5 Jul 2022 01:36:56 -0400
-Received: from mail.pgj.campeche.gob.mx (unknown [187.157.28.107])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FDA7101DE;
-        Mon,  4 Jul 2022 22:36:56 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.pgj.campeche.gob.mx (Postfix) with ESMTP id 7E44D1BC261C;
-        Tue,  5 Jul 2022 00:36:24 -0500 (CDT)
-Received: from mail.pgj.campeche.gob.mx ([127.0.0.1])
-        by localhost (mail.pgj.campeche.gob.mx [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id G4c8TOVhpc2E; Tue,  5 Jul 2022 00:36:21 -0500 (CDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.pgj.campeche.gob.mx (Postfix) with ESMTP id CC1B21BC2615;
-        Tue,  5 Jul 2022 00:36:20 -0500 (CDT)
-X-Virus-Scanned: amavisd-new at pgj.campeche.gob.mx
-Received: from mail.pgj.campeche.gob.mx ([127.0.0.1])
-        by localhost (mail.pgj.campeche.gob.mx [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id ghH6gQQkEy_T; Tue,  5 Jul 2022 00:36:19 -0500 (CDT)
-Received: from mail.pgj.campeche.gob.mx (mail.pgj.campeche.gob.mx [172.24.1.108])
-        by mail.pgj.campeche.gob.mx (Postfix) with ESMTP id CE4B91BC260C;
-        Tue,  5 Jul 2022 00:36:16 -0500 (CDT)
-Date:   Tue, 5 Jul 2022 00:36:16 -0500 (CDT)
-From:   =?utf-8?B?0YHQuNGB0YLQtdC80L3QuNC5INCw0LTQvNGW0L3RltGB0YLRgNCw0YLQvtGA?= 
-        <vfgcontrolinterno@pgj.campeche.gob.mx>
-Reply-To: sistemassadmins@mail2engineer.com
-Message-ID: <965779657.10836.1656999376808.JavaMail.zimbra@pgj.campeche.gob.mx>
-Subject: 
+        Tue, 5 Jul 2022 02:48:36 -0400
+X-Greylist: delayed 521 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 04 Jul 2022 23:48:36 PDT
+Received: from mail.ferris.chat (mail.ferris.chat [172.105.4.241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B9CCE96
+        for <linux-bluetooth@vger.kernel.org>; Mon,  4 Jul 2022 23:48:35 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 99F461F248
+        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Jul 2022 06:39:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imaskeleton.me;
+        s=dkim; t=1657003192; h=from:subject:date:message-id:to:mime-version:content-type:
+         content-transfer-encoding:content-language:  disposition-notification-to;
+        bh=QA3rwpnQu9s90PZbyLPjuHn18SJfku/PYY+D0OC6cXM=;
+        b=Fo4NriKpajgXdFobVweQdPc9kvFFw/SpM4PSAs661JcYu6FW78jf0I8xY4S0uwyOCf18m5
+        hHfJ4DdYkxBaxv8E6eKx36VKcULS8pojrE/Ie9nhReBKTI/NKQx2OlMQaVF3P3Kcbevo3D
+        C+uNh1CFgLN/+ZAi+GAwZKXlD60jRH1+hafrNXixFTsnPU1KAfChtxLVdtMdWc2gMX0vnn
+        Y/GJetGjzrniKDTmKpWmpCZ3XiT8R5NZThPQfyWjRKPtZw8gzAhvek/trPAbd2q/bXRK4/
+        PjSCp/26AaRA6GyGzIBKlpfipg7pGbLeKbdj8HQ074UzECqc1N6DY/DZCo9s4w==
+Message-ID: <faa17dab-fbd5-a077-3e08-31b91645154d@imaskeleton.me>
+Date:   Tue, 5 Jul 2022 00:39:46 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Originating-IP: [172.24.1.254]
-X-Mailer: Zimbra 8.8.15_GA_4304 (zclient/8.8.15_GA_4304)
-Thread-Index: d92JZ22dbxhpjczsobuE062h14d0ng==
-Thread-Topic: 
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: Yes, score=7.5 required=5.0 tests=BAYES_50,
-        FREEMAIL_FORGED_REPLYTO,KHOP_HELO_FCRDNS,MAY_BE_FORGED,MISSING_HEADERS,
-        RCVD_IN_MSPIKE_H2,RDNS_DYNAMIC,REPLYTO_WITHOUT_TO_CC,SPF_HELO_NONE,
-        SPF_NONE,TVD_SPACE_RATIO_MINFP,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_MSPIKE_H2 RBL: Average reputation (+2)
-        *      [187.157.28.107 listed in wl.mailspike.net]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4466]
-        *  1.0 MISSING_HEADERS Missing To: header
-        *  0.0 SPF_NONE SPF: sender does not publish an SPF Record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  1.6 REPLYTO_WITHOUT_TO_CC No description available.
-        *  1.0 RDNS_DYNAMIC Delivered to internal network by host with
-        *      dynamic-looking rDNS
-        *  0.0 UPPERCASE_50_75 message body is 50-75% uppercase
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-        *  1.0 MAY_BE_FORGED Relay IP's reverse DNS does not resolve to IP
-        *  0.0 KHOP_HELO_FCRDNS Relay HELO differs from its IP's reverse DNS
-        *  0.0 TVD_SPACE_RATIO_MINFP Space ratio (vertical text obfuscation?)
-X-Spam-Level: *******
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Content-Language: en-US
+To:     linux-bluetooth@vger.kernel.org
+From:   0/0 <zero@imaskeleton.me>
+Subject: ASHA Implementation
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_40,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-увага;
+Hi there!
 
-Ваша електронна пошта перевищила обмеження пам'яті, яке становить 5 ГБ, визначене адміністратором, яке в даний час працює на 10,9 ГБ. Ви не зможете надсилати або отримувати нову пошту, доки не перевірите поштову скриньку "Вхідні". Щоб відновити справність поштової скриньки, надішліть такі відомості
-нижче:
+I'm deaf with Bluetooth-enabled implants that implement the ASHA 
+protocol, for which docs can be found here: 
+https://source.android.com/devices/bluetooth/asha, along with an example 
+implementation here: 
+https://developer.android.com/reference/android/bluetooth/BluetoothHearingAid.
 
-Ім'я:
-Ім'я користувача:
-пароль:
-Підтвердження пароля:
-Адреса електронної пошти:
-телефон:
+I was wondering if it'd be possible to get this implemented somewhere in 
+Linux itself, as it'd be a huge time saver instead of having to hassle 
+with many libraries. Right now my only option really is to stream audio 
+to an Android/iOS device from Linux, and then to my processors, which 
+adds some bad latency and makes it a huge hassle, or to use proprietary 
+devices that don't seem to reliably work.
 
-Якщо не вдається повторно перевірити повідомлення, ваша поштова скринька буде
-Вимкнуто!
+I'm sure I'm definitely not the only person out here who would benefit 
+from their processors being automatically picked up.
 
-Приносимо вибачення за незручності.
-Код підтвердження: UA:@UAWEBADMIN72134539.WEB.UA
-Технічна підтримка Пошти Системний адміністратор © 2022
+Thanks!
+
