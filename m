@@ -2,63 +2,62 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23D3D570E5B
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Jul 2022 01:35:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD9D4570E75
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Jul 2022 01:59:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230117AbiGKXfx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 11 Jul 2022 19:35:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53026 "EHLO
+        id S229745AbiGKX7S (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 11 Jul 2022 19:59:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229743AbiGKXfr (ORCPT
+        with ESMTP id S229477AbiGKX7R (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 11 Jul 2022 19:35:47 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD87B2B626
-        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Jul 2022 16:35:46 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d10so6036244pfd.9
-        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Jul 2022 16:35:46 -0700 (PDT)
+        Mon, 11 Jul 2022 19:59:17 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D504B6147
+        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Jul 2022 16:59:13 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id o133so8596178oig.13
+        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Jul 2022 16:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=A5LrmgTgvCmMiw2D30mRJ2rF8pm0EvvvJb9ByHe153M=;
-        b=ClixVJyoGzzxwLRfWfVxGbAGPbyes9Ec8tdYdV8F+p0L9bwzxJi8O8b4/0izO8wpqV
-         AWhD2lxeEYCv1iP++ZwvQr8QSVYtwci3UvJvkUORmMG1UuSeB/0Yo93Kq45XR9F1OHov
-         MqpyWs19QMyWdijfTUpDt8FNvaDBHu3eA6skkMewW/guCqiIxjLwM+ZyLvURVfQBNxj0
-         Vy98hYnF/YhUvjHbN/eST+/s82hSaqh+ruKWpI3UHJ0m1bQHkoMlq6O/HF3W8pukQDgA
-         SqhfQZ3vPvEXSkfShrM0P61onGJLYfyma63dLElDuz/aIZIEPYTUuap/BK1p6dVL0Smd
-         qp6g==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=UjCFOwf0jWHe/GM/COFL2k5eoeDCrZ/VMVxX8o6Vq30=;
+        b=OeT1pIqW4IHISb16rIFrHVw7dd1vi+UywY/Wxrtpd1qwSu9Y+KM6lNuIhAZN+w14dc
+         6k1Dl/ZkpqaVbZnz6xQGSn4tQnyKsNtTVuoSD/H6Fl4zDTFqeWU514LslqieGcVrQjRN
+         cP7fznxldvruy9YDIh0+t3fJyoXqQzcOpzFGFXyzYgCrd6OaUuCGpIRMeM0e2jbWaYvt
+         URIuT8vKqj5TyaG3tGuHN41KFpPy0sxsALMsJVavYFhp4E+63ZsfrB81bJqpXk5dud6f
+         wGXS8ZTPN531RahZLDpewMO7kZF8XU7ECryhAtw+kyd/squU6znOvoX5/2Vdln8UHXPh
+         nsDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=A5LrmgTgvCmMiw2D30mRJ2rF8pm0EvvvJb9ByHe153M=;
-        b=wBx/WtY0wDdDg1J28ZrY9PC0q98aYPuEkOdzBPnJW3ji9Z9k8XZZIci32yRnA02ANW
-         YlpQ46D5ipHeq8Zgo7/Ak4u1nmlvQjZZLSpeNPaozWPv2W4kxEfMst6ampLP34vP0JrV
-         qovPwrc630JQ+XW8zmEdwN1/9zH/F9qdawA6IjZ1hL1aeC14mZFe8MWt+IrDrc4oaAY6
-         mDZ8zIrrBjSzAhnb5l6CH8HX9UQvOpdLz5/5cQn7P5gbxNUTXVoxXbnAWTDFJfeptiYY
-         cNmsp7jNkJbx9kubhdGIKL4Ovcq9AoCLNsA1JIWDygQCzGtiylG6uy28xjp/1ZxVhJQu
-         6KyQ==
-X-Gm-Message-State: AJIora8z91o5DMmq/JecpyWMQh05XDVyRessbsVU1oHN6MFvdIeOTIw4
-        uZztXNfUfE4Eqv2nI8xi2TGl5bgV4v8=
-X-Google-Smtp-Source: AGRyM1v3nGs1BcB8ohwoR1AUm2Hqr278FaBElr7S+CoSGTPYQrZvyHk08XOwF6rUyBi3he51hYKkoA==
-X-Received: by 2002:a63:b144:0:b0:40c:e240:5e05 with SMTP id g4-20020a63b144000000b0040ce2405e05mr18410753pgp.276.1657582545857;
-        Mon, 11 Jul 2022 16:35:45 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id q93-20020a17090a17e600b001e33e264fd6sm5446281pja.40.2022.07.11.16.35.44
-        for <linux-bluetooth@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=UjCFOwf0jWHe/GM/COFL2k5eoeDCrZ/VMVxX8o6Vq30=;
+        b=GsbTPZXXe6jstFgIJJGTFnOY3GNKd29dVKT72CuStezb2HM5CLLni7gnUbpyz9ZfPf
+         ufDBgbPnNzJDL526u+uCZ3YmC7UgtO9AaHfjT0zOEjyzLFStW+yUzm27jcxBAQKWVYcP
+         VyfHYGSctAgncizSiG8eahOlhsQefeh3OlMaJpdxLlvbmKGDaK47EIT+S0PGCNDYFkeT
+         pErUwUQIqtKsVEt5SpTDBdVjcAlrRAIM3QPXGoAJdXA9yZQTdTg6kk2yyc9nrR8CwiwJ
+         lw4b1Y8yyRe5vNBfFwOrHHClqZ1OWagHT7XLzsc87n5xoSf6MckyMCLQ24hFEzySJHq3
+         NYTQ==
+X-Gm-Message-State: AJIora/IU5VI+vFO/rPQ2En/bUnIZhvY3kDF1AmBzl6lYfX7xJDHxd+2
+        YEGzvhCLTIBFVswjsxLJIvVfXJnMA8Y=
+X-Google-Smtp-Source: AGRyM1u8ZAE5OpxAUv4qghzlu1qq+dP9yYASz3UWSl2T31VkJjBg814IbQ75ePuDmAKSS0s0aUkIlg==
+X-Received: by 2002:a05:6808:158e:b0:33a:4e2:3ae5 with SMTP id t14-20020a056808158e00b0033a04e23ae5mr591213oiw.236.1657583952970;
+        Mon, 11 Jul 2022 16:59:12 -0700 (PDT)
+Received: from [172.17.0.2] ([70.37.90.230])
+        by smtp.gmail.com with ESMTPSA id eh40-20020a056870f5a800b000f342d078fasm3938940oab.52.2022.07.11.16.59.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jul 2022 16:35:45 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v7 7/7] Bluetooth: btusb: Detect if an ACL packet is in fact an ISO packet
-Date:   Mon, 11 Jul 2022 16:35:35 -0700
-Message-Id: <20220711233535.3134546-7-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20220711233535.3134546-1-luiz.dentz@gmail.com>
-References: <20220711233535.3134546-1-luiz.dentz@gmail.com>
+        Mon, 11 Jul 2022 16:59:12 -0700 (PDT)
+Message-ID: <62ccb950.1c69fb81.1d2c1.c258@mx.google.com>
+Date:   Mon, 11 Jul 2022 16:59:12 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8984191173231710860=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, jiangzp@google.com
+Subject: RE: This patch fixes a previous patch which did not remove setting
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220711155349.kernel.v1.1.Ia489394ab4176efa5a39ce8d08bb4c4b7bee23b9@changeid>
+References: <20220711155349.kernel.v1.1.Ia489394ab4176efa5a39ce8d08bb4c4b7bee23b9@changeid>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -69,44 +68,50 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============8984191173231710860==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Fix up the packet type if ISO packets are sent over the bulk endpoint.
+This is automated email and please do not reply to this email!
 
-Note: This is a stopgap since the Bluetooth specification currently
-doesn't define any endpoint to transport ISO packets.
+Dear submitter,
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=658707
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.37 seconds
+GitLint                       FAIL      0.91 seconds
+SubjectPrefix                 PASS      0.62 seconds
+BuildKernel                   PASS      33.12 seconds
+BuildKernel32                 PASS      28.93 seconds
+Incremental Build with patchesPASS      39.50 seconds
+TestRunner: Setup             PASS      487.99 seconds
+TestRunner: l2cap-tester      PASS      16.99 seconds
+TestRunner: bnep-tester       PASS      5.85 seconds
+TestRunner: mgmt-tester       PASS      99.27 seconds
+TestRunner: rfcomm-tester     PASS      9.02 seconds
+TestRunner: sco-tester        PASS      9.19 seconds
+TestRunner: smp-tester        PASS      9.19 seconds
+TestRunner: userchan-tester   PASS      6.15 seconds
+
+Details
+##############################
+Test: GitLint - FAIL - 0.91 seconds
+Run gitlint with rule in .gitlint
+[kernel,v1,1/1] Bluetooth: hci_sync: Fix resuming passive scan after suspend resume
+1: T1 Title exceeds max length (83>80): "[kernel,v1,1/1] Bluetooth: hci_sync: Fix resuming passive scan after suspend resume"
+
+
+
+
 ---
- drivers/bluetooth/btusb.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 28fbc5837f79..812a046f1b5e 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -896,11 +896,21 @@ static int btusb_recv_bulk(struct btusb_data *data, void *buffer, int count)
- 		hci_skb_expect(skb) -= len;
- 
- 		if (skb->len == HCI_ACL_HDR_SIZE) {
-+			__u16 handle = __le16_to_cpu(hci_acl_hdr(skb)->handle);
- 			__le16 dlen = hci_acl_hdr(skb)->dlen;
-+			__u8 type;
- 
- 			/* Complete ACL header */
- 			hci_skb_expect(skb) = __le16_to_cpu(dlen);
- 
-+			/* Detect if ISO packet has been sent over bulk */
-+			if (hci_conn_num(data->hdev, ISO_LINK)) {
-+				type = hci_conn_lookup_type(data->hdev,
-+							    hci_handle(handle));
-+				if (type == ISO_LINK)
-+					hci_skb_pkt_type(skb) = HCI_ISODATA_PKT;
-+			}
-+
- 			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
- 				kfree_skb(skb);
- 				skb = NULL;
--- 
-2.35.3
 
+--===============8984191173231710860==--
