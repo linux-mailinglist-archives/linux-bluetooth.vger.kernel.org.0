@@ -2,108 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 604B9574641
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Jul 2022 10:01:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0A185746E8
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Jul 2022 10:36:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232322AbiGNIAw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 14 Jul 2022 04:00:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57212 "EHLO
+        id S236043AbiGNIgo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 14 Jul 2022 04:36:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229869AbiGNIAq (ORCPT
+        with ESMTP id S235796AbiGNIgm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 14 Jul 2022 04:00:46 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F24922522
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Jul 2022 01:00:45 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-10c0d96953fso1613623fac.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Jul 2022 01:00:45 -0700 (PDT)
+        Thu, 14 Jul 2022 04:36:42 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F9673ED4D
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Jul 2022 01:36:40 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id bp17so1650314lfb.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Jul 2022 01:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
-         :references;
-        bh=tZOsZ9o/wmMdf21zGnFd0+0ycOAK/adrec2RpHkDbvU=;
-        b=kcTcF3QINSdr2ftN3L0IpsmWsj5LzAhAo6FdF5114OKJfliGIEoJQJDbFS7OYz0UTt
-         Guk8uZ5ZkvDi+EuGqYlKQvT7AYlUDRd13LtUrD8brDZ7uQiv+FOofrRRSDKAgWWcqFS2
-         TVO+BEW7w9lb/SZ+VbC6khM8g/kYv3O0vsj4poajkUPbD4JVbHt6BcNKExgWxbtHq/Ka
-         BcUtYAOJG2RJbf5yZD5l3LSY1qvKNnk/yi2UZQ5nvfWnaBHpsWHBQsc6/0e/mHyWHaG+
-         w7LExkx39yQOuaA3w6WyL6dGMYKEIrH8ZqKJJdNO7LjArTfy5U/FWlcCANfnJ8YQYzf7
-         wRZw==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=H3bGT1ZyGPu3PRQJlJHyQI9TvTjBPuNSyHjFOzNfiP0=;
+        b=nfF93HFABydKtKUN6hm08YjvNRh2G4i7biDP0iGWKm0CJI/6tO/7ASVGiMVbrFcvre
+         dFe7LS0o6XmnC1olR6EZQT61Pk5CcDXk8EOCE/ZUPQPC2WOF08wHjQNTI98f51BXkTW7
+         5dyslKzFlMJ1FAFUBcS5XSZMuJJQc0mVGS8sJL1EcuApFLh9MbSY3DeHMChVpm6lylO2
+         ZiD2YD5TYnCnW1RYesj2zabgr2TZokupGOdRW5Wg1Wsic5Yzi6a7GNVAIH/aFq924Tv4
+         l/BLkapdJUQdDh1nnfELCxBLwNTsd2zSHh12MGEWr6e9uOYA2kL+ohlW7KhzBK2CbHvs
+         dAHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
-         :reply-to:in-reply-to:references;
-        bh=tZOsZ9o/wmMdf21zGnFd0+0ycOAK/adrec2RpHkDbvU=;
-        b=tlnVFGBdN3e1ICOesWGV9wtQqrH09EXFnqR2oXBxnoOKwSvryX9PYvzvhigTegQClA
-         17yZiqGmcYfd5Pwj0KztR63lm0WeOdPeR0sshROWOBalVCwlApE8GoGuRwkUDmTMNTwB
-         DIuvdUtu7eJZLaN1K+Q2Q2t1x6cRVexWmchAC+NhIXuF9MXMDGOrN2oqVoYDasQSAybI
-         9PYCx6pqggTOVrdmgICMzW/N4ivpW24gaWZ74caW46VOzDEpR7QQCl8wwHTSWErhmdJY
-         Bee+2GmnUAaQkd9UWoNnpn9L5DUXznHkeFkWvsrB3+yoiFyNRbWLBYxNhpDfGLU5Npls
-         QQCg==
-X-Gm-Message-State: AJIora+LwbDEzT6n8Uq4X7Nb1OY4zDYj77jVxOg5YyclOGitFKRtTwHK
-        WoeRShJEViFPNaX3ObWy2lgFiZnJenI=
-X-Google-Smtp-Source: AGRyM1t8na9YRXATqNL1xnXtMESCP69xtQRYCsxDyNWlyjJzmC3u65VunKXnWxp7jsDY+ZEKBx1yVA==
-X-Received: by 2002:a05:6870:e99b:b0:10c:9eb4:faa9 with SMTP id r27-20020a056870e99b00b0010c9eb4faa9mr6554330oao.260.1657785644433;
-        Thu, 14 Jul 2022 01:00:44 -0700 (PDT)
-Received: from [172.17.0.2] ([20.225.180.188])
-        by smtp.gmail.com with ESMTPSA id ek11-20020a056870f60b00b00101afc7b263sm560468oab.9.2022.07.14.01.00.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 01:00:43 -0700 (PDT)
-Message-ID: <62cfcd2b.1c69fb81.13eb3.1c18@mx.google.com>
-Date:   Thu, 14 Jul 2022 01:00:43 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============0019298573333289707=="
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=H3bGT1ZyGPu3PRQJlJHyQI9TvTjBPuNSyHjFOzNfiP0=;
+        b=2oTxjwIGAbfZlHCQeylzuueASWDYeB1hocjPmmgF35djgm9XVE0epr/cOLUWUbdD7v
+         GLEBx13uq/rF3v9YFZjdIynGqaTGr1MVSOJGRS9sDMl9JUKmkVAUQ8aViwWnWoGytaPA
+         kqB4dc38CoEHoKyIOU/q4euMHFfjO1IwgQV8NHRRpmUUR1+LB2POWoqB/GB6DHGYnZX7
+         jNF4dH2o+2X6FQhnijDTPshGRbtvHNoXk1vgiWZBqihVep+4Yib/21WtabGWj5+mx35h
+         QpEeV8cqbS3LE0VxDi9CvC+D4FvXKlqPGEGy3ZMgV5iG+y1uOfRQ7eW2wjMe+vC8ObNt
+         tDmA==
+X-Gm-Message-State: AJIora9vmge74UPCNotLRVIX2H2FxCqhKvuxVpaD1+wUOU+FOqtN9a6E
+        9nBJu8FBdmX01Yxxmi0/TK5yBnPmGN+TXnW4GeI=
+X-Google-Smtp-Source: AGRyM1sBAY02anFyAAkYvB61573ohyB+lIVHvdune1I2St249pttaSZdeqZISv5rckThyg5u7Q/retQg6yCpkFrJ9YI=
+X-Received: by 2002:a05:6512:1307:b0:47f:baa4:52c5 with SMTP id
+ x7-20020a056512130700b0047fbaa452c5mr4350443lfu.103.1657787798421; Thu, 14
+ Jul 2022 01:36:38 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, quic_zijuhu@quicinc.com
-Subject: RE: [v1] Bluetooth: Fix cvsd sco setup failure
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <1657782880-28234-1-git-send-email-quic_zijuhu@quicinc.com>
-References: <1657782880-28234-1-git-send-email-quic_zijuhu@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a2e:9041:0:0:0:0:0 with HTTP; Thu, 14 Jul 2022 01:36:37
+ -0700 (PDT)
+Reply-To: abdwabbomaddahm@gmail.com
+From:   Abdwabbo Maddah <abdwabbomaddah746@gmail.com>
+Date:   Thu, 14 Jul 2022 09:36:37 +0100
+Message-ID: <CAFC-3idDfFB0Mmtq-N-n6z5Ly7T-KDCJtvbc0UgtirMnTLYTCg@mail.gmail.com>
+Subject: Get back to me... URGENT
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:12a listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [abdwabbomaddah746[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [abdwabbomaddah746[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0019298573333289707==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=659570
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.46 seconds
-GitLint                       PASS      0.71 seconds
-SubjectPrefix                 PASS      0.66 seconds
-BuildKernel                   PASS      32.14 seconds
-BuildKernel32                 PASS      27.75 seconds
-Incremental Build with patchesPASS      38.14 seconds
-TestRunner: Setup             PASS      477.78 seconds
-TestRunner: l2cap-tester      PASS      17.07 seconds
-TestRunner: bnep-tester       PASS      6.08 seconds
-TestRunner: mgmt-tester       PASS      103.92 seconds
-TestRunner: rfcomm-tester     PASS      9.45 seconds
-TestRunner: sco-tester        PASS      9.10 seconds
-TestRunner: smp-tester        PASS      9.21 seconds
-TestRunner: userchan-tester   PASS      6.10 seconds
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============0019298573333289707==--
+-- 
+Dear,
+I had sent you a mail but i don't think you received it that's why am
+writing you again.It is important you get back to me as soon as you
+can.
+Abd-Wabbo Maddah
