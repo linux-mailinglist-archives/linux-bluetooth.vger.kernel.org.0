@@ -2,59 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FED1574072
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Jul 2022 02:22:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0551574071
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Jul 2022 02:22:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229846AbiGNAWn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 13 Jul 2022 20:22:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48520 "EHLO
+        id S229973AbiGNAWl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 13 Jul 2022 20:22:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbiGNAWl (ORCPT
+        with ESMTP id S229561AbiGNAWl (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 13 Jul 2022 20:22:41 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F34115FC3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Jul 2022 17:22:39 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id y141so419479pfb.7
-        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Jul 2022 17:22:39 -0700 (PDT)
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9221A1583A
+        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Jul 2022 17:22:40 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id s27so50661pga.13
+        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Jul 2022 17:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=CvPxkbMOFRl8cd2zgxoRK3eBdp3uTFiraVv+yOUnTWo=;
-        b=kO0/Ztbo8ANkOdq6LIJTmUIrm9ANIYfnUZD53gKF67wb+4k1jBJYmgaAw14epGfusF
-         6MYTQj7o+23QLTOE+BX6Ikw1UnkNisgbcp1a+pla57EtGSrBIHB5fhUtAaZfJkb2EXu2
-         4OR/QRnFVrdsxRTanOIIQWhqTWXvSNrSSn4iywXeRKaApnAQ1lw0xiK6QvwZnN6jLyxU
-         4z5eRy3Ze+NjfezulOB2okti3iZx5LzLt2wdod+g12X70n30enD5HLWBw5JKR7CVKBrT
-         3KRJqLPDrUhNTdUwS/T9XBYvnx4+FTE8H4QWEZfT8JcZ5z9VdmvE7agFzq9sgblfEnjm
-         DiwA==
+        bh=VGJIIZrNjuYfNVmoQvK1yk2T9hZwYcMUOQiL6YF3FRs=;
+        b=btw3gxje4f5RUGlPIjz9boHcWfHY/lz0mJmf3KhDorgyqhAGaW2YFoGNqcqd0I4Kdy
+         r/hy1AygWGLkYQ1dpWnOLR6Awg+0+KicR5QliPvHGSv7cnHQuZ+TRGnp20meXR2UBH2e
+         HVIH0pKw+MYV9Sg2AthUKaJuvrZpstooZ6bNTdensikeTAe8vaDHDSBWMvmzwor+7T7C
+         WwJsgHbkAU77awUtl0DGHYRohTaRRD0vkfhnFV2QOsSD4pwjNZa7DaVPiw5IgX4v14I+
+         9HGhayr4+MVFaOD64oX6RYOp4MkwylXD3Poo+rIuYFnVn2Y1lGECKDSQuNp2zh+Cx5dZ
+         yZKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CvPxkbMOFRl8cd2zgxoRK3eBdp3uTFiraVv+yOUnTWo=;
-        b=gBcMpUWnN5SmQbmypQ/g/4R+rsCsPqBDrCa4BUom8S8a4PCxmo3QYR2cEToXnlsiRN
-         CFK5vJ8uEGacgv3AOG24MB7D9NDJm+Lk1S+BHEkTs/CoRpBenDw0Gu9hoWuVALqkIDd1
-         2EACyGnAuERhZXwLn0E3BIaTUiow0+Z/9jwwbU+NDKkhaZCgbR1kWdDS4hqdUW7piQBg
-         UUtCm/fRouauhy+31T6uWRn/rm4UHseCZahw8pBFu1aG5oixsPHSyLRB2dxKjBOXVr+W
-         DC/ozxJhpt6puYThyslQoT6KtrclWrnwPquL55k5Kc8sbaRRZlUOSgtj4aHWrstnhL6K
-         m8lg==
-X-Gm-Message-State: AJIora96bc0YoBvpMwZfiGN9xLuuFHgcLrH+qgEUtQwlYl+g870ckakV
-        YcdTIBzS3h5ILTtqmXgKrU+xJBrWNNo=
-X-Google-Smtp-Source: AGRyM1syS8aNJupbd6jAYAaVV53pHgLyQZDynFhb5OW6fjdMz0a90PDzUnrWcO602Sv+zneF7kF18A==
-X-Received: by 2002:a05:6a00:cd5:b0:52b:1744:af86 with SMTP id b21-20020a056a000cd500b0052b1744af86mr2664586pfv.19.1657758158352;
-        Wed, 13 Jul 2022 17:22:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VGJIIZrNjuYfNVmoQvK1yk2T9hZwYcMUOQiL6YF3FRs=;
+        b=qNz2xanlXSjxvpqSjXqWAZ+A3eMCAKO5omJlv6K9IiWRjf3BuQISPogyCX7RJhRXHi
+         MM5eF5pWC8UNwbsDgM+7+sCeWQa1tAANcq2aUB5nXxykgiewCS/2CAcwG4JxG5o3q6zG
+         kIudLii3xoglYXpcTYeDVNxrZbClr61LgRC4wtFQzoqMy15AA+oLvbOEpDVrRZlpHJH1
+         /9qfd0ysINjtaAG5w3ZwvbIbbCHPwiX1thtEBsPNkmazYVLWG9XucF27tlmp9ipKTasT
+         sYdeRmvI5NznOG3SN8KGBFEkrhYtMw2mPBuEL0XP09DMFG8cbcZE+YvALls/Rop0u1Ty
+         7T7g==
+X-Gm-Message-State: AJIora9fy5dLuiay+UOuWuJSGCQ4qKpOWYGGVVmK4ZM7W/XollqHLM0T
+        6KvcFFYQne8MfoCWxG1En06+w4I1P6E=
+X-Google-Smtp-Source: AGRyM1tH9F2DR3dk/HPLUO7TfjURZjokYqLXrtXgHfDUTNjL0n+L8F9OXnPvU6kFYvQkQ7wKA5FeHw==
+X-Received: by 2002:a63:2785:0:b0:413:655d:fb0 with SMTP id n127-20020a632785000000b00413655d0fb0mr5175122pgn.297.1657758159547;
+        Wed, 13 Jul 2022 17:22:39 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id mm18-20020a17090b359200b001efa35356besm2221893pjb.28.2022.07.13.17.22.37
+        by smtp.gmail.com with ESMTPSA id mm18-20020a17090b359200b001efa35356besm2221893pjb.28.2022.07.13.17.22.38
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jul 2022 17:22:37 -0700 (PDT)
+        Wed, 13 Jul 2022 17:22:38 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 1/2] Bluetooth: hci_sync: Fix not updating privacy_mode
-Date:   Wed, 13 Jul 2022 17:22:35 -0700
-Message-Id: <20220714002236.3540353-1-luiz.dentz@gmail.com>
+Subject: [PATCH 2/2] Bluetooth: hci_sync: Don't remove connected devices from accept list
+Date:   Wed, 13 Jul 2022 17:22:36 -0700
+Message-Id: <20220714002236.3540353-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20220714002236.3540353-1-luiz.dentz@gmail.com>
+References: <20220714002236.3540353-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -69,29 +71,37 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-When programming a new entry into the resolving list it shall default
-to network mode since the params may contain the mode programmed when
-the device was last added to the resolving list.
+These devices are likely going to be reprogrammed when disconnected so
+this avoid a whole bunch of commands attempt to remove and the add back
+to the list.
 
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- net/bluetooth/hci_sync.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_sync.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index ca97378fd81f..9f44537db348 100644
+index 9f44537db348..86846a765be0 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -1636,6 +1636,9 @@ static int hci_le_add_resolve_list_sync(struct hci_dev *hdev,
- 	bacpy(&cp.bdaddr, &params->addr);
- 	memcpy(cp.peer_irk, irk->val, 16);
+@@ -1892,12 +1892,15 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 	}
  
-+	/* Default privacy mode is always 0x00 (Network) */
-+	params->privacy_mode = 0x00;
+ 	/* Go through the current accept list programmed into the
+-	 * controller one by one and check if that address is still
+-	 * in the list of pending connections or list of devices to
++	 * controller one by one and check if that address is connected or is
++	 * still in the list of pending connections or list of devices to
+ 	 * report. If not present in either list, then remove it from
+ 	 * the controller.
+ 	 */
+ 	list_for_each_entry_safe(b, t, &hdev->le_accept_list, list) {
++		if (hci_conn_hash_lookup_le(hdev, &b->bdaddr, b->bdaddr_type))
++			continue;
 +
- done:
- 	if (hci_dev_test_flag(hdev, HCI_PRIVACY))
- 		memcpy(cp.local_irk, hdev->irk, 16);
+ 		pend_conn = hci_pend_le_action_lookup(&hdev->pend_le_conns,
+ 						      &b->bdaddr,
+ 						      b->bdaddr_type);
 -- 
 2.35.3
 
