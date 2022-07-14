@@ -2,98 +2,131 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0A185746E8
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Jul 2022 10:36:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F856574B16
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Jul 2022 12:48:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236043AbiGNIgo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 14 Jul 2022 04:36:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60282 "EHLO
+        id S238477AbiGNKsX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 14 Jul 2022 06:48:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235796AbiGNIgm (ORCPT
+        with ESMTP id S238459AbiGNKsU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 14 Jul 2022 04:36:42 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F9673ED4D
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Jul 2022 01:36:40 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id bp17so1650314lfb.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Jul 2022 01:36:40 -0700 (PDT)
+        Thu, 14 Jul 2022 06:48:20 -0400
+Received: from mail-wr1-x449.google.com (mail-wr1-x449.google.com [IPv6:2a00:1450:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E98954CAD
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Jul 2022 03:48:19 -0700 (PDT)
+Received: by mail-wr1-x449.google.com with SMTP id i13-20020adfaacd000000b0021d96b4da5eso458004wrc.18
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Jul 2022 03:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=H3bGT1ZyGPu3PRQJlJHyQI9TvTjBPuNSyHjFOzNfiP0=;
-        b=nfF93HFABydKtKUN6hm08YjvNRh2G4i7biDP0iGWKm0CJI/6tO/7ASVGiMVbrFcvre
-         dFe7LS0o6XmnC1olR6EZQT61Pk5CcDXk8EOCE/ZUPQPC2WOF08wHjQNTI98f51BXkTW7
-         5dyslKzFlMJ1FAFUBcS5XSZMuJJQc0mVGS8sJL1EcuApFLh9MbSY3DeHMChVpm6lylO2
-         ZiD2YD5TYnCnW1RYesj2zabgr2TZokupGOdRW5Wg1Wsic5Yzi6a7GNVAIH/aFq924Tv4
-         l/BLkapdJUQdDh1nnfELCxBLwNTsd2zSHh12MGEWr6e9uOYA2kL+ohlW7KhzBK2CbHvs
-         dAHg==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=TcbL293klknuFRfZ1i01tinmhCgguD5yCB7g0kW+L6k=;
+        b=G5jbzXEoJg6vN8TMAZMcpCS0XRYpdmVmOPqNHtSHypAGXhz8VJoUqU2KRox7AiA3sM
+         S/NvzjYJK0dBsxN8zKdMRLKvQruCZIAPdLW7y/DfggEgFSv34G4aPSqJXomGxqG0Dua7
+         h1HdW9A8ErP4DhheRfut5PVo+APDi2/JlHiLgy9uR3pA5uCQQpsHLqzPi1zfqrtKqfzo
+         vO7fDKnOdgqE2jml88KtH6iEWhqQ5j7QcktLOgHd/zhX3ByHqhz5CcRI2lXW1HIuJh0o
+         Mfw4L9Z/QQ0n+YXx9w967uVqwXWjxijfPD3/yBrs9J1+9dNTEpZY6tvrlv4n4GOj87EG
+         HxHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=H3bGT1ZyGPu3PRQJlJHyQI9TvTjBPuNSyHjFOzNfiP0=;
-        b=2oTxjwIGAbfZlHCQeylzuueASWDYeB1hocjPmmgF35djgm9XVE0epr/cOLUWUbdD7v
-         GLEBx13uq/rF3v9YFZjdIynGqaTGr1MVSOJGRS9sDMl9JUKmkVAUQ8aViwWnWoGytaPA
-         kqB4dc38CoEHoKyIOU/q4euMHFfjO1IwgQV8NHRRpmUUR1+LB2POWoqB/GB6DHGYnZX7
-         jNF4dH2o+2X6FQhnijDTPshGRbtvHNoXk1vgiWZBqihVep+4Yib/21WtabGWj5+mx35h
-         QpEeV8cqbS3LE0VxDi9CvC+D4FvXKlqPGEGy3ZMgV5iG+y1uOfRQ7eW2wjMe+vC8ObNt
-         tDmA==
-X-Gm-Message-State: AJIora9vmge74UPCNotLRVIX2H2FxCqhKvuxVpaD1+wUOU+FOqtN9a6E
-        9nBJu8FBdmX01Yxxmi0/TK5yBnPmGN+TXnW4GeI=
-X-Google-Smtp-Source: AGRyM1sBAY02anFyAAkYvB61573ohyB+lIVHvdune1I2St249pttaSZdeqZISv5rckThyg5u7Q/retQg6yCpkFrJ9YI=
-X-Received: by 2002:a05:6512:1307:b0:47f:baa4:52c5 with SMTP id
- x7-20020a056512130700b0047fbaa452c5mr4350443lfu.103.1657787798421; Thu, 14
- Jul 2022 01:36:38 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a2e:9041:0:0:0:0:0 with HTTP; Thu, 14 Jul 2022 01:36:37
- -0700 (PDT)
-Reply-To: abdwabbomaddahm@gmail.com
-From:   Abdwabbo Maddah <abdwabbomaddah746@gmail.com>
-Date:   Thu, 14 Jul 2022 09:36:37 +0100
-Message-ID: <CAFC-3idDfFB0Mmtq-N-n6z5Ly7T-KDCJtvbc0UgtirMnTLYTCg@mail.gmail.com>
-Subject: Get back to me... URGENT
-To:     undisclosed-recipients:;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=TcbL293klknuFRfZ1i01tinmhCgguD5yCB7g0kW+L6k=;
+        b=WhimacsL1oniNYlYa80K8Setpr/c+hRTFM1xejnjI/AvznhTIcRmV8LGyMWxi9n8XQ
+         aol0GIPnu2x+SUceY28LsmQnUt228xciXxh327FvtCHEwoy+CG5NfN75YEJpsqWGhepi
+         3EKRwD9PDnOfbvvCm2U20PE5HOC8Wy8KmSJvl4B5+G1R3PY5cgU+e6jjw/P3dtBqBPo8
+         J4ny9K3JUlqUthhNUJG+OHUIWTpDqJgIIXNXkYjKU/VOGaGsdPpaXXe9bYuJ9fGaPyVo
+         kviHuAgS4e755vMsYKcPmJlwdFk4sy74panbu+7s+Sg4FZWvl6YsxSr8IbDyZiH6SxCc
+         OvBA==
+X-Gm-Message-State: AJIora/U6ZimLzeOWcwwaRWqCrpncdn7NntG5SI39Hp//WHpK+ADmILV
+        J2Oo1evQb75aafl8Nk7GfQWuLaKNwAU=
+X-Google-Smtp-Source: AGRyM1sbV0Yq2YAAjCOTbGhhzgSDovNLXEQNSglI0p/MoD9f0OPPIRDj1RhbV1yqEROnz6Hyhac9fEZ/eeo=
+X-Received: from rax.c.googlers.com ([fda3:e722:ac3:cc00:28:9cb1:c0a8:2a98])
+ (user=poprdi job=sendgmr) by 2002:a05:600c:4f4d:b0:3a1:98de:abde with SMTP id
+ m13-20020a05600c4f4d00b003a198deabdemr14697421wmq.36.1657795697567; Thu, 14
+ Jul 2022 03:48:17 -0700 (PDT)
+Date:   Thu, 14 Jul 2022 10:48:14 +0000
+Message-Id: <20220714104814.1296858-1-poprdi@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.0.144.g8ac04bfd2-goog
+Subject: [PATCH v2] Bluetooth: Collect kcov coverage from hci_rx_work
+From:   Tamas Koczka <poprdi@google.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, theflow@google.com,
+        Tamas Koczka <poprdi@google.com>,
+        Aleksandr Nogikh <nogikh@google.com>,
+        Dmitry Vyukov <dvyukov@google.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:12a listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [abdwabbomaddah746[at]gmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [abdwabbomaddah746[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Annotate hci_rx_work() with kcov_remote_start() and kcov_remote_stop()
+calls, so remote KCOV coverage is collected while processing the rx_q
+queue which is the main incoming Bluetooth packet queue.
+
+Coverage is associated with the thread which created the packet skb.
+
+The collected extra coverage helps kernel fuzzing efforts in finding
+vulnerabilities.
+
+This change only has effect if the kernel is compiled with CONFIG_KCOV,
+otherwise kcov_ functions don't do anything.
+
+Signed-off-by: Tamas Koczka <poprdi@google.com>
+Tested-by: Aleksandr Nogikh <nogikh@google.com>
+Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
+---
+Changelog since v1:
+ - add comment about why kcov_remote functions are called
+
+v1: https://lore.kernel.org/all/20220517094532.2729049-1-poprdi@google.com/
+
+Note: this is a resubmission of https://lore.kernel.org/netdev/CAPUC6bJbVMPn1FMLYnXg2GUX4ikesMSRjj=oPOOrS5H2DOx_bA@mail.gmail.com/T/
+
+ net/bluetooth/hci_core.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 45c2dd2e1590..0af43844c55a 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -29,6 +29,7 @@
+ #include <linux/rfkill.h>
+ #include <linux/debugfs.h>
+ #include <linux/crypto.h>
++#include <linux/kcov.h>
+ #include <linux/property.h>
+ #include <linux/suspend.h>
+ #include <linux/wait.h>
+@@ -3780,7 +3781,14 @@ static void hci_rx_work(struct work_struct *work)
+ 
+ 	BT_DBG("%s", hdev->name);
+ 
+-	while ((skb = skb_dequeue(&hdev->rx_q))) {
++	/* The kcov_remote functions used for collecting packet parsing
++	 * coverage information from this background thread and associate
++	 * the coverage with the syscall's thread which originally injected
++	 * the packet. This helps fuzzing the kernel.
++	 */
++	for (; (skb = skb_dequeue(&hdev->rx_q)); kcov_remote_stop()) {
++		kcov_remote_start_common(skb_get_kcov_handle(skb));
++
+ 		/* Send copy to monitor */
+ 		hci_send_to_monitor(hdev, skb);
+ 
 -- 
-Dear,
-I had sent you a mail but i don't think you received it that's why am
-writing you again.It is important you get back to me as soon as you
-can.
-Abd-Wabbo Maddah
+2.37.0.144.g8ac04bfd2-goog
+
