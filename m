@@ -2,51 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA83A57BB43
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Jul 2022 18:20:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 179DF57BB40
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Jul 2022 18:20:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240591AbiGTQU3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 20 Jul 2022 12:20:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50234 "EHLO
+        id S239024AbiGTQUU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 20 Jul 2022 12:20:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239611AbiGTQUW (ORCPT
+        with ESMTP id S233552AbiGTQUT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 20 Jul 2022 12:20:22 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D9AAE72;
-        Wed, 20 Jul 2022 09:20:20 -0700 (PDT)
+        Wed, 20 Jul 2022 12:20:19 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64255DE99;
+        Wed, 20 Jul 2022 09:20:18 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 510D4B81FB7;
-        Wed, 20 Jul 2022 16:20:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 65AFFC341D1;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0052161D7C;
+        Wed, 20 Jul 2022 16:20:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 54604C341D0;
         Wed, 20 Jul 2022 16:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1658334017;
-        bh=BM8hJxS2c6lrxc3PihLVapgJizE+rdCx1seTN/YGxkg=;
+        bh=BYcsMcijnL0pP/PiWG5nGWH7n3G0OWC2Q7MrG+Nlvj0=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=vFOHZKHmjQsn6d4jyaspOT2m71xAx0gwI6AeXalaulv6Qc9wSMke9wZmM5DeQLhzO
-         JkO3BvCH5b6cP3LcJTMDDcu91JoHFBMjcovnGg68sLDjUPS/5fCBpvAo/62X09yzER
-         jKKlDBdga/soLklUSGgBLV6e/BMPk9/7FDRkZ+hVK3sEj1wSrQMlIVsFEP/yAvH1Yu
-         5vN9Y79PvZ7r5QgoBbvcvxKxyeAhkxLDJufquHu1ZCZpZVgBHZa8ClrcGb6PEkRzuV
-         /U6uzoo0tPxa64CiG84fknSVohVATnL4z8CiudOfit3SSS2qPTjY3cyq0USpAgE0do
-         CUKcn7YU6Gtjg==
+        b=gGZxmosbDLlniOH0n0Z2mWELtNt2g2Yiu+vasUz2lXZoC6r/ND4Sbm53IyTN1fQiQ
+         JFwzRSYKrt/j8Rfmxy79FGrFD5NSE+QXn6FENpSmvcoIjCDn6AsSXtfSCBibNnJwDJ
+         HANbFFlCSR8f5wTlKRtoOS82U9Yfdf5Q+lWjhuIKej98CQX5dvq8YUcvisl8pPAOPE
+         jz9fGU8Xy0q756JqdSWbMpSbKJXH3tcntD7DMl5HkTXaEtg42McVoBjOI5cQCgKY7N
+         gK11foWL6nbBGyeJoFZf8Mm9bNznXk45XXdKN0ogumzNkygmvv4ZCZ0Wf/tkRAoBBe
+         KvRisABq9/xzA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4ED0CD9DDDD;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3CF98E451BD;
         Wed, 20 Jul 2022 16:20:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v4] Bluetooth: btusb: Add a new VID/PID 0489/e0e2 for MT7922
+Subject: Re: [PATCH v2 0/5] Bluetooth: hci_bcm: Improve FW load time on CYW55572
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165833401732.6265.16625108181654949341.git-patchwork-notify@kernel.org>
+Message-Id: <165833401724.6265.284056488301192508.git-patchwork-notify@kernel.org>
 Date:   Wed, 20 Jul 2022 16:20:17 +0000
-References: <20220625090358.9373-1-xw897002528@gmail.com>
-In-Reply-To: <20220625090358.9373-1-xw897002528@gmail.com>
-To:     xhe <xw897002528@gmail.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <cover.1656583541.git.hakan.jansson@infineon.com>
+In-Reply-To: <cover.1656583541.git.hakan.jansson@infineon.com>
+To:     Hakan Jansson <hakan.jansson@infineon.com>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linus.walleij@linaro.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marcel@holtmann.org,
+        johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -58,22 +63,31 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Sat, 25 Jun 2022 17:03:57 +0800 you wrote:
-> From: He Wang <xw897002528@gmail.com>
+On Thu, 30 Jun 2022 14:45:19 +0200 you wrote:
+> These patches add an optional device specific data member to specify max
+> baudrate of a device when in autobaud mode. This allows the host to set a
+> first baudrate higher than "init speed" to improve FW load time.
 > 
-> Add VID/PID 0489:e0e2 for MediaTek MT7922 Bluetooth chip. Found and
-> tested with Asus UM5302TA.
-> 
-> From /sys/kernel/debug/usb/devices:
+> The host baudrate will later be changed to "init speed" (as usual) once FW
+> loading is complete and the device has been reset to begin normal
+> operation.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v4] Bluetooth: btusb: Add a new VID/PID 0489/e0e2 for MT7922
-    https://git.kernel.org/bluetooth/bluetooth-next/c/b4e7b216fd4c
+  - [v2,1/5] dt-bindings: net: broadcom-bluetooth: Add CYW55572 DT binding
+    https://git.kernel.org/bluetooth/bluetooth-next/c/c6480829cda7
+  - [v2,2/5] dt-bindings: net: broadcom-bluetooth: Add conditional constraints
+    https://git.kernel.org/bluetooth/bluetooth-next/c/f5d25901c5cc
+  - [v2,3/5] Bluetooth: hci_bcm: Add DT compatible for CYW55572
+    https://git.kernel.org/bluetooth/bluetooth-next/c/7386459d24b3
+  - [v2,4/5] Bluetooth: hci_bcm: Prevent early baudrate setting in autobaud mode
+    https://git.kernel.org/bluetooth/bluetooth-next/c/31e65c6d44a2
+  - [v2,5/5] Bluetooth: hci_bcm: Increase host baudrate for CYW55572 in autobaud mode
+    https://git.kernel.org/bluetooth/bluetooth-next/c/719a11a62d19
 
 You are awesome, thank you!
 -- 
