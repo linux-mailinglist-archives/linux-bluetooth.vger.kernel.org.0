@@ -2,245 +2,185 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C8B957D722
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Jul 2022 00:57:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 448ED57D729
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Jul 2022 01:00:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232024AbiGUW5i (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 21 Jul 2022 18:57:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57082 "EHLO
+        id S232721AbiGUXAj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 21 Jul 2022 19:00:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229739AbiGUW5h (ORCPT
+        with ESMTP id S229485AbiGUXAi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 21 Jul 2022 18:57:37 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 231608E1E7
-        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Jul 2022 15:57:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1658444256; x=1689980256;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=oUnDghkAdX3J79VH+QJzFotsgQoXuVGIOuKWvP4LkUo=;
-  b=UYbrUxe+VprmmMc45vE7dtzdx0gMUtQ7c1X98GDWb+UktdO8nOFQQ6Zi
-   G3s9x3X/LwNC3tKYMAqWxW0IxrfaszWzYMaOVC5u5K/h3PqfTlPKhp4uH
-   /w/fxKKPB65l5tVMfeaizIfLjYvBwNWd+CSYhg/dkcKIq1wicuFsT513U
-   W/T79QiniGqyP+7h14IBEGTy8dQ4pmOkHpKVpnvRNnOyP5bJNKEoqE8bN
-   NlZi7tf3HhfsFZQ0nL6I4s3mJxBdA/DdWdxu/h3fueJXKIeAiph3vEPEQ
-   ybHqGE+B/WKQJwdjPJcE1j8EYXtylzNx2a6SpgmCKJDjxIIWXT8fwhr7E
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10415"; a="267586483"
-X-IronPort-AV: E=Sophos;i="5.93,184,1654585200"; 
-   d="scan'208";a="267586483"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2022 15:57:19 -0700
-X-IronPort-AV: E=Sophos;i="5.93,184,1654585200"; 
-   d="scan'208";a="548961969"
-Received: from chialing-mobl.amr.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.213.171.1])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2022 15:57:19 -0700
-From:   Brian Gix <brian.gix@intel.com>
+        Thu, 21 Jul 2022 19:00:38 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C862237E7
+        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Jul 2022 16:00:37 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id g17so3169841plh.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Jul 2022 16:00:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=px+a3zvYjDz83L14EV7/Ch9L28G8tIC4PazCTB7h/sA=;
+        b=PdrjhqpYu4vmlG5rPaLS7+M4bltcfRuXTKYpQfCw74skenQRqhO9TFsyld+30VR4y7
+         BVn3Y6ek6aHMdB+RCQS/KmIxFT2vZc8vfOpeqjUqQfoXa3/NAgA+k8jBqF6JjKUOCVtJ
+         66xQ9d1lUNcmeJWvdu95EAqA9nM/B7JCyolfCB2ubm4e2cHTlgnVsUgkOiHoKwiYOone
+         Ak6M3/r5PkSmXRFSOeYse6vz2AbdkneY/WNeApzPpkF0BsTd0HNrNszv7O5PsDgOhPhD
+         uxOkicTzsn4AkhonL/c/Y7VpUoRu7B/TzGucD1VsosDKOVd6/m4VOEfLgKCcfHX4OKSe
+         OX+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=px+a3zvYjDz83L14EV7/Ch9L28G8tIC4PazCTB7h/sA=;
+        b=sAmyDah4OWp9eu3Tdx0bOopOOrEZSAVA7ryqHjeV7qoCqviI00QJnVHMizgDcTJWKB
+         MDJe4vu/pGLd1859UqHGS6UnZiY0XuKRrYWtZj/zjEnJ1I1Sj5bU7IRZImXaG6xczgKk
+         xSqFCCX5IYgSJQr8E9F/EnMmbQ9k3QOYT0G+QIELBhQveK5aSx4SX43qWUFk7xrQB3Tq
+         k2IfZ0IV2aSFuc7p7WKzlsce346rda43z0tcA9aJVFbF+p8ZFNtHoPmf0Wbz0hNITqQJ
+         j7sa/6L+K9oj0/09gGTBV2XdqIpJ/v6C4leQQrXiYcMfkxS7RoU5Fvqp3HrtwYpGE4KB
+         GaGw==
+X-Gm-Message-State: AJIora8/4YT3Xkc8HH1A0llj2g4LgBVwsEHbC674aLc8qo8jJPt8u10X
+        wdFVLacTQ4HjuuZ30KoFsj1761Ph12hTrg==
+X-Google-Smtp-Source: AGRyM1vqNSwJGfssTDizIdTufrn/xKuImRJaRQO0WF1kYk00h+6uqGEFD6/wDZJ0NrkFI76UiO1P5Q==
+X-Received: by 2002:a17:902:c401:b0:16d:1fdc:6114 with SMTP id k1-20020a170902c40100b0016d1fdc6114mr529921plk.23.1658444436320;
+        Thu, 21 Jul 2022 16:00:36 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id e2-20020a170902784200b0016cf714d024sm2201697pln.236.2022.07.21.16.00.35
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 16:00:35 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Cc:     marcel@holtmann.org, luiz.dentz@gmail.com, brian.gix@intel.com
-Subject: [PATCH 3/3] Bluetooth: Convert delayed discov_off to hci_sync
-Date:   Thu, 21 Jul 2022 15:57:05 -0700
-Message-Id: <20220721225705.602002-4-brian.gix@intel.com>
+Subject: [PATCH] Bluetooth: MGMT: Fix helding hci_conn reference while command is queued
+Date:   Thu, 21 Jul 2022 16:00:34 -0700
+Message-Id: <20220721230034.416231-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220721225705.602002-1-brian.gix@intel.com>
-References: <20220721225705.602002-1-brian.gix@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The timed ending of Discoverability was handled in hci_requst.c, with
-calls using the deprecated hci_req_add() mechanism. Converted to live
-inside mgmt.c using the same delayed work queue, but with hci_sync
-version of hci_update_discoverable().
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Signed-off-by: Brian Gix <brian.gix@intel.com>
+This removes the use of hci_conn_hold from Get Conn Info and Get Clock
+Info since the callback can just do a lookup by address using the cmd
+data and only then set cmd->user_data to pass to the complete callback.
+
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- net/bluetooth/hci_request.c | 89 -------------------------------------
- net/bluetooth/mgmt.c        | 32 +++++++++++++
- 2 files changed, 32 insertions(+), 89 deletions(-)
+ net/bluetooth/mgmt.c | 49 ++++++++++----------------------------------
+ 1 file changed, 11 insertions(+), 38 deletions(-)
 
-diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 379eb388633f..ef790978fc99 100644
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -1903,69 +1903,6 @@ void __hci_req_update_class(struct hci_request *req)
- 	hci_req_add(req, HCI_OP_WRITE_CLASS_OF_DEV, sizeof(cod), cod);
- }
- 
--static void write_iac(struct hci_request *req)
--{
--	struct hci_dev *hdev = req->hdev;
--	struct hci_cp_write_current_iac_lap cp;
--
--	if (!hci_dev_test_flag(hdev, HCI_DISCOVERABLE))
--		return;
--
--	if (hci_dev_test_flag(hdev, HCI_LIMITED_DISCOVERABLE)) {
--		/* Limited discoverable mode */
--		cp.num_iac = min_t(u8, hdev->num_iac, 2);
--		cp.iac_lap[0] = 0x00;	/* LIAC */
--		cp.iac_lap[1] = 0x8b;
--		cp.iac_lap[2] = 0x9e;
--		cp.iac_lap[3] = 0x33;	/* GIAC */
--		cp.iac_lap[4] = 0x8b;
--		cp.iac_lap[5] = 0x9e;
--	} else {
--		/* General discoverable mode */
--		cp.num_iac = 1;
--		cp.iac_lap[0] = 0x33;	/* GIAC */
--		cp.iac_lap[1] = 0x8b;
--		cp.iac_lap[2] = 0x9e;
--	}
--
--	hci_req_add(req, HCI_OP_WRITE_CURRENT_IAC_LAP,
--		    (cp.num_iac * 3) + 1, &cp);
--}
--
--static int discoverable_update(struct hci_request *req, unsigned long opt)
--{
--	struct hci_dev *hdev = req->hdev;
--
--	hci_dev_lock(hdev);
--
--	if (hci_dev_test_flag(hdev, HCI_BREDR_ENABLED)) {
--		write_iac(req);
--		__hci_req_update_scan(req);
--		__hci_req_update_class(req);
--	}
--
--	/* Advertising instances don't use the global discoverable setting, so
--	 * only update AD if advertising was enabled using Set Advertising.
--	 */
--	if (hci_dev_test_flag(hdev, HCI_ADVERTISING)) {
--		__hci_req_update_adv_data(req, 0x00);
--
--		/* Discoverable mode affects the local advertising
--		 * address in limited privacy mode.
--		 */
--		if (hci_dev_test_flag(hdev, HCI_LIMITED_PRIVACY)) {
--			if (ext_adv_capable(hdev))
--				__hci_req_start_ext_adv(req, 0x00);
--			else
--				__hci_req_enable_advertising(req);
--		}
--	}
--
--	hci_dev_unlock(hdev);
--
--	return 0;
--}
--
- void __hci_abort_conn(struct hci_request *req, struct hci_conn *conn,
- 		      u8 reason)
- {
-@@ -2349,33 +2286,8 @@ int hci_req_configure_datapath(struct hci_dev *hdev, struct bt_codec *codec)
- 	return err;
- }
- 
--static void discov_off(struct work_struct *work)
--{
--	struct hci_dev *hdev = container_of(work, struct hci_dev,
--					    discov_off.work);
--
--	bt_dev_dbg(hdev, "");
--
--	hci_dev_lock(hdev);
--
--	/* When discoverable timeout triggers, then just make sure
--	 * the limited discoverable flag is cleared. Even in the case
--	 * of a timeout triggered from general discoverable, it is
--	 * safe to unconditionally clear the flag.
--	 */
--	hci_dev_clear_flag(hdev, HCI_LIMITED_DISCOVERABLE);
--	hci_dev_clear_flag(hdev, HCI_DISCOVERABLE);
--	hdev->discov_timeout = 0;
--
--	hci_dev_unlock(hdev);
--
--	hci_req_sync(hdev, discoverable_update, 0, HCI_CMD_TIMEOUT, NULL);
--	mgmt_new_settings(hdev);
--}
--
- void hci_request_setup(struct hci_dev *hdev)
- {
--	INIT_DELAYED_WORK(&hdev->discov_off, discov_off);
- 	INIT_DELAYED_WORK(&hdev->le_scan_disable, le_scan_disable_work);
- 	INIT_DELAYED_WORK(&hdev->le_scan_restart, le_scan_restart_work);
- 	INIT_DELAYED_WORK(&hdev->adv_instance_expire, adv_timeout_expire);
-@@ -2386,7 +2298,6 @@ void hci_request_cancel_all(struct hci_dev *hdev)
- {
- 	__hci_cmd_sync_cancel(hdev, ENODEV);
- 
--	cancel_delayed_work_sync(&hdev->discov_off);
- 	cancel_delayed_work_sync(&hdev->le_scan_disable);
- 	cancel_delayed_work_sync(&hdev->le_scan_restart);
- 
 diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index e81491d24904..9478e204b1b5 100644
+index e1eb36009fe7..9f02341a21b6 100644
 --- a/net/bluetooth/mgmt.c
 +++ b/net/bluetooth/mgmt.c
-@@ -1084,6 +1084,31 @@ static void mesh_send_done(struct work_struct *work)
- 	hci_cmd_sync_queue(hdev, mesh_send_done_sync, NULL, mesh_next);
+@@ -6718,11 +6718,6 @@ static void get_conn_info_complete(struct hci_dev *hdev, void *data, int err)
+ 	mgmt_cmd_complete(cmd->sk, cmd->index, MGMT_OP_GET_CONN_INFO, status,
+ 			  &rp, sizeof(rp));
+ 
+-	if (conn) {
+-		hci_conn_drop(conn);
+-		hci_conn_put(conn);
+-	}
+-
+ 	mgmt_pending_free(cmd);
  }
  
-+static void discov_off(struct work_struct *work)
-+{
-+	struct hci_dev *hdev = container_of(work, struct hci_dev,
-+					    discov_off.work);
-+
-+	bt_dev_dbg(hdev, "");
-+
-+	hci_dev_lock(hdev);
-+
-+	/* When discoverable timeout triggers, then just make sure
-+	 * the limited discoverable flag is cleared. Even in the case
-+	 * of a timeout triggered from general discoverable, it is
-+	 * safe to unconditionally clear the flag.
-+	 */
-+	hci_dev_clear_flag(hdev, HCI_LIMITED_DISCOVERABLE);
-+	hci_dev_clear_flag(hdev, HCI_DISCOVERABLE);
-+	hdev->discov_timeout = 0;
-+
-+	hci_update_discoverable(hdev);
-+
-+	mgmt_new_settings(hdev);
-+
-+	hci_dev_unlock(hdev);
-+}
-+
- static void mgmt_init_hdev(struct sock *sk, struct hci_dev *hdev)
- {
- 	if (hci_dev_test_and_set_flag(hdev, HCI_MGMT))
-@@ -1091,6 +1116,7 @@ static void mgmt_init_hdev(struct sock *sk, struct hci_dev *hdev)
+@@ -6741,15 +6736,10 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
+ 	else
+ 		conn = hci_conn_hash_lookup_ba(hdev, LE_LINK, &cp->addr.bdaddr);
  
- 	BT_INFO("MGMT ver %d.%d", MGMT_VERSION, MGMT_REVISION);
+-	if (!conn || conn != cmd->user_data || conn->state != BT_CONNECTED) {
+-		if (cmd->user_data) {
+-			hci_conn_drop(cmd->user_data);
+-			hci_conn_put(cmd->user_data);
+-			cmd->user_data = NULL;
+-		}
++	if (!conn || conn->state != BT_CONNECTED)
+ 		return MGMT_STATUS_NOT_CONNECTED;
+-	}
  
-+	INIT_DELAYED_WORK(&hdev->discov_off, discov_off);
- 	INIT_DELAYED_WORK(&hdev->service_cache, service_cache_off);
- 	INIT_DELAYED_WORK(&hdev->rpa_expired, rpa_expired);
- 	INIT_DELAYED_WORK(&hdev->mesh_send_done, mesh_send_done);
-@@ -9345,6 +9371,12 @@ void mgmt_index_removed(struct hci_dev *hdev)
++	cmd->user_data = conn;
+ 	handle = cpu_to_le16(conn->handle);
  
- 	mgmt_index_event(MGMT_EV_EXT_INDEX_REMOVED, hdev, &ev, sizeof(ev),
- 			 HCI_MGMT_EXT_INDEX_EVENTS);
-+
-+	/* Cancel any remaining timed work */
-+	cancel_delayed_work_sync(&hdev->discov_off);
-+	cancel_delayed_work_sync(&hdev->service_cache);
-+	cancel_delayed_work_sync(&hdev->rpa_expired);
-+	cancel_delayed_work_sync(&hdev->mesh_send_done);
+ 	/* Refresh RSSI each time */
+@@ -6831,8 +6821,6 @@ static int get_conn_info(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		if (!cmd) {
+ 			err = -ENOMEM;
+ 		} else {
+-			hci_conn_hold(conn);
+-			cmd->user_data = hci_conn_get(conn);
+ 			err = hci_cmd_sync_queue(hdev, get_conn_info_sync,
+ 						 cmd, get_conn_info_complete);
+ 		}
+@@ -6885,8 +6873,6 @@ static void get_clock_info_complete(struct hci_dev *hdev, void *data, int err)
+ 	if (conn) {
+ 		rp.piconet_clock = cpu_to_le32(conn->clock);
+ 		rp.accuracy = cpu_to_le16(conn->clock_accuracy);
+-		hci_conn_drop(conn);
+-		hci_conn_put(conn);
+ 	}
+ 
+ complete:
+@@ -6901,30 +6887,21 @@ static int get_clock_info_sync(struct hci_dev *hdev, void *data)
+ 	struct mgmt_pending_cmd *cmd = data;
+ 	struct mgmt_cp_get_clock_info *cp = cmd->param;
+ 	struct hci_cp_read_clock hci_cp;
+-	struct hci_conn *conn = cmd->user_data;
++	struct hci_conn *conn;
+ 	int err;
+ 
+ 	memset(&hci_cp, 0, sizeof(hci_cp));
+-	err = hci_read_clock_sync(hdev, &hci_cp);
+ 
+-	if (conn) {
+-		/* Make sure connection still exists */
+-		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
+-					       &cp->addr.bdaddr);
++	/* Make sure connection still exists */
++	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &cp->addr.bdaddr);
++	if (!conn && conn->state != BT_CONNECTED)
++		return MGMT_STATUS_NOT_CONNECTED;
+ 
+-		if (conn && conn == cmd->user_data &&
+-		    conn->state == BT_CONNECTED) {
+-			hci_cp.handle = cpu_to_le16(conn->handle);
+-			hci_cp.which = 0x01; /* Piconet clock */
+-			err = hci_read_clock_sync(hdev, &hci_cp);
+-		} else if (cmd->user_data) {
+-			hci_conn_drop(cmd->user_data);
+-			hci_conn_put(cmd->user_data);
+-			cmd->user_data = NULL;
+-		}
+-	}
++	cmd->user_data = conn;
++	hci_cp.handle = cpu_to_le16(conn->handle);
++	hci_cp.which = 0x01; /* Piconet clock */
+ 
+-	return err;
++	return hci_read_clock_sync(hdev, &hci_cp);
  }
  
- void mgmt_power_on(struct hci_dev *hdev, int err)
+ static int get_clock_info(struct sock *sk, struct hci_dev *hdev, void *data,
+@@ -6983,10 +6960,6 @@ static int get_clock_info(struct sock *sk, struct hci_dev *hdev, void *data,
+ 
+ 		if (cmd)
+ 			mgmt_pending_free(cmd);
+-
+-	} else if (conn) {
+-		hci_conn_hold(conn);
+-		cmd->user_data = hci_conn_get(conn);
+ 	}
+ 
+ 
 -- 
 2.36.1
 
