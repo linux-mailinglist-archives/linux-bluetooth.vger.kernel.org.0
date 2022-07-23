@@ -2,179 +2,81 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D7AD57EF36
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 23 Jul 2022 15:31:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CC0257EF95
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 23 Jul 2022 16:26:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233293AbiGWNbc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 23 Jul 2022 09:31:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51952 "EHLO
+        id S230422AbiGWO0N convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 23 Jul 2022 10:26:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiGWNba (ORCPT
+        with ESMTP id S230213AbiGWO0M (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 23 Jul 2022 09:31:30 -0400
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB6CF63B8
-        for <linux-bluetooth@vger.kernel.org>; Sat, 23 Jul 2022 06:31:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1658583089; x=1690119089;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=W/RibUQfeWyict+S8i2n5qwEASmFoss65sVyhxpIE0E=;
-  b=Yj4Ga1lrvjRg2vFu64e9+SW80ppQtF7S3GdX6uzcqb6h6GOKEzeur6s+
-   Ckms0pOBDOIS7ItNGrBHIjpWeXZoqxSjJMAjtkAd0kT+iRxerNEqffxzE
-   lOy2RIFysLQfdIYgCCk9Kz1yqSh2oMHPkj5GJKZEb9GfAb1bwJiRxo4wq
-   WEEru3XXaoY4T06Sa3En68khz+kV1NV9tiIVhp96qZxkn3K5RAq0Xov+v
-   4gdXff5x6jq7vVQWrLNOVaRfhH3zboHV8H926tX+Ol4zmZrsVCG76+QzL
-   C28t0YNYrHaGOoP8jAIK5nBMQWOW80B/IyXH/oi8pfDKsr1SQopHP1kOt
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10417"; a="274326714"
-X-IronPort-AV: E=Sophos;i="5.93,188,1654585200"; 
-   d="scan'208";a="274326714"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2022 06:31:27 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,188,1654585200"; 
-   d="scan'208";a="549464485"
-Received: from lkp-server01.sh.intel.com (HELO e0eace57cfef) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 23 Jul 2022 06:31:26 -0700
-Received: from kbuild by e0eace57cfef with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oFFE5-0002dZ-1v;
-        Sat, 23 Jul 2022 13:31:25 +0000
-Date:   Sat, 23 Jul 2022 21:30:54 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- 14202eff214e1e941fefa0366d4c3bc4b1a0d500
-Message-ID: <62dbf80e.VHpQsauSMxWvjS9O%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        Sat, 23 Jul 2022 10:26:12 -0400
+X-Greylist: delayed 36445 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 23 Jul 2022 07:26:10 PDT
+Received: from iara.government.bg (mail.iara.government.bg [95.43.208.99])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39DFB1089
+        for <linux-bluetooth@vger.kernel.org>; Sat, 23 Jul 2022 07:26:10 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by iara.government.bg (Postfix) with ESMTP id 5F37919BA325;
+        Sat, 23 Jul 2022 07:01:23 +0300 (EEST)
+Received: from iara.government.bg ([127.0.0.1])
+        by localhost (iara.government.bg [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id g94EdJ9ABST0; Sat, 23 Jul 2022 07:01:23 +0300 (EEST)
+Received: from localhost (localhost [127.0.0.1])
+        by iara.government.bg (Postfix) with ESMTP id 2A954197491A;
+        Sat, 23 Jul 2022 06:01:07 +0300 (EEST)
+X-Virus-Scanned: amavisd-new at iara.government.bg
+Received: from iara.government.bg ([127.0.0.1])
+        by localhost (iara.government.bg [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id GCI9mhCy7xn6; Sat, 23 Jul 2022 06:01:07 +0300 (EEST)
+Received: from [51.89.160.112] (cvdcdy7n.indoordelivery.online [51.89.160.112])
+        by iara.government.bg (Postfix) with ESMTPSA id 68E831972409;
+        Sat, 23 Jul 2022 05:29:12 +0300 (EEST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: text GT
+To:     Recipients <Borislav.Chardakov@iara.government.bg>
+From:   Borislav.Chardakov@iara.government.bg
+Date:   Fri, 22 Jul 2022 19:29:10 -0700
+Reply-To: lerynnewest5412@gmail.com
+Message-Id: <20220723022912.68E831972409@iara.government.bg>
+X-Spam-Status: Yes, score=7.4 required=5.0 tests=BAYES_80,
+        FREEMAIL_FORGED_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,NIXSPAM_IXHASH,
+        RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H2,
+        REPTO_419_FRAUD_GM_LOOSE,SPF_HELO_PASS,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -2.3 RCVD_IN_DNSWL_MED RBL: Sender listed at https://www.dnswl.org/,
+        *       medium trust
+        *      [95.43.208.99 listed in list.dnswl.org]
+        *  1.3 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in
+        *      bl.spamcop.net
+        *      [Blocked - see <https://www.spamcop.net/bl.shtml?51.89.160.112>]
+        *  2.0 BAYES_80 BODY: Bayes spam probability is 80 to 95%
+        *      [score: 0.8953]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [lerynnewest5412[at]gmail.com]
+        * -0.0 RCVD_IN_MSPIKE_H2 RBL: Average reputation (+2)
+        *      [95.43.208.99 listed in wl.mailspike.net]
+        *  3.0 NIXSPAM_IXHASH http://www.nixspam.org/
+        * -0.0 SPF_HELO_PASS SPF: HELO matches SPF record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  1.0 REPTO_419_FRAUD_GM_LOOSE Ends-in-digits Reply-To is similar to
+        *      known advance fee fraud collector mailbox
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: 14202eff214e1e941fefa0366d4c3bc4b1a0d500  Bluetooth: btusb: Detect if an ACL packet is in fact an ISO packet
+Is this email address active? We sent you a message earlier regarding
+the claiming of your €2.8 million donation. Please confirm your email
+and contact us by email
 
-elapsed time: 722m
-
-configs tested: 97
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm64                            allyesconfig
-arm                                 defconfig
-arm                              allyesconfig
-i386                          randconfig-c001
-powerpc              randconfig-c003-20220722
-m68k                          atari_defconfig
-sparc                       sparc64_defconfig
-sh                          r7785rp_defconfig
-m68k                                defconfig
-powerpc                 mpc834x_itx_defconfig
-arm                       imx_v6_v7_defconfig
-powerpc                      tqm8xx_defconfig
-arc                      axs103_smp_defconfig
-m68k                        m5407c3_defconfig
-mips                           jazz_defconfig
-powerpc                 mpc8540_ads_defconfig
-openrisc                 simple_smp_defconfig
-nios2                         3c120_defconfig
-sh                        apsh4ad0a_defconfig
-powerpc                     pq2fads_defconfig
-alpha                            alldefconfig
-openrisc                            defconfig
-sh                             sh03_defconfig
-xtensa                           alldefconfig
-arm                       omap2plus_defconfig
-xtensa                              defconfig
-powerpc                 mpc837x_rdb_defconfig
-powerpc                     asp8347_defconfig
-powerpc                       ppc64_defconfig
-csky                                defconfig
-arm                          gemini_defconfig
-powerpc                      mgcoge_defconfig
-sh                           se7751_defconfig
-arc                    vdk_hs38_smp_defconfig
-alpha                               defconfig
-parisc64                         alldefconfig
-riscv                    nommu_virt_defconfig
-riscv                          rv32_defconfig
-riscv                    nommu_k210_defconfig
-riscv                             allnoconfig
-i386                              debian-10.3
-loongarch                           defconfig
-loongarch                         allnoconfig
-i386                          debian-10.3-kvm
-i386                        debian-10.3-kunit
-i386                         debian-10.3-func
-csky                              allnoconfig
-alpha                             allnoconfig
-arc                               allnoconfig
-m68k                             allyesconfig
-m68k                             allmodconfig
-arc                              allyesconfig
-alpha                            allyesconfig
-powerpc                           allnoconfig
-mips                             allyesconfig
-powerpc                          allmodconfig
-sh                               allmodconfig
-i386                                defconfig
-i386                             allyesconfig
-x86_64                        randconfig-a006
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-i386                          randconfig-a012
-i386                          randconfig-a014
-i386                          randconfig-a016
-arc                  randconfig-r043-20220721
-x86_64                    rhel-8.3-kselftests
-x86_64                           allyesconfig
-um                           x86_64_defconfig
-um                             i386_defconfig
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                           rhel-8.3-kvm
-x86_64                          rhel-8.3-func
-x86_64                           rhel-8.3-syz
-x86_64                         rhel-8.3-kunit
-
-clang tested configs:
-arm                      pxa255-idp_defconfig
-mips                      maltaaprp_defconfig
-arm                       mainstone_defconfig
-mips                        bcm63xx_defconfig
-powerpc                     ksi8560_defconfig
-arm                       spear13xx_defconfig
-mips                     loongson1c_defconfig
-mips                         tb0287_defconfig
-arm                         hackkit_defconfig
-arm                  colibri_pxa300_defconfig
-x86_64                        randconfig-k001
-i386                          randconfig-a002
-i386                          randconfig-a006
-i386                          randconfig-a004
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
-x86_64                        randconfig-a016
-hexagon              randconfig-r041-20220721
-hexagon              randconfig-r045-20220721
-riscv                randconfig-r042-20220721
-s390                 randconfig-r044-20220721
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Best Regard
+Mrs. Lerynne West
