@@ -2,63 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 721C858282C
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Jul 2022 16:03:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB4AA5828B1
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 27 Jul 2022 16:30:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232641AbiG0ODx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 27 Jul 2022 10:03:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33986 "EHLO
+        id S233957AbiG0Oau (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 27 Jul 2022 10:30:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231204AbiG0ODv (ORCPT
+        with ESMTP id S233978AbiG0Oat (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 27 Jul 2022 10:03:51 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB45B03
-        for <linux-bluetooth@vger.kernel.org>; Wed, 27 Jul 2022 07:03:50 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id r14so19927809ljp.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 27 Jul 2022 07:03:50 -0700 (PDT)
+        Wed, 27 Jul 2022 10:30:49 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB20A3C171
+        for <linux-bluetooth@vger.kernel.org>; Wed, 27 Jul 2022 07:30:48 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id g20-20020a9d6a14000000b0061c84e679f5so13014407otn.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 27 Jul 2022 07:30:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=3aFTw8H5phswNH2+dV7HvXz/6aW0iiy4e+J50BzPHa8=;
-        b=cMT6Palrzsi2VRiJmROtTVABshO1kHS1F1unVebrYn7XThJ6FCMDei4iQov9qvOfFl
-         vVKYuQ10ux4Dxp6yDXIHWEGdfYMpFTI3NXddxyikcmTVYRBpUBoXT7FuuFTdHVmWHIzq
-         LBIN9xkbZ54BnJ+VTU+3VWBqvJ2pl8fmPReeHAcumM7jhPeVEWR/64HcBdV2Nw4Wy2C+
-         AyX/VDoy/ql58LkP6VGgphC/6In8GNwiD8glX1UjmWUa5SnSZBcJIfx3PKTj3hPT7N76
-         wMJSkO8V5k/Kq9T3OXHLVzISBMIRHrVbHNAlKos0hp2MeZ9sAw0bEMpnQ+OOiEayMhV2
-         3qAg==
+        h=message-id:date:mime-version:from:to:subject:reply-to:in-reply-to
+         :references;
+        bh=6b1YUVFKc32BzArSxWlgTzxg211jeT9pP/3p9mgNQ58=;
+        b=X6+jJktGwNziofyUH4cXTt+MXmGGKSHw2itMZe4UTDjH8dsVSy+dFVmVUTepNfeKrn
+         p+4bn9Fk4xhQ+q+en5eqcHYAZd0uFWcGZ5Z20ZK79xCAOiGPGFOIR7FpDicRLz5iCrip
+         rvGUPZR48zUy+Q05g2ILKT2/8Rcv3pROoHIfkWzcnm3mqBfp7eAKzzfinH1jxXnqs+mY
+         /DD93cONwVmYatwwYA84BPRXMf54/ObjpRs77fhWdDIuyMn/wY6OAbVv+Ez/wRvfhBLi
+         NcVbCzGXsDOSf7l0fSuGhz9tknaBiGyHc4MXCZtiOHfA7AJfU6I0j7hUfAI01TFVJZVM
+         dimQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=3aFTw8H5phswNH2+dV7HvXz/6aW0iiy4e+J50BzPHa8=;
-        b=vn3BQ53CF4SYdjZCK+ZAXsKBqnx1LlOY32/UPkbEkbY41gsJpSev+xd/5y1uRIFVLX
-         +ByzP8oL8xu4WmCHfrV8DTxsn76nJn1v/D5VZOYIkhGNtdB653KOAfp22bSEneUmrH5r
-         ClkGfSgd+9rE0KLInWuZHLlFWPN15d/CUrsYl2BD67zVlmR8b/Z8eTWcJ94ECPXbInJ6
-         3XvEeA+eMNGbi6eXRRJQxASj8vXRDCKDdEcy/4YqShyOpGrT8/Nx30JjmhQNeQorEGnq
-         3/N+K+ilBL3BHhj98PwNWpMNlvn5FDPPXcIEAJT4IENs1RFeJV96mwWo+nizboKBEyKD
-         Oh0g==
-X-Gm-Message-State: AJIora9mbaVv5C4AjIDIuNjpmn3yX/88W6uSNxTvA7GJJkixt/QFsPwD
-        hPt0VSlT7asMaUxiFH8Y3UjULF0BdwIC+4Ivhsw=
-X-Google-Smtp-Source: AGRyM1uUcL/1eDt8M0pIpkW1m/Zl2ZXq3I4cT5M1aKx7Yi7mSJwr+p3EDMB9KBprJ22fB4iMx2usUj7z+dzu5psNBD8=
-X-Received: by 2002:a2e:96c9:0:b0:25d:fc67:8df6 with SMTP id
- d9-20020a2e96c9000000b0025dfc678df6mr6950305ljj.518.1658930629241; Wed, 27
- Jul 2022 07:03:49 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:from:to:subject
+         :reply-to:in-reply-to:references;
+        bh=6b1YUVFKc32BzArSxWlgTzxg211jeT9pP/3p9mgNQ58=;
+        b=7Do4mT0CDxppOtGynAC9+pfLW8fjMfg+qRsujiYAt+BXw3Q51pqVMMYJZB7EDnNB/z
+         EI6kfZWIxbD/xWhe4rhqjzuEJXhLpaFC2eIVvHY8woUidHoFC4i71HVTGhpcqSX31UUW
+         u9cU2yGen+M3DL0wyiaKbP1hBYKlUxn1I7jPBlGCM6GNIYXL3TRovb5uH+4RF3I0wmxo
+         diJJAlJxWuxsl+7z8AMVbnt2lBPQh9pZkDiO8/juxIHetIVXh740OjSZc92X48lMNcw0
+         mzRcJ++UCPMxrMSDq00adS01ZoXX0PenC4pK4NB/ZKL4GccVdo35bNiwIv/SC8rWI3pD
+         iIgA==
+X-Gm-Message-State: AJIora/MwFVaX7yL+UEuTP91+TQh0asNJ2W2nWiJq2mG7I1iREFwxxfW
+        uRucWpQPm/bGWB9fQE60ObZ2ZVLCRcc=
+X-Google-Smtp-Source: AGRyM1uSeGN3l71YHUXWxj9oKEfhFaWS+ZbZDSGzIANmthHh3j96frtj8Omjx96ke6yhG0IUmh5pvQ==
+X-Received: by 2002:a9d:ecc:0:b0:61d:219c:ea0 with SMTP id 70-20020a9d0ecc000000b0061d219c0ea0mr384795otj.217.1658932247861;
+        Wed, 27 Jul 2022 07:30:47 -0700 (PDT)
+Received: from [172.17.0.2] ([20.225.149.55])
+        by smtp.gmail.com with ESMTPSA id l15-20020a4a94cf000000b00435f5744be3sm2306735ooi.9.2022.07.27.07.30.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Jul 2022 07:30:47 -0700 (PDT)
+Message-ID: <62e14c17.1c69fb81.9050a.938c@mx.google.com>
+Date:   Wed, 27 Jul 2022 07:30:47 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============3521097573380296846=="
 MIME-Version: 1.0
-Reply-To: sgtkalamanthey@gmail.com
-Sender: tantaadjo@gmail.com
-Received: by 2002:a2e:a16d:0:0:0:0:0 with HTTP; Wed, 27 Jul 2022 07:03:48
- -0700 (PDT)
-From:   Kayla Manthey <sgtkalamanthey@gmail.com>
-Date:   Wed, 27 Jul 2022 07:03:48 -0700
-X-Google-Sender-Auth: _zRR2LVSkFTTwdu8308YSWzdIk0
-Message-ID: <CAOji6HA7qCysqknZb9Cg3stP59SsckXhhvA-OnfOF4DpEA2KyA@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, brian.gix@intel.com
+Subject: RE: Clean-up stale/unused hci_request.c code
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220727135834.294184-2-brian.gix@intel.com>
+References: <20220727135834.294184-2-brian.gix@intel.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
@@ -68,5 +68,42 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Ol=C3=A1, voc=C3=AA recebeu meus e -mails? Por favor, verifique e me respon=
-da
+--===============3521097573380296846==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=663448
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      6.94 seconds
+GitLint                       PASS      3.40 seconds
+SubjectPrefix                 PASS      2.37 seconds
+BuildKernel                   PASS      40.29 seconds
+BuildKernel32                 PASS      35.21 seconds
+Incremental Build with patchesPASS      84.66 seconds
+TestRunner: Setup             PASS      582.65 seconds
+TestRunner: l2cap-tester      PASS      19.53 seconds
+TestRunner: bnep-tester       PASS      7.70 seconds
+TestRunner: mgmt-tester       PASS      115.78 seconds
+TestRunner: rfcomm-tester     PASS      11.30 seconds
+TestRunner: sco-tester        PASS      11.03 seconds
+TestRunner: smp-tester        PASS      11.06 seconds
+TestRunner: userchan-tester   PASS      8.14 seconds
+
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============3521097573380296846==--
