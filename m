@@ -2,50 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FF2A5848E0
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 Jul 2022 02:10:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAEC75848E9
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 Jul 2022 02:10:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233026AbiG2AKT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 28 Jul 2022 20:10:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46710 "EHLO
+        id S230312AbiG2AK1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 28 Jul 2022 20:10:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232113AbiG2AKS (ORCPT
+        with ESMTP id S232864AbiG2AKT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 28 Jul 2022 20:10:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2701712D15
-        for <linux-bluetooth@vger.kernel.org>; Thu, 28 Jul 2022 17:10:16 -0700 (PDT)
+        Thu, 28 Jul 2022 20:10:19 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 369F113E1C;
+        Thu, 28 Jul 2022 17:10:18 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F3CBD61D0A
-        for <linux-bluetooth@vger.kernel.org>; Fri, 29 Jul 2022 00:10:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E6982C43142;
+        by sin.source.kernel.org (Postfix) with ESMTPS id 8960BCE27EA;
+        Fri, 29 Jul 2022 00:10:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C71E1C43470;
         Fri, 29 Jul 2022 00:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1659053414;
-        bh=EEx/SyvvsGtDvnksDgag6Xx/Qkou5DtjgzGv7gjKLSg=;
+        bh=zcS2YkdtKZb7AqWH/yryAX5jxPMeJ3blFea2GwgswZ0=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=lr+O9hZPw3kwytT9DUQMG3AYaAljwVAZpl6Poo+/05k429XyOdWQRLIHSzLLgu9wS
-         OPWa19hP+vF0tDBn4pePHYxxrL1rfCuutqEcKvAw3MXPmoCi7rnz4ex1Qh2NYACIsr
-         XBoiCG/fJljfTnQ8wI9+BWYzvQnxDuYI1pBVL0YujXJKD1/5JEOdWDvBWc67sWmZZH
-         yfUeUp3yzGU5sQgCjQYO8EOCHqp1nXVoJ/qb5F7sI4TX4KteA91xMQTMT6WN4M77Rg
-         9vKE4h1dJPoGl9Z/mlBR0gRpuHKJ4Kx/4c8I4zMGt6gYnA2C2VanIk/NCdGwLXi9qQ
-         WGGYZbNhvSknQ==
+        b=fSxzrm23ajdgr+ExlFqX9zXXh7ho4NvyjYeeXAgyi7F4IrWx7NAod0ebCm0SSG9Zo
+         oaPrK614wIaA0Ns3zZIH/PDDy8+PY1/mWZ+Oz2Vn1zI83ONAtwfkUkRcAj0muLsLps
+         m93PP5pG+OV5thxpyR+jVj54xN62OiAyYTeKqv64luHc7Lh4KWBRdujzaWpIZBGoX4
+         dHSJPrbqrel8R5MZTCT4U1umM2VJQLmXpN1b4iefXfITyz25km5OJWZqo7A9iZSfbU
+         h6zskpf6PHqfmgFkiUKiPjzmpgaFVCTD6j9zSN9cUq+MOcGWexaLazjusVRRWXjXQ1
+         Qv4JR4HsM3pag==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D2BA1C43145;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id AD8DDC43144;
         Fri, 29 Jul 2022 00:10:14 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: hci_conn: Fix updating ISO QoS PHY
+Subject: Re: [PATCH] Bluetooth: Add VID/PID 0489/e0e0 for MediaTek MT7921
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165905341485.26440.17052003841675206872.git-patchwork-notify@kernel.org>
+Message-Id: <165905341470.26440.1987962667105455550.git-patchwork-notify@kernel.org>
 Date:   Fri, 29 Jul 2022 00:10:14 +0000
-References: <20220728210556.1236145-1-luiz.dentz@gmail.com>
-In-Reply-To: <20220728210556.1236145-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
+References: <20220724182501.5351-1-faenkhauser@gmail.com>
+In-Reply-To: <20220724182501.5351-1-faenkhauser@gmail.com>
+To:     Fae <faenkhauser@gmail.com>
+Cc:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, luiz.dentz@gmail.com,
+        marcel@holtmann.org
 X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -60,22 +62,56 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 28 Jul 2022 14:05:56 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Sun, 24 Jul 2022 13:25:02 -0500 you wrote:
+> Tested on HP Envy ey0xxx
 > 
-> BT_ISO_QOS has different semantics when it comes to QoS PHY as it uses
-> 0x00 to disable a direction but that value is invalid over HCI and
-> sockets using DEFER_SETUP to connect may attempt to use hci_bind_cis
-> multiple times in order to detect if the parameters have changed, so to
-> fix the code will now just mirror the PHY for the parameters of
-> HCI_OP_LE_SET_CIG_PARAMS and will not update the PHY of the socket
-> leaving it disabled.
+> output from /sys/kernel/debug/usb/devices:
+> 
+> T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+> D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+> P:  Vendor=0489 ProdID=e0e0 Rev= 1.00
+> S:  Manufacturer=MediaTek Inc.
+> S:  Product=Wireless_Device
+> S:  SerialNumber=000000000
+> C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+> A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+> E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+> E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+> I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+> E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+> E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+> I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+> E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+> E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: hci_conn: Fix updating ISO QoS PHY
-    https://git.kernel.org/bluetooth/bluetooth-next/c/8ce91829ab3a
+  - Bluetooth: Add VID/PID 0489/e0e0 for MediaTek MT7921
+    https://git.kernel.org/bluetooth/bluetooth-next/c/1a50481b4de9
 
 You are awesome, thank you!
 -- 
