@@ -2,51 +2,50 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 434735848E5
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 Jul 2022 02:10:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15CD85848E7
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 29 Jul 2022 02:10:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233371AbiG2AKX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 28 Jul 2022 20:10:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46706 "EHLO
+        id S233481AbiG2AK0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 28 Jul 2022 20:10:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230312AbiG2AKS (ORCPT
+        with ESMTP id S232627AbiG2AKS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Thu, 28 Jul 2022 20:10:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26E88DEB0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 28 Jul 2022 17:10:15 -0700 (PDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E92F13D0F
+        for <linux-bluetooth@vger.kernel.org>; Thu, 28 Jul 2022 17:10:17 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7E5E661D0B
-        for <linux-bluetooth@vger.kernel.org>; Fri, 29 Jul 2022 00:10:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D0EA5C4347C;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3A7E5B82664
+        for <linux-bluetooth@vger.kernel.org>; Fri, 29 Jul 2022 00:10:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D89F3C43140;
         Fri, 29 Jul 2022 00:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1659053414;
-        bh=VvMyffPD3Wk5WYD9sohZCxnEoge+plne1gJERpe7fuU=;
+        bh=iNhQD/RmDMz5YJvbC7qU0Mn33NXw/fR7tQDWzFkH9DY=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=hYKQozeC/X24IY8dZH48uEqXi5nG8xXzQQSiGQR1OE/C8e/gLj/VrCX8QaG1Vy8G4
-         V0GqLHButaLMqE1kVUPyAMoPTR7Q+ApbuHnfMiYoPMfLAZQ0Egs6tqQHKMwPxzfTZi
-         Xp859VBsAWJLxL4hcU7gTRaDF67h9RSeG/nbY1qSn46YRe4EggVzKnwC8qm2/+dus8
-         QCo5vfZHTeYxScqX5sUJSWNTEFwUIppzm38EkbQIpiVc3kXQjCvQcDbOEYx+yutXbT
-         7HHZ8hKbEXjqryzXE4WYL2lIhsS5USq7RfM+b4DHFLvuwc3wCn1S0zoykpp8XaoGsJ
-         Qu+i6DM8+ixeg==
+        b=dWHemJsQF9xexDKC8x/Bjw0O3DBFe8TcvoaEd7zxmrE30nsMwcHgWDp3d78kS46B3
+         VBjTCXk/Ni4rwYpYUvN2SIdBTJ+wRgutjw/uCOfRfyl9M53ErULz0Zciyjn4o5cWWT
+         nxazmNlsbm/y5u/WhhYfonhF1xAGCG96ump61ynj62pcM8MALTBBmZ7oO/olbnp6Rl
+         Dmo55uVALnsSDK5xs9SD+yCosxmHlRbB/6piN/07WltyUodoD4+d081GsSnz7+2kgH
+         /KDJiyV/qAbXl0VOEc9N6IFyUhV0LORmNvmQbkFDzMUGxb4RbwSFBK2EFvLHQiiK7v
+         aecpvwcbq77yQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B8194C43143;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C2E3AC43146;
         Fri, 29 Jul 2022 00:10:14 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: Fix null pointer deref on unexpected status event
+Subject: Re: [PATCH] Bluetooth: ISO: Fix info leak in iso_sock_getsockopt()
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165905341474.26440.12900245976401138748.git-patchwork-notify@kernel.org>
+Message-Id: <165905341479.26440.13048305380787468541.git-patchwork-notify@kernel.org>
 Date:   Fri, 29 Jul 2022 00:10:14 +0000
-References: <20220722115307.243056-1-soenke.huster@eknoes.de>
-In-Reply-To: <20220722115307.243056-1-soenke.huster@eknoes.de>
-To:     Soenke Huster <soenke.huster@eknoes.de>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org
+References: <20220728221145.1301230-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220728221145.1301230-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -61,19 +60,20 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Fri, 22 Jul 2022 13:53:07 +0200 you wrote:
-> __hci_cmd_sync returns NULL if the controller responds with a status
-> event. This is unexpected for the commands sent here, but on
-> occurrence leads to null pointer dereferences and thus must be
-> handled.
+On Thu, 28 Jul 2022 15:11:45 -0700 you wrote:
+> From: Dan Carpenter <dan.carpenter@oracle.com>
 > 
-> Signed-off-by: Soenke Huster <soenke.huster@eknoes.de>
+> The C standard rules for when struct holes are zeroed out are slightly
+> weird.  The existing assignments might initialize everything, but GCC
+> is allowed to (and does sometimes) leave the struct holes uninitialized,
+> so instead of using yet another variable and copy the QoS settings just
+> use a pointer to the stored QoS settings.
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: Fix null pointer deref on unexpected status event
-    https://git.kernel.org/bluetooth/bluetooth-next/c/aa7c99c75eea
+  - Bluetooth: ISO: Fix info leak in iso_sock_getsockopt()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/2cd0542726ba
 
 You are awesome, thank you!
 -- 
