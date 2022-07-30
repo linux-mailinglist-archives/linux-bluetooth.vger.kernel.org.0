@@ -2,47 +2,47 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FCDB5857A3
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 30 Jul 2022 02:50:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 581C35857A6
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 30 Jul 2022 02:51:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239595AbiG3Au5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 29 Jul 2022 20:50:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52718 "EHLO
+        id S239604AbiG3Au7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 29 Jul 2022 20:50:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239518AbiG3Auy (ORCPT
+        with ESMTP id S239572AbiG3Auz (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 29 Jul 2022 20:50:54 -0400
+        Fri, 29 Jul 2022 20:50:55 -0400
 Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA19773920
-        for <linux-bluetooth@vger.kernel.org>; Fri, 29 Jul 2022 17:50:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 923A77392A
+        for <linux-bluetooth@vger.kernel.org>; Fri, 29 Jul 2022 17:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1659142253; x=1690678253;
+  t=1659142254; x=1690678254;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=erD1VlI0xlr+4HyfUepsVBTOn1c+35rHmwf7ZvB4MTk=;
-  b=IkNyCkooXgWS2rqLP+SpZ42ux+1Avvjacz2HyBP8roziA9uoxGrpfFe4
-   V8H1iI6LcZJbeR85Ih28TtnW6gudmyCoG2QQ1eBnVV3XQtmAW+MLcTQyn
-   wmu26p57R1qX4nTYvQ0s25vXNjmRjtA5XjzhqN8Tjyn6wCDCzugfn7+H3
-   YN7E1CWVIjwj5gRlyv0/ODlXMDf4sYzt2MjmV/RDgrco6JZzSZ+ywPV6s
-   RSCG9UlVPmtmRAqrT9Q+Q9vWjOzBFBpGxN3maWGR+23PCH5GWt7VBE9g/
-   wzcqLXTgzqGuUYc6dNLFvud+jKBsvxjD4VYDSLMz9XMIhheyOtZB8hVii
+  bh=4YptWyqVFSTPwIPEGSBEq9FlJSIeISKSP8lD74P7k50=;
+  b=ROB6T/k9BdfatHl/VuJDEHmwolXVGif1hxdfSzs0yQgidKUgunXv5jdw
+   wJB9ycpT/urZdSVVwCqku/cSwIUJFdU3cLH1SIqZOBiZ2sBttlC1XFX+K
+   TRIFiXm6vASS9qFF3DwknQSCAodtJxI69ia2dLFpG7dTY6kSMly7SXVvB
+   8js06HZtIdr7W1OlG8D67xVE36GN7MO9jNYHW8op/AHGViwCjwW2wo56Z
+   TtVQt0O14jJToN54MulCb1T+mL9hkE++DtopsD5XnVcofP8lvQhgVGHKW
+   sLAvicEpxgORbliW57NoIZ5zSVCS3Sc+mTb6j4MwpkZ/iPkvGYzzf2udI
    A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10423"; a="268644798"
+X-IronPort-AV: E=McAfee;i="6400,9594,10423"; a="268644799"
 X-IronPort-AV: E=Sophos;i="5.93,202,1654585200"; 
-   d="scan'208";a="268644798"
+   d="scan'208";a="268644799"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
   by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2022 17:50:51 -0700
 X-IronPort-AV: E=Sophos;i="5.93,202,1654585200"; 
-   d="scan'208";a="660458135"
+   d="scan'208";a="660458139"
 Received: from agcodina-mobl1.amr.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.212.26.50])
   by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2022 17:50:51 -0700
 From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     marcel@holtmann.org, luiz.dentz@gmail.com, brian.gix@intel.com
-Subject: [PATCH v5 09/10] Bluetooth: convert hci_update_adv_data to hci_sync
-Date:   Fri, 29 Jul 2022 17:50:37 -0700
-Message-Id: <20220730005038.894650-10-brian.gix@intel.com>
+Subject: [PATCH v5 10/10] Bluetooth: Convert hci_abort_conn to hci_sync
+Date:   Fri, 29 Jul 2022 17:50:38 -0700
+Message-Id: <20220730005038.894650-11-brian.gix@intel.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220730005038.894650-1-brian.gix@intel.com>
 References: <20220730005038.894650-1-brian.gix@intel.com>
@@ -57,172 +57,271 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-hci_update_adv_data() is called from hci_event and hci_core due to
-events from the controller. The prior function used the deprecated
-hci_request method, and the new one uses hci_sync.c
+The prior hci_abort_conn() used the deprecated hci_request mechanism.
+This version has been rewritten to use hci_sync.c
 
 Signed-off-by: Brian Gix <brian.gix@intel.com>
 ---
- include/net/bluetooth/hci_sync.h |  1 +
- net/bluetooth/hci_core.c         |  2 +-
- net/bluetooth/hci_event.c        |  2 +-
- net/bluetooth/hci_request.c      | 64 --------------------------------
- net/bluetooth/hci_request.h      |  3 --
- net/bluetooth/hci_sync.c         | 20 ++++++++++
- 6 files changed, 23 insertions(+), 69 deletions(-)
+ include/net/bluetooth/hci_sync.h |   1 +
+ net/bluetooth/hci_request.c      |  93 ----------------------
+ net/bluetooth/hci_request.h      |   2 -
+ net/bluetooth/hci_sync.c         | 127 +++++++++++++++++++++++++++++++
+ 4 files changed, 128 insertions(+), 95 deletions(-)
 
 diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
-index b6b975c2ed3e..17f5a4c32f36 100644
+index 17f5a4c32f36..1f5784da98e6 100644
 --- a/include/net/bluetooth/hci_sync.h
 +++ b/include/net/bluetooth/hci_sync.h
-@@ -61,6 +61,7 @@ int hci_update_random_address_sync(struct hci_dev *hdev, bool require_privacy,
+@@ -129,3 +129,4 @@ int hci_le_terminate_big_sync(struct hci_dev *hdev, u8 handle, u8 reason);
+ int hci_le_big_terminate_sync(struct hci_dev *hdev, u8 handle);
  
- int hci_update_scan_rsp_data_sync(struct hci_dev *hdev, u8 instance);
- int hci_update_adv_data_sync(struct hci_dev *hdev, u8 instance);
-+int hci_update_adv_data(struct hci_dev *hdev, u8 instance);
- int hci_schedule_adv_instance_sync(struct hci_dev *hdev, u8 instance,
- 				   bool force);
- 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 3209b39899c1..22e373ff5293 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -714,7 +714,7 @@ static void hci_update_passive_scan_state(struct hci_dev *hdev, u8 scan)
- 		hci_dev_set_flag(hdev, HCI_BREDR_ENABLED);
- 
- 		if (hci_dev_test_flag(hdev, HCI_LE_ENABLED))
--			hci_req_update_adv_data(hdev, hdev->cur_adv_instance);
-+			hci_update_adv_data(hdev, hdev->cur_adv_instance);
- 
- 		mgmt_new_settings(hdev);
- 	}
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index ea33dd0cd478..9ab359b15f57 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2149,7 +2149,7 @@ static u8 hci_cc_set_ext_adv_param(struct hci_dev *hdev, void *data,
- 			adv_instance->tx_power = rp->tx_power;
- 	}
- 	/* Update adv data as tx power is known now */
--	hci_req_update_adv_data(hdev, cp->handle);
-+	hci_update_adv_data(hdev, cp->handle);
- 
- 	hci_dev_unlock(hdev);
- 
+ int hci_le_pa_terminate_sync(struct hci_dev *hdev, u16 handle);
++int hci_abort_conn(struct hci_conn *conn, u8 reason);
 diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index 31b75253a7eb..c6bfb2e75e52 100644
+index c6bfb2e75e52..064026bb6162 100644
 --- a/net/bluetooth/hci_request.c
 +++ b/net/bluetooth/hci_request.c
-@@ -273,70 +273,6 @@ void hci_req_add(struct hci_request *req, u16 opcode, u32 plen,
+@@ -272,96 +272,3 @@ void hci_req_add(struct hci_request *req, u16 opcode, u32 plen,
+ 	bt_dev_dbg(req->hdev, "HCI_REQ-0x%4.4x", opcode);
  	hci_req_add_ev(req, opcode, plen, param, 0);
  }
- 
--void __hci_req_update_adv_data(struct hci_request *req, u8 instance)
+-
+-static void __hci_abort_conn(struct hci_request *req, struct hci_conn *conn,
+-			     u8 reason)
 -{
--	struct hci_dev *hdev = req->hdev;
--	u8 len;
+-	switch (conn->state) {
+-	case BT_CONNECTED:
+-	case BT_CONFIG:
+-		if (conn->type == AMP_LINK) {
+-			struct hci_cp_disconn_phy_link cp;
 -
--	if (!hci_dev_test_flag(hdev, HCI_LE_ENABLED))
--		return;
+-			cp.phy_handle = HCI_PHY_HANDLE(conn->handle);
+-			cp.reason = reason;
+-			hci_req_add(req, HCI_OP_DISCONN_PHY_LINK, sizeof(cp),
+-				    &cp);
+-		} else {
+-			struct hci_cp_disconnect dc;
 -
--	if (ext_adv_capable(hdev)) {
--		struct {
--			struct hci_cp_le_set_ext_adv_data cp;
--			u8 data[HCI_MAX_EXT_AD_LENGTH];
--		} pdu;
+-			dc.handle = cpu_to_le16(conn->handle);
+-			dc.reason = reason;
+-			hci_req_add(req, HCI_OP_DISCONNECT, sizeof(dc), &dc);
+-		}
 -
--		memset(&pdu, 0, sizeof(pdu));
+-		conn->state = BT_DISCONN;
 -
--		len = eir_create_adv_data(hdev, instance, pdu.data);
+-		break;
+-	case BT_CONNECT:
+-		if (conn->type == LE_LINK) {
+-			if (test_bit(HCI_CONN_SCANNING, &conn->flags))
+-				break;
+-			hci_req_add(req, HCI_OP_LE_CREATE_CONN_CANCEL,
+-				    0, NULL);
+-		} else if (conn->type == ACL_LINK) {
+-			if (req->hdev->hci_ver < BLUETOOTH_VER_1_2)
+-				break;
+-			hci_req_add(req, HCI_OP_CREATE_CONN_CANCEL,
+-				    6, &conn->dst);
+-		}
+-		break;
+-	case BT_CONNECT2:
+-		if (conn->type == ACL_LINK) {
+-			struct hci_cp_reject_conn_req rej;
 -
--		/* There's nothing to do if the data hasn't changed */
--		if (hdev->adv_data_len == len &&
--		    memcmp(pdu.data, hdev->adv_data, len) == 0)
--			return;
+-			bacpy(&rej.bdaddr, &conn->dst);
+-			rej.reason = reason;
 -
--		memcpy(hdev->adv_data, pdu.data, len);
--		hdev->adv_data_len = len;
+-			hci_req_add(req, HCI_OP_REJECT_CONN_REQ,
+-				    sizeof(rej), &rej);
+-		} else if (conn->type == SCO_LINK || conn->type == ESCO_LINK) {
+-			struct hci_cp_reject_sync_conn_req rej;
 -
--		pdu.cp.length = len;
--		pdu.cp.handle = instance;
--		pdu.cp.operation = LE_SET_ADV_DATA_OP_COMPLETE;
--		pdu.cp.frag_pref = LE_SET_ADV_DATA_NO_FRAG;
+-			bacpy(&rej.bdaddr, &conn->dst);
 -
--		hci_req_add(req, HCI_OP_LE_SET_EXT_ADV_DATA,
--			    sizeof(pdu.cp) + len, &pdu.cp);
--	} else {
--		struct hci_cp_le_set_adv_data cp;
+-			/* SCO rejection has its own limited set of
+-			 * allowed error values (0x0D-0x0F) which isn't
+-			 * compatible with most values passed to this
+-			 * function. To be safe hard-code one of the
+-			 * values that's suitable for SCO.
+-			 */
+-			rej.reason = HCI_ERROR_REJ_LIMITED_RESOURCES;
 -
--		memset(&cp, 0, sizeof(cp));
--
--		len = eir_create_adv_data(hdev, instance, cp.data);
--
--		/* There's nothing to do if the data hasn't changed */
--		if (hdev->adv_data_len == len &&
--		    memcmp(cp.data, hdev->adv_data, len) == 0)
--			return;
--
--		memcpy(hdev->adv_data, cp.data, sizeof(cp.data));
--		hdev->adv_data_len = len;
--
--		cp.length = len;
--
--		hci_req_add(req, HCI_OP_LE_SET_ADV_DATA, sizeof(cp), &cp);
+-			hci_req_add(req, HCI_OP_REJECT_SYNC_CONN_REQ,
+-				    sizeof(rej), &rej);
+-		}
+-		break;
+-	default:
+-		conn->state = BT_CLOSED;
+-		break;
 -	}
 -}
 -
--int hci_req_update_adv_data(struct hci_dev *hdev, u8 instance)
+-static void abort_conn_complete(struct hci_dev *hdev, u8 status, u16 opcode)
 -{
--	struct hci_request req;
--
--	hci_req_init(&req, hdev);
--	__hci_req_update_adv_data(&req, instance);
--
--	return hci_req_run(&req, NULL);
+-	if (status)
+-		bt_dev_dbg(hdev, "Failed to abort connection: status 0x%2.2x", status);
 -}
 -
- static void __hci_abort_conn(struct hci_request *req, struct hci_conn *conn,
- 			     u8 reason)
- {
+-int hci_abort_conn(struct hci_conn *conn, u8 reason)
+-{
+-	struct hci_request req;
+-	int err;
+-
+-	hci_req_init(&req, conn->hdev);
+-
+-	__hci_abort_conn(&req, conn, reason);
+-
+-	err = hci_req_run(&req, abort_conn_complete);
+-	if (err && err != -ENODATA) {
+-		bt_dev_err(conn->hdev, "failed to run HCI request: err %d", err);
+-		return err;
+-	}
+-
+-	return 0;
+-}
 diff --git a/net/bluetooth/hci_request.h b/net/bluetooth/hci_request.h
-index 9792c34a681c..e5ecd4e4b686 100644
+index e5ecd4e4b686..763a9e6db976 100644
 --- a/net/bluetooth/hci_request.h
 +++ b/net/bluetooth/hci_request.h
-@@ -68,7 +68,4 @@ int __hci_req_sync(struct hci_dev *hdev, int (*func)(struct hci_request *req,
+@@ -67,5 +67,3 @@ int __hci_req_sync(struct hci_dev *hdev, int (*func)(struct hci_request *req,
+ 
  struct sk_buff *hci_prepare_cmd(struct hci_dev *hdev, u16 opcode, u32 plen,
  				const void *param);
- 
--void __hci_req_update_adv_data(struct hci_request *req, u8 instance);
--int hci_req_update_adv_data(struct hci_dev *hdev, u8 instance);
 -
- int hci_abort_conn(struct hci_conn *conn, u8 reason);
+-int hci_abort_conn(struct hci_conn *conn, u8 reason);
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index e8d5b08a38dc..280f0fcfdedc 100644
+index 280f0fcfdedc..39adeddbb39f 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -6120,3 +6120,23 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
- 
- 	return 0;
+@@ -6140,3 +6140,130 @@ int hci_update_adv_data(struct hci_dev *hdev, u8 instance)
+ 	*inst_ptr = instance;
+ 	return hci_cmd_sync_queue(hdev, _update_adv_data_sync, inst_ptr, NULL);
  }
 +
-+static int _update_adv_data_sync(struct hci_dev *hdev, void *data)
++struct conn_reason {
++	struct hci_conn *conn;
++	u8 reason;
++};
++
++static int _abort_conn_sync(struct hci_dev *hdev, void *data)
 +{
-+	u8 instance = *(u8 *) data;
++	struct hci_conn *conn = ((struct conn_reason *)data)->conn;
++	u8 reason = ((struct conn_reason *)data)->reason;
++	int err = 0;
 +
 +	kfree(data);
 +
-+	return hci_update_adv_data_sync(hdev, instance);
++	switch (conn->state) {
++	case BT_CONNECTED:
++	case BT_CONFIG:
++		if (conn->type == AMP_LINK) {
++			struct hci_cp_disconn_phy_link cp;
++
++			cp.phy_handle = HCI_PHY_HANDLE(conn->handle);
++			cp.reason = reason;
++			err = __hci_cmd_sync_status(hdev,
++						    HCI_OP_DISCONN_PHY_LINK,
++						    sizeof(cp), &cp,
++						    HCI_CMD_TIMEOUT);
++		} else {
++			struct hci_cp_disconnect dc;
++
++			dc.handle = cpu_to_le16(conn->handle);
++			dc.reason = reason;
++			err = __hci_cmd_sync_status(hdev,
++						    HCI_OP_DISCONNECT,
++						    sizeof(dc), &dc,
++						    HCI_CMD_TIMEOUT);
++		}
++		conn->state = BT_DISCONN;
++		break;
++	case BT_CONNECT:
++		if (conn->type == LE_LINK) {
++			if (test_bit(HCI_CONN_SCANNING, &conn->flags))
++				break;
++
++			err = __hci_cmd_sync_status(hdev,
++						    HCI_OP_LE_CREATE_CONN_CANCEL,
++						    0, NULL, HCI_CMD_TIMEOUT);
++		} else if (conn->type == ACL_LINK) {
++			if (hdev->hci_ver < BLUETOOTH_VER_1_2)
++				break;
++
++			err = __hci_cmd_sync_status(hdev,
++						    HCI_OP_CREATE_CONN_CANCEL,
++						    6, &conn->dst,
++						    HCI_CMD_TIMEOUT);
++		}
++		break;
++	case BT_CONNECT2:
++		if (conn->type == ACL_LINK) {
++			struct hci_cp_reject_conn_req rej;
++
++			bacpy(&rej.bdaddr, &conn->dst);
++			rej.reason = reason;
++
++			err = __hci_cmd_sync_status(hdev,
++						    HCI_OP_REJECT_CONN_REQ,
++						    sizeof(rej), &rej,
++						    HCI_CMD_TIMEOUT);
++
++		} else if (conn->type == SCO_LINK || conn->type == ESCO_LINK) {
++			struct hci_cp_reject_sync_conn_req rej;
++
++			bacpy(&rej.bdaddr, &conn->dst);
++
++			/* SCO rejection has its own limited set of
++			 * allowed error values (0x0D-0x0F) which isn't
++			 * compatible with most values passed to this
++			 * function. To be safe hard-code one of the
++			 * values that's suitable for SCO.
++			 */
++			rej.reason = HCI_ERROR_REJ_LIMITED_RESOURCES;
++
++			err = __hci_cmd_sync_status(hdev,
++						    HCI_OP_REJECT_SYNC_CONN_REQ,
++						    sizeof(rej), &rej,
++						    HCI_CMD_TIMEOUT);
++		}
++		break;
++	default:
++		conn->state = BT_CLOSED;
++		break;
++	}
++
++	return err;
 +}
 +
-+int hci_update_adv_data(struct hci_dev *hdev, u8 instance)
++static void abort_conn_complete(struct hci_dev *hdev, void *data, int err)
 +{
-+	u8 *inst_ptr = kmalloc(1, GFP_KERNEL);
++	if (err)
++		bt_dev_dbg(hdev, "Failed to abort connection: err %d", err);
++}
 +
-+	if (!inst_ptr)
++int hci_abort_conn(struct hci_conn *conn, u8 reason)
++{
++	struct conn_reason *conn_reason = kmalloc(sizeof(struct conn_reason),
++						  GFP_KERNEL);
++	int err;
++
++
++	if ( !conn_reason)
 +		return -ENOMEM;
 +
-+	*inst_ptr = instance;
-+	return hci_cmd_sync_queue(hdev, _update_adv_data_sync, inst_ptr, NULL);
++	conn_reason->conn = conn;
++	conn_reason->reason = reason;
++
++	err = hci_cmd_sync_queue(conn->hdev, _abort_conn_sync, conn_reason,
++				 abort_conn_complete);
++
++	if (err)
++		kfree(conn_reason);
++
++	if (err && err != -ENODATA) {
++		bt_dev_err(conn->hdev, "failed to run HCI req: err %d", err);
++		return err;
++	}
++
++	return 0;
 +}
 -- 
 2.37.1
