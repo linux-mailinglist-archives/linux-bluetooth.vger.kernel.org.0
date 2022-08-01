@@ -2,107 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65A90586EE6
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Aug 2022 18:43:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6426586F5D
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Aug 2022 19:15:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234082AbiHAQnf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 1 Aug 2022 12:43:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37712 "EHLO
+        id S233308AbiHARP0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 1 Aug 2022 13:15:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234002AbiHAQn3 (ORCPT
+        with ESMTP id S233098AbiHARPS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 1 Aug 2022 12:43:29 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBF461C903
-        for <linux-bluetooth@vger.kernel.org>; Mon,  1 Aug 2022 09:43:26 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id b21so12935116ljk.8
-        for <linux-bluetooth@vger.kernel.org>; Mon, 01 Aug 2022 09:43:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=q9Slei3vdZHf3BWZhWjxjnYHcSiTDd6lLLw5COAJJH4=;
-        b=bf7kmBr/SgfZ1wV4nI5vTAndNdYUbiAGmhGqIym6rX1OX0IxSa121QCCLjtfPTtP/q
-         Ji+y0OXbVSONjuLK/7HvTPJ0m6T7C2i8zva8hRhi9PAc4NLMf2QcGCMsVKAR/4SoxG8P
-         QCVBFNb+TBSE6hOTyUwwlUWtblNmcAsvavL/vwkHJhwxC5HKcnSuNdd2JaoddtOnq0f2
-         l8L1cTnZHt01Ad2nR5db4ZRgjujP4vZ5Nbd+R/n0bCKSy+6DchnTG1m2WXhoILL//vjC
-         4hQ2rR4QddBHqcFb8uNfmIzBTiaeke8T1siffGxdfn9eTO7JBIN070YbQDUKkrumHKo5
-         1fZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=q9Slei3vdZHf3BWZhWjxjnYHcSiTDd6lLLw5COAJJH4=;
-        b=ARgmX5qivxwO3GYDwlUwrRbBab9YLupbDy9RdeR2rVRGLj3HiVm8VwTeGVVid2naMt
-         W7qWSIeMLyEpIXWZU5sdYb49w3v5WRArQMYUBJ4Vr3cytf0U9Ap9YZEahfWqmcwQibBJ
-         VcD6cNI/SSzoT4AOaNPRjhNVBbQpWBSVs/C4Zi3SfXEoi8caA6hnLDrxmECvZUcyAOqA
-         xsLYGAACk3HnI6awhTtesAMlC1/wvBk4fsCboDoNzHxO6/J76nttEFqBDaMQ39NBXghb
-         ou37Nds/BIwfAzYBXPLWL7mgRMAnsM9L8UjAgc8lCZNNdOGu0ybAhFUYh5IINALC5tjU
-         3HIw==
-X-Gm-Message-State: ACgBeo0JWaotO5t9RtYx9k/Kvbwj9kc1UAH968x1UXozd2Ua/mxLFQt3
-        PC6dkUXzAZ77/GmnvEXQXgay7vbTSDQTF/znJWI=
-X-Google-Smtp-Source: AA6agR515/n1OMi0vRWF0LCNYzDsADnnMxK25Yt6CRjhyA+ZrhMbjmB0DBADjlTnR+ktgvNpDDCS04nHCVe1WUuUnWY=
-X-Received: by 2002:a2e:3806:0:b0:25e:48ff:a218 with SMTP id
- f6-20020a2e3806000000b0025e48ffa218mr3294471lja.292.1659372205210; Mon, 01
- Aug 2022 09:43:25 -0700 (PDT)
+        Mon, 1 Aug 2022 13:15:18 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F7A56315
+        for <linux-bluetooth@vger.kernel.org>; Mon,  1 Aug 2022 10:15:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1659374116; x=1690910116;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=1pF1gYPCY7F7+C+u6fZi8e0ZulNq6em06lp2WdlG3nM=;
+  b=b7nI0Rt4ITyW4KSVM/VARFTo0EXAyF6V0FZp1xTO1LTUFznYxCbJTA5I
+   64PE0P9KcFy8wADDszbYIIcrVshIFc65CQEoPypmqljEPrQMW5c8OXj+S
+   7oj+bh4DqWmuBgx/YXd2qKNAm478ZPmKE8M/fYlAvlY1s/E8IjYv4tZss
+   QGqSQZWYeKIww7b2jNvvmhBBXLNAqiclwgHjwXstn/PPrg/IKeUDYOG7T
+   11ZI2j9IwhfO3ggMJl6Y12dIgSamGDxwJhJdmZLPiXrCHhnJUHwexSQ6m
+   y99Qml3N7q0d3ZL1RAbNw5EsYLcZ/H/mqM/U4YKlOOYmiagFozq/3wuL9
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10426"; a="276104765"
+X-IronPort-AV: E=Sophos;i="5.93,208,1654585200"; 
+   d="scan'208";a="276104765"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2022 10:15:16 -0700
+X-IronPort-AV: E=Sophos;i="5.93,208,1654585200"; 
+   d="scan'208";a="847899602"
+Received: from gestarne-mobl.amr.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.212.120.49])
+  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2022 10:15:15 -0700
+From:   Brian Gix <brian.gix@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     marcel@holtmann.org, luiz.dentz@gmail.com, brian.gix@intel.com
+Subject: [PATCH v6 00/10] Clean-up stale/unused hci_request.c code
+Date:   Mon,  1 Aug 2022 10:14:55 -0700
+Message-Id: <20220801171505.1271059-1-brian.gix@intel.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Received: by 2002:aa6:cb52:0:b0:1fa:aaed:e6d9 with HTTP; Mon, 1 Aug 2022
- 09:43:24 -0700 (PDT)
-From:   Bright Gawayn <gben68387@gmail.com>
-Date:   Mon, 1 Aug 2022 22:13:24 +0530
-Message-ID: <CAG1+V0xy74Pa_JLx+ze1qhQfmiuJXdNJ4_AvNnskoiwRCHFd=g@mail.gmail.com>
-Subject: Lucrative business proposal very urgent!
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=6.9 required=5.0 tests=ADVANCE_FEE_3_NEW,BAYES_50,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,UNDISC_MONEY autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:243 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5113]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [gben68387[at]gmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [gben68387[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        *  3.5 ADVANCE_FEE_3_NEW Appears to be advance fee fraud (Nigerian
-        *      419)
-        *  2.5 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: ******
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello dear My name is Mr Bright Gawayn,  It's my pleasure to contact you today.
+This will be a growing patch-set of conversions and dead-code removal
+towards the goal of retiring hci_request.c
 
-We use a certain raw material in our pharmaceutical firm for the
-manufacture of animal vaccines and many more.
+The patch sets will be split amoung the work queues and delayed work
+queues as initialized in hci_request_setup(), with the ultimate goal of
+eliminating hci_request.c entirely.
 
-My intention is to give you the new contact information of the local
-manufacturer of this raw material in India and every details regarding
-how to supply the material to my company if you're interested, my
-company pays in advance for this material.
+v2: Published
 
-Due to some reasons, which I will explain in my next email, I cannot
-procure this material and supply it to my company myself due to the
-fact that I am a staff in the company.
+v3: Continuing work.  This does include one conversion
+(SCO configure_datapath) that has been tested with mgmt-tester and
+sco-tester, but has not been tested with a controller with an
+off-loadable codec.
 
-Please get back to me as soon as possible for full detail if you are interested.
+v4: Clean-up checkpatch warnings.
 
-Thanks and regards
-Bright.
+v5: Remove remaining procedures from hci_request.c/h. Not that other
+entities (notably amp.c, hci_event.c and hci_core.c) are still using
+the hci_request mechanism, however, the mgmt-tester unit test only
+currently execute opcode 0x1408 - HCI_OP_READ_ENC_KEY_SIZE during normal
+testing.
+
+v6: Fix CI reported errors, and recoded hci_abort_conn for optional sync
+queue usage to fix some L2CAP test cases.
+
+Brian Gix (10):
+  Bluetooth: Convert le_scan_disable timeout to hci_sync
+  Bluetooth: Rework le_scan_restart for hci_sync
+  Bluetooth: Delete unused hci_req_stop_discovery()
+  Bluetooth: Convert SCO configure_datapath to hci_sync
+  Bluetooth: Convert Interleave Scanning timeout to hci_sync
+  Bluetooth: Move Adv Instance timer to hci_sync
+  Bluetooth: Delete unreference hci_request code
+  Bluetooth: move hci_get_random_address() to hci_sync
+  Bluetooth: convert hci_update_adv_data to hci_sync
+  Bluetooth: Convert hci_abort_conn to hci_sync
+
+ include/net/bluetooth/hci_sync.h |   10 +-
+ net/bluetooth/hci_conn.c         |   92 +-
+ net/bluetooth/hci_core.c         |    4 +-
+ net/bluetooth/hci_event.c        |    2 +-
+ net/bluetooth/hci_request.c      | 2002 +-----------------------------
+ net/bluetooth/hci_request.h      |   61 -
+ net/bluetooth/hci_sync.c         |  567 ++++++++-
+ net/bluetooth/mgmt.c             |    7 +-
+ 8 files changed, 646 insertions(+), 2099 deletions(-)
+
+-- 
+2.37.1
+
