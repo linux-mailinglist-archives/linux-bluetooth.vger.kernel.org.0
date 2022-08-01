@@ -2,139 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CDE4586DAB
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Aug 2022 17:23:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C26DA586DD7
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Aug 2022 17:37:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232357AbiHAPXo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 1 Aug 2022 11:23:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57764 "EHLO
+        id S233092AbiHAPhC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 1 Aug 2022 11:37:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231162AbiHAPXn (ORCPT
+        with ESMTP id S231928AbiHAPg7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 1 Aug 2022 11:23:43 -0400
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4979EE9B;
-        Mon,  1 Aug 2022 08:23:42 -0700 (PDT)
-Received: by mail-io1-f53.google.com with SMTP id l24so8600949ion.13;
-        Mon, 01 Aug 2022 08:23:42 -0700 (PDT)
+        Mon, 1 Aug 2022 11:36:59 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61DBE2A279
+        for <linux-bluetooth@vger.kernel.org>; Mon,  1 Aug 2022 08:36:57 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id v7so5084720ljh.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 01 Aug 2022 08:36:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=q9Slei3vdZHf3BWZhWjxjnYHcSiTDd6lLLw5COAJJH4=;
+        b=UKcP1FDF09nj1k3uYCs67Q7ZyiUIjGtO/8/Bj2O390UgRgAJaQbdj4bNFv73NHa6D2
+         iYDxlXmYJBF3bZ+BbTGm686z3m5B8jXpwu0YmqjPCoKHCXX42ltrt2aAmH4sQv+ccJN+
+         OHyZ31OJTJwijh8OV8oO5eWh1/bM4pqSqK2uyo052aPr6eVSdk1CVQkx424vXYMEZQTj
+         HsS77Ky28UOjl0KpgsmMPfvxGbLfejaevmoaRlv0kRAHXIpr67GF1/t31ULjMlw9VGDc
+         NI+pGTJBLZwknk3P787XURm2/kBy3STaEpJiGhVmWsgdrf7IgJXaPWV7ssfsuJ7alB0a
+         /1Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=h+EaozKCPOAR4Pt7H3+DF41E8A2I4TARDu5JctlsAKc=;
-        b=pmOW9D78wmSGO/Ps/4wHQeVt9vI+q/9UYZ5/LOQcDQE3e+RsTkjGwePqElsrKXTQtj
-         /ZMD10tX4ZjU5xzXS5NWTgix903r9wrTFoVDfJbd5+ZBjPESWc/uBuVbQEcxMFHrQOLE
-         TJglyduHatXf5xf8e7UADdUo9eP3wVbqDZy2mgMOk5zKdNDbFDyRmyq/ucVd+FACoJtk
-         FFTn/Lk+C7uygcgssyXVcilTXambbaOe8wKi8uX4F7FEd8C52Nk+xYmqaIeO8hJ2PAIC
-         qud5jMxpo9oDmuS8znG7Ik46jMzzZadFKYHsD+dR1BfLHl7SJVTFUSKq0pS15tElpVNz
-         zmcQ==
-X-Gm-Message-State: AJIora/PWArCDxNrSoD7EsGon3wRHVuxV5c8J9qmsbEEHJZlrLE5HcYm
-        nl7P/7RcJb9uqP60sTHOJQ==
-X-Google-Smtp-Source: AGRyM1sbtEtvoAfQUhoXHdTBPOIKR4FoungfLRb+EiLPBcmuQIEkA8rGIIDK77b+f14A5MTJsKzOXQ==
-X-Received: by 2002:a02:cbcd:0:b0:33f:6f8c:f4a6 with SMTP id u13-20020a02cbcd000000b0033f6f8cf4a6mr6450682jaq.300.1659367421281;
-        Mon, 01 Aug 2022 08:23:41 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id y8-20020a027308000000b00339c4e447e2sm5384819jab.151.2022.08.01.08.23.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Aug 2022 08:23:40 -0700 (PDT)
-Received: (nullmailer pid 1045598 invoked by uid 1000);
-        Mon, 01 Aug 2022 15:23:38 -0000
-Date:   Mon, 1 Aug 2022 09:23:38 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sven Peter <sven@svenpeter.dev>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Hector Martin <marcan@marcan.st>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        asahi@lists.linux.dev, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: net: Add generic Bluetooth controller
-Message-ID: <20220801152338.GB1031441-robh@kernel.org>
-References: <20220801103633.27772-1-sven@svenpeter.dev>
- <20220801103633.27772-2-sven@svenpeter.dev>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=q9Slei3vdZHf3BWZhWjxjnYHcSiTDd6lLLw5COAJJH4=;
+        b=3TrgmhzEMiA2dfcdAfvQWKJgt9NXMDlDZ5aQGx2WUJdHvHSjJfH6CZv68xXPXzWQyw
+         weKmNoXpMrAJxhjmWzr39evICvWf+5J9TZJa3+J7OQo+delHVsaA+4gmfxEKiTkmDOVR
+         frCwB4d4+t61vASPx8LewFSwYICRenGU6BTJWyDpVdFgA+RZKjGoCKbTf1gytUDdjSP3
+         aia/UA7ySUi9VqIsfiOdBQJBHk4EBjW5UauTcqMME0TsWu/MRVHSK9H9H9Ls2Kb4drHj
+         iboY4Nlly5B+xwU2NG571q+DTOjDkbUiSNLvazuseCGv9jBk35azsN2lay4H1lgTMopT
+         s4Xg==
+X-Gm-Message-State: AJIora9H0mDXUefk2chJ05lT0gtGZCedBzZTKZ0ZhduGdJ/Ei7wMFgqd
+        cVtJ2gDMOubC559f84XgmxmdWzAqJu8uMdKlOBQ=
+X-Google-Smtp-Source: AGRyM1vmE9FJ4oaYsT2Hr55xmADsiyPljwE7zY7KjJ0BGtCDobMH8efpf5FFXcSqHPDNiB3EqFhLCRIlfACfnG64NOA=
+X-Received: by 2002:a2e:be90:0:b0:25e:1496:a0b8 with SMTP id
+ a16-20020a2ebe90000000b0025e1496a0b8mr5475533ljr.194.1659368215756; Mon, 01
+ Aug 2022 08:36:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220801103633.27772-2-sven@svenpeter.dev>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Received: by 2002:aa6:cb52:0:b0:1fa:aaed:e6d9 with HTTP; Mon, 1 Aug 2022
+ 08:36:55 -0700 (PDT)
+From:   Bright Gawayn <gben68387@gmail.com>
+Date:   Mon, 1 Aug 2022 21:06:55 +0530
+Message-ID: <CAG1+V0zQ=FhBLNLT__co7DHJWC=eYBw480NBDxjx-Za_ZVMuzw@mail.gmail.com>
+Subject: Lucrative business proposal very urgent!
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=6.9 required=5.0 tests=ADVANCE_FEE_3_NEW,BAYES_50,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,UNDISC_MONEY autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:242 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5003]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [gben68387[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [gben68387[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        *  3.5 ADVANCE_FEE_3_NEW Appears to be advance fee fraud (Nigerian
+        *      419)
+        *  2.5 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Mon, Aug 01, 2022 at 12:36:29PM +0200, Sven Peter wrote:
-> Bluetooth controllers share the common local-bd-address property.
-> Add a generic YAML schema to replace bluetooth.txt for those.
-> 
-> Signed-off-by: Sven Peter <sven@svenpeter.dev>
-> ---
-> I hope it's fine to list the current Bluetooth maintainers in here
-> as well.
-> 
->  .../bindings/net/bluetooth-controller.yaml    | 30 +++++++++++++++++++
->  .../devicetree/bindings/net/bluetooth.txt     |  6 +---
->  2 files changed, 31 insertions(+), 5 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/net/bluetooth-controller.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/net/bluetooth-controller.yaml b/Documentation/devicetree/bindings/net/bluetooth-controller.yaml
-> new file mode 100644
-> index 000000000000..0ea8a20e30f9
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/bluetooth-controller.yaml
-> @@ -0,0 +1,30 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/bluetooth-controller.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Bluetooth Controller Generic Binding
-> +
-> +maintainers:
-> +  - Marcel Holtmann <marcel@holtmann.org>
-> +  - Johan Hedberg <johan.hedberg@gmail.com>
-> +  - Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^bluetooth(@.*)?$"
-> +
-> +  local-bd-address:
-> +    $ref: /schemas/types.yaml#/definitions/uint8-array
-> +    minItems: 6
-> +    maxItems: 6
-> +    description:
-> +      Specifies the BD address that was uniquely assigned to the Bluetooth
-> +      device. Formatted with least significant byte first (little-endian), e.g.
-> +      in order to assign the address 00:11:22:33:44:55 this property must have
-> +      the value [55 44 33 22 11 00].
-> +
-> +additionalProperties: true
-> +
-> +...
-> diff --git a/Documentation/devicetree/bindings/net/bluetooth.txt b/Documentation/devicetree/bindings/net/bluetooth.txt
-> index 94797df751b8..3cb5a7b8e5ad 100644
-> --- a/Documentation/devicetree/bindings/net/bluetooth.txt
-> +++ b/Documentation/devicetree/bindings/net/bluetooth.txt
-> @@ -1,5 +1 @@
-> -The following properties are common to the Bluetooth controllers:
-> -
-> -- local-bd-address: array of 6 bytes, specifies the BD address that was
-> -  uniquely assigned to the Bluetooth device, formatted with least significant
-> -  byte first (little-endian).
-> +This file has been moved to bluetooth-controller.yaml.
+Hello dear My name is Mr Bright Gawayn,  It's my pleasure to contact you today.
 
-There's one reference to bluetooth.txt. Update it and remove this file.
+We use a certain raw material in our pharmaceutical firm for the
+manufacture of animal vaccines and many more.
 
-Rob
+My intention is to give you the new contact information of the local
+manufacturer of this raw material in India and every details regarding
+how to supply the material to my company if you're interested, my
+company pays in advance for this material.
+
+Due to some reasons, which I will explain in my next email, I cannot
+procure this material and supply it to my company myself due to the
+fact that I am a staff in the company.
+
+Please get back to me as soon as possible for full detail if you are interested.
+
+Thanks and regards
+Bright.
