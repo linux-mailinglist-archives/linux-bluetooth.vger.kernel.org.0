@@ -2,53 +2,80 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27A94589F8F
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Aug 2022 18:55:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17596589F6B
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Aug 2022 18:30:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233238AbiHDQzi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 4 Aug 2022 12:55:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58284 "EHLO
+        id S233341AbiHDQag (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 4 Aug 2022 12:30:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230177AbiHDQzh (ORCPT
+        with ESMTP id S231946AbiHDQaP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 4 Aug 2022 12:55:37 -0400
-X-Greylist: delayed 1326 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 04 Aug 2022 09:55:37 PDT
-Received: from cpanel03.truespeed.ca (cpanel03.truespeed.ca [66.78.99.200])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13310BF46
-        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Aug 2022 09:55:36 -0700 (PDT)
-Received: from electric by cpanel03.truespeed.ca with local (Exim 4.95)
-        (envelope-from <electric@cpanel03.truespeed.ca>)
-        id 1oJdhG-0005cr-Ab;
-        Thu, 04 Aug 2022 12:27:42 -0400
-To:     dgray@iecbl.ca
-Subject: Contact Form: BITCOIN WILL MAKE YOU A BILLIONAIRE
-X-PHP-Script: iecbl.ca/index.php for 191.101.31.49
- X-PHP-Originating-Script: 1140:index.php
-From:   linux-bluetooth@vger.kernel.org
-CC:     linux-bluetooth@vger.kernel.org
-Message-Id: <E1oJdhG-0005cr-Ab@cpanel03.truespeed.ca>
-Date:   Thu, 04 Aug 2022 12:27:42 -0400
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel03.truespeed.ca
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [1140 993] / [47 12]
-X-AntiAbuse: Sender Address Domain - cpanel03.truespeed.ca
-X-Get-Message-Sender-Via: cpanel03.truespeed.ca: authenticated_id: electric/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel03.truespeed.ca: electric
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Spam-Status: No, score=3.4 required=5.0 tests=BAYES_50,
-        HEADER_FROM_DIFFERENT_DOMAINS,PHP_SCRIPT,SPF_HELO_PASS,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+        Thu, 4 Aug 2022 12:30:15 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2197272D
+        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Aug 2022 09:30:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3D120614AC
+        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Aug 2022 16:30:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9EDBFC433B5;
+        Thu,  4 Aug 2022 16:30:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659630613;
+        bh=65coytVEMdyZ9ofhl/jX64ytfR84M4IlBKL/srw9SEU=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=OKeMj/Iosx3Sm81uMuqcYSk59+WfKhKpISrPbpIb32smhoKw6WBP/FhgpSnVTQPO6
+         4hug093w9MN5eTteufcWu++KG+HQE3Tr5BZiVTtiYe2L31aGEMFG216/qsCkS/obOl
+         eyBLa1CkD6oGkWkGTlixveTsDEqE4ihN7d001pSb8nuOBtaSzwk0LgVIamOIwBE3Ec
+         i+HLhYQrTfWLrjqrti2d8UqPWzds8P7lNE4vt1FLuZl/+W72aSf/gXBQuCGGbEZZ+D
+         wIO2xu58psy0gHBQmSdZ0zZ/kxRZLVuzHVzyZNzHcY/HMzUqxa+hoVNcal/jpKBpHo
+         0CDgFjH2l60lw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 7971FC43140;
+        Thu,  4 Aug 2022 16:30:13 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ] iso-tester: Test BT_DEFER_SETUP works with getsockopt
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <165963061349.5660.12889968034767897427.git-patchwork-notify@kernel.org>
+Date:   Thu, 04 Aug 2022 16:30:13 +0000
+References: <20220803172222.2952373-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220803172222.2952373-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: CharlesBew 
-Contact: 89854985664 
-Message: A QUICK AND EFFECTIVE WAY TO GET RICH https://telegra.ph/Cryptocurrency-makes-people-millionaires-at-15-people-per-hour---Page-378380-08-02
+Hello:
+
+This patch was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+
+On Wed,  3 Aug 2022 10:22:22 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> This attempts to test BT_DEFER_SETUP is properly set when the test has
+> defer flag set.
+> ---
+>  tools/iso-tester.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+
+Here is the summary with links:
+  - [BlueZ] iso-tester: Test BT_DEFER_SETUP works with getsockopt
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d9497e0001c0
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
