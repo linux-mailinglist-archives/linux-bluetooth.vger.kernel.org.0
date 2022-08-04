@@ -2,66 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EEFB589F6F
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Aug 2022 18:32:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABE7C58A31F
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Aug 2022 00:15:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234628AbiHDQcD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 4 Aug 2022 12:32:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47284 "EHLO
+        id S232665AbiHDWPR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 4 Aug 2022 18:15:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233341AbiHDQcB (ORCPT
+        with ESMTP id S230335AbiHDWPP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 4 Aug 2022 12:32:01 -0400
-Received: from smtp.github.com (out-25.smtp.github.com [192.30.252.208])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E61E13DD4
-        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Aug 2022 09:32:00 -0700 (PDT)
-Received: from github.com (hubbernetes-node-8a30038.ash1-iad.github.net [10.56.225.26])
-        by smtp.github.com (Postfix) with ESMTPA id 92F09840AB9
-        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Aug 2022 09:31:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-        s=pf2014; t=1659630719;
-        bh=+lwnlM22vR7IIIUmxrN6yFm7nrVR92PlPErEJnIpU7U=;
-        h=Date:From:To:Subject:From;
-        b=0wkN/rJYwkkepWpASc3yOe7ODpGVhLKJjE9AuHVkAN41NLlLCg3CNZtAwGWoqjl3G
-         S37N+jh35oFNwFri3Zu18s0DQmcdWTqR3tHZLSaaK4GBkelW0QFfQxvoc6qgq1gKUm
-         EcFWuVx8ZUaHLxS3e1CFhWiiycnmFCDRc5cTGVvY=
-Date:   Thu, 04 Aug 2022 09:31:59 -0700
-From:   Luiz Augusto von Dentz <noreply@github.com>
+        Thu, 4 Aug 2022 18:15:15 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB10A1FE
+        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Aug 2022 15:15:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8C73DB82771
+        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Aug 2022 22:15:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3E919C433B5
+        for <linux-bluetooth@vger.kernel.org>; Thu,  4 Aug 2022 22:15:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659651310;
+        bh=WyAkrkXFxkX/sonOZiETk+XCU6/brRsKmyjLo8Gq9cE=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=Oqa43gqcjUrCVxtzP4lZjgYybSGb79ZHCbQ/glBxbh/qWex3D0qUP7mmo/c1x3aJG
+         6etgtf921w8wI30ADSMyPGZddUniR72T8jNfmaT/w0g8Zw1yRIoaaKTAcm6rsmkEyZ
+         jjG9E6vcH38cZv6bw+XNlzNnyWs2PIMTd3pE6MLF9e7xf1WqnJ7wBmx9RTyQvT9aPB
+         etwnbJOSCHMmrkUck/PxCxmzrCSyg/o0+KwJpBFPigHY/BfVLJLmLIXZr2STfoTVBz
+         4wejc6qzW9bWzsLsT9mHV8M7XcnU6UXOJB2Z6Rntb4SZgtLZ+mQUQZW6+/0/iPbeV9
+         ZuNkgLhoAltUg==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 312F5C433EA; Thu,  4 Aug 2022 22:15:10 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
 To:     linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/a65ddf-d9497e@github.com>
-Subject: [bluez/bluez] d9497e: iso-tester: Test BT_DEFER_SETUP works with
- getsockopt
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+Subject: [Bug 215768] Kernel 5.17 can't suspend while bluetooth is enabled.
+Date:   Thu, 04 Aug 2022 22:15:09 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: nechtom@gmail.com
+X-Bugzilla-Status: REOPENED
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-215768-62941-lOll7ZSzws@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-215768-62941@https.bugzilla.kernel.org/>
+References: <bug-215768-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: d9497e0001c050a7e3ef0fd87fb03bce7b331879
-      https://github.com/bluez/bluez/commit/d9497e0001c050a7e3ef0fd87fb03bce7b331879
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2022-08-04 (Thu, 04 Aug 2022)
+https://bugzilla.kernel.org/show_bug.cgi?id=3D215768
 
-  Changed paths:
-    M tools/iso-tester.c
+woky (nechtom@gmail.com) changed:
 
-  Log Message:
-  -----------
-  iso-tester: Test BT_DEFER_SETUP works with getsockopt
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |nechtom@gmail.com
 
-This attempts to test BT_DEFER_SETUP is properly set when the test has
-defer flag set.
+--- Comment #34 from woky (nechtom@gmail.com) ---
+The problem seems to be fixed by commit d50f2557 ("Bluetooth: Always set ev=
+ent
+mask on suspend") present in 5.18.16. At least on my box (Asus ZenBook UX41=
+0)
+it doesn't resume few seconds after suspend with bluetooth headset connected
+anymore. Thanks!
 
+--=20
+You may reply to this email to add a comment.
 
+You are receiving this mail because:
+You are the assignee for the bug.=
