@@ -2,47 +2,47 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A42658B2D4
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Aug 2022 01:42:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0608E58B2D5
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Aug 2022 01:42:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241716AbiHEXmw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 Aug 2022 19:42:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55394 "EHLO
+        id S241561AbiHEXmx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 Aug 2022 19:42:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241284AbiHEXmt (ORCPT
+        with ESMTP id S241576AbiHEXmt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 5 Aug 2022 19:42:49 -0400
 Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0E167B1C1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F19FF7B1F3
         for <linux-bluetooth@vger.kernel.org>; Fri,  5 Aug 2022 16:42:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1659742968; x=1691278968;
+  t=1659742969; x=1691278969;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=G3uLrkjGnv49db2IxmJi6pfh8i/dto0AcPrVM5i5LUM=;
-  b=gXKMG4Eu5kCFq5peM88t+s34MbW8xW3N8lCYp1NH8E5ej5QvM0c6aAQ3
-   DW4QG7do9v0WqFMYuyfyY/0HYcNOI0W5w1YcSPnH2TZt/XRB1yZ35hoia
-   SrxYbBdfWkwqrENSXrQD/ryslSVaK5B1jn1xAsoiyO4iC/pX+vAUm/Qbu
-   JQo5RXZOJK3f2OzcmKm3gW8l+l2sDyF68BJkqxK8vgvDN86pFOjMjfQj+
-   rJgzdAAcNPzD2mSPQNsVy93LRh8jWwZ5tlBg5j4603meb3u0Rz+Ju7CP+
-   Oh8zRTGy7rWJ1dAPnauOii65lG4fzRyGyOBHcjiqek5J+fLsjrW1lMBKo
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10430"; a="273362747"
+  bh=eOPWYFYJAPgrTQvyfeRJYAfCS87ac2RPkgxZVKBaLLE=;
+  b=YtDMmx7d07MeEUj7cSAqUAMdvkCqXkhAt8csRzhcIEUmeDu2kgJtkW11
+   zjyEUYrixLCvZvqqHLzr59i+QAnhaPD7rZRGD7LsdsCiWWKuIs2+9JMfW
+   hHHY9lZGk/mEEUV2g5X2YepLz+MLydIRS0Ul1/WRMNtb6KOtd4lRlWdiA
+   /AzR2xyY8OeszzZmCRB9R3B+xvXiajWsy12tQZxFB/qnV3i9VdTXZu9oT
+   z8b4HEjn3y9b0REOMSPi1btuIF98fzxaiSIZ/JZZh0s+2vMUAekYpPiDb
+   F13ArxjRwIWk6guzgQMwsBRlEi6wrofGXF9M8yqVTCtlKGg+B4aj5uxK0
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10430"; a="273362748"
 X-IronPort-AV: E=Sophos;i="5.93,217,1654585200"; 
-   d="scan'208";a="273362747"
+   d="scan'208";a="273362748"
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2022 16:42:47 -0700
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2022 16:42:48 -0700
 X-IronPort-AV: E=Sophos;i="5.93,217,1654585200"; 
-   d="scan'208";a="636661802"
+   d="scan'208";a="636661807"
 Received: from bkkx-mobl.gar.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.209.189.232])
   by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2022 16:42:47 -0700
 From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     marcel@holtmann.org, luiz.dentz@gmail.com, brian.gix@intel.com
-Subject: [PATCH v7 1/9] Bluetooth: Convert le_scan_disable timeout to hci_sync
-Date:   Fri,  5 Aug 2022 16:42:28 -0700
-Message-Id: <20220805234236.704986-2-brian.gix@intel.com>
+Subject: [PATCH v7 2/9] Bluetooth: Rework le_scan_restart for hci_sync
+Date:   Fri,  5 Aug 2022 16:42:29 -0700
+Message-Id: <20220805234236.704986-3-brian.gix@intel.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220805234236.704986-1-brian.gix@intel.com>
 References: <20220805234236.704986-1-brian.gix@intel.com>
@@ -58,240 +58,226 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The le_scan_disable timeout was being performed on the deprecated
-hci_request.c mechanism.  This timeout is performed in hci_sync.c
+le_scan_restart delayed work queue was running as a deprecated
+hci_request instead of on the newer thread-safe hci_sync mechanism.
 
 Signed-off-by: Brian Gix <brian.gix@intel.com>
 ---
- net/bluetooth/hci_request.c | 98 +------------------------------------
- net/bluetooth/hci_sync.c    | 73 +++++++++++++++++++++++++++
- 2 files changed, 74 insertions(+), 97 deletions(-)
+ net/bluetooth/hci_request.c | 89 -------------------------------------
+ net/bluetooth/hci_sync.c    | 75 +++++++++++++++++++++++++++++++
+ 2 files changed, 75 insertions(+), 89 deletions(-)
 
 diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
-index e64d558e5d69..32fefaa0d3ca 100644
+index 32fefaa0d3ca..114af7350363 100644
 --- a/net/bluetooth/hci_request.c
 +++ b/net/bluetooth/hci_request.c
-@@ -269,6 +269,7 @@ void hci_req_add_ev(struct hci_request *req, u16 opcode, u32 plen,
- void hci_req_add(struct hci_request *req, u16 opcode, u32 plen,
- 		 const void *param)
- {
-+	bt_dev_dbg(req->hdev, "HCI_REQ-0x%4.4x", opcode);
- 	hci_req_add_ev(req, opcode, plen, param, 0);
- }
- 
-@@ -1974,101 +1975,6 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+@@ -1975,92 +1975,6 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
  	return 0;
  }
  
--static int le_scan_disable(struct hci_request *req, unsigned long opt)
+-static int le_scan_restart(struct hci_request *req, unsigned long opt)
 -{
--	hci_req_add_le_scan_disable(req, false);
--	return 0;
--}
+-	struct hci_dev *hdev = req->hdev;
 -
--static int bredr_inquiry(struct hci_request *req, unsigned long opt)
--{
--	u8 length = opt;
--	const u8 giac[3] = { 0x33, 0x8b, 0x9e };
--	const u8 liac[3] = { 0x00, 0x8b, 0x9e };
--	struct hci_cp_inquiry cp;
--
--	if (test_bit(HCI_INQUIRY, &req->hdev->flags))
+-	/* If controller is not scanning we are done. */
+-	if (!hci_dev_test_flag(hdev, HCI_LE_SCAN))
 -		return 0;
 -
--	bt_dev_dbg(req->hdev, "");
+-	if (hdev->scanning_paused) {
+-		bt_dev_dbg(hdev, "Scanning is paused for suspend");
+-		return 0;
+-	}
 -
--	hci_dev_lock(req->hdev);
--	hci_inquiry_cache_flush(req->hdev);
--	hci_dev_unlock(req->hdev);
+-	hci_req_add_le_scan_disable(req, false);
 -
--	memset(&cp, 0, sizeof(cp));
+-	if (use_ext_scan(hdev)) {
+-		struct hci_cp_le_set_ext_scan_enable ext_enable_cp;
 -
--	if (req->hdev->discovery.limited)
--		memcpy(&cp.lap, liac, sizeof(cp.lap));
--	else
--		memcpy(&cp.lap, giac, sizeof(cp.lap));
+-		memset(&ext_enable_cp, 0, sizeof(ext_enable_cp));
+-		ext_enable_cp.enable = LE_SCAN_ENABLE;
+-		ext_enable_cp.filter_dup = LE_SCAN_FILTER_DUP_ENABLE;
 -
--	cp.length = length;
+-		hci_req_add(req, HCI_OP_LE_SET_EXT_SCAN_ENABLE,
+-			    sizeof(ext_enable_cp), &ext_enable_cp);
+-	} else {
+-		struct hci_cp_le_set_scan_enable cp;
 -
--	hci_req_add(req, HCI_OP_INQUIRY, sizeof(cp), &cp);
+-		memset(&cp, 0, sizeof(cp));
+-		cp.enable = LE_SCAN_ENABLE;
+-		cp.filter_dup = LE_SCAN_FILTER_DUP_ENABLE;
+-		hci_req_add(req, HCI_OP_LE_SET_SCAN_ENABLE, sizeof(cp), &cp);
+-	}
 -
 -	return 0;
 -}
 -
--static void le_scan_disable_work(struct work_struct *work)
+-static void le_scan_restart_work(struct work_struct *work)
 -{
 -	struct hci_dev *hdev = container_of(work, struct hci_dev,
--					    le_scan_disable.work);
+-					    le_scan_restart.work);
+-	unsigned long timeout, duration, scan_start, now;
 -	u8 status;
 -
 -	bt_dev_dbg(hdev, "");
 -
--	if (!hci_dev_test_flag(hdev, HCI_LE_SCAN))
--		return;
--
--	cancel_delayed_work(&hdev->le_scan_restart);
--
--	hci_req_sync(hdev, le_scan_disable, 0, HCI_CMD_TIMEOUT, &status);
+-	hci_req_sync(hdev, le_scan_restart, 0, HCI_CMD_TIMEOUT, &status);
 -	if (status) {
--		bt_dev_err(hdev, "failed to disable LE scan: status 0x%02x",
+-		bt_dev_err(hdev, "failed to restart LE scan: status %d",
 -			   status);
 -		return;
 -	}
 -
--	hdev->discovery.scan_start = 0;
--
--	/* If we were running LE only scan, change discovery state. If
--	 * we were running both LE and BR/EDR inquiry simultaneously,
--	 * and BR/EDR inquiry is already finished, stop discovery,
--	 * otherwise BR/EDR inquiry will stop discovery when finished.
--	 * If we will resolve remote device name, do not change
--	 * discovery state.
--	 */
--
--	if (hdev->discovery.type == DISCOV_TYPE_LE)
--		goto discov_stopped;
--
--	if (hdev->discovery.type != DISCOV_TYPE_INTERLEAVED)
--		return;
--
--	if (test_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks)) {
--		if (!test_bit(HCI_INQUIRY, &hdev->flags) &&
--		    hdev->discovery.state != DISCOVERY_RESOLVING)
--			goto discov_stopped;
--
--		return;
--	}
--
--	hci_req_sync(hdev, bredr_inquiry, DISCOV_INTERLEAVED_INQUIRY_LEN,
--		     HCI_CMD_TIMEOUT, &status);
--	if (status) {
--		bt_dev_err(hdev, "inquiry failed: status 0x%02x", status);
--		goto discov_stopped;
--	}
--
--	return;
--
--discov_stopped:
 -	hci_dev_lock(hdev);
--	hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
+-
+-	if (!test_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks) ||
+-	    !hdev->discovery.scan_start)
+-		goto unlock;
+-
+-	/* When the scan was started, hdev->le_scan_disable has been queued
+-	 * after duration from scan_start. During scan restart this job
+-	 * has been canceled, and we need to queue it again after proper
+-	 * timeout, to make sure that scan does not run indefinitely.
+-	 */
+-	duration = hdev->discovery.scan_duration;
+-	scan_start = hdev->discovery.scan_start;
+-	now = jiffies;
+-	if (now - scan_start <= duration) {
+-		int elapsed;
+-
+-		if (now >= scan_start)
+-			elapsed = now - scan_start;
+-		else
+-			elapsed = ULONG_MAX - scan_start + now;
+-
+-		timeout = duration - elapsed;
+-	} else {
+-		timeout = 0;
+-	}
+-
+-	queue_delayed_work(hdev->req_workqueue,
+-			   &hdev->le_scan_disable, timeout);
+-
+-unlock:
 -	hci_dev_unlock(hdev);
 -}
 -
- static int le_scan_restart(struct hci_request *req, unsigned long opt)
+ bool hci_req_stop_discovery(struct hci_request *req)
  {
  	struct hci_dev *hdev = req->hdev;
-@@ -2252,7 +2158,6 @@ int hci_req_configure_datapath(struct hci_dev *hdev, struct bt_codec *codec)
+@@ -2158,7 +2072,6 @@ int hci_req_configure_datapath(struct hci_dev *hdev, struct bt_codec *codec)
  
  void hci_request_setup(struct hci_dev *hdev)
  {
--	INIT_DELAYED_WORK(&hdev->le_scan_disable, le_scan_disable_work);
- 	INIT_DELAYED_WORK(&hdev->le_scan_restart, le_scan_restart_work);
+-	INIT_DELAYED_WORK(&hdev->le_scan_restart, le_scan_restart_work);
  	INIT_DELAYED_WORK(&hdev->adv_instance_expire, adv_timeout_expire);
  	INIT_DELAYED_WORK(&hdev->interleave_scan, interleave_scan_work);
-@@ -2262,7 +2167,6 @@ void hci_request_cancel_all(struct hci_dev *hdev)
+ }
+@@ -2167,8 +2080,6 @@ void hci_request_cancel_all(struct hci_dev *hdev)
  {
  	__hci_cmd_sync_cancel(hdev, ENODEV);
  
--	cancel_delayed_work_sync(&hdev->le_scan_disable);
- 	cancel_delayed_work_sync(&hdev->le_scan_restart);
- 
+-	cancel_delayed_work_sync(&hdev->le_scan_restart);
+-
  	if (hdev->adv_instance_timeout) {
+ 		cancel_delayed_work_sync(&hdev->adv_instance_expire);
+ 		hdev->adv_instance_timeout = 0;
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index e6d804b82b67..e22837510ab1 100644
+index e22837510ab1..75e7c0a01ab1 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -321,6 +321,77 @@ static void hci_cmd_sync_cancel_work(struct work_struct *work)
- 	wake_up_interruptible(&hdev->req_wait_q);
+@@ -392,6 +392,79 @@ static void le_scan_disable(struct work_struct *work)
+ 	hci_dev_unlock(hdev);
  }
  
-+static int hci_scan_disable_sync(struct hci_dev *hdev);
-+static int scan_disable_sync(struct hci_dev *hdev, void *data)
++static int hci_le_set_scan_enable_sync(struct hci_dev *hdev, u8 val,
++				       u8 filter_dup);
++static int hci_le_scan_restart_sync(struct hci_dev *hdev)
 +{
-+	return hci_scan_disable_sync(hdev);
++	/* If controller is not scanning we are done. */
++	if (!hci_dev_test_flag(hdev, HCI_LE_SCAN))
++		return 0;
++
++	if (hdev->scanning_paused) {
++		bt_dev_dbg(hdev, "Scanning is paused for suspend");
++		return 0;
++	}
++
++	hci_le_set_scan_enable_sync(hdev, LE_SCAN_DISABLE, 0x00);
++	return hci_le_set_scan_enable_sync(hdev, LE_SCAN_ENABLE,
++					   LE_SCAN_FILTER_DUP_ENABLE);
 +}
 +
-+static int hci_inquiry_sync(struct hci_dev *hdev, u8 length);
-+static int interleaved_inquiry_sync(struct hci_dev *hdev, void *data)
++static int le_scan_restart_sync(struct hci_dev *hdev, void *data)
 +{
-+	return hci_inquiry_sync(hdev, DISCOV_INTERLEAVED_INQUIRY_LEN);
++	return hci_le_scan_restart_sync(hdev);
 +}
 +
-+static void le_scan_disable(struct work_struct *work)
++static void le_scan_restart(struct work_struct *work)
 +{
 +	struct hci_dev *hdev = container_of(work, struct hci_dev,
-+					    le_scan_disable.work);
++					    le_scan_restart.work);
++	unsigned long timeout, duration, scan_start, now;
 +	int status;
 +
 +	bt_dev_dbg(hdev, "");
++
 +	hci_dev_lock(hdev);
 +
-+	if (!hci_dev_test_flag(hdev, HCI_LE_SCAN))
-+		goto _return;
-+
-+	cancel_delayed_work(&hdev->le_scan_restart);
-+
-+	status = hci_cmd_sync_queue(hdev, scan_disable_sync, NULL, NULL);
++	status = hci_cmd_sync_queue(hdev, le_scan_restart_sync, NULL, NULL);
 +	if (status) {
-+		bt_dev_err(hdev, "failed to disable LE scan: %d", status);
-+		goto _return;
++		bt_dev_err(hdev, "failed to restart LE scan: status %d",
++			   status);
++		goto unlock;
 +	}
 +
-+	hdev->discovery.scan_start = 0;
++	if (!test_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks) ||
++	    !hdev->discovery.scan_start)
++		goto unlock;
 +
-+	/* If we were running LE only scan, change discovery state. If
-+	 * we were running both LE and BR/EDR inquiry simultaneously,
-+	 * and BR/EDR inquiry is already finished, stop discovery,
-+	 * otherwise BR/EDR inquiry will stop discovery when finished.
-+	 * If we will resolve remote device name, do not change
-+	 * discovery state.
++	/* When the scan was started, hdev->le_scan_disable has been queued
++	 * after duration from scan_start. During scan restart this job
++	 * has been canceled, and we need to queue it again after proper
++	 * timeout, to make sure that scan does not run indefinitely.
 +	 */
++	duration = hdev->discovery.scan_duration;
++	scan_start = hdev->discovery.scan_start;
++	now = jiffies;
++	if (now - scan_start <= duration) {
++		int elapsed;
 +
-+	if (hdev->discovery.type == DISCOV_TYPE_LE)
-+		goto discov_stopped;
++		if (now >= scan_start)
++			elapsed = now - scan_start;
++		else
++			elapsed = ULONG_MAX - scan_start + now;
 +
-+	if (hdev->discovery.type != DISCOV_TYPE_INTERLEAVED)
-+		goto _return;
-+
-+	if (test_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks)) {
-+		if (!test_bit(HCI_INQUIRY, &hdev->flags) &&
-+		    hdev->discovery.state != DISCOVERY_RESOLVING)
-+			goto discov_stopped;
-+
-+		goto _return;
++		timeout = duration - elapsed;
++	} else {
++		timeout = 0;
 +	}
 +
-+	status = hci_cmd_sync_queue(hdev, interleaved_inquiry_sync, NULL, NULL);
-+	if (status) {
-+		bt_dev_err(hdev, "inquiry failed: status %d", status);
-+		goto discov_stopped;
-+	}
++	queue_delayed_work(hdev->req_workqueue,
++			   &hdev->le_scan_disable, timeout);
 +
-+	goto _return;
-+
-+discov_stopped:
-+	hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
-+
-+_return:
++unlock:
 +	hci_dev_unlock(hdev);
 +}
 +
  void hci_cmd_sync_init(struct hci_dev *hdev)
  {
  	INIT_WORK(&hdev->cmd_sync_work, hci_cmd_sync_work);
-@@ -328,6 +399,7 @@ void hci_cmd_sync_init(struct hci_dev *hdev)
- 	mutex_init(&hdev->cmd_sync_work_lock);
+@@ -400,6 +473,7 @@ void hci_cmd_sync_init(struct hci_dev *hdev)
  
  	INIT_WORK(&hdev->cmd_sync_cancel_work, hci_cmd_sync_cancel_work);
-+	INIT_DELAYED_WORK(&hdev->le_scan_disable, le_scan_disable);
+ 	INIT_DELAYED_WORK(&hdev->le_scan_disable, le_scan_disable);
++	INIT_DELAYED_WORK(&hdev->le_scan_restart, le_scan_restart);
  }
  
  void hci_cmd_sync_clear(struct hci_dev *hdev)
-@@ -4415,6 +4487,7 @@ int hci_dev_close_sync(struct hci_dev *hdev)
- 
+@@ -4488,6 +4562,7 @@ int hci_dev_close_sync(struct hci_dev *hdev)
  	cancel_delayed_work(&hdev->power_off);
  	cancel_delayed_work(&hdev->ncmd_timer);
-+	cancel_delayed_work(&hdev->le_scan_disable);
+ 	cancel_delayed_work(&hdev->le_scan_disable);
++	cancel_delayed_work(&hdev->le_scan_restart);
  
  	hci_request_cancel_all(hdev);
  
