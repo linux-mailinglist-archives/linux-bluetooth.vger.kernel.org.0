@@ -2,156 +2,139 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9DEE58B580
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Aug 2022 14:31:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9463458B595
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Aug 2022 14:37:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230288AbiHFMbf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 6 Aug 2022 08:31:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44756 "EHLO
+        id S231723AbiHFMhk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 6 Aug 2022 08:37:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234167AbiHFMa6 (ORCPT
+        with ESMTP id S230096AbiHFMhi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 6 Aug 2022 08:30:58 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AFBDD5E
-        for <linux-bluetooth@vger.kernel.org>; Sat,  6 Aug 2022 05:30:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1659789057; x=1691325057;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=OR9fAU++Tt6lmq12HPRZ/49dGPpGWuC7m9PK+//Z378=;
-  b=BeeddgZ+xDxtVUKT8w/B9he/mZJsvBLkO1N1lxGBc2QSLmIQUzQ4Mp7o
-   VKcRT8er8kBjNFDyChk1/IRuXU44ANAq/mLYye1oyOzJm+lb5DnYI0hkU
-   HptPNsSAX7oYY2C3Ti6vUY1C4o+kxj+ZK1eMF6fot4tM0tlHKZnX6Uh3B
-   5ollLgVSmIN6wefhW3LBBRDlOtYr7qSbJmobIpnX7ZippOjtncb8ibkEB
-   zetzBRsordTECebhEWn5Zu7KFoJm/mb6mvXLUXg3rVpxe9a3FpAsQdqEQ
-   +r8xrE004zLJLYLtZHwzH8JouQEHVktQXhq9yt/9sW6IIWZKm23kIzICv
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10430"; a="273412572"
-X-IronPort-AV: E=Sophos;i="5.93,217,1654585200"; 
-   d="scan'208";a="273412572"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2022 05:30:56 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,217,1654585200"; 
-   d="scan'208";a="554406761"
-Received: from lkp-server01.sh.intel.com (HELO e0eace57cfef) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 06 Aug 2022 05:30:55 -0700
-Received: from kbuild by e0eace57cfef with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oKIxD-000KMF-0v;
-        Sat, 06 Aug 2022 12:30:55 +0000
-Date:   Sat, 06 Aug 2022 20:30:21 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- aac59090a068139550f9b73d46d1116e31cdd2d1
-Message-ID: <62ee5edd.yYcf5e5wOrkrSsob%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        Sat, 6 Aug 2022 08:37:38 -0400
+Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com [IPv6:2607:f8b0:4864:20::b43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A8E2DFD9
+        for <linux-bluetooth@vger.kernel.org>; Sat,  6 Aug 2022 05:37:37 -0700 (PDT)
+Received: by mail-yb1-xb43.google.com with SMTP id e127so7398456yba.12
+        for <linux-bluetooth@vger.kernel.org>; Sat, 06 Aug 2022 05:37:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc;
+        bh=vvtS89Fk2u1S3Szl4rrCs3KSXNS797GmNVbZS9fGKtQ=;
+        b=cGU74KiXsAWmQo7b5ysRSoTJRblN3ee4wgEMwnQJaeTqfpkxgciQwz0vtEvP92SF0f
+         ngFj1/2FpRRX3frbkZsz7lDMb6zo4qeCaGSuNr4yCLI8gZ+qTNfEl1imBTVpUT7tnEfL
+         neBjnx5+sho0JANks4/w4vbOCvVGnD4YFeysBzh07yO/93srUVnQgHEfy6IYeYR8I0pW
+         Yr0jTvVESXYuL3QmuGPgi5j1AjDRRCeGJ8Lvwf42RdlKJid2TjcFoj8CzcjibU2qKMVN
+         6iPh7MxJEBD6qMg1i3KaaeEw3Vxu2/3Yzd8wtpFyKN6elqQb0WqAlODZQqU3UMZyLH73
+         boPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=vvtS89Fk2u1S3Szl4rrCs3KSXNS797GmNVbZS9fGKtQ=;
+        b=4ha941ETVxOZIrPGF3siCWUW1NTuNr+n15S1VurXbEEy+sflvjgWCY9hKTnvYTW9h5
+         zJ4TIjykVw4lvxdGtiEuqrzD6M/PkCPsF070aoaZqax93H9Wci/EzPOodwZEsT23THjN
+         r3w+3N7wj4VrDeJSdC2gVoxOzj8WPlWt2Xu6c/fYRMYQhRr4Ja+Ll5IEuUmNLguK//dx
+         Tt37L+6U0tAjhzXe8m6XN9+73SIFc/X0REIjvi85s5XEmcK+bX6OGzFO/ZbSgaHOBbyE
+         zAeruLLaO2XLAhqeXVCSP9pPiZZ4LXqRR+E2uUhg9oaV3uViyms7UKQmsvfx4VQ0kyTU
+         ZNmw==
+X-Gm-Message-State: ACgBeo3l9vvCJjR1MCNocHA1s/DvE0Nj5WZqslAfrPVimLnq/iJxrEDL
+        BbBXPzjOF1bWRxqRPb4caFjeAbW+x9Pb20e8HJQ=
+X-Google-Smtp-Source: AA6agR5hkATzdZPN/YPqLjADrVClmMPPZvtGf2464aBkeESIM4bE6oQFqNjfCNox0SoWEvdjFPySIDkSQfJ7h8ua+Yo=
+X-Received: by 2002:a05:6902:251:b0:676:e907:c782 with SMTP id
+ k17-20020a056902025100b00676e907c782mr9723314ybs.439.1659789456314; Sat, 06
+ Aug 2022 05:37:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+Received: by 2002:a05:7110:14a0:b0:18d:90d8:2a81 with HTTP; Sat, 6 Aug 2022
+ 05:37:35 -0700 (PDT)
+Reply-To: cfc.ubagroup09@gmail.com
+From:   Kristalina Georgieva <ubabankofafrica989@gmail.com>
+Date:   Sat, 6 Aug 2022 05:37:35 -0700
+Message-ID: <CAHwXt+y43Cutjyy6X4-1WjS9O4BpTujA7NuZMBnv-wFafx3etQ@mail.gmail.com>
+Subject: HEAD UUDISED
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=5.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,LOTTO_DEPT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
         version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:b43 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [ubabankofafrica989[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [ubabankofafrica989[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [cfc.ubagroup09[at]gmail.com]
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  0.0 LOTTO_DEPT Claims Department
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: aac59090a068139550f9b73d46d1116e31cdd2d1  Bluetooth: ISO: Fix not using the correct QoS
+Lugupeetud abisaaja!
+Saatsin sulle selle kirja kuu aega tagasi, aga ma pole sinust midagi kuulnu=
+d, ei
+Olen kindel, et saite selle k=C3=A4tte ja sellep=C3=A4rast saatsin selle te=
+ile uuesti.
+Esiteks olen pr Kristalina Georgieva, tegevdirektor ja
+Rahvusvahelise Valuutafondi president.
 
-elapsed time: 718m
+Tegelikult oleme l=C3=A4bi vaadanud k=C3=B5ik =C3=BCmbritsevad takistused j=
+a probleemid
+teie mittet=C3=A4ielik tehing ja teie suutmatus tasuda
+=C3=BClekandetasud, mida v=C3=B5etakse teie vastu j=C3=A4rgmiste v=C3=B5ima=
+luste eest
+varasemate =C3=BClekannete kohta k=C3=BClastage kinnituse saamiseks meie sa=
+iti 38
+=C2=B0 53=E2=80=B256 =E2=80=B3 N 77 =C2=B0 2 =E2=80=B2 39 =E2=80=B3 W
 
-configs tested: 74
-configs skipped: 2
+Oleme direktorite n=C3=B5ukogu, Maailmapank ja Valuutafond
+Washingtoni Rahvusvaheline (IMF) koos osakonnaga
+Ameerika =C3=9Chendriikide riigikassa ja m=C3=B5ned teised uurimisasutused
+asjakohane siin Ameerika =C3=9Chendriikides. on tellinud
+meie Overseas Payment Remittance Unit, United Bank of
+Africa Lome Togo, et v=C3=A4ljastada teile VISA kaart, kus $
+1,5 miljonit teie fondist, et oma fondist rohkem v=C3=A4lja v=C3=B5tta.
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Uurimise k=C3=A4igus avastasime koos
+kardab, et teie makse on hilinenud korrumpeerunud ametnike poolt
+pangast, kes =C3=BCritavad teie raha teie kontodele suunata
+privaatne.
 
-gcc tested configs:
-um                           x86_64_defconfig
-um                             i386_defconfig
-i386                                defconfig
-arm                                 defconfig
-i386                             allyesconfig
-x86_64                              defconfig
-x86_64                          rhel-8.3-func
-i386                          randconfig-a001
-x86_64                         rhel-8.3-kunit
-arm                              allyesconfig
-x86_64                               rhel-8.3
-i386                          randconfig-a003
-powerpc                           allnoconfig
-s390                 randconfig-r044-20220805
-x86_64                        randconfig-a004
-alpha                            allyesconfig
-i386                          randconfig-a005
-i386                          randconfig-a014
-powerpc                          allmodconfig
-x86_64                        randconfig-a015
-m68k                             allyesconfig
-arm64                            allyesconfig
-x86_64                        randconfig-a013
-x86_64                        randconfig-a002
-x86_64                        randconfig-a011
-sh                               allmodconfig
-arc                  randconfig-r043-20220805
-i386                          randconfig-a012
-m68k                             allmodconfig
-riscv                randconfig-r042-20220805
-i386                          randconfig-a016
-x86_64                           rhel-8.3-kvm
-x86_64                    rhel-8.3-kselftests
-x86_64                           allyesconfig
-x86_64                           rhel-8.3-syz
-x86_64                        randconfig-a006
-mips                             allyesconfig
-arc                              allyesconfig
-ia64                             allmodconfig
-arc                               allnoconfig
-alpha                             allnoconfig
-csky                              allnoconfig
-riscv                             allnoconfig
-arm                          pxa3xx_defconfig
-arm                      footbridge_defconfig
-arm                        realview_defconfig
-powerpc                   currituck_defconfig
-mips                    maltaup_xpa_defconfig
-powerpc                     taishan_defconfig
-sh                               j2_defconfig
-nios2                               defconfig
-arm                     eseries_pxa_defconfig
-csky                                defconfig
-powerpc                 mpc8540_ads_defconfig
-powerpc                        warp_defconfig
+Ja t=C3=A4na anname teile teada, et teie raha on kaardile kantud
+UBA panga VISA ja see on ka kohaletoimetamiseks valmis. N=C3=BC=C3=BCd
+v=C3=B5tke =C3=BChendust UBA panga direktoriga, tema nimi on hr Tony
+Elumelu, e-post: (cfc.ubagroup09@gmail.com)
+et =C3=B6elda, kuidas ATM VISA kaarti k=C3=A4tte saada.
 
-clang tested configs:
-hexagon              randconfig-r045-20220805
-hexagon              randconfig-r041-20220805
-i386                          randconfig-a013
-i386                          randconfig-a002
-i386                          randconfig-a015
-i386                          randconfig-a006
-i386                          randconfig-a004
-i386                          randconfig-a011
-x86_64                        randconfig-a005
-x86_64                        randconfig-a001
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
-x86_64                        randconfig-a003
-x86_64                        randconfig-a016
-powerpc                 xes_mpc85xx_defconfig
-mips                      maltaaprp_defconfig
-powerpc                 mpc832x_mds_defconfig
-arm                       mainstone_defconfig
-mips                     cu1830-neo_defconfig
+Lugupidamisega
 
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Proua Kristalina Georgieva
