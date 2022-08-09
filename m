@@ -2,99 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F69F58E244
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Aug 2022 00:01:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2EA558E2CB
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Aug 2022 00:16:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229897AbiHIWAe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 9 Aug 2022 18:00:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38776 "EHLO
+        id S229601AbiHIWPK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 9 Aug 2022 18:15:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbiHIWAS (ORCPT
+        with ESMTP id S229533AbiHIWPI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 9 Aug 2022 18:00:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5245121
-        for <linux-bluetooth@vger.kernel.org>; Tue,  9 Aug 2022 15:00:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3937860FB6
-        for <linux-bluetooth@vger.kernel.org>; Tue,  9 Aug 2022 22:00:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9E36BC433C1;
-        Tue,  9 Aug 2022 22:00:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660082415;
-        bh=X+MO6VdxVjdQOFr40fbQmwi3sAby5Yo9D77H0LPciyI=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=tBxpKMBiCHcfJK12fjDx3rXsnHMZu/+6EBvmt5ON1ZrtPTsKbUq3gLzfX8tAGyb45
-         uU8yXzdBSnIvhqdBBF5B7czEFNeRwMG+0BUYi7mCAybkEccZxWbCiA2ymzcJJVaNgv
-         CCxjQ2X1pB7X374pFB0tjMDDiD+1lArxyCUiX0pV4ee1gHL7Qq/IioOUtVwvcF77l/
-         gnPrlGJRk+jz+HCLmn8dns7/xs/Mw3Gq9Q6M+2dsDj0ii6ZLOx2xXrORV9uEjkTe7Q
-         CpWSrAQVTBORVZHQOivTmdSyQZj9VpNfk0ugiAyXCHJ9ZBgc2o4jOzO5dFr+DaU31Y
-         1X3cjeClAf1Hg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 83F91C43142;
-        Tue,  9 Aug 2022 22:00:15 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 9 Aug 2022 18:15:08 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4E61E3E8
+        for <linux-bluetooth@vger.kernel.org>; Tue,  9 Aug 2022 15:15:04 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id u133so12013394pfc.10
+        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Aug 2022 15:15:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc;
+        bh=GI1h58u9NHz7rI/vIwOU5DkUcoHPmL+b4tk5i/xxv5Y=;
+        b=QTP95oQi+RYhXbI8sz4RyTZp0RSE4jP48cyyUmWbTiK1ItvOHbADVtjkGHK/8zFbqv
+         EIzUG3d4HgG5eAQxnVHuBpH33ycuIiNpMEXk8S0LHARhhQGb6AufQVVn/40aQfLvP77W
+         778oK7qnpGZXO0Q2aGCYT4Mad4FGDHlh1br3s7D4D+9Vr7gPQrhXDR8bwR1fyz6kQ1n2
+         /mI7/+oIm6xqfpBjeRephfywWnzvzUcqvvdKwYuFsxmTm/GRVEQb9jKfBsLPvHEPeyBR
+         SLk52BQ10Zm7GZ4Mv5gugSKJZhGFXVOipaGDVsAOq6ABLyMrmGMv+5RYTjL3cqduwO+M
+         O1Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc;
+        bh=GI1h58u9NHz7rI/vIwOU5DkUcoHPmL+b4tk5i/xxv5Y=;
+        b=NML3L9bzEhp0qTK/Eed32ZQbkqZoGC7Nso6Lw2yUydlpu0o7LUN/HQbVxtQ6mdqjzq
+         fS/Zx1q0Ud3yUzV/G9k8fwMxVzdwtJiRg6l2kLx5ZRJqDGgrsWt678r5Y33debmZZORz
+         2GnVHcncqMN4+XhMwAvr1WFnwi7y8tbv/IwcRshlAq8lGzF7G27t/WZ33ROoH9aFHID7
+         ThHdvsYlV43ID5YIa2rdwyK24/jvOkRVdhU64gwlSHql7gC1Ay4R6LlNnkWT8Td+VpCp
+         DX/fiKpfRe1QbsmqiK/MXbRt+41RtvSRu6aWz9wGLVPNJ6nZCppClJQar51XkJxO78lz
+         L1bg==
+X-Gm-Message-State: ACgBeo0eZ9VzPYCvO8pZDpjvtxnDjBA3VDyzKiaQ/JUXaCsR0srhaov5
+        JyPTI7rg1NRhCcnPZk0z0qS+aVjJVqsQVcOmrsQ=
+X-Google-Smtp-Source: AA6agR7pJ6r7fhR2kV9XLe+oV3h+/ej1weqLnpTQS1YP5ule1vsDwGSNCnOW6LlEIY2xTapZFY+hu5KXPqSjTYpoaJM=
+X-Received: by 2002:a63:4642:0:b0:41b:d353:c5c7 with SMTP id
+ v2-20020a634642000000b0041bd353c5c7mr20359415pgk.568.1660083303718; Tue, 09
+ Aug 2022 15:15:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v7 0/9] Clean-up stale/unused hci_request.c code
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166008241553.11039.8770757425299965789.git-patchwork-notify@kernel.org>
-Date:   Tue, 09 Aug 2022 22:00:15 +0000
-References: <20220805234236.704986-1-brian.gix@intel.com>
-In-Reply-To: <20220805234236.704986-1-brian.gix@intel.com>
-To:     Brian Gix <brian.gix@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        luiz.dentz@gmail.com
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: by 2002:a05:6a10:e8a6:b0:2d4:fb1c:cc5e with HTTP; Tue, 9 Aug 2022
+ 15:15:03 -0700 (PDT)
+Reply-To: wijh555@gmail.com
+From:   "Dr. Ali Moses" <alimoses07@gmail.com>
+Date:   Tue, 9 Aug 2022 15:15:03 -0700
+Message-ID: <CADWzZe65tcOX2+bMZfMLLauGpHEQ9Cdv814nLU=uQvKzDFrEVg@mail.gmail.com>
+Subject: Good Day,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:436 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [alimoses07[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [wijh555[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [alimoses07[at]gmail.com]
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
-
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
-
-On Fri,  5 Aug 2022 16:42:27 -0700 you wrote:
-> This will be a growing patch-set of conversions and dead-code removal
-> towards the goal of retiring hci_request.c
-> 
-> The patch sets will be split amoung the work queues and delayed work
-> queues as initialized in hci_request_setup(), with the ultimate goal of
-> eliminating hci_request.c entirely.
-> 
-> [...]
-
-Here is the summary with links:
-  - [v7,1/9] Bluetooth: Convert le_scan_disable timeout to hci_sync
-    https://git.kernel.org/bluetooth/bluetooth-next/c/2bf8edacd155
-  - [v7,2/9] Bluetooth: Rework le_scan_restart for hci_sync
-    https://git.kernel.org/bluetooth/bluetooth-next/c/89f043b2c6d5
-  - [v7,3/9] Bluetooth: Delete unused hci_req_stop_discovery()
-    https://git.kernel.org/bluetooth/bluetooth-next/c/eed7aab6c517
-  - [v7,4/9] Bluetooth: Convert SCO configure_datapath to hci_sync
-    https://git.kernel.org/bluetooth/bluetooth-next/c/71172654bff2
-  - [v7,5/9] Bluetooth: Move Adv Instance timer to hci_sync
-    https://git.kernel.org/bluetooth/bluetooth-next/c/8c59889a6b5c
-  - [v7,6/9] Bluetooth: Delete unreferenced hci_request code
-    https://git.kernel.org/bluetooth/bluetooth-next/c/3edf244f8c71
-  - [v7,7/9] Bluetooth: move hci_get_random_address() to hci_sync
-    https://git.kernel.org/bluetooth/bluetooth-next/c/c7eb26d1285c
-  - [v7,8/9] Bluetooth: convert hci_update_adv_data to hci_sync
-    https://git.kernel.org/bluetooth/bluetooth-next/c/9ec46ac996f5
-  - [v7,9/9] Bluetooth: Convert hci_abort_conn to hci_sync
-    (no matching commit)
-
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Hello,
+We the Board Directors believe you are in good health, doing great and
+with the hope that this mail will meet you in good condition, We are
+privileged and delighted to reach you via email" And we are urgently
+waiting to hear from you. and again your number is not connecting.
 
+My regards,
+Dr. Ali Moses..
 
+Sincerely,
+Prof. Chin Guang
