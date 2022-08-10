@@ -2,107 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2EA558E2CB
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Aug 2022 00:16:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D0C858E402
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Aug 2022 02:17:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbiHIWPK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 9 Aug 2022 18:15:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37270 "EHLO
+        id S229727AbiHJARQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 9 Aug 2022 20:17:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbiHIWPI (ORCPT
+        with ESMTP id S229475AbiHJARP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 9 Aug 2022 18:15:08 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4E61E3E8
-        for <linux-bluetooth@vger.kernel.org>; Tue,  9 Aug 2022 15:15:04 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id u133so12013394pfc.10
-        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Aug 2022 15:15:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc;
-        bh=GI1h58u9NHz7rI/vIwOU5DkUcoHPmL+b4tk5i/xxv5Y=;
-        b=QTP95oQi+RYhXbI8sz4RyTZp0RSE4jP48cyyUmWbTiK1ItvOHbADVtjkGHK/8zFbqv
-         EIzUG3d4HgG5eAQxnVHuBpH33ycuIiNpMEXk8S0LHARhhQGb6AufQVVn/40aQfLvP77W
-         778oK7qnpGZXO0Q2aGCYT4Mad4FGDHlh1br3s7D4D+9Vr7gPQrhXDR8bwR1fyz6kQ1n2
-         /mI7/+oIm6xqfpBjeRephfywWnzvzUcqvvdKwYuFsxmTm/GRVEQb9jKfBsLPvHEPeyBR
-         SLk52BQ10Zm7GZ4Mv5gugSKJZhGFXVOipaGDVsAOq6ABLyMrmGMv+5RYTjL3cqduwO+M
-         O1Rw==
+        Tue, 9 Aug 2022 20:17:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B34247D787
+        for <linux-bluetooth@vger.kernel.org>; Tue,  9 Aug 2022 17:17:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1660090633;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=hWwaUHjBysXWhHJ+eod4q2ogYoDzJ4P57FOFOXiREtk=;
+        b=HyxAY64GXnH9CfsFkZQg0JItCxvaX5LlS98hi3IWooCRBK2b/uBWAo2RRAwrj69J9T4mCu
+        /aTl+vXdGXnv35AOhdiWTjc6t1xgndaYeP7625qGXU9e28VeZDlLywgmXeRUiBO1226BDd
+        +aSM5nTZskJNoAgJDtBLiAm6V5FLZUQ=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-591-s-pyHa_cMDi1IOwlnhxQvg-1; Tue, 09 Aug 2022 20:17:12 -0400
+X-MC-Unique: s-pyHa_cMDi1IOwlnhxQvg-1
+Received: by mail-qk1-f197.google.com with SMTP id i15-20020a05620a404f00b006b55998179bso11344003qko.4
+        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Aug 2022 17:17:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc;
-        bh=GI1h58u9NHz7rI/vIwOU5DkUcoHPmL+b4tk5i/xxv5Y=;
-        b=NML3L9bzEhp0qTK/Eed32ZQbkqZoGC7Nso6Lw2yUydlpu0o7LUN/HQbVxtQ6mdqjzq
-         fS/Zx1q0Ud3yUzV/G9k8fwMxVzdwtJiRg6l2kLx5ZRJqDGgrsWt678r5Y33debmZZORz
-         2GnVHcncqMN4+XhMwAvr1WFnwi7y8tbv/IwcRshlAq8lGzF7G27t/WZ33ROoH9aFHID7
-         ThHdvsYlV43ID5YIa2rdwyK24/jvOkRVdhU64gwlSHql7gC1Ay4R6LlNnkWT8Td+VpCp
-         DX/fiKpfRe1QbsmqiK/MXbRt+41RtvSRu6aWz9wGLVPNJ6nZCppClJQar51XkJxO78lz
-         L1bg==
-X-Gm-Message-State: ACgBeo0eZ9VzPYCvO8pZDpjvtxnDjBA3VDyzKiaQ/JUXaCsR0srhaov5
-        JyPTI7rg1NRhCcnPZk0z0qS+aVjJVqsQVcOmrsQ=
-X-Google-Smtp-Source: AA6agR7pJ6r7fhR2kV9XLe+oV3h+/ej1weqLnpTQS1YP5ule1vsDwGSNCnOW6LlEIY2xTapZFY+hu5KXPqSjTYpoaJM=
-X-Received: by 2002:a63:4642:0:b0:41b:d353:c5c7 with SMTP id
- v2-20020a634642000000b0041bd353c5c7mr20359415pgk.568.1660083303718; Tue, 09
- Aug 2022 15:15:03 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=hWwaUHjBysXWhHJ+eod4q2ogYoDzJ4P57FOFOXiREtk=;
+        b=UV1rTo/TCq4i3EYCylU+0DdOmQF1usNY6qN0XDbCpszz9UUc2labJ35nu0Jprb3xhq
+         C39P+Tz6HaxPIz6W9qZqis9xdADyG2GXI38zzUUJhRHRZron6WXotAeHM2SBUm4dLUGK
+         zJsQbqmOFJytHBejZqwvje9B+nAZphOwbGGE7wmfl+70Bg8L9yWoVxVNQuwWexOd+GqP
+         Vg67hKYSl3Q+bn3ndG6wdLgKQsTl4lvYyYS/lFZkXI7Hshrj8qxehnf7o0bZNlv2iIwN
+         t89+R8/WK/OGZD8FVkfnYhVZ3qRT2mGuBjBOMS5jWasiOIxn/mp1sJCEbUHEAyWcPgNk
+         mDOA==
+X-Gm-Message-State: ACgBeo3PjZtXowCqwvIdmbaTgveRjWaYCg30HPq86yG7tVU8r+V2oW90
+        y9tXiVYlXkkuWL0zIdzFKDHHsGsAOSddJDgkYhQXinMnVk2hERfbeldUhYmn4EmyvxmPSZzm8bF
+        TVq3TxUIfRBKBeAzHm9aX81ZxD2nlVemqYsscs+k5j2EC
+X-Received: by 2002:a0c:e0cc:0:b0:474:94d4:53e with SMTP id x12-20020a0ce0cc000000b0047494d4053emr21898134qvk.2.1660090632157;
+        Tue, 09 Aug 2022 17:17:12 -0700 (PDT)
+X-Google-Smtp-Source: AA6agR65oSYaxdMQK1e3z5h5nEqt9Sgaho3HpLyfWhDFN2BziT6eJUv59emy46T6uE93XY9XUBsqOtkCCMMXbfgRTkI=
+X-Received: by 2002:a0c:e0cc:0:b0:474:94d4:53e with SMTP id
+ x12-20020a0ce0cc000000b0047494d4053emr21898122qvk.2.1660090631911; Tue, 09
+ Aug 2022 17:17:11 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:e8a6:b0:2d4:fb1c:cc5e with HTTP; Tue, 9 Aug 2022
- 15:15:03 -0700 (PDT)
-Reply-To: wijh555@gmail.com
-From:   "Dr. Ali Moses" <alimoses07@gmail.com>
-Date:   Tue, 9 Aug 2022 15:15:03 -0700
-Message-ID: <CADWzZe65tcOX2+bMZfMLLauGpHEQ9Cdv814nLU=uQvKzDFrEVg@mail.gmail.com>
-Subject: Good Day,
-To:     undisclosed-recipients:;
+References: <3a3904c4-1bf9-ef1b-3d03-b5c3e1e2f8c5@desertmonitor.com>
+In-Reply-To: <3a3904c4-1bf9-ef1b-3d03-b5c3e1e2f8c5@desertmonitor.com>
+From:   Alexander Aring <aahringo@redhat.com>
+Date:   Tue, 9 Aug 2022 20:17:01 -0400
+Message-ID: <CAK-6q+gBUHaR5njKHJJnONW41duVafMA-6R8jKMtN=7M1mg6rA@mail.gmail.com>
+Subject: Re: 6LoWPAN (IPv6 over BLE) neighbor discovery
+To:     Philipp Blum <info@desertmonitor.com>
+Cc:     linux-wpan - ML <linux-wpan@vger.kernel.org>,
+        linux-bluetooth@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:436 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [alimoses07[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [wijh555[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [alimoses07[at]gmail.com]
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-Hello,
-We the Board Directors believe you are in good health, doing great and
-with the hope that this mail will meet you in good condition, We are
-privileged and delighted to reach you via email" And we are urgently
-waiting to hear from you. and again your number is not connecting.
+Hi,
 
-My regards,
-Dr. Ali Moses..
+On Tue, Aug 9, 2022 at 4:24 PM Philipp Blum <info@desertmonitor.com> wrote:
+>
+> Hey,
+>
+> I am currently working on a demonstration for the W3C TPAC next month.
+> Just wanted to get an update on this topic, since RIOT uses it in IPv6
+> over BLE.
+>
 
-Sincerely,
-Prof. Chin Guang
+Which neighbor discovery are you talking about? Can you be more
+specific here? I am not aware that any 6LoWPAN implementation uses any
+optimized in-kernel IPv6 neighbor discovery for any low power/lossy
+network, we are still using the default IPv6 one which should probably
+still work if the other side supports it. In 802.15.4 we tweaked it a
+little bit to support the short address into the address option as
+RFC4944 describes it [0] that autoconfiguration can use it.
+
+I added linux-bluetooth in cc.
+
+- Alex
+
+[0] https://www.rfc-editor.org/rfc/rfc4944#section-8
+
