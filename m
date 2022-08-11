@@ -2,52 +2,49 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 179B8590344
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Aug 2022 18:21:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC3F35903CC
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Aug 2022 18:28:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237747AbiHKQV2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 11 Aug 2022 12:21:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60898 "EHLO
+        id S238266AbiHKQ1w (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 11 Aug 2022 12:27:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237932AbiHKQVB (ORCPT
+        with ESMTP id S238086AbiHKQ0b (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 11 Aug 2022 12:21:01 -0400
+        Thu, 11 Aug 2022 12:26:31 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D62DB02BB;
-        Thu, 11 Aug 2022 09:03:21 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB879F746;
+        Thu, 11 Aug 2022 09:07:58 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 374156133A;
-        Thu, 11 Aug 2022 16:03:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD5DC433B5;
-        Thu, 11 Aug 2022 16:03:18 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6C1E16141C;
+        Thu, 11 Aug 2022 16:07:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFC3C433C1;
+        Thu, 11 Aug 2022 16:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660233800;
-        bh=vXfoFootITy+FkfYy6TFNfHiQJDgV05om3bAiEd/0iU=;
+        s=k20201202; t=1660234077;
+        bh=NkubZo0iuIEQ73DnsM8xDQ7qZoOJxp9SYFv4homoy7M=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=OZP/dmANU5QZwZvd/joT2YZFRQVgB3lJbqvwjLgJXsLpDVa/X69nU9bEuvoXzQnMb
-         SDSP01MS0oJ58fg+Nwxlw1h4EGp87mzreppVWKzmgcaQiypprNAOASqE5UN4uMxpnP
-         lXvna7qeTOpfedg5zu+ekD+iJrNtzt8Nu2REQpi8p/Xe4XbP3iF5Mq7JZXJAo0YHwp
-         KRzabf/2r5VOxenFPk90/y9JxqVpd69mFRvgrNoXs+ZHNX7mnnic8svKzUBLuUIrO9
-         DbkUyrINXcZMDW9qey/X7aLsOhRqZt3Bu7NbmjwMQP3xlltGKBiNqoPCG5RqRit8O4
-         3gjteKigoNqQg==
+        b=JikCspoQKL1PqVRzOY5hZr9Q5oeE+U/f/VIYFjqqDfmP7fiBdDEIKGG0IgVYqps9L
+         vwEmSYp3mjVSkMA+UgbQ3uP751hv0cEfTLqgSpdQx07bl4ngeLT/3CpPsL7s+JBV1H
+         8my/9s+23e0E098p04fYlqibhuag3FtM3+bDgdhA+EekRo6Ua93/pHC1QpcSHZewOG
+         L+F3JQkQ+AnCTr9gWOIPHoxp/JG5hsPvRfEj5rVoP2kdGe/PVI4cocHVy199P5tIVq
+         BkHatS0HOmKzoyWvh0I6XF7LHS8qNA9/o4uaR5Ck+ouqQ6ksuHLqS4snbFLaG7/xwG
+         GuydMMxu/kIJg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Tamas Koczka <poprdi@google.com>,
-        Aleksandr Nogikh <nogikh@google.com>,
-        Dmitry Vyukov <dvyukov@google.com>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Sasha Levin <sashal@kernel.org>, marcel@holtmann.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 58/69] Bluetooth: Collect kcov coverage from hci_rx_work
-Date:   Thu, 11 Aug 2022 11:56:07 -0400
-Message-Id: <20220811155632.1536867-58-sashal@kernel.org>
+Cc:     Ahmad Fatoum <a.fatoum@pengutronix.de>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Sasha Levin <sashal@kernel.org>, johan.hedberg@gmail.com,
+        luiz.dentz@gmail.com, linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 38/46] Bluetooth: hci_bcm: Add BCM4349B1 variant
+Date:   Thu, 11 Aug 2022 12:04:02 -0400
+Message-Id: <20220811160421.1539956-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220811155632.1536867-1-sashal@kernel.org>
-References: <20220811155632.1536867-1-sashal@kernel.org>
+In-Reply-To: <20220811160421.1539956-1-sashal@kernel.org>
+References: <20220811160421.1539956-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -62,59 +59,52 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Tamas Koczka <poprdi@google.com>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit 9f30de9e0343da05ac621b5817e9b1ce303c6310 ]
+[ Upstream commit 4f17c2b6694d0c4098f33b07ee3a696976940aa5 ]
 
-Annotate hci_rx_work() with kcov_remote_start() and kcov_remote_stop()
-calls, so remote KCOV coverage is collected while processing the rx_q
-queue which is the main incoming Bluetooth packet queue.
+The BCM4349B1, aka CYW/BCM89359, is a WiFi+BT chip and its Bluetooth
+portion can be controlled over serial.
 
-Coverage is associated with the thread which created the packet skb.
+Two subversions are added for the chip, because ROM firmware reports
+002.002.013 (at least for the chips I have here), while depending on
+patchram firmware revision, either 002.002.013 or 002.002.014 is
+reported.
 
-The collected extra coverage helps kernel fuzzing efforts in finding
-vulnerabilities.
-
-This change only has effect if the kernel is compiled with CONFIG_KCOV,
-otherwise kcov_ functions don't do anything.
-
-Signed-off-by: Tamas Koczka <poprdi@google.com>
-Tested-by: Aleksandr Nogikh <nogikh@google.com>
-Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btbcm.c   | 2 ++
+ drivers/bluetooth/hci_bcm.c | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index cdca53732304..f4ce6efe3b72 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -29,6 +29,7 @@
- #include <linux/rfkill.h>
- #include <linux/debugfs.h>
- #include <linux/crypto.h>
-+#include <linux/kcov.h>
- #include <linux/property.h>
- #include <linux/suspend.h>
- #include <linux/wait.h>
-@@ -5100,7 +5101,14 @@ static void hci_rx_work(struct work_struct *work)
- 
- 	BT_DBG("%s", hdev->name);
- 
--	while ((skb = skb_dequeue(&hdev->rx_q))) {
-+	/* The kcov_remote functions used for collecting packet parsing
-+	 * coverage information from this background thread and associate
-+	 * the coverage with the syscall's thread which originally injected
-+	 * the packet. This helps fuzzing the kernel.
-+	 */
-+	for (; (skb = skb_dequeue(&hdev->rx_q)); kcov_remote_stop()) {
-+		kcov_remote_start_common(skb_get_kcov_handle(skb));
-+
- 		/* Send copy to monitor */
- 		hci_send_to_monitor(hdev, skb);
- 
+diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
+index 1b9743b7f2ef..d263eac784da 100644
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -401,6 +401,8 @@ static const struct bcm_subver_table bcm_uart_subver_table[] = {
+ 	{ 0x6606, "BCM4345C5"	},	/* 003.006.006 */
+ 	{ 0x230f, "BCM4356A2"	},	/* 001.003.015 */
+ 	{ 0x220e, "BCM20702A1"  },	/* 001.002.014 */
++	{ 0x420d, "BCM4349B1"	},	/* 002.002.013 */
++	{ 0x420e, "BCM4349B1"	},	/* 002.002.014 */
+ 	{ 0x4217, "BCM4329B1"   },	/* 002.002.023 */
+ 	{ 0x6106, "BCM4359C0"	},	/* 003.001.006 */
+ 	{ 0x4106, "BCM4335A0"	},	/* 002.001.006 */
+diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
+index 259a643377c2..574f84708859 100644
+--- a/drivers/bluetooth/hci_bcm.c
++++ b/drivers/bluetooth/hci_bcm.c
+@@ -1489,6 +1489,7 @@ static const struct of_device_id bcm_bluetooth_of_match[] = {
+ 	{ .compatible = "brcm,bcm4345c5" },
+ 	{ .compatible = "brcm,bcm4330-bt" },
+ 	{ .compatible = "brcm,bcm43438-bt", .data = &bcm43438_device_data },
++	{ .compatible = "brcm,bcm4349-bt", .data = &bcm43438_device_data },
+ 	{ .compatible = "brcm,bcm43540-bt", .data = &bcm4354_device_data },
+ 	{ .compatible = "brcm,bcm4335a0" },
+ 	{ },
 -- 
 2.35.1
 
