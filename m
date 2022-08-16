@@ -2,53 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09FB55964B1
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Aug 2022 23:35:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 952BF5964B3
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Aug 2022 23:35:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237680AbiHPVfb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 16 Aug 2022 17:35:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46078 "EHLO
+        id S237690AbiHPVfc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 16 Aug 2022 17:35:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237673AbiHPVf3 (ORCPT
+        with ESMTP id S237679AbiHPVfa (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 16 Aug 2022 17:35:29 -0400
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E85DA8B985
-        for <linux-bluetooth@vger.kernel.org>; Tue, 16 Aug 2022 14:35:28 -0700 (PDT)
-Received: by mail-oo1-xc34.google.com with SMTP id x10-20020a4a410a000000b004456a27110fso2009138ooa.7
-        for <linux-bluetooth@vger.kernel.org>; Tue, 16 Aug 2022 14:35:28 -0700 (PDT)
+        Tue, 16 Aug 2022 17:35:30 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 403758B996
+        for <linux-bluetooth@vger.kernel.org>; Tue, 16 Aug 2022 14:35:29 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id x10-20020a4a410a000000b004456a27110fso2009146ooa.7
+        for <linux-bluetooth@vger.kernel.org>; Tue, 16 Aug 2022 14:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc;
-        bh=aAt6P37pBqhIVywXLS+9ui3hd3o2tnrW2ZpidF50UMY=;
-        b=g+iPAxCEX6ruLbw2ZXYnz50pKU3L59xjM+FcYtmKFrLeO+7zRmcz+yvFB04uZ23DjH
-         J06cwcjSPFP08P5l8AUcgby2nDVXnGo9cNus83eCqogIORIwGHEyIwENLD1IX8Wm1xuB
-         nJVuY24mAb0A2lMzAMBkFiGUdhUm6MostDnITX/xp39mhQvKNOtPmLFWU29sls7y9UGm
-         2Ts6V4kz2mJ2rHQjHlTP9i9TUdhRO1urdPh89C/iwS0ebI0Pq6/6QZokGZE+vrp9WoSH
-         R5KVq6N1XoOOCK41J7lT7mbgEoW8Wg6nK3NKfUGgRSmucxtvnckTSO+xCFZFq/MErJPl
-         1rdg==
+        bh=0iUjTpHZhf5wriiAcqQNIgI532H+rjITIuetchmVkTg=;
+        b=a15Y2lZGynsgZpOuhqKEHf8ytcP+EoAPbPZo6QszxmPgEpJkOJv4WvLhQUbkCpTt6x
+         d1fHQDRH3Hy1vvP6TBRflLVWd0UwUEGfEHKg2TFIEt7tSOh5PETaMu42Y90foUUpcG3E
+         +F3A2571Mrj0b2Yg8b06KfC//8YYUZ56utdI5lppNI57uVrRHQQ6gkcmr0Xb3dz4H9O7
+         CF3KKxAvRzwmMPJdv9F5R07nGcoSZ3Ek9pI4Sk9BnimeUY+Jl9gKuiw4UWhSKwP4v1WA
+         qleQiRT0iHV7sODLVvBXW0XWyHECiypKM0piYvM/zDPXL7Lgwgz1AQiBOwWBYIfSbhh0
+         aMLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
          :to:cc;
-        bh=aAt6P37pBqhIVywXLS+9ui3hd3o2tnrW2ZpidF50UMY=;
-        b=RZhrPApcFISat6Xf9R3fkQg5IFmWVaEWlk+zDj2rjdiyTseN0qLMor7LxvOuDdyHLo
-         SiEGUUwhqFew18dooalmmdZdxDZfgyVCbTyi/hyL+2bYvpHzkYhroKbLWuSziAjdJBM+
-         rwoaryjTm3Oy0LtB7/AqQKwVMVoAdeMBK7vZv2Lo1B4vMDJzuHLGZWHY9pJgnyXAVT1e
-         I87G5ryIvoFFmgjqXgJoFoS2YfdK0NmxKfukqKaFV1ZSToaniS1pBsy6w6rRMJURC62z
-         AgkNjIbMfPv88mbaNCKmNrJ2nUn+BlX+1w6pIquQh9FrgD7U04Gs40D5HOu3n5QbBLIa
-         KhUA==
-X-Gm-Message-State: ACgBeo22ILDVVjwsMAXF8s1grq58/hhqqN4LGY8fKgktfTrXlNH1BcV1
-        j2HQsc6gRnwkxwmeFA7Ua+c=
-X-Google-Smtp-Source: AA6agR4WCEEDY9RCncCuAbPFN/GBzwpZ2pzlzDroRwgjrq//CldY3aRd3l1kdgUN9A6gT1bKSeLu2g==
-X-Received: by 2002:a4a:4b47:0:b0:428:f03a:56a6 with SMTP id q68-20020a4a4b47000000b00428f03a56a6mr6973116ooa.85.1660685727869;
-        Tue, 16 Aug 2022 14:35:27 -0700 (PDT)
+        bh=0iUjTpHZhf5wriiAcqQNIgI532H+rjITIuetchmVkTg=;
+        b=QaAgBG3VGwh/SeZC3Bu9bGVLjxSHMMCNnraUCErfLYEIJNCm8aFHoJEN05qGiMOgTR
+         nhsgjafP4dISeioUHfORLjUzMwFNoUgSF7agrRTfCDAHoWeWhg5623DJOYDhNyKdT/5P
+         2ciUIK37vFZh33Z3p3a1OnmjvvENQuoK6Sc8+KIZmUalCt0T1JoyNRaPQkiYQLREMvc/
+         /MV2jyLVNEnYLA/xR757xBXOFqfuUy+yRLpyUUzavHZHoHAAs9RIxpR1GUa44nK56sgl
+         jIfJlxSPo7kKpVHosLvoXqyu6KaQIsDvg9OieGHGxUmX/KNtftNBTgr3ofwyUnXkS6r1
+         37/g==
+X-Gm-Message-State: ACgBeo2qysTKm+GSJ0DeMi3Op070EjFfJdfKR7o4nW1dPTSpT1QnO4Ps
+        qDbF6SkyUC9fM57ZkkqDpMY=
+X-Google-Smtp-Source: AA6agR5jx7nctuzE2QDIUq/KDwzbky+wFpE7D0Fi6ibggcAMwilRTPDv87MTZYvXL+r8+kSWIaqrQg==
+X-Received: by 2002:a4a:b445:0:b0:44a:c71e:9921 with SMTP id h5-20020a4ab445000000b0044ac71e9921mr1579582ooo.49.1660685728594;
+        Tue, 16 Aug 2022 14:35:28 -0700 (PDT)
 Received: from localhost.localdomain ([216.130.59.33])
         by smtp.gmail.com with ESMTPSA id l6-20020a056870f14600b0010c5005d427sm2325240oac.33.2022.08.16.14.35.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Aug 2022 14:35:27 -0700 (PDT)
+        Tue, 16 Aug 2022 14:35:28 -0700 (PDT)
 Sender: Larry Finger <larry.finger@gmail.com>
 From:   Larry Finger <Larry.Finger@lwfinger.net>
 To:     Marcel Holtmann <marcel@holtmann.org>,
@@ -56,9 +56,9 @@ To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>
 Cc:     linux-bluetooth@vger.kernel.org, Hilda Wu <hildawu@realtek.com>,
         Larry Finger <Larry.Finger@lwfinger.net>
-Subject: [PATCH 1/2] Bluetooth: btusb: Add BT device 0cb8:c549 from RTW8852AE to tables
-Date:   Tue, 16 Aug 2022 16:35:22 -0500
-Message-Id: <20220816213523.5207-2-Larry.Finger@lwfinger.net>
+Subject: [PATCH 2/2] Bluetooth: btusb: Add BT devices 0bda:4853 and 0bda:887b from RTW8852BE to tables
+Date:   Tue, 16 Aug 2022 16:35:23 -0500
+Message-Id: <20220816213523.5207-3-Larry.Finger@lwfinger.net>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220816213523.5207-1-Larry.Finger@lwfinger.net>
 References: <20220816213523.5207-1-Larry.Finger@lwfinger.net>
@@ -75,61 +75,70 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-A new Bluetooth device for the Realtek RTW8852AE has been noted.
+A new Realtek device, the RTW8852BE, includes a BT part, which is not
+currently contained in the tables in btusb. File btrtl already contains
+some information for these devices. Thus far, two such devices are known.
 
-This device has the following lsusb output:
+These two known devices have the following lsusb outputs:
 
-Bus 001 Device 003: ID 0cb8:c549 Opticis Co., Ltd Bluetooth Radio
+Bus 003 Device 004: ID 0bda:4853 Realtek Semiconductor Corp. Bluetooth Radio
+Bus 002 Device 003: ID 0bda:887b Realtek Semiconductor Corp. Bluetooth Radio
 
-The pertinent part of /sys/kernel/debug/usb/devices is as follows:
+The pertinent contents of /sys/kernel/debug/usb/devices for the second is
+as follows:
 
-T: Bus=01 Lev=01 Prnt=01 Port=03 Cnt=02 Dev#= 3 Spd=12 MxCh= 0
-D: Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs= 1
-P: Vendor=0cb8 ProdID=c549 Rev= 0.00
-S: Manufacturer=Realtek
-S: Product=Bluetooth Radio
+T:  Bus=02 Lev=01 Prnt=01 Port=12 Cnt=03 Dev#=  3 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0bda ProdID=887b Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
 C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
 I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=1ms
-E: Ad=02(O) Atr=02(Bulk) MxPS= 64 Ivl=0ms
-E: Ad=82(I) Atr=02(Bulk) MxPS= 64 Ivl=0ms
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
 I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 0 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 0 Ivl=1ms
-I: If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 9 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 9 Ivl=1ms
-I: If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 17 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 17 Ivl=1ms
-I: If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 25 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 25 Ivl=1ms
-I: If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 33 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 33 Ivl=1ms
-I: If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 49 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
 Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btusb.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 15caa6469538..33e8ff6e0d13 100644
+index 33e8ff6e0d13..e3776dbbaf18 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -426,6 +426,8 @@ static const struct usb_device_id blacklist_table[] = {
+@@ -441,6 +441,12 @@ static const struct usb_device_id blacklist_table[] = {
+ 	{ USB_DEVICE(0x13d3, 0x3586), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04ca, 0x4006), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0cb8, 0xc549), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
  
- 	/* Realtek 8852CE Bluetooth devices */
- 	{ USB_DEVICE(0x04ca, 0x4007), .driver_info = BTUSB_REALTEK |
++	/* Realtek 8852BE Bluetooth devices */
++	{ USB_DEVICE(0x0bda, 0x4853), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
++
+ 	/* Realtek Bluetooth devices */
+ 	{ USB_VENDOR_AND_INTERFACE_INFO(0x0bda, 0xe0, 0x01, 0x01),
+ 	  .driver_info = BTUSB_REALTEK },
 -- 
 2.37.1
 
