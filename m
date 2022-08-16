@@ -2,91 +2,169 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01AFF595249
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Aug 2022 08:01:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52A375952EC
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Aug 2022 08:47:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbiHPGBk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 16 Aug 2022 02:01:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33738 "EHLO
+        id S230411AbiHPGrc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 16 Aug 2022 02:47:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbiHPGBY (ORCPT
+        with ESMTP id S229809AbiHPGrR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 16 Aug 2022 02:01:24 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AFA77E311
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Aug 2022 16:26:39 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id s206so7791651pgs.3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Aug 2022 16:26:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc;
-        bh=X2MPZKPMA1t7Ei3dQp1ACWwbEt+VEpMzdmVn3LOSD68=;
-        b=dhjtxMLFCK3R/VAH+BvFWq/MSfiez43sbLpFgkh4teYprXWk/YxSFqx/zCBdDkWcZZ
-         mbAnqEhiMaeeTDQBYeXedVNu9NyOF6g4lDeid69YpPWMRDbX0xIlFKZBZA5cluz/lh9V
-         zf5G3lwXhpZe6aH0sC37eKrYZg5qjDINH6CMY/TkVUTrvAYGlK11ERPWEg8G83sa0vtx
-         T4N5B4wfbsIokoW7vSx8nDtWdCHBOSS53L06yldvDmloKMEk2SzSvErKGtOLp/VEW9g5
-         wGd9VTv4qe/k4ymmTSK+7rvAFrDaG6eDpgMKsHqlOo2e5BEaLyFmSiFyBqBRBapTSc3R
-         szCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc;
-        bh=X2MPZKPMA1t7Ei3dQp1ACWwbEt+VEpMzdmVn3LOSD68=;
-        b=riwIpvHTCM67ZJrQx4UF4WBoKyK6HIqF6SYdU6KRom1wlOCXzpSNTSUnEDT4kWYFhW
-         BYLoFpdCySFTA2giZTiS0vxHRLRFPqT9flelh3RmFj4mqHTIjF9Rs5vJiuTvYdpEAFh6
-         Z08B7vkBLoFyyDcel6hN0S+TDaG/MtsDnlBkSW1DIx+48okZZKFG7qdSGrJTmyEbK50X
-         7csphGFhnIvKFUDn/xHLkIA3JrciyLI8W9kFX5tgTpdyWNvapjkhglOtrKl6b1e1Y1+4
-         BFVNNXuip42RkmFrkS6qbEAojwGJBI3Vd1gNOyaAbo4IvMA826+K2TuqjLOfrQN2r/G3
-         UaQg==
-X-Gm-Message-State: ACgBeo3lyAnj8LhX5BfKOQVa9JC9s6rzbjKSjUf6sJjWWNMkTHlEnX1b
-        zM0B6x3rDSbGp6zUxWGgUZ8AcHFOiJrbCA==
-X-Google-Smtp-Source: AA6agR72lpBITjaxYOxInMo0KOHOwLg8lcaV+vH86y2zBwhbH7H6K5IJCiGL13276R5EmGC67g9zuw==
-X-Received: by 2002:a65:6e87:0:b0:41d:fefe:fd9d with SMTP id bm7-20020a656e87000000b0041dfefefd9dmr15297158pgb.557.1660605998598;
-        Mon, 15 Aug 2022 16:26:38 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id 6-20020a170902c10600b0016d23e941f2sm7474276pli.258.2022.08.15.16.26.36
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Aug 2022 16:26:37 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] build: Enable admin plugin
-Date:   Mon, 15 Aug 2022 16:26:31 -0700
-Message-Id: <20220815232631.1275861-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20220815232631.1275861-1-luiz.dentz@gmail.com>
-References: <20220815232631.1275861-1-luiz.dentz@gmail.com>
+        Tue, 16 Aug 2022 02:47:17 -0400
+Received: from endrift.com (endrift.com [173.255.198.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA6C13F339
+        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Aug 2022 18:49:34 -0700 (PDT)
+Received: from [192.168.0.22] (unknown [50.106.20.54])
+        by endrift.com (Postfix) with ESMTPSA id CB01CA176;
+        Mon, 15 Aug 2022 18:49:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=endrift.com; s=2020;
+        t=1660614574; bh=D6l9v4SCkxOFCmHxvon49KLHY+sl1oGS0FN/viPlM+E=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=LB/vEmjtdGDuU+fl9JnftKCgVG93460gSqj3PEYJOfK2882rssfnbuKIzV9Fe5cyF
+         SFk5KU4c1yLm3jf+VpN+uYclLTlC9JCDBle0AO3HbksPs5IUVpZvVk5o+Svs9im6a3
+         r08eOnr7YUdJqcwflEspZWV00sNU8eyGuO37fmz+qnsIk0NIcTZSJiRqPy0q4HAXpU
+         bvePG/G8Ko7VAtLsnpqqG2QHP/DGUA+d4thRbgMIiBA5DY652dOlbP8HVMBWo4rXna
+         imm3yOHntC2ThIpftda3t5oRKDn64AfcjyjqyqVuVOeAMZDGF9HPdXbpc+r8IFprvs
+         L0W9grPtWsg2Q==
+Message-ID: <be49af1f-f08a-7e26-42e5-98fe83077488@endrift.com>
+Date:   Mon, 15 Aug 2022 18:49:32 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH BlueZ] hog-lib: Increase maximum report map size
+Content-Language: en-US
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
+References: <20220803225716.1287921-1-vi@endrift.com>
+ <CABBYNZKcAZeDqjeHzTfqmvKS3Tbur-rRi6+uPL4x4t8MnWp5ug@mail.gmail.com>
+ <c0f52a2d-19ff-acb2-92ac-cec87819a2cf@endrift.com>
+ <CABBYNZLtWN7oWBRc-YjV6baCPpkh_J-2mUMO83A_3y=Xtn==dw@mail.gmail.com>
+ <dbeb83e5-9986-ca5d-e71f-cdaa579794bb@endrift.com>
+ <CABBYNZLHFAj4LwaMTEvCmysF2D__xrhJT9ORY-qmm_XYcGjjtQ@mail.gmail.com>
+ <CABBYNZKbCcz7p+EaNpWZkuX77BJ-DsoT=BRUQGwJjAhTesLhXA@mail.gmail.com>
+From:   Vicki Pfau <vi@endrift.com>
+In-Reply-To: <CABBYNZKbCcz7p+EaNpWZkuX77BJ-DsoT=BRUQGwJjAhTesLhXA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hi,
 
-This enables admin plugin with bootstrap-configure so it is normally
-build by the likes of CI.
----
- bootstrap-configure | 1 +
- 1 file changed, 1 insertion(+)
+On 8/15/22 11:09, Luiz Augusto von Dentz wrote:
+> Hi Vicki,
+> 
+> On Wed, Aug 10, 2022 at 1:13 PM Luiz Augusto von Dentz
+> <luiz.dentz@gmail.com> wrote:
+>>
+>> Hi Vicki,
+>>
+>> On Tue, Aug 9, 2022 at 7:02 PM Vicki Pfau <vi@endrift.com> wrote:
+>>>
+>>>
+>>>
+>>> On 8/3/22 17:16, Luiz Augusto von Dentz wrote:
+>>>> Hi Vicki,
+>>>>
+>>>> On Wed, Aug 3, 2022 at 5:05 PM Vicki Pfau <vi@endrift.com> wrote:
+>>>>>
+>>>>>
+>>>>>
+>>>>> On 8/3/22 16:55, Luiz Augusto von Dentz wrote:
+>>>>>> Hi Vicki,
+>>>>>>
+>>>>>> On Wed, Aug 3, 2022 at 4:07 PM Vicki Pfau <vi@endrift.com> wrote:
+>>>>>>>
+>>>>>>> Though a 512 byte report map size seems plenty large, there exist some devices
+>>>>>>> (e.g. Brydge W-Touch) that send larger reports. There is no protocol-defined
+>>>>>>> maximum size so doubling the maximum size is safe, and should hopefully fix
+>>>>>>> most real-world failures.
+>>>>>>> ---
+>>>>>>>  profiles/input/hog-lib.c | 2 +-
+>>>>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>>>
+>>>>>>> diff --git a/profiles/input/hog-lib.c b/profiles/input/hog-lib.c
+>>>>>>> index 4a9c60185..9f3eb428c 100644
+>>>>>>> --- a/profiles/input/hog-lib.c
+>>>>>>> +++ b/profiles/input/hog-lib.c
+>>>>>>> @@ -64,7 +64,7 @@
+>>>>>>>  #define HOG_PROTO_MODE_BOOT    0
+>>>>>>>  #define HOG_PROTO_MODE_REPORT  1
+>>>>>>>
+>>>>>>> -#define HOG_REPORT_MAP_MAX_SIZE        512
+>>>>>>> +#define HOG_REPORT_MAP_MAX_SIZE        1024
+>>>>>>>  #define HID_INFO_SIZE                  4
+>>>>>>>  #define ATT_NOTIFICATION_HEADER_SIZE   3
+>>>>>>
+>>>>>> Afaik 512 is the maximum length an attribute can have even when using
+>>>>>> read long procedure:
+>>>>>>
+>>>>>> BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 3, Part F
+>>>>>> page 1416:
+>>>>>>
+>>>>>> The maximum length of an attribute value shall be 512 octets.
+>>>>>>
+>>>>>> And
+>>>>>>
+>>>>>> BLUETOOTH SPECIFICATION
+>>>>>> HID Service Specification
+>>>>>> Page 16 of 26
+>>>>>>
+>>>>>> 2.6.1 Report Map Characteristic Behavior
+>>>>>> The GATT Read Characteristic Value or Read Long Characteristic Values sub-
+>>>>>> procedures are used to read the Report Map characteristic value.
+>>>>>> The length of the Report Map characteristic value is limited to 512 octets.
+>>>>>>
+>>>>>> So I believe the device is not compliant and very likely needs to have
+>>>>>> multiple instances of HID Service instead of combining everything in a
+>>>>>> single instance.
+>>>>>>
+>>>>>>> --
+>>>>>>> 2.37.1
+>>>>>>>
+>>>>>>
+>>>>>>
+>>>>>
+>>>>> Ah, that's strange. I looked through the spec but didn't see those. That said, while the device may be non-compliant, the device is on the market and I doubt I could get them to update the firmware as a random third party. It works on Windows, so clearly Windows doesn't have a problem with its noncompliance. So this raises the question, how should Linux handle non-compliant hardware, especially when it could easily be made to work just by bending the rules in this one instance? I can absolutely change the commit message since it's erroneous, but the question then comes down to how should it be handled at all.
+>>>>
+>>>> While I agree this could be worked around it is probably worth
+>>>> checking with the manufacturer if it is aware of the problem because
+>>>> even if we were to allow reading past 512 bytes offset in the future
+>>>> there may be qualification tests enforcing not to do so, besides
+>>>> versions up to BlueZ 5.65 would still not work anyway so I thing
+>>>> letting the manufacturer know there is a problem with their
+>>>> implementation is actually worth a shot here.
+>>>>
+>>> Brydge replied with the standard tech support "this is only supported on Windows, so there probably won't be a firmware update" reply, despite its noncompliance. And since I doubt Windows will add a change to limit it, well, that kind of limits our options here to either "enforce compliance and break non-compliant hardware" or "figure out a way to bend the rules". Given that BlueZ, upon expanding the maximum size, does successfully read the overly-long report map (it does use the read blob with offset message to get the last several bytes), it does work as intended if we ignore that specific rule. Though obviously that's up to the bluetooth maintainers to solve, so at this point I'm just tossing my two cents at it.
+>>
+>> Well we can do what Windows is doing but let's have it documented
+>> then, we could as well scalate this with Bluetooth SIG since the
+>> manufacturer seem to be intentionally creating interoperability
+>> problems with a standard service, but that would likely take a lot
+>> more time and most likely will need to be resolved by introducing a
+>> test that enforces that HoG client don't attempt to read past 512
+>> bytes offset.
 
-diff --git a/bootstrap-configure b/bootstrap-configure
-index 0aba3ef22295..8172840d5fc2 100755
---- a/bootstrap-configure
-+++ b/bootstrap-configure
-@@ -33,4 +33,5 @@ fi
- 		--enable-ubsan \
- 		--enable-cups \
- 		--enable-library \
-+		--enable-admin \
- 		--disable-datafiles $*
--- 
-2.37.2
+Is the client the device or the computer? Because the computer does successfully read past 512 bytes, and I believe it's needed for this device.
 
+>>
+>> Btw, if there is no limitation on how big the report map can get in
+>> HID, I'd leave it up to the kernel to figure out if that is acceptable
+>> or not, so I'd remove the 1024.
+
+That makes sense. I can look into how to arbitrarily size that buffer.
+
+> 
+> Are you still planning to update this change? Btw, how about Android,
+> does it handle such devices?
+> 
+
+Ah sorry, your reply was somewhat open ended and I didn't realize you wanted me to specifically look into this. As for Android, I have no idea. I can try pairing the trackpad with an Android device and seeing what happens, but I don't have anything with modern Android as it's not my day-to-day phone OS.
