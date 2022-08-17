@@ -2,65 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF66C597A4A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Aug 2022 01:43:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E748597A4E
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Aug 2022 01:43:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242406AbiHQXl6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 Aug 2022 19:41:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46528 "EHLO
+        id S242337AbiHQXly (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Aug 2022 19:41:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240008AbiHQXl5 (ORCPT
+        with ESMTP id S241321AbiHQXlx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 17 Aug 2022 19:41:57 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E81AF98A41
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Aug 2022 16:41:50 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id n21so52158qkk.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Aug 2022 16:41:50 -0700 (PDT)
+        Wed, 17 Aug 2022 19:41:53 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6742F8A1C6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Aug 2022 16:41:52 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id h27so37136qkk.9
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Aug 2022 16:41:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc;
-        bh=GdEdyMOAx3hPsCbsEHMTRC6v3KQtf84BHdk4+rO+K64=;
-        b=l4NrFOzgvxLW040JLx8uH2fdRRykELfR28Ppl3t7WKxCedioP8PRB+PuIAsWMF/2BB
-         gIaiNhszcOLk+H+ind4Td5LJkP2A+mdZoy2eXyf3QwsPT6gOSwhm28ZAabOjzc1uFQKS
-         ow0FuXXgzLYqvo2GwuiOaQ+EDWg8T0RTOZtg4OevCv2RLaoKhzl/4mqcBb2T6nMQKXAt
-         Q1Ea6rrrBdRNHQH7xE/g9eMIg8Po1+h+WI/o2A8fgdCve+Qry7arb1iAcEfbABN6pL9q
-         kwvu06nj3JqNRW6QFVXZp2+V9Ec7tdLSMwb/KPTHXaTI55++c5hW4F2bC7X+w+eLfqoA
-         9Y1A==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc;
+        bh=PGmZ7DQ3cpNSfiS5ddnYWL4e9lGgSws8kjOomJcuQlA=;
+        b=enYoba4viz2zGJq5e1Ez7YsD2TGS9M63xvEsLzqSxIfZUrJUUSZcEwRxV1NXzKuMLB
+         O0fsS9HJhuWDsDBDKgw08jpBcIfnZBq2REWOosCEeeT05YH5BQYT16wzOU0fJbD+KEDg
+         IuLmH5VAqfExBDf7YX+pnQqpQIq7zOQp58mp+5CU5SWKBf4Q/FzDPdLPhOsPD7gMXM56
+         /k8ONI+UlJNuq+QeYSQ4Z2JC1egoWoBF7zrunk+2w1STW9R+PREW+hJ+5fFV+jCbvMoR
+         HAEDKoBurikqAb5Pbk12I9gtt593mWzlYi55AexmnEwI3vVeO3I5UYevDYzbprOXFmZr
+         Hngw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc;
-        bh=GdEdyMOAx3hPsCbsEHMTRC6v3KQtf84BHdk4+rO+K64=;
-        b=7RzhgR0sTddL1AxrUDpAtjBqJS6JhHhgYadlofNRTNuPeK8REOYTB29Yo/nponUvPk
-         7wwzhvo5L+xnhO2y0H1tFz18dIKBzRapXM7JgHmZ6xJnZSUL5gmyTHGCiOidh6tT0H/E
-         ulKUCFPjmXO1xDT8tT4Rh4/Q3AVt0PMN0GRkpICljG7whKVZNEteAuYwp1ubd0R+aVb3
-         g92HIL9G0xfobCJyBICWVEJdqGJ0lIk3jGEBn9oUtvSyWeGi/0lOF7HDdAudveqaIozR
-         S76/ADwm9/GPFHms4TYP7bZiQcZrJFli2buC64bS9mngtLjmGNSLPYbWommzaR1Kha1A
-         1Ucw==
-X-Gm-Message-State: ACgBeo0nzXafMw2FXTVs4aTbGzpJHkRmxItPpsBvc7AEiDS4WU8p3iwe
-        mBtMIu9aoKg7PXSx8yMkNPKNclI0UuceLoiQ
-X-Google-Smtp-Source: AA6agR7duM8CkdpiFZGTMyzeLI1cxwVrCpyal3pQkLT9Ti2jdkrsSR+fGOHzBPPXp+Q2iULF/xLGLA==
-X-Received: by 2002:a05:620a:756:b0:6b9:91b5:cbb2 with SMTP id i22-20020a05620a075600b006b991b5cbb2mr329877qki.211.1660779709488;
-        Wed, 17 Aug 2022 16:41:49 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc;
+        bh=PGmZ7DQ3cpNSfiS5ddnYWL4e9lGgSws8kjOomJcuQlA=;
+        b=6gLMMXPlVUI9gsUV0teFrwXNZXojlmwFRI0U4syx7u2OMngIZOKAWrkWTYEX4iRLVW
+         pis5cwHalKeYgNJSRWCuRAulCi1Vc+i6BXp+5AXvxCXny99LMA0alq4oKguymUsGyYLh
+         DoZMKOQ3yOTzRVW7qCEGZBPGfkN2GC/MSFrEG8BEgQqzJ9aqI2RNHQI0mFGUs3eM6vI2
+         m0TwgfgZkO9PXDO+HE/eo8Fz2XmMuQ5H5vtjizCxnUR41KcvXrrY5XQBp/BjiJ5aRAH1
+         8Yhqtmo5xLyld/EftttlhIkiQKQ02UB+CsL8CPJGLO6fbMZvPkZusgvbMxnTwefd0Pcs
+         eifg==
+X-Gm-Message-State: ACgBeo005kabGoS5T5m+DH6BHLj5klkKRp8k0z/N9SwaL3DzbsMmYG+S
+        It5NfodWafYcujgWkdyKDcT0kjtVha6NYnD6
+X-Google-Smtp-Source: AA6agR6G0qCosmLiKsnZ5sKI6WBaJnYig4Yo9LSzzSLr5BiD6A96ZZN1K85zz/HLbEOqBG/21P2TfQ==
+X-Received: by 2002:a37:6c86:0:b0:6b9:4a99:3ab7 with SMTP id h128-20020a376c86000000b006b94a993ab7mr354831qkc.534.1660779711110;
+        Wed, 17 Aug 2022 16:41:51 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id r25-20020ae9d619000000b006bb2f555ba4sm189637qkk.41.2022.08.17.16.41.48
+        by smtp.gmail.com with ESMTPSA id r25-20020ae9d619000000b006bb2f555ba4sm189637qkk.41.2022.08.17.16.41.49
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Aug 2022 16:41:48 -0700 (PDT)
+        Wed, 17 Aug 2022 16:41:50 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 0/9] Initial BAP support
-Date:   Wed, 17 Aug 2022 16:41:37 -0700
-Message-Id: <20220817234146.224081-1-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 1/9] adapter: Add btd_adapter_find_device_by_fd
+Date:   Wed, 17 Aug 2022 16:41:38 -0700
+Message-Id: <20220817234146.224081-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.37.2
+In-Reply-To: <20220817234146.224081-1-luiz.dentz@gmail.com>
+References: <20220817234146.224081-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -69,113 +71,69 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This set add initial support for BAP (Basic Audio Profile) which is
-an essential part of LE Audio responsible for stream control.
+This adds btd_adapter_find_device_by_fd that lookup a device by a fd
+socket destination address.
+---
+ src/adapter.c | 33 +++++++++++++++++++++++++++++++++
+ src/adapter.h |  1 +
+ 2 files changed, 34 insertions(+)
 
-The plugin is considered experimental and depends on ISO socket in order
-to work so the following setting needs to be changed in order to enable it:
-
- # Enables D-Bus experimental interfaces
- # Possible values: true or false
-+Experimental = true
+diff --git a/src/adapter.c b/src/adapter.c
+index ec26aab1a771..d33fc9bd661c 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -1364,6 +1364,39 @@ struct btd_device *btd_adapter_get_device(struct btd_adapter *adapter,
+ 	return adapter_create_device(adapter, addr, addr_type);
+ }
  
- # Enables kernel experimental features, alternatively a list of UUIDs
- # can be given.
-@@ -126,7 +126,7 @@
- # a6695ace-ee7f-4fb9-881a-5fac66c629af (BlueZ Experimental Offload Codecs)
- # 6fbaf188-05e0-496a-9885-d6ddfdb4e03e (BlueZ Experimental ISO socket)
- # Defaults to false.
-+KernelExperimental = 6fbaf188-05e0-496a-9885-d6ddfdb4e03e
-
-While proper support to the likes of PulseAudio and Pipewire are still
-in progress it is possible to test using bluetoothctl with the following
-commands:
-
-[Server/Peripheral]
-[bluetooth]# power on
-[bluetooth]# advertise on
-[bluetooth]# endpoint.register 00002bc9-0000-1000-8000-00805f9b34fb 0x06
-[/local/endpoint/ep0] Auto Accept (yes/no): y
-[/local/endpoint/ep0] CIG (auto/value): a
-[/local/endpoint/ep0] CIS (auto/value): a
-Capabilities:
-  03 01 ff 00 02 02 03 02 03 03 05 04 1e 00 f0 00  ................
-Endpoint /local/endpoint/ep0 registered
-[bluetooth]# endpoint.register 00002bcb-0000-1000-8000-00805f9b34fb 0x06
-[/local/endpoint/ep1] Auto Accept (yes/no): y
-[/local/endpoint/ep1] CIG (auto/value): a
-[/local/endpoint/ep1] CIS (auto/value): a
-Capabilities:
-  03 01 ff 00 02 02 03 02 03 03 05 04 1e 00 f0 00  ................
-Endpoint /local/endpoint/ep1 registered
-
-[Client/Central]
-[bluetooth]# power on
-[bluetooth]# endpoint.register 00002bc9-0000-1000-8000-00805f9b34fb 0x06
-[/local/endpoint/ep0] Auto Accept (yes/no): y
-[/local/endpoint/ep0] CIG (auto/value): a
-[/local/endpoint/ep0] CIS (auto/value): a
-Capabilities:
-  03 01 ff 00 02 02 03 02 03 03 05 04 1e 00 f0 00  ................
-Endpoint /local/endpoint/ep0 registered
-[bluetooth]# endpoint.register 00002bcb-0000-1000-8000-00805f9b34fb 0x06
-[/local/endpoint/ep1] Auto Accept (yes/no): y
-[/local/endpoint/ep1] CIG (auto/value): a
-[/local/endpoint/ep1] CIS (auto/value): a
-Capabilities:
-  03 01 ff 00 02 02 03 02 03 03 05 04 1e 00 f0 00  ................
-Endpoint /local/endpoint/ep1 registered
-[bluetooth]# scan on
-[bluetooth]# scan off
-[bluetooth]# connect <bdaddr>
-[NEW] Transport /org/bluez/hci0/dev_00_AA_01_01_00_02/pac_source0/fd0
-Endpoint: SetConfiguration
-	Transport /org/bluez/hci0/dev_00_AA_01_01_00_02/pac_source0/fd0
-	Device: /org/bluez/hci0/dev_00_AA_01_01_00_02
-Auto Accepting...
-[NEW] Transport /org/bluez/hci0/dev_00_AA_01_01_00_02/pac_sink0/fd1
-Endpoint: SetConfiguration
-	Transport /org/bluez/hci0/dev_00_AA_01_01_00_02/pac_sink0/fd1
-	Device: /org/bluez/hci0/dev_00_AA_01_01_00_02
-Auto Accepting...
-[bluetooth]# transport.acquire /org/bluez/hci0/dev_00_AA_01_01_00_02/pac_sink0/fd1
-
-Luiz Augusto von Dentz (9):
-  adapter: Add btd_adapter_find_device_by_fd
-  lib/uuid: Add PACS/ASCS UUIDs
-  shared/bap: Add initial code for handling BAP
-  profiles: Add initial code for bap plugin
-  shared: Add definition for LC3 codec
-  media-api: Add SelectProperties
-  test/simple-endpoint: Add support for LC3 endpoints
-  client/player: Add support for PACS endpoints
-  client/player: Use QoS interval on transport.send
-
- Makefile.am                |    3 +-
- Makefile.plugins           |    5 +
- client/player.c            |  688 +++++-
- configure.ac               |    4 +
- doc/media-api.txt          |   88 +-
- lib/uuid.h                 |   18 +
- profiles/audio/bap.c       | 1302 ++++++++++
- profiles/audio/media.c     |  678 ++++-
- profiles/audio/transport.c |  552 ++++-
- profiles/audio/transport.h |    3 +-
- src/adapter.c              |   33 +
- src/adapter.h              |    1 +
- src/shared/ascs.h          |  196 ++
- src/shared/bap.c           | 4780 ++++++++++++++++++++++++++++++++++++
- src/shared/bap.h           |  269 ++
- src/shared/lc3.h           |  112 +
- test/simple-endpoint       |   17 +
- tools/bluetooth-player.c   |    1 -
- 18 files changed, 8609 insertions(+), 141 deletions(-)
- create mode 100644 profiles/audio/bap.c
- create mode 100644 src/shared/ascs.h
- create mode 100644 src/shared/bap.c
- create mode 100644 src/shared/bap.h
- create mode 100644 src/shared/lc3.h
-
++struct btd_device *btd_adapter_find_device_by_fd(int fd)
++{
++	bdaddr_t src, dst;
++	uint8_t dst_type;
++	GIOChannel *io = NULL;
++	GError *gerr = NULL;
++	struct btd_adapter *adapter;
++
++	io = g_io_channel_unix_new(fd);
++	if (!io)
++		return NULL;
++
++	bt_io_get(io, &gerr,
++			BT_IO_OPT_SOURCE_BDADDR, &src,
++			BT_IO_OPT_DEST_BDADDR, &dst,
++			BT_IO_OPT_DEST_TYPE, &dst_type,
++			BT_IO_OPT_INVALID);
++	if (gerr) {
++		error("bt_io_get: %s", gerr->message);
++		g_error_free(gerr);
++		g_io_channel_unref(io);
++		return NULL;
++	}
++
++	g_io_channel_unref(io);
++
++	adapter = adapter_find(&src);
++	if (!adapter)
++		return NULL;
++
++	return btd_adapter_find_device(adapter, &dst, dst_type);
++}
++
+ sdp_list_t *btd_adapter_get_services(struct btd_adapter *adapter)
+ {
+ 	return adapter->services;
+diff --git a/src/adapter.h b/src/adapter.h
+index b09044edda70..f38f473b79d7 100644
+--- a/src/adapter.h
++++ b/src/adapter.h
+@@ -86,6 +86,7 @@ struct btd_device *btd_adapter_find_device(struct btd_adapter *adapter,
+ 							uint8_t dst_type);
+ struct btd_device *btd_adapter_find_device_by_path(struct btd_adapter *adapter,
+ 						   const char *path);
++struct btd_device *btd_adapter_find_device_by_fd(int fd);
+ 
+ void btd_adapter_update_found_device(struct btd_adapter *adapter,
+ 					const bdaddr_t *bdaddr,
 -- 
 2.37.2
 
