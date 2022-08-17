@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3965597A52
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Aug 2022 01:43:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C39D597A4F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Aug 2022 01:43:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242486AbiHQXmD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 Aug 2022 19:42:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46568 "EHLO
+        id S242494AbiHQXmG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 Aug 2022 19:42:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242473AbiHQXmC (ORCPT
+        with ESMTP id S242487AbiHQXmD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 17 Aug 2022 19:42:02 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE9698A41
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Aug 2022 16:41:59 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id h4so46182qtj.11
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Aug 2022 16:41:59 -0700 (PDT)
+        Wed, 17 Aug 2022 19:42:03 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94958883D5
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Aug 2022 16:42:00 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id j17so43815qtp.12
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Aug 2022 16:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc;
-        bh=HcZbzWIaS3ZBAoKQ8WtTSxdAa3N97Uesw92CvXSMVJ0=;
-        b=liC/Tp4UwLqbQvPlhJqPR/7zqVEx+a9OVI74XDcG9DCyzCFbOa/F4bpN+b9tOyQLNq
-         d48Qk9NqS/XsKIc9bY1EG4WzSHL5I1Og8k4zKCKgbUBP/wV2D9dWEc/ngwAlKnqFRhny
-         h2aTLadUhIRmp8LULLMEx4OQ0/ucHQhwFdXIbN5JMVF55k/pH6I4YQG2hAhT3jXhC0L0
-         VnHq8+J/B1QkwmCXoDzktG839sxJ6GVzqgI1CLtpna3eGy6EUUToLbS0AInfrno7n38g
-         VowLpWleLpd3Cdw+9YaJ5Jep1hwjREKgHvnfsa/W8QZLO27i93Icgd0AXRyW/HMDLP0J
-         rBjg==
+        bh=LtLsDeU6W0S2tsIhTDpRd9Huw05LEotatD+3ogiUrJQ=;
+        b=F5SjWOetbrUhIKHzeTFp3QR8Cn9aWg5wV9xSSkEZwYGVq++S5xiBIFahZQXzKr0dMd
+         iLDkaalyooQpaz9xkhLRr+as+32/tVHJtqu5sebo1cABfYWavB1zbrXZFCfHU5aKYWqv
+         /Qb5urrAKnHxDsC5zAwEA4+wr34cYk/OwX6ZOtP/1STcObFbhACuFwg1GxyjjZeC0wN1
+         M6B8YBza7edGa57lrbfPfSb1CY4aYkI9/w6V3L5N3P+wihh3OTp4p4vgNuuM4v+45plA
+         W3GHb3GFUYrsDlB00AC2e9zdvmT3QaMyyrKD9xTKvYMdjQ4r5oDDztUuohjccLjdVsp0
+         +Nww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc;
-        bh=HcZbzWIaS3ZBAoKQ8WtTSxdAa3N97Uesw92CvXSMVJ0=;
-        b=R2HTI89zAaIXG6cCXr3k2lS5wDxgslU6hf7jxWVkbNlGXdzesJniTVoyRODSMmKc+U
-         gROnF5bZeuA+JMf8YViL9xgLJABHcIFk4RTYBsDob15wHm+aweG7+hnR9yBox5fumTBd
-         qrRdM39kmDi6msS+dGQQdIP2qcIVBkhr524qN3z337AxUETI9Fv3WDfOGT4c/+52Uo6V
-         iNFRXMeZySkVAKv5ONy84IivCKd20UkyWDp0zBiLfj+9q25uQr1drXwS6YVU8XDRdZNA
-         K+yll6dXLoJAX5bd34COIGLsMoRZn1Y7APymmVfwHxJJGyEaqlxldxCHi4Ab7CIbjATB
-         ULTA==
-X-Gm-Message-State: ACgBeo1meHPEM57SlId3n6pA2wfZMma5emZLUAxLLi8rd7ucMbBAZawV
-        5oJxr8SUdRa5qlDEMeekZQs6NPsZUEzAd5kX
-X-Google-Smtp-Source: AA6agR5UyT7QJ8qdb82pypGRgrRyNz5kiooSqJixtRW8hVVtgDPI8AsMn6bUhRskpRVgQm2oWxkhng==
-X-Received: by 2002:a05:622a:1aa3:b0:344:60fc:6686 with SMTP id s35-20020a05622a1aa300b0034460fc6686mr592028qtc.116.1660779717788;
-        Wed, 17 Aug 2022 16:41:57 -0700 (PDT)
+        bh=LtLsDeU6W0S2tsIhTDpRd9Huw05LEotatD+3ogiUrJQ=;
+        b=lcpwIBgNiejokohPMXHZ1FZBSdE8nEH1ogQ5D9yCkSYGK7bCtLxeeCHhOe5sNUMIzT
+         VGcI0aQUOwJzEeExgt+6n9cWUvUAmupsywSgdoZSzkaosebLkQ+ouvtLTcDuFWxmqjk6
+         G/w0yPqy5hBkIKeRB/AijdVMxps/JVi/9YgkCICKctRGY823doaZU2O7AkAzhDGaEveL
+         m1b2TTt6JQtueBgaXEsJpYIuNj7TEgD6v3ryHjZpEEcvplwF00U6/RKvRwbYwVV0DSmG
+         CWah+dBbAY4AiSJS2UKSRJTGRrKFBE69nnJuyHG+zCLO8PUqUeJTqv6tuwaoOkKfPzPe
+         qwqg==
+X-Gm-Message-State: ACgBeo122+R5DsOqM/7mDR6OUTQuZezekurSIxzErZuVPkTPSJ+DliI0
+        KaVdNePhIdJokCrRgG4Xowd0gMtnWkQ5f+9+
+X-Google-Smtp-Source: AA6agR4+Km8OY/WO93CjxVY0v35pkpVGGCUNeL+kXptvwNQxkcviWO/BCTZGIPgPfiyy7t9vdTizfA==
+X-Received: by 2002:a05:622a:104f:b0:344:5130:409a with SMTP id f15-20020a05622a104f00b003445130409amr560885qte.547.1660779719263;
+        Wed, 17 Aug 2022 16:41:59 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id r25-20020ae9d619000000b006bb2f555ba4sm189637qkk.41.2022.08.17.16.41.56
+        by smtp.gmail.com with ESMTPSA id r25-20020ae9d619000000b006bb2f555ba4sm189637qkk.41.2022.08.17.16.41.57
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Aug 2022 16:41:57 -0700 (PDT)
+        Wed, 17 Aug 2022 16:41:58 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 5/9] shared: Add definition for LC3 codec
-Date:   Wed, 17 Aug 2022 16:41:42 -0700
-Message-Id: <20220817234146.224081-6-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 6/9] media-api: Add SelectProperties
+Date:   Wed, 17 Aug 2022 16:41:43 -0700
+Message-Id: <20220817234146.224081-7-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <20220817234146.224081-1-luiz.dentz@gmail.com>
 References: <20220817234146.224081-1-luiz.dentz@gmail.com>
@@ -61,8 +61,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -71,144 +71,144 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds the definition for LC3 codec capabilities and configuration.
+This adds SelectProperties which is a more extensible version of
+SelectCapability since it takes a dictionary rather than a byte array
+and define new Properties for LE Audio.
 ---
- Makefile.am      |   2 +-
- src/shared/lc3.h | 112 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 113 insertions(+), 1 deletion(-)
- create mode 100644 src/shared/lc3.h
+ doc/media-api.txt | 88 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 87 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile.am b/Makefile.am
-index 92758ca55816..960bf21bc726 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -231,7 +231,7 @@ shared_sources = src/shared/io.h src/shared/timeout.h \
- 			src/shared/gap.h src/shared/gap.c \
- 			src/shared/log.h src/shared/log.c \
- 			src/shared/bap.h src/shared/bap.c src/shared/ascs.h \
--			src/shared/tty.h
-+			src/shared/lc3.h src/shared/tty.h
+diff --git a/doc/media-api.txt b/doc/media-api.txt
+index e98573157c60..9cd211355860 100644
+--- a/doc/media-api.txt
++++ b/doc/media-api.txt
+@@ -24,6 +24,9 @@ Methods		void RegisterEndpoint(object endpoint, dict properties)
+ 					UUID of the profile which the endpoint
+ 					is for.
  
- if READLINE
- shared_sources += src/shared/shell.c src/shared/shell.h
-diff --git a/src/shared/lc3.h b/src/shared/lc3.h
-new file mode 100644
-index 000000000000..33e8107e39e6
---- /dev/null
-+++ b/src/shared/lc3.h
-@@ -0,0 +1,112 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
-+/*
-+ *
-+ *  BlueZ - Bluetooth protocol stack for Linux
-+ *
-+ *  Copyright (C) 2020  Intel Corporation. All rights reserved.
-+ *
-+ */
++					UUID must be in the list of
++					SupportedUUIDS.
 +
-+#define LTV(_type, _bytes...) \
-+	{ \
-+		.len = 1 + sizeof((uint8_t []) { _bytes }), \
-+		.type = _type, \
-+		.data = { _bytes }, \
-+	}
+ 				byte Codec:
+ 
+ 					Assigned number of codec that the
+@@ -87,6 +90,12 @@ Methods		void RegisterEndpoint(object endpoint, dict properties)
+ 
+ 			Possible errors: org.bluez.Error.InvalidArguments
+ 					 org.bluez.Error.DoesNotExist
 +
-+#define LC3_ID			0x06
++Properties	array{string} SupportedUUIDs [readonly]:
 +
-+#define LC3_BASE		0x01
++			List of 128-bit UUIDs that represents the supported
++			Endpoint registration.
 +
-+#define LC3_FREQ		(LC3_BASE)
-+#define LC3_FREQ_8KHZ		BIT(0)
-+#define LC3_FREQ_11KHZ		BIT(1)
-+#define LC3_FREQ_16KHZ		BIT(2)
-+#define LC3_FREQ_22KHZ		BIT(3)
-+#define LC3_FREQ_24KHZ		BIT(4)
-+#define LC3_FREQ_32KHZ		BIT(5)
-+#define LC3_FREQ_44KHZ		BIT(6)
-+#define LC3_FREQ_48KHZ		BIT(7)
-+#define LC3_FREQ_ANY		(LC3_FREQ_8KHZ | \
-+					LC3_FREQ_11KHZ | \
-+					LC3_FREQ_16KHZ | \
-+					LC3_FREQ_22KHZ | \
-+					LC3_FREQ_24KHZ | \
-+					LC3_FREQ_32KHZ | \
-+					LC3_FREQ_44KHZ | \
-+					LC3_FREQ_48KHZ)
+ Media Control hierarchy
+ =======================
+ 
+@@ -564,7 +573,18 @@ Methods		void SetConfiguration(object transport, dict properties)
+ 			endpoint oject which will be configured and the
+ 			properties must contain the following properties:
+ 
+-				array{byte} Capabilities
++				array{byte} Capabilities [Mandatory]
++				array{byte} Metadata [ISO only]
++				byte CIG [ISO only]
++				byte CIS [ISO only]
++				uint32 Interval [ISO only]
++				bool Framing [ISO only]
++				string PHY [ISO only]
++				uint16 SDU [ISO only]
++				byte Retransmissions [ISO only]
++				uint16 Latency [ISO only]
++				uint32 Delay [ISO only]
++				uint8 TargetLatency [ISO Latency]
+ 
+ 		array{byte} SelectConfiguration(array{byte} capabilities)
+ 
+@@ -578,6 +598,19 @@ Methods		void SetConfiguration(object transport, dict properties)
+ 			configuration since on success the configuration is
+ 			send back as parameter of SetConfiguration.
+ 
++		dict SelectProperties(dict properties)
 +
-+#define LC3_DURATION		(LC3_BASE + 1)
-+#define LC3_DURATION_7_5	BIT(0)
-+#define LC3_DURATION_10		BIT(1)
-+#define LC3_DURATION_ANY	(LC3_DURATION_7_5 | LC3_DURATION_10)
-+#define LC3_DURATION_PREFER_7_5	BIT(4)
-+#define LC3_DURATION_PREFER_10	BIT(5)
++			Select preferable properties from the supported
++			properties. Refer to SetConfiguration for the list of
++			possible properties.
 +
++			Returns propeties which can be used to setup
++			a transport.
 +
-+#define LC3_CHAN_COUNT		(LC3_BASE + 2)
-+#define LC3_CHAN_COUNT_SUPPORT	BIT(0)
++			Note: There is no need to cache the selected
++			properties since on success the configuration is
++			send back as parameter of SetConfiguration.
 +
-+#define LC3_FRAME_LEN		(LC3_BASE + 3)
+ 		void ClearConfiguration(object transport)
+ 
+ 			Clear transport configuration.
+@@ -613,6 +646,46 @@ Properties	string UUID [readonly, optional]:
+ 
+ 			Indicates if endpoint supports Delay Reporting.
+ 
++		byte Framing [ISO only]
 +
-+#define LC3_FRAME_COUNT		(LC3_BASE + 4)
++			Indicates endpoint support framing.
 +
-+#define LC3_CAPABILITIES(_freq, _duration, _chan_count, _len_min, _len_max) \
-+	{ \
-+		LTV(LC3_FREQ, _freq), \
-+		LTV(LC3_DURATION, _duration), \
-+		LTV(LC3_CHAN_COUNT, _chan_count), \
-+		LTV(LC3_FRAME_LEN, _len_min, _len_min >> 8, \
-+				_len_max, _len_max >> 8), \
-+	}
++		byte PHY [ISO only]
 +
-+#define LC3_CONFIG_BASE		0x01
++			Indicates endpoint supported PHY.
 +
-+#define LC3_CONFIG_FREQ		(LC3_CONFIG_BASE)
-+#define LC3_CONFIG_FREQ_8KHZ	0x01
-+#define LC3_CONFIG_FREQ_11KHZ	0x02
-+#define LC3_CONFIG_FREQ_16KHZ	0x03
-+#define LC3_CONFIG_FREQ_22KHZ	0x04
-+#define LC3_CONFIG_FREQ_24KHZ	0x05
-+#define LC3_CONFIG_FREQ_32KHZ	0x06
-+#define LC3_CONFIG_FREQ_44KHZ	0x07
-+#define LC3_CONFIG_FREQ_48KHZ	0x08
++		uint16_t MaximumLatency [ISO only]
 +
-+#define LC3_CONFIG_DURATION	(LC3_CONFIG_BASE + 1)
-+#define LC3_CONFIG_DURATION_7_5	0x00
-+#define LC3_CONFIG_DURATION_10	0x01
++			Indicates endpoint maximum latency.
 +
-+#define LC3_CONFIG_CHAN_ALLOC	(LC3_CONFIG_BASE + 2)
++		uint32_t MinimumDelay [ISO only]
 +
-+#define LC3_CONFIG_FRAME_LEN	(LC3_CONFIG_BASE + 3)
++			Indicates endpoint minimum presentation delay.
 +
-+#define LC3_CONFIG(_freq, _duration, _len) \
-+	{ \
-+		LTV(LC3_CONFIG_FREQ, _freq), \
-+		LTV(LC3_CONFIG_DURATION, _duration), \
-+		LTV(LC3_CONFIG_FRAME_LEN, _len, _len >> 8), \
-+	}
++		uint32_t MaximumDelay [ISO only]
 +
-+#define LC3_CONFIG_8KHZ(_duration, _len) \
-+	LC3_CONFIG(LC3_CONFIG_FREQ_8KHZ, _duration, _len)
++			Indicates endpoint maximum presentation delay.
 +
-+#define LC3_CONFIG_11KHZ(_duration, _len) \
-+	LC3_CONFIG(LC3_CONFIG_FREQ_11KHZ, _duration, _len)
++		uint32_t PreferredMinimumDelay [ISO only]
 +
-+#define LC3_CONFIG_16KHZ(_duration, _len) \
-+	LC3_CONFIG(LC3_CONFIG_FREQ_16KHZ, _duration, _len)
++			Indicates endpoint preferred minimum presentation delay.
 +
-+#define LC3_CONFIG_22KHZ(_duration, _len) \
-+	LC3_CONFIG(LC3_CONFIG_FREQ_22KHZ, _duration, _len)
++		uint32_t PreferredMinimumDelay [ISO only]
 +
-+#define LC3_CONFIG_24KHZ(_duration, _len) \
-+	LC3_CONFIG(LC3_CONFIG_FREQ_24KHZ, _duration, _len)
++			Indicates endpoint preferred minimum presentation delay.
 +
-+#define LC3_CONFIG_32KHZ(_duration, _len) \
-+	LC3_CONFIG(LC3_CONFIG_FREQ_32KHZ, _duration, _len)
++		uint32 Location [ISO only]
 +
-+#define LC3_CONFIG_44KHZ(_duration, _len) \
-+	LC3_CONFIG(LC3_CONFIG_FREQ_44KHZ, _duration, _len)
++			Indicates endpoint supported locations.
 +
-+#define LC3_CONFIG_48KHZ(_duration, _len) \
-+	LC3_CONFIG(LC3_CONFIG_FREQ_48KHZ, _duration, _len)
++		uint16 SupportedContext [ISO only]
++
++			Indicates endpoint supported audio context.
++
++		uint16 Context [ISO only]
++
++			Indicates endpoint available audio context.
++
+ MediaTransport1 hierarchy
+ =========================
+ 
+@@ -689,3 +762,16 @@ Properties	object Device [readonly]
+ 
+ 			Endpoint object which the transport is associated
+ 			with.
++
++		uint32 Location [readonly, ISO only, experimental]
++
++			Indicates transport Audio Location.
++
++		array{byte} Metadata [ISO Only, experimental]
++
++			Indicates transport Metadata.
++
++		array{object} Links [readonly, optional, ISO only, experimental]
++
++			Linked transport objects which the transport is
++			associated with.
 -- 
 2.37.2
 
