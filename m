@@ -2,62 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA89A5A32EB
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 27 Aug 2022 02:06:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E46825A32EE
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 27 Aug 2022 02:06:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345143AbiH0AGB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 26 Aug 2022 20:06:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55390 "EHLO
+        id S1345153AbiH0AGC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 26 Aug 2022 20:06:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345128AbiH0AF6 (ORCPT
+        with ESMTP id S1345111AbiH0AF7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 26 Aug 2022 20:05:58 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE754E42FA
-        for <linux-bluetooth@vger.kernel.org>; Fri, 26 Aug 2022 17:05:55 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id c16-20020a17090aa61000b001fb3286d9f7so8452467pjq.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 26 Aug 2022 17:05:55 -0700 (PDT)
+        Fri, 26 Aug 2022 20:05:59 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 136F2E8337
+        for <linux-bluetooth@vger.kernel.org>; Fri, 26 Aug 2022 17:05:57 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id y1so1031259plb.2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 26 Aug 2022 17:05:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc;
-        bh=uKZN+WtU9c3IVIhReF07AEB77DEg2H9OvDD5FkV5cdU=;
-        b=D65bEwoaCjVVkugPHJV49QE3p/11SvRRppn0inqH94FkMJLa0srtiKswBLXVY8aeo9
-         Qa+vOEHue+EPnvEAllx2wfFh7O/EhVPgIWBL8ZZYcMLgV5RXNaJUHMB9+x8A6AiEE3Wv
-         YmqwNGikv1JV6ZQ+wJfoQaQ+tXKDj6aqvWG3SpC/S6uK3EkPiHudXXLeeQXzcLfLoDYU
-         gkJJZAuzAbiokmCzJSZhOyz5xej9zWKzc3Dptw3MyBWI6W7iid3XkImv4OeGS/s8v98g
-         Ca5q/+q6oiSLqwkZ7X9zMWKHKsZCJYjepHr0rSDVcpP0fcRsoLNq8FAu2bwgNaMcG4AI
-         VRoQ==
+        bh=OewMMH2FhTMDlAG1e4dJh9VaKQQF/YVhC1cCT3PeBg8=;
+        b=FwbS5FfxBJeXPqU+BpdMLFYjyhhzAPkqAiid5GolgEluI2GHOzsq0ve+KIdw17mSTD
+         MoGcx7AihUUUo1HBkROBerHQJtuvsQbRtVw9eGyUwWInQtwX0ekdcOEUhvrNMZWkosal
+         ltAn02/vA/beTe6+jR6No3gltTf/Q8bjL5KBX0TWr/eEqiVLv+gqfkAxvbQH3HnA7b78
+         iZWItAkGyzv4m4rG727dXEiHfz8DNioC5DL1MiltJjkmghHW++1hU7OZnqOiYHesoipJ
+         6IGkuDK0GN6Fa/VsBlEj1jG/8G6fQgaqDQkPiNVBesGMhnR+71uKffJQoMXoQ+yC9svU
+         1w1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc;
-        bh=uKZN+WtU9c3IVIhReF07AEB77DEg2H9OvDD5FkV5cdU=;
-        b=hb30nkSUV1ZIApS+9A4T/VrfEbdXFphNYx2eGtKeMiZf5rKrn0i08thhNGxzGg7IdG
-         0KFMCqXheJcqWuTd96IVvTMe47LzOq2pLJJ7lHQg+Bv2p2vXZoBeFX5q8pFjKeB8qEvq
-         3bsqjYyHPtUl2Ocwt0aZ8yu1THMs473Ch52kXm4f5IDpHkvqdUizQox4UBKE7uXUIq/g
-         Qu6+R7c7lZZiZVKoeqca1QzLQwPBG+sjASlZJ9KWwEUym2TsLxVdbYiRiTk0ZSp7Uuwx
-         Me8G0NmnPPAEizEYgUzoQT0qJQvbh0rOjmnWuWM0aRuBuPINgBSnuBal3atpn5ph+3Zh
-         79cw==
-X-Gm-Message-State: ACgBeo04WuSixfntiNuWVALo1Nk/FRwc9xzuIin0lxZaBwCPwZRmVbHz
-        /Z8cNyeMmiyu8nJSw2vt3OXg6hT+2iE=
-X-Google-Smtp-Source: AA6agR5+9F7WPm1USe62ojFeSnfzFMZeUpMw7zj/pRwB6KMbF7WuLWXAg01L260/bMYZ3vQNNgDzig==
-X-Received: by 2002:a17:903:32d2:b0:172:f62a:2f33 with SMTP id i18-20020a17090332d200b00172f62a2f33mr5916748plr.16.1661558754807;
-        Fri, 26 Aug 2022 17:05:54 -0700 (PDT)
+        bh=OewMMH2FhTMDlAG1e4dJh9VaKQQF/YVhC1cCT3PeBg8=;
+        b=4nkXqK6qFGFcXPNNSe9dk1ullacxF3ngR+dos2+TvLAKDe3g/rQEPAmQYU/PyOont2
+         9UZyPWbHNtkaHYVq1eLm9a6mVAS1Nf3JJ8eNIKMXlmO7nKE1SwOCKS0MnbuuwZZcVz1j
+         06yXZ74vMXMuRXTPthkDxMGfC22lPEKd1zuPk6gZ4YLcpwEhlAW7qjiEV5NyP10ltIMF
+         7LD5SZv5NwIs0MJ6Nt7oEX7DYnG8CjPuDM255SzSBEnUrZVRP+kbciQtUHZoWzbtVPlj
+         VYPfSbwNvHMHjTnRK+EY4ZG0qOnQ76dqdkurf93Ma19k+WFkY/5F2BdUdRJu0ejWFmYn
+         t0ng==
+X-Gm-Message-State: ACgBeo1Tu3fZBCnZstM8g30vBGqV27JJhKZoMOr2Sro/kWkZq8//pOoP
+        ydNawvfnMeGvsoVD66lrVZwWBVQjqCM=
+X-Google-Smtp-Source: AA6agR5mTA5TJTH3ymjGgOTZPXI5eZWC5HvaiXqEpSQfi2b59pE5QTZxh/BeHzz8OwV3fMlpZOQjPQ==
+X-Received: by 2002:a17:90b:3149:b0:1fb:71ad:256b with SMTP id ip9-20020a17090b314900b001fb71ad256bmr6735949pjb.18.1661558756164;
+        Fri, 26 Aug 2022 17:05:56 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id o1-20020a17090a168100b001fa8b909ef0sm2249487pja.7.2022.08.26.17.05.53
+        by smtp.gmail.com with ESMTPSA id o1-20020a17090a168100b001fa8b909ef0sm2249487pja.7.2022.08.26.17.05.55
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Aug 2022 17:05:53 -0700 (PDT)
+        Fri, 26 Aug 2022 17:05:55 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v3 09/11] client/player: Use QoS interval on transport.send
-Date:   Fri, 26 Aug 2022 17:05:38 -0700
-Message-Id: <20220827000540.113414-10-luiz.dentz@gmail.com>
+Subject: [PATCH v3 10/11] profiles: Allow linked transport to release the fd
+Date:   Fri, 26 Aug 2022 17:05:39 -0700
+Message-Id: <20220827000540.113414-11-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <20220827000540.113414-1-luiz.dentz@gmail.com>
 References: <20220827000540.113414-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -69,136 +70,92 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Frédéric Danis <frederic.danis@collabora.com>
 
-This makes use of QoS interval when sending a file.
+Multiple transports can be linked when using LE Audio BAP.
+In this case only one transport is used to Acquire the file descriptor
+which will be shared by all linked transports.
+In the same way, any transport can Release the file descriptor.
 ---
- client/player.c          | 69 ++++++++++++++++++++++++++++++++++++++--
- tools/bluetooth-player.c |  1 -
- 2 files changed, 67 insertions(+), 3 deletions(-)
+ profiles/audio/transport.c | 43 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/client/player.c b/client/player.c
-index 4ba1a72ecfd5..99b036b8c3ec 100644
---- a/client/player.c
-+++ b/client/player.c
-@@ -2981,9 +2981,56 @@ static int open_file(const char *filename, int flags)
- 	return fd;
+diff --git a/profiles/audio/transport.c b/profiles/audio/transport.c
+index 47db2a8026b2..f36e609cbd7a 100644
+--- a/profiles/audio/transport.c
++++ b/profiles/audio/transport.c
+@@ -281,9 +281,26 @@ static void media_owner_free(struct media_owner *owner)
+ 	g_free(owner);
  }
  
--static int transport_send(struct transport *transport, int fd)
-+#define NSEC_USEC(_t) (_t / 1000L)
-+#define SEC_USEC(_t)  (_t  * 1000000L)
-+#define TS_USEC(_ts)  (SEC_USEC((_ts)->tv_sec) + NSEC_USEC((_ts)->tv_nsec))
++static void linked_transport_remove_owner(void *data, void *user_data)
++{
++	struct bt_bap_stream *stream = data;
++	struct media_owner *owner = user_data;
++	struct media_transport *transport;
 +
-+static void send_wait(struct timespec *t_start, uint32_t us)
- {
-+	struct timespec t_now;
-+	struct timespec t_diff;
-+	int64_t delta_us;
-+
-+	/* Skip sleep at start */
-+	if (!us)
-+		return;
-+
-+	if (clock_gettime(CLOCK_MONOTONIC, &t_now) < 0) {
-+		bt_shell_printf("clock_gettime: %s (%d)", strerror(errno),
-+								errno);
++	transport = find_transport_by_bap_stream(stream);
++	if (!transport) {
++		error("Unable to find transport");
 +		return;
 +	}
 +
-+	t_diff.tv_sec = t_now.tv_sec - t_start->tv_sec;
-+	t_diff.tv_nsec = t_now.tv_nsec - t_start->tv_nsec;
-+
-+	delta_us = us - TS_USEC(&t_diff);
-+
-+	if (delta_us < 0) {
-+		bt_shell_printf("Send is behind: %zd us - skip sleep",
-+							delta_us);
-+		delta_us = 1000;
-+	}
-+
-+	usleep(delta_us);
-+
-+	if (clock_gettime(CLOCK_MONOTONIC, t_start) < 0)
-+		bt_shell_printf("clock_gettime: %s (%d)", strerror(errno),
-+								errno);
++	DBG("Transport %s Owner %s", transport->path, owner->name);
++	transport->owner = NULL;
 +}
 +
-+static int transport_send(struct transport *transport, int fd,
-+					struct bt_iso_qos *qos)
+ static void media_transport_remove_owner(struct media_transport *transport)
+ {
+ 	struct media_owner *owner = transport->owner;
++	struct bap_transport *bap = transport->data;
+ 
+ 	if (!transport->owner)
+ 		return;
+@@ -295,6 +312,9 @@ static void media_transport_remove_owner(struct media_transport *transport)
+ 		media_request_reply(owner->pending, EIO);
+ 
+ 	transport->owner = NULL;
++	if (bap->linked)
++		queue_foreach(bt_bap_stream_io_get_links(bap->stream),
++				linked_transport_remove_owner, owner);
+ 
+ 	if (owner->watch)
+ 		g_dbus_remove_watch(btd_get_dbus_connection(), owner->watch);
+@@ -452,11 +472,34 @@ static void media_owner_exit(DBusConnection *connection, void *user_data)
+ 	media_transport_remove_owner(owner->transport);
+ }
+ 
++static void linked_transport_set_owner(void *data, void *user_data)
 +{
-+	struct timespec t_start;
- 	uint8_t *buf;
-+	uint32_t num = 0;
++	struct bt_bap_stream *stream = data;
++	struct media_owner *owner = user_data;
++	struct media_transport *transport;
 +
-+	if (qos && clock_gettime(CLOCK_MONOTONIC, &t_start) < 0) {
-+		bt_shell_printf("clock_gettime: %s (%d)", strerror(errno),
-+								errno);
-+		return -errno;
++	transport = find_transport_by_bap_stream(stream);
++	if (!transport) {
++		error("Unable to find transport");
++		return;
 +	}
- 
- 	buf = malloc(transport->mtu[1]);
- 	if (!buf) {
-@@ -2991,6 +3038,10 @@ static int transport_send(struct transport *transport, int fd)
- 		return -ENOMEM;
- 	}
- 
-+	/* num of packets = latency (ms) / interval (us) */
-+	if (qos)
-+		num = (qos->out.latency * 1000 / qos->out.interval);
 +
- 	for (transport->seq = 0; ; transport->seq++) {
- 		ssize_t ret;
- 		int queued;
-@@ -3016,6 +3067,11 @@ static int transport_send(struct transport *transport, int fd)
- 		bt_shell_printf("[seq %d] send: %zd bytes "
- 				"(TIOCOUTQ %d bytes)\n",
- 				transport->seq, ret, queued);
++	DBG("Transport %s Owner %s", transport->path, owner->name);
++	transport->owner = owner;
++}
 +
-+		if (qos) {
-+			if (transport->seq && !((transport->seq + 1) % num))
-+				send_wait(&t_start, num * qos->out.interval);
-+		}
- 	}
- 
- 	free(buf);
-@@ -3026,6 +3082,8 @@ static void cmd_send_transport(int argc, char *argv[])
- 	GDBusProxy *proxy;
- 	struct transport *transport;
- 	int fd, err;
-+	struct bt_iso_qos qos;
-+	socklen_t len;
- 
- 	proxy = g_dbus_proxy_lookup(transports, NULL, argv[1],
- 					BLUEZ_MEDIA_TRANSPORT_INTERFACE);
-@@ -3049,7 +3107,14 @@ static void cmd_send_transport(int argc, char *argv[])
- 
- 	bt_shell_printf("Sending ...\n");
- 
--	err = transport_send(transport, fd);
-+	/* Read QoS if available */
-+	memset(&qos, 0, sizeof(qos));
-+	len = sizeof(qos);
-+	if (getsockopt(transport->sk, SOL_BLUETOOTH, BT_ISO_QOS, &qos,
-+							&len) < 0)
-+		err = transport_send(transport, fd, NULL);
-+	else
-+		err = transport_send(transport, fd, &qos);
- 
- 	close(fd);
- 
-diff --git a/tools/bluetooth-player.c b/tools/bluetooth-player.c
-index b6cdd161ee8c..eba104d09fdb 100644
---- a/tools/bluetooth-player.c
-+++ b/tools/bluetooth-player.c
-@@ -36,7 +36,6 @@
- #define PROMPT_ON	COLOR_BLUE "[bluetooth]" COLOR_OFF "# "
- #define PROMPT_OFF	"[bluetooth]# "
- 
--
- static DBusConnection *dbus_conn;
- 
- static void connect_handler(DBusConnection *connection, void *user_data)
+ static void media_transport_set_owner(struct media_transport *transport,
+ 					struct media_owner *owner)
+ {
++	struct bap_transport *bap = transport->data;
++
+ 	DBG("Transport %s Owner %s", transport->path, owner->name);
+ 	transport->owner = owner;
++
++	if (bap->linked)
++		queue_foreach(bt_bap_stream_io_get_links(bap->stream),
++				linked_transport_set_owner, owner);
++
+ 	owner->transport = transport;
+ 	owner->watch = g_dbus_add_disconnect_watch(btd_get_dbus_connection(),
+ 							owner->name,
 -- 
 2.37.2
 
