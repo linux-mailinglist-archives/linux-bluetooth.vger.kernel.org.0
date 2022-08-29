@@ -2,74 +2,151 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60CD75A558F
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Aug 2022 22:32:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A1025A5637
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Aug 2022 23:32:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230103AbiH2Ubk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 29 Aug 2022 16:31:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51014 "EHLO
+        id S229969AbiH2VcB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 29 Aug 2022 17:32:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230090AbiH2Ubi (ORCPT
+        with ESMTP id S229979AbiH2Vbe (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 29 Aug 2022 16:31:38 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C122A85FDB
-        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Aug 2022 13:31:36 -0700 (PDT)
-Received: from localhost.localdomain (67.227.121.78.rev.sfr.net [78.121.227.67])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: fdanis)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 2A4AE6601EFC
-        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Aug 2022 21:31:35 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1661805095;
-        bh=RV22VPkuxsue9tUo9epYMtrLQw3X95030umtA9KVT40=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=N8GRWxxVJ0IlHCPo4/sXc0oWYdmOGjIhu2CqQWYIxSYQOlmfA0upD0gs3TeDTxguE
-         BLw1ZYP3g9kWvpsXPvZJFYIH/BQMKh9jC6/l0MHz0C+Iz7yDwOuIr+7K4TrZ2a63x6
-         DUc8cri+wfxagywClO6c2vl6PPwFWhgTpjsZPTnIylsDhpJV9udD42w/mPrMVvfQCS
-         7xL17/PIteCFS+llzUw5BT4UyI7M/16O+2U1S1P7TQtwp7BICG6qlvtzM+0eSFduRf
-         QM09xP5WcT6cwSUqQQ9woI50LbgLJWSKTNmp4p8bjxx3NEnPASd5aM5hs1YaqsE6mG
-         EfH+gHxxwU1aw==
-From:   =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= 
-        <frederic.danis@collabora.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] doc: Add remote endpoint path to SelectProperties
-Date:   Mon, 29 Aug 2022 22:31:22 +0200
-Message-Id: <20220829203122.51343-3-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220829203122.51343-1-frederic.danis@collabora.com>
-References: <20220829203122.51343-1-frederic.danis@collabora.com>
+        Mon, 29 Aug 2022 17:31:34 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 753F0A00C9
+        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Aug 2022 14:30:32 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id s22so4588767qkj.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Aug 2022 14:30:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc;
+        bh=/jtuJblk8iVmvNgjRfNdddK8MkjmXSVZ0vXU+o1Pgl0=;
+        b=fTULlYPZfvLRYrUB4uuzrs/nD/Rdm53UqF/IYS1DjYypfTiyMx/5RMApcyRjpNSzF1
+         2PSoQKLJopCkEC6NYSoVApioA/PKj7YM6o2IQ30CmJ6xk6IWDGaMH/j0b5vzD6OOimnj
+         FqJm4Xqbz/kkzFpsoXvhW/5Txx+CKuYSO3V+3jakiuaCxXjNeW51CpQgCz9IWC7L7gCX
+         jPJZu/xLBHCpeExuBMBj6h8OEIRXaX9gY2g2unOEQTE0+2r/4TXU2225qG4hlhXK5rAt
+         T6+n758UAx2dbSrPtFm5n+LdunJnbYQFIMwMJZpvpAtMWfWQsmm2fa61CSVTujoG5nHz
+         2zDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc;
+        bh=/jtuJblk8iVmvNgjRfNdddK8MkjmXSVZ0vXU+o1Pgl0=;
+        b=tt1HasLSmGngLQBUTo7Fyys3trIf2Qt8QHA6wyHETjBPGNA4ROrPcORpnOldtOq8tT
+         PR3L/sZCVP9BwypLphdTSYQL9MNyaTtSmTDIqXDYKGHroePsSXB8fWyfckoJiG91EehM
+         udVunHs9qtpGyvCrKmswf5SlNtECgx9StiP5aFzWCkgTbVG0avFGbnsIUdPyVT2EnmMw
+         u55wuOdggByGkHJ7xBiPfeRK4u9EXxxx/ymf2xLkRgiR1hT9e9xGHEY87gwbk5OR/zyn
+         XOayLQzqJMWFKiegSvK7RP+9SU75V9Eph6rUntMWN4QaHzqUMKbIGC8NXVOCdrTLS7hH
+         8Ufg==
+X-Gm-Message-State: ACgBeo1dY9UpPCDb4cfZwM+WTh9udiRSCS2WKiNQvC8XW7+BW1acGcpc
+        9ADIXe7592HQ7fomU89V/IjkKqo+mak=
+X-Google-Smtp-Source: AA6agR4MMlQj3SPGU1COh/+zIUa4zQASlajgYELaKZbOx50BN45QZFGBnykUG2go+MLtt1PVofTU1A==
+X-Received: by 2002:a05:620a:4306:b0:6bc:5751:4b4c with SMTP id u6-20020a05620a430600b006bc57514b4cmr9787447qko.387.1661808583223;
+        Mon, 29 Aug 2022 14:29:43 -0700 (PDT)
+Received: from [172.17.0.2] ([20.114.250.100])
+        by smtp.gmail.com with ESMTPSA id v10-20020ac873ca000000b00342f960d26esm5737163qtp.15.2022.08.29.14.29.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Aug 2022 14:29:42 -0700 (PDT)
+Message-ID: <630d2fc6.c80a0220.2e29f.e9b4@mx.google.com>
+Date:   Mon, 29 Aug 2022 14:29:42 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8661280699505275238=="
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, frederic.danis@collabora.com
+Subject: RE: profiles: Add remote endpoint path to SelectProperties
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220829203122.51343-2-frederic.danis@collabora.com>
+References: <20220829203122.51343-2-frederic.danis@collabora.com>
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+--===============8661280699505275238==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=672169
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      2.95 seconds
+GitLint                       PASS      2.01 seconds
+Prep - Setup ELL              PASS      27.91 seconds
+Build - Prep                  PASS      0.84 seconds
+Build - Configure             PASS      8.96 seconds
+Build - Make                  PASS      1039.25 seconds
+Make Check                    PASS      11.03 seconds
+Make Check w/Valgrind         PASS      276.22 seconds
+Make Distcheck                PASS      238.53 seconds
+Build w/ext ELL - Configure   PASS      8.61 seconds
+Build w/ext ELL - Make        PASS      82.44 seconds
+Incremental Build w/ patches  PASS      201.30 seconds
+Scan Build                    WARNING   580.56 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script with rule in .checkpatch.conf
+Output:
+[BlueZ,1/2] profiles: Add remote endpoint path to SelectProperties
+WARNING:LONG_LINE: line length of 86 exceeds 80 columns
+#99: FILE: profiles/audio/media.c:921:
++	dbus_message_iter_append_basic(&iter, DBUS_TYPE_OBJECT_PATH, &remote_ep_path);
+
+/github/workspace/src/12958401.patch total: 0 errors, 1 warnings, 51 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/12958401.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: Scan Build - WARNING
+Desc: Run Scan Build with patches
+Output:
+*****************************************************************************
+The bugs reported by the scan-build may or may not be caused by your patches.
+Please check the list and fix the bugs if they are caused by your patch.
+*****************************************************************************
+profiles/audio/media.c:1453:6: warning: 8th function call argument is an uninitialized value
+        if (media_endpoint_create(adapter, sender, path, uuid, delay_reporting,
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+profiles/audio/media.c:2999:3: warning: Use of memory after it is freed
+                release_endpoint(adapter->endpoints->data);
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+profiles/audio/media.c:3002:3: warning: Use of memory after it is freed
+                media_player_destroy(adapter->players->data);
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3 warnings generated.
+
+
+
+
 ---
- doc/media-api.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/doc/media-api.txt b/doc/media-api.txt
-index 9cd211355..1866ecfcb 100644
---- a/doc/media-api.txt
-+++ b/doc/media-api.txt
-@@ -598,7 +598,7 @@ Methods		void SetConfiguration(object transport, dict properties)
- 			configuration since on success the configuration is
- 			send back as parameter of SetConfiguration.
- 
--		dict SelectProperties(dict properties)
-+		dict SelectProperties(object remote_endpoint, dict properties)
- 
- 			Select preferable properties from the supported
- 			properties. Refer to SetConfiguration for the list of
--- 
-2.25.1
 
+--===============8661280699505275238==--
