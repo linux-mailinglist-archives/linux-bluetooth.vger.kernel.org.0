@@ -2,56 +2,73 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C6775A558D
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Aug 2022 22:30:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 471865A5591
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Aug 2022 22:32:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229939AbiH2Uav (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 29 Aug 2022 16:30:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50114 "EHLO
+        id S229546AbiH2Ubm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 29 Aug 2022 16:31:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229620AbiH2Uau (ORCPT
+        with ESMTP id S230093AbiH2Ubi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 29 Aug 2022 16:30:50 -0400
-X-Greylist: delayed 519 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 29 Aug 2022 13:30:49 PDT
-Received: from twoot.bin.org.in (twoot.bin.org.in [5.9.7.142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931FB696D4
-        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Aug 2022 13:30:49 -0700 (PDT)
-Received: from [IPV6:2a02:8388:288f:6d80:7544:5e43:ff32:1f0b] (2a02-8388-288f-6d80-7544-5e43-ff32-1f0b.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:288f:6d80:7544:5e43:ff32:1f0b])
-        (Authenticated sender: flori@bin.org.in)
-        by twoot.bin.org.in (Postfix) with ESMTPSA id 8269FCC09B3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Aug 2022 22:22:07 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bin.org.in; s=2020;
-        t=1661804527;
-        h=from:from:reply-to:subject:date:date:message-id:message-id:to:to:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=IM8OcCd1J5H5NYYxqt8/UURDJnjX3/PpwHj5eTTFHqg=;
-        b=bJnMCL81ZwIFu/4sFgzUZIUVaDMZRFMxAl3qEyRLxissVGBVG+LUOIXAwhx+EKcwe5VSi9
-        lHvH3Ryd/B+yVJWgUNfIwb+SUYIk7Qfr/gJbiqekPwyNs4TExQJcIbrzTELvv1vae4MdhC
-        1Axe2yE3h7FltYou129ErZwcbQcPuegLz/UKWETNmKVPFj/wh6veU6ANQrbtZNSeQ3GfGx
-        4dyYdJjM/s7EvwjTmHCDvYR/In5TjVy24c/DuyTzD77YJ87gOr+zmHwjmXosmEkvNbH34o
-        O16sxYvpTydfjoI3p5x05mc1UZC5RVlYR19tcZZlGwbrEEn/J7aCexeZa3f4aQ==
-Message-ID: <addfa255-997e-fb0e-f189-5970ae818c43@bin.org.in>
-Date:   Mon, 29 Aug 2022 22:22:03 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
+        Mon, 29 Aug 2022 16:31:38 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C0B86065
+        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Aug 2022 13:31:36 -0700 (PDT)
+Received: from localhost.localdomain (67.227.121.78.rev.sfr.net [78.121.227.67])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: fdanis)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id A6F656601E7E
+        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Aug 2022 21:31:34 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1661805094;
+        bh=FCLXPsSEbdxOk2zsFrZT2cx3cwjO5dKGVrUSJK1BB7M=;
+        h=From:To:Subject:Date:From;
+        b=TqRP23bU038+yQjNaNlU5IFGpdW7ZUNtaVTHTX6peWV7EcY2ZvVx9CquYTGMjOZ1y
+         6zgowkbxUiYm/uPAgq55dXOPSOKYDxSrLT27srwgCxJ9wFm9+/pEKP590in/43skNa
+         sseJKk8+Q3YP1ze3aQEAaTJdzH2DmJ5WmRHKv5PkY4CGomNgg0XRiT5AWZGpR0Uxyg
+         GvnrD2M+5msmMCONbN3uApFlMjZO3+5r/HQeiV7jpXI+69QVmPRertLQMgzAQ643xL
+         Ymi9+ZfORxawPQentW3M1kurpMFL/GIhFcqc2BrKaGIRf3cyA9eAE606hnmb279Vsd
+         ZyAxevdH9AMgw==
+From:   =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= 
+        <frederic.danis@collabora.com>
 To:     linux-bluetooth@vger.kernel.org
-Content-Language: de-DE
-From:   Florian Leeber <flori@bin.org.in>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-        auth=pass smtp.auth=flori@bin.org.in smtp.mailfrom=flori@bin.org.in
-X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MISSING_SUBJECT,SPF_HELO_NONE,
-        SPF_PASS,TVD_SPACE_RATIO,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Subject: [PATCH BlueZ 0/2] profiles: Add remote endpoint path to SelectProperties
+Date:   Mon, 29 Aug 2022 22:31:20 +0200
+Message-Id: <20220829203122.51343-1-frederic.danis@collabora.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Subscribe
+The SelectProperties method is only called on the central (initiator) device.
+But there's no information related to the remote device for which is call is
+done.
+These commits allow the audio server to link this call methos to the
+appropriate remote endpoint.
+
+Frédéric Danis (2):
+  profiles: Add remote endpoint path to SelectProperties
+  doc: Add remote endpoint path to SelectProperties
+
+ doc/media-api.txt      | 2 +-
+ profiles/audio/bap.c   | 2 +-
+ profiles/audio/media.c | 3 +++
+ src/shared/bap.c       | 2 ++
+ src/shared/bap.h       | 2 ++
+ 5 files changed, 9 insertions(+), 2 deletions(-)
+
+-- 
+2.25.1
 
