@@ -2,84 +2,137 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A1975A6697
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Aug 2022 16:48:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD2BD5A67E8
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Aug 2022 18:08:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229985AbiH3OsB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 30 Aug 2022 10:48:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50254 "EHLO
+        id S230486AbiH3QIA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 30 Aug 2022 12:08:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229998AbiH3Or7 (ORCPT
+        with ESMTP id S230498AbiH3QH7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 30 Aug 2022 10:47:59 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76735BFC53
-        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 07:47:56 -0700 (PDT)
-Received: from localhost.localdomain (67.227.121.78.rev.sfr.net [78.121.227.67])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: fdanis)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 1B5D36601F01
-        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 15:47:55 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1661870875;
-        bh=6QLviVyQq0ni+/AJifpiFagFZmFAziOKtE9yGu4Jbzc=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=jDWhkY5vDLQ9eTrSHoUev6easnT5qFtiNmwhf1fWqdJQoOxBF7s+gv5dZiqzXdQfQ
-         UcJGNtCazvtTu6XwSWHH6LAAEKF3NUkVIB0M1HFqBx98UoKdq087dOzueEXIYMM6+D
-         Tn+RoakpvH7uQ7R/9fCGW0c2xU4uDKVyhJkrAXA72VObVfAaZb7ps48arOPVoUWqww
-         ZD5jbDq5FJs63T7VLl36M/LM/lsnu6sqdVxB+/y1Q44zY/zucEJ8ALBzNGaZeXXGon
-         /gs1898A2W04uy+M5OeDv5YEUTSZ8Ujp+e3WmG+C56KYEV/EH+FdCFJJiDQZzs9DlU
-         6sbfRKKfyipPA==
-From:   =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= 
-        <frederic.danis@collabora.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 3/3] profiles: Fix function definition style
-Date:   Tue, 30 Aug 2022 16:47:34 +0200
-Message-Id: <20220830144734.55263-4-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220830144734.55263-1-frederic.danis@collabora.com>
-References: <20220830144734.55263-1-frederic.danis@collabora.com>
+        Tue, 30 Aug 2022 12:07:59 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4363F2CDC4
+        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 09:07:55 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id h78so9603638iof.13
+        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 09:07:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc;
+        bh=mcwbPi/6YwNcLvV6Y6P2ec52wJB4px0mAfFOPuyzAxI=;
+        b=PYJ/kfnQl8El8OnS+jjOmmOYr0BDMFmqR2HnvWtAeyfDs1gFh02L0zZnMoiHIjnSXO
+         2Z0YoI30v1mg5tXu6QVw2TSVrUuP8PnMlZ2MY62OZ9tRFLRJDEEUKIST1qtaNx38beER
+         UM2gM6igk5XK+1icZQOUDB0+890kXg7ReRSj+jIyWKRXwpJAJ/hygNKtwWeAin0ubhDM
+         ds8+HDRsoCHHiRN+V70h67QmReDapajfTMEA2fZkpwoLDdKO5fsTDng3/8behvw/NpYp
+         1hjY+PJSpsJGiBG0uCV+zqbz/2NQu5h8FqyvmNq34nD8RdFI4p5oxrpFZd/bmT40HuCX
+         gPtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc;
+        bh=mcwbPi/6YwNcLvV6Y6P2ec52wJB4px0mAfFOPuyzAxI=;
+        b=0rwbHJhXzzCgg/G2hCCNCDiyf+vbv3Bn/VUHAg+Y2ZY5H1I6omgtbH7BnM10fX5/1c
+         jI+ycGpphfIEaRKxMtOCqa2RB+YNcNlEWxe/HvBnqrJR5+CjpWHi/BmRPi6qM+qJl2mQ
+         CEyikrpXV/7jH5ezDGveaI8tjshKwq0R/g05QmKQKyEUkBFGNnCRo/V+kBSD3YVA11JA
+         7umzVWXFrohOkExhQmvYp2atS/Rxyjf9nwsowyzL1h2LrH7I/33HwbzmZsn557UmDHr3
+         klJ8/rJRIamsySJwLwizI8EIO0FQo2TOhmuo9tvs3tWd5uHTRK1TQfrVl454jmX4dZeH
+         Xwvw==
+X-Gm-Message-State: ACgBeo26IsB5/k89dLJQGlj0DdWiXH08+iMo3PReHhrlZxGhZWrLmQz3
+        g+F6N2qVDSBjl3T/rbCw3XGyf0EHelU=
+X-Google-Smtp-Source: AA6agR5qd5DZZg10ERx6Ha89O4W3dnHn2JeugyhIFJnILIuobccn0MaxK7ghD4ZaV7lUlip1+GOKbA==
+X-Received: by 2002:a05:6638:2686:b0:343:7299:2c8c with SMTP id o6-20020a056638268600b0034372992c8cmr13224963jat.198.1661875674403;
+        Tue, 30 Aug 2022 09:07:54 -0700 (PDT)
+Received: from [172.17.0.2] ([40.69.131.183])
+        by smtp.gmail.com with ESMTPSA id x10-20020a026f0a000000b00349bd096a82sm5715711jab.109.2022.08.30.09.07.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Aug 2022 09:07:53 -0700 (PDT)
+Message-ID: <630e35d9.020a0220.8c3cf.63d7@mx.google.com>
+Date:   Tue, 30 Aug 2022 09:07:53 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2800893021266124795=="
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, frederic.danis@collabora.com
+Subject: RE: profiles: Add remote endpoint path to SelectProperties
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220830144734.55263-2-frederic.danis@collabora.com>
+References: <20220830144734.55263-2-frederic.danis@collabora.com>
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This was found by checkpatch in previous commit:
-WARNING:SPACING: Unnecessary space before function pointer arguments
-124: FILE: src/shared/bap.h:123:
-+	int (*select) (struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+--===============2800893021266124795==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Do the same for (*config) and (*clear) for consistence.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=672467
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      3.40 seconds
+GitLint                       FAIL      2.32 seconds
+Prep - Setup ELL              PASS      26.45 seconds
+Build - Prep                  PASS      0.68 seconds
+Build - Configure             PASS      8.09 seconds
+Build - Make                  PASS      735.40 seconds
+Make Check                    PASS      11.29 seconds
+Make Check w/Valgrind         PASS      286.38 seconds
+Make Distcheck                PASS      237.35 seconds
+Build w/ext ELL - Configure   PASS      8.26 seconds
+Build w/ext ELL - Make        PASS      82.60 seconds
+Incremental Build w/ patches  PASS      292.60 seconds
+Scan Build                    WARNING   516.29 seconds
+
+Details
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint with rule in .gitlint
+Output:
+[BlueZ,v2,3/3] profiles: Fix function definition style
+6: B3 Line contains hard tab characters (\t): "+	int (*select) (struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,"
+
+
+##############################
+Test: Scan Build - WARNING
+Desc: Run Scan Build with patches
+Output:
+*****************************************************************************
+The bugs reported by the scan-build may or may not be caused by your patches.
+Please check the list and fix the bugs if they are caused by your patch.
+*****************************************************************************
+profiles/audio/media.c:1459:6: warning: 8th function call argument is an uninitialized value
+        if (media_endpoint_create(adapter, sender, path, uuid, delay_reporting,
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+profiles/audio/media.c:3005:3: warning: Use of memory after it is freed
+                release_endpoint(adapter->endpoints->data);
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+profiles/audio/media.c:3008:3: warning: Use of memory after it is freed
+                media_player_destroy(adapter->players->data);
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3 warnings generated.
+
+
+
+
 ---
- src/shared/bap.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/src/shared/bap.h b/src/shared/bap.h
-index 93b00d771..b63b4b024 100644
---- a/src/shared/bap.h
-+++ b/src/shared/bap.h
-@@ -123,10 +123,10 @@ struct bt_bap_pac_ops {
- 	int (*select)(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
- 			struct bt_bap_pac_qos *qos,
- 			bt_bap_pac_select_t cb, void *cb_data, void *user_data);
--	int (*config) (struct bt_bap_stream *stream, struct iovec *cfg,
-+	int (*config)(struct bt_bap_stream *stream, struct iovec *cfg,
- 			struct bt_bap_qos *qos, bt_bap_pac_config_t cb,
- 			void *user_data);
--	void (*clear) (struct bt_bap_stream *stream, void *user_data);
-+	void (*clear)(struct bt_bap_stream *stream, void *user_data);
- };
- 
- bool bt_bap_pac_set_ops(struct bt_bap_pac *pac, struct bt_bap_pac_ops *ops,
--- 
-2.25.1
 
+--===============2800893021266124795==--
