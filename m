@@ -2,84 +2,83 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ADE55A6EB9
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Aug 2022 22:54:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8942A5A6F28
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Aug 2022 23:30:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231277AbiH3Uy1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 30 Aug 2022 16:54:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60620 "EHLO
+        id S231237AbiH3Va3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 30 Aug 2022 17:30:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231335AbiH3UyX (ORCPT
+        with ESMTP id S231511AbiH3VaX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 30 Aug 2022 16:54:23 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DF9F86731
-        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 13:54:22 -0700 (PDT)
-Received: from localhost.localdomain (67.227.121.78.rev.sfr.net [78.121.227.67])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        Tue, 30 Aug 2022 17:30:23 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 084EB54CAD
+        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 14:30:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: fdanis)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 11CE96601DDD
-        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 21:54:21 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1661892861;
-        bh=pNHwki0Xdbw+94ZZqN1z8E/ybCNnfvHFlO0jSAeX3NI=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=YAwyFUHSGsyo9HcXRSbUtzNfX9QoLIuK60OFWP7HBuAWBhWUXBleWkgEqrUn9SY/I
-         xIVMmJmU7YGKPnqUMQWzNKUM4465biemTShF6dMpHlZkZAVOmBSx+lwr+IKa79g1rk
-         yUDqDwHQDy2qBAmDK7BdvU+Lv6RYpFmptRwt5el2QYWii7ec5uSvH/V5ff1yllwZca
-         o3+lYB7qsMPjvyDx8dFCgxugEkfVFVfdzPIbEJ8YTvoavjwWA6Y6L2e8//RyjBTSek
-         /Rn4N/weXT4KTggyhx7T1y+vi5EultyIwA+c76dl3rFJsQ3dxv7iT8ZLkW7F8MbEZ6
-         car25Dt58j2FA==
-From:   =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= 
-        <frederic.danis@collabora.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 3/3] profiles: Fix function definition style
-Date:   Tue, 30 Aug 2022 22:54:11 +0200
-Message-Id: <20220830205411.68299-4-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220830205411.68299-1-frederic.danis@collabora.com>
-References: <20220830205411.68299-1-frederic.danis@collabora.com>
-MIME-Version: 1.0
+        by ams.source.kernel.org (Postfix) with ESMTPS id AD617B81E29
+        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 21:30:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5B93CC43141;
+        Tue, 30 Aug 2022 21:30:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661895019;
+        bh=NengFvu7NmpAS5r16wS4cNM8gds3RKFbavmzguoNEws=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=LuIz1III3ZF/tKX3d+K3JP6ig/sjBUneICf+I4Epgkm5tCz8FocG/rpAvq8Z73JB5
+         7Oz4sUJ8PwY3cp8ZH0cJ9X2oZsjsmeV8EQzOO8gei6WE5Xn/lLiEPM39pUUjDG6gR5
+         FqzT0yo3dteV8JifTGEStTJGRMALxLanCxKgMLNqiBBfsui/sJuEej1GNYdlU9LHAX
+         PVOSZSgYzEPLKgYOlVZXBE2CBwFYfieDDOUIK9t9I2oYGHhg5cSeEWI895Oc+zBRc0
+         wmnhhLBPGx67DAF0HH/NyA1M8zNyn9WKtsQrNULsXY1BOWsaZJwqXzGJWmbftYJFgP
+         QVyYxrR9Zewrg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2B986E924D9;
+        Tue, 30 Aug 2022 21:30:19 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH BlueZ 1/2] shell: Set empty argument if optarg is NULL
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <166189501917.8541.2918886148033361938.git-patchwork-notify@kernel.org>
+Date:   Tue, 30 Aug 2022 21:30:19 +0000
+References: <20220829213738.779598-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220829213738.779598-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This was found by checkpatch in previous commit:
-WARNING:SPACING: Unnecessary space before function pointer arguments
-124: FILE: src/shared/bap.h:123:
-+    int (*select) (struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+Hello:
 
-Do the same for (*config) and (*clear) for consistence.
----
- src/shared/bap.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-diff --git a/src/shared/bap.h b/src/shared/bap.h
-index 93b00d771..b63b4b024 100644
---- a/src/shared/bap.h
-+++ b/src/shared/bap.h
-@@ -123,10 +123,10 @@ struct bt_bap_pac_ops {
- 	int (*select)(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
- 			struct bt_bap_pac_qos *qos,
- 			bt_bap_pac_select_t cb, void *cb_data, void *user_data);
--	int (*config) (struct bt_bap_stream *stream, struct iovec *cfg,
-+	int (*config)(struct bt_bap_stream *stream, struct iovec *cfg,
- 			struct bt_bap_qos *qos, bt_bap_pac_config_t cb,
- 			void *user_data);
--	void (*clear) (struct bt_bap_stream *stream, void *user_data);
-+	void (*clear)(struct bt_bap_stream *stream, void *user_data);
- };
- 
- bool bt_bap_pac_set_ops(struct bt_bap_pac *pac, struct bt_bap_pac_ops *ops,
+On Mon, 29 Aug 2022 14:37:37 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> This sets enmpty string ("") when argument don't set any optarg so the
+> application can tell when an option was set or not.
+> ---
+>  src/shared/shell.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Here is the summary with links:
+  - [BlueZ,1/2] shell: Set empty argument if optarg is NULL
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=75f73f6d6264
+  - [BlueZ,2/2] client: Add -e/--endpoint option to auto register endpoints
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d297a5873d21
+
+You are awesome, thank you!
 -- 
-2.25.1
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
