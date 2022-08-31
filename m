@@ -2,96 +2,159 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 206E95A7650
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 31 Aug 2022 08:13:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2ADFE5A79FE
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 31 Aug 2022 11:20:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230096AbiHaGNG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 31 Aug 2022 02:13:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50990 "EHLO
+        id S231935AbiHaJUC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 31 Aug 2022 05:20:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiHaGNA (ORCPT
+        with ESMTP id S230108AbiHaJTg (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 31 Aug 2022 02:13:00 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA4DBBCC1F
-        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 23:12:59 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id u3-20020a4ab5c3000000b0044b125e5d9eso2350014ooo.12
-        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Aug 2022 23:12:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:to:from:reply-to:subject:mime-version:date
-         :message-id:from:to:cc;
-        bh=Qj2p8YrgXBK6a9h06fDoxUP9OHd1auAzlEwx1dlbG30=;
-        b=gzcco3BTueaFAWB5uBF1q9t5+5rDOltRRR2yq4pYqfkacOxgZikYHMbrOL292DhsHF
-         8cR/P0lxBFSf+HOb3kwgYjx6EDvIa+g8ves1fXed5d8RVskuR/5wE7GwGeO8UJ+5IFrE
-         rjPM7+eRMk9iuu/F6f9MBjg/qy3uBawfNffv0dW1NE6KpWVbqCcA1nI1Mcl6FdyubEf4
-         Y1/KCHPjOr4GIG637TynhhddgnLwkKF8JOuZ8jam631kmQh3Eu1KiAJinqQhNasa1EPR
-         LmqxqGvwQaubWq3iTPa76hC7ruDlSbuXA2Lbn79/wUKm/2T7Ua7wAnBEdUFo828wXYBo
-         Ff0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:to:from:reply-to:subject:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc;
-        bh=Qj2p8YrgXBK6a9h06fDoxUP9OHd1auAzlEwx1dlbG30=;
-        b=t4w4gITdkbMNeCFsn57fKJSNjeM4zknM8X+NY12ikLnEY9IQ1q+SHsXcZX9FzL1mae
-         KJQvrifEeWsTNwWD0rYW7md403PUNCL39wISpzXPI//iVIey1I5xzO7QG5hxz10A33aw
-         H5BZxbUnEfqtKgxlIfqSskyIRhGTWdIGD38r8alXn/CI74JoD7q7IxFTTTMcANqmdKJV
-         huFqSQfxI8UjLrEYXCySaH/uCKGWpFo2jWeVsC2agDJn3rUT6twNCMOhitSp4dUU6WQ8
-         YcT6IttF1STUSOY55if8YvcFZ8zJtzKLl69766Op6jGca4V4Ofw2JMJTjmz5YiReD1cs
-         GGDw==
-X-Gm-Message-State: ACgBeo0Fki2fVgpECn/1CK3Du3ynA0MenI///Uxm0X6+Gn9ufyE4Es/5
-        /G1CTKDwQx7JR2BTva6U+7cm4tz/kgQ=
-X-Google-Smtp-Source: AA6agR42y/xUSrLzXWM8hfp6qY1Vo19dC0f8re51faOsAsDb0jAEZFrLx43COvi7KYCi19dLQlOY0g==
-X-Received: by 2002:a4a:b6c8:0:b0:44b:4bfe:426d with SMTP id w8-20020a4ab6c8000000b0044b4bfe426dmr8390371ooo.12.1661926378652;
-        Tue, 30 Aug 2022 23:12:58 -0700 (PDT)
-Received: from [172.17.0.2] ([13.66.23.166])
-        by smtp.gmail.com with ESMTPSA id k8-20020a056820016800b0042859bebfebsm7895437ood.45.2022.08.30.23.12.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 23:12:58 -0700 (PDT)
-Message-ID: <630efbea.050a0220.1789a.52ac@mx.google.com>
-Date:   Tue, 30 Aug 2022 23:12:58 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============3934828119140359476=="
+        Wed, 31 Aug 2022 05:19:36 -0400
+Received: from relay12.mail.gandi.net (relay12.mail.gandi.net [IPv6:2001:4b98:dc4:8::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88B2ECACB7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Aug 2022 02:19:14 -0700 (PDT)
+Received: (Authenticated sender: hadess@hadess.net)
+        by mail.gandi.net (Postfix) with ESMTPSA id A2BCD200012
+        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Aug 2022 09:19:12 +0000 (UTC)
+From:   Bastien Nocera <hadess@hadess.net>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v4 1/6] adapter: Keep track of whether the adapter is rfkill'ed
+Date:   Wed, 31 Aug 2022 11:19:07 +0200
+Message-Id: <20220831091912.47894-1-hadess@hadess.net>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Subject: RE: Bluetooth: btusb: Add a new PID/VID 13d3/3583 for MT7921
-Reply-To: linux-bluetooth@vger.kernel.org
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, sean.wang@mediatek.com
-In-Reply-To: <cec2ae0d86aa633f3a6666e3812c1c05ab9a0d03.1661921257.git.objelf@gmail.com>
-References: <cec2ae0d86aa633f3a6666e3812c1c05ab9a0d03.1661921257.git.objelf@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============3934828119140359476==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is an automated email and please do not reply to this email.
-
-Dear Submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
-
------ Output -----
-error: patch failed: drivers/bluetooth/btusb.c:484
-error: drivers/bluetooth/btusb.c: patch does not apply
-hint: Use 'git am --show-current-patch' to see the failed patch
-
-
-Please resolve the issue and submit the patches again.
-
-
+Instead of only replying to D-Bus requests with an error saying the
+adapter is blocked, keep track of the rfkill being enabled or disabled
+so we know the rfkill state of the adapter at all times.
 ---
-Regards,
-Linux Bluetooth
+ src/adapter.c | 25 +++++++++++++++++++++++--
+ src/adapter.h |  1 +
+ src/rfkill.c  |  8 ++++++--
+ 3 files changed, 30 insertions(+), 4 deletions(-)
 
+diff --git a/src/adapter.c b/src/adapter.c
+index b453e86a0..641db67f9 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -250,6 +250,7 @@ struct btd_adapter {
+ 	uint32_t dev_class;		/* controller class of device */
+ 	char *name;			/* controller device name */
+ 	char *short_name;		/* controller short name */
++	bool blocked;			/* whether rfkill is enabled */
+ 	uint32_t supported_settings;	/* controller supported settings */
+ 	uint32_t pending_settings;	/* pending controller settings */
+ 	uint32_t current_settings;	/* current controller settings */
+@@ -654,6 +655,8 @@ static void set_mode_complete(uint8_t status, uint16_t length,
+ 	if (status != MGMT_STATUS_SUCCESS) {
+ 		btd_error(adapter->dev_id, "Failed to set mode: %s (0x%02x)",
+ 						mgmt_errstr(status), status);
++		if (status == MGMT_STATUS_RFKILLED)
++			adapter->blocked = true;
+ 		adapter->pending_settings &= ~data->setting;
+ 		return;
+ 	}
+@@ -2914,10 +2917,12 @@ static void property_set_mode_complete(uint8_t status, uint16_t length,
+ 		btd_error(adapter->dev_id, "Failed to set mode: %s (0x%02x)",
+ 						mgmt_errstr(status), status);
+ 
+-		if (status == MGMT_STATUS_RFKILLED)
++		if (status == MGMT_STATUS_RFKILLED) {
+ 			dbus_err = ERROR_INTERFACE ".Blocked";
+-		else
++			adapter->blocked = true;
++		} else {
+ 			dbus_err = ERROR_INTERFACE ".Failed";
++		}
+ 
+ 		g_dbus_pending_property_error(data->id, dbus_err,
+ 							mgmt_errstr(status));
+@@ -7548,6 +7553,12 @@ int btd_cancel_authorization(guint id)
+ 
+ int btd_adapter_restore_powered(struct btd_adapter *adapter)
+ {
++	if (adapter->blocked) {
++		adapter->blocked = false;
++	        g_dbus_emit_property_changed(dbus_conn, adapter->path,
++					ADAPTER_INTERFACE, "PowerState");
++	}
++
+ 	if (btd_adapter_get_powered(adapter))
+ 		return 0;
+ 
+@@ -7556,6 +7567,16 @@ int btd_adapter_restore_powered(struct btd_adapter *adapter)
+ 	return 0;
+ }
+ 
++int btd_adapter_set_blocked(struct btd_adapter *adapter)
++{
++	if (!adapter->blocked) {
++		adapter->blocked = true;
++	        g_dbus_emit_property_changed(dbus_conn, adapter->path,
++					ADAPTER_INTERFACE, "PowerState");
++	}
++	return 0;
++}
++
+ void btd_adapter_register_pin_cb(struct btd_adapter *adapter,
+ 							btd_adapter_pin_cb_t cb)
+ {
+diff --git a/src/adapter.h b/src/adapter.h
+index b09044edd..332c0b239 100644
+--- a/src/adapter.h
++++ b/src/adapter.h
+@@ -143,6 +143,7 @@ guint btd_request_authorization_cable_configured(const bdaddr_t *src, const bdad
+ int btd_cancel_authorization(guint id);
+ 
+ int btd_adapter_restore_powered(struct btd_adapter *adapter);
++int btd_adapter_set_blocked(struct btd_adapter *adapter);
+ 
+ typedef ssize_t (*btd_adapter_pin_cb_t) (struct btd_adapter *adapter,
+ 			struct btd_device *dev, char *out, bool *display,
+diff --git a/src/rfkill.c b/src/rfkill.c
+index 2099c5ac5..93f8e0e12 100644
+--- a/src/rfkill.c
++++ b/src/rfkill.c
+@@ -61,6 +61,7 @@ static gboolean rfkill_event(GIOChannel *chan,
+ 	struct rfkill_event event = { 0 };
+ 	struct btd_adapter *adapter;
+ 	char sysname[PATH_MAX];
++	bool blocked = false;
+ 	ssize_t len;
+ 	int fd, id;
+ 
+@@ -84,7 +85,7 @@ static gboolean rfkill_event(GIOChannel *chan,
+ 						event.soft, event.hard);
+ 
+ 	if (event.soft || event.hard)
+-		return TRUE;
++		blocked = true;
+ 
+ 	if (event.op != RFKILL_OP_CHANGE)
+ 		return TRUE;
+@@ -122,7 +123,10 @@ static gboolean rfkill_event(GIOChannel *chan,
+ 
+ 	DBG("RFKILL unblock for hci%d", id);
+ 
+-	btd_adapter_restore_powered(adapter);
++	if (blocked)
++		btd_adapter_set_blocked(adapter);
++	else
++		btd_adapter_restore_powered(adapter);
+ 
+ 	return TRUE;
+ }
+-- 
+2.37.2
 
---===============3934828119140359476==--
