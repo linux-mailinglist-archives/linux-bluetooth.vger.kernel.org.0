@@ -2,51 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0349D5A8958
+	by mail.lfdr.de (Postfix) with ESMTP id EB72E5A895A
 	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Sep 2022 01:10:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231768AbiHaXK0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 31 Aug 2022 19:10:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58610 "EHLO
+        id S231873AbiHaXKa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 31 Aug 2022 19:10:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbiHaXKX (ORCPT
+        with ESMTP id S229813AbiHaXKY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 31 Aug 2022 19:10:23 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E55305F233
-        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Aug 2022 16:10:20 -0700 (PDT)
+        Wed, 31 Aug 2022 19:10:24 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 830D162A8A;
+        Wed, 31 Aug 2022 16:10:20 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id DB2C8CE23BB
-        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Aug 2022 23:10:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7B829C433C1;
+        by sin.source.kernel.org (Postfix) with ESMTPS id 1646DCE23BC;
+        Wed, 31 Aug 2022 23:10:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 74F0AC433B5;
         Wed, 31 Aug 2022 23:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1661987416;
-        bh=fWYBxWCpwUiyq/G5tc3NPHP3fP9pA5EbNRlgkLaj1/0=;
+        bh=9yzqYWQSSPYBUv51fZxscF1h4YaLJd1bhTqD33vncvg=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=NYja+RDAK4/gnWiX9F1cP65DJFtCuTEPphXmtGjpukQhZ7OLp1rCQaUZTOCeLsp/+
-         yRlp1551viE7mOZaYX9/jb8Oei1+PWNPtGyMMIh0rzGQdkn2KKiJsFjWDzMKWIZIN8
-         5qXkizc9XlJOxm1olrmdw+dJQja7MbOgOM8N7d8L+4xH0NZAvB2B2gNb1FBXrktIXk
-         NNjA5Go/TPjrfcSPMZpIcWEWWG81zUriK9jRxC+5JO5sxSl9gIypFBNsKT+MOdCJKT
-         hrwNUl/DGU/QbE2e7Z+x9Ri90S/lyF+v/GntM1juJUEOpDxYuSNdkhjBvgiBWVYkeA
-         GstWAprwN1x0A==
+        b=AMhCa83IyPT4SIazgmZF8spUCKEw3KytoEycaQpSmtrJp21twvIhHLfzI54kvWqKf
+         d+bk7SLeg4oaoAsgJxB1rPx714Z1/Kg5wxsb8PJLwPpMa/2pRLNbzKcvf4a/2YTkGS
+         VA9hzQUc/EEbcvNiPMfB6aGMMTbBGEyXEa1Jw8m0NYU9UBoZm4kAaiNaFico4fS/LW
+         WDxg804k7tecVK/zxWLsqilkCv/KbTjTXQ/zxb4v1RwsnHbnFq+OD681fOmtekdLav
+         VSKHW/EnUgsa2BxD07nKIM9Ei5qcw61eS3QxfMuD7c0BwM0UDqMblfC6kvtDrxIB4m
+         NEQUgfMyS4DNg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 59C40E924DA;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4F06AE924DC;
         Wed, 31 Aug 2022 23:10:16 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/2] New BT devices from the Realtek rtw89 family
+Subject: Re: [PATCH 1/1] Bluetooth: btusb: Add Realtek RTL8852C support ID
+ 0x13D3:0x3592
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166198741636.19908.7617765130882172394.git-patchwork-notify@kernel.org>
+Message-Id: <166198741631.19908.12220351710969580519.git-patchwork-notify@kernel.org>
 Date:   Wed, 31 Aug 2022 23:10:16 +0000
-References: <20220816213523.5207-1-Larry.Finger@lwfinger.net>
-In-Reply-To: <20220816213523.5207-1-Larry.Finger@lwfinger.net>
-To:     Larry Finger <Larry.Finger@lwfinger.net>
-Cc:     marcel@holtmann.org, gustavo@padovan.org, johan.hedberg@gmail.com,
-        linux-bluetooth@vger.kernel.org, hildawu@realtek.com
+References: <20220829114507.1024-1-max.chou@realtek.com>
+In-Reply-To: <20220829114507.1024-1-max.chou@realtek.com>
+To:     Max Chou <max.chou@realtek.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        alex_lu@realsil.com.cn, hildawu@realtek.com, karenhsu@realtek.com,
+        kidman@realtek.com
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -59,24 +62,22 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluetooth-next.git (master)
+This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 16 Aug 2022 16:35:21 -0500 you wrote:
-> One new BT device for the RTW8852AE and two new devices for the RTW8852BE
-> have been reported through GitHub repos that I maintain to help users
-> with new devices get wifi and Bluetooth as soon as possible.
+On Mon, 29 Aug 2022 19:45:07 +0800 you wrote:
+> From: Max Chou <max.chou@realtek.com>
 > 
-> Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
+> Add the support ID(0x13D3, 0x3592) to usb_device_id table for
+> Realtek RTL8852C.
 > 
+> The device info from /sys/kernel/debug/usb/devices as below.
 > 
 > [...]
 
 Here is the summary with links:
-  - [1/2] Bluetooth: btusb: Add BT device 0cb8:c549 from RTW8852AE to tables
-    https://git.kernel.org/bluetooth/bluetooth-next/c/a0476f6a2cac
-  - [2/2] Bluetooth: btusb: Add BT devices 0bda:4853 and 0bda:887b from RTW8852BE to tables
-    (no matching commit)
+  - [1/1] Bluetooth: btusb: Add Realtek RTL8852C support ID 0x13D3:0x3592
+    https://git.kernel.org/bluetooth/bluetooth-next/c/c4ba5800217b
 
 You are awesome, thank you!
 -- 
