@@ -2,52 +2,51 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8ABD5A8955
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Sep 2022 01:10:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77B835A8959
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Sep 2022 01:10:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229711AbiHaXKT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 31 Aug 2022 19:10:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58242 "EHLO
+        id S229638AbiHaXK2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 31 Aug 2022 19:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbiHaXKS (ORCPT
+        with ESMTP id S229572AbiHaXKX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 31 Aug 2022 19:10:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8590A4F195;
-        Wed, 31 Aug 2022 16:10:17 -0700 (PDT)
+        Wed, 31 Aug 2022 19:10:23 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DCA362AAA
+        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Aug 2022 16:10:21 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0CF1561BF7;
+        by sin.source.kernel.org (Postfix) with ESMTPS id 78007CE2370
+        for <linux-bluetooth@vger.kernel.org>; Wed, 31 Aug 2022 23:10:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2029AC4347C;
         Wed, 31 Aug 2022 23:10:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5E02EC433D7;
-        Wed, 31 Aug 2022 23:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661987416;
-        bh=f3qOYIe1QSt67LuPHFAD+HBeB9IZ+ctIbxbt2beu2tQ=;
+        s=k20201202; t=1661987417;
+        bh=qt9EKkWzjlE7B/sj8RlZgcFjcgy4FV6lAZUoaOh+xZY=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=TGXxfSVTvBclj1I5dBxzfDEHnw8aiVZTp58g0GYg19jEMXORAxf6cyxuYDu0erJMI
-         sHP866M8Sew/vyUh6o9jNAiC4TS2DzCoFjRLKVntjpTamrvVTqm8au6xDBve6C+l2Q
-         nuJkv7Ipvnqihu8ZGlWLIXWuG/rGCtAs7PK94GQ1J9nBDhIouHeb2NCohrDZtKRLsS
-         E4xVv2yYKcNhjtEPO4JGKidc1j6RmlkITc+LlekzCo+Vf+pVEUlcy8qB/kHoLZxxeM
-         ph+mojQT0CL19z5rH0zhe+VkjhxHknUtCyYPl51F4+Atpx94/bPASDvBJkoRvDlWGw
-         ZZL4lASLrmmmw==
+        b=g7d7rRO2tSaKRynK+P3EP4UOMo9Qx3UOIqCC+sXnz2Id3tZOKpsziHiQIc7//D0wr
+         TCR8SXkF+DvQYrv3RAppsSLkkkGM2UbXrGYAIipp16oIb8GFNbdRxFfiJhvOvMinHj
+         zlb+sOqGYY7SDrRBt/piDKmEDVLvp9rVjwyd6JteMfajvteKBfxvoPNwjgMTwFrPkg
+         9Zuu5HGIop/3c84aytA1K3EyQ6ON9Xef1TNPKqm0i+dMJw1+1DRy494TVRuicC67Yr
+         PX1N9lgNo9W3q11gHbI9Php25YD3eHQqEE8Nr9Q6vo/YQK1xjXTfDAYmC8DxXD4Jc9
+         HfEF6TvKVjbrQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 437D4C4166F;
-        Wed, 31 Aug 2022 23:10:16 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0D73AE924D6;
+        Wed, 31 Aug 2022 23:10:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/2] Bluetooth: btusb: RTL8761BUV consistent naming
+Subject: Re: [PATCH BlueZ] media: Fix registering PAC endpoints if ISO socket are
+ not supported
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166198741627.19908.15124677919927831058.git-patchwork-notify@kernel.org>
-Date:   Wed, 31 Aug 2022 23:10:16 +0000
-References: <20220825224208.343700-1-labuwx@balfug.com>
-In-Reply-To: <20220825224208.343700-1-labuwx@balfug.com>
-To:     Szabolcs Sipos <labuwx@balfug.com>
-Cc:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-kernel@vger.kernel.org
+Message-Id: <166198741705.19908.11574360179107012733.git-patchwork-notify@kernel.org>
+Date:   Wed, 31 Aug 2022 23:10:17 +0000
+References: <20220830215444.1141653-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220830215444.1141653-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -60,24 +59,21 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluetooth-next.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Fri, 26 Aug 2022 00:42:07 +0200 you wrote:
-> Based on photos available from the FCC, all currently supported RTL8761B
-> series USB dongles have the same chip: RTL8761BUV.
+On Tue, 30 Aug 2022 14:54:44 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> rtl8761bu is often used to refer to this chip.
-> rtl8761b sometimes refers to this chip, and other times to its
-> UART variant (RTL8761BTV).
-> 
-> [...]
+> If adapter don't support ISO sockets the PAC UUIDs shall not be allowed
+> to be registered as they depend on ISO sockets to work properly.
+> ---
+>  profiles/audio/media.c | 15 +++++++++++----
+>  1 file changed, 11 insertions(+), 4 deletions(-)
 
 Here is the summary with links:
-  - [1/2] Bluetooth: btusb: RTL8761BUV consistent naming
-    https://git.kernel.org/bluetooth/bluetooth-next/c/d8daa3991652
-  - [2/2] Bluetooth: btusb: Add RTL8761BUV device (Edimax BT-8500)
-    https://git.kernel.org/bluetooth/bluetooth-next/c/c7577014b74c
+  - [BlueZ] media: Fix registering PAC endpoints if ISO socket are not supported
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a84aa0e6e5e7
 
 You are awesome, thank you!
 -- 
