@@ -2,135 +2,91 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A62B35A9EE5
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Sep 2022 20:26:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DC885A9EE1
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Sep 2022 20:25:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232372AbiIASZ7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 1 Sep 2022 14:25:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56500 "EHLO
+        id S231589AbiIASZr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 1 Sep 2022 14:25:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233560AbiIASZz (ORCPT
+        with ESMTP id S229514AbiIASZq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 1 Sep 2022 14:25:55 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98A014CA05
-        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Sep 2022 11:25:54 -0700 (PDT)
+        Thu, 1 Sep 2022 14:25:46 -0400
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 779F03AE5F
+        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Sep 2022 11:25:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1662056754; x=1693592754;
-  h=date:from:to:cc:subject:message-id:mime-version:
+  t=1662056745; x=1693592745;
+  h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
-  bh=lfsA6EawqzF8wRj+yiDcO0l2mipwQx/TgWlUG9qnpGU=;
-  b=hKbMbUrIM6vTYc3t/jLlZAwbNc9InsDsUiCcmupVEWC5cz+CPNeLle5w
-   cVwa3dqsO4StXl5quR3Yq8qtkcrTzU5vtgQt1xhhzQqVvlXFGUrwgTH5Q
-   Cqn/7nUneZd47HBxaEA3xR+whASjox1cZqmukG946IWzi1McgmxjYbFkm
-   gLstQXA1NW7P5AUdtXGmNEUqa7DsMopumPT1mIx5XG2ap4r51cgjMZTFe
-   e3RajPIbpIRvOXLo73eDEHJijIwGGbpnq2RF+DkomQv/Dpz3i2EqNvvWX
-   q1+HmuFvKmE0kArOILJ18d8LqSCcXYH9XfFyE3byrr3ZOZt1xh/Xfef5L
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10457"; a="278811841"
+  bh=/Gd5OHkFpGgmPftdR/J34+T4MyzeM4uQWhHflynTUko=;
+  b=KrI+G8oAlKnhEW9pWLSq1tplenoruxAnFK2I9G4a+XJh4HCc/5pNppDP
+   jTe+6BFRFuKimXvSJPZS7YiodQHf3NW9sA0ETk5nZyAZiaGsL1QZw2tJO
+   W4RGrQYhSqZrkgb+jd4qm1UQHZ162mLIehcKIaE7lpCB3/lnDpKQrPxe8
+   Gt5nP89eHfXE2RmumsSIHf8sj3BWu44QlCfV7A6ldCx2cL/CFHrih11eK
+   rAC4eVbeB0gTvSchdDi49VecN9j9SHGsF3Z+mkCYutSe4gLityNjUydSm
+   +9Any8w5akASP/RO1UYa4ccdOZY6NPYxWJ21WGCcukHz4G2mvNi7Q0uGu
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10457"; a="295803457"
 X-IronPort-AV: E=Sophos;i="5.93,281,1654585200"; 
-   d="scan'208";a="278811841"
+   d="scan'208";a="295803457"
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2022 11:25:52 -0700
-X-ExtLoop1: 1
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2022 11:25:45 -0700
 X-IronPort-AV: E=Sophos;i="5.93,281,1654585200"; 
-   d="scan'208";a="940962461"
-Received: from lkp-server02.sh.intel.com (HELO b138c9e8658c) ([10.239.97.151])
-  by fmsmga005.fm.intel.com with ESMTP; 01 Sep 2022 11:25:51 -0700
-Received: from kbuild by b138c9e8658c with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oTosw-0000d1-1A;
-        Thu, 01 Sep 2022 18:25:50 +0000
-Date:   Fri, 02 Sep 2022 02:25:17 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- 177978b2942624bb1dd826a892ab4a6a400f5715
-Message-ID: <6310f90d.aUrSOvdmoz50T5T/%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+   d="scan'208";a="940962376"
+Received: from ghonawax-mobl.amr.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.212.58.197])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2022 11:25:45 -0700
+From:   Brian Gix <brian.gix@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     marcel@holtmann.org, luiz.dentz@gmail.com, brian.gix@intel.com
+Subject: [PATCH v6 0/2] Add Mesh functionality to net/bluetooth
+Date:   Thu,  1 Sep 2022 11:25:25 -0700
+Message-Id: <20220901182528.13487-1-brian.gix@intel.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: 177978b2942624bb1dd826a892ab4a6a400f5715  Bluetooth: btusb: mediatek: fix WMT failure during runtime suspend
+Housekeeping and implementation
 
-elapsed time: 1128m
+v2: Add checking for Packet Ownership when querying Tx queue state
+    Add cleanup of Tx queue when MGMT socket closes
 
-configs tested: 53
-configs skipped: 2
+v3: Fix CI complaints
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+v4: More indent clean-ups and proper var types
 
-gcc tested configs:
-um                             i386_defconfig
-um                           x86_64_defconfig
-arc                  randconfig-r043-20220831
-s390                 randconfig-r044-20220831
-riscv                randconfig-r042-20220831
-x86_64                              defconfig
-arc                              allyesconfig
-alpha                            allyesconfig
-powerpc                           allnoconfig
-powerpc                          allmodconfig
-x86_64                               rhel-8.3
-mips                             allyesconfig
-m68k                             allmodconfig
-x86_64                        randconfig-a013
-m68k                             allyesconfig
-x86_64                        randconfig-a011
-x86_64                           allyesconfig
-sh                               allmodconfig
-x86_64                        randconfig-a015
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-i386                          randconfig-a014
-x86_64                        randconfig-a006
-i386                          randconfig-a001
-i386                          randconfig-a003
-i386                          randconfig-a012
-i386                          randconfig-a016
-i386                                defconfig
-i386                          randconfig-a005
-i386                             allyesconfig
-x86_64                          rhel-8.3-func
-x86_64                         rhel-8.3-kunit
-x86_64                           rhel-8.3-kvm
-x86_64                    rhel-8.3-kselftests
-x86_64                           rhel-8.3-syz
-arm                                 defconfig
-arm                              allyesconfig
-arm64                            allyesconfig
-ia64                             allmodconfig
+v5: Conform to the ADV Instance mechanism, and make fully compatible
+    with Extended Advertising mechanism.
 
-clang tested configs:
-hexagon              randconfig-r045-20220831
-hexagon              randconfig-r041-20220831
-x86_64                        randconfig-a016
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
-x86_64                        randconfig-a001
-x86_64                        randconfig-a003
-i386                          randconfig-a013
-i386                          randconfig-a011
-i386                          randconfig-a002
-x86_64                        randconfig-a005
-i386                          randconfig-a015
-i386                          randconfig-a004
-i386                          randconfig-a006
+v6: Paired with BlueZ user space unit tests (tools/mesh-tester)
+
+Brian Gix (2):
+  Bluetooth: Implement support for Mesh
+  Bluetooth: Add experimental wrapper for MGMT based mesh
+
+ include/net/bluetooth/bluetooth.h |   1 +
+ include/net/bluetooth/hci.h       |   4 +
+ include/net/bluetooth/hci_core.h  |  16 +-
+ include/net/bluetooth/mgmt.h      |  52 +++
+ net/bluetooth/hci_core.c          |  13 +-
+ net/bluetooth/hci_event.c         |  61 ++--
+ net/bluetooth/hci_sock.c          |   1 +
+ net/bluetooth/hci_sync.c          |  87 ++++-
+ net/bluetooth/mgmt.c              | 589 +++++++++++++++++++++++++++++-
+ net/bluetooth/mgmt_util.c         |  74 ++++
+ net/bluetooth/mgmt_util.h         |  18 +
+ 11 files changed, 864 insertions(+), 52 deletions(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.37.2
+
