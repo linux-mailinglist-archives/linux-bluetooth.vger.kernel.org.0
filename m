@@ -2,86 +2,114 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03E6B5B0616
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Sep 2022 16:06:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72C475B06EA
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Sep 2022 16:33:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229788AbiIGOG0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 7 Sep 2022 10:06:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58972 "EHLO
+        id S229611AbiIGOdT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 7 Sep 2022 10:33:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229700AbiIGOGZ (ORCPT
+        with ESMTP id S229829AbiIGOdA (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 7 Sep 2022 10:06:25 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C42B799248
-        for <linux-bluetooth@vger.kernel.org>; Wed,  7 Sep 2022 07:06:23 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id u9so30667666ejy.5
-        for <linux-bluetooth@vger.kernel.org>; Wed, 07 Sep 2022 07:06:23 -0700 (PDT)
+        Wed, 7 Sep 2022 10:33:00 -0400
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D148B3B30
+        for <linux-bluetooth@vger.kernel.org>; Wed,  7 Sep 2022 07:32:27 -0700 (PDT)
+Received: by mail-ed1-x543.google.com with SMTP id b16so20033413edd.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 07 Sep 2022 07:32:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date;
-        bh=5N+aMihLorZXBHcklDfHgYNT/W4ZQvt0cLc1vwY1KVE=;
-        b=ILSSmh5FDSf4xUHjmhsAIvjC+rUrB/c3J453eOFtdx/AkVWmyeCDy41BW7cU0zkndG
-         n37qh7wJtDWKKAtKpqlJKaphY2Lczm6aYOOXsBRXa5rF+Xi4bTFkX95eRqTrjAlK/ySc
-         5fxefAXcgJGtofvLST3H5hVqrDM59a3yGoijI1/vKxueZM237ag7pmbxTIUQ3+YG3ONX
-         0GIuxeYNynb7kf9Tjm9e6BKJqjD1nlujdD7m4gsxvc8Levnuh/LHPi8mflADRmBQ5q+X
-         5pOyWDcBima30VU+IXCwT3vD3C8s4Sc6g3yfVqIHmJ/i+BVXgmUucbtVHLvP7H5+ayRm
-         soeA==
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date;
+        bh=UTPjlhWN0j/3cl0uibj9IdU3K9tIHCNTd74bAPWV+BQ=;
+        b=UtFlTSGHQz81OSpK49QGakNczTrN7BvVDcdecb2PlQLSH6U6g6YnfIOwEhF4HyopVw
+         xF3rEa1JazWxVmoA4IZ4APHTWslJfRg5yYhTgDCuueeGynL8ZQ8rlmQ1XFto97Lt71ZJ
+         j3Ra7mPDPEuM/14t68TI6JbC26x0Okvn0tFLgQTeFpImczwoq6TYczyXFG/k8mY/UwUL
+         n4rphtthc3JujA/DBbZnDH2NqlI3e1mX42kS7zoBsDbrZwgnwP4UWzhHEqiLlccbumw3
+         Wu+X+CCk1Fp6KNp6XYfEMT802FX63wwwnC1iqf8dYPeJE0BVyNRj/Y77DpMb+lFAEfsS
+         NjnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=5N+aMihLorZXBHcklDfHgYNT/W4ZQvt0cLc1vwY1KVE=;
-        b=GHkHlE/VMuQ0QbF8U/apPOvz/Dhki0BxFhvYcECKc+T+H5DjkZ4+CVR0UVJV2Db7z8
-         74VQyJliBvKWO+pxsCTmDMKXpVETCAPLoYszQ5Qoruj/Vqm26BwCphxueOlY11Ciljbb
-         owKkjtTjAT2MSDn9E7I0gaX4i8qkPJBwTkTN2F1vHcWJEsCUB4GLYWa5q6iR3Tv/eLzC
-         m56EOnhsM7KXzFjXtVHNkxUtGyBMEYKGkehJrqsO7O0lWKdx+BVohKL81s502kzgjRQs
-         N2FPp8u+wGAowdpnEjTasMSpQNVS4oONpNadFtYbeoMg7f46A4Dg2ALBg8DvOSRJwQFe
-         UcfA==
-X-Gm-Message-State: ACgBeo0HQUvEGgBlipTxvNcULGrZE0rqo8YckvL2illnGqG9EOBP8Src
-        C9R0pvLh9GtlX0YnuE7P22zzYCRa8aTrIIy97YE=
-X-Google-Smtp-Source: AA6agR7z79jAvOOoMvZpGvQocZ7RguNzumLksOIPxgHDFQj8byZf/NuM2vIU0/qzf9vuuPt73rRBhfXqJbHcmlbj8cs=
-X-Received: by 2002:a17:906:7621:b0:750:c4a3:8fcd with SMTP id
- c1-20020a170906762100b00750c4a38fcdmr2636607ejn.180.1662559582347; Wed, 07
- Sep 2022 07:06:22 -0700 (PDT)
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=UTPjlhWN0j/3cl0uibj9IdU3K9tIHCNTd74bAPWV+BQ=;
+        b=iJjWgcgIgDuXezUbfmyAiRN+fKBfM2x41U5vzBzM4XYHr3x2ZhoUqEWdg3snctwPJW
+         UbNtpCkrGoSRNZA66FtQ7jerumWO7MwdiQHCVbzhRDEa8I1vrT7nNG41ekMZSlR3KqKK
+         yGXHdV34Fgn0O78tq9jEF7p1VgccrONQo/ZOG2yR8Ste0rqg35MWxEFEo4flVt1Sm4AG
+         SGEMnETylfan8dnLEgsxVDcwB+iv/GanLOJXdaOfJU3t+rHwfm1BWCDFm68iO7UCE1Na
+         RfcSkqGG7MZTHPwXLGWWQKwKZ7DYZOAR+eBy0Zr1GQMTgmIIIYez/5L7eRgwscoWIHhe
+         9hkA==
+X-Gm-Message-State: ACgBeo0DIAtn8UbkwLD38ew+0EbiRFDwLU3PSYurfQlNK1ole53Y3NVc
+        e0OL9JcYJXU0ZSeHw4/VuN21i1kXyNkxazHrvMI=
+X-Google-Smtp-Source: AA6agR4u/dbCsJbsVZIBLL6h1UPerJ2TE45jgxUgoCjVrPyl8+wsl025ctgdSe/t/2vkl2wcEplmUnwM80u8Z9eZepA=
+X-Received: by 2002:a05:6402:51d1:b0:44b:ea34:6c0a with SMTP id
+ r17-20020a05640251d100b0044bea346c0amr3314952edd.369.1662561145430; Wed, 07
+ Sep 2022 07:32:25 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a05:6400:5593:0:0:0:0 with HTTP; Wed, 7 Sep 2022 07:06:21
- -0700 (PDT)
-Reply-To: jennifermbaya036@gmail.com
-From:   "Mrs.Jennifer Mbaya" <robinrampha409@gmail.com>
-Date:   Wed, 7 Sep 2022 15:06:21 +0100
-Message-ID: <CAOudsvdZB_1kK9xDSYYkY=UTNdg_BWe9=fxrg=wxrHSMZtE2qQ@mail.gmail.com>
-Subject: Edunsaaja
+Received: by 2002:a54:3fc4:0:0:0:0:0 with HTTP; Wed, 7 Sep 2022 07:32:24 -0700 (PDT)
+Reply-To: lumar.casey@outlook.com
+From:   LUMAR CASEY <miriankushrat@gmail.com>
+Date:   Wed, 7 Sep 2022 16:32:24 +0200
+Message-ID: <CAO4StN1OR4tXWWJAZ10p+-rJJ7qOsU8FxVS9cWv=PiegDVtnsA@mail.gmail.com>
+Subject: ATTENTION/PROPOSAL
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: **
+X-Spam-Status: Yes, score=6.8 required=5.0 tests=ADVANCE_FEE_4_NEW_MONEY,
+        BAYES_50,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM,UNDISC_MONEY,UPPERCASE_75_100 autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:543 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [miriankushrat[at]gmail.com]
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  0.0 UPPERCASE_75_100 message body is 75-100% uppercase
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  2.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  0.2 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+        *  0.0 ADVANCE_FEE_4_NEW_MONEY Advance Fee fraud and lots of money
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Edunsaaja
+ATTENTION
 
-Nimess=C3=A4si on palkinto Yhdistyneilt=C3=A4 Kansakunnilta ja Maailman
-terveysj=C3=A4rjest=C3=B6lt=C3=A4, joka on osa kansainv=C3=A4list=C3=A4 val=
-uuttarahastoa, johon
-s=C3=A4hk=C3=B6postisi, osoite ja raha on luovutettu meille siirtoa varten,
-vahvista yst=C3=A4v=C3=A4llisesti tietosi siirtoa varten.
-Meit=C3=A4 kehotettiin siirt=C3=A4m=C3=A4=C3=A4n kaikki vireill=C3=A4 oleva=
-t tapahtumat
-seuraavien kahden aikana, mutta jos olet vastaanottanut rahasi, j=C3=A4t=C3=
-=A4
-t=C3=A4m=C3=A4 viesti huomioimatta, jos et toimi heti.
-Tarvitsemme kiireellist=C3=A4 vastausta t=C3=A4h=C3=A4n viestiin, t=C3=A4m=
-=C3=A4 ei ole yksi
-niist=C3=A4 Internet-huijareista, se on pandemiaapu.
-Jennifer
+BUSINESS PARTNER,
+
+I AM LUMAR CASEY WORKING WITH AN INSURANCE FINANCIAL INSTITUTE, WITH
+MY POSITION AND PRIVILEGES I WAS ABLE TO SOURCE OUT AN OVER DUE
+PAYMENT OF 12.8 MILLION POUNDS THAT IS NOW SECURED WITH A SHIPPING
+DIPLOMATIC OUTLET.
+
+I AM SEEKING YOUR PARTNERSHIP TO RECEIVE THIS CONSIGNMENT AS AS MY
+PARTNER TO INVEST THIS FUND INTO A PROSPEROUS INVESTMENT VENTURE IN
+YOUR COUNTRY.
+
+I AWAIT YOUR REPLY TO ENABLE US PROCEED WITH THIS BUSINESS PARTNERSHIP TOGETHER.
+
+REGARDS,
+
+LUMAR CASEY
