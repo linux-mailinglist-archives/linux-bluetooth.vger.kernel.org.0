@@ -2,52 +2,50 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 984845B3FA5
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  9 Sep 2022 21:30:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8690F5B3FA0
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  9 Sep 2022 21:30:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229949AbiIITay (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 9 Sep 2022 15:30:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46120 "EHLO
+        id S229566AbiIITat (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 9 Sep 2022 15:30:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231330AbiIITa3 (ORCPT
+        with ESMTP id S231244AbiIITa2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 9 Sep 2022 15:30:29 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E992A97D67
-        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Sep 2022 12:30:19 -0700 (PDT)
+        Fri, 9 Sep 2022 15:30:28 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BB03B97E
+        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Sep 2022 12:30:18 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 54541B8261C
-        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Sep 2022 19:30:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EE0A6C433D6;
-        Fri,  9 Sep 2022 19:30:16 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B1F57620C6
+        for <linux-bluetooth@vger.kernel.org>; Fri,  9 Sep 2022 19:30:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1E960C43470;
+        Fri,  9 Sep 2022 19:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1662751817;
-        bh=V0sG0+3Ej6SwEWZ0wmaNCkQbBqEFDeFO+HfeDNSZKbY=;
+        bh=Qx6RXJE9PYq/S1qrdM8ODJp0UjuDJVk3wJfYB85hiE4=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=d9BVJwSB/Cldo80fc4Np5v8UbIJvHHkpOStH3Y3R3TzrW2cfvq0Y5rS+eOVhq9hhF
-         n70l0sw/AOMKF4bTl9JW8cIWc+GbJrS5Ycl2Q65lTJONFJqXGvOteiQpcH0M4o5Vvx
-         G8Q5CdcpYhieq6CFQXS0Jgb4eTGgP24NIM2uXtQHnBGenBf+N5P/o0UdXB75XgtRjB
-         vwRkTvRA+gN1F4B5jwGyAoPJDaJNLYw8N8ZDXVl77I24q5a6zxoYX+dd5SpHiictTo
-         pqnrS70jdiweCpXM5Y1GD3dWHJEVu9Uj4dDooHpL2/0SRzt30jSRoyz2BaM8C1lUlF
-         fVAI4IW46cNLw==
+        b=NvaozRls6h1rIFsCtLgxUD0JGRNA45l1X/b60z7Zvp1/mMIFzHr1Nao7BMwvoDSqL
+         YDdt1x9It8OeGUfaNR1UgQDlYehoDSyX4bBqxeABSs08yTx5/EHzJjEKicxb+bc5zp
+         VCSvUOndoFGC6nRg1ZO8QtckUjTvbtovtoMfXRoTP0nW+lMzlNShFGOaF7kfFtMh5X
+         M42hgjSlEo0OxLLlpisW4b7jQjgZr8xoErXhcAJckhxRRhOkZ5RdJWAaDplHBGKkaB
+         pl/AM2sSuNXkuypBb31VWFIGRlSVgXTZYuuuS2oSuzhQv9gq2IQjJhVDqNrNE+GxmY
+         +lrgterbgXRyQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D0B62C73FE7;
-        Fri,  9 Sep 2022 19:30:16 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0419EC73FF0;
+        Fri,  9 Sep 2022 19:30:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth: btintel: Mark Intel controller to support
- LE_STATES quirk
+Subject: Re: [PATCH] Bluetooth: Fix HCIGETDEVINFO regression
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166275181684.14413.17881202405230639284.git-patchwork-notify@kernel.org>
-Date:   Fri, 09 Sep 2022 19:30:16 +0000
-References: <20220907071945.9925-1-kiran.k@intel.com>
-In-Reply-To: <20220907071945.9925-1-kiran.k@intel.com>
-To:     Kiran K <kiran.k@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org, chethan.tumkur.narayan@intel.com,
-        ravishankar.srivatsa@intel.com, tedd.an@intel.com
+Message-Id: <166275181701.14413.5901937901820747185.git-patchwork-notify@kernel.org>
+Date:   Fri, 09 Sep 2022 19:30:17 +0000
+References: <20220908212135.3543626-1-luiz.dentz@gmail.com>
+In-Reply-To: <20220908212135.3543626-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -63,19 +61,21 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed,  7 Sep 2022 12:49:45 +0530 you wrote:
-> HarrrisonPeak, CyclonePeak, SnowFieldPeak and SandyPeak controllers
-> are marked to support HCI_QUIRK_LE_STATES.
+On Thu,  8 Sep 2022 14:21:35 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> Signed-off-by: Kiran K <kiran.k@intel.com>
-> Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
-> ---
->  drivers/bluetooth/btintel.c | 17 ++++++++---------
->  1 file changed, 8 insertions(+), 9 deletions(-)
+> Recent changes breaks HCIGETDEVINFO since it changes the size of
+> hci_dev_info.
+> 
+> Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+> Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> [...]
 
 Here is the summary with links:
-  - [v1] Bluetooth: btintel: Mark Intel controller to support LE_STATES quirk
-    https://git.kernel.org/bluetooth/bluetooth-next/c/dd0a1794f433
+  - Bluetooth: Fix HCIGETDEVINFO regression
+    https://git.kernel.org/bluetooth/bluetooth-next/c/2a40f883781d
 
 You are awesome, thank you!
 -- 
