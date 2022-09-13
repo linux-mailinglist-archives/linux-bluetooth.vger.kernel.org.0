@@ -2,81 +2,140 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6DC95B76AB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Sep 2022 18:46:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 027635B7959
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Sep 2022 20:23:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230307AbiIMQqF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 13 Sep 2022 12:46:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57426 "EHLO
+        id S232397AbiIMSXH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 13 Sep 2022 14:23:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231979AbiIMQpe (ORCPT
+        with ESMTP id S229692AbiIMSWt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 13 Sep 2022 12:45:34 -0400
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:8234::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61ECF6DAC6
-        for <linux-bluetooth@vger.kernel.org>; Tue, 13 Sep 2022 08:39:53 -0700 (PDT)
-Received: from [185.122.133.20] (helo=[172.16.40.43]); authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1oY7yJ-0006Fz-Ee; Tue, 13 Sep 2022 17:37:11 +0200
-Message-ID: <6c0f6043-8aa0-2516-38de-b2b9f4a22401@leemhuis.info>
-Date:   Tue, 13 Sep 2022 16:37:10 +0100
+        Tue, 13 Sep 2022 14:22:49 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABBA360E2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 13 Sep 2022 10:39:18 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id y17so24190346ejo.6
+        for <linux-bluetooth@vger.kernel.org>; Tue, 13 Sep 2022 10:39:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=ROR9HKc+i/EG3Ruo2ziztWgnKpNvTt2Fc72iYdNl99Y=;
+        b=oUFMgAAumFxK6DUW8wAKwcAc54OmDcpJDpDFlV3mp9JHi6jqH6MX0/ZsflH4WlyUBM
+         XbXMIzRihS6HyT23TPa23ATtXNn6XRqiIpt0Lvpecu+4BNO5AmOS4+0C1CPTpH4Aj4pz
+         V9OiGhxlB2uSf/ZqsT5OyySQjIFsZXOcPgfiuq5Dyr1u88gcs7isWj1bvL1E/zVE9i2L
+         za2MSF8vkm/K2KpDNe4cUBxuI53DgF89GkRT3NwJgCRwQjoAl3xs6etg1zp4jQoM9osq
+         2iRmC+436qCM8VFvUtLK6GvCkkGtONA+uNOyJOFpceS14IM+a4gVgePk7Ag9vLqIP3HA
+         KnSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=ROR9HKc+i/EG3Ruo2ziztWgnKpNvTt2Fc72iYdNl99Y=;
+        b=59gEaGK08TZKQXhE5nG7TTrvllHKi9cGnkpgZPTrWlAJZPmujJdufywFgBKoIG0Skw
+         p+ZMw+pNLrvB+QoP9jtcFuJnKMnLNq8copbLC7+UJnrkKAMJ0KRYVEZWKVkFYHGCihlF
+         693pxMCqqPlDf5EQQGVb+th92j9ub+QcPGG05WmD+LOWTihynWI0gAZSFeDzfsEwKfCb
+         Rv/sYRwl0Rgm9h4NFPmjNzP/rxZvcPEdiej7xqB1FXZQXUd1kHOmLoPr/aowr7gq0Prt
+         QFE5f0/l5pmzaHj6hFw7sB4Edhkpm/dD0eBjonBjAI80YtGn2xRAyzPVXjG4EQhMYB7L
+         iphA==
+X-Gm-Message-State: ACgBeo3ljb49vJpAF8oB2rN3TYrRYLkv/4LSI46vpeIsZWyaHN9WYaNM
+        0Ty/YOV2YGVovzvKFoSjtDWUvG8zERI=
+X-Google-Smtp-Source: AA6agR5SgsH+gf+95txupGSVDOcuPRzTLcADLlIU1wfRy6BAUTrwYrjR96uAG9VHkGDfULL9pLxwzQ==
+X-Received: by 2002:a17:907:9484:b0:73d:8c67:a945 with SMTP id dm4-20020a170907948400b0073d8c67a945mr22703047ejc.634.1663090757152;
+        Tue, 13 Sep 2022 10:39:17 -0700 (PDT)
+Received: from nlaptop.localdomain (ptr-dtfv0poj8u7zblqwbt6.18120a2.ip6.access.telenet.be. [2a02:1811:cc83:eef0:f2b6:6987:9238:41ca])
+        by smtp.gmail.com with ESMTPSA id j7-20020a170906278700b007324aa2ca77sm6348507ejc.85.2022.09.13.10.39.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Sep 2022 10:39:16 -0700 (PDT)
+From:   Niels Dossche <dossche.niels@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Niels Dossche <dossche.niels@gmail.com>
+Subject: [PATCH v2] Bluetooth: protect remote oob data in build_pairing_cmd's callsites
+Date:   Tue, 13 Sep 2022 19:39:08 +0200
+Message-Id: <20220913173907.13792-1-dossche.niels@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.1
-Subject: Re: [Bug] [Deadlock] Kernel thread deadlock in rfcomm socket release
- when connect interrupted
-Content-Language: en-US, de-DE
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     Paul Menzel <pmenzel@molgen.mpg.de>,
-        Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>,
-        linux-bluetooth@vger.kernel.org, regressions@lists.linux.dev,
-        Peter Sutton <peter@foxdogstudios.com>
-References: <CAD+dNTsbuU4w+Y_P7o+VEN7BYCAbZuwZx2+tH+OTzCdcZF82YA@mail.gmail.com>
- <24e95c8b-dc05-0d00-50bb-58b71c5baf94@molgen.mpg.de>
- <CAD+dNTuRThoa2OSzQ27tENB29GJ4oD0j3D+P4k42HzopEeTJMw@mail.gmail.com>
- <CAD+dNTsqBEjzG7BinKtxveH9faJqss89WPufbSsaB5FZRDgOPA@mail.gmail.com>
- <ef7a1421-06c5-f3b7-8c7f-7fdfd7862c96@molgen.mpg.de>
- <e7c8127a-d561-3a3d-f208-770f3abbee17@leemhuis.info>
- <CAD+dNTsnVpyFKyZcAgnqAZz-e2upjFd3NGWV=hPhywL8k0g6Nw@mail.gmail.com>
-From:   Thorsten Leemhuis <regressions@leemhuis.info>
-In-Reply-To: <CAD+dNTsnVpyFKyZcAgnqAZz-e2upjFd3NGWV=hPhywL8k0g6Nw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1663083593;7dab6341;
-X-HE-SMSGID: 1oY7yJ-0006Fz-Ee
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Accesses to hci_dev->remote_oob_data are protected by the hdev lock,
+except for the access in build_pairing_cmd via hci_find_remote_oob_data.
+Adding the lock around the access in build_pairing_cmd would cause a
+lock ordering problem: the l2cap_chan_lock is taken in the caller
+smp_conn_security, while the hdev lock should be taken before the chan
+lock.
+The solution is to add the hdev lock to the callsites of
+build_pairing_cmd.
 
+Fixes: 02b05bd8b0a6 ("Bluetooth: Set SMP OOB flag if OOB data is available")
+Signed-off-by: Niels Dossche <dossche.niels@gmail.com>
+---
 
-On 13.09.22 16:20, Peter Sutton wrote:
->>  a fix for a deadlock for RFCOMM sk state change was posted last year already:
->>
->> https://lore.kernel.org/all/20211004180734.434511-1-desmondcheongzx@gmail.com/
->>
->> It seems it never went anywhere, unless I'm missing something. Is that
->> maybe the same problem or somehow related?
-> 
-> I mentioned this on the Arch Linux Matrix channel. The `linux` package
-> maintainer said they had encountered the same and added the linked
-> patch to the Arch Linux kernel package but removed it because it
-> wasn't merged (which explains why my issue went way then came back).
-> Anyway, we compiled a 5.19.8 `linux` package with the patch (which
-> fixes my issue) and they said they'll add the patch back to the linux
-> package.
+Note:
+I am currently working on a static analyser to detect missing locks
+using type-based static analysis, which reported the missing lock on
+v6.0-rc5. I manually verified the report by looking at the code,
+so that I do not send wrong information or patches.
+After concluding that this seems to be a true positive, I created
+this patch. I have only managed to compile-test this patch on x86_64.
+After applying the patch, my analyser no longer reports the potential
+bug.
 
-Well, that's fine and hopefully will solve your issue soon, but the arch
-maintainers are right: this should be fixed upstream.
+ net/bluetooth/smp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Luiz, is there a reason why that patch wasn't merged? What is needed to
-get this merged, ideally while adding a "Link:
-https://lore.kernel.org/all/CAD+dNTsbuU4w+Y_P7o+VEN7BYCAbZuwZx2+tH+OTzCdcZF82YA@mail.gmail.com/"
-tag?
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 11f853d0500f..6611a789b6c1 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -1803,7 +1803,9 @@ static u8 smp_cmd_pairing_req(struct l2cap_conn *conn, struct sk_buff *skb)
+ 		return 0;
+ 	}
+ 
++	hci_dev_lock(hdev);
+ 	build_pairing_cmd(conn, req, &rsp, auth);
++	hci_dev_unlock(hdev);
+ 
+ 	if (rsp.auth_req & SMP_AUTH_SC) {
+ 		set_bit(SMP_FLAG_SC, &smp->flags);
+@@ -2335,7 +2337,9 @@ static u8 smp_cmd_security_req(struct l2cap_conn *conn, struct sk_buff *skb)
+ 	skb_pull(skb, sizeof(*rp));
+ 
+ 	memset(&cp, 0, sizeof(cp));
++	hci_dev_lock(hdev);
+ 	build_pairing_cmd(conn, &cp, NULL, auth);
++	hci_dev_unlock(hdev);
+ 
+ 	smp->preq[0] = SMP_CMD_PAIRING_REQ;
+ 	memcpy(&smp->preq[1], &cp, sizeof(cp));
+@@ -2380,6 +2384,7 @@ int smp_conn_security(struct hci_conn *hcon, __u8 sec_level)
+ 		return 1;
+ 	}
+ 
++	hci_dev_lock(hcon->hdev);
+ 	l2cap_chan_lock(chan);
+ 
+ 	/* If SMP is already in progress ignore this request */
+@@ -2435,6 +2440,7 @@ int smp_conn_security(struct hci_conn *hcon, __u8 sec_level)
+ 
+ unlock:
+ 	l2cap_chan_unlock(chan);
++	hci_dev_unlock(hcon->hdev);
+ 	return ret;
+ }
+ 
+-- 
+2.37.3
 
-Ciao, Thorsten
