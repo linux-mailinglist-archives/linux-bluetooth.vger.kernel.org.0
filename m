@@ -2,117 +2,132 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CD1A5B6C3C
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Sep 2022 13:11:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B4785B76A0
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Sep 2022 18:42:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231207AbiIMLLP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 13 Sep 2022 07:11:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58004 "EHLO
+        id S231273AbiIMQmt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 13 Sep 2022 12:42:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230376AbiIMLLO (ORCPT
+        with ESMTP id S231244AbiIMQm1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 13 Sep 2022 07:11:14 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D7BE4F1B6
-        for <linux-bluetooth@vger.kernel.org>; Tue, 13 Sep 2022 04:11:13 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id y15so6025972ilq.4
-        for <linux-bluetooth@vger.kernel.org>; Tue, 13 Sep 2022 04:11:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=AtL4nH42b1YDkXam35FwAVT8wGD9yLpZUCvbIDRzBOA=;
-        b=EJeCOgwGK8KsJY6u3JD7unQpLsvkIfV7amvOsJM4kaCwYBN/FAj3UeISUmRQur7X8J
-         lwnN4RMisj18qRvuCP073mi9gAewdCdg4FfQPh0nPXJFhhZbVfbVBxvZdvpiECMGU3mn
-         2ZlmR39kU5NNr2scl83HX5RAQ5WIAXnAh0UTd9Vmh1GsDtB+VP592E3gcHbndnZBgRGE
-         8bLBa/rAdWaATE6t5wMrlZaWFjL02gjVuwHFKSy53n7yGE7WAXkl7DsZcMvWhzP42yib
-         VSq3lj7xtyIWYJH96EBLgxdIdSXdk48HVt1dhJYBbSinrTs/0rNb9C0BulZKuieMWqLT
-         XWsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=AtL4nH42b1YDkXam35FwAVT8wGD9yLpZUCvbIDRzBOA=;
-        b=u/qcS7kXIgOTOUaGtfna2l8QcKLhUkIF5lWukkL5d9rKQFqX7BUUOW91wVGDuRgyda
-         AvQ7AcjZXTYef4DuB9UD9Pygmq1ldDdG2dtQrsuKvA5YC/ERyQGUIykTqzAn7Cl6gSAw
-         cRho32tU3/npcDw0BnFDQCM0mrF1H8SN5dgvYVTp2/fkUI529+ssj1w9d+YghZUbr7GU
-         D+eVNkEQg2nNg44ny6WJkA5XOifhShwKR7eLlPnSE5eC+RYTZmRIR4px9bnDxwHEHkVP
-         /ifjtDEYpJM7evnkjZVcU10WPMrIIpPNhZ5RJnx7bxkETH/KMS4rWzBAALiXuV2SXVHw
-         HHrA==
-X-Gm-Message-State: ACgBeo2SCvm/i3KHWwPizvcodt0rW7N0K6gW67bUfJuQSVMvnpzJqMFW
-        NohxqiyQ39Un2h69RaaBdZkBSl0hWZc=
-X-Google-Smtp-Source: AA6agR7GZzZl3iQz20nntRlox0LMpvbI1eUSKybraJcTis6FNhSZS5ZgwYBVO81Ij4ofIvQdKXsN2Q==
-X-Received: by 2002:a05:6e02:dc3:b0:2ea:d7a4:a5f with SMTP id l3-20020a056e020dc300b002ead7a40a5fmr12044672ilj.308.1663067472035;
-        Tue, 13 Sep 2022 04:11:12 -0700 (PDT)
-Received: from [172.17.0.2] ([168.61.147.86])
-        by smtp.gmail.com with ESMTPSA id v16-20020a92cd50000000b002e900a19516sm4934569ilq.38.2022.09.13.04.11.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 04:11:11 -0700 (PDT)
-Message-ID: <6320654f.920a0220.76fde.42f0@mx.google.com>
-Date:   Tue, 13 Sep 2022 04:11:11 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============4839441262261072539=="
+        Tue, 13 Sep 2022 12:42:27 -0400
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:8234::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC5F5BB022
+        for <linux-bluetooth@vger.kernel.org>; Tue, 13 Sep 2022 08:36:58 -0700 (PDT)
+Received: from [185.122.133.20] (helo=[172.16.40.43]); authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1oY7UJ-0003Pb-Jo; Tue, 13 Sep 2022 17:06:11 +0200
+Message-ID: <e7c8127a-d561-3a3d-f208-770f3abbee17@leemhuis.info>
+Date:   Tue, 13 Sep 2022 16:06:10 +0100
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, hildawu@realtek.com
-Subject: RE: Bluetooth: Add btrealtek data struct and improve SCO sound quality of RTK chips
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20220913100244.23660-2-hildawu@realtek.com>
-References: <20220913100244.23660-2-hildawu@realtek.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Content-Language: en-US, de-DE
+To:     Paul Menzel <pmenzel@molgen.mpg.de>,
+        Peter Sutton <peter@foxdogstudios.com>
+Cc:     Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-bluetooth@vger.kernel.org, regressions@lists.linux.dev
+References: <CAD+dNTsbuU4w+Y_P7o+VEN7BYCAbZuwZx2+tH+OTzCdcZF82YA@mail.gmail.com>
+ <24e95c8b-dc05-0d00-50bb-58b71c5baf94@molgen.mpg.de>
+ <CAD+dNTuRThoa2OSzQ27tENB29GJ4oD0j3D+P4k42HzopEeTJMw@mail.gmail.com>
+ <CAD+dNTsqBEjzG7BinKtxveH9faJqss89WPufbSsaB5FZRDgOPA@mail.gmail.com>
+ <ef7a1421-06c5-f3b7-8c7f-7fdfd7862c96@molgen.mpg.de>
+From:   Thorsten Leemhuis <regressions@leemhuis.info>
+Subject: Re: [Bug] [Deadlock] Kernel thread deadlock in rfcomm socket release
+ when connect interrupted
+In-Reply-To: <ef7a1421-06c5-f3b7-8c7f-7fdfd7862c96@molgen.mpg.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1663083419;7ef54709;
+X-HE-SMSGID: 1oY7UJ-0003Pb-Jo
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============4839441262261072539==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+On 12.09.22 07:23, Paul Menzel wrote:
+> [Cc: +regressions]
+> 
+> #regzbot ^introduced: b7ce436a5d798bc59e71797952566608a4b4626b
 
-This is automated email and please do not reply to this email!
+thx for this
 
-Dear submitter,
+> #regzbot title: [Bug] [Deadlock] Kernel thread deadlock in rfcomm socket
+> release when connect interrupted
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=676514
+BTW & JFYI: regzbot will automatically use the mail's subject as title
+by default, so it seems in this case that "#regzbot title:" is superfluous.
 
----Test result---
+> Am 11.09.22 um 17:42 schrieb Peter Sutton:
+>> Just following this up. Is there anything I can do to help fix this?
+>> Running a custom kernel is a real pain. I've been running with the
+>> commit revert and upgrading with Arch Linux kernel releases with no
+>> issue.
+> 
+> (Please do not top post.)
+> 
+> Have you tested bluetooth-next already? Regardless, the offending commit
+> present in Linux since 5.15-rc1 should be reverted.
 
-Test Summary:
-CheckPatch                    PASS      5.12 seconds
-GitLint                       FAIL      2.46 seconds
-SubjectPrefix                 PASS      1.94 seconds
-BuildKernel                   PASS      34.34 seconds
-BuildKernel32                 PASS      30.14 seconds
-Incremental Build with patchesPASS      56.77 seconds
-TestRunner: Setup             PASS      501.76 seconds
-TestRunner: l2cap-tester      PASS      16.63 seconds
-TestRunner: iso-tester        PASS      15.66 seconds
-TestRunner: bnep-tester       PASS      6.21 seconds
-TestRunner: mgmt-tester       PASS      100.91 seconds
-TestRunner: rfcomm-tester     PASS      9.78 seconds
-TestRunner: sco-tester        PASS      9.30 seconds
-TestRunner: smp-tester        PASS      9.38 seconds
-TestRunner: userchan-tester   PASS      6.41 seconds
+Well, I'd be a bit more careful here, as reverting commits after so much
+time easily can cause other regressions.
 
-Details
-##############################
-Test: GitLint - FAIL - 2.46 seconds
-Run gitlint with rule in .gitlint
-[v2,3/3] Bluetooth: btsub: Ignore zero length of USB packets on ALT 6 for the specific chip model of Realtek devices
-1: T1 Title exceeds max length (116>80): "[v2,3/3] Bluetooth: btsub: Ignore zero length of USB packets on ALT 6 for the specific chip model of Realtek devices"
+>> On Mon, 30 May 2022 at 12:44, Peter Sutton <peter@foxdogstudios.com>
+>> wrote:
+>>>
+>>> Commit b7ce436a5d798bc59e71797952566608a4b4626b is the probable cause.
+>>> I compiled a custom Arch Linux kernel package [1] and the bug was
+>>> present. Reverting the commit fixed the bug. Below is the reply I was
+>>> writing before Matt found the suspect commit and I tested with the
+>>> custom kernel.
 
+Anyway, the main reason why I write this: I'm currently traveling and
+only took a very quick look into this, but a fix for a deadlock for
+RFCOMM sk state change was posted last year already:
 
+https://lore.kernel.org/all/20211004180734.434511-1-desmondcheongzx@gmail.com/
 
+It seems it never went anywhere, unless I'm missing something. Is that
+maybe the same problem or somehow related?
 
----
-Regards,
-Linux Bluetooth
+>>>> What hardware is that?
+>>>
+>>> $ dmesg | grep iwlwifi
+>>> Me: Intel(R) Dual Band Wireless AC 8260, REV=0x204
+>>> Matt: Intel(R) Dual Band Wireless AC 8265, REV=0x230
+>>>
+>>> We both get:
+>>>
+>>> $ lsusb | grep Bluetooth
+>>> Me & Matt: Bus 001 Device 006: ID 8087:0a2b Intel Corp. Bluetooth
+>>> wireless interface
+>>>
+>>>> As a lot of patches are also applied to the stable series, do you know,
+>>>> if this is a regression? Does it work with Linux 5.15(.0) or 5.10?
+>>>
+>>> Bug is present on current Arch Linux LTS kernel:
+>>>
+>>> $ uname -a
+>>> Linux taffer 5.15.43-1-lts #1 SMP Wed, 25 May 2022 14:08:34 +0000
+>>> x86_64 GNU/Linux
+>>>
+>>> Matt tested on 5.10.115 and the bug is not present. So I guess it's a
+>>> regression. Anecdotally, we encountered this behaviour 1 yr ago
+>>> (difficult to say exactly), then it went away but came back about 1 or
+>>> 2 months ago. All of this is on Arch Linux, I update about once a
+>>> week.
+>>>
+>>> [1] https://wiki.archlinux.org/title/Kernel/Arch_Build_System
 
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
 
---===============4839441262261072539==--
+P.S.: As the Linux kernel's regression tracker I deal with a lot of
+reports and sometimes miss something important when writing mails like
+this. If that's the case here, don't hesitate to tell me in a public
+reply, it's in everyone's interest to set the public record straight.
