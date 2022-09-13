@@ -2,158 +2,126 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AABD95B6B4E
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Sep 2022 12:03:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D18115B6C11
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Sep 2022 12:57:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231271AbiIMKDK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 13 Sep 2022 06:03:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51204 "EHLO
+        id S231818AbiIMK5N (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 13 Sep 2022 06:57:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230138AbiIMKDH (ORCPT
+        with ESMTP id S231247AbiIMK5J (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 13 Sep 2022 06:03:07 -0400
-Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5A7E936DF9;
-        Tue, 13 Sep 2022 03:03:04 -0700 (PDT)
-Authenticated-By: 
-X-SpamFilter-By: ArmorX SpamTrap 5.77 with qID 28DA2VGM0014166, This message is accepted by code: ctloc85258
-Received: from mail.realtek.com (rtexh36505.realtek.com.tw[172.21.6.25])
-        by rtits2.realtek.com.tw (8.15.2/2.81/5.90) with ESMTPS id 28DA2VGM0014166
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=FAIL);
-        Tue, 13 Sep 2022 18:02:31 +0800
-Received: from RTEXMBS04.realtek.com.tw (172.21.6.97) by
- RTEXH36505.realtek.com.tw (172.21.6.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Tue, 13 Sep 2022 18:02:51 +0800
-Received: from localhost.localdomain (172.21.132.192) by
- RTEXMBS04.realtek.com.tw (172.21.6.97) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.7; Tue, 13 Sep 2022 18:02:50 +0800
-From:   <hildawu@realtek.com>
-To:     <marcel@holtmann.org>
-CC:     <johan.hedberg@gmail.com>, <luiz.dentz@gmail.com>,
-        <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <apusaka@chromium.org>, <yinghsu@chromium.org>,
-        <max.chou@realtek.com>, <alex_lu@realsil.com.cn>,
-        <kidman@realtek.com>
-Subject: [PATCH v2 3/3] Bluetooth: btsub: Ignore zero length of USB packets on ALT 6 for the specific chip model of Realtek devices
-Date:   Tue, 13 Sep 2022 18:02:44 +0800
-Message-ID: <20220913100244.23660-4-hildawu@realtek.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220913100244.23660-1-hildawu@realtek.com>
-References: <20220913100244.23660-1-hildawu@realtek.com>
+        Tue, 13 Sep 2022 06:57:09 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 777F35F107;
+        Tue, 13 Sep 2022 03:57:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1663066628; x=1694602628;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=zjp/S/AcGVNBiOd4qsqoHOGHjb2vjSK71vPXyphH3wA=;
+  b=INteE/SjZNd7WpnPZE2+ykdeZsaeF4sYcRj5jc7OGPf2fihiVDwesxAU
+   FGi2sM11Oquv5dAfR04rd9QzHe6kii1uiTXThec4Zp0Brs/O09wxhZic0
+   7oMmrOe9u5C5gn5GzZH/YyzbBfu/SHF/QccrzlLZJnbHzwPrgBpW5+HD1
+   M/MzYUi4m8+Nvf4rYr+c5x4Fms55S5WqcgTYXxQczglpa3+xvcoNLfu7Z
+   5dxDtq3v3VSJfCm6ewtVBsa+LVRkzb/pu0Pfj84gIXt72HRrfaQWucyD7
+   CgebGIFOCfshxAWX4R5ynNGAdtGwedDbEVLAX++DYl7IjnSzvtpR4klaO
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10468"; a="277839564"
+X-IronPort-AV: E=Sophos;i="5.93,312,1654585200"; 
+   d="scan'208";a="277839564"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2022 03:57:08 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,312,1654585200"; 
+   d="scan'208";a="742124384"
+Received: from lkp-server02.sh.intel.com (HELO 4011df4f4fd3) ([10.239.97.151])
+  by orsmga004.jf.intel.com with ESMTP; 13 Sep 2022 03:57:01 -0700
+Received: from kbuild by 4011df4f4fd3 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1oY3bB-0003WB-0K;
+        Tue, 13 Sep 2022 10:57:01 +0000
+Date:   Tue, 13 Sep 2022 18:56:30 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     sean.wang@mediatek.com, marcel@holtmann.org,
+        johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     kbuild-all@lists.01.org, sean.wang@mediatek.com,
+        Soul.Huang@mediatek.com, YN.Chen@mediatek.com,
+        Leon.Yen@mediatek.com, Eric-SY.Chang@mediatek.com,
+        Deren.Wu@mediatek.com, km.lin@mediatek.com,
+        robin.chiu@mediatek.com, Eddie.Chen@mediatek.com,
+        ch.yeh@mediatek.com, posh.sun@mediatek.com, ted.huang@mediatek.com,
+        Stella.Chang@mediatek.com, Tom.Chou@mediatek.com,
+        steve.lee@mediatek.com, jsiuda@google.com, frankgor@google.com,
+        abhishekpandit@google.com, michaelfsun@google.com,
+        abhishekpandit@chromium.org, mcchou@chromium.org,
+        shawnku@google.com, linux-bluetooth@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Jing Cai <jing.cai@mediatek.com>
+Subject: Re: [PATCH 4/4] Bluetooth: btusb: mediatek: add MediaTek devcoredump
+ support
+Message-ID: <202209131812.1EOjfRYn-lkp@intel.com>
+References: <540fc6d93481e72e18b51f82f022ab34d57d5caa.1663020936.git.objelf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [172.21.132.192]
-X-ClientProxiedBy: RTEXH36505.realtek.com.tw (172.21.6.25) To
- RTEXMBS04.realtek.com.tw (172.21.6.97)
-X-KSE-ServerInfo: RTEXMBS04.realtek.com.tw, 9
-X-KSE-AntiSpam-Interceptor-Info: trusted connection
-X-KSE-Antiphishing-Info: Clean
-X-KSE-Antiphishing-ScanningType: Deterministic
-X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 09/13/2022 08:01:00
-X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
- rules found
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: =?big5?B?Q2xlYW4sIGJhc2VzOiAyMDIyLzkvMTMgpFekyCAwNzozMzowMA==?=
-X-KSE-BulkMessagesFiltering-Scan-Result: protection disabled
-X-KSE-ServerInfo: RTEXH36505.realtek.com.tw, 9
-X-KSE-Attachment-Filter-Triggered-Rules: Clean
-X-KSE-Attachment-Filter-Triggered-Filters: Clean
-X-KSE-BulkMessagesFiltering-Scan-Result: protection disabled
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <540fc6d93481e72e18b51f82f022ab34d57d5caa.1663020936.git.objelf@gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Hilda Wu <hildawu@realtek.com>
+Hi,
 
-For USB ALT 6 settings some Realtek chips need to transmit mSBC data
-continuously without the zero length of USB packets.
-In this commit, create BTUSB_ALT6_CONTINUOUS_TX to manage the workaround.
-Therefore, create REALTEK_ALT6_CONTINUOUS_TX_CHIP to manage the specific
-chip model for the workaround.
+Thank you for the patch! Perhaps something to improve:
 
-Signed-off-by: Max Chou <max.chou@realtek.com>
-Signed-off-by: Hilda Wu <hildawu@realtek.com>
----
- drivers/bluetooth/btrtl.c |  7 +++++++
- drivers/bluetooth/btusb.c | 14 +++++++++++++-
- 2 files changed, 20 insertions(+), 1 deletion(-)
+[auto build test WARNING on bluetooth/master]
+[also build test WARNING on bluetooth-next/master linus/master v6.0-rc5 next-20220912]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index 15223b3ed94d..6d74175cd25f 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -782,6 +782,13 @@ void btrtl_set_quirks(struct hci_dev *hdev, struct btrtl_device_info *btrtl_dev)
- 		set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
- 		set_bit(HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED, &hdev->quirks);
- 		btrealtek_set_flag(hdev, REALTEK_WBS_FILTER);
-+
-+		/* RTL8852C needs to transmit mSBC data continuously without
-+		 * the zero length of USB packets for the ALT 6 supported chips
-+		 */
-+		if (btrtl_dev->project_id == CHIP_ID_8852C)
-+			btrealtek_set_flag(hdev, REALTEK_ALT6_CONTINUOUS_TX_CHIP);
-+
- 		hci_set_aosp_capable(hdev);
- 		break;
- 	default:
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 8e595e03655a..50a21061350e 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -626,6 +626,7 @@ static const struct dmi_system_id btusb_needs_reset_resume_table[] = {
- #define BTUSB_TX_WAIT_VND_EVT	13
- #define BTUSB_WAKEUP_AUTOSUSPEND	14
- #define BTUSB_USE_ALT3_FOR_WBS	15
-+#define BTUSB_ALT6_CONTINUOUS_TX	16
- 
- struct btusb_data {
- 	struct hci_dev       *hdev;
-@@ -1284,11 +1285,18 @@ static void btusb_isoc_complete(struct urb *urb)
- static inline void __fill_isoc_descriptor_msbc(struct urb *urb, int len,
- 					       int mtu, struct btusb_data *data)
- {
--	int i, offset = 0;
-+	int i = 0, offset = 0;
- 	unsigned int interval;
- 
- 	BT_DBG("len %d mtu %d", len, mtu);
- 
-+	/* For mSBC ALT 6 settings some Realtek chips need to transmit the data
-+	 * continuously without the zero length of USB packets.
-+	 */
-+	if (test_bit(BTUSB_ALT6_CONTINUOUS_TX, &data->flags))
-+		if (btrealtek_test_flag(data->hdev, REALTEK_ALT6_CONTINUOUS_TX_CHIP))
-+			goto ignore_usb_alt6_packet_flow;
-+
- 	/* For mSBC ALT 6 setting the host will send the packet at continuous
- 	 * flow. As per core spec 5, vol 4, part B, table 2.1. For ALT setting
- 	 * 6 the HCI PACKET INTERVAL should be 7.5ms for every usb packets.
-@@ -1308,6 +1316,7 @@ static inline void __fill_isoc_descriptor_msbc(struct urb *urb, int len,
- 		urb->iso_frame_desc[i].length = offset;
- 	}
- 
-+ignore_usb_alt6_packet_flow:
- 	if (len && i < BTUSB_MAX_ISOC_FRAMES) {
- 		urb->iso_frame_desc[i].offset = offset;
- 		urb->iso_frame_desc[i].length = len;
-@@ -3931,6 +3940,9 @@ static int btusb_probe(struct usb_interface *intf,
- 		/* Realtek devices need to set remote wakeup on auto-suspend */
- 		set_bit(BTUSB_WAKEUP_AUTOSUSPEND, &data->flags);
- 		set_bit(BTUSB_USE_ALT3_FOR_WBS, &data->flags);
-+
-+		/* Some Realtek devices need to transmit mSBC data continuously */
-+		set_bit(BTUSB_ALT6_CONTINUOUS_TX, &data->flags);
- 	}
- 
- 	if (!reset)
+url:    https://github.com/intel-lab-lkp/linux/commits/sean-wang-mediatek-com/Bluetooth-btusb-mediatek-use-readx_poll_timeout-instead-of-open-coding/20220913-062200
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth.git master
+config: m68k-randconfig-r033-20220911 (https://download.01.org/0day-ci/archive/20220913/202209131812.1EOjfRYn-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/d478461e2fd5fdd8d505c00c7864a421170a54bb
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review sean-wang-mediatek-com/Bluetooth-btusb-mediatek-use-readx_poll_timeout-instead-of-open-coding/20220913-062200
+        git checkout d478461e2fd5fdd8d505c00c7864a421170a54bb
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/
+
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   In file included from drivers/bluetooth/btusb.c:28:
+>> drivers/bluetooth/btmtk.h:172:6: warning: no previous prototype for 'btmtk_register_coredump' [-Wmissing-prototypes]
+     172 | void btmtk_register_coredump(struct hci_dev *hdev, u32 dev_id, const char *name,
+         |      ^~~~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/btmtk_register_coredump +172 drivers/bluetooth/btmtk.h
+
+   171	
+ > 172	void btmtk_register_coredump(struct hci_dev *hdev, u32 dev_id, const char *name,
+   173				     u32 fw_version)
+   174	{
+   175	}
+   176	
+
 -- 
-2.17.1
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
