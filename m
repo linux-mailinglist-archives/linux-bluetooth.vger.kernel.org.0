@@ -2,111 +2,125 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F35A25B88AE
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 14:55:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE6225B88DB
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 15:11:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229830AbiINMzg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 14 Sep 2022 08:55:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56114 "EHLO
+        id S229679AbiINNK6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 14 Sep 2022 09:10:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229849AbiINMzd (ORCPT
+        with ESMTP id S229531AbiINNK4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 14 Sep 2022 08:55:33 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7831222B9
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 05:55:30 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id 130so22553470ybz.9
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 05:55:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date;
-        bh=QIq127AsrVETtjmlZHJuq6KTgcVseSvZ0/hA9NYCU2w=;
-        b=dQ7OJ3+1KRiMJrRQMvd3LvRoNOSD2pJhAgZJbA+aUTgWMj+Kutx04r7f/ZXwlTpeer
-         8olZRiCOQD6cs1ZK8uZhrPZmhn15++7w7VrorD4EROLTw5YRI2ep/erKNcgKrhU+KPzW
-         SObKpkfbSqx6oA2j2dZMMIXNrQUvyx/sc8cboF8Sjcg24U6eT/c4kyEUB2g88xgH5dRr
-         0XUTLd4NPCv/6Bhp1i7qoMMatuH15rKNEwIlo1VWiotW4muQtvoYL5q2ca+VfY6FpEOK
-         PNeLl5wIeGaiuwGtDXJr/xy5yI9s15qyApF5tGny5UbZB8W5D9TlzWXTkUoUhUQD/LX2
-         0yBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=QIq127AsrVETtjmlZHJuq6KTgcVseSvZ0/hA9NYCU2w=;
-        b=ekrYrnpuQMsi2onRUH0WIU1TVFfXB4YybohNQOps/Ng9y6k6dQX6JQBy+ZRtDm+Jl+
-         PMgGz8dqdDsrlNIfXwXxbu6wtrO5hsctcs6ZRiBuUgRNVfg60Dy7+MBfFrH164nfWBwM
-         EPj3UMteM5hGMjccJX7jpizFdgWA4ya+0yEEa9Dr7ODc042J9hcCqp08xhF1v1o+HzNd
-         6io8LMMr2VppvqwEvu2OxjTy6hcqrmiEpMli23p+tZwuM7QAqL8odcFrwQpbqaZqXa6R
-         3oT5otLemxEuEM58+h2d0f6uYlz591Y8a9q9LyfCjFf43x8dK3k5AwhEehmeeLZIsz7V
-         VzXQ==
-X-Gm-Message-State: ACgBeo1YaUOn+wjmdd/CtNTmyO9SIbTQV5Ml+n/Ov7rhnpee7QUGAXnn
-        +PIwT2srl5HNBHQUlcAq48cwlktcBfB8Rt35wN0=
-X-Google-Smtp-Source: AA6agR76PDdl7uOzHAuoe+S3VKmfXiet6skAb4heyl8lJf6c1nBHiieKZZVlfd6FZfx59/mNAZHA2FkdCdIC+oO8xoA=
-X-Received: by 2002:a25:c704:0:b0:6aa:aef4:f325 with SMTP id
- w4-20020a25c704000000b006aaaef4f325mr30674626ybe.544.1663160130108; Wed, 14
- Sep 2022 05:55:30 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:7000:4e91:0:0:0:0 with HTTP; Wed, 14 Sep 2022 05:55:29
- -0700 (PDT)
-Reply-To: westernuniontg453@gmail.com
-From:   POST OFFICE <mrmajidaahmedmuhammed@gmail.com>
-Date:   Wed, 14 Sep 2022 05:55:29 -0700
-Message-ID: <CAD-=s3XHBos9adu7kREyGjT__+BsuSQ4+1n1weDS+bAZ4QJHEA@mail.gmail.com>
-Subject: Merhaba sevgili e-posta sahibi
-To:     undisclosed-recipients:;
+        Wed, 14 Sep 2022 09:10:56 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BC414F3A6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 06:10:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 60401B81A79
+        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 13:10:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 25A78C433D6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 13:10:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663161053;
+        bh=gMUc454K77tr7Beoyvq0KMCg+nF2mzZIjW4LC1vn2K4=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=R2oS3x9/9asn8Lrm8fj0etBKnvSteoZaLaPJb3++lLYGpRezVhFGwQJjfGZjHjPOs
+         qUJYoyyg/FSEki2vzDYgJjBCtXLFVMZ66kJvcpnRD6ZD2dMXZX0eS0dk5i1btnOKU+
+         9+miSixsjYAS7iGz0ymkNb72X9mntT++Vt6wlFaUUYSGJQC//vF/YHZyLXDqD7onO4
+         g+prNZubI+CQBjq2qb+8f6px16BC9johd1Saj0Xp8y/5puFoCjjylqGmnnI4Nivfm4
+         Xyj9M1N0wB3FF+owepXDmt5171o2zUODglnYjVWf8YsQkqcMwFkhl3BnM+xP5++K35
+         RMyafV53urvyg==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 0EF82C433E7; Wed, 14 Sep 2022 13:10:53 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 215197] Memory leaks show up when using Edimax Wi-Fi N150
+ Bluetooth/Wireless USB Adapter (RTL8XXXU)
+Date:   Wed, 14 Sep 2022 13:10:52 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: network-wireless
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: erhard_f@mailbox.org
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cc component short_desc
+Message-ID: <bug-215197-62941-aM9QzTWrhO@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-215197-62941@https.bugzilla.kernel.org/>
+References: <bug-215197-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ****
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Say=C4=B1n E-posta Sahibi;
+https://bugzilla.kernel.org/show_bug.cgi?id=3D215197
 
-Uluslararas=C4=B1 Para Fonu (IMF), t=C3=BCm doland=C4=B1r=C4=B1c=C4=B1l=C4=
-=B1k kurbanlar=C4=B1n=C4=B1 ve talep
-edilmemi=C5=9F fonlar=C4=B1 olanlar=C4=B1 tazmin ediyor ve e-posta adresini=
-z talep
-edilmeyen fon listesinde bulundu. Bu Western Union ofisi, IMF
-taraf=C4=B1ndan tazminat=C4=B1n=C4=B1z=C4=B1 Western Union Para Transferi y=
-oluyla size
-aktarmakla g=C3=B6revlendirilmi=C5=9Ftir. Ara=C5=9Ft=C4=B1rd=C4=B1k ve bu f=
-onun ger=C3=A7ek sahibi
-oldu=C4=9Funuzu =C3=B6=C4=9Frendik.
+Erhard F. (erhard_f@mailbox.org) changed:
 
-Ancak, toplam 800.000,00 ABD Dolar=C4=B1 tutar=C4=B1ndaki tutar size tamame=
-n
-aktar=C4=B1lana kadar, g=C3=BCnl=C3=BCk 5000 ABD Dolar=C4=B1 tutar=C4=B1nda=
-ki Western Union
-Para Transferi yoluyla kendi =C3=B6demenizi havale etmeyi kararla=C5=9Ft=C4=
-=B1rd=C4=B1k.
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |Jes.Sorensen@gmail.com
+          Component|Bluetooth                   |network-wireless
+            Summary|Memory leaks show up a      |Memory leaks show up when
+                   |while after usung Edimax    |using Edimax Wi-Fi N150
+                   |Wi-Fi N150 Bluetooth4.0 USB |Bluetooth/Wireless USB
+                   |Adapter (rtl8723be)         |Adapter (RTL8XXXU)
 
-Bu =C3=B6demeyi yaln=C4=B1zca e-posta adresinizle g=C3=B6nderemeyebiliriz, =
-bu nedenle
-g=C3=BCnl=C3=BCk 5000 dolar=C4=B1 size g=C3=B6nderece=C4=9Fimiz yerlere bil=
-gilerinize
-ihtiyac=C4=B1m=C4=B1z var, =C3=B6rne=C4=9Fin;
+--- Comment #4 from Erhard F. (erhard_f@mailbox.org) ---
+Still a problem on v6.0-rc4:
 
-Al=C4=B1c=C4=B1n=C4=B1n ad=C4=B1: ________________
-Adres: ________________
-=C3=9Clke: __________________
-Meslek: __________________
-Telefon numaras=C4=B1:________________
-Kimli=C4=9Finizin ekli kopyas=C4=B1: ___________
-Ya=C5=9F: _____________
+ # cat /sys/kernel/debug/kmemleak
+unreferenced object 0xffff8b7b18611bc0 (size 216):
+  comm "iwd", pid 1992, jiffies 4294908755 (age 2333.527s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff9d294858>] kmem_cache_alloc+0x288/0x380
+    [<ffffffff9d7f161a>] __alloc_skb+0x8a/0x250
+    [<ffffffff9d7f18cc>] __netdev_alloc_skb+0xec/0x190
+    [<ffffffffc17f2f1f>] rtl8xxxu_submit_rx_urb+0x4f/0xf0 [rtl8xxxu]
+    [<ffffffffc17f0641>] rtl8xxxu_start+0x321/0x8b0 [rtl8xxxu]
+    [<ffffffffc16910dd>] drv_start+0x6d/0x120 [mac80211]
+    [<ffffffffc16af3e2>] ieee80211_do_open+0x142/0x9c0 [mac80211]
+    [<ffffffffc16b2279>] ieee80211_open+0x59/0x80 [mac80211]
+    [<ffffffff9d80ad72>] __dev_open+0x122/0x1f0
+    [<ffffffff9d815daa>] __dev_change_flags+0xaa/0x200
+    [<ffffffff9d81613c>] dev_change_flags+0x1c/0x60
+    [<ffffffff9d83575b>] do_setlink+0x4ab/0x10e0
+    [<ffffffff9d82f808>] rtnl_setlink+0x218/0x260
+    [<ffffffff9d834dbf>] rtnetlink_rcv_msg+0x32f/0x5e0
+    [<ffffffff9d880291>] netlink_rcv_skb+0x101/0x130
+    [<ffffffff9d87df33>] netlink_unicast+0x1d3/0x2d0
+unreferenced object 0xffff8b7b18729a80 (size 216):
+  comm "iwd", pid 1992, jiffies 4294997204 (age 2038.757s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+[...]
 
-Yukar=C4=B1daki bilgilerinizi al=C4=B1r almaz transfere ba=C5=9Flayaca=C4=
-=9F=C4=B1z: =C4=B0leti=C5=9Fim
-e-postas=C4=B1 (westernuniontg453@gmail.com)
+--=20
+You may reply to this email to add a comment.
 
-Sayg=C4=B1lar=C4=B1mla te=C5=9Fekk=C3=BCrler
-
-Western Union Para Transferi Direkt=C3=B6r=C3=BC Bayan Martins Nanny,
-Merkez Ofis Lome Togo.
+You are receiving this mail because:
+You are the assignee for the bug.=
