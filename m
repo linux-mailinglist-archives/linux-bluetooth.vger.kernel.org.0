@@ -2,112 +2,89 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E83E15B8F19
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 20:57:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3A585B8F8C
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 22:10:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbiINS5s (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 14 Sep 2022 14:57:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40096 "EHLO
+        id S229801AbiINUKc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 14 Sep 2022 16:10:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229617AbiINS5q (ORCPT
+        with ESMTP id S229642AbiINUKV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 14 Sep 2022 14:57:46 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D79314D809
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 11:57:45 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id f14so25715290lfg.5
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 11:57:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=gPfbkeIYaVopJrRsNVDJhc0yLj8eY4j3MAgfbBt+sxE=;
-        b=OPLlLZS7KRNbONLlitB5/O7utZowHBbpt5AZ/lAR+kM/ZWUnKNSFQPtQb7pDsq8bIM
-         Ji7QnYghtoeb+7B7PGhLfo1llBDas8Xw+wlikbxvSl2TYAGLh9xb0Ry/ZRaD1D3TaNMf
-         6KVzJAp6OhLVhR8bnfKLCVPja+vsGgOQ+d4aazFl17+zqR2AZ1dRU9ci3Sllylg8zhf7
-         12LW9d/YmBPsX7AizdMr0MrDdv26iTzKwpR4Np8ntJGgnW0WuTNzlwiyqiR7aAk4ATGg
-         kdpV1JMd7mRB9RctNDy885oM1xZVq8zVBuq2+14bgaDAxUULu+NX/TaMZDIfaSLmoPmF
-         edJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=gPfbkeIYaVopJrRsNVDJhc0yLj8eY4j3MAgfbBt+sxE=;
-        b=DUQ0PE4jHv+iNhdNJaX7y+qWoFMWTC/UtNpc9pIElc6PKa5TxZS8h3ZXI8uttcUfGd
-         /fHcd0wtgXADHde3Pe8Ia4QihuaFtX4rUMNyS5+HyMs85DZoWpeRR18Fg3GegHiyt3fv
-         LO2YJLlfbri5uyh7hFOmpHwc1G/Ch6NQOBwyz9L5tVqBQOkcITAeNErTZyrb1uKvsODX
-         tTqssuFzyiUBmDgBN91SmPsv0IR5NR4vKKK3W60gX8gBl07wd/YA8CPKIl6eAfch7jvJ
-         /9K255ilaYVrm34jb9HkHlIBGsOF/Hr85RNK8vldNijszvYXkF5qgPDH7lIm8EL4gF90
-         rFoA==
-X-Gm-Message-State: ACrzQf1R5pfUnNsE9eix5pxDEgahZcAjorMfJzc7UvqYDB0r8X/IJGpV
-        FJPlCJyOlnAGLDqqUk5iu4r7zAjCATscFHnYiAraGn4HsdHsSg==
-X-Google-Smtp-Source: AMsMyM7gjnU3PEOBc+LUo3qrlwLaOUqq3ehximM6YPm9NVHMn5Bg6LSyBnm7eZFDw7BgQJjgOnQFtRzE4PhsgW24RYA=
-X-Received: by 2002:a19:6555:0:b0:49e:7d52:a4ca with SMTP id
- c21-20020a196555000000b0049e7d52a4camr377014lfj.198.1663181863391; Wed, 14
- Sep 2022 11:57:43 -0700 (PDT)
+        Wed, 14 Sep 2022 16:10:21 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B3C25DB;
+        Wed, 14 Sep 2022 13:10:18 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 18C73B81C98;
+        Wed, 14 Sep 2022 20:10:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C7CCBC433C1;
+        Wed, 14 Sep 2022 20:10:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663186215;
+        bh=2mXpFvdOt1OvzNHuzshAgYldAVI1T0KIUcLZXgJlUZ8=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=E+VIbf81votm60urSSWBBfQyDVkdPQxEexclVTEb+QqCTArMTULLATFdLYoZ8Vd1D
+         2fG9DEt7PWZDTND/AtD/Pj3ssQsBKbQ+oqhho33jtLZW99dPfH1akrdnVNjOlp4iMF
+         PGwt3JDKhF7AhB68qiQllDeNBJ6GUg2RidKxsGRp5GNnGEsyeoBSmIM0Ed2SreIBC2
+         q19momLFaH+MitdACqrFGvvBqAIvxwXYdSy0IWK8tiNh9j5d8+P84Tm+NCU7GCc961
+         tzGOv8i8efuGRnmCRPLyQw/UwTk18OUCDgwulzrIhWgxJeveCYtmvadugxOjNxnQOh
+         5qePUdR/fFrqQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A4831E8834D;
+        Wed, 14 Sep 2022 20:10:15 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20220913233157.526041-1-luiz.dentz@gmail.com> <63211c98.a70a0220.fc7d7.e5ba@mx.google.com>
-In-Reply-To: <63211c98.a70a0220.fc7d7.e5ba@mx.google.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 14 Sep 2022 11:57:31 -0700
-Message-ID: <CABBYNZ+d3QuemepkKGL8yS4TRyzXh8EcH=K4LkTkKLkfWfR51A@mail.gmail.com>
-Subject: Re: Bluetooth: RFCOMM: Fix possible deadlock on socket shutdown/release
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>,
-        Peter Sutton <peter@foxdogstudios.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [kernel PATCH v1 0/1] Bluetooth: hci_sync: allow advertising during
+ active scan without privacy
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <166318621566.18930.18182109802852789130.git-patchwork-notify@kernel.org>
+Date:   Wed, 14 Sep 2022 20:10:15 +0000
+References: <20220913220433.3308871-1-jiangzp@google.com>
+In-Reply-To: <20220913220433.3308871-1-jiangzp@google.com>
+To:     Zhengping Jiang <jiangzp@google.com>
+Cc:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        johan.hedberg@gmail.com, luiz.dentz@gmail.com, pabeni@redhat.com,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+Hello:
 
-On Tue, Sep 13, 2022 at 5:13 PM <bluez.test.bot@gmail.com> wrote:
->
-> This is automated email and please do not reply to this email!
->
-> Dear submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> This is a CI test results with your patch series:
-> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=676714
->
-> ---Test result---
->
-> Test Summary:
-> CheckPatch                    PASS      0.92 seconds
-> GitLint                       FAIL      0.47 seconds
-> SubjectPrefix                 PASS      0.31 seconds
-> BuildKernel                   PASS      45.45 seconds
-> BuildKernel32                 PASS      40.12 seconds
-> Incremental Build with patchesPASS      59.47 seconds
-> TestRunner: Setup             PASS      667.48 seconds
-> TestRunner: l2cap-tester      PASS      20.48 seconds
-> TestRunner: iso-tester        PASS      20.45 seconds
-> TestRunner: bnep-tester       PASS      7.74 seconds
-> TestRunner: mgmt-tester       PASS      127.19 seconds
-> TestRunner: rfcomm-tester     PASS      12.53 seconds
-> TestRunner: sco-tester        PASS      11.90 seconds
-> TestRunner: smp-tester        PASS      11.79 seconds
-> TestRunner: userchan-tester   PASS      8.35 seconds
->
-> Details
-> ##############################
-> Test: GitLint - FAIL - 0.47 seconds
-> Run gitlint with rule in .gitlint
-> Bluetooth: RFCOMM: Fix possible deadlock on socket shutdown/release
-> 21: B1 Line exceeds max length (101>80): "Link: https://lore.kernel.org/all/CAD+dNTsbuU4w+Y_P7o+VEN7BYCAbZuwZx2+tH+OTzCdcZF82YA@mail.gmail.com/"
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Let me know if this fixes the problems you are are having, note that I
-did add a test for rfcomm-tester to verify the deadlock is fixed:
+On Tue, 13 Sep 2022 15:04:32 -0700 you wrote:
+> This patch allows the device to keep advertising during active scan when
+> ll privacy is enabled, if the device is not using privacy mode.
+> 
+> Changes in v1:
+> - Check privacy flag when disable advertising
+> 
+> Zhengping Jiang (1):
+>   Bluetooth: hci_sync: allow advertising during active scan without
+>     privacy
+> 
+> [...]
 
-https://patchwork.kernel.org/project/bluetooth/patch/20220913233349.526675-1-luiz.dentz@gmail.com/
+Here is the summary with links:
+  - [kernel,v1,1/1] Bluetooth: hci_sync: allow advertising during active scan without privacy
+    https://git.kernel.org/bluetooth/bluetooth-next/c/9afc675edeeb
 
+You are awesome, thank you!
 -- 
-Luiz Augusto von Dentz
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
