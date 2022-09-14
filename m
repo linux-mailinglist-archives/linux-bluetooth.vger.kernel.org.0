@@ -2,52 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31F0C5B8F84
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 22:10:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 019C55B8F8A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 22:10:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbiINUK1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 14 Sep 2022 16:10:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55656 "EHLO
+        id S229624AbiINUKa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 14 Sep 2022 16:10:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229765AbiINUKS (ORCPT
+        with ESMTP id S229772AbiINUKS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 14 Sep 2022 16:10:18 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84D831D9
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 13:10:16 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DFEC10;
+        Wed, 14 Sep 2022 13:10:16 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 561C361ED8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 20:10:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B24B1C433D7;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7CCAF61ED9;
+        Wed, 14 Sep 2022 20:10:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D18C2C433B5;
         Wed, 14 Sep 2022 20:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1663186215;
-        bh=WFz/KE//pR0ciZQ+uAMNg+tlBpJuFEjb2tCFRLPahrM=;
+        bh=g6KUO98zbkQKhRZROdFqw4U5su9kSopTVBix/TJw0vI=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=R0TMfT/rzaGndP51AwP9mgBKgaveGXvS410LWOnI+qCBEnTCzjjgu9EC2cGdt6AwF
-         a7m+W3l9Vi5SdjZIfG4SqNeVWFAsVmrBstdzGzHT8UIHecDg8ZkWq5Od0pDlytkPsS
-         77sBqiGqPZW3c5PJq9+cZQGxX8zMCoAgFdkSZhtlgyAlQzvzBZtQ5mCKBnEUCqdJuW
-         e7sfZuQFr7MPnhQYoW32I9fmiFTVKjLf8KCA1cj2U62OsFi94sSsDEQ+txp9SvxdxY
-         UcfAy3dpJpRnDVGYsHnsiUbdv8wgKT/M1jttsNChmY/MrfS9Ncx3SNSOW0ZTyKp4BW
-         PDadDhs5nsVeA==
+        b=nEoChH23HgaLlAmOJpNLC9BTj5z4Ye0zaB1QCJrCsxd7BI2ntpljeCATeJfOSOjHn
+         R2Pq02qpQLtUxsB7zO/ENiUQ5EQS+w7geqNjIt5HB+tGinPHF+12hK8D1fbIsWDdu3
+         d3jtCEXIB6n7MfbqY4vAUeAHDlzwepPW1fymosp3yPvd0TgwBr26OWtreNy8jL+yrH
+         m4zvYXk1kFNgEvAL7XE3Y/0bubSgnmJWO7M7o+T8r+RlKR5eIoaUwZvL8+WXjp2Ms4
+         tt7LM1lKYQ1DB5z+GHa/vHxabbTphAAbk5xm1lZ90m/v8LzUs2U6cfkEPr+stgZMGf
+         6x3pLCTK17UvQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 99E3CC73FEB;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B00D4C73FF7;
         Wed, 14 Sep 2022 20:10:15 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: btusb: Add a new VID/PID 0e8d/0608 for MT7921
+Subject: Re: [kernel PATCH v2 0/1] Bluetooth: hci_sync: allow advertise when scan
+ without RPA
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166318621561.18930.13956663237311044921.git-patchwork-notify@kernel.org>
+Message-Id: <166318621571.18930.13188395810053943250.git-patchwork-notify@kernel.org>
 Date:   Wed, 14 Sep 2022 20:10:15 +0000
-References: <YxubXl/fxmBBDjVp@makrotopia.org>
-In-Reply-To: <YxubXl/fxmBBDjVp@makrotopia.org>
-To:     Daniel Golle <daniel@makrotopia.org>
-Cc:     linux-mediatek@lists.infradead.org,
-        linux-bluetooth@vger.kernel.org, matthias.bgg@gmail.com,
-        luiz.dentz@gmail.com, johan.hedberg@gmail.com, marcel@holtmann.org
+References: <20220913233715.3323089-1-jiangzp@google.com>
+In-Reply-To: <20220913233715.3323089-1-jiangzp@google.com>
+To:     Zhengping Jiang <jiangzp@google.com>
+Cc:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        johan.hedberg@gmail.com, luiz.dentz@gmail.com, pabeni@redhat.com,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -63,55 +65,21 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Fri, 9 Sep 2022 21:00:30 +0100 you wrote:
-> Add a new PID/VID 0e8d/0608 for MT7921K chip found on AMD RZ608 module.
+On Tue, 13 Sep 2022 16:37:14 -0700 you wrote:
+> This patch allows the device to keep advertising during active scan when
+> ll privacy is enabled, if the device is not using privacy mode.
 > 
-> From /sys/kernel/debug/usb/devices:
-> T:  Bus=01 Lev=02 Prnt=02 Port=01 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
-> D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-> P:  Vendor=0e8d ProdID=0608 Rev= 1.00
-> S:  Manufacturer=MediaTek Inc.
-> S:  Product=Wireless_Device
-> S:  SerialNumber=000000000
-> C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-> A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-> E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-> E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-> E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-> E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-> I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-> E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-> E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+> Changes in v2:
+> - Modify title to reduce length within limit
+> 
+> Changes in v1:
+> - Check privacy flag when disable advertising
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: btusb: Add a new VID/PID 0e8d/0608 for MT7921
-    https://git.kernel.org/bluetooth/bluetooth-next/c/be55622ce673
+  - [kernel,v2,1/1] Bluetooth: hci_sync: allow advertise when scan without RPA
+    https://git.kernel.org/bluetooth/bluetooth-next/c/9afc675edeeb
 
 You are awesome, thank you!
 -- 
