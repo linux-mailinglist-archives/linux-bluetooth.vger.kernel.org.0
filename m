@@ -2,54 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3A585B8F8C
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 22:10:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DD3C5B8F85
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 22:10:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229801AbiINUKc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 14 Sep 2022 16:10:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55768 "EHLO
+        id S229765AbiINUK2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 14 Sep 2022 16:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229642AbiINUKV (ORCPT
+        with ESMTP id S229568AbiINUKS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 14 Sep 2022 16:10:21 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B3C25DB;
-        Wed, 14 Sep 2022 13:10:18 -0700 (PDT)
+        Wed, 14 Sep 2022 16:10:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84FB91160
+        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 13:10:16 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 18C73B81C98;
-        Wed, 14 Sep 2022 20:10:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C7CCBC433C1;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 80E5F61EDD
+        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 20:10:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DDC78C4347C;
         Wed, 14 Sep 2022 20:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1663186215;
-        bh=2mXpFvdOt1OvzNHuzshAgYldAVI1T0KIUcLZXgJlUZ8=;
+        bh=stVRc1yS+SOK2i5XhtLCYosmNa7H/zyiLN+LsWBTwIg=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=E+VIbf81votm60urSSWBBfQyDVkdPQxEexclVTEb+QqCTArMTULLATFdLYoZ8Vd1D
-         2fG9DEt7PWZDTND/AtD/Pj3ssQsBKbQ+oqhho33jtLZW99dPfH1akrdnVNjOlp4iMF
-         PGwt3JDKhF7AhB68qiQllDeNBJ6GUg2RidKxsGRp5GNnGEsyeoBSmIM0Ed2SreIBC2
-         q19momLFaH+MitdACqrFGvvBqAIvxwXYdSy0IWK8tiNh9j5d8+P84Tm+NCU7GCc961
-         tzGOv8i8efuGRnmCRPLyQw/UwTk18OUCDgwulzrIhWgxJeveCYtmvadugxOjNxnQOh
-         5qePUdR/fFrqQ==
+        b=b11CITgF1WHzIJmEV9yPJE5FCYnDLVzgH3TIXs96emL/a5opvbH+jJgv9iu9zVaaO
+         AAbP9NGKN4tFlFqS551wuedO2Wz8ORESszIsagHpeGX3e/5x57FPjsS4VdkOZoKy6M
+         Qu3sbqfaASPhvaJlAIZphyhLqBCyHmFidmZlvhwxRTMFazixopdnOKoNBX/hw8K7ec
+         +XJdWLE3loJfCYSw+mXsEBTWSwi+OMAVp+dfEwYHQ2qh+euscDmg5rhA1yUje2xKME
+         HAJKaqMdAkBhsuGTCTq+rr93j7K8OjQgEdxhp7a+nWBBflx6b+skfJZUPuZH+vnT07
+         SyoPrxol2/oow==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A4831E8834D;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C9E8EC73FEB;
         Wed, 14 Sep 2022 20:10:15 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [kernel PATCH v1 0/1] Bluetooth: hci_sync: allow advertising during
- active scan without privacy
+Subject: Re: [PATCH] Bluetooth: avoid hci_dev_test_and_set_flag() in
+ mgmt_init_hdev()
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166318621566.18930.18182109802852789130.git-patchwork-notify@kernel.org>
+Message-Id: <166318621582.18930.5263572054834552054.git-patchwork-notify@kernel.org>
 Date:   Wed, 14 Sep 2022 20:10:15 +0000
-References: <20220913220433.3308871-1-jiangzp@google.com>
-In-Reply-To: <20220913220433.3308871-1-jiangzp@google.com>
-To:     Zhengping Jiang <jiangzp@google.com>
-Cc:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com, pabeni@redhat.com,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+References: <f6de02d1-dcda-0383-739d-27484b4d5c63@I-love.SAKURA.ne.jp>
+In-Reply-To: <f6de02d1-dcda-0383-739d-27484b4d5c63@I-love.SAKURA.ne.jp>
+To:     Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        syzbot+844c7bf1b1aa4119c5de@syzkaller.appspotmail.com,
+        linux-bluetooth@vger.kernel.org, syzkaller-bugs@googlegroups.com
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -65,22 +64,23 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 13 Sep 2022 15:04:32 -0700 you wrote:
-> This patch allows the device to keep advertising during active scan when
-> ll privacy is enabled, if the device is not using privacy mode.
+On Mon, 12 Sep 2022 01:21:42 +0900 you wrote:
+> syzbot is again reporting attempt to cancel uninitialized work
+> at mgmt_index_removed() [1], for setting of HCI_MGMT flag from
+> mgmt_init_hdev() from hci_mgmt_cmd() from hci_sock_sendmsg() can
+> race with testing of HCI_MGMT flag from mgmt_index_removed() from
+> hci_sock_bind() due to lack of serialization via hci_dev_lock().
 > 
-> Changes in v1:
-> - Check privacy flag when disable advertising
-> 
-> Zhengping Jiang (1):
->   Bluetooth: hci_sync: allow advertising during active scan without
->     privacy
+> Since mgmt_init_hdev() is called with mgmt_chan_list_lock held, we can
+> safely split hci_dev_test_and_set_flag() into hci_dev_test_flag() and
+> hci_dev_set_flag(). Thus, in order to close this race, set HCI_MGMT flag
+> after INIT_DELAYED_WORK() completed.
 > 
 > [...]
 
 Here is the summary with links:
-  - [kernel,v1,1/1] Bluetooth: hci_sync: allow advertising during active scan without privacy
-    https://git.kernel.org/bluetooth/bluetooth-next/c/9afc675edeeb
+  - Bluetooth: avoid hci_dev_test_and_set_flag() in mgmt_init_hdev()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/f74ca25d6d66
 
 You are awesome, thank you!
 -- 
