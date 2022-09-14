@@ -2,64 +2,154 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A62855B7FF0
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 05:57:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C6F75B8574
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Sep 2022 11:47:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229732AbiIND5R (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 13 Sep 2022 23:57:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41688 "EHLO
+        id S230284AbiINJr3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 14 Sep 2022 05:47:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229911AbiIND4m (ORCPT
+        with ESMTP id S229975AbiINJr2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 13 Sep 2022 23:56:42 -0400
-X-Greylist: delayed 2508 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 13 Sep 2022 20:56:26 PDT
-Received: from virtnet-202-22.sysprovider.com (virtnet-202-22.sysprovider.com [185.250.202.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76227E011
-        for <linux-bluetooth@vger.kernel.org>; Tue, 13 Sep 2022 20:56:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=obsequioydetalles.es; s=x; h=Message-ID:Reply-To:Date:From:To:Subject:
-        Content-Description:Content-Transfer-Encoding:MIME-Version:Content-Type:
-        Sender:Cc:Content-ID:Resent-Date:Resent-From:Resent-Sender:Resent-To:
-        Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=cMV6g1dG62Wa1QS5IUASXqy0B+w37tgW03NQOYRA/Y4=; b=OqmUjJgcWdilaHbbVhMyJ2r47z
-        WMI5nsE1KzZRLIuV6yMR07ntUsL4xzDJtuV6qHd9kpifV4h7qTngOvD8LC9oR1kTz/nlcW2HbrhLZ
-        LyeqIXmbyGoDBRWmchvgFl2POT8jd7+UTyURPsLe4CzJD/fIK8FDd176H6GuxzMf+eaL3IoaB34oB
-        sWb4krEZ/9K9Q5mjyUT+Ikc4lmxZsyoYtEZ45pQ9C+Ohi8Mzxgr/LIsvd5eGuwNZBIfTLGVw3hDGY
-        SzoCXkG3i35ckK4GDL1X/SuVHdMAw+fDco5MxZt+u0P3f7ZV5isKlxOmrLvWczALxrzLcddvMeKMI
-        nb/D8SSA==;
-Received: from [216.73.160.136] (helo=[10.153.0.6])
-        by virtnet-202-22.sysprovider.com with esmtpa (Exim 4.95)
-        (envelope-from <design@obsequioydetalles.es>)
-        id 1oYIlp-0002hd-U6;
-        Wed, 14 Sep 2022 05:09:02 +0200
-Content-Type: text/plain; charset="iso-8859-1"
+        Wed, 14 Sep 2022 05:47:28 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F47161B3C
+        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 02:47:27 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a26so4679252ejc.4
+        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Sep 2022 02:47:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=xX1BC1zE+4pPFFRGV5eLSMuFNVycNGnz7b+F9WB7kfU=;
+        b=GeVEAHXzEIfPUiJgaGKejWbceYG2XhGbqyUjD1rf8cMuMf/9070HTgrNa+nigLY6si
+         YR5xU6r4tgU1WHa7h68bMKBqvrM0or6JiHN/MfFTTP2exOYyvfOJ/GDJdTrE4s+AuryS
+         sjLYcdAkkB5wkRaluBdFG5VS5ielI7lG4LW4eYoVSgHh2PtlYBIvnrOkctn+CFtejZ1R
+         y2FlxYswXQXuLBcVth+ZKJa8/gMeEqb3NHQEMbgfVAU2uIsrQJqgVBMQpNR/wfTCuPXY
+         NHpUC5FyUxPbOHDA7o+sNJRawed+830ooM2OOrGZFY8ULZjHVTiw/ojDQCxxwvDWBtiY
+         aKdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=xX1BC1zE+4pPFFRGV5eLSMuFNVycNGnz7b+F9WB7kfU=;
+        b=VWwi7wFCvtHOa+HiG8zy5z3IS2Ca0K23OyXFlpgRvjO6MdmfgPhq8NBNZnOsjAWXNW
+         O90aIf2ERZMSt2c1PSUZ0Y81xfEkuuQXfxlkkFGjNHSe1qDXzhEci1RSDlBwWnGJp6bs
+         OKWr18o/x/f29TRHx87fVUvKrJ7Z66+scR0UMQwWvP35au9pAkqZ7IWSBtegtyT2vSB8
+         cvaWRyFyj6RP3DQ8+I6m9RiHaWgzQ/kuouKIghbSwOpPcToGBI0rzVMsA2iqiIikDucz
+         eB+tHUNyy84+yt88N73fMfw5uTZFd9q58TS7Bzpyy3relM84hSxzjpkKiQ9m2EL0xziI
+         qDHw==
+X-Gm-Message-State: ACgBeo3lQfS8bWLsh3DdcQVk+SWsxBq8MIr8LfQOnxwV7sTopOr5o3dM
+        f7pFKNphG9jut7V5T6LIr8u9t+cRqrA=
+X-Google-Smtp-Source: AA6agR5rd9KYrSAHonCch6kl7ABtW36y30Ee456mSwYvShb4R4hj3WkCwGdbPq2Fw4QrMrcrlUM3zw==
+X-Received: by 2002:a17:907:7678:b0:730:e1ad:b128 with SMTP id kk24-20020a170907767800b00730e1adb128mr25341949ejc.67.1663148845857;
+        Wed, 14 Sep 2022 02:47:25 -0700 (PDT)
+Received: from [172.17.234.72] (nata162.ugent.be. [157.193.240.162])
+        by smtp.gmail.com with ESMTPSA id c11-20020a170906924b00b0072a881b21d8sm7288654ejx.119.2022.09.14.02.47.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Sep 2022 02:47:25 -0700 (PDT)
+Message-ID: <00660cd3-7d71-13a4-f617-229e6defb701@gmail.com>
+Date:   Wed, 14 Sep 2022 11:47:23 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: 10 BTC (BITCOIN)
-To:     Recipients <design@obsequioydetalles.es>
-From:   "Team Elon Musk" <design@obsequioydetalles.es>
-Date:   Wed, 14 Sep 2022 05:08:44 +0200
-Reply-To: teamelonmusk94@gmail.com
-Message-ID: <GENERATED-WASMISSING-1oYIlp-0002hd-U6@virtnet-202-22.sysprovider.com>
-X-ACL-Warn: Adding Message-ID header because it is missing!
-X-Authenticated-Id: design@obsequioydetalles.es 
-X-Spam-Status: No, score=3.4 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH v2] Bluetooth: protect remote oob data in
+ build_pairing_cmd's callsites
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+References: <20220913173907.13792-1-dossche.niels@gmail.com>
+Content-Language: en-US
+From:   Niels Dossche <dossche.niels@gmail.com>
+In-Reply-To: <20220913173907.13792-1-dossche.niels@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Your email was luckly selected to received a donation of 10 BTC (BITCOIN) e=
-qual to 4,124,270.00 from Elon Musk.
+On 9/13/22 19:39, Niels Dossche wrote:
+> Accesses to hci_dev->remote_oob_data are protected by the hdev lock,
+> except for the access in build_pairing_cmd via hci_find_remote_oob_data.
+> Adding the lock around the access in build_pairing_cmd would cause a
+> lock ordering problem: the l2cap_chan_lock is taken in the caller
+> smp_conn_security, while the hdev lock should be taken before the chan
+> lock.
+> The solution is to add the hdev lock to the callsites of
+> build_pairing_cmd.
+> 
+> Fixes: 02b05bd8b0a6 ("Bluetooth: Set SMP OOB flag if OOB data is available")
+> Signed-off-by: Niels Dossche <dossche.niels@gmail.com>
+> ---
+> 
+> Note:
+> I am currently working on a static analyser to detect missing locks
+> using type-based static analysis, which reported the missing lock on
+> v6.0-rc5. I manually verified the report by looking at the code,
+> so that I do not send wrong information or patches.
+> After concluding that this seems to be a true positive, I created
+> this patch. I have only managed to compile-test this patch on x86_64.
+> After applying the patch, my analyser no longer reports the potential
+> bug.
+> 
+>  net/bluetooth/smp.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+> index 11f853d0500f..6611a789b6c1 100644
+> --- a/net/bluetooth/smp.c
+> +++ b/net/bluetooth/smp.c
+> @@ -1803,7 +1803,9 @@ static u8 smp_cmd_pairing_req(struct l2cap_conn *conn, struct sk_buff *skb)
+>  		return 0;
+>  	}
+>  
+> +	hci_dev_lock(hdev);
+>  	build_pairing_cmd(conn, req, &rsp, auth);
+> +	hci_dev_unlock(hdev);
+>  
+>  	if (rsp.auth_req & SMP_AUTH_SC) {
+>  		set_bit(SMP_FLAG_SC, &smp->flags);
+> @@ -2335,7 +2337,9 @@ static u8 smp_cmd_security_req(struct l2cap_conn *conn, struct sk_buff *skb)
+>  	skb_pull(skb, sizeof(*rp));
+>  
+>  	memset(&cp, 0, sizeof(cp));
+> +	hci_dev_lock(hdev);
+>  	build_pairing_cmd(conn, &cp, NULL, auth);
+> +	hci_dev_unlock(hdev);
+>  
+>  	smp->preq[0] = SMP_CMD_PAIRING_REQ;
+>  	memcpy(&smp->preq[1], &cp, sizeof(cp));
+> @@ -2380,6 +2384,7 @@ int smp_conn_security(struct hci_conn *hcon, __u8 sec_level)
+>  		return 1;
+>  	}
+>  
+> +	hci_dev_lock(hcon->hdev);
+>  	l2cap_chan_lock(chan);
+>  
+>  	/* If SMP is already in progress ignore this request */
+> @@ -2435,6 +2440,7 @@ int smp_conn_security(struct hci_conn *hcon, __u8 sec_level)
+>  
+>  unlock:
+>  	l2cap_chan_unlock(chan);
+> +	hci_dev_unlock(hcon->hdev);
+>  	return ret;
+>  }
+>  
 
-The donation is coming from Elon Musk, CEO and chief engineer of early-stag=
-e investor with an estimated net worth of around $245 billion.
+Please disregard this patch as this can cause a deadlock as I now tested this with the CI runner locally.
+Sorry for the inconvenience.
 
-Urgently email us: (teamelonmusk94@gmail.com).
+First, the lock in smp_cmd_security_req is not needed. Second, there is still a lock ordering problem with the other two callsites.
+smp_sig_chan can call both smp_cmd_pairing_req and smp_cmd_security_req, at which point the hdev lock is not taken and the race is possible as far as I know, so the lock would be necessary.
+The problem is however that taking the lock inside smp_cmd_pairing_req and smp_cmd_security_req around build_pairing_cmd will cause a lock ordering problem as that means hdev lock is taken after the chan->lock.
+I don't know how to approach this from here on.
+Thanks
