@@ -2,139 +2,233 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 676DD5B9712
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Sep 2022 11:12:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B88555B9860
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Sep 2022 11:58:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229835AbiIOJMA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 15 Sep 2022 05:12:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49112 "EHLO
+        id S229933AbiIOJ6M (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 15 Sep 2022 05:58:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbiIOJL6 (ORCPT
+        with ESMTP id S230009AbiIOJ5h (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 15 Sep 2022 05:11:58 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06C7D98A44
-        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Sep 2022 02:11:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1663233117; x=1694769117;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=lEIA4rjVi3QwksNHFtO/tRqQTysTvVksh+rNROV+dPY=;
-  b=SAzGYb4dSYOYwqPl24/Uf4eXRCNR87uPk3TNLxcAG/eQ5wMaqlTs4VQ9
-   ohcNUA2RBwrt5tUeKBGKGLYnmoSx/BhFP4iHpRyge5SXWPYjjkZP9hW90
-   eEfTpvq6ZpMRCo2ZCeBYWSGwtUWkGPsPBxMTbwsylUiPKzYE6kwAPl7Vi
-   FcMWip8tBTyCPAxksXwLVDK+HDnZY6Fa0rmns+Wp7nMv8yiKZ1oFb45SG
-   P+CKYzCd1kOmvL/R7JdNmMGzdXm8U2qNlMwRMX/uWHFQsmp5zXSRwzx0r
-   /qr1zfQAG9+FC2904xcEno5WxZTSs/xOOTrBT/jRJ2/8lTiXoqo9fg4wR
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10470"; a="384953308"
-X-IronPort-AV: E=Sophos;i="5.93,317,1654585200"; 
-   d="scan'208";a="384953308"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2022 02:11:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,317,1654585200"; 
-   d="scan'208";a="759560386"
-Received: from lkp-server02.sh.intel.com (HELO 41300c7200ea) ([10.239.97.151])
-  by fmsmga001.fm.intel.com with ESMTP; 15 Sep 2022 02:11:47 -0700
-Received: from kbuild by 41300c7200ea with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oYkuR-0000G3-10;
-        Thu, 15 Sep 2022 09:11:47 +0000
-Date:   Thu, 15 Sep 2022 17:11:25 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- 9afc675edeeb34d281675f1d5a217d27c5a1a3db
-Message-ID: <6322ec3d.YjItPucVuDVDFcZp%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        Thu, 15 Sep 2022 05:57:37 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 038579C228
+        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Sep 2022 02:53:24 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id p69so20136923yba.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Sep 2022 02:53:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=dWKFLfMRTgfQu9bSpTr/rzHVqKoEmBUXIEoSuOHE3Ak=;
+        b=RcEK4m87RefXG575cYTY/p7pvh+1P1mhoLuFljIhjSB8Si5HnS1eIyeXCSBoPMHauD
+         +jBTXZUS9aALk1A2SWsRAP5dtRWOBERt78/SOrS8RHB108nkmjOeMduknBFUk1IudZJy
+         NrC78jhhjA2+c8jeplBSi8CsrlQcjQjYukccL/Y3IOeHqn4TaEm77hg5dWzgvLuBvn8U
+         CDAAt08m6thAjNco07pA2fpvVJnMghB68VbM29i4qaSj1cRVRoT6Vg3qVGQJRwohx/tf
+         pEzVEBBEJgCqfF0UFPcOo4IUr4U2hU8hseAU/7zPeevjZezQmeOFObHGnjl1M0FbAaHX
+         yqBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=dWKFLfMRTgfQu9bSpTr/rzHVqKoEmBUXIEoSuOHE3Ak=;
+        b=eu7P0P0z+dWHRoit53eWIt9HjYHrdRmUyvxMJv7rFon9GxA1R85qsa9Es4Og2sOcdA
+         DsINNDBdgoh0NzQpvhMO8W+rb1TiactcuQuegOn7faiwY4AAKETvq6Qcxw6OZQMuvGFC
+         a4w62UIOj14xGSTl+ICqAx4mEP8HoM/skCm243F8nMx4UJadtdf15W9sjVls/IyJpbJ1
+         b/I/G+V97eTMSpNN1ENyVtkq/0vmIIk1ZsBwpQ627ZHXyjhfUa/1dqg1iBe+45ewbncM
+         soD5UUV5dKCBD76DQ3ZUqmtW3FlwD7ABKFrU0QTuCnTW4wZxAkhE0WGoLfucDyWyCk9t
+         uXAg==
+X-Gm-Message-State: ACgBeo0giDchih+VVVdFvISoq6YWUqGLEQGFfzSaBQVbiXTbTdQk7miI
+        ORyfp5yCwBNOcDLXCSimiaw8yEPwpKAgoFdokAB9QthZJfY=
+X-Google-Smtp-Source: AA6agR5uCKkUeoTfoVpjPuEcgAhLhu8An2GLwd64jIwTMbQBSqY2WcZNCnE/E2URyjhJIUXiRS33MBsG/IKnTO/gePA=
+X-Received: by 2002:a05:6902:1245:b0:6ae:325e:166a with SMTP id
+ t5-20020a056902124500b006ae325e166amr30401206ybu.206.1663235603795; Thu, 15
+ Sep 2022 02:53:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+References: <20220912124657.404551-2-sathish.narasimman@intel.com>
+ <631f3c5c.050a0220.3a4e9.d86a@mx.google.com> <CABBYNZKbMvToE1S4JAJz80SLpW8a9jFzw+u3KQMTdmC0wtrK+g@mail.gmail.com>
+In-Reply-To: <CABBYNZKbMvToE1S4JAJz80SLpW8a9jFzw+u3KQMTdmC0wtrK+g@mail.gmail.com>
+From:   Sathish Narasimman <nsathish41@gmail.com>
+Date:   Thu, 15 Sep 2022 15:23:12 +0530
+Message-ID: <CAOVXEJKL5d04tm3Yi=4vCyDjUmri-9Unne+aW7YVk967Fe_fjw@mail.gmail.com>
+Subject: Re: Volume Control Profile
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org, sathish.narasimman@intel.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: 9afc675edeeb34d281675f1d5a217d27c5a1a3db  Bluetooth: hci_sync: allow advertise when scan without RPA
+Hi Luiz
 
-elapsed time: 720m
+Updated v2 of the patch.
+Please review
 
-configs tested: 58
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-x86_64                        randconfig-a004
-um                           x86_64_defconfig
-x86_64                        randconfig-a002
-arc                  randconfig-r043-20220914
-um                             i386_defconfig
-arc                                 defconfig
-s390                             allmodconfig
-x86_64                        randconfig-a006
-alpha                               defconfig
-s390                                defconfig
-i386                          randconfig-a001
-x86_64                              defconfig
-x86_64                               rhel-8.3
-arm                                 defconfig
-s390                             allyesconfig
-i386                                defconfig
-m68k                             allmodconfig
-x86_64                           allyesconfig
-i386                          randconfig-a003
-arc                              allyesconfig
-i386                          randconfig-a005
-alpha                            allyesconfig
-m68k                             allyesconfig
-arm                              allyesconfig
-powerpc                           allnoconfig
-arm64                            allyesconfig
-i386                          randconfig-a014
-i386                          randconfig-a012
-x86_64                          rhel-8.3-func
-i386                             allyesconfig
-x86_64                         rhel-8.3-kunit
-i386                          randconfig-a016
-powerpc                          allmodconfig
-x86_64                           rhel-8.3-kvm
-sh                               allmodconfig
-mips                             allyesconfig
-x86_64                    rhel-8.3-kselftests
-x86_64                           rhel-8.3-syz
-x86_64                        randconfig-a013
-ia64                             allmodconfig
-x86_64                        randconfig-a011
-x86_64                        randconfig-a015
-
-clang tested configs:
-hexagon              randconfig-r041-20220914
-x86_64                        randconfig-a005
-x86_64                        randconfig-a001
-hexagon              randconfig-r045-20220914
-x86_64                        randconfig-a003
-riscv                randconfig-r042-20220914
-s390                 randconfig-r044-20220914
-i386                          randconfig-a002
-i386                          randconfig-a006
-i386                          randconfig-a004
-i386                          randconfig-a013
-i386                          randconfig-a011
-i386                          randconfig-a015
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
-x86_64                        randconfig-a016
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+On Thu, Sep 15, 2022 at 3:18 AM Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
+>
+> Hi Sathish,
+>
+> On Mon, Sep 12, 2022 at 7:08 AM <bluez.test.bot@gmail.com> wrote:
+> >
+> > This is automated email and please do not reply to this email!
+> >
+> > Dear submitter,
+> >
+> > Thank you for submitting the patches to the linux bluetooth mailing list.
+> > This is a CI test results with your patch series:
+> > PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=676220
+> >
+> > ---Test result---
+> >
+> > Test Summary:
+> > CheckPatch                    FAIL      5.79 seconds
+> > GitLint                       PASS      3.00 seconds
+> > Prep - Setup ELL              PASS      31.92 seconds
+> > Build - Prep                  PASS      0.90 seconds
+> > Build - Configure             PASS      9.87 seconds
+> > Build - Make                  PASS      1165.82 seconds
+> > Make Check                    PASS      12.98 seconds
+> > Make Check w/Valgrind         PASS      355.07 seconds
+> > Make Distcheck                PASS      306.75 seconds
+> > Build w/ext ELL - Configure   PASS      10.50 seconds
+> > Build w/ext ELL - Make        PASS      107.90 seconds
+> > Incremental Build w/ patches  PASS      510.36 seconds
+> > Scan Build                    WARNING   1238.26 seconds
+> >
+> > Details
+> > ##############################
+> > Test: CheckPatch - FAIL
+> > Desc: Run checkpatch.pl script with rule in .checkpatch.conf
+> > Output:
+> > [BlueZ,2/4] shared/vcp: Add initial code for handling VCP
+> > WARNING:LONG_LINE: line length of 88 exceeds 80 columns
+> > #393: FILE: src/shared/vcp.c:302:
+> > +       gatt_db_attribute_notify(vdb->vcs->vs, (void *)vstate, sizeof(struct vol_state),
+> >
+> > WARNING:LONG_LINE: line length of 88 exceeds 80 columns
+> > #425: FILE: src/shared/vcp.c:334:
+> > +       gatt_db_attribute_notify(vdb->vcs->vs, (void *)vstate, sizeof(struct vol_state),
+> >
+> > WARNING:LONG_LINE: line length of 88 exceeds 80 columns
+> > #458: FILE: src/shared/vcp.c:367:
+> > +       gatt_db_attribute_notify(vdb->vcs->vs, (void *)vstate, sizeof(struct vol_state),
+> >
+> > WARNING:LONG_LINE: line length of 88 exceeds 80 columns
+> > #491: FILE: src/shared/vcp.c:400:
+> > +       gatt_db_attribute_notify(vdb->vcs->vs, (void *)vstate, sizeof(struct vol_state),
+> >
+> > WARNING:LONG_LINE: line length of 88 exceeds 80 columns
+> > #523: FILE: src/shared/vcp.c:432:
+> > +       gatt_db_attribute_notify(vdb->vcs->vs, (void *)vstate, sizeof(struct vol_state),
+> >
+> > WARNING:LONG_LINE: line length of 88 exceeds 80 columns
+> > #555: FILE: src/shared/vcp.c:464:
+> > +       gatt_db_attribute_notify(vdb->vcs->vs, (void *)vstate, sizeof(struct vol_state),
+> >
+> > WARNING:LONG_LINE: line length of 82 exceeds 80 columns
+> > #1051: FILE: src/shared/vcp.c:960:
+> > +                                               value_handle, vcp_vstate_register,
+> >
+> > WARNING:LONG_LINE: line length of 81 exceeds 80 columns
+> > #1080: FILE: src/shared/vcp.c:989:
+> > +                                               value_handle, vcp_vflag_register,
+> >
+> > WARNING:PREFER_DEFINED_ATTRIBUTE_MACRO: Prefer __packed over __attribute__((packed))
+> > #1146: FILE: src/shared/vcp.h:16:
+> > +#define __packed __attribute__((packed))
+> >
+> > /github/workspace/src/12973630.patch total: 0 errors, 9 warnings, 1098 lines checked
+> >
+> > NOTE: For some of the reported defects, checkpatch may be able to
+> >       mechanically convert to the typical style using --fix or --fix-inplace.
+> >
+> > /github/workspace/src/12973630.patch has style problems, please review.
+> >
+> > NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+> >
+> > NOTE: If any of the errors are false positives, please report
+> >       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+> >
+> > [BlueZ,3/4] profiles: Add initial code for vcp plugin
+> > ERROR:INITIALISED_STATIC: do not initialise statics to 0
+> > #395: FILE: profiles/audio/vcp.c:288:
+> > +static unsigned int vcp_id = 0;
+> >
+> > /github/workspace/src/12973633.patch total: 1 errors, 0 warnings, 330 lines checked
+> >
+> > NOTE: For some of the reported defects, checkpatch may be able to
+> >       mechanically convert to the typical style using --fix or --fix-inplace.
+> >
+> > /github/workspace/src/12973633.patch has style problems, please review.
+> >
+> > NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+> >
+> > NOTE: If any of the errors are false positives, please report
+> >       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+> >
+> >
+> > ##############################
+> > Test: Scan Build - WARNING
+> > Desc: Run Scan Build with patches
+> > Output:
+> > *****************************************************************************
+> > The bugs reported by the scan-build may or may not be caused by your patches.
+> > Please check the list and fix the bugs if they are caused by your patch.
+> > *****************************************************************************
+> > src/shared/vcp.c:288:11: warning: Access to field 'vcs' results in a dereference of a null pointer (loaded from variable 'vdb')
+> >         vstate = vdb->vcs->vstate;
+> >                  ^~~~~~~~
+> > src/shared/vcp.c:294:25: warning: Access to field 'counter' results in a dereference of a null pointer (loaded from variable 'vstate')
+> >         if (*change_counter != vstate->counter) {
+> >                                ^~~~~~~~~~~~~~~
+> > src/shared/vcp.c:320:11: warning: Access to field 'vcs' results in a dereference of a null pointer (loaded from variable 'vdb')
+> >         vstate = vdb->vcs->vstate;
+> >                  ^~~~~~~~
+> > src/shared/vcp.c:326:25: warning: Access to field 'counter' results in a dereference of a null pointer (loaded from variable 'vstate')
+> >         if (*change_counter != vstate->counter) {
+> >                                ^~~~~~~~~~~~~~~
+> > src/shared/vcp.c:352:11: warning: Access to field 'vcs' results in a dereference of a null pointer (loaded from variable 'vdb')
+> >         vstate = vdb->vcs->vstate;
+> >                  ^~~~~~~~
+> > src/shared/vcp.c:358:25: warning: Access to field 'counter' results in a dereference of a null pointer (loaded from variable 'vstate')
+> >         if (*change_counter != vstate->counter) {
+> >                                ^~~~~~~~~~~~~~~
+> > src/shared/vcp.c:385:11: warning: Access to field 'vcs' results in a dereference of a null pointer (loaded from variable 'vdb')
+> >         vstate = vdb->vcs->vstate;
+> >                  ^~~~~~~~
+> > src/shared/vcp.c:391:25: warning: Access to field 'counter' results in a dereference of a null pointer (loaded from variable 'vstate')
+> >         if (*change_counter != vstate->counter) {
+> >                                ^~~~~~~~~~~~~~~
+> > src/shared/vcp.c:418:11: warning: Access to field 'vcs' results in a dereference of a null pointer (loaded from variable 'vdb')
+> >         vstate = vdb->vcs->vstate;
+> >                  ^~~~~~~~
+> > src/shared/vcp.c:424:29: warning: Access to field 'counter' results in a dereference of a null pointer (loaded from variable 'vstate')
+> >         if (req->change_counter != vstate->counter) {
+> >                                    ^~~~~~~~~~~~~~~
+> > src/shared/vcp.c:450:11: warning: Access to field 'vcs' results in a dereference of a null pointer (loaded from variable 'vdb')
+> >         vstate = vdb->vcs->vstate;
+> >                  ^~~~~~~~
+> > src/shared/vcp.c:456:25: warning: Access to field 'counter' results in a dereference of a null pointer (loaded from variable 'vstate')
+> >         if (*change_counter != vstate->counter) {
+> >                                ^~~~~~~~~~~~~~~
+> > src/shared/vcp.c:482:11: warning: Access to field 'vcs' results in a dereference of a null pointer (loaded from variable 'vdb')
+> >         vstate = vdb->vcs->vstate;
+> >                  ^~~~~~~~
+> > src/shared/vcp.c:488:25: warning: Access to field 'counter' results in a dereference of a null pointer (loaded from variable 'vstate')
+> >         if (*change_counter != vstate->counter) {
+> >                                ^~~~~~~~~~~~~~~
+> > 14 warnings generated.
+>
+> Would you please fix the above problems, also Id reorder the patches
+> so the monitor changes can be applied before the others.
+>
+> --
+> Luiz Augusto von Dentz
