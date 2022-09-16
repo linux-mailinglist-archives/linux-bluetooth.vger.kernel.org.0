@@ -2,139 +2,118 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D66B5BA9B0
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Sep 2022 11:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80A3D5BB054
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Sep 2022 17:37:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbiIPJvu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 16 Sep 2022 05:51:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37298 "EHLO
+        id S231753AbiIPPhR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 16 Sep 2022 11:37:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229990AbiIPJvt (ORCPT
+        with ESMTP id S231368AbiIPPhM (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 16 Sep 2022 05:51:49 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2B79BCAD
-        for <linux-bluetooth@vger.kernel.org>; Fri, 16 Sep 2022 02:51:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1663321908; x=1694857908;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=dkAV4CLaMwHSZvjMABZIi3qBIKWwff4CD2ir2FwebsE=;
-  b=RsxYyVo5+cSZ3X9aCFisZPmELP+Nd6GntNDcwAC0uZNuN1hIOrTdHwDz
-   pZBqt/1RPtAvNMA3PPj2YQHYIjRQPsI+fzvF4+ZSt7ls2/QEzcpfLTnsR
-   ZXp5Bjnmj5zom6JVUAxyFViOB4i+ri13qBPMziz3EulGEHW5JO8VGEdmz
-   x/lnEa5ZLuTG1HXhlHoSs1AkVhArp96fakt3wtr3dOFYl/7jGm2HTziun
-   hocEHAnzyIphE9WoVaSa3HeelcYVnzOpZEEYq1Wszhzg+J6/iK7STukBa
-   d6IV4KNdXP+zcL2rYOlrk5nwi3o6Qx+rjF0AQ6+RI92DRyMYGVGwdn045
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10471"; a="279337444"
-X-IronPort-AV: E=Sophos;i="5.93,320,1654585200"; 
-   d="scan'208";a="279337444"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2022 02:51:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,320,1654585200"; 
-   d="scan'208";a="568776410"
-Received: from lkp-server02.sh.intel.com (HELO 41300c7200ea) ([10.239.97.151])
-  by orsmga003.jf.intel.com with ESMTP; 16 Sep 2022 02:51:46 -0700
-Received: from kbuild by 41300c7200ea with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oZ80g-0001fO-0T;
-        Fri, 16 Sep 2022 09:51:46 +0000
-Date:   Fri, 16 Sep 2022 17:51:06 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- 812e92b824c1db16c9519f8624d48a9901a0d38f
-Message-ID: <6324470a.dRETZVm2dA2Vr76r%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        Fri, 16 Sep 2022 11:37:12 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E77D597B34
+        for <linux-bluetooth@vger.kernel.org>; Fri, 16 Sep 2022 08:37:11 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id g5so33085791ybg.11
+        for <linux-bluetooth@vger.kernel.org>; Fri, 16 Sep 2022 08:37:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
+         :subject:date;
+        bh=WS4wMSByWryX8P5xXNg6/F9cuXaZcQ/JDEQQ6/oYhcI=;
+        b=GfeKhhTnG6rJ1nCybDv37mL9OaaEGOZeBJLeF+wqAiIb5zF78B4pQKHisVS8kY8Qtb
+         0AiOAjXADtiOgowDehtBXy7x8y/KYhjBcbBd49q4LSFR3G7C0orAjW0KjS5Rp8f150HZ
+         /U/oOPC6u4WP1WOArTIj6Spom/bnbsYkJVMLvOL3sHsWwp0Ed4e3r0n9Qjp7WD4azrBO
+         ciGQ9gDblEkQAF8I4Dp2SzGl3UAr/hwz59bRi0A4Zid7allOCAUXllVRna2tA9Xrli/Q
+         Evnt0G9/fah8fJeTrK2PioG8kdjwckkSZjrmYC+Em7S60m3CW43OWOihrJkhPI+bY2zl
+         cEWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:sender:mime-version
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=WS4wMSByWryX8P5xXNg6/F9cuXaZcQ/JDEQQ6/oYhcI=;
+        b=kxPWYtKagvkPIBpENwcHXXto1xOgCp/r5W2YEVlVGwU0GbqFLCzcfFoCYgUCm9BCNN
+         LJ+anP1kUfOuIzArSSMfqc9Dk4hyb8A4AijihOfcsDyMCltYeDeK9AfIEEPsmvWHJwlU
+         lpxGVO4tEwaUVdUMeGJKZO/9neDx2Iozo8Ozg6e2PAK+vsnXIvNIP/g3hQgD8y6WaILs
+         6ycND/y+jx/xmWEOxmcjKZKo6SDo8h2/QGYePOmhbv6HXd5NjKc5YumYRd5YctKyM/Jt
+         3N0r3W3u+8/Wxb1XFkf20Tm74BbVy6EMgzaptiLGEDJMzWzbpEbCFE9m3E8qJl94SjGh
+         O6Cw==
+X-Gm-Message-State: ACrzQf09Fdzxln78Ei/KXma8eEULHVTKaGtd7jwbuEkUApq58hcOTCot
+        gAh2UCZ1wpN1OnZI9zOe8xLWOE/MTSYzByPW7g==
+X-Google-Smtp-Source: AMsMyM58e7a6F7CiW63c1qU62w0Jvg6UCdZ3cib6UlSFerZZnywi+BpFJWeB+8LWwFAITxDI7EnMIa/sU+cw/9YZa4A=
+X-Received: by 2002:a05:6902:15cf:b0:67c:1ee7:149 with SMTP id
+ l15-20020a05690215cf00b0067c1ee70149mr4805612ybu.594.1663342631104; Fri, 16
+ Sep 2022 08:37:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Sender: chantalstark91@gmail.com
+Received: by 2002:a05:7110:4b14:b0:191:623f:b301 with HTTP; Fri, 16 Sep 2022
+ 08:37:10 -0700 (PDT)
+From:   Aisha Gaddafi <aishagaddafi6604@gmail.com>
+Date:   Fri, 16 Sep 2022 15:37:10 +0000
+X-Google-Sender-Auth: _CWx7KLEkQVPZLret8RFlrfwUZ8
+Message-ID: <CAOzO0HTsGSxdGhj=kupuwA=3zZEgtRL1Vuvbj-YYmH1cSKCupQ@mail.gmail.com>
+Subject: Investment proposal,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=6.3 required=5.0 tests=BAYES_99,BAYES_999,
+        DEAR_FRIEND,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,LOTS_OF_MONEY,MILLION_HUNDRED,
+        MILLION_USD,MONEY_FRAUD_5,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_MONEY autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:b29 listed in]
+        [list.dnswl.org]
+        *  3.5 BAYES_99 BODY: Bayes spam probability is 99 to 100%
+        *      [score: 1.0000]
+        *  0.2 BAYES_999 BODY: Bayes spam probability is 99.9 to 100%
+        *      [score: 1.0000]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [chantalstark91[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [chantalstark91[at]gmail.com]
+        *  2.6 DEAR_FRIEND BODY: Dear Friend? That's not very dear!
+        *  0.0 MILLION_HUNDRED BODY: Million "One to Nine" Hundred
+        *  0.0 MILLION_USD BODY: Talks about millions of dollars
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  0.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+        *  0.0 MONEY_FRAUD_5 Lots of money and many fraud phrases
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: 812e92b824c1db16c9519f8624d48a9901a0d38f  Bluetooth: RFCOMM: Fix possible deadlock on socket shutdown/release
+Dear Friend.,
 
-elapsed time: 720m
+With sincerity of purpose I wish to communicate with you seeking your
+acceptance towards investing in your country under your Management as
+my foreign investor/business partner I'm Mrs. Aisha Al-Gaddafi, the
+only biological Daughter of the late Libyan President (Late Colonel
+Muammar. Gaddafi) I'm a single Mother and a widow with three Children,
+presently residing herein Oman the Southeastern coast of the Arabian
+Peninsula in Western Asia. I have an investment funds worth Twenty
+Seven Million Five Hundred Thousand United State Dollars (
+$27.500.000.00) which I want to entrust on you for investment project
+in your country as my investment Manager/Partner.
 
-configs tested: 58
-configs skipped: 2
+I am willing to negotiate an investment/business profit sharing ratio
+with you based on the future investment earning profits. If you are
+willing to handle this project kindly reply urgently to enable me to
+provide you more information about the investment funds..
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-um                           x86_64_defconfig
-um                             i386_defconfig
-arc                                 defconfig
-arc                  randconfig-r043-20220915
-alpha                               defconfig
-m68k                             allyesconfig
-x86_64                              defconfig
-m68k                             allmodconfig
-riscv                randconfig-r042-20220915
-arc                              allyesconfig
-s390                 randconfig-r044-20220915
-alpha                            allyesconfig
-i386                                defconfig
-x86_64                               rhel-8.3
-s390                             allmodconfig
-x86_64                        randconfig-a002
-x86_64                           allyesconfig
-s390                                defconfig
-powerpc                           allnoconfig
-i386                          randconfig-a001
-x86_64                        randconfig-a013
-i386                          randconfig-a003
-powerpc                          allmodconfig
-x86_64                        randconfig-a006
-x86_64                        randconfig-a011
-i386                          randconfig-a005
-i386                          randconfig-a014
-x86_64                          rhel-8.3-func
-x86_64                        randconfig-a015
-x86_64                        randconfig-a004
-x86_64                         rhel-8.3-kunit
-arm                                 defconfig
-x86_64                    rhel-8.3-kselftests
-i386                          randconfig-a012
-x86_64                           rhel-8.3-syz
-mips                             allyesconfig
-x86_64                           rhel-8.3-kvm
-i386                          randconfig-a016
-s390                             allyesconfig
-sh                               allmodconfig
-i386                             allyesconfig
-arm                              allyesconfig
-arm64                            allyesconfig
-ia64                             allmodconfig
-
-clang tested configs:
-hexagon              randconfig-r045-20220915
-hexagon              randconfig-r041-20220915
-x86_64                        randconfig-a001
-i386                          randconfig-a013
-i386                          randconfig-a002
-x86_64                        randconfig-a016
-x86_64                        randconfig-a003
-i386                          randconfig-a004
-x86_64                        randconfig-a012
-i386                          randconfig-a011
-i386                          randconfig-a006
-x86_64                        randconfig-a014
-x86_64                        randconfig-a005
-i386                          randconfig-a015
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Best Regards
+Mrs. Aisha Muammar. Al-Gaddafi..
