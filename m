@@ -2,267 +2,434 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F17D5BC3ED
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Sep 2022 10:06:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 781E85BC483
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Sep 2022 10:42:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229833AbiISIGK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 19 Sep 2022 04:06:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48234 "EHLO
+        id S229938AbiISImW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 19 Sep 2022 04:42:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229865AbiISIF4 (ORCPT
+        with ESMTP id S229563AbiISImU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 19 Sep 2022 04:05:56 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB8813DF3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 19 Sep 2022 01:05:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1663574755; x=1695110755;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=kBQRHwmj5jBLZDQZaifMfbtxMnVSmpvncYMBxNKp0GQ=;
-  b=EHGKgfWJhrXBAhw92Qx31hh6V5GyuAhxOWdKinvKJFxlZvXWSEbfenYm
-   U42btk3bbXDOWKyncmY1SVw+HHBskYjWXSfa4S7KSINhjlphh8PhLHw6i
-   ZH/VQOWsXrdiURm9PNKYpQ8SMJi9Xhfe2XwyLg5ef4kIEvVPvKhZGlj+N
-   QvaGwwbdzspBY39PDry74SBFT1hRENvH1YEj42j8zSa94AuUJQVVM1Cp4
-   UWSipWhhfSE6ejf/c4ZkJNT5F/V0r1C5XEFNQxNEhfeKWXAwEfCkaoypk
-   f2wterU8djpsgLDjNtVhlKcCoFHNVH4bdyfht3izjLZHP1sKm2c0xGgBZ
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10474"; a="279718280"
-X-IronPort-AV: E=Sophos;i="5.93,327,1654585200"; 
-   d="scan'208";a="279718280"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Sep 2022 01:05:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,327,1654585200"; 
-   d="scan'208";a="947113966"
-Received: from bsblt022.iind.intel.com ([10.224.186.21])
-  by fmsmga005.fm.intel.com with ESMTP; 19 Sep 2022 01:05:53 -0700
-From:   Sathish Narasimman <sathish.narasimman@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Sathish Narasimman <sathish.narasimman@intel.com>
-Subject: [PATCH BlueZ v3 3/3] monitor/att: Add decoding support for Volume Control Serice
-Date:   Mon, 19 Sep 2022 13:37:22 +0530
-Message-Id: <20220919080722.562080-3-sathish.narasimman@intel.com>
+        Mon, 19 Sep 2022 04:42:20 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E59121E0B;
+        Mon, 19 Sep 2022 01:42:17 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d24so4122780pls.4;
+        Mon, 19 Sep 2022 01:42:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=yktNTOHmRWm8GByc49lMtPuySSRZJkz89QAdnX80J0Q=;
+        b=VOhcN7//PU/H8v4momL9+UbkkR+BLAF4dFEx9ixDx3mpCXQOhJcZHExhzUI0OHs/RQ
+         Fju5kHnnaBeUqg1Q+asosCB71epUEymvhCuGCCgyB9Yr1NWx3wDFB0Id34JUEEt9W/7z
+         SKFnakC0QS6XA2YzhlxfuiJN+ZMNe5IZn+q4udD/0Zl8jO7e25HYTamqunoK/UuIlNv8
+         Uo5HCieSyB5M+mktoIp+pNQC/ITpIaG7Lem1MNnE1KvslW5EdiJc8dMyRtiR7kA90OZU
+         cc7PnnyXwbTE8WhrjQ2K+AFfln0t6mjf5Kt0JpE5Rw883VaWtWKW1g/PlyPOXm2P8B/r
+         Dw5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=yktNTOHmRWm8GByc49lMtPuySSRZJkz89QAdnX80J0Q=;
+        b=R8jea9A2Ckgi76tv3Z7sHJUAi80qhiMstUuxvenxvycFwbou88BDKU30PPX/LSjB9v
+         v02xrCKu+OpWnZpWU8mroDjLtIH+yrHMYcSJyFQ0RvdDjN/T/JwHWJAIaeijKtYsX4nf
+         NOBYs9BOjOxC20IcWPUYtwbiXa8mUljzcYqDKugEk7a2ncA+QunJlEHEvgdhyVNBR3xr
+         PX2H2DNPLd9U/N6KKjoCMQGIzuqadyYNjuwK115EClyunStSniQpfBOL1MFWd+d53RRQ
+         oKe/FMObbeNA8fkRPsBAEAgODu67SdYxH+fezv95PzF5dTQWNrA5JcLPFatExIcfyx+y
+         1LLw==
+X-Gm-Message-State: ACrzQf2RDlaeJ1nPAozWuOEIuX0kbR9E7ljnYKQxrYSuaCpBZZxlTdBZ
+        tFyNE27Mm+7I8b0nXzuGNgE=
+X-Google-Smtp-Source: AMsMyM4Utlc8gMYFUn2f++zbNpekFyNVYvAJvpMJU3qlzfavRBOXtx3gxcL4Aru3kmHyaRD/AiIUrQ==
+X-Received: by 2002:a17:90b:3ec7:b0:202:b984:8436 with SMTP id rm7-20020a17090b3ec700b00202b9848436mr18914617pjb.4.1663576936362;
+        Mon, 19 Sep 2022 01:42:16 -0700 (PDT)
+Received: from localhost ([36.112.86.8])
+        by smtp.gmail.com with ESMTPSA id w11-20020aa79a0b000000b005375a574846sm19746854pfj.125.2022.09.19.01.42.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Sep 2022 01:42:16 -0700 (PDT)
+From:   Hawkins Jiawei <yin31149@gmail.com>
+To:     yin31149@gmail.com,
+        syzbot+5a2d2b4a8ca80ad216a9@syzkaller.appspotmail.com
+Cc:     18801353760@163.com, gregkh@linuxfoundation.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        luiz.dentz@gmail.com, marcel@holtmann.org, rafael@kernel.org,
+        soenke.huster@eknoes.de,
+        syzbot+e653e3f67251b6139aaa@syzkaller.appspotmail.com,
+        syzkaller-bugs@googlegroups.com
+Subject: Re: [syzbot] BUG: corrupted list in kobject_add_internal (4)
+Date:   Mon, 19 Sep 2022 16:41:50 +0800
+Message-Id: <20220919084149.127253-1-yin31149@gmail.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220919080722.562080-1-sathish.narasimman@intel.com>
-References: <20220919080722.562080-1-sathish.narasimman@intel.com>
+In-Reply-To: <20220917014739.5624-1-yin31149@gmail.com>
+References: <20220917014739.5624-1-yin31149@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds decoding support for VCS attributes
+On Sat, 17 Sept 2022 at 09:47, Hawkins Jiawei <yin31149@gmail.com> wrote:
+>
+>Hi,
+>
+>On Fri, 26 Aug 2022 08:27:06, AM Sönke Huster <soenke.huster@eknoes.de> wrote:
+>>Hi Luiz,
+>>
+>>On 25.08.22 20:58, Luiz Augusto von Dentz wrote:
+>>> Hi Sönke,
+>>>
+>>> On Thu, Aug 25, 2022 at 8:08 AM Sönke Huster <soenke.huster@eknoes.de> wrote:
+>>>>
+>>>> Hi,
+>>>>
+>>>>
+>>>>
+>>>> While fuzzing I found several crashes similar to the following:
+>>>>
+>>>>
+>>>>         [    5.345731] sysfs: cannot create duplicate filename '/devices/virtual/bluetooth/hci0/hci0:0'
+>>>>
+>>>>         [...]
+>>>>
+>>>>         [    5.430464] BUG: KASAN: use-after-free in klist_add_tail+0x1bd/0x200
+>>>>
+>>>>         [    5.430464] Write of size 8 at addr ffff88800bfcc468 by task kworker/u3:1/43
+>>>>
+>>>>         [    5.430464]
+>>>>
+>>>>         [    5.430464] CPU: 0 PID: 43 Comm: kworker/u3:1 Not tainted 5.19.0-12855-g13f222680b8f #2
+>>>>
+>>>>         [    5.430464] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+>>>>
+>>>>         [    5.430464] Workqueue: hci0 hci_rx_work
+>>>>
+>>>>         [    5.430464] Call Trace:
+>>>>
+>>>>         [    5.430464]  <TASK>
+>>>>
+>>>>         [    5.430464]  dump_stack_lvl+0x45/0x5d
+>>>>
+>>>>         [    5.430464]  print_report.cold+0x5e/0x5e5
+>>>>
+>>>>         [    5.430464]  kasan_report+0xb1/0x1c0
+>>>>
+>>>>         [    5.430464]  klist_add_tail+0x1bd/0x200
+>>>>
+>>>>         [    5.430464]  device_add+0xa6b/0x1b80
+>>>>
+>>>>         [    5.430464]  hci_conn_add_sysfs+0x91/0x110
+>>>>
+>>>>         [    5.430464]  le_conn_complete_evt+0x117f/0x17d0
+>>>>
+>>>>         [    5.430464]  hci_le_conn_complete_evt+0x226/0x2c0
+>>>>
+>>>>         [    5.430464]  hci_le_meta_evt+0x2c0/0x4a0
+>>>>
+>>>>         [    5.430464]  hci_event_packet+0x636/0xf60
+>>>>
+>>>>         [    5.430464]  hci_rx_work+0xa8c/0x1000
+>>>>
+>>>>         [    5.430464]  process_one_work+0x8df/0x1530
+>>>>
+>>>>         [    5.430464]  worker_thread+0x575/0x11a0
+>>>>
+>>>>         [    5.430464]  kthread+0x29d/0x340
+>>>>
+>>>>         [    5.430464]  ret_from_fork+0x22/0x30
+>>>>
+>>>>         [    5.430464]  </TASK>
+>>>>
+>>>>         [    5.430464]
+>>>>
+>>>>         [    5.430464] Allocated by task 44:
+>>>>
+>>>>         [    5.430464]  kasan_save_stack+0x1e/0x40
+>>>>
+>>>>         [    5.430464]  __kasan_kmalloc+0x81/0xa0
+>>>>
+>>>>         [    5.430464]  device_add+0xcae/0x1b80
+>>>>
+>>>>         [    5.430464]  hci_conn_add_sysfs+0x91/0x110
+>>>>
+>>>>         [    5.430464]  le_conn_complete_evt+0x117f/0x17d0
+>>>>
+>>>>         [    5.430464]  hci_le_conn_complete_evt+0x226/0x2c0
+>>>>
+>>>>         [    5.430464]  hci_le_meta_evt+0x2c0/0x4a0
+>>>>
+>>>>         [    5.430464]  hci_event_packet+0x636/0xf60
+>>>>
+>>>>         [    5.430464]  hci_rx_work+0xa8c/0x1000
+>>>>
+>>>>         [    5.430464]  process_one_work+0x8df/0x1530
+>>>>
+>>>>         [    5.430464]  worker_thread+0x575/0x11a0
+>>>>
+>>>>         [    5.430464]  kthread+0x29d/0x340
+>>>>
+>>>>         [    5.430464]  ret_from_fork+0x22/0x30
+>>>>
+>>>>         [    5.430464]
+>>>>
+>>>>         [    5.430464] Freed by task 43:
+>>>>
+>>>>         [    5.430464]  kasan_save_stack+0x1e/0x40
+>>>>
+>>>>         [    5.430464]  kasan_set_track+0x21/0x30
+>>>>
+>>>>         [    5.430464]  kasan_set_free_info+0x20/0x40
+>>>>
+>>>>         [    5.430464]  __kasan_slab_free+0x108/0x190
+>>>>
+>>>>         [    5.430464]  kfree+0xa9/0x360
+>>>>
+>>>>         [    5.430464]  device_add+0x33a/0x1b80
+>>>>
+>>>>         [    5.430464]  hci_conn_add_sysfs+0x91/0x110
+>>>>
+>>>>         [    5.430464]  hci_le_cis_estabilished_evt+0x517/0xa70
+>>>>
+>>>>         [    5.430464]  hci_le_meta_evt+0x2c0/0x4a0
+>>>>
+>>>>         [    5.430464]  hci_event_packet+0x636/0xf60
+>>>>
+>>>>         [    5.430464]  hci_rx_work+0xa8c/0x1000
+>>>>
+>>>>         [    5.430464]  process_one_work+0x8df/0x1530
+>>>>
+>>>>         [    5.430464]  worker_thread+0x575/0x11a0
+>>>>
+>>>>         [    5.430464]  kthread+0x29d/0x340
+>>>>
+>>>>         [    5.430464]  ret_from_fork+0x22/0x30
+>>>>
+>>>>
+>>>>
+>>>> I think I fixed a similar issue in d5ebaa7c5f6f ("Bluetooth: hci_event: Ignore multiple conn complete events"). Here, the problem was that multiple connection complete events for the same handle called hci_conn_add_sysfs multiple times, but if it is called with an existing connection conn->dev->p is freed.
+>>>>
+>>>> This is because device_add is called - its documentation contains this sentence: "Do not call this routine or device_register() more than once for any device structure".
+>>>>
+>>>>
+>>>>
+>>>> This here is similar: First, an hci_le_conn_complete_evt creates a new connection.
+>>>>
+>>>> Afterwards, an hci_le_cis_estabilished_evt with the same handle finds that connection, and tries to add it to sysfs again, freeing conn->dev->p. Now, an event that might use that connection such as here the hci_le_conn_complete_evt triggers a use after free.
+>>>>
+>
+>Syzkaller reports a bug as follows [1]:
+>------------[ cut here ]------------
+>kernel BUG at lib/list_debug.c:33!
+>invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+>[...]
+>Call Trace:
+> <TASK>
+> __list_add include/linux/list.h:69 [inline]
+> list_add_tail include/linux/list.h:102 [inline]
+> kobj_kset_join lib/kobject.c:164 [inline]
+> kobject_add_internal+0x18f/0x8f0 lib/kobject.c:214
+> kobject_add_varg lib/kobject.c:358 [inline]
+> kobject_add+0x150/0x1c0 lib/kobject.c:410
+> device_add+0x368/0x1e90 drivers/base/core.c:3452
+> hci_conn_add_sysfs+0x9b/0x1b0 net/bluetooth/hci_sysfs.c:53
+> hci_le_cis_estabilished_evt+0x57c/0xae0 net/bluetooth/hci_event.c:6799
+> hci_le_meta_evt+0x2b8/0x510 net/bluetooth/hci_event.c:7110
+> hci_event_func net/bluetooth/hci_event.c:7440 [inline]
+> hci_event_packet+0x63d/0xfd0 net/bluetooth/hci_event.c:7495
+> hci_rx_work+0xae7/0x1230 net/bluetooth/hci_core.c:4007
+> process_one_work+0x991/0x1610 kernel/workqueue.c:2289
+> worker_thread+0x665/0x1080 kernel/workqueue.c:2436
+> kthread+0x2e4/0x3a0 kernel/kthread.c:376
+> ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+> </TASK>
+>
+>I think they are the same problems:
+>A hci_le_conn_complete_evt creates a new connection, and calls
+>hci_conn_add_sysfs(). Then hci_le_cis_estabilished_evt with the same handle
+>finds that connection, and will also calls hci_conn_add_sysfs(), which maybe
+>triggering corrupted list bug.
+>
+>Link: https://syzkaller.appspot.com/bug?id=da3246e2d33afdb92d66bc166a0934c5b146404a [1]
+>
+>>>>
+>>>>
+>>>> I bisected this bug and it was introduced with  26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections").
+>>>>
+>>>>
+>>>>
+>>>> The same happens with hci_le_create_big_complete_evt: Here, multiple events trigger the following bug:
+>>>>
+>>>>
+>>>>
+>>>>         [    6.898080] BUG: kernel NULL pointer dereference, address: 0000000000000058
+>>>>
+>>>>         [    6.898081] #PF: supervisor read access in kernel mode
+>>>>
+>>>>         [    6.898083] #PF: error_code(0x0000) - not-present page
+>>>>
+>>>>         [    6.898085] Oops: 0000 [#1] PREEMPT SMP NOPTI
+>>>>
+>>>>         [    6.898090] Workqueue: hci0 hci_rx_work
+>>>>
+>>>>         [    6.898092] RIP: 0010:klist_next+0x12/0x160
+>>>>
+>>>>         [    6.898128] Call Trace:
+>>>>
+>>>>         [    6.898129]  <TASK>
+>>>>
+>>>>         [    6.898130]  ? bt_link_release+0x20/0x20
+>>>>
+>>>>         [    6.898133]  device_find_child+0x37/0xa0
+>>>>
+>>>>         [    6.898136]  hci_conn_del_sysfs+0x71/0xa0
+>>>>
+>>>>         [    6.898138]  hci_conn_cleanup+0x17a/0x2c0
+>>>>
+>>>>         [    6.898141]  hci_conn_del+0x14a/0x240
+>>>>
+>>>>         [    6.898144]  hci_le_create_big_complete_evt+0x3d8/0x470
+>>>>
+>>>>         [    6.898146]  ? hci_le_remote_feat_complete_evt+0x3e0/0x3e0
+>>>>
+>>>>         [    6.898148]  hci_le_meta_evt+0x155/0x230
+>>>>
+>>>>         [    6.898150]  hci_event_packet+0x328/0x820
+>>>>
+>>>>         [    6.898152]  ? hci_conn_drop+0x100/0x100
+>>>>
+>>>>         [    6.898155]  hci_rx_work+0x725/0xb70
+>>>>
+>>>>         [    6.898157]  process_one_work+0x2a6/0x5d0
+>>>>
+>>>>         [    6.898160]  worker_thread+0x4a/0x3e0
+>>>>
+>>>>         [    6.898162]  ? process_one_work+0x5d0/0x5d0
+>>>>
+>>>>         [    6.898164]  kthread+0xed/0x120
+>>>>
+>>>>         [    6.898165]  ? kthread_complete_and_exit+0x20/0x20
+>>>>
+>>>>         [    6.898167]  ret_from_fork+0x22/0x30
+>>>>
+>>>>         [    6.898170]  </TASK>
+>>>>
+>>>>
+>>>>
+>>>> I bisected this bug and it was introduced with eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections").
+>>>>
+>>>>
+>>>>
+>>>> I am not really sure how to solve that. As far as I understand, previously we simply set an unused handle as connection handle, and checked for that before setting the correct handle and adding it to sysfs. But here, adding it to sysfs seems to happen in a different function and the handle is already set.
+>>>
+>>> We should probably check if link-type, if it is an ISO link it shall
+>>> not be created via Connection Complete events and they have their own
+>>> events to create that.
+I wonder if we can check the connection type in hci_le_create_big_complete_evt()
+and hci_le_cis_estabilished_evt(), as below:
 
-> ACL Data RX: Handle 3585 flags 0x02 dlen 7
-      ATT: Read Request (0x0a) len 2
-        Handle: 0x0017 Type: Volume State (0x2b7d)
-< ACL Data TX: Handle 3585 flags 0x00 dlen 8
-      ATT: Read Response (0x0b) len 3
-        Value: 000000
-        Handle: 0x0017 Type: Volume State (0x2b7d)
-            Volume Setting: 0
-            Not Muted: 0
-            Change Counter: 0
-> HCI Event: Number of Completed Packets (0x13) plen 5
-        Num handles: 1
-        Handle: 3585 Address: 49:71:FC:C0:66:C6 (Resolvable)
-        Count: 1
-> ACL Data RX: Handle 3585 flags 0x02 dlen 7
-      ATT: Read Request (0x0a) len 2
-        Handle: 0x001c Type: Volume Flags (0x2b7f)
-< ACL Data TX: Handle 3585 flags 0x00 dlen 6
-      ATT: Read Response (0x0b) len 1
-        Value: 01
-        Handle: 0x001c Type: Volume Flags (0x2b7f)
-            Volume Falg: 1
----
- monitor/att.c | 159 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 159 insertions(+)
-
-diff --git a/monitor/att.c b/monitor/att.c
-index b7470f7a2ff4..3c1ff2e2aaa0 100644
---- a/monitor/att.c
-+++ b/monitor/att.c
-@@ -1590,6 +1590,162 @@ static void pac_context_notify(const struct l2cap_frame *frame)
- 	print_pac_context(frame);
- }
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 6643c9c20fa4..5b83473d51b5 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6795,8 +6795,16 @@ static void hci_le_cis_estabilished_evt(struct hci_dev *hdev, void *data,
  
-+static void print_vcs_state(const struct l2cap_frame *frame)
-+{
-+	uint8_t vol_set, mute, chng_ctr;
+ 	if (!ev->status) {
+ 		conn->state = BT_CONNECTED;
+-		hci_debugfs_create_conn(conn);
+-		hci_conn_add_sysfs(conn);
 +
-+	if (!l2cap_frame_get_u8((void *)frame, &vol_set)) {
-+		print_text(COLOR_ERROR, "Volume Settings: invalid size");
-+		goto done;
-+	}
-+	print_field("    Volume Setting: %u", vol_set);
++		/* Only ISO_LINK link type need to register connection device
++		 * here, others will register in their relative
++		 * Connection Complete events
++		 */
++		if (conn->type == ISO_LINK) {
++			hci_debugfs_create_conn(conn);
++			hci_conn_add_sysfs(conn);
++		}
 +
-+	if (!l2cap_frame_get_u8((void *)frame, &mute)) {
-+		print_text(COLOR_ERROR, "Mute Filed: invalid size");
-+		goto done;
-+	}
-+
-+	switch (mute) {
-+	case 0x00:
-+		print_field("    Not Muted: %u", mute);
-+		break;
-+	case 0x01:
-+		print_field("    Muted: %u", mute);
-+		break;
-+	default:
-+		print_field("    Unknown Mute Value: %u", mute);
-+		break;
-+	}
-+
-+	if (!l2cap_frame_get_u8((void *)frame, &chng_ctr)) {
-+		print_text(COLOR_ERROR, "Change Counter: invalid size");
-+		goto done;
-+	}
-+	print_field("    Change Counter: %u", chng_ctr);
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void vol_state_read(const struct l2cap_frame *frame)
-+{
-+	print_vcs_state(frame);
-+}
-+
-+static void vol_state_notify(const struct l2cap_frame *frame)
-+{
-+	print_vcs_state(frame);
-+}
-+
-+static bool vcs_config_cmd(const struct l2cap_frame *frame)
-+{
-+	if (!l2cap_frame_print_u8((void *)frame, "    Change Counter"))
-+		return false;
-+
-+	return true;
-+}
-+
-+static bool vcs_absolute_cmd(const struct l2cap_frame *frame)
-+{
-+	if (!l2cap_frame_print_u8((void *)frame, "    Change Counter"))
-+		return false;
-+
-+	if (!l2cap_frame_print_u8((void *)frame, "    Volume Setting"))
-+		return false;
-+
-+	return true;
-+}
-+
-+#define ASE_CMD(_op, _desc, _func) \
-+[_op] = { \
-+	.desc = _desc, \
-+	.func = _func, \
-+}
-+
-+struct vcs_cmd {
-+	const char *desc;
-+	bool (*func)(const struct l2cap_frame *frame);
-+} vcs_cmd_table[] = {
-+	/* Opcode = 0x00 (Relative Volume Down) */
-+	ASE_CMD(0x00, "Relative Volume Down", vcs_config_cmd),
-+	/* Opcode = 0x01 (Relative Volume Up) */
-+	ASE_CMD(0x01, "Relative Volume Up", vcs_config_cmd),
-+	/* Opcode = 0x02 (Unmute/Relative Volume Down) */
-+	ASE_CMD(0x02, "Unmute/Relative Volume Down", vcs_config_cmd),
-+	/* Opcode = 0x03 (Unmute/Relative Volume Up) */
-+	ASE_CMD(0x03, "Unmute/Relative Volume Up", vcs_config_cmd),
-+	/* Opcode = 0x04 (Set Absolute Volume) */
-+	ASE_CMD(0x04, "Set Absolute Volume", vcs_absolute_cmd),
-+	/* Opcode = 0x05 (Unmute) */
-+	ASE_CMD(0x05, "Unmute", vcs_config_cmd),
-+	/* Opcode = 0x06 (Mute) */
-+	ASE_CMD(0x06, "Mute", vcs_config_cmd),
-+};
-+
-+static struct vcs_cmd *vcs_get_cmd(uint8_t op)
-+{
-+	if (op > ARRAY_SIZE(vcs_cmd_table))
-+		return NULL;
-+
-+	return &vcs_cmd_table[op];
-+}
-+
-+static void print_vcs_cmd(const struct l2cap_frame *frame)
-+{
-+	uint8_t op;
-+	struct vcs_cmd *cmd;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, &op)) {
-+		print_text(COLOR_ERROR, "opcode: invalid size");
-+		goto done;
-+	}
-+
-+	cmd = vcs_get_cmd(op);
-+	if (!cmd) {
-+		print_field("    Opcode: Reserved (0x%2.2x)", op);
-+		goto done;
-+	}
-+
-+	print_field("    Opcode: %s (0x%2.2x)", cmd->desc, op);
-+	if (!cmd->func(frame))
-+		print_field("    Unknown Opcode");
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void vol_cp_write(const struct l2cap_frame *frame)
-+{
-+	print_vcs_cmd(frame);
-+}
-+
-+static void print_vcs_flag(const struct l2cap_frame *frame)
-+{
-+	uint8_t vol_flag;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, &vol_flag)) {
-+		print_text(COLOR_ERROR, "Volume Flag: invalid size");
-+		goto done;
-+	}
-+	print_field("    Volume Falg: %u", vol_flag);
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void vol_flag_read(const struct l2cap_frame *frame)
-+{
-+	print_vcs_flag(frame);
-+}
-+
-+static void vol_flag_notify(const struct l2cap_frame *frame)
-+{
-+	print_vcs_flag(frame);
-+}
-+
- #define GATT_HANDLER(_uuid, _read, _write, _notify) \
- { \
- 	.uuid = { \
-@@ -1617,6 +1773,9 @@ struct gatt_handler {
- 	GATT_HANDLER(0x2bcc, pac_loc_read, NULL, pac_loc_notify),
- 	GATT_HANDLER(0x2bcd, pac_context_read, NULL, pac_context_notify),
- 	GATT_HANDLER(0x2bce, pac_context_read, NULL, pac_context_notify),
-+	GATT_HANDLER(0x2b7d, vol_state_read, NULL, vol_state_notify),
-+	GATT_HANDLER(0x2b7e, NULL, vol_cp_write, NULL),
-+	GATT_HANDLER(0x2b7f, vol_flag_read, NULL, vol_flag_notify),
- };
+ 		hci_iso_setup_path(conn);
+ 		goto unlock;
+ 	}
+@@ -6901,8 +6909,16 @@ static void hci_le_create_big_complete_evt(struct hci_dev *hdev, void *data,
  
- static struct gatt_handler *get_handler(struct gatt_db_attribute *attr)
--- 
-2.25.1
+ 	if (!ev->status) {
+ 		conn->state = BT_CONNECTED;
+-		hci_debugfs_create_conn(conn);
+-		hci_conn_add_sysfs(conn);
++
++		/* Only ISO_LINK link type need to register connection device
++		 * here, others will register in their relative
++		 * Connection Complete events
++		 */
++		if (conn->type == ISO_LINK) {
++			hci_debugfs_create_conn(conn);
++			hci_conn_add_sysfs(conn);
++		}
++
+ 		hci_iso_setup_path(conn);
+ 		goto unlock;
+ 	}
 
+It seems that this patch can pass the syzbot test.
+
+Link: https://lore.kernel.org/all/0000000000004f9ca105e8ba8157@google.com/
+Reported-and-tested-by: syzbot+5a2d2b4a8ca80ad216a9@syzkaller.appspotmail.com
+
+Link: https://lore.kernel.org/all/0000000000008a7a3f05e8ad02f6@google.com/
+Reported-and-tested-by: syzbot+e653e3f67251b6139aaa@syzkaller.appspotmail.com
+
+>>>
+>>
+>>But then the problem of duplicate hci_le_cis_estabilished_evt / hci_le_create_big_complete_evt still exists, isn't it? For example if the connection is created through a hci_le_cis_req_evt, and afterwards two hci_le_cis_estabilished_evt arrive, the second event calls hci_conn_add_sysfs a second time which frees parts of the device structure.
+As for this problem, I wonder if we can check the connection state in those
+functions as below, liking patch
+d5ebaa7c5f6f("Bluetooth: hci_event: Ignore multiple conn complete events"):
+
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 5b83473d51b5..f6b62cfcf082 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6794,6 +6794,14 @@ static void hci_le_cis_estabilished_evt(struct hci_dev *hdev, void *data,
+ 	}
+ 
+ 	if (!ev->status) {
++		/* The HCI_LE_CIS_Estabilished event is only sent once per connection.
++		 * Processing it more than once per connection can corrupt kernel memory.
++		 *
++		 * As the connection state is set here for the first time, it indicates
++		 * whether the connection is already set up.
++		 */
++		if (conn->state == BT_CONNECTED)
++			goto unlock;
+ 		conn->state = BT_CONNECTED;
+ 
+ 		/* Only ISO_LINK link type need to register connection device
+@@ -6908,6 +6916,14 @@ static void hci_le_create_big_complete_evt(struct hci_dev *hdev, void *data,
+ 		conn->handle = __le16_to_cpu(ev->bis_handle[0]);
+ 
+ 	if (!ev->status) {
++		/* The HCI_LE_Create_BIG_Complete event is only sent once per connection.
++		 * Processing it more than once per connection can corrupt kernel memory.
++		 *
++		 * As the connection state is set here for the first time, it indicates
++		 * whether the connection is already set up.
++		 */
++		if (conn->state == BT_CONNECTED)
++			goto unlock;
+ 		conn->state = BT_CONNECTED;
+ 
+ 		/* Only ISO_LINK link type need to register connection device
+
+>>
+>>>> Best
+>>>> Sönke
+>I wonder that if we need both two patches? Because they
+>seems to be used to patch different bugs?
