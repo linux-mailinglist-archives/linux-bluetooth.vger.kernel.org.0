@@ -2,59 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 872CB5E5564
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Sep 2022 23:47:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C8135E5566
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Sep 2022 23:47:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229935AbiIUVrC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 21 Sep 2022 17:47:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50048 "EHLO
+        id S229716AbiIUVrD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 21 Sep 2022 17:47:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229762AbiIUVrB (ORCPT
+        with ESMTP id S229877AbiIUVrC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 21 Sep 2022 17:47:01 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BD28857FB
-        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Sep 2022 14:47:00 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id fv3so7903937pjb.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Sep 2022 14:47:00 -0700 (PDT)
+        Wed, 21 Sep 2022 17:47:02 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB4E9A6AFF
+        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Sep 2022 14:47:01 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id r23so7237913pgr.6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Sep 2022 14:47:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date;
-        bh=5GZxcBiJGKp47n50Mm9YXlGISV8AqMdHecBdqqmUSeY=;
-        b=iT/tnWcwTflhlhmc501i+b3k2EJLBZNQOQIPvya9GMVSsD8Hno5J6oK8fM09NumerT
-         YqA2eOruVVpK2wpVQz3Y8Dzr3Ygd4ffZC+KZcaJypZPXMebakbcM0l3Xw+uYkJeM6GFy
-         p/FDxxI/JNW8kpTL+NcD13bsgwbARFEsykIBYFc+QExDHtf2kRSyW4OiXQnEygvhH7Z5
-         HUkn+ncoPJD/ZqapX45U3TpOu6ZmviZVEx8sazav4qbmzoyTPSFNLk4KlXK6T8AesGgP
-         okPj/LFUD4M+uhCs/5KWV4uyO156G9qgDlEpOyb4L/z3sgWxJTXFuCNhF5v2330rA6Rw
-         zmVw==
+        bh=6W9MrSFw3Dj8LODmWhYflLLrYCpPux4iXSGDv9dO1HI=;
+        b=OFFHg43n4qQXqU+nTjmRZSeWCxlW8N3qECUsa9mGZSNdmqN/0NjxHsmvdKKIiHA9wX
+         VEi5af7NHiwDcpJE0xOWEqteaCQ+IQgPSaJVLS+o3IQ+esrwYabGdXhQ9bI0GLhXr1pu
+         rsdyC/2ZeqK20XSOzcPg1YCTiDznbSpjuKYDjIJTh7dnGsqQ34GAB7JsMEJIbBzZWepi
+         YxG7YvAKCNdEWyd0EMiyQOX5bteBwQqpVU38GxmUtFQiB+NMc6jh+hlyjLpjZ7QbFC0V
+         M2f70Q5l873nrdX31ust9ne0QKTMPLrT8GnSGdq7OTJBHUC001xNcKFupJM/2fQfB733
+         FH3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=5GZxcBiJGKp47n50Mm9YXlGISV8AqMdHecBdqqmUSeY=;
-        b=fHZ8nSpUy0E8JEWz3XAc4aYHsw5cGMggTqwJd9eMYEAih2LPvqxqHWw7hm7YxHIvVi
-         HOJgw6lLP0+VyKZMA+pVtTu7Htc9hntmHzfLTAm7nXWA7Ty0DnZQtX1ai1P6u11Q2M7+
-         eqRT9k0Rqv80FFxNqOlLpXXlpYB6nQb5qDU1eBLGr8g3sLnpnqRjW/ubCLdx0jQElIya
-         iYgPQk0CxQvrZ44sOAm21/orRZpWN8GmW+uDyYdBVnMpRxqolmd+VJ2dfAOCHqbvIUdE
-         qBDInkjizeG3STvWnXjKeqgqqMKjvz00KzzF4v5kP1ZVGYvrpHBFEWm1wQlmPnhj+83l
-         +uYg==
-X-Gm-Message-State: ACrzQf2TEwGlmk/57cSNcIIYhLkPushY5xrQNcDsqpeC9RDl9viFJWqZ
-        okAIjI5rxfkmaKMbtKr4TCuRjI7nPAM=
-X-Google-Smtp-Source: AMsMyM4S3efHiaJSIt9z9KM3om7BT9+50tAdC0uXXkjh9rU3Nf7hgduMgbJwc136DH30JNfv4wj9Fw==
-X-Received: by 2002:a17:90a:ac10:b0:202:9880:4cae with SMTP id o16-20020a17090aac1000b0020298804caemr176673pjq.173.1663796819540;
-        Wed, 21 Sep 2022 14:46:59 -0700 (PDT)
+        bh=6W9MrSFw3Dj8LODmWhYflLLrYCpPux4iXSGDv9dO1HI=;
+        b=SIp8yfrIXST2kV6ZHOXGv1spJ7daZ4LfpaP59aFRRUmlbfDzxpMZMVP2TEbI6K8WiF
+         sOW76wjivC52ZJ9ckcIZFMqxNCo1vmeHD4GK2IScX9nKtNzhD6prYRU2zwSxJDriV+7S
+         grqdP3Z0LEhyjY7F8ImCQZuIhBvD4KoHcxoQ+SjvAP1mOFW+bQzCpcAwSElw3T8J4eFa
+         RnnJyuaaJnpTzNTR28veX7aLlsIB9TEJCu/qwwHoEh5sXTdAuUkpUdpITQaCCFebIkfh
+         yVejVaEmv7/3nso2AVChoEvo8ZvYyEkZaWZJHCvG5lIjrWJFELtqt3qjoyfrbpGyw2xJ
+         QGuA==
+X-Gm-Message-State: ACrzQf1JixK0RjWihd/o9Bh6bkMoaVRvbFnELS+RERnY3UjlA7l1m5I6
+        aPO6MQtbqE2tfDP9el8baB+FFmoMBiU=
+X-Google-Smtp-Source: AMsMyM6/6EDPmgVes5IXggWr1C2n0ib6bpo66tCh2pnvPLvWD0F/91AHRVHF4biui3tsGO1wNeTx0A==
+X-Received: by 2002:a63:243:0:b0:43c:75c:d92a with SMTP id 64-20020a630243000000b0043c075cd92amr195269pgc.497.1663796820823;
+        Wed, 21 Sep 2022 14:47:00 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id t11-20020a170902e84b00b001782a6fbcacsm2506526plg.101.2022.09.21.14.46.58
+        by smtp.gmail.com with ESMTPSA id t11-20020a170902e84b00b001782a6fbcacsm2506526plg.101.2022.09.21.14.46.59
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Sep 2022 14:46:58 -0700 (PDT)
+        Wed, 21 Sep 2022 14:47:00 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/3] gatt-db: Check if permissions are set when adding CCC
-Date:   Wed, 21 Sep 2022 14:46:55 -0700
-Message-Id: <20220921214656.2241730-2-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 3/3] client/gatt: Fix notification enabled/disabled output
+Date:   Wed, 21 Sep 2022 14:46:56 -0700
+Message-Id: <20220921214656.2241730-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.37.3
 In-Reply-To: <20220921214656.2241730-1-luiz.dentz@gmail.com>
 References: <20220921214656.2241730-1-luiz.dentz@gmail.com>
@@ -72,24 +72,35 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-CCC shall always have some permission set.
+When notifications are enabled/disable the output was not print a new
+line.
 ---
- src/shared/gatt-db.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ client/gatt.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/src/shared/gatt-db.c b/src/shared/gatt-db.c
-index d3b5cec1da86..32cbf6cdc38b 100644
---- a/src/shared/gatt-db.c
-+++ b/src/shared/gatt-db.c
-@@ -1066,7 +1066,7 @@ gatt_db_service_add_ccc(struct gatt_db_attribute *attrib, uint32_t permissions)
- 	struct gatt_db_attribute *value;
- 	uint16_t handle = 0;
+diff --git a/client/gatt.c b/client/gatt.c
+index 4c1efaf75ac8..efd736b2359a 100644
+--- a/client/gatt.c
++++ b/client/gatt.c
+@@ -2518,7 +2518,7 @@ static DBusMessage *chrc_start_notify(DBusConnection *conn, DBusMessage *msg,
  
--	if (!attrib)
-+	if (!attrib || !permissions)
- 		return NULL;
+ 	chrc->notifying = true;
+ 	bt_shell_printf("[" COLORED_CHG "] Attribute %s (%s) notifications "
+-			"enabled", chrc->path, bt_uuidstr_to_str(chrc->uuid));
++			"enabled\n", chrc->path, bt_uuidstr_to_str(chrc->uuid));
+ 	g_dbus_emit_property_changed(conn, chrc->path, CHRC_INTERFACE,
+ 							"Notifying");
  
- 	db = attrib->service->db;
+@@ -2538,7 +2538,8 @@ static DBusMessage *chrc_stop_notify(DBusConnection *conn, DBusMessage *msg,
+ 
+ 	chrc->notifying = false;
+ 	bt_shell_printf("[" COLORED_CHG "] Attribute %s (%s) notifications "
+-			"disabled", chrc->path, bt_uuidstr_to_str(chrc->uuid));
++			"disabled\n", chrc->path,
++			bt_uuidstr_to_str(chrc->uuid));
+ 	g_dbus_emit_property_changed(conn, chrc->path, CHRC_INTERFACE,
+ 							"Notifying");
+ 
 -- 
 2.37.3
 
