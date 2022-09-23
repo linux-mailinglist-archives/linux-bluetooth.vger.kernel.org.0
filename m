@@ -2,137 +2,131 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61EAB5E78B8
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Sep 2022 12:52:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B35B5E795F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Sep 2022 13:22:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229724AbiIWKwQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 23 Sep 2022 06:52:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58728 "EHLO
+        id S232177AbiIWLWE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 23 Sep 2022 07:22:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231805AbiIWKwD (ORCPT
+        with ESMTP id S232003AbiIWLWA (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 23 Sep 2022 06:52:03 -0400
-Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03on2124.outbound.protection.outlook.com [40.107.105.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BE28E6DC0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Sep 2022 03:52:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=O2G4X1xsHUkaDbDRDsO6Mex6AuR7ZgAUJrmt9GtaZABBqmrciD3lZfWj1lWF878cWzblro7Hri51+1O/sgLpkN0wdgU1dHd3MD1t6G1jQ5/fBbNMwWcEqvW8cOjNNyIJAZNrfM50VP0lrZzgbwHpEgxSYOvCvhT/nhYJ1z4LPaB32XMkFmqwjcTfdhAEYITI5U/fSBrkKYBnyZtT/b/2hefP0bz03alus6Es3CEKUSqO33ExU9s+hQsDNwEdSPZNWMY6JQE/YsNcJ47TNZ4kdVESIYSYbIvRGi+DEVeTsxJOFua2idXVoRMoX8Xi5JRAFUBzmH3qfIuMDmULL+uuSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=F3+hMbm3cTSXugM51pLIqBXjw+p/nBjYEDyQ0bPg38A=;
- b=Res7/YxykyaK9w+qNzX63QaLHQj4KPzZZFDa4OtnrWDZvxKHBrAGn4d8Mj4F3AbTayx+9yiX1PMnsV93GVDIcV4l0rNEyfscIqx22lezVGjHW4quKWWU2ov+1ON2vB82vi2RZ/KRXq7TbbLuTS+ulZpDuFOKgNQv1YdZnxtG9AF/I3f4N3UPhBNTBk6ufVizLQifpbNRuozkBH1JbyuBCLwxQOGCJ03DLjWyddPYNuRuhXW4lR+Sj0ZCTKtvvk6govqydSJ4EtE75WVmCfBcefRFPBl0lTZPp+aRDoDIaJZWd0VX72X8+hsGP2KekQmyy4TtAdKpudKRIm+O4hyDLQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 217.111.95.7) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=arri.de;
- dmarc=none action=none header.from=arri.de; dkim=none (message not signed);
- arc=none
+        Fri, 23 Sep 2022 07:22:00 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CE4113791B
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Sep 2022 04:21:55 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id i3so8029807qkl.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Sep 2022 04:21:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=arrigroup.onmicrosoft.com; s=selector1-arrigroup-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=F3+hMbm3cTSXugM51pLIqBXjw+p/nBjYEDyQ0bPg38A=;
- b=RIIsciaqtHv89vfFkbm8sphZHoyKq5m0d+UDKHZ/zZ/vIjKREFTG3humfrce/cHmK58vrtMxvlP3c/T28wV+JSzYT4/S45kCQ2c65bo/AhC2DiW7fzb/jVuFoI2tIHugqMNrFLs4Gia630TlE+xa58UXqHI3RWMHfxi7tM/DbGQ=
-Received: from GV3P280CA0003.SWEP280.PROD.OUTLOOK.COM (2603:10a6:150:b::28) by
- DU2PR07MB8152.eurprd07.prod.outlook.com (2603:10a6:10:275::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5676.7; Fri, 23 Sep 2022 10:51:59 +0000
-Received: from HE1EUR02FT003.eop-EUR02.prod.protection.outlook.com
- (2603:10a6:150:b:cafe::6e) by GV3P280CA0003.outlook.office365.com
- (2603:10a6:150:b::28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5654.14 via Frontend
- Transport; Fri, 23 Sep 2022 10:51:59 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 217.111.95.7)
- smtp.mailfrom=arri.de; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=arri.de;
-Received-SPF: Fail (protection.outlook.com: domain of arri.de does not
- designate 217.111.95.7 as permitted sender) receiver=protection.outlook.com;
- client-ip=217.111.95.7; helo=mta.arri.de;
-Received: from mta.arri.de (217.111.95.7) by
- HE1EUR02FT003.mail.protection.outlook.com (10.152.10.98) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.5654.14 via Frontend Transport; Fri, 23 Sep 2022 10:51:58 +0000
-Received: from N95HX1G2.arri.de (192.168.54.71) by mta.arri.de (10.10.18.5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Fri, 23 Sep
- 2022 12:51:57 +0200
-From:   Christian Eggers <ceggers@arri.de>
-To:     <linux-bluetooth@vger.kernel.org>
-CC:     Christian Eggers <ceggers@arri.de>
-Subject: [PATCH BlueZ 3/3] tools: fix printf format strings
-Date:   Fri, 23 Sep 2022 12:51:41 +0200
-Message-ID: <20220923105141.20176-3-ceggers@arri.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20220923105141.20176-1-ceggers@arri.de>
-References: <20220923105141.20176-1-ceggers@arri.de>
+        d=gmail.com; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date;
+        bh=EsAAI+fspJvYyp4KYHtbOKLdxKposfg0OC4VA0F+w3w=;
+        b=APfFumi51VgUJVjrWC2mk9WgPv0ZDxeWOUAQc98uqldUmsZEYiejal/2AZVyWpYn8E
+         IgoZaZF9ENdcrR7HlxGvqg4HCKP39cHwKoAlzr2dP/PspJ3RP1GfLkWasYLH1AlVZdSr
+         TbZm5W38V0BxkFlr2hSJp49SJw8oCZQ0iw4M21pyzGHQ2qrMelKMseR9EDdLq+3eujj9
+         jPVCnTsCd29Y61q6baNS1SCjVXOrChqqcJFEf40jD/3pVKXifEPm5JaJXqLdmoYGz7pl
+         HQXFfvwDW5XPYoN/eAmdwfZJ3rZozY1aaS3F0AVHNe0NSSpOB7LD/x0rj6CPwZ1gqRtm
+         D4Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=EsAAI+fspJvYyp4KYHtbOKLdxKposfg0OC4VA0F+w3w=;
+        b=Iyf4mC7YCCzmx6TIVSdL+QO+ol21q3LjkKxRfaV+zfXyGl/8Fcv9b2Fkv1PqQ6N8XT
+         s4ErOWLohtsEvAq6ffs6mXnL9HuLYVXj1FHI64z+6PdtBrXCGp6B1yAEP0KrSQ866BUt
+         eLLsp0T72L0HzoxXN5pM6QEYVTXvx01dcxBH8Vq8sNPpTTcq25y7RyowMfHQUqPwV4iu
+         +8OfBcjr1urhDZqQmy+CzPG6+8aqXhtzQRTfVJqQAVFidmSusDaSmRQRFZ1kT/5M91Po
+         oDVTwiYBGqYyzobuuOzMwXmPV7lUKQfWIG+4WYjcrBh0qKwcKa+f0khfJcc0rDKfnTuN
+         jDZw==
+X-Gm-Message-State: ACrzQf03mVval2nYIIMAPsfz+b5wPhDCdeLYD8ZQMCxtK52FSS1ildB2
+        Y8bIJBB+VGNXduHvZJruu9H8LCWUa9k=
+X-Google-Smtp-Source: AMsMyM7l+/5r6h8ASa1Grl6m+N1ibk1MXnOQRJtb+zCeO9a6H7NAj40XeXb9ga0UXyvksug3a88ZIg==
+X-Received: by 2002:a05:620a:4145:b0:6ce:8c42:7087 with SMTP id k5-20020a05620a414500b006ce8c427087mr5334620qko.334.1663932114923;
+        Fri, 23 Sep 2022 04:21:54 -0700 (PDT)
+Received: from [172.17.0.2] ([20.230.91.151])
+        by smtp.gmail.com with ESMTPSA id x22-20020a05620a0b5600b006b61b2cb1d2sm5408905qkg.46.2022.09.23.04.21.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Sep 2022 04:21:54 -0700 (PDT)
+Message-ID: <632d96d2.050a0220.966ee.3608@mx.google.com>
+Date:   Fri, 23 Sep 2022 04:21:54 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============4947027937426037338=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.54.71]
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: HE1EUR02FT003:EE_|DU2PR07MB8152:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9e9929d2-fadb-4186-a7c4-08da9d51a393
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: I4ppycmGtSF1wVHXUa9jt/1a1NVz7lj6T5U5NB+LqmW0d9YDrEUO3vMztLVdh0ouMxIoPc5wgbhjhh7XSUYLCWGeogyoKm97sYnSjidyn9qGKHgoPKJZkmhPj+epTkLxDIpJKSu1w3tOwwyGQOx52FgftdTLt4h0bv7zxyGzpxoi27ffonXlCuqDjHpyTIUOJjHlAuNsDdKvVnGoeW9V0Eq/ppue4mBnM1HLhQzrCfg8xXIICqXSVARZpDixaGFjBGfdZj/iEkOqLTJNKQ2c9R5Y3I/Fu9D+e+97/5dASj4JoKYG4J6mes0QvZEy7HyE11RQBnRyHgD3DXfAQ9kGC6TLV0HMTF8tLbxGSYo+8/DOi8CQ11X2U/SunvFO8zdpJlzEo/PRH4axpEBz7UK5SkKhdjAauJ/HLzULUvy2uLqzUqLerybb+WKb7cZerM0YClbm3peLn1j7ovZYQcrnLkMY+okZU8NXsdc9zlsYcGoMyyxfRnakXf8X2qK+gaXIGkNoVsiWiZpsAlqUBu0cPoSWzWK5anPnGUvPhByQP2u0uAF1TVG45iEs7vFjPjXNHHT8Imllj+QVo6dWVCjIglx9dlV7CEBAk01bFuiV+56vLBXtrK7R5bK6fzJT3LmH73dpgFfA6VCftZUowH2MoT44JfpERr7a34oVciRUOEfQA1SHLC3uUzfyhQMYOlb6QPbeUGC19ah9qvrCxdlGEVC5KSzlAQ6SmoqG40f4IzrqMbcPOQ1S7Qv4s7ELjCb6GDHjLwtIKIJ9kWsMBIe9Wg==
-X-Forefront-Antispam-Report: CIP:217.111.95.7;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mta.arri.de;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(4636009)(346002)(136003)(376002)(396003)(39860400002)(451199015)(46966006)(36840700001)(82740400003)(26005)(86362001)(4326008)(8676002)(6916009)(36756003)(41300700001)(426003)(70586007)(82310400005)(356005)(316002)(5660300002)(4744005)(2906002)(8936002)(47076005)(83380400001)(81166007)(6666004)(7696005)(107886003)(478600001)(70206006)(16526019)(186003)(36860700001)(2616005)(1076003)(336012)(40480700001)(36900700001);DIR:OUT;SFP:1102;
-X-OriginatorOrg: arri.de
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2022 10:51:58.7840
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9e9929d2-fadb-4186-a7c4-08da9d51a393
-X-MS-Exchange-CrossTenant-Id: e6a73a5a-614d-4c51-b3e3-53b660a9433a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e6a73a5a-614d-4c51-b3e3-53b660a9433a;Ip=[217.111.95.7];Helo=[mta.arri.de]
-X-MS-Exchange-CrossTenant-AuthSource: HE1EUR02FT003.eop-EUR02.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR07MB8152
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, ceggers@arri.de
+Subject: RE: properties_changed: check for NULL iterator
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220923102421.10336-2-ceggers@arri.de>
+References: <20220923102421.10336-2-ceggers@arri.de>
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-time_t is 64 bit (long long) on many 32 bit platforms (e.g. ARM) now
+--===============4947027937426037338==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=679824
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      12.59 seconds
+GitLint                       FAIL      8.83 seconds
+Prep - Setup ELL              PASS      26.35 seconds
+Build - Prep                  PASS      0.79 seconds
+Build - Configure             PASS      8.36 seconds
+Build - Make                  PASS      747.77 seconds
+Make Check                    PASS      11.00 seconds
+Make Check w/Valgrind         PASS      289.46 seconds
+Make Distcheck                PASS      239.58 seconds
+Build w/ext ELL - Configure   PASS      8.42 seconds
+Build w/ext ELL - Make        PASS      84.11 seconds
+Incremental Build w/ patches  PASS      892.46 seconds
+Scan Build                    WARNING   493.39 seconds
+
+Details
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint with rule in .gitlint
+Output:
+[BlueZ,9/9] battery: provided_battery_property_changed_cb: check for NULL iterator
+1: T1 Title exceeds max length (82>80): "[BlueZ,9/9] battery: provided_battery_property_changed_cb: check for NULL iterator"
+
+
+##############################
+Test: Scan Build - WARNING
+Desc: Run Scan Build with patches
+Output:
+*****************************************************************************
+The bugs reported by the scan-build may or may not be caused by your patches.
+Please check the list and fix the bugs if they are caused by your patch.
+*****************************************************************************
+client/gatt.c:2146:2: warning: Null pointer passed to 2nd parameter expecting 'nonnull'
+        memcpy(*dst_value + offset, src_val, src_len);
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+
+
+
+
 ---
- tools/l2test.c | 5 +++--
- tools/rctest.c | 5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/l2test.c b/tools/l2test.c
-index fbaca747eaaa..5aae4b687518 100644
---- a/tools/l2test.c
-+++ b/tools/l2test.c
-@@ -893,8 +893,9 @@ static void recv_mode(int sk)
- 					timestamp = 0;
- 					memset(ts, 0, sizeof(ts));
- 				} else {
--					sprintf(ts, "[%ld.%ld] ",
--							tv.tv_sec, tv.tv_usec);
-+					sprintf(ts, "[%lld.%lld] ",
-+							(long long)tv.tv_sec,
-+							(long long)tv.tv_usec);
- 				}
- 			}
- 
-diff --git a/tools/rctest.c b/tools/rctest.c
-index 9eb8210d6eb2..269503701e6b 100644
---- a/tools/rctest.c
-+++ b/tools/rctest.c
-@@ -500,8 +500,9 @@ static void recv_mode(int sk)
- 					timestamp = 0;
- 					memset(ts, 0, sizeof(ts));
- 				} else {
--					sprintf(ts, "[%ld.%ld] ",
--							tv.tv_sec, tv.tv_usec);
-+					sprintf(ts, "[%lld.%lld] ",
-+							(long long)tv.tv_sec,
-+							(long long)tv.tv_usec);
- 				}
- 			}
- 
--- 
-2.35.3
 
+--===============4947027937426037338==--
