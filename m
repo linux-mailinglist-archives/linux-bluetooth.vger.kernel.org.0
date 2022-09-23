@@ -2,83 +2,96 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0C645E812B
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Sep 2022 19:54:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2876E5E8142
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 23 Sep 2022 20:00:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231805AbiIWRyv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 23 Sep 2022 13:54:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53232 "EHLO
+        id S232651AbiIWSAu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 23 Sep 2022 14:00:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230194AbiIWRyu (ORCPT
+        with ESMTP id S232626AbiIWSAt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 23 Sep 2022 13:54:50 -0400
-Received: from out-23.smtp.github.com (out-23.smtp.github.com [192.30.252.206])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFE89326C6
-        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Sep 2022 10:54:47 -0700 (PDT)
-Received: from github.com (hubbernetes-node-d332492.ac4-iad.github.net [10.52.200.35])
-        by smtp.github.com (Postfix) with ESMTPA id F21D0600804
-        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Sep 2022 10:54:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-        s=pf2014; t=1663955686;
-        bh=SWrB7BrXds6+VHKD7ko98b269XurvrKELmK34LcHPiY=;
-        h=Date:From:To:Subject:From;
-        b=tByjsNAq+EQhbpthIZGZZVTJezBfv+WlKrPJP6VtIMGZNMIWwfTU0u6ZkLair+xBc
-         D2qUNGR+Sg4ZWmIOVObP7sgoOKcW4Ke/tQfp2LkwQW7NBzwtih5rF6USkPN2rg384S
-         VZUzAI8Mfn70P4E0EkN+Q7KlMB5CoPFj2ADqIb5Q=
-Date:   Fri, 23 Sep 2022 10:54:46 -0700
-From:   iwestin <noreply@github.com>
+        Fri, 23 Sep 2022 14:00:49 -0400
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D1F8C028
+        for <linux-bluetooth@vger.kernel.org>; Fri, 23 Sep 2022 11:00:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1663956048; x=1695492048;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=3Qe3EEGwjOJAFfWuVOfdQJ4FuFXvzFxoL9HU49eQLaA=;
+  b=bsS12wGN+VNvdqsmjUWuiaj8skK9KZ0XRVwaJpIFXmK1v/I8x+rniSzt
+   KkvVDMz90BaCGae8vFNCec/MdHesMkGge/62o2ZxlrCwGDwHTwWjnIkDq
+   GJ74ZhlQEst+bQ+OoW+zHxVfkLAD2/GMR7rubCYZmz7U5/bkjNrPXMnYN
+   IYEMgqd/OEwYEmgZBN4RUpBGzht1IeFsUWksAtfQJfB4AdXBdI+1FpwZt
+   Ydz5/Ijgt/2hRs2bX8ffEbXeQfKjzp0gwjjBgi3iQzkPu3WsizBUhimki
+   tM+tGe7Iw8V4kPx+CxTUReUcgsbvqye8q43n82n0ye4mlqW0fRabBhd4V
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10479"; a="300633802"
+X-IronPort-AV: E=Sophos;i="5.93,339,1654585200"; 
+   d="scan'208";a="300633802"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2022 11:00:30 -0700
+X-IronPort-AV: E=Sophos;i="5.93,339,1654585200"; 
+   d="scan'208";a="745878190"
+Received: from cramirez-mobl.amr.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.212.82.81])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2022 11:00:30 -0700
+From:   Brian Gix <brian.gix@intel.com>
 To:     linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/721d5a-95d9dc@github.com>
-Subject: [bluez/bluez] 32d866: mesh: Clear addr field if virt sub failed
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+Cc:     luiz.dentz@gmail.com, brian.gix@intel.com, inga.stotland@intel.com
+Subject: [PATCH BlueZ v5 0/2] Mesh demon switched to using kernel Mesh MGMT
+Date:   Fri, 23 Sep 2022 11:00:16 -0700
+Message-Id: <20220923180018.815614-1-brian.gix@intel.com>
+X-Mailer: git-send-email 2.37.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: 32d866b4df928aa1d7785da7f83d089f64d42797
-      https://github.com/bluez/bluez/commit/32d866b4df928aa1d7785da7f83d089f64d42797
-  Author: Isak Westin <isak.westin@loytec.com>
-  Date:   2022-09-23 (Fri, 23 Sep 2022)
+This patchset enables the mesh daemon (bluetooth-meshd) to use the new
+MGMT mesh opcodes and events to send and receive Mesh packets. By
+default, the daemon attempts to enable the experimental mesh
+functionality, and query the kernel for active mesh support before then
+enumerating the available controllers and selecting ojne that works.
 
-  Changed paths:
-    M mesh/cfgmod-server.c
+If no kernel support is found, it will continue to use a raw HCI socket
+for mesh support.
 
-  Log Message:
-  -----------
-  mesh: Clear addr field if virt sub failed
+v2-v3: Fix whitespace and spelling
 
-If processing failed for a Config Model Subscription Virtual Address
-Add/Delete/Overwrite message, the address field in the status reply
-should be set to zero. See MshPRFv1.0.1 section 4.4.1.2.8.
+v4: Rework missed 2 new files...  readded.
 
+v5: Fix null-point dereference found by CI
 
-  Commit: 95d9dc6764fc3859af9528c222eef95e843a9cbc
-      https://github.com/bluez/bluez/commit/95d9dc6764fc3859af9528c222eef95e843a9cbc
-  Author: Isak Westin <isak.westin@loytec.com>
-  Date:   2022-09-23 (Fri, 23 Sep 2022)
+Brian Gix (2):
+  mesh: Improve PB-ADV timing for reliability
+  mesh: Add new kernel MGMT based IO transport
 
-  Changed paths:
-    M mesh/appkey.c
+ Makefile.mesh          |   9 +-
+ mesh/main.c            |  39 +-
+ mesh/mesh-io-api.h     |  11 +-
+ mesh/mesh-io-generic.c |  47 +--
+ mesh/mesh-io-mgmt.c    | 788 +++++++++++++++++++++++++++++++++++++++++
+ mesh/mesh-io-mgmt.h    |  11 +
+ mesh/mesh-io-unit.c    |  13 +-
+ mesh/mesh-io.c         | 189 +++++++---
+ mesh/mesh-io.h         |   4 +-
+ mesh/mesh-mgmt.c       | 164 +++++++--
+ mesh/mesh-mgmt.h       |  12 +-
+ mesh/mesh.c            |   6 +-
+ mesh/mesh.h            |   2 +-
+ mesh/pb-adv.c          |   9 +-
+ 14 files changed, 1160 insertions(+), 144 deletions(-)
+ create mode 100644 mesh/mesh-io-mgmt.c
+ create mode 100644 mesh/mesh-io-mgmt.h
 
-  Log Message:
-  -----------
-  mesh: Reply error if appkey added for wrong netkey
+-- 
+2.37.3
 
-If a known appkey is added for a different netkey, the status reply
-should be Invalid NetKey.
-
-
-Compare: https://github.com/bluez/bluez/compare/721d5a8ae86d...95d9dc6764fc
