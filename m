@@ -2,112 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 576375EA8BA
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 26 Sep 2022 16:41:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CCE15EAD4F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 26 Sep 2022 18:58:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235100AbiIZOlY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 26 Sep 2022 10:41:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36040 "EHLO
+        id S230090AbiIZQ6H (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 26 Sep 2022 12:58:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235060AbiIZOk5 (ORCPT
+        with ESMTP id S230092AbiIZQ5w (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 26 Sep 2022 10:40:57 -0400
-Received: from voyager.loytec.com (voyager.loytec.com [88.198.4.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C05783239
-        for <linux-bluetooth@vger.kernel.org>; Mon, 26 Sep 2022 06:01:48 -0700 (PDT)
-Received: from 212-17-98-152.static.upcbusiness.at ([212.17.98.152] helo=lexx.office.loytec.com)
-        by voyager.loytec.com with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <isak.westin@loytec.com>)
-        id 1ocnk3-000470-72
-        for linux-bluetooth@vger.kernel.org; Mon, 26 Sep 2022 15:01:47 +0200
-Received: from loytec-dev-vm.delta.corp ([10.101.25.21])
-        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 28QD1bCY1107873;
-        Mon, 26 Sep 2022 15:01:45 +0200
-From:   Isak Westin <isak.westin@loytec.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Isak Westin <isak.westin@loytec.com>
-Subject: [PATCH BlueZ 4/4] mesh: Clear HB sub status field if disabled
-Date:   Mon, 26 Sep 2022 15:01:10 +0200
-Message-Id: <20220926130110.2146-5-isak.westin@loytec.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20220926130110.2146-1-isak.westin@loytec.com>
-References: <20220926130110.2146-1-isak.westin@loytec.com>
+        Mon, 26 Sep 2022 12:57:52 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A12C54668
+        for <linux-bluetooth@vger.kernel.org>; Mon, 26 Sep 2022 08:54:05 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d11so6619796pll.8
+        for <linux-bluetooth@vger.kernel.org>; Mon, 26 Sep 2022 08:54:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date;
+        bh=9dA2q93Py0ZODP0TMAaBQp1gLdJ2hCsmQf04ujEZ9TM=;
+        b=DAauvrH19D6REotTcUcpDkklAnUH8OGDtp2Oyf4z9qLAu3F390GUKyjOGriU2GTWUp
+         exL7QnRh04icM+EF9aVZOjxQ/ZbV9HC6zmxUw3adhpXEVWBXtAMj8mYCwO0RqLYn+lf6
+         Y6XfnT3dMgtXLMSufpBjq8CYYaCVuvfoWaan9zpuaSmeCdJdV30eILc/vsqbBiI2Cw6T
+         pH6T3bRPU3WnldQKHIXU3h41DR/1FTqeSmh5Y0BNk23EUE10+VjcvA91wVdFjW9o3N1C
+         3Zj1qB73ZBzpJ+n2+GQoV4FWOUAHzdYtW5uFqdBHPrDxt87pYNOt4IPoriORg5VZ8S8b
+         9svQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=9dA2q93Py0ZODP0TMAaBQp1gLdJ2hCsmQf04ujEZ9TM=;
+        b=2DpSuHd+f2qKyOwgb1ac8Hf+Mc/l0ZtqBZiXJHx0qBmwnJLS9jJ1aYg6DIIJQiEgCB
+         6MBMu7IDOQ3j/8gLiBBUsOnQg+IsUP39+r57+ru/JWDYUKNRdxV1gjE5qlbiT/q6MWqH
+         fJy/CoIEGLUx9+wWlLv1ULj8/Y8ITInV5xwMj3pmZtbB1WFCBYePuzqr3jTXN3e97nOH
+         0HsbBVS9ZTQTqAMsTXvXQUdWRmT46UQ+3+ohr0gCNJPzyE2jEB21JkYNaKNQhLaZEPoM
+         c4deGLn23/lGd8rN0Cs7SBDMuhNvuInGSBWRS7M5SXEZ4Ib7t9vzPASskwgdSfpWCC6n
+         WWAw==
+X-Gm-Message-State: ACrzQf2ZylZ2CwSeOiYQ9b2l/Zz+WdmZDAjEoe5i/v2T0d0mGkSULbxp
+        VdoSKxbRLEiYZD2XW+OGCTVHnAN821vHrw==
+X-Google-Smtp-Source: AMsMyM5OD95neDb6rggedyaLqCFocW4saIGaDVnTY0wlE3toShiLHTW5rMPG2pdXF9mNYvO67xWfHg==
+X-Received: by 2002:a17:90b:1c07:b0:202:ff6e:6015 with SMTP id oc7-20020a17090b1c0700b00202ff6e6015mr26139799pjb.210.1664207644762;
+        Mon, 26 Sep 2022 08:54:04 -0700 (PDT)
+Received: from [172.17.0.2] ([138.91.166.165])
+        by smtp.gmail.com with ESMTPSA id f1-20020a170902684100b00173cfb184c0sm11417485pln.32.2022.09.26.08.54.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 08:54:04 -0700 (PDT)
+Message-ID: <6331cb1c.170a0220.2d0e6.4cbd@mx.google.com>
+Date:   Mon, 26 Sep 2022 08:54:04 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8062655555653478485=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 212.17.98.152
-X-SA-Exim-Mail-From: isak.westin@loytec.com
-X-SA-Exim-Scanned: No (on voyager.loytec.com); SAEximRunCond expanded to false
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, isak.westin@loytec.com
+Subject: RE: Mesh: Fix heartbeat publication/subscription
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20220926130110.2146-2-isak.westin@loytec.com>
+References: <20220926130110.2146-2-isak.westin@loytec.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-When replying to a HB subscription get message, and the current state of
-source or destination fields is zero (which means that HB subscription
-is disabled), all fields in the status reply should be zero.
+--===============8062655555653478485==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=680522
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      3.06 seconds
+GitLint                       PASS      2.07 seconds
+Prep - Setup ELL              PASS      35.30 seconds
+Build - Prep                  PASS      0.83 seconds
+Build - Configure             PASS      10.94 seconds
+Build - Make                  PASS      1231.41 seconds
+Make Check                    PASS      13.40 seconds
+Make Check w/Valgrind         PASS      380.05 seconds
+Make Distcheck                PASS      324.29 seconds
+Build w/ext ELL - Configure   PASS      11.27 seconds
+Build w/ext ELL - Make        PASS      115.80 seconds
+Incremental Build w/ patches  PASS      538.07 seconds
+Scan Build                    PASS      738.03 seconds
+
+
+
 ---
- mesh/cfgmod-server.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
-
-diff --git a/mesh/cfgmod-server.c b/mesh/cfgmod-server.c
-index 55a2d896b..7044b670d 100644
---- a/mesh/cfgmod-server.c
-+++ b/mesh/cfgmod-server.c
-@@ -470,7 +470,7 @@ static uint8_t uint32_to_log(uint32_t value)
- 	return ret;
- }
- 
--static uint16_t hb_subscription_get(struct mesh_node *node, int status)
-+static uint16_t hb_subscription_status(struct mesh_node *node, int status)
- {
- 	struct mesh_net *net = node_get_net(node);
- 	struct mesh_net_heartbeat_sub *sub = mesh_net_get_heartbeat_sub(net);
-@@ -502,6 +502,28 @@ static uint16_t hb_subscription_get(struct mesh_node *node, int status)
- 	return n;
- }
- 
-+static uint16_t hb_subscription_get(struct mesh_node *node, int status)
-+{
-+	struct mesh_net *net = node_get_net(node);
-+	struct mesh_net_heartbeat_sub *sub = mesh_net_get_heartbeat_sub(net);
-+
-+	/*
-+	 * MshPRFv1.0.1 section 4.4.1.2.16, Heartbeat Subscription state:
-+	 * If this is a GET request and the source or destination is unassigned,
-+	 * all fields shall be set to zero in the status reply.
-+	 */
-+	if (IS_UNASSIGNED(sub->src) || IS_UNASSIGNED(sub->dst)) {
-+		uint16_t n;
-+
-+		n = mesh_model_opcode_set(OP_CONFIG_HEARTBEAT_SUB_STATUS, msg);
-+		memset(msg + n, 0, 9);
-+		n += 9;
-+		return n;
-+	}
-+
-+	return hb_subscription_status(node, status);
-+}
-+
- static uint16_t hb_subscription_set(struct mesh_node *node, const uint8_t *pkt)
- {
- 	uint16_t src, dst;
-@@ -525,7 +547,7 @@ static uint16_t hb_subscription_set(struct mesh_node *node, const uint8_t *pkt)
- 
- 	status = mesh_net_set_heartbeat_sub(net, src, dst, period_log);
- 
--	return hb_subscription_get(node, status);
-+	return hb_subscription_status(node, status);
- }
- 
- static uint16_t hb_publication_get(struct mesh_node *node, int status)
--- 
-2.20.1
+Regards,
+Linux Bluetooth
 
 
-
-
-
+--===============8062655555653478485==--
