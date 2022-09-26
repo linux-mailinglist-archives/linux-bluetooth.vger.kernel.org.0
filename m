@@ -2,118 +2,109 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 320875E9F41
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 26 Sep 2022 12:22:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2A635EA714
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 26 Sep 2022 15:26:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235004AbiIZKWj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 26 Sep 2022 06:22:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37402 "EHLO
+        id S233535AbiIZN0I (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 26 Sep 2022 09:26:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234569AbiIZKVZ (ORCPT
+        with ESMTP id S234222AbiIZNZV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 26 Sep 2022 06:21:25 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59BD44BA76
-        for <linux-bluetooth@vger.kernel.org>; Mon, 26 Sep 2022 03:16:05 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id a80so6213606pfa.4
-        for <linux-bluetooth@vger.kernel.org>; Mon, 26 Sep 2022 03:16:05 -0700 (PDT)
+        Mon, 26 Sep 2022 09:25:21 -0400
+Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB17753A2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 26 Sep 2022 04:50:43 -0700 (PDT)
+Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-3450a7358baso65185117b3.13
+        for <linux-bluetooth@vger.kernel.org>; Mon, 26 Sep 2022 04:50:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=Klgl7KNTPZX6/7bHHE20SbQAQo3ilxqE72hmsPzAr74=;
-        b=UklklmZfXeJCf+I+g8Yoh4MwnpUiMSG5eOXOeRhZNqO/S3dYp4z9ZyEClSFxABeu7P
-         21KflDpF1US4q11otXEnuYtfF9XrAORmKE4Jyq2wJlzO6ASH5pb1VzQeiiIFDufUltVH
-         t1E6daqkXunjDbCpluYjCJDp012so8Bg2GayIMDrYx/UC9gym5dsx9XqYWwDFToWN4vm
-         NIgOPnSAUMGJTWChgD5sOpUzL0DK5aZWVdEgTliaAyuyfYDId72GyLORpgM5E+RtCrIK
-         qWcrKxb9Mr0Rb1ODnli3NNGbTF4ox77SfGZdvu2aFaHEexqW+iLLipk59SeUwsoRGe/t
-         b6NQ==
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date;
+        bh=YeEFrOpnueqp49lpSsCtkyhW66cD5QzqZPU5hyS5TkM=;
+        b=gxgPYqMBX0nR+iKzUnNtpUSOBn8ieFDaTHmmheEPHIGEphmDuiwhI9fI6GnfzWZmif
+         BXa+ygt661myWUlb3quBsgw2PxVOAPvU6M9aGpP7M8CX8K1q5rN8lEIO3gt+xFqfIA3V
+         FnqD99r3Hw8/UUzO7dgAD3AGXYskn73CY07UBp4BPr/s0v9+eJ9oyikOg0xDacTnJagO
+         WoE8wi6Dp4c7Q4zhTTpS0jhmFENtJUB7lV7B5gqzQeJQs3fX5EBBLQWWdzSiCTUnvM7d
+         7iNOvTgPe2xqw8lcZTwSUwwvHqvOUCljJ+pLCWd6qilRCbjIWN1DlBrBhzM5ZvmUg9Pm
+         P6+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=Klgl7KNTPZX6/7bHHE20SbQAQo3ilxqE72hmsPzAr74=;
-        b=tSNUGvDKBoE7DhnsrTSmpjXtKyTqBtxYr/LGa8M8hVHqOn6ow48r/zMSdzJWtkyssO
-         GpU9Q0nQI5obcter6dru5XakC6RnwppdlUMKwY+HeJdynWgixoq5UFDhm+v1lOQ1n6Mm
-         VJV07QNuoDolFcP1JwkEAK+iphQzrneSqsutyMQrMirqjoIsG3kHKqjjC+1WLyHzRCVX
-         OQ+qSK/h3wEnMQyzj1v7wcabxlGeG25XTfPbE4puFjMs6RSTiiPkR8yJFq/A13SPphm7
-         sIs6pgocD5pweNsq9x10kq/g46WbEdmJtRm8g+awPPEFByq0v4bn+YbgsMMnhrdctwxl
-         T1gg==
-X-Gm-Message-State: ACrzQf0jbgvF3kxzjG/PD1op1xwjkmXiU2WAfZA42dtVN6HfN8vpMNL0
-        VLSBAh26afNJb4gzcKh0TVLlNE7cNEE=
-X-Google-Smtp-Source: AMsMyM6GQEVJG5a+hRpsTGEWpONgoUz7s9vFukBIaPPUkZs1idqSDYCZiC8q3Y5uq32OWwN+NslyPA==
-X-Received: by 2002:a63:da4b:0:b0:439:14a8:52b with SMTP id l11-20020a63da4b000000b0043914a8052bmr18546191pgj.500.1664187364430;
-        Mon, 26 Sep 2022 03:16:04 -0700 (PDT)
-Received: from [172.17.0.2] ([20.253.136.171])
-        by smtp.gmail.com with ESMTPSA id r62-20020a17090a43c400b0020255f4960bsm6131078pjg.24.2022.09.26.03.16.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 03:16:04 -0700 (PDT)
-Message-ID: <63317be4.170a0220.632bc.a65f@mx.google.com>
-Date:   Mon, 26 Sep 2022 03:16:04 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============3790145020839843307=="
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=YeEFrOpnueqp49lpSsCtkyhW66cD5QzqZPU5hyS5TkM=;
+        b=oUFT+q+P9SyxrjeXBuOemk2GaQXhKCmNt2iCHaimrNLysTPtf7v01rzwrXomMJa/D1
+         WVa9KwcX2wVEiSxnKRS1E3c33q/VH/y+5LGKhCcZVo94gc65PGrUMTpQaxYD04dZH6LQ
+         Z5zK2kcmeJceytdGmy5RrzXokT6IzBjpYf91Si1PApofjc2sdurIlHKMGjOQO2/ZBiwl
+         A8bVH3XXW/bT123U4xCBIlFLR6efb1Wuiy8otygCN3yXyEZYMqdDQlfeZeRN8KS6Tz6B
+         UHWbwwZXxD0VtpviJKSgfU3bOZ0WY/Q08TPJMtExHUZWaL28ip92iSSTyHAENJIqYith
+         pFyQ==
+X-Gm-Message-State: ACrzQf3YJxsgAi28DDdcC4QVpblfsR6iOeT+Qi1nAdIqWa3rXl1uKMQO
+        1D2QKJlS7eMXo7GMexVEuJnLqU1lRVSzQtltQxU=
+X-Google-Smtp-Source: AMsMyM4HrVMj9QbyA6RL2lwzkPHaMztRJEKxRj7UuFxFGmaMMZ/4NAJuuyq7lOxPcIYVA8Iu7lyhdMn3d9xBX7r7cZI=
+X-Received: by 2002:a0d:d501:0:b0:345:74cf:965f with SMTP id
+ x1-20020a0dd501000000b0034574cf965fmr20511522ywd.93.1664192881315; Mon, 26
+ Sep 2022 04:48:01 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, ruanjinjie@huawei.com
-Subject: RE: [-next] Bluetooth: btrsi: Add __init/__exit annotations to module init/exit funcs
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20220926092002.1191313-1-ruanjinjie@huawei.com>
-References: <20220926092002.1191313-1-ruanjinjie@huawei.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: by 2002:a05:7010:289:b0:2f0:1279:d56 with HTTP; Mon, 26 Sep 2022
+ 04:48:00 -0700 (PDT)
+Reply-To: lisawilliams46655@yahoo.com
+From:   Dr Lisa Williams <daouda76104963@gmail.com>
+Date:   Mon, 26 Sep 2022 04:48:00 -0700
+Message-ID: <CACGepZVqm11z=ac7=HWYVJZfPH5ajjHLDom6fGTjf5-CH81uhA@mail.gmail.com>
+Subject: Hi Dear!
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5013]
+        * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [209.85.128.195 listed in list.dnswl.org]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [lisawilliams46655[at]yahoo.com]
+        * -0.0 RCVD_IN_MSPIKE_H2 RBL: Average reputation (+2)
+        *      [209.85.128.195 listed in wl.mailspike.net]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [daouda76104963[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [daouda76104963[at]gmail.com]
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============3790145020839843307==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hi Dear,
 
-This is automated email and please do not reply to this email!
+My name is Dr Lisa Williams from the United States.I am a French and
+American nationality (dual) living in the U.S and sometimes in France
+for Work Purpose.
 
-Dear submitter,
+I hope you consider my friend request. I will share some of my pics
+and more details about myself when I get your response.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=680405
+Thanks
 
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.89 seconds
-GitLint                       FAIL      0.46 seconds
-SubjectPrefix                 PASS      0.33 seconds
-BuildKernel                   PASS      46.37 seconds
-BuildKernel32                 PASS      38.80 seconds
-Incremental Build with patchesPASS      57.07 seconds
-TestRunner: Setup             PASS      665.96 seconds
-TestRunner: l2cap-tester      PASS      21.02 seconds
-TestRunner: iso-tester        PASS      20.54 seconds
-TestRunner: bnep-tester       PASS      7.89 seconds
-TestRunner: mgmt-tester       PASS      129.42 seconds
-TestRunner: rfcomm-tester     PASS      12.36 seconds
-TestRunner: sco-tester        PASS      11.65 seconds
-TestRunner: ioctl-tester      PASS      13.25 seconds
-TestRunner: smp-tester        PASS      11.49 seconds
-TestRunner: userchan-tester   PASS      8.15 seconds
-
-Details
-##############################
-Test: GitLint - FAIL - 0.46 seconds
-Run gitlint with rule in .gitlint
-[-next] Bluetooth: btrsi: Add __init/__exit annotations to module init/exit funcs
-1: T1 Title exceeds max length (81>80): "[-next] Bluetooth: btrsi: Add __init/__exit annotations to module init/exit funcs"
-
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============3790145020839843307==--
+With love
+Lisa
