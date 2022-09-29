@@ -2,34 +2,34 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC1445EF3DB
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Sep 2022 13:04:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 449A15EF3DD
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Sep 2022 13:04:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235224AbiI2LEP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Sep 2022 07:04:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36238 "EHLO
+        id S235126AbiI2LES (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Sep 2022 07:04:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234687AbiI2LEM (ORCPT
+        with ESMTP id S234729AbiI2LEP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Sep 2022 07:04:12 -0400
+        Thu, 29 Sep 2022 07:04:15 -0400
 Received: from voyager.loytec.com (voyager.loytec.com [88.198.4.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF6AD12BDA8
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Sep 2022 04:04:11 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37F2C1EC58
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Sep 2022 04:04:13 -0700 (PDT)
 Received: from 212-17-98-152.static.upcbusiness.at ([212.17.98.152] helo=lexx.office.loytec.com)
         by voyager.loytec.com with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <isak.westin@loytec.com>)
-        id 1odrKs-0007Jf-8W
-        for linux-bluetooth@vger.kernel.org; Thu, 29 Sep 2022 13:04:10 +0200
+        id 1odrKu-0007Jp-9Q
+        for linux-bluetooth@vger.kernel.org; Thu, 29 Sep 2022 13:04:12 +0200
 Received: from loytec-dev-vm.delta.corp ([10.101.25.21])
-        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 28TB45CH3109252;
-        Thu, 29 Sep 2022 13:04:08 +0200
+        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 28TB45CI3109252;
+        Thu, 29 Sep 2022 13:04:10 +0200
 From:   Isak Westin <isak.westin@loytec.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Isak Westin <isak.westin@loytec.com>
-Subject: [PATCH BlueZ 3/4] mesh: Allow Key refresh to skip Phase 2
-Date:   Thu, 29 Sep 2022 13:03:43 +0200
-Message-Id: <20220929110344.26130-4-isak.westin@loytec.com>
+Subject: [PATCH BlueZ 4/4] mesh: Allow Key Refresh Phase 0 to 3 transition
+Date:   Thu, 29 Sep 2022 13:03:44 +0200
+Message-Id: <20220929110344.26130-5-isak.westin@loytec.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20220929110344.26130-1-isak.westin@loytec.com>
 References: <20220929110344.26130-1-isak.westin@loytec.com>
@@ -46,36 +46,27 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-If we are in Key Refresh Phase 1, and receive a Secure Network beacon
-using the new NetKey and with KR flag set to 0, Phase 2 should be
-skipped. See MshPRFv1.0.1 section 3.10.4.1.
+Transition to Phase 3 from Phase 0 does not cause any state change, but
+is a valid transition. See MshPRFv1.0.1 section 4.2.14.
 ---
- mesh/net.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mesh/cfgmod-server.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/mesh/net.c b/mesh/net.c
-index c225fdb9a..379a6e250 100644
---- a/mesh/net.c
-+++ b/mesh/net.c
-@@ -2613,7 +2613,8 @@ static bool update_kr_state(struct mesh_subnet *subnet, bool kr, uint32_t id)
- {
- 	/* Figure out the key refresh phase */
- 	if (kr) {
--		if (id == subnet->net_key_upd) {
-+		if (subnet->kr_phase == KEY_REFRESH_PHASE_ONE &&
-+						id == subnet->net_key_upd) {
- 			l_debug("Beacon based KR phase 2 change");
- 			return (key_refresh_phase_two(subnet->net, subnet->idx)
- 							== MESH_STATUS_SUCCESS);
-@@ -2754,7 +2755,7 @@ static void process_beacon(void *net_ptr, void *user_data)
- 							ivu != net->iv_update)
- 		updated |= update_iv_ivu_state(net, ivi, ivu);
+diff --git a/mesh/cfgmod-server.c b/mesh/cfgmod-server.c
+index 7044b670d..be90ef8c5 100644
+--- a/mesh/cfgmod-server.c
++++ b/mesh/cfgmod-server.c
+@@ -436,6 +436,10 @@ static uint16_t cfg_key_refresh_phase(struct mesh_node *node,
+ 				return 0;
+ 		}
  
--	if (kr != local_kr)
-+	if (kr != local_kr || beacon_data->net_key_id != subnet->net_key_cur)
- 		updated |= update_kr_state(subnet, kr, beacon_data->net_key_id);
++		if (pkt[2] == KEY_REFRESH_TRANS_THREE &&
++						phase == KEY_REFRESH_PHASE_NONE)
++			goto done;
++
+ 		status = mesh_net_key_refresh_phase_set(net, idx, pkt[2]);
+ 		l_debug("Set KR Phase: net=%3.3x transition=%d", idx, pkt[2]);
  
- 	if (updated)
 -- 
 2.20.1
 
