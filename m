@@ -2,34 +2,34 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D21C35EF3DA
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Sep 2022 13:04:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D4335EF3DC
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Sep 2022 13:04:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235218AbiI2LEO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Sep 2022 07:04:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36228 "EHLO
+        id S235234AbiI2LEQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Sep 2022 07:04:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235197AbiI2LEM (ORCPT
+        with ESMTP id S235198AbiI2LEM (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Thu, 29 Sep 2022 07:04:12 -0400
 Received: from voyager.loytec.com (voyager.loytec.com [88.198.4.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECE198E0FE
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13DF012BD8F
         for <linux-bluetooth@vger.kernel.org>; Thu, 29 Sep 2022 04:04:10 -0700 (PDT)
 Received: from 212-17-98-152.static.upcbusiness.at ([212.17.98.152] helo=lexx.office.loytec.com)
         by voyager.loytec.com with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <isak.westin@loytec.com>)
-        id 1odrKq-0007JU-0k
-        for linux-bluetooth@vger.kernel.org; Thu, 29 Sep 2022 13:04:08 +0200
+        id 1odrKr-0007Jb-E8
+        for linux-bluetooth@vger.kernel.org; Thu, 29 Sep 2022 13:04:09 +0200
 Received: from loytec-dev-vm.delta.corp ([10.101.25.21])
-        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 28TB45CF3109252;
-        Thu, 29 Sep 2022 13:04:06 +0200
+        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 28TB45CG3109252;
+        Thu, 29 Sep 2022 13:04:07 +0200
 From:   Isak Westin <isak.westin@loytec.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Isak Westin <isak.westin@loytec.com>
-Subject: [PATCH BlueZ 1/4] mesh: Ignore Secure Network Beacon from subnet
-Date:   Thu, 29 Sep 2022 13:03:41 +0200
-Message-Id: <20220929110344.26130-2-isak.westin@loytec.com>
+Subject: [PATCH BlueZ 2/4] mesh: Ignore SNB with invalid IV Index values
+Date:   Thu, 29 Sep 2022 13:03:42 +0200
+Message-Id: <20220929110344.26130-3-isak.westin@loytec.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20220929110344.26130-1-isak.westin@loytec.com>
 References: <20220929110344.26130-1-isak.westin@loytec.com>
@@ -46,45 +46,28 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-If this node is a member of a primary subnet and receives a Secure Network
-beacon on a secondary subnet with an IV Index greater than the last known
-IV Index of the primary subnet, the Secure Network beacon shall be ignored.
-See MshPRFv1.0.1 section 3.10.5.
+If we are in IV update in progress state, and receive a Secure Network
+beacon with an IV index equal to last known IV index + 1, and IV update
+flag set to 1, it should be ignored. See MshPRFv1.0.1 section 3.10.5.
 ---
- mesh/net.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ mesh/net.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/mesh/net.c b/mesh/net.c
-index 7fec98531..dc3d1fd80 100644
+index dc3d1fd80..c225fdb9a 100644
 --- a/mesh/net.c
 +++ b/mesh/net.c
-@@ -2708,7 +2708,7 @@ static void process_beacon(void *net_ptr, void *user_data)
- 	struct net_beacon_data *beacon_data = user_data;
- 	uint32_t ivi;
- 	bool ivu, kr, local_kr;
--	struct mesh_subnet *subnet;
-+	struct mesh_subnet *subnet, *primary_subnet;
+@@ -2671,6 +2671,10 @@ static bool update_iv_ivu_state(struct mesh_net *net, uint32_t iv_index,
+ 		if (iv_index == net->iv_index)
+ 			return false;
  
- 	ivi = beacon_data->ivi;
- 
-@@ -2723,6 +2723,17 @@ static void process_beacon(void *net_ptr, void *user_data)
- 	if (!subnet)
- 		return;
- 
-+	/*
-+	 * @MshPRFv1.0.1 section 3.10.5: IV Update procedure
-+	 * If this node is a member of a primary subnet and receives a Secure
-+	 * Network beacon on a secondary subnet with an IV Index greater than
-+	 * the last known IV Index of the primary subnet, the Secure Network
-+	 * beacon shall be ignored.
-+	 */
-+	primary_subnet = get_primary_subnet(net);
-+	if (primary_subnet && subnet != primary_subnet && ivi > net->iv_index)
-+		return;
++		/* Ignore beacon with invalid IV index value */
++		if (net->iv_update && iv_index == net->iv_index + 1)
++			return false;
 +
- 	/* Get IVU and KR boolean bits from beacon */
- 	ivu = beacon_data->ivu;
- 	kr = beacon_data->kr;
+ 		if (!net->iv_update) {
+ 			l_debug("iv_upd_state = IV_UPD_UPDATING");
+ 			net->iv_upd_state = IV_UPD_UPDATING;
 -- 
 2.20.1
 
