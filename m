@@ -2,119 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13A0F5F0818
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Sep 2022 11:59:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 224175F082F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Sep 2022 12:02:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231459AbiI3J7D (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 30 Sep 2022 05:59:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41854 "EHLO
+        id S230480AbiI3KCe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 30 Sep 2022 06:02:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231406AbiI3J65 (ORCPT
+        with ESMTP id S229700AbiI3KCQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 30 Sep 2022 05:58:57 -0400
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B1EB187354
-        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Sep 2022 02:58:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1664531937; x=1696067937;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=weArQEE1+BAZ7Td37iXcT7Dn5h69cCu0jphqGbByJuE=;
-  b=QIbXcoGuP7BNOPMzlsSk+MtAdIzlCVni0SCDUlMhx2ImXyxDObXQvB9s
-   J1yuJQTwPC/S4z/M5/FNgNCinnH5ugB46FX0hrItB7/nPWDbY7tUNrGjh
-   iuwx9w+79/cbhON8yQSmsP1wN5DW6z+D04vn6Jj2fTlOGtKnoorOqnBiM
-   c9moCiuSEPMkWNyQKw5ISbURDc5Nxs6lZvvyRl+aGzCO8e/olc9xeB+v3
-   KzqFdQ6RtUxRi1DFfdHwhFdogfSJ6X86YSDVZW/nPTxaO+8dOVPauRX9B
-   ajOB6+goUiNApm3ySGkGj2kVj3x5MEB4cQQGllccq/YZHQ9nqE702tmLK
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10485"; a="299756640"
-X-IronPort-AV: E=Sophos;i="5.93,358,1654585200"; 
-   d="scan'208";a="299756640"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2022 02:58:56 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10485"; a="711743764"
-X-IronPort-AV: E=Sophos;i="5.93,358,1654585200"; 
-   d="scan'208";a="711743764"
-Received: from intel-latitude-e5450.iind.intel.com ([10.224.186.32])
-  by FMSMGA003.fm.intel.com with ESMTP; 30 Sep 2022 02:58:55 -0700
-From:   Sathish Narasimman <sathish.narasimman@intel.com>
+        Fri, 30 Sep 2022 06:02:16 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C0F1ED21A
+        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Sep 2022 03:01:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D9C276205F
+        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Sep 2022 10:01:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 46491C433C1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Sep 2022 10:01:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664532107;
+        bh=D063tozisPP7HZBfvZxk52LngT8IM0EppQr+eP88vsI=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=dBov4osSQNN8xFuSD9cKVNkb4q8Qc3NNU9yCMDMT9q2YdPMISFp3RJarn/HJA7SXB
+         egmje1v0Pb4WNc+PIPs2WyawN3tjmgCQfAilQ0BmBGktjTJfPVcpV2sds0ZZQ9JjZh
+         yejgznuJ0kKNJuBVmZKsRE9N5hFstGDcJYNihfaoprv7UcZuMTuPtTffC77mRpKY7g
+         KciaKrIy0+ANqsHTCP/cxPNPlDlOVCDkBWc9jyQ74NgsFcz3qUvxM6PlrTinaZKa85
+         6flb4WzvaTeoF1DE+IxrS8E0s3d4h6QcPt2sHcmVPcakPbjQZrNe7yG6sI7JUUbho0
+         lEACMBtwoEXMA==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 354E5C433E6; Fri, 30 Sep 2022 10:01:47 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
 To:     linux-bluetooth@vger.kernel.org
-Cc:     Sathish Narasimman <sathish.narasimman@intel.com>
-Subject: [PATCH 3/3] profiles: Register callback function to update volume
-Date:   Sat,  1 Oct 2022 00:19:54 +0530
-Message-Id: <20220930184954.108937-3-sathish.narasimman@intel.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220930184954.108937-1-sathish.narasimman@intel.com>
-References: <20220930184954.108937-1-sathish.narasimman@intel.com>
+Subject: [Bug 216532] openSUSE Tumbleweed, AX210, bluetooth, connection fails
+Date:   Fri, 30 Sep 2022 10:01:47 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: epistemepromeneur@free.fr
+X-Bugzilla-Status: NEEDINFO
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-216532-62941-gjUsdiO5WM@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-216532-62941@https.bugzilla.kernel.org/>
+References: <bug-216532-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_06_12,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Callback function has to be registered to call
-media_transport_update_device_volume to change transport volume.
----
- profiles/audio/vcp.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+https://bugzilla.kernel.org/show_bug.cgi?id=3D216532
 
-diff --git a/profiles/audio/vcp.c b/profiles/audio/vcp.c
-index b42b0a4f79dd..4b790b03c032 100644
---- a/profiles/audio/vcp.c
-+++ b/profiles/audio/vcp.c
-@@ -50,6 +50,7 @@
- #include "src/service.h"
- #include "src/log.h"
- #include "src/error.h"
-+#include "transport.h"
- 
- #define VCS_UUID_STR "00001844-0000-1000-8000-00805f9b34fb"
- #define MEDIA_ENDPOINT_INTERFACE "org.bluez.MediaEndpoint1"
-@@ -83,6 +84,20 @@ static struct vcp_data *vcp_data_new(struct btd_device *device)
- 	return data;
- }
- 
-+static void vr_set_volume(struct bt_vcp *vcp, int8_t volume, void *data)
-+{
-+	struct vcp_data *user_data = data;
-+	struct btd_device *device = user_data->device;
-+
-+	DBG("set volume");
-+
-+	media_transport_update_device_volume(device, volume);
-+}
-+
-+static struct bt_vcp_vr_ops vcp_vr_ops = {
-+	.set_volume	= vr_set_volume,
-+};
-+
- static void vcp_data_add(struct vcp_data *data)
- {
- 	DBG("data %p", data);
-@@ -94,6 +109,7 @@ static void vcp_data_add(struct vcp_data *data)
- 
- 	bt_vcp_set_debug(data->vcp, vcp_debug, NULL, NULL);
- 
-+	bt_vcp_vr_set_ops(data->vcp, &vcp_vr_ops, data);
- 	if (!sessions)
- 		sessions = queue_new();
- 
-@@ -178,6 +194,7 @@ static void vcp_attached(struct bt_vcp *vcp, void *user_data)
- 	data->vcp = vcp;
- 
- 	vcp_data_add(data);
-+
- }
- 
- static int vcp_probe(struct btd_service *service)
--- 
-2.25.1
+--- Comment #7 from epistemepromeneur@free.fr ---
+At the PC, I connect the smartphone
 
+bluetoothctl connect 90:06:28:B6:B1:B6
+Attempting to connect to 90:06:28:B6:B1:B6
+Failed to connect: org.bluez.Error.Failed le-connection-abort-by-local
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
