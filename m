@@ -2,34 +2,34 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12CB55F3E3E
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Oct 2022 10:25:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45C5E5F3E40
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Oct 2022 10:25:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230073AbiJDIZz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 4 Oct 2022 04:25:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32824 "EHLO
+        id S230155AbiJDIZ5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 4 Oct 2022 04:25:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbiJDIZx (ORCPT
+        with ESMTP id S230144AbiJDIZz (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 4 Oct 2022 04:25:53 -0400
+        Tue, 4 Oct 2022 04:25:55 -0400
 Received: from voyager.loytec.com (voyager.loytec.com [88.198.4.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE22C2252E
-        for <linux-bluetooth@vger.kernel.org>; Tue,  4 Oct 2022 01:25:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5CD22B05
+        for <linux-bluetooth@vger.kernel.org>; Tue,  4 Oct 2022 01:25:53 -0700 (PDT)
 Received: from 212-17-98-152.static.upcbusiness.at ([212.17.98.152] helo=lexx.office.loytec.com)
         by voyager.loytec.com with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <isak.westin@loytec.com>)
-        id 1ofdFP-0002Gr-1r
+        id 1ofdFP-0002Gv-TA
         for linux-bluetooth@vger.kernel.org; Tue, 04 Oct 2022 10:25:51 +0200
 Received: from loytec-dev-vm.delta.corp ([10.101.25.21])
-        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 2948PkTa2433476;
+        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 2948PkTb2433476;
         Tue, 4 Oct 2022 10:25:49 +0200
 From:   Isak Westin <isak.westin@loytec.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Isak Westin <isak.westin@loytec.com>
-Subject: [PATCH BlueZ 1/4] mesh: Correct size of friend cache
-Date:   Tue,  4 Oct 2022 10:25:27 +0200
-Message-Id: <20221004082530.25719-2-isak.westin@loytec.com>
+Subject: [PATCH BlueZ 2/4] mesh: Verify padding bits in Friend Poll messages
+Date:   Tue,  4 Oct 2022 10:25:28 +0200
+Message-Id: <20221004082530.25719-3-isak.westin@loytec.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20221004082530.25719-1-isak.westin@loytec.com>
 References: <20221004082530.25719-1-isak.westin@loytec.com>
@@ -46,25 +46,25 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The cache size communicated to the Low Power node should be the same as
-the cache size actually used.
+The padding bits in a Friend Poll message must be zero.
+See MshPRFv1.0.1 section 3.6.5.1.
 ---
- mesh/friend.c | 2 +-
+ mesh/net.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mesh/friend.c b/mesh/friend.c
-index 6c63032ac..5b73da689 100644
---- a/mesh/friend.c
-+++ b/mesh/friend.c
-@@ -25,7 +25,7 @@
+diff --git a/mesh/net.c b/mesh/net.c
+index 379a6e250..a8a527c2f 100644
+--- a/mesh/net.c
++++ b/mesh/net.c
+@@ -2059,7 +2059,7 @@ static bool ctl_received(struct mesh_net *net, uint32_t net_key_id,
+ 		break;
  
- #define MAX_FRND_GROUPS		20
- #define FRND_RELAY_WINDOW	250		/* 250 ms */
--#define FRND_CACHE_SIZE		16
-+#define FRND_CACHE_SIZE		FRND_CACHE_MAX
- #define FRND_SUB_LIST_SIZE	8
+ 	case NET_OP_FRND_POLL:
+-		if (len != 1 || ttl)
++		if (len != 1 || ttl || pkt[0] > 1)
+ 			return false;
  
- #define RESPONSE_DELAY		(100 - 12)	/*  100  ms - 12ms hw delay */
+ 		print_packet("Rx-NET_OP_FRND_POLL", pkt, len);
 -- 
 2.20.1
 
