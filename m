@@ -2,110 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B7E55F5060
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Oct 2022 09:35:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB12C5F5112
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Oct 2022 10:43:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229926AbiJEHfb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Oct 2022 03:35:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48928 "EHLO
+        id S230082AbiJEIny (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 Oct 2022 04:43:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229928AbiJEHfU (ORCPT
+        with ESMTP id S229530AbiJEInt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Oct 2022 03:35:20 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4EAB52448
-        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Oct 2022 00:35:16 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id a17so7462662ilq.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Oct 2022 00:35:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=Z8h6QYuDJB8FaSYROzM1i4//hht76EolphpDeZc/7Nw=;
-        b=U4CbTwS0Jj0RISZXYjJ6Dvo+6xbeC1HPdNnT2mW0h12WLYx+yW20y5wQmdfFp7qKk5
-         9vJWzTsfh9gkYsQSWCvwoJMZ/45YJ4szxOl+R3FwKnUo+EIJsYNBdqQE2GhsgvS9fJlm
-         WLjEhnssoErp31UfFnjp9bOXu5rBJFFe2iDNri4c5BgBLDqLhNOZ9mRjvUwpK2Kln9ed
-         oSxASiWylUlEWudPltgi4lcuamdOOJ3ejUetSgvvAZw/XWr/bV22Rz8sSNGYZuRl9c5J
-         e9ybs6F5Jpog3J0dtpFxFKJsMoexAe+7M9Z8NJ4xnPiJqeXdX504EErwbcCIWTwRb3bQ
-         TqgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=Z8h6QYuDJB8FaSYROzM1i4//hht76EolphpDeZc/7Nw=;
-        b=arnqCBfvpzr1YFe7V5hJKvNs4L032tlD7Ibty5lvstQnYPyTwGZKxLyrq/iiPhkDYT
-         LzaM6B/89t7wPggZmKFxpWnqLizVFSZvZaBIMB01n/3TdYESeo+aaM9fXAHeteTEcfhI
-         u8DD5Ch54QGZIznGm+7YO6JWaUYzxD53yukY4JVWPpuoQjQo4PrmksEfw8EEOURFF912
-         WvG2BCx6X+Jo573bcG+OF1r3LHSFui1rShHliA5LqM9GAkeaqj4v48pOG64AG2fl2wTu
-         yy5c+PabnD2I87/fCrSXyqAbGxuTSUq3v+oT/FcCuZlhrB2GYjJnwGKwGj/qu/f81AjB
-         oChg==
-X-Gm-Message-State: ACrzQf2vyQrdQkopxUpHaUJgI9cAi5CGwbs1gDHghMsEN6vSOt7/rQLN
-        rEgwSWKQm4pofzr/Ue8TbQ9p/6R4lzQ=
-X-Google-Smtp-Source: AMsMyM6gy+9gHWiSnmC6t788K4ayrPpWhc5hzDHLqrtzk40VeTz26Kq2FCW8IoSEt6YeFdoL1R5S3A==
-X-Received: by 2002:a05:6e02:1446:b0:2f9:8ce9:8da with SMTP id p6-20020a056e02144600b002f98ce908damr8518335ilo.196.1664955314926;
-        Wed, 05 Oct 2022 00:35:14 -0700 (PDT)
-Received: from [172.17.0.2] ([20.12.235.219])
-        by smtp.gmail.com with ESMTPSA id q15-20020a02cf0f000000b0036345b91f4asm2076777jar.23.2022.10.05.00.35.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Oct 2022 00:35:14 -0700 (PDT)
-Message-ID: <633d33b2.020a0220.568a4.2915@mx.google.com>
-Date:   Wed, 05 Oct 2022 00:35:14 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============7405961456928130815=="
+        Wed, 5 Oct 2022 04:43:49 -0400
+Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8CAC774DCD;
+        Wed,  5 Oct 2022 01:43:47 -0700 (PDT)
+Authenticated-By: 
+X-SpamFilter-By: ArmorX SpamTrap 5.77 with qID 2958h9Zz9022992, This message is accepted by code: ctloc85258
+Received: from mail.realtek.com (rtexh36505.realtek.com.tw[172.21.6.25])
+        by rtits2.realtek.com.tw (8.15.2/2.81/5.90) with ESMTPS id 2958h9Zz9022992
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=FAIL);
+        Wed, 5 Oct 2022 16:43:09 +0800
+Received: from RTEXMBS04.realtek.com.tw (172.21.6.97) by
+ RTEXH36505.realtek.com.tw (172.21.6.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Wed, 5 Oct 2022 16:43:36 +0800
+Received: from localhost.localdomain (172.21.132.192) by
+ RTEXMBS04.realtek.com.tw (172.21.6.97) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.7; Wed, 5 Oct 2022 16:43:36 +0800
+From:   <hildawu@realtek.com>
+To:     <marcel@holtmann.org>
+CC:     <johan.hedberg@gmail.com>, <luiz.dentz@gmail.com>,
+        <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <apusaka@chromium.org>, <yinghsu@chromium.org>,
+        <max.chou@realtek.com>, <alex_lu@realsil.com.cn>,
+        <kidman@realtek.com>
+Subject: [PATCH v4 0/2] Bluetooth: Add btrealtek data struct and improve SCO sound quality of RTK chips
+Date:   Wed, 5 Oct 2022 16:43:29 +0800
+Message-ID: <20221005084331.1001-1-hildawu@realtek.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, apusaka@google.com
-Subject: RE: Bluetooth: hci_sync: cancel cmd_timer if hci_open failed
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20221005150934.1.Ife932473db2eec6f0bc54226c3328e5fa8c5f97b@changeid>
-References: <20221005150934.1.Ife932473db2eec6f0bc54226c3328e5fa8c5f97b@changeid>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [172.21.132.192]
+X-ClientProxiedBy: RTEXH36505.realtek.com.tw (172.21.6.25) To
+ RTEXMBS04.realtek.com.tw (172.21.6.97)
+X-KSE-ServerInfo: RTEXMBS04.realtek.com.tw, 9
+X-KSE-AntiSpam-Interceptor-Info: trusted connection
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-ScanningType: Deterministic
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 10/05/2022 03:37:00
+X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
+ rules found
+X-KSE-Antivirus-Interceptor-Info: scan successful
+X-KSE-Antivirus-Info: =?big5?B?Q2xlYW4sIGJhc2VzOiAyMDIyLzEwLzUgpFekyCAwMjo1OTowMA==?=
+X-KSE-BulkMessagesFiltering-Scan-Result: protection disabled
+X-KSE-ServerInfo: RTEXH36505.realtek.com.tw, 9
+X-KSE-Attachment-Filter-Triggered-Rules: Clean
+X-KSE-Attachment-Filter-Triggered-Filters: Clean
+X-KSE-BulkMessagesFiltering-Scan-Result: protection disabled
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============7405961456928130815==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Hilda Wu <hildawu@realtek.com>
 
-This is automated email and please do not reply to this email!
+Add btrealtek data struct and use definition of vendor flags to manage
+the specific chip.
 
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=683158
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      2.38 seconds
-GitLint                       PASS      0.79 seconds
-SubjectPrefix                 PASS      0.69 seconds
-BuildKernel                   PASS      49.88 seconds
-BuildKernel32                 PASS      41.45 seconds
-Incremental Build with patchesPASS      54.45 seconds
-TestRunner: Setup             PASS      731.82 seconds
-TestRunner: l2cap-tester      PASS      17.16 seconds
-TestRunner: iso-tester        PASS      16.55 seconds
-TestRunner: bnep-tester       PASS      6.21 seconds
-TestRunner: mgmt-tester       PASS      106.64 seconds
-TestRunner: rfcomm-tester     PASS      10.10 seconds
-TestRunner: sco-tester        PASS      9.29 seconds
-TestRunner: ioctl-tester      PASS      10.61 seconds
-TestRunner: smp-tester        PASS      9.48 seconds
-TestRunner: userchan-tester   PASS      6.49 seconds
-
-
+The Bluetooth: btusb: Ignore zero length of USB packets on ALT 6 for
+specific chip need to transmit mSBC data continuously without the
+zero length of USB packets.
 
 ---
-Regards,
-Linux Bluetooth
+Changes in v4:
+ - Since the original 0002 patch has no dependency with this 0001 patch.
+   So let the 0002 patch submit independent.
 
+Changes in v3:
+ - Use the vendor function to replace btus_recv_isoc.
+ - For ignore_usb_alt6_packet_flow, manage the common flag by the vendor private flag.
 
---===============7405961456928130815==--
+Changes in v2:
+ - Set the proper priv_size to hci_alloc_dev_priv().
+ - Separate commits for functions.
+---
+Thank you for your review and suggestions.
+
+Hilda Wu (2):
+  Bluetooth: btrtl: Add btrealtek data struct
+  Bluetooth: btsub: Ignore zero length of USB packets on ALT 6 for
+    specific chip
+
+ drivers/bluetooth/btrtl.c |  7 +++++++
+ drivers/bluetooth/btrtl.h | 21 +++++++++++++++++++++
+ drivers/bluetooth/btusb.c | 28 ++++++++++++++++++++++++++--
+ 3 files changed, 54 insertions(+), 2 deletions(-)
+
+-- 
+2.17.1
+
