@@ -2,78 +2,108 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEED75F6A2D
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Oct 2022 17:00:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13A425F6B80
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Oct 2022 18:22:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230345AbiJFPAI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Oct 2022 11:00:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49210 "EHLO
+        id S229815AbiJFQWN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 Oct 2022 12:22:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbiJFO77 (ORCPT
+        with ESMTP id S229540AbiJFQWL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Oct 2022 10:59:59 -0400
-Received: from voyager.loytec.com (voyager.loytec.com [88.198.4.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C72711C40F
-        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Oct 2022 07:59:54 -0700 (PDT)
-Received: from 212-17-98-152.static.upcbusiness.at ([212.17.98.152] helo=lexx.office.loytec.com)
-        by voyager.loytec.com with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <isak.westin@loytec.com>)
-        id 1ogSLo-0006re-2Y
-        for linux-bluetooth@vger.kernel.org; Thu, 06 Oct 2022 16:59:52 +0200
-Received: from loytec-dev-vm.delta.corp ([10.101.25.21])
-        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 296ExnRI4163430;
-        Thu, 6 Oct 2022 16:59:49 +0200
-From:   Isak Westin <isak.westin@loytec.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Isak Westin <isak.westin@loytec.com>
-Subject: [PATCH BlueZ 6/6] mesh: Fix msg cache ring buffer
-Date:   Thu,  6 Oct 2022 16:59:27 +0200
-Message-Id: <20221006145927.32731-7-isak.westin@loytec.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20221006145927.32731-1-isak.westin@loytec.com>
-References: <20221006145927.32731-1-isak.westin@loytec.com>
+        Thu, 6 Oct 2022 12:22:11 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81CAEB0B3F
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Oct 2022 09:22:10 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1326637be6eso2719657fac.13
+        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Oct 2022 09:22:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=TwquJrFmP8v69zmi0EOTqyoG/84qtHa+65O7hUgzNA8=;
+        b=SZCliZDnnsIW6rRCmbIpLk5qBrwl5x6tfXPZ+s7ntVXJbP1/W2u6HqLZ391cmwPvhh
+         qiQvSBI+sYrJIM+KU588LYwurVpMClfgVUusqhdKaZubo6ory4K0Zm61hxwtzRaHwM7B
+         gPr6ZIKmvL45+MzgMoZyampR1929O6VS5jAu/+w/5Y+WSIOvENnSP/yqSQ2jy3nBS9Tc
+         OUSse1WlrH5b8LnlWZu7XDk5WjAGvzuCtnohV9f9o+/H66skmMqGvx286UMxN/OvXAS8
+         aMMmr8GA9lWc2wDWtfxXWK8NloHi9/oIBHfQ60WkV10h9hpFqBo0cHR2ktovWkgANU8A
+         +nlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TwquJrFmP8v69zmi0EOTqyoG/84qtHa+65O7hUgzNA8=;
+        b=m5kcPL3JCnaP+UQNUBMfG1PlGWJhbOiDJsBSuRV2cVZu2tNSe3tVU1VSShBb4rM4qL
+         KkjCa/g80qopHlwxa5h1XSIY6h1GGIfLrVik4+o3RxaUqfjNK6gw3dRGQ+Egof5CIs6t
+         iCT+K6ul1MrBqfd2rHbF5w2G/yUgZswTZPU+WkDueCTokO1WQ+VmczsNarJ6v7+P9Gpz
+         CHXMEkeoqHRegUg7Ajo6eMVS0q4pEXwgOLwkqZ6mzSQ1q03eJlldYfwW/zOIaX65d+VT
+         1Ly3sWjJFUBWwjqx7hbBOj/a9XKdhYK+hy/kOkgB3vkIizmoszIZdO9hNAsxX1D72NNm
+         hD5A==
+X-Gm-Message-State: ACrzQf0BW/PiQxeYbQZ9GYdSx60s/tePRZYzZ1qs0OHL7cb08Hm1kVBZ
+        nICVh1bF3dKifrbDu6jAOQEcji0edZ8=
+X-Google-Smtp-Source: AMsMyM7SL2wqG5tEETAL4GRNiphGkHhs4e1KtunV3DjR0IxkMYMwtsJT5TaYnSKkRszpAUwu1hT6Ig==
+X-Received: by 2002:a05:6870:e248:b0:12d:27b0:db9e with SMTP id d8-20020a056870e24800b0012d27b0db9emr280529oac.28.1665073329483;
+        Thu, 06 Oct 2022 09:22:09 -0700 (PDT)
+Received: from [172.17.0.2] ([13.66.5.129])
+        by smtp.gmail.com with ESMTPSA id m18-20020a056870889200b0012d939eb0bfsm6742921oam.34.2022.10.06.09.22.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Oct 2022 09:22:09 -0700 (PDT)
+Message-ID: <633f00b1.050a0220.96b53.62bc@mx.google.com>
+Date:   Thu, 06 Oct 2022 09:22:09 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============1248933080820003736=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 212.17.98.152
-X-SA-Exim-Mail-From: isak.westin@loytec.com
-X-SA-Exim-Scanned: No (on voyager.loytec.com); SAEximRunCond expanded to false
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, isak.westin@loytec.com
+Subject: RE: Mesh: Fixes for PTS issues
+Reply-To: linux-bluetooth@vger.kernel.org
+In-Reply-To: <20221006145927.32731-2-isak.westin@loytec.com>
+References: <20221006145927.32731-2-isak.westin@loytec.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The message cache should be a strict ring buffer, suppressed message
-should not move to the front of the queue.
+--===============1248933080820003736==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=683513
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      6.47 seconds
+GitLint                       PASS      4.32 seconds
+Prep - Setup ELL              PASS      27.73 seconds
+Build - Prep                  PASS      0.73 seconds
+Build - Configure             PASS      8.76 seconds
+Build - Make                  PASS      867.47 seconds
+Make Check                    PASS      11.56 seconds
+Make Check w/Valgrind         PASS      295.55 seconds
+Make Distcheck                PASS      242.61 seconds
+Build w/ext ELL - Configure   PASS      8.79 seconds
+Build w/ext ELL - Make        PASS      85.61 seconds
+Incremental Build w/ patches  PASS      602.70 seconds
+Scan Build                    PASS      518.24 seconds
+
+
+
 ---
- mesh/net.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/mesh/net.c b/mesh/net.c
-index e95ae5114..8be45e61a 100644
---- a/mesh/net.c
-+++ b/mesh/net.c
-@@ -1028,12 +1028,11 @@ static bool msg_in_cache(struct mesh_net *net, uint16_t src, uint32_t seq,
- 		.mic = mic,
- 	};
- 
--	msg = l_queue_remove_if(net->msg_cache, match_cache, &tst);
-+	msg = l_queue_find(net->msg_cache, match_cache, &tst);
- 
- 	if (msg) {
- 		l_debug("Supressing duplicate %4.4x + %6.6x + %8.8x",
- 							src, seq, mic);
--		l_queue_push_head(net->msg_cache, msg);
- 		return true;
- 	}
- 
--- 
-2.20.1
+Regards,
+Linux Bluetooth
 
 
-
-
-
+--===============1248933080820003736==--
