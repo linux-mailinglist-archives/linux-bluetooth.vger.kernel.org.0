@@ -2,34 +2,34 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F0C05F6A2E
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Oct 2022 17:00:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 697CF5F6A2C
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Oct 2022 17:00:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbiJFPAK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Oct 2022 11:00:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49212 "EHLO
+        id S231749AbiJFPAG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 Oct 2022 11:00:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231809AbiJFO77 (ORCPT
+        with ESMTP id S231805AbiJFO76 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Oct 2022 10:59:59 -0400
+        Thu, 6 Oct 2022 10:59:58 -0400
 Received: from voyager.loytec.com (voyager.loytec.com [88.198.4.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C74BC1EADC
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7CFD1F9EF
         for <linux-bluetooth@vger.kernel.org>; Thu,  6 Oct 2022 07:59:54 -0700 (PDT)
 Received: from 212-17-98-152.static.upcbusiness.at ([212.17.98.152] helo=lexx.office.loytec.com)
         by voyager.loytec.com with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <isak.westin@loytec.com>)
-        id 1ogSLo-0006rb-0t
+        id 1ogSLo-0006ra-1b
         for linux-bluetooth@vger.kernel.org; Thu, 06 Oct 2022 16:59:52 +0200
 Received: from loytec-dev-vm.delta.corp ([10.101.25.21])
-        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 296ExnRD4163430;
+        by lexx.office.loytec.com (8.15.2/8.15.2/Some OS 1.2.3-4.5) with ESMTP id 296ExnRE4163430;
         Thu, 6 Oct 2022 16:59:49 +0200
 From:   Isak Westin <isak.westin@loytec.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Isak Westin <isak.westin@loytec.com>
-Subject: [PATCH BlueZ 1/6] mesh: Update Key Refresh flag after provision
-Date:   Thu,  6 Oct 2022 16:59:22 +0200
-Message-Id: <20221006145927.32731-2-isak.westin@loytec.com>
+Subject: [PATCH BlueZ 2/6] mesh: provisionee: Handle unknown PDUs
+Date:   Thu,  6 Oct 2022 16:59:23 +0200
+Message-Id: <20221006145927.32731-3-isak.westin@loytec.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20221006145927.32731-1-isak.westin@loytec.com>
 References: <20221006145927.32731-1-isak.westin@loytec.com>
@@ -46,27 +46,39 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The Key Refresh flag in the Secure Network beacon is now correctly
-updated based on provisioning data after being successfully provisioned.
+If an unknown PDU is received during provisioning, the provisioning
+should fail with "Invalid PDU".
 ---
- mesh/node.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mesh/prov-acceptor.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/mesh/node.c b/mesh/node.c
-index e81aa82fe..cf4ed140e 100644
---- a/mesh/node.c
-+++ b/mesh/node.c
-@@ -1270,8 +1270,8 @@ static bool add_local_node(struct mesh_node *node, uint16_t unicast, bool kr,
- 							MESH_STATUS_SUCCESS)
- 			return false;
+diff --git a/mesh/prov-acceptor.c b/mesh/prov-acceptor.c
+index f579a143b..ac257b170 100644
+--- a/mesh/prov-acceptor.c
++++ b/mesh/prov-acceptor.c
+@@ -399,6 +399,12 @@ static void acp_prov_rx(void *user_data, const uint8_t *data, uint16_t len)
+ 	l_debug("Provisioning packet received type: %2.2x (%u octets)",
+ 								type, len);
  
--		if (!mesh_config_net_key_set_phase(node->cfg, net_key_idx,
--							KEY_REFRESH_PHASE_TWO))
-+		if (mesh_net_key_refresh_phase_set(node->net, net_key_idx,
-+				KEY_REFRESH_PHASE_TWO) != MESH_STATUS_SUCCESS)
- 			return false;
++	if (type >= L_ARRAY_SIZE(expected_pdu_size)) {
++		l_error("Unknown PDU type: %2.2x", type);
++		fail.reason = PROV_ERR_INVALID_PDU;
++		goto failure;
++	}
++
+ 	if (type == prov->previous) {
+ 		l_error("Ignore repeated %2.2x packet", type);
+ 		return;
+@@ -408,8 +414,7 @@ static void acp_prov_rx(void *user_data, const uint8_t *data, uint16_t len)
+ 		goto failure;
  	}
  
+-	if (type >= L_ARRAY_SIZE(expected_pdu_size) ||
+-					len != expected_pdu_size[type]) {
++	if (len != expected_pdu_size[type]) {
+ 		l_error("Expected PDU size %d, Got %d (type: %2.2x)",
+ 			len, expected_pdu_size[type], type);
+ 		fail.reason = PROV_ERR_INVALID_FORMAT;
 -- 
 2.20.1
 
