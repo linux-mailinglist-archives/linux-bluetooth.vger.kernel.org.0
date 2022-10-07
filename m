@@ -2,108 +2,139 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B2365F7238
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Oct 2022 02:22:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF6005F738A
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Oct 2022 06:26:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231872AbiJGAWT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Oct 2022 20:22:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55394 "EHLO
+        id S229555AbiJGE0i (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 Oct 2022 00:26:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231587AbiJGAWS (ORCPT
+        with ESMTP id S229450AbiJGE0f (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Oct 2022 20:22:18 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75B7C510A
-        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Oct 2022 17:22:17 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id a25so2000328qtw.10
-        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Oct 2022 17:22:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xh0KCxBZnFmVfLH0MF/BL5MOIVCol/odPyfKKs28rEA=;
-        b=ThWgOzIgF+Fe6p2b0SyXzeiDrdYhtRvuBCj/jSzzBKBUohhBGntSlynWu2AjIL2pr4
-         f2gVjftzBm2QBGx/b/PbR1WGIHVoevv/JpiMeikerJq2hW6ghH4ow+94ASR1dAYwPGP/
-         OxoBT6Mp8l986qhpUm8/y02y4OYdUKOT3JIXywnNxRU7uuJnvLO0WQcavKEA8mocLPrA
-         5YZAfoh1BXddKp51il1USht5FK0HZPRxbMIp34p+UAJoWVHhWVtz8Xq2rDLl3WySYpT9
-         VIkJCqjEblQUi5fk6g53TKE4wSJqz1rcHdmsLUrPbJOrhEX7mk/lGDgASYaEbj8H+DGm
-         7sBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xh0KCxBZnFmVfLH0MF/BL5MOIVCol/odPyfKKs28rEA=;
-        b=ZbOI996ovGxznlLw2ztuFI7XPNq4iQsLzNNZxZnIXNkM+IDVXGnP82i9N5lhua2wn4
-         EDl25Vt1zfofEP+rKj/5Tk/rRxXyi41ILCiC9ySdlDQ+p/EwIj3xlsgZdmK2RZDZ4aLv
-         CVpKX4ptfF+giN1i7AA/NzEb2VWGu1vNpL5+GvTCb5WM844rQLclSzo+tJ7vmOSlXgn7
-         pcwrOAkNrgETEm6geo8fhKmILYkE+l+r2+56IlRGd69leu5uzOlo80425up5OJ317+BH
-         lB2qsKksjB6urzxhjBCyN0mOVw9wbzT+YB4yWY5SL4G5wZo17w+q+RPK2AJHF6BK0Rb9
-         1BUg==
-X-Gm-Message-State: ACrzQf1m0gJNxIaPoV/L4Y9aLdMy47GZMSCkq909e3ALwdvj66FnN/eG
-        kwh26DyRZXj0Hm9IFroGvmRhV1X5j74=
-X-Google-Smtp-Source: AMsMyM7GIAaH6yEk/83JyNlHjp+0SfJOYeh7DrzseAg8ojEjNXh6vAPwe2oYgdboD1Io3RaHrEfk4Q==
-X-Received: by 2002:a05:622a:1182:b0:35c:c062:ec0a with SMTP id m2-20020a05622a118200b0035cc062ec0amr2522025qtk.654.1665102136770;
-        Thu, 06 Oct 2022 17:22:16 -0700 (PDT)
-Received: from [172.17.0.2] ([20.122.110.87])
-        by smtp.gmail.com with ESMTPSA id bl21-20020a05620a1a9500b006cf38fd659asm417181qkb.103.2022.10.06.17.22.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 17:22:16 -0700 (PDT)
-Message-ID: <633f7138.050a0220.b1e0d.0ed2@mx.google.com>
-Date:   Thu, 06 Oct 2022 17:22:16 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============2296197321577520220=="
+        Fri, 7 Oct 2022 00:26:35 -0400
+Received: from mail.lintas.net.id (mail.lintas.net.id [103.242.106.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68476C512E;
+        Thu,  6 Oct 2022 21:26:34 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.lintas.net.id (Postfix) with ESMTP id 7E742170DBA3;
+        Fri,  7 Oct 2022 11:16:26 +0700 (WIB)
+Received: from mail.lintas.net.id ([127.0.0.1])
+        by localhost (mail.lintas.net.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id BnhldqdKZ2KA; Fri,  7 Oct 2022 11:16:25 +0700 (WIB)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.lintas.net.id (Postfix) with ESMTP id 0C40C1726D7E;
+        Fri,  7 Oct 2022 11:16:23 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.lintas.net.id 0C40C1726D7E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lintas.net.id;
+        s=F92A790A-805A-11EA-A140-F25EC2A2148A; t=1665116184;
+        bh=gZiSU8BF75oNvlb6qfUUuu+jcJW0UzNNn6MGM2sggoI=;
+        h=Date:From:Message-ID:MIME-Version;
+        b=lFo3C+K9/FCFBRz/jibzo1QdirULpByRgoYKHHi4RZ+kdu6TK2yooeMJYQX6mq9bb
+         CmrZJePS4nH02xO3WnhF5GvOSZ7e532XtSbioBcvSdBgGZLkcSIfh4fBYAmiBSAiJL
+         Mg79sjPxSC0LNY+zm9GypHAoIuxPDRh7I5vKVY1795LAzm1e/1DrCQMo9AiGMMhpLP
+         8yinYN48HNwF1Sa9JHa3uABLVBrHJI6tCxtHS6XynEUG05UE+PwZv7v/uhnFWpM3AA
+         tQr66e/bTFyhUTd40E595yPVbGTWeI/q9MUmHX8Zi1bxAMJgKl3e1dvBBGdOZxzeDZ
+         qWf8H6r8TPhmw==
+X-Virus-Scanned: amavisd-new at lintas.net.id
+Received: from mail.lintas.net.id ([127.0.0.1])
+        by localhost (mail.lintas.net.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id quzFQvV6kg5R; Fri,  7 Oct 2022 11:16:22 +0700 (WIB)
+Received: from mail.lintas.net.id (mail.lintas.net.id [103.242.106.86])
+        by mail.lintas.net.id (Postfix) with ESMTP id 006C416DAE7A;
+        Fri,  7 Oct 2022 11:16:08 +0700 (WIB)
+Date:   Fri, 7 Oct 2022 11:16:08 +0700 (WIB)
+From:   =?utf-8?B?0YHQuNGB0YLQtdC80L3QuNC5INCw0LTQvNGW0L3RltGB0YLRgNCw0YLQvtGA?= 
+        <nancy@lintas.net.id>
+Reply-To: sistemassadmins@mail2engineer.com
+Message-ID: <292752197.1510648.1665116168861.JavaMail.zimbra@lintas.net.id>
+Subject: 
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, brian.gix@intel.com
-Subject: RE: [BlueZ] tools: mgmt-tester - Test for HCI cmd after static addr set
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20221006225326.641765-1-brian.gix@intel.com>
-References: <20221006225326.641765-1-brian.gix@intel.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+X-Originating-IP: [103.242.106.86]
+X-Mailer: Zimbra 8.8.15_GA_3888 (zclient/8.8.15_GA_3888)
+Thread-Index: v87tlOH5chRHkMfLhF7Am5fXIiFf8Q==
+Thread-Topic: 
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=6.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
+        MISSING_HEADERS,RCVD_IN_VALIDITY_RPBL,REPLYTO_WITHOUT_TO_CC,
+        SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75 autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: *  1.3 RCVD_IN_VALIDITY_RPBL RBL: Relay in Validity RPBL,
+        *      https://senderscore.org/blocklistlookup/
+        *      [103.242.106.86 listed in bl.score.senderscore.com]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5033]
+        *  1.0 MISSING_HEADERS Missing To: header
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.0 UPPERCASE_50_75 message body is 50-75% uppercase
+        *  1.6 REPLYTO_WITHOUT_TO_CC No description available.
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============2296197321577520220==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+=D1=83=D0=B2=D0=B0=D0=B3=D0=B0;
 
-This is automated email and please do not reply to this email!
+=D0=92=D0=B0=D1=88=D0=B0 =D0=B5=D0=BB=D0=B5=D0=BA=D1=82=D1=80=D0=BE=D0=BD=
+=D0=BD=D0=B0 =D0=BF=D0=BE=D1=88=D1=82=D0=B0 =D0=BF=D0=B5=D1=80=D0=B5=D0=B2=
+=D0=B8=D1=89=D0=B8=D0=BB=D0=B0 =D0=BE=D0=B1=D0=BC=D0=B5=D0=B6=D0=B5=D0=BD=
+=D0=BD=D1=8F =D0=BF=D0=B0=D0=BC'=D1=8F=D1=82=D1=96, =D1=8F=D0=BA=D0=B5 =D1=
+=81=D1=82=D0=B0=D0=BD=D0=BE=D0=B2=D0=B8=D1=82=D1=8C 5 =D0=93=D0=91, =D0=B2=
+=D0=B8=D0=B7=D0=BD=D0=B0=D1=87=D0=B5=D0=BD=D0=B5 =D0=B0=D0=B4=D0=BC=D1=96=
+=D0=BD=D1=96=D1=81=D1=82=D1=80=D0=B0=D1=82=D0=BE=D1=80=D0=BE=D0=BC, =D1=8F=
+=D0=BA=D0=B5 =D0=B2 =D0=B4=D0=B0=D0=BD=D0=B8=D0=B9 =D1=87=D0=B0=D1=81 =D0=
+=BF=D1=80=D0=B0=D1=86=D1=8E=D1=94 =D0=BD=D0=B0 10,9 =D0=93=D0=91. =D0=92=D0=
+=B8 =D0=BD=D0=B5 =D0=B7=D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=BD=D0=B0=D0=
+=B4=D1=81=D0=B8=D0=BB=D0=B0=D1=82=D0=B8 =D0=B0=D0=B1=D0=BE =D0=BE=D1=82=D1=
+=80=D0=B8=D0=BC=D1=83=D0=B2=D0=B0=D1=82=D0=B8 =D0=BD=D0=BE=D0=B2=D1=83 =D0=
+=BF=D0=BE=D1=88=D1=82=D1=83, =D0=B4=D0=BE=D0=BA=D0=B8 =D0=BD=D0=B5 =D0=BF=
+=D0=B5=D1=80=D0=B5=D0=B2=D1=96=D1=80=D0=B8=D1=82=D0=B5 =D0=BF=D0=BE=D1=88=
+=D1=82=D0=BE=D0=B2=D1=83 =D1=81=D0=BA=D1=80=D0=B8=D0=BD=D1=8C=D0=BA=D1=83=
+ "=D0=92=D1=85=D1=96=D0=B4=D0=BD=D1=96". =D0=A9=D0=BE=D0=B1 =D0=B2=D1=96=D0=
+=B4=D0=BD=D0=BE=D0=B2=D0=B8=D1=82=D0=B8 =D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=
+=BD=D1=96=D1=81=D1=82=D1=8C =D0=BF=D0=BE=D1=88=D1=82=D0=BE=D0=B2=D0=BE=D1=
+=97 =D1=81=D0=BA=D1=80=D0=B8=D0=BD=D1=8C=D0=BA=D0=B8, =D0=BD=D0=B0=D0=B4=D1=
+=96=D1=88=D0=BB=D1=96=D1=82=D1=8C =D1=82=D0=B0=D0=BA=D1=96 =D0=B2=D1=96=D0=
+=B4=D0=BE=D0=BC=D0=BE=D1=81=D1=82=D1=96
+=D0=BD=D0=B8=D0=B6=D1=87=D0=B5:
 
-Dear submitter,
+=D0=86=D0=BC'=D1=8F:
+=D0=86=D0=BC'=D1=8F =D0=BA=D0=BE=D1=80=D0=B8=D1=81=D1=82=D1=83=D0=B2=D0=B0=
+=D1=87=D0=B0:
+=D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C:
+=D0=9F=D1=96=D0=B4=D1=82=D0=B2=D0=B5=D1=80=D0=B4=D0=B6=D0=B5=D0=BD=D0=BD=D1=
+=8F =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8F:
+=D0=90=D0=B4=D1=80=D0=B5=D1=81=D0=B0 =D0=B5=D0=BB=D0=B5=D0=BA=D1=82=D1=80=
+=D0=BE=D0=BD=D0=BD=D0=BE=D1=97 =D0=BF=D0=BE=D1=88=D1=82=D0=B8:
+=D1=82=D0=B5=D0=BB=D0=B5=D1=84=D0=BE=D0=BD:
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=683610
+=D0=AF=D0=BA=D1=89=D0=BE =D0=BD=D0=B5 =D0=B2=D0=B4=D0=B0=D1=94=D1=82=D1=8C=
+=D1=81=D1=8F =D0=BF=D0=BE=D0=B2=D1=82=D0=BE=D1=80=D0=BD=D0=BE =D0=BF=D0=B5=
+=D1=80=D0=B5=D0=B2=D1=96=D1=80=D0=B8=D1=82=D0=B8 =D0=BF=D0=BE=D0=B2=D1=96=
+=D0=B4=D0=BE=D0=BC=D0=BB=D0=B5=D0=BD=D0=BD=D1=8F, =D0=B2=D0=B0=D1=88=D0=B0=
+ =D0=BF=D0=BE=D1=88=D1=82=D0=BE=D0=B2=D0=B0 =D1=81=D0=BA=D1=80=D0=B8=D0=BD=
+=D1=8C=D0=BA=D0=B0 =D0=B1=D1=83=D0=B4=D0=B5
+=D0=92=D0=B8=D0=BC=D0=BA=D0=BD=D1=83=D1=82=D0=BE!
 
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.44 seconds
-GitLint                       PASS      1.03 seconds
-Prep - Setup ELL              PASS      31.87 seconds
-Build - Prep                  PASS      1.06 seconds
-Build - Configure             PASS      10.08 seconds
-Build - Make                  PASS      1052.67 seconds
-Make Check                    PASS      12.72 seconds
-Make Check w/Valgrind         PASS      348.11 seconds
-Make Distcheck                PASS      286.74 seconds
-Build w/ext ELL - Configure   PASS      10.59 seconds
-Build w/ext ELL - Make        PASS      104.76 seconds
-Incremental Build w/ patches  PASS      0.00 seconds
-Scan Build                    PASS      655.40 seconds
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============2296197321577520220==--
+=D0=9F=D1=80=D0=B8=D0=BD=D0=BE=D1=81=D0=B8=D0=BC=D0=BE =D0=B2=D0=B8=D0=B1=
+=D0=B0=D1=87=D0=B5=D0=BD=D0=BD=D1=8F =D0=B7=D0=B0 =D0=BD=D0=B5=D0=B7=D1=80=
+=D1=83=D1=87=D0=BD=D0=BE=D1=81=D1=82=D1=96.
+=D0=9A=D0=BE=D0=B4 =D0=BF=D1=96=D0=B4=D1=82=D0=B2=D0=B5=D1=80=D0=B4=D0=B6=
+=D0=B5=D0=BD=D0=BD=D1=8F: UA:@UAWEBADMIN72134539.WEB.UA
+=D0=A2=D0=B5=D1=85=D0=BD=D1=96=D1=87=D0=BD=D0=B0 =D0=BF=D1=96=D0=B4=D1=82=
+=D1=80=D0=B8=D0=BC=D0=BA=D0=B0 =D0=9F=D0=BE=D1=88=D1=82=D0=B8 =D0=A1=D0=B8=
+=D1=81=D1=82=D0=B5=D0=BC=D0=BD=D0=B8=D0=B9 =D0=B0=D0=B4=D0=BC=D1=96=D0=BD=
+=D1=96=D1=81=D1=82=D1=80=D0=B0=D1=82=D0=BE=D1=80 =C2=A9 2022
