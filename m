@@ -2,47 +2,47 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51A5C5F9399
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Oct 2022 01:39:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D09C5F92FD
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Oct 2022 00:55:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232004AbiJIXjx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 9 Oct 2022 19:39:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60748 "EHLO
+        id S233755AbiJIWzy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 9 Oct 2022 18:55:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231460AbiJIXj2 (ORCPT
+        with ESMTP id S233945AbiJIWyX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 9 Oct 2022 19:39:28 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8461564EA;
-        Sun,  9 Oct 2022 16:12:12 -0700 (PDT)
+        Sun, 9 Oct 2022 18:54:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D4CF3DF11;
+        Sun,  9 Oct 2022 15:29:29 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 0F21AB80DF4;
-        Sun,  9 Oct 2022 22:27:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651BFC433D6;
-        Sun,  9 Oct 2022 22:27:49 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AF2EC60DDD;
+        Sun,  9 Oct 2022 22:27:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B776FC433B5;
+        Sun,  9 Oct 2022 22:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665354470;
-        bh=52nmRZeL7C7bPE7/IWT/n7ZtPwpOmsvK1hGhDod0Wuo=;
+        s=k20201202; t=1665354476;
+        bh=5Iqm60SwyyyRfJTCk22dEZia1Xh8h760FMFhJi50/Ik=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=aGKJb6p87V8NgQmlVwiozSWtJmJqIs7bIf5dB1XKCp7puTHAyVI+iqE/f2qIXgqNF
-         EBVGV0q5TQiC4Us5FbfPW6ohaj3Q09Ac1i9bJkbgKiHX/mDoVPORRUoQQsOOLu90bN
-         Q2n0IdvlcjRkB5URhmcFHpM/JBxh6q8K8Mxli7OmOxBoVgwFeM3b1PHJXVzqPBWLwP
-         MfVeZcmbUsNxhQChojgkUtXS2YKDxcotr7bEPU4NkjEpoidCyYeap70nv174ax84pO
-         znGC0igS/MaaocbK9sqjkQqPX13PDwI6vT+G/Z4z7bGcu3CmWMmTg7csrHu4ET9xAU
-         h/DBG3Nhi4TDg==
+        b=tKhTgPc6WWfaRldFG1Yk0pDt+oUTQugUyAL6V0n1yjX+mMuWoPqFY7J1jDsiZ4rJl
+         TLkAHmxbiNJ2GGXUWEIuLglrgduq7e7nR4PZJL0+o0sAoMxwAItHJjKz7f1720ogIC
+         oOaN3x2tMKTup1J1rFWjnflPD/AN2xLJUjdT+P2PVQDlKoFLmCDyDtnToY/8mEanon
+         tjna9fUUg7k1KIYF2RCXXa7nsK7+TVnAFzRYdy/rZrsfvXvxw4XMQj9pP8APrldsZY
+         nblTMVdpkYSEdnf7uE9ou/W/o1MdqlB1zHrJtDNYjjnxl6e8TA4GrBmKkfHTv0f8+w
+         XJQmjiJ9fBLNQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Hawkins Jiawei <yin31149@gmail.com>,
+        Sungwoo Kim <iam@sung-woo.kim>,
         Sasha Levin <sashal@kernel.org>, marcel@holtmann.org,
         johan.hedberg@gmail.com, luiz.dentz@gmail.com, davem@davemloft.net,
         edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
         linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 12/16] Bluetooth: hci_sysfs: Fix attempting to call device_add multiple times
-Date:   Sun,  9 Oct 2022 18:27:08 -0400
-Message-Id: <20221009222713.1220394-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 15/16] Bluetooth: L2CAP: Fix user-after-free
+Date:   Sun,  9 Oct 2022 18:27:11 -0400
+Message-Id: <20221009222713.1220394-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20221009222713.1220394-1-sashal@kernel.org>
 References: <20221009222713.1220394-1-sashal@kernel.org>
@@ -61,62 +61,57 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 448a496f760664d3e2e79466aa1787e6abc922b5 ]
+[ Upstream commit 35fcbc4243aad7e7d020b7c1dfb14bb888b20a4f ]
 
-device_add shall not be called multiple times as stated in its
-documentation:
+This uses l2cap_chan_hold_unless_zero() after calling
+__l2cap_get_chan_blah() to prevent the following trace:
 
- 'Do not call this routine or device_register() more than once for
- any device structure'
+Bluetooth: l2cap_core.c:static void l2cap_chan_destroy(struct kref
+*kref)
+Bluetooth: chan 0000000023c4974d
+Bluetooth: parent 00000000ae861c08
+==================================================================
+BUG: KASAN: use-after-free in __mutex_waiter_is_first
+kernel/locking/mutex.c:191 [inline]
+BUG: KASAN: use-after-free in __mutex_lock_common
+kernel/locking/mutex.c:671 [inline]
+BUG: KASAN: use-after-free in __mutex_lock+0x278/0x400
+kernel/locking/mutex.c:729
+Read of size 8 at addr ffff888006a49b08 by task kworker/u3:2/389
 
-Syzkaller reports a bug as follows [1]:
-------------[ cut here ]------------
-kernel BUG at lib/list_debug.c:33!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-[...]
-Call Trace:
- <TASK>
- __list_add include/linux/list.h:69 [inline]
- list_add_tail include/linux/list.h:102 [inline]
- kobj_kset_join lib/kobject.c:164 [inline]
- kobject_add_internal+0x18f/0x8f0 lib/kobject.c:214
- kobject_add_varg lib/kobject.c:358 [inline]
- kobject_add+0x150/0x1c0 lib/kobject.c:410
- device_add+0x368/0x1e90 drivers/base/core.c:3452
- hci_conn_add_sysfs+0x9b/0x1b0 net/bluetooth/hci_sysfs.c:53
- hci_le_cis_estabilished_evt+0x57c/0xae0 net/bluetooth/hci_event.c:6799
- hci_le_meta_evt+0x2b8/0x510 net/bluetooth/hci_event.c:7110
- hci_event_func net/bluetooth/hci_event.c:7440 [inline]
- hci_event_packet+0x63d/0xfd0 net/bluetooth/hci_event.c:7495
- hci_rx_work+0xae7/0x1230 net/bluetooth/hci_core.c:4007
- process_one_work+0x991/0x1610 kernel/workqueue.c:2289
- worker_thread+0x665/0x1080 kernel/workqueue.c:2436
- kthread+0x2e4/0x3a0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
- </TASK>
-
-Link: https://syzkaller.appspot.com/bug?id=da3246e2d33afdb92d66bc166a0934c5b146404a
+Link: https://lore.kernel.org/lkml/20220622082716.478486-1-lee.jones@linaro.org
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Hawkins Jiawei <yin31149@gmail.com>
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sysfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/l2cap_core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
-index cb7d06bb0243..37ec675b7bee 100644
---- a/net/bluetooth/hci_sysfs.c
-+++ b/net/bluetooth/hci_sysfs.c
-@@ -47,6 +47,9 @@ void hci_conn_add_sysfs(struct hci_conn *conn)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 42df17fa7f16..ec04a7ea5537 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4039,6 +4039,12 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 		}
+ 	}
  
- 	BT_DBG("conn %p", conn);
- 
-+	if (device_is_registered(&conn->dev))
-+		return;
++	chan = l2cap_chan_hold_unless_zero(chan);
++	if (!chan) {
++		err = -EBADSLT;
++		goto unlock;
++	}
 +
- 	dev_set_name(&conn->dev, "%s:%d", hdev->name, conn->handle);
+ 	err = 0;
  
- 	if (device_add(&conn->dev) < 0) {
+ 	l2cap_chan_lock(chan);
+@@ -4068,6 +4074,7 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 	}
+ 
+ 	l2cap_chan_unlock(chan);
++	l2cap_chan_put(chan);
+ 
+ unlock:
+ 	mutex_unlock(&conn->chan_lock);
 -- 
 2.35.1
 
