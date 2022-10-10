@@ -2,49 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2C975FA6C8
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Oct 2022 23:01:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BF635FA6C5
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Oct 2022 23:01:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230493AbiJJVBW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 10 Oct 2022 17:01:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55268 "EHLO
+        id S229997AbiJJVBS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 10 Oct 2022 17:01:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230487AbiJJVAx (ORCPT
+        with ESMTP id S229484AbiJJVAv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 10 Oct 2022 17:00:53 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC0240009
+        Mon, 10 Oct 2022 17:00:51 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 720483DF1E
         for <linux-bluetooth@vger.kernel.org>; Mon, 10 Oct 2022 14:00:26 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D6447B810DF
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 38CFD61025
         for <linux-bluetooth@vger.kernel.org>; Mon, 10 Oct 2022 21:00:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7F195C433B5;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8C461C43470;
         Mon, 10 Oct 2022 21:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1665435617;
-        bh=cMfrsdFSB9fjR4lIzON8HaJSI6xIescOn6Tr/dA2aK0=;
+        bh=FhMhrJ8RnZbd3lw6oiB2YvI24+9LbI6CyLxmzyu0xXg=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=F3rntuOfxBMPuZrpjPK4IDycqpg8Ip02Jv8AvFXuAvsWzcbwss/FZ4Dlhv4rXRax1
-         SC+Rzfb0vDitAdic3/S6LDknZb0WzM8FhjFqMkZXLMHVvFfjbGz7vtugGx1q6//8BH
-         wct/TBvs2w/b0qXh3GGIYsOenXhdb4N3RNb2WTlQAz/BFt8rJBvQ2XbGxhe91HOWJw
-         Infz2IR7KpfrSgmAFD77nu+KU5wOKAVAzWtV5cKncH8myOcmdpPnVA8atxH7kU+3RS
-         qi1J6Stavx/MWdFAIqZgtBmdW6RYvuPpn+fUUrYrKltFb51csxX2exVrq7oa3g6CEQ
-         m4WabeZsreg+A==
+        b=I6An8S8WchHMnyD/3LH7tFIDZ8GhH4qsu1/LM+a3GbtJ0tkV+uwUinbrTwgBXq18R
+         PlHMP42kepYB+H2g5IwRvaoz6e4zJl3qFX6t9pq4ojWO0aXkggLD1xxYA/oBP1D264
+         0nPjXQxdMDFrrlr/odBWd6gY5sUvqSQ8wCXnSYfyuq6fgBJHXYpiRGxqWJ1CnOFQYi
+         /k0KQmpnSJYUwpa5FUEr5KB6Q705/abzdwQokflyQPrk+hQMQOZVoadIk4QlDEDcN4
+         fvpOPd20HGp71tf7MzLV4E3zuiSo5foE/rVslpaRWBz8uVDbpTzgBYWKtkk/p7ZZec
+         uLEgZCaquDVwg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 6D560E4D00E;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 78167E4D024;
         Mon, 10 Oct 2022 21:00:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] vhci: Add function to interact with
- force_static_address
+Subject: Re: [PATCH BlueZ 1/3] btdev: Add support for setting bdaddr
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166543561744.14234.11311670254400177639.git-patchwork-notify@kernel.org>
+Message-Id: <166543561748.14234.13302214712570934172.git-patchwork-notify@kernel.org>
 Date:   Mon, 10 Oct 2022 21:00:17 +0000
-References: <20221007225527.1838767-1-luiz.dentz@gmail.com>
-In-Reply-To: <20221007225527.1838767-1-luiz.dentz@gmail.com>
+References: <20221008011410.1907549-1-luiz.dentz@gmail.com>
+In-Reply-To: <20221008011410.1907549-1-luiz.dentz@gmail.com>
 To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -58,22 +57,26 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Fri,  7 Oct 2022 15:55:27 -0700 you wrote:
+On Fri,  7 Oct 2022 18:14:08 -0700 you wrote:
 > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> This adds functions that can be used to set debugfs
-> force_static_address.
+> This adds btdev_set_bdaddr so it is possible to set an arbritrary
+> address.
 > ---
->  emulator/vhci.c | 10 ++++++++++
->  emulator/vhci.h |  1 +
->  2 files changed, 11 insertions(+)
+>  emulator/btdev.c | 10 ++++++++++
+>  emulator/btdev.h |  2 ++
+>  2 files changed, 12 insertions(+)
 
 Here is the summary with links:
-  - [BlueZ] vhci: Add function to interact with force_static_address
+  - [BlueZ,1/3] btdev: Add support for setting bdaddr
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c94cdbc6d73f
+  - [BlueZ,2/3] vhci: Add function to interact with force_static_address
     https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c2bf15137410
+  - [BlueZ,3/3] mgmt-tester: Fix Set Static Address tests
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=9065853fe5c7
 
 You are awesome, thank you!
 -- 
