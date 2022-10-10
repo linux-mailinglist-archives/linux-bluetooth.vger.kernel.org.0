@@ -2,89 +2,111 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEC2C5FA66B
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Oct 2022 22:37:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39DE95FA6C6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 10 Oct 2022 23:01:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230213AbiJJUhO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 10 Oct 2022 16:37:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55242 "EHLO
+        id S230372AbiJJVBV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 10 Oct 2022 17:01:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbiJJUgk (ORCPT
+        with ESMTP id S230479AbiJJVAv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 10 Oct 2022 16:36:40 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E837DBF51
-        for <linux-bluetooth@vger.kernel.org>; Mon, 10 Oct 2022 13:35:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1665434134; x=1696970134;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=0sz9r/pAE+BRb15nd+4QZH7Cfu1rlGXnRZmwKYZeAcg=;
-  b=RM/eGtbKzLAS4SDS5QDk2DeIHdrMJBqkldInvNQZUSPA4U6KCfFiATGQ
-   Te4w8Hvjn+H48Zcf4ou0LEtc2Pmg/azL/FxNiui+A0mmNmjRmtCfRLP1f
-   /Jc+zrl161wrXBbW4TiZBmo4AyqLSfOWmO6628zLmevQIq4C5+rv6XkrW
-   ggaMbcfAPVAjmoMtRsKH7VA77rdvE7gbqefL6JpZJzsuW3OMc4/hTi8IC
-   bfunc5Aou/YEPRgTv6JJ3B3T541R/TqM8Lt8cfPYFnqfYqWsZUCCIOuax
-   QI+W5AN0+E3iWsVnNQAZnzyMPegXrm1fh/agrmzUBxm5eIKArm6wJDo2W
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10496"; a="330802909"
-X-IronPort-AV: E=Sophos;i="5.95,173,1661842800"; 
-   d="scan'208";a="330802909"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2022 13:35:30 -0700
-X-IronPort-AV: E=McAfee;i="6500,9779,10496"; a="730696023"
-X-IronPort-AV: E=Sophos;i="5.95,173,1661842800"; 
-   d="scan'208";a="730696023"
-Received: from yvasudev-mobl.amr.corp.intel.com (HELO bgi1-mobl2.amr.corp.intel.com) ([10.209.135.7])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2022 13:35:30 -0700
-From:   Brian Gix <brian.gix@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     luiz.dentz@gmail.com, brian.gix@intel.com,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 2/2] Bluetooth: hci_sync: Fix not able to set force_static_address
-Date:   Mon, 10 Oct 2022 13:35:22 -0700
-Message-Id: <20221010203522.1251151-2-brian.gix@intel.com>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221010203522.1251151-1-brian.gix@intel.com>
-References: <20221010203522.1251151-1-brian.gix@intel.com>
+        Mon, 10 Oct 2022 17:00:51 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB0B942AE2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 10 Oct 2022 14:00:26 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D2552B810D2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 10 Oct 2022 21:00:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 820C9C433D6;
+        Mon, 10 Oct 2022 21:00:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665435616;
+        bh=Yk7ZNkR3bklAcUrsS9SPmmf7zO2881cG2VBXH/iPJc0=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=TKK1z3EsZTYVGsUBwMZ81U/w47rKrs+LrfPbR8H6uTzbHfTUFGEN5D81GgPu6yA3t
+         VNluJ/WIs//3CxRWONOVb1foJ4Ck7iYjBNVkkZkLS3huTMCmQ8IPQvUqpo5jgOVWRa
+         iPy4FGgspSlZgNhNpoCeaKHkAgP8lbcUmmLptO/tnmrtR64me8Pw8IOXW17PPh5sBc
+         /NRC2LadQDv5HS+FPBWtkNpn/DoY2yvDDo22TzD2qm089ihBqf7bpU03IwKJnX5EB7
+         G4t7zyuNhCFR3zRIy+6ERcAL4BYW8qfVELYPc2KHK8hZELGbQ006F0mcnLWiMb1IFY
+         x9LHQXzy/c9pw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 68572E2A05F;
+        Mon, 10 Oct 2022 21:00:16 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 1/2] Bluetooth: hci_sync: Fix not setting static address
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <166543561642.14234.1519084303913709414.git-patchwork-notify@kernel.org>
+Date:   Mon, 10 Oct 2022 21:00:16 +0000
+References: <20221008011129.1906898-1-luiz.dentz@gmail.com>
+In-Reply-To: <20221008011129.1906898-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hello:
 
-force_static_address shall be writable while hdev is initing but is not
-considered powered yet since the static address is written only when
-powered.
+This series was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Brian Gix <brian.gix@intel.com>
----
- net/bluetooth/hci_debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Fri,  7 Oct 2022 18:11:28 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> This attempts to program the address stored in hdev->static_addr after
+> the init sequence has been complete:
+> 
+> @ MGMT Command: Set Static A.. (0x002b) plen 6
+>         Address: C0:55:44:33:22:11 (Static)
+> @ MGMT Event: Command Complete (0x0001) plen 7
+>       Set Static Address (0x002b) plen 4
+>         Status: Success (0x00)
+>         Current settings: 0x00008200
+>           Low Energy
+>           Static Address
+> @ MGMT Event: New Settings (0x0006) plen 4
+>         Current settings: 0x00008200
+>           Low Energy
+>           Static Address
+> < HCI Command: LE Set Random.. (0x08|0x0005) plen 6
+>         Address: C0:55:44:33:22:11 (Static)
+> > HCI Event: Command Complete (0x0e) plen 4
+>       LE Set Random Address (0x08|0x0005) ncmd 1
+>         Status: Success (0x00)
+> @ MGMT Event: Command Complete (0x0001) plen 7
+>       Set Powered (0x0005) plen 4
+>         Status: Success (0x00)
+>         Current settings: 0x00008201
+>           Powered
+>           Low Energy
+>           Static Address
+> @ MGMT Event: New Settings (0x0006) plen 4
+>         Current settings: 0x00008201
+>           Powered
+>           Low Energy
+>           Static Address
+> 
+> [...]
 
-diff --git a/net/bluetooth/hci_debugfs.c b/net/bluetooth/hci_debugfs.c
-index 3f401ec5bb0c..b7f682922a16 100644
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -757,7 +757,7 @@ static ssize_t force_static_address_write(struct file *file,
- 	bool enable;
- 	int err;
- 
--	if (test_bit(HCI_UP, &hdev->flags))
-+	if (hdev_is_powered(hdev))
- 		return -EBUSY;
- 
- 	err = kstrtobool_from_user(user_buf, count, &enable);
+Here is the summary with links:
+  - [1/2] Bluetooth: hci_sync: Fix not setting static address
+    https://git.kernel.org/bluetooth/bluetooth-next/c/ca57023e7c49
+  - [2/2] Bluetooth: hci_sync: Fix not able to set force_static_address
+    https://git.kernel.org/bluetooth/bluetooth-next/c/8549542298e9
+
+You are awesome, thank you!
 -- 
-2.37.3
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
