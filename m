@@ -2,50 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 969075FBC63
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Oct 2022 22:50:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3D775FBC65
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Oct 2022 22:50:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229600AbiJKUuW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 11 Oct 2022 16:50:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45478 "EHLO
+        id S229695AbiJKUuY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 11 Oct 2022 16:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiJKUuU (ORCPT
+        with ESMTP id S229548AbiJKUuV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 11 Oct 2022 16:50:20 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D55722A410
-        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 13:50:19 -0700 (PDT)
+        Tue, 11 Oct 2022 16:50:21 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4CFE2A739;
+        Tue, 11 Oct 2022 13:50:19 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8F6D1B816A9
-        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 20:50:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 182C5C433C1;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8724EB816AD;
+        Tue, 11 Oct 2022 20:50:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 23DE6C433D7;
         Tue, 11 Oct 2022 20:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1665521417;
-        bh=9qmelDB7dLVWd0raASz4PlkXGvX7/TkVFU6MrISbaUQ=;
+        bh=EkZDntzfhCC+LGw9OnjWM2/+O+hp2cF51ogIpBq6dPw=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=bdI+gY8cOXtL7WOb/gLPQtjQ55KVq6rs1sC1+96+cMnX2ViJg+rO7etxwDpOK3/I9
-         1RKBwYxDJM8HxpkMFoARAjZ6na66f1/sWj74274oxqzS6Co51dhhX4vmDPo7G/dMoJ
-         nupABefklgqtxRiP3gKRQRFzYH+lUCBbBNgSImqdLoLSm1wdXahR5TCwm57Akuig/L
-         j9fQa/GzyKXt0Put6w4goiRJliYOg75fWxsIYyuiv1b76gSgNOH81j0yc6Qzp3sHMB
-         ksZDA/to+G+qHnNhWL0NTz437vCuOez4MbDnT96gm+Iu9JMHCcNBwFNK1O+UTtM17w
-         BSQ5/8HibkLtw==
+        b=i7x+i+wpodaUGUnxCSY5u9Af6yDJkAxqaMIyMsCfWqUpsVItaiuXruA4IlWKdCrEF
+         obWFTzFRyqnnXHzuT2TAmGdV7YWIRekHsNpoO6nrWc41nm/CSQ0ekiQR6/EnnQk7J8
+         Lu/Oc74UHvAd2dfShaLQ23ZjQXZ9syuLZ1kHWhHEksWgKZCl3A392tpLxat2Ps1Dfa
+         bsVt7Q8U6ZyJw576+UKE7pe/p9bm6l8yW3v3X9wJmpg9V7nrnENy7+NLmpIwoFFFug
+         CGjU0EqEOZi8bkmKt67aFmV4O9yT50JSPU1KTdCmgIHSftHtmvlwcVpO1P9Jm91utc
+         FK4L4M50xG4yQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id F2900E29F33;
-        Tue, 11 Oct 2022 20:50:16 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 07EE1E29F37;
+        Tue, 11 Oct 2022 20:50:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: hci_conn: Fix CIS connection dst_type handling
+Subject: Re: [PATCH v4 0/2] Bluetooth: Add btrealtek data struct and improve SCO
+ sound quality of RTK chips
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166552141698.15349.13183520200083892484.git-patchwork-notify@kernel.org>
-Date:   Tue, 11 Oct 2022 20:50:16 +0000
-References: <20221009174216.17533-1-pav@iki.fi>
-In-Reply-To: <20221009174216.17533-1-pav@iki.fi>
-To:     Pauli Virtanen <pav@iki.fi>
-Cc:     linux-bluetooth@vger.kernel.org
+Message-Id: <166552141702.15349.18253290720492836485.git-patchwork-notify@kernel.org>
+Date:   Tue, 11 Oct 2022 20:50:17 +0000
+References: <20221005084331.1001-1-hildawu@realtek.com>
+In-Reply-To: <20221005084331.1001-1-hildawu@realtek.com>
+To:     Hilda Wu <hildawu@realtek.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        apusaka@chromium.org, yinghsu@chromium.org, max.chou@realtek.com,
+        alex_lu@realsil.com.cn, kidman@realtek.com
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -60,25 +64,23 @@ Hello:
 This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Sun,  9 Oct 2022 20:42:15 +0300 you wrote:
-> hci_connect_cis and iso_connect_cis call hci_bind_cis inconsistently
-> with dst_type being either ISO socket address type or the HCI type, but
-> these values cannot be mixed like this. Fix this by using only the
-> socket address type.
+On Wed, 5 Oct 2022 16:43:29 +0800 you wrote:
+> From: Hilda Wu <hildawu@realtek.com>
 > 
-> CIS connection dst_type was also not initialized in hci_bind_cis, even
-> though it is used in hci_conn_hash_lookup_cis to find existing
-> connections.  Set the value in hci_bind_cis, so that existing CIS
-> connections are found e.g. when doing deferred socket connections, also
-> when dst_type is not 0 (ADDR_LE_DEV_PUBLIC).
+> Add btrealtek data struct and use definition of vendor flags to manage
+> the specific chip.
+> 
+> The Bluetooth: btusb: Ignore zero length of USB packets on ALT 6 for
+> specific chip need to transmit mSBC data continuously without the
+> zero length of USB packets.
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: hci_conn: Fix CIS connection dst_type handling
-    (no matching commit)
-  - [v2,2/2] Bluetooth: hci_conn: use HCI dst_type values also for BIS
-    https://git.kernel.org/bluetooth/bluetooth-next/c/4d12cd187c82
+  - [v4,1/2] Bluetooth: btrtl: Add btrealtek data struct
+    https://git.kernel.org/bluetooth/bluetooth-next/c/a0acc8e27228
+  - [v4,2/2] Bluetooth: btusb: Ignore zero length of USB packets on ALT 6 for specific chip
+    https://git.kernel.org/bluetooth/bluetooth-next/c/d6a615c8b539
 
 You are awesome, thank you!
 -- 
