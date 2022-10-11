@@ -2,107 +2,160 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFB375FBA1D
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Oct 2022 20:07:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75F755FBB54
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Oct 2022 21:26:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230007AbiJKSHj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 11 Oct 2022 14:07:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34736 "EHLO
+        id S230072AbiJKT0D (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 11 Oct 2022 15:26:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbiJKSHi (ORCPT
+        with ESMTP id S229595AbiJKT0A (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 11 Oct 2022 14:07:38 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5576D2A95D
-        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 11:07:35 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-35ad0584879so134648367b3.7
-        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 11:07:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=b7nMl+IIoVXIZCC/DKHT3CXI2Xf2HP4geGz0+dJZi9s=;
-        b=FG0qA4ikAjxVKa3sHpnmD3r0ovEhAB/bTmLX8VaAqEoTpZLQ8gI6+KCa2X7rXzcUx3
-         rJST5MEvmq0VI70J8hjHeW0BnsDmXHjn1DU19Jfy8L1wC2sLYsljtxyV47EilRh2TLtC
-         9cB+K0rCTEfq02tPXJzGGRr2QF9LJd3mCke8WtuRcb9fZqpXu9hc5PKyEH03JR7y3FCa
-         fR9MC0LDUvDah73tE2PvE3mCpnHEUVEXCgJH/S+cEMd13lcLv9SWquKndDYNyeOjDrAV
-         6YYxGSJpZ+hIfCaCTY2Nyncsf03owIdhplfLFZJjPMseBggOY0NJfZkPV3LWUppYNKkJ
-         0fRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b7nMl+IIoVXIZCC/DKHT3CXI2Xf2HP4geGz0+dJZi9s=;
-        b=Ii7s9tBC9BcJtCLj3iBWicp6/I5xIcHBZhdMHDVEWMJ6S0WNpMm/yAIP3tqw/jJvdE
-         8GAvf/aa1a3y98YbFNOXSQlrbu4Ee8f+ip3X6bYC1MNQ2gj6K9TkXph/95+8GsdFAnzg
-         tL+KjqBm55XSWEommQwp3q/mvV6ju2/EhP1psQAqTPd3wXd9JYKnLq94LKJIHozS0hA+
-         JjXU336/M6nzhEm+Hs9EnCOCp6NTVFfM5hPL1I3FtbFSPyQAWa8WT3U1iFMZ1EgoKjli
-         Girn09+YWsi4PivgsREm/7ufW7SJ1MWULb1AM182o2BiRPcfy+RqROUgLhqJJpgCHjdp
-         IRcQ==
-X-Gm-Message-State: ACrzQf2OU6B46x91VxhQN+sD1Bj50rIHbsjrIvdICO3MqGMzx/FRm+TM
-        ni9kwwRVhTaHl/Wy9WmQz2YLzD19EaCQ6qLjSgk=
-X-Google-Smtp-Source: AMsMyM6OCvagOVxxxTEsfErq9xBhIJJgtNqp5+7CYXRzAiyXlU45PahqHzXqTx5VO8MUR+9wqIhH0LJTIZYEhX9SSJw=
-X-Received: by 2002:a81:6907:0:b0:34a:51ce:3b38 with SMTP id
- e7-20020a816907000000b0034a51ce3b38mr23284332ywc.151.1665511654327; Tue, 11
- Oct 2022 11:07:34 -0700 (PDT)
+        Tue, 11 Oct 2022 15:26:00 -0400
+Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9407F75486
+        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 12:25:59 -0700 (PDT)
+Received: from monolith.lan (91-152-121-49.elisa-laajakaista.fi [91.152.121.49])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: pav)
+        by meesny.iki.fi (Postfix) with ESMTPSA id 0E0B42024C;
+        Tue, 11 Oct 2022 22:25:53 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+        t=1665516353;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=LyMi5E4dTvBBBn+MCoiLCuT/rwJZSoFTa3yyi9YQ6d4=;
+        b=wq6iExBE0mqMV84L/DRFlNssitX6R7Ns/LoS9oX/QWyEU4XBbDWU4xfU1S2ORaN6O/6w4m
+        al48KxmDkxPd8tZFcWcHH74FVoHvtrydVTjEJAoZofCKtc/OyqMoQOI09DYckUrNg5UHSV
+        DibJ9BEIkbRWxNZ2L+ildqAFrcu1Pwg=
+From:   Pauli Virtanen <pav@iki.fi>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH v2 1/2] Bluetooth: hci_conn: Fix CIS connection dst_type handling
+Date:   Tue, 11 Oct 2022 22:25:33 +0300
+Message-Id: <20221011192534.16281-1-pav@iki.fi>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20221009174216.17533-1-pav@iki.fi>
+References: <20221009174216.17533-1-pav@iki.fi>
 MIME-Version: 1.0
-Received: by 2002:a05:7000:1749:b0:3c5:f473:56e4 with HTTP; Tue, 11 Oct 2022
- 11:07:33 -0700 (PDT)
-Reply-To: illuminatiinitiationcenter56@gmail.com
-From:   Garry Lee <johnalinda8@gmail.com>
-Date:   Tue, 11 Oct 2022 21:07:33 +0300
-Message-ID: <CA+Dt0k_wprVPDRPoDepuruBYd2vtSZ60hGqdrTRy=NsRMSYouA@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_FILL_THIS_FORM_SHORT,
-        UNDISC_FREEM,UPPERCASE_75_100 autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:112a listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [illuminatiinitiationcenter56[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [johnalinda8[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [johnalinda8[at]gmail.com]
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        *  0.0 UPPERCASE_75_100 message body is 75-100% uppercase
-        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-        *  0.0 T_FILL_THIS_FORM_SHORT Fill in a short form with personal
-        *      information
-X-Spam-Level: *****
+Content-Transfer-Encoding: 8bit
+ARC-Authentication-Results: i=1;
+        ORIGINATING;
+        auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1665516353; a=rsa-sha256; cv=none;
+        b=YYulz5YWGg8aX1iyLlDUbSI+YYrAghHQ1E/oQUw5PHTAeRi8ubE6X8qPUO7wpidOBRFHYT
+        ulX+dVXpTSXZsd6QvyCQXts9ja1SQGXofuumlZWIpCgZLD9QrsCUoF2u1YJWxBrmSgsZO8
+        VR22gS9e5LwXTg2ZIXvZzP+aXjz7mPw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+        s=meesny; t=1665516353;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=LyMi5E4dTvBBBn+MCoiLCuT/rwJZSoFTa3yyi9YQ6d4=;
+        b=V8lnM5ZMkjGTYXiuwBOAcQt4W221g+yjhSo2ywaU/DxzYZteIIxVp4e1YDbmlkY3sbTdJr
+        359T5ZBtZnlp5OjI5YvTMkzqoLUGjKzdsQ+7LbNOIkFcViSzTK1SyklfiO0Pnrv0031bOZ
+        7uWXkFNu5wkhEGtN+gHYdlLo2mBO4UE=
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+hci_connect_cis and iso_connect_cis call hci_bind_cis inconsistently
+with dst_type being either ISO socket address type or the HCI type, but
+these values cannot be mixed like this. Fix this by using only the HCI
+type.
+
+CIS connection dst_type was also not initialized in hci_bind_cis, even
+though it is used in hci_conn_hash_lookup_cis to find existing
+connections.  Set the value in hci_bind_cis, so that existing CIS
+connections are found e.g. when doing deferred socket connections, also
+when dst_type is not 0 (ADDR_LE_DEV_PUBLIC).
+
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+---
+
+Notes:
+    v2:
+    * do address type conversions in iso.c
+    * do the same for BIS for consistency (separate patch)
+
+ net/bluetooth/hci_conn.c |  7 +------
+ net/bluetooth/iso.c      | 14 ++++++++++++--
+ 2 files changed, 13 insertions(+), 8 deletions(-)
+
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 9777e7b109ee..f1263cdd71dd 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1697,6 +1697,7 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 		if (!cis)
+ 			return ERR_PTR(-ENOMEM);
+ 		cis->cleanup = cis_cleanup;
++		cis->dst_type = dst_type;
+ 	}
+ 
+ 	if (cis->state == BT_CONNECTED)
+@@ -2076,12 +2077,6 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 	struct hci_conn *le;
+ 	struct hci_conn *cis;
+ 
+-	/* Convert from ISO socket address type to HCI address type  */
+-	if (dst_type == BDADDR_LE_PUBLIC)
+-		dst_type = ADDR_LE_DEV_PUBLIC;
+-	else
+-		dst_type = ADDR_LE_DEV_RANDOM;
+-
+ 	if (hci_dev_test_flag(hdev, HCI_ADVERTISING))
+ 		le = hci_connect_le(hdev, dst, dst_type, false,
+ 				    BT_SECURITY_LOW,
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 613039ba5dbf..f825857db6d0 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -235,6 +235,14 @@ static int iso_chan_add(struct iso_conn *conn, struct sock *sk,
+ 	return err;
+ }
+ 
++static inline u8 le_addr_type(u8 bdaddr_type)
++{
++	if (bdaddr_type == BDADDR_LE_PUBLIC)
++		return ADDR_LE_DEV_PUBLIC;
++	else
++		return ADDR_LE_DEV_RANDOM;
++}
++
+ static int iso_connect_bis(struct sock *sk)
+ {
+ 	struct iso_conn *conn;
+@@ -328,14 +336,16 @@ static int iso_connect_cis(struct sock *sk)
+ 	/* Just bind if DEFER_SETUP has been set */
+ 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
+ 		hcon = hci_bind_cis(hdev, &iso_pi(sk)->dst,
+-				    iso_pi(sk)->dst_type, &iso_pi(sk)->qos);
++				    le_addr_type(iso_pi(sk)->dst_type),
++				    &iso_pi(sk)->qos);
+ 		if (IS_ERR(hcon)) {
+ 			err = PTR_ERR(hcon);
+ 			goto done;
+ 		}
+ 	} else {
+ 		hcon = hci_connect_cis(hdev, &iso_pi(sk)->dst,
+-				       iso_pi(sk)->dst_type, &iso_pi(sk)->qos);
++				       le_addr_type(iso_pi(sk)->dst_type),
++				       &iso_pi(sk)->qos);
+ 		if (IS_ERR(hcon)) {
+ 			err = PTR_ERR(hcon);
+ 			goto done;
 -- 
-DO YOU WANT TO BE RICH AND FAMOUS? JOIN THE GREAT ILLUMINATI ORDER OF
-RICHES, POWER/FAME  NOW AND ACHIEVE ALL YOUR DREAMS? IF YES EMAIL US :
-MAIL: illuminatiinitiationcenter56@gmail.com
-YOUR FULL NAME:
-PHONE NUMBER :
-COUNTRY :
-GENDER:
+2.37.3
+
