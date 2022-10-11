@@ -2,135 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49B9F5FB27F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Oct 2022 14:36:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B9065FB353
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Oct 2022 15:22:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229613AbiJKMgd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 11 Oct 2022 08:36:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52014 "EHLO
+        id S230015AbiJKNWr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 11 Oct 2022 09:22:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbiJKMgV (ORCPT
+        with ESMTP id S230013AbiJKNWL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 11 Oct 2022 08:36:21 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F27C68F961
-        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 05:36:18 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id h10so13075620plb.2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 05:36:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=flA7cDe6vyY9U1quz0oQE8ihEyzvHvay/DA2yYefAiU=;
-        b=mf20GECvX26RrsWjb030bj4mUae9hwoURRoCw6Sijl7tIWugGC/APYjk42iVxblA1u
-         FMlqnDg61XjUlqMHoIvqLHzfgYbiakELLly6MMZeJT7rr8fHb3HJJCfYNoPfkD9JVpDp
-         2utFNseNrYGZVGrMFHfXVAG9Kk7wW3bffQYjQHFJib60WU+wCQ1zWu+av8fbcvGyIali
-         eXma4pM8Pju17l7MjLE0mdj0ANP2cOoY26ZvxLhn0AgIVsUGa8px8Z2Lc4q87OTZIRkX
-         OuP07m6vQ7j9ZK5q5+SxdEHuqhOfx+Z2jTw5oZGwmpcApo4ra/ZN8Dservw5U4DTcJmE
-         KHjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=flA7cDe6vyY9U1quz0oQE8ihEyzvHvay/DA2yYefAiU=;
-        b=zDxhKKHX4NQp/Zr6q3X0S398U3rSxLzj5QIaulZjhdiRiJDu4DWCWq2R8c/8NkUdgm
-         NmOAdNGu5IYet132JCwi8WggznVFuP7H/Rx06ntOKv1WWLwwc6eDTP+CTSph3cV9fGgd
-         6/L6HniozF1RTyrMu+23qdJ2HqKb0R8joZRTdYkhZk7FgSx4yfyyPnEewlN8tc+PAAmr
-         o9egx1Y3/fR996DLYcr6JG+vkByYMFcYWHI1M0OgJQVxpjZMhLSYIYDDWMK4pxR2I0NM
-         ziYKIjGSaaVnkqpD2qt//+xjWRZF0FDNvLs78GZEc2qhrruSOU4VKywtJ9B+Lkk54XVI
-         GHrw==
-X-Gm-Message-State: ACrzQf1Gqov/hbTWnwt7uJRXk7FsMaO4CM0UB4QYXbuCkEtt6YcMIiZY
-        8HZeY2Ex+fbP+i7C2W9V1pemuZ3whFY=
-X-Google-Smtp-Source: AMsMyM4/x9287yXPyFI/tdaEjlenen2RLXzfKSYQIc4x0l+eGmxSgP21fAUJmDRNS/fBxDFF3ox9aA==
-X-Received: by 2002:a17:903:18d:b0:178:28d1:4a13 with SMTP id z13-20020a170903018d00b0017828d14a13mr24024410plg.160.1665491778157;
-        Tue, 11 Oct 2022 05:36:18 -0700 (PDT)
-Received: from [172.17.0.2] ([20.66.72.95])
-        by smtp.gmail.com with ESMTPSA id u9-20020a1709026e0900b00176ca533ea0sm1370036plk.90.2022.10.11.05.36.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Oct 2022 05:36:17 -0700 (PDT)
-Message-ID: <63456341.170a0220.a5dde.22a7@mx.google.com>
-Date:   Tue, 11 Oct 2022 05:36:17 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============2410823600963369249=="
+        Tue, 11 Oct 2022 09:22:11 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C8360FE
+        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 06:21:27 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E9253611AB
+        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 13:21:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 605A3C43143
+        for <linux-bluetooth@vger.kernel.org>; Tue, 11 Oct 2022 13:21:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665494486;
+        bh=YeOuAiUlvVcEmxjNsXZnKbWZFKNmAhUH9SAOSygYsqA=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=GsgeRYI23lmmu3sBIWJIFyizWEbaRmUE1g7fmimaNzmPXqhvoYtc/Tq8EOV3niTIQ
+         5gDjHIlPiGTMS2JPpDUHc0CaQMC+UYAGsIyo5g4GDlbYQj+pWx1uHaPUyjGehzn7ZI
+         UOShpW8aWGeJs8CDssthYhJuViq6Sq1E0WHGLzOMqRHPWEjzDAx/Q58jsQu7lCYrih
+         zuwMdfEv5xFwYBl8+2eTl6zMmyas/KbwfEAwJvHUA/xasQiIVewDRbgVbHxTqwHJET
+         LfonNqkbAEEc03YBQUojQ+P0DwUqmf54sJcx7eRmboVukLHukG8x6f+86+85QqHijy
+         mxLS5hD5iix9Q==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 4C147C433E6; Tue, 11 Oct 2022 13:21:26 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 60824] [PATCH][regression] Cambridge Silicon Radio, Ltd
+ Bluetooth Dongle unusable
+Date:   Tue, 11 Oct 2022 13:21:23 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: ostroffjh@users.sourceforge.net
+X-Bugzilla-Status: REOPENED
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-60824-62941-wd3BsfJI8Q@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-60824-62941@https.bugzilla.kernel.org/>
+References: <bug-60824-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, sathish.narasimman@intel.com
-Subject: RE: [BlueZ,v3,1/3] audio/transport: Adding volume callback to media transport
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20221011113116.70514-1-sathish.narasimman@intel.com>
-References: <20221011113116.70514-1-sathish.narasimman@intel.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============2410823600963369249==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+https://bugzilla.kernel.org/show_bug.cgi?id=3D60824
 
-This is automated email and please do not reply to this email!
+--- Comment #234 from Jack (ostroffjh@users.sourceforge.net) ---
+I'll try to do that, and I can try bisection.  The good (?) news is that I =
+have
+repeated the failure in a reboot, but without those long traces in dmesg, so
+that bit might just be a red herring.
 
-Dear submitter,
+--=20
+You may reply to this email to add a comment.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=684476
-
----Test result---
-
-Test Summary:
-CheckPatch                    FAIL      2.38 seconds
-GitLint                       PASS      1.31 seconds
-Prep - Setup ELL              PASS      30.54 seconds
-Build - Prep                  PASS      0.78 seconds
-Build - Configure             PASS      9.45 seconds
-Build - Make                  PASS      1039.19 seconds
-Make Check                    PASS      12.27 seconds
-Make Check w/Valgrind         PASS      331.94 seconds
-Make Distcheck                PASS      273.49 seconds
-Build w/ext ELL - Configure   PASS      9.51 seconds
-Build w/ext ELL - Make        PASS      99.86 seconds
-Incremental Build w/ patches  PASS      350.20 seconds
-Scan Build                    PASS      642.82 seconds
-
-Details
-##############################
-Test: CheckPatch - FAIL
-Desc: Run checkpatch.pl script with rule in .checkpatch.conf
-Output:
-[BlueZ,v3,1/3] audio/transport: Adding volume callback to media transport
-WARNING:SPACING: Unnecessary space before function pointer arguments
-#87: FILE: profiles/audio/transport.c:120:
-+	void			(*set_volume) (struct media_transport *transp,
-
-WARNING:SPACING: Unnecessary space before function pointer arguments
-#89: FILE: profiles/audio/transport.c:122:
-+	int8_t			(*get_volume) (struct media_transport *transp);
-
-/github/workspace/src/13003868.patch total: 0 errors, 2 warnings, 198 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/13003868.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============2410823600963369249==--
+You are receiving this mail because:
+You are the assignee for the bug.=
