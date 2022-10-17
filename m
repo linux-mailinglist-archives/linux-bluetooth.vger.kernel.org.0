@@ -2,628 +2,139 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD2AF601053
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Oct 2022 15:35:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 569F76011E4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Oct 2022 16:56:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229974AbiJQNf3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 17 Oct 2022 09:35:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51340 "EHLO
+        id S231367AbiJQO4K (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 17 Oct 2022 10:56:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbiJQNf2 (ORCPT
+        with ESMTP id S231218AbiJQOy4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 17 Oct 2022 09:35:28 -0400
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C883C3337E
-        for <linux-bluetooth@vger.kernel.org>; Mon, 17 Oct 2022 06:35:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1666013726; x=1697549726;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=0XPHvI123VECfCiwidSUZseCcfOAevX/Qfsn1fVnhls=;
-  b=Hu96bZVVHKbLx8DLLU6Djv7Y3Wk8xpArnEI52VXV8oUM1IqGMf9CwMLR
-   k66NBdeFvy59mRWPxC3gpChHJ9NfAiTmb9WAcT2cG0xqoW8nsHC6jlRAI
-   fnidl+DLAW24IQEFy9g+Sj8iTitb6V3bVN50a2Lq096d65TPKHH8rJWbt
-   l4wmg92SYwT/LGCEmJW+0MNfgjlzm2hJfkiWsPQZQtKW3KrxxtqXM4PIR
-   wCz/ztUKPcrifrnq4Ihm5xEH5WFQJ+ZubNwH0h1y4+fcn5eBPvn4A5WE9
-   rTLlE55+1qW0neVUm3z/o7iAfmNyyZR9/Jb2XQlZPgouUDPfV6TKKYs45
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10503"; a="285522209"
-X-IronPort-AV: E=Sophos;i="5.95,191,1661842800"; 
-   d="scan'208";a="285522209"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2022 06:35:12 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10503"; a="957336416"
-X-IronPort-AV: E=Sophos;i="5.95,191,1661842800"; 
-   d="scan'208";a="957336416"
-Received: from bsbdt.iind.intel.com ([10.224.186.26])
-  by fmsmga005.fm.intel.com with ESMTP; 17 Oct 2022 06:35:10 -0700
-From:   Abhay Maheta <abhay.maheshbhai.maheta@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Abhay Maheta <abhay.maheshbhai.maheta@intel.com>
-Subject: [PATCH BlueZ v2 4/4] monitor/att: Add decoding support for GMCS
-Date:   Mon, 17 Oct 2022 19:04:40 +0530
-Message-Id: <20221017133440.321139-5-abhay.maheshbhai.maheta@intel.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221017133440.321139-1-abhay.maheshbhai.maheta@intel.com>
-References: <20221017133440.321139-1-abhay.maheshbhai.maheta@intel.com>
+        Mon, 17 Oct 2022 10:54:56 -0400
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2095.outbound.protection.outlook.com [40.107.21.95])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 727D249B69
+        for <linux-bluetooth@vger.kernel.org>; Mon, 17 Oct 2022 07:54:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Oo+7xYTjWUX8czZjcbMwF4s1lcLuDi3I5GJjwZzq3xFgl5GLs/zp2ZM2v7mCh+3fbM2L6fgvmN9zYlXCONcwIlVcf+/d6BdKacrLjk/vSyN8IVhOwXV5vFcbaY12fLhDDmHH9I/DDXVQWuuXVaHEdjCPv1VcfpcsW6p4dChFswSCkYnMt9jFrMwZ8mrv45r4yRZKZdBwsjynTMDnRZ63rvbY3WHFA1hhyukXtqe4sCbXgoUHh6WmhJ9eDNypYX800FnQJw2ZtgKUtk11oqV+QMSjWDdW0KctNE54tMSoBaEAfXwhSyj7NUyV6FXFAzW3G/KyvJS3g4CURxoBadgFbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0ygO2TWO7BGxRW8w4DoHOsvHuUdOSZbY4g7/Wdq+Hv0=;
+ b=VTbSMfb0dsia1ZGDvR0T6ozOXRe1iYl5erFVZviJyzUjXCIgU/swaFOAG8YwmRcTxXEN/nSzcOvbJpHPm/LDTf5n2JS4QgWiLsQgfOS8q/4bBQbaR9z0IWVEwjcKR8nUIDORMCvDDqFxztxmoA16FPcWYFsx6TKoYwKe5IwpoV8hLKqqaqaitMObOZm5Q8Ng/8nOUXKW6IPYmxpUKQ3cT8y0nSCEI1zhqRdKCvc+olRBhfTTpJpIf8xS2Yd6xh4GWrKg31sp3LzpvOKPHSwPNBPDBx9vlzzK5MpfGN0lYUuVdYtUB1ECfvAkHQ9qnZhp1LRIJc1dWMbe4prdZ+xnDQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 217.111.95.7) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=arri.de;
+ dmarc=none action=none header.from=arri.de; dkim=none (message not signed);
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=arrigroup.onmicrosoft.com; s=selector1-arrigroup-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0ygO2TWO7BGxRW8w4DoHOsvHuUdOSZbY4g7/Wdq+Hv0=;
+ b=eO5/3qr013mYDEBWYDyjGaLZojVJ5mTPdxWfs0iRmTiMq6ajb5DXtEaDezVy4aAQU6Gnb9LesPArpEQ1Cr0SrTinPu6vndvAwdMFMPiGUEeqGwtwwKgqqiqDKGt8lPs2AlT6Ud28op3dIh2H+JgaHorsLcnH25iE4v8clfhkyf0=
+Received: from AS8P251CA0011.EURP251.PROD.OUTLOOK.COM (2603:10a6:20b:2f2::31)
+ by AS8PR07MB8325.eurprd07.prod.outlook.com (2603:10a6:20b:440::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.32; Mon, 17 Oct
+ 2022 14:54:05 +0000
+Received: from AM0EUR02FT017.eop-EUR02.prod.protection.outlook.com
+ (2603:10a6:20b:2f2:cafe::1c) by AS8P251CA0011.outlook.office365.com
+ (2603:10a6:20b:2f2::31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.26 via Frontend
+ Transport; Mon, 17 Oct 2022 14:54:05 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 217.111.95.7)
+ smtp.mailfrom=arri.de; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=arri.de;
+Received-SPF: Fail (protection.outlook.com: domain of arri.de does not
+ designate 217.111.95.7 as permitted sender) receiver=protection.outlook.com;
+ client-ip=217.111.95.7; helo=mta.arri.de;
+Received: from mta.arri.de (217.111.95.7) by
+ AM0EUR02FT017.mail.protection.outlook.com (10.13.54.134) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.5723.20 via Frontend Transport; Mon, 17 Oct 2022 14:54:05 +0000
+Received: from n95hx1g2.localnet (192.168.54.96) by mta.arri.de (10.10.18.5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.32; Mon, 17 Oct
+ 2022 16:54:04 +0200
+From:   Christian Eggers <ceggers@arri.de>
+To:     <linux-bluetooth@vger.kernel.org>
+Subject: Support for Data Length Extension (DLE)?
+Date:   Mon, 17 Oct 2022 16:54:04 +0200
+Message-ID: <2264504.ElGaqSPkdT@n95hx1g2>
+Organization: Arnold & Richter Cine Technik GmbH & Co. Betriebs KG
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Originating-IP: [192.168.54.96]
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0EUR02FT017:EE_|AS8PR07MB8325:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5b3d229d-ec17-4163-0a72-08dab04f6fe0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Hhxe/D3dC1h/gGos9urtcdcKHUK2pcZI33G4q62MW8dg2lQtgrNdJct8zMlUqSGAl2s7MHSFU4nrPr2YPp7/nBieEX3S0asJFqqJPURlbd9jHrexzsXFKkRRhMHrdCq0cXn6S6abTTqWiw3dUFjEyHggOmgX5Y4YnLSYJbelgaw/q/1yR9bWzVsxEacd2bREhPRoGn/8OI3sTCyHsGO0euzErv7DS2Ytp3ZMLwDszJX9XjmQL0AoufxJ0xD0nOwXMc+fCPn2/N20C4BJrCgaNrNqYgtFrXrqivbb0JJJ3KvUHcpO1UhNJ6nYit+uxMrVX7+gr7Gnee+hERy+ITpUHDu39mTjZag4BE+HXWowIWMCI7f/DFI+EkUDRG5lLF7WOAHu7ZPePesRWs0oNNXNo0FsP4tSCNKyJ47Jt/EDuZJa0OKrWcddZm5bQt9sPdFaZh1qXgxLs2g70sLZs5lazS9LMokXfUY0xAvhcoBd9ueiyDN6Be2i2uaY/24QcWq3jqu5xaPFNFEzVLk+PtraSi4XDCbi0dGLE8+y7A3FDnAsgzTgUFJPYZ/+sQSNooLZY97Iz23c2Zrl7xkNqFKu13vNQVdm3c0Q00+2SkNbB15FmCwLVBj6ldaZaurFbquXi/btvsJ5n46MvlaNkRJoSS8VK/DFtliaQYD5AGz4hb8IfKwgYbFpHyGq09RfdBP9H3R8k2wph/xXA50X9z5CI9BXlC2pm20c+iuYnlDLjxJeglURh7u6yOK/zis35MGOQlM1uFVUaPE/Vb1K+yOY5w==
+X-Forefront-Antispam-Report: CIP:217.111.95.7;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mta.arri.de;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(4636009)(376002)(136003)(346002)(39860400002)(396003)(451199015)(36840700001)(46966006)(186003)(40480700001)(26005)(36916002)(9686003)(82740400003)(336012)(2906002)(426003)(47076005)(16526019)(8676002)(8936002)(33716001)(41300700001)(70206006)(70586007)(86362001)(9576002)(356005)(81166007)(316002)(82310400005)(5660300002)(6916009)(478600001)(36860700001)(83380400001)(36900700001);DIR:OUT;SFP:1102;
+X-OriginatorOrg: arri.de
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Oct 2022 14:54:05.1736
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5b3d229d-ec17-4163-0a72-08dab04f6fe0
+X-MS-Exchange-CrossTenant-Id: e6a73a5a-614d-4c51-b3e3-53b660a9433a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e6a73a5a-614d-4c51-b3e3-53b660a9433a;Ip=[217.111.95.7];Helo=[mta.arri.de]
+X-MS-Exchange-CrossTenant-AuthSource: AM0EUR02FT017.eop-EUR02.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR07MB8325
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds decoding support for GMCS attributes.
+When monitoring a Bluetooth connection between two Linux systems
+(kernel 5.14 / 5.15 + bluez-5.65), I noticed the following:
 
-< ACL Data TX: Handle 3585 flags 0x00 dlen 7
-      ATT: Read Request (0x0a) len 2
-        Handle: 0x0056 Type: Media Control Point Opcodes Supported (0x2ba5)
-> ACL Data RX: Handle 3585 flags 0x02 dlen 9
-      ATT: Read Response (0x0b) len 4
-        Value: 33180000
-        Handle: 0x0056 Type: Media Control Point Opcodes Supported (0x2ba5)
-              Supported Opcodes: 0x00001833
-                Play (0x00000001)
-                Pause (0x00000002)
-                Stop (0x00000010)
-                Move Relative (0x00000020)
-                Previous Track (0x00000800)
-                Next Track (0x00001000)
----
- monitor/att.c | 513 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 513 insertions(+)
+> HCI Event: LE Meta Event (0x3e) plen 12                                                                                                                          #21108 [hci0] 1650.255887
+      LE Read Remote Used Features (0x04)
+        Status: Success (0x00)
+        Handle: 25 Address: 00:1A:7D:F0:21:40 (OUI 00-1A-7D)
+        Features: 0xbd 0x5f 0x66 0x00 0x00 0x00 0x00 0x00
+...
+          LE Data Packet Length Extension
+...
 
-diff --git a/monitor/att.c b/monitor/att.c
-index f5fc32cb0..e6df496cc 100644
---- a/monitor/att.c
-+++ b/monitor/att.c
-@@ -14,6 +14,7 @@
- #endif
- 
- #define _GNU_SOURCE
-+#include <ctype.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
-@@ -22,6 +23,8 @@
- #include <errno.h>
- #include <linux/limits.h>
- 
-+#include <glib.h>
-+
- #include "lib/bluetooth.h"
- #include "lib/uuid.h"
- #include "lib/hci.h"
-@@ -1746,6 +1749,499 @@ static void vol_flag_notify(const struct l2cap_frame *frame)
- 	print_vcs_flag(frame);
- }
- 
-+static char *name2utf8(const uint8_t *name, uint16_t len)
-+{
-+	char utf8_name[HCI_MAX_NAME_LENGTH + 2];
-+	int i;
-+
-+	if (g_utf8_validate((const char *) name, len, NULL))
-+		return g_strndup((char *) name, len);
-+
-+	len = MIN(len, sizeof(utf8_name) - 1);
-+
-+	memset(utf8_name, 0, sizeof(utf8_name));
-+	strncpy(utf8_name, (char *) name, len);
-+
-+	/* Assume ASCII, and replace all non-ASCII with spaces */
-+	for (i = 0; utf8_name[i] != '\0'; i++) {
-+		if (!isascii(utf8_name[i]))
-+			utf8_name[i] = ' ';
-+	}
-+
-+	/* Remove leading and trailing whitespace characters */
-+	g_strstrip(utf8_name);
-+
-+	return g_strdup(utf8_name);
-+}
-+
-+static void print_mp_name(const struct l2cap_frame *frame)
-+{
-+	char *name;
-+
-+	name = name2utf8((uint8_t *)frame->data, frame->size);
-+
-+	print_field("  Media Player Name: %s", name);
-+}
-+
-+static void mp_name_read(const struct l2cap_frame *frame)
-+{
-+	print_mp_name(frame);
-+}
-+
-+static void mp_name_notify(const struct l2cap_frame *frame)
-+{
-+	print_mp_name(frame);
-+}
-+
-+static void print_track_changed(const struct l2cap_frame *frame)
-+{
-+	print_field("  Track Changed");
-+}
-+
-+static void track_changed_notify(const struct l2cap_frame *frame)
-+{
-+	print_track_changed(frame);
-+}
-+
-+static void print_track_title(const struct l2cap_frame *frame)
-+{
-+	char *name;
-+
-+	name = name2utf8((uint8_t *)frame->data, frame->size);
-+
-+	print_field("  Track Title: %s", name);
-+}
-+
-+static void track_title_read(const struct l2cap_frame *frame)
-+{
-+	print_track_title(frame);
-+}
-+
-+static void track_title_notify(const struct l2cap_frame *frame)
-+{
-+	print_track_title(frame);
-+}
-+
-+static void print_track_duration(const struct l2cap_frame *frame)
-+{
-+	int32_t duration;
-+
-+	if (!l2cap_frame_get_le32((void *)frame, (uint32_t *)&duration)) {
-+		print_text(COLOR_ERROR, "  Track Duration: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("  Track Duration: %u", duration);
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void track_duration_read(const struct l2cap_frame *frame)
-+{
-+	print_track_duration(frame);
-+}
-+
-+static void track_duration_notify(const struct l2cap_frame *frame)
-+{
-+	print_track_duration(frame);
-+}
-+
-+static void print_track_position(const struct l2cap_frame *frame)
-+{
-+	int32_t position;
-+
-+	if (!l2cap_frame_get_le32((void *)frame, (uint32_t *)&position)) {
-+		print_text(COLOR_ERROR, "  Track Position: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("  Track Position: %u", position);
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void track_position_read(const struct l2cap_frame *frame)
-+{
-+	print_track_position(frame);
-+}
-+
-+static void track_position_write(const struct l2cap_frame *frame)
-+{
-+	print_track_position(frame);
-+}
-+
-+static void track_position_notify(const struct l2cap_frame *frame)
-+{
-+	print_track_position(frame);
-+}
-+
-+static void print_playback_speed(const struct l2cap_frame *frame)
-+{
-+	int8_t playback_speed;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&playback_speed)) {
-+		print_text(COLOR_ERROR, "  Playback Speed: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("  Playback Speed: %u", playback_speed);
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void playback_speed_read(const struct l2cap_frame *frame)
-+{
-+	print_playback_speed(frame);
-+}
-+
-+static void playback_speed_write(const struct l2cap_frame *frame)
-+{
-+	print_playback_speed(frame);
-+}
-+
-+static void playback_speed_notify(const struct l2cap_frame *frame)
-+{
-+	print_playback_speed(frame);
-+}
-+
-+static void print_seeking_speed(const struct l2cap_frame *frame)
-+{
-+	int8_t seeking_speed;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&seeking_speed)) {
-+		print_text(COLOR_ERROR, "  Seeking Speed: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("  Seeking Speed: %u", seeking_speed);
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void seeking_speed_read(const struct l2cap_frame *frame)
-+{
-+	print_seeking_speed(frame);
-+}
-+
-+static void seeking_speed_notify(const struct l2cap_frame *frame)
-+{
-+	print_seeking_speed(frame);
-+}
-+
-+const char *play_order_str(uint8_t order)
-+{
-+	switch (order) {
-+	case 0x01:
-+		return "Single once";
-+	case 0x02:
-+		return "Single repeat";
-+	case 0x03:
-+		return "In order once";
-+	case 0x04:
-+		return "In order repeat";
-+	case 0x05:
-+		return "Oldest once";
-+	case 0x06:
-+		return "Oldest repeat";
-+	case 0x07:
-+		return "Newest once";
-+	case 0x08:
-+		return "Newest repeat";
-+	case 0x09:
-+		return "Shuffle once";
-+	case 0x0A:
-+		return "Shuffle repeat";
-+	default:
-+		return "RFU";
-+	}
-+}
-+
-+static void print_playing_order(const struct l2cap_frame *frame)
-+{
-+	int8_t playing_order;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&playing_order)) {
-+		print_text(COLOR_ERROR, "  Playing Order: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("  Playing Order: %s", play_order_str(playing_order));
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void playing_order_read(const struct l2cap_frame *frame)
-+{
-+	print_playing_order(frame);
-+}
-+
-+static void playing_order_write(const struct l2cap_frame *frame)
-+{
-+	print_playing_order(frame);
-+}
-+
-+static void playing_order_notify(const struct l2cap_frame *frame)
-+{
-+	print_playing_order(frame);
-+}
-+
-+static const struct bitfield_data playing_orders_table[] = {
-+	{  0, "Single once (0x0001)"	    },
-+	{  1, "Single repeat (0x0002)"		},
-+	{  2, "In order once (0x0004)"		},
-+	{  3, "In Order Repeat (0x0008)"	},
-+	{  4, "Oldest once (0x0010)"		},
-+	{  5, "Oldest repeat (0x0020)"		},
-+	{  6, "Newest once (0x0040)"		},
-+	{  7, "Newest repeat (0x0080)"	    },
-+	{  8, "Shuffle once (0x0100)"		},
-+	{  9, "Shuffle repeat (0x0200)"		},
-+	{  10, "RFU (0x0400)"			    },
-+	{  11, "RFU (0x0800)"		        },
-+	{  12, "RFU (0x1000)"				},
-+	{  13, "RFU (0x2000)"				},
-+	{  14, "RFU (0x4000)"				},
-+	{  15, "RFU (0x8000)"				},
-+	{ }
-+};
-+
-+static void print_playing_orders_supported(const struct l2cap_frame *frame)
-+{
-+	uint16_t supported_orders;
-+	uint16_t mask;
-+
-+	if (!l2cap_frame_get_le16((void *)frame, &supported_orders)) {
-+		print_text(COLOR_ERROR,
-+				"    Supported Playing Orders: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("      Supported Playing Orders: 0x%4.4x",
-+				supported_orders);
-+
-+	mask = print_bitfield(8, supported_orders, playing_orders_table);
-+	if (mask)
-+		print_text(COLOR_WHITE_BG, "    Unknown fields (0x%4.4x)",
-+								mask);
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("    Data", frame->data, frame->size);
-+}
-+
-+static void playing_orders_supported_read(const struct l2cap_frame *frame)
-+{
-+	print_playing_orders_supported(frame);
-+}
-+
-+const char *media_state_str(uint8_t state)
-+{
-+	switch (state) {
-+	case 0x00:
-+		return "Inactive";
-+	case 0x01:
-+		return "Playing";
-+	case 0x02:
-+		return "Paused";
-+	case 0x03:
-+		return "Seeking";
-+	default:
-+		return "RFU";
-+	}
-+}
-+
-+static void print_media_state(const struct l2cap_frame *frame)
-+{
-+	int8_t state;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&state)) {
-+		print_text(COLOR_ERROR, "  Media State: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("  Media State: %s", media_state_str(state));
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void media_state_read(const struct l2cap_frame *frame)
-+{
-+	print_media_state(frame);
-+}
-+
-+static void media_state_notify(const struct l2cap_frame *frame)
-+{
-+	print_media_state(frame);
-+}
-+
-+struct media_cp_opcode {
-+	uint8_t opcode;
-+	const char *opcode_str;
-+} media_cp_opcode_table[] = {
-+	{0x01,	"Play"},
-+	{0x02,	"Pause"},
-+	{0x03,	"Fast Rewind"},
-+	{0x04,	"Fast Forward"},
-+	{0x05,	"Stop"},
-+	{0x10,	"Move Relative"},
-+	{0x20,	"Previous Segment"},
-+	{0x21,	"Next Segment"},
-+	{0x22,	"First Segment"},
-+	{0x23,	"Last Segment"},
-+	{0x24,	"Goto Segment"},
-+	{0x30,	"Previous Track"},
-+	{0x31,	"Next Track"},
-+	{0x32,	"First Track"},
-+	{0x33,	"Last Track"},
-+	{0x34,	"Goto Track"},
-+	{0x40,	"Previous Group"},
-+	{0x41,	"Next Group"},
-+	{0x42,	"First Group"},
-+	{0x43,	"Last Group"},
-+	{0x44,	"Goto Group"},
-+};
-+
-+const char *cp_opcode_str(uint8_t opcode)
-+{
-+	size_t i;
-+
-+	for (i = 0; i < ARRAY_SIZE(media_cp_opcode_table); i++) {
-+		const char *str = media_cp_opcode_table[i].opcode_str;
-+
-+		if (opcode == media_cp_opcode_table[i].opcode)
-+			return str;
-+	}
-+
-+	return "RFU";
-+}
-+
-+static void print_media_cp(const struct l2cap_frame *frame)
-+{
-+	int8_t opcode;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&opcode)) {
-+		print_text(COLOR_ERROR, "  Media Control Point: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("  Media Control Point: %s", cp_opcode_str(opcode));
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void media_cp_write(const struct l2cap_frame *frame)
-+{
-+	print_media_cp(frame);
-+}
-+
-+static void media_cp_notify(const struct l2cap_frame *frame)
-+{
-+	print_media_cp(frame);
-+}
-+
-+static const struct bitfield_data supported_opcodes_table[] = {
-+	{0, "Play (0x00000001)"				},
-+	{1, "Pause (0x00000002)"			},
-+	{2, "Fast Rewind	(0x00000004)"	},
-+	{3, "Fast Forward (0x00000008)"		},
-+	{4, "Stop (0x00000010)"				},
-+	{5, "Move Relative (0x00000020)"	},
-+	{6, "Previous Segment (0x00000040)"	},
-+	{7, "Next Segment (0x00000080)"		},
-+	{8, "First Segment (0x00000100)"	},
-+	{9, "Last Segment (0x00000200)"		},
-+	{10, "Goto Segment (0x00000400)"	},
-+	{11, "Previous Track (0x00000800)"	},
-+	{12, "Next Track (0x00001000)"		},
-+	{13, "First Track (0x00002000)"		},
-+	{14, "Last Track (0x00004000)"		},
-+	{15, "Goto Track (0x00008000)"		},
-+	{16, "Previous Group (0x00010000)"	},
-+	{17, "Next Group (0x00020000)"		},
-+	{18, "First Group (0x00040000)"		},
-+	{19, "Last Group (0x00080000)"		},
-+	{20, "Goto Group (0x00100000)"		},
-+	{21, "RFU (0x00200000)"				},
-+	{22, "RFU (0x00400000)"				},
-+	{23, "RFU (0x00800000)"				},
-+	{24, "RFU (0x01000000)"				},
-+	{25, "RFU (0x02000000)"				},
-+	{26, "RFU (0x04000000)"				},
-+	{27, "RFU (0x08000000)"				},
-+	{28, "RFU (0x10000000)"				},
-+	{29, "RFU (0x20000000)"				},
-+	{30, "RFU (0x40000000)"				},
-+	{31, "RFU (0x80000000)"				},
-+	{ }
-+};
-+
-+static void print_media_cp_op_supported(const struct l2cap_frame *frame)
-+{
-+	uint32_t supported_opcodes;
-+	uint32_t mask;
-+
-+	if (!l2cap_frame_get_le32((void *)frame, &supported_opcodes)) {
-+		print_text(COLOR_ERROR, "    value: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("      Supported Opcodes: 0x%8.8x", supported_opcodes);
-+
-+	mask = print_bitfield(8, supported_opcodes, supported_opcodes_table);
-+	if (mask)
-+		print_text(COLOR_WHITE_BG, "    Unknown fields (0x%4.4x)",
-+								mask);
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("    Data", frame->data, frame->size);
-+}
-+
-+static void media_cp_op_supported_read(const struct l2cap_frame *frame)
-+{
-+	print_media_cp_op_supported(frame);
-+}
-+
-+static void media_cp_op_supported_notify(const struct l2cap_frame *frame)
-+{
-+	print_media_cp_op_supported(frame);
-+}
-+
-+static void print_content_control_id(const struct l2cap_frame *frame)
-+{
-+	int8_t ccid;
-+
-+	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&ccid)) {
-+		print_text(COLOR_ERROR, "  Content Control ID: invalid size");
-+		goto done;
-+	}
-+
-+	print_field("  Content Control ID: 0x%2.2x", ccid);
-+
-+done:
-+	if (frame->size)
-+		print_hex_field("  Data", frame->data, frame->size);
-+}
-+
-+static void content_control_id_read(const struct l2cap_frame *frame)
-+{
-+	print_content_control_id(frame);
-+}
-+
- #define GATT_HANDLER(_uuid, _read, _write, _notify) \
- { \
- 	.uuid = { \
-@@ -1776,6 +2272,23 @@ struct gatt_handler {
- 	GATT_HANDLER(0x2b7d, vol_state_read, NULL, vol_state_notify),
- 	GATT_HANDLER(0x2b7e, NULL, vol_cp_write, NULL),
- 	GATT_HANDLER(0x2b7f, vol_flag_read, NULL, vol_flag_notify),
-+	GATT_HANDLER(0x2b93, mp_name_read, NULL, mp_name_notify),
-+	GATT_HANDLER(0x2b96, NULL, NULL, track_changed_notify),
-+	GATT_HANDLER(0x2b97, track_title_read, NULL, track_title_notify),
-+	GATT_HANDLER(0x2b98, track_duration_read, NULL, track_duration_notify),
-+	GATT_HANDLER(0x2b99, track_position_read, track_position_write,
-+					track_position_notify),
-+	GATT_HANDLER(0x2b9a, playback_speed_read, playback_speed_write,
-+					playback_speed_notify),
-+	GATT_HANDLER(0x2b9b, seeking_speed_read, NULL, seeking_speed_notify),
-+	GATT_HANDLER(0x2ba1, playing_order_read, playing_order_write,
-+					playing_order_notify),
-+	GATT_HANDLER(0x2ba2, playing_orders_supported_read, NULL, NULL),
-+	GATT_HANDLER(0x2ba3, media_state_read, NULL, media_state_notify),
-+	GATT_HANDLER(0x2ba4, NULL, media_cp_write, media_cp_notify),
-+	GATT_HANDLER(0x2ba5, media_cp_op_supported_read, NULL,
-+					media_cp_op_supported_notify),
-+	GATT_HANDLER(0x2bba, content_control_id_read, NULL, NULL),
- };
- 
- static struct gatt_handler *get_handler(struct gatt_db_attribute *attr)
--- 
-2.25.1
+> ACL Data RX: Handle 25 flags 0x02 dlen 18                                                                                                                        #21109 [hci0] 1650.300224
+      LE L2CAP: LE Connection Request (0x14) ident 1 len 10
+        PSM: 128 (0x0080)
+        Source CID: 64
+        MTU: 672
+        MPS: 23
+        Credits: 30
+< ACL Data TX: Handle 25 flags 0x00 dlen 18                                                                                                                        #21110 [hci0] 1650.300431
+      LE L2CAP: LE Connection Response (0x15) ident 1 len 10
+        Destination CID: 64
+        MTU: 672
+        MPS: 23
+        Credits: 30
+        Result: Connection successful (0x0000)
+...
+> HCI Event: LE Meta Event (0x3e) plen 11                                                                                                                          #21113 [hci0] 1650.345822
+      LE Data Length Change (0x07)
+        Handle: 25 Address: 00:1A:7D:F0:21:40 (OUI 00-1A-7D)
+        Max TX octets: 251
+        Max TX time: 2120
+        Max RX octets: 251
+        Max RX time: 2120
+
+I can't find that HCI_EV_LE_DATA_LEN_CHANGE is implemented anywhere in the kernel nor in bluez userspace.
+So why do I get this event? Is it generated by controller firmware itself?
+
+I think that both adapters support DLE. Is there there already support for using it with Linux?
+
+regards
+Christian
+
+
 
