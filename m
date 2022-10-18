@@ -2,102 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8ABB603342
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Oct 2022 21:19:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AD1D603370
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 18 Oct 2022 21:48:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbiJRTTh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 18 Oct 2022 15:19:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56826 "EHLO
+        id S229687AbiJRTsC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 18 Oct 2022 15:48:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbiJRTTf (ORCPT
+        with ESMTP id S229705AbiJRTsB (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 18 Oct 2022 15:19:35 -0400
-Received: from repost01.tmes.trendmicro.eu (repost01.tmes.trendmicro.eu [18.185.115.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 491DA12AE0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Oct 2022 12:19:28 -0700 (PDT)
-Received: from 104.47.12.50_.trendmicro.com (unknown [172.21.183.236])
-        by repost01.tmes.trendmicro.eu (Postfix) with SMTP id 1F10510000631;
-        Tue, 18 Oct 2022 19:19:26 +0000 (UTC)
-X-TM-MAIL-RECEIVED-TIME: 1666120765.555000
-X-TM-MAIL-UUID: 9066b0dd-d2db-4d31-a8d7-56375b195f26
-Received: from EUR04-DB3-obe.outbound.protection.outlook.com (unknown [104.47.12.50])
-        by repre01.tmes.trendmicro.eu (Trend Micro Email Security) with ESMTPS id 87A0D10002B32;
-        Tue, 18 Oct 2022 19:19:25 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BHSBK+2VaGk+SAShIW2T3/5HReYtLxEUABkluLbLRE6NUOkSqaZDqLXV6NBIQ+f4AR36miO9kaDEvywP4LrwcN7ofknHTzbpteEuGlepwJlOdmhz+rrLPlio8X/lrER9Nm51Xd8O+Nn0WwblgB/RPdzXoRePPDDi0ePBddG9nmrrgp0Lhtk558xaNc4/mMvUqV1uHo6DPk2ZHfy0bHT6Gacer91RshNcY2pJUX9wCKNkMsdTsUttdy4Dxj7y91vcsMlikXvNteUl5Gw5aNe59azO/A9VUikhmjd8TweBzh9k6Yo2VGyMTZBHZ8sr8G3E3zydRF61n+w81Yq51k9j+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+PTqWON0tFus0A+Tdf6DvvhzAwoaHaTPS17wa6Wg7zA=;
- b=CaomnOEpEUP0cPtxFasOHLMAtVG3ynlBVmcclviBc4GNC/TH966YUM6h8VTYgzlMgexmQLKHe8IUAEozlKUvrjq0fTguUWNWQxQcGvA2Uo7e9zESaxAk12+7Yt9yD584AhP9+d4XSNXVNK1ldimm814LDYx5+H6crSPu17knwEEvcMEhZ153x+bsVMqHH1OFXQgTAFX7h0ahBmO6RUtYHq0636gIvUjomg4GJq3m5jy0t3ExmRvxeBTVWTUgjnNiSGJUqFnnCL5iaiIJ39QViHKXkl4vIcuva9WnCRDN2Vj0MFZemQ12zBaqx3QWUg3aFVY+Aprtx5Qo0JoT8BabZA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 217.66.60.4) smtp.rcpttodomain=gmail.com smtp.mailfrom=opensynergy.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=opensynergy.com;
- dkim=none (message not signed); arc=none
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 217.66.60.4)
- smtp.mailfrom=opensynergy.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=opensynergy.com;
-Received-SPF: Pass (protection.outlook.com: domain of opensynergy.com
- designates 217.66.60.4 as permitted sender) receiver=protection.outlook.com;
- client-ip=217.66.60.4; helo=SR-MAIL-03.open-synergy.com; pr=C
-From:   Igor Skalkin <Igor.Skalkin@opensynergy.com>
-To:     virtualization@lists.linux-foundation.org, luiz.dentz@gmail.com,
-        mst@redhat.com
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, jasowang@redhat.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Igor Skalkin <Igor.Skalkin@opensynergy.com>
-Subject: [PATCH v3 1/1] virtio_bt: Fix alignment in configuration struct
-Date:   Tue, 18 Oct 2022 21:19:11 +0200
-Message-Id: <20221018191911.589564-2-Igor.Skalkin@opensynergy.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20221018191911.589564-1-Igor.Skalkin@opensynergy.com>
-References: <20221018191911.589564-1-Igor.Skalkin@opensynergy.com>
+        Tue, 18 Oct 2022 15:48:01 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56C8E8113A
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Oct 2022 12:47:57 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id b18so19347997ljr.13
+        for <linux-bluetooth@vger.kernel.org>; Tue, 18 Oct 2022 12:47:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ojySqP9f3MlZ0goMlefnWm9Y5GG6pd0MLlCtKDfHw/8=;
+        b=e7onVbEA1QEPChXmeRqtrxxri5hDwHqWYXRtjZ/R2mKxWXYBY3DAyTFUUGO7j6jVIx
+         wWsUc5m+naiqeAabnHgkJyQ+Ak0od35CMni3qlDc2GczidS6/yNgtfL7DiDTup2MOcxm
+         hawmZO3/LlW0TaO1P4JisWeC2EB/jntu2R6ReV+XTIpgQBXChfIMpBsVCJTEG9pPnV8Y
+         WFnLWMw74r/RJKu09S51Cz6+7pbmJKOYdCUT6S9AQsnXTkUZ8dt5/WwmGyRPL5LyjZKZ
+         mkVn+eSWppQ9oac6nh5HGrruokhbRBJ7AfXM0IyyO56tGsH/iDt+3OzbLPN95Xm77pR4
+         Byyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ojySqP9f3MlZ0goMlefnWm9Y5GG6pd0MLlCtKDfHw/8=;
+        b=FSBJ8ropWEhjfsrzboKS91QnsAfJCxSZ1qHF8aaeKBehbc0hLCLKBQSIe6zsncFGo2
+         LbL2lm0dGaVzT8G4B/R29eYXzC6EYuFGsdtMvhfHWOTItjGtG1iqMTJcncg9a1H/B23U
+         CiAOHCbx/9qwiih74dJbalena9iuDmdF/stdD+IA9N+TqU+LDwfPG00cqwy1ymkmn8RH
+         Xh6IBs3F4nBiOqJsBFdgmHYf/NyQJpqFpTfEW7f93lJ/F45e2Gdna1vFy85wxWXh1OsI
+         k2kgggDO1LVUgGEBypv592aMmpPSxwKskg9Qqzi5zTczKpadHfBPpsbSYi84hWopr59W
+         8eRQ==
+X-Gm-Message-State: ACrzQf3jsgLF9sgbH35YunoPS8RrkbwMnbwtvDF8vX5TQ171aPo07GdG
+        VUwUA6F53q73YqggxcG7hCBgTzrzMtjUv3Jfv8eCux3u
+X-Google-Smtp-Source: AMsMyM6ak/LMaNz9t6wAVFTAGjgE1YWhYXBonh0XzUYoDT36JnkYB6Ppv929jlq7mbtuhd4TY1wp41+S25ZddL58Peo=
+X-Received: by 2002:a2e:a884:0:b0:25d:d8a2:d18c with SMTP id
+ m4-20020a2ea884000000b0025dd8a2d18cmr1518565ljq.305.1666122475250; Tue, 18
+ Oct 2022 12:47:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI1EUR05FT057:EE_|AS4PR04MB9410:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 4de1fbf8-c2cb-4748-78ef-08dab13daac3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: jF/Uk4YtQO0vqAxdhZ8CZJVsRqAmdHHFB9MEXdtFScGILqBx4rl1EYVNJ9uySYfs7YhFa5xH3ulZ0C39DcKdyIA6PVl9jkcrKS7dtio4j9PltOspWBz/rlz/ARMVsWYKs6z2NxwbwjjaTjt54tUHanPklBEe0e+JbJq8pV1ZSIWRO5j6Q9MfJRAcyfJz3VlnJAOY4t/7bK1orSSiEUx1ExPpKXD8D2SIIsE4kivf1OTI28LezH8HvkOcUGu5ieCReV9MCu5Ky6ESKxJIxfAgFaWFzcCVeG+kZdyB75TbfrZMoseIa1yOfxu5MfxEBay3ltJUqB42PmXApAgnWY6PsDkF4oXaoXJkdaaucvJGYaPU4KLv1GeY8yvufXngjFvBQOaaxSHND4UtAsMKfPmpHjP5lEsPq1tEBzUtuqZuEs+nIozwHHvorTooNTOeQdGbROoLxfOsTfQn6ZVp879bt0GVpHnH072bwxP54E/liau72vvz5WZ6Ik8gDKwoEt0RIT3RUCEZdjy5X3YfrLr1W/MwP8xtz8faf5hauWyDAYJ7tcDki+i7cERdN3HVWpbAC525X/PBBX6jqf+xs0eQzzInuoF8OKrA9jps/cVcsENRvWebnq2xMOYUKhS3gwsK4V+8NbXA9ARoy0pgOeyrIvewk+Z77ehEylHezvtp2RakZ2BX6Eal3rXC4AZkemot8NZlYaFIrIwFIbGwsZY0SypY7KaRvLAfP1lWq0JMGYcEBDa8I6uR+2m5jfqOhOtEb7lcbt2EQqcjFAAUoA5CTYra+Neeu6etHgN6ChPzhMQ=
-X-Forefront-Antispam-Report: CIP:217.66.60.4;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SR-MAIL-03.open-synergy.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(376002)(396003)(39840400004)(346002)(136003)(451199015)(46966006)(36840700001)(36860700001)(2616005)(107886003)(1076003)(26005)(47076005)(83380400001)(336012)(186003)(5660300002)(40480700001)(8936002)(82310400005)(316002)(70586007)(2906002)(478600001)(4326008)(41300700001)(966005)(8676002)(70206006)(42186006)(66899015)(86362001)(36756003)(81166007)(36900700001);DIR:OUT;SFP:1102;
-X-OriginatorOrg: opensynergy.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Oct 2022 19:19:24.1311
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4de1fbf8-c2cb-4748-78ef-08dab13daac3
-X-MS-Exchange-CrossTenant-Id: 800fae25-9b1b-4edc-993d-c939c4e84a64
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=800fae25-9b1b-4edc-993d-c939c4e84a64;Ip=[217.66.60.4];Helo=[SR-MAIL-03.open-synergy.com]
-X-MS-Exchange-CrossTenant-AuthSource: VI1EUR05FT057.eop-eur05.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR04MB9410
-X-TM-AS-ERS: 104.47.12.50-0.0.0.0
-X-TMASE-Version: StarCloud-1.3-9.0.1006-27210.001
-X-TMASE-Result: 10--9.079000-4.000000
-X-TMASE-MatchedRID: IMuFrDGWl2QxZoNWTqFxuUXBhxFdFgcQBXngI6jFvpeueqlDxh8ToXMW
-        fmr8UEU8gRXUy3f9jsQW+rN4H33dkdyU5e20qrzVuce7gFxhKa3BOVz0Jwcxl6vCrG0TnfVUilv
-        Ab18i4hOxIT6WtCo5I1cnoO4Nx+loO4kcA8kjsz+8coKUcaOOvXiywgNDw+2oYHEoQgBRP6UwhB
-        ahsGBBJGGVjGzWpzaq0IBzswjjWMxMGPWd3bHvfijPfBDLwtluMQN1uVM9I/izllWfDcUJq7ZTW
-        XFJmOgDego2wiaj2iG5cURAloITPv46FBYGUp+VFEUknJ/kEl4+IIVHuzUb7A1fU1q220JrKrau
-        Xd3MZDWU7rL13kdicLfXZq+WXHSCKRn+Fu8cjYWjse1qY0kZUQuk1fKPiPoS
-X-TMASE-XGENCLOUD: a74d4875-784e-4b8b-ae7c-93c0c2493c28-0-0-200-0
-X-TM-Deliver-Signature: E9544974AD5E395BCBCB74874A054FE7
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=opensynergy.com;
-        s=TM-DKIM-20210503141657; t=1666120766;
-        bh=YH50lXef3NIHfAOTFrt2fmD8LHTKJg7LLA8vRLSBLak=; l=3789;
-        h=From:To:Date;
-        b=HoeXQIEhdo4rDLOb5qVtle0YS0QGCEUPq6mKVhHbx3bU8gL/fnEGS2GuwkddhTC0L
-         RbTIhLxccZnEZ6EU3MpG4Xfadv88fxnTNtDDK3cjZyT5xOci+b8i1AcnENvEKCySPc
-         HuRMXR5De/60sRMbHnhiRZ46NoQ64VRPeei095gF7dS3j3xmBp4g+WzeTqteiGXEI5
-         1qRWSfMI+iJeTbiyJxkeOwparl9VtJ/lq9pdlNNCB1BREO1KVotwMDIlkuAPJyuRaC
-         Xp9Dbn5WHWi1XwwDt9PVyxpTbhTWd+sB8v1PiIBN8zQCBUpGHCmLwLakSdI9gVow8V
-         B4Nb3jLNdi06g==
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+References: <20221018043831.342821-1-abhay.maheshbhai.maheta@intel.com> <20221018043831.342821-3-abhay.maheshbhai.maheta@intel.com>
+In-Reply-To: <20221018043831.342821-3-abhay.maheshbhai.maheta@intel.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Tue, 18 Oct 2022 12:47:43 -0700
+Message-ID: <CABBYNZKrVnkbyU7juoJ5OT7Mrh_OSd09u2eAYP1rmjauvEaA7w@mail.gmail.com>
+Subject: Re: [PATCH BlueZ v3 2/4] shared/mcp: Add initial code for handling MCP
+To:     Abhay Maheta <abhay.maheshbhai.maheta@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -105,97 +66,1604 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The current version of the configuration structure has unaligned
-16-bit fields, but according to the specification [1], access to
-the configuration space must be aligned.
+Hi Abhay,
 
-Add a second, aligned  version of the configuration structure
-and a new feature bit indicating that this version is being used.
+On Mon, Oct 17, 2022 at 9:40 PM Abhay Maheta
+<abhay.maheshbhai.maheta@intel.com> wrote:
+>
+> This adds initial code for Media Control Profile for Client Role.
+> ---
+>  Makefile.am      |    1 +
+>  src/shared/mcp.c | 1419 ++++++++++++++++++++++++++++++++++++++++++++++
+>  src/shared/mcp.h |   61 ++
+>  src/shared/mcs.h |   65 +++
+>  4 files changed, 1546 insertions(+)
+>  create mode 100644 src/shared/mcp.c
+>  create mode 100644 src/shared/mcp.h
+>  create mode 100644 src/shared/mcs.h
+>
+> diff --git a/Makefile.am b/Makefile.am
+> index 27715c73d..23f6c1b98 100644
+> --- a/Makefile.am
+> +++ b/Makefile.am
+> @@ -231,6 +231,7 @@ shared_sources = src/shared/io.h src/shared/timeout.h \
+>                         src/shared/gap.h src/shared/gap.c \
+>                         src/shared/log.h src/shared/log.c \
+>                         src/shared/bap.h src/shared/bap.c src/shared/ascs.h \
+> +                       src shared/mcs.h src/shared/mcp.h src/shared/mcp.c \
 
-[1] https://docs.oasis-open.org/virtio/virtio/v1.1/virtio-v1.1.pdf
+Looks like we are missing a '/' for mcs.h which is why CI is complaining.
 
-Signed-off-by: Igor Skalkin <Igor.Skalkin@opensynergy.com>
----
- drivers/bluetooth/virtio_bt.c  | 16 +++++++++++++---
- include/uapi/linux/virtio_bt.h |  8 ++++++++
- 2 files changed, 21 insertions(+), 3 deletions(-)
+>                         src/shared/vcp.c src/shared/vcp.h \
+>                         src/shared/lc3.h src/shared/tty.h
+>
+> diff --git a/src/shared/mcp.c b/src/shared/mcp.c
+> new file mode 100644
+> index 000000000..b3726ebae
+> --- /dev/null
+> +++ b/src/shared/mcp.c
+> @@ -0,0 +1,1419 @@
+> +// SPDX-License-Identifier: LGPL-2.1-or-later
+> +/*
+> + *
+> + *  BlueZ - Bluetooth protocol stack for Linux
+> + *
+> + *  Copyright (C) 2022  Intel Corporation. All rights reserved.
+> + *
+> + */
+> +
+> +#define _GNU_SOURCE
+> +#include <inttypes.h>
+> +#include <string.h>
+> +#include <stdlib.h>
+> +#include <stdbool.h>
+> +#include <unistd.h>
+> +#include <errno.h>
+> +
+> +#include "lib/bluetooth.h"
+> +#include "lib/uuid.h"
+> +#include "lib/hci.h"
+> +
+> +#include "src/shared/queue.h"
+> +#include "src/shared/util.h"
+> +#include "src/shared/timeout.h"
+> +#include "src/shared/att.h"
+> +#include "src/shared/gatt-db.h"
+> +#include "src/shared/gatt-server.h"
+> +#include "src/shared/gatt-client.h"
+> +#include "src/shared/mcp.h"
+> +#include "src/shared/mcs.h"
+> +
+> +#define DBG(_mcp, fmt, arg...) \
+> +       mcp_debug(_mcp, "%s:%s() " fmt, __FILE__, __func__, ## arg)
+> +
+> +struct bt_mcp_db {
+> +       struct gatt_db *db;
+> +       struct bt_mcs *mcs;
+> +};
+> +
+> +struct bt_mcp_pending {
+> +       unsigned int id;
+> +       struct bt_mcp *mcp;
+> +       bt_gatt_client_read_callback_t func;
+> +       void *user_data;
+> +};
+> +
+> +struct event_callback {
+> +       const struct bt_mcp_event_callback *cbs;
+> +       void *user_data;
+> +};
+> +
+> +struct bt_mcp_session_info {
+> +       uint8_t content_control_id;
+> +       uint32_t cp_op_supported;
+> +};
+> +
+> +struct bt_mcp {
+> +       int ref_count;
+> +       struct bt_gatt_client *client;
+> +       struct bt_mcp_db *ldb;
+> +       struct bt_mcp_db *rdb;
+> +       unsigned int mp_name_id;
+> +       unsigned int track_changed_id;
+> +       unsigned int track_title_id;
+> +       unsigned int track_duration_id;
+> +       unsigned int track_position_id;
+> +       unsigned int media_state_id;
+> +       unsigned int media_cp_id;
+> +       unsigned int media_cp_op_supported_id;
+> +
+> +       struct bt_mcp_session_info session;
+> +       struct event_callback *cb;
+> +
+> +       struct queue *pending;
+> +
+> +       bt_mcp_debug_func_t debug_func;
+> +       bt_mcp_destroy_func_t debug_destroy;
+> +       void *debug_data;
+> +       void *user_data;
+> +};
+> +
+> +struct bt_mcs {
+> +       struct bt_mcp_db *mdb;
+> +       struct gatt_db_attribute *service;
+> +       struct gatt_db_attribute *mp_name;
+> +       struct gatt_db_attribute *track_changed;
+> +       struct gatt_db_attribute *track_changed_ccc;
+> +       struct gatt_db_attribute *track_title;
+> +       struct gatt_db_attribute *track_duration;
+> +       struct gatt_db_attribute *track_position;
+> +       struct gatt_db_attribute *playback_speed;
+> +       struct gatt_db_attribute *seeking_speed;
+> +       struct gatt_db_attribute *play_order;
+> +       struct gatt_db_attribute *play_order_supported;
+> +       struct gatt_db_attribute *media_state;
+> +       struct gatt_db_attribute *media_state_ccc;
+> +       struct gatt_db_attribute *media_cp;
+> +       struct gatt_db_attribute *media_cp_ccc;
+> +       struct gatt_db_attribute *media_cp_op_supportd;
+> +       struct gatt_db_attribute *content_control_id;
+> +       struct gatt_db_attribute *content_control_id_ccc;
+> +};
+> +
+> +static struct queue *mcp_db;
+> +
+> +static void mcp_debug(struct bt_mcp *mcp, const char *format, ...)
+> +{
+> +       va_list ap;
+> +
+> +       if (!mcp || !format || !mcp->debug_func)
+> +               return;
+> +
+> +       va_start(ap, format);
+> +       util_debug_va(mcp->debug_func, mcp->debug_data, format, ap);
+> +       va_end(ap);
+> +}
+> +
+> +static bool mcp_db_match(const void *data, const void *match_data)
+> +{
+> +       const struct bt_mcp_db *mdb = data;
+> +       const struct gatt_db *db = match_data;
+> +
+> +       return (mdb->db == db);
+> +}
+> +
+> +static void mcp_db_free(void *data)
+> +{
+> +       struct bt_mcp_db *bdb = data;
+> +
+> +       if (!bdb)
+> +               return;
+> +
+> +       gatt_db_unref(bdb->db);
+> +
+> +       free(bdb->mcs);
+> +       free(bdb);
+> +}
+> +
+> +static void mcp_free(void *data)
+> +{
+> +       struct bt_mcp *mcp = data;
+> +
+> +       DBG(mcp, "");
+> +
+> +       bt_mcp_detach(mcp);
+> +
+> +       mcp_db_free(mcp->rdb);
+> +
+> +       queue_destroy(mcp->pending, NULL);
+> +
+> +       free(mcp);
+> +}
+> +
+> +struct bt_mcp *bt_mcp_ref(struct bt_mcp *mcp)
+> +{
+> +       if (!mcp)
+> +               return NULL;
+> +
+> +       __sync_fetch_and_add(&mcp->ref_count, 1);
+> +
+> +       return mcp;
+> +}
+> +
+> +void bt_mcp_unref(struct bt_mcp *mcp)
+> +{
+> +       if (!mcp)
+> +               return;
+> +
+> +       if (__sync_sub_and_fetch(&mcp->ref_count, 1))
+> +               return;
+> +
+> +       mcp_free(mcp);
+> +}
+> +
+> +bool bt_mcp_set_user_data(struct bt_mcp *mcp, void *user_data)
+> +{
+> +       if (!mcp)
+> +               return false;
+> +
+> +       mcp->user_data = user_data;
+> +
+> +       return true;
+> +}
+> +
+> +void *bt_mcp_get_user_data(struct bt_mcp *mcp)
+> +{
+> +       if (!mcp)
+> +               return NULL;
+> +
+> +       return mcp->user_data;
+> +}
+> +
+> +bool bt_mcp_set_debug(struct bt_mcp *mcp, bt_mcp_debug_func_t func,
+> +                       void *user_data, bt_mcp_destroy_func_t destroy)
+> +{
+> +       if (!mcp)
+> +               return false;
+> +
+> +       if (mcp->debug_destroy)
+> +               mcp->debug_destroy(mcp->debug_data);
+> +
+> +       mcp->debug_func = func;
+> +       mcp->debug_destroy = destroy;
+> +       mcp->debug_data = user_data;
+> +
+> +       return true;
+> +}
+> +
+> +static void mcs_mp_name_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       char mp_name[] = "";
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = mp_name;
+> +       iov.iov_len = sizeof(mp_name);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_track_title_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       char track_title[] = "";
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = track_title;
+> +       iov.iov_len = 0;
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_track_duration_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       int32_t track_duration = 0xFFFFFFFF;
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = &track_duration;
+> +       iov.iov_len = sizeof(track_duration);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_track_position_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       int32_t track_position = 0xFFFFFFFF;
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = &track_position;
+> +       iov.iov_len = sizeof(track_position);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_track_position_write(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               const uint8_t *value, size_t len,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       gatt_db_attribute_write_result(attrib, id,
+> +                       BT_ATT_ERROR_INSUFFICIENT_RESOURCES);
+> +}
+> +
+> +static void mcs_playback_speed_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       int8_t playback_speed = 0x00;
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = &playback_speed;
+> +       iov.iov_len = sizeof(playback_speed);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_playback_speed_write(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               const uint8_t *value, size_t len,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       gatt_db_attribute_write_result(attrib, id,
+> +                               BT_ATT_ERROR_INSUFFICIENT_RESOURCES);
+> +}
+> +
+> +static void mcs_seeking_speed_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       int8_t seeking_speed = 0x00;
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = &seeking_speed;
+> +       iov.iov_len = sizeof(seeking_speed);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_playing_order_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       uint8_t playing_order = 0x01;
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = &playing_order;
+> +       iov.iov_len = sizeof(playing_order);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_playing_order_write(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               const uint8_t *value, size_t len,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       gatt_db_attribute_write_result(attrib, id,
+> +                               BT_ATT_ERROR_INSUFFICIENT_RESOURCES);
+> +}
+> +
+> +static void mcs_playing_order_supported_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       uint16_t playing_order_supported = 0x01;
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = &playing_order_supported;
+> +       iov.iov_len = sizeof(playing_order_supported);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_media_state_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       uint8_t media_state = 0x00;
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = &media_state;
+> +       iov.iov_len = sizeof(media_state);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_media_cp_write(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               const uint8_t *value, size_t len,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       gatt_db_attribute_write_result(attrib, id,
+> +                               BT_ATT_ERROR_INSUFFICIENT_RESOURCES);
+> +}
+> +
+> +static void mcs_media_cp_op_supported_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       uint32_t cp_op_supported = 0x00000000;
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = &cp_op_supported;
+> +       iov.iov_len = sizeof(cp_op_supported);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static void mcs_media_content_control_id_read(struct gatt_db_attribute *attrib,
+> +                               unsigned int id, uint16_t offset,
+> +                               uint8_t opcode, struct bt_att *att,
+> +                               void *user_data)
+> +{
+> +       uint8_t content_control_id = 0x00;
+> +       struct iovec iov;
+> +
+> +       iov.iov_base = &content_control_id;
+> +       iov.iov_len = sizeof(content_control_id);
+> +
+> +       gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
+> +                                                       iov.iov_len);
+> +}
+> +
+> +static struct bt_mcs *mcs_new(struct gatt_db *db)
+> +{
+> +       struct bt_mcs *mcs;
+> +       bt_uuid_t uuid;
+> +
+> +       if (!db)
+> +               return NULL;
+> +
+> +       mcs = new0(struct bt_mcs, 1);
+> +
+> +       /* Populate DB with MCS attributes */
+> +       bt_uuid16_create(&uuid, GMCS_UUID);
+> +       mcs->service = gatt_db_add_service(db, &uuid, true, 31);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_PLAYER_NAME_CHRC_UUID);
+> +       mcs->mp_name = gatt_db_service_add_characteristic(mcs->service, &uuid,
+> +                                       BT_ATT_PERM_READ,
+> +                                       BT_GATT_CHRC_PROP_READ,
+> +                                       mcs_mp_name_read, NULL,
+> +                                       mcs);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_TRACK_CHNGD_CHRC_UUID);
+> +       mcs->track_changed = gatt_db_service_add_characteristic(mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_NONE,
+> +                                       BT_GATT_CHRC_PROP_NOTIFY,
+> +                                       NULL, NULL,
+> +                                       mcs);
+> +
+> +       mcs->track_changed_ccc = gatt_db_service_add_ccc(mcs->service,
+> +                                       BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_TRACK_TITLE_CHRC_UUID);
+> +       mcs->track_title = gatt_db_service_add_characteristic(mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ,
+> +                                       BT_GATT_CHRC_PROP_READ,
+> +                                       mcs_track_title_read, NULL,
+> +                                       mcs);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_TRACK_DURATION_CHRC_UUID);
+> +       mcs->track_duration = gatt_db_service_add_characteristic(mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ,
+> +                                       BT_GATT_CHRC_PROP_READ,
+> +                                       mcs_track_duration_read, NULL,
+> +                                       mcs);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_TRACK_POSTION_CHRC_UUID);
+> +       mcs->track_position = gatt_db_service_add_characteristic(mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ | BT_ATT_PERM_WRITE,
+> +                                       BT_GATT_CHRC_PROP_READ |
+> +                                       BT_GATT_CHRC_PROP_WRITE |
+> +                                       BT_GATT_CHRC_PROP_WRITE_WITHOUT_RESP,
+> +                                       mcs_track_position_read,
+> +                                       mcs_track_position_write,
+> +                                       mcs);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_PLAYBACK_SPEED_CHRC_UUID);
+> +       mcs->playback_speed = gatt_db_service_add_characteristic(mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ | BT_ATT_PERM_WRITE,
+> +                                       BT_GATT_CHRC_PROP_READ |
+> +                                       BT_GATT_CHRC_PROP_WRITE |
+> +                                       BT_GATT_CHRC_PROP_WRITE_WITHOUT_RESP,
+> +                                       mcs_playback_speed_read,
+> +                                       mcs_playback_speed_write,
+> +                                       mcs);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_SEEKING_SPEED_CHRC_UUID);
+> +       mcs->seeking_speed = gatt_db_service_add_characteristic(mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ,
+> +                                       BT_GATT_CHRC_PROP_READ,
+> +                                       mcs_seeking_speed_read, NULL,
+> +                                       mcs);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_PLAYING_ORDER_CHRC_UUID);
+> +       mcs->play_order = gatt_db_service_add_characteristic(mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ | BT_ATT_PERM_WRITE,
+> +                                       BT_GATT_CHRC_PROP_READ |
+> +                                       BT_GATT_CHRC_PROP_WRITE |
+> +                                       BT_GATT_CHRC_PROP_WRITE_WITHOUT_RESP,
+> +                                       mcs_playing_order_read,
+> +                                       mcs_playing_order_write,
+> +                                       mcs);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_PLAY_ORDER_SUPPRTD_CHRC_UUID);
+> +       mcs->play_order_supported = gatt_db_service_add_characteristic(
+> +                                       mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ,
+> +                                       BT_GATT_CHRC_PROP_READ,
+> +                                       mcs_playing_order_supported_read, NULL,
+> +                                       mcs);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_STATE_CHRC_UUID);
+> +       mcs->media_state = gatt_db_service_add_characteristic(mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ,
+> +                                       BT_GATT_CHRC_PROP_READ |
+> +                                       BT_GATT_CHRC_PROP_NOTIFY,
+> +                                       mcs_media_state_read, NULL,
+> +                                       mcs);
+> +
+> +       mcs->media_state_ccc = gatt_db_service_add_ccc(mcs->service,
+> +                                       BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_CP_CHRC_UUID);
+> +       mcs->media_cp = gatt_db_service_add_characteristic(mcs->service, &uuid,
+> +                                       BT_ATT_PERM_WRITE,
+> +                                       BT_GATT_CHRC_PROP_WRITE |
+> +                                       BT_GATT_CHRC_PROP_NOTIFY |
+> +                                       BT_GATT_CHRC_PROP_WRITE_WITHOUT_RESP,
+> +                                       NULL, mcs_media_cp_write,
+> +                                       mcs);
+> +
+> +       mcs->media_cp_ccc = gatt_db_service_add_ccc(mcs->service,
+> +                                       BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_CP_OP_SUPPORTED_CHRC_UUID);
+> +       mcs->media_cp_op_supportd = gatt_db_service_add_characteristic(
+> +                                       mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ,
+> +                                       BT_GATT_CHRC_PROP_READ,
+> +                                       mcs_media_cp_op_supported_read, NULL,
+> +                                       mcs);
+> +
+> +       bt_uuid16_create(&uuid, MEDIA_CONTENT_CONTROL_ID_CHRC_UUID);
+> +       mcs->content_control_id = gatt_db_service_add_characteristic(
+> +                                       mcs->service,
+> +                                       &uuid,
+> +                                       BT_ATT_PERM_READ,
+> +                                       BT_GATT_CHRC_PROP_READ |
+> +                                       BT_GATT_CHRC_PROP_NOTIFY,
+> +                                       mcs_media_content_control_id_read,
+> +                                       NULL,
+> +                                       mcs);
+> +
+> +       mcs->content_control_id_ccc = gatt_db_service_add_ccc(mcs->service,
+> +                                       BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
+> +
+> +       gatt_db_service_set_active(mcs->service, false);
+> +
+> +       return mcs;
+> +}
+> +
+> +static struct bt_mcs *mcp_get_mcs(struct bt_mcp *mcp)
+> +{
+> +       if (!mcp)
+> +               return NULL;
+> +
+> +       if (mcp->rdb->mcs)
+> +               return mcp->rdb->mcs;
+> +
+> +       mcp->rdb->mcs = new0(struct bt_mcs, 1);
+> +       mcp->rdb->mcs->mdb = mcp->rdb;
+> +
+> +       return mcp->rdb->mcs;
+> +}
+> +
+> +static unsigned int mcp_send(struct bt_mcp *mcp, uint8_t operation)
+> +{
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +       int ret;
+> +       uint16_t handle;
+> +
+> +       DBG(mcp, "mcs %p", mcs);
+> +
+> +       if (!mcp->client)
+> +               return -1;
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->media_cp, NULL, &handle,
+> +                                       NULL, NULL, NULL))
+> +               return -1;
+> +
+> +       ret = bt_gatt_client_write_without_response(mcp->client, handle, false,
+> +                                       &operation, sizeof(uint8_t));
+> +       if (!ret)
+> +               return -1;
+> +
+> +       return 0;
+> +}
+> +
+> +unsigned int bt_mcp_play(struct bt_mcp *mcp)
+> +{
+> +       if (!(mcp->session.cp_op_supported & BT_MCS_CMD_PLAY_SUPPORTED))
+> +               return -ENOTSUP;
+> +
+> +       DBG(mcp, "mcp %p", mcp);
+> +
+> +       return mcp_send(mcp, BT_MCS_CMD_PLAY);
+> +}
+> +
+> +unsigned int bt_mcp_pause(struct bt_mcp *mcp)
+> +{
+> +       if (!(mcp->session.cp_op_supported & BT_MCS_CMD_PAUSE_SUPPORTED))
+> +               return -ENOTSUP;
+> +
+> +       DBG(mcp, "mcp %p", mcp);
+> +
+> +       return mcp_send(mcp, BT_MCS_CMD_PAUSE);
+> +}
+> +
+> +unsigned int bt_mcp_stop(struct bt_mcp *mcp)
+> +{
+> +       if (!(mcp->session.cp_op_supported & BT_MCS_CMD_STOP_SUPPORTED))
+> +               return -ENOTSUP;
+> +
+> +       DBG(mcp, "mcp %p", mcp);
+> +
+> +       return mcp_send(mcp, BT_MCS_CMD_STOP);
+> +}
+> +
+> +static void mcp_mp_set_player_name(struct bt_mcp *mcp, const uint8_t *value,
+> +                                       uint16_t length)
+> +{
+> +       struct event_callback *cb = mcp->cb;
+> +
+> +       if (cb && cb->cbs && cb->cbs->player_name)
+> +               cb->cbs->player_name(mcp, value, length);
+> +}
+> +
+> +static void mcp_mp_set_track_title(struct bt_mcp *mcp, const uint8_t *value,
+> +                                       uint16_t length)
+> +{
+> +       struct event_callback *cb = mcp->cb;
+> +
+> +       if (cb && cb->cbs && cb->cbs->track_title)
+> +               cb->cbs->track_title(mcp, value, length);
+> +}
+> +
+> +static void mcp_mp_set_title_duration(struct bt_mcp *mcp, int32_t duration)
+> +{
+> +       struct event_callback *cb = mcp->cb;
+> +
+> +       DBG(mcp, "Track Duration 0x%08x", duration);
+> +
+> +       if (cb && cb->cbs && cb->cbs->track_duration)
+> +               cb->cbs->track_duration(mcp, duration);
+> +}
+> +
+> +static void mcp_mp_set_title_position(struct bt_mcp *mcp, int32_t position)
+> +{
+> +       struct event_callback *cb = mcp->cb;
+> +
+> +       DBG(mcp, "Track Position 0x%08x", position);
+> +
+> +       if (cb && cb->cbs && cb->cbs->track_position)
+> +               cb->cbs->track_position(mcp, position);
+> +}
+> +
+> +static void mcp_mp_set_media_state(struct bt_mcp *mcp, uint8_t state)
+> +{
+> +       struct event_callback *cb = mcp->cb;
+> +
+> +       DBG(mcp, "Media State 0x%02x", state);
+> +
+> +       if (cb && cb->cbs && cb->cbs->media_state)
+> +               cb->cbs->media_state(mcp, state);
+> +}
+> +
+> +static void read_media_player_name(bool success, uint8_t att_ecode,
+> +                               const uint8_t *value, uint16_t length,
+> +                               void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (!success) {
+> +               DBG(mcp, "Unable to read media player name: error 0x%02x",
+> +                               att_ecode);
+> +               return;
+> +       }
+> +
+> +       if (!length)
+> +               return;
+> +
+> +       mcp_mp_set_player_name(mcp, value, length);
+> +}
+> +
+> +static void read_track_title(bool success, uint8_t att_ecode,
+> +                               const uint8_t *value, uint16_t length,
+> +                               void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (!success) {
+> +               DBG(mcp, "Unable to read track title: error 0x%02x",
+> +                                       att_ecode);
+> +               return;
+> +       }
+> +
+> +       if (!length)
+> +               return;
+> +
+> +       mcp_mp_set_track_title(mcp, value, length);
+> +}
+> +
+> +static void read_track_duration(bool success, uint8_t att_ecode,
+> +                               const uint8_t *value, uint16_t length,
+> +                               void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +       int32_t duration;
+> +
+> +       if (!success) {
+> +               DBG(mcp, "Unable to read track duration: error 0x%02x",
+> +                                       att_ecode);
+> +               return;
+> +       }
+> +
+> +       if (length != sizeof(duration))
+> +               DBG(mcp, "Wrong length received Length : %u", length);
+> +
+> +       memcpy(&duration, value, length);
+> +       mcp_mp_set_title_duration(mcp, duration);
+> +}
+> +
+> +static void read_track_position(bool success, uint8_t att_ecode,
+> +                               const uint8_t *value, uint16_t length,
+> +                               void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +       int32_t position;
+> +
+> +       if (!success) {
+> +               DBG(mcp, "Unable to read track position: error 0x%02x",
+> +                                       att_ecode);
+> +               return;
+> +       }
+> +
+> +       if (length != sizeof(position))
+> +               DBG(mcp, "Wrong length received Length : %u", length);
+> +
+> +       memcpy(&position, value, length);
+> +       mcp_mp_set_title_position(mcp, position);
+> +}
+> +
+> +static void read_media_state(bool success, uint8_t att_ecode,
+> +                               const uint8_t *value, uint16_t length,
+> +                               void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (!success) {
+> +               DBG(mcp, "Unable to read media state: error 0x%02x",
+> +                                       att_ecode);
+> +               return;
+> +       }
+> +
+> +       if (length != sizeof(uint8_t))
+> +               DBG(mcp, "Wrong length received Length : %u", length);
+> +
+> +       mcp_mp_set_media_state(mcp, *value);
+> +}
+> +
+> +static void read_media_cp_op_supported(bool success, uint8_t att_ecode,
+> +                               const uint8_t *value, uint16_t length,
+> +                               void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (!success) {
+> +               DBG(mcp, "Unable to read media CP OP supported: error 0x%02x",
+> +                                       att_ecode);
+> +               return;
+> +       }
+> +
+> +       if (length != sizeof(uint32_t))
+> +               DBG(mcp, "Wrong length received Length : %u", length);
+> +
+> +       memcpy(&mcp->session.cp_op_supported, value, sizeof(uint32_t));
+> +       DBG(mcp, "Media Control Point Opcodes Supported 0x%08x",
+> +                       mcp->session.cp_op_supported);
+> +}
+> +
+> +static void read_content_control_id(bool success, uint8_t att_ecode,
+> +                               const uint8_t *value, uint16_t length,
+> +                               void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (!success) {
+> +               DBG(mcp, "Unable to read content control id: error 0x%02x",
+> +                                       att_ecode);
+> +               return;
+> +       }
+> +
+> +       if (length != sizeof(uint8_t))
+> +               DBG(mcp, "Wrong length received Length : %u", length);
+> +
+> +       DBG(mcp, "Content Control ID 0x%02x", *value);
+> +}
+> +
+> +static void mcp_pending_destroy(void *data)
+> +{
+> +       struct bt_mcp_pending *pending = data;
+> +       struct bt_mcp *mcp = pending->mcp;
+> +
+> +       queue_remove_if(mcp->pending, NULL, pending);
+> +}
+> +
+> +static void mcp_pending_complete(bool success, uint8_t att_ecode,
+> +                               const uint8_t *value, uint16_t length,
+> +                               void *user_data)
+> +{
+> +       struct bt_mcp_pending *pending = user_data;
+> +
+> +       if (pending->func)
+> +               pending->func(success, att_ecode, value, length,
+> +                                               pending->user_data);
+> +}
+> +
+> +static void mcp_read_value(struct bt_mcp *mcp, uint16_t value_handle,
+> +                               bt_gatt_client_read_callback_t func,
+> +                               void *user_data)
+> +{
+> +       struct bt_mcp_pending *pending;
+> +
+> +       pending = new0(struct bt_mcp_pending, 1);
+> +       pending->mcp = mcp;
+> +       pending->func = func;
+> +       pending->user_data = user_data;
+> +
+> +       pending->id = bt_gatt_client_read_value(mcp->client, value_handle,
+> +                                               mcp_pending_complete, pending,
+> +                                               mcp_pending_destroy);
+> +       if (!pending->id) {
+> +               DBG(mcp, "Unable to send Read request");
+> +               free(pending);
+> +               return;
+> +       }
+> +
+> +       queue_push_tail(mcp->pending, pending);
+> +}
+> +
+> +static void mcp_mp_name_register(uint16_t att_ecode, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (att_ecode)
+> +               DBG(mcp, "Media Player Name notification failed: 0x%04x",
+> +                                       att_ecode);
+> +}
+> +
+> +static void mcp_mp_name_notify(uint16_t value_handle, const uint8_t *value,
+> +                                       uint16_t length, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (!length)
+> +               return;
+> +
+> +       mcp_mp_set_player_name(mcp, value, length);
+> +}
+> +
+> +static void mcp_track_changed_register(uint16_t att_ecode, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (att_ecode)
+> +               DBG(mcp, "Media Track Changed notification failed: 0x%04x",
+> +                                       att_ecode);
+> +}
+> +
+> +static void mcp_track_changed_notify(uint16_t value_handle,
+> +                       const uint8_t *value, uint16_t length, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +       struct event_callback *cb = mcp->cb;
+> +
+> +       DBG(mcp, "Track Changed");
+> +
+> +       if (cb && cb->cbs && cb->cbs->track_changed)
+> +               cb->cbs->track_changed(mcp);
+> +}
+> +
+> +static void mcp_track_title_register(uint16_t att_ecode, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (att_ecode)
+> +               DBG(mcp, "Media Track Title notification failed: 0x%04x",
+> +                                       att_ecode);
+> +}
+> +
+> +static void mcp_track_title_notify(uint16_t value_handle,
+> +                       const uint8_t *value, uint16_t length, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       mcp_mp_set_track_title(mcp, value, length);
+> +}
+> +
+> +static void mcp_track_duration_register(uint16_t att_ecode, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (att_ecode)
+> +               DBG(mcp, "Media Track Duration notification failed: 0x%04x",
+> +                                       att_ecode);
+> +}
+> +
+> +static void mcp_track_duration_notify(uint16_t value_handle,
+> +                       const uint8_t *value, uint16_t length, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +       int32_t duration;
+> +
+> +       memcpy(&duration, value, sizeof(int32_t));
+> +       mcp_mp_set_title_duration(mcp, duration);
+> +}
+> +
+> +static void mcp_track_position_register(uint16_t att_ecode, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (att_ecode)
+> +               DBG(mcp, "Media Track Position notification failed: 0x%04x",
+> +                                       att_ecode);
+> +}
+> +
+> +static void mcp_track_position_notify(uint16_t value_handle,
+> +               const uint8_t *value, uint16_t length, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +       int32_t position;
+> +
+> +       memcpy(&position, value, sizeof(int32_t));
+> +       mcp_mp_set_title_position(mcp, position);
+> +}
+> +
+> +static void mcp_media_state_register(uint16_t att_ecode, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (att_ecode)
+> +               DBG(mcp, "Media Media State notification failed: 0x%04x",
+> +                                       att_ecode);
+> +}
+> +
+> +static void mcp_media_state_notify(uint16_t value_handle,
+> +                       const uint8_t *value, uint16_t length, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       mcp_mp_set_media_state(mcp, *value);
+> +}
+> +
+> +static void mcp_media_cp_register(uint16_t att_ecode, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (att_ecode)
+> +               DBG(mcp, "Media Media CP notification failed: 0x%04x",
+> +                                       att_ecode);
+> +}
+> +
+> +static void mcp_media_cp_notify(uint16_t value_handle, const uint8_t *value,
+> +                                       uint16_t length, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       DBG(mcp, "Media CP Notification");
+> +}
+> +
+> +static void mcp_media_cp_op_supported_register(uint16_t att_ecode,
+> +                                       void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       if (att_ecode)
+> +               DBG(mcp, "Media Media CP OP Supported notify failed: 0x%04x",
+> +                                       att_ecode);
+> +}
+> +
+> +static void mcp_media_cp_op_supported_notify(uint16_t value_handle,
+> +                       const uint8_t *value, uint16_t length, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +
+> +       memcpy(&mcp->session.cp_op_supported, value, sizeof(uint32_t));
+> +       DBG(mcp, "Media CP Opcodes Supported Notification 0x%08x",
+> +                       mcp->session.cp_op_supported);
+> +}
+> +
+> +static void bt_mcp_mp_name_attach(struct bt_mcp *mcp)
+> +{
+> +       uint16_t value_handle;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->mp_name, NULL, &value_handle,
+> +                                               NULL, NULL, NULL))
+> +               return;
+> +
+> +       DBG(mcp, "Media Player handle 0x%04x", value_handle);
+> +
+> +       mcp_read_value(mcp, value_handle, read_media_player_name, mcp);
+> +
+> +       mcp->mp_name_id = bt_gatt_client_register_notify(mcp->client,
+> +                               value_handle, mcp_mp_name_register,
+> +                               mcp_mp_name_notify, mcp, NULL);
+> +}
+> +
+> +static void bt_mcp_track_changed_attach(struct bt_mcp *mcp)
+> +{
+> +       uint16_t value_handle;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->track_changed, NULL,
+> +                               &value_handle, NULL, NULL, NULL))
+> +               return;
+> +
+> +       DBG(mcp, "Track Changed handle 0x%04x", value_handle);
+> +
+> +       mcp->track_changed_id = bt_gatt_client_register_notify(mcp->client,
+> +                               value_handle, mcp_track_changed_register,
+> +                               mcp_track_changed_notify, mcp, NULL);
+> +}
+> +
+> +static void bt_mcp_track_title_attach(struct bt_mcp *mcp)
+> +{
+> +       uint16_t value_handle;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->track_title, NULL,
+> +                               &value_handle, NULL, NULL, NULL))
+> +               return;
+> +
+> +       DBG(mcp, "Track Title handle 0x%04x", value_handle);
+> +
+> +       mcp_read_value(mcp, value_handle, read_track_title, mcp);
+> +
+> +       mcp->track_title_id = bt_gatt_client_register_notify(mcp->client,
+> +                               value_handle, mcp_track_title_register,
+> +                               mcp_track_title_notify, mcp, NULL);
+> +}
+> +
+> +static void bt_mcp_track_duration_attach(struct bt_mcp *mcp)
+> +{
+> +       uint16_t value_handle;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->track_duration, NULL,
+> +                               &value_handle, NULL, NULL, NULL))
+> +               return;
+> +
+> +       DBG(mcp, "Track Duration handle 0x%04x", value_handle);
+> +
+> +       mcp_read_value(mcp, value_handle, read_track_duration, mcp);
+> +
+> +       mcp->track_duration_id = bt_gatt_client_register_notify(mcp->client,
+> +                               value_handle, mcp_track_duration_register,
+> +                               mcp_track_duration_notify, mcp, NULL);
+> +}
+> +
+> +static void bt_mcp_track_position_attach(struct bt_mcp *mcp)
+> +{
+> +       uint16_t value_handle;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->track_position, NULL,
+> +                               &value_handle, NULL, NULL, NULL))
+> +               return;
+> +
+> +       DBG(mcp, "Track Position handle 0x%04x", value_handle);
+> +
+> +       mcp_read_value(mcp, value_handle, read_track_position, mcp);
+> +
+> +       mcp->track_position_id = bt_gatt_client_register_notify(mcp->client,
+> +                               value_handle, mcp_track_position_register,
+> +                               mcp_track_position_notify, mcp, NULL);
+> +}
+> +
+> +static void bt_mcp_media_state_attach(struct bt_mcp *mcp)
+> +{
+> +       uint16_t value_handle;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->media_state, NULL,
+> +                               &value_handle, NULL, NULL, NULL))
+> +               return;
+> +
+> +       DBG(mcp, "Media State handle 0x%04x", value_handle);
+> +
+> +       mcp_read_value(mcp, value_handle, read_media_state, mcp);
+> +
+> +       mcp->media_state_id = bt_gatt_client_register_notify(mcp->client,
+> +                                       value_handle, mcp_media_state_register,
+> +                                       mcp_media_state_notify, mcp, NULL);
+> +}
+> +
+> +static void bt_mcp_media_cp_attach(struct bt_mcp *mcp)
+> +{
+> +       uint16_t value_handle;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->media_cp, NULL,
+> +                               &value_handle, NULL, NULL, NULL))
+> +               return;
+> +
+> +       DBG(mcp, "Media Control Point handle 0x%04x", value_handle);
+> +
+> +       mcp->media_cp_id = bt_gatt_client_register_notify(mcp->client,
+> +                                       value_handle, mcp_media_cp_register,
+> +                                       mcp_media_cp_notify, mcp, NULL);
+> +}
+> +
+> +static void bt_mcp_media_cp_op_supported_attach(struct bt_mcp *mcp)
+> +{
+> +       uint16_t value_handle;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->media_cp_op_supportd, NULL,
+> +                               &value_handle, NULL, NULL, NULL))
+> +               return;
+> +
+> +       DBG(mcp, "Media Control Point Opcodes Supported handle 0x%04x",
+> +                       value_handle);
+> +
+> +       mcp_read_value(mcp, value_handle, read_media_cp_op_supported, mcp);
+> +
+> +       mcp->media_cp_op_supported_id = bt_gatt_client_register_notify(
+> +               mcp->client, value_handle, mcp_media_cp_op_supported_register,
+> +               mcp_media_cp_op_supported_notify, mcp, NULL);
+> +}
+> +
+> +static void bt_mcp_content_control_id_supported_attach(struct bt_mcp *mcp)
+> +{
+> +       uint16_t value_handle;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       if (!gatt_db_attribute_get_char_data(mcs->content_control_id, NULL,
+> +                               &value_handle, NULL, NULL, NULL))
+> +               return;
+> +
+> +       DBG(mcp, "Media Content Control id Supported handle 0x%04x",
+> +                               value_handle);
+> +       mcp_read_value(mcp, value_handle, read_content_control_id, mcp);
+> +}
+> +
+> +static void foreach_mcs_char(struct gatt_db_attribute *attr, void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +       uint16_t value_handle;
+> +       bt_uuid_t uuid, uuid_mp_name, uuid_track_changed, uuid_track_title,
+> +               uuid_track_duration, uuid_track_position, uuid_media_state,
+> +               uuid_media_cp, uuid_media_cp_op_supported,
+> +               uuid_content_control_id;
+> +       struct bt_mcs *mcs;
+> +
+> +       if (!gatt_db_attribute_get_char_data(attr, NULL, &value_handle,
+> +                                               NULL, NULL, &uuid))
+> +               return;
+> +
+> +       bt_uuid16_create(&uuid_mp_name, MEDIA_PLAYER_NAME_CHRC_UUID);
+> +       bt_uuid16_create(&uuid_track_changed, MEDIA_TRACK_CHNGD_CHRC_UUID);
+> +       bt_uuid16_create(&uuid_track_title, MEDIA_TRACK_TITLE_CHRC_UUID);
+> +       bt_uuid16_create(&uuid_track_duration, MEDIA_TRACK_DURATION_CHRC_UUID);
+> +       bt_uuid16_create(&uuid_track_position, MEDIA_TRACK_POSTION_CHRC_UUID);
+> +       bt_uuid16_create(&uuid_media_state, MEDIA_STATE_CHRC_UUID);
+> +       bt_uuid16_create(&uuid_media_cp, MEDIA_CP_CHRC_UUID);
+> +       bt_uuid16_create(&uuid_media_cp_op_supported,
+> +                                       MEDIA_CP_OP_SUPPORTED_CHRC_UUID);
+> +       bt_uuid16_create(&uuid_content_control_id,
+> +                                       MEDIA_CONTENT_CONTROL_ID_CHRC_UUID);
+> +
+> +       if (!bt_uuid_cmp(&uuid, &uuid_mp_name)) {
+> +               DBG(mcp, "Media Player Name found: handle 0x%04x",
+> +                                       value_handle);
+> +
+> +               mcs = mcp_get_mcs(mcp);
+> +               if (!mcs || mcs->mp_name)
+> +                       return;
+> +
+> +               mcs->mp_name = attr;
+> +               bt_mcp_mp_name_attach(mcp);
+> +       }
+> +
+> +       if (!bt_uuid_cmp(&uuid, &uuid_track_changed)) {
+> +               DBG(mcp, "Track Changed found: handle 0x%04x", value_handle);
+> +
+> +               mcs = mcp_get_mcs(mcp);
+> +               if (!mcs || mcs->track_changed)
+> +                       return;
+> +
+> +               mcs->track_changed = attr;
+> +               bt_mcp_track_changed_attach(mcp);
+> +       }
+> +
+> +       if (!bt_uuid_cmp(&uuid, &uuid_track_title)) {
+> +               DBG(mcp, "Track Title found: handle 0x%04x", value_handle);
+> +
+> +               mcs = mcp_get_mcs(mcp);
+> +               if (!mcs || mcs->track_title)
+> +                       return;
+> +
+> +               mcs->track_title = attr;
+> +               bt_mcp_track_title_attach(mcp);
+> +       }
+> +
+> +       if (!bt_uuid_cmp(&uuid, &uuid_track_duration)) {
+> +               DBG(mcp, "Track Duration found: handle 0x%04x", value_handle);
+> +
+> +               mcs = mcp_get_mcs(mcp);
+> +               if (!mcs || mcs->track_duration)
+> +                       return;
+> +
+> +               mcs->track_duration = attr;
+> +               bt_mcp_track_duration_attach(mcp);
+> +       }
+> +
+> +       if (!bt_uuid_cmp(&uuid, &uuid_track_position)) {
+> +               DBG(mcp, "Track Position found: handle 0x%04x", value_handle);
+> +
+> +
+> +               mcs = mcp_get_mcs(mcp);
+> +               if (!mcs || mcs->track_position)
+> +                       return;
+> +
+> +               mcs->track_position = attr;
+> +               bt_mcp_track_position_attach(mcp);
+> +       }
+> +
+> +       if (!bt_uuid_cmp(&uuid, &uuid_media_state)) {
+> +               DBG(mcp, "Media State found: handle 0x%04x", value_handle);
+> +
+> +               mcs = mcp_get_mcs(mcp);
+> +               if (!mcs || mcs->media_state)
+> +                       return;
+> +
+> +               mcs->media_state = attr;
+> +               bt_mcp_media_state_attach(mcp);
+> +       }
+> +
+> +       if (!bt_uuid_cmp(&uuid, &uuid_media_cp)) {
+> +               DBG(mcp, "Media Control Point found: handle 0x%04x",
+> +                                       value_handle);
+> +
+> +               mcs = mcp_get_mcs(mcp);
+> +               if (!mcs || mcs->media_cp)
+> +                       return;
+> +
+> +               mcs->media_cp = attr;
+> +               bt_mcp_media_cp_attach(mcp);
+> +       }
+> +
+> +       if (!bt_uuid_cmp(&uuid, &uuid_media_cp_op_supported)) {
+> +               DBG(mcp, "Media CP Opcodes Supported found: handle 0x%04x",
+> +                                       value_handle);
+> +
+> +               mcs = mcp_get_mcs(mcp);
+> +               if (!mcs || mcs->media_cp_op_supportd)
+> +                       return;
+> +
+> +               mcs->media_cp_op_supportd = attr;
+> +               bt_mcp_media_cp_op_supported_attach(mcp);
+> +       }
+> +
+> +       if (!bt_uuid_cmp(&uuid, &uuid_content_control_id)) {
+> +               DBG(mcp, "Content Control ID found: handle 0x%04x",
+> +                                       value_handle);
+> +
+> +               mcs = mcp_get_mcs(mcp);
+> +               if (!mcs || mcs->content_control_id)
+> +                       return;
+> +
+> +               mcs->content_control_id = attr;
+> +               bt_mcp_content_control_id_supported_attach(mcp);
+> +       }
+> +}
+> +
+> +void bt_mcp_set_event_callbacks(struct bt_mcp *mcp,
+> +                               const struct bt_mcp_event_callback *cbs,
+> +                               void *user_data)
+> +{
+> +       struct event_callback *cb;
+> +
+> +       if (mcp->cb)
+> +               free(mcp->cb);
+> +
+> +       cb = new0(struct event_callback, 1);
+> +       cb->cbs = cbs;
+> +       cb->user_data = user_data;
+> +
+> +       mcp->cb = cb;
+> +}
+> +
+> +static void foreach_mcs_service(struct gatt_db_attribute *attr,
+> +                                               void *user_data)
+> +{
+> +       struct bt_mcp *mcp = user_data;
+> +       struct bt_mcs *mcs = mcp_get_mcs(mcp);
+> +
+> +       DBG(mcp, "");
+> +
+> +       mcs->service = attr;
+> +
+> +       gatt_db_service_foreach_char(attr, foreach_mcs_char, mcp);
+> +}
+> +
+> +static struct bt_mcp_db *mcp_db_new(struct gatt_db *db)
+> +{
+> +       struct bt_mcp_db *mdb;
+> +
+> +       if (!db)
+> +               return NULL;
+> +
+> +       mdb = new0(struct bt_mcp_db, 1);
+> +       mdb->db = gatt_db_ref(db);
+> +
+> +       if (!mcp_db)
+> +               mcp_db = queue_new();
+> +
+> +       queue_push_tail(mcp_db, mdb);
+> +
+> +       mdb->mcs = mcs_new(db);
+> +       return mdb;
+> +}
+> +
+> +static struct bt_mcp_db *mcp_get_db(struct gatt_db *db)
+> +{
+> +       struct bt_mcp_db *mdb;
+> +
+> +       mdb = queue_find(mcp_db, mcp_db_match, db);
+> +       if (mdb)
+> +               return mdb;
+> +
+> +       return mcp_db_new(db);
+> +}
+> +
+> +struct bt_mcp *bt_mcp_new(struct gatt_db *ldb, struct gatt_db *rdb)
+> +{
+> +       struct bt_mcp *mcp;
+> +       struct bt_mcp_db *mdb;
+> +
+> +       if (!ldb)
+> +               return NULL;
+> +
+> +       mdb = mcp_get_db(ldb);
+> +       if (!mdb)
+> +               return NULL;
+> +
+> +       mcp = new0(struct bt_mcp, 1);
+> +       mcp->ldb = mdb;
+> +       mcp->pending = queue_new();
+> +
+> +       if (!rdb)
+> +               goto done;
+> +
+> +       mdb = new0(struct bt_mcp_db, 1);
+> +       mdb->db = gatt_db_ref(rdb);
+> +
+> +       mcp->rdb = mdb;
+> +
+> +done:
+> +       bt_mcp_ref(mcp);
+> +
+> +       return mcp;
+> +}
+> +
+> +void bt_mcp_register(struct gatt_db *db)
+> +{
+> +       mcp_db_new(db);
+> +}
+> +
+> +bool bt_mcp_attach(struct bt_mcp *mcp, struct bt_gatt_client *client)
+> +{
+> +       bt_uuid_t uuid;
+> +
+> +       DBG(mcp, "mcp %p", mcp);
+> +
+> +       mcp->client = bt_gatt_client_clone(client);
+> +       if (!mcp->client)
+> +               return false;
+> +
+> +       if (mcp->rdb->mcs) {
+> +               bt_mcp_mp_name_attach(mcp);
+> +               bt_mcp_track_changed_attach(mcp);
+> +               bt_mcp_track_title_attach(mcp);
+> +               bt_mcp_track_duration_attach(mcp);
+> +               bt_mcp_track_position_attach(mcp);
+> +               bt_mcp_media_state_attach(mcp);
+> +               bt_mcp_media_cp_attach(mcp);
+> +               bt_mcp_media_cp_op_supported_attach(mcp);
+> +               bt_mcp_content_control_id_supported_attach(mcp);
+> +
+> +               return true;
+> +       }
+> +
+> +       bt_uuid16_create(&uuid, GMCS_UUID);
+> +       gatt_db_foreach_service(mcp->rdb->db, &uuid, foreach_mcs_service, mcp);
+> +
+> +       return true;
+> +}
+> +
+> +void bt_mcp_detach(struct bt_mcp *mcp)
+> +{
+> +       DBG(mcp, "%p", mcp);
+> +
+> +       bt_gatt_client_unref(mcp->client);
+> +       mcp->client = NULL;
+> +}
+> diff --git a/src/shared/mcp.h b/src/shared/mcp.h
+> new file mode 100644
+> index 000000000..a2cd6fc45
+> --- /dev/null
+> +++ b/src/shared/mcp.h
+> @@ -0,0 +1,61 @@
+> +/* SPDX-License-Identifier: LGPL-2.1-or-later */
+> +/*
+> + *
+> + *  BlueZ - Bluetooth protocol stack for Linux
+> + *
+> + *  Copyright (C) 2020  Intel Corporation. All rights reserved.
+> + *
+> + */
+> +
+> +#include <stdbool.h>
+> +#include <inttypes.h>
+> +
+> +#ifndef __packed
+> +#define __packed __attribute__((packed))
+> +#endif
+> +
+> +struct bt_mcp;
+> +struct bt_mcp_db;
+> +struct bt_mcp_session_info;
+> +
+> +typedef void (*bt_mcp_debug_func_t)(const char *str, void *user_data);
+> +typedef void (*bt_mcp_destroy_func_t)(void *user_data);
+> +
+> +struct bt_mcp_event_callback {
+> +       void (*player_name)(struct bt_mcp *mcp,  const uint8_t *value,
+> +                                       uint16_t length);
+> +       void (*track_changed)(struct bt_mcp *mcp);
+> +       void (*track_title)(struct bt_mcp *mcp, const uint8_t *value,
+> +                                       uint16_t length);
+> +       void (*track_duration)(struct bt_mcp *mcp, int32_t duration);
+> +       void (*track_position)(struct bt_mcp *mcp, int32_t position);
+> +       void (*playback_speed)(struct bt_mcp *mcp, int8_t speed);
+> +       void (*seeking_speed)(struct bt_mcp *mcp, int8_t speed);
+> +       void (*play_order)(struct bt_mcp *mcp, uint8_t order);
+> +       void (*play_order_supported)(struct bt_mcp *mcp,
+> +                                       uint16_t order_supported);
+> +       void (*media_state)(struct bt_mcp *mcp, uint8_t state);
+> +       void (*content_control_id)(struct bt_mcp *mcp, uint8_t cc_id);
+> +};
+> +
+> +void bt_mcp_set_event_callbacks(struct bt_mcp *mcp,
+> +                               const struct bt_mcp_event_callback *cbs,
+> +                               void *user_data);
+> +
+> +bool bt_mcp_set_debug(struct bt_mcp *mcp, bt_mcp_debug_func_t cb,
+> +                       void *user_data, bt_mcp_destroy_func_t destroy);
+> +
+> +void bt_mcp_register(struct gatt_db *db);
+> +bool bt_mcp_attach(struct bt_mcp *mcp, struct bt_gatt_client *client);
+> +void bt_mcp_detach(struct bt_mcp *mcp);
+> +
+> +struct bt_mcp *bt_mcp_new(struct gatt_db *ldb, struct gatt_db *rdb);
+> +struct bt_mcp *bt_mcp_ref(struct bt_mcp *mcp);
+> +void bt_mcp_unref(struct bt_mcp *mcp);
+> +
+> +bool bt_mcp_set_user_data(struct bt_mcp *mcp, void *user_data);
+> +void *bt_mcp_get_user_data(struct bt_mcp *mcp);
+> +
+> +unsigned int bt_mcp_play(struct bt_mcp *mcp);
+> +unsigned int bt_mcp_pause(struct bt_mcp *mcp);
+> +unsigned int bt_mcp_stop(struct bt_mcp *mcp);
+> diff --git a/src/shared/mcs.h b/src/shared/mcs.h
+> new file mode 100644
+> index 000000000..09b3bffe8
+> --- /dev/null
+> +++ b/src/shared/mcs.h
+> @@ -0,0 +1,65 @@
+> +/* SPDX-License-Identifier: LGPL-2.1-or-later */
+> +/*
+> + *
+> + *  BlueZ - Bluetooth protocol stack for Linux
+> + *
+> + *  Copyright (C) 2020  Intel Corporation. All rights reserved.
+> + *
+> + */
+> +
+> +/* MCP Media State */
+> +#define BT_MCS_STATUS_INACTIVE 0x00
+> +#define BT_MCS_STATUS_PLAYING  0x01
+> +#define BT_MCS_STATUS_PAUSED   0x02
+> +#define BT_MCS_STATUS_SEEKING  0x03
+> +
+> +/* MCP Control Point Opcodes */
+> +#define BT_MCS_CMD_PLAY                            0x01
+> +#define BT_MCS_CMD_PAUSE                   0x02
+> +#define BT_MCS_CMD_FAST_REWIND     0x03
+> +#define BT_MCS_CMD_FAST_FORWARD            0x04
+> +#define BT_MCS_CMD_STOP                            0x05
+> +
+> +#define BT_MCS_CMD_MOVE_RELATIVE    0x10
+> +
+> +#define BT_MCS_CMD_PREV_SEGMENT     0x20
+> +#define BT_MCS_CMD_NEXT_SEGMENT     0x21
+> +#define BT_MCS_CMD_FIRST_SEGMENT    0x22
+> +#define BT_MCS_CMD_LAST_SEGMENT     0x23
+> +#define BT_MCS_CMD_GOTO_SEGMENT     0x24
+> +
+> +#define BT_MCS_CMD_PREV_TRACK       0x30
+> +#define BT_MCS_CMD_NEXT_TRACK       0x31
+> +#define BT_MCS_CMD_FIRST_TRACK      0x32
+> +#define BT_MCS_CMD_LAST_TRACK       0x33
+> +#define BT_MCS_CMD_GOTO_TRACK       0x34
+> +
+> +#define BT_MCS_CMD_PREV_GROUP       0x40
+> +#define BT_MCS_CMD_NEXT_GROUP       0x41
+> +#define BT_MCS_CMD_FIRST_GROUP      0x42
+> +#define BT_MCS_CMD_LAST_GROUP       0x43
+> +#define BT_MCS_CMD_GOTO_GROUP       0x44
+> +
+> +
+> +/* MCP Control Point Opcodes Supported */
+> +#define BT_MCS_CMD_PLAY_SUPPORTED              0x00000001
+> +#define BT_MCS_CMD_PAUSE_SUPPORTED             0x00000002
+> +#define BT_MCS_CMD_FAST_REWIND_SUPPORTED       0x00000004
+> +#define BT_MCS_CMD_FAST_FORWARD_SUPPORTED      0x00000008
+> +#define BT_MCS_CMD_STOP_SUPPORTED              0x00000010
+> +#define BT_MCS_CMD_MOVE_RELATIVE_SUPPORTED     0x00000020
+> +#define BT_MCS_CMD_PREV_SEGMENT_SUPPORTED      0x00000040
+> +#define BT_MCS_CMD_NEXT_SEGMENT_SUPPORTED      0x00000080
+> +#define BT_MCS_CMD_FIRST_SEGMENT_SUPPORTED     0x00000100
+> +#define BT_MCS_CMD_LAST_SEGMENT_SUPPORTED      0x00000200
+> +#define BT_MCS_CMD_GOTO_SEGMENT_SUPPORTED      0x00000400
+> +#define BT_MCS_CMD_PREV_TRACK_SUPPORTED                0x00000800
+> +#define BT_MCS_CMD_NEXT_TRACK_SUPPORTED                0x00001000
+> +#define BT_MCS_CMD_FIRST_TRACK_SUPPORTED       0x00002000
+> +#define BT_MCS_CMD_LAST_TRACK_SUPPORTED                0x00004000
+> +#define BT_MCS_CMD_GOTO_TRACK_SUPPORTED                0x00008000
+> +#define BT_MCS_CMD_PREV_GROUP_SUPPORTED                0x00010000
+> +#define BT_MCS_CMD_NEXT_GROUP_SUPPORTED                0x00020000
+> +#define BT_MCS_CMD_FIRST_GROUP_SUPPORTED       0x00040000
+> +#define BT_MCS_CMD_LAST_GROUP_SUPPORTED                0x00080000
+> +#define BT_MCS_CMD_GOTO_GROUP_SUPPORTED                0x00100000
+> --
+> 2.25.1
+>
 
-diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
-index 67c21263f9e0..35f8041722c8 100644
---- a/drivers/bluetooth/virtio_bt.c
-+++ b/drivers/bluetooth/virtio_bt.c
-@@ -306,7 +306,12 @@ static int virtbt_probe(struct virtio_device *vdev)
-        if (virtio_has_feature(vdev, VIRTIO_BT_F_VND_HCI)) {
-                __u16 vendor;
 
--               virtio_cread(vdev, struct virtio_bt_config, vendor, &vendor=
-);
-+               if (virtio_has_feature(vdev, VIRTIO_BT_F_CONFIG_V2))
-+                       virtio_cread(vdev, struct virtio_bt_config_v2,
-+                                    vendor, &vendor);
-+               else
-+                       virtio_cread(vdev, struct virtio_bt_config,
-+                                    vendor, &vendor);
-
-                switch (vendor) {
-                case VIRTIO_BT_CONFIG_VENDOR_ZEPHYR:
-@@ -339,8 +344,12 @@ static int virtbt_probe(struct virtio_device *vdev)
-        if (virtio_has_feature(vdev, VIRTIO_BT_F_MSFT_EXT)) {
-                __u16 msft_opcode;
-
--               virtio_cread(vdev, struct virtio_bt_config,
--                            msft_opcode, &msft_opcode);
-+               if (virtio_has_feature(vdev, VIRTIO_BT_F_CONFIG_V2))
-+                       virtio_cread(vdev, struct virtio_bt_config_v2,
-+                                    msft_opcode, &msft_opcode);
-+               else
-+                       virtio_cread(vdev, struct virtio_bt_config,
-+                                    msft_opcode, &msft_opcode);
-
-                hci_set_msft_opcode(hdev, msft_opcode);
-        }
-@@ -387,6 +396,7 @@ static const unsigned int virtbt_features[] =3D {
-        VIRTIO_BT_F_VND_HCI,
-        VIRTIO_BT_F_MSFT_EXT,
-        VIRTIO_BT_F_AOSP_EXT,
-+       VIRTIO_BT_F_CONFIG_V2,
- };
-
- static struct virtio_driver virtbt_driver =3D {
-diff --git a/include/uapi/linux/virtio_bt.h b/include/uapi/linux/virtio_bt.=
-h
-index a7bd48daa9a9..af798f4c9680 100644
---- a/include/uapi/linux/virtio_bt.h
-+++ b/include/uapi/linux/virtio_bt.h
-@@ -9,6 +9,7 @@
- #define VIRTIO_BT_F_VND_HCI    0       /* Indicates vendor command support=
- */
- #define VIRTIO_BT_F_MSFT_EXT   1       /* Indicates MSFT vendor support */
- #define VIRTIO_BT_F_AOSP_EXT   2       /* Indicates AOSP vendor support */
-+#define VIRTIO_BT_F_CONFIG_V2  3       /* Use second version configuration=
- */
-
- enum virtio_bt_config_type {
-        VIRTIO_BT_CONFIG_TYPE_PRIMARY   =3D 0,
-@@ -28,4 +29,11 @@ struct virtio_bt_config {
-        __u16 msft_opcode;
- } __attribute__((packed));
-
-+struct virtio_bt_config_v2 {
-+       __u8  type;
-+       __u8  alignment;
-+       __u16 vendor;
-+       __u16 msft_opcode;
-+};
-+
- #endif /* _UAPI_LINUX_VIRTIO_BT_H */
---
-2.37.2
-
-
-Please mind our privacy notice<https://www.opensynergy.com/datenschutzerkla=
-erung/privacy-notice-for-business-partners-pursuant-to-article-13-of-the-ge=
-neral-data-protection-regulation-gdpr/> pursuant to Art. 13 GDPR. // Unsere=
- Hinweise zum Datenschutz gem. Art. 13 DSGVO finden Sie hier.<https://www.o=
-pensynergy.com/de/datenschutzerklaerung/datenschutzhinweise-fuer-geschaefts=
-partner-gem-art-13-dsgvo/>
+-- 
+Luiz Augusto von Dentz
