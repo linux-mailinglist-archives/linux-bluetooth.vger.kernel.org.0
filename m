@@ -2,119 +2,142 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32BFD60BDEB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Oct 2022 00:54:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FB0160BF6C
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Oct 2022 02:18:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231982AbiJXWyt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 24 Oct 2022 18:54:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58562 "EHLO
+        id S231246AbiJYASY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 24 Oct 2022 20:18:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231998AbiJXWy2 (ORCPT
+        with ESMTP id S231211AbiJYAR4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 24 Oct 2022 18:54:28 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D351BFBAE
-        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Oct 2022 14:16:04 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id z8so6406924qtv.5
-        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Oct 2022 14:16:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=uvu3ZmNS98EQenPqE5bE3iuj2W4Sgf+U7b+wuw7Q2t0=;
-        b=Fu6D5Keo3s5qtCumqCww7U7JI4XUDag1FzvHPJAkRfCuCzzpHR9M4ezlQCF8sEq0uI
-         bwmz5U3ARpyI1YygDh5FwuziFggNpohx4GPd+Zn2DR5/fTgVzHUsggA5mK3MgZ99U3R5
-         sSZ4j5zNygtROQSSv9u4/ETry/fDyBqyyj2Sy4Ggnu+RSn06Xe3e7Q0JaOVxqbSAM7yc
-         VmKtoJRNkqbeLHOChjMoVrcCj3EL2ZcKwOGUQp2fUmUwOXJ+CbxiCh9jsXXGX4V6ecIy
-         QVkIJPpGHhgzh7T8QJAu6gCqG8DALH8cklaNbhIzZ14XHnLBj3rt2MTeRn0LHr+invxR
-         MU2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uvu3ZmNS98EQenPqE5bE3iuj2W4Sgf+U7b+wuw7Q2t0=;
-        b=ssCQHycHBHtD90g/tX+xEGavQtEZvJ90714bwbOFj8Td4qo9+IZdqtF6sJmM5rOFP3
-         e4tWkRBSkgZ6Q+5XCbVNDJaFzsQUD+xR1haQOc9l0peDD8RQepKC8UpPvpkk1KhzSEdC
-         VHUjoPeiQpQ6rvWxfQCs12gTstWPPqXPhxedQ3E8GULpQETcUrWU8StayaLfPT69wsPT
-         GXUFCtzn9WEiC0opNo3Ia31ppZlUc1kjoW0J9vzSeW1F6FmvYHzs4vJ3914mkz6w8oy1
-         na4JwN/33ZxFl2lOrUE8CoD1l9V7c0cds5QoeugQTTfk8yupl2gQksxWPrQ+1L3qKH6n
-         PeBg==
-X-Gm-Message-State: ACrzQf35uIB4L2/Pyw59dCtbDfxsmZ1rL8G3/KmEeJBu1aYxg9EIkwCK
-        StpTsMOWwwG+en3ACvoq53+chdGDLEt4/A==
-X-Google-Smtp-Source: AMsMyM4Z+hp06O7zv6lUsGYRmQDlByvvf1OO0HwfyNvV8w1xantplJe0FicKkStjemD0D+g3GBR8Ow==
-X-Received: by 2002:ac8:5f12:0:b0:39c:d2ff:13aa with SMTP id x18-20020ac85f12000000b0039cd2ff13aamr27781057qta.193.1666646109565;
-        Mon, 24 Oct 2022 14:15:09 -0700 (PDT)
-Received: from [172.17.0.2] ([20.230.124.147])
-        by smtp.gmail.com with ESMTPSA id u13-20020a05620a454d00b006a6ebde4799sm690563qkp.90.2022.10.24.14.15.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 14:15:09 -0700 (PDT)
-Message-ID: <6357005d.050a0220.caba2.2500@mx.google.com>
-Date:   Mon, 24 Oct 2022 14:15:09 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============7768344550679736043=="
+        Mon, 24 Oct 2022 20:17:56 -0400
+Received: from refb01.tmes.trendmicro.eu (refb01.tmes.trendmicro.eu [18.185.115.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D35F34725
+        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Oct 2022 15:38:16 -0700 (PDT)
+Received: from 104.47.12.52_.trendmicro.com (unknown [172.21.19.58])
+        by refb01.tmes.trendmicro.eu (Postfix) with ESMTPS id E32911004F124;
+        Mon, 24 Oct 2022 13:42:06 +0000 (UTC)
+Received: from 104.47.12.52_.trendmicro.com (unknown [172.21.183.236])
+        by repost01.tmes.trendmicro.eu (Postfix) with SMTP id 8488C10000BA7;
+        Mon, 24 Oct 2022 13:41:06 +0000 (UTC)
+X-TM-MAIL-RECEIVED-TIME: 1666618861.342000
+X-TM-MAIL-UUID: 9e157397-6108-4e9a-a759-eb7011619f73
+Received: from EUR04-DB3-obe.outbound.protection.outlook.com (unknown [104.47.12.52])
+        by repre01.tmes.trendmicro.eu (Trend Micro Email Security) with ESMTPS id 53D311000031C;
+        Mon, 24 Oct 2022 13:41:01 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lLNcJSiMspqVVpOrI6lzd4KwWo4QmoCRa+Zh1Y6owt7HKsKDC22Bx+t9FMMOmDJMBqweCvpXTxPBzmzdUihzldJNxWI6ri0lHI5P16fXP4Kn5r61ZOqT132n6dK61tcJCX006EWJM5qQ1Qvn6QDGjmR5XHGjHNz9fFtZWAM9+xiqEjIUZA7FO46KcU0G03lAHOqtcmuRNEJvwcE8c3w4NAwxG95LCA5WFovrvpb4nSpUQfHzYCwPyRupO2W039X0eNCzWM/TxALGGD1DQy28C8PcdKTEpES/JmsaruMpvvfm/4hAMdbqYM5cEAmUxisBssBldgvzr0qmaWsrztDRSQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BUCWsYwSa4f8pb0D6lRzIM8Sfo43/oagQfT7nF480BU=;
+ b=ei13Jny8wdZ78PS5poVUjNrYik/orMK8sN6fnhrUep1A6qidlMWmTatInt4U7omhy5WTLVFW0WjQQa2GoaxQewROjY+G8rXvLmAsuA4kv0yryRx8sBV5ddiCQr7b2NwfrwI3PWm06SbNLcqLb3I/5z4sG/gxo6lUfGuPpjhco/seb94NwKiDiATjwuwhoWo2VMuCjV/ZGcrM5sJAQ5ihUpRaWCpg4PnFngKBL9QHmxJkgSNgCrqJrrpRLo84PK9PhXGM5fyM77dKSWSzj/JpR64p5ZqqQ3OMoKCChxR/RqS/L+gApj3dw+00eao57AeMlN6SMDO9LoDjW165pBu8nw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 217.66.60.4) smtp.rcpttodomain=gmail.com smtp.mailfrom=opensynergy.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=opensynergy.com;
+ dkim=none (message not signed); arc=none
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 217.66.60.4)
+ smtp.mailfrom=opensynergy.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=opensynergy.com;
+Received-SPF: Pass (protection.outlook.com: domain of opensynergy.com
+ designates 217.66.60.4 as permitted sender) receiver=protection.outlook.com;
+ client-ip=217.66.60.4; helo=SR-MAIL-03.open-synergy.com; pr=C
+From:   Igor Skalkin <Igor.Skalkin@opensynergy.com>
+To:     virtualization@lists.linux-foundation.org, luiz.dentz@gmail.com,
+        mst@redhat.com
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, jasowang@redhat.com,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Igor Skalkin <Igor.Skalkin@opensynergy.com>
+Subject: [PATCH v3 0/1] virtio_bt: Fix alignment in configuration struct
+Date:   Mon, 24 Oct 2022 15:40:32 +0200
+Message-Id: <20221024134033.30142-1-Igor.Skalkin@opensynergy.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <20221018191911.589564-1-Igor.Skalkin@opensynergy.com>
+References: <20221018191911.589564-1-Igor.Skalkin@opensynergy.com>
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, igor.skalkin@opensynergy.com
-Subject: RE: [v4,1/1] virtio_bt: Fix alignment in configuration struct
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20221024134033.30142-2-Igor.Skalkin@opensynergy.com>
-References: <20221024134033.30142-2-Igor.Skalkin@opensynergy.com>
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI1EUR05FT010:EE_|AS8PR04MB8770:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 11bd2c82-b347-487c-ed2a-08dab5c56289
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: NNotQ68KdvfvC3Gu3/kouHfOkBn65H/tdz4+7vbkZsIU8qXgpojMbmGmVj6EJCweEHacTEQocSWV9OwPWOkG+jRy8UIxdI1u96piPiFhXBjpGv5H3mvcq3RbxP2D2/NqlE1GUs/8ZRjgUiji6BvsvpuCaAGUgkY1t6obwE2J4TXqyq2iGNodjCw79MGOea0SlU1rt+LfKF7XkmuLWX3Z+dGUYa1MxPIzAM6R018atxD6Lx4nOEypDnACOsVWfb+7UK0eMpsNwbCmqqWlxCrY9ecyeLNWSXKb595KVEvt8IvlveKS3IYRagT4XCKAKv21UJNvKjWmvjEjpIje0T+zf75JhhEp+PIkJe0+lvPsoPzpW5bBryPLUSl+UQMXtI3qtbnAMYbul9C7htfDcV6FhBQgyDnOmmIR0Zo3IvCQwqIxcJyxpONswWn+so6F+MUA8fPTB4XP/T57qxMdQf5TOyEy+Dvnac05+Hk7VbtobsLTm0qSnhq33TeqKwJJRSTGEvcmrN9iBKUgecuTQ6r7/uGhGrtzQy/PV7tAoeH/fPvbFkCl/AqUJDj0BlTSWgxCvNyXG8ChJW8OLd8UUmGsuDYHxfH/bT+KMaainBzlym4fdAtT1rNYi2oVNoW17g7I+D5WcoU6TDP0WjPB0NwFJvvIawgmGJHuDN5VLrKvUOtrDhdcWU013PbfsEp+d8iq8UPZNSJgBbzpZmKVRhp8UaO/WWWgO2yvC3Igi1NGFGsFL400/lCjzUhx76tMTpVuEi3nGByFudOdfbd/1I9/J7hrZ6im/F0a5Lm1ARras0A=
+X-Forefront-Antispam-Report: CIP:217.66.60.4;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SR-MAIL-03.open-synergy.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(376002)(136003)(39830400003)(396003)(346002)(451199015)(36840700001)(46966006)(42186006)(83380400001)(316002)(86362001)(41300700001)(4326008)(36860700001)(336012)(40480700001)(26005)(2616005)(186003)(1076003)(8936002)(2906002)(8676002)(5660300002)(107886003)(70206006)(70586007)(82310400005)(47076005)(36756003)(66899015)(966005)(478600001)(81166007)(36900700001);DIR:OUT;SFP:1102;
+X-OriginatorOrg: opensynergy.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Oct 2022 13:40:59.1956
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11bd2c82-b347-487c-ed2a-08dab5c56289
+X-MS-Exchange-CrossTenant-Id: 800fae25-9b1b-4edc-993d-c939c4e84a64
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=800fae25-9b1b-4edc-993d-c939c4e84a64;Ip=[217.66.60.4];Helo=[SR-MAIL-03.open-synergy.com]
+X-MS-Exchange-CrossTenant-AuthSource: VI1EUR05FT010.eop-eur05.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8770
+X-TM-AS-ERS: 104.47.12.52-0.0.0.0
+X-TMASE-Version: StarCloud-1.3-9.0.1006-27220.007
+X-TMASE-Result: 10-1.841600-4.000000
+X-TMASE-MatchedRID: k/56TffKUsg4vjIDbvA3OMVUBXy8OM3/M9EkAUzyluGAI7Mvq/sL57ek
+        d2LX0DpINaAGdu5Ot0eXJbVmtnHrxnI0shGAc7FenVTWWiNp+v+wQ8dOma+kqrwxqSK0GSPRjFK
+        /NcS7G4llfaF/BQ/tikrFr2FVZxb3hYCiPfz7etn3dt27LH8hnKxAhf/GPomfeGHkpR2WBaL6Pq
+        wEmsq4onoKNsImo9ohuXFEQJaCEz7+OhQWBlKflRRFJJyf5BJenOXVXbtyRcZUMLUJu4leYyq2r
+        l3dzGQ11VrbCslo1IPzdrwMaU6LTMVEUeIHhCKcPpsnApkCOkM22y3gb14N8g==
+X-TMASE-XGENCLOUD: 41de61e5-7a29-48f4-ad5f-068e5c6e9b47-0-0-200-0
+X-TM-Deliver-Signature: CE0A99EB907CC0AE3CBC5D1BBF2D5FA8
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=opensynergy.com;
+        s=TM-DKIM-20210503141657; t=1666618866;
+        bh=LiTSONCq/pWfBg/3qES81Hhk0fxoeYLdcH3ISspf2kQ=; l=1320;
+        h=From:To:Date;
+        b=oVZJ+pBoTFsa4Xd/jB8f0DpuLtbmjpVUqITQOthmUe3ttiqtGp7eFEOBBHR4nn5Bg
+         Q7GHFoorleOe9bsYeysXYonMdvOMF1AZQh2JjZS7DkCTGRHgk7MR9NuG3hl4tTZgko
+         lt+5Zfforpes8Y4MdOKiSnhrCiV/iT9vKgUNa4T9jQjIwaJQMemHvR1zuK6YZpgp9V
+         h6BvFqmCG6UPUWYhYErcQIkgGdEdwEmPWR+UY9pOjOFCG5LNEO8jnRR4Ii94JoUtjH
+         0WRMafcZ4Q4yFUfeTlzl35sANppmraAlwnCIvSB/ktqEKNTD21vThX006VDQWpJxiN
+         8cARgnxGIE6nQ==
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============7768344550679736043==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+According to specification [1], "For the device-specific configuration
+space, the driver MUST use 8 bit wide accesses for 8 bit wide fields,
+16 bit wide and aligned accesses for 16 bit wide fields and 32 bit wide
+and aligned accesses for 32 and 64 bit wide fields.".
 
-This is automated email and please do not reply to this email!
+Current version of the configuration structure has non-aligned 16bit
+fields.
 
-Dear submitter,
+This patch adds a second, aligned  version of the configuration structure
+and a new feature bit indicating that this version is being used.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=688397
+[1] https://docs.oasis-open.org/virtio/virtio/v1.1/virtio-v1.1.pdf
 
----Test result---
+Changes in v4:
+  v3 was corrupted by our smtp server.
+Changes in v3:
+  v2 had been sent from the wrong address, fixed.
+Changes in v2:
+  The first version of this patch just changed the configuration
+  structure in uapi/linux/virtio_bt.h
+  This can not be done, because it will break the userspace, so the
+  second version offers a less radical approach - it introduces a new
+  feature bit and a new configuration structure that both the device
+  and the driver will use if this bit is negotiated.
 
-Test Summary:
-CheckPatch                    PASS      1.80 seconds
-GitLint                       PASS      1.02 seconds
-SubjectPrefix                 FAIL      0.90 seconds
-BuildKernel                   PASS      34.59 seconds
-BuildKernel32                 PASS      31.04 seconds
-Incremental Build with patchesPASS      45.75 seconds
-TestRunner: Setup             PASS      515.95 seconds
-TestRunner: l2cap-tester      PASS      17.43 seconds
-TestRunner: iso-tester        PASS      16.58 seconds
-TestRunner: bnep-tester       PASS      6.65 seconds
-TestRunner: mgmt-tester       PASS      106.36 seconds
-TestRunner: rfcomm-tester     PASS      10.56 seconds
-TestRunner: sco-tester        PASS      10.04 seconds
-TestRunner: ioctl-tester      PASS      11.22 seconds
-TestRunner: mesh-tester       PASS      8.12 seconds
-TestRunner: smp-tester        PASS      9.89 seconds
-TestRunner: userchan-tester   PASS      6.90 seconds
+Igor Skalkin (1):
+  virtio_bt: Fix alignment in configuration struct
 
-Details
-##############################
-Test: SubjectPrefix - FAIL - 0.90 seconds
-Check subject contains "Bluetooth" prefix
-"Bluetooth: " is not specified in the subject
+ drivers/bluetooth/virtio_bt.c  | 16 +++++++++++++---
+ include/uapi/linux/virtio_bt.h |  8 ++++++++
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
+-- 
+2.37.2
 
-
----
-Regards,
-Linux Bluetooth
-
-
---===============7768344550679736043==--
