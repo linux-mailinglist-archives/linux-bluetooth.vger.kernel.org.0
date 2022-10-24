@@ -2,83 +2,167 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F261260BC88
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 24 Oct 2022 23:53:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E229960BE28
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Oct 2022 01:06:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230259AbiJXVxe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 24 Oct 2022 17:53:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59960 "EHLO
+        id S230338AbiJXXGH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 24 Oct 2022 19:06:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230405AbiJXVxG (ORCPT
+        with ESMTP id S230384AbiJXXFd (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 24 Oct 2022 17:53:06 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 329A3132DCD
-        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Oct 2022 13:06:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 9DB11CE13CF
-        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Oct 2022 20:00:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DD09BC433D7;
-        Mon, 24 Oct 2022 20:00:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666641616;
-        bh=7ToBhbO4Kxh/RFKay51R53VtuX3WzCH/IGnNGC5AS/o=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=C1D0o+gYaxT+g++vSzH+k1eUPR1RnIPp7s1ELSKq9zRaKFzgJ4XKPtla8fJY+seq4
-         cyF8AArVvX6VFsqeTkCHyXnDXRi8LHZoZNw+VQdiQ14u1WsfCBNHwmLuSid4mALGP5
-         ctgQXhUOu/5bH16ZGnq0Bn5kGaoRkceBeBhZnGEobo6hJaqM+DQ9p+hDawWvoIRsZ6
-         wkVixyazZOHD3Lw06E+qzrnSwo28oqLz23pJOGCpDCMDxk8hDjVlhPRcfIgmkyxemZ
-         Y2dR3nrZRiB3HEwtszXgjjdD4kNdhfRKKgamqk63g0jefG/j6C+u2G90W5R/g+QrME
-         tkoUc49mQWcKQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C2795E29F30;
-        Mon, 24 Oct 2022 20:00:16 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 24 Oct 2022 19:05:33 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2704928E07C;
+        Mon, 24 Oct 2022 14:26:55 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id be13so18776412lfb.4;
+        Mon, 24 Oct 2022 14:26:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lpmvn6r7dh60+tXCwg9HVv88NIhkpPaXAz7PN44Ep2g=;
+        b=oa5GbDJ8fcj7npsls3OssMNUVigy+PTewvlQmBBoDoi3MrZ0aMwPLyxD1uf8fqcLZ0
+         MCi6fqWraBirLQPpYixafFBpK2g1WUoP2WdN22To+uCTHC1vAS/YgEMed90lHKp/9il5
+         bVRFf3AVaeYJ41tZ59RxKw9W8Fqx2PVQd74JNxkvseXvdIt2kArF2ENlU+wwKl2TnvP3
+         dqqsLzJF/WYEhjOQgs6+3CHSnzYzifpc4+MQtJkNeYPj5uzU7M3R5+UCaQV2luYlwSl3
+         gWn37ygBR6JXvLYPWcuCBPtUmVgXklWh3qUvimaFuhw0skGPxdBcSCIICJVlNBgT5o59
+         mjPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lpmvn6r7dh60+tXCwg9HVv88NIhkpPaXAz7PN44Ep2g=;
+        b=l7wTndwJg3QyqM6hPlKfvCsai9iriCOYdWc9HoxIBeghJTsil5iB7Ph7aquZ1D6Di4
+         dfRbhELvp7h9mgcb27NYVzC33f+OgbO6sHGlTFVNY5OKBR/PULoHuLgyX7eJd/jDPHzA
+         Mr2dcMOx/9QTWbaPwZ5GRZMeHIumy/XmrVOVVPg/rTXGeJbCBkBqpUynyDPzEoKXOjCk
+         HOpQ6utDqyoCSEfM+IRVdvXxCfWnhNiO3IG4d3Hw6ZItXUY8fOnin2q5X34gEAaMeKAx
+         yncoMegI/lYnxspAJ8bFy2JyIA6JbwpX0n5sL0MJQPa+LM7nxxaNLHL5slQgJzcWDkSY
+         vMOg==
+X-Gm-Message-State: ACrzQf2B2eI4EYdnOkAHP54GQIFUAersrxXF6oo7grrgCgdKFXhVgrSJ
+        iHKJVrmIbc/fH0hDb3E4F9VC1SZ4uD7wxlPtL/qYOuGlOAM=
+X-Google-Smtp-Source: AMsMyM58SleO86M78mwwRfccBo3+XaYYC7DNfdxs/Vb9MLcUfY0/LU7yG3PKMRSSyl8hmd8G8av3g0pFIat3soaaW8c=
+X-Received: by 2002:a05:651c:4ce:b0:26f:e2fd:57ed with SMTP id
+ e14-20020a05651c04ce00b0026fe2fd57edmr13810523lji.161.1666644876485; Mon, 24
+ Oct 2022 13:54:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 1/1] monitor: Ellisys: Add iso packet support
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166664161679.31850.6622560238267088637.git-patchwork-notify@kernel.org>
-Date:   Mon, 24 Oct 2022 20:00:16 +0000
-References: <20221022031333.4333-1-xiaokeqinhealth@126.com>
-In-Reply-To: <20221022031333.4333-1-xiaokeqinhealth@126.com>
-To:     None <xiaokeqinhealth@126.com>
-Cc:     linux-bluetooth@vger.kernel.org, xiaoyao@rock-chips.com
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221018191911.589564-1-Igor.Skalkin@opensynergy.com>
+ <20221024134033.30142-1-Igor.Skalkin@opensynergy.com> <20221024134033.30142-2-Igor.Skalkin@opensynergy.com>
+In-Reply-To: <20221024134033.30142-2-Igor.Skalkin@opensynergy.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Mon, 24 Oct 2022 13:54:24 -0700
+Message-ID: <CABBYNZKc7Y8JJ-J9+yUvnDTeVwYuqmzEZYpvfzvN0ctKGyj-Ow@mail.gmail.com>
+Subject: Re: [PATCH v4 1/1] virtio_bt: Fix alignment in configuration struct
+To:     Igor Skalkin <Igor.Skalkin@opensynergy.com>
+Cc:     virtualization@lists.linux-foundation.org, mst@redhat.com,
+        marcel@holtmann.org, johan.hedberg@gmail.com, jasowang@redhat.com,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+Hi Igor,
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+On Mon, Oct 24, 2022 at 6:41 AM Igor Skalkin
+<Igor.Skalkin@opensynergy.com> wrote:
+>
+> The current version of the configuration structure has unaligned
+> 16-bit fields, but according to the specification [1], access to
+> the configuration space must be aligned.
+>
+> Add a second, aligned  version of the configuration structure
+> and a new feature bit indicating that this version is being used.
+>
+> [1] https://docs.oasis-open.org/virtio/virtio/v1.1/virtio-v1.1.pdf
+>
+> Signed-off-by: Igor Skalkin <Igor.Skalkin@opensynergy.com>
+> ---
+>  drivers/bluetooth/virtio_bt.c  | 16 +++++++++++++---
+>  include/uapi/linux/virtio_bt.h |  8 ++++++++
+>  2 files changed, 21 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
+> index 67c21263f9e0..35f8041722c8 100644
+> --- a/drivers/bluetooth/virtio_bt.c
+> +++ b/drivers/bluetooth/virtio_bt.c
+> @@ -306,7 +306,12 @@ static int virtbt_probe(struct virtio_device *vdev)
+>         if (virtio_has_feature(vdev, VIRTIO_BT_F_VND_HCI)) {
+>                 __u16 vendor;
+>
+> -               virtio_cread(vdev, struct virtio_bt_config, vendor, &vendor);
+> +               if (virtio_has_feature(vdev, VIRTIO_BT_F_CONFIG_V2))
+> +                       virtio_cread(vdev, struct virtio_bt_config_v2,
+> +                                    vendor, &vendor);
+> +               else
+> +                       virtio_cread(vdev, struct virtio_bt_config,
+> +                                    vendor, &vendor);
+>
+>                 switch (vendor) {
+>                 case VIRTIO_BT_CONFIG_VENDOR_ZEPHYR:
+> @@ -339,8 +344,12 @@ static int virtbt_probe(struct virtio_device *vdev)
+>         if (virtio_has_feature(vdev, VIRTIO_BT_F_MSFT_EXT)) {
+>                 __u16 msft_opcode;
+>
+> -               virtio_cread(vdev, struct virtio_bt_config,
+> -                            msft_opcode, &msft_opcode);
+> +               if (virtio_has_feature(vdev, VIRTIO_BT_F_CONFIG_V2))
+> +                       virtio_cread(vdev, struct virtio_bt_config_v2,
+> +                                    msft_opcode, &msft_opcode);
+> +               else
+> +                       virtio_cread(vdev, struct virtio_bt_config,
+> +                                    msft_opcode, &msft_opcode);
+>
+>                 hci_set_msft_opcode(hdev, msft_opcode);
+>         }
+> @@ -387,6 +396,7 @@ static const unsigned int virtbt_features[] = {
+>         VIRTIO_BT_F_VND_HCI,
+>         VIRTIO_BT_F_MSFT_EXT,
+>         VIRTIO_BT_F_AOSP_EXT,
+> +       VIRTIO_BT_F_CONFIG_V2,
+>  };
 
-On Sat, 22 Oct 2022 11:13:33 +0800 you wrote:
-> From: Yao Xiao <xiaoyao@rock-chips.com>
-> 
-> Ellisys Bluetooth Analyzer Injection API Services.pdf
-> 
-> HCI Packet Type Object
-> Value   HCI Packet Type
-> 0x05    HCI ISO Data (host to controller)
-> 0x85    HCI ISO Data (controller to host)
-> 
-> [...]
+So this introduces a new flag which must be checked when attempting to
+config, right? But is this backward compatible? What happens if for
+some reason the userspace doesn't use the new struct are we able to
+detect that?
 
-Here is the summary with links:
-  - [BlueZ,1/1] monitor: Ellisys: Add iso packet support
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=6899322b68e5
+>  static struct virtio_driver virtbt_driver = {
+> diff --git a/include/uapi/linux/virtio_bt.h b/include/uapi/linux/virtio_bt.h
+> index a7bd48daa9a9..af798f4c9680 100644
+> --- a/include/uapi/linux/virtio_bt.h
+> +++ b/include/uapi/linux/virtio_bt.h
+> @@ -9,6 +9,7 @@
+>  #define VIRTIO_BT_F_VND_HCI    0       /* Indicates vendor command support */
+>  #define VIRTIO_BT_F_MSFT_EXT   1       /* Indicates MSFT vendor support */
+>  #define VIRTIO_BT_F_AOSP_EXT   2       /* Indicates AOSP vendor support */
+> +#define VIRTIO_BT_F_CONFIG_V2  3       /* Use second version configuration */
+>
+>  enum virtio_bt_config_type {
+>         VIRTIO_BT_CONFIG_TYPE_PRIMARY   = 0,
+> @@ -28,4 +29,11 @@ struct virtio_bt_config {
+>         __u16 msft_opcode;
+>  } __attribute__((packed));
+>
+> +struct virtio_bt_config_v2 {
+> +       __u8  type;
+> +       __u8  alignment;
+> +       __u16 vendor;
+> +       __u16 msft_opcode;
+> +};
+> +
+>  #endif /* _UAPI_LINUX_VIRTIO_BT_H */
+> --
+> 2.37.2
+>
 
-You are awesome, thank you!
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Luiz Augusto von Dentz
