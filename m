@@ -2,85 +2,75 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E20D60C570
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Oct 2022 09:37:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E36460C60B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Oct 2022 10:05:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231414AbiJYHho convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 25 Oct 2022 03:37:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46328 "EHLO
+        id S231267AbiJYIFF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 25 Oct 2022 04:05:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231259AbiJYHhi (ORCPT
+        with ESMTP id S230235AbiJYIFD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 25 Oct 2022 03:37:38 -0400
-X-Greylist: delayed 1068 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 25 Oct 2022 00:37:34 PDT
-Received: from mail.bojonegorokab.go.id (mail.bojonegorokab.go.id [103.87.16.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C67D0BFC;
-        Tue, 25 Oct 2022 00:37:34 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.bojonegorokab.go.id (Postfix) with ESMTP id F065CA01523;
-        Tue, 25 Oct 2022 14:04:00 +0700 (WIB)
-Received: from mail.bojonegorokab.go.id ([127.0.0.1])
-        by localhost (mail.bojonegorokab.go.id [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id IoZ0UA-xRwRs; Tue, 25 Oct 2022 14:04:00 +0700 (WIB)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.bojonegorokab.go.id (Postfix) with ESMTP id 50129A0125C;
-        Tue, 25 Oct 2022 14:04:00 +0700 (WIB)
-X-Virus-Scanned: amavisd-new at bojonegorokab.go.id
-Received: from mail.bojonegorokab.go.id ([127.0.0.1])
-        by localhost (mail.bojonegorokab.go.id [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id O8ATskPXV1jw; Tue, 25 Oct 2022 14:04:00 +0700 (WIB)
-Received: from mail.bojonegorokab.go.id (mail.bojonegorokab.go.id [10.1.2.26])
-        by mail.bojonegorokab.go.id (Postfix) with ESMTP id 59A1DA01517;
-        Tue, 25 Oct 2022 14:03:58 +0700 (WIB)
-Date:   Tue, 25 Oct 2022 14:03:58 +0700 (WIB)
-From:   =?utf-8?B?0YHQuNGB0YLQtdC80L3QuNC5INCw0LTQvNGW0L3RltGB0YLRgNCw0YLQvtGA?= 
-        <bapenda@bojonegorokab.go.id>
-Reply-To: sistemassadmins@mail2engineer.com
-Message-ID: <373195014.17102.1666681438273.JavaMail.zimbra@bojonegorokab.go.id>
-Subject: 
+        Tue, 25 Oct 2022 04:05:03 -0400
+X-Greylist: delayed 1616 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 25 Oct 2022 01:04:59 PDT
+Received: from smtpq4.tb.mail.iss.as9143.net (smtpq4.tb.mail.iss.as9143.net [212.54.42.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BABE2871E
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Oct 2022 01:04:58 -0700 (PDT)
+Received: from [212.54.42.106] (helo=smtp2.tb.mail.iss.as9143.net)
+        by smtpq4.tb.mail.iss.as9143.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <fabrizio.ge@tiscalinet.it>)
+        id 1onEVc-0007vl-Pt
+        for linux-bluetooth@vger.kernel.org; Tue, 25 Oct 2022 09:38:00 +0200
+Received: from [192.168.178.171] ([95.96.5.22])
+        by smtp2.tb.mail.iss.as9143.net with ESMTPA
+        id nEVboOOyKnLZXnEVco8p95; Tue, 25 Oct 2022 09:38:00 +0200
+X-Env-Mailfrom: fabrizio.ge@tiscalinet.it
+X-Env-Rcptto: linux-bluetooth@vger.kernel.org
+X-SourceIP: 95.96.5.22
+X-CNFS-Analysis: v=2.4 cv=J6S5USrS c=1 sm=1 tr=0 ts=63579258 cx=a_exe
+ a=OsQTkdxsvPZRyRYdxlniGQ==:117 a=OsQTkdxsvPZRyRYdxlniGQ==:17
+ a=IkcTkHD0fZMA:10 a=jU4qhlNgAAAA:8 a=l_ntp0G6eeSyGZe4ARwA:9 a=QEXdDO2ut3YA:10
+X-Authenticated-Sender: fabbo@ziggo.nl
+Message-ID: <5c5d1ce5-0ec5-a29b-a0f6-121703464f54@tiscalinet.it>
+Date:   Tue, 25 Oct 2022 09:37:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Originating-IP: [106.202.89.217]
-X-Mailer: Zimbra 8.8.15_GA_4203 (zclient/8.8.15_GA_4203)
-Thread-Index: Zx1SbZHPBLbOoCIau/i1W71zmzql+w==
-Thread-Topic: 
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: Yes, score=5.5 required=5.0 tests=BAYES_50,
-        FREEMAIL_FORGED_REPLYTO,MISSING_HEADERS,REPLYTO_WITHOUT_TO_CC,
-        SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75 autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4861]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  1.0 MISSING_HEADERS Missing To: header
-        *  1.6 REPLYTO_WITHOUT_TO_CC No description available.
-        *  0.0 UPPERCASE_50_75 message body is 50-75% uppercase
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-X-Spam-Level: *****
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Content-Language: en-US
+To:     linux-bluetooth@vger.kernel.org
+From:   Fabrizio Gennari <fabrizio.ge@tiscalinet.it>
+Subject: Article on history of the BCSP driver
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfLMGzOgI49yJ29umuZt16f0zGAxwVkHgzP10NCDQMgDccIzkE31VChEvWCbgkb99P3Dmatztst/cuJDF5VWekDd38msE0DQ4zWnQ8WmLfmO5aZ1jmUhC
+ he1CX4Y5ICXTyp3XWeYfymz/2JeF5dfj8tAXScnIClgx28kWdhyUrhT8iva/I+jjpbY/ol4p8nIZ74m6kSvfaNZ1vzmhsxnHK1w=
+X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_50,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_SOFTFAIL
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-увага;
+Hello,
 
-Ваша електронна пошта перевищила обмеження пам'яті, яке становить 5 ГБ, визначене адміністратором, яке в даний час працює на 10,9 ГБ. Ви не зможете надсилати або отримувати нову пошту, доки не перевірите поштову скриньку "Вхідні". Щоб відновити справність поштової скриньки, надішліть такі відомості
-нижче:
+long, long time ago, I used to contribute to BlueZ: sent a few patches 
+to the libraries, wrote a few man pages (e.g. hciconfig and hcitool), 
+and wrote a kernel driver for the BCSP protocol used by CSR devices. In 
+occasion of the 20th anniversary of the latter being merged into the 
+kernel, I wrote an article about the driver and the context in which it 
+was born (including the lab being shut down and its employees being laid 
+off shortly after).
 
-Ім'я:
-Ім'я користувача:
-пароль:
-Підтвердження пароля:
-Адреса електронної пошти:
-телефон:
+Writing it involved digging into the history of mailing lists and Web 
+pages. The fact that the archives of the old bluez-users mailing list 
+seem to be nowhere did not help.
 
-Якщо не вдається повторно перевірити повідомлення, ваша поштова скринька буде
-Вимкнуто!
+https://www.linkedin.com/pulse/history-linux-kernel-driver-hcibcspc-fabrizio-gennari 
+. Hope you enjoy reading it
 
-Приносимо вибачення за незручності.
-Код підтвердження: UA:@UAWEBADMIN72134539.WEB.UA
-Технічна підтримка Пошти Системний адміністратор © 2022
+Best regards,
+Fabrizio
+
