@@ -2,112 +2,113 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DDF760F6C0
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Oct 2022 14:06:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A4C160FB50
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Oct 2022 17:09:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235526AbiJ0MGt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 27 Oct 2022 08:06:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57978 "EHLO
+        id S236224AbiJ0PJX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 27 Oct 2022 11:09:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234869AbiJ0MGs (ORCPT
+        with ESMTP id S236247AbiJ0PJO (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 27 Oct 2022 08:06:48 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CECBF8E99A
-        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Oct 2022 05:06:47 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id y67so1690311oiy.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Oct 2022 05:06:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mU5sdY3tyACM+tcMqkP8WP2x6N/WMAxlyxjU4RHudRQ=;
-        b=E6U06B1JT+3JeOlWVXTiE3+1Yxy5RCsyjPfIwaSGQNnYRQeLHAP1IzTBQVwBB23pbd
-         QSsjXpJF2SfNJzKQ3t85l3Ze/Pd+lV+R1/Zy/U5mbkVu0Qvn8Bg0z3dJb0X5O3SKxQ1m
-         tMQXCaYZxiWCkUHcK33XUr3XD+PQxxTp+t+0MQpDqg22cOVt+WX+r0QVpxYypiS51GOb
-         VdaUSHlkM/ntGsySpCbADECU+GzqpaW1169/Vg1jJ1GBz96pNnMfGiaEDA1Vc6ltFmq0
-         mBUU4mnC6JK9vvP6qSywkm56bUf+Do6hxmpp2vdTF3b/asHA4IqtmUBE4JsgFJqxbSwY
-         8H9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mU5sdY3tyACM+tcMqkP8WP2x6N/WMAxlyxjU4RHudRQ=;
-        b=F2BEcBIefaALPYG7yMp3L7pgJ6e39VDtQ1o8Vd+JbZpCfGl2Af8i0DhMidD36deYxG
-         nu00ih/pmR8/tyTYQEL6sBLTSPHDoZlNphmh6Ona/6fCe0liTDi/SQJGQmFewT3h47NP
-         7BWJZCYvGIfAyBHiSjISR3mNDostwmTXvWlEbM71y3M1vs5gyKchYEGbIH9dm4c3nN7F
-         pN9nOTBIt/Z6ia3lxsBDiShN4f/iU66EM8bWycY7iJaxqx+p5uBcmRAqzfFYuBiNEKX4
-         61wE3goZ+erlW+rx90O9Kz7hribdLygItFIhzFXWvhmZNNj6vUeH2Tu9ektinQzEVTvf
-         y8gA==
-X-Gm-Message-State: ACrzQf3X20G6DgjeAi8R30KhAijJkO7TYhEAqlgGpn4E1+yVPJNFkQ/B
-        WQBl14sAUHK5va/+Ig8XC3jbomMFlUw=
-X-Google-Smtp-Source: AMsMyM4Eomm8MZhXqRdksEtd7dvPh0/RDemhMqBZlJW8fNv4Spe72du+nusm4doOcFX0bJvia7W4ZA==
-X-Received: by 2002:a05:6808:13cc:b0:359:8e25:127d with SMTP id d12-20020a05680813cc00b003598e25127dmr4617822oiw.177.1666872406995;
-        Thu, 27 Oct 2022 05:06:46 -0700 (PDT)
-Received: from [172.17.0.2] ([20.45.42.155])
-        by smtp.gmail.com with ESMTPSA id q21-20020a9d7c95000000b006618e23df48sm403302otn.39.2022.10.27.05.06.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 05:06:46 -0700 (PDT)
-Message-ID: <635a7456.9d0a0220.a0414.11c9@mx.google.com>
-Date:   Thu, 27 Oct 2022 05:06:46 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============7702969617113519205=="
+        Thu, 27 Oct 2022 11:09:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 367DE18F0D9;
+        Thu, 27 Oct 2022 08:09:13 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1E706623A4;
+        Thu, 27 Oct 2022 15:09:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0FFC43148;
+        Thu, 27 Oct 2022 15:09:11 +0000 (UTC)
+Received: from rostedt by gandalf.local.home with local (Exim 4.96)
+        (envelope-from <rostedt@goodmis.org>)
+        id 1oo4Va-00BvW0-2R;
+        Thu, 27 Oct 2022 11:09:26 -0400
+Message-ID: <20221027150926.587581591@goodmis.org>
+User-Agent: quilt/0.66
+Date:   Thu, 27 Oct 2022 11:05:33 -0400
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-bluetooth@vger.kernel.org
+Subject: [RFC][PATCH v2 08/31] timers: Bluetooth: Use del_timer_shutdown() before freeing timer
+References: <20221027150525.753064657@goodmis.org>
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, quic_zijuhu@quicinc.com
-Subject: RE: [v1] Bluetooth: btusb: Fix enable failure for a CSR BT dongle
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <1666868760-4680-1-git-send-email-quic_zijuhu@quicinc.com>
-References: <1666868760-4680-1-git-send-email-quic_zijuhu@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============7702969617113519205==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-This is automated email and please do not reply to this email!
+Before a timer is freed, del_timer_shutdown() must be called.
 
-Dear submitter,
+Link: https://lore.kernel.org/all/20220407161745.7d6754b3@gandalf.local.home/
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=689388
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.31 seconds
-GitLint                       PASS      0.79 seconds
-SubjectPrefix                 PASS      0.60 seconds
-BuildKernel                   PASS      40.13 seconds
-BuildKernel32                 PASS      36.08 seconds
-Incremental Build with patchesPASS      54.02 seconds
-TestRunner: Setup             PASS      608.14 seconds
-TestRunner: l2cap-tester      PASS      19.54 seconds
-TestRunner: iso-tester        PASS      19.79 seconds
-TestRunner: bnep-tester       PASS      7.61 seconds
-TestRunner: mgmt-tester       PASS      119.94 seconds
-TestRunner: rfcomm-tester     PASS      11.91 seconds
-TestRunner: sco-tester        PASS      11.06 seconds
-TestRunner: ioctl-tester      PASS      12.73 seconds
-TestRunner: mesh-tester       PASS      9.40 seconds
-TestRunner: smp-tester        PASS      11.09 seconds
-TestRunner: userchan-tester   PASS      7.88 seconds
-
-
-
+Cc: Marcel Holtmann <marcel@holtmann.org>
+Cc: Johan Hedberg <johan.hedberg@gmail.com>
+Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 ---
-Regards,
-Linux Bluetooth
+ drivers/bluetooth/hci_bcsp.c | 2 +-
+ drivers/bluetooth/hci_h5.c   | 2 +-
+ drivers/bluetooth/hci_qca.c  | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-
---===============7702969617113519205==--
+diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
+index cf4a56095817..69caaff37141 100644
+--- a/drivers/bluetooth/hci_bcsp.c
++++ b/drivers/bluetooth/hci_bcsp.c
+@@ -737,7 +737,7 @@ static int bcsp_close(struct hci_uart *hu)
+ {
+ 	struct bcsp_struct *bcsp = hu->priv;
+ 
+-	del_timer_sync(&bcsp->tbcsp);
++	del_timer_shutdown(&bcsp->tbcsp);
+ 
+ 	hu->priv = NULL;
+ 
+diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
+index c5a0409ef84f..08a36ea9eea9 100644
+--- a/drivers/bluetooth/hci_h5.c
++++ b/drivers/bluetooth/hci_h5.c
+@@ -253,7 +253,7 @@ static int h5_close(struct hci_uart *hu)
+ {
+ 	struct h5 *h5 = hu->priv;
+ 
+-	del_timer_sync(&h5->timer);
++	del_timer_shutdown(&h5->timer);
+ 
+ 	skb_queue_purge(&h5->unack);
+ 	skb_queue_purge(&h5->rel);
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 8df11016fd51..1796166ba35d 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -697,8 +697,8 @@ static int qca_close(struct hci_uart *hu)
+ 	skb_queue_purge(&qca->txq);
+ 	skb_queue_purge(&qca->rx_memdump_q);
+ 	destroy_workqueue(qca->workqueue);
+-	del_timer_sync(&qca->tx_idle_timer);
+-	del_timer_sync(&qca->wake_retrans_timer);
++	del_timer_shutdown(&qca->tx_idle_timer);
++	del_timer_shutdown(&qca->wake_retrans_timer);
+ 	qca->hu = NULL;
+ 
+ 	kfree_skb(qca->rx_skb);
+-- 
+2.35.1
