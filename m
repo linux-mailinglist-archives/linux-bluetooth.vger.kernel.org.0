@@ -2,57 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E97EA615340
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Nov 2022 21:27:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1D9461537B
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Nov 2022 21:50:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229958AbiKAU1Z (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 1 Nov 2022 16:27:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33124 "EHLO
+        id S230208AbiKAUuW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 1 Nov 2022 16:50:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbiKAU1D (ORCPT
+        with ESMTP id S229841AbiKAUuU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 1 Nov 2022 16:27:03 -0400
-Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B6542BD2
-        for <linux-bluetooth@vger.kernel.org>; Tue,  1 Nov 2022 13:27:02 -0700 (PDT)
-Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+        Tue, 1 Nov 2022 16:50:20 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10E9118B34
+        for <linux-bluetooth@vger.kernel.org>; Tue,  1 Nov 2022 13:50:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: marex@denx.de)
-        by phobos.denx.de (Postfix) with ESMTPSA id BACBC81E72;
-        Tue,  1 Nov 2022 21:27:00 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-        s=phobos-20191101; t=1667334421;
-        bh=5fTp7OzwYVZG6MD/wr502JQXy32M5jP6ub+x/dxy/u4=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=CVZDx+R/QKNgFyidTX2JF98tF6JOxjH5vBadMb9tTT2GERDG5Fgad60i1iQKk3m5L
-         UHNZqt4GrJpkFzvc9kzuR042CAqzRJKr9TfXYDQae40e35QYG7BctUKQsgfaG5Fq6s
-         gMVBQxaFSyjOt/Ll251HLr3lTsbK7dNwguiFPEDOH2tpllUdvOTix+PpgW7NRGJXOf
-         k6b9/1pljlkf6CQ4G05ckrkQ9U1CkDWjtO3PAN+48LIfT1f6kkT4zRUrUnub6xEuDN
-         r1cM1ysev+j9YdD6zmucYzG7Mu3cxNkGjk9LbDc880oJDPPS4QlOxlHEguH4MOip1g
-         1XkFh0AoaLGqQ==
-Message-ID: <a347544a-ff06-5f62-0ac1-27ff7a70b6bd@denx.de>
-Date:   Tue, 1 Nov 2022 21:27:00 +0100
+        by sin.source.kernel.org (Postfix) with ESMTPS id 4010ECE1DBC
+        for <linux-bluetooth@vger.kernel.org>; Tue,  1 Nov 2022 20:50:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 728E3C433D6;
+        Tue,  1 Nov 2022 20:50:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667335816;
+        bh=Uq3wL6wwXa4KFGHVvKUZdjq3gg5WzjgTgFp0cy8pvuk=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=lhx01/Ol2Rgp3harza47b+VVxMjOCSn9jhI8le/2lHv6DJV83fJlzk2ghsdTwQrnS
+         f7ZfiyE/JtkwWsuCxfC9WIN3PxcAe+z9TblDrYHzSnJsjnZYur8Nf044oEumIepmDm
+         xhEkyqQA9ilmmjFXyKqooMDvU9CWcQaPiCodaNBSuYHzUvEWgMASfMBp0bbfqma5H4
+         rRuhN2Ou3JllRF647hqXAw/8MbfGtdZWUI34mVdaiHxYrGm6cOrWg71kaxtcrZrx16
+         dJXickYRlsY4GgU9Y3KWAo1vjO7Mffb86YFiJ5f2SIfSt1rSe5DJhFCCfy5TfJ6OQk
+         Zp+Udc79KJOWg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 557D8E50D71;
+        Tue,  1 Nov 2022 20:50:16 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [BlueZ] tools: Make hciattach_* firmware path build-time
- configurable
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] Bluetooth: L2CAP: Fix attempting to access uninitialized
+ memory
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <166733581634.15990.15185356562874303701.git-patchwork-notify@kernel.org>
+Date:   Tue, 01 Nov 2022 20:50:16 +0000
+References: <20221031231052.2718430-1-luiz.dentz@gmail.com>
+In-Reply-To: <20221031231052.2718430-1-luiz.dentz@gmail.com>
 To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     linux-bluetooth@vger.kernel.org
-References: <20221101115333.18223-1-marex@denx.de>
- <63612127.4a0a0220.ee3ae.be5c@mx.google.com>
- <1f4bcb64-9402-3975-960a-fc1c1f7cebe4@denx.de>
- <CABBYNZLQKEJZc_bDNOEqVHqZNv8pOnCxEAQBT68i693t87Ur_A@mail.gmail.com>
-From:   Marek Vasut <marex@denx.de>
-In-Reply-To: <CABBYNZLQKEJZc_bDNOEqVHqZNv8pOnCxEAQBT68i693t87Ur_A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: clamav-milter 0.103.6 at phobos.denx.de
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,58 +56,31 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On 11/1/22 20:24, Luiz Augusto von Dentz wrote:
-> Hi Marek,
-> 
-> On Tue, Nov 1, 2022 at 8:45 AM Marek Vasut <marex@denx.de> wrote:
->>
->> On 11/1/22 14:37, bluez.test.bot@gmail.com wrote:
->>> This is automated email and please do not reply to this email!
->>>
->>> Dear submitter,
->>>
->>> Thank you for submitting the patches to the linux bluetooth mailing list.
->>> This is a CI test results with your patch series:
->>> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=690839
->>>
->>> ---Test result---
->>>
->>> Test Summary:
->>> CheckPatch                    PASS      1.01 seconds
->>> GitLint                       PASS      0.86 seconds
->>> Prep - Setup ELL              PASS      26.44 seconds
->>> Build - Prep                  PASS      0.68 seconds
->>> Build - Configure             PASS      8.16 seconds
->>> Build - Make                  PASS      723.76 seconds
->>> Make Check                    PASS      10.90 seconds
->>> Make Check w/Valgrind         PASS      287.82 seconds
->>> Make Distcheck                PASS      233.70 seconds
->>> Build w/ext ELL - Configure   PASS      8.17 seconds
->>> Build w/ext ELL - Make        PASS      83.94 seconds
->>> Incremental Build w/ patches  PASS      0.00 seconds
->>> Scan Build                    WARNING   476.19 seconds
->>>
->>> Details
->>> ##############################
->>> Test: Scan Build - WARNING
->>> Desc: Run Scan Build with patches
->>> Output:
->>> *****************************************************************************
->>> The bugs reported by the scan-build may or may not be caused by your patches.
->>> Please check the list and fix the bugs if they are caused by your patch.
->>> *****************************************************************************
->>> tools/hciattach_qualcomm.c:218:8: warning: Although the value stored to 'n' is used in the enclosing expression, the value is never actually read from 'n'
->>>                   if ((n = read_hci_event(fd, resp, 100)) < 0) {
->>>                        ^   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>> tools/hciattach_qualcomm.c:253:8: warning: Although the value stored to 'n' is used in the enclosing expression, the value is never actually read from 'n'
->>>                   if ((n = read_hci_event(fd, resp, 100)) < 0) {
->>>                        ^   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>> 2 warnings generated.
->>
->> That's unlikely caused by this patch.
-> 
-> Yep, the scan-build rebuilds the file you have changed so any problem
-> it finds in that file will be reported, anyway I can ignore the
-> warnings but patches to fix these warnings are welcome as well.
+Hello:
 
-Done
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+
+On Mon, 31 Oct 2022 16:10:52 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> On l2cap_parse_conf_req the variable efs is only initialized if
+> remote_efs has been set.
+> 
+> CVE: CVE-2022-42895
+> CC: stable@vger.kernel.org
+> Reported-by: Tamás Koczka <poprdi@google.com>
+> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> [...]
+
+Here is the summary with links:
+  - Bluetooth: L2CAP: Fix attempting to access uninitialized memory
+    https://git.kernel.org/bluetooth/bluetooth-next/c/34f07dd531a4
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
