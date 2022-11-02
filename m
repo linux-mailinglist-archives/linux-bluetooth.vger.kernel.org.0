@@ -2,109 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E818261619C
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Nov 2022 12:18:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3212C6168E9
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Nov 2022 17:30:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230433AbiKBLSa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 2 Nov 2022 07:18:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54448 "EHLO
+        id S229459AbiKBQar (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 2 Nov 2022 12:30:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230394AbiKBLS3 (ORCPT
+        with ESMTP id S231871AbiKBQaS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 2 Nov 2022 07:18:29 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4023313FA6
-        for <linux-bluetooth@vger.kernel.org>; Wed,  2 Nov 2022 04:18:28 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id b124so6372784oia.4
-        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Nov 2022 04:18:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=V3l0C0Hv4Witx/wJyp/Qo3W+HDIPZdLN5NfZj2QX6KQ=;
-        b=QVbpYu58I15bakYMOEoHZlaa2w9UHfrYDUmQmu+QL7UZe/2q2fLLGYQblLPYHVOhAu
-         kJcVBNFSrSmHF1hyYpV1M71V1WBjrY0xEaO+LX+2qOos2gs0ZiAXCMGM20fBGyqkf/ax
-         0EgyZx3g7rcDyx/qHfvkFZeRAiOgZELdI2vkcb9R8TWbTeqreM6dqIIqD7gjIv2i7EFq
-         vAvbUNrnr8/C81wR0wbKlcxfp4iEUyv4KKQIoN0M9kGzgu0iOmlkNNf/xrT5M7uRHmeC
-         lMg3bNKXw8D0QgzqpH4nPG8NGbg2MVz0N09uRJDoI0SQvMf9bh4S0aKiDI3TKqXiLl0g
-         wF+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V3l0C0Hv4Witx/wJyp/Qo3W+HDIPZdLN5NfZj2QX6KQ=;
-        b=nW2VCJTHdBkpwwlYumSX0F1K3v+ODPZOeOm5gE4yX5tzhLsaVhjOh1rXtPm69/FFmM
-         kLqlEhFo6XqphAtSQXlhGOW7B+o0n0nNW71Raga44CBnjewqjtJcOC9wlULk0JBePgQe
-         JdR+ZjAeSlJCZawd2PzwBfjk6oRH+wphZhbOxrspe9hIVqyDq7VxKB+VRdSL3gKUkQWX
-         kkYI56EDMiNggb3CmwVzcH9Y+PR6uvWZcV7R6KVwR8qTUdFVTxbbrJW8uT7g1PcQUzRt
-         /qsmemvgJ9NIQU6AUCxphm33IGH/YVojaumzH66kFTzb626nWZrQydWYps1l0WQu3S+N
-         wKAw==
-X-Gm-Message-State: ACrzQf2xMjMMYNKkMUulbbH0pb8ppubnkwGkJiiVO7sZVHnPRrbYh2Zc
-        eGGFfNb9xY76vPSTpvpmsrTkW1TdJpU=
-X-Google-Smtp-Source: AMsMyM5EauFjwZ6RiRdbfEJrHjwu+y5Tw05ZhqVb6qeiP8/BHr7Hqq7ucQ+DXbd+PDVQIWGtUOvVrA==
-X-Received: by 2002:aca:ba42:0:b0:354:88fc:81b4 with SMTP id k63-20020acaba42000000b0035488fc81b4mr20968433oif.252.1667387907459;
-        Wed, 02 Nov 2022 04:18:27 -0700 (PDT)
-Received: from [172.17.0.2] ([20.165.64.41])
-        by smtp.gmail.com with ESMTPSA id g13-20020a056870d20d00b0012c21a64a76sm5824635oac.24.2022.11.02.04.18.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 04:18:26 -0700 (PDT)
-Message-ID: <63625202.050a0220.a2974.53bf@mx.google.com>
-Date:   Wed, 02 Nov 2022 04:18:26 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============5562196278744735820=="
+        Wed, 2 Nov 2022 12:30:18 -0400
+X-Greylist: delayed 2419 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 02 Nov 2022 09:26:52 PDT
+Received: from mailgate.kemenperin.go.id (mailgate.kemenperin.go.id [202.47.80.142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5137D2D746
+        for <linux-bluetooth@vger.kernel.org>; Wed,  2 Nov 2022 09:26:52 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mailgate.kemenperin.go.id (Postfix) with ESMTP id 6AD5E2822B8;
+        Wed,  2 Nov 2022 22:11:48 +0700 (WIB)
+Received: from mailgate.kemenperin.go.id ([127.0.0.1])
+        by localhost (mailgate.kemenperin.go.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id VYSqba1EEiOU; Wed,  2 Nov 2022 22:11:47 +0700 (WIB)
+Received: from localhost (localhost [127.0.0.1])
+        by mailgate.kemenperin.go.id (Postfix) with ESMTP id DFA6D2822B9;
+        Wed,  2 Nov 2022 22:11:41 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mailgate.kemenperin.go.id DFA6D2822B9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kemenperin.go.id;
+        s=3298A942-BBC6-11E3-B333-483736368EC2; t=1667401902;
+        bh=YY0byl9QW9mbpcGFFvLhgG9jS+KSNFV6XsisqWE0AkE=;
+        h=Date:From:Message-ID:MIME-Version;
+        b=Dw0EJ+Oq9oCax5w9gCNdh9Uf5BrFV8mCXgQqlr0rIWznrwluPpdTYxhG2CxcBxL70
+         jfOzVN3lp/70RFw/DiaUsXpzMrgmfXm7xacqRjmd6NF11zM4Thc/9CiQbao9d1XW32
+         FiKukb5jhYYqdziPDa6UC65Lx+J0EOvGNhtTixK4=
+X-Virus-Scanned: amavisd-new at kemenperin.go.id
+Received: from mailgate.kemenperin.go.id ([127.0.0.1])
+        by localhost (mailgate.kemenperin.go.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id oXUdfHcPTxMf; Wed,  2 Nov 2022 22:11:41 +0700 (WIB)
+Received: from mailgate.kemenperin.go.id (mailgate.kemenperin.go.id [10.1.0.89])
+        by mailgate.kemenperin.go.id (Postfix) with ESMTP id 4A3DE2822A6;
+        Wed,  2 Nov 2022 22:11:30 +0700 (WIB)
+Date:   Wed, 2 Nov 2022 22:11:30 +0700 (WIB)
+From:   Global Credit Consultancy <anggilimbong@kemenperin.go.id>
+Reply-To: Global Credit Consultancy 
+          <info@gccreditinternationalconsultancy.com>
+Message-ID: <864562546.299720.1667401890243.JavaMail.zimbra@kemenperin.go.id>
+Subject: =?utf-8?Q?Snabbl=C3=A5n?=
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, hadess@hadess.net
-Subject: RE: [BlueZ] main.conf: Add comment about LA Audio BAP UUIDs
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20221102101224.1463549-1-hadess@hadess.net>
-References: <20221102101224.1463549-1-hadess@hadess.net>
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.1.0.89]
+Thread-Index: C8dT0JWW2zeqrIlwnbpVnTMpuemKRw==
+Thread-Topic: =?utf-8?Q?Snabbl=C3=A5n?=
+X-Spam-Status: No, score=3.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MISSING_HEADERS,
+        RCVD_IN_MSPIKE_H2,REPLYTO_WITHOUT_TO_CC,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5562196278744735820==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=691153
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.03 seconds
-GitLint                       PASS      0.75 seconds
-Prep - Setup ELL              PASS      33.82 seconds
-Build - Prep                  PASS      0.98 seconds
-Build - Configure             PASS      10.66 seconds
-Build - Make                  PASS      1141.01 seconds
-Make Check                    PASS      12.91 seconds
-Make Check w/Valgrind         PASS      365.20 seconds
-Make Distcheck                PASS      304.19 seconds
-Build w/ext ELL - Configure   PASS      10.59 seconds
-Build w/ext ELL - Make        PASS      109.91 seconds
-Incremental Build w/ patches  PASS      0.00 seconds
-Scan Build                    PASS      676.03 seconds
 
 
+Uppm=C3=A4rksamhet!
 
----
-Regards,
-Linux Bluetooth
+F=C3=A5 s=C3=A4krade omedelbara l=C3=A5n till 1,1 % inom 48 timmar.
+L=C3=A5nebelopp: =E2=82=AC10 000,00 till =E2=82=AC10 000 000,00
 
+Typer av l=C3=A5n:
+Privatl=C3=A5n, f=C3=B6retagsl=C3=A5n, projektl=C3=A5n, investeringsl=C3=A5=
+n och
+Mer.
 
---===============5562196278744735820==--
+Obligatoriska applikationsdata:
+
+Fullst=C3=A4ndiga namn:__________________
+Hela adressen:_________________
+L=C3=A5nebelopp:__________
+Hyresperiod:___________________
+Syftet med l=C3=A5net:_________________
+
+Obs: V=C3=A5ra tj=C3=A4nster =C3=A4r 100% garanterade och
+Att uppfylla dina ekonomiska behov till din bel=C3=A5tenhet =C3=A4r v=C3=A5=
+rt
+h=C3=B6gsta prioritet.
+Missa inte dessa chanser.
+
+Kreditans=C3=B6kningsdisk
+Herman Gilligan
+E-post: info@gccreditinternationalconsultancy.com
+Gc International Credit Advisor
