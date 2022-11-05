@@ -2,153 +2,74 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94AE361D981
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Nov 2022 11:45:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B32C61D9F9
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Nov 2022 13:39:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbiKEKob (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 5 Nov 2022 06:44:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45122 "EHLO
+        id S229718AbiKEMi5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 5 Nov 2022 08:38:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbiKEKo2 (ORCPT
+        with ESMTP id S229669AbiKEMix (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 5 Nov 2022 06:44:28 -0400
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C7E42DABD
-        for <linux-bluetooth@vger.kernel.org>; Sat,  5 Nov 2022 03:44:27 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id D2F2B5C0158;
-        Sat,  5 Nov 2022 06:44:24 -0400 (EDT)
-Received: from imap47 ([10.202.2.97])
-  by compute2.internal (MEProxy); Sat, 05 Nov 2022 06:44:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=svenpeter.dev;
-         h=cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; t=1667645064; x=1667731464; bh=svqRhy053y
-        ZEkTZj6Ytmk3ysvtseyhP5dPlEhdxeIN8=; b=U/Z0DByHiLUjby+n2/EKrPiacz
-        OwpbjiDZDfEISrViZwQNQMeYYCxAVN+q1zbHlpZj4aFiccpqFFHOXei5WnkorB2U
-        TVdSvHuyV7JICf5OzffFSzmUGHl0aarY/hKnSjIGfHQ4DH1pd+lsrxDPM3R8hhRS
-        oDR9ye94Z0bxgszrAoHaMwEVF27wkOhHlPVJuvPJ/WxZ0OoZaukoe3zDEPnOrRpM
-        SNQxn8KswTo16F+ghsFCUF+KYkCqwxdyKXRAnHJEAbpLxQ9E0XPwm9NIoxZ87n31
-        RnsuUFrepQ4yIdsl6RCrBBquag4Pr0BvHwAAs7+nhWSU81VpLhne3/lpRL6w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; t=1667645064; x=1667731464; bh=svqRhy053yZEkTZj6Ytmk3ysvtse
-        yhP5dPlEhdxeIN8=; b=Opdn0ALAFS7kq3d1QDDbn7JU1jKqQoOLAUeh09liYzuu
-        Hd7qcnjh4IBxbRomsm6THXbpFcFw13oFe5IYBMUz5vl5KJVLDPuqr3RRBCKCUMK+
-        s9UvQOeLDc7XGZCMDVrLq8BKj4yskfQ279xzfbT2zuYgjLmgQys9hXTmikT5GSw6
-        hS5cg76F9Aw1iFyKKGbnqLGbFcoJKY1mQwbH0b/La8FxSRvMbFvdnGIejQnWCIgR
-        Cc4YwnDaH7FzdmeNgbmjZB7dEoPdwoREp2bGtNutHpHbKBInGUNKgSEqlx4x+Wjj
-        GXnLTvKi5ukxm7v9UHMM5ZQGyLm+F7p2a5fOSoQmRA==
-X-ME-Sender: <xms:iD5mY9VkrMMzhz69aIY2vb_wxzS-Jhpu4NWASaNczhiAm0M0qr3M4w>
-    <xme:iD5mY9loUCWzkvWsskuGKaJTfO7a0pBiCWQSYrVnsIRUjmEToNBkHYunRfY4UzZOU
-    Y6quqXYhdygCZi8OKk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrvdefgddvtdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedfufhvvghn
-    ucfrvghtvghrfdcuoehsvhgvnhesshhvvghnphgvthgvrhdruggvvheqnecuggftrfgrth
-    htvghrnhepvedvgeevuddvvedvgfelfeegiedvgeehieeutdelvedvieevveeljeefvedt
-    leehnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehsvhgvnhesshhvvghnphgvthgvrhdruggv
-    vh
-X-ME-Proxy: <xmx:iD5mY5by2-6vsV3syfVvMJkhah-s6nph1Y5799mPkXZ0kXIx7OnAxw>
-    <xmx:iD5mYwV6xEpv1npTLO5IJstyeSuCG58sY3P6PlbHzYKDEnJX8vo_eg>
-    <xmx:iD5mY3k2KGqXg-t2XnJxzmrOjF-F0-JmoUrm0lY7HN0P-pdMZ2wDug>
-    <xmx:iD5mY9R9nR6oslj34rb7lqHj8Q8T0OLr5sIGUpWJ8L8ebFeoOQn5hA>
-Feedback-ID: i51094778:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id A9E8DA6007C; Sat,  5 Nov 2022 06:44:24 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1087-g968661d8e1-fm-20221021.001-g968661d8
-Mime-Version: 1.0
-Message-Id: <69ac6612-0153-4428-b0ff-fe950ffd6448@app.fastmail.com>
-In-Reply-To: <CABBYNZJ20Uw8_++2d1HyND-1UZcn5UzzuBcSqhk0W5VhszLutQ@mail.gmail.com>
-References: <20221104211303.70222-2-sven@svenpeter.dev>
- <63658c5b.050a0220.abbe1.14c5@mx.google.com>
- <CABBYNZJ20Uw8_++2d1HyND-1UZcn5UzzuBcSqhk0W5VhszLutQ@mail.gmail.com>
-Date:   Sat, 05 Nov 2022 11:44:04 +0100
-From:   "Sven Peter" <sven@svenpeter.dev>
-To:     "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>,
-        linux-bluetooth@vger.kernel.org
-Subject: Re: Broadcom/Apple Bluetooth driver for Apple Silicon
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Sat, 5 Nov 2022 08:38:53 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83CAE1759B
+        for <linux-bluetooth@vger.kernel.org>; Sat,  5 Nov 2022 05:38:51 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id 4so7249030pli.0
+        for <linux-bluetooth@vger.kernel.org>; Sat, 05 Nov 2022 05:38:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=c8XA1N0uaxkLO/wKHErNWHaSuu64k5Pjb5u9dmcZrOc=;
+        b=dP/vGfJ52tqdGGbdLFa+Ia1xCAutipWeAOPq8jKDnWkU62hZU7sMsZY49TgkwXAA5g
+         1yeGamAlfRFs90wkvR6lgaV3Wg24N6HDnekdo8UURsmSP5otybZlRkZzNxJ7AfUj6Q2+
+         CKiyBj4FP1EFkZc1H9L2i7zRAVvwvNQ+/TJeOdzeNP7tRScDVLp3Vlh/OdENcMPFJkDn
+         oSEUQfZcVQpylzARvlDhQNJui4E2RbhaxAaa7n3Kdgsd4f/k34LkyqWLBylB/XpPW04g
+         dKDuUZyENsU3QsJf+hTLTKsTcNOWBj2897N39hnlhbs7/J2gK6gRaL+j/IeFSdFJ1ntP
+         NWQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c8XA1N0uaxkLO/wKHErNWHaSuu64k5Pjb5u9dmcZrOc=;
+        b=SPObwsjW0mAmMz3HAHxPTqbrP7/z6L7zIikjUUhOWKcq3Oy2pUIlPUMZE7TLmbhQTQ
+         dVhENYaLR3fjNGb3uqS5bTpKgfHnkzIxUzeDNvApTpmVw7k3Nq21+WSAAdsgFXNVm6PU
+         H50vBzNcuqSHVmzOdZebOkLQm04rQYMsyn/vhBwtljcvreGNYlC6unc/nZT/w8R0gbIv
+         jVp5037A8YwkyTBYKvxzmEU7v6UbM0IzENn/ZHaIvBCrX3m1zqY7bxc20gAqmtY7GDzb
+         HQ+jLbiTITYzdo5pQicNqQN3tdioG7hJuEZSil343Hqx+LZocldl7eSxfksUDarDlOPJ
+         wlcg==
+X-Gm-Message-State: ACrzQf0ssxMPsjBlNHozZv5rkSHN3/uqoeR8k3ZrS+YxWsM/R5Zg/5Y3
+        BmSyrcIxJsNugR4HlICm2pFXYhcY3vQQ/5rIddw=
+X-Google-Smtp-Source: AMsMyM4olsI8J+PUrJBDqcdS3+ybCY1m5BPCD8wMv7D7l+O5tLdAL0JwRK1eWuD3q/Waqjsy5xHfJk1xeIU90M7q0J0=
+X-Received: by 2002:a17:902:f28b:b0:186:b069:63fc with SMTP id
+ k11-20020a170902f28b00b00186b06963fcmr41192256plc.38.1667651930280; Sat, 05
+ Nov 2022 05:38:50 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a05:7301:2e91:b0:83:922d:c616 with HTTP; Sat, 5 Nov 2022
+ 05:38:49 -0700 (PDT)
+Reply-To: stefanopessia755@hotmail.com
+From:   Stefano Pessina <wamathaibenard@gmail.com>
+Date:   Sat, 5 Nov 2022 15:38:49 +0300
+Message-ID: <CAN7bvZJK9DwWPHW=SDzsdiMac2NZ4YPui9Vp11ivOjS8hNwTjg@mail.gmail.com>
+Subject: Geldspende
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Luiz,
-
-On Fri, Nov 4, 2022, at 23:37, Luiz Augusto von Dentz wrote:
-> Hi Sven,
->
-> On Fri, Nov 4, 2022 at 3:15 PM <bluez.test.bot@gmail.com> wrote:
->>
->> This is automated email and please do not reply to this email!
->>
->> Dear submitter,
->>
->> Thank you for submitting the patches to the linux bluetooth mailing list.
->> This is a CI test results with your patch series:
->> PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=692274
->>
->> ---Test result---
->>
->> Test Summary:
->> CheckPatch                    FAIL      7.46 seconds
->> GitLint                       FAIL      2.01 seconds
->> SubjectPrefix                 FAIL      2.61 seconds
->> BuildKernel                   PASS      34.62 seconds
->> BuildKernel32                 PASS      31.22 seconds
->> Incremental Build with patchesPASS      151.12 seconds
->> TestRunner: Setup             PASS      513.16 seconds
->> TestRunner: l2cap-tester      PASS      17.36 seconds
->> TestRunner: iso-tester        PASS      16.95 seconds
->> TestRunner: bnep-tester       PASS      6.66 seconds
->> TestRunner: mgmt-tester       PASS      107.82 seconds
->> TestRunner: rfcomm-tester     PASS      10.55 seconds
->> TestRunner: sco-tester        PASS      9.93 seconds
->> TestRunner: ioctl-tester      PASS      11.21 seconds
->> TestRunner: mesh-tester       PASS      8.08 seconds
->> TestRunner: smp-tester        PASS      9.90 seconds
->> TestRunner: userchan-tester   PASS      6.88 seconds
->>
->> Details
->> ##############################
->> Test: CheckPatch - FAIL - 7.46 seconds
->> Run checkpatch.pl script with rule in .checkpatch.conf
->> [v5,1/7] dt-bindings: net: Add generic Bluetooth controller\WARNING:FILE_PATH_CHANGES: added, moved or deleted file(s), does MAINTAINERS need updating?
->> #115:
->>  .../{ => bluetooth}/qualcomm-bluetooth.yaml   |  6 ++--
->>
->> WARNING:DT_SPLIT_BINDING_PATCH: DT binding docs and includes should be a separate patch. See: Documentation/devicetree/bindings/submitting-patches.rst
->>
->> WARNING:DT_SPLIT_BINDING_PATCH: DT binding docs and includes should be a separate patch. See: Documentation/devicetree/bindings/submitting-patches.rst
->>
->> total: 0 errors, 3 warnings, 71 lines checked
->
-> The other errors you can probably ignore but this one above got my
-> attention, it seems we are doing the right by having the documentation
-> changes as a separate patch but checkpatch is still complaining?
-
-I think that one happens because I replace bluetooth.txt with the yml binding
-and replace all references to bluetooth.txt in the same commit. So technically
-it looks like I introduce a generic binding and a more specific binding
-that includes the generic one in a single commit.
-
-I could split that into multiple commits but the DT maintainers seems to be
-fine with the single commit. They also have their own CI and usually complain
-if it generates warnings.
-
-
-Best,
-
-
-Sven
+--=20
+Die Summe von 500.000,00 =E2=82=AC wurde Ihnen von STEFANO PESSINA gespende=
+t.
+Bitte kontaktieren Sie uns f=C3=BCr weitere Informationen =C3=BCber
+stefanopessia755@hotmail.com
