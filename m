@@ -2,120 +2,129 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3A4E61EB1C
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Nov 2022 07:39:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F9BE61F066
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Nov 2022 11:24:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231178AbiKGGjS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 7 Nov 2022 01:39:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48784 "EHLO
+        id S231833AbiKGKYB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 7 Nov 2022 05:24:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231373AbiKGGjP (ORCPT
+        with ESMTP id S231714AbiKGKXz (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 7 Nov 2022 01:39:15 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04F876576;
-        Sun,  6 Nov 2022 22:39:14 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id d20so14691044ljc.12;
-        Sun, 06 Nov 2022 22:39:13 -0800 (PST)
+        Mon, 7 Nov 2022 05:23:55 -0500
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C00C5186FD
+        for <linux-bluetooth@vger.kernel.org>; Mon,  7 Nov 2022 02:23:52 -0800 (PST)
+Received: by mail-pl1-x641.google.com with SMTP id y4so10655748plb.2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 07 Nov 2022 02:23:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YhxHSbVpdxUsgd8PqvbbYUKKhoaOXSotkm3CoyNxy14=;
-        b=EYjNnJVCjk8/LdUHzXwZFV0g2SWgE278DLW9zsNC6TTCIBlzwupO9ieIMfGhu7rZ+u
-         mWmJd3ruVLfoZRLQy8FwUkNT+BkB6aR1AGU14+6/9E3FSTMAmjDlr4xFHRJSukWwlLit
-         bd4FwLRBJ4oRAsEDDWqxFVaKGSjsArqjCu0oA3bCvCrszJsJc9zuk0uKpqhSpHclSWgK
-         cbgg6ftj3jrFnrtSRJE8oBEaLbNZeXkScG56D6bLKb1+xHHNRZIXOmaFQoirwSUVxjr8
-         Pdk5w0av0n9fD41u5ACOn8A09kTtiQIsycNYp3hCBYNGeSBOt4vDtb4Mo3LKNM0k9tdk
-         7sTQ==
+        bh=AOmtRIzmF5dcnWrT0j3skK83MYTC+QvduwZ6ndeN2Ks=;
+        b=Zv++OJ/ncK2pWuUWAQT+z52+cIoHK/WVJU4bVze52hunD5wDL4D5XJdl5mW2VbRjhi
+         PKA0tQ/z42/ONfUnPJoBfdYRGEG2gwiyoDRW7hecaxcg+/0t0u3g44ISFlpe+B9l1fvu
+         TmkNgtKOyak6WThRMAIvY+g5IgPZxvnz63e21BpajeaX9653GP4qpHUHyfV7BL4cSNb4
+         pCU1fNGxZBn7NlKzWZCMHMxM9LSs8sKofgpQ0FSoeb/qTDQ+CPP+tvlBe/vGQ8T8hOyn
+         vdUZr48/zTuwVxtBDF6IrOR7pT19nf73qD9i1Q8QUWEzM8dVJjwmGS+xVbVCXqFaE09J
+         SKzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YhxHSbVpdxUsgd8PqvbbYUKKhoaOXSotkm3CoyNxy14=;
-        b=vVk1ZnC+nYpfU2bVatiP7NL551EfD2UZAvY8Xv/WJPZUyn4Cwl9VogCq/52n2EJvkn
-         AhT/yGKtNHUzATlBH64ea9qS9zRyNRvOUeWNdjtq08lHL1IhH4/grh119IbFRU7s8e6Q
-         3ItC6L8lyjDN69l97ZEuXxev0yVylhR8+2mGf+coJ91lDlUWBB5laA2zGtMg8vEEUmXh
-         o7elYaVPd4ieyshdvshqpvfp95biv6ERYeBxJOouJY1wA/ABEAi/ejMXibgEGcZ1s02z
-         vuygHlK3NIgaKpWmtMBjxH8dW0c1hicdB6pcj08nozdSW5o9ink1/SG+l7adiyDTzZeI
-         yh8w==
-X-Gm-Message-State: ANoB5pn6sJblHUuJ+wMq9LldOJcbyVO9GD1HkBomqMsuVEcpRAXLJ8Iz
-        Dq6PWxGW+5oFFRqLrW5w54JHpr/q0IYB4tHqyKw=
-X-Google-Smtp-Source: AA0mqf5Jrlncit5ydl+cRhKGZZ8pY+GYr8SjNH41rgGyQ7Dc5I/SyQwZ19aqwveKZ+V9c3D/zRRBJY4HSdGwHOXWvTg=
-X-Received: by 2002:a2e:2e12:0:b0:278:acaa:acda with SMTP id
- u18-20020a2e2e12000000b00278acaaacdamr365840lju.305.1667803152130; Sun, 06
- Nov 2022 22:39:12 -0800 (PST)
+        bh=AOmtRIzmF5dcnWrT0j3skK83MYTC+QvduwZ6ndeN2Ks=;
+        b=CddhiRaYrXgn5ETdeps2cnTtHaEmCdOvbmZQL7j/zM5IOsH/I6lguVkoOJOgGIUutA
+         9d3s7QbTwRlQmSzobVqWy/VsNZVUjKqDcHW6Rb+f7dM5U43GtrV5bPhASWcg6oVl6USa
+         x0K1vRfR9+wETPP62QpiAr1WLhQJEY7DR9PSkFnHgJPd6mWdIWAxNeIEUifqppeghidP
+         dOjg+ARROfOFBhU1J66nEa3mr6UNHOClqlRvFr85qVFasJiOFWQFh4IO5oAPiOkD/Vwn
+         jZ6E2SDd3hgz81j+CRKjGL3sy8p5oJ0pukY01hij7WmCaNuZEEqFW/VJ69//Y5sOvU4M
+         2DoQ==
+X-Gm-Message-State: ACrzQf2nDYSH1B15s7xcUu0gDbw91mYwGsPUH2ldQtulaOVtDzB4pwdp
+        8AN3HeHlgDFJUPzplBp/1ebMA2Rkd3RLAKHTzYo=
+X-Google-Smtp-Source: AMsMyM7DPjaK7bSeUBIcMTkNZUaqK+NSwCEUfp88ZZDLY5TXShnQ2+B86xH3ryBKqTyGQWW3ozA/96x60VupsK8qo34=
+X-Received: by 2002:a17:902:8a90:b0:186:b145:f5ec with SMTP id
+ p16-20020a1709028a9000b00186b145f5ecmr50774476plo.103.1667816632274; Mon, 07
+ Nov 2022 02:23:52 -0800 (PST)
 MIME-Version: 1.0
-References: <0000000000000bab2c05e95a81a3@google.com> <000000000000946f3005eca8cafe@google.com>
- <CACT4Y+bX40TE_rx0SFnixoQVd_vHuGih9mtJA4TB7-dDOeguew@mail.gmail.com>
-In-Reply-To: <CACT4Y+bX40TE_rx0SFnixoQVd_vHuGih9mtJA4TB7-dDOeguew@mail.gmail.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Sun, 6 Nov 2022 22:39:00 -0800
-Message-ID: <CABBYNZKyjFE_oVFDMj-U9uSax79bMimUCi1JyGBmyR_ufCNAUw@mail.gmail.com>
-Subject: Re: [syzbot] BUG: corrupted list in hci_conn_add_sysfs
-To:     Dmitry Vyukov <dvyukov@google.com>
-Cc:     syzbot <syzbot+b30ccad4684cce846cef@syzkaller.appspotmail.com>,
-        davem@davemloft.net, edumazet@google.com,
-        gregkh@linuxfoundation.org, johan.hedberg@gmail.com,
-        kuba@kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, luiz.von.dentz@intel.com,
-        marcel@holtmann.org, netdev@vger.kernel.org, pabeni@redhat.com,
-        rafael@kernel.org, syzkaller-bugs@googlegroups.com,
-        yin31149@gmail.com
+Received: by 2002:a05:6a06:925:b0:587:19e0:c567 with HTTP; Mon, 7 Nov 2022
+ 02:23:51 -0800 (PST)
+Reply-To: contact@ammico.it
+From:   =?UTF-8?Q?Mrs=2E_Monika_Everenov=C3=A1?= <977638ib@gmail.com>
+Date:   Mon, 7 Nov 2022 11:23:51 +0100
+Message-ID: <CAHAXD+bPNCns8Ez=7iXmPLADMtJgZj3-mFTk3NMhWC-Ca1b9rw@mail.gmail.com>
+Subject: Re:
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=5.8 required=5.0 tests=ADVANCE_FEE_2_NEW_MONEY,
+        BAYES_20,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FREEMAIL_FROM,FROM_STARTS_WITH_NUMS,LOTS_OF_MONEY,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,UNDISC_MONEY autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:641 listed in]
+        [list.dnswl.org]
+        * -0.0 BAYES_20 BODY: Bayes spam probability is 5 to 20%
+        *      [score: 0.1680]
+        *  0.7 FROM_STARTS_WITH_NUMS From: starts with several numbers
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [977638ib[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  3.3 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+        *  2.0 ADVANCE_FEE_2_NEW_MONEY Advance Fee fraud and lots of money
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
-
-On Sun, Nov 6, 2022 at 3:25 PM Dmitry Vyukov <dvyukov@google.com> wrote:
->
-> On Fri, 4 Nov 2022 at 10:56, syzbot
-> <syzbot+b30ccad4684cce846cef@syzkaller.appspotmail.com> wrote:
-> >
-> > syzbot suspects this issue was fixed by commit:
-> >
-> > commit 448a496f760664d3e2e79466aa1787e6abc922b5
-> > Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> > Date:   Mon Sep 19 17:56:59 2022 +0000
-> >
-> >     Bluetooth: hci_sysfs: Fix attempting to call device_add multiple times
-> >
-> > bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=1052f8fe880000
-> > start commit:   dc164f4fb00a Merge tag 'for-linus-6.0-rc7' of git://git.ke..
-> > git tree:       upstream
-> > kernel config:  https://syzkaller.appspot.com/x/.config?x=122d7bd4fc8e0ecb
-> > dashboard link: https://syzkaller.appspot.com/bug?extid=b30ccad4684cce846cef
-> > syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1110db8c880000
-> > C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=13e58aef080000
-> >
-> > If the result looks correct, please mark the issue as fixed by replying with:
-> >
-> > #syz fix: Bluetooth: hci_sysfs: Fix attempting to call device_add multiple times
-> >
-> > For information about bisection process see: https://goo.gl/tpsmEJ#bisection
->
->
-> Looks reasonable based on subsystem and the patch:
->
-> #syz fix: Bluetooth: hci_sysfs: Fix attempting to call device_add multiple times
-
-Looks like I did add a different link when fixing it:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/commit/?id=448a496f760664d3e2e79466aa1787e6abc922b5
-
-Or perhaps they are duplicated?
-
-https://syzkaller.appspot.com/bug?id=da3246e2d33afdb92d66bc166a0934c5b146404a
-https://syzkaller.appspot.com/bug?extid=b30ccad4684cce846cef
-
--- 
-Luiz Augusto von Dentz
+Hei ja miten voit?
+Nimeni on rouva Evereen, l=C3=A4het=C3=A4n t=C3=A4m=C3=A4n viestin suurella=
+ toivolla
+v=C3=A4lit=C3=B6n vastaus, koska minun on teht=C3=A4v=C3=A4 uusi syd=C3=A4n=
+leikkaus
+t=C3=A4ll=C3=A4 hetkell=C3=A4 huonokuntoinen ja v=C3=A4h=C3=A4iset mahdolli=
+suudet selviyty=C3=A4.
+Mutta ennen kuin min=C3=A4
+Tee toinen vaarallinen operaatio, annan sen sinulle
+Minulla on 6 550 000 dollaria yhdysvaltalaisella pankkitilill=C3=A4
+sijoittamista, hallinnointia ja k=C3=A4ytt=C3=B6=C3=A4 varten
+voittoa hyv=C3=A4ntekev=C3=A4isyysprojektin toteuttamiseen. Tarkoitan saira=
+iden auttamista
+ja k=C3=B6yh=C3=A4t ovat viimeinen haluni maan p=C3=A4=C3=A4ll=C3=A4, sill=
+=C3=A4 minulla ei ole niit=C3=A4
+kenelt=C3=A4 perii rahaa.
+Vastaa minulle nopeasti
+terveisi=C3=A4
+Rouva Monika Evereen
+Florida, Amerikan Yhdysvallat
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+Hi and how are you?
+My name is Mrs. Evereen, I am sending this message with great hope for
+an immediate response, as I have to undergo heart reoperation in my
+current poor health with little chance of survival. But before I
+undertake the second dangerous operation, I will give you the
+$6,550,000 I have in my US bank account to invest well, manage and use
+the profits to run a charity project for me. I count helping the sick
+and the poor as my last wish on earth, because I have no one to
+inherit money from.
+Please give me a quick reply
+regards
+Mrs. Monika Evereen
+Florida, United States of America
