@@ -2,161 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93A1962144D
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Nov 2022 14:59:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03F6F621668
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Nov 2022 15:27:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234890AbiKHN7t (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 8 Nov 2022 08:59:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33818 "EHLO
+        id S233928AbiKHO1N (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 8 Nov 2022 09:27:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234842AbiKHN7r (ORCPT
+        with ESMTP id S234076AbiKHO0p (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 8 Nov 2022 08:59:47 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFC9E528A4;
-        Tue,  8 Nov 2022 05:59:46 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 79D9AB81AFB;
-        Tue,  8 Nov 2022 13:59:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329FBC43144;
-        Tue,  8 Nov 2022 13:59:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667915984;
-        bh=gt3e/46Fztc4JQae3Mx8JCLYeah5CxMi8WSozle/3iA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=fB9gCqxgaOkiVIJZFtjTFtPeciaEpPfvLLIdmkZH6SH0KJCkgub5Pt//FU+Ss+nXJ
-         +cQjPUS7oyqm3M1vGNi10M9nVimW5ZSI9+3eIlcVD1uEg81oJcXFFD2D6xHjJoj1kf
-         Il3pkcKiV2j7kFC/mHFz7qcjraz0mCmMVALpPwkBAsKlLAbWHgT/Nsok1h1exCX1tS
-         aBYEjLlLhXskfflZc22j1kNDcwcjLLtAIHRfxsjvaDw0r0VjMyxNx7VbaYcUkQT4EN
-         4ExPbq8ZpeP2MuN8Zo5BpdpgFEJGe2pL5eS0CWXHBrR7ad01VXXuLPAw5QeScY24Fk
-         uXXiAzNkewt/w==
-Received: by mail-lj1-f175.google.com with SMTP id x21so21204447ljg.10;
-        Tue, 08 Nov 2022 05:59:44 -0800 (PST)
-X-Gm-Message-State: ACrzQf0cslshuUlmJfR8xkNScAr7YGRUmRIyZ7FJoMsFTlh51OqH/KIt
-        CBPSj7EqX6o2UJph7KUz43Orji58uA2jxCXxTw==
-X-Google-Smtp-Source: AMsMyM6v95NHP6D6kjSL3cfj63z3lVhmN0hKNF2Re0ZxrUaTNruCtaNBrEflOi0n2jImuvMyuQALQF+iytz273/QVJo=
-X-Received: by 2002:a05:651c:114a:b0:25d:5ae6:42a4 with SMTP id
- h10-20020a05651c114a00b0025d5ae642a4mr19189817ljo.255.1667915982102; Tue, 08
- Nov 2022 05:59:42 -0800 (PST)
+        Tue, 8 Nov 2022 09:26:45 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBA8711829
+        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Nov 2022 06:25:31 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id f63so13542734pgc.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Nov 2022 06:25:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
+        b=dj7L8L4Tt3T52fNCiLgU1wmk4q3GKw+FgtxNNdpNZejQJQ1k3Xi+uLyqI46mZtlAe9
+         HLOA9P1jXmiTZuSDq5pdxRxdF0a/HoEZnGcKQ3YQ37POKm1J5RjeTmEaXOGvNGsQ/aCd
+         x8X3wRq447BygztmxjMMFJOJydFOJUOGXobl/qzDVFAJS2xNGHdVGGQVxwZyaR/NBt0/
+         bE+cdHmQ/pyeyXGzJcY+3ABqxwuM8e+fvQz2jyAv1cJHWTFyjffI5j3/3Sk+yOdlf96H
+         6ymXuWHpJpL3yt30UdlgfE5yAEKuZaLtj9+SPJvm7HvWfCahTeKPqye7UyLe1WT7erj+
+         Thwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
+        b=sI5WOBPa7FfExc/nSCbdDbEFq2gwJ6MzTlaltecTT50HsNenGi3InK9/wgqo8+f7cB
+         p8WJIwNgOaz62s2mc93YbgNGnJkkV70vgnZB6uzzWsx8oUpMxgRC3W9t2loU1I1Hi4XK
+         E+BNPPPoml8hPFiDHYNacXRrPqFcgUQQ4htnuMjoWHUZkD1myr710imU6GsQ3J1yOID4
+         Z+2hnLRw4EMzSULKruK8hbcO6uqvCNP2Xp1gC2Dot70k2UQz2CsEkBfudmSbUo5e0X/Q
+         dbCU6riSUUNuA+gLwjAJFVsHozbx6Ux1lkhwkprLRAjZWcJODvYaH3jAO8Vfibliyv8h
+         cbHw==
+X-Gm-Message-State: ACrzQf1AHkZUXA1k4RDyJK7p7GJnlnAaQj/0SqTTRw57XwYvvewSVLEd
+        bABoCXaSx/pger/t2+WweLyZC8CbHKIHcl63pMg=
+X-Google-Smtp-Source: AMsMyM5/o8Tv1jtvv5i5ish68BM3WfS9X9eqWOTVG2elMlgZjohDVk/23K/5zEIB58o7eHSGPzDyTC5sLFDQxOS4ibc=
+X-Received: by 2002:a63:2c8b:0:b0:41c:5f9e:a1d6 with SMTP id
+ s133-20020a632c8b000000b0041c5f9ea1d6mr47624667pgs.601.1667917531062; Tue, 08
+ Nov 2022 06:25:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20221108055531.2176793-1-dominique.martinet@atmark-techno.com> <20221108055531.2176793-2-dominique.martinet@atmark-techno.com>
-In-Reply-To: <20221108055531.2176793-2-dominique.martinet@atmark-techno.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 8 Nov 2022 07:59:33 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKCb2ZA+CLTVnGBMjp6zu0yw-rSFjWRg2S3hA7S6h-XEA@mail.gmail.com>
-Message-ID: <CAL_JsqKCb2ZA+CLTVnGBMjp6zu0yw-rSFjWRg2S3hA7S6h-XEA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] dt-bindings: net: h4-bluetooth: add new bindings
- for hci_h4
-To:     Dominique Martinet <dominique.martinet@atmark-techno.com>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Paolo Abeni <pabeni@redhat.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Eric Dumazet <edumazet@google.com>,
-        "David S . Miller" <davem@davemloft.net>, mizo@atmark-techno.com
+Received: by 2002:a05:7300:5388:b0:85:81c6:896c with HTTP; Tue, 8 Nov 2022
+ 06:25:29 -0800 (PST)
+Reply-To: mr.abraham022@gmail.com
+From:   "Mr.Abraham" <davidkekeli11@gmail.com>
+Date:   Tue, 8 Nov 2022 14:25:29 +0000
+Message-ID: <CAPBO+FLUDBD86dHQM6-TOwtKbf996Qz13VQWrvY27T9ETbCTEA@mail.gmail.com>
+Subject: Greeting
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:536 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.4871]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [mr.abraham022[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [davidkekeli11[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [davidkekeli11[at]gmail.com]
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Mon, Nov 7, 2022 at 11:56 PM Dominique Martinet
-<dominique.martinet@atmark-techno.com> wrote:
->
-> Add devicetree binding to support defining a bluetooth device using the h4
-> uart protocol
-
-The protocol is mostly irrelevant to the binding. The binding is for a
-particular device even if the driver is shared.
-
->
-> This was tested with a NXP wireless+BT AW-XM458 module, but might
-> benefit others as the H4 protocol seems often used.
->
-> Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-> ---
->  .../devicetree/bindings/net/h4-bluetooth.yaml | 49 +++++++++++++++++++
-
-Use the compatible string for the filename.
-
-There's now a pending (in linux-next) net/bluetooth/ directory and a
-bluetooth-controller.yaml schema which you should reference.
-
->  1 file changed, 49 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/h4-bluetooth.yaml
->
-> diff --git a/Documentation/devicetree/bindings/net/h4-bluetooth.yaml b/Documentation/devicetree/bindings/net/h4-bluetooth.yaml
-> new file mode 100644
-> index 000000000000..5d11b89ca386
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/h4-bluetooth.yaml
-> @@ -0,0 +1,49 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/h4-bluetooth.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: H4 Bluetooth
-> +
-> +maintainers:
-> +  - Dominique Martinet <dominique.martinet@atmark-techno.com>
-> +
-> +description:
-> +  H4 is a common bluetooth over uart protocol.
-> +  For example, the AW-XM458 is a WiFi + BT module where the WiFi part is
-> +  connected over PCI (M.2), while BT is connected over serial speaking
-> +  the H4 protocol. Its firmware is sent on the PCI side.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - nxp,aw-xm458-bt
-> +
-> +  max-speed: true
-> +
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/gpio/gpio.h>
-> +    #include <dt-bindings/clock/imx8mp-clock.h>
-> +
-> +    uart1 {
-
-serial {
-
-> +        pinctrl-names = "default";
-> +        pinctrl-0 = <&pinctrl_uart1>;
-> +        assigned-clocks = <&clk IMX8MP_CLK_UART1>;
-> +        assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_80M>;
-> +        status = "okay";
-> +        fsl,dte-mode = <1>;
-> +        fsl,uart-has-rtscts;
-
-All these properties are irrelevant to the example. Drop.
-
-> +
-> +
-> +        bluetooth {
-> +            compatible = "nxp,aw-xm458-bt";
-> +            max-speed = <3000000>;
-> +        };
-> +    };
-> --
-> 2.35.1
->
->
+My Greeting, Did you receive the letter i sent to you. Please answer me.
+Regard, Mr.Abraham
