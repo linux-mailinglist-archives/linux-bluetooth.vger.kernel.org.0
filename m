@@ -2,104 +2,93 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C708D627869
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Nov 2022 10:02:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C2E78628BC3
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Nov 2022 23:05:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236686AbiKNJC2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 14 Nov 2022 04:02:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45130 "EHLO
+        id S237059AbiKNWFj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 14 Nov 2022 17:05:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236693AbiKNJCW (ORCPT
+        with ESMTP id S236124AbiKNWFi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 14 Nov 2022 04:02:22 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DE5063AB
-        for <linux-bluetooth@vger.kernel.org>; Mon, 14 Nov 2022 01:02:21 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id x2so16297753edd.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 14 Nov 2022 01:02:21 -0800 (PST)
+        Mon, 14 Nov 2022 17:05:38 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D828645E;
+        Mon, 14 Nov 2022 14:05:37 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id p8so21601316lfu.11;
+        Mon, 14 Nov 2022 14:05:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ddKdS4x8c4ZSI9PbKdla4xMHlbecpUYnHnf7KqPY/v4=;
-        b=mLIRFP3nM1QPmTsxF0MUAS8PnpFLkBGp6MxsW/etpFY+bdhGl1O+WXwSnoqFKwHFoA
-         D8UT+1YOlbrkQbcNxXMnngoGD7CoF8+Jz0+fQERyhWckzxx8cXDjX6FCj4rVAPDNkxsY
-         iz6/9A7mdHzChv1GYyKT1gJ0/8zIcKroq/pX2Z1NLrnX+UewPEufYFBeTPNEhIFjdvkF
-         0aBg+WAdOC4UUuZLpPFeVkp22K313Anql2qz1+fgal59K4vUt/PsRVMJiJ4lcAJNoyJR
-         5urACXpZGxabXf4/qG3M3K0sR0U7gegYcDwFbSipxwg59YrM6nOMK+ETUynKuQhB1r+s
-         xgkg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OvIKu8xYhgEpbqXECsNQ5zYgFCSscSAylV2o5sVbq4A=;
+        b=XvZTor6KuexX5oMvV2vFohasI4/uU0LLUW82V/FUBd+vNsfEJGTDkwTViSioQX3e22
+         vWYwRW1pT5ZOUy1hhvLEu2hudOt3JR12XKgwa8OVyVgAZriz2r6jmFs+75ZAqdJ90dhB
+         aWXYkg7DzAaU7PS/ENvmag5ep/GVEdDNFeFDTF1ADH1NFQuuhB1cd6iOaMYJWIGWKnjo
+         X9HGmHWoEYqOkQdDFZR2IFmVrxaPBQ5PAZKNVCvswtVoqWWHU9aLtZo2qnqrRHWgwuJ3
+         1c1jifWgtzM0pDP2rK9ws/RRkH51Yu45pJtynUG4Zn7O6rppoUkcYKiUMZbtNz8YUyOK
+         YHQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ddKdS4x8c4ZSI9PbKdla4xMHlbecpUYnHnf7KqPY/v4=;
-        b=Aubbloa8w6rKHYkSt9fbeu5XbsnosGDar85aqngeDWCOX+ve9piJpIjyG3Zsb/vkt6
-         kcn2X77+kdFwDOw/zoKdk145CGQwxj0MG6kio9KC5bxk677k5Z9oIYjilGc7oesSlXcy
-         hBydJl/te/YIssQSg+G9Rp10xQSdmUX3Xjna4KPPw3SiLg8ytdQCuNiWc+gWfvcEqQyn
-         aZoR0d01T8KrTBff7NDrcK2lvFkEW3spqbUMNs6IZ2gHIdn1hQY3VbFnubPzTq7nEBdQ
-         7GvrcsQtfcCWaDfS6ADC/UAtqyN4KqvEtv7UcCcArZhDXlT99nnCKW4Q8VqU5Sag3IJ+
-         XdDQ==
-X-Gm-Message-State: ANoB5pl5MuFkMNeJZ4iTckPgiJkQhV8y5R5msEkfwqcOQHn1up4Gy1RM
-        8mglxJZ2tXsxS5xykgMTTa9L+P3UzNHH4VjxG90=
-X-Google-Smtp-Source: AA0mqf4tziZketbScIv0ehLOvhK948K49mMVNAq6wnIsY5FeYdrNcf5dSfw2Aq4v6byLa125lp3rkFnV7ZnsGafQ2sc=
-X-Received: by 2002:aa7:c543:0:b0:458:dbc5:67c5 with SMTP id
- s3-20020aa7c543000000b00458dbc567c5mr10553027edr.214.1668416539946; Mon, 14
- Nov 2022 01:02:19 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OvIKu8xYhgEpbqXECsNQ5zYgFCSscSAylV2o5sVbq4A=;
+        b=IcYVWUjfRipe2/1d0VIbK+CHP90wC3Mr8hce6tfX1+kTbZbNxYHceHr5W92dVUae/Y
+         dcG9gqzc8KZ32CczZaFt6RVdepLmwBV+qyuQywJlSsfYmg+Dqf2LpuDDMaAdKxKLpaw1
+         ufeD7PylI9Lt6E7+xHn1x0yrfe8N7MNae/AZZtztMzUz1KCQ7vPOBjwnWWvdp00MQlD8
+         7QQH2EyaoYd7lFYWYZr+GO9PvwbTcu7kqpTdDX/oOvIXpD4F66QHScP9QKMGcUjP6rEP
+         0Sj6AGlLD5bN95Dbh5d5UCrRCzevgk7VfIRdux28LB0ebo9V+FzPFjRu0IeNmBllESyW
+         hA8A==
+X-Gm-Message-State: ANoB5pmT+Hi0k2anbJNZ+RlE3EASrta52c3Eb2W8xW5aYoYD7+8+3bkm
+        noOVlmzCtzi6k8GIF+1hYBaxP/XSSMWZCFwd7FE=
+X-Google-Smtp-Source: AA0mqf6UE2R647BTGVfpuE9wrdHjinFcpncPaeNyxnyss9EIMKAtD683t+/1AfAr7s89vGjdPvHGNWy6TMeJKQg3DM8=
+X-Received: by 2002:a19:2d48:0:b0:4a2:2d7b:838 with SMTP id
+ t8-20020a192d48000000b004a22d7b0838mr4410510lft.251.1668463535758; Mon, 14
+ Nov 2022 14:05:35 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a17:906:9c90:b0:7ae:8e84:1093 with HTTP; Mon, 14 Nov 2022
- 01:02:19 -0800 (PST)
-Reply-To: subik7633@gmail.com
-From:   Susan Bikram <jeannemorgan479@gmail.com>
-Date:   Mon, 14 Nov 2022 01:02:19 -0800
-Message-ID: <CABXDZ2Ky0fqQ8xC69D-E94eEnDqOA=+4LJcmiH5vfFYj1-N9xg@mail.gmail.com>
-Subject: Please can i have your attention
-To:     undisclosed-recipients:;
+References: <CAJNyHpJ7hbmDK-Tq==L1D3gWB2ac4MTVYynf57JM0GmEN9-i7Q@mail.gmail.com>
+In-Reply-To: <CAJNyHpJ7hbmDK-Tq==L1D3gWB2ac4MTVYynf57JM0GmEN9-i7Q@mail.gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Mon, 14 Nov 2022 14:05:24 -0800
+Message-ID: <CABBYNZJ-BjuUcriLpNzs95SDqXP+_6-LJZ-t_00Q6ppy8qYg2Q@mail.gmail.com>
+Subject: Re: L2CAP: Spec violation
+To:     Sungwoo Kim <iam@sung-woo.kim>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:531 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [subik7633[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [jeannemorgan479[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [jeannemorgan479[at]gmail.com]
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear ,
+Hi Kim,
 
-Please can I have your attention and possibly help me for humanity's
-sake please. I am writing this message with a heavy heart filled with
-sorrows and sadness.
-Please if you can respond, i have an issue that i will be most
-grateful if you could help me deal with it please.
+On Fri, Nov 4, 2022 at 9:13 AM Sungwoo Kim <iam@sung-woo.kim> wrote:
+>
+> Hello,
+>
+> Our fuzzer found a BT spec violation, illegal state transition on L2cap.
+> Specifically, l2cap_chan::state is transitioned from BT_CONFIG to
+> BT_DISCONN by CONFIG_RSP by following trace:
+>
+> l2cap_config_rsp l2cap_core.c:4498
+> l2cap_send_disconn_req l2cap_core.c:4585
+> l2cap_state_change l2cap_core.c:1618
+>
+> According to the spec 5.3 vol.3 part A 6.1.4, CONFIG_RSP cannot cause
+> that transition, i.e., CONFIG -> DISCONN by CONFIG_RSP is illegal.
+> It'd be great if we could discuss.
 
-Susan
+Can you include some btmon traces?
+
+
+-- 
+Luiz Augusto von Dentz
