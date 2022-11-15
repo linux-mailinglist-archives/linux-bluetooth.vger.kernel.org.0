@@ -2,107 +2,79 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C34466291F2
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Nov 2022 07:41:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C956462995E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Nov 2022 13:54:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232381AbiKOGls (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 15 Nov 2022 01:41:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57410 "EHLO
+        id S238291AbiKOMy4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 15 Nov 2022 07:54:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232163AbiKOGlr (ORCPT
+        with ESMTP id S238372AbiKOMyj (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 15 Nov 2022 01:41:47 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 880B71F2F0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 14 Nov 2022 22:41:46 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id w14so22528316wru.8
-        for <linux-bluetooth@vger.kernel.org>; Mon, 14 Nov 2022 22:41:46 -0800 (PST)
+        Tue, 15 Nov 2022 07:54:39 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1A752A40C
+        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Nov 2022 04:54:35 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id s8so7120851lfc.8
+        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Nov 2022 04:54:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WPexXP3uhjDbZmPtdTFQsryNfXofuLhfqLBahbl0WXQ=;
-        b=NQgcA0dJ0yj9l3FSv47VzlDfV9pN0r0GALWn9zV1hzIzHnzyVE9Uy7QYHxYDEL4xSD
-         zjeXIvP336wweX4Q6SQNQBi56vbOV3R4kBtsOQ1rLbYVg8+KvI3nX+qP3sWfiZooLkDN
-         442TOBowWwZuXd/YatAAIL7EmDc35VByB6pVU8d2weheIe2eFBalXr8KCjr093j3Jy+0
-         iB0ZjfMBIeBfOxyJJ/OB5I8M8z8paOJ+VotaVGdDS0qahiHA1PbnQjLhyZdrloAEHlro
-         MLNJxlf6YzHw0fE3hKaJgmdwawacdSaR7o1ddQ6GmpWZLMxfzUHV3CKCsIYwESnrqrW5
-         8YZQ==
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=YzgGX4AwSt860hhHaRgKsA8hx2m0I67dk0IZRTCbtjk=;
+        b=R8/6l9mT5f9SQKdT4cGWJYnkxRRFSJIQsac5Qvn42TiX+UBSx9eCPJZ3jZd6u66PdA
+         PSFug2HsL+3Ti2E6ocDEk4SLoXilpYapKrU6wrTrqbtCTXUFoARgiWM75Rnzl/vEfLBP
+         42Yec1hOlAqhu7wO34koxxdBvWmOoojTjW3nlRemEwCYbwi7zV6b0UCZByuu4Uxf+vkr
+         dMfHvUGoNNu/+dGwPZABibgi+qUcKB5ULOefeZAPVm3bBmbMefnj9XQld+KTUd2exy6o
+         q2BReSNG2xuu1v9YMwsUVgk8NryOBjThVIlXf/S9XWr0LacvcoUvI3ysG56l9twoufmk
+         Wbvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WPexXP3uhjDbZmPtdTFQsryNfXofuLhfqLBahbl0WXQ=;
-        b=uLatOs5hbWYivpDeVDoKi9caxqRcJxxvlKShprueqJ+hM23TZWbtYShLDL5QkgIuOq
-         BHYfK/fp22L58naZO7iIsSlKGPfUAQ62s4f33c+ZgTvuOjHMc1ZZq8PH0Bzot0/4BQzn
-         NNLP8gcGVaW2tPHFs0A8xzE7u/LAYhuK9ygZfIFLLWRYir8a3mKvy8VzdsNbqKK132xf
-         nDvCk9IUEUR9xT1F6+xVE5gucQPiWhq2GljKw30Wnt0lhR0wDTI0cK/F6vZnOHKJe1l4
-         1ZTh2vDljBqoB6oudxtuOp7HoC95oHhil2EsoT3mi0wXCZcB8lKHY1xdoPG5z6EuQB2T
-         s0bQ==
-X-Gm-Message-State: ANoB5pm/UidJZZDfhZVtlFxX5lP/vs4fJf7cN9a/pAioaevkRc8/IaU+
-        2YXR1Idk3bGpKI1XXVk5Kvg=
-X-Google-Smtp-Source: AA0mqf54TByb8JZS2K92k5qIvBmp3Lkulz9NY0enMKBSWBxU0+12QlH6M4Mn9hj0NXvImEVVDbK83g==
-X-Received: by 2002:a5d:630d:0:b0:236:57e8:c79a with SMTP id i13-20020a5d630d000000b0023657e8c79amr10166730wru.321.1668494504985;
-        Mon, 14 Nov 2022 22:41:44 -0800 (PST)
-Received: from 168.52.45.77 (201.ip-51-68-45.eu. [51.68.45.201])
-        by smtp.gmail.com with ESMTPSA id q13-20020adfea0d000000b0023677fd2657sm11332394wrm.52.2022.11.14.22.41.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 22:41:44 -0800 (PST)
-Message-ID: <c8987bdd-8a8d-1491-c4c7-66e95f990148@gmail.com>
-Date:   Tue, 15 Nov 2022 07:41:41 +0100
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YzgGX4AwSt860hhHaRgKsA8hx2m0I67dk0IZRTCbtjk=;
+        b=aEdSytr8jE1L6Q1fNqdqD2PGVs4EO8WrMm2EeW4zxKkBXA3vgOuOtuCkUpds+2OpXN
+         8PjUPhWoNWJ9sVmNkcWbzpBe0JFNtGsSaqdjYmgaVInT13Hqju/1q3hZeeV2WWXCUCZp
+         pUn29OyXcKIq4Gnd6OXL7lGqohv+lr8dcxqECIubL/2jZZqGX2TBbPo+dGjEZ4h/CK1O
+         oOtxIJN+0H8uM4JXVxnrgUYg5qpDABy9UJVcAghPEgaaZpSe/WWF/au/zgBcLnbdDepJ
+         td5NYHXKpPUQgapAWlHv++XWXlAjR414kgD7aNF0iekNMruPU+9btJ+pznFzGcEBQZEp
+         q+EA==
+X-Gm-Message-State: ANoB5plcJpa0fYEbSsKC7CTTy4PMA+Y2u+Rl+36H8XHBOd48FhcM6gYs
+        No2S4lYVguFBrcMJwA+eVlL+xNibXmT0HICnnCA=
+X-Google-Smtp-Source: AA0mqf7FJHS2VmM4ADmGTYikGT9okn9eTzzzSd7ZU4PN2Ysqrqe5DNP5Gsd91TQTePyCOx4n/Bn7TDVSd+IfgXUXLEg=
+X-Received: by 2002:a19:6d02:0:b0:4ab:5d1f:9325 with SMTP id
+ i2-20020a196d02000000b004ab5d1f9325mr5665131lfc.438.1668516874151; Tue, 15
+ Nov 2022 04:54:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: nano 6.4
-Subject: Re: [Regression] Cambridge Silicon Radio, Ltd Bluetooth Dongle
-Content-Language: en-US
-To:     Mika Laitio <lamikr@pilppa.org>
-Cc:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Jack <ostroffjh@users.sourceforge.net>,
-        linux-bluetooth@vger.kernel.org,
-        Paul Menzel <pmenzel@molgen.mpg.de>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Hans de Goede <hdegoede@redhat.com>
-References: <76cd4547-a68d-9d52-1d87-8299e29406ff@gmail.com>
- <LWPL3AC7.RRTERTU2.B5FO44IX@4YQH7VT3.DY2DZPQX.S6LIZ6VV>
- <CABBYNZKDEjYOW+b1snUsvBgidW37+tPbsidq0pXaOqWKvRC8uQ@mail.gmail.com>
- <7ea187e5-7c70-db36-1fa8-148507b2e7c5@gmail.com>
- <e382d911-90bc-de3f-9f3-6143ed8a9b75@pilppa.org>
-From:   Swyter <swyterzone@gmail.com>
-In-Reply-To: <e382d911-90bc-de3f-9f3-6143ed8a9b75@pilppa.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_HELO_IP_MISMATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Sender: moneyman235472@gmail.com
+Received: by 2002:aa6:c0c8:0:b0:1f8:fcd4:1daa with HTTP; Tue, 15 Nov 2022
+ 04:54:33 -0800 (PST)
+From:   Richard Wahl <richardwahlii18@gmail.com>
+Date:   Tue, 15 Nov 2022 12:54:33 +0000
+X-Google-Sender-Auth: vLFsAJjBzwYQdUhfNh6gVj8xfzI
+Message-ID: <CAE4rAXH_9mOi4fHFs5JWBJbbTbqYv3GSot1wnbuso_+dR66nNQ@mail.gmail.com>
+Subject: =?UTF-8?Q?Sie_haben_eine_Spende_von_=E2=82=AC_1=2E200=2E000=2C00?=
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=2.1 required=5.0 tests=BAYES_80,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
->> Thanks to this last-effort parameter we can cover that last mile
->> without people having to recompile custom versions of btusb.
->>
->> My dongle doesn't work? Easy, add this here. Most people won't
->> have to bother with this, but that final ~3% would be screwed.
-> 
-> So what is the parameter needed for now? Might help users coming to this 
-> bug and finding this thread.
+--=20
+Hallo. Ihre E-Mail wurde f=C3=BCr eine Spende in einer bestimmten H=C3=B6he
+vergeben. Antworten Sie mit Ihrem Namen und Ihrer Adresse,
+Telefonnummer, um Ihnen dieses Geld zukommen zu lassen.
 
-Hans explained it better than me.
+ Ignorieren Sie diese Nachricht nicht, da sie direkt an Sie gerichtet ist.
 
-The Linux people haven't merged this patch yet, but the idea is that in
-case our generic workaround is a bit too much for a small bunch of dissident
-devices and we are actually making it not work (we're making it worse!) when
-it would work otherwise, adding «btusb.disable_fake_csr_forcesuspend_hack=1»
-should neutralize any side effects, as that workaround wasn't needed
-for your dongle in the first place. But we can't be sure of that.
-
-I think we have received two or three reports of this actually helping.
-
-It should be a thing you'd try and see what happens, this isn't an exact
-science. Most people won't need it, we're just being thorough and nice.
-
-Letting you skip our little shakeup. Easily.
+Rigards
+Richard Wahl
