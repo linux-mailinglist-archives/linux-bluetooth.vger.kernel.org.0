@@ -2,92 +2,135 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CE6462A214
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Nov 2022 20:40:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FEA162A2CD
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Nov 2022 21:28:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbiKOTkV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 15 Nov 2022 14:40:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41848 "EHLO
+        id S230498AbiKOU2h (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 15 Nov 2022 15:28:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231357AbiKOTkU (ORCPT
+        with ESMTP id S229495AbiKOU2h (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 15 Nov 2022 14:40:20 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45F0BFD3E
-        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Nov 2022 11:40:18 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A4903B81A1C
-        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Nov 2022 19:40:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 62A52C433D7;
-        Tue, 15 Nov 2022 19:40:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668541216;
-        bh=wuuwJupNcYcCtewKsd59dn4NCHN/MkVjSnsCsxZY430=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=JNmuUgkHCx8PcoAGz63/nF5DtmOas9Uci02kUkx3z1m0GVBDsnGz98uh9lhD2bwog
-         XReSLY1W0J9LWrm64sE+ZfpaZ9R42ghaXKORDuu9vpiHM4A3Crti+4ttuaYB4YXajf
-         xYb/0suPaeie8Ol+7siTPAESRkF3GQtYRXpn5CG66Zh73zFion1EyAMOOdjNkCGkrk
-         mN5Ke8yzcXtaVAJfYPjurnNGLcYRlZZjVq+uk9w7GzgwpwULLPhdMGBb1neZ21NsFB
-         D61cn9MTb3KSE061u5E6+43X0hgrNWRWpC8dq1Z4vj8T9pfi3FTX0wKv3MiWvIIY+U
-         lcS5b/ciR734Q==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 47A0DC395F5;
-        Tue, 15 Nov 2022 19:40:16 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 1/6] monitor/att: Fix not dequeing att_read on error
- response
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <166854121628.14574.15934497067014079627.git-patchwork-notify@kernel.org>
-Date:   Tue, 15 Nov 2022 19:40:16 +0000
-References: <20221115003038.2134340-1-luiz.dentz@gmail.com>
-In-Reply-To: <20221115003038.2134340-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 15 Nov 2022 15:28:37 -0500
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76BB56259;
+        Tue, 15 Nov 2022 12:28:35 -0800 (PST)
+Message-ID: <20221115195802.415956561@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1668544113;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc; bh=N0+DYQIzJQiuGQVL9zG7WmZVX2CclyspM4BrFbhZiQ4=;
+        b=M7ECxDE0fB4Eu8YucLFheDApDFsLZrYtCJcaFO+SOJLCYWeIswLu1kIiaw2A4DwSg7KQPs
+        s1AZ5RzM2N9m/XwTQFVZRuYoLcHvbcSDs9wLQuQ2KBFeaqa0xwsKAtJ6o05zt8Ynmm8FTC
+        njJ7KEfbuFvxFnQikQGBFrUrApiyvVt16OgJmB2MERr5pd4PYGmjjTj8CistfVWbGeYEeL
+        nHhkSE+Dpiknoo1XdNL/jkkiqgZ3mvk0GOI2nSJvddEsPE9sUtqH87wetaMUm9To3RtQ+l
+        H7XWTsjAldnu6cDgr0LFA82ogzpgjCKLWD4GLNmIPijLX000LKEdy3+W72VgOQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1668544113;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc; bh=N0+DYQIzJQiuGQVL9zG7WmZVX2CclyspM4BrFbhZiQ4=;
+        b=fvWTUM9JRU6WBtEcA9FaxJnJobRgfpEAalgfSWHfdnd4NJtaxKu1epQKvYY3Z6S7g+tSVK
+        8M5r+Fg9FZuU48Bg==
+From:   Thomas Gleixner <tglx@linutronix.de>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Linus Torvalds <torvalds@linuxfoundation.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Anna-Maria Behnsen <anna-maria@linutronix.de>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Julia Lawall <Julia.Lawall@inria.fr>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-bluetooth@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org
+Subject: [patch 00/15] timers: Provide timer_shutdown[_sync]()
+Date:   Tue, 15 Nov 2022 21:28:32 +0100 (CET)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+Tearing down timers can be tedious when there are circular dependencies to
+other things which need to be torn down. A prime example is timer and
+workqueue where the timer schedules work and the work arms the timer.
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+Steven and the Google Chromebook team ran into such an issue in the
+Bluetooth HCI code.
 
-On Mon, 14 Nov 2022 16:30:33 -0800 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> If a read/read by type fails it needs to be dequeued otherwise it can
-> cause the next operation of the same type to return the wrong request
-> and possible decoding as if it was a different attribute type.
-> ---
->  monitor/att.c | 109 +++++++++++++++++++++++++++-----------------------
->  1 file changed, 58 insertions(+), 51 deletions(-)
+Steven suggested to create a new function del_timer_free() which marks the
+timer as shutdown. Rearm attempts of shutdown timers are discarded and he
+wanted to emit a warning for that case:
 
-Here is the summary with links:
-  - [BlueZ,1/6] monitor/att: Fix not dequeing att_read on error response
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=b3a8f8fea99b
-  - [BlueZ,2/6] shared/util: Add iovec helpers
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=7c2e276d9e7c
-  - [BlueZ,3/6] shared/bap: Make use of util_iov helpers
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f96bccd80979
-  - [BlueZ,4/6] shared/tester: Add tester_io_set_complete_func
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=918c73acb778
-  - [BlueZ,5/6] shared/bap: Fix crash when canceling requests
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=7fcd6889fb13
-  - [BlueZ,6/6] unit: Introduce test-bap
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=1ebbfee34517
+   https://lore.kernel.org/all/20220407161745.7d6754b3@gandalf.local.home
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+This resulted in a lengthy discussion and suggestions how this should be
+implemented. The patch series went through several iterations and during
+the review of the last version it turned out that this approach is
+suboptimal:
 
+   https://lore.kernel.org/all/20221110064101.429013735@goodmis.org
 
+The warning is not really helpful because it's entirely unclear how it
+should be acted upon. The only way to address such a case is to add 'if
+(in_shutdown)' conditionals all over the place. This is error prone and in
+most cases of teardown like the HCI one which started this discussion not
+required all.
+
+What needs to prevented is that pending work which is drained via
+destroy_workqueue() does not rearm the previously shutdown timer. Nothing
+in that shutdown sequence relies on the timer being functional.
+
+The conclusion was that the semantics of timer_shutdown_sync() should be:
+
+    - timer is not enqueued
+    - timer callback is not running
+    - timer cannot be rearmed
+
+Preventing the rearming of shutdown timers is done by discarding rearm
+attempts silently.
+
+As Steven is short of cycles, I made some spare cycles available and
+reworked the patch series to follow the new semantics and plugged the races
+which were discovered during review.
+
+The patches have been split up into small pieces to make review easier and
+I took the liberty to throw a bunch of overdue cleanups into the picture
+instead of proliferating the existing state further.
+
+The last patch in the series addresses the HCI teardown issue for real.
+
+The series is also available from git:
+
+   git://git.kernel.org/pub/scm/linux/kernel/git/tglx/devel.git timers
+
+Thanks,
+
+	tglx
+---
+ Documentation/RCU/Design/Requirements/Requirements.rst |    2 
+ Documentation/core-api/local_ops.rst                   |    2 
+ Documentation/kernel-hacking/locking.rst               |   13 
+ arch/arm/mach-spear/time.c                             |    8 
+ drivers/bluetooth/hci_qca.c                            |   10 
+ drivers/char/tpm/tpm-dev-common.c                      |    4 
+ drivers/clocksource/arm_arch_timer.c                   |   12 
+ drivers/clocksource/timer-sp804.c                      |    6 
+ drivers/staging/wlan-ng/hfa384x_usb.c                  |    4 
+ drivers/staging/wlan-ng/prism2usb.c                    |    6 
+ include/linux/timer.h                                  |   35 +
+ kernel/time/timer.c                                    |  409 +++++++++++++----
+ net/sunrpc/xprt.c                                      |    2 
+ 13 files changed, 383 insertions(+), 130 deletions(-)
