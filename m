@@ -2,63 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1B6362B3D1
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Nov 2022 08:13:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F42762BD46
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Nov 2022 13:11:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231234AbiKPHN1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Nov 2022 02:13:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41198 "EHLO
+        id S233131AbiKPMLq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 16 Nov 2022 07:11:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232834AbiKPHNU (ORCPT
+        with ESMTP id S236954AbiKPMLR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Nov 2022 02:13:20 -0500
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7613420BEE
-        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Nov 2022 23:13:14 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id x21so11120292qkj.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Nov 2022 23:13:14 -0800 (PST)
+        Wed, 16 Nov 2022 07:11:17 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4947DC6F
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Nov 2022 04:04:55 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id u8-20020a17090a5e4800b002106dcdd4a0so2108515pji.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Nov 2022 04:04:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=VLILD5VdFX9qQ6uLBBOqvW9F5g742Y61kauzHubLp4M=;
-        b=DUMTM/BsIdMfN6qXJMsmSQnss3YAh8jpBmAjOpgeD2gUYLpm7E9hDKIMrb5VQAEWyZ
-         fHDGFjUye8yps3VyX5BtNAT/X8Xeet8599snTzQCjqZROXZ3ysQcekY5DTCGuwzBFco6
-         ylu7MbqyKdcv+4Rq+EblbqOSDOBB2zjnW3wlKaueZHxxc0MMh0nTYeVLl0TO75qyLxnf
-         pPMzCq3DffHMdoKBH0bAvxwlQgtGFam4sd/q6rRSaXlwcyIb00UyfSeq7O8P9dYaZY6F
-         62HoLglWJ0hzNof93WJ1nPeReJkMTlPv4LPkulghMf+wLTtigf3emGNjz3gDcMaLAs/V
-         h+ew==
+        bh=I7Df5ZiULXk89+gsPujjTDzyqWoDqB6P3SqAfswqirw=;
+        b=eXmfnoqnyPoGYxDa6i49aZP2zxSFr8i8FSWx1xTZJhvcdb83YFi1eJgaTDeTjs5/eo
+         ZRHEOEcfRvslNfvcQND99pyqmtITgYm0dBS1UsjodGlzBrBksGl3lglAE22NXq029CAS
+         uYSyZeIbyOzWBcMB6w2+mY5C39FkXV5ROB5YcXJHKZm1lLOBPiQXvluG0YRWsnhTVyBL
+         9hyC12JaeIz9WKZvOCjnQNmwhJHVWTc7qqgSrJBHSw3Ex8aNO+1Yzr2WKFr52EVT0/pS
+         DivknR/dW8GrrAskSr9sHKxgLn6HIK0WesONs2GTwXkdnWG0EgHZo7Oa22AqmUyhc6LN
+         zRcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VLILD5VdFX9qQ6uLBBOqvW9F5g742Y61kauzHubLp4M=;
-        b=CHthS+QYQpPoTLdVXV7PImAHKSbJCTMOWYrb6bll8tpVn+pkZ7KdoTKk5+xZIm2V87
-         rygvnKA10e6sOjpg14nk9KxlUQGf153APP46mq+F9qB3uRS1TUOkJiXsqX5RO0tjnMcH
-         Un+3WaWZftA8TvA8Ilsw/6oLg6UtLpOILFB6Z3mMWGWXabkdoFidvpj4KEsMGs1dnDpe
-         ZpMr/vT+m06maX8JyMyQwxmgaypWDISTlZJM6be+q5iyfIa4ZSz65+QPFsw2ySjf0pse
-         vMBd/UTR7JaK4kjUEo0FvGXaYt7U75JxmBfAmKrlsEwjgdaOzu4Gd9O02dUCXRyUD2kM
-         x5zA==
-X-Gm-Message-State: ANoB5pnF2c9LU+6z0aFem+X/JoRKsf25NTKD0l3bVYQuvsS4A8EdakmK
-        5L8ifSplnqcZNvxm2uLfgIKDWQzwu+2qBw==
-X-Google-Smtp-Source: AA0mqf4DlC4rPouh5PXr0VrK/W76NwdbhZ9a8fk//0M6UW1L7WGj11EXVSOSB13nAvMmuWxgqDQSmA==
-X-Received: by 2002:a05:620a:144a:b0:6f9:ddab:11b0 with SMTP id i10-20020a05620a144a00b006f9ddab11b0mr17956006qkl.193.1668582793419;
-        Tue, 15 Nov 2022 23:13:13 -0800 (PST)
-Received: from [172.17.0.2] ([172.173.249.78])
-        by smtp.gmail.com with ESMTPSA id ff5-20020a05622a4d8500b0039cc47752casm8342086qtb.77.2022.11.15.23.13.13
+        bh=I7Df5ZiULXk89+gsPujjTDzyqWoDqB6P3SqAfswqirw=;
+        b=qs5k6TFtcsnuDToLFy578YSWxUuunwHAqe8FYS9m2YinFiF2X87ny4hTzlvmDBj4rg
+         ILxYfj1kHlxaLrYU1VruuEkH4SPb9G5TJzJf72jd2qKIhKoqhYtYb9Lv4D1rIe86JTOB
+         BkIu2Mem/rK/qppBnKXIc9TmhAXRRHMEqd1V1Mtdj/L9juvdt8aH9u7jq2Sg5G5ct5zr
+         fcpRsE1nnsUC3W/HXIq0GVWXzW/Tgon/aQqMFcNFazZ93RgLu7ND2gcmWfNM0Ad+4O1n
+         GrnW9rJTvbgRzBZZTxvqllLovGOT7GVGkzUf+7wjT7PVkmAsrSl3pTkVHyqDoGPQk6Sp
+         JlFg==
+X-Gm-Message-State: ANoB5pmNY/s3achpEPIQFNEmG9rCVNEZ3BjjgJnRmAc+cGpH8YbWEg5B
+        zC2I9Dbgel/4UiAQ+la0cCVxFToNbKg=
+X-Google-Smtp-Source: AA0mqf7HCEnFewG99ZYCn4r16ZaQBRzJOK/70/Z2EgZ2RycFdgAGTT1JYuM7dZeFSFJ3t9u3xYJWYw==
+X-Received: by 2002:a17:90a:8c07:b0:212:e2e9:4b1f with SMTP id a7-20020a17090a8c0700b00212e2e94b1fmr3366168pjo.20.1668600294444;
+        Wed, 16 Nov 2022 04:04:54 -0800 (PST)
+Received: from [172.17.0.2] ([13.64.119.92])
+        by smtp.gmail.com with ESMTPSA id q8-20020a170902dac800b0018725c2fc46sm12061516plx.303.2022.11.16.04.04.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 23:13:13 -0800 (PST)
-Message-ID: <63748d89.050a0220.b0adc.c737@mx.google.com>
-Date:   Tue, 15 Nov 2022 23:13:13 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============0127279570933907091=="
+        Wed, 16 Nov 2022 04:04:54 -0800 (PST)
+Message-ID: <6374d1e6.170a0220.582f4.2989@mx.google.com>
+Date:   Wed, 16 Nov 2022 04:04:54 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============1117939794762147989=="
 MIME-Version: 1.0
 From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, kiran.k@intel.com
-Subject: RE: [v2,1/2] Bluetooth: Remove codec id field in vendor codec definition
+To:     linux-bluetooth@vger.kernel.org, neeraj.sanjaykale@nxp.com
+Subject: RE: [v1] Bluetooth: Add hci_nxp BT submodule with controller Power Save feature for NXP BT chipsets.
 Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20221116062918.11879-1-kiran.k@intel.com>
-References: <20221116062918.11879-1-kiran.k@intel.com>
+In-Reply-To: <1668616931-21987-1-git-send-email-neeraj.sanjaykale@nxp.com>
+References: <1668616931-21987-1-git-send-email-neeraj.sanjaykale@nxp.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -69,7 +69,7 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0127279570933907091==
+--===============1117939794762147989==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -80,28 +80,37 @@ Dear submitter,
 
 Thank you for submitting the patches to the linux bluetooth mailing list.
 This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=695805
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=695943
 
 ---Test result---
 
 Test Summary:
-CheckPatch                    PASS      3.39 seconds
-GitLint                       PASS      2.01 seconds
-SubjectPrefix                 PASS      1.70 seconds
-BuildKernel                   PASS      35.36 seconds
-BuildKernel32                 PASS      31.71 seconds
-Incremental Build with patchesPASS      55.47 seconds
-TestRunner: Setup             PASS      528.98 seconds
-TestRunner: l2cap-tester      PASS      17.63 seconds
-TestRunner: iso-tester        PASS      17.38 seconds
-TestRunner: bnep-tester       PASS      6.74 seconds
-TestRunner: mgmt-tester       PASS      108.48 seconds
-TestRunner: rfcomm-tester     PASS      10.64 seconds
-TestRunner: sco-tester        PASS      10.09 seconds
-TestRunner: ioctl-tester      PASS      11.46 seconds
-TestRunner: mesh-tester       PASS      8.16 seconds
-TestRunner: smp-tester        PASS      10.10 seconds
-TestRunner: userchan-tester   PASS      7.03 seconds
+CheckPatch                    PASS      3.42 seconds
+GitLint                       FAIL      0.47 seconds
+SubjectPrefix                 PASS      0.33 seconds
+BuildKernel                   PASS      46.71 seconds
+BuildKernel32                 PASS      42.04 seconds
+Incremental Build with patchesPASS      62.78 seconds
+TestRunner: Setup             PASS      696.11 seconds
+TestRunner: l2cap-tester      PASS      21.62 seconds
+TestRunner: iso-tester        PASS      22.45 seconds
+TestRunner: bnep-tester       PASS      8.74 seconds
+TestRunner: mgmt-tester       PASS      138.54 seconds
+TestRunner: rfcomm-tester     PASS      13.16 seconds
+TestRunner: sco-tester        PASS      12.09 seconds
+TestRunner: ioctl-tester      PASS      14.39 seconds
+TestRunner: mesh-tester       PASS      10.42 seconds
+TestRunner: smp-tester        PASS      12.05 seconds
+TestRunner: userchan-tester   PASS      8.76 seconds
+
+Details
+##############################
+Test: GitLint - FAIL - 0.47 seconds
+Run gitlint with rule in .gitlint
+[v1] Bluetooth: Add hci_nxp BT submodule with controller Power Save feature for NXP BT chipsets.
+1: T1 Title exceeds max length (96>80): "[v1] Bluetooth: Add hci_nxp BT submodule with controller Power Save feature for NXP BT chipsets."
+1: T3 Title has trailing punctuation (.): "[v1] Bluetooth: Add hci_nxp BT submodule with controller Power Save feature for NXP BT chipsets."
+
 
 
 
@@ -110,4 +119,4 @@ Regards,
 Linux Bluetooth
 
 
---===============0127279570933907091==--
+--===============1117939794762147989==--
