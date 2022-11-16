@@ -2,108 +2,87 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53E1962B349
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Nov 2022 07:28:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0583062B32E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Nov 2022 07:20:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231483AbiKPG2I (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Nov 2022 01:28:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45890 "EHLO
+        id S232602AbiKPGUA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 16 Nov 2022 01:20:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232087AbiKPG1p (ORCPT
+        with ESMTP id S232280AbiKPGTx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Nov 2022 01:27:45 -0500
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5048A1D0EA
-        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Nov 2022 22:27:44 -0800 (PST)
-Received: by mail-pl1-x62d.google.com with SMTP id 4so15586328pli.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Nov 2022 22:27:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=onGJsOC8sQiwsSjz9f9qzt+vQiKXUsdWUJda1GqiPTo=;
-        b=EOSdXsRBGHvFu13w6IF0QsjGZky/dWzPns9XDzBqIsTRLNupkg1lUlgngd+l5lhsl6
-         xZBkfXTJlShqdVkvZp0vJtxnOOU7gsggWgZGzZybe/BB9YadMj2Hs5Ua0blK4bwh/vzK
-         6NCluzNSHTMtixD1JuNG+xKY9YnC+YBzS3lsiofGgCybLFFRz6N6SSTharpxnf64fh04
-         3kBW31crDCLPXzBpZMPYRH/tYLmegTFPL7COpKNcXNVXzTejVORqkjBq1H3f2Rfm2idh
-         TDomu/10q9c/o1GYpt4v/VP7+JQYcxxPvMenQ7anLbIsX3nEU1d3SAScSOA89qH7z8Ho
-         p+qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=onGJsOC8sQiwsSjz9f9qzt+vQiKXUsdWUJda1GqiPTo=;
-        b=pgnCFiL1ICT1B6lYaVjv1bZcwZYiO4On8PaIME3KihFq64y7PaA5Ia0sCVN/hMMGR7
-         oEzE6LIiOIawuaSnKFxt4l0CpmuUU40J6x2uL2RXN4D87miAbg1O0ypeDTuk1sRfiLiY
-         SitFE71de/PYjrmzfERPkur9GuS1mfTfckArVFTLSVRtTpo7U0OyZrV/9zFHiRhdpsYz
-         eg+Bv5K1H0SxahgFvPNoiQxRhOUlNbAe/rvM9GRSiXBgbcZZ5wrdYpVbIenzsUbEjrnB
-         LB3KAuools49FZYB44OCjzzyhnmCuLxykb8TFj2WEvGF+cErkUu6SnEe19Lr73y29J6p
-         itxw==
-X-Gm-Message-State: ANoB5pnkjjwJnIm1P1cfDH7qR1pXsSvwZP4qB3QBZ885tsPER8haW0rx
-        gwl1FtGKHQTNjpCljsHSM863uVLw7ls=
-X-Google-Smtp-Source: AA0mqf7tfA1iFxkm+jbXvUNixwDQUBJ9fIOEd+x7tF8zizuMDp4qKdS4514rYcU7rq/AlUYAfLFfag==
-X-Received: by 2002:a17:902:f549:b0:188:5c0c:7590 with SMTP id h9-20020a170902f54900b001885c0c7590mr7856845plf.65.1668580063487;
-        Tue, 15 Nov 2022 22:27:43 -0800 (PST)
-Received: from [172.17.0.2] ([20.230.159.220])
-        by smtp.gmail.com with ESMTPSA id y10-20020a17090322ca00b00186f81bb3f0sm11209816plg.122.2022.11.15.22.27.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 22:27:43 -0800 (PST)
-Message-ID: <637482df.170a0220.7501d.130f@mx.google.com>
-Date:   Tue, 15 Nov 2022 22:27:43 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============5903696575442131835=="
-MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, hj.tedd.an@gmail.com
-Subject: RE: [BlueZ,v3] doc: test patch - DO NOT MERGE
-Reply-To: linux-bluetooth@vger.kernel.org
-In-Reply-To: <20221116052513.57081-1-hj.tedd.an@gmail.com>
-References: <20221116052513.57081-1-hj.tedd.an@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 16 Nov 2022 01:19:53 -0500
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E1E715717
+        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Nov 2022 22:19:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1668579592; x=1700115592;
+  h=from:to:cc:subject:date:message-id;
+  bh=/J0wkZUAFhdtL/86/ykBYABiwi8FBxgu8eN1doQHxWE=;
+  b=T5+3DutnenVougreEvGOYIOhqUKn+Yp6Alge9XRgz9myy93skorhRrD/
+   yFiG2AQSCdu5wRDR/fY4nZgt4X1t+MH1Ozuv1sPZmkF3UYNXlZma7qCTi
+   KPevYMk3/SH5DLOwmCtyjwEiDzhh/B+wBrNkiG5spAxiKGC0B2db2cuGT
+   7PvTADskVdDnDSbWxQp6KHjqTqL8OswrFT1b+MORVbgs4XyxFsRFX14sF
+   p9TnMa+JLdQXWcn1yx8k8T/8GV/xDruev/MVLh1UCJeO+2kKhBwmalURS
+   s0/9seEkW4juO/gsmjKpQbPPlezIEOWMNft/ct3I8UcEePXoFLwDSn1/D
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10532"; a="374596318"
+X-IronPort-AV: E=Sophos;i="5.96,167,1665471600"; 
+   d="scan'208";a="374596318"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Nov 2022 22:19:52 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10532"; a="702739828"
+X-IronPort-AV: E=Sophos;i="5.96,167,1665471600"; 
+   d="scan'208";a="702739828"
+Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
+  by fmsmga008.fm.intel.com with ESMTP; 15 Nov 2022 22:19:50 -0800
+From:   Kiran K <kiran.k@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     ravishankar.srivatsa@intel.com,
+        Chethan T N <chethan.tumkur.narayan@intel.com>,
+        Kiran K <kiran.k@intel.com>
+Subject: [PATCH v2 1/2] Bluetooth: Remove codec id field in vendor codec definition
+Date:   Wed, 16 Nov 2022 11:59:17 +0530
+Message-Id: <20221116062918.11879-1-kiran.k@intel.com>
+X-Mailer: git-send-email 2.17.1
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5903696575442131835==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Chethan T N <chethan.tumkur.narayan@intel.com>
 
-This is automated email and please do not reply to this email!
+As per the specfication vendor codec id is defined.
+BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 4, Part E page 2127
 
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=695796
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.52 seconds
-GitLint                       PASS      0.35 seconds
-Prep - Setup ELL              PASS      34.32 seconds
-Build - Prep                  PASS      0.91 seconds
-Build - Configure             PASS      10.65 seconds
-Build - Make                  PASS      1096.36 seconds
-Make Check                    PASS      12.62 seconds
-Make Check w/Valgrind         PASS      366.48 seconds
-Make Distcheck                PASS      304.62 seconds
-Build w/ext ELL - Configure   PASS      11.12 seconds
-Build w/ext ELL - Make        PASS      108.32 seconds
-Incremental Build w/ patches  PASS      0.00 seconds
-Scan Build                    PASS      672.43 seconds
-
-
-
+Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
+Signed-off-by: Kiran K <kiran.k@intel.com>
 ---
-Regards,
-Linux Bluetooth
+Notes:
+Changes in v2:
+ - Fix commit message format
 
+ include/net/bluetooth/hci.h | 1 -
+ 1 file changed, 1 deletion(-)
 
---===============5903696575442131835==--
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 7a8a19bef92c..8d773b042c85 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -1455,7 +1455,6 @@ struct hci_std_codecs_v2 {
+ } __packed;
+ 
+ struct hci_vnd_codec_v2 {
+-	__u8	id;
+ 	__le16	cid;
+ 	__le16	vid;
+ 	__u8	transport;
+-- 
+2.17.1
+
