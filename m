@@ -2,72 +2,44 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFC7162E7EF
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Nov 2022 23:12:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A62962E88A
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Nov 2022 23:37:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235017AbiKQWMX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 17 Nov 2022 17:12:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51426 "EHLO
+        id S235116AbiKQWh3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Nov 2022 17:37:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234710AbiKQWMV (ORCPT
+        with ESMTP id S235112AbiKQWh0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 17 Nov 2022 17:12:21 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 827A26160;
-        Thu, 17 Nov 2022 14:12:20 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id u2so4553118ljl.3;
-        Thu, 17 Nov 2022 14:12:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Nn7CD1Io5Tu7IrvKfUpPCinD6fv0Cid4YkXQszLbTa0=;
-        b=HNtqT3X+fZXMPAUtvFZEGrDknoC92jrQXKMoHNuWCUfeaQPRVAULY3fZqDTqk2NIRz
-         L/SXPWL82YbSC9Dv3QkLR1BNjhy1YMblLF6GP6J+oHJTGW7V3mtq2FFT4QNzl/ZSIZSV
-         G0+Lgh51wunlfbEpg2VGDLZhwspxlqwGoVnXdKTgw5IYrbGdNV6FcEaWa05RB/nOEAH7
-         B9Mzo6WfmX9EXTnWYO5tS+mEQDm6immwn79yM+xEJ9xSlx7YfidWD/GF5W/ldRgnzbhM
-         uIUoOlOiMgePlv4p0ZXIMZcjLsApNQ6Ij5IEtMYvIfk0eYvs8FhlEdcyBMJPsNfFWRie
-         kLlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Nn7CD1Io5Tu7IrvKfUpPCinD6fv0Cid4YkXQszLbTa0=;
-        b=iT6C756sQD3hLtO00gIUolk9+OzDeMAO/jXXZXYqtqcPFYemT5yz5S6Uk/Yf4QY1ta
-         3LMFiqS1jrYpwMAJOECcLbcK+gMzTEShboOLloI7QLgDBalAUCagvhRML4ZyKS384QUy
-         YxOQahY6H/TXn5xCqbOYB79P4ru0kYtdjUt2u4Qh3S+twGmRSTm177wdBTU0hiiCFTWI
-         S9108548/AxyLlbnJwTNzfMDiNCXr5IX6i79SFTSfmKlwGpjMcKPenwqxkPDg7dhTGgT
-         loS23qs6c95dGuTBoP7oZky8aBOcyZL7tvfDuWe3Dd8e8jW0oRSmbMTJ74yAALXQcQpQ
-         MVoA==
-X-Gm-Message-State: ANoB5pkoNUWWhpsOJWod8WO7wJvuXSFyIwSxprQFKh41qcba+IEkj4cB
-        H0noLB8qqcA7Neamvp13f8fVfaIuQy43RQaaKvw=
-X-Google-Smtp-Source: AA0mqf6XFdGLQW/qNOnI71a815e7g8gK6kELLCP8DjyotGqp/RBDsq3X83iooriuM6qpAmr2g8HEuGZtuah2g3JBZJc=
-X-Received: by 2002:a2e:a4c7:0:b0:277:81ff:b8c4 with SMTP id
- p7-20020a2ea4c7000000b0027781ffb8c4mr1578359ljm.260.1668723138518; Thu, 17
- Nov 2022 14:12:18 -0800 (PST)
-MIME-Version: 1.0
-References: <20221116202856.55847-1-mat.jonczyk@o2.pl> <499a1278bcf1b2028f6984d61733717a849d9787.camel@intel.com>
- <232fd0ae-0002-53cb-9400-f0347e434d42@o2.pl> <7909f86e4d13015b7f14a6f3f1f75f053d837314.camel@intel.com>
-In-Reply-To: <7909f86e4d13015b7f14a6f3f1f75f053d837314.camel@intel.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Thu, 17 Nov 2022 14:12:07 -0800
-Message-ID: <CABBYNZJowvWWtKs_Ok74wNxCVsrKt26pqftG5hgpknusosjbZw@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: silence a dmesg error message in hci_request.c
-To:     "Gix, Brian" <brian.gix@intel.com>
-Cc:     "mat.jonczyk@o2.pl" <mat.jonczyk@o2.pl>,
-        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "Von Dentz, Luiz" <luiz.von.dentz@intel.com>,
-        "johan.hedberg@gmail.com" <johan.hedberg@gmail.com>,
-        "marcel@holtmann.org" <marcel@holtmann.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Thu, 17 Nov 2022 17:37:26 -0500
+Received: from smtp.github.com (out-26.smtp.github.com [192.30.252.209])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0981E1C92D
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Nov 2022 14:37:19 -0800 (PST)
+Received: from github.com (hubbernetes-node-1610bd8.ash1-iad.github.net [10.56.201.85])
+        by smtp.github.com (Postfix) with ESMTPA id 367885E04A8
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Nov 2022 14:37:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2014; t=1668724639;
+        bh=9Tao59Pdje9Ou862FnZQpoHAKfImCiPLYqwf8wzc+CE=;
+        h=Date:From:To:Subject:From;
+        b=joIO/FGmoCDF4c669A5u/6NI4WMsZq8ko2iPG7NmL1J6E699f5mXiGgs4XlppfX9T
+         IMtMl14gU3ENNKVylLli8j+HvjmmJ/gYPdbzGNKDLdfU3caHxyYLsQqqCSF40oynqV
+         DbV0sEOTAnxTjpMkr9X7GTSlIK8DAWxQ9YwxQvQI=
+Date:   Thu, 17 Nov 2022 14:37:19 -0800
+From:   hadess <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/f65b4d-e2b2b1@github.com>
+Subject: [bluez/bluez] b3f76b: tools/test-runner: Remove
+ bluetooth.enable_ecred
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,78 +47,352 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: b3f76b30ec9d0e06d44a9240698698926df9e333
+      https://github.com/bluez/bluez/commit/b3f76b30ec9d0e06d44a9240698698926df9e333
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-10-28 (Fri, 28 Oct 2022)
 
-On Thu, Nov 17, 2022 at 1:45 PM Gix, Brian <brian.gix@intel.com> wrote:
->
-> Hi  Mateusz,
->
-> On Thu, 2022-11-17 at 22:27 +0100, Mateusz Jo=C5=84czyk wrote:
-> > W dniu 17.11.2022 o 21:34, Gix, Brian pisze:
-> > > On Wed, 2022-11-16 at 21:28 +0100, Mateusz Jo=C5=84czyk wrote:
-> > > > On kernel 6.1-rcX, I have been getting the following dmesg error
-> > > > message
-> > > > on every boot, resume from suspend and rfkill unblock of the
-> > > > Bluetooth
-> > > > device:
-> > > >
-> > > >         Bluetooth: hci0: HCI_REQ-0xfcf0
-> > > >
-> > > This has a patch that fixes the usage of the deprecated HCI_REQ
-> > > mechanism rather than hiding the fact it is being called, as in
-> > > this
-> > > case.
-> > >
-> > > I am still waiting for someone to give me a "Tested-By:" tag to
-> > > patch:
-> > >
-> > > [PATCH 1/1] Bluetooth: Convert MSFT filter HCI cmd to hci_sync
-> > >
-> > > Which will also stop the dmesg error. If you could try that patch,
-> > > and
-> > > resend it to the list with a Tested-By tag, it can be applied.
-> >
-> > Hello,
-> >
-> > I did not receive this patch, as I was not on the CC list; I was not
-> > aware of it. I will test it shortly.
+  Changed paths:
+    M tools/test-runner.c
 
-You can find the patch here:
+  Log Message:
+  -----------
+  tools/test-runner: Remove bluetooth.enable_ecred
 
-https://patchwork.kernel.org/project/bluetooth/patch/20221102175927.401091-=
-2-brian.gix@intel.com/
+L2CAP ECRED is now enabled by default by the following kernel change:
 
-> >
-> > Any guidelines how I should test this functionality? I have a Sony
-> > Xperia 10 i4113
-> > mobile phone with LineageOS 19.1 / Android 12L, which according to
-> > the spec supports
-> > Bluetooth 5.0. Quick Google search tells me that I should do things
-> > like
-> >
-> >         hcitool lescan
-> >
->
-> Whatever you were running that produced the
->
-> "Bluetooth: hci0: HCI_REQ-0xfcf0"
->
-> error in the dmesg log should be sufficient to determine that the error
-> log is no longer happening. The HCI call is necessary on some
-> platforms, so the absense of other negative behavior should be
-> sufficient to verify that the call is still being made.  The code flow
-> itself has not changed, and new coding enforces the HCI command
-> sequence, so that it is more deterministric than it was with
-> hci_request. The hci_request mechanism was an asyncronous request.
->
-> > to discover the phone, then use gatttool to list the services, etc.
-> >
-> > Greetings,
-> >
-> > Mateusz
-> >
->
+98f18bb78b7d ("Bluetooth: Add CONFIG_BT_LE_L2CAP_ECRED")
 
 
---=20
-Luiz Augusto von Dentz
+  Commit: d9253248363b995e44c1f5e393ed1c7aa4ec81ce
+      https://github.com/bluez/bluez/commit/d9253248363b995e44c1f5e393ed1c7aa4ec81ce
+  Author: Marek Vasut <marex@denx.de>
+  Date:   2022-11-01 (Tue, 01 Nov 2022)
+
+  Changed paths:
+    M tools/hciattach.h
+    M tools/hciattach_bcm43xx.c
+    M tools/hciattach_qualcomm.c
+    M tools/hciattach_tialt.c
+
+  Log Message:
+  -----------
+  tools: Make hciattach_* firmware path build-time configurable
+
+Make hciattach_qualcomm.c and hciattach_tialt.c behave the same way
+as hciattach_bcm43xx.c does, where FIRMWARE_DIR can be overridden
+at build time by using -DFIRMWARE_DIR= CFLAGS.
+
+
+  Commit: f9657b86ddd3008768b3f6fef2c94eec46d976b5
+      https://github.com/bluez/bluez/commit/f9657b86ddd3008768b3f6fef2c94eec46d976b5
+  Author: Marek Vasut <marex@denx.de>
+  Date:   2022-11-01 (Tue, 01 Nov 2022)
+
+  Changed paths:
+    M tools/hciattach_qualcomm.c
+
+  Log Message:
+  -----------
+  tools: Switch hciattach_qualcomm to FAILIF macro completely
+
+Use the FAILIF() macro consistently to avoid unused variable n warnings.
+
+
+  Commit: 3a3298e29b4468bd6cbf74de6d677c052a4e960a
+      https://github.com/bluez/bluez/commit/3a3298e29b4468bd6cbf74de6d677c052a4e960a
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-11-04 (Fri, 04 Nov 2022)
+
+  Changed paths:
+    M monitor/att.c
+    M monitor/l2cap.h
+
+  Log Message:
+  -----------
+  monitor/att: Add handler support for Read by Type
+
+This adds handler support for Read by Type so it can further decode
+the values when the procedure is used.
+
+
+  Commit: 7e0e08ca5396bd9e40f25fac74018963f6516c61
+      https://github.com/bluez/bluez/commit/7e0e08ca5396bd9e40f25fac74018963f6516c61
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-11-04 (Fri, 04 Nov 2022)
+
+  Changed paths:
+    M monitor/att.c
+
+  Log Message:
+  -----------
+  monitor/att: Add support for decoding Characteristic Declaration
+
+This adds supports for decoding the so called Characteristic
+Declaration (0x2803):
+
+> ACL Data RX: Handle 3585 flags 0x02 dlen 76
+      ATT: Read By Type Response (0x09) len 71
+        Attribute data length: 7
+        Attribute data list: 10 entries
+        Handle: 0x0002
+        Value: 200300052a
+            Properties: 0x20
+              Indicate (0x20)
+            Value Handle: 0x0003
+            Value UUID: Service Changed (0x2a05)
+        Handle: 0x0015
+        Value: 021600002a
+            Properties: 0x02
+              Read (0x02)
+            Value Handle: 0x0016
+            Value UUID: Device Name (0x2a00)
+        Handle: 0x0017
+        Value: 021800012a
+            Properties: 0x02
+              Read (0x02)
+            Value Handle: 0x0018
+            Value UUID: Appearance (0x2a01)
+        Handle: 0x0019
+        Value: 021a00a62a
+            Properties: 0x02
+              Read (0x02)
+            Value Handle: 0x001a
+            Value UUID: Central Address Resolution (0x2aa6)
+        Handle: 0x0029
+        Value: 102a00372a
+            Properties: 0x10
+              Notify (0x10)
+            Value Handle: 0x002a
+            Value UUID: Heart Rate Measurement (0x2a37)
+        Handle: 0x002c
+        Value: 022d00382a
+            Properties: 0x02
+              Read (0x02)
+            Value Handle: 0x002d
+            Value UUID: Body Sensor Location (0x2a38)
+        Handle: 0x002e
+        Value: 082f00392a
+            Properties: 0x08
+              Write (0x08)
+            Value Handle: 0x002f
+            Value UUID: Heart Rate Control Point (0x2a39)
+        Handle: 0x0031
+        Value: 0a32008a2a
+            Properties: 0x0a
+              Read (0x02)
+              Write (0x08)
+            Value Handle: 0x0032
+            Value UUID: First Name (0x2a8a)
+        Handle: 0x0033
+        Value: 0a3400902a
+            Properties: 0x0a
+              Read (0x02)
+              Write (0x08)
+            Value Handle: 0x0034
+            Value UUID: Last Name (0x2a90)
+        Handle: 0x0035
+        Value: 0a36008c2a
+            Properties: 0x0a
+              Read (0x02)
+              Write (0x08)
+            Value Handle: 0x0036
+            Value UUID: Gender (0x2a8c)
+
+
+  Commit: 3bd7df28cbbccd59cca5c35e95c4275229b0badf
+      https://github.com/bluez/bluez/commit/3bd7df28cbbccd59cca5c35e95c4275229b0badf
+  Author: Marcel Holtmann <marcel@holtmann.org>
+  Date:   2022-11-07 (Mon, 07 Nov 2022)
+
+  Changed paths:
+    M monitor/packet.c
+
+  Log Message:
+  -----------
+  monitor: Add some definitions from Bluetooth 5.3 Core specification
+
+
+  Commit: 532c903aa423291e32f1328a69b053cb8185d4f9
+      https://github.com/bluez/bluez/commit/532c903aa423291e32f1328a69b053cb8185d4f9
+  Author: Marcel Holtmann <marcel@holtmann.org>
+  Date:   2022-11-10 (Thu, 10 Nov 2022)
+
+  Changed paths:
+    M Makefile.am
+
+  Log Message:
+  -----------
+  build: Update library version
+
+
+  Commit: 63b01d0b0661d6a0048107dcb9e6f12ceac409e0
+      https://github.com/bluez/bluez/commit/63b01d0b0661d6a0048107dcb9e6f12ceac409e0
+  Author: Marcel Holtmann <marcel@holtmann.org>
+  Date:   2022-11-10 (Thu, 10 Nov 2022)
+
+  Changed paths:
+    M ChangeLog
+    M configure.ac
+
+  Log Message:
+  -----------
+  Release 5.66
+
+
+  Commit: b3a8f8fea99bc47abcf91d79f611fc7c1fce5c4b
+      https://github.com/bluez/bluez/commit/b3a8f8fea99bc47abcf91d79f611fc7c1fce5c4b
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-11-15 (Tue, 15 Nov 2022)
+
+  Changed paths:
+    M monitor/att.c
+
+  Log Message:
+  -----------
+  monitor/att: Fix not dequeing att_read on error response
+
+If a read/read by type fails it needs to be dequeued otherwise it can
+cause the next operation of the same type to return the wrong request
+and possible decoding as if it was a different attribute type.
+
+
+  Commit: 7c2e276d9e7c27e863d2cb9ebcf3be99b3c4fb4e
+      https://github.com/bluez/bluez/commit/7c2e276d9e7c27e863d2cb9ebcf3be99b3c4fb4e
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-11-15 (Tue, 15 Nov 2022)
+
+  Changed paths:
+    M src/shared/util.c
+    M src/shared/util.h
+
+  Log Message:
+  -----------
+  shared/util: Add iovec helpers
+
+This adds iovec helpers functions.
+
+
+  Commit: f96bccd80979283e7bf99a07a6dd9af3110cdf42
+      https://github.com/bluez/bluez/commit/f96bccd80979283e7bf99a07a6dd9af3110cdf42
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-11-15 (Tue, 15 Nov 2022)
+
+  Changed paths:
+    M src/shared/bap.c
+
+  Log Message:
+  -----------
+  shared/bap: Make use of util_iov helpers
+
+This make use of util_iov helpers instead of reimplementing them.
+
+
+  Commit: 918c73acb778e2359abcf5c3fa4c6528164b3910
+      https://github.com/bluez/bluez/commit/918c73acb778e2359abcf5c3fa4c6528164b3910
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-11-15 (Tue, 15 Nov 2022)
+
+  Changed paths:
+    M src/shared/tester.c
+    M src/shared/tester.h
+
+  Log Message:
+  -----------
+  shared/tester: Add tester_io_set_complete_func
+
+This adds tester_io_set_complete_func which can be used to set a
+callback when all iovec has been sent/received.
+
+
+  Commit: 7fcd6889fb13858e3f78e9d5e35ffd80d8e0accb
+      https://github.com/bluez/bluez/commit/7fcd6889fb13858e3f78e9d5e35ffd80d8e0accb
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-11-15 (Tue, 15 Nov 2022)
+
+  Changed paths:
+    M src/shared/bap.c
+
+  Log Message:
+  -----------
+  shared/bap: Fix crash when canceling requests
+
+If bt_bap_unref/bap_free is called while there is an ongoing pending
+request it may endup calling into bap_notify_ready which will try to
+notify ready callbacks while holding a reference, but in case the
+reference is already 0 that means it would switch to 1 and back 0
+causing a double free.
+
+To prevent that bap_notify_ready now checks that the reference is not 0
+with use of bt_bap_ref_safe.
+
+
+  Commit: 1ebbfee345171cb4d38ae55501849a5671d2df4a
+      https://github.com/bluez/bluez/commit/1ebbfee345171cb4d38ae55501849a5671d2df4a
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2022-11-15 (Tue, 15 Nov 2022)
+
+  Changed paths:
+    M Makefile.am
+    A unit/test-bap.c
+
+  Log Message:
+  -----------
+  unit: Introduce test-bap
+
+Test Summary
+------------
+BAP/UCL/DISC/BV-01-C                                 Passed
+BAP/UCL/DISC/BV-02-C                                 Passed
+BAP/UCL/DISC/BV-06-C                                 Passed
+BAP/UCL/DISC/BV-05-C                                 Passed
+BAP/UCL/DISC/BV-03-C                                 Passed
+BAP/UCL/DISC/BV-04-C                                 Passed
+Total: 6, Passed: 6 (100.0%), Failed: 0, Not Run: 0
+
+
+  Commit: e515f4b6e25c971c47ab79e9cbdfa17119bbde23
+      https://github.com/bluez/bluez/commit/e515f4b6e25c971c47ab79e9cbdfa17119bbde23
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2022-11-16 (Wed, 16 Nov 2022)
+
+  Changed paths:
+    M plugins/hostname.c
+
+  Log Message:
+  -----------
+  hostname: Add '' around printed strings
+
+Otherwise we can't see whether the string is nul, or empty.
+
+
+  Commit: e2b2b1675f310023862319ea10ffd205a75cc0cb
+      https://github.com/bluez/bluez/commit/e2b2b1675f310023862319ea10ffd205a75cc0cb
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2022-11-16 (Wed, 16 Nov 2022)
+
+  Changed paths:
+    M plugins/hostname.c
+
+  Log Message:
+  -----------
+  hostname: Fallback to transient hostname
+
+After pretty hostname, and static hostname, also support transient
+hostname as a last resort before 'BlueZ X.XX'.
+
+This happens on Fedora's Workstation installation as it calls
+"hostnamectl set-hostname" on startup. In Fedora Silverblue, the default
+hostname is set as fedora in /etc/os-release.
+
+In both cases, we should fall back to that transient hostname, as bad as
+it could be.
+
+Note that the transient hostname needs to be monitored through the
+kernel directly, as explained in:
+https://www.freedesktop.org/software/systemd/man/org.freedesktop.hostname1.html
+
+
+Compare: https://github.com/bluez/bluez/compare/f65b4d5fc77f...e2b2b1675f31
