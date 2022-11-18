@@ -2,112 +2,91 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECC9B62F140
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Nov 2022 10:33:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16A1B62F9FF
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Nov 2022 17:14:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241165AbiKRJdd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 18 Nov 2022 04:33:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46530 "EHLO
+        id S241629AbiKRQOe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 18 Nov 2022 11:14:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241702AbiKRJdb (ORCPT
+        with ESMTP id S235220AbiKRQOd (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 18 Nov 2022 04:33:31 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E0C32194
-        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Nov 2022 01:33:27 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id jn7so2218458plb.13
-        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Nov 2022 01:33:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q0j5iVbUicTICmhWh5rDVg0bSjdYuaVFJ6m1lg1rW0U=;
-        b=Y1U6ToUgFWbRO3ePqO54lTADP3EkVNUjPe1YpQzkFlw865YybS+8xFWc5V/2YRWwSM
-         YRDFpGT/77QEVeBzdno5ZzqdtxkIhQ1VHwxHnCLHWJr6nkaVYuz+81dvdXxxVaE5f89B
-         vn6QrVPTVbYNc/t9/5FETAjNQTRlQZdGWtQlNBegHONqXSKLO24Ijzdu8ow6bPIMfaUT
-         0HmfD1wDhdjfw2v9UjIDUQzsK4iohJHlDbB8lWJQsTIAzi+aHQrJta2epryew57rGW5J
-         yOSwrL8Z0OihnIqaBBrdrj9IWvQoY6Yyl9uGGcWjoDPhBUxuyIoCuSdau0ClJx14rtom
-         E5cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q0j5iVbUicTICmhWh5rDVg0bSjdYuaVFJ6m1lg1rW0U=;
-        b=o1Av0ZWT5m3nP8MrzEK2oVVGEnddNieHw2xhl5fU8u/FU5EvZNOkAxCmE8A8OCFYXy
-         9XMDn0tHkQIv82++q5iItK8esVSA7t/RP5oyyYOmO7N+SoZDvbAjYWhFKNlk1UhofTRZ
-         weBUikOzih7K6ClubEmL1wuIND0cYGhEmyE+oh3j5yCDVwn4ca+jQuU8L1UkQmBQy9S9
-         jv44GTpSCXc9n2QMr5DtEsXui03YO0EkbkHOg9EOzhJgNS+kziMNVrYjv/Ec0cz7byks
-         DYEIGB9ZVH7xsiXJTg8W2SWJkqstuAAR1fqh18OOhOUeTVrLq2udrbRCH5gf2oITEey/
-         jxIg==
-X-Gm-Message-State: ANoB5pkdIzJ7NxTizOUIH1pz9apLMH7Sfil+Pt8svEqBzSD4dAPXmjN7
-        SOsgjAqx2d5TEC6AwftLn0+ZiZYZONo=
-X-Google-Smtp-Source: AA0mqf61xTmAjm+xGJ23dLcU/NOgUXyl1UmhEkfLadWywDGWZ7RaEyVQ/3op6CvKNNLkKR+KUZlESw==
-X-Received: by 2002:a17:902:ab8d:b0:178:7040:9917 with SMTP id f13-20020a170902ab8d00b0017870409917mr6758285plr.109.1668764006773;
-        Fri, 18 Nov 2022 01:33:26 -0800 (PST)
-Received: from [172.17.0.2] ([13.64.245.183])
-        by smtp.gmail.com with ESMTPSA id f7-20020aa79d87000000b00560cdb3784bsm2684958pfq.60.2022.11.18.01.33.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 01:33:26 -0800 (PST)
-Message-ID: <63775166.a70a0220.775c7.47a3@mx.google.com>
-Date:   Fri, 18 Nov 2022 01:33:26 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============0601789895424151427=="
+        Fri, 18 Nov 2022 11:14:33 -0500
+X-Greylist: delayed 261 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 18 Nov 2022 08:14:30 PST
+Received: from mailgw1.uni-kl.de (mailgw1.uni-kl.de [IPv6:2001:638:208:120::220])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44491922E6
+        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Nov 2022 08:14:29 -0800 (PST)
+Received: from [192.168.2.118] (dslb-088-068-027-038.088.068.pools.vodafone-ip.de [88.68.27.38])
+        (authenticated bits=0)
+        by mailgw1.uni-kl.de (8.14.4/8.14.4/Debian-8+deb8u2) with ESMTP id 2AIG9xTU065171
+        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <linux-bluetooth@vger.kernel.org>; Fri, 18 Nov 2022 17:10:03 +0100
+Message-ID: <f9213307-e4c3-902a-e0b6-aed53f3a1e02@rhrk.uni-kl.de>
+Date:   Fri, 18 Nov 2022 17:09:59 +0100
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, brian.gix@intel.com
-Subject: RE: Fix MSFT filter enable
-In-Reply-To: <20221102175927.401091-2-brian.gix@intel.com>
-References: <20221102175927.401091-2-brian.gix@intel.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Content-Language: de-DE, en-GB
+To:     linux-bluetooth@vger.kernel.org
+From:   Marvin Sinnwell <msinnwel@rhrk.uni-kl.de>
+Subject: LE Advertisement on data channels/ btvirt
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Score:  (0.001)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0601789895424151427==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello everyone,
 
-This is automated email and please do not reply to this email!
+TL;DR: Seeking advice on advertising on arbitrary channels + usage of 
+btvirt specifically function "send_adv_pkt".
 
-Dear submitter,
+I am currently working on my bachelor thesis and have the following 
+problem with I would like to request some advice:
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=691340
+I want to test several algorithms that try to improve the time it takes 
+to find an advertisement packet of another device. For this I not only 
+want to change the method of advertising, on channels 37-39 in 
+sequential order, to something else, but also send advertisement packets 
+on other channels.
 
----Test result---
+My main difficulty currently is composed of trying to find out where the 
+actual advertisement packets are sent. Currently my best guess is, that 
+is is controlled by the firmware of my raspberry pi that I am using 
+(specific model below), because I could not find anything within the 
+bluez stack. Maybe one of you has more knowledge on where I have to search.
 
-Test Summary:
-CheckPatch                    PASS      0.59 seconds
-GitLint                       PASS      0.25 seconds
-SubjectPrefix                 PASS      0.06 seconds
-BuildKernel                   PASS      41.11 seconds
-BuildKernel32                 PASS      37.32 seconds
-TestRunnerSetup               PASS      510.53 seconds
-TestRunner_l2cap-tester       PASS      17.83 seconds
-TestRunner_iso-tester         PASS      18.17 seconds
-TestRunner_bnep-tester        PASS      6.47 seconds
-TestRunner_mgmt-tester        PASS      120.23 seconds
-TestRunner_rfcomm-tester      PASS      10.83 seconds
-TestRunner_sco-tester         PASS      10.13 seconds
-TestRunner_ioctl-tester       PASS      11.69 seconds
-TestRunner_mesh-tester        PASS      8.17 seconds
-TestRunner_smp-tester         PASS      9.90 seconds
-TestRunner_userchan-tester    PASS      6.84 seconds
-IncrementalBuild              PASS      38.07 seconds
+What I was able to find was the btvirt tool, which could help with my 
+problem. There I found in the file "le.c" in function 
+"adv_timeout_callback" another function called "send_adv_pkt". Sadly 
+while trying out btvirt and clever usage of some print statements I 
+could not see the function be executed. Maybe someone can give me some 
+advice on that, because this function should do exactly what I am 
+looking for. It could be that I was just using the tool incorrectly in 
+which case it would be great if somebody could tell me how to use it. My 
+methodology was: 1. "sudo ./btvirt -L -l2 -d" to create 2 new local LE 
+controller. 2. Start advertisement using hcitool "sudo hcitool -i hci2 
+cmd 0x08 0x000a 01". The advertisement is correct and the other local 
+controller can connect to the first one.
+
+My current equipment is:
+
+Device:                Raspberry Pi 3 Model B+
+
+Kernel + OS:       Linux raspberrypi 5.15.61-v7+ #1579 SMP Fri Aug 26 
+11:10:59 BST 2022 armv7l GNU/Linux
+
+Bluez version:     5.65
+
+
+Kind regards
+
+Marvin Sinnwell
 
 
 
----
-Regards,
-Linux Bluetooth
-
-
---===============0601789895424151427==--
