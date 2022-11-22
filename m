@@ -2,210 +2,79 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5B376333E0
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Nov 2022 04:24:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98651633414
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Nov 2022 04:43:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232229AbiKVDYA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 21 Nov 2022 22:24:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43478 "EHLO
+        id S232259AbiKVDnS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 21 Nov 2022 22:43:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232111AbiKVDX5 (ORCPT
+        with ESMTP id S232269AbiKVDnH (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 21 Nov 2022 22:23:57 -0500
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE931240B3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 21 Nov 2022 19:23:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1669087435; x=1700623435;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=hlRyjRXk/Mf8iKNdbIXvoPgMyfu1rQ99CWmCVV5h0AE=;
-  b=KUxx8E7MS6QSZsUvrIFuFC7uWEYxwbSlssu4QRW3VNYj1WALPPYeq9xC
-   QLmVUdCdwdfFXLTkQRx60rez+MZttZOA/23v6hcrL65CbnbJTd+WHUVpH
-   L6M3nj4I5PrDPqR67OoeJK3n0ClF9Srygaa5ZocTjQOx3QSlmh3ynqF3R
-   f67kvdw74yuJY+gtLj66e7dCC8NP7WYVaKfIHOH1UNSrbW9yB6Es1gkkM
-   funeyjxsCMOzUmbGFaBawTrIIoaXU1sZtiG6+jyoOFcIb/osAKcze3z4g
-   2uYQxdrWFYtzNPhkqDf//LYjLt00UGeqRygoSLC2kQPjRaK87tP/RFB6X
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10538"; a="340583293"
-X-IronPort-AV: E=Sophos;i="5.96,182,1665471600"; 
-   d="scan'208";a="340583293"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2022 19:23:55 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10538"; a="672331745"
-X-IronPort-AV: E=Sophos;i="5.96,182,1665471600"; 
-   d="scan'208";a="672331745"
-Received: from intel-latitude-e5450.iind.intel.com ([10.224.186.32])
-  by orsmga008.jf.intel.com with ESMTP; 21 Nov 2022 19:23:54 -0800
-From:   Sathish Narasimman <sathish.narasimman@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Sathish Narasimman <sathish.narasimman@intel.com>
-Subject: [PATCH BlueZ V2 6/6] tools: Add support to generate RSI using SIRK
-Date:   Tue, 22 Nov 2022 08:55:30 +0530
-Message-Id: <20221122032530.3842-7-sathish.narasimman@intel.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221122032530.3842-1-sathish.narasimman@intel.com>
-References: <20221122032530.3842-1-sathish.narasimman@intel.com>
+        Mon, 21 Nov 2022 22:43:07 -0500
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C3192A269;
+        Mon, 21 Nov 2022 19:43:00 -0800 (PST)
+Received: from canpemm500007.china.huawei.com (unknown [172.30.72.53])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4NGVSb1kRPzHvyr;
+        Tue, 22 Nov 2022 11:42:23 +0800 (CST)
+Received: from localhost (10.174.179.215) by canpemm500007.china.huawei.com
+ (7.192.104.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Tue, 22 Nov
+ 2022 11:42:58 +0800
+From:   YueHaibing <yuehaibing@huawei.com>
+To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
+        <luiz.dentz@gmail.com>, <davem@davemloft.net>,
+        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
+        <yuehaibing@huawei.com>, <jkosina@suse.cz>,
+        <gregkh@linuxfoundation.org>, <benjamin.tissoires@redhat.com>
+CC:     <linux-bluetooth@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH -next] Bluetooth: Fix Kconfig warning for BT_HIDP
+Date:   Tue, 22 Nov 2022 11:42:46 +0800
+Message-ID: <20221122034246.24408-1-yuehaibing@huawei.com>
+X-Mailer: git-send-email 2.10.2.windows.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.174.179.215]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ canpemm500007.china.huawei.com (7.192.104.62)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The patch helps to generate Resolvable set identifier adv data.
-which can be used as ADV data during advertisement.
-It will be used to identify the device as part of setmember for
-Coordinated set identification profile.
-Example:
-$<path to advtest/>advtest -i "761FAE703ED681F0C50B34155B6434FB"
-SIRK: 761FAE703ED681F0C50B34155B6434FB
-  RSI:  0x71 0xcb 0xbc 0x7e 0x01 0x84
-    Random: bccb71
-    Hash:   84017e
----
- tools/advtest.c | 80 +++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 78 insertions(+), 2 deletions(-)
+commit 25621bcc8976 add HID_SUPPORT, and HID depends on it now.
+Add HID_SUPPORT dependency for BT_HIDP to fix the warning:
 
-diff --git a/tools/advtest.c b/tools/advtest.c
-index de036e783325..1ac9dd9e1226 100644
---- a/tools/advtest.c
-+++ b/tools/advtest.c
-@@ -13,6 +13,13 @@
- #include <config.h>
- #endif
- 
-+#include <stdlib.h>
-+
-+#include <sys/types.h>
-+#include <sys/stat.h>
-+#include <fcntl.h>
-+#include <unistd.h>
-+
- #include <getopt.h>
- 
- #include "lib/bluetooth.h"
-@@ -32,6 +39,9 @@
- 			"\xe1\x23\x99\xc1\xca\x9a\xc3\x31"
- #define SCAN_IRK	"\xfa\x73\x09\x11\x3f\x03\x37\x0f" \
- 			"\xf4\xf9\x93\x1e\xf9\xa3\x63\xa6"
-+#ifndef MIN
-+#define MIN(x, y) ((x) < (y) ? (x) : (y))
-+#endif
- 
- static struct mgmt *mgmt;
- static uint16_t index1 = MGMT_INDEX_NONE;
-@@ -43,13 +53,73 @@ static struct bt_hci *scan_dev;
- 
- static void print_rpa(const uint8_t addr[6])
- {
--	printf("  Address:  %02x:%02x:%02x:%02x:%02x:%02x\n",
-+	printf("  RSI:\t0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x\n",
- 					addr[5], addr[4], addr[3],
- 					addr[2], addr[1], addr[0]);
- 	printf("    Random: %02x%02x%02x\n", addr[3], addr[4], addr[5]);
- 	printf("    Hash:   %02x%02x%02x\n", addr[0], addr[1], addr[2]);
- }
- 
-+static size_t hex2bin(const char *hexstr, uint8_t *buf, size_t buflen)
-+{
-+	size_t i, len;
-+
-+	len = MIN((strlen(hexstr) / 2), buflen);
-+	memset(buf, 0, len);
-+
-+	for (i = 0; i < len; i++)
-+		if (sscanf(hexstr + (i * 2), "%02hhX", &buf[i]) != 1)
-+			continue;
-+
-+
-+	return len;
-+}
-+
-+static bool get_random_bytes(void *buf, size_t num_bytes)
-+{
-+	ssize_t len;
-+	int fd;
-+
-+	fd = open("/dev/urandom", O_RDONLY);
-+	if (fd < 0)
-+		return false;
-+
-+	len = read(fd, buf, num_bytes);
-+
-+	close(fd);
-+
-+	if (len < 0)
-+		return false;
-+
-+	return true;
-+}
-+
-+static void generate_rsi(char *val)
-+{
-+	uint8_t sirk[16], hash[3];
-+	uint8_t  rsi[6];
-+
-+	hex2bin(val, sirk, sizeof(sirk));
-+
-+	get_random_bytes(&rsi[3], 3);
-+
-+	rsi[5] &= 0x3f; /* Clear 2 msb */
-+	rsi[5] |= 0x40; /* Set 2nd msb */
-+
-+	crypto = bt_crypto_new();
-+	if (!crypto) {
-+		fprintf(stderr, "Failed to open crypto interface\n");
-+		mainloop_exit_failure();
-+		return;
-+	}
-+
-+	bt_crypto_ah(crypto, sirk, rsi + 3, hash);
-+	memcpy(rsi, hash, 3);
-+
-+	print_rpa(rsi);
-+}
-+
-+
- static void scan_le_adv_report(const void *data, uint8_t size,
- 							void *user_data)
- {
-@@ -351,9 +421,11 @@ static void usage(void)
- 	printf("\tadvtest [options]\n");
- 	printf("options:\n"
- 		"\t-h, --help             Show help options\n");
-+	printf(" \t-i  <128bit SIRK>,     Generate RSI ADV Data\n");
- }
- 
- static const struct option main_options[] = {
-+	{ "hash",   no_argument,       NULL, 'i' },
- 	{ "version",   no_argument,       NULL, 'v' },
- 	{ "help",      no_argument,       NULL, 'h' },
- 	{ }
-@@ -366,11 +438,15 @@ int main(int argc ,char *argv[])
- 	for (;;) {
- 		int opt;
- 
--		opt = getopt_long(argc, argv, "vh", main_options, NULL);
-+		opt = getopt_long(argc, argv, "i:vh", main_options, NULL);
- 		if (opt < 0)
- 			break;
- 
- 		switch (opt) {
-+		case 'i':
-+			printf("SIRK: %s\n", optarg);
-+			generate_rsi(optarg);
-+			return EXIT_SUCCESS;
- 		case 'v':
- 			printf("%s\n", VERSION);
- 			return EXIT_SUCCESS;
+WARNING: unmet direct dependencies detected for HID
+  Depends on [n]: HID_SUPPORT [=n]
+  Selected by [m]:
+  - BT_HIDP [=m] && NET [=y] && BT_BREDR [=y] && INPUT [=m]
+
+Fixes: 25621bcc8976 ("HID: Kconfig: split HID support and hid-core compilation")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+---
+ net/bluetooth/hidp/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/bluetooth/hidp/Kconfig b/net/bluetooth/hidp/Kconfig
+index 14100f341f33..6746be07e222 100644
+--- a/net/bluetooth/hidp/Kconfig
++++ b/net/bluetooth/hidp/Kconfig
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ config BT_HIDP
+ 	tristate "HIDP protocol support"
+-	depends on BT_BREDR && INPUT
++	depends on BT_BREDR && INPUT && HID_SUPPORT
+ 	select HID
+ 	help
+ 	  HIDP (Human Interface Device Protocol) is a transport layer
 -- 
-2.25.1
+2.17.1
 
