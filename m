@@ -2,177 +2,89 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1F3D6333A2
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Nov 2022 04:02:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52A556333DB
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Nov 2022 04:23:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231490AbiKVDCH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 21 Nov 2022 22:02:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52786 "EHLO
+        id S231894AbiKVDXu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 21 Nov 2022 22:23:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbiKVDCF (ORCPT
+        with ESMTP id S231896AbiKVDXs (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 21 Nov 2022 22:02:05 -0500
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07821D318
-        for <linux-bluetooth@vger.kernel.org>; Mon, 21 Nov 2022 19:02:03 -0800 (PST)
-Received: by mail-il1-x131.google.com with SMTP id m15so6555973ilq.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 21 Nov 2022 19:02:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=wiRTbDc+lJRcmx8eKb0o1XFGB3lh99xWGIvL5bohkaA=;
-        b=RY4T1Z6LOvwJ5DhMNyHUkO41YIrxz+WYjDFzSbKKXgapCjn/WjriQOSzPzadp60NCI
-         gJ9FJwmFlNd7sV/4/boMaBBWl7jwk9f4nUuR/TTXw/6sZD33bd7WKgzI42shaBgsQEuP
-         7g7412nI6PDPyjlv39XfewIsDGfT+2GR5gt/CV+KL+qXLUzayKLdjo+kT1vwBa7G3E6g
-         s0Z/OwjE13Tg85r5IorHJrUigRMq+mVqZUsqi7w87vL5jlRFkEpcbS44dwEn6WZca4XK
-         IjvyXrwSYgbxCeLiAJnBwGSalp6VJF7lcXNMFOirWzCRHadk9sg0F2OKaQTTxkP4mCIr
-         c0GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wiRTbDc+lJRcmx8eKb0o1XFGB3lh99xWGIvL5bohkaA=;
-        b=tLw4bKmbRazZz+BRc8lEAOoMirqnrWuCx5eCylj9PkPMOftfXXWsD9pKTFOA56LaXv
-         bL3fisU/2er248AhK9Cp897RvqpKsXeMBxS0Z+xOPbV1bEhogeYJ/2wziGD6SRnKr+mi
-         Aml+fN8FbHaeAjpHqvdeoIE4q3TUSxQcVemfdZo8fCfR/b1VFb0bW3RJxONkGKkFZsri
-         fXFvax7SCjxFEXVgRbFeKYLbIq2J/kNSxJ67f1fNMtttTDlrNdy1y38vNmG1MNgOi6w0
-         wfhTcXKd5DlyN2D/cxZxDGuel3+PL1QGkEXFcmsWki7SJMraKwZioCWqa64ESQl3tcm1
-         DVXA==
-X-Gm-Message-State: ANoB5plUf4NRh+Hvc1fPH0tZSvPu17SgLuyqVOiX6JR1gddJqhoX2OxC
-        4VCtTvO/Tmi20s8doXiEQQ4hHY89NxM=
-X-Google-Smtp-Source: AA0mqf4mftjH8haK/6pZbbNtcpyLcG1LrA5jdWbKLNlvSq8mFwspyPaBGEoF3YXI0GLzgEQO/KKZYg==
-X-Received: by 2002:a92:cc4a:0:b0:302:b6c0:70f7 with SMTP id t10-20020a92cc4a000000b00302b6c070f7mr1081961ilq.151.1669086122986;
-        Mon, 21 Nov 2022 19:02:02 -0800 (PST)
-Received: from [172.17.0.2] ([20.9.69.162])
-        by smtp.gmail.com with ESMTPSA id u22-20020a02c056000000b003753b6452f9sm4823892jam.35.2022.11.21.19.02.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 19:02:02 -0800 (PST)
-Message-ID: <637c3baa.020a0220.528ce.96a2@mx.google.com>
-Date:   Mon, 21 Nov 2022 19:02:02 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============5148288079036178744=="
+        Mon, 21 Nov 2022 22:23:48 -0500
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3831123EA4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 21 Nov 2022 19:23:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1669087423; x=1700623423;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=ucrl8gKQOXQW7UCxNxIN4ZmC+JwU3y1FgyEse9qx/0I=;
+  b=YlTuiFheZzaRhDffTbGXCODj1oL5XvbSZsaeyx+wtIBN+7F1mdEtn2e4
+   MTVLIjlW0GdpGQyV35yrJ8Bo7lihJnnULqrbNFMx1XSg/hBf26/ztXHRy
+   PazFZ38cY92MDvhy0fzTMXFrMhEOTuLfQQh8V4iUZUb+hUnfIq1kIM4kP
+   sBW5PJLpCRiq5IrPoEX0jiVA4xAYGC/rkNIAfxzZCS83qK/7p0M/RGYW0
+   qgD0Wu8EthRmzZQYsFiv48y32EYs9R2Lxv8lGzLSzFvHQXa1hBa4qA22I
+   zxtoqmYFSyI2zSEXC2xYF2jwU28rZVvDcP0IcL3CjfKXdHOzrAmhSHCzm
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10538"; a="340583262"
+X-IronPort-AV: E=Sophos;i="5.96,182,1665471600"; 
+   d="scan'208";a="340583262"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2022 19:23:42 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10538"; a="672331692"
+X-IronPort-AV: E=Sophos;i="5.96,182,1665471600"; 
+   d="scan'208";a="672331692"
+Received: from intel-latitude-e5450.iind.intel.com ([10.224.186.32])
+  by orsmga008.jf.intel.com with ESMTP; 21 Nov 2022 19:23:41 -0800
+From:   Sathish Narasimman <sathish.narasimman@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Sathish Narasimman <sathish.narasimman@intel.com>
+Subject: [PATCH BlueZ V2 0/6] V2 of CSIP client role
+Date:   Tue, 22 Nov 2022 08:55:24 +0530
+Message-Id: <20221122032530.3842-1-sathish.narasimman@intel.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, sathish.narasimman@intel.com
-Subject: RE: CSIP - Client Role
-In-Reply-To: <20221121234624.2961-2-sathish.narasimman@intel.com>
-References: <20221121234624.2961-2-sathish.narasimman@intel.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5148288079036178744==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Version 2 Fixed few checkpatch warnings.
 
-This is automated email and please do not reply to this email!
+Sathish Narasimman (6):
+  lib/uuid: Add CSIS UUIDs
+  main.conf: Add CSIP profile configurable options
+  shared/csip: Add initial code for handling CSIP
+  profiles: Add initial code for csip plugin
+  monitor/att: Add decoding support for CSIP
+  tools: Add support to generate RSI using SIRK
 
-Dear submitter,
+ Makefile.am           |   1 +
+ Makefile.plugins      |   5 +
+ configure.ac          |   4 +
+ lib/uuid.h            |   7 +
+ monitor/att.c         |  73 ++++++
+ profiles/audio/csip.c | 319 ++++++++++++++++++++++++
+ src/btd.h             |   9 +
+ src/main.c            | 113 +++++++++
+ src/main.conf         |  24 ++
+ src/shared/csip.c     | 554 ++++++++++++++++++++++++++++++++++++++++++
+ src/shared/csip.h     |  44 ++++
+ tools/advtest.c       |  80 +++++-
+ 12 files changed, 1231 insertions(+), 2 deletions(-)
+ create mode 100644 profiles/audio/csip.c
+ create mode 100644 src/shared/csip.c
+ create mode 100644 src/shared/csip.h
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=697847
+-- 
+2.25.1
 
----Test result---
-
-Test Summary:
-CheckPatch                    FAIL      3.33 seconds
-GitLint                       PASS      1.63 seconds
-BuildEll                      PASS      26.59 seconds
-BluezMake                     PASS      760.57 seconds
-MakeCheck                     PASS      10.81 seconds
-MakeDistcheck                 PASS      146.48 seconds
-CheckValgrind                 PASS      239.47 seconds
-bluezmakeextell               PASS      94.21 seconds
-IncrementalBuild              PASS      3722.53 seconds
-ScanBuild                     WARNING   997.30 seconds
-
-Details
-##############################
-Test: CheckPatch - FAIL
-Desc: Run checkpatch.pl script
-Output:
-[BlueZ,2/6] main.conf: Add CSIP profile configurable options
-WARNING:STATIC_CONST_CHAR_ARRAY: static const char * array should probably be static const char * const
-#119: FILE: src/main.c:151:
-+static const char *csip_options[] = {
-
-/github/workspace/src/src/13051723.patch total: 0 errors, 1 warnings, 199 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/src/13051723.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-[BlueZ,3/6] shared/csip: Add initial code for handling CSIP
-WARNING:PREFER_DEFINED_ATTRIBUTE_MACRO: Prefer __packed over __attribute__((packed))
-#668: FILE: src/shared/csip.h:16:
-+#define __packed __attribute__((packed))
-
-/github/workspace/src/src/13051726.patch total: 0 errors, 1 warnings, 605 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/src/13051726.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-[BlueZ,4/6] profiles: Add initial code for csip plugin
-ERROR:INITIALISED_STATIC: do not initialise statics to 0
-#404: FILE: profiles/audio/csip.c:295:
-+static unsigned int csip_id = 0;
-
-/github/workspace/src/src/13051729.patch total: 1 errors, 0 warnings, 337 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/src/13051729.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-##############################
-Test: ScanBuild - WARNING
-Desc: Run Scan Build
-Output:
-src/main.c:209:2: warning: Undefined or garbage value returned to caller
-        return val;
-        ^~~~~~~~~~
-1 warning generated.
-tools/advtest.c:106:9: warning: The left expression of the compound assignment is an uninitialized value. The computed value will also be garbage
-        rsi[5] &= 0x3f; /* Clear 2 msb */
-        ~~~~~~ ^
-1 warning generated.
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============5148288079036178744==--
