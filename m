@@ -2,118 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA89E638323
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Nov 2022 05:32:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89DBC6392CA
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 26 Nov 2022 01:35:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229463AbiKYEcc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 24 Nov 2022 23:32:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38820 "EHLO
+        id S230220AbiKZAfH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 25 Nov 2022 19:35:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiKYEca (ORCPT
+        with ESMTP id S230116AbiKZAfG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 24 Nov 2022 23:32:30 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B66F1009
-        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Nov 2022 20:32:28 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id x18so2020374qki.4
-        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Nov 2022 20:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rptwOqcNcMxt+9zzl8e3cnNhteTgbFllLfRNM4iO4j8=;
-        b=DZKe3+D62+pJXxTfPZUmvnw2j03A5fpRRCKeLD1ckafGZ7ZhNKgjFsNgMc57ZG/dIw
-         FyedRPTgmw/pJdnubUPwGSzrAlW60gi+GEsbwQggT33V7u09prZ/IOQ+WQlXNagjbvr9
-         s3tVz2hI0MaIxHA6hUQKs77EBH3SJCO5tFDibpWtZ2Fdq8b8Cf9TlxcDSI4bt5S184nc
-         CMLrj6LylLK1iDE4C1/MuVLyxd3+WQXpVhug7hVCY52bkUSmKhXIMnhQCTm22fvZhPVM
-         yqTmfgcKpK1y00aRcps4F04XnL45LT7V0ylNpQXts4ApZ4NcqEfVgEzGBD5hC9aIs/xQ
-         /JPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rptwOqcNcMxt+9zzl8e3cnNhteTgbFllLfRNM4iO4j8=;
-        b=nN5/2aaCXYvv5+LEIJWepHc9Qnzjwbgo49+rrPsbPuRjXrgrwemYRv/04CyF+IvmBp
-         M3lLASwha1cSq3wBssqhNK6x0vPRynsL7Whdy+yWFEKwuo5Pr+sSfQNbt0TGlXELVJ7d
-         JNxP5xf2XbVCSCV5gnAJAmJC1OQ66qbjgE9kDcarby3M/DAnD8VpHwele5C6KhhD6dUF
-         AUKc1EQhF+0Gy9ZCkmEBycugBIzdKyCgfom1xLTYmbC1yF/bRTZCyB7+mLOF+NySu74w
-         2wTs3B/Kv2uexrEe2rcZOH/rNe8IMI4X5R8jo1J0Vtx+0UB28ZA/K7GuMXjObEPrve+x
-         UnvA==
-X-Gm-Message-State: ANoB5pk7GlSL4SiF2pcYp/cBNN2/WqpNoSaLIW2N9RRazL8flcTNHcEF
-        8eDzcQTk7HeOTwPmdwIcylGG05m9fZLz+w==
-X-Google-Smtp-Source: AA0mqf6f+Pwl7TlLfgH9Mt0DZGaVDPv5DZVprh2kciOnLUrLuapfUOqbR6DT4JLs9IzlP+HzY/dPcg==
-X-Received: by 2002:a05:620a:1a16:b0:6f9:5ebe:aa7 with SMTP id bk22-20020a05620a1a1600b006f95ebe0aa7mr16879467qkb.509.1669350747568;
-        Thu, 24 Nov 2022 20:32:27 -0800 (PST)
-Received: from [172.17.0.2] ([20.185.27.191])
-        by smtp.gmail.com with ESMTPSA id u8-20020a05620a454800b006ecf030ef15sm2104735qkp.65.2022.11.24.20.32.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 20:32:27 -0800 (PST)
-Message-ID: <6380455b.050a0220.b56c5.4729@mx.google.com>
-Date:   Thu, 24 Nov 2022 20:32:27 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============8184739207068065203=="
+        Fri, 25 Nov 2022 19:35:06 -0500
+X-Greylist: delayed 423 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 25 Nov 2022 16:35:03 PST
+Received: from mail.psssf.go.tz (mail.psssf.go.tz [196.11.255.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 150185B5B5;
+        Fri, 25 Nov 2022 16:35:02 -0800 (PST)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.psssf.go.tz (Postfix) with ESMTP id DDA6D10040BC;
+        Sat, 26 Nov 2022 03:26:15 +0300 (EAT)
+Received: from mail.psssf.go.tz ([127.0.0.1])
+        by localhost (mail.psssf.go.tz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id KnMoM5RKyMME; Sat, 26 Nov 2022 03:26:15 +0300 (EAT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.psssf.go.tz (Postfix) with ESMTP id 9A60E1004111;
+        Sat, 26 Nov 2022 03:26:15 +0300 (EAT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.psssf.go.tz 9A60E1004111
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=psssf.go.tz;
+        s=psssfdkim; t=1669422375;
+        bh=GgFYceHPfP/4Ju84fndFJB/TSJ1oqCCcVK78ii2DXwQ=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=Cy+/TibqOsRDZ+tAWqJVJv+eocn6iERHIJTFBXHXsPQUdmiNAqwmCLrjm/3NldWy1
+         JSSWGfNF1Pf2eRuK1RlSkoupqD7VX4kI+EXxvIwIgkFJHP4M6LXysskMgBw7US91eR
+         4ZIsbSb52tqcddIW8sOcyqyg/GCXTz4LQrE44u5i3wkDTdLW8MrDxJxYZW52hrHrW0
+         oZxo3i2tlZFbIcj/P4dbwD6UEi+WJvV1LYa10e51JfCN+IFmlyiBMvNoQh+vl6OCS8
+         G+osRr2Kt7pqJ1pPFGUhmlJWcbfn/Q6HLMxQnxRPqXuLfQwfgCwWZqRpfcMDCMbjV7
+         EJoySyF48aSQw==
+X-Virus-Scanned: amavisd-new at mail.psssf.go.tz
+Received: from mail.psssf.go.tz ([127.0.0.1])
+        by localhost (mail.psssf.go.tz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id J-KYvJzBHMaE; Sat, 26 Nov 2022 03:26:15 +0300 (EAT)
+Received: from EC2AMAZ-O7KPIJ2.ec2.internal (ec2-3-238-242-41.compute-1.amazonaws.com [3.238.242.41])
+        by mail.psssf.go.tz (Postfix) with ESMTPSA id 6537B10040BC;
+        Sat, 26 Nov 2022 03:26:10 +0300 (EAT)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, samuel@sholland.org
-Subject: RE: [v2] dt-bindings: net: realtek-bluetooth: Add RTL8723DS
-In-Reply-To: <20221125040956.18648-1-samuel@sholland.org>
-References: <20221125040956.18648-1-samuel@sholland.org>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: 
+To:     Recipients <lusajo.anderson@psssf.go.tz>
+From:   "Rowell" <lusajo.anderson@psssf.go.tz>
+Date:   Fri, 25 Nov 2022 19:27:45 -0500
+Reply-To: rowellhm0192@gmail.com
+Message-Id: <20221126002610.6537B10040BC@mail.psssf.go.tz>
+X-Spam-Status: Yes, score=5.8 required=5.0 tests=BAYES_99,BAYES_999,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FREEMAIL_FORGED_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_MSPIKE_H2 RBL: Average reputation (+2)
+        *      [196.11.255.52 listed in wl.mailspike.net]
+        *  0.2 BAYES_999 BODY: Bayes spam probability is 99.9 to 100%
+        *      [score: 0.9993]
+        *  3.5 BAYES_99 BODY: Bayes spam probability is 99 to 100%
+        *      [score: 0.9993]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [rowellhm0192[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============8184739207068065203==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=699014
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.62 seconds
-GitLint                       PASS      0.33 seconds
-SubjectPrefix                 FAIL      0.32 seconds
-BuildKernel                   PASS      33.78 seconds
-BuildKernel32                 PASS      30.27 seconds
-TestRunnerSetup               PASS      419.21 seconds
-TestRunner_l2cap-tester       PASS      15.65 seconds
-TestRunner_iso-tester         PASS      15.19 seconds
-TestRunner_bnep-tester        PASS      5.31 seconds
-TestRunner_mgmt-tester        PASS      103.24 seconds
-TestRunner_rfcomm-tester      PASS      9.17 seconds
-TestRunner_sco-tester         PASS      8.54 seconds
-TestRunner_ioctl-tester       PASS      9.87 seconds
-TestRunner_mesh-tester        PASS      6.61 seconds
-TestRunner_smp-tester         PASS      8.42 seconds
-TestRunner_userchan-tester    PASS      5.56 seconds
-IncrementalBuild              PASS      31.00 seconds
-
-Details
-##############################
-Test: SubjectPrefix - FAIL
-Desc: Check subject contains "Bluetooth" prefix
-Output:
-"Bluetooth: " prefix is not specified in the subject
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============8184739207068065203==--
+Hope you get my mail
