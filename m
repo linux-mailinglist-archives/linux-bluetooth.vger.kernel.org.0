@@ -2,68 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 376A263B136
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 28 Nov 2022 19:24:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DE5863BCEF
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 29 Nov 2022 10:29:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232665AbiK1SYh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 28 Nov 2022 13:24:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32768 "EHLO
+        id S231769AbiK2J3B (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 29 Nov 2022 04:29:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232602AbiK1SYU (ORCPT
+        with ESMTP id S231440AbiK2J3A (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 28 Nov 2022 13:24:20 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAD2729822
-        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Nov 2022 10:14:19 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7101A611B0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Nov 2022 18:14:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CF78DC433B5
-        for <linux-bluetooth@vger.kernel.org>; Mon, 28 Nov 2022 18:14:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669659258;
-        bh=93hd8qldF16MselnW47zv+oXIH1NrBUwrx3K36HfEkY=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=BqtZ2+XR3+g6RWS+454VWUuDYvV73mRUyhCiosjYavYi9wJCe+46+RpXhfFzN7J53
-         xLgrctpifl4Kz1IqCO4HC7kWC4TG6XFkSEeOEzqNZpy1X5QlaVmcp07yGiLol2MBGs
-         Lrv8xJN/L3PZzZwmx4mULTJRxTKtsM7Mgeq0VDYwE8Rra6KlL/fEbBWJn/kDJN1ywE
-         AAeJEYA1KQLMRFBQNkNJTdWbzqGHxxnj0FYR25r8hsP2UTvmG8x65RQOVK7vV8tEvU
-         /dHfjn8JIrEintTT/9MaEuTYWV7fD0TgZ7QyO8SXPspzyzo5yJYcIAHZ10bjEjkaNh
-         x7QooZC9DITbg==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id B9418C433E9; Mon, 28 Nov 2022 18:14:18 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 216683] [REGRESSION] HCI_QUIRK_NO_SUSPEND_NOTIFIER causes
- kernel panic on fake CSR 5.0 clones
-Date:   Mon, 28 Nov 2022 18:14:18 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: high
-X-Bugzilla-Who: luiz.dentz@gmail.com
-X-Bugzilla-Status: REOPENED
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-216683-62941-h19XGaw2lk@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-216683-62941@https.bugzilla.kernel.org/>
-References: <bug-216683-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Tue, 29 Nov 2022 04:29:00 -0500
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E2B54A04D;
+        Tue, 29 Nov 2022 01:28:58 -0800 (PST)
+Received: from dggpemm500023.china.huawei.com (unknown [172.30.72.55])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4NLxpT6Z20zmW81;
+        Tue, 29 Nov 2022 17:28:17 +0800 (CST)
+Received: from dggpemm500013.china.huawei.com (7.185.36.172) by
+ dggpemm500023.china.huawei.com (7.185.36.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Tue, 29 Nov 2022 17:28:57 +0800
+Received: from ubuntu1804.huawei.com (10.67.175.36) by
+ dggpemm500013.china.huawei.com (7.185.36.172) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Tue, 29 Nov 2022 17:28:56 +0800
+From:   Chen Zhongjin <chenzhongjin@huawei.com>
+To:     <linux-bluetooth@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <chenzhongjin@huawei.com>, <marcel@holtmann.org>,
+        <johan.hedberg@gmail.com>, <luiz.dentz@gmail.com>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>
+Subject: [PATCH] Bluetooth: Fix not cleanup led when bt_init fails
+Date:   Tue, 29 Nov 2022 17:25:56 +0800
+Message-ID: <20221129092556.116222-1-chenzhongjin@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain
+X-Originating-IP: [10.67.175.36]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm500013.china.huawei.com (7.185.36.172)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,17 +51,49 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D216683
+bt_init() calls bt_leds_init() to register led, but if it fails later,
+bt_leds_cleanup() is not called to unregister it.
 
---- Comment #14 from Luiz Von Dentz (luiz.dentz@gmail.com) ---
-@JustANormalTinkererMihir
+This can cause panic if the argument "bluetooth-power" in text is freed
+and then another led_trigger_register() tries to access it:
 
-Could you try something like bellow:
+BUG: unable to handle page fault for address: ffffffffc06d3bc0
+RIP: 0010:strcmp+0xc/0x30
+  Call Trace:
+    <TASK>
+    led_trigger_register+0x10d/0x4f0
+    led_trigger_register_simple+0x7d/0x100
+    bt_init+0x39/0xf7 [bluetooth]
+    do_one_initcall+0xd0/0x4e0
 
-https://gist.github.com/Vudentz/0e0cb034a434e94daaf219f26f921aa2
+Fixes: e64c97b53bc6 ("Bluetooth: Add combined LED trigger for controller power")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+---
+ net/bluetooth/af_bluetooth.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---=20
-You may reply to this email to add a comment.
+diff --git a/net/bluetooth/af_bluetooth.c b/net/bluetooth/af_bluetooth.c
+index dc65974f5adb..1c3c7ff5c3c6 100644
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -737,7 +737,7 @@ static int __init bt_init(void)
+ 
+ 	err = bt_sysfs_init();
+ 	if (err < 0)
+-		return err;
++		goto cleanup_led;
+ 
+ 	err = sock_register(&bt_sock_family_ops);
+ 	if (err)
+@@ -773,6 +773,8 @@ static int __init bt_init(void)
+ 	sock_unregister(PF_BLUETOOTH);
+ cleanup_sysfs:
+ 	bt_sysfs_cleanup();
++cleanup_led:
++	bt_leds_cleanup();
+ 	return err;
+ }
+ 
+-- 
+2.17.1
 
-You are receiving this mail because:
-You are the assignee for the bug.=
