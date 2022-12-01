@@ -2,58 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6142563F03E
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Dec 2022 13:15:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FE9363F04A
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Dec 2022 13:17:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231343AbiLAMPo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 1 Dec 2022 07:15:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55932 "EHLO
+        id S231379AbiLAMRA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 1 Dec 2022 07:17:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231334AbiLAMPm (ORCPT
+        with ESMTP id S230143AbiLAMQ6 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 1 Dec 2022 07:15:42 -0500
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F98A322F
-        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Dec 2022 04:15:41 -0800 (PST)
-Received: by mail-pj1-x1044.google.com with SMTP id cm20so1697357pjb.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Dec 2022 04:15:41 -0800 (PST)
+        Thu, 1 Dec 2022 07:16:58 -0500
+Received: from mail-yw1-x1142.google.com (mail-yw1-x1142.google.com [IPv6:2607:f8b0:4864:20::1142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34437A5552
+        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Dec 2022 04:16:58 -0800 (PST)
+Received: by mail-yw1-x1142.google.com with SMTP id 00721157ae682-3c21d6e2f3aso15057327b3.10
+        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Dec 2022 04:16:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:to:subject:message-id:date:from:sender
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
         bh=R6OkCvPA2zl2Wdoh++7tP7g6YAt2T7tV3GofKyYJrUc=;
-        b=UqD7DPUT0KGwbyvqQWtW8Y/Gk/ckLox3c8U0UGTU1HBYtYmSSClB+ZuV01tCWiXSHY
-         OUVMNb/3JXsibH5w28ddqJ2QivRfPqwrCwN80Pc0LBaBCAAeY9vjFGmZ+mgu1olz9fIc
-         kGEp27B7Lo3GuA3MMUj16p1h+S48tcx6j8x6UPIDrBG+Fj7MoiQZ5jDMPaVyP3/JmwfQ
-         NgNcVYlIY+uWwW/lg3GizvSyzmjExEgZy4CnBqo8/ZUJQKY+n/ZRfijNXNrhK8+l8cg4
-         GGvrqvsU6KQM423Io9x46kW+d3EKIpKbrCHbJi+/1AdfZwZSUuJljrxqxrFEMstpA2cc
-         d9mg==
+        b=JnGb/sPdvMSDh6ypnJUhz++BuLKojrPzfSzN3hH2yPotjz1JLk5k82ozdkSB1YFPAz
+         UlH/dPjBbRl5n2RX8MyHSEcjnimAOD61GKl6Ey3Dw3spLiCY0aFYevB1vV4qSqRQf09L
+         VHToSfkRYwcuKaRV2/2gOI4LSz0NZwqvGloNjbWZypVdBO+8CNznw+dGK5MVStDa4w7V
+         M93/dEn4Bs+iquSN2C/uzXT7u4B99mUt74s5JnBTxNIjXjaT/bpzxYDADcalx2CEfbEf
+         gckNyjcycEcUTgsliyUMrSfnLPZuQNp0u53Ho9TX4ICepMmoKzLM34uMJyIFMCdZNgcT
+         iRgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:to:subject:message-id:date:from:sender
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
         bh=R6OkCvPA2zl2Wdoh++7tP7g6YAt2T7tV3GofKyYJrUc=;
-        b=gMXMI6nG4mTo37vAmqp6uGOwNpNStNrhwkwV15OZAJk976mvHu5Gn5You95Do7cCZi
-         eh8aFPvZrIX6y69AYSYIMtHESFriyDBM+8rTN3H8opaUVG9Y2odpKaUH83nz/JWScJzK
-         9eJRd4LVklO03D1Urg2Nlnng8xvsu6xljqG4CZizv2qitHpk11vmoxOXfOYOeyDNMMih
-         n5CGgiclXW5A17BQO0bjbNlx7LKOPPcaVREI00d3v1YhbrbEZSk3s3hen9kiEFAiryQm
-         v674gtYd7x+Qqf7aFPqP9fQo3l1efuexQKZn17dFdvbMduWIUv5hu2Qn/TmP3vlWJgLb
-         AsJQ==
-X-Gm-Message-State: ANoB5plxlweSgOpE8fefpC8QvAbyUBKqZlwGHjb+djl3U9bUjMCsspgT
-        zbl1IHVN7/6kKNKDTD2N72Dov/7xW1dTjguNnZE=
-X-Google-Smtp-Source: AA0mqf4ZmPY90Gz3DnOYZ+UEQx6Bq2DO8qL05q6UBQCZZvO4V0N72a7CYjCiPbk7L34cM3xi5by+QA+zqiaeNHvMBcc=
-X-Received: by 2002:a17:903:1314:b0:189:86b4:c4a with SMTP id
- iy20-20020a170903131400b0018986b40c4amr21367549plb.30.1669896940456; Thu, 01
- Dec 2022 04:15:40 -0800 (PST)
+        b=cc3Eaypr0ykS5El6v9FA707i2Kn731qVMeITH6a0wqHdbRLULV0wb1J7prCMcZoG3T
+         96MLw8meKhN97Xy/ZgKMJOBCk0NxB+fZZlOnavWQNApNJp0xKXTjBHXsLlUiRAEdNB+k
+         zLojXlebvYUSJjFUgvGq+h3v3KFFu/B6cZuNNAOphSpAEj4/D5+D4LTeWCUdyNxYGj78
+         nyoOnVFg6K/1o4cpZPfvF8MOeWbd28atOBtCYAqyXQ+DxXEjK7lDzMy3Cr5eMKHT/qh9
+         TIDdDobm6qHkMzrMokYhljjwriMhDWGGA4gG7RLXjRL1UNO+dobiVcbIXbXGYBBo9cmr
+         qwJw==
+X-Gm-Message-State: ANoB5pmIO7AHKjbr/pIxO9n0iNikHfexA6TDVbAIIg6RvTXaa3i5oVI7
+        M+KwV+NNW07lvcXqKdKtLAxKGgip/NRUeT5KZdM=
+X-Google-Smtp-Source: AA0mqf6ArOWYLW3YK+qK3bHf+Nq91wMoZOXVMXKcKPddg9AaS/J6zomfN471MGYTfkgUVytypY75I9ibdyGoIjVwG/s=
+X-Received: by 2002:a81:ece:0:b0:3d6:8ecf:8370 with SMTP id
+ 197-20020a810ece000000b003d68ecf8370mr5945507ywo.162.1669897017038; Thu, 01
+ Dec 2022 04:16:57 -0800 (PST)
 MIME-Version: 1.0
 Sender: mourineomondi9@gmail.com
-Received: by 2002:a17:902:ce86:b0:189:a74e:9bfa with HTTP; Thu, 1 Dec 2022
- 04:15:39 -0800 (PST)
+Received: by 2002:a05:7108:7c20:0:0:0:0 with HTTP; Thu, 1 Dec 2022 04:16:55
+ -0800 (PST)
 From:   sandraomeratega <sandraomeratega1@gmail.com>
-Date:   Thu, 1 Dec 2022 04:15:39 -0800
-X-Google-Sender-Auth: RGWQCY2YgTCSTRW6oWvPpEkcDZ8
-Message-ID: <CABdJfXX6c4qH-44fo2b9_oFh16b2RepJZMH1XbAZSLvcgzux0A@mail.gmail.com>
+Date:   Thu, 1 Dec 2022 04:16:55 -0800
+X-Google-Sender-Auth: kuRe2Jr3jR79PaVoKbqxL1I1AFg
+Message-ID: <CABdJfXXunXm6aYeE=a-iieiZ-pixhrP72ZgGcBejnPwwbtuACw@mail.gmail.com>
 Subject: Sie brauchen einen legalen Kredit?
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
