@@ -2,103 +2,78 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B64663EF81
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Dec 2022 12:32:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6142563F03E
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Dec 2022 13:15:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230078AbiLALcC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 1 Dec 2022 06:32:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47588 "EHLO
+        id S231343AbiLAMPo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 1 Dec 2022 07:15:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230519AbiLALcB (ORCPT
+        with ESMTP id S231334AbiLAMPm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 1 Dec 2022 06:32:01 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC0C353EF0
-        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Dec 2022 03:32:00 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 79E7EB81F08
-        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Dec 2022 11:31:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3FD0BC433B5
-        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Dec 2022 11:31:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669894318;
-        bh=VwEVODXqAX3Gno6eOljnyjJ1N1VlRj5h50FW8La/DfA=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=qwp7St7CF9oQ8qkQr3sg9g+m7CieddoiyGW/3jPspiHkHz5w36bSckb4YawMedCyw
-         MCmoXHfTMpmC4gHgLRPhBVgsOFJek5AuFs9/z4qVr6aszmCa/7EHg9TkSV52Xi807B
-         SKYVD2Dm3Ocib3Z2xK5MHKD2yOPUIbhjX2z1TqvXKmQBmjV202nBhv3VBF8mSKUXOw
-         5B3nFZJT1UPYlroozGQ+MEiLsJkuL6ZMUcal7oyWmmajD5VowjIMZRJv00nNfKwMfp
-         Sm8mG2EpoQ5MHni7vU9FNapk855bliv7E+PqxUOlXGFHZ5gXZi27//9Aagsx+cgmUh
-         mEO5dlMOS669Q==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id 2F640C433E6; Thu,  1 Dec 2022 11:31:58 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 216683] [REGRESSION] HCI_QUIRK_NO_SUSPEND_NOTIFIER causes
- kernel panic on fake CSR 5.0 clones
-Date:   Thu, 01 Dec 2022 11:31:57 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: high
-X-Bugzilla-Who: kernel@rotce.de
-X-Bugzilla-Status: REOPENED
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-216683-62941-oDFHFipbWt@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-216683-62941@https.bugzilla.kernel.org/>
-References: <bug-216683-62941@https.bugzilla.kernel.org/>
+        Thu, 1 Dec 2022 07:15:42 -0500
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F98A322F
+        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Dec 2022 04:15:41 -0800 (PST)
+Received: by mail-pj1-x1044.google.com with SMTP id cm20so1697357pjb.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Dec 2022 04:15:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=R6OkCvPA2zl2Wdoh++7tP7g6YAt2T7tV3GofKyYJrUc=;
+        b=UqD7DPUT0KGwbyvqQWtW8Y/Gk/ckLox3c8U0UGTU1HBYtYmSSClB+ZuV01tCWiXSHY
+         OUVMNb/3JXsibH5w28ddqJ2QivRfPqwrCwN80Pc0LBaBCAAeY9vjFGmZ+mgu1olz9fIc
+         kGEp27B7Lo3GuA3MMUj16p1h+S48tcx6j8x6UPIDrBG+Fj7MoiQZ5jDMPaVyP3/JmwfQ
+         NgNcVYlIY+uWwW/lg3GizvSyzmjExEgZy4CnBqo8/ZUJQKY+n/ZRfijNXNrhK8+l8cg4
+         GGvrqvsU6KQM423Io9x46kW+d3EKIpKbrCHbJi+/1AdfZwZSUuJljrxqxrFEMstpA2cc
+         d9mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R6OkCvPA2zl2Wdoh++7tP7g6YAt2T7tV3GofKyYJrUc=;
+        b=gMXMI6nG4mTo37vAmqp6uGOwNpNStNrhwkwV15OZAJk976mvHu5Gn5You95Do7cCZi
+         eh8aFPvZrIX6y69AYSYIMtHESFriyDBM+8rTN3H8opaUVG9Y2odpKaUH83nz/JWScJzK
+         9eJRd4LVklO03D1Urg2Nlnng8xvsu6xljqG4CZizv2qitHpk11vmoxOXfOYOeyDNMMih
+         n5CGgiclXW5A17BQO0bjbNlx7LKOPPcaVREI00d3v1YhbrbEZSk3s3hen9kiEFAiryQm
+         v674gtYd7x+Qqf7aFPqP9fQo3l1efuexQKZn17dFdvbMduWIUv5hu2Qn/TmP3vlWJgLb
+         AsJQ==
+X-Gm-Message-State: ANoB5plxlweSgOpE8fefpC8QvAbyUBKqZlwGHjb+djl3U9bUjMCsspgT
+        zbl1IHVN7/6kKNKDTD2N72Dov/7xW1dTjguNnZE=
+X-Google-Smtp-Source: AA0mqf4ZmPY90Gz3DnOYZ+UEQx6Bq2DO8qL05q6UBQCZZvO4V0N72a7CYjCiPbk7L34cM3xi5by+QA+zqiaeNHvMBcc=
+X-Received: by 2002:a17:903:1314:b0:189:86b4:c4a with SMTP id
+ iy20-20020a170903131400b0018986b40c4amr21367549plb.30.1669896940456; Thu, 01
+ Dec 2022 04:15:40 -0800 (PST)
+MIME-Version: 1.0
+Sender: mourineomondi9@gmail.com
+Received: by 2002:a17:902:ce86:b0:189:a74e:9bfa with HTTP; Thu, 1 Dec 2022
+ 04:15:39 -0800 (PST)
+From:   sandraomeratega <sandraomeratega1@gmail.com>
+Date:   Thu, 1 Dec 2022 04:15:39 -0800
+X-Google-Sender-Auth: RGWQCY2YgTCSTRW6oWvPpEkcDZ8
+Message-ID: <CABdJfXX6c4qH-44fo2b9_oFh16b2RepJZMH1XbAZSLvcgzux0A@mail.gmail.com>
+Subject: Sie brauchen einen legalen Kredit?
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
-MIME-Version: 1.0
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=0.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D216683
-
-Daniel (kernel@rotce.de) changed:
-
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |kernel@rotce.de
-
---- Comment #18 from Daniel (kernel@rotce.de) ---
-I also need all four patches to make it work. However, after a sleep I get =
-the
-following in my dmesg output:
-
-```
-[32332.754468] Bluetooth: hci0: command 0x0405 tx timeout
-```
-
-After that I get the following repeating:
-
-```
-[36431.813695] Bluetooth: hci0: command 0x0c24 tx timeout
-[36431.813705] Bluetooth: hci0: Opcode 0x c24 failed: -110
-[36533.323814] Bluetooth: hci0: command 0x0408 tx timeout
-
-```
-
 --=20
-You may reply to this email to add a comment.
+Sch=C3=B6nen Tag. Brauchen Sie einen Kredit? Bitte kontaktieren Sie mich
+f=C3=BCr weitere Informationen. Meine Kredite sind schnell und zuverl=C3=A4=
+ssig.
+Probieren Sie es aus, denn wir scheitern nicht.
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+
+Gr=C3=BC=C3=9Fe
+Sandra Ortegamera
