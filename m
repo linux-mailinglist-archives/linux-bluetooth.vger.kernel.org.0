@@ -2,145 +2,76 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5254641555
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  3 Dec 2022 10:38:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3F5F641823
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  3 Dec 2022 18:36:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229527AbiLCJiu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 3 Dec 2022 04:38:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52498 "EHLO
+        id S229680AbiLCRgi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 3 Dec 2022 12:36:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiLCJis (ORCPT
+        with ESMTP id S229611AbiLCRgg (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 3 Dec 2022 04:38:48 -0500
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1F413E1C
-        for <linux-bluetooth@vger.kernel.org>; Sat,  3 Dec 2022 01:38:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1670060327; x=1701596327;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=+WgtYDT2s61gpP9CAcBW9u5bzpAvSA+IZRFpervOKU0=;
-  b=mwL7CXLhEHY/Nuf73exjePCfRICvujX302CV37/NGvq5S0KyG/z5D/s1
-   1J/lqXk2QfY4DWMUFgMguG7dZxwe6I6Vd4JnxD0CuP7V8e63y1mEu9r2u
-   oimTcB+UxkzrZiKl0lZf3Szrbvbu0M/s/d2W36y3ALMkyIHYmOoIHN/wE
-   Pyi06Sw/GGklXKbmBfKKC1w2eO3g2nbZLb8sxiB4d7mvdpHggD80+Z8HO
-   +OICn5907gR1lAxl6x0H0lX9ZgLPd3eORwThyURe8XSiEEU9cBiTBFNgH
-   xPM3uc4+kpV7GbPKBCA8c5RmZo0E/yrYvF/zrq2H3wGn72qxVhfebJdnp
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10549"; a="303721742"
-X-IronPort-AV: E=Sophos;i="5.96,214,1665471600"; 
-   d="scan'208";a="303721742"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2022 01:38:47 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10549"; a="751574295"
-X-IronPort-AV: E=Sophos;i="5.96,214,1665471600"; 
-   d="scan'208";a="751574295"
-Received: from lkp-server01.sh.intel.com (HELO 64a2d449c951) ([10.239.97.150])
-  by fmsmga002.fm.intel.com with ESMTP; 03 Dec 2022 01:38:45 -0800
-Received: from kbuild by 64a2d449c951 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1p1Oyr-000ES5-0p;
-        Sat, 03 Dec 2022 09:38:45 +0000
-Date:   Sat, 03 Dec 2022 17:37:51 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- dbd24be484227fe64615fc6c01fa9cf6de0455ac
-Message-ID: <638b18ef.wVVtbKfIQeAfxYE2%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        Sat, 3 Dec 2022 12:36:36 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6424A1E72A
+        for <linux-bluetooth@vger.kernel.org>; Sat,  3 Dec 2022 09:36:35 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id s8so12164403lfc.8
+        for <linux-bluetooth@vger.kernel.org>; Sat, 03 Dec 2022 09:36:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=r/ctzesBDdhC+Y3n4ElDRulMMltmusXqIbDihrEfQDM=;
+        b=OHEnnX0jGp1638H8u/uZ4bJNDPcFOPpcFpgi9tHunQXqIcHfPKsunadfrRXgNy1bQx
+         tcPJcmRNAfbIoNlPJDsWRQoM2yal6JT1Ueuxl0p6Yb0rXkZqvEtg9Mx0pD5wH5dv10ia
+         uST3PM08GV8MchAP5QsTvQ9xWnyDP2FD6SbeIIWNjJOy647+st3/5+4YyoEXWqAqoGYF
+         z2OTM4x4GAqulvap35qdWrkRWjD6RhuC3oFQDJ0h40irrmnp1QhtuuTpUTEe1ISprqc3
+         gP50ZBi8Qg4uigx8MKz/eJD7FXShSV+ziGYp6dS8rfgrLpFbEKw0i+I3/RW6GbH8UNJR
+         C2ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=r/ctzesBDdhC+Y3n4ElDRulMMltmusXqIbDihrEfQDM=;
+        b=hnxuRwIz4jZ0gCTdNrfmRrsLZq3mlYLiKvvbHxFIPF+C21n7v+9/6fiYA3Y3RaOONs
+         wu22tbnqoudHNSr0OaVAfBsNq+NoP1norUWNGHMKJ54sxe0Hp8wpZIwkNLIy/ruSM0i2
+         iHOY9WCYIQcYAw+uQfffIuk3fadu5CpOXOC2PyoO7B3frIcMfLnD2ffRKj9qchWyJADb
+         jjWTXSVBUIFC1A17mgF53Xmtpd6ajrIZG2YV/ak91Xjvpxqo9yM7tfcx084ae/ExR+CB
+         Fs3coh3SagSbjmeVPxpO1+9J+LJ5h8P3gIOx2PsDqSgF3h+V93yKCJyeScWpVqRcoz75
+         PPQg==
+X-Gm-Message-State: ANoB5pk5MjkyNvOOmQqf9MeAa4hK4hJoJpi7GqV4lqifQGZmJXKWKPDV
+        ioppJRBC7g7eqIxPUZ5+iBQKBWltpvCIxmFXLv8=
+X-Google-Smtp-Source: AA0mqf7V2EiYLQhuJdG5Kw6yb99BKQmFThgOfAm3yATQDN2bBOnJUNdUqnMZ2BN6nAuJzHt8e0BfpA3oc04rSzUjHZk=
+X-Received: by 2002:a05:6512:4cd:b0:4a2:c2cf:a297 with SMTP id
+ w13-20020a05651204cd00b004a2c2cfa297mr23780329lfq.286.1670088993299; Sat, 03
+ Dec 2022 09:36:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:6022:5653:b0:33:7b6f:7092 with HTTP; Sat, 3 Dec 2022
+ 09:36:32 -0800 (PST)
+Reply-To: Gregdenzell9@gmail.com
+From:   Greg Denzell <incceisabit@gmail.com>
+Date:   Sat, 3 Dec 2022 17:36:32 +0000
+Message-ID: <CAJu2LG8XQ07qu_bRvm1CgyEsMAXh6N-zgORqsoXzF_mfD57VdA@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: dbd24be484227fe64615fc6c01fa9cf6de0455ac  Bluetooth: Fix crash when replugging CSR fake controllers
+Ahoj,
 
-elapsed time: 721m
-
-configs tested: 62
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-um                           x86_64_defconfig
-um                             i386_defconfig
-arc                                 defconfig
-powerpc                           allnoconfig
-alpha                               defconfig
-x86_64                    rhel-8.3-kselftests
-x86_64                          rhel-8.3-func
-x86_64                           rhel-8.3-syz
-x86_64                         rhel-8.3-kunit
-x86_64                           rhel-8.3-kvm
-x86_64                               rhel-8.3
-x86_64                              defconfig
-x86_64                        randconfig-a013
-x86_64                        randconfig-a011
-x86_64                        randconfig-a015
-s390                             allmodconfig
-s390                                defconfig
-ia64                             allmodconfig
-x86_64                           allyesconfig
-m68k                             allyesconfig
-m68k                             allmodconfig
-arc                              allyesconfig
-sh                               allmodconfig
-alpha                            allyesconfig
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-s390                             allyesconfig
-x86_64                        randconfig-a006
-mips                             allyesconfig
-powerpc                          allmodconfig
-arc                  randconfig-r043-20221201
-riscv                randconfig-r042-20221201
-s390                 randconfig-r044-20221201
-i386                                defconfig
-i386                          randconfig-a001
-i386                          randconfig-a003
-i386                          randconfig-a014
-i386                          randconfig-a012
-i386                          randconfig-a016
-i386                          randconfig-a005
-i386                             allyesconfig
-arm                                 defconfig
-x86_64                            allnoconfig
-arm                              allyesconfig
-arm64                            allyesconfig
-
-clang tested configs:
-x86_64                        randconfig-a014
-x86_64                        randconfig-a016
-x86_64                        randconfig-a012
-x86_64                        randconfig-a001
-x86_64                        randconfig-a003
-x86_64                        randconfig-a005
-hexagon              randconfig-r045-20221201
-hexagon              randconfig-r041-20221201
-i386                          randconfig-a013
-i386                          randconfig-a002
-i386                          randconfig-a004
-i386                          randconfig-a011
-i386                          randconfig-a015
-i386                          randconfig-a006
-x86_64                        randconfig-k001
-arm                       spear13xx_defconfig
-arm                          ep93xx_defconfig
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Toto je moja druh=C3=A1 spr=C3=A1va pre v=C3=A1s t=C3=BDkaj=C3=BAca sa fina=
+n=C4=8Dn=C3=BDch prostriedkov
+v=C3=A1=C5=A1ho zosnul=C3=A9ho pr=C3=ADbuzn=C3=A9ho. Podrobnosti v=C3=A1m p=
+o=C5=A1lem po prijat=C3=AD va=C5=A1ej
+odpovede.
