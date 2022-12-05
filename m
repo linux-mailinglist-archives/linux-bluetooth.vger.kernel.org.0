@@ -2,85 +2,189 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D56C641930
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  3 Dec 2022 22:18:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF5CF64279B
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Dec 2022 12:36:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbiLCVSp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 3 Dec 2022 16:18:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58392 "EHLO
+        id S231140AbiLELg0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 5 Dec 2022 06:36:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiLCVSo (ORCPT
+        with ESMTP id S229970AbiLELgY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 3 Dec 2022 16:18:44 -0500
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2462A1A053
-        for <linux-bluetooth@vger.kernel.org>; Sat,  3 Dec 2022 13:18:43 -0800 (PST)
-Received: by mail-pj1-x1043.google.com with SMTP id fa4-20020a17090af0c400b002198d1328a0so3505094pjb.0
-        for <linux-bluetooth@vger.kernel.org>; Sat, 03 Dec 2022 13:18:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h168AaiDjF2PxjYcrauF4QKAoAcqNVRNnL32bHHefOo=;
-        b=MYFaltxDnC8YJ/FTCaASiwwaz3glsjdGk0LFFUH1w8fJUIb96HIhbnqwIpQn33OrQm
-         Ard4WOIznDh/Eb5fOUMeMQ9PtU4hRZTSAFF2rQ/zSjdXYIVP3VHVi6x8tekAZYBhFlZD
-         VdAWntoB5CxbADnuNsiyinwc/+arktHw9RizVXlFqG0S6jaa1cqL0ZrOg0jwKyerSNVn
-         A6zucknEIrHHIvjv25P8CD7Nl5KxC9Ff0TI7WNhzTHPmtM1bcmEcMSb2q98Dh0qhcnlp
-         GN6rEmEVbxoYiTnME+GUNBJqr2KcTcJ42P7ynyuuHmreMQnjorpzMzDCFs0z0XVvKCca
-         +PNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:sender:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h168AaiDjF2PxjYcrauF4QKAoAcqNVRNnL32bHHefOo=;
-        b=m7dvpgrCq8iYasx/QGZcoc7vV6Cq1uyseI+NkgxDdbWuJ29+DKAGyVgyFpsvQSfwwO
-         CAGjJBmfRHicSdLtvRKP5OdnY//p2GvYXoQNjQJKirdizXpGY1NZdJ2tigQWWhTWpAVF
-         Lmx5P1p4DMTTIUf3N+xaXKRPDal8l06FbIraFBiF5nxbz8rAjU7nCOsuOLbRy3XHpE2y
-         yb3y8IBTN3svnRF2XZ4S1kUz3CHLey0SEbniLSSw43jJhYK0iRXH7YwYHlNUhUbL9/KJ
-         cqbrPy9YS62dIaIrySBfQAIRG1Hx0EP67ewJheIXGZz4M04bmlzqyNztI4wl9IBf8dZX
-         sXAA==
-X-Gm-Message-State: ANoB5pmdh9T1kvrF7OxyiiKuKT+7hukA0BkZLl5Y5m4q1E5Dq/iPNZGS
-        c7BmvDwU5ZzcLVoptBwN1doxvDfkQswKF/9j0mg=
-X-Google-Smtp-Source: AA0mqf7yuKPXkZgmfZQoacF4LV2FS7iEa9EqNUMNm1dcfjoVwThvjf43YspC11Bq7vZRqbXOIJAv6EKJV7I1tVHbG2w=
-X-Received: by 2002:a17:903:2112:b0:186:67b0:afab with SMTP id
- o18-20020a170903211200b0018667b0afabmr58714085ple.17.1670102322452; Sat, 03
- Dec 2022 13:18:42 -0800 (PST)
-MIME-Version: 1.0
-Sender: rabiuishaku1@gmail.com
-Received: by 2002:a05:6a10:c64a:b0:360:f6fb:57cb with HTTP; Sat, 3 Dec 2022
- 13:18:41 -0800 (PST)
-From:   BARCLAYS INFO <nigelhiggins.md5@gmail.com>
-Date:   Sat, 3 Dec 2022 22:18:41 +0100
-X-Google-Sender-Auth: N48TDSrexluhJcAzUrNPYksX8g4
-Message-ID: <CAOmZXYAzU+H9zhRS85zkgLYHWBCBtaYe03j_LjR5ZUBYZmr3_Q@mail.gmail.com>
-Subject: Re Fund Payment Notification
-To:     undisclosed-recipients:;
+        Mon, 5 Dec 2022 06:36:24 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FA3319C15
+        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Dec 2022 03:36:23 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id F2B51B80EF9
+        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Dec 2022 11:36:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9C29FC43154
+        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Dec 2022 11:36:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670240180;
+        bh=d+b6ziB3TtnEeThLUq1kQRbCzrRWswx7ZGtrzqLeYf0=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=e9vK3NTuc2tyUzwDsF0WiY7WI8MFd5rnz3VoGifVWIvpm0dTqFB0mym+JCdshWZ9o
+         Jo4sefr1HSSpYQbJS+4izrtEIhzIb1vppIRjeLW+i/q49xNlftf1NG9LGHW+ukK0bT
+         EKP4uMsT+vyBU1Hk9H4ON38UkE5UdKTwNBLo7JiM7YkI7XQtwboK2ucX+vV84ojvwC
+         PawuFNUNozpoc+nukjsXNWCpUPEfcHTLZBwsSnkbYTfCTLR8qlu13FkXOv5hJrHScN
+         9LNGGf22MXoERPt5SZd8ZJDnvOv/zG1+bQRIdz567WmOHSZ/0ZTEmxan1dawXHe3dy
+         Q8/oubNJiTTKg==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 8CAE1C433E6; Mon,  5 Dec 2022 11:36:20 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 215167] Bluetooth: hci0: command 0xfc05 tx timeout
+Date:   Mon, 05 Dec 2022 11:36:19 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: tr.ml@gmx.de
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-215167-62941-yCXDhuT4DN@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-215167-62941@https.bugzilla.kernel.org/>
+References: <bug-215167-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-Dear Email User,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D215167
 
-I am the Group Chairman of Barclays Bank Plc. This is to inform you
-that our bank has been assigned by the world financial governing
-authorities to pay selected pending inheritance and compensations and
-your name appeared in the list. Get back for more details.
+RockT (tr.ml@gmx.de) changed:
 
-Yours sincerely,
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |tr.ml@gmx.de
 
-Nigel Higgins, (Group Chairman),
-Barclays Bank Plc,
-Registered number: 1026167,
-1 Churchill Place, London, ENG E14 5HP,
-SWIFT Code: BARCGB21,
-Direct Telephone: +44 770 000 8965,
-WhatsApp, SMS Number: + 44 787 229 9022
-www.barclays.co.uk
+--- Comment #43 from RockT (tr.ml@gmx.de) ---
+I see this problem with the switch of kernel 6.0 (all versions work) to
+6.1.0rc7.
+Bluetooth has stopped working. :(
+
+$ dmesg |grep -i bluetooth
+[    0.890611] thinkpad_acpi: rfkill switch tpacpi_bluetooth_sw: radio is
+unblocked
+[    9.373051] Bluetooth: Core ver 2.22
+[    9.373087] NET: Registered PF_BLUETOOTH protocol family
+[    9.373088] Bluetooth: HCI device and connection manager initialized
+[    9.373093] Bluetooth: HCI socket layer initialized
+[    9.373096] Bluetooth: L2CAP socket layer initialized
+[    9.373102] Bluetooth: SCO socket layer initialized
+[    9.667105] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    9.667109] Bluetooth: BNEP filters: protocol multicast
+[    9.667114] Bluetooth: BNEP socket layer initialized
+[   11.669721] Bluetooth: hci0: Reading Intel version command failed (-110)
+[   11.669725] Bluetooth: hci0: command 0xfc05 tx timeout
+
+Sys: Lenovo Thinkpad T14s Gen2
+lspci:
+$ lspci
+00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne Root
+Complex
+00:00.2 IOMMU: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne IOMMU
+00:01.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir PCIe Dummy H=
+ost
+Bridge
+00:02.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir PCIe Dummy H=
+ost
+Bridge
+00:02.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne PCIe =
+GPP
+Bridge
+00:02.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne PCIe =
+GPP
+Bridge
+00:02.3 PCI bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne PCIe =
+GPP
+Bridge
+00:02.5 PCI bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne PCIe =
+GPP
+Bridge
+00:02.7 PCI bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne PCIe =
+GPP
+Bridge
+00:08.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir PCIe Dummy H=
+ost
+Bridge
+00:08.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Renoir Internal PCIe=
+ GPP
+Bridge to Bus
+00:14.0 SMBus: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller (rev=
+ 51)
+00:14.3 ISA bridge: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge (rev =
+51)
+00:18.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Cezanne Data Fabric;
+Function 0
+00:18.1 Host bridge: Advanced Micro Devices, Inc. [AMD] Cezanne Data Fabric;
+Function 1
+00:18.2 Host bridge: Advanced Micro Devices, Inc. [AMD] Cezanne Data Fabric;
+Function 2
+00:18.3 Host bridge: Advanced Micro Devices, Inc. [AMD] Cezanne Data Fabric;
+Function 3
+00:18.4 Host bridge: Advanced Micro Devices, Inc. [AMD] Cezanne Data Fabric;
+Function 4
+00:18.5 Host bridge: Advanced Micro Devices, Inc. [AMD] Cezanne Data Fabric;
+Function 5
+00:18.6 Host bridge: Advanced Micro Devices, Inc. [AMD] Cezanne Data Fabric;
+Function 6
+00:18.7 Host bridge: Advanced Micro Devices, Inc. [AMD] Cezanne Data Fabric;
+Function 7
+01:00.0 Non-Volatile memory controller: Shenzhen Unionmemory Information Sy=
+stem
+Ltd. Device 6304 (rev 03)
+02:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8=
+411
+PCI Express Gigabit Ethernet Controller (rev 0e)
+03:00.0 Network controller: Intel Corporation Wi-Fi 6 AX200 (rev 1a)
+04:00.0 Unassigned class [ff00]: Quectel Wireless Solutions Co., Ltd. EM120=
+R-GL
+LTE Modem
+05:00.0 USB controller: Renesas Technology Corp. uPD720202 USB 3.0 Host
+Controller (rev 02)
+06:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI]
+Cezanne [Radeon Vega Series / Radeon Vega Mobile Series] (rev d1)
+06:00.1 Audio device: Advanced Micro Devices, Inc. [AMD/ATI] Renoir Radeon =
+High
+Definition Audio Controller
+06:00.2 Encryption controller: Advanced Micro Devices, Inc. [AMD] Family 17h
+(Models 10h-1fh) Platform Security Processor
+06:00.3 USB controller: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne U=
+SB
+3.1
+06:00.4 USB controller: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne U=
+SB
+3.1
+06:00.5 Multimedia controller: Advanced Micro Devices, Inc. [AMD]
+ACP/ACP3X/ACP6x Audio Coprocessor (rev 01)
+06:00.6 Audio device: Advanced Micro Devices, Inc. [AMD] Family 17h/19h HD
+Audio Controller
+
+Any further info to provide?
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
