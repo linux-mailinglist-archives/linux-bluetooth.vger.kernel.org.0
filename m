@@ -2,50 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AAFA644A9E
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Dec 2022 18:50:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 63231644A9D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  6 Dec 2022 18:50:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229557AbiLFRuW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 6 Dec 2022 12:50:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45552 "EHLO
+        id S229554AbiLFRuV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 6 Dec 2022 12:50:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiLFRuU (ORCPT
+        with ESMTP id S229544AbiLFRuU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Tue, 6 Dec 2022 12:50:20 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C26CC2
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB66E209BB
         for <linux-bluetooth@vger.kernel.org>; Tue,  6 Dec 2022 09:50:19 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 85FC3B81AE4
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9596BB81AFB
         for <linux-bluetooth@vger.kernel.org>; Tue,  6 Dec 2022 17:50:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 454A4C433D7;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4E2AAC433C1;
         Tue,  6 Dec 2022 17:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1670349017;
-        bh=R4vsVqAgYdUpF/OUoFPHhilQ8eGgJ3x0lKh3All0xHY=;
+        bh=FhV/sR87xrTNgXWx0sYeX2lVssRl5mzGqIF3TaIC140=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Vo4H65IxWWPJA/u90GU7Gvuy4ZMv85UsN4FqsW84bLEBNBo4c4STsokyqrzY3qTGs
-         Jdtdb7Zumpn0WvXex1TD/Isly1lCWEiNCWt189CVzIZL9rXRZOvhUlXMiOLS+Ob1cf
-         UbMkCEQIsGC1F5NosCDuLuC0CeZvSc511MeQM4ykZz+CYSemFXf46KP6hLoPdr++u5
-         ce/KXpm6+nzEZnp6dLYBoBZlshQr51hUY395df+oMOLlgJkwyFzk8UHlCgO9FOJyrY
-         XKxCxusXTyV+IIu9l+se+QtB54qXa6jiQVtZRcK/2aabk7TX+uSa0KCrJuxSV3qtSM
-         DjrCFqTczmtzA==
+        b=GUZCoTWW8LVFzuX7ZCOoSZBO8lT7Qh5C+Vvy5niRiPofqcJqH6W8zXBuX5qzqzUzg
+         y5OL10wOeeJVR4cdpJX6eiUI0dL5HGn3KvRNi+e5AN/iDGzHwmcoYfUSSC8YLyMVen
+         3gvje/IfTWtEFPpIpQCmRV0LNYU7PtLiZiK74QISQf6vbjmVXmj0+qCP/FRObszPZX
+         5uJZdmgM9RinG7EbIheW7uOT3TS0w1xCTtVtAKkuluaKSdUdiNLUv/3DXH5CpUFCP0
+         YeR0oxRBl2i/pPqXMCDLUpcDZ2z/9iIS2ZuW9GoSqOvIfdN7aTGTfrfrOgyMEAx8WE
+         7uWsnIgGwG0pw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2D0BFE270CF;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 35277E56AA5;
         Tue,  6 Dec 2022 17:50:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 1/3] Bluetooth: btusb: Fix new sparce warnings
+Subject: Re: [PATCH] Bluetooth: btusb: don't call kfree_skb() under
+ spin_lock_irqsave()
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167034901718.25798.9174906645042172678.git-patchwork-notify@kernel.org>
+Message-Id: <167034901721.25798.9447572227827738583.git-patchwork-notify@kernel.org>
 Date:   Tue, 06 Dec 2022 17:50:17 +0000
-References: <20221205183236.3460924-1-luiz.dentz@gmail.com>
-In-Reply-To: <20221205183236.3460924-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
+References: <20221206125910.2170554-1-yangyingliang@huawei.com>
+In-Reply-To: <20221206125910.2170554-1-yangyingliang@huawei.com>
+To:     Yang Yingliang <yangyingliang@huawei.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -57,32 +59,22 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluetooth-next.git (master)
+This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon,  5 Dec 2022 10:32:34 -0800 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Tue, 6 Dec 2022 20:59:10 +0800 you wrote:
+> It is not allowed to call kfree_skb() from hardware interrupt
+> context or with interrupts being disabled. So replace kfree_skb()
+> with dev_kfree_skb_irq() under spin_lock_irqsave().
 > 
-> This fix the following warnings detect with make W=1 C=1:
-> 
-> drivers/bluetooth/btusb.c:2212:9: warning: cast to restricted __le16
-> drivers/bluetooth/btusb.c:2212:9: warning: cast to restricted __le16
-> drivers/bluetooth/btusb.c:2245:18: warning: cast to restricted __le16
-> drivers/bluetooth/btusb.c:2249:18: warning: cast to restricted __le16
-> drivers/bluetooth/btusb.c:2253:18: warning: cast to restricted __le16
-> drivers/bluetooth/btusb.c:2257:18: warning: cast to restricted __le16
-> drivers/bluetooth/btusb.c:2261:18: warning: cast to restricted __le16
-> drivers/bluetooth/btusb.c:2267:18: warning: cast to restricted __le16
+> Fixes: 803b58367ffb ("Bluetooth: btusb: Implement driver internal packet reassembly")
+> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2,1/3] Bluetooth: btusb: Fix new sparce warnings
-    https://git.kernel.org/bluetooth/bluetooth-next/c/ee93fd98d900
-  - [v2,2/3] Bluetooth: btusb: Fix existing sparce warning
-    https://git.kernel.org/bluetooth/bluetooth-next/c/e05ae902672a
-  - [v2,3/3] Bluetooth: btintel: Fix existing sparce warnings
-    https://git.kernel.org/bluetooth/bluetooth-next/c/b84a13ff4eda
+  - Bluetooth: btusb: don't call kfree_skb() under spin_lock_irqsave()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/0dff4eccb2ed
 
 You are awesome, thank you!
 -- 
