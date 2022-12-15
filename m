@@ -2,61 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A89D64E287
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Dec 2022 21:48:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 088AF64E2CF
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Dec 2022 22:11:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229847AbiLOUs3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 15 Dec 2022 15:48:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42982 "EHLO
+        id S229636AbiLOVK7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 15 Dec 2022 16:10:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229784AbiLOUs2 (ORCPT
+        with ESMTP id S229728AbiLOVKn (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 15 Dec 2022 15:48:28 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEDF221E10
-        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Dec 2022 12:48:27 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id m29so90892lfo.11
-        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Dec 2022 12:48:27 -0800 (PST)
+        Thu, 15 Dec 2022 16:10:43 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A946E101A
+        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Dec 2022 13:10:40 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id g1so471159pfk.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Dec 2022 13:10:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cCX6fCfFngCLI4PrK145m/3DtAZxkwlgnv7UrXpsTw4=;
-        b=SRZBr4/YhvNdIGbHUqDG4Ir8euz2tqgqY0geq+FZfD5352xEpjLTIpiffYyj/fJi0n
-         eExYm7Mb6/567FpfG7AksLZ5ZjO7Xsn1qeLaoEtB+88W3Bb/qLcHbXVWxILUPZ6QWoBf
-         gfxbIn8ZGrf9oBbAA2MhcpAiRAK65XMzcA6A7zLWYRnsOuif1ORstGj3pGi1a8F8cQPp
-         CJYCcSzwRjulCDr93O2VzvpHweTwusAEC0XIWlL4eticy+/f82XkN7XWHXbQ7JLYQSFt
-         s4D0pz4bWEsLppnaVwSPrz2hvDnBwGwBaGfMljykcqo+3l6MBm9ue83xh8nHlodD/5mV
-         NLfQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AKdbowsslj10qklst4fkV5gdI623N0h5RYQCxNRxPMs=;
+        b=OLk1+OMxMjCAlgUjddRmmNV99WUrM3NdnC6gk5EJ6e+G/Gb8DVUzGtWq9cMQ6qqxzM
+         xX7VOsraTKit6EHUSuoF1aJUMffaoERQIiBvhAiRtzHoifAyfGUOm+moD/hxIg4Gp0zU
+         Wauc9tWkhXi7Q9IJnJ/IXU649hbqFrnTHDFyyTVWJyzWM52UtPP/Fvr8qfKbOwDsbpEW
+         nWVP4TTDwkOdXk/jhsS8SAv5I/sGxQakvJ698Fy6NIiLgzKJik3xN+jg86+nAM9S0hP/
+         3U3np2ciVQfI0lUIYnkOp0IRLrhaDYfGw0/9+SbhAK6o7A2bTcatLfaSxT45XTEzHrR5
+         APmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cCX6fCfFngCLI4PrK145m/3DtAZxkwlgnv7UrXpsTw4=;
-        b=Fl2SGVHkcrYd/b6wA/ttktHtHOYu5a1p0O00obcAWhRTcLEjJRI7Bdyd1rrBpMkElo
-         aqyVBCcbmi8l+daCVwevRvFbWq+P/Ifmh/kmI00CD4PHs21UkEhV31NnIhGPsqk1nkLF
-         X6PBClX9vE66RpYZjrTeF/u/LYp7F42jC7C5X1Dor5qNTBCLlJ2ug/gCs/A72I4RkgAi
-         h5sClSqN8p7WE+YokQ6UXHzFd1AOCcNzY76F7NKbd/WulPzqKSi7fe3nXk1Ur9HRGtMR
-         Q4Uka/W5Ilc/n2FUVwocmTY3tSa3Idcw0SKCe1PNfpT62bFbXzDoXVCbGiKd1XmBY5ip
-         48vQ==
-X-Gm-Message-State: ANoB5pk058QEiwlwI71XZlOOcL6JSnK282/jpPcD7pfHz2KNaoV4wEes
-        H9e3zbvRuh6Un0AwHbH8k3zY92flfnzmAFEGO9QhNMs/J6w8AD0a
-X-Google-Smtp-Source: AA0mqf77A4lJwYtNykCmtRa75WGPTfftPj/tCdynHKuBIQENQ4hXFBPHchKk3W6Tug0LAJ9OJ4V9TGDFt9pA/kfE+rQ=
-X-Received: by 2002:a05:6512:31ca:b0:4b5:5da1:5224 with SMTP id
- j10-20020a05651231ca00b004b55da15224mr8244685lfe.106.1671137305421; Thu, 15
- Dec 2022 12:48:25 -0800 (PST)
-MIME-Version: 1.0
-References: <20221215142150.240712-1-neeraj.sanjaykale@nxp.com> <639b31a8.c80a0220.85898.f5be@mx.google.com>
-In-Reply-To: <639b31a8.c80a0220.85898.f5be@mx.google.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AKdbowsslj10qklst4fkV5gdI623N0h5RYQCxNRxPMs=;
+        b=x/IB5+4P25o4sgqovtmqwPNwmLvtmsKGgJCboPOHZI34AXFP99hSEGnJkB2q1M5rmc
+         YZGYILfb4Qj3Z2t5pQYcXt9bnI6buBjt7/pLxfyg6Y1DrLJ+tWqDzxkQt+SG9CQhA3Ld
+         XM2JjYxMZFoZXhYJSOsebXsjw2Z1DO0TnZ+8u95cKyv7iIwTxFvMYfW3srMLq7Vr2YZc
+         nD76VlgIJbpHD9nifZcs9pOVqyy8TUd37YBnxUu8GJqWLt5HZwQU5G8IGeaVJMIR6gvK
+         sZ1AM+SpOSq7Dtw824grBW8kNsYIie3//RWuI6uik66JjLGU8Dew0dVwozeei6gfR1uY
+         AZ/g==
+X-Gm-Message-State: ANoB5pkNmkhqXnsViV/jLnHNQRvMz58n7eRhmxWhDI50BWrp9PE5OFRt
+        0KEhw29MgaKDuIiV7vBfnxQq5VTqU7odtiRd
+X-Google-Smtp-Source: AA0mqf6h1y8EiNoY3eFKNjeiQIwWgwgWiTDPw1wYYmLZkCwuflRB8imw52M8rQuexXepNxNJ8WiwXQ==
+X-Received: by 2002:a05:6a00:1d1b:b0:57c:2ab7:2c0b with SMTP id a27-20020a056a001d1b00b0057c2ab72c0bmr12008028pfx.28.1671138639329;
+        Thu, 15 Dec 2022 13:10:39 -0800 (PST)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id c20-20020aa79534000000b005779110635asm54908pfp.51.2022.12.15.13.10.38
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Dec 2022 13:10:38 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Thu, 15 Dec 2022 12:48:13 -0800
-Message-ID: <CABBYNZKpJCT3VhRgc-a58utFOm7mFz6uOQayzW_+pEbfhbfGqQ@mail.gmail.com>
-Subject: Re: [v5,1/2] Bluetooth: Add hci_nxp to hci_uart module to support NXP
- BT chipsets
 To:     linux-bluetooth@vger.kernel.org
-Cc:     neeraj.sanjaykale@nxp.com
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH BlueZ v2 1/5] client/player: Make transport.send non-blocking
+Date:   Thu, 15 Dec 2022 13:10:33 -0800
+Message-Id: <20221215211037.2686489-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.37.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -67,31 +67,307 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Neeraj,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-On Thu, Dec 15, 2022 at 6:46 AM <bluez.test.bot@gmail.com> wrote:
->
-> This is an automated email and please do not reply to this email.
->
-> Dear Submitter,
->
-> Thank you for submitting the patches to the linux bluetooth mailing list.
-> While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
->
-> ----- Output -----
->
-> error: tools/btattach.c: does not exist in index
-> error: tools/hciattach.h: does not exist in index
-> hint: Use 'git am --show-current-patch' to see the failed patch
->
-> Please resolve the issue and submit the patches again.
+This makes transport.send command non-blocking by using timerfd
+callback to initiate the transfers.
+---
+ client/player.c | 205 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 138 insertions(+), 67 deletions(-)
 
-Looks like you are mixing up userspace and kernel changes in the same
-set, please don't do that since they are for different trees and our
-CI get confused when you do that, for the userspace please follow the
-instructions below:
-
-https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/HACKING#n98
-
+diff --git a/client/player.c b/client/player.c
+index 8b3785d6b632..1f10387f89ad 100644
+--- a/client/player.c
++++ b/client/player.c
+@@ -24,6 +24,7 @@
+ #include <sys/ioctl.h>
+ #include <sys/uio.h>
+ #include <wordexp.h>
++#include <sys/timerfd.h>
+ 
+ #include <glib.h>
+ 
+@@ -92,6 +93,7 @@ struct transport {
+ 	int fd;
+ 	struct io *io;
+ 	uint32_t seq;
++	struct io *timer_io;
+ };
+ 
+ static void endpoint_unregister(void *data)
+@@ -2959,6 +2961,8 @@ static void transport_close(struct transport *transport)
+ 		return;
+ 
+ 	close(transport->fd);
++	transport->fd = -1;
++
+ 	free(transport->filename);
+ }
+ 
+@@ -2966,6 +2970,7 @@ static void transport_free(void *data)
+ {
+ 	struct transport *transport = data;
+ 
++	io_destroy(transport->timer_io);
+ 	io_destroy(transport->io);
+ 	free(transport);
+ }
+@@ -3330,104 +3335,166 @@ static int open_file(const char *filename, int flags)
+ 	return fd;
+ }
+ 
+-#define NSEC_USEC(_t) (_t / 1000L)
+-#define SEC_USEC(_t)  (_t  * 1000000L)
+-#define TS_USEC(_ts)  (SEC_USEC((_ts)->tv_sec) + NSEC_USEC((_ts)->tv_nsec))
+-
+-static void send_wait(struct timespec *t_start, uint32_t us)
++static int elapsed_time(bool reset, int *secs, int *nsecs)
+ {
+-	struct timespec t_now;
+-	struct timespec t_diff;
+-	int64_t delta_us;
++	static struct timespec start;
++	struct timespec curr;
+ 
+-	/* Skip sleep at start */
+-	if (!us)
+-		return;
+-
+-	if (clock_gettime(CLOCK_MONOTONIC, &t_now) < 0) {
+-		bt_shell_printf("clock_gettime: %s (%d)", strerror(errno),
+-								errno);
+-		return;
++	if (reset) {
++		if (clock_gettime(CLOCK_MONOTONIC, &start) < 0) {
++			bt_shell_printf("clock_gettime: %s (%d)",
++						strerror(errno), errno);
++			return -errno;
++		}
+ 	}
+ 
+-	t_diff.tv_sec = t_now.tv_sec - t_start->tv_sec;
+-	if (t_start->tv_nsec > t_now.tv_nsec) {
+-		t_diff.tv_sec--;
+-		t_now.tv_nsec += 1000000000L;
+-	}
+-	t_diff.tv_nsec = t_now.tv_nsec - t_start->tv_nsec;
+-
+-	delta_us = us - TS_USEC(&t_diff);
+-
+-	if (delta_us < 0) {
+-		bt_shell_printf("Send is behind: %" PRId64 " us - skip sleep",
+-							delta_us);
+-		delta_us = 1000;
+-	}
+-
+-	usleep(delta_us);
+-
+-	if (clock_gettime(CLOCK_MONOTONIC, t_start) < 0)
++	if (clock_gettime(CLOCK_MONOTONIC, &curr) < 0) {
+ 		bt_shell_printf("clock_gettime: %s (%d)", strerror(errno),
+-								errno);
+-}
+-
+-static int transport_send(struct transport *transport, int fd,
+-					struct bt_iso_qos *qos)
+-{
+-	struct timespec t_start;
+-	uint8_t *buf;
+-	uint32_t num = 0;
+-
+-	if (qos && clock_gettime(CLOCK_MONOTONIC, &t_start) < 0) {
+-		bt_shell_printf("clock_gettime: %s (%d)", strerror(errno),
+-								errno);
++						errno);
+ 		return -errno;
+ 	}
+ 
+-	buf = malloc(transport->mtu[1]);
+-	if (!buf) {
+-		bt_shell_printf("malloc: %s (%d)", strerror(errno), errno);
+-		return -ENOMEM;
++	*secs = curr.tv_sec - start.tv_sec;
++	*nsecs = curr.tv_nsec - start.tv_nsec;
++	if (*nsecs < 0) {
++		(*secs)--;
++		*nsecs += 1000000000;
+ 	}
+ 
+-	/* num of packets = latency (ms) / interval (us) */
+-	if (qos)
+-		num = (qos->out.latency * 1000 / qos->out.interval);
++	return 0;
++}
+ 
+-	for (transport->seq = 0; ; transport->seq++) {
++static int transport_send_seq(struct transport *transport, int fd, uint32_t num)
++{
++	uint8_t *buf;
++	uint32_t i;
++
++	if (!num)
++		return 0;
++
++	buf = malloc(transport->mtu[1]);
++	if (!buf)
++		return -ENOMEM;
++
++	for (i = 0; i < num; i++, transport->seq++) {
+ 		ssize_t ret;
+ 		int queued;
++		int secs = 0, nsecs = 0;
+ 
+ 		ret = read(fd, buf, transport->mtu[1]);
+ 		if (ret <= 0) {
+ 			if (ret < 0)
+ 				bt_shell_printf("read failed: %s (%d)",
+ 						strerror(errno), errno);
+-			close(fd);
++			free(buf);
+ 			return ret;
+ 		}
+ 
+ 		ret = send(transport->sk, buf, ret, 0);
+ 		if (ret <= 0) {
+-			bt_shell_printf("Send failed: %s (%d)",
++			bt_shell_printf("send failed: %s (%d)",
+ 							strerror(errno), errno);
++			free(buf);
+ 			return -errno;
+ 		}
+ 
++		elapsed_time(!transport->seq, &secs, &nsecs);
++
+ 		ioctl(transport->sk, TIOCOUTQ, &queued);
+ 
+-		bt_shell_printf("[seq %d] send: %zd bytes "
++		bt_shell_printf("[seq %d %d.%03ds] send: %zd bytes "
+ 				"(TIOCOUTQ %d bytes)\n",
+-				transport->seq, ret, queued);
+-
+-		if (qos) {
+-			if (transport->seq && !((transport->seq + 1) % num))
+-				send_wait(&t_start, num * qos->out.interval);
+-		}
++				transport->seq, secs,
++				(nsecs + 500000) / 1000000,
++				ret, queued);
+ 	}
+ 
+ 	free(buf);
++
++	return i;
++}
++
++static bool transport_timer_read(struct io *io, void *user_data)
++{
++	struct transport *transport = user_data;
++	struct bt_iso_qos qos;
++	socklen_t len;
++	int ret, fd;
++	uint32_t num;
++	uint64_t exp;
++
++	if (transport->fd < 0)
++		return false;
++
++	fd = io_get_fd(io);
++	ret = read(fd, &exp, sizeof(exp));
++	if (ret < 0) {
++		bt_shell_printf("Failed to read: %s (%d)\n", strerror(errno),
++								-errno);
++		return false;
++	}
++
++	/* Read QoS if available */
++	memset(&qos, 0, sizeof(qos));
++	len = sizeof(qos);
++	if (getsockopt(transport->sk, SOL_BLUETOOTH, BT_ISO_QOS, &qos,
++							&len) < 0) {
++		bt_shell_printf("Failed to getsockopt(BT_ISO_QOS): %s (%d)\n",
++					strerror(errno), -errno);
++		return false;
++	}
++
++	/* num of packets = latency (ms) / interval (us) */
++	num = (qos.out.latency * 1000 / qos.out.interval);
++
++	ret = transport_send_seq(transport, transport->fd, num);
++	if (ret < 0) {
++		bt_shell_printf("Unable to send: %s (%d)\n",
++					strerror(-ret), ret);
++		return false;
++	}
++
++	if (!ret) {
++		transport_close(transport);
++		return false;
++	}
++
++	return true;
++}
++
++static int transport_send(struct transport *transport, int fd,
++					struct bt_iso_qos *qos)
++{
++	struct itimerspec ts;
++	int timer_fd;
++
++	transport->seq = 0;
++
++	if (!qos)
++		return transport_send_seq(transport, fd, UINT32_MAX);
++
++	if (transport->fd >= 0)
++		return -EALREADY;
++
++	timer_fd = timerfd_create(CLOCK_MONOTONIC, 0);
++	if (timer_fd < 0)
++		return -errno;
++
++	memset(&ts, 0, sizeof(ts));
++	ts.it_value.tv_nsec = qos->out.latency * 1000000;
++	ts.it_interval.tv_nsec = qos->out.latency * 1000000;
++
++	if (timerfd_settime(timer_fd, TFD_TIMER_ABSTIME, &ts, NULL) < 0)
++		return -errno;
++
++	transport->fd = fd;
++
++	transport->timer_io = io_new(timer_fd);
++
++	io_set_read_handler(transport->timer_io, transport_timer_read,
++						transport, NULL);
++
++	return transport_send_seq(transport, fd, 1);
+ }
+ 
+ static void cmd_send_transport(int argc, char *argv[])
+@@ -3457,6 +3524,8 @@ static void cmd_send_transport(int argc, char *argv[])
+ 	}
+ 
+ 	fd = open_file(argv[2], O_RDONLY);
++	if (fd < 0)
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+ 
+ 	bt_shell_printf("Sending ...\n");
+ 
+@@ -3469,10 +3538,12 @@ static void cmd_send_transport(int argc, char *argv[])
+ 	else
+ 		err = transport_send(transport, fd, &qos);
+ 
+-	close(fd);
+-
+-	if (err < 0)
++	if (err < 0) {
++		bt_shell_printf("Unable to send: %s (%d)", strerror(-err),
++								-err);
++		close(fd);
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
+ 
+ 	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
+ }
 -- 
-Luiz Augusto von Dentz
+2.37.3
+
