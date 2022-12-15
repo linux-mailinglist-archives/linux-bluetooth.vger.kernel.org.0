@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4280264E2CB
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Dec 2022 22:11:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A76FB64E2CE
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Dec 2022 22:11:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229976AbiLOVK5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 15 Dec 2022 16:10:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51104 "EHLO
+        id S229989AbiLOVLC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 15 Dec 2022 16:11:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229809AbiLOVKn (ORCPT
+        with ESMTP id S229926AbiLOVKp (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 15 Dec 2022 16:10:43 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C21C410B6
-        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Dec 2022 13:10:41 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id 21so460717pfw.4
-        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Dec 2022 13:10:41 -0800 (PST)
+        Thu, 15 Dec 2022 16:10:45 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1AC5F7C
+        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Dec 2022 13:10:43 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id f3so480408pgc.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 15 Dec 2022 13:10:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dk4rLbDdNGWPnvC7kri4rqAgpOPPYTq/B4Hcvj14rhk=;
-        b=UrVuo5UBwk3FFGlu8ZD0pBTckYfmCdK3nKDJ2XNw9Iwwry5gbzLcBzPZjXml0bbu6H
-         lLoI39fbyLmh1owGVHUcUgDDrJ0luEO+75IAZudUUPb0Uo/gz8gYljs9gf8GN3oXod5R
-         8by8zBkmg8QQ4G0RHluW2kQUo/DfdokIiMW6g+LNorpromJd2SasRDDWgEhRWIacPK9y
-         2t4JNlAw/cl/qgYDeH25+csGv64OKB/Bb30FCXOkmQcCCSbcxCByjWlsyd37qo93dTVM
-         ayn/49lvai7oUbiyFFBbLyP0j47K32A/+wdDN4Xp0xWptKJcu4408biKgoCEedMT0N/D
-         gsGQ==
+        bh=pJsP1JYOTVWNXZaAAf4aqeAwsVljV5PglWKu2WbNtNs=;
+        b=qksuDV5s70pIDOLQbuzta6KXUN0qfb4UgqAl/Yu+70iyHmVcjlbBoH+ef2rQ0ZkJda
+         WX88pVJv2HaGS1o9mP4uhvTebN8rGoxhjP0+OgmdoASayHVEuln7+GBenU2kCN32c1wn
+         RLQNjq/KtHaN1yEL4zpzQjLM9EtA26p7yVDGCghZHaq8xPixZnBlNw61BNwTjFg+IyIV
+         PzCBxV4G3FLVOnpEadHnHklLlf3CDIWKaXlAfFarLsw0OtO4vkPeD0wUySOFowWN94JP
+         X8U1B/5Kxxa25tPjCFVWKgdmdZurkRxc8Nk/zy+YPC57NUNPEmn7EBhF8nRc3HnIYM4h
+         X+6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dk4rLbDdNGWPnvC7kri4rqAgpOPPYTq/B4Hcvj14rhk=;
-        b=kjGwCtzmsAdoPiM9KDkRLjpzWxaWMWp8vh/xVkZOxeYYosX3ItX51fm7Pxp5Un3Yh8
-         OfimmkkBSfRsR/22hmQky6mUSa2N76SEXvsmAkPpo/1IGRXu9AKVV+TH8otzLQlVIGal
-         qdG6sDVgQMlClK65vpe+prITQ/tgUcBdidu3xaLNTXTsQYCMWqc83qHy7GW6gAs/xpUD
-         Slrs4ye+CMEUMQssMP+S8UoswVqlbsm43lZcwvt3GDHuq2rICeN/Yr5AZnBIp5RBh+g1
-         YSXoVsgTywpank+/mZH3MWl1GNp/eDszXVwCuZohqP2xpzq6ZspGQz1EURjcFBSIq9sP
-         Uvfg==
-X-Gm-Message-State: ANoB5plfdMrRp8+uR4xY5v+6sLloSqNYqsJmnUGryTvOU9gSoPADz4V6
-        ua3cx9FCQgcfNbJ0sbku5blVVM1GaCjOwFOa
-X-Google-Smtp-Source: AA0mqf4I+HV3orQLleTvbAjIM0TQk/N+/kjXcEbv6Z8AxfrxdSA2O83BR1mUb4fCpfcFEAYbmkjDPA==
-X-Received: by 2002:a05:6a00:1696:b0:566:94d0:8c96 with SMTP id k22-20020a056a00169600b0056694d08c96mr38971495pfc.26.1671138640775;
-        Thu, 15 Dec 2022 13:10:40 -0800 (PST)
+        bh=pJsP1JYOTVWNXZaAAf4aqeAwsVljV5PglWKu2WbNtNs=;
+        b=0hhu06FUo/OolriC2zGzQzhXgKNCTrsuc+pYfyS5EhUqk8qaQbQE+HQZroAJUL/33x
+         gwAypXbowjccHH+p25aPJKpR1QZtgH6SY1qYnBOpNVnheYs9xoaiGr7Lkos4tvLeYzEq
+         LvjKt5dKukGxkC+ap2E56J2I9b5Us2Oz8rmrzhJz/WDB1M08CKAsGBbyhpmf7kv3OAXs
+         vStXLJBHgwAmug4p7YuZ4Wosco4NsU+AWvS9Fk0SqRd8vYo1uSo1UF6HPbN5lyEsE71d
+         K86GADEaqw7CPsS69P1hdLP592IeNPB9NjJlHqFGlHpJ8j1F6jkCQtgMztaxfQ9T85A/
+         GmsQ==
+X-Gm-Message-State: ANoB5pmY2va9F47iRS2+EVmYCj6zneouWUvXlqKrak7bAOvO1ASLuoFV
+        /KkUg6F0s4FF8uhqKFss+bo0w6hoE7z+EVQ4
+X-Google-Smtp-Source: AA0mqf6q7cT5ihSQRsZzLmuRFvLGeIDXHiYxBsqJSC4yI6ofQmsjNsF4lMABwvbHcbJAp2t7VSupBg==
+X-Received: by 2002:a05:6a00:796:b0:577:3523:bd23 with SMTP id g22-20020a056a00079600b005773523bd23mr30721586pfu.27.1671138642218;
+        Thu, 15 Dec 2022 13:10:42 -0800 (PST)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id c20-20020aa79534000000b005779110635asm54908pfp.51.2022.12.15.13.10.39
+        by smtp.gmail.com with ESMTPSA id c20-20020aa79534000000b005779110635asm54908pfp.51.2022.12.15.13.10.40
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Dec 2022 13:10:40 -0800 (PST)
+        Thu, 15 Dec 2022 13:10:41 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 2/5] shared/shell: Add bt_shell_echo
-Date:   Thu, 15 Dec 2022 13:10:34 -0800
-Message-Id: <20221215211037.2686489-2-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v2 3/5] client/player: Use bt_shell_echo to print transfer progress
+Date:   Thu, 15 Dec 2022 13:10:35 -0800
+Message-Id: <20221215211037.2686489-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.37.3
 In-Reply-To: <20221215211037.2686489-1-luiz.dentz@gmail.com>
 References: <20221215211037.2686489-1-luiz.dentz@gmail.com>
@@ -73,57 +73,79 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds bt_shell_echo which can be used to print messages on the echo
-area.
+This uses bt_shell_echo to print transfer progress.
 ---
- src/shared/shell.c | 20 ++++++++++++++++++++
- src/shared/shell.h |  2 ++
- 2 files changed, 22 insertions(+)
+ client/player.c    | 12 ++++--------
+ src/shared/shell.c | 10 +++++-----
+ 2 files changed, 9 insertions(+), 13 deletions(-)
 
+diff --git a/client/player.c b/client/player.c
+index 1f10387f89ad..e73ed6ac925a 100644
+--- a/client/player.c
++++ b/client/player.c
+@@ -3000,11 +3000,11 @@ static bool transport_recv(struct io *io, void *user_data)
+ 		return true;
+ 	}
+ 
+-	bt_shell_printf("[seq %d] recv: %u bytes\n", transport->seq, ret);
++	bt_shell_echo("[seq %d] recv: %u bytes", transport->seq, ret);
+ 
+ 	transport->seq++;
+ 
+-	if (transport->fd) {
++	if (transport->fd >= 0) {
+ 		len = write(transport->fd, buf, ret);
+ 		if (len < 0)
+ 			bt_shell_printf("Unable to write: %s (%d)",
+@@ -3378,7 +3378,6 @@ static int transport_send_seq(struct transport *transport, int fd, uint32_t num)
+ 
+ 	for (i = 0; i < num; i++, transport->seq++) {
+ 		ssize_t ret;
+-		int queued;
+ 		int secs = 0, nsecs = 0;
+ 
+ 		ret = read(fd, buf, transport->mtu[1]);
+@@ -3400,13 +3399,10 @@ static int transport_send_seq(struct transport *transport, int fd, uint32_t num)
+ 
+ 		elapsed_time(!transport->seq, &secs, &nsecs);
+ 
+-		ioctl(transport->sk, TIOCOUTQ, &queued);
+-
+-		bt_shell_printf("[seq %d %d.%03ds] send: %zd bytes "
+-				"(TIOCOUTQ %d bytes)\n",
++		bt_shell_echo("[seq %d %d.%03ds] send: %zd bytes ",
+ 				transport->seq, secs,
+ 				(nsecs + 500000) / 1000000,
+-				ret, queued);
++				ret);
+ 	}
+ 
+ 	free(buf);
 diff --git a/src/shared/shell.c b/src/shared/shell.c
-index 0639c786d983..3c0e61dbc414 100644
+index 3c0e61dbc414..3358b383e9e4 100644
 --- a/src/shared/shell.c
 +++ b/src/shared/shell.c
-@@ -576,6 +576,26 @@ void bt_shell_printf(const char *fmt, ...)
- 	}
- }
- 
-+void bt_shell_echo(const char *fmt, ...)
-+{
-+	va_list args;
-+	char *str;
-+	int err;
-+
-+	va_start(args, fmt);
-+	err = vasprintf(&str, fmt, args);
-+	if (!err)
-+		err = asprintf(&str, COLOR_HIGHLIGHT "%s#" COLOR_OFF, str);
-+	va_end(args);
-+
-+	if (err)
-+		return;
-+
-+	rl_save_prompt();
-+	bt_shell_set_prompt(str);
-+	rl_restore_prompt();
-+}
-+
- static void print_string(const char *str, void *user_data)
+@@ -580,15 +580,15 @@ void bt_shell_echo(const char *fmt, ...)
  {
- 	bt_shell_printf("%s\n", str);
-diff --git a/src/shared/shell.h b/src/shared/shell.h
-index 8baa2854a250..87fb5c415f20 100644
---- a/src/shared/shell.h
-+++ b/src/shared/shell.h
-@@ -70,6 +70,8 @@ void bt_shell_set_prompt(const char *string);
+ 	va_list args;
+ 	char *str;
+-	int err;
++	int ret;
  
- void bt_shell_printf(const char *fmt,
- 				...) __attribute__((format(printf, 1, 2)));
-+void bt_shell_echo(const char *fmt,
-+				...) __attribute__((format(printf, 1, 2)));
- void bt_shell_hexdump(const unsigned char *buf, size_t len);
- void bt_shell_usage(void);
+ 	va_start(args, fmt);
+-	err = vasprintf(&str, fmt, args);
+-	if (!err)
+-		err = asprintf(&str, COLOR_HIGHLIGHT "%s#" COLOR_OFF, str);
++	ret = vasprintf(&str, fmt, args);
++	if (ret >= 0)
++		ret = asprintf(&str, COLOR_HIGHLIGHT "%s " COLOR_OFF "#", str);
+ 	va_end(args);
  
+-	if (err)
++	if (ret < 0)
+ 		return;
+ 
+ 	rl_save_prompt();
 -- 
 2.37.3
 
