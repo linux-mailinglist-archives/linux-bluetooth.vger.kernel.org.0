@@ -2,83 +2,109 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CC47658EA2
+	by mail.lfdr.de (Postfix) with ESMTP id CE84B658EA3
 	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Dec 2022 16:57:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233597AbiL2P5D (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Dec 2022 10:57:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42380 "EHLO
+        id S233645AbiL2P5E (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Dec 2022 10:57:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233698AbiL2P4e (ORCPT
+        with ESMTP id S233726AbiL2P4g (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Dec 2022 10:56:34 -0500
+        Thu, 29 Dec 2022 10:56:36 -0500
 Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5133F164A1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Dec 2022 07:54:25 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6571513F8C
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Dec 2022 07:54:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1672329265; x=1703865265;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=A79TZpi1+iYIEguY4DVGXyasuA43rY9di1w6X0LmY90=;
-  b=Bdel2rVXPIxCMTa/oTp7IZjcZB3xKX+d82SoEyIcTKWCZcVGn8OzKw3G
-   7nmxdDtlhVqDKN6RkeporaAQUimO4NIoftAjIg19F5lxCaobS5Gt3maOg
-   bLmwLY5zxCQ+iCwqng3dKwkUeHF+gD2HKaooXJKvr8/5kO16xYjA3uVBz
-   Rj1M23GFWDdYlDxwyJK+SO2uwypIg/u/uAhmULu42Zy6jgukIglLBWAdZ
-   L3QUs+Da5qLiD2LWH3h7AtNR2ljKlpDaH7RNu0SzQ2cI7HTWIIOuH6zV7
-   xiQHXy6kPaM7hsGesMpxUOkfzs6FQshR8T+TMqonBjK46RnXWj9HchIIX
+  t=1672329284; x=1703865284;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=haZ63aeQDXjvGiKaqek1vC51gPQbXGUp5JwCERsunkY=;
+  b=dy+TnMdk4aXJD3zHXzd+hwqWGPU9pyDNGWWOoeYbPdGxhrxNWNeKPxYB
+   YMU47c4Djk/tryvtSE1yYz9TTWiKhD8oVq2WRLGc1tDWBaM5KbjDWQ/IX
+   OHqGcSfUp1wedFc/S2jlzaJg5QL9BMSLJNIml7KC6kLEHbEB33fa//g5v
+   v/6/4YA7BwaZnoNgU5n9jYY5hsiEi73CfjZWqnpMN2BbkDtD0tudZ//Yr
+   DjaE3XdNtTpPxKihBJGFEKwY/j58ROD4g0+je8YVoPxgzxkH9AgWBLP5+
+   4uz3SK7mXfShPYZNrQBn/8Ha34wZ5ZdreMKF+Pw5mYprkj8c3B3wtCCAB
    w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10575"; a="321139189"
+X-IronPort-AV: E=McAfee;i="6500,9779,10575"; a="321139290"
 X-IronPort-AV: E=Sophos;i="5.96,284,1665471600"; 
-   d="scan'208";a="321139189"
+   d="scan'208";a="321139290"
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Dec 2022 07:54:25 -0800
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Dec 2022 07:54:44 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10575"; a="686024225"
+X-IronPort-AV: E=McAfee;i="6500,9779,10575"; a="686024317"
 X-IronPort-AV: E=Sophos;i="5.96,284,1665471600"; 
-   d="scan'208";a="686024225"
+   d="scan'208";a="686024317"
 Received: from tester-latitude-7480.iind.intel.com ([10.224.186.122])
-  by orsmga001.jf.intel.com with ESMTP; 29 Dec 2022 07:54:23 -0800
+  by orsmga001.jf.intel.com with ESMTP; 29 Dec 2022 07:54:42 -0800
 From:   Abhay Maheta <abhay.maheshbhai.maheta@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Abhay Maheta <abhay.maheshbhai.maheta@intel.com>,
         Abhay Maheta <mabhay125@gmail.com>
-Subject: [PATCH BlueZ v3 0/6] To add support for Metadata, CID, VID
-Date:   Thu, 29 Dec 2022 21:22:53 +0530
-Message-Id: <20221229155257.341327-1-abhay.maheshbhai.maheta@intel.com>
+Subject: [PATCH BlueZ v3 1/6] shared/bap: Fix handling for Company ID and Vendor Codec ID
+Date:   Thu, 29 Dec 2022 21:22:55 +0530
+Message-Id: <20221229155257.341327-2-abhay.maheshbhai.maheta@intel.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20221229155257.341327-1-abhay.maheshbhai.maheta@intel.com>
+References: <20221229155257.341327-1-abhay.maheshbhai.maheta@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.1 required=5.0 tests=AC_FROM_MANY_DOTS,BAYES_00,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This series of patches adds support for Metadata, Company ID and
-Vendor Codec ID during Endpoint Registration for LE Audio.
+This adds fixes for handing for Company ID and Vendor Codec ID
+while adding PAC record to database and responding to Attribute
+Read Request for Sink/Source PAC Characteristics.
+---
+ src/shared/bap.c | 5 +++++
+ src/shared/bap.h | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-Abhay Maheta (6):
-  shared/bap: Fix handling for Company ID and Vendor Codec ID
-  shared/bap: Add support to set stream metadata
-  profiles: Add Support for Metadata, CID and VID
-  media-api: Add CompanyID, VendorCodecID, Metadata
-  client/player: Add support for Company ID, Vendor ID
-  client/player: Add support for Metadata in BAP Profile
-
- client/player.c            | 205 ++++++++++++++++++++++++++++++++++---
- doc/media-api.txt          |  18 ++++
- profiles/audio/bap.c       |  14 ++-
- profiles/audio/media.c     |  99 ++++++++++++++++--
- profiles/audio/transport.c |   4 +-
- src/shared/bap.c           |  31 +++++-
- src/shared/bap.h           |   4 +-
- 7 files changed, 342 insertions(+), 33 deletions(-)
-
+diff --git a/src/shared/bap.c b/src/shared/bap.c
+index 2919f243f..0cafb75e6 100644
+--- a/src/shared/bap.c
++++ b/src/shared/bap.c
+@@ -344,6 +344,8 @@ static void pac_foreach(void *data, void *user_data)
+ 
+ 	p = util_iov_push(iov, sizeof(*p));
+ 	p->codec.id = pac->codec.id;
++	p->codec.cid = pac->codec.cid;
++	p->codec.vid = pac->codec.vid;
+ 
+ 	if (pac->data) {
+ 		p->cc_len = pac->data->iov_len;
+@@ -2383,6 +2385,9 @@ struct bt_bap_pac *bt_bap_add_vendor_pac(struct gatt_db *db,
+ 	if (!bdb)
+ 		return NULL;
+ 
++	if ((id != 0xff) && ((cid != 0U)  || (vid != 0U)))
++		return NULL;
++
+ 	codec.id = id;
+ 	codec.cid = cid;
+ 	codec.vid = vid;
+diff --git a/src/shared/bap.h b/src/shared/bap.h
+index 3558d0445..47a15636c 100644
+--- a/src/shared/bap.h
++++ b/src/shared/bap.h
+@@ -39,8 +39,8 @@ struct bt_bap_stream;
+ 
+ struct bt_bap_codec {
+ 	uint8_t  id;
+-	uint16_t vid;
+ 	uint16_t cid;
++	uint16_t vid;
+ } __packed;
+ 
+ struct bt_ltv {
 -- 
 2.25.1
 
