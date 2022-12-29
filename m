@@ -2,42 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87B36658CA4
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Dec 2022 13:22:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DE49658C8C
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Dec 2022 13:09:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230423AbiL2MWU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Dec 2022 07:22:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58896 "EHLO
+        id S233027AbiL2MJz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Dec 2022 07:09:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbiL2MWR (ORCPT
+        with ESMTP id S233240AbiL2MJw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Dec 2022 07:22:17 -0500
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD48E1208B
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Dec 2022 04:22:15 -0800 (PST)
-Received: from [192.168.0.2] (ip5f5ae935.dynamic.kabel-deutschland.de [95.90.233.53])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: pmenzel)
-        by mx.molgen.mpg.de (Postfix) with ESMTPSA id 5DE5860027FC5;
-        Thu, 29 Dec 2022 13:22:14 +0100 (CET)
-Message-ID: <20aebdae-8780-40c0-ae6c-3a67fe46cb60@molgen.mpg.de>
-Date:   Thu, 29 Dec 2022 13:22:13 +0100
+        Thu, 29 Dec 2022 07:09:52 -0500
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CCE813E3A
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Dec 2022 04:09:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1672315790; x=1703851790;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=j2sBWqjKZIHsxWFYMjrJWHZfy/n6qXjjCfkETVqiqxk=;
+  b=V54azp2R0fAB3ZlFKveDPE2HDpJUXMtM+mkyq7KholHhbnduOGLRkiAx
+   Dazo9g0VyDHCjusLciMPxMBqyuDQfScFlcVInFXf3zPJh3r4ut6EF1fOd
+   cOnG+PUTFSl+pkR6tDbBLnHt0+dgaLq3mcyd8sFyOqrkOrVVUD5syWZpp
+   oGWZCTlMmlOPYD1RHn0ZSx7qf+PZZ+Yh2RqGVedBj85bXWzLYPAVzzBRL
+   OQ/PhNKfVfqbcPVk9anuFrtGv3qttWtnKbogwAJ6lVJKcGP8mMc3pFQ3z
+   dmXLG44g5XcflOyjwsRM4BYeQzE1aQjM4cXNnibBWKXx9HuGwJq5EOHpK
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10574"; a="319744701"
+X-IronPort-AV: E=Sophos;i="5.96,284,1665471600"; 
+   d="scan'208";a="319744701"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Dec 2022 04:09:50 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10574"; a="777680047"
+X-IronPort-AV: E=Sophos;i="5.96,284,1665471600"; 
+   d="scan'208";a="777680047"
+Received: from tester-latitude-7480.iind.intel.com ([10.224.186.122])
+  by orsmga004.jf.intel.com with ESMTP; 29 Dec 2022 04:09:48 -0800
+From:   Abhay Maheta <abhay.maheshbhai.maheta@intel.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Abhay Maheta <abhay.maheshbhai.maheta@intel.com>,
+        Abhay Maheta <mabhay125@gmail.com>
+Subject: [PATCH BlueZ v2 0/6] To add support for Metadata, CID, VID
+Date:   Thu, 29 Dec 2022 17:58:17 +0530
+Message-Id: <20221229122821.340073-1-abhay.maheshbhai.maheta@intel.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH BlueZ v2 0/6] To add support for Metadata, CID, VID
-Content-Language: en-US
-To:     Abhay Maheta <abhay.maheshbhai.maheta@intel.com>
-Cc:     Abhay Maheta <mabhay125@gmail.com>, linux-bluetooth@vger.kernel.org
-References: <20221229122821.340073-1-abhay.maheshbhai.maheta@intel.com>
-From:   Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20221229122821.340073-1-abhay.maheshbhai.maheta@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-1.4 required=5.0 tests=AC_FROM_MANY_DOTS,BAYES_00,
+        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -45,27 +59,26 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Abhay,
+This series of patches adds support for Metadata, Company ID and
+Vendor Codec ID during Endpoint Registration for LE Audio.
 
+Abhay Maheta (6):
+  shared/bap: Fix handling for Company ID and Vendor Codec ID
+  shared/bap: Add support to set stream metadata
+  profiles: Add Support for Metadata, CID and VID
+  media-api: Add CompanyID, VendorCodecID, Metadata
+  client/player: Add support for Company ID, Vendor ID in BAP Profile
+  client/player: Add support for Metadata in BAP Profile
 
-Thank you for your patches.
+ client/player.c            | 205 ++++++++++++++++++++++++++++++++++---
+ doc/media-api.txt          |  18 ++++
+ profiles/audio/bap.c       |  14 ++-
+ profiles/audio/media.c     |  99 ++++++++++++++++--
+ profiles/audio/transport.c |   4 +-
+ src/shared/bap.c           |  31 +++++-
+ src/shared/bap.h           |   4 +-
+ 7 files changed, 342 insertions(+), 33 deletions(-)
 
+-- 
+2.25.1
 
-Am 29.12.22 um 13:28 schrieb Abhay Maheta:
-
-[…]
-
-Just a note, that your system time is configured incorrectly and set to 
-the future.
-
-     Received: from tester-latitude-7480.iind.intel.com ([10.224.186.122])
-       by orsmga004.jf.intel.com with ESMTP; 29 Dec 2022 04:09:48 -0800
-     […]
-     Date:   Thu, 29 Dec 2022 17:58:17 +0530
-
-It’d be great, if you fixed that, as it messes up the ordering in the inbox.
-
-
-Kind regards,
-
-Paul
