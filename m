@@ -2,101 +2,81 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82B7D6591FA
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Dec 2022 22:06:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE9CB659C33
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Dec 2022 21:39:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234053AbiL2VGX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Dec 2022 16:06:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36182 "EHLO
+        id S235403AbiL3Ujg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 30 Dec 2022 15:39:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbiL2VGU (ORCPT
+        with ESMTP id S235329AbiL3Uj1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Dec 2022 16:06:20 -0500
-Received: from mail-vk1-xa29.google.com (mail-vk1-xa29.google.com [IPv6:2607:f8b0:4864:20::a29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD50D1CE
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Dec 2022 13:06:19 -0800 (PST)
-Received: by mail-vk1-xa29.google.com with SMTP id j5so9301832vkp.10
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Dec 2022 13:06:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gLNxs7pbWYpTYvz8n5ArGbH6UGnr7tRzCa9oZesPdqs=;
-        b=J29It6oTqRe7mj0MdCJFWyTgOmv9nxCVNkbmAwxBc2g6vwpxbOFusxdV9Pe7g7WCKf
-         EkWA40CAiucwPlnh+8KhEqMHAS0xejOWPuZ8C0zd42uflrPXeotn5J5NAPol4TgfdR/R
-         ypjAkwXgO7SkxnqTaiT98D9/0Ci6JdoHZrbFJGPC+/zh+w+phujsHCLO94Bi490lvGkL
-         tk+muPSj1wA5UM3v2Jwaw7lXvQ5F+slWsQZTINkRCxSOFtHNvwryPDkETQJ+vz644ZEp
-         e3X25vGxUaTM35j1ZZxe4Ck0wSd1O6604Xgi5mYfCjrwl2xT3Y4K2vV6yH+I4gPZzqRq
-         xv2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=gLNxs7pbWYpTYvz8n5ArGbH6UGnr7tRzCa9oZesPdqs=;
-        b=AL7lnHfWF8XF+lehwwTGddGrN6twTlSNjWPfXm6InAlIS8e4Xdei+WfDcPtLz+NRqi
-         mOmQre23Iao2AaY4qVFPrbaA7MI0qaCcOvv9q52YjqBGuvBZGPgq78naqBKYvr8gjDLc
-         nll68awAEpoWkpg3dYZomF1HcqR+kfOA6pHqTWZ45SG4tB3JMB4PmaXthvp5HwIqqIh/
-         zwiTpGjw9TV526rbJT8Trt5e3pcCPsi81MVyfe69p9A8/tOB0SoFaAln20zdlVZz3ucM
-         OkCywjh/K6BcG93ikcbEVLFCLi6Fiz4ph6xddOjfApy8XOrd8IOkqBlxRZxpZ5QMJi/9
-         J9Zg==
-X-Gm-Message-State: AFqh2krflx6TbGBEyQ2YprQiwL+014oNkV9llmMNy5ZH6tCK4xBVHtv4
-        pLEs6XJ9DSvau6pW0JwiQWDdYdW1/Vw=
-X-Google-Smtp-Source: AMrXdXsBXNmSQBm9idS9kCkiqnTIudQV25go7pHy23GVzGNUtULp2wBT6mPyVVSlhuXtCNRpMUXymA==
-X-Received: by 2002:a1f:1b07:0:b0:3bd:fb7f:e385 with SMTP id b7-20020a1f1b07000000b003bdfb7fe385mr12127997vkb.8.1672347978791;
-        Thu, 29 Dec 2022 13:06:18 -0800 (PST)
-Received: from [192.168.1.104] (c-73-129-38-53.hsd1.va.comcast.net. [73.129.38.53])
-        by smtp.gmail.com with ESMTPSA id bq43-20020a05620a46ab00b0070209239b87sm14001918qkb.41.2022.12.29.13.06.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Dec 2022 13:06:17 -0800 (PST)
-Message-ID: <76585149-101a-f24b-7160-ff741ccd656c@gmail.com>
-Date:   Thu, 29 Dec 2022 16:06:17 -0500
+        Fri, 30 Dec 2022 15:39:27 -0500
+X-Greylist: delayed 20175 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 30 Dec 2022 12:39:25 PST
+Received: from mail.vacuumatic.cc (vacuumatic.cc [163.123.140.34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A2CECD9;
+        Fri, 30 Dec 2022 12:39:25 -0800 (PST)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.vacuumatic.cc (Postfix) with ESMTP id 2980C70E1E10;
+        Fri, 30 Dec 2022 05:10:13 -0500 (EST)
+Received: from mail.vacuumatic.cc ([127.0.0.1])
+        by localhost (mail.vacuumatic.cc [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id CwMzyfTDikvJ; Fri, 30 Dec 2022 05:10:11 -0500 (EST)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.vacuumatic.cc (Postfix) with ESMTP id E3E3570E1E17;
+        Fri, 30 Dec 2022 05:10:05 -0500 (EST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.vacuumatic.cc E3E3570E1E17
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vacuumatic.cc;
+        s=BD5E5048-7767-11ED-9AB1-AEF27DAD29AF; t=1672395006;
+        bh=8OSRQtZ/XGMt0m+/MV768q5oZkUB/T254Ol9zod/hVE=;
+        h=Date:From:Message-ID:MIME-Version;
+        b=oB017uJM3+VILepDVCRHqbBAxlNXvfFNju4QVc0p3VUhVHhYs4DgNfLDW9wz1lU46
+         4LWvcI5Awkb/hOzV1UgLqeDN0zRIp52gDKoo2R56wNemOOP++kCUyb+LReDz9kz0zK
+         mNCXcATQ2SymudADNCITJFseZyWRbXACBVwjCTIstpKFy+Q93NDCbFJX0ZZ/Jgrchi
+         f7UbK64NokFfXnjhWY684sMSS2ON3oE68SPMv1lcx7npNSiGe4+ekt9Y7sIS4nzz2/
+         fhtX+gTaQo6W1cQFj+jA4uw6d2lCDziIaWDuWF7XsaedWUmUrC0v7Mbl50/YLrvj47
+         11lF+1Ok3fjeQ==
+X-Virus-Scanned: amavisd-new at vacuumatic.cc
+Received: from mail.vacuumatic.cc ([127.0.0.1])
+        by localhost (mail.vacuumatic.cc [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id dQge5yDQT0pW; Fri, 30 Dec 2022 05:10:05 -0500 (EST)
+Received: from mail.vacuumatic.cc (mail.vacuumatic.cc [163.123.140.34])
+        by mail.vacuumatic.cc (Postfix) with ESMTP id 82A4E70EDE27;
+        Fri, 30 Dec 2022 05:09:57 -0500 (EST)
+Date:   Fri, 30 Dec 2022 05:09:57 -0500 (EST)
+From:   Lukas Reinhardt <support@vacuumatic.cc>
+Reply-To: Lukas Reinhardt <lukreinhard1@vivaldi.net>
+Message-ID: <1565539681.269587.1672394997473.JavaMail.zimbra@vacuumatic.cc>
+In-Reply-To: <1397014707.241670.1672348232055.JavaMail.zimbra@vacuumatic.cc>
+References: <1397014707.241670.1672348232055.JavaMail.zimbra@vacuumatic.cc>
+Subject: 3% IR Loan Offer
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Content-Language: en-US
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-bluetooth@vger.kernel.org
-From:   Robert Lippmann <robert.m.lippmann@gmail.com>
-Subject: Ugreen Bluetooth 5.3 adapter
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [163.123.140.34]
+X-Mailer: Zimbra 8.8.15_GA_4484 (zclient/8.8.15_GA_4484)
+Thread-Topic: 3% IR Loan Offer
+Thread-Index: u96i7u0zPj8LOsjj2ctwnSi+vmZef3ojmbos
+X-Spam-Status: No, score=4.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MISSING_HEADERS,
+        RCVD_IN_MSPIKE_H2,RCVD_IN_VALIDITY_RPBL,REPLYTO_WITHOUT_TO_CC,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi all,
+Hello,
 
-I've been working on trying to get this to work.
+We are a Kuwait Based Investment company offering corporate and personal loans at 3% interest rate for the duration of 10 years. We also give 1% commission to brokers, who introduce project owners for finance or other opportunities.
 
-I've applied this patch:
+Please get back to me if you are interested in more details.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/commit/?id=0bb039f39058
 
-But I was still getting the following error:
-
-Bluetooth: hci0: Opcode 0x c5a failed: -56
-
-I added
-
-set_bit(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER,&hdev->quirks);
-
-as an additional quirk for the device, but now I'm getting
-
-Bluetooth: hci0: Opcode 0x202e failed: -56
-
-Which tells me that HCI_OP_LE_SET_RPA_TIMEOUT isn't supported. I'm not 
-at all familiar with the linux bluetooth drivers, so I'm not sure how to 
-work around this.  I didn't see another quirk I could register.
-
-Any advice?
-
-TIA
-
+Best Regards,
+Mr.Lukas Reinhardt
+Assistant Secretary
+General Global Financial Investment.
