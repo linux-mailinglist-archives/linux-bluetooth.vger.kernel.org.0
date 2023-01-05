@@ -2,59 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01E8465F67D
+	by mail.lfdr.de (Postfix) with ESMTP id A121365F67F
 	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Jan 2023 23:10:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235444AbjAEWKJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 Jan 2023 17:10:09 -0500
+        id S235662AbjAEWKL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 Jan 2023 17:10:11 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235705AbjAEWJt (ORCPT
+        with ESMTP id S235717AbjAEWJu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 5 Jan 2023 17:09:49 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D37C167BEA
-        for <linux-bluetooth@vger.kernel.org>; Thu,  5 Jan 2023 14:09:47 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id d3so40764809plr.10
-        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Jan 2023 14:09:47 -0800 (PST)
+        Thu, 5 Jan 2023 17:09:50 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563AC67BE4
+        for <linux-bluetooth@vger.kernel.org>; Thu,  5 Jan 2023 14:09:49 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id p24so18276667plw.11
+        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Jan 2023 14:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nLx/zURPiGT0IcVnLTUycL4Bg0QmQuAYlvG/tHxlN70=;
-        b=PW8wjLZmTcfPe9sjHOqaoPZJYFTtlILPY/B3AOeu/dqQKeGMrMdTDbVdGmcROyUNVB
-         6Mi6C3eb5BQlzi/sSMtZ+CavvTcr1qOtyYTG4acympyqvhpeVDZecLmuK3HHe2BBcj0V
-         /fkK1NwWkpCbTnqQpYTUH3zFlVzO/v89x6RPZNialEwkqLeRBFHitPaZ5/qQ8FOMvAnh
-         3Yl9myBu2wVTvoHP0wyWF95vaU9sGe8x7Sq5eJlJazvdWAfxH5IGMvNB7s2afFrbm9+Z
-         4BofFE0v8Ex6Ge9BsLNh7YTRudRUtVrG6oh6BtxoP8K61puQc6aNN+ZmxHCYsb4QhpAh
-         ArVg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CWJ9a+qVJy1gWUNU381hC5U7R/t9smb2m2ZecZHXjMI=;
+        b=XwGX3NSLqwbaFY0m0V8PU39WiX1KQuTwVOYUoFJV0s5lj/ue5TJvZbJhOYLuTkl+Yx
+         Np7TZCsytKYysjNLTgprFxY9KHFe+AvgOdhG984gbdqp50k3zXKaur95Ko5l1rlnRQUz
+         8AzcsOIMOtC6ZnJ64NWqPKHc75oZ6a8oMMi8YmBYHq5jgKQZya3BOUc7ClHRo1fHmCb2
+         eoOHh0VWUlXVAFXKyloSSkHBkp50IhaOZJkcK1WRoMJ34OZnX6+n3LMa7r9ADbyIg/Sq
+         IlPwU9UJ1SeBJ9IqrI0IoCmzQ8A5zUIIS9dDrTYv+OGrJFthltncR32tbbE9P8mZtcUh
+         uV5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nLx/zURPiGT0IcVnLTUycL4Bg0QmQuAYlvG/tHxlN70=;
-        b=WpSuXFtQrVSu6YkptW3mFG4BQxfQMOkPQhLot5htZoCOfE/oVGBn9ydz/VffC7ATpT
-         23lLZpY31ch16hqQle1KSIxiqLkWk2MoYSjJoVoGLllfYnkTrp7AVax4+oVyDmvG9956
-         WAuwUkWG18VQTKxaGTQp6b+PZ7Q9lSQSNTYG63y6CkYhR8y1Rc1IvU1MCLWr2nwgb+MO
-         CnwjE8Wcq0xblk/rg+uhKBgZxd5lwtaSuUALG3tY9y2vJ/BO4h9nFXVWX8ifCgUcFyjm
-         /cZUP36yWpeva8s4UVWM3vr/IbvOLH5quWANAzrLmXYMY5Nl4DTXKw4j/yoe/TvKsEMb
-         RBlQ==
-X-Gm-Message-State: AFqh2koRhxCUyM5wyvr7pigArXRMEd6tnU3qYTWJbPTzxUglQQEejext
-        XbAVzXJMFsSyR1YmID2NDTyv8hMJtvA=
-X-Google-Smtp-Source: AMrXdXuRs/vB5vvxevfw5/gHrqACbw/dmWl1t/+sd/0dwtuX2cTS+wqq7aaanxfe7EIbKYjnV1DuJQ==
-X-Received: by 2002:a17:902:f201:b0:189:377c:9ab with SMTP id m1-20020a170902f20100b00189377c09abmr48996978plc.51.1672956586631;
-        Thu, 05 Jan 2023 14:09:46 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CWJ9a+qVJy1gWUNU381hC5U7R/t9smb2m2ZecZHXjMI=;
+        b=ll8kSbG1S0WlSKPkQQCQ89duCN7XKKNnO5IGhm/eizhbu+8zM3qzRzCVkBErxzKTEl
+         RwSOjD66w3g+EvNMs5wL+LXbjwMS5pn4Pw6S0gA0etZHw3Ra6kniowUrNM2jm9hatGun
+         V1pwTcWjlowObgiHYpDKNra1jeXLhw4kDLDeizqgHgujgUfrvAFo2E7OZH8yG4SS2iiW
+         GhvVtPmuioJAeXUW05RfU7mXl7zv8RqNPMQqA/TwiOdnyTfy+LMeZv/0Vij0m7qcxI07
+         xJIcu8tL7Hc+kKiORXhSty9ZLQqd7K1lhbImSwMRkotWz4RHqQBudZFNhBYITC5JBsHX
+         yimg==
+X-Gm-Message-State: AFqh2kroIHpYQCSTQww3jya7P/OB2s7kSbpl0R3l9YBHZzdik7zFKMgD
+        oH6E9CayNd2t7JT7Ap8Cn0AOiIKVfz4=
+X-Google-Smtp-Source: AMrXdXvQbUo632XcGiGwlbcHKJVMu4WdnW2r6lsq9OGKfjQC8I/TKGC8aR+qo3R1X/vd6tuoOGjmRw==
+X-Received: by 2002:a17:903:28e:b0:193:a5b:cd01 with SMTP id j14-20020a170903028e00b001930a5bcd01mr1054953plr.19.1672956587946;
+        Thu, 05 Jan 2023 14:09:47 -0800 (PST)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id jg21-20020a17090326d500b001929827731esm16744861plb.201.2023.01.05.14.09.45
+        by smtp.gmail.com with ESMTPSA id jg21-20020a17090326d500b001929827731esm16744861plb.201.2023.01.05.14.09.46
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jan 2023 14:09:46 -0800 (PST)
+        Thu, 05 Jan 2023 14:09:47 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 1/4] shared/gatt-client: Use parent debug_callback if not set on clone
-Date:   Thu,  5 Jan 2023 14:09:41 -0800
-Message-Id: <20230105220944.2373424-1-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 2/4] shared/gatt-client: Allow registering with NULL callback
+Date:   Thu,  5 Jan 2023 14:09:42 -0800
+Message-Id: <20230105220944.2373424-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20230105220944.2373424-1-luiz.dentz@gmail.com>
+References: <20230105220944.2373424-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -69,58 +73,63 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-If clone don't have a dedicated callback set use its parent so users of
-bt_gatt_client_clone don't have to keep setting the same callback for
-all clone instances.
+This makes bt_gatt_client_register_notify allow registering with NULL
+callback which is interpreted as the CCC write has already been
+performed therefore it won't be written again.
 ---
- src/shared/gatt-client.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ src/shared/gatt-client.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
-index cb2e64b6cc6b..4aa5d7d92957 100644
+index 4aa5d7d92957..593b0f27f871 100644
 --- a/src/shared/gatt-client.c
 +++ b/src/shared/gatt-client.c
-@@ -38,7 +38,8 @@
- #define GATT_SVC_UUID	0x1801
- #define SVC_CHNGD_UUID	0x2a05
- #define DBG(_client, _format, arg...) \
--	gatt_log(_client, "%s:%s() " _format, __FILE__, __func__, ## arg)
-+	gatt_log(_client, "[%p] %s:%s() " _format, _client, __FILE__, \
-+		__func__, ## arg)
+@@ -1711,8 +1711,11 @@ static unsigned int register_notify(struct bt_gatt_client *client,
+ 		 * descriptor.
+ 		 */
+ 		chrc = notify_chrc_create(client, handle);
+-		if (!chrc)
++		if (!chrc) {
++			DBG(client, "Unable to locate characteristic at 0x%04x",
++							handle);
+ 			return 0;
++		}
+ 	}
  
- struct ready_cb {
- 	bt_gatt_client_callback_t callback;
-@@ -357,15 +358,28 @@ static void discovery_op_free(struct discovery_op *op)
+ 	/* Fail if we've hit the maximum allowed notify sessions */
+@@ -1750,9 +1753,10 @@ static unsigned int register_notify(struct bt_gatt_client *client,
+ 	}
  
- static bool read_db_hash(struct discovery_op *op);
+ 	/*
+-	 * If the ref count > 1, then notifications are already enabled.
++	 * If the ref count > 1, ccc handle cannot be found or registration
++	 * callback is not set consider notifications are already enabled.
+ 	 */
+-	if (chrc->notify_count > 1 || !chrc->ccc_handle) {
++	if (chrc->notify_count > 1 || !chrc->ccc_handle || !callback) {
+ 		complete_notify_request(notify_data);
+ 		return notify_data->id;
+ 	}
+@@ -2176,6 +2180,9 @@ static void notify_cb(struct bt_att_chan *chan, uint8_t opcode,
+ 	struct bt_gatt_client *client = user_data;
+ 	struct value_data data;
  
-+static void gatt_log_va(struct bt_gatt_client *client, const char *format,
-+						va_list va)
-+{
-+	if (!client || !format)
++	if (queue_isempty(client->notify_list))
 +		return;
 +
-+	if (client->debug_callback)
-+		util_debug_va(client->debug_callback, client->debug_data,
-+							format, va);
-+	else
-+		gatt_log_va(client->parent, format, va);
-+}
-+
- static void gatt_log(struct bt_gatt_client *client, const char *format, ...)
+ 	bt_gatt_client_ref(client);
+ 
+ 	memset(&data, 0, sizeof(data));
+@@ -3670,7 +3677,8 @@ unsigned int bt_gatt_client_register_notify(struct bt_gatt_client *client,
+ 				void *user_data,
+ 				bt_gatt_client_destroy_func_t destroy)
  {
- 	va_list ap;
+-	if (!client || !client->db || !chrc_value_handle || !callback)
++	if (!client || !client->db || !chrc_value_handle ||
++				(!callback && !notify))
+ 		return 0;
  
--	if (!client || !format || !client->debug_callback)
-+	if (!client || !format)
- 		return;
- 
- 	va_start(ap, format);
--	util_debug_va(client->debug_callback, client->debug_data, format, ap);
-+	gatt_log_va(client, format, ap);
- 	va_end(ap);
- }
- 
+ 	if (client->in_svc_chngd)
 -- 
 2.37.3
 
