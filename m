@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C69765F681
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Jan 2023 23:10:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBE2865F680
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Jan 2023 23:10:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235210AbjAEWKP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 Jan 2023 17:10:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47104 "EHLO
+        id S235717AbjAEWKM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 Jan 2023 17:10:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230402AbjAEWJw (ORCPT
+        with ESMTP id S235623AbjAEWJw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Thu, 5 Jan 2023 17:09:52 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1432967BEA
-        for <linux-bluetooth@vger.kernel.org>; Thu,  5 Jan 2023 14:09:51 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id n4so40802577plp.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Jan 2023 14:09:51 -0800 (PST)
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F30367BE4
+        for <linux-bluetooth@vger.kernel.org>; Thu,  5 Jan 2023 14:09:52 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id cl14so4846579pjb.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Jan 2023 14:09:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Gw6itf7AVrCO7LXSXZODgQaXufV/CbE8VRMeicmNgDc=;
-        b=TyWwwYCGbAZpp2Qiwlr03WssIfQgQ21+P0AZPHakekrKtRUp/u/YoQ9fx9DbCWACcA
-         IbzEQy0xekxmwEJOHXQzromGzkKPnUheWkbAFUGrpl3twIAbSeX81hgN5krj9a3IQ7EF
-         vwwskenk7Ns0jB9NEGRHaxmx22Qed6mVMrDi02umU44o8q/TjFIJjRgo9LBHWS560FkN
-         EEMjRXmOZ/Cj/6B4nud3fmgHBsPaEhWBL9twEMLqUiUqSLxX05q9KXjDRhq07mBB3dVV
-         OaaVjAWEfRx4HhyLgY6rDdH1+mcdguh2DZ8ok20pPoiBY6tilXQxWN+kidRUsoAE0aLz
-         dzVw==
+        bh=cNud4kWdkw52+hXAnumbx8Ikmuw+BRe/Pf1t1Z/q3Y8=;
+        b=QOvEbBJ6Pz0b7wJvrbxCCq88bebfI8kMwj31mnJ1IkhpwRY+xbW4RwogMOM/uc90KK
+         h07gzh0+83sDvk19FB091QxdWESboAEzMoW/PxF1Q/q3h2t2favLsXUuMKgLDNzRnkge
+         l05gV0kCYJ5/RNaKgQoWsTm5M1rReUuPQKhKPY8McLsPx+7033AHoEVRS17YWp1P9Y8X
+         jc9Nl7G5uSBeHTqp/TKEldlTnXK3eCA1/a5Okez6Cf4l7p88c6zprnWCkY5JkiBvgqa7
+         60g7ORKbe/9XUghUtkSEtCuuN/SBz08DR0aRtFWvkvJKLaxQHc1eiJdP+f5O1aMO7iwa
+         p4jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Gw6itf7AVrCO7LXSXZODgQaXufV/CbE8VRMeicmNgDc=;
-        b=Tn/+bMmwHfEcOc1t3Teehz4d/fjXQ6/ujUKtOrwRTg/LnvU0YqFXS75IJhxiK/DL5V
-         C+488s5SdFKbIURnmMp9H2hIFDNNxP8i31rZNRvK3pkJn4ceGezcbL8uMkqLx5Oyocxf
-         P1j8tN2/SFixFA/qcN3/ZtBmHeWUA5Tiysv/XfHWdJsBx35nawdnYOpn++0vFfQV5JHc
-         7+yBBRRML8wTry/7mTmsKMiIhlLSW/PlXrsmmX2FGC4fU4tbc4hCvehlT22isJms05EY
-         DKjPnz6L8OvzE9UHllTxbKJecB7Huj42l1/ce1E1ojjts16hXrD9fUT5DA1D3HRmyCCT
-         yeIA==
-X-Gm-Message-State: AFqh2krJMFTO6xvhf7SdQIUpNgQrZxSOo35x83Hc7lDg2hUXnX+ZlW/6
-        nNor4RG1SsIv591q+7SGc36RGK7syN4=
-X-Google-Smtp-Source: AMrXdXsLuC1cDYsMsk15nn4cuu3YURR9Qx8FjQK6Se4CmamgruT++5EriN6GVQNzviijVlWsIZHiEw==
-X-Received: by 2002:a17:903:3311:b0:189:d696:63e2 with SMTP id jk17-20020a170903331100b00189d69663e2mr58379339plb.39.1672956589964;
-        Thu, 05 Jan 2023 14:09:49 -0800 (PST)
+        bh=cNud4kWdkw52+hXAnumbx8Ikmuw+BRe/Pf1t1Z/q3Y8=;
+        b=5U3/Z34S6tAsuoue0Mb35CKafc9E26c9srW6ZjHt5d3mzbUZGBc1mDgqGGltgeKi4n
+         p8aWuJldRG/p9i6U6klIANAlQkI+K4Oe18/7fyJwXUYGQYTwrJk/0cwdJzimQqYDVl/u
+         5lenusYosRwoDtmW3KuWBEosSEILJTgxNA9b98QZ9oq+rPDTyvgUWQ40adpFqg9hYu8L
+         zpcdOiO0TApwVvX0sJ9jE9Q5Sz44ODUWctZb64z7LVUIH47QUS9jmhulc6U8c/619ucW
+         QPcSDOjDgfITRjJcZFA/izWmcmpdpafvwLyYjqZd/T0KCwSWAKsi140MCn8bUDdWcQZ4
+         yeKA==
+X-Gm-Message-State: AFqh2koMnpS9g1mj+WR0NS/LjyeeTije3N27TMZ0FT6IUGbb0a/lcs1G
+        vV2ebi9BuIElQ2FlOT/l5rmo7ntu52s=
+X-Google-Smtp-Source: AMrXdXsGCBdyo3L4/G7HSss0WYQ8vB2kK8TMOpoguSJR2DQsPCYdFgmKK17/6fMgZVFfnXgXj3iQGA==
+X-Received: by 2002:a17:902:f145:b0:191:10e0:b912 with SMTP id d5-20020a170902f14500b0019110e0b912mr52494033plb.41.1672956591194;
+        Thu, 05 Jan 2023 14:09:51 -0800 (PST)
 Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id jg21-20020a17090326d500b001929827731esm16744861plb.201.2023.01.05.14.09.48
+        by smtp.gmail.com with ESMTPSA id jg21-20020a17090326d500b001929827731esm16744861plb.201.2023.01.05.14.09.50
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jan 2023 14:09:49 -0800 (PST)
+        Thu, 05 Jan 2023 14:09:50 -0800 (PST)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 3/4] attrib: Introduce g_attrib_attach_client
-Date:   Thu,  5 Jan 2023 14:09:43 -0800
-Message-Id: <20230105220944.2373424-3-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 4/4] hog-lib: Fix not handling BT_ATT_OP_HANDLE_NFY_MULT
+Date:   Thu,  5 Jan 2023 14:09:44 -0800
+Message-Id: <20230105220944.2373424-4-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.37.3
 In-Reply-To: <20230105220944.2373424-1-luiz.dentz@gmail.com>
 References: <20230105220944.2373424-1-luiz.dentz@gmail.com>
@@ -73,148 +73,77 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This introduces g_attrib_attach_client which can be used to attach a
-bt_gatt_client instance to GAttr so it can be used to register
-notifications.
----
- Makefile.am      |  6 +++---
- attrib/gattrib.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- attrib/gattrib.h |  2 ++
- 3 files changed, 51 insertions(+), 3 deletions(-)
+This is a temporary fix for not handling BT_ATT_OP_HANDLE_NFY_MULT in
+GAttr so the code will use g_attrib_attach_client to attach the
+bt_gatt_client instance which is then used to register notifications
+including those sent with BT_ATT_OP_HANDLE_NFY_MULT.
 
-diff --git a/Makefile.am b/Makefile.am
-index aa3a5e053cd8..0e8cce249c7d 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -565,9 +565,9 @@ unit_tests += unit/test-gattrib
- 
- unit_test_gattrib_SOURCES = unit/test-gattrib.c attrib/gattrib.c \
- 					$(btio_sources) src/log.h src/log.c
--unit_test_gattrib_LDADD = lib/libbluetooth-internal.la \
--			src/libshared-glib.la \
--			$(GLIB_LIBS) $(DBUS_LIBS) -ldl -lrt
-+unit_test_gattrib_LDADD = src/libshared-glib.la \
-+				lib/libbluetooth-internal.la \
-+				$(GLIB_LIBS) $(DBUS_LIBS) -ldl -lrt
- 
- unit_tests += unit/test-bap
- 
-diff --git a/attrib/gattrib.c b/attrib/gattrib.c
-index 041b9d289c64..997af3699c51 100644
---- a/attrib/gattrib.c
-+++ b/attrib/gattrib.c
-@@ -21,17 +21,23 @@
- #include <glib.h>
- 
- #include "lib/bluetooth.h"
-+#include "lib/uuid.h"
- 
- #include "btio/btio.h"
- #include "src/log.h"
- #include "src/shared/util.h"
- #include "src/shared/att.h"
-+#include "src/shared/gatt-helpers.h"
- #include "src/shared/queue.h"
-+#include "src/shared/gatt-db.h"
-+#include "src/shared/gatt-client.h"
-+#include "attrib/att.h"
- #include "attrib/gattrib.h"
- 
- struct _GAttrib {
- 	int ref_count;
- 	struct bt_att *att;
-+	struct bt_gatt_client *client;
- 	GIOChannel *io;
- 	GDestroyNotify destroy;
- 	gpointer destroy_user_data;
-@@ -145,6 +151,7 @@ void g_attrib_unref(GAttrib *attrib)
- 	if (attrib->destroy)
- 		attrib->destroy(attrib->destroy_user_data);
- 
-+	bt_gatt_client_unref(attrib->client);
- 	bt_att_unref(attrib->att);
- 
- 	queue_destroy(attrib->callbacks, attrib_callbacks_destroy);
-@@ -338,6 +345,20 @@ gboolean g_attrib_cancel_all(GAttrib *attrib)
- 	return TRUE;
+Fixes: https://github.com/bluez/bluez/issues/71
+---
+ profiles/input/hog-lib.c | 23 +++++++++++++++++++++--
+ src/device.c             |  1 +
+ 2 files changed, 22 insertions(+), 2 deletions(-)
+
+diff --git a/profiles/input/hog-lib.c b/profiles/input/hog-lib.c
+index 021db386f3b7..7ff1ede3db35 100644
+--- a/profiles/input/hog-lib.c
++++ b/profiles/input/hog-lib.c
+@@ -374,6 +374,15 @@ static void report_value_cb(const guint8 *pdu, guint16 len, gpointer user_data)
+ 		error("bt_uhid_send: %s (%d)", strerror(-err), -err);
  }
  
-+static void client_notify_cb(uint16_t value_handle, const uint8_t *value,
-+				uint16_t length, void *user_data)
++static void report_notify_destroy(void *user_data)
 +{
-+	uint8_t *buf = newa(uint8_t, length + 2);
++	struct report *report = user_data;
 +
-+	put_le16(value_handle, buf);
++	DBG("");
 +
-+	if (length)
-+		memcpy(buf + 2, value, length);
-+
-+	attrib_callback_notify(NULL, ATT_OP_HANDLE_NOTIFY, buf, length + 2,
-+							user_data);
++	report->notifyid = 0;
 +}
 +
- guint g_attrib_register(GAttrib *attrib, guint8 opcode, guint16 handle,
- 				GAttribNotifyFunc func, gpointer user_data,
- 				GDestroyNotify notify)
-@@ -359,6 +380,16 @@ guint g_attrib_register(GAttrib *attrib, guint8 opcode, guint16 handle,
- 		queue_push_head(attrib->callbacks, cb);
+ static void report_ccc_written_cb(guint8 status, const guint8 *pdu,
+ 					guint16 plen, gpointer user_data)
+ {
+@@ -393,7 +402,13 @@ static void report_ccc_written_cb(guint8 status, const guint8 *pdu,
+ 	report->notifyid = g_attrib_register(hog->attrib,
+ 					ATT_OP_HANDLE_NOTIFY,
+ 					report->value_handle,
+-					report_value_cb, report, NULL);
++					report_value_cb, report,
++					report_notify_destroy);
++	if (!report->notifyid) {
++		error("Unable to register report notification: handle 0x%04x",
++					report->value_handle);
++		goto remove;
++	}
+ 
+ 	DBG("Report characteristic descriptor written: notifications enabled");
+ 
+@@ -1798,7 +1813,11 @@ bool bt_hog_attach(struct bt_hog *hog, void *gatt)
+ 		r->notifyid = g_attrib_register(hog->attrib,
+ 					ATT_OP_HANDLE_NOTIFY,
+ 					r->value_handle,
+-					report_value_cb, r, NULL);
++					report_value_cb, r,
++					report_notify_destroy);
++		if (!r->notifyid)
++			error("Unable to register report notification: "
++				"handle 0x%04x", r->value_handle);
  	}
  
-+	if (opcode == ATT_OP_HANDLE_NOTIFY && attrib->client) {
-+		unsigned int id;
-+
-+		id = bt_gatt_client_register_notify(attrib->client, handle,
-+						NULL, client_notify_cb, cb,
-+						attrib_callbacks_remove);
-+		if (id)
-+			return id;
-+	}
-+
- 	if (opcode == GATTRIB_ALL_REQS)
- 		opcode = BT_ATT_ALL_REQUESTS;
+ 	return true;
+diff --git a/src/device.c b/src/device.c
+index 995d39f2ccee..28b93eb9ac38 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -5152,6 +5152,7 @@ static void gatt_client_init(struct btd_device *device)
+ 	}
  
-@@ -410,6 +441,21 @@ gboolean g_attrib_set_mtu(GAttrib *attrib, int mtu)
- 	return bt_att_set_mtu(attrib->att, mtu);
- }
+ 	bt_gatt_client_set_debug(device->client, gatt_debug, NULL, NULL);
++	g_attrib_attach_client(device->attrib, device->client);
  
-+gboolean g_attrib_attach_client(GAttrib *attrib, struct bt_gatt_client *client)
-+{
-+	if (!attrib || !client)
-+		return FALSE;
-+
-+	if (attrib->client)
-+		bt_gatt_client_unref(attrib->client);
-+
-+	attrib->client = bt_gatt_client_clone(client);
-+	if (!attrib->client)
-+		return FALSE;
-+
-+	return TRUE;
-+}
-+
- gboolean g_attrib_unregister(GAttrib *attrib, guint id)
- {
- 	if (!attrib)
-diff --git a/attrib/gattrib.h b/attrib/gattrib.h
-index c2877d757342..0111bfc3f2fa 100644
---- a/attrib/gattrib.h
-+++ b/attrib/gattrib.h
-@@ -19,6 +19,7 @@ extern "C" {
- #define GATTRIB_ALL_HANDLES 0x0000
- 
- struct bt_att;  /* Forward declaration for compatibility */
-+struct bt_gatt_client;  /* Forward declaration for compatibility */
- struct _GAttrib;
- typedef struct _GAttrib GAttrib;
- 
-@@ -53,6 +54,7 @@ guint g_attrib_register(GAttrib *attrib, guint8 opcode, guint16 handle,
- 
- uint8_t *g_attrib_get_buffer(GAttrib *attrib, size_t *len);
- gboolean g_attrib_set_mtu(GAttrib *attrib, int mtu);
-+gboolean g_attrib_attach_client(GAttrib *attrib, struct bt_gatt_client *client);
- 
- gboolean g_attrib_unregister(GAttrib *attrib, guint id);
- gboolean g_attrib_unregister_all(GAttrib *attrib);
+ 	/*
+ 	 * Notify notify existing service about the new connection so they can
 -- 
 2.37.3
 
