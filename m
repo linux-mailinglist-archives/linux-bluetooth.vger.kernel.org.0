@@ -2,148 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBE2865F680
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Jan 2023 23:10:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA0BE65F7E0
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Jan 2023 00:50:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235717AbjAEWKM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 Jan 2023 17:10:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47118 "EHLO
+        id S234755AbjAEXuT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 Jan 2023 18:50:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235623AbjAEWJw (ORCPT
+        with ESMTP id S229684AbjAEXuS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 5 Jan 2023 17:09:52 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F30367BE4
-        for <linux-bluetooth@vger.kernel.org>; Thu,  5 Jan 2023 14:09:52 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id cl14so4846579pjb.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Jan 2023 14:09:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cNud4kWdkw52+hXAnumbx8Ikmuw+BRe/Pf1t1Z/q3Y8=;
-        b=QOvEbBJ6Pz0b7wJvrbxCCq88bebfI8kMwj31mnJ1IkhpwRY+xbW4RwogMOM/uc90KK
-         h07gzh0+83sDvk19FB091QxdWESboAEzMoW/PxF1Q/q3h2t2favLsXUuMKgLDNzRnkge
-         l05gV0kCYJ5/RNaKgQoWsTm5M1rReUuPQKhKPY8McLsPx+7033AHoEVRS17YWp1P9Y8X
-         jc9Nl7G5uSBeHTqp/TKEldlTnXK3eCA1/a5Okez6Cf4l7p88c6zprnWCkY5JkiBvgqa7
-         60g7ORKbe/9XUghUtkSEtCuuN/SBz08DR0aRtFWvkvJKLaxQHc1eiJdP+f5O1aMO7iwa
-         p4jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cNud4kWdkw52+hXAnumbx8Ikmuw+BRe/Pf1t1Z/q3Y8=;
-        b=5U3/Z34S6tAsuoue0Mb35CKafc9E26c9srW6ZjHt5d3mzbUZGBc1mDgqGGltgeKi4n
-         p8aWuJldRG/p9i6U6klIANAlQkI+K4Oe18/7fyJwXUYGQYTwrJk/0cwdJzimQqYDVl/u
-         5lenusYosRwoDtmW3KuWBEosSEILJTgxNA9b98QZ9oq+rPDTyvgUWQ40adpFqg9hYu8L
-         zpcdOiO0TApwVvX0sJ9jE9Q5Sz44ODUWctZb64z7LVUIH47QUS9jmhulc6U8c/619ucW
-         QPcSDOjDgfITRjJcZFA/izWmcmpdpafvwLyYjqZd/T0KCwSWAKsi140MCn8bUDdWcQZ4
-         yeKA==
-X-Gm-Message-State: AFqh2koMnpS9g1mj+WR0NS/LjyeeTije3N27TMZ0FT6IUGbb0a/lcs1G
-        vV2ebi9BuIElQ2FlOT/l5rmo7ntu52s=
-X-Google-Smtp-Source: AMrXdXsGCBdyo3L4/G7HSss0WYQ8vB2kK8TMOpoguSJR2DQsPCYdFgmKK17/6fMgZVFfnXgXj3iQGA==
-X-Received: by 2002:a17:902:f145:b0:191:10e0:b912 with SMTP id d5-20020a170902f14500b0019110e0b912mr52494033plb.41.1672956591194;
-        Thu, 05 Jan 2023 14:09:51 -0800 (PST)
-Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
-        by smtp.gmail.com with ESMTPSA id jg21-20020a17090326d500b001929827731esm16744861plb.201.2023.01.05.14.09.50
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jan 2023 14:09:50 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 4/4] hog-lib: Fix not handling BT_ATT_OP_HANDLE_NFY_MULT
-Date:   Thu,  5 Jan 2023 14:09:44 -0800
-Message-Id: <20230105220944.2373424-4-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20230105220944.2373424-1-luiz.dentz@gmail.com>
-References: <20230105220944.2373424-1-luiz.dentz@gmail.com>
+        Thu, 5 Jan 2023 18:50:18 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E5145F8D;
+        Thu,  5 Jan 2023 15:50:17 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D9CAF61C39;
+        Thu,  5 Jan 2023 23:50:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3C83BC433F0;
+        Thu,  5 Jan 2023 23:50:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672962616;
+        bh=PrrLFxarYWh5CM+qoMzISrjfCB1Rub1rzIzz5HE0W+A=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=pY8s+tUlk7VLeh6+pkyslV9p97RwbJHPgUVE6E5GvlrFDYosIfO6Hlz8u8JQcXMZ5
+         U1FxahmERg0s3QdYyakvEbghL1P+Q4jkLbPtzF9/w0oEC45hjEI9JmksUaH9Mzxyz1
+         7Ku4U7uml8ZgI+YJVyCTu5g2xE40coyTxSXDeinvCgH6aXSlQR+1DtJPlxQ5e466p9
+         B5U+gnTjX+OGhJxrY2HGerYFfQltBbIO38wVHTaJe7LwqfBBCgPoImo5hUUM8MAnTn
+         lIDx6VMQgdsx1o9GuTsZiLasp8F+JcGyKvtaZmeWfzX4wYjMt/uTlTTsm9W8OROXL7
+         fxKU/fLqf/ecA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 21D53E5724A;
+        Thu,  5 Jan 2023 23:50:16 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Subject: Re: [PATCH] Bluetooth: hci_conn: fix memory leak in
+ hci_le_terminate_big() and hci_le_big_terminate()
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <167296261613.18068.1679301858190838721.git-patchwork-notify@kernel.org>
+Date:   Thu, 05 Jan 2023 23:50:16 +0000
+References: <20230104064623.1140644-1-shaozhengchao@huawei.com>
+In-Reply-To: <20230104064623.1140644-1-shaozhengchao@huawei.com>
+To:     Zhengchao Shao <shaozhengchao@huawei.com>
+Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, weiyongjun1@huawei.com, yuehaibing@huawei.com
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hello:
 
-This is a temporary fix for not handling BT_ATT_OP_HANDLE_NFY_MULT in
-GAttr so the code will use g_attrib_attach_client to attach the
-bt_gatt_client instance which is then used to register notifications
-including those sent with BT_ATT_OP_HANDLE_NFY_MULT.
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Fixes: https://github.com/bluez/bluez/issues/71
----
- profiles/input/hog-lib.c | 23 +++++++++++++++++++++--
- src/device.c             |  1 +
- 2 files changed, 22 insertions(+), 2 deletions(-)
+On Wed, 4 Jan 2023 14:46:23 +0800 you wrote:
+> When hci_cmd_sync_queue() failed in hci_le_terminate_big() or
+> hci_le_big_terminate(), the memory pointed by variable d is not freed,
+> which will cause memory leak. Add release process to error path.
+> 
+> Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
+> Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+> 
+> [...]
 
-diff --git a/profiles/input/hog-lib.c b/profiles/input/hog-lib.c
-index 021db386f3b7..7ff1ede3db35 100644
---- a/profiles/input/hog-lib.c
-+++ b/profiles/input/hog-lib.c
-@@ -374,6 +374,15 @@ static void report_value_cb(const guint8 *pdu, guint16 len, gpointer user_data)
- 		error("bt_uhid_send: %s (%d)", strerror(-err), -err);
- }
- 
-+static void report_notify_destroy(void *user_data)
-+{
-+	struct report *report = user_data;
-+
-+	DBG("");
-+
-+	report->notifyid = 0;
-+}
-+
- static void report_ccc_written_cb(guint8 status, const guint8 *pdu,
- 					guint16 plen, gpointer user_data)
- {
-@@ -393,7 +402,13 @@ static void report_ccc_written_cb(guint8 status, const guint8 *pdu,
- 	report->notifyid = g_attrib_register(hog->attrib,
- 					ATT_OP_HANDLE_NOTIFY,
- 					report->value_handle,
--					report_value_cb, report, NULL);
-+					report_value_cb, report,
-+					report_notify_destroy);
-+	if (!report->notifyid) {
-+		error("Unable to register report notification: handle 0x%04x",
-+					report->value_handle);
-+		goto remove;
-+	}
- 
- 	DBG("Report characteristic descriptor written: notifications enabled");
- 
-@@ -1798,7 +1813,11 @@ bool bt_hog_attach(struct bt_hog *hog, void *gatt)
- 		r->notifyid = g_attrib_register(hog->attrib,
- 					ATT_OP_HANDLE_NOTIFY,
- 					r->value_handle,
--					report_value_cb, r, NULL);
-+					report_value_cb, r,
-+					report_notify_destroy);
-+		if (!r->notifyid)
-+			error("Unable to register report notification: "
-+				"handle 0x%04x", r->value_handle);
- 	}
- 
- 	return true;
-diff --git a/src/device.c b/src/device.c
-index 995d39f2ccee..28b93eb9ac38 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -5152,6 +5152,7 @@ static void gatt_client_init(struct btd_device *device)
- 	}
- 
- 	bt_gatt_client_set_debug(device->client, gatt_debug, NULL, NULL);
-+	g_attrib_attach_client(device->attrib, device->client);
- 
- 	/*
- 	 * Notify notify existing service about the new connection so they can
+Here is the summary with links:
+  - Bluetooth: hci_conn: fix memory leak in hci_le_terminate_big() and hci_le_big_terminate()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/5d043a6a43b6
+
+You are awesome, thank you!
 -- 
-2.37.3
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
