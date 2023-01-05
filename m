@@ -2,79 +2,125 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA8E665F01F
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Jan 2023 16:32:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01E8465F67D
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Jan 2023 23:10:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230261AbjAEPcE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 Jan 2023 10:32:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
+        id S235444AbjAEWKJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 Jan 2023 17:10:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbjAEPcD (ORCPT
+        with ESMTP id S235705AbjAEWJt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 5 Jan 2023 10:32:03 -0500
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6186201A
-        for <linux-bluetooth@vger.kernel.org>; Thu,  5 Jan 2023 07:32:02 -0800 (PST)
-Received: by mail-vs1-xe2f.google.com with SMTP id m129so32627007vsc.11
-        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Jan 2023 07:32:02 -0800 (PST)
+        Thu, 5 Jan 2023 17:09:49 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D37C167BEA
+        for <linux-bluetooth@vger.kernel.org>; Thu,  5 Jan 2023 14:09:47 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id d3so40764809plr.10
+        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Jan 2023 14:09:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7JT2Gt7y/M3YLHVCyMzZwNsFe1p6EOvnpVpu2gl496w=;
-        b=cF9cw0qN66erQX2jewuVfWNEaE3dPIBuOVmM+FJrm53EpvafwS4BjB0/pAzif6SlGs
-         0aqnVDAdZ4zJ1eci9oATMpV4VPRm7ih/vmDI0BBZDaIQP69dYxINqT7ZurQb9oFnj6ex
-         U7dtUl7z2kgDMruIC6rFltadu4EBCQuNoHjRPz4/+tYswTC1e9YSWY8QMlyd8nTABx3F
-         avVW3DmQDsm10D2TOFvEEB+oRo9d1vnSE8YbN3HTUZjr0cBP4xKxauFrxP0WSkppHT9J
-         vyYODluG1jTsTa3YpOOwcdcnz8CEBH0Q4aG1wgoIToyEZtGZv6cORqUxu5K6NDRbzy8I
-         PVUA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nLx/zURPiGT0IcVnLTUycL4Bg0QmQuAYlvG/tHxlN70=;
+        b=PW8wjLZmTcfPe9sjHOqaoPZJYFTtlILPY/B3AOeu/dqQKeGMrMdTDbVdGmcROyUNVB
+         6Mi6C3eb5BQlzi/sSMtZ+CavvTcr1qOtyYTG4acympyqvhpeVDZecLmuK3HHe2BBcj0V
+         /fkK1NwWkpCbTnqQpYTUH3zFlVzO/v89x6RPZNialEwkqLeRBFHitPaZ5/qQ8FOMvAnh
+         3Yl9myBu2wVTvoHP0wyWF95vaU9sGe8x7Sq5eJlJazvdWAfxH5IGMvNB7s2afFrbm9+Z
+         4BofFE0v8Ex6Ge9BsLNh7YTRudRUtVrG6oh6BtxoP8K61puQc6aNN+ZmxHCYsb4QhpAh
+         ArVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7JT2Gt7y/M3YLHVCyMzZwNsFe1p6EOvnpVpu2gl496w=;
-        b=Sc1oSSBsz9WIIKwL2HaQ43pjyZp1IMmbXrzH7KqcPuE0MTJ+cx6W5zzdOJwjNNi632
-         QG69kUKvm77PAwnuL/yW1LmUbjcdUj6ahrDDI+1Qy5n1PQQ47BLMGSKwQDHN1w5QQlGu
-         yCGZkxN224B5bxjp5ro1lnlXj6IDgiTSMYdrTUVJCl+hrGfnslbRKd8xczODahrOTezk
-         DQybVtz33U0569egCUUYqb6RVAdn+6g+pKX8oMpmigBD/L3e5dck6IBPQGdEdDKYM3Rl
-         R+Eyi39FFTsLibbFVzKmUcB9stknyX93pKqG5Se2JogoV5SEzBdW7UucBCzc8K1kRd88
-         Ca0Q==
-X-Gm-Message-State: AFqh2kq6KXbMKLZo3zAm3YlhjtWLMzKZ0RzX6OK2J0kvouqQ/nP5PhFU
-        xRoJsEoCPUnMJOymxMLbAGe5g6mnR2KBEvuBoAI=
-X-Google-Smtp-Source: AMrXdXuq6pXpJgDMitDdxrBc6pFsteDWtbOFWqF8eXGfvdjaQALjzDAXmHZUH4RTrSDGcCxWfQC/OOzsu2zqCSYpVeo=
-X-Received: by 2002:a67:ec47:0:b0:3c1:55fb:3850 with SMTP id
- z7-20020a67ec47000000b003c155fb3850mr6967616vso.10.1672932721845; Thu, 05 Jan
- 2023 07:32:01 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nLx/zURPiGT0IcVnLTUycL4Bg0QmQuAYlvG/tHxlN70=;
+        b=WpSuXFtQrVSu6YkptW3mFG4BQxfQMOkPQhLot5htZoCOfE/oVGBn9ydz/VffC7ATpT
+         23lLZpY31ch16hqQle1KSIxiqLkWk2MoYSjJoVoGLllfYnkTrp7AVax4+oVyDmvG9956
+         WAuwUkWG18VQTKxaGTQp6b+PZ7Q9lSQSNTYG63y6CkYhR8y1Rc1IvU1MCLWr2nwgb+MO
+         CnwjE8Wcq0xblk/rg+uhKBgZxd5lwtaSuUALG3tY9y2vJ/BO4h9nFXVWX8ifCgUcFyjm
+         /cZUP36yWpeva8s4UVWM3vr/IbvOLH5quWANAzrLmXYMY5Nl4DTXKw4j/yoe/TvKsEMb
+         RBlQ==
+X-Gm-Message-State: AFqh2koRhxCUyM5wyvr7pigArXRMEd6tnU3qYTWJbPTzxUglQQEejext
+        XbAVzXJMFsSyR1YmID2NDTyv8hMJtvA=
+X-Google-Smtp-Source: AMrXdXuRs/vB5vvxevfw5/gHrqACbw/dmWl1t/+sd/0dwtuX2cTS+wqq7aaanxfe7EIbKYjnV1DuJQ==
+X-Received: by 2002:a17:902:f201:b0:189:377c:9ab with SMTP id m1-20020a170902f20100b00189377c09abmr48996978plc.51.1672956586631;
+        Thu, 05 Jan 2023 14:09:46 -0800 (PST)
+Received: from lvondent-mobl4.. (c-71-56-157-77.hsd1.or.comcast.net. [71.56.157.77])
+        by smtp.gmail.com with ESMTPSA id jg21-20020a17090326d500b001929827731esm16744861plb.201.2023.01.05.14.09.45
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jan 2023 14:09:46 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/4] shared/gatt-client: Use parent debug_callback if not set on clone
+Date:   Thu,  5 Jan 2023 14:09:41 -0800
+Message-Id: <20230105220944.2373424-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Received: by 2002:a67:f49a:0:b0:3cb:1c63:2054 with HTTP; Thu, 5 Jan 2023
- 07:32:01 -0800 (PST)
-Reply-To: westernuniontransfer277@gmail.com
-From:   Western Union Agent <samaachille98@gmail.com>
-Date:   Thu, 5 Jan 2023 07:32:01 -0800
-Message-ID: <CAGvvqD-poKCnMTs1CwCODXY-GTkNS7+XousVDNGa2A-fCTkEbg@mail.gmail.com>
-Subject: Hello
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Good day dear,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This is to let you know that your payment is ready now, but we need
-your details now so we can complete your transfer today without
-no error, so please try to send us your information now
-so we can continue.
+If clone don't have a dedicated callback set use its parent so users of
+bt_gatt_client_clone don't have to keep setting the same callback for
+all clone instances.
+---
+ src/shared/gatt-client.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-We hope to confirm your information now.
+diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
+index cb2e64b6cc6b..4aa5d7d92957 100644
+--- a/src/shared/gatt-client.c
++++ b/src/shared/gatt-client.c
+@@ -38,7 +38,8 @@
+ #define GATT_SVC_UUID	0x1801
+ #define SVC_CHNGD_UUID	0x2a05
+ #define DBG(_client, _format, arg...) \
+-	gatt_log(_client, "%s:%s() " _format, __FILE__, __func__, ## arg)
++	gatt_log(_client, "[%p] %s:%s() " _format, _client, __FILE__, \
++		__func__, ## arg)
+ 
+ struct ready_cb {
+ 	bt_gatt_client_callback_t callback;
+@@ -357,15 +358,28 @@ static void discovery_op_free(struct discovery_op *op)
+ 
+ static bool read_db_hash(struct discovery_op *op);
+ 
++static void gatt_log_va(struct bt_gatt_client *client, const char *format,
++						va_list va)
++{
++	if (!client || !format)
++		return;
++
++	if (client->debug_callback)
++		util_debug_va(client->debug_callback, client->debug_data,
++							format, va);
++	else
++		gatt_log_va(client->parent, format, va);
++}
++
+ static void gatt_log(struct bt_gatt_client *client, const char *format, ...)
+ {
+ 	va_list ap;
+ 
+-	if (!client || !format || !client->debug_callback)
++	if (!client || !format)
+ 		return;
+ 
+ 	va_start(ap, format);
+-	util_debug_va(client->debug_callback, client->debug_data, format, ap);
++	gatt_log_va(client, format, ap);
+ 	va_end(ap);
+ }
+ 
+-- 
+2.37.3
 
-Cheers,
-Western Union Agent.
