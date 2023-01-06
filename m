@@ -2,69 +2,66 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3821D65F922
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Jan 2023 02:31:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0644C65F966
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Jan 2023 03:06:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229905AbjAFBba (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 Jan 2023 20:31:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54728 "EHLO
+        id S229688AbjAFCGF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 Jan 2023 21:06:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230507AbjAFBbP (ORCPT
+        with ESMTP id S229441AbjAFCGC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 5 Jan 2023 20:31:15 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3C4A3227A
-        for <linux-bluetooth@vger.kernel.org>; Thu,  5 Jan 2023 17:31:14 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id c4so195878plc.5
-        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Jan 2023 17:31:14 -0800 (PST)
+        Thu, 5 Jan 2023 21:06:02 -0500
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6F79B7D2
+        for <linux-bluetooth@vger.kernel.org>; Thu,  5 Jan 2023 18:06:01 -0800 (PST)
+Received: by mail-qt1-x835.google.com with SMTP id v14so1086594qtq.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 05 Jan 2023 18:06:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8nes1oSOLfK+ntfaQB+T+bjU3oDqawffQKlo+JIhefg=;
-        b=b0jJ8BnJDcNM4oiOvMXGR9C+ltqTnuFyGSIpIB2tHODhkLAC4atlP0fkf4uLsS5Hzw
-         lY6iXxkvZC13sJ9KTlYYG5vhyrDdMoUEpMffIACRnCNbNvPLCcQY3RZDVJrFoV8LbtRD
-         APgLP4W3Vr1yutP8+JEP7sQUYsDje7lbLNchOyRf8zly6UDIN+yRc++V7l7zSg7Whczl
-         lwlxjnBY2G/i1DSZimF+DUfLLgWSErpF61FnlRiw3g7EmZd5bbQFTQvkmPIDtVZ8pLq7
-         ynAAeK1ZBiYc7RBHPtiyc+rnXS0rOPs8lKFtdG8WGdDUy7Q9lRIg1mQln88Zwv6TcQK7
-         G3Kg==
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=07P3xVxDXSfrA5Nn5cM4sfzldPSmJJiDYOepp1SZC6E=;
+        b=A+sCWAgUmO2kfQ4HnyJFRPCf/RlD5e/KvcaUOfiaQDEqz+pGF6mlNdRBAOKJPYkM78
+         xXXJC6xUMocYwwJlI8beButZkTbk7mXhHGEqK45eMP/eK8fLU/3UF5vGb28vrtQVv9bV
+         a+DzeB480exVms+s8e+xiv4g0qM4A+DC0Ak9BfdtXleKQIKir5GbvEJVAs59oWXgGXZV
+         /ntHllY2PnXixBhkEfSwJJYhxpo4ItJ0rgih0b7H/tXwXzZ5kgsBgeezT89wEVJ605K9
+         A26iMmyYYVDIUYAMs3qpjIghaWjLcTsd9BZ6+OnpWUNXkXNo68/mGE21ZZhpCIdflnst
+         YnRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8nes1oSOLfK+ntfaQB+T+bjU3oDqawffQKlo+JIhefg=;
-        b=76ZendtICNMqgZ658DNuS52QSLzM1TErCOXRl/S7Zfy0mRzNiJRpG3p3iDuGQmEnZk
-         ap3kIXLbe5X78zZwvalSg+ugWzhdH4CRvnevcGJXi6Tiqw3xXEN/fEcEAhnrOZIMXV5w
-         1YDDR79/mzIWzPzKE1t++JfTqIfouK2TLAE0Z4aQTg/pNnZvOd9h80GJyAEWrBQ8NJEb
-         iKo+kxG+r1eRZQwKpw4QPnYZyxuKFVHbJyS0uWZr78kVBMCwQPgVkK0XG0n697V3lJsH
-         j2BNmFv2aB0nVoPnXk8yJHcffzxtqZVB+VBOvt0cxH3bef22QbqWGWi8YQjBQIo5P85M
-         nuzg==
-X-Gm-Message-State: AFqh2ko5tu2R+4lh21WQ2HeQ7s8VYU5RTOf2ehe/C8WIeaoYSdathitD
-        tvmjuaaIPJA1KDnzhjfG1CLasSW05iE=
-X-Google-Smtp-Source: AMrXdXtjd5c9x2/9fF9ujpLyQdf3vSqH9imqn0hoz8uz521Ael2smVE0P4am7LOOdndbgWWBqM6fmQ==
-X-Received: by 2002:a05:6a20:d685:b0:ac:83e:a9dc with SMTP id it5-20020a056a20d68500b000ac083ea9dcmr65455451pzb.13.1672968674176;
-        Thu, 05 Jan 2023 17:31:14 -0800 (PST)
-Received: from EDP-LAB-JQIAN2.PD.CalAmpCorp.com ([69.110.165.186])
-        by smtp.gmail.com with ESMTPSA id z16-20020a170902d55000b00189db296776sm17421946plf.17.2023.01.05.17.31.13
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=07P3xVxDXSfrA5Nn5cM4sfzldPSmJJiDYOepp1SZC6E=;
+        b=8JambWyEBvOVIprRnKxc3pyQ02XdEaUAkNcHP6kpJFcrJsQ7OadVDq2ic3eMA/jiSn
+         MC+B+gNuw54sbO6ihzNw5flYVtm/szlPvHBe2i0w9cUfM7C7H57u4bcxoDIM7skhHhDF
+         MVVOgJ8r1+2ABX2gLlgSbTrpRzXBwut8wZa7VCaPG5fR9BSxuHX6GSvMiFoIdTHM3ubP
+         iRZDTWeT2MnqH8M5DLAqUiY+DsHZREfthgpCzQBxW+CzgJE5gNy30y8tGHUksO5AAUAj
+         ktcwqGQoH1AkqOT94i5/G6JycK3hGIeprX3mG4xre3YrhflrDSY0m5DYpCo3a95a1Lmp
+         GLRQ==
+X-Gm-Message-State: AFqh2krMQM7JGS4wbPt3eZkiWRSbPCLIOOaGWK6FuozuCHF0fLKGCuCk
+        0zZ3A+SmAoKKKY6WeeNu2+Z64wiNPVB7yw==
+X-Google-Smtp-Source: AMrXdXuGHjvw2tjSMoSGk+CXXIvUpEZCn95/7cE0ov6AwdUMwWg2Z3hq7jIfoOtpuuLEnEAwVX0g0A==
+X-Received: by 2002:a05:622a:4d0f:b0:3a8:661:251 with SMTP id fd15-20020a05622a4d0f00b003a806610251mr80841416qtb.64.1672970760950;
+        Thu, 05 Jan 2023 18:06:00 -0800 (PST)
+Received: from [172.17.0.2] ([104.45.200.34])
+        by smtp.gmail.com with ESMTPSA id d18-20020ac847d2000000b0039cc82a319asm22185975qtr.76.2023.01.05.18.06.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jan 2023 17:31:13 -0800 (PST)
-From:   Jing Qian <jingq77@gmail.com>
-X-Google-Original-From: Jing Qian <jqian@calamp.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Jing Qian <jqian@calamp.com>
-Subject: [PATCH BlueZ 1/1] hcidump:fix array boundary issue le_meta_ev_dump()
-Date:   Thu,  5 Jan 2023 19:31:01 -0600
-Message-Id: <20230106013101.35016-2-jqian@calamp.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230106013101.35016-1-jqian@calamp.com>
-References: <20230106013101.35016-1-jqian@calamp.com>
+        Thu, 05 Jan 2023 18:06:00 -0800 (PST)
+Message-ID: <63b78208.c80a0220.db170.fb63@mx.google.com>
+Date:   Thu, 05 Jan 2023 18:06:00 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============2800935796902112951=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [BlueZ] shared/gatt-client: Fix smatch warnings
+In-Reply-To: <20230106003729.2526075-1-luiz.dentz@gmail.com>
+References: <20230106003729.2526075-1-luiz.dentz@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,30 +69,62 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-le_meta_ev_dump() print array content without checking index boundary.
-hcidump would crash if the event index is out-of-boundary
+--===============2800935796902112951==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=709359
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      0.77 seconds
+GitLint                       PASS      0.34 seconds
+BuildEll                      PASS      27.44 seconds
+BluezMake                     PASS      875.24 seconds
+MakeCheck                     PASS      11.99 seconds
+MakeDistcheck                 PASS      148.79 seconds
+CheckValgrind                 PASS      241.83 seconds
+CheckSmatch                   PASS      322.74 seconds
+bluezmakeextell               PASS      96.36 seconds
+IncrementalBuild              PASS      708.63 seconds
+ScanBuild                     PASS      980.23 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[BlueZ] shared/gatt-client: Fix smatch warnings
+WARNING:EMAIL_SUBJECT: A patch subject line should describe the change not the tool that found it
+#69: 
+Subject: [PATCH BlueZ] shared/gatt-client: Fix smatch warnings
+
+/github/workspace/src/src/13090718.patch total: 0 errors, 1 warnings, 64 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13090718.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+
+
 ---
- tools/parser/hci.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/parser/hci.c b/tools/parser/hci.c
-index db7d32c011b9..b434b879a292 100644
---- a/tools/parser/hci.c
-+++ b/tools/parser/hci.c
-@@ -3657,7 +3657,12 @@ static inline void le_meta_ev_dump(int level, struct frame *frm)
- 	frm->len -= EVT_LE_META_EVENT_SIZE;
- 
- 	p_indent(level, frm);
--	printf("%s\n", ev_le_meta_str[subevent]);
-+
-+	if (subevent >= 0 && subevent <= LE_EV_NUM) {
-+		printf("%s\n", ev_le_meta_str[subevent]);
-+	} else {
-+		printf("Undefined--> %d\n", subevent);
-+	}
- 
- 	switch (mevt->subevent) {
- 	case EVT_LE_CONN_COMPLETE:
--- 
-2.25.1
 
+--===============2800935796902112951==--
