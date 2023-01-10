@@ -2,202 +2,99 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F23C6640AA
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Jan 2023 13:38:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD5BA66411B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Jan 2023 14:02:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238112AbjAJMiY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 Jan 2023 07:38:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49314 "EHLO
+        id S238165AbjAJNCt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 Jan 2023 08:02:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238438AbjAJMha (ORCPT
+        with ESMTP id S233452AbjAJNCq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Jan 2023 07:37:30 -0500
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9909BDF99
-        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Jan 2023 04:37:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1673354241; x=1704890241;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=a/wrkIMUgdu1vzckIbvpelpLNhr+3HX5TPQLK4CscAg=;
-  b=b3JCTN2Hr+vlUKwfJAeuyJEyT5Lm5sIFy08CxMOG05u2EFdaRNCvuUT1
-   u8niJNil9V5D5n3q5yn3J8YLXkEXtgLNPXhJfFUenFI9SU+vlg0nMx3R3
-   0mO9H+YgGCIxhpOWd4ZAumMwxhnN8Tu2aBkGRua/cFnINp2viXTTO6oDj
-   nkuh10wrfJtaGGBFVRoYsCq1wxtcm7/6TbSCvfovU+LmOWGSyANa5rLoA
-   w6rp9SFQZpGkkWtU3+8ONJ/Otei5WgAZ6fvRD1rzVOQYm2JVNhKIoBTdZ
-   DN5pbCe52rZYiUh2gDGAxFKHNEPjKmp307Mir+HZb3G5q17JR3ZJZLuqv
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10585"; a="321834252"
-X-IronPort-AV: E=Sophos;i="5.96,315,1665471600"; 
-   d="scan'208";a="321834252"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2023 04:37:21 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10585"; a="745760756"
-X-IronPort-AV: E=Sophos;i="5.96,315,1665471600"; 
-   d="scan'208";a="745760756"
-Received: from lkp-server02.sh.intel.com (HELO f1920e93ebb5) ([10.239.97.151])
-  by FMSMGA003.fm.intel.com with ESMTP; 10 Jan 2023 04:37:10 -0800
-Received: from kbuild by f1920e93ebb5 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pFDsL-0007y1-0z;
-        Tue, 10 Jan 2023 12:37:09 +0000
-Date:   Tue, 10 Jan 2023 20:37:06 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- e8b5fd71713bb440fbe0ddac0c1e48c6326fddd4
-Message-ID: <63bd5bf2.uLvunQwwnu0zd7rt%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        Tue, 10 Jan 2023 08:02:46 -0500
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53DB15370C
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Jan 2023 05:02:45 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-4bf16baa865so152059907b3.13
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Jan 2023 05:02:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3FoRX2f/YZd1ew3w9a7uXRMrccel34cHi9ReaKIRWJg=;
+        b=ln6PR+yGe6pNxxE0brMnBfQ2YDyThfWDqmxR3la9cJiCQ2auc1WITSvS68FuwNEPw6
+         fAzKCb3YJ5lNfQoV/JBAIJyxenUcUb/JuVwRJst1tj8SuPH4k4SpKgpKz11cyu+8Or2A
+         +Q+rc0wcp7NKZyiBmcTiMpanZk7rXOO0XaUOEoLOrJPXlI8Qs5ERfz27sFRm55XsARJ4
+         ncU932PvH6sfvw4Y8BQwzbWdpQFUUb5DhUmtT6ZQw03lxynm1gzkWmjDAquYYVU/lW3X
+         tZvcsVRazBj9EYchgs6DjCP+a7E0CE/stzAm7yhwlZMhhRDylX2wLdwWGNl4eL/HaNQk
+         V4tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3FoRX2f/YZd1ew3w9a7uXRMrccel34cHi9ReaKIRWJg=;
+        b=Y8ssbjY3O/3e4VNTzEoAb1LcgmcPhwwpkVTPBnf+pmuSN2d8HukgY59UHRLChLGzj6
+         D/XYFvChRjOKIA5J7DCOJRxq/ZAuN9GYidc80DY823JY1QcoAFwvhWE3LWRLxs0AdILa
+         hBl03qQF+LmDiv5E+QaRfb9rjZKOALJm6xvU8l0wF1zMj+R901GJIRR0/LGixnNuDTar
+         xf8fjmCibUaYbJtVLfZzsdsegDJqPSzWg99bYwcqSOXzk1ArqfpPw1+HCRS+HIMeeoPL
+         g7gi63y8/B0PNDAoN6fUdycSmdBVzcjZr5iA+fqbMmx0a65jyHdAmxSixsZ8r4KfMx/R
+         28XA==
+X-Gm-Message-State: AFqh2kpM4SUc5cw9xTzZ+4vn9kuiMq8zh9II5s0CPCfi/9MuRS/+S+qT
+        bgvuAFNrIFoaZHyNBgJzIH1FhYFPe0NXs7rxbPI=
+X-Google-Smtp-Source: AMrXdXs6oxzpnoxsBeqKHNrGCLp1jEU5Yz31Pw2+PB2uJ/Q1JQKH4Sm8jO7/fRA06U7IyUVDP7iyYc1t75KZW52bt+w=
+X-Received: by 2002:a81:6f57:0:b0:475:9f2c:899 with SMTP id
+ k84-20020a816f57000000b004759f2c0899mr842408ywc.290.1673355764537; Tue, 10
+ Jan 2023 05:02:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:7000:c810:b0:3de:4254:e85e with HTTP; Tue, 10 Jan 2023
+ 05:02:44 -0800 (PST)
+Reply-To: ab8111977@gmail.com
+From:   MS NADAGE LASSOU <ibrahimdanzabilyaminu@gmail.com>
+Date:   Tue, 10 Jan 2023 14:02:44 +0100
+Message-ID: <CAKG2jqhDsquG8dFNZummg=yxtueZeGvMR14sTq-FPgfOap8MTQ@mail.gmail.com>
+Subject: REPLY FOR DETAILS.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        SUBJ_ALL_CAPS,UNDISC_FREEM autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:1136 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [ab8111977[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [ibrahimdanzabilyaminu[at]gmail.com]
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  2.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: e8b5fd71713bb440fbe0ddac0c1e48c6326fddd4  Bluetooth: hci_sync: fix memory leak in hci_update_adv_data()
+Greetings.
 
-elapsed time: 720m
-
-configs tested: 120
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-x86_64                            allnoconfig
-um                           x86_64_defconfig
-powerpc                           allnoconfig
-um                             i386_defconfig
-arc                                 defconfig
-s390                             allmodconfig
-alpha                               defconfig
-s390                                defconfig
-s390                             allyesconfig
-sh                               allmodconfig
-mips                             allyesconfig
-powerpc                          allmodconfig
-x86_64                           rhel-8.3-bpf
-x86_64                           rhel-8.3-syz
-x86_64                         rhel-8.3-kunit
-x86_64                           rhel-8.3-kvm
-i386                 randconfig-a014-20230109
-arm                                 defconfig
-x86_64                              defconfig
-i386                 randconfig-a011-20230109
-ia64                             allmodconfig
-i386                 randconfig-a016-20230109
-i386                                defconfig
-m68k                             allyesconfig
-x86_64                               rhel-8.3
-i386                 randconfig-a015-20230109
-arm                              allyesconfig
-i386                 randconfig-a013-20230109
-m68k                             allmodconfig
-x86_64               randconfig-a011-20230109
-x86_64                           allyesconfig
-arc                              allyesconfig
-x86_64               randconfig-a016-20230109
-i386                 randconfig-a012-20230109
-x86_64                        randconfig-a004
-arm64                            allyesconfig
-x86_64               randconfig-a013-20230109
-x86_64                    rhel-8.3-kselftests
-alpha                            allyesconfig
-x86_64               randconfig-a015-20230109
-x86_64               randconfig-a012-20230109
-x86_64                          rhel-8.3-func
-x86_64                        randconfig-a002
-x86_64               randconfig-a014-20230109
-x86_64                        randconfig-a006
-riscv                             allnoconfig
-i386                   debian-10.3-kselftests
-i386                              debian-10.3
-riscv                    nommu_k210_defconfig
-riscv                    nommu_virt_defconfig
-riscv                          rv32_defconfig
-i386                             allyesconfig
-mips                           jazz_defconfig
-sparc64                          alldefconfig
-arc                         haps_hs_defconfig
-arc                  randconfig-r043-20230108
-arm                  randconfig-r046-20230108
-arm                             pxa_defconfig
-powerpc                         ps3_defconfig
-sh                          polaris_defconfig
-powerpc                 canyonlands_defconfig
-m68k                           sun3_defconfig
-powerpc                      ppc6xx_defconfig
-x86_64                           alldefconfig
-powerpc                 mpc834x_mds_defconfig
-m68k                        stmark2_defconfig
-arm                             rpc_defconfig
-arm                           corgi_defconfig
-xtensa                    xip_kc705_defconfig
-powerpc                     asp8347_defconfig
-parisc                generic-32bit_defconfig
-sh                     sh7710voipgw_defconfig
-mips                            gpr_defconfig
-i386                          randconfig-c001
-m68k                        m5407c3_defconfig
-xtensa                           allyesconfig
-ia64                         bigsur_defconfig
-m68k                        mvme147_defconfig
-sh                           se7712_defconfig
-riscv                randconfig-r042-20230110
-s390                 randconfig-r044-20230109
-arc                  randconfig-r043-20230109
-s390                 randconfig-r044-20230110
-riscv                randconfig-r042-20230109
-arc                  randconfig-r043-20230110
-loongarch                           defconfig
-loongarch                         allnoconfig
-loongarch                        allmodconfig
-powerpc                    amigaone_defconfig
-arm                            hisi_defconfig
-arm                            pleb_defconfig
-sh                      rts7751r2d1_defconfig
-arc                           tb10x_defconfig
-arm                       multi_v4t_defconfig
-arc                    vdk_hs38_smp_defconfig
-arm                        trizeps4_defconfig
-arm                         s3c6400_defconfig
-sh                               alldefconfig
-
-clang tested configs:
-x86_64                          rhel-8.3-rust
-x86_64                        randconfig-a001
-i386                 randconfig-a001-20230109
-x86_64                        randconfig-a003
-i386                 randconfig-a004-20230109
-x86_64                        randconfig-a005
-i386                 randconfig-a002-20230109
-i386                 randconfig-a003-20230109
-i386                 randconfig-a006-20230109
-i386                 randconfig-a005-20230109
-x86_64               randconfig-a001-20230109
-x86_64               randconfig-a002-20230109
-x86_64               randconfig-a004-20230109
-x86_64               randconfig-a003-20230109
-x86_64               randconfig-a006-20230109
-x86_64               randconfig-a005-20230109
-x86_64                        randconfig-k001
-arm                        multi_v5_defconfig
-arm                          ep93xx_defconfig
-powerpc                     ksi8560_defconfig
-arm                          pcm027_defconfig
-powerpc                       ebony_defconfig
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+I am Ms Nadage lassou,I have a business for our benefit.
+Thanks, i will send you the details once i hear from you.
+Regards.
+Ms Nadage Lassou
