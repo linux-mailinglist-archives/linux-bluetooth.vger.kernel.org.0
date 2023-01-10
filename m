@@ -2,138 +2,121 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 399AF664543
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Jan 2023 16:49:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 262AE664645
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Jan 2023 17:39:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234632AbjAJPth (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 10 Jan 2023 10:49:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51000 "EHLO
+        id S239010AbjAJQjI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 10 Jan 2023 11:39:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234695AbjAJPt1 (ORCPT
+        with ESMTP id S238986AbjAJQjD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 10 Jan 2023 10:49:27 -0500
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7A4944C5B
-        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Jan 2023 07:49:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1673365765; x=1704901765;
-  h=from:to:cc:subject:date:message-id;
-  bh=klDJ3cXO3vOmIiwnOoIGpsEH2vvVWuW494w103h4vC4=;
-  b=GF6YoIxA7ovqH0Jw3leInXSX1VYmvkiEkCoG99v7wMZA0rJwliu2KTry
-   XoZb0AcSVepbsNmX/Rse8sE2232h9ibpVIWSWqCUcNtBO5Q0LOEKi0/g4
-   R3mJ7Yc/sa/x3MhHskd8P2wTb58+/qxDGmpiDCVDdUuOiW8WD9TIgHMiS
-   Jbz5PCaFKA3N0lL6xZgaX0/CSPrHJXZGHnZnSaCb562qZzp4/jORaV10k
-   5HpQ2Cc5Z0L4Xbp8xDtfGBrTHyGX9p/NbILni2uMeVy/3wNG77WVTaTdl
-   pxPLcR4f1YYRpLCD3z928nIjAO8sl4ikrRuQ0LXBSOIBsOE1vmO2nbBUy
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10586"; a="310977121"
-X-IronPort-AV: E=Sophos;i="5.96,315,1665471600"; 
-   d="scan'208";a="310977121"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2023 07:49:16 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10586"; a="745812943"
-X-IronPort-AV: E=Sophos;i="5.96,315,1665471600"; 
-   d="scan'208";a="745812943"
-Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
-  by FMSMGA003.fm.intel.com with ESMTP; 10 Jan 2023 07:49:13 -0800
-From:   Kiran K <kiran.k@intel.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     ravishankar.srivatsa@intel.com, Kiran K <kiran.k@intel.com>,
-        Chethan Tumkur Narayan <chethan.tumkur.narayan@intel.com>
-Subject: [PATCH v1] btintel: Add recovery when secure verification of firmware fails
-Date:   Tue, 10 Jan 2023 21:29:05 +0530
-Message-Id: <20230110155905.18203-1-kiran.k@intel.com>
-X-Mailer: git-send-email 2.17.1
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 10 Jan 2023 11:39:03 -0500
+Received: from mail-vk1-xa36.google.com (mail-vk1-xa36.google.com [IPv6:2607:f8b0:4864:20::a36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F43D3FCAD
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Jan 2023 08:39:02 -0800 (PST)
+Received: by mail-vk1-xa36.google.com with SMTP id b81so5875874vkf.1
+        for <linux-bluetooth@vger.kernel.org>; Tue, 10 Jan 2023 08:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Jt9N/C7klIe867ZBsPCOwbXqA2BPaacAn4Hv6YmaJc=;
+        b=CPi7F5nheKNVqos7ar7+oIG76KWKEO001ibgR23sZLOjeK7lfyX1sYn+1IpOrCth0v
+         wYsgvLHoPt6myMqgxb7lZwcTw9+2lrmcRnEBoIVFQn8X/3ZVq/CvA/aYvGb4aWWZOJR3
+         n6b54Zw8HpN2izbM8HN0hfXQ6WNNDQ1LU9cPKvYyZtvRj5ihivR2adf7EL7y81PlDM3D
+         tECE+x1A1kDdCgwgQAYuSviFIQDBYoFXk+zMo9NUjaniYwBVao7HGe4rJ/GFXoeemxaC
+         wluDR0FSbwMrtynZov1y1zOTdULzA+Q1wr/veIFwb50XqebI/Efy0rOsedG2w0BnG7LL
+         wp7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1Jt9N/C7klIe867ZBsPCOwbXqA2BPaacAn4Hv6YmaJc=;
+        b=ixeylCixcq4O4X0fZ0isoOxjugOZVCfVzfjr5yVHZAmLYKTGR3qOgbscWxjED8REYF
+         hgKGXu38jRKPt26iJZ4bBNq0B05UbEGDoEZhwOOV7DlCgYqTJcQU5iGKNVcumbTbJqNv
+         x2vhzhA/j3I6SWjDBGTKKHSBUQeIjiyRaQYELXVCAxTp5FusnCngRAyUX/49AtL8UZz3
+         mhvAmLTAHPaL1SkkRXP5de9U0TjhViuQACbqF7Pdk79EX9PxulPy9V8o7tAu5BnoagRO
+         olmIFs2jT9mdD+WIvjx3RIB+gkVcFnyKz1w5V0A8rPom9uNHcSBu7RxW/TsBO7m1nYVG
+         1lYA==
+X-Gm-Message-State: AFqh2krFDyP3pdWEYuvcNTMywnMth1v5Qpuc8Y3tz+xAfJF2cJBFAZtR
+        TvYuDjR5G0cSH8nE7M0B8vVuw6SW8u9JGQ==
+X-Google-Smtp-Source: AMrXdXtads5aj3dLgKlxnLuYfGFno+tj3yemVkhiCJFNMPxvdJlKJZ2886Bwol6HFtbBIEBANVEMQQ==
+X-Received: by 2002:a1f:f808:0:b0:3da:de07:66a1 with SMTP id w8-20020a1ff808000000b003dade0766a1mr2439518vkh.14.1673368741225;
+        Tue, 10 Jan 2023 08:39:01 -0800 (PST)
+Received: from [172.17.0.2] ([172.176.188.83])
+        by smtp.gmail.com with ESMTPSA id c15-20020ae9ed0f000000b006fafc111b12sm7360464qkg.83.2023.01.10.08.39.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jan 2023 08:39:01 -0800 (PST)
+Message-ID: <63bd94a5.e90a0220.f4937.7273@mx.google.com>
+Date:   Tue, 10 Jan 2023 08:39:01 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============7324271556850117736=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, kiran.k@intel.com
+Subject: RE: [v1] btintel: Add recovery when secure verification of firmware fails
+In-Reply-To: <20230110155905.18203-1-kiran.k@intel.com>
+References: <20230110155905.18203-1-kiran.k@intel.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On warm reboot stress test case, firmware download failure
-has been observed with failure in secure verification of firmware
-and BT becomes completely inaccessible. This can happen due to a race
-condition in TOP registers when Wifi driver is also getting loaded
-at the same time. This patch adds a work around to load the BT firmware
-again when secure verify failure is observed.
+--===============7324271556850117736==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Chethan Tumkur Narayan <chethan.tumkur.narayan@intel.com>
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=710575
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.90 seconds
+GitLint                       PASS      0.35 seconds
+SubjectPrefix                 FAIL      0.39 seconds
+BuildKernel                   PASS      32.29 seconds
+CheckAllWarning               PASS      35.00 seconds
+CheckSparse                   PASS      39.88 seconds
+CheckSmatch                   PASS      107.37 seconds
+BuildKernel32                 PASS      30.46 seconds
+TestRunnerSetup               PASS      441.80 seconds
+TestRunner_l2cap-tester       PASS      16.27 seconds
+TestRunner_iso-tester         PASS      17.18 seconds
+TestRunner_bnep-tester        PASS      5.80 seconds
+TestRunner_mgmt-tester        PASS      110.21 seconds
+TestRunner_rfcomm-tester      PASS      9.07 seconds
+TestRunner_sco-tester         PASS      8.33 seconds
+TestRunner_ioctl-tester       PASS      9.87 seconds
+TestRunner_mesh-tester        PASS      7.24 seconds
+TestRunner_smp-tester         PASS      8.26 seconds
+TestRunner_userchan-tester    PASS      6.08 seconds
+IncrementalBuild              PASS      28.91 seconds
+
+Details
+##############################
+Test: SubjectPrefix - FAIL
+Desc: Check subject contains "Bluetooth" prefix
+Output:
+"Bluetooth: " prefix is not specified in the subject
+
+
 ---
- drivers/bluetooth/btintel.c | 20 ++++++++++++++++----
- drivers/bluetooth/btintel.h |  1 +
- 2 files changed, 17 insertions(+), 4 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index d4e2cb9a4eb4..3f2976fb056a 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -1700,6 +1700,11 @@ static int btintel_download_wait(struct hci_dev *hdev, ktime_t calltime, int mse
- 		return -ETIMEDOUT;
- 	}
- 
-+	if (btintel_test_flag(hdev, INTEL_FIRMWARE_VERIFY_FAILED)) {
-+		bt_dev_err(hdev, "Firmware secure verification failed");
-+		return -EAGAIN;
-+	}
-+
- 	if (btintel_test_flag(hdev, INTEL_FIRMWARE_FAILED)) {
- 		bt_dev_err(hdev, "Firmware loading failed");
- 		return -ENOEXEC;
-@@ -1961,7 +1966,7 @@ static int btintel_download_fw(struct hci_dev *hdev,
- 	 * of this device.
- 	 */
- 	err = btintel_download_wait(hdev, calltime, 5000);
--	if (err == -ETIMEDOUT)
-+	if (err == -ETIMEDOUT || err == -EAGAIN)
- 		btintel_reset_to_bootloader(hdev);
- 
- done:
-@@ -2153,7 +2158,7 @@ static int btintel_prepare_fw_download_tlv(struct hci_dev *hdev,
- 	 * of this device.
- 	 */
- 	err = btintel_download_wait(hdev, calltime, 5000);
--	if (err == -ETIMEDOUT)
-+	if (err == -ETIMEDOUT || err == -EAGAIN)
- 		btintel_reset_to_bootloader(hdev);
- 
- done:
-@@ -2644,8 +2649,15 @@ void btintel_secure_send_result(struct hci_dev *hdev,
- 	if (len != sizeof(*evt))
- 		return;
- 
--	if (evt->result)
--		btintel_set_flag(hdev, INTEL_FIRMWARE_FAILED);
-+	if (evt->result) {
-+		bt_dev_err(hdev, "Intel Secure Send Results event result: %u status: %u",
-+			   evt->result, evt->status);
-+
-+		if (evt->result == 3)
-+			btintel_set_flag(hdev, INTEL_FIRMWARE_VERIFY_FAILED);
-+		else
-+			btintel_set_flag(hdev, INTEL_FIRMWARE_FAILED);
-+	}
- 
- 	if (btintel_test_and_clear_flag(hdev, INTEL_DOWNLOADING) &&
- 	    btintel_test_flag(hdev, INTEL_FIRMWARE_LOADED))
-diff --git a/drivers/bluetooth/btintel.h b/drivers/bluetooth/btintel.h
-index e0060e58573c..10e5be7e451a 100644
---- a/drivers/bluetooth/btintel.h
-+++ b/drivers/bluetooth/btintel.h
-@@ -147,6 +147,7 @@ enum {
- 	INTEL_BOOTLOADER,
- 	INTEL_DOWNLOADING,
- 	INTEL_FIRMWARE_LOADED,
-+	INTEL_FIRMWARE_VERIFY_FAILED,
- 	INTEL_FIRMWARE_FAILED,
- 	INTEL_BOOTING,
- 	INTEL_BROKEN_INITIAL_NCMD,
--- 
-2.17.1
 
+--===============7324271556850117736==--
