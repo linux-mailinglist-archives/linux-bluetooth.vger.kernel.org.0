@@ -2,48 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE5C3666498
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jan 2023 21:10:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C022166649B
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jan 2023 21:11:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235870AbjAKUKV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 11 Jan 2023 15:10:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39280 "EHLO
+        id S232775AbjAKUK0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 11 Jan 2023 15:10:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232992AbjAKUKT (ORCPT
+        with ESMTP id S233540AbjAKUKT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 11 Jan 2023 15:10:19 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D97E271
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FD63276
         for <linux-bluetooth@vger.kernel.org>; Wed, 11 Jan 2023 12:10:18 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DC50961E4E
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DE41A61E4F
         for <linux-bluetooth@vger.kernel.org>; Wed, 11 Jan 2023 20:10:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3CE07C433F2;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 30B4BC433D2;
         Wed, 11 Jan 2023 20:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1673467817;
-        bh=HzIhQ0UtLb/l95mpge8Kh8jnOqSKpJMR2WeFL6Psjlc=;
+        bh=k37/30KPvcgEaBPuOhJlszLmViJfQFBC0Npt4kb4t4E=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=JOJj6t6LLkg/2Cs8jcC5RsWjI+aJWwtcbdnItNQaEOjU7osmWRkF59N7orRuD7XM+
-         JyZqMIZbtEphrFpwAaH5fcHsMlgilc3FaGW+si4ittKgUJ96Bgb/Levru4SzOgi2Q/
-         v1xk44bNK9PPicml+2o+a+un+o0+Sd4OEqbGmjorveUiHEo42/+83CC8iUQr53d5TL
-         cvY0HXlYfxe3f8oEJpN3O79h6lryiim2xJwCeg+fUT1uns6HL1wjZDzDLwgHhgYES0
-         12CsGFIV6Ct6TF5eb7LH+2KvWCvQsg0YoOzfLmNYpeDnZ5mmWiQyugQHjGYCD5Ir1K
-         nKeHk9qRMu76g==
+        b=ZWSY2+CYOkbBSd7lK1zWewBNiFCrk4TB/6RJWODxU03dprM1wmhcXbu1d5UGip8KH
+         gf1X2GsXObhRW9+Ga/APmS+4I38bx08eMMa9Sf6TIMOj+OQY0Aj5MRhWWas+Ei2J32
+         9Gzl5qoyhqB3PEl6Eh1aMCXw/40B/YqJxesC7ltT0VOEeGYBKOhkSV1XbEqQR1rejk
+         cv0xJgjJcy79M9M4sb7XxLKtsD24pijR/j1IZekVbUybm6Jl4prgtuROr64OvSScg4
+         G54KvrE2s7kXh8Oxrx6C51zuHd593ARPABvMrfrq301QOop7lKaScZIB0ETE/8FlUX
+         v16xInPHTXlyw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 07714E50D61;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0FBF8E4D026;
         Wed, 11 Jan 2023 20:10:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: ISO: Fix possible circular locking dependency
+Subject: Re: [PATCH] Bluetooth: hci_event: Fix Invalid wait context
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167346781702.28484.10748896819178620223.git-patchwork-notify@kernel.org>
+Message-Id: <167346781705.28484.3986664007099253159.git-patchwork-notify@kernel.org>
 Date:   Wed, 11 Jan 2023 20:10:17 +0000
-References: <20230111012254.3724082-2-luiz.dentz@gmail.com>
-In-Reply-To: <20230111012254.3724082-2-luiz.dentz@gmail.com>
+References: <20230111012254.3724082-1-luiz.dentz@gmail.com>
+In-Reply-To: <20230111012254.3724082-1-luiz.dentz@gmail.com>
 To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -60,20 +60,32 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 10 Jan 2023 17:22:54 -0800 you wrote:
+On Tue, 10 Jan 2023 17:22:53 -0800 you wrote:
 > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> This attempts to fix the following trace:
+> This fixes the following trace caused by attempting to lock
+> cmd_sync_work_lock while holding the rcu_read_lock:
 > 
-> iso-tester/52 is trying to acquire lock:
-> ffff8880024e0070 (&hdev->lock){+.+.}-{3:3}, at:
-> iso_sock_listen+0x29e/0x440
+> kworker/u3:2/212 is trying to lock:
+> ffff888002600910 (&hdev->cmd_sync_work_lock){+.+.}-{3:3}, at:
+> hci_cmd_sync_queue+0xad/0x140
+> other info that might help us debug this:
+> context-{4:4}
+> 4 locks held by kworker/u3:2/212:
+>  #0: ffff8880028c6530 ((wq_completion)hci0#2){+.+.}-{0:0}, at:
+>  process_one_work+0x4dc/0x9a0
+>  #1: ffff888001aafde0 ((work_completion)(&hdev->rx_work)){+.+.}-{0:0},
+>  at: process_one_work+0x4dc/0x9a0
+>  #2: ffff888002600070 (&hdev->lock){+.+.}-{3:3}, at:
+>  hci_cc_le_set_cig_params+0x64/0x4f0
+>  #3: ffffffffa5994b00 (rcu_read_lock){....}-{1:2}, at:
+>  hci_cc_le_set_cig_params+0x2f9/0x4f0
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: ISO: Fix possible circular locking dependency
-    https://git.kernel.org/bluetooth/bluetooth-next/c/489691e98909
+  - Bluetooth: hci_event: Fix Invalid wait context
+    https://git.kernel.org/bluetooth/bluetooth-next/c/fd18e1680ee2
 
 You are awesome, thank you!
 -- 
