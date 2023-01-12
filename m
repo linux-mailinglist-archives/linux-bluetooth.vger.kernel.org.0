@@ -2,95 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5083A66873D
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Jan 2023 23:49:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35D166687CB
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Jan 2023 00:21:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234765AbjALWtF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 12 Jan 2023 17:49:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56754 "EHLO
+        id S231911AbjALXVc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 12 Jan 2023 18:21:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232772AbjALWtD (ORCPT
+        with ESMTP id S231305AbjALXV3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 12 Jan 2023 17:49:03 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1741031
-        for <linux-bluetooth@vger.kernel.org>; Thu, 12 Jan 2023 14:49:01 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id d9so21653397pll.9
-        for <linux-bluetooth@vger.kernel.org>; Thu, 12 Jan 2023 14:49:01 -0800 (PST)
+        Thu, 12 Jan 2023 18:21:29 -0500
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63D6F11473
+        for <linux-bluetooth@vger.kernel.org>; Thu, 12 Jan 2023 15:21:26 -0800 (PST)
+Received: by mail-oi1-x22e.google.com with SMTP id c133so16530385oif.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 12 Jan 2023 15:21:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GZfksTuFjoscMgLpeLPqh4N8gEWgn0z0z3v4P62lrqg=;
-        b=OOtO5L5MXolhyRP8x0LwCnc0Zt/IaTZHakf9JxR0SpiN+raNaxR6ZRgDfTexKXYfhP
-         NWpHQdZVlRLY+lKBziKXeKvu/IPTgXErVWLJLjnSE8HilfmJ/mHGqRKDLUaEaEiovSdM
-         49FyiqBJZ/sWTzT9amSkx/BBvUxVoReJ7Dt5Q=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zOPkcjVsSmSdjRmNnY2abwBKS1g5ZjrtXRlyMy4P0uM=;
+        b=WQw//2Suz2+1K70eXdBEn9ZLpwPiCqA65K8+gUkThnVgZOYd6LdQxlnHcC6To/K4G3
+         YgsIXotLn6yrBybJruWsNW1rPO74gwNCpetM0rqVzFk5Y+d8jcBcA0hh6DS2jlquBn0k
+         5QlZEHp8c+nOp/ZKtAxAR8aso5lI2oPmE3igtzLsch0x0kOB5p8PeXEikNZ1L62LDA4W
+         5Ka11ZGIizHONQnf7SVvERm9lgWqowavLHZ/zNIjA8XDby3cts1XDVSDiCCeEAPaLJ5U
+         KiCdNfEYRbPBLnUwbOpM/8i1seeJ/8GVIqK/JbHRHOFkYnXtJRtHabx22MxgkZTkykeK
+         5D/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GZfksTuFjoscMgLpeLPqh4N8gEWgn0z0z3v4P62lrqg=;
-        b=ncsGPXxEAFcjJYe3M54YnzkuufF6c95ao8kbKgqpCMkmznIgxyV9/afr7U9QSzEIPL
-         vWGQg+9OTW10NY/w/EJstCr3xnfgjWLrhmtdWLaijf0MDtgKz1sTO5bXiypnCvvUCzHr
-         y8LOmpkQXnqZTIrsHaQLSja7Ga+0DjHdwONo/Nis7kz7av/UU570nA35mYHMpAzj7g01
-         IdJVoJNnzT1m+Zgnn3EWFd2zmd9pDGsOX5w5ZqcXa/v4mZeKsuqk2B/mIYWquBZfgcRQ
-         n/yqQE9qzQ2s6QZnLQhJi1jJYHKB4AwqlCFviM5O9fREDngXUsPXEHmWIc2EqbDKQ/b5
-         S8Kg==
-X-Gm-Message-State: AFqh2kom0HO+sfccnBRNzUd0b1/IH1HyFIbagFqnimaEIILN7ebLhyi/
-        pHGgaec7/HWzj9LF7TbyOFfyKQ==
-X-Google-Smtp-Source: AMrXdXsAJrytZC7RA8wdAMnUFaWk6Tfi5iZGRjX61dCPmw3ckLM4sS+INxWrMpZmIVGV0Ep1UePjUA==
-X-Received: by 2002:a17:902:ebca:b0:191:117a:414f with SMTP id p10-20020a170902ebca00b00191117a414fmr90680365plg.27.1673563741418;
-        Thu, 12 Jan 2023 14:49:01 -0800 (PST)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id d13-20020a170902f14d00b001873aa85e1fsm12613137plb.305.2023.01.12.14.49.00
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zOPkcjVsSmSdjRmNnY2abwBKS1g5ZjrtXRlyMy4P0uM=;
+        b=c5AlVafRhe2xaS0mEEEx49dOa/4adiC82Kntzz0JpLF53u8ONLS65mZ0r7VXk0BSHT
+         3+6kwoYdvBmb6un4lNMaXTVnunhnodWS3nOHaIewX/F6Wt2A0FNnuFXxfsDHw4Wy0d2s
+         GRRfd2t2u/RDf0oyukA0FhbQqXWvvSw0QWH/GDaNeVA3JwH2cmxX0uvMOsu9xtlI8txg
+         4+tZVE79D8LSO/GGMmLICpIVjUyud2WLLC4SNn8KWIG/ikf32IuLQlv/B8SVKewn64Eo
+         ZOHYNFmLk8APoQP3pkLiAA/6qPgucfPOpiSMIFVRqJBlpGFCbwKsGwgWW8xhF9L7QR+g
+         NBcw==
+X-Gm-Message-State: AFqh2kr3DearsUvU0iExDs8F59+ZcJJbK57RhSWFR79H04JiyuBGccIo
+        1NyqUWM+dCkOtrf5zMbT6F36nGe4WJc=
+X-Google-Smtp-Source: AMrXdXuvuCAUxf/FPrmdp3HPg5yRqdZkejNM6eCL33vQaNbNt+5/sRFw0fgk1SiO2XSa379W79KP2g==
+X-Received: by 2002:a05:6808:189d:b0:360:d0db:d3c2 with SMTP id bi29-20020a056808189d00b00360d0dbd3c2mr5079501oib.15.1673565685562;
+        Thu, 12 Jan 2023 15:21:25 -0800 (PST)
+Received: from EDP-LAB-JQIAN2.PD.CalAmpCorp.com ([69.110.165.186])
+        by smtp.gmail.com with ESMTPSA id k22-20020a056830169600b00684c7de281fsm1028827otr.6.2023.01.12.15.21.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 14:49:00 -0800 (PST)
-Date:   Thu, 12 Jan 2023 14:49:00 -0800
-From:   Kees Cook <keescook@chromium.org>
-To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH][next] Bluetooth: HCI: Replace zero-length arrays with
- flexible-array members
-Message-ID: <202301121448.59EDAA92FF@keescook>
-References: <Y7zBcCkkuIIS4ueP@work>
+        Thu, 12 Jan 2023 15:21:25 -0800 (PST)
+From:   Jing Qian <jingq77@gmail.com>
+X-Google-Original-From: Jing Qian <jqian@calamp.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Jing Qian <jqian@calamp.com>
+Subject: [PATCH BlueZ 0/1] *** hcidump: fix array boundary issue le_meta_ev_dump ***
+Date:   Thu, 12 Jan 2023 17:21:10 -0600
+Message-Id: <20230112232112.212021-1-jqian@calamp.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y7zBcCkkuIIS4ueP@work>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Mon, Jan 09, 2023 at 07:37:52PM -0600, Gustavo A. R. Silva wrote:
-> Zero-length arrays are deprecated[1] and we are moving towards
-> adopting C99 flexible-array members instead. So, replace zero-length
-> arrays in a couple of structures with flex-array members.
-> 
-> This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-> routines on memcpy() and help us make progress towards globally
-> enabling -fstrict-flex-arrays=3 [2].
-> 
-> Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays [1]
-> Link: https://gcc.gnu.org/pipermail/gcc-patches/2022-October/602902.html [2]
-> Link: https://github.com/KSPP/linux/issues/78
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+*** BLURB HERE ***
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Jing Qian (1):
+  hcidump:fix array boundary issue le_meta_ev_dump()
 
+ tools/parser/hci.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+
+base-commit: 4e2ae14ea31178ebbbcb0bc81dfe74bd56b4885f
+prerequisite-patch-id: 575020e7a5c285246441a91a4273d7eadaed45ac
+prerequisite-patch-id: 6d2faa9ddc42fb2e346c0708d7624f9e7ed67c98
+prerequisite-patch-id: 039c4d44eae6e358148da5a1d04a3ef9602f6a67
+prerequisite-patch-id: ec5b1c0ec7a429dbbbf0367adb61b191ee231b59
+prerequisite-patch-id: 6ea9dc8e56804c2755e9dc8cdc811690fb6c2c17
 -- 
-Kees Cook
+2.25.1
+
