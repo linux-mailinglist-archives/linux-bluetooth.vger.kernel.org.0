@@ -2,131 +2,131 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F24CD675A2E
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Jan 2023 17:40:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2806E675E4F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Jan 2023 20:47:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230307AbjATQkA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 20 Jan 2023 11:40:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49992 "EHLO
+        id S229501AbjATTrm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 20 Jan 2023 14:47:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230119AbjATQj6 (ORCPT
+        with ESMTP id S229509AbjATTrj (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 20 Jan 2023 11:39:58 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D6E340E9
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Jan 2023 08:39:56 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id z5so5354458wrt.6
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Jan 2023 08:39:56 -0800 (PST)
+        Fri, 20 Jan 2023 14:47:39 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 513BFBB96
+        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Jan 2023 11:47:38 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id o13so6603026pjg.2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Jan 2023 11:47:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pGYySup8p6S2QLbw0VKiZbUhVbWmQ+yt84mNVfAu/t0=;
-        b=UApWjzlXda6CKOsxYSAekXBHCiPYv6pVkiWHbI7PK6NXlDBf2dZaBDBu3pcMBX4Dvp
-         6pVJCoYaf28tSrmY+cQXTcE5NCML/7/aNdhPsd9f1zZGxwjZ8KtIc0zafg1CDt+MmL1t
-         ht+1uJ+qps8er08SQIPj8jCpqo9gs3doYVucXRacX8doWIlUzIZI6fYKJoTuT8NrG42t
-         MEw5W4JoUE4dXTKy6NU3b03SLyKAPuoCmZGqaBryF9fm76CMUuyzmAcMzhe2Gc9aBSvv
-         rVqHAHr0IWrNPbn8V79yED7CryU1Vk3Sen0HSlqKLB5YcHIC9rN/57uXiyLuvli0/Rbt
-         Yz+w==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ND2zUS33F0ZGk7pfPodjU4KpbhoItVhsoFmt7NsUrVY=;
+        b=JaRBeC2QwqLcpVD9N84bQXX/i2N1KcFRLZKxTn7fy27pB6VkTAGvLXTI/IcVDY/Z5Y
+         NtJnSWfLA5sw3Q1Kj4d7g2T9ypAktlFIqDY9ePiHt7DN3BIcFjomGQdInjc4Rk366VDK
+         wqMXoHGO4TC8e2jo8xxGiudbXaNgqueipZmaBHsN56vgfC40iuNZAAmb90wa8a+9Vwye
+         gd9Ilm8FPukz/HWWrFcMI58lKJnwKSPBaUXpnKsF1V4OuY7+10dcseL+VbE7Wvd2ZC7n
+         +MyoEPUY4iKH65Pd8pgR8H/fgwjt38Hgqx1Sw3urWnRlIjlYZFHGsdD+Rd69p8IC6jHN
+         5GWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pGYySup8p6S2QLbw0VKiZbUhVbWmQ+yt84mNVfAu/t0=;
-        b=Cow2+xyPLbVXSl38WVWUrtjj5vim1idg/9AQfPYpaz7ReDjyOzLSleBCcjr6+IvDgI
-         LyzsKmMHZNkh0EmRl+UMRXEH3BA9+JeCN1+pReEjjACcJeBMrRjhmFEQawOfXf9L8iPY
-         jaYvr7IvK3vwW8h8in8cN+BJKUyUfArhyfj6dj3r5AM+EvLrb4/HgOtdIOwDsg301h8B
-         9pZYP1avbHAiP/iXHfKO2i3q3ak1md4tSK66w+EAtYRBlAjoHGG7hPyCo4ehVeJLSprT
-         /ZTDTxfZzc0w58X4UmljDy8ZiFgA1itYigv4Uzg6pltGkxBkc7BY010OCXKmLhSnv1zw
-         NsZg==
-X-Gm-Message-State: AFqh2krvYt5CRZ18b6KRL/itdJnyDcQWgIFtTYbZIj/98y1G/YDPS0x3
-        PkW+jybed78/cbRVylwH481pRQ==
-X-Google-Smtp-Source: AMrXdXtZ9DWblZSaKSzMSMqI/0YMAXlKAx5MWIAT7Z2mmChtlRMs75VNjLqzEiOVvNoaJZ95nuiIUg==
-X-Received: by 2002:a05:6000:98d:b0:25f:8ead:96cc with SMTP id by13-20020a056000098d00b0025f8ead96ccmr14507795wrb.70.1674232794812;
-        Fri, 20 Jan 2023 08:39:54 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id z12-20020adfd0cc000000b002bdff778d87sm13385996wrh.34.2023.01.20.08.39.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jan 2023 08:39:54 -0800 (PST)
-Message-ID: <0bb76233-062c-a1c5-da88-4f04feccd5b2@linaro.org>
-Date:   Fri, 20 Jan 2023 17:39:52 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ND2zUS33F0ZGk7pfPodjU4KpbhoItVhsoFmt7NsUrVY=;
+        b=Jx/wu8cZ/E2v3uQvXnTxDyksVhdm2JuNMCOMvfRfzOktYrVgw97vE2Wd1Fcy5Nr041
+         /dCWFTvjRpuMFERfPzbV/0gdhqhLhgK9NCJYK3eJCDtlhD+RPcI9MvRAJBIEIe1HgLJs
+         vFqx2zWdF5ppZsfjuqspJuABrkwNIXZvJGw6EjBxChb0M8SM3NVrUs+kThCqkLg760Ml
+         oIW4Z0U+TB5HjqTSCOKNmyBvDSSDszpMpFw93x+Ek2vKoSU5yJ9LBX0/cVBtsqyM5msa
+         Exd/ulYRgZuxDJkEoFhQz5lrcVEVxQBq2VajAXt8P5ZFQKVVRkrzpSx/9Gfa2z2sx/Fo
+         dolA==
+X-Gm-Message-State: AFqh2kp4K7VxqeKUgaUP5mZ5Bb8Mzj6yKFxI3F612LkEnkVbvZEM3wQY
+        zA5vozyYWdbpy2E7pCJ8aG9kDhD6/TRp3Q==
+X-Google-Smtp-Source: AMrXdXtySh2Yc0ljzZhks3FdCsIxbLWXJkmhNEa8rNPg7y1QRWCX61iKLt076GWj4R+S1ARR9LCyAQ==
+X-Received: by 2002:a17:902:e80c:b0:192:6b23:e38b with SMTP id u12-20020a170902e80c00b001926b23e38bmr20263528plg.24.1674244057129;
+        Fri, 20 Jan 2023 11:47:37 -0800 (PST)
+Received: from fedora.. (174-21-24-126.tukw.qwest.net. [174.21.24.126])
+        by smtp.gmail.com with ESMTPSA id y13-20020a17090322cd00b001896af10ca7sm5149967plg.134.2023.01.20.11.47.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Jan 2023 11:47:36 -0800 (PST)
+From:   Brian Gix <brian.gix@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Brian Gix <brian.gix@gmail.com>
+Subject: [PATCH BlueZ v2 00/11] Mesh v1.1 additions
+Date:   Fri, 20 Jan 2023 11:47:20 -0800
+Message-Id: <20230120194731.90065-1-brian.gix@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH] dt-bindings: leds: Document Bluetooth and WLAN triggers
-To:     Geert Uytterhoeven <geert+renesas@glider.be>,
-        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Cc:     linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-wireless@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org
-References: <a85c256af01f64389a078c2b37c3b72a27d97536.1668005062.git.geert+renesas@glider.be>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <a85c256af01f64389a078c2b37c3b72a27d97536.1668005062.git.geert+renesas@glider.be>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On 09/11/2022 15:46, Geert Uytterhoeven wrote:
-> Add the missing trigger patterns for Bluetooth and WLAN activity, which
-> are already in active use.
-> 
-> While at it, move the mmc pattern comment where it belongs, and restore
-> alphabetical sort order.
-> 
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> ---
-> arch/arm64/boot/dts/renesas/r8a774a1-hihope-rzg2m-rev2.dtb: leds: bt_active_led:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
-> 	'hci0-power' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'ide-disk', 'timer', 'pattern']
-> 	'hci0-power' does not match '^mmc[0-9]+$'
-> 	From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
-> arch/arm64/boot/dts/renesas/r8a774a1-hihope-rzg2m-rev2.dtb: leds: wlan_active_led:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
-> 	'phy0tx' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'ide-disk', 'timer', 'pattern']
-> 	'phy0tx' does not match '^mmc[0-9]+$'
-> 	From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
+This patch-set includes implementations for Client/Server Remote
+Provisioning, and Client/Server Mesh Private Beacons
 
-This patch got lost... Rob, Lee or Pavel, can you pick it up?
+v2: Clean-up checkpatch warnings.
 
-It's with Rob's approval:
-https://lore.kernel.org/all/166861772609.231295.14812410099261417331.robh@kernel.org/
+Brian Gix (11):
+  doc/mesh: Add Remote Provisioning DBus APIs
+  mesh: Add Remote Provisioning
+  tools/mesh: Optimize for multiple RPR servers and NPPI
+  mesh: Rename parameter list per crypto usage
+  unit/mesh:  Add unit testing of Mesh Private Beaconing
+  mesh: Add storage of Mesh Private Beacon settings
+  mesh: Add Mesh Private Beacon server
+  mesh: Add Tx/Rx support of Mesh Private Beacons
+  mesh: Add internal Mesh Private Beacon model
+  tools/mesh: Add support for Mesh Private Beacons
+  mesh: Switch beaconing net key
 
-> ---
->  Documentation/devicetree/bindings/leds/common.yaml | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/leds/common.yaml b/Documentation/devicetree/bindings/leds/common.yaml
-> index f5c57a580078ea23..d34bb58c00371402 100644
-> --- a/Documentation/devicetree/bindings/leds/common.yaml
-> +++ b/Documentation/devicetree/bindings/leds/common.yaml
-> @@ -98,9 +98,13 @@ properties:
->              # LED alters the brightness for the specified duration with one software
->              # timer (requires "led-pattern" property)
->            - pattern
-> -        # LED is triggered by SD/MMC activity
-> -      - pattern: "^mmc[0-9]+$"
->        - pattern: "^cpu[0-9]*$"
-> +      - pattern: "^hci[0-9]+-power$"
-> +        # LED is triggered by Bluetooth activity
-> +      - pattern: "^mmc[0-9]+$"
-> +        # LED is triggered by SD/MMC activity
-> +      - pattern: "^phy[0-9]+tx$"
-> +        # LED is triggered by WLAN activity
->  
->    led-pattern:
->      description: |
+ Makefile.mesh           |   2 +
+ doc/mesh-api.txt        | 140 ++++++-
+ mesh/cfgmod-server.c    |   2 +-
+ mesh/crypto.c           |   4 +-
+ mesh/crypto.h           |   2 +-
+ mesh/keyring.c          |  29 +-
+ mesh/keyring.h          |   1 +
+ mesh/manager.c          | 533 ++++++++++++++++++-----
+ mesh/mesh-config-json.c | 428 +++++++++++++------
+ mesh/mesh-config.h      |  12 +-
+ mesh/model.c            |  37 +-
+ mesh/net-keys.c         | 506 +++++++++++++++++-----
+ mesh/net-keys.h         |  11 +-
+ mesh/net.c              | 188 ++++++---
+ mesh/net.h              |   6 +-
+ mesh/node.c             | 326 ++++++++++++---
+ mesh/node.h             |   5 +
+ mesh/pb-adv.c           |   4 +-
+ mesh/pb-adv.h           |   2 +-
+ mesh/prov-acceptor.c    |  87 ++--
+ mesh/prov-initiator.c   | 269 +++++++++++-
+ mesh/prov.h             |   4 +-
+ mesh/provision.h        |  23 +-
+ mesh/prv-beacon.h       |  36 ++
+ mesh/prvbeac-server.c   | 128 ++++++
+ mesh/remprv-server.c    | 908 ++++++++++++++++++++++++++++++++++++++++
+ mesh/remprv.h           |  78 ++++
+ tools/mesh-cfgclient.c  | 488 +++++++++++++++++----
+ tools/mesh/cfgcli.c     |  99 ++++-
+ tools/mesh/mesh-db.c    |  37 +-
+ tools/mesh/mesh-db.h    |   1 +
+ tools/mesh/remote.c     | 122 ++++++
+ tools/mesh/remote.h     |   9 +
+ tools/mesh/util.c       |   3 +
+ unit/test-mesh-crypto.c | 100 ++++-
+ 35 files changed, 3954 insertions(+), 676 deletions(-)
+ create mode 100644 mesh/prv-beacon.h
+ create mode 100644 mesh/prvbeac-server.c
+ create mode 100644 mesh/remprv-server.c
+ create mode 100644 mesh/remprv.h
 
-Best regards,
-Krzysztof
+-- 
+2.39.0
 
