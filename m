@@ -2,65 +2,67 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58309675E5A
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Jan 2023 20:47:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9888675FA6
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Jan 2023 22:28:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229941AbjATTrw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 20 Jan 2023 14:47:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41330 "EHLO
+        id S229883AbjATV2X (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 20 Jan 2023 16:28:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbjATTru (ORCPT
+        with ESMTP id S229464AbjATV2W (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 20 Jan 2023 14:47:50 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C29D95758
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Jan 2023 11:47:47 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id lp10so3156135pjb.4
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Jan 2023 11:47:47 -0800 (PST)
+        Fri, 20 Jan 2023 16:28:22 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F7C413525;
+        Fri, 20 Jan 2023 13:28:20 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id o7so6862567ljj.8;
+        Fri, 20 Jan 2023 13:28:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BLkq6q/okt0GkgsTj5xp39MSMsYIl9kNLVja+aNu/yM=;
-        b=HjzVcHgVHCvhnIOfg0iMwYWPTheo7Q8brcfJzzTzSbSji2ufAZZYuW6dGNBruO6Xav
-         GMDXfv2RiwzGWHhdaHjTGfs6zkKXtdWFb5kOya8mVoFb0c+ulRSHgzo04RldS2JP682/
-         BnEyv0zNPes0YNwlhzgEyIgWKHdgAuwRXfmWpGAbhIc6V8ITz3nyR3m0g8JUwuWtT647
-         dWC8L94kljgsjOatEQCIS+bL4gWPtHG5xm6Lb93X6Mda94RggY3EwRekJCsS9HvWpsXJ
-         /pVHjHMA5OFiBHFYi7y8awWfha51jKp1Ypy41/Rp+7xBhzxzgDQ6gj2usO5cev05Yu5l
-         21VA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=L6XTbctyjJuiaEzlBOG1ARAyGnfelnTEYPz3b788Q50=;
+        b=jkyTlGVIJzztnDFFrJNnHyxRnrtmCbyk3jOf5SUuvDV71gDGIHYAT9gKDThokvojYQ
+         NbniCrDCFhv0+oYTu2ExkvtsoHzY3FvjzsfvpVWkV0Admv4yiX/m8RYzbb5MHmpPXk9Z
+         fsBG6eTMZ/iAgD66ERU3UO1yx8igBJxhjmpMRlwz0epMLs5VUxBBoH9qu4Fywb90Zzeq
+         DoUse+wahv+6vaxle4kT9fXMgqrhp+M+qgqPR2rXIzROY+ZfvP5nJv96dlf3felIrN3d
+         /jbB19KXFQj4ErcSKw/MJ/aUG854BdpqBwV87GAXU6Rv/LxIxLTvjT/+Lopa2JOSA1c1
+         bM7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BLkq6q/okt0GkgsTj5xp39MSMsYIl9kNLVja+aNu/yM=;
-        b=s0YyS/FwyKGLOqREXrubfnCM7Bs5hqFW97ndmKUAdH6feOnc4oXfQkphBw5f8UdE3w
-         x8qbcI8O5JyYSCW8b1HTm5H9ZHBygbHN9kAZ1uD/czPa8g09VsCcrnlEoyNkPdRX4OPY
-         8RPS7znxC+TAXhRyWgKEu10UFPrFgmIeCPY+kKKwZUiciX0GlwmzYJuF8H1LBbEZs/IS
-         moyeZyQseX2wY8/CnShamIH4MC0z1Vqu5B/xah2Z+SwFa+cjpg7JLJuCFYERVigT9E7I
-         8YhfIizXBjql3isIE4HYHKxwVbTMXoQnoUZhTHFwSBYmyPvIFFBJJqXqoYDgBbUjNdPB
-         wMyA==
-X-Gm-Message-State: AFqh2kqPqMRfTmLagGQ/W5sCZF80vlkIi8hpIRgZroCVg8goUbi7r++9
-        82jqcZA+p/WRCXzyx2SSctINFbPrt915dg==
-X-Google-Smtp-Source: AMrXdXsjCFKjNblCIshfOcTSwJIbaPLWfT6m+V/tnKfWqkoD/pz2djRUihg9YGIpXA5RwezUgPRrsQ==
-X-Received: by 2002:a17:903:11d1:b0:195:e2cc:6f35 with SMTP id q17-20020a17090311d100b00195e2cc6f35mr4917815plh.59.1674244066650;
-        Fri, 20 Jan 2023 11:47:46 -0800 (PST)
-Received: from fedora.. (174-21-24-126.tukw.qwest.net. [174.21.24.126])
-        by smtp.gmail.com with ESMTPSA id y13-20020a17090322cd00b001896af10ca7sm5149967plg.134.2023.01.20.11.47.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 11:47:46 -0800 (PST)
-From:   Brian Gix <brian.gix@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Brian Gix <brian.gix@intel.com>
-Subject: [PATCH BlueZ v2 11/11] mesh: Switch beaconing net key
-Date:   Fri, 20 Jan 2023 11:47:31 -0800
-Message-Id: <20230120194731.90065-12-brian.gix@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230120194731.90065-1-brian.gix@gmail.com>
-References: <20230120194731.90065-1-brian.gix@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L6XTbctyjJuiaEzlBOG1ARAyGnfelnTEYPz3b788Q50=;
+        b=rLGrVfJXjeVrPd8z/OSrXqHxptMXMqvohP8V2VZWi7b4Y96Yk+WWleYAot/9d3ZrEC
+         OJUaUabA5KAben+KariJob934zbe94VX/o7Q/6UVnZZT5pC6yFuETppsFCXj+lWOpuwe
+         ODNgQYyxHa3O4nwlM3OPp5VkT9TyTuDK3nlGWDSgSHxdJsSzTm8vTurOVvZiHfXWVGvk
+         p780etH4+X/j7wh3Sev1tw9TU0X72xVFicibhqlbHNQ0pKeFMOpYoh/wMX0Lvdl4MBgZ
+         JwPqTdYJsRMBl47cgTVbKH3hjCAAZuP6YRSrU4KNqxbgQJ5VN0ZMsCCwfn2S8sryjbqB
+         /3rg==
+X-Gm-Message-State: AFqh2kp5JbcWQBG/DbaOekHw07t+eoayQJkq0gso8NChahidFhnNzYk3
+        pK5nT9kkAAWrfAYnG/ihd5g61hUTDNGyb1pCVa8=
+X-Google-Smtp-Source: AMrXdXvbYs0GsrXDeFVwrDWcr/ZKXKHi4GXDCr076tjbDWyLo6wIxf7LwFWlW3g3q3cFLgPGCLjJFF/gKeQxPEoEg8M=
+X-Received: by 2002:a2e:b94f:0:b0:28b:88b3:2ead with SMTP id
+ 15-20020a2eb94f000000b0028b88b32eadmr1389772ljs.293.1674250098612; Fri, 20
+ Jan 2023 13:28:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <a85c256af01f64389a078c2b37c3b72a27d97536.1668005062.git.geert+renesas@glider.be>
+ <0bb76233-062c-a1c5-da88-4f04feccd5b2@linaro.org>
+In-Reply-To: <0bb76233-062c-a1c5-da88-4f04feccd5b2@linaro.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 20 Jan 2023 13:28:07 -0800
+Message-ID: <CABBYNZJX+9SxW48qSSmyyMa7_bvqzwHafa0BNOz4Kz_Jc+gu9Q@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: leds: Document Bluetooth and WLAN triggers
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-wireless@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -71,49 +73,68 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Brian Gix <brian.gix@intel.com>
+Hi Krzysztof,
 
-When transitioning from Phase 1 to Phase 2 of a network key and we are
-beaconing, we need to halt the beaconing on the old key version, and
-begin beaconing on the new key version.
----
- mesh/net.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+On Fri, Jan 20, 2023 at 8:42 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 09/11/2022 15:46, Geert Uytterhoeven wrote:
+> > Add the missing trigger patterns for Bluetooth and WLAN activity, which
+> > are already in active use.
+> >
+> > While at it, move the mmc pattern comment where it belongs, and restore
+> > alphabetical sort order.
+> >
+> > Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> > ---
+> > arch/arm64/boot/dts/renesas/r8a774a1-hihope-rzg2m-rev2.dtb: leds: bt_active_led:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+> >       'hci0-power' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'ide-disk', 'timer', 'pattern']
+> >       'hci0-power' does not match '^mmc[0-9]+$'
+> >       From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
+> > arch/arm64/boot/dts/renesas/r8a774a1-hihope-rzg2m-rev2.dtb: leds: wlan_active_led:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+> >       'phy0tx' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'ide-disk', 'timer', 'pattern']
+> >       'phy0tx' does not match '^mmc[0-9]+$'
+> >       From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
+>
+> This patch got lost... Rob, Lee or Pavel, can you pick it up?
+>
+> It's with Rob's approval:
+> https://lore.kernel.org/all/166861772609.231295.14812410099261417331.robh@kernel.org/
 
-diff --git a/mesh/net.c b/mesh/net.c
-index 81f1e57ee..05ca48326 100644
---- a/mesh/net.c
-+++ b/mesh/net.c
-@@ -2625,6 +2625,13 @@ static int key_refresh_phase_two(struct mesh_net *net, uint16_t idx)
- 	if (subnet->kr_phase == KEY_REFRESH_PHASE_TWO)
- 		return MESH_STATUS_SUCCESS;
- 
-+	/* Stop beaconing on old key */
-+	if (net->snb_enable)
-+		net_key_beacon_disable(subnet->net_key_tx, false);
-+
-+	if (net->mpb_enable)
-+		net_key_beacon_disable(subnet->net_key_tx, true);
-+
- 	subnet->key_refresh = 1;
- 	subnet->net_key_tx = subnet->net_key_upd;
- 	/*
-@@ -2632,6 +2639,15 @@ static int key_refresh_phase_two(struct mesh_net *net, uint16_t idx)
- 	 * it hears beacons from all the nodes
- 	 */
- 	subnet->kr_phase = KEY_REFRESH_PHASE_TWO;
-+
-+	/* Start beaconing on new key */
-+	if (net->snb_enable)
-+		net_key_beacon_enable(subnet->net_key_tx, false, 0);
-+
-+	if (net->mpb_enable)
-+		net_key_beacon_enable(subnet->net_key_tx, true,
-+							net->mpb_period);
-+
- 	refresh_beacon(subnet, net);
- 	queue_friend_update(net);
- 
+If it is going to be applied via bluetooth-next make sure to resend it
+since last time our CI was not able to apply it thus why we didn't
+apply it in the first place.
+
+>
+> > ---
+> >  Documentation/devicetree/bindings/leds/common.yaml | 8 ++++++--
+> >  1 file changed, 6 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/leds/common.yaml b/Documentation/devicetree/bindings/leds/common.yaml
+> > index f5c57a580078ea23..d34bb58c00371402 100644
+> > --- a/Documentation/devicetree/bindings/leds/common.yaml
+> > +++ b/Documentation/devicetree/bindings/leds/common.yaml
+> > @@ -98,9 +98,13 @@ properties:
+> >              # LED alters the brightness for the specified duration with one software
+> >              # timer (requires "led-pattern" property)
+> >            - pattern
+> > -        # LED is triggered by SD/MMC activity
+> > -      - pattern: "^mmc[0-9]+$"
+> >        - pattern: "^cpu[0-9]*$"
+> > +      - pattern: "^hci[0-9]+-power$"
+> > +        # LED is triggered by Bluetooth activity
+> > +      - pattern: "^mmc[0-9]+$"
+> > +        # LED is triggered by SD/MMC activity
+> > +      - pattern: "^phy[0-9]+tx$"
+> > +        # LED is triggered by WLAN activity
+> >
+> >    led-pattern:
+> >      description: |
+>
+> Best regards,
+> Krzysztof
+>
+
+
 -- 
-2.39.0
-
+Luiz Augusto von Dentz
