@@ -2,268 +2,249 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92740674B62
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Jan 2023 05:53:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C51B674A7E
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Jan 2023 05:12:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229553AbjATExz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 19 Jan 2023 23:53:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47706 "EHLO
+        id S229495AbjATEM3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 19 Jan 2023 23:12:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229641AbjATExT (ORCPT
+        with ESMTP id S229525AbjATEM2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 19 Jan 2023 23:53:19 -0500
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB14C13C6;
-        Thu, 19 Jan 2023 20:45:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674189906; x=1705725906;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=xUMGOOnrFjF855GJVu/wgBpVbF0KHei/pi+VlrqpaWA=;
-  b=gZUFmseojkWxLzwVG8gPq3XQDNHegJ+BIiWSa7L3pj4r1FJIS2nl5fsM
-   blX355gU+s5Cimh09WLf1AIe3/YaVRUtc/6Z9zJdLFaQcg4zPySPCtz6u
-   hHoB1OtyZe3bzp0GjVzRCKGgfWfenYCJCOuX5O1r5Fb4tSqnYUr0Z6pK4
-   eRuTrDPDNndMJ6YwRd5cwzVagrqpTYEP64xzw9NaKIdCyi68MZCJkoEBt
-   FLPT6S0KgG8UAXkxgdD0j3slcxenzpo3r2nll++vclZEih93Q/YnZ7Ecj
-   ETuzGIH8rYcSxl0l5rK4BbNFdU2GPGfe5VKgx4rn1nZQLNhbV7FwWzvux
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10595"; a="387728780"
-X-IronPort-AV: E=Sophos;i="5.97,229,1669104000"; 
-   d="scan'208";a="387728780"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2023 09:44:06 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10595"; a="834062414"
-X-IronPort-AV: E=Sophos;i="5.97,229,1669104000"; 
-   d="scan'208";a="834062414"
-Received: from lkp-server01.sh.intel.com (HELO 5646d64e7320) ([10.239.97.150])
-  by orsmga005.jf.intel.com with ESMTP; 19 Jan 2023 09:44:03 -0800
-Received: from kbuild by 5646d64e7320 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pIYxG-0001go-38;
-        Thu, 19 Jan 2023 17:44:02 +0000
-Date:   Fri, 20 Jan 2023 01:43:53 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     max.chou@realtek.com, marcel@holtmann.org
-Cc:     oe-kbuild-all@lists.linux.dev, johan.hedberg@gmail.com,
-        luiz.dentz@gmail.com, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alex_lu@realsil.com.cn,
-        hildawu@realtek.com, max.chou@realtek.com,
-        allen_chen@realsil.com.cn
-Subject: Re: [PATCH 1/1] Bluetooth: btrtl: Firmware format v2 support
-Message-ID: <202301200134.RGBBGiDD-lkp@intel.com>
-References: <20230119074714.156283-1-max.chou@realtek.com>
+        Thu, 19 Jan 2023 23:12:28 -0500
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B967E9EE13
+        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Jan 2023 20:12:26 -0800 (PST)
+Received: by mail-qt1-x82b.google.com with SMTP id fd15so3312228qtb.9
+        for <linux-bluetooth@vger.kernel.org>; Thu, 19 Jan 2023 20:12:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=V0mhW4Ax1KfIELdqY0XfBMaMuxja46f70Q4U/DW6hoo=;
+        b=Y4aApzRg1BdViP6UEcmjLPo2gcY1eMoZxLumFtQ1SULaWwR4XqJj1DfXFAfzP2ymX8
+         N0VsxU0zVnKI5hbc7kGL8Gsaw1oND0EKlK0sOJzaNObCVBc7OgNpYVF01Gh3cmC3hP/U
+         zXoo4wyRZ46d27NuwirnvQ1RBJJQlY1mu3/2FLxchET6bw49j4BF9xgIij26HEDJgKaS
+         5yG35Sxv2a6bxrsf415reH/hoVn/+vneDYBCEnxhAc0wgUgnGLQrNjXLPPoyURXz+ia0
+         YUHDVIyCvfYMz/uG6WuP8Qp6nMJhO7PftFucZHc4H8HovZpVw4wlKy+laWqTANN6s/39
+         +p2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V0mhW4Ax1KfIELdqY0XfBMaMuxja46f70Q4U/DW6hoo=;
+        b=wlDSGJ379gdYk918z2YNIw7uOWGRugut91BFd6deCXcvh6S1bNE2aArf+68h1uB1Ya
+         wACObZAUvfb8/xqMN6z95aLY2MplGZaHeNR+rkdokLAOK6lvhH4uHFzkGI156sBEPG6S
+         bFclA9wWj4ruSuR5Kxuk2KF/EANgY6zECDm3O1d7hQpAjvGdt9JEqkhls2DGExAHcVoj
+         Ll3Mh2vbSSCiltkguSHxMMZq6hI4HBBQ6VtF5fYwSYjaWLtp1+0hw4t3iaCi2nDUOWeI
+         z6bSx2/bIQ2usW6fETyG7CxA+aBsL2381gxmPdQ7bELI8ojZ90psm1xdQbx0QiT6Zx3i
+         f/2Q==
+X-Gm-Message-State: AFqh2kpW7Pn+OESp28lU2urT0zOPCXAYomuSdPQRTBgQbQSeukoGg9jc
+        YA2CP1sw+tWvKzkFitjhSwHP7WemMtwSug==
+X-Google-Smtp-Source: AMrXdXtsGUAkeaBbSepHkCBHWiapy8778bFlozaA2Nv6Y6Y81ZoHlaPQlLbPpKgmnn13CTkVD81WAA==
+X-Received: by 2002:a05:622a:6094:b0:3a5:fd39:ff90 with SMTP id hf20-20020a05622a609400b003a5fd39ff90mr54139532qtb.3.1674187945636;
+        Thu, 19 Jan 2023 20:12:25 -0800 (PST)
+Received: from [172.17.0.2] ([172.176.196.113])
+        by smtp.gmail.com with ESMTPSA id bz25-20020a05622a1e9900b003a591194221sm4703545qtb.7.2023.01.19.20.12.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Jan 2023 20:12:25 -0800 (PST)
+Message-ID: <63ca14a9.050a0220.c4a4e.2490@mx.google.com>
+Date:   Thu, 19 Jan 2023 20:12:25 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============1882843315939663940=="
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230119074714.156283-1-max.chou@realtek.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, brian.gix@gmail.com
+Subject: RE: Mesh v1.1 additions
+In-Reply-To: <20230119235755.46002-2-brian.gix@gmail.com>
+References: <20230119235755.46002-2-brian.gix@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+--===============1882843315939663940==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Thank you for the patch! Perhaps something to improve:
+This is automated email and please do not reply to this email!
 
-[auto build test WARNING on bluetooth/master]
-[also build test WARNING on bluetooth-next/master linus/master v6.2-rc4 next-20230119]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Dear submitter,
 
-url:    https://github.com/intel-lab-lkp/linux/commits/max-chou-realtek-com/Bluetooth-btrtl-Firmware-format-v2-support/20230119-155205
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth.git master
-patch link:    https://lore.kernel.org/r/20230119074714.156283-1-max.chou%40realtek.com
-patch subject: [PATCH 1/1] Bluetooth: btrtl: Firmware format v2 support
-config: csky-randconfig-s043-20230119 (https://download.01.org/0day-ci/archive/20230120/202301200134.RGBBGiDD-lkp@intel.com/config)
-compiler: csky-linux-gcc (GCC) 12.1.0
-reproduce:
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # apt-get install sparse
-        # sparse version: v0.6.4-39-gce1a6720-dirty
-        # https://github.com/intel-lab-lkp/linux/commit/ffdaef9bef66fbba642b544b0a1f35217dc17d6a
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review max-chou-realtek-com/Bluetooth-btrtl-Firmware-format-v2-support/20230119-155205
-        git checkout ffdaef9bef66fbba642b544b0a1f35217dc17d6a
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=csky olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=csky SHELL=/bin/bash drivers/bluetooth/
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=713938
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
+---Test result---
 
-sparse warnings: (new ones prefixed by >>)
->> drivers/bluetooth/btrtl.c:893:22: sparse: sparse: cast to restricted __le16
-   drivers/bluetooth/btrtl.c:899:27: sparse: sparse: cast to restricted __le16
-   drivers/bluetooth/btrtl.c: note: in included file:
-   drivers/bluetooth/btrtl.h:47:45: sparse: sparse: array of flexible structures
+Test Summary:
+CheckPatch                    FAIL      9.88 seconds
+GitLint                       FAIL      4.26 seconds
+BuildEll                      PASS      27.14 seconds
+BluezMake                     PASS      835.50 seconds
+MakeCheck                     PASS      11.77 seconds
+MakeDistcheck                 PASS      147.68 seconds
+CheckValgrind                 PASS      243.94 seconds
+CheckSmatch                   WARNING   326.37 seconds
+bluezmakeextell               PASS      97.49 seconds
+IncrementalBuild              PASS      8277.83 seconds
+ScanBuild                     WARNING   997.72 seconds
 
-vim +893 drivers/bluetooth/btrtl.c
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[BlueZ,02/12] mesh: Add Remote Provisioning
+WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
+#3305: FILE: mesh/remprv-server.c:238:
++		/* Fall Through */
 
-   865	
-   866	struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
-   867						   const char *postfix)
-   868	{
-   869		struct btrtl_device_info *btrtl_dev;
-   870		struct sk_buff *skb;
-   871		struct hci_rp_read_local_version *resp;
-   872		char cfg_name[40];
-   873		u16 hci_rev, lmp_subver;
-   874		u8 hci_ver;
-   875		u8 lmp_ver;
-   876		int ret;
-   877		u16 opcode;
-   878		u8 cmd[2];
-   879		u8 reg_val[2];
-   880	
-   881		btrtl_dev = kzalloc(sizeof(*btrtl_dev), GFP_KERNEL);
-   882		if (!btrtl_dev) {
-   883			ret = -ENOMEM;
-   884			goto err_alloc;
-   885		}
-   886	
-   887		INIT_LIST_HEAD(&btrtl_dev->patch_subsecs);
-   888	
-   889	check_version:
-   890		ret = btrtl_vendor_read_reg16(hdev, RTL_CHIP_SUBVER, reg_val);
-   891		if (ret < 0)
-   892			goto err_free;
- > 893		lmp_subver = le16_to_cpu(*((u16 *)reg_val));
-   894	
-   895		if (lmp_subver == RTL_ROM_LMP_8822B) {
-   896			ret = btrtl_vendor_read_reg16(hdev, RTL_CHIP_REV, reg_val);
-   897			if (ret < 0)
-   898				goto err_free;
-   899			hci_rev = le16_to_cpu(*((u16 *)reg_val));
-   900	
-   901			/* 8822E */
-   902			if (hci_rev == 0x000e) {
-   903				hci_ver = 0x0c;
-   904				lmp_ver = 0x0c;
-   905				btrtl_dev->ic_info = btrtl_match_ic(lmp_subver, hci_rev,
-   906								    hci_ver, hdev->bus);
-   907				goto next;
-   908			}
-   909		}
-   910	
-   911		skb = btrtl_read_local_version(hdev);
-   912		if (IS_ERR(skb)) {
-   913			ret = PTR_ERR(skb);
-   914			goto err_free;
-   915		}
-   916		resp = (struct hci_rp_read_local_version *)skb->data;
-   917	
-   918		hci_ver    = resp->hci_ver;
-   919		hci_rev    = le16_to_cpu(resp->hci_rev);
-   920		lmp_ver    = resp->lmp_ver;
-   921		lmp_subver = le16_to_cpu(resp->lmp_subver);
-   922	
-   923		kfree_skb(skb);
-   924	
-   925		btrtl_dev->ic_info = btrtl_match_ic(lmp_subver, hci_rev, hci_ver,
-   926						    hdev->bus);
-   927	
-   928	next:
-   929		rtl_dev_info(hdev, "examining hci_ver=%02x hci_rev=%04x lmp_ver=%02x lmp_subver=%04x",
-   930			     hci_ver, hci_rev,
-   931			     lmp_ver, lmp_subver);
-   932	
-   933		if (!btrtl_dev->ic_info && !btrtl_dev->drop_fw)
-   934			btrtl_dev->drop_fw = true;
-   935		else
-   936			btrtl_dev->drop_fw = false;
-   937	
-   938		if (btrtl_dev->drop_fw) {
-   939			opcode = hci_opcode_pack(0x3f, 0x66);
-   940			cmd[0] = opcode & 0xff;
-   941			cmd[1] = opcode >> 8;
-   942	
-   943			skb = bt_skb_alloc(sizeof(cmd), GFP_KERNEL);
-   944			if (!skb)
-   945				goto err_free;
-   946	
-   947			skb_put_data(skb, cmd, sizeof(cmd));
-   948			hci_skb_pkt_type(skb) = HCI_COMMAND_PKT;
-   949	
-   950			ret = hdev->send(hdev, skb);
-   951			if (ret < 0) {
-   952				bt_dev_err(hdev, "sending frame failed (%d)", ret);
-   953				kfree_skb(skb);
-   954				goto err_free;
-   955			}
-   956	
-   957			/* Ensure the above vendor command is sent to controller and
-   958			 * process has done.
-   959			 */
-   960			msleep(200);
-   961	
-   962			goto check_version;
-   963		}
-   964	
-   965		if (!btrtl_dev->ic_info) {
-   966			rtl_dev_info(hdev, "unknown IC info, lmp subver %04x, hci rev %04x, hci ver %04x",
-   967				    lmp_subver, hci_rev, hci_ver);
-   968			return btrtl_dev;
-   969		}
-   970	
-   971		if (btrtl_dev->ic_info->has_rom_version) {
-   972			ret = rtl_read_rom_version(hdev, &btrtl_dev->rom_version);
-   973			if (ret)
-   974				goto err_free;
-   975		}
-   976	
-   977		btrtl_dev->fw_len = rtl_load_file(hdev, btrtl_dev->ic_info->fw_name,
-   978						  &btrtl_dev->fw_data);
-   979		if (btrtl_dev->fw_len < 0) {
-   980			rtl_dev_err(hdev, "firmware file %s not found",
-   981				    btrtl_dev->ic_info->fw_name);
-   982			ret = btrtl_dev->fw_len;
-   983			goto err_free;
-   984		}
-   985	
-   986		if (btrtl_dev->ic_info->cfg_name) {
-   987			if (postfix) {
-   988				snprintf(cfg_name, sizeof(cfg_name), "%s-%s.bin",
-   989					 btrtl_dev->ic_info->cfg_name, postfix);
-   990			} else {
-   991				snprintf(cfg_name, sizeof(cfg_name), "%s.bin",
-   992					 btrtl_dev->ic_info->cfg_name);
-   993			}
-   994			btrtl_dev->cfg_len = rtl_load_file(hdev, cfg_name,
-   995							   &btrtl_dev->cfg_data);
-   996			if (btrtl_dev->ic_info->config_needed &&
-   997			    btrtl_dev->cfg_len <= 0) {
-   998				rtl_dev_err(hdev, "mandatory config file %s not found",
-   999					    btrtl_dev->ic_info->cfg_name);
-  1000				ret = btrtl_dev->cfg_len;
-  1001				goto err_free;
-  1002			}
-  1003		}
-  1004	
-  1005		/* The following chips supports the Microsoft vendor extension,
-  1006		 * therefore set the corresponding VsMsftOpCode.
-  1007		 */
-  1008		if (btrtl_dev->ic_info->has_msft_ext)
-  1009			hci_set_msft_opcode(hdev, 0xFCF0);
-  1010	
-  1011		return btrtl_dev;
-  1012	
-  1013	err_free:
-  1014		btrtl_free(btrtl_dev);
-  1015	err_alloc:
-  1016		return ERR_PTR(ret);
-  1017	}
-  1018	EXPORT_SYMBOL_GPL(btrtl_initialize);
-  1019	
+WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
+#3514: FILE: mesh/remprv-server.c:447:
++		/* Fall Through */
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
+#3518: FILE: mesh/remprv-server.c:451:
++		/* Fall Through */
+
+WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
+#3797: FILE: mesh/remprv-server.c:730:
++		/* Fall Through */
+
+/github/workspace/src/src/13108984.patch total: 0 errors, 4 warnings, 3740 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13108984.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+[BlueZ,07/12] mesh: Add Mesh Private Beacon server
+WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
+#228: FILE: mesh/prvbeac-server.c:74:
++		/* Fall Through */
+
+WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
+#240: FILE: mesh/prvbeac-server.c:86:
++		/* Fall Through */
+
+WARNING:PREFER_FALLTHROUGH: Prefer 'fallthrough;' over fallthrough comment
+#247: FILE: mesh/prvbeac-server.c:93:
++		/* Fall Through */
+
+/github/workspace/src/src/13108981.patch total: 0 errors, 3 warnings, 166 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13108981.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+[BlueZ,08/12] mesh: Add Tx/Rx support of Mesh Private Beacons
+ERROR:INITIALISED_STATIC: do not initialise statics to NULL
+#163: FILE: mesh/net-keys.c:70:
++static struct l_queue *beacons = NULL;
+
+WARNING:LONG_LINE: line length of 81 exceeds 80 columns
+#981: FILE: mesh/net.c:2834:
++							beacon_data->net_key_id);
+
+/github/workspace/src/src/13108983.patch total: 1 errors, 1 warnings, 1067 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13108983.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint
+Output:
+[BlueZ,01/12] doc/mesh: Add Remote Provisioning DBus APIs
+
+WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
+11: B3 Line contains hard tab characters (\t): "	* Refresh Device Keys"
+12: B3 Line contains hard tab characters (\t): "	* Reassign Node Addresses"
+13: B3 Line contains hard tab characters (\t): "	* Refresh Node Composition"
+##############################
+Test: CheckSmatch - WARNING
+Desc: Run smatch tool with source
+Output:
+mesh/manager.c:113:35: warning: non-ANSI function declaration of function 'free_pending_add_call'mesh/crypto.c:1023:30: warning: non-ANSI function declaration of function 'mesh_crypto_check_avail'unit/test-mesh-crypto.c: note: in included file:
+##############################
+Test: ScanBuild - WARNING
+Desc: Run Scan Build
+Output:
+mesh/remprv-server.c:735:12: warning: Assigned value is garbage or undefined
+                msg[n++] = status;
+                         ^ ~~~~~~
+1 warning generated.
+mesh/prov-initiator.c:123:7: warning: Access to field 'server' results in a dereference of a null pointer (loaded from variable 'prov')
+        if (!prov->server)
+             ^~~~~~~~~~~~
+1 warning generated.
+tools/mesh/mesh-db.c:1978:4: warning: Value stored to 'jobj' is never read
+                        jobj = json_object_new_object();
+                        ^      ~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+In file included from unit/test-mesh-crypto.c:20:
+In file included from ./mesh/crypto.c:18:
+In file included from ./ell/ell.h:1:
+./ell/util.h:187:9: warning: 1st function call argument is an uninitialized value
+        return L_BE32_TO_CPU(L_GET_UNALIGNED((const uint32_t *) ptr));
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./ell/util.h:89:28: note: expanded from macro 'L_BE32_TO_CPU'
+#define L_BE32_TO_CPU(val) bswap_32(val)
+                           ^~~~~~~~~~~~~
+/usr/include/byteswap.h:34:21: note: expanded from macro 'bswap_32'
+#define bswap_32(x) __bswap_32 (x)
+                    ^~~~~~~~~~~~~~
+unit/test-mesh-crypto.c:995:11: warning: The left expression of the compound assignment is an uninitialized value. The computed value will also be garbage
+                key_aid |= KEY_ID_AKF;
+                ~~~~~~~ ^
+unit/test-mesh-crypto.c:1038:2: warning: 4th function call argument is an uninitialized value
+        verify_uint8("NID", 0, keys->net_nid, nid);
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit/test-mesh-crypto.c:1319:6: warning: Branch condition evaluates to a garbage value
+        if (ctl) {
+            ^~~
+unit/test-mesh-crypto.c:1539:7: warning: Branch condition evaluates to a garbage value
+                if (net_ctl) {
+                    ^~~~~~~
+unit/test-mesh-crypto.c:1806:3: warning: 1st function call argument is an uninitialized value
+                l_put_be64(cmac_tmp, cmac);
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~
+6 warnings generated.
+
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============1882843315939663940==--
