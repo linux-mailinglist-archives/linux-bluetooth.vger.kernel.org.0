@@ -2,119 +2,100 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1772C67655E
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 21 Jan 2023 10:13:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50CE9676C29
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 22 Jan 2023 11:49:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbjAUJNZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 21 Jan 2023 04:13:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44304 "EHLO
+        id S229988AbjAVKs7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 22 Jan 2023 05:48:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229715AbjAUJNY (ORCPT
+        with ESMTP id S229937AbjAVKs6 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 21 Jan 2023 04:13:24 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 617DD4AA64
-        for <linux-bluetooth@vger.kernel.org>; Sat, 21 Jan 2023 01:13:23 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id o20so11310309lfk.5
-        for <linux-bluetooth@vger.kernel.org>; Sat, 21 Jan 2023 01:13:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:sender
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7YJocFL0Vh33YfDbBzUiOd7tRE+2JSe+jC95CTt2zVw=;
-        b=TDOmuHvjOyELL5WwHWiK+R5pGijVyWK8WFE5jeHayWs2D97jKTaffbJLMUuufCqknN
-         9sadaxcKf+75+jgcanVeJ66Ns5jl9UPNi3GDdduQ3QoAL+cO5uqy6S3mqP+ApV8/rLJ1
-         nZxfQAogX/mlqi0qsPtwCov4yL0BYNlFUwEiJzRvdihctcvsnSDQkkmZV2q2rQLDvSrV
-         JIt0tieB4/io27upA9FIQRkcSup6vAHgS5rP83gA5HU9kf6bwvdS8NGOIw27rL329/yV
-         g4jf3ID+8KQVVLG56IO2kmbFfADyuKL1kSZW7boVpuAkuiVJi7h1N+oshaLTgbFEsbvD
-         X2fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:sender
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7YJocFL0Vh33YfDbBzUiOd7tRE+2JSe+jC95CTt2zVw=;
-        b=JCiXyuth1mRbN2BDDJDGvC+wKgVjbh1bfi8tUsXIZjWQOAcIJdVdcUtjUhzP9ziMNu
-         6nEGhy0ZsFGAPumXz1VpgxZpaesozT//M5PKf4JagHooT9gCCCn5fXQ0x6wa84FARQFh
-         erWWRYkecRk1J9x5cLcCainUb/CiKh/R0U3jwtXCIrkWvgqVsJkBorMIxGiTRksBHbn5
-         Ueqw5cfzLIlErmT/6hffqzfLOD+UFIcU5h21NedqoKLGp8swsKNScVh07FRnirlRPPd+
-         PwnkNjtIPi20PmoSDJ/MYI1+6d01M7USiUMPBtYnl2eIP9aQflJwtmOIq/0DQmvr/0NU
-         8JSg==
-X-Gm-Message-State: AFqh2ko2w1p8Akv5+v5XUzPzq1CHL0Qrwr5oqFt+Uz+sKlj2wW2JTuoR
-        fa14tyzLT2CZT3HRcBjh7dFT064gHntX4ro46NI=
-X-Google-Smtp-Source: AMrXdXvypGDL0L++f33hhoBL1mdOUwirBc8qFLHSJR5A+w+9ghwmub+EmD+wBSlL6axE3sGQNVpw5d4d3ZxUx8L88oA=
-X-Received: by 2002:a19:6a04:0:b0:4cc:8bf1:f9d with SMTP id
- u4-20020a196a04000000b004cc8bf10f9dmr875538lfu.509.1674292401352; Sat, 21 Jan
- 2023 01:13:21 -0800 (PST)
+        Sun, 22 Jan 2023 05:48:58 -0500
+Received: from albert.telenet-ops.be (albert.telenet-ops.be [IPv6:2a02:1800:110:4::f00:1a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 125C6166D5
+        for <linux-bluetooth@vger.kernel.org>; Sun, 22 Jan 2023 02:48:55 -0800 (PST)
+Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed50:4d08:7796:61ee:69a0])
+        by albert.telenet-ops.be with bizsmtp
+        id Bmop2900G0XvA8106mopjH; Sun, 22 Jan 2023 11:48:52 +0100
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan.of.borg with esmtp (Exim 4.95)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1pJXtx-006qbZ-IN;
+        Sun, 22 Jan 2023 11:48:49 +0100
+Received: from geert by rox.of.borg with local (Exim 4.95)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1pJXso-0037wg-Qn;
+        Sun, 22 Jan 2023 11:47:30 +0100
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Cc:     linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-wireless@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v2] dt-bindings: leds: Document Bluetooth and WLAN triggers
+Date:   Sun, 22 Jan 2023 11:47:27 +0100
+Message-Id: <0d0de1bc949d24e08174205c13c0b59bd73c1ea8.1674384302.git.geert+renesas@glider.be>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Sender: joseyao0638@gmail.com
-Received: by 2002:a05:6504:3157:0:0:0:0 with HTTP; Sat, 21 Jan 2023 01:13:20
- -0800 (PST)
-From:   Sandrina Omaru <sandrina.omaru2022@gmail.com>
-Date:   Sat, 21 Jan 2023 10:13:20 +0100
-X-Google-Sender-Auth: Vbv3SckrF0XKnx8g8WSf_RSfd2Q
-Message-ID: <CAJwRcBENhsHuBwX+hqSTwhh7Q4b-3V9MYsY75hyGeEsLaCvCxA@mail.gmail.com>
-Subject: Autorius Sandrina Omaru
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,LOTS_OF_MONEY,MIXED_ES,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,UNDISC_MONEY autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: **
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Autorius Sandrina Omaru
-Abid=C5=BEanas. Dramblio kaulo krantas,
-Vakar=C5=B3 Afrika .
+Add the missing trigger patterns for Bluetooth and WLAN activity, which
+are already in active use.
 
-Labas, brangioji
+While at it, move the mmc pattern comment where it belongs, and restore
+alphabetical sort order.
 
-Sveikinu jus su pagarba ir nuolankumu ir pra=C5=A1au, kad gal=C4=97tum=C4=
-=97te
-para=C5=A1yti =C5=A1ias eilutes. Tikiuosi, kad sugai=C5=A1ite dal=C4=AF sav=
-o brangi=C5=B3
-minu=C4=8Di=C5=B3 supratingai skaitydami =C5=A1=C4=AF kreipim=C4=85si. Turi=
-u prisipa=C5=BEinti, kad
-ra=C5=A1au jums =C5=A1=C4=AF el. lai=C5=A1k=C4=85 su did=C5=BEiule viltimi,=
- d=C5=BEiaugsmu ir jauduliu, o
-tai, tik=C4=97damas ir tikiu, tikrai turi b=C5=ABti geros sveikatos.
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Rob Herring <robh@kernel.org>
+---
+arch/arm64/boot/dts/renesas/r8a774a1-hihope-rzg2m-rev2.dtb: leds: bt_active_led:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+	'hci0-power' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'ide-disk', 'timer', 'pattern']
+	'hci0-power' does not match '^mmc[0-9]+$'
+	From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
+arch/arm64/boot/dts/renesas/r8a774a1-hihope-rzg2m-rev2.dtb: leds: wlan_active_led:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+	'phy0tx' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'ide-disk', 'timer', 'pattern']
+	'phy0tx' does not match '^mmc[0-9]+$'
+	From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
 
-A=C5=A1 esu panel=C4=97 Sandrina Omaru, velionio pono Williamso Omaru dukra=
-.
-Prie=C5=A1 mirt=C4=AF t=C4=97vas man paskambino ir pasak=C4=97, kad =C4=AFn=
-e=C5=A1=C4=97 tris milijonus
-=C5=A1e=C5=A1is =C5=A1imtus t=C5=ABkstan=C4=8Di=C5=B3 eur=C5=B3 (3 600 000 =
-EUR) priva=C4=8Diame banke =C4=8Dia,
-Abid=C5=BEane, Dramblio Kaulo Krante.
+v2:
+  - Add Reviewed-by.
+---
+ Documentation/devicetree/bindings/leds/common.yaml | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Jis man pasak=C4=97, kad pinigus =C4=AFne=C5=A1=C4=97 mano vardu, taip pat =
-dav=C4=97 visus
-reikalingus teisinius dokumentus d=C4=97l =C5=A1io ind=C4=97lio banke. A=C5=
-=A1 esu
-student=C4=97 ir tikrai ne=C5=BEinau, k=C4=85 daryti. Dabar noriu, kad s=C4=
-=85=C5=BEiningas ir
-dievobaimingas u=C5=BEsienio partneris kreipt=C5=B3si su jo pagalba. Po san=
-dorio
-a=C5=A1 liksiu j=C5=ABs=C5=B3 =C5=A1alyje tol, kol man bus patogu gr=C4=AF=
-=C5=BEti namo, jei
-papra=C5=A1ysiu. Taip yra tod=C4=97l, kad d=C4=97l tebesit=C4=99sian=C4=8Di=
-os politin=C4=97s kriz=C4=97s
-=C4=8Dia, Dramblio Kaulo Krante, patyriau daug nes=C4=97kmi=C5=B3.
+diff --git a/Documentation/devicetree/bindings/leds/common.yaml b/Documentation/devicetree/bindings/leds/common.yaml
+index f5c57a580078ea23..d34bb58c00371402 100644
+--- a/Documentation/devicetree/bindings/leds/common.yaml
++++ b/Documentation/devicetree/bindings/leds/common.yaml
+@@ -98,9 +98,13 @@ properties:
+             # LED alters the brightness for the specified duration with one software
+             # timer (requires "led-pattern" property)
+           - pattern
+-        # LED is triggered by SD/MMC activity
+-      - pattern: "^mmc[0-9]+$"
+       - pattern: "^cpu[0-9]*$"
++      - pattern: "^hci[0-9]+-power$"
++        # LED is triggered by Bluetooth activity
++      - pattern: "^mmc[0-9]+$"
++        # LED is triggered by SD/MMC activity
++      - pattern: "^phy[0-9]+tx$"
++        # LED is triggered by WLAN activity
+ 
+   led-pattern:
+     description: |
+-- 
+2.34.1
 
-Apsvarstykite tai ir kuo grei=C4=8Diau susisiekite su manimi. A=C5=A1
-nedelsdamas patvirtinsiu j=C5=ABs=C5=B3 pasirengim=C4=85, atsi=C5=B3siu jum=
-s savo
-nuotrauk=C4=85 ir taip pat informuosiu apie i=C5=A1samesn=C4=99 informacij=
-=C4=85 =C5=A1iuo
-klausimu.
-
-
-Su pagarba,
-
-Sandrina Omaru
