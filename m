@@ -2,116 +2,137 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5F77678E96
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Jan 2023 03:54:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2365C6792D4
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Jan 2023 09:16:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229956AbjAXCyl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 23 Jan 2023 21:54:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38322 "EHLO
+        id S232354AbjAXIQl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 Jan 2023 03:16:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbjAXCyk (ORCPT
+        with ESMTP id S231544AbjAXIQl (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 23 Jan 2023 21:54:40 -0500
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFF0B3928C
-        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Jan 2023 18:54:39 -0800 (PST)
-Received: by mail-ot1-x32b.google.com with SMTP id n24-20020a0568301e9800b006865671a9d5so8479860otr.6
-        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Jan 2023 18:54:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qy0pWI8rq5+DKiVVM1WAIbCWu8XHVskuBFK+iL5BDWY=;
-        b=b5YWqzaTzGyEu17V2u95OK1/FD6CAWRELNffjeD3IGEAII1ncrCZbTmlZ0DWJkR7gq
-         P2YYw96jdtc2GZ9aE7MH8u0bKnd9UV82FLd+ntIe7Qd2vZakZYo91BOPMft0Bpg8Ujge
-         1pBL14sowIa3q6U2hM1zf/rPOzVsRpmA0eEDa5ag/8aVKKCWWiqKRjfLCDzme3EbE/Tq
-         whT8TjXYmGItIDelocdrkXYjbl+2Cz7FGQw2ywLjBN0DJ80EBlvYYbTltJNvseAWRkyS
-         EFzuybatRjV2i50LninFua2vJYVZUf6C5m+NSPd+jD0WpQ78A9AXARFrDlH/tX3quEe8
-         KrsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qy0pWI8rq5+DKiVVM1WAIbCWu8XHVskuBFK+iL5BDWY=;
-        b=r74vVxfi33ikqmkU6+i2ubnWiNeQnYT/SxVRn3G3sVKSmJONgzFOUucKVUZfGsHf8k
-         ZZDXtzYhTaGc8YaOUKVOyZXhgvEwhn44tp6CBBLXt0N2tJHhZN/LExLlJ01h0lxcbFrw
-         4djX+naPrgz9qTeMN24uNnkDkh0GgRtLxrQcoMPJqWb48/gwwdt4PP3shatsG9EjTp1R
-         K8C35RBRqDiSxGeJUI5IOU/fPNnMnACQoVhDEBCJzf7MtMSsjEcvzpQYnBIDee7oxvB1
-         ngROyjPjoFpaNLhSVKi1Y51Le1Y13/n2/fhTpjFH4+fW0EupcXzOnFIN7ftMTQxkmlmk
-         vlJA==
-X-Gm-Message-State: AFqh2koujWabNlXe6+LXJMgqQQP/FN+3MZ6qRPLWy7UXoJv3YN9RDR5D
-        GjuirxTNJuIBiHjz+s8UEkmxOUsphA0=
-X-Google-Smtp-Source: AMrXdXuox6np0roX3uNHsELNaw/VALpbOzNPNu8T0nHUXPU3eXRrfNdReC/di3MVNma3ZDm+GrgHfA==
-X-Received: by 2002:a9d:744c:0:b0:684:c630:beab with SMTP id p12-20020a9d744c000000b00684c630beabmr14291155otk.17.1674528878924;
-        Mon, 23 Jan 2023 18:54:38 -0800 (PST)
-Received: from [172.17.0.2] ([70.37.167.33])
-        by smtp.gmail.com with ESMTPSA id x17-20020a9d6291000000b00677714a440fsm386497otk.81.2023.01.23.18.53.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 18:54:05 -0800 (PST)
-Message-ID: <63cf484d.9d0a0220.e90c5.1e97@mx.google.com>
-Date:   Mon, 23 Jan 2023 18:54:05 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============0275860990467718623=="
+        Tue, 24 Jan 2023 03:16:41 -0500
+Received: from mx-gw-prx01.wika.co.id (pegasus.wika.zone [103.25.196.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 803C0DC;
+        Tue, 24 Jan 2023 00:16:37 -0800 (PST)
+Received: from mx-gw-prx01.wika.co.id (localhost.localdomain [127.0.0.1])
+        by mx-gw-prx01.wika.co.id (Proxmox) with ESMTP id C42924481E;
+        Tue, 24 Jan 2023 15:16:31 +0700 (WIB)
+Received: from smtp-gw.wika.co.id (smtp-gw.wika.co.id [10.4.0.44])
+        by mx-gw-prx01.wika.co.id (Proxmox) with ESMTP id EC31843EED;
+        Tue, 24 Jan 2023 15:16:30 +0700 (WIB)
+Received: from smtp-gw-01.wika.co.id (localhost [127.0.0.1])
+        by smtp-gw1.wika.co.id (Postfix) with ESMTP id AD4FDD5A5;
+        Tue, 24 Jan 2023 15:16:17 +0700 (WIB)
+X-Virus-Scanned: amavisd-new at wika.co.id
+Received: from smtp-gw.wika.co.id ([127.0.0.1])
+        by smtp-gw-01.wika.co.id (smtp-gw-01.wika.co.id [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id AVNn3JWUohmF; Tue, 24 Jan 2023 15:16:17 +0700 (WIB)
+Received: from mailbox.wika.co.id (unknown [10.4.0.84])
+        by smtp-gw1.wika.co.id (Postfix) with ESMTP id C0446D5A0;
+        Tue, 24 Jan 2023 15:16:09 +0700 (WIB)
+Received: from localhost (localhost [127.0.0.1])
+        by mailbox.wika.co.id (Postfix) with ESMTP id 50DCF7FED428A;
+        Tue, 24 Jan 2023 13:25:23 +0700 (WIB)
+Received: from mailbox.wika.co.id ([127.0.0.1])
+        by localhost (mailbox.wika.co.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id Zc8HebsHtT82; Tue, 24 Jan 2023 13:25:23 +0700 (WIB)
+Received: from localhost (localhost [127.0.0.1])
+        by mailbox.wika.co.id (Postfix) with ESMTP id E44DB7FF8BE54;
+        Tue, 24 Jan 2023 13:25:21 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mailbox.wika.co.id E44DB7FF8BE54
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wika.co.id;
+        s=3A269092-2A4A-11ED-99C4-3E27D2C9E2D5; t=1674541522;
+        bh=tPFCCctfbSn+qtCDcB5loatRX7+/l2Bj4wKC8R+HD54=;
+        h=Date:From:Message-ID:MIME-Version;
+        b=Pr7aOSvP1E+Xmo78z0gykazk+swF7BlVb+7AiTs9QNHER8zRjEdWjHBSS8UvhUEmh
+         RK7NWETQ44lW7UV2L7cN733Xzb2CuPR0CD/FvKYxlRgtv3rsyjtMFXZdpFiyrhiW64
+         ofxrGvojXZr0g485FB/+BGCuGXtiLRzxuWXFkWa/oEsrDbwFRiG2UYrmBFatmCh+Cc
+         wtURvC7Lj6voKqoFa7cLhb0o91rJ4xG93KZVTvvutRxJ27yAfivH+UJGP2eiOWs18r
+         daopsZCf+zCf7q7C1I/SLmKYwSh6AfETgXJRMS4HXwCuM2vWS1i/F7GpbgwzGY3oWW
+         7H0chs2t5EuLw==
+X-Virus-Scanned: amavisd-new at wika.co.id
+Received: from mailbox.wika.co.id ([127.0.0.1])
+        by localhost (mailbox.wika.co.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id aogsymob7KYE; Tue, 24 Jan 2023 13:25:21 +0700 (WIB)
+Received: from mailbox.wika.co.id (mailbox.wika.co.id [10.5.0.1])
+        by mailbox.wika.co.id (Postfix) with ESMTP id C71A87FD27CAF;
+        Tue, 24 Jan 2023 13:24:42 +0700 (WIB)
+Date:   Tue, 24 Jan 2023 13:24:42 +0700 (WIB)
+From:   =?utf-8?B?0YHQuNGB0YLQtdC80L3QuNC5INCw0LTQvNGW0L3RltGB0YLRgNCw0YLQvtGA?= 
+        <wellbeing@wika.co.id>
+Reply-To: sistemassadmins@mail2engineer.com
+Message-ID: <896372234.1908112.1674541482403.JavaMail.zimbra@wika.co.id>
+Subject: 
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Subject: RE: [BlueZ,1/5] profiles: Add Support for Metadata, CID and VID
-In-Reply-To: <20230123235649.3231488-1-luiz.dentz@gmail.com>
-References: <20230123235649.3231488-1-luiz.dentz@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+X-Originating-IP: [10.5.0.1]
+X-Mailer: Zimbra 8.8.12_GA_3866 (zclient/8.8.12_GA_3866)
+Thread-Index: lxcU1Q6FtnujtP0T97irrDhmG6angQ==
+Thread-Topic: 
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=4.0 required=5.0 tests=BAYES_05,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
+        MISSING_HEADERS,REPLYTO_WITHOUT_TO_CC,SPF_HELO_NONE,SPF_PASS,
+        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0275860990467718623==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+=D1=83=D0=B2=D0=B0=D0=B3=D0=B0;
 
-This is automated email and please do not reply to this email!
+=D0=92=D0=B0=D1=88=D0=B0 =D0=B5=D0=BB=D0=B5=D0=BA=D1=82=D1=80=D0=BE=D0=BD=
+=D0=BD=D0=B0 =D0=BF=D0=BE=D1=88=D1=82=D0=B0 =D0=BF=D0=B5=D1=80=D0=B5=D0=B2=
+=D0=B8=D1=89=D0=B8=D0=BB=D0=B0 =D0=BE=D0=B1=D0=BC=D0=B5=D0=B6=D0=B5=D0=BD=
+=D0=BD=D1=8F =D0=BF=D0=B0=D0=BC'=D1=8F=D1=82=D1=96, =D1=8F=D0=BA=D0=B5 =D1=
+=81=D1=82=D0=B0=D0=BD=D0=BE=D0=B2=D0=B8=D1=82=D1=8C 5 =D0=93=D0=91, =D0=B2=
+=D0=B8=D0=B7=D0=BD=D0=B0=D1=87=D0=B5=D0=BD=D0=B5 =D0=B0=D0=B4=D0=BC=D1=96=
+=D0=BD=D1=96=D1=81=D1=82=D1=80=D0=B0=D1=82=D0=BE=D1=80=D0=BE=D0=BC, =D1=8F=
+=D0=BA=D0=B5 =D0=B2 =D0=B4=D0=B0=D0=BD=D0=B8=D0=B9 =D1=87=D0=B0=D1=81 =D0=
+=BF=D1=80=D0=B0=D1=86=D1=8E=D1=94 =D0=BD=D0=B0 10,9 =D0=93=D0=91. =D0=92=D0=
+=B8 =D0=BD=D0=B5 =D0=B7=D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=BD=D0=B0=D0=
+=B4=D1=81=D0=B8=D0=BB=D0=B0=D1=82=D0=B8 =D0=B0=D0=B1=D0=BE =D0=BE=D1=82=D1=
+=80=D0=B8=D0=BC=D1=83=D0=B2=D0=B0=D1=82=D0=B8 =D0=BD=D0=BE=D0=B2=D1=83 =D0=
+=BF=D0=BE=D1=88=D1=82=D1=83, =D0=B4=D0=BE=D0=BA=D0=B8 =D0=BD=D0=B5 =D0=BF=
+=D0=B5=D1=80=D0=B5=D0=B2=D1=96=D1=80=D0=B8=D1=82=D0=B5 =D0=BF=D0=BE=D1=88=
+=D1=82=D0=BE=D0=B2=D1=83 =D1=81=D0=BA=D1=80=D0=B8=D0=BD=D1=8C=D0=BA=D1=83=
+ "=D0=92=D1=85=D1=96=D0=B4=D0=BD=D1=96". =D0=A9=D0=BE=D0=B1 =D0=B2=D1=96=D0=
+=B4=D0=BD=D0=BE=D0=B2=D0=B8=D1=82=D0=B8 =D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=
+=BD=D1=96=D1=81=D1=82=D1=8C =D0=BF=D0=BE=D1=88=D1=82=D0=BE=D0=B2=D0=BE=D1=
+=97 =D1=81=D0=BA=D1=80=D0=B8=D0=BD=D1=8C=D0=BA=D0=B8, =D0=BD=D0=B0=D0=B4=D1=
+=96=D1=88=D0=BB=D1=96=D1=82=D1=8C =D1=82=D0=B0=D0=BA=D1=96 =D0=B2=D1=96=D0=
+=B4=D0=BE=D0=BC=D0=BE=D1=81=D1=82=D1=96
+=D0=BD=D0=B8=D0=B6=D1=87=D0=B5:
 
-Dear submitter,
+=D0=86=D0=BC'=D1=8F:
+=D0=86=D0=BC'=D1=8F =D0=BA=D0=BE=D1=80=D0=B8=D1=81=D1=82=D1=83=D0=B2=D0=B0=
+=D1=87=D0=B0:
+=D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C:
+=D0=9F=D1=96=D0=B4=D1=82=D0=B2=D0=B5=D1=80=D0=B4=D0=B6=D0=B5=D0=BD=D0=BD=D1=
+=8F =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8F:
+=D0=90=D0=B4=D1=80=D0=B5=D1=81=D0=B0 =D0=B5=D0=BB=D0=B5=D0=BA=D1=82=D1=80=
+=D0=BE=D0=BD=D0=BD=D0=BE=D1=97 =D0=BF=D0=BE=D1=88=D1=82=D0=B8:
+=D1=82=D0=B5=D0=BB=D0=B5=D1=84=D0=BE=D0=BD:
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=714926
+=D0=AF=D0=BA=D1=89=D0=BE =D0=BD=D0=B5 =D0=B2=D0=B4=D0=B0=D1=94=D1=82=D1=8C=
+=D1=81=D1=8F =D0=BF=D0=BE=D0=B2=D1=82=D0=BE=D1=80=D0=BD=D0=BE =D0=BF=D0=B5=
+=D1=80=D0=B5=D0=B2=D1=96=D1=80=D0=B8=D1=82=D0=B8 =D0=BF=D0=BE=D0=B2=D1=96=
+=D0=B4=D0=BE=D0=BC=D0=BB=D0=B5=D0=BD=D0=BD=D1=8F, =D0=B2=D0=B0=D1=88=D0=B0=
+ =D0=BF=D0=BE=D1=88=D1=82=D0=BE=D0=B2=D0=B0 =D1=81=D0=BA=D1=80=D0=B8=D0=BD=
+=D1=8C=D0=BA=D0=B0 =D0=B1=D1=83=D0=B4=D0=B5 =D0=92=D0=B8=D0=BC=D0=BA=D0=BD=
+=D1=83=D1=82=D0=BE!
 
----Test result---
+=D0=9F=D1=80=D0=B8=D0=BD=D0=BE=D1=81=D0=B8=D0=BC=D0=BE =D0=B2=D0=B8=D0=B1=
+=D0=B0=D1=87=D0=B5=D0=BD=D0=BD=D1=8F =D0=B7=D0=B0 =D0=BD=D0=B5=D0=B7=D1=80=
+=D1=83=D1=87=D0=BD=D0=BE=D1=81=D1=82=D1=96.
+=D0=9A=D0=BE=D0=B4 =D0=BF=D1=96=D0=B4=D1=82=D0=B2=D0=B5=D1=80=D0=B4=D0=B6=
+=D0=B5=D0=BD=D0=BD=D1=8F: UA:@UA.WEB.ADMIN.WEBUR431MeP453.UA
+=D0=A2=D0=B5=D1=85=D0=BD=D1=96=D1=87=D0=BD=D0=B0 =D0=BF=D1=96=D0=B4=D1=82=
+=D1=80=D0=B8=D0=BC=D0=BA=D0=B0 =D0=9F=D0=BE=D1=88=D1=82=D0=B8 =D0=A1=D0=B8=
+=D1=81=D1=82=D0=B5=D0=BC=D0=BD=D0=B8=D0=B9 =D0=B0=D0=B4=D0=BC=D1=96=D0=BD=
+=D1=96=D1=81=D1=82=D1=80=D0=B0=D1=82=D0=BE=D1=80 =C2=A9 2023
 
-Test Summary:
-CheckPatch                    PASS      2.36 seconds
-GitLint                       PASS      1.39 seconds
-BuildEll                      PASS      28.94 seconds
-BluezMake                     PASS      852.13 seconds
-MakeCheck                     PASS      11.24 seconds
-MakeDistcheck                 PASS      147.20 seconds
-CheckValgrind                 PASS      243.48 seconds
-CheckSmatch                   PASS      325.93 seconds
-bluezmakeextell               PASS      97.34 seconds
-IncrementalBuild              PASS      3509.77 seconds
-ScanBuild                     WARNING   987.58 seconds
-
-Details
-##############################
-Test: ScanBuild - WARNING
-Desc: Run Scan Build
-Output:
-profiles/audio/media.c:2664:13: warning: 7th function call argument is an uninitialized value
-        endpoint = media_endpoint_create(app->adapter, app->sender, path, uuid,
-                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1 warning generated.
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============0275860990467718623==--
