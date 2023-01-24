@@ -2,191 +2,97 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F29767911B
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Jan 2023 07:38:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C77F679DD2
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Jan 2023 16:45:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232855AbjAXGiv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 Jan 2023 01:38:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55372 "EHLO
+        id S234680AbjAXPpG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 Jan 2023 10:45:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231921AbjAXGit (ORCPT
+        with ESMTP id S234372AbjAXPpF (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 Jan 2023 01:38:49 -0500
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3685B4C31;
-        Mon, 23 Jan 2023 22:38:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674542328; x=1706078328;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=nCllPZY6zrzrfh4fFvccqk4bgDomrRfcoK4PfShWMzQ=;
-  b=KwR+bIrJ8od/KfJySIUfd5lRGtkmRTNAajbNqPvP6sZ+BcsEgtBxkeA9
-   YjRHpiePxk+J/uFLLqwsAuYhB6RCJNYmEU39t+Z0KQE8LY7BLNfiNiqbC
-   Y/ZriBtPEGRrIRGjHC6XRdOJERIRdHvCNTQWME1QT/uVs87MM65Z9QWbU
-   9H/kD8tWryevzM17tE28vOzRssZ1Huno3Djx/YHFHF9ktB9JiOFV5qySg
-   6pYLCOpCuVj3du0kFN7xXPMBiAmhn7/V4P8tKahxwHOVZn20SOzrceDIw
-   cb/sCo37xD91h/AHPogJw/1QRfpgBexZBv/t3MCvHYxgiJ/Wv2hQVFqeB
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10599"; a="388584537"
-X-IronPort-AV: E=Sophos;i="5.97,241,1669104000"; 
-   d="scan'208";a="388584537"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2023 22:38:47 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10599"; a="639475752"
-X-IronPort-AV: E=Sophos;i="5.97,241,1669104000"; 
-   d="scan'208";a="639475752"
-Received: from lkp-server01.sh.intel.com (HELO 5646d64e7320) ([10.239.97.150])
-  by orsmga006.jf.intel.com with ESMTP; 23 Jan 2023 22:38:43 -0800
-Received: from kbuild by 5646d64e7320 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pKCx8-0006D6-1U;
-        Tue, 24 Jan 2023 06:38:42 +0000
-Date:   Tue, 24 Jan 2023 14:38:37 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Francesco Dolcini <francesco@dolcini.it>, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        Stefan Eichenberger <stefan.eichenberger@toradex.com>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Francesco Dolcini <francesco.dolcini@toradex.com>
-Subject: Re: [PATCH v1 3/4] Bluetooth: hci_mrvl: Add serdev support for
- 88W8997
-Message-ID: <202301241423.sEVD92vC-lkp@intel.com>
-References: <20230118122817.42466-4-francesco@dolcini.it>
+        Tue, 24 Jan 2023 10:45:05 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EC856A45
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Jan 2023 07:45:04 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id v5so18727697edc.3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Jan 2023 07:45:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FocuR5aXn3z28LzYD0rCmA/t4By4lcIW0G986gs+i74=;
+        b=hyoQf1NqvicBaHDrkam2iWDKVrn0yGYM+CNoZrUCki0kg5/9s1EW86dA+g2HDKhaAd
+         vLUOpIrs6bBNRaXVGHtNWWVpPhFkfIrz+dd2mxfqNXB1BGUztU41fiCMlGG4N+Z0yujJ
+         UV62nJCPyAq4XvB5Zl69oBYxCyMZanJ24ysip0zKbe5adLK/XFSbtp/3yOBtA4H+jKwG
+         TKjUoE9NgnzBsQC6w1VmO02Ac3yBTrSXZEaAOknWJhAMJNWjpLrRkevAEA/Xdo1N/WWf
+         nT2A2vCtA4OyeMis0h0z2vk+AB+sh/zjJK6IRHhpHRMwvr6KCX/zEdHSbKv7ZbkCahF1
+         jjLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FocuR5aXn3z28LzYD0rCmA/t4By4lcIW0G986gs+i74=;
+        b=L+fZylpfQ6jXLK5CD7UINr6ElkI81+/8WfJDwKQpPH+a7crxWohW28hsYOY31n8yfG
+         ZscP580B3D4wpMwLPEEOhgh57b6itbE+YNztJRdC1LLVDAKKnK12pbLTLcFu938wAdkU
+         hy+vrFqtljR+G51OxWCtW95LvO4Sa6CiAIH7bKMK+2I+Oahdq14YYxsy2C7YoYWj5lh5
+         3RBMKUaZG1/ptlCp2hXjBIql/Z+hJ1MVmTLAtwXHNwmUysZB7D3EZ2w+y0zPn2c9Hrwz
+         XKYT0t8UGHaIBx1rWOBQW1FUO6EFYsaUHPq5lZUC8qmamB3vXHd8nTacOnGZZmtr8/Lr
+         c4CQ==
+X-Gm-Message-State: AFqh2kpRqRKXYXQSvq9IWJxIq11L0q43z0byOKDidcGncwCr+aP+jrDq
+        bbY1125QTUtXjLntbvTMgXpY9VPNsFTBI1Ynpwo=
+X-Google-Smtp-Source: AMrXdXu3szy4JrWMLeyErxTwFEZ2qARZ/eeo7LVfP9XWjBGrhlnec2y8DGdRpXpNhfQVR63fYlxxfjcuEWDmSqLycAo=
+X-Received: by 2002:a05:6402:21a:b0:468:f142:3040 with SMTP id
+ t26-20020a056402021a00b00468f1423040mr3746200edv.107.1674575102296; Tue, 24
+ Jan 2023 07:45:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230118122817.42466-4-francesco@dolcini.it>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:640c:945:b0:1a0:3fc7:c47b with HTTP; Tue, 24 Jan 2023
+ 07:45:01 -0800 (PST)
+Reply-To: khalil588577@gmail.com
+From:   Abdul Latif <anthoniushermanus1969@gmail.com>
+Date:   Tue, 24 Jan 2023 15:45:01 +0000
+Message-ID: <CAA=EwkL_cXXb+Y4f409zBjKQTsxPMSAAdnFAMqcKMKbOHQwi5w@mail.gmail.com>
+Subject: GET BACK TO ME
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.4 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,UNDISC_FREEM
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:533 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [anthoniushermanus1969[at]gmail.com]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [khalil588577[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [anthoniushermanus1969[at]gmail.com]
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  2.8 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Francesco,
-
-Thank you for the patch! Perhaps something to improve:
-
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on bluetooth-next/master bluetooth/master horms-ipvs/master net/master net-next/master linus/master v6.2-rc5 next-20230123]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Francesco-Dolcini/dt-bindings-bluetooth-marvell-add-88W8997-DT-binding/20230118-210919
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20230118122817.42466-4-francesco%40dolcini.it
-patch subject: [PATCH v1 3/4] Bluetooth: hci_mrvl: Add serdev support for 88W8997
-config: hexagon-randconfig-r021-20230123 (https://download.01.org/0day-ci/archive/20230124/202301241423.sEVD92vC-lkp@intel.com/config)
-compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/2ae116c8ad209e0bf11559519915e511c44c28be
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Francesco-Dolcini/dt-bindings-bluetooth-marvell-add-88W8997-DT-binding/20230118-210919
-        git checkout 2ae116c8ad209e0bf11559519915e511c44c28be
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash drivers/bluetooth/ lib/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-
-All warnings (new ones prefixed by >>):
-
-   In file included from drivers/bluetooth/hci_mrvl.c:12:
-   In file included from include/linux/skbuff.h:17:
-   In file included from include/linux/bvec.h:10:
-   In file included from include/linux/highmem.h:12:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:334:
-   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __raw_readb(PCI_IOBASE + addr);
-                             ~~~~~~~~~~ ^
-   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:37:51: note: expanded from macro '__le16_to_cpu'
-   #define __le16_to_cpu(x) ((__force __u16)(__le16)(x))
-                                                     ^
-   In file included from drivers/bluetooth/hci_mrvl.c:12:
-   In file included from include/linux/skbuff.h:17:
-   In file included from include/linux/bvec.h:10:
-   In file included from include/linux/highmem.h:12:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:334:
-   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:35:51: note: expanded from macro '__le32_to_cpu'
-   #define __le32_to_cpu(x) ((__force __u32)(__le32)(x))
-                                                     ^
-   In file included from drivers/bluetooth/hci_mrvl.c:12:
-   In file included from include/linux/skbuff.h:17:
-   In file included from include/linux/bvec.h:10:
-   In file included from include/linux/highmem.h:12:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:334:
-   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writeb(value, PCI_IOBASE + addr);
-                               ~~~~~~~~~~ ^
-   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
-   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
->> drivers/bluetooth/hci_mrvl.c:450:36: warning: unused variable 'mrvl_proto_8997' [-Wunused-const-variable]
-   static const struct hci_uart_proto mrvl_proto_8997 = {
-                                      ^
-   7 warnings generated.
-
-
-vim +/mrvl_proto_8997 +450 drivers/bluetooth/hci_mrvl.c
-
-   449	
- > 450	static const struct hci_uart_proto mrvl_proto_8997 = {
-   451		.id		= HCI_UART_MRVL,
-   452		.name		= "Marvell 8997",
-   453		.init_speed	= 115200,
-   454		.oper_speed	= 3000000,
-   455		.open		= mrvl_open,
-   456		.close		= mrvl_close,
-   457		.flush		= mrvl_flush,
-   458		.set_baudrate   = mrvl_set_baudrate,
-   459		.recv		= mrvl_recv,
-   460		.enqueue	= mrvl_enqueue,
-   461		.dequeue	= mrvl_dequeue,
-   462	};
-   463	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+I am Mr.Abdul Latif i have something to discuss with you
