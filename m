@@ -2,65 +2,71 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3DDA67A3DB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Jan 2023 21:26:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BF5C67A52B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Jan 2023 22:44:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233948AbjAXU04 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 Jan 2023 15:26:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40124 "EHLO
+        id S234125AbjAXVod (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 Jan 2023 16:44:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230054AbjAXU0l (ORCPT
+        with ESMTP id S230160AbjAXVod (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 Jan 2023 15:26:41 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD9944B49A
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Jan 2023 12:26:33 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id b10so16311860pjo.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Jan 2023 12:26:33 -0800 (PST)
+        Tue, 24 Jan 2023 16:44:33 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 120B847082;
+        Tue, 24 Jan 2023 13:44:32 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id e16so18270538ljn.3;
+        Tue, 24 Jan 2023 13:44:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u3S6DymdGfYHRiXCumpLY6fvCt5QsjWexMsLMH4TD6o=;
-        b=UjrINS4Fmn9amGn2nHJ8JUZNk3l8tLdHDrXXD4LKTMQRimH3SSaPUyLgW/FL+Kmlrm
-         gsA2YyX+Vy2LnYSGOlhyVB2PRfAKo9RG7/yec7LKFPGsjdFat6U+PN5FkyCONv3k2S9K
-         6nsBFK4vjj5eUthwrw141kPGhKcNd5lPOBvESXHdpQ+JYzuHV16eZG0y7iuElPSCKZ9h
-         GdaYQ3hPfnG5Re6hN82zxLkoOvjwRdV573dwVMiTUhehHnDmTcjjnZfzj4zvcvh3aXWc
-         cCLetIRR292rYtVeLWlj8XVQ4wo7SuDxkP7nAjkBYem+TGQRC5CDATqx+D3ah9b2cWwV
-         cHpA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=R4IEpD9aZshjrnq+Srup39D3KYAjhRrq9qRZNhDQbZw=;
+        b=OhtCGeL+X0n5LCE8IvchaPqRu+KxeSiZ0ohzBqS2Mp7J2VlzQATe8yJsxMkHACU2uI
+         yn25a1V6Y3eztsmNsdUwCgvfNvUUx+J/9YG/zMVU2/Qs4Mj36xFiNCxdqj95huqvp4Yb
+         iLOU8F3r/tGL+FK11zu6WxkBYhTpL/mXBoI/oTArJY6OmLWPLb8/xSCxQjN/jgR2crZ0
+         MFoSxDgmc3LW7alYPATjQZYiumYTcCLcc09dSsWt6d1SdsxxjISEWq0io9k8vbDe7CLw
+         klAb/i+Xb3BP2FiLHaqU2hHddMAakU9WFLoORmrMIoQ0C7jHgOjYYbwdzvVVqiRrZsuH
+         zOTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u3S6DymdGfYHRiXCumpLY6fvCt5QsjWexMsLMH4TD6o=;
-        b=ILZLlzbPax1kQlrAGWKLQmRW/ECOBbrpfQXd6SC2OaMgJVo+ooXSfjAWf1PPK8Mzzq
-         Bj6mS2/63STguapbA0Y/XCDGu4B2M1w5mo5iETGWpxHQXNX3Wmc96X0E9z5htHkH/iLR
-         Dkzl3X7Yet8LsoPBioE8YX7TMPcpQWdGqHPvvT3I4GLqgPHH+vJw3otFmKYZWD5MgjOf
-         y4i3Ez5QZ2j8uPigRr62Y9WubDb9cQUABKhn/4Jwj2lO8qfY8F4s0AlMWmsKcNuRoh9x
-         jhZcteb4QKoyV0jx+wHdBHq0wqiOm0OE9P9o2mZB0N8mIe58BlxavPKgeSU0u7YBsc/j
-         hOxw==
-X-Gm-Message-State: AO0yUKUReiVlsFrLdzKF/8da+OjMcT6EgVnrzaWwXTS+PB0aRf84knW0
-        PwAyJ4iSIyfiQx2378DPEIEyrB5Keg3ZPA==
-X-Google-Smtp-Source: AK7set+lpU5N3qQCqGri6zK0h6Y9MAj7eZj3e2QbMq5Xc8+XWLf9GZSrVnWfTJDk0/66W0rejLaHJA==
-X-Received: by 2002:a17:903:1ca:b0:196:1519:3538 with SMTP id e10-20020a17090301ca00b0019615193538mr4094936plh.57.1674591992882;
-        Tue, 24 Jan 2023 12:26:32 -0800 (PST)
-Received: from fedora.. (97-126-124-199.tukw.qwest.net. [97.126.124.199])
-        by smtp.gmail.com with ESMTPSA id ju21-20020a170903429500b0019600b78487sm2108099plb.33.2023.01.24.12.26.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 12:26:32 -0800 (PST)
-From:   Brian Gix <brian.gix@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Brian Gix <brian.gix@gmail.com>
-Subject: [PATCH BlueZ v4 13/13] mesh: Remove unused byte swap for ScanBuild
-Date:   Tue, 24 Jan 2023 12:26:16 -0800
-Message-Id: <20230124202616.310544-14-brian.gix@gmail.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230124202616.310544-1-brian.gix@gmail.com>
-References: <20230124202616.310544-1-brian.gix@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R4IEpD9aZshjrnq+Srup39D3KYAjhRrq9qRZNhDQbZw=;
+        b=WcHEMPxoHNDBpn7v5njbRUS0nIM74GjlZjL5m3DLge7X9gcNF7qkkEihlGRftL/vUh
+         urzd28rg8+bKyY9nPA5XD3tMNIuqudEA4UYLIJDVHQTNaAMkUegddFP1QPQms+ikjXsh
+         8iam+YJUsRiyJ8GupdSjhne/bvaK5Y/yMMXSe40vklLiCsz2vRBO+o6LNRssTR+kP3U2
+         GxYhI7h/ATwIMmCz9SRNr813DcPLfrRyJhlSniECIafT3V4w5qfKjvGJHj0OscoEVx+C
+         lX/QYmEK7IhHxAFlAZHIkUk6Qz6pikM+a3oQMtJcFrnE4CQbhskiflXugN1N7B83iezF
+         0R+Q==
+X-Gm-Message-State: AFqh2ko4u5dhUToYYbRj3vuCSxrPeO3UasmkcCF65+UepTVoCu3TZMN0
+        A2tPoOS5nxwdoJEcDa0kdNihRJDwQSoeXv49KN4=
+X-Google-Smtp-Source: AMrXdXu0QWfIjYRWGz+8p7L9B9+lFy3maxvk1fReg4QhtlC0V7o9DjmS9axIQp7sTUwe7JOTSKodmQnXCmKzccJ4KHk=
+X-Received: by 2002:a2e:9212:0:b0:28b:63dc:4c7 with SMTP id
+ k18-20020a2e9212000000b0028b63dc04c7mr1609175ljg.423.1674596670073; Tue, 24
+ Jan 2023 13:44:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230124174714.2775680-1-neeraj.sanjaykale@nxp.com>
+ <20230124174714.2775680-3-neeraj.sanjaykale@nxp.com> <167458712396.1259484.1395941797664824881.robh@kernel.org>
+In-Reply-To: <167458712396.1259484.1395941797664824881.robh@kernel.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Tue, 24 Jan 2023 13:44:18 -0800
+Message-ID: <CABBYNZKAwp3Wqjrcp4k3wvjZSNfJhRWA5ytH7oNWXCG7V4k2ow@mail.gmail.com>
+Subject: Re: [PATCH v1 2/3] dt-bindings: net: bluetooth: Add NXP bluetooth support
+To:     Rob Herring <robh@kernel.org>,
+        Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
+Cc:     Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
+        jirislaby@kernel.org, robh+dt@kernel.org, sherry.sun@nxp.com,
+        marcel@holtmann.org, linux-serial@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, rohit.fule@nxp.com,
+        devicetree@vger.kernel.org, amitkumar.karwar@nxp.com,
+        linux-bluetooth@vger.kernel.org, edumazet@google.com,
+        pabeni@redhat.com, gregkh@linuxfoundation.org,
+        netdev@vger.kernel.org, kuba@kernel.org,
+        linux-kernel@vger.kernel.org, davem@davemloft.net,
+        johan.hedberg@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -71,28 +77,57 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
----
- mesh/crypto.c | 7 -------
- 1 file changed, 7 deletions(-)
+Hi Rob, Tedd,
 
-diff --git a/mesh/crypto.c b/mesh/crypto.c
-index 38dfc5fb5..b712a2654 100644
---- a/mesh/crypto.c
-+++ b/mesh/crypto.c
-@@ -94,13 +94,6 @@ bool mesh_crypto_aes_ccm_encrypt(const uint8_t nonce[13], const uint8_t key[16],
- 	result = l_aead_cipher_encrypt(cipher, msg, msg_len, aad, aad_len,
- 					nonce, 13, out_msg, msg_len + mic_size);
- 
--	if (result && out_mic) {
--		if (mic_size == 4)
--			*(uint32_t *)out_mic = l_get_be32(out_msg + msg_len);
--		else
--			*(uint64_t *)out_mic = l_get_be64(out_msg + msg_len);
--	}
--
- 	l_aead_cipher_free(cipher);
- 
- 	return result;
+On Tue, Jan 24, 2023 at 11:06 AM Rob Herring <robh@kernel.org> wrote:
+>
+>
+> On Tue, 24 Jan 2023 23:17:13 +0530, Neeraj Sanjay Kale wrote:
+> > Add binding document for generic and legacy NXP bluetooth
+> > chipset.
+> >
+> > Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+> > ---
+> >  .../bindings/net/bluetooth/nxp-bluetooth.yaml | 67 +++++++++++++++++++
+> >  1 file changed, 67 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/net/bluetooth/nxp-bluetooth.yaml
+> >
+>
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>
+> yamllint warnings/errors:
+> ./Documentation/devicetree/bindings/net/bluetooth/nxp-bluetooth.yaml:67:1: [warning] too many blank lines (2 > 1) (empty-lines)
+>
+> dtschema/dtc warnings/errors:
+> Error: Documentation/devicetree/bindings/net/bluetooth/nxp-bluetooth.example.dts:18.9-15 syntax error
+> FATAL ERROR: Unable to parse input tree
+> make[1]: *** [scripts/Makefile.lib:434: Documentation/devicetree/bindings/net/bluetooth/nxp-bluetooth.example.dtb] Error 1
+> make[1]: *** Waiting for unfinished jobs....
+> make: *** [Makefile:1508: dt_binding_check] Error 2
+
+I wonder if that is something that we could incorporate to our CI,
+perhaps we can detect if the subject starts with dt-binding then we
+attempt to make with DT_CHECKER_FLAGS, thoughts?
+
+> doc reference errors (make refcheckdocs):
+>
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230124174714.2775680-3-neeraj.sanjaykale@nxp.com
+>
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+>
+> pip3 install dtschema --upgrade
+>
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+>
+
+
 -- 
-2.39.1
-
+Luiz Augusto von Dentz
