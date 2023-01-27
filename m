@@ -2,106 +2,102 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E79C67E6B6
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Jan 2023 14:29:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF8E567EA3E
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Jan 2023 17:02:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234367AbjA0N3u (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 27 Jan 2023 08:29:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45652 "EHLO
+        id S231810AbjA0QCT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 27 Jan 2023 11:02:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233005AbjA0N3s (ORCPT
+        with ESMTP id S231547AbjA0QCP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 27 Jan 2023 08:29:48 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B41FC77517
-        for <linux-bluetooth@vger.kernel.org>; Fri, 27 Jan 2023 05:29:47 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id j5so4620351pjn.5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 27 Jan 2023 05:29:47 -0800 (PST)
+        Fri, 27 Jan 2023 11:02:15 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2E6888CC4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 27 Jan 2023 08:01:38 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so5730635wmb.2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 27 Jan 2023 08:01:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DOY9At67p67kR2ShFWKaU2Jb60HkMgJR48ajnIni/No=;
-        b=Pe2Jf3mUhjNWZMigOuPorjncxOAs76EVXGsgRxCMdp1kKYseILIy3dBMDj3vSwLE1U
-         Ihs/XHmuFm+z3sufss1MCWpjxaK3Trbk5Q+4lFk3TO7ObI/NTnd7ux2gmHksjRalo2xQ
-         Gy624vomhRMRPXqiQEH9R9euUs3a5H1mamFnmHRW06PVWS5lNcKQ8pLwpAtZ/RJAT/gW
-         FXhFZkKR6mTNTwJatqq4WPh43tmu+TL23r/3H7sbXU7LXnw7DMnKktlAJbiW0q3F+nqk
-         vF64lObrnnoEXHUjF+ozp714roQ8HhYquGtCU7/5yth3YVxnjuKOA/1tqR7CK3ke6rR8
-         k1Lg==
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sVtlaBH2oW7gQDOB4EYMReZLPA6GM1pQjljM+jQPnhA=;
+        b=LS8e3XXvmrSAOOfNlcAd/w+utdfOKbDy+boOtZbeEZMx3J+dghiCZIapd3IEJ80bEO
+         ZQwGIt6BaNKrR4pwRJp4L/hkNg3NxR2N7OJ7rnCPo2NsRG4qD7f8oTEw+rRsF4BmVV7k
+         k2w+8JUwG0L5YKvqCq6I/Azr9zv9xb30IVHYUNdbpNGKXT4e0nL2z2vkLrc8x/eLEq0d
+         uxTQxVDqdG+kzDkQ36/LwdFE01t+lBTvteJ3GmqcAjUVrynl9ZK4arMklJnG8DMETK/D
+         +Y6ss5dVUq5AH3tLX4O28HhRbiuuxAJEVDLDaw6yZRrIG98xBc6iok/tVlGbP//MP5A7
+         uQtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DOY9At67p67kR2ShFWKaU2Jb60HkMgJR48ajnIni/No=;
-        b=1Usx/6aisEraXsXLSfq1vwlkXAm33VWWE4CFfM8vdHftDvEPkJAzk4n2sbp68Mlsnk
-         ullvcsevmKIwtfKfdSQ66LLITz+j00qjRrv+g81j075rT3jf/S4OwMXVkLrsGo0+kgxe
-         A2F4GXjDgR5TDB4ow98A7YHkXteUAHIGt8f25j7qSUqodEzuxwPS7m8Jgtw+zD+UKJof
-         W+Hav4QLc46uFQ5igNf9npYF47Gin0ooTjVmxu3HwQzG6vLSMREqfW36udF9rz+wVtcV
-         yzyUPxHvm52N1MhOPg1tfwj+mGj5Fw3fJ1KMo2e4Pu0P9DkJIU0L5oZPL55641H/LUGX
-         87Gg==
-X-Gm-Message-State: AO0yUKW73FmOZZtLzxUZ+v2eTmavbvEeGCXjsgdr/aVEGjjc85hZz8KP
-        okdMbHQmZK4y1MIzBI5vmaSIt2TMiLqz+w==
-X-Google-Smtp-Source: AK7set/LW/Jnxw4OMUKQ0nk5KtqwRnhH8LTxvISa7Dad7XTD7a7jJNmN3ybd5pKIYBMN5FJ1wNtESg==
-X-Received: by 2002:a17:90a:1a43:b0:22c:906:aea7 with SMTP id 3-20020a17090a1a4300b0022c0906aea7mr10325530pjl.36.1674826186707;
-        Fri, 27 Jan 2023 05:29:46 -0800 (PST)
-Received: from [172.17.0.2] ([4.227.9.19])
-        by smtp.gmail.com with ESMTPSA id k3-20020a17090a404300b0022b787fb08dsm5102118pjg.5.2023.01.27.05.29.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jan 2023 05:29:46 -0800 (PST)
-Message-ID: <63d3d1ca.170a0220.6b19a.884f@mx.google.com>
-Date:   Fri, 27 Jan 2023 05:29:46 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============5288312091572336714=="
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sVtlaBH2oW7gQDOB4EYMReZLPA6GM1pQjljM+jQPnhA=;
+        b=3iToqCXYq21edC8iceoo7e4JPB08cIkcAyXaEfCxe42tRFV1Dnoh+yRuqAy7SrlOlU
+         WfHtx34T5RcG86hUBJFA8c3GBhuim9nwDLU1twwIuwbohxPShoB++aGxmXdIlIRcxhT4
+         J5z0FYSP24U7VM6Cd9oCcJLmwdMePyANGTi2+A8o5KwaqxOMG1idmA20gjhs8Yr1sXcI
+         7hN7hzk3KB3/faSmjx/x04WIn+WOk7P75xbd/ppKe2clQJLRbyBVlJb+iiWgdNZkeSjq
+         Cma/rxctxWB4pWJfiOCunL4E+aJlV8RIcqbjKLlDC3nVfBGOhKAItqfVAhRwa7JAwkDo
+         G4pQ==
+X-Gm-Message-State: AFqh2krS/ZcB0Xw9+7w01hOaXEnKGivWKZuGdrnHyREmv9WHTAOXTdPD
+        Bea9df8vukbwAy5aV+HW9+VbyRgYNFAg9i2juQQ=
+X-Google-Smtp-Source: AMrXdXuJDax+UKPF7gdSGuz9t+JeSva///+hoX0tEhCzQqIh/mHoksFwU4jOXOOquTomXA6FmLco3BIuh6bai3UuA6Y=
+X-Received: by 2002:a05:600c:b85:b0:3d9:ed04:727 with SMTP id
+ fl5-20020a05600c0b8500b003d9ed040727mr2883054wmb.137.1674835295236; Fri, 27
+ Jan 2023 08:01:35 -0800 (PST)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, marcin.kraglak@telink-semi.com
-Subject: RE: [1/2] shared/util: Add CAS, HAS, TMAS and PBAS UUIDs
-In-Reply-To: <20230127113504.134109-1-marcin.kraglak@telink-semi.com>
-References: <20230127113504.134109-1-marcin.kraglak@telink-semi.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: by 2002:a5d:6d89:0:0:0:0:0 with HTTP; Fri, 27 Jan 2023 08:01:34
+ -0800 (PST)
+Reply-To: innocent_iddrisa@innocent.com
+From:   Mr innocent Kanazoe Iddrisa <lindaqare13@gmail.com>
+Date:   Fri, 27 Jan 2023 16:01:34 +0000
+Message-ID: <CAPfsn2v8+RySr-VkgOhHsUSaCGsNbFGAxE+bH5y30U8WikPwjg@mail.gmail.com>
+Subject: Please reply me this mail today.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=7.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
+        UNDISC_FREEM,UNDISC_MONEY autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:343 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [lindaqare13[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [lindaqare13[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  2.8 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  0.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  3.1 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5288312091572336714==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=716204
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.86 seconds
-GitLint                       PASS      0.47 seconds
-BuildEll                      PASS      27.10 seconds
-BluezMake                     PASS      744.08 seconds
-MakeCheck                     PASS      11.42 seconds
-MakeDistcheck                 PASS      146.04 seconds
-CheckValgrind                 PASS      237.78 seconds
-CheckSmatch                   PASS      316.33 seconds
-bluezmakeextell               PASS      95.14 seconds
-IncrementalBuild              PASS      1217.19 seconds
-ScanBuild                     PASS      985.60 seconds
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============5288312091572336714==--
+-- 
+Greetings to you.I am Mr.innocent kanazoe iddrisa working at the coris
+bank international.I have a transaction that worth a total sum of
+$18.7 million dollars to handle with you.Reply me today for more
+detailed information if you are interested.
