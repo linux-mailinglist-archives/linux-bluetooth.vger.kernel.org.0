@@ -2,102 +2,107 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF8E567EA3E
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Jan 2023 17:02:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0623F67EB6D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Jan 2023 17:47:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231810AbjA0QCT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 27 Jan 2023 11:02:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54768 "EHLO
+        id S234025AbjA0Qr1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 27 Jan 2023 11:47:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231547AbjA0QCP (ORCPT
+        with ESMTP id S232597AbjA0Qr0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 27 Jan 2023 11:02:15 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2E6888CC4
-        for <linux-bluetooth@vger.kernel.org>; Fri, 27 Jan 2023 08:01:38 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so5730635wmb.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 27 Jan 2023 08:01:38 -0800 (PST)
+        Fri, 27 Jan 2023 11:47:26 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3502F199F0;
+        Fri, 27 Jan 2023 08:46:48 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id o66so4653853oia.6;
+        Fri, 27 Jan 2023 08:46:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sVtlaBH2oW7gQDOB4EYMReZLPA6GM1pQjljM+jQPnhA=;
-        b=LS8e3XXvmrSAOOfNlcAd/w+utdfOKbDy+boOtZbeEZMx3J+dghiCZIapd3IEJ80bEO
-         ZQwGIt6BaNKrR4pwRJp4L/hkNg3NxR2N7OJ7rnCPo2NsRG4qD7f8oTEw+rRsF4BmVV7k
-         k2w+8JUwG0L5YKvqCq6I/Azr9zv9xb30IVHYUNdbpNGKXT4e0nL2z2vkLrc8x/eLEq0d
-         uxTQxVDqdG+kzDkQ36/LwdFE01t+lBTvteJ3GmqcAjUVrynl9ZK4arMklJnG8DMETK/D
-         +Y6ss5dVUq5AH3tLX4O28HhRbiuuxAJEVDLDaw6yZRrIG98xBc6iok/tVlGbP//MP5A7
-         uQtQ==
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2P3exPS46FCuDEJsZhMkyQI8tWctasaM0g3W82t3mtc=;
+        b=W0lAIvI+f9yqF2W4ylDvJ1fbmpYqKoW/rGgM3EgKypWyfVTFvLSvuK997i4+0QZ8OD
+         LoM1fBxmpdbQ5P7uruEEPSsVPccHSUm0oXU3XYcM/+1vvtCoJWbouXtAf31jpceKeZup
+         Gx/4Zgp5dWNhaaWJFJbbNeIMSKj8++NPZlolBkY0/nacNerRSFQyGBNLBfdQm3uGb/i9
+         HP/dR6XXBjMphjscdS+63Uu0GY2dDNsMsYzEyXs/jK64TNzbTcR1p7tGQYP+AmBc9iLU
+         51x2gvCLXfM7sJBItCslAC0Cmfbbzc56nBhgcOSlTFVgfu9NzQX7tT8hq86OkPcbyJp5
+         TNBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sVtlaBH2oW7gQDOB4EYMReZLPA6GM1pQjljM+jQPnhA=;
-        b=3iToqCXYq21edC8iceoo7e4JPB08cIkcAyXaEfCxe42tRFV1Dnoh+yRuqAy7SrlOlU
-         WfHtx34T5RcG86hUBJFA8c3GBhuim9nwDLU1twwIuwbohxPShoB++aGxmXdIlIRcxhT4
-         J5z0FYSP24U7VM6Cd9oCcJLmwdMePyANGTi2+A8o5KwaqxOMG1idmA20gjhs8Yr1sXcI
-         7hN7hzk3KB3/faSmjx/x04WIn+WOk7P75xbd/ppKe2clQJLRbyBVlJb+iiWgdNZkeSjq
-         Cma/rxctxWB4pWJfiOCunL4E+aJlV8RIcqbjKLlDC3nVfBGOhKAItqfVAhRwa7JAwkDo
-         G4pQ==
-X-Gm-Message-State: AFqh2krS/ZcB0Xw9+7w01hOaXEnKGivWKZuGdrnHyREmv9WHTAOXTdPD
-        Bea9df8vukbwAy5aV+HW9+VbyRgYNFAg9i2juQQ=
-X-Google-Smtp-Source: AMrXdXuJDax+UKPF7gdSGuz9t+JeSva///+hoX0tEhCzQqIh/mHoksFwU4jOXOOquTomXA6FmLco3BIuh6bai3UuA6Y=
-X-Received: by 2002:a05:600c:b85:b0:3d9:ed04:727 with SMTP id
- fl5-20020a05600c0b8500b003d9ed040727mr2883054wmb.137.1674835295236; Fri, 27
- Jan 2023 08:01:35 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2P3exPS46FCuDEJsZhMkyQI8tWctasaM0g3W82t3mtc=;
+        b=sUsam1oq5LJhBmVpbEsgf8isHYMUbWPQ6Hp5LQniX55sI/kPQ/JqucUmfz7P5YXkim
+         SOMfGlb10DeboLCwnKxA0l3d/05hTnc5EEpI3/a/fy3/dBEk5hReS3dO6CnACDLtX/h8
+         Q3lffSXXB5AlCNx14cEoNSOCjqYaLHeyqf0CkIN5nrhTCXjfRp6RjfDfBoMDOS+lC5yS
+         uzWEnwHb+dDPcme+azDPfpruZwI3QvGZa93HY5xULu4aVzrc9yl8EmjwfG0S2RGy1Goe
+         ZYhOL6RVyxGWfX4xgo4ONVKB5okuKiwE95dYxJUMGpRFtG3dBso55pubz/wt1/Nu81e0
+         20iA==
+X-Gm-Message-State: AO0yUKVbFfBqttsX1uoruc4OnW6wKX6FWtalKLxikWZGj9jea0uCYaty
+        JYXZP9k91onlMji2moVNC6w=
+X-Google-Smtp-Source: AK7set9VKpC6Qzj7rQikZ5B5cKyszGYD0wzi0IyNmjajW1eyIvZX8kRpk1aRA88Wr8wngGMccqIGiQ==
+X-Received: by 2002:a05:6808:911:b0:35e:a9d4:30d6 with SMTP id w17-20020a056808091100b0035ea9d430d6mr2792250oih.44.1674838007430;
+        Fri, 27 Jan 2023 08:46:47 -0800 (PST)
+Received: from neuromancer. (76-244-6-13.lightspeed.rcsntx.sbcglobal.net. [76.244.6.13])
+        by smtp.gmail.com with ESMTPSA id u22-20020a056808115600b0036718f58b7esm1743540oiu.15.2023.01.27.08.46.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jan 2023 08:46:47 -0800 (PST)
+Message-ID: <63d3fff7.050a0220.db92.7af4@mx.google.com>
+X-Google-Original-Message-ID: <Y9P/9H/NkmCF8dHE@neuromancer.>
+Date:   Fri, 27 Jan 2023 10:46:44 -0600
+From:   Chris Morgan <macroalpha82@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
+        alistair@alistair23.me, anarsoul@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        max.chou@realtek.com, hildawu@realtek.com,
+        Chris Morgan <macromorgan@hotmail.com>
+Subject: Re: [PATCH RFC 1/2] dt-bindings: net: realtek-bluetooth: Add
+ RTL8821CS
+References: <20230126165529.1452252-1-macroalpha82@gmail.com>
+ <20230126165529.1452252-2-macroalpha82@gmail.com>
+ <02bddab6-4c63-bb39-9a11-8dab81322c28@linaro.org>
 MIME-Version: 1.0
-Received: by 2002:a5d:6d89:0:0:0:0:0 with HTTP; Fri, 27 Jan 2023 08:01:34
- -0800 (PST)
-Reply-To: innocent_iddrisa@innocent.com
-From:   Mr innocent Kanazoe Iddrisa <lindaqare13@gmail.com>
-Date:   Fri, 27 Jan 2023 16:01:34 +0000
-Message-ID: <CAPfsn2v8+RySr-VkgOhHsUSaCGsNbFGAxE+bH5y30U8WikPwjg@mail.gmail.com>
-Subject: Please reply me this mail today.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=7.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <02bddab6-4c63-bb39-9a11-8dab81322c28@linaro.org>
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
-        UNDISC_FREEM,UNDISC_MONEY autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:343 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [lindaqare13[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [lindaqare13[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        *  2.8 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  0.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
-        *      email?
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-        *  3.1 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: *******
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-Greetings to you.I am Mr.innocent kanazoe iddrisa working at the coris
-bank international.I have a transaction that worth a total sum of
-$18.7 million dollars to handle with you.Reply me today for more
-detailed information if you are interested.
+On Fri, Jan 27, 2023 at 11:24:03AM +0100, Krzysztof Kozlowski wrote:
+> On 26/01/2023 17:55, Chris Morgan wrote:
+> > From: Chris Morgan <macromorgan@hotmail.com>
+> > 
+> > Add compatible string for RTL8821CS for existing Realtek Bluetooth
+> > driver.
+> > 
+> > Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+> > ---
+> >  Documentation/devicetree/bindings/net/realtek-bluetooth.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> 
+> Based on your driver it is compatible with rtl8822cs, so you can
+> indicate it in the binding and use just one of_device_id entry.
+
+It's very similar, and uses some of the same constants, but has a
+different firmware. I assumed the firmware difference is enough to
+require it to be differentiated, but I wasn't sure. You are saying
+it does not? I just want to be clear.
+
+As always, thank you.
+
+> 
+> Best regards,
+> Krzysztof
+> 
