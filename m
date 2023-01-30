@@ -2,24 +2,24 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B69E681974
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Jan 2023 19:39:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 869F6681977
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Jan 2023 19:39:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238258AbjA3SjF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Jan 2023 13:39:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45072 "EHLO
+        id S238358AbjA3SjJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Jan 2023 13:39:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238352AbjA3Sit (ORCPT
+        with ESMTP id S238052AbjA3Six (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Jan 2023 13:38:49 -0500
+        Mon, 30 Jan 2023 13:38:53 -0500
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA0D9DBEC
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 10:38:03 -0800 (PST)
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C8BA23D8C
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 10:38:06 -0800 (PST)
+Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by lahtoruutu.iki.fi (Postfix) with ESMTPS id 968CC1B00284
+        by lahtoruutu.iki.fi (Postfix) with ESMTPS id 541231B0027A
         for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 20:38:01 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
         t=1675103881;
@@ -27,52 +27,52 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=XGr63m2nawIlWmW54r7Y7bbf5H8d62yr4LMtjIapxLE=;
-        b=SupBJFo2nokol5N585npdxHG/KIHYMeN+e/LqYQfBYcxU17/cGNNQ/WaRCifxYnroMa+2n
-        +y0E1NVdhDQELX/6rj3iJqlcyqQzY1c1a7tQ+MhDKJpF+/iG1pPqmxOeegGsqWeifhOlEI
-        yD6lkHXrXJ95ZZAu2lozRqsa7mbn0lEwfsHzY+2CVEiQqE/ZaNTJXd7aqoZNCpDjj20YyV
-        7zBKajfdNt3ibMPCAoDsh3a0naumIhT87vX/qpyp/pnAsHiwTv+H1DVaP4z7R6CzCGI+Rz
-        pQw+GwHqkUI07SzKZzgjY5y5p4lAdnvPZ0HARmj2o1K26zCIcw+EK3Z+p0Z+mg==
+        bh=j7x0icnorU2d5QS8/EgbEzJZVUpP8E8+GWy+CNyG/qs=;
+        b=oCQi+6d5JrTL/qsPxnK47ZKCG1EGHmOxPgblNBls20lSXQ+Ck4WW33lH9QD9h87XHvpr+c
+        SFRbEX9me9d4O3x4UxNhJaZc6/z489RfMoG81DNJ6hTTs0EA52ZE7p+ZlXNJRsg8tTO5Fs
+        499Ly3M28AcX5MseDA1TJw1teh8+ISpJ04VP7rlJI+Q2JMgKiwU6frp93svAFEZv9hnNKJ
+        8SQlj0NGcPwWAVSeQtpQTZ2goOZW/MX5ZdcmTCgtEHVSVUlhLPsKhCWdCoJ2K+/fAfbGj3
+        AYbpG6uIq+6p2cHQZI8/eiNk05X47/p8xTYg5Lw8FSZtvg+iDKl8I8a4Az6gwQ==
 Received: from monolith.lan (91-152-121-187.elisa-laajakaista.fi [91.152.121.187])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: pav)
-        by meesny.iki.fi (Postfix) with ESMTPSA id E97EF203AF;
-        Mon, 30 Jan 2023 20:37:54 +0200 (EET)
+        by meesny.iki.fi (Postfix) with ESMTPSA id 12163203BD;
+        Mon, 30 Jan 2023 20:37:55 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
         t=1675103875;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=XGr63m2nawIlWmW54r7Y7bbf5H8d62yr4LMtjIapxLE=;
-        b=Nz45eKaQnASPHKZgbDPtricnlJ24Rd7FJcGIz8HLByoksW4DcfvxmQwA1BoWmkCNnFhhPh
-        wpReRhqMOTbbDleFb5AM3R6ruIBfHKtH2YoS5TRrSNz4oJQp5U4DRIiqG2UXTl6YTNbUPn
-        r0MNyPsix+H2BW5l5gL/hTgFocoJIw8=
+        bh=j7x0icnorU2d5QS8/EgbEzJZVUpP8E8+GWy+CNyG/qs=;
+        b=CNyb5u4sYLno1BP5aaxFvLgj8OF/QsRHzUpGaPcQ3BpSljEcRj8eiGoNIzded8aJuFQcDw
+        aBRtCfy1d7l8fZqQWGUjO5TuPg+auTKwKyBxCvidQMlNlccbI+kO32uCUvD/CPud/aTS/H
+        r8gzQetDza9UFeo5IJG3GK7CwZxmBjg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
         s=meesny; t=1675103875;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=XGr63m2nawIlWmW54r7Y7bbf5H8d62yr4LMtjIapxLE=;
-        b=w/bggFRU2C4xSyCRL9NOjQD9wLEiHESM/P/UxeP0ZHx2aPNCk/+Kvx6FjnQnyG3l9rBfDo
-        rK5phz9eoiJtGV/qRvXMHxmuAdFAHzlTjjuRztU/RpTOt+MeuD5FSfvbTCfmLpRQ59LJ/V
-        RLcW0SaSmDNO5NH/baXmr20s9kj8OnI=
+        bh=j7x0icnorU2d5QS8/EgbEzJZVUpP8E8+GWy+CNyG/qs=;
+        b=KQqJb++6R4wmUgNvHF/twBt4e8PccTVklbRB7SrxGEVE3F1zhl2C0wSQqh0exymALXljaa
+        xrdH0dCzkwjIHY4zjs/RzISAFv+mRGWfXrv7s9R9TPwR0Dnfj4illCmhuhpCPgLx4F2QmI
+        NTVb9vl1smcPGSZpVU/Ot1JvtpuxE08=
 ARC-Authentication-Results: i=1;
         ORIGINATING;
         auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1675103875; a=rsa-sha256; cv=none;
-        b=e+RyE7fasXLu0rBFfJrd/5+76AEcdCycEdfZc/KUJLkFz++FFl/Psa80EPiDjlH4cMfkAy
-        9c3nPIXA13oTqUavGXgDgK+CAiDF2QzgRQ3ajcvwR5AlqQCvk0sQ8LX/2RYyY3r1QjVSjw
-        GveUIwyQiDVmSmXTQfphbGOnFHSKOqA=
+        b=HrmaksdFFWSCtzZaBgtkKADTyNiSA96mBvVbbkpwryEeO1RIRKAqSTX3lNx6oIhkoB2qSk
+        EjOLvN+lcuPde/qAT5iIZAGyobZb1IDRntVa1rJomfs57l0EhiAPdsVZLO4GwQEmTC02qx
+        lxRA6nL/naYzgMJ7zeSDBNZ5mp2P5IY=
 From:   Pauli Virtanen <pav@iki.fi>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 4/8] tools/btmgmt: add names for MGMT setting bits for CIS feature support
-Date:   Mon, 30 Jan 2023 20:37:35 +0200
-Message-Id: <b98624eb045141f941c3855631e266c93203bf91.1675103676.git.pav@iki.fi>
+Subject: [PATCH BlueZ 5/8] adapter: add functions indicating adapter CIS capability
+Date:   Mon, 30 Jan 2023 20:37:36 +0200
+Message-Id: <32554e8adb382a7e5051f09cd06ca4e0dfe1f86b.1675103676.git.pav@iki.fi>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <a8aedc0f9a4c1e21d61694589c5b7a9f31cbedc1.1675103676.git.pav@iki.fi>
 References: <20230127205205.20235-1-pav@iki.fi>
@@ -88,22 +88,51 @@ List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 ---
- tools/btmgmt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ src/adapter.c | 16 ++++++++++++++++
+ src/adapter.h |  3 +++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/tools/btmgmt.c b/tools/btmgmt.c
-index 29f86091f..323c26712 100644
---- a/tools/btmgmt.c
-+++ b/tools/btmgmt.c
-@@ -353,6 +353,8 @@ static const char *settings_str[] = {
- 				"static-addr",
- 				"phy-configuration",
- 				"wide-band-speech",
-+				"cis-central",
-+				"cis-peripheral",
- };
+diff --git a/src/adapter.c b/src/adapter.c
+index aadad4016..4f06bce53 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -9033,6 +9033,22 @@ bool btd_adapter_ssp_enabled(struct btd_adapter *adapter)
+ 	return false;
+ }
  
- static const char *settings2str(uint32_t settings)
++bool btd_adapter_cis_central_capable(struct btd_adapter *adapter)
++{
++	if (adapter->current_settings & MGMT_SETTING_CIS_CENTRAL)
++		return true;
++
++	return false;
++}
++
++bool btd_adapter_cis_peripheral_capable(struct btd_adapter *adapter)
++{
++	if (adapter->current_settings & MGMT_SETTING_CIS_PERIPHERAL)
++		return true;
++
++	return false;
++}
++
+ void btd_adapter_set_oob_handler(struct btd_adapter *adapter,
+ 						struct oob_handler *handler)
+ {
+diff --git a/src/adapter.h b/src/adapter.h
+index 78eb069ae..3fcee30bc 100644
+--- a/src/adapter.h
++++ b/src/adapter.h
+@@ -226,6 +226,9 @@ void btd_adapter_gatt_server_stop(struct btd_adapter *adapter);
+ 
+ bool btd_adapter_ssp_enabled(struct btd_adapter *adapter);
+ 
++bool btd_adapter_cis_central_capable(struct btd_adapter *adapter);
++bool btd_adapter_cis_peripheral_capable(struct btd_adapter *adapter);
++
+ int adapter_connect_list_add(struct btd_adapter *adapter,
+ 					struct btd_device *device);
+ void adapter_connect_list_remove(struct btd_adapter *adapter,
 -- 
 2.39.1
 
