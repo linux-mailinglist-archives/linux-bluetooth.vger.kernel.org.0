@@ -2,75 +2,80 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67E50681973
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Jan 2023 19:39:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 63A7B681976
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 30 Jan 2023 19:39:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238187AbjA3SjD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Jan 2023 13:39:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44550 "EHLO
+        id S238215AbjA3SjI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Jan 2023 13:39:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238254AbjA3Sis (ORCPT
+        with ESMTP id S237916AbjA3Siv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Jan 2023 13:38:48 -0500
+        Mon, 30 Jan 2023 13:38:51 -0500
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAD55B44B
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 10:38:02 -0800 (PST)
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BB921E1F4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 10:38:06 -0800 (PST)
+Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by lahtoruutu.iki.fi (Postfix) with ESMTPS id 3FF4D1B000A4
+        by lahtoruutu.iki.fi (Postfix) with ESMTPS id C1BDD1B001E5
         for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 20:38:00 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
         t=1675103880;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=jdsUT2XSJyrD2X4/zPGnfk6UagSBuq0Oo+Bi3zY6Q8Q=;
-        b=e6P2PT6IBC1Q0gBKEe1ZORyMyTno/5YjMIw0OIoTnFLZ/+Qf7AkVSNnosIpclQ8mMF0eCI
-        cUIkAUwaM5k3crTe+T8sOPRXzObJgfjYSpH/OMWjwzuVjpc0CKjh5UsP2k+CFuHeBn9EAy
-        hfdJ7DLZRAvyGRc0tKcUPy4BYoNj+vXGJb8QIxuTOpPsqw7axTzGh7kYR59Ex4PvIYVTlv
-        4vJFIblo1zussjJyNVD5budt4L8kwfmfxalSVOAxNn4KU2BDFAa+9lVeTPTZIatHaTb8Pd
-        gpcdRrSUbcoY2c+e8MjbDHv1JsNex/9jJsLOLhVd5cYhxrQ5pywVOiBbW+uzlA==
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=5wqMUAdn/P0OmOJuwUxgCO3BaZYL9+puHVBdgZa+D0U=;
+        b=ocd7vURUPOmpeX5B+IazMEaEk/V9IOlGJYDnc619GFIIba4aA2zZPWgKvgCzktrCoUsCqJ
+        G684Tsb8Zhb9PLFTsfYFZtvrp103uP7nQ62hr+cOzeIGo2gaEzBkLaK6W4gsF+qjXCiRRI
+        TnhuwhX3GJ4FNZeypgZ/yAhIAJdkG+L3unWmqAMAcrSBwm3tRTo09ELpGai/StXwDnEvdF
+        TNnWVNLUfAA7V76Y3iMDYd6LfhW8klJLz73jM1WiJgDDmHrh+fd6X++H1jvl5HaBTu00pQ
+        PK1ygL3gUCbqEnagB9aR8KHABPvKWj06CHdB+zJw7wMybgniUwQztqL8ZCBEPw==
 Received: from monolith.lan (91-152-121-187.elisa-laajakaista.fi [91.152.121.187])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: pav)
-        by meesny.iki.fi (Postfix) with ESMTPSA id 7644F200E5;
+        by meesny.iki.fi (Postfix) with ESMTPSA id A22AA20231;
         Mon, 30 Jan 2023 20:37:54 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
         t=1675103874;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=jdsUT2XSJyrD2X4/zPGnfk6UagSBuq0Oo+Bi3zY6Q8Q=;
-        b=PZ8lqfnXV4lkg0A+KV49zGii2Rn4cYrZFxcqjMNiFQxkSroQTWG2XPUdI9sPChWDevQxOp
-        sscxHOKcDPUznb40FY4rtveuw0ZICED8RDvJOQwwJzV/Ha/cI0LqLfxhn0gsO9W4KwO9eF
-        ou6uSN21HMhcx/PM/RqGKPs2s9gS5YI=
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=5wqMUAdn/P0OmOJuwUxgCO3BaZYL9+puHVBdgZa+D0U=;
+        b=ilbiS5aCCqoZR/gn4OHgBOcSI3iswJW1nuRw8MuM0l7+zx0JCXojazztl7OpsMpkAfCguZ
+        2mhsSCaruaafOX1UUqiIP5hrlRp42cK3m5YHv9p3IW/3Vg5ryeXBlt3HE44K/TJVJC9MC0
+        qFgilssB2MjLzJhDy2FV0YDVcYFABpA=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
         s=meesny; t=1675103874;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=jdsUT2XSJyrD2X4/zPGnfk6UagSBuq0Oo+Bi3zY6Q8Q=;
-        b=cMVfd/eJN3GQgPWxynqRm9flwZ0vjfP7gxU3hUHPgcBPOcjhXqywHV2R03LnlUKsEnu7rz
-        RNW2/NXZlWhncKYo4uvNqSh7wfh9r+6r1C+/qHxLxgMWvJdaYuIdPDEI7uskKxFR0nf6Tg
-        NmXefN5WZ9GZtYgI3lLUlM9Kd/0M33o=
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=5wqMUAdn/P0OmOJuwUxgCO3BaZYL9+puHVBdgZa+D0U=;
+        b=aUa4PuKUWKk7rBrTNo0TV10FjOu8weCBriGsa+Q9cdYQlMaG9Y+tpz7DhMovM272O+/lD1
+        NvCB+3wDcUp8N63mhDA1qwddbIgurNFU+sAahXw1+yvKXEzFTgBsYMcuaux2hp5kEF4JJ1
+        WHWZNZcnF0FurB6H2kTWTk5NRvAn7bc=
 ARC-Authentication-Results: i=1;
         ORIGINATING;
         auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1675103874; a=rsa-sha256; cv=none;
-        b=kpudVUNNcf5j3proY2BZE4MnRGumyqi3JWTMdx7oYe0Hpbgamkz1Kr4r1M55WncM3CZUEh
-        Gbm/Vex1R24DYOqTg/FUyZeqE62LnLtKUrz0L6TR5omUJKf7t4ZzSNbhzfux5IK8nshRNo
-        MS8BOgF7FrPc90sjh2toeVfA/XMxJqo=
+        b=mir2axofry3CIuZrpXdxApqn7aeiNgs1ACt4kq3L6LVU/9ItJN2APtB5OL+WsfEY+gsC/A
+        cB2J2EXhXMDAmmOg0eg+RDV2nSq3dIJ78d79HCFRS1KC/uHVIeoHZqNoSNxQCl6Roln3W9
+        U2GhJRJsi87m0An7eHuE9pD+s1wIfoo=
 From:   Pauli Virtanen <pav@iki.fi>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 1/8] doc: add MGMT setting for CIS features, remove Quality Report
-Date:   Mon, 30 Jan 2023 20:37:32 +0200
-Message-Id: <a8aedc0f9a4c1e21d61694589c5b7a9f31cbedc1.1675103676.git.pav@iki.fi>
+Subject: [PATCH BlueZ 2/8] lib: Add defines for MGMT setting bits for CIS feature support
+Date:   Mon, 30 Jan 2023 20:37:33 +0200
+Message-Id: <7e42fb8018045ac29c3e7a6784dd1a43a755e977.1675103676.git.pav@iki.fi>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <a8aedc0f9a4c1e21d61694589c5b7a9f31cbedc1.1675103676.git.pav@iki.fi>
+References: <20230127205205.20235-1-pav@iki.fi>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,49 +87,23 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add definitions for new MGMT Controller Information settings bits,
-indicating adapter Connected Isochronous Stream - Central/Peripheral
-feature support.
-
-The Set Quality Report command was removed in
-commit 0454e2d09570 ("mgmt: Add support for Mesh in the kernel"),
-but the settings bit was not removed. It's also not implemented on
-kernel side, so remove it now.
 ---
+ lib/mgmt.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Notes:
-    Was the quality report setting bit reserved on purpose?
-    
-    From the commit log it looks like it was forgotten to remove from the
-    docs, but this is not clear.
-
- doc/mgmt-api.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/doc/mgmt-api.txt b/doc/mgmt-api.txt
-index 90d612ed8..58395dc90 100644
---- a/doc/mgmt-api.txt
-+++ b/doc/mgmt-api.txt
-@@ -332,7 +332,8 @@ Read Controller Information Command
- 		15	Static Address
- 		16	PHY Configuration
- 		17	Wideband Speech
--		18	Quality Report
-+		18	Connected Isochronous Stream - Central
-+		19	Connected Isochronous Stream - Peripheral
+diff --git a/lib/mgmt.h b/lib/mgmt.h
+index 796190cd9..efbdfb4b1 100644
+--- a/lib/mgmt.h
++++ b/lib/mgmt.h
+@@ -96,6 +96,8 @@ struct mgmt_rp_read_index_list {
+ #define MGMT_SETTING_STATIC_ADDRESS	0x00008000
+ #define MGMT_SETTING_PHY_CONFIGURATION	0x00010000
+ #define MGMT_SETTING_WIDEBAND_SPEECH	0x00020000
++#define MGMT_SETTING_CIS_CENTRAL	0x00040000
++#define MGMT_SETTING_CIS_PERIPHERAL	0x00080000
  
- 	This command generates a Command Complete event on success or
- 	a Command Status event on failure.
-@@ -2925,7 +2926,8 @@ Read Extended Controller Information Command
- 		15	Static Address
- 		16	PHY Configuration
- 		17	Wideband Speech
--		18	Quality Report
-+		18	Connected Isochronous Stream - Central
-+		19	Connected Isochronous Stream - Peripheral
- 
- 	The EIR_Data field contains information about class of device,
- 	local name and other values. Not all of them might be present. For
+ #define MGMT_OP_READ_INFO		0x0004
+ struct mgmt_rp_read_info {
 -- 
 2.39.1
 
