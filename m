@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2909C682004
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 31 Jan 2023 00:52:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 107CB682005
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 31 Jan 2023 00:52:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230430AbjA3Xw2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 30 Jan 2023 18:52:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37312 "EHLO
+        id S230465AbjA3Xw3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 30 Jan 2023 18:52:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230271AbjA3XwZ (ORCPT
+        with ESMTP id S230299AbjA3Xw0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 30 Jan 2023 18:52:25 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF0AA2E0E3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 15:52:23 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id cq16-20020a17090af99000b0022c9791ac39so4862321pjb.4
-        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 15:52:23 -0800 (PST)
+        Mon, 30 Jan 2023 18:52:26 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A932DE76
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 15:52:24 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id e6so5142357plg.12
+        for <linux-bluetooth@vger.kernel.org>; Mon, 30 Jan 2023 15:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MxFB/vGyvOLqHBHjxb1DG1dv0eiHN4kUObFXqXhRuYU=;
-        b=mCOO3eNsXneMFaYGGZReT72ttRw2CTaOFdGfRHEI5d7S1GyXWdS5Rp5qEsLllkBnmc
-         uXrFtp7+PQgegL7sxIkJBH9OAVeBt2pPCmvCvbsuldlzJnk5nbxoVL8ptialVPBliatQ
-         /B0qQsRD2TxIznY3UU4t0Npjs+bo4br3IVv7rXdycpx9vGhFzykEqJIogtwL8Cnx+Brc
-         1hNIUYnTKEG1uE01XbEUo6rfit4dW6ZSJ/jYG6pU7hMzv6fIhWLKAozxgln6FGAV9vDA
-         kkvL7mHhDMgGKS67HWV7Cck2AEFN6DxO6BcqwYzQgeZGXozUXmhQWE/bj5o/vUbbVi2z
-         GxEQ==
+        bh=p6x8iDv3n3QmZU6gO771CCS9s6JsSEmUGZoOr7PVM2w=;
+        b=es3KOOw+0kfuY3UZYHPwdn157NDgPKmsfLPY1WySC/dH1AVEwYJ9+sCG9Hv6yZNs+p
+         REDuZVhOZVMzb1iGo3gKDwOOj0kC5FqJAiqytpv3vp4qns23lYoTTcReH3jJ08UANcu7
+         2nPF4MP7FTGX1rlKjWyNP1qcT+8Wa5pFE9gwI5Qgn/HXN7r978RtMC8oyXsCeRfLprOs
+         Ge4n7cH19kG3+8dSUO4+pSvY5ylwUjlAOKca+ZoJRqFwaeFN/4iGxgdl11n6x6pxEsod
+         v6+EYGn0+9MkiVD2WVodKF+GayF5WXrIX45mHi5hshKr0n7VDCsS2lUKNPfyFWOBs57j
+         gRkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MxFB/vGyvOLqHBHjxb1DG1dv0eiHN4kUObFXqXhRuYU=;
-        b=JqCQp1RZG3UrC0am2aaGmY9zfXdUUqIKkfUwowztWa5lykh9m3xvvzdXvpLOgibDu+
-         g24zFLC6dt/9InrQEyl2MWqRBm0ZM96wGiJUHq8TZ5uKIK1zBNqlZyCjq4gCW0DOI4RW
-         h4gEdEaO9yiG3vWljs9cRVG8IErMcKUL2CT+psmpa8R4iwlFdUVQQuz2/wg01D3h7F+I
-         L5QEjPhyoWbDjW3CpiOn/GhnZKgApSWpo47q0ozEc5+lDL/EewP3tA1BqRaMr88KYhu4
-         1Mn9/evaIVn9AXVr3QzEApPrMYLRDAoGfnw5UkQU8mwqeg/ZZkMVJV62Ow4VkSTvPV2e
-         jy8w==
-X-Gm-Message-State: AO0yUKUYKhcXTjVtx3Sv6An/BvquHDI5cZvLj69vBzgeKg0WtvTHpbLZ
-        jNxJdXeXKGkXz7YXwkXBOYbAEFYtbOa2sQ==
-X-Google-Smtp-Source: AK7set9+HIi2TWHSAq4x/ccDMJII2/04tdx3FujHApOicgk0hxTAowBLvgtX5mldnFsDJAvdtpx28g==
-X-Received: by 2002:a17:90a:1952:b0:22c:3edd:7e48 with SMTP id 18-20020a17090a195200b0022c3edd7e48mr16028677pjh.32.1675122742664;
-        Mon, 30 Jan 2023 15:52:22 -0800 (PST)
+        bh=p6x8iDv3n3QmZU6gO771CCS9s6JsSEmUGZoOr7PVM2w=;
+        b=iYEiW9rgi8iNK6VikKj977tlhsa1OWDJgucfYNcq+3SAbF8eiXwnSDRZKVgOcwvTQ/
+         cVS/hxRUZR2pfKdg7SqxFSTWTPQVC0Qv/4CCt9U3/MOBGDHACf1rBzr1af/GyCwGIQv4
+         L25VNbhDAKKnvTyagCSquJNYThgHvi1FOVSy8Qtzl43FLqUqRBF9XsdQzsjcx3sIZA4F
+         FJVFTHvqzZ3B+fafEYRWdxNUWb+nxqzWWcjGu2hP71+HObDwXNVqvzwZqo2M7MXOtTLP
+         lV/0aWBg9g5eyXCOEXn9ndM3scxD9awUPBzi3XR12+5mW5UmKolnKVb070jtp1SihXNq
+         LnwQ==
+X-Gm-Message-State: AO0yUKUNrzb0pzbBN5UkojiYSbOza8jBXAMPh+WPJinvSuqd1XobOmd+
+        j4l74bT4GXcBoMXzG/nR2/tWYqBfryYNJA==
+X-Google-Smtp-Source: AK7set/bBLnvObADPpqsDMfXuwRZwBaSjqCprJ7E9ktD+PBrk3L1yAz/05XhLtBz/6+rAOQwWN0cQg==
+X-Received: by 2002:a05:6a21:99a8:b0:bc:8b91:69a7 with SMTP id ve40-20020a056a2199a800b000bc8b9169a7mr13974720pzb.33.1675122743425;
+        Mon, 30 Jan 2023 15:52:23 -0800 (PST)
 Received: from fedora.. (97-126-124-199.tukw.qwest.net. [97.126.124.199])
-        by smtp.gmail.com with ESMTPSA id t191-20020a6381c8000000b004e8f7f23c4bsm2663948pgd.76.2023.01.30.15.52.21
+        by smtp.gmail.com with ESMTPSA id t191-20020a6381c8000000b004e8f7f23c4bsm2663948pgd.76.2023.01.30.15.52.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 15:52:22 -0800 (PST)
+        Mon, 30 Jan 2023 15:52:23 -0800 (PST)
 From:   Brian Gix <brian.gix@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     brian.gix@intel.com, inga.stotland@intel.com
-Subject: [PATCH BlueZ v5 06/14] mesh: Add storage of Mesh Private Beacon settings
-Date:   Mon, 30 Jan 2023 15:52:02 -0800
-Message-Id: <20230130235210.94385-7-brian.gix@gmail.com>
+Subject: [PATCH BlueZ v5 07/14] mesh: Add Mesh Private Beacon server
+Date:   Mon, 30 Jan 2023 15:52:03 -0800
+Message-Id: <20230130235210.94385-8-brian.gix@gmail.com>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130235210.94385-1-brian.gix@gmail.com>
 References: <20230130235210.94385-1-brian.gix@gmail.com>
@@ -73,120 +73,200 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Brian Gix <brian.gix@intel.com>
 
-If current storage does not exist in node.json, the Mesh Private
-Beacon will be disabled.
+This initial server supports only the Mesh Private Beacon and returns
+"Not Suppoerted" for Get/Set of Private GATT Proxy and Private Node
+Identity beacons.
 ---
- mesh/mesh-config-json.c | 48 +++++++++++++++++++++++++++++++++++++++++
- mesh/mesh-config.h      |  6 ++++++
- 2 files changed, 54 insertions(+)
+ Makefile.mesh         |   1 +
+ mesh/prv-beacon.h     |  36 +++++++++++++
+ mesh/prvbeac-server.c | 123 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 160 insertions(+)
+ create mode 100644 mesh/prv-beacon.h
+ create mode 100644 mesh/prvbeac-server.c
 
-diff --git a/mesh/mesh-config-json.c b/mesh/mesh-config-json.c
-index 8f321a731..c198627c6 100644
---- a/mesh/mesh-config-json.c
-+++ b/mesh/mesh-config-json.c
-@@ -1337,6 +1337,19 @@ static void parse_features(json_object *jconfig, struct mesh_config_node *node)
- 			node->modes.beacon = mode;
- 	}
+diff --git a/Makefile.mesh b/Makefile.mesh
+index e18a169eb..63f085de1 100644
+--- a/Makefile.mesh
++++ b/Makefile.mesh
+@@ -36,6 +36,7 @@ mesh_sources = mesh/mesh.h mesh/mesh.c \
+ 				mesh/pb-adv.h mesh/pb-adv.c \
+ 				mesh/keyring.h mesh/keyring.c \
+ 				mesh/rpl.h mesh/rpl.c \
++				mesh/prv-beacon.h mesh/prvbeac-server.c \
+ 				mesh/mesh-defs.h
+ pkglibexec_PROGRAMS += mesh/bluetooth-meshd
  
-+	if (json_object_object_get_ex(jconfig, "mpb", &jvalue)) {
-+		mode = get_mode(jvalue);
-+		if (mode <= MESH_MODE_UNSUPPORTED)
-+			node->modes.mpb = mode;
+diff --git a/mesh/prv-beacon.h b/mesh/prv-beacon.h
+new file mode 100644
+index 000000000..1e69e7fda
+--- /dev/null
++++ b/mesh/prv-beacon.h
+@@ -0,0 +1,36 @@
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2023  Intel Corporation. All rights reserved.
++ *
++ *
++ *  This library is free software; you can redistribute it and/or
++ *  modify it under the terms of the GNU Lesser General Public
++ *  License as published by the Free Software Foundation; either
++ *  version 2.1 of the License, or (at your option) any later version.
++ *
++ *  This library is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ *  Lesser General Public License for more details.
++ *
++ */
 +
-+		if (node->modes.mpb == MESH_MODE_ENABLED) {
-+			if (json_object_object_get_ex(jconfig, "mpbPeriod",
-+								&jvalue))
-+				node->modes.mpb_period =
-+						json_object_get_int(jvalue);
-+		}
-+	}
++struct mesh_node;
 +
- 	if (!json_object_object_get_ex(jconfig, "relay", &jrelay))
- 		return;
- 
-@@ -1576,6 +1589,18 @@ bool mesh_config_write_mode(struct mesh_config *cfg, const char *keyword,
- 	return save_config(cfg->jnode, cfg->node_dir_path);
- }
- 
-+bool mesh_config_write_mode_ex(struct mesh_config *cfg, const char *keyword,
-+							int value, bool save)
++#define PRV_BEACON_SRV_MODEL	SET_ID(SIG_VENDOR, 0x0008)
++#define PRV_BEACON_CLI_MODEL	SET_ID(SIG_VENDOR, 0x0009)
++
++/* Private Beacon opcodes */
++#define OP_PRIVATE_BEACON_GET			0x8060
++#define OP_PRIVATE_BEACON_SET			0x8061
++#define OP_PRIVATE_BEACON_STATUS		0x8062
++#define OP_PRIVATE_GATT_PROXY_GET		0x8063
++#define OP_PRIVATE_GATT_PROXY_SET		0x8064
++#define OP_PRIVATE_GATT_PROXY_STATUS		0x8065
++#define OP_PRIVATE_NODE_ID_GET			0x8066
++#define OP_PRIVATE_NODE_ID_SET			0x8067
++#define OP_PRIVATE_NODE_ID_STATUS		0x8068
++
++void prv_beacon_server_init(struct mesh_node *node, uint8_t ele_idx);
+diff --git a/mesh/prvbeac-server.c b/mesh/prvbeac-server.c
+new file mode 100644
+index 000000000..e712778f8
+--- /dev/null
++++ b/mesh/prvbeac-server.c
+@@ -0,0 +1,123 @@
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2023  Intel Corporation. All rights reserved.
++ *
++ *
++ *  This library is free software; you can redistribute it and/or
++ *  modify it under the terms of the GNU Lesser General Public
++ *  License as published by the Free Software Foundation; either
++ *  version 2.1 of the License, or (at your option) any later version.
++ *
++ *  This library is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ *  Lesser General Public License for more details.
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include <config.h>
++#endif
++
++#include <sys/time.h>
++#include <ell/ell.h>
++
++#include "mesh/mesh-defs.h"
++#include "mesh/node.h"
++#include "mesh/net.h"
++#include "mesh/appkey.h"
++#include "mesh/model.h"
++#include "mesh/mesh-config.h"
++#include "mesh/prv-beacon.h"
++
++#define NOT_SUPPORTED 0x02
++
++static bool prvbec_srv_pkt(uint16_t src, uint16_t dst, uint16_t app_idx,
++				uint16_t net_idx, const uint8_t *data,
++				uint16_t size, const void *user_data)
 +{
-+	if (!cfg)
++	struct mesh_node *node = (struct mesh_node *) user_data;
++	const uint8_t *pkt = data;
++	uint32_t opcode;
++	uint8_t msg[5];
++	uint16_t n;
++	uint8_t period = 0;
++
++	if (app_idx != APP_IDX_DEV_LOCAL)
 +		return false;
 +
-+	if (save)
-+		return mesh_config_write_mode(cfg, keyword, value);
-+	else
-+		return write_mode(cfg->jnode, keyword, value);
-+}
-+
- static bool write_relay_mode(json_object *jobj, uint8_t mode,
- 					uint8_t count, uint16_t interval)
- {
-@@ -1622,6 +1647,21 @@ bool mesh_config_write_relay_mode(struct mesh_config *cfg, uint8_t mode,
- 	return save_config(cfg->jnode, cfg->node_dir_path);
- }
- 
-+bool mesh_config_write_mpb(struct mesh_config *cfg, uint8_t mode,
-+								uint8_t period)
-+{
-+
-+	if (!cfg || !write_mode(cfg->jnode, "mpb", mode))
++	if (mesh_model_opcode_get(pkt, size, &opcode, &n)) {
++		size -= n;
++		pkt += n;
++	} else
 +		return false;
 +
-+	if (mode) {
-+		if (!write_int(cfg->jnode, "mpbPeriod", period))
-+			return false;
++	l_debug("PRV-BEAC-SRV-opcode 0x%x size %u idx %3.3x", opcode, size,
++								net_idx);
++
++	n = 0;
++
++	switch (opcode) {
++	default:
++		return false;
++
++	case OP_PRIVATE_BEACON_SET:
++		if (size == 1)
++			period = 0xff;
++		else if (size == 2)
++			period = pkt[1];
++		else
++			return true;
++
++		/* fall through */
++
++	case OP_PRIVATE_BEACON_GET:
++		n = mesh_model_opcode_set(OP_PRIVATE_BEACON_STATUS, msg);
++
++		msg[n++] = NOT_SUPPORTED;
++		msg[n++] = period;
++
++		l_debug("Get/Set Private Beacon (%d)", msg[n-2]);
++		break;
++
++	case OP_PRIVATE_GATT_PROXY_SET:
++		/* fall through */
++	case OP_PRIVATE_GATT_PROXY_GET:
++		n = mesh_model_opcode_set(OP_PRIVATE_GATT_PROXY_STATUS, msg);
++		msg[n++] = NOT_SUPPORTED;
++		break;
++
++	case OP_PRIVATE_NODE_ID_SET:
++		/* fall through */
++	case OP_PRIVATE_NODE_ID_GET:
++		n = mesh_model_opcode_set(OP_PRIVATE_NODE_ID_STATUS, msg);
++		msg[n++] = NOT_SUPPORTED;
++		break;
 +	}
 +
-+	return save_config(cfg->jnode, cfg->node_dir_path);
++	if (n)
++		mesh_model_send(node, dst, src, APP_IDX_DEV_LOCAL, net_idx,
++						DEFAULT_TTL, false, n, msg);
++
++	return true;
 +}
 +
- bool mesh_config_write_net_transmit(struct mesh_config *cfg, uint8_t cnt,
- 							uint16_t interval)
- {
-@@ -1746,6 +1786,14 @@ static struct mesh_config *create_config(const char *cfg_path,
- 	if (!write_mode(jnode, "beacon", modes->beacon))
- 		return NULL;
- 
-+	if (!write_mode(jnode, "mpb", modes->mpb))
-+		return NULL;
++static void prvbec_srv_unregister(void *user_data)
++{
++}
 +
-+	if (modes->mpb) {
-+		if (!write_int(jnode, "mpbPeriod", modes->mpb_period))
-+			return NULL;
-+	}
++static const struct mesh_model_ops ops = {
++	.unregister = prvbec_srv_unregister,
++	.recv = prvbec_srv_pkt,
++	.bind = NULL,
++	.sub = NULL,
++	.pub = NULL
++};
 +
- 	/* Sequence number */
- 	json_object_object_add(jnode, sequenceNumber,
- 					json_object_new_int(node->seq_number));
-diff --git a/mesh/mesh-config.h b/mesh/mesh-config.h
-index ed1b610de..3cb20b85d 100644
---- a/mesh/mesh-config.h
-+++ b/mesh/mesh-config.h
-@@ -60,6 +60,8 @@ struct mesh_config_modes {
- 	uint8_t friend;
- 	uint8_t proxy;
- 	uint8_t beacon;
-+	uint8_t mpb;
-+	uint8_t mpb_period;
- };
- 
- struct mesh_config_netkey {
-@@ -140,9 +142,13 @@ bool mesh_config_write_seq_number(struct mesh_config *cfg, uint32_t seq,
- bool mesh_config_write_unicast(struct mesh_config *cfg, uint16_t unicast);
- bool mesh_config_write_relay_mode(struct mesh_config *cfg, uint8_t mode,
- 					uint8_t count, uint16_t interval);
-+bool mesh_config_write_mpb(struct mesh_config *cfg, uint8_t mode,
-+								uint8_t period);
- bool mesh_config_write_ttl(struct mesh_config *cfg, uint8_t ttl);
- bool mesh_config_write_mode(struct mesh_config *cfg, const char *keyword,
- 								int value);
-+bool mesh_config_write_mode_ex(struct mesh_config *cfg, const char *keyword,
-+							int value, bool save);
- bool mesh_config_comp_page_add(struct mesh_config *cfg, uint8_t page,
- 						uint8_t *data, uint16_t size);
- void mesh_config_comp_page_del(struct mesh_config *cfg, uint8_t page);
++void prv_beacon_server_init(struct mesh_node *node, uint8_t ele_idx)
++{
++	l_debug("%2.2x", ele_idx);
++	mesh_model_register(node, ele_idx, PRV_BEACON_SRV_MODEL, &ops, node);
++}
 -- 
 2.39.1
 
