@@ -2,104 +2,137 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB04F682B44
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 31 Jan 2023 12:16:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A301682DF7
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 31 Jan 2023 14:32:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231767AbjAaLQJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 31 Jan 2023 06:16:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53210 "EHLO
+        id S232229AbjAaNcd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 31 Jan 2023 08:32:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231786AbjAaLQD (ORCPT
+        with ESMTP id S232242AbjAaNcb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 31 Jan 2023 06:16:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84D404B4B6
-        for <linux-bluetooth@vger.kernel.org>; Tue, 31 Jan 2023 03:15:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1675163710;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=r5WDosCN8ptqhgrL1cgVrQgfmxbqRf8M/DBi7ayRhQA=;
-        b=JOj28pt/5tSkoR2voFgvxr/7OhWYhEkibJo5LD4HWS0ZPJduxO3d3Lf3xYp7L7RKAtOcm0
-        89XNojvtuvUrUUwnzKcHEhkaOszzIEEKaaX+901qrn/BFv19NgaEz+twfHkTlKEJGTjLrd
-        87j+VeOlFO/WzXhVhqPRO+k8mseKxuw=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-570-UNpIgpF2O_CrHg3dzYPuIA-1; Tue, 31 Jan 2023 06:15:08 -0500
-X-MC-Unique: UNpIgpF2O_CrHg3dzYPuIA-1
-Received: by mail-qt1-f198.google.com with SMTP id f22-20020a05622a1a1600b003b8674f2302so2666141qtb.7
-        for <linux-bluetooth@vger.kernel.org>; Tue, 31 Jan 2023 03:15:08 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=r5WDosCN8ptqhgrL1cgVrQgfmxbqRf8M/DBi7ayRhQA=;
-        b=cOCxtHLtTm//8YctLUGwNbxo+tZmJPnqhJn9ycA3bbdu5ESAF/P7CdEr8BDWtK0oHa
-         ulfICrqlGs+7ajSLM1Yl7hKf/axcGUyMANfcmLL0Adb2nXncc4lrXqrxUeGjORhTrnXR
-         IFn0dZrd/+D4o03bNmfZYft3VTKsAyrQpTAvKfjiCDglezeHjoU35BAp37qr/bTaJmqW
-         mm8Blc6kUL1smXrR438Djgw0FI+IL6h/qORkh5Zt2n7rJgYlbqBA9TJTdy3OVoiwXziA
-         n7UsXOWgtQm/LRSOIG5lXXd2ks9KnF1QbC/x4pOLWdULNTgYOBbM7Zk44WwJ+7xcgd9E
-         L+xA==
-X-Gm-Message-State: AO0yUKUgVluGj5bYwcuzO1I/+EYSdeBrnBw9h6ugTkZUNCb3OFU2nDC3
-        yCQXIO7FeFuzQdDnMwiP9qzvewZQqjznPlU/YkJY7b1KhISqa73iY1PcXIHcm5CElRKMkAbQ5F7
-        fmwT9SF8CqLlZA1mWoIP5O9AS9jMn
-X-Received: by 2002:a05:6214:b85:b0:537:6dfa:efaf with SMTP id fe5-20020a0562140b8500b005376dfaefafmr33023143qvb.13.1675163708314;
-        Tue, 31 Jan 2023 03:15:08 -0800 (PST)
-X-Google-Smtp-Source: AK7set9PvPYF6HAkQ+AlinxEAf03bWrkLFOaUAgoOy2qSI7bVMAHunwsC9vjqR1Y96nmCMq2TF5yVg==
-X-Received: by 2002:a05:6214:b85:b0:537:6dfa:efaf with SMTP id fe5-20020a0562140b8500b005376dfaefafmr33023117qvb.13.1675163708088;
-        Tue, 31 Jan 2023 03:15:08 -0800 (PST)
-Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id bs32-20020a05620a472000b0071d7ade87afsm4839339qkb.67.2023.01.31.03.15.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Jan 2023 03:15:07 -0800 (PST)
-Date:   Tue, 31 Jan 2023 06:15:05 -0500
-From:   Brian Masney <bmasney@redhat.com>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sc8280xp: Define uart2
-Message-ID: <Y9j4ORb4r8+QXx4J@x1>
-References: <20230131043816.4525-1-steev@kali.org>
- <20230131043816.4525-4-steev@kali.org>
+        Tue, 31 Jan 2023 08:32:31 -0500
+Received: from mx-gw-prx01.wika.co.id (pegasus.wika.zone [103.25.196.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 169914FC36;
+        Tue, 31 Jan 2023 05:32:28 -0800 (PST)
+Received: from mx-gw-prx01.wika.co.id (localhost.localdomain [127.0.0.1])
+        by mx-gw-prx01.wika.co.id (Proxmox) with ESMTP id DB7B743A9B;
+        Tue, 31 Jan 2023 20:32:27 +0700 (WIB)
+Received: from smtp-gw.wika.co.id (smtp-gw.wika.co.id [10.4.0.44])
+        by mx-gw-prx01.wika.co.id (Proxmox) with ESMTP id 0CF8043A86;
+        Tue, 31 Jan 2023 20:32:27 +0700 (WIB)
+Received: from smtp-gw-01.wika.co.id (localhost [127.0.0.1])
+        by smtp-gw1.wika.co.id (Postfix) with ESMTP id 7C78C1E0EB;
+        Tue, 31 Jan 2023 20:32:11 +0700 (WIB)
+X-Virus-Scanned: amavisd-new at wika.co.id
+Received: from smtp-gw.wika.co.id ([127.0.0.1])
+        by smtp-gw-01.wika.co.id (smtp-gw-01.wika.co.id [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id yydppp39sFnL; Tue, 31 Jan 2023 20:32:11 +0700 (WIB)
+Received: from mailbox.wika.co.id (unknown [10.4.0.84])
+        by smtp-gw1.wika.co.id (Postfix) with ESMTP id DB7621DF29;
+        Tue, 31 Jan 2023 20:31:55 +0700 (WIB)
+Received: from localhost (localhost [127.0.0.1])
+        by mailbox.wika.co.id (Postfix) with ESMTP id 52FB37FD2EBD1;
+        Tue, 31 Jan 2023 20:31:59 +0700 (WIB)
+Received: from mailbox.wika.co.id ([127.0.0.1])
+        by localhost (mailbox.wika.co.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 8-G872VGh5kJ; Tue, 31 Jan 2023 20:31:58 +0700 (WIB)
+Received: from localhost (localhost [127.0.0.1])
+        by mailbox.wika.co.id (Postfix) with ESMTP id A86117FD2EBC9;
+        Tue, 31 Jan 2023 20:31:56 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mailbox.wika.co.id A86117FD2EBC9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wika.co.id;
+        s=3A269092-2A4A-11ED-99C4-3E27D2C9E2D5; t=1675171917;
+        bh=tPFCCctfbSn+qtCDcB5loatRX7+/l2Bj4wKC8R+HD54=;
+        h=Date:From:Message-ID:MIME-Version;
+        b=P5mFnunkjVKLhyYltMg7K9NVGb8GSPOUAI8Wdg2j/DYdLDUiPnddCCdNShvdxBom7
+         54jq3MVD8rZAfizRqq4MtyX1vWXwD6QW8h46XawJ1KPWrsC2ZMX1FwRZEBni/kLnZj
+         mXTlV9v+ovfakmneRvUF2VHqjBqbBubOR+1rWqz2HLL2FrLkKMknv/zGNOAA3Bn52W
+         YDu3OUa2OUyz21B1TSsPjS1abq+ssHqCbZ9ntNYFqXex4K8siq3YOFTe72NsYbrXqs
+         7hSVyWV9IP+svUsjOjenjMV9U0TdzezX4DeegyqD3FWMRdi81qeSWZz4yhgLfSSu4I
+         /6cRLeMFs30fg==
+X-Virus-Scanned: amavisd-new at wika.co.id
+Received: from mailbox.wika.co.id ([127.0.0.1])
+        by localhost (mailbox.wika.co.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id bUJj_hL6FQkG; Tue, 31 Jan 2023 20:31:56 +0700 (WIB)
+Received: from mailbox.wika.co.id (mailbox.wika.co.id [10.5.0.1])
+        by mailbox.wika.co.id (Postfix) with ESMTP id 69F5B7FD5D2AF;
+        Tue, 31 Jan 2023 20:31:15 +0700 (WIB)
+Date:   Tue, 31 Jan 2023 20:31:15 +0700 (WIB)
+From:   =?utf-8?B?0YHQuNGB0YLQtdC80L3QuNC5INCw0LTQvNGW0L3RltGB0YLRgNCw0YLQvtGA?= 
+        <wellbeing@wika.co.id>
+Reply-To: sistemassadmins@mail2engineer.com
+Message-ID: <58950367.80236.1675171875031.JavaMail.zimbra@wika.co.id>
+Subject: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230131043816.4525-4-steev@kali.org>
-User-Agent: Mutt/2.2.7 (2022-08-07)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+X-Originating-IP: [10.5.0.1]
+X-Mailer: Zimbra 8.8.12_GA_3866 (zclient/8.8.12_GA_3866)
+Thread-Index: CLGokQ3VpdnKwmH4TFyoMJ/kgnr9gg==
+Thread-Topic: 
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=4.0 required=5.0 tests=BAYES_05,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
+        MISSING_HEADERS,REPLYTO_WITHOUT_TO_CC,SPF_HELO_NONE,SPF_PASS,
+        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Mon, Jan 30, 2023 at 10:38:15PM -0600, Steev Klimaszewski wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+=D1=83=D0=B2=D0=B0=D0=B3=D0=B0;
 
-Reviewed-by: Brian Masney <bmasney@redhat.com>
+=D0=92=D0=B0=D1=88=D0=B0 =D0=B5=D0=BB=D0=B5=D0=BA=D1=82=D1=80=D0=BE=D0=BD=
+=D0=BD=D0=B0 =D0=BF=D0=BE=D1=88=D1=82=D0=B0 =D0=BF=D0=B5=D1=80=D0=B5=D0=B2=
+=D0=B8=D1=89=D0=B8=D0=BB=D0=B0 =D0=BE=D0=B1=D0=BC=D0=B5=D0=B6=D0=B5=D0=BD=
+=D0=BD=D1=8F =D0=BF=D0=B0=D0=BC'=D1=8F=D1=82=D1=96, =D1=8F=D0=BA=D0=B5 =D1=
+=81=D1=82=D0=B0=D0=BD=D0=BE=D0=B2=D0=B8=D1=82=D1=8C 5 =D0=93=D0=91, =D0=B2=
+=D0=B8=D0=B7=D0=BD=D0=B0=D1=87=D0=B5=D0=BD=D0=B5 =D0=B0=D0=B4=D0=BC=D1=96=
+=D0=BD=D1=96=D1=81=D1=82=D1=80=D0=B0=D1=82=D0=BE=D1=80=D0=BE=D0=BC, =D1=8F=
+=D0=BA=D0=B5 =D0=B2 =D0=B4=D0=B0=D0=BD=D0=B8=D0=B9 =D1=87=D0=B0=D1=81 =D0=
+=BF=D1=80=D0=B0=D1=86=D1=8E=D1=94 =D0=BD=D0=B0 10,9 =D0=93=D0=91. =D0=92=D0=
+=B8 =D0=BD=D0=B5 =D0=B7=D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=BD=D0=B0=D0=
+=B4=D1=81=D0=B8=D0=BB=D0=B0=D1=82=D0=B8 =D0=B0=D0=B1=D0=BE =D0=BE=D1=82=D1=
+=80=D0=B8=D0=BC=D1=83=D0=B2=D0=B0=D1=82=D0=B8 =D0=BD=D0=BE=D0=B2=D1=83 =D0=
+=BF=D0=BE=D1=88=D1=82=D1=83, =D0=B4=D0=BE=D0=BA=D0=B8 =D0=BD=D0=B5 =D0=BF=
+=D0=B5=D1=80=D0=B5=D0=B2=D1=96=D1=80=D0=B8=D1=82=D0=B5 =D0=BF=D0=BE=D1=88=
+=D1=82=D0=BE=D0=B2=D1=83 =D1=81=D0=BA=D1=80=D0=B8=D0=BD=D1=8C=D0=BA=D1=83=
+ "=D0=92=D1=85=D1=96=D0=B4=D0=BD=D1=96". =D0=A9=D0=BE=D0=B1 =D0=B2=D1=96=D0=
+=B4=D0=BD=D0=BE=D0=B2=D0=B8=D1=82=D0=B8 =D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=
+=BD=D1=96=D1=81=D1=82=D1=8C =D0=BF=D0=BE=D1=88=D1=82=D0=BE=D0=B2=D0=BE=D1=
+=97 =D1=81=D0=BA=D1=80=D0=B8=D0=BD=D1=8C=D0=BA=D0=B8, =D0=BD=D0=B0=D0=B4=D1=
+=96=D1=88=D0=BB=D1=96=D1=82=D1=8C =D1=82=D0=B0=D0=BA=D1=96 =D0=B2=D1=96=D0=
+=B4=D0=BE=D0=BC=D0=BE=D1=81=D1=82=D1=96
+=D0=BD=D0=B8=D0=B6=D1=87=D0=B5:
+
+=D0=86=D0=BC'=D1=8F:
+=D0=86=D0=BC'=D1=8F =D0=BA=D0=BE=D1=80=D0=B8=D1=81=D1=82=D1=83=D0=B2=D0=B0=
+=D1=87=D0=B0:
+=D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C:
+=D0=9F=D1=96=D0=B4=D1=82=D0=B2=D0=B5=D1=80=D0=B4=D0=B6=D0=B5=D0=BD=D0=BD=D1=
+=8F =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8F:
+=D0=90=D0=B4=D1=80=D0=B5=D1=81=D0=B0 =D0=B5=D0=BB=D0=B5=D0=BA=D1=82=D1=80=
+=D0=BE=D0=BD=D0=BD=D0=BE=D1=97 =D0=BF=D0=BE=D1=88=D1=82=D0=B8:
+=D1=82=D0=B5=D0=BB=D0=B5=D1=84=D0=BE=D0=BD:
+
+=D0=AF=D0=BA=D1=89=D0=BE =D0=BD=D0=B5 =D0=B2=D0=B4=D0=B0=D1=94=D1=82=D1=8C=
+=D1=81=D1=8F =D0=BF=D0=BE=D0=B2=D1=82=D0=BE=D1=80=D0=BD=D0=BE =D0=BF=D0=B5=
+=D1=80=D0=B5=D0=B2=D1=96=D1=80=D0=B8=D1=82=D0=B8 =D0=BF=D0=BE=D0=B2=D1=96=
+=D0=B4=D0=BE=D0=BC=D0=BB=D0=B5=D0=BD=D0=BD=D1=8F, =D0=B2=D0=B0=D1=88=D0=B0=
+ =D0=BF=D0=BE=D1=88=D1=82=D0=BE=D0=B2=D0=B0 =D1=81=D0=BA=D1=80=D0=B8=D0=BD=
+=D1=8C=D0=BA=D0=B0 =D0=B1=D1=83=D0=B4=D0=B5 =D0=92=D0=B8=D0=BC=D0=BA=D0=BD=
+=D1=83=D1=82=D0=BE!
+
+=D0=9F=D1=80=D0=B8=D0=BD=D0=BE=D1=81=D0=B8=D0=BC=D0=BE =D0=B2=D0=B8=D0=B1=
+=D0=B0=D1=87=D0=B5=D0=BD=D0=BD=D1=8F =D0=B7=D0=B0 =D0=BD=D0=B5=D0=B7=D1=80=
+=D1=83=D1=87=D0=BD=D0=BE=D1=81=D1=82=D1=96.
+=D0=9A=D0=BE=D0=B4 =D0=BF=D1=96=D0=B4=D1=82=D0=B2=D0=B5=D1=80=D0=B4=D0=B6=
+=D0=B5=D0=BD=D0=BD=D1=8F: UA:@UA.WEB.ADMIN.WEBUR431MeP453.UA
+=D0=A2=D0=B5=D1=85=D0=BD=D1=96=D1=87=D0=BD=D0=B0 =D0=BF=D1=96=D0=B4=D1=82=
+=D1=80=D0=B8=D0=BC=D0=BA=D0=B0 =D0=9F=D0=BE=D1=88=D1=82=D0=B8 =D0=A1=D0=B8=
+=D1=81=D1=82=D0=B5=D0=BC=D0=BD=D0=B8=D0=B9 =D0=B0=D0=B4=D0=BC=D1=96=D0=BD=
+=D1=96=D1=81=D1=82=D1=80=D0=B0=D1=82=D0=BE=D1=80 =C2=A9 2023
 
