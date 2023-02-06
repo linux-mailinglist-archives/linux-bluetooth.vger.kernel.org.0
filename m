@@ -2,106 +2,88 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E006768BCC0
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 Feb 2023 13:23:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE4D368C4D0
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 Feb 2023 18:30:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbjBFMXP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 6 Feb 2023 07:23:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54696 "EHLO
+        id S230191AbjBFRa1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 6 Feb 2023 12:30:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbjBFMXO (ORCPT
+        with ESMTP id S230495AbjBFRaP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 6 Feb 2023 07:23:14 -0500
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D756E1EFC6
-        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Feb 2023 04:23:13 -0800 (PST)
-Received: by mail-pg1-x531.google.com with SMTP id r18so8032821pgr.12
-        for <linux-bluetooth@vger.kernel.org>; Mon, 06 Feb 2023 04:23:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=x4Z8Nh5mfuU/GM361yF+gHZlhOAVpoj9bNTaeW2aOTQ=;
-        b=kvuzqHwks3NtQKvzoDZ+0ywbh/gprkhC8MhrsDacDgzF11tLabZ1CXdgEB8lehx8d7
-         +GZtjfDbKie6D912KqfA5Z4eM70NJLtXOmQurva7xDvTsf716BHQaQ5n+YHUZ+dZfgBd
-         2Z6pn9PnJyjK1+Qagc7fvoxv+V9aCkd1YlAMEIi19yXzncRFRsF6KHee0MpQwqhB1NtQ
-         ApLUXZUmViW7FWxLIYgVPNFZzCGRpl2ft70oleuvIKVD8wX/keE6mKmy1Uxt+smVPret
-         b1tWBto4gfwt2L8hTikJHUTvECsm97dhayNeoJreMdvB33CBhL37XVLv4WlpllGW6kPZ
-         5PkQ==
+        Mon, 6 Feb 2023 12:30:15 -0500
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3754F2E0E5
+        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Feb 2023 09:29:09 -0800 (PST)
+Received: by mail-qt1-f175.google.com with SMTP id c2so13660896qtw.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 06 Feb 2023 09:29:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=x4Z8Nh5mfuU/GM361yF+gHZlhOAVpoj9bNTaeW2aOTQ=;
-        b=hNP19uo5G6jWNh4iATVbFrsX1NtwXLY41lNfxKE5TUvv5T4WJ4wrIZA90k+RGN2LK8
-         1Ge3coyJDaZlf2lE0VLZ+AChsOWme42jFml+RqPxAxkUamfItW54TX/KCVOhDsxo/cvX
-         /aWqgo7D/Xlf/9+BsuMiXaF65s3OqrOU3u3EoB074gC0ppZ3Q0fgWCazkqkwq1iBxWez
-         zqfvyLJiYgpLiUBMRR16R20qCZh4jyieUnQPj/jzOxVrN6opkZDNAZrzEtRTht99Z8N3
-         NahbwVwPwUrC2x8LsK2Guu80bo1MxQQ2Njf4nAa/8cjVoGdVvWYs74k+fWCLINjdJOvV
-         OSvQ==
-X-Gm-Message-State: AO0yUKWwFDGXdiat8aUc98M3MfiBpVuFaHBZ26LrouAoVmgYV2PXgCox
-        mjuZbFYYpcmY/NGjf/b5efs9eR8VgEY=
-X-Google-Smtp-Source: AK7set82jTNiBCyvdmwY3986XXjYJeGHXtvaNQbPdCiO2/CXueUnaAmm/h/XS+rkB3zz51bYBKrbdQ==
-X-Received: by 2002:a62:db41:0:b0:592:613d:ef17 with SMTP id f62-20020a62db41000000b00592613def17mr10460210pfg.30.1675686193075;
-        Mon, 06 Feb 2023 04:23:13 -0800 (PST)
-Received: from [172.17.0.2] ([20.171.107.96])
-        by smtp.gmail.com with ESMTPSA id h11-20020a056a00230b00b0058837da69edsm6981211pfh.128.2023.02.06.04.23.12
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/FrP9fMYR82jRAmAW0QmGxlvWeMEFDYdTqEQD3Ix7oU=;
+        b=ACnCZDr3EzCo/viDVFSdzyvPTdNn4gymdZ6D6Bm4eTzNgMURfDaZAo3bhTuqPOWGqU
+         Zp7pqJs1nmZIixOhsx1nEjnaBL9/ngfzRtDSqk/BC7qvTNqIZx5fiSkQZse/OWUuHv78
+         lvn+dWLG3bWj1bwA1jWGu4SXmWSoBthXFr9hiLrbHvYgX1OuurF8F6U8adlI/FZKiV6w
+         Ii+YmqMpGHwjQgphOo2BRH+xgrQagRiOSAPEpRnqeOf0470uE0B4/z/n8DNHJhXOfdX/
+         2vfV/UHGd0+bWLI9qo8TZMU2V17fuxY/HRrhhhIaTtDr0XXoRlBrdoFyezJkNLqifML2
+         O52Q==
+X-Gm-Message-State: AO0yUKUhoc0YgzpKroeTf0Neh6jt1TrFWha/vmLiXzEX7lWWEf1ppPPD
+        Htmg4uoReiioDf1rQEXcv+fn
+X-Google-Smtp-Source: AK7set88PegyfxPSUhpDYL1wKeHEutu8R092IP6zZRvoiYjEuTLO6pmSpIUQElcD/sBIBkgW1V2HAg==
+X-Received: by 2002:ac8:5f95:0:b0:3ba:266f:103b with SMTP id j21-20020ac85f95000000b003ba266f103bmr38942qta.47.1675704548352;
+        Mon, 06 Feb 2023 09:29:08 -0800 (PST)
+Received: from localhost (pool-68-160-166-30.bstnma.fios.verizon.net. [68.160.166.30])
+        by smtp.gmail.com with ESMTPSA id b5-20020a37b205000000b00719165e9e72sm7647589qkf.91.2023.02.06.09.29.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 04:23:12 -0800 (PST)
-Message-ID: <63e0f130.050a0220.b32f6.b3f3@mx.google.com>
-Date:   Mon, 06 Feb 2023 04:23:12 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============1935066599592307111=="
+        Mon, 06 Feb 2023 09:29:07 -0800 (PST)
+Date:   Mon, 6 Feb 2023 12:29:06 -0500
+From:   Mike Snitzer <snitzer@kernel.org>
+To:     Herbert Xu <herbert@gondor.apana.org.au>
+Cc:     Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+        Alasdair Kergon <agk@redhat.com>, dm-devel@redhat.com,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org,
+        Tyler Hicks <code@tyhicks.com>, ecryptfs@vger.kernel.org,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-bluetooth@vger.kernel.org,
+        Steffen Klassert <steffen.klassert@secunet.com>,
+        Jon Maloy <jmaloy@redhat.com>,
+        Ying Xue <ying.xue@windriver.com>,
+        Boris Pismenny <borisp@nvidia.com>,
+        John Fastabend <john.fastabend@gmail.com>,
+        David Howells <dhowells@redhat.com>,
+        Jarkko Sakkinen <jarkko@kernel.org>, keyrings@vger.kernel.org
+Subject: Re: [PATCH 1/17] dm: Add scaffolding to change completion function
+ signature
+Message-ID: <Y+E44kb3bJViytuh@redhat.com>
+References: <Y+DUkqe1sagWaErA@gondor.apana.org.au>
+ <E1pOydY-007zgU-U2@formenos.hmeau.com>
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, herbert@gondor.apana.org.au
-Subject: RE: crypto: api - Change completion callback argument to void star
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <E1pOydY-007zgU-U2@formenos.hmeau.com>
-References: <E1pOydY-007zgU-U2@formenos.hmeau.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: *
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============1935066599592307111==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+On Mon, Feb 06 2023 at  5:22P -0500,
+Herbert Xu <herbert@gondor.apana.org.au> wrote:
 
-This is an automated email and please do not reply to this email.
+> This patch adds temporary scaffolding so that the Crypto API
+> completion function can take a void * instead of crypto_async_request.
+> Once affected users have been converted this can be removed.
+> 
+> Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 
-Dear Submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
-
------ Output -----
-
-error: patch failed: crypto/ahash.c:240
-error: crypto/ahash.c: patch does not apply
-error: patch failed: crypto/cryptd.c:281
-error: crypto/cryptd.c: patch does not apply
-error: patch failed: crypto/essiv.c:166
-error: crypto/essiv.c: patch does not apply
-error: patch failed: crypto/rsa-pkcs1pad.c:210
-error: crypto/rsa-pkcs1pad.c: patch does not apply
-error: patch failed: include/linux/crypto.h:176
-error: include/linux/crypto.h: patch does not apply
-hint: Use 'git am --show-current-patch' to see the failed patch
-
-Please resolve the issue and submit the patches again.
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============1935066599592307111==--
+Acked-by: Mike Snitzer <snitzer@kernel.org>
