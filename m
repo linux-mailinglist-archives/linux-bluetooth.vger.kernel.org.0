@@ -2,98 +2,83 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EE3168B95D
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 Feb 2023 11:05:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C07B68BC36
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 Feb 2023 13:03:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230222AbjBFKF2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 6 Feb 2023 05:05:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57424 "EHLO
+        id S229830AbjBFMDO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 6 Feb 2023 07:03:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229630AbjBFKFF (ORCPT
+        with ESMTP id S229460AbjBFMDN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 6 Feb 2023 05:05:05 -0500
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 518CD206A7;
-        Mon,  6 Feb 2023 02:03:51 -0800 (PST)
-Received: from [141.14.220.45] (g45.guest.molgen.mpg.de [141.14.220.45])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: pmenzel)
-        by mx.molgen.mpg.de (Postfix) with ESMTPSA id 60A9361CC40F9;
-        Mon,  6 Feb 2023 11:03:11 +0100 (CET)
-Message-ID: <5c249a19-f79b-346d-2fb1-cdfc05324909@molgen.mpg.de>
-Date:   Mon, 6 Feb 2023 11:03:10 +0100
+        Mon, 6 Feb 2023 07:03:13 -0500
+Received: from formenos.hmeau.com (167-179-156-38.a7b39c.syd.nbn.aussiebb.net [167.179.156.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931441422B
+        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Feb 2023 04:03:11 -0800 (PST)
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+        by formenos.hmeau.com with smtp (Exim 4.94.2 #2 (Debian))
+        id 1pOycU-007zew-Vi; Mon, 06 Feb 2023 18:21:08 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Mon, 06 Feb 2023 18:21:06 +0800
+Date:   Mon, 6 Feb 2023 18:21:06 +0800
+From:   Herbert Xu <herbert@gondor.apana.org.au>
+To:     Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+        Alasdair Kergon <agk@redhat.com>,
+        Mike Snitzer <snitzer@kernel.org>, dm-devel@redhat.com,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org,
+        Tyler Hicks <code@tyhicks.com>, ecryptfs@vger.kernel.org,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-bluetooth@vger.kernel.org,
+        Steffen Klassert <steffen.klassert@secunet.com>,
+        Jon Maloy <jmaloy@redhat.com>,
+        Ying Xue <ying.xue@windriver.com>,
+        Boris Pismenny <borisp@nvidia.com>,
+        John Fastabend <john.fastabend@gmail.com>,
+        David Howells <dhowells@redhat.com>,
+        Jarkko Sakkinen <jarkko@kernel.org>, keyrings@vger.kernel.org
+Subject: [PATCH 0/17] crypto: api - Change completion callback argument to
+ void star
+Message-ID: <Y+DUkqe1sagWaErA@gondor.apana.org.au>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [RESEND] Bluetooth: btrtl: Add support for RTL8852BS
-Content-Language: en-US
-To:     Victor Hassan <victor@allwinnertech.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230206063334.45861-1-victor@allwinnertech.com>
-From:   Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20230206063334.45861-1-victor@allwinnertech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,PDS_RDNS_DYNAMIC_FP,
+        RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Victor,
+Hi:
 
+The crypto completion function currently takes a pointer to a
+struct crypto_async_request object.  However, in reality the API
+does not allow the use of any part of the object apart from the
+data field.  For example, ahash/shash will create a fake object
+on the stack to pass along a different data field.
 
-Thank you for your patch.
+This leads to potential bugs where the user may try to dereference
+or otherwise use the crypto_async_request object.
 
-Am 06.02.23 um 07:33 schrieb Victor Hassan:
-> Add the support for RTL8852BS BT controller on UART interface.
-> The necessary firmware file will be submitted to linux-firmware.
-> 
-> Signed-off-by: Victor Hassan <victor@allwinnertech.com>
-> ---
->   drivers/bluetooth/btrtl.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-> index 69c3fe649ca7..36c3a23324f8 100644
-> --- a/drivers/bluetooth/btrtl.c
-> +++ b/drivers/bluetooth/btrtl.c
-> @@ -198,6 +198,14 @@ static const struct id_table ic_id_table[] = {
->   	  .fw_name  = "rtl_bt/rtl8852bu_fw.bin",
->   	  .cfg_name = "rtl_bt/rtl8852bu_config" },
->   
-> +	/* 8852B with UART interface */
-> +	{ IC_INFO(RTL_ROM_LMP_8852A, 0xb, 0xb, HCI_UART),
-> +	  .config_needed = true,
-> +	  .has_rom_version = true,
-> +	  .has_msft_ext = true,
-> +	  .fw_name  = "rtl_bt/rtl8852bs_fw.bin",
-> +	  .cfg_name = "rtl_bt/rtl8852bs_config" },
-> +
+This series changes the completion function to take a void *
+argument instead of crypto_async_request.
 
-I’d sort *bs* before *bu*.
+This series touches code in a number of different subsystems.
+Most of them are trivial except for tls which was actually buggy
+as it did exactly what was described above.
 
->   	/* 8852C */
->   	{ IC_INFO(RTL_ROM_LMP_8852A, 0xc, 0xc, HCI_USB),
->   	  .config_needed = false,
-> @@ -965,5 +973,7 @@ MODULE_FIRMWARE("rtl_bt/rtl8852au_fw.bin");
->   MODULE_FIRMWARE("rtl_bt/rtl8852au_config.bin");
->   MODULE_FIRMWARE("rtl_bt/rtl8852bu_fw.bin");
->   MODULE_FIRMWARE("rtl_bt/rtl8852bu_config.bin");
-> +MODULE_FIRMWARE("rtl_bt/rtl8852bs_fw.bin");
-> +MODULE_FIRMWARE("rtl_bt/rtl8852bs_config.bin");
->   MODULE_FIRMWARE("rtl_bt/rtl8852cu_fw.bin");
->   MODULE_FIRMWARE("rtl_bt/rtl8852cu_config.bin");
+I'd like to pull all the changes through the crypto tree.  But
+feel free to object if you'd like the relevant patches to go
+through your trees instead and I'll split this up.
 
-Ditto.
-
-
-Kind regards,
-
-Paul
+Thanks,
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
