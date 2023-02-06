@@ -2,86 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F372468C910
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 Feb 2023 23:00:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FF5268CAA2
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Feb 2023 00:39:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbjBFWA0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 6 Feb 2023 17:00:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60894 "EHLO
+        id S229797AbjBFXjj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 6 Feb 2023 18:39:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjBFWAZ (ORCPT
+        with ESMTP id S229732AbjBFXji (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 6 Feb 2023 17:00:25 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A98010A8C
-        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Feb 2023 14:00:20 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C33EBB8162C
-        for <linux-bluetooth@vger.kernel.org>; Mon,  6 Feb 2023 22:00:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 55AFCC4339B;
-        Mon,  6 Feb 2023 22:00:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675720817;
-        bh=T4Y8Br+tYD77OX04//otarMe6GdAakY+syQFMBbXfrM=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=JLOWTzz7EUttRNuV7Tdxj3uki0q6n3nrCQCPrejaEO+KfEl0c6MB1vkwP+wCRmIki
-         xXyK9T9fHVE9QoHEtVIZnepapBR5d/6JpSvUPLvmimCFD7aKPyuGt5TLe0YxBL6V2x
-         T9YeFAZEkjec+DB58o3B9eCXA51TYaIf8Oo/a31KF+Lfc+VX918cBwlQASd6odh06H
-         ojriBghEN6IZSaiS2k/wsae9K1Eo8+CJi1qmfJORdEWTIIjpFlzV7aZanQjTBD9keL
-         11iG+ECu/+KOfsHMzCgkExiqQjpeFZh1JxRBxgaCtgApyqPSorIXZ+nHXPpccN4hpP
-         zdL/iiBwn0qvw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 28CF0E55EFC;
-        Mon,  6 Feb 2023 22:00:17 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 6 Feb 2023 18:39:38 -0500
+Received: from stravinsky.debian.org (stravinsky.debian.org [IPv6:2001:41b8:202:deb::311:108])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E749524125;
+        Mon,  6 Feb 2023 15:39:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+        s=smtpauto.stravinsky; h=X-Debian-User:Content-Transfer-Encoding:MIME-Version
+        :Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:Content-ID:
+        Content-Description:In-Reply-To:References;
+        bh=0NkuGutGnpoXOxfngHhh2vxTrjVGUeZm0lOH3QfaZ0o=; b=A5MtcuJGJ009/D1f7dhPtBP8rx
+        fBL+XKO3AnkkL/95sRoQCcLJhK9sSEv0WaMNXe8h2RL2v+p0z57a2/DUZ4HHtCTMjP7O2pG92fqRK
+        aflyanceF2yksynK4IzumthDPnhCzsOzjx74U82eOvjLHAU6JdI6Uru1xM+9so6iO69Aa/Hn07hQA
+        XTteCeyNJUoCA/WAIYPdSVQzPmt4vyenriJH7zSqK/6sqONLldsukJx2wX+ke5KcCppY17rVYu92V
+        HECOsiU5UHIb41baD2OdIEQYlfWyUu+Zm5Ihbyery2efD1GjTwiH3ta4b2XJ4mDD9HzpFiTLsRRnX
+        eQ3gUKWw==;
+Received: from authenticated user
+        by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+        (Exim 4.94.2)
+        (envelope-from <bage@debian.org>)
+        id 1pPB53-00CT8W-AU; Mon, 06 Feb 2023 23:39:25 +0000
+From:   Bastian Germann <bage@debian.org>
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Bastian Germann <bage@debian.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: [PATCH v3 0/2] Bluetooth: btrtl: add support for the RTL8723CS
+Date:   Tue,  7 Feb 2023 00:39:09 +0100
+Message-Id: <20230206233912.9410-1-bage@debian.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3] Bluetooth: btintel: Set Per Platform Antenna Gain(PPAG)
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167572081715.28546.15309782433795616620.git-patchwork-notify@kernel.org>
-Date:   Mon, 06 Feb 2023 22:00:17 +0000
-References: <20230206065144.28322-1-kiran.k@intel.com>
-In-Reply-To: <20230206065144.28322-1-kiran.k@intel.com>
-To:     Kiran K <kiran.k@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
-        lokendra.singh@intel.com, chethan.tumkur.narayan@intel.com,
-        seema.sreemantha@intel.com
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Debian-User: bage
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,UNPARSEABLE_RELAY autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+Pinebook uses RTL8723CS for WiFi and bluetooth. Unfortunately, RTL8723CS
+has broken BT-4.1 support, so it requires a quirk.
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+Add a quirk and wire up 8723CS support in btrtl.
+I was asked for a btmon output without the quirk;
+however, using the chip without the quirk ends up in a bad state with
+"Opcode 0x c77 failed: -56" (HCI_OP_READ_SYNC_TRAIN_PARAMS) on training.
+A btmon output with the quirk active was already sent by Vasily.
 
-On Mon,  6 Feb 2023 12:21:44 +0530 you wrote:
-> From: Seema Sreemantha <seema.sreemantha@intel.com>
-> 
-> Antenna gain is defined as the antenna’s ability to
-> increase the Tx power in a given direction. Intel
-> is certifying its products with fixed reference
-> antenna peak gain values (3/5dBi). The feature takes
-> into account the actual antenna gain, and increases
-> output power values, which results in a performance
-> improvement.
-> 
-> [...]
+v1 of this series was sent in July 2020 by Vasily Khoruzhick.
+I have tested it to work on the Pinebook.
 
-Here is the summary with links:
-  - [v3] Bluetooth: btintel: Set Per Platform Antenna Gain(PPAG)
-    https://git.kernel.org/bluetooth/bluetooth-next/c/b8ad6dcdc651
+Changelog:
+v2:
+   * Rebase
+   * Add uart-has-rtscts to device tree as requested by reviewer
+v3:
+   * Drop the device tree as it was split out and is already integrated.
+   * Rename the quirk as requested by reviewer Marcel Holtmann
 
-You are awesome, thank you!
+Vasily Khoruzhick (2):
+  Bluetooth: Add new quirk for broken local ext features page 2
+  Bluetooth: btrtl: add support for the RTL8723CS
+
+ drivers/bluetooth/btrtl.c   | 120 ++++++++++++++++++++++++++++++++++--
+ drivers/bluetooth/btrtl.h   |   5 ++
+ drivers/bluetooth/hci_h5.c  |   4 ++
+ include/net/bluetooth/hci.h |   7 +++
+ net/bluetooth/hci_event.c   |   4 +-
+ 5 files changed, 135 insertions(+), 5 deletions(-)
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.39.1
 
