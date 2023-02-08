@@ -2,33 +2,33 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4360468E7D1
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Feb 2023 06:41:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0548A68E7E0
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Feb 2023 06:49:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230365AbjBHFl0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 8 Feb 2023 00:41:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36604 "EHLO
+        id S230365AbjBHFt0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 8 Feb 2023 00:49:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230378AbjBHFlX (ORCPT
+        with ESMTP id S229706AbjBHFtZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 8 Feb 2023 00:41:23 -0500
+        Wed, 8 Feb 2023 00:49:25 -0500
 Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3A32528A;
-        Tue,  7 Feb 2023 21:40:54 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E87611EAF;
+        Tue,  7 Feb 2023 21:49:23 -0800 (PST)
 Authenticated-By: 
-X-SpamFilter-By: ArmorX SpamTrap 5.77 with qID 3185eVIn9008889, This message is accepted by code: ctloc85258
-Received: from mail.realtek.com (rtexh36505.realtek.com.tw[172.21.6.25])
-        by rtits2.realtek.com.tw (8.15.2/2.81/5.90) with ESMTPS id 3185eVIn9008889
+X-SpamFilter-By: ArmorX SpamTrap 5.77 with qID 3185n8snD022899, This message is accepted by code: ctloc85258
+Received: from mail.realtek.com (rtexh36506.realtek.com.tw[172.21.6.27])
+        by rtits2.realtek.com.tw (8.15.2/2.81/5.90) with ESMTPS id 3185n8snD022899
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Wed, 8 Feb 2023 13:40:31 +0800
+        Wed, 8 Feb 2023 13:49:08 +0800
 Received: from RTEXMBS03.realtek.com.tw (172.21.6.96) by
- RTEXH36505.realtek.com.tw (172.21.6.25) with Microsoft SMTP Server
+ RTEXH36506.realtek.com.tw (172.21.6.27) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.32; Wed, 8 Feb 2023 13:40:38 +0800
+ 15.1.2507.9; Wed, 8 Feb 2023 13:49:15 +0800
 Received: from localhost (172.21.132.123) by RTEXMBS03.realtek.com.tw
  (172.21.6.96) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.7; Wed, 8 Feb 2023
- 13:40:38 +0800
+ 13:49:15 +0800
 From:   <max.chou@realtek.com>
 To:     <marcel@holtmann.org>
 CC:     <johan.hedberg@gmail.com>, <luiz.dentz@gmail.com>,
@@ -36,8 +36,8 @@ CC:     <johan.hedberg@gmail.com>, <luiz.dentz@gmail.com>,
         <alex_lu@realsil.com.cn>, <allen_chen@realsil.com.cn>,
         <hildawu@realtek.com>, <max.chou@realtek.com>
 Subject: [PATCH v3] Bluetooth: btrtl: Firmware format v2 support
-Date:   Wed, 8 Feb 2023 13:40:24 +0800
-Message-ID: <20230208054024.116272-1-max.chou@realtek.com>
+Date:   Wed, 8 Feb 2023 13:49:08 +0800
+Message-ID: <20230208054908.116502-1-max.chou@realtek.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7BIT
@@ -50,15 +50,11 @@ X-KSE-AntiSpam-Interceptor-Info: trusted connection
 X-KSE-Antiphishing-Info: Clean
 X-KSE-Antiphishing-ScanningType: Deterministic
 X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 02/08/2023 05:03:00
+X-KSE-Antiphishing-Bases: 02/08/2023 05:23:00
 X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
  rules found
 X-KSE-Antivirus-Interceptor-Info: scan successful
 X-KSE-Antivirus-Info: =?big5?B?Q2xlYW4sIGJhc2VzOiAyMDIzLzIvOCCkV6TIIDAxOjM2OjAw?=
-X-KSE-BulkMessagesFiltering-Scan-Result: protection disabled
-X-KSE-ServerInfo: RTEXH36505.realtek.com.tw, 9
-X-KSE-Attachment-Filter-Triggered-Rules: Clean
-X-KSE-Attachment-Filter-Triggered-Filters: Clean
 X-KSE-BulkMessagesFiltering-Scan-Result: protection disabled
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,8 +68,8 @@ From: Max Chou <max.chou@realtek.com>
 
 Realtek changes the format for the firmware file as v2. The driver
 should implement the patch to extract the firmware data from the
-firmware file.
-It's compatible with the both previous format(v1) and v2.
+firmware file. The future chips must apply this patch for firmware loading.
+This patch is compatible with the both previous format and v2 as well.
 
 Signed-off-by: Allen Chen <allen_chen@realsil.com.cn>
 Signed-off-by: Alex Lu <alex_lu@realsil.com.cn>
@@ -82,6 +78,7 @@ Signed-off-by: Max Chou <max.chou@realtek.com>
 ---
 Changes in v3:
 - Fix sparse check
+- Edit commit log
 Changes in v2:
 - Use iovec pull data function as rtl_iov_pull_data() to parse data.
 ---
