@@ -2,107 +2,133 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51F09693367
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Feb 2023 20:56:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D6C569340C
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Feb 2023 22:38:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229484AbjBKT4D (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 11 Feb 2023 14:56:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34022 "EHLO
+        id S229770AbjBKViD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 11 Feb 2023 16:38:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbjBKT4C (ORCPT
+        with ESMTP id S229514AbjBKViC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 11 Feb 2023 14:56:02 -0500
-Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373D7166C4
-        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Feb 2023 11:56:00 -0800 (PST)
-Received: from submission (posteo.de [185.67.36.169]) 
-        by mout02.posteo.de (Postfix) with ESMTPS id C3DCE240454
-        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Feb 2023 20:55:58 +0100 (CET)
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4PDhDZ1SWLz9rxL;
-        Sat, 11 Feb 2023 20:55:58 +0100 (CET)
-From:   Pauli Virtanen <pav@iki.fi>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v2 2/2] media: clear the right transport when clearing BAP endpoint
-Date:   Sat, 11 Feb 2023 19:55:53 +0000
-Message-Id: <f93d483b5deb1628ba822ab752767b17e946d9c8.1676145318.git.pav@iki.fi>
+        Sat, 11 Feb 2023 16:38:02 -0500
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E328D11674
+        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Feb 2023 13:38:01 -0800 (PST)
+Received: by mail-qt1-x82c.google.com with SMTP id q13so9991503qtx.2
+        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Feb 2023 13:38:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=N323LhmidLgR5WKA7JmuQStBGKhsvILi7BlOV/qFXwg=;
+        b=Q50Ya/Z5lQ8mYWw1IlRlByQsTNB76u7PBejGV9JJuGiG2NZmiCJZBv7dJhSM/gfmAg
+         Oys0pSUXhip3SGzrNi/2/kRlacBI0WmnBZNOp6KMaefaSzKBhB/6hzWlVy9FKKXoXG42
+         SI1OTYWXgC++0TcqvqYmFkHCqsKesJNVa2YAAHNGp0bMgSlf/sG/lfvSw4teX4Wlbmsa
+         EIhAP/ka+sosfNK+NzuVS1gZeaLq8XVhz9EN1RM9c9CVAq0w+9u+vm0JTG7V1gMGdiL/
+         2pOT57SjKZDbtPc9eSbt8pSmSNgwRU0l28unKmDRnaKtWTNdgWcEXFc+jys2vMlPSFEW
+         dj/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N323LhmidLgR5WKA7JmuQStBGKhsvILi7BlOV/qFXwg=;
+        b=r9zUAKei1zwhLBBQIB33aI6jZVc7aN0IjvwLAM2p1xjgDJIZRAQhkV30d/9obqiChO
+         S9sm0OJMOOxOhrRu9VQkNPUFAFrNLla3CbJvwvDfSCQfJC6gB8/djwotU71c+90Bz8Xq
+         nYOzYYL4sCkyWN1wb5BdT10mvnTqpLbBIU0WpDFvZVT9M1ETj784HDlzDZBFTk5FD2Mf
+         QmyxkiXE4qZqFNibLeLblR+zMt6ll+7YArVaM+hzp0RSkieZIUZWmAqa/l1VYjhlOx4B
+         9/8MptYhIP0iAAlNrM+IMgRrQVVujphLc6dHysKL6Si+kUZSkZau13DwDBUswMG79TmF
+         cZXQ==
+X-Gm-Message-State: AO0yUKUebsiAycah9iZ3d6oIBARPzktOS6fxzrGAb9Nfz1i8gxcqI+ru
+        bxieGJm233XMoWvdIkbG/kik5Rwh9tM=
+X-Google-Smtp-Source: AK7set+/0E5SNJLD7+UM7GB07j1sFZ5ahn//KylB3dM7e5eaGgDtBBhkfJuNgUwNNX9u63dvTEWSGg==
+X-Received: by 2002:ac8:5e11:0:b0:3b9:a4c8:d57a with SMTP id h17-20020ac85e11000000b003b9a4c8d57amr33990469qtx.32.1676151480931;
+        Sat, 11 Feb 2023 13:38:00 -0800 (PST)
+Received: from [172.17.0.2] ([104.45.203.177])
+        by smtp.gmail.com with ESMTPSA id v129-20020a372f87000000b0070495934152sm6432979qkh.48.2023.02.11.13.38.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Feb 2023 13:38:00 -0800 (PST)
+Message-ID: <63e80ab8.370a0220.1658b.468a@mx.google.com>
+Date:   Sat, 11 Feb 2023 13:38:00 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============4878927935278798844=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, pav@iki.fi
+Subject: RE: [BlueZ,v2,1/2] shared/bap: fix local endpoint state to be per-client
 In-Reply-To: <a0b0c0b71c0bbf0e200fd01619901bc5fa00e531.1676145318.git.pav@iki.fi>
 References: <a0b0c0b71c0bbf0e200fd01619901bc5fa00e531.1676145318.git.pav@iki.fi>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NEUTRAL autolearn=ham autolearn_force=no
-        version=3.4.6
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Each configured BAP stream is associated with a transport, and only that
-transport should be cleared when the stream's configuration is cleared.
+--===============4878927935278798844==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This is required for multiple BAP clients to use the same Media1
-endpoint, which is what we should aim for to follow the spirit in which
-the endpoints work in ASCS.  Sound servers generally can handle this,
-since the *Configuration calls provide the transport paths, and for
-different clients they are associated with different devices.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=721007
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.20 seconds
+GitLint                       FAIL      0.99 seconds
+BuildEll                      PASS      32.90 seconds
+BluezMake                     PASS      1023.32 seconds
+MakeCheck                     PASS      12.94 seconds
+MakeDistcheck                 PASS      183.68 seconds
+CheckValgrind                 PASS      298.03 seconds
+CheckSmatch                   PASS      394.87 seconds
+bluezmakeextell               PASS      119.38 seconds
+IncrementalBuild              PASS      1661.75 seconds
+ScanBuild                     PASS      1231.11 seconds
+
+Details
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint
+Output:
+[BlueZ,v2,1/2] shared/bap: fix local endpoint state to be per-client
+
+WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
+22: B2 Line has trailing whitespace: "    "
+24: B2 Line has trailing whitespace: "    "
+27: B2 Line has trailing whitespace: "    "
+29: B2 Line has trailing whitespace: "    "
+30: B1 Line exceeds max length (109>80): "    bluetoothd[139699]: src/shared/bap.c:ascs_ase_read() bap:0x60e000008d20 ep:0x603000042f70 -> id:1 state:0"
+31: B1 Line exceeds max length (109>80): "    bluetoothd[139699]: src/shared/bap.c:ascs_ase_read() bap:0x60e000008d20 ep:0x603000043330 -> id:2 state:0"
+32: B1 Line exceeds max length (109>80): "    bluetoothd[139699]: src/shared/bap.c:ascs_ase_read() bap:0x60e000008d20 ep:0x6030000436c0 -> id:3 state:0"
+33: B1 Line exceeds max length (109>80): "    bluetoothd[139699]: src/shared/bap.c:ascs_ase_read() bap:0x60e000008d20 ep:0x603000043a50 -> id:4 state:0"
+34: B2 Line has trailing whitespace: "    "
+36: B2 Line has trailing whitespace: "    "
+37: B1 Line exceeds max length (109>80): "    bluetoothd[139699]: src/shared/bap.c:ascs_ase_read() bap:0x60e0000095e0 ep:0x603000042f70 -> id:1 state:4"
+38: B1 Line exceeds max length (109>80): "    bluetoothd[139699]: src/shared/bap.c:ascs_ase_read() bap:0x60e0000095e0 ep:0x603000043330 -> id:2 state:0"
+39: B1 Line exceeds max length (109>80): "    bluetoothd[139699]: src/shared/bap.c:ascs_ase_read() bap:0x60e0000095e0 ep:0x6030000436c0 -> id:3 state:4"
+40: B1 Line exceeds max length (109>80): "    bluetoothd[139699]: src/shared/bap.c:ascs_ase_read() bap:0x60e0000095e0 ep:0x603000043a50 -> id:4 state:0"
+41: B2 Line has trailing whitespace: "    "
+43: B2 Line has trailing whitespace: "    "
+52: B2 Line has trailing whitespace: "    "
+56: B2 Line has trailing whitespace: "    "
+60: B2 Line has trailing whitespace: "    "
+
+
 ---
+Regards,
+Linux Bluetooth
 
-Notes:
-    In principle multiple clients should work, but I don't have equipment
-    right now to test streaming for more than one client.
 
- profiles/audio/media.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/profiles/audio/media.c b/profiles/audio/media.c
-index 505c4b3a6..3eb038cb7 100644
---- a/profiles/audio/media.c
-+++ b/profiles/audio/media.c
-@@ -86,7 +86,6 @@ struct endpoint_request {
- struct media_endpoint {
- 	struct a2dp_sep		*sep;
- 	struct bt_bap_pac	*pac;
--	void			*stream;
- 	char			*sender;	/* Endpoint DBus bus id */
- 	char			*path;		/* Endpoint object path */
- 	char			*uuid;		/* Endpoint property UUID */
-@@ -1007,9 +1006,6 @@ static void pac_config_cb(struct media_endpoint *endpoint, void *ret, int size,
- 	struct pac_config_data *data = user_data;
- 	gboolean *ret_value = ret;
- 
--	if (ret_value)
--		endpoint->stream = data->stream;
--
- 	data->cb(data->stream, ret_value ? 0 : -EINVAL);
- }
- 
-@@ -1089,11 +1085,20 @@ static int pac_config(struct bt_bap_stream *stream, struct iovec *cfg,
- static void pac_clear(struct bt_bap_stream *stream, void *user_data)
- {
- 	struct media_endpoint *endpoint = user_data;
-+	struct media_transport *transport;
-+	const char *path;
-+
-+	path = bt_bap_stream_get_user_data(stream);
-+	if (!path)
-+		return;
- 
--	endpoint->stream = NULL;
-+	DBG("endpoint %p path %s", endpoint, path);
- 
--	while (endpoint->transports != NULL)
--		clear_configuration(endpoint, endpoint->transports->data);
-+	transport = find_transport(endpoint, path);
-+	if (transport) {
-+		clear_configuration(endpoint, transport);
-+		bt_bap_stream_set_user_data(stream, NULL);
-+	}
- }
- 
- static struct bt_bap_pac_ops pac_ops = {
--- 
-2.39.1
-
+--===============4878927935278798844==--
