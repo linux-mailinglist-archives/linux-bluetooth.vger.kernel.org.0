@@ -2,31 +2,31 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28E31693025
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Feb 2023 11:57:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14DF6693026
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Feb 2023 11:57:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbjBKK5N (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 11 Feb 2023 05:57:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36022 "EHLO
+        id S230005AbjBKK5O (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 11 Feb 2023 05:57:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229959AbjBKK5K (ORCPT
+        with ESMTP id S229962AbjBKK5K (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Sat, 11 Feb 2023 05:57:10 -0500
 Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7138F23112
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE05126CDD
         for <linux-bluetooth@vger.kernel.org>; Sat, 11 Feb 2023 02:57:09 -0800 (PST)
 Received: from submission (posteo.de [185.67.36.169]) 
-        by mout02.posteo.de (Postfix) with ESMTPS id 262E0240769
+        by mout02.posteo.de (Postfix) with ESMTPS id 74D0D240769
         for <linux-bluetooth@vger.kernel.org>; Sat, 11 Feb 2023 11:57:08 +0100 (CET)
 Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4PDSGq5PjZz9rxM;
-        Sat, 11 Feb 2023 11:57:07 +0100 (CET)
+        by submission (posteo.de) with ESMTPSA id 4PDSGr0SM0z9rxK;
+        Sat, 11 Feb 2023 11:57:08 +0100 (CET)
 From:   Pauli Virtanen <pav@iki.fi>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v2 5/9] tools/btmgmt: add MGMT setting bit names for CIS feature support
-Date:   Sat, 11 Feb 2023 10:53:49 +0000
-Message-Id: <34f7dbd9336538420154195bd0d353d8cbbeb2dd.1676112710.git.pav@iki.fi>
+Subject: [PATCH BlueZ v2 6/9] adapter: add function for checking adapter features, add CIS features
+Date:   Sat, 11 Feb 2023 10:53:50 +0000
+Message-Id: <fec95d980e1d7c4588a227d24140a213d156470c.1676112710.git.pav@iki.fi>
 In-Reply-To: <3df45c4a6737b249b519d4c6128e2eb783198abc.1676112710.git.pav@iki.fi>
 References: <20230127205205.20235-1-pav@iki.fi>
 MIME-Version: 1.0
@@ -40,40 +40,59 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add names for CIS Central/Peripheral MGMT setting bits:
-
-[mgmt]# info
-Index list with 1 item
-hci0:	Primary controller
-	addr XX:XX:XX:XX:XX:XX version 12 manufacturer 2 class 0x7c0104
-	supported settings: powered connectable fast-connectable discoverable bondable link-security ssp br/edr le advertising secure-conn debug-keys privacy configuration static-addr phy-configuration wide-band-speech cis-central cis-peripheral
-	current settings: powered bondable ssp br/edr le secure-conn cis-central cis-peripheral
-	name xxx
-	short name
-hci0:	Configuration options
-	supported options: public-address
-	missing options:
+Add function for checking adapter features, similar to
+btd_has_kernel_features. Currently supports the CIS feature bits.
 ---
 
 Notes:
-    v2: add example command output
+    v2: use feature flags, not separate functions
 
- tools/btmgmt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ src/adapter.c | 13 +++++++++++++
+ src/adapter.h |  7 +++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/tools/btmgmt.c b/tools/btmgmt.c
-index 29f86091f..323c26712 100644
---- a/tools/btmgmt.c
-+++ b/tools/btmgmt.c
-@@ -353,6 +353,8 @@ static const char *settings_str[] = {
- 				"static-addr",
- 				"phy-configuration",
- 				"wide-band-speech",
-+				"cis-central",
-+				"cis-peripheral",
- };
+diff --git a/src/adapter.c b/src/adapter.c
+index aadad4016..4ccacdb8b 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -10712,6 +10712,19 @@ bool btd_le_connect_before_pairing(void)
+ 	return false;
+ }
  
- static const char *settings2str(uint32_t settings)
++bool btd_adapter_has_features(struct btd_adapter *adapter, uint32_t features)
++{
++	uint32_t flags = 0;
++
++	if (adapter->current_settings & MGMT_SETTING_CIS_CENTRAL)
++		flags |= ADAPTER_CIS_CENTRAL;
++
++	if (adapter->current_settings & MGMT_SETTING_CIS_PERIPHERAL)
++		flags |= ADAPTER_CIS_PERIPHERAL;
++
++	return (flags & features) ? true : false;
++}
++
+ bool btd_has_kernel_features(uint32_t features)
+ {
+ 	return (kernel_features & features) ? true : false;
+diff --git a/src/adapter.h b/src/adapter.h
+index 78eb069ae..96a8668d5 100644
+--- a/src/adapter.h
++++ b/src/adapter.h
+@@ -256,6 +256,13 @@ void btd_adapter_for_each_device(struct btd_adapter *adapter,
+ 
+ bool btd_le_connect_before_pairing(void);
+ 
++enum adapter_features {
++	ADAPTER_CIS_CENTRAL		= 1 << 0,
++	ADAPTER_CIS_PERIPHERAL		= 1 << 1,
++};
++
++bool btd_adapter_has_features(struct btd_adapter *adapter, uint32_t features);
++
+ enum experimental_features {
+ 	EXP_FEAT_DEBUG			= 1 << 0,
+ 	EXP_FEAT_LE_SIMULT_ROLES	= 1 << 1,
 -- 
 2.39.1
 
