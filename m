@@ -2,100 +2,186 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79AAB6953AE
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Feb 2023 23:20:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25B646953E4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Feb 2023 23:30:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229946AbjBMWUU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Feb 2023 17:20:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60138 "EHLO
+        id S230062AbjBMWas (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Feb 2023 17:30:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjBMWUT (ORCPT
+        with ESMTP id S229978AbjBMWaq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Feb 2023 17:20:19 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77BB71ADC9
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Feb 2023 14:20:18 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0FE186131B
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Feb 2023 22:20:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 75145C4339B;
-        Mon, 13 Feb 2023 22:20:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676326817;
-        bh=31mUBsKEdwcfk/KRhZJX5J5ieN1YgHAwBXUlpet+Sxs=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=EOep6/zZdHz3+4t4Xx+Y4PS9IQnT/dUEYNIHiS+gRX8dNDNzNpq5+sMjK111o59tK
-         JL3Tg2hw15Zkv2Np2+9SxoMbpTW9yCB9abOiVXVmLj4VDqkB4qSvnkFwso7Jl1J2tr
-         uMJz0V+ik0xZGmPLb+g3c0+4jBqnIgfEdl8gXyHRvO/EVZtp0YPhhz6t1oKBcNj/Lg
-         y+QWU8ECt/V5/6885kjB/bsLln0VIeoIICX+v/RjEerI0BJizrGbCKfd83XYqVd7xH
-         PgsBzGRwFZBkMcGCi+wpNRvy/h3rqq+uAJvYWbdRAybDrMIHdjI8llTb8Dk8BqnCps
-         uuZJfX+DzyEzg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 5BF9EE68D39;
-        Mon, 13 Feb 2023 22:20:17 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 13 Feb 2023 17:30:46 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0F31DB8A
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Feb 2023 14:30:45 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id d2so13298875pjd.5
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Feb 2023 14:30:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=s+1SIKPQbZyXNxoWF1sOuN681PhVFf4YYd4/NhTCsmg=;
+        b=h+ooCrO/N2sZob+NYlV65ihOp4LxG4aqYchZsNjb6DfxxXGqk3EqvZKHC7dGCRsm3O
+         fOGOXUlFi3Q9FPBjwkWi0SdDElxSQpL/9eC31oNbJkQAhLaaZt9rnMMGScyGLAMsw/tD
+         FDHt6/SGiwcV9BGT4dFWVr64KYUHNoolMKOUbuy37UEGbT48CjaKk2xDKmk7Hq/pMlvN
+         rmjTuiYbTJiIlSC+HJM/bHuMIllZetYwfULBPWGytwigVgUgcHBkqki2f7Ogfp5OAiIm
+         f9iZmQIsekkzCjrTKHW43jlZPgL/wC4lue98NdoBfzBWLc4c5sTvXR8rO/LOaMWulO21
+         4wkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s+1SIKPQbZyXNxoWF1sOuN681PhVFf4YYd4/NhTCsmg=;
+        b=LGtlOGdRniglw8Twi/amn6c3l5uJGI7nVRzTasw3FBkdXj+JpwTbqzNq0MDCiFFF1Q
+         8Pyon9utJZxL3rRejWulUfn3riIdEyYk2wOOZl3OnHHYbg5rALTneNtSbJewx8fdLthH
+         THOMvzucvDGzrzpMgcLaxetskQVh1k0cWKGh9FdoPGpAUteekM10kasgWVaVSRpIX5kM
+         A2BbLftuL5ZRdI55ZUdoqs/TQ5wxzvplA9+8EWFOVJNZaAnP1+oEQoOLZEF0z5g9tLzz
+         9Ow3E0cA850mgWQg91aHf7GpacuGDvhAIK6lBs6HRfJADlUkF+vZP+9iCQTF8hKRiVAn
+         ubVQ==
+X-Gm-Message-State: AO0yUKUJVrrBSUKllC7EVZQiZqcGiEnzh6kSYIUcTEqJ0UloBXeB/z5y
+        k3MTskt6LZvYlWrfu17NCtCLD1KhDos=
+X-Google-Smtp-Source: AK7set+y/MgYxcD9HMclG6Xp1HxXObg+l1kk+Up1tUoyjx9723LLen2PQ3FPuDRKl2uJAAhn5qkGgw==
+X-Received: by 2002:a17:902:f54f:b0:199:26b1:17b3 with SMTP id h15-20020a170902f54f00b0019926b117b3mr475953plf.28.1676327444516;
+        Mon, 13 Feb 2023 14:30:44 -0800 (PST)
+Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
+        by smtp.gmail.com with ESMTPSA id d21-20020a170902aa9500b0019a71017ab2sm6774199plr.91.2023.02.13.14.30.43
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Feb 2023 14:30:43 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH] Bluetooth: MGMT: Use BIT macro when defining bitfields
+Date:   Mon, 13 Feb 2023 14:30:42 -0800
+Message-Id: <20230213223042.575952-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v2 1/9] doc: remove unimplemented Quality Report from
- MGMT settings
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167632681737.28787.7790111416073990674.git-patchwork-notify@kernel.org>
-Date:   Mon, 13 Feb 2023 22:20:17 +0000
-References: <3df45c4a6737b249b519d4c6128e2eb783198abc.1676112710.git.pav@iki.fi>
-In-Reply-To: <3df45c4a6737b249b519d4c6128e2eb783198abc.1676112710.git.pav@iki.fi>
-To:     Pauli Virtanen <pav@iki.fi>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75 autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+This makes use of BIT macro when defining bitfields which makes it
+clearer what bit it is toggling.
 
-On Sat, 11 Feb 2023 10:53:45 +0000 you wrote:
-> The Set Quality Report command was removed in
-> commit 0454e2d09570 ("mgmt: Add support for Mesh in the kernel"),
-> but the settings bit was not removed. It's also not implemented on
-> kernel side, so remove it now.
-> ---
-> 
-> Notes:
->     v2: split to two commits
-> 
-> [...]
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ include/net/bluetooth/mgmt.h | 80 ++++++++++++++++++------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
 
-Here is the summary with links:
-  - [BlueZ,v2,1/9] doc: remove unimplemented Quality Report from MGMT settings
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=3e2e3aa73904
-  - [BlueZ,v2,2/9] doc: add MGMT setting for CIS features
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=97ad0ecbfdd4
-  - [BlueZ,v2,3/9] lib: Add defines for MGMT setting bits for CIS feature support
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c35d32b19989
-  - [BlueZ,v2,4/9] monitor: add MGMT setting bit names for CIS feature support
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=0f2f7a8fe270
-  - [BlueZ,v2,5/9] tools/btmgmt: add MGMT setting bit names for CIS feature support
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=6f131929b832
-  - [BlueZ,v2,6/9] adapter: add function for checking adapter features, add CIS features
-    (no matching commit)
-  - [BlueZ,v2,7/9] media: Check adapter CIS support to add BAP in SupportedUUIDs
-    (no matching commit)
-  - [BlueZ,v2,8/9] shared/bap: support client-only case
-    (no matching commit)
-  - [BlueZ,v2,9/9] bap: handle adapters that are not CIS Central / Peripheral capable
-    (no matching commit)
-
-You are awesome, thank you!
+diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
+index e18a927669c0..a5801649f619 100644
+--- a/include/net/bluetooth/mgmt.h
++++ b/include/net/bluetooth/mgmt.h
+@@ -91,26 +91,26 @@ struct mgmt_rp_read_index_list {
+ #define MGMT_MAX_NAME_LENGTH		(HCI_MAX_NAME_LENGTH + 1)
+ #define MGMT_MAX_SHORT_NAME_LENGTH	(HCI_MAX_SHORT_NAME_LENGTH + 1)
+ 
+-#define MGMT_SETTING_POWERED		0x00000001
+-#define MGMT_SETTING_CONNECTABLE	0x00000002
+-#define MGMT_SETTING_FAST_CONNECTABLE	0x00000004
+-#define MGMT_SETTING_DISCOVERABLE	0x00000008
+-#define MGMT_SETTING_BONDABLE		0x00000010
+-#define MGMT_SETTING_LINK_SECURITY	0x00000020
+-#define MGMT_SETTING_SSP		0x00000040
+-#define MGMT_SETTING_BREDR		0x00000080
+-#define MGMT_SETTING_HS			0x00000100
+-#define MGMT_SETTING_LE			0x00000200
+-#define MGMT_SETTING_ADVERTISING	0x00000400
+-#define MGMT_SETTING_SECURE_CONN	0x00000800
+-#define MGMT_SETTING_DEBUG_KEYS		0x00001000
+-#define MGMT_SETTING_PRIVACY		0x00002000
+-#define MGMT_SETTING_CONFIGURATION	0x00004000
+-#define MGMT_SETTING_STATIC_ADDRESS	0x00008000
+-#define MGMT_SETTING_PHY_CONFIGURATION	0x00010000
+-#define MGMT_SETTING_WIDEBAND_SPEECH	0x00020000
+-#define MGMT_SETTING_CIS_CENTRAL	0x00040000
+-#define MGMT_SETTING_CIS_PERIPHERAL	0x00080000
++#define MGMT_SETTING_POWERED		BIT(0)
++#define MGMT_SETTING_CONNECTABLE	BIT(1)
++#define MGMT_SETTING_FAST_CONNECTABLE	BIT(2)
++#define MGMT_SETTING_DISCOVERABLE	BIT(3)
++#define MGMT_SETTING_BONDABLE		BIT(4)
++#define MGMT_SETTING_LINK_SECURITY	BIT(5)
++#define MGMT_SETTING_SSP		BIT(6)
++#define MGMT_SETTING_BREDR		BIT(7)
++#define MGMT_SETTING_HS			BIT(8)
++#define MGMT_SETTING_LE			BIT(9)
++#define MGMT_SETTING_ADVERTISING	BIT(10)
++#define MGMT_SETTING_SECURE_CONN	BIT(11)
++#define MGMT_SETTING_DEBUG_KEYS		BIT(12)
++#define MGMT_SETTING_PRIVACY		BIT(13)
++#define MGMT_SETTING_CONFIGURATION	BIT(14)
++#define MGMT_SETTING_STATIC_ADDRESS	BIT(15)
++#define MGMT_SETTING_PHY_CONFIGURATION	BIT(16)
++#define MGMT_SETTING_WIDEBAND_SPEECH	BIT(17)
++#define MGMT_SETTING_CIS_CENTRAL	BIT(18)
++#define MGMT_SETTING_CIS_PERIPHERAL	BIT(19)
+ 
+ #define MGMT_OP_READ_INFO		0x0004
+ #define MGMT_READ_INFO_SIZE		0
+@@ -635,21 +635,21 @@ struct mgmt_rp_get_phy_configuration {
+ } __packed;
+ #define MGMT_GET_PHY_CONFIGURATION_SIZE	0
+ 
+-#define MGMT_PHY_BR_1M_1SLOT	0x00000001
+-#define MGMT_PHY_BR_1M_3SLOT	0x00000002
+-#define MGMT_PHY_BR_1M_5SLOT	0x00000004
+-#define MGMT_PHY_EDR_2M_1SLOT	0x00000008
+-#define MGMT_PHY_EDR_2M_3SLOT	0x00000010
+-#define MGMT_PHY_EDR_2M_5SLOT	0x00000020
+-#define MGMT_PHY_EDR_3M_1SLOT	0x00000040
+-#define MGMT_PHY_EDR_3M_3SLOT	0x00000080
+-#define MGMT_PHY_EDR_3M_5SLOT	0x00000100
+-#define MGMT_PHY_LE_1M_TX		0x00000200
+-#define MGMT_PHY_LE_1M_RX		0x00000400
+-#define MGMT_PHY_LE_2M_TX		0x00000800
+-#define MGMT_PHY_LE_2M_RX		0x00001000
+-#define MGMT_PHY_LE_CODED_TX	0x00002000
+-#define MGMT_PHY_LE_CODED_RX	0x00004000
++#define MGMT_PHY_BR_1M_1SLOT		BIT(0)
++#define MGMT_PHY_BR_1M_3SLOT		BIT(1)
++#define MGMT_PHY_BR_1M_5SLOT		BIT(2)
++#define MGMT_PHY_EDR_2M_1SLOT		BIT(3)
++#define MGMT_PHY_EDR_2M_3SLOT		BIT(4)
++#define MGMT_PHY_EDR_2M_5SLOT		BIT(5)
++#define MGMT_PHY_EDR_3M_1SLOT		BIT(6)
++#define MGMT_PHY_EDR_3M_3SLOT		BIT(7)
++#define MGMT_PHY_EDR_3M_5SLOT		BIT(8)
++#define MGMT_PHY_LE_1M_TX		BIT(9)
++#define MGMT_PHY_LE_1M_RX		BIT(10)
++#define MGMT_PHY_LE_2M_TX		BIT(11)
++#define MGMT_PHY_LE_2M_RX		BIT(12)
++#define MGMT_PHY_LE_CODED_TX		BIT(13)
++#define MGMT_PHY_LE_CODED_RX		BIT(14)
+ 
+ #define MGMT_PHY_BREDR_MASK (MGMT_PHY_BR_1M_1SLOT | MGMT_PHY_BR_1M_3SLOT | \
+ 			     MGMT_PHY_BR_1M_5SLOT | MGMT_PHY_EDR_2M_1SLOT | \
+@@ -974,11 +974,11 @@ struct mgmt_ev_auth_failed {
+ 	__u8	status;
+ } __packed;
+ 
+-#define MGMT_DEV_FOUND_CONFIRM_NAME		0x01
+-#define MGMT_DEV_FOUND_LEGACY_PAIRING		0x02
+-#define MGMT_DEV_FOUND_NOT_CONNECTABLE		0x04
+-#define MGMT_DEV_FOUND_INITIATED_CONN		0x08
+-#define MGMT_DEV_FOUND_NAME_REQUEST_FAILED	0x10
++#define MGMT_DEV_FOUND_CONFIRM_NAME		BIT(0)
++#define MGMT_DEV_FOUND_LEGACY_PAIRING		BIT(1)
++#define MGMT_DEV_FOUND_NOT_CONNECTABLE		BIT(2)
++#define MGMT_DEV_FOUND_INITIATED_CONN		BIT(3)
++#define MGMT_DEV_FOUND_NAME_REQUEST_FAILED	BIT(4)
+ 
+ #define MGMT_EV_DEVICE_FOUND		0x0012
+ struct mgmt_ev_device_found {
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.37.3
 
