@@ -2,185 +2,98 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B97369539B
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Feb 2023 23:08:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B6ED6953AF
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Feb 2023 23:20:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229556AbjBMWI4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Feb 2023 17:08:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51982 "EHLO
+        id S229947AbjBMWUW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Feb 2023 17:20:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230043AbjBMWIw (ORCPT
+        with ESMTP id S229468AbjBMWUV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Feb 2023 17:08:52 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E2721A4B0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Feb 2023 14:08:51 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id o20so20955196lfk.5
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Feb 2023 14:08:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TT6+NBpqgyQIASi8ctW6Ba+a4I43nBhXQjZjPvoKWmI=;
-        b=gV3R5l+OsQq/olBwOHhsYwVPKeSzCTPRG1H+XrwDBNlML93PAVn/So0KAEZJlM75Bk
-         uAvguyEPRCTGA5B61ZQ2QMghiRqOqtDeTUn0ogSYQPfa+8GM/nkb+fENo6heno3+RWBS
-         tQhcmdFu6Fr6+P0MPoE2CxgtINBLNn5ziRmnGJQ6vcyOk7wwfdk4eW35pW0DxWlqEqQR
-         rr8Kg5NRiT9et81gPt4LHagoiNp2TDcGRRpVVjZE2HsdkYHp9Py1AXCahplHUFeufNHf
-         UZp7AcagmOoW5immcrUBwE9ySh11J2JkU0v0ooIEY9g0W+cpPUFmmAVBN6VNEbOC9tVv
-         +nWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TT6+NBpqgyQIASi8ctW6Ba+a4I43nBhXQjZjPvoKWmI=;
-        b=OLD+0gizvyaxY055jWvjYXdwMVOaMdkiwTStGskhpqw9gVcKXQyT57yVLWNwnVF8nk
-         chdCqOUbRRrvNMRdB00freuyg+bh7JnJ3hXjWlOiCNAzruLk375v63kPWBsE9/JBFc9R
-         zCoYFv8Zhe+w1rXEs8jXzn7QbVVSfPEhQLaefIzf0tDWoPlnYI6tzekNYTQzZiQpMMd8
-         BiF0XCCPWRW3loFPbnK6IKghLaYEu1Dq0gPfbIy5iVFDnqBJHwlDpDiedDCgkb8NLm7X
-         16kqPaYgg3lWYkDGGAMNqHT2HD9BzKCgOm0usXwSDBjdgR4iKzL93ZgwyRAQn3VGO9zQ
-         G22Q==
-X-Gm-Message-State: AO0yUKW5+wF+1XdtmnXE6GiFp3wcLBwkEAMyoEg8E/cEV6bsgfC8gSbK
-        CVT1mZlE0YF98snUzMGfUvCgJHYKrXvmhQ8zC/Xamkhb
-X-Google-Smtp-Source: AK7set8z09jNsFgwujeIa0NNctek5/B43bWgrfzsE3pWanhWBgMW+urldk7/7TomAclLmiNpt5JaEYUdCgblFPsiYnc=
-X-Received: by 2002:ac2:54af:0:b0:4bb:35c9:dfb5 with SMTP id
- w15-20020ac254af000000b004bb35c9dfb5mr4160777lfk.13.1676326129473; Mon, 13
- Feb 2023 14:08:49 -0800 (PST)
+        Mon, 13 Feb 2023 17:20:21 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B2321ADC9
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Feb 2023 14:20:20 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D0377B8197A
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Feb 2023 22:20:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 773B8C4339C;
+        Mon, 13 Feb 2023 22:20:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676326817;
+        bh=Z6lBysXr0P9w5fL2EFZ9c5L87XriCzEuhbNMlteE5+Y=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=s1qHclO8yA4LExN48wvQOwOFbzxTef3nr0ZqVYXeLrSvnIdBV0FLClszgbgUahf4/
+         bWRp+kTRlJ9K+E1jbMAPgoS2p2+P5uUIqn+uM8sml0l042aZnpgYgtEgbYNoS+BuYn
+         MlF7yfMRzawpVuWA6F3cif/PP593SG57C2Qp4U8pE4UXNAnWr1wy1Bha8zANFH9eLj
+         KgdAVLjAAafM6/SYjAjyyt+GRRxu7NWZUs7UjcnGIIVE1zygwm4OYfZ3R/pU0cJEoM
+         MrdLOMMbzqxQmwDy07ABU5Wx0O5P4ZHsEQgvNR1dDzZzTwF7QjVIfDcZREATtdMNKC
+         jpyxNyVrIO42g==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 53701C41676;
+        Mon, 13 Feb 2023 22:20:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <8355ef6eaf7bf6b1d82d03580de9a1d18ed4f152.1676323061.git.pav@iki.fi>
-In-Reply-To: <8355ef6eaf7bf6b1d82d03580de9a1d18ed4f152.1676323061.git.pav@iki.fi>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Mon, 13 Feb 2023 14:08:37 -0800
-Message-ID: <CABBYNZ+SJauj_Q8+E8LMbcTp__PQQCM=PjmH48oRXt=9q_iGVA@mail.gmail.com>
-Subject: Re: [PATCH BlueZ] media: fix crash when clearing BAP transport
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ 1/8] doc: add MGMT setting for CIS features,
+ remove Quality Report
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <167632681733.28787.4286157502141715950.git-patchwork-notify@kernel.org>
+Date:   Mon, 13 Feb 2023 22:20:17 +0000
+References: <a8aedc0f9a4c1e21d61694589c5b7a9f31cbedc1.1675103676.git.pav@iki.fi>
+In-Reply-To: <a8aedc0f9a4c1e21d61694589c5b7a9f31cbedc1.1675103676.git.pav@iki.fi>
 To:     Pauli Virtanen <pav@iki.fi>
 Cc:     linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Pauli,
+Hello:
 
-On Mon, Feb 13, 2023 at 1:28 PM Pauli Virtanen <pav@iki.fi> wrote:
->
-> The BAP stream user data used for transport paths in media.c is set both
-> in media.c:pac_config and in profiles/bap.c. In the latter, it gets set
-> to a string owned by bap_ep, whose lifetime can be shorter than that of
-> the transport.
->
-> Under some conditions, bap.c:bap_disconnect is hit while there are
-> transports and the user data is owned by the endpoint. In this case, the
-> path string owned by the endpoints gets freed first, and ASAN
-> use-after-free crash is encountered when clearing the transports.
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Hmm, I didn't hit while testing, anyway that means the transport is
-being freed before we clean up? It might be a good idea to run this
-under valgrind to check where the path is freed.
+On Mon, 30 Jan 2023 20:37:32 +0200 you wrote:
+> Add definitions for new MGMT Controller Information settings bits,
+> indicating adapter Connected Isochronous Stream - Central/Peripheral
+> feature support.
+> 
+> The Set Quality Report command was removed in
+> commit 0454e2d09570 ("mgmt: Add support for Mesh in the kernel"),
+> but the settings bit was not removed. It's also not implemented on
+> kernel side, so remove it now.
+> 
+> [...]
 
-> Fix this by matching the transports by the stream pointer, and not by
-> the transport/endpoint path.
->
-> Fixes: 7b1b1a499cf3 ("media: clear the right transport when clearing BAP endpoint")
-> ---
->
-> Notes:
->     The v2 version of the patch in commit 7b1b1a499cf334 was buggy, and its
->     v3 sent to the list was supposed to replace it. However, I resubmitted
->     only that patch and not the full series, which maybe would have been the
->     right thing.  Sorry for the mess.
->
->  profiles/audio/media.c     | 21 +++++++++++----------
->  profiles/audio/transport.c | 14 ++++++++++++++
->  profiles/audio/transport.h |  1 +
->  3 files changed, 26 insertions(+), 10 deletions(-)
->
-> diff --git a/profiles/audio/media.c b/profiles/audio/media.c
-> index 3eb038cb7..8728b69e0 100644
-> --- a/profiles/audio/media.c
-> +++ b/profiles/audio/media.c
-> @@ -1085,19 +1085,20 @@ static int pac_config(struct bt_bap_stream *stream, struct iovec *cfg,
->  static void pac_clear(struct bt_bap_stream *stream, void *user_data)
->  {
->         struct media_endpoint *endpoint = user_data;
-> -       struct media_transport *transport;
-> -       const char *path;
-> +       GSList *item;
->
-> -       path = bt_bap_stream_get_user_data(stream);
-> -       if (!path)
-> -               return;
-> +       DBG("endpoint %p stream %p", endpoint, stream);
->
-> -       DBG("endpoint %p path %s", endpoint, path);
-> +       item = endpoint->transports;
-> +       while (item) {
-> +               struct media_transport *transport = item->data;
->
-> -       transport = find_transport(endpoint, path);
-> -       if (transport) {
-> -               clear_configuration(endpoint, transport);
-> -               bt_bap_stream_set_user_data(stream, NULL);
-> +               if (media_transport_get_stream(transport) == stream) {
-> +                       clear_configuration(endpoint, transport);
-> +                       item = endpoint->transports;
-> +               } else {
-> +                       item = item->next;
-> +               }
->         }
->  }
->
-> diff --git a/profiles/audio/transport.c b/profiles/audio/transport.c
-> index 5e057e2a5..cd91669c6 100644
-> --- a/profiles/audio/transport.c
-> +++ b/profiles/audio/transport.c
-> @@ -1483,6 +1483,20 @@ const char *media_transport_get_path(struct media_transport *transport)
->         return transport->path;
->  }
->
-> +void *media_transport_get_stream(struct media_transport *transport)
-> +{
-> +       struct bap_transport *bap;
-> +       const char *uuid;
-> +
-> +       uuid = media_endpoint_get_uuid(transport->endpoint);
-> +       if (strcasecmp(uuid, PAC_SINK_UUID) &&
-> +                       strcasecmp(uuid, PAC_SOURCE_UUID))
-> +               return NULL;
+Here is the summary with links:
+  - [BlueZ,1/8] doc: add MGMT setting for CIS features, remove Quality Report
+    (no matching commit)
+  - [BlueZ,2/8] lib: Add defines for MGMT setting bits for CIS feature support
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c35d32b19989
+  - [BlueZ,3/8] monitor: add names for MGMT setting bits for CIS feature support
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=0f2f7a8fe270
+  - [BlueZ,4/8] tools/btmgmt: add names for MGMT setting bits for CIS feature support
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=6f131929b832
+  - [BlueZ,5/8] adapter: add functions indicating adapter CIS capability
+    (no matching commit)
+  - [BlueZ,6/8] media: Check adapter CIS support to add BAP in SupportedUUIDs
+    (no matching commit)
+  - [BlueZ,7/8] shared/bap: handle central-only case
+    (no matching commit)
+  - [BlueZ,8/8] bap: handle adapters that are not CIS Central / Peripheral capable
+    (no matching commit)
 
-This should probably be made generic, perhaps with a get_stream
-callback so we don't have to check the UUID like above.
-
-> +
-> +       bap = transport->data;
-> +       return bap->stream;
-> +}
-> +
->  void media_transport_update_delay(struct media_transport *transport,
->                                                         uint16_t delay)
->  {
-> diff --git a/profiles/audio/transport.h b/profiles/audio/transport.h
-> index 102fc3cf1..5ca9b8f9e 100644
-> --- a/profiles/audio/transport.h
-> +++ b/profiles/audio/transport.h
-> @@ -19,6 +19,7 @@ struct media_transport *media_transport_create(struct btd_device *device,
->
->  void media_transport_destroy(struct media_transport *transport);
->  const char *media_transport_get_path(struct media_transport *transport);
-> +void *media_transport_get_stream(struct media_transport *transport);
->  struct btd_device *media_transport_get_dev(struct media_transport *transport);
->  int8_t media_transport_get_volume(struct media_transport *transport);
->  void media_transport_update_delay(struct media_transport *transport,
-> --
-> 2.39.1
->
-
-
+You are awesome, thank you!
 -- 
-Luiz Augusto von Dentz
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
