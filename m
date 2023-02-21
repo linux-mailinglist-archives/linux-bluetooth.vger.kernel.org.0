@@ -2,159 +2,118 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1825469DAFF
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 Feb 2023 08:13:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BA8C69E005
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 Feb 2023 13:14:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233504AbjBUHNn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Feb 2023 02:13:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47880 "EHLO
+        id S233753AbjBUMOj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 21 Feb 2023 07:14:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233502AbjBUHNm (ORCPT
+        with ESMTP id S234675AbjBUMOi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Feb 2023 02:13:42 -0500
-Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8096322DC0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 20 Feb 2023 23:13:34 -0800 (PST)
-Received: by mail-vk1-xa2e.google.com with SMTP id 26so2056305vkn.10
-        for <linux-bluetooth@vger.kernel.org>; Mon, 20 Feb 2023 23:13:34 -0800 (PST)
+        Tue, 21 Feb 2023 07:14:38 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5731513A
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Feb 2023 04:14:12 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id ee7so1234777edb.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Feb 2023 04:14:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:cc:date:message-id:subject:mime-version
-         :content-transfer-encoding:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3q2pzU9Qz6VR/qGmSVfVV1MeAe6CaEVEzfExBv8Dc1s=;
-        b=iXgKBYy5yxtPqzbtlPjctm5jlsHcZc6U/v2vDahSMUzTUm9mIpm4MjWcMXW0754LnE
-         BCmA8xw5HjIijZDtesveZTYnbKqhX8xxrdlS5HXnviSn6nFDZJ8KHwMWyCUe/hZbK5HN
-         jNpwsqyH/qeYAEWInjeW8IEO1H5tVanYJ2tK1NO7v+040vYA8YhqXp8ElLfiXGt5A8wl
-         ASz8nQJj3hA5BGB3gNV8bHBJPnP1bIy8/yVRxPQEDqfleRb79X+dEPCfWWkbttkNnTAq
-         YFLDTItkeZhS4v11mtQCz0CFGd32fL2jdHSb8CX4Dg28rS2pIwhPxHqjED1TgvcYJR5x
-         nIZw==
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :reply-to:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tCnQYkQRNYKhCffGuGJjYkip6x1uFotNA8/ojuqPm4Y=;
+        b=kWMUKTQxE8WCBtMcVM5PC58UPKWuxB1Q717bkUpqEjh1mgMw9Nj36qxw2eCgyG4lBW
+         /Hs/lBS6xVn77V16xLUGIL9+pwpWJgg7+dst0OUBH5fokHQdpb/cqJ/SOFOGcyyFBGuZ
+         yws2bgbnjoHLxSEf2BSR6uIFwSntEvJjodxXJ+Hw9SQDZmUfvzc4G8HJNJtbpI3EyJ+J
+         mBDCHil4xHhLrpDCsTTH6GO2K9TV3wJEyOHR6L6DC4IiOIx4jXmtqc+NNxLVr9oSs9cZ
+         W5gMc3UdzhZYeCng3tFp2JG6ufrcbOi9jQA8387ULHhVTcETHNJ9VfTfjdqw4k0e5eU7
+         x3Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:cc:date:message-id:subject:mime-version
-         :content-transfer-encoding:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3q2pzU9Qz6VR/qGmSVfVV1MeAe6CaEVEzfExBv8Dc1s=;
-        b=ot4bt7zD2t8RiSauY0mDRzev71191JIem+F7VV6h2sPzx51VTKHZwN6HKs4iVQI10I
-         rSX6aAFlCBOpc70IwbMGDz0IORnRfPJPzz6xg3zQJ9Jk8070FF6tu4naJsHXGO9QkwUg
-         je85G19WQZkDB5ED049DuWld7FhYVDVWnpb2Vzt/nRe6p7rD31RCA1tZ9+1LrkjM4eGM
-         utkfLz1B3FS1lq+Xnih/aheE6lBE6jb4oAWAQPPJjEG/HOOaL11AWG8f19dBPdmqDW05
-         qAM8vsIfPsdtssco0aELtHSNEAU7llIqUCz9MDRv2GEVCO/6vUDXVwm2VNyesAxaff2J
-         T4nA==
-X-Gm-Message-State: AO0yUKUMxMIbEpsc/NvGi6wikymr3T+vBlx7LJZ43cC9/NSCWajcCqpd
-        1ZWLCzXOPnItdzI2hACZOY0=
-X-Google-Smtp-Source: AK7set+loPpTa9ITQdtl4VtkX5HEBpkGoTEXNHeupxdN4rap1aqxF1m21V30bvjHsYuJWupQFkl4qQ==
-X-Received: by 2002:a1f:a08e:0:b0:400:fe65:477e with SMTP id j136-20020a1fa08e000000b00400fe65477emr3288251vke.9.1676963613527;
-        Mon, 20 Feb 2023 23:13:33 -0800 (PST)
-Received: from smtpclient.apple ([167.99.200.149])
-        by smtp.gmail.com with ESMTPSA id d189-20020a1f9bc6000000b003c115870e46sm615400vke.7.2023.02.20.23.13.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Feb 2023 23:13:33 -0800 (PST)
-From:   Christian Hewitt <christianshewitt@gmail.com>
-Content-Type: text/plain;
-        charset=utf-8
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tCnQYkQRNYKhCffGuGJjYkip6x1uFotNA8/ojuqPm4Y=;
+        b=F2LeuHS3OG8PjejId1FR8/j+pg6RPTpYMA3uvqd5bwCfOFsQANYJ0dnCUs5De28Bzk
+         aTCyqBEm1fGGwfLauShSmJQQTyA1OGQd4ITvPV9Pnp8lcGb7c2O5zGqBeCRsjxC4TbvA
+         hB7eKx/dmRRiXrAV3apXjAHObs3/NUMKloBECl5Ns5M2R3oLSbk+39+e4vwL0YIk59xn
+         Ck4839mFbj2Udo0eKS9WwMO8cUMl0vxeiiEA64DyE2yoMGYTeIA8EP5juKj/0uMIss6k
+         z24vj3pZunrcHwQa6H3u8hQcYQIFNFyeq15RsSn2CpXqMa80jwtBMxE7WMaysvalWJWL
+         yL2Q==
+X-Gm-Message-State: AO0yUKWGZcWpEZMJa3FzE9E0evqJHVdS1qUrxujnvolkx/VDkAOCbdGk
+        WMZZYJSQ66W0L2qK4uwaDOwpaGE6lqNoJ9A74Q==
+X-Google-Smtp-Source: AK7set8SWb2U7nEkpCOS6skd8EDKWmvdFpEgQSjFmKlf4YNype+mAYrWrn66sln06QOMGzYgHAGUcz3c51DJPtl0CP8=
+X-Received: by 2002:a17:906:80d7:b0:877:747d:f121 with SMTP id
+ a23-20020a17090680d700b00877747df121mr5841124ejx.9.1676981606249; Tue, 21 Feb
+ 2023 04:13:26 -0800 (PST)
+MIME-Version: 1.0
+Reply-To: intfund@yandex.com
+Sender: michealangle233@gmail.com
+Received: by 2002:a17:907:6d89:b0:87b:55cb:ebaf with HTTP; Tue, 21 Feb 2023
+ 04:13:25 -0800 (PST)
+From:   Alyona Degrik <iam1546780@gmail.com>
+Date:   Tue, 21 Feb 2023 04:13:25 -0800
+X-Google-Sender-Auth: h32A0s7SizqP3EVL66aU5tuDuUU
+Message-ID: <CACM6Vsz3Mt8sSgfn=yty_ZY00P3YKc+Ja=3hAoOG6DYEr2gR=Q@mail.gmail.com>
+Subject: eu preciso de sua ajuda por favor
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
-Subject: Bug/Problem with rtl_bt/rtl8822cs_config.bin
-Message-Id: <3B9D4DB2-D2CD-44FE-817A-F6EA8A0AD734@gmail.com>
-Date:   Tue, 21 Feb 2023 11:13:28 +0400
-Cc:     Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Vyacheslav <adeep@lexina.in>
-To:     Hilda Wu <hildawu@realtek.com>, Josh Boyer <jwboyer@kernel.org>,
-        Linux Firmware <linux-firmware@kernel.org>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>
-X-Mailer: Apple Mail (2.3696.120.41.1.1)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-I=E2=80=99m working with the RTL8822CS WiFi/BT mezzanine for BananaPi =
-M2S/M5 boards.
+Prezado bom dia,
 
-SDIO WiFi works fine. The BT side fails to load firmware:
+  Por favor, n=C3=A3o tenha vergonha de contat=C3=A1-lo atrav=C3=A9s deste =
+meio;
+Peguei seu contato na busca do pessoal do Google e resolvi entrar em
+contato com voc=C3=AA devido a situa=C3=A7=C3=A3o em meu pa=C3=ADs ser muit=
+o din=C3=A2mica.
 
-[    7.413297] Bluetooth: hci0: RTL: examining hci_ver=3D0a hci_rev=3D000c=
- lmp_ver=3D0a lmp_subver=3D8822
-[    7.416873] Bluetooth: hci0: RTL: rom_version status=3D0 version=3D3
-[    7.416892] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_fw.bin
-[    7.418200] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_config.bin
-[    7.453778] Bluetooth: hci0: RTL: cfg_sz 33, total sz 36529
-[    9.469947] Bluetooth: hci0: command 0xfc20 tx timeout
-[   17.629661] Bluetooth: hci0: RTL: download fw command failed (-110)
+  Sou a Sra. Alyona Degrik, de Kiev- (Ucr=C3=A2nia); Eu era o propriet=C3=
+=A1rio
+e CEO da LEOGAMING, antes da invas=C3=A3o russa do meu pa=C3=ADs. Devido =
+=C3=A0
+invas=C3=A3o da R=C3=BAssia em meu pa=C3=ADs, a Ucr=C3=A2nia, considero nec=
+ess=C3=A1rio
+diversificar meu projeto de neg=C3=B3cios em seu pa=C3=ADs para proteger o
+futuro de minha fam=C3=ADlia.
 
-The same is also observed on an Amlogic Android box with 08 silicon:
+Estou em busca de uma pessoa honesta e confi=C3=A1vel que me ajude a
+investir meus fundos depositados na Ind=C3=BAstria Imobili=C3=A1ria, Setore=
+s
+Agr=C3=ADcolas e Ind=C3=BAstria Cosm=C3=A9tica e outros projetos de investi=
+mento em
+seu pa=C3=ADs. Depois que meu neg=C3=B3cio foi destru=C3=ADdo pelas tropas =
+militares
+russas, n=C3=A3o h=C3=A1 atividades econ=C3=B4micas significativas acontece=
+ndo em meu
+pa=C3=ADs.
 
-[    3.950116] Bluetooth: hci0: RTL: examining hci_ver=3D08 hci_rev=3D000c=
- lmp_ver=3D08 lmp_subver=3D8822
-[    3.963304] Bluetooth: hci0: RTL: rom_version status=3D0 version=3D3
-[    3.969522] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_fw.bin
-[    3.969556] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_config.bin
-[    4.026336] Bluetooth: hci0: RTL: cfg_sz 33, total sz 36529
-[    6.086301] Bluetooth: hci0: command 0xfc20 tx timeout
-[   14.566290] Bluetooth: hci0: RTL: download fw command failed (-110)
+Estou realmente interessado em fazer um investimento an=C3=B4nimo de Quinze
+Milh=C3=B5es de Euros (=E2=82=AC 15.000.000,00 } que depositei em uma empre=
+sa
+financeira em Berlim, Alemanha com um plano de neg=C3=B3cios muito bom e
+confian=C3=A7a porque =C3=A9 o =C3=BAnico dinheiro que resta para mim e min=
+ha
+fam=C3=ADlia,
 
-The device is working in Armbian who bundle an older firmware:
+Por favor, gostaria de discutir com voc=C3=AA a possibilidade de como
+podemos trabalhar juntos como parceiros de neg=C3=B3cios e investir em seu
+pa=C3=ADs por meio de sua assist=C3=AAncia, se voc=C3=AA puder me ajudar. P=
+or favor,
+se voc=C3=AA estiver interessado em fazer parceria comigo, responda com
+urg=C3=AAncia para obter mais informa=C3=A7=C3=B5es.
 
-[    7.319820] Bluetooth: hci0: RTL: examining hci_ver=3D0a hci_rev=3D000c=
- lmp_ver=3D0a lmp_subver=3D8822
-[    7.323114] Bluetooth: hci0: RTL: rom_version status=3D0 version=3D3
-[    7.323150] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_fw.bin
-[    7.325103] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_config.bin
-[    7.348972] Bluetooth: hci0: RTL: cfg_sz 73, total sz 40777
-[    7.699139] Bluetooth: hci0: RTL: fw version 0x05a91a4a
-
-However it=E2=80=99s not a regression in firmware. Further testing =
-pinpointed the
-rtl8822cs_config.bin file. I can use the latest firmware (FFB8_ABD6) =
-with
-the config file bundled with Armbian:
-
-[    7.504405] Bluetooth: hci0: RTL: examining hci_ver=3D0a hci_rev=3D000c=
- lmp_ver=3D0a lmp_subver=3D8822
-[    7.507827] Bluetooth: hci0: RTL: rom_version status=3D0 version=3D3
-[    7.507850] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_fw.bin
-[    7.509158] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_config.bin
-[    7.529486] Bluetooth: hci0: RTL: cfg_sz 73, total sz 36569
-[    7.850914] Bluetooth: hci0: RTL: fw version 0xffb8abd6
-
-I can also use the oldest upstream firmware with the Armbian config:
-
-[    7.315358] Bluetooth: hci0: RTL: examining hci_ver=3D0a hci_rev=3D000c=
- lmp_ver=3D0a lmp_subver=3D8822
-[    7.318754] Bluetooth: hci0: RTL: rom_version status=3D0 version=3D3
-[    7.318772] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_fw.bin
-[    7.319680] Bluetooth: hci0: RTL: loading rtl_bt/rtl8822cs_config.bin
-[    7.341340] Bluetooth: hci0: RTL: cfg_sz 73, total sz 30817
-[    7.612533] Bluetooth: hci0: RTL: fw version 0x05990d54
-
-The config file Armbian are using [0] is sourced from an Amlogic =
-(Android) BSP
-repo shared to manufacturer Jethome (Vyacheslav on CC). There is no =
-obvious
-version info. There are newer (more recently committed) config files =
-available
-in updates to the Amlogic repo (alongside older 0599_0D54 firmware) and =
-all work
-with any upstream firmware file.
-
-I=E2=80=99m happy to apply test patches to get more output and I can =
-provide remote
-access to the board or arrange hardware to be shipped if that helps at =
-all.
-
-Hopefully RTL folks can spot whether this is a driver issue or something =
-not
-present in the upstream config?
-
-Christian
-
-[0] =
-https://github.com/armbian/firmware/blob/master/rtl_bt/rtl8822cs_config.bi=
-n
-
+"Com toda a minha sinceridade
+Sra. Alyona Degrik.
+CEO na LEOGAMING
+Com sede em Kiev, Kiev, Ucr=C3=A2nia.
