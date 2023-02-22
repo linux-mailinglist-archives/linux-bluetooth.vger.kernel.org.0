@@ -2,81 +2,94 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE6A969EA31
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 21 Feb 2023 23:30:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF90069EBA9
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Feb 2023 01:09:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230307AbjBUWa0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 21 Feb 2023 17:30:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55012 "EHLO
+        id S230195AbjBVAJ3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 21 Feb 2023 19:09:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230115AbjBUWaZ (ORCPT
+        with ESMTP id S229712AbjBVAJ2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 21 Feb 2023 17:30:25 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE48732CF2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Feb 2023 14:30:19 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 671AF611EE
-        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Feb 2023 22:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D1862C433D2;
-        Tue, 21 Feb 2023 22:30:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677018618;
-        bh=02j/BttkKv+dLKaxtCqwcxG9pJzi5r3gX+S7zmzm8fc=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=hZdZ/5hL4SEXXWJ6ERTUG9mRyKF5MBlSigAXV0wYAklYyEJsfkv1Xu1UyNUwoFse4
-         qdPdgRZqHXpOAClDMsRQ3C4m1po0OlLK2cnuYq7RSVNpkAayvXUqVCiLg75scSgFAp
-         k8/IWlwSKVmHwQ0CS9fBy/mJ1rmXdSbow2mKowFT5Rx8NP3rDGDp4A2g/nA3YYynFh
-         wdyHnAYqecIpywwNmyn9zNKHfwwqwoCX9Y96+Uott7NR7XvKMRizMnuP99cLFkw1Od
-         rRgocyK3JU9hzx055ZnhsCTUf/lcG3+18NaEKYADVJ2XrH0Ig4dsiMIkdJqdLO3ics
-         Mk+lG6fHC0GnQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B4F41C43161;
-        Tue, 21 Feb 2023 22:30:18 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [BlueZ PATCH v2] configure: Check ell path
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167701861873.4644.12485324441456071942.git-patchwork-notify@kernel.org>
-Date:   Tue, 21 Feb 2023 22:30:18 +0000
-References: <20230220181205.1577283-1-hj.tedd.an@gmail.com>
-In-Reply-To: <20230220181205.1577283-1-hj.tedd.an@gmail.com>
-To:     Tedd Ho-Jeong An <hj.tedd.an@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 21 Feb 2023 19:09:28 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9F830299
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Feb 2023 16:09:23 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id j18-20020a170903025200b00198aa765a9dso3046254plh.6
+        for <linux-bluetooth@vger.kernel.org>; Tue, 21 Feb 2023 16:09:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UL0yRbeKpZcUS7oK0Keg6M2sHdVnxq6xd5IYXope5uY=;
+        b=nK8EhIa3on6tNIjcrLIcrc+52eoe1UNMPTBON95D+w8PUIMo0Y8J7N+EwAb5a+Nq2m
+         zUuXEIK63sTwf9iAVYoWXIyQPQvwgpnDmNiMlYRWjtiKdWtNIYMWc78gayh0KdsZw9Ke
+         z/j3T07SMoF1qWbhKRV2WJbkSuCuWIjsse9WsBFwz/5hdaImod85lG/N3L6Kqdf3omnC
+         op6n+uexiIQuhqwrEB9jZZEg2jUcB2+aL3Uig8LQsv/Rjm6etP4j1YdxgVY/Hn4F9c6r
+         IEAC8yomjq/DyciVjxvRaPaTSIAzT0LVWUO486m/KUIOh46qVNlyTCbmK3UQrhLjSQwY
+         lM0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UL0yRbeKpZcUS7oK0Keg6M2sHdVnxq6xd5IYXope5uY=;
+        b=ITdvG+CUj10gC/NQGYF2ESPCFAzLsxsBNofLfnA3oDzMEYqSckinaMVoizcxSyy31b
+         Y+wX0G7iwpGnqJf1eIRBRNRkF8+y74PszwiAXi46EYRC9pRRYjOUZjuoLfrfAvko54iD
+         gDreB3ovDzzxnFcmI/A0LhvcUWzoyRvd0QbKvGkNowdAgVHy0CLH7lgMG/oZtco0EZZT
+         LVFm9HFASTCE+6h8ZbAa787c7xMqg2+/49Yc2OWZohDdTaE+QCwID+DisLx1D36fVBsP
+         qqWDcl3afbzVJbM9JKOFZMMtkZqfLeRbVnV78G438zlPrCm7/Eq2xnL1cmaowpVmimYy
+         FRTA==
+X-Gm-Message-State: AO0yUKXNdYk7jkTtfEmkQhX7qiCw6+DczSDnK+NB/XZbZANbeH/nizZ2
+        ILD4SOYwFlDlfYRyWQJZVg8A4v7AVK5f4YNOApF8GERbkLqdLA0qyAhfHj8dGAgRc8hY18WAPVD
+        YlnkjPi2xX+V999Udrqgxp4L37tmt40rC15ADBMxlUpxBcCSQ9Vkwj8h+2i36lpUQpvypZW8fK4
+        tQ
+X-Google-Smtp-Source: AK7set9uUrJFSUvsKgKPY2E5kYay1tfSQR7nxQxSfHMsjQJNToCgtmPwuLDiapTw9S5iadiMFd4jTr/vbUkb
+X-Received: from jiangzp-glinux-dev.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:4c52])
+ (user=jiangzp job=sendgmr) by 2002:a63:3e41:0:b0:4df:6f34:48f8 with SMTP id
+ l62-20020a633e41000000b004df6f3448f8mr874990pga.8.1677024562362; Tue, 21 Feb
+ 2023 16:09:22 -0800 (PST)
+Date:   Tue, 21 Feb 2023 16:09:13 -0800
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.39.2.637.g21b0678d19-goog
+Message-ID: <20230222000915.2843208-1-jiangzp@google.com>
+Subject: [kernel PATCH v1 0/1] Clear workqueue to avoid use-after-free
+From:   Zhengping Jiang <jiangzp@google.com>
+To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
+        luiz.dentz@gmail.com
+Cc:     chromeos-bluetooth-upstreaming@chromium.org, mmandlik@google.com,
+        Zhengping Jiang <jiangzp@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Paolo Abeni <pabeni@redhat.com>, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+After the hci_sync rework, cmd_sync_work was cleared when calling
+hci_unregister_dev, but not when powering off the adapter.
+Use-after-free errors happened because a work is still scheduled
+when cmd is freed by __mgmt_power_off.
 
-On Mon, 20 Feb 2023 10:12:05 -0800 you wrote:
-> From: Tedd Ho-Jeong An <tedd.an@intel.com>
-> 
-> If the 'enable-external-ell' is not specified in the configure parameter,
-> the build system assumes that the ELL source is located same level where
-> the bluez source is cloned. But the configure doens't check the folder
-> and user will get the build error while building the source.
-> 
-> [...]
+Changes in v1:
+- Clear cmd_sync_work queue before clearing the mgmt cmd list
 
-Here is the summary with links:
-  - [BlueZ,v2] configure: Check ell path
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=1106b28be85a
+Zhengping Jiang (1):
+  Bluetooth: hci_sync: clear workqueue before clear mgmt cmd
 
-You are awesome, thank you!
+ net/bluetooth/hci_sync.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.39.2.637.g21b0678d19-goog
 
