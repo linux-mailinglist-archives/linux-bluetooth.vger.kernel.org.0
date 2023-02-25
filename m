@@ -2,102 +2,127 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 080FA6A2BEA
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 25 Feb 2023 22:43:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE66E6A2C97
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 26 Feb 2023 00:32:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229485AbjBYVm6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 25 Feb 2023 16:42:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50006 "EHLO
+        id S229520AbjBYXb7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 25 Feb 2023 18:31:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbjBYVm5 (ORCPT
+        with ESMTP id S229485AbjBYXb6 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 25 Feb 2023 16:42:57 -0500
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EDC1A5CD
-        for <linux-bluetooth@vger.kernel.org>; Sat, 25 Feb 2023 13:42:54 -0800 (PST)
-Received: from submission (posteo.de [185.67.36.169]) 
-        by mout01.posteo.de (Postfix) with ESMTPS id 6A2D3240174
-        for <linux-bluetooth@vger.kernel.org>; Sat, 25 Feb 2023 22:42:53 +0100 (CET)
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4PPKxT07cPz9rxF;
-        Sat, 25 Feb 2023 22:42:52 +0100 (CET)
-From:   Pauli Virtanen <pav@iki.fi>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 2/2] iso-tester: Add test for central receiving timestamped ISO packet
-Date:   Sat, 25 Feb 2023 21:42:51 +0000
-Message-Id: <b0e2347cc5092c800c083c20b29cd6bbce9295d5.1677361002.git.pav@iki.fi>
+        Sat, 25 Feb 2023 18:31:58 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CE5516893
+        for <linux-bluetooth@vger.kernel.org>; Sat, 25 Feb 2023 15:31:57 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id n6so1841453plf.5
+        for <linux-bluetooth@vger.kernel.org>; Sat, 25 Feb 2023 15:31:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1677367916;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=sy92vwD4lBjK1sF//341s6b/f+QPbs3O1iYrf21UBtM=;
+        b=lED12jXhD49ATx3PjAGxtoVnrT8nqbkn7QVEQ7oV7iu2bXxfUdfkVDp+EuzwXEK0FO
+         azG7kaHmEdzEakJR0UT7IBfSUaxkVC530+oYfZa1VdPXKqdxFYbNauK4OWsGz1gZZhZW
+         msSvhNcopw2CqoT6SrmeCSn9563ONk6IGr0XOkF32FJ4DzkbMbb6X2aqKFTWePEK5V81
+         Nokhc8lqUCPLoBeWIDDkgBpW2N6KzZ2XIvtUgEZz/eSuXQTLbA1pUvGcK6qsjQxISKSQ
+         tBbUod3WyGICQ2vqc2p9LxHj0GSIYRV7tFXbGZ0yq4AHI7+MtYVPTulrnYBWq4OTOjfW
+         LV5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677367916;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sy92vwD4lBjK1sF//341s6b/f+QPbs3O1iYrf21UBtM=;
+        b=VxxlJsrLukAsgoAtXkA2vj7UcDx4MQOLQ3wKR2WkO8owZkNhC76wv+q7xcAMvYUNls
+         2ARJgJhzg0p94yDbzSOQREdpPUuq0onzpANdywHqTWY9U+IrB7fvGObAM5jkPL+5PYK3
+         08k1joF6S+H4YikdKX1f4vf9venuVAZdUt+6ulL13rtiOKaYpEgKJLpKfFM+pGOx+xG7
+         4vgB+M4RfRFJij6/PMCE0eMH+PSoywha8uueoY7NV2XCQb/1sYQT/t5bkE+KTP1u5M/+
+         BaoYtYpM/QfhjyjFj+Zr66HUj32UBysMFztLYsVUVFcQ8X4gOLKhKM04LQeF2aEgFUmb
+         RcVw==
+X-Gm-Message-State: AO0yUKVRcxBDuWDQSwDR+dVDvoxNzRWBrMwW/QSHvk8LL+L/se7LAali
+        oJQpYABgtGQqFbOZIJaZCm02/C/o++E=
+X-Google-Smtp-Source: AK7set8vRHO/flG/uO36mQyBMoFJBAf+BQjPyo5fACxGBIOPwNbd3d13E0y2sKN/VZGFHTiZCw/ZRA==
+X-Received: by 2002:a17:90a:ea05:b0:237:91df:9fcd with SMTP id w5-20020a17090aea0500b0023791df9fcdmr7421961pjy.48.1677367916276;
+        Sat, 25 Feb 2023 15:31:56 -0800 (PST)
+Received: from [172.17.0.2] ([13.73.50.81])
+        by smtp.gmail.com with ESMTPSA id p2-20020a17090a348200b00233567a978csm3575713pjb.42.2023.02.25.15.31.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Feb 2023 15:31:55 -0800 (PST)
+Message-ID: <63fa9a6b.170a0220.18ec4.747d@mx.google.com>
+Date:   Sat, 25 Feb 2023 15:31:55 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============3545130371954229979=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, pav@iki.fi
+Subject: RE: [BlueZ,1/2] bthost: Allow sending ISO packets with sequence number and timestamp
 In-Reply-To: <b071b484b1b199ad69412ca0b2610c9c75fe7181.1677361002.git.pav@iki.fi>
 References: <b071b484b1b199ad69412ca0b2610c9c75fe7181.1677361002.git.pav@iki.fi>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NEUTRAL autolearn=ham autolearn_force=no
-        version=3.4.6
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This attempts to receive a timestamped HCI ISO data packet on central.
+--===============3545130371954229979==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-With kernel 6.2 HCI ISO packet parsing this test fails with
-Bluetooth: Frame malformed (len 40, expected len 0)
+This is automated email and please do not reply to this email!
 
-Link: https://lore.kernel.org/linux-bluetooth/1fd2d4523c139deda93aab2c31f1508d79c32472.1676921889.git.pav@iki.fi/
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=724874
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.72 seconds
+GitLint                       FAIL      0.81 seconds
+BuildEll                      PASS      30.91 seconds
+BluezMake                     PASS      956.76 seconds
+MakeCheck                     PASS      12.69 seconds
+MakeDistcheck                 PASS      169.88 seconds
+CheckValgrind                 PASS      281.35 seconds
+CheckSmatch                   WARNING   371.67 seconds
+bluezmakeextell               PASS      112.03 seconds
+IncrementalBuild              PASS      1553.96 seconds
+ScanBuild                     PASS      1146.92 seconds
+
+Details
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint
+Output:
+[BlueZ,1/2] bthost: Allow sending ISO packets with sequence number and timestamp
+
+WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
+12: B2 Line has trailing whitespace: "    "
+13: B1 Line exceeds max length (111>80): "    https://lore.kernel.org/linux-bluetooth/1fd2d4523c139deda93aab2c31f1508d79c32472.1676921889.git.pav@iki.fi/"
+14: B2 Line has trailing whitespace: "    "
+19: B2 Line has trailing whitespace: "    "
+[BlueZ,2/2] iso-tester: Add test for central receiving timestamped ISO packet
+
+WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
+8: B1 Line exceeds max length (113>80): "Link: https://lore.kernel.org/linux-bluetooth/1fd2d4523c139deda93aab2c31f1508d79c32472.1676921889.git.pav@iki.fi/"
+##############################
+Test: CheckSmatch - WARNING
+Desc: Run smatch tool with source
+Output:
+emulator/bthost.c:583:28: warning: Variable length array is used.emulator/bthost.c:740:28: warning: Variable length array is used.
+
+
 ---
- tools/iso-tester.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/iso-tester.c b/tools/iso-tester.c
-index dcfd6a045..7bcb1b3ca 100644
---- a/tools/iso-tester.c
-+++ b/tools/iso-tester.c
-@@ -149,6 +149,7 @@ struct iso_client_data {
- 	bool bcast;
- 	bool defer;
- 	bool disconnect;
-+	bool ts;
- };
- 
- static void mgmt_debug(const char *str, void *user_data)
-@@ -572,6 +573,14 @@ static const struct iso_client_data listen_16_2_1_recv = {
- 	.server = true,
- };
- 
-+static const struct iso_client_data listen_16_2_1_recv_ts = {
-+	.qos = QOS_16_2_1,
-+	.expect_err = 0,
-+	.recv = &send_16_2_1,
-+	.server = true,
-+	.ts = true,
-+};
-+
- static const struct iso_client_data defer_16_2_1 = {
- 	.qos = QOS_16_2_1,
- 	.expect_err = 0,
-@@ -1157,7 +1166,8 @@ static void iso_recv(struct test_data *data, GIOChannel *io)
- 	}
- 
- 	host = hciemu_client_get_host(data->hciemu);
--	bthost_send_iso(host, data->handle, false, sn++, 0, isodata->recv, 1);
-+	bthost_send_iso(host, data->handle, isodata->ts, sn++, 0,
-+							isodata->recv, 1);
- 
- 	data->io_id[0] = g_io_add_watch(io, G_IO_IN, iso_recv_data, data);
- }
-@@ -1809,6 +1819,10 @@ int main(int argc, char *argv[])
- 	test_iso("ISO Receive - Success", &listen_16_2_1_recv, setup_powered,
- 							test_listen);
- 
-+	test_iso("ISO Receive Timestamped - Success", &listen_16_2_1_recv_ts,
-+							setup_powered,
-+							test_listen);
-+
- 	test_iso("ISO Defer - Success", &defer_16_2_1, setup_powered,
- 							test_defer);
- 
--- 
-2.39.2
 
+--===============3545130371954229979==--
