@@ -2,116 +2,135 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37E186A734E
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Mar 2023 19:18:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92B966A75D2
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Mar 2023 22:05:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbjCASSq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 1 Mar 2023 13:18:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55904 "EHLO
+        id S229486AbjCAVF3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 1 Mar 2023 16:05:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229713AbjCASSo (ORCPT
+        with ESMTP id S229462AbjCAVF2 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 1 Mar 2023 13:18:44 -0500
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 703153668A
-        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Mar 2023 10:18:42 -0800 (PST)
-Received: by mail-pj1-x1044.google.com with SMTP id m8-20020a17090a4d8800b002377bced051so177541pjh.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Mar 2023 10:18:42 -0800 (PST)
+        Wed, 1 Mar 2023 16:05:28 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B520C4ECE2
+        for <linux-bluetooth@vger.kernel.org>; Wed,  1 Mar 2023 13:05:27 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id n2so19390480lfb.12
+        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Mar 2023 13:05:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1677694722;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SMt7axMQbQeEE0CBN+7cLsm38pqjF8+UDAWISk+ju1w=;
-        b=nIk6YSHg6X0PbNo+2KHmx6A8IcfkVst5qQRg6Z6AgsQyjqFPR0sjP0AqIjmGkPAKfB
-         /jGJS2Rl7eIdtMKzGloVJvdy4OPxOw9Anq5ujpjln+nYbRG0KFXvucFAW8yT7o4BaSox
-         /Kius/Jdro7rok/RQZyzMKVxdbDxbBf5td2tjdVTvPPTjQJOSlCI5R8mggb/bwq3y7cC
-         P6vQvWAYu+mW6npH40nEnv5NIoTNnfH9cJdaTcMxcxNcbcfTCzac0lOdcjnse9uEbmb8
-         jorO87Abs4fY0vl+gMRpdI50XKllLGOK8AOxMEgTSYmKRtH//b9Ydv8UJI+41BFHF+FN
-         SJQw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8BYqWVhhaUCD5gwOz92ODJ7fVQaO7oMM21BkoCV7oWs=;
+        b=XnE3RKoftiiMpg54E7c54J0NjYfEQEY8tWrQE+2rCL1own23m+DpUIbZw0uhHb2fA1
+         CT+udftjVerx85/6YVdxBzk6+Vt9ny+u+enHD26TUGjVXffpB0b5QJvhGtqP1k1EJ1DX
+         ZmrGTQP3zARRFXAGrvEGcR8ON4fhO2V6N8z128HiYtIO8HG9UGaFSDj+Iw81nBTV/io1
+         zKggN8ODcCZLeqoohBBfXgxwH53N8GadZadxV1MPssutEjPcqRA54dw7dGSt7o45kD1z
+         CJpNgUNuPHIZI4t8HULIfk8Rfm+awFtPRjhDPZSEvJ67r4xM7G3CWCyoSgZ+EgUh5Wk3
+         YJdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677694722;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SMt7axMQbQeEE0CBN+7cLsm38pqjF8+UDAWISk+ju1w=;
-        b=q+FakBRGmnefKP40Tr2TUwck48ieYY5sSfYHniYOYGlPd2wDUYTV84M9vc/MbG1i4O
-         5aJxUsHTVM1av+z2YvrInLgvu+HW0kr2i4//NJbhxcz2DB+wizRQ5Wj6HQnmr87LzTnB
-         mWxTS3xFFx5sUh8V59Hn35Zwo54K+gKdD3cXBX22nyhRQ1zHWG23As0uN8aG17Szp04a
-         0vplprTdhicsAG+AXn7UgOwQF+xJPc5hGlqKVExZHgTpAwaOdo92iyOtrvzqtaC7UWnv
-         OuI2lhcdX9eedaf9p+I/yEcvvYxYFzj74GIxVgzmhfArQYs/ZAjGYiN1Hku0kXrdGwWm
-         WsIQ==
-X-Gm-Message-State: AO0yUKXOLS9gfmdB9eOm4GBUC4561+k/O+QWtTYmBGKN+9cwgsmJ5VdG
-        xX/q7YL6O5DNLl6E6pap7aMcx/lQZiNKY5lcsj0=
-X-Google-Smtp-Source: AK7set9eix+P0nlT80/20cyINjOka8BHdmMC2Se0y1QAcfhudRjQQegcqdrU+3OrBst/olgIpBmvip7weUL8ItoVnQk=
-X-Received: by 2002:a17:903:2601:b0:19a:fdca:e3e9 with SMTP id
- jd1-20020a170903260100b0019afdcae3e9mr2704096plb.10.1677694721686; Wed, 01
- Mar 2023 10:18:41 -0800 (PST)
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8BYqWVhhaUCD5gwOz92ODJ7fVQaO7oMM21BkoCV7oWs=;
+        b=iv469arcYs38M9rF72UliFItrRKsYCjSRcGGcGr4cdMWcQRAe83/WrHIYRfmGv2knX
+         n72Z4JbJGMJ7B63Sd+DNlT6gL1SAu6kSoPN6dnZmKACX7VnsXWN3je7KakO8FZX3HFX5
+         7Bd+Btx1dPbbRvXnkXbAnPJKIKtuilJV/LM3j4R/0VpD3HDYY4z9LMdwvRw6AA7mkbDy
+         8nLaOYARD531KROOsqqXjUz246Ou/qL9G8B9c/CKS7MWDvzAdGZ8NcE8AG1BiExlz8i+
+         MA8e4BPcu32W/iBaRHtJlZ0pKkaZujAKFeRok1Nawr3g5qZrCJMg0TZZwDColKL4gB04
+         NdDQ==
+X-Gm-Message-State: AO0yUKUTBSVh56fL/DaX4994A0/9qNw++/t1UETlAfyUSH7yoCLbWJkm
+        BrQVXEq1BD9MWPNmQ2AJj+WV2M3F8dMyX6aNMLgjSuZb6Lc=
+X-Google-Smtp-Source: AK7set/KBNAI2mKp4NWZcK6RhxzcRE2yRW508UrtlXIBnPtso1LdbS3EN6hoAoCMHql4RcRddfmQLLobY1F6+mul/rA=
+X-Received: by 2002:ac2:51ba:0:b0:4d5:ca32:68a3 with SMTP id
+ f26-20020ac251ba000000b004d5ca3268a3mr2237301lfk.8.1677704725788; Wed, 01 Mar
+ 2023 13:05:25 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:e818:b0:44b:720f:304f with HTTP; Wed, 1 Mar 2023
- 10:18:41 -0800 (PST)
-Reply-To: sackrobert@yandex.com
-From:   Robert Sack <sophiebrandon679@gmail.com>
-Date:   Wed, 1 Mar 2023 19:18:41 +0100
-Message-ID: <CAFXeZCTb5+bsMLEJ=sLzAUeOhD2JcpoL4s1h_wwneOYtXvCFnw@mail.gmail.com>
-Subject: INVESTMENT
-To:     undisclosed-recipients:;
+References: <20230301153322.12555-1-iulia.tanasescu@nxp.com> <20230301153322.12555-2-iulia.tanasescu@nxp.com>
+In-Reply-To: <20230301153322.12555-2-iulia.tanasescu@nxp.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 1 Mar 2023 13:05:14 -0800
+Message-ID: <CABBYNZK9_McOdhoyC=MaOBSaFVidphpRgnuMZJH7FXXiyWia5w@mail.gmail.com>
+Subject: Re: [PATCH BlueZ 1/2] lib: Add BASS UUIDs and auxiliary defines
+To:     iulia-tanasescu <iulia.tanasescu@nxp.com>
+Cc:     linux-bluetooth@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=7.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM,UNDISC_MONEY
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:1044 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [sophiebrandon679[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [sophiebrandon679[at]gmail.com]
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        *  3.0 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  0.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
-        *      email?
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-        *  3.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: *******
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Partner,
+Hi Iulia,
 
-My Name is Mr.Robert Sack from  the United Kingdom.
-It is my resolve to contact you for an investment proposal.
-I have a client who owns a pool of funds worth Eight Million,Five
-Hundred Thousand British Pounds(=C2=A38.5m)
-and wants to invest in any viable and profitable business that has
-good returns on investment(ROI)
-such as Manufacturing, Agriculture, Real Estate,
-Hoteling,Education,trading and others, in an effort to expand his
-business empire globally.
+On Wed, Mar 1, 2023 at 7:41=E2=80=AFAM iulia-tanasescu <iulia.tanasescu@nxp=
+.com> wrote:
+>
+> Added BASS and Audio Announcement UUIDs, added OCF for
+> BIG Create Sync.
+>
+> ---
+>  lib/hci.h  | 2 ++
+>  lib/uuid.h | 7 +++++++
+>  2 files changed, 9 insertions(+)
+>
+> diff --git a/lib/hci.h b/lib/hci.h
+> index 50f385c1e..d01e6f8ee 100644
+> --- a/lib/hci.h
+> +++ b/lib/hci.h
+> @@ -1731,6 +1731,8 @@ typedef struct {
+>  } __attribute__ ((packed)) le_set_address_resolution_enable_cp;
+>  #define LE_SET_ADDRESS_RESOLUTION_ENABLE_CP_SIZE 1
+>
+> +#define OCF_LE_BIG_CREATE_SYNC                 0x006B
 
-If you choose to partner with my client,please indicate.
+We shouldn't be generating HCI commands directly from userspace,
+instead we use the so called ISO socket with address set to
+00:00:00:00:00:00, see isotest for a reference:
 
-Thank you in anticipation as I look forward to reading your reply.
+https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/tools/isotest.rst#n=
+180
+https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/tools/isotest.c#n37=
+9
 
-Mr. Robert Sack
-International Financial Consultant
+>  /* Vendor specific commands */
+>  #define OGF_VENDOR_CMD         0x3f
+>
+> diff --git a/lib/uuid.h b/lib/uuid.h
+> index 84ff46cd8..a6bbc3770 100644
+> --- a/lib/uuid.h
+> +++ b/lib/uuid.h
+> @@ -164,6 +164,13 @@ extern "C" {
+>  #define ASE_SOURCE_UUID                                        0x2bc5
+>  #define ASE_CP_UUID                                    0x2bc6
+>
+> +#define BASS_UUID                                      0x184f
+> +#define BCST_AUDIO_SCAN_CP_UUID                                0x2bc7
+> +#define BCST_RECV_STATE_UUID                           0x2bc8
+
+It is probably a good idea to start with adding support to decode
+these on btmon:
+
+https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/monitor/att.c#n2475
+
+> +
+> +#define BCST_AUDIO_ANNOUNCEMENT_SERVICE_UUID           0x1852
+> +#define BASIC_AUDIO_ANNOUNCEMENT_SERVICE_UUID          0x1851
+> +
+>  #define VCS_UUID                                       0x1844
+>  #define VOL_OFFSET_CS_UUID                             0x1845
+>  #define AUDIO_INPUT_CS_UUID                            0x1843
+> --
+> 2.34.1
+
+
+
+--=20
+Luiz Augusto von Dentz
