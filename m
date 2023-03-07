@@ -2,65 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01A136AF89F
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Mar 2023 23:26:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E7CEA6AF8B7
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Mar 2023 23:30:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbjCGW0H (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Mar 2023 17:26:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52958 "EHLO
+        id S231408AbjCGWax (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Mar 2023 17:30:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230240AbjCGWZq (ORCPT
+        with ESMTP id S229724AbjCGWaG (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Mar 2023 17:25:46 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB71B06DD
-        for <linux-bluetooth@vger.kernel.org>; Tue,  7 Mar 2023 14:25:10 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id m20-20020a17090ab79400b00239d8e182efso187752pjr.5
-        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Mar 2023 14:25:10 -0800 (PST)
+        Tue, 7 Mar 2023 17:30:06 -0500
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF0E2B0BA9
+        for <linux-bluetooth@vger.kernel.org>; Tue,  7 Mar 2023 14:29:19 -0800 (PST)
+Received: by mail-qt1-x830.google.com with SMTP id d7so16215686qtr.12
+        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Mar 2023 14:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678227878;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z1IU8LiWwZeoZ/1lc6uZFO7QKOeog+W2EZMCDjvEpLE=;
-        b=gSq9C3z3ElE7vwAVygN50LcQN0FYB+pGpPYfTeHN3/UJCAzfFYxNdZrGYsYASnNblL
-         5sI6W6Rzrq/zzo52klf2HPvCXoSWDFcORmnQPiNjxI1VfRpgRFepHiKYvT4kpvKmNmM1
-         9i0damE7357bmEPiczd0V4XJOG5il4lmepG1Q33b7DtAPBeSKjxoAXicbdwogKPitaa0
-         StLuMLAPKtHAAfOFS2I2tPMUEPaXUgcz+e1e2X/myZSObdvo8iiwY743CfeErKfl3S9W
-         9BnBu7JgcAMVrfHOca7U9sXdqFeC5vMMYJICs+VXZjkG+VV8dQKZSkmInW0iy5V8vM/S
-         LHQQ==
+        d=gmail.com; s=20210112; t=1678228157;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9tKMma6Rz2NP++wpAuWjiHAPhHb/87q0Egau5xtnvjY=;
+        b=hdW+rKrQvBT24cxVB1M9NFyYOmGWz7xMfaF3HcI7Ya59CJVjI8xSNpSCIx2FQ3Saio
+         8T+xROZdXMfKCT2/moughB8I4pbWJWObfZ4c39y89AEJ2ZiXQQMDumN+FUWdD4W8n1vM
+         bn7LaLijLReW0UeLFDH995qkqio2J5W6BGizi0nXfISVJPUXO9/FMUmZmrwqGuW88TfA
+         S3jDosINMdhImr0Kj1chPJX28OOvgvk/P9QiQXwQ/6URsC7oEegg/5ejMILAuVwBOYZb
+         tnK0CWXUD5Q4Q++blwK35d50iNAIWLkxksdFw9RqtTRVVwg1lPJmDmDA1AjuUEbfwEUq
+         VZ+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678227878;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z1IU8LiWwZeoZ/1lc6uZFO7QKOeog+W2EZMCDjvEpLE=;
-        b=JetJfRgcHK1bj43Xy7GzxOL8fzWJ7w3VqsMEAOFMU1LLGn0Fhqu05OCtKzJy/9IXrY
-         +uM6b+C8dH9RaRs5lW8LrWtKPuL7Y13P2t9k6Yd9KFvZDg1emUsYEeylExRllr3jA6mb
-         gsI8PkcdGp9izmmBDjId3GqujYToOr2UjiwWM5R+N36fqB1/goQRohkfs3AiBfsneNp1
-         GtQC4I+tgTM72GjQSsIJSnZyV9GdAwPCAYyWyJmGjZyuQSMAUKqVu64lBQ6OJXFoBM0M
-         szle2PCOR1Ib4lKna0LK4TjjYKz5KCiC9WBfkY+2vlj8mLxPmtk99pCJ0BKHDu0puGg5
-         bkJg==
-X-Gm-Message-State: AO0yUKWvDnPpAXaivb6OdglJ/p5YdpQN9+YizDZgXBgQ2oTejucQpp6J
-        IIx5iCPHFnRkkG1va8WdyysmN7g8tEQ=
-X-Google-Smtp-Source: AK7set/9eNQAfULKWfO1B3cLnisHqMRtar3Kt0GSm+tu9pS9BEPQ1fFI50buDouk/XrqtPA7ZANQBg==
-X-Received: by 2002:a17:903:22c1:b0:19e:ba2c:27ec with SMTP id y1-20020a17090322c100b0019eba2c27ecmr12638088plg.11.1678227878532;
-        Tue, 07 Mar 2023 14:24:38 -0800 (PST)
-Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id d18-20020a170902729200b0019c901b35ecsm8814392pll.106.2023.03.07.14.24.37
-        for <linux-bluetooth@vger.kernel.org>
+        d=1e100.net; s=20210112; t=1678228157;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9tKMma6Rz2NP++wpAuWjiHAPhHb/87q0Egau5xtnvjY=;
+        b=QL2tRco1Nn7ujJVw9OQA0ytyClr06BkYoryCscfGaMeQ0+E79xbQuXQl9fbaVfcixy
+         yXGaVtWJsCGLrosarbtDPLYTMZGsdHXmW2lYhggPagwVG6U8JA+qZiXnz48UEMfDvPe0
+         xww4H+FJeQQL5r7N5/8ocr+B8Wy0yJbcMImIWIhpO7uYbJe7GuHvz2VC+lURwgMZBpZw
+         sQZ48Y62yX72ZMyb5kA+b7OypyGg/RV9U6j9j5TZn7iwZGgjzOAJeDydnAb0KOBcn2EJ
+         b8VvJBvli6Xejh8dY9XcnKtOl3ul0qp8Pz4DAagRaab5EEWrW66dBWMs1SUYtcPfGSyi
+         XeCw==
+X-Gm-Message-State: AO0yUKVxZmFxI0X2l51HYX/1EwbajI56BOSQIqYQs8QovAG9+q/rgXMf
+        mx3AeJWAbMpq5rVoCDMRSb7xh5pe82E=
+X-Google-Smtp-Source: AK7set8GULSSGya2SfCH+xBvtFdH8BZJHuPuOPUQU2V8d3dNItEWsMq/Z5ybX0pLgscgILYkew1hag==
+X-Received: by 2002:a05:622a:114:b0:3b6:2f0d:1925 with SMTP id u20-20020a05622a011400b003b62f0d1925mr21949493qtw.64.1678228157643;
+        Tue, 07 Mar 2023 14:29:17 -0800 (PST)
+Received: from [172.17.0.2] ([172.177.255.2])
+        by smtp.gmail.com with ESMTPSA id x25-20020ac84d59000000b003b86a6449b8sm10329432qtv.85.2023.03.07.14.29.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 14:24:38 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [RFC v2 12/12] client: Use AdvertisingFlags when available
-Date:   Tue,  7 Mar 2023 14:24:22 -0800
-Message-Id: <20230307222422.2608483-12-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230307222422.2608483-1-luiz.dentz@gmail.com>
-References: <20230307222422.2608483-1-luiz.dentz@gmail.com>
+        Tue, 07 Mar 2023 14:29:17 -0800 (PST)
+Message-ID: <6407babd.c80a0220.7c0bf.1f46@mx.google.com>
+Date:   Tue, 07 Mar 2023 14:29:17 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============1574258616875438428=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [BlueZ] shared/att: Always queue BT_ATT_OP_MTU_REQ on the fixed channel
+In-Reply-To: <20230307211756.2581274-1-luiz.dentz@gmail.com>
+References: <20230307211756.2581274-1-luiz.dentz@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -71,130 +69,39 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============1574258616875438428==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This prints devices not discoverable in grey so the user are able to
-distict when for example set members are actually visible.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=727615
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.50 seconds
+GitLint                       PASS      0.34 seconds
+BuildEll                      PASS      26.32 seconds
+BluezMake                     PASS      733.56 seconds
+MakeCheck                     PASS      11.37 seconds
+MakeDistcheck                 PASS      145.39 seconds
+CheckValgrind                 PASS      237.76 seconds
+CheckSmatch                   PASS      317.08 seconds
+bluezmakeextell               PASS      95.08 seconds
+IncrementalBuild              PASS      596.28 seconds
+ScanBuild                     PASS      936.72 seconds
+
+
+
 ---
- client/main.c | 79 +++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 55 insertions(+), 24 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/client/main.c b/client/main.c
-index e4a39896b2c6..79895015d6a6 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -24,6 +24,7 @@
- 
- #include "src/shared/shell.h"
- #include "src/shared/util.h"
-+#include "src/shared/ad.h"
- #include "gdbus/gdbus.h"
- #include "print.h"
- #include "agent.h"
-@@ -143,10 +144,32 @@ static void print_adapter(GDBusProxy *proxy, const char *description)
- 
- }
- 
-+#define	DISTANCE_VAL_INVALID	0x7FFF
-+
-+static struct set_discovery_filter_args {
-+	char *transport;
-+	char *pattern;
-+	dbus_uint16_t rssi;
-+	dbus_int16_t pathloss;
-+	char **uuids;
-+	size_t uuids_len;
-+	dbus_bool_t duplicate;
-+	dbus_bool_t discoverable;
-+	bool set;
-+	bool active;
-+	unsigned int timeout;
-+} filter = {
-+	.rssi = DISTANCE_VAL_INVALID,
-+	.pathloss = DISTANCE_VAL_INVALID,
-+	.set = true,
-+};
-+
- static void print_device(GDBusProxy *proxy, const char *description)
- {
- 	DBusMessageIter iter;
- 	const char *address, *name;
-+	uint8_t *flags;
-+	int flags_len = 0;
- 
- 	if (g_dbus_proxy_get_property(proxy, "Address", &iter) == FALSE)
- 		return;
-@@ -158,11 +181,39 @@ static void print_device(GDBusProxy *proxy, const char *description)
- 	else
- 		name = "<unknown>";
- 
-+	if (g_dbus_proxy_get_property(proxy, "AdvertisingFlags", &iter)) {
-+		DBusMessageIter array;
-+
-+		dbus_message_iter_recurse(&iter, &array);
-+		dbus_message_iter_get_fixed_array(&array, &flags, &flags_len);
-+	}
-+
-+	if (!flags_len)
-+		goto done;
-+
-+	if (!(flags[0] & (BT_AD_FLAG_LIMITED | BT_AD_FLAG_GENERAL))) {
-+		/* Only print hidden/non-discoverable if filter.discoverable is
-+		 * not set.
-+		 */
-+		if (filter.discoverable)
-+			return;
-+
-+		bt_shell_printf("%s%s%s" COLOR_BOLDGRAY "Device %s %s"
-+					COLOR_OFF "\n",
-+					description ? "[" : "",
-+					description ? : "",
-+					description ? "] " : "",
-+					address, name);
-+
-+		return;
-+	}
-+
-+done:
- 	bt_shell_printf("%s%s%sDevice %s %s\n",
--				description ? "[" : "",
--				description ? : "",
--				description ? "] " : "",
--				address, name);
-+					description ? "[" : "",
-+					description ? : "",
-+					description ? "] " : "",
-+					address, name);
- }
- 
- static void print_uuid(const char *label, const char *uuid)
-@@ -1133,26 +1184,6 @@ static void cmd_default_agent(int argc, char *argv[])
- 	agent_default(dbus_conn, agent_manager);
- }
- 
--#define	DISTANCE_VAL_INVALID	0x7FFF
--
--static struct set_discovery_filter_args {
--	char *transport;
--	char *pattern;
--	dbus_uint16_t rssi;
--	dbus_int16_t pathloss;
--	char **uuids;
--	size_t uuids_len;
--	dbus_bool_t duplicate;
--	dbus_bool_t discoverable;
--	bool set;
--	bool active;
--	unsigned int timeout;
--} filter = {
--	.rssi = DISTANCE_VAL_INVALID,
--	.pathloss = DISTANCE_VAL_INVALID,
--	.set = true,
--};
--
- static void start_discovery_reply(DBusMessage *message, void *user_data)
- {
- 	dbus_bool_t enable = GPOINTER_TO_UINT(user_data);
--- 
-2.39.2
 
+--===============1574258616875438428==--
