@@ -2,106 +2,81 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5A466AF75F
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Mar 2023 22:18:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1AC26AF79E
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 Mar 2023 22:30:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230167AbjCGVSF (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 7 Mar 2023 16:18:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52332 "EHLO
+        id S229984AbjCGVa0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 7 Mar 2023 16:30:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231383AbjCGVSD (ORCPT
+        with ESMTP id S231426AbjCGVaX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 7 Mar 2023 16:18:03 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5226911EAC
-        for <linux-bluetooth@vger.kernel.org>; Tue,  7 Mar 2023 13:17:59 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id i5so15581445pla.2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 07 Mar 2023 13:17:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678223878;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1oHoBbUXMh9VB2Gmy8ASP8TkSycxsMplJXCauV3mzqg=;
-        b=DMGRoGEI00VwFMAV3pN9KmQ1GlMVHkRXVHsHRMJqEGYdLMKwginBtvRC7rKWS9zlkN
-         T9u98GodYW1PmmKAr4xWdl5dcLSslG46oHQYLO+36+c8CbuL0y9e85yT9/0MkksZnZRK
-         hVmUxQVL2N44r+hp4zmfftOWlYKbXvt8FFBFl4hYi/7kUMHCn7/ZP7n8eRbVWGwEYQGH
-         uVv9Urle+KmHPLNutSagTtpw0C5tB3vdbXmSIe8NyvgCGtuLeyNsa606fAk4tLYyAgm1
-         f/e7cKsP9AgrdB8jyRUAJVfH+PpYuRl8wtCvQsX48JaDgUsp6G3dHVTl9RP3qCeLd+mI
-         Xy5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678223878;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1oHoBbUXMh9VB2Gmy8ASP8TkSycxsMplJXCauV3mzqg=;
-        b=IJD2PuIOEv9FvE/oRahMQw8zp8RXHsPkXdQgaw01S4z6kveGLzbwRArq4EMGaNWbs6
-         +lwTqcZ3lVuVpyj70KcTZn3q3antVPw1d4/qiOGYVZs2hsJ63J3Qm6A/vQvDQ8xxxL/E
-         X27JGRMTMrSKymjE0gA7EmbcSjwl7o+dAk+02LoBlijJYUWon70PW7o+ZkBu/3CvBcTv
-         bs/hw8rQw0ATvczDF3htjeT5DySJRHnXcaUUMNmeLQRap4gjl7eH7Gcq9UnckTLc8+yf
-         Ut698c2gJriH8aj4qmBY/5tQR2jLA5Ps5sO24ZRQpg8qap6m1yKJwBWxQ9XlbjF9nbGB
-         vbaQ==
-X-Gm-Message-State: AO0yUKVM/tPWhTKUDdLCXoTHB/b4Av/40yZC5tsyY+T4iuH0n5dxcIwn
-        Vc/xZJV1/Iis71XAqDI66u+YINAQTJs=
-X-Google-Smtp-Source: AK7set/jutlgqYqKoCMsvWwGSw9ufSOdCVwTba6Zc6sY9Wcg1Fm7t9pg04Ve1Luqv5p77iZU9CT2lg==
-X-Received: by 2002:a17:90a:30d:b0:22c:afd6:e597 with SMTP id 13-20020a17090a030d00b0022cafd6e597mr17289351pje.17.1678223878139;
-        Tue, 07 Mar 2023 13:17:58 -0800 (PST)
-Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id hx20-20020a17090b441400b002371e290565sm7871030pjb.12.2023.03.07.13.17.57
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 13:17:57 -0800 (PST)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ] shared/att: Always queue BT_ATT_OP_MTU_REQ on the fixed channel
-Date:   Tue,  7 Mar 2023 13:17:56 -0800
-Message-Id: <20230307211756.2581274-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.39.2
+        Tue, 7 Mar 2023 16:30:23 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 499C3A335E
+        for <linux-bluetooth@vger.kernel.org>; Tue,  7 Mar 2023 13:30:21 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 92A8261579
+        for <linux-bluetooth@vger.kernel.org>; Tue,  7 Mar 2023 21:30:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0091EC4339B;
+        Tue,  7 Mar 2023 21:30:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678224620;
+        bh=/CBDnnWyhfAZMDfE422siIRIgjBnOaUooWaN483Uttc=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=GiORcf0ueL40hWkbsOM5yTM5iqAK5TqLW+agS5gF1473p9FcRAw5g4tod2jdMW+3d
+         LDm7se6wY6SFqCEq+dIfWyZnkZW3lWDNR6hKmnmBRqvtzTj/yh3gjNj6oH4sZ3WGab
+         Ac31wafPzlSpZIb9sf/dsIfEyb+604opCJl7zD7yFog6MaVa6ngmjYMvGu5Y9bG3Ou
+         vDH3xXUkFpbMcZhv286P17eXseo2dWX5nE9gAqeCZPuuFDfB74PN/Eb/TaXXoIYPfT
+         Ywus6YDJm+ZPilmLJUo0YbgvOvyVflT1FZNmzQhei1u2F5a+xkNib9+V7qO3AFRxn3
+         zTfRgq0Bb4nFA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D2551E61B67;
+        Tue,  7 Mar 2023 21:30:19 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Subject: Re: [PATCH v2] Bluetooth: Convert MSFT filter HCI cmd to hci_sync
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <167822461985.28216.481970631444868909.git-patchwork-notify@kernel.org>
+Date:   Tue, 07 Mar 2023 21:30:19 +0000
+References: <20230224175632.461834-1-brian.gix@intel.com>
+In-Reply-To: <20230224175632.461834-1-brian.gix@intel.com>
+To:     Brian Gix <brian.gix@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hello:
 
-BT_ATT_OP_MTU_REQ shall only be sent on the so called fixed channel
-since EATT channels shall use L2CAP procedure to update its MTU.
----
- src/shared/att.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-diff --git a/src/shared/att.c b/src/shared/att.c
-index b90af93ccbf8..85feead77d0f 100644
---- a/src/shared/att.c
-+++ b/src/shared/att.c
-@@ -1588,6 +1588,14 @@ unsigned int bt_att_send(struct bt_att *att, uint8_t opcode,
- 
- 	op->id = att->next_send_id++;
- 
-+	/* Always use fixed channel for BT_ATT_OP_MTU_REQ */
-+	if (opcode == BT_ATT_OP_MTU_REQ) {
-+		struct bt_att_chan *chan = queue_peek_tail(att->chans);
-+
-+		result = queue_push_tail(chan->queue, op);
-+		goto done;
-+	}
-+
- 	/* Add the op to the correct queue based on its type */
- 	switch (op->type) {
- 	case ATT_OP_TYPE_REQ:
-@@ -1606,6 +1614,7 @@ unsigned int bt_att_send(struct bt_att *att, uint8_t opcode,
- 		break;
- 	}
- 
-+done:
- 	if (!result) {
- 		free(op->pdu);
- 		free(op);
+On Fri, 24 Feb 2023 09:56:32 -0800 you wrote:
+> The msft_set_filter_enable() command was using the deprecated
+> hci_request mechanism rather than hci_sync. This caused the warning error:
+> hci0: HCI_REQ-0xfcf0
+> 
+> Signed-off-by: Brian Gix <brian.gix@intel.com>
+> ---
+>  net/bluetooth/msft.c | 36 +++++++++++-------------------------
+>  1 file changed, 11 insertions(+), 25 deletions(-)
+
+Here is the summary with links:
+  - [v2] Bluetooth: Convert MSFT filter HCI cmd to hci_sync
+    https://git.kernel.org/bluetooth/bluetooth-next/c/0e21956501c0
+
+You are awesome, thank you!
 -- 
-2.39.2
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
