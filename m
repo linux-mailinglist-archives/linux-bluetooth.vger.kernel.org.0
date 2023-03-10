@@ -2,52 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 331FB6B32B2
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Mar 2023 01:20:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BBE86B32B6
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Mar 2023 01:20:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231443AbjCJAUW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 9 Mar 2023 19:20:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39780 "EHLO
+        id S231450AbjCJAUZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 9 Mar 2023 19:20:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231438AbjCJAUV (ORCPT
+        with ESMTP id S229876AbjCJAUW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 9 Mar 2023 19:20:21 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94342F4B70
-        for <linux-bluetooth@vger.kernel.org>; Thu,  9 Mar 2023 16:20:20 -0800 (PST)
+        Thu, 9 Mar 2023 19:20:22 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D53CAF4D93;
+        Thu,  9 Mar 2023 16:20:20 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5451FB82149
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Mar 2023 00:20:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 014EAC4339C;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7ED7BB8214D;
+        Fri, 10 Mar 2023 00:20:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0E7A8C4339E;
         Fri, 10 Mar 2023 00:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1678407618;
-        bh=ylYE4zuN9++Nv/rLFd/QXrmcltLQLsbpazoAcyyDCOE=;
+        bh=29AmesE7AXdHqjf2NOMeUWHAZIhTTbKWYLKdnfX/+Lc=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Ra7ouEopFsh371QMwgiUkqMnSiLTWnr17CCSnKZOz5kTtM0EQQqR58FBKfIY6qfJ+
-         t7yXuI3boK0UWaRxNAW2eBdyxb+N27JMnwGcYa2EIm2UFLKcAIbN4ia+jIXLYaygG4
-         6k2JY+BDEtkOGIUJaKumjXT5JpMq2OoiHP7BI7eySs/hn8y09nGWxxytXLfmNngIMJ
-         Yn+KwKHE9p/CGGVQZDPPCbiWlS4velZuLLwdnrvHqNBT1ZanLBEThwoWD8UqL7yTH2
-         z5dwVbQDdFUsyVQ7jpfalK1D43ak9esP6ee27Dma/EdBSjumZojaD/yoTEXkHgQlDM
-         7IfcP1K5kaSdg==
+        b=LBwsAx2GKM9dh9Nd0UNGal5z7ZdmpvkCMdCWwHCrIA3ILNiI/DbtsjAWEC7uu2nJy
+         rkhsDlCToQVvW3RqCO90nudzSEPQK0QRKRgaHXKA9Mv243j0AF1UOo/D9TQ/Owk4uM
+         czZrnM3yqpwZeq21KX7LYWpal/cSGybemVZNddSKUoUgUqmI3+GNNAnAt03becoJ7B
+         sqqGYZ26uKIDMtUp8WP8wBrbDPSJMwIolyj207Ti2tVBf84tmpcmlsbctx6IaCUzqL
+         /961u1oplueRzELsqntOGtBC14xm2WA8tqLIA2M7TZXU276k07MAEIuen79wkS7oz6
+         KoAvWtvSb8yIw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DDEFDE61B6E;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E7C84E55F00;
         Fri, 10 Mar 2023 00:20:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: hci_sync: Remove duplicate statement
+Subject: Re: [PATCH v2 RESEND] Bluetooth: btqcomsmd: Fix command timeout after
+ setting BD address
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167840761790.25154.15771619907903459554.git-patchwork-notify@kernel.org>
+Message-Id: <167840761794.25154.15476663413483482390.git-patchwork-notify@kernel.org>
 Date:   Fri, 10 Mar 2023 00:20:17 +0000
-References: <20230308183235.326109-1-inga.stotland@intel.com>
-In-Reply-To: <20230308183235.326109-1-inga.stotland@intel.com>
-To:     Inga Stotland <inga.stotland@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org, luiz.von.dentz@intel.com
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+References: <20230308133155.165537-1-stephan.gerhold@kernkonzept.com>
+In-Reply-To: <20230308133155.165537-1-stephan.gerhold@kernkonzept.com>
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     luiz.dentz@gmail.com, marcel@holtmann.org, johan.hedberg@gmail.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        stephan@gerhold.net, pmenzel@molgen.mpg.de
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,19 +64,19 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed,  8 Mar 2023 10:32:35 -0800 you wrote:
-> This removes the following duplicate statement in
-> hci_le_ext_directed_advertising_sync():
-> cp.own_addr_type = own_addr_type;
+On Wed,  8 Mar 2023 14:31:55 +0100 you wrote:
+> On most devices using the btqcomsmd driver (e.g. the DragonBoard 410c
+> and other devices based on the Qualcomm MSM8916/MSM8909/... SoCs)
+> the Bluetooth firmware seems to become unresponsive for a while after
+> setting the BD address. On recent kernel versions (at least 5.17+)
+> this often causes timeouts for subsequent commands, e.g. the HCI reset
+> sent by the Bluetooth core during initialization:
 > 
-> Signed-off-by: Inga Stotland <inga.stotland@intel.com>
-> ---
->  net/bluetooth/hci_sync.c | 1 -
->  1 file changed, 1 deletion(-)
+> [...]
 
 Here is the summary with links:
-  - Bluetooth: hci_sync: Remove duplicate statement
-    https://git.kernel.org/bluetooth/bluetooth-next/c/f959b6b32769
+  - [v2,RESEND] Bluetooth: btqcomsmd: Fix command timeout after setting BD address
+    https://git.kernel.org/bluetooth/bluetooth-next/c/048379740637
 
 You are awesome, thank you!
 -- 
