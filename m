@@ -2,54 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5149C6B32B5
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Mar 2023 01:20:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D4376B32B1
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 Mar 2023 01:20:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231447AbjCJAUY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 9 Mar 2023 19:20:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39798 "EHLO
+        id S231192AbjCJAUU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 9 Mar 2023 19:20:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231442AbjCJAUV (ORCPT
+        with ESMTP id S229876AbjCJAUT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 9 Mar 2023 19:20:21 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9354CF4B65
-        for <linux-bluetooth@vger.kernel.org>; Thu,  9 Mar 2023 16:20:20 -0800 (PST)
+        Thu, 9 Mar 2023 19:20:19 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9ADFF4B65;
+        Thu,  9 Mar 2023 16:20:18 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 495EBB8214C
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Mar 2023 00:20:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EDEE0C433EF;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8288F61D14;
+        Fri, 10 Mar 2023 00:20:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E57C6C4339B;
         Fri, 10 Mar 2023 00:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678407618;
-        bh=w4gwxZ+2Su8iKGdm6VUZ1/2gQJ0xWfP+tNJROl3Ysi4=;
+        s=k20201202; t=1678407617;
+        bh=1erPvfc/QLqM7MHKi9s/IDbH6aDGxqpQ3SXGGXtIkzY=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=U5OMZc/egtTdsJOmAlBbJ1oVsZV2J17GTRgwptV+68J9yuJLudGj3kd05Rz8SzQB9
-         6bEqQl3r6WMnAXJ+WmETP68bHqgXsbecjGo1zPesaJeZEPzfmXO7iNfnBCn9UW+anL
-         W8is5oxGXIa51uSEk+SKAy/amF2soGX9sqGk0IuDxu8RDQepxLwqKyCgFou2PD0xLC
-         Pt9m36eHaDlVo6cQay021OJSbr++BdDT1vz9wMGe2KXBER98kxH5ohc39f1dfsLkM2
-         CGH5VSGCMTnQb6sGkzKJYszuo3jJirlPBWA5sp3Yy9xMQaMAzGLJ7qztAl4hdXwV+L
-         QZuod28pqz51A==
+        b=DTCdywgRUvz7XUGCHBe8YJgPy2QXRtbI1vOZHhAmRfb/p3OlKxdjSa8jgyIt5Xq1+
+         XgbV7lEhpTVkdKvbdxZdFwEenTY9uNeFwCkldMxcH9vIHndvsD3Bz2YwVU9jmnlg/E
+         SMtHsoqeVp/mPa6jw6eUCaEUnKAPIwLA642AsovmN+TcOm4ZpD+/sPlNlIdbFeAHeI
+         lLpr4N7KC53te9bOwRhu6Tw3ExZASm72RWESy3ALxMF02vpu6cNXzCIqmtK1uuo9aj
+         Ol0rv704p76UT5Nw1PgScUU0rpZ7ZLob1IAm34vmO1U+A1VJRH/nyfWS7LajdWlsno
+         Fwfd9xilNbi7w==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D391DE5250A;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CA70BE61B60;
         Fri, 10 Mar 2023 00:20:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth: btinel: Check ACPI handle for NULL before
- accessing
+Subject: Re: [PATCH] Bluetooth: btsdio:  fix use after free bug in btsdio_remove
+ due to race condition
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167840761786.25154.15943833396609314301.git-patchwork-notify@kernel.org>
+Message-Id: <167840761782.25154.7899078093044397807.git-patchwork-notify@kernel.org>
 Date:   Fri, 10 Mar 2023 00:20:17 +0000
-References: <20230308075837.5559-1-kiran.k@intel.com>
-In-Reply-To: <20230308075837.5559-1-kiran.k@intel.com>
-To:     Kiran K <kiran.k@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
-        lokendra.singh@intel.com, chethan.tumkur.narayan@intel.com
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20230308164501.2734985-1-zyytlz.wz@163.com>
+In-Reply-To: <20230308164501.2734985-1-zyytlz.wz@163.com>
+To:     Zheng Wang <zyytlz.wz@163.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hackerzheng666@gmail.com, 1395428693sheep@gmail.com,
+        alex000young@gmail.com
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,37 +64,19 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed,  8 Mar 2023 13:28:37 +0530 you wrote:
-> Older platforms and Virtual platforms which doesn't have support for
-> bluetooth device in ACPI firmware will not have valid ACPI handle. Check
-> for validity of handle before accessing.
+On Thu,  9 Mar 2023 00:45:01 +0800 you wrote:
+> In btsdio_probe, the data->work is bound with btsdio_work. It will be
+> started in btsdio_send_frame.
 > 
-> dmesg log from simics environment (virtual platform):
-> 
-> BUG: unable to handle kernel NULL pointer dereference at 0000000000000018
-> IP: acpi_ns_walk_namespace+0x5c/0x278
-> PGD 0 P4D 0
-> Oops: 0000 [#1] SMP PTI
-> Modules linked in: bnep intel_powerclamp coretemp kvm_intel kvm irqbypass intel_cstate input_leds joydev serio_raw mac_hid btusb(OE) btintel(OE) bluetooth(OE) lpc_ich compat(OE) ecdh_generic i7core_edac i5500_temp shpchp binfmt_misc sch_fq_codel parport_pc ppdev lp parport ip_tables x_tables autofs4 hid_generic usbhid hid e1000e psmouse ahci pata_acpi libahci ptp pps_core floppy
-> CPU: 0 PID: 35 Comm: kworker/u3:0 Tainted: G           OE    4.15.0-140-generic #144-Ubuntu
-> Hardware name: Simics Simics, BIOS Simics 01/01/2011
-> Workqueue: hci0 hci_power_on [bluetooth]
-> RIP: 0010:acpi_ns_walk_namespace+0x5c/0x278
-> RSP: 0000:ffffaa9c0049bba8 EFLAGS: 00010246
-> RAX: 0000000000000001 RBX: 0000000000001001 RCX: 0000000000000010
-> RDX: ffffffff92ea7e27 RSI: ffffffff92ea7e10 RDI: 00000000000000c8
-> RBP: ffffaa9c0049bbf8 R08: 0000000000000000 R09: ffffffffc05b39d0
-> R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000001
-> R13: 0000000000000000 R14: ffffffffc05b39d0 R15: ffffaa9c0049bc70
-> FS:  0000000000000000(0000) GS:ffff8be73fc00000(0000) knlGS:0000000000000000
-> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> CR2: 0000000000000018 CR3: 0000000075f0e000 CR4: 00000000000006f0
+> If the btsdio_remove runs with a unfinished work, there may be a race
+> condition that hdev is freed but used in btsdio_work. Fix it by
+> canceling the work before do cleanup in btsdio_remove.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v1] Bluetooth: btinel: Check ACPI handle for NULL before accessing
-    https://git.kernel.org/bluetooth/bluetooth-next/c/44f771148fb8
+  - Bluetooth: btsdio: fix use after free bug in btsdio_remove due to race condition
+    https://git.kernel.org/bluetooth/bluetooth-next/c/61115bb7574e
 
 You are awesome, thank you!
 -- 
