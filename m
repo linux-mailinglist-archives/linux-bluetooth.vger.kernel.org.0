@@ -2,54 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 404096B56E2
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Mar 2023 01:41:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 643556B56E5
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Mar 2023 01:41:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230463AbjCKAlc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Mar 2023 19:41:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53710 "EHLO
+        id S230372AbjCKAlY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Mar 2023 19:41:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229800AbjCKAlD (ORCPT
+        with ESMTP id S230415AbjCKAkz (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Mar 2023 19:41:03 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F2FD133DB5
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Mar 2023 16:40:28 -0800 (PST)
+        Fri, 10 Mar 2023 19:40:55 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A40913844D
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Mar 2023 16:40:24 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 815F261D97
-        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Mar 2023 00:40:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E19ABC433A7;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 41603B82471
+        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Mar 2023 00:40:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DDB04C433A4;
         Sat, 11 Mar 2023 00:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1678495220;
-        bh=Rxy5xiyauyHM5FlJVT+w624RD23NvC7TG4vLysLyQR0=;
+        bh=xRHjrmeN800JbqAFEbbWIDg3AVCGDj/vJsHNJE1Yf2A=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=uxcQAb9C2v7CH88tnd9ANYN/jxJSKbYbziWDdq6m8Kau4BFh0OoAJjeXxaXManOd4
-         1XEMgHsfZnzzO2f14p258erleGOScoQj/ER+YomceICkFKCUxIoTTDYiov//osXPMg
-         KOW5IzciZp2dKEkv1rnZUCJNvjvmlQ7IrnTqUO1fCjPMiS9ivqZ/r4Zwc10cqoqLws
-         IqnWsT6W3mKS4d95PlqR7ipvamRmjkNJIDSc9A9zF/QJGqaG+j4CwEkCGZNQJp4iPh
-         PN3SEpNZ7bBR/EoEUySJA30HmaMODH5graREOoUATnKcK73/qSbLs6T4xSM1Y9jHkJ
-         sT2JKRPWOMIOQ==
+        b=lYQEV9QOImiQ113zoyFNcM3YkhUAcM3zl2FRfV0kqo63Qq3svjHKzv20pzRmw8Hu7
+         T8Zhmi0PkaeZ7RZUGf19msGUe2Mx6gzrjrQ6Ihws74x9aKhbXLNcgHTXGF4wky3G3l
+         IXijcSyzVxXd968TXGGKd/MlhiqI5LoDiIgZgMBBXUpSUGrXC25l1cyYlWfwySJrj7
+         V+IRh+eqhnV+nhut5t1SO/rWfrxfDJ1JfRd3QgtirmeyHuASP9XurtnjIFqMfQ/QE1
+         R45Ga5lfrzTfCKq7w+7BmxQ86AfJEkQJgAiFILai+GNl864VfcXT/ngZnkMGLE2SdL
+         n1jBazx9WZz7g==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C49A4E4D007;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BCF4DE21EEB;
         Sat, 11 Mar 2023 00:40:20 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 1/2] iso-tester: Update High Reliability presets
+Subject: Re: [PATCH BlueZ] shared/att: Always queue BT_ATT_OP_MTU_REQ on the fixed
+ channel
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167849522080.21816.8868222366994265405.git-patchwork-notify@kernel.org>
+Message-Id: <167849522077.21816.1436185214763912331.git-patchwork-notify@kernel.org>
 Date:   Sat, 11 Mar 2023 00:40:20 +0000
-References: <20230310214001.3891437-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230310214001.3891437-1-luiz.dentz@gmail.com>
+References: <20230307211756.2581274-1-luiz.dentz@gmail.com>
+In-Reply-To: <20230307211756.2581274-1-luiz.dentz@gmail.com>
 To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -58,24 +58,21 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluez.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Fri, 10 Mar 2023 13:40:00 -0800 you wrote:
+On Tue,  7 Mar 2023 13:17:56 -0800 you wrote:
 > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> This updates High Reliability presets as published in BAP 1.0.1:
-> 
-> https://www.bluetooth.com/specifications/bap-1-0-1/
+> BT_ATT_OP_MTU_REQ shall only be sent on the so called fixed channel
+> since EATT channels shall use L2CAP procedure to update its MTU.
 > ---
->  tools/iso-tester.c | 32 ++++++++++++++++----------------
->  1 file changed, 16 insertions(+), 16 deletions(-)
+>  src/shared/att.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 
 Here is the summary with links:
-  - [v2,1/2] iso-tester: Update High Reliability presets
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a0847e005d33
-  - [v2,2/2] client/player: Update High Reliability presets
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=31ab084f072c
+  - [BlueZ] shared/att: Always queue BT_ATT_OP_MTU_REQ on the fixed channel
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=96ab7296cb92
 
 You are awesome, thank you!
 -- 
