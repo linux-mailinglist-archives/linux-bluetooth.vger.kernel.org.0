@@ -2,105 +2,154 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9568C6B56E3
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Mar 2023 01:41:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9B8A6B5714
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 11 Mar 2023 01:51:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231175AbjCKAlg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 10 Mar 2023 19:41:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54116 "EHLO
+        id S231260AbjCKAuQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 10 Mar 2023 19:50:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230389AbjCKAlH (ORCPT
+        with ESMTP id S231586AbjCKAtz (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 10 Mar 2023 19:41:07 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353AB139072
-        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Mar 2023 16:40:32 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 303BCB82473
-        for <linux-bluetooth@vger.kernel.org>; Sat, 11 Mar 2023 00:40:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CCA71C4339C;
-        Sat, 11 Mar 2023 00:40:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678495220;
-        bh=9POsjiQfg3M3sEKMv2PJWbmr4dbQHjFLZs31jyFHjOs=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=stdaCtdFdpgINmExiyZWV7z+cINBEZ7QvaHix5iwPcHY1moT3borWt0XlqbfDW3pK
-         5ZKyya3GAWMXJNmB8pitF89yTOlUONHwi4QBDq5O2rKzrMArC9yK8EcTQJ7flLjgIZ
-         OUMovENnjCa/TPype7X/fMvhjX/MMKLsl37TmiGXgkurE6K8isES5RVRf/IToihKsQ
-         BqYu6JFySTxkVAHgQY5Tl55F6C1mmAQimoAjQXgXRpkJ0KQblaPiZvhXpPeHf7hAfZ
-         HZ/sovg08Qy3nRdsHZxxemu41OyUbyDVpwR2BX+in+Poju06ys0fwfHqTFGa7Kj3LI
-         dYxkUf4p+7VWg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id AE3E4E21EEA;
-        Sat, 11 Mar 2023 00:40:20 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 10 Mar 2023 19:49:55 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6770114EE7
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Mar 2023 16:48:11 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id x20-20020a17090a8a9400b00233ba727724so8880996pjn.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 10 Mar 2023 16:48:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678495642;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GcnDg8Z7WGEEH1ZaQ3pRyfxNZF7233jBeqjI2RRVg4w=;
+        b=bEqaUDaqheuApggrq6k9gP6A3jEvnGhORzL33SvYd+I0sZGMaCXnmb6JkVNk4nKKw7
+         8vAbffguZw6Y9voSNWbXvkH9I894Avy8/upTWsi5Z+UJgF1Okh2/AexWkhpV++FdgCoI
+         cs9WK5ydYZvgJD10eeE/WkztiZLWQ/8tGHnCowQ0/uVPXKwfNwPoHfotPeCaMRvjtnlv
+         75FRAFUQ16NYIT+Blj6dfnW/GW4pqGT8cMXDAqye6MCljQvxBcxjwkRqad5Nznb3BreI
+         Vz7awypPQdFwd5b81pySAVkBxrXAMCC8BPJJxrdkdw/UMV87hjfxPUFVQkD/HAhQsieX
+         JtsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678495642;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GcnDg8Z7WGEEH1ZaQ3pRyfxNZF7233jBeqjI2RRVg4w=;
+        b=ijOFF/yHGPBvAzq9fwg+kSmWYBYfD2qX3gv3sv5mMiQ71VETxNLtKYKv/FAwMvfYql
+         DmWgm1IqFu9CWsZIuM7scOGT2sePruMgUC+wqenJNe5sgMqeCMAjxeY47hAYhnCd8Q68
+         iRdUlfDq0AG2qWNGBj7ftBH7WejGEK0rDfN7xRnVZZrur5cim7RMzOVlZo6oD3YK81nj
+         H8Obx0Z6I2nRZrA8P8RdxdZbqk3cIeHXqbTXm3ZNSrMA8dDcaHBIdLQ7dkSEX/590whQ
+         uAaQWD45VfTnidx8r4qTXwetZfDhy9mE7itNDqPmEvR45oaPtLOISJeWMunTHFVih9Uu
+         U4Ng==
+X-Gm-Message-State: AO0yUKVNaqOD0HRRGwHiWq3NTkCeb/P+xzm9Pg2ASODLRp9MXDVW14p3
+        /6H4ojM5KG7/pkIURW+QngbXdVSBBxA=
+X-Google-Smtp-Source: AK7set/AaBAsuGCYxc8qv7fN3dK9ZJSazwWswmQ7C+epEx77nr62lMMpHadMNEanP092Cvrtn+AfuA==
+X-Received: by 2002:a17:902:e80d:b0:19c:cb64:dacc with SMTP id u13-20020a170902e80d00b0019ccb64daccmr32657725plg.61.1678495642342;
+        Fri, 10 Mar 2023 16:47:22 -0800 (PST)
+Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
+        by smtp.gmail.com with ESMTPSA id kh12-20020a170903064c00b0019f0f670c00sm508826plb.225.2023.03.10.16.47.21
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Mar 2023 16:47:21 -0800 (PST)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ] shared/att: Use a short timeout for EATT bearer
+Date:   Fri, 10 Mar 2023 16:47:20 -0800
+Message-Id: <20230311004720.4017529-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [RFC v2 01/12] shared/crypto: Add bt_crypto_sirk
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167849522070.21816.4954897604805294201.git-patchwork-notify@kernel.org>
-Date:   Sat, 11 Mar 2023 00:40:20 +0000
-References: <20230307222422.2608483-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230307222422.2608483-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+This uses 5 seconds timeout for EATT bearers since it maybe possible
+that other channels can be used so the operation can be resend.
+---
+ src/shared/att.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-On Tue,  7 Mar 2023 14:24:11 -0800 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> This adds bt_crypto_sirk which attempts to generate a unique SIRK using
-> the following steps:
-> 
->  - Generate a hash (k) using the str as input
->  - Generate a hash (sirk) using vendor, product, version and source as input
->  - Encrypt sirk using k as LTK with sef function.
-> 
-> [...]
-
-Here is the summary with links:
-  - [RFC,v2,01/12] shared/crypto: Add bt_crypto_sirk
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c1dd94cc7f81
-  - [RFC,v2,02/12] shared/ad: Add RSI data type
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c2e99aefd337
-  - [RFC,v2,03/12] doc: Add set-api
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=6477522e92e3
-  - [RFC,v2,04/12] device-api: Add Set property
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=5bac4cddb191
-  - [RFC,v2,05/12] core: Add initial implementation of DeviceSet interface
-    (no matching commit)
-  - [RFC,v2,06/12] core: Check if device has RSI
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f95ffcc8b1fe
-  - [RFC,v2,07/12] main.conf: Add CSIP profile configurable options
-    (no matching commit)
-  - [RFC,v2,08/12] shared/csip: Add initial code for handling CSIP
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d297a03b7a61
-  - [RFC,v2,09/12] profiles: Add initial code for csip plugin
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=9e1eb0a62b3f
-  - [RFC,v2,10/12] tools: Add support to generate RSI using SIRK
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c446a64d461b
-  - [RFC,v2,11/12] client: Add support for DeviceSet proxy
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=373bafc34ce6
-  - [RFC,v2,12/12] client: Use AdvertisingFlags when available
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=815f779aa8e4
-
-You are awesome, thank you!
+diff --git a/src/shared/att.c b/src/shared/att.c
+index 85feead77d0f..b8fc44b16b20 100644
+--- a/src/shared/att.c
++++ b/src/shared/att.c
+@@ -30,6 +30,7 @@
+ #define ATT_OP_CMD_MASK			0x40
+ #define ATT_OP_SIGNED_MASK		0x80
+ #define ATT_TIMEOUT_INTERVAL		30000  /* 30000 ms */
++#define EATT_TIMEOUT_INTERVAL		5000  /* 5000 ms */
+ 
+ /* Length of signature in write signed packet */
+ #define BT_ATT_SIGNATURE_LEN		12
+@@ -42,6 +43,7 @@ struct bt_att_chan {
+ 	struct io *io;
+ 	uint8_t type;
+ 	int sec_level;			/* Only used for non-L2CAP */
++	int timeout;
+ 
+ 	struct queue *queue;		/* Channel dedicated queue */
+ 
+@@ -470,6 +472,8 @@ struct timeout_data {
+ 	unsigned int id;
+ };
+ 
++static void wakeup_writer(struct bt_att *att);
++
+ static bool timeout_cb(void *user_data)
+ {
+ 	struct timeout_data *timeout = user_data;
+@@ -495,7 +499,16 @@ static bool timeout_cb(void *user_data)
+ 		att->timeout_callback(op->id, op->opcode, att->timeout_data);
+ 
+ 	op->timeout_id = 0;
+-	disc_att_send_op(op);
++
++	/* Resend op if it is using EATT bearer and there are more channels
++	 * left that could be used since there maybe a problem with the channel
++	 * e.g. not enough credits to send the entire packet.
++	 */
++	if (chan->type == BT_ATT_EATT && queue_length(att->chans) > 1) {
++		queue_push_tail(att->req_queue, op);
++		wakeup_writer(att);
++	} else
++		disc_att_send_op(op);
+ 
+ 	/*
+ 	 * Directly terminate the connection as required by the ATT protocol.
+@@ -585,8 +598,7 @@ static bool can_write_data(struct io *io, void *user_data)
+ 	timeout = new0(struct timeout_data, 1);
+ 	timeout->chan = chan;
+ 	timeout->id = op->id;
+-	op->timeout_id = timeout_add(ATT_TIMEOUT_INTERVAL, timeout_cb,
+-								timeout, free);
++	op->timeout_id = timeout_add(chan->timeout, timeout_cb, timeout, free);
+ 
+ 	/* Return true as there may be more operations ready to write. */
+ 	return true;
+@@ -1204,9 +1216,16 @@ static struct bt_att_chan *bt_att_chan_new(int fd, uint8_t type)
+ 		/* fall through */
+ 	case BT_ATT_LE:
+ 		chan->mtu = BT_ATT_DEFAULT_LE_MTU;
++		chan->timeout = ATT_TIMEOUT_INTERVAL;
+ 		break;
+-	default:
++	case BT_ATT_BREDR:
+ 		chan->mtu = io_get_mtu(chan->fd);
++		chan->timeout = ATT_TIMEOUT_INTERVAL;
++		break;
++	case BT_ATT_EATT:
++		chan->mtu = io_get_mtu(chan->fd);
++		chan->timeout = EATT_TIMEOUT_INTERVAL;
++		break;
+ 	}
+ 
+ 	if (chan->mtu < BT_ATT_DEFAULT_LE_MTU)
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.39.2
 
