@@ -2,115 +2,186 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A8B66B8544
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Mar 2023 23:52:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71AD16B8574
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Mar 2023 23:59:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229755AbjCMWwp (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Mar 2023 18:52:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57856 "EHLO
+        id S229524AbjCMW7X (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Mar 2023 18:59:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbjCMWwZ (ORCPT
+        with ESMTP id S230063AbjCMW7V (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Mar 2023 18:52:25 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 840028ABC4
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Mar 2023 15:51:59 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id b5so5691292iow.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Mar 2023 15:51:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678747916;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DVhH1FenjO23iPOz9PWDVrqP8gmDYaGiFkkC/dXtHy8=;
-        b=KquCkPJDlsj/WXmzP7jhpIGYp/8/L9yMbjBDbiFcghKR7/DDOA5v2HTXT+MGVFSktF
-         vFIDJMLQkMXzHEYODZt7WcV871KQeE6ApdZ68J3Eu4SvsAaoJ/rkOqGyEPlbP6pSPAfD
-         ORSzcuwgu2mn8MDeOZ/ihGSX5cBwTwxPVSLkeaSUMHIKA2wTKje8eolzjk8fbrDRqk/G
-         8xaNmaoSKPnHJoHvVyk3VKVB9lIIoXU2dlbM1KcW+fEsSaHPeK2MxMk3V/XnkhuIIxUG
-         UTud0o53VZs4lGO4cALUt5mPLr9XHTHTHUxAz8rDeyvKXtTFOPGnceR3qdSTvx2AtK0q
-         zw1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678747916;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DVhH1FenjO23iPOz9PWDVrqP8gmDYaGiFkkC/dXtHy8=;
-        b=t3Ws7RST31ZwJldJ4KgX9WULhb0E5Tkj2YAf77OSR9AXKuC+KxReT6YePeTOB/rp23
-         a5QvXxqkmyaXak7qeftX8v7U9FnXQaNXOny69N9K4FjdzpMXhJBP8pHEy92sMy7KYimU
-         2uzafTsENTnYzDZUJxSYDMbYHQGjlvxO3ZZcGQ0tulbPt5QCJERPFyPIycl8Jwjk0bwf
-         XLvFsZ+vyW3P6NTd1SyEBC1GpDazg+4PbEpPrxJxy1JMsobGyUI8Fw/TH917dC0VXptZ
-         T5HDIljumm0D8dVGuMH5G+RrJ0rx0z6X7/GbJ3pNPXWQjs9k1uhCuRJoRrgVuRq5UJD4
-         WI8Q==
-X-Gm-Message-State: AO0yUKWOUylE1vbN6NA0tzkGMGN84Vxcj7ziTHJLbekOCYXjC26gWZtM
-        Sfxx4ZcXwAVr+KiD/jrHUqCYIJMMo6M=
-X-Google-Smtp-Source: AK7set+jlnOXigurCT1Pbsxl+6n373Ovol4FGrnl6vuaLoBEp2eG5GS1sY+EPnLE7OFU6CUMGxGQUQ==
-X-Received: by 2002:a5d:889a:0:b0:713:7b7c:46d7 with SMTP id d26-20020a5d889a000000b007137b7c46d7mr10208556ioo.21.1678747916388;
-        Mon, 13 Mar 2023 15:51:56 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id m17-20020a02cdd1000000b003c4d71489aasm278318jap.6.2023.03.13.15.51.55
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 15:51:55 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 4/4] shared/csip: Fix crash on bt_csip_get_sirk
-Date:   Mon, 13 Mar 2023 15:51:50 -0700
-Message-Id: <20230313225150.267896-4-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230313225150.267896-1-luiz.dentz@gmail.com>
-References: <20230313225150.267896-1-luiz.dentz@gmail.com>
+        Mon, 13 Mar 2023 18:59:21 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12BF67C9D3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Mar 2023 15:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678748330; x=1710284330;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Qca/1FB4IJf73J/1rMwLppRXhRCcYlJXxz50/bSwuXg=;
+  b=QMWuHsE9El6kOPgO4xgtP9QEAbGlYtJn6kXS3NBR57c0p3mkxYI+azZJ
+   Q0jZrj/bsqpOAvDxvU7HA7SzYIvpepsjAmyNPmZpvEcCWoBQVhqIiO80J
+   qIRzAtq1xcm4oYQ1mrydGkuKO3GAng8eF4p2hlR6G7DeYtvTjE5O0FLNF
+   rMHmJVPGZF5zsm+QDmqyzIPUWdR/giS/kCaVoTPNGye5EaWAJxhw8CcGy
+   J6z5VkTzTOMunpPBftjLwm/q9/cg21koAJvdb5w6iC5BsQP8mJMHYs4vr
+   t0ouJvJs6avQ50FNVABrdyaZA8SaN2gszUWVXgFl0ogNvRzgD38LNWCz8
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="334755691"
+X-IronPort-AV: E=Sophos;i="5.98,258,1673942400"; 
+   d="scan'208";a="334755691"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 15:57:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="822139325"
+X-IronPort-AV: E=Sophos;i="5.98,258,1673942400"; 
+   d="scan'208";a="822139325"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by fmsmga001.fm.intel.com with ESMTP; 13 Mar 2023 15:57:50 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pbr6z-0006DR-2H;
+        Mon, 13 Mar 2023 22:57:49 +0000
+Date:   Tue, 14 Mar 2023 06:57:22 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Kiran K <kiran.k@intel.com>, linux-bluetooth@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev, ravishankar.srivatsa@intel.com,
+        chethan.tumkur.narayan@intel.com, Kiran K <kiran.k@intel.com>
+Subject: Re: [PATCH v1] Bluetooth: btintel: Add support to reset bluetooth
+ via ACPI DSM
+Message-ID: <202303140634.L887SSqU-lkp@intel.com>
+References: <20230313151549.15791-1-kiran.k@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230313151549.15791-1-kiran.k@intel.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hi Kiran,
 
-This fixes the following trace:
+Thank you for the patch! Yet something to improve:
 
-Invalid read of size 1
-   at 0x1F4282: bt_csip_get_sirk (csip.c:812)
-   by 0x176B21: csip_ready (csip.c:259)
-   by 0x1F3C74: csip_notify_ready (csip.c:578)
-   by 0x1F3C74: csip_idle (csip.c:659)
-   by 0x1DCDCC: idle_notify (gatt-client.c:171)
-   by 0x1D579A: queue_remove_if (queue.c:279)
-   by 0x1D584F: queue_remove_all (queue.c:321)
-   by 0x1E036F: notify_client_idle (gatt-client.c:180)
-   by 0x1E036F: request_unref (gatt-client.c:199)
-   by 0x1DC60D: destroy_att_send_op (att.c:211)
-   by 0x1DC60D: handle_rsp (att.c:874)
-   by 0x1DC60D: can_read_data (att.c:1064)
-   by 0x1F43F4: watch_callback (io-glib.c:157)
-   by 0x48BBC7E: g_main_context_dispatch (in /usr/lib64/libglib-2.0.so.0.7400.6)
-   by 0x4912117: ??? (in /usr/lib64/libglib-2.0.so.0.7400.6)
-   by 0x48BB24E: g_main_loop_run (in /usr/lib64/libglib-2.0.so.0.7400.6)
- Address 0x0 is not stack'd, malloc'd or (recently) free'd
----
- src/shared/csip.c | 3 +++
- 1 file changed, 3 insertions(+)
+[auto build test ERROR on bluetooth-next/master]
+[also build test ERROR on linus/master v6.3-rc2 next-20230310]
+[cannot apply to bluetooth/master]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-diff --git a/src/shared/csip.c b/src/shared/csip.c
-index 094f448a3532..7e90a3c97614 100644
---- a/src/shared/csip.c
-+++ b/src/shared/csip.c
-@@ -810,6 +810,9 @@ bool bt_csip_get_sirk(struct bt_csip *csip, uint8_t *type,
- 	if (!csis)
- 		return false;
- 
-+	if (!csis->sirk_val)
-+		return false;
-+
- 	if (type)
- 		*type = csis->sirk_val->type;
- 
+url:    https://github.com/intel-lab-lkp/linux/commits/Kiran-K/Bluetooth-btintel-Add-support-to-reset-bluetooth-via-ACPI-DSM/20230313-230800
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
+patch link:    https://lore.kernel.org/r/20230313151549.15791-1-kiran.k%40intel.com
+patch subject: [PATCH v1] Bluetooth: btintel: Add support to reset bluetooth via ACPI DSM
+config: arc-randconfig-r043-20230313 (https://download.01.org/0day-ci/archive/20230314/202303140634.L887SSqU-lkp@intel.com/config)
+compiler: arc-elf-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/6a89221ddaa7b13fa1da2d345e61b2bf8efd5a87
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Kiran-K/Bluetooth-btintel-Add-support-to-reset-bluetooth-via-ACPI-DSM/20230313-230800
+        git checkout 6a89221ddaa7b13fa1da2d345e61b2bf8efd5a87
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc SHELL=/bin/bash drivers/bluetooth/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303140634.L887SSqU-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/bluetooth/btintel.c: In function 'btintel_set_dsm_reset_method':
+>> drivers/bluetooth/btintel.c:2450:14: error: implicit declaration of function 'acpi_has_method'; did you mean 'acpi_has_watchdog'? [-Werror=implicit-function-declaration]
+    2450 |         if (!acpi_has_method(handle, "_PRR")) {
+         |              ^~~~~~~~~~~~~~~
+         |              acpi_has_watchdog
+   cc1: some warnings being treated as errors
+
+
+vim +2450 drivers/bluetooth/btintel.c
+
+  2430	
+  2431	static void btintel_set_dsm_reset_method(struct hci_dev *hdev,
+  2432						 struct intel_version_tlv *ver_tlv)
+  2433	{
+  2434		struct btintel_data *data = hci_get_priv(hdev);
+  2435		acpi_handle handle = ACPI_HANDLE(GET_HCIDEV_DEV(hdev));
+  2436		u8 reset_payload[4] = {0x01, 0x00, 0x01, 0x00};
+  2437		union acpi_object *obj, argv4;
+  2438		enum {
+  2439			RESET_TYPE_WDISABLE2,
+  2440			RESET_TYPE_VSEC
+  2441		};
+  2442	
+  2443		handle = ACPI_HANDLE(GET_HCIDEV_DEV(hdev));
+  2444	
+  2445		if (!handle) {
+  2446			bt_dev_dbg(hdev, "No support for bluetooth device in ACPI firmware");
+  2447			return;
+  2448		}
+  2449	
+> 2450		if (!acpi_has_method(handle, "_PRR")) {
+  2451			bt_dev_err(hdev, "No support for _PRR ACPI method");
+  2452			return;
+  2453		}
+  2454	
+  2455		switch (ver_tlv->cnvi_top & 0xfff) {
+  2456		case 0x910: /* GalePeak2 */
+  2457			reset_payload[2] = RESET_TYPE_VSEC;
+  2458			break;
+  2459		default:
+  2460			/* WDISABLE2 is the default reset method */
+  2461			reset_payload[2] = RESET_TYPE_WDISABLE2;
+  2462	
+  2463			if (!acpi_check_dsm(handle, &btintel_guid_dsm, 0,
+  2464					    BIT(DSM_SET_WDISABLE2_DELAY))) {
+  2465				bt_dev_err(hdev, "No dsm support to set reset delay");
+  2466				return;
+  2467			}
+  2468			argv4.integer.type = ACPI_TYPE_INTEGER;
+  2469			/* delay required to toggle BT power */
+  2470			argv4.integer.value = 160;
+  2471			obj = acpi_evaluate_dsm(handle, &btintel_guid_dsm, 0,
+  2472						DSM_SET_WDISABLE2_DELAY, &argv4);
+  2473			if (!obj) {
+  2474				bt_dev_err(hdev, "Failed to call dsm to set reset delay");
+  2475				return;
+  2476			}
+  2477			ACPI_FREE(obj);
+  2478		}
+  2479	
+  2480		bt_dev_info(hdev, "DSM reset method type: 0x%02x", reset_payload[2]);
+  2481	
+  2482		if (!acpi_check_dsm(handle, &btintel_guid_dsm, 0,
+  2483				    DSM_SET_RESET_METHOD)) {
+  2484			bt_dev_warn(hdev, "No support for dsm to set reset method");
+  2485			return;
+  2486		}
+  2487		argv4.buffer.type = ACPI_TYPE_BUFFER;
+  2488		argv4.buffer.length = sizeof(reset_payload);
+  2489		argv4.buffer.pointer = reset_payload;
+  2490	
+  2491		obj = acpi_evaluate_dsm(handle, &btintel_guid_dsm, 0,
+  2492					DSM_SET_RESET_METHOD, &argv4);
+  2493		if (!obj) {
+  2494			bt_dev_err(hdev, "Failed to call dsm to set reset method");
+  2495			return;
+  2496		}
+  2497		ACPI_FREE(obj);
+  2498		data->acpi_reset_method = btintel_acpi_reset_method;
+  2499	}
+  2500	
+
 -- 
-2.39.2
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
