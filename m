@@ -2,142 +2,115 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AE486B721B
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Mar 2023 10:10:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E45196B72B9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Mar 2023 10:36:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229909AbjCMJKC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Mar 2023 05:10:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35906 "EHLO
+        id S229801AbjCMJgy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Mar 2023 05:36:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230479AbjCMJJr (ORCPT
+        with ESMTP id S229797AbjCMJgh (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Mar 2023 05:09:47 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A16D156159;
-        Mon, 13 Mar 2023 02:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678698521; x=1710234521;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=cq6QdrMcR3tA5ptzjJyzksVlZ4tZ93rLnwQheu8e54Q=;
-  b=Ulprt4xM1tdMpTmsVc/JhnJCDDu7xcaQMYLK1tFy8h5QObEKk8Lxi81d
-   ZDEZ6fkxzRuarFY14o47BFptora5h9+uCnjKRcYSMXrecuyY9eKqEma0a
-   hNapvJEs6r2nzS8tLtDENtOkS0qHPk1KQoNX3/qBxL6IOuSrDGIEWXxro
-   lph5kq0QGotjl8zs/2JmnMUrdnxzERCPjxILAMGLjvnf4Wa8p281ksCjj
-   /DnX/56pB5fmD7vvvu/R/jjjs8kxtTczOUBWssSl4VszH4AHWN93cCuIq
-   f8R7TLuusmleCJikVnQNq53Kg0JDdoCu6UlzaZPzAa+J1aQiP5l7Y6FDE
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10647"; a="423363959"
-X-IronPort-AV: E=Sophos;i="5.98,256,1673942400"; 
-   d="scan'208";a="423363959"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 02:08:41 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10647"; a="680950602"
-X-IronPort-AV: E=Sophos;i="5.98,256,1673942400"; 
-   d="scan'208";a="680950602"
-Received: from etsykuno-mobl2.ccr.corp.intel.com ([10.252.47.211])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 02:08:35 -0700
-Date:   Mon, 13 Mar 2023 11:08:33 +0200 (EET)
-From:   =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To:     Neeraj sanjay kale <neeraj.sanjaykale@nxp.com>
-cc:     "davem@davemloft.net" <davem@davemloft.net>,
-        "edumazet@google.com" <edumazet@google.com>,
-        "kuba@kernel.org" <kuba@kernel.org>,
-        "pabeni@redhat.com" <pabeni@redhat.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "krzysztof.kozlowski+dt@linaro.org" 
-        <krzysztof.kozlowski+dt@linaro.org>,
-        "marcel@holtmann.org" <marcel@holtmann.org>,
-        "johan.hedberg@gmail.com" <johan.hedberg@gmail.com>,
-        "luiz.dentz@gmail.com" <luiz.dentz@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        "alok.a.tiwari@oracle.com" <alok.a.tiwari@oracle.com>,
-        "hdanton@sina.com" <hdanton@sina.com>,
-        "leon@kernel.org" <leon@kernel.org>,
-        Netdev <netdev@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        linux-serial <linux-serial@vger.kernel.org>,
-        Amitkumar Karwar <amitkumar.karwar@nxp.com>,
-        Rohit Fule <rohit.fule@nxp.com>,
-        Sherry Sun <sherry.sun@nxp.com>
-Subject: Re: [PATCH v6 3/3] Bluetooth: NXP: Add protocol support for NXP
- Bluetooth chipsets
-In-Reply-To: <AM9PR04MB8603D2F3E3CDC714BDACECC0E7BA9@AM9PR04MB8603.eurprd04.prod.outlook.com>
-Message-ID: <11c7e098-19c8-6961-5369-214bc948bc37@linux.intel.com>
-References: <20230301154514.3292154-1-neeraj.sanjaykale@nxp.com> <20230301154514.3292154-4-neeraj.sanjaykale@nxp.com> <73527cb7-6546-6c47-768c-5f4648b6d477@linux.intel.com> <AM9PR04MB86037CDF6A032963405AF0CEE7B69@AM9PR04MB8603.eurprd04.prod.outlook.com>
- <48e776a1-7526-5b77-568b-322d4555a138@linux.intel.com> <AM9PR04MB8603D2F3E3CDC714BDACECC0E7BA9@AM9PR04MB8603.eurprd04.prod.outlook.com>
+        Mon, 13 Mar 2023 05:36:37 -0400
+Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12F5856782
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Mar 2023 02:34:28 -0700 (PDT)
+Received: by mail-oo1-xc2b.google.com with SMTP id bd3-20020a4aee03000000b00517affa07c0so1724743oob.7
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Mar 2023 02:34:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678700062;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=7cszE2r1N+Zt8OxF2TvZIksF25sudASnrRMj/UX9UAY=;
+        b=VMYgCQSnFUiBFoPQ3ITGP0RN4Yh8Ompc3+4fIfDOpJYo2jl+2NLHG800qn9jtIxelC
+         02Z3tAH1vHExVvW4QWbJ7O2YiwwQIXQcS0gpOH3Mywcou3HC4wJFqEMbVv0JJjghUdal
+         qpmhYynlD4xQH2wBWl9rytsEfF6eGlZEcoGhoAgIl5VUr623xHd7jDLYiWvibAuKIHx/
+         gaAKAqGz/YsFo1hpR4bPsDlPqRHfQzRZjQh4VlhmkEWmco0IAoYGcUppi06CH1PHRp6D
+         euly4/beN/Vm5ZNyWkfChp1gFSx96uK+wlDFdOG8wwVW3nJLR1wNYYo440AtVho0ddMG
+         iNWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678700062;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7cszE2r1N+Zt8OxF2TvZIksF25sudASnrRMj/UX9UAY=;
+        b=mFe+TVurMIw5oc0uMri05qluE0aX4f04mn+pVACDgK5GBXhM/GvVjqUjUR/SubF+aq
+         7v7Q7xGJ+yMHzOHZIwXaomgm8+rCcW2TnS8T995RQ/qRDSJMQ3hpt/XhY0YSHUwSurAs
+         fuGN/0ixdd45JwB7wt6jSr7YD32U5UklNseyz1uQ+rKYck385ItZpcLEPvRlZP2HRWDh
+         RxnH/rx/Dhrn4SCv7i8NIyE1GRoxC9xjaZYjKForXKgvLsS5pEJZD4E11oCNJJlYqqwh
+         EGhrSfma79fJ0NrBtaxTQbhDgZbf2MyEoc5nKvGDzFMEfTYmW5iRrrkp9em4eQ763z9p
+         RIIA==
+X-Gm-Message-State: AO0yUKUle86qHF//AUYkmdo444Gg2M8rFTphxBGgi2eXD1oJ2tKvmbkv
+        1Da6DIPIZXDnrBuYd25m4OHZCIom9nw=
+X-Google-Smtp-Source: AK7set+A+vcG2qDTPm4MfhC4b+FElsqM/xV3ShWSAMLsBsyTnLm27CsEWo+Kpv7Kbg/iic5aJNcZZw==
+X-Received: by 2002:a05:6820:3cb:b0:525:3c47:a9bf with SMTP id s11-20020a05682003cb00b005253c47a9bfmr16513705ooj.8.1678700062725;
+        Mon, 13 Mar 2023 02:34:22 -0700 (PDT)
+Received: from [172.17.0.2] ([52.248.87.135])
+        by smtp.gmail.com with ESMTPSA id 63-20020a9d0845000000b00690f6d9a737sm2931732oty.8.2023.03.13.02.34.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Mar 2023 02:34:22 -0700 (PDT)
+Message-ID: <640eee1e.9d0a0220.18b4d.b601@mx.google.com>
+Date:   Mon, 13 Mar 2023 02:34:22 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============3283805090833296573=="
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, jiasheng@iscas.ac.cn
+Subject: RE: Bluetooth: 6LoWPAN: Add missing check for skb_clone
+In-Reply-To: <20230313090346.48778-1-jiasheng@iscas.ac.cn>
+References: <20230313090346.48778-1-jiasheng@iscas.ac.cn>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Fri, 10 Mar 2023, Neeraj sanjay kale wrote:
+--===============3283805090833296573==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-> Hi Ilpo,
-> 
-> I have resolved most of your comments in v8 patch, and I have few things to discuss regarding the v6 patch.
-> 
-> > > > > +static bool nxp_fw_change_baudrate(struct hci_dev *hdev, u16
-> > > > > +req_len) {
-> > > > > +     struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-> > > > > +     struct nxp_bootloader_cmd nxp_cmd5;
-> > > > > +     struct uart_config uart_config;
-> > > > > +
-> > > > > +     if (req_len == sizeof(nxp_cmd5)) {
-> > > > > +             nxp_cmd5.header = __cpu_to_le32(5);
-> > > > > +             nxp_cmd5.arg = 0;
-> > > > > +             nxp_cmd5.payload_len = __cpu_to_le32(sizeof(uart_config));
-> > > > > +             nxp_cmd5.crc = swab32(crc32_be(0UL, (char *)&nxp_cmd5,
-> > > > > +                                            sizeof(nxp_cmd5) -
-> > > > > + 4));
-> > > >
-> > > > swab32(crc32_be(...)) seems and odd construct instead of
-> > __cpu_to_le32().
-> > > Earlier I had tried using __cpu_to_le32() but that did not work. The
-> > > FW expects a swapped CRC value for it's header and payload data.
-> > 
-> > So the .crc member should be __be32 then?
-> > 
-> I disagree with using __be32.
-> I have simplified this part of the code in v8 patch, please do check it out.
-> So the CRC part of the data structure will remain __le32, and will be sent over UART to the chip in Little Endian format.
-> It's just that the FW expects the CRC to be byte-swapped. 
-> Technically it is big endian format, but you may think of it as a "+1 level" of encryption (although it isn't).
-> So defining this structure member as __be32 can create more questions 
-> than answers, leading to more confusion. 
-> If it helps, I have also added a small comment in there to signify that 
-> the FW  expects CRC in byte swapped method.
+This is automated email and please do not reply to this email!
 
-I'd have still put the member as __be32 and commented the swap expectation 
-there. But it's not an end of the world even in the current form.
+Dear submitter,
 
-> > > > > +     serdev_device_write_buf(nxpdev->serdev, (u8 *)&nxp_cmd7,
-> > > > > + req_len);
-> > > >
-> > > > Is it safe to assume req_len is small enough to not leak stack content?
-> > > The chip requests chunk of FW data which is never more than 2048 bytes
-> > > at a time.
-> > 
-> > Eh, sizeof(*nxp_cmd7) is 16 bytes!?! Are you sure that req_len given to
-> > serdev_device_write_buf() is not larger than 16 bytes?
-> > 
-> I have now replaced req_len with sizeof(<struct>).
-> There is also a check in the beginning of the function to return if req_len is not 16 bytes.
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=729360
 
-Ah, I'd missed that check for some reason.
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.61 seconds
+GitLint                       PASS      0.29 seconds
+SubjectPrefix                 PASS      0.10 seconds
+BuildKernel                   PASS      31.73 seconds
+CheckAllWarning               PASS      35.05 seconds
+CheckSparse                   PASS      39.86 seconds
+CheckSmatch                   PASS      107.69 seconds
+BuildKernel32                 PASS      31.26 seconds
+TestRunnerSetup               PASS      444.70 seconds
+TestRunner_l2cap-tester       PASS      17.17 seconds
+TestRunner_iso-tester         PASS      17.53 seconds
+TestRunner_bnep-tester        PASS      5.62 seconds
+TestRunner_mgmt-tester        PASS      114.29 seconds
+TestRunner_rfcomm-tester      PASS      9.09 seconds
+TestRunner_sco-tester         PASS      8.41 seconds
+TestRunner_ioctl-tester       PASS      9.86 seconds
+TestRunner_mesh-tester        PASS      7.27 seconds
+TestRunner_smp-tester         PASS      8.31 seconds
+TestRunner_userchan-tester    PASS      5.97 seconds
+IncrementalBuild              PASS      28.66 seconds
 
 
--- 
- i.
 
+---
+Regards,
+Linux Bluetooth
+
+
+--===============3283805090833296573==--
