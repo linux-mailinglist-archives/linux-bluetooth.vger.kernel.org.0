@@ -2,119 +2,86 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDBB06B7201
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Mar 2023 10:05:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB8696B7233
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Mar 2023 10:11:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230455AbjCMJFg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 13 Mar 2023 05:05:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54280 "EHLO
+        id S230238AbjCMJLo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 13 Mar 2023 05:11:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231300AbjCMJFA (ORCPT
+        with ESMTP id S230229AbjCMJLW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 13 Mar 2023 05:05:00 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACDAACC2B;
-        Mon, 13 Mar 2023 02:02:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678698122; x=1710234122;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=pI4nUmeEVLC3M5pHVpsWX+NZs0JcgtOBrvHpvPUR7eg=;
-  b=EkhYi4RdBGdu3QgJdPFU/U+D88BS49AMSYSHC2XBho2cfDU3Ge44RBDq
-   QsvK/lFQGNXk0lXJHa0+l7qHjRz4W9NbT3ADJZTP/kja/Pe0u7wZeYGG4
-   ekunyiW/i1B4j7atJrvxy2m8MSC/fB3kjnU9XUX3UzeDMpbqopuNbvkPE
-   1exz+sX50KN8HzhdVAeK4b6PQ9p302dvKp6je0oWhkLI0zeqc9Lw8rhPt
-   ysCAiWn1R0GTIyowZbjGC4Gzz/DocdOPTlkPge8TgrxHtiD8+xgKJ6c+w
-   wAvqOW0FMZ0DeiYOQpa2YQWW9Bh1y9yLKaYddXeNcuNmBkWImSaWV+MHr
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10647"; a="339468051"
-X-IronPort-AV: E=Sophos;i="5.98,256,1673942400"; 
-   d="scan'208";a="339468051"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 02:01:59 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10647"; a="628552130"
-X-IronPort-AV: E=Sophos;i="5.98,256,1673942400"; 
-   d="scan'208";a="628552130"
-Received: from etsykuno-mobl2.ccr.corp.intel.com ([10.252.47.211])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 02:01:52 -0700
-Date:   Mon, 13 Mar 2023 11:01:47 +0200 (EET)
-From:   =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To:     Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, marcel@holtmann.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>, alok.a.tiwari@oracle.com,
-        hdanton@sina.com, leon@kernel.org, Netdev <netdev@vger.kernel.org>,
-        devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        linux-bluetooth@vger.kernel.org,
-        linux-serial <linux-serial@vger.kernel.org>,
-        amitkumar.karwar@nxp.com, rohit.fule@nxp.com, sherry.sun@nxp.com
-Subject: Re: [PATCH v8 3/3] Bluetooth: NXP: Add protocol support for NXP
- Bluetooth chipsets
-In-Reply-To: <20230310181921.1437890-4-neeraj.sanjaykale@nxp.com>
-Message-ID: <52e8d148-8b0-c0f7-5f27-716ec2d247e0@linux.intel.com>
-References: <20230310181921.1437890-1-neeraj.sanjaykale@nxp.com> <20230310181921.1437890-4-neeraj.sanjaykale@nxp.com>
+        Mon, 13 Mar 2023 05:11:22 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 13 Mar 2023 02:10:56 PDT
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6BB2B6EB8;
+        Mon, 13 Mar 2023 02:10:55 -0700 (PDT)
+Received: from localhost.localdomain (unknown [124.16.138.125])
+        by APP-03 (Coremail) with SMTP id rQCowACXnx_95g5kIV2jDg--.57156S2;
+        Mon, 13 Mar 2023 17:03:57 +0800 (CST)
+From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Subject: [PATCH] Bluetooth: 6LoWPAN: Add missing check for skb_clone
+Date:   Mon, 13 Mar 2023 17:03:46 +0800
+Message-Id: <20230313090346.48778-1-jiasheng@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1117770723-1678698117=:2573"
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: rQCowACXnx_95g5kIV2jDg--.57156S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrZw1kWryUJrW5CFWfWrWDtwb_yoW3urX_GF
+        97Z3yUuw1jyFyxtFsFka1Skr9xAwn3XFyxWwsaqFW5X34DGayxur1vvr15Jr4IgasFgr17
+        ZF90ya4kuw4xCjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUbV8FF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+        A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
+        Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+        0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+        jxv20xvE14v26r126r1DMcIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+        1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
+        n2IY04v7MxkIecxEwVAFwVW8uwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJV
+        W8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF
+        1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6x
+        IIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvE
+        x4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvj
+        DU0xZFpf9x0JUDkucUUUUU=
+X-Originating-IP: [124.16.138.125]
+X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Add the check for the return value of skb_clone since it may return NULL
+pointer and cause NULL pointer dereference in send_pkt.
 
---8323329-1117770723-1678698117=:2573
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Fixes: 18722c247023 ("Bluetooth: Enable 6LoWPAN support for BT LE devices")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+---
+ net/bluetooth/6lowpan.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-On Fri, 10 Mar 2023, Neeraj Sanjay Kale wrote:
-
-> This adds a driver based on serdev driver for the NXP BT serial protocol
-> based on running H:4, which can enable the built-in Bluetooth device
-> inside an NXP BT chip.
-> 
-> This driver has Power Save feature that will put the chip into sleep state
-> whenever there is no activity for 2000ms, and will be woken up when any
-> activity is to be initiated over UART.
-> 
-> This driver enables the power save feature by default by sending the vendor
-> specific commands to the chip during setup.
-> 
-> During setup, the driver checks if a FW is already running on the chip
-> by waiting for the bootloader signature, and downloads device specific FW
-> file into the chip over UART if bootloader signature is received..
-> 
-> Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-> ---
-
-> v8: Move bootloader signature handling to a separate function. Add
-> select CRC32 to Kconfig file. (Ilpo Järvinen)
-
-> +config BT_NXPUART
-> +	tristate "NXP protocol support"
-> +	depends on SERIAL_DEV_BUS
-> +	help
-> +	  NXP is serial driver required for NXP Bluetooth
-> +	  devices with UART interface.
-> +
-> +	  Say Y here to compile support for NXP Bluetooth UART device into
-> +	  the kernel, or say M here to compile as a module (btnxpuart).
-> +
-> +
-
-The select change in not there.
-
-
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 4eb1b3ced0d2..bf42a0b03e20 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -477,6 +477,10 @@ static int send_mcast_pkt(struct sk_buff *skb, struct net_device *netdev)
+ 			int ret;
+ 
+ 			local_skb = skb_clone(skb, GFP_ATOMIC);
++			if (!local_skb) {
++				rcu_read_unlock();
++				return -ENOMEM;
++			}
+ 
+ 			BT_DBG("xmit %s to %pMR type %u IP %pI6c chan %p",
+ 			       netdev->name,
 -- 
- i.
+2.25.1
 
---8323329-1117770723-1678698117=:2573--
