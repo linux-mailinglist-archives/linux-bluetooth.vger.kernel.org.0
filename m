@@ -2,51 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E456F6BA182
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Mar 2023 22:40:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AD2E6BA36D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Mar 2023 00:10:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230341AbjCNVkd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 14 Mar 2023 17:40:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58404 "EHLO
+        id S229730AbjCNXKi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 14 Mar 2023 19:10:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbjCNVkc (ORCPT
+        with ESMTP id S229690AbjCNXK1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 14 Mar 2023 17:40:32 -0400
+        Tue, 14 Mar 2023 19:10:27 -0400
 Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32F8610AAA
-        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Mar 2023 14:40:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D67F460AD;
+        Tue, 14 Mar 2023 16:10:26 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 08E13CE177D
-        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Mar 2023 21:40:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 33840C4339B;
-        Tue, 14 Mar 2023 21:40:18 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id EA81BCE17BB;
+        Tue, 14 Mar 2023 23:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 12013C4339E;
+        Tue, 14 Mar 2023 23:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678830018;
-        bh=cf5J49+3VRik6lh01z7+LTqXMwSelfyxSCXPdFpwgt8=;
+        s=k20201202; t=1678835421;
+        bh=he9+eX/qxlOVc5NLfphaepMaTzE+siMIMb5ZhSybN3U=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=qOePswve9Gtfie8GMPwuq8GNCJktHAWXZq41Zhm8ABgVcFVVutuP9sS8dOLowmyXW
-         yhHuwKeeh9q7W0WnHMrI8tblkB4Vh6b3Rp+tPrYgSh2lsNoRSapdkykfQJtd4nsNpJ
-         U6fJEuc4PSSUwma3unMKTttp8RG2cfmrG66VKgpCDa/WGB9Y5MNFcTGr5PVuvHvjRw
-         MFeewMMF6AbtfXGgwgRcQTaFzgfInsCW16O4jiM11ZfMjY0vc6rKu2hSx4+RGrSg5E
-         v/gTY8QlgJ44hTwExpkoQQhI8aRalkEV+nQsM0Pwna2pe+4QBR30VjlLO1TCMgx+zA
-         HpEEKDM/zfV2g==
+        b=eShUVvEjx9pzxhAFgf7uqPLbKQ2BoGzMZYdN2oTD4B1+g9wKnyGzK1eOAXopgPtcW
+         Wk6/TxWtgDvBP58ivKzDNQ2HvMYSmduY/SdgaW7fxd3276pxDiWNw8tth9sWzUML7n
+         3sAbSNekKxUapDGfQqQpRX5KAJ1TC77wJU9g6CkakhQy47v3AN/fOjQGfvko7eIn25
+         KsOOC+kl0c3ilKMFAuCXS62SOCq5i4iqmC9HdZxmf13oI14RcRtAk6c3/QqFYll+31
+         5TYj40ujrgUD/vDaPcj1kRlmnXCzAXp+uy10vQBFp+FqNVamwQ4n4aPSHn5vnr+2VF
+         pABGIzgswHbTg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1122AE66CBC;
-        Tue, 14 Mar 2023 21:40:18 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id EA155E524FF;
+        Tue, 14 Mar 2023 23:10:20 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v3 1/2] mesh: Fix uninitialized memory usage
+Subject: Re: [PATCH] Bluetooth: btsdio: fix use after free bug in btsdio_remove
+ due to unfinished work
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167883001806.25944.4701946410337864742.git-patchwork-notify@kernel.org>
-Date:   Tue, 14 Mar 2023 21:40:18 +0000
-References: <20230313231152.59147-1-brian.gix@gmail.com>
-In-Reply-To: <20230313231152.59147-1-brian.gix@gmail.com>
-To:     Brian Gix <brian.gix@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org, brian.gix@intel.com,
-        inga.stotland@intel.com
+Message-Id: <167883542095.4543.7797236411801708072.git-patchwork-notify@kernel.org>
+Date:   Tue, 14 Mar 2023 23:10:20 +0000
+References: <20230309080739.3714610-1-zyytlz.wz@163.com>
+In-Reply-To: <20230309080739.3714610-1-zyytlz.wz@163.com>
+To:     Zheng Wang <zyytlz.wz@163.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hackerzheng666@gmail.com, 1395428693sheep@gmail.com,
+        alex000young@gmail.com
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -58,21 +61,24 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluez.git (master)
-by Brian Gix <brian.gix@gmail.com>:
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 13 Mar 2023 16:11:51 -0700 you wrote:
-> When attempting to cancel an unknown Scan request structure must be
-> NULL initialized.
-> ---
->  mesh/manager.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu,  9 Mar 2023 16:07:39 +0800 you wrote:
+> In btsdio_probe, &data->work was bound with btsdio_work.In
+> btsdio_send_frame, it was started by schedule_work.
+> 
+> If we call btsdio_remove with an unfinished job, there may
+> be a race condition and cause UAF bug on hdev.
+> 
+> Fixes: ddbaf13e3609 ("[Bluetooth] Add generic driver for Bluetooth SDIO devices")
+> Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+> 
+> [...]
 
 Here is the summary with links:
-  - [BlueZ,v3,1/2] mesh: Fix uninitialized memory usage
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=5934f133d44a
-  - [BlueZ,v3,2/2] mesh: Loopback unprovisioned beacons
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=7c0fb2fefb6a
+  - Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work
+    https://git.kernel.org/bluetooth/bluetooth-next/c/f132c2d13088
 
 You are awesome, thank you!
 -- 
