@@ -2,55 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CC926BA364
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Mar 2023 00:10:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C1256BA366
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Mar 2023 00:10:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231239AbjCNXKZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 14 Mar 2023 19:10:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47944 "EHLO
+        id S231274AbjCNXK2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 14 Mar 2023 19:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjCNXKX (ORCPT
+        with ESMTP id S230190AbjCNXKY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 14 Mar 2023 19:10:23 -0400
+        Tue, 14 Mar 2023 19:10:24 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09FF136699;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A030D37702;
         Tue, 14 Mar 2023 16:10:22 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9BDC861A4D;
-        Tue, 14 Mar 2023 23:10:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 01411C433D2;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 350CA61A87;
+        Tue, 14 Mar 2023 23:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 20E87C433A4;
         Tue, 14 Mar 2023 23:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1678835421;
-        bh=3RW1LjUe9QdV4fvcdKvel7HMcg0PrtNvXvNC9faqtN0=;
+        bh=Y0PSkm58IIOZziuW7EzUa97Zrez1ej5mXtPbTp0dJLc=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=sxwn7HxWl4vX6OH3+nN5MSfK6/+P4tAOoduG9Wvfd3hLm4xLRedTKHluOsuXEzsbF
-         c2/jXdVcO5ZgZSm8mlika/PL6x4jPgIk9ZbbyTuqdaz28QwF+vL5/j9ieb3VhLc7j+
-         IiSL6e4OuMLFaLKHRx62KT1qLzapVh3jUARRyoz9WnPKaeOd8hJsXF2EHCqSyuuHTp
-         bHLxNsXLiIU28cDa3y1dfuFyTChQ4UzoBZ7NEkxLWQ4Ddn6aLdy9CxaKCFIwHhAqOz
-         m98WN2IRSIc8H/RgFgmQs76GW2jTUflApV+YCgbbnVOPS8QZOfXTutfJ/RFcTFVy3d
-         KvdYpWVWT+ZlQ==
+        b=Q5xN8aIwFXeW7MGimKYbTxfDB9RfS9bSDiVu7XA1MUDUslUdTFpH/1SLEM623NKnN
+         EfoTRLfqzbjLcSkgBhm2/3TsRFj79sI6P0JHaohg3xV7p/0/ObB5hFaftP+9eHCJzu
+         DkJVMTAdh8ZcIKzRAO2Euk3JuOK2aMo56PRao7PoedDMQGw9Xfd5VY4vJf6CmxbaL6
+         ubo9mvkfVLsyjP9/yC2WxJABGueMCiG3hbCyfgMGOd9CC8L45EcL8gQfNduA2iTQ70
+         /gqlpGPb9v1aJ72qQvuIVUP+W20YB6KzV+ufY6kcZbJa81G3UoPvrGQWIITEaxWiWb
+         0G19sPzRP+4/Q==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D785BE50D65;
-        Tue, 14 Mar 2023 23:10:20 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 08D05E52507;
+        Tue, 14 Mar 2023 23:10:21 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/4] Bluetooth: hci_ll: drop of_match_ptr for ID table
+Subject: Re: [PATCH RESEND] bluetooth: btbcm: Fix logic error in forming the
+ board name.
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167883542087.4543.16572103480151689650.git-patchwork-notify@kernel.org>
-Date:   Tue, 14 Mar 2023 23:10:20 +0000
-References: <20230311111354.251316-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230311111354.251316-1-krzysztof.kozlowski@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Message-Id: <167883542103.4543.14888292350332012679.git-patchwork-notify@kernel.org>
+Date:   Tue, 14 Mar 2023 23:10:21 +0000
+References: <20230224-btbcm-wtf-v1-1-98b56133a5b7@gmail.com>
+In-Reply-To: <20230224-btbcm-wtf-v1-1-98b56133a5b7@gmail.com>
+To:     Sasha Finkelstein via B4 Relay 
+        <devnull+fnkl.kernel.gmail.com@kernel.org>
 Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        sean.wang@mediatek.com, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com,
         linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org
+        stable@vger.kernel.org, fnkl.kernel@gmail.com
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -62,29 +61,24 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluetooth-next.git (master)
+This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Sat, 11 Mar 2023 12:13:51 +0100 you wrote:
-> The driver can match only via the DT table so the table should be always
-> used and the of_match_ptr does not have any sense (this also allows ACPI
-> matching via PRP0001, even though it might not be relevant here).
+On Fri, 10 Mar 2023 11:28:42 +0100 you wrote:
+> From: Sasha Finkelstein <fnkl.kernel@gmail.com>
 > 
->   drivers/bluetooth/hci_ll.c:769:34: error: ‘hci_ti_of_match’ defined but not used [-Werror=unused-const-variable=]
+> This patch fixes an incorrect loop exit condition in code that replaces
+> '/' symbols in the board name. There might also be a memory corruption
+> issue here, but it is unlikely to be a real problem.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Sasha Finkelstein <fnkl.kernel@gmail.com>
 > 
 > [...]
 
 Here is the summary with links:
-  - [1/4] Bluetooth: hci_ll: drop of_match_ptr for ID table
-    https://git.kernel.org/bluetooth/bluetooth-next/c/7bbc48103072
-  - [2/4] Bluetooth: btmrvl_sdio: mark OF related data as maybe unused
-    https://git.kernel.org/bluetooth/bluetooth-next/c/ab0fc9bd67ba
-  - [3/4] Bluetooth: hci_qca: mark OF related data as maybe unused
-    https://git.kernel.org/bluetooth/bluetooth-next/c/e93d2fbf47e2
-  - [4/4] Bluetooth: btmtkuart: mark OF related data as maybe unused
-    https://git.kernel.org/bluetooth/bluetooth-next/c/f19083c1bdff
+  - [RESEND] bluetooth: btbcm: Fix logic error in forming the board name.
+    https://git.kernel.org/bluetooth/bluetooth-next/c/3629e1ce7721
 
 You are awesome, thank you!
 -- 
