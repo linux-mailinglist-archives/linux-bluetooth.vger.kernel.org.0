@@ -2,51 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEB326BA368
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Mar 2023 00:10:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 271D96BA369
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Mar 2023 00:10:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230527AbjCNXK1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 14 Mar 2023 19:10:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47946 "EHLO
+        id S230101AbjCNXKa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 14 Mar 2023 19:10:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbjCNXKX (ORCPT
+        with ESMTP id S231144AbjCNXKY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 14 Mar 2023 19:10:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13F35367F7
-        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Mar 2023 16:10:22 -0700 (PDT)
+        Tue, 14 Mar 2023 19:10:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD39A2A6C2;
+        Tue, 14 Mar 2023 16:10:23 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A141861A7C
-        for <linux-bluetooth@vger.kernel.org>; Tue, 14 Mar 2023 23:10:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 04ADBC433EF;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 70514B81C1E;
+        Tue, 14 Mar 2023 23:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 154D7C433A1;
         Tue, 14 Mar 2023 23:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1678835421;
-        bh=KTDqeIR8HAU6iLvFXnhz5+bemUkmPO/ZLoumjwKMzEc=;
+        bh=Y1jhSl5t1yRVm3V2cFgzlR2isIydaRbBCbb6BWOJaAo=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Sif2jruNMqRKiHfFfB6OEahDyo2UnSidflwW8tF04RkWyV1KGqqGbmU6fO6y0LgxR
-         2zdt64jBPDDU1wHmc/0B37k1IvmqcWfDkKHD2J/8/9V9lSoM93Ii39jJGLzB7FTxza
-         VfB7Y9jMEU8g6BacCMJbwrtHsrK24xCCu22zu87a+KLdO8rFRuzbfpeXPPs/JjVIGL
-         LP1smacP0S8UqPC0rxVwRbKIEyWhAnL7Fqd0tXDC0ZQssj3eGh1L+GPk923kt1o61O
-         iYOnQcmeFn1PiVMwy2Up1EuRmWDbmQAEIfgR7FawSKDhGA5GRYmOi8wdDrffKQ/5iF
-         MwSCGWzmwhI9A==
+        b=iOM6W9t6T47DsH4QzF3dwMVb8wxdToWbGDk+1cIhSwCHTUZFut+TnglodwUcg4Aaj
+         y+28DddIDd0YQpFTfo9GlfNHkVmlp33gyQrS4pev5V+7n2ZQxjhtXRLEfwqU8G8Hz/
+         0HSDERZNBUvLRWhblWEGH8Xqr3QNW0OQigd2BhnoEfNQjBaBHStxhz9OtAaYZmHnbp
+         +BoNIQNmp0zfls7xjfnzGUHIyEr3DNno2fCOJ5tss6CXUECG6+CpgLTnwCDQy9tEBX
+         9Ivx1txiDyzmcrjZvjzm5nqEa9PKAhgw8at5uACM3Eg48R2HQlJ/Bepj0OYuWJulwb
+         rvQrUB42CXZaw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E1412E66CBC;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id F36B8E524FE;
         Tue, 14 Mar 2023 23:10:20 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: Improve support for Actions Semi ATS2851 based
- devices
+Subject: Re: [PATCH 3/8] Bluetooth: hci_ldisc: Fix tty_set_termios() return value
+ assumptions
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167883542091.4543.4466227373690842432.git-patchwork-notify@kernel.org>
+Message-Id: <167883542099.4543.9923542324087254222.git-patchwork-notify@kernel.org>
 Date:   Tue, 14 Mar 2023 23:10:20 +0000
-References: <20230310151410.2686458-1-rcheleguini@google.com>
-In-Reply-To: <20230310151410.2686458-1-rcheleguini@google.com>
-To:     Raul Cheleguini <rcheleguini@google.com>
-Cc:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org
+References: <20230309082035.14880-4-ilpo.jarvinen@linux.intel.com>
+In-Reply-To: <20230309082035.14880-4-ilpo.jarvinen@linux.intel.com>
+To:     =?utf-8?q?Ilpo_J=C3=A4rvinen_=3Cilpo=2Ejarvinen=40linux=2Eintel=2Ecom=3E?=@ci.codeaurora.org
+Cc:     linux-serial@vger.kernel.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, marcel@holtmann.org, johan.hedberg@gmail.com,
+        luiz.dentz@gmail.com, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -61,21 +64,19 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Fri, 10 Mar 2023 15:14:10 +0000 you wrote:
-> Add two more quirks to resume the device initialization and basic
-> operation as the device seems not to support "Read Transmit Power"
-> and "Set Extended Scan Parameters".
+On Thu,  9 Mar 2023 10:20:30 +0200 you wrote:
+> tty_set_termios() never returns anything else than 0. Make the debug
+> prints to look directly into the new termios instead to check CRTSCTS
+> state.
 > 
-> < HCI Command: LE Read Transmit Power (0x08|0x004b) plen 0
-> > HCI Event: Command Status (0x0f) plen 4
->       LE Read Transmit Power (0x08|0x004b) ncmd 1
->         Status: Unknown HCI Command (0x01)
-> 
-> [...]
+> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+> ---
+>  drivers/bluetooth/hci_ldisc.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 
 Here is the summary with links:
-  - Bluetooth: Improve support for Actions Semi ATS2851 based devices
-    https://git.kernel.org/bluetooth/bluetooth-next/c/2dc354d004ed
+  - [3/8] Bluetooth: hci_ldisc: Fix tty_set_termios() return value assumptions
+    https://git.kernel.org/bluetooth/bluetooth-next/c/dd41882582a9
 
 You are awesome, thank you!
 -- 
