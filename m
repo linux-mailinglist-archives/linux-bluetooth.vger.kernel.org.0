@@ -2,106 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7161F6BDCDE
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Mar 2023 00:25:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87CFD6BE17B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Mar 2023 07:45:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbjCPXYn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 16 Mar 2023 19:24:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44846 "EHLO
+        id S229560AbjCQGp5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Mar 2023 02:45:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229879AbjCPXYO (ORCPT
+        with ESMTP id S229621AbjCQGp4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 16 Mar 2023 19:24:14 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C704686A8
-        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Mar 2023 16:24:12 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id l13so3675111qtv.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Mar 2023 16:24:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679009052;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pLha6/yHyK0nMq2MoCx/jiK6HFosbPlSbrUaSOcurbs=;
-        b=VLLoaRyFGZNlYV+K+ytrFzAn0BYk+UN21aZ7BIZ/Ynmy9iE8y/oWBofRefitbd3Ahz
-         tpqcz/udwYCjKj7QsrvTbpKGy2kTI/8h/OH1A0fa/OPqsWQmk47Gpi39C8wLjc+hI/0U
-         TJ1tRulk0mcVyXM0N/HOmycDlURGQnj8v6TgzA8FyX6tXN1DKqSI+Vbtb36kDKT579uP
-         2+Fi/DSZFL3SOptb4G3/jlGK5CD13mQ35/OMqio5uiSChgEnquIsm2Fn3mXfQUnM6BXw
-         V9nEnIoh+pT33V+V5yt1Z4MSVUqRG0YiZFbaLlJhuljzy542n8+KI0PglelCmpl/7rXQ
-         9FsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679009052;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pLha6/yHyK0nMq2MoCx/jiK6HFosbPlSbrUaSOcurbs=;
-        b=DQoSkFNjf3qgMGktKRMgAcPMU0Mdtad5zxHiAJqHUFjNjEpxyq+MzIjiZf0XHgjoOH
-         jSE6Na8dTGlFqlNVi03pO2clRSLf0iZhCqasPa/InaPjDpbiYGRN2T28L5+WBo4rib9r
-         +qJPuNm4KOKsAwgjOkdnJQkN8pUDxLq/qjYvY2zqzFLAx7WyUDDi7a6F7k9iXy112TAP
-         EiH6lvhRA9tdlGU+XH+Q5XZMapqL81BqhQzOcVK30sd/KmR6WeVD8s1eETrRrnnsh3J1
-         Tmn72eA/SgwAtZn+SVxtfA0Nt/yFTMBmiiZpfU8+gnX5L/ODHuEWoeGv+fs2G+w25nct
-         XREg==
-X-Gm-Message-State: AO0yUKUJ8cnVsygACb51DpMI4C30qYhzLadISnpeU3jJ6E+dehIhjiq5
-        bZASPNgrczjcKVbTvjWMUYksHrMzqbs=
-X-Google-Smtp-Source: AK7set+9O67vtIjmay/k7/sFbzwrEjuxsML+d4D4EiwwCw5We7UCYs3fmTK9QkBYMtXZmZu+2w2D7w==
-X-Received: by 2002:a05:622a:104d:b0:3ae:189c:7455 with SMTP id f13-20020a05622a104d00b003ae189c7455mr9798624qte.47.1679009051786;
-        Thu, 16 Mar 2023 16:24:11 -0700 (PDT)
-Received: from [172.17.0.2] ([104.45.202.162])
-        by smtp.gmail.com with ESMTPSA id p17-20020a374211000000b007428e743508sm487171qka.70.2023.03.16.16.24.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 16:24:11 -0700 (PDT)
-Message-ID: <6413a51b.370a0220.20a9e.267a@mx.google.com>
-Date:   Thu, 16 Mar 2023 16:24:11 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============7569005672382717825=="
+        Fri, 17 Mar 2023 02:45:56 -0400
+Received: from sragenkab.go.id (mail.sragenkab.go.id [103.172.109.4])
+        by lindbergh.monkeyblade.net (Postfix) with SMTP id 6FB86A6773
+        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Mar 2023 23:45:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sragenkab.go.id;
+         h=mime-version:content-type:content-transfer-encoding:date:from
+        :to:subject:reply-to:message-id; q=dns/txt; s=dkim1; bh=QGcIAmD5
+        O/Y9qXzDV8MxyimbsW3+rMaQ/kz75GzBHbk=; b=Z0yg33xcX4Qjrc7pvVfGEOTp
+        r31dGCGrjOSCvi9pcKhBSAyBV960FiyUFfZZ4156c6sUHhljM13liysHzosSpt4I
+        PbByuag5S/qy6RQGW9TrTsvicevlrgchi5huDskO+Ycs2iNnQBn7A5t2NydfDI+H
+        G4cAWR3l3tn8bbDCHhsySnvRDnnZ6hPZseWNhNTFhLzM3ldJfjERf/ov7n4R3Xm8
+        cZAbxTw30MHLvF3TTvPLbP2zwSEt3XmhRr8Dw9ujtJ+8AuvSouramMhjygrUxwox
+        NMyLcGIWDpRL7brddT88o7e/BOlC50m86WSpz0BybdX3OeEP+bXVuZ2ywCvq3g==
+Received: (qmail 63373 invoked from network); 14 Mar 2023 19:48:30 -0000
+Received: from localhost (HELO mail2.sragenkab.go.id) (127.0.0.1)
+  by localhost with SMTP; 14 Mar 2023 19:48:30 -0000
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, inga.stotland@gmail.com
-Subject: RE: [BlueZ,v2,1/2] tools/mesh-cfgclient: Prevent storing duplicate models
-In-Reply-To: <20230316213312.159370-1-inga.stotland@gmail.com>
-References: <20230316213312.159370-1-inga.stotland@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 14 Mar 2023 12:48:30 -0700
+From:   Ibrahim Tafa <jurnalsukowati@sragenkab.go.id>
+To:     undisclosed-recipients:;
+Subject: LOAN OPPORTUNITY AT LOW-INTEREST RATE/
+Reply-To: <ibrahimtafa@abienceinvestmentsfze.com>
+Mail-Reply-To: <ibrahimtafa@abienceinvestmentsfze.com>
+Message-ID: <e6b53e210599a9a726b758f304664f9b@sragenkab.go.id>
+X-Sender: jurnalsukowati@sragenkab.go.id
+User-Agent: Roundcube Webmail/0.8.1
+X-Spam-Status: No, score=3.1 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+        SPF_PASS,SUBJ_ALL_CAPS,UNDISC_MONEY,URIBL_BLOCKED autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============7569005672382717825==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=730979
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.09 seconds
-GitLint                       PASS      0.71 seconds
-BuildEll                      PASS      27.08 seconds
-BluezMake                     PASS      849.17 seconds
-MakeCheck                     PASS      11.94 seconds
-MakeDistcheck                 PASS      148.63 seconds
-CheckValgrind                 PASS      245.05 seconds
-CheckSmatch                   PASS      327.65 seconds
-bluezmakeextell               PASS      98.21 seconds
-IncrementalBuild              PASS      1415.53 seconds
-ScanBuild                     PASS      1023.62 seconds
 
 
+-- 
+Greetings,
+   I am contacting you based on the Investment/Loan opportunity for 
+companies in need of financing a project/business, We have developed a 
+new method of financing that doesn't take long to receive financing from 
+our clients.
+    If you are looking for funds to finance your project/Business or if 
+you are willing to work as our agent in your country to find clients in 
+need of financing and earn commissions, then get back to me for more 
+details.
 
----
 Regards,
-Linux Bluetooth
-
-
---===============7569005672382717825==--
+Ibrahim Tafa
+ABIENCE INVESTMENT GROUP FZE, United Arab Emirates
