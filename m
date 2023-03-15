@@ -2,54 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8161C6BBB08
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Mar 2023 18:37:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A85946BBB04
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 Mar 2023 18:37:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232417AbjCORhL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 15 Mar 2023 13:37:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44728 "EHLO
+        id S232391AbjCORhJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 15 Mar 2023 13:37:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231613AbjCORhH (ORCPT
+        with ESMTP id S231393AbjCORhH (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 15 Mar 2023 13:37:07 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856ED233F3;
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39373233C2;
         Wed, 15 Mar 2023 10:37:06 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id d22-20020a9d5e16000000b0069b5252ced7so828318oti.13;
+Received: by mail-ot1-x332.google.com with SMTP id d22-20020a9d5e16000000b0069b5252ced7so828338oti.13;
         Wed, 15 Mar 2023 10:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112; t=1678901825;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Pi5SJcEKPHpeQOw0+UlGmmDXXROx+75oT2f8FTNnNag=;
-        b=qPC4gZYCxPAdomO7x2ePq6XD9csKWTlB7N6G/jLz48l0dY4EJY8cSHrew/nHQHFt40
-         WxIAs1WMQ3LsOsd+WLyQ4m1haS+rq0layySkB2ZmI+mAfzdTFLPdkmN7+VJ4TcESvbMt
-         VPWTRSzaz8A3/IXPSfMeEq/9RgOjgaW05hiO9P7Us2Lc0r7arNW50xQrHt2uhhCcY0fN
-         XvTMsl7KPWZQemToXDQ/5d1mRlUcwsKXkIHbv9Yfq9NUdbSAGe9MStCwuqc1XYXDPVcN
-         SdYzo931LEEBV1Z6Ru04Im76Bd6t1dovo/7mhJDZnUEIAMj7PMpZRbomrecoAup09/cF
-         RFVA==
+        bh=x/9Vp2rjSvwwPz/8jyevs3pjUOOzExCmwYfnGqWJt1o=;
+        b=DVXeSurI2s0jk03wKyF78GKCPeNlKbbH8KqxStbUCbohz5DxG2rYDV5LDCsw/A/qoM
+         jHwzZJn7Uzh14SREUZvVI7+oY5Wa5SVd2c39/jb9oeoBsowrDUpJ9Kysls0Kjx71OC21
+         8TUcIJ9a0zb+rzyeo7xoD9cqXnJeIeQuMgJWHNCgMwhm2+q0VnTZ2eI3wuRNnOoWhyR/
+         njVj3Jb8e88WhHrgUsPhhhFmubxYDmOtykekkYfvvC1fdUJgUoJY1oufHtwrbDIvv2Tb
+         HsxhywJWe964l5iLh5uE7M3VfiQ57AjvkFr4ou2GQ5eRYFsJ9F79C0+b4MNt75hkUj0F
+         oJ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112; t=1678901825;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Pi5SJcEKPHpeQOw0+UlGmmDXXROx+75oT2f8FTNnNag=;
-        b=YhjvtguBqH/vob4ILfZ51smzR5O57DfnjK/vNeVS8182325TaXFvPQ8tKRPA1tLoio
-         P8rBEIgmiQiwggOoYmyCv2FPg1E2eFKA48+sHomC6AH98ghVNzfC3Y8xhCn2E/WTWDkc
-         mD8ImLmN608MK23/qTheoeWms1gr2af2Uc532qG2lAUO07+Xpq+5ovgGyBbPX/Eka3BW
-         +fTY6CsgcuXjtqqz/kZaELOiGhYRVp/fB8Q69ZjTycy6yQE2Yb6kfR2fS8XUXmPbStPO
-         8OnjkyU/JQoGGCcbRS+CA8mfgnQrbhEXFAEa3W7Dc1Lf4jOryyiHsVj7Hyea1gbPSfFK
-         QABA==
-X-Gm-Message-State: AO0yUKXde+C0IQhJ58VIcaXMJEIk05uRhTEpcQHkI0ORDgSIWeAibkv5
-        4gwn8glHLsY+FWOzDYKZGnxOzdMNq3Q=
-X-Google-Smtp-Source: AK7set+sx5nxxFxUnhUxX2uYiMEekshtg15WzBs5KwTRHPbKUletwNKGwb4nm2kN6q4jEk2xLohDmA==
-X-Received: by 2002:a9d:19c2:0:b0:694:7e44:d4b1 with SMTP id k60-20020a9d19c2000000b006947e44d4b1mr17560353otk.9.1678901824877;
-        Wed, 15 Mar 2023 10:37:04 -0700 (PDT)
+        bh=x/9Vp2rjSvwwPz/8jyevs3pjUOOzExCmwYfnGqWJt1o=;
+        b=1Nax9f1w8XvynXMbNhBXWZrQXuDRTPdBWx8R3zF5hYb+VrR/wynXdgh4ZnJiAEt8/z
+         +X+9GV2y2enGLv03F2jcuSKchM+SLJjj2FLw5Q1Eb/9KYwMPgKRPTT79RqolrsE3P9e9
+         JO3j6CdcgUsIUJUvhCPpbL1fpInXJ89VUnYOZm0lEKaF2MUZOzkWOCqabIvptbg/81c2
+         LKrXq0PF0/R6qkXlGp1do6VDENEmym0ZvBp5uJnqJ4NGshWt5pzc2c+po8BCQbqMSSbQ
+         hDeQ2PMvZ/ggfQiJ20xz2ol8nPOtHJETJSR7vri661rQfHIlpijfpaddrZMLr9u9UbhP
+         Qx+w==
+X-Gm-Message-State: AO0yUKWjcuUHHAEtyaviatzJHvylqsd9fCaYK723ID4m71J1kLkLiZB+
+        QGO/uz9nmLaiPhqHvUpTxiBzfzjOHLk=
+X-Google-Smtp-Source: AK7set89mOu5hazfJAwp3mKSvz1N/coT+ZLHY4Tb4tHaZS7gYI1pxVxb711XbbZoXjSpu0zYcXR3Wg==
+X-Received: by 2002:a9d:620e:0:b0:68d:6fa6:19ba with SMTP id g14-20020a9d620e000000b0068d6fa619bamr8928487otj.9.1678901825420;
+        Wed, 15 Mar 2023 10:37:05 -0700 (PDT)
 Received: from localhost.localdomain (76-244-6-13.lightspeed.rcsntx.sbcglobal.net. [76.244.6.13])
         by smtp.gmail.com with ESMTPSA id a23-20020a9d3e17000000b0068abc8e786fsm2562044otd.10.2023.03.15.10.37.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 10:37:04 -0700 (PDT)
+        Wed, 15 Mar 2023 10:37:05 -0700 (PDT)
 From:   Chris Morgan <macroalpha82@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     linux-rockchip@lists.infradead.org, devicetree@vger.kernel.org,
@@ -57,9 +57,9 @@ Cc:     linux-rockchip@lists.infradead.org, devicetree@vger.kernel.org,
         johan.hedberg@gmail.com, marcel@holtmann.org, heiko@sntech.de,
         krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
         Chris Morgan <macromorgan@hotmail.com>
-Subject: [PATCH 2/3 V5] Bluetooth: hci_h5: btrtl: Add support for RTL8821CS
-Date:   Wed, 15 Mar 2023 12:36:56 -0500
-Message-Id: <20230315173657.28692-3-macroalpha82@gmail.com>
+Subject: [PATCH 3/3 V5] arm64: dts: rockchip: Update compatible for bluetooth
+Date:   Wed, 15 Mar 2023 12:36:57 -0500
+Message-Id: <20230315173657.28692-4-macroalpha82@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230315173657.28692-1-macroalpha82@gmail.com>
 References: <20230315173657.28692-1-macroalpha82@gmail.com>
@@ -77,37 +77,26 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Chris Morgan <macromorgan@hotmail.com>
 
-RTL8821CS is a WiFi + Bluetooth combo chip from Realtek that provides
-WiFi A/B/G/N/AC over an SDIO interface and Bluetooth 4.2 over a UART
-interface.
-
-Note that the firmware this was tested with was firmware version
-0x75b8f098.
+Update the compatible for the Realtek RTL8821CS bluetooth node.
 
 Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
 ---
- drivers/bluetooth/btrtl.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index 69c3fe649ca7..72947d319fa6 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -128,6 +128,14 @@ static const struct id_table ic_id_table[] = {
- 	  .fw_name  = "rtl_bt/rtl8821c_fw.bin",
- 	  .cfg_name = "rtl_bt/rtl8821c_config" },
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi
+index 41262a69d33e..ad43fa199ca5 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi
+@@ -716,7 +716,7 @@ &uart1 {
+ 	status = "okay";
  
-+	/* 8821CS */
-+	{ IC_INFO(RTL_ROM_LMP_8821A, 0xc, 0x8, HCI_UART),
-+	  .config_needed = true,
-+	  .has_rom_version = true,
-+	  .has_msft_ext = true,
-+	  .fw_name  = "rtl_bt/rtl8821cs_fw.bin",
-+	  .cfg_name = "rtl_bt/rtl8821cs_config" },
-+
- 	/* 8761A */
- 	{ IC_INFO(RTL_ROM_LMP_8761A, 0xa, 0x6, HCI_USB),
- 	  .config_needed = false,
+ 	bluetooth {
+-		compatible = "realtek,rtl8821cs-bt";
++		compatible = "realtek,rtl8821cs-bt", "realtek,rtl8723bs-bt";
+ 		device-wake-gpios = <&gpio4 4 GPIO_ACTIVE_HIGH>;
+ 		enable-gpios = <&gpio4 3 GPIO_ACTIVE_HIGH>;
+ 		host-wake-gpios = <&gpio4 5 GPIO_ACTIVE_HIGH>;
 -- 
 2.34.1
 
