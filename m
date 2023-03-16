@@ -2,117 +2,195 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 749386BCC21
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Mar 2023 11:11:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33A396BCCBA
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Mar 2023 11:26:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230135AbjCPKLu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 16 Mar 2023 06:11:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33188 "EHLO
+        id S229608AbjCPK03 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 16 Mar 2023 06:26:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbjCPKLq (ORCPT
+        with ESMTP id S231140AbjCPK0I (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 16 Mar 2023 06:11:46 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D243AB9516
-        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Mar 2023 03:11:44 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-54161af1984so10793957b3.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 16 Mar 2023 03:11:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678961504;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DtSR8peTag+7FVObqwQG2UIK8AgoJoOOD5xOkww8fUg=;
-        b=Vqx1tPXZl7slipqjTj/RBU03HLDX+Kopxph+y1OCZLR+YOkoC9zMefkuqZfeoeoDi4
-         53pmTJmQKGEuof4fKjFvCwPBTfr7Bxd+NMNd6+//qDGXx7ZFPdj5lCNxadH3EI6asJpG
-         XpV66FfgOfNkrw//e6MPe8i+rt4ZU1o2rTTo+xa15oFO4V8alx/A8VY45iIniW+HoFWI
-         iJGcewU4inPIZWjZmJLBIInzScDWnXN/ACjC0c5biu4gwF8W7YbVIMFgXclrmynV+mQw
-         //62v7IwELmwLpPvCEDz7asq3imk9B+3F8QA6QMCPDBlDTrEl2IKQEZL9ZMZnQpwaYsU
-         CyAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678961504;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DtSR8peTag+7FVObqwQG2UIK8AgoJoOOD5xOkww8fUg=;
-        b=ZXzlO0jd5R32kkp93Lsv5LDwH7v/MZYhOaZbVR6oNXiVMvy55NXUykJA+o/M8TWcOv
-         5Q77qBclBK3WlKraZ0uMQUvVb6QJc6XbR3/cV4wV0FgdnSjRacdqdch38dDAQOyIbfIO
-         0sLXXKFvd18yUWNIPEFpMB+055p3lDzZHXWScF4gHjSHejQdKQLG8vGM88bTJMLfvkFs
-         tCN6vbiS0u4ewvqBGCML5dTlKuqB5Se2quR+4es7tx5Y8iIwIAMKkOeAeSZHitHf2Yll
-         sMyN6Nzms2rbNWHuizqb6hFLuWSDCPzg8Hd9g5GijmHSD4r+uirNsuscT7aqUeZAkBsy
-         e+Xg==
-X-Gm-Message-State: AO0yUKVc6tvRhP9zdaKJz8thW4QioKRlhYlu+tHU+EMnwH4oBgum4yta
-        7RP5r6VtEgcWMxPOfPrFJHN/Xee7Le187MDT8RFPbbBagB2sKhy36LDA09oAvAFREPezi0yG5Fr
-        Xn37Oe2aFZucIoTMiJ+ENHOfA2lbXuyk15t+Z3AdazGUKiLosqPMJNr5M7NGz8FYiNDYT4gte/w
-        y5AtLWsJ/gj8k=
-X-Google-Smtp-Source: AK7set+9Pv9ZTtKhvmWS/BG19Gkw6tJBJ4CR76H3uLrPj1yEY91L+ij06g5L1Yx+fy81h4n033fRdaJ4UZbF1eS/vg==
-X-Received: from howardchung-p920.tpe.corp.google.com ([2401:fa00:1:17:5470:81fd:9c7f:513a])
- (user=howardchung job=sendgmr) by 2002:a25:9f0e:0:b0:b3b:fb47:8534 with SMTP
- id n14-20020a259f0e000000b00b3bfb478534mr7994759ybq.5.1678961503826; Thu, 16
- Mar 2023 03:11:43 -0700 (PDT)
-Date:   Thu, 16 Mar 2023 18:11:38 +0800
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.40.0.rc2.332.ga46443480c-goog
-Message-ID: <20230316181112.v3.1.I9113bb4f444afc2c5cb19d1e96569e01ddbd8939@changeid>
-Subject: [PATCH v3] Bluetooth: mgmt: Fix MGMT add advmon with RSSI command
-From:   Howard Chung <howardchung@google.com>
-To:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org
-Cc:     chromeos-bluetooth-upstreaming@chromium.org,
-        Howard Chung <howardchung@google.com>,
-        Archie Pusaka <apusaka@chromium.org>,
-        Brian Gix <brian.gix@intel.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Paolo Abeni <pabeni@redhat.com>, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Thu, 16 Mar 2023 06:26:08 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A73A5A6EB;
+        Thu, 16 Mar 2023 03:25:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678962350; x=1710498350;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=vOeMo0XFKfqKWdYGjD9rANGbrJFxVjhdVEjJG6ytNag=;
+  b=Lv0MUJe12151X4TtE76LJi51B0Ce5HlKI0v33TiHwRmtM5IZdOrsGtSM
+   qoPfY75mrUQd/natbgl1AszOEpu90wihftbqGK/SIR2WdU4KH0XD01jfs
+   TM9ItgjICrjaQj6Oy9X4Tn5/7gS3EXJjJEJUmiOIlCJpXGpBQJI+6Jmee
+   Nb2/dokIAYmNoQfAk2HZxY3tTnYyPowDCxMCu8lZwCzpRG4Ki/Lm2NBOS
+   EcqYOtsdC5rSdBxuoo5YDzqhgGvulL+hKHGJ2pNYXmOpk6pWy916GXqVB
+   9WW7phvGy/5OA/Zz9gCaSj6Q6y6ZxEVk3fN/BWbNf9YJ75opdjle4RYN8
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10650"; a="326301435"
+X-IronPort-AV: E=Sophos;i="5.98,265,1673942400"; 
+   d="scan'208";a="326301435"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2023 03:24:32 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10650"; a="790223570"
+X-IronPort-AV: E=Sophos;i="5.98,265,1673942400"; 
+   d="scan'208";a="790223570"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by fmsmga002.fm.intel.com with ESMTP; 16 Mar 2023 03:24:28 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pckmZ-0008TC-27;
+        Thu, 16 Mar 2023 10:24:27 +0000
+Date:   Thu, 16 Mar 2023 18:23:42 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     hildawu@realtek.com, marcel@holtmann.org
+Cc:     oe-kbuild-all@lists.linux.dev, johan.hedberg@gmail.com,
+        luiz.dentz@gmail.com, davem@davemloft.net, edumazet@google.com,
+        kuba@kernel.org, pabeni@redhat.com,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, apusaka@chromium.org,
+        mmandlik@google.com, yinghsu@chromium.org, max.chou@realtek.com,
+        alex_lu@realsil.com.cn, kidman@realtek.com
+Subject: Re: [PATCH] Bluetooth: msft: Extended monitor tracking by address
+ filter
+Message-ID: <202303161807.AcfCGsAP-lkp@intel.com>
+References: <20230316090729.14572-1-hildawu@realtek.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230316090729.14572-1-hildawu@realtek.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-The MGMT command: MGMT_OP_ADD_ADV_PATTERNS_MONITOR_RSSI uses variable
-length argument. This causes host not able to register advmon with rssi.
+Hi,
 
-This patch has been locally tested by adding monitor with rssi via
-btmgmt on a kernel 6.1 machine.
+Thank you for the patch! Perhaps something to improve:
 
-Reviewed-by: Archie Pusaka <apusaka@chromium.org>
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Signed-off-by: Howard Chung <howardchung@google.com>
----
+[auto build test WARNING on bluetooth/master]
+[also build test WARNING on bluetooth-next/master]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Changes in v3:
-- Moved commit-notes to commit message
-- Fixed a typo
+url:    https://github.com/intel-lab-lkp/linux/commits/hildawu-realtek-com/Bluetooth-msft-Extended-monitor-tracking-by-address-filter/20230316-170950
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth.git master
+patch link:    https://lore.kernel.org/r/20230316090729.14572-1-hildawu%40realtek.com
+patch subject: [PATCH] Bluetooth: msft: Extended monitor tracking by address filter
+config: riscv-allmodconfig (https://download.01.org/0day-ci/archive/20230316/202303161807.AcfCGsAP-lkp@intel.com/config)
+compiler: riscv64-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/cee47af4605a9e5cba61be1ab1d92e8748d92e1e
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review hildawu-realtek-com/Bluetooth-msft-Extended-monitor-tracking-by-address-filter/20230316-170950
+        git checkout cee47af4605a9e5cba61be1ab1d92e8748d92e1e
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=riscv olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=riscv SHELL=/bin/bash net/
 
-Changes in v2:
-- Fixed git user name
-- Included commit notes for the test step.
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303161807.AcfCGsAP-lkp@intel.com/
 
- net/bluetooth/mgmt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+All warnings (new ones prefixed by >>):
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 39589f864ea7..249dc6777fb4 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -9357,7 +9357,8 @@ static const struct hci_mgmt_handler mgmt_handlers[] = {
- 	{ add_ext_adv_data,        MGMT_ADD_EXT_ADV_DATA_SIZE,
- 						HCI_MGMT_VAR_LEN },
- 	{ add_adv_patterns_monitor_rssi,
--				   MGMT_ADD_ADV_PATTERNS_MONITOR_RSSI_SIZE },
-+				   MGMT_ADD_ADV_PATTERNS_MONITOR_RSSI_SIZE,
-+						HCI_MGMT_VAR_LEN },
- 	{ set_mesh,                MGMT_SET_MESH_RECEIVER_SIZE,
- 						HCI_MGMT_VAR_LEN },
- 	{ mesh_features,           MGMT_MESH_READ_FEATURES_SIZE },
+   net/bluetooth/msft.c: In function 'msft_add_monitor_sync':
+>> net/bluetooth/msft.c:521:50: warning: variable 'rp' set but not used [-Wunused-but-set-variable]
+     521 |         struct msft_rp_le_monitor_advertisement *rp;
+         |                                                  ^~
+
+
+vim +/rp +521 net/bluetooth/msft.c
+
+   507	
+   508	static int msft_add_monitor_sync(struct hci_dev *hdev,
+   509					 struct adv_monitor *monitor)
+   510	{
+   511		struct msft_cp_le_monitor_advertisement *cp;
+   512		struct msft_le_monitor_advertisement_pattern_data *pattern_data;
+   513		struct msft_le_monitor_advertisement_pattern *pattern;
+   514		struct adv_pattern *entry;
+   515		size_t total_size = sizeof(*cp) + sizeof(*pattern_data);
+   516		ptrdiff_t offset = 0;
+   517		u8 pattern_count = 0;
+   518		struct sk_buff *skb;
+   519		int err;
+   520		struct msft_monitor_advertisement_handle_data *handle_data;
+ > 521		struct msft_rp_le_monitor_advertisement *rp;
+   522	
+   523		if (!msft_monitor_pattern_valid(monitor))
+   524			return -EINVAL;
+   525	
+   526		list_for_each_entry(entry, &monitor->patterns, list) {
+   527			pattern_count++;
+   528			total_size += sizeof(*pattern) + entry->length;
+   529		}
+   530	
+   531		cp = kmalloc(total_size, GFP_KERNEL);
+   532		if (!cp)
+   533			return -ENOMEM;
+   534	
+   535		cp->sub_opcode = MSFT_OP_LE_MONITOR_ADVERTISEMENT;
+   536		cp->rssi_high = monitor->rssi.high_threshold;
+   537		cp->rssi_low = monitor->rssi.low_threshold;
+   538		cp->rssi_low_interval = (u8)monitor->rssi.low_threshold_timeout;
+   539		cp->rssi_sampling_period = monitor->rssi.sampling_period;
+   540	
+   541		cp->cond_type = MSFT_MONITOR_ADVERTISEMENT_TYPE_PATTERN;
+   542	
+   543		pattern_data = (void *)cp->data;
+   544		pattern_data->count = pattern_count;
+   545	
+   546		list_for_each_entry(entry, &monitor->patterns, list) {
+   547			pattern = (void *)(pattern_data->data + offset);
+   548			/* the length also includes data_type and offset */
+   549			pattern->length = entry->length + 2;
+   550			pattern->data_type = entry->ad_type;
+   551			pattern->start_byte = entry->offset;
+   552			memcpy(pattern->pattern, entry->value, entry->length);
+   553			offset += sizeof(*pattern) + entry->length;
+   554		}
+   555	
+   556		skb = __hci_cmd_sync(hdev, hdev->msft_opcode, total_size, cp,
+   557				     HCI_CMD_TIMEOUT);
+   558	
+   559		if (IS_ERR_OR_NULL(skb)) {
+   560			kfree(cp);
+   561			return PTR_ERR(skb);
+   562		}
+   563	
+   564		err = msft_le_monitor_advertisement_cb(hdev, hdev->msft_opcode,
+   565						       monitor, skb);
+   566		if (!err) {
+   567			rp = (struct msft_rp_le_monitor_advertisement *)skb->data;
+   568			handle_data = msft_find_handle_data(hdev, monitor->handle,
+   569							    true);
+   570			if (handle_data) {
+   571				handle_data->rssi_high   = cp->rssi_high;
+   572				handle_data->rssi_low    = cp->rssi_low;
+   573				handle_data->rssi_low_interval    =
+   574							cp->rssi_low_interval;
+   575				handle_data->rssi_sampling_period =
+   576							cp->rssi_sampling_period;
+   577			}
+   578		}
+   579		kfree(cp);
+   580	
+   581		return err;
+   582	}
+   583	
+
 -- 
-2.40.0.rc2.332.ga46443480c-goog
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
