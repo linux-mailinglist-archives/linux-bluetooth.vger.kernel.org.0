@@ -2,82 +2,105 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA70F6BEE96
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Mar 2023 17:40:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 714D26BEEBC
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Mar 2023 17:46:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230196AbjCQQkY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 17 Mar 2023 12:40:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36512 "EHLO
+        id S229981AbjCQQqD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 17 Mar 2023 12:46:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230123AbjCQQkX (ORCPT
+        with ESMTP id S230131AbjCQQpl (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 17 Mar 2023 12:40:23 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60B1316ACA
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Mar 2023 09:40:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1F54CB8264E
-        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Mar 2023 16:40:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D2EFCC433EF;
-        Fri, 17 Mar 2023 16:40:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679071218;
-        bh=gkrOy6KNBDUaVxvNOIsbrw5r2oDFc1zScUm1m2aLdIo=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=onZ4Fi2wVNdAYU82PQhrID8ISbTwtpENJHaGI+qhVpEQJ9JWFtdpXC93Bt2Nv7Tas
-         7qftvSpPQxCmaUAK8KDeRgXT6+OCCcNVYL681zoCjV7r+IXZnb1yEDSnal+v5a925R
-         hGdb5OxHQ05VpLBKi9mjY6UrL2E+EFhkws5FFGW7fvTzZs3c4pvNuEMpHqfDXgxhGc
-         SFStUdmwJ0zr0XwEYLL2k79vQYG7Oprl7ZMnb3NBe4pbhSxGIGh1m0ZNRR1qCrXy1p
-         gmXFfxEgRQcBKWKs75L8xB0X3+YUfZD6hX9FsawBDCZr/88xsCuU6MTN/LN6pSaMMR
-         EBIu2xBls9E4Q==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id AEA31E66CBF;
-        Fri, 17 Mar 2023 16:40:18 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] shared/gatt-client: Fix not creating a request for
- notifications
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <167907121871.10682.14358175544691498884.git-patchwork-notify@kernel.org>
-Date:   Fri, 17 Mar 2023 16:40:18 +0000
-References: <20230316193634.1195948-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230316193634.1195948-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
+        Fri, 17 Mar 2023 12:45:41 -0400
+Received: from out-20.smtp.github.com (out-20.smtp.github.com [192.30.252.203])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF5483D09B
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Mar 2023 09:45:38 -0700 (PDT)
+Received: from github.com (hubbernetes-node-b43ed3a.va3-iad.github.net [10.48.201.107])
+        by smtp.github.com (Postfix) with ESMTPA id EC01DE173A
+        for <linux-bluetooth@vger.kernel.org>; Fri, 17 Mar 2023 09:45:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2014; t=1679071538;
+        bh=RLE1Bdx1f0tIKVg7FWwTqH0ymzhWPP+idOdIZwJ0xdg=;
+        h=Date:From:To:Subject:From;
+        b=ns1u7Vv+htZ/GtDBsoVJnbER8EjYx7FBs79p2aaas9Yqr9esxWkOPaLlED95WLn7C
+         akUOY6vhat5Sk91WYLIJ00CfpmmAdfUkSzhR/mbtMtBCznkJvRhZ51mEd3SGA+Otjx
+         tkXN19eCpYO3Z5cF0ZwzC7p70XZvvO3HPDCUtvTw=
+Date:   Fri, 17 Mar 2023 09:45:37 -0700
+From:   Pauli Virtanen <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/806230-39260c@github.com>
+Subject: [bluez/bluez] 306a80: shared/gatt-client: Fix not creating a request
+ for...
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 306a8083ad19459136cb46b7ec7fb27b070fb118
+      https://github.com/bluez/bluez/commit/306a8083ad19459136cb46b7ec7fb27b070fb118
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2023-03-17 (Fri, 17 Mar 2023)
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M src/shared/gatt-client.c
 
-On Thu, 16 Mar 2023 12:36:34 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> Notifications were using bt_att_send directly instead of
-> bt_gatt_client_write_value thus it wouldn't create a request which
-> causes the instance to not be able to track it which in turn may cause
-> the client to trigger its idle callback too early.
-> 
-> [...]
+  Log Message:
+  -----------
+  shared/gatt-client: Fix not creating a request for notifications
 
-Here is the summary with links:
-  - [BlueZ] shared/gatt-client: Fix not creating a request for notifications
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=306a8083ad19
+Notifications were using bt_att_send directly instead of
+bt_gatt_client_write_value thus it wouldn't create a request which
+causes the instance to not be able to track it which in turn may cause
+the client to trigger its idle callback too early.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Fixes: https://github.com/bluez/bluez/issues/490
 
 
+  Commit: 28422cd231196037ae7d52f8803ff282482c607e
+      https://github.com/bluez/bluez/commit/28422cd231196037ae7d52f8803ff282482c607e
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2023-03-17 (Fri, 17 Mar 2023)
+
+  Changed paths:
+    M profiles/audio/transport.c
+
+  Log Message:
+  -----------
+  transport: add CIG/CIS/PHY properties, don't show unset QoS properties
+
+Add CIG, CIS, and PHY properties to BAP transport.  The other QoS
+properties are there, and these may also be useful to clients, e.g.  to
+manage CIG/CIS allocation as client.
+
+Hide transport QoS properties when they are not configured.
+
+
+  Commit: 39260c3cfa056321feaf1d49fe8db92e17b386f0
+      https://github.com/bluez/bluez/commit/39260c3cfa056321feaf1d49fe8db92e17b386f0
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2023-03-17 (Fri, 17 Mar 2023)
+
+  Changed paths:
+    M doc/media-api.txt
+
+  Log Message:
+  -----------
+  doc: describe new ISO Transport properties
+
+Document the currently undocumented transport QoS properties.
+
+
+Compare: https://github.com/bluez/bluez/compare/806230e4fda7...39260c3cfa05
