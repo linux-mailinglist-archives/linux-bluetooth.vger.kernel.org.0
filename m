@@ -2,60 +2,57 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 183ED6C651F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Mar 2023 11:32:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C331F6C655E
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Mar 2023 11:41:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231308AbjCWKcl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 Mar 2023 06:32:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46116 "EHLO
+        id S229470AbjCWKl5 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 Mar 2023 06:41:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230459AbjCWKcL (ORCPT
+        with ESMTP id S231209AbjCWKla (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 Mar 2023 06:32:11 -0400
+        Thu, 23 Mar 2023 06:41:30 -0400
 Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2846E1C33F
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:29:04 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id eh3so84268131edb.11
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:29:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 469EC3B0CC
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:38:40 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id h8so84354592ede.8
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:38:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=streamunlimited.com; s=google; t=1679567342;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qyszvu/uUvUultdr5LryrAA3EmGp70fEi+2Bwj0O3p4=;
-        b=GMFSl2KJbNG9p340hRgtA+LG65TJFa0rQWS5qFBAsJEm4m/yuSVBkMHzac3i1d38Fq
-         DZ7yxDsy1k8MFGg/+goufuuT8o6AnXdB6Jm1UmcqARKS2n6Kgt7VF5D4KpIpEXziywv/
-         HWkPmXagBRyU0qiwxMSjSVBHijjYRBiqZPZ1Q=
+        d=streamunlimited.com; s=google; t=1679567918;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kee+3n1RrsPBTsD+CrAHR1FBqgQq4iOdVLGKQPr0qXA=;
+        b=WNrDksroZNi2Nh/ZVMARskZau+Jy/PzENbtXWlb0Ib9bzeImJSYJqbbRYJHzvHUQC2
+         x/IUvgWHS4q5lh/T/VfIPt1ToJETY/Uz3q2gk4DoSkeJAafqjF/5QjPI/gvm5Y54MmJ/
+         fFuNFyIx4KAuWi4gWO1kPr+vB6OPJKZnktJ3A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679567342;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qyszvu/uUvUultdr5LryrAA3EmGp70fEi+2Bwj0O3p4=;
-        b=Be70vImJm2dX72TZig5rBnE0nP9rwgq+nCSgkDbviRvUi61xPVi1XcEjdbUxtLq7z2
-         yREiOg2D/lJMbszAhWaLSC/5T435k8rKeEupF1X2Z9uPb2yVFobQ2XiFfN7gq2+NUpAq
-         nQfNvKFvHVMlSl1Mbh+YblkLUx4yhfvfTU38huygWaVYLu1H1OfL3S0u7EinPcNATYMh
-         4b2cn84flu9wXJgrfXVIqEVbUenk6SXCnPJ5OJ75/V2GCOZi0C2433vizceswauE5wwx
-         EEfqD6kj0MHNngEBbWynKiNMxdZO92WLO/2LQVyg3rI824LEQ13bk7jarm+8ikOhIfsn
-         E3Uw==
-X-Gm-Message-State: AO0yUKXPnMp/1ba23vnQKhwUJ2hFtDcsvS+Cc16N7Q2CHsd9oNVgANiM
-        u44HJKN+h++BZqU+syIq/UtxhQ1YNQlWRrFMlgQ=
-X-Google-Smtp-Source: AK7set9ADVeRen1CQzJ1OoKorCekoUL4PnA6JMswOxmhoXd3xTKmU9R0eG9UGeGG2ZpQZH5QezJXXw==
-X-Received: by 2002:a17:906:d8d8:b0:8b1:fc58:a4ad with SMTP id re24-20020a170906d8d800b008b1fc58a4admr10706710ejb.11.1679567342426;
-        Thu, 23 Mar 2023 03:29:02 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679567918;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Kee+3n1RrsPBTsD+CrAHR1FBqgQq4iOdVLGKQPr0qXA=;
+        b=PZJz6QxDOlEohCP2WQwtvtOcUS7hZZtgSynrGMmcNT9KmscMUtDWNjjYNDz0CMKcgS
+         iQ/ulNgPd7Lf1qz6sg5qCnz1XLA0OP4C2pDvNcEy0CzjNL0Hus6g7ItV6hjw/z7YGvg+
+         CSYRAge45bmNKsGEpLl0GazVSgzD0F8BjtweS4DBNgtWjmJ5Mzwoh11TV+1hhDf1GNsp
+         KbB27L8LzkT/KRYqRDPTuJ7W837SbduFj2GaGECTXq3SohGXrTzKdoLxoprTDoeJ/xpn
+         qrmN4ybTYIO8Qru/dVoIuxMZYjMx6TZOTIC2aEFLEbqkcy5Rhl+DeHeswQBdZzBYDdS7
+         Ij6A==
+X-Gm-Message-State: AO0yUKVNFCxCTTj0YeJVnQV8mdcph36HqUmvKBbBT8sGQG8iINF1TRAv
+        gqH3mfRHf2aazluDk5wqmlfisYh/dlK/udfRt5s=
+X-Google-Smtp-Source: AK7set9fn6QSnEMRW+uSetv7fSgZKYjTnLFTGJSdNmOGWH+J2Dpqz6IX1RiMbIIjM1q5otS8N1DsJA==
+X-Received: by 2002:a17:906:eb8b:b0:884:930:b017 with SMTP id mh11-20020a170906eb8b00b008840930b017mr11390383ejb.60.1679567918225;
+        Thu, 23 Mar 2023 03:38:38 -0700 (PDT)
 Received: from smi-ubuntu.sueba ([2a01:390:0:101:4f8c:7da4:48b2:8bd2])
-        by smtp.gmail.com with ESMTPSA id s9-20020a170906454900b008f89953b761sm8459883ejq.3.2023.03.23.03.29.01
+        by smtp.gmail.com with ESMTPSA id bv1-20020a170906b1c100b00939e76a0cabsm3513208ejb.111.2023.03.23.03.38.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 03:29:02 -0700 (PDT)
+        Thu, 23 Mar 2023 03:38:37 -0700 (PDT)
 From:   Simon Mikuda <simon.mikuda@streamunlimited.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Simon Mikuda <simon.mikuda@streamunlimited.com>
-Subject: [PATCH BlueZ 2/2] monitor: Fix printing Signed Write Command
-Date:   Thu, 23 Mar 2023 11:28:58 +0100
-Message-Id: <20230323102858.566934-3-simon.mikuda@streamunlimited.com>
+Subject: [PATCH BlueZ 0/9] gatt-db fix + btgatt-client features
+Date:   Thu, 23 Mar 2023 11:38:26 +0100
+Message-Id: <20230323103835.571037-1-simon.mikuda@streamunlimited.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230323102858.566934-1-simon.mikuda@streamunlimited.com>
-References: <20230323102858.566934-1-simon.mikuda@streamunlimited.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -67,45 +64,39 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Data field were print twice (1 time incorrectly):
-> ACL Data RX: Handle 64 flags 0x02 dlen 19
-      ATT: Signed Write Command (0xd2) len 14
-        Handle: 0x006f Type: Vendor specific (f7debc9a-7856-3412-7856-341278563412)
-          Data: 0800000087f303c224516133
-          Data:
-          Signature: 0800000087f303c224516133
----
- monitor/att.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Hello!
 
-diff --git a/monitor/att.c b/monitor/att.c
-index d3b82074f..18a5af05b 100644
---- a/monitor/att.c
-+++ b/monitor/att.c
-@@ -2934,13 +2934,14 @@ static void print_write(const struct l2cap_frame *frame, uint16_t handle,
- 	struct gatt_handler *handler;
- 
- 	print_handle(frame, handle, false);
--	print_hex_field("  Data", frame->data, frame->size);
- 
- 	if (len > frame->size) {
- 		print_text(COLOR_ERROR, "invalid size");
- 		return;
- 	}
- 
-+	print_hex_field("  Data", frame->data, len);
-+
- 	attr = get_attribute(frame, handle, false);
- 	if (!attr)
- 		return;
-@@ -3105,7 +3106,6 @@ static void att_signed_write_command(const struct l2cap_frame *frame)
- 	}
- 
- 	print_write(frame, handle, frame->size - 12);
--	print_hex_field("  Data", frame->data, frame->size - 12);
- 	print_hex_field("  Signature", frame->data + frame->size - 12, 12);
- }
- 
+We're doing PTS testing in company and I've made some fix for gatt-db.
+
+Also I've extended btgatt-client utility so that we can use it more
+efficiently:
+- connect+disconnect commands
+- don't wait for discovery - you can read, write attributes immediately.
+- use bt_shell - you'll have commands history in that way
+- you can use: bytes <value> <count> to generate long inputs
+
+Also we've added:
+- read by type command (needed for some PTS test cases)
+
+Best regards.
+
+Simon Mikuda (9):
+  gatt-db: Fix crash during calculating hash from ATT handles
+  btgatt-client: Add option to connect to ATT over BR/EDR
+  btgatt-client: Don't wait for discovery on read/write commands
+  btgatt-client: Rewrite to use bt_shell
+  btgatt-client: Implement disconnect and connect commands
+  btgatt-client: Implement read by type
+  btgatt-client: Implement common read bytes procedure
+  btgatt-client: Add 'bytes <value> <count>' option
+  btgatt-client: Implement filter service by start handle
+
+ Makefile.tools        |    2 +-
+ src/shared/gatt-db.c  |   13 +-
+ src/shared/shell.h    |    1 +
+ tools/btgatt-client.c | 1436 ++++++++++++++++++-----------------------
+ 4 files changed, 644 insertions(+), 808 deletions(-)
+
 -- 
 2.34.1
 
