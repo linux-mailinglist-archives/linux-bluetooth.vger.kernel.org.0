@@ -2,57 +2,57 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D1386C6561
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Mar 2023 11:42:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B4136C6564
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Mar 2023 11:42:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231252AbjCWKmB (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 Mar 2023 06:42:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33576 "EHLO
+        id S230357AbjCWKmE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 Mar 2023 06:42:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229993AbjCWKln (ORCPT
+        with ESMTP id S230366AbjCWKlo (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 Mar 2023 06:41:43 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7A163B877
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:38:47 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id w9so84434817edc.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:38:47 -0700 (PDT)
+        Thu, 23 Mar 2023 06:41:44 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB0D36095
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:38:49 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id x3so84329110edb.10
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:38:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=streamunlimited.com; s=google; t=1679567922;
+        d=streamunlimited.com; s=google; t=1679567923;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rSw/9A8e25iNNUIuoQ6diM5sPI659B2koAayn4VceGY=;
-        b=REOa65XR2YHqqQCs+cLPW7MhKLJCGArzuJDQDSLjECJIHQZd+iYZeWHxI+E+UqQ8yX
-         mSb8e4PoKpVw4xzqyy/RFTI1BODS8xketkhiRPnVtbNqU9M2OX1K49jmoHPlowNzWkux
-         E2QjuRFU3KiLXLei0HSCWOHNYC69g5N1+AcCo=
+        bh=joJx6HhFwXvoHrCIHTeLaTTrK8R0VHAtHSi1abn1ul8=;
+        b=npW8+DGdWsIlmJyLIVyBFlMzhsaZ61rW+nOlmLqaSDeS+Ol35dwcJADPazMGe57Ebw
+         SIgRyzxO8WFKRDwr80qPEO6xJ1kZORdNyfuAVF4VST2lMX5zETAeg2dfpmcszcvklHuD
+         SvW2SQsODTbHMEvWBnJUvHuk/c7q8gvuz9WFs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679567922;
+        d=1e100.net; s=20210112; t=1679567923;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rSw/9A8e25iNNUIuoQ6diM5sPI659B2koAayn4VceGY=;
-        b=egfJL8NwEPuPp3enn/RwIxCfgZ7Si8e7bnQDHbK8LU1eM2eelYHIVG52iLogq7zb4q
-         iuiUY75QFm6f9Z4Z7cxm3u47poinXp752Yd25oCbJrg7DyzOOuxfKipW5Qqz2jdjM/7K
-         7NtqEjmDwHTsbA68DlymaPzq4o7WbL6UXZ3ptRh3O1/+8whpDeXSRDk3v+2bbsz1/fuO
-         ODkyWx+N4plrsvkzoD2H4FIYM001OAvmZNN493iysF0AoTRtwaTl7iQ0IRkOxt4LANZj
-         rKIiW1wnS+xi90g41baej7YX99WADmGUaBDhHCuAtjH+D8bjC725aqsUSscBU2+mn7wo
-         pF+Q==
-X-Gm-Message-State: AO0yUKULtW0z9miQ0JcUv0tCj6y1mdhYAHblfw5G9gCy/KDcEedRMmR5
-        vi4EHpoMqjv/6CCe4AoU8e15K3jJNIjk7T5L1pM=
-X-Google-Smtp-Source: AK7set90vrKTX/ikTOmoV2IDjrzE5CE39SXTuOQgBhJo+3Xovbeqwuvq3RDwe0yttj/wWV6EipnkbQ==
-X-Received: by 2002:a17:907:6e17:b0:902:874:9c31 with SMTP id sd23-20020a1709076e1700b0090208749c31mr5985518ejc.35.1679567922303;
-        Thu, 23 Mar 2023 03:38:42 -0700 (PDT)
+        bh=joJx6HhFwXvoHrCIHTeLaTTrK8R0VHAtHSi1abn1ul8=;
+        b=QGH+Ze/jAwYrfbnJahfMMm7taoQTDYGsu7NcKDnpj/Ks+DL8IWVOPoq/+vMSSXHv2Y
+         HIa1bT4u51dPghqcVJsjY62exPqfO3igEEqFxyIS6hOFRLTmjsQNq2xPGR9IOS3hkGk7
+         qbK28Wnk0joxNPbvZkuWV72EE7hzRhC4B+ZKun79j1wxyycSjjS8p2PHNhuJX5j09Gb4
+         0kaB7Oj5kNVWhUq8vDGB4Oxb9UiW09/YYQOk5JtJpOX+u0kVLgu5Hd92VGf+nX7Zcoz4
+         s4hOG/CDMVL1rivLO/7AGGX4SAxvmc3iw451UpD3JkJOgXlcPdvY6+prFKQxyeCS4XMI
+         q+mg==
+X-Gm-Message-State: AO0yUKU7pE1i42F4YrM//vK9QLOFnWyXlC/EdgOD5IwlkhQ+9IOMoqN4
+        Qnsc1mp550Gt0+5AO8/imbDFcpsm0HzRG2S4VPg=
+X-Google-Smtp-Source: AK7set9mYG5dOm82ezU05Bf76zo9Ey2oeP1y+r5wk0YIl59A9kUTWld4IksREtyVrFXpH9RpJ/8N4w==
+X-Received: by 2002:a17:907:987c:b0:92f:de0d:104b with SMTP id ko28-20020a170907987c00b0092fde0d104bmr10613520ejc.9.1679567923146;
+        Thu, 23 Mar 2023 03:38:43 -0700 (PDT)
 Received: from smi-ubuntu.sueba ([2a01:390:0:101:4f8c:7da4:48b2:8bd2])
-        by smtp.gmail.com with ESMTPSA id bv1-20020a170906b1c100b00939e76a0cabsm3513208ejb.111.2023.03.23.03.38.41
+        by smtp.gmail.com with ESMTPSA id bv1-20020a170906b1c100b00939e76a0cabsm3513208ejb.111.2023.03.23.03.38.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 03:38:41 -0700 (PDT)
+        Thu, 23 Mar 2023 03:38:42 -0700 (PDT)
 From:   Simon Mikuda <simon.mikuda@streamunlimited.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Simon Mikuda <simon.mikuda@streamunlimited.com>
-Subject: [PATCH BlueZ 6/9] btgatt-client: Implement read by type
-Date:   Thu, 23 Mar 2023 11:38:32 +0100
-Message-Id: <20230323103835.571037-7-simon.mikuda@streamunlimited.com>
+Subject: [PATCH BlueZ 7/9] btgatt-client: Implement common read bytes procedure
+Date:   Thu, 23 Mar 2023 11:38:33 +0100
+Message-Id: <20230323103835.571037-8-simon.mikuda@streamunlimited.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230323103835.571037-1-simon.mikuda@streamunlimited.com>
 References: <20230323103835.571037-1-simon.mikuda@streamunlimited.com>
@@ -68,106 +68,187 @@ List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 ---
- tools/btgatt-client.c | 72 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+ tools/btgatt-client.c | 130 ++++++++++++++----------------------------
+ 1 file changed, 42 insertions(+), 88 deletions(-)
 
 diff --git a/tools/btgatt-client.c b/tools/btgatt-client.c
-index 152e6ee70..0681074f9 100644
+index 0681074f9..c4311d067 100644
 --- a/tools/btgatt-client.c
 +++ b/tools/btgatt-client.c
-@@ -34,6 +34,7 @@
- #include "src/shared/queue.h"
- #include "src/shared/gatt-db.h"
- #include "src/shared/gatt-client.h"
-+#include "src/shared/gatt-helpers.h"
- 
- #define ATT_CID 4
- #define ATT_PSM 31
-@@ -510,6 +511,75 @@ static void cmd_read_multiple(int argc, char **argv)
- 	free(value);
+@@ -664,6 +664,40 @@ static void write_cb(bool success, uint8_t att_ecode, void *user_data)
+ 	}
  }
  
-+void read_by_type_cb(bool success, uint8_t att_ecode,
-+						struct bt_gatt_result *result,
-+						void *user_data)
++static uint8_t *read_bytes(char **argv, int *length)
 +{
-+	const uint8_t *value;
-+	uint16_t length, handle;
-+	struct bt_gatt_iter iter;
-+	char line[MAX_LEN_LINE];
-+	int i;
-+
-+	if (!success) {
-+		error("Read by type request failed: %s (0x%02x)",
-+				ecode_to_string(att_ecode), att_ecode);
-+		return;
-+	}
-+
-+	bt_gatt_iter_init(&iter, result);
-+	while (bt_gatt_iter_next_read_by_type(&iter, &handle, &length, &value)) {
-+		line[0] = '\0';
-+		append(line, "\tValue handle 0x%04x", handle);
-+
-+		if (length == 0) {
-+			print("%s: 0 bytes", line);
-+			return;
-+		}
-+
-+		append(line, " (%u bytes): ", length);
-+
-+		for (i = 0; i < length; i++)
-+			append(line, "%02x ", value[i]);
-+
-+		print("%s", line);
-+	}
-+}
-+
-+static void cmd_read_by_type(int argc, char **argv)
-+{
-+	bt_uuid_t uuid;
-+	uint16_t start_handle = 0x0001, end_handle = 0xFFFF;
++	int i, byte;
++	uint8_t *value;
 +	char *endptr = NULL;
 +
-+	if (bt_string_to_uuid(&uuid, argv[1]) < 0) {
-+		error("Invalid UUID: %s", optarg);
-+		return;
++	if (*length <= 0) {
++		error("Nothing to write");
++		return NULL;
 +	}
-+	if (argc > 2) {
-+		start_handle = strtol(argv[2], &endptr, 0);
-+		if (!endptr || *endptr != '\0' || !start_handle) {
-+			error("Invalid start_handle : %s", argv[1]);
-+			return;
-+		}
-+	}
-+	if (argc > 3) {
-+		end_handle = strtol(argv[3], &endptr, 0);
-+		if (!endptr || *endptr != '\0' || !end_handle) {
-+			error("Invalid end_handle : %s", argv[1]);
-+			return;
-+		}
-+	}
-+	if (start_handle > end_handle) {
-+		error("start_handle cannot by larger than end_handle");
-+		return;
++	if (*length > BT_ATT_MAX_VALUE_LEN) {
++		error("Write value too long");
++		return NULL;
 +	}
 +
-+	if (!bt_gatt_read_by_type(cli->att, start_handle, end_handle,
-+				&uuid, read_by_type_cb, NULL, NULL))
-+		error("Failed to initiate read value procedure");
++	value = malloc(*length);
++	if (!value) {
++		error("Failed to construct write value");
++		return NULL;
++	}
++
++	for (i = 0; i < *length; i++) {
++		byte = strtol(argv[i], &endptr, 0);
++		if (endptr == argv[i] || *endptr != '\0'
++			|| errno == ERANGE || byte < 0 || byte > 255) {
++			error("Invalid value byte: %s", argv[i]);
++			free(value);
++			return NULL;
++		}
++		value[i] = byte;
++	}
++	return value;
 +}
 +
- static void read_cb(bool success, uint8_t att_ecode, const uint8_t *value,
- 					uint16_t length, void *user_data)
+ static void cmd_write_value(int argc, char **argv)
  {
-@@ -1163,6 +1233,8 @@ static const struct bt_shell_menu main_menu = {
- 		cmd_read_long_value, "Read a long characteristic or desctriptor value" },
- 	{ "read-multiple", "<handles...>",
- 		cmd_read_multiple, "Read Multiple" },
-+	{ "read-by-type", "<uuid> [start_handle] [end_handle]",
-+		cmd_read_by_type, "Read a value by UUID" },
- 	{ "write-value", " [-w|-s] <value_handle> <value...>",
- 		cmd_write_value, "Write a characteristic or descriptor value\n"
- 		"Options:\n"
+ 	int opt, i, val;
+@@ -705,30 +739,9 @@ static void cmd_write_value(int argc, char **argv)
+ 	}
+ 
+ 	length = argc - 1;
+-
+-	if (length > 0) {
+-		if (length > UINT16_MAX) {
+-			error("Write value too long");
+-			return;
+-		}
+-
+-		value = malloc(length);
+-		if (!value) {
+-			error("Failed to construct write value");
+-			return;
+-		}
+-
+-		for (i = 1; i < argc; i++) {
+-			val = strtol(argv[i], &endptr, 0);
+-			if (endptr == argv[i] || *endptr != '\0'
+-				|| errno == ERANGE || val < 0 || val > 255) {
+-				error("Invalid value byte: %s",
+-								argv[i]);
+-				goto done;
+-			}
+-			value[i-1] = val;
+-		}
+-	}
++	value = read_bytes(argv + 1, &length);
++	if (!value)
++		return;
+ 
+ 	if (without_response) {
+ 		if (!bt_gatt_client_write_without_response(cli->gatt, handle,
+@@ -801,13 +814,6 @@ static void cmd_write_long_value(int argc, char **argv)
+ 	argv += optind;
+ 	optind = 0;
+ 
+-	if (argc > 514) {
+-		error("Too many arguments");
+-		bt_shell_usage();
+-		optind = 0;
+-		return;
+-	}
+-
+ 	handle = strtol(argv[0], &endptr, 0);
+ 	if (!endptr || *endptr != '\0' || !handle) {
+ 		error("Invalid handle: %s", argv[1]);
+@@ -822,31 +828,9 @@ static void cmd_write_long_value(int argc, char **argv)
+ 	}
+ 
+ 	length = argc - 2;
+-
+-	if (length > 0) {
+-		if (length > UINT16_MAX) {
+-			error("Write value too long");
+-			return;
+-		}
+-
+-		value = malloc(length);
+-		if (!value) {
+-			error("Failed to construct write value");
+-			return;
+-		}
+-
+-		for (i = 2; i < argc; i++) {
+-			val = strtol(argv[i], &endptr, 0);
+-			if (endptr == argv[i] || *endptr != '\0'
+-				|| errno == ERANGE || val < 0 || val > 255) {
+-				error("Invalid value byte: %s",
+-								argv[i]);
+-				free(value);
+-				return;
+-			}
+-			value[i-2] = val;
+-		}
+-	}
++	value = read_bytes(argv + 2, &length);
++	if (!value)
++		return;
+ 
+ 	if (!bt_gatt_client_write_long_value(cli->gatt, reliable_writes, handle,
+ 							offset, value, length,
+@@ -894,13 +878,6 @@ static void cmd_write_prepare(int argc, char **argv)
+ 	argv += optind;
+ 	optind = 0;
+ 
+-	if (argc > 514) {
+-		error("Too many arguments");
+-		bt_shell_usage();
+-		optind = 0;
+-		return;
+-	}
+-
+ 	if (cli->reliable_session_id != id) {
+ 		error("Session id != Ongoing session id (%u!=%u)", id,
+ 						cli->reliable_session_id);
+@@ -925,33 +902,10 @@ static void cmd_write_prepare(int argc, char **argv)
+ 	 * length
+ 	 */
+ 	length = argc - 2;
+-
+-	if (length == 0)
+-		goto done;
+-
+-	if (length > UINT16_MAX) {
+-		error("Write value too long");
+-		return;
+-	}
+-
+-	value = malloc(length);
+-	if (!value) {
+-		error("Failed to allocate memory for value");
++	value = read_bytes(argv + 2, &length);
++	if (!value)
+ 		return;
+-	}
+-
+-	for (i = 2; i < argc; i++) {
+-		val = strtol(argv[i], &endptr, 0);
+-		if (endptr == argv[i] || *endptr != '\0' || errno == ERANGE
+-						|| val < 0 || val > 255) {
+-			error("Invalid value byte: %s", argv[i]);
+-			free(value);
+-			return;
+-		}
+-		value[i-2] = val;
+-	}
+ 
+-done:
+ 	cli->reliable_session_id =
+ 			bt_gatt_client_prepare_write(cli->gatt, id,
+ 							handle, offset,
 -- 
 2.34.1
 
