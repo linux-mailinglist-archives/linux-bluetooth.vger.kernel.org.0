@@ -2,134 +2,99 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C4D56C70D1
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Mar 2023 20:12:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17B6D6C718A
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Mar 2023 21:07:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231529AbjCWTMl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 Mar 2023 15:12:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35140 "EHLO
+        id S231522AbjCWUHG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 Mar 2023 16:07:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229863AbjCWTMk (ORCPT
+        with ESMTP id S231478AbjCWUHD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 Mar 2023 15:12:40 -0400
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2A75171C
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 12:12:39 -0700 (PDT)
-Received: by mail-oo1-xc34.google.com with SMTP id n7-20020a4ae1c7000000b0053b61145406so1433667oot.11
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 12:12:39 -0700 (PDT)
+        Thu, 23 Mar 2023 16:07:03 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0465E28E8B;
+        Thu, 23 Mar 2023 13:07:02 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id y20so29350527lfj.2;
+        Thu, 23 Mar 2023 13:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679598759;
-        h=content-transfer-encoding:to:subject:message-id:date:from:sender
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=n/aRv5DDyEdwK1T7Yg5lz74OdtmIecGRUxlzh8mnlOg=;
-        b=RTVLbzoZWie5OZ4rTDFLDSfi87o6zsX+uEWGzJ7/C2GD4XGRH6LbO6rpwlemdkLJaq
-         ZrqJHpAWxKARC+gYIU6EZA1bO3llChYeMkNBGGzOx8feLd9PO+doGmbEtK2a5R13AIFw
-         3RDqnaUdeJpjdNCaCrBPOFBG/Ppv9Jtx+EdCcRs9RV+paF22P45kV2GgXKBFCc5Kncm3
-         6qYi0uG/PaCGRjJ2kB2HnJjo9LI6OwFC/zuIK1yk1kjCdnpHIAjSDfHB4TUZv3ii25iI
-         fU7uJlPaKlDJzpXPEzIQXwGjkIiQtmSDmO3nzZ9J5NPL6mMoOqoLEX8lAp25YoydNWd+
-         RSDg==
+        d=gmail.com; s=20210112; t=1679602020;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6dx0LNrSnDNSxghRtdZKIgvcKSai0Xv19sa2pKVBtm0=;
+        b=PtHSPpgV3RWyesi9nMsqNsp5f+gP7vlw/NInZXvqLdqOaCrTUhSRqXJHuw0a+h6np4
+         XsmOlw0hcSSclkJme5yM1+36sK2kpfa/Ig2R0yN/21fSwVHfpgTf0rZmONLEANeWXoXu
+         B63lmGeK3K5a3Pd8H+DwbQxT47zg8gfVIZ8JOEMcELj+9D9bvMK+yqmaHDEIy/xm/T9H
+         8LuyCyR8rPdTHJKc4KpTP3NFc4tU7XTwItQjnHuHPc3gYwvPNE50ordCIgXQlftScW5V
+         J9CgGhccQOBbrpio7S68rBjk0PvsJkNz36fxIrYQz27LMQaInhfkqxP/n7zSq6YispzI
+         gx1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679598759;
-        h=content-transfer-encoding:to:subject:message-id:date:from:sender
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n/aRv5DDyEdwK1T7Yg5lz74OdtmIecGRUxlzh8mnlOg=;
-        b=gKtHuAmhwjqp5zUDZdwmYXPxCMVxDKwOKTNlsgIu0ijUGeuuV+A/xen1AX82pMLVCt
-         gJlUniKgdD2Y2gsfic6L4dg5NY1JmE7CvcpqT2fJ3MBlZD7opPSWxxuOolffRJZEgJFI
-         9DAJ5xYuWIKxP0O6MGuno10lrAizq4bHDM8PZ/UX+Js/IItS9DswNz7sLtlbwmWYuluL
-         POvNy1a1oQcwhxhnS5bWqXG0qTLqADGLWe6SS/k+AsMDNrj83mduMximlOrqYEePB0X8
-         gN055VUovWM9WGSapq75UxuhnmUW6ePgShVz0LL+JkX70oB/XbfQfjYnMXIq8rY2bjOp
-         tzew==
-X-Gm-Message-State: AO0yUKXHkBwVTlRQtKCP/le3viRTWgtdelzdJpTqTwmK56lFzX31F/LR
-        7HDtq8AxNVIiNd0Ld6pZybx7qfdiGumHIN+Yupg=
-X-Google-Smtp-Source: AK7set9K2lpr2oYjJo+dgR1De9ha+kNEkp5XegG7w79P2GYs2dk50yzld2jWcjQWwy4FJKfNZFMqYP6UrF4pmfBflOg=
-X-Received: by 2002:a4a:e243:0:b0:525:5f43:215a with SMTP id
- c3-20020a4ae243000000b005255f43215amr2313523oot.1.1679598759050; Thu, 23 Mar
- 2023 12:12:39 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679602020;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6dx0LNrSnDNSxghRtdZKIgvcKSai0Xv19sa2pKVBtm0=;
+        b=VYNnKwW22Gxk6BJhoh47f01BEmQvk2WEHCnerdABnB2+pKI1GJjkyNokM7JTfjyNs4
+         QXWhKJojg/rER5AoO9Y0IwfDMWEvd+q5kFCKJCLap0kmu7yWYpcKu1CsuhMIYsveK/up
+         HRWA6Jaw5UTH9v7c/h4MNyHXdVSRK3uAo5jH38m6OJUM7lXociqRPHIRuiCU/cdJOF1G
+         FyylU7gmr/wIci0Fv14oq6ZsBH11UKSLtn8uF8cElwmRU7zhX/0rpQ7zdlbLs/LAdFxP
+         geHGu0hWzwPLrp91jVF0EdX9M49da36ShStHRCx50ncZLaCAenmSB3c2H6++Ebso3SIi
+         STAA==
+X-Gm-Message-State: AO0yUKU4WBI5Y/VnL4I3Dt4drOL5lhWW727T5G2UNol/li/a1PpRTt3Y
+        Nx0g/adhSenVHHRsWD0uUGpN4YynXMoEHhW44scZ3i2X
+X-Google-Smtp-Source: AK7set/o3pCVnKMNC2+I4YvRtdLo7f8opwJWz17r7RNwCnow/FuynAlZYxD2/SaMUr99oy4jTP4B16qAluL/zbly8o0=
+X-Received: by 2002:ac2:5ddb:0:b0:4d5:ca32:6aea with SMTP id
+ x27-20020ac25ddb000000b004d5ca326aeamr3450794lfq.10.1679602019726; Thu, 23
+ Mar 2023 13:06:59 -0700 (PDT)
 MIME-Version: 1.0
-Sender: dhldeliveringcompany.bf@gmail.com
-Received: by 2002:ac9:5e17:0:b0:4c8:8e08:fdd2 with HTTP; Thu, 23 Mar 2023
- 12:12:38 -0700 (PDT)
-From:   Dina Mckenna <dinamckenna9@gmail.com>
-Date:   Thu, 23 Mar 2023 19:12:38 +0000
-X-Google-Sender-Auth: VOOWU_v6mRUO6JOMXnnPyA7HCl8
-Message-ID: <CAGPv-0Ek7MM=ewhpj8Pcwv5xQiXEDFALDCnvpWzmHZMRFyxv-g@mail.gmail.com>
-Subject: Hello,
-To:     undisclosed-recipients:;
+References: <20230322232543.3079578-1-luiz.dentz@gmail.com>
+ <20230322214614.0e70a4a0@kernel.org> <20230323104639.05b3674b@kernel.org>
+In-Reply-To: <20230323104639.05b3674b@kernel.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Thu, 23 Mar 2023 13:06:48 -0700
+Message-ID: <CABBYNZKwhUnNQ9nz0kUbUS5auAjriyfQia36p_kYM2=mCq50gQ@mail.gmail.com>
+Subject: Re: pull-request: bluetooth 2023-03-22
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     davem@davemloft.net, linux-bluetooth@vger.kernel.org,
+        netdev@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=6.8 required=5.0 tests=ADVANCE_FEE_5_NEW_MONEY,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        LOTS_OF_MONEY,MONEY_FRAUD_8,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        UNDISC_MONEY autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:c34 listed in]
-        [list.dnswl.org]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [dinamckenna9[at]gmail.com]
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        *  2.0 MONEY_FRAUD_8 Lots of money and very many fraud phrases
-        *  3.0 ADVANCE_FEE_5_NEW_MONEY Advance Fee fraud and lots of money
-        *  2.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: ******
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello my dear,
+Hi Jakub,
 
- I sent this mail praying it will get to you in a good condition of
-health, since I myself are in a very critical health condition in
-which I sleep every night without knowing if I may be alive to see the
-next day. I bring peace and love to you.. It is by the grace of God, I
-had no choice than to do what is lawful and right in the sight of God
-for eternal life and in the sight of man, for witness of God=E2=80=99s merc=
-y
-and glory upon my life. I am Mrs. Dina Howley Mckenna, a widow. I am
-suffering from a long time brain tumor, It has defiled all forms of
-medical treatment, and right now I have about a few months to leave,
-according to medical experts. The situation has gotten complicated
-recently with my inability to hear proper, am communicating with you
-with the help of the chief nurse herein the hospital, from all
-indication my conditions is really deteriorating and it is quite
-obvious that, according to my doctors they have advised me that I may
-not live too long, Because this illness has gotten to a very bad
-stage. I plead that you will not expose or betray this trust and
-confidence that I am about to repose on you for the mutual benefit of
-the orphans and the less privilege. I have some funds I inherited from
-my late husband, the sum of ( $11,000,000.00, Eleven Million Dollars
-). Having known my condition, I decided to donate this fund to you
-believing that you will utilize it the way i am going to instruct
-herein. I need you to assist me and reclaim this money and use it for
-Charity works therein your country  for orphanages and gives justice
-and help to the poor, needy and widows says The Lord." Jeremiah
-22:15-16.=E2=80=9C and also build schools for less privilege that will be
-named after my late husband if possible and to promote the word of God
-and the effort that the house of God is maintained. I do not want a
-situation where this money will be used in an ungodly manner.. That's
-why I'm taking this decision. I'm not afraid of death, so I know where
-I'm going. I accept this decision because I do not have any child who
-will inherit this money after I die. Please I want your sincerely and
-urgent answer to know if you will be able to execute this project for
-the glory of God, and I will give you more information on how the fund
-will be transferred to your bank account. May the grace, peace, love
-and the truth in the Word of God be with you and all those that you
-love and care for.
+On Thu, Mar 23, 2023 at 10:46=E2=80=AFAM Jakub Kicinski <kuba@kernel.org> w=
+rote:
+>
+> On Wed, 22 Mar 2023 21:46:14 -0700 Jakub Kicinski wrote:
+> > On Wed, 22 Mar 2023 16:25:43 -0700 Luiz Augusto von Dentz wrote:
+> > > The following changes since commit bb765a743377d46d8da8e7f7e512802250=
+4741b9:
+> > >
+> > >   mlxsw: spectrum_fid: Fix incorrect local port type (2023-03-22 15:5=
+0:32 +0100)
+> >
+> > Did you rebase? Do you still have the old head?
+> > Because this fixes tag is now incorrect:
+> >
+> > Fixes: ee9b749cb9ad ("Bluetooth: btintel: Iterate only bluetooth device=
+ ACPI entries")
+> > Has these problem(s):
+> >       - Target SHA1 does not exist
+>
+> Hi, any chance of getting fix fixed in the next hour or so?
+> It can still make today's PR..
 
-I'm waiting for your immediate reply.
- .
-May God Bless you,
-Mrs. Dina Howley Mckenna.
+Sorry about the delay, Im on it should be able to send an update shortly.
+
+--=20
+Luiz Augusto von Dentz
