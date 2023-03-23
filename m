@@ -2,95 +2,140 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 876B66C6566
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Mar 2023 11:42:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71BBB6C66EF
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 23 Mar 2023 12:42:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231264AbjCWKmG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 23 Mar 2023 06:42:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33650 "EHLO
+        id S231601AbjCWLm1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 23 Mar 2023 07:42:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230409AbjCWKlp (ORCPT
+        with ESMTP id S231584AbjCWLm0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 23 Mar 2023 06:41:45 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03B8367E1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:38:51 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id eh3so84363845edb.11
-        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 03:38:51 -0700 (PDT)
+        Thu, 23 Mar 2023 07:42:26 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 215311E1E0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 04:42:15 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id hf2so21938180qtb.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 23 Mar 2023 04:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=streamunlimited.com; s=google; t=1679567924;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qTiNn5ElAqSIAm568k6v0bazI47/CuUlIG5hKkmFQbE=;
-        b=PPnXU9P0ZKmXfN17axYUb+xWhSjqik3AHPGvbND3tcf5hr0mjIBZnuH5YDVKPC4GeT
-         6mqie7P6JnDduouaHDusHW8eakANhIVk8X3Yzjih+uFmkh06yaVBF4BpYFRVa2957kXr
-         MbVrpV1jIRpENZg+fybLA8Q4Ep1jrtsUSARzc=
+        d=gmail.com; s=20210112; t=1679571734;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=0oyqxfnD+KBqDKBD01OzpsydhSCyYFg6e93sh8xPoJE=;
+        b=QhOrfmPD4Lz4BFjhaWkRtW2xL0khBx7oJDVK0FULi9PXsQAQkjzGisO/qxZRikpO92
+         zLhHfoAnux1jKWntdhi+xXKie02uVMEmULXKl42HhY8aPBPcWPf00oyCRhNQNq9LUdKg
+         i8NDFJmUrpbc4i0b8We9qi5i/p1cQKRqsFozrgFKuDhe5ZiBeC6anv/UnUX4r39XmnRa
+         JuL5II+ix4ViETgaZyc9utfYW9H5kb7FM2WEm3BK6tfXKhXcKCc9l030w6WuO284AyLo
+         6Tc/FoOX274iH69uN5boEOBFsA2s++ruh4xlHhpooI72pV3IhJ1T/asjqyJ/vWSify/j
+         7XDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679567924;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qTiNn5ElAqSIAm568k6v0bazI47/CuUlIG5hKkmFQbE=;
-        b=Rch8sSJfWi3EC72Kk63zww5bb2Hstropzqejaa5sMT/7OkCqCFxIL8zwyoiAa+UE34
-         d3GXbDT0jbmk+g2YCcrZEuupocYLrgFnUVqZuwvxlrOyldDrcM5j9O6I0DVTYx0r891y
-         Ty5POMsF/wUGVKl5k/UUmjAqaVuf4dDopDxwdGXyDZApk2Hfmg+Xkqe++9s87fA4B2Gl
-         9rcXulth+5TlJ+XZ5lbdnNEJZ46/GLDFXqOkWJMos9cldu0JbQBCfDy19n5RdxnMmiV/
-         mk4Hb/eV46HBR/bHfERGJHB8gqfQuz7rg+nZurR6Wte1KSun1LxK/c8JgxEHUj66XgfK
-         39qg==
-X-Gm-Message-State: AO0yUKU2sLhVsDAFMow9obFcv8MXePt2YmFjSehq6djJN1fa3IQ7Cypb
-        6DmpgAmRIozfMmyV/P3OJvaPT+6KFd+D6WUwNco=
-X-Google-Smtp-Source: AK7set+9xomHPozhhDGz6bkEKNxGqxkxVJ3r+6E7SUWBzWKFGFdYO3/z8AJgUv7pfFwqUUgncCCPyg==
-X-Received: by 2002:a17:906:a4b:b0:92b:2389:46bd with SMTP id x11-20020a1709060a4b00b0092b238946bdmr10239655ejf.21.1679567924329;
-        Thu, 23 Mar 2023 03:38:44 -0700 (PDT)
-Received: from smi-ubuntu.sueba ([2a01:390:0:101:4f8c:7da4:48b2:8bd2])
-        by smtp.gmail.com with ESMTPSA id bv1-20020a170906b1c100b00939e76a0cabsm3513208ejb.111.2023.03.23.03.38.43
+        d=1e100.net; s=20210112; t=1679571734;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0oyqxfnD+KBqDKBD01OzpsydhSCyYFg6e93sh8xPoJE=;
+        b=AHKNRydupmn3DKEmMupoq7unp7+YEwJlHnSA/jSQX6jtnwNvF/jH3HXQMCy8WWineW
+         ODpYJzEqWmUUnTAaXEIHQ0KSyKfNibgW/ZM2ojfLT+NlppglVoZPTNNGbPe3FyAnWEkE
+         13PJFpVULm+Jc8bpng7tFssQVMkWbUmDw3apCWPrDz4xpwOd4mj36g6g+giZHwLyaXtY
+         5FbBEndG6c+C5l94MXyUbgUcpLWNo4v1nA0ed6sxyC/NUoaVkrpzFEJT4jMqfInFf5i0
+         gXGXBmRHeJXNw6f3I/WmOLkM9LbkdBrINU6kNFYM/1Ie4qtUIUSkBgmo59jrcQeHdnMB
+         kssg==
+X-Gm-Message-State: AO0yUKWHGcjyfQAXb7Jfs4enO4TJMJHSRO9cveGgVa7ynmZz5/ruWcHK
+        Qn8AFc++R6gVdM8E+zvuN2t4thiEORA=
+X-Google-Smtp-Source: AK7set9+YsfmDg5HzycTujYQArsA8Dn9ZVFOv0f36gufTEH/nF8U4tBBhU3n+YSUasV/vKAcevwZiA==
+X-Received: by 2002:a05:622a:2d2:b0:3e3:803b:e5c7 with SMTP id a18-20020a05622a02d200b003e3803be5c7mr8846949qtx.19.1679571734177;
+        Thu, 23 Mar 2023 04:42:14 -0700 (PDT)
+Received: from [172.17.0.2] ([20.51.128.128])
+        by smtp.gmail.com with ESMTPSA id 196-20020a3707cd000000b007426e664cdcsm2468031qkh.133.2023.03.23.04.42.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 03:38:44 -0700 (PDT)
-From:   Simon Mikuda <simon.mikuda@streamunlimited.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Simon Mikuda <simon.mikuda@streamunlimited.com>
-Subject: [PATCH BlueZ 9/9] btgatt-client: Implement filter service by start handle
-Date:   Thu, 23 Mar 2023 11:38:35 +0100
-Message-Id: <20230323103835.571037-10-simon.mikuda@streamunlimited.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230323103835.571037-1-simon.mikuda@streamunlimited.com>
-References: <20230323103835.571037-1-simon.mikuda@streamunlimited.com>
+        Thu, 23 Mar 2023 04:42:13 -0700 (PDT)
+Message-ID: <641c3b15.370a0220.3162d.a88b@mx.google.com>
+Date:   Thu, 23 Mar 2023 04:42:13 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============0210359026686532777=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, simon.mikuda@streamunlimited.com
+Subject: RE: l2test fix+feature
+In-Reply-To: <20230323102732.566440-2-simon.mikuda@streamunlimited.com>
+References: <20230323102732.566440-2-simon.mikuda@streamunlimited.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+--===============0210359026686532777==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=733107
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      1.31 seconds
+GitLint                       PASS      0.68 seconds
+BuildEll                      PASS      26.34 seconds
+BluezMake                     PASS      752.58 seconds
+MakeCheck                     PASS      11.03 seconds
+MakeDistcheck                 PASS      147.91 seconds
+CheckValgrind                 PASS      240.89 seconds
+CheckSmatch                   PASS      320.56 seconds
+bluezmakeextell               PASS      97.38 seconds
+IncrementalBuild              PASS      1229.04 seconds
+ScanBuild                     PASS      972.80 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[BlueZ,2/2] l2test: Fix setting mode for BR/EDR l2cap socket
+ERROR:SWITCH_CASE_INDENT_LEVEL: switch and case should be at the same indent
+#108: FILE: tools/l2test.c:160:
++	switch (mode) {
++		case BT_MODE_BASIC:
+[...]
++		case BT_MODE_ERTM:
+[...]
++		case BT_MODE_STREAMING:
+[...]
++		case BT_MODE_LE_FLOWCTL:
+[...]
++		case BT_MODE_EXT_FLOWCTL:
+[...]
++		default:
+
+/github/workspace/src/src/13185459.patch total: 1 errors, 0 warnings, 44 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13185459.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+
+
 ---
- tools/btgatt-client.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/btgatt-client.c b/tools/btgatt-client.c
-index b7a23ac9b..629063d5c 100644
---- a/tools/btgatt-client.c
-+++ b/tools/btgatt-client.c
-@@ -377,8 +377,13 @@ static void print_services_by_uuid(const bt_uuid_t *uuid)
- 
- static void print_services_by_handle(uint16_t handle)
- {
--	/* TODO: Filter by handle */
--	gatt_db_foreach_service(cli->db, NULL, print_service, cli);
-+	uint16_t start = 0x0001, end = 0xFFFF;
-+	if (handle) {
-+		start = handle;
-+		end = handle;
-+	}
-+	gatt_db_foreach_service_in_range(cli->db, NULL, print_service, NULL,
-+			start, end);
- }
- 
- static void ready_cb(bool success, uint8_t att_ecode, void *user_data)
--- 
-2.34.1
 
+--===============0210359026686532777==--
