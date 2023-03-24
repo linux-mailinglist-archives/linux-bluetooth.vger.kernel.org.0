@@ -2,70 +2,258 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88FAE6C7DB3
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 24 Mar 2023 13:06:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A254D6C833F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 24 Mar 2023 18:22:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231621AbjCXMGw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 24 Mar 2023 08:06:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50370 "EHLO
+        id S231444AbjCXRWh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 24 Mar 2023 13:22:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231818AbjCXMGt (ORCPT
+        with ESMTP id S230092AbjCXRWf (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 24 Mar 2023 08:06:49 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003CE23C7A
-        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Mar 2023 05:06:46 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-17aceccdcf6so1490705fac.9
-        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Mar 2023 05:06:46 -0700 (PDT)
+        Fri, 24 Mar 2023 13:22:35 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B4C1B751
+        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Mar 2023 10:22:34 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id o4-20020a056a00214400b00627ddde00f4so1309887pfk.4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Mar 2023 10:22:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679659606;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uBlRr9q265Nv8kRQVI2pIMY+89rTouQ4PH5QCVhBU8c=;
-        b=IFTKXPgmH+JwUWSaNg6Lwhqmbh6HJwwViU9pzV0NYNicSmq1A0suSGWkJedmK1i6rw
-         zdPMc2yhFhc0XnUBELU2t9weSI90m36Nu9+L+5A99ujJAYIaS3fSQazP1QAQlIGLenlz
-         ftfXqxbaZiqWFcP4vR+k3yVeFzfXhmYtxmsiu3ijOe3tbHM6hxJIq0Mg3chco6xsUIeC
-         kT5+t6o6F33PPF/aFMBKYHPfnpSfisKKwqqDYyDr1IagIe/KW8r2uFqQ0I+nuN1bU72Q
-         KBK6fRbVwPy98grhixQf3aE+b9dZ3iyBvApsRlhcRpQHCJKbyUBPs1JIY7qVUmH+SQdk
-         ButA==
+        d=google.com; s=20210112; t=1679678554;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=en5uyJ0jozcxQz6Wf0lgpgw8RE5n+UOgd4/2Vd3q22c=;
+        b=VHFq9YcBcmztKYbdIfCPfG+StxFx9unuo8u4TB9mIT4P9zOiIyPfIlqxRfrShZaiRH
+         LqYbETAIjNibmYR3cOh0tj5itYaf51qCGK3VtYuNgzJjXkYNCm3wctO2cdt2qIUw+bYr
+         TasRIlUkijVpRRB1r31vlzqHWZnA8DRIWZi9wsphDN+sVf0kZiFH76deVWsOHb0h0j+3
+         QyQAKHsKXmvPKImdSF/ryZPY2sUyo9oyUv+MaD/nz7e3JOLgAbEXQ3nQeKUMFB4hXDyN
+         xK5SAmtF/D0hfcltYZ48hRI0hA2KvlDQ3sDE/OvUvuNDpjDbFxw1B04o7F1vqsNCG/ws
+         sUUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679659606;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uBlRr9q265Nv8kRQVI2pIMY+89rTouQ4PH5QCVhBU8c=;
-        b=SmmHu0NFTnL2iVyTwaS5l4ihLBabLnyfU8BdXKXIQGy+5wQmo94TlNkTFgvadxDrDA
-         XZvVeIrFFRXjt/KsTTFmNCcpMjigjejg9kh+B8kjsWyrcbt8/odPro3lb+Rf0zHHyoZC
-         5gYYKoRo2tTtSzgxBZtLdQiMezcb0dQIC9I/+R2rpeVbnvl35Dxvi8tvP5+qDtNtNLmc
-         K3xmwUm+xVcVsUIdczEPu9iiMg/DwYm7mhrIDYzzNxJChbrlK0vMmG9fdBlFpJQkgKyf
-         FcfrYx1mOyeC5mQbk3/BjVnCApPS22HOWwYZF7wVZN1tS1N1RTvAhlGhGRYVXpvBXPL2
-         MYxQ==
-X-Gm-Message-State: AAQBX9ezZTNHi/egoKzkQlMDFtwU5hSl2iPcgv5WfYyFnLPBIjO3eZQS
-        Lrw21EY5U6wkbOLFWpMGK7s5DReSV3OF3Mdl1TY=
-X-Google-Smtp-Source: AKy350agvYrD/JhcZHVQkU+kEEW/BIo1GkZ1QL2cnrjhUPpAPT7D5GuG9IgGLzIoQxgjwYsbk7/q73IymPKh5QN0200=
-X-Received: by 2002:a05:6871:4d03:b0:17d:1287:1b5c with SMTP id
- ug3-20020a0568714d0300b0017d12871b5cmr933854oab.9.1679659606332; Fri, 24 Mar
- 2023 05:06:46 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:6358:1087:b0:eb:2721:599b with HTTP; Fri, 24 Mar 2023
- 05:06:45 -0700 (PDT)
-Reply-To: fionahill.2023@outlook.com
-From:   Fiona Hill <hasanahmed62621@gmail.com>
-Date:   Fri, 24 Mar 2023 05:06:45 -0700
-Message-ID: <CALpxZtjacaNg872Tj83hTMZAd_xF9pn15DTLWzFoAgJv+ayESw@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
+        d=1e100.net; s=20210112; t=1679678554;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=en5uyJ0jozcxQz6Wf0lgpgw8RE5n+UOgd4/2Vd3q22c=;
+        b=OkkC5N/GmhZydy1VhaIZionWfB0KOFkVP8Z/wY105shBbNlD3X5lnPEG4QQT3ibv0x
+         jQImawNTrXJay8Cd/EcrQfpcnrlOLU4wd5GFl5eM4YV/NjD3vENytkJOuDdusML3FegV
+         cjpyeXmaNeSaS6zsWnlqUlTcgVZlz9x+PVVtkPuCzRI1RHThF/fXCJTS1UEda8witg9A
+         +j7ngy4BnlXo6/wdPATI7JoF6HyzHel80mu6yZRarfRM5yWR4BqMjffkaPLmtpJrPQhp
+         GGZy9IwRQl03z93fb1kXf3zGOcCmpW5cR3hAgODSI0jCkUevKAQ89mcliNPMxVSXgALq
+         ke0w==
+X-Gm-Message-State: AAQBX9fZEwj8Ev0kkaMIqAQDFLjBdfHl7CCnOfIylkzmfGm2mEjvVR7A
+        4E6xsGLD4mNea27awx1lQrzOV98IBCwGHA==
+X-Google-Smtp-Source: AKy350YTs10W7zFGU60yYdIdHES0zgj8Jd6BBaCnpPdvlFu3Yt3L02ZF/mBe3WRsQZ3JgJWRgs6HJmDHJaGFrg==
+X-Received: from mmandlik-cloudtop.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:2893])
+ (user=mmandlik job=sendgmr) by 2002:a17:902:e88e:b0:1a0:7630:8ef9 with SMTP
+ id w14-20020a170902e88e00b001a076308ef9mr1272424plg.12.1679678553959; Fri, 24
+ Mar 2023 10:22:33 -0700 (PDT)
+Date:   Fri, 24 Mar 2023 10:22:30 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
+Message-ID: <20230324102227.BlueZ.v3.1.I21ac5a143b0e42eef4ff71ef04ef0e53a294932a@changeid>
+Subject: [BlueZ PATCH v3] mgmt-tester: Add devcoredump test
+From:   Manish Mandlik <mmandlik@google.com>
+To:     marcel@holtmann.org, luiz.dentz@gmail.com
+Cc:     chromeos-bluetooth-upstreaming@chromium.org,
+        linux-bluetooth@vger.kernel.org,
+        Manish Mandlik <mmandlik@google.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-        FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ****
+X-Spam-Status: No, score=-7.7 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
+Add mgmt-tester test for hci devcoredump. This test triggers the
+devcoredump with a test data and verifies the generated devcoredump
+file for the test data and correct devcoredump header fields.
+
+Signed-off-by: Manish Mandlik <mmandlik@google.com>
+---
+
+Changes in v3:
+- Fix compiler warning for signed comparision in test_hci_devcd()
+
+Changes in v2:
+- Rename function names to *_devcd
+
+ emulator/vhci.c     | 42 ++++++++++++++++++++++++
+ emulator/vhci.h     |  2 ++
+ tools/mgmt-tester.c | 78 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 122 insertions(+)
+
+diff --git a/emulator/vhci.c b/emulator/vhci.c
+index a12b11e0f..1676f1697 100644
+--- a/emulator/vhci.c
++++ b/emulator/vhci.c
+@@ -22,6 +22,7 @@
+ #include <sys/uio.h>
+ #include <fcntl.h>
+ #include <unistd.h>
++#include <dirent.h>
+ 
+ #include "lib/bluetooth.h"
+ #include "lib/hci.h"
+@@ -32,6 +33,7 @@
+ #include "vhci.h"
+ 
+ #define DEBUGFS_PATH "/sys/kernel/debug/bluetooth"
++#define DEVCORE_PATH "/sys/class/devcoredump"
+ 
+ struct vhci {
+ 	enum btdev_type type;
+@@ -267,3 +269,43 @@ int vhci_set_force_static_address(struct vhci *vhci, bool enable)
+ 	return vhci_debugfs_write(vhci, "force_static_address", &val,
+ 							sizeof(val));
+ }
++
++int vhci_force_devcd(struct vhci *vhci, void *data, size_t len)
++{
++	return vhci_debugfs_write(vhci, "force_devcoredump", data, len);
++}
++
++int vhci_read_devcd(struct vhci *vhci, void *buf, size_t size)
++{
++	DIR *dir;
++	struct dirent *entry;
++	char filename[PATH_MAX];
++	int fd;
++	int count;
++
++	dir = opendir(DEVCORE_PATH);
++	if (dir == NULL)
++		return -errno;
++
++	while ((entry = readdir(dir)) != NULL) {
++		if (strstr(entry->d_name, "devcd"))
++			break;
++	}
++
++	if (entry == NULL) {
++		closedir(dir);
++		return -ENOENT;
++	}
++
++	sprintf(filename, DEVCORE_PATH "/%s/data", entry->d_name);
++	fd  = open(filename, O_RDONLY);
++	if (fd < 0) {
++		closedir(dir);
++		return -errno;
++	}
++
++	count = read(fd, buf, size);
++	close(fd);
++
++	return count;
++}
+diff --git a/emulator/vhci.h b/emulator/vhci.h
+index 6da56cb58..5dd28b627 100644
+--- a/emulator/vhci.h
++++ b/emulator/vhci.h
+@@ -29,3 +29,5 @@ int vhci_set_msft_opcode(struct vhci *vhci, uint16_t opcode);
+ int vhci_set_aosp_capable(struct vhci *vhci, bool enable);
+ int vhci_set_emu_opcode(struct vhci *vhci, uint16_t opcode);
+ int vhci_set_force_static_address(struct vhci *vhci, bool enable);
++int vhci_force_devcd(struct vhci *vhci, void *data, size_t len);
++int vhci_read_devcd(struct vhci *vhci, void *buf, size_t size);
+diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
+index a56c38173..838ae5d2b 100644
+--- a/tools/mgmt-tester.c
++++ b/tools/mgmt-tester.c
+@@ -12511,6 +12511,77 @@ static void test_suspend_resume_success_10(const void *test_data)
+ 	tester_wait(2, trigger_force_resume, NULL);
+ }
+ 
++#define MAX_COREDUMP_BUF_LEN	512
++#define MAX_COREDUMP_LINE_LEN	40
++
++static void test_hci_devcd(const void *test_data)
++{
++	struct test_data *data = tester_get_data();
++	struct vhci *vhci = hciemu_get_vhci(data->hciemu);
++	char buf[MAX_COREDUMP_BUF_LEN] = {0};
++	char delim[] = "\n";
++	char *line;
++	char *saveptr;
++	unsigned int i = 0;
++
++	char dump_data[] = "test data";
++	char expected[][MAX_COREDUMP_LINE_LEN] = {
++		"Bluetooth devcoredump",
++		"State: 2",
++		"Controller Name: vhci_ctrl",
++		"Firmware Version: vhci_fw",
++		"Driver: vhci_drv",
++		"Vendor: vhci",
++		"--- Start dump ---",
++	};
++
++	/* Triggers the devcoredump */
++	if (vhci_force_devcd(vhci, dump_data, sizeof(dump_data))) {
++		tester_warn("Unable to set force_devcoredump");
++		tester_test_failed();
++		return;
++	}
++
++	/* Read the generated devcoredump file */
++	if (vhci_read_devcd(vhci, buf, sizeof(buf)) <= 0) {
++		tester_warn("Unable to read devcoredump");
++		tester_test_failed();
++		return;
++	}
++
++	/* Verify if all devcoredump header fields are present */
++	line = strtok_r(buf, delim, &saveptr);
++	while (i < ARRAY_SIZE(expected)) {
++		if (!line || strcmp(line, expected[i])) {
++			tester_warn("Incorrect coredump data: %s (expected %s)",
++				    line, expected[i]);
++			tester_test_failed();
++			return;
++		}
++
++		if (!strcmp(line, "State: 2")) {
++			/* After updating the devcoredump state, the HCI
++			 * devcoredump API adds a `\0` at the end. Skip it
++			 * before reading the next line.
++			 */
++			saveptr++;
++		}
++
++		line = strtok_r(NULL, delim, &saveptr);
++		i++;
++	}
++
++	/* Verify the devcoredump data */
++	if (!line || strcmp(line, dump_data)) {
++		tester_warn("Incorrect coredump data: %s (expected %s)", line,
++			    dump_data);
++		tester_test_failed();
++		return;
++	}
++
++	tester_test_passed();
++}
++
+ int main(int argc, char *argv[])
+ {
+ 	tester_init(&argc, &argv);
+@@ -14651,5 +14722,12 @@ int main(int argc, char *argv[])
+ 				setup_ll_privacy_add_device,
+ 				test_command_generic);
+ 
++	/* HCI devcoredump
++	 * Setup : Power on
++	 * Run: Trigger devcoredump via force_devcoredump
++	 * Expect: Devcoredump is generated with correct data
++	 */
++	test_bredrle("HCI devcoredump", NULL, NULL, test_hci_devcd);
++
+ 	return tester_run();
+ }
 -- 
-Hello friend did you recive my messsage i send to you?  ple get back to me
+2.40.0.348.gf938b09366-goog
+
