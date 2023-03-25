@@ -2,112 +2,103 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C65036C8A42
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 25 Mar 2023 03:27:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACB936C8A97
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 25 Mar 2023 04:10:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231986AbjCYC1o (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 24 Mar 2023 22:27:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39642 "EHLO
+        id S231228AbjCYDKv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 24 Mar 2023 23:10:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231954AbjCYC1n (ORCPT
+        with ESMTP id S229441AbjCYDKu (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 24 Mar 2023 22:27:43 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 758C318A83
-        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Mar 2023 19:27:42 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id qh28so2901488qvb.7
-        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Mar 2023 19:27:42 -0700 (PDT)
+        Fri, 24 Mar 2023 23:10:50 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D11C1422E
+        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Mar 2023 20:10:45 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id g17so4580043lfv.4
+        for <linux-bluetooth@vger.kernel.org>; Fri, 24 Mar 2023 20:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679711261;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lcwr2Kd3/25AD+mzfk7NtcjdPc+eIvQ9nQO3HF6SYs8=;
-        b=bZkUnqqY/s+CYSdXmKxcezG8Tx3e0mPxycsKUACT+QVPd2qfFYQwA+f87+Qa6D9NiP
-         6eQQzzAhIsD5Ke5bAJWTEQqwhiaeTA+j8XFII6ZXqvigo3ELNozYCxstfK0jbkka0R68
-         deS+iZp4Gyr4sTsQVQdRDH+Qva8quMy4u1RoGzvi2/uoPljli7ebCz2d13eIR6bN7+Ds
-         e6Xa1qZ4M8pyq/Fw6EZwmCWXMhapMQt38P61SEcdoaih30G8Xc26gRWipW67dEKR6DSf
-         oPh2uBtPrAvWQPD/m+tR0CDmIFiDsfp0qgZzQMMvXBwz1ihHEIOLlbieguhgy9TG+ZAG
-         6Lng==
+        d=gmail.com; s=20210112; t=1679713843;
+        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=21T2ruoV7Hb2byNjXRrKdStLSJ9N1tOpZrLYkVqWI4g=;
+        b=DVBp6IM4QEk51zOjXsKkHWEQPmDzXCe512wtZJN5rOWcaqKLFdq3Jzy31Q3JVfY/E3
+         sT7PKEJmuyNz7/dHGpbT3//qOpNLnmt95/jiomDdP2JsEX+MmGf21i6RcfM2BRqNYyKZ
+         5tEYUZJNY7kC7Ua5yV91ofI7KhFApzwvetmf1cj1SYQHTeX/UXk5DKmdTlre6akTa4vk
+         SurS1wF633sPE51+E+eiXgB5IWT6K5z5M6U7s4ZxqjlsHGMoBYWvnosJ62DJ8wh+6nls
+         T+8wg+Mjyawy5ASWtKBbtxeQpKPNEBcgmrDIpC6KWtDsQn/Z3jSTFCmnhPuG+M8AXuUz
+         UEWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679711261;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lcwr2Kd3/25AD+mzfk7NtcjdPc+eIvQ9nQO3HF6SYs8=;
-        b=tscV6ulA6nvfj2NCwJBa3WiCkKQfjSZtsh2f/ccM2HbpxKoh84qtVfLRhfEvnsVSAA
-         qJ3oJXVvxmN6Zw/Fjzc9OCy8BLgrf9y3dm3Q1fnKtffNoTA69h2eGy/ImI1OCIfufnJC
-         TY4pvM7Zq6+plbPwkVqYCgy0ugQZn/pyy6Vn6MlUDeojWKdwY3I1CNbEYu7oqL1rOsZT
-         byNrmhPM6k9uviQ+kLf3XigTN4revnebP2Pp/dax42XnUgphTbxuU8AU78sMv96Opzxw
-         xFi4P3n7UX+KdYqefFvX8TqJDP2KeDN3v33KSPWBYl+aMs6TDz7oTBokNT1xeIvxqUnh
-         R6GQ==
-X-Gm-Message-State: AAQBX9eSIqrwPoXWd61RCXnd3VZ4L3HXkNSCD94j3/vOJDfg75H6K3pR
-        KeCMvMlauU9o+0L9gxWQ10nBBOoKcQs=
-X-Google-Smtp-Source: AKy350Yuly35Z0+YZiz5LG2zHxevqewa35Lor0vxglHOwR2gF/snSvVT17OlVuWZihn5CytB5MAAjw==
-X-Received: by 2002:a05:6214:2349:b0:5d1:f504:fda9 with SMTP id hu9-20020a056214234900b005d1f504fda9mr6882386qvb.26.1679711261470;
-        Fri, 24 Mar 2023 19:27:41 -0700 (PDT)
-Received: from [172.17.0.2] ([172.177.255.85])
-        by smtp.gmail.com with ESMTPSA id cw2-20020ad44dc2000000b005dd8b9345aesm1140492qvb.70.2023.03.24.19.27.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Mar 2023 19:27:41 -0700 (PDT)
-Message-ID: <641e5c1d.d40a0220.65636.54c4@mx.google.com>
-Date:   Fri, 24 Mar 2023 19:27:41 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============1916653679885171966=="
+        d=1e100.net; s=20210112; t=1679713843;
+        h=to:subject:message-id:date:from:sender:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=21T2ruoV7Hb2byNjXRrKdStLSJ9N1tOpZrLYkVqWI4g=;
+        b=VVnuNKr2cGAWmgLAjsEiGGghbDoDyQX6p+UJyDrd0C6fWrMUpTBDkBhKLbjY54G3eV
+         SJIld6kPsxc0PEdvb4o7zW34vMhjc7rgiEnT6YivFxMGQhRHd/ik7cFzGEf/MLAirm1M
+         58vIliDqxOvmoGvjzxF9SD5G5dfCkR4YAP8KxmT23VcOtjMVKb5pBiJGx2+vzWDXowpK
+         Nfy4cqE2hUkrNczoNrwo2r/aZYABOmk+ZbUuyMGyq9Sxr49Qs6Dl940BzNXEDmrpI4uZ
+         R7PbZGVxkkf+GO6XbFSVazo9+Terv92iAkcX+er1FvaqtQcPYeT9MINjaaEnU18NmN1y
+         XW6Q==
+X-Gm-Message-State: AAQBX9fIL9O3PRVowVHZkCdrEAYb/MLFM7QYQ9K2dMG6NssTKnrMPbzz
+        TL2WayhGLLQW4HhJXMGJetCCtFhNByTR8AP0NPU=
+X-Google-Smtp-Source: AKy350a3WMVHJt/+HLtDaQWymMLL0z+GbI1iDxzNStu1tLwQzTtw8HJhDzWkPTb6EsfGy58NzpZnDHFJg61+MhoZftA=
+X-Received: by 2002:ac2:55a4:0:b0:4eb:a8c:5f22 with SMTP id
+ y4-20020ac255a4000000b004eb0a8c5f22mr83184lfg.5.1679713843640; Fri, 24 Mar
+ 2023 20:10:43 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Subject: RE: [BlueZ,1/4] shared/gatt-db: Make gatt_db_attribute_get_value public
-In-Reply-To: <20230324233856.3693370-1-luiz.dentz@gmail.com>
-References: <20230324233856.3693370-1-luiz.dentz@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Sender: ahmedmusas66688@gmail.com
+Received: by 2002:ab2:51a:0:b0:1b2:c788:b617 with HTTP; Fri, 24 Mar 2023
+ 20:10:42 -0700 (PDT)
+From:   Mrs Suzara Maling Wan <mrssuzaramailingwan12@gmail.com>
+Date:   Sat, 25 Mar 2023 03:10:42 +0000
+X-Google-Sender-Auth: a40wMiAsSmxC1nVfnR8u9cOFdL4
+Message-ID: <CAEiNFvY-=HPnpStGByJa4EQH1uVu=GADGYVzNbppj=355or+mw@mail.gmail.com>
+Subject: DEAR FRIEND
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.1 required=5.0 tests=DEAR_FRIEND,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,LOTS_OF_MONEY,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        SUBJ_ALL_CAPS,T_HK_NAME_FM_MR_MRS,UNDISC_MONEY autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:143 listed in]
+        [list.dnswl.org]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [ahmedmusas66688[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [ahmedmusas66688[at]gmail.com]
+        *  2.6 DEAR_FRIEND BODY: Dear Friend? That's not very dear!
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  2.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============1916653679885171966==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+I am Mrs Suzara Maling Wan, I have a desire to build an orphanage home
+in your country and also support the poor and less privilege in your
+society, I want you to handle this project on my behalf, I have $4.5
+Million Dollars with Ecobank to execute this project .
 
-This is automated email and please do not reply to this email!
+If you are in a good position to handle this project, reply for
+further details of the project
 
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=733736
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      2.00 seconds
-GitLint                       PASS      1.35 seconds
-BuildEll                      PASS      26.61 seconds
-BluezMake                     PASS      775.64 seconds
-MakeCheck                     PASS      11.40 seconds
-MakeDistcheck                 PASS      150.29 seconds
-CheckValgrind                 PASS      242.80 seconds
-CheckSmatch                   WARNING   324.85 seconds
-bluezmakeextell               PASS      98.44 seconds
-IncrementalBuild              PASS      2446.98 seconds
-ScanBuild                     PASS      960.47 seconds
-
-Details
-##############################
-Test: CheckSmatch - WARNING
-Desc: Run smatch tool with source
-Output:
-monitor/att.c: note: in included file:monitor/display.h:82:26: warning: Variable length array is used.monitor/att.c: note: in included file:monitor/display.h:82:26: warning: Variable length array is used.monitor/packet.c: note: in included file:monitor/display.h:82:26: warning: Variable length array is used.monitor/packet.c:1799:26: warning: Variable length array is used.monitor/packet.c: note: in included file:monitor/bt.h:3551:52: warning: array of flexible structuresmonitor/bt.h:3539:40: warning: array of flexible structures
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============1916653679885171966==--
+Regards
+Mrs Suzara Maling Wan
