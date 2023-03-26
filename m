@@ -2,119 +2,82 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3455B6C963C
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 26 Mar 2023 17:47:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0FF06C98C4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Mar 2023 01:38:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231808AbjCZPrc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 26 Mar 2023 11:47:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40140 "EHLO
+        id S231667AbjCZXiW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 26 Mar 2023 19:38:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjCZPrb (ORCPT
+        with ESMTP id S229456AbjCZXiS (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 26 Mar 2023 11:47:31 -0400
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2122.outbound.protection.outlook.com [40.107.212.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BECC7284;
-        Sun, 26 Mar 2023 08:47:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SX8XuM0atMIGouSal4Lh2psK72OIE48PRuHyrP4Dm3v7t6KQin6KgPvwvZKj/DscgWYjJvnbdmvLkvu/I2OlPXgKEisyh1jp7dsdRVyt5kKPrgrqDImvUokfIcySqoeJat5rlhS5TT68Gr05tIAm8Wea0WGs7YMN1+MROFGiQ793zybr3r518RbuH7Np4fVwtHC1UlfqIIfziM49DNIZX1hpjj16ci3rRGucuTMf8TaD2PsIho3eNWIgqV4isO/WL2zT/jKSYFeFT1gfrvYmpZGIcStxAAo3NHI/otxEOKM+2aOiQs/fJhjT6XF7N032q+oN3glD+jECcZ6doi1x8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lNUepj8OUvJkjBOvf7TT1wItwEC47CK3kkVFfrcLG3U=;
- b=X9yVasjwi7YM1/PSDpLNHgnJAKk69sHZZdtCmSwBbP6xXKyAl7/FZFykGrHTCZD2tPsPkJPMNOHD5zOhHfJAejp/cOyRjzT4qEMnPJ2g/ePDpVeSxFZiCpct2OjA+Jou8fdhs6BtMZGjUwEnMkBuQ3Tm675Eo3/hHnluM28ozer6uQbI7Bd6qXZCSZ8yI6UBDVEwC7I6UuVaI/6n6HoSwRWb30Vz8X1kcO9M5AG4iVcyNWmdjANp+X6RQEhR1H7MKgU0YiAh3yWeJM6pkyVMe8ICM6X5qjy7JDhS1lgYni2fGKNGs7uaTZxLVemMWdv453cdPfYRa73PKFJq9mnoJQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=corigine.com; dmarc=pass action=none header.from=corigine.com;
- dkim=pass header.d=corigine.com; arc=none
+        Sun, 26 Mar 2023 19:38:18 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C6A14C0E
+        for <linux-bluetooth@vger.kernel.org>; Sun, 26 Mar 2023 16:38:15 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id x8-20020a9d3788000000b0069f922cd5ceso3682727otb.12
+        for <linux-bluetooth@vger.kernel.org>; Sun, 26 Mar 2023 16:38:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=corigine.onmicrosoft.com; s=selector2-corigine-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lNUepj8OUvJkjBOvf7TT1wItwEC47CK3kkVFfrcLG3U=;
- b=vLpHbz6BtQBe/pgOCu0Go/SWJRF0HWFJTUZLstR4AVhBUgx7VyK5+/ak+sVUPDk2EKlji2WAQ/JBFbwjWlWZ4/bo9XiYvQonpyamNkaiOKdWq2/kVXpLPyw8aEbB4hek1AHTZpyxX72OWxYS4foOS2IX6GYaE+T8ZV9duBq6ysQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=corigine.com;
-Received: from PH0PR13MB4842.namprd13.prod.outlook.com (2603:10b6:510:78::6)
- by BY5PR13MB3860.namprd13.prod.outlook.com (2603:10b6:a03:22d::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.41; Sun, 26 Mar
- 2023 15:47:26 +0000
-Received: from PH0PR13MB4842.namprd13.prod.outlook.com
- ([fe80::c506:5243:557e:82cb]) by PH0PR13MB4842.namprd13.prod.outlook.com
- ([fe80::c506:5243:557e:82cb%4]) with mapi id 15.20.6222.028; Sun, 26 Mar 2023
- 15:47:26 +0000
-Date:   Sun, 26 Mar 2023 17:47:18 +0200
-From:   Simon Horman <simon.horman@corigine.com>
-To:     Manish Mandlik <mmandlik@google.com>
-Cc:     marcel@holtmann.org, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org,
-        chromeos-bluetooth-upstreaming@chromium.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
+        d=kali.org; s=google; t=1679873894;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rD/4jqknT+2SfkmCPcdlb88a5ABGC34ExHbgNfTm8GY=;
+        b=k0lfLbGWXDEOwiywNv2JuXcotcGCpmb0zO7bHJsyT1/SFrC4mtmICd8TrIiVsS2ev8
+         n48L4HlRzGN+FEo5hL4UKaXC1NfU5ZlXw6vpgFANLP87+P3X2HB7OSHHsrQTsWexcH5e
+         e/7wzQ8eolc4nZVRK3QfofFJUu5qsAM8cSCloKG28HXdOHyEMHag1Xmofb/FeSdI0EPo
+         cYh077vAmvg0Ae0FUHBylrAwlQdSSRvoSd7g3Hxy/kYs5tD3bubOmMI0ndNcbVPTx0d9
+         rbyQ+TJnvZclxZFI7EjKuc6+pehsmWMKiTinqHPqZTMM2L3v9U3G7KunzRrCjrJuU43r
+         EZ8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679873894;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rD/4jqknT+2SfkmCPcdlb88a5ABGC34ExHbgNfTm8GY=;
+        b=51wJmOAiqgEzy3IdvnmfAU2PHxdaNFLyvxER2rS4yzvJslEW6fdZuFBRRHVAt0FR3S
+         Ku5E9r5v8Kq+6oYR2T/QQgNiwGjMyzRHFgBGZs61eCexUlYHagnFAo+DuT/oTwdZZzUs
+         vPf/7qZxoQT71WDSzC5rGzP34ZipUXOlbkyXl4MVr8aRwEMpSL/WqZk0Y3ebBDDNw7XH
+         Ag90GmvrfgoPxA8f9OYnjRSaHGYOKHfMcszFApyjL1SPMjdc2V5fi8OZ1mZLcIBf2vwO
+         hpJo4iTpS4WTrS8KM8xj0C3/t3Gj5cFYlGQyECEVOWDzzkihjzlBTsknAJt/JYb1yImf
+         01cA==
+X-Gm-Message-State: AAQBX9dGyOS4SJcms6Vjoi5tQ5Z1hD2/VCyJlnJ6xbDSsKmPTNdMroZK
+        x3rq0ZD8fFiUg8qrDUoh4W8/CQ==
+X-Google-Smtp-Source: AKy350agDeXz+t/l3M9eFwvJa5NwWBwm5Y8uqyR9+NypJltaTSL4Dw714LoHxmGJ0pISV3W6/SOdxQ==
+X-Received: by 2002:a05:6830:3892:b0:6a1:2a17:16f2 with SMTP id bq18-20020a056830389200b006a12a1716f2mr2999700otb.1.1679873894386;
+        Sun, 26 Mar 2023 16:38:14 -0700 (PDT)
+Received: from localhost ([2600:1700:eb1:c450::35])
+        by smtp.gmail.com with ESMTPSA id m18-20020a9d7ad2000000b006a120f50a6fsm2044585otn.61.2023.03.26.16.38.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Mar 2023 16:38:13 -0700 (PDT)
+From:   Steev Klimaszewski <steev@kali.org>
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
         Eric Dumazet <edumazet@google.com>,
         Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
-        Paolo Abeni <pabeni@redhat.com>, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH v8 1/4] Bluetooth: Add support for hci devcoredump
-Message-ID: <ZCBpBs3i4+RCv5SI@corigine.com>
-References: <20230323140942.v8.1.I9b4e4818bab450657b19cda3497d363c9baa616e@changeid>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230323140942.v8.1.I9b4e4818bab450657b19cda3497d363c9baa616e@changeid>
-X-ClientProxiedBy: AM4P190CA0011.EURP190.PROD.OUTLOOK.COM
- (2603:10a6:200:56::21) To PH0PR13MB4842.namprd13.prod.outlook.com
- (2603:10b6:510:78::6)
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>,
+        Tim Jiang <quic_tjiang@quicinc.com>,
+        Johan Hovold <johan@kernel.org>
+Subject: [PATCH v8 0/4] Add WCN6855 Bluetooth support
+Date:   Sun, 26 Mar 2023 18:38:08 -0500
+Message-Id: <20230326233812.28058-1-steev@kali.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR13MB4842:EE_|BY5PR13MB3860:EE_
-X-MS-Office365-Filtering-Correlation-Id: c456dccb-2fbf-4bd7-aabf-08db2e11659e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 9LSh2fK3pnIiELcIohXSOOd5ib0F7yjaaF69t0w4XuAtsuvk/UHnruIxDT2kvLUylojI4cR44M97DcMuDYy+ucorFIB7jUwuGcipF3Bz4sVU2CCyqCNY+ANi1kSOgGxcWkAMPYHsxPI3ldOrRRmCsG6XRh/2AYa6tL81tpYgklIogHDukmqq8DhDwG6yTXQgKdxYDON4Bw438RLYE6a/M8Z8yD8CPIVmEJSYD5VxEMp+HzuZCzvwD4mrvLMewKDO9ZU7xbitSoIdfOAoHLl/szfPTBq08MCU6A988jWRCVluE8jk0YC/GSXRfZoKT68pwb9z63AkU6n8dVy1yAB6gmKk4quImHfn8nQLTOwQiAK/NSslSgQFFSZ72nt8SIAQKVziEHP4DhuqmFAT4mgWwjEDMTvsHzifHoBBjiBPce0BkH3vwkRz06qzluiWFPDZNEeJkGQaI3aK8s40AYOsfCNfYhg6i29xpPMZpGSHQpz4Z10rssB1VabkSFkDYTPEaJqrqhQXj2y+6BNAkCYHhTSvHUYYzL7U0p90ykEUeGr0FzOq9NNLPGnrEJD0TE40ksdI4X7LMF6BSm8Flrsi5MGPGt6+H9Llx3KsyKvVCkw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR13MB4842.namprd13.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(366004)(376002)(136003)(346002)(39830400003)(451199021)(2906002)(86362001)(83380400001)(186003)(2616005)(38100700002)(66556008)(8936002)(5660300002)(4326008)(6916009)(8676002)(41300700001)(66946007)(7416002)(36756003)(66476007)(44832011)(6506007)(6512007)(6486002)(316002)(6666004)(478600001)(54906003)(67856001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?VqXqHNIz+azwSY/i9aZfT5bxwkY/NJkgTywg7O47Lpv6res5zrfV/bAmmtbN?=
- =?us-ascii?Q?3zFc0PH1dyFMSDOsNrVzHQAy6+a92XECxApM2s0jU1AQNoR+NbGu2t/SIDDO?=
- =?us-ascii?Q?qH9g7UZEihrI4OOEiVsuwBbI9LdNkNMOriObCo0HePudIAsRdSWbS6DL8s3j?=
- =?us-ascii?Q?3k8RDujwY+Un1F548RYGvSZ4owf70YC/PAMMBiWoafzPodJoXfZxNkH5dPzn?=
- =?us-ascii?Q?DEcUdqSFKRq8iL2LLYAeYVL3JKD8chOi7xqXBdOpp4dMwARd4e9yRbT8204b?=
- =?us-ascii?Q?O0KYlcd8ELR7ntHQc3B98xMI/aAxpuhSS3ZWh4IqewiVDKn+/X/5A5P9wwyR?=
- =?us-ascii?Q?l6Lo8d60JNS9Ql7SVQNtpGcx8UqX+wLZQ89XEz9NQPGsgr4v4PDOr8jusXKI?=
- =?us-ascii?Q?+6WveQZvIW386AX+/IqLUIAkbU42JLB4xixosPBx0WwOWc+3o/Kj/VICRHIp?=
- =?us-ascii?Q?pMa+ZWoBLTHYYTsXwNuhTkHCzmFTRk7xywqpWygdyjPW62/POeZ7BFXhY4w8?=
- =?us-ascii?Q?DGMkTJVWVCDk/kToRo/Gwlr32abbr7YBgeYplsgF/Tanf+a+KQ4XEdVX8r7I?=
- =?us-ascii?Q?p79CkYoVZgOPSBXUy/kV/2TzkQyhmhmR7ScV5aJ9n0z1IvMBB2/cEd47sd4B?=
- =?us-ascii?Q?okhkd/ckjffVRmXIqKpx9FeFY90g0jj4be9Ndk+9CHr9UHnjbMkI5fr3Www1?=
- =?us-ascii?Q?KwdR97c+kl1vmvVAEIl0J9D1fBmQibl1qdwMfuwn6NoK1OuZgthYOr/9OXic?=
- =?us-ascii?Q?hcv6SoeKtQv1BvODd+1O9zznCm510R3SWe91+Zmwv/TJfS7szcED2I//DVV6?=
- =?us-ascii?Q?W65hcfXAllUAuiVN+jplFxGkrLASkLKXPKqLsGkyJ/x0uhqmTUFi6uMCcF6k?=
- =?us-ascii?Q?6jmKyTQU5qWzCfEBy6D2kHs9DIs3lfZIBCw1pvAlnS1uEoijZM4Hz2Jlgqud?=
- =?us-ascii?Q?t+3u1Or6HjEO6Z3asdPVCPI+ioygcgL6SeIlCSZjk89t1oS6XxBEVtv94sm5?=
- =?us-ascii?Q?eklMmgPMrt/SjI5iOMPfXruWhVTd6IGeEDs9txucj45dnyujrlHw+5JDfuGn?=
- =?us-ascii?Q?4q3b4YepiboXYHsw9nCiWFiyX3Qe52GHmIiQulYshT4wjwi9p5riLruhDvG+?=
- =?us-ascii?Q?iWCvGRGma0jIYq+R+Q7wHq3Wu1PUJYnRiP+toqEQTQt/TuNY1ZZRJ5gOXA5e?=
- =?us-ascii?Q?9nI3lSBKuu3b/xtImL8C3wZQ3HjdRTXlijo4pHC5adf3YN2xDyJLUn4m5oKf?=
- =?us-ascii?Q?Xvp8su67/CcZ4eCSuWXhrUxFARHsJF42LLCnvBx2HVqVbukj+pzcKWklWo98?=
- =?us-ascii?Q?8iirCjLa9QSZHlfiq8V300beb+t3GHI655GUzw5MgT+orzTAcn6wz03Qe40i?=
- =?us-ascii?Q?u525uU4DiFgLDaqzVGJA4u5fYXRN6SNtVI83IkdjXtZvN5wGpMxgqyxPEqPq?=
- =?us-ascii?Q?9BXa1sS/qviLqxaG1470kaYlZ31nCWJOGhCZlgVJSb+LDR5X3Bk3+0usct+T?=
- =?us-ascii?Q?hjcmkiU6ph1emTA/057Sp7S9c5b0Mvi7JS+aPgqGQWG1nPWD8Zidyv1/31wK?=
- =?us-ascii?Q?8gBzgeM8p3+Nh4cIlCPqwFWpcuIycy5iUUStp9PDo4wJvS28VzI9lFX+oEqY?=
- =?us-ascii?Q?t4ueKG1y594/FbSsuJLJUGJk/XOu/rPIpgksCVdKL6zhiAwv6wlrAafNEktI?=
- =?us-ascii?Q?sN2+rA=3D=3D?=
-X-OriginatorOrg: corigine.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c456dccb-2fbf-4bd7-aabf-08db2e11659e
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR13MB4842.namprd13.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Mar 2023 15:47:26.0694
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: fe128f2c-073b-4c20-818e-7246a585940c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Y+rwxFe2TAz8ASZVF9P7KI8kn691TopaYRYpirVIsDeBGs4emFA2mSpG/g1XIBGWU5LYyoXoBYRbXefkGJ13TERDrR0Dd2t+CXJtnEDkOKQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR13MB3860
-X-Spam-Status: No, score=-0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -122,309 +85,102 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Thu, Mar 23, 2023 at 02:10:15PM -0700, Manish Mandlik wrote:
-> From: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> 
-> Add devcoredump APIs to hci core so that drivers only have to provide
-> the dump skbs instead of managing the synchronization and timeouts.
-> 
-> The devcoredump APIs should be used in the following manner:
->  - hci_devcoredump_init is called to allocate the dump.
->  - hci_devcoredump_append is called to append any skbs with dump data
->    OR hci_devcoredump_append_pattern is called to insert a pattern.
->  - hci_devcoredump_complete is called when all dump packets have been
->    sent OR hci_devcoredump_abort is called to indicate an error and
->    cancel an ongoing dump collection.
-> 
-> The high level APIs just prepare some skbs with the appropriate data and
-> queue it for the dump to process. Packets part of the crashdump can be
-> intercepted in the driver in interrupt context and forwarded directly to
-> the devcoredump APIs.
-> 
-> Internally, there are 5 states for the dump: idle, active, complete,
-> abort and timeout. A devcoredump will only be in active state after it
-> has been initialized. Once active, it accepts data to be appended,
-> patterns to be inserted (i.e. memset) and a completion event or an abort
-> event to generate a devcoredump. The timeout is initialized at the same
-> time the dump is initialized (defaulting to 10s) and will be cleared
-> either when the timeout occurs or the dump is complete or aborted.
-> 
-> Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> Signed-off-by: Manish Mandlik <mmandlik@google.com>
-> Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+First things first, I do not have access to the specs nor the schematics, so a
+lot of this was done via guess work, looking at the acpi tables, and looking at
+how a similar device (wcn6750) was added.
 
-...
+This patchset has 2 patchsets that it depends on, for the bindings so that they
+pass dtbs_check, as well as adding in the needed regulators to make bluetooth
+work.
 
-> +static int hci_devcoredump_update_hdr_state(char *buf, size_t size, int state)
-> +{
-> +	int len = 0;
-> +
-> +	if (!buf)
-> +		return 0;
-> +
-> +	len = snprintf(buf, size, "Bluetooth devcoredump\nState: %d\n", state);
+https://lore.kernel.org/lkml/20230316105800.18751-1-johan+linaro@kernel.org/
+and
+https://lore.kernel.org/lkml/20230322113318.17908-1-johan+linaro@kernel.org/
 
-The snprintf documentation says:
+The end result is that we do have a working device, using the firmware files
+that are found in the linux-firmware git repository already.
 
- * The return value is the number of characters which would be
- * generated for the given input, excluding the trailing null,
- * as per ISO C99.  If the return is greater than or equal to
- * @size, the resulting string is truncated.
 
-While the scnprintf documentation says:
+Bluetooth: hci0: setting up wcn6855
+Bluetooth: hci0: Frame reassembly failed (-84)
+Bluetooth: hci0: QCA Product ID   :0x00000013
+Bluetooth: hci0: QCA SOC Version  :0x400c0210
+Bluetooth: hci0: QCA ROM Version  :0x00000201
+Bluetooth: hci0: QCA Patch Version:0x000038e6
+Bluetooth: hci0: QCA controller version 0x02100201
+Bluetooth: hci0: QCA Downloading qca/hpbtfw21.tlv
+Bluetooth: hci0: QCA Downloading qca/hpnv21.bin
+Bluetooth: hci0: QCA setup on UART is completed
 
- * The return value is the number of characters written into @buf not including
- * the trailing '\0'. If @size is == 0 the function returns 0.
+There are a few things that I am not sure why they happen, and don't have the
+knowledge level to figure out why they happen or debugging it.
 
-As the return value us used to determine how many bytes to put to
-an skb, you might want scnprintf(), or a check on the value of len here.
+I do not know why the Frame assembly failed, and modprobe -r hci_uart and then
+modprobe hci_uart does not always show the same Frame assembly failed.
 
-> +
-> +	return len + 1; /* snprintf adds \0 at the end upon state rewrite */
-> +}
-> +
-> +/* Call with hci_dev_lock only. */
-> +static int hci_devcoredump_update_state(struct hci_dev *hdev, int state)
-> +{
-> +	hdev->dump.state = state;
-> +
-> +	return hci_devcoredump_update_hdr_state(hdev->dump.head,
-> +						hdev->dump.alloc_size, state);
-> +}
+The BD Address also seems to be incorrect, and I'm not sure what is going on
+there either.
 
-...
+Testing was done by connecting a Razer Orochi bluetooth mouse, and using it, as
+well as connecting to and using an H2GO bluetooth speaker and playing audio out
+via canberra-gtk-play as well as a couple of YouTube videos in a browser.
+Additionally, a huddle was done in Slack on Chromium with a pair of Gen1 Apple
+AirPods as well as a hangout in Discord on Firefox ESR.
 
-> +/* Call with hci_dev_lock only. */
-> +static int hci_devcoredump_prepare(struct hci_dev *hdev, u32 dump_size)
-> +{
-> +	struct sk_buff *skb = NULL;
-> +	int dump_hdr_size;
-> +	int err = 0;
-> +
-> +	skb = alloc_skb(MAX_DEVCOREDUMP_HDR_SIZE, GFP_ATOMIC);
-> +	if (!skb) {
-> +		bt_dev_err(hdev, "Failed to allocate devcoredump prepare");
+steev@wintermute:~$ hciconfig -a
+hci0:   Type: Primary  Bus: UART
+        BD Address: 00:00:00:00:5A:AD  ACL MTU: 1024:8  SCO MTU: 240:4
+        UP RUNNING PSCAN
+        RX bytes:1492 acl:0 sco:0 events:126 errors:0
+        TX bytes:128743 acl:0 sco:0 commands:597 errors:0
+        Features: 0xff 0xfe 0x8f 0xfe 0xd8 0x3f 0x5b 0x87
+        Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3
+        Link policy: RSWITCH HOLD SNIFF
+        Link mode: PERIPHERAL ACCEPT
+        Name: 'wintermute'
+        Class: 0x0c010c
+        Service Classes: Rendering, Capturing
+        Device Class: Computer, Laptop
+        HCI Version:  (0xc)  Revision: 0x0
+        LMP Version:  (0xc)  Subversion: 0x46f7
+        Manufacturer: Qualcomm (29)
 
-I don't think memory allocation errors need to be logged like this,
-as they are already logged by the core.
+steev@wintermute:~$ dmesg | grep Razer
+[ 3089.235440] input: Razer Orochi as /devices/virtual/misc/uhid/0005:1532:0056.0003/input/input11
+[ 3089.238580] hid-generic 0005:1532:0056.0003: input,hidraw2: BLUETOOTH HID v0.01 Mouse [Razer Orochi] on 00:00:00:00:5a:ad
+steev@wintermute:~$ dmesg | grep H2GO
+[ 3140.959947] input: H2GO Speaker (AVRCP) as /devices/virtual/input/input12
+steev@wintermute:~$ dmesg | grep AirPod
+[  853.742619] input: Steev’s AirPods (AVRCP) as /devices/virtual/input/input14
 
-Please run checkpatch, which flags this.
+v8 Adds a dependency on another patchset from Johan, which can be found at
+https://lore.kernel.org/lkml/20230322113318.17908-1-johan+linaro@kernel.org/
+which I believe has already been accepted upstream, and removes the regulator
+from the dts in my patchset, additionally, fix the alphabetization.
 
-> +		return -ENOMEM;
-> +	}
-> +
-> +	dump_hdr_size = hci_devcoredump_mkheader(hdev, skb);
-> +
-> +	if (hci_devcoredump_alloc(hdev, dump_hdr_size + dump_size)) {
-> +		err = -ENOMEM;
-> +		goto hdr_free;
-> +	}
-> +
-> +	/* Insert the device header */
-> +	if (!hci_devcoredump_copy(hdev, skb->data, skb->len)) {
-> +		bt_dev_err(hdev, "Failed to insert header");
-> +		hci_devcoredump_free(hdev);
-> +
-> +		err = -ENOMEM;
-> +		goto hdr_free;
-> +	}
-> +
-> +hdr_free:
-> +	if (skb)
+v7 Addresses commit message review nits by Paul, as  well as dts
+changes requested by Johan. Additionally, the dt bindings now rely on
+https://lore.kernel.org/lkml/20230316105800.18751-1-johan+linaro@kernel.org/ for
+the bias-bus-hold option on sc8280xp.
 
-It seems that this condition is always true.
-And in any case, kfree_skb can handle a NULL argument.
+v6 can be found at https://lore.kernel.org/all/20230316034759.73489-1-steev@kali.org/
 
-> +		kfree_skb(skb);
-> +
-> +	return err;
-> +}
+Bjorn Andersson (1):
+  arm64: dts: qcom: sc8280xp: Define uart2
 
-...
+Steev Klimaszewski (3):
+  dt-bindings: net: Add WCN6855 Bluetooth
+  Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6855
+  arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
 
-> +void hci_devcoredump_rx(struct work_struct *work)
-> +{
-> +	struct hci_dev *hdev = container_of(work, struct hci_dev, dump.dump_rx);
-> +	struct sk_buff *skb;
-> +	struct hci_devcoredump_skb_pattern *pattern;
-> +	u32 dump_size;
-> +	int start_state;
-> +
-> +#define DBG_UNEXPECTED_STATE() \
-> +		bt_dev_dbg(hdev, \
-> +			   "Unexpected packet (%d) for state (%d). ", \
-> +			   hci_dmp_cb(skb)->pkt_type, hdev->dump.state)
+ .../net/bluetooth/qualcomm-bluetooth.yaml     | 17 +++++
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 70 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 14 ++++
+ drivers/bluetooth/btqca.c                     | 14 +++-
+ drivers/bluetooth/btqca.h                     | 10 +++
+ drivers/bluetooth/hci_qca.c                   | 57 +++++++++++----
+ 6 files changed, 167 insertions(+), 15 deletions(-)
 
-nit: indentation seems excessive in above 3 lines.
+-- 
+2.39.2
 
-> +
-> +	while ((skb = skb_dequeue(&hdev->dump.dump_q))) {
-> +		hci_dev_lock(hdev);
-> +		start_state = hdev->dump.state;
-> +
-> +		switch (hci_dmp_cb(skb)->pkt_type) {
-> +		case HCI_DEVCOREDUMP_PKT_INIT:
-> +			if (hdev->dump.state != HCI_DEVCOREDUMP_IDLE) {
-> +				DBG_UNEXPECTED_STATE();
-> +				goto loop_continue;
-
-I'm probably missing something terribly obvious.
-But can the need for the loop_continue label be avoided by using 'break;' ?
-
-> +			}
-> +
-> +			if (skb->len != sizeof(dump_size)) {
-> +				bt_dev_dbg(hdev, "Invalid dump init pkt");
-> +				goto loop_continue;
-> +			}
-> +
-> +			dump_size = *((u32 *)skb->data);
-> +			if (!dump_size) {
-> +				bt_dev_err(hdev, "Zero size dump init pkt");
-> +				goto loop_continue;
-> +			}
-> +
-> +			if (hci_devcoredump_prepare(hdev, dump_size)) {
-> +				bt_dev_err(hdev, "Failed to prepare for dump");
-> +				goto loop_continue;
-> +			}
-> +
-> +			hci_devcoredump_update_state(hdev,
-> +						     HCI_DEVCOREDUMP_ACTIVE);
-> +			queue_delayed_work(hdev->workqueue,
-> +					   &hdev->dump.dump_timeout,
-> +					   DEVCOREDUMP_TIMEOUT);
-> +			break;
-> +
-> +		case HCI_DEVCOREDUMP_PKT_SKB:
-> +			if (hdev->dump.state != HCI_DEVCOREDUMP_ACTIVE) {
-> +				DBG_UNEXPECTED_STATE();
-> +				goto loop_continue;
-> +			}
-> +
-> +			if (!hci_devcoredump_copy(hdev, skb->data, skb->len))
-> +				bt_dev_dbg(hdev, "Failed to insert skb");
-> +			break;
-> +
-> +		case HCI_DEVCOREDUMP_PKT_PATTERN:
-> +			if (hdev->dump.state != HCI_DEVCOREDUMP_ACTIVE) {
-> +				DBG_UNEXPECTED_STATE();
-> +				goto loop_continue;
-> +			}
-> +
-> +			if (skb->len != sizeof(*pattern)) {
-> +				bt_dev_dbg(hdev, "Invalid pattern skb");
-> +				goto loop_continue;
-> +			}
-> +
-> +			pattern = (void *)skb->data;
-> +
-> +			if (!hci_devcoredump_memset(hdev, pattern->pattern,
-> +						    pattern->len))
-> +				bt_dev_dbg(hdev, "Failed to set pattern");
-> +			break;
-> +
-> +		case HCI_DEVCOREDUMP_PKT_COMPLETE:
-> +			if (hdev->dump.state != HCI_DEVCOREDUMP_ACTIVE) {
-> +				DBG_UNEXPECTED_STATE();
-> +				goto loop_continue;
-> +			}
-> +
-> +			hci_devcoredump_update_state(hdev,
-> +						     HCI_DEVCOREDUMP_DONE);
-> +			dump_size = hdev->dump.tail - hdev->dump.head;
-> +
-> +			bt_dev_info(hdev,
-> +				    "Devcoredump complete with size %u "
-> +				    "(expect %zu)",
-
-I think it is best practice not to split quoted strings across multiple lines.
-Although it leads to long lines (which is undesirable)
-keeping the string on one line aids searching the code (with grep).
-
-checkpatch warns about this.
-
-> +				    dump_size, hdev->dump.alloc_size);
-> +
-> +			dev_coredumpv(&hdev->dev, hdev->dump.head, dump_size,
-> +				      GFP_KERNEL);
-> +			break;
-> +
-> +		case HCI_DEVCOREDUMP_PKT_ABORT:
-> +			if (hdev->dump.state != HCI_DEVCOREDUMP_ACTIVE) {
-> +				DBG_UNEXPECTED_STATE();
-> +				goto loop_continue;
-> +			}
-> +
-> +			hci_devcoredump_update_state(hdev,
-> +						     HCI_DEVCOREDUMP_ABORT);
-> +			dump_size = hdev->dump.tail - hdev->dump.head;
-> +
-> +			bt_dev_info(hdev,
-> +				    "Devcoredump aborted with size %u "
-> +				    "(expect %zu)",
-> +				    dump_size, hdev->dump.alloc_size);
-> +
-> +			/* Emit a devcoredump with the available data */
-> +			dev_coredumpv(&hdev->dev, hdev->dump.head, dump_size,
-> +				      GFP_KERNEL);
-> +			break;
-> +
-> +		default:
-> +			bt_dev_dbg(hdev,
-> +				   "Unknown packet (%d) for state (%d). ",
-> +				   hci_dmp_cb(skb)->pkt_type, hdev->dump.state);
-> +			break;
-> +		}
-> +
-> +loop_continue:
-> +		kfree_skb(skb);
-> +		hci_dev_unlock(hdev);
-> +
-> +		if (start_state != hdev->dump.state)
-> +			hci_devcoredump_notify(hdev, hdev->dump.state);
-> +
-> +		hci_dev_lock(hdev);
-> +		if (hdev->dump.state == HCI_DEVCOREDUMP_DONE ||
-> +		    hdev->dump.state == HCI_DEVCOREDUMP_ABORT)
-> +			hci_devcoredump_reset(hdev);
-> +		hci_dev_unlock(hdev);
-> +	}
-> +}
-> +EXPORT_SYMBOL(hci_devcoredump_rx);
-
-...
-
-> +static inline bool hci_devcoredump_enabled(struct hci_dev *hdev)
-> +{
-> +	return hdev->dump.supported;
-> +}
-> +
-> +int hci_devcoredump_init(struct hci_dev *hdev, u32 dmp_size)
-> +{
-> +	struct sk_buff *skb = NULL;
-
-nit: I don't think it is necessary to initialise skb here.
-     Likewise elsewhere in this patch.
-
-> +
-> +	if (!hci_devcoredump_enabled(hdev))
-> +		return -EOPNOTSUPP;
-> +
-> +	skb = alloc_skb(sizeof(dmp_size), GFP_ATOMIC);
-> +	if (!skb) {
-> +		bt_dev_err(hdev, "Failed to allocate devcoredump init");
-> +		return -ENOMEM;
-> +	}
-> +
-> +	hci_dmp_cb(skb)->pkt_type = HCI_DEVCOREDUMP_PKT_INIT;
-> +	skb_put_data(skb, &dmp_size, sizeof(dmp_size));
-> +
-> +	skb_queue_tail(&hdev->dump.dump_q, skb);
-> +	queue_work(hdev->workqueue, &hdev->dump.dump_rx);
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL(hci_devcoredump_init);
-
-...
