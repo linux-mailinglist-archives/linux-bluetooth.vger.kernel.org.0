@@ -2,50 +2,51 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3827F6CCBA0
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Mar 2023 22:50:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EEE96CCBC1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Mar 2023 23:00:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbjC1UuV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 28 Mar 2023 16:50:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57908 "EHLO
+        id S229708AbjC1VA1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 28 Mar 2023 17:00:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjC1UuU (ORCPT
+        with ESMTP id S229695AbjC1VA0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 28 Mar 2023 16:50:20 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB05B1721
-        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Mar 2023 13:50:19 -0700 (PDT)
+        Tue, 28 Mar 2023 17:00:26 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 867711BDB
+        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Mar 2023 14:00:21 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 32E4461957
-        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Mar 2023 20:50:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8CDFDC433EF;
-        Tue, 28 Mar 2023 20:50:18 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 2BD0BB81E71
+        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Mar 2023 21:00:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E13F6C4339C;
+        Tue, 28 Mar 2023 21:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680036618;
-        bh=xiQxJedCG/a9OaKMxhOqzt1bff2lwc0+wo/sGFSMRq8=;
+        s=k20201202; t=1680037218;
+        bh=Ki8qlcAaO7JWXUJrDh5b3qLDmPbxfw8IuV+ERjmSjOM=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=RNoi0a85fvTTK+N+lgWrT0Rnno94O0GtmuFMygxNwsTZyOsTHbeTuPDL8ZokUil4T
-         2+QL1JgMkQ9Bs0oEi+HV5bSB823RIGX/9kaRCngAY4XRZUCgLkm9ZTMRIEl9K1gqJn
-         BElJhQGHuSllcQvXkxX3lHj9w8ruEOby+sYI3bdRS3LH2/T1xB7bXl0wEMWnI260Sz
-         iuuQwtWObo/GjypFEMKwtqluKnJdJZbrzgXmlDqPyzCfNK9uq4z41JHrDaYZDScd7a
-         hDfflPSwxjxf9lCumuTlMkCzmb3u4ss7KiBPY55MktYrT6pGf/GDGN/yKHWUrBmweI
-         JZh6Q6sdeluaQ==
+        b=t3JELSkuXYtzdUMgQCs1glH5DTMAW63fMuriTuqzc7ogA55bszSAjNjyyCB/v0q6Q
+         FUeQO4cp4vS0ajZzI83EfFOEkEdfokqfWmL8kJXlgQpf5JQ2+Fd98uNubpMeV989dW
+         QIvpw9qxHC+KbhdcnCW+z1VgMIIwXNbm6SgBAMxVFmm6boyikK3NFmu2D60K/qXxIK
+         v/NWe65iiIk+6AVyyaMMWK8hG09UzmKwdRYUr5+FLzW0mCHEvKujLuA/cTb5Lbuzpb
+         otsP6Yk9dm2Ckohhib50hUPcUz48HvdrGA0MrCm2GTc5A+JuXmOtxJnAxqsVUxuD6c
+         gqS6oJWBweT3Q==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 6A097E21EE2;
-        Tue, 28 Mar 2023 20:50:18 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C8615E50D77;
+        Tue, 28 Mar 2023 21:00:18 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v2 0/2] l2test: Enable hex input for PSM
+Subject: Re: [PATCH v2 1/2] Bluetooth: Add device 0bda:887b to device tables
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168003661843.8805.15121337504355290538.git-patchwork-notify@kernel.org>
-Date:   Tue, 28 Mar 2023 20:50:18 +0000
-References: <20230328052619.1357253-1-simon.mikuda@streamunlimited.com>
-In-Reply-To: <20230328052619.1357253-1-simon.mikuda@streamunlimited.com>
-To:     Simon Mikuda <simon.mikuda@streamunlimited.com>
-Cc:     linux-bluetooth@vger.kernel.org
+Message-Id: <168003721881.12776.7647058371878538147.git-patchwork-notify@kernel.org>
+Date:   Tue, 28 Mar 2023 21:00:18 +0000
+References: <20230323174604.30088-1-Larry.Finger@lwfinger.net>
+In-Reply-To: <20230323174604.30088-1-Larry.Finger@lwfinger.net>
+To:     Larry Finger <Larry.Finger@lwfinger.net>
+Cc:     marcel@holtmann.org, gustavo@padovan.org, johan.hedberg@gmail.com,
+        linux-bluetooth@vger.kernel.org, hildawu@realtek.com
 X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
@@ -57,25 +58,49 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluez.git (master)
+This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 28 Mar 2023 07:26:17 +0200 you wrote:
-> Thanks for review. I'm sending updated patches.
+On Thu, 23 Mar 2023 12:45:46 -0500 you wrote:
+> This device is part of a Realtek RTW8852BE chip.
 > 
-> Simon Mikuda (2):
->   l2test: Enable hex input for PSM
->   l2test: Fix setting mode for BR/EDR l2cap socket
+> The device table entry is as follows:
 > 
->  lib/l2cap.h    |  2 ++
->  tools/l2test.c | 24 ++++++++++++++++++++++--
->  2 files changed, 24 insertions(+), 2 deletions(-)
+> T:  Bus=03 Lev=01 Prnt=01 Port=12 Cnt=02 Dev#=  3 Spd=12   MxCh= 0
+> D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+> P:  Vendor=0bda ProdID=887b Rev= 0.00
+> S:  Manufacturer=Realtek
+> S:  Product=Bluetooth Radio
+> S:  SerialNumber=00e04c000001
+> C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+> E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+> E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> 
+> [...]
 
 Here is the summary with links:
-  - [BlueZ,v2,1/2] l2test: Enable hex input for PSM
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=cedace72c3f7
-  - [BlueZ,v2,2/2] l2test: Fix setting mode for BR/EDR l2cap socket
-    (no matching commit)
+  - [v2,1/2] Bluetooth: Add device 0bda:887b to device tables
+    https://git.kernel.org/bluetooth/bluetooth-next/c/8052aa4f4e7c
 
 You are awesome, thank you!
 -- 
