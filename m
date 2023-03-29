@@ -2,54 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9902D6CF3B1
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Mar 2023 21:51:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 221306CF3B2
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Mar 2023 21:51:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230221AbjC2TvX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 29 Mar 2023 15:51:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39530 "EHLO
+        id S230362AbjC2Tvj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 29 Mar 2023 15:51:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230114AbjC2TvS (ORCPT
+        with ESMTP id S230474AbjC2Tvc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 29 Mar 2023 15:51:18 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 661866E8B;
-        Wed, 29 Mar 2023 12:50:52 -0700 (PDT)
+        Wed, 29 Mar 2023 15:51:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A144F768B
+        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 12:51:13 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4441EB82438;
-        Wed, 29 Mar 2023 19:50:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D31CBC433D2;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5945261DEE
+        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 19:50:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B88F3C4339C;
         Wed, 29 Mar 2023 19:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1680119423;
-        bh=TZnuON2ALMaVaJ38tnDMvCxndBybp4aPi0dcrIYjgmw=;
+        bh=0EB5d0i3b5tyjt1g/JqYszdrgAa3+c1z4P4I8QDbdtU=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=jyW9GB/knF2E2BGAy/FeDuny4C+OgyfVr0vYdVhzVUAfclTbbCSprGNX66eQgmvf4
-         wO1F8R74F/DVDty4MPex5UbERwn73zRTbbEplYff5cBr2QobO+KfI6c26aWp3/4ZvE
-         9Qs7koLhvyHGwmQXtDd6gZGdrnD5vkUFjjVHDAtrZ4PeoVpJxAag/Hhy/5m+vGCbGn
-         RH7u8BpT/dNtWLFHTse8u12OBk+EvYnKYzGoIybV6zRjlblLUWKGOR5Y3fgfj7JmdR
-         jh9qE1XHA+VT4AU0ikw6kBJKU91C2yjWbqvh7XnRM6K7mKx+pSa8NPXYD4u1g/DHpj
-         8pZquQf43L7Cw==
+        b=k1TlDjqx3ZgzIwmxiFATn5rt/EvURBcj3RODTwlK3gavMQgN1C2opLnRvfqm+S4WC
+         H69TwERmis8imQVraziJby7STqTkdcX6+5w18I33r+RD9O7wvk0E/hpkgQGsl7UU+X
+         9DU5aO0gXXo/NXBuIZyGWkmra77zBPedmhUEIS4o4YBbl0wLLBpGR0Pb7KgywdjatK
+         W0OIPLlCxDPDbHFJl4aCmSPT9XslqJIBW6gunWUKdzSU+cwoDP+CHPPp0VjaVs0E0z
+         rCInwoHciy4BLMGmx7tg0y7/IdWTJsJSeZNr7C/d9axSoeMO353gOWKxfPkWYHal2w
+         GtmPDckk1dThg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BA9C4E21EE4;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A459FC41612;
         Wed, 29 Mar 2023 19:50:23 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/1] Bluetooth: btrtl: check for NULL in btrtl_set_quirks()
+Subject: Re: [PATCH] Bluetooth: btintel: Fix: Add LE States quirk form Solar
+ onwards
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168011942375.31352.12731684585593411555.git-patchwork-notify@kernel.org>
+Message-Id: <168011942366.31352.15310894564852597542.git-patchwork-notify@kernel.org>
 Date:   Wed, 29 Mar 2023 19:50:23 +0000
-References: <20230321114826.3544-1-max.chou@realtek.com>
-In-Reply-To: <20230321114826.3544-1-max.chou@realtek.com>
-To:     Max Chou <max.chou@realtek.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        alex_lu@realsil.com.cn, hildawu@realtek.com
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+References: <20230320061813.69895-1-chethan.tumkur.narayan@intel.com>
+In-Reply-To: <20230320061813.69895-1-chethan.tumkur.narayan@intel.com>
+To:     Chethan T N <chethan.tumkur.narayan@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
+        kiran.k@intel.com
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,20 +62,18 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 21 Mar 2023 19:48:26 +0800 you wrote:
-> From: Max Chou <max.chou@realtek.com>
+On Mon, 20 Mar 2023 11:48:13 +0530 you wrote:
+> This patch shall enable the LE States quirks by default on all
+> Intel controller from Solar products on wards.
 > 
-> The btrtl_set_quirks() has accessed btrtl_dev->ic_info->lmp_subver since
-> b8e482d02513. However, if installing a Realtek Bluetooth controller
-> without the driver supported, it will hit the NULL point accessed.
-> 
-> Add a check for NULL to avoid the Kernel Oops.
-> 
-> [...]
+> Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
+> ---
+>  drivers/bluetooth/btintel.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 
 Here is the summary with links:
-  - [1/1] Bluetooth: btrtl: check for NULL in btrtl_set_quirks()
-    https://git.kernel.org/bluetooth/bluetooth-next/c/dfa0a31c0cee
+  - Bluetooth: btintel: Fix: Add LE States quirk form Solar onwards
+    https://git.kernel.org/bluetooth/bluetooth-next/c/5b23f8375a36
 
 You are awesome, thank you!
 -- 
