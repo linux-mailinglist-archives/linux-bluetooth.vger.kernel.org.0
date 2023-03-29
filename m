@@ -2,63 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39D5C6CD631
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Mar 2023 11:19:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28C406CD73A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Mar 2023 12:03:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229878AbjC2JTA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 29 Mar 2023 05:19:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52296 "EHLO
+        id S231449AbjC2KDy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 29 Mar 2023 06:03:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230142AbjC2JSv (ORCPT
+        with ESMTP id S231468AbjC2KDv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 29 Mar 2023 05:18:51 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59F1D10A
-        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 02:18:51 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id fb38so9836307pfb.7
-        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 02:18:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680081531;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QKJ9KBgedySRjL3dvLGW6fxF1uoFaulO0VdxYq1EqpM=;
-        b=p1r/+Qm2RbcXlVFAadE7B8zA8Q5yZNtv8UCPiXRJJHc1o0lO11eUmjS92wa4AL8DjT
-         9YOUGt8vlDtKipyIUdcI5CYKfA3ogK5Chndj+nNkkdvQVAC6cauzjhi14vHOso0ASp3N
-         9yKmCmzvnz6LhHPLaObnGLr3WCZOmx7x2rQyMzGkJHpT2RQwK3g1LVgHvJc/yd/FOYqv
-         otP1AVflCUdBRZxmO9h8lLuRWcaw2dhwoqwoPvPT/Y7KzPu0dax8UgWTds2lJTVY1Tov
-         SIropnacupkltQDx0SefPxoPXx2weYgDfszCH8IX61VEOJ/BweHHVLUWpAS64lFSVtv3
-         lB2Q==
+        Wed, 29 Mar 2023 06:03:51 -0400
+Received: from mail-il1-f199.google.com (mail-il1-f199.google.com [209.85.166.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09E510DE
+        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 03:03:47 -0700 (PDT)
+Received: by mail-il1-f199.google.com with SMTP id q17-20020a056e020c3100b003245df8be9fso9882256ilg.14
+        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 03:03:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680081531;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QKJ9KBgedySRjL3dvLGW6fxF1uoFaulO0VdxYq1EqpM=;
-        b=uDcHf3hHjCLEhQRnbkadQUtIKFyOIKX7VnVYcN+mJXBH4vqBV9PHanbvWofTFxj5aF
-         hIfADnoZGlBnL3evloEREG2y7Y2BavY4E2w+6uLYpPO3KjZxQXNwUqJT+lAaMDiQW3Is
-         4hFGO7S1msx/BSNIHoGzHgAHGUkn4Y3z3Eeno3M/hDSBe8AUTTlakBE1GqTVBhYld7O6
-         byrl0s3SH9XFTHHy6EOGFMqz1cuQabQ8IGYn2/dkVzWohBOdScbOq+6fwXTe3+i+kskY
-         7Ou+6OKoEXuWd5Y61huV4H2x/QEPBRcfd5jqX9DIOC6Hd3U9fPvrs2r0N1sJo2K/iYJi
-         zv8A==
-X-Gm-Message-State: AAQBX9d3LL2zV/TUADyVKBzMhg/C916AOp5rdkaY2QdTPovLv72yRfi6
-        sorx//xiSrNvkkpqnkr5hbUnri+Qm/p5ZxrXZGI=
-X-Google-Smtp-Source: AKy350aedV/fxrErlpziEmrZmhn2BIu/mMdx87z56vsM6VctgMrJusAq1D5AuMcEXLoxseB2m9MxKjnzQklUmCHPsUA=
-X-Received: by 2002:a63:581c:0:b0:503:7bcd:89e9 with SMTP id
- m28-20020a63581c000000b005037bcd89e9mr5235329pgb.1.1680081530869; Wed, 29 Mar
- 2023 02:18:50 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680084227; x=1682676227;
+        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Cdo+FJ+hnOxvR2ATSEhcdhm77Y9ERKu4XhwzioM3xNs=;
+        b=Xnr7j13Avjuv9kli0xYWnDCOpXS6E3C21Zp5cEfjWb/+/4IHp2xcsgIoT/6wXxFQ6L
+         IbxZUlgRljFIJhYgGjln7kuzbGnBxtVlLBZyuejSmrkYp83a0jzeVbIVxDhiROMe50rc
+         iInHnRmY8KJIA50m1hJFol2xm3liIyJCQEkFezSzfZEz5RWRroofAmghK2NMUR9QXUBf
+         md+s5S4IlMyVBcUiHrkYSNWk3WStg0tsjOyQEZgjCpA/9Tazo5+UbETMlAp/g+1REJhC
+         cUyKNtcAJd/pBPbG3M33okegdheWav3EgAkUfLYrvBfKxAlTwi6+9kimEH3gfh7rCXYi
+         VfSQ==
+X-Gm-Message-State: AO0yUKVukXILeHqrYQOSGAIOiZCwFYzML3ts9BM0QsiqmkESE0fRBhcd
+        7geSo/J4CyqcLMiD03ulwBwaROChRiCT505/8D1lP7BcX9wg
+X-Google-Smtp-Source: AK7set+0iHf8fHLMGTtxqUc6hVGUISfAeEpSctCBGunKPKyuF+AMFYrdXy7FwFuslBISoNpqyoVxCoa5JXhOiukq+g//u1NH4ZRT
 MIME-Version: 1.0
-Received: by 2002:a05:6a20:6617:b0:da:5e11:4e95 with HTTP; Wed, 29 Mar 2023
- 02:18:50 -0700 (PDT)
-Reply-To: fionahill.2023@outlook.com
-From:   Fiona Hill <rogerpakayi@gmail.com>
-Date:   Wed, 29 Mar 2023 02:18:50 -0700
-Message-ID: <CAL0uRZBhMRgHsrkJ6oJazU=S=BC3SxJsCc7oCVT3t7OVavLbzA@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
+X-Received: by 2002:a5d:83d9:0:b0:745:b287:c281 with SMTP id
+ u25-20020a5d83d9000000b00745b287c281mr7192438ior.2.1680084226930; Wed, 29 Mar
+ 2023 03:03:46 -0700 (PDT)
+Date:   Wed, 29 Mar 2023 03:03:46 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <0000000000008a040605f80717b3@google.com>
+Subject: [syzbot] Monthly bluetooth report
+From:   syzbot <syzbot+lista37ea1d82518ef3e82b4@syzkaller.appspotmail.com>
+To:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, luiz.dentz@gmail.com,
+        marcel@holtmann.org, netdev@vger.kernel.org,
+        syzkaller-bugs@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=3.1 required=5.0 tests=FROM_LOCAL_HEX,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,5 +57,36 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
--- 
-Hi, please with honest did you receive my message ?
+Hello bluetooth maintainers/developers,
+
+This is a 30-day syzbot report for the bluetooth subsystem.
+All related reports/information can be found at:
+https://syzkaller.appspot.com/upstream/s/bluetooth
+
+During the period, 2 new issues were detected and 0 were fixed.
+In total, 30 issues are still open and 47 have been fixed so far.
+
+Some of the still happening issues:
+
+Crashes Repro Title
+5798    Yes   possible deadlock in rfcomm_sk_state_change
+              https://syzkaller.appspot.com/bug?extid=d7ce59b06b3eb14fd218
+2690    Yes   WARNING in hci_conn_timeout
+              https://syzkaller.appspot.com/bug?extid=2446dd3cb07277388db6
+1046    Yes   INFO: task can't die in __lock_sock
+              https://syzkaller.appspot.com/bug?extid=7d51f807c81b190a127d
+272     Yes   possible deadlock in sco_conn_del
+              https://syzkaller.appspot.com/bug?extid=b825d87fe2d043e3e652
+182     No    KASAN: slab-use-after-free Read in hci_conn_hash_flush
+              https://syzkaller.appspot.com/bug?extid=8bb72f86fc823817bc5d
+111     No    possible deadlock in rfcomm_dlc_exists
+              https://syzkaller.appspot.com/bug?extid=b69a625d06e8ece26415
+45      Yes   WARNING in call_timer_fn
+              https://syzkaller.appspot.com/bug?extid=6fb78d577e89e69602f9
+18      Yes   WARNING: ODEBUG bug in put_device
+              https://syzkaller.appspot.com/bug?extid=a9290936c6e87b3dc3c2
+
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
