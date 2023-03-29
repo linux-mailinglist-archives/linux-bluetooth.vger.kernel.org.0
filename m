@@ -2,213 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 619E26CD5B3
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Mar 2023 11:00:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39D5C6CD631
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Mar 2023 11:19:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229900AbjC2JAD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 29 Mar 2023 05:00:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48984 "EHLO
+        id S229878AbjC2JTA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 29 Mar 2023 05:19:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231238AbjC2I7p (ORCPT
+        with ESMTP id S230142AbjC2JSv (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 29 Mar 2023 04:59:45 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B705B3C10
-        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 01:59:11 -0700 (PDT)
-Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77] helo=[127.0.0.1])
-        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
-        (envelope-from <a.fatoum@pengutronix.de>)
-        id 1phRdg-0002Kq-7X; Wed, 29 Mar 2023 10:58:40 +0200
-Message-ID: <04377d2a-4d97-0345-18a1-1f18533436fe@pengutronix.de>
-Date:   Wed, 29 Mar 2023 10:58:41 +0200
+        Wed, 29 Mar 2023 05:18:51 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59F1D10A
+        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 02:18:51 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id fb38so9836307pfb.7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 02:18:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680081531;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QKJ9KBgedySRjL3dvLGW6fxF1uoFaulO0VdxYq1EqpM=;
+        b=p1r/+Qm2RbcXlVFAadE7B8zA8Q5yZNtv8UCPiXRJJHc1o0lO11eUmjS92wa4AL8DjT
+         9YOUGt8vlDtKipyIUdcI5CYKfA3ogK5Chndj+nNkkdvQVAC6cauzjhi14vHOso0ASp3N
+         9yKmCmzvnz6LhHPLaObnGLr3WCZOmx7x2rQyMzGkJHpT2RQwK3g1LVgHvJc/yd/FOYqv
+         otP1AVflCUdBRZxmO9h8lLuRWcaw2dhwoqwoPvPT/Y7KzPu0dax8UgWTds2lJTVY1Tov
+         SIropnacupkltQDx0SefPxoPXx2weYgDfszCH8IX61VEOJ/BweHHVLUWpAS64lFSVtv3
+         lB2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680081531;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QKJ9KBgedySRjL3dvLGW6fxF1uoFaulO0VdxYq1EqpM=;
+        b=uDcHf3hHjCLEhQRnbkadQUtIKFyOIKX7VnVYcN+mJXBH4vqBV9PHanbvWofTFxj5aF
+         hIfADnoZGlBnL3evloEREG2y7Y2BavY4E2w+6uLYpPO3KjZxQXNwUqJT+lAaMDiQW3Is
+         4hFGO7S1msx/BSNIHoGzHgAHGUkn4Y3z3Eeno3M/hDSBe8AUTTlakBE1GqTVBhYld7O6
+         byrl0s3SH9XFTHHy6EOGFMqz1cuQabQ8IGYn2/dkVzWohBOdScbOq+6fwXTe3+i+kskY
+         7Ou+6OKoEXuWd5Y61huV4H2x/QEPBRcfd5jqX9DIOC6Hd3U9fPvrs2r0N1sJo2K/iYJi
+         zv8A==
+X-Gm-Message-State: AAQBX9d3LL2zV/TUADyVKBzMhg/C916AOp5rdkaY2QdTPovLv72yRfi6
+        sorx//xiSrNvkkpqnkr5hbUnri+Qm/p5ZxrXZGI=
+X-Google-Smtp-Source: AKy350aedV/fxrErlpziEmrZmhn2BIu/mMdx87z56vsM6VctgMrJusAq1D5AuMcEXLoxseB2m9MxKjnzQklUmCHPsUA=
+X-Received: by 2002:a63:581c:0:b0:503:7bcd:89e9 with SMTP id
+ m28-20020a63581c000000b005037bcd89e9mr5235329pgb.1.1680081530869; Wed, 29 Mar
+ 2023 02:18:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v2 2/2] Bluetooth: Fix printing errors if LE Connection
- times out
-Content-Language: en-US
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-bluetooth@vger.kernel.org
-References: <20230327205347.51568-1-luiz.dentz@gmail.com>
- <20230327205347.51568-2-luiz.dentz@gmail.com>
-From:   Ahmad Fatoum <a.fatoum@pengutronix.de>
-Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>
-In-Reply-To: <20230327205347.51568-2-luiz.dentz@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
-X-SA-Exim-Mail-From: a.fatoum@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.3 required=5.0 tests=NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Received: by 2002:a05:6a20:6617:b0:da:5e11:4e95 with HTTP; Wed, 29 Mar 2023
+ 02:18:50 -0700 (PDT)
+Reply-To: fionahill.2023@outlook.com
+From:   Fiona Hill <rogerpakayi@gmail.com>
+Date:   Wed, 29 Mar 2023 02:18:50 -0700
+Message-ID: <CAL0uRZBhMRgHsrkJ6oJazU=S=BC3SxJsCc7oCVT3t7OVavLbzA@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello Luiz,
-
-On 27.03.23 22:53, Luiz Augusto von Dentz wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> This fixes errors like bellow when LE Connection times out since that
-> is actually not a controller error:
-> 
->  Bluetooth: hci0: Opcode 0x200d failed: -110
->  Bluetooth: hci0: request failed to create LE connection: err -110
-> 
-> Instead the code shall properly detect if -ETIMEDOUT is returned and
-> send HCI_OP_LE_CREATE_CONN_CANCEL to give up on the connection.
-> 
-> Link: https://github.com/bluez/bluez/issues/340
-
-I assume the issue described in the Github PR to be the same issue
-I had reported here:
-
-https://lore.kernel.org/linux-bluetooth/a1ce1743-e450-6cdb-dfab-56a3e3eb9aed@pengutronix.de/
-
-I gave these patches a test and all pairing attempts after the first pair/unpair
-are still unsuccessful. Only visible change to me is that there's no -110 error
-message printed anymore with default log level.
-
-Cheers,
-Ahmad
-
-#regzbot monitor: https://lore.kernel.org/linux-bluetooth/a1ce1743-e450-6cdb-dfab-56a3e3eb9aed@pengutronix.de/
-
-> Fixes: Fixes: 8e8b92ee60de ("Bluetooth: hci_sync: Add hci_le_create_conn_sync")
-> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> ---
->  include/net/bluetooth/hci_core.h |  1 +
->  net/bluetooth/hci_conn.c         |  7 +++++--
->  net/bluetooth/hci_event.c        | 16 ++++++----------
->  net/bluetooth/hci_sync.c         | 13 ++++++++++---
->  4 files changed, 22 insertions(+), 15 deletions(-)
-> 
-> diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-> index 53d3328c2b8b..e22e45fbe8db 100644
-> --- a/include/net/bluetooth/hci_core.h
-> +++ b/include/net/bluetooth/hci_core.h
-> @@ -954,6 +954,7 @@ enum {
->  	HCI_CONN_STK_ENCRYPT,
->  	HCI_CONN_AUTH_INITIATOR,
->  	HCI_CONN_DROP,
-> +	HCI_CONN_CANCEL,
->  	HCI_CONN_PARAM_REMOVAL_PEND,
->  	HCI_CONN_NEW_LINK_KEY,
->  	HCI_CONN_SCANNING,
-> diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-> index 5af3f6b011c9..e4aee5950c36 100644
-> --- a/net/bluetooth/hci_conn.c
-> +++ b/net/bluetooth/hci_conn.c
-> @@ -1233,6 +1233,8 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
->  {
->  	struct hci_conn *conn = data;
->  
-> +	bt_dev_dbg(hdev, "err %d", err);
-> +
->  	hci_dev_lock(hdev);
->  
->  	if (!err) {
-> @@ -1240,8 +1242,6 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
->  		goto done;
->  	}
->  
-> -	bt_dev_err(hdev, "request failed to create LE connection: err %d", err);
-> -
->  	/* Check if connection is still pending */
->  	if (conn != hci_lookup_le_connect(hdev))
->  		goto done;
-> @@ -2771,6 +2771,9 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
->  {
->  	int r = 0;
->  
-> +	if (test_and_set_bit(HCI_CONN_CANCEL, &conn->flags))
-> +		return 0;
-> +
->  	switch (conn->state) {
->  	case BT_CONNECTED:
->  	case BT_CONFIG:
-> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-> index 8d8547fa9032..ff99e8c2750f 100644
-> --- a/net/bluetooth/hci_event.c
-> +++ b/net/bluetooth/hci_event.c
-> @@ -2886,16 +2886,6 @@ static void cs_le_create_conn(struct hci_dev *hdev, bdaddr_t *peer_addr,
->  
->  	conn->resp_addr_type = peer_addr_type;
->  	bacpy(&conn->resp_addr, peer_addr);
-> -
-> -	/* We don't want the connection attempt to stick around
-> -	 * indefinitely since LE doesn't have a page timeout concept
-> -	 * like BR/EDR. Set a timer for any connection that doesn't use
-> -	 * the accept list for connecting.
-> -	 */
-> -	if (filter_policy == HCI_LE_USE_PEER_ADDR)
-> -		queue_delayed_work(conn->hdev->workqueue,
-> -				   &conn->le_conn_timeout,
-> -				   conn->conn_timeout);
->  }
->  
->  static void hci_cs_le_create_conn(struct hci_dev *hdev, u8 status)
-> @@ -5907,6 +5897,12 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
->  	if (status)
->  		goto unlock;
->  
-> +	/* Drop the connection if it has been aborted */
-> +	if (test_bit(HCI_CONN_CANCEL, &conn->flags)) {
-> +		hci_conn_drop(conn);
-> +		goto unlock;
-> +	}
-> +
->  	if (conn->dst_type == ADDR_LE_DEV_PUBLIC)
->  		addr_type = BDADDR_LE_PUBLIC;
->  	else
-> diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-> index 4376b6f06702..31231f0e4a28 100644
-> --- a/net/bluetooth/hci_sync.c
-> +++ b/net/bluetooth/hci_sync.c
-> @@ -246,8 +246,9 @@ int __hci_cmd_sync_status_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
->  
->  	skb = __hci_cmd_sync_sk(hdev, opcode, plen, param, event, timeout, sk);
->  	if (IS_ERR(skb)) {
-> -		bt_dev_err(hdev, "Opcode 0x%4x failed: %ld", opcode,
-> -				PTR_ERR(skb));
-> +		if (!event)
-> +			bt_dev_err(hdev, "Opcode 0x%4x failed: %ld", opcode,
-> +				   PTR_ERR(skb));
->  		return PTR_ERR(skb);
->  	}
->  
-> @@ -5128,8 +5129,11 @@ static int hci_le_connect_cancel_sync(struct hci_dev *hdev,
->  	if (test_bit(HCI_CONN_SCANNING, &conn->flags))
->  		return 0;
->  
-> +	if (test_and_set_bit(HCI_CONN_CANCEL, &conn->flags))
-> +		return 0;
-> +
->  	return __hci_cmd_sync_status(hdev, HCI_OP_LE_CREATE_CONN_CANCEL,
-> -				     6, &conn->dst, HCI_CMD_TIMEOUT);
-> +				     0, NULL, HCI_CMD_TIMEOUT);
->  }
->  
->  static int hci_connect_cancel_sync(struct hci_dev *hdev, struct hci_conn *conn)
-> @@ -6103,6 +6107,9 @@ int hci_le_create_conn_sync(struct hci_dev *hdev, struct hci_conn *conn)
->  				       conn->conn_timeout, NULL);
->  
->  done:
-> +	if (err == -ETIMEDOUT)
-> +		hci_le_connect_cancel_sync(hdev, conn);
-> +
->  	/* Re-enable advertising after the connection attempt is finished. */
->  	hci_resume_advertising_sync(hdev);
->  	return err;
-
 -- 
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
-
+Hi, please with honest did you receive my message ?
