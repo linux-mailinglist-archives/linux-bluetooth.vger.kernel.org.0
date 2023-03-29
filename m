@@ -2,54 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 221306CF3B2
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Mar 2023 21:51:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9BC66CF3AC
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 29 Mar 2023 21:51:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230362AbjC2Tvj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 29 Mar 2023 15:51:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40152 "EHLO
+        id S230456AbjC2TvV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 29 Mar 2023 15:51:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230474AbjC2Tvc (ORCPT
+        with ESMTP id S230221AbjC2TvR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 29 Mar 2023 15:51:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A144F768B
-        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 12:51:13 -0700 (PDT)
+        Wed, 29 Mar 2023 15:51:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B9856A74;
+        Wed, 29 Mar 2023 12:50:49 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5945261DEE
-        for <linux-bluetooth@vger.kernel.org>; Wed, 29 Mar 2023 19:50:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B88F3C4339C;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 62A2261E26;
+        Wed, 29 Mar 2023 19:50:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B1450C4339B;
         Wed, 29 Mar 2023 19:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1680119423;
-        bh=0EB5d0i3b5tyjt1g/JqYszdrgAa3+c1z4P4I8QDbdtU=;
+        bh=2BMeM8dD3hziGXEFErJyFqPV9onZ6X8OoaehGvFbk7A=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=k1TlDjqx3ZgzIwmxiFATn5rt/EvURBcj3RODTwlK3gavMQgN1C2opLnRvfqm+S4WC
-         H69TwERmis8imQVraziJby7STqTkdcX6+5w18I33r+RD9O7wvk0E/hpkgQGsl7UU+X
-         9DU5aO0gXXo/NXBuIZyGWkmra77zBPedmhUEIS4o4YBbl0wLLBpGR0Pb7KgywdjatK
-         W0OIPLlCxDPDbHFJl4aCmSPT9XslqJIBW6gunWUKdzSU+cwoDP+CHPPp0VjaVs0E0z
-         rCInwoHciy4BLMGmx7tg0y7/IdWTJsJSeZNr7C/d9axSoeMO353gOWKxfPkWYHal2w
-         GtmPDckk1dThg==
+        b=JuSOEnsguHz56oDMcKCeWXRXqi1iFmbhRiTkod5lT612eIYeRuQNdVanAEaMzRcEd
+         9w4M873hYQHRAbtb2gizEuAqh6NezpgtvXW6wlEO7yaLTrQENpEmk63uzuLkcbRvAZ
+         0aHX0i4stFuPY8Y2hfxfeFtkT5qZPEjkw/h64tOT6RrGE/QpHT5hpCtBRi6gbmrdKh
+         E5zCdZu2yhToBrliNxgX9GbxrJcr74A0eDrS3m6RMG/dziwLgma9/IWovNiqW4d3cy
+         y37QjRtBE6ImwpBOGzkkARsno9mJtMX96GfZMls2eZONNgX0G+VbALY2etnBZ00Ydt
+         GjYAMfKey+4sQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A459FC41612;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 93217E50D75;
         Wed, 29 Mar 2023 19:50:23 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: btintel: Fix: Add LE States quirk form Solar
- onwards
+Subject: Re: [PATCH v8 0/4] Add WCN6855 Bluetooth support
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168011942366.31352.15310894564852597542.git-patchwork-notify@kernel.org>
+Message-Id: <168011942359.31352.12230106748890164488.git-patchwork-notify@kernel.org>
 Date:   Wed, 29 Mar 2023 19:50:23 +0000
-References: <20230320061813.69895-1-chethan.tumkur.narayan@intel.com>
-In-Reply-To: <20230320061813.69895-1-chethan.tumkur.narayan@intel.com>
-To:     Chethan T N <chethan.tumkur.narayan@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
-        kiran.k@intel.com
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+References: <20230326233812.28058-1-steev@kali.org>
+In-Reply-To: <20230326233812.28058-1-steev@kali.org>
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        sven@svenpeter.dev, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        markpearson@lenovo.com, quic_tjiang@quicinc.com, johan@kernel.org
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,21 +65,29 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 20 Mar 2023 11:48:13 +0530 you wrote:
-> This patch shall enable the LE States quirks by default on all
-> Intel controller from Solar products on wards.
+On Sun, 26 Mar 2023 18:38:08 -0500 you wrote:
+> First things first, I do not have access to the specs nor the schematics, so a
+> lot of this was done via guess work, looking at the acpi tables, and looking at
+> how a similar device (wcn6750) was added.
 > 
-> Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
-> ---
->  drivers/bluetooth/btintel.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+> This patchset has 2 patchsets that it depends on, for the bindings so that they
+> pass dtbs_check, as well as adding in the needed regulators to make bluetooth
+> work.
+> 
+> [...]
 
 Here is the summary with links:
-  - Bluetooth: btintel: Fix: Add LE States quirk form Solar onwards
-    https://git.kernel.org/bluetooth/bluetooth-next/c/5b23f8375a36
+  - [v8,1/4] dt-bindings: net: Add WCN6855 Bluetooth
+    https://git.kernel.org/bluetooth/bluetooth-next/c/5c63b28b9107
+  - [v8,2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6855
+    https://git.kernel.org/bluetooth/bluetooth-next/c/e5a3f2af0036
+  - [v8,3/4] arm64: dts: qcom: sc8280xp: Define uart2
+    (no matching commit)
+  - [v8,4/4] arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
+    (no matching commit)
 
 You are awesome, thank you!
 -- 
