@@ -2,166 +2,125 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08E4F6D0DB2
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Mar 2023 20:25:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D3446D0D91
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Mar 2023 20:16:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230506AbjC3SZk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Mar 2023 14:25:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56432 "EHLO
+        id S229933AbjC3SQm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 30 Mar 2023 14:16:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230427AbjC3SZh (ORCPT
+        with ESMTP id S229448AbjC3SQk (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 Mar 2023 14:25:37 -0400
-X-Greylist: delayed 567 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 30 Mar 2023 11:25:35 PDT
-Received: from mout-b-105.mailbox.org (mout-b-105.mailbox.org [IPv6:2001:67c:2050:102:465::105])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC798D517
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Mar 2023 11:25:35 -0700 (PDT)
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mout-b-105.mailbox.org (Postfix) with ESMTPS id 4PnWnZ5KVjz9tkR;
-        Thu, 30 Mar 2023 20:16:02 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tavla.de; s=MBO0001;
-        t=1680200162;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=KpjQgMlCxvz1aRknvywc/KB47S0KCt76gMfJAksNes4=;
-        b=vvhkOKmKKZIxsCw6x7pCPSdTBXhpHYmRy1X96FQ2FpNfAMa/rVPjGeGimzbgPGSu3L45af
-        e5aGHjw/5dCQNJmy955790R7hY+TTwh1/4quXY2PS1KZH4Sb2j1EkEC/BH9317tVOLbyVP
-        ppCvmAuupDDJAWCNBU3iH+dqoUa9pgZlq2rrBtyOcg1ZdJbu0QX8tNLBmui8qbQhmM9eGW
-        Mw99eQejOSfKv7zAipaVdJHkNMZEZUkx2mWLyDdk1GxzEuxGfBhgaZkmVU0MWl3Ll0mIN9
-        /VvXWZePxKLrHqJ7Q25QlhphZucpUvCl0BI7lPqB8FnvjtTtvWD2OusUKY4OKw==
-Message-ID: <96ab0304-09e0-7bd9-944c-09ab03a21b67@tavla.de>
-Date:   Thu, 30 Mar 2023 20:16:01 +0200
+        Thu, 30 Mar 2023 14:16:40 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2287D306;
+        Thu, 30 Mar 2023 11:16:38 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id by14so1365476ljb.12;
+        Thu, 30 Mar 2023 11:16:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680200197;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=D9h2GvUNNoLQAB8LDpXTAOuV+zteZS3OOQfkay6SCnQ=;
+        b=GVCrY1TUpJ9FmQOJgtwEpuW8SU3t65Qd7/THjNZ+CwyTKHuHSzz3Bpec41R4qLqSvQ
+         M3XurktFxv/n/JHFMsOE4zhzn5bzmkHup48j+jrb0ixvqh1bUnHeHO5hXqACzy6I6L80
+         b7F+/floOZbeFeCwUBllaojfIq/LHyb+FquDYWcFq8hCHf1wxOWInG6qv4OIvE3rFJM2
+         xRuAlWb+yXpGwIc063hC8uc8IGmhTB1KEBy/Y8CX4ueB91j8Fp+zBYmYwsy4a1TdKGFx
+         oXzUkPhp7uUivnKkAwn54MlntgNPY408GLY3VLrA6V5vXS+5u5Eb/DOpySvTATd6buT5
+         Vl6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680200197;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=D9h2GvUNNoLQAB8LDpXTAOuV+zteZS3OOQfkay6SCnQ=;
+        b=fTcL5eelOXOf1GXS/XefP67RSbyt5uE0wo4rvZUPHHOsOkn/bFUADbPq276vp3K62V
+         5oWA9z0liaAOI5u0Jk00ivrDdljBRK++hF6VONHrK+6DG6yDTNBjxXSYWW7oYjAc3PXz
+         7jaOAlrkf+GtYf0JqUdH+2LdSU20sV1Ct7RdsR/rvQ3qLVYw99tyZJW7iSAOj1ugOrQb
+         Arj3QL9ylqP38ZzLCozOMoy/HSLNaAzpc6E/vesL8yHH4c+PAGQrzkFc2U+Kid1tvXNG
+         DUZMiu2i8YrQYPMN6Ch9ji4T8OLO0HeSCfOQRRrghF51TZjzCKf0lHzJaVwb8xv6ZlSm
+         WaFA==
+X-Gm-Message-State: AAQBX9e/ZhjjoWHht7feg08gHAEG5Jt2ClHTKez5YP4EOhLjmH/c4jl4
+        HEvuG6EouJJUBOk+MGSCMDGL1zxkB8XGGoJzNmI=
+X-Google-Smtp-Source: AKy350Yqc4ilqAsTqUl0WSGgkMAXCRaM87jJ1cjkCjT4KKrGsB28GvRHHn4Khc1dR28W4j5uEReLow8XgRr0LXEcMug=
+X-Received: by 2002:a2e:8697:0:b0:295:acea:5875 with SMTP id
+ l23-20020a2e8697000000b00295acea5875mr2300855lji.2.1680200196984; Thu, 30 Mar
+ 2023 11:16:36 -0700 (PDT)
 MIME-Version: 1.0
-Subject: Re: How to Automatically Re-Connect Bluetooth HID over GATT (HOG)
- Device when BlueZ Plugin "hog" is Disabled
-Content-Language: en-GB
-From:   Martin Petzold <martin.petzold@tavla.de>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-References: <6950dd49-7436-ebef-eb88-940597472ce1@tavla.de>
- <CABBYNZJMcEX6-9nQgoYccc7W=yEetNjjCMXSzP=Aa-4r4X_puw@mail.gmail.com>
- <56921851-be55-1380-2185-111335edaeb0@tavla.de>
-Organization: TAVLA Technology GmbH
-In-Reply-To: <56921851-be55-1380-2185-111335edaeb0@tavla.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230330095714.v13.1.I9b4e4818bab450657b19cda3497d363c9baa616e@changeid>
+ <168019982448.20045.10207710004218277745.git-patchwork-notify@kernel.org>
+In-Reply-To: <168019982448.20045.10207710004218277745.git-patchwork-notify@kernel.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Thu, 30 Mar 2023 11:16:25 -0700
+Message-ID: <CABBYNZLcS3uEkYgkokR5a0YHRfdJczm5XFbxXCEUfmrZg3ifnw@mail.gmail.com>
+Subject: Re: [PATCH v13 1/4] Bluetooth: Add support for hci devcoredump
+To:     patchwork-bot+bluetooth@kernel.org
+Cc:     Manish Mandlik <mmandlik@google.com>, marcel@holtmann.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        linux-bluetooth@vger.kernel.org, abhishekpandit@chromium.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        johan.hedberg@gmail.com, pabeni@redhat.com,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dear Luiz,
+Hi Manish,
 
-I now have another issue with remote control HID integration 
-(non-system; direct implementation).
-
-I am using Java with d-bus BlueZ 5.55 on Debian Linux. I have "hid" and 
-"input" plugin disabled on bluetooth startup.
-
-I have one remote integrated and working. With this one after boot and 
-while application startup I iterate over all paired devices with 
-existing HID service (check for existing service UUID) and then iterate 
-all Report characteristics and enabling notifying for all of them (if 
-supported). Everything is running well with this (legacy) remote. After 
-pairing it also auto-connects using my own registered object manager, as 
-suggested by you.
-
-Now we received our final custom remote control from our manufacturer 
-(other chip) and this approach does not work any more. I have tried a 
-lot of things now. Once the remote control is paired (which is also 
-somehow still buggy) and I rebooted the system with our application, the 
-device is found in the list as paired, BUT I cannot access the HID 
-service any more. Therefore, I cannot enable notifying for this remote.
-
-What I realized is, that this remote control seems to have something 
-like MAC address randomization enabled (probably for security reasons). 
-It also does not propagate device information unless I start pairing 
-mode. Because of MAC address randomization it also seems that pairing is 
-buggy - only works sometimes with some special procedure.
-
-I know this remote works, because if I connected in manually via 
-bluetoothctl sometimes I works with enabling of notifying. Also directly 
-after pairing it seemed to work.
-
-Have you seen something like this before? What should I do?
-
-Thanks,
-
-Martin
-
-Am 09.02.23 um 10:18 schrieb Martin Petzold:
-> Hi Luiz,
+On Thu, Mar 30, 2023 at 11:10=E2=80=AFAM <patchwork-bot+bluetooth@kernel.or=
+g> wrote:
 >
-> Am 01.02.23 um 22:37 schrieb Luiz Augusto von Dentz:
->> Hi Martin,
->>
->> On Wed, Feb 1, 2023 at 1:25 PM Martin Petzold 
->> <martin.petzold@tavla.de> wrote:
->>> Hi,
->>>
->>> Linux 5.10, BlueZ 5.55
->>>
->>> I have a remote control which implements Bluetooth LE. If I use the
->>> default Bluetooth daemon, I am able to pair and trust using
->>> bluetoothctl. If the connection is lost after a while (or days) and a
->>> button on the remote control is pressed, the daemon re-connects
->>> automatically (because the device is paired). This is basically what 
->>> I need.
->>>
->>> But, I would also like to manually set notifying for characteristics
->>> (Report) on the HID service within my application (Java via d-bus). 
->>> This
->>> is not possible anymore (also not via bluetoothctl) because the "hog"
->>> (or "input") plugin manages the input device and the related HID
->>> services are now hidden.
->>>
->>> I then added "--noplugin=input,hog" to my Bluetooth daemon. Which is
->>> okay, because I don't need this support for Kernel HID. Great, now the
->>> HID services are available (also using bluetoothctl), but the 
->>> peripheral
->>> does not re-connect automatically any more. I always have to connect
->>> manually first. I also have no signal on the d-bus when I press the
->>> button of the remote control, when it is disconnected.
->>>
->>> How can I enable automatic re-connect for devices, when these plugins
->>> are disabled?
->>>
->>> The only other way I was thinking of is to leave the "hog" plugin
->>> enabled and use the operating system HID interface. However, my
->>> application runs as non-root which makes it complicated and also I 
->>> would
->>> like to have direct connection and control to my device.
->> https://github.com/bluez/bluez/blob/master/doc/gatt-api.txt#L390
->>
-> Thanks, I have implemented and registered the HID profile using 
-> org.bluez.GattProfile1 and now the device (remote control) re-connects 
-> automatically.
+> Hello:
 >
-> However, when I enable notifying on the Report characteristics of the 
-> HID service after I received the first device properties update (with 
-> services resolved), I miss the first Report event. If I press a 
-> button, the remote re-connects and dbus events for device properties 
-> updated are fine, but I don't have a Report event. If I then press 
-> again, I do get a Report event, because I set notifying on the Report 
-> characteristics. Setting notify seems to be too late.
+> This series was applied to bluetooth/bluetooth-next.git (master)
+> by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 >
-> What is the trick to get also the first button pressed as a Report 
-> characteristic event?
+> On Thu, 30 Mar 2023 09:58:23 -0700 you wrote:
+> > From: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+> >
+> > Add devcoredump APIs to hci core so that drivers only have to provide
+> > the dump skbs instead of managing the synchronization and timeouts.
+> >
+> > The devcoredump APIs should be used in the following manner:
+> >  - hci_devcoredump_init is called to allocate the dump.
+> >  - hci_devcoredump_append is called to append any skbs with dump data
+> >    OR hci_devcoredump_append_pattern is called to insert a pattern.
+> >  - hci_devcoredump_complete is called when all dump packets have been
+> >    sent OR hci_devcoredump_abort is called to indicate an error and
+> >    cancel an ongoing dump collection.
+> >
+> > [...]
 >
-> At the moment I only have the HID service 
-> (00001812-0000-1000-8000-00805f9b34fb) in the properties map of the 
-> org.bluez.GattProfile1.
+> Here is the summary with links:
+>   - [v13,1/4] Bluetooth: Add support for hci devcoredump
+>     (no matching commit)
+
+Note that I did a small change to convert from bt_dev_info to
+bt_dev_dbg that is why the no matching commit is shown above.
+
+>   - [v13,2/4] Bluetooth: Add vhci devcoredump support
+>     https://git.kernel.org/bluetooth/bluetooth-next/c/d5d5df6da0aa
+>   - [v13,3/4] Bluetooth: btusb: Add btusb devcoredump support
+>     https://git.kernel.org/bluetooth/bluetooth-next/c/1078959dcb5c
+>   - [v13,4/4] Bluetooth: btintel: Add Intel devcoredump support
+>     https://git.kernel.org/bluetooth/bluetooth-next/c/0b93eeba4454
 >
-> Thanks,
+> You are awesome, thank you!
+> --
+> Deet-doot-dot, I am a bot.
+> https://korg.docs.kernel.org/patchwork/pwbot.html
 >
-> Martin
 >
+
+
+--=20
+Luiz Augusto von Dentz
