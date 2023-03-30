@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DAA16D11EC
+	by mail.lfdr.de (Postfix) with ESMTP id CD8566D11ED
 	for <lists+linux-bluetooth@lfdr.de>; Fri, 31 Mar 2023 00:07:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229980AbjC3WHd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 30 Mar 2023 18:07:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41618 "EHLO
+        id S230293AbjC3WHe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 30 Mar 2023 18:07:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230260AbjC3WGW (ORCPT
+        with ESMTP id S229784AbjC3WGX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 30 Mar 2023 18:06:22 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E291166A
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Mar 2023 15:03:36 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id u38so13557805pfg.10
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Mar 2023 15:03:36 -0700 (PDT)
+        Thu, 30 Mar 2023 18:06:23 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80BA61166B
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Mar 2023 15:03:37 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id o2so19471675plg.4
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Mar 2023 15:03:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680213815;
+        d=gmail.com; s=20210112; t=1680213816;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=d77Nw+BkN6Mf/MhUByOfs+MKddlz3PjAAb/O2n/14tQ=;
-        b=q5FUTPlCbzFRLk85LdnRAk3fT4dPxiU2I6Reu5hZMJd6+tUByepDxKxfFBcQE6jVDW
-         KUN6k/hz0M6T9dH4cVfHjseDGRegjll55K3+KXb4RGy+Qf6D84qF+SbqkZRcBSAwL+dx
-         ew5lgRFOkLjBfYbGZ9HlbLw5Kfjl/y9+yxVvDwNV++NrTOpzp7oUgg5ji1uajX/0joAx
-         yo5cc3N3Izc5os1vy278k+sE5ObrbjiVAb5GB0ZLLEZfoGiwQmCJZIKKgDQpFmohPPxh
-         DetwdIZ/KMfJN60dYcY4JM/a6LrcDC5QmugX/YzDAtYSvNAs1ZW2BcGsYy13q76UhCPV
-         Wm9g==
+        bh=uepZg69M+ah19FAXIauFv/g+sr4j5xKx856LnLPgKrA=;
+        b=ea1jqo6xsATHtsewQK7n7LfEaCVorTpFPUhjBXiqFy8gmhqJ3hZQ5qwRPK30rL1i67
+         yXPe49LYGqLyHPSQmX0dxO0hvVFZDd2Y/QJw2sksVs0YbVPA4aLzuc1Hnt/Fz7o07caz
+         FdHmoDpmjKqbfzz1dkf4ViNmSrlHTdGC+y0lbNn8qdop8t6NFEQQD1f/HvF7HnM2c5p5
+         /zKfrezped3chRMRsQ8Uyx7lXo+asNsnbljVs5ihP+5PEt+iRO9WyFHKpEOiAGOqBU5M
+         rwrZKuHaWiO6KXLQv3H0qsp2jyiYNL/y8XM2BWTtAzDJdXzMi+Meef+KOoRddVTP4It8
+         pBgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680213815;
+        d=1e100.net; s=20210112; t=1680213816;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=d77Nw+BkN6Mf/MhUByOfs+MKddlz3PjAAb/O2n/14tQ=;
-        b=E5QTY0d/OCtryWlVqMRVvu/oXaG9uWGnK/VFRJrmNEdF54zhRc4kWLi03JhvrqgodP
-         vGH1AihP3ORpTctWC2IiJkXwUNFec85Tf6jmHsOlED3cQGZeoyIzqo//5a0pfj6J10T7
-         rmcXBBq0oC16EyNEu+qLgeO2QW/TKwDkr8wzMyuckZgBTgKLDVeIY+sFWQv0EHbPoB03
-         BWw2JJOxfXCMR6i5tu8g2zSyVLRRlPzZoiJoNh4iNeezdlS+VsGn07e6xtMzJCue21Wd
-         3zvbNC07adi+Obj3LrBhyXt+V+jJQdmMHA0e9WP+ZPT9tXwf+dnhCs2EoYX8W2JoiSpU
-         ATfw==
-X-Gm-Message-State: AAQBX9cE/pZuTyio/7ei1MAr873/cHDB/dDHyCT4RtIT+YcN3KTGBviq
-        6DYmuqRI4i6mCjLHr/LmtMHu6H/Hl1s=
-X-Google-Smtp-Source: AKy350ZvSi6r+r89KzD5+Hpf2KqFzQC/rOzrZ4PnZhsCzJqa3GbBmrPVivOfE8zkDfZvkV7+LUzRLg==
-X-Received: by 2002:a62:1b85:0:b0:627:ecd4:84a5 with SMTP id b127-20020a621b85000000b00627ecd484a5mr22140813pfb.14.1680213815346;
-        Thu, 30 Mar 2023 15:03:35 -0700 (PDT)
+        bh=uepZg69M+ah19FAXIauFv/g+sr4j5xKx856LnLPgKrA=;
+        b=Cp6gVx4JMSoOLXto+eVTyp/5V0qn0Xws3EeSYpK+ovoXtTh6bVXmd79PEGmt1CuoDG
+         fo0AFHxGQOXhQObhugk26f39jtMIJ2qyGbpKW3EksOIoxEjjDLQNWABrfy0wGV0iiIVa
+         8WuvfgiXokVHmcnpK6ayHhYU51nfpVuSukDSoQmqltoxTZGHn8M8+nJ5Fuz4UYRO07Dl
+         E7+AjFiDtSwRLmkmYfWBboBkWI8mCFJC0S2sKgWB4p4WD0AvME+CMViM0f/IgP0dK403
+         PAyYBs59LNKIrZXk2he/NftCR5DBVyEEa0SxUKYqSSnElEqMNjiqaXovgiOwGYtS731l
+         Bztw==
+X-Gm-Message-State: AO0yUKX9lZZb/ygj6Yotu50WX6J+oyD9e+q/aM2Z21dJLcSRSmU9f3la
+        xOyjrFyElh8IdXaiUSfPDzFFTBLMNzs=
+X-Google-Smtp-Source: AK7set/O02D5EP3rbxJINyu3donzXzOQIv5D+qZRj3iFTfrAnw8/creL8dFTke0+UVUtmPrFNWZXvA==
+X-Received: by 2002:a05:6a20:ba83:b0:db:b960:d319 with SMTP id fb3-20020a056a20ba8300b000dbb960d319mr23494432pzb.12.1680213816423;
+        Thu, 30 Mar 2023 15:03:36 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id z14-20020aa791ce000000b00571cdbd0771sm333790pfa.102.2023.03.30.15.03.34
+        by smtp.gmail.com with ESMTPSA id z14-20020aa791ce000000b00571cdbd0771sm333790pfa.102.2023.03.30.15.03.35
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 15:03:34 -0700 (PDT)
+        Thu, 30 Mar 2023 15:03:35 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH 1/2] Bluetooth: SCO: Fix possible circular locking dependency on sco_connect_cfm
-Date:   Thu, 30 Mar 2023 15:03:31 -0700
-Message-Id: <20230330220332.1035910-2-luiz.dentz@gmail.com>
+Subject: [PATCH 2/2] Bluetooth: SCO: Fix possible circular locking dependency sco_sock_getsockopt
+Date:   Thu, 30 Mar 2023 15:03:32 -0700
+Message-Id: <20230330220332.1035910-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230330220332.1035910-1-luiz.dentz@gmail.com>
 References: <20230330220332.1035910-1-luiz.dentz@gmail.com>
@@ -77,41 +77,21 @@ This attempts to fix the following trace:
 
 ======================================================
 WARNING: possible circular locking dependency detected
-6.3.0-rc2-g0b93eeba4454 #4703 Not tainted
+6.3.0-rc2-g68fcb3a7bf97 #4706 Not tainted
 ------------------------------------------------------
-kworker/u3:0/46 is trying to acquire lock:
-ffff888001fd9130 (sk_lock-AF_BLUETOOTH-BTPROTO_SCO){+.+.}-{0:0}, at:
-sco_connect_cfm+0x118/0x4a0
+sco-tester/31 is trying to acquire lock:
+ffff8880025b8070 (&hdev->lock){+.+.}-{3:3}, at:
+sco_sock_getsockopt+0x1fc/0xa90
 
 but task is already holding lock:
-ffffffff831e3340 (hci_cb_list_lock){+.+.}-{3:3}, at:
-hci_sync_conn_complete_evt+0x1ad/0x3d0
+ffff888001eeb130 (sk_lock-AF_BLUETOOTH-BTPROTO_SCO){+.+.}-{0:0}, at:
+sco_sock_getsockopt+0x104/0xa90
 
 which lock already depends on the new lock.
 
 the existing dependency chain (in reverse order) is:
 
--> #2 (hci_cb_list_lock){+.+.}-{3:3}:
-       __mutex_lock+0x13b/0xcc0
-       hci_sync_conn_complete_evt+0x1ad/0x3d0
-       hci_event_packet+0x55c/0x7c0
-       hci_rx_work+0x34c/0xa00
-       process_one_work+0x575/0x910
-       worker_thread+0x89/0x6f0
-       kthread+0x14e/0x180
-       ret_from_fork+0x2b/0x50
-
--> #1 (&hdev->lock){+.+.}-{3:3}:
-       __mutex_lock+0x13b/0xcc0
-       sco_sock_connect+0xfc/0x630
-       __sys_connect+0x197/0x1b0
-       __x64_sys_connect+0x37/0x50
-       do_syscall_64+0x42/0x90
-       entry_SYSCALL_64_after_hwframe+0x70/0xda
-
--> #0 (sk_lock-AF_BLUETOOTH-BTPROTO_SCO){+.+.}-{0:0}:
-       __lock_acquire+0x18cc/0x3740
-       lock_acquire+0x151/0x3a0
+-> #2 (sk_lock-AF_BLUETOOTH-BTPROTO_SCO){+.+.}-{0:0}:
        lock_sock_nested+0x32/0x80
        sco_connect_cfm+0x118/0x4a0
        hci_sync_conn_complete_evt+0x1e6/0x3d0
@@ -122,176 +102,101 @@ the existing dependency chain (in reverse order) is:
        kthread+0x14e/0x180
        ret_from_fork+0x2b/0x50
 
+-> #1 (hci_cb_list_lock){+.+.}-{3:3}:
+       __mutex_lock+0x13b/0xcc0
+       hci_sync_conn_complete_evt+0x1ad/0x3d0
+       hci_event_packet+0x55c/0x7c0
+       hci_rx_work+0x34c/0xa00
+       process_one_work+0x575/0x910
+       worker_thread+0x89/0x6f0
+       kthread+0x14e/0x180
+       ret_from_fork+0x2b/0x50
+
+-> #0 (&hdev->lock){+.+.}-{3:3}:
+       __lock_acquire+0x18cc/0x3740
+       lock_acquire+0x151/0x3a0
+       __mutex_lock+0x13b/0xcc0
+       sco_sock_getsockopt+0x1fc/0xa90
+       __sys_getsockopt+0xe9/0x190
+       __x64_sys_getsockopt+0x5b/0x70
+       do_syscall_64+0x42/0x90
+       entry_SYSCALL_64_after_hwframe+0x70/0xda
+
 other info that might help us debug this:
 
 Chain exists of:
-  sk_lock-AF_BLUETOOTH-BTPROTO_SCO --> &hdev->lock --> hci_cb_list_lock
+  &hdev->lock --> hci_cb_list_lock --> sk_lock-AF_BLUETOOTH-BTPROTO_SCO
 
  Possible unsafe locking scenario:
 
        CPU0                    CPU1
        ----                    ----
-  lock(hci_cb_list_lock);
-                               lock(&hdev->lock);
-                               lock(hci_cb_list_lock);
   lock(sk_lock-AF_BLUETOOTH-BTPROTO_SCO);
+                               lock(hci_cb_list_lock);
+                               lock(sk_lock-AF_BLUETOOTH-BTPROTO_SCO);
+  lock(&hdev->lock);
 
  *** DEADLOCK ***
 
-4 locks held by kworker/u3:0/46:
- #0: ffff8880028d1130 ((wq_completion)hci0#2){+.+.}-{0:0}, at:
- process_one_work+0x4c0/0x910
- #1: ffff8880013dfde0 ((work_completion)(&hdev->rx_work)){+.+.}-{0:0},
- at: process_one_work+0x4c0/0x910
- #2: ffff8880025d8070 (&hdev->lock){+.+.}-{3:3}, at:
- hci_sync_conn_complete_evt+0xa6/0x3d0
- #3: ffffffffb79e3340 (hci_cb_list_lock){+.+.}-{3:3}, at:
- hci_sync_conn_complete_evt+0x1ad/0x3d0
+1 lock held by sco-tester/31:
+ #0: ffff888001eeb130 (sk_lock-AF_BLUETOOTH-BTPROTO_SCO){+.+.}-{0:0},
+ at: sco_sock_getsockopt+0x104/0xa90
 
+Fixes: 248733e87d50 ("Bluetooth: Allow querying of supported offload codecs over SCO socket")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- net/bluetooth/sco.c | 69 ++++++++++++++++++++++++++-------------------
- 1 file changed, 40 insertions(+), 29 deletions(-)
+ net/bluetooth/sco.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index 1111da4e2f2b..f3a5ab9e4fa4 100644
+index f3a5ab9e4fa4..cd1a27ac555d 100644
 --- a/net/bluetooth/sco.c
 +++ b/net/bluetooth/sco.c
-@@ -235,27 +235,41 @@ static int sco_chan_add(struct sco_conn *conn, struct sock *sk,
- 	return err;
- }
+@@ -1140,6 +1140,8 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
  
--static int sco_connect(struct hci_dev *hdev, struct sock *sk)
-+static int sco_connect(struct sock *sk)
- {
- 	struct sco_conn *conn;
- 	struct hci_conn *hcon;
-+	struct hci_dev  *hdev;
- 	int err, type;
- 
- 	BT_DBG("%pMR -> %pMR", &sco_pi(sk)->src, &sco_pi(sk)->dst);
- 
-+	hdev = hci_get_route(&sco_pi(sk)->dst, &sco_pi(sk)->src, BDADDR_BREDR);
-+	if (!hdev)
-+		return -EHOSTUNREACH;
++		release_sock(sk);
 +
-+	hci_dev_lock(hdev);
-+
- 	if (lmp_esco_capable(hdev) && !disable_esco)
- 		type = ESCO_LINK;
- 	else
- 		type = SCO_LINK;
+ 		/* find total buffer size required to copy codec + caps */
+ 		hci_dev_lock(hdev);
+ 		list_for_each_entry(c, &hdev->local_codecs, list) {
+@@ -1157,15 +1159,13 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
+ 		buf_len += sizeof(struct bt_codecs);
+ 		if (buf_len > len) {
+ 			hci_dev_put(hdev);
+-			err = -ENOBUFS;
+-			break;
++			return -ENOBUFS;
+ 		}
+ 		ptr = optval;
  
- 	if (sco_pi(sk)->setting == BT_VOICE_TRANSPARENT &&
--	    (!lmp_transp_capable(hdev) || !lmp_esco_capable(hdev)))
--		return -EOPNOTSUPP;
-+	    (!lmp_transp_capable(hdev) || !lmp_esco_capable(hdev))) {
-+		err = -EOPNOTSUPP;
-+		goto unlock;
-+	}
+ 		if (put_user(num_codecs, ptr)) {
+ 			hci_dev_put(hdev);
+-			err = -EFAULT;
+-			break;
++			return -EFAULT;
+ 		}
+ 		ptr += sizeof(num_codecs);
  
- 	hcon = hci_connect_sco(hdev, type, &sco_pi(sk)->dst,
- 			       sco_pi(sk)->setting, &sco_pi(sk)->codec);
--	if (IS_ERR(hcon))
--		return PTR_ERR(hcon);
-+	if (IS_ERR(hcon)) {
-+		err = PTR_ERR(hcon);
-+		goto unlock;
-+	}
-+
-+	hci_dev_unlock(hdev);
-+	hci_dev_put(hdev);
+@@ -1205,12 +1205,14 @@ static int sco_sock_getsockopt(struct socket *sock, int level, int optname,
+ 			ptr += len;
+ 		}
  
- 	conn = sco_conn_add(hcon);
- 	if (!conn) {
-@@ -263,13 +277,15 @@ static int sco_connect(struct hci_dev *hdev, struct sock *sk)
- 		return -ENOMEM;
- 	}
- 
--	/* Update source addr of the socket */
--	bacpy(&sco_pi(sk)->src, &hcon->src);
+-		if (!err && put_user(buf_len, optlen))
+-			err = -EFAULT;
 -
- 	err = sco_chan_add(conn, sk, NULL);
- 	if (err)
- 		return err;
+ 		hci_dev_unlock(hdev);
+ 		hci_dev_put(hdev);
  
-+	lock_sock(sk);
++		lock_sock(sk);
 +
-+	/* Update source addr of the socket */
-+	bacpy(&sco_pi(sk)->src, &hcon->src);
++		if (!err && put_user(buf_len, optlen))
++			err = -EFAULT;
 +
- 	if (hcon->state == BT_CONNECTED) {
- 		sco_sock_clear_timer(sk);
- 		sk->sk_state = BT_CONNECTED;
-@@ -278,6 +294,13 @@ static int sco_connect(struct hci_dev *hdev, struct sock *sk)
- 		sco_sock_set_timer(sk, sk->sk_sndtimeo);
- 	}
+ 		break;
  
-+	release_sock(sk);
-+
-+	return err;
-+
-+unlock:
-+	hci_dev_unlock(hdev);
-+	hci_dev_put(hdev);
- 	return err;
- }
- 
-@@ -565,7 +588,6 @@ static int sco_sock_connect(struct socket *sock, struct sockaddr *addr, int alen
- {
- 	struct sockaddr_sco *sa = (struct sockaddr_sco *) addr;
- 	struct sock *sk = sock->sk;
--	struct hci_dev  *hdev;
- 	int err;
- 
- 	BT_DBG("sk %p", sk);
-@@ -574,37 +596,26 @@ static int sco_sock_connect(struct socket *sock, struct sockaddr *addr, int alen
- 	    addr->sa_family != AF_BLUETOOTH)
- 		return -EINVAL;
- 
--	lock_sock(sk);
--	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) {
--		err = -EBADFD;
--		goto done;
--	}
-+	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND)
-+		return -EBADFD;
- 
--	if (sk->sk_type != SOCK_SEQPACKET) {
-+	if (sk->sk_type != SOCK_SEQPACKET)
- 		err = -EINVAL;
--		goto done;
--	}
--
--	hdev = hci_get_route(&sa->sco_bdaddr, &sco_pi(sk)->src, BDADDR_BREDR);
--	if (!hdev) {
--		err = -EHOSTUNREACH;
--		goto done;
--	}
--	hci_dev_lock(hdev);
- 
-+	lock_sock(sk);
- 	/* Set destination address and psm */
- 	bacpy(&sco_pi(sk)->dst, &sa->sco_bdaddr);
-+	release_sock(sk);
- 
--	err = sco_connect(hdev, sk);
--	hci_dev_unlock(hdev);
--	hci_dev_put(hdev);
-+	err = sco_connect(sk);
- 	if (err)
--		goto done;
-+		return err;
-+
-+	lock_sock(sk);
- 
- 	err = bt_sock_wait_state(sk, BT_CONNECTED,
- 				 sock_sndtimeo(sk, flags & O_NONBLOCK));
- 
--done:
- 	release_sock(sk);
- 	return err;
- }
+ 	default:
 -- 
 2.39.2
 
