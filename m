@@ -2,52 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3D596D2AEF
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 Apr 2023 00:10:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5E4C6D2AF2
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 Apr 2023 00:10:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233353AbjCaWKX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 31 Mar 2023 18:10:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39532 "EHLO
+        id S233383AbjCaWKZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 31 Mar 2023 18:10:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233183AbjCaWKW (ORCPT
+        with ESMTP id S233244AbjCaWKW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 31 Mar 2023 18:10:22 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4497A55A3
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E3AA9751
         for <linux-bluetooth@vger.kernel.org>; Fri, 31 Mar 2023 15:10:21 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id CB761B83285
-        for <linux-bluetooth@vger.kernel.org>; Fri, 31 Mar 2023 22:10:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6F7AEC4339C;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 319F4B8328A
+        for <linux-bluetooth@vger.kernel.org>; Fri, 31 Mar 2023 22:10:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D9EE4C433A4;
         Fri, 31 Mar 2023 22:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1680300618;
-        bh=22POkhdID+EP4LgiXQ0xWVHFwofxspLpBSCmlZkOWnU=;
+        bh=zG9FHOpzq9p5zh/l5skY1f90THEhNfoe5Rza414AEew=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=pPgcWMBvF/rfgJpd03Yl2nTuQNbxvEp7vazksRwfbieAAlMhcOj1cdi2ZxTIoWB4f
-         tERAUoy3iqWpNS3sfOZusmwOsaBj8uoZPKnNJ2OgRLyjzHMpk7qpypCsIueJ+J8UmN
-         sKUPSBdzBp8r+ahUOzJ5NmBRnCU5oW8oXQ530S8eeFxmEVVNi5tHSKlpViF+luIR3C
-         Anrw8o8KDUQdIIcK8vlZjO9yoDzBxWbJk1ZrVqa/M1eqVsM8RfNN09EAXuhR+D8g+b
-         gmMD2CgIPppSggmgj/TRtQgENoBgnLFvDfIaTmd4e5laO+p4XGtlG8eQqlu673AneH
-         yWClVt/x53Hiw==
+        b=ZLfMsRgYrzCditE07rROyE+godGkqExXkRVSwPukO4RD/42cNQc1r/JI0LC1i0dsy
+         caRy1tcI0MRMnaqPH9JizfPHgBsJUYsJuNUqMf0ryO7uDE00fUwfpir4tg110u+NR+
+         ysS2+gRcRsSey4iQQ/p3d85DGAMVA+woh9aW6NFzcEKXcR8/VSQCa025IrzY5Grfbe
+         Aht1R3jWfSuwuXxKnLuQhQGNs2jW9NZ5FJMXHx4xfV3VCUzKAelPZMclbbwD5GhjrQ
+         u3nF23awVvh+5ZukDRBwGSBayF8gscVJl7c7/6MlbCsb5hAIPvKghrQuiGILDFUz7p
+         jMhkHqbtZ8tAw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4D1BDE21EDD;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C8808E21EDD;
         Fri, 31 Mar 2023 22:10:18 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/1] Bluetooth: Split bt_iso_qos into dedicated structures
+Subject: Re: [PATCH BlueZ v3 0/1] Split bt_iso_qos into dedicated structures
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168030061831.9780.17665215762184848731.git-patchwork-notify@kernel.org>
+Message-Id: <168030061881.9780.2905721652873874499.git-patchwork-notify@kernel.org>
 Date:   Fri, 31 Mar 2023 22:10:18 +0000
-References: <20230331153801.35290-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20230331153801.35290-1-iulia.tanasescu@nxp.com>
+References: <20230331153927.35411-1-iulia.tanasescu@nxp.com>
+In-Reply-To: <20230331153927.35411-1-iulia.tanasescu@nxp.com>
 To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
 Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,10 +57,10 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Fri, 31 Mar 2023 18:38:00 +0300 you wrote:
+On Fri, 31 Mar 2023 18:39:26 +0300 you wrote:
 > This patch adds support for additional ISO broadcast QoS parameters,
 > that the user can set before performing broadcast procedures
 > using an ISO socket.
@@ -73,8 +73,8 @@ On Fri, 31 Mar 2023 18:38:00 +0300 you wrote:
 > [...]
 
 Here is the summary with links:
-  - [v3,1/1] Bluetooth: Split bt_iso_qos into dedicated structures
-    https://git.kernel.org/bluetooth/bluetooth-next/c/991aa4a69a47
+  - [BlueZ,v3,1/1] Split bt_iso_qos into dedicated structures
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c4d9b99db5a6
 
 You are awesome, thank you!
 -- 
