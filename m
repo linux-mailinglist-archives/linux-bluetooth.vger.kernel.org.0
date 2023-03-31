@@ -2,51 +2,51 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CF086D29D7
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 31 Mar 2023 23:12:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50F916D29D9
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 31 Mar 2023 23:12:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233067AbjCaVM0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 31 Mar 2023 17:12:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43096 "EHLO
+        id S232426AbjCaVMa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 31 Mar 2023 17:12:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230092AbjCaVMZ (ORCPT
+        with ESMTP id S230092AbjCaVM3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 31 Mar 2023 17:12:25 -0400
+        Fri, 31 Mar 2023 17:12:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48C421D2C9
-        for <linux-bluetooth@vger.kernel.org>; Fri, 31 Mar 2023 14:11:39 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B0EF1D936
+        for <linux-bluetooth@vger.kernel.org>; Fri, 31 Mar 2023 14:11:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1680297098;
+        s=mimecast20190719; t=1680297099;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=8jjTu0gEBp3IgjYSiFsToObIbCc9F06ihqOobiqQVF8=;
-        b=E/7WD2LW9BqzZiGpciugJiGR0KlBu+P22zY+nvKZyJz85WgjLxtvU/k1FrUcPqFFmy914j
-        xStd0zEnl5uYpwmWzSmyqgDTGWUbFpWWYc2JLF1wZPi1ZcE99fPuPfx4yzU9olM7I9A4WF
-        ByPahJls4Ok44xX9AbFCzcsiMLWUV4A=
+        bh=LrsrRTwi0WYJL389M6cXTGbwr4lYcS7GvH8qZhx/QnA=;
+        b=gn7g2ebazfyJxDF///b7Ok+qt0UzkYbaWV/O6abz5OkkdpsAbCaFsIGcd5e3dQjj9gPB/F
+        Q/45zPrScyLjXbxgcZqr1rBRAIUjrd/AMdzlVceNb1EG3eIZr3UrFCJJyQxFsbA0o/U+GE
+        FYBxlb0LzDGnVSy8fwWJYn5eq8XP/Zw=
 Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
  [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-475-1ItpC1QkODWy55DDFlLgjQ-1; Fri, 31 Mar 2023 17:11:35 -0400
-X-MC-Unique: 1ItpC1QkODWy55DDFlLgjQ-1
+ us-mta-199-dPmQYiV5NciPXU6RvBzvug-1; Fri, 31 Mar 2023 17:11:36 -0400
+X-MC-Unique: dPmQYiV5NciPXU6RvBzvug-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com [10.11.54.9])
         (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CA2CA1C05AF0;
-        Fri, 31 Mar 2023 21:11:34 +0000 (UTC)
+        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BCDAF3C0ED41;
+        Fri, 31 Mar 2023 21:11:35 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.39.192.21])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 14BC4492B00;
-        Fri, 31 Mar 2023 21:11:33 +0000 (UTC)
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 0648F492B00;
+        Fri, 31 Mar 2023 21:11:34 +0000 (UTC)
 From:   Hans de Goede <hdegoede@redhat.com>
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     Hans de Goede <hdegoede@redhat.com>,
         linux-bluetooth@vger.kernel.org
-Subject: [PATCH 1/4] Bluetooth: hci_bcm: Fall back to getting bdaddr from EFI if not set
-Date:   Fri, 31 Mar 2023 23:11:21 +0200
-Message-Id: <20230331211124.463003-2-hdegoede@redhat.com>
+Subject: [PATCH 2/4] Bluetooth: hci_bcm: Limit bcm43430a0 / bcm43430a1 baudrate to 2000000
+Date:   Fri, 31 Mar 2023 23:11:22 +0200
+Message-Id: <20230331211124.463003-3-hdegoede@redhat.com>
 In-Reply-To: <20230331211124.463003-1-hdegoede@redhat.com>
 References: <20230331211124.463003-1-hdegoede@redhat.com>
 MIME-Version: 1.0
@@ -62,105 +62,138 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On some devices the BCM Bluetooth adapter does not have a valid bdaddr set.
+The bcm43430a0 and bcm43430a1 BT does not support the 0xfc45 command
+to set the UART clock to 48 MHz and it also does not work at 4000000
+baud without this command as some newer models do.
 
-btbcm.c currently sets HCI_QUIRK_INVALID_BDADDR to indicate when this is
-the case. But this requires users to manual setup a btaddr, by doing e.g.:
+These chips are found on ACPI/x86 devices where the operating baudrate
+does not come from the firmware but is hardcoded at 4000000, which does
+not work.
 
-btmgmt -i hci0 public-addr 'B0:F1:EC:82:1D:B3'
+Add a max_baudrate value to struct bcm_device_data and set this
+to 2000000 on all known ACPI hardware-ids for the bcm43430a0
+and the bcm43430a1.
 
-Which means that Bluetooth will not work out of the box on such devices.
-To avoid this (where possible) hci_bcm sets: HCI_QUIRK_USE_BDADDR_PROPERTY
-which tries to get the bdaddr from devicetree.
-
-But this only works on devicetree platforms. On UEFI based platforms
-there is a special Broadcom UEFI variable which when present contains
-the devices bdaddr, just like how there is another UEFI variable which
-contains wifi nvram contents including the wifi MAC address.
-
-Add support for getting the bdaddr from this Broadcom UEFI variable,
-so that Bluetooth will work OOTB for users on devices where this
-UEFI variable is present.
-
-This fixes Bluetooth not working on for example Asus T100HA 2-in-1s.
+Note this also adds the BCM2E9F ACPI HID which was missing until now.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 ---
- drivers/bluetooth/btbcm.c | 47 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 44 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_bcm.c | 37 ++++++++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
-index 3006e2a0f37e..cf5b26b8850a 100644
---- a/drivers/bluetooth/btbcm.c
-+++ b/drivers/bluetooth/btbcm.c
-@@ -6,6 +6,7 @@
-  *  Copyright (C) 2015  Intel Corporation
+diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
+index 2b6c0e1922cb..4a3ef844df5d 100644
+--- a/drivers/bluetooth/hci_bcm.c
++++ b/drivers/bluetooth/hci_bcm.c
+@@ -55,12 +55,14 @@
+  * @drive_rts_on_open: drive RTS signal on ->open() when platform requires it
+  * @no_uart_clock_set: UART clock set command for >3Mbps mode is unavailable
+  * @max_autobaud_speed: max baudrate supported by device in autobaud mode
++ * @max_speed: max baudrate supported
   */
+ struct bcm_device_data {
+ 	bool	no_early_set_baudrate;
+ 	bool	drive_rts_on_open;
+ 	bool	no_uart_clock_set;
+ 	u32	max_autobaud_speed;
++	u32	max_speed;
+ };
  
-+#include <linux/efi.h>
- #include <linux/module.h>
- #include <linux/firmware.h>
- #include <linux/dmi.h>
-@@ -34,6 +35,43 @@
- /* For kmalloc-ing the fw-name array instead of putting it on the stack */
- typedef char bcm_fw_name[BCM_FW_NAME_LEN];
+ /**
+@@ -1300,6 +1302,12 @@ static const struct hci_uart_proto bcm_proto = {
+ };
  
-+#ifdef CONFIG_EFI
-+static int btbcm_set_bdaddr_from_efi(struct hci_dev *hdev)
-+{
-+	efi_guid_t guid = EFI_GUID(0x74b00bd9, 0x805a, 0x4d61, 0xb5, 0x1f,
-+				   0x43, 0x26, 0x81, 0x23, 0xd1, 0x13);
-+	bdaddr_t efi_bdaddr, bdaddr;
-+	efi_status_t status;
-+	unsigned long len;
-+	int ret;
+ #ifdef CONFIG_ACPI
 +
-+	if (!efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE))
-+		return -EOPNOTSUPP;
++/* bcm43430a0/a1 BT does not support 48MHz UART clock, limit to 2000000 baud */
++static struct bcm_device_data bcm43430_device_data = {
++	.max_speed = 2000000,
++};
 +
-+	len = sizeof(efi_bdaddr);
-+	status = efi.get_variable(L"BDADDR", &guid, NULL, &len, &efi_bdaddr);
-+	if (status != EFI_SUCCESS)
-+		return -ENXIO;
-+
-+	if (len != sizeof(efi_bdaddr))
-+		return -EIO;
-+
-+	baswap(&bdaddr, &efi_bdaddr);
-+
-+	ret = btbcm_set_bdaddr(hdev, &bdaddr);
-+	if (ret)
-+		return ret;
-+
-+	bt_dev_info(hdev, "BCM: Using EFI device address (%pMR)", &bdaddr);
-+	return 0;
-+}
-+#else
-+static int btbcm_set_bdaddr_from_efi(struct hci_dev *hdev)
-+{
-+	return -EOPNOTSUPP;
-+}
-+#endif
-+
- int btbcm_check_bdaddr(struct hci_dev *hdev)
- {
- 	struct hci_rp_read_bd_addr *bda;
-@@ -87,9 +125,12 @@ int btbcm_check_bdaddr(struct hci_dev *hdev)
- 	    !bacmp(&bda->bdaddr, BDADDR_BCM4345C5) ||
- 	    !bacmp(&bda->bdaddr, BDADDR_BCM43430A0) ||
- 	    !bacmp(&bda->bdaddr, BDADDR_BCM43341B)) {
--		bt_dev_info(hdev, "BCM: Using default device address (%pMR)",
--			    &bda->bdaddr);
--		set_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks);
-+		/* Try falling back to BDADDR EFI variable */
-+		if (btbcm_set_bdaddr_from_efi(hdev) != 0) {
-+			bt_dev_info(hdev, "BCM: Using default device address (%pMR)",
-+				    &bda->bdaddr);
-+			set_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks);
-+		}
+ static const struct acpi_device_id bcm_acpi_match[] = {
+ 	{ "BCM2E00" },
+ 	{ "BCM2E01" },
+@@ -1414,19 +1422,19 @@ static const struct acpi_device_id bcm_acpi_match[] = {
+ 	{ "BCM2E71" },
+ 	{ "BCM2E72" },
+ 	{ "BCM2E73" },
+-	{ "BCM2E74" },
+-	{ "BCM2E75" },
++	{ "BCM2E74", (long)&bcm43430_device_data },
++	{ "BCM2E75", (long)&bcm43430_device_data },
+ 	{ "BCM2E76" },
+ 	{ "BCM2E77" },
+ 	{ "BCM2E78" },
+ 	{ "BCM2E79" },
+ 	{ "BCM2E7A" },
+-	{ "BCM2E7B" },
++	{ "BCM2E7B", (long)&bcm43430_device_data },
+ 	{ "BCM2E7C" },
+ 	{ "BCM2E7D" },
+ 	{ "BCM2E7E" },
+ 	{ "BCM2E7F" },
+-	{ "BCM2E80" },
++	{ "BCM2E80", (long)&bcm43430_device_data },
+ 	{ "BCM2E81" },
+ 	{ "BCM2E82" },
+ 	{ "BCM2E83" },
+@@ -1435,7 +1443,7 @@ static const struct acpi_device_id bcm_acpi_match[] = {
+ 	{ "BCM2E86" },
+ 	{ "BCM2E87" },
+ 	{ "BCM2E88" },
+-	{ "BCM2E89" },
++	{ "BCM2E89", (long)&bcm43430_device_data },
+ 	{ "BCM2E8A" },
+ 	{ "BCM2E8B" },
+ 	{ "BCM2E8C" },
+@@ -1444,29 +1452,30 @@ static const struct acpi_device_id bcm_acpi_match[] = {
+ 	{ "BCM2E90" },
+ 	{ "BCM2E92" },
+ 	{ "BCM2E93" },
+-	{ "BCM2E94" },
++	{ "BCM2E94", (long)&bcm43430_device_data },
+ 	{ "BCM2E95" },
+ 	{ "BCM2E96" },
+ 	{ "BCM2E97" },
+ 	{ "BCM2E98" },
+-	{ "BCM2E99" },
++	{ "BCM2E99", (long)&bcm43430_device_data },
+ 	{ "BCM2E9A" },
+-	{ "BCM2E9B" },
++	{ "BCM2E9B", (long)&bcm43430_device_data },
+ 	{ "BCM2E9C" },
+ 	{ "BCM2E9D" },
++	{ "BCM2E9F", (long)&bcm43430_device_data },
+ 	{ "BCM2EA0" },
+ 	{ "BCM2EA1" },
+-	{ "BCM2EA2" },
+-	{ "BCM2EA3" },
++	{ "BCM2EA2", (long)&bcm43430_device_data },
++	{ "BCM2EA3", (long)&bcm43430_device_data },
+ 	{ "BCM2EA4" },
+ 	{ "BCM2EA5" },
+ 	{ "BCM2EA6" },
+ 	{ "BCM2EA7" },
+ 	{ "BCM2EA8" },
+ 	{ "BCM2EA9" },
+-	{ "BCM2EAA" },
+-	{ "BCM2EAB" },
+-	{ "BCM2EAC" },
++	{ "BCM2EAA", (long)&bcm43430_device_data },
++	{ "BCM2EAB", (long)&bcm43430_device_data },
++	{ "BCM2EAC", (long)&bcm43430_device_data },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(acpi, bcm_acpi_match);
+@@ -1535,6 +1544,8 @@ static int bcm_serdev_probe(struct serdev_device *serdev)
+ 		bcmdev->no_early_set_baudrate = data->no_early_set_baudrate;
+ 		bcmdev->drive_rts_on_open = data->drive_rts_on_open;
+ 		bcmdev->no_uart_clock_set = data->no_uart_clock_set;
++		if (data->max_speed && bcmdev->oper_speed > data->max_speed)
++			bcmdev->oper_speed = data->max_speed;
  	}
  
- 	kfree_skb(skb);
+ 	return hci_uart_register_device(&bcmdev->serdev_hu, &bcm_proto);
 -- 
 2.39.1
 
