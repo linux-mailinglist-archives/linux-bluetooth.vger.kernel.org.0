@@ -2,121 +2,70 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAE486D18B4
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 31 Mar 2023 09:36:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABAFA6D2031
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 31 Mar 2023 14:26:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229659AbjCaHgn (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 31 Mar 2023 03:36:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36414 "EHLO
+        id S232350AbjCaM0R (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 31 Mar 2023 08:26:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbjCaHgl (ORCPT
+        with ESMTP id S232341AbjCaM0Q (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 31 Mar 2023 03:36:41 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4561A768B
-        for <linux-bluetooth@vger.kernel.org>; Fri, 31 Mar 2023 00:36:40 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id p2so15830427qtw.13
-        for <linux-bluetooth@vger.kernel.org>; Fri, 31 Mar 2023 00:36:40 -0700 (PDT)
+        Fri, 31 Mar 2023 08:26:16 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D7C01FD31
+        for <linux-bluetooth@vger.kernel.org>; Fri, 31 Mar 2023 05:25:59 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id n14so5204769plc.8
+        for <linux-bluetooth@vger.kernel.org>; Fri, 31 Mar 2023 05:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680248199;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qmkKASLrqScv9wBxvin0Z5CUPNBoCKNZmCZZkwrJxZE=;
-        b=KKfhf6W9JGEbcORqQUHh42zwrA/C8dnj75PrUZ3lFF8jC2fx0N4EPk9fQ3d7gzRzo1
-         TCwSlj7braRLQ8uUWTVgVLnASofCZWiB8Av9Tx1akVaORRRY4XQ2baH6C5aBqO3k7m8h
-         3+P+oWQC6h1JAKq7dqr8d+0nFnd8ZBranWbe8tSPJTwfTXaPPaSitF5DuJuhmDx5NJfz
-         a+FJ+yyFoFZXX2uWm9zgdC6QXvlUSvMRqa77vwSihtK8gbMEVXhoQzFw/ZXh2Xi1DoFG
-         1GFPunSotgO8CvRgBTDaXlfNbOx7PgRNOf7F68rpRqnmtJfDcX5XGz3st/OhoV7oBTFH
-         N5dA==
+        d=gmail.com; s=20210112; t=1680265559;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ps43Ql5Tjnd+rS8BdUE8H1PpwwGazEWm6mc1DzBYYUo=;
+        b=A4FBhCYgWwn9FWTMN3XU+qF3OTbptG6BdHPynUBRj/W35LtXwdXJqHI/JxI0/3XQbV
+         HXnZr6ps9uyAYuyL9cHKfRuyWK1fDPIIdE+M3Ie6/dTjSdkuTXnZ56r0vt+KOLzR2McV
+         xhGSmdqVJoBjagXMJByToj+wSy/ayvTjyKiYFeJ0Cj/Sd6JJiUxBBEWM1yYLrkHT4Sex
+         n+u1eHkR6xGgDsE5qmbzTzxEyrT4346i8dFS61/ZO65hqZLG21vR2mLFsnp58f5gWwuN
+         0T+sy494k5+ozGcmqMF6ioo4FyewjHctPud39aFQoI/7FR1gbwmvQwJv9QdyGt3AFeql
+         PHRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680248199;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qmkKASLrqScv9wBxvin0Z5CUPNBoCKNZmCZZkwrJxZE=;
-        b=oyy8SbP9Qv21WOShfVSXSZBKSckQ3XU+lKODDe9HQ6kw71ZUAkbmAvtskAOzdHCgud
-         VAOCuoO0qejU7mqPuU1V4Z1imqEzmsIVNb8Qcy1sorSomzNHxl8S66pqlyaDmdVRfIwU
-         GVcX0mBp/EOcCw5q+F6DR/kTwHApyEOYJkUr2Loxk5okBPUr6qtYN9lggJllrz0sEt4L
-         hQXq6yQjGH9iC2N+zGfUes6rjD6ErzfLkSbfNg5Cvv5bmpBoQp6/LfJQVEHKi9wMmMaB
-         T4L3HXXwk5oZ/BD0+2zR6virobi/TcjKLIlMnDNBqCC7+nJetCC+Dj0zhSYqTF3zSwfN
-         w2CA==
-X-Gm-Message-State: AAQBX9erzlGpM8v0lWtMtMG9L7gtf6L63hiuI1Qql+1C94RBv67hsz3N
-        0Krl2IsyFhGVo2bwVjdWUtDwk2yxjMI=
-X-Google-Smtp-Source: AKy350Zb9NNVGBMQWttbX3FaoqrMB7E2HlOo7wIXUm1U8lTw0vstRdxWznr+p7Cdey31xox8UCBg9Q==
-X-Received: by 2002:ac8:7d0c:0:b0:3e4:e94a:5082 with SMTP id g12-20020ac87d0c000000b003e4e94a5082mr28835867qtb.5.1680248199362;
-        Fri, 31 Mar 2023 00:36:39 -0700 (PDT)
-Received: from [172.17.0.2] ([104.45.201.65])
-        by smtp.gmail.com with ESMTPSA id y3-20020a37f603000000b007468733cd1fsm470593qkj.58.2023.03.31.00.36.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Mar 2023 00:36:39 -0700 (PDT)
-Message-ID: <64268d87.370a0220.7d922.2655@mx.google.com>
-Date:   Fri, 31 Mar 2023 00:36:39 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============0986430023905570492=="
+        d=1e100.net; s=20210112; t=1680265559;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ps43Ql5Tjnd+rS8BdUE8H1PpwwGazEWm6mc1DzBYYUo=;
+        b=clXYp2i05mH38K3ZmiYitcdCoK7KCfF0X6q6pJcscM/PKReRqrJ146aZOMRYV+7Xnh
+         UOapKbp/GdO2Y1oFsMU6N2zUiTpsMQnYEhX7Hp7DpXXDM8OIuxjegjx57DHdR5aSWiWR
+         948YGmWnDigb+RrlzQs59v2DamfMtcrkbu2LPuEtqHmYwqFdu53iu2k98uftBd4fLc04
+         YCXU04S7lJOvxleIrmkMAMyRnV0PLQ+jWgnXFsu/M4+wRnPcUJZAtYVrbtD3iiAo2fTB
+         slaLTmUKchISJfOu2z1nFm8gFslOGJs5jT//qqH954m3qdRXPSL2YnSC0jZaUTsp9ZUv
+         dgnw==
+X-Gm-Message-State: AAQBX9dGtnS8m2iUJdQjMdH/8ySlgv0BbumN3pGl5tqEHw5gkq0COP7N
+        AXuYXj/9DqnfzQMrENqk3X0qbTfDvTGx67rvUoo=
+X-Google-Smtp-Source: AKy350YGOQxxCWaEzq/wub+2pOtzWTnTSNN/USZkbpmgwdtiHbi0IU7BElxbK/DydffW6P5TvJuOfZyQF2tlkml6/LM=
+X-Received: by 2002:a17:90a:fb57:b0:23d:30c2:c5b7 with SMTP id
+ iq23-20020a17090afb5700b0023d30c2c5b7mr3206057pjb.3.1680265558970; Fri, 31
+ Mar 2023 05:25:58 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, michenyuan@huawei.com
-Subject: RE: cmtp: fix argument error
-In-Reply-To: <20230331064520.1320749-1-michenyuan@huawei.com>
-References: <20230331064520.1320749-1-michenyuan@huawei.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+Received: by 2002:a05:6a10:8c92:b0:474:c743:9f91 with HTTP; Fri, 31 Mar 2023
+ 05:25:58 -0700 (PDT)
+Reply-To: fionahill.2023@outlook.com
+From:   Fiona Hill <leea4982@gmail.com>
+Date:   Fri, 31 Mar 2023 05:25:58 -0700
+Message-ID: <CADa=nC1zAsLJ8hS2vb+bDx30QusG4bVT-9vRnaRKhtgY+j+5qg@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+        FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no autolearn_force=no
         version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============0986430023905570492==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=735678
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.75 seconds
-GitLint                       PASS      0.36 seconds
-SubjectPrefix                 FAIL      0.41 seconds
-BuildKernel                   PASS      39.31 seconds
-CheckAllWarning               PASS      43.12 seconds
-CheckSparse                   PASS      48.21 seconds
-CheckSmatch                   PASS      129.98 seconds
-BuildKernel32                 PASS      38.30 seconds
-TestRunnerSetup               PASS      534.77 seconds
-TestRunner_l2cap-tester       PASS      18.44 seconds
-TestRunner_iso-tester         PASS      18.96 seconds
-TestRunner_bnep-tester        PASS      6.32 seconds
-TestRunner_mgmt-tester        PASS      123.65 seconds
-TestRunner_rfcomm-tester      PASS      10.02 seconds
-TestRunner_sco-tester         PASS      8.95 seconds
-TestRunner_ioctl-tester       PASS      10.65 seconds
-TestRunner_mesh-tester        PASS      8.16 seconds
-TestRunner_smp-tester         PASS      9.17 seconds
-TestRunner_userchan-tester    PASS      6.59 seconds
-IncrementalBuild              PASS      35.97 seconds
-
-Details
-##############################
-Test: SubjectPrefix - FAIL
-Desc: Check subject contains "Bluetooth" prefix
-Output:
-"Bluetooth: " prefix is not specified in the subject
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============0986430023905570492==--
+-- 
+Hello did you receive my message?
