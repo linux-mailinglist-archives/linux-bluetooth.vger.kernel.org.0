@@ -2,222 +2,127 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D4E76D881A
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Apr 2023 22:19:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 296296D8AF5
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 01:11:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232586AbjDEUT2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Apr 2023 16:19:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34062 "EHLO
+        id S229446AbjDEXLR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 Apr 2023 19:11:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbjDEUT1 (ORCPT
+        with ESMTP id S229907AbjDEXLP (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Apr 2023 16:19:27 -0400
-Received: from out-17.smtp.github.com (out-17.smtp.github.com [192.30.252.200])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A99C43A9C
-        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 13:19:25 -0700 (PDT)
-Received: from github.com (hubbernetes-node-c7b2993.va3-iad.github.net [10.48.146.34])
-        by smtp.github.com (Postfix) with ESMTPA id 07F6D5C03F6
-        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 13:19:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-        s=pf2023; t=1680725965;
-        bh=iaYrnk4bPkl44tbM+8yFZrlEHQ/785aAVmVmjp0QJac=;
-        h=Date:From:To:Subject:From;
-        b=lbyHnj8AHyavVMlpYfYJrOthLCznCRnCOZU4cpEmfyocbN7odklhSVi62TMyNVJiq
-         SgEI2303yX9pkCLiirMBzlZw9bSN++x8wsGQcQPGh3dpJt8grE4bw/EcAOv0xWyZZ1
-         9A2CtRrjtJKnDxz2JXCjIPPZekm5l70BC3OdWRPU=
-Date:   Wed, 05 Apr 2023 13:19:25 -0700
-From:   iulia-tanasescu <noreply@github.com>
+        Wed, 5 Apr 2023 19:11:15 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E826E95
+        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 16:11:14 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id n14so19994139plc.8
+        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Apr 2023 16:11:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680736273;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kaqayTVDIWTLTbDe2Uwv5TQo6TvQbsXcmK3rO09rfRg=;
+        b=WgJVoRMKzUUujDGslreTnEtrjY5PwyB9wHWL3kkNh59aDqexh7nJgj6Svh/nkXwT22
+         NHvXLghumYGGEqRf048eqSNmvT52cfjS81e1IJFbWh6YwDOcOUVQ3FopenZAS2Nu4ZAd
+         1bijlOoQ8c4ZHFuJ3Q2wzUeSTN4Uu69TpIfd+CfG31xjWVP1Qa5JBB/LmlWGkSrWWEEQ
+         Ijlal5LPgpZqFAjnausFjVb2giAZ73Uh4E2vyPSufsnV0FXzGi4EKRLkPILSZ5rU94+Q
+         /H8E4gOQIYFQnJemFfYiOdLSvRKkBVl36vBCXRK7Wb0BN7LiZyiNQkMq6YSwXHFWIwxG
+         MGJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680736273;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kaqayTVDIWTLTbDe2Uwv5TQo6TvQbsXcmK3rO09rfRg=;
+        b=cspBbAN1fGaz+tW6UD8BSYwcf6Zs8kw0QuhrGOxXHBlE10axyLn0VF5EKrknlaxGaF
+         lzgflr2GjM/wIX7ApmWN7vBQyuLbYaAReVTyGEpUPjXsYXItI5J1/VfBwGN29Q8qi5ja
+         FZN+Mw/KnwIuMKs0UqhjKVCxSal9O56Bf/iE9gHnQ4OVzOoUhMTrJOxL5t/R7rnHe1qJ
+         XRqKaK/rz+pcm/GE/Td499YSvDyBpuCJTDpGDzjYKCxXnBRI4mT/alUvMpnQBg4CK10j
+         Aqeo/Z1iVTUkEQx6VbbgldlOmXVn3z5Uv8pNQs1cWbZkaLTwHUotJXkAcs5JyJgAPhSH
+         e/RA==
+X-Gm-Message-State: AAQBX9flPX8anwrzIgWTFbPJZ1mstJj8LJg0l0AJJxS3HdJeFYIP3/io
+        53BIgdBqKp+kPBF1jnlkqLuElAlZd94=
+X-Google-Smtp-Source: AKy350b/As0gdfXNcUN6CHdUzb9XIXVw2xmFti6BSeNFO7ENm8hUxB0qHwsfSwxFISpUFAkTL92xEA==
+X-Received: by 2002:a05:6a20:3b28:b0:de:6e42:e0e5 with SMTP id c40-20020a056a203b2800b000de6e42e0e5mr1001556pzh.13.1680736272833;
+        Wed, 05 Apr 2023 16:11:12 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
+        by smtp.gmail.com with ESMTPSA id v12-20020aa7808c000000b006254794d5b2sm11537752pff.94.2023.04.05.16.11.11
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Apr 2023 16:11:12 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/cffd58-61971f@github.com>
-Subject: [bluez/bluez] 7aee0b: set: Fix not attempt to connect devices with
- RSI
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Subject: [PATCH BlueZ 1/5] main.conf: Fix parsing of CSIS group
+Date:   Wed,  5 Apr 2023 16:11:07 -0700
+Message-Id: <20230405231111.2636523-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: 7aee0b67ba9fadb0713a14a3f4121cdeffa75f6c
-      https://github.com/bluez/bluez/commit/7aee0b67ba9fadb0713a14a3f4121cdeffa75f6c
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2023-04-03 (Mon, 03 Apr 2023)
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-  Changed paths:
-    M src/set.c
+There was a typo in the group name using CSIP instead of CSIS.
+---
+ src/main.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-  Log Message:
-  -----------
-  set: Fix not attempt to connect devices with RSI
+diff --git a/src/main.c b/src/main.c
+index 3198091fc12c..a64b833b58c1 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -177,7 +177,7 @@ static const struct group_table {
+ 	{ "LE",		le_options },
+ 	{ "Policy",	policy_options },
+ 	{ "GATT",	gatt_options },
+-	{ "CSIP",	csip_options },
++	{ "CSIS",	csip_options },
+ 	{ "AVDTP",	avdtp_options },
+ 	{ "AdvMon",	advmon_options },
+ 	{ }
+@@ -1015,7 +1015,7 @@ static void parse_config(GKeyFile *config)
+ 		btd_opts.gatt_channels = val;
+ 	}
+ 
+-	str = g_key_file_get_string(config, "CSIP", "SIRK", &err);
++	str = g_key_file_get_string(config, "CSIS", "SIRK", &err);
+ 	if (err) {
+ 		DBG("%s", err->message);
+ 		g_clear_error(&err);
+@@ -1031,7 +1031,7 @@ static void parse_config(GKeyFile *config)
+ 		g_free(str);
+ 	}
+ 
+-	boolean = g_key_file_get_boolean(config, "CSIP", "SIRK", &err);
++	boolean = g_key_file_get_boolean(config, "CSIS", "Encryption", &err);
+ 	if (err) {
+ 		DBG("%s", err->message);
+ 		g_clear_error(&err);
+@@ -1041,7 +1041,7 @@ static void parse_config(GKeyFile *config)
+ 		btd_opts.csis.encrypt = boolean;
+ 	}
+ 
+-	val = g_key_file_get_integer(config, "CSIP", "Size", &err);
++	val = g_key_file_get_integer(config, "CSIS", "Size", &err);
+ 	if (err) {
+ 		DBG("%s", err->message);
+ 		g_clear_error(&err);
+@@ -1052,7 +1052,7 @@ static void parse_config(GKeyFile *config)
+ 		btd_opts.csis.size = val;
+ 	}
+ 
+-	val = g_key_file_get_integer(config, "CSIP", "Rank", &err);
++	val = g_key_file_get_integer(config, "CSIS", "Rank", &err);
+ 	if (err) {
+ 		DBG("%s", err->message);
+ 		g_clear_error(&err);
+-- 
+2.39.2
 
-If a device advertising with RSI is only found later after the set was
-already create we shall still attempt to connect to it.
-
-
-  Commit: 61971f026466391ca8fa563559e2fe6bd5129581
-      https://github.com/bluez/bluez/commit/61971f026466391ca8fa563559e2fe6bd5129581
-  Author: Iulia Tanasescu <iulia.tanasescu@nxp.com>
-  Date:   2023-04-05 (Wed, 05 Apr 2023)
-
-  Changed paths:
-    M monitor/att.c
-
-  Log Message:
-  -----------
-  monitor/att: Add decoding support for BASS
-
-This adds decoding support for BASS attributes:
-
-> ACL Data RX: Handle 0 flags 0x02 dlen 7
-      ATT: Read Request (0x0a) len 2
-        Handle: 0x003a Type: Broadcast Receive State (0x2bc8)
-
-< ACL Data TX: Handle 0 flags 0x00 dlen 45
-      ATT: Read Response (0x0b) len 40
-        Handle: 0x003a Type: Broadcast Receive State (0x2bc8)
-        Value: 0100f2698be807c0013a6501020101000000000403020400
-          Source_ID: 1
-          Source_Address_Type: 0
-          Source_Address: C0:07:E8:8B:69:F2
-          Source_Adv_SID: 1
-          Broadcast_ID: 0x01653a
-          PA_Sync_State: Synchronized to PA
-          BIG_Encryption: Broadcast_Code required
-          Num_Subgroups: 1
-          Subgroup #0:
-            BIS_Sync State: 0x00000000
-            Metadata #0: len 0x03 type 0x02
-            Metadata: 0400
-
-> ACL Data RX: Handle 0 flags 0x02 dlen 7
-      ATT: Read Request (0x0a) len 2
-        Handle: 0x003d Type: Broadcast Receive State (0x2bc8)
-
-< ACL Data TX: Handle 0 flags 0x00 dlen 5
-      ATT: Read Response (0x0b) len 0
-        Handle: 0x003d Type: Broadcast Receive State (0x2bc8)
-        Value:
-          Empty characteristic
-
-> ACL Data RX: Handle 0 flags 0x02 dlen 8
-      ATT: Write Request (0x12) len 3
-        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
-          Data: 00
-            Opcode: Remote Scan Stopped (0x00)
-
-< ACL Data TX: Handle 0 flags 0x00 dlen 9
-      ATT: Error Response (0x01) len 4
-        Write Request (0x12)
-        Handle: 0x0040
-        Error: Reserved (0x80)
-
-> ACL Data RX: Handle 0 flags 0x02 dlen 8
-      ATT: Write Request (0x12) len 3
-        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
-          Data: 01
-            Opcode: Remote Scan Started (0x01)
-
-< ACL Data TX: Handle 0 flags 0x00 dlen 9
-      ATT: Error Response (0x01) len 4
-        Write Request (0x12)
-        Handle: 0x0040
-        Error: Reserved (0x80)
-
-> ACL Data RX: Handle 0 flags 0x01 dlen 5
-      ATT: Write Request (0x12) len 27
-        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
-          Data: 0200f2698be807c0013a650100ffff01000000000403020400
-            Opcode: Add Source (0x02)
-            Source_Address_Type: 0
-            Source_Address: C0:07:E8:8B:69:F2
-            Source_Adv_SID: 1
-            Broadcast_ID: 0x01653a
-            PA_Sync_State: Do not synchronize to PA
-            PA_Interval: 0xffff
-            Num_Subgroups: 1
-            Subgroup #0:
-              BIS_Sync State: 0x00000000
-              Metadata #0: len 0x03 type 0x02
-              Metadata: 0400
-
-< ACL Data TX: Handle 0 flags 0x00 dlen 9
-      ATT: Error Response (0x01) len 4
-        Write Request (0x12)
-        Handle: 0x0040
-        Error: Reserved (0x80)
-
-> ACL Data RX: Handle 0 flags 0x02 dlen 22
-      ATT: Write Request (0x12) len 17
-        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
-          Data: 030102780001000000000403040400
-            Opcode: Modify Source (0x03)
-            Source_ID: 1
-            PA_Sync_State: Synchronize to PA - PAST not available
-            PA_Interval: 0x0078
-            Num_Subgroups: 1
-            Subgroup #0:
-              BIS_Sync State: 0x00000000
-              Metadata #0: len 0x03 type 0x04
-              Metadata: 0400
-
-< ACL Data TX: Handle 0 flags 0x00 dlen 9
-      ATT: Error Response (0x01) len 4
-        Write Request (0x12)
-        Handle: 0x0040
-        Error: Reserved (0x80)
-
-> ACL Data RX: Handle 0 flags 0x02 dlen 25
-      ATT: Write Request (0x12) len 20
-        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
-          Data: 0401b803eac6afbb65a25a41f15305680201
-            Opcode: Set Broadcast_Code (0x04)
-            Source_ID: 1
-            Broadcast_Code: b803eac6afbb65a25a41f15305680201
-
-< ACL Data TX: Handle 0 flags 0x00 dlen 5
-      ATT: Write Response (0x13) len 0
-
-< ACL Data TX: Handle 0 flags 0x00 dlen 33
-      ATT: Handle Multiple Value Notification (0x23) len 28
-        Length: 0x0018
-        Handle: 0x003a Type: Broadcast Receive State (0x2bc8)
-          Data: 0100f2698be807c0013a6501020201000000000403020400
-          Source_ID: 1
-          Source_Address_Type: 0
-          Source_Address: C0:07:E8:8B:69:F2
-          Source_Adv_SID: 1
-          Broadcast_ID: 0x01653a
-          PA_Sync_State: Synchronized to PA
-          BIG_Encryption: Decrypting
-          Num_Subgroups: 1
-          Subgroup #0:
-            BIS_Sync State: 0x00000000
-            Metadata #0: len 0x03 type 0x02
-            Metadata: 0400
-
-> ACL Data RX: Handle 0 flags 0x02 dlen 9
-      ATT: Write Request (0x12) len 4
-        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
-          Data: 0501
-            Opcode: Remove Source (0x05)
-            Source_ID: 1
-
-< ACL Data TX: Handle 0 flags 0x00 dlen 9
-      ATT: Error Response (0x01) len 4
-        Write Request (0x12)
-        Handle: 0x0040
-        Error: Reserved (0x80)
-
-
-Compare: https://github.com/bluez/bluez/compare/cffd5832a52c...61971f026466
