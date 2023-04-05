@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED84A6D8AF8
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 01:11:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FA516D8AF9
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 01:11:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231664AbjDEXLU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Apr 2023 19:11:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51440 "EHLO
+        id S232680AbjDEXLW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 Apr 2023 19:11:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229907AbjDEXLT (ORCPT
+        with ESMTP id S229907AbjDEXLV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Apr 2023 19:11:19 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C6A6E95
-        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 16:11:18 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id lr16-20020a17090b4b9000b0023f187954acso38850733pjb.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Apr 2023 16:11:18 -0700 (PDT)
+        Wed, 5 Apr 2023 19:11:21 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 987077689
+        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 16:11:19 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id ja10so35860748plb.5
+        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Apr 2023 16:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680736277;
+        d=gmail.com; s=20210112; t=1680736278;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8ft6avUwxhvv7WofQyTMsrSxsU+FGAMzJcVueT+bAcA=;
-        b=INVwvdWjMQuR1t5qo6GIyNjOrplYzMeaCbQoiTAPNeGsqiVtsmZm3vV9xpLfBmKVc8
-         +4icseBYalUejNW/6ZXbPo3ZvFX/fJQsg0+QXIEwUtZO8rqgctKrVpzO6Gl8aI+Nq1uQ
-         /pb6/TO8Sf+XXgJ2D0XUjgUtGwOPGGKJaLTjUPBCCtLkWCcgfQkRaq5Z+MFQ+8l6URiQ
-         jV8cUgSMEnRSh3FUvys8lDWaOFycVhaacKp1maNlc19M1H2Hrla4F6zMM1wXkUXoJR/+
-         oFfzonPx5Tu28OGsEV4oxgI8QE6BxKBQXKF6+IfizKGhIsCHA6hZLKQbXHb0fcjQ3hs9
-         fC5A==
+        bh=9h2LAyTEPFBx9MN8b1NweE/DCDt8zWMHpQDzmPvfrs8=;
+        b=iE0Eno4PAYMMTG/gXPaRkflofWfvgLwSQSuPoyZRFWT1cwPqGyQ2+D+rPHApTfVEA+
+         dKsXY7QPZbVQKegcV2dDq4n0y4kKUNx/oe7autKa1Py01eZMwU1Btvw1RT0Fq5qZ9PBB
+         4Mc+iDZODesje6Y+357JyJgJOcpVyz4FCTB+/OswRdbecXbKytZxoMU/6fhPlU7tJr5t
+         Kor/K9NxS4Ai1xSv1qwtM9XB/vj9iKBNK3atFIX8WaS74NOOiGMvq/A2gdVAnsfJs3LF
+         XpQ+426opYPnktetmfEVbtuLlTdjXVkXU+966RjLR8iZHEEoXaQthJYYGaeiYkhnEg0w
+         BAdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680736277;
+        d=1e100.net; s=20210112; t=1680736278;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8ft6avUwxhvv7WofQyTMsrSxsU+FGAMzJcVueT+bAcA=;
-        b=cdcJRvfMBpMZGdF9DW7ROqZ+YYwMkEdMn1UgIE8Xm1NW/0hZB6btRS2E3lHzo1cqX4
-         xdlM+AZFgXyTHbkgNCdBwshtqMOdbe+n6SGmvIsAOlzypdnckQucmBYzbuJuDMMq5gxR
-         A2zRs92zksKpM++AxUawY9Vc5yRao3XRWGLdt57Of3UZ1sk/vsPcJNdx1hDBBV+WDxyP
-         YhBRuK7CbmdLqVEaUYeegJ6InQdY3N/8Wq+/M7gIHOCaeDIGxK3+oi5lVOQJmlTFRYzA
-         iT4o4nyBv4nEB3KEI4oPty2zs/qo8r/bXIuJPIpCK6V0PgBnxc+kU+6kPfDwM85lJK6c
-         ljrQ==
-X-Gm-Message-State: AAQBX9e8NNwQ/cD5GpE+hEkN8Pr5RMI9SX4OSVUe2G5jE5KvGaWuxEOr
-        +ZO98J1R/jg1xHd/mU24PO7aqMsCRLE=
-X-Google-Smtp-Source: AKy350ZySVxAf4bF43IiGOO1IPm/OkuwnQOUs2a5U0eFsrFnBChLOdPJFRgZeSyrhyIIvjAmcVxFag==
-X-Received: by 2002:a05:6a20:4da6:b0:d9:f69c:5349 with SMTP id gj38-20020a056a204da600b000d9f69c5349mr831788pzb.48.1680736277228;
-        Wed, 05 Apr 2023 16:11:17 -0700 (PDT)
+        bh=9h2LAyTEPFBx9MN8b1NweE/DCDt8zWMHpQDzmPvfrs8=;
+        b=MnyxLPcp87TxHIb4M7eWuYIDeVhJo3TcmsbIqe3MtH5kSKXSbpgJOf31IvEnnzQ+L4
+         Jkt6Bwj74yzpLRY3BFZv0wfyDqBfQN3VaUoe5DFJ7kOQXU9Z0U6Yv6VAVjiotNZ7PppO
+         BA3j6FYb3QeOmfZOu7K5XXGH99dwL32Vp4EgwqZCgxQkFLjlj5OVKzD2XaYoqFvbDEt1
+         3Py8Xbpl4Df5iCVXLHi8z4yqstZ8xcSnm7pPS8ZNSE0YGTGDYG74l5bEg8M96g3qRKh3
+         u6j6AK0d7UEY19gv7fiubunnbwC0EQeZgZbNgxGJRywMpk7Z3mx5i7ZLDw3DToRoICXY
+         bk+Q==
+X-Gm-Message-State: AAQBX9ddCwOtBx8RhF/BNV076WMXBfXKUSWRelN+qDWirPu1gIFHQY0p
+        F7wXQE28QKDeM4avZqAMrLiFuc/4PkI=
+X-Google-Smtp-Source: AKy350brgp0sUKoPy0HTlooEXHSxZIc6ydBZQJdExOj06j1Pn16ptHz29bpYqNrwbZ/oKHOLZ/VrjA==
+X-Received: by 2002:a05:6a20:cc41:b0:db:314d:c19a with SMTP id hq1-20020a056a20cc4100b000db314dc19amr658492pzb.50.1680736278419;
+        Wed, 05 Apr 2023 16:11:18 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id v12-20020aa7808c000000b006254794d5b2sm11537752pff.94.2023.04.05.16.11.16
+        by smtp.gmail.com with ESMTPSA id v12-20020aa7808c000000b006254794d5b2sm11537752pff.94.2023.04.05.16.11.17
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 16:11:16 -0700 (PDT)
+        Wed, 05 Apr 2023 16:11:17 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 4/5] advertising: Add support for rsi as Includes
-Date:   Wed,  5 Apr 2023 16:11:10 -0700
-Message-Id: <20230405231111.2636523-4-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 5/5] client/advertising: Add support for advertise.rsi command
+Date:   Wed,  5 Apr 2023 16:11:11 -0700
+Message-Id: <20230405231111.2636523-5-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230405231111.2636523-1-luiz.dentz@gmail.com>
 References: <20230405231111.2636523-1-luiz.dentz@gmail.com>
@@ -73,117 +73,141 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds support for "rsi" when a SIRK has been set on main.conf, the
-clients can then enable it via Includes property which will make the
-daemon to automatically generate an RSI (hash+random) and include it as
-part of the advertising data:
+This adds support for advertise.rsi command which can be used to request
+the generation of RSI and include it as part of advertising data:
 
-< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 15
-        Handle: 0x01
-        Operation: Complete extended advertising data (0x03)
-        Fragment preference: Minimize fragmentation (0x01)
-        Data length: 0x0b
-        Resolvable Set Identifier: E2-4E-AA-1B-2B-61
-          Hash: 0x1b2b61
-          Random: 0xe24eaa
-        Flags: 0x06
-          LE General Discoverable Mode
-          BR/EDR Not Supported
+[bluetooth]# advertise.rsi --help
+Show/Enable/Disable RSI to be advertised
+Usage:
+	 rsi [on/off]
+[bluetooth]# advertise.rsi
+RSI: on
+[bluetooth]# advertise on
+...
+Advertising object registered
+Tx Power: off
+Name: off
+Appearance: off
+Discoverable: on
+RSI: on
+[bluetooth]#
 ---
- src/advertising.c | 47 ++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 46 insertions(+), 1 deletion(-)
+ client/advertising.c | 28 +++++++++++++++++++++++++++-
+ client/advertising.h |  1 +
+ client/main.c        | 17 +++++++++++++++++
+ 3 files changed, 45 insertions(+), 1 deletion(-)
 
-diff --git a/src/advertising.c b/src/advertising.c
-index f9748b1328bc..0dceb14c3be4 100644
---- a/src/advertising.c
-+++ b/src/advertising.c
-@@ -29,11 +29,13 @@
- #include "error.h"
- #include "log.h"
- #include "eir.h"
-+#include "btd.h"
- #include "src/shared/ad.h"
- #include "src/shared/mgmt.h"
- #include "src/shared/queue.h"
- #include "src/shared/timeout.h"
- #include "src/shared/util.h"
-+#include "src/shared/crypto.h"
- #include "advertising.h"
- 
- #define LE_ADVERTISING_MGR_IFACE "org.bluez.LEAdvertisingManager1"
-@@ -459,13 +461,50 @@ fail:
- 	return false;
- }
- 
-+static bool set_rsi(struct btd_adv_client *client)
-+{
-+	struct bt_crypto *crypto;
-+	uint8_t zero[16] = {};
-+	struct bt_ad_data rsi = { .type = BT_AD_CSIP_RSI };
-+	uint8_t data[6];
-+	bool ret;
-+
-+	/* Check if a valid SIRK has been set */
-+	if (!memcmp(btd_opts.csis.sirk, zero, sizeof(zero)))
-+		return false;
-+
-+	/* Check if RSI needs to be set or data already contains RSI data */
-+	if (!client || bt_ad_has_data(client->data, &rsi))
-+		return true;
-+
-+	crypto = bt_crypto_new();
-+	if (!crypto)
-+		return false;
-+
-+	ret = bt_crypto_random_bytes(crypto, data + 3, sizeof(data) - 3);
-+	if (!ret)
-+		goto done;
-+
-+	ret = bt_crypto_sih(crypto, btd_opts.csis.sirk, data + 3, data);
-+	if (!ret)
-+		goto done;
-+
-+	ret = bt_ad_add_data(client->data, BT_AD_CSIP_RSI, data, sizeof(data));
-+
-+done:
-+	bt_crypto_unref(crypto);
-+	return ret;
-+}
-+
- static struct adv_include {
- 	uint8_t flag;
- 	const char *name;
-+	bool (*set)(struct btd_adv_client *client);
- } includes[] = {
- 	{ MGMT_ADV_FLAG_TX_POWER, "tx-power" },
- 	{ MGMT_ADV_FLAG_APPEARANCE, "appearance" },
- 	{ MGMT_ADV_FLAG_LOCAL_NAME, "local-name" },
-+	{ 0 , "rsi", set_rsi },
- 	{ },
+diff --git a/client/advertising.c b/client/advertising.c
+index fb9b049fde78..8b8e6d97ff80 100644
+--- a/client/advertising.c
++++ b/client/advertising.c
+@@ -67,9 +67,11 @@ static struct ad {
+ 	bool tx_power;
+ 	bool name;
+ 	bool appearance;
++	bool rsi;
+ } ad = {
+ 	.local_appearance = UINT16_MAX,
+ 	.discoverable = true,
++	.rsi = true,
  };
  
-@@ -497,6 +536,11 @@ static bool parse_includes(DBusMessageIter *iter,
- 			if (strcmp(str, inc->name))
- 				continue;
+ static void ad_release(DBusConnection *conn)
+@@ -176,6 +178,7 @@ static void print_ad(void)
+ 					ad.appearance ? "on" : "off");
  
-+			if (inc->set && inc->set(client)) {
-+				DBG("Including Feature: %s", str);
-+				continue;
-+			}
-+
- 			if (!(client->manager->supported_flags & inc->flag))
- 				continue;
+ 	bt_shell_printf("Discoverable: %s\n", ad.discoverable ? "on": "off");
++	bt_shell_printf("RSI: %s\n", ad.rsi ? "on": "off");
  
-@@ -1644,7 +1688,8 @@ static void append_include(struct btd_adv_manager *manager,
- 	struct adv_include *inc;
+ 	if (ad.duration)
+ 		bt_shell_printf("Duration: %u sec\n", ad.duration);
+@@ -295,7 +298,7 @@ static gboolean get_manufacturer_data(const GDBusPropertyTable *property,
  
- 	for (inc = includes; inc && inc->name; inc++) {
--		if (manager->supported_flags & inc->flag)
-+		if ((inc->set && inc->set(NULL)) ||
-+				(manager->supported_flags & inc->flag))
- 			dbus_message_iter_append_basic(iter, DBUS_TYPE_STRING,
- 								&inc->name);
+ static gboolean includes_exists(const GDBusPropertyTable *property, void *data)
+ {
+-	return ad.tx_power || ad.name || ad.appearance;
++	return ad.tx_power || ad.name || ad.appearance || ad.rsi;
+ }
+ 
+ static gboolean get_includes(const GDBusPropertyTable *property,
+@@ -323,6 +326,12 @@ static gboolean get_includes(const GDBusPropertyTable *property,
+ 		dbus_message_iter_append_basic(&array, DBUS_TYPE_STRING, &str);
  	}
+ 
++	if (ad.rsi) {
++		const char *str = "rsi";
++
++		dbus_message_iter_append_basic(&array, DBUS_TYPE_STRING, &str);
++	}
++
+ 	dbus_message_iter_close_container(iter, &array);
+ 
+ 
+@@ -1023,3 +1032,20 @@ void ad_advertise_interval(DBusConnection *conn, uint32_t *min, uint32_t *max)
+ 
+ 	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
+ }
++
++void ad_advertise_rsi(DBusConnection *conn, dbus_bool_t *value)
++{
++	if (!value) {
++		bt_shell_printf("RSI: %s\n", ad.rsi ? "on" : "off");
++		return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++	}
++
++	if (ad.rsi == *value)
++		return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++
++	ad.rsi = *value;
++
++	g_dbus_emit_property_changed(conn, AD_PATH, AD_IFACE, "Includes");
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
+diff --git a/client/advertising.h b/client/advertising.h
+index 472396efd381..145ac80452d2 100644
+--- a/client/advertising.h
++++ b/client/advertising.h
+@@ -30,3 +30,4 @@ void ad_advertise_discoverable(DBusConnection *conn, dbus_bool_t *value);
+ void ad_advertise_discoverable_timeout(DBusConnection *conn, long int *value);
+ void ad_advertise_secondary(DBusConnection *conn, const char *value);
+ void ad_advertise_interval(DBusConnection *conn, uint32_t *min, uint32_t *max);
++void ad_advertise_rsi(DBusConnection *conn, dbus_bool_t *value);
+diff --git a/client/main.c b/client/main.c
+index 79895015d6a6..b433a22001a3 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -2733,6 +2733,21 @@ static void cmd_advertise_interval(int argc, char *argv[])
+ 	ad_advertise_interval(dbus_conn, &min, &max);
+ }
+ 
++static void cmd_advertise_rsi(int argc, char *argv[])
++{
++	dbus_bool_t value;
++
++	if (argc < 2) {
++		ad_advertise_rsi(dbus_conn, NULL);
++		return;
++	}
++
++	if (!parse_argument(argc, argv, NULL, NULL, &value, NULL))
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++	ad_advertise_rsi(dbus_conn, &value);
++}
++
+ static void ad_clear_uuids(void)
+ {
+ 	ad_disable_uuids(dbus_conn);
+@@ -2931,6 +2946,8 @@ static const struct bt_shell_menu advertise_menu = {
+ 			"Set/Get advertise secondary channel" },
+ 	{ "interval", "[min] [max] ", cmd_advertise_interval,
+ 			"Set/Get advertise interval range" },
++	{ "rsi", "[on/off]", cmd_advertise_rsi,
++			"Show/Enable/Disable RSI to be advertised", NULL },
+ 	{ "clear", "[uuids/service/manufacturer/config-name...]", cmd_ad_clear,
+ 			"Clear advertise config" },
+ 	{ } },
 -- 
 2.39.2
 
