@@ -2,82 +2,222 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BF076D8752
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Apr 2023 21:51:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D4E76D881A
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Apr 2023 22:19:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234262AbjDETu7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Apr 2023 15:50:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50656 "EHLO
+        id S232586AbjDEUT2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 Apr 2023 16:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231799AbjDETuj (ORCPT
+        with ESMTP id S229815AbjDEUT1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Apr 2023 15:50:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9E287D8C
-        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 12:50:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7E177640FF
-        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 19:50:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E8546C433D2;
-        Wed,  5 Apr 2023 19:50:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680724219;
-        bh=N/ccQD1NYaj2cVJVaUVHa6puJrsKAIvY8kPeI/cA8Zg=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=e0g9Z22egXzsw58u9dYz+ELAE0iSqmIUgNE9BhrGAXQMT3kQZQBeOKCmBvCQQNzBx
-         QpKMYiaJ/1uafwvAzmh+158AbGfyF6U981ww8+3+jvX9YDohdWO7IM6WbMZ5/t+OvR
-         qxyUccbUSca8H8Hq1YNCRkLsxYGaam2LQrOoQyDhYNCxmqzE+awB9nQPZQbSxKSFZQ
-         YJEqoMCnjLamsJU8mxtay4aRkHvlZQnmg80p6xcmkYbvNgFWPQ/W1kFsgzHGy0PUOR
-         WtJh30a1rU/UGjhVDUH3KwVMid658Rd/dUqco/G21+ubKxa2LKGiBsJWIhNZ4pVfnc
-         AJN0BDJ6L4aLw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D64D1E29F4E;
-        Wed,  5 Apr 2023 19:50:19 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v2 0/1] monitor/att: Add decoding support for BASS
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168072421987.28321.1878400837564538119.git-patchwork-notify@kernel.org>
-Date:   Wed, 05 Apr 2023 19:50:19 +0000
-References: <20230405105442.14281-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20230405105442.14281-1-iulia.tanasescu@nxp.com>
-To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Cc:     linux-bluetooth@vger.kernel.org
+        Wed, 5 Apr 2023 16:19:27 -0400
+Received: from out-17.smtp.github.com (out-17.smtp.github.com [192.30.252.200])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A99C43A9C
+        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 13:19:25 -0700 (PDT)
+Received: from github.com (hubbernetes-node-c7b2993.va3-iad.github.net [10.48.146.34])
+        by smtp.github.com (Postfix) with ESMTPA id 07F6D5C03F6
+        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 13:19:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2023; t=1680725965;
+        bh=iaYrnk4bPkl44tbM+8yFZrlEHQ/785aAVmVmjp0QJac=;
+        h=Date:From:To:Subject:From;
+        b=lbyHnj8AHyavVMlpYfYJrOthLCznCRnCOZU4cpEmfyocbN7odklhSVi62TMyNVJiq
+         SgEI2303yX9pkCLiirMBzlZw9bSN++x8wsGQcQPGh3dpJt8grE4bw/EcAOv0xWyZZ1
+         9A2CtRrjtJKnDxz2JXCjIPPZekm5l70BC3OdWRPU=
+Date:   Wed, 05 Apr 2023 13:19:25 -0700
+From:   iulia-tanasescu <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/cffd58-61971f@github.com>
+Subject: [bluez/bluez] 7aee0b: set: Fix not attempt to connect devices with
+ RSI
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 7aee0b67ba9fadb0713a14a3f4121cdeffa75f6c
+      https://github.com/bluez/bluez/commit/7aee0b67ba9fadb0713a14a3f4121cdeffa75f6c
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2023-04-03 (Mon, 03 Apr 2023)
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M src/set.c
 
-On Wed,  5 Apr 2023 13:54:41 +0300 you wrote:
-> This patch adds decoding support for BASS attributes
-> 
-> Iulia Tanasescu (1):
->   monitor/att: Add decoding support for BASS
-> 
->  monitor/att.c | 464 +++++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 462 insertions(+), 2 deletions(-)
-> 
-> [...]
+  Log Message:
+  -----------
+  set: Fix not attempt to connect devices with RSI
 
-Here is the summary with links:
-  - [BlueZ,v2,1/1] monitor/att: Add decoding support for BASS
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=61971f026466
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+If a device advertising with RSI is only found later after the set was
+already create we shall still attempt to connect to it.
 
 
+  Commit: 61971f026466391ca8fa563559e2fe6bd5129581
+      https://github.com/bluez/bluez/commit/61971f026466391ca8fa563559e2fe6bd5129581
+  Author: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+  Date:   2023-04-05 (Wed, 05 Apr 2023)
+
+  Changed paths:
+    M monitor/att.c
+
+  Log Message:
+  -----------
+  monitor/att: Add decoding support for BASS
+
+This adds decoding support for BASS attributes:
+
+> ACL Data RX: Handle 0 flags 0x02 dlen 7
+      ATT: Read Request (0x0a) len 2
+        Handle: 0x003a Type: Broadcast Receive State (0x2bc8)
+
+< ACL Data TX: Handle 0 flags 0x00 dlen 45
+      ATT: Read Response (0x0b) len 40
+        Handle: 0x003a Type: Broadcast Receive State (0x2bc8)
+        Value: 0100f2698be807c0013a6501020101000000000403020400
+          Source_ID: 1
+          Source_Address_Type: 0
+          Source_Address: C0:07:E8:8B:69:F2
+          Source_Adv_SID: 1
+          Broadcast_ID: 0x01653a
+          PA_Sync_State: Synchronized to PA
+          BIG_Encryption: Broadcast_Code required
+          Num_Subgroups: 1
+          Subgroup #0:
+            BIS_Sync State: 0x00000000
+            Metadata #0: len 0x03 type 0x02
+            Metadata: 0400
+
+> ACL Data RX: Handle 0 flags 0x02 dlen 7
+      ATT: Read Request (0x0a) len 2
+        Handle: 0x003d Type: Broadcast Receive State (0x2bc8)
+
+< ACL Data TX: Handle 0 flags 0x00 dlen 5
+      ATT: Read Response (0x0b) len 0
+        Handle: 0x003d Type: Broadcast Receive State (0x2bc8)
+        Value:
+          Empty characteristic
+
+> ACL Data RX: Handle 0 flags 0x02 dlen 8
+      ATT: Write Request (0x12) len 3
+        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
+          Data: 00
+            Opcode: Remote Scan Stopped (0x00)
+
+< ACL Data TX: Handle 0 flags 0x00 dlen 9
+      ATT: Error Response (0x01) len 4
+        Write Request (0x12)
+        Handle: 0x0040
+        Error: Reserved (0x80)
+
+> ACL Data RX: Handle 0 flags 0x02 dlen 8
+      ATT: Write Request (0x12) len 3
+        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
+          Data: 01
+            Opcode: Remote Scan Started (0x01)
+
+< ACL Data TX: Handle 0 flags 0x00 dlen 9
+      ATT: Error Response (0x01) len 4
+        Write Request (0x12)
+        Handle: 0x0040
+        Error: Reserved (0x80)
+
+> ACL Data RX: Handle 0 flags 0x01 dlen 5
+      ATT: Write Request (0x12) len 27
+        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
+          Data: 0200f2698be807c0013a650100ffff01000000000403020400
+            Opcode: Add Source (0x02)
+            Source_Address_Type: 0
+            Source_Address: C0:07:E8:8B:69:F2
+            Source_Adv_SID: 1
+            Broadcast_ID: 0x01653a
+            PA_Sync_State: Do not synchronize to PA
+            PA_Interval: 0xffff
+            Num_Subgroups: 1
+            Subgroup #0:
+              BIS_Sync State: 0x00000000
+              Metadata #0: len 0x03 type 0x02
+              Metadata: 0400
+
+< ACL Data TX: Handle 0 flags 0x00 dlen 9
+      ATT: Error Response (0x01) len 4
+        Write Request (0x12)
+        Handle: 0x0040
+        Error: Reserved (0x80)
+
+> ACL Data RX: Handle 0 flags 0x02 dlen 22
+      ATT: Write Request (0x12) len 17
+        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
+          Data: 030102780001000000000403040400
+            Opcode: Modify Source (0x03)
+            Source_ID: 1
+            PA_Sync_State: Synchronize to PA - PAST not available
+            PA_Interval: 0x0078
+            Num_Subgroups: 1
+            Subgroup #0:
+              BIS_Sync State: 0x00000000
+              Metadata #0: len 0x03 type 0x04
+              Metadata: 0400
+
+< ACL Data TX: Handle 0 flags 0x00 dlen 9
+      ATT: Error Response (0x01) len 4
+        Write Request (0x12)
+        Handle: 0x0040
+        Error: Reserved (0x80)
+
+> ACL Data RX: Handle 0 flags 0x02 dlen 25
+      ATT: Write Request (0x12) len 20
+        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
+          Data: 0401b803eac6afbb65a25a41f15305680201
+            Opcode: Set Broadcast_Code (0x04)
+            Source_ID: 1
+            Broadcast_Code: b803eac6afbb65a25a41f15305680201
+
+< ACL Data TX: Handle 0 flags 0x00 dlen 5
+      ATT: Write Response (0x13) len 0
+
+< ACL Data TX: Handle 0 flags 0x00 dlen 33
+      ATT: Handle Multiple Value Notification (0x23) len 28
+        Length: 0x0018
+        Handle: 0x003a Type: Broadcast Receive State (0x2bc8)
+          Data: 0100f2698be807c0013a6501020201000000000403020400
+          Source_ID: 1
+          Source_Address_Type: 0
+          Source_Address: C0:07:E8:8B:69:F2
+          Source_Adv_SID: 1
+          Broadcast_ID: 0x01653a
+          PA_Sync_State: Synchronized to PA
+          BIG_Encryption: Decrypting
+          Num_Subgroups: 1
+          Subgroup #0:
+            BIS_Sync State: 0x00000000
+            Metadata #0: len 0x03 type 0x02
+            Metadata: 0400
+
+> ACL Data RX: Handle 0 flags 0x02 dlen 9
+      ATT: Write Request (0x12) len 4
+        Handle: 0x0040 Type: Broadcast Audio Scan Control Point (0x2bc7)
+          Data: 0501
+            Opcode: Remove Source (0x05)
+            Source_ID: 1
+
+< ACL Data TX: Handle 0 flags 0x00 dlen 9
+      ATT: Error Response (0x01) len 4
+        Write Request (0x12)
+        Handle: 0x0040
+        Error: Reserved (0x80)
+
+
+Compare: https://github.com/bluez/bluez/compare/cffd5832a52c...61971f026466
