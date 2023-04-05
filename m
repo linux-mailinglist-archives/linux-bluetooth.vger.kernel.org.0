@@ -2,92 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 699DC6D7332
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Apr 2023 06:08:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADE6E6DB9C3
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  8 Apr 2023 11:13:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237032AbjDEEIS (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Apr 2023 00:08:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50712 "EHLO
+        id S229545AbjDHJNf convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 8 Apr 2023 05:13:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236967AbjDEEHV (ORCPT
+        with ESMTP id S229456AbjDHJNe (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Apr 2023 00:07:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC3D65594;
-        Tue,  4 Apr 2023 21:06:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 84F71639A7;
-        Wed,  5 Apr 2023 04:06:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74066C433A1;
-        Wed,  5 Apr 2023 04:06:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680667599;
-        bh=jT/2zkWq1kpMZM9EJKrwaCUHOri4Z7ZvlFY8/qkgQcY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=KGzkUlJO8R96gOAjDLZquxrmWD3XdcQYdV8JNk55s0K41+5/gGJKRjQOIbkLl12/y
-         cGyb6544ImHVgU3mvO/+984ooZNqCII2X5ukz24IYJbDYrl7TT1zCdpfMPhCU8C7QR
-         oajq+UuiRTLSdjRDqm/E5p5nhBhTRA4kAuHj49Qg/8jrVv47nQZ03l1f61POnqnW5R
-         4z/JjlKCKDYXYDQH4xU8PDx97U1bX87mDTTFw51B7Fbj7l/5Mwa/zuMurKR7Zjrk/d
-         9lHeCfPbLFuYrfWFoEj+zVj4J86H26E8LLxOGcK6XTp9sruZY8Yyl27os9FpU+giUl
-         Y+UqiFrsh7hag==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Sven Peter <sven@svenpeter.dev>, linux-arm-msm@vger.kernel.org,
-        Tim Jiang <quic_tjiang@quicinc.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Johan Hovold <johan@kernel.org>, netdev@vger.kernel.org,
-        Eric Dumazet <edumazet@google.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        devicetree@vger.kernel.org,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>
-Subject: Re: (subset) [PATCH v8 0/4] Add WCN6855 Bluetooth support
-Date:   Tue,  4 Apr 2023 21:09:09 -0700
-Message-Id: <168066774422.443656.15310898054593060870.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230326233812.28058-1-steev@kali.org>
-References: <20230326233812.28058-1-steev@kali.org>
+        Sat, 8 Apr 2023 05:13:34 -0400
+Received: from mail.weeksenterprises.net (unknown [173.161.249.211])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3429C30E5
+        for <linux-bluetooth@vger.kernel.org>; Sat,  8 Apr 2023 02:13:34 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.weeksenterprises.net (Postfix) with ESMTP id BC7EC4F5BA7A;
+        Wed,  5 Apr 2023 06:24:02 -0400 (EDT)
+Received: from mail.weeksenterprises.net ([127.0.0.1])
+        by localhost (weeksenterprises.net [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id VFoxqaGaiPmP; Wed,  5 Apr 2023 06:24:01 -0400 (EDT)
+Received: from [192.168.0.110] (unknown [194.146.157.64])
+        by mail.weeksenterprises.net (Postfix) with ESMTPA id 3D9F14F44816;
+        Wed,  5 Apr 2023 03:22:48 -0400 (EDT)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: DARLEHENSANGEBOT
+To:     Recipients <Fred@gmail.com>
+From:   Fred@gmail.com
+Date:   Wed, 05 Apr 2023 00:22:29 -0700
+Reply-To: freddonaldloaninvestment2007@gmail.com
+Message-Id: <20230405072249.3D9F14F44816@mail.weeksenterprises.net>
+X-Spam-Status: No, score=4.5 required=5.0 tests=DKIM_ADSP_CUSTOM_MED,
+        FORGED_GMAIL_RCVD,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,KHOP_HELO_FCRDNS,NML_ADSP_CUSTOM_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_SOFTFAIL,SPOOFED_FREEMAIL,
+        SPOOFED_FREEM_REPTO,SPOOF_GMAIL_MID autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Sun, 26 Mar 2023 18:38:08 -0500, Steev Klimaszewski wrote:
-> First things first, I do not have access to the specs nor the schematics, so a
-> lot of this was done via guess work, looking at the acpi tables, and looking at
-> how a similar device (wcn6750) was added.
-> 
-> This patchset has 2 patchsets that it depends on, for the bindings so that they
-> pass dtbs_check, as well as adding in the needed regulators to make bluetooth
-> work.
-> 
-> [...]
+Benötigen Sie dringend ein Darlehen, wenn ja, wenden Sie sich bitte an uns, um weitere Informationen zu erhalten.
 
-Applied, thanks!
-
-[3/4] arm64: dts: qcom: sc8280xp: Define uart2
-      commit: 9db28f297526f17c6575ec0eefc93a8b1642cff7
-[4/4] arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
-      commit: 105560b4fca4df0d42dba6656105b5e4131d8ad3
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Vollständiger Name:.........
+Land:.........
+Zustand:...........
+Geschlecht:............
+Benötigte Menge:.........
+Leihdauer: ...........
+Telefonnummer:........
+WhatsApp-Nummer: .........
+E-Mail:......freddonaldloaninvestment2007@gmail.com
