@@ -2,59 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 296296D8AF5
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 01:11:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F15B6D8AF6
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 01:11:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229446AbjDEXLR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S230296AbjDEXLR (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Wed, 5 Apr 2023 19:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51310 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229907AbjDEXLP (ORCPT
+        with ESMTP id S229481AbjDEXLR (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Apr 2023 19:11:15 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E826E95
-        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 16:11:14 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id n14so19994139plc.8
-        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Apr 2023 16:11:14 -0700 (PDT)
+        Wed, 5 Apr 2023 19:11:17 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD746A7A
+        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Apr 2023 16:11:15 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id d8so22740951pgm.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Apr 2023 16:11:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680736273;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kaqayTVDIWTLTbDe2Uwv5TQo6TvQbsXcmK3rO09rfRg=;
-        b=WgJVoRMKzUUujDGslreTnEtrjY5PwyB9wHWL3kkNh59aDqexh7nJgj6Svh/nkXwT22
-         NHvXLghumYGGEqRf048eqSNmvT52cfjS81e1IJFbWh6YwDOcOUVQ3FopenZAS2Nu4ZAd
-         1bijlOoQ8c4ZHFuJ3Q2wzUeSTN4Uu69TpIfd+CfG31xjWVP1Qa5JBB/LmlWGkSrWWEEQ
-         Ijlal5LPgpZqFAjnausFjVb2giAZ73Uh4E2vyPSufsnV0FXzGi4EKRLkPILSZ5rU94+Q
-         /H8E4gOQIYFQnJemFfYiOdLSvRKkBVl36vBCXRK7Wb0BN7LiZyiNQkMq6YSwXHFWIwxG
-         MGJA==
+        d=gmail.com; s=20210112; t=1680736274;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BTuVRoYIpyS9FYtg1FOjJUWJ8TECAJyoSu618nmDA/0=;
+        b=hDVgnRYy43qgTyMXQ4ixA94esSsdwSqN4cpawCtXk5rdzdTi3R0GozPHodXf8xbkRo
+         jPh+K6138Qq8EChetMFZPP1bVsJpfhlkpjEyaK47erBgzcc7pFUYHOL4YHj9XM2KN5pW
+         4lEbDVe33ouEQBlQeP3W++fTPgNhRsnj8NRnqrIjkDjS+1XAKWmpU3oii+QN1KGpOXt9
+         k4gsDoMd9diYqyL6cf7wy50reJCgfhWSyZGXp8UrXZ09lgOdgJ+bphGReJ7sU6zQ7n0N
+         SVG2gXG/iqF3H7S4j0wBnyf6NESwmjWzz9OibujkRPyhKu+01WOQ0LmVgFQ/4/M4UaQB
+         sX7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680736273;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kaqayTVDIWTLTbDe2Uwv5TQo6TvQbsXcmK3rO09rfRg=;
-        b=cspBbAN1fGaz+tW6UD8BSYwcf6Zs8kw0QuhrGOxXHBlE10axyLn0VF5EKrknlaxGaF
-         lzgflr2GjM/wIX7ApmWN7vBQyuLbYaAReVTyGEpUPjXsYXItI5J1/VfBwGN29Q8qi5ja
-         FZN+Mw/KnwIuMKs0UqhjKVCxSal9O56Bf/iE9gHnQ4OVzOoUhMTrJOxL5t/R7rnHe1qJ
-         XRqKaK/rz+pcm/GE/Td499YSvDyBpuCJTDpGDzjYKCxXnBRI4mT/alUvMpnQBg4CK10j
-         Aqeo/Z1iVTUkEQx6VbbgldlOmXVn3z5Uv8pNQs1cWbZkaLTwHUotJXkAcs5JyJgAPhSH
-         e/RA==
-X-Gm-Message-State: AAQBX9flPX8anwrzIgWTFbPJZ1mstJj8LJg0l0AJJxS3HdJeFYIP3/io
-        53BIgdBqKp+kPBF1jnlkqLuElAlZd94=
-X-Google-Smtp-Source: AKy350b/As0gdfXNcUN6CHdUzb9XIXVw2xmFti6BSeNFO7ENm8hUxB0qHwsfSwxFISpUFAkTL92xEA==
-X-Received: by 2002:a05:6a20:3b28:b0:de:6e42:e0e5 with SMTP id c40-20020a056a203b2800b000de6e42e0e5mr1001556pzh.13.1680736272833;
-        Wed, 05 Apr 2023 16:11:12 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680736274;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BTuVRoYIpyS9FYtg1FOjJUWJ8TECAJyoSu618nmDA/0=;
+        b=D5GiW3QCCZmxoo+9lIcNkUYr3jvVPcM3z8ydkjAgDc/9HHZQvCSv8nXBc6Kzj3/I9S
+         +LCku9FLQ5l7GH0udFzmWA0vYisCUA5SjsXAjDb30+ghprt0sNnF3Xd1R/r/84nL1i/7
+         ImFEtZMmhLmQKv28dAIEsMuwtnZYo6IxZmPOj6gV/yTR1mP9ST/omApHAtOZfX4ayP1l
+         IFQ/jdFJvTvOVSfu6xo00ND8vR8396kIIAw+rm54wtJBGxziQ8Z2SNANflKQIvnc5Aa2
+         NjRfMmzuhVbQmH5n5rokjx8MdyNBO1I7jj80jkQ86M+EBCx2OTIIgXy6XcYSzf6ddrZ5
+         4jyQ==
+X-Gm-Message-State: AAQBX9cRKi/guYWYFs+p3EjcAY63E+cWIQWILmq0Fw46MVZC9AkiHM1r
+        jgZHYSd5wXXG8VJWUOwjtZi0ErCE9gg=
+X-Google-Smtp-Source: AKy350Z+wvIZbSXomq61hYsrhxLJzuo4xJafelK39ub0bFKnI5Lk/WVLda/qRzB2kPafVEnKYWYlIA==
+X-Received: by 2002:a05:6a00:8f:b0:627:ee6a:2a40 with SMTP id c15-20020a056a00008f00b00627ee6a2a40mr7726519pfj.10.1680736274529;
+        Wed, 05 Apr 2023 16:11:14 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id v12-20020aa7808c000000b006254794d5b2sm11537752pff.94.2023.04.05.16.11.11
+        by smtp.gmail.com with ESMTPSA id v12-20020aa7808c000000b006254794d5b2sm11537752pff.94.2023.04.05.16.11.13
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 16:11:12 -0700 (PDT)
+        Wed, 05 Apr 2023 16:11:13 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 1/5] main.conf: Fix parsing of CSIS group
-Date:   Wed,  5 Apr 2023 16:11:07 -0700
-Message-Id: <20230405231111.2636523-1-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 2/5] shared/ad: Fix bt_ad_has_data not matching when only type is passed
+Date:   Wed,  5 Apr 2023 16:11:08 -0700
+Message-Id: <20230405231111.2636523-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230405231111.2636523-1-luiz.dentz@gmail.com>
+References: <20230405231111.2636523-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -69,60 +73,27 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-There was a typo in the group name using CSIP instead of CSIS.
+bt_ad_has_data attempts to match the data portion even when not set
+which is useful the user is only interested in actually mataching the
+type alone.
 ---
- src/main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ src/shared/ad.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/src/main.c b/src/main.c
-index 3198091fc12c..a64b833b58c1 100644
---- a/src/main.c
-+++ b/src/main.c
-@@ -177,7 +177,7 @@ static const struct group_table {
- 	{ "LE",		le_options },
- 	{ "Policy",	policy_options },
- 	{ "GATT",	gatt_options },
--	{ "CSIP",	csip_options },
-+	{ "CSIS",	csip_options },
- 	{ "AVDTP",	avdtp_options },
- 	{ "AdvMon",	advmon_options },
- 	{ }
-@@ -1015,7 +1015,7 @@ static void parse_config(GKeyFile *config)
- 		btd_opts.gatt_channels = val;
- 	}
+diff --git a/src/shared/ad.c b/src/shared/ad.c
+index 27b76dc8179b..7350aa206d1e 100644
+--- a/src/shared/ad.c
++++ b/src/shared/ad.c
+@@ -1028,6 +1028,9 @@ static bool data_match(const void *data, const void *user_data)
+ 	if (d1->type != d2->type)
+ 		return false;
  
--	str = g_key_file_get_string(config, "CSIP", "SIRK", &err);
-+	str = g_key_file_get_string(config, "CSIS", "SIRK", &err);
- 	if (err) {
- 		DBG("%s", err->message);
- 		g_clear_error(&err);
-@@ -1031,7 +1031,7 @@ static void parse_config(GKeyFile *config)
- 		g_free(str);
- 	}
++	if (!d2->len && !d2->data)
++		return true;
++
+ 	if (d1->len != d2->len)
+ 		return false;
  
--	boolean = g_key_file_get_boolean(config, "CSIP", "SIRK", &err);
-+	boolean = g_key_file_get_boolean(config, "CSIS", "Encryption", &err);
- 	if (err) {
- 		DBG("%s", err->message);
- 		g_clear_error(&err);
-@@ -1041,7 +1041,7 @@ static void parse_config(GKeyFile *config)
- 		btd_opts.csis.encrypt = boolean;
- 	}
- 
--	val = g_key_file_get_integer(config, "CSIP", "Size", &err);
-+	val = g_key_file_get_integer(config, "CSIS", "Size", &err);
- 	if (err) {
- 		DBG("%s", err->message);
- 		g_clear_error(&err);
-@@ -1052,7 +1052,7 @@ static void parse_config(GKeyFile *config)
- 		btd_opts.csis.size = val;
- 	}
- 
--	val = g_key_file_get_integer(config, "CSIP", "Rank", &err);
-+	val = g_key_file_get_integer(config, "CSIS", "Rank", &err);
- 	if (err) {
- 		DBG("%s", err->message);
- 		g_clear_error(&err);
 -- 
 2.39.2
 
