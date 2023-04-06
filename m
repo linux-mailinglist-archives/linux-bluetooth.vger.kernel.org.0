@@ -2,55 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 847F86DA43C
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 23:00:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7329B6DA43F
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 23:00:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238096AbjDFVAX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Apr 2023 17:00:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57926 "EHLO
+        id S238887AbjDFVAZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 Apr 2023 17:00:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229941AbjDFVAW (ORCPT
+        with ESMTP id S230005AbjDFVAX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Apr 2023 17:00:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAF9B768B;
-        Thu,  6 Apr 2023 14:00:21 -0700 (PDT)
+        Thu, 6 Apr 2023 17:00:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D57257695
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Apr 2023 14:00:21 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 464C464BE1;
-        Thu,  6 Apr 2023 21:00:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id AEA5BC433EF;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6318E64CA9
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Apr 2023 21:00:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C91E8C433A1;
         Thu,  6 Apr 2023 21:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1680814820;
-        bh=3AsPzO1Lcn3gkRBA53VbVGPripY9CGNKCaBwTdvHPzI=;
+        bh=+jwGM4DKGW9rM/d2CG3JX9vju1BH+IPCgrmoDr6jHZs=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=H9hO3RPMRjFY3ubYzhxJCnGMdr/DbSE3/ABl8aFdr3WYdzVTVmhqZndnNIBvT7QqN
-         dztv+cqtkGlYCC3IBJvFID/DgDalLieI6k23JsRmw6DybA1avjnbid0SomGee7PeIO
-         gZo55x8bNV3wgnUbhg/1jQlJXkttJmVeCbQ/3nH+j75n6As+uy+yii6MJEFtQKlzVP
-         rxgOX1o+3s4nmKJcIv9vFAjnwVdC5wsokPL7mbSAEhxWXv276QhMOCAFJDJlq6LJCB
-         5tvvaX8N4IbUpmmZkuWm8lX9J0GcBuO+fWf/4yH1M9YsxQqWmj7dSP9hTEobGTmTO1
-         Fv5/W5CRMOF1w==
+        b=SUov4R6Ufq0uNX52nH3hDd6G2nbXLYeVFzCi47ogtIiqqOXTFoTP1tLUz9un1zkDv
+         t8/blmPvuRB8f7Q78dqCWGAWaYf8iFC1la+sgNchM4Qx5dXrk9G+DE+XLakO3ixEFg
+         jPx+wSvbknb7xbOe66wWfxQYA+F74DKYTVwBeBqVlPM/71Gk+LeAVu2l6ZGXCNi5nQ
+         Fnex8LBND2Dkzbt14PSMLeh4U6qEtZoj3gUny/s5SLYhK4ZeaL0T/Oejnt7dfVqVky
+         npryfry1mhecBv15ZH9BOrQPyUP8ciEbc/s3meaNpTgBsRywXAlaDPOxsx5lu9roLZ
+         drM4yf7NKhc/A==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8E117E4F155;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B3084E4F158;
         Thu,  6 Apr 2023 21:00:20 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth: btnxpuart: Disable Power Save feature on
- startup
+Subject: Re: [PATCH v2 0/1] Set ISO Data Path on broadcast sink
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168081482057.2619.5043442116700132701.git-patchwork-notify@kernel.org>
+Message-Id: <168081482072.2619.17846943875971851872.git-patchwork-notify@kernel.org>
 Date:   Thu, 06 Apr 2023 21:00:20 +0000
-References: <20230403122430.1024235-3-neeraj.sanjaykale@nxp.com>
-In-Reply-To: <20230403122430.1024235-3-neeraj.sanjaykale@nxp.com>
-To:     Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        amitkumar.karwar@nxp.com, rohit.fule@nxp.com, sherry.sun@nxp.com
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+References: <20230405111918.4885-1-claudia.rosu@nxp.com>
+In-Reply-To: <20230405111918.4885-1-claudia.rosu@nxp.com>
+To:     Claudia Draghicescu <claudia.rosu@nxp.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,20 +60,17 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon,  3 Apr 2023 17:54:29 +0530 you wrote:
-> This sets the default power save mode setting to disabled.
-> With this setting, this driver will behave like a normal h4 driver.
-> If user needs to use the power save feature, it can be enabled
-> using the following vendor command:
-> hcitool cmd 3f 23 02 00 00 (HCI_NXP_AUTO_SLEEP_MODE)
+On Wed,  5 Apr 2023 14:19:17 +0300 you wrote:
+> This patch enables ISO data rx on broadcast sink.
+> Claudia Draghicescu (1):
+>   Set ISO Data Path on broadcast sink
 > 
-> Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-> 
-> [...]
+>  net/bluetooth/hci_event.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Here is the summary with links:
-  - [v1] Bluetooth: btnxpuart: Disable Power Save feature on startup
-    https://git.kernel.org/bluetooth/bluetooth-next/c/3f8dae828fb2
+  - [v2,1/1] Bluetooth: Set ISO Data Path on broadcast sink
+    https://git.kernel.org/bluetooth/bluetooth-next/c/32947ea30644
 
 You are awesome, thank you!
 -- 
