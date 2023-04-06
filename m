@@ -2,53 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67BDF6DA444
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 23:00:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38D186DA447
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 23:00:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239971AbjDFVAa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Apr 2023 17:00:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58008 "EHLO
+        id S238341AbjDFVAc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 Apr 2023 17:00:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238341AbjDFVAY (ORCPT
+        with ESMTP id S239448AbjDFVAY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Thu, 6 Apr 2023 17:00:24 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF6E17ED4;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F07DB8684;
         Thu,  6 Apr 2023 14:00:22 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CEAB164CAF;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D142F64CB8;
         Thu,  6 Apr 2023 21:00:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CBE84C433A4;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D6BE3C433A8;
         Thu,  6 Apr 2023 21:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1680814820;
-        bh=5GOYcpjCXrTJTg4gv8OrwqfP2Uo8jGUVfVGHDrjSYUw=;
+        bh=XoYnhpz1nosnbu8m31uMeB//5D2cdGXQcYGY+UFtxp0=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=oQ/jCLtVZSy3w+nB4xPK8VbNRgeq3CUz2oscZfDqMccf24yCRyELlWWMBF4yJsYWq
-         MO6/1Q4/dWxa3xt/hZBYltNKexoAOTm1IS6GrjofVDfw0QR9XcvWCnRz3vMHEZ3VKd
-         a56l0Kp/MWkv6jCEzjH7M/akX38WGLoQH6mjDhqJRvlxXYWQ1eXHymBAEbAkK4/TjQ
-         F5JsliDmJWrcQA5KHX4gZeQYqDUZzkrj435AasPAYy+gBGV7x7jwOJwOpUwCcakLrg
-         UF/nPVoshE5BBmbxM1A315/o+E5fjd17EnUyrym+6kmtKoVOUQiKpGuHJptTtzOGi8
-         wT5vw9TW4Wv6Q==
+        b=SzSUPaBEjPIB7kRWqwJYsYFZC3nBllN0sRNEDxXVOcbnq7OdlBpTFUD0ZK/hx2WfM
+         KJs5s+MwmzHav0izATjxmWgowKC333q/SHdtHjfRAzbPe1TiIhWLhmjSyQhoRa61vL
+         QknkLTU6Uvhi9YgXl+hwI8JVgpmxpEBac5TZGPgshWwi1vMrqeHLhI1cDzMiCUTeZ9
+         R1An7G6IsCsa60FWMgN53rmZ1AmArvgTOD1UhUZaNL/uIltoulL/HQ93PTGmJokR38
+         t7ovKMPaC7wJ/Yv3/xO2N7sbWeoJZCS1Zse+4hKCQo0uKYoxmvlAPwiFYX20els/1p
+         tSzxJ2M2yhUvA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id AB099E4F156;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C5DC4C4167B;
         Thu,  6 Apr 2023 21:00:20 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth: btnxpuart: Deasset UART break before closing
- serdev device
+Subject: Re: [PATCH] Bluetooth: hci_h5: Complements reliable packet processing
+ logic.
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168081482069.2619.17204223621296227564.git-patchwork-notify@kernel.org>
+Message-Id: <168081482080.2619.3659825366548108220.git-patchwork-notify@kernel.org>
 Date:   Thu, 06 Apr 2023 21:00:20 +0000
-References: <20230403122430.1024235-2-neeraj.sanjaykale@nxp.com>
-In-Reply-To: <20230403122430.1024235-2-neeraj.sanjaykale@nxp.com>
-To:     Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+References: <20230403162928.118172-1-eddy.zhang@rock-chips.com>
+In-Reply-To: <20230403162928.118172-1-eddy.zhang@rock-chips.com>
+To:     Qiqi Zhang <eddy.zhang@rock-chips.com>
 Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        amitkumar.karwar@nxp.com, rohit.fule@nxp.com, sherry.sun@nxp.com
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
@@ -63,18 +62,26 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon,  3 Apr 2023 17:54:28 +0530 you wrote:
-> This adds a call to ps_wakeup() before closing the serdev device, to
-> de-assert UART break.
+On Tue,  4 Apr 2023 00:29:28 +0800 you wrote:
+> As shown in the schematic diagram below.There may be a critical
+> scenario in the current code. If the device does not receive an
+> pure ack sent by the host due to insufficient receive buffer or
+> other reasons and triggers a retransmission, the host will always
+> be in an 'out-of-order' state.The state machine will get stuck.
 > 
-> Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-> ---
->  drivers/bluetooth/btnxpuart.c | 1 +
->  1 file changed, 1 insertion(+)
+>        host                 device
+>      SEQ3,ACK4 --------->
+>                <--------- SEQ4,ACK4
+>      pure ACK  ---------> (not received)
+> (out-of-order) <--------- SEQ4,ACK4(retransmission)
+> 		........
+> (out-of-order) <--------- SEQ4,ACK4(retransmission)
+> 
+> [...]
 
 Here is the summary with links:
-  - [v1] Bluetooth: btnxpuart: Deasset UART break before closing serdev device
-    https://git.kernel.org/bluetooth/bluetooth-next/c/051711980f5a
+  - Bluetooth: hci_h5: Complements reliable packet processing logic.
+    https://git.kernel.org/bluetooth/bluetooth-next/c/13a6ebae665d
 
 You are awesome, thank you!
 -- 
