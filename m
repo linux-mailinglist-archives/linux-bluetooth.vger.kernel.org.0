@@ -2,53 +2,51 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55C556DA44A
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 23:00:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 545DC6DA43D
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Apr 2023 23:00:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240190AbjDFVAg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Apr 2023 17:00:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58000 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238906AbjDFVAY (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
+        id S239710AbjDFVAY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Thu, 6 Apr 2023 17:00:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57924 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229588AbjDFVAW (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 6 Apr 2023 17:00:22 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F06857ED5;
-        Thu,  6 Apr 2023 14:00:22 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24AD7683
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Apr 2023 14:00:21 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D849164CBA;
-        Thu,  6 Apr 2023 21:00:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E65F4C433AA;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3CFE764BDA
+        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Apr 2023 21:00:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9F410C4339B;
         Thu,  6 Apr 2023 21:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1680814820;
-        bh=rAs0EQ8DTvyaFqe2XUSUKx0TAecI3Kfv4Oh+Vb886/Y=;
+        bh=1rKTWMcbX3+eTB1PKHgYE3Hb2MPEcePhDbCYw32sIAo=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=kNRYnplY8j6ydAxWmWKXf/VcKpN+h78xVE3Cv6ApVUhr4pQSLZ8S6ZLiE0p2oHTuq
-         rdEj8hOpXqVP4MbBcIJWE06a8tTGzbUOr8P7UgLJ9dbJjeEg1UQIcEX44d09mb/aRv
-         hJLqZ3c8uqXUqZgYEknMq9ebAB50/vVyOkcQHsjXbwIi1jQTNndI6scDx7BQlYgqzJ
-         F3wmI4PXCUrqtxDbvRuLS5KQ5E4YGldNcY25tYOQqz4b0q9b8Eyul2uUkc4ktTOdSx
-         c4TIi40h8peqGU7krRJSXSkcoheDtjB1GfJbOvrPkGd1aPA3Rja6/ZipVjMBqjmPX8
-         Y3kGAvwjAh9og==
+        b=bIPd/KdaNylxJLBFDpQ7hfgxHUSX+4eftPS4wPfSOJOXTITEQcRgirA6axiqCHp/R
+         VyJ2E2qAyGIfEbN0hS4Y5pRmPLmEv/hHng9QhRwIP/wLpVR5tFPHBUYHqJJWjdyO3r
+         GHd31foxlodQxaJJRRWGbb2aHk93Gz7OdyN34TqfOmPFd4dkXpwxm9yO+on1N69QoV
+         E3E8TAXXeIi60vayBkRFz1wt4aJHurFHVEb1V8Vs+i/lEhrhCGSrBlPPVewj47MXd1
+         ccgZ2pgVCpSESmJtByWVw5ZoY5TJvQmCncZzuCsoiy4m0M/gUbjVNr+qPl2INnZuw8
+         Vu+z9bkoH4O6Q==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D3D02E4F155;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 83301C4167B;
         Thu,  6 Apr 2023 21:00:20 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] Bluetooth: hci_h5: Complements reliable packet processing
- logic
+Subject: Re: [PATCH 0/4] Bluetooth: hci_bcm: 4 fixes / tweaks
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168081482085.2619.8551087940289417594.git-patchwork-notify@kernel.org>
+Message-Id: <168081482052.2619.6076248429328151114.git-patchwork-notify@kernel.org>
 Date:   Thu, 06 Apr 2023 21:00:20 +0000
-References: <20230404022711.86515-1-eddy.zhang@rock-chips.com>
-In-Reply-To: <20230404022711.86515-1-eddy.zhang@rock-chips.com>
-To:     Qiqi Zhang <eddy.zhang@rock-chips.com>
-Cc:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, luiz.dentz@gmail.com,
-        marcel@holtmann.org
+References: <20230331211124.463003-1-hdegoede@redhat.com>
+In-Reply-To: <20230331211124.463003-1-hdegoede@redhat.com>
+To:     Hans de Goede <hdegoede@redhat.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
@@ -60,29 +58,28 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue,  4 Apr 2023 10:27:11 +0800 you wrote:
-> As shown in the schematic diagram below.There may be a critical
-> scenario in the current code. If the device does not receive an
-> pure ack sent by the host due to insufficient receive buffer or
-> other reasons and triggers a retransmission, the host will always
-> be in an 'out-of-order' state.The state machine will get stuck.
+On Fri, 31 Mar 2023 23:11:20 +0200 you wrote:
+> Hi All,
 > 
->        host                 device
->      SEQ3,ACK4 --------->
->                <--------- SEQ4,ACK4
->      pure ACK  ---------> (not received)
-> (out-of-order) <--------- SEQ4,ACK4(retransmission)
->                 ........
-> (out-of-order) <--------- SEQ4,ACK4(retransmission)
+> Here is a series with 4 fixes for UART attached Broadcom BT adapters.
+> 
+> Note patch 3/4 is an unchanged resend of an earlier patch,
+> the other 3 or new.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] Bluetooth: hci_h5: Complements reliable packet processing logic
-    https://git.kernel.org/bluetooth/bluetooth-next/c/13a6ebae665d
+  - [1/4] Bluetooth: hci_bcm: Fall back to getting bdaddr from EFI if not set
+    https://git.kernel.org/bluetooth/bluetooth-next/c/6734b7202113
+  - [2/4] Bluetooth: hci_bcm: Limit bcm43430a0 / bcm43430a1 baudrate to 2000000
+    https://git.kernel.org/bluetooth/bluetooth-next/c/1f3e94a46e16
+  - [3/4] Bluetooth: hci_bcm: Add Lenovo Yoga Tablet 2 830 / 1050 to the bcm_broken_irq_dmi_table
+    https://git.kernel.org/bluetooth/bluetooth-next/c/c80b3429f37c
+  - [4/4] Bluetooth: hci_bcm: Add Acer Iconia One 7 B1-750 to the bcm_broken_irq_dmi_table
+    https://git.kernel.org/bluetooth/bluetooth-next/c/ffd6167980f9
 
 You are awesome, thank you!
 -- 
