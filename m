@@ -2,84 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 625456DB456
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Apr 2023 21:41:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18E286DB533
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Apr 2023 22:29:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229724AbjDGTlq (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 7 Apr 2023 15:41:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39482 "EHLO
+        id S229804AbjDGU35 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 Apr 2023 16:29:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjDGTlp (ORCPT
+        with ESMTP id S231202AbjDGU3y (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 7 Apr 2023 15:41:45 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C437B6A47
-        for <linux-bluetooth@vger.kernel.org>; Fri,  7 Apr 2023 12:41:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5F358651DB
-        for <linux-bluetooth@vger.kernel.org>; Fri,  7 Apr 2023 19:41:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BD7B4C4339B;
-        Fri,  7 Apr 2023 19:41:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680896503;
-        bh=UXeP8jA2VJLCWMj+LxmO6JcZ2RcDJsLI/X8UfZThR/8=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=WxJW7VOIDAQvfwqdewErUveGrk5mgGYoo259sfRIUA+qH7vBbUbgJjtpNDXMQ3nHI
-         SBwxoy6LilUb5ynKwkckfQCyjYe/COdoYxOvISm6HlKVpgyY4TnPV99fXeSnickXGf
-         hRbO2QqZtUfBe9s36NvtlLKwo/fpUZj5nX8IBDQORKbzqWTsGzV9VJ2swpGHGmR13q
-         4AoZujr1LkJycjvTZI25TU0m15N8riN+ar2nC00PksHiiel7q3HIQE9QbD7kXP2U+/
-         RQqnBE1ENxZwLFw1OqdLjjWa/acMWQnIMSk3q0PwkXNIPMHEL84rfwQzCeScNhErFq
-         gUi1PiOtky+FQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 9FB0BC395C5;
-        Fri,  7 Apr 2023 19:41:43 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 7 Apr 2023 16:29:54 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021C27A83
+        for <linux-bluetooth@vger.kernel.org>; Fri,  7 Apr 2023 13:29:54 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id k14-20020a9d700e000000b0069faa923e7eso22540643otj.10
+        for <linux-bluetooth@vger.kernel.org>; Fri, 07 Apr 2023 13:29:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680899393; x=1683491393;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=gQDUh5rjkj0jkg3BR6sc0Ry74U8GGXE7vDPUelgterY=;
+        b=JHedV9P+DQaROW6M0Kh84Yj+v6p0mQdGv+RrEfVw26nc6/ELshTCwxFlNPtSFJ317X
+         s4mKJRBmqPsgmZqoT8xAwCqUERve2Va/VN5uVkOC4J7zqUxU45dH5o9Lpm/ki80E72hi
+         lATqwNXdgw8+yAn3iD/LANcWjrwkR3A0JqJWUHrzpmKXISTeSohdP3n1+JUYBlJg9U98
+         OYbT2fsGV3viAw6HH+foXU22evc/11rQ7g+l1Jy6OaSNpUx7FcAagcS27jMn0QQMqule
+         gapev1QpEkHK/8wV5Sl2SJVc6D6Ex/8pnVdOKn5lSg+xaMMKHa8nsfokVhxi2l+KjV9r
+         QSTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680899393; x=1683491393;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gQDUh5rjkj0jkg3BR6sc0Ry74U8GGXE7vDPUelgterY=;
+        b=AebgzTp+LO+KZis5unmVH6er87tKy4uK/fgxlarHSviRiDxxJIOAKx5LTIJN55Gu1Z
+         fZRcMKlLhi3spYQy+D5fJ1FK8hjWV2zBoR9yl3PIGRadkCqntUDGKMB9KG3U+Rvpi3qf
+         MGEoIDpWXv/ZHFlcdYMeIc0Gn3IneeCD7R+Dc5h6q3VNADwjs4YBwX4HcGUZIEjawiQt
+         25frIbOCtPF+ZvYKoZCuQAkdV/JLjP3f1PjdUsX9ge4e0VcDtB115Ifm+Ylgup09aq3K
+         AEq2VHiGsNycVE3gAMdk9mdPyWTAz37TJbJh4hvgJ/ju9EnRujNGVOSn234KzYejHxGn
+         TNng==
+X-Gm-Message-State: AAQBX9eyPCcAGNzEtA3BPDwc7pZW2642ESDyBQECrYNJFraQhurZ5lu+
+        xinwVTqZidMeUH8mQTigHi5dpceZ9h8=
+X-Google-Smtp-Source: AKy350Z9TmMYY/USx8gbpXX4gCUKc1CytBkiAPJzKfzhqTje/Y3On/67fIMKACVB72auSz+unBwejQ==
+X-Received: by 2002:a05:6830:d05:b0:6a3:df0f:91a with SMTP id bu5-20020a0568300d0500b006a3df0f091amr123561otb.15.1680899393133;
+        Fri, 07 Apr 2023 13:29:53 -0700 (PDT)
+Received: from [172.17.0.2] ([70.37.167.50])
+        by smtp.gmail.com with ESMTPSA id g25-20020a9d6c59000000b0069f95707335sm1944071otq.69.2023.04.07.13.29.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Apr 2023 13:29:52 -0700 (PDT)
+Message-ID: <64307d40.9d0a0220.99898.8b0c@mx.google.com>
+Date:   Fri, 07 Apr 2023 13:29:52 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8814964781347769597=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: L2CAP: Fix use-after-free in
- l2cap_disconnect_{req,rsp}
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168089650364.19462.11243514647984539590.git-patchwork-notify@kernel.org>
-Date:   Fri, 07 Apr 2023 19:41:43 +0000
-References: <20230407180201.3229763-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230407180201.3229763-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [RESEND,BlueZ] mgmt-tester: Fix Get/Set PHY tests
+In-Reply-To: <20230407184440.3291592-1-luiz.dentz@gmail.com>
+References: <20230407184440.3291592-1-luiz.dentz@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+--===============8814964781347769597==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+This is automated email and please do not reply to this email!
 
-On Fri,  7 Apr 2023 11:02:01 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> Similar to commit d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free
-> caused by l2cap_chan_put"), just use l2cap_chan_hold_unless_zero to
-> prevent referencing a channel that is about to be destroyed.
-> 
-> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> Signed-off-by: Min Li <lm0963hack@gmail.com>
-> 
-> [...]
+Dear submitter,
 
-Here is the summary with links:
-  - Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}
-    https://git.kernel.org/bluetooth/bluetooth-next/c/cbcb70b9beee
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=738056
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.51 seconds
+GitLint                       PASS      0.32 seconds
+BuildEll                      PASS      35.49 seconds
+BluezMake                     PASS      1217.63 seconds
+MakeCheck                     PASS      12.86 seconds
+MakeDistcheck                 PASS      188.02 seconds
+CheckValgrind                 PASS      308.34 seconds
+CheckSmatch                   PASS      434.04 seconds
+bluezmakeextell               PASS      129.97 seconds
+IncrementalBuild              PASS      1005.50 seconds
+ScanBuild                     PASS      1356.40 seconds
 
 
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============8814964781347769597==--
