@@ -2,69 +2,83 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 078F06DB450
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Apr 2023 21:37:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5B856DB458
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Apr 2023 21:41:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229820AbjDGTha (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 7 Apr 2023 15:37:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37364 "EHLO
+        id S229797AbjDGTlr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 Apr 2023 15:41:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbjDGTh3 (ORCPT
+        with ESMTP id S229459AbjDGTlp (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 7 Apr 2023 15:37:29 -0400
-Received: from out-24.smtp.github.com (out-24.smtp.github.com [192.30.252.207])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7346BBBB7
-        for <linux-bluetooth@vger.kernel.org>; Fri,  7 Apr 2023 12:37:23 -0700 (PDT)
-Received: from github.com (hubbernetes-node-47c2ae5.ac4-iad.github.net [10.52.138.43])
-        by smtp.github.com (Postfix) with ESMTPA id 9CD98600379
-        for <linux-bluetooth@vger.kernel.org>; Fri,  7 Apr 2023 12:37:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-        s=pf2023; t=1680896242;
-        bh=XxaVR690naKqCkcfrol2gvs5xOJYo4FdlOVA3H/yc1w=;
-        h=Date:From:To:Subject:From;
-        b=kwnDUTOxsHFWvUVAId9Us/jMhIVzEjEqOW7VPFhK31WPVLN7Z0eZRx4numyIK0AOs
-         lGiA6BTtHo0oEvv20dgOU764z1us/NbdTgpfo1R8v0G7Jzj6SeRliuFxsSBlAMBIIU
-         /paOX1VBB8auXxkTETLbgYuPpwwR2YUfVYSfdF1I=
-Date:   Fri, 07 Apr 2023 12:37:22 -0700
-From:   Luiz Augusto von Dentz <noreply@github.com>
-To:     linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/070c78-e122a0@github.com>
-Subject: [bluez/bluez] e122a0: mgmt-tester: Fix Get/Set PHY tests
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+        Fri, 7 Apr 2023 15:41:45 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF1135FE6;
+        Fri,  7 Apr 2023 12:41:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5A115651D2;
+        Fri,  7 Apr 2023 19:41:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AC12CC433D2;
+        Fri,  7 Apr 2023 19:41:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680896503;
+        bh=LTwM6B9bXlrZlNBiKgr8YuQPNzMio2yhGAeYlYznra8=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=kD5b4x7ma0Lo4HB6eU8DsJcafy2JJf7wHvcHmgu+GzU8ua+e1KNFTXG8F1cq1VyH1
+         OGcVqwYqVpNTvhNEFlHRGlMfEjD51wM8nniQIMmvmlmeMFBzIBClgGhI1DsQU6PeQK
+         wp+uGXfEEHcvk7XJ7WyVR7mH3ankbHkOaPFry4qEAbDOaaL9kJ1t+P40it54BGpNVN
+         piNaSP6xZ1F3EaaPJlMlF3dbCedZM84D0Ezbf72ALeLGY3yWxMGmCrjYvGNEU21UVv
+         j0/uzEZzjB8sl9+F7KBfotTFsQghsrApdWQf1xJ1XZllSVAgRhRTR2u/XP45Zu/ay8
+         D46PODGMlCeew==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 968ABE4D029;
+        Fri,  7 Apr 2023 19:41:43 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: pull-request: bluetooth 2023-03-23
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <168089650361.19462.15346565048908939729.git-patchwork-notify@kernel.org>
+Date:   Fri, 07 Apr 2023 19:41:43 +0000
+References: <20230323202335.3380841-1-luiz.dentz@gmail.com>
+In-Reply-To: <20230323202335.3380841-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     davem@davemloft.net, kuba@kernel.org,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
 X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: e122a07088966efb1fadc72fcf8378a1e77549b4
-      https://github.com/bluez/bluez/commit/e122a07088966efb1fadc72fcf8378a1e77549b4
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2023-04-07 (Fri, 07 Apr 2023)
+Hello:
 
-  Changed paths:
-    M tools/mgmt-tester.c
+This pull request was applied to bluetooth/bluetooth-next.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
 
-  Log Message:
-  -----------
-  mgmt-tester: Fix Get/Set PHY tests
+On Thu, 23 Mar 2023 13:23:35 -0700 you wrote:
+> The following changes since commit bb765a743377d46d8da8e7f7e5128022504741b9:
+> 
+>   mlxsw: spectrum_fid: Fix incorrect local port type (2023-03-22 15:50:32 +0100)
+> 
+> are available in the Git repository at:
+> 
+>   git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth.git tags/for-net-2023-03-23
+> 
+> [...]
 
-This fixes the following tests now that all supported PHYs are enabled
-by default:
+Here is the summary with links:
+  - pull-request: bluetooth 2023-03-23
+    https://git.kernel.org/bluetooth/bluetooth-next/c/2e63a2dfe73f
 
-Start Discovery LE - (Ext Scan Param)   Failed
-Get PHY Success                         Failed
-Set PHY 1m 2m coded Succcess            Timed out
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
