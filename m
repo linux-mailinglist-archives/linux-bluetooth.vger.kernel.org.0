@@ -2,134 +2,99 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4278B6DFF53
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Apr 2023 22:01:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A7846E01B6
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Apr 2023 00:14:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229980AbjDLUBA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 12 Apr 2023 16:01:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51986 "EHLO
+        id S229722AbjDLWO0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 12 Apr 2023 18:14:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229862AbjDLUA7 (ORCPT
+        with ESMTP id S229522AbjDLWOZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 12 Apr 2023 16:00:59 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B13BD3;
-        Wed, 12 Apr 2023 13:00:58 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id y4so12979964ljq.9;
-        Wed, 12 Apr 2023 13:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681329657;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SV12FO2b4kT0IrF91lFzuk9597ZEnM0XOQm9xOUoWhg=;
-        b=FRubNzWLXGSns4USosxtOjJbEEy9u6VqM7bheSYfY1uYTDl/z3pzUnp5POVdw9RZEx
-         4walJXnsyPnuM90+x6cLapou86kSnjmEISEwn0I3gY/E2tIFGroZmABZyFGBBrPrIiNo
-         kRDTxiAiPT3WjjGCNJfGeyYQv54zCNbQ6TiHYPz7jpWwd3gGTSDgT+xgLwIj3kjBUiMZ
-         9j11giUY9AMUAdOMvQhvASKdIXHNlTNDMaZS/ssCzV0lmsuHXSGV7GsO0scWAPm0k8k0
-         7NR+T/C4G8/0kNFecWmKs6Y2tGTU1x85VjkFjX6odHUqnvI+1xK1kHwE241khWR9nPrY
-         9/Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681329657;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SV12FO2b4kT0IrF91lFzuk9597ZEnM0XOQm9xOUoWhg=;
-        b=XwzKc0QmjEWncbQePp3QoeFG9TDGDir1zhJ+hR864vwXgkSi+3KAIVg3ytPDLKcdtY
-         trcJYCKPNZa0/53RYXN73cfMFxSeyeVvQfSTPpwCyElsex/2WnlRms2i5GxKLXZKw+s5
-         R7ai8LOHYWLO+Vx3/hibCkNSUqFN7SOmpRM/2U9bcsA+nLXERAgJA6RNMT61vIv7O3kn
-         +wa+aVpLTeV3YnibII31ibmLhiKk2ZKQIC3SDYBiRC9WfeBeP6UI4rUiRhsXJRgphJh5
-         1bpgi8+L7nXsqVUHiI2h5njC3vV3E0eRUfLeYB99j5URa2GQ5h2HCBs6xXGMVSJMun3B
-         eFjQ==
-X-Gm-Message-State: AAQBX9ccMAwG1TH9o6bBSbed1lHmfSPR78joe9pRPs7M4o70vGj/UI4D
-        qwgfxF/1G1L15kxc+jaGddtbPY9YW9TCE2qF7lo=
-X-Google-Smtp-Source: AKy350bucxC4IK3WvOK+UzT+bI0MfALmLc9++97Iaj6iW3vVQ/fWqaczVGW32KFQ6Z3ddGlZeNanoOPtEbfHxF7YEew=
-X-Received: by 2002:a2e:9c9a:0:b0:298:6ffd:e856 with SMTP id
- x26-20020a2e9c9a000000b002986ffde856mr1116156lji.8.1681329656693; Wed, 12 Apr
- 2023 13:00:56 -0700 (PDT)
+        Wed, 12 Apr 2023 18:14:25 -0400
+X-Greylist: delayed 466 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 12 Apr 2023 15:14:24 PDT
+Received: from mail-200167.simplelogin.co (mail-200167.simplelogin.co [176.119.200.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84CCC65B6
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Apr 2023 15:14:24 -0700 (PDT)
+Date:   Wed, 12 Apr 2023 22:06:16 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=8shield.net; s=dkim;
+        t=1681337197;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=3QIKZYyDwVYZ16tbgagaCvjpy0LQkwhUHoy8ARF4pbc=;
+        b=EsrQasQSwkKeC8ow5PTAUfZSfibG7I2VzJ7QKCDDEOQUBRi5EGzq8eDq2JYYpPr4SE+2Tm
+        JxFCfwPT/xWT63rCKcwLgybeHwGqmc7WxivpUR0/ZBvya/AMACYw8PaEjoeqssSpk/sgR9
+        hH9O8sVP+jFVtsIQVCoQjjnrkBvEqRM=
+Subject: btusb driver need to be unloaded and reloaded after boot & lag issue
 MIME-Version: 1.0
-References: <20230326233812.28058-1-steev@kali.org> <20230326233812.28058-3-steev@kali.org>
- <ZCVgMuSdyMQhf/Ko@hovoldconsulting.com> <CAKXuJqjJjd6SY1g3JW8w53rEVCqgDkJXQ=1iA3qXcF+C9qv1SQ@mail.gmail.com>
-In-Reply-To: <CAKXuJqjJjd6SY1g3JW8w53rEVCqgDkJXQ=1iA3qXcF+C9qv1SQ@mail.gmail.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 12 Apr 2023 13:00:44 -0700
-Message-ID: <CABBYNZKX9bixyy8GZ0VDFaeNeY0_MSVDDNvcTqiAXEx8zFXfbA@mail.gmail.com>
-Subject: Re: [PATCH v8 2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth
- chip wcn6855
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Johan Hovold <johan@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>,
-        Tim Jiang <quic_tjiang@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+From:   help.7ocym@8shield.net
+To:     linux-usb@vger.kernel.org, linux-bluetooth@vger.kernel.org
+Message-ID: <168133719213.7.14774994518515251513.119182329@8shield.net>
+X-SimpleLogin-Type: Reply
+X-SimpleLogin-EmailLog-ID: 119182345
+X-SimpleLogin-Want-Signing: yes
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Steev,
+Hi,
+sorry to address both list, but this issue seems related, without knowing w=
+here lies the issue
+my hardware : https://wiki.gentoo.org/wiki/Lenovo_Yoga_900
+I use the pre-built gentoo linux kernel,=20
+6.2.8-gentoo-dist #1 SMP PREEMPT_DYNAMIC Wed Mar 22 17:15:39 -00 2023 x86_6=
+4 Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz GenuineIntel GNU/Linux
 
-On Thu, Mar 30, 2023 at 9:35=E2=80=AFAM Steev Klimaszewski <steev@kali.org>=
- wrote:
->
-> Hi Johan,
->
-> On Thu, Mar 30, 2023 at 5:10=E2=80=AFAM Johan Hovold <johan@kernel.org> w=
-rote:
-> >
-> > On Sun, Mar 26, 2023 at 06:38:10PM -0500, Steev Klimaszewski wrote:
-> > > Add regulators, GPIOs and changes required to power on/off wcn6855.
-> > > Add support for firmware download for wcn6855 which is in the
-> > > linux-firmware repository as hpbtfw21.tlv and hpnv21.bin.
-> > >
-> > > Based on the assumption that this is similar to the wcn6750
-> > >
-> > > Tested-on: BTFW.HSP.2.1.0-00538-VER_PATCHZ-1
-> > >
-> > > Signed-off-by: Steev Klimaszewski <steev@kali.org>
-> > > Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> > > Tested-by: Bjorn Andersson <andersson@kernel.org>
-> > > ---
-> > > Changes since v7:
-> > >  * None
-> >
-> > Only noticed now when Luiz applied the patches, but why did you drop my
-> > reviewed-by and tested-by tags from this patch when submitting v8?
-> >
-> > For the record:
-> >
-> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> > Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> >
-> Oops, that wasn't intentional! I only meant to drop it on the dts bits
-> as that part I wanted to make sure I got right based on your comments,
-> my apologies!
-> --steev
+since a few update (sadly I didn't noted the latest kernel version that did=
+n't had the issue), after a boot, the bluetooth isn't working, nothing bad =
+in dmesg, I just have to unload btusb module and modprobe it again to have =
+bluetooth working again...
 
-This one seems to be causing a new warning:
+after a suspend to ram, I have to power off-power on the bluetooth to have =
+it work again (bluetoothctl power off; bluetoothctl power on)
 
-drivers/bluetooth/hci_qca.c:18
-94:37: warning: unused variable 'qca_soc_data_wcn6855' [-Wunused-const-vari=
-able]
+bluetooth mouse can also be extremely laggy sometimes,but without error mes=
+sage in dmesg, most of the time `bluetoothctl power` off-on cycling do solv=
+e the issue....
 
---=20
-Luiz Augusto von Dentz
+I also included the usb mailing list because it might be related to some be=
+havior I noticed :
+
+I have usb3.0 micro sd card reader (SanDisk MobileMate UHS-I microSD Reader=
+/Writer USB 3.0 Reader, Kingston MobileLite Plus (MLPM) microSD Card Reader=
+ USB 3.1 microSDHC/SDXC UHS-II, for example) and some extra fast micro sd c=
+ards (like sandisk extrem 512G), when transfering data the read rate can be=
+ as high as 110Mo/s and write 70Mo/s sustained, nothing impressive but when=
+ such rate is achieved for a long time (big file transfer) either reading o=
+nly access, writing only access or read write, the usb bus become unusable,=
+ I can't even use a usb mouse connected to it by wire... even if cpu usage =
+is really low (less than 10%)=20
+I don't have the issue if I connect a M2 usb3 flash drive, with comparable =
+transfert speed... so not related to some bus over usage... =20
+
+so I suspect that there is an issue with the usb driver, and that maybe the=
+ bluetooth issue can be related to the usb issue, since the bluetooth contr=
+oller is on the usb bus on the laptop
+
+the transfer issue of usb is much more older than the bluetooth issue, it's=
+ approximative, but :
+ - the btusb boot issue is about 3 month old,=20
+ - the suspend/resume issue of bluetooth is more than a year old
+ - the usb transfer issue as more than a year...
+
+I'll gladly provide any useful information, can also do patch tries...=20
+
+thanks and regards
+JLM
+
+
+Sent with Proton Mail secure email.
+
