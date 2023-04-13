@@ -2,63 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEB4F6E13EF
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Apr 2023 20:15:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A87C6E142C
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Apr 2023 20:31:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbjDMSPg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 13 Apr 2023 14:15:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45394 "EHLO
+        id S229885AbjDMSbV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 13 Apr 2023 14:31:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjDMSPf (ORCPT
+        with ESMTP id S229739AbjDMSbT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 13 Apr 2023 14:15:35 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A1465A0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Apr 2023 11:15:33 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id o2so15827108plg.4
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Apr 2023 11:15:33 -0700 (PDT)
+        Thu, 13 Apr 2023 14:31:19 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEFCD2D53
+        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Apr 2023 11:31:17 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id la3so15716825plb.11
+        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Apr 2023 11:31:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681409732; x=1684001732;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=L96TuqCPzayM+tlF1Q2ojmcW/QrB7+fyLCbAl8Wxyug=;
-        b=Lla8yE7bxbsZ1FDadZi+hPJLzFlHTV9TX7nmdlnlMi76Q9UVcry36UPHD4FzZS6sVX
-         /P4O5QNc4+z2kN/PiTmbD/Ym1E0i0m3RWODGpe7B+huAKAfuXdFAODAy1jLpdkRy8Qp/
-         4bXuUce7dylJKp3uDrD9KOW5IRgrjdPf5rdaPpFoGHSp/UVRJyBF9gPfIzL9ubFUywb6
-         JSsJSWxmzA9rzwWcM76E2l7C+PbOh4G2d/7LmoLNFVK6n5eXdeGIqOxLKyOiMbXh5jYo
-         suAr6npUGjgZXYKLtSrSRwGHdnUUGirz9P25n675tq7IM83IpYK3CKaQw3/gfAkmzVlU
-         qiJQ==
+        d=gmail.com; s=20221208; t=1681410676; x=1684002676;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Oxqx5r2ztstTgfLqxBKtI69iSNtkePaEfMi0xkZylE=;
+        b=KljU31RBHfpCq4hn+8uPeIGxtgFPy4Nzb5MCAFpO4ZGDXsdFKJstCGJhAOP0+Yx1mw
+         PWhN71wZitvNH5ew9qUjrL9DifK3HYW/8TPOmQZ7Oah9d5G8xln1ziZkxls9GgO6XhOV
+         /nJav/+TfqE87E33a4bEwBVEasILs/zmZPSkNaEmlRTubsxLrAJq+HN3UcSBhWKPVFjO
+         joPvrtHv2+LngvreCSkknB7z5sP2VWuGY1qp4yVQin09eyor3DHs/ukMtXlQUzcLQ2OZ
+         1LxtlF9HD/gp2DrqkhDBLc86a/ubOoyRRYJzJarf4C7JKtCN0GqbOzoPfvGzctfn2NEv
+         za4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681409732; x=1684001732;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L96TuqCPzayM+tlF1Q2ojmcW/QrB7+fyLCbAl8Wxyug=;
-        b=WOEfvpEfFOHgemA7S7DlRdettrWWcyp4ArUh3RNzxg7r6ZD5Q/HO52rbdQCXA3a7cl
-         63q4vPBBgU9vdgbN2QJizW8w6PL8zXpp65ZRziATpbLg5nAu2P12DYZ3UvLY2h0n8e62
-         M3XxEg2vRbecUTKgl4lIJR5G2FODFui2CxIaJL93geq9ozmuag15RT2w3FXVeO6JGVQb
-         emDOKg7X4TOslTWWX7/LbIqiA+NeTzYrfapCYRXRYnvgZ43UPXWh4pHb2CuvWycNoNqJ
-         zMlOJkpkbxIZGb5qRTKxNYBMSPGujffa+3+JnLWhNgpLzXwI4mwAr16Drfnmf2X6/T8i
-         AeXQ==
-X-Gm-Message-State: AAQBX9eSvyoUlYbP012H2b0Wrt1KRigVsfCeeGqXQqNN1nSyojGJNbdh
-        z34zasuBKmYp6BFrzsEbvBReJ7/QjRPlWQ==
-X-Google-Smtp-Source: AKy350YWQ4IXgZDK+MljilcmzUUuvFjwYAKN1HakfSvvpFpN+hiEePg+ZDjG9SW8v55eXo6Tyg1YPQ==
-X-Received: by 2002:a17:902:d512:b0:1a6:8548:e0ac with SMTP id b18-20020a170902d51200b001a68548e0acmr2888302plg.34.1681409732138;
-        Thu, 13 Apr 2023 11:15:32 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681410676; x=1684002676;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Oxqx5r2ztstTgfLqxBKtI69iSNtkePaEfMi0xkZylE=;
+        b=V63AMWm5PmXIPrgUf5DwTFkG3qRhppKL3C8pgK1lX1o+DHef15ZdTFIuWmzpzG7JMp
+         3WH1tP7KhBB1yykXvxt2Jke/dw18hhJUH9RuQmO7yAE89N6eMWuHDRSkRd8kACU+8vFg
+         +/sqCK/2TpLd94Un1U+HrqT4RRm45zp+mwelM5yiQhuTsrsaWaYarY5Eh+SWSwgZCvK1
+         iPu8mR9JKYezy54v1Bg2xpI0H7zxCB+QqK2/a7J2QJf7yvSx8uvhZ/ulRKqfHMfxwpAC
+         NWICyXP3IWUjM9yFDtNt/5XYCLRN6UtUMckCdADO78pH/6s/NvRq57JzTi/Va30lK1i8
+         VAVA==
+X-Gm-Message-State: AAQBX9dH8MMIgrRixvncMiofDKJe25y7U/UWd8whlES8JkGuhpyb+dAj
+        r8AbmpYMgAg/JF/i/yY7LqFdJN6qwaMvDg==
+X-Google-Smtp-Source: AKy350Y3JFTVFZnSDYNiCTNmvSYMGoER+8ysdkOzxpkYvfEZxlorHYxZXKMfC9J1ypdTMGYEMXdeZw==
+X-Received: by 2002:a17:90b:ec2:b0:246:9932:18a2 with SMTP id gz2-20020a17090b0ec200b00246993218a2mr2872118pjb.31.1681410675666;
+        Thu, 13 Apr 2023 11:31:15 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id jn15-20020a170903050f00b001a1a9a639c2sm151921plb.134.2023.04.13.11.15.30
+        by smtp.gmail.com with ESMTPSA id c13-20020a170902b68d00b001a19438336esm1790257pls.67.2023.04.13.11.31.14
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 11:15:31 -0700 (PDT)
+        Thu, 13 Apr 2023 11:31:14 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] iso-tester: Add BAP Audio Configuration tests
-Date:   Thu, 13 Apr 2023 11:15:28 -0700
-Message-Id: <20230413181528.860660-2-luiz.dentz@gmail.com>
+Subject: [PATCH v2 1/3] Bluetooth: hci_conn: Add support for linking multiple hcon
+Date:   Thu, 13 Apr 2023 11:31:11 -0700
+Message-Id: <20230413183113.896669-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230413181528.860660-1-luiz.dentz@gmail.com>
-References: <20230413181528.860660-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,430 +69,557 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds the following tests based on BAP Audio Configurations:
+Since it is required for some configurations to have multiple CIS with
+the same peer which is now covered by iso-tester in the following test
+cases:
 
-ISO AC 1 & 4 - Success
-ISO AC 2 & 10 - Success
-ISO AC 3 & 5 - Success
-ISO AC 6(i) - Success
-ISO AC 6(ii) - Success
-ISO AC 7(i) - Success
-ISO AC 7(ii) - Success
-ISO AC 8(i) - Success
-ISO AC 8(ii) - Success
-ISO AC 9(i) - Success
-ISO AC 9(ii) - Success
-ISO AC 11(i) - Success
-ISO AC 11(ii) - Success
+    ISO AC 6(i) - Success
+    ISO AC 7(i) - Success
+    ISO AC 8(i) - Success
+    ISO AC 9(i) - Success
+    ISO AC 11(i) - Success
+
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- tools/iso-tester.c | 270 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 262 insertions(+), 8 deletions(-)
+ include/net/bluetooth/hci_core.h |  14 ++-
+ net/bluetooth/hci_conn.c         | 157 ++++++++++++++++++++++---------
+ net/bluetooth/hci_event.c        |  94 +++++++++---------
+ net/bluetooth/iso.c              |   8 +-
+ 4 files changed, 174 insertions(+), 99 deletions(-)
 
-diff --git a/tools/iso-tester.c b/tools/iso-tester.c
-index 0f10f8940f0f..61013c2150be 100644
---- a/tools/iso-tester.c
-+++ b/tools/iso-tester.c
-@@ -69,6 +69,11 @@
- 		QOS_IO(_interval, _latency, _sdu, _phy, _rtn), \
- 		QOS_IO(_interval, _latency, _sdu, _phy, _rtn))
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 827e67159523..4fe1e71cb9d8 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -770,7 +770,10 @@ struct hci_conn {
+ 	void		*iso_data;
+ 	struct amp_mgr	*amp_mgr;
  
-+#define QOS_1_2(_interval, _latency, _sdu, _phy, _rtn) \
-+	QOS_FULL(0x01, 0x02, \
-+		QOS_IO(_interval, _latency, _sdu, _phy, _rtn), \
-+		QOS_IO(_interval, _latency, _sdu, _phy, _rtn))
+-	struct hci_conn	*link;
++	struct list_head link_list;
++	struct hci_conn	*parent;
++	struct hci_link *link;
 +
- #define QOS_OUT(_interval, _latency, _sdu, _phy, _rtn) \
- 	QOS_FULL(BT_ISO_QOS_CIG_UNSET, BT_ISO_QOS_CIS_UNSET, \
- 		{}, QOS_IO(_interval, _latency, _sdu, _phy, _rtn))
-@@ -81,9 +86,22 @@
- 	QOS_FULL(0x01, 0x01, \
- 		{}, QOS_IO(_interval, _latency, _sdu, _phy, _rtn))
+ 	struct bt_codec codec;
  
-+#define QOS_OUT_1_2(_interval, _latency, _sdu, _phy, _rtn) \
-+	QOS_FULL(0x01, 0x02, \
-+		{}, QOS_IO(_interval, _latency, _sdu, _phy, _rtn))
-+
- #define QOS_IN(_interval, _latency, _sdu, _phy, _rtn) \
- 	QOS_FULL(BT_ISO_QOS_CIG_UNSET, BT_ISO_QOS_CIS_UNSET, \
- 		QOS_IO(_interval, _latency, _sdu, _phy, _rtn), {})
-+#define QOS_IN_1(_interval, _latency, _sdu, _phy, _rtn) \
-+	QOS_FULL(0x01, BT_ISO_QOS_CIS_UNSET, \
-+		QOS_IO(_interval, _latency, _sdu, _phy, _rtn), {})
-+#define QOS_IN_1_1(_interval, _latency, _sdu, _phy, _rtn) \
-+	QOS_FULL(0x01, 0x01, \
-+		QOS_IO(_interval, _latency, _sdu, _phy, _rtn), {})
-+#define QOS_IN_1_2(_interval, _latency, _sdu, _phy, _rtn) \
-+	QOS_FULL(0x01, 0x02, \
-+		QOS_IO(_interval, _latency, _sdu, _phy, _rtn), {})
- 
- /* QoS Configuration settings for low latency audio data */
- #define QOS_8_1_1 QOS(7500, 8, 26, 0x02, 2)
-@@ -122,6 +140,80 @@
- #define QOS_48_5_2 QOS_OUT(7500, 75, 117, 0x02, 13)
- #define QOS_48_6_2 QOS_OUT(10000, 100, 155, 0x02, 13)
- 
-+/* One unidirectional CIS. Unicast Server is Audio Sink */
-+#define AC_1_4 QOS_OUT(10000, 10, 40, 0x02, 2)
-+/* One unidirectional CIS. Unicast Server is Audio Source. */
-+#define AC_2_10 QOS_IN(10000, 10, 40, 0x02, 2)
-+/* One bidirectional CIS. Unicast Server is Audio Sink and Audio Source. */
-+#define AC_3_5 QOS(10000, 10, 40, 0x02, 2)
-+/* Two unidirectional CISes. Unicast Server is Audio Sink.
-+ * #1 - CIG 1 CIS 1 (output)
-+ * #2 - CIG 1 CIS 2 (output)
-+ */
-+#define AC_6i_1 QOS_OUT_1_1(10000, 10, 40, 0x02, 2)
-+#define AC_6i_2 QOS_OUT_1_2(10000, 10, 40, 0x02, 2)
-+/* Two Unicast Servers. Unicast Server 1 is Audio Sink. Unicast Server 2 is
-+ * Audio Sink.
-+ * #1 - CIG 1 CIS auto (output)
-+ * #2 - CIG 1 CIS auto (output)
-+ */
-+#define AC_6ii_1 QOS_OUT_1(10000, 10, 40, 0x02, 2)
-+#define AC_6ii_2 QOS_OUT_1(10000, 10, 40, 0x02, 2)
-+/* Two unidirectional CISes. Unicast Server is Audio Sink and Audio Source.
-+ * #1 - CIG 1 CIS 1 (input)
-+ * #2 - CIG 1 CIS 2 (output)
-+ */
-+#define AC_7i_1 QOS_OUT_1_1(10000, 10, 40, 0x02, 2)
-+#define AC_7i_2 QOS_IN_1_2(10000, 10, 40, 0x02, 2)
-+/* Two Unidirectional CISes. Two Unicast Servers. Unicast Server 1 is Audio
-+ * Sink. Unicast Server 2 is Audio Source.
-+ * #1 - CIG 1 CIS auto (output)
-+ * #2 - CIG 1 CIS auto (output)
-+ */
-+#define AC_7ii_1 QOS_OUT_1(10000, 10, 40, 0x02, 2)
-+#define AC_7ii_2 QOS_IN_1(10000, 10, 40, 0x02, 2)
-+/* One bidirectional CIS and one unidirectional CIS. Unicast Server is Audio
-+ * Sink and Audio Source.
-+ * #1 - CIG 1 CIS 1 (output)
-+ * #2 - CIG 1 CIS 2 (input/output)
-+ */
-+#define AC_8i_1 QOS_OUT_1_1(10000, 10, 40, 0x02, 2)
-+#define AC_8i_2 QOS_1_2(10000, 10, 40, 0x02, 2)
-+/* One bidirectional CIS and one unidirectional CIS. Two Unicast Servers.
-+ * Unicast Server 1 is Audio Sink and Audio Source. Unicast Server 2 is
-+ * Audio Sink.
-+ * #1 - CIG 1 CIS auto (input/output)
-+ * #2 - CIG 1 CIS auto (output)
-+ */
-+#define AC_8ii_1 QOS_1(10000, 10, 40, 0x02, 2)
-+#define AC_8ii_2 QOS_OUT_1(10000, 10, 40, 0x02, 2)
-+/* Two unidirectional CISes. Unicast Server is Audio Source.
-+ * #1 - CIG 1 CIS 1 (input)
-+ * #2 - CIG 1 CIS 2 (input)
-+ */
-+#define AC_9i_1 QOS_IN_1_1(10000, 10, 40, 0x02, 2)
-+#define AC_9i_2 QOS_IN_1_2(10000, 10, 40, 0x02, 2)
-+/* Two unidirectional CISes. Two Unicast Servers. Unicast Server 1 is Audio
-+ * Source. Unicast Server 2 is Audio Source.
-+ * #1 - CIG 1 CIS auto (input)
-+ * #2 - CIG 1 CIS auto (input)
-+ */
-+#define AC_9ii_1 QOS_IN_1(10000, 10, 40, 0x02, 2)
-+#define AC_9ii_2 QOS_IN_1(10000, 10, 40, 0x02, 2)
-+/* Two bidirectional CISes. Unicast Server is Audio Sink and Audio Source.
-+ * #1 - CIG 1 CIS 1 (input/output)
-+ * #2 - CIG 1 CIS 2 (input/output)
-+ */
-+#define AC_11i_1 QOS_1_1(10000, 10, 40, 0x02, 2)
-+#define AC_11i_2 QOS_1_2(10000, 10, 40, 0x02, 2)
-+/* Two bidirectional CISes. Two Unicast Servers. Unicast Server 1 is Audio Sink
-+ * and Audio Source. Unicast Server 2 is Audio Sink and Audio Source.
-+ * #1 - CIG 1 CIS auto (input/output)
-+ * #2 - CIG 1 CIS auto (input/output)
-+ */
-+#define AC_11ii_1 QOS_1(10000, 10, 40, 0x02, 2)
-+#define AC_11ii_2 QOS_1(10000, 10, 40, 0x02, 2)
-+
- #define QOS_BCAST_FULL(_big, _bis, _in, _out) \
- { \
- 	.bcast = { \
-@@ -182,6 +274,7 @@ struct test_data {
- 
- struct iso_client_data {
- 	struct bt_iso_qos qos;
-+	struct bt_iso_qos qos_2;
- 	int expect_err;
- 	const struct iovec *send;
- 	const struct iovec *recv;
-@@ -190,6 +283,7 @@ struct iso_client_data {
- 	bool defer;
- 	bool disconnect;
- 	bool ts;
-+	bool mcis;
+ 	void (*connect_cfm_cb)	(struct hci_conn *conn, u8 status);
+@@ -780,6 +783,11 @@ struct hci_conn {
+ 	void (*cleanup)(struct hci_conn *conn);
  };
  
- static void mgmt_debug(const char *str, void *user_data)
-@@ -684,6 +778,91 @@ static const struct iso_client_data reconnect_16_2_1 = {
- 	.disconnect = true,
- };
++struct hci_link {
++	struct list_head list;
++	struct hci_conn *conn;
++};
++
+ struct hci_chan {
+ 	struct list_head list;
+ 	__u16 handle;
+@@ -1383,12 +1391,14 @@ static inline void hci_conn_put(struct hci_conn *conn)
+ 	put_device(&conn->dev);
+ }
  
-+static const struct iso_client_data connect_ac_1_4 = {
-+	.qos = AC_1_4,
-+	.expect_err = 0
-+};
-+
-+static const struct iso_client_data connect_ac_2_10 = {
-+	.qos = AC_2_10,
-+	.expect_err = 0
-+};
-+
-+static const struct iso_client_data connect_ac_3_5 = {
-+	.qos = AC_3_5,
-+	.expect_err = 0
-+};
-+
-+static const struct iso_client_data connect_ac_6i= {
-+	.qos = AC_6i_1,
-+	.qos_2 = AC_6i_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
-+static const struct iso_client_data connect_ac_6ii= {
-+	.qos = AC_6ii_1,
-+	.qos_2 = AC_6ii_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
-+static const struct iso_client_data connect_ac_7i= {
-+	.qos = AC_7i_1,
-+	.qos_2 = AC_7i_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
-+static const struct iso_client_data connect_ac_7ii= {
-+	.qos = AC_7ii_1,
-+	.qos_2 = AC_7ii_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
-+static const struct iso_client_data connect_ac_8i= {
-+	.qos = AC_8i_1,
-+	.qos_2 = AC_8i_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
-+static const struct iso_client_data connect_ac_8ii= {
-+	.qos = AC_8ii_1,
-+	.qos_2 = AC_8ii_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
-+static const struct iso_client_data connect_ac_9i= {
-+	.qos = AC_9i_1,
-+	.qos_2 = AC_9i_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
-+static const struct iso_client_data connect_ac_9ii= {
-+	.qos = AC_9ii_1,
-+	.qos_2 = AC_9ii_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
-+static const struct iso_client_data connect_ac_11i= {
-+	.qos = AC_11i_1,
-+	.qos_2 = AC_11i_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
-+static const struct iso_client_data connect_ac_11ii= {
-+	.qos = AC_11ii_1,
-+	.qos_2 = AC_11ii_2,
-+	.expect_err = 0,
-+	.mcis = true,
-+};
-+
- static const struct iso_client_data bcast_16_2_1_send = {
- 	.qos = QOS_OUT_16_2_1,
- 	.expect_err = 0,
-@@ -1018,16 +1197,28 @@ static int connect_iso_sock(struct test_data *data, uint8_t num, int sk)
- 	const struct iso_client_data *isodata = data->test_data;
- 	struct hciemu_client *client;
- 	const uint8_t *client_bdaddr = NULL;
-+	const struct bt_iso_qos *qos = &isodata->qos;
- 	struct sockaddr_iso addr;
- 	char str[18];
- 	int err;
+-static inline void hci_conn_hold(struct hci_conn *conn)
++static inline struct hci_conn *hci_conn_hold(struct hci_conn *conn)
+ {
+ 	BT_DBG("hcon %p orig refcnt %d", conn, atomic_read(&conn->refcnt));
  
- 	client = hciemu_get_client(data->hciemu, num);
- 	if (!client) {
--		tester_warn("No client");
--		return -ENODEV;
-+		if (!isodata->mcis) {
-+			tester_warn("No client");
-+			return -ENODEV;
-+		}
+ 	atomic_inc(&conn->refcnt);
+ 	cancel_delayed_work(&conn->disc_work);
 +
-+		client = hciemu_get_client(data->hciemu, 0);
-+		if (!client) {
-+			tester_warn("No client");
-+			return -ENODEV;
-+		}
++	return conn;
+ }
+ 
+ static inline void hci_conn_drop(struct hci_conn *conn)
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 5672b4924572..204164ee5f9a 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -330,8 +330,11 @@ static void hci_add_sco(struct hci_conn *conn, __u16 handle)
+ static bool find_next_esco_param(struct hci_conn *conn,
+ 				 const struct sco_param *esco_param, int size)
+ {
++	if (!conn->parent)
++		return false;
++
+ 	for (; conn->attempt <= size; conn->attempt++) {
+-		if (lmp_esco_2m_capable(conn->link) ||
++		if (lmp_esco_2m_capable(conn->parent) ||
+ 		    (esco_param[conn->attempt - 1].pkt_type & ESCO_2EV3))
+ 			break;
+ 		BT_DBG("hcon %p skipped attempt %d, eSCO 2M not supported",
+@@ -461,7 +464,7 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
+ 		break;
+ 
+ 	case BT_CODEC_CVSD:
+-		if (lmp_esco_capable(conn->link)) {
++		if (conn->parent && lmp_esco_capable(conn->parent)) {
+ 			if (!find_next_esco_param(conn, esco_param_cvsd,
+ 						  ARRAY_SIZE(esco_param_cvsd)))
+ 				return -EINVAL;
+@@ -531,7 +534,7 @@ static bool hci_setup_sync_conn(struct hci_conn *conn, __u16 handle)
+ 		param = &esco_param_msbc[conn->attempt - 1];
+ 		break;
+ 	case SCO_AIRMODE_CVSD:
+-		if (lmp_esco_capable(conn->link)) {
++		if (conn->parent && lmp_esco_capable(conn->parent)) {
+ 			if (!find_next_esco_param(conn, esco_param_cvsd,
+ 						  ARRAY_SIZE(esco_param_cvsd)))
+ 				return false;
+@@ -637,21 +640,22 @@ void hci_le_start_enc(struct hci_conn *conn, __le16 ediv, __le64 rand,
+ /* Device _must_ be locked */
+ void hci_sco_setup(struct hci_conn *conn, __u8 status)
+ {
+-	struct hci_conn *sco = conn->link;
++	struct hci_link *link;
+ 
+-	if (!sco)
++	link = list_first_entry_or_null(&conn->link_list, struct hci_link, list);
++	if (!link || !link->conn)
+ 		return;
+ 
+ 	BT_DBG("hcon %p", conn);
+ 
+ 	if (!status) {
+ 		if (lmp_esco_capable(conn->hdev))
+-			hci_setup_sync(sco, conn->handle);
++			hci_setup_sync(link->conn, conn->handle);
+ 		else
+-			hci_add_sco(sco, conn->handle);
++			hci_add_sco(link->conn, conn->handle);
+ 	} else {
+-		hci_connect_cfm(sco, status);
+-		hci_conn_del(sco);
++		hci_connect_cfm(link->conn, status);
++		hci_conn_del(link->conn);
  	}
+ }
  
-+	if (num && isodata->mcis)
-+		qos = &isodata->qos_2;
+@@ -1042,6 +1046,7 @@ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	skb_queue_head_init(&conn->data_q);
+ 
+ 	INIT_LIST_HEAD(&conn->chan_list);
++	INIT_LIST_HEAD(&conn->link_list);
+ 
+ 	INIT_DELAYED_WORK(&conn->disc_work, hci_conn_timeout);
+ 	INIT_DELAYED_WORK(&conn->auto_accept_work, hci_conn_auto_accept);
+@@ -1069,15 +1074,39 @@ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	return conn;
+ }
+ 
+-static bool hci_conn_unlink(struct hci_conn *conn)
++static void hci_conn_unlink(struct hci_conn *conn)
+ {
+-	if (!conn->link)
+-		return false;
++	struct hci_dev *hdev = conn->hdev;
+ 
+-	conn->link->link = NULL;
++	bt_dev_dbg(hdev, "hcon %p", conn);
 +
- 	if (!isodata->bcast) {
- 		client_bdaddr = hciemu_client_bdaddr(client);
- 		if (!client_bdaddr) {
-@@ -1045,8 +1236,7 @@ static int connect_iso_sock(struct test_data *data, uint8_t num, int sk)
++	if (!conn->parent) {
++		struct hci_link *link, *t;
++
++		list_for_each_entry_safe(link, t, &conn->link_list, list)
++			hci_conn_unlink(link->conn);
++
++		return;
++	}
++
++	if (!conn->link)
++		return;
++
++	hci_conn_put(conn->parent);
++	conn->parent = NULL;
++
++	list_del_rcu(&conn->link->list);
++	synchronize_rcu();
++
++	kfree(conn->link);
+ 	conn->link = NULL;
+ 
+-	return true;
++	/* Due to race, SCO connection might be not established
++	 * yet at this point. Delete it now, otherwise it is
++	 * possible for it to be stuck and can't be deleted.
++	 */
++	if (conn->handle == HCI_CONN_HANDLE_UNSET)
++		hci_conn_del(conn);
+ }
+ 
+ int hci_conn_del(struct hci_conn *conn)
+@@ -1091,18 +1120,7 @@ int hci_conn_del(struct hci_conn *conn)
+ 	cancel_delayed_work_sync(&conn->idle_work);
+ 
+ 	if (conn->type == ACL_LINK) {
+-		struct hci_conn *link = conn->link;
+-
+-		if (link) {
+-			hci_conn_unlink(conn);
+-			/* Due to race, SCO connection might be not established
+-			 * yet at this point. Delete it now, otherwise it is
+-			 * possible for it to be stuck and can't be deleted.
+-			 */
+-			if (link->handle == HCI_CONN_HANDLE_UNSET)
+-				hci_conn_del(link);
+-		}
+-
++		hci_conn_unlink(conn);
+ 		/* Unacked frames */
+ 		hdev->acl_cnt += conn->sent;
+ 	} else if (conn->type == LE_LINK) {
+@@ -1113,7 +1131,7 @@ int hci_conn_del(struct hci_conn *conn)
+ 		else
+ 			hdev->acl_cnt += conn->sent;
+ 	} else {
+-		struct hci_conn *acl = conn->link;
++		struct hci_conn *acl = conn->parent;
+ 
+ 		if (acl) {
+ 			hci_conn_unlink(conn);
+@@ -1600,11 +1618,40 @@ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
+ 	return acl;
+ }
+ 
++static struct hci_link *hci_conn_link(struct hci_conn *parent,
++				      struct hci_conn *conn)
++{
++	struct hci_dev *hdev = parent->hdev;
++	struct hci_link *link;
++
++	bt_dev_dbg(hdev, "parent %p hcon %p", parent, conn);
++
++	if (conn->link)
++		return conn->link;
++
++	if (conn->parent)
++		return NULL;
++
++	link = kzalloc(sizeof(*link), GFP_KERNEL);
++	if (!link)
++		return NULL;
++
++	link->conn = hci_conn_hold(conn);
++	conn->link = link;
++	conn->parent = hci_conn_get(parent);
++
++	/* Use list_add_tail_rcu append to the list */
++	list_add_tail_rcu(&link->list, &parent->link_list);
++
++	return link;
++}
++
+ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 				 __u16 setting, struct bt_codec *codec)
+ {
+ 	struct hci_conn *acl;
+ 	struct hci_conn *sco;
++	struct hci_link *link;
+ 
+ 	acl = hci_connect_acl(hdev, dst, BT_SECURITY_LOW, HCI_AT_NO_BONDING,
+ 			      CONN_REASON_SCO_CONNECT);
+@@ -1620,10 +1667,12 @@ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
  		}
  	}
  
--	err = setsockopt(sk, SOL_BLUETOOTH, BT_ISO_QOS, &isodata->qos,
--						sizeof(isodata->qos));
-+	err = setsockopt(sk, SOL_BLUETOOTH, BT_ISO_QOS, qos, sizeof(*qos));
- 	if (err < 0) {
- 		tester_warn("Can't set socket BT_ISO_QOS option : %s (%d)",
- 							strerror(errno), errno);
-@@ -1122,11 +1312,15 @@ static bool check_io_qos(const struct bt_iso_io_qos *io1,
+-	acl->link = sco;
+-	sco->link = acl;
+-
+-	hci_conn_hold(sco);
++	link = hci_conn_link(acl, sco);
++	if (!link) {
++		hci_conn_drop(acl);
++		hci_conn_drop(sco);
++		return NULL;
++	}
+ 
+ 	sco->setting = setting;
+ 	sco->codec = *codec;
+@@ -1891,7 +1940,7 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ 	u8 cig;
+ 
+ 	memset(&cmd, 0, sizeof(cmd));
+-	cmd.cis[0].acl_handle = cpu_to_le16(conn->link->handle);
++	cmd.cis[0].acl_handle = cpu_to_le16(conn->parent->handle);
+ 	cmd.cis[0].cis_handle = cpu_to_le16(conn->handle);
+ 	cmd.cp.num_cis++;
+ 	cig = conn->iso_qos.ucast.cig;
+@@ -1904,11 +1953,12 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ 		struct hci_cis *cis = &cmd.cis[cmd.cp.num_cis];
+ 
+ 		if (conn == data || conn->type != ISO_LINK ||
+-		    conn->state == BT_CONNECTED || conn->iso_qos.ucast.cig != cig)
++		    conn->state == BT_CONNECTED ||
++		    conn->iso_qos.ucast.cig != cig)
+ 			continue;
+ 
+ 		/* Check if all CIS(s) belonging to a CIG are ready */
+-		if (!conn->link || conn->link->state != BT_CONNECTED ||
++		if (!conn->parent || conn->parent->state != BT_CONNECTED ||
+ 		    conn->state != BT_CONNECT) {
+ 			cmd.cp.num_cis = 0;
+ 			break;
+@@ -1925,7 +1975,7 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ 		 * command have been generated, the Controller shall return the
+ 		 * error code Command Disallowed (0x0C).
+ 		 */
+-		cis->acl_handle = cpu_to_le16(conn->link->handle);
++		cis->acl_handle = cpu_to_le16(conn->parent->handle);
+ 		cis->cis_handle = cpu_to_le16(conn->handle);
+ 		cmd.cp.num_cis++;
+ 	}
+@@ -1944,15 +1994,33 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ int hci_le_create_cis(struct hci_conn *conn)
+ {
+ 	struct hci_conn *cis;
++	struct hci_link *link, *t;
+ 	struct hci_dev *hdev = conn->hdev;
+ 	int err;
+ 
++	bt_dev_dbg(hdev, "hcon %p", conn);
++
+ 	switch (conn->type) {
+ 	case LE_LINK:
+-		if (!conn->link || conn->state != BT_CONNECTED)
++		if (conn->state != BT_CONNECTED || list_empty(&conn->link_list))
+ 			return -EINVAL;
+-		cis = conn->link;
+-		break;
++
++		cis = NULL;
++
++		/* hci_conn_link uses list_add_tail_rcu so the list is in
++		 * the same order as the connections are requested.
++		 */
++		list_for_each_entry_safe(link, t, &conn->link_list, list) {
++			if (link->conn->state == BT_BOUND) {
++				err = hci_le_create_cis(link->conn);
++				if (err)
++					return err;
++
++				cis = link->conn;
++			}
++		}
++
++		return cis ? 0 : -EINVAL;
+ 	case ISO_LINK:
+ 		cis = conn;
+ 		break;
+@@ -2173,6 +2241,7 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ {
+ 	struct hci_conn *le;
+ 	struct hci_conn *cis;
++	struct hci_link *link;
+ 
+ 	if (hci_dev_test_flag(hdev, HCI_ADVERTISING))
+ 		le = hci_connect_le(hdev, dst, dst_type, false,
+@@ -2198,16 +2267,18 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 		return cis;
+ 	}
+ 
+-	le->link = cis;
+-	cis->link = le;
+-
+-	hci_conn_hold(cis);
++	link = hci_conn_link(le, cis);
++	if (!link) {
++		hci_conn_drop(le);
++		hci_conn_drop(cis);
++		return NULL;
++	}
+ 
+ 	/* If LE is already connected and CIS handle is already set proceed to
+ 	 * Create CIS immediately.
+ 	 */
+ 	if (le->state == BT_CONNECTED && cis->handle != HCI_CONN_HANDLE_UNSET)
+-		hci_le_create_cis(le);
++		hci_le_create_cis(cis);
+ 
+ 	return cis;
+ }
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 0e0a93cc1218..d00ef6e3fc45 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2345,7 +2345,8 @@ static void hci_cs_create_conn(struct hci_dev *hdev, __u8 status)
+ static void hci_cs_add_sco(struct hci_dev *hdev, __u8 status)
+ {
+ 	struct hci_cp_add_sco *cp;
+-	struct hci_conn *acl, *sco;
++	struct hci_conn *acl;
++	struct hci_link *link;
+ 	__u16 handle;
+ 
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+@@ -2365,12 +2366,13 @@ static void hci_cs_add_sco(struct hci_dev *hdev, __u8 status)
+ 
+ 	acl = hci_conn_hash_lookup_handle(hdev, handle);
+ 	if (acl) {
+-		sco = acl->link;
+-		if (sco) {
+-			sco->state = BT_CLOSED;
++		link = list_first_entry_or_null(&acl->link_list,
++						struct hci_link, list);
++		if (link && link->conn) {
++			link->conn->state = BT_CLOSED;
+ 
+-			hci_connect_cfm(sco, status);
+-			hci_conn_del(sco);
++			hci_connect_cfm(link->conn, status);
++			hci_conn_del(link->conn);
+ 		}
+ 	}
+ 
+@@ -2637,11 +2639,34 @@ static void hci_cs_read_remote_ext_features(struct hci_dev *hdev, __u8 status)
+ 	hci_dev_unlock(hdev);
  }
  
- static bool check_ucast_qos(const struct bt_iso_qos *qos1,
--				const struct bt_iso_qos *qos2)
-+				const struct bt_iso_qos *qos2,
-+				const struct bt_iso_qos *qos2_2)
++static void hci_setup_sync_conn_status(struct hci_dev *hdev, __u16 handle,
++				       __u8 status)
++{
++	struct hci_conn *acl;
++	struct hci_link *link;
++
++	bt_dev_dbg(hdev, "handle 0x%4.4x status 0x%2.2x", handle, status);
++
++	hci_dev_lock(hdev);
++
++	acl = hci_conn_hash_lookup_handle(hdev, handle);
++	if (acl) {
++		link = list_first_entry_or_null(&acl->link_list,
++						struct hci_link, list);
++		if (link && link->conn) {
++			link->conn->state = BT_CLOSED;
++
++			hci_connect_cfm(link->conn, status);
++			hci_conn_del(link->conn);
++		}
++	}
++
++	hci_dev_unlock(hdev);
++}
++
+ static void hci_cs_setup_sync_conn(struct hci_dev *hdev, __u8 status)
  {
- 	if (qos1->ucast.cig != BT_ISO_QOS_CIG_UNSET &&
- 			qos2->ucast.cig != BT_ISO_QOS_CIG_UNSET &&
- 			qos1->ucast.cig != qos2->ucast.cig) {
-+		if (qos2_2)
-+			return check_ucast_qos(qos1, qos2_2, NULL);
-+
- 		tester_warn("Unexpected CIG ID: 0x%02x != 0x%02x",
- 				qos1->ucast.cig, qos2->ucast.cig);
- 		return false;
-@@ -1135,29 +1329,44 @@ static bool check_ucast_qos(const struct bt_iso_qos *qos1,
- 	if (qos1->ucast.cis != BT_ISO_QOS_CIS_UNSET &&
- 			qos2->ucast.cis != BT_ISO_QOS_CIS_UNSET &&
- 			qos1->ucast.cis != qos2->ucast.cis) {
-+		if (qos2_2)
-+			return check_ucast_qos(qos1, qos2_2, NULL);
-+
- 		tester_warn("Unexpected CIS ID: 0x%02x != 0x%02x",
- 				qos1->ucast.cis, qos2->ucast.cis);
- 		return false;
- 	}
+ 	struct hci_cp_setup_sync_conn *cp;
+-	struct hci_conn *acl, *sco;
+-	__u16 handle;
  
- 	if (qos1->ucast.packing != qos2->ucast.packing) {
-+		if (qos2_2)
-+			return check_ucast_qos(qos1, qos2_2, NULL);
-+
- 		tester_warn("Unexpected QoS packing: 0x%02x != 0x%02x",
- 				qos1->ucast.packing, qos2->ucast.packing);
- 		return false;
- 	}
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
  
- 	if (qos1->ucast.framing != qos2->ucast.framing) {
-+		if (qos2_2)
-+			return check_ucast_qos(qos1, qos2_2, NULL);
-+
- 		tester_warn("Unexpected QoS framing: 0x%02x != 0x%02x",
- 				qos1->ucast.framing, qos2->ucast.framing);
- 		return false;
- 	}
+@@ -2652,31 +2677,12 @@ static void hci_cs_setup_sync_conn(struct hci_dev *hdev, __u8 status)
+ 	if (!cp)
+ 		return;
  
- 	if (!check_io_qos(&qos1->ucast.in, &qos2->ucast.in)) {
-+		if (qos2_2)
-+			return check_ucast_qos(qos1, qos2_2, NULL);
-+
- 		tester_warn("Unexpected Input QoS");
- 		return false;
- 	}
- 
- 	if (!check_io_qos(&qos1->ucast.out, &qos2->ucast.out)) {
-+		if (qos2_2)
-+			return check_ucast_qos(qos1, qos2_2, NULL);
-+
- 		tester_warn("Unexpected Output QoS");
- 		return false;
- 	}
-@@ -1404,9 +1613,10 @@ static gboolean iso_connect(GIOChannel *io, GIOCondition cond,
- 		return FALSE;
- 	}
- 
--	if (!isodata->bcast)
--		ret = check_ucast_qos(&qos, &isodata->qos);
--	else if (!isodata->server)
-+	if (!isodata->bcast) {
-+		ret = check_ucast_qos(&qos, &isodata->qos,
-+				      isodata->mcis ? &isodata->qos_2 : NULL);
-+	} else if (!isodata->server)
- 		ret = check_bcast_qos(&qos, &isodata->qos);
- 
- 	if (!ret) {
-@@ -1549,8 +1759,13 @@ static void setup_connect(struct test_data *data, uint8_t num, GIOFunc func)
- static void test_connect(const void *test_data)
- {
- 	struct test_data *data = tester_get_data();
-+	const struct iso_client_data *isodata = test_data;
- 
- 	setup_connect(data, 0, iso_connect_cb);
-+
-+	/* Check if configuration requires multiple CIS setup */
-+	if (!isodata->bcast && isodata->mcis)
-+		setup_connect(data, 1, iso_connect2_cb);
+-	handle = __le16_to_cpu(cp->handle);
+-
+-	bt_dev_dbg(hdev, "handle 0x%4.4x", handle);
+-
+-	hci_dev_lock(hdev);
+-
+-	acl = hci_conn_hash_lookup_handle(hdev, handle);
+-	if (acl) {
+-		sco = acl->link;
+-		if (sco) {
+-			sco->state = BT_CLOSED;
+-
+-			hci_connect_cfm(sco, status);
+-			hci_conn_del(sco);
+-		}
+-	}
+-
+-	hci_dev_unlock(hdev);
++	hci_setup_sync_conn_status(hdev, __le16_to_cpu(cp->handle), status);
  }
  
- static void setup_reconnect(struct test_data *data, uint8_t num, GIOFunc func)
-@@ -2001,6 +2216,45 @@ int main(int argc, char *argv[])
- 							setup_powered,
- 							test_reconnect);
+ static void hci_cs_enhanced_setup_sync_conn(struct hci_dev *hdev, __u8 status)
+ {
+ 	struct hci_cp_enhanced_setup_sync_conn *cp;
+-	struct hci_conn *acl, *sco;
+-	__u16 handle;
  
-+	test_iso("ISO AC 1 & 4 - Success", &connect_ac_1_4, setup_powered,
-+							test_connect);
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+ 
+@@ -2687,24 +2693,7 @@ static void hci_cs_enhanced_setup_sync_conn(struct hci_dev *hdev, __u8 status)
+ 	if (!cp)
+ 		return;
+ 
+-	handle = __le16_to_cpu(cp->handle);
+-
+-	bt_dev_dbg(hdev, "handle 0x%4.4x", handle);
+-
+-	hci_dev_lock(hdev);
+-
+-	acl = hci_conn_hash_lookup_handle(hdev, handle);
+-	if (acl) {
+-		sco = acl->link;
+-		if (sco) {
+-			sco->state = BT_CLOSED;
+-
+-			hci_connect_cfm(sco, status);
+-			hci_conn_del(sco);
+-		}
+-	}
+-
+-	hci_dev_unlock(hdev);
++	hci_setup_sync_conn_status(hdev, __le16_to_cpu(cp->handle), status);
+ }
+ 
+ static void hci_cs_sniff_mode(struct hci_dev *hdev, __u8 status)
+@@ -3834,19 +3823,20 @@ static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(conn, &hdev->conn_hash.list, list) {
+-		if (conn->type != ISO_LINK || conn->iso_qos.ucast.cig != rp->cig_id ||
++		if (conn->type != ISO_LINK ||
++		    conn->iso_qos.ucast.cig != rp->cig_id ||
+ 		    conn->state == BT_CONNECTED)
+ 			continue;
+ 
+ 		conn->handle = __le16_to_cpu(rp->handle[i++]);
+ 
+-		bt_dev_dbg(hdev, "%p handle 0x%4.4x link %p", conn,
+-			   conn->handle, conn->link);
++		bt_dev_dbg(hdev, "%p handle 0x%4.4x parent %p", conn,
++			   conn->handle, conn->parent);
+ 
+ 		/* Create CIS if LE is already connected */
+-		if (conn->link && conn->link->state == BT_CONNECTED) {
++		if (conn->parent && conn->parent->state == BT_CONNECTED) {
+ 			rcu_read_unlock();
+-			hci_le_create_cis(conn->link);
++			hci_le_create_cis(conn);
+ 			rcu_read_lock();
+ 		}
+ 
+@@ -5031,7 +5021,7 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev, void *data,
+ 		if (conn->out) {
+ 			conn->pkt_type = (hdev->esco_type & SCO_ESCO_MASK) |
+ 					(hdev->esco_type & EDR_ESCO_MASK);
+-			if (hci_setup_sync(conn, conn->link->handle))
++			if (hci_setup_sync(conn, conn->parent->handle))
+ 				goto unlock;
+ 		}
+ 		fallthrough;
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 74117df03a3f..34d55a85d8f6 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1657,8 +1657,12 @@ static void iso_connect_cfm(struct hci_conn *hcon, __u8 status)
+ 
+ 		/* Check if LE link has failed */
+ 		if (status) {
+-			if (hcon->link)
+-				iso_conn_del(hcon->link, bt_to_errno(status));
++			struct hci_link *link, *t;
 +
-+	test_iso("ISO AC 2 & 10 - Success", &connect_ac_2_10, setup_powered,
-+							test_connect);
++			list_for_each_entry_safe(link, t, &hcon->link_list,
++						 list)
++				iso_conn_del(link->conn, bt_to_errno(status));
 +
-+	test_iso("ISO AC 3 & 5 - Success", &connect_ac_3_5, setup_powered,
-+							test_connect);
-+
-+	test_iso("ISO AC 6(i) - Success", &connect_ac_6i, setup_powered,
-+							test_connect);
-+
-+	test_iso2("ISO AC 6(ii) - Success", &connect_ac_6ii, setup_powered,
-+							test_connect2);
-+
-+	test_iso("ISO AC 7(i) - Success", &connect_ac_7i, setup_powered,
-+							test_connect);
-+
-+	test_iso2("ISO AC 7(ii) - Success", &connect_ac_7ii, setup_powered,
-+							test_connect2);
-+
-+	test_iso("ISO AC 8(i) - Success", &connect_ac_8i, setup_powered,
-+							test_connect);
-+
-+	test_iso2("ISO AC 8(ii) - Success", &connect_ac_8ii, setup_powered,
-+							test_connect2);
-+
-+	test_iso("ISO AC 9(i) - Success", &connect_ac_9i, setup_powered,
-+							test_connect);
-+
-+	test_iso2("ISO AC 9(ii) - Success", &connect_ac_9ii, setup_powered,
-+							test_connect2);
-+
-+	test_iso("ISO AC 11(i) - Success", &connect_ac_11i, setup_powered,
-+							test_connect);
-+
-+	test_iso2("ISO AC 11(ii) - Success", &connect_ac_11ii, setup_powered,
-+							test_connect2);
-+
- 	test_iso("ISO Broadcaster - Success", &bcast_16_2_1_send, setup_powered,
- 							test_bcast);
- 	test_iso("ISO Broadcaster BIG 0x01 - Success", &bcast_1_16_2_1_send,
+ 			return;
+ 		}
+ 
 -- 
 2.39.2
 
