@@ -2,54 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5CA76E2BC2
+	by mail.lfdr.de (Postfix) with ESMTP id 6B5C46E2BC1
 	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Apr 2023 23:30:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229804AbjDNVaV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S229794AbjDNVaV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Fri, 14 Apr 2023 17:30:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38078 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbjDNVaU (ORCPT
+        with ESMTP id S229513AbjDNVaU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 14 Apr 2023 17:30:20 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FABD5BB8
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 787725BA2
         for <linux-bluetooth@vger.kernel.org>; Fri, 14 Apr 2023 14:30:19 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1917664A7C
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 10D6E64A7B
         for <linux-bluetooth@vger.kernel.org>; Fri, 14 Apr 2023 21:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 60AF6C4339B;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 59C27C433D2;
         Fri, 14 Apr 2023 21:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1681507818;
-        bh=w1bCwHem077sBSGNygws2N49BGNdGSGGBtFYfoezeII=;
+        bh=/3Yoyx/ibaWJPFH5J31qju/ZQ1ss7ujvidcgJxSMqfw=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=iOkmDTeoyJk5zX05T728y5O2pCis2f8z5I3XFBkwDnCZp1BmehpImWS5IPyc2ynYj
-         IQn3a9RcMrvkK9kEQAEuEWgd17GQS0R5+Jr84X+9FlQyjeYvOoZhmKooBcwo6bp87c
-         lIhhFnAT/kJZAP1ExsLYXIbuU2zgOAoe9SSKNKtkUWFwcgESlHpLeeSYPVc9nHZRcI
-         q8dHN5tsk3lk2+NsycSpq6xe0j5+4vLFOK7ZtRSvyeWoLa/6O26CXyabshA8ChRAr/
-         wNK2okHXlkB9t/NOsjTXH4viF4bGQyDoMC0oz3FUQkqnGwiUZWZGBSa3B6DrT6YjqK
-         0nwd0zRaojYIA==
+        b=jhFH2Wdtxx1nk34WL7WFaZ8GcSBPNlJan+kwL4buJENGcP+5GG3Rx9QPvjrOeYFDo
+         +A5GvbWUB7z7f1blcZ3cu1jjSy9tG+/BDDdJdTDXZP1oHtCUpatkJ41BzfP+mR/xmg
+         W9T14fDlu5WRHFulT0uAXfP5V21sdiiWH3H4+jcbo71nMrhAABd8ySrM9WdUAt12DE
+         FpV5HOOL2vIZBOdrGpsLQ2GXXPJMUinjbiFmhy8gYElGP27eJZWIzJP4f7W2krn9Tb
+         dqnfJhkg+tRWuapdJNnm7m8aRp6uDdVuQB76vbKvo34PiDgs6yvq76PmHXd/4+gfUu
+         +m65Z/mmsZ66w==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4036BE52446;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3683AE21EDE;
         Fri, 14 Apr 2023 21:30:18 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: Add new quirk for broken set random RPA timeout
- for ATS2851
+Subject: Re: [BlueZ PATCH v3 1/3] Bluetooth: hci_conn: Add support for linking
+ multiple hcon
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168150781825.20001.4973139468540739153.git-patchwork-notify@kernel.org>
+Message-Id: <168150781821.20001.5395447365656696228.git-patchwork-notify@kernel.org>
 Date:   Fri, 14 Apr 2023 21:30:18 +0000
-References: <20230323134539.3957410-1-raul.cheleguini@gmail.com>
-In-Reply-To: <20230323134539.3957410-1-raul.cheleguini@gmail.com>
-To:     Raul Cheleguini <raul.cheleguini@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com, wzj9912@gmail.com
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+References: <20230414202608.1152970-1-luiz.dentz@gmail.com>
+In-Reply-To: <20230414202608.1152970-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -60,22 +59,31 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 23 Mar 2023 10:45:39 -0300 you wrote:
-> The ATS2851 based controller advertises support for command "LE Set Random
-> Private Address Timeout" but does not actually implement it, impeding the
-> controller initialization.
+On Fri, 14 Apr 2023 13:26:06 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> Add the quirk HCI_QUIRK_BROKEN_SET_RPA_TIMEOUT to unblock the controller
-> initialization.
+> Since it is required for some configurations to have multiple CIS with
+> the same peer which is now covered by iso-tester in the following test
+> cases:
+> 
+>     ISO AC 6(i) - Success
+>     ISO AC 7(i) - Success
+>     ISO AC 8(i) - Success
+>     ISO AC 9(i) - Success
+>     ISO AC 11(i) - Success
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: Add new quirk for broken set random RPA timeout for ATS2851
-    https://git.kernel.org/bluetooth/bluetooth-next/c/cbddddcbd7d6
+  - [BlueZ,v3,1/3] Bluetooth: hci_conn: Add support for linking multiple hcon
+    (no matching commit)
+  - [BlueZ,v3,2/3] Bluetooth: hci_conn: Fix not matching by CIS ID
+    https://git.kernel.org/bluetooth/bluetooth-next/c/450b35ffd344
+  - [BlueZ,v3,3/3] Bluetooth: hci_conn: Fix not waiting for HCI_EVT_LE_CIS_ESTABLISHED
+    https://git.kernel.org/bluetooth/bluetooth-next/c/2e5ad941e0e5
 
 You are awesome, thank you!
 -- 
