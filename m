@@ -2,89 +2,155 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBC3D6E2AF7
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Apr 2023 22:10:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97A8E6E2AFF
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Apr 2023 22:13:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230017AbjDNUKZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 14 Apr 2023 16:10:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60662 "EHLO
+        id S229820AbjDNUNT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 14 Apr 2023 16:13:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229954AbjDNUKW (ORCPT
+        with ESMTP id S229841AbjDNUNQ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 14 Apr 2023 16:10:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 478E465B7;
-        Fri, 14 Apr 2023 13:10:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CD3DF649F5;
-        Fri, 14 Apr 2023 20:10:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3A3EBC4339E;
-        Fri, 14 Apr 2023 20:10:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681503020;
-        bh=VYAuLSJnEMAkX+vDzpaAVQk7hpPnKCfWHvAaAjXfvdg=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=gsKAMDFBUJWNqWSHN5AFNoRRNNjxJJjA1twtXZRN1g5o6D4g0KSxeQlWlqREaZs9R
-         QwqR3/X7Qtuj2GE3OKnFVyrFwKAP558IR4NZ5ZRy9ILqYwsINt0HqX26X30OWTOO+W
-         xGaBDqEqUvLesTgMCJpuNLoWVm/oKBJ1jg4WaVq2GgUD5fFE5AO4SgFUqMNLvcpKs7
-         TW6fLlardwox4xwOzefLmLf9tY4NGCuqkyrhSwWNQLZBi64Ls8c0hiE5smF6fr5F41
-         tUxvyZrwcB6c9RGOXazPqlzPnI09LtNbsftLKaVZSAuqxt56Fk8qNktuU3zJZSlpBS
-         suxhv/VClWftw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 21BA9E4D003;
-        Fri, 14 Apr 2023 20:10:20 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 14 Apr 2023 16:13:16 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDD786581
+        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Apr 2023 13:13:14 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2a76b2a36e2so237561fa.0
+        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Apr 2023 13:13:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681503193; x=1684095193;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mKwHqAgVHy/0tduAZM9uGm5T+u/56JLY5nnUj/n+Ys4=;
+        b=LFUEnbL8oGDbFu7kIzX4DNZ8r2DS6lyPaEzl4KEd3KS8AlXjbVQiPG3FQvKekVRkQ1
+         vsGX962Cvc8et1jglCT2o70gIlap5yjFZZ7BWod4eK6F3fWuFJF+ZSsXJU19dDrDeMOL
+         zDrpi3YVg8LnWNK0m+J8+jZYOPvEhlTaEDNPeiwMN912nYtEbqP+iZjNyz/2NDL3QRqx
+         95bxH5k33nsKkKzL3Z1MBHtYqTl9RaaD4wx6AoP311vEsifAAuiKy2LBd9Elfdaf6GNn
+         5F5NWtIFRmbjFSZXg62Gic7jgL9u47SvLCS5k6TZFqvEMUL2ZJLP/mVHTUtZrNWVgs3n
+         u/aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681503193; x=1684095193;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mKwHqAgVHy/0tduAZM9uGm5T+u/56JLY5nnUj/n+Ys4=;
+        b=PEpinUHAWrwn/+PNRG2+yB8Jqm/poBn+EzhhnkRiFupS4jAYMiJZvqLCEbZR7RVmO0
+         ogjpXFhKIcpQg3rHApCxsho5OBnhLoSd3f0OdiXOTF3zRL7ZLenbHd5LX6WBtUGvT8h/
+         LyNZkKIIyhe8HSaENq7iLrfOMWI8fqnT3lmgLSwCJT2DVGTpdpboFwt8MNAXm67JvMj+
+         VeOG0FEbfq/UW8auMfqrcf1pZUfz4/iuQdjFb8UfD8cJL7faRFoqCf4/RtW1td1/mVV9
+         qeYZ5MxKvt06x2/k1+IKhSjYxU+AUfqJwWmfQwQvlS1Ec7tFGuRteWSmxtlDV/Vzj9fL
+         y/rA==
+X-Gm-Message-State: AAQBX9dQ5LF8F3G6iHy0qttoqdQ3hLDBXNKg+aVThGGBl8URew70+lER
+        Jv27ZJ9bcmuwb1owydhywpTbwhxPgPK0+6AIx9mA1Hm2
+X-Google-Smtp-Source: AKy350YW1ioVBV5UV6wJDBrq/Tcw5h2kXEPwDc6iJ8MJxwSzFuW+XIB6ZYdgqeXmjd9T32IAq+StQadrrjF3VWHoY6I=
+X-Received: by 2002:a19:c50f:0:b0:4ec:8e50:5032 with SMTP id
+ w15-20020a19c50f000000b004ec8e505032mr27326lfe.13.1681503192842; Fri, 14 Apr
+ 2023 13:13:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: vhci: Fix info leak in force_devcd_write()
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168150302013.15322.10506281113817205664.git-patchwork-notify@kernel.org>
-Date:   Fri, 14 Apr 2023 20:10:20 +0000
-References: <634ab328-3ef2-43b7-8f81-8a48c7661427@kili.mountain>
-In-Reply-To: <634ab328-3ef2-43b7-8f81-8a48c7661427@kili.mountain>
-To:     Dan Carpenter <error27@gmail.com>
-Cc:     mmandlik@google.com, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org, kernel-janitors@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230413183113.896669-1-luiz.dentz@gmail.com> <20230413183113.896669-2-luiz.dentz@gmail.com>
+ <1ae133312ec9d702ebf18cbf3a2b106e8c27acd4.camel@iki.fi>
+In-Reply-To: <1ae133312ec9d702ebf18cbf3a2b106e8c27acd4.camel@iki.fi>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 14 Apr 2023 13:13:00 -0700
+Message-ID: <CABBYNZ+eDB7ajTM2ktkwSrQB-8RWrhixkChW9DKfV3aazX-RSw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] Bluetooth: hci_conn: Fix not matching by CIS ID
+To:     Pauli Virtanen <pav@iki.fi>
+Cc:     linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+Hi Pauli,
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+On Fri, Apr 14, 2023 at 12:53=E2=80=AFPM Pauli Virtanen <pav@iki.fi> wrote:
+>
+> Hi Luiz,
+>
+> to, 2023-04-13 kello 11:31 -0700, Luiz Augusto von Dentz kirjoitti:
+> > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> >
+> > This fixes only matching CIS by address which prevents creating new hco=
+n
+> > if upper layer is requesting a specific CIS ID.
+> >
+> > Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> > ---
+> >  include/net/bluetooth/hci_core.h | 7 ++++++-
+> >  net/bluetooth/hci_conn.c         | 2 +-
+> >  2 files changed, 7 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/h=
+ci_core.h
+> > index 4fe1e71cb9d8..6f5e8594ff2d 100644
+> > --- a/include/net/bluetooth/hci_core.h
+> > +++ b/include/net/bluetooth/hci_core.h
+> > @@ -1180,7 +1180,8 @@ static inline struct hci_conn *hci_conn_hash_look=
+up_le(struct hci_dev *hdev,
+> >
+> >  static inline struct hci_conn *hci_conn_hash_lookup_cis(struct hci_dev=
+ *hdev,
+> >                                                       bdaddr_t *ba,
+> > -                                                     __u8 ba_type)
+> > +                                                     __u8 ba_type,
+> > +                                                     __u8 id)
+> >  {
+> >       struct hci_conn_hash *h =3D &hdev->conn_hash;
+> >       struct hci_conn  *c;
+> > @@ -1191,6 +1192,10 @@ static inline struct hci_conn *hci_conn_hash_loo=
+kup_cis(struct hci_dev *hdev,
+> >               if (c->type !=3D ISO_LINK)
+> >                       continue;
+> >
+> > +             /* Match CIS ID if set */
+> > +             if (id !=3D BT_ISO_QOS_CIS_UNSET && id !=3D c->iso_qos.uc=
+ast.cis)
+> > +                     continue;
+> > +
+>
+> Should this also check the CIG ID?
+>
+> Core v5.3 4.E Sec. 5.3: "The CIS_ID has a separate number space for
+> each CIG_ID.", and I didn't manage to find restriction that you
+> couldn't have the same peripheral in multiple CIG.
 
-On Thu, 6 Apr 2023 11:55:17 +0300 you wrote:
-> There are a number of bugs here:
-> 
-> 1) If "count" is less than sizeof(dump_data.data) then it copies
->    uninitialized data.
-> 2) If simple_write_to_buffer() returns -EFAULT then we run into a
->    problem "ret < count" comparison.  "count" is an unsigned long so the
->    comparison is type promoted to unsigned long and the negative returns
->    become high positive values.  That also results in copying
->    uninitialized data.
-> 3) If "*ppos" is non-zero then the first part of the dump_data
->    buffer is uninitialized.  Using copy_from_user() instead of
->    simple_write_to_buffer() is more appropriate here.
-> 
-> [...]
+That is a good point, it seems the BAP Audio Configurations are
+limited to just one CIG but in theory there could be multiple if they
+don't need to be synchronized, I will fix that to check both CIG and
+CIS.
 
-Here is the summary with links:
-  - Bluetooth: vhci: Fix info leak in force_devcd_write()
-    https://git.kernel.org/bluetooth/bluetooth-next/c/0b1900708232
+> >               if (ba_type =3D=3D c->dst_type && !bacmp(&c->dst, ba)) {
+> >                       rcu_read_unlock();
+> >                       return c;
+> > diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+> > index 204164ee5f9a..b9ecfc782be9 100644
+> > --- a/net/bluetooth/hci_conn.c
+> > +++ b/net/bluetooth/hci_conn.c
+> > @@ -1842,7 +1842,7 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hde=
+v, bdaddr_t *dst,
+> >  {
+> >       struct hci_conn *cis;
+> >
+> > -     cis =3D hci_conn_hash_lookup_cis(hdev, dst, dst_type);
+> > +     cis =3D hci_conn_hash_lookup_cis(hdev, dst, dst_type, qos->ucast.=
+cis);
+> >       if (!cis) {
+> >               cis =3D hci_conn_add(hdev, ISO_LINK, dst, HCI_ROLE_MASTER=
+);
+> >               if (!cis)
+>
+> --
+> Pauli Virtanen
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
+--=20
+Luiz Augusto von Dentz
