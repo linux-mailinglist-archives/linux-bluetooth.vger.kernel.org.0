@@ -2,55 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 264576E2AF9
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Apr 2023 22:10:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E79226E2AF3
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Apr 2023 22:10:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230054AbjDNUK3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 14 Apr 2023 16:10:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60664 "EHLO
+        id S229992AbjDNUKY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 14 Apr 2023 16:10:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229965AbjDNUKW (ORCPT
+        with ESMTP id S229907AbjDNUKW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 14 Apr 2023 16:10:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61F7A65B8;
-        Fri, 14 Apr 2023 13:10:21 -0700 (PDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F4565B3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Apr 2023 13:10:21 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E056C64A26;
-        Fri, 14 Apr 2023 20:10:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 40E58C433A0;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B887E64A1E
+        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Apr 2023 20:10:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2D86FC433D2;
         Fri, 14 Apr 2023 20:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1681503020;
-        bh=Mvyvuwtj/oRXkXPTS/Co4jsSYBGPv4LCGVF9JXluDUY=;
+        bh=byfWLOYABnI3ZIMRebZn3/r8+3eLl4A5vyQeSu3Mucg=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=XpSGiKFUcGwX9yKPxNsP0eXXIc+VwVoXFr0ef+rwUtKfWAaR8wnAjVY7n+Lt6/3sn
-         9VNffWlgQCdhUBbRBoMWEgdpU0PVSN09DNJngxEFBk3aW4phlZYOey3+pbV9lvl8nt
-         6H8ZlDE3ushFWARQxJFRCdHGjC3D8/7AeL3tkU+6JiHYqBtqK4aiBXTuM+FwhJd3UD
-         q5k7KW42GOk18zO6xk9mR02x8o/0+1tYyWAS0kTTM5CYk4Me6zp4oBtaLAEKrU9dxF
-         ZuDdg+g3oiR8i9r9ohlkyTO1MO1vOwhZ1mKsfNd6mcRO3x6MOl5CsMizNfoURAyLkf
-         7wfEicCuj8EIg==
+        b=JD77nsCpBhr4axhSteR9tgkvySz2aze5BQjAKI7xI/e5N7EhulolNqEJy+JdVqx9S
+         LdG8CCzxMhuevMbyPA0Gz7ysAmkbx5BJPQqh4Upi0dakVsFqTtIVSL8CzianNezxOY
+         q88Gq+zhXdnULRoBJMpIzo92E2A/1Edt6DWDXultpsv5uTvDNKAMACTi3Gq+Om8mlm
+         iCX+eU9uZvM3b02xOKZVBFsWrfFf26/lF0Hl9OXadCDJTF/6lDeM2x23kFKWDv9C4/
+         4Ygoh1vl9bsHhasRlaHgqaC6eyQ1x/CjDDk3eD8OLcqgVUeTwirqQzDEayHyD9JI0J
+         0kSNO4I/d9F+A==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2A3C2E4508F;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1A0BAE52446;
         Fri, 14 Apr 2023 20:10:20 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] net: bluetooth: hci_debugfs: fix inconsistent indenting
+Subject: Re: [PATCH 0/1] Bluetooth: hci_conn: remove extra line in
+ hci_le_big_create_sync
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168150302017.15322.3070073451036592572.git-patchwork-notify@kernel.org>
+Message-Id: <168150302010.15322.1181322105086656091.git-patchwork-notify@kernel.org>
 Date:   Fri, 14 Apr 2023 20:10:20 +0000
-References: <20230408164542.2316-1-u202212060@hust.edu.cn>
-In-Reply-To: <20230408164542.2316-1-u202212060@hust.edu.cn>
-To:     Lanzhe Li <u202212060@hust.edu.cn>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, linux-bluetooth@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20230411074135.69768-1-iulia.tanasescu@nxp.com>
+In-Reply-To: <20230411074135.69768-1-iulia.tanasescu@nxp.com>
+To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,19 +62,19 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Sun,  9 Apr 2023 00:45:42 +0800 you wrote:
-> From: markli <u202212060@hust.edu.cn>
+On Tue, 11 Apr 2023 10:41:34 +0300 you wrote:
+> This patch removes the extra line setting the broadcast code parameter
+> of the hci_cp_le_create_big struct to 0. The line above copies the
+> broadcast code set in the QoS struct into the HCI command struct.
 > 
-> Fixed a wrong indentation before "return".This line uses a 7 space
-> indent instead of a tab.
-> 
-> Signed-off-by: Lanzhe Li <u202212060@hust.edu.cn>
+> Iulia Tanasescu (1):
+>   Bluetooth: hci_conn: remove extra line in hci_le_big_create_sync
 > 
 > [...]
 
 Here is the summary with links:
-  - net: bluetooth: hci_debugfs: fix inconsistent indenting
-    https://git.kernel.org/bluetooth/bluetooth-next/c/2df7d630ef53
+  - [1/1] Bluetooth: hci_conn: remove extra line in hci_le_big_create_sync
+    https://git.kernel.org/bluetooth/bluetooth-next/c/f5457383cdf4
 
 You are awesome, thank you!
 -- 
