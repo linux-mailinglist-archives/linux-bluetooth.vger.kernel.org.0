@@ -2,115 +2,120 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C5856E957D
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Apr 2023 15:13:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A9066E9AD8
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Apr 2023 19:35:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231469AbjDTNN0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 20 Apr 2023 09:13:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58896 "EHLO
+        id S229661AbjDTRfu (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 20 Apr 2023 13:35:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbjDTNNZ (ORCPT
+        with ESMTP id S229448AbjDTRft (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 20 Apr 2023 09:13:25 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B64A5187
-        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Apr 2023 06:13:24 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id d75a77b69052e-3ef49c15454so2654151cf.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Apr 2023 06:13:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681996404; x=1684588404;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dh3zdl/hbEpwNTZVzWE96rIAylYZh7Ut0QSG/0aLLUo=;
-        b=B2F9BXsVXbTvyOGK//VMy3USAVQimRir5KVJxcROUnDdHPQ0tYORwYr1/3Vk4+Lra4
-         pBiSEFCAokOj5WZqEJp6c1ldhfUR3IquSirDN28ejiGo/Dr099GYrdGW3ssto+1JPs0Z
-         6lNueW2hp+w4BVRCIpwwVL294aSBfzJjJggcrSWS3/7UZAxwD/qTzWra7Edt/XhR9kR4
-         TM9ByQlLfakHxyLmQJCUhLqWFtn1sdzREiZRtK1tF2o9xX8RsPv1zq6wSAtU8hJ16V8V
-         E/nzy/LyI4y20JYNnMK3nOujENAYz270Wc0FiabjuiafTHzybAsIvUe+OCPcypVeWKpv
-         sGpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681996404; x=1684588404;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Dh3zdl/hbEpwNTZVzWE96rIAylYZh7Ut0QSG/0aLLUo=;
-        b=Y0TfOm85l1I1aJvFTisYuk4GA74ogi0cd62WE1pUEjvp83+x1AbXEkba+P6ixGJOdB
-         gvyngVWU/njVX4kVvu+it/dqBe1B7p2v/HzT75RiQqurJhiTdbknlGMm9im+0JuBTrsy
-         ikK2gBKYseAjqr5euK4rZmNz6+U6QfgypDjETbZSmimjZ/k+gk0DW6PB6gzaT0tuaFBG
-         Zy/G4fGCuRpmljcAboB3YfV16yLpG/6Dey9vsHa/5rxj0mnH1Bcte2edDYb0dSr+mX1a
-         OirFdgKawBNuLTAC/fnbtHz08jOyfLNLPgFJjDQ868O7ZXfvkO9Qt/RMWCzQW1ZavGfg
-         wZ5w==
-X-Gm-Message-State: AAQBX9flt8YdUWdErwv6MNL5/hXVJxVPr0lMPRzrTwU9mjSeZ2D3FGAe
-        cprOFehJCtvJ4HCr0YwVh4vbPciYza0=
-X-Google-Smtp-Source: AKy350bSggvaVsX9YokdzD58TNjir+cYwGkyBwVibyps0LeSQQm9Im+KEfAFkUuZ/LGGwggWQE2BVg==
-X-Received: by 2002:a05:622a:1041:b0:3ef:3ca6:c77d with SMTP id f1-20020a05622a104100b003ef3ca6c77dmr1571193qte.47.1681996403227;
-        Thu, 20 Apr 2023 06:13:23 -0700 (PDT)
-Received: from [172.17.0.2] ([52.226.113.41])
-        by smtp.gmail.com with ESMTPSA id z26-20020ac87cba000000b003eb136bec50sm467525qtv.66.2023.04.20.06.13.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 06:13:23 -0700 (PDT)
-Message-ID: <64413a73.c80a0220.ddae.20fe@mx.google.com>
-Date:   Thu, 20 Apr 2023 06:13:23 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============1817797041463906126=="
+        Thu, 20 Apr 2023 13:35:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A2133590
+        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Apr 2023 10:35:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D1A8C64B0C
+        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Apr 2023 17:35:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2EF02C433A4
+        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Apr 2023 17:35:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1682012147;
+        bh=qVqXyO6mrz1X1ny0p9giuEjMhUEenrcnTej0psfLm90=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=TqzSSkLC1s4dgcr6P10PoRSSE/kCwvPQ4Icn40q6/BIYm82ARF195wiFk0lB4TRtB
+         URtRz5xtq5olDSBWAFwd1UgWuxGQhWD+TX3OrLWUy20e0c7YXVyyvfra4p3nmMIY5D
+         GTHkH9qjW0pT2WjbnTE3riSOHFqd4V/TJboLRBcbm+CAS4n8FoZ81sHJXOZPuqc0gz
+         EyrwIO3e5XUD9hRTUJtGwTvrBP6c3RKh/qAr1CUqJCPSkCbZn7GBX3MjHLzby+23W1
+         SbCTVUNSeNCf9+aeqTojDNVwbGPp9+7rXCGs/NtwdesKtAIQJk67N3E24vk2QDzGso
+         nHLpyPZZWKOUQ==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 1FC86C43142; Thu, 20 Apr 2023 17:35:47 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 60824] [PATCH][regression] Cambridge Silicon Radio, Ltd
+ Bluetooth Dongle unusable
+Date:   Thu, 20 Apr 2023 17:35:43 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: vitaliy.ognev@gmail.com
+X-Bugzilla-Status: REOPENED
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-60824-62941-SqdUgpH0Xp@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-60824-62941@https.bugzilla.kernel.org/>
+References: <bug-60824-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, apusaka@google.com
-Subject: RE: Bluetooth: Cancel sync command before suspend and power off
-In-Reply-To: <20230420202312.1.I53bc906a716045c7474a77d3038bfcb6909094e2@changeid>
-References: <20230420202312.1.I53bc906a716045c7474a77d3038bfcb6909094e2@changeid>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============1817797041463906126==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+https://bugzilla.kernel.org/show_bug.cgi?id=3D60824
 
-This is automated email and please do not reply to this email!
+--- Comment #270 from Vitaliy Ognev (vitaliy.ognev@gmail.com) ---
+Got mine somehow working (scanning, pairing) by applying following patch:
 
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=741724
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.87 seconds
-GitLint                       PASS      0.34 seconds
-SubjectPrefix                 PASS      0.13 seconds
-BuildKernel                   PASS      31.60 seconds
-CheckAllWarning               PASS      35.22 seconds
-CheckSparse                   PASS      39.70 seconds
-CheckSmatch                   PASS      108.30 seconds
-BuildKernel32                 PASS      30.72 seconds
-TestRunnerSetup               PASS      441.03 seconds
-TestRunner_l2cap-tester       PASS      16.96 seconds
-TestRunner_iso-tester         PASS      20.94 seconds
-TestRunner_bnep-tester        PASS      5.55 seconds
-TestRunner_mgmt-tester        PASS      115.13 seconds
-TestRunner_rfcomm-tester      PASS      8.92 seconds
-TestRunner_sco-tester         PASS      8.20 seconds
-TestRunner_ioctl-tester       PASS      9.50 seconds
-TestRunner_mesh-tester        PASS      7.08 seconds
-TestRunner_smp-tester         PASS      8.13 seconds
-TestRunner_userchan-tester    PASS      5.84 seconds
-IncrementalBuild              PASS      29.22 seconds
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 5a6aa1627791..b27fe44ec41e 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -3605,7 +3605,7 @@ static const struct hci_init_stage hci_init2[] =3D {
+        /* HCI_OP_READ_INQ_RSP_TX_POWER */
+        HCI_INIT(hci_read_inq_rsp_tx_power_sync),
+        /* HCI_OP_READ_LOCAL_EXT_FEATURES */
+-       HCI_INIT(hci_read_local_ext_features_1_sync),
++       // HCI_INIT(hci_read_local_ext_features_1_sync),
+        /* HCI_OP_WRITE_AUTH_ENABLE */
+        HCI_INIT(hci_write_auth_enable_sync),
+        {}
 
 
+still with lot of errors in dmesg. My dongle having "Hoco." label on it and
+looks like following in lsusb:
 
----
-Regards,
-Linux Bluetooth
+Bus 001 Device 005: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Don=
+gle
+(HCI mode)
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               1.10
+  bDeviceClass          224 Wireless
+  bDeviceSubClass         1 Radio Frequency
+  bDeviceProtocol         1 Bluetooth
+  bMaxPacketSize0        64
+  idVendor           0x0a12 Cambridge Silicon Radio, Ltd
+  idProduct          0x0001 Bluetooth Dongle (HCI mode)
+  bcdDevice           88.91
+  iManufacturer           0=20
+  iProduct                2 USB2.0-BT
+  iSerial                 0=20
+  bNumConfigurations      1
 
+--=20
+You may reply to this email to add a comment.
 
---===============1817797041463906126==--
+You are receiving this mail because:
+You are the assignee for the bug.=
