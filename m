@@ -2,130 +2,171 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 432EA6E9430
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Apr 2023 14:23:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A8086E9596
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Apr 2023 15:14:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234907AbjDTMXr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 20 Apr 2023 08:23:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45984 "EHLO
+        id S231633AbjDTNOU (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 20 Apr 2023 09:14:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234890AbjDTMXq (ORCPT
+        with ESMTP id S231705AbjDTNOJ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 20 Apr 2023 08:23:46 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AA7B59C7
-        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Apr 2023 05:23:44 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-555d8c556faso20621207b3.5
-        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Apr 2023 05:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1681993424; x=1684585424;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VyYkUgfpkn7wH0j2BAe1UVwheOGlOiDjxtv8agVE+bw=;
-        b=TbQn/Mbd2r9XbgqECjXDNQ1qXc11e+lRv5zVbY5g0fUxU/wBDgi0LWdBvJ5EzfN2vS
-         nbC0c3At6RoNmHTkHR7olw8UwMzG78HCLxLcPErHiS/OjPLCaKqfWb4ihfJFtRDkOInk
-         5/xJJwjjSRtVs4SvIGI+ija/vJ+OpKQJP/bI64FBBytS2a+frulCCNNKSlQxPdJXjueo
-         OwIo0PzvJTH+t14FcAXUSmdH6RsQ1BaU10JvbGZXM8W7dzClnZ0sGZ8dBdbQz3d3oRVB
-         idGJUnyeoIQuTUE3Pqa5RYfI3fvc6B1omoFTq6C4av/3vsyTbzJzisxdMsKBZF95I7fQ
-         Vvrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681993424; x=1684585424;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VyYkUgfpkn7wH0j2BAe1UVwheOGlOiDjxtv8agVE+bw=;
-        b=UKZU7hPR4iASg314kEbyK5abiAL8R2VPEa1YD4rNSQjqByOh1ZWuutOVGO9E+9Q+uX
-         NRmJ0lI1Mro28giU8L0SdK2Gt5TlRQuV2P0cAYagiUUn083HIERD3plQpaOMSHM3zFas
-         YVGT6B71oamQEYiBpa8x5G2EIwB7jYU8ZG5dJApKQCBcfv+ZWnpWc7PDpwUck9v289ob
-         9GZ9AMtLzwf4E+/RcpZT9SH4rmRRlEUk63X8pFJiW1508+Ij0EByRf7VtT8VCaD8C3W/
-         DSDKzzD4G65r3Baolhr5uA+3qAreGmK7HK2rsd336L0Gp5PffKvqmT3MMAVeRK4bzCRr
-         klvA==
-X-Gm-Message-State: AAQBX9cKHvu3zN89rdahWoZg39H7Pm9+2IvaOq0bOE8XpFqKsuwHrn3d
-        1mQK2Md9vQzcJ8bBV02QYygGD4rPKsoaEiVBnKhH4TMBa6e40c1QdcUTvRQACIAT98H3iOn8M7Y
-        /QL/79H2P3tyZWqj85dWd7L+e7FJGUs2qj8qgFqDs3fCaOaYFrcvIf46cgzOaiugcG188o9P+oW
-        64
-X-Google-Smtp-Source: AKy350abez9O9onkkWOz4907E7Tm2r2pMZdIYnuyIOpOSJjrHP1NRWsW0B4RvmPmbW4IZX2IfF9GAKPclgfj
-X-Received: from apusaka-p920.tpe.corp.google.com ([2401:fa00:1:17:f314:6a1b:5ed1:38f4])
- (user=apusaka job=sendgmr) by 2002:a25:d796:0:b0:b92:5112:3f53 with SMTP id
- o144-20020a25d796000000b00b9251123f53mr673809ybg.2.1681993424038; Thu, 20 Apr
- 2023 05:23:44 -0700 (PDT)
-Date:   Thu, 20 Apr 2023 20:23:36 +0800
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.40.0.634.g4ca3ef3211-goog
-Message-ID: <20230420202312.1.I53bc906a716045c7474a77d3038bfcb6909094e2@changeid>
-Subject: [PATCH] Bluetooth: Cancel sync command before suspend and power off
-From:   Archie Pusaka <apusaka@google.com>
-To:     linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>
-Cc:     CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>,
-        Archie Pusaka <apusaka@chromium.org>,
-        Ying Hsu <yinghsu@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Paolo Abeni <pabeni@redhat.com>, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL
-        autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 20 Apr 2023 09:14:09 -0400
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F0E08697
+        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Apr 2023 06:13:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681996431; x=1713532431;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=ufRAQ5uj5ULRSR3EgY8wKSgp+sYmc79aWNMuywnYbso=;
+  b=AfX8tI1mJPdpPENqweC9PIPuNxxvS7shrpW53OlI/9pr593y3nJUAsWW
+   S6TeF5W2xQ7D8rdGmgNABxWxvY4Ri8JGFk1MhLuQGEHtYniQRjhGkMBS1
+   pvwokQrn2At8s/ayumL/F1CMwX1MHrAQfidZRegkks5eYhvVOxqPo7qsl
+   wobJcRO+Gw4BFMqMeGdbyqyFo/YQM37PRcPartdmNru/naejtTa6uZo33
+   KPn+WQyLIWxh6QxwDxcfIzlh+u5IdVvPrRSSVnLWBxyf/AfcaWAJvc/WM
+   yLDj4m0/HVSLTAh878aUIm/DPCHv5QFAqDgmhGdsKi44lw9ubTx4hMFGZ
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10686"; a="345737785"
+X-IronPort-AV: E=Sophos;i="5.99,212,1677571200"; 
+   d="scan'208";a="345737785"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2023 06:13:43 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10686"; a="866253603"
+X-IronPort-AV: E=Sophos;i="5.99,212,1677571200"; 
+   d="scan'208";a="866253603"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 20 Apr 2023 06:13:42 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1ppU6X-000fqj-1X;
+        Thu, 20 Apr 2023 13:13:41 +0000
+Date:   Thu, 20 Apr 2023 21:13:09 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org
+Subject: [bluetooth-next:master] BUILD SUCCESS
+ 9b4f511443f77d761f4ecb0077bf8a9879cff438
+Message-ID: <64413a65.43hyw2eRzkPvBgVn%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Archie Pusaka <apusaka@chromium.org>
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
+branch HEAD: 9b4f511443f77d761f4ecb0077bf8a9879cff438  Bluetooth: btrtl: Add the support for RTL8851B
 
-Some of the sync commands might take a long time to complete, e.g.
-LE Create Connection when the peer device isn't responding might take
-20 seconds before it times out. If suspend command is issued during
-this time, it will need to wait for completion since both commands are
-using the same sync lock.
+elapsed time: 727m
 
-This patch cancel any running sync commands before attempting to
-suspend or adapter power off.
+configs tested: 90
+configs skipped: 7
 
-Signed-off-by: Archie Pusaka <apusaka@chromium.org>
-Reviewed-by: Ying Hsu <yinghsu@chromium.org>
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
----
+tested configs:
+alpha                            allyesconfig   gcc  
+alpha                               defconfig   gcc  
+arc                              allyesconfig   gcc  
+arc                                 defconfig   gcc  
+arc                  randconfig-r013-20230416   gcc  
+arm                              allmodconfig   gcc  
+arm                              allyesconfig   gcc  
+arm                                 defconfig   gcc  
+arm                  randconfig-r011-20230416   clang
+arm64                            allyesconfig   gcc  
+arm64        buildonly-randconfig-r002-20230417   gcc  
+arm64        buildonly-randconfig-r005-20230417   gcc  
+arm64                               defconfig   gcc  
+arm64                randconfig-r006-20230416   clang
+arm64                randconfig-r012-20230416   gcc  
+csky                                defconfig   gcc  
+csky                 randconfig-r016-20230417   gcc  
+hexagon      buildonly-randconfig-r004-20230416   clang
+i386                             allyesconfig   gcc  
+i386                              debian-10.3   gcc  
+i386                                defconfig   gcc  
+i386                 randconfig-a001-20230417   gcc  
+i386                 randconfig-a002-20230417   gcc  
+i386                 randconfig-a003-20230417   gcc  
+i386                 randconfig-a004-20230417   gcc  
+i386                 randconfig-a005-20230417   gcc  
+i386                 randconfig-a006-20230417   gcc  
+i386                 randconfig-a011-20230417   clang
+i386                 randconfig-a012-20230417   clang
+i386                 randconfig-a013-20230417   clang
+i386                 randconfig-a014-20230417   clang
+i386                 randconfig-a015-20230417   clang
+i386                 randconfig-a016-20230417   clang
+ia64                             allmodconfig   gcc  
+ia64                                defconfig   gcc  
+loongarch                        allmodconfig   gcc  
+loongarch                         allnoconfig   gcc  
+loongarch                           defconfig   gcc  
+m68k                             allmodconfig   gcc  
+m68k                                defconfig   gcc  
+m68k                 randconfig-r014-20230417   gcc  
+mips                             allmodconfig   gcc  
+mips                             allyesconfig   gcc  
+nios2                               defconfig   gcc  
+parisc       buildonly-randconfig-r002-20230416   gcc  
+parisc                              defconfig   gcc  
+parisc64                            defconfig   gcc  
+powerpc                          allmodconfig   gcc  
+powerpc                           allnoconfig   gcc  
+powerpc              randconfig-r002-20230416   clang
+powerpc              randconfig-r003-20230416   clang
+powerpc              randconfig-r016-20230416   gcc  
+riscv                            allmodconfig   gcc  
+riscv                             allnoconfig   gcc  
+riscv        buildonly-randconfig-r006-20230417   clang
+riscv                               defconfig   gcc  
+riscv                randconfig-r015-20230416   gcc  
+riscv                          rv32_defconfig   gcc  
+s390                             allmodconfig   gcc  
+s390                             allyesconfig   gcc  
+s390                                defconfig   gcc  
+s390                 randconfig-r012-20230417   clang
+s390                 randconfig-r015-20230417   clang
+sh                               allmodconfig   gcc  
+sh           buildonly-randconfig-r004-20230417   gcc  
+sh           buildonly-randconfig-r005-20230416   gcc  
+sparc        buildonly-randconfig-r003-20230417   gcc  
+sparc                               defconfig   gcc  
+sparc64      buildonly-randconfig-r006-20230416   gcc  
+um                             i386_defconfig   gcc  
+um                           x86_64_defconfig   gcc  
+x86_64                            allnoconfig   gcc  
+x86_64                           allyesconfig   gcc  
+x86_64       buildonly-randconfig-r001-20230417   gcc  
+x86_64                              defconfig   gcc  
+x86_64                                  kexec   gcc  
+x86_64               randconfig-a001-20230417   gcc  
+x86_64               randconfig-a002-20230417   gcc  
+x86_64               randconfig-a003-20230417   gcc  
+x86_64               randconfig-a004-20230417   gcc  
+x86_64               randconfig-a005-20230417   gcc  
+x86_64               randconfig-a006-20230417   gcc  
+x86_64               randconfig-a011-20230417   clang
+x86_64               randconfig-a012-20230417   clang
+x86_64               randconfig-a013-20230417   clang
+x86_64               randconfig-a014-20230417   clang
+x86_64               randconfig-a015-20230417   clang
+x86_64               randconfig-a016-20230417   clang
+x86_64                               rhel-8.3   gcc  
+xtensa       buildonly-randconfig-r003-20230416   gcc  
 
- net/bluetooth/hci_core.c | 3 +++
- net/bluetooth/mgmt.c     | 4 ++++
- 2 files changed, 7 insertions(+)
-
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 393b317ae68f6..a856b1051d355 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2803,6 +2803,9 @@ int hci_suspend_dev(struct hci_dev *hdev)
- 	if (mgmt_powering_down(hdev))
- 		return 0;
- 
-+	/* Cancel potentially blocking sync operation before suspend */
-+	__hci_cmd_sync_cancel(hdev, -EHOSTDOWN);
-+
- 	hci_req_sync_lock(hdev);
- 	ret = hci_suspend_sync(hdev);
- 	hci_req_sync_unlock(hdev);
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 5f8c144c84b88..13c745876b390 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1399,6 +1399,10 @@ static int set_powered(struct sock *sk, struct hci_dev *hdev, void *data,
- 		goto failed;
- 	}
- 
-+	/* Cancel potentially blocking sync operation before power off */
-+	if (cp->val == 0x00)
-+		__hci_cmd_sync_cancel(hdev, -EHOSTDOWN);
-+
- 	err = hci_cmd_sync_queue(hdev, set_powered_sync, cmd,
- 				 mgmt_set_powered_complete);
- 
 -- 
-2.40.0.634.g4ca3ef3211-goog
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
