@@ -2,127 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 592986EB5C7
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 22 Apr 2023 01:45:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6BF26EB735
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 22 Apr 2023 05:49:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233465AbjDUXo6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 21 Apr 2023 19:44:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38270 "EHLO
+        id S229559AbjDVDtJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 21 Apr 2023 23:49:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233260AbjDUXo5 (ORCPT
+        with ESMTP id S229451AbjDVDtI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 21 Apr 2023 19:44:57 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6B11BD4
-        for <linux-bluetooth@vger.kernel.org>; Fri, 21 Apr 2023 16:44:54 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2a8bdcf87f4so20238671fa.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 21 Apr 2023 16:44:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682120693; x=1684712693;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hixhMP6FNA3IBI/+W0OiYDt1RzdLUYjvt+1hvJF06Ls=;
-        b=BnNZR146Xyd3osyCJz6ZtkJ6VgCpsuCLd2Dih8y2uwtXxxtDkuzw0ukKlu/YKVKCAA
-         e5v5/dsZoprrwR+Um26urO4LUFedYXFhl9KdHFSCgTozVR2s72Y363d08cQEiSLP/Pbq
-         5GpdL4D+/5WJvWrETCzB9eqzUWaVQdxGzOYSqGGi4/Ws99PVsBvvZU8e+rYhZsTcvm06
-         Ix7strsuoPugj4rYrWmGXsk0R3Ujyiv+uQqlgVf67BPi30oPSR9dF/1f2u9bM00AyS+7
-         w0p9FRgN2qhuI4xOZD1VRxpQZ9r83k6JWm9ZQ/F/kYA6s9qrJcjyweM0+mfVg1OOKL0b
-         J7bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682120693; x=1684712693;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hixhMP6FNA3IBI/+W0OiYDt1RzdLUYjvt+1hvJF06Ls=;
-        b=e8xPcjYC0KqG1fuBfwD8/rJdvXBoCw6d3t/4jG6AJ/+XCCEAgkl9S/q8b06zi2+bBb
-         QB2te4oKDkyqtimoZ4o5UTebaPYBLzf4hMN+TK5zZux3TH/xbssKuWiNiD5Uk2vJTI8s
-         X/dwfMBtvmYexHVg0hCuKnhvN06N1sSRrmDUYFmkqXBoHpiS2/ks4CJkd5h+Yc6dC9i6
-         D5tgqWoaxgatYtBLUm/C9aZ90fHBvrWygYYUgYRrw/FIKs46/ytiE9OgZhG1OWVq7z6q
-         SYZB/WX87LLtxXgvlS0Y00YpJYWJ5RaggF1P405W9VSJ24EuOSQU61sYcaAML2y5cUBB
-         Lecg==
-X-Gm-Message-State: AAQBX9fXRGJGg1CvXi10sWCXGH0EnIVAWjvUykDqpJ/xa3lpQH40C/cY
-        gvozODGvwA7/p6lShuIBHkZUtsFQ14aTP7c9rcqyqnqJ684=
-X-Google-Smtp-Source: AKy350bMp8rJUlgO0DgQHe4wrDavKBqPVCfirhiEoI+zuVOjszY2+4zZdS05MPs1tx7Fo/VpxgUfDWvZDl0NHD0F/ik=
-X-Received: by 2002:a2e:a0d4:0:b0:2a8:ba49:a811 with SMTP id
- f20-20020a2ea0d4000000b002a8ba49a811mr1157538ljm.25.1682120692905; Fri, 21
- Apr 2023 16:44:52 -0700 (PDT)
+        Fri, 21 Apr 2023 23:49:08 -0400
+Received: from mail.peterfykh.hu (mail.peterfykh.hu [84.206.67.96])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F56D1BC8
+        for <linux-bluetooth@vger.kernel.org>; Fri, 21 Apr 2023 20:49:05 -0700 (PDT)
+Received: from mail.peterfykh.hu (localhost [127.0.0.1])
+        by mail.peterfykh.hu (Postfix) with ESMTP id 2EEB7D01;
+        Sat, 22 Apr 2023 01:45:54 +0200 (CEST)
 MIME-Version: 1.0
-References: <733a8933-008a-8394-4564-71e49c3a4059@braneaudio.com>
-In-Reply-To: <733a8933-008a-8394-4564-71e49c3a4059@braneaudio.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Fri, 21 Apr 2023 16:44:40 -0700
-Message-ID: <CABBYNZKHE8soV+5tOhMGQay7iSCJoOz6Eo4Cy5QEEmXAqXmw3w@mail.gmail.com>
-Subject: Re: Is AVCTP Version Really 1.3?
-To:     Richard Greer <rg@braneaudio.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Sat, 22 Apr 2023 01:45:53 +0200
+From:   MK <kiss.zsuzsa@peterfykh.hu>
+To:     undisclosed-recipients:;
+Subject: hello dear, how are you?
+Reply-To: mabakker562@gmail.com
+Mail-Reply-To: mabakker562@gmail.com
+Message-ID: <cacd01ad0998cf8738322dc7a770013f@peterfykh.hu>
+X-Sender: kiss.zsuzsa@peterfykh.hu
+User-Agent: Roundcube Webmail/1.2.3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=peterfykh.hu; s=mail; t=1682120770; bh=0j7yD+cxzXLXX+N8Pfu0pI8AptxbBqvWPi3jLmEYeJ8=; h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Subject:Reply-To:Message-ID; b=CFmSU+n2P1q9LqKu8o/9g77JcaaDz0+eoOgRPnrxYnyuYHDCFdVEXTvoZ4LXiYHwWDH6kUf4MeWqg1Yuh4p6cnDdsDDIn3Swf2biS+/QNtgQSaX+QcTq+PJ4v+sfIqHeYs7/1tSRV7BWRe4pulxv0/b+HYbRhigzDOKOx8Zg4ko=
+X-Spam-Status: No, score=2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,ODD_FREEM_REPTO,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Richard,
+Hello Dear,
 
-It is still marked as 1.3:
+Am sorry to bother you, but I am single, lonely and in need of a caring, 
+loving, and romantic companion.
 
-https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/profiles/audio/avrc=
-p.c#n409
+I am a secret admirer and would like to explore the opportunity to learn 
+more about each other.
 
-That said I don't think there is much difference, well we better check
-what was incorporated with these erratas:
+Hopefully, it will be the beginning of a long-term communication between 
+us.
 
-1.4 Bluetooth AVCTP Protocol Change History
-1.4.1 Changes from 1.3 to 1.4
-1.4.1.1 General Changes
-=EF=82=B7 Incorporation of adopted changes to correct various errata. Relev=
-ant
-errata are
-733, 2689.
+Please let me know what you think, just send a reply to my message, I 
+will be glad to hear from you.
 
-If Tizen qualified it for 1.4 it is most likely just a version change
-that needs to be made, from 0x0103 to 0x0104.
+Hugs and kisses,
 
-On Fri, Apr 21, 2023 at 4:26=E2=80=AFPM Richard Greer <rg@braneaudio.com> w=
-rote:
->
-> Hi,
->
-> I will start by saying that I am not a Bluetooth expert, but just getting=
- started on Bluetooth development.
->
-> In looking at BlueZ 5.66, it seems that the version of AVCTP being report=
-ed is 1.3 (in avrcp_ct_record() in profiles/audio/avrcp.c) which correspond=
-ed with what is in doc/supported-features.txt (which looks like it was last=
- updated several years ago).
->
-> On the BlueZ website there is an entry from 21 Aug, 2014 titled "Bluetoot=
-h 4.1 qualification for Tizen BlueZ" that says it was using AVCTP 1.4.
->
-> AVCTP version 1.3 was deprecated in July, 2013 and officially withdrawn o=
-n 1 Feb, 2023.
->
-> If I were to start working on a product that was going to have Bluetooth =
-in it, I could not get it certified with AVCTP 1.3.  So, I was just sort of=
- hoping that it was a version reporting issue (due to the Tizen BlueZ state=
-ment above about it using 1.4 8+ years ago) and not something that still ne=
-eds to be developed.
->
-> Anyhow, if someone more familiar with Bluetooth on Linux can explain what=
- is up with the AVCTP version, that would be greatly appreciated.
->
->
-> Thanks in advance,
->
-> Richard Greer
+Secret admirer,
 
-
-
---=20
-Luiz Augusto von Dentz
+Marion.
