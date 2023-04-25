@@ -2,161 +2,99 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 677A26EDBE4
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Apr 2023 08:48:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4E336EE449
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Apr 2023 16:52:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233542AbjDYGsg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 25 Apr 2023 02:48:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53236 "EHLO
+        id S234361AbjDYOwr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 25 Apr 2023 10:52:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233528AbjDYGse (ORCPT
+        with ESMTP id S234401AbjDYOwm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 25 Apr 2023 02:48:34 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D24BBB9
-        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Apr 2023 23:48:12 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-94a34a14a54so992871866b.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 24 Apr 2023 23:48:12 -0700 (PDT)
+        Tue, 25 Apr 2023 10:52:42 -0400
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5286C19A2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Apr 2023 07:52:40 -0700 (PDT)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-187df75c906so4303472fac.3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Apr 2023 07:52:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1682405291; x=1684997291;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M1ZE7zkQJkA5e8pU4DAT31Q8ZdOD3Fw5YHswnvzUZmg=;
-        b=olsY2tC3Gx43o+1zlMobkyWpvjqynYcSpBNJpha9GJ236pWS48I5T6fRMsjnEXvXW6
-         nPi0bqOs+1TlaWLvYdtK05Phwd64bnf8h8lpwCoavOQKecIrT39b+c9OXon5xQQ/G8v5
-         C9ljuQugTDRKMyiQ5qglbXWyDGR5BHf2xgBOnY4Ic4pvsZ2wdQd/paK4gDRXz5hVaFo1
-         4sGV2PZjTYKCVn15Pw/Akl3g3hkRNCNsRHG7vFd0Yq0YJiWgig0JZOf8yfF87vpttcMF
-         HG7HPRei4vraUYDcnXZreqsqGm02uputbga0Nei8umyDLFxVgq8OAfyloV/3rrSUMB2q
-         yv+g==
+        d=gmail.com; s=20221208; t=1682434359; x=1685026359;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TJVJ5dnNAnzZeM2Nb3aK3AA1Pstz/NNRaH6Qyz+4Yms=;
+        b=IrTT4tnHDBrjObhyu38ginDgYadgl+9nXsOmP70KNhp5Asu5Z7pyJHI7toB3GjBJxj
+         EzunuWwItSjwRZDWpSCq4DBaCEXKUXlzijetJk1nK4V/wPw5td+MUGytgDQgUVHjMcMx
+         N0cwPTj4gHF5xBSZwfBBG02WODWb3vOj/Zbwl8rbCDFR0Qt8XsDSlSgwcBimgFOPQiZO
+         TIFbzcmp3Y/EPOImq5PFR86/ihmFHetXpMObkKQm0fJfBW1QFUNi/QMi13UHh83uqmuy
+         kMyCplxr+9oLG6TakXKR0MqjxyezE4HS10kNCXaRcRWByA9pJQFsGambimtTrhxkKGWI
+         DUaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682405291; x=1684997291;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=M1ZE7zkQJkA5e8pU4DAT31Q8ZdOD3Fw5YHswnvzUZmg=;
-        b=bS8yoDkD0QoAIWGuRUR/AwLJKY9f7prEypTwCcr8tTmwqmNzatg9hsXYt8HgFS8q8Q
-         z/7Arraw94XrSJ4NiTH28SevhoAQmF0/h/amjaqadqVTRQ6Y2O6GL9Z0ye5Z68eLX1Ho
-         csF8yI5V1TPbjjm7wnZR0iPvqgxJ/5mK8c7AW+y0vjJWZBkcSzKdpYVLOxx4kVxHWv3e
-         DAIlqZcEjL3WH7yy0ZlPoS9tc5lYSp3T1buM0Eb9qRnYId43J3Fgonk9XAihJrruobsr
-         gUlrCOY6vJktysAx0+Cjd5+YjY8Gfi57WTlkzgvgHB08tNJgchgNOhFGRLeRx2avY2ML
-         tw1w==
-X-Gm-Message-State: AAQBX9fgi4p0Dt2crlnkHf4yiYZsrdBoLeKLIW6GwuG3u/asm2hi0IDQ
-        e4rYA9P3dnGZvTVsVv8YddIBgQ==
-X-Google-Smtp-Source: AKy350Z1GFt6IUApk1g0YPdKIdF8wPBWzQ1iG4DdhA44udPMwwV1bqNKEmVs8J1NANW0v9bSPKkIgg==
-X-Received: by 2002:a17:907:38c:b0:94e:fdec:67e2 with SMTP id ss12-20020a170907038c00b0094efdec67e2mr12906256ejb.77.1682405291266;
-        Mon, 24 Apr 2023 23:48:11 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id sd14-20020a170906ce2e00b0094f5d1bbb21sm6340135ejb.102.2023.04.24.23.48.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Apr 2023 23:48:10 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 25 Apr 2023 08:48:10 +0200
-Message-Id: <CS5MWGNURMH4.2VD8BIIJ3V3Q4@otso>
-Subject: Re: [PATCH RFC 0/4] Add WCN3988 Bluetooth support for Fairphone 4
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        "Eric Dumazet" <edumazet@google.com>,
-        "Jakub Kicinski" <kuba@kernel.org>,
-        "Paolo Abeni" <pabeni@redhat.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Balakrishna Godavarthi" <bgodavar@codeaurora.org>,
-        "Rocky Liao" <rjliao@codeaurora.org>,
-        "Marcel Holtmann" <marcel@holtmann.org>,
-        "Johan Hedberg" <johan.hedberg@gmail.com>,
-        "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.14.0
-References: <20230421-fp4-bluetooth-v1-0-0430e3a7e0a2@fairphone.com>
- <0f2af683-07f9-7fc7-a043-ee55e41d65c3@linaro.org>
-In-Reply-To: <0f2af683-07f9-7fc7-a043-ee55e41d65c3@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        d=1e100.net; s=20221208; t=1682434359; x=1685026359;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TJVJ5dnNAnzZeM2Nb3aK3AA1Pstz/NNRaH6Qyz+4Yms=;
+        b=ke9Tg/GQg2nOOskv8YnFYFvRRG/pPC86tpLu1NDc8P9WJO++ijqgTuwudff3XdFr/t
+         D9Hxv5WW08vnyysmUxr+o2PE1/fajdCeUF0qGBrzFzli9MPlb3NF2e+hEzpfPMi2/fSE
+         7A7TfoDCn5703cIbM3UxUwiDZiamX6gVQB3ZYsWDBXdgttEGlU6vE/oj1KPenj7V5Zlz
+         a/57GRWB6/gxKfkql4rJ5Kb2vkNkTc+BZ0VQtu6EQpoM6nEPHpokADp6yFB0dwkAnGeC
+         PR4/DzLgGGO1OGcxd8oqk1qqvJoV/Kr7bKx0Dq41YCVcXOxVEfbWQRrCZJKjaj2nM/0+
+         eBDQ==
+X-Gm-Message-State: AAQBX9f7Ef5bNnLgUp/ljglZb7XMgxyQTdPlIfopKTeN1LVtgV0Eq+4c
+        S/mZxHF1Un9HuU9eWSH/9pKlmQd7nSda5x8QTt8=
+X-Google-Smtp-Source: AKy350YnwAKedxX2OtCt+z0SILAoeFvu0qKd/FiWaKYB0EdRLvhmt65j3JFVY0RI7AS3rH59YFKFMvxa84fcedHBO54=
+X-Received: by 2002:a05:6870:f217:b0:18b:15cd:9b45 with SMTP id
+ t23-20020a056870f21700b0018b15cd9b45mr10015838oao.40.1682434359414; Tue, 25
+ Apr 2023 07:52:39 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a05:6839:6292:b0:701:6145:5d6d with HTTP; Tue, 25 Apr 2023
+ 07:52:38 -0700 (PDT)
+Reply-To: chiogb00@gmail.com
+From:   "Mrs.Elaine Lam Su Yen" <mrdavidkekeli0@gmail.com>
+Date:   Tue, 25 Apr 2023 16:52:38 +0200
+Message-ID: <CANSBbRZ4H6fmGFSOb=cZhRoAFZBEOZkmN7paSedutNfS=Dz=XA@mail.gmail.com>
+Subject: hi
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.7 required=5.0 tests=BAYES_40,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        HK_NAME_FM_MR_MRS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2001:4860:4864:20:0:0:0:33 listed in]
+        [list.dnswl.org]
+        * -0.0 BAYES_40 BODY: Bayes spam probability is 20 to 40%
+        *      [score: 0.2023]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [mrdavidkekeli0[at]gmail.com]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [chiogb00[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [mrdavidkekeli0[at]gmail.com]
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  1.5 HK_NAME_FM_MR_MRS No description available.
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Sat Apr 22, 2023 at 2:03 PM CEST, Konrad Dybcio wrote:
->
->
-> On 21.04.2023 16:11, Luca Weiss wrote:
-> > Just to start with the important part why this is an RFC:
-> >=20
-> > While Bluetooth chip init works totally fine and bluez seems to be
-> > fairly happy with it, there's a (major) problem with scanning, as shown
-> > with this bluetoothctl snippet and dmesg snippet:
-> >=20
-> >   [bluetooth]# scan on
-> >   Failed to start discovery: org.bluez.Error.InProgress
-> >=20
-> >   [  202.371374] Bluetooth: hci0: Opcode 0x200b failed: -16
-> >=20
-> > This opcode should be the following:
-> >=20
-> >   include/net/bluetooth/hci.h:#define HCI_OP_LE_SET_SCAN_PARAM    0x200=
-b
-> Not a bluetooth expert or anything, but does that thing support
-> bluetooth LE?
-
-I don't know too much about Bluetooth details either, but hasn't
-Bluetooth LE been a consistently supported thing since like 10 years?
-
-All the info I can easily find just states SM7225 SoC supports
-"Bluetooth 5.1".
-
-Regards
-Luca
-
->
-> Konrad
-> >=20
-> > Unfortunately trying various existing code branches in the Bluetooth
-> > driver doesn't show any sign of making this work and I don't really kno=
-w
-> > where to look to debug this further.
-> >=20
-> > On the other hand "discoverable on" makes the device show up on other
-> > devices during scanning , so the RF parts of the Bluetooth chip are
-> > generally functional for sure.
-> >=20
-> > Any ideas are welcome.
-> >=20
-> > @Bjorn: Patch "arm64: dts: qcom: sm6350: add uart1 node" should be fine
-> > to take regardless the RFC status, I don't think the problem is caused
-> > there.
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> > Luca Weiss (4):
-> >       dt-bindings: net: qualcomm: Add WCN3988
-> >       Bluetooth: btqca: Add WCN3988 support
-> >       arm64: dts: qcom: sm6350: add uart1 node
-> >       arm64: dts: qcom: sm7225-fairphone-fp4: Add Bluetooth
-> >=20
-> >  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml |  2 +
-> >  arch/arm64/boot/dts/qcom/sm6350.dtsi               | 63 ++++++++++++++=
-++++++++
-> >  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 17 ++++++
-> >  drivers/bluetooth/btqca.c                          | 13 ++++-
-> >  drivers/bluetooth/btqca.h                          | 12 ++++-
-> >  drivers/bluetooth/hci_qca.c                        | 12 +++++
-> >  6 files changed, 115 insertions(+), 4 deletions(-)
-> > ---
-> > base-commit: cf4c0112a0350cfe8a63b5eb3377e2366f57545b
-> > change-id: 20230421-fp4-bluetooth-b36a0e87b9c8
-> >=20
-> > Best regards,
-
+I Still went to hear from you thanks.Mrs.Elaine Lam Su Yen.
