@@ -2,62 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B949B6F0C23
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Apr 2023 20:50:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 056506F0C97
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Apr 2023 21:33:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243835AbjD0SuK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 27 Apr 2023 14:50:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58036 "EHLO
+        id S245465AbjD0TdK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 27 Apr 2023 15:33:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233136AbjD0SuI (ORCPT
+        with ESMTP id S245502AbjD0Tcw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 27 Apr 2023 14:50:08 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6711E359D
-        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Apr 2023 11:50:07 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id 006d021491bc7-549f0b45ac6so1177947eaf.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Apr 2023 11:50:07 -0700 (PDT)
+        Thu, 27 Apr 2023 15:32:52 -0400
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADBA410D9
+        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Apr 2023 12:32:49 -0700 (PDT)
+Received: by mail-il1-x12d.google.com with SMTP id e9e14a558f8ab-32ac0743030so67431255ab.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Apr 2023 12:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682621406; x=1685213406;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TSw1IlHabKdeoJWFqhha6ktdPaX7I8X8moKzfrrA+xs=;
-        b=c5VdzcPthUwYt+fAt1IPr3kLAhLRh0w+qstLZEj8WYb3uGognGMUbKZJcJEN83rBrU
-         9hD046zwbrCiaOfD1uTLKwJDo1lFoSaiBiNWwuRuQKyvCfZy5s42WTg7XiDWyGXOSReW
-         a9732IBAlF6O1sT9IdCv1z3pwsPDR23SFeox4kc2hdvejZwFLzFQ05zJ63YjgYMYRPxB
-         4C0leKMWCzdn9wnfYPJWY5uuynAGH+W8SwZHElwsF9WzL3eqP/Y07NsbjYR35wgMguu6
-         IleTVey38i11ADRQi/9hbvnFKkrXd0IL0ovdSq/58MXpc5sLLrLq2RykDGZSnK50qlKJ
-         rDRg==
+        d=gmail.com; s=20221208; t=1682623968; x=1685215968;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=R5PZrWIw9wJtuIkYP9O2VU+XSk2bbMScan7h1oDUe4c=;
+        b=RDNI+J+ulYs7YK+0tLOq6QEIhaX9cIXYyqD40UTRyVZMnukLlJ2hNwA3BFng8BXlVc
+         cIdiYGZnPuCVeInd1+gStc6drbmgY7dzJ3oT5XP5PgpDdHIVL529t16+qa8SfQSHeKkH
+         0XuTlucRhBJmfepdFUcY5ag0zz6ETQ3OKfnxGKd0pwhF7hc7jPpCKak9kzetU8e98Ym/
+         7RmAEHAJbyPZYYbkqrPqq7Uh3zsxILPrvh8zeUe5sXqlpQn1mOuF/O7Vn1PWngKOwPU8
+         7cIeQp7zoQe2PF/jXXUifZfHoIdp2uQnCPD2ZvF/8VLy/0hTVjNXPtOHT3Ij2bDvJ7Mi
+         Ofbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682621406; x=1685213406;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TSw1IlHabKdeoJWFqhha6ktdPaX7I8X8moKzfrrA+xs=;
-        b=Enti7niP/Jp6qEiZcSXunW1SzgZwIR/O8Emd1zhnZ8s0kXU+KuiODjXXTL/P37uBss
-         /MKHrj9j05c0+nTzC44/H5pDMaw7me3AN6QoUGGfH7Lgo733uT06+TuL7e/kmonImAtc
-         Ient0FDq/EI0YD/bQx+7VTgjorXJB3zr8ZAqXh2/UaTnj8ETlmjBWMX8kzQU4OYibFFh
-         cjLOyy0SvxOSuLJQYcRE75Q9yr1HCp0ut7kcnAHs0vI1JloO4H09v6enrT35/l3gTrbu
-         dqfwcebFrv2+xU9++Ng0NVkEh/nMemmq2+RZZytr02GDKlmmk06TpsuRFAK/TQAc+x5p
-         I1Ng==
-X-Gm-Message-State: AC+VfDwtVOTZH9GMYaNYcWQC4vwGmWidtjQfIJ1o7gKyJWhke/28e4qT
-        KO1CBUs0F53ybGg041vnYto7N/CgrER+/zIcnIX4JEWhIw+fpwMC
-X-Google-Smtp-Source: ACHHUZ6mPFjhxOsaKkHe5R6CyJoROA03B2FebAR7i2VDpHZLUTA4rOp0dcOgq61wZgaMqoBMzbi8GOPCWZkxhuNRlTA=
-X-Received: by 2002:a05:6808:60f:b0:38e:8d92:5884 with SMTP id
- y15-20020a056808060f00b0038e8d925884mr1092207oih.12.1682621406035; Thu, 27
- Apr 2023 11:50:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <CACk7upyDgd8kCY+8j+RMJz35GXrF=bwRzDNH76Oh8q4nB8i0KQ@mail.gmail.com>
-In-Reply-To: <CACk7upyDgd8kCY+8j+RMJz35GXrF=bwRzDNH76Oh8q4nB8i0KQ@mail.gmail.com>
-From:   Raul Cheleguini <raul.cheleguini@gmail.com>
-Date:   Thu, 27 Apr 2023 15:49:29 -0300
-Message-ID: <CACk7upyDxpy45wEWXi_EU_r7F8WeD2bObSHRRo82HGTrYGXNHQ@mail.gmail.com>
-Subject: Re: unexpected SMP command errors with controller ATS2851
+        d=1e100.net; s=20221208; t=1682623968; x=1685215968;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=R5PZrWIw9wJtuIkYP9O2VU+XSk2bbMScan7h1oDUe4c=;
+        b=lOR7VT7YETxuWln5A1vsHDiaJqoOOYG1S8/nWH+L2xLROCjLZunHHrrxKUtnup+uzC
+         eU97rKzaWk1QA26i8tdZu7XZGLROn22MlDcyKKeIFMep+y5mF7ZIHFvA5FZdW+9Kjj1j
+         jcUkRcGKXa0eB1zPlx4P7MOcajomXt+0rvtJ/AWJTiEfwF2J/eE0GgNzQJHijUKXgDKx
+         opGlX3TAU5CykRltTFhD2lhzxJ0Xr+yObV/GETip8ZMyDJo0nLEBTx+GxHOM7DMcz50D
+         NpCQDsI60R73pPnjdMH171ElkiyZlobivHuOoMF9JPxANYtMO8lxn1+sWbFQZabBDAvJ
+         MO+g==
+X-Gm-Message-State: AC+VfDxWZyIy0E9fZVuETchyIi48fHy95Hyzus+PtIVlsxqgNm6IUxLB
+        02JmxW0XCmcLG+CO1Qf1269SDHM3vdo=
+X-Google-Smtp-Source: ACHHUZ76O2gb88AKRlptZfNZPc4nLHDySbkrZ6ItZiwDkv5z/RKY/SztyAeAGx4Z/zoz5Wb5lE+oZg==
+X-Received: by 2002:a92:d344:0:b0:32b:681d:b1e7 with SMTP id a4-20020a92d344000000b0032b681db1e7mr2055462ilh.8.1682623967890;
+        Thu, 27 Apr 2023 12:32:47 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
+        by smtp.gmail.com with ESMTPSA id n12-20020a056638264c00b00411baa5ec5asm3349898jat.154.2023.04.27.12.32.46
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Apr 2023 12:32:47 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [BlueZ PATCH v2 1/9] media: Fix not storing Preferred Delay properly
+Date:   Thu, 27 Apr 2023 12:32:37 -0700
+Message-Id: <20230427193245.323502-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.40.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -68,90 +67,32 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Fri, Mar 24, 2023 at 12:17=E2=80=AFAM Raul Cheleguini
-<raul.cheleguini@gmail.com> wrote:
->
-> Hi everyone,
->
-> I'm trying to understand and narrow down a pairing problem with this
-> controller that I'm trying to make it work in Linux.
->
-> When pairing, the negotiation does not complete and the system logs
-> the following messages:
->
-> Bluetooth: hci0: unexpected SMP command 0x08 from dd:5e:b9:fe:49:3f
-> Bluetooth: hci0: unexpected SMP command 0x09 from dd:5e:b9:fe:49:3f
-> Bluetooth: hci0: Opcode 0x200d failed: -110
-> Bluetooth: hci0: request failed to create LE connection: err -110
->
-> (dd:5e:b9:fe:49:3f is my bluetooth mouse)
->
-> After some debug I found the condition that refuses the SMP commands and
-> drops them:
->
-> net/bluetooth/smp.c in smp_sig_channel()
->
-> if (smp && !test_and_clear_bit(code, &smp->allow_cmd))
->     goto drop;
->
-> The interesting part is that if I disable this condition with comments,
-> the pairing process manages to complete and my bluetooth mouse starts to =
-work
-> (even with some errors in logs):
->
-> Bluetooth: hci0: Opcode 0x200d failed: -110
-> Bluetooth: hci0: request failed to create LE connection: err -110
-> hid: raw HID events driver (C) Jiri Kosina
-> input: Logi M650 L Mouse as /devices/virtual/misc/uhid/0005:046D:B02A.000=
-1/
-> input/input6
-> hid-generic 0005:046D:B02A.0001: input,hidraw0: BLUETOOTH HID v0.09 Mouse
-> [Logi M650 L] on f4:4e:fc:c0:de:5e
-> Bluetooth: hci0: Opcode 0x200d failed: -110
-> Bluetooth: hci0: request failed to create LE connection: err -110
->
-> Logs from bluetoothd receiving the mouse data events:
->
-> bluetoothd[576]: src/shared/att.c:can_read_data() (chan 0x55f8ad8db380)
-> ATT PDU received: 0x1b
-> bluetoothd[576]: src/shared/att.c:can_read_data() (chan 0x55f8ad8db380)
-> ATT PDU received: 0x1b
-> bluetoothd[576]: src/shared/att.c:can_read_data() (chan 0x55f8ad8db380)
-> ATT PDU received: 0x1b
->
-> I kindly ask guidance on what could be done in these cases or any hints
-> how to further debug this issue.
->
-> For context, the controller works in other systems using generic drivers.
->
-> Regards,
-> Raul.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-For the benefit of any novice who may face similar situation in future:
+Preferred Delay properties were being stored as qos->pd_* instead of
+qos->ppd_*.
+---
+ profiles/audio/media.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-The error "unexpected SMP command 0x08" indicates that command 0x08
-(SMP_CMD_IDENT_INFO) arrives before it has been allowed. That is part smp
-implementation, it allows commands and responds to them in the expected
-context, otherwise it drops them.
+diff --git a/profiles/audio/media.c b/profiles/audio/media.c
+index 52c4bd80a94c..6ce668e31303 100644
+--- a/profiles/audio/media.c
++++ b/profiles/audio/media.c
+@@ -1483,11 +1483,11 @@ static int parse_properties(DBusMessageIter *props, const char **uuid,
+ 		} else if (strcasecmp(key, "PreferredMinimumDelay") == 0) {
+ 			if (var != DBUS_TYPE_UINT16)
+ 				return -EINVAL;
+-			dbus_message_iter_get_basic(&value, &qos->pd_min);
++			dbus_message_iter_get_basic(&value, &qos->ppd_min);
+ 		} else if (strcasecmp(key, "PreferredMaximumDelay") == 0) {
+ 			if (var != DBUS_TYPE_UINT16)
+ 				return -EINVAL;
+-			dbus_message_iter_get_basic(&value, &qos->pd_max);
++			dbus_message_iter_get_basic(&value, &qos->ppd_max);
+ 		}
+ 
+ 		dbus_message_iter_next(props);
+-- 
+2.40.0
 
-In this particular situation, we enter a condition in hci_encrypt_change_ev=
-t()
-[1] that results in an unrelated HCI command being sent during the time we
-should be preparing to receive command 0x08. The command 0x08 arrives befor=
-e
-it has been allowed and this confusion eventually leads to a disconnect eve=
-nt.
-
-According to my raw notes, 0x08 is allowed in smp_allow_key_dist(), as
-a result of a callback chain for this type of connection/adapter:
-
-hci_encrypt_cfm > security_cfm_cb >
-l2cap_security_cfm > smp_resume_cb > smp_distribute_keys > smp_allow_key_di=
-st
-
-Regards,
-Raul.
-
-[1]
-https://elixir.bootlin.com/linux/v6.3/source/net/bluetooth/hci_event.c#L367=
-0
