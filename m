@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE3186F0C96
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Apr 2023 21:33:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AC116F0C98
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Apr 2023 21:33:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244974AbjD0TdJ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 27 Apr 2023 15:33:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59578 "EHLO
+        id S245494AbjD0TdL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 27 Apr 2023 15:33:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245533AbjD0TdA (ORCPT
+        with ESMTP id S245537AbjD0TdB (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 27 Apr 2023 15:33:00 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F351D10CB
-        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Apr 2023 12:32:57 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id ca18e2360f4ac-760f29073b4so244028039f.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Apr 2023 12:32:57 -0700 (PDT)
+        Thu, 27 Apr 2023 15:33:01 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCAA010CF
+        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Apr 2023 12:32:59 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id e9e14a558f8ab-3293e4b2cb5so70750035ab.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Apr 2023 12:32:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682623976; x=1685215976;
+        d=gmail.com; s=20221208; t=1682623978; x=1685215978;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6pK5TjJ5FkDFV3GQCfWI9bCv3wKiC+Ep60HITp76X6o=;
-        b=C3n1p5TaZI8ik+k/42XnmDd3rLAUVAhBf2A1p2ceOk8fNIjoCTsp5foVcUNO8epb2m
-         QgaMsG7QbO9CswYAOhrJsFJKeQvtSpOKiGOi8hwL988mL4MTtqxdPQRD6vrD2/BnLhdS
-         gVyD7Rl+jxJUVZxhDNyZ41t/H/54ZgRVRQUU6CpJzFt+wpIAC0l1gtcwGwqMpWJJ7hj+
-         okSTUPpOacP50ipbDypsSAp8s8DOjfaMA0vgsfpVjzvPqBJjXtQ/stqgxF+gB8HGYKKQ
-         JyRUCf3/TbqXINepikIDBdrynawzkWaODARvsjiGZLz9/joqJdB07hkc8RZT4IjlI6SS
-         a6/Q==
+        bh=JAzRzgFqkl4Naoj8NS6vvPgDDNigBOrReuLftwEG1Rg=;
+        b=i03oSb8n101w6ecDZjPt+YPXd/SijX7d6Mgatatz0TFf6R4GQRKDS4i5F4VB6jtAVb
+         L+P1c0rCCWj3l6J/MdM5bUrKx5B2VddQaP+oUZeaol9DQU/225UCFaSIheAKK0I/qnKR
+         y3N1zMMprHdymoVmALljFdPbPbwEnT8Ev4hvvOBwdntYREwIU+y15Xhh/9JKXKt0CpyY
+         DlKKH5N79FsphBlQgNfZi2bqLCHFW0KPXWXi0ezTKEVgnHIuDspY1NunVbymu2W7xoAw
+         gAZEC5uyWyFOSEgyNSI4CUMq25JpdHp1Bg3xl5YMQZklAp4X6C590btBFOxYyxC7u9VC
+         PXNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682623976; x=1685215976;
+        d=1e100.net; s=20221208; t=1682623978; x=1685215978;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6pK5TjJ5FkDFV3GQCfWI9bCv3wKiC+Ep60HITp76X6o=;
-        b=GczdDUV0mhM+ePFt8aaMoGCFA1GCoO48YIqPDCC027FCMXh2jLmf3CjuKCmJgBUQen
-         VBqUuIH3XC70NZbtysm2gJcVdjg0arla5aDL9uhxWoerwx5q7wpl4HLNsG4BNmyjN0+Y
-         jfEoSp5kaH3Ye9pFwBICHv2KyiI9E/JvnkZqFNt18kp7Us2lK6y4P/IUrwMcx1YMl+VK
-         1kZbYXo5XCm9HMD02UoAig8uZqoIe7F+AfsmdX+iIDcFCeo/DwAMsLgCoifydF8Bo52Z
-         HFZn5XOJyrJxC5cpNpoKAJ+ToBWn5zx5cw7K2YqLdiynPiJBRMJUkNiz7MjiAxTWwExh
-         48bw==
-X-Gm-Message-State: AC+VfDzJyxnYI1p7MmyWjrInca2dOM18HyxH32a1h26BtW7zWOl7Gl2O
-        ME10ik72tywXbCa1Mnwn95cH/z5CiUw=
-X-Google-Smtp-Source: ACHHUZ4HjkJBLO2Yl+GF6g7hYf7BW0qnfWJQlHAe/gi7M5AjxtzXRg26DasADAF490oJvPyX66+fpA==
-X-Received: by 2002:a5d:924e:0:b0:763:538e:2316 with SMTP id e14-20020a5d924e000000b00763538e2316mr2169576iol.9.1682623976564;
-        Thu, 27 Apr 2023 12:32:56 -0700 (PDT)
+        bh=JAzRzgFqkl4Naoj8NS6vvPgDDNigBOrReuLftwEG1Rg=;
+        b=GEC06KBg3igP7XwEv2UTzFHEFe/r18zl+4TJUkrF+31kUsxvELgtTHiUUrwfw9m1hp
+         IEY68Vet7nsTcStbleWTV3DESbPjrcYo/f72k9qdmxa2poR98whdAbN3tD7QVMOJG3P1
+         VFEoppU1nZkDJdT4C+kBAow8nDddNCRJkcWzARxkwq8qI/xE9KKqx/UXF5HQaRr8/fyG
+         MhvOSClioTQcKc6IegMvJGXstegnYgSHpU9zU5py9B9EouYdd0J3JuyaVGOqfE6113pR
+         HnfQh4f4nt3JgcfPRTk48J7Tq2QiADcTn88VvV7qg4aIEgO0NvPYaYj8Y9kw4W8cKpAN
+         Cr6Q==
+X-Gm-Message-State: AC+VfDxtHQbRswDkZQ6fF9IbwtcOS1vDjJ71U+oeUxULIhLDMs3scrLZ
+        M0a4kSh6JxCdXi2VmvMV9mTH75hXHlM=
+X-Google-Smtp-Source: ACHHUZ4pQsqq9g5FS1HUr7k+BPYQOvyc5PGdX5Xxku0iFDr44/guFVvK8CcWbWS2RVP8GprymXw4EQ==
+X-Received: by 2002:a92:ccc4:0:b0:32f:2614:cda9 with SMTP id u4-20020a92ccc4000000b0032f2614cda9mr1927199ilq.3.1682623978430;
+        Thu, 27 Apr 2023 12:32:58 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id n12-20020a056638264c00b00411baa5ec5asm3349898jat.154.2023.04.27.12.32.54
+        by smtp.gmail.com with ESMTPSA id n12-20020a056638264c00b00411baa5ec5asm3349898jat.154.2023.04.27.12.32.56
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Apr 2023 12:32:55 -0700 (PDT)
+        Thu, 27 Apr 2023 12:32:57 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [BlueZ PATCH v2 5/9] shared/bap: Fix typo
-Date:   Thu, 27 Apr 2023 12:32:41 -0700
-Message-Id: <20230427193245.323502-5-luiz.dentz@gmail.com>
+Subject: [BlueZ PATCH v2 6/9] shared/lc3: Update configuration to use iovec
+Date:   Thu, 27 Apr 2023 12:32:42 -0700
+Message-Id: <20230427193245.323502-6-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230427193245.323502-1-luiz.dentz@gmail.com>
 References: <20230427193245.323502-1-luiz.dentz@gmail.com>
@@ -73,24 +73,145 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Fix typo s/BT_BAP_CONFIG_LATENCY_BALACED/BT_BAP_CONFIG_LATENCY_BALANCED
+This use iovec as expected storage for capabilities and configuration
+so it is inline with what bluetoothctl has been using making it simpler
+to reuse these definitions.
 ---
- src/shared/bap.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/shared/lc3.h | 93 +++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 69 insertions(+), 24 deletions(-)
 
-diff --git a/src/shared/bap.h b/src/shared/bap.h
-index 0d419aa74982..e9f769d0ef3a 100644
---- a/src/shared/bap.h
-+++ b/src/shared/bap.h
-@@ -26,7 +26,7 @@
- #define BT_BAP_STREAM_STATE_RELEASING	0x06
+diff --git a/src/shared/lc3.h b/src/shared/lc3.h
+index fd9eb15a73ea..c702a951f50c 100644
+--- a/src/shared/lc3.h
++++ b/src/shared/lc3.h
+@@ -7,11 +7,12 @@
+  *
+  */
  
- #define BT_BAP_CONFIG_LATENCY_LOW	0x01
--#define BT_BAP_CONFIG_LATENCY_BALACED	0x02
-+#define BT_BAP_CONFIG_LATENCY_BALANCED	0x02
- #define BT_BAP_CONFIG_LATENCY_HIGH	0x03
+-#define LTV(_type, _bytes...) \
++#define data(args...) ((const unsigned char[]) { args })
++
++#define LC3_IOV(args...) \
+ 	{ \
+-		.len = 1 + sizeof((uint8_t []) { _bytes }), \
+-		.type = _type, \
+-		.data = { _bytes }, \
++		.iov_base = (void *)data(args), \
++		.iov_len = sizeof(data(args)), \
+ 	}
  
- #define BT_BAP_CONFIG_PHY_1M		0x01
+ #define LC3_ID			0x06
+@@ -52,13 +53,11 @@
+ #define LC3_FRAME_COUNT		(LC3_BASE + 4)
+ 
+ #define LC3_CAPABILITIES(_freq, _duration, _chan_count, _len_min, _len_max) \
+-	{ \
+-		LTV(LC3_FREQ, _freq), \
+-		LTV(LC3_DURATION, _duration), \
+-		LTV(LC3_CHAN_COUNT, _chan_count), \
+-		LTV(LC3_FRAME_LEN, _len_min, _len_min >> 8, \
+-				_len_max, _len_max >> 8), \
+-	}
++	LC3_IOV(0x02, LC3_FREQ, _freq, _freq >>8, \
++		0x02, LC3_DURATION, _duration, \
++		0x02, LC3_CHAN_COUNT, _chan_count, \
++		0x05, LC3_FRAME_LEN, _len_min, _len_min >> 8, \
++		_len_max, _len_max >> 8)
+ 
+ #define LC3_CONFIG_BASE		0x01
+ 
+@@ -81,32 +80,78 @@
+ #define LC3_CONFIG_FRAME_LEN	(LC3_CONFIG_BASE + 3)
+ 
+ #define LC3_CONFIG(_freq, _duration, _len) \
+-	{ \
+-		LTV(LC3_CONFIG_FREQ, _freq), \
+-		LTV(LC3_CONFIG_DURATION, _duration), \
+-		LTV(LC3_CONFIG_FRAME_LEN, _len, _len >> 8), \
+-	}
++	LC3_IOV(0x02, LC3_CONFIG_FREQ, _freq, \
++		0x02, LC3_CONFIG_DURATION, _duration, \
++		0x03, LC3_CONFIG_FRAME_LEN, _len, _len >> 8)
+ 
+-#define LC3_CONFIG_8KHZ(_duration, _len) \
++#define LC3_CONFIG_8(_duration, _len) \
+ 	LC3_CONFIG(LC3_CONFIG_FREQ_8KHZ, _duration, _len)
+ 
+-#define LC3_CONFIG_11KHZ(_duration, _len) \
++#define LC3_CONFIG_11(_duration, _len) \
+ 	LC3_CONFIG(LC3_CONFIG_FREQ_11KHZ, _duration, _len)
+ 
+-#define LC3_CONFIG_16KHZ(_duration, _len) \
++#define LC3_CONFIG_16(_duration, _len) \
+ 	LC3_CONFIG(LC3_CONFIG_FREQ_16KHZ, _duration, _len)
+ 
+-#define LC3_CONFIG_22KHZ(_duration, _len) \
++#define LC3_CONFIG_22(_duration, _len) \
+ 	LC3_CONFIG(LC3_CONFIG_FREQ_22KHZ, _duration, _len)
+ 
+-#define LC3_CONFIG_24KHZ(_duration, _len) \
++#define LC3_CONFIG_24(_duration, _len) \
+ 	LC3_CONFIG(LC3_CONFIG_FREQ_24KHZ, _duration, _len)
+ 
+-#define LC3_CONFIG_32KHZ(_duration, _len) \
++#define LC3_CONFIG_32(_duration, _len) \
+ 	LC3_CONFIG(LC3_CONFIG_FREQ_32KHZ, _duration, _len)
+ 
+-#define LC3_CONFIG_44KHZ(_duration, _len) \
++#define LC3_CONFIG_44(_duration, _len) \
+ 	LC3_CONFIG(LC3_CONFIG_FREQ_44KHZ, _duration, _len)
+ 
+-#define LC3_CONFIG_48KHZ(_duration, _len) \
++#define LC3_CONFIG_48(_duration, _len) \
+ 	LC3_CONFIG(LC3_CONFIG_FREQ_48KHZ, _duration, _len)
++
++#define LC3_CONFIG_8_1 \
++	LC3_CONFIG_8(LC3_CONFIG_DURATION_7_5, 26u)
++
++#define LC3_CONFIG_8_2 \
++	LC3_CONFIG_8(LC3_CONFIG_DURATION_10, 30u)
++
++#define LC3_CONFIG_16_1 \
++	LC3_CONFIG_16(LC3_CONFIG_DURATION_7_5, 30u)
++
++#define LC3_CONFIG_16_2 \
++	LC3_CONFIG_16(LC3_CONFIG_DURATION_10, 40u)
++
++#define LC3_CONFIG_24_1 \
++	LC3_CONFIG_24(LC3_CONFIG_DURATION_7_5, 45u)
++
++#define LC3_CONFIG_24_2 \
++	LC3_CONFIG_24(LC3_CONFIG_DURATION_10, 60u)
++
++#define LC3_CONFIG_32_1 \
++	LC3_CONFIG_32(LC3_CONFIG_DURATION_7_5, 60u)
++
++#define LC3_CONFIG_32_2 \
++	LC3_CONFIG_32(LC3_CONFIG_DURATION_10, 80u)
++
++#define LC3_CONFIG_44_1 \
++	LC3_CONFIG_44(LC3_CONFIG_DURATION_7_5, 98u)
++
++#define LC3_CONFIG_44_2 \
++	LC3_CONFIG_44(LC3_CONFIG_DURATION_10, 130u)
++
++#define LC3_CONFIG_48_1 \
++	LC3_CONFIG_48(LC3_CONFIG_DURATION_7_5, 75u)
++
++#define LC3_CONFIG_48_2 \
++	LC3_CONFIG_48(LC3_CONFIG_DURATION_10, 100u)
++
++#define LC3_CONFIG_48_3 \
++	LC3_CONFIG_48(LC3_CONFIG_DURATION_7_5, 90u)
++
++#define LC3_CONFIG_48_4 \
++	LC3_CONFIG_48(LC3_CONFIG_DURATION_10, 120u)
++
++#define LC3_CONFIG_48_5 \
++	LC3_CONFIG_48(LC3_CONFIG_DURATION_7_5, 117u)
++
++#define LC3_CONFIG_48_6 \
++	LC3_CONFIG_48(LC3_CONFIG_DURATION_10, 155u)
 -- 
 2.40.0
 
