@@ -2,64 +2,65 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 683A86F1E2F
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Apr 2023 20:46:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C81D06F1E31
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Apr 2023 20:46:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346508AbjD1Sq4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 28 Apr 2023 14:46:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60482 "EHLO
+        id S1346521AbjD1Sq6 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 28 Apr 2023 14:46:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346075AbjD1Sqx (ORCPT
+        with ESMTP id S1346516AbjD1Sq5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 28 Apr 2023 14:46:53 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51D562D51
-        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Apr 2023 11:46:52 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1a92513abebso2901365ad.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Apr 2023 11:46:52 -0700 (PDT)
+        Fri, 28 Apr 2023 14:46:57 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 866762D51
+        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Apr 2023 11:46:54 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id 41be03b00d2f7-5144a9c11c7so105202a12.2
+        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Apr 2023 11:46:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682707611; x=1685299611;
+        d=gmail.com; s=20221208; t=1682707613; x=1685299613;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fDu9ngCUhq7egRGnT1zXnnBvaz72CpY739h6yjYjBd8=;
-        b=ZrRiCwRv9zdoj4XsSp/YN2RL5PwejGcZP3roehm2lJeBI1ZjJjsvQ0Iq7pFFJhhsQT
-         7Lcys2brORlb4tovzfeXfioWqOme2XswjdlydZC9JKZbdq/NZh0QUQ1gN7kU9tvCevue
-         hSgoSPMKvj3B8rZBNh14816pnU90mm/+qn5+XkTH/qw8s8Hq12VlydhuVojxBHcRWUp2
-         E7aShf7KW0yOjQKricUH0GsjFry3e72hkqWR2WvkO2ddW03iy41U6Wj0VFgR0GvNjVeX
-         M8lSP/089Mu5yVoN/eAGHUiQnbcIe9aXsBomY6+jn7Za041R57EgjNyB/jvVqUA15K+U
-         gpiQ==
+        bh=PkMxcOuV3hGZ9O7uCLlBgXJ9G5s3hfg1WaWodTfqpfs=;
+        b=PlzDU9EYhT38pNcqPxhoto1k5VMZM4CQUKJw5mYNVlULk1wi43q3dbu4cKHFOKjAAj
+         53ueYl9R3jDwpLXtcQo5q51Q94YXwHSULtZSHYNzy3oCtuCJw3nL1FNDVMZvgIx4V6a4
+         qg0YIMzpG7OikfAyt3D20HqJmVG7gW/YgpBA4d6b5TSfoqCN4MD9l5sHJRVHmu1a/Z7F
+         vL8n6LpTpRGXTnkHLIr9R+uRi6BIXovJ7j8U01HkAQ6OyTpuIF/QZGOicQhGWqqe/8Zo
+         D5EGw7VCFHoOuaZ9mazY9B59BoT1/YaG8gaGUkMDFk7c3OmQ6eL1kmifi7DiGIYpQ9CH
+         SPWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682707611; x=1685299611;
+        d=1e100.net; s=20221208; t=1682707613; x=1685299613;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fDu9ngCUhq7egRGnT1zXnnBvaz72CpY739h6yjYjBd8=;
-        b=JFMiz9su5nlASs3NlmOTBZfO+DBZMxajwyBbOAMFqlcFrGyRT8oqDmwM8nO5qLB3al
-         0/IzNcPEDcVNQnC6zCdKNWaych2z3mlLB2kr+2DCGi8TpmF2+Om1z2eBtW6QTe3ozjEK
-         576EalEImCglIFPiJxtqJEHlNCBTfKiLPg8ck4kv85F9dV4a2w5reV4ef/K/2kJpYzi4
-         Q9NW0WS7JDKIe+bTfSn8wH7UCDGGV0AoFJQiub7ord8j07Cq0flIvO/aWWJW7kLDQQdQ
-         Gbi/TUPoflIfVg3eyx3tS+8URgTpbSiC/kNXLujWdjWiQcR1WAuE/EdE35iks5xqHE5U
-         4Qxw==
-X-Gm-Message-State: AC+VfDyXEuB9bScfor6tUL32rGoRBhWtMuZA0bIfOFpdHx3LXfReWzIL
-        x/dy+rEd/3hsuHCCkFppg82AL0KfRls=
-X-Google-Smtp-Source: ACHHUZ5rW0PnoiQ2Hf7/SFDzOJJ5i6Y96mIMax5xZPn+nfH4XWa0giwnLrXXKKJ0XWonKUT6xqtmFw==
-X-Received: by 2002:a17:902:c745:b0:1a9:9a18:345c with SMTP id q5-20020a170902c74500b001a99a18345cmr5430391plq.44.1682707611029;
-        Fri, 28 Apr 2023 11:46:51 -0700 (PDT)
+        bh=PkMxcOuV3hGZ9O7uCLlBgXJ9G5s3hfg1WaWodTfqpfs=;
+        b=R9LpKVOpK5ORH/3qzq6wA9FJBSvXD/3Soqbt8oiHuzYxf7LtcVbAeifTRhmx1IwIGf
+         nxbvOpnOm/NF4rz0V0Vo2b3sRMuMY8IKcaJlMpcbgI5FGkhjXdgCGwlwyQ1PXWlQhJGI
+         uaMd2p+8ZNlylNUZW0trREpxJLA5ud8AJU+5mOTdG0rQhZ0fE4wDv07cZjfDwDBBXtGL
+         Fz+GjqiRDtn/e0S3qNpDT9iugZ1cmPXCB/W9vEsOxDj0BwKThcqKWSfNYSk3J/UUP8EE
+         QJvsgyLbJA0LT79KWw+BXIzGER8TzhBeTPkkBSYl889kC/7+eaVKkyqKmj5Cn3Fx6le/
+         zaOw==
+X-Gm-Message-State: AC+VfDyyMUoMFb2h+0mNYMahqr5+N2dKFpL3de7l0JOQIoa7tZ9rMie6
+        8qzKMkHZL4ItgPzg8yM0KrTqXa3KFIA=
+X-Google-Smtp-Source: ACHHUZ7S+WXRw+N63u3fr6qcjdhv8KdYEVeykQwQH9rWWobj/qjXEkXzMHpO0BcICRUNbpzhGhkhDQ==
+X-Received: by 2002:a17:903:104c:b0:1a6:ba5a:cae0 with SMTP id f12-20020a170903104c00b001a6ba5acae0mr5974272plc.27.1682707612635;
+        Fri, 28 Apr 2023 11:46:52 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id bf9-20020a170902b90900b0019f9fd10f62sm13626366plb.70.2023.04.28.11.46.49
+        by smtp.gmail.com with ESMTPSA id bf9-20020a170902b90900b0019f9fd10f62sm13626366plb.70.2023.04.28.11.46.51
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Apr 2023 11:46:49 -0700 (PDT)
+        Fri, 28 Apr 2023 11:46:51 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [BlueZ PATCH v4 6/9] shared/lc3: Update configuration to use iovec
-Date:   Fri, 28 Apr 2023 11:46:37 -0700
-Message-Id: <20230428184640.849066-6-luiz.dentz@gmail.com>
+Subject: [BlueZ PATCH v4 7/9] test-bap: Introduce SCC tests for LC3
+Date:   Fri, 28 Apr 2023 11:46:38 -0700
+Message-Id: <20230428184640.849066-7-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230428184640.849066-1-luiz.dentz@gmail.com>
 References: <20230428184640.849066-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -73,145 +74,713 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This use iovec as expected storage for capabilities and configuration
-so it is inline with what bluetoothctl has been using making it simpler
-to reuse these definitions.
----
- src/shared/lc3.h | 93 +++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 69 insertions(+), 24 deletions(-)
+4.8.1 Unicast Client Initiates a Config Codec Operation – LC3
+(Page 39):
 
-diff --git a/src/shared/lc3.h b/src/shared/lc3.h
-index fd9eb15a73ea..ae193f9e2fa7 100644
---- a/src/shared/lc3.h
-+++ b/src/shared/lc3.h
-@@ -7,11 +7,12 @@
-  *
-  */
+  Test Purpose:
+  Verify that a Unicast Client IUT can initiate a Config Codec
+  operation for an LC3 codec.
+
+  Test Case Configuration:
+  BAP/UCL/SCC/BV-001-C [UCL SRC Config Codec, LC3 8_1]
+  BAP/UCL/SCC/BV-002-C [UCL SRC Config Codec, LC3 8_2]
+  BAP/UCL/SCC/BV-003-C [UCL SRC Config Codec, LC3 16_1]
+  BAP/UCL/SCC/BV-004-C [UCL SRC Config Codec, LC3 16_2]
+  BAP/UCL/SCC/BV-005-C [UCL SRC Config Codec, LC3 24_1]
+  BAP/UCL/SCC/BV-006-C [UCL SRC Config Codec, LC3 24_2]
+  BAP/UCL/SCC/BV-007-C [UCL SRC Config Codec, LC3 32_1]
+  BAP/UCL/SCC/BV-008-C [UCL SRC Config Codec, LC3 32_2]
+  BAP/UCL/SCC/BV-009-C [UCL SRC Config Codec, LC3 44.1_1]
+  BAP/UCL/SCC/BV-010-C [UCL SRC Config Codec, LC3 44.1_2]
+  BAP/UCL/SCC/BV-011-C [UCL SRC Config Codec, LC3 48_1]
+  BAP/UCL/SCC/BV-012-C [UCL SRC Config Codec, LC3 48_2]
+  BAP/UCL/SCC/BV-013-C [UCL SRC Config Codec, LC3 48_3]
+  BAP/UCL/SCC/BV-014-C [UCL SRC Config Codec, LC3 48_4]
+  BAP/UCL/SCC/BV-015-C [UCL SRC Config Codec, LC3 48_5]
+  BAP/UCL/SCC/BV-016-C [UCL SRC Config Codec, LC3 48_6]
+  BAP/UCL/SCC/BV-017-C [UCL SNK Config Codec, LC3 8_1]
+  BAP/UCL/SCC/BV-018-C [UCL SNK Config Codec, LC3 8_2]
+  BAP/UCL/SCC/BV-019-C [UCL SNK Config Codec, LC3 16_1]
+  BAP/UCL/SCC/BV-020-C [UCL SNK Config Codec, LC3 16_2]
+  BAP/UCL/SCC/BV-021-C [UCL SNK Config Codec, LC3 24_1]
+  BAP/UCL/SCC/BV-022-C [UCL SNK Config Codec, LC3 24_2]
+  BAP/UCL/SCC/BV-023-C [UCL SNK Config Codec, LC3 32_1]
+  BAP/UCL/SCC/BV-024-C [UCL SNK Config Codec, LC3 32_2]
+  BAP/UCL/SCC/BV-025-C [UCL SNK Config Codec, LC3 44.1_1]
+  BAP/UCL/SCC/BV-026-C [UCL SNK Config Codec, LC3 44.1_2]
+  BAP/UCL/SCC/BV-027-C [UCL SNK Config Codec, LC3 48_1]
+  BAP/UCL/SCC/BV-028-C [UCL SNK Config Codec, LC3 48_2]
+  BAP/UCL/SCC/BV-029-C [UCL SNK Config Codec, LC3 48_3]
+  BAP/UCL/SCC/BV-030-C [UCL SNK Config Codec, LC3 48_4]
+  BAP/UCL/SCC/BV-031-C [UCL SNK Config Codec, LC3 48_5]
+  BAP/UCL/SCC/BV-032-C [UCL SNK Config Codec, LC3 48_6]
+
+  Pass verdict:
+  The IUT successfully writes to the ASE Control point with the opcode
+  set to 0x01 (Config Codec) and correctly formatted parameter values
+  from Table 4.9.
+  The Codec_ID field is a 5-octet field with octet 0 set to the LC3
+  Coding_Format value defined in Bluetooth Assigned Numbers, octets 1–4
+  set to 0x0000.
+
+Test Summary
+------------
+BAP/UCL/SCC/BV-001-C [UCL SRC Config Codec, LC3 8_1] Passed
+BAP/UCL/SCC/BV-002-C [UCL SRC Config Codec, LC3 8_2] Passed
+BAP/UCL/SCC/BV-003-C [UCL SRC Config Codec, LC3 16_1] Passed
+BAP/UCL/SCC/BV-004-C [UCL SRC Config Codec, LC3 16_2] Passed
+BAP/UCL/SCC/BV-005-C [UCL SRC Config Codec, LC3 24_1] Passed
+BAP/UCL/SCC/BV-006-C [UCL SRC Config Codec, LC3 24_2] Passed
+BAP/UCL/SCC/BV-007-C [UCL SRC Config Codec, LC3 32_1] Passed
+BAP/UCL/SCC/BV-008-C [UCL SRC Config Codec, LC3 32_2] Passed
+BAP/UCL/SCC/BV-009-C [UCL SRC Config Codec, LC3 44.1_1] Passed
+BAP/UCL/SCC/BV-010-C [UCL SRC Config Codec, LC3 44.1_2] Passed
+BAP/UCL/SCC/BV-011-C [UCL SRC Config Codec, LC3 48_1] Passed
+BAP/UCL/SCC/BV-012-C [UCL SRC Config Codec, LC3 48_2] Passed
+BAP/UCL/SCC/BV-013-C [UCL SRC Config Codec, LC3 48_3] Passed
+BAP/UCL/SCC/BV-014-C [UCL SRC Config Codec, LC3 48_4] Passed
+BAP/UCL/SCC/BV-015-C [UCL SRC Config Codec, LC3 48_5] Passed
+BAP/UCL/SCC/BV-016-C [UCL SRC Config Codec, LC3 48_6] Passed
+BAP/UCL/SCC/BV-017-C [UCL SNK Config Codec, LC3 8_1] Passed
+BAP/UCL/SCC/BV-018-C [UCL SNK Config Codec, LC3 8_2] Passed
+BAP/UCL/SCC/BV-019-C [UCL SNK Config Codec, LC3 16_1] Passed
+BAP/UCL/SCC/BV-020-C [UCL SNK Config Codec, LC3 16_2] Passed
+BAP/UCL/SCC/BV-021-C [UCL SNK Config Codec, LC3 24_1] Passed
+BAP/UCL/SCC/BV-022-C [UCL SNK Config Codec, LC3 24_2] Passed
+BAP/UCL/SCC/BV-023-C [UCL SNK Config Codec, LC3 32_1] Passed
+BAP/UCL/SCC/BV-024-C [UCL SNK Config Codec, LC3 32_2] Passed
+BAP/UCL/SCC/BV-025-C [UCL SNK Config Codec, LC3 44.1_1] Passed
+BAP/UCL/SCC/BV-026-C [UCL SNK Config Codec, LC3 44.1_2] Passed
+BAP/UCL/SCC/BV-027-C [UCL SNK Config Codec, LC3 48_1] Passed
+BAP/UCL/SCC/BV-028-C [UCL SNK Config Codec, LC3 48_2] Passed
+BAP/UCL/SCC/BV-029-C [UCL SNK Config Codec, LC3 48_3] Passed
+BAP/UCL/SCC/BV-030-C [UCL SNK Config Codec, LC3 48_4] Passed
+BAP/UCL/SCC/BV-031-C [UCL SNK Config Codec, LC3 48_5] Passed
+BAP/UCL/SCC/BV-032-C [UCL SNK Config Codec, LC3 48_6] Passed
+Total: 32, Passed: 32 (100.0%), Failed: 0, Not Run: 0
+---
+ unit/test-bap.c | 543 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 536 insertions(+), 7 deletions(-)
+
+diff --git a/unit/test-bap.c b/unit/test-bap.c
+index afeefac84091..ab48a15d32b4 100644
+--- a/unit/test-bap.c
++++ b/unit/test-bap.c
+@@ -30,20 +30,45 @@
+ #include "src/shared/gatt-db.h"
+ #include "src/shared/gatt-client.h"
+ #include "src/shared/bap.h"
++#include "src/shared/lc3.h"
++
++struct test_config {
++	struct bt_bap_pac_qos pqos;
++	struct iovec cc;
++	struct bt_bap_qos qos;
++	bool snk;
++	bool src;
++};
  
--#define LTV(_type, _bytes...) \
-+#define data(args...) ((const unsigned char[]) { args })
-+
-+#define LC3_IOV(args...) \
- 	{ \
--		.len = 1 + sizeof((uint8_t []) { _bytes }), \
--		.type = _type, \
--		.data = { _bytes }, \
-+		.iov_base = (void *)data(args), \
-+		.iov_len = sizeof(data(args)), \
- 	}
+ struct test_data {
+ 	struct bt_gatt_client *client;
+ 	struct bt_bap *bap;
++	struct bt_bap_pac *snk;
++	struct bt_bap_pac *src;
++	struct iovec *caps;
++	struct test_config *cfg;
++	struct bt_bap_stream *stream;
+ 	size_t iovcnt;
+ 	struct iovec *iov;
+ };
  
- #define LC3_ID			0x06
-@@ -52,13 +53,11 @@
- #define LC3_FRAME_COUNT		(LC3_BASE + 4)
++/*
++ * Frequencies: 8Khz 11Khz 16Khz 22Khz 24Khz 32Khz 44.1Khz 48Khz
++ * Duration: 7.5 ms 10 ms
++ * Channel count: 3
++ * Frame length: 30-240
++ */
++static struct iovec lc3_caps = LC3_CAPABILITIES(LC3_FREQ_ANY, LC3_DURATION_ANY,
++								3u, 30, 240);
++
+ #define iov_data(args...) ((const struct iovec[]) { args })
  
- #define LC3_CAPABILITIES(_freq, _duration, _chan_count, _len_min, _len_max) \
--	{ \
--		LTV(LC3_FREQ, _freq), \
--		LTV(LC3_DURATION, _duration), \
--		LTV(LC3_CHAN_COUNT, _chan_count), \
--		LTV(LC3_FRAME_LEN, _len_min, _len_min >> 8, \
--				_len_max, _len_max >> 8), \
--	}
-+	LC3_IOV(0x02, LC3_FREQ, _freq, _freq >> 8, \
-+		0x02, LC3_DURATION, _duration, \
-+		0x02, LC3_CHAN_COUNT, _chan_count, \
-+		0x05, LC3_FRAME_LEN, _len_min, _len_min >> 8, \
-+		_len_max, _len_max >> 8)
+-#define define_test(name, function, args...)			\
++#define define_test(name, function, _cfg, args...)		\
+ 	do {							\
+ 		const struct iovec iov[] = { args };		\
+ 		static struct test_data data;			\
++		data.caps = &lc3_caps;				\
++		data.cfg = _cfg;				\
+ 		data.iovcnt = ARRAY_SIZE(iov_data(args));	\
+ 		data.iov = util_iov_dup(iov, ARRAY_SIZE(iov_data(args))); \
+ 		tester_add(name, &data, test_setup, function,	\
+@@ -307,6 +332,38 @@ static void test_complete_cb(const void *user_data)
+ 	tester_test_passed();
+ }
  
- #define LC3_CONFIG_BASE		0x01
++static void bap_config(struct bt_bap_stream *stream,
++					uint8_t code, uint8_t reason,
++					void *user_data)
++{
++	if (code)
++		tester_test_failed();
++}
++
++static bool pac_found(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
++							void *user_data)
++{
++	struct test_data *data = user_data;
++	unsigned int config_id;
++
++	data->stream = bt_bap_stream_new(data->bap, lpac, rpac,
++						&data->cfg->qos,
++						&data->cfg->cc);
++	g_assert(data->stream);
++
++	config_id = bt_bap_stream_config(data->stream, &data->cfg->qos,
++					&data->cfg->cc, bap_config, data);
++	g_assert(config_id);
++
++	return true;
++}
++
++static void bap_ready(struct bt_bap *bap, void *user_data)
++{
++	bt_bap_foreach_pac(bap, BT_BAP_SINK, pac_found, user_data);
++	bt_bap_foreach_pac(bap, BT_BAP_SOURCE, pac_found, user_data);
++}
++
+ static void test_client(const void *user_data)
+ {
+ 	struct test_data *data = (void *)user_data;
+@@ -321,11 +378,29 @@ static void test_client(const void *user_data)
+ 	db = gatt_db_new();
+ 	g_assert(db);
  
-@@ -81,32 +80,78 @@
- #define LC3_CONFIG_FRAME_LEN	(LC3_CONFIG_BASE + 3)
++	if (data->cfg) {
++		if (data->cfg->src) {
++			data->snk = bt_bap_add_pac(db, "test-bap-snk",
++							BT_BAP_SINK, LC3_ID,
++							NULL, data->caps, NULL);
++			g_assert(data->snk);
++		}
++
++		if (data->cfg->snk) {
++			data->src = bt_bap_add_pac(db, "test-bap-src",
++							BT_BAP_SOURCE, LC3_ID,
++							NULL, data->caps, NULL);
++			g_assert(data->src);
++		}
++	}
++
+ 	data->bap = bt_bap_new(db, bt_gatt_client_get_db(data->client));
+ 	g_assert(data->bap);
  
- #define LC3_CONFIG(_freq, _duration, _len) \
--	{ \
--		LTV(LC3_CONFIG_FREQ, _freq), \
--		LTV(LC3_CONFIG_DURATION, _duration), \
--		LTV(LC3_CONFIG_FRAME_LEN, _len, _len >> 8), \
--	}
-+	LC3_IOV(0x02, LC3_CONFIG_FREQ, _freq, \
-+		0x02, LC3_CONFIG_DURATION, _duration, \
-+		0x03, LC3_CONFIG_FRAME_LEN, _len, _len >> 8)
+ 	bt_bap_set_debug(data->bap, print_debug, "bt_bap:", NULL);
  
--#define LC3_CONFIG_8KHZ(_duration, _len) \
-+#define LC3_CONFIG_8(_duration, _len) \
- 	LC3_CONFIG(LC3_CONFIG_FREQ_8KHZ, _duration, _len)
++	bt_bap_ready_register(data->bap, bap_ready, data, NULL);
++
+ 	bt_bap_attach(data->bap, data->client);
+ }
  
--#define LC3_CONFIG_11KHZ(_duration, _len) \
-+#define LC3_CONFIG_11(_duration, _len) \
- 	LC3_CONFIG(LC3_CONFIG_FREQ_11KHZ, _duration, _len)
+@@ -531,22 +606,22 @@ static void test_disc(void)
+ 	 * The IUT reads the values of the characteristics specified in the PAC
+ 	 * Characteristic and Location Characteristic columns.
+ 	 */
+-	define_test("BAP/UCL/DISC/BV-01-C", test_client, DISC_SINK_PAC);
+-	define_test("BAP/UCL/DISC/BV-02-C", test_client, DISC_SOURCE_PAC);
++	define_test("BAP/UCL/DISC/BV-01-C", test_client, NULL, DISC_SINK_PAC);
++	define_test("BAP/UCL/DISC/BV-02-C", test_client, NULL, DISC_SOURCE_PAC);
  
--#define LC3_CONFIG_16KHZ(_duration, _len) \
-+#define LC3_CONFIG_16(_duration, _len) \
- 	LC3_CONFIG(LC3_CONFIG_FREQ_16KHZ, _duration, _len)
+ 	/* BAP/UCL/DISC/BV-06-C [Discover Available Audio Contexts]
+ 	 *
+ 	 * The IUT successfully reads the value of the Available Audio Contexts
+ 	 * characteristic on the LowerTester.
+ 	 */
+-	define_test("BAP/UCL/DISC/BV-06-C", test_client, DISC_CTX);
++	define_test("BAP/UCL/DISC/BV-06-C", test_client, NULL, DISC_CTX);
  
--#define LC3_CONFIG_22KHZ(_duration, _len) \
-+#define LC3_CONFIG_22(_duration, _len) \
- 	LC3_CONFIG(LC3_CONFIG_FREQ_22KHZ, _duration, _len)
+ 	/* BAP/UCL/DISC/BV-05-C [Discover Supported Audio Contexts]
+ 	 *
+ 	 * The IUT successfully reads the value of the Supported Audio Contexts
+ 	 * characteristic on the Lower Tester.
+ 	 */
+-	define_test("BAP/UCL/DISC/BV-05-C", test_client, DISC_SUP_CTX);
++	define_test("BAP/UCL/DISC/BV-05-C", test_client, NULL, DISC_SUP_CTX);
  
--#define LC3_CONFIG_24KHZ(_duration, _len) \
-+#define LC3_CONFIG_24(_duration, _len) \
- 	LC3_CONFIG(LC3_CONFIG_FREQ_24KHZ, _duration, _len)
+ 	/* BAP/UCL/DISC/BV-03-C [Discover Sink ASE_ID]
+ 	 * BAP/UCL/DISC/BV-04-C [Discover Source ASE_ID]
+@@ -554,8 +629,461 @@ static void test_disc(void)
+ 	 * The IUT successfully reads the ASE_ID values of each discovered ASE
+ 	 * characteristic on the LowerTester.
+ 	 */
+-	define_test("BAP/UCL/DISC/BV-03-C", test_client, DISC_SINK_ASE);
+-	define_test("BAP/UCL/DISC/BV-04-C", test_client, DISC_SOURCE_ASE);
++	define_test("BAP/UCL/DISC/BV-03-C", test_client, NULL, DISC_SINK_ASE);
++	define_test("BAP/UCL/DISC/BV-04-C", test_client, NULL, DISC_SOURCE_ASE);
++}
++
++/* ATT: Write Command (0x52) len 23
++ *  Handle: 0x0022
++ *    Data: 010101020206000000000_cfg
++ * ATT: Handle Value Notification (0x1b) len 7
++ *   Handle: 0x0022
++ *     Data: 0101010000
++ * ATT: Handle Value Notification (0x1b) len 37
++ *   Handle: 0x0016
++ *     Data: 01010102010a00204e00409c00204e00409c000600000000_cfg
++ */
++#define SCC_SNK(_cfg...) \
++	DISC_SOURCE_ASE, \
++	IOV_DATA(0x52, 0x22, 0x00, 0x01, 0x01, 0x01, 0x02, 0x02, 0x06, 0x00, \
++			0x00, 0x00, 0x00, _cfg), \
++	IOV_DATA(0x1b, 0x22, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00), \
++	IOV_NULL, \
++	IOV_DATA(0x1b, 0x16, 0x00, 0x01, 0x01, 0x01, 0x02, 0x01, 0x0a, 0x00, \
++			0x20, 0x4e, 0x00, 0x40, 0x9c, 0x00, 0x20, 0x4e, 0x00, \
++			0x40, 0x9c, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, _cfg)
++
++#define QOS_BALANCED_2M \
++	{ \
++		.target_latency = BT_BAP_CONFIG_LATENCY_BALANCED, \
++		.phy = BT_BAP_CONFIG_PHY_2M, \
++	}
++
++static struct test_config cfg_snk_8_1 = {
++	.cc = LC3_CONFIG_8_1,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_8_1 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x01, 0x02, 0x02, 0x00, 0x03, 0x04, 0x1a, \
++			0x00)
++
++static struct test_config cfg_snk_8_2 = {
++	.cc = LC3_CONFIG_8_2,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_8_2 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x01, 0x02, 0x02, 0x01, 0x03, 0x04, 0x1e, \
++			0x00)
++
++static struct test_config cfg_snk_16_1 = {
++	.cc = LC3_CONFIG_16_1,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_16_1 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x03, 0x02, 0x02, 0x00, 0x03, 0x04, 0x1e, \
++			0x00)
++
++static struct test_config cfg_snk_16_2 = {
++	.cc = LC3_CONFIG_16_2,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_16_2 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x03, 0x02, 0x02, 0x01, 0x03, 0x04, 0x28, \
++			0x00)
++
++static struct test_config cfg_snk_24_1 = {
++	.cc = LC3_CONFIG_24_1,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_24_1 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x05, 0x02, 0x02, 0x00, 0x03, 0x04, 0x2d, \
++			0x00)
++
++static struct test_config cfg_snk_24_2 = {
++	.cc = LC3_CONFIG_24_2,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_24_2 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x05, 0x02, 0x02, 0x01, 0x03, 0x04, 0x3c, \
++			0x00)
++
++static struct test_config cfg_snk_32_1 = {
++	.cc = LC3_CONFIG_32_1,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_32_1 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x06, 0x02, 0x02, 0x00, 0x03, 0x04, 0x3c, \
++			0x00)
++
++static struct test_config cfg_snk_32_2 = {
++	.cc = LC3_CONFIG_32_2,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_32_2 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x06, 0x02, 0x02, 0x01, 0x03, 0x04, 0x50, \
++			0x00)
++
++static struct test_config cfg_snk_44_1 = {
++	.cc = LC3_CONFIG_44_1,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_44_1 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x07, 0x02, 0x02, 0x00, 0x03, 0x04, 0x62, \
++			0x00)
++
++static struct test_config cfg_snk_44_2 = {
++	.cc = LC3_CONFIG_44_2,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_44_2 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x07, 0x02, 0x02, 0x01, 0x03, 0x04, 0x82, \
++			0x00)
++
++static struct test_config cfg_snk_48_1 = {
++	.cc = LC3_CONFIG_48_1,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_48_1 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x00, 0x03, 0x04, 0x4b, \
++			0x00)
++
++static struct test_config cfg_snk_48_2 = {
++	.cc = LC3_CONFIG_48_2,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_48_2 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x01, 0x03, 0x04, 0x64, \
++			0x00)
++
++static struct test_config cfg_snk_48_3 = {
++	.cc = LC3_CONFIG_48_3,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_48_3 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x00, 0x03, 0x04, 0x5a, \
++			0x00)
++
++static struct test_config cfg_snk_48_4 = {
++	.cc = LC3_CONFIG_48_4,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_48_4 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x01, 0x03, 0x04, 0x78, \
++			0x00)
++
++static struct test_config cfg_snk_48_5 = {
++	.cc = LC3_CONFIG_48_5,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_48_5 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x00, 0x03, 0x04, 0x75, \
++			0x00)
++
++static struct test_config cfg_snk_48_6 = {
++	.cc = LC3_CONFIG_48_6,
++	.qos = QOS_BALANCED_2M,
++	.snk = true,
++};
++
++#define SCC_SNK_48_6 \
++	SCC_SNK(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x01, 0x03, 0x04, 0x9b, \
++			0x00)
++
++/* ATT: Write Command (0x52) len 23
++ *  Handle: 0x0022
++ *    Data: 010103020206000000000_cfg
++ * ATT: Handle Value Notification (0x1b) len 7
++ *   Handle: 0x0022
++ *     Data: 0101030000
++ * ATT: Handle Value Notification (0x1b) len 37
++ *   Handle: 0x001c
++ *     Data: 03010102010a00204e00409c00204e00409c000600000000_cfg
++ */
++#define SCC_SRC(_cfg...) \
++	DISC_SOURCE_ASE, \
++	IOV_DATA(0x52, 0x22, 0x00, 0x01, 0x01, 0x03, 0x02, 0x02, 0x06, 0x00, \
++			0x00, 0x00, 0x00, _cfg), \
++	IOV_DATA(0x1b, 0x22, 0x00, 0x01, 0x01, 0x03, 0x00, 0x00), \
++	IOV_NULL, \
++	IOV_DATA(0x1b, 0x1c, 0x00, 0x03, 0x01, 0x01, 0x02, 0x01, 0x0a, 0x00, \
++			0x20, 0x4e, 0x00, 0x40, 0x9c, 0x00, 0x20, 0x4e, 0x00, \
++			0x40, 0x9c, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, _cfg)
++
++static struct test_config cfg_src_8_1 = {
++	.cc = LC3_CONFIG_8_1,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_8_1 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x01, 0x02, 0x02, 0x00, 0x03, 0x04, 0x1a, \
++			0x00)
++
++static struct test_config cfg_src_8_2 = {
++	.cc = LC3_CONFIG_8_2,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_8_2 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x01, 0x02, 0x02, 0x01, 0x03, 0x04, 0x1e, \
++			0x00)
++
++static struct test_config cfg_src_16_1 = {
++	.cc = LC3_CONFIG_16_1,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_16_1 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x03, 0x02, 0x02, 0x00, 0x03, 0x04, 0x1e, \
++			0x00)
++
++static struct test_config cfg_src_16_2 = {
++	.cc = LC3_CONFIG_16_2,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_16_2 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x03, 0x02, 0x02, 0x01, 0x03, 0x04, 0x28, \
++			0x00)
++
++static struct test_config cfg_src_24_1 = {
++	.cc = LC3_CONFIG_24_1,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_24_1 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x05, 0x02, 0x02, 0x00, 0x03, 0x04, 0x2d, \
++			0x00)
++
++static struct test_config cfg_src_24_2 = {
++	.cc = LC3_CONFIG_24_2,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_24_2 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x05, 0x02, 0x02, 0x01, 0x03, 0x04, 0x3c, \
++			0x00)
++
++static struct test_config cfg_src_32_1 = {
++	.cc = LC3_CONFIG_32_1,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_32_1 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x06, 0x02, 0x02, 0x00, 0x03, 0x04, 0x3c, \
++			0x00)
++
++static struct test_config cfg_src_32_2 = {
++	.cc = LC3_CONFIG_32_2,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_32_2 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x06, 0x02, 0x02, 0x01, 0x03, 0x04, 0x50, \
++			0x00)
++
++static struct test_config cfg_src_44_1 = {
++	.cc = LC3_CONFIG_44_1,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_44_1 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x07, 0x02, 0x02, 0x00, 0x03, 0x04, 0x62, \
++			0x00)
++
++static struct test_config cfg_src_44_2 = {
++	.cc = LC3_CONFIG_44_2,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_44_2 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x07, 0x02, 0x02, 0x01, 0x03, 0x04, 0x82, \
++			0x00)
++
++static struct test_config cfg_src_48_1 = {
++	.cc = LC3_CONFIG_48_1,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_48_1 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x00, 0x03, 0x04, 0x4b, \
++			0x00)
++
++static struct test_config cfg_src_48_2 = {
++	.cc = LC3_CONFIG_48_2,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_48_2 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x01, 0x03, 0x04, 0x64, \
++			0x00)
++
++static struct test_config cfg_src_48_3 = {
++	.cc = LC3_CONFIG_48_3,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_48_3 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x00, 0x03, 0x04, 0x5a, \
++			0x00)
++
++static struct test_config cfg_src_48_4 = {
++	.cc = LC3_CONFIG_48_4,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_48_4 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x01, 0x03, 0x04, 0x78, \
++			0x00)
++
++static struct test_config cfg_src_48_5 = {
++	.cc = LC3_CONFIG_48_5,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_48_5 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x00, 0x03, 0x04, 0x75, \
++			0x00)
++
++static struct test_config cfg_src_48_6 = {
++	.cc = LC3_CONFIG_48_6,
++	.qos = QOS_BALANCED_2M,
++	.src = true,
++};
++
++#define SCC_SRC_48_6 \
++	SCC_SRC(0x0a, 0x02, 0x01, 0x08, 0x02, 0x02, 0x01, 0x03, 0x04, \
++			0x9b, 0x00)
++
++/* Test Purpose:
++ * Verify that a Unicast Client IUT can initiate a Config Codec
++ * operation for an LC3 codec.
++ *
++ * Pass verdict:
++ * The IUT successfully writes to the ASE Control point with the opcode
++ * set to 0x01 (Config Codec) and correctly formatted parameter values
++ * from Table 4.9. The Codec_ID field is a 5-octet field with octet 0
++ * set to the LC3 Coding_Format value defined in Bluetooth Assigned
++ * Numbers, octets 1–4 set to 0x0000. Each parameter (if present)
++ * included in the data sent in Codec_Specific_Configuration is
++ * formatted in an LTV structure with the length, type, and value
++ * specified in Table 4.10.
++ */
++static void test_scc_cc_lc3(void)
++{
++	define_test("BAP/UCL/SCC/BV-001-C [UCL SRC Config Codec, LC3 8_1]",
++			test_client, &cfg_snk_8_1, SCC_SNK_8_1);
++	define_test("BAP/UCL/SCC/BV-002-C [UCL SRC Config Codec, LC3 8_2]",
++			test_client, &cfg_snk_8_2, SCC_SNK_8_2);
++	define_test("BAP/UCL/SCC/BV-003-C [UCL SRC Config Codec, LC3 16_1]",
++			test_client, &cfg_snk_16_1, SCC_SNK_16_1);
++	define_test("BAP/UCL/SCC/BV-004-C [UCL SRC Config Codec, LC3 16_2]",
++			test_client, &cfg_snk_16_2, SCC_SNK_16_2);
++	define_test("BAP/UCL/SCC/BV-005-C [UCL SRC Config Codec, LC3 24_1]",
++			test_client, &cfg_snk_24_1, SCC_SNK_24_1);
++	define_test("BAP/UCL/SCC/BV-006-C [UCL SRC Config Codec, LC3 24_2]",
++			test_client, &cfg_snk_24_2, SCC_SNK_24_2);
++	define_test("BAP/UCL/SCC/BV-007-C [UCL SRC Config Codec, LC3 32_1]",
++			test_client, &cfg_snk_32_1, SCC_SNK_32_1);
++	define_test("BAP/UCL/SCC/BV-008-C [UCL SRC Config Codec, LC3 32_2]",
++			test_client, &cfg_snk_32_2, SCC_SNK_32_2);
++	define_test("BAP/UCL/SCC/BV-009-C [UCL SRC Config Codec, LC3 44.1_1]",
++			test_client, &cfg_snk_44_1, SCC_SNK_44_1);
++	define_test("BAP/UCL/SCC/BV-010-C [UCL SRC Config Codec, LC3 44.1_2]",
++			test_client, &cfg_snk_44_2, SCC_SNK_44_2);
++	define_test("BAP/UCL/SCC/BV-011-C [UCL SRC Config Codec, LC3 48_1]",
++			test_client, &cfg_snk_48_1, SCC_SNK_48_1);
++	define_test("BAP/UCL/SCC/BV-012-C [UCL SRC Config Codec, LC3 48_2]",
++			test_client, &cfg_snk_48_2, SCC_SNK_48_2);
++	define_test("BAP/UCL/SCC/BV-013-C [UCL SRC Config Codec, LC3 48_3]",
++			test_client, &cfg_snk_48_3, SCC_SNK_48_3);
++	define_test("BAP/UCL/SCC/BV-014-C [UCL SRC Config Codec, LC3 48_4]",
++			test_client, &cfg_snk_48_4, SCC_SNK_48_4);
++	define_test("BAP/UCL/SCC/BV-015-C [UCL SRC Config Codec, LC3 48_5]",
++			test_client, &cfg_snk_48_5, SCC_SNK_48_5);
++	define_test("BAP/UCL/SCC/BV-016-C [UCL SRC Config Codec, LC3 48_6]",
++			test_client, &cfg_snk_48_6, SCC_SNK_48_6);
++	define_test("BAP/UCL/SCC/BV-017-C [UCL SNK Config Codec, LC3 8_1]",
++			test_client, &cfg_src_8_1, SCC_SRC_8_1);
++	define_test("BAP/UCL/SCC/BV-018-C [UCL SNK Config Codec, LC3 8_2]",
++			test_client, &cfg_src_8_2, SCC_SRC_8_2);
++	define_test("BAP/UCL/SCC/BV-019-C [UCL SNK Config Codec, LC3 16_1]",
++			test_client, &cfg_src_16_1, SCC_SRC_16_1);
++	define_test("BAP/UCL/SCC/BV-020-C [UCL SNK Config Codec, LC3 16_2]",
++			test_client, &cfg_src_16_2, SCC_SRC_16_2);
++	define_test("BAP/UCL/SCC/BV-021-C [UCL SNK Config Codec, LC3 24_1]",
++			test_client, &cfg_src_24_1, SCC_SRC_24_1);
++	define_test("BAP/UCL/SCC/BV-022-C [UCL SNK Config Codec, LC3 24_2]",
++			test_client, &cfg_src_24_2, SCC_SRC_24_2);
++	define_test("BAP/UCL/SCC/BV-023-C [UCL SNK Config Codec, LC3 32_1]",
++			test_client, &cfg_src_32_1, SCC_SRC_32_1);
++	define_test("BAP/UCL/SCC/BV-024-C [UCL SNK Config Codec, LC3 32_2]",
++			test_client, &cfg_src_32_2, SCC_SRC_32_2);
++	define_test("BAP/UCL/SCC/BV-025-C [UCL SNK Config Codec, LC3 44.1_1]",
++			test_client, &cfg_src_44_1, SCC_SRC_44_1);
++	define_test("BAP/UCL/SCC/BV-026-C [UCL SNK Config Codec, LC3 44.1_2]",
++			test_client, &cfg_src_44_2, SCC_SRC_44_2);
++	define_test("BAP/UCL/SCC/BV-027-C [UCL SNK Config Codec, LC3 48_1]",
++			test_client, &cfg_src_48_1, SCC_SRC_48_1);
++	define_test("BAP/UCL/SCC/BV-028-C [UCL SNK Config Codec, LC3 48_2]",
++			test_client, &cfg_src_48_2, SCC_SRC_48_2);
++	define_test("BAP/UCL/SCC/BV-029-C [UCL SNK Config Codec, LC3 48_3]",
++			test_client, &cfg_src_48_3, SCC_SRC_48_3);
++	define_test("BAP/UCL/SCC/BV-030-C [UCL SNK Config Codec, LC3 48_4]",
++			test_client, &cfg_src_48_4, SCC_SRC_48_4);
++	define_test("BAP/UCL/SCC/BV-031-C [UCL SNK Config Codec, LC3 48_5]",
++			test_client, &cfg_src_48_5, SCC_SRC_48_5);
++	define_test("BAP/UCL/SCC/BV-032-C [UCL SNK Config Codec, LC3 48_6]",
++			test_client, &cfg_src_48_6, SCC_SRC_48_6);
++}
++
++static void test_scc(void)
++{
++	test_scc_cc_lc3();
+ }
  
--#define LC3_CONFIG_32KHZ(_duration, _len) \
-+#define LC3_CONFIG_32(_duration, _len) \
- 	LC3_CONFIG(LC3_CONFIG_FREQ_32KHZ, _duration, _len)
+ int main(int argc, char *argv[])
+@@ -563,6 +1091,7 @@ int main(int argc, char *argv[])
+ 	tester_init(&argc, &argv);
  
--#define LC3_CONFIG_44KHZ(_duration, _len) \
-+#define LC3_CONFIG_44(_duration, _len) \
- 	LC3_CONFIG(LC3_CONFIG_FREQ_44KHZ, _duration, _len)
+ 	test_disc();
++	test_scc();
  
--#define LC3_CONFIG_48KHZ(_duration, _len) \
-+#define LC3_CONFIG_48(_duration, _len) \
- 	LC3_CONFIG(LC3_CONFIG_FREQ_48KHZ, _duration, _len)
-+
-+#define LC3_CONFIG_8_1 \
-+	LC3_CONFIG_8(LC3_CONFIG_DURATION_7_5, 26u)
-+
-+#define LC3_CONFIG_8_2 \
-+	LC3_CONFIG_8(LC3_CONFIG_DURATION_10, 30u)
-+
-+#define LC3_CONFIG_16_1 \
-+	LC3_CONFIG_16(LC3_CONFIG_DURATION_7_5, 30u)
-+
-+#define LC3_CONFIG_16_2 \
-+	LC3_CONFIG_16(LC3_CONFIG_DURATION_10, 40u)
-+
-+#define LC3_CONFIG_24_1 \
-+	LC3_CONFIG_24(LC3_CONFIG_DURATION_7_5, 45u)
-+
-+#define LC3_CONFIG_24_2 \
-+	LC3_CONFIG_24(LC3_CONFIG_DURATION_10, 60u)
-+
-+#define LC3_CONFIG_32_1 \
-+	LC3_CONFIG_32(LC3_CONFIG_DURATION_7_5, 60u)
-+
-+#define LC3_CONFIG_32_2 \
-+	LC3_CONFIG_32(LC3_CONFIG_DURATION_10, 80u)
-+
-+#define LC3_CONFIG_44_1 \
-+	LC3_CONFIG_44(LC3_CONFIG_DURATION_7_5, 98u)
-+
-+#define LC3_CONFIG_44_2 \
-+	LC3_CONFIG_44(LC3_CONFIG_DURATION_10, 130u)
-+
-+#define LC3_CONFIG_48_1 \
-+	LC3_CONFIG_48(LC3_CONFIG_DURATION_7_5, 75u)
-+
-+#define LC3_CONFIG_48_2 \
-+	LC3_CONFIG_48(LC3_CONFIG_DURATION_10, 100u)
-+
-+#define LC3_CONFIG_48_3 \
-+	LC3_CONFIG_48(LC3_CONFIG_DURATION_7_5, 90u)
-+
-+#define LC3_CONFIG_48_4 \
-+	LC3_CONFIG_48(LC3_CONFIG_DURATION_10, 120u)
-+
-+#define LC3_CONFIG_48_5 \
-+	LC3_CONFIG_48(LC3_CONFIG_DURATION_7_5, 117u)
-+
-+#define LC3_CONFIG_48_6 \
-+	LC3_CONFIG_48(LC3_CONFIG_DURATION_10, 155u)
+ 	return tester_run();
+ }
 -- 
 2.40.0
 
