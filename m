@@ -2,28 +2,28 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1FC86F467D
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 May 2023 16:58:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C78EA6F4679
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 May 2023 16:58:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234494AbjEBO6G (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 2 May 2023 10:58:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55650 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234223AbjEBO6B (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
+        id S234512AbjEBO6B (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Tue, 2 May 2023 10:58:01 -0400
-Received: from pku.edu.cn (mx19.pku.edu.cn [162.105.129.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CE0142D41
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55664 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233656AbjEBO6A (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Tue, 2 May 2023 10:58:00 -0400
+Received: from pku.edu.cn (mx18.pku.edu.cn [162.105.129.181])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CDE91273C
         for <linux-bluetooth@vger.kernel.org>; Tue,  2 May 2023 07:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=pku.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:Date:
         Message-Id:In-Reply-To:References:MIME-Version:
-        Content-Transfer-Encoding; bh=9xGmf8aJdntu7YhLTCkjnA49nu1UugN/HF
-        b1MKGUwPM=; b=YQnlniD7cSnV3PFVXCc0pBsUeC9CN01uDZ4OZhlMFDc5oFwkK6
-        qoYkVvKl3k2miQLjUxYfEwJO++Lh79xUmNgLJ5YhOrdFIMCpB1byOh+SQWJq0Glu
-        L2BzA2u3Xqyfrq0SLwkQwsT5kl6UfCajh+YJsW4DpnXr5wCXGroEsIMyg=
+        Content-Transfer-Encoding; bh=5F7Xn4VuaYHkhG59E72wk6A+DGy1euMitS
+        xWn5Qzcc4=; b=nvHp7qSt/32GAyT6oiapULjO84JpoJTv04/ae8muEZyZtbGJfM
+        FmRbz1Qi/AIb99cgJyddc6Z+L+Lqn5cKIHcmC0c1RLqEm6ixN9221FPTxzKzMz5u
+        8+EGNja7B7f2FObgww++ZyvOLjBRoCPsfcc14qoxjHv5U+TEEygfJsVcE=
 Received: from localhost.localdomain (unknown [10.7.101.92])
-        by front01 (Coremail) with SMTP id 5oFpogBXX5fjJFFk6i5LAQ--.10226S7;
+        by front01 (Coremail) with SMTP id 5oFpogBXX5fjJFFk6i5LAQ--.10226S8;
         Tue, 02 May 2023 22:57:48 +0800 (CST)
 From:   Ruihan Li <lrh2000@pku.edu.cn>
 To:     linux-bluetooth@vger.kernel.org
@@ -31,18 +31,18 @@ Cc:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
         Ruihan Li <lrh2000@pku.edu.cn>
-Subject: [PATCH v3 5/6] Bluetooth: Unlink CISes when LE disconnects in hci_conn_del
-Date:   Tue,  2 May 2023 22:57:36 +0800
-Message-Id: <20230502145737.140856-6-lrh2000@pku.edu.cn>
+Subject: [PATCH v3 6/6] Bluetooth: Avoid recursion in hci_conn_unlink
+Date:   Tue,  2 May 2023 22:57:37 +0800
+Message-Id: <20230502145737.140856-7-lrh2000@pku.edu.cn>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230502145737.140856-1-lrh2000@pku.edu.cn>
 References: <20230502145737.140856-1-lrh2000@pku.edu.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: 5oFpogBXX5fjJFFk6i5LAQ--.10226S7
-X-Coremail-Antispam: 1UD129KBjvJXoWxGF15ZrWDtFW8tw4DXw4ruFg_yoW5CFyUpa
-        43K3s7ur4kJwn3uFnYvay8AFsYvr1kAFy7Kr48Xw1Ut390qr1vyr4Fkw1qgrZ8Cr95Za4U
-        ZF4jqr42gF15C3DanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID: 5oFpogBXX5fjJFFk6i5LAQ--.10226S8
+X-Coremail-Antispam: 1UD129KBjvJXoWxury8Cr17ZF4fWF1UJw1DWrg_yoW5XFy8pa
+        43Wa4fZr48twna9F42yw1DJrn0qr1kZFy3KryrJF1kJw4Fvw4qyr40k34UKry5ZrWkWFy7
+        AF4jqF18KF4UGw7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
         9KBjDU0xBIdaVrnRJUUU9j1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
         w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
         IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
@@ -56,102 +56,108 @@ X-Coremail-Antispam: 1UD129KBjvJXoWxGF15ZrWDtFW8tw4DXw4ruFg_yoW5CFyUpa
         IF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4l
         IxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvf
         C2KfnxnUUI43ZEXa7VU1c4S5UUUUU==
-X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgETBVPy77xtsAAAs6
+X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEPBVPy77wh+AAds-
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Currently, hci_conn_del calls hci_conn_unlink for BR/EDR, (e)SCO, and
-CIS connections, i.e., everything except LE connections. However, if
-(e)SCO connections are unlinked when BR/EDR disconnects, CIS connections
-should also be unlinked when LE disconnects.
+Previously, hci_conn_unlink was implemented as a recursion function. To
+unlink physical connections (e.g. ACL/LE), it calls itself to unlink all
+its logical channels (e.g. SCO/eSCO/ISO).
 
-In terms of disconnection behavior, CIS and (e)SCO connections are not
-too different. One peculiarity of CIS is that when CIS connections are
-disconnected, the CIS handle isn't deleted, as per [BLUETOOTH CORE
-SPECIFICATION Version 5.4 | Vol 4, Part E] 7.1.6 Disconnect command:
-
-	All SCO, eSCO, and CIS connections on a physical link should be
-	disconnected before the ACL connection on the same physical
-	connection is disconnected. If it does not, they will be
-	implicitly disconnected as part of the ACL disconnection.
-	...
-	Note: As specified in Section 7.7.5, on the Central, the handle
-	for a CIS remains valid even after disconnection and, therefore,
-	the Host can recreate a disconnected CIS at a later point in
-	time using the same connection handle.
-
-This peculiarity has nothing to do with the code, as long as the current
-implementation always ties the CIS handle, the CIS connection, and the
-LE connection together in hci_link, and manually performs CIS deletion
-in cis_cleanup after CIS disconnections.
+Recursion is not required. This patch refactors hci_conn_unlink into two
+functions, where hci_conn_unlink_parent takes a physical connection,
+checks out all its logical channels, and calls hci_conn_unlink_child for
+each logical channel to unlink it.
 
 Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
 ---
- net/bluetooth/hci_conn.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ net/bluetooth/hci_conn.c | 55 +++++++++++++++++++++++-----------------
+ 1 file changed, 32 insertions(+), 23 deletions(-)
 
 diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index e76ebb50d..de553e062 100644
+index de553e062..243d68a64 100644
 --- a/net/bluetooth/hci_conn.c
 +++ b/net/bluetooth/hci_conn.c
-@@ -1092,7 +1092,9 @@ static void hci_conn_unlink(struct hci_conn *conn)
- 			 * yet at this point. Delete it now, otherwise it is
- 			 * possible for it to be stuck and can't be deleted.
- 			 */
--			if (child->handle == HCI_CONN_HANDLE_UNSET)
-+			if ((child->type == SCO_LINK ||
-+			     child->type == ESCO_LINK) &&
-+			    child->handle == HCI_CONN_HANDLE_UNSET)
- 				hci_conn_del(child);
- 		}
+@@ -1074,34 +1074,13 @@ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	return conn;
+ }
  
-@@ -1119,11 +1121,17 @@ void hci_conn_del(struct hci_conn *conn)
+-static void hci_conn_unlink(struct hci_conn *conn)
++static void hci_conn_unlink_parent(struct hci_conn *conn)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
  
- 	BT_DBG("%s hcon %p handle %d", hdev->name, conn, conn->handle);
+ 	bt_dev_dbg(hdev, "hcon %p", conn);
  
-+	hci_conn_unlink(conn);
-+
-+	/* hci_conn_unlink may trigger additional disc_work, so
-+	 * ensure to perform cancelling after that.
-+	 */
-+	cancel_delayed_work_sync(&conn->disc_work);
-+
- 	cancel_delayed_work_sync(&conn->auto_accept_work);
- 	cancel_delayed_work_sync(&conn->idle_work);
- 
- 	if (conn->type == ACL_LINK) {
--		hci_conn_unlink(conn);
- 		/* Unacked frames */
- 		hdev->acl_cnt += conn->sent;
- 	} else if (conn->type == LE_LINK) {
-@@ -1134,8 +1142,6 @@ void hci_conn_del(struct hci_conn *conn)
- 		else
- 			hdev->acl_cnt += conn->sent;
- 	} else {
--		hci_conn_unlink(conn);
+-	if (!conn->parent) {
+-		struct hci_link *link, *t;
 -
- 		/* Unacked ISO frames */
- 		if (conn->type == ISO_LINK) {
- 			if (hdev->iso_pkts)
-@@ -1147,11 +1153,6 @@ void hci_conn_del(struct hci_conn *conn)
- 		}
- 	}
- 
--	/* hci_conn_unlink may trigger additional disc_work, so
--	 * ensure to perform cancelling after that.
--	 */
--	cancel_delayed_work_sync(&conn->disc_work);
+-		list_for_each_entry_safe(link, t, &conn->link_list, list) {
+-			struct hci_conn *child = link->conn;
 -
- 	if (conn->amp_mgr)
- 		amp_mgr_put(conn->amp_mgr);
+-			hci_conn_unlink(child);
+-
+-			/* Due to race, SCO connection might be not established
+-			 * yet at this point. Delete it now, otherwise it is
+-			 * possible for it to be stuck and can't be deleted.
+-			 */
+-			if ((child->type == SCO_LINK ||
+-			     child->type == ESCO_LINK) &&
+-			    child->handle == HCI_CONN_HANDLE_UNSET)
+-				hci_conn_del(child);
+-		}
+-
+-		return;
+-	}
+-
+-	if (!conn->link)
++	if (WARN_ON(!conn->link))
+ 		return;
  
+ 	list_del_rcu(&conn->link->list);
+@@ -1115,6 +1094,36 @@ static void hci_conn_unlink(struct hci_conn *conn)
+ 	conn->link = NULL;
+ }
+ 
++static void hci_conn_unlink_children(struct hci_conn *conn)
++{
++	struct hci_dev *hdev = conn->hdev;
++	struct hci_link *link, *t;
++
++	bt_dev_dbg(hdev, "hcon %p", conn);
++
++	list_for_each_entry_safe(link, t, &conn->link_list, list) {
++		struct hci_conn *child = link->conn;
++
++		hci_conn_unlink_parent(child);
++
++		/* Due to race, SCO connection might be not established
++		 * yet at this point. Delete it now, otherwise it is
++		 * possible for it to be stuck and can't be deleted.
++		 */
++		if (child->type == SCO_LINK || child->type == ESCO_LINK)
++			if (child->handle == HCI_CONN_HANDLE_UNSET)
++				hci_conn_del(child);
++	}
++}
++
++static void hci_conn_unlink(struct hci_conn *conn)
++{
++	if (conn->parent)
++		hci_conn_unlink_parent(conn);
++	else
++		hci_conn_unlink_children(conn);
++}
++
+ void hci_conn_del(struct hci_conn *conn)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
 -- 
 2.40.0
 
