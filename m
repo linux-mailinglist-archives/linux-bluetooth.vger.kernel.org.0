@@ -2,45 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E4196F467F
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 May 2023 16:58:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CB9F6F467B
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 May 2023 16:58:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233917AbjEBO6H (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 2 May 2023 10:58:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55666 "EHLO
+        id S234528AbjEBO6E (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 2 May 2023 10:58:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234364AbjEBO6B (ORCPT
+        with ESMTP id S234138AbjEBO6B (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Tue, 2 May 2023 10:58:01 -0400
-Received: from pku.edu.cn (mx18.pku.edu.cn [162.105.129.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CDD1A273A
+Received: from pku.edu.cn (mx19.pku.edu.cn [162.105.129.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CDC582733
         for <linux-bluetooth@vger.kernel.org>; Tue,  2 May 2023 07:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=pku.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:Date:
-        Message-Id:MIME-Version:Content-Transfer-Encoding; bh=SLvP7Rm0p5
-        mMK0mIr4FQLnN1i0z9DL3Tp3K+tqe/eIA=; b=h8e+Y7xfH0Bih7X/qKBRVcpnhw
-        iXeAQFBCKI++TF6ME64yAPLRPbwyxNJzCWG9AsvCLCILupIdcVTOH/PlODzy8O5Q
-        a6RaF5CzTZETWUy6u6UfrvwwMQ9w6pPk0EfFhX+IDwPe46Pq20uH2jNp6/gDaYis
-        nbRv/mu898gkv/Crs=
+        Message-Id:In-Reply-To:References:MIME-Version:
+        Content-Transfer-Encoding; bh=+23j70KJbA3hTfSGNHgn4j0Bbr5o3LtuB5
+        dNkDC+QWE=; b=RHMoB8tpZc7+Vwm4SpuMtjw9OraKJpBFCJDuNlDCNttPZ11stM
+        7bU6oyo97473y0TvMD5rVp0i1lmPb9gitcKwlWCuggHvSbAS9lpf6qvx7Bjzl47H
+        Kihkoe9PCZAhF9f20hG2qZLqPaGzHWnUdLuoc0b6mF+kBOzwc38oqNz/k=
 Received: from localhost.localdomain (unknown [10.7.101.92])
-        by front01 (Coremail) with SMTP id 5oFpogBXX5fjJFFk6i5LAQ--.10226S2;
-        Tue, 02 May 2023 22:57:46 +0800 (CST)
+        by front01 (Coremail) with SMTP id 5oFpogBXX5fjJFFk6i5LAQ--.10226S3;
+        Tue, 02 May 2023 22:57:47 +0800 (CST)
 From:   Ruihan Li <lrh2000@pku.edu.cn>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Ruihan Li <lrh2000@pku.edu.cn>
-Subject: [PATCH v3 0/6] Bluetooth: Fix potential double free caused by hci_conn_unlink
-Date:   Tue,  2 May 2023 22:57:31 +0800
-Message-Id: <20230502145737.140856-1-lrh2000@pku.edu.cn>
+        Ruihan Li <lrh2000@pku.edu.cn>,
+        syzbot+690b90b14f14f43f4688@syzkaller.appspotmail.com
+Subject: [PATCH v3 1/6] Bluetooth: Fix potential double free caused by hci_conn_unlink
+Date:   Tue,  2 May 2023 22:57:32 +0800
+Message-Id: <20230502145737.140856-2-lrh2000@pku.edu.cn>
 X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230502145737.140856-1-lrh2000@pku.edu.cn>
+References: <20230502145737.140856-1-lrh2000@pku.edu.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: 5oFpogBXX5fjJFFk6i5LAQ--.10226S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Ww1kZw1DCr1DZry8tF4ktFb_yoW8Xw18pa
-        y3uas8Xa1kJrySqr43Awn7WrWFqws5Zryakrn2q34rJ3yYva18AwsY9Fyj9rWDurZ7GF10
-        yF1ktrnrKF1DArDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID: 5oFpogBXX5fjJFFk6i5LAQ--.10226S3
+X-Coremail-Antispam: 1UD129KBjvJXoWxJrWkCrWrXrW8JryrKr1xXwb_yoW8ur45pa
+        y3WayfurWktrnavF4jyw48WFs0vw1kZFy3Krn5tryrXws0vr48Ar40kryjqrZ8ZrZ5WF4Y
+        vF4Utr18KF4UG37anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
         9KBjDU0xBIdaVrnRJUUUvE1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
         w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
         IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E
@@ -51,55 +54,76 @@ X-Coremail-Antispam: 1UD129KBjvJXoW7Ww1kZw1DCr1DZry8tF4ktFb_yoW8Xw18pa
         MxAIw28IcxkI7VAKI48JMxAIw28IcVCjz48v1sIEY20_Kr1UJr1l4I8I3I0E4IkC6x0Yz7
         v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF
         1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIx
-        AIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI
+        AIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI
         42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWI
         evJa73UjIFyTuYvjfUFYFADUUUU
-X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEPBVPy77wh+AAWs0
+X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgETBVPy77xtrwAAsl
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This patch series contains six fixes related to hci_conn_unlink. The
-purpose is to prevent merge conflicts between each other. I'm not
-intentially linking them together. So if any patch is not suitable,
-please just let me know (I'll be grateful if you can explain the
-reason).
+The hci_conn_unlink function is being called by hci_conn_del, which
+means it should not call hci_conn_del with the input parameter conn
+again. If it does, conn may have already been released when
+hci_conn_unlink returns, leading to potential UAF and double-free
+issues.
 
-The first three patches are the most important, each fixing a
-triggerable use-after-free bug (see the report URL for details). And the
-fourth through sixth patches are a bit more minor, containing mostly
-tweaks and refactorings.
+This patch resolves the problem by modifying hci_conn_unlink to release
+only conn's child links when necessary, but never release conn itself.
 
-Changes since v2:
-  * Put all fixes, adjustments, and refactorings about hci_conn_unlink
-    in one patch series.
-Link to v2:
-  * https://lore.kernel.org/linux-bluetooth/20230430180535.168270-1-lrh2000@pku.edu.cn/
-See also:
-  * https://lore.kernel.org/linux-bluetooth/20230430171847.156825-1-lrh2000@pku.edu.cn/
+Reported-by: syzbot+690b90b14f14f43f4688@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-bluetooth/000000000000484a8205faafe216@google.com/
+Fixes: 06149746e720 ("Bluetooth: hci_conn: Add support for linking multiple hcon")
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+---
+ net/bluetooth/hci_conn.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-Changes since v1:
-  * Resolve merge conflicts.
-Link to v1:
-  * https://lore.kernel.org/linux-bluetooth/20230430172937.157999-1-lrh2000@pku.edu.cn/
-
-Ruihan Li (6):
-  Bluetooth: Fix potential double free caused by hci_conn_unlink
-  Bluetooth: Refcnt drop must be placed last in hci_conn_unlink
-  Bluetooth: Fix UAF in hci_conn_hash_flush again
-  Bluetooth: Perform hci_conn_drop in hci_conn_unlink
-  Bluetooth: Unlink CISes when LE disconnects in hci_conn_del
-  Bluetooth: Avoid recursion in hci_conn_unlink
-
- include/net/bluetooth/hci_core.h |  2 +-
- net/bluetooth/hci_conn.c         | 96 ++++++++++++++++++--------------
- 2 files changed, 54 insertions(+), 44 deletions(-)
-
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 640b951bf..70e1655a9 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1083,8 +1083,18 @@ static void hci_conn_unlink(struct hci_conn *conn)
+ 	if (!conn->parent) {
+ 		struct hci_link *link, *t;
+ 
+-		list_for_each_entry_safe(link, t, &conn->link_list, list)
+-			hci_conn_unlink(link->conn);
++		list_for_each_entry_safe(link, t, &conn->link_list, list) {
++			struct hci_conn *child = link->conn;
++
++			hci_conn_unlink(child);
++
++			/* Due to race, SCO connection might be not established
++			 * yet at this point. Delete it now, otherwise it is
++			 * possible for it to be stuck and can't be deleted.
++			 */
++			if (child->handle == HCI_CONN_HANDLE_UNSET)
++				hci_conn_del(child);
++		}
+ 
+ 		return;
+ 	}
+@@ -1100,13 +1110,6 @@ static void hci_conn_unlink(struct hci_conn *conn)
+ 
+ 	kfree(conn->link);
+ 	conn->link = NULL;
+-
+-	/* Due to race, SCO connection might be not established
+-	 * yet at this point. Delete it now, otherwise it is
+-	 * possible for it to be stuck and can't be deleted.
+-	 */
+-	if (conn->handle == HCI_CONN_HANDLE_UNSET)
+-		hci_conn_del(conn);
+ }
+ 
+ int hci_conn_del(struct hci_conn *conn)
 -- 
 2.40.0
 
