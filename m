@@ -2,36 +2,36 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 887AD6F76BB
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 May 2023 22:14:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75A6C6F762E
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 May 2023 22:06:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232869AbjEDUOW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 4 May 2023 16:14:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45238 "EHLO
+        id S232385AbjEDUGE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 4 May 2023 16:06:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231972AbjEDUOD (ORCPT
+        with ESMTP id S232648AbjEDUE4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 4 May 2023 16:14:03 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38AC030448;
-        Thu,  4 May 2023 12:58:37 -0700 (PDT)
+        Thu, 4 May 2023 16:04:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E00318DEC;
+        Thu,  4 May 2023 12:52:40 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7E7626382F;
-        Thu,  4 May 2023 19:50:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7375CC433EF;
-        Thu,  4 May 2023 19:50:38 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2750463836;
+        Thu,  4 May 2023 19:51:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273D2C4339B;
+        Thu,  4 May 2023 19:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683229839;
-        bh=L09HCa16HlNY9sRK3znjKlX3Ugqny+reixwRKj4fFZA=;
+        s=k20201202; t=1683229889;
+        bh=xqnVCedNH7mQsCdY9m1JgAgwtMxQ5a73EXkT4swv6VQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qsJGeOMpZfcb2jRNrU+KNlMKCeiTXN4okK5DMdfPNvz6iINMluLvWxaemvfZycPx7
-         wRGN/qRBWQy8Ch9+x+0Ga65qt3jsPccUnf/ywmZGmRPOMLxiwib/EgkeFNUkiUmvrd
-         tBkvlj340B7O4HTL6/qMhLrjTeOpNYSOcgwvoqe59g2CsH0f6A+FVfa1RelCDCtWqc
-         zvziUDc/xV0FiHm+L29zn7qr8I4VeSZ3iv7CCGrsOTYT23Akk3TvKyy9M2UyFWzXdP
-         5ldKFcPE9nLbvRpNlGa3XQnukwNA8aEYW7vjdDZDtdPcAu5dZQ7w/agC44+MQ80QEk
-         5UVWs8hZTiHnQ==
+        b=SJhx0oaRi2u7Q+uffOrFnvnnW218dKI5nW4RbRUeVTbKM5fgTdt/N7cWvmyiIheWi
+         O8ndS/hWWMk6j1KpEcQO5Q9lxnqwDfzXj8a1uy22Ojn7ZdLK0ZInF0agpXXpMvpNFH
+         1Lay6xo5T4AyCXMzyNQEoqeFYREBTptdOWBYZ8mMUtcxJrVXnQOrV8NBfPR7Er+REX
+         8/zlGoKhtqbgHhkgUIykFS5S9wFDcXjK0n2asYpN/rsPSE347IuFxQG1/r0RrA49jI
+         ApdKtIwOaG89BabdaPh9oSFszqBjtGACGVBBvoqHcJ7YNd4IlMuFhQmd0xtmhmr1gS
+         mq6g7j3xO+ChA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Min Li <lm0963hack@gmail.com>,
@@ -41,18 +41,18 @@ Cc:     Min Li <lm0963hack@gmail.com>,
         johan.hedberg@gmail.com, luiz.dentz@gmail.com, davem@davemloft.net,
         edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
         linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 24/24] Bluetooth: L2CAP: fix "bad unlock balance" in l2cap_disconnect_rsp
-Date:   Thu,  4 May 2023 15:49:37 -0400
-Message-Id: <20230504194937.3808414-24-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 18/18] Bluetooth: L2CAP: fix "bad unlock balance" in l2cap_disconnect_rsp
+Date:   Thu,  4 May 2023 15:50:40 -0400
+Message-Id: <20230504195042.3808716-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230504194937.3808414-1-sashal@kernel.org>
-References: <20230504194937.3808414-1-sashal@kernel.org>
+In-Reply-To: <20230504195042.3808716-1-sashal@kernel.org>
+References: <20230504195042.3808716-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,10 +79,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index f9d2ce9cee369..b85ce276e2a3c 100644
+index 3c559a177761b..5f53e75d83024 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -4689,7 +4689,6 @@ static inline int l2cap_disconnect_rsp(struct l2cap_conn *conn,
+@@ -4410,7 +4410,6 @@ static inline int l2cap_disconnect_rsp(struct l2cap_conn *conn,
  
  	chan = l2cap_get_chan_by_scid(conn, scid);
  	if (!chan) {
