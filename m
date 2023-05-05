@@ -2,65 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C8766F8A2E
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 May 2023 22:32:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAF546F8A9E
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 May 2023 23:19:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233145AbjEEUcD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 5 May 2023 16:32:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59598 "EHLO
+        id S232238AbjEEVTy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 5 May 2023 17:19:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233051AbjEEUcC (ORCPT
+        with ESMTP id S232171AbjEEVTk (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 5 May 2023 16:32:02 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3DCC46AF
-        for <linux-bluetooth@vger.kernel.org>; Fri,  5 May 2023 13:32:01 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id e9e14a558f8ab-32b47d6792dso16125285ab.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 05 May 2023 13:32:01 -0700 (PDT)
+        Fri, 5 May 2023 17:19:40 -0400
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97FBF525D
+        for <linux-bluetooth@vger.kernel.org>; Fri,  5 May 2023 14:19:39 -0700 (PDT)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-18f4a6d2822so20116635fac.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 05 May 2023 14:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683318720; x=1685910720;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nSt3r01zkwaXGNSAImYKmxDp2AYuwlOkuQWolsaOpm0=;
-        b=GU1G4l1x5wf0opPzkKDpnc2shsHz6/FpmvtpPvjY0Hmkku/nSL8dMCRI+cW/imJere
-         yLQcJdqHKrg2R5nC5+Y7HeyYKeR89L6SnrKqk5FreSaNbAQHXM5Ah5o+e+8hHvbbCzxw
-         dB91vb5HSqvIiVTzlQUjSmLUgYE+prnTd4UMdZUD7XKfGiSdWCThWaobHqgliEOtI7Ak
-         /rQ1TH0dmXrRI5JlWQpxxaNeslPUO3JwywdlTU7eQkAvd82d9X0GMmOj67WDtmmJLwFW
-         a+UTO76wVlFBT5gmo9k4kxt5ay0+AUASD7ghzjI77Vw0IPNwjceaycisl4wa7y1XWFB4
-         q/2A==
+        d=gmail.com; s=20221208; t=1683321579; x=1685913579;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jgd1X+Gu5xjFnPIfNtY90lsd8GnVU1hNOYE8UcegVDk=;
+        b=TqQDmxY170Lfgd8MFzVeKhPFf8MLepptV1VDjBxoIVo5g9/yPzWRom9n+vA9+M+Ytt
+         exLlJ9FBU5Gz0HKw5H5AeXst7XuidkQolbDDSfHLZiLDl1AocJeoKuTO51M3iF9rG0nP
+         L8W/XnwmL7NNz9Zj+exaYnQuVT3qD+20KPAKlHSKmREEQmgU7XP0u29ZFcp+9neLa5YH
+         FrLk2kLbycNIMkYlbGdEW4kF7KPvUiAdaw21SaFRGM8LFEr3u87RXpoG6Og/w4K9aZe1
+         1QD2YpqxwTvhTJG8m8fYxLVkcAi0fC3+Tna88mC/w8Yz2KOjj+yISfj2bzuSb5+xsl8C
+         QWQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683318720; x=1685910720;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nSt3r01zkwaXGNSAImYKmxDp2AYuwlOkuQWolsaOpm0=;
-        b=hHyO3H0VX6/+Sh8RkwyAGTlpNNrsx+crInx87gooWiOBeXIhxZ450d/0kiIdR1D05y
-         w1jSZTZ9kldSm13KZhlYYc6+0CqO1uJSJGaSzq7383D1XdfvcdBJBVNwumYXw5G/kuCd
-         t7VyK0AFuj9Fry+5cpfiv5VTIvuN14LWDhiMAc+gagMJ9rfLM697l2IN4zseiGwnurhn
-         9G0b9tkyIxj2wm6KR4CZ0pQT6eEGFw1MZHNar8GJM+Sf0GAIa6B2U/zUjjPKhvUOnFRu
-         xPRIJ/qeyf/V/PSzqrFgxuNrXZLIRl9HT7gSEJo1khhnPRXF4dyIAY5XmMXWjhVdKGc2
-         FxjA==
-X-Gm-Message-State: AC+VfDwja0eUi7g7NPzgFwEHKzkz0gZBbiLeEt7QPUVVNmv00GW3ovzW
-        NKmlszsa0E/DrfIb0bmzLsK71JV5Wsk=
-X-Google-Smtp-Source: ACHHUZ6m34KOkTH3UuwczZNv1S5aWu/BCdVY+qpJ9Kpg7oNJb+av1H3Z43Iro3hp84h2g5L0Tj1jbQ==
-X-Received: by 2002:a92:d449:0:b0:331:3564:7834 with SMTP id r9-20020a92d449000000b0033135647834mr1724497ilm.18.1683318720350;
-        Fri, 05 May 2023 13:32:00 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id s187-20020a0251c4000000b0040f9c31784csm190678jaa.87.2023.05.05.13.31.59
-        for <linux-bluetooth@vger.kernel.org>
+        d=1e100.net; s=20221208; t=1683321579; x=1685913579;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jgd1X+Gu5xjFnPIfNtY90lsd8GnVU1hNOYE8UcegVDk=;
+        b=agY6DGEKlFLWhjLX2lquucCyQDFNrXJRzS1npsXj+BC6REuU6Af0BCt3cfmVYX7n/u
+         G6xP596IyL8erom22D60/O0MJ90geP38YuyKehKMumuBfgAd4UULg4TjWXnQM1sG5W26
+         +k5zObwlPYhFqTB7OUklkNzKtgz22ayJav7+e88FOj1HUk4sAx+ZYbNcSFfKP3N/ib3H
+         Tgw/8u9sl1/acJsP0cUN1yXt2ltI+k5ajddjryNuCcVIzs9mmkbCgGWFkp+obChy4Aho
+         mtSG4t0a3ZvB/zHZwAJf5cX247eNzzIeXE+ut9X/tYbUDsb/98jn3OWZyBGp8fzby4xb
+         jFaQ==
+X-Gm-Message-State: AC+VfDyou8G4IAHJMFnJ8I2lJ2Djet7QLx7F8wFda2i1KaZYj66N0sCS
+        Z2hZAIQuFOKFXDYUv6bjN2CAwn5wfps=
+X-Google-Smtp-Source: ACHHUZ4uBZFEmom8GdytrR722Txe1P/VvZcdd4VthgvDWtehUEv+VYvIflOwNe3ruy3ELAlM688fPQ==
+X-Received: by 2002:a4a:c905:0:b0:547:62e8:c5bc with SMTP id v5-20020a4ac905000000b0054762e8c5bcmr2070247ooq.0.1683321578612;
+        Fri, 05 May 2023 14:19:38 -0700 (PDT)
+Received: from [172.17.0.2] ([40.84.219.151])
+        by smtp.gmail.com with ESMTPSA id j16-20020a9d7690000000b006a6558ef17fsm1336652otl.30.2023.05.05.14.19.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 May 2023 13:31:59 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] monitor: Fix misaligment errors
-Date:   Fri,  5 May 2023 13:31:56 -0700
-Message-Id: <20230505203156.2561265-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230505203156.2561265-1-luiz.dentz@gmail.com>
-References: <20230505203156.2561265-1-luiz.dentz@gmail.com>
+        Fri, 05 May 2023 14:19:38 -0700 (PDT)
+Message-ID: <645572ea.9d0a0220.a907c.75e7@mx.google.com>
+Date:   Fri, 05 May 2023 14:19:38 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8000969334449018789=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, inga.stotland@gmail.com
+Subject: RE: [BlueZ] mesh: Update the behavior of --io option
+In-Reply-To: <20230505193931.106760-1-inga.stotland@gmail.com>
+References: <20230505193931.106760-1-inga.stotland@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -71,43 +69,49 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============8000969334449018789==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This fixes the following errors:
+This is automated email and please do not reply to this email!
 
-monitor/packet.c:11968:27: runtime error: member access within
-misaligned address 0x565448026d55 for type
-'const struct monitor_l2cap_hdr', which requires 2 byte alignment
-monitor/packet.c:11968:4: runtime error: member access within
-misaligned address 0x565448026d55 for type
-'const struct monitor_l2cap_hdr', which requires 2 byte alignment
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=745379
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.51 seconds
+GitLint                       PASS      0.31 seconds
+BuildEll                      PASS      31.27 seconds
+BluezMake                     PASS      953.63 seconds
+MakeCheck                     PASS      12.38 seconds
+MakeDistcheck                 PASS      179.73 seconds
+CheckValgrind                 PASS      291.13 seconds
+CheckSmatch                   PASS      381.59 seconds
+bluezmakeextell               PASS      113.70 seconds
+IncrementalBuild              PASS      758.30 seconds
+ScanBuild                     WARNING   1182.91 seconds
+
+Details
+##############################
+Test: ScanBuild - WARNING
+Desc: Run Scan Build
+Output:
+mesh/main.c:161:3: warning: Value stored to 'optarg' is never read
+                optarg += strlen("auto");
+                ^         ~~~~~~~~~~~~~~
+1 warning generated.
+
+
+
 ---
- monitor/packet.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/monitor/packet.c b/monitor/packet.c
-index 645e3f97ef40..94561b65ea75 100644
---- a/monitor/packet.c
-+++ b/monitor/packet.c
-@@ -11945,7 +11945,7 @@ void packet_system_note(struct timeval *tv, struct ucred *cred,
- struct monitor_l2cap_hdr {
- 	uint16_t cid;
- 	uint16_t psm;
--};
-+} __attribute__((packed));
- 
- static void packet_decode(struct timeval *tv, struct ucred *cred, char dir,
- 				uint16_t index, const char *color,
-@@ -11964,7 +11964,8 @@ static void packet_decode(struct timeval *tv, struct ucred *cred, char dir,
- 				NULL);
- 
- 	/* Discard last byte since it just a filler */
--	l2cap_frame(index, dir == '>', 0, hdr->cid, hdr->psm,
-+	l2cap_frame(index, dir == '>', 0,
-+			le16_to_cpu(hdr->cid), le16_to_cpu(hdr->psm),
- 			data + sizeof(*hdr), size - (sizeof(*hdr) + 1));
- }
- 
--- 
-2.40.0
 
+--===============8000969334449018789==--
