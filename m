@@ -2,97 +2,72 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D6826F9242
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 May 2023 15:37:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D3EC6F9721
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  7 May 2023 08:04:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232515AbjEFNhA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 6 May 2023 09:37:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52612 "EHLO
+        id S229986AbjEGGEd convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 7 May 2023 02:04:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232518AbjEFNg4 (ORCPT
+        with ESMTP id S229441AbjEGGEc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 6 May 2023 09:36:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047674481
-        for <linux-bluetooth@vger.kernel.org>; Sat,  6 May 2023 06:36:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8EFCC615C8
-        for <linux-bluetooth@vger.kernel.org>; Sat,  6 May 2023 13:36:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F3ED5C4339C
-        for <linux-bluetooth@vger.kernel.org>; Sat,  6 May 2023 13:36:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683380215;
-        bh=2fhiGPgLV80Uxdf5Hj1cZd3+zXD5o18S8L+sdu/ffoc=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=D9U+0lBUs+CUmPRQIVPVdRAwPK1KtvLgPnLag93ncIQvgsjQwwoz3z9HC+axuIzxG
-         SpEQKS+akwliqttXEkwL0BLd0QcNbeQIiwqCJf+tnG3QHbbpzarnFTo1QelHnmBDqD
-         poW/FRL0D3k23prF5Zkd6hT7xk6OVulPTsKneQCkaoRHL8LqHCmVpLmLeRsw3xXuAc
-         EU19rUqLain8wLT/qdjpz5qM7voXC8AiFiHbbgUqawSMSa/QNYl2SwsU21D5R2rVI9
-         pEuH0JScT5qr4Wtmb72La8bvM7aSMRjHJA3N4nlPJiCQ4V6gDtrIj4K27tt4Bc2QEG
-         KJaY7OvUWKisg==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id DF74EC43144; Sat,  6 May 2023 13:36:54 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 200007] HP Elite Presenter Mouse support
-Date:   Sat, 06 May 2023 13:36:54 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: denisclopotaritei@yahoo.it
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-200007-62941-Yxk3HQbeaV@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-200007-62941@https.bugzilla.kernel.org/>
-References: <bug-200007-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Sun, 7 May 2023 02:04:32 -0400
+Received: from mail.bpip.go.id (unknown [103.166.134.2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B4BE13294;
+        Sat,  6 May 2023 23:04:29 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.bpip.go.id (Postfix) with ESMTP id AD1DBC2E893;
+        Sat,  6 May 2023 17:48:30 +0700 (WIB)
+Received: from mail.bpip.go.id ([127.0.0.1])
+        by localhost (mail.bpip.go.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id Ry0BPgB_9D7y; Sat,  6 May 2023 17:48:30 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.bpip.go.id (Postfix) with ESMTP id ED5FCBEB327;
+        Sat,  6 May 2023 09:11:19 +0700 (WIB)
+X-Amavis-Modified: Mail body modified (using disclaimer) - mail.bpip.go.id
+X-Virus-Scanned: amavisd-new at bpip.go.id
+Received: from mail.bpip.go.id ([127.0.0.1])
+        by localhost (mail.bpip.go.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id jQsgdQhd6AsF; Sat,  6 May 2023 09:11:19 +0700 (WIB)
+Received: from [103.167.91.37] (unknown [103.167.91.37])
+        by mail.bpip.go.id (Postfix) with ESMTPSA id 89E93BCC757;
+        Sat,  6 May 2023 08:34:27 +0700 (WIB)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Letzte Erinnerung
+To:     Recipients <persuratan@bpip.go.id>
+From:   "Qatar Foundation" <persuratan@bpip.go.id>
+Date:   Fri, 05 May 2023 18:34:23 -0700
+Reply-To: qf.qatarcares.org@gmail.com
+Message-Id: <20230506013428.89E93BCC757@mail.bpip.go.id>
+X-Spam-Status: Yes, score=6.0 required=5.0 tests=BAYES_50,
+        FREEMAIL_FORGED_REPLYTO,NIXSPAM_IXHASH,RCVD_IN_SBL,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: *  0.1 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
+        *      [103.167.91.37 listed in zen.spamhaus.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  3.0 NIXSPAM_IXHASH http://www.nixspam.org/
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D200007
+Sehr geehrter Begünstigter,
 
-Denis AC (denisclopotaritei@yahoo.it) changed:
+Sie wurden ausgewählt,  (995.000,00 €) von Katar Foundation zu erhalten, antworten Sie bitte mit Ihrem vollständigen Namen und Ihrer Adresse, um weitere Informationen zu erhalten. E-mail:qf.qatarcares.org@gmail.com
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |denisclopotaritei@yahoo.it
-
---- Comment #2 from Denis AC (denisclopotaritei@yahoo.it) ---
-Same issue had on Solus (though there I could use the gesture-mouse functio=
-n),
-Ubuntu & Manjaro (and a few others I cannot recall).
-
-The issue spread across multiple kernels, the current one I'm using being:
-5.15.108-1-MANJARO=20
-
-The devices used were:
-HP ProBook 455 G5
-HP Pavillion
-
---=20
-You may reply to this email to add a comment.
-
-You are receiving this mail because:
-You are the assignee for the bug.=
+Mit Freundlichen Grüßen,
+Herr Rashid Al-Naimi.
+Chief Executive Officer der Qatar Foundation Endowment.
+(null)
