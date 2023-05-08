@@ -2,72 +2,180 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D3EC6F9721
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  7 May 2023 08:04:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 188BB6FA273
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 May 2023 10:39:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229986AbjEGGEd convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 7 May 2023 02:04:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58966 "EHLO
+        id S233178AbjEHIjh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 8 May 2023 04:39:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjEGGEc (ORCPT
+        with ESMTP id S232080AbjEHIjf (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 7 May 2023 02:04:32 -0400
-Received: from mail.bpip.go.id (unknown [103.166.134.2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B4BE13294;
-        Sat,  6 May 2023 23:04:29 -0700 (PDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.bpip.go.id (Postfix) with ESMTP id AD1DBC2E893;
-        Sat,  6 May 2023 17:48:30 +0700 (WIB)
-Received: from mail.bpip.go.id ([127.0.0.1])
-        by localhost (mail.bpip.go.id [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id Ry0BPgB_9D7y; Sat,  6 May 2023 17:48:30 +0700 (WIB)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.bpip.go.id (Postfix) with ESMTP id ED5FCBEB327;
-        Sat,  6 May 2023 09:11:19 +0700 (WIB)
-X-Amavis-Modified: Mail body modified (using disclaimer) - mail.bpip.go.id
-X-Virus-Scanned: amavisd-new at bpip.go.id
-Received: from mail.bpip.go.id ([127.0.0.1])
-        by localhost (mail.bpip.go.id [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id jQsgdQhd6AsF; Sat,  6 May 2023 09:11:19 +0700 (WIB)
-Received: from [103.167.91.37] (unknown [103.167.91.37])
-        by mail.bpip.go.id (Postfix) with ESMTPSA id 89E93BCC757;
-        Sat,  6 May 2023 08:34:27 +0700 (WIB)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 8 May 2023 04:39:35 -0400
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CDE518DC8;
+        Mon,  8 May 2023 01:39:34 -0700 (PDT)
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1pvwP6-0007CA-K0; Mon, 08 May 2023 10:39:32 +0200
+Message-ID: <9d1022a5-847b-13f0-84d3-5b7d81355d59@leemhuis.info>
+Date:   Mon, 8 May 2023 10:39:32 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Letzte Erinnerung
-To:     Recipients <persuratan@bpip.go.id>
-From:   "Qatar Foundation" <persuratan@bpip.go.id>
-Date:   Fri, 05 May 2023 18:34:23 -0700
-Reply-To: qf.qatarcares.org@gmail.com
-Message-Id: <20230506013428.89E93BCC757@mail.bpip.go.id>
-X-Spam-Status: Yes, score=6.0 required=5.0 tests=BAYES_50,
-        FREEMAIL_FORGED_REPLYTO,NIXSPAM_IXHASH,RCVD_IN_SBL,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: *  0.1 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
-        *      [103.167.91.37 listed in zen.spamhaus.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  3.0 NIXSPAM_IXHASH http://www.nixspam.org/
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-X-Spam-Level: ******
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: PROBLEM: ThinkPad T430 (BCM20702) Can't Detect Bluetooth Devices
+ Starting from Kernel v6.1.0 Until Now v6.3.1
+Content-Language: en-US, de-DE
+To:     Moh Oktavi Aziz Nugraha <moktavizzen@gmail.com>,
+        marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        avisaziz123@gmail.com
+Cc:     linux-bluetooth@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux kernel regressions list <regressions@lists.linux.dev>
+References: <CAHCNbp3ztCcp31JdVYuxy+s1qXaa+Zy74eGJmfPmyrx_6Wjhhw@mail.gmail.com>
+From:   "Linux regression tracking (Thorsten Leemhuis)" 
+        <regressions@leemhuis.info>
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+In-Reply-To: <CAHCNbp3ztCcp31JdVYuxy+s1qXaa+Zy74eGJmfPmyrx_6Wjhhw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1683535174;acdecd99;
+X-HE-SMSGID: 1pvwP6-0007CA-K0
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Sehr geehrter Begünstigter,
+[CCing the regression list, as it should be in the loop for regressions:
+https://docs.kernel.org/admin-guide/reporting-regressions.html]
 
-Sie wurden ausgewählt,  (995.000,00 €) von Katar Foundation zu erhalten, antworten Sie bitte mit Ihrem vollständigen Namen und Ihrer Adresse, um weitere Informationen zu erhalten. E-mail:qf.qatarcares.org@gmail.com
+[TLDR: I'm adding this report to the list of tracked Linux kernel
+regressions; the text you find below is based on a few templates
+paragraphs you might have encountered already in similar form.
+See link in footer if these mails annoy you.]
 
-Mit Freundlichen Grüßen,
-Herr Rashid Al-Naimi.
-Chief Executive Officer der Qatar Foundation Endowment.
-(null)
+On 06.05.23 13:33, Moh Oktavi Aziz Nugraha wrote:
+> [1.] One line summary of the problem:
+> ThinkPad T430 (BCM20702) Can't Detect Bluetooth Devices Starting from
+> Kernel v6.1.0 Until Now v6.3.1
+> 
+> [2.] Full description of the problem/report:
+> Last week I installed Ubuntu, but my bluetooth can't detect devices
+> when I use kernel 6.1 and above. My bluetooth was fine when I used
+> kernel 6.0 and before. I'm filing this bug on the kernel because when
+> I tested this bug on Fedora and Ubuntu, the same problem appeared when
+> I used kernel version 6.1 and above.
+> The workaround for version 6.1 and above is to run "hcitool scan" on
+> the terminal if I want to detect bluetooth devices.
+> There are similar problem in earlier kernel version, but it was fixed
+> according to this post https://askubuntu.com/a/1169415
+> Here is the video i made to reproduce the issue https://youtu.be/pHjOIAk90Zc
+> Here is the information about my Bluetooth card:
+> Bus 001 Device 007: ID 0a5c:21e6 Broadcom Corp. BCM20702 Bluetooth 4.0
+> [ThinkPad]
+> What I have tried:
+> - Installed Fedora 38 and then Install bluetooth firmware
+> https://github.com/winterheart/broadcom-bt-firmware, and then
+> downgrade bluez (bluetooth cant detect devices)
+> - Installed Fedora 37 (no problem, because the default kernel is 6.0)
+> - installed Ubuntu 23.04 and then  install bluetooth firmware
+> https://github.com/winterheart/broadcom-bt-firmware (bluetooth cant
+> detect devices)
+> - Installed Ubuntu 22.10 (no problem, because the default kernel is 5.19)
+> - Installed Ubuntu 22.04 (no problem, because the default kernel is 5.19)
+> - Go back to Ubuntu 23.04 and then try these kernel:
+> v5.15.110 (good)
+> v5.19.17 (good)
+> v6.0.12 (good)
+> v6.0.19 (good)
+> v6.1.27 (bad)
+> v6.2.14 (bad)
+> v6.3.1 (bad)
+> After trying all of that I came to conclusion that this bug is caused
+> by the kernel.
+> I want to try git bisect to find the commit that caused the regression
+> between kernel versions 6.0 and 6.1, but it might take me a while
+> since it’s my first time using it. Plus, I’ve got a bunch of college
+> assignments to finish up this week, so I’m a bit strapped for time.
+
+FWIW, the following guide recently added might help you (a similar
+document to also cover bisection is planned, but I haven't started on it
+yet...):
+https://docs.kernel.org/admin-guide/quickly-build-trimmed-linux.html
+
+> [3.] Keywords (i.e., modules, networking, kernel):
+> bluetooth, networking, broadcom, bcm20702, thinkpad, t430
+>
+> [4.] Kernel information
+> [4.1.] Kernel version (from /proc/version):
+> Linux version 6.3.1-060301-generic (kernel@kathleen)
+>
+> (x86_64-linux-gnu-gcc-12 (Ubuntu 12.2.0-17ubuntu1) 12.2.0, GNU ld (GNU
+> Binutils for Ubuntu) 2.40) #202304302031 SMP PREEMPT_DYNAMIC Mon May
+> 1 00:41:22 UTC 2023
+> [4.2.] Kernel .config file:
+> <attachment1-KernelConfig.txt>
+> 
+> [5.] Most recent kernel version which did not have the bug:
+> 6.0.19
+> 
+> [6.] Output of Oops.. message (if applicable) with symbolic
+> information resolved (see Documentation/admin-guide/bug-hunting.rst)
+> I can't find the Oops message when i use "journalctl | grep Oops"
+> 
+> [7.] A small shell script or example program which triggers the
+> problem (if possible)
+> I cant write a shell script yet, but i have made a video to show the
+> trigger and how to reproduce the issue https://youtu.be/pHjOIAk90Zc
+> 
+> [8.] Environment
+> [8.1.] Software (add the output of the ver_linux script here)
+> <attachment2-Software.txt>
+> [8.2.] Processor information (from /proc/cpuinfo):
+> <attachment3-Processor.txt>
+> [8.3.] Module information (from /proc/modules):
+> <attachment4-Module.txt>
+> [8.4.] Loaded driver and hardware information (/proc/ioports, /proc/iomem)
+> <attachment5-DriverHW.txt>
+> [8.5.] PCI information ('lspci -vvv' as root)
+> <attachment6-PCI.txt>
+> [8.6.] SCSI information (from /proc/scsi/scsi)
+> <attachment7-SCSI.txt>
+> [8.7.] Other information that might be relevant to the problem (please
+> look in /proc and include all information that you think to be
+> relevant):
+> <attachment9-lsusb.txt>
+> 
+> [X.] Other notes, patches, fixes, workarounds:
+> The workaround for version 6.1 and above is to run "hcitool scan" on
+> the terminal if I want to detect bluetooth devices.
+
+Thanks for the report. To be sure the issue doesn't fall through the
+cracks unnoticed, I'm adding it to regzbot, the Linux kernel regression
+tracking bot:
+
+#regzbot ^introduced v6.0..v6.1
+#regzbot title bluetooth: ThinkPad T430 (BCM20702) does not  Detect
+Bluetooth Devices anymore
+#regzbot ignore-activity
+
+This isn't a regression? This issue or a fix for it are already
+discussed somewhere else? It was fixed already? You want to clarify when
+the regression started to happen? Or point out I got the title or
+something else totally wrong? Then just reply and tell me -- ideally
+while also telling regzbot about it, as explained by the page listed in
+the footer of this mail.
+
+Developers: When fixing the issue, remember to add 'Link:' tags pointing
+to the report (the parent of this mail). See page linked in footer for
+details.
+
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+--
+Everything you wanna know about Linux kernel regression tracking:
+https://linux-regtracking.leemhuis.info/about/#tldr
+That page also explains what to do if mails like this annoy you.
