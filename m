@@ -2,118 +2,80 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA9856FE847
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 May 2023 02:02:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73D776FE8B0
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 May 2023 02:30:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236405AbjEKACD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 10 May 2023 20:02:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53692 "EHLO
+        id S236284AbjEKAaj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 10 May 2023 20:30:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236189AbjEKACC (ORCPT
+        with ESMTP id S235579AbjEKAah (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 10 May 2023 20:02:02 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E44A10DA
-        for <linux-bluetooth@vger.kernel.org>; Wed, 10 May 2023 17:02:01 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-64395e2a715so7891742b3a.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 10 May 2023 17:02:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683763320; x=1686355320;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rf8eRSKfJPDMFusnZzOI0itkuuwBnCgk1u412CdsNUs=;
-        b=jK+juGZOt4vgvnxNo5tcj/LdUEB+c2rlpnJHmz1GYSkiDr0DIbw05+MB/IiJR7/inR
-         iUekynMomtYvXcSGIklN4fA0YvIxurE5z6L+bKg/htRw/KhSZYehBTVs+4l162AAVlYR
-         /TGPSTEWPIU0qGhFFHAQlsWJhVWA5f2Afi4uV5vTbQzeDicxv78BgdDmxKyrmpq25nyp
-         EHOyi2gDF2kx8oTzjffT5AvQ6Guh0HqGEBRDO1kj8JXnnGPC/xtyqEEgzxNO2J3fOc4+
-         twcdZEooVu8tkst6qGiF7uXEfU8kNvvmCKpihDlXwc/9TCW9yHKUcVo4C5w7g75+bTWk
-         mksA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683763320; x=1686355320;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rf8eRSKfJPDMFusnZzOI0itkuuwBnCgk1u412CdsNUs=;
-        b=fZdl5l/gbYZhtvqXXW7u9+mqCPKXg5K1caQAkjx6GoiRmgJ9YOJgQlThhEweURR5xq
-         b7T/EA3bZ/RrQ8mQdiUKX630DMDprxtD5uLdctUZ9PIiqzIuAvX55D6IlpfAdrVnJqdM
-         PBCxFSRA8rkiPTzxDFyuC15tdfma7vWDRcMIlTHfVVG3WgMtAihVo1cjj4ns77jqonSP
-         Euj9fn+zCiWZsDClJolZRCugamL6L47rzDvhe/NUEb8u25VRVN2MRDSaTmgnyXtVo4PZ
-         0tpbF++rplg00cVEpd9HzfIsXfoimqWZLnwh067Gr93ZaY+sLm2+CT9m1FNsfMfe0SGY
-         n36Q==
-X-Gm-Message-State: AC+VfDy6I6XL5uiBeNmWb78s01zmY3m+D2DGqYL/w+t52Tv35UTHfWtV
-        KoUzbIE7EyrL17wtCAx2Qd3kGVtuwi0=
-X-Google-Smtp-Source: ACHHUZ6oZQyETYr4UO0aA+a+aJUokiLn/gnTU5wxA9YTcsFY2A5XwvMGiwU3/aDezp8w+iL9Sy1j7g==
-X-Received: by 2002:a05:6a21:9996:b0:f5:6530:c7a8 with SMTP id ve22-20020a056a21999600b000f56530c7a8mr24698821pzb.22.1683763320207;
-        Wed, 10 May 2023 17:02:00 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id g15-20020a63f40f000000b0053031f7a367sm3761604pgi.85.2023.05.10.17.01.58
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 17:01:58 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+        Wed, 10 May 2023 20:30:37 -0400
+Received: from out-56.mta1.migadu.com (out-56.mta1.migadu.com [95.215.58.56])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 055381BE9
+        for <linux-bluetooth@vger.kernel.org>; Wed, 10 May 2023 17:30:34 -0700 (PDT)
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ayaya.dev; s=key1;
+        t=1683764592;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=/8sy2kY4/g0x4D4nPXyzPG63+I6YAM4Ar+nfcmTS1KE=;
+        b=vePx4ftw3B+0fBQHK+5V44pKQMdWEgPVHfKL+GIq9VCWZAfRbBp+OX25DgwCHkYL0q2TfW
+        KWfKwISzZ+UqncYlDFbG+sGwtbD+q4ERvuUSIT8JB0AFeadR/WmSv90ZK+w2GLOBwnUeyf
+        DsDrVp//VU64XPnvxFh5V/Kldx9BvF8=
+From:   psykose <alice@ayaya.dev>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] shared/bap: Fix not sending ASE Receiver Stop Ready
-Date:   Wed, 10 May 2023 17:01:55 -0700
-Message-Id: <20230511000155.3721222-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230511000155.3721222-1-luiz.dentz@gmail.com>
-References: <20230511000155.3721222-1-luiz.dentz@gmail.com>
+Cc:     alice@ayaya.dev
+Subject: [PATCH BlueZ 1/3] build: set _FILE_OFFSET_BITS and _TIME_BITS to 64 universally
+Date:   Thu, 11 May 2023 02:22:50 +0200
+Message-Id: <20230511002252.30868-1-alice@ayaya.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+these are required to make glibc set off_t and time_t to 64-bit wide
+types on 32-bit platforms, for large-file-support and 2k38 proofing.
 
-This fixes not sending ASE Receiver Stop Ready if stream is on disabling
-state when CIS is disconnected.
-
-Fixes: https://github.com/bluez/bluez/issues/516
+Signed-off-by: psykose <alice@ayaya.dev>
 ---
- src/shared/bap.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ Makefile.am    | 1 +
+ Makefile.obexd | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/shared/bap.c b/src/shared/bap.c
-index 6131c312865a..f194f466fde1 100644
---- a/src/shared/bap.c
-+++ b/src/shared/bap.c
-@@ -1115,6 +1115,18 @@ static bool match_stream_io(const void *data, const void *user_data)
- 	return stream->io == io;
- }
+diff --git a/Makefile.am b/Makefile.am
+index 48f0cefa7..97825a720 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -27,6 +27,7 @@ pkginclude_HEADERS =
+ AM_CFLAGS = $(MISC_CFLAGS) $(WARNING_CFLAGS) $(UDEV_CFLAGS) $(LIBEBOOK_CFLAGS) \
+ 				$(LIBEDATASERVER_CFLAGS) $(ell_cflags)
+ AM_LDFLAGS = $(MISC_LDFLAGS)
++AM_CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64
  
-+static void stream_stop_disabling(void *data, void *user_data)
-+{
-+	struct bt_bap_stream *stream = data;
-+
-+	if (stream->io || stream->ep->state != BT_ASCS_ASE_STATE_DISABLING)
-+		return;
-+
-+	DBG(stream->bap, "stream %p", stream);
-+
-+	bt_bap_stream_stop(stream, NULL, NULL);
-+}
-+
- static bool bap_stream_io_detach(struct bt_bap_stream *stream)
- {
- 	struct bt_bap_stream *link;
-@@ -1133,6 +1145,9 @@ static bool bap_stream_io_detach(struct bt_bap_stream *stream)
- 		/* Detach link if in QoS state */
- 		if (link->ep->state == BT_ASCS_ASE_STATE_QOS)
- 			bap_stream_io_detach(link);
-+	} else {
-+		/* Links without IO on disabling state shall be stopped. */
-+		queue_foreach(stream->links, stream_stop_disabling, NULL);
- 	}
+ confdir = $(sysconfdir)/bluetooth
+ statedir = $(localstatedir)/lib/bluetooth
+diff --git a/Makefile.obexd b/Makefile.obexd
+index 5d1a4ff65..f4abbb3e5 100644
+--- a/Makefile.obexd
++++ b/Makefile.obexd
+@@ -91,7 +91,6 @@ obexd_src_obexd_LDFLAGS = $(AM_LDFLAGS) -Wl,--export-dynamic
+ obexd_src_obexd_CPPFLAGS = $(AM_CPPFLAGS) $(GLIB_CFLAGS) $(DBUS_CFLAGS) \
+ 				$(ICAL_CFLAGS) -DOBEX_PLUGIN_BUILTIN \
+ 				-DPLUGINDIR=\""$(obex_plugindir)"\" \
+-				-D_FILE_OFFSET_BITS=64 \
+ 				-I$(builddir)/lib -I$(builddir)/obexd/src
  
- 	stream_io_unref(io);
+ obexd_src_obexd_CFLAGS = $(AM_CFLAGS) -fPIC
 -- 
-2.40.0
+2.40.1
 
