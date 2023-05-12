@@ -2,53 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9109D700FD4
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 May 2023 22:40:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 61120700FD7
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 May 2023 22:40:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239522AbjELUkm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 12 May 2023 16:40:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47482 "EHLO
+        id S239488AbjELUkl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 12 May 2023 16:40:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239005AbjELUkZ (ORCPT
+        with ESMTP id S238984AbjELUkY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 12 May 2023 16:40:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F522700;
+        Fri, 12 May 2023 16:40:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 555A326B3;
         Fri, 12 May 2023 13:40:23 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CA548654A9;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C5477654D3;
         Fri, 12 May 2023 20:40:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1E20DC433A0;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 176F2C4339E;
         Fri, 12 May 2023 20:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1683924022;
-        bh=zmnDEw+XtLNhTeioTFVBO41iVL5ZOIR5s5wqpdkl5Tg=;
+        bh=V0pMFVHAuJqDt1SaxN6ONTrEJHicTlCt/hIc5lto7C8=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=n0SFM73VSHBBmn9XmgaMTRTTR7L/cWhLZGtFu1QHVK1B+IaROn6vY95zxF0LExMMH
-         VnGlkwGYgyXv6OUa3ruwKmn3BCIsdbUU3Wkhjrhfe8t0tg2+IrrsiWvCFxDm0EY+JT
-         xrFyhYTsER+F6jGzJx3q9dRm0o/xpAvPFmI1/NFwBRJ0XOZdPd3nQb6mEBZm8WvgXb
-         BYPcTFhZq0JOhsPMdXqJfaOLtIkS7a7oI5DbM6Wbuc59kzlZnyzC25wGowqIjuwx+P
-         aa5rE6bETgczczuQ5ZRH0db781d7xVKrq4kuJZlkKF1Me/drq/RYNjEU4LNF0EtVKS
-         Ka8Vh+q7Cxuzw==
+        b=V7hnWvea0feVqMTFe9xd3VMmP1irAJ3zB6hpb59v8YHpx51sLF4MvCW9xRj3+nh2i
+         yp2ptJVMgoeUDmLv7yAEmeVCYunwFf96K8lhOekdvzs3N03fak1s2GcOcKBi6qgoWF
+         rRAo9ba+wVmBNQvsSCGy37/1/wc8TvU0SrAamJiCHPf6jsvPzXXsCDy/NlcH1qB7G9
+         nx0SPaucp27xBOsydH5GQClURqm2EErPbsLMmTXbybqeJXdwIxCt8Jnws52u41D6kZ
+         W2JUgpNwtL1il2WuzRXMmNyqgkk6Y6yMvd1mkHWT0OT1j0oFVrELysjdrJrMYVXQah
+         qyvFeRonUFNCw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DC933E501EF;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E7A13E4D00E;
         Fri, 12 May 2023 20:40:21 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/1] Bluetooth: btusb: Add device 6655:8771 to device tables.
+Subject: Re: [PATCH v2 1/1] Bluetooth: btusb: Add device 6655:8771 to device
+ tables
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168392402189.13139.12241479236932628209.git-patchwork-notify@kernel.org>
+Message-Id: <168392402194.13139.16401468603783736020.git-patchwork-notify@kernel.org>
 Date:   Fri, 12 May 2023 20:40:21 +0000
-References: <20230504212752.16179-1-dan.gora@gmail.com>
-In-Reply-To: <20230504212752.16179-1-dan.gora@gmail.com>
+References: <20230509194524.9361-1-dan.gora@gmail.com>
+In-Reply-To: <20230509194524.9361-1-dan.gora@gmail.com>
 To:     Dan Gora <dan.gora@gmail.com>
 Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
         linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -62,7 +63,7 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu,  4 May 2023 14:27:53 -0700 you wrote:
+On Tue,  9 May 2023 12:45:24 -0700 you wrote:
 > This device is an Inspire branded BT 5.1 USB dongle with a
 > Realtek RTL8761BU chip using the "Best Buy China" vendor ID.
 > 
@@ -86,7 +87,7 @@ On Thu,  4 May 2023 14:27:53 -0700 you wrote:
 > [...]
 
 Here is the summary with links:
-  - [1/1] Bluetooth: btusb: Add device 6655:8771 to device tables.
+  - [v2,1/1] Bluetooth: btusb: Add device 6655:8771 to device tables
     https://git.kernel.org/bluetooth/bluetooth-next/c/376b10586124
 
 You are awesome, thank you!
