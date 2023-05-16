@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0339D705930
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 May 2023 22:59:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29158705931
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 May 2023 22:59:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230222AbjEPU7h (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 16 May 2023 16:59:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34676 "EHLO
+        id S229957AbjEPU7j (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 16 May 2023 16:59:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229832AbjEPU7f (ORCPT
+        with ESMTP id S230189AbjEPU7h (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 16 May 2023 16:59:35 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79EC576AF
-        for <linux-bluetooth@vger.kernel.org>; Tue, 16 May 2023 13:59:34 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1ab1ce53ca6so1019155ad.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 16 May 2023 13:59:34 -0700 (PDT)
+        Tue, 16 May 2023 16:59:37 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B8E076AF
+        for <linux-bluetooth@vger.kernel.org>; Tue, 16 May 2023 13:59:35 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1ae3a5dfa42so1123245ad.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 16 May 2023 13:59:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684270773; x=1686862773;
+        d=gmail.com; s=20221208; t=1684270774; x=1686862774;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5cTAOIXAq0oIiEHGSrM64rKJl+f/1F4LAw7ra9PqE78=;
-        b=JnrQ4raWpowF4A2cmnUaGlib1V/qtn8A0o3c7PSUBO0ROQGEdSm+mIIpBkWmlNCBIg
-         O72Wd6Y/D8+F63ifTgs7OYTlRHrp3kulrR/T+0MfmmI/3MSw3DyGVk0spUmDXBI/3DsK
-         N1HXcDIIdutlWAbS+qG+6Aqk3XV4PW+pQGpNv+Mb8KGXx9WGoVl01ErdSET7HgVIU8HA
-         SffPS96kExVljOVJ9BpUZ5WhjBKDEQ9ZlFfIzdk/NWD8meVTRp4ZDT4y+Sya87BC3FJR
-         +lqG6bPSq/8rvqMv68KuW7dZ5J2riXulL7F1pd+nq3MmtFx/UjSwq8F6Ihs5TEM9m33L
-         qrwA==
+        bh=+Iobs+R2ddrlT8b4QQ65ACB2Nf3ufHdusbKHpv7a0ow=;
+        b=DWheeTkSuUxSG/GGfHIxPYEd2E8nVWOgB8ctozMuVSSARLNHEnXK4nCOPRygluQYMJ
+         rDPjrQmU2PhcebJ6YpVymQKwUr5lrE+hRs9z/xYSoc9qEzyLvUy3GgVmWEVNAX6nfw3s
+         9wbFOuymnkuV7TW//hp7VpEYSzpWH7ikGAdnTH8zaehRHUzkSlZUqGptZn4cLfO1tZiE
+         Z1DB6bVZvsGxTl0mYyBc3uWYUZsaITX7ZxHGxisaYX3HdynbGlDA098gAPGM3iq+KFDp
+         ml+deiW7X3zSKPgHjklRwPKIYOfRW7o9A8KbmPoycf+Ta9TLsQbFLJDnXVHAhmvXeaPq
+         JSTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684270773; x=1686862773;
+        d=1e100.net; s=20221208; t=1684270774; x=1686862774;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5cTAOIXAq0oIiEHGSrM64rKJl+f/1F4LAw7ra9PqE78=;
-        b=GVgtr79bM8fT8IUX7PrR5m4jPY9PbWeX1jPpehHtDAukBKf0GQqUfEtbZP6iF3SiVk
-         osh0p1d92eonhvFk9CTgaYoR4f4YwuLQNNEGqx6/qXy+OAhXwk6FhSsxyujlEOtZ0Gbj
-         g80+EgaA6/D5JmWjK8G55figBsGQ+dcktaDm7hbmWKPidJIifyTa01c+8hCZHF5bA9gx
-         k2dOd2yRJ+nbCPI7XNiJkUgEkUt6ZZadxZrwYBO5Diz4x9ArlqwdBRED7fRnHQThemHv
-         M2y9cu0ZkPq+aFPCKn7mkM8JyXmqIOIvdCq1vAWJmzsplf8Z5DydjBaxv2PWqIpnAoE5
-         ZcnQ==
-X-Gm-Message-State: AC+VfDy89Daeqaq2u4z8NiT/qaoRFdnWpOjG0ZZNSMeMCieGwM8EWKTP
-        z2vX+5Hnd+Y8EzSH++xWX05YujdvBAM=
-X-Google-Smtp-Source: ACHHUZ6jW7kIB/lDAISmOt8WFBMZXJ0NL8NZNm+bR/TPOXpnBDQYFMFiJIcO4mjsh0WXGnxKvvE2cQ==
-X-Received: by 2002:a17:902:b418:b0:1ad:dac0:5125 with SMTP id x24-20020a170902b41800b001addac05125mr16107696plr.11.1684270772855;
-        Tue, 16 May 2023 13:59:32 -0700 (PDT)
+        bh=+Iobs+R2ddrlT8b4QQ65ACB2Nf3ufHdusbKHpv7a0ow=;
+        b=h7T7oPYVqM7Cp9mvoUsGQ947GMF8XVkFHvkAvSspP7PVxtDWw48N8T3L6xDrV7RGQo
+         BznYi+O4tszZLuGQ2T0KZ2LmPdhVAI1oJqsZPKSJvCiFIW8zyJAQDnyMywrIhw7l6Mqr
+         FGaLdUiyK/7fmidddSU4txugi/orvVCH9ycAdRnQyyWC4AMsRQATuD6jeZ6aPAyEBo7f
+         jRhb0qqhhQFq1Vn0sRPWCH0goREojoLd5Qu315onbS3JuwiUX5OrPeRtaboUSnsLB00r
+         5WqnDMPs0asPa3WUfrOjZzSRAfyWFx4Jbi93v0tanZjUPYLMNZ1yfEgl35+LxnNQR479
+         wYOg==
+X-Gm-Message-State: AC+VfDz404abon7sW9e2RS6WMp2+En4LP6Y+yHTk3SnNSEbWiBrhWWXh
+        m3x0XMCGlseKpjfiSU4Z4S6ywyQUwh4=
+X-Google-Smtp-Source: ACHHUZ4AXS5X3qKwcgey0kwefptQxShAWKK9m5lVptZeu7IvvaYIB5ZNySHb7CamOGrR6dY6DqqPIQ==
+X-Received: by 2002:a17:903:1110:b0:1a9:bc13:7e20 with SMTP id n16-20020a170903111000b001a9bc137e20mr46746440plh.44.1684270774561;
+        Tue, 16 May 2023 13:59:34 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id t16-20020a1709028c9000b001acad024c8asm14272237plo.40.2023.05.16.13.59.31
+        by smtp.gmail.com with ESMTPSA id t16-20020a1709028c9000b001acad024c8asm14272237plo.40.2023.05.16.13.59.32
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 May 2023 13:59:32 -0700 (PDT)
+        Tue, 16 May 2023 13:59:33 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 04/10] csip: Mark driver as experimental
-Date:   Tue, 16 May 2023 13:59:18 -0700
-Message-Id: <20230516205924.1040506-4-luiz.dentz@gmail.com>
+Subject: [PATCH v2 05/10] mcp: Mark driver as experimental
+Date:   Tue, 16 May 2023 13:59:19 -0700
+Message-Id: <20230516205924.1040506-5-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230516205924.1040506-1-luiz.dentz@gmail.com>
 References: <20230516205924.1040506-1-luiz.dentz@gmail.com>
@@ -76,52 +76,45 @@ From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 This uses the btd_profile.experimental to mark the driver as
 experimental.
 ---
- profiles/audio/csip.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ profiles/audio/mcp.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
-diff --git a/profiles/audio/csip.c b/profiles/audio/csip.c
-index c273c02b8e76..ec042afd54eb 100644
---- a/profiles/audio/csip.c
-+++ b/profiles/audio/csip.c
-@@ -334,18 +334,20 @@ static struct btd_profile csip_profile = {
+diff --git a/profiles/audio/mcp.c b/profiles/audio/mcp.c
+index f3ea330f9839..b410b3d2aa03 100644
+--- a/profiles/audio/mcp.c
++++ b/profiles/audio/mcp.c
+@@ -403,27 +403,18 @@ static struct btd_profile mcp_profile = {
  
- 	.adapter_probe	= csip_server_probe,
- 	.adapter_remove	= csip_server_remove,
+ 	.adapter_probe	= media_control_server_probe,
+ 	.adapter_remove = media_control_server_remove,
 +
 +	.experimental	= true,
  };
  
- static unsigned int csip_id;
- 
- static int csip_init(void)
+ static int mcp_init(void)
  {
+-	DBG("");
+-
 -	if (!(g_dbus_get_flags() & G_DBUS_FLAG_ENABLE_EXPERIMENTAL)) {
 -		warn("D-Bus experimental not enabled");
 -		return -ENOTSUP;
 -	}
-+	int err;
-+
-+	err = btd_profile_register(&csip_profile);
-+	if (err)
-+		return err;
- 
--	btd_profile_register(&csip_profile);
- 	csip_id = bt_csip_register(csip_attached, csip_detached, NULL);
- 
- 	return 0;
-@@ -353,10 +355,8 @@ static int csip_init(void)
- 
- static void csip_exit(void)
- {
--	if (g_dbus_get_flags() & G_DBUS_FLAG_ENABLE_EXPERIMENTAL) {
--		btd_profile_unregister(&csip_profile);
--		bt_csip_unregister(csip_id);
--	}
-+	btd_profile_unregister(&csip_profile);
-+	bt_csip_unregister(csip_id);
+-
+-	btd_profile_register(&mcp_profile);
+-	return 0;
++	return btd_profile_register(&mcp_profile);
  }
  
- BLUETOOTH_PLUGIN_DEFINE(csip, VERSION, BLUETOOTH_PLUGIN_PRIORITY_DEFAULT,
+ static void mcp_exit(void)
+ {
+-	DBG("");
+-
+-	if (g_dbus_get_flags() & G_DBUS_FLAG_ENABLE_EXPERIMENTAL)
+-		btd_profile_unregister(&mcp_profile);
++	btd_profile_unregister(&mcp_profile);
+ }
+ 
+ BLUETOOTH_PLUGIN_DEFINE(mcp, VERSION, BLUETOOTH_PLUGIN_PRIORITY_DEFAULT,
 -- 
 2.40.1
 
