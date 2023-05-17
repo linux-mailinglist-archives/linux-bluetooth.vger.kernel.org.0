@@ -2,84 +2,176 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B60870728A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 May 2023 21:50:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41059707303
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 May 2023 22:30:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbjEQTu0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 17 May 2023 15:50:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36654 "EHLO
+        id S229699AbjEQUaV convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 17 May 2023 16:30:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbjEQTuY (ORCPT
+        with ESMTP id S229510AbjEQUaU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 17 May 2023 15:50:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29165525E
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 May 2023 12:50:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AA71264ADA
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 May 2023 19:50:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 13E79C4339E;
-        Wed, 17 May 2023 19:50:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684353023;
-        bh=BLIMzDWfqNFrp/VCcxEYKWipgQ13je0htbpfHT74yLQ=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=GFdDI9Vs6tjFvThAWfddxG/lt9J2yAy3ruqh2p1I/ahHP68XbTuH5pHC4ePTXm8SP
-         OH3b1BgMy9eKizXnWJ/OzQBjRxfiw+Y9gEiD7nAFzCLhuaxOXLU1aBFYJpoLucyiqG
-         gYAXNCCTmb/RAXP9sz8kW9vqGbcSzdKOSCoLsBPJrNa9gnCBKDb8gS57md0j7OacgN
-         g2EHIz9n9dxF4+1HW9RXq+uC33klH/G70r2JMTWmQhSvO7oascpwrjbAX+x6c2lNlg
-         xxTzn7MgN9K3OcAycaQqDnEb3ZL5jww59Owam6Bc6ZG6tHR7lJrhyYU7Wgg6bBwSMP
-         57ESSbpbMFN/Q==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id EB25FE5421C;
-        Wed, 17 May 2023 19:50:22 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v3 1/2] test-runner: revert udevd and audio support
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168435302295.9114.3945510474101072187.git-patchwork-notify@kernel.org>
-Date:   Wed, 17 May 2023 19:50:22 +0000
-References: <fcd0cc37474487489e2567f3de7d90f1b62d9613.1683994090.git.pav@iki.fi>
-In-Reply-To: <fcd0cc37474487489e2567f3de7d90f1b62d9613.1683994090.git.pav@iki.fi>
-To:     Pauli Virtanen <pav@iki.fi>
+        Wed, 17 May 2023 16:30:20 -0400
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B91630DE
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 May 2023 13:30:17 -0700 (PDT)
+Received: from submission (posteo.de [185.67.36.169]) 
+        by mout02.posteo.de (Postfix) with ESMTPS id B95682401AF
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 May 2023 22:30:15 +0200 (CEST)
+Received: from customer (localhost [127.0.0.1])
+        by submission (posteo.de) with ESMTPSA id 4QM4VG1SmGz6txn;
+        Wed, 17 May 2023 22:30:14 +0200 (CEST)
+Message-ID: <25523ad612ce4491281743bc8d5a6ccf7673aa76.camel@iki.fi>
+Subject: Re: [BlueZ,v3,1/2] test-runner: revert udevd and audio support
+From:   Pauli Virtanen <pav@iki.fi>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Date:   Wed, 17 May 2023 20:30:13 +0000
+In-Reply-To: <CABBYNZKu7pPE0EddZyzv1mbEW0nePOzf_dawkDJ-e6+ReJvS-A@mail.gmail.com>
+References: <fcd0cc37474487489e2567f3de7d90f1b62d9613.1683994090.git.pav@iki.fi>
+         <645fc6ce.630a0220.1799b.9542@mx.google.com>
+         <CABBYNZLUQOQ-gTdCAeUNknEkgQenmVQhahrog+8CL4y87PZKBg@mail.gmail.com>
+         <87eda7c7bdb8479f6233b6709e5c21de0535fdfc.camel@iki.fi>
+         <CABBYNZKu7pPE0EddZyzv1mbEW0nePOzf_dawkDJ-e6+ReJvS-A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+MIME-Version: 1.0
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NEUTRAL,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+Hi Luiz,
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
-
-On Sat, 13 May 2023 16:08:36 +0000 you wrote:
-> Tests running inside the VM don't need access to sound cards running on
-> the host.
+ke, 2023-05-17 kello 12:34 -0700, Luiz Augusto von Dentz kirjoitti:
+> Hi Pauli,
 > 
-> This reverts commit 91a48af52efb0751fab396b2b9026c9186b10b88
-> This reverts commit e20e7e0b05c7edb74255c9b092916ac5bb99c97f
-> ---
->  tools/test-runner.c | 108 ++------------------------------------------
->  1 file changed, 3 insertions(+), 105 deletions(-)
+> On Mon, May 15, 2023 at 1:30 PM Pauli Virtanen <pav@iki.fi> wrote:
+> > 
+> > Hi Luiz,
+> > 
+> > ma, 2023-05-15 kello 13:01 -0700, Luiz Augusto von Dentz kirjoitti:
+> > > Hi Pauli,
+> > > 
+> > > On Sat, May 13, 2023 at 10:41 AM <bluez.test.bot@gmail.com> wrote:
+> > > > 
+> > > > This is automated email and please do not reply to this email!
+> > > > 
+> > > > Dear submitter,
+> > > > 
+> > > > Thank you for submitting the patches to the linux bluetooth mailing list.
+> > > > This is a CI test results with your patch series:
+> > > > PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=747273
+> > > > 
+> > > > ---Test result---
+> > > > 
+> > > > Test Summary:
+> > > > CheckPatch                    FAIL      1.14 seconds
+> > > > GitLint                       PASS      0.52 seconds
+> > > > BuildEll                      PASS      26.21 seconds
+> > > > BluezMake                     PASS      745.32 seconds
+> > > > MakeCheck                     PASS      11.04 seconds
+> > > > MakeDistcheck                 PASS      151.18 seconds
+> > > > CheckValgrind                 PASS      243.86 seconds
+> > > > CheckSmatch                   PASS      326.99 seconds
+> > > > bluezmakeextell               PASS      98.83 seconds
+> > > > IncrementalBuild              PASS      1262.88 seconds
+> > > > ScanBuild                     WARNING   964.73 seconds
+> > > > 
+> > > > Details
+> > > > ##############################
+> > > > Test: CheckPatch - FAIL
+> > > > Desc: Run checkpatch.pl script
+> > > > Output:
+> > > > [BlueZ,v3,1/2] test-runner: revert udevd and audio support
+> > > > WARNING:UNKNOWN_COMMIT_ID: Unknown commit id '91a48af52efb0751fab396b2b9026c9186b10b88', maybe rebased or not pulled?
+> > > > #49:
+> > > > This reverts commit 91a48af52efb0751fab396b2b9026c9186b10b88
+> > > > 
+> > > > WARNING:UNKNOWN_COMMIT_ID: Unknown commit id 'e20e7e0b05c7edb74255c9b092916ac5bb99c97f', maybe rebased or not pulled?
+> > > > #50:
+> > > > This reverts commit e20e7e0b05c7edb74255c9b092916ac5bb99c97f
+> > > > 
+> > > > /github/workspace/src/src/13240258.patch total: 0 errors, 2 warnings, 193 lines checked
+> > > > 
+> > > > NOTE: For some of the reported defects, checkpatch may be able to
+> > > >       mechanically convert to the typical style using --fix or --fix-inplace.
+> > > > 
+> > > > /github/workspace/src/src/13240258.patch has style problems, please review.
+> > > > 
+> > > > NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+> > > > 
+> > > > NOTE: If any of the errors are false positives, please report
+> > > >       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+> > > > 
+> > > > 
+> > > > ##############################
+> > > > Test: ScanBuild - WARNING
+> > > > Desc: Run Scan Build
+> > > > Output:
+> > > > tools/test-runner.c:924:2: warning: 2nd function call argument is an uninitialized value
+> > > >         printf("Running command %s\n", cmdname ? cmdname : argv[0]);
+> > > >         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > > > 1 warning generated.
+> > > > 
+> > > > 
+> > > > 
+> > > > ---
+> > > > Regards,
+> > > > Linux Bluetooth
+> > > 
+> > > I tried running on fedora but it looks like something is missing in my setup:
+> > > 
+> > > [E][00003.767959] spa.dbus     | [          dbus.c:  329
+> > > impl_connection_get()] Failed to connect to session bus: Unable to
+> > > autolaun1
+> > > [E][00003.769967] mod.portal   | [ module-portal.c:  326
+> > > pipewire__module_init()] Failed to connect to session bus:
+> > > Input/output error
+> > 
+> > I have those two "errors" too, they should be harmless as the xdg-
+> > desktop-portal module is optional. With `test-runner -d -l -A` you
+> > should get the Bluetooth endpoints to appear.
+> > 
+> > Removing the mod.portal from the configuration can't be done with drop-
+> > in config files currently, and I didn't want to include a full config
+> > file here as it has some tens of lines of mandatory boilerplate.
+> 
+> Ok, looks like it configuring the endpoints:
+> 
+> https://gist.github.com/Vudentz/0d8851e719affd9f2dc1f4081ce32fb7
+> 
+> That said I probably need to compile pipewire from source in order to
+> have the LE Audio endpoints registered, btw do you have any
+> instructions on how to build it, do I need to build wireplumber as
+> well?
 
-Here is the summary with links:
-  - [BlueZ,v3,1/2] test-runner: revert udevd and audio support
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a0a10f8c9d78
-  - [BlueZ,v3,2/2] tools/test-runner: add option to start Pipewire inside the VM
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=86b8d4192dbd
+Should be along these lines to install under $PWD/install and enable
+BAP parts:
 
-You are awesome, thank you!
+git clone https://gitlab.freedesktop.org/pipewire/pipewire.git
+cd pipewire
+LDFLAGS="-Wl,-rpath=$PWD/install/lib64" \
+   meson setup builddir --prefix=$PWD/install \
+       -Dsystemd-user-service=disabled \
+       -Dudevrulesdir=$PWD/install/lib/udev/rules.d \
+       -Dbluez5-codec-lc3=enabled
+meson install -C builddir
+
+Meson will clone and install Wireplumber too. Turning experimental on
+in src/main.conf and it should give
+
+$ ./tools/test-runner -d -l --audio=/home/pauli/tmp/pipewire/install/bin/pipewire -k../linux/arch/x86_64/boot/bzImage sleep 5
+...
+bluetoothd[29]: profiles/audio/media.c:endpoint_init_pac() PAC :1.1:/MediaEndpointLE/BAPSource/lc3 registered
+bluetoothd[29]: Endpoint registered: sender=:1.1 path=/MediaEndpointLE/BAPSource/lc3
+bluetoothd[29]: profiles/audio/media.c:client_ready_cb() Media application registered: :1.1:/MediaEndpointLE
+...
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Pauli Virtanen
