@@ -2,115 +2,356 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A1FA70A8EE
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 20 May 2023 17:57:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3719770AE91
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 May 2023 17:27:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231557AbjETP5A (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 20 May 2023 11:57:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39392 "EHLO
+        id S230048AbjEUP1t (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 21 May 2023 11:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229737AbjETP47 (ORCPT
+        with ESMTP id S229794AbjEUP1q (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 20 May 2023 11:56:59 -0400
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6781A95
-        for <linux-bluetooth@vger.kernel.org>; Sat, 20 May 2023 08:56:58 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id 6a1803df08f44-62385de2d40so9418096d6.0
-        for <linux-bluetooth@vger.kernel.org>; Sat, 20 May 2023 08:56:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684598217; x=1687190217;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qMH0nr4XVtZMQVJLc9zV0M1MrBtoWpErO85hiGJz3Ss=;
-        b=M81ac6MdFmjVstDwzL1SrDPmhKosKbMU+hiJsYYzvcrDCLAilutNn/Dk/yptKQrNB8
-         /BVrmWhhtu178pUxauSj6OYowCgMWNbF2jyygiS5y42hUN+BloMbvhiU0XVpOnYZ+/bA
-         /ZZgehh593nhAGvmF9I6nh7Hut26G/fvE1I7v05jcaaqa+dO0VCnZi1ERu6ap6M67O/9
-         NPBrbWKcaD1/iErWduesup50yKPCL1xgDaxFsX4xUyuQtr/pLxOgUM3kCii5ere/UE8x
-         Q40w93dG26Mfe7cfI7qO9kc77Snn2CHET/IauZWR9REVvQ0he/Hz6852vG2B/dQYTvpR
-         LKsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684598217; x=1687190217;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qMH0nr4XVtZMQVJLc9zV0M1MrBtoWpErO85hiGJz3Ss=;
-        b=jKStgGkIzDvWST3R9dbswSRA0PmOfb9mNo2X9OMYbGXbau5DH3WmMkMVw9svH3tokg
-         oB5js64kjs9lWfyXweeSfrA6SnFLP4NbAAVJSlWRoC7ygupkwmcLv8gMA0gjV2Y/7gDn
-         QiR/fiMexA42hdhMoPPPXlFGKcpHgQYHUwT0Vej16m6Zqjk//YkNaZ1GKy5cTZo30IEZ
-         SpevxyCTunMHiKE9+aKG9/iuoupbV7NR4QEJlg33vsFLASaW/OnE0lD905fK+SKigWWG
-         L8WHkx6bs2HiGkHfZJWw6I3sIRllf8uFD/0hIUctsjKaAt0AFv7/2rOv6WVp+6djfWk5
-         Zj/w==
-X-Gm-Message-State: AC+VfDzWkq9aNDmIlbhp8afhIAk8PeCXl0VTL+wfF7OXeF3XdUnNSC3p
-        riiq83Wsc8l2jAS9LJ0hecuIoL6GJZrJmQ==
-X-Google-Smtp-Source: ACHHUZ4H/9U6lGFeFkBc7+z2mEe9gEUoZEd37SptRweQwQaNbNCndeM8xKvZcltw0wCQET9jBKbDtA==
-X-Received: by 2002:a05:6214:27e6:b0:5d8:eac2:3b54 with SMTP id jt6-20020a05621427e600b005d8eac23b54mr13066238qvb.16.1684598217398;
-        Sat, 20 May 2023 08:56:57 -0700 (PDT)
-Received: from [172.17.0.2] ([52.191.76.16])
-        by smtp.gmail.com with ESMTPSA id ml22-20020a056214585600b0061b73e331b2sm643220qvb.30.2023.05.20.08.56.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 May 2023 08:56:57 -0700 (PDT)
-Message-ID: <6468edc9.050a0220.30bd7.2b5f@mx.google.com>
-Date:   Sat, 20 May 2023 08:56:57 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============4724642998100799612=="
+        Sun, 21 May 2023 11:27:46 -0400
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43B72DE
+        for <linux-bluetooth@vger.kernel.org>; Sun, 21 May 2023 08:27:44 -0700 (PDT)
+Received: from submission (posteo.de [185.67.36.169]) 
+        by mout01.posteo.de (Postfix) with ESMTPS id D2A19240029
+        for <linux-bluetooth@vger.kernel.org>; Sun, 21 May 2023 17:27:40 +0200 (CEST)
+Received: from customer (localhost [127.0.0.1])
+        by submission (posteo.de) with ESMTPSA id 4QPPbJ2Q4yz9rxG;
+        Sun, 21 May 2023 17:27:40 +0200 (CEST)
+From:   Pauli Virtanen <pav@iki.fi>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ 1/5] iso-tester: always use DEFER_SETUP for multiple CIS in same CIG
+Date:   Sun, 21 May 2023 15:27:34 +0000
+Message-Id: <024df2d86c14fc811701ba27bfa576476bc9c0d6.1684682575.git.pav@iki.fi>
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, christophe.jaillet@wanadoo.fr
-Subject: RE: Bluetooth: hci_ll: Use the devm_clk_get_optional() helper
-In-Reply-To: <2035c65977818626011f512d17cd018b6d877925.1684595848.git.christophe.jaillet@wanadoo.fr>
-References: <2035c65977818626011f512d17cd018b6d877925.1684595848.git.christophe.jaillet@wanadoo.fr>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NEUTRAL,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============4724642998100799612==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+There is a race between multiple connect() for CIS in the same CIG.
+connect() will both reconfigure the CIG and connect the CIS, but CIG
+cannot be reconfigured once one CIS has already connected.  That these
+tests pass currently relies on some timing/event ordering in the
+emulator.
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=749494
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.72 seconds
-GitLint                       PASS      0.36 seconds
-SubjectPrefix                 PASS      0.14 seconds
-BuildKernel                   PASS      32.27 seconds
-CheckAllWarning               PASS      35.06 seconds
-CheckSparse                   PASS      39.96 seconds
-CheckSmatch                   PASS      108.89 seconds
-BuildKernel32                 PASS      31.10 seconds
-TestRunnerSetup               PASS      446.95 seconds
-TestRunner_l2cap-tester       PASS      17.26 seconds
-TestRunner_iso-tester         PASS      21.31 seconds
-TestRunner_bnep-tester        PASS      5.71 seconds
-TestRunner_mgmt-tester        PASS      116.57 seconds
-TestRunner_rfcomm-tester      PASS      9.09 seconds
-TestRunner_sco-tester         PASS      8.35 seconds
-TestRunner_ioctl-tester       PASS      9.72 seconds
-TestRunner_mesh-tester        PASS      7.16 seconds
-TestRunner_smp-tester         PASS      8.31 seconds
-TestRunner_userchan-tester    PASS      5.99 seconds
-IncrementalBuild              PASS      29.29 seconds
-
-
-
+Connecting multiple CIS in same CIG is meant to be done using
+DEFER_SETUP, so change the tests to use it, so we test the intended
+usage.
 ---
-Regards,
-Linux Bluetooth
+ tools/iso-tester.c | 150 +++++++++++++++++++++++++++++++--------------
+ 1 file changed, 104 insertions(+), 46 deletions(-)
 
+diff --git a/tools/iso-tester.c b/tools/iso-tester.c
+index c5c6f0aec..164cb465f 100644
+--- a/tools/iso-tester.c
++++ b/tools/iso-tester.c
+@@ -740,6 +740,12 @@ static const struct iso_client_data defer_16_2_1 = {
+ 	.defer = true,
+ };
+ 
++static const struct iso_client_data defer_1_16_2_1 = {
++	.qos = QOS_1_16_2_1,
++	.expect_err = 0,
++	.defer = true,
++};
++
+ static const struct iso_client_data connect_16_2_1_defer_send = {
+ 	.qos = QOS_16_2_1,
+ 	.expect_err = 0,
+@@ -817,6 +823,7 @@ static const struct iso_client_data connect_ac_6i = {
+ 	.qos_2 = AC_6i_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data connect_ac_6ii = {
+@@ -824,6 +831,7 @@ static const struct iso_client_data connect_ac_6ii = {
+ 	.qos_2 = AC_6ii_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data connect_ac_7i = {
+@@ -831,6 +839,7 @@ static const struct iso_client_data connect_ac_7i = {
+ 	.qos_2 = AC_7i_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data connect_ac_7ii = {
+@@ -838,6 +847,7 @@ static const struct iso_client_data connect_ac_7ii = {
+ 	.qos_2 = AC_7ii_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data connect_ac_8i = {
+@@ -845,6 +855,7 @@ static const struct iso_client_data connect_ac_8i = {
+ 	.qos_2 = AC_8i_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data connect_ac_8ii = {
+@@ -852,6 +863,7 @@ static const struct iso_client_data connect_ac_8ii = {
+ 	.qos_2 = AC_8ii_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data connect_ac_9i = {
+@@ -859,6 +871,7 @@ static const struct iso_client_data connect_ac_9i = {
+ 	.qos_2 = AC_9i_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data connect_ac_9ii = {
+@@ -866,6 +879,7 @@ static const struct iso_client_data connect_ac_9ii = {
+ 	.qos_2 = AC_9ii_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data connect_ac_11i = {
+@@ -873,6 +887,7 @@ static const struct iso_client_data connect_ac_11i = {
+ 	.qos_2 = AC_11i_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data connect_ac_11ii = {
+@@ -880,6 +895,7 @@ static const struct iso_client_data connect_ac_11ii = {
+ 	.qos_2 = AC_11ii_2,
+ 	.expect_err = 0,
+ 	.mcis = true,
++	.defer = true,
+ };
+ 
+ static const struct iso_client_data bcast_16_2_1_send = {
+@@ -1715,13 +1731,9 @@ static gboolean iso_connect2_cb(GIOChannel *io, GIOCondition cond,
+ 	return iso_connect(io, cond, user_data);
+ }
+ 
+-static void setup_connect(struct test_data *data, uint8_t num, GIOFunc func)
++static int setup_sock(struct test_data *data, uint8_t num)
+ {
+-	const struct iso_client_data *isodata = data->test_data;
+-	GIOChannel *io;
+ 	int sk, err;
+-	char c;
+-	struct pollfd pfd;
+ 
+ 	sk = create_iso_sock(data);
+ 	if (sk < 0) {
+@@ -1729,7 +1741,8 @@ static void setup_connect(struct test_data *data, uint8_t num, GIOFunc func)
+ 			tester_test_abort();
+ 		else
+ 			tester_test_failed();
+-		return;
++
++		return sk;
+ 	}
+ 
+ 	err = connect_iso_sock(data, num, sk);
+@@ -1743,65 +1756,106 @@ static void setup_connect(struct test_data *data, uint8_t num, GIOFunc func)
+ 		else
+ 			tester_test_failed();
+ 
+-		return;
++		return err;
+ 	}
+ 
+-	if (isodata->defer) {
+-		int defer;
+-		socklen_t len;
+-
+-		/* Check if socket has DEFER_SETUP set */
+-		len = sizeof(defer);
+-		if (getsockopt(sk, SOL_BLUETOOTH, BT_DEFER_SETUP, &defer,
+-				&len) < 0) {
+-			tester_warn("getsockopt: %s (%d)", strerror(errno),
+-								errno);
++	return sk;
++}
++
++static int connect_deferred(int sk)
++{
++	int defer;
++	socklen_t len;
++	struct pollfd pfd;
++	char c;
++
++	/* Check if socket has DEFER_SETUP set */
++	len = sizeof(defer);
++	if (getsockopt(sk, SOL_BLUETOOTH, BT_DEFER_SETUP, &defer,
++					&len) < 0) {
++		tester_warn("getsockopt: %s (%d)", strerror(errno),
++				errno);
++		tester_test_failed();
++		return 0;
++	}
++
++	memset(&pfd, 0, sizeof(pfd));
++	pfd.fd = sk;
++	pfd.events = POLLOUT;
++
++	if (poll(&pfd, 1, 0) < 0) {
++		tester_warn("poll: %s (%d)", strerror(errno), errno);
++		tester_test_failed();
++		return -EIO;
++	}
++
++	if (!(pfd.revents & POLLOUT)) {
++		if (read(sk, &c, 1) < 0) {
++			tester_warn("read: %s (%d)", strerror(errno),
++					errno);
+ 			tester_test_failed();
+-			return;
++			return -EIO;
+ 		}
++	}
++
++	return 0;
++}
+ 
+-		memset(&pfd, 0, sizeof(pfd));
+-		pfd.fd = sk;
+-		pfd.events = POLLOUT;
++static void setup_connect_many(struct test_data *data, uint8_t n, uint8_t *num,
++								GIOFunc *func)
++{
++	const struct iso_client_data *isodata = data->test_data;
++	int sk[256];
++	GIOChannel *io;
++	unsigned int i;
+ 
+-		if (poll(&pfd, 1, 0) < 0) {
+-			tester_warn("poll: %s (%d)", strerror(errno), errno);
+-			tester_test_failed();
++	for (i = 0; i < n; ++i) {
++		sk[i] = setup_sock(data, num[i]);
++		if (sk[i] < 0)
+ 			return;
+-		}
++	}
+ 
+-		if (!(pfd.revents & POLLOUT)) {
+-			if (read(sk, &c, 1) < 0) {
+-				tester_warn("read: %s (%d)", strerror(errno),
+-								errno);
+-				tester_test_failed();
++	if (isodata->defer) {
++		for (i = 0; i < n; ++i)
++			if (connect_deferred(sk[i]) < 0)
+ 				return;
+-			}
+-		}
+ 	}
+ 
+-	io = g_io_channel_unix_new(sk);
+-	g_io_channel_set_close_on_unref(io, TRUE);
++	for (i = 0; i < n; ++i) {
++		io = g_io_channel_unix_new(sk[i]);
++		g_io_channel_set_close_on_unref(io, TRUE);
+ 
+-	data->io_id[num] = g_io_add_watch(io, G_IO_OUT, func, NULL);
++		data->io_id[num[i]] = g_io_add_watch(io, G_IO_OUT, func[i],
++									NULL);
+ 
+-	g_io_channel_unref(io);
++		g_io_channel_unref(io);
+ 
+-	tester_print("Connect in progress");
++		tester_print("Connect %d in progress", num[i]);
+ 
+-	data->step++;
++		data->step++;
++	}
++}
++
++static void setup_connect(struct test_data *data, uint8_t num, GIOFunc func)
++{
++	return setup_connect_many(data, 1, &num, &func);
+ }
+ 
+ static void test_connect(const void *test_data)
+ {
+ 	struct test_data *data = tester_get_data();
+ 	const struct iso_client_data *isodata = test_data;
++	uint8_t n = 0;
++	GIOFunc func[2];
++	uint8_t num[2] = {0, 1};
+ 
+-	setup_connect(data, 0, iso_connect_cb);
++	func[n++] = iso_connect_cb;
+ 
+ 	/* Check if configuration requires multiple CIS setup */
+ 	if (!isodata->bcast && isodata->mcis)
+-		setup_connect(data, 1, iso_connect2_cb);
++		func[n++] = iso_connect2_cb;
++
++	setup_connect_many(data, n, num, func);
+ }
+ 
+ static void setup_reconnect(struct test_data *data, uint8_t num, GIOFunc func)
+@@ -2066,9 +2120,10 @@ static void test_listen(const void *test_data)
+ static void test_connect2(const void *test_data)
+ {
+ 	struct test_data *data = tester_get_data();
++	uint8_t num[2] = {0, 1};
++	GIOFunc funcs[2] = {iso_connect_cb, iso_connect2_cb};
+ 
+-	setup_connect(data, 0, iso_connect_cb);
+-	setup_connect(data, 1, iso_connect2_cb);
++	setup_connect_many(data, 2, num, funcs);
+ }
+ 
+ static void test_bcast(const void *test_data)
+@@ -2212,10 +2267,6 @@ int main(int argc, char *argv[])
+ 	test_iso_rej("ISO Connect - Reject", &connect_reject, setup_powered,
+ 			test_connect, BT_HCI_ERR_CONN_FAILED_TO_ESTABLISH);
+ 
+-	test_iso2("ISO Connect2 CIG 0x01 - Success", &connect_1_16_2_1,
+-							setup_powered,
+-							test_connect2);
+-
+ 	test_iso("ISO Send - Success", &connect_16_2_1_send, setup_powered,
+ 							test_connect);
+ 
+@@ -2229,6 +2280,13 @@ int main(int argc, char *argv[])
+ 	test_iso("ISO Defer - Success", &defer_16_2_1, setup_powered,
+ 							test_defer);
+ 
++	test_iso("ISO Defer Connect - Success", &defer_16_2_1, setup_powered,
++							test_connect);
++
++	test_iso2("ISO Defer Connect2 CIG 0x01 - Success", &defer_1_16_2_1,
++							setup_powered,
++							test_connect2);
++
+ 	test_iso("ISO Defer Send - Success", &connect_16_2_1_defer_send,
+ 							setup_powered,
+ 							test_connect);
+-- 
+2.40.1
 
---===============4724642998100799612==--
