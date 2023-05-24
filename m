@@ -2,80 +2,196 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 584E170FC15
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 May 2023 19:00:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AAC270FE15
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 May 2023 20:56:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234366AbjEXRAY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 24 May 2023 13:00:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60466 "EHLO
+        id S229604AbjEXS4u (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 24 May 2023 14:56:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229624AbjEXRAW (ORCPT
+        with ESMTP id S229482AbjEXS4t (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 24 May 2023 13:00:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33C3EBB
-        for <linux-bluetooth@vger.kernel.org>; Wed, 24 May 2023 10:00:22 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 78D3C63748
-        for <linux-bluetooth@vger.kernel.org>; Wed, 24 May 2023 17:00:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D931FC433EF;
-        Wed, 24 May 2023 17:00:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684947620;
-        bh=Rbe1gS/GO6qJdIwnNwHj9qLaxfX26gos2uasw7bC5Bw=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=YurvErYHtf2YbedZ9XvqWY0zClqiHXzrzBROqRjiUxCmUmf5kirkGnw3bmEinhoSJ
-         DVGTVN2eNXnYLrmKGfNpVOo4a8WbEtsBOjMx4bDVdzz6tXfxxw7zS0Aelv8lQ5fAgh
-         vJ1O1h5mkVgQTBFOcz5z90+/ZRUyR2zB52TtdObkhMgvysbddcmYDHbLcyPQCW9hRm
-         Pigh0duGIkdWxF6GuMpv8Ukv7ifMRmFIkmOW+NOiLFmf5U5yo/XFLk0EOTeBngwe+c
-         J9QWGSdw5N8ufRGBBcqw3GvH0rJwyni55dhdcL0d3rDG/1KU1zi45djC50AWgKC5B4
-         8P4e/9jg0IsbQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BEEF6E450AF;
-        Wed, 24 May 2023 17:00:20 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 24 May 2023 14:56:49 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2781C113;
+        Wed, 24 May 2023 11:56:46 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2afb2875491so15274481fa.1;
+        Wed, 24 May 2023 11:56:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684954604; x=1687546604;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nFc5+4hJmG80gbCGSLCg+YTvQ2ViynmFbtirUDeRW/w=;
+        b=iPkNWloTpYUleJ4Yo/4U5PL0dlt5rktILW8viFrT7dTFzy8a5m1qLGVzEJMlre1M+2
+         sAMDgB9mw4+i41Xg9qOGM1MIhiO2ehNaaFxEzLrqu8WBMEix5XlZDH7RyIvAw62sTVNY
+         AZMfDZYR3MPot1NdIjWnPe2gLOkpfabb9pfRWLtMHbYQxXY6672oLNLsxarl1wf0KoAI
+         nV2GWNUiwVsy+idgD0IjOa+K00JNPDC+CydKPi3zizB1l/GiebYo9lMVj2Bzb8dzlpvG
+         IDKRzW/t6tawRf5W0jCyWf4pjufXbCWfjEb4tXSak7yIjsgMiDeEMDCHA6LAMS5vCxAc
+         QYXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684954604; x=1687546604;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nFc5+4hJmG80gbCGSLCg+YTvQ2ViynmFbtirUDeRW/w=;
+        b=SK+kw6ylfbVZkmR0I7Bx/DEriWiV8nZ5LFn0BMn9yN6ok2GZhz96bT/UQ+ary6FsJR
+         Sqvg5UBQmRggWOsWAdiFKkpY61fYKgwQCy3ntGT+2iByvFTC6xyn9CkCrViwLR9Nda6p
+         QwtnxRbQSGPZGxjPa44PoQhTgo7FNwX5OyXxM40kSkrcy6vUDYgznhoguvleP94XnnfK
+         /Vt1UgS2ruY8iNiInCVsl0BWglkQ115WiU5szzZkc30sBhgtc25ojcjwnIOjrXEp/95Y
+         S2vcPuqMDd5uvAwPoLDyhNkjCHF873GPrApWjDA3JB5KOKPh2DL2yf2wGC7l3yHiM1oC
+         4LQQ==
+X-Gm-Message-State: AC+VfDyosZS4wXKLUFlp9OQjD6XhdfkqLteY0UdGnOhtK1ZrKwf7XQ/8
+        gdfIS9K+AEvXzvDTZYvRY+2hvWxvG6SP1jQ81mg=
+X-Google-Smtp-Source: ACHHUZ7U82Xbuq436/IWABbU91mpiCWN1wfiHa5KlG1XrdwoXANaosuwV0E0Vf3RRfXoNphnTgGv5pB/51aGiVd8e1U=
+X-Received: by 2002:a2e:7215:0:b0:2a8:d13d:88fb with SMTP id
+ n21-20020a2e7215000000b002a8d13d88fbmr221362ljc.11.1684954604217; Wed, 24 May
+ 2023 11:56:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] iso-tester: Make QoS parameters reflect the tests names
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168494762077.20557.17842580848143033536.git-patchwork-notify@kernel.org>
-Date:   Wed, 24 May 2023 17:00:20 +0000
-References: <20230523174906.2751379-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230523174906.2751379-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230522234154.2924052-1-yinghsu@chromium.org>
+ <ZGyPt1GYGV2C2RQZ@corigine.com> <CABBYNZ+by-OQH2aPEMHpQ5cOLoKNpR7k111rJj6iOd2PGLx3gg@mail.gmail.com>
+ <CAAa9mD3A+3uJzFK0EbTrn5hX42EOgeixehmxgkwdhp1KetxjVQ@mail.gmail.com>
+In-Reply-To: <CAAa9mD3A+3uJzFK0EbTrn5hX42EOgeixehmxgkwdhp1KetxjVQ@mail.gmail.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 24 May 2023 11:56:31 -0700
+Message-ID: <CABBYNZKPv_0AaJJm2_c0F+4qX_vKXQ9BnVgR-kPy40YsDDqSRQ@mail.gmail.com>
+Subject: Re: [PATCH v2] Bluetooth: Fix l2cap_disconnect_req deadlock
+To:     Ying Hsu <yinghsu@chromium.org>
+Cc:     Simon Horman <simon.horman@corigine.com>,
+        linux-bluetooth@vger.kernel.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Paolo Abeni <pabeni@redhat.com>, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+Hi Ying,
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+On Wed, May 24, 2023 at 3:54=E2=80=AFAM Ying Hsu <yinghsu@chromium.org> wro=
+te:
+>
+> Hi Simon,
+>
+> I understand your concern about the repeated code.
+> However, simply hiding the locking logic in another function
+> introduces hidden assumptions.
+> For this patch, I would like to fix the deadlock in a simple and easy
+> to understand way.
+> We can always refactor the l2cap_chan utility functions later.
+>
+> Hi Luis,
+>
+> I'll add a fixes tag in the next version.
 
-On Tue, 23 May 2023 10:49:06 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> AC 1 + 2 tests shall use their respective QoS parameters.
-> ---
->  tools/iso-tester.c | 35 +++++++++++++++++++++--------------
->  1 file changed, 21 insertions(+), 14 deletions(-)
+And how about doing this:
 
-Here is the summary with links:
-  - [BlueZ] iso-tester: Make QoS parameters reflect the tests names
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=98a9a3c48ce8
+https://gist.github.com/Vudentz/e513859ecb31e79c947dfcb4b5c60453
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> Best regards,
+> Ying
+>
+>
+> On Wed, May 24, 2023 at 3:06=E2=80=AFAM Luiz Augusto von Dentz
+> <luiz.dentz@gmail.com> wrote:
+> >
+> > Hi Simon, Ying,
+> >
+> > On Tue, May 23, 2023 at 3:04=E2=80=AFAM Simon Horman <simon.horman@cori=
+gine.com> wrote:
+> > >
+> > > On Mon, May 22, 2023 at 11:41:51PM +0000, Ying Hsu wrote:
+> > > > L2CAP assumes that the locks conn->chan_lock and chan->lock are
+> > > > acquired in the order conn->chan_lock, chan->lock to avoid
+> > > > potential deadlock.
+> > > > For example, l2sock_shutdown acquires these locks in the order:
+> > > >   mutex_lock(&conn->chan_lock)
+> > > >   l2cap_chan_lock(chan)
+> > > >
+> > > > However, l2cap_disconnect_req acquires chan->lock in
+> > > > l2cap_get_chan_by_scid first and then acquires conn->chan_lock
+> > > > before calling l2cap_chan_del. This means that these locks are
+> > > > acquired in unexpected order, which leads to potential deadlock:
+> > > >   l2cap_chan_lock(c)
+> > > >   mutex_lock(&conn->chan_lock)
+> > > >
+> > > > This patch uses __l2cap_get_chan_by_scid to replace
+> > > > l2cap_get_chan_by_scid and adjusts the locking order to avoid the
+> > > > potential deadlock.
+> >
+> > This needs the fixes tag so we can backport it properly.
+> >
+> > > > Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+> > > > ---
+> > > > This commit has been tested on a Chromebook device.
+> > > >
+> > > > Changes in v2:
+> > > > - Adding the prefix "Bluetooth:" to subject line.
+> > > >
+> > > >  net/bluetooth/l2cap_core.c | 26 ++++++++++++++++++++------
+> > > >  1 file changed, 20 insertions(+), 6 deletions(-)
+> > > >
+> > > > diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.=
+c
+> > > > index 376b523c7b26..8f08192b8fb1 100644
+> > > > --- a/net/bluetooth/l2cap_core.c
+> > > > +++ b/net/bluetooth/l2cap_core.c
+> > > > @@ -4651,8 +4651,16 @@ static inline int l2cap_disconnect_req(struc=
+t l2cap_conn *conn,
+> > > >
+> > > >       BT_DBG("scid 0x%4.4x dcid 0x%4.4x", scid, dcid);
+> > > >
+> > > > -     chan =3D l2cap_get_chan_by_scid(conn, dcid);
+> > > > +     mutex_lock(&conn->chan_lock);
+> > > > +     chan =3D __l2cap_get_chan_by_scid(conn, dcid);
+> > > > +     if (chan) {
+> > > > +             chan =3D l2cap_chan_hold_unless_zero(chan);
+> > > > +             if (chan)
+> > > > +                     l2cap_chan_lock(chan);
+> > > > +     }
+> > > > +
+> > > >       if (!chan) {
+> > > > +             mutex_unlock(&conn->chan_lock);
+> > > >               cmd_reject_invalid_cid(conn, cmd->ident, dcid, scid);
+> > > >               return 0;
+> > > >       }
+> > >
+> > > Hi Ying,
+> > >
+> > > The conditional setting of chan and calling l2cap_chan_lock()
+> > > is both non-trivial and repeated. It seems that it ought to be
+> > > in a helper.
+> > >
+> > > Something like this (I'm sure a better function name can be chosen):
+> > >
+> > >         chan =3D __l2cap_get_and_lock_chan_by_scid(conn, dcid);
+> > >         if (!chan) {
+> > >                 ...
+> > >         }
+> > >
+> > >         ...
+> >
+> > Or perhaps we could do something like l2cap_del_chan_by_scid:
+> >
+> > https://gist.github.com/Vudentz/e513859ecb31e79c947dfcb4b5c60453
+> >
+> > --
+> > Luiz Augusto von Dentz
 
 
+
+--=20
+Luiz Augusto von Dentz
