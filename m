@@ -2,49 +2,49 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1802712FBE
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 27 May 2023 00:10:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2379712FBB
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 27 May 2023 00:10:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237083AbjEZWK0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 26 May 2023 18:10:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60664 "EHLO
+        id S230521AbjEZWKZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 26 May 2023 18:10:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbjEZWKY (ORCPT
+        with ESMTP id S229999AbjEZWKY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 26 May 2023 18:10:24 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BDE0F7
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BBF5F3
         for <linux-bluetooth@vger.kernel.org>; Fri, 26 May 2023 15:10:23 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 93F406542F
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 869F465430
         for <linux-bluetooth@vger.kernel.org>; Fri, 26 May 2023 22:10:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EE570C4339C;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E5B49C4339E;
         Fri, 26 May 2023 22:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685139022;
-        bh=tKQqP5NinQmkfXUyuNly3fvTRbAx8OuFOxDfEvaAhDQ=;
+        s=k20201202; t=1685139021;
+        bh=9hYhcbwA4LUJPoualpPrYWzb00peWxcyWu3hIkuk0ug=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=nWe9wnfOSc7Q9dY4EuEKvl3u9tGIeV0d8gwOA/z35HxAxGpWMFUhoj8AToA1caYP3
-         6N+/T/PdUT6EAoKSqqhLcAobEpWjk9d4Xs+ESR9/vgufWmJU1WcgQcnP3k1AOfZsN0
-         B+nhSS/G//o2fTiI1TIk4O+xaZZIqOAOG4s5ljVdXkZgGqKpNszngGnvsqrqpUdFce
-         ueNYL5O2IlIVmRS3/c8jgYXKKe0c9SHmPnqqWk7X1pKIcupVso1qYYBQPaI0PPMdDu
-         AMSZzdBYIv0a+kzkIsbvzahR1w8RqOoWOMbU8G0c4ZVk9W+34aeYCf7BGIBw8W/SHS
-         fb+IKHwUj7TVA==
+        b=QWsW/FNaFIgCh+o96YwxvkqNFHCKZ0DVSmEzFbqWgumvLJjuhKXE7ZoPIEnPZLqn+
+         dxmAsb2N0U74QV2pLiXRnW6hISuSkO9+N3W3OUhLkieUDJFJxhvJQM9lLRdudLdf7X
+         SZtTmtlx2YCQ8VaJVzrNxYfdHF3A39hXf6OQVsClUlWsZlCkQY9L2MhiQvF42igmfT
+         qZ8ydHUkIdRUWTeiVG7ehyjQLq4NoFLy+VGSSu50YbHWgN/pEMdTom49UMR6E0Aq0N
+         g2RzTFWxiRnLrBWPpIdFMLWt+xuWcOS79KiMUoJKuSXIB/dpDFXtKksPUY1ZVIEvgg
+         HtmM/V1kIhF7A==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CAA72E4F133;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C09A8E22B06;
         Fri, 26 May 2023 22:10:21 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] monitor: Print process information
+Subject: Re: [PATCH v2 0/6] Add initial support for BAP broadcast source
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168513902182.4400.12365722735968962103.git-patchwork-notify@kernel.org>
+Message-Id: <168513902178.4400.7735618892742799772.git-patchwork-notify@kernel.org>
 Date:   Fri, 26 May 2023 22:10:21 +0000
-References: <20230525234621.3597759-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230525234621.3597759-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+References: <20230525153452.125789-1-silviu.barbulescu@nxp.com>
+In-Reply-To: <20230525153452.125789-1-silviu.barbulescu@nxp.com>
+To:     Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
 Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
@@ -58,23 +58,32 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 25 May 2023 16:46:21 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Thu, 25 May 2023 18:34:46 +0300 you wrote:
+> This patch adds initial support for BAP broadcast source.
 > 
-> This prints the process information when available:
+> The current implementation allows BAP source endpoint registration,
+> media transport creation, transport acquiring and sending broadcast ISO data.
 > 
-> bluetoothd[35]: @ MGMT Command: Rea.. (0x0001) plen 0  {0x0001}
-> @ MGMT Event: Command Complete (0x0001) plen 6         {0x0001}
->     Read Management Version Information (0x0001) plen 3
+> Currently, one BIG containing one BIS is supported.
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ] monitor: Print process information
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=ec85350c4803
+  - [v2,1/6] Update Docs for BAP broadcast source
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f808fa065396
+  - [v2,2/6] Add macro definitions for BAP broadcast source support
+    (no matching commit)
+  - [v2,3/6] Check for ISO broadcast support in controller
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=97f3386268fa
+  - [v2,4/6] Add support for setsockopt (BT_IO_OPT_BASE)
+    (no matching commit)
+  - [v2,5/6] Update bluetoothctl with support for broadcast source
+    (no matching commit)
+  - [v2,6/6] Add initial support for BAP broadcast source
+    (no matching commit)
 
 You are awesome, thank you!
 -- 
