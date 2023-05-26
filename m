@@ -2,156 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C51E9712CE9
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 May 2023 20:57:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A679712FBC
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 27 May 2023 00:10:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243651AbjEZS5K (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 26 May 2023 14:57:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33074 "EHLO
+        id S230437AbjEZWKZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 26 May 2023 18:10:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243628AbjEZS5J (ORCPT
+        with ESMTP id S230410AbjEZWKY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 26 May 2023 14:57:09 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B544A1B3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 26 May 2023 11:57:06 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-64d577071a6so1560278b3a.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 26 May 2023 11:57:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685127426; x=1687719426;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cRKRqs1azPbd7iwxCa0GioomO5os6B6BTILzfIHdDts=;
-        b=Yic5detC8GlyOlPa5ME7aKUdei7Rs0jP0zcK0QoO6AHIsE6uqdZENpDI8h22H7whyK
-         uXlp3cqukTBIVZTFA8n0XXyfH1gs9JDpburQCMckFVCjBPE60a9d3qKiBLx6BsQfccBx
-         kG1Cb+n3mrUON9MeUitZW4c/eQj+yuat60noiezO81+S1siKke8K6mDSZa/tJizEzHFM
-         vQGAn2oNrXIFoScsbdPpATaj9AvVs2zDDSyUcUb5qF3Mk2XHFSVHxI/n+lFLoghfxQdg
-         BBAcOU8x4VgDhgioKw5SwmC1urke0ZTcPPppXwgqF/QayqJFtNI/qDjYsM4yZA19Sd29
-         JEYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685127426; x=1687719426;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cRKRqs1azPbd7iwxCa0GioomO5os6B6BTILzfIHdDts=;
-        b=GBiNBruIXjB0D9v+ovSCe1DzV4sLEAFjGRsSZXV4xM5XrvpqQjXSWL2KeWxW5jIlMs
-         Bh9WYywrRmSiSF/wkmhmGJMN2hL1jB1kFkr2SCxP9sc5d6gB4JjgWJ85YQjoYpaYZG9x
-         6xCZGnKYaQFRnH+qn92rCPz5NVMcnp6EEckMdOUSimfj6SQiepmWiZYFQ6FuIEzwI+NV
-         4884m/iRdnzFhjHOKO+9p06NQVwxCFAy5Hehn+ephVKxZEo8XUKnhR6+wC7iF2YgWRkg
-         A3sumrXZdVFtz7qqpn6ylB8gzOCX1EYdfb0CBC9lr7QGYWuWqtmxgzfgZyAkK8iz6p4+
-         Ptzg==
-X-Gm-Message-State: AC+VfDzg91YqR9ksoU5+0BV/Heu+MJoAbq6wI2rAdaEKx80JO9DVV+KS
-        S2jiTSOcL4SY2IEx0JO5K2iW6uACHKk=
-X-Google-Smtp-Source: ACHHUZ7rqv0oVdBAmg0F0pR2VtLusf/64jsNveQ9ULYTyVF7IBbiE3bEYkzFn+eUbyD2OU3tkHvOTQ==
-X-Received: by 2002:a05:6a00:189f:b0:64c:e899:dcd1 with SMTP id x31-20020a056a00189f00b0064ce899dcd1mr5584902pfh.5.1685127425736;
-        Fri, 26 May 2023 11:57:05 -0700 (PDT)
-Received: from [172.17.0.2] ([20.171.59.211])
-        by smtp.gmail.com with ESMTPSA id e16-20020aa78c50000000b0063b867a1959sm3018178pfd.133.2023.05.26.11.57.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 May 2023 11:57:05 -0700 (PDT)
-Message-ID: <64710101.a70a0220.679a4.6773@mx.google.com>
-Date:   Fri, 26 May 2023 11:57:05 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============4200464974692261302=="
+        Fri, 26 May 2023 18:10:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0747D8
+        for <linux-bluetooth@vger.kernel.org>; Fri, 26 May 2023 15:10:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7464465418
+        for <linux-bluetooth@vger.kernel.org>; Fri, 26 May 2023 22:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D74ADC4339B;
+        Fri, 26 May 2023 22:10:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685139021;
+        bh=dwkIOUjhm21tdZtE/dxcquEAb6ZPmDItth7QxsoPsHY=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=RZsUpJZrsNwqjTCdeh2T1Yk5abLvdAObxdG1X3yrXJNQYQUlYvdYOJszE51qDJA90
+         RCdrLKdm654p1+wmZtWEUWHcfh+6nQQkUkRj56S97WfYuaYHDbXVAzdXjNRWd2FvK5
+         DeEJLYGlctyOTkby0FzFeqQaNFok/W7vE14JjtfKot9d4pimRo1ZwiGz1l2dEtT+h5
+         FDcuqZJIi0+LYAqcPulZ3C5NhmRo3FaeXV3I+wyQT755BosG1JkEEedkvbE1yu9DwW
+         g2MMVcQPbbt6Y/KPnJDfzzG6LWpSgileRcanW8WSPPpEAUJAnMrP9PjmAJmjJ8L31k
+         m8z6drM1dQG7A==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B7538E270C2;
+        Fri, 26 May 2023 22:10:21 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, iam@sung-woo.kim
-Subject: RE: Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_ready_cb
-In-Reply-To: <20230526181647.3074391-1-iam@sung-woo.kim>
-References: <20230526181647.3074391-1-iam@sung-woo.kim>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ 0/6] Add initial support for BAP broadcast source
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <168513902174.4400.17722937765978938679.git-patchwork-notify@kernel.org>
+Date:   Fri, 26 May 2023 22:10:21 +0000
+References: <20230523143504.3319-1-iulia.tanasescu@nxp.com>
+In-Reply-To: <20230523143504.3319-1-iulia.tanasescu@nxp.com>
+To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============4200464974692261302==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello:
 
-This is automated email and please do not reply to this email!
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Dear submitter,
+On Tue, 23 May 2023 17:34:58 +0300 you wrote:
+> This patch adds initial support for BAP broadcast source.
+> 
+> The current implementation allows BAP source endpoint registration,
+> media transport creation, transport acquiring and sending broadcast ISO data.
+> 
+> Currently, one BIG containing one BIS is supported.
+> 
+> [...]
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=751481
+Here is the summary with links:
+  - [BlueZ,1/6] doc: Update Docs for BAP broadcast source
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f808fa065396
+  - [BlueZ,2/6] lib: Add macro definitions for BAP broadcast source support
+    (no matching commit)
+  - [BlueZ,3/6] monitor: Check for ISO broadcast support in controller
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=97f3386268fa
+  - [BlueZ,4/6] btio: Add support for setsockopt (BT_IO_OPT_BASE)
+    (no matching commit)
+  - [BlueZ,5/6] client/player: Update bluetoothctl with support for broadcast source
+    (no matching commit)
+  - [BlueZ,6/6] bap: Add initial support for BAP broadcast source
+    (no matching commit)
 
----Test result---
-
-Test Summary:
-CheckPatch                    FAIL      0.81 seconds
-GitLint                       FAIL      0.54 seconds
-SubjectPrefix                 PASS      0.09 seconds
-BuildKernel                   PASS      31.67 seconds
-CheckAllWarning               PASS      34.90 seconds
-CheckSparse                   PASS      39.38 seconds
-CheckSmatch                   PASS      110.87 seconds
-BuildKernel32                 PASS      30.74 seconds
-TestRunnerSetup               PASS      441.52 seconds
-TestRunner_l2cap-tester       PASS      16.65 seconds
-TestRunner_iso-tester         PASS      21.28 seconds
-TestRunner_bnep-tester        PASS      5.47 seconds
-TestRunner_mgmt-tester        PASS      110.94 seconds
-TestRunner_rfcomm-tester      PASS      8.76 seconds
-TestRunner_sco-tester         PASS      8.05 seconds
-TestRunner_ioctl-tester       PASS      9.27 seconds
-TestRunner_mesh-tester        PASS      6.87 seconds
-TestRunner_smp-tester         PASS      7.98 seconds
-TestRunner_userchan-tester    PASS      5.72 seconds
-IncrementalBuild              PASS      29.11 seconds
-
-Details
-##############################
-Test: CheckPatch - FAIL
-Desc: Run checkpatch.pl script
-Output:
-Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_ready_cb
-WARNING: Possible unwrapped commit description (prefer a maximum 75 chars per line)
-#74: 
-> >> net/bluetooth/l2cap_sock.c:1418:9: error: implicit declaration of function 'l2cap_sock_cleanup_listen'; did you mean 'l2cap_sock_listen'? [-Werror=implicit-function-declaration]
-
-ERROR: trailing whitespace
-#113: FILE: net/bluetooth/l2cap_sock.c:1418:
-+^I^I$
-
-total: 1 errors, 1 warnings, 0 checks, 16 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-NOTE: Whitespace errors detected.
-      You may wish to use scripts/cleanpatch or scripts/cleanfile
-
-/github/workspace/src/src/13257259.patch has style problems, please review.
-
-NOTE: Ignored message types: UNKNOWN_COMMIT_ID
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-##############################
-Test: GitLint - FAIL
-Desc: Run gitlint
-Output:
-Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_ready_cb
-
-WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
-4: B1 Line exceeds max length (182>80): "> >> net/bluetooth/l2cap_sock.c:1418:9: error: implicit declaration of function 'l2cap_sock_cleanup_listen'; did you mean 'l2cap_sock_listen'? [-Werror=implicit-function-declaration]"
-12: B1 Line exceeds max length (127>80): "> >> net/bluetooth/l2cap_sock.c:1436:13: warning: conflicting types for 'l2cap_sock_cleanup_listen'; have 'void(struct sock *)'"
-15: B1 Line exceeds max length (128>80): "> >> net/bluetooth/l2cap_sock.c:1436:13: error: static declaration of 'l2cap_sock_cleanup_listen' follows non-static declaration"
-16: B1 Line exceeds max length (138>80): ">    net/bluetooth/l2cap_sock.c:1418:9: note: previous implicit declaration of 'l2cap_sock_cleanup_listen' with type 'void(struct sock *)'"
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============4200464974692261302==--
