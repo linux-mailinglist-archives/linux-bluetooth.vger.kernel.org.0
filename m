@@ -2,57 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2113C7163E0
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 May 2023 16:23:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C57A7716401
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 May 2023 16:26:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229782AbjE3OXz (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 30 May 2023 10:23:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36510 "EHLO
+        id S232476AbjE3O0o (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 30 May 2023 10:26:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232052AbjE3OXe (ORCPT
+        with ESMTP id S232486AbjE3O0W (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 30 May 2023 10:23:34 -0400
+        Tue, 30 May 2023 10:26:22 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB361E41;
-        Tue, 30 May 2023 07:23:00 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9C7210DE;
+        Tue, 30 May 2023 07:25:26 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8776A62BD5;
-        Tue, 30 May 2023 14:22:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEE8C4339C;
-        Tue, 30 May 2023 14:22:09 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 352E862927;
+        Tue, 30 May 2023 14:25:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA3EC433EF;
+        Tue, 30 May 2023 14:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685456529;
-        bh=k700hgbiU2x5v71H9KHKEiPJRC2HKKRUZbC/XC2nTNM=;
+        s=k20201202; t=1685456707;
+        bh=+SYa9bhZBDTkyURy2GHBB/vLDr+xUSjpSqvR1WZibas=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RQJ+edKK9vPos0wVd2D7Ef/BPog8efISHA8NkA697qyRU/yLVFgd2aEExM/wYh60/
-         /NE53C/NmCt+mdkOF9cmriwPSJRosIvPIjx71tuKUyL29P55idt7KB0g3QN4AJt9Og
-         +SHI/K2YqQOROccEoRLwpqGX4qQvhDYZNln4YCqSyvTH5497i6oBYP+jTGSrpKH0ds
-         Koow4LSFejvhNTTp2EODkAhGPRfS9TJEpEmI6+hHRmswqM1qhfev+mgJtykdWkjsjb
-         0XcqMYiPqembqFubXole0hEQ6rmDWV7IxWSuYyGr7+KRB7I0UUhCjb+goCvM4XYGxj
-         Mo/xF6ZkJNF+Q==
+        b=f/juyAhcdNjjQ8aklB2nIws+qDmE0bsjg9H0H0+PjK5dDKw5piNsQu0LQFnle03Yl
+         pcEdusnAxxj9dHlTeNkV+iC98Vu5M74hvEWApcEMA+QTNmPyUZIbyQNfrc7e+xci+E
+         jWaEaqX0Nlrj7xc4/zFfss978JpHu7PUqK/OtbzKKIDg63TFtKyAGkSDzBY2haeDQP
+         jSf8irbEX8RfwIQAKd+HVI01bv762Tm27eBTHgv3KZIdZI+xepKeblQg24dCrvM9ar
+         s5SSwE/2T9R0JdfV+kzwUBrZ5UMu7+F3t/CWanLmj/4trn6WjhaqR6/OR7FFPM5Wwy
+         ITn/31eU7zXRQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1q40El-0007rF-BZ; Tue, 30 May 2023 16:22:11 +0200
-Date:   Tue, 30 May 2023 16:22:11 +0200
+        id 1q40Hd-0007sX-3Z; Tue, 30 May 2023 16:25:09 +0200
+Date:   Tue, 30 May 2023 16:25:09 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     "David S. Miller" <davem@davemloft.net>,
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
         Eric Dumazet <edumazet@google.com>,
         Jakub Kicinski <kuba@kernel.org>,
         Paolo Abeni <pabeni@redhat.com>,
         linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
         netdev@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH 0/2] Bluetooth: fix debugfs registration
-Message-ID: <ZHYGkxX-Z6deSgAH@hovoldconsulting.com>
-References: <20230424124852.12625-1-johan+linaro@kernel.org>
+Subject: Re: [PATCH 0/2] Bluetooth: fix bdaddr quirks
+Message-ID: <ZHYHRW-9BN4n4pPs@hovoldconsulting.com>
+References: <20230424133542.14383-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230424124852.12625-1-johan+linaro@kernel.org>
+In-Reply-To: <20230424133542.14383-1-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -63,35 +64,33 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 02:48:50PM +0200, Johan Hovold wrote:
-> The HCI controller debugfs interface is created during setup or when a
-> controller is configured, but there is nothing preventing a controller
-> from being configured multiple times (e.g. by setting the device
-> address), which results in a host of errors in the logs:
+On Mon, Apr 24, 2023 at 03:35:40PM +0200, Johan Hovold wrote:
+> These patches fixes a couple of issues with the two bdaddr quirks:
 > 
-> 	debugfs: File 'features' in directory 'hci0' already present!
-> 	debugfs: File 'manufacturer' in directory 'hci0' already present!
-> 	debugfs: File 'hci_version' in directory 'hci0' already present!
-> 	...
-> 	debugfs: File 'quirk_simultaneous_discovery' in directory 'hci0' already present!
+> The first one allows HCI_QUIRK_INVALID_BDADDR to be used with
+> HCI_QUIRK_NON_PERSISTENT_SETUP.
 > 
-> The Qualcomm driver suffers from a related problem for controllers with
-> non-persistent setup.
->
+> The second patch restores the original semantics of the
+> HCI_QUIRK_USE_BDADDR_PROPERTY so that the controller is marked as
+> unconfigured when no device address is specified in the devicetree (as
+> the quirk is documented to work).
 > 
+> This specifically makes sure that Qualcomm HCI controllers such as
+> wcn6855 found on the Lenovo X13s are marked as unconfigured until user
+> space has provided a valid address.
+> 
+> Long term, the HCI_QUIRK_USE_BDADDR_PROPERTY should probably be dropped
+> in favour of HCI_QUIRK_INVALID_BDADDR and always checking the devicetree
+> property.
+
 > Johan Hovold (2):
->   Bluetooth: fix debugfs registration
->   Bluetooth: hci_qca: fix debugfs registration
+>   Bluetooth: fix invalid-bdaddr quirk for non-persistent setup
+>   Bluetooth: fix use-bdaddr-property quirk
 > 
->  drivers/bluetooth/hci_qca.c | 6 +++++-
->  include/net/bluetooth/hci.h | 1 +
->  net/bluetooth/hci_sync.c    | 3 +++
->  3 files changed, 9 insertions(+), 1 deletion(-)
+>  net/bluetooth/hci_sync.c | 30 +++++++++++-------------------
+>  1 file changed, 11 insertions(+), 19 deletions(-)
 
-Are there any more comments to this series or can we can get this merged
-for 6.5?
-
-I hope this is not blocked on the bogus checkpatch warning the robot
-posted?
+Any further comments to this series, or can this one be merged for 6.5
+now?
 
 Johan
