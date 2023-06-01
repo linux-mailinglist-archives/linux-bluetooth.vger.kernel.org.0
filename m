@@ -2,78 +2,128 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84CB271968B
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Jun 2023 11:14:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 995867197E7
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Jun 2023 11:57:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232277AbjFAJOG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 1 Jun 2023 05:14:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37924 "EHLO
+        id S232250AbjFAJ5e (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 1 Jun 2023 05:57:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231815AbjFAJOE (ORCPT
+        with ESMTP id S232094AbjFAJ5V (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 1 Jun 2023 05:14:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A071D126;
-        Thu,  1 Jun 2023 02:14:03 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 34C97615AC;
-        Thu,  1 Jun 2023 09:14:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E770C433D2;
-        Thu,  1 Jun 2023 09:14:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1685610842;
-        bh=ysr19ykWuCDaS2xafT1YDerKvtGKlTxvqTLcdhIJ5PA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HDFLVauXWDELZgAWHW918L6ZBHpnxeRShvPkfGZLW/Pu3xelY/wvG/KwLdd2mIt5A
-         OzwdqiRiJrGXXwDCJ5wWydEsUla0AQn53w4boHt2Ublkqv98I8miaxcW8M9HFys+Q2
-         u8fVIFt+iyVeQYFaSy8ILsAwpkjeYGJFIMzrUi6A=
-Date:   Thu, 1 Jun 2023 10:14:00 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     "Panait, Dragos Marian" <dragos.panait@windriver.com>
-Cc:     "stable@vger.kernel.org" <stable@vger.kernel.org>,
-        Ruihan Li <lrh2000@pku.edu.cn>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Paolo Abeni <pabeni@redhat.com>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 6.1 1/1] bluetooth: Add cmd validity checks at the start
- of hci_sock_ioctl()
-Message-ID: <2023060116-brush-entail-0d8c@gregkh>
-References: <20230530122629.231821-1-dragos.panait@windriver.com>
- <20230530122629.231821-2-dragos.panait@windriver.com>
- <2023053043-duo-collide-fd9c@gregkh>
- <PH0PR11MB495229C3DABA728EE5C8A19EFA489@PH0PR11MB4952.namprd11.prod.outlook.com>
+        Thu, 1 Jun 2023 05:57:21 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F086186
+        for <linux-bluetooth@vger.kernel.org>; Thu,  1 Jun 2023 02:57:13 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id 6a1803df08f44-62603efd2e3so6206976d6.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Jun 2023 02:57:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685613432; x=1688205432;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=HJplrBL5oJ6UqgDqFtXz8+X1q3vl67HVQn8MGAMceq4=;
+        b=VbfJiClkB14D+zIFms+iTXvz4mgnE20LJuXCl02M4YxUGoxTA0mJWzfFthM0B8Tr4v
+         dwCUPNrhgDfyZ0W0ZCvsMKzo9yuJQtAALsrZGE+ngaSe53crPuonXZMQASEfr9JUokDW
+         Brn5OCyqZzQD0imYht4ZI5P3t3MDU0rfFhliSxSpzdeh7rzY0SzUx2XyS4HgaZloxl5J
+         KXNd65httZ5gR/Jt00KKH7cJ1q6Bej1VLYPMqmRrvbAP5MomHGwDIf72OpF28BfeFrGT
+         RoucHCLn0jUGWZTXEAVWFqEBzFFQMjq4zJEFFyKaOKOyfjkP9BzmVtitx48c2rwATfQr
+         MmVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685613432; x=1688205432;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HJplrBL5oJ6UqgDqFtXz8+X1q3vl67HVQn8MGAMceq4=;
+        b=k3YwoXUJyjESCg/3uD9SacaUQmyIlDTUzYNh9xe5SqKcCBgaaUKTm0IOiH5BIRvF8I
+         uvK1aPfGlrYE7qOYSRDtv3YgPj8ilR3cH0FU4PzMD+nktje8831uF0ET+/rZ1go+j+Qe
+         OVlwgtfJ8xi5l0Pw8S3HB/FKK2cQjjjRojcMrpF/nKyIv86ZjxrIhVuytE3hPlEZcWGZ
+         Mvg+podi6hyRPXS0omVug0Kvt+rzdyt/q9dRiJEXo3zAeVSW1CNIApGxMypfnYtVZvQa
+         4LlZPRgQI8978vTywxyTYlXeuY15dUTIfFjfZCLkpFd5HIU20XshzsAetjkVDCvt5cUM
+         cziw==
+X-Gm-Message-State: AC+VfDzm72fJv9+V0ZrJ13678VQm0a/8RFGPvTR+oVu4WKkz4kOL1S4I
+        ty58ks1VjlfFtkj4+44KllCZFfz0nQc=
+X-Google-Smtp-Source: ACHHUZ6Cfc6npYq0diHiGIJTrXQChpuy9KPRGsfXDhGxB0Xd2vEHvm+kdlwC5REwFvaWDcXU0fbXiQ==
+X-Received: by 2002:ad4:5b8c:0:b0:623:6822:ff6e with SMTP id 12-20020ad45b8c000000b006236822ff6emr8668768qvp.7.1685613432314;
+        Thu, 01 Jun 2023 02:57:12 -0700 (PDT)
+Received: from [172.17.0.2] ([20.57.124.86])
+        by smtp.gmail.com with ESMTPSA id ej8-20020ad45a48000000b006263a9e7c63sm2894622qvb.104.2023.06.01.02.57.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jun 2023 02:57:12 -0700 (PDT)
+Message-ID: <64786b78.d40a0220.e7677.a462@mx.google.com>
+Date:   Thu, 01 Jun 2023 02:57:12 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2222692187884021064=="
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <PH0PR11MB495229C3DABA728EE5C8A19EFA489@PH0PR11MB4952.namprd11.prod.outlook.com>
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, quic_tjiang@quicinc.com
+Subject: RE: [v8] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth SoC QCA2066
+In-Reply-To: <20230601091355.18097-1-quic_tjiang@quicinc.com>
+References: <20230601091355.18097-1-quic_tjiang@quicinc.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Wed, May 31, 2023 at 10:06:11AM +0000, Panait, Dragos Marian wrote:
-> Done! (without the cover letter for newer kernels :))
+--===============2222692187884021064==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-All now queued up, thanks.
+This is automated email and please do not reply to this email!
 
-You could have just send a one sentance email saying "Please apply
-commit XYZ to all stable kernels please" which would have been much
-simpler and easier for you :)
+Dear submitter,
 
-thanks,
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=752993
 
-greg k-h
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.10 seconds
+GitLint                       PASS      0.34 seconds
+SubjectPrefix                 PASS      0.12 seconds
+BuildKernel                   PASS      32.01 seconds
+CheckAllWarning               PASS      35.53 seconds
+CheckSparse                   PASS      40.10 seconds
+CheckSmatch                   PASS      112.17 seconds
+BuildKernel32                 PASS      31.08 seconds
+TestRunnerSetup               PASS      442.96 seconds
+TestRunner_l2cap-tester       PASS      16.80 seconds
+TestRunner_iso-tester         FAIL      22.34 seconds
+TestRunner_bnep-tester        PASS      5.37 seconds
+TestRunner_mgmt-tester        PASS      112.84 seconds
+TestRunner_rfcomm-tester      PASS      8.59 seconds
+TestRunner_sco-tester         PASS      7.94 seconds
+TestRunner_ioctl-tester       PASS      9.22 seconds
+TestRunner_mesh-tester        PASS      6.89 seconds
+TestRunner_smp-tester         PASS      7.81 seconds
+TestRunner_userchan-tester    PASS      5.63 seconds
+IncrementalBuild              PASS      29.71 seconds
+
+Details
+##############################
+Test: TestRunner_iso-tester - FAIL
+Desc: Run iso-tester with test-runner
+Output:
+Total: 80, Passed: 75 (93.8%), Failed: 5, Not Run: 0
+
+Failed Test Cases
+ISO AC 6(i) - Success                                Failed       0.219 seconds
+ISO AC 7(i) - Success                                Failed       0.218 seconds
+ISO AC 8(i) - Success                                Failed       0.217 seconds
+ISO AC 9(i) - Success                                Failed       0.218 seconds
+ISO AC 11(i) - Success                               Failed       0.219 seconds
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============2222692187884021064==--
