@@ -2,45 +2,114 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 298F9720F2C
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  3 Jun 2023 12:24:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E20471FC75
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  2 Jun 2023 10:48:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229673AbjFCKY4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 3 Jun 2023 06:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46624 "EHLO
+        id S234599AbjFBIsk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 2 Jun 2023 04:48:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230021AbjFCKYy (ORCPT
+        with ESMTP id S234853AbjFBIsT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 3 Jun 2023 06:24:54 -0400
-X-Greylist: delayed 4200 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 03 Jun 2023 03:24:53 PDT
-Received: from mail.webtopbits.pl (mail.webtopbits.pl [195.231.64.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7621BB
-        for <linux-bluetooth@vger.kernel.org>; Sat,  3 Jun 2023 03:24:53 -0700 (PDT)
-Received: by mail.webtopbits.pl (Postfix, from userid 1001)
-        id 4DEF1A38E4; Fri,  2 Jun 2023 09:36:05 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=webtopbits.pl;
-        s=mail; t=1685694973;
-        bh=Eh8ECMiYd4baGAwPAzhz8mhJACXX7NSRkYjh+plaY18=;
-        h=Date:From:To:Subject:From;
-        b=Z0+yUtkOmbWQopMCjoo3W2x9/UdpkOPaR5UlaBGvCg6wkz87XTVRuXaja87d0L1xJ
-         ZFP2u3AePrbJ9vysUr8WzyilIZRDOKQ3Gfy3h2ncNB31IFAbsb1W5T/zunH/6ojaTD
-         K0rk8JgPN1yQQ0KcrVGke7WWWP8cF54fE2zvpDuO3L14ep79JSuqD7aliyXpOZcEQw
-         fNJGsADET/Z6IE3cEC5dArLmMLzL7Dola5OWSL2nYOfSxpX8HRKDYJnJg/XgR0oaTN
-         9y6dKt0zu11Ljt8CNYsHrb68PAkYF6f/Er97ex+KJkdqRtu0AHroiQdvRkEA2xinNA
-         Q7PoqKB56W8Kw==
-Received: by mail.webtopbits.pl for <linux-bluetooth@vger.kernel.org>; Fri,  2 Jun 2023 08:35:59 GMT
-Message-ID: <20230602085530-0.1.8w.5k4q.0.qjn4zckk5i@webtopbits.pl>
-Date:   Fri,  2 Jun 2023 08:35:59 GMT
-From:   "Kamil Durjasz" <kamil.durjasz@webtopbits.pl>
-To:     <linux-bluetooth@vger.kernel.org>
-Subject: =?UTF-8?Q?Wy=C5=BCsza_konwersja_w_e-sklepie_?=
-X-Mailer: mail.webtopbits.pl
+        Fri, 2 Jun 2023 04:48:19 -0400
+Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A10D171F
+        for <linux-bluetooth@vger.kernel.org>; Fri,  2 Jun 2023 01:47:33 -0700 (PDT)
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20230602084730euoutp0224706ddaf39b6719f818dd928d4682a4~ky0NFVbDC0514405144euoutp02f
+        for <linux-bluetooth@vger.kernel.org>; Fri,  2 Jun 2023 08:47:30 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20230602084730euoutp0224706ddaf39b6719f818dd928d4682a4~ky0NFVbDC0514405144euoutp02f
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1685695650;
+        bh=vifMgSmablSJYtcBsnJzPn7Ul7wbzd0xbOWiVjKaYqQ=;
+        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+        b=VgrX91JQm2aNpr78FchK6/KNuxp6IESPkGBBSo8fwGgUmml+chw3EzJ5z+/+c1x14
+         t+kDv4efhpx1jR6wkT9ilU3j2Fa3qFJPlKq8VM30XO32ZddlZZHUonS8nEdepIDsg/
+         3nhI7GI8qtXW8Z0GxmbJFEUTOTe0IezAgukEFUKU=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20230602084730eucas1p1b93d3e14361d7b02f4b79c87b1d56344~ky0M8THCi0628406284eucas1p1l;
+        Fri,  2 Jun 2023 08:47:30 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 48.45.37758.2ACA9746; Fri,  2
+        Jun 2023 09:47:30 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20230602084729eucas1p21d572cc0c2cfa671c1c5668beca53ae8~ky0MjgsIW1432714327eucas1p2y;
+        Fri,  2 Jun 2023 08:47:29 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20230602084729eusmtrp222adcd926bfc53e3c575b6928f24dbae~ky0Mi2Tuy0464204642eusmtrp2T;
+        Fri,  2 Jun 2023 08:47:29 +0000 (GMT)
+X-AuditID: cbfec7f5-815ff7000002937e-3c-6479aca289ae
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 19.95.10549.1ACA9746; Fri,  2
+        Jun 2023 09:47:29 +0100 (BST)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20230602084729eusmtip192a8de50f9973961360bb45f5fbe5456~ky0MJUEUB1505415054eusmtip1L;
+        Fri,  2 Jun 2023 08:47:29 +0000 (GMT)
+Message-ID: <428e37b4-7fb6-7026-8ad9-91218b034a12@samsung.com>
+Date:   Fri, 2 Jun 2023 10:47:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0)
+        Gecko/20100101 Thunderbird/102.11.0
+Subject: Re: [PATCH] Bluetooth: hci_bcm: do not mark valid bd_addr as
+ invalid
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <20230602081912.4708-1-johan+linaro@kernel.org>
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsWy7djPc7qL1lSmGCxsYrdYUWmxa+oxZos5
+        1/qYLS7vmsNm8fTzFFaLb59+MVp83vCY0YHdY3bDRRaPnbPusnus372c3WPTqk42j8+b5AJY
+        o7hsUlJzMstSi/TtErgyZq1+wVqwkq/iy5SFTA2Mv7i7GDk5JARMJO5vOMjaxcjFISSwglHi
+        9crtbBDOF0aJ7SsvMUE4nxkljmxewAjTsuN1PztEYjmjxOf9/SwQzkdGie4Fx1hBqngF7CSu
+        Xe5iA7FZBFQk/i14yA4RF5Q4OfMJC4gtKpAq8W3uDqB6Dg5hAX+JMz+8QMLMAuISt57MZwKx
+        RQTWMkocXqINEc+UOHJ8PTOIzSZgKNH1FmI8p4CNxNf1X1ghauQltr+dwwxyj4TADQ6J6cdm
+        QV3tIvFp+xVWCFtY4tXxLewQtozE/53zmSAa2hklFvy+D+VMYJRoeH4Lqtta4s65X2wglzIL
+        aEqs36UPEXaUeP6zjRkkLCHAJ3HjrSDEEXwSk7ZNhwrzSnS0CUFUq0nMOr4Obu3BC5eYJzAq
+        zUIKlVlI3p+F5J1ZCHsXMLKsYhRPLS3OTU8tNs5LLdcrTswtLs1L10vOz93ECExAp/8d/7qD
+        ccWrj3qHGJk4GA8xSnAwK4nwCoWVpwjxpiRWVqUW5ccXleakFh9ilOZgURLn1bY9mSwkkJ5Y
+        kpqdmlqQWgSTZeLglGpgYth9qG9mtCzDq5CPNxUEZz4w0bxjcPWuh8Fv9WcyQt83W6XH6h3x
+        Sr6xSL130wUp/SkeFsI9Cl1JSyv5VLe8XcVVJTU1LWmX+E0jm9lL5LZdUThX/XziT7W3XItO
+        zlK1m+Fu+EZ9Mu95Y653pdPqYk48EGa2599yhXl/weue5RGeW9YavC3X6JyeYXA2Zcsvo/eh
+        rxc+n7BsUi6bR9B1Lqmb+7mKt4h1rZx6hD+2V7nPdfvCFsUDfK91HirMZs5d7v9BSCh2ymqH
+        jUsmr3LZtfl6W7Kfsdbnx5e78uboLwqObxLdcLA2UKajyrnZZpF+7/X662svqpst3PHJac2a
+        Z9lNu3iOp7aGvki/+4ojRImlOCPRUIu5qDgRAJKfjaavAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPIsWRmVeSWpSXmKPExsVy+t/xu7oL11SmGFx4pWmxotJi19RjzBZz
+        rvUxW1zeNYfN4unnKawW3z79YrT4vOExowO7x+yGiyweO2fdZfdYv3s5u8emVZ1sHp83yQWw
+        RunZFOWXlqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq6dvZpKTmZJalFunbJehlzFr9
+        grVgJV/FlykLmRoYf3F3MXJySAiYSOx43c/excjFISSwlFHi4svtjBAJGYmT0xpYIWxhiT/X
+        utggit4zSvx+vIEJJMErYCdx7TJIgpODRUBF4t+Ch+wQcUGJkzOfsIDYogKpEr1fVoANFRbw
+        lZj/fiZYPbOAuMStJ/OZQIaKCKxnlFj07S1QAwdQIlPicoc2xLJ+RokPDZfAGtgEDCW63kIs
+        4xSwkfi6/gsrxCAzia6tXYwQtrzE9rdzmCcwCs1CcscsJPtmIWmZhaRlASPLKkaR1NLi3PTc
+        YkO94sTc4tK8dL3k/NxNjMCY23bs5+YdjPNefdQ7xMjEwXiIUYKDWUmEVyisPEWINyWxsiq1
+        KD++qDQntfgQoykwMCYyS4km5wOjPq8k3tDMwNTQxMzSwNTSzFhJnNezoCNRSCA9sSQ1OzW1
+        ILUIpo+Jg1OqgSl/5R+uHQKJ8lnaLw8oiHazXBM9tbmz+/yZM3vjL4T67rhUn//OyOVgqlWE
+        Uq673CGdDWyvkhJ6H7888Zqj8t0sP+kXM/TO8jzQiHYTYJCbf12jSfz1Ba6vZjPUZgf17V7p
+        V2T7TPhD2L+YLO0Q5jdbz68wZxIO2lXXonvBt+TavdCv3+Ym3/k5e2uH2aJ9cWZS5i+bdtw/
+        3Wr67O+LjMRD5TIS/jIVDstt758q2cEo5Lxh5haTh02Zie+ddxxJcV7B9922L/j11NavvnHa
+        04Kqrsioli76ar+kuYa16i2HREjS3Fm/b8Z+mbLO0aOofmagXEjgQpZ2ocRND3RXX81MmvNk
+        79Gq3TkWmsI8zEosxRmJhlrMRcWJANzn0pFCAwAA
+X-CMS-MailID: 20230602084729eucas1p21d572cc0c2cfa671c1c5668beca53ae8
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20230602081950eucas1p22a82f91f361fb64e23ecddada3173534
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20230602081950eucas1p22a82f91f361fb64e23ecddada3173534
+References: <CGME20230602081950eucas1p22a82f91f361fb64e23ecddada3173534@eucas1p2.samsung.com>
+        <20230602081912.4708-1-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -48,24 +117,48 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dzie=C5=84 dobry,
+On 02.06.2023 10:19, Johan Hovold wrote:
+> A recent commit restored the original (and still documented) semantics
+> for the HCI_QUIRK_USE_BDADDR_PROPERTY quirk so that the device address
+> is considered invalid unless an address is provided by firmware.
+>
+> This specifically means that this flag must only be set for devices with
+> invalid addresses, but the Broadcom driver has so far been setting this
+> flag unconditionally.
+>
+> Fortunately the driver already checks for invalid addresses during setup
+> and sets the HCI_QUIRK_INVALID_BDADDR flag. Use this flag to indicate
+> when the address can be overridden by firmware (long term, this should
+> probably just always be allowed).
+>
+> Fixes: 6ac517d8cf8b ("Bluetooth: fix use-bdaddr-property quirk")
+> Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> Link: https://lore.kernel.org/lkml/ecef83c8-497f-4011-607b-a63c24764867@samsung.com
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-w jaki spos=C3=B3b docieraj=C4=85 Pa=C5=84stwo do odbiorc=C3=B3w?
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
 
-Tworzymy pot=C4=99=C5=BCne narz=C4=99dzia sprzeda=C5=BCy, kt=C3=B3re pozw=
-alaj=C4=85 kompleksowo rozwi=C4=85za=C4=87 problemy potencjalnych klient=C3=
-=B3w i skutecznie wp=C5=82yn=C4=85=C4=87 na ich decyzje zakupowe.=20
+> ---
+>   drivers/bluetooth/hci_bcm.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
+> index 83bf5d4330c4..874d23089b39 100644
+> --- a/drivers/bluetooth/hci_bcm.c
+> +++ b/drivers/bluetooth/hci_bcm.c
+> @@ -643,7 +643,8 @@ static int bcm_setup(struct hci_uart *hu)
+>   	 * Allow the bootloader to set a valid address through the
+>   	 * device tree.
+>   	 */
+> -	set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hu->hdev->quirks);
+> +	if (test_bit(HCI_QUIRK_INVALID_BDADDR, &hu->hdev->quirks))
+> +		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hu->hdev->quirks);
+>   
+>   	if (!bcm_request_irq(bcm))
+>   		err = bcm_setup_sleep(hu);
 
-Skupiamy si=C4=99 na Pa=C5=84stwa potrzebach zwi=C4=85zanych z obs=C5=82u=
-g=C4=85 sklepu, oczekiwaniach i planach sprzeda=C5=BCowych. Szczeg=C3=B3=C5=
-=82owo dopasowujemy grafik=C4=99, funkcjonalno=C5=9Bci, struktur=C4=99 i =
-mikrointerakcje do Pa=C5=84stwa grupy docelowej, co przek=C5=82ada si=C4=99=
- na oczekiwane rezultaty.
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
-Ch=C4=99tnie przedstawi=C4=99 dotychczasowe realizacje, aby mogli Pa=C5=84=
-stwo przekona=C4=87 si=C4=99 o naszych mo=C5=BCliwo=C5=9Bciach. Mog=C4=99=
- si=C4=99 skontaktowa=C4=87?
-
-
-Pozdrawiam
-Kamil Durjasz
