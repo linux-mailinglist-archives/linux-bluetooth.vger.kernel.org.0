@@ -2,65 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E443572233D
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Jun 2023 12:18:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36E8B722FEF
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Jun 2023 21:40:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbjFEKSN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 5 Jun 2023 06:18:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45216 "EHLO
+        id S235759AbjFETkZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 5 Jun 2023 15:40:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229739AbjFEKSL (ORCPT
+        with ESMTP id S235482AbjFETkX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 5 Jun 2023 06:18:11 -0400
+        Mon, 5 Jun 2023 15:40:23 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54658F4
-        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Jun 2023 03:18:10 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA99CF2;
+        Mon,  5 Jun 2023 12:40:22 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CA13861321
-        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Jun 2023 10:18:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 38AAFC4339C
-        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Jun 2023 10:18:09 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B712629D4;
+        Mon,  5 Jun 2023 19:40:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B8734C4339E;
+        Mon,  5 Jun 2023 19:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685960289;
-        bh=w5NxOi8XxE2IyXu96LytEMez2hSvJXcQT4dL2zDbqPg=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=bKimhekiE8mcoYYMhFGt1e+tpCK7SIaMJqCpUztGXOm/d7Oo3R0qy/ZPNGLzjRVKb
-         BYgk9MqydAg5Sqfgmv9r+sTbkpZH7Jj2ddOOOJf/SPu4jkbLySsuKQPKzoh1RyPVRu
-         wiUoGwbUx5MWhAgaw4u4mK+OBMwBugdmeOHR9OsmEzroKqV+BZjTrIKw9f76TaSIBZ
-         VLZapCJMgWWtzNJ2r0pYhssaNV0SnoFldeU2sONY6UH1FzOaZH3IALHZgkuKF3sW8G
-         t8mVdM8YODEl1WkW1FL9eNHaqvSfIaIVdtsmXe+G4HPK0X0iVbs/ny6xbtH8VXupG4
-         xP+lv2XiTggAg==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id 1AD85C43141; Mon,  5 Jun 2023 10:18:09 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 200007] HP Elite Presenter Mouse support
-Date:   Mon, 05 Jun 2023 10:18:08 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: DenisAC@tutanota.de
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P1
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-200007-62941-JFR8b0r44m@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-200007-62941@https.bugzilla.kernel.org/>
-References: <bug-200007-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        s=k20201202; t=1685994021;
+        bh=bU+IT8BCly5Fc/qZSAc8bqubJxJEIBW8A50BpW7DNw8=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=MgBOgzagW5VFRZISYs1byVQz1+5y1GRY2nO3kmF3TAthDgMKFs4/rOXAHspMOKmqR
+         1D/uDjIqsu9mhc8WY1guTY6YIiduEKZESxYRwoKvpGJxxLUKNpU/k9BguZcZYCPeS8
+         KfKC01smzrUEUIB8HPefp2yF+SnQEWZTJROD18TKlMsEBbxWxe8TWZemC+M7nLT3bM
+         OXJGJZ2WMp6R2G4mNZEO8dXFG+7dZhOJIsko5cpS+yWrN6KuY9SYbLXSO6ZvsCs9Kg
+         FF+gRDo8IZq20mA1VY0MlBqlZKpf8V7/a3cBXDdE0GWmaAfyeyWCv6gUlyfCO5kOQc
+         CBV9+VJW2n5mw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 99152E4F0A6;
+        Mon,  5 Jun 2023 19:40:21 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] Bluetooth: L2CAP: Add missing checks for invalid DCID
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <168599402161.27522.9116993393266784955.git-patchwork-notify@kernel.org>
+Date:   Mon, 05 Jun 2023 19:40:21 +0000
+References: <20230603122808.1633403-1-iam@sung-woo.kim>
+In-Reply-To: <20230603122808.1633403-1-iam@sung-woo.kim>
+To:     Sungwoo Kim <iam@sung-woo.kim>
+Cc:     daveti@purdue.edu, marcel@holtmann.org, johan.hedberg@gmail.com,
+        luiz.dentz@gmail.com, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -71,17 +58,30 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D200007
+Hello:
 
---- Comment #4 from Denis AC (DenisAC@tutanota.de) ---
-Thanks for the solution!=20
-Now, say if I were to show this to a friend who doesn't know much about Lin=
-ux..
-could I tell him to just copy&paste the lines starting with "diff" in the
-terminal and that would work? :D
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
---=20
-You may reply to this email to add a comment.
+On Sat,  3 Jun 2023 08:28:09 -0400 you wrote:
+> When receiving a connect response we should make sure that the DCID is
+> within the valid range and that we don't already have another channel
+> allocated for the same DCID.
+> Missing checks may violate the specification (BLUETOOTH CORE SPECIFICATION
+> Version 5.4 | Vol 3, Part A, Page 1046).
+> 
+> Fixes: 40624183c202 ("L2CAP: Add missing checks for invalid LE DCID")
+> Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+> 
+> [...]
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+Here is the summary with links:
+  - Bluetooth: L2CAP: Add missing checks for invalid DCID
+    https://git.kernel.org/bluetooth/bluetooth-next/c/f9367ce74db3
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
