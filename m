@@ -2,75 +2,86 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF0817222FF
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Jun 2023 12:09:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E443572233D
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Jun 2023 12:18:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231774AbjFEKJO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 5 Jun 2023 06:09:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39658 "EHLO
+        id S229570AbjFEKSN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 5 Jun 2023 06:18:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230084AbjFEKJI (ORCPT
+        with ESMTP id S229739AbjFEKSL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 5 Jun 2023 06:09:08 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCB5AE9
-        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Jun 2023 03:09:07 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id 2adb3069b0e04-4f611ac39c5so3850309e87.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 05 Jun 2023 03:09:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685959746; x=1688551746;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BRmE3g2QJT0SgK/3STNj6b7IqlONWZa1zmfHqIOOFUE=;
-        b=pPitXbowu2ulsAF7xZx34mTyP6nrz+mCZYtJ7K8sOhfkzlOWi8+qMvwiTLqym3IaIN
-         sFmLnWh0yA4N6h98DzKZKuGxEDvdxEbF+g7CZMuN9uLjB/gG0WmD0SCZ+ZqH7xksRnJi
-         IpUue3x7k2vl+gPREFd+Q7c9DdHomMDSURuMcRJKL0cPmVPknChKJm3GvIXoJfrYAnBI
-         FrY7SJehZ4z9jn/uVww5+2nLO+WAKqkRLwjuUO3VkzJ3fYR/JGHVVNVx35C2/tCdQPqF
-         UmFVsMHuUk7Ut+qSTbrvnw7PI1VIEUnzsUsltNv+EezWUFKyHQr7DYmT21VI+TLBKPbN
-         E4Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685959746; x=1688551746;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BRmE3g2QJT0SgK/3STNj6b7IqlONWZa1zmfHqIOOFUE=;
-        b=KNkeeNDiz6BQzXKxC0DSyjjz9bRlAUWC7gjGrEEHtUf7GjfD4GtRALdUl9XvK6Leto
-         8FtZpf5w9gas1+yrygqkcy1c02mBOemcxnnkPgbQzkhsulhXbaROnEmnHExNiTt0Tc3+
-         /UPmin4Zso7IyQkVTrOR0icShmXbISoEzdHS1YUrQJ6AY4HjO+/p8odUpLXJzKI1JTuh
-         EzjHPHElFW1jYYry20M9gO/PRLoJDRHLSM4FnZ43Abv1mBN0DPJ3oLjoRSHU077Ce1OP
-         7mY82K5pO2XX2QxBVzrfDwCc9ux9sw/26+fxPGVCmUhx6j1eeyWgukaT0OPZTr/N6iX8
-         PwlQ==
-X-Gm-Message-State: AC+VfDw0HaOqGqTPX5nXXyClA0MpB24KqXIxW6Ou/iDfOEMSbEYVFIA9
-        P4JMq0gjhooCqs4b/l9jRZscjrw6o0TOCS5cTIA=
-X-Google-Smtp-Source: ACHHUZ7UydXn6tsY3Evtp3nqjZqJWS/5EK8Uaq4rxtzRpD3t8Xp7ozeh8a1xXqVVgTbIUzdvWHD2zNiUcDPUoa58eIs=
-X-Received: by 2002:ac2:4d13:0:b0:4f3:7c24:1029 with SMTP id
- r19-20020ac24d13000000b004f37c241029mr4614430lfi.60.1685959745750; Mon, 05
- Jun 2023 03:09:05 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:6f02:6796:b0:51:35b4:7d33 with HTTP; Mon, 5 Jun 2023
- 03:09:05 -0700 (PDT)
-Reply-To: felixglas37@gmail.com
-From:   "Mr. Douglas Felix" <felixdou123@gmail.com>
-Date:   Mon, 5 Jun 2023 10:09:05 +0000
-Message-ID: <CAE7V6wxxHmEZfzO3i2m5gQy+tWXpMOPYjrZgXEMMtaPaToGHig@mail.gmail.com>
-Subject: Good day
-To:     undisclosed-recipients:;
+        Mon, 5 Jun 2023 06:18:11 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54658F4
+        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Jun 2023 03:18:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CA13861321
+        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Jun 2023 10:18:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 38AAFC4339C
+        for <linux-bluetooth@vger.kernel.org>; Mon,  5 Jun 2023 10:18:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685960289;
+        bh=w5NxOi8XxE2IyXu96LytEMez2hSvJXcQT4dL2zDbqPg=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=bKimhekiE8mcoYYMhFGt1e+tpCK7SIaMJqCpUztGXOm/d7Oo3R0qy/ZPNGLzjRVKb
+         BYgk9MqydAg5Sqfgmv9r+sTbkpZH7Jj2ddOOOJf/SPu4jkbLySsuKQPKzoh1RyPVRu
+         wiUoGwbUx5MWhAgaw4u4mK+OBMwBugdmeOHR9OsmEzroKqV+BZjTrIKw9f76TaSIBZ
+         VLZapCJMgWWtzNJ2r0pYhssaNV0SnoFldeU2sONY6UH1FzOaZH3IALHZgkuKF3sW8G
+         t8mVdM8YODEl1WkW1FL9eNHaqvSfIaIVdtsmXe+G4HPK0X0iVbs/ny6xbtH8VXupG4
+         xP+lv2XiTggAg==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 1AD85C43141; Mon,  5 Jun 2023 10:18:09 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 200007] HP Elite Presenter Mouse support
+Date:   Mon, 05 Jun 2023 10:18:08 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: DenisAC@tutanota.de
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-200007-62941-JFR8b0r44m@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-200007-62941@https.bugzilla.kernel.org/>
+References: <bug-200007-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ****
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-A mail was sent to you sometime last week with the expectation of
-having a return mail from you but to my surprise you never bothered to replied.
-Kindly reply for further explanations.
+https://bugzilla.kernel.org/show_bug.cgi?id=3D200007
 
-Respectfully yours,
-Barrister Douglas Felix.
+--- Comment #4 from Denis AC (DenisAC@tutanota.de) ---
+Thanks for the solution!=20
+Now, say if I were to show this to a friend who doesn't know much about Lin=
+ux..
+could I tell him to just copy&paste the lines starting with "diff" in the
+terminal and that would work? :D
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
