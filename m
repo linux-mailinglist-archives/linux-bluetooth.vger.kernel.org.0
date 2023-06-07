@@ -2,134 +2,174 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C2B0726D13
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Jun 2023 22:39:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7023727281
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  8 Jun 2023 00:56:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234306AbjFGUjE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 7 Jun 2023 16:39:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38192 "EHLO
+        id S233143AbjFGW4q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 7 Jun 2023 18:56:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234305AbjFGUil (ORCPT
+        with ESMTP id S233355AbjFGW4S (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 7 Jun 2023 16:38:41 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EA86270C
-        for <linux-bluetooth@vger.kernel.org>; Wed,  7 Jun 2023 13:38:21 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1b246dd3390so15463655ad.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 07 Jun 2023 13:38:21 -0700 (PDT)
+        Wed, 7 Jun 2023 18:56:18 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 359F02706
+        for <linux-bluetooth@vger.kernel.org>; Wed,  7 Jun 2023 15:56:15 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-51458187be1so2544595a12.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 07 Jun 2023 15:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686170300; x=1688762300;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jrg7k/2dsASF6qPEANUUCkggcmyUVakPk0P6yWa15KQ=;
-        b=DdMTAAVjhEjKIZDE7N57ILVjuUHrqyJHk6JoycX5lCuulnDmE+gTcZJ9ZKMTuhUdW8
-         0DoIh9F66Pdfgp9g3bHJGFf0qWFpgs6BJIxu7pF7SUppJsAOsxYfxL2R5nJNdfpdrTvl
-         Jx9MTQMHb7n1gxWvJh+sKJXWmahPcesm/k7/EqLEQRoM7Hnl7pT0Ub4EajzZjdwJ56ay
-         ziPiut0N1+LWwPgL3R26rZ6ylap0SbQ2NQ2cFNa4/d3NMxvwXhUBJrFYtZKgJ2EtF1qJ
-         fYRE0mLMMa1oH8LNfIhOjlVc2AYGmjj9eHcD67GL3k/Ml5HT0xr8NQ/xwUHzDrnwcb+V
-         K6tw==
+        d=gmail.com; s=20221208; t=1686178573; x=1688770573;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lwmqmz3SLTAm/5XHn54kA2Qkz1KiGdBlOiEDAaxIk1A=;
+        b=Vs2O3FJiGjOSsYkVdVVwQ8usUW0Na2c1JkRxzODLflg+DQkLHMSvDUTON1eOgoDd5p
+         icZX7jz85gtt675JIQoCg2qYDeGvdgrlIlnYsBqJCXY6A+wwUH4Pzx63GHJ70nVIOHpq
+         q8q4NwQWw9O7Ka1WcBWhtc95lIatv8n89RH1nSmTaJwpto6eirRVCg2zeJDk+R5CA+KG
+         ThXmo+FVEx7rMo/R9HxHw2025VcLT8t8EGl5ZKxML6giyeJpWVWuCmdmhwVTBmwvl+lO
+         4Pyzwb5XpDz845p07KZNMlaubUmeRc4L02Q7u93h4SKEXfacqvhkSvKzrJS0PjXfy7pG
+         yWrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686170300; x=1688762300;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1686178573; x=1688770573;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jrg7k/2dsASF6qPEANUUCkggcmyUVakPk0P6yWa15KQ=;
-        b=Cdqat2aLY1MhCq8NVMWiLwqcnAHHR35wtxQiYm19eQvN5qREf7arRiMrUqXwB1B9ie
-         GuEyNxc02nv6QFzmQKdU0eLgNbYGN2Swq+2y4SJCN0P8MFntGc94eWYyDXiAic/rDFc8
-         sVzRUeTcJPM5DY0Qeu/5LBg+PkJV6NwaqRqwC6M9bXQbPApGw7z8F0YMUMy6LFSByJxX
-         jsfES6aaCwXhIAnz71pZaAjxSlZbAl0mJxaIEu7hbXaeIQs+UxKFGSfLxGvdxl05BEHI
-         JFxbZRlT4KZoq7EbSUpQGpUCQk4Rf2AcNKl3w+304nTt092CHGt3qCGDi347vh51hez1
-         xwsQ==
-X-Gm-Message-State: AC+VfDxxFUDqGanVwUiYV8iPHSBiK6Rir7z+8vxVOZa1QmKQzwar54Rx
-        L2t893v0URkwUpYKS8N0c+76qs8sJng=
-X-Google-Smtp-Source: ACHHUZ5chbq+tOXBsMSXYvg8E/QjBdQ/NEYfdLbNagB55gkVwPPttgoXcpKRqAbWlrzyKgl0FJqeRA==
-X-Received: by 2002:a17:902:f1cd:b0:1ad:edbe:57a8 with SMTP id e13-20020a170902f1cd00b001adedbe57a8mr5437612plc.50.1686170300249;
-        Wed, 07 Jun 2023 13:38:20 -0700 (PDT)
-Received: from [172.17.0.2] ([13.87.244.147])
-        by smtp.gmail.com with ESMTPSA id o13-20020a170902778d00b001b024ee5f6esm10822402pll.81.2023.06.07.13.38.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jun 2023 13:38:19 -0700 (PDT)
-Message-ID: <6480eabb.170a0220.fc604.5a93@mx.google.com>
-Date:   Wed, 07 Jun 2023 13:38:19 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============5543265499615895323=="
+        bh=lwmqmz3SLTAm/5XHn54kA2Qkz1KiGdBlOiEDAaxIk1A=;
+        b=SANuJKSDx6R8W6kbKpfzfUnA3tvy+qeoNizQ4uT22xRLO/pCTjCRBi0PrA5/KmpuTY
+         Ra/UA9VHjaTURP4srisO7a9CV3KOYCQA+6qau6CLlT1oZWwtc76a5BT5kCHF2ntqLAaI
+         r5wXYN6KWNmHkM21fTFJcYkU7L1oy8T+pgsYaPfFfD1vQPbp4u/uRZ3QIIPLFVfze6Un
+         hsPpwoL18Z2CyTnUuH8MIXjCsQYcCNTJ4dezfaMtYJhDmwOC8nz/U74VTRJlCs8f5jZJ
+         3i6wr0yyUl6LMjXAO0qKx2hxUYmVkF1B09qKSlLfiKi1samiGF33KF2G2pL3VzH0kGgN
+         JVNg==
+X-Gm-Message-State: AC+VfDxIyXMvBZHI69XWnvu2J5FyeaA/vlwRChTR3Eu9ejWTd80zl/xY
+        xkPELzhXBfimmeXYJz6/svPJwxVp1SeJZviFH7CKT8z3GRHBwg==
+X-Google-Smtp-Source: ACHHUZ5lc5uNG0II8N/7owu97MNYayebO2FU5BOHITGRdvZTCXANx0Yi1fv5Th/dfzvi0zTuZAaSCLE67mXxoPl8ud4=
+X-Received: by 2002:a17:907:8a08:b0:973:ad8f:ef9b with SMTP id
+ sc8-20020a1709078a0800b00973ad8fef9bmr8009971ejc.5.1686178552696; Wed, 07 Jun
+ 2023 15:55:52 -0700 (PDT)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Subject: RE: Bluetooth: MGMT: Fix marking SCAN_RSP as not connectable
-In-Reply-To: <20230607194518.2901376-1-luiz.dentz@gmail.com>
-References: <20230607194518.2901376-1-luiz.dentz@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a54:2409:0:b0:217:72a9:f646 with HTTP; Wed, 7 Jun 2023
+ 15:55:52 -0700 (PDT)
+Reply-To: unitednationcompensationcoordinatortreasury@hotmail.com
+From:   "UNITED NATION DEPUTY SECRETARY-GENERAL (U.N)" 
+        <successikolo@gmail.com>
+Date:   Wed, 7 Jun 2023 15:55:52 -0700
+Message-ID: <CADFNGJ8EwbrtVXBod+yuxOPvcNStu1uNZVywED0Ra-jpG92ATw@mail.gmail.com>
+Subject: CONTACT DHL OFFICE IMMEDIATELY FOR YOUR ATM MASTER CARD 1.5 MILLION,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=6.6 required=5.0 tests=ADVANCE_FEE_3_NEW_FRM_MNY,
+        BAYES_50,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FILL_THIS_FORM,FORM_FRAUD_5,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        LOTS_OF_MONEY,MONEY_FORM,MONEY_FRAUD_5,MONEY_FREEMAIL_REPTO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,
+        T_FILL_THIS_FORM_LOAN,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM,UNDISC_MONEY
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:531 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [successikolo[at]gmail.com]
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  0.2 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  0.0 FILL_THIS_FORM Fill in a form with personal information
+        *  0.0 T_FILL_THIS_FORM_LOAN Answer loan question(s)
+        *  0.0 MONEY_FORM Lots of money if you fill out a form
+        *  1.3 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+        *  0.0 ADVANCE_FEE_3_NEW_FRM_MNY Advance Fee fraud form and lots of
+        *      money
+        *  0.2 MONEY_FRAUD_5 Lots of money and many fraud phrases
+        *  0.0 FORM_FRAUD_5 Fill a form and many fraud phrases
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============5543265499615895323==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+UNITED NATION DEPUTY SECRETARY-GENERAL.
 
-This is automated email and please do not reply to this email!
+This is to official inform you that we have been having meetings for
+the past three (3) weeks which ended two days ago with MR. JIM YONG
+KIM the world bank president and other seven continent presidents on
+the congress we treated on solution to scam victim problems.
 
-Dear submitter,
+ Note: we have decided to contact you following the reports we
+received from anti-fraud international monitoring group your
+name/email has been submitted to us therefore the united nations have
+agreed to compensate you with the sum of (USD$ 1.5 Million) this
+compensation is also including international business that failed you
+in the past due to government problems etc.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=755036
+ We have arranged your payment through our ATM Master Card and
+deposited it in DHL Office to deliver it to you which is the latest
+instruction from the World Bank president MR. JIM YONG KIM, For your
+information=E2=80=99s, the delivery charges already paid by U.N treasury, t=
+he
+only money you will send to DHL office south Korea is
+($500). for security keeping fee, U.N coordinator already paid for
+others charges fees for delivery except the security keeping fee, the
+director of DHL refused to collect the security keeping fee from U.N
+coordinator, the Director of DHL office said that they don=E2=80=99t know
+exactly time you will contact them to reconfirm your details to avoid
+counting demur-rage that is why they refused collecting the ($500) .
+for security keeping fee.
 
----Test result---
+ Therefore be advice to contact DHL Office agent south Korea. Rev:John
+Lee Tae-seok
+who is in position to deliver your ATM
+Master Card to your location address, contact DHL Office immediately
+with the bellow email & phone number as listed below.
 
-Test Summary:
-CheckPatch                    PASS      0.88 seconds
-GitLint                       FAIL      0.67 seconds
-SubjectPrefix                 PASS      0.09 seconds
-BuildKernel                   PASS      43.40 seconds
-CheckAllWarning               PASS      46.08 seconds
-CheckSparse                   WARNING   51.88 seconds
-CheckSmatch                   WARNING   142.87 seconds
-BuildKernel32                 PASS      42.15 seconds
-TestRunnerSetup               PASS      592.76 seconds
-TestRunner_l2cap-tester       PASS      20.87 seconds
-TestRunner_iso-tester         PASS      30.92 seconds
-TestRunner_bnep-tester        PASS      7.51 seconds
-TestRunner_mgmt-tester        PASS      146.19 seconds
-TestRunner_rfcomm-tester      PASS      11.75 seconds
-TestRunner_sco-tester         PASS      10.98 seconds
-TestRunner_ioctl-tester       PASS      13.07 seconds
-TestRunner_mesh-tester        PASS      9.55 seconds
-TestRunner_smp-tester         PASS      10.71 seconds
-TestRunner_userchan-tester    PASS      7.93 seconds
-IncrementalBuild              PASS      39.33 seconds
+ Contact name: John Lee Tae-seok
 
-Details
-##############################
-Test: GitLint - FAIL
-Desc: Run gitlint
-Output:
-Bluetooth: MGMT: Fix marking SCAN_RSP as not connectable
+ Email:( dhlgeneralheadquartersrepublic@gmail.com )
 
-WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
-11: B1 Line exceeds max length (113>80): "Link: https://lore.kernel.org/linux-bluetooth/CABBYNZ+CYMsDSPTxBn09Js3BcdC-x7vZFfyLJ3ppZGGwJKmUTw@mail.gmail.com/"
-##############################
-Test: CheckSparse - WARNING
-Desc: Run sparse tool with linux kernel
-Output:
-net/bluetooth/hci_event.c: note: in included file (through include/net/bluetooth/hci_core.h):
-##############################
-Test: CheckSmatch - WARNING
-Desc: Run smatch tool with source
-Output:
-net/bluetooth/hci_event.c: note: in included file (through include/net/bluetooth/hci_core.h):
+ Do not hesitate to Contact Rev: John Lee Tae-seok, as soon as you
 
+ read this message. Email:( dhlgeneralheadquartersrepublic@gmail.com )
 
----
-Regards,
-Linux Bluetooth
+ Make sure you reconfirmed DHL Office your details ASAP as stated
+below to avoid wrong delivery.
 
+ Your full name..........
 
---===============5543265499615895323==--
+ Home address:.........
+
+ Your country...........
+
+ Your city..............
+
+ Telephone......
+
+ Occupation:.......
+
+ Age:=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6..
+
+ Let us know as soon as possible you receive your ATM MasterCard
+for proper verification.
+
+ Regards,
+
+ Mrs Vivian kakadu.
+
+ DEPUTY SECRETARY-GENERAL (U.N)
