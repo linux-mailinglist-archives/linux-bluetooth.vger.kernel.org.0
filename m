@@ -2,132 +2,82 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43E83726A08
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Jun 2023 21:45:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95046726A26
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Jun 2023 21:50:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231415AbjFGTpZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 7 Jun 2023 15:45:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54632 "EHLO
+        id S231596AbjFGTuZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 7 Jun 2023 15:50:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbjFGTpY (ORCPT
+        with ESMTP id S230447AbjFGTuY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 7 Jun 2023 15:45:24 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 507E1101
-        for <linux-bluetooth@vger.kernel.org>; Wed,  7 Jun 2023 12:45:22 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-650c89c7e4fso8014723b3a.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 07 Jun 2023 12:45:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686167121; x=1688759121;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xT3kADPrEvXYhvJJ84lwwdvqcicdAyqwnsVNnVpMXxw=;
-        b=dLP7cJo6yp3VPevaayr2z99NvSY3o2yHE9fpgAt6bFMUpq9EByKd9jFY6fu0RDTxaM
-         4JQRvDmYsZ5vCY0113a/JiECwKKs0pUFiv83pqg4/5oWnicz/fgOsvMV+ezgxwPIIr1s
-         eH5KDktV0hYCnR7YYA3+LDDH4+EdVrQv4EdX3YrvVdUgZxZ2ffTgW7AmfdoNdTtYg/Xn
-         B6qIti6vfIJGp+pV9C0xdP+hrkcfVuMXvrxixB4/CwoRU9FOfmQkXaDOMvdvoNk3DTSR
-         +V09py3S4aia4L181xgMt+YEj8lStUAMwaXPqp58oUPJammEuvtXQPDiQXu0JN0JXg+2
-         VEDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686167121; x=1688759121;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xT3kADPrEvXYhvJJ84lwwdvqcicdAyqwnsVNnVpMXxw=;
-        b=TbtgLOuDSuhNVsPOclBwp8qPaaOJrzqErfV4tuH/toX/KE6RqpW7fJkqVlD+4BEZta
-         7yoi79Itz0+bS9AZlH9z8tDkgucY1n0sklmx+SFpRFMEAJ9Mohyoj9/nY5Vu2RHnaDhv
-         6DdFmLc5A3/ObqVNn0vF0X3ndhRjE+4AUuO56vOIg6MOCuPJ8hX+p3J3Fw0yK/70IvqS
-         cYsq8W7QvaUYDlgTtP+E09WV6JC7EevwYiX+IEA1N2yizqpkkVo5wTZr9sRju4upxMzI
-         qGo6/jZCVUlDI00PcSxcxRT+CbnMjSAAtSRMA/sGaVEENAhlHTi+a6lnD5StgcKfQxKA
-         svxw==
-X-Gm-Message-State: AC+VfDwDx5i4+xMh8bRpOyGM9jNW2Cs+1CtnpIbbIq5Kq9Kv4ntomvVt
-        1TZsaaSIDCJLt83NBUFdgsuIRS93mjU=
-X-Google-Smtp-Source: ACHHUZ4a3k3XOzEvtOZpDiaP2BUmXDDwscQbTsPVKLwBQN0WtbRuDw6d0AhHZpProXTqluhunzJTaA==
-X-Received: by 2002:a05:6a00:8d6:b0:654:ab4:305 with SMTP id s22-20020a056a0008d600b006540ab40305mr8444823pfu.2.1686167120736;
-        Wed, 07 Jun 2023 12:45:20 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-59-129-171.hsd1.or.comcast.net. [71.59.129.171])
-        by smtp.gmail.com with ESMTPSA id bm2-20020a056a00320200b00642f1e03dc1sm133807pfb.174.2023.06.07.12.45.19
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jun 2023 12:45:19 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH] Bluetooth: MGMT: Fix marking SCAN_RSP as not connectable
-Date:   Wed,  7 Jun 2023 12:45:18 -0700
-Message-Id: <20230607194518.2901376-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.40.1
+        Wed, 7 Jun 2023 15:50:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225151BEF
+        for <linux-bluetooth@vger.kernel.org>; Wed,  7 Jun 2023 12:50:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9ABBA63B4A
+        for <linux-bluetooth@vger.kernel.org>; Wed,  7 Jun 2023 19:50:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id F3C91C433EF;
+        Wed,  7 Jun 2023 19:50:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686167422;
+        bh=1nPmJHPCPTl8Y/hBLsoQCUfk3rsF/rAqjHBX4JBkJRY=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=hdOqsJ9MFyJYAUWknuAl7+S8tCIv3r7pV9jQRWT+96V2gZD9V0u5iZruVRKsFuEF8
+         vrAiVb7NceNO6116lEFiKb8e8F0EryfMa4dNup3L1+s/TZNQRC3sayD+E/yX08q4RR
+         v0UnIDlLdaxIF/unks/Jp8GBil8hPdLK5DtuJYZYX5LPAKcfhArgI1V1zvrC7KTAOL
+         ijUszZdaFdlUQNhWBUrEGbsrj2dkbPZlGhsfF5onIQwF03DxMaEJI9Lx5qbUgyiBno
+         8KMJh839ZYIy8rfSuV6qL/FszSwatSlNmjKAQAUR4Kq7OD8cRW+3t6zoaIczUyoOMv
+         IYwoMT3pQdo/A==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D4C9CE29F39;
+        Wed,  7 Jun 2023 19:50:21 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH BlueZ] media: Register app objects in proxy_added_cb()
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <168616742185.16860.6931728637611457817.git-patchwork-notify@kernel.org>
+Date:   Wed, 07 Jun 2023 19:50:21 +0000
+References: <20230527231458.673167-1-arkadiusz.bokowy@gmail.com>
+In-Reply-To: <20230527231458.673167-1-arkadiusz.bokowy@gmail.com>
+To:     Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hello:
 
-When receiving a scan response there is no way to know if the remote
-device is connectable or not, so when it cannot be merged don't
-make any assumption and instead just mark it with a new flag defined as
-MGMT_DEV_FOUND_SCAN_RSP so userspace can tell it is a standalone
-SCAN_RSP.
+This patch was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Link: https://lore.kernel.org/linux-bluetooth/CABBYNZ+CYMsDSPTxBn09Js3BcdC-x7vZFfyLJ3ppZGGwJKmUTw@mail.gmail.com/
-Fixes: c70a7e4cc8d2 ("Bluetooth: Add support for Not Connectable flag for Device Found events")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
----
- include/net/bluetooth/mgmt.h |  1 +
- net/bluetooth/hci_event.c    | 15 +++++----------
- 2 files changed, 6 insertions(+), 10 deletions(-)
+On Sun, 28 May 2023 01:14:58 +0200 you wrote:
+> The proxy_added_cb() function is called every time a new client is added
+> to the application object manager. Registering media endpoint and player
+> in that proxy_added_cb() callback function will allow to register new
+> endpoints and players not only during the initial RegisterApplication
+> call, but also during the application lifetime. For instance, this might
+> allow to dynamically enable/disable support for additional codecs.
+> 
+> [...]
 
-diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
-index 7eeec8501846..d382679efd2b 100644
---- a/include/net/bluetooth/mgmt.h
-+++ b/include/net/bluetooth/mgmt.h
-@@ -981,6 +981,7 @@ struct mgmt_ev_auth_failed {
- #define MGMT_DEV_FOUND_NOT_CONNECTABLE		BIT(2)
- #define MGMT_DEV_FOUND_INITIATED_CONN		BIT(3)
- #define MGMT_DEV_FOUND_NAME_REQUEST_FAILED	BIT(4)
-+#define MGMT_DEV_FOUND_SCAN_RSP			BIT(5)
- 
- #define MGMT_EV_DEVICE_FOUND		0x0012
- struct mgmt_ev_device_found {
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 7c199f7361f7..13319757258f 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6327,23 +6327,18 @@ static void process_adv_report(struct hci_dev *hdev, u8 type, bdaddr_t *bdaddr,
- 		return;
- 	}
- 
--	/* When receiving non-connectable or scannable undirected
--	 * advertising reports, this means that the remote device is
--	 * not connectable and then clearly indicate this in the
--	 * device found event.
--	 *
--	 * When receiving a scan response, then there is no way to
-+	/* When receiving a scan response, then there is no way to
- 	 * know if the remote device is connectable or not. However
- 	 * since scan responses are merged with a previously seen
- 	 * advertising report, the flags field from that report
- 	 * will be used.
- 	 *
--	 * In the really unlikely case that a controller get confused
--	 * and just sends a scan response event, then it is marked as
--	 * not connectable as well.
-+	 * In the unlikely case that a controller just sends a scan
-+	 * response event that doesn't match the pending report, then
-+	 * it is marked as a standalone SCAN_RSP.
- 	 */
- 	if (type == LE_ADV_SCAN_RSP)
--		flags = MGMT_DEV_FOUND_NOT_CONNECTABLE;
-+		flags = MGMT_DEV_FOUND_SCAN_RSP;
- 
- 	/* If there's nothing pending either store the data from this
- 	 * event or send an immediate device found event if the data
+Here is the summary with links:
+  - [BlueZ] media: Register app objects in proxy_added_cb()
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=08d62744ce17
+
+You are awesome, thank you!
 -- 
-2.40.1
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
