@@ -2,77 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72209730661
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Jun 2023 19:55:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F48C7318BB
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Jun 2023 14:16:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234721AbjFNRz1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 14 Jun 2023 13:55:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33746 "EHLO
+        id S1344902AbjFOMQo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 15 Jun 2023 08:16:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233908AbjFNRzZ (ORCPT
+        with ESMTP id S1344849AbjFOMP7 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 14 Jun 2023 13:55:25 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 583FE2126
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jun 2023 10:55:23 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id 006d021491bc7-55b38fc0c70so842141eaf.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jun 2023 10:55:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686765322; x=1689357322;
-        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YgsQjPYSA4x9EUAST26pLIMgzwk5/fmUNEDBBVE+P4A=;
-        b=VCXPNCraZYaTu7G2pWl4+xMj1l4Y4mQDL11K9iSvgOdGsNAHfuHyLjj8V4vW+9sJAI
-         SajL1EFpxLSNeAT8tjhoryQ1i59otgLUMIBl+0+3JLfNTMWsbDYdrYhpKA5/30UpKxBX
-         n2D+t/3BTp0GMr9jxVUNLq/yPERe9miXMvD/00bADfgA6Zp9zSEqSpGr19t/vJAIki9X
-         +OjVADPsqB1VbM2+YxqMIL4yWp+s/JnCACZMmTS2sqPqHEMBu8rvw4ZDkBwzUIZOR7fx
-         H8StQD2KLRvvEREMDSiuq6H53efasEwySKeAQtwg1zgWmreDb1sgoQGNuU0rUdtcCCvy
-         jpyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686765322; x=1689357322;
-        h=to:subject:message-id:date:from:sender:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YgsQjPYSA4x9EUAST26pLIMgzwk5/fmUNEDBBVE+P4A=;
-        b=S+EEFTU0xXijixOuq1IjyAHztSD52Y/aFB0otP3AMeTGE/dLbZXWDf3HUehPgUgBxx
-         Axk9yFQhNSHbPkMdqArMEdC7wdCvnflyGpsyNSaXLso91/TR1VXKXBLGL5ZmvC2BeaSN
-         JFlGoBLn+iFf5cFPA+NvAfHBHbcHv2pj6wrF3r7jBSZXEimd81ubvin245uxEoNmOWrO
-         v4chYXAdmE1nBVBke1UJSFdJyjhORVyE3Q2h4xu50i2mgvBfbpiRSmDz3tss7AjpxuCT
-         mxfMUx82kCcKCF3auY8PN3Q9dm5OdvVv3Z7Ln7t3EMJ0sLu4szn092soX4qiZ8o1Gwdd
-         gE2A==
-X-Gm-Message-State: AC+VfDyTXQHT0+Gc2RGuaH8nmfg2n+qSmbQTF/9YLTfGlfTh40d5eHX7
-        u23UteN8SfaOP0+tqchIP+VBenWApGj6MUsQN3A=
-X-Google-Smtp-Source: ACHHUZ6UGFPXXI784rUSMFAGSLlxpr84ES9mILD3wsvvfuIbRnHm7KT7cxnaUJ1SUuE4Jyebch3b6+kaQDNHuerCAbM=
-X-Received: by 2002:a4a:bb05:0:b0:558:b78d:8d1e with SMTP id
- f5-20020a4abb05000000b00558b78d8d1emr10506190oop.7.1686765322435; Wed, 14 Jun
- 2023 10:55:22 -0700 (PDT)
+        Thu, 15 Jun 2023 08:15:59 -0400
+Received: from mail.sitirkam.com (mail.aurorateknoglobal.com [103.126.10.58])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFF782967;
+        Thu, 15 Jun 2023 05:15:15 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.sitirkam.com (Postfix) with ESMTP id CBFD64E7BE89;
+        Thu, 15 Jun 2023 08:32:09 +0700 (WIB)
+Received: from mail.sitirkam.com ([127.0.0.1])
+        by localhost (mail.sitirkam.com [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 9PEOXuiK4TdS; Thu, 15 Jun 2023 08:32:09 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.sitirkam.com (Postfix) with ESMTP id AAB384E7BAAC;
+        Thu, 15 Jun 2023 08:32:00 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.sitirkam.com AAB384E7BAAC
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sitirkam.com;
+        s=B8AB377C-ED3B-11EA-8736-9248CAEF674E; t=1686792720;
+        bh=q7vDHy+gLAr4GKZUDI+hjt8I93kvW09nNmGJORUTyfg=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=N3NjQucfB1d8dBLppq5WOh9bTmxlsSrZrD1Gp71hr+LTWwbArUSVM7dMpgM62Owhl
+         W7LBChAaU70l8BlUjF4S2JZZJFtwsCOBwua8836eYRoa8Lqqpa2Hw04ZGd/1B/v+a5
+         fzJQU7cq6lc5swJnNLTYAWsmOIHSXKVid9vWBYGNfM538yXPWLew+hTSVQtaFH/o0M
+         nMiRwINVYUTxeSu7wJyzj0uVbDnMICisnE5XL3+d5nhoQOYiunftxFKReM8NRDd5sG
+         yowX8M3Y2OHoU/sj3hD5ZHU9YTzZ6ncO5H4tm5/qRcWb21gS098lmuJcQk7NSpD31f
+         UgRlXu+cxXLwQ==
+X-Virus-Scanned: amavisd-new at mail.sitirkam.com
+Received: from mail.sitirkam.com ([127.0.0.1])
+        by localhost (mail.sitirkam.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id g4cxxQwKGqiU; Thu, 15 Jun 2023 08:32:00 +0700 (WIB)
+Received: from [185.169.4.111] (unknown [185.169.4.111])
+        by mail.sitirkam.com (Postfix) with ESMTPSA id 30EFE4E7BABB;
+        Thu, 15 Jun 2023 08:31:54 +0700 (WIB)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Sender: mrsthereseninna@gmail.com
-Received: by 2002:a05:6358:998a:b0:f1:be9a:c0c5 with HTTP; Wed, 14 Jun 2023
- 10:55:21 -0700 (PDT)
-From:   Dr Lisa Williams <lw4666555@gmail.com>
-Date:   Wed, 14 Jun 2023 10:55:21 -0700
-X-Google-Sender-Auth: vmAb2NVlphKo8pDPEyDrOAbbRyw
-Message-ID: <CAKVHDg9QnTTM9BZ=iEMEOq+CKt3056rmJg2mz1VtnN8BO1D1tQ@mail.gmail.com>
-Subject: Hi,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Spende
+To:     Recipients <admin@sitirkam.com>
+From:   "Maria-Elisabeth Schaeffler" <admin@sitirkam.com>
+Date:   Wed, 14 Jun 2023 18:34:01 -0700
+Reply-To: schaefflermariaelisabeth1941@gmail.com
+Message-Id: <20230615013155.30EFE4E7BABB@mail.sitirkam.com>
+X-Spam-Status: No, score=2.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi,
+Your email account has been selected for a donation of =E2=82=AC1,700,000. =
+Please contact me for more information.
 
-My name is Dr. Lisa Williams, from the United States, currently living
-in the United Kingdom.
-
-I hope you consider my friend request. I will share some of my photos
-and more details about me when I get your reply.
-
-With love
-Lisa
+Mrs Maria Elisabeth Schaeffler
+CEO SCHAEFFLER.
