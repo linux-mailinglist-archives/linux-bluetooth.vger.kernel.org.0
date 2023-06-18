@@ -2,182 +2,111 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F69F734073
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Jun 2023 13:12:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A52973490C
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Jun 2023 00:04:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234499AbjFQLMv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 17 Jun 2023 07:12:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39292 "EHLO
+        id S229536AbjFRWEt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 18 Jun 2023 18:04:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232207AbjFQLMu (ORCPT
+        with ESMTP id S229485AbjFRWEs (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 17 Jun 2023 07:12:50 -0400
-Received: from mail-io1-f80.google.com (mail-io1-f80.google.com [209.85.166.80])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738EA1BF3
-        for <linux-bluetooth@vger.kernel.org>; Sat, 17 Jun 2023 04:12:48 -0700 (PDT)
-Received: by mail-io1-f80.google.com with SMTP id ca18e2360f4ac-77a1f4e92cdso211843939f.1
-        for <linux-bluetooth@vger.kernel.org>; Sat, 17 Jun 2023 04:12:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687000368; x=1689592368;
-        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tqysVBz+NFmrTu+Ca/Xnkrb+OEIx8dLa2JZyf+GKTrw=;
-        b=AoP3UgtOFlE17qYNBKta7T/pz4g2GFIYDzcVM5LNt0CvyKbzhcxHAcJwk56AS9NPAU
-         AliiuSK+aWqHMTIdhwhZybyKsHHbLpBNVuuX4vz6t1zJ/SQFnnavcFeG5B7kQA8zVtKH
-         kxM/GtO6yUGl8Jjro/me6fCuZA+u/VDqktv73uTbkxstUbSsLLY4F0Q+r89QSZOSPvyV
-         9W4p0sQmJMQQh50WduSFc+yo1l6ZBAPr2dbuc9tVdEEkR6EpFviXYVsnWUO1/xrd137r
-         h01xh+Vzr7bIy3xLENllu/r370hW6Zmd4GJ/GfqgiemPdS3QHoY+a8LMvKjbiQ4/T+fm
-         6cnQ==
-X-Gm-Message-State: AC+VfDyk/G2PG4nHgCTwARtce61nOet+DIz444EJhfPYYk8as9P3A8Nt
-        OxWX7tN684z6tle7MJakQuTo2oYDplJc69K0kAmxThAichoP
-X-Google-Smtp-Source: ACHHUZ4msT+TTZyn0q/FX5PQ0CqLUvKtu2X97cf3SNxRrcp6ri3a1sPOQOT2KklftY2+grulVgp2JCc8fdvjhW7CFLx9FFQpBLCb
+        Sun, 18 Jun 2023 18:04:48 -0400
+Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33DFFCF
+        for <linux-bluetooth@vger.kernel.org>; Sun, 18 Jun 2023 15:04:47 -0700 (PDT)
+Received: from monolith.lan (91-152-120-101.elisa-laajakaista.fi [91.152.120.101])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: pav)
+        by meesny.iki.fi (Postfix) with ESMTPSA id 4Qkn4W4nzdzyV2;
+        Mon, 19 Jun 2023 01:04:43 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+        t=1687125883;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=D4l7qWwIQkMCfRXA9sOibFHVNmXVjTzNxQ3qkmTNqaQ=;
+        b=GyJ/H/MaeYaKQRxBc7knaeWk2jz/h45qLsoKEQXKB3vORev/CJVhY51T/c3R1XUkTOTBGb
+        Tk5es5rS50kIu6Cvp1jYPBNVr3MnSwpk3LIBlX712Z2WYXifUxs9gwNeQTYuLewNkvnzFc
+        nX71HdUeR2pwcqMQPnNBioCg0tK9Xz8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+        s=meesny; t=1687125883;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=D4l7qWwIQkMCfRXA9sOibFHVNmXVjTzNxQ3qkmTNqaQ=;
+        b=qngYgmvR2NfEuBMoXD/EKOQMdSE6MYyOkerP3AxZ1+z7UpLXygUTFZOKf+uygcU3y2EBd5
+        X06DZkyTj+9dozU7VMfDehz0OmluKMiltR8cjshEkw6lXXYCPQADNFG2S1pdziP0chjYvv
+        M1aArK3KmSfm44FuQsuRc2PZg1bNo6I=
+ARC-Authentication-Results: i=1;
+        ORIGINATING;
+        auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1687125883; a=rsa-sha256; cv=none;
+        b=kcqg+05GqM53uh34xo1JQmowbs77bRwaT9g/pQutDT/ja4mdjKTH8C3xG2PNQgGC/U+oEM
+        OfGD1sFZajX8saSd66DawZiV7UTPzhnP83PD+a1ps//et99YYMETf1ythDHjy/7/HA0hKT
+        EG7L6TLGcNvVwLZPT/IGtM108WHpwO0=
+From:   Pauli Virtanen <pav@iki.fi>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH v3 0/3] Bluetooth: ISO-related concurrency fixes
+Date:   Mon, 19 Jun 2023 01:04:30 +0300
+Message-ID: <cover.1687115142.git.pav@iki.fi>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:1aac:b0:341:e20d:24b with SMTP id
- l12-20020a056e021aac00b00341e20d024bmr1531796ilv.0.1687000367830; Sat, 17 Jun
- 2023 04:12:47 -0700 (PDT)
-Date:   Sat, 17 Jun 2023 04:12:47 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000a91cfe05fe5161f2@google.com>
-Subject: [syzbot] [bluetooth?] BUG: sleeping function called from invalid
- context in __hci_cmd_sync_sk
-From:   syzbot <syzbot+c715e1bd8dfbcb1ab176@syzkaller.appspotmail.com>
-To:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, luiz.dentz@gmail.com,
-        marcel@holtmann.org, netdev@vger.kernel.org,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_00,FROM_LOCAL_HEX,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+This series addresses some concurrency issues (NULL / GPF) in ISO
+sockets or related.
 
-syzbot found the following issue on:
+v3:
+- Copy the pend_le_* lists, iterate over copy to make it simple.
+- Rename to hci_pend_le_list_*
 
-HEAD commit:    1f6ce8392d6f Add linux-next specific files for 20230613
-git tree:       linux-next
-console+strace: https://syzkaller.appspot.com/x/log.txt?x=14adff43280000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=d103d5f9125e9fe9
-dashboard link: https://syzkaller.appspot.com/bug?extid=c715e1bd8dfbcb1ab176
-compiler:       gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=11287563280000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=14395963280000
+v2:
+- Use RCU for the pend_le_* lists, avoid using hci_dev_lock.
+- Always call disconn_cfm before hci_conn_del.
 
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/2d9bf45aeae9/disk-1f6ce839.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/e0b03ef83e17/vmlinux-1f6ce839.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/b6c21a24174d/bzImage-1f6ce839.xz
+These were found while testing patches that make hci_le_set_cig_params
+check the validity of the configuration and return false if incorrect.
+This causes dropping of hci_conn just created, which apparently makes
+hitting race conditions easier.
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+c715e1bd8dfbcb1ab176@syzkaller.appspotmail.com
+The test setup was primitive
 
-BUG: sleeping function called from invalid context at net/bluetooth/hci_sync.c:166
-in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 4430, name: kworker/u5:1
-preempt_count: 0, expected: 0
-RCU nest depth: 1, expected: 0
-4 locks held by kworker/u5:1/4430:
- #0: ffff888020183138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: arch_atomic64_set arch/x86/include/asm/atomic64_64.h:20 [inline]
- #0: ffff888020183138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: raw_atomic64_set include/linux/atomic/atomic-arch-fallback.h:2608 [inline]
- #0: ffff888020183138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: raw_atomic_long_set include/linux/atomic/atomic-long.h:79 [inline]
- #0: ffff888020183138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: atomic_long_set include/linux/atomic/atomic-instrumented.h:3196 [inline]
- #0: ffff888020183138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: set_work_data kernel/workqueue.c:675 [inline]
- #0: ffff888020183138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: set_work_pool_and_clear_pending kernel/workqueue.c:702 [inline]
- #0: ffff888020183138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: process_one_work+0x8fd/0x16f0 kernel/workqueue.c:2564
- #1: ffffc900057a7db0 ((work_completion)(&hdev->rx_work)){+.+.}-{0:0}, at: process_one_work+0x930/0x16f0 kernel/workqueue.c:2568
- #2: ffff88802b78c078 (&hdev->lock){+.+.}-{3:3}, at: hci_le_create_big_complete_evt+0xe9/0xab0 net/bluetooth/hci_event.c:6947
- #3: ffffffff8c9a2840 (rcu_read_lock){....}-{1:2}, at: hci_le_ev_skb_pull net/bluetooth/hci_event.c:79 [inline]
- #3: ffffffff8c9a2840 (rcu_read_lock){....}-{1:2}, at: hci_le_create_big_complete_evt+0xcc/0xab0 net/bluetooth/hci_event.c:6943
-CPU: 0 PID: 4430 Comm: kworker/u5:1 Not tainted 6.4.0-rc6-next-20230613-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
-Workqueue: hci0 hci_rx_work
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x136/0x150 lib/dump_stack.c:106
- __might_resched+0x358/0x580 kernel/sched/core.c:10188
- __hci_cmd_sync_sk+0x359/0xe30 net/bluetooth/hci_sync.c:166
- __hci_cmd_sync_status_sk+0x45/0x160 net/bluetooth/hci_sync.c:247
- __hci_cmd_sync_status net/bluetooth/hci_sync.c:273 [inline]
- hci_le_terminate_big_sync+0xa4/0xd0 net/bluetooth/hci_sync.c:1671
- hci_le_create_big_complete_evt+0x741/0xab0 net/bluetooth/hci_event.c:6982
- hci_le_meta_evt+0x2bc/0x510 net/bluetooth/hci_event.c:7182
- hci_event_func net/bluetooth/hci_event.c:7512 [inline]
- hci_event_packet+0x641/0xfd0 net/bluetooth/hci_event.c:7567
- hci_rx_work+0xaeb/0x1340 net/bluetooth/hci_core.c:4064
- process_one_work+0xa34/0x16f0 kernel/workqueue.c:2594
- worker_thread+0x67d/0x10c0 kernel/workqueue.c:2745
- kthread+0x344/0x440 kernel/kthread.c:379
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
- </TASK>
-------------[ cut here ]------------
-Voluntary context switch within RCU read-side critical section!
-WARNING: CPU: 0 PID: 4430 at kernel/rcu/tree_plugin.h:320 rcu_note_context_switch+0xbb9/0x1800 kernel/rcu/tree_plugin.h:320
-Modules linked in:
-CPU: 0 PID: 4430 Comm: kworker/u5:1 Tainted: G        W          6.4.0-rc6-next-20230613-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
-Workqueue: hci0 hci_rx_work
-RIP: 0010:rcu_note_context_switch+0xbb9/0x1800 kernel/rcu/tree_plugin.h:320
-Code: 1d 44 68 00 4c 8b 4c 24 30 8b 4c 24 28 48 8b 54 24 20 e9 8f 03 00 00 48 c7 c7 c0 32 6e 8a c6 05 10 41 24 0d 01 e8 87 83 dc ff <0f> 0b e9 4c f5 ff ff 81 e5 ff ff ff 7f 0f 84 d7 f6 ff ff 65 48 8b
-RSP: 0018:ffffc900057a74c0 EFLAGS: 00010086
-RAX: 0000000000000000 RBX: ffff8880b983d340 RCX: 0000000000000000
-RDX: ffff88802c40bb80 RSI: ffffffff814bf5f7 RDI: 0000000000000001
-RBP: ffff88802c40bb80 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000000
-R13: ffff88802c40bb80 R14: ffffffff8ea9aff0 R15: ffff8880b983c440
-FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f802b262fc8 CR3: 000000002812e000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __schedule+0x276/0x5790 kernel/sched/core.c:6609
- schedule+0xde/0x1a0 kernel/sched/core.c:6785
- schedule_timeout+0x14e/0x2b0 kernel/time/timer.c:2167
- __hci_cmd_sync_sk+0xc1d/0xe30 net/bluetooth/hci_sync.c:166
- __hci_cmd_sync_status_sk+0x45/0x160 net/bluetooth/hci_sync.c:247
- __hci_cmd_sync_status net/bluetooth/hci_sync.c:273 [inline]
- hci_le_terminate_big_sync+0xa4/0xd0 net/bluetooth/hci_sync.c:1671
- hci_le_create_big_complete_evt+0x741/0xab0 net/bluetooth/hci_event.c:6982
- hci_le_meta_evt+0x2bc/0x510 net/bluetooth/hci_event.c:7182
- hci_event_func net/bluetooth/hci_event.c:7512 [inline]
- hci_event_packet+0x641/0xfd0 net/bluetooth/hci_event.c:7567
- hci_rx_work+0xaeb/0x1340 net/bluetooth/hci_core.c:4064
- process_one_work+0xa34/0x16f0 kernel/workqueue.c:2594
- worker_thread+0x67d/0x10c0 kernel/workqueue.c:2745
- kthread+0x344/0x440 kernel/kthread.c:379
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
- </TASK>
+while true; do bluetoothctl power on; sleep 12; bluetoothctl power off; sleep 1.5; bluetoothctl power off; sleep 2.5; done;
+while true; do sudo systemctl restart bluetooth; sleep 110; done
+while true; do systemctl --user restart pipewire wireplumber pipewire-pulse; sleep 91; done
+while true; do paplay sample.flac & sleep 2; kill %1; sleep 0.7; done
 
+and equivalent operations manually, on VM + connect to TWS earbuds. This
+eventually hit the NULL / GFP errors here, but they are hard to
+reproduce aside from the first one that appears in iso-tester.
 
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+Pauli Virtanen (3):
+  Bluetooth: use RCU for hci_conn_params and iterate safely in hci_sync
+  Bluetooth: hci_event: call disconnect callback before deleting conn
+  Bluetooth: ISO: fix iso_conn related locking and validity issues
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+ include/net/bluetooth/hci_core.h |   5 ++
+ net/bluetooth/hci_conn.c         |  10 +--
+ net/bluetooth/hci_core.c         |  38 ++++++++--
+ net/bluetooth/hci_event.c        |  15 ++--
+ net/bluetooth/hci_sync.c         | 117 ++++++++++++++++++++++++++++---
+ net/bluetooth/iso.c              |  53 ++++++++------
+ net/bluetooth/mgmt.c             |  26 +++----
+ 7 files changed, 198 insertions(+), 66 deletions(-)
 
-If the bug is already fixed, let syzbot know by replying with:
-#syz fix: exact-commit-title
+-- 
+2.41.0
 
-If you want syzbot to run the reproducer, reply with:
-#syz test: git://repo/address.git branch-or-commit-hash
-If you attach or paste a git patch, syzbot will apply it before testing.
-
-If you want to change bug's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the bug is a duplicate of another bug, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
