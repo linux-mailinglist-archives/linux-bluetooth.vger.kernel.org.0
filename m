@@ -2,192 +2,115 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 328EE73704A
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jun 2023 17:20:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77A5C737095
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jun 2023 17:36:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233287AbjFTPUL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 20 Jun 2023 11:20:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49588 "EHLO
+        id S232452AbjFTPgV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 20 Jun 2023 11:36:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233750AbjFTPTx (ORCPT
+        with ESMTP id S232030AbjFTPgU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 20 Jun 2023 11:19:53 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A105A12C
-        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jun 2023 08:19:49 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f86fbe5e4fso3311653e87.2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jun 2023 08:19:49 -0700 (PDT)
+        Tue, 20 Jun 2023 11:36:20 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CD3912C
+        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jun 2023 08:36:20 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id 6a1803df08f44-62ff6cf5af0so43875666d6.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jun 2023 08:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687274385; x=1689866385;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p40Myde1fQD0UIg2pdHi3GBfZvAX9ZMU2rMN96RSnz4=;
-        b=VSRrMFVzm/tx2+tgs2b4f0TfMWuYR3WoPN5QYWDSkc57hO4M2TqfzIGSC6Fh3KDw+9
-         FLmbhgaqQYm2JPlLDFDyHfL1zdyTnKPECn/fwVAD3NMIRlMEDxJo63B7Mmjr0gylLqAk
-         BAz5rMcZ7xImS8HPaEYZcrMahkzysVugY8M2gCT+97DChTgK3p1a/W8XB/zaApuqgsxO
-         7k3BYpIr7G8G0Po7c7E2laloyjTo8cootFClULrM7V3rW6gT1M9x8WTbei8n5BsuQvgu
-         msuz731EToSmMI4M/g1uq8u5B5TV0iv5TRX2FaVMD20Zd69nY2BEWQ4WzGs0reCuDOvg
-         grWg==
+        d=gmail.com; s=20221208; t=1687275379; x=1689867379;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vf8Wo+dyeNzKyPhT9DtgUOC0vCoxo5GM02ZLY6gCel4=;
+        b=HDVhkkwGEFD8XwxuAMvc6O8tGt76wODxTgISq9QQoy5u4Za8bUX8zBcd5Q9IT32sm6
+         lgG8sqMsTr9kJXsb1uzKArSGjOp9jShLZcfupDXPA8xvKPW08HEC1bJ57WqOqMsPqGdz
+         u5VrgALbhhwBaImo/j9sZPbWfFGo/2/ij0CSCobyPdMjTjnvBYdlZMGH3RH9ysEWvw9S
+         3STdzHMDzcMEMcMDrKez7oKpsh01jejeLaVcNXsGq27AQbaHfNO08XE6a/LFsFKSMdrj
+         N//a4giTYm2TUND5UVe1+UgO1NwAJHuMhSgHT6mUgnRfFgGzw1qjchHc45pt6B+zU/+A
+         o9tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687274385; x=1689866385;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p40Myde1fQD0UIg2pdHi3GBfZvAX9ZMU2rMN96RSnz4=;
-        b=hZ5YjFOV1ddASQj40YJGZoV7Lf4y7Mul1D5iC2j52pTNV6UoqLbALIqVKxSuSUOySo
-         xzSu+2WHGbDaXjpCoEMVy03A4o8+KxUHrtM2AGNvQr4saqz2Rf6fJBzL4XAz0QKbAsLt
-         N7emNiEw9VyP8flKtoL/bWWjV01lIjIAtiWOnKCZCPQ+K4bW6BuaMp4hHg2E6DPF3Y7R
-         2qcQQS2zdSm+voCEpMBs2u2NbipaNbEpMrf9EqNk1ynUni1TKID23HBmgvCT1QlLkLYO
-         rTaRJysFQekL1PwvAP2WDGLfY8yZjFfKQFb10LF2WOK850wm3b6Yh7ckWOe54SJuPN7g
-         JJOg==
-X-Gm-Message-State: AC+VfDxEQzXyjLGhJNxD9D11/5t3VS/vPV54/CoILQp+5XCGFzv18/7b
-        wcTiv6tV527TQVyYOxfSV5Ki4w==
-X-Google-Smtp-Source: ACHHUZ6RxrplvWpSP7VbXbCbvL7neIz92yh4McApWcsTpRoLERfQlJKoITO+aNX5plLeHzFdWqKEtg==
-X-Received: by 2002:a19:6702:0:b0:4f8:770d:6d7d with SMTP id b2-20020a196702000000b004f8770d6d7dmr2526971lfc.6.1687274385376;
-        Tue, 20 Jun 2023 08:19:45 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id x23-20020a05600c21d700b003f427687ba7sm2518659wmj.41.2023.06.20.08.19.44
+        d=1e100.net; s=20221208; t=1687275379; x=1689867379;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vf8Wo+dyeNzKyPhT9DtgUOC0vCoxo5GM02ZLY6gCel4=;
+        b=VRah+P+VM7p8tINfyxpqim3z63Gz7CCMFLEBA3k3LrL39mGBJa3E67RlqmM+snCjzE
+         CfNhAg8gOAuZsExX7KSkZEV9sOiq9YPzfE5xLz2lEKKC/xyk2pcF7tIPgds7knorNP6M
+         xw6eTCAyLworIUGzA4NgLr0WG6XLOIxLCkFRkAz2tPwBsWrto5ANn0UMCC+CH2FKnxUH
+         vSzUttPq34kbC1Y+c0tv3kLqVJrt2Wd+MG4KBcPifnrKUa7PM4U6dq0xMzDgDKkiQRzw
+         FoFN+r+CU16g6dffzUCoA/Y9qmmiLBCCcHu7gbdjgGhfZIL784FkGhvgRo5omxWpLi8c
+         h6Fg==
+X-Gm-Message-State: AC+VfDx5fHn3tqO9vVgZjm65SUOadSI6mJ+fS+XhlEfRwP9INnYNEKch
+        6mz22SoZpnzMEDkkpt1TvWHq1HRKSMY=
+X-Google-Smtp-Source: ACHHUZ7ME+r5QZt+BbERY+k4q6GZhcgzuFNNrSvcdM/6eFJXbVqiTSexVd9MvXE5cyFr2M/hjpUaqw==
+X-Received: by 2002:a05:622a:190a:b0:3ff:2f27:12ac with SMTP id w10-20020a05622a190a00b003ff2f2712acmr1729133qtc.66.1687275378822;
+        Tue, 20 Jun 2023 08:36:18 -0700 (PDT)
+Received: from [172.17.0.2] ([20.42.13.25])
+        by smtp.gmail.com with ESMTPSA id t3-20020ac85303000000b003ff1fcaa5e6sm1224729qtn.27.2023.06.20.08.36.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 08:19:45 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 20 Jun 2023 17:19:39 +0200
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8550-qrd: add bluetooth support
+        Tue, 20 Jun 2023 08:36:17 -0700 (PDT)
+Message-ID: <6491c771.c80a0220.b41c1.363e@mx.google.com>
+Date:   Tue, 20 Jun 2023 08:36:17 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============0112931271148328777=="
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230620-topic-sm8550-upstream-bt-v1-4-4728564f8872@linaro.org>
-References: <20230620-topic-sm8550-upstream-bt-v1-0-4728564f8872@linaro.org>
-In-Reply-To: <20230620-topic-sm8550-upstream-bt-v1-0-4728564f8872@linaro.org>
-To:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1926;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=iuWV9Gxv674pEfpCf7eMGZhLUcpDiyM3q/JmNOeS3JU=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkkcOKO49c819U+yoUkl35AaT8tcGr+8GX71phwray
- VPP+SsSJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJHDigAKCRB33NvayMhJ0bHuD/
- 40xu1H6nRY7N1Zg0Kd7N9u1eCPUqKqATg+pxuDEwcgP56uQ/znYyJZgny2ON/DAk+nKn4SKWJ+pXp8
- PZ/XH1Few0oNPvudL+WnFDfN2UiKqcAaMDNtrBCNNK1J5Ibg+Z9iUtfFCnS6M+HPXJk0hbFZLtVTPp
- 11toSYOuMJVTLmk7CF/Y1qKlLY14RR2I+g1CJWloAebyk8//BT6cIOjuOrkUAHq5JaSSqTFLfr9CNb
- NijJ/TGHqhkx+WZoNQTFMRsiaGUNwPmeLvXXT3/QHEVmHSePBXao5yA35xv1n9fLOLYNBaXfGp+tFT
- Ifdb75J/duHHRyni7OnNrfQbXSfePSwwHlY1LCPztqCjPHvkt/Spoe9+CC+eKEEIsWYBlBrzuwFmYe
- aJVNuDBpWJI30+qs0ltmryJNDOu6ENJ6vmyBgCBKHVvvjTkEbPcmgU+j9DAD0gb4aDN34blkH33MiW
- 0qPX4Muc7lXXqSiihb7w28sG4Ns9oylHzkLeMrlbTWJssKVny/kN0T5TjuSiT4QIrnwqlWEU4brhHf
- uT2p5xgCwUr6/Al4MChMI94NF9rYHAgh9FHs+qa3QV97zp3H4VY+SMFvfXqhlUz00vd3sp7mSJqMDs
- BpgvuZ1HO/L9OchmUWN/PdDN9KPl2MAaUqBH44Yn2KPijZEEZYyEyZ1SGpIQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, gregkh@linuxfoundation.org
+Subject: RE: Bluetooth: hci_sysfs: make bt_class a static const structure
+In-Reply-To: <20230620144051.580683-2-gregkh@linuxfoundation.org>
+References: <20230620144051.580683-2-gregkh@linuxfoundation.org>
+Reply-To: linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Enable the WCN7850 bluetooth over the UART14 link.
+--===============0112931271148328777==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=758732
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.82 seconds
+GitLint                       PASS      0.39 seconds
+SubjectPrefix                 PASS      0.14 seconds
+BuildKernel                   PASS      39.70 seconds
+CheckAllWarning               PASS      43.61 seconds
+CheckSparse                   PASS      48.89 seconds
+CheckSmatch                   PASS      132.08 seconds
+BuildKernel32                 PASS      37.98 seconds
+TestRunnerSetup               PASS      537.43 seconds
+TestRunner_l2cap-tester       PASS      20.26 seconds
+TestRunner_iso-tester         PASS      29.62 seconds
+TestRunner_bnep-tester        PASS      6.95 seconds
+TestRunner_mgmt-tester        PASS      135.86 seconds
+TestRunner_rfcomm-tester      PASS      11.08 seconds
+TestRunner_sco-tester         PASS      10.03 seconds
+TestRunner_ioctl-tester       PASS      11.90 seconds
+TestRunner_mesh-tester        PASS      9.03 seconds
+TestRunner_smp-tester         PASS      9.92 seconds
+TestRunner_userchan-tester    PASS      7.43 seconds
+IncrementalBuild              PASS      36.27 seconds
+
+
+
 ---
- arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 43 +++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-index ec4feee6837d..5191fdbe72cb 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-@@ -22,6 +22,7 @@ / {
- 
- 	aliases {
- 		serial0 = &uart7;
-+		serial1 = &uart14;
- 	};
- 
- 	wcd938x: audio-codec {
-@@ -691,6 +692,10 @@ &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/sm8550/adsp.mbn",
- 			"qcom/sm8550/adsp_dtb.mbn";
-@@ -768,6 +773,21 @@ wcd_tx: codec@0,3 {
- &tlmm {
- 	gpio-reserved-ranges = <32 8>;
- 
-+	bt_default: bt-default-state {
-+		bt-en-pins {
-+			pins = "gpio81";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+
-+		sw-ctrl-pins {
-+			pins = "gpio82";
-+			function = "gpio";
-+			bias-pull-down;
-+		};
-+	};
-+
- 	sde_dsi_active: sde-dsi-active-state {
- 		pins = "gpio133";
- 		function = "gpio";
-@@ -809,6 +829,29 @@ &uart7 {
- 	status = "okay";
- };
- 
-+&uart14 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn7850-bt";
-+
-+		vddio-supply = <&vreg_l15b_1p8>;
-+		vddaon-supply = <&vreg_s4e_0p95>;
-+		vdddig-supply = <&vreg_s4e_0p95>;
-+		vddrfa0p8-supply = <&vreg_s4e_0p95>;
-+		vddrfa1p2-supply = <&vreg_s4g_1p25>;
-+		vddrfa1p9-supply = <&vreg_s6g_1p86>;
-+
-+		max-speed = <3200000>;
-+
-+		enable-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 82 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&bt_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
- &ufs_mem_hc {
- 	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
- 	vcc-supply = <&vreg_l17b_2p5>;
 
--- 
-2.34.1
-
+--===============0112931271148328777==--
