@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96476737435
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jun 2023 20:30:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D9B073742D
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jun 2023 20:30:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230078AbjFTSad (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 20 Jun 2023 14:30:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57348 "EHLO
+        id S229971AbjFTSa2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 20 Jun 2023 14:30:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229935AbjFTSa1 (ORCPT
+        with ESMTP id S229657AbjFTSa0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 20 Jun 2023 14:30:27 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9339710E6;
-        Tue, 20 Jun 2023 11:30:25 -0700 (PDT)
+        Tue, 20 Jun 2023 14:30:26 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AD2610C2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jun 2023 11:30:25 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 308A061408;
-        Tue, 20 Jun 2023 18:30:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 821DDC433CD;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0027B613F9
+        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jun 2023 18:30:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 62FF3C433CB;
         Tue, 20 Jun 2023 18:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1687285824;
-        bh=dmdXO9EOYaPTDvdSJBnvA6ZG2eBsDyhXoF36rRwzS3U=;
+        bh=5ZOvxn/ue6ft8CKRq7q8k62kGoWfSWaU+d5FNR/7Rew=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=HX/7fMO/S4aAENDKMTbje1k9LH7K5j5D4cx3kzyNLELuzAASgOw8zVG/+74soZWn+
-         e0kwt/26rZdhKJ3x0j2pCFXMN7Xpdf1ZOxy9UqO1Di3g4ICvzSs34qNvf6bKDNUeWk
-         iHmbXi4meSkAlZvTZk25futRCTyvR597EtcjR8jrBQW0M3a0z7JaXrM6WweL5UHmVN
-         MaMRZtj+M3wAHYQtRsTYHDbHtrwneVvEZr+FqGFZtvxQ8G6/9QJO7J61u+2DxB3J/2
-         sofQnK4/b8QFpxKFtvXfWDvUuyju3J+tlanxjxDR0cusRQOyf23yKnpYXNKc8/7YV9
-         40RKjgtoVi3Lw==
+        b=q2L/MbrbTe+GEuD1XKSTZ860qASMUupYpBF1hUZAV1GN7pXBGB5taxGorwFmsaRrc
+         WXXUwcBKA+V0A2+A+rb89ZNFu1gEcxGbCdOVQYsru5q7V5yVwPTg+RaKvfRc2aS6G+
+         pA91pS2hIL4dgSZOT8ad2ViLmljSEVAFZC/EAw2iD5LnxwIfK0EBRfKWgwBJEKCzXO
+         DRp9p0MmSlWaFnO7oKx4/H2/AKmFmqo1iNGleRvaTiN8l79gg6yg61lqFwhENbI1+Y
+         p2m8Hsu3Jk0lduUrU/5Y1uq++/jdaPlTdeU6ObTkvkjaggxASpC8n/ljhvdJk0IjHO
+         8LS87qQX8IcMw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 58C9CE301FA;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 41FC3C395D9;
         Tue, 20 Jun 2023 18:30:24 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: hci_sysfs: make bt_class a static const structure
+Subject: Re: [RESEND v3] Bluetooth: btintel: Add support to reset bluetooth via
+ ACPI DSM
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168728582435.12887.8737547745115004930.git-patchwork-notify@kernel.org>
+Message-Id: <168728582425.12887.12508398484861046663.git-patchwork-notify@kernel.org>
 Date:   Tue, 20 Jun 2023 18:30:24 +0000
-References: <20230620144051.580683-2-gregkh@linuxfoundation.org>
-In-Reply-To: <20230620144051.580683-2-gregkh@linuxfoundation.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ivan.orlov0322@gmail.com, marcel@holtmann.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20230611064342.1587278-1-kiran.k@intel.com>
+In-Reply-To: <20230611064342.1587278-1-kiran.k@intel.com>
+To:     K@ci.codeaurora.org, Kiran <kiran.k@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
+        chethan.tumkur.nayaran@intel.com
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,19 +64,20 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 20 Jun 2023 16:40:52 +0200 you wrote:
-> From: Ivan Orlov <ivan.orlov0322@gmail.com>
+On Sun, 11 Jun 2023 12:13:42 +0530 you wrote:
+> New Intel platforms supports reset of Bluetooth device  via ACPI DSM
+> methods. The legacy reset mechanism via GPIO will be deprecated in
+> future. This patch checks the platform support for reset methods and if
+> supported uses the same instead of legacy GPIO toggling method.
 > 
-> Now that the driver core allows for struct class to be in read-only
-> memory, move the bt_class structure to be declared at build time
-> placing it into read-only memory, instead of having to be dynamically
-> allocated at load time.
+> ACPI firmware supports two types of reset method based on NIC card.
+> (Discrete or Integrated).
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: hci_sysfs: make bt_class a static const structure
-    https://git.kernel.org/bluetooth/bluetooth-next/c/665baafde870
+  - [RESEND,v3] Bluetooth: btintel: Add support to reset bluetooth via ACPI DSM
+    https://git.kernel.org/bluetooth/bluetooth-next/c/41022e05ccf6
 
 You are awesome, thank you!
 -- 
