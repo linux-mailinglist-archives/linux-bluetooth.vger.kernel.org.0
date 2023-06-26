@@ -2,60 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 828A173EBFE
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 26 Jun 2023 22:44:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67E6373EBFC
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 26 Jun 2023 22:44:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230171AbjFZUmi (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 26 Jun 2023 16:42:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42410 "EHLO
+        id S229584AbjFZUmg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 26 Jun 2023 16:42:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230063AbjFZUmc (ORCPT
+        with ESMTP id S229571AbjFZUmb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 26 Jun 2023 16:42:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6DDE19BA;
+        Mon, 26 Jun 2023 16:42:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B512412C;
         Mon, 26 Jun 2023 13:42:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4F50E60F79;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0DF4560F59;
         Mon, 26 Jun 2023 20:42:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9CE3AC433C9;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 74434C433C8;
         Mon, 26 Jun 2023 20:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1687812134;
-        bh=+L005PfmtR6wWWP0Xltnl1KnCOk0d39rmSCki7NghLw=;
+        bh=gOj1k9JojrNwRP9mT37pNzDg/rLxVjtZQAF51Mcy+ew=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=DyDjgqgAM8w77q7+810tcqBaJWt2ouE/nmLhgYxjjreo5izhFTMUiYXrtqc7WMl8e
-         /d/fE/VpZbclT6Kbi9Q8M3LTzSgrurZ7xXyryZ3rJWLhMUea9UTRVDntnmQubgX3kv
-         F7LyohwcoTlyEha2uAoFMep5gKMk/s5PU1FlA4AOrKcm1qHCRo1iaa33QHZx8UkZW0
-         6X7wp3KhApY0tY+hglXQd6RVb0LxG27NdcOMBraBchI/tZt0I+Mn+aSKmuODCBEESD
-         uwTqquZmaW6aFFy3vjIWd55RX08Kk0C+uxnU0hliyD9P89c2bni2PA31wbCkXrdG94
-         kl+RN5FsGxb4A==
+        b=kn0aopctOVfmLUS9K0QnhWSG70BVPy1jSGhOy24BBgYtctIho+//6ZpNbZJ32NrIp
+         BdrBuF6qQckboalLHd1ZqruaYaMQTE9fUKoLJQk5E62wTNA/O/z0TycdbC7jwhVegh
+         z3IVe0Wk4e5weRLv12TpAtDn6OJ8CKx1HkpRIyLlOcni3MxZEanL916yc+R0/l5Zmv
+         Gaim8qQFNVQiRAL+8YrgV3xdFA+fkGfe91/KtenF/jxYIKr96KcusTJ3739jToydhG
+         FKbHcCYvBxkfvbYhQvJDzBXkOWf+6aX/dmSpXd4OehrABm5kSDtpcixtNsnZ7SAhJg
+         BSeJ68E92KRTg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 78FA8E53808;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 530F4C395E0;
         Mon, 26 Jun 2023 20:42:14 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v5] Bluetooth: msft: Extended monitor tracking by address
- filter
+Subject: Re: [PATCH] Bluetooth: hci_conn: Use kmemdup() to replace kzalloc +
+ memcpy
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168781213448.29844.3605670439854920705.git-patchwork-notify@kernel.org>
+Message-Id: <168781213432.29844.16837505476926129837.git-patchwork-notify@kernel.org>
 Date:   Mon, 26 Jun 2023 20:42:14 +0000
-References: <20230621100031.19477-1-hildawu@realtek.com>
-In-Reply-To: <20230621100031.19477-1-hildawu@realtek.com>
-To:     Hilda Wu <hildawu@realtek.com>
+References: <20230625084513.6319-1-jiapeng.chong@linux.alibaba.com>
+In-Reply-To: <20230625084513.6319-1-jiapeng.chong@linux.alibaba.com>
+To:     Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, linux-bluetooth@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        apusaka@chromium.org, mmandlik@google.com, yinghsu@chromium.org,
-        simon.horman@corigine.com, max.chou@realtek.com,
-        alex_lu@realsil.com.cn, kidman@realtek.com
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        abaci@linux.alibaba.com
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,26 +65,20 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 21 Jun 2023 18:00:31 +0800 you wrote:
-> From: Hilda Wu <hildawu@realtek.com>
+On Sun, 25 Jun 2023 16:45:13 +0800 you wrote:
+> Use kmemdup rather than duplicating its implementation.
 > 
-> Since limited tracking device per condition, this feature is to support
-> tracking multiple devices concurrently.
-> When a pattern monitor detects the device, this feature issues an address
-> monitor for tracking that device. Let pattern monitor can keep monitor
-> new devices.
-> This feature adds an address filter when receiving a LE monitor device
-> event which monitor handle is for a pattern, and the controller started
-> monitoring the device. And this feature also has cancelled the monitor
-> advertisement from address filters when receiving a LE monitor device
-> event when the controller stopped monitoring the device specified by an
-> address and monitor handle.
+> ./net/bluetooth/hci_conn.c:1880:7-14: WARNING opportunity for kmemdup.
+> 
+> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+> Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=5597
+> Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v5] Bluetooth: msft: Extended monitor tracking by address filter
-    https://git.kernel.org/bluetooth/bluetooth-next/c/53c7c193d66a
+  - Bluetooth: hci_conn: Use kmemdup() to replace kzalloc + memcpy
+    https://git.kernel.org/bluetooth/bluetooth-next/c/f1a9a7cc825f
 
 You are awesome, thank you!
 -- 
