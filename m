@@ -2,52 +2,51 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00BEE73EBF5
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 26 Jun 2023 22:44:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F153773EBFA
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 26 Jun 2023 22:44:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230209AbjFZUml (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 26 Jun 2023 16:42:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42422 "EHLO
+        id S229780AbjFZUmh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 26 Jun 2023 16:42:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbjFZUmc (ORCPT
+        with ESMTP id S229623AbjFZUmb (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 26 Jun 2023 16:42:32 -0400
+        Mon, 26 Jun 2023 16:42:31 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A8951BC0;
-        Mon, 26 Jun 2023 13:42:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1E6CE54
+        for <linux-bluetooth@vger.kernel.org>; Mon, 26 Jun 2023 13:42:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 52EE360F7B;
-        Mon, 26 Jun 2023 20:42:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A58F6C433CD;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2543D60F6E
+        for <linux-bluetooth@vger.kernel.org>; Mon, 26 Jun 2023 20:42:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7F06EC433CA;
         Mon, 26 Jun 2023 20:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1687812134;
-        bh=/KXyd21CfHb6rzo+c1XgD1UT5PbguXa+XvRxeJl+LEQ=;
+        bh=ROY2C+vz6Aza/XLavVEep12p6uoYd6K0rQaYl+KRAxQ=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=L5k0TFPrgdU0w6KY1en9+UavUbxblgQZJ5Xes4oreW1VXIhhuNhevPqLC8lc5NQan
-         8yTP7hWp2VFwdKtDPfnIT2iWhBbjcmELjNPe7hmz6lXOLi39OBYmhRie6C8k7mMcbp
-         IjTRkkMXG47G8cG8oWVbku54v1T9MBU5OtyHsVIEkWNVM+y4F5hl/frDIU51qYyJQO
-         dY2ShfpvqF+EoczgVlmY89s2Nu4EgByXCB57NcQiG+MYF8Mtl9NT8q8A//Cvy2A2JB
-         sUf3qVCg7f8zd7Vk9kK/T4Yjbz8jqF/DFfMYBkBDfID/gL+z1lsom43XvP7Vs9o5E5
-         EsGj1oGfiaD/A==
+        b=bOE50HEp7HYCw+JWHnVb82mchktNe3p7/jL6f1rj7wJNvVTztdlPYdOUl09jMv8PN
+         7b/r/P38hQ1R1dyo7WGjRF6emmxdPAuSM9U2BP7nJJ7JQlbFDuc+7bF79pBiRuqBop
+         opzi4PV9+G3OLsjhA4ZbEQDNtCZTciVncDwHbjnN+pONmc6gaTRhZt3jgwdDjZg5/H
+         0c3oEIlcCFcMTVtFl0qpDC3z8RFI6AMV2umVHw4QV8Vy5tou00EASdIubX5sbknUsi
+         0Q1iRW6ejbwJpHT/xPjVwAMdPfZxocg2qCrxskQOaPRkKVbx29BaTfoF++qSI/+HKx
+         xTMQv+VhMBaOw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8B505C64459;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 5FE76E537FE;
         Mon, 26 Jun 2023 20:42:14 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: btusb: Add MT7922 bluetooth ID for the Asus Ally
+Subject: Re: [PATCH v5] Bluetooth: hci_event: Fix parsing of CIS Established Event
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168781213454.29844.5739328500636012482.git-patchwork-notify@kernel.org>
+Message-Id: <168781213438.29844.9936704307447731174.git-patchwork-notify@kernel.org>
 Date:   Mon, 26 Jun 2023 20:42:14 +0000
-References: <20230624170810.298776-1-ruinairas1992@gmail.com>
-In-Reply-To: <20230624170810.298776-1-ruinairas1992@gmail.com>
-To:     Matthew Anderson <ruinairas1992@gmail.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230623212439.1702413-1-luiz.dentz@gmail.com>
+In-Reply-To: <20230623212439.1702413-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -63,18 +62,19 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Sat, 24 Jun 2023 12:08:10 -0500 you wrote:
-> Adding the device ID from the Asus Ally gets the bluetooth working
-> on the device.
+On Fri, 23 Jun 2023 14:24:39 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> Signed-off-by: Matthew Anderson <ruinairas1992@gmail.com>
-> ---
->  drivers/bluetooth/btusb.c | 3 +++
->  1 file changed, 3 insertions(+)
+> The ISO Interval on CIS Established Event uses 1.25 ms slots:
+> 
+>     BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 4, Part E
+>     page 2304:
+> 
+> [...]
 
 Here is the summary with links:
-  - Bluetooth: btusb: Add MT7922 bluetooth ID for the Asus Ally
-    https://git.kernel.org/bluetooth/bluetooth-next/c/6d5475f4a29c
+  - [v5] Bluetooth: hci_event: Fix parsing of CIS Established Event
+    https://git.kernel.org/bluetooth/bluetooth-next/c/5f68122ac282
 
 You are awesome, thank you!
 -- 
