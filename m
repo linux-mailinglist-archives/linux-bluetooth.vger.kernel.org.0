@@ -2,59 +2,91 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F62E740A59
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jun 2023 10:02:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16B7B741022
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jun 2023 13:36:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232815AbjF1ICl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 28 Jun 2023 04:02:41 -0400
-Received: from mail.mahavavy.com ([92.222.170.29]:33576 "EHLO
-        mail.mahavavy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232795AbjF1H7w (ORCPT
-        <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 28 Jun 2023 03:59:52 -0400
-Received: by mail.mahavavy.com (Postfix, from userid 1002)
-        id EB48B2353A; Wed, 28 Jun 2023 07:50:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mahavavy.com; s=mail;
-        t=1687938654; bh=IfqQW79nVX/qUpmHcJiWDpV9BQnOf/s+Zcq9ON74QJY=;
-        h=Date:From:To:Subject:From;
-        b=nOSbPWmVbgd8YEgGZpMhwGLr6TAZAn4VJdr5WvphSq6bjtwDBH5Hnuk+01Aw+M6IM
-         P2oHDzcTfCeCIMH+N7bMOLhrHuNDj5yXWfi60VdFG/xFfs0XLVmsHntYP0US2t4aCn
-         PGsCmbMZx1oyPSBxX/YjKzsPUBQOAiwBFlSwvg3JeBZ8f5/JM/6CU0OVqhZ2InQZI5
-         jaFoQO+SFX4BUcSRWfNDyZVYzBouIWzaZQF2Vhab3ePkbDmiwJFY9uxZCsVsvMkkgF
-         tz2kuCIstIT9y1pfAkRKyGQ31USYv8pZRN/mxIw1R0lw+K/DTtof8UCAJRV7K22J0W
-         rI8Nd7+lPc7Vw==
-Received: by mail.mahavavy.com for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jun 2023 07:50:17 GMT
-Message-ID: <20230628064500-0.1.3f.7yvz.0.4dxll06w4p@mahavavy.com>
-Date:   Wed, 28 Jun 2023 07:50:17 GMT
-From:   =?UTF-8?Q? "Kristi=C3=A1n_Plet=C3=A1nek" ?= 
-        <kristian.pletanek@mahavavy.com>
-To:     <linux-bluetooth@vger.kernel.org>
-Subject: =?UTF-8?Q?Tlakov=C4=9B_lit=C3=BD?=
-X-Mailer: mail.mahavavy.com
+        id S231539AbjF1LgO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 28 Jun 2023 07:36:14 -0400
+Received: from mx3.molgen.mpg.de ([141.14.17.11]:44125 "EHLO mx3.molgen.mpg.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229456AbjF1LgN (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
+        Wed, 28 Jun 2023 07:36:13 -0400
+Received: from [141.14.220.45] (g45.guest.molgen.mpg.de [141.14.220.45])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: pmenzel)
+        by mx.molgen.mpg.de (Postfix) with ESMTPSA id 7B46661E5FE01;
+        Wed, 28 Jun 2023 13:34:26 +0200 (CEST)
+Message-ID: <2a43ecd8-faf5-11f7-1a01-c114aa16354b@molgen.mpg.de>
+Date:   Wed, 28 Jun 2023 13:34:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v1] Bluetooth: btintel: Add support for GalePeak
+Content-Language: en-US
+To:     Kiran K <kiran.k@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
+        chethan.tumkur.narayan@intel.com
+References: <20230628113934.824668-1-kiran.k@intel.com>
+From:   Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <20230628113934.824668-1-kiran.k@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dobr=C3=A9 r=C3=A1no,
+Dear Kiran,
 
-zaji=C5=A1=C5=A5ujeme technologii tlakov=C3=A9ho lit=C3=AD hlin=C3=ADku.
 
-M=C3=A1me v=C3=BDrobn=C3=AD z=C3=A1vody v Polsku, =C5=A0v=C3=A9dsku a =C4=
-=8C=C3=ADn=C4=9B se schopnost=C3=AD flexibiln=C4=9B p=C5=99esouvat v=C3=BD=
-robu mezi lokalitami.
+Thank you for your patch.
 
-Na=C5=A1e lic=C3=AD bu=C5=88ky jsou v=C4=9Bt=C5=A1inou automatick=C3=A9 n=
-ebo poloautomatick=C3=A9, co=C5=BE umo=C5=BE=C5=88uje v=C3=BDrobu velk=C3=
-=BDch v=C3=BDrobn=C3=ADch s=C3=A9ri=C3=AD s vysokou flexibilitou detail=C5=
-=AF.
-=20
-Poskytujeme podporu v ka=C5=BEd=C3=A9 f=C3=A1zi v=C3=BDvoje projektu, vyv=
-=C3=ADj=C3=ADme strukturu detailu.
+Am 28.06.23 um 13:39 schrieb Kiran K:
+> Hardware variant for GalePeak core (CNVi) is added.
 
-Cht=C4=9Bli byste mluvit o spolupr=C3=A1ci v t=C3=A9to oblasti?
+The code names are officially spelled with a space, I believe: Gale Peak.
 
-Pozdravy
-Kristi=C3=A1n Plet=C3=A1nek
+Maybe also mention 0x1c.
+
+> Signed-off-by: Kiran K <kiran.k@intel.com>
+> ---
+>   drivers/bluetooth/btintel.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+> index dd1e48808ee2..f4d096639080 100644
+> --- a/drivers/bluetooth/btintel.c
+> +++ b/drivers/bluetooth/btintel.c
+> @@ -480,6 +480,7 @@ static int btintel_version_info_tlv(struct hci_dev *hdev,
+>   	case 0x18:	/* Slr */
+>   	case 0x19:	/* Slr-F */
+>   	case 0x1b:      /* Mgr */
+> +	case 0x1c:	/* GaP */
+
+Why not add the full name in the comment? Maybe: Gale Peak (GaP).
+
+>   		break;
+>   	default:
+>   		bt_dev_err(hdev, "Unsupported Intel hardware variant (0x%x)",
+> @@ -2648,6 +2649,7 @@ static void btintel_set_msft_opcode(struct hci_dev *hdev, u8 hw_variant)
+>   	case 0x18:
+>   	case 0x19:
+>   	case 0x1b:
+> +	case 0x1c:
+>   		hci_set_msft_opcode(hdev, 0xFC1E);
+>   		break;
+>   	default:
+> @@ -2862,6 +2864,7 @@ static int btintel_setup_combined(struct hci_dev *hdev)
+>   	case 0x18:
+>   	case 0x19:
+>   	case 0x1b:
+> +	case 0x1c:
+>   		/* Display version information of TLV type */
+>   		btintel_version_info_tlv(hdev, &ver_tlv);
+>   
+
+
+Kind regards,
+
+Paul
