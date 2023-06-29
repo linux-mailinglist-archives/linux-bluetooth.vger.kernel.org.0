@@ -2,54 +2,65 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 003F7742DA5
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jun 2023 21:33:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A443742D9F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jun 2023 21:33:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232665AbjF2T0l (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Jun 2023 15:26:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52222 "EHLO
+        id S232817AbjF2T1L (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Jun 2023 15:27:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232806AbjF2TZk (ORCPT
+        with ESMTP id S232307AbjF2TZ4 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Jun 2023 15:25:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F8E3AAB
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 12:24:44 -0700 (PDT)
+        Thu, 29 Jun 2023 15:25:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65923AB1;
+        Thu, 29 Jun 2023 12:24:45 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4D6196160E
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 19:24:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id AB7CFC433C0;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F18061627;
+        Thu, 29 Jun 2023 19:24:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CB296C433CB;
         Thu, 29 Jun 2023 19:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1688066683;
-        bh=SG1NkjvdDh9wxYdwSTO+Btn6p/7GcRX2t1gHa0fKsUA=;
+        bh=L9C7oOakDN59nBwxio4rrnZ5puCMWHaJhaQkT95aTVs=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=AETXON52O+KD96OmvCf0WyKWinm7FHM+1uixbZCY5vAgQQX3OQeuRsJJFmv7n4sib
-         bKknW9/OETb482Id4gdfUsSxEtE2TN1yzFQLTgTKyXGnyiqadrCRvs3rU8O9pFteys
-         qGzEJHVTcW7Zly5r2POJlmZrLi7Wuj5mw/4/xp+kP8C9i4nDcpz3EtmX74MPI/U6ty
-         2PVeUth4i4nklwoDuMJWvi2U+vtSDecwpoNRsGpz2/RaVjJPOw+ymgmjUpnK0OAK9R
-         DS71nV0h1PWrMLvC5+hohj6vMzrZ7mGA7G4APFHqRsdX/9swbU+bhc/dQ54peiRXi4
-         ZHGIg771nfAHA==
+        b=tIh/Xv1fjjFllaWns4oz4Nak8x4gAUKrBLHf7Xgu65f26Q6G0PLLaEcyWYQ7zNkOL
+         5oKn78ofQ2lwfXdUb7ncxnpUZe7vY4e0Dop96CCxzxZLND6S/yBdP+OEVSiYaKdh7a
+         CfZaBLGa/siBHomfr/EGpOAQRVBrAKG40/LIx+uiCJB6MtHk3Od7iycx7nKZSBDTgU
+         JHeFB1GLERTyamYrx0gI7Zpcu7kdSqFQmLgDjZDl2qxFFjrNJg8pgKHqoP7jFqMCPw
+         v0RkKgxaMVPeC3WZOv5McxSh7ujI6LttGFY8RGRLQC4lTSm5jwjVkzIM+92X79N1x8
+         BIoHXxjErQXqA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8C699C64457;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A334AE5381B;
         Thu, 29 Jun 2023 19:24:43 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] Bluetooth: btintel: Add support for Gale Peak
+Subject: Re: [PATCH v8 1/3] Bluetooth: btusb: mediatek: readx_poll_timeout
+ replaces open coding
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168806668356.29593.3335054694469300023.git-patchwork-notify@kernel.org>
+Message-Id: <168806668365.29593.2167157062342737212.git-patchwork-notify@kernel.org>
 Date:   Thu, 29 Jun 2023 19:24:43 +0000
-References: <20230628121831.827171-1-kiran.k@intel.com>
-In-Reply-To: <20230628121831.827171-1-kiran.k@intel.com>
-To:     Kiran K <kiran.k@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
-        chethan.tumkur.narayan@intel.com
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+References: <80efe66b16d933e3457bd38b1a60a5d51d4dee9e.1687991820.git.objelf@gmail.com>
+In-Reply-To: <80efe66b16d933e3457bd38b1a60a5d51d4dee9e.1687991820.git.objelf@gmail.com>
+To:     Sean Wang <sean.wang@mediatek.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        chris.lu@mediatek.com, Soul.Huang@mediatek.com,
+        Leon.Yen@mediatek.com, Deren.Wu@mediatek.com, km.lin@mediatek.com,
+        robin.chiu@mediatek.com, Eddie.Chen@mediatek.com,
+        ch.yeh@mediatek.com, jenhao.yang@mediatek.com,
+        Stella.Chang@mediatek.com, Tom.Chou@mediatek.com,
+        steve.lee@mediatek.com, jsiuda@google.com, frankgor@google.com,
+        abhishekpandit@google.com, michaelfsun@google.com,
+        mmandlik@google.com, abhishekpandit@chromium.org,
+        mcchou@chromium.org, shawnku@google.com,
+        linux-bluetooth@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -60,23 +71,26 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 28 Jun 2023 17:48:31 +0530 you wrote:
-> Add hardware variant(0x1c) for Gale Peak core (CNVi).
+On Thu, 29 Jun 2023 06:54:55 +0800 you wrote:
+> From: Sean Wang <sean.wang@mediatek.com>
 > 
-> Signed-off-by: Kiran K <kiran.k@intel.com>
-> ---
-> changes  in v2:
-> 1. Expand GaP to Gale Peak
-> 2. s/GalePeak/Gale Peak/g
+> Use readx_poll_timeout instead of open coding to poll the hardware reset
+> status until it is done.
+> 
+> Signed-off-by: Sean Wang <sean.wang@mediatek.com>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] Bluetooth: btintel: Add support for Gale Peak
-    https://git.kernel.org/bluetooth/bluetooth-next/c/1c1fcdb51ed8
+  - [v8,1/3] Bluetooth: btusb: mediatek: readx_poll_timeout replaces open coding
+    https://git.kernel.org/bluetooth/bluetooth-next/c/c56e5f834e13
+  - [v8,2/3] Bluetooth: btmtk: introduce btmtk reset work
+    https://git.kernel.org/bluetooth/bluetooth-next/c/ed2e80b8b6a7
+  - [v8,3/3] Bluetooth: btusb: mediatek: add MediaTek devcoredump support
+    https://git.kernel.org/bluetooth/bluetooth-next/c/872f8c253cb9
 
 You are awesome, thank you!
 -- 
