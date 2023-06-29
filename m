@@ -2,54 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D694742DAA
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jun 2023 21:33:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 003F7742DA5
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jun 2023 21:33:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232837AbjF2T1M (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Jun 2023 15:27:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52646 "EHLO
+        id S232665AbjF2T0l (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Jun 2023 15:26:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232324AbjF2T0B (ORCPT
+        with ESMTP id S232806AbjF2TZk (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Jun 2023 15:26:01 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CEF43AB3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 12:24:46 -0700 (PDT)
+        Thu, 29 Jun 2023 15:25:40 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F8E3AAB
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 12:24:44 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 57B9761616
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4D6196160E
         for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 19:24:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B9FBAC433C9;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AB7CFC433C0;
         Thu, 29 Jun 2023 19:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1688066683;
-        bh=2oJvohimrtBxgh46YXcxeBnk00MReuYlG5DqyWPcT88=;
+        bh=SG1NkjvdDh9wxYdwSTO+Btn6p/7GcRX2t1gHa0fKsUA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=jcr6GOznFFfsKUkVxXf53xF0ecsEwG/8Ryy/WaOf+L8qfTeiMNYxp2n9ElAFF7xFM
-         zxEzpyDFZkfZB8WczcgyEHwUkQV6foZ6GKM8qdVXs4iCyNnGb7EAmnJVxdsJHmefhP
-         1ZqgSNJGxCwCbTh02Eukxs78cP4/aqUNbPfQgwTo1qpolpVpAnXbjZfIzjlOa5JA9/
-         PUSGh4lKWYt7pBz9AI9fYQyjrVJaXCijhQXz1DsHXYorjXLDw5tbk/9xfo0ff8Pe7u
-         mSzPrTyLfyIw6+U26Nw1QBtxrGsiap8mcZb/Ow4LcBzKEw654gOFD+X1EPyvfsoF49
-         JFE+FZcFBmsJg==
+        b=AETXON52O+KD96OmvCf0WyKWinm7FHM+1uixbZCY5vAgQQX3OQeuRsJJFmv7n4sib
+         bKknW9/OETb482Id4gdfUsSxEtE2TN1yzFQLTgTKyXGnyiqadrCRvs3rU8O9pFteys
+         qGzEJHVTcW7Zly5r2POJlmZrLi7Wuj5mw/4/xp+kP8C9i4nDcpz3EtmX74MPI/U6ty
+         2PVeUth4i4nklwoDuMJWvi2U+vtSDecwpoNRsGpz2/RaVjJPOw+ymgmjUpnK0OAK9R
+         DS71nV0h1PWrMLvC5+hohj6vMzrZ7mGA7G4APFHqRsdX/9swbU+bhc/dQ54peiRXi4
+         ZHGIg771nfAHA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 971BDC64458;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8C699C64457;
         Thu, 29 Jun 2023 19:24:43 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/1] Bluetooth: hci_sync: Enable events for BIS capable
- device
+Subject: Re: [PATCH v2] Bluetooth: btintel: Add support for Gale Peak
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168806668360.29593.8609924413523480751.git-patchwork-notify@kernel.org>
+Message-Id: <168806668356.29593.3335054694469300023.git-patchwork-notify@kernel.org>
 Date:   Thu, 29 Jun 2023 19:24:43 +0000
-References: <20230629134518.5574-1-claudia.rosu@nxp.com>
-In-Reply-To: <20230629134518.5574-1-claudia.rosu@nxp.com>
-To:     Claudia Draghicescu <claudia.rosu@nxp.com>
-Cc:     linux-bluetooth@vger.kernel.org, iulia.tanasescu@nxp.com
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20230628121831.827171-1-kiran.k@intel.com>
+In-Reply-To: <20230628121831.827171-1-kiran.k@intel.com>
+To:     Kiran K <kiran.k@intel.com>
+Cc:     linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
+        chethan.tumkur.narayan@intel.com
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -63,21 +63,20 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 29 Jun 2023 16:45:17 +0300 you wrote:
-> In the case of a Synchronized Receiver capable device, enable at start-up the
-> events for PA reports, PA Sync Established and Big Info Adv reports.
+On Wed, 28 Jun 2023 17:48:31 +0530 you wrote:
+> Add hardware variant(0x1c) for Gale Peak core (CNVi).
 > 
-> Claudia Draghicescu (1):
->   Bluetooth: hci_sync: Enable events for BIS capable devices
-> 
->  net/bluetooth/hci_sync.c | 3 +++
->  1 file changed, 3 insertions(+)
+> Signed-off-by: Kiran K <kiran.k@intel.com>
+> ---
+> changes  in v2:
+> 1. Expand GaP to Gale Peak
+> 2. s/GalePeak/Gale Peak/g
 > 
 > [...]
 
 Here is the summary with links:
-  - [v3,1/1] Bluetooth: hci_sync: Enable events for BIS capable devices
-    https://git.kernel.org/bluetooth/bluetooth-next/c/e006be3454c9
+  - [v2] Bluetooth: btintel: Add support for Gale Peak
+    https://git.kernel.org/bluetooth/bluetooth-next/c/1c1fcdb51ed8
 
 You are awesome, thank you!
 -- 
