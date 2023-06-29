@@ -2,129 +2,276 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3CD17422A9
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jun 2023 10:52:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D676B742271
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jun 2023 10:43:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232377AbjF2Iwf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Jun 2023 04:52:35 -0400
-Received: from mail-vi1eur05on2041.outbound.protection.outlook.com ([40.107.21.41]:50784
-        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S231838AbjF2IwA (ORCPT <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Jun 2023 04:52:00 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iphnbJHFt7dHGUGkat2qaC1YPXxYPnbsu5S9viaLlkeYlaVWDZL1ym2bxuQyb1B3aUzSH4isv57xKubhKiPLGZrb1hTU3uvwrqQT0cpCCEtbSYfmocfhfCE52nsSUa60V/je09HqXSOXw14rnz8wPkcGpJH2+u/y0RT8HEUARGfbIuIXdb8a3LOxzKW37ZIvQDQeB6UuAaR7fQP0FTDXzlbY3ZKFQT5blSAmS+6vvtUVzLplhdGDxVulzdZ9z65yisXSHtnKDCVwome00JXP+1lg02JEyfHhe/CgLnOCGGi8n0+LwxTln6y2tU879XMi1EXRq6eAbrcLiFNsW7CO0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=A1NQOGc7o2c1vezgQnxmIFOR/bU08vK8Gs4+KAdNfGk=;
- b=kPMaaGkEBZuW+PUQN8DITyiS9+VJIrhUmQqTKywT1rEJWWlEwi79CqujQN/s/QYgnQ+ppM457JtboudD877Kgncqatu24lZL87OYxvmFqr90deGDHSQxg5kSUVFPkBoMAX0xztXAqjFkA19fAxaG5nKkGEqvdTOEXjzzELovLTisk/u1CRXTpAf+9F5829Cl89K0zGCje5VtnnuLmlrzodmr3j+3yhpWX2HWnZTDzv0X8m/ZYfFGmv9tfiAXLxKj24Ixytr66Ajp5PRNL3hun0Vx5IFCsM1ONIfzJik9nEZmY7Irz+IP7iY8vTO51X7weDcUOZEm0KXRaE71MT3+Ag==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=A1NQOGc7o2c1vezgQnxmIFOR/bU08vK8Gs4+KAdNfGk=;
- b=N2maqQlJaFfWid9OifG6CoN3HUPQU9vN3WrJjPWJjPGkSrsipFxuobRqSAh/6Am2G1SsJJzimHtgtaluY0Y5sshz+FxbClArWwIHXlJHlnMGru1KUsNJyT0ncSHvjkAVavnrlLRY9bRTXgF41yf0qSBfTmk8GIgkqVf6dLbJ5pg=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from GV1PR04MB9151.eurprd04.prod.outlook.com (2603:10a6:150:26::9)
- by DBBPR04MB7978.eurprd04.prod.outlook.com (2603:10a6:10:1e9::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.26; Thu, 29 Jun
- 2023 08:51:58 +0000
-Received: from GV1PR04MB9151.eurprd04.prod.outlook.com
- ([fe80::2cc8:4c5d:9b6f:5cab]) by GV1PR04MB9151.eurprd04.prod.outlook.com
- ([fe80::2cc8:4c5d:9b6f:5cab%7]) with mapi id 15.20.6521.026; Thu, 29 Jun 2023
- 08:51:58 +0000
-From:   Claudia Draghicescu <claudia.rosu@nxp.com>
+        id S232624AbjF2Imj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Jun 2023 04:42:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52816 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232449AbjF2IlV (ORCPT
+        <rfc822;linux-bluetooth@vger.kernel.org>);
+        Thu, 29 Jun 2023 04:41:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 419512972
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 01:40:02 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B9CF9614ED
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 08:40:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1B46FC433C0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 08:40:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688028001;
+        bh=J9lI1TVsk4dRc0TxdV2yOZcNOYeP0kVnO+gs5T9jNM4=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=LlA7Pt2Q1MyX8/+MOtqvP+MVmS1hmpgpnyO75MDWlmThG+ao8KZj4HTmHeX+Ws/tY
+         6d4JxObijiyx98osZyzaPzr3pinu9Znc+vkXNT3z+xtF4HJmg3Qjv8s0mUn/x66TtI
+         phiTcNosLyxvBaZ3iP3t8mwFugdsr90Syq7I2SVNZEn72eWtZ+whY+Gr7vBMd1uaof
+         OjaWLjCv/9Lew83Iw+1xyRcrPTpGYu66rWviwFhdMjxpGJl4s9VDlr+TVQ8M44Gg4G
+         AtoNcUWEC0NiVUf82l7P+QuDgqNxImOOHwHHZwxqINqp5YfNf2Q99le3nTx+O+6caA
+         xgxJ2vfea0/gA==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id EDFB3C4332E; Thu, 29 Jun 2023 08:40:00 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
 To:     linux-bluetooth@vger.kernel.org
-Cc:     iulia.tanasescu@nxp.com, Claudia Draghicescu <claudia.rosu@nxp.com>
-Subject: [PATCH 1/1] Bluetooth: hci_sync: Enable events for BIS capable devices
-Date:   Thu, 29 Jun 2023 11:37:26 +0300
-Message-Id: <20230629083726.8505-2-claudia.rosu@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230629083726.8505-1-claudia.rosu@nxp.com>
-References: <20230629083726.8505-1-claudia.rosu@nxp.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BYAPR08CA0070.namprd08.prod.outlook.com
- (2603:10b6:a03:117::47) To GV1PR04MB9151.eurprd04.prod.outlook.com
- (2603:10a6:150:26::9)
+Subject: [Bug 217581] Bluetooth L2CAP use-after-free
+Date:   Thu, 29 Jun 2023 08:40:00 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: high
+X-Bugzilla-Who: mohamed-yassine.jebabli@witbe.net
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P3
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-217581-62941-jpvEHC45Bf@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-217581-62941@https.bugzilla.kernel.org/>
+References: <bug-217581-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV1PR04MB9151:EE_|DBBPR04MB7978:EE_
-X-MS-Office365-Filtering-Correlation-Id: aafed74f-4581-4909-e972-08db787e18a7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: aEdUWAd5i/umxSnR8MbMsmxfXqctOf7Pa3IAwwURmzok5xb9E3bz0ZDfRqKwyLy2c4a2XZ/Bad98ec2+QCY+TBSJOdCLpr3j3ROIKSjrYSFTwNS9rg9+8IYDASGtpAI3ntM+91dqiydDp6rejZApWAq+k/k19qM9VVCbCNC7t14SkUkVj00jOGu8LfT9cz6QAqAUeWjecmbUTk1w1/D+T1O1wvDCwq1br13/Xw4sPMRFgPvU24WIMVb5LyxCT7JU1lBsuFFQNTDOQ9FovQNWyHyz4Mwikdep3sMoB3/9RktuLllYPgiz4LA8a9L5O3hJK6+j6JT12ATcyqDQKoD8dPYkKv8Imx181w3ergL2MvCRLhQX10IXYVq7QiK1UJH7GWrABWDqMhELBtVvK8svZN4TiUeps3/0tkytyIh7DRoa/goeuWg4roOij3cpFNRRMuFzFhX0PT2ehXAt+KvvXwD7Q8YIajRjnKZBZAozm73wlZQ2uRFYr2R/nPtzRPoczekIv+JPCHRZEDBTqzRl4tlk+Xu+Z2/ARRDk1PT4iqUAYs3Rk7eAMrvmsTGafVqfJjm6gUNxbZ3fJYItwmVZJf7wg1x+ZtgwD4MhwTZFV23KO64oUfqSo/X7tTJTvrGY
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV1PR04MB9151.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(346002)(366004)(376002)(396003)(39860400002)(136003)(451199021)(6512007)(2906002)(55236004)(186003)(38350700002)(6486002)(52116002)(2616005)(38100700002)(6506007)(26005)(86362001)(1076003)(4744005)(41300700001)(6666004)(478600001)(316002)(36756003)(66556008)(4326008)(66946007)(6916009)(66476007)(5660300002)(8676002)(8936002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?D5RQs89AjgBBCKXgvRU+aP713l3Tq2samMg2kDg+arvHFjRIMu0tIufuISRj?=
- =?us-ascii?Q?CJMpVGUyJz7oRQvBGeiWwt1J7jcyJ4UJmzBpGvWiwJb/F3KmH9gc7X2PfH+T?=
- =?us-ascii?Q?exMYNeZgaVa7s2pFazhJLslH3mcOEu15SrSdnL9v2ds5bVkIKNARoL+Qq3ox?=
- =?us-ascii?Q?SeOiQVsUIIhCbmsfqfVHq/3p2Vi1c1Q+ylPdRtbDDNDWt7szM5zZnWwZVRLL?=
- =?us-ascii?Q?UoSkWjsfbxHzjztzjDNxJQbEie972fZRnVkG4YuSf+eT48QEBglsiDRRwww0?=
- =?us-ascii?Q?VN4+YeV/dLuEOYefg0ej7mHU+r7DBuivnDhCU1b2vcHIsd0kE2wYoRXh4dXM?=
- =?us-ascii?Q?bPzrAqI3nSDWffpfeRGe6tH4EgoavkP/ZYFyhuzeID26P6kbmKQUkuObUnUH?=
- =?us-ascii?Q?Z+3sLm2QnCFvAiVuKEuyKZea5L601jj+zNB/+avLL7QTkrB2edaTOgEobTk7?=
- =?us-ascii?Q?zJ1aRZ8bzXoZ1Hru7nnx6AuHPhJytZK8cG7KEq1R6q7PyO+P90LKffQnpWVM?=
- =?us-ascii?Q?Smh3FX5oYlRyo4wctGj8CbqSIZGOwlx0F3sYSfYK9l7O3HM34eXbriYdM0oS?=
- =?us-ascii?Q?N84ifNnwgoRhMqqh09aUxQMHH1RJOW3xQ7tPEMnCYf0FDlpeNxQAeHnY1yvo?=
- =?us-ascii?Q?V5J8jEo1yuwSklgeLno4+AotFzbucXQZ/T2KsEhsPAfFYntWlnyGGp0yRpAM?=
- =?us-ascii?Q?MrJDgRdGFYdMgFDN7txAuh7NlYNOWKmHj7XgHzfHR+XHqeP67XWniVvkrTjx?=
- =?us-ascii?Q?pcn+bkVcWRIdY/BHexkmBg47Dp0mArjewwSW6irJ74wwhGpZJyVcaQuMux50?=
- =?us-ascii?Q?463ORhAkfQYuL8wbL2mnHfqAo2iKn/77P9/kZoh8PbwPa9ALuSy/jzUKg1k0?=
- =?us-ascii?Q?EeySbaSaehDWxc6I2qzArc1wo+YxT2t59VBntnr+UNqCX5bD9YmhJtA1fJUw?=
- =?us-ascii?Q?dNE9mmKZk8NozHsl0owLdiYhzqO5F2ujLEWrkBovPMLNZEtSnDmas/LJWUtw?=
- =?us-ascii?Q?tyjN3tKKRN65frtZlxfFOUaIuw6KBLDDVXoJb9UaYkS3zcfRyGamA7Lj7bgj?=
- =?us-ascii?Q?eNm49QJwvYzRxg5jg72wV3Uze0JsC/2JA4O1r2RNcn8ZKrlnN9vVpRTn1VCz?=
- =?us-ascii?Q?hChyZevSDZEscSGRsDWYkXk9mPPAI7m3q1/1ET17NXpSVTYoOOpaTstGhB5w?=
- =?us-ascii?Q?nY6+zP3JfmCWQNvn9jUs+OA0YqHq/pgUxFYNG9VcdAwYQxSgIyyj04MGzpZu?=
- =?us-ascii?Q?yZJhx8U247O2qGhrXBKq0u5u39SUzAlklVe8n6H/DFlMEKnRDCg486xRk4Nm?=
- =?us-ascii?Q?TzfcY4Qy4dWtTn47zK0X07Cfzq0nC+bhN3GcwMPsFKzTr4wvjSyrrM0Cp1od?=
- =?us-ascii?Q?Ie5esdGa3zd+5O2CcJ/yqnW3pb3Ti98BxFJn4YRvSwf10+0dv0HRsP6nnkOT?=
- =?us-ascii?Q?oy6ew5y6V69JwLJ60Ld1ZR0US28zPSa2QwV4RIaB+xFOuxf1GWwB1dxRvP/D?=
- =?us-ascii?Q?U70JBOCBYUYus/DObnCuRHjanLsk2xEHmD9xdaBOceCdk4oESMNdcVPHXkON?=
- =?us-ascii?Q?NA6QvS4FRTHRvJw+NvjvgiOweWHhf0izBcS6SHDv?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: aafed74f-4581-4909-e972-08db787e18a7
-X-MS-Exchange-CrossTenant-AuthSource: GV1PR04MB9151.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jun 2023 08:51:58.1223
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fCKi++cJgXJpZdCGyPadHX7FHXTwhqCYygDuqJ1LxIenKskJoghAEwdRVQihlVV4CzMrUSsrIwPAd5ct2R9yqw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7978
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
----
- net/bluetooth/hci_sync.c | 3 +++
- 1 file changed, 3 insertions(+)
+https://bugzilla.kernel.org/show_bug.cgi?id=3D217581
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index afb8e970e62c..73b49d0c1e11 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -4135,10 +4135,13 @@ static int hci_le_set_event_mask_sync(struct hci_dev *hdev)
- 	}
- 
- 	if (bis_capable(hdev)) {
-+		events[1] |= 0x20;	/* LE PA Report */
-+		events[1] |= 0x40;	/* LE PA Sync Established */
- 		events[3] |= 0x04;	/* LE Create BIG Complete */
- 		events[3] |= 0x08;	/* LE Terminate BIG Complete */
- 		events[3] |= 0x10;	/* LE BIG Sync Established */
- 		events[3] |= 0x20;	/* LE BIG Sync Loss */
-+		events[4] |= 0x02;	/* LE BIG Info Advertising Report */
- 	}
- 
- 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EVENT_MASK,
--- 
-2.34.1
+--- Comment #8 from Mohamed Yassine JEBABLI (mohamed-yassine.jebabli@witbe.=
+net) ---
+(In reply to Bagas Sanjaya from comment #6)
+> On 6/27/23 20:23, bugzilla-daemon@kernel.org wrote:
+> > https://bugzilla.kernel.org/show_bug.cgi?id=3D217581
+> >=20
+> > --- Comment #5 from Mohamed Yassine JEBABLI
+> > (mohamed-yassine.jebabli@witbe.net) ---
+> > (In reply to Bagas Sanjaya from comment #4)
+> >> (In reply to Mohamed Yassine JEBABLI from comment #0)
+> >>> In reconnect slave mode, I start direct advertising. After establishi=
+ng
+> the
+> >>> connection with the central device, we begin ATT exchanges over the L=
+2CAP
+> >>> socket, and then I receive a disconnect with L2CAP traces. This issue=
+ is
+> >>> observed across different kernel versions such as 5.17, 6.2, 6.3, 6.3=
+.7,
+> >> etc.
+> >>>
+> >>
+> >> Do you have this issue on v5.15?
+> >=20
+> > Not tested on v5.15. I started with 5.17 version.
+> >=20
+>=20
+> Again: Do you have this issue on v5.15?
 
+Tested on kernel v5.15 with l2cap_core traces enabled.=20
+=3D=3D> The same scenario from reconnecr to disconnect and I think the same=
+ bug
+related to rfcount which goes to NULL in the other versions > v5.15.=20
+
+Jun 28 14:41:36 buildroot kernel: chan 7942e3b3 orig refcnt 1
+Jun 28 14:41:36 buildroot kernel: hcon 5a56584a bdaddr 48:b0:2d:02:81:0a st=
+atus
+0
+Jun 28 14:41:36 buildroot kernel: hcon 5a56584a conn d7202d29 hchan 981967be
+Jun 28 14:41:36 buildroot kernel: chan 7942e3b3 orig refcnt 2
+Jun 28 14:41:36 buildroot kernel: chan e8221202
+Jun 28 14:41:36 buildroot kernel: chan e8221202 orig refcnt 1
+Jun 28 14:41:36 buildroot kernel: conn d7202d29, psm 0x00, dcid 0x0004
+Jun 28 14:41:36 buildroot kernel: chan e8221202 orig refcnt 2
+Jun 28 14:41:36 buildroot kernel: chan e5e549e1 orig refcnt 1
+Jun 28 14:41:36 buildroot kernel: chan 7942e3b3 orig refcnt 3
+Jun 28 14:41:36 buildroot kernel: chan 05ee00c1
+Jun 28 14:41:36 buildroot kernel: conn d7202d29, psm 0x00, dcid 0x0006
+Jun 28 14:41:36 buildroot kernel: chan 05ee00c1 orig refcnt 1
+Jun 28 14:41:36 buildroot kernel: chan e5e549e1 orig refcnt 2
+Jun 28 14:41:36 buildroot kernel: conn d7202d29
+Jun 28 14:41:36 buildroot kernel: chan 05ee00c1 len 2
+Jun 28 14:41:36 buildroot kernel: chan 05ee00c1, skb 62f90460 len 6 priorit=
+y 7
+Jun 28 14:41:36 buildroot kernel: hci1 conn d7202d29
+Jun 28 14:41:36 buildroot kernel:=20
+Jun 28 14:41:37 buildroot kernel: hcon 5a56584a reason 19
+Jun 28 14:41:37 buildroot kernel: hcon 5a56584a conn d7202d29, err 104
+Jun 28 14:41:37 buildroot kernel: chan 05ee00c1 orig refcnt 2
+Jun 28 14:41:37 buildroot kernel: chan 05ee00c1, conn d7202d29, err 104, st=
+ate
+BT_CONNECTED
+Jun 28 14:41:37 buildroot kernel: chan 05ee00c1 orig refcnt 3
+Jun 28 14:41:37 buildroot kernel: chan 05ee00c1 orig refcnt 2
+Jun 28 14:41:37 buildroot kernel: chan 05ee00c1 orig refcnt 1
+Jun 28 14:41:37 buildroot kernel: chan 05ee00c1
+Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 3
+Jun 28 14:41:37 buildroot kernel: chan e8221202, conn d7202d29, err 104, st=
+ate
+BT_OPEN
+Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 4
+Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 3
+Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 2
+Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 2
+Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 state BT_LISTEN
+Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 1
+Jun 28 14:41:37 buildroot kernel: chan e8221202
+Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 0
+Jun 28 14:41:37 buildroot kernel: ------------[ cut here ]------------
+Jun 28 14:41:37 buildroot kernel: WARNING: CPU: 1 PID: 476 at lib/refcount.=
+c:25
+l2cap_sock_teardown_cb+0x13c/0x23c
+Jun 28 14:41:37 buildroot kernel: refcount_t: addition on 0; use-after-free.
+Jun 28 14:41:37 buildroot kernel: Modules linked in: algif_hash algif_skcip=
+her
+af_alg stm32_adc stm32_timer_trigger stm32_lptimer_trigger galcore(O)
+stm32_crc32 stm32_cryp stm32_hash libdes crypto_engine stm32_adc_core stm32=
+_cec
+Jun 28 14:41:37 buildroot kernel: CPU: 1 PID: 476 Comm: HCIManager Tainted:=
+ G=20=20
+        O      5.15.67 #2
+Jun 28 14:41:37 buildroot kernel: Hardware name: STM32 (Device Tree Support)
+Jun 28 14:41:37 buildroot kernel: [<c0110c54>] (unwind_backtrace) from
+[<c010c61c>] (show_stack+0x10/0x14)
+Jun 28 14:41:37 buildroot kernel: [<c010c61c>] (show_stack) from [<c0ca2f50=
+>]
+(dump_stack_lvl+0x40/0x4c)
+Jun 28 14:41:37 buildroot kernel: [<c0ca2f50>] (dump_stack_lvl) from
+[<c0120fc0>] (__warn+0xec/0x104)
+Jun 28 14:41:37 buildroot kernel: [<c0120fc0>] (__warn) from [<c0c9e214>]
+(warn_slowpath_fmt+0x98/0xc4)
+Jun 28 14:41:37 buildroot kernel: [<c0c9e214>] (warn_slowpath_fmt) from
+[<c0b67748>] (l2cap_sock_teardown_cb+0x13c/0x23c)
+Jun 28 14:41:37 buildroot kernel: [<c0b67748>] (l2cap_sock_teardown_cb) from
+[<c0b5f584>] (l2cap_chan_close+0x138/0x2f4)
+Jun 28 14:41:37 buildroot kernel: [<c0b5f584>] (l2cap_chan_close) from
+[<c0b67a60>] (l2cap_sock_shutdown+0x218/0x5ac)
+Jun 28 14:41:37 buildroot kernel: [<c0b67a60>] (l2cap_sock_shutdown) from
+[<c0b67e44>] (l2cap_sock_release+0x50/0xe8)
+Jun 28 14:41:37 buildroot kernel: [<c0b67e44>] (l2cap_sock_release) from
+[<c09b7f10>] (__sock_release+0x40/0xb8)
+Jun 28 14:41:37 buildroot kernel: [<c09b7f10>] (__sock_release) from
+[<c09b7f98>] (sock_close+0x10/0x18)
+Jun 28 14:41:37 buildroot kernel: [<c09b7f98>] (sock_close) from [<c02a6e84=
+>]
+(__fput+0x74/0x240)
+Jun 28 14:41:37 buildroot kernel: [<c02a6e84>] (__fput) from [<c0141ac0>]
+(task_work_run+0x90/0xbc)
+Jun 28 14:41:37 buildroot kernel: [<c0141ac0>] (task_work_run) from
+[<c010c048>] (do_work_pending+0x498/0x594)
+Jun 28 14:41:37 buildroot kernel: [<c010c048>] (do_work_pending) from
+[<c01000c0>] (slow_work_pending+0xc/0x20)
+Jun 28 14:41:37 buildroot kernel: Exception stack(0xc3fe1fb0 to 0xc3fe1ff8)
+Jun 28 14:41:37 buildroot kernel: 1fa0:=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+00000000 00000002 00000000 00000000
+Jun 28 14:41:37 buildroot kernel: 1fc0: 00000006 b4dfd8c0 00000005 00000006
+b4dfd400 b4dfd470 00000000 b4dfcb7c
+Jun 28 14:41:37 buildroot kernel: 1fe0: 00000006 b4dfcb58 b6b96bf9 b6b98b26
+80030030 00000006
+Jun 28 14:41:37 buildroot kernel: ---[ end trace b1ffe2b440acbd97 ]---
+Jun 28 14:41:37 buildroot kernel: chan e8221202 state BT_OPEN
+Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 3221225472
+Jun 28 14:41:37 buildroot kernel: ------------[ cut here ]------------
+Jun 28 14:41:37 buildroot kernel: WARNING: CPU: 1 PID: 476 at lib/refcount.=
+c:28
+l2cap_sock_kill.part.0+0x28/0xc0
+Jun 28 14:41:37 buildroot kernel: refcount_t: underflow; use-after-free.
+Jun 28 14:41:37 buildroot kernel: Modules linked in: algif_hash algif_skcip=
+her
+af_alg stm32_adc stm32_timer_trigger stm32_lptimer_trigger galcore(O)
+stm32_crc32 stm32_cryp stm32_hash libdes crypto_engine stm32_adc_core stm32=
+_cec
+Jun 28 14:41:37 buildroot kernel: CPU: 1 PID: 476 Comm: HCIManager Tainted:=
+ G=20=20
+     W  O      5.15.67 #2
+Jun 28 14:41:37 buildroot kernel: Hardware name: STM32 (Device Tree Support)
+Jun 28 14:41:37 buildroot kernel: [<c0110c54>] (unwind_backtrace) from
+[<c010c61c>] (show_stack+0x10/0x14)
+Jun 28 14:41:37 buildroot kernel: [<c010c61c>] (show_stack) from [<c0ca2f50=
+>]
+(dump_stack_lvl+0x40/0x4c)
+Jun 28 14:41:37 buildroot kernel: [<c0ca2f50>] (dump_stack_lvl) from
+[<c0120fc0>] (__warn+0xec/0x104)
+Jun 28 14:41:37 buildroot kernel: [<c0120fc0>] (__warn) from [<c0c9e214>]
+(warn_slowpath_fmt+0x98/0xc4)
+Jun 28 14:41:37 buildroot kernel: [<c0c9e214>] (warn_slowpath_fmt) from
+[<c0b6754c>] (l2cap_sock_kill.part.0+0x28/0xc0)
+Jun 28 14:41:37 buildroot kernel: [<c0b6754c>] (l2cap_sock_kill.part.0) from
+[<c0b67708>] (l2cap_sock_teardown_cb+0xfc/0x23c)
+Jun 28 14:41:37 buildroot kernel: [<c0b67708>] (l2cap_sock_teardown_cb) from
+[<c0b5f584>] (l2cap_chan_close+0x138/0x2f4)
+Jun 28 14:41:37 buildroot kernel: [<c0b5f584>] (l2cap_chan_close) from
+[<c0b67a60>] (l2cap_sock_shutdown+0x218/0x5ac)
+Jun 28 14:41:37 buildroot kernel: [<c0b67a60>] (l2cap_sock_shutdown) from
+[<c0b67e44>] (l2cap_sock_release+0x50/0xe8)
+Jun 28 14:41:37 buildroot kernel: [<c0b67e44>] (l2cap_sock_release) from
+[<c09b7f10>] (__sock_release+0x40/0xb8)
+Jun 28 14:41:37 buildroot kernel: [<c09b7f10>] (__sock_release) from
+[<c09b7f98>] (sock_close+0x10/0x18)
+Jun 28 14:41:37 buildroot kernel: [<c09b7f98>] (sock_close) from [<c02a6e84=
+>]
+(__fput+0x74/0x240)
+Jun 28 14:41:37 buildroot kernel: [<c02a6e84>] (__fput) from [<c0141ac0>]
+(task_work_run+0x90/0xbc)
+Jun 28 14:41:37 buildroot kernel: [<c0141ac0>] (task_work_run) from
+[<c010c048>] (do_work_pending+0x498/0x594)
+Jun 28 14:41:37 buildroot kernel: [<c010c048>] (do_work_pending) from
+[<c01000c0>] (slow_work_pending+0xc/0x20)
+Jun 28 14:41:37 buildroot kernel: Exception stack(0xc3fe1fb0 to 0xc3fe1ff8)
+Jun 28 14:41:37 buildroot kernel: 1fa0:=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+00000000 00000002 00000000 00000000
+Jun 28 14:41:37 buildroot kernel: 1fc0: 00000006 b4dfd8c0 00000005 00000006
+b4dfd400 b4dfd470 00000000 b4dfcb7c
+Jun 28 14:41:37 buildroot kernel: 1fe0: 00000006 b4dfcb58 b6b96bf9 b6b98b26
+80030030 00000006
+Jun 28 14:41:37 buildroot kernel: ---[ end trace b1ffe2b440acbd98 ]---
+Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 3221225472
+Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 3
+Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 2
+Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 3
+Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 2
+Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 1
+Jun 28 14:41:37 buildroot kernel: chan 7942e3b3
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
