@@ -2,276 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D676B742271
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jun 2023 10:43:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82DBB74232D
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jun 2023 11:25:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232624AbjF2Imj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 29 Jun 2023 04:42:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52816 "EHLO
+        id S232254AbjF2JZ2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 29 Jun 2023 05:25:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232449AbjF2IlV (ORCPT
+        with ESMTP id S232003AbjF2JZ0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 29 Jun 2023 04:41:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 419512972
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 01:40:02 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B9CF9614ED
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 08:40:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1B46FC433C0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 08:40:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688028001;
-        bh=J9lI1TVsk4dRc0TxdV2yOZcNOYeP0kVnO+gs5T9jNM4=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=LlA7Pt2Q1MyX8/+MOtqvP+MVmS1hmpgpnyO75MDWlmThG+ao8KZj4HTmHeX+Ws/tY
-         6d4JxObijiyx98osZyzaPzr3pinu9Znc+vkXNT3z+xtF4HJmg3Qjv8s0mUn/x66TtI
-         phiTcNosLyxvBaZ3iP3t8mwFugdsr90Syq7I2SVNZEn72eWtZ+whY+Gr7vBMd1uaof
-         OjaWLjCv/9Lew83Iw+1xyRcrPTpGYu66rWviwFhdMjxpGJl4s9VDlr+TVQ8M44Gg4G
-         AtoNcUWEC0NiVUf82l7P+QuDgqNxImOOHwHHZwxqINqp5YfNf2Q99le3nTx+O+6caA
-         xgxJ2vfea0/gA==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id EDFB3C4332E; Thu, 29 Jun 2023 08:40:00 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
-To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 217581] Bluetooth L2CAP use-after-free
-Date:   Thu, 29 Jun 2023 08:40:00 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: high
-X-Bugzilla-Who: mohamed-yassine.jebabli@witbe.net
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P3
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-217581-62941-jpvEHC45Bf@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-217581-62941@https.bugzilla.kernel.org/>
-References: <bug-217581-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+        Thu, 29 Jun 2023 05:25:26 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26502134
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 02:25:25 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id af79cd13be357-7672303c831so46737085a.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jun 2023 02:25:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688030724; x=1690622724;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=D4I/TY7c6xHiXdGKI+IdGXt5RVxEglZ81NsxjXgx5LQ=;
+        b=YkEaNrk2VlDviK9kelo3lIP2zHA+fgrZ7AHEkh1xRoSHO7b7Gjb1woxpI5tbl+J1D6
+         WFJck2By8xtO6OEBvWI1dBPr+GI8Yf8QpYOxEwLZk9d6pZM8Dwgot5/zHt0mWCYCns2y
+         wObSAGtB3a06gz5oJ2c4Ci3x6qnreYBMiRJY56l8Ov9YEfxWCsMZL/OPCw3WWw0oKRBh
+         TqZaL/zx+67f704qbZmaPUttOZKy7vPYMQStGolI3AI85q79m5aCXB6T8L8VPEHYk923
+         r87wBvcvQrq2xa0EmZYJ7hgZk/TOgY73O0PI1qHGxu98epnRTl1s9jL6UcL37DMfK3M2
+         bp4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688030724; x=1690622724;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D4I/TY7c6xHiXdGKI+IdGXt5RVxEglZ81NsxjXgx5LQ=;
+        b=j8EZEzwF2LiIJ6SMlI+4wNzk8pST0t47bW2Y4uoxTpaSghK7JSsK0Nrdia8XbknwaR
+         Oi8CG2O38+buinlmMEnKR3J5j3dSGdAtljj85GfV2Un6iPqBri2C96iwj3pzlNwe4c8W
+         t2BNmKJBbauJ6n+mexdkGEQmmG7hm2WuljzS3lA6PmFieGDxshF9fvn2Luv3rN+9mb3y
+         CDkifTfY8EM/LjJZYsSVlpKwXYepgC8RWm+BL7NSw/oQtv+vT80VSvBUkAeak7xg/yOC
+         4ABZNYXmJuFlyPg6S1QpGQSkUElmHCMbXyPJL2nk0Mozd2FwkHTNfwOM1Zty7Ao/q6uQ
+         y0mg==
+X-Gm-Message-State: AC+VfDwM/3zCkF8gbC1lJy8JJBZeTc6pdHRdi6pMKD79zYlbJtDMbmMD
+        OTcybISFhZBmXFrDSqohEyVZqqEHgbI=
+X-Google-Smtp-Source: ACHHUZ4aTlbLpbqAqehknLn0S34ezvTrTMTtww9bSTQZKhTxbYRbxS51+4nsArzVcUMnD0JU5OFuAA==
+X-Received: by 2002:a05:620a:2589:b0:75b:23a0:d9e1 with SMTP id x9-20020a05620a258900b0075b23a0d9e1mr42017792qko.55.1688030724631;
+        Thu, 29 Jun 2023 02:25:24 -0700 (PDT)
+Received: from [172.17.0.2] ([172.177.6.21])
+        by smtp.gmail.com with ESMTPSA id pc26-20020a05620a841a00b0076219ec1fbesm2055620qkn.42.2023.06.29.02.25.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jun 2023 02:25:24 -0700 (PDT)
+Message-ID: <649d4e04.050a0220.f3b88.637a@mx.google.com>
+Date:   Thu, 29 Jun 2023 02:25:24 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============0208996532272622545=="
 MIME-Version: 1.0
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, iulia.tanasescu@nxp.com
+Subject: RE: shared/bass: Introduce Add Source opcode handler
+In-Reply-To: <20230629080735.525650-2-iulia.tanasescu@nxp.com>
+References: <20230629080735.525650-2-iulia.tanasescu@nxp.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D217581
+--===============0208996532272622545==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
---- Comment #8 from Mohamed Yassine JEBABLI (mohamed-yassine.jebabli@witbe.=
-net) ---
-(In reply to Bagas Sanjaya from comment #6)
-> On 6/27/23 20:23, bugzilla-daemon@kernel.org wrote:
-> > https://bugzilla.kernel.org/show_bug.cgi?id=3D217581
-> >=20
-> > --- Comment #5 from Mohamed Yassine JEBABLI
-> > (mohamed-yassine.jebabli@witbe.net) ---
-> > (In reply to Bagas Sanjaya from comment #4)
-> >> (In reply to Mohamed Yassine JEBABLI from comment #0)
-> >>> In reconnect slave mode, I start direct advertising. After establishi=
-ng
-> the
-> >>> connection with the central device, we begin ATT exchanges over the L=
-2CAP
-> >>> socket, and then I receive a disconnect with L2CAP traces. This issue=
- is
-> >>> observed across different kernel versions such as 5.17, 6.2, 6.3, 6.3=
-.7,
-> >> etc.
-> >>>
-> >>
-> >> Do you have this issue on v5.15?
-> >=20
-> > Not tested on v5.15. I started with 5.17 version.
-> >=20
->=20
-> Again: Do you have this issue on v5.15?
+This is automated email and please do not reply to this email!
 
-Tested on kernel v5.15 with l2cap_core traces enabled.=20
-=3D=3D> The same scenario from reconnecr to disconnect and I think the same=
- bug
-related to rfcount which goes to NULL in the other versions > v5.15.=20
+Dear submitter,
 
-Jun 28 14:41:36 buildroot kernel: chan 7942e3b3 orig refcnt 1
-Jun 28 14:41:36 buildroot kernel: hcon 5a56584a bdaddr 48:b0:2d:02:81:0a st=
-atus
-0
-Jun 28 14:41:36 buildroot kernel: hcon 5a56584a conn d7202d29 hchan 981967be
-Jun 28 14:41:36 buildroot kernel: chan 7942e3b3 orig refcnt 2
-Jun 28 14:41:36 buildroot kernel: chan e8221202
-Jun 28 14:41:36 buildroot kernel: chan e8221202 orig refcnt 1
-Jun 28 14:41:36 buildroot kernel: conn d7202d29, psm 0x00, dcid 0x0004
-Jun 28 14:41:36 buildroot kernel: chan e8221202 orig refcnt 2
-Jun 28 14:41:36 buildroot kernel: chan e5e549e1 orig refcnt 1
-Jun 28 14:41:36 buildroot kernel: chan 7942e3b3 orig refcnt 3
-Jun 28 14:41:36 buildroot kernel: chan 05ee00c1
-Jun 28 14:41:36 buildroot kernel: conn d7202d29, psm 0x00, dcid 0x0006
-Jun 28 14:41:36 buildroot kernel: chan 05ee00c1 orig refcnt 1
-Jun 28 14:41:36 buildroot kernel: chan e5e549e1 orig refcnt 2
-Jun 28 14:41:36 buildroot kernel: conn d7202d29
-Jun 28 14:41:36 buildroot kernel: chan 05ee00c1 len 2
-Jun 28 14:41:36 buildroot kernel: chan 05ee00c1, skb 62f90460 len 6 priorit=
-y 7
-Jun 28 14:41:36 buildroot kernel: hci1 conn d7202d29
-Jun 28 14:41:36 buildroot kernel:=20
-Jun 28 14:41:37 buildroot kernel: hcon 5a56584a reason 19
-Jun 28 14:41:37 buildroot kernel: hcon 5a56584a conn d7202d29, err 104
-Jun 28 14:41:37 buildroot kernel: chan 05ee00c1 orig refcnt 2
-Jun 28 14:41:37 buildroot kernel: chan 05ee00c1, conn d7202d29, err 104, st=
-ate
-BT_CONNECTED
-Jun 28 14:41:37 buildroot kernel: chan 05ee00c1 orig refcnt 3
-Jun 28 14:41:37 buildroot kernel: chan 05ee00c1 orig refcnt 2
-Jun 28 14:41:37 buildroot kernel: chan 05ee00c1 orig refcnt 1
-Jun 28 14:41:37 buildroot kernel: chan 05ee00c1
-Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 3
-Jun 28 14:41:37 buildroot kernel: chan e8221202, conn d7202d29, err 104, st=
-ate
-BT_OPEN
-Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 4
-Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 3
-Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 2
-Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 2
-Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 state BT_LISTEN
-Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 1
-Jun 28 14:41:37 buildroot kernel: chan e8221202
-Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 0
-Jun 28 14:41:37 buildroot kernel: ------------[ cut here ]------------
-Jun 28 14:41:37 buildroot kernel: WARNING: CPU: 1 PID: 476 at lib/refcount.=
-c:25
-l2cap_sock_teardown_cb+0x13c/0x23c
-Jun 28 14:41:37 buildroot kernel: refcount_t: addition on 0; use-after-free.
-Jun 28 14:41:37 buildroot kernel: Modules linked in: algif_hash algif_skcip=
-her
-af_alg stm32_adc stm32_timer_trigger stm32_lptimer_trigger galcore(O)
-stm32_crc32 stm32_cryp stm32_hash libdes crypto_engine stm32_adc_core stm32=
-_cec
-Jun 28 14:41:37 buildroot kernel: CPU: 1 PID: 476 Comm: HCIManager Tainted:=
- G=20=20
-        O      5.15.67 #2
-Jun 28 14:41:37 buildroot kernel: Hardware name: STM32 (Device Tree Support)
-Jun 28 14:41:37 buildroot kernel: [<c0110c54>] (unwind_backtrace) from
-[<c010c61c>] (show_stack+0x10/0x14)
-Jun 28 14:41:37 buildroot kernel: [<c010c61c>] (show_stack) from [<c0ca2f50=
->]
-(dump_stack_lvl+0x40/0x4c)
-Jun 28 14:41:37 buildroot kernel: [<c0ca2f50>] (dump_stack_lvl) from
-[<c0120fc0>] (__warn+0xec/0x104)
-Jun 28 14:41:37 buildroot kernel: [<c0120fc0>] (__warn) from [<c0c9e214>]
-(warn_slowpath_fmt+0x98/0xc4)
-Jun 28 14:41:37 buildroot kernel: [<c0c9e214>] (warn_slowpath_fmt) from
-[<c0b67748>] (l2cap_sock_teardown_cb+0x13c/0x23c)
-Jun 28 14:41:37 buildroot kernel: [<c0b67748>] (l2cap_sock_teardown_cb) from
-[<c0b5f584>] (l2cap_chan_close+0x138/0x2f4)
-Jun 28 14:41:37 buildroot kernel: [<c0b5f584>] (l2cap_chan_close) from
-[<c0b67a60>] (l2cap_sock_shutdown+0x218/0x5ac)
-Jun 28 14:41:37 buildroot kernel: [<c0b67a60>] (l2cap_sock_shutdown) from
-[<c0b67e44>] (l2cap_sock_release+0x50/0xe8)
-Jun 28 14:41:37 buildroot kernel: [<c0b67e44>] (l2cap_sock_release) from
-[<c09b7f10>] (__sock_release+0x40/0xb8)
-Jun 28 14:41:37 buildroot kernel: [<c09b7f10>] (__sock_release) from
-[<c09b7f98>] (sock_close+0x10/0x18)
-Jun 28 14:41:37 buildroot kernel: [<c09b7f98>] (sock_close) from [<c02a6e84=
->]
-(__fput+0x74/0x240)
-Jun 28 14:41:37 buildroot kernel: [<c02a6e84>] (__fput) from [<c0141ac0>]
-(task_work_run+0x90/0xbc)
-Jun 28 14:41:37 buildroot kernel: [<c0141ac0>] (task_work_run) from
-[<c010c048>] (do_work_pending+0x498/0x594)
-Jun 28 14:41:37 buildroot kernel: [<c010c048>] (do_work_pending) from
-[<c01000c0>] (slow_work_pending+0xc/0x20)
-Jun 28 14:41:37 buildroot kernel: Exception stack(0xc3fe1fb0 to 0xc3fe1ff8)
-Jun 28 14:41:37 buildroot kernel: 1fa0:=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-00000000 00000002 00000000 00000000
-Jun 28 14:41:37 buildroot kernel: 1fc0: 00000006 b4dfd8c0 00000005 00000006
-b4dfd400 b4dfd470 00000000 b4dfcb7c
-Jun 28 14:41:37 buildroot kernel: 1fe0: 00000006 b4dfcb58 b6b96bf9 b6b98b26
-80030030 00000006
-Jun 28 14:41:37 buildroot kernel: ---[ end trace b1ffe2b440acbd97 ]---
-Jun 28 14:41:37 buildroot kernel: chan e8221202 state BT_OPEN
-Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 3221225472
-Jun 28 14:41:37 buildroot kernel: ------------[ cut here ]------------
-Jun 28 14:41:37 buildroot kernel: WARNING: CPU: 1 PID: 476 at lib/refcount.=
-c:28
-l2cap_sock_kill.part.0+0x28/0xc0
-Jun 28 14:41:37 buildroot kernel: refcount_t: underflow; use-after-free.
-Jun 28 14:41:37 buildroot kernel: Modules linked in: algif_hash algif_skcip=
-her
-af_alg stm32_adc stm32_timer_trigger stm32_lptimer_trigger galcore(O)
-stm32_crc32 stm32_cryp stm32_hash libdes crypto_engine stm32_adc_core stm32=
-_cec
-Jun 28 14:41:37 buildroot kernel: CPU: 1 PID: 476 Comm: HCIManager Tainted:=
- G=20=20
-     W  O      5.15.67 #2
-Jun 28 14:41:37 buildroot kernel: Hardware name: STM32 (Device Tree Support)
-Jun 28 14:41:37 buildroot kernel: [<c0110c54>] (unwind_backtrace) from
-[<c010c61c>] (show_stack+0x10/0x14)
-Jun 28 14:41:37 buildroot kernel: [<c010c61c>] (show_stack) from [<c0ca2f50=
->]
-(dump_stack_lvl+0x40/0x4c)
-Jun 28 14:41:37 buildroot kernel: [<c0ca2f50>] (dump_stack_lvl) from
-[<c0120fc0>] (__warn+0xec/0x104)
-Jun 28 14:41:37 buildroot kernel: [<c0120fc0>] (__warn) from [<c0c9e214>]
-(warn_slowpath_fmt+0x98/0xc4)
-Jun 28 14:41:37 buildroot kernel: [<c0c9e214>] (warn_slowpath_fmt) from
-[<c0b6754c>] (l2cap_sock_kill.part.0+0x28/0xc0)
-Jun 28 14:41:37 buildroot kernel: [<c0b6754c>] (l2cap_sock_kill.part.0) from
-[<c0b67708>] (l2cap_sock_teardown_cb+0xfc/0x23c)
-Jun 28 14:41:37 buildroot kernel: [<c0b67708>] (l2cap_sock_teardown_cb) from
-[<c0b5f584>] (l2cap_chan_close+0x138/0x2f4)
-Jun 28 14:41:37 buildroot kernel: [<c0b5f584>] (l2cap_chan_close) from
-[<c0b67a60>] (l2cap_sock_shutdown+0x218/0x5ac)
-Jun 28 14:41:37 buildroot kernel: [<c0b67a60>] (l2cap_sock_shutdown) from
-[<c0b67e44>] (l2cap_sock_release+0x50/0xe8)
-Jun 28 14:41:37 buildroot kernel: [<c0b67e44>] (l2cap_sock_release) from
-[<c09b7f10>] (__sock_release+0x40/0xb8)
-Jun 28 14:41:37 buildroot kernel: [<c09b7f10>] (__sock_release) from
-[<c09b7f98>] (sock_close+0x10/0x18)
-Jun 28 14:41:37 buildroot kernel: [<c09b7f98>] (sock_close) from [<c02a6e84=
->]
-(__fput+0x74/0x240)
-Jun 28 14:41:37 buildroot kernel: [<c02a6e84>] (__fput) from [<c0141ac0>]
-(task_work_run+0x90/0xbc)
-Jun 28 14:41:37 buildroot kernel: [<c0141ac0>] (task_work_run) from
-[<c010c048>] (do_work_pending+0x498/0x594)
-Jun 28 14:41:37 buildroot kernel: [<c010c048>] (do_work_pending) from
-[<c01000c0>] (slow_work_pending+0xc/0x20)
-Jun 28 14:41:37 buildroot kernel: Exception stack(0xc3fe1fb0 to 0xc3fe1ff8)
-Jun 28 14:41:37 buildroot kernel: 1fa0:=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-00000000 00000002 00000000 00000000
-Jun 28 14:41:37 buildroot kernel: 1fc0: 00000006 b4dfd8c0 00000005 00000006
-b4dfd400 b4dfd470 00000000 b4dfcb7c
-Jun 28 14:41:37 buildroot kernel: 1fe0: 00000006 b4dfcb58 b6b96bf9 b6b98b26
-80030030 00000006
-Jun 28 14:41:37 buildroot kernel: ---[ end trace b1ffe2b440acbd98 ]---
-Jun 28 14:41:37 buildroot kernel: chan e8221202 orig refcnt 3221225472
-Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 3
-Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 2
-Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 3
-Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 2
-Jun 28 14:41:37 buildroot kernel: chan 7942e3b3 orig refcnt 1
-Jun 28 14:41:37 buildroot kernel: chan 7942e3b3
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=761141
 
---=20
-You may reply to this email to add a comment.
+---Test result---
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+Test Summary:
+CheckPatch                    PASS      1.50 seconds
+GitLint                       PASS      0.68 seconds
+BuildEll                      PASS      26.38 seconds
+BluezMake                     PASS      770.64 seconds
+MakeCheck                     PASS      12.18 seconds
+MakeDistcheck                 PASS      153.70 seconds
+CheckValgrind                 PASS      248.67 seconds
+CheckSmatch                   PASS      334.87 seconds
+bluezmakeextell               PASS      101.04 seconds
+IncrementalBuild              PASS      1289.17 seconds
+ScanBuild                     PASS      1002.57 seconds
+
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============0208996532272622545==--
