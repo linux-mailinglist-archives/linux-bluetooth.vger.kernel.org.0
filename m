@@ -2,100 +2,116 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DC0E745064
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  2 Jul 2023 21:34:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E49F5745230
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  2 Jul 2023 22:17:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229513AbjGBTeZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sun, 2 Jul 2023 15:34:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49964 "EHLO
+        id S229960AbjGBURE (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sun, 2 Jul 2023 16:17:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229992AbjGBTeZ (ORCPT
+        with ESMTP id S229605AbjGBURD (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sun, 2 Jul 2023 15:34:25 -0400
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9DE4E6A
-        for <linux-bluetooth@vger.kernel.org>; Sun,  2 Jul 2023 12:34:23 -0700 (PDT)
-Received: from monolith.lan (91-152-120-101.elisa-laajakaista.fi [91.152.120.101])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: pav)
-        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4QvK4Y5ZlDz49Q7F;
-        Sun,  2 Jul 2023 22:34:21 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-        t=1688326461;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=2ry3Gs3ypdQxJSRFrm44H6LVyp9adVRUWAhuPQORacI=;
-        b=S7l+lekHTFbvPsAsnA4C/xD3gYQtkg5yc3LwXRSMRBtdf1OeweqOz9ahD+sgvfT0BQMNXg
-        vbhdNTD/HS5G6U2a7FmTBt2kZkpHXs2Hyv42Opp585chFR4943kzRwiajuQuptoqMXwNkV
-        UmCGNJ8p5kjaVs0U+YpRHG9kA1h+Np/5nSAQ0EKu++hguPNFRlHvQcLah8qd0wgBaufa3c
-        ol8TAHhW0M1A+Q7qNrXVydH7Qb5T+V6ePxT4g1hfva4onn0FU/fHmdEJ7a6unJMpSZ5cDk
-        NZtSlSBK+FEcsCbCDQ8UZqmU9ZcAVbPQw2A2iVO8pf3u+/5+O+SdSqMRruNNgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-        s=lahtoruutu; t=1688326461;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=2ry3Gs3ypdQxJSRFrm44H6LVyp9adVRUWAhuPQORacI=;
-        b=goI5+1uljPvZAmRlZVjWKkq6VtgqDZoGUjlmHldchL2oKigr1AL+srDvluocHxVnV0fn7l
-        /aT5/0qiyGUdeKVvgzaM6Q9y9nheqeXczEz/pYsQgbmA+OVuwgFnpirbGPZVQpencQ7vdZ
-        Bhv8D+c56eMvJBWwYUHnP8xo85l+UcUQzQlCjn6icf2XFUkIDuqVi09gDm21AFKu1r2UQw
-        kD97Y9I6iY5xJJ+z7SNlbQrZhAkKzf74pN0Tf0U0yjJuT/BuVfV5+3cwZN9vV0PBwnUsxI
-        InzdBb2XXPRcmRF6FURd+aPkHmsEAtZ36pbT/icVG2uLkADSaxw5pwev2siYgg==
-ARC-Authentication-Results: i=1;
-        ORIGINATING;
-        auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1688326461; a=rsa-sha256;
-        cv=none;
-        b=jsUhJ+QE+NOqkwIXZW9eXjUbRpVmCE35al1g5Q+LifncO1AbLrRwxP64Z/zivslpcCUDny
-        bOg+zx+dwyrJtwwz3wy5ARRwMAeTPsO+iSInDy2FsLLYq/o2gx4u5rC/3A4FOF1nw5WQ9t
-        9EzN+Cc8bj2IKeIVa0AMBQirKNwaP57/Iq31ckaI042E/YdRd7Y7UWb8hiq8Kj+Xi2iCCU
-        YExt0j+EV5TMeo7XdCc16OSzHAksA+Oyw6G1+oVRKJT7i2UFIo5R3gZ/goyI9L/Sr2l0Z0
-        LFU4FtcHLt8cwcLwXK4u6AWkl+BhjoxNCdz7CmAi9KZvMbY3QlXxl+MAg9J3xQ==
-From:   Pauli Virtanen <pav@iki.fi>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 2/2] shared/bap: use only nonzero req->id
-Date:   Sun,  2 Jul 2023 22:34:19 +0300
-Message-ID: <7e5753e471757d50569802ddb19546768dea07f5.1688326228.git.pav@iki.fi>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <8af1dd5097cc4411ff2681ed39c49c232f817ebe.1688326228.git.pav@iki.fi>
-References: <8af1dd5097cc4411ff2681ed39c49c232f817ebe.1688326228.git.pav@iki.fi>
+        Sun, 2 Jul 2023 16:17:03 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3845AF
+        for <linux-bluetooth@vger.kernel.org>; Sun,  2 Jul 2023 13:17:01 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id af79cd13be357-765a5d31d0aso320569585a.2
+        for <linux-bluetooth@vger.kernel.org>; Sun, 02 Jul 2023 13:17:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688329021; x=1690921021;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=aCLHwTAWtUHWXlnufbxxTCln75ga/ZkeHRsg2t7pSpI=;
+        b=YrPq70qm7eb5ltqukmzSZHGVQmxWHmTzlnAK1QzVyJSLKJ+oUDqtU1kZSqo+xehlyO
+         h6OtBwdmRQzvBXgfxvsaMm3RsnDIwqZMB44hF8P3AMsjhKUkGGHfislM+7K/GlkBZ1NF
+         OZGQSDk2unjcpbriCasQii5l7FH5z5bUDv6icA4GsfZ6z6gQxQAMb6WEGb91AZa2CR7R
+         Nc370ZofpFF/JrJNsq56QNP2jOaaIw8ziu99GUMGOLSLiko6BzSNPIbusZ/mpEMLUrmP
+         osXN5vVYFRf9zo9QM6Ql7imaZUTzTVz2cYBgnXmIMFYbySJUZqyQhaS/t61LXQ7Wu4pD
+         x+pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688329021; x=1690921021;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aCLHwTAWtUHWXlnufbxxTCln75ga/ZkeHRsg2t7pSpI=;
+        b=O6BXj+Bk+buHyu4LlieIUYwI24eqwXPllEcF7f5ycpcq/iJ5znlBJxZDJkTbdBWRvZ
+         sgXRQRE23HfSARwWNK0FPFa3w+4S0sqzRWyljgZoG+xPJ8xXTqL+sYZS28vTj/EUgb0T
+         YNBeB5mF+Rv8Keiwuh7Zd2lSdc2e/9wnNRRPvEq5P3RZSwxodPgF3c+KxxDI26VRqulx
+         yyDzBd1GRmlmMYcmRb/oEhmtbw4USOTzzkfDHrKOGvm07TRJ+vKMEbtX7mszB66ZJFnp
+         vPnE9SROYH/Zm85xo/047+E2nQ28fW6yLuHokcgxokca+H1jifQh2SkbRiq/KfOPQP9B
+         wqlA==
+X-Gm-Message-State: ABy/qLbdZ1Mje+s5kLiHQYE4bCaOpeQkZDDH3hgD7Xw0EMaOEAcRHb1u
+        yZmi7a4jCjnw/wNU4OoC1XcT+18vBBY=
+X-Google-Smtp-Source: APBJJlG30g5slFpTSPFgJ/DOYsyKKVbU5H6kf7nz/kEV+QgSvJg7xmVesbZ/lGpLI2Ey/W/b44eE2w==
+X-Received: by 2002:a05:620a:440b:b0:765:7a1e:a456 with SMTP id v11-20020a05620a440b00b007657a1ea456mr11107050qkp.54.1688329020856;
+        Sun, 02 Jul 2023 13:17:00 -0700 (PDT)
+Received: from [172.17.0.2] ([172.177.98.62])
+        by smtp.gmail.com with ESMTPSA id k13-20020a05620a138d00b007671b599cf5sm5313731qki.40.2023.07.02.13.17.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Jul 2023 13:17:00 -0700 (PDT)
+Message-ID: <64a1db3c.050a0220.ce4d7.d09e@mx.google.com>
+Date:   Sun, 02 Jul 2023 13:17:00 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============1252641661693719026=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, pav@iki.fi
+Subject: RE: [BlueZ,v2,1/2] shared/bap: detach io for source ASEs only after Stop Ready
+In-Reply-To: <09443d89e7486d890b346d47ebc5c6a8f5eb30af.1688323254.git.pav@iki.fi>
+References: <09443d89e7486d890b346d47ebc5c6a8f5eb30af.1688323254.git.pav@iki.fi>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-In bap_req_new, use same pattern as elsewhere to not use zero as
-a valid id.
+--===============1252641661693719026==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=761842
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      1.04 seconds
+GitLint                       FAIL      0.88 seconds
+BuildEll                      PASS      26.33 seconds
+BluezMake                     PASS      754.04 seconds
+MakeCheck                     PASS      11.14 seconds
+MakeDistcheck                 PASS      152.44 seconds
+CheckValgrind                 PASS      246.87 seconds
+CheckSmatch                   PASS      331.78 seconds
+bluezmakeextell               PASS      100.51 seconds
+IncrementalBuild              PASS      1272.53 seconds
+ScanBuild                     PASS      992.76 seconds
+
+Details
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint
+Output:
+[BlueZ,v2,1/2] shared/bap: detach io for source ASEs only after Stop Ready
+
+WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
+25: B2 Line has trailing whitespace: "    "
+28: B2 Line has trailing whitespace: "    "
+
+
 ---
- src/shared/bap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/src/shared/bap.c b/src/shared/bap.c
-index 13c76afe6..72ce67c08 100644
---- a/src/shared/bap.c
-+++ b/src/shared/bap.c
-@@ -4303,7 +4303,7 @@ static struct bt_bap_req *bap_req_new(struct bt_bap_stream *stream,
- 	static unsigned int id;
- 
- 	req = new0(struct bt_bap_req, 1);
--	req->id = ++id;
-+	req->id = ++id ? id : ++id;
- 	req->stream = stream;
- 	req->op = op;
- 	req->iov = util_iov_dup(iov, len);
--- 
-2.41.0
 
+--===============1252641661693719026==--
