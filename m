@@ -2,154 +2,199 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4ABD3746ADE
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Jul 2023 09:42:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9DD7746B94
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Jul 2023 10:10:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231460AbjGDHmL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 4 Jul 2023 03:42:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53510 "EHLO
+        id S231249AbjGDIKv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 4 Jul 2023 04:10:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231127AbjGDHmK (ORCPT
+        with ESMTP id S231162AbjGDIKt (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 4 Jul 2023 03:42:10 -0400
-Received: from EUR03-DBA-obe.outbound.protection.outlook.com (mail-dbaeur03on2065.outbound.protection.outlook.com [40.107.104.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA16E64
-        for <linux-bluetooth@vger.kernel.org>; Tue,  4 Jul 2023 00:42:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GuE0RTkOyYkyCXQLLWFFLD3Kq/IjnEazp56gCW3dvAE+s9Ckvfv9YMbx2AqZ5Nc8NB0YY8J4XgyVVE7Sm4Yn9Or1gDYwg0lsHBRF9KyD6EkzwwR9vWEW/8FTmjbJxy3iG9ZI/9g0hlHN8vanVQ8g3OTpSH5kL9IGKuOnFZ1v43S6mFk6QlIrx3Z/BVHQJ1Ang2Y3gvpe/CK9ps7+pKgZPuUCXVuTxhASiD3TzRAk4dhOEKoW27Q8J5tU5RdeS2Vgz1HziGNKDQrgJllsSwMpxqswhKD/p+xBee0pk5f4bOD/YpgNkYbof5kzh1i5LBuPJPYEJLDuw44iegVA6uFaLQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QOqIg0G/jQdaeOeQV+LMr9rkOM9SW41GmlShaGEkumQ=;
- b=MA52Buig1gM2yf4b/+msTMah6XW8hXOvp9G9xH/m1oBYey1Ibj5rD2zQZnalnWuwNuMxWTASQdp8RpDOjhHfM5ZkHsHqpaM9ZD61LektVxD4qaLno4KlBJv48eF6N7vZicCpTS321XTTzGsgmrQq8EckVXpliKzkDTr6BXgkXErYBasyzfyP9q7l96qpE+VJeWX5qgZurvSAXekLDE6TZmGFRdbiBmyVYXging4lrAun9unaeJZMdOAhu8s97wUvTekkRbr8VBQ/ittEu4DnVMb3fLAtKE711TMxuVUcDgIbH58yUJmlZLq+Sx5mC4vnD9aJrehQQVU8K/l1ymNJJA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QOqIg0G/jQdaeOeQV+LMr9rkOM9SW41GmlShaGEkumQ=;
- b=Qqdkui6RNLGsquvuP6T8FM9Pned8Pn0h+d/VGeblScJxfJE/k96PZ33YIPKZD7y8H2oUKwh5PT9NvVfmE+coN5T/C36GPGU3cfqFzX/gKfdMM9DxpkiXirL6l6SC6uwgrzL9ohEEbscGiHp7w6ieC4E7nZDJsu242ZSsvHpk6X4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from GV1PR04MB9151.eurprd04.prod.outlook.com (2603:10a6:150:26::9)
- by PAXPR04MB8222.eurprd04.prod.outlook.com (2603:10a6:102:1bd::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6544.24; Tue, 4 Jul
- 2023 07:42:03 +0000
-Received: from GV1PR04MB9151.eurprd04.prod.outlook.com
- ([fe80::2cc8:4c5d:9b6f:5cab]) by GV1PR04MB9151.eurprd04.prod.outlook.com
- ([fe80::2cc8:4c5d:9b6f:5cab%7]) with mapi id 15.20.6544.024; Tue, 4 Jul 2023
- 07:42:03 +0000
-From:   Claudia Draghicescu <claudia.rosu@nxp.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Claudia Draghicescu <claudia.rosu@nxp.com>
-Subject: [PATCH BlueZ v2 1/1] monitor: Add decoding support for Sync Receiver events
-Date:   Tue,  4 Jul 2023 10:41:44 +0300
-Message-Id: <20230704074144.5587-2-claudia.rosu@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230704074144.5587-1-claudia.rosu@nxp.com>
-References: <20230704074144.5587-1-claudia.rosu@nxp.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PA7P264CA0171.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:36f::20) To GV1PR04MB9151.eurprd04.prod.outlook.com
- (2603:10a6:150:26::9)
+        Tue, 4 Jul 2023 04:10:49 -0400
+Received: from mail-pj1-f78.google.com (mail-pj1-f78.google.com [209.85.216.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20C9BBD
+        for <linux-bluetooth@vger.kernel.org>; Tue,  4 Jul 2023 01:10:48 -0700 (PDT)
+Received: by mail-pj1-f78.google.com with SMTP id 98e67ed59e1d1-262f7a3bc80so7129083a91.3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 04 Jul 2023 01:10:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688458247; x=1691050247;
+        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=T7xwhrlzcysPZgD7raFUrW5vjIVCVs0H5URIJbA37uU=;
+        b=SPx11MXl5qsfo6mbvmk3KGuexlydLsI+Q3LLEKd3Tw+o9Y6QsVMgjk35sYMZsEmBtk
+         Xtmiz75K/vemdcb/1qsN9MTgIKi2nLzDxW50vxw2w3nhfmE+FYhBOkAgCb+wWSfe4VzA
+         NPPjqRzV0nkAbG41zOaEjvO31+JHspKjcLRBtWyLs+rIE5js7lO0eJkCkX79hwPYIVEf
+         ewFEt8Qi+fwWDtT5zYFLd78FZVDbso7LcPa5nJ5VcgV+Gv8Ea5ATfSyAcuZk7HGhb/D+
+         slLpKVtFiy8h1BJWorlp7LUmblF4KDVPnt50Eppgveflng3R4eTBJiJUR0pyc6tvvtQ5
+         QIww==
+X-Gm-Message-State: ABy/qLbGr6Eu+NvAymRW9y9tL49M7OZ6vWanMj9BCbetMD95ashkkwVj
+        3YJIRJq2Ds0UKourVth5PPj6BtQJwTiya2pT7WPFdc23+WWv
+X-Google-Smtp-Source: APBJJlF614BsBKSxk9mPoRcakWxeYZ7WHS+xp5jhGmJU5TV7o4+jcZEV5f0oXUJsx+7U5fnOKazTAJi2RqTP5tzo/673IeePeoDr
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV1PR04MB9151:EE_|PAXPR04MB8222:EE_
-X-MS-Office365-Filtering-Correlation-Id: f4f5a780-089e-4df8-0af9-08db7c6228ce
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: nZVpx/dm8ibKJ6lEWzbh1ONQhYSAMIIgnLguAoXItale9cn5HQffJV32QV8P2ywFMM4wkjg5ohDsh05J0G5KZfkHpk8rNRcR+Gtz/aHZs24gfU3m8TR0Vwm9Z25Qn8OdJBNh3cn2W+BHp9VoaJEtZQWZNq7Vm20F28GipYLQ+9rU9E5a68rPrV/SupnIJbO3iYCONSa37HxlbzL7QZOxpKp099Xdioooznaz5LOADm5HdAImVS0Ai4z6j2I9yEhpNgiKpk0K3gH3LIen3frJbFszQTqHdn3/0Tk/8aHxkb/j5O7EmqH47IQSRKgV4gLN2FmqEuYCAM2K87OQqCPtrabsICfnzvFmd35jKoPIYu/EnAm0GPOolmiIaLRYYT9QCk33J9xdhxUtxF1HsmEauZm2ZIX4xNSa7q+oJkwAGnQe+89Mc+F9Ce1A47gTgZSfu2FZrqsDsZKzuVJtPuwqP2Ch1EY5IVvoimykRQnUdvGn7NLaBIfsBnqOSc0zM9fWPMlu5lxsaZLSdfCe8zAqXrdG/m3co4VWN6RqK5Aw7dHHArvU+q1sYXrRJgaYO40CnvT6fGzE7OQ6bq8UPtCWjjzrQoZSoqVjZj+0OauesVmFpcq1tdjFcNeJqC1YfMAR
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV1PR04MB9151.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(136003)(346002)(39860400002)(396003)(376002)(451199021)(52116002)(6666004)(38100700002)(38350700002)(83380400001)(6486002)(2616005)(186003)(36756003)(26005)(6506007)(6512007)(478600001)(2906002)(5660300002)(316002)(66556008)(6916009)(66946007)(66476007)(1076003)(41300700001)(4326008)(86362001)(8676002)(8936002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?QCH7vWnuNb7XyiQoELE2EjZ4pRBVZz2Co6M0v+KZp6VXdj0Wk3ukGw9s7+J4?=
- =?us-ascii?Q?jFsCx2EEtZlS3sHu5jb+p2362aPJRGYWoDUNi1BqApwKZZ74NGnWvCGgY5RS?=
- =?us-ascii?Q?ZJb+eoZ72YpMg1nZcHa+Ln9TVhiPnaOWn4JxiyKFBJAs7rjxlGspFXK34dTp?=
- =?us-ascii?Q?FtooWdKMhiT1ONOGTnQLxAIIkZxryCRRlPWjhEHEtiUMCsEnDFc6v53yDd3W?=
- =?us-ascii?Q?ML338B2fhOv/frDBWU/lQCy2DGoE9+/QGdJm9dAY4JeKB+FiMok4sLYOWJ+D?=
- =?us-ascii?Q?Q+GASe92x69wbKP6VI20clUyXeI2sdjn69HlrsfCE0qWuVpRf302LfVUrqEG?=
- =?us-ascii?Q?y4EIrFppSt6LNd7NgSHhHBRjLszYgQW0iRT0Kll5GnjAKbkJWVZakmwl1+Ky?=
- =?us-ascii?Q?CTPsqkH4MvUGpFCm9PPRXq7Q0jhEMCXYpaFkKywQhJG8nZ3nn/HkBuuRB+iE?=
- =?us-ascii?Q?2F6sC1RGYWzs5ffukAhyo9D6gwQbNce9Dpw7DFMeKKBm3IwMi27LudPx9yGX?=
- =?us-ascii?Q?3k3eVkA0Rl4wtfh1tlrnE+zGjawJEZfD5GuXKoQO+Yuk53gjmr4RDaXiWQno?=
- =?us-ascii?Q?tT2FQS2E3aU+eeA0KhG7g0QuwG8133GekfPmzr3d+0k+j8voMfL0sxTTlbTp?=
- =?us-ascii?Q?milpLb2Nb9C2IOXo1dHgzBgsBDOEjlKojq5Hix1ZtLhp4a4LBPQUYOo9UyL3?=
- =?us-ascii?Q?uksQrIA2NCbhaLgoT9eSnOLgizfaQIT7GB3DyvdIxX7DVBTBJ/k0ijOPK54U?=
- =?us-ascii?Q?W6v4qxboze8jssMY3vLYTEbeUHqms8ysoK8kD1opotslMG35AolvKITeJFls?=
- =?us-ascii?Q?ya6IYUY0poXdFrBY6xumzjZrmfp7S2Y8Tg+bX6rt9dz+bxoj9mnG6OOWv1hA?=
- =?us-ascii?Q?+EgGifZq/7/p/MHSjDsyWp3VQNeurtHIRU0DrqADUvJv+TW/3Cf5OMVbm0vq?=
- =?us-ascii?Q?S8QbajgUgCnpP6X54S4IYtJWjMcKBOF2MCDOvqrv6HJK25XUewqB0TEC79NT?=
- =?us-ascii?Q?8C9NHRRNrGnM9ObvqACc4v+eoabmIaENqnRfVhojQ+E/FcJkNf/6xcIYYApr?=
- =?us-ascii?Q?1vgK9LB72SRFM4TyLv4Ymg8uGzUF94nNbSC4A1LIhulWoeAYSsOPtwcn4Upw?=
- =?us-ascii?Q?RkPRnuyDdljgR/i+acOcw6CT7tYQ9z6MdKnWDhyD+E++sgFKZKDOlcR89e7A?=
- =?us-ascii?Q?lsinpEN4h56qOYIJCFfO0tXYisDi7XT+zJTyeMYZT2mXPCFs5wHTGtoHsOV6?=
- =?us-ascii?Q?LK7h18kRJmSwY32K54SZO21B3vD+XWyLZoDWRFSdx+d6upUH/GgTEY8WBf1/?=
- =?us-ascii?Q?Q+ZaXqksLzg0GuhDAQS6obNpOEuvWfx7GSboqluzrzecAvz+HwKuA+ldzbpQ?=
- =?us-ascii?Q?qQK8GofarnWxZNx6R9wcO4KEiuJohCznAH7VFOetgwyz+VmX70ph8pjtr4N0?=
- =?us-ascii?Q?iWSrhkhB6QQ/LXRjshBdlELhfr29eRsOYwrWs1g795BHazRwbQ6zmTo0o5hM?=
- =?us-ascii?Q?6vu0Sr1fdXi7rY0V6pBTtAeijT1zT5KXhF+Vkc7NuEPEWv6ENcjZWIIThp2P?=
- =?us-ascii?Q?hCVd7z8l/0JrL51lw1nJNCGLzAm9IHN31kQHnVJ5?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f4f5a780-089e-4df8-0af9-08db7c6228ce
-X-MS-Exchange-CrossTenant-AuthSource: GV1PR04MB9151.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jul 2023 07:42:03.8392
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZOfNvRRMBZ6CHpCdts0v1YPdXHJktJTTcfQGIS+lDHchGhGXHBD1l5ntdusVdSSBAJH3AU30SvIc5rTSLJDbhg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8222
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Received: by 2002:a17:90a:c7d8:b0:262:fc7f:7d95 with SMTP id
+ gf24-20020a17090ac7d800b00262fc7f7d95mr9087523pjb.0.1688458247656; Tue, 04
+ Jul 2023 01:10:47 -0700 (PDT)
+Date:   Tue, 04 Jul 2023 01:10:47 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <00000000000011da7605ffa4d289@google.com>
+Subject: [syzbot] [bluetooth?] BUG: sleeping function called from invalid
+ context in hci_cmd_sync_submit
+From:   syzbot <syzbot+e7be5be00de0c3c2d782@syzkaller.appspotmail.com>
+To:     johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, luiz.dentz@gmail.com,
+        marcel@holtmann.org, netdev@vger.kernel.org,
+        syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_00,FROM_LOCAL_HEX,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This commit adds decoding support for PA Sync Established,
-BIG Sync Established and BIG Sync Lost events.
+Hello,
+
+syzbot found the following issue on:
+
+HEAD commit:    6352a698ca5b Add linux-next specific files for 20230630
+git tree:       linux-next
+console+strace: https://syzkaller.appspot.com/x/log.txt?x=10bce02ca80000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=1ae0334a93bf3848
+dashboard link: https://syzkaller.appspot.com/bug?extid=e7be5be00de0c3c2d782
+compiler:       gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=161dadc7280000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=158449fb280000
+
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/938bb9b98868/disk-6352a698.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/4468e2b2789e/vmlinux-6352a698.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/16555dd478fa/bzImage-6352a698.xz
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+e7be5be00de0c3c2d782@syzkaller.appspotmail.com
+
+Bluetooth: hci0: link tx timeout
+Bluetooth: hci0: killing stalled connection 11:aa:aa:aa:aa:aa
+BUG: sleeping function called from invalid context at kernel/locking/mutex.c:580
+in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 4431, name: kworker/u5:1
+preempt_count: 0, expected: 0
+RCU nest depth: 1, expected: 0
+3 locks held by kworker/u5:1/4431:
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: arch_atomic64_set arch/x86/include/asm/atomic64_64.h:20 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: raw_atomic64_set include/linux/atomic/atomic-arch-fallback.h:2608 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: raw_atomic_long_set include/linux/atomic/atomic-long.h:79 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: atomic_long_set include/linux/atomic/atomic-instrumented.h:3196 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: set_work_data kernel/workqueue.c:675 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: set_work_pool_and_clear_pending kernel/workqueue.c:702 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: process_one_work+0x8fd/0x16f0 kernel/workqueue.c:2567
+ #1: ffffc900070efdb0 ((work_completion)(&hdev->tx_work)){+.+.}-{0:0}, at: process_one_work+0x930/0x16f0 kernel/workqueue.c:2571
+ #2: ffffffff8c9a2d80 (rcu_read_lock){....}-{1:2}, at: hci_link_tx_to net/bluetooth/hci_core.c:3406 [inline]
+ #2: ffffffff8c9a2d80 (rcu_read_lock){....}-{1:2}, at: __check_timeout net/bluetooth/hci_core.c:3561 [inline]
+ #2: ffffffff8c9a2d80 (rcu_read_lock){....}-{1:2}, at: __check_timeout+0x171/0x480 net/bluetooth/hci_core.c:3541
+CPU: 1 PID: 4431 Comm: kworker/u5:1 Not tainted 6.4.0-next-20230630-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
+Workqueue: hci0 hci_tx_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x136/0x150 lib/dump_stack.c:106
+ __might_resched+0x358/0x580 kernel/sched/core.c:10188
+ __mutex_lock_common kernel/locking/mutex.c:580 [inline]
+ __mutex_lock+0x9f/0x1350 kernel/locking/mutex.c:747
+ hci_cmd_sync_submit+0x3b/0x330 net/bluetooth/hci_sync.c:699
+ hci_cmd_sync_queue+0x7b/0xb0 net/bluetooth/hci_sync.c:739
+ hci_abort_conn+0x15b/0x330 net/bluetooth/hci_conn.c:2906
+ hci_disconnect+0xc3/0x220 net/bluetooth/hci_conn.c:258
+ hci_link_tx_to net/bluetooth/hci_core.c:3415 [inline]
+ __check_timeout net/bluetooth/hci_core.c:3561 [inline]
+ __check_timeout+0x2cc/0x480 net/bluetooth/hci_core.c:3541
+ hci_sched_le net/bluetooth/hci_core.c:3744 [inline]
+ hci_tx_work+0x82b/0x1bb0 net/bluetooth/hci_core.c:3822
+ process_one_work+0xa34/0x16f0 kernel/workqueue.c:2597
+ worker_thread+0x67d/0x10c0 kernel/workqueue.c:2748
+ kthread+0x344/0x440 kernel/kthread.c:389
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+ </TASK>
+
+=============================
+[ BUG: Invalid wait context ]
+6.4.0-next-20230630-syzkaller #0 Tainted: G        W         
+-----------------------------
+kworker/u5:1/4431 is trying to lock:
+ffff888021b149b0 (&hdev->unregister_lock){+.+.}-{3:3}, at: hci_cmd_sync_submit+0x3b/0x330 net/bluetooth/hci_sync.c:699
+other info that might help us debug this:
+context-{4:4}
+3 locks held by kworker/u5:1/4431:
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: arch_atomic64_set arch/x86/include/asm/atomic64_64.h:20 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: raw_atomic64_set include/linux/atomic/atomic-arch-fallback.h:2608 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: raw_atomic_long_set include/linux/atomic/atomic-long.h:79 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: atomic_long_set include/linux/atomic/atomic-instrumented.h:3196 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: set_work_data kernel/workqueue.c:675 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: set_work_pool_and_clear_pending kernel/workqueue.c:702 [inline]
+ #0: ffff88807e8a8138 ((wq_completion)hci0#2){+.+.}-{0:0}, at: process_one_work+0x8fd/0x16f0 kernel/workqueue.c:2567
+ #1: ffffc900070efdb0 ((work_completion)(&hdev->tx_work)){+.+.}-{0:0}, at: process_one_work+0x930/0x16f0 kernel/workqueue.c:2571
+ #2: ffffffff8c9a2d80 (rcu_read_lock){....}-{1:2}, at: hci_link_tx_to net/bluetooth/hci_core.c:3406 [inline]
+ #2: ffffffff8c9a2d80 (rcu_read_lock){....}-{1:2}, at: __check_timeout net/bluetooth/hci_core.c:3561 [inline]
+ #2: ffffffff8c9a2d80 (rcu_read_lock){....}-{1:2}, at: __check_timeout+0x171/0x480 net/bluetooth/hci_core.c:3541
+stack backtrace:
+CPU: 1 PID: 4431 Comm: kworker/u5:1 Tainted: G        W          6.4.0-next-20230630-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
+Workqueue: hci0 hci_tx_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xd9/0x150 lib/dump_stack.c:106
+ print_lock_invalid_wait_context kernel/locking/lockdep.c:4758 [inline]
+ check_wait_context kernel/locking/lockdep.c:4828 [inline]
+ __lock_acquire+0x15e8/0x5e20 kernel/locking/lockdep.c:5094
+ lock_acquire kernel/locking/lockdep.c:5761 [inline]
+ lock_acquire+0x1b1/0x520 kernel/locking/lockdep.c:5726
+ __mutex_lock_common kernel/locking/mutex.c:603 [inline]
+ __mutex_lock+0x12f/0x1350 kernel/locking/mutex.c:747
+ hci_cmd_sync_submit+0x3b/0x330 net/bluetooth/hci_sync.c:699
+ hci_cmd_sync_queue+0x7b/0xb0 net/bluetooth/hci_sync.c:739
+ hci_abort_conn+0x15b/0x330 net/bluetooth/hci_conn.c:2906
+ hci_disconnect+0xc3/0x220 net/bluetooth/hci_conn.c:258
+ hci_link_tx_to net/bluetooth/hci_core.c:3415 [inline]
+ __check_timeout net/bluetooth/hci_core.c:3561 [inline]
+ __check_timeout+0x2cc/0x480 net/bluetooth/hci_core.c:3541
+ hci_sched_le net/bluetooth/hci_core.c:3744 [inline]
+ hci_tx_work+0x82b/0x1bb0 net/bluetooth/hci_core.c:3822
+ process_one_work+0xa34/0x16f0 kernel/workqueue.c:2597
+ worker_thread+0x67d/0x10c0 kernel/workqueue.c:2748
+ kthread+0x344/0x440 kernel/kthread.c:389
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+ </TASK>
+Bluetooth: hci0: command 0x0406 tx timeout
+
 
 ---
- lib/mgmt.h       | 3 +++
- monitor/packet.c | 5 +++++
- 2 files changed, 8 insertions(+)
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-diff --git a/lib/mgmt.h b/lib/mgmt.h
-index 062fa0271..8f92b7731 100644
---- a/lib/mgmt.h
-+++ b/lib/mgmt.h
-@@ -1238,6 +1238,9 @@ static const char *mgmt_ev[] = {
- 	"Advertisement Monitor Device Lost",
- 	"Mesh Packet Found",
- 	"Mesh Packet Complete",
-+	"PA Sync Established",
-+	"BIG Sync Established",
-+	"BIG Sync Lost",
- };
- 
- static const char *mgmt_status[] = {
-diff --git a/monitor/packet.c b/monitor/packet.c
-index a871c7f27..f2167fb52 100644
---- a/monitor/packet.c
-+++ b/monitor/packet.c
-@@ -3093,6 +3093,11 @@ static const struct bitfield_data events_le_table[] = {
- 	{ 27, "LE Terminate BIG Complete"		},
- 	{ 28, "LE BIG Sync Estabilished Complete"	},
- 	{ 29, "LE BIG Sync Lost"			},
-+	{ 30, "LE Request Peer SCA Complete"},
-+	{ 31, "LE Path Loss Threshold"		},
-+	{ 32, "LE Transmit Power Reporting"	},
-+	{ 33, "LE BIG Info Advertising Report"	},
-+	{ 34, "LE Subrate Change"			},
- 	{ }
- };
- 
--- 
-2.34.1
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
 
+If the bug is already fixed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want syzbot to run the reproducer, reply with:
+#syz test: git://repo/address.git branch-or-commit-hash
+If you attach or paste a git patch, syzbot will apply it before testing.
+
+If you want to change bug's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the bug is a duplicate of another bug, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
