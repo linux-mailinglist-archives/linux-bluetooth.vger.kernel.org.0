@@ -2,115 +2,94 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B3D6749003
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Jul 2023 23:41:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E57B74913D
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jul 2023 01:00:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231482AbjGEVlP (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 5 Jul 2023 17:41:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39446 "EHLO
+        id S232185AbjGEXAd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 5 Jul 2023 19:00:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbjGEVlO (ORCPT
+        with ESMTP id S232120AbjGEXA1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 5 Jul 2023 17:41:14 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 139131998
-        for <linux-bluetooth@vger.kernel.org>; Wed,  5 Jul 2023 14:41:14 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id 5614622812f47-39eab4bbe8aso120929b6e.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Jul 2023 14:41:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688593273; x=1691185273;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IZAZbWb2AE2SxEe+ju28RXskvDk9SwGGzWqP5Kj+yuo=;
-        b=HUQPMoTcxLCUNO3eRXK40JkC+KdIhfjXJquX6xC0PkafjT8ebIH3M5rPCIMN4MsMVl
-         c4J6jCs/XoxqLF3q3wvvjkCEYpDe73FwMheUAlaufZkcpdmQ/7NkOv8LgElKCqG/0l94
-         tMvVctzs2CdFR5tumz6AoupHnrmIi9T5h+dNooNszHnWZ22kzquPj4WD7dzlJF8n+cq3
-         6BkQ4n5rmenKKENqpRoVgr0S2iyf6k2zLi4JH8guGuRUIPk3VI/G1RdCsj06P3vI/f7I
-         t9I/bYM4dk73HmLIma3RQCYtuiDVJWBYNyIwDrtxDgoimI68argISLMNRXn6/v14etA0
-         YHDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688593273; x=1691185273;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IZAZbWb2AE2SxEe+ju28RXskvDk9SwGGzWqP5Kj+yuo=;
-        b=BDfJmOsth40GCQaVLspohYcRz0V7PZObJ85YQHyb9m/vC+gj6UioVWzeqHc7Wv2zxg
-         NNw+knzyKLJD/wGP2iCyXjZFJ1iAOsSSlnLBrqR+l+fDbiLAM03ORaEtLEsL4Z4BAwYE
-         +8aRPRjRO7FnzwH85SnE+E2iFuW21jnPVKH32PtCWD++Egc4kz88R4XF35/3rnO46dFH
-         xl1wRqyTf1UVxL3uVQFo//u6xXEIBJVuEK7EY2nrRreRz1eA1kT1z4VBv6oNfGr2S0oY
-         baMDkcqjXFRVeBAjoyV0RfuQprDyJovaEYHdTN53gc5N9XCopNkvVUi+SEpGvRprMoU9
-         F1eg==
-X-Gm-Message-State: AC+VfDysgGzPxxnaaE4rssJ7kEVeuh9NgNXxr/VkANhfadNhKrofyaXP
-        2mMS5SKgYPLQa2dBOt+TQKmjOupvnIk=
-X-Google-Smtp-Source: ACHHUZ69tqk7Ja1LzLj0Vk6twy3yUizPevPBAVhN86QisMSCYPxdfrAKu5Fl6mMf5zSVUuRsLRx5yw==
-X-Received: by 2002:a05:6808:4ce:b0:3a1:eb0e:ddab with SMTP id a14-20020a05680804ce00b003a1eb0eddabmr18376492oie.28.1688593273244;
-        Wed, 05 Jul 2023 14:41:13 -0700 (PDT)
-Received: from [172.17.0.2] ([52.171.134.52])
-        by smtp.gmail.com with ESMTPSA id c14-20020a056808138e00b003a05ba0ccb2sm21107oiw.39.2023.07.05.14.41.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jul 2023 14:41:13 -0700 (PDT)
-Message-ID: <64a5e379.050a0220.a4f53.0289@mx.google.com>
-Date:   Wed, 05 Jul 2023 14:41:13 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============6957644005890415471=="
+        Wed, 5 Jul 2023 19:00:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45E61992;
+        Wed,  5 Jul 2023 16:00:26 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D52576182C;
+        Wed,  5 Jul 2023 23:00:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D2577C433CD;
+        Wed,  5 Jul 2023 23:00:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688598024;
+        bh=dmhwZA3FcpfgoYkFfK0f8ZtZqryqQgsRp0crWis6QbQ=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=NqytIV+i2Y1Mb4sTJ1R7sBGsVT1PgQkczXX6gi/AYTubNeHdwSGFJ31WPHoDBw1rQ
+         gnwqa07At6SoXEqar8mS4ipJRSUZgee4S53d6fPcUUpnknNxTTt/YZ6mUd7BQOaovA
+         r+KJo9njiudLdukssL5l4c5HQ0mZyaxNngdu3r/xgpnbybI1L3K+hcdd2cfbtrmy9C
+         m1caFfOz8kB//TjnuKireidE8dZgR8DE2AKB9VaUbD11T8GIx40boljBb/gCvdHK+2
+         s9HCtZJPzKh88Y+heVvZNh0DuT7b7oBcXfbEdaiAIx+xFSzgMmWnnP9DMa89nVAtnr
+         wk9PLTvsO7row==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BA50AC691EF;
+        Wed,  5 Jul 2023 23:00:24 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, yinghsu@chromium.org
-Subject: RE: Bluetooth: Fix hci_suspend_sync crash
-In-Reply-To: <20230705210647.1.I636c21e4dc8fe3352f4d7aef26c0ec3857e24ca0@changeid>
-References: <20230705210647.1.I636c21e4dc8fe3352f4d7aef26c0ec3857e24ca0@changeid>
-Reply-To: linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] Bluetooth: coredump: fix building with coredump disabled
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <168859802475.24898.14279072242552303522.git-patchwork-notify@kernel.org>
+Date:   Wed, 05 Jul 2023 23:00:24 +0000
+References: <20230703113112.380663-1-arnd@kernel.org>
+In-Reply-To: <20230703113112.380663-1-arnd@kernel.org>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        chris.lu@mediatek.com, sean.wang@mediatek.com,
+        jing.cai@mediatek.com, abhishekpandit@chromium.org,
+        mmandlik@google.com, arnd@arndb.de, luiz.dentz@gmail.com,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, brian.gix@intel.com, pav@iki.fi,
+        iulia.tanasescu@nxp.com, linux-bluetooth@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============6957644005890415471==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello:
 
-This is automated email and please do not reply to this email!
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Dear submitter,
+On Mon,  3 Jul 2023 13:30:48 +0200 you wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> The btmtk driver uses an IS_ENABLED() check to conditionally compile
+> the coredump support, but this fails to build because the hdev->dump
+> member is in an #ifdef:
+> 
+> drivers/bluetooth/btmtk.c: In function 'btmtk_process_coredump':
+> drivers/bluetooth/btmtk.c:386:30: error: 'struct hci_dev' has no member named 'dump'
+>   386 |   schedule_delayed_work(&hdev->dump.dump_timeout,
+>       |                              ^~
+> 
+> [...]
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=762867
+Here is the summary with links:
+  - Bluetooth: coredump: fix building with coredump disabled
+    https://git.kernel.org/bluetooth/bluetooth-next/c/6ca03ff0da3e
 
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.67 seconds
-GitLint                       PASS      0.31 seconds
-SubjectPrefix                 PASS      0.09 seconds
-BuildKernel                   PASS      40.45 seconds
-CheckAllWarning               PASS      44.29 seconds
-CheckSparse                   PASS      49.58 seconds
-CheckSmatch                   PASS      134.53 seconds
-BuildKernel32                 PASS      38.85 seconds
-TestRunnerSetup               PASS      594.80 seconds
-TestRunner_l2cap-tester       PASS      28.84 seconds
-TestRunner_iso-tester         PASS      63.10 seconds
-TestRunner_bnep-tester        PASS      13.19 seconds
-TestRunner_mgmt-tester        PASS      256.80 seconds
-TestRunner_rfcomm-tester      PASS      20.28 seconds
-TestRunner_sco-tester         PASS      20.72 seconds
-TestRunner_ioctl-tester       PASS      22.56 seconds
-TestRunner_mesh-tester        PASS      16.72 seconds
-TestRunner_smp-tester         PASS      17.53 seconds
-TestRunner_userchan-tester    PASS      14.28 seconds
-IncrementalBuild              PASS      37.29 seconds
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-
----
-Regards,
-Linux Bluetooth
-
-
---===============6957644005890415471==--
