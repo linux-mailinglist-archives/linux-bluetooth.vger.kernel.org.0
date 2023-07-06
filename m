@@ -2,167 +2,95 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1852B74A491
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jul 2023 21:53:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 942B974A4AD
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jul 2023 22:10:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbjGFTxH (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 6 Jul 2023 15:53:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53174 "EHLO
+        id S232484AbjGFUKO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 6 Jul 2023 16:10:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbjGFTxG (ORCPT
+        with ESMTP id S232265AbjGFUKM (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 6 Jul 2023 15:53:06 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 268771BF4
-        for <linux-bluetooth@vger.kernel.org>; Thu,  6 Jul 2023 12:53:05 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-666e97fcc60so897972b3a.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Jul 2023 12:53:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688673184; x=1691265184;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ouw02jZWi/s79zedc1y3o/UBqif9/zA8Pb5KBdWb480=;
-        b=IZ50v//iVJ+PuEBz7OAhIVw0omth+G80/HoX+Z70nOgXOIrah9snOU6wxIKhRhNmC/
-         l5nRxevJaPqVsZb/nnvpN7qZVfnhcwwtOhnEY5SVHEIjQ0A4rChU9gAzkSwfpjijZXxv
-         lWSkeZbLbso1VDP12MfpRDv7benQhwCSZYfrME4GSJfnzkBA6Cf8A0R9GsFvfqlZLnhb
-         mx4jjZOozweqCbGgvCdpE+fzh57Fmyl05ltpQw2RwrvTH6Hjl+epHbfQpwCs5IVAI+y2
-         RgIAigZdG6OAO/6LQeKh3TWs2Qmn4S9Bv+sS2sXrLEJZk7Tjpgu4tPx4uYeNkZAF5U6S
-         ZxQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688673184; x=1691265184;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ouw02jZWi/s79zedc1y3o/UBqif9/zA8Pb5KBdWb480=;
-        b=W1m43W+7SqXSYpGPIcRwBDvUkgcAeNtkt9fXWMJYAeKZnKvJHBWoGJrumbMUAtYmja
-         r1Tx3LuBbMhF/I++LFW5Ntq3baAcT+Bw4gYQoMOnheMDNBj1wQ/VxishTd3h3rbriuJh
-         LCb/dXce9Fm/jptfBE3KPHDcDkfwQMQHFVtkCHpxUPT/7CfUCl5Ia/c4TZ2mlB+qzzJm
-         1SRzJ/QxwzI7+rw+Nqy/mrU26zhmDHCWMZmeo5CyX63pVTFiygylAYIXkFUbe0ouErg1
-         siT9PMbjZlMtS6alMNEQuSNDzU7HnSmgsiJtLkJgstrKEdpKTvUJTsZKu3eL+poLmOq6
-         bwbg==
-X-Gm-Message-State: ABy/qLZuAB3u0TcHXBU3zOYnR9suoRcidCD/nezLQfrCMiygHNbYxiqn
-        2PmWFRXjR7RucQYJHqX7lEFSg+5ig14=
-X-Google-Smtp-Source: APBJJlHODSDguiN1BTMkm+uZAm/Sk2lZg3u7EZRPm6pHetz67ft/NqsyuKkQnBiBqA41IU0qwbU7wQ==
-X-Received: by 2002:a05:6a20:2a0a:b0:12e:641b:454a with SMTP id e10-20020a056a202a0a00b0012e641b454amr2217130pzh.30.1688673183717;
-        Thu, 06 Jul 2023 12:53:03 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-236-201-58.hsd1.or.comcast.net. [71.236.201.58])
-        by smtp.gmail.com with ESMTPSA id i11-20020a170902eb4b00b001b80b583092sm1773803pli.210.2023.07.06.12.53.02
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jul 2023 12:53:03 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH] Bluetooth: MGMT: Fix always using HCI_MAX_AD_LENGTH
-Date:   Thu,  6 Jul 2023 12:53:01 -0700
-Message-Id: <20230706195301.395052-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.40.1
+        Thu, 6 Jul 2023 16:10:12 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 537F710F3;
+        Thu,  6 Jul 2023 13:10:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D1D16612D1;
+        Thu,  6 Jul 2023 20:10:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2D925C433C9;
+        Thu,  6 Jul 2023 20:10:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688674210;
+        bh=3QVb4qQu1Gml6yi2ur2ya9vRyI9CNA7dgTC9agqVbqo=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=JZENVqmYt4PYgsQ2ojnng9w8cNrg0gzQJB3ZvAt5tHH5JY4zjLUWC1/iXeM7s/WpO
+         VjgAuTHdS+kx/G44i3qnzZ2A0wxz3FVXGuF8PVW9H/lwi7y4UiO0v12cTV9EadwR2Z
+         w4R3QmncGYh3LPfSRJ0yTutiJwUKlmswWJ38BNQtmZa9nxmButPceuIELS8J6KiVi7
+         9ix4wbkxybWazdztusMdr/19IzJbwx9hZwcZHd28Z0qMgmbBDFN5OEYI6qTNjc7fle
+         wUlSAQEYQEQ2n13GRPj+6QKF2vXA0vSmxf3+0DXrZVS7N/v7GqyMVaSclVfpK6lUpc
+         3lO3WrPFwyqVw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 10A98C59A4C;
+        Thu,  6 Jul 2023 20:10:10 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH 0/3] fixup potential cpu stall
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <168867421006.27620.2867140526566551543.git-patchwork-notify@kernel.org>
+Date:   Thu, 06 Jul 2023 20:10:10 +0000
+References: <20230609131817.712867-1-xianting.tian@linux.alibaba.com>
+In-Reply-To: <20230609131817.712867-1-xianting.tian@linux.alibaba.com>
+To:     Xianting Tian <xianting.tian@linux.alibaba.com>
+Cc:     arei.gonglei@huawei.com, mst@redhat.com, jasowang@redhat.com,
+        xuanzhuo@linux.alibaba.com, herbert@gondor.apana.org.au,
+        davem@davemloft.net, amit@kernel.org, arnd@arndb.de,
+        gregkh@linuxfoundation.org, marcel@holtmann.org,
+        johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-bluetooth@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hello:
 
-HCI_MAX_AD_LENGTH shall only be used if the controller doesn't support
-extended advertising, otherwise HCI_MAX_EXT_AD_LENGTH shall be used
-instead.
+This series was applied to bluetooth/bluetooth-next.git (master)
+by Michael S. Tsirkin <mst@redhat.com>:
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
----
- include/net/bluetooth/hci_core.h |  4 ++++
- net/bluetooth/hci_event.c        | 12 +++++++-----
- net/bluetooth/mgmt.c             |  6 +++---
- 3 files changed, 14 insertions(+), 8 deletions(-)
+On Fri,  9 Jun 2023 21:18:14 +0800 you wrote:
+> Cpu stall issue may happen if device is configured with multi queues
+> and large queue depth, so fix it.
+> 
+> Xianting Tian (3):
+>   virtio-crypto: fixup potential cpu stall when free unused bufs
+>   virtio_console: fixup potential cpu stall when free unused bufs
+>   virtio_bt: fixup potential cpu stall when free unused bufs
+> 
+> [...]
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 105c1c394f82..8200a6689b39 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1801,6 +1801,10 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
- /* Extended advertising support */
- #define ext_adv_capable(dev) (((dev)->le_features[1] & HCI_LE_EXT_ADV))
- 
-+/* Maximum advertising length */
-+#define max_adv_len(dev) \
-+	(ext_adv_capable(dev) ? HCI_MAX_EXT_AD_LENGTH : HCI_MAX_AD_LENGTH)
-+
- /* BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 4, Part E page 1789:
-  *
-  * C24: Mandatory if the LE Controller supports Connection State and either
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index c29eece88d2c..f1fcece29e7d 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -1747,7 +1747,7 @@ static void store_pending_adv_report(struct hci_dev *hdev, bdaddr_t *bdaddr,
- {
- 	struct discovery_state *d = &hdev->discovery;
- 
--	if (len > HCI_MAX_AD_LENGTH)
-+	if (len > max_adv_len(hdev))
- 		return;
- 
- 	bacpy(&d->last_adv_addr, bdaddr);
-@@ -6249,8 +6249,9 @@ static void process_adv_report(struct hci_dev *hdev, u8 type, bdaddr_t *bdaddr,
- 		return;
- 	}
- 
--	if (!ext_adv && len > HCI_MAX_AD_LENGTH) {
--		bt_dev_err_ratelimited(hdev, "legacy adv larger than 31 bytes");
-+	if (len > max_adv_len(hdev)) {
-+		bt_dev_err_ratelimited(hdev,
-+				       "adv larger than maximum supported");
- 		return;
- 	}
- 
-@@ -6315,7 +6316,8 @@ static void process_adv_report(struct hci_dev *hdev, u8 type, bdaddr_t *bdaddr,
- 	 */
- 	conn = check_pending_le_conn(hdev, bdaddr, bdaddr_type, bdaddr_resolved,
- 				     type);
--	if (!ext_adv && conn && type == LE_ADV_IND && len <= HCI_MAX_AD_LENGTH) {
-+	if (!ext_adv && conn && type == LE_ADV_IND &&
-+	    len <= max_adv_len(hdev)) {
- 		/* Store report for later inclusion by
- 		 * mgmt_device_connected
- 		 */
-@@ -6456,7 +6458,7 @@ static void hci_le_adv_report_evt(struct hci_dev *hdev, void *data,
- 					info->length + 1))
- 			break;
- 
--		if (info->length <= HCI_MAX_AD_LENGTH) {
-+		if (info->length <= max_adv_len(hdev)) {
- 			rssi = info->data[info->length];
- 			process_adv_report(hdev, info->type, &info->bdaddr,
- 					   info->bdaddr_type, NULL, 0, rssi,
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 3156bc27088e..33c06f7c7641 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -8428,8 +8428,8 @@ static int read_adv_features(struct sock *sk, struct hci_dev *hdev,
- 	supported_flags = get_supported_adv_flags(hdev);
- 
- 	rp->supported_flags = cpu_to_le32(supported_flags);
--	rp->max_adv_data_len = HCI_MAX_AD_LENGTH;
--	rp->max_scan_rsp_len = HCI_MAX_AD_LENGTH;
-+	rp->max_adv_data_len = max_adv_len(hdev);
-+	rp->max_scan_rsp_len = max_adv_len(hdev);
- 	rp->max_instances = hdev->le_num_of_adv_sets;
- 	rp->num_instances = hdev->adv_instance_cnt;
- 
-@@ -8465,7 +8465,7 @@ static u8 calculate_name_len(struct hci_dev *hdev)
- static u8 tlv_data_max_len(struct hci_dev *hdev, u32 adv_flags,
- 			   bool is_adv_data)
- {
--	u8 max_len = HCI_MAX_AD_LENGTH;
-+	u8 max_len = max_adv_len(hdev);
- 
- 	if (is_adv_data) {
- 		if (adv_flags & (MGMT_ADV_FLAG_DISCOV |
+Here is the summary with links:
+  - [1/3] virtio-crypto: fixup potential cpu stall when free unused bufs
+    https://git.kernel.org/bluetooth/bluetooth-next/c/7a5103b81a96
+  - [2/3] virtio_console: fixup potential cpu stall when free unused bufs
+    https://git.kernel.org/bluetooth/bluetooth-next/c/56b5e65efe00
+  - [3/3] virtio_bt: fixup potential cpu stall when free unused bufs
+    https://git.kernel.org/bluetooth/bluetooth-next/c/3845308fc8b0
+
+You are awesome, thank you!
 -- 
-2.40.1
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
