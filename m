@@ -2,59 +2,46 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD0E174B01E
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Jul 2023 13:45:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE1F274B107
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  7 Jul 2023 14:37:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230372AbjGGLpK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 7 Jul 2023 07:45:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45184 "EHLO
+        id S231233AbjGGMhC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 7 Jul 2023 08:37:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbjGGLpJ (ORCPT
+        with ESMTP id S229661AbjGGMhB (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 7 Jul 2023 07:45:09 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1BCF128;
-        Fri,  7 Jul 2023 04:45:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 71219618EE;
-        Fri,  7 Jul 2023 11:45:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BF5C433C8;
-        Fri,  7 Jul 2023 11:45:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688730307;
-        bh=hYR2v6vBRoKSEbMKL5joI8ALWET1hUcjOO4qG93jcKs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PsZvxJgmvhgRKzram15wtfTjOx0BhHxv/7P6mPVe9jOwW+X5rCqE2Oz1Czz+brTJL
-         3ErR1td/Jo/BdvLOeCTFhC+E5lJfbo2qAI41S4G5xGGV/m1tN33ccTiOd9uz5B6/7b
-         82AIR+NkIalWstvOVKQdaskaPjVKOF/7igDXclcVSkc3O/CuXDMmuAGjJ2ON0hb5yM
-         N2HVIpTitSkC5ycFPdcO9RInOUB7QkML7tTznRCkFsfPp5wvREJfYUVkx77Iocd1gn
-         X3X9IvJglNI8RSRBfb7IL+I7IWqwlIjtfL/B4gGSN8whtaXkBE0+RIGHiMo8J6NvQ6
-         2JwHmH2X4IG9g==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qHju1-0007TH-1n;
-        Fri, 07 Jul 2023 13:45:34 +0200
-Date:   Fri, 7 Jul 2023 13:45:33 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Tim Jiang <quic_tjiang@quicinc.com>
-Cc:     marcel@holtmann.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_bgodavar@quicinc.com, quic_hemantg@quicinc.com,
-        mka@chromium.org
-Subject: Re: [PATCH v9] Bluetooth: hci_qca: Add support for Qualcomm
- Bluetooth SoC QCA2066
-Message-ID: <ZKf63XOPsImef2y2@hovoldconsulting.com>
-References: <20230707113645.10673-1-quic_tjiang@quicinc.com>
+        Fri, 7 Jul 2023 08:37:01 -0400
+X-Greylist: delayed 1929 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 07 Jul 2023 05:36:59 PDT
+Received: from nicole.computer-surgery.co.uk (mail.computer-surgery.co.uk [82.69.253.61])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEA2319B2;
+        Fri,  7 Jul 2023 05:36:59 -0700 (PDT)
+Received: from roger by nicole.computer-surgery.co.uk with local (Exim 4.92)
+        (envelope-from <roger@computer-surgery.co.uk>)
+        id 1qHkCb-0008QO-BX; Fri, 07 Jul 2023 13:04:45 +0100
+Date:   Fri, 7 Jul 2023 13:04:45 +0100
+From:   Roger Gammans <rgammans@gammascience.co.uk>
+To:     Chris Lu <chris.lu@mediatek.com>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Von Dentz <luiz.dentz@gmail.com>,
+        Sean Wang <sean.wang@mediatek.com>,
+        Aaron Hou <aaron.hou@mediatek.com>,
+        Steve Lee <steve.lee@mediatek.com>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        linux-mediatek <linux-mediatek@lists.infradead.org>
+Subject: Re: [PATCH v3 1/2] Bluetooth: btusb: Add new VID/PID 0489/e102 for
+ MT7922
+Message-ID: <20230707120444.GA32181@computer-surgery.co.uk>
+References: <20230707062959.30371-1-chris.lu@mediatek.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230707113645.10673-1-quic_tjiang@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20230707062959.30371-1-chris.lu@mediatek.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,KHOP_HELO_FCRDNS,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,19 +49,59 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Fri, Jul 07, 2023 at 07:36:45PM +0800, Tim Jiang wrote:
-> This patch adds support for QCA2066 firmware patch and NVM downloading.
-> as the RF performance of QCA2066 SOC chip from different foundries may
-> vary. Therefore we use different NVM to configure them based on board ID.
-> 
-> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
-> ---
+On Fri, Jul 07, 2023 at 02:29:58PM +0800, Chris Lu wrote:
+> Add VID 0489 & PID e102 for MediaTek MT7922 USB Bluetooth chip.
+>
 
-There is still no changelog here as I explicitly asked you to add.
+I've been testing a similar patch here for 0489/e0f1, which is the
+vid/pid I see on m my Dell Inspiron laptop.
 
-You also did not CC all people who have been reviewing your previous
-attempts.
+Dev info is:
+T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=02 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e0f1 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-If you don't listen to feedback you will never get your patches merged.
+I've only tested with keyboard/mice HID devices so far, is that 
+good enough?
 
-Johan
+Also, do you want me to send a patch or is this enough info ?
+
+-- 
+Roger Gammans
+
