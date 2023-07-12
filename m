@@ -2,56 +2,58 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDEBA751238
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Jul 2023 23:10:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B88275128B
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Jul 2023 23:20:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232490AbjGLVKd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 12 Jul 2023 17:10:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35596 "EHLO
+        id S232490AbjGLVU2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 12 Jul 2023 17:20:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232252AbjGLVKb (ORCPT
+        with ESMTP id S232650AbjGLVUZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 12 Jul 2023 17:10:31 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 490971FCD
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jul 2023 14:10:25 -0700 (PDT)
+        Wed, 12 Jul 2023 17:20:25 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB9EE1FD2;
+        Wed, 12 Jul 2023 14:20:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BA54C61946
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jul 2023 21:10:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2259BC433CA;
-        Wed, 12 Jul 2023 21:10:24 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 89C7761948;
+        Wed, 12 Jul 2023 21:20:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EA043C433C9;
+        Wed, 12 Jul 2023 21:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689196224;
-        bh=mjetRKcA26BEvsmiifj2y4y6okeiEmfHUeFuRyBbvew=;
+        s=k20201202; t=1689196824;
+        bh=XzpCV7L+ggi2pYIN4/kiBvQmtWkPa45z6Dp7ndAAo+k=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=E/ju7YrxE+u/6zU6aE5bDqUo3yi2V0UQepyODcknIyVFbzUpyPNvU5MsHL/p8VWIL
-         joAr78b9gbJACOwOb7g9zFio/DXlMFxwmEWrr0OAjiVp27LnwBaVC2aWjT65dPqBYC
-         7e/DHivAOY11yHeGR9YO7kjUXXpsl1oYJWCPzviF9Xk8bYRTBgAaJsgNv3m658fBmy
-         VMASD/ioN0By3+TJK+GSgJ4EtB7CRmINfXbcpjafeZdmRVOQhiVN6gToQ6LML4NrzB
-         SVqqLUX8ozOGgGBftjpPtE53X3edfalmGsntndjY5Lbqbg50XgSdMzuvrvb2dH2IEb
-         F406Baw0diXuw==
+        b=G4jiPgBvxdyFZPGbgupHO3CJPAduRRUe09GOZGO7Fh/T6AoOvp6uF3ZYViA/iTS/9
+         g8on4Y9rkrwubaNg7bWV2oYZRI1D1w5LHmK1F7mH9EKAG+fuMS5HbRn7rGHb2MehDv
+         wAMcbMgcMblApF1B4nOVxcJ7hLPYESL8os7Ub1XdwtYHKFBXRHB/FeY/1gI6NzHf5n
+         coRm/n/ucNVEIwGu4Rtdm5LD2/P4R87y0w/UAdiHLLJ/iE+/LS91u219tneE1pUsZf
+         RRZUsSUZ18cjbk/nAjUX/x7LI32QLUmmCCiLOxP7QoHoeXAqrArcnB2eQn8Lo/XW8q
+         WJ+aXHrsmI33Q==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 04F18E4D010;
-        Wed, 12 Jul 2023 21:10:24 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CE88AC04E32;
+        Wed, 12 Jul 2023 21:20:23 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: SCO: fix sco_conn related locking and validity
- issues
+Subject: Re: [PATCH] Bluetooth: hci_ldisc: check HCI_UART_PROTO_READY flag in
+ HCIUARTGETPROTO
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168919622401.11357.16209979465018497480.git-patchwork-notify@kernel.org>
-Date:   Wed, 12 Jul 2023 21:10:24 +0000
-References: <490b5c6a0e13047fd1bea42d3184b46623adc359.1689003801.git.pav@iki.fi>
-In-Reply-To: <490b5c6a0e13047fd1bea42d3184b46623adc359.1689003801.git.pav@iki.fi>
-To:     Pauli Virtanen <pav@iki.fi>
-Cc:     linux-bluetooth@vger.kernel.org, pobrn@protonmail.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Message-Id: <168919682384.17000.13075790266021679958.git-patchwork-notify@kernel.org>
+Date:   Wed, 12 Jul 2023 21:20:23 +0000
+References: <20230710151723.15617-1-jlee@suse.com>
+In-Reply-To: <20230710151723.15617-1-jlee@suse.com>
+To:     Lee@ci.codeaurora.org, Chun-Yi <joeyli.kernel@gmail.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        yhao016@ucr.edu, jlee@suse.com
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -63,19 +65,19 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 10 Jul 2023 19:48:19 +0300 you wrote:
-> Operations that check/update sk_state and access conn should hold
-> lock_sock, otherwise they can race.
+On Mon, 10 Jul 2023 23:17:23 +0800 you wrote:
+> This patch adds code to check HCI_UART_PROTO_READY flag before
+> accessing hci_uart->proto. It fixs the race condition in
+> hci_uart_tty_ioctl() between HCIUARTSETPROTO and HCIUARTGETPROTO.
+> This issue bug found by Yu Hao and Weiteng Chen:
 > 
-> The order of taking locks is hci_dev_lock > lock_sock > sco_conn_lock,
-> which is how it is in connect/disconnect_cfm -> sco_conn_del ->
-> sco_chan_del.
+> BUG: general protection fault in hci_uart_tty_ioctl [1]
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: SCO: fix sco_conn related locking and validity issues
-    https://git.kernel.org/bluetooth/bluetooth-next/c/23ba0a1d51bd
+  - Bluetooth: hci_ldisc: check HCI_UART_PROTO_READY flag in HCIUARTGETPROTO
+    https://git.kernel.org/bluetooth/bluetooth-next/c/ff1b86784849
 
 You are awesome, thank you!
 -- 
