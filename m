@@ -2,91 +2,104 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B04FE75145B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jul 2023 01:17:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49A52751428
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jul 2023 01:11:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233270AbjGLXRx (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 12 Jul 2023 19:17:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33378 "EHLO
+        id S232052AbjGLXLy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 12 Jul 2023 19:11:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233268AbjGLXRd (ORCPT
+        with ESMTP id S231144AbjGLXLx (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 12 Jul 2023 19:17:33 -0400
-X-Greylist: delayed 504 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 12 Jul 2023 16:16:54 PDT
-Received: from qs51p00im-qukt01072702.me.com (qs51p00im-qukt01072702.me.com [17.57.155.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6B0E2703
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jul 2023 16:16:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1689203309;
-        bh=XhwDSPgzFYYtLQ+xsSBfgW1YWK6L8CKR9neCgOZCqCY=;
-        h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type;
-        b=xUlkPy1dfEeoryOQ3dyz84vrtMdMNF3uARdK/OSNhzNgKhx50quH6NRbMbUEBAJ5b
-         FhAxpkmTnznjXinEf0qtD29arEse9mcgjXNVotrEA7V6aUENCiUVEWpJKN5YwdgFqV
-         6ojDwjpi0x7PR0Vv1WKXKQZHPiNqwD5wbMaxKxNTGxtjEUCXOU6DeG1bgHDFq51kuW
-         1Zycw8EAE2djymwJTCabElTaYAS1u2Z7waA99qEbHFvUo55eY2I0Xj9fymMr+uMRxP
-         b+4fN1Lpz+UK+p3HK9jw8jcrsNHZNqR1bNJk2bkUWpwJhYl7ZyZphsaUDey0yHSrjE
-         w/I8m0ipLTsVg==
-Received: from [192.168.61.156] (qs51p00im-dlb-asmtp-mailmevip.me.com [17.57.155.28])
-        by qs51p00im-qukt01072702.me.com (Postfix) with ESMTPSA id C2A74168008A;
-        Wed, 12 Jul 2023 23:08:28 +0000 (UTC)
-Message-ID: <370f0784-05c2-a36d-bfe8-f5159aeb8729@icloud.com>
-Date:   Wed, 12 Jul 2023 19:08:27 -0400
+        Wed, 12 Jul 2023 19:11:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3643319B
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jul 2023 16:11:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C38BF61986
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jul 2023 23:11:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 26B17C433C7
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jul 2023 23:11:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689203511;
+        bh=2dQXb+orygkP7VWpl2KDFER8ZF0wEwtXrX1RRF6FyeA=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=kqk68GRx3STv7NPjDN3v9PJwFjE8THIrzAsq5rtX5/HHMFpQf1PlDIhrrc9q4ssIv
+         LvGh3ZbHaT9ho7bs6bY1Uq7yftMKQFZu+TOaT4wVMQxagkaUayH247hcpOP8jgNIDk
+         8QUnUQ41SBiXgE7ZRvZ90huaq7Il2PbfYHd1q+NE8019l6r86RbzT6R+d17ZqMhpx9
+         7iO3L+cRSSV9J7DoPwE8fBoOwHWK7s5LgyKdVGB3paS0TQgkGbTSsb7+PKPlfAAAiO
+         bViADDxCjNazwiXscCQgxPsVzyhNBJe6kh4z5MXCl24FsREyXBc0bO9HxfNRU4j6Dj
+         pQ0/yo/KWRLHQ==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 0C095C53BD1; Wed, 12 Jul 2023 23:11:51 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 216936] First attempt to upload firmware for Intel Bluetooth
+ fails (a timing issue?)
+Date:   Wed, 12 Jul 2023 23:11:50 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: espritlibre@yadim.dismail.de
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-216936-62941-hQFltOX1OV@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-216936-62941@https.bugzilla.kernel.org/>
+References: <bug-216936-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Content-Language: en-US
-To:     "tomasz.mon@nordicsemi.noluiz.von.dentz"@intel.com
-From:   John Holland <johnbholland@icloud.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: bluetooth broken in Intel Macbook 2014
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: i8VweLpzmhiGRJ5gmGa8hOFhgMFevfGu
-X-Proofpoint-GUID: i8VweLpzmhiGRJ5gmGa8hOFhgMFevfGu
-X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
- =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.790,17.0.605.474.0000000_definitions?=
- =?UTF-8?Q?=3D2022-01-12=5F02:2020-02-14=5F02,2022-01-12=5F02,2020-01-23?=
- =?UTF-8?Q?=5F02_signatures=3D0?=
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 clxscore=1011
- phishscore=0 spamscore=0 malwarescore=0 mlxscore=0 adultscore=0
- suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2307120204
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D216936
 
-I've had my first attempt at kernel development in trying to fix a 
-problem with newer kernels and the bluetooth in my Macbook Pro (2014 
-vintage). I did the bisecting and found that the commit below seems to 
-be the culprit.
+--- Comment #15 from espritlibre (espritlibre@yadim.dismail.de) ---
+sorry! forget what i wrote, 5.19.11 seems to be bad too...
 
+i think this could be a race condition between user space and kernel. becau=
+se i
+start my notbeook always in flight mode, in my case it's gnome/wayland. whe=
+n i
+turn off flight mode, the bluetooth firmware gets loaded.
 
-commit c13380a55522bf14e54779a142487c224509db95
-Author: Tomasz Moń <tomasz.mon@nordicsemi.no>
-Date:   Tue Feb 7 12:57:41 2023 +0100
+if i turn flight mode off and quickly on again, so the firmware download ge=
+ts
+interrupted and results in a:
+kernel: Bluetooth: hci0: FW download error recovery failed (-19)
+most of the time
 
-    Bluetooth: btusb: Do not require hardcoded interface numbers
-......
+or:
+kernel: Bluetooth: hci0: FW download error recovery failed (-108)
 
-Reverting this change in both 6.3 and 6.5 restores my ability to use the 
-Bluetooth in this Mac. I created a bug in bugzilla for it.
+i think on boot, the kernel trys to upload the firmware and then the flight
+mode kicks in, resulting in the error, sometimes. i need to pay more attent=
+ion
+and not use flight mode and see if the error appears again.
 
+--=20
+You may reply to this email to add a comment.
 
-This is new to me, I'm a retired application developer. I hope this is 
-close enough to the correct process. Thanks,
-
-John Holland
-
-
-
-https://bugzilla.kernel.org/show_bug.cgi?id=217651
-
+You are receiving this mail because:
+You are the assignee for the bug.=
