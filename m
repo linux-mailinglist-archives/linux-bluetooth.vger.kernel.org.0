@@ -2,44 +2,44 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAE0D751837
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jul 2023 07:36:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54D11751849
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jul 2023 07:45:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233679AbjGMFgN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 13 Jul 2023 01:36:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59392 "EHLO
+        id S233454AbjGMFpc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 13 Jul 2023 01:45:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233269AbjGMFgM (ORCPT
+        with ESMTP id S232348AbjGMFpa (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 13 Jul 2023 01:36:12 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BD901BDA
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jul 2023 22:36:10 -0700 (PDT)
+        Thu, 13 Jul 2023 01:45:30 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A216E65
+        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Jul 2023 22:45:30 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0DB7061A21
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jul 2023 05:36:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6E407C433CA
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jul 2023 05:36:09 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CD0A3619DD
+        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jul 2023 05:45:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 42B60C433C9
+        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jul 2023 05:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689226569;
-        bh=Uyj9ae9GamqviC0EztyAzfrvWTRmPOS0CnW7JCDc9EA=;
+        s=k20201202; t=1689227129;
+        bh=D2MrYUYzwLlFDLeG8y1gqmiNuYbN7hORq8F+puOFEcg=;
         h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=lK/lYqxjD1HvSjvs1I0UxEd9oZt+FUmcRsDcc3kLW5LYwLqsHqKgcXVrZ1MCE3yaK
-         xaAgSqBdJc+sfHzcVLe9e+uKIxpylo9kdY4rU8rUK/NImEDmOvnu18VUNN9cZJpimx
-         uaHDXVdTXGitVUE6zD8DpnDmUJZHDy7cDumOmmu3NwKWMzGPoW1hc6b3Bslhy6gcXi
-         ZrQts5ubpyyMQoNxY09xvNoJz0nngCO5l+UGmWx4nagxepHlIhNzf55F5RY3vwtcGP
-         KXNWePpUtEc3m1U56WX/sgEIK561HnWYbAgK6LCK5oJsY4x+JGdUWxUTI1j+tD259g
-         YQNLIe1paPHGA==
+        b=J72fdYZqIoYnY8qlp5CRfSkYFxSLARyocNIQclZtbhimUyHhUB/UUOeggmIxFycL3
+         aV52TSrpsIuc8FSAhlH6DOOz5O5JfK32RDUxbbhhx5oFoszCo7xBBUWtnaNZVZeGkE
+         VCTRyhw4tqNkzUaqGFmOuWsiYxRbp40Em0NNS8lzUqbSBwAPCanSTFTLUjp2gAuTb4
+         mZrMOxDqLwqMup/ptnXxhaBLAClFLZY857ettTHLYfaiESVU8f+IYm80BXlAwIm0zF
+         fxC3+12DCEcqDn+DuBDC9nsNm5VB4zbrLu7LES9o1ENJVwXEf3ko/zlSEj73GINhoJ
+         R6BAqjrdsy6Ew==
 Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id 54F55C53BD2; Thu, 13 Jul 2023 05:36:09 +0000 (UTC)
+        id 3380DC53BD2; Thu, 13 Jul 2023 05:45:29 +0000 (UTC)
 From:   bugzilla-daemon@kernel.org
 To:     linux-bluetooth@vger.kernel.org
 Subject: [Bug 217651] BCM20702B0  Bluetooth device in MacBook no longer
  working
-Date:   Thu, 13 Jul 2023 05:36:09 +0000
+Date:   Thu, 13 Jul 2023 05:45:28 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -54,8 +54,8 @@ X-Bugzilla-Resolution:
 X-Bugzilla-Priority: P3
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-217651-62941-aojsngzmZX@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-217651-62941-RkBcMY1icy@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-217651-62941@https.bugzilla.kernel.org/>
 References: <bug-217651-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -63,8 +63,8 @@ Content-Transfer-Encoding: quoted-printable
 X-Bugzilla-URL: https://bugzilla.kernel.org/
 Auto-Submitted: auto-generated
 MIME-Version: 1.0
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,14 +75,32 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D217651
 
-Tomasz Mo=C5=84 (desowin@gmail.com) changed:
+--- Comment #17 from Tomasz Mo=C5=84 (desowin@gmail.com) ---
+I think I understand the issue now, but the lsusb output would confirm it.
+Before my patch, the driver would allow both interface 0 and 2, after it on=
+ly
+interface 2 is allowed for devices with BTUSB_IFNUM_2 flag set.
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |desowin@gmail.com
+I see two potential solutions:
+  1. Remove the check completely
+  2. Change the if condition to allow both interface 0 and 2.
 
---- Comment #16 from Tomasz Mo=C5=84 (desowin@gmail.com) ---
-Could you please attach "lsusb -d 05ac: -v" output?
+For the second solution, please try following patch:
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 5ec4ad0a5c86..46844194f54e 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -4104,7 +4104,8 @@ static int btusb_probe(struct usb_interface *intf,
+        BT_DBG("intf %p id %p", intf, id);
+
+        if ((id->driver_info & BTUSB_IFNUM_2) &&
+-           (intf->cur_altsetting->desc.bInterfaceNumber !=3D 2))
++           ((intf->cur_altsetting->desc.bInterfaceNumber !=3D 0) ||
++            (intf->cur_altsetting->desc.bInterfaceNumber !=3D 2))
+                return -ENODEV;
+
+        ifnum_base =3D intf->cur_altsetting->desc.bInterfaceNumber;
 
 --=20
 You may reply to this email to add a comment.
