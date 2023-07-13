@@ -2,87 +2,123 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F148752AFA
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jul 2023 21:31:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F32BF752B60
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jul 2023 22:10:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233139AbjGMTbT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 13 Jul 2023 15:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35006 "EHLO
+        id S233666AbjGMUK1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 13 Jul 2023 16:10:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231745AbjGMTbS (ORCPT
+        with ESMTP id S233601AbjGMUKY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 13 Jul 2023 15:31:18 -0400
-Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09842D68
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jul 2023 12:31:16 -0700 (PDT)
-Received: from github.com (hubbernetes-node-2a8587f.ash1-iad.github.net [10.56.149.37])
-        by smtp.github.com (Postfix) with ESMTPA id E8DF81010CB
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jul 2023 12:31:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-        s=pf2023; t=1689276675;
-        bh=92Bw0Ak3cUj7C+IuSV92+7IzTC1tP+2DlZ4Wk8fKeI0=;
-        h=Date:From:To:Subject:From;
-        b=JDyC/RWk3ALZdb428EXjvaCLYrsOyunjRBReyZt/+30Gw5SWNBquywMvF3tjTEOmK
-         eYXRttDOff17iCIQVs2FDIjpV/JFriXHHEeyUlvpwTfuUmvlzfJTLpZyl2bgs2IC6K
-         Yjj0myX945O2Ht1xgAnDSQVcP3C1H68QElndUvbA=
-Date:   Thu, 13 Jul 2023 12:31:15 -0700
-From:   Pauli Virtanen <noreply@github.com>
-To:     linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/c62a4c-9aff3f@github.com>
-Subject: [bluez/bluez] 7cea6b: test-runner: set non-quiet printk before
- running t...
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+        Thu, 13 Jul 2023 16:10:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27219270A;
+        Thu, 13 Jul 2023 13:10:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AD31661B60;
+        Thu, 13 Jul 2023 20:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1A348C433C9;
+        Thu, 13 Jul 2023 20:10:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689279022;
+        bh=Vd69UnBMvNxkGVnrm8VAbe2niEVf8MQoM3flkrP2Mwg=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=ry31bvQCUMTGpltWNCWm+i8gT81OJgHFD8sWLHgzlbFDYVabFOBCS7PvY5kc1yqtU
+         H8N1k0zNorxr6GndVvVu0horqnrCgj9hQ9rWviIEvFBIC/4ZMjmpm9vrzg/87rYXyg
+         oIfxDB7O+j25GSrP/cXOjmuv+a1OHlWLqu+U2lto6YCqILbgrijX1uIn7a6x+bdi/D
+         6UYUn8aQTLRDEZgl77sE90a2ABAJfLn9vrshP0YaaeIlP7qxPA4CWOMpxYVmgBtSpt
+         CbBkneDhpVKI5QCN1HQoPypUne3syXGfnAU9HZA+4y4HK7+9CU93AAspCu2a569me3
+         xMnDsMsDAHBVg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id EEE8CE4D006;
+        Thu, 13 Jul 2023 20:10:21 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2] Bluetooth: btusb: Add support for another MediaTek 7922
+ VID/PID
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <168927902197.26469.16922399141053596083.git-patchwork-notify@kernel.org>
+Date:   Thu, 13 Jul 2023 20:10:21 +0000
+References: <20230712213602.15280-1-rgammans@gammascience.co.uk>
+In-Reply-To: <20230712213602.15280-1-rgammans@gammascience.co.uk>
+To:     Roger Gammans <rgammans@gammascience.co.uk>
+Cc:     luiz.dentz@gmail.com, johan.hedberg@gmail.com, marcel@holtmann.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: 7cea6b964119747925312a7a00ff217021d6c4a1
-      https://github.com/bluez/bluez/commit/7cea6b964119747925312a7a00ff217021d6c4a1
-  Author: Pauli Virtanen <pav@iki.fi>
-  Date:   2023-07-13 (Thu, 13 Jul 2023)
+Hello:
 
-  Changed paths:
-    M tools/test-runner.c
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-  Log Message:
-  -----------
-  test-runner: set non-quiet printk before running tests
+On Wed, 12 Jul 2023 22:36:02 +0100 you wrote:
+> This one is found on the Dell Inspiron 2-in-1 7435
+> 
+> The information in /sys/kernel/debug/usb/devices about the Bluetooth
+> device is listed as the below.
+> 
+> T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+> D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+> P:  Vendor=0489 ProdID=e0f1 Rev= 1.00
+> S:  Manufacturer=MediaTek Inc.
+> S:  Product=Wireless_Device
+> S:  SerialNumber=000000000
+> C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+> A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+> E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+> E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+> I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+> E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+> E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+> I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+> E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+> E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+> 
+> [...]
 
-It is useful to see WARN_ON etc. messages when running the tests.
+Here is the summary with links:
+  - [v2] Bluetooth: btusb: Add support for another MediaTek 7922 VID/PID
+    https://git.kernel.org/bluetooth/bluetooth-next/c/ce13b87737a8
 
-The 'quiet' in cmdline suppresses levels >= WARN, so re-enable them
-explicitly after boot, so that it is on by default and doesn't need to
-be handled in local test scripts.
-
-
-  Commit: 9aff3f4941426d6a79d08404e1fe36767eadd0fd
-      https://github.com/bluez/bluez/commit/9aff3f4941426d6a79d08404e1fe36767eadd0fd
-  Author: Pauli Virtanen <pav@iki.fi>
-  Date:   2023-07-13 (Thu, 13 Jul 2023)
-
-  Changed paths:
-    M tools/test-runner.c
-
-  Log Message:
-  -----------
-  test-runner: fix behavior when no audio server
-
-If no audio server, don't pass NULL to printf and parse TESTAUDIO
-correctly.
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-Compare: https://github.com/bluez/bluez/compare/c62a4cb55183...9aff3f494142
