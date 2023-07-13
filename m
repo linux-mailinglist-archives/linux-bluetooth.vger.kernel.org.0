@@ -2,54 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC646752B5F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jul 2023 22:10:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5B08752B61
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jul 2023 22:10:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231279AbjGMUKZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 13 Jul 2023 16:10:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45668 "EHLO
+        id S233603AbjGMUK2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 13 Jul 2023 16:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232912AbjGMUKX (ORCPT
+        with ESMTP id S232017AbjGMUKY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 13 Jul 2023 16:10:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 105AF1720
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jul 2023 13:10:23 -0700 (PDT)
+        Thu, 13 Jul 2023 16:10:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37012273E;
+        Thu, 13 Jul 2023 13:10:23 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9FCBE61B5D
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jul 2023 20:10:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 07429C433CA;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B95F161B63;
+        Thu, 13 Jul 2023 20:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1FAB3C433CD;
         Thu, 13 Jul 2023 20:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1689279022;
-        bh=UMMK3MqMGEcnei/pI+LgVUcWKP7hNJGEf6mAZVt55sw=;
+        bh=/T0RGImw5OHbBJqaqZIGtDVaNfpbb1jTUyvOzVCwqwc=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=FA7gAP1HZV61HnaHSqDDd97bBaXKAAWBS92e5xywPziSOlzOE7HBvcSGfupiZlrXR
-         4ultiQPct38F63l19e8R0V7Y3H14uuX9q753hz4OZGycpyI8XIPz6H+3pLs5BThtEc
-         8Jsj8AhrgQA7vVaQR/lxbL2ahsIc7RKnpH10mmHVfFgNeE1YQW9lXWrwNE7CM3PkbR
-         ys/kliUQijC8G9RuhBeLcd7PoeVORrMxMthz1vGz1x1FRbmlHnsUyABLa91tOtIrSO
-         TITFh/FnaQGsXqP6WJxlMjJy2+yQ/+AfqTLg1RtMTF7ufejPuSJmbaS8ReBi2y26Zn
-         BPZmJx0jrbQdw==
+        b=qptsmUk/s9g37BNrYb553GLnStu/I0oyNyzlTqBV+ZvSkkie6WljdpBaEnUkXiaiV
+         VcHFdVS4aqekHNY8Ym02sxxD7FvT45Neat3KDUUcNIzTlnVIVb/CIliblIZZCGg3IW
+         mJiSO+b9VSu5La1Jv/xK6m/E8Z1vIUQ1oOmug8tmKbXu4qUmtVVaJF9M1zD+epXXwM
+         6qQE7nviXikgLC+OqNftvbF76FaeDKcieg15zpjiL4aVvbuCzRitSH+jYOkhJL9bfm
+         jAtkaoIXdtW4W1GHJMyTKYIpBMTC4y+ZTPPjeiZvv4xZaInXwAaQHUOwxMvvNelosV
+         IjpMwxGrIrlOQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DDB29E4508F;
-        Thu, 13 Jul 2023 20:10:21 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 024D9F83708;
+        Thu, 13 Jul 2023 20:10:22 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [RFC PATCH] Bluetooth: btusb: Fix bluetooth on Intel Macbook 2014
+Subject: Re: [PATCH] Bluetooth: Fix hci_suspend_sync crash
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168927902189.26469.5406966566822603728.git-patchwork-notify@kernel.org>
-Date:   Thu, 13 Jul 2023 20:10:21 +0000
-References: <20230713102514.699277-1-tomasz.mon@nordicsemi.no>
-In-Reply-To: <20230713102514.699277-1-tomasz.mon@nordicsemi.no>
-To:     =?utf-8?q?Tomasz_Mo=C5=84_=3Ctomasz=2Emon=40nordicsemi=2Eno=3E?=@ci.codeaurora.org
-Cc:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com,
-        johan.hedberg@gmail.com, marcel@holtmann.org,
-        johnbholland@icloud.com, carles.cufi@nordicsemi.no,
-        pmenzel@molgen.mpg.de
+Message-Id: <168927902200.26469.6694434190230470998.git-patchwork-notify@kernel.org>
+Date:   Thu, 13 Jul 2023 20:10:22 +0000
+References: <20230705210647.1.I636c21e4dc8fe3352f4d7aef26c0ec3857e24ca0@changeid>
+In-Reply-To: <20230705210647.1.I636c21e4dc8fe3352f4d7aef26c0ec3857e24ca0@changeid>
+To:     Ying Hsu <yinghsu@chromium.org>
+Cc:     linux-bluetooth@vger.kernel.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        johan.hedberg@gmail.com, luiz.dentz@gmail.com, marcel@holtmann.org,
+        linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -65,21 +65,33 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 13 Jul 2023 12:25:14 +0200 you wrote:
-> Commit c13380a55522 ("Bluetooth: btusb: Do not require hardcoded
-> interface numbers") inadvertedly broke bluetooth on Intel Macbook 2014.
-> The intention was to keep behavior intact when BTUSB_IFNUM_2 is set and
-> otherwise allow any interface numbers. The problem is that the new logic
-> condition omits the case where bInterfaceNumber is 0.
-> 
-> Fix BTUSB_IFNUM_2 handling by allowing both interface number 0 and 2
-> when the flag is set.
+On Wed,  5 Jul 2023 21:06:47 +0000 you wrote:
+> If hci_unregister_dev() frees the hci_dev object but hci_suspend_notifier
+> may still be accessing it, it can cause the program to crash.
+> Here's the call trace:
+>   <4>[102152.653246] Call Trace:
+>   <4>[102152.653254]  hci_suspend_sync+0x109/0x301 [bluetooth]
+>   <4>[102152.653259]  hci_suspend_dev+0x78/0xcd [bluetooth]
+>   <4>[102152.653263]  hci_suspend_notifier+0x42/0x7a [bluetooth]
+>   <4>[102152.653268]  notifier_call_chain+0x43/0x6b
+>   <4>[102152.653271]  __blocking_notifier_call_chain+0x48/0x69
+>   <4>[102152.653273]  __pm_notifier_call_chain+0x22/0x39
+>   <4>[102152.653276]  pm_suspend+0x287/0x57c
+>   <4>[102152.653278]  state_store+0xae/0xe5
+>   <4>[102152.653281]  kernfs_fop_write+0x109/0x173
+>   <4>[102152.653284]  __vfs_write+0x16f/0x1a2
+>   <4>[102152.653287]  ? selinux_file_permission+0xca/0x16f
+>   <4>[102152.653289]  ? security_file_permission+0x36/0x109
+>   <4>[102152.653291]  vfs_write+0x114/0x21d
+>   <4>[102152.653293]  __x64_sys_write+0x7b/0xdb
+>   <4>[102152.653296]  do_syscall_64+0x59/0x194
+>   <4>[102152.653299]  entry_SYSCALL_64_after_hwframe+0x5c/0xc1
 > 
 > [...]
 
 Here is the summary with links:
-  - [RFC] Bluetooth: btusb: Fix bluetooth on Intel Macbook 2014
-    https://git.kernel.org/bluetooth/bluetooth-next/c/f0408f0a1998
+  - Bluetooth: Fix hci_suspend_sync crash
+    https://git.kernel.org/bluetooth/bluetooth-next/c/0c9bf63ad8ca
 
 You are awesome, thank you!
 -- 
