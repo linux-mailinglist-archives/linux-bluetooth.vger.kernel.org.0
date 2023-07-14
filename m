@@ -2,246 +2,140 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E1B2754269
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Jul 2023 20:15:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 526237542C1
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 14 Jul 2023 20:44:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236743AbjGNSPe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 14 Jul 2023 14:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35204 "EHLO
+        id S236470AbjGNSop (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 14 Jul 2023 14:44:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236002AbjGNSP3 (ORCPT
+        with ESMTP id S236238AbjGNSoo (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 14 Jul 2023 14:15:29 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCDA62722
-        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Jul 2023 11:15:06 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-68336d06620so2151316b3a.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 14 Jul 2023 11:15:06 -0700 (PDT)
+        Fri, 14 Jul 2023 14:44:44 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6CBA2D73;
+        Fri, 14 Jul 2023 11:44:42 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b703c900e3so34370531fa.1;
+        Fri, 14 Jul 2023 11:44:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689358504; x=1691950504;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vJVdFSWCiQFyuKHB74EapuxZyjnN4YRnz/xUvxkXk0M=;
-        b=PUdGa+3j3XrQmrX+yTo8XATd7JpGrmKlQ41E+r011+MQo4hjENbsJ0vHx0rxqvjqr4
-         TRASTkDHMcQ99OdgbDBD8zbJ1tR61tUnOJb2C6Xngr4DxiP68cU9eDkyoZTIoS+9Unjg
-         vGAyC3SwFCowiWfw9e6rCno/ZXAZXIi+UJJ5JgBrZHsyOwFyJxdJP60SA63gxsKf8SX4
-         g0WrJ3xeKua03ceNHG5023W27lUdtrrw3jvpAJAKBMSccKMEcqa8v4k8d1oQO3KTi2Qc
-         0FepLX40s2mIbAihrFsZqVGV1vE2pwPXg7LM1d00pmEjTtqeC7Q9zbNXeb+YZ6WYtncV
-         CblQ==
+        d=gmail.com; s=20221208; t=1689360281; x=1691952281;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WiTiOlt1XJQdn9IJyzeR6Oi5H77aLqIo6gLSmte40zI=;
+        b=p9AAAy3rgXf65E73pctjyNfEgeN4qk6ux4LaxWDYTVUvmSODWPIFotDGeL3oG128jQ
+         OeV3xi63nQF5pj+karbgcpObwLP2pws8c6xHXI+8xvQcg+ArUMxjzZA4Letr2Rdyv2BR
+         +leYH0cFIrYys62GIKQ1gcoGawmTrxmhO6Gy3JjzDzzTVG+6FX46snBBD81IiVhRPMw7
+         kfscja15OANNaq797N3w6iAPk7G+uthHM157uBP87vK8XUYjbfbO4AbVr5J9hDwmkYws
+         /8L72/5alvUgmD+lGlwyZnt8sl3rjR9m+Mx+4NY1PUmvj4yTYawIHncNxRGCCXNK8fTk
+         FDsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689358504; x=1691950504;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1689360281; x=1691952281;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vJVdFSWCiQFyuKHB74EapuxZyjnN4YRnz/xUvxkXk0M=;
-        b=XJaVX2vB/lDhhaO0vZVXWs100KZgOQpL+c05vlArAlvyYJYvC/cHfhD9nh4zekaq6Y
-         vD0rTrnVY2VINTFaxtQrK1DDImcfCLjmu+dB0BAldJvhSrUsDSiQz6xHJQgrSdWJfugZ
-         C0N4rLv8YLLlJN2TjUoBA6QuzHGRdGxCrC0oaby0+TP9E8R1ty/TVc4NaK2saAmXmp2+
-         nD3BdL5yLeMPWiNuEToRhtZUSmSatbAOHM8uufjhlXRoR0eYOLGWs47LKVV2CIuYjfP2
-         ZC82475l0MBHOEDZwF7h9Auz+cXGfgx647JqHzMGoWrl+QQFTJFT6kYMFBk92yV2eLBj
-         N0uA==
-X-Gm-Message-State: ABy/qLadwMSX4+48NbXsL2wo15UTmcBpg5gtX3vZ8MHDprIByBL6e+5Y
-        OegaaWj3q46jsfLbd7boOTNCuo0+wbk=
-X-Google-Smtp-Source: APBJJlGnP97MIk4BLjBKN9TkSvarz+n/odAUJJL/Oher5nsNgq/ECSzKoNoWvUyVlMiJ8BigasM4WQ==
-X-Received: by 2002:a05:6a20:8e0a:b0:12f:bc36:4c67 with SMTP id y10-20020a056a208e0a00b0012fbc364c67mr6327739pzj.61.1689358504544;
-        Fri, 14 Jul 2023 11:15:04 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-236-201-58.hsd1.or.comcast.net. [71.236.201.58])
-        by smtp.gmail.com with ESMTPSA id bt19-20020a632913000000b0054ff075fb31sm7800508pgb.42.2023.07.14.11.15.03
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jul 2023 11:15:03 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 2/2] iso-tester: Add test for BT_PKT_STATUS sockopt
-Date:   Fri, 14 Jul 2023 11:15:00 -0700
-Message-Id: <20230714181500.2371014-2-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230714181500.2371014-1-luiz.dentz@gmail.com>
-References: <20230714181500.2371014-1-luiz.dentz@gmail.com>
+        bh=WiTiOlt1XJQdn9IJyzeR6Oi5H77aLqIo6gLSmte40zI=;
+        b=X05VmJ1rnvRdeQ1w1jMHTjunTvU2lmyPl+fvmZTLaQZegmv9oxS31Kp7uu+qFoSv0S
+         dlRKfEP9T71tQViJuGUoHYINx35/HSeV/fSia7g2YfPnfbMfK9+UZR0KkryyQsEirX9b
+         /2RoyxoO4r6caieGNy9QdCS8KED1ELEogMLty30gfKrHqguhegfeeILVvxFiNLyyV2k7
+         wsIYFpQvWF/ndaZ0CXza0JyOU3KjmFBZOPYvxAxsGGtXT6pJKohDyokSEk6qWwWCrmNE
+         3/Y62kMUEouOS8U6nTBPt1MYxI7v5sGHXMICh1NmLrajuc41VTWcYCGb/93u1QeKiE/x
+         a/rA==
+X-Gm-Message-State: ABy/qLZzzldR0lx3jjyywLQRvZzXCSgu8st3U5iOHwQhzH8eTgMMr5f2
+        YYNa7ICpG3w09wz0yjHYB0qayJb9iquaCWxSJdVBN0Jp
+X-Google-Smtp-Source: APBJJlGm/SFvX7efyWMjRgZsQu1iLJu0IQhWMc7tF1WRs2avL8T1CSpVqxAtVKE6x3OdW3Uoq/5YS90f27oxEWOoutE=
+X-Received: by 2002:a05:651c:120c:b0:2b7:344c:a039 with SMTP id
+ i12-20020a05651c120c00b002b7344ca039mr4202216lja.33.1689360280585; Fri, 14
+ Jul 2023 11:44:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230714161210.20969-1-jlee@suse.com>
+In-Reply-To: <20230714161210.20969-1-jlee@suse.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 14 Jul 2023 11:44:28 -0700
+Message-ID: <CABBYNZJ46Lt-Y4OjT7AqXczaGyGoRTzEA0gpG4Z+91GugHwsNw@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: hci_event: Ignore NULL link key
+To:     "Lee, Chun-Yi" <joeyli.kernel@gmail.com>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "David S . Miller" <davem@davemloft.net>,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        "Lee, Chun-Yi" <jlee@suse.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hi Chun-Yi,
 
-This adds a test for setting BT_PKT_STATUS sockopt and checks if
-BT_SCM_PKT_STATUS is properly received.
----
- tools/iso-tester.c | 91 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 89 insertions(+), 2 deletions(-)
+On Fri, Jul 14, 2023 at 9:14=E2=80=AFAM Lee, Chun-Yi <joeyli.kernel@gmail.c=
+om> wrote:
+>
+> This change is used to relieve CVE-2020-26555. The description of the
+> CVE:
+>
+> Bluetooth legacy BR/EDR PIN code pairing in Bluetooth Core Specification
+> 1.0B through 5.2 may permit an unauthenticated nearby device to spoof
+> the BD_ADDR of the peer device to complete pairing without knowledge
+> of the PIN. [1]
+>
+> The detail of this attack is in IEEE paper:
+> BlueMirror: Reflections on Bluetooth Pairing and Provisioning Protocols
+> [2]
+>
+> It's a reflection attack. Base on the paper, attacker can induce the
+> attacked target to generate null link key (zero key) without PIN code.
+>
+> We can ignore null link key in the handler of "Link Key Notification
+> event" to relieve the attack. A similar implementation also shows in
+> btstack project. [3]
+>
+> Closes: https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2020-26555 [=
+1]
+> Closes: https://ieeexplore.ieee.org/abstract/document/9474325/authors#aut=
+hors [2]
+> Closes: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L372=
+2 [3]
 
-diff --git a/tools/iso-tester.c b/tools/iso-tester.c
-index ae3eb684e830..8f43d7becf16 100644
---- a/tools/iso-tester.c
-+++ b/tools/iso-tester.c
-@@ -400,6 +400,7 @@ struct iso_client_data {
- 	bool disconnect;
- 	bool ts;
- 	bool mconn;
-+	uint8_t pkt_status;
- 	const uint8_t *base;
- 	size_t base_len;
- };
-@@ -833,6 +834,14 @@ static const struct iso_client_data listen_16_2_1_recv_ts = {
- 	.ts = true,
- };
- 
-+static const struct iso_client_data listen_16_2_1_recv_pkt_status = {
-+	.qos = QOS_16_2_1,
-+	.expect_err = 0,
-+	.recv = &send_16_2_1,
-+	.server = true,
-+	.pkt_status = 0x02,
-+};
-+
- static const struct iso_client_data defer_16_2_1 = {
- 	.qos = QOS_16_2_1,
- 	.expect_err = 0,
-@@ -1322,6 +1331,7 @@ static void test_setsockopt(const void *test_data)
- 	int sk, err;
- 	socklen_t len;
- 	struct bt_iso_qos qos = QOS_16_1_2;
-+	int pkt_status = 1;
- 
- 	sk = socket(PF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_ISO);
- 	if (sk < 0) {
-@@ -1350,6 +1360,26 @@ static void test_setsockopt(const void *test_data)
- 		goto end;
- 	}
- 
-+	err = setsockopt(sk, SOL_BLUETOOTH, BT_PKT_STATUS, &pkt_status,
-+			 sizeof(pkt_status));
-+	if (err < 0) {
-+		tester_warn("Can't set socket BT_PKT_STATUS option: "
-+				"%s (%d)", strerror(errno), errno);
-+		tester_test_failed();
-+		goto end;
-+	}
-+
-+	len = sizeof(pkt_status);
-+	memset(&pkt_status, 0, len);
-+
-+	err = getsockopt(sk, SOL_BLUETOOTH, BT_PKT_STATUS, &pkt_status, &len);
-+	if (err < 0) {
-+		tester_warn("Can't get socket option : %s (%d)",
-+							strerror(errno), errno);
-+		tester_test_failed();
-+		goto end;
-+	}
-+
- 	tester_test_passed();
- 
- end:
-@@ -1678,12 +1708,24 @@ static gboolean iso_recv_data(GIOChannel *io, GIOCondition cond,
- 	struct test_data *data = user_data;
- 	const struct iso_client_data *isodata = data->test_data;
- 	int sk = g_io_channel_unix_get_fd(io);
-+	unsigned char control[64];
- 	ssize_t ret;
- 	char buf[1024];
-+	struct msghdr msg;
-+	struct iovec iov;
- 
- 	data->io_id[0] = 0;
- 
--	ret = read(sk, buf, isodata->recv->iov_len);
-+	iov.iov_base = buf;
-+	iov.iov_len = isodata->recv->iov_len;
-+
-+	memset(&msg, 0, sizeof(msg));
-+	msg.msg_iov = &iov;
-+	msg.msg_iovlen = 1;
-+	msg.msg_control = control;
-+	msg.msg_controllen = sizeof(control);
-+
-+	ret = recvmsg(sk, &msg, MSG_DONTWAIT);
- 	if (ret < 0 || isodata->recv->iov_len != (size_t) ret) {
- 		tester_warn("Failed to read %zu bytes: %s (%d)",
- 				isodata->recv->iov_len, strerror(errno), errno);
-@@ -1691,6 +1733,35 @@ static gboolean iso_recv_data(GIOChannel *io, GIOCondition cond,
- 		return FALSE;
- 	}
- 
-+	if (isodata->pkt_status) {
-+		struct cmsghdr *cmsg;
-+		uint8_t pkt_status = 0;
-+
-+		for (cmsg = CMSG_FIRSTHDR(&msg); cmsg != NULL;
-+					cmsg = CMSG_NXTHDR(&msg, cmsg)) {
-+			if (cmsg->cmsg_level != SOL_BLUETOOTH)
-+				continue;
-+
-+			if (cmsg->cmsg_type == BT_SCM_PKT_STATUS) {
-+				memcpy(&pkt_status, CMSG_DATA(cmsg),
-+						sizeof(pkt_status));
-+				tester_debug("BT_SCM_PKT_STATUS = 0x%2.2x",
-+							pkt_status);
-+				break;
-+			}
-+		}
-+
-+		if (isodata->pkt_status != pkt_status) {
-+			tester_warn("isodata->pkt_status 0x%2.2x != 0x%2.2x "
-+					"pkt_status", isodata->pkt_status,
-+					pkt_status);
-+			tester_test_failed();
-+		} else
-+			tester_test_passed();
-+
-+		return FALSE;
-+	}
-+
- 	if (memcmp(buf, isodata->recv->iov_base, ret))
- 		tester_test_failed();
- 	else
-@@ -1715,7 +1786,7 @@ static void iso_recv(struct test_data *data, GIOChannel *io)
- 
- 	host = hciemu_client_get_host(data->hciemu);
- 	bthost_send_iso(host, data->handle, isodata->ts, sn++, 0,
--				0x00, isodata->recv, 1);
-+				isodata->pkt_status, isodata->recv, 1);
- 
- 	data->io_id[0] = g_io_add_watch(io, G_IO_IN, iso_recv_data, data);
- }
-@@ -2250,6 +2321,18 @@ static gboolean iso_accept_cb(GIOChannel *io, GIOCondition cond,
- 		return false;
- 	}
- 
-+	if (isodata->pkt_status) {
-+		int opt = 1;
-+
-+		if (setsockopt(new_sk, SOL_BLUETOOTH, BT_PKT_STATUS, &opt,
-+							sizeof(opt)) < 0) {
-+			tester_print("Can't set socket BT_PKT_STATUS option: "
-+					"%s (%d)", strerror(errno), errno);
-+			tester_test_failed();
-+			return false;
-+		}
-+	}
-+
- 	return iso_connect(io, cond, user_data);
- }
- 
-@@ -2448,6 +2531,10 @@ int main(int argc, char *argv[])
- 							setup_powered,
- 							test_listen);
- 
-+	test_iso("ISO Receive Packet Status - Success",
-+						&listen_16_2_1_recv_pkt_status,
-+						setup_powered, test_listen);
-+
- 	test_iso("ISO Defer - Success", &defer_16_2_1, setup_powered,
- 							test_defer);
- 
--- 
-2.40.1
+Shouldn't the last 2 be using Link: instead?
 
+> Signed-off-by: "Lee, Chun-Yi" <jlee@suse.com>
+> ---
+>  net/bluetooth/hci_event.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+> index 95816a938cea..e81b8d6c13ba 100644
+> --- a/net/bluetooth/hci_event.c
+> +++ b/net/bluetooth/hci_event.c
+> @@ -4684,6 +4684,12 @@ static void hci_link_key_notify_evt(struct hci_dev=
+ *hdev, void *data,
+>         bool persistent;
+>         u8 pin_len =3D 0;
+>
+> +       /* Ignore NULL link key against CVE-2020-26555 */
+> +       if (!memcmp(ev->link_key, ZERO_KEY, HCI_LINK_KEY_SIZE)) {
+> +               BT_DBG("Ignore NULL link key (ZERO KEY) for %pMR", &ev->b=
+daddr);
+
+Please use bt_dev_dbg instead.
+
+> +               return;
+> +       }
+> +
+>         bt_dev_dbg(hdev, "");
+>
+>         hci_dev_lock(hdev);
+> --
+> 2.35.3
+>
+
+
+--=20
+Luiz Augusto von Dentz
