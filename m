@@ -2,66 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25AC1756DCF
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Jul 2023 21:57:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CB00756DE5
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Jul 2023 22:00:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231646AbjGQT5C (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 17 Jul 2023 15:57:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48122 "EHLO
+        id S231630AbjGQUA0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 17 Jul 2023 16:00:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229790AbjGQT4z (ORCPT
+        with ESMTP id S231467AbjGQUAZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 17 Jul 2023 15:56:55 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 202211988;
-        Mon, 17 Jul 2023 12:56:34 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b8392076c9so59257711fa.1;
-        Mon, 17 Jul 2023 12:56:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689623790; x=1692215790;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rszA/sUQP4638eSLYjafY6lZFlI8AksGb/kh6alFFEA=;
-        b=aeTY9kvK+dYQYxXtsdHaO8b+QJ4j80pzphbMsecW7Tiz57oAypIW1g0cn/MYZaNhc/
-         6pOxM+uQ3GyHxugdGUgVMZo8LKxz1LHtRLoEKFpE+lXfrrIdr6OY78r4npXJ5nKgn5aS
-         RuFMSekA155UqlThXveJO4vE3AN5HALGvKfd/ErZSQkH1SIcuQyCXpiktEg0hkvttBZd
-         z6KeMZvZJVAf8wgq/Mjj1tQ1KNhvDN+f/tWydNt3msgU4fF/RLmnWn4wx2TkqRUgG5qd
-         At/HdEyh8eGV1AoGhm5YQpZGjpDba/3xv+C9koKheJ7J+7oCtvy8RRxCl5/HfNhbhb3J
-         VmQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689623790; x=1692215790;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rszA/sUQP4638eSLYjafY6lZFlI8AksGb/kh6alFFEA=;
-        b=VRvlSeSItXIQkveGgyNCpD0NHP36EKeLGlpsg9xeHdp5WBBzVGxxmPx8LKXbZkxj78
-         FY4tpS/OeA/V5vdwDITBz/oDaUl5Cz6ncFTB08pjyy3BDx2ZXRMj9wCdLde5hGID8oyD
-         yDhrKmdFKGKObnm3N7/kNl/kHJVroM5C3EBDKKjMoz9+kGAKTWYKvRnRrJ+f5HSRaRa5
-         hoMPjdtppQXga/yDIA3MznM7jWF/UE+OIUxsDUDUR719yQAsewl6IfHf5yQ/nKpgCyas
-         chulR8wMLbl1c7hn4dKHRweXO50y+UDqbydL6SzcR3iJjs5MjOA7p9r4XBNuuft2BMwy
-         tlhg==
-X-Gm-Message-State: ABy/qLbPnTCO9AVJCE83mrfWOf3be+U4rVMBxdnuINBK/bDqYjX4yYh8
-        eeq6DNIGJQu2HeZmD7wsGvFsJ/GYN0neqsT8XgI=
-X-Google-Smtp-Source: APBJJlGzVztlKsF5BOtsKT2Uy4ah+nrOJEhBigkGA3OqTOPCYzou0U07BvCdy+sdP6K5E5Nxea0glBZlUfvMNDnlRJw=
-X-Received: by 2002:a2e:8356:0:b0:2b6:d084:e589 with SMTP id
- l22-20020a2e8356000000b002b6d084e589mr8329844ljh.47.1689623789694; Mon, 17
- Jul 2023 12:56:29 -0700 (PDT)
+        Mon, 17 Jul 2023 16:00:25 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90145C0;
+        Mon, 17 Jul 2023 13:00:24 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 26E2A6123D;
+        Mon, 17 Jul 2023 20:00:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 87CCCC433C9;
+        Mon, 17 Jul 2023 20:00:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689624023;
+        bh=VvUrr/lNy1RoFBlVS4sKFuvySllf8RjVXY1xZwC6b70=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=MZrlWvYUmlwnP1oX+amr5BrJ8tdljFYHzoA9Jy3kbUXjFK5cX1ak8Nqwi2j+uy81P
+         uqk3oBy9Y4oB2Ze2g91CuFNPYQqoJDb2DLEB994tPuT+MM4UXmByZC6+/eNiCVDJ3R
+         cPV61Kq9fkgwzusBnPK1RyuyN3MY+tBN3rT42hHy6aHlCzfTept0U7nA+Q7orxyIMb
+         oi45hH8kXDXs98+ZB+g81AQP6Ek2++I49qqnRnxtKq3P+374oVE36zQ6xAhvRKWepk
+         K/NlaXT93VxoU3IFPssPEgFC5H8Wx9huY0YvJu91RArnE7vDn0LLhCZ9BPOXsDjjil
+         RbU+v8iX/KVgw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 6D747C561EE;
+        Mon, 17 Jul 2023 20:00:23 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <ZLSwfv2pQ5uH6bja@bud-laptop>
-In-Reply-To: <ZLSwfv2pQ5uH6bja@bud-laptop>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Mon, 17 Jul 2023 12:56:17 -0700
-Message-ID: <CABBYNZLvqcO9Bnbr-mFa23yPvKbePSeRk7s9xr5Vfred9hhUTw@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: Add VID/PID 0489/e102 for MediaTek MT7922
-To:     Wes Miser <buddwm@gmail.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v1 1/1] Bluetooth: MGMT: Use correct address for memcpy()
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <168962402343.17606.5289910658256471701.git-patchwork-notify@kernel.org>
+Date:   Mon, 17 Jul 2023 20:00:23 +0000
+References: <20230717093214.82102-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20230717093214.82102-1-andriy.shevchenko@linux.intel.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     luiz.von.dentz@intel.com, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marcel@holtmann.org,
+        johan.hedberg@gmail.com, luiz.dentz@gmail.com
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,40 +59,28 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Wes,
+Hello:
 
-On Sun, Jul 16, 2023 at 8:07=E2=80=AFPM Wes Miser <buddwm@gmail.com> wrote:
->
-> Tested on Acer Swift Edge 16 Notebook
->
-> Signed-off-by: Wes Miser <buddwm@gmail.com>
-> ---
->  drivers/bluetooth/btusb.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 5ec4ad0a5c86..95f43d48f383 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -628,6 +628,9 @@ static const struct usb_device_id blacklist_table[] =
-=3D {
->         { USB_DEVICE(0x0489, 0xe0f2), .driver_info =3D BTUSB_MEDIATEK |
->                                                      BTUSB_WIDEBAND_SPEEC=
-H |
->                                                      BTUSB_VALID_LE_STATE=
-S },
-> +       { USB_DEVICE(0x0489, 0xe102), .driver_info =3D BTUSB_MEDIATEK |
-> +                                                    BTUSB_WIDEBAND_SPEEC=
-H |
-> +                                                    BTUSB_VALID_LE_STATE=
-S },
->
->         /* Additional Realtek 8723AE Bluetooth devices */
->         { USB_DEVICE(0x0930, 0x021d), .driver_info =3D BTUSB_REALTEK },
-> --
-> 2.41.0
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Please include the information from /sys/kernel/debug/usb/devices
+On Mon, 17 Jul 2023 12:32:14 +0300 you wrote:
+> In function ‘fortify_memcpy_chk’,
+>     inlined from ‘get_conn_info_complete’ at net/bluetooth/mgmt.c:7281:2:
+> include/linux/fortify-string.h:592:25: error: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+>   592 |                         __read_overflow2_field(q_size_field, size);
+>       |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> cc1: all warnings being treated as errors
+> 
+> [...]
 
---=20
-Luiz Augusto von Dentz
+Here is the summary with links:
+  - [v1,1/1] Bluetooth: MGMT: Use correct address for memcpy()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/75401514ef1b
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
