@@ -2,54 +2,43 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8512B756DE8
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Jul 2023 22:00:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49C80756DEA
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Jul 2023 22:03:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231467AbjGQUA1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 17 Jul 2023 16:00:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51434 "EHLO
+        id S231630AbjGQUDN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 17 Jul 2023 16:03:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231580AbjGQUA0 (ORCPT
+        with ESMTP id S231886AbjGQUDL (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 17 Jul 2023 16:00:26 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 358EAD8
-        for <linux-bluetooth@vger.kernel.org>; Mon, 17 Jul 2023 13:00:25 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BE4096124D
-        for <linux-bluetooth@vger.kernel.org>; Mon, 17 Jul 2023 20:00:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3505FC433CD;
-        Mon, 17 Jul 2023 20:00:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689624024;
-        bh=qqCclp6mH3eCpPeaNchY0sHJq/k+qt3vOPBd93r9Vv8=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=hPMbXYD9uYbY5qeT3C5bNj+fP1bAUoLh7Qfm4zDHNTRv4CwY0WGNFlXBOBi5Vp5p2
-         6CFDrW0o5UzpCWhSeaKmBAfgWWpgefZoids0+3mkf4m5d/yrkfNs5/OqOj3qTA4E3d
-         zn6wpRPfGK1qNpHM2P22PjcvT5sl6b5wZJOlPYGtPsJ+QFmItjm1z0U0VPuFnaDxc+
-         rNEMOYL7QQ+Vk8oCJmFG+H+I5KchDZiQFnqpq3aLO956aNTTRqOl7COwUkWDpiNI6p
-         qgnJyQt52Loe2Lp1W/0phfVZAR9Jmx/N/+ZRM4ZoNIZoq6vgIPZeI0D1ARvYSDOXun
-         mQsk2NqudJxfw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1F9B4C561EE;
-        Mon, 17 Jul 2023 20:00:24 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 1/2] bthost: Add support to set ISO Packet Status
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <168962402412.17606.7773996611180416035.git-patchwork-notify@kernel.org>
-Date:   Mon, 17 Jul 2023 20:00:24 +0000
-References: <20230714181500.2371014-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230714181500.2371014-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        Mon, 17 Jul 2023 16:03:11 -0400
+Received: from out-18.smtp.github.com (out-18.smtp.github.com [192.30.252.201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CDEC99
+        for <linux-bluetooth@vger.kernel.org>; Mon, 17 Jul 2023 13:03:10 -0700 (PDT)
+Received: from github.com (hubbernetes-node-c2ec55c.va3-iad.github.net [10.48.204.68])
+        by smtp.github.com (Postfix) with ESMTPA id 87E509407A4
+        for <linux-bluetooth@vger.kernel.org>; Mon, 17 Jul 2023 13:03:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2023; t=1689624189;
+        bh=D2ZGGkhvkJOZ0i3IvyLaV4XEQD8fPnikKxugGsBxsBc=;
+        h=Date:From:To:Subject:From;
+        b=MBhV12NLlWr7g9d4m6951WpoxhEq1inCDtu9WH7ZHNNArI5Afd54cj34kKtYT8oTE
+         zi6oin9tCbGCjVapSHBFrxK8YSTHQwg2JR9qmCfZmp8I+hsgnYCeQE6pAo5G0eDSh+
+         VCJQW8DPeq/SRC8ZJoa8bd6AiSGtKWYhRK3YraVA=
+Date:   Mon, 17 Jul 2023 13:03:09 -0700
+From:   Luiz Augusto von Dentz <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/9aff3f-b9e93e@github.com>
+Subject: [bluez/bluez] 92bb38: bthost: Add support to set ISO Packet Status
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,30 +46,93 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 92bb384f5f409517027b315effd66bc776a6ee16
+      https://github.com/bluez/bluez/commit/92bb384f5f409517027b315effd66bc776a6ee16
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2023-07-14 (Fri, 14 Jul 2023)
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M emulator/bthost.c
+    M emulator/bthost.h
+    M tools/iso-tester.c
 
-On Fri, 14 Jul 2023 11:14:59 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> This adds support to set ISO Packet Status to bthost_send_iso.
-> ---
->  emulator/bthost.c  | 12 ++++++------
->  emulator/bthost.h  |  4 ++--
->  tools/iso-tester.c |  2 +-
->  3 files changed, 9 insertions(+), 9 deletions(-)
+  Log Message:
+  -----------
+  bthost: Add support to set ISO Packet Status
 
-Here is the summary with links:
-  - [v2,1/2] bthost: Add support to set ISO Packet Status
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=92bb384f5f40
-  - [v2,2/2] iso-tester: Add test for BT_PKT_STATUS sockopt
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=17b229e8e451
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+This adds support to set ISO Packet Status to bthost_send_iso.
 
 
+  Commit: 17b229e8e451da95a7b2fd8a0d9b8fb42b36763b
+      https://github.com/bluez/bluez/commit/17b229e8e451da95a7b2fd8a0d9b8fb42b36763b
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2023-07-14 (Fri, 14 Jul 2023)
+
+  Changed paths:
+    M tools/iso-tester.c
+
+  Log Message:
+  -----------
+  iso-tester: Add test for BT_PKT_STATUS sockopt
+
+This adds a test for setting BT_PKT_STATUS sockopt and checks if
+BT_SCM_PKT_STATUS is properly received.
+
+
+  Commit: 2b063f47ab7044e4c744b51f5d400b77b1ea3b2f
+      https://github.com/bluez/bluez/commit/2b063f47ab7044e4c744b51f5d400b77b1ea3b2f
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2023-07-14 (Fri, 14 Jul 2023)
+
+  Changed paths:
+    M Makefile.tools
+    M client/main.c
+    A client/mgmt.c
+    A client/mgmt.h
+    M tools/btmgmt.c
+
+  Log Message:
+  -----------
+  client: Add support for mgmt submenu
+
+This moves the functionality of btmgmt into client/mgmt.c so its
+commands become available on bluetoothctl via mgmt submenu.
+
+
+  Commit: b9e93e01161cf5392f0cbea3400cfa2dae54643d
+      https://github.com/bluez/bluez/commit/b9e93e01161cf5392f0cbea3400cfa2dae54643d
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2023-07-17 (Mon, 17 Jul 2023)
+
+  Changed paths:
+    M profiles/midi/midi.c
+    M unit/test-midi.c
+
+  Log Message:
+  -----------
+  midi: Fix build errors
+
+This fixes the following build errors:
+
+unit/test-midi.c:541:82: error: function definition is not allowed here
+void compare_events_cb(const struct midi_write_parser *parser,
+					void *user_data) {
+							 ^
+unit/test-midi.c:587:17: error: use of undeclared identifier
+'compare_events_cb'; did you mean 'compare_events'?
+                                     compare_events_cb, &midi_data);
+                                     ^~~~~~~~~~~~~~~~~
+                                     compare_events
+
+profiles/midi/midi.c:61:75: error: function definition is not allowed
+here
+void foreach_cb(const struct midi_write_parser *parser, void *user_data) {
+                                                                         ^
+profiles/midi/midi.c:78:40: error: use of undeclared identifier 'foreach_cb'
+                midi_read_ev(&midi->midi_out, event, foreach_cb, midi);
+                                                     ^
+
+
+Compare: https://github.com/bluez/bluez/compare/9aff3f494142...b9e93e01161c
