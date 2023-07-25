@@ -2,54 +2,68 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FCCA7622A6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Jul 2023 21:50:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 290C17623F9
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Jul 2023 22:54:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229929AbjGYTu2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 25 Jul 2023 15:50:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41080 "EHLO
+        id S230086AbjGYUyO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 25 Jul 2023 16:54:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231379AbjGYTuY (ORCPT
+        with ESMTP id S229953AbjGYUyN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 25 Jul 2023 15:50:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10CE619BF
-        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Jul 2023 12:50:23 -0700 (PDT)
+        Tue, 25 Jul 2023 16:54:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3FB21736
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Jul 2023 13:54:12 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9A6436187E
-        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Jul 2023 19:50:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0219AC433C7;
-        Tue, 25 Jul 2023 19:50:21 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5919761648
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Jul 2023 20:54:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id BB742C433C7
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Jul 2023 20:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690314622;
-        bh=WWgW2I11KrMvPYi46g5snzKXtMTnPXBm99zoOkfaDys=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=E1ygexOVHqApdU/kDNLDULYt/3GntjNH+MQsw2R6UEXmpcXeEoqHFvdHtpN1KLqoA
-         uNys+sO7zC/k7h1xsgdFtiedCu0XkICag5ZF6Owg4S7vzRzCVK0htlCoUUjKDB7s1X
-         hp7hEAaNNNiaxn+1ycxkt2md6NZoeYJ2YU+Lv9vAYOaODW3q43+nw9s4vDAqpPOpQo
-         FkXJ7Fk6B+ZfH0Yfq85Mw5opLa5d2C/L7rbo+Dq9WdmkQTlPpqnwyFc58J2DthKM+6
-         1PHdg67KOWmRavbJJ19vgAQz1yXxw2N+PC1TUEzXdFo6IF/MtVpMlfO1BiroA2VwXO
-         bGlH/NfrqPYgg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D274FC59A4C;
-        Tue, 25 Jul 2023 19:50:21 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        s=k20201202; t=1690318451;
+        bh=klz8lUzIz+CcDlwOwRp+BB4noft+zHlA2xjfvJL7PEk=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=GBFteSdmeIWI4pPjE8yvTQkk9T9/yZqgs192NRws6XMcsoXHKd9FDm6LmQKSNAOJm
+         nde/Hetx5jM0X/81fENVWLTAN58UkUStQeJxnnJFl3rHfFRkIuhovztM5VvQz5O6NB
+         aIpoN5GPY+ORbDzY4lLMh/sSg0gjDn1fZfrq6Hd/Guo//kHdf+8TLVf9Ea1t+AD+9D
+         BuAdm1wzjQF13+v1N92EydVkTXspGV31V1FyCgSFKro2Kzy5CldNAZXSqA6sp3BXyT
+         9QmSoLinzn+MsA94RhmgAc6302o99VIo6IsEW68r37kVFscOTsUFnrA9jHPPoFrvsA
+         XcdqeZVWgOy3Q==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 97908C4332E; Tue, 25 Jul 2023 20:54:11 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 216819] kernel detects Mediatek bluetooth does not work
+Date:   Tue, 25 Jul 2023 20:54:11 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: jeremy53561@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-216819-62941-NNgx9shjV1@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-216819-62941@https.bugzilla.kernel.org/>
+References: <bug-216819-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v3 0/3] Fixed the crash observed with VOCS
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169031462185.19624.11352500926929002201.git-patchwork-notify@kernel.org>
-Date:   Tue, 25 Jul 2023 19:50:21 +0000
-References: <20230725112126.49656-1-nitin.jadhav@nxp.com>
-In-Reply-To: <20230725112126.49656-1-nitin.jadhav@nxp.com>
-To:     Nitin Jadhav <nitin.jadhav@nxp.com>
-Cc:     linux-bluetooth@vger.kernel.org, devyani.godbole@nxp.com,
-        pav@iki.fi, luiz.dentz@gmail.com, sathish.narasimman@intel.com
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -58,32 +72,15 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+https://bugzilla.kernel.org/show_bug.cgi?id=3D216819
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+--- Comment #3 from jeremy (jeremy53561@gmail.com) ---
+This can be closed, fixed with
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?=
+h=3Dv6.5-rc3&id=3D13209415d0e88396d99d346b184864834d70d68a
 
-On Tue, 25 Jul 2023 14:21:23 +0300 you wrote:
-> Hello Maintainers
-> 
-> This series of patch handles the fix for the crash observed with VOCS when trying to pair with LE Audio TWS earbuds and few other issues.
-> 
-> A crash was reported for the following patch by Pauli Virtanen <pav@iki.fi>.
-> Patch Link: https://patchwork.kernel.org/project/bluetooth/patch/20230612133251.194-4-nitin.jadhav@nxp.com/
-> 
-> [...]
+--=20
+You may reply to this email to add a comment.
 
-Here is the summary with links:
-  - [BlueZ,v3,1/3] shared/vcp: Fixed the crash observed with VOCS
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=06ec4f61000a
-  - [BlueZ,v3,2/3] shared/vcp: Fixed issues related to read audio location and descriptor
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=2a0e392b40fa
-  - [BlueZ,v3,3/3] shared/vcp: Corrected handle size to accommodate included service
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=4d714becb7df
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+You are receiving this mail because:
+You are the assignee for the bug.=
