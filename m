@@ -2,52 +2,54 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C595761A6D
+	by mail.lfdr.de (Postfix) with ESMTP id 6CA3F761A6E
 	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Jul 2023 15:48:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231477AbjGYNsT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S231475AbjGYNsT (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Tue, 25 Jul 2023 09:48:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42210 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231623AbjGYNsF (ORCPT
+        with ESMTP id S231664AbjGYNsI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 25 Jul 2023 09:48:05 -0400
-Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-db5eur01on2089.outbound.protection.outlook.com [40.107.15.89])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5639100
-        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Jul 2023 06:48:03 -0700 (PDT)
+        Tue, 25 Jul 2023 09:48:08 -0400
+Received: from EUR04-DB3-obe.outbound.protection.outlook.com (mail-db3eur04on2081.outbound.protection.outlook.com [40.107.6.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 354D4A6
+        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Jul 2023 06:48:07 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gGJCqHIk2XO1PX056nfeX3XyIpMg2GRVamXkkVa5EjZ5+9o8dWpYdVjuTjQ4T93KdO8AEq7bo1CPnLZdkpYGrdfyjcDxMW2bZ5NnqDSno+ubDQLj6yp9yViX2p2c3YBsigpYCQz43sRyqRVgQowJkyPCNYH4pxuWUn9kB/YNgniuGRCL6eD9FQA07RNKwBhe6DeOUB9LbNUn2Tz4D716pE4giGbvzJg7dn9mAs3cwF/OXnGnkEFWhiDvDopz7+K7eKmQl2PK25MemxtLpk2S5/cW60t+NHui41Gj5hXJ/ukJMTxoxEl5h7FFErzHcrf0Zyya/clqhYKT4b2NaN1EEQ==
+ b=Inr9dIYMyDNs2XBjh1oDRQaT/o0phLojmTG/4nUlNB+gGhT/WgPnOfb0ftV4wSFVVoVUsF2A4c2+VeEZVD47GGGMeWreC78JanIbrPkysrbRCDMiQyOP1SYTQI80Ebp25BfO4hTepxJuy1cMVeRCJ6l5ZthmPlJlBsskc6dQndMtujuw5RzP5YxVgdJlsrFjS+CaQdHnLpvn6mw4rWcniiK/Fngv3/t8r5673MyWkxV2J/ktT4Ux2MZfrFu4NjrCWyjkWX+4e927tI0DUH01d1hdoti5CmFULcdP7JKxCiFZHROPmISN8OyFpPggvFTAFBqO17EYBY9Cv1+HbrkNXA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v77dW3Rd1d+ag8HTw0QHLsZXs5kV/QWAiBGcduNZ++I=;
- b=ClJOPyUquKT8STxw6V0opOcCYSkZodzeQxN4OGjZIk2h4uBCYIF7EhU9DsrHk4g53q0Y80dr/eR3FWo6EsSn/nBeU1Y0/5DYS1G4FgneNcCqg3AwfEY6qe1Jv1OO7Amwx3zG3/kJT+oNvAXVrUMk0e/kUW/JQUSKvk0NP25GRT0wg3mdiRF/1J6jC3yTLe2Y5eKLK5q0YZGQlLVY46KyVh72/lnIiv8XhO2qPN6OOcKvzUS69w+EelyEUhNNciCEcnHGWcd7VLxVJX7lwaGPZNcQOEFoBX+IoSOnTYIXz1wmDJ1R+9IoJjrUH5JOeR0N0MeCNQ8TVVo5hZYmvjUD+Q==
+ bh=5e+kH7jbavEfXy2CI+FXctgAclZYu0bRugEzfUjGJ1E=;
+ b=FiA1XHYm6Ip+vwQWoD487S6Da090+v2JKzKGDx4u7ujnKgHDeZqxoaXNAeOt7zRshEnxjrm7KkbxT6kiTI6VI5DfQnMj0imMdi2JUJ0cYVFamc4feePpBf0cKkBzH0+plfgphuVjzgRVhyBkGGlKP/E6BYxQUKn2bb2Nw3kNdOccu4mZmD4vW6dore3g835TIVWF50bbLTIudSfCZIzjrYnhtLJW0gVr9pprZ7MQtJnUliZdNqzFbf7vbwWYcNA/CGlojj7tyf+nRWWD0HmQDqP9InPAOBcIWFrhUnBgtjG4N3MWHxXwggswoHq5Tr7maqzGoLjY+T82kCuHds4c+Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v77dW3Rd1d+ag8HTw0QHLsZXs5kV/QWAiBGcduNZ++I=;
- b=s+3sDu/Rha6hYpSBXKZIRghk9rhTLxCBFhTiVIJRgHUPtCfZWUUCIdq6DXQ2H9/cpShSEVT35M4SMtRJM/msHdPnwg9rkAT1stgpNtKZCw0VaqKsgnIQpolQapFLRR4/Hie/YYkOjiGmjM0faU4hF4vHV4rYjaHPKRfFchPVkvg=
+ bh=5e+kH7jbavEfXy2CI+FXctgAclZYu0bRugEzfUjGJ1E=;
+ b=UJJXfWBdW/DNK/GfWhUc5utjuKUXgQZABu/FYCGhEjuC3bwLKZbc3qalx5J9GP50WlqZDXu8DefkNMCkJyUCwKt72jzTOuIovkZbp/MyqZ5joLOyOvhDsOlhqZec5m84T5C8MUPX8r6YIqZabdjQbUvHiL07lQTq5e19COEntwU=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 Received: from AS8PR04MB9126.eurprd04.prod.outlook.com (2603:10a6:20b:449::16)
  by PAXPR04MB9593.eurprd04.prod.outlook.com (2603:10a6:102:24f::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6609.33; Tue, 25 Jul
- 2023 13:48:01 +0000
+ 2023 13:48:04 +0000
 Received: from AS8PR04MB9126.eurprd04.prod.outlook.com
  ([fe80::273d:f528:aaa9:288]) by AS8PR04MB9126.eurprd04.prod.outlook.com
  ([fe80::273d:f528:aaa9:288%4]) with mapi id 15.20.6609.032; Tue, 25 Jul 2023
- 13:48:01 +0000
+ 13:48:04 +0000
 From:   Nitin Jadhav <nitin.jadhav@nxp.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     devyani.godbole@nxp.com, pav@iki.fi, luiz.dentz@gmail.com,
         sathish.narasimman@intel.com, nitin.jadhav@nxp.com
-Subject: [PATCH BlueZ v4 0/3] Fix the crash observed with VOCS
-Date:   Tue, 25 Jul 2023 16:47:39 +0300
-Message-Id: <20230725134742.51651-1-nitin.jadhav@nxp.com>
+Subject: [PATCH BlueZ v4 1/3] shared/vcp: Fix the crash observed with VOCS
+Date:   Tue, 25 Jul 2023 16:47:40 +0300
+Message-Id: <20230725134742.51651-2-nitin.jadhav@nxp.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230725134742.51651-1-nitin.jadhav@nxp.com>
+References: <20230725134742.51651-1-nitin.jadhav@nxp.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: AS4P189CA0037.EURP189.PROD.OUTLOOK.COM
@@ -56,53 +58,53 @@ X-ClientProxiedBy: AS4P189CA0037.EURP189.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AS8PR04MB9126:EE_|PAXPR04MB9593:EE_
-X-MS-Office365-Filtering-Correlation-Id: f42bb216-6bc0-4990-99d3-08db8d15c304
+X-MS-Office365-Filtering-Correlation-Id: aa9e3cd9-729e-44d7-271d-08db8d15c556
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: FsAY2a4qcbJ2+N+GExuFnfjO7rYx/suP2sS9AdMlOulux2byQSPfdX24ZpxKtcvETF6LJaSvmvZH1LdmkMaYdsTCqnhtkioYUDVOJcqopHbdKHD5uJXiEfTon5phnX9IDUw8Oy1GqvUbd4G4vW3IF9R2J0qbnaAYmFSxnM21XMPb5ghU7f8DqJRcZfBCkQGhGZWzRzTMidf6CGVRMlsw5qwshTSr3WL+79Hs1+qgbIa++P87cvhqDQ/5qOSLjhoByVaCHOnNAQzhj54wiPXLpfrnajwOiB0PvnbEnNrSt+UHV+xnX9PUiGd/tsVRIrRAWxh2v+cW+/ezqyq7p1Xsqi44XftFEv3Xgg6LceVYzX5d//dkVR11l4NK3C75YGUitz42sbd+XhG7/FQi7gKcC96txYTXZs+mi5zmYTGjNugJ7Xt0S6UfXefSbvPxkGyv6tNZ2ziztaayMRG1w2KneBc8iQz6iIAP9j/9mbIIURSrc5Ik1mo9+1XT3zUqmG5vA9Nk5MnSXSSZ6YcL1Tmi593Gq8ARn1hXYSlVeEtz+xFMJiekZNv21jkQEnmqIPtn5n5gM6ui10RuV1ugXbDPd+xNVGC4zEFSyn+FLPIwgiM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB9126.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(376002)(396003)(366004)(39860400002)(346002)(451199021)(36756003)(86362001)(2906002)(52116002)(478600001)(38100700002)(38350700002)(186003)(1076003)(26005)(2616005)(6506007)(55236004)(5660300002)(8676002)(41300700001)(6666004)(6512007)(44832011)(66946007)(6486002)(966005)(66476007)(4326008)(83380400001)(316002)(66556008)(8936002)(6916009);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: odQLTL3MDOQXJwXtau4iRgPdjOc8PcPBF8GKGas2haOuA68CIfLUnIw7A6GThEZE9bTmoAgIsIB/YYfI232pgjX/C2elSQ90ibMqBxD9DXGKw3HiZSzA4EMYFS6DMxFvcbHuScXS87B5nezxgHzDtdSwq1AxPhpwzwhmDj7xsI6nxMyORwgVBIwBiWUjW3INJUPjDKOycbOh/U/D+cppuWkNP4IYiR/nxulvsSQjFl9l54dvTo3qjDSHjRd+q0EXUOsvso6qGEt3Oq5v7AiceiG/NKMA8JOfIJ9ttANYc8ExViNNkfosGLVktqX4vVgVL8z6XO1eT+nCewYulaheSOABgvVxeCSmiMtXcwqKxcy6/RM6mBbHscv/5YvDIySYlbYmzyhWukmtH8GlEBUEdeHokucuMkuVP+1o+PqcAQlMOydXCYBnS6cunm3SmljIWaMfOsQb2mGUWY25gH46NHi81mvKqSbCAvls2j9gNgpX/GJruc9kwTROLFWAGvqXxyZgQIbuvGO8wio8BJYgKxaiiDLzb5gU4HYVzMx3XTYLuWvrFwKXLXGN3Y/h2H/+B1Zc2tstBTW2eJqHp3P+Et59wisHD0YDHI7BEUhiR5Q/PGfVAS440xdLjJSVwSfw
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB9126.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(376002)(396003)(366004)(39860400002)(346002)(451199021)(36756003)(86362001)(2906002)(52116002)(478600001)(38100700002)(38350700002)(186003)(1076003)(26005)(2616005)(6506007)(55236004)(5660300002)(8676002)(41300700001)(6666004)(6512007)(44832011)(66946007)(6486002)(66476007)(4326008)(83380400001)(316002)(66556008)(8936002)(6916009);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?NkKm65eoGx3sI0x8Z8M/hLqtmOOhSAAkD3rAD8MFmPDsZcupfAlubuT1fBFu?=
- =?us-ascii?Q?mhxnJHL9BidtrVGwsw5eCfv60GpvhJzz3uQzrTQneivco+J8GIqYtpEWGy3h?=
- =?us-ascii?Q?mTMg3KG2mbfcS65myapTHzgp2JT7dNkS7ebhzMPEjgqoheUerNmimxQ2lP9c?=
- =?us-ascii?Q?cGvJaEJRZ6EbcIsgzXB+uQMw30QvgPFc4yZdgUlp8bn3O3tLs20nQdXzMyOy?=
- =?us-ascii?Q?Ii0vMMh9HsG+zWHIXwZHikGokZRmMroiEH0reWAXgqNZxW2LqrCDrYIh6TsT?=
- =?us-ascii?Q?ECL7Jdq6t3t7tIlj5JM8x+5lSqPwOaQ0O09Z9TkIwiRMDCcmB5KO/qOtqpaa?=
- =?us-ascii?Q?8rHSh3uNzHzsTOHo0SxWuaWU46Xsa2fVxFaH/D7ZxdK3Y8RYJeFZDw3d8BQW?=
- =?us-ascii?Q?64xV2A1+05PJq6HZPwxTuwJCVoJZqG/LK26R32c/dVtIW/FMgmkw0xqxNpAg?=
- =?us-ascii?Q?jqZOc5yKy2XrRkMrWV4uLOeTyhUIT91avY5JakMcVVWEXmIl1Rx/9xpc5PtE?=
- =?us-ascii?Q?SmGzqkb+mq5oEQ4NOG6+XMtDKMDGu2tOFiRomAuW3pjKXBanOsGCsoDEV2R4?=
- =?us-ascii?Q?jnduFrBL0gFYjN4IU6+IjcnhNBVvE5EjYeurnkSBALe6kzZIAAcxLY4GpyxO?=
- =?us-ascii?Q?9NlyV8ZSYuKx/Vu6R0lFoa+X76DKWL5/maZFEeqMGQQExaj5Ijfj/mPWvLdM?=
- =?us-ascii?Q?CuYsfIOlCwmJdOW3VTeGie+g7lM33rnVx2Q36FPokoi+4a68xY8+Ku4xEUBG?=
- =?us-ascii?Q?6Sd7QHlE9Wd11vx9S6YyEkDRuK6XQF1XLi/np8085O2wEoLW6H3htLJ2qjDS?=
- =?us-ascii?Q?wedC53ycDHp0XfuQbFuXjnRhNlozKH+cFNqZaSgtKgCQMYSegEeFi6vallyc?=
- =?us-ascii?Q?Tk2pauJLTV3UCKdhkn7R/BFXhU/xAxbz+5vI7fdNZuZ2l8L35e1oe3TCY5AQ?=
- =?us-ascii?Q?mF0nBrg94ekt9knkfNNAv3sdWp/b+ILUrR9BE+eFN9plAu6PDQUN4RAEXfuM?=
- =?us-ascii?Q?bHiAzUOoTMwuS8/78FgW7AIFi4kUmdoh3iItcOHqttddvqrLWP4mnVKzQ5Ca?=
- =?us-ascii?Q?rd2fq7nE/nAZQtOJ7sf+HIP0rkdsAAxgVC2Vc1AWEnPtTkBR+C2j5GPbGRM6?=
- =?us-ascii?Q?VR+CYxUJn0eIQvzpKBYGM5xwJRlNp6w6a9dLxmvW/iQwsHVptQtSFxk1KGyk?=
- =?us-ascii?Q?pTQehZ8xUjOCuyXp8zajskaEIfCGcEsFp0J4xZXyDvadQanygz9ZzTdTWIlx?=
- =?us-ascii?Q?SONcTzW5wKi78i0Y9r+rBgBA9ZAThaeT6DA0wTwLgU0wGKKTj4YeZ5kHZAlS?=
- =?us-ascii?Q?Y3ZTxgcUZSGnKDamF95AxBmqr0Gh/HSAxuNqqWDcBw3xhXuEdMQB6uRiN/ux?=
- =?us-ascii?Q?ACj6i7lSogHKPHs1EaD+yIzGXHPklfJ2xbcJLEgwebpn3AAnWcAonoW9jQdT?=
- =?us-ascii?Q?H73FWbT39mA2qKYapnj2FC5mWV0cAHNkbhJx4ua76HdiTS6rGQFSXAli+MLG?=
- =?us-ascii?Q?15CMmJVGa8ixyPW0ggpvMdH4unoLV/cXy26127fUIBxtj5Mi+fYEjmm2ncnK?=
- =?us-ascii?Q?r1QUjqFSm7IX0LPvdJry7TGg6+LcsyGuiGFSWNOc?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?bwcdMmKlUP3dQVzzOo1CF8RLf8gAYBOZ4zBjxSN/VcGHJQyRdo5k/kNud7Fq?=
+ =?us-ascii?Q?0hHjY9jJug8RZNbe+bL3whH0wwDiFzHo1l6Cqg5JmToxGVmUTpzAJbpj6dg1?=
+ =?us-ascii?Q?9Cxyp/VWqiT1ofXFFCdvybjX4vorj8JfdytqrlQOtkfSczahX9ZtxpPpWA8k?=
+ =?us-ascii?Q?8Vztl8zxlpBNk8duO8H4dq8f5t17V+f+UrFBhV0YHDCJnllagPf1XYH7nV2N?=
+ =?us-ascii?Q?g61rVCE8DO4eAT1syjtoQuhHv2kiUkQvfHaWOBoOAKU8gWyyykfiJEpmDIUn?=
+ =?us-ascii?Q?zZnX3XKV++r5GxE0S5Oas5Iehz41f/G95rVL3MBURPDS8/DLJrjNRizkrqhg?=
+ =?us-ascii?Q?SvOdbK8a1UoQ6ft6RYdk992IW6LWF0PrO4R6MKiPIcK+KzJglsHCm+WcHWQG?=
+ =?us-ascii?Q?NwdRNRRJaAXkp6GrchJxKi3qk2ZPA6BeDZrATMjZg75r4DiJ1GNKoETl1VuS?=
+ =?us-ascii?Q?cns9Eex7pDbQiFPuuwzpufcKJL/6WX27fdFSIfgY6yXZMQeP1gRkO8++mnuS?=
+ =?us-ascii?Q?79/gPJTHDVXfiVcUALZa2e0TqMy6ziqsoGbvsYsfHmE4R3EiBDPKsNa3b1k9?=
+ =?us-ascii?Q?BfaE+FMvj8Krlsd62TDGB6JbKwl2/M2fgf8IKuzCXCW2opgfIvmrieH62WyE?=
+ =?us-ascii?Q?eZP1Dd6qymjiwecD4fjCCBnd7+C9U7VmMHglw2etDe3Lp1Ho9kyD7szW2s3b?=
+ =?us-ascii?Q?GBaZJGxzkG91yYzChpcc1JCHPQPrfQlSEbuB+9IpStdAGhk2uDQYhesnOZBH?=
+ =?us-ascii?Q?PgTrunx40h2Grax64MGgghnNlsjcWj6yCTrSw+Fvip6N9fJMCo7bhyWTRsxG?=
+ =?us-ascii?Q?5RF/93gsvQ69xotTMqFzoroF2WicUVIm/87AO2G/S7HtvvotlqSSY9+Hc2Ep?=
+ =?us-ascii?Q?dwEr4s8Oo7R9oQk54TsQ0K+zDFkMcOUDEZl65625tujhqhYzayOt3RFUIn0y?=
+ =?us-ascii?Q?gqThtP9BmLfSK4LTyz+1Z6lETwBpLCVOLwN/uqFmpLXAIJAtJbSemRrJeTDt?=
+ =?us-ascii?Q?FvUbco/rM4h3tVI7F+T7IRwilPmyBrwvABMUIR/xr3zhhnhUd4kPQRBa0qyS?=
+ =?us-ascii?Q?2FAPI11nw7gvzNm3GEbHWi6Nto+kAQkpUSWG9fBFsFFUt3QudC2o0KJyw7mV?=
+ =?us-ascii?Q?OFcT/i8IMGszogfeXQZ6Y0G0oQ5AB7esNl/2t5gPljnfX0z2oIf5ocDiftnV?=
+ =?us-ascii?Q?I1cBc+ALULP0SWvunPQK8HTpFfHMleVDY3Faa4soyKqW3rVCRwahQ0BOJoKv?=
+ =?us-ascii?Q?VO+nZ0Jitb86NIKMWyBgo+sDqsXDqOEvBcdF9E5ihxxSclkjRtW8rNoGiex+?=
+ =?us-ascii?Q?d4Zx7L0fMXT+fpsSLP9yTQIsWOEjVt4hjCrxT51dAQ2YZLXb47S0on3ONDoL?=
+ =?us-ascii?Q?tnz30m7/5r1jdqPUJ/GVIArh0di0v1rWAi3+wA3JUUvaDahX+T18+R8KGGPu?=
+ =?us-ascii?Q?xSu/F82iCgWiZ8rRU9tnjju31Ea4VHIfkomoAFJf8zQv5ed7j+0XI1x7xFdQ?=
+ =?us-ascii?Q?lG9vvY270NNme6Mlk2teIUO3sKkARv2HMKiqmNr2yKEA1qH1b2JoodNapzNP?=
+ =?us-ascii?Q?V8JCDDM96SDSSviCQDZPC1y9jxBbvwf0d4aJaBTu?=
 X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f42bb216-6bc0-4990-99d3-08db8d15c304
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa9e3cd9-729e-44d7-271d-08db8d15c556
 X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB9126.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jul 2023 13:48:01.0199
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jul 2023 13:48:04.8423
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: d2M2eKbvL67/iGqsD52tgW3DCjc87JiJ6rajBuy2WrzaYMcNITeqFvw7pIENzMxfJLf+MDv1ykrAlCghl3zlNA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: a8wWlgxVvvmn8qd+F+ovxhb6we7sZGODHWM3rIl9VziPiCiqmFfwYrWU2UeyTnD1bgowVpJZly5uQLcw+YvZag==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB9593
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
         URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -111,35 +113,36 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello Maintainers
+Root cause
+- There are two types of database- Remote and Local (rdb and ldb).
+- In client mode currently the code was written to access ldb.
 
-This series of patch handles the fix for the crash observed with VOCS when trying to pair with LE Audio TWS earbuds and few other issues. 
-
-A crash was reported for the following patch by Pauli Virtanen <pav@iki.fi>. 
-Patch Link: https://patchwork.kernel.org/project/bluetooth/patch/20230612133251.194-4-nitin.jadhav@nxp.com/
-
-Root cause: 
-- There are two types of database- Remote and Local (rdb and ldb)
-- In client mode currently the code was written to access ldb
-
-Fix:
-- Correcting it to access rdb has resolved the problem in VOCS
+Fix
+- Correcting it, to access rdb has resolved the problem in VOCS.
 - Same correction is done for VCS.
 
-Later to fixing the above crash few more issues were observed, these are fixed in subsequent patches.
+Reported-by: Pauli Virtanen <pav@iki.fi>
+---
+ src/shared/vcp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks,
-Warm Regards,
-Nitin Jadhav
-
-Nitin Jadhav (3):
-  shared/vcp: Fix the crash observed with VOCS
-  shared/vcp: Fix issues of audio location and descriptor
-  shared/vcp: Reserve one more handle in VCS for VOCS
-
- src/shared/vcp.c | 47 +++++++++++++++++++++++++----------------------
- 1 file changed, 25 insertions(+), 22 deletions(-)
-
+diff --git a/src/shared/vcp.c b/src/shared/vcp.c
+index 74bd01729..314618664 100644
+--- a/src/shared/vcp.c
++++ b/src/shared/vcp.c
+@@ -1719,10 +1719,10 @@ bool bt_vcp_attach(struct bt_vcp *vcp, struct bt_gatt_client *client)
+ 		return false;
+ 
+ 	bt_uuid16_create(&uuid, VCS_UUID);
+-	gatt_db_foreach_service(vcp->ldb->db, &uuid, foreach_vcs_service, vcp);
++	gatt_db_foreach_service(vcp->rdb->db, &uuid, foreach_vcs_service, vcp);
+ 
+ 	bt_uuid16_create(&uuid, VOL_OFFSET_CS_UUID);
+-	gatt_db_foreach_service(vcp->ldb->db, &uuid, foreach_vocs_service, vcp);
++	gatt_db_foreach_service(vcp->rdb->db, &uuid, foreach_vocs_service, vcp);
+ 
+ 	return true;
+ }
 -- 
 2.34.1
 
